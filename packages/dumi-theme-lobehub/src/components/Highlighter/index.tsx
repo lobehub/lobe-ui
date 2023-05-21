@@ -3,8 +3,8 @@ import { Button, ConfigProvider, Tooltip } from 'antd';
 import copy from 'copy-to-clipboard';
 import { CSSProperties, FC, memo } from 'react';
 
-import { PrismSyntaxTheme } from 'dumi-theme-lobehub/components/Highlighter/Prism';
-import { ShikiSyntaxTheme } from 'dumi-theme-lobehub/components/Highlighter/useShiki';
+import { PrismSyntaxTheme } from '../../components/Highlighter/Prism';
+import { ShikiSyntaxTheme } from '../../components/Highlighter/useShiki';
 import { useCopied } from '../../hooks/useCopied';
 import SyntaxHighlighter from './Highlighter';
 import { LanguageKeys } from './language';

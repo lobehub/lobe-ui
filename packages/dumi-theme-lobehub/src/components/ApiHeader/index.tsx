@@ -6,7 +6,7 @@ import { Flexbox } from 'react-layout-kit';
 
 import Code from '../CodeSnippet';
 
-import { ApiHeaderProps } from 'dumi-theme-lobehub/src';
+import { ApiHeaderProps } from '@/src';
 import { useStyles } from './style';
 
 /**

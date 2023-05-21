@@ -12,8 +12,8 @@
     "paths": {
       "@@/*": [".dumi/tmp/*"],
       "@/*": ["src"],
-      "lobe-ui": ["src"],
-      "lobe-ui/*": ["src/*", "*"]
+      "@lobehub/ui": ["src"],
+      "@lobehub/ui/*": ["src/*", "*"]
     }
   }
 }

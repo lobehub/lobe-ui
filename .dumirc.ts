@@ -15,6 +15,7 @@ const themeConfig = {
 
 export default defineConfig({
   themeConfig,
+  locales: [{ id: 'en-US', name: 'English' }],
   title: 'LobeHub UI Kit',
   favicons: ['https://raw.githubusercontent.com/lobehub/favicon/main/dist/favicon.ico'],
   npmClient: 'pnpm',
@@ -30,5 +31,15 @@ export default defineConfig({
   define: {
     'process.env': process.env,
   },
-  extraBabelPlugins: ['babel-plugin-styled-components'],
+  extraBabelPlugins: [
+    [
+      'babel-plugin-styled-components',
+      {
+        minify: true,
+        transpileTemplateLiterals: true,
+        displayName: process.env.NODE_ENV === 'development',
+        pure: true,
+      },
+    ],
+  ],
 });

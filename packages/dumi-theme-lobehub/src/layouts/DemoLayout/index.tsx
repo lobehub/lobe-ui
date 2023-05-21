@@ -1,8 +1,11 @@
+import { ThemeProvider } from '@lobehub/ui';
 import { useOutlet } from 'dumi';
-import DemoProvider from '../../components/DemoProvider';
+import isEqual from 'fast-deep-equal';
+import { useThemeStore } from '../../store';
 
 export default () => {
+  const themeMode = useThemeStore((st) => st.themeMode, isEqual);
   const outlet = useOutlet();
 
-  return <DemoProvider>{outlet}</DemoProvider>;
+  return <ThemeProvider themeMode={themeMode}>{outlet}</ThemeProvider>;
 };

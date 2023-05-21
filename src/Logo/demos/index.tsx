@@ -1,5 +1,5 @@
+import { Logo } from '@lobehub/ui';
 import { Space } from 'antd';
-import { Logo } from 'lobe-ui';
 
 export default () => {
   return (

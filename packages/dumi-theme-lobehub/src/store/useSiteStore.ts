@@ -86,6 +86,6 @@ export const useSiteStore = create<SiteStore>()(
     () => ({
       ...initialState,
     }),
-    { name: 'dumi-theme-lobehub' },
+    { name: '@' },
   ),
 );

@@ -1,5 +1,6 @@
 export * from './selectors';
 export * from './useSiteStore';
+export * from './useThemeStore';
 import { apiHeaderSel, flattenSidebarSel, tokenSel } from './selectors';
 
 /**

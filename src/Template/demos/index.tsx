@@ -1,5 +1,5 @@
+import { Template } from '@lobehub/ui';
 import { Button } from 'antd';
-import { Template } from 'lobe-ui';
 
 export default () => {
   return (

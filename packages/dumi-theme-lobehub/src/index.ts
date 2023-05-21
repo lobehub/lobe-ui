@@ -1,5 +1,4 @@
 export { ApiHeader, type ApiTitleProps } from './components/ApiHeader';
-export { default as DumiSiteProvider } from './components/DumiSiteProvider';
 export { default as Features } from './components/Features';
 export { default as Footer } from './components/Footer';
 export { default as Hero } from './components/Hero';

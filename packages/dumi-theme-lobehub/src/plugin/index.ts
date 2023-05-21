@@ -11,7 +11,7 @@ import { getHash } from './utils';
  */
 const SSRPlugin = (api: IApi) => {
   api.describe({
-    key: 'dumi-theme-lobehub',
+    key: '@',
   });
 
   // 如果没有开启 SSR，则啥也不做

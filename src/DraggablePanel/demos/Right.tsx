@@ -1,4 +1,4 @@
-import { DraggablePanel } from 'lobe-ui';
+import { DraggablePanel } from '@lobehub/ui';
 import styled from 'styled-components';
 
 const View = styled.div`

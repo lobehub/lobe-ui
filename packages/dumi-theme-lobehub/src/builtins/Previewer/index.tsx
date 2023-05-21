@@ -3,7 +3,6 @@ import { IPreviewerProps } from 'dumi/dist/client/theme-api/types';
 import Previewer from 'dumi/theme-default/builtins/Previewer';
 import { rgba } from 'polished';
 import { useMemo } from 'react';
-import DemoProvider from '../../components/DemoProvider';
 import { IntersectionLoad } from '../../components/LazyLoad';
 
 const useStyles = createStyles(({ css, token, prefixCls }) => {
@@ -121,7 +120,7 @@ const useStyles = createStyles(({ css, token, prefixCls }) => {
 });
 
 export default (props: IPreviewerProps) => {
-  const { styles, cx, theme } = useStyles();
+  const { styles, cx } = useStyles();
 
   const height = useMemo(() => {
     if (typeof props.iframe === 'number') {
@@ -136,9 +135,7 @@ export default (props: IPreviewerProps) => {
   return (
     <div className={cx(styles.container, styles[props.codePlacement as 'left' | 'right' | 'top'])}>
       <IntersectionLoad height={height} elementType="section">
-        <DemoProvider inherit={props.inherit || theme.demoInheritSiteTheme}>
-          <Previewer {...props} />
-        </DemoProvider>
+        <Previewer {...props} />
       </IntersectionLoad>
     </div>
   );

@@ -1,5 +1,5 @@
 {
-  "include": ["src", "tests", ".dumi/**/*", "typings", "*.ts"],
+  "include": ["src", "typings", "*.ts"],
   "compilerOptions": {
     "strict": true,
     "declaration": true,
@@ -7,12 +7,13 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "jsx": "react-jsx",
-    "types": ["vitest/globals"],
     "baseUrl": ".",
     "paths": {
+      "@@/*": ["../../.dumi/tmp/*"],
       "@/*": ["src"],
-      "dumi-theme-lobehub": ["src"],
-      "dumi-theme-lobehub/*": ["src/*"]
+      "dumi/theme/*": ["../../.dumi/tmp/dumi/theme/*"],
+      "@lobehub/ui": ["../../src"],
+      "@lobehub/ui/*": ["../../src/*", "*"]
     }
   }
 }

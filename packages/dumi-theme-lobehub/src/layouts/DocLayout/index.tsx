@@ -1,16 +1,14 @@
+import { ThemeProvider } from '@lobehub/ui';
 import { extractStaticStyle } from 'antd-style';
 import { Helmet, useIntl, useLocation } from 'dumi';
 import isEqual from 'fast-deep-equal';
-import { PropsWithChildren, memo, useEffect, type FC } from 'react';
-
-import DumiSiteProvider from '../../components/DumiSiteProvider';
+import { memo, useEffect, type FC } from 'react';
 import { StoreUpdater } from '../../components/StoreUpdater';
 
 import Docs from '../../pages/Docs';
 import Home from '../../pages/Home';
 
-import { isHeroPageSel, tokenSel, useSiteStore } from '../../store';
-import { GlobalStyle } from './styles';
+import { isHeroPageSel, tokenSel, useSiteStore, useThemeStore } from '../../store';
 
 const DocLayout: FC = memo(() => {
   const intl = useIntl();
@@ -54,22 +52,16 @@ const DocLayout: FC = memo(() => {
 // @ts-ignore
 global.__ANTD_CACHE__ = extractStaticStyle.cache;
 
-const ThemeProvider = ({ children }: PropsWithChildren) => {
+export default () => {
+  const themeMode = useThemeStore((st) => st.themeMode, isEqual);
   const siteToken = useSiteStore(tokenSel, isEqual);
 
   return (
-    <DumiSiteProvider cache={extractStaticStyle.cache} token={siteToken}>
-      {children}
-    </DumiSiteProvider>
+    <>
+      <StoreUpdater />
+      <ThemeProvider cache={extractStaticStyle.cache} token={siteToken} themeMode={themeMode}>
+        <DocLayout />
+      </ThemeProvider>
+    </>
   );
 };
-
-export default () => (
-  <>
-    <StoreUpdater />
-    <ThemeProvider>
-      <GlobalStyle />
-      <DocLayout />
-    </ThemeProvider>
-  </>
-);

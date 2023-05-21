@@ -57,7 +57,7 @@ const useSyncState = <T extends keyof SiteStore>(
 };
 
 const homeNav = {
-  title: '首页',
+  title: 'Home',
   link: '/',
   activePath: '/',
 };

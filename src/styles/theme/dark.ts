@@ -33,7 +33,7 @@ const darkModeRelationship: TokenRelationship = (type) => {
   };
 };
 
-const darkMode = genMapTokenAlgorithm({
+const darkMode = genMapTokenAlgorithm('dark', {
   lighter: {
     steps: 4, // 减少较亮颜色的数量
     targetBrightness: 0.8, // 降低最大亮度值
@@ -72,9 +72,30 @@ const darkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => ({
 
 export const darkTheme: ThemeConfig = {
   token: {
-    // colorTextBase: '#c7ddff',
-    colorTextBase: '#dcdcf2',
-    colorBgBase: '#050608',
+    colorTextLightSolid: '#000000',
+    colorBgLayout: '#000000',
+    colorBgContainer: '#111111',
+    colorBgElevated: '#222222',
+    colorBgSpotlight: '#444444',
+    colorBorder: '#333333',
+    colorBorderSecondary: '#333333',
+    colorText: '#ffffff',
+    colorTextSecondary: '#999999',
+    colorTextTertiary: '#888888',
+    colorTextQuaternary: '#666666',
+    colorPrimary: '#ffffff',
+    colorInfo: '#0070f3',
+    colorSuccess: '#50e3c2',
+    colorWarning: '#f5a623',
+    colorError: '#ee0000',
+    colorFillQuaternary: 'rgba(0,0,0,0)',
+    borderRadius: 5,
+    borderRadiusXS: 3,
+    borderRadiusSM: 3,
+    borderRadiusLG: 8,
+    controlHeight: 36,
+    boxShadow: '0 12px 20px 6px rgb(0 0 0 / 0.08)',
+    boxShadowSecondary: '0 2px 8px 2px rgb(0 0 0 / 0.07), 0 2px 4px -1px rgb(0 0 0 / 0.04)',
 
     colorLinkHover: darkColorPalettes.primary[7],
     colorLink: darkColorPalettes.primary[6],

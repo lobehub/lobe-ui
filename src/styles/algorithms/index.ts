@@ -37,12 +37,12 @@ interface MapTokenAlgorithm extends NeutralPaletteOptions {
   brandColor?: string;
 }
 
-export const genMapTokenAlgorithm = (params?: MapTokenAlgorithm) => {
+export const genMapTokenAlgorithm = (mode: 'dark' | 'light', params?: MapTokenAlgorithm) => {
   const {
     relationship = defaultRelationship,
     infoColorFollowPrimary = false,
     adjustWarning,
-    brandColor = '#1677FF',
+    brandColor = mode === 'dark' ? '#fff' : '#000',
   } = params || {};
 
   const funcColors = generateAssociatedColors(brandColor, adjustWarning);

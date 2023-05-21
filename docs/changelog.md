@@ -1,7 +1,7 @@
 ---
-title: 更新日志
+title: Changelog
 nav:
-  title: 更新日志
+  title: Changelog
   order: 999
 ---
 

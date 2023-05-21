@@ -1,5 +1,5 @@
+import { ActionIcon } from '@lobehub/ui';
 import { Space } from 'antd';
-import { ActionIcon } from 'lobe-ui';
 import { Settings } from 'lucide-react';
 
 export default () => {

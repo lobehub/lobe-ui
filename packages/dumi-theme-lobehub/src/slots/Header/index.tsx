@@ -6,9 +6,9 @@ import Logo from 'dumi/theme/slots/Logo';
 import Navbar from 'dumi/theme/slots/Navbar';
 import SearchBar from 'dumi/theme/slots/SearchBar';
 
-import Burger from '../../components/Burger';
-import GithubButton from '../../components/GithubButton';
-import ThemeSwitch from '../../components/ThemeSwitch';
+import Burger from '@/components/Burger';
+import GithubButton from '@/components/GithubButton';
+import ThemeSwitch from '@/components/ThemeSwitch';
 
 import { useResponsive } from 'antd-style';
 import { useSiteStore } from '../../store/useSiteStore';

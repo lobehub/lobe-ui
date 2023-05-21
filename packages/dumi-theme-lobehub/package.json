@@ -1,25 +1,22 @@
 {
   "name": "dumi-theme-lobehub",
   "version": "0.0.0",
+  "private": "true",
   "sideEffects": false,
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "father build",
-    "build:watch": "father dev",
+    "dev": "father dev",
     "prepare": "npm run build"
   },
   "dependencies": {
-    "@emotion/css": "^11",
-    "@emotion/server": "^11",
-    "@emotion/styled": "^11",
-    "@emotion/utils": "^1",
     "@floating-ui/react": "^0.17",
+    "@lobehub/ui": "latest",
     "animated-scroll-to": "^2",
     "chalk": "^4",
     "fast-deep-equal": "^3",
-    "polished": "^4",
     "rc-footer": "^0.6",
     "react-syntax-highlighter": "^15",
     "shiki-es": "^0.2"

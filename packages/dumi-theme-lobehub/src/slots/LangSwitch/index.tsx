@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import { history, Link, useLocation, useSiteData } from 'dumi';
 import { memo, useEffect, useState, type FC } from 'react';
 
-import NativeSelect from '../../components/NativeSelect';
+import NativeSelect from '@/components/NativeSelect';
 import { useSiteStore } from '../../store';
 
 type ILocaleItem = ReturnType<typeof useSiteData>['locales'][0];

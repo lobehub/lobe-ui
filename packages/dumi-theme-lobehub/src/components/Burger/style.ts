@@ -1,6 +1,6 @@
-import styled from '@emotion/styled';
 import { createStyles } from 'antd-style';
 import { rgba } from 'polished';
+import styled from 'styled-components';
 
 export const FillRect = styled.div`
   background: ${(p) => rgba(p.theme.colorBgContainer, 0.8)};

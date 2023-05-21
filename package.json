@@ -1,5 +1,5 @@
 {
-  "name": "lobe-ui",
+  "name": "@lobehub/ui",
   "version": "1.0.0",
   "description": "ui kit for lobehub",
   "keywords": [
@@ -26,11 +26,13 @@
   ],
   "scripts": {
     "build": "father build",
+    "build:theme": "npm run build --prefix=packages/dumi-theme-lobehub",
     "build:watch": "father dev",
     "ci": "npm run lint && npm run type-check",
     "clean": "rm -rf es lib dist coverage .dumi/tmp .eslintcache",
     "dev": "dumi dev",
-    "docs:build": "dumi build",
+    "dev:theme": "npm run dev --prefix=packages/dumi-theme-lobehub",
+    "docs:build": "npm run build:theme && dumi build",
     "doctor": "father doctor",
     "lint": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
     "prepare": "husky install && npm run setup",
@@ -65,6 +67,7 @@
     "copy-to-clipboard": "^3",
     "lodash": "^4",
     "lucide-react": "latest",
+    "polished": "^4",
     "re-resizable": "^6",
     "react-layout-kit": "^1",
     "react-rnd": "^10",

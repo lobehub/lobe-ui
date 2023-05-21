@@ -1,5 +1,5 @@
+import { ActionIcon, SideNav } from '@lobehub/ui';
 import { Avatar } from 'antd';
-import { ActionIcon, SideNav } from 'lobe-ui';
 import { Album, MessageSquare, Settings2 } from 'lucide-react';
 import { useState } from 'react';
 

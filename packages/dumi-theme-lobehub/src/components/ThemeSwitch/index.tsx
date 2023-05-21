@@ -1,7 +1,7 @@
-import styled from '@emotion/styled';
 import type { ThemeMode } from 'antd-style';
 import { ReactNode, memo, type FC } from 'react';
 import { Flexbox } from 'react-layout-kit';
+import styled from 'styled-components';
 
 import { useThemeStore } from '../../store/useThemeStore';
 import NativeSelect from '../NativeSelect';

@@ -1,44 +1,52 @@
-import { ThemeProvider as AntdThemeProvider, setupStyled, type ThemeAppearance } from 'antd-style';
-import { AliasToken } from 'antd/es/theme/interface';
-import React from 'react';
+import { App } from 'antd';
+import {
+  ThemeProvider as AntdThemeProvider,
+  StyleProvider,
+  extractStaticStyle,
+  setupStyled,
+  type CustomTokenParams,
+  type ThemeMode,
+} from 'antd-style';
+import React, { useCallback } from 'react';
 import { ThemeContext } from 'styled-components';
+import { createCustomToken, getAntdTheme, getCustomStylish } from '../styles';
 import GlobalStyle from './GlobalStyle';
-import { darkToken as dark, lightToken as light } from './token';
 
 export interface ThemeProviderProps {
+  token?: any;
   children: React.ReactNode;
-  appearance?: ThemeAppearance;
-  lightToken?: Partial<AliasToken>;
-  darkToken?: Partial<AliasToken>;
+  themeMode?: ThemeMode;
+  ssrInline?: boolean;
+  cache?: typeof extractStaticStyle.cache;
 }
 
-const ThemeProvider: React.FC<ThemeProviderProps> = ({
-  children,
-  appearance,
-  lightToken = {},
-  darkToken = {},
-}) => {
+const ThemeProvider: React.FC<ThemeProviderProps> = ({ token, children, themeMode }) => {
   setupStyled({ ThemeContext });
+  const getCustomToken = useCallback(
+    (params: CustomTokenParams) => {
+      const base = createCustomToken(params);
+
+      if (token) {
+        return { ...base, ...token };
+      } else {
+        return base;
+      }
+    },
+    [token],
+  );
+
   return (
-    <AntdThemeProvider
-      appearance={appearance}
-      theme={(appearance: ThemeAppearance) => {
-        switch (appearance) {
-          case 'light':
-            return {
-              token: { ...light, ...lightToken },
-            };
-          case 'dark':
-          default:
-            return {
-              token: { ...dark, ...darkToken },
-            };
-        }
-      }}
-    >
-      <GlobalStyle />
-      {children}
-    </AntdThemeProvider>
+    <StyleProvider speedy={process.env.NODE_ENV === 'production'}>
+      <AntdThemeProvider
+        themeMode={themeMode}
+        theme={getAntdTheme}
+        customStylish={getCustomStylish}
+        customToken={getCustomToken}
+      >
+        <GlobalStyle />
+        <App>{children}</App>
+      </AntdThemeProvider>
+    </StyleProvider>
   );
 };
 
