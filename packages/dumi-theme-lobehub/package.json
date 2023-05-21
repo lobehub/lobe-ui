@@ -1,0 +1,52 @@
+{
+  "name": "dumi-theme-lobehub",
+  "version": "0.0.0",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "father build",
+    "build:watch": "father dev",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "@emotion/css": "^11",
+    "@emotion/server": "^11",
+    "@emotion/styled": "^11",
+    "@emotion/utils": "^1",
+    "@floating-ui/react": "^0.17",
+    "animated-scroll-to": "^2",
+    "chalk": "^4",
+    "fast-deep-equal": "^3",
+    "polished": "^4",
+    "rc-footer": "^0.6",
+    "react-syntax-highlighter": "^15",
+    "shiki-es": "^0.2"
+  },
+  "devDependencies": {
+    "@ant-design/icons": "^5",
+    "@emotion/babel-plugin": "^11",
+    "@emotion/react": "^11",
+    "@testing-library/react": "^13",
+    "@types/react-syntax-highlighter": "^15",
+    "@umijs/lint": "^4",
+    "@vitest/coverage-c8": "latest",
+    "concurrently": "^7",
+    "cross-env": "^7",
+    "father-plugin-dumi-theme": "^1.0.0-rc.1",
+    "history": "^5",
+    "jsdom": "^21",
+    "tilg": "^0.1"
+  },
+  "peerDependencies": {
+    "@ant-design/icons": ">=4",
+    "dumi": "^2.0.0",
+    "react": ">=16.8",
+    "react-dom": ">=16.8"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  }
+}
