@@ -1,44 +1,144 @@
-# lobe-ui
+<a name="readme-top"></a>
 
-[![NPM version][npm-image]][npm-url] [![NPM downloads][download-image]][download-url] [![install size][npm-size]][npm-size-url]
+<div align="center">
+  
+<img width="160" src="https://raw.githubusercontent.com/lobehub/.github/main/profile/Logo.webp">
 
-[![Test CI status][test-ci]][test-ci-url] [![Deploy CI][release-ci]][release-ci-url] [![Coverage][coverage]][codecov-url]
+<h1>Lobe UI</h1>
 
-[![ docs by dumi][dumi-url]](https://d.umijs.org/) [![Build With father][father-url]](https://github.com/umijs/father/)
+Lobe UI is an open-source UI component library for building chatbot web apps
+  
+[Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
+  
+<!-- SHIELD GROUP -->
 
-<!-- gitpod url -->
+[![release][release-shield]][release-url]
+[![releaseDate][release-date-shield]][release-date-url]
+[![ciTest][ci-test-shield]][ci-test-url]
+[![ciRelease][ci-release-shield]][ci-release-url]
+<br/>
+[![contributors][contributors-shield]][contributors-url]
+[![forks][forks-shield]][forks-url]
+[![stargazers][stargazers-shield]][stargazers-url]
+[![issues][issues-shield]][issues-url]
+  
+![](https://github.com/othneildrew/Best-README-Template/raw/master/images/screenshot.png)
 
-[gitpod-badge]: https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod
-[gitpod-url]: https://gitpod.io/#https://github.com/ant-design/lobe-ui
+</div>
 
-<!-- umi url -->
+## 📦 Installation
 
-[dumi-url]: https://img.shields.io/badge/docs%20by-dumi-blue
-[father-url]: https://img.shields.io/badge/build%20with-father-028fe4.svg
+To install Lobe Commit, run the following command:
 
-<!-- npm url -->
+```bash
+pnpm add @lobehub/ui
+```
 
-[npm-image]: http://img.shields.io/npm/v/lobe-ui.svg?style=flat-square&color=deepgreen&label=latest
-[npm-url]: http://npmjs.org/package/lobe-ui
-[npm-size]: https://img.shields.io/bundlephobia/minzip/lobe-ui?color=deepgreen&label=gizpped%20size&style=flat-square
-[npm-size-url]: https://packagephobia.com/result?p=lobe-ui
+<div align="right">
 
-<!-- coverage -->
+[![][back-to-top]](#readme-top)
 
-[coverage]: https://codecov.io/gh/lobehub/lobe-ui/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/lobehub/lobe-ui/branch/master
+</div>
 
-<!-- Github CI -->
+## ⌨️ Local Development
 
-[test-ci]: https://github.com/lobehub/lobe-ui/workflows/Test%20CI/badge.svg
-[release-ci]: https://github.com/lobehub/lobe-ui/workflows/Release%20CI/badge.svg
-[test-ci-url]: https://github.com/lobehub/lobe-ui/actions?query=workflow%3ATest%20CI
-[release-ci-url]: https://github.com/lobehub/lobe-ui/actions?query=workflow%3ARelease%20CI
-[download-image]: https://img.shields.io/npm/dm/lobe-ui.svg?style=flat-square
-[download-url]: https://npmjs.org/package/lobe-ui
+You can use Gitpod for online development:
 
-## 简介
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)][gitpod-url]
 
-## License
+Or clone it for local development:
 
-[MIT](./LICENSE)
+```bash
+$ git clone https://github.com/lobehub/lobe-ui.git
+$ cd lobe-ui
+$ pnpm install
+$ pnpm start
+```
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+
+## 🤝 Contributing
+
+<!-- CONTRIBUTION GROUP -->
+
+> 📊 Total: <kbd>**3**</kbd>
+
+<a href="https://github.com/canisminor1990" title="canisminor1990">
+  <img src="https://avatars.githubusercontent.com/u/17870709?v=4" width="50" />
+</a>
+<a href="https://github.com/actions-user" title="actions-user">
+  <img src="https://avatars.githubusercontent.com/u/65916846?v=4" width="50" />
+</a>
+<a href="https://github.com/apps/dependabot" title="dependabot[bot]">
+  <img src="https://avatars.githubusercontent.com/in/29110?v=4" width="50" />
+</a>
+
+<!-- CONTRIBUTION END -->
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+---
+#### 📝 License
+
+Copyright © 2023 [LobeHub][profile-url]. <br />
+This project is [MIT](./LICENSE) licensed. 
+
+
+<!-- LINK GROUP -->
+
+[profile-url]: https://github.com/lobehub
+[issues-url]: https://github.com/lobehub/lobe-ui/issues/new/choose
+[gitpod-url]: https://gitpod.io/#https://github.com/lobehub/lobe-ui
+
+<!-- SHIELD LINK GROUP -->
+
+[back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
+
+<!-- release -->
+
+[release-shield]: https://img.shields.io/npm/v/@lobehub/ui?label=%F0%9F%A4%AF%20NPM
+[release-url]: https://www.npmjs.com/package/@lobehub/ui
+
+<!-- releaseDate -->
+
+[release-date-shield]: https://img.shields.io/github/release-date/lobehub/lobe-ui?style=flat
+[release-date-url]: https://github.com/lobehub/lobe-ui/releases
+
+<!-- ciTest -->
+
+[ci-test-shield]: https://github.com/lobehub/lobe-ui/workflows/Test%20CI/badge.svg
+[ci-test-url]: https://github.com/lobehub/lobe-ui/actions?query=workflow%3ATest%20CI
+
+<!-- ciRelease -->
+
+[ci-release-shield]: https://github.com/lobehub/lobe-ui/workflows/Release%20CI/badge.svg
+[ci-release-url]: https://github.com/lobehub/lobe-ui/actions?query=workflow%3ARelease%20CI
+
+<!-- contributors -->
+
+[contributors-shield]: https://img.shields.io/github/contributors/lobehub/lobe-ui.svg?style=flat
+[contributors-url]: https://github.com/lobehub/lobe-ui/graphs/contributors
+
+<!-- forks -->
+
+[forks-shield]: https://img.shields.io/github/forks/lobehub/lobe-ui.svg?style=flat
+[forks-url]: https://github.com/lobehub/lobe-ui/network/members
+
+<!-- stargazers -->
+
+[stargazers-shield]: https://img.shields.io/github/stars/lobehub/lobe-ui.svg?style=flat
+[stargazers-url]: https://github.com/lobehub/lobe-ui/stargazers
+
+<!-- issues -->
+
+[issues-shield]: https://img.shields.io/github/issues/lobehub/lobe-ui.svg?style=flat
+[issues-url]: https://img.shields.io/github/issues/lobehub/lobe-ui.svg?style=flat
