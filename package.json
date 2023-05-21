@@ -106,7 +106,7 @@
     "react-dom": "^18",
     "semantic-release": "^20",
     "semantic-release-config-gitmoji": "^1",
-    "stylelint": "^14",
+    "stylelint": "^15",
     "typescript": "^5",
     "vitest": "latest"
   },
