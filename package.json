@@ -94,7 +94,7 @@
     "dumi-theme-lobehub": "latest",
     "eslint": "^8",
     "eslint-import-resolver-alias": "^1",
-    "eslint-import-resolver-typescript": "^2",
+    "eslint-import-resolver-typescript": "^3",
     "father": "^4",
     "husky": "^8",
     "jsdom": "^22",
