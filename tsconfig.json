@@ -1,5 +1,5 @@
 {
-  "include": ["src", "tests", "packages/**/*", ".dumi/**/*", ".dumirc.ts", "*.ts"],
+  "include": ["src", "tests", ".dumi/**/*", ".dumirc.ts", "*.ts"],
   "compilerOptions": {
     "strict": true,
     "declaration": true,
@@ -11,7 +11,7 @@
     "types": ["vitest/globals"],
     "paths": {
       "@@/*": [".dumi/tmp/*"],
-      "@/*": ["src"],
+      "@/*": ["src/*"],
       "@lobehub/ui": ["src"],
       "@lobehub/ui/*": ["src/*", "*"]
     }

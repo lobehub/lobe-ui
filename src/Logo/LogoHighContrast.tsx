@@ -1,4 +1,7 @@
-export default (props) => (
+import { SvgProps } from '@/types';
+import React from 'react';
+
+const LogoHighContrast: React.FC<SvgProps> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 320 320"
@@ -15,3 +18,5 @@ export default (props) => (
     <path d="M83 20.516a9.5 9.5 0 11-19 0 9.5 9.5 0 0119 0zM264.5 65.016c8.56 0 15.5-6.94 15.5-15.5 0-8.56-6.94-15.5-15.5-15.5-8.56 0-15.5 6.94-15.5 15.5 0 8.56 6.94 15.5 15.5 15.5zM55 124.016c8.837 0 16-7.164 16-16 0-8.837-7.163-16-16-16s-16 7.163-16 16c0 8.836 7.163 16 16 16z" />
   </svg>
 );
+
+export default React.memo(LogoHighContrast);

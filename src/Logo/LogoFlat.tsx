@@ -1,4 +1,7 @@
-export default (props) => (
+import { SvgProps } from '@/types';
+import React from 'react';
+
+const LogoFlat: React.FC<SvgProps> = (props) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 320 320" {...props}>
     <path
       fill="#FFB02E"
@@ -71,3 +74,5 @@ export default (props) => (
     <circle cx="205.5" cy="106.516" r="13.5" fill="#0C74FF" />
   </svg>
 );
+
+export default React.memo(LogoFlat);
