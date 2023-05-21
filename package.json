@@ -87,7 +87,7 @@
     "antd": "^5",
     "commitlint": "^17",
     "commitlint-config-gitmoji": "^2",
-    "concurrently": "^7",
+    "concurrently": "^8",
     "cross-env": "^7",
     "dumi": "^2",
     "dumi-assets-types": "^1",
