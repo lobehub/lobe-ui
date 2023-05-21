@@ -104,7 +104,7 @@
     "prettier-plugin-packagejson": "^2",
     "react": "^18",
     "react-dom": "^18",
-    "semantic-release": "^20",
+    "semantic-release": "^21",
     "semantic-release-config-gitmoji": "^1",
     "stylelint": "^14",
     "typescript": "^5",
