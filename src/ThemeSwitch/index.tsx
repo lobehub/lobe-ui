@@ -1,9 +1,9 @@
-import { ActionIcon, Icon, type ActionIconSize } from '@/index';
-
 import { Dropdown, type MenuProps } from 'antd';
 import { ThemeMode } from 'antd-style';
 import { Monitor, Moon, Sun } from 'lucide-react';
-import React from 'react';
+import { memo } from 'react';
+
+import { ActionIcon, Icon, type ActionIconSize } from '@lobehub/ui';
 
 const icons = {
   auto: Monitor,
@@ -39,21 +39,18 @@ export interface ThemeSwitchProps extends DivProps {
   onThemeSwitch: (themeMode: ThemeMode) => void;
 }
 
-const ThemeSwitch: React.FC<ThemeSwitchProps> = ({
-  size = 'site',
-  themeMode,
-  onThemeSwitch,
-  ...props
-}) => {
-  const menuProps: MenuProps = {
-    items,
-    onClick: (e: any) => onThemeSwitch(e.key),
-  };
-  return (
-    <Dropdown menu={menuProps} trigger={['click']} {...props}>
-      <ActionIcon size={size} icon={icons[themeMode]} />
-    </Dropdown>
-  );
-};
+const ThemeSwitch = memo<ThemeSwitchProps>(
+  ({ size = 'site', themeMode, onThemeSwitch, ...props }) => {
+    const menuProps: MenuProps = {
+      items,
+      onClick: (e: any) => onThemeSwitch(e.key),
+    };
+    return (
+      <Dropdown menu={menuProps} trigger={['click']} {...props}>
+        <ActionIcon size={size} icon={icons[themeMode]} />
+      </Dropdown>
+    );
+  },
+);
 
-export default React.memo(ThemeSwitch);
+export default ThemeSwitch;

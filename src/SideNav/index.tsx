@@ -1,5 +1,5 @@
 import { Space } from 'antd';
-import React from 'react';
+import { memo, ReactNode } from 'react';
 import styled from 'styled-components';
 
 const Layout = styled.div`
@@ -22,18 +22,18 @@ export interface SideNavProps extends DivProps {
   /**
    * @description Avatar to be displayed at the top of the sidenav
    */
-  avatar?: React.ReactNode;
+  avatar?: ReactNode;
   /**
    * @description Actions to be displayed below the avatar
    */
-  topActions?: React.ReactNode;
+  topActions?: ReactNode;
   /**
    * @description Actions to be displayed at the bottom of the sidenav
    */
-  bottomActions: React.ReactNode;
+  bottomActions: ReactNode;
 }
 
-const SideNav: React.FC<SideNavProps> = ({ avatar, topActions, bottomActions, ...props }) => {
+const SideNav = memo<SideNavProps>(({ avatar, topActions, bottomActions, ...props }) => {
   return (
     <Layout {...props}>
       <Space size={16} direction="vertical" align="center">
@@ -47,6 +47,6 @@ const SideNav: React.FC<SideNavProps> = ({ avatar, topActions, bottomActions, ..
       </Space>
     </Layout>
   );
-};
+});
 
-export default React.memo(SideNav);
+export default SideNav;

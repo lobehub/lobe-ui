@@ -1,5 +1,6 @@
 import { Tabs, TabsProps } from 'antd';
-import React from 'react';
+import { memo } from 'react';
+
 import { useStyles } from './style';
 
 export interface TabsNavProps {
@@ -21,9 +22,9 @@ export interface TabsNavProps {
   activeKey?: TabsProps['activeKey'];
 }
 
-const TabsNav: React.FC<TabsNavProps> = ({ className, ...props }) => {
+const TabsNav = memo<TabsNavProps>(({ className, ...props }) => {
   const { styles, cx } = useStyles();
   return <Tabs className={cx(styles.tabs, className)} {...props} />;
-};
+});
 
-export default React.memo(TabsNav);
+export default TabsNav;

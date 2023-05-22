@@ -1,5 +1,5 @@
 import { LucideIcon } from 'lucide-react';
-import React from 'react';
+import { FC, memo } from 'react';
 
 export type IconSize =
   | 'large'
@@ -23,7 +23,7 @@ export interface IconProps extends SvgProps {
   icon: LucideIcon;
 }
 
-const Icon: React.FC<IconProps> = ({ icon, size = 'normal', ...props }) => {
+const Icon: FC<IconProps> = ({ icon, size = 'normal', ...props }) => {
   let fontSize: number;
   let strokeWidth: number;
   const SvgIcon = icon;
@@ -46,4 +46,4 @@ const Icon: React.FC<IconProps> = ({ icon, size = 'normal', ...props }) => {
   return <SvgIcon size={fontSize} strokeWidth={strokeWidth} {...props} />;
 };
 
-export default React.memo(Icon);
+export default memo(Icon);

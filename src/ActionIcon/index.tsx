@@ -1,7 +1,8 @@
 import { Icon } from '@/index';
 
 import { LucideIcon } from 'lucide-react';
-import React from 'react';
+import { memo } from 'react';
+
 import { useStyles } from './style';
 
 export type ActionIconSize =
@@ -34,48 +35,43 @@ export interface ActionIconProps extends DivProps {
   icon: LucideIcon;
 }
 
-const ActionIcon: React.FC<ActionIconProps> = ({
-  className,
-  active,
-  icon,
-  size = 'normal',
-  style,
-  ...props
-}) => {
-  const { styles, cx } = useStyles(active);
-  let blockSize: number;
-  let borderRadius: number;
-  switch (size) {
-    case 'large':
-      blockSize = 44;
-      borderRadius = 8;
-      break;
-    case 'normal':
-      blockSize = 36;
-      borderRadius = 5;
-      break;
-    case 'small':
-      blockSize = 28;
-      borderRadius = 5;
-      break;
-    case 'site':
-      blockSize = 34;
-      borderRadius = 5;
-      break;
-    default:
-      blockSize = size?.blockSize || 36;
-      borderRadius = size?.borderRadius || 5;
-      break;
-  }
-  return (
-    <div
-      className={cx(styles.block, className)}
-      style={{ width: blockSize, height: blockSize, borderRadius, ...style }}
-      {...props}
-    >
-      <Icon size={size === 'site' ? 'small' : size} icon={icon} />
-    </div>
-  );
-};
+const ActionIcon = memo<ActionIconProps>(
+  ({ className, active, icon, size = 'normal', style, ...props }) => {
+    const { styles, cx } = useStyles(active);
+    let blockSize: number;
+    let borderRadius: number;
+    switch (size) {
+      case 'large':
+        blockSize = 44;
+        borderRadius = 8;
+        break;
+      case 'normal':
+        blockSize = 36;
+        borderRadius = 5;
+        break;
+      case 'small':
+        blockSize = 28;
+        borderRadius = 5;
+        break;
+      case 'site':
+        blockSize = 34;
+        borderRadius = 5;
+        break;
+      default:
+        blockSize = size?.blockSize || 36;
+        borderRadius = size?.borderRadius || 5;
+        break;
+    }
+    return (
+      <div
+        className={cx(styles.block, className)}
+        style={{ width: blockSize, height: blockSize, borderRadius, ...style }}
+        {...props}
+      >
+        <Icon size={size === 'site' ? 'small' : size} icon={icon} />
+      </div>
+    );
+  },
+);
 
-export default React.memo(ActionIcon);
+export default ActionIcon;
