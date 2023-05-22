@@ -1,7 +1,7 @@
 import { SvgProps } from '@/types';
 import React from 'react';
 
-const LogoText: React.FC<SvgProps> = (props) => (
+const LogoText: React.FC<SvgProps | any> = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 940 320"

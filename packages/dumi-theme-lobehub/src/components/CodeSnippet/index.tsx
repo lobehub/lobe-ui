@@ -6,8 +6,8 @@ import { FC } from 'react';
 
 import { Highlighter } from '../Highlighter';
 
+import { useCopied } from '@/hooks/useCopied';
 import { vs, vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-import { useCopied } from '../../hooks/useCopied';
 import { useStyles } from './style';
 
 const CodeSnippet: FC<{ children: string }> = ({ children }) => {

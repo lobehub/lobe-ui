@@ -1,5 +1,5 @@
 {
-  "include": ["src", "typings", "*.ts"],
+  "include": ["src", "typings", "../../.dumi/**/*", "*.ts"],
   "compilerOptions": {
     "strict": true,
     "declaration": true,
@@ -10,7 +10,7 @@
     "baseUrl": ".",
     "paths": {
       "@@/*": ["../../.dumi/tmp/*"],
-      "@/*": ["src"],
+      "@/*": ["src/*"],
       "dumi/theme/*": ["../../.dumi/tmp/dumi/theme/*"],
       "@lobehub/ui": ["../../src"],
       "@lobehub/ui/*": ["../../src/*", "*"]

@@ -3,8 +3,8 @@ import { createGlobalStyle } from 'antd-style';
 const GlobalStyle = createGlobalStyle`
 
   body {
-    font-family: "AliPuHui", ${({ theme }) => theme.fontFamily};
-    font-size: ${({ theme }) => theme.fontSize};
+    font-family: 'Segoe UI', SegoeUI, AliPuHui, ${({ theme }) => theme.fontFamily};
+    font-size: ${({ theme }) => theme.fontSize}px;
     line-height: 1;
     color: ${({ theme }) => theme.colorTextBase};
 

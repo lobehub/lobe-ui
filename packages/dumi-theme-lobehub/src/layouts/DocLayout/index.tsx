@@ -1,14 +1,14 @@
+import { StoreUpdater } from '@/components/StoreUpdater';
 import { ThemeProvider } from '@lobehub/ui';
 import { extractStaticStyle } from 'antd-style';
 import { Helmet, useIntl, useLocation } from 'dumi';
 import isEqual from 'fast-deep-equal';
 import { memo, useEffect, type FC } from 'react';
-import { StoreUpdater } from '../../components/StoreUpdater';
 
-import Docs from '../../pages/Docs';
-import Home from '../../pages/Home';
+import Docs from '@/pages/Docs';
+import Home from '@/pages/Home';
 
-import { isHeroPageSel, tokenSel, useSiteStore, useThemeStore } from '../../store';
+import { isHeroPageSel, tokenSel, useSiteStore, useThemeStore } from '@/store';
 
 const DocLayout: FC = memo(() => {
   const intl = useIntl();

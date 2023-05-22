@@ -4,9 +4,8 @@ import { homepage } from './package.json';
 const isProd = process.env.NODE_ENV === 'production';
 
 const themeConfig = {
-  name: 'Lobe UI',
+  name: 'UI',
   description: 'Empowering your AI dreams with LobeHub',
-  logo: 'https://raw.githubusercontent.com/lobehub/.github/main/profile/Logo.webp',
   footer: 'LobeHub',
   socialLinks: {
     github: homepage,

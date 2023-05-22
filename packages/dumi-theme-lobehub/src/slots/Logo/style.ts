@@ -4,7 +4,6 @@ export const useStyles = createStyles(
   ({ css, responsive, token }) => css`
     display: inline-flex;
     align-items: center;
-    font-family: AliPuHui, ${token.fontFamily};
     color: ${token.colorText};
     font-size: 22px;
     line-height: 1;

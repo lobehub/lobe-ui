@@ -3,7 +3,7 @@ import { ReactNode, memo, type FC } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import styled from 'styled-components';
 
-import { useThemeStore } from '../../store/useThemeStore';
+import { useThemeStore } from '@/store/useThemeStore';
 import NativeSelect from '../NativeSelect';
 
 const IconDark = () => (
@@ -36,9 +36,9 @@ const Option = ({ icon, label }: { icon: ReactNode; label: ReactNode }) => (
 );
 
 const options = [
-  { label: '跟随系统', icon: <IconAuto />, value: 'auto' },
-  { label: '亮色模式', icon: <IconLight />, value: 'light' },
-  { label: '暗色模式', icon: <IconDark />, value: 'dark' },
+  { label: 'Auto', icon: <IconAuto />, value: 'auto' },
+  { label: 'Light', icon: <IconLight />, value: 'light' },
+  { label: 'Dark', icon: <IconDark />, value: 'dark' },
 ];
 
 const ThemeSwitch: FC = () => {

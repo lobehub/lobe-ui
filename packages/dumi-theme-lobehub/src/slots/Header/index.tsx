@@ -10,8 +10,8 @@ import Burger from '@/components/Burger';
 import GithubButton from '@/components/GithubButton';
 import ThemeSwitch from '@/components/ThemeSwitch';
 
+import { useSiteStore } from '@/store/useSiteStore';
 import { useResponsive } from 'antd-style';
-import { useSiteStore } from '../../store/useSiteStore';
 import { useStyle } from './style';
 
 const Header: FC = () => {

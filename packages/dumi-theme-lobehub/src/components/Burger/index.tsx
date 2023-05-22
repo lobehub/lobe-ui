@@ -5,7 +5,7 @@ import { uniq } from 'lodash';
 import { useState } from 'react';
 import { Center } from 'react-layout-kit';
 
-import { activePathSel, useSiteStore } from '../../store';
+import { activePathSel, useSiteStore } from '@/store';
 import { FillRect, useStyles } from './style';
 
 const Burger = () => {

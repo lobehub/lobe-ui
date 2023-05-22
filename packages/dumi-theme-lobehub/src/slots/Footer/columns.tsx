@@ -7,16 +7,16 @@ interface GetColumnParams {
 }
 export const getColumns = ({ github }: GetColumnParams) => {
   const resources: FooterColumn = {
-    title: '相关资源',
+    title: 'Resources',
     items: [],
   };
   const community: FooterColumn = {
-    title: 'Social',
+    title: 'Community',
     items: [],
   };
 
   const more: FooterColumn = {
-    title: 'More',
+    title: 'More Products',
     items: [],
   };
 

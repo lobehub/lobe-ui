@@ -2,7 +2,7 @@ import { GithubFilled } from '@ant-design/icons';
 import { Button, Tooltip } from 'antd';
 import { memo, type FC } from 'react';
 
-import { githubSel, useSiteStore } from '../../store';
+import { githubSel, useSiteStore } from '@/store';
 
 const GithubButton: FC = () => {
   const repoUrl = useSiteStore(githubSel);

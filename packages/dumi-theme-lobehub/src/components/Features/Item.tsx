@@ -4,7 +4,7 @@ import { history, Link } from 'dumi';
 import { type FC } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
-import { IFeature } from '../../types';
+import { IFeature } from '@/types';
 import { useStyles } from './Item.style';
 
 const Image: FC<{ image: string; className?: string; title: string }> = ({

@@ -4,7 +4,7 @@ import { useResponsive, useTheme } from 'antd-style';
 import { memo, useMemo, type FC } from 'react';
 import useControlledState from 'use-merge-value';
 
-import { AnchorItem } from '../../types';
+import { AnchorItem } from '@/types';
 import { useStyles } from './style';
 
 /**

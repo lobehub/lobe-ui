@@ -1,6 +1,6 @@
 import { CSSProperties, type FC } from 'react';
 
-import { IFeature } from '../../types';
+import { IFeature } from '@/types';
 import FeatureItem from './Item';
 import { useStyles } from './style';
 

@@ -2,7 +2,7 @@ import { NavLink } from 'dumi';
 import isEqual from 'fast-deep-equal';
 import { memo, type FC } from 'react';
 
-import { useSiteStore } from '../../store/useSiteStore';
+import { useSiteStore } from '@/store/useSiteStore';
 import { useStyles } from './style';
 
 const Sidebar: FC = () => {

@@ -2,7 +2,6 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ css, token, responsive: r, stylish }) => ({
   title: css`
-    font-family: monospace;
     ${r.mobile} {
       margin-block: 0;
       font-size: 32px !important;

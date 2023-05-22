@@ -1,5 +1,5 @@
+import { SiteToken } from '@lobehub/ui/styles';
 import { FooterColumn } from 'rc-footer/es/column';
-import { SiteToken } from '../styles';
 import { ApiHeaderConfig, HighlighterSyntaxTheme, IHero } from '../types';
 
 /**

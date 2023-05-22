@@ -1,8 +1,8 @@
 import { type FC } from 'react';
 
-import HeroComp from '../../components/Hero';
+import HeroComp from '@/components/Hero';
 
-import { heroActionsSel, heroDescSel, heroTitleSel, useSiteStore } from '../../store';
+import { heroActionsSel, heroDescSel, heroTitleSel, useSiteStore } from '@/store';
 
 const Hero: FC = () => {
   const title = useSiteStore(heroTitleSel);

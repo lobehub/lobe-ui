@@ -12,7 +12,7 @@ import Toc from 'dumi/theme/slots/Toc';
 // @ts-ignore
 import ApiHeader from 'dumi/theme/slots/ApiHeader';
 
-import { isApiPageSel, siteTitleSel, tocAnchorItemSel, useSiteStore } from '../../store';
+import { isApiPageSel, siteTitleSel, tocAnchorItemSel, useSiteStore } from '@/store';
 import { useStyles } from './styles';
 
 const Docs: FC = memo(() => {

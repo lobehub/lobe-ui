@@ -7,7 +7,7 @@ import { Flexbox } from 'react-layout-kit';
 // @ts-ignore
 import ContentFooter from 'dumi/theme/slots/ContentFooter';
 
-import { useSiteStore } from '../../store';
+import { useSiteStore } from '@/store';
 
 import { useStyles } from './style';
 

@@ -1,9 +1,9 @@
+import { IntersectionLoad } from '@/components/LazyLoad';
 import { createStyles } from 'antd-style';
 import { IPreviewerProps } from 'dumi/dist/client/theme-api/types';
 import Previewer from 'dumi/theme-default/builtins/Previewer';
 import { rgba } from 'polished';
 import { useMemo } from 'react';
-import { IntersectionLoad } from '../../components/LazyLoad';
 
 const useStyles = createStyles(({ css, token, prefixCls }) => {
   return {

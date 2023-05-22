@@ -7,7 +7,7 @@ import Footer from 'dumi/theme/slots/Footer';
 import Header from 'dumi/theme/slots/Header';
 import Hero from 'dumi/theme/slots/Hero';
 
-import { siteTitleSel, useSiteStore } from '../../store';
+import { siteTitleSel, useSiteStore } from '@/store';
 
 const Home: FC = memo(() => {
   const siteTitle = useSiteStore(siteTitleSel);

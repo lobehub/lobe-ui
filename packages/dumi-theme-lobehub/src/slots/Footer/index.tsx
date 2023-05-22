@@ -4,8 +4,8 @@ import { type FC } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
 import Foot, { FooterProps } from '@/components/Footer';
+import { githubSel, useSiteStore } from '@/store';
 import { IFooter } from '@/types';
-import { githubSel, useSiteStore } from '../../store';
 import { getColumns } from './columns';
 import { useStyles } from './style';
 

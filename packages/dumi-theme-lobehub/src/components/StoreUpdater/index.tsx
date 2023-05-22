@@ -1,3 +1,4 @@
+import { SiteStore, useSiteStore } from '@/store/useSiteStore';
 import { useDebounceEffect } from 'ahooks';
 import {
   useLocale,
@@ -10,7 +11,6 @@ import {
 } from 'dumi';
 import isEqual from 'fast-deep-equal';
 import React, { memo, useEffect } from 'react';
-import { SiteStore, useSiteStore } from '../../store/useSiteStore';
 
 const isBrowser = typeof window !== 'undefined';
 

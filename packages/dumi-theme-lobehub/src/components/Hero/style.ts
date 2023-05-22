@@ -30,7 +30,6 @@ export const useStyles = createStyles(({ css, responsive, token, stylish, isDark
     z-index: 10;
     color: transparent;
     margin: 0;
-    font-family: AliPuHui, ${token.fontFamily};
 
     ${responsive({
       mobile: { fontSize: 40 },
@@ -54,7 +53,6 @@ export const useStyles = createStyles(({ css, responsive, token, stylish, isDark
     top: 0;
     left: 0;
     font-size: 68px;
-    font-family: AliPuHui, ${token.fontFamily};
     font-weight: bold;
     ${responsive({
       mobile: { fontSize: 40 },

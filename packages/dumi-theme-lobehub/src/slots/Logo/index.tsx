@@ -1,9 +1,10 @@
+import { Logo as SiteLogo } from '@lobehub/ui';
 import { useResponsive } from 'antd-style';
 import { Link } from 'dumi';
 import isEqual from 'fast-deep-equal';
 import { memo, type FC } from 'react';
 
-import { useSiteStore } from '../../store/useSiteStore';
+import { useSiteStore } from '@/store/useSiteStore';
 
 import { useStyles } from './style';
 
@@ -16,10 +17,14 @@ const Logo: FC = () => {
   return (
     themeConfig && (
       <Link className={cx(styles)} to={'base' in locale ? locale.base : '/'}>
-        {!!themeConfig.logo && (
-          <img src={themeConfig.logo as string} alt={themeConfig.name} height={mobile ? 32 : 40} />
+        {themeConfig.logo ? (
+          <>
+            <img src={themeConfig.logo} height={mobile ? 32 : 36} />
+            {themeConfig.name}
+          </>
+        ) : (
+          <SiteLogo type="combine" size={mobile ? 32 : 36} extra={themeConfig.name} />
         )}
-        {themeConfig.name}
       </Link>
     )
   );
