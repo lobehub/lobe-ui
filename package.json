@@ -3,8 +3,9 @@
   "version": "1.2.0",
   "description": "ui kit for lobehub",
   "keywords": [
-    "npm",
-    "template"
+    "lobehub",
+    "ai",
+    "react"
   ],
   "homepage": "https://github.com/lobehub/lobe-ui",
   "bugs": {
