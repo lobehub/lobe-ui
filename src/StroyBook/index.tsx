@@ -1,5 +1,5 @@
 import { DraggablePanel } from '@/index';
-import { DivProps } from '@/types';
+
 import { LevaPanel, useControls, useCreateStore } from 'leva';
 import React from 'react';
 import { useStyles } from './style';

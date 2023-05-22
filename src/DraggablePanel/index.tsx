@@ -1,4 +1,3 @@
-import type { DivProps } from '@/types';
 import { useHover } from 'ahooks';
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
 import type { Enable, NumberSize, Size } from 're-resizable';

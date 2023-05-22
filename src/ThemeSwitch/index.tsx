@@ -1,5 +1,5 @@
 import { ActionIcon, Icon, type ActionIconSize } from '@/index';
-import { DivProps } from '@/types';
+
 import { Dropdown, type MenuProps } from 'antd';
 import { ThemeMode } from 'antd-style';
 import { Monitor, Moon, Sun } from 'lucide-react';
@@ -40,11 +40,7 @@ export interface ThemeSwitchProps extends DivProps {
 }
 
 const ThemeSwitch: React.FC<ThemeSwitchProps> = ({
-  size = {
-    blockSize: 34,
-    fontSize: 20,
-    strokeWidth: 1.5,
-  },
+  size = 'site',
   themeMode,
   onThemeSwitch,
   ...props

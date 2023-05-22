@@ -1,6 +1,7 @@
-import { ArrowDownOutlined, MenuOutlined } from '@ant-design/icons';
+import { ActionIcon } from '@lobehub/ui';
 import { Anchor, Collapse, ConfigProvider } from 'antd';
 import { useResponsive, useTheme } from 'antd-style';
+import { PanelTopClose, PanelTopOpen } from 'lucide-react';
 import { memo, useMemo, type FC } from 'react';
 import useControlledState from 'use-merge-value';
 
@@ -59,13 +60,25 @@ const Toc: FC<TocProps> = memo(({ items, activeKey, onChange }) => {
             bordered={false}
             ghost
             expandIconPosition={'end'}
-            expandIcon={({ isActive }) => (isActive ? <ArrowDownOutlined /> : <MenuOutlined />)}
+            expandIcon={({ isActive }) =>
+              isActive ? (
+                <ActionIcon
+                  icon={PanelTopClose}
+                  size={{ fontSize: 16, strokeWidth: 1, blockSize: 24, borderRadius: 3 }}
+                />
+              ) : (
+                <ActionIcon
+                  icon={PanelTopOpen}
+                  size={{ fontSize: 16, strokeWidth: 1, blockSize: 24, borderRadius: 3 }}
+                />
+              )
+            }
             className={styles.expand}
           >
             <Collapse.Panel
               forceRender
               key={'toc'}
-              header={!activeAnchor ? '目录' : activeAnchor.title}
+              header={!activeAnchor ? 'TOC' : activeAnchor.title}
             >
               <ConfigProvider theme={{ token: { fontSize: 14, sizeStep: 4 } }}>
                 <Anchor

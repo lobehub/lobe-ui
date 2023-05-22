@@ -1,4 +1,3 @@
-import { Loading3QuartersOutlined as Loading } from '@ant-design/icons';
 import { useThemeMode } from 'antd-style';
 import { memo, useState } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
@@ -16,7 +15,7 @@ type SyntaxHighlighterProps = Pick<
 
 const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
   ({ children, language, type = 'shiki', syntaxThemes: syntaxTheme }) => {
-    const { styles, theme } = useStyles();
+    const { styles } = useStyles();
     const { isDarkMode } = useThemeMode();
     const [loading, setLoading] = useState(false);
 
@@ -34,7 +33,9 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
         return (
           <>
             {loading ? (
-              <Prism language={language}>{children}</Prism>
+              <Center horizontal gap={8} className={styles.loading}>
+                Shiki Rendering...
+              </Center>
             ) : (
               <div
                 dangerouslySetInnerHTML={{
@@ -42,12 +43,6 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
                 }}
                 className={styles.shiki}
               />
-            )}
-            {loading && (
-              <Center horizontal gap={8} className={styles.loading}>
-                <Loading spin style={{ color: theme.colorTextTertiary }} />
-                shiki 着色器准备中...
-              </Center>
             )}
           </>
         );

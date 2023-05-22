@@ -21,10 +21,10 @@ export default defineConfig({
   base: '/',
   publicPath: '/',
   ssr: isProd ? {} : false,
-  apiParser: {},
-  resolve: {
-    entryFile: './src/index.ts',
-  },
+  // apiParser: {},
+  // resolve: {
+  //   entryFile: './src/index.ts',
+  // },
   define: {
     'process.env': process.env,
   },

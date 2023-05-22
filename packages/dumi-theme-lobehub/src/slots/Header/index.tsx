@@ -52,7 +52,7 @@ const Header: FC = () => {
             <section className={styles.right}>
               <div />
               <Flexbox
-                gap={16}
+                gap={8}
                 horizontal
                 align={'center'}
                 className="dumi-default-header-right-aside"

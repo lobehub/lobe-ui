@@ -108,7 +108,6 @@ export const useStyles = createStyles(({ css, responsive, token }, isEmpty: bool
             font-size: 16px;
             line-height: 32px;
             text-align: center;
-            border-top: 1px solid ${isEmpty ? 'transparent' : token.colorBorderSecondary};
           }
         }
 

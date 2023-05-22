@@ -1,4 +1,3 @@
-import { ImgProps } from '@/types';
 import React from 'react';
 
 const Logo3D: React.FC<ImgProps | any> = (props) => (

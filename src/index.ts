@@ -12,3 +12,4 @@ export {
 export { default as TabsNav, type TabsNavProps } from './TabsNav';
 export { default as ThemeProvider } from './ThemeProvider';
 export { default as ThemeSwitch, type ThemeSwitchProps } from './ThemeSwitch';
+export { default as Tooltip, type TooltipProps } from './Tooltip';

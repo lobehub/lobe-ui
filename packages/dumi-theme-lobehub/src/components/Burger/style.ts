@@ -1,17 +1,15 @@
 import { createStyles } from 'antd-style';
 import { rgba } from 'polished';
-import styled from 'styled-components';
-
-export const FillRect = styled.div`
-  background: ${(p) => rgba(p.theme.colorBgContainer, 0.8)};
-
-  width: 100%;
-` as any;
 
 export const useStyles = createStyles(({ token, prefixCls, cx, css }) => {
   const offset = 6;
 
   return {
+    fillRect: css`
+      border-top: 1px dashed ${token.colorBorder};
+      width: 100%;
+      flex: 1;
+    `,
     icon: cx(
       'site-burger-icon',
       css`
@@ -81,9 +79,8 @@ export const useStyles = createStyles(({ token, prefixCls, cx, css }) => {
 
       .${prefixCls}-drawer {
         &-mask {
-          background: transparent;
-          backdrop-filter: blur(7px);
-          background: ${rgba(token.colorBgBase, 0.5)};
+          background-color: ${rgba(token.colorBgLayout, 0.8)};
+          backdrop-filter: saturate(180%) blur(10px);
         }
 
         &-content-wrapper {
@@ -106,20 +103,45 @@ export const useStyles = createStyles(({ token, prefixCls, cx, css }) => {
       background: transparent;
       border-inline-end: transparent !important;
 
+      .${prefixCls}-menu-item-only-child:first-child {
+        border-top: none;
+      }
+
       > .${prefixCls}-menu-item-only-child,.${prefixCls}-menu-submenu-title {
-        background: ${rgba(token.colorBgContainer, 0.8)};
         border-radius: 0;
-        margin: 0;
+        margin: 0 !important;
         width: 100%;
+        border-top: 1px dashed ${token.colorBorder};
+
         &:active {
-          margin-inline: 4px;
-          border-radius: ${token.borderRadius}px;
+          color: ${token.colorText};
+          background-color: ${token.colorFill};
         }
       }
 
-      .${prefixCls}-menu-sub.${prefixCls}-menu-inline {
-        //background: transparent !important;
-        background: ${rgba(token.colorBgContainer, 0.2)} !important;
+      .ant-menu-item-group-title {
+        padding: 0;
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+      }
+
+      .ant-menu-item-selected {
+        margin: 0;
+        width: 100%;
+        border-radius: 0;
+        color: ${token.colorText};
+        background: ${token.colorFillSecondary};
+      }
+
+      .ant-menu-item,
+      a:before {
+        margin: 0 !important;
+        width: 100% !important;
+        border-radius: 0 !important;
       }
     `,
   };

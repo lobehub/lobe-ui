@@ -16,10 +16,9 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
-  
+
   #root {
 	  min-height: 100vh;
-	  width: 100vw;
   }
 
   @font-face {
@@ -41,7 +40,7 @@ const GlobalStyle = createGlobalStyle`
 
   /* 定义滚动槽的样式 */
   ::-webkit-scrollbar {
-    width: 6px;
+    width: 0;
     height: 6px;
     margin-right: 4px;
     background-color: transparent; // 定义滚动槽的背景色

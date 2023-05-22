@@ -12,13 +12,13 @@ export const useStyles = createStyles(({ css, token }, active) => {
 
       color: ${active ? token.colorText : token.colorTextQuaternary};
 
-      background: ${active ? token.colorFill : 'transparent'};
+      background: ${active ? token.colorFillTertiary : 'transparent'};
 
       transition: color 600ms ${token.motionEaseOut}, background-color 100ms ${token.motionEaseOut};
 
       &:hover {
         color: ${token.colorText};
-        background-color: ${token.colorFillTertiary};
+        background-color: ${active ? token.colorFillSecondary : token.colorFillTertiary};
       }
 
       &:active {

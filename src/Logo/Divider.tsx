@@ -1,4 +1,3 @@
-import { SvgProps } from '@/types';
 import React from 'react';
 
 const Divider: React.FC<SvgProps | any> = (props) => (

@@ -1,6 +1,6 @@
 import { createStyles, css, cx } from 'antd-style';
 
-const offset = 17;
+const offset = 16;
 const toggleLength = 40;
 const toggleShort = 16;
 
@@ -203,7 +203,6 @@ export const useStyle = createStyles(({ token }, prefix: string) => {
       `${prefix}-fixed`,
       css`
         overflow: hidden;
-        background: ${token.colorBgContainer};
         transition: all 0.2s ${token.motionEaseOut};
       `,
     ),

@@ -2,18 +2,11 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ css, token }) => ({
   sidebar: css`
-    grid-area: sidebar;
-    overflow: auto;
-    position: sticky;
-    top: ${token.headerHeight}px;
-    max-height: calc(100vh - ${token.headerHeight}px);
-
-    padding-top: 20px;
-    padding-bottom: 24px;
-    padding-inline: 16px;
-    border-right: 1px solid ${token.colorSplit};
-
-    > dl {
+    margin-top: ${token.headerHeight}px;
+  `,
+  sidebarInner: css`
+    padding: 16px;
+    dl {
       margin: 0;
       padding: 0;
       line-height: 1;
@@ -39,26 +32,34 @@ export const useStyles = createStyles(({ css, token }) => ({
           font-size: ${token.fontSize}px;
           line-height: ${token.lineHeight};
           text-decoration: none;
-          transition: all 0.1s;
 
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
 
           color: ${token.colorTextSecondary};
-
+          transition: color 600ms ${token.motionEaseOut},
+            background-color 100ms ${token.motionEaseOut};
           &:hover {
             color: ${token.colorText};
             background: ${token.colorFillTertiary};
           }
+          &:active {
+            color: ${token.colorText};
+            background-color: ${token.colorFill};
+          }
 
           &.active {
-            color: ${token.colorPrimaryText};
-            background: ${token.colorPrimaryBg};
+            color: ${token.colorText};
+            background-color: ${token.colorFillTertiary};
 
             &:hover {
-              color: ${token.colorPrimaryTextHover};
-              background: ${token.colorPrimaryBgHover};
+              color: ${token.colorText};
+              background: ${token.colorFillSecondary};
+            }
+            &:active {
+              color: ${token.colorText};
+              background-color: ${token.colorFill};
             }
           }
         }

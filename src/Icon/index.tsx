@@ -1,4 +1,3 @@
-import { SvgProps } from '@/types';
 import { LucideIcon } from 'lucide-react';
 import React from 'react';
 

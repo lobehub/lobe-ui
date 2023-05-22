@@ -7,22 +7,25 @@ import Footer from 'dumi/theme/slots/Footer';
 import Header from 'dumi/theme/slots/Header';
 import Hero from 'dumi/theme/slots/Hero';
 
+import { useStyles } from '@/pages/Docs/styles';
 import { siteTitleSel, useSiteStore } from '@/store';
 
 const Home: FC = memo(() => {
   const siteTitle = useSiteStore(siteTitleSel);
-
+  const { styles } = useStyles();
   return (
     <>
       <Helmet>
         <title>{siteTitle}</title>
       </Helmet>
-      <Flexbox align={'center'} gap={80}>
-        <Header />
+
+      <Header />
+      <div className={styles.spacing} />
+      <Flexbox align={'center'} gap={80} style={{ minHeight: '60vh' }}>
         <Hero />
         <Features />
-        <Footer />
       </Flexbox>
+      <Footer />
     </>
   );
 });

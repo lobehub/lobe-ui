@@ -1,11 +1,13 @@
 import { createStyles } from 'antd-style';
+import { rgba } from 'polished';
 
 export const useStyle = createStyles(({ css, responsive, token }) => ({
   header: css`
     top: 0;
-    position: sticky;
-    background-color: transparent;
-    backdrop-filter: blur(6px);
+    position: fixed;
+    width: 100%;
+    background-color: ${rgba(token.colorBgLayout, 0.5)};
+    backdrop-filter: saturate(180%) blur(10px);
     z-index: ${token.zIndexPopupBase - 50};
     border-bottom: 1px solid ${token.colorSplit};
 
@@ -13,7 +15,7 @@ export const useStyle = createStyles(({ css, responsive, token }) => ({
     align-self: stretch;
 
     ${responsive.mobile} {
-      background: ${token.colorBgContainer};
+      background-color: ${rgba(token.colorBgLayout, 0.8)};
     }
   `,
   content: css`

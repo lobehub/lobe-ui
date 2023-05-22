@@ -8,7 +8,7 @@ title: TabsNav
 
 TabsNav component
 
-<code src="./demos/index.tsx"></code>
+<code src="./demos/index.tsx" center></code>
 
 ## APIs
 

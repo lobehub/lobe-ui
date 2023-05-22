@@ -1,11 +1,10 @@
-import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
-import { Button, ConfigProvider, Tooltip } from 'antd';
-import copy from 'copy-to-clipboard';
-import { CSSProperties, FC, memo } from 'react';
-
 import { PrismSyntaxTheme } from '@/components/Highlighter/Prism';
 import { ShikiSyntaxTheme } from '@/components/Highlighter/useShiki';
 import { useCopied } from '@/hooks/useCopied';
+import { ActionIcon, Tooltip } from '@lobehub/ui';
+import copy from 'copy-to-clipboard';
+import { Copy } from 'lucide-react';
+import { CSSProperties, FC, memo } from 'react';
 import SyntaxHighlighter from './Highlighter';
 import { LanguageKeys } from './language';
 import { useStyles } from './style';
@@ -73,41 +72,23 @@ export const Highlighter: FC<HighlighterProps> = memo(
     copyable = true,
   }) => {
     const { copied, setCopied } = useCopied();
-    const { styles, theme, cx } = useStyles();
+    const { styles, cx } = useStyles();
     const container = cx(styles.container, background && styles.withBackground, className);
 
     return (
-      <div
-        // 用于标记是 markdown 中的代码块，避免和普通 code 的样式混淆
-        data-code-type="highlighter"
-        className={container}
-        style={style}
-      >
+      <div data-code-type="highlighter" className={container} style={style}>
         {copyable && (
-          <ConfigProvider theme={{ token: { colorBgContainer: theme.colorBgElevated } }}>
-            <Tooltip
-              placement={'left'}
-              arrow={false}
-              title={
-                copied ? (
-                  <>
-                    <CheckOutlined style={{ color: theme.colorSuccess }} /> 复制成功
-                  </>
-                ) : (
-                  '复制'
-                )
-              }
-            >
-              <Button
-                icon={<CopyOutlined />}
-                className={styles.button}
-                onClick={() => {
-                  copy(children);
-                  setCopied();
-                }}
-              />
-            </Tooltip>
-          </ConfigProvider>
+          <Tooltip placement={'left'} arrow={false} title={copied ? '✅ Success' : 'Copy'}>
+            <ActionIcon
+              size="site"
+              icon={Copy}
+              className={styles.button}
+              onClick={() => {
+                copy(children);
+                setCopied();
+              }}
+            />
+          </Tooltip>
         )}
 
         {language && <div className={styles.lang}>{language.toLowerCase()}</div>}

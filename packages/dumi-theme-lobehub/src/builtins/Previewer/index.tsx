@@ -12,7 +12,7 @@ const useStyles = createStyles(({ css, token, prefixCls }, { center, nopadding }
         border-color: ${token.colorBorderSecondary};
         display: flex;
         flex-direction: column;
-
+        overflow: hidden;
         &-demo {
           flex: 1;
           ${nopadding &&
@@ -25,6 +25,7 @@ const useStyles = createStyles(({ css, token, prefixCls }, { center, nopadding }
             align-items: center;
             justify-content: center;
           `}
+
           &[data-iframe]::before {
             background: ${token.colorFillContent};
           }

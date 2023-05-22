@@ -1,4 +1,3 @@
-import { DivProps } from '@/types';
 import { useTheme } from 'antd-style';
 import React from 'react';
 import Divider from './Divider';

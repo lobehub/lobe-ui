@@ -9,8 +9,8 @@ export const lightColorPalettes: ColorPalettes = lightMode.palettes;
 export const lightTheme: ThemeConfig = {
   token: {
     colorTextLightSolid: '#ffffff',
-    colorBgLayout: '#ffffff',
-    colorBgContainer: '#fafafa',
+    colorBgLayout: '#fafafa',
+    colorBgContainer: '#ffffff',
     colorBgElevated: '#f2f2f2',
     colorBgSpotlight: '#999999',
     colorBorder: '#eaeaea',
@@ -20,6 +20,9 @@ export const lightTheme: ThemeConfig = {
     colorTextTertiary: '#666666',
     colorTextQuaternary: '#888888',
     colorPrimary: '#000000',
+    colorFill: 'rgba(0,0,0,0.1)',
+    colorFillSecondary: 'rgba(0,0,0,0.075)',
+    colorFillTertiary: 'rgba(0,0,0,0.05)',
     colorFillQuaternary: 'rgba(0,0,0,0)',
     borderRadius: 5,
     borderRadiusXS: 3,

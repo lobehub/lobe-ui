@@ -38,40 +38,40 @@ const Docs: FC = memo(() => {
         )}
       </Helmet>
       <Header />
-
-      {hideToc ? null : <Toc />}
-
-      {mobile || hideSidebar ? null : <Sidebar />}
-
-      {isApiPage ? (
-        <Flexbox style={{ gridArea: 'title', paddingBlock: mobile ? 24 : undefined }}>
-          <Center>
-            <Flexbox style={{ maxWidth: theme.contentMaxWidth, width: '100%' }}>
-              <Flexbox style={{ paddingBlock: 0, paddingInline: mobile ? 16 : 48 }}>
-                <ApiHeader />
+      <div className={styles.view}>
+        {mobile || hideSidebar ? null : <Sidebar />}
+        <div className={styles.right}>
+          <div className={styles.spacing} />
+          {hideToc ? null : <Toc />}
+          {isApiPage ? (
+            <Flexbox style={{ gridArea: 'title', paddingBlock: mobile ? 24 : undefined }}>
+              <Center>
+                <Flexbox style={{ maxWidth: theme.contentMaxWidth, width: '100%' }}>
+                  <Flexbox style={{ paddingBlock: 0, paddingInline: mobile ? 16 : 48 }}>
+                    <ApiHeader />
+                  </Flexbox>
+                </Flexbox>
+              </Center>
+            </Flexbox>
+          ) : null}
+          <Flexbox
+            style={{
+              zIndex: 10,
+              margin: mobile ? 0 : 24,
+              marginBottom: mobile ? 0 : 48,
+            }}
+          >
+            <Center width={'100%'}>
+              <Flexbox className={styles.content}>
+                <Flexbox horizontal>
+                  <Content>{outlet}</Content>
+                </Flexbox>
               </Flexbox>
-            </Flexbox>
-          </Center>
-        </Flexbox>
-      ) : null}
-
-      <Flexbox
-        style={{
-          zIndex: 10,
-          gridArea: 'main',
-          margin: mobile ? 0 : 24,
-          marginBottom: mobile ? 0 : 48,
-        }}
-      >
-        <Center width={'100%'}>
-          <Flexbox className={styles.content}>
-            <Flexbox horizontal>
-              <Content>{outlet}</Content>
-            </Flexbox>
+            </Center>
           </Flexbox>
-        </Center>
-      </Flexbox>
-      <Footer />
+          <Footer />
+        </div>
+      </div>
     </div>
   );
 });

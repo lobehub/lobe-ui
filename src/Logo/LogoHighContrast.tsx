@@ -1,4 +1,3 @@
-import { SvgProps } from '@/types';
 import React from 'react';
 
 const LogoHighContrast: React.FC<SvgProps | any> = (props) => (

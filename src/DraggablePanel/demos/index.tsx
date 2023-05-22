@@ -33,8 +33,14 @@ export default () => {
         value: 'left',
         options: ['left', 'right', 'top', 'bottom'],
       },
-      minWidth: 0,
-      minHeight: 0,
+      minWidth: {
+        value: 0,
+        step: 1,
+      },
+      minHeight: {
+        value: 0,
+        step: 1,
+      },
       expandable: true,
       defaultExpand: true,
       showHandlerWhenUnexpand: false,

@@ -6,15 +6,15 @@ export const useStyles = createStyles(({ token, stylish, prefixCls, responsive, 
   return {
     container: css`
       grid-area: toc;
-      position: sticky;
-      top: 100px;
+      position: fixed;
+      top: ${token.headerHeight + 64}px;
+      right: 0;
       width: ${token.tocWidth}px;
       margin-inline-end: 24px;
       max-height: 80vh;
       overflow: auto;
-      margin-top: 48px;
       z-index: 10;
-      border-radius: 8px;
+      border-radius: 3px;
 
       ${responsive.mobile} {
         z-index: 300;
@@ -34,24 +34,24 @@ export const useStyles = createStyles(({ token, stylish, prefixCls, responsive, 
       }
     `,
     mobileCtn: css`
-      position: sticky;
-      top: ${token.headerHeight + 1}px;
-
+      position: fixed;
+      top: ${token.headerHeight}px;
       height: ${fixHeight}px;
       width: 100%;
       z-index: 200;
-      background: transparent;
-      background: ${rgba(token.colorBgContainer, 0.8)};
+      .ant-collapse-expand-icon {
+        color: ${token.colorTextQuaternary};
+      }
     `,
     expand: css`
-      backdrop-filter: blur(6px);
+      background-color: ${rgba(token.colorBgLayout, 0.8)};
+      backdrop-filter: saturate(180%) blur(10px);
       border-radius: 0;
       border-bottom: 1px solid ${token.colorSplit};
 
       box-shadow: ${token.boxShadowSecondary};
       width: 100%;
       z-index: 201;
-      background: ${rgba(token.colorBgContainer, 0.8)};
 
       .${prefixCls}-collapse-header {
         padding: 8px 16px !important;

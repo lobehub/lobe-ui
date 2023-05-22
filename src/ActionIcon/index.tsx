@@ -1,5 +1,5 @@
 import { Icon } from '@/index';
-import { DivProps } from '@/types';
+
 import { LucideIcon } from 'lucide-react';
 import React from 'react';
 import { useStyles } from './style';
@@ -8,6 +8,7 @@ export type ActionIconSize =
   | 'large'
   | 'normal'
   | 'small'
+  | 'site'
   | {
       blockSize?: number;
       fontSize?: number;
@@ -57,6 +58,10 @@ const ActionIcon: React.FC<ActionIconProps> = ({
       blockSize = 28;
       borderRadius = 5;
       break;
+    case 'site':
+      blockSize = 34;
+      borderRadius = 5;
+      break;
     default:
       blockSize = size?.blockSize || 36;
       borderRadius = size?.borderRadius || 5;
@@ -68,7 +73,7 @@ const ActionIcon: React.FC<ActionIconProps> = ({
       style={{ width: blockSize, height: blockSize, borderRadius, ...style }}
       {...props}
     >
-      <Icon size={size} icon={icon} />
+      <Icon size={size === 'site' ? 'small' : size} icon={icon} />
     </div>
   );
 };

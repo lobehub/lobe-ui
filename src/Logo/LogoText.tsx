@@ -1,4 +1,3 @@
-import { SvgProps } from '@/types';
 import React from 'react';
 
 const LogoText: React.FC<SvgProps | any> = (props) => (

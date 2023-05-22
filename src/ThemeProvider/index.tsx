@@ -25,7 +25,6 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ token, children, themeMod
   const getCustomToken = useCallback(
     (params: CustomTokenParams) => {
       const base = createCustomToken(params);
-
       if (token) {
         return { ...base, ...token };
       } else {
