@@ -77,7 +77,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^17",
-    "@testing-library/react": "^13",
+    "@testing-library/react": "^14",
     "@types/chroma-js": "^2",
     "@types/lodash": "^4",
     "@types/react": "^18",
