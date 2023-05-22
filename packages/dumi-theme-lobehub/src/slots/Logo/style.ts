@@ -13,9 +13,5 @@ export const useStyles = createStyles(
     ${responsive.mobile} {
       font-size: 18px;
     }
-
-    img {
-      margin-inline-end: 10px;
-    }
   `,
 );

@@ -44,7 +44,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ token, children, themeMod
         customToken={getCustomToken}
       >
         <GlobalStyle />
-        <App>{children}</App>
+        <App style={{ minHeight: 'inherit', width: 'inherit' }}>{children}</App>
       </AntdThemeProvider>
     </StyleProvider>
   );

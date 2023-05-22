@@ -1,12 +1,11 @@
 ---
 nav: Components
 group: Layout
-title: SideNav
+title: StoryBook
+description: Component showcase with leva
 ---
 
 ## Default
-
-SideNav component
 
 <code src="./demos/index.tsx" nopadding></code>
 

@@ -1,8 +1,8 @@
 ---
 nav: Components
 group: Common
-title: ActionIcon
-description: Button container for Lucide icons
+title: Icon
+description: Semantic vector graphics
 ---
 
 ## Default

@@ -10,16 +10,13 @@ export default () => {
         min: 16,
         max: 240,
       },
-      type: {
-        value: '3d',
-        options: ['3d', 'flat', 'high-contrast', 'text', 'combine'],
-      },
+      extra: 'UI',
     },
     { store },
   );
   return (
     <StroyBook levaStore={store}>
-      <Logo {...control} />
+      <Logo type="combine" {...control} />
     </StroyBook>
   );
 };

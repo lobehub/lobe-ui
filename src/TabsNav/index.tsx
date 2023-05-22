@@ -1,47 +1,25 @@
 import { Tabs, TabsProps } from 'antd';
-import { createStyles } from 'antd-style';
 import React from 'react';
+import { useStyles } from './style';
 
-const useStyles = createStyles(({ css, token, prefixCls }) => {
-  const prefix = `.${prefixCls}-tabs`;
-
-  const marginHoriz = 16;
-  const paddingVertical = 6;
-
-  return {
-    tabs: css`
-      ${prefix}-tab + ${prefix}-tab {
-        margin: ${marginHoriz}px 4px !important;
-        padding: 0 12px !important;
-      }
-
-      ${prefix}-tab {
-        color: ${token.colorTextSecondary};
-        transition: background-color 100ms ease-out;
-
-        &:first-child {
-          margin: ${marginHoriz}px 4px ${marginHoriz}px 0;
-          padding: ${paddingVertical}px 12px !important;
-        }
-
-        &:hover {
-          color: ${token.colorText} !important;
-          background: ${token.colorFillTertiary};
-          border-radius: ${token.borderRadius}px;
-        }
-      }
-
-      ${prefix}-nav {
-        margin-bottom: 0;
-        &::before {
-          display: none;
-        }
-      }
-    `,
-  };
-});
-
-export type TabsNavProps = TabsProps;
+export interface TabsNavProps {
+  /**
+   * @description Additional className to apply to the component
+   */
+  className?: string;
+  /**
+   * @description Callback function that is triggered when a tab is changed
+   */
+  onChange?: (activeKey: string) => void;
+  /**
+   * @description An array of objects representing the tabs to be rendered
+   */
+  items?: TabsProps['items'];
+  /**
+   * @description The key of the active tab
+   */
+  activeKey?: TabsProps['activeKey'];
+}
 
 const TabsNav: React.FC<TabsNavProps> = ({ className, ...props }) => {
   const { styles, cx } = useStyles();

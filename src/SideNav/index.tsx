@@ -20,8 +20,17 @@ const Layout = styled.div`
 `;
 
 export interface SideNavProps extends DivProps {
+  /**
+   * @description Avatar to be displayed at the top of the sidenav
+   */
   avatar?: React.ReactNode;
+  /**
+   * @description Actions to be displayed below the avatar
+   */
   topActions?: React.ReactNode;
+  /**
+   * @description Actions to be displayed at the bottom of the sidenav
+   */
   bottomActions: React.ReactNode;
 }
 

@@ -5,7 +5,7 @@ import Previewer from 'dumi/theme-default/builtins/Previewer';
 import { rgba } from 'polished';
 import { useMemo } from 'react';
 
-const useStyles = createStyles(({ css, token, prefixCls }) => {
+const useStyles = createStyles(({ css, token, prefixCls }, { center, nopadding }: any) => {
   return {
     container: css`
       .dumi-default-previewer {
@@ -15,7 +15,16 @@ const useStyles = createStyles(({ css, token, prefixCls }) => {
 
         &-demo {
           flex: 1;
-
+          ${nopadding &&
+          css`
+            padding: 0;
+          `}
+          ${center &&
+          css`
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          `}
           &[data-iframe]::before {
             background: ${token.colorFillContent};
           }
@@ -119,8 +128,13 @@ const useStyles = createStyles(({ css, token, prefixCls }) => {
   };
 });
 
+export interface PreviewerProps extends IPreviewerProps {
+  center?: boolean;
+  nopadding?: boolean;
+}
+
 export default (props: IPreviewerProps) => {
-  const { styles, cx } = useStyles();
+  const { styles, cx } = useStyles(props);
 
   const height = useMemo(() => {
     if (typeof props.iframe === 'number') {

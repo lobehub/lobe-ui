@@ -1,62 +1,73 @@
 import { DivProps } from '@/types';
 import { useTheme } from 'antd-style';
 import React from 'react';
-import styled from 'styled-components';
 import Divider from './Divider';
 import Logo3D from './Logo3D';
 import LogoFlat from './LogoFlat';
 import LogoHighContrast from './LogoHighContrast';
 import LogoText from './LogoText';
-
-const View = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const SubTitle = styled.div`
-  white-space: nowrap;
-  font-weight: 200;
-`;
+import { useStyles } from './style';
 
 export interface LogoProps extends DivProps {
+  /**
+   * @description Type of the logo to be rendered
+   * @default '3d'
+   */
   type?: '3d' | 'flat' | 'high-contrast' | 'text' | 'combine';
+  /**
+   * @description Size of the logo in pixels
+   * @default 32
+   */
   size?: number;
+  /**
+   * @description Additional React Node to be rendered next to the logo
+   */
   extra?: React.ReactNode;
 }
 
-const Logo: React.FC<LogoProps> = ({ type = '3d', size = 32, style, extra, ...props }) => {
+const Logo: React.FC<LogoProps> = ({
+  type = '3d',
+  size = 32,
+  style,
+  extra,
+  className,
+  ...props
+}) => {
   const theme = useTheme();
+  const { styles, cx } = useStyles();
   let logoComponent: React.ReactNode;
   switch (type) {
     case '3d':
-      logoComponent = <Logo3D style={{ height: size, width: size, ...style }} {...props} />;
+      return <Logo3D style={{ height: size, width: size, ...style }} {...props} />;
     case 'flat':
-      logoComponent = <LogoFlat style={{ height: size, width: size, ...style }} {...props} />;
+      return <LogoFlat style={{ height: size, width: size, ...style }} {...props} />;
     case 'high-contrast':
-      logoComponent = (
-        <LogoHighContrast style={{ height: size, width: size, ...style }} {...props} />
-      );
+      return <LogoHighContrast style={{ height: size, width: size, ...style }} {...props} />;
     case 'text':
-      logoComponent = <LogoText style={{ height: size, width: 'auto', ...style }} {...props} />;
+      return <LogoText style={{ height: size, width: 'auto', ...style }} {...props} />;
     case 'combine':
       logoComponent = (
-        <View style={style} {...props}>
+        <>
           <Logo3D style={{ height: size, width: size }} />
-          <LogoText style={{ height: size, width: 'auto' }} />
-        </View>
+          <LogoText style={{ marginLeft: Math.round(size / 4), height: size, width: 'auto' }} />
+        </>
       );
   }
 
   const extraSize = Math.round((size / 3) * 2);
 
-  return extra ? (
-    <View>
+  return (
+    <div className={cx(styles.flexCenter, className)} style={style} {...props}>
       {logoComponent}
-      <Divider style={{ height: extraSize, width: extraSize, color: theme.colorBorder }} />
-      <SubTitle style={{ fontSize: extraSize }}>{extra}</SubTitle>
-    </View>
-  ) : (
-    logoComponent
+      {extra && (
+        <>
+          <Divider style={{ height: extraSize, width: extraSize, color: theme.colorBorder }} />
+          <div className={styles.extraTitle} style={{ fontSize: extraSize }}>
+            {extra}
+          </div>
+        </>
+      )}
+    </div>
   );
 };
 

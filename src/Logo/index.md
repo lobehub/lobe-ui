@@ -2,12 +2,17 @@
 nav: Components
 group: Common
 title: Logo
+description: LobeHub logos
 ---
 
-## Usage
+## Default
 
-Logo component
+<code src="./demos/index.tsx" nopadding></code>
 
-<code src="./demos/index.tsx"></code>
+## Extra text
+
+<code src="./demos/ExtraText.tsx" nopadding></code>
+
+## APIs
 
 <API></API>

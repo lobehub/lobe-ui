@@ -4,10 +4,12 @@ group: Layout
 title: TabsNav
 ---
 
-## Usage
+## Default
 
 TabsNav component
 
 <code src="./demos/index.tsx"></code>
+
+## APIs
 
 <API></API>

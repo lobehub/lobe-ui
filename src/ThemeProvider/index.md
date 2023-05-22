@@ -4,8 +4,10 @@ group: Theme
 title: ThemeProvider
 ---
 
-## Usage
+## Default
 
 LobeHub ThemeProvider
+
+## APIs
 
 <API></API>

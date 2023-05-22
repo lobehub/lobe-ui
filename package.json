@@ -65,6 +65,7 @@
     "antd-style": "^3",
     "chroma-js": "^2",
     "copy-to-clipboard": "^3",
+    "leva": "^0.9.34",
     "lodash": "^4",
     "lucide-react": "latest",
     "polished": "^4",

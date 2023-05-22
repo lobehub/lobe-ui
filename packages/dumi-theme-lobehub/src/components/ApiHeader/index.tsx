@@ -6,7 +6,7 @@ import { Flexbox } from 'react-layout-kit';
 
 import Code from '../CodeSnippet';
 
-import { ApiHeaderProps } from '@/src';
+import { ApiHeaderProps } from '@/index';
 import { useStyles } from './style';
 
 /**
@@ -95,7 +95,7 @@ export const ApiHeader: FC<ApiTitleProps> = memo(
               type={'secondary'}
               style={{ display: 'flex', alignItems: 'center' }}
             >
-              引入方法
+              Snippet
             </Typography.Text>
             <Code>{importStr}</Code>
           </Flexbox>

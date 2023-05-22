@@ -4,34 +4,10 @@ group: Layout
 title: DraggablePanel
 ---
 
-## Usage
+## Default
 
-DraggablePanel component
+<code src="./demos/index.tsx" noPadding></code>
 
-### Mode
+## APIs
 
-**Fixed**
-
-<code src="./demos/Left.tsx"></code>
-
-**Float**
-
-<code src="./demos/Float.tsx"></code>
-
-**Pin**
-
-<code src="./demos/Pin.tsx"></code>
-
-### Positon
-
-**Right**
-
-<code src="./demos/Right.tsx"></code>
-
-**Top**
-
-<code src="./demos/Top.tsx"></code>
-
-**Bottom**
-
-<code src="./demos/Bottom.tsx"></code>
+<API></API>

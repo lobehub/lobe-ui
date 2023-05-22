@@ -1,5 +1,4 @@
-import { ActionIcon, SideNav } from '@lobehub/ui';
-import { Avatar } from 'antd';
+import { ActionIcon, Logo, SideNav } from '@lobehub/ui';
 import { Album, MessageSquare, Settings2 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -7,12 +6,7 @@ export default () => {
   const [tab, setTab] = useState<string>('chat');
   return (
     <SideNav
-      avatar={
-        <Avatar
-          size={40}
-          src="https://raw.githubusercontent.com/lobehub/.github/main/profile/Logo.webp"
-        />
-      }
+      avatar={<Logo size={40} />}
       topActions={
         <>
           <ActionIcon

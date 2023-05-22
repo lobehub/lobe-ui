@@ -1,93 +1,75 @@
+import { Icon } from '@/index';
 import { DivProps } from '@/types';
 import { LucideIcon } from 'lucide-react';
 import React from 'react';
-import styled from 'styled-components';
+import { useStyles } from './style';
 
-const Block = styled.div<{ active?: boolean }>`
-  cursor: pointer;
-
-  display: flex;
-  flex: none;
-  align-items: center;
-  justify-content: center;
-
-  color: ${({ active, theme }) => (active ? theme.colorText : theme.colorTextQuaternary)};
-
-  background: ${({ active, theme }) => (active ? theme.colorFill : 'transparent')};
-
-  transition: all 0.2s ${({ theme }) => theme.motionEaseOut};
-
-  &:hover {
-    background: ${({ theme }) => theme.colorFillTertiary};
-  }
-
-  &:active {
-    color: ${({ theme }) => theme.colorText};
-    background: ${({ theme }) => theme.colorFill};
-  }
-`;
+export type ActionIconSize =
+  | 'large'
+  | 'normal'
+  | 'small'
+  | {
+      blockSize?: number;
+      fontSize?: number;
+      strokeWidth?: number;
+      borderRadius?: number;
+    };
 
 export interface ActionIconProps extends DivProps {
+  /**
+   * @description Whether the icon is active or not
+   * @default false
+   */
   active?: boolean;
-  size?:
-    | 'large'
-    | 'normal'
-    | 'small'
-    | {
-        blockSize: number;
-        fontSize: number;
-        strokeWidth: number;
-        borderRadius: number;
-      };
+  /**
+   * @description Size of the icon
+   * @default 'normal'
+   */
+  size?: ActionIconSize;
+  /**
+   * @description The icon element to be rendered
+   * @type LucideIcon
+   */
   icon: LucideIcon;
 }
 
 const ActionIcon: React.FC<ActionIconProps> = ({
+  className,
   active,
   icon,
   size = 'normal',
   style,
   ...props
 }) => {
+  const { styles, cx } = useStyles(active);
   let blockSize: number;
-  let fontSize: number;
-  let strokeWidth: number;
   let borderRadius: number;
-  const Icon: LucideIcon = icon;
   switch (size) {
     case 'large':
       blockSize = 44;
-      fontSize = 24;
-      strokeWidth = 2;
       borderRadius = 8;
       break;
     case 'normal':
       blockSize = 36;
-      fontSize = 24;
-      strokeWidth = 2;
       borderRadius = 5;
       break;
     case 'small':
       blockSize = 28;
-      fontSize = 20;
-      strokeWidth = 1.5;
       borderRadius = 5;
       break;
     default:
       blockSize = size?.blockSize || 36;
-      fontSize = size?.fontSize || 24;
-      strokeWidth = size?.strokeWidth || 2;
       borderRadius = size?.borderRadius || 5;
       break;
   }
   return (
-    <Block
-      active={active}
+    <div
+      className={cx(styles.block, className)}
       style={{ width: blockSize, height: blockSize, borderRadius, ...style }}
       {...props}
     >
-      <Icon size={fontSize} strokeWidth={strokeWidth} />
-    </Block>
+      <Icon size={size} icon={icon} />
+    </div>
   );
 };
 
