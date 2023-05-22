@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.2.0](https://github.com/lobehub/lobe-ui/compare/v1.1.0...v1.2.0) (2023-05-22)
+
+### ✨ 新特性
+
+- add StoryBook mode ([3785b6d](https://github.com/lobehub/lobe-ui/commit/3785b6d))
+
 # [1.1.0](https://github.com/lobehub/lobe-ui/compare/v1.0.0...v1.1.0) (2023-05-21)
 
 ### ✨ 新特性
