@@ -65,6 +65,7 @@
   "dependencies": {
     "@ant-design/icons": "^5",
     "@babel/runtime": "^7",
+    "@floating-ui/react": "^0.24",
     "ahooks": "^3",
     "antd-style": "^3",
     "chroma-js": "^2",
