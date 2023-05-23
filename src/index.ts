@@ -16,6 +16,7 @@ export { default as List } from './List';
 export { default as Logo, type LogoProps } from './Logo';
 export { default as Markdown, type MarkdownProps } from './Markdown';
 export { default as MessageInput, type MessageInputProps } from './MessageInput';
+export { default as MessageModal, type MessageModalProps } from './MessageModal';
 export { default as SearchBar, type SearchBarProps } from './SearchBar';
 export { default as SideNav, type SideNavProps } from './SideNav';
 export { default as Snippet, type SnippetProps } from './Snippet';
