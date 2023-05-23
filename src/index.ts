@@ -1,4 +1,5 @@
 export { default as ActionIcon, type ActionIconProps, type ActionIconSize } from './ActionIcon';
+export { default as CopyButton, type CopyButtonProps } from './CopyButton';
 export { default as DraggablePanel, type DraggablePanelProps } from './DraggablePanel';
 export { default as Highlighter, type HighlighterProps } from './Highlighter';
 export { default as Icon, type IconProps, type IconSize } from './Icon';

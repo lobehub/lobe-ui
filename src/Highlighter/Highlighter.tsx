@@ -34,9 +34,12 @@ const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
 
     loading: css`
       position: absolute;
-      top: 8px;
-      right: 12px;
+      top: 0;
+      right: 0;
       color: ${token.colorTextTertiary};
+      padding: 4px 8px;
+      backdrop-filter: saturate(180%) blur(10px);
+      border-radius: ${token.borderRadiusSM};
     `,
   };
 });
@@ -70,7 +73,7 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
         {isLoading && (
           <Center horizontal gap={8} className={styles.loading}>
             <Loading spin style={{ color: theme.colorTextTertiary }} />
-            shiki 着色器准备中...
+            shiki rendering...
           </Center>
         )}
       </>

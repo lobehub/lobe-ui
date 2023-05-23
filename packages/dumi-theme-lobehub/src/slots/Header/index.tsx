@@ -1,10 +1,10 @@
 import { memo, type FC } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import LangSwitch from 'dumi/theme/slots/LangSwitch';
-import Logo from 'dumi/theme/slots/Logo';
-import Navbar from 'dumi/theme/slots/Navbar';
-import SearchBar from 'dumi/theme/slots/SearchBar';
+import LangSwitch from '@/slots/LangSwitch';
+import Logo from '@/slots/Logo';
+import Navbar from '@/slots/Navbar';
+import SearchBar from '@/slots/SearchBar';
 
 import Burger from '@/components/Burger';
 import GithubButton from '@/components/GithubButton';

@@ -1,13 +1,10 @@
+import { useCopied } from '@/hooks/useCopied';
 import { CheckOutlined } from '@ant-design/icons';
+import { Highlighter } from '@lobehub/ui';
 import { Tooltip } from 'antd';
 import { useResponsive } from 'antd-style';
 import copy from 'copy-to-clipboard';
 import { FC } from 'react';
-
-import { Highlighter } from '../Highlighter';
-
-import { useCopied } from '@/hooks/useCopied';
-import { vs, vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import { useStyles } from './style';
 
 const CodeSnippet: FC<{ children: string }> = ({ children }) => {
@@ -35,18 +32,7 @@ const CodeSnippet: FC<{ children: string }> = ({ children }) => {
           setCopied();
         }}
       >
-        <Highlighter
-          background={false}
-          type={'prism'}
-          copyable={false}
-          syntaxThemes={{
-            prism: {
-              dark: vscDarkPlus,
-              light: vs,
-            },
-          }}
-          language={'js'}
-        >
+        <Highlighter showLanguage={false} background={false} language={'tsx'} copyable={false}>
           {children}
         </Highlighter>
       </div>

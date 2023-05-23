@@ -1,34 +1,36 @@
-import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
-import { Button, ConfigProvider, Tooltip, TooltipProps } from 'antd';
-import { useTheme } from 'antd-style';
-import { ButtonSize, ButtonType } from 'antd/es/button';
+import { ActionIcon, ActionIconSize, Tooltip, TooltipProps } from '@/index';
+
 import copy from 'copy-to-clipboard';
+import { Copy } from 'lucide-react';
 import { ReactNode } from 'react';
 
 import { useCopied } from '@/hooks/useCopied';
 
-/**
- * @title 复制按钮属性
- */
-interface CopyButtonProps {
+export interface CopyButtonProps extends DivProps {
   /**
-   * @title 复制的内容
+   * @description The text content to be copied
    */
   content: string;
   /**
-   * @title 自定义类名
+   * @description The size of the icon
+   * @enum ['large', 'normal', 'small', 'site']
+   * @default 'site'
+   */
+  size?: ActionIconSize;
+  /**
+   * @description Additional class name
    */
   className?: string;
   /**
-   * @title Tooltip 提示框位置
+   * @description The placement of the tooltip
    * @enum ['top', 'left', 'right', 'bottom', 'topLeft', 'topRight', 'bottomLeft', 'bottomRight', 'leftTop', 'leftBottom', 'rightTop', 'rightBottom']
-   * @enumNames ['上', '左', '右', '下', '左上', '右上', '左下', '右下', '左上', '左下', '右上', '右下']
-   * @default 'top'
+   * @default 'right'
    */
   placement?: TooltipProps['placement'];
-  type?: ButtonType;
-  size?: ButtonSize;
-  children?: ReactNode;
+  /**
+   * @description A function that returns the children to be rendered
+
+   */
   render?: (props: { handleCopy: () => void }) => ReactNode;
 }
 
@@ -36,13 +38,11 @@ const CopyButton = ({
   content,
   className,
   placement = 'right',
-  type,
-  size,
+  size = 'site',
   render,
+  ...props
 }: CopyButtonProps) => {
   const { copied, setCopied } = useCopied();
-
-  const theme = useTheme();
 
   const handleCopy = () => {
     copy(content);
@@ -52,10 +52,10 @@ const CopyButton = ({
   const children = render ? (
     render({ handleCopy })
   ) : (
-    <Button
-      icon={<CopyOutlined />}
+    <ActionIcon
+      {...props}
+      icon={Copy}
       className={className}
-      type={type}
       size={size}
       onClick={() => {
         copy(content);
@@ -65,22 +65,9 @@ const CopyButton = ({
   );
 
   return (
-    <ConfigProvider theme={{ token: { colorBgContainer: theme.colorBgElevated } }}>
-      <Tooltip
-        placement={placement}
-        title={
-          copied ? (
-            <>
-              <CheckOutlined style={{ color: theme.colorSuccess }} /> 复制成功
-            </>
-          ) : (
-            '复制'
-          )
-        }
-      >
-        {children}
-      </Tooltip>
-    </ConfigProvider>
+    <Tooltip arrow={false} placement={placement} title={copied ? <>✅ Success</> : 'Copy'}>
+      {children}
+    </Tooltip>
   );
 };
 

@@ -1,5 +1,5 @@
 import { DraggablePanel } from '@/index';
-
+import { useResponsive } from 'antd-style';
 import { LevaPanel, useControls, useCreateStore } from 'leva';
 import React from 'react';
 import { useStyles } from './style';
@@ -24,11 +24,12 @@ export const StroyBook: React.FC<StroyBookProps> = ({
   children,
   ...props
 }) => {
-  const { styles, cx } = useStyles(noPadding);
+  const { mobile } = useResponsive();
+  const { styles, cx } = useStyles({ noPadding: Boolean(noPadding), mobile: Boolean(mobile) });
   return (
     <div className={cx(styles.editor, className)} {...props}>
       <div className={styles.left}>{children}</div>
-      <DraggablePanel className={styles.right} placement="right">
+      <DraggablePanel className={styles.right} placement={mobile ? 'bottom' : 'right'}>
         <LevaPanel fill store={levaStore} titleBar={false} flat />{' '}
       </DraggablePanel>
     </div>

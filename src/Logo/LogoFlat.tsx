@@ -1,6 +1,6 @@
-import React from 'react';
+import { memo } from 'react';
 
-const LogoFlat: React.FC<SvgProps | any> = (props) => (
+const LogoFlat = memo<SvgProps | any>(({ ...props }) => (
   <svg fill="none" viewBox="0 0 320 320" {...props}>
     <path
       fill="#FFB02E"
@@ -72,6 +72,6 @@ const LogoFlat: React.FC<SvgProps | any> = (props) => (
     />
     <circle cx="205.5" cy="106.516" r="13.5" fill="#0C74FF" />
   </svg>
-);
+));
 
-export default React.memo(LogoFlat);
+export default LogoFlat;

@@ -15,7 +15,7 @@ export const useStyles = createStyles(({ css, token }, active) => {
       background: ${active ? token.colorFillTertiary : 'transparent'};
 
       transition: color 600ms ${token.motionEaseOut}, background-color 100ms ${token.motionEaseOut};
-
+      backdrop-filter: saturate(180%) blur(10px);
       &:hover {
         color: ${token.colorText};
         background-color: ${active ? token.colorFillSecondary : token.colorFillTertiary};
