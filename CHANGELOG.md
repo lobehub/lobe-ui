@@ -1,5 +1,13 @@
 # Changelog
 
+# [1.4.0](https://github.com/lobehub/lobe-ui/compare/v1.3.0...v1.4.0) (2023-05-23)
+
+### ✨ Features
+
+- add Avatar、ListItem components ([a4cc946](https://github.com/lobehub/lobe-ui/commit/a4cc946))
+- add classNames prop to DraggablePanel ([2dcd23a](https://github.com/lobehub/lobe-ui/commit/2dcd23a))
+- add ContextMenu ([e3498d7](https://github.com/lobehub/lobe-ui/commit/e3498d7))
+
 # [1.3.0](https://github.com/lobehub/lobe-ui/compare/v1.2.0...v1.3.0) (2023-05-23)
 
 ### ✨ Features
