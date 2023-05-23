@@ -1,6 +1,8 @@
-import { CopyButton, SyntaxHighlighter } from '@/index';
-
 import { memo } from 'react';
+
+import { DivProps } from '@/types';
+import CopyButton from '../CopyButton';
+import { SyntaxHighlighter } from '../Highlighter';
 import { useStyles } from './style';
 
 export interface SnippetProps extends DivProps {

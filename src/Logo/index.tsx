@@ -1,4 +1,6 @@
+import { DivProps } from '@/types';
 import { useTheme } from 'antd-style';
+
 import { memo } from 'react';
 import Divider from './Divider';
 import Logo3D from './Logo3D';

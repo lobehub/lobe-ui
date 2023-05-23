@@ -1,3 +1,4 @@
+import { DivProps } from '@/types';
 import { Space } from 'antd';
 import { memo, ReactNode } from 'react';
 import { useStyles } from './style';

@@ -6,9 +6,12 @@ declare module 'styled-components' {
   export interface DefaultTheme extends AntdStyleTheme {}
 }
 
-declare global {
-  type DivProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+export type DivProps = React.DetailedHTMLProps<
+  React.HTMLAttributes<HTMLDivElement>,
+  HTMLDivElement
+>;
 
+declare global {
   type SvgProps = React.DetailedHTMLProps<React.HTMLAttributes<SVGSVGElement>, SVGSVGElement>;
 
   type ImgProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLImageElement>, HTMLImageElement>;

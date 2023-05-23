@@ -6,6 +6,8 @@ import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { Center } from 'react-layout-kit';
 import type { Props as RndProps } from 'react-rnd';
 import useControlledState from 'use-merge-value';
+
+import { DivProps } from '@/types';
 import { useStyle } from './style';
 import { revesePlacement } from './utils';
 

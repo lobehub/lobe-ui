@@ -1,5 +1,6 @@
 import { useCopied } from '@/hooks/useCopied';
 import { ActionIcon, ActionIconSize, Tooltip, TooltipProps } from '@/index';
+import { DivProps } from '@/types';
 import copy from 'copy-to-clipboard';
 import { Copy } from 'lucide-react';
 import { ReactNode } from 'react';

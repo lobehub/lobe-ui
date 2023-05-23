@@ -3,6 +3,7 @@ import { Icon } from '@/index';
 import { LucideIcon } from 'lucide-react';
 import { memo } from 'react';
 
+import { DivProps } from '@/types';
 import { useStyles } from './style';
 
 export type ActionIconSize =

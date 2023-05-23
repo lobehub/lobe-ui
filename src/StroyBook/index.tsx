@@ -1,7 +1,9 @@
-import { DraggablePanel } from '@/index';
+import { DivProps } from '@/types';
 import { useResponsive } from 'antd-style';
 import { LevaPanel, useControls, useCreateStore } from 'leva';
 import { memo } from 'react';
+
+import DraggablePanel from '../DraggablePanel';
 import { useStyles } from './style';
 
 export { useCreateStore, useControls };

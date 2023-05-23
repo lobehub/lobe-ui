@@ -1,9 +1,10 @@
+import { ActionIcon, Icon, type ActionIconSize } from '@lobehub/ui';
 import { Dropdown, type MenuProps } from 'antd';
 import { ThemeMode } from 'antd-style';
 import { Monitor, Moon, Sun } from 'lucide-react';
 import { memo } from 'react';
 
-import { ActionIcon, Icon, type ActionIconSize } from '@lobehub/ui';
+import { DivProps } from '@/types';
 
 const icons = {
   auto: Monitor,
