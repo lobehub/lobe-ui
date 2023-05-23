@@ -5,10 +5,10 @@ title: Tooltip
 description: The Tooltip component is used to provide additional information to the user when they hover over a specific element.
 ---
 
-## Default
+### Default
 
 <code src="./demos/index.tsx" nopadding></code>
 
-## APIs
+### APIs
 
 <API></API>

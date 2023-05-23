@@ -1,7 +1,7 @@
-import { Skeleton } from 'antd';
+import { Skeleton, Typography } from 'antd';
 import { useResponsive } from 'antd-style';
 import type { FC, PropsWithChildren } from 'react';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 // @ts-ignore
@@ -17,8 +17,16 @@ const Content: FC<PropsWithChildren> = ({ children }) => {
   const { styles, cx } = useStyles();
   const { mobile } = useResponsive();
 
+  useEffect(() => {
+    document.querySelectorAll('.markdown').forEach((dom) => {
+      dom.classList.add('ant-typography');
+      dom.classList.add('css-dev-only-do-not-override-owqh1v');
+    });
+  }, [window.location.pathname]);
+
   return (
     <Flexbox width={'100%'} gap={mobile ? 0 : 24}>
+      <Typography />
       <div className={cx('dumi-antd-style-content', styles.content)}>
         <Skeleton active paragraph loading={loading} />
         <div

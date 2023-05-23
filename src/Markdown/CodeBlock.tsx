@@ -5,7 +5,10 @@ import { memo } from 'react';
 const useStyles = createStyles(
   ({ css }) => css`
     :not(:last-child) {
-      margin-bottom: 14px;
+      margin-block-start: 1em;
+      margin-block-end: 1em;
+      margin-inline-start: 0px;
+      margin-inline-end: 0px;
     }
   `,
 );
@@ -20,6 +23,7 @@ const Code = memo((props: any) => {
 
   return (
     <Highlighter
+      type="block"
       theme={theme.appearance as any}
       language={className?.replace('language-', '') || 'markdown'}
       className={styles}

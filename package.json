@@ -78,6 +78,7 @@
     "react-layout-kit": "^1",
     "react-markdown": "^8",
     "react-rnd": "^10",
+    "remark-gfm": "^3.0.1",
     "shiki-es": "^0.2",
     "styled-components": "^6.0.0-rc.1",
     "use-merge-value": "^1",

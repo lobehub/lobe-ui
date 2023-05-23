@@ -5,10 +5,10 @@ title: ThemeProvider
 description: ThemeProvider is a component that provides a theme to all the child components.
 ---
 
-## Default
+### Default
 
 <code src="./demos/index.tsx" center></code>
 
-## APIs
+### APIs
 
 <API></API>

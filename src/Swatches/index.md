@@ -5,10 +5,10 @@ title: Swatches
 description: Swatches
 ---
 
-## Default
+### Default
 
 <code src="./demos/index.tsx" center></code>
 
-## APIs
+### APIs
 
 <API></API>

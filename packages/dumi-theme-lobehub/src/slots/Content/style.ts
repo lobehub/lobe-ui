@@ -24,13 +24,16 @@ export const useStyles = createStyles(({ token, responsive, isDarkMode, css }) =
     .markdown {
       color: ${isDarkMode ? token.colorTextSecondary : token.colorText};
 
-      h1,
-      h2,
-      h3 {
-        color: ${token.colorText};
-      }
       p {
-        line-height: 1.8;
+        margin: 20px auto;
+        line-height: 2;
+        word-wrap: break-word;
+        font-size: 14px;
+        color: ${token.colorText};
+
+        &:not(:last-child) {
+          margin-bottom: 1em;
+        }
       }
 
       // hyperlink
@@ -48,61 +51,64 @@ export const useStyles = createStyles(({ token, responsive, isDarkMode, css }) =
 
       img {
         max-width: 100%;
-
-        opacity: ${isDarkMode ? 0.8 : 1};
       }
 
-      > [data-code-type='highlighter'] {
-        pre {
-          margin: 8px 0 !important;
-        }
-      }
       // inline code
       > :not([data-code-type='highlighter']) code {
         padding: 2px 6px;
-
-        //FIXME: 等下一版 token 优化升级
         color: ${isDarkMode ? token['cyan-7'] : token.colorPrimaryText};
         background: ${isDarkMode ? token['cyan-1'] : token.colorPrimaryBg};
         border-radius: 4px;
       }
 
-      // pre tag
-      pre {
-        font-size: 14px;
-        padding-left: 24px;
-        padding-right: 24px;
-      }
-
       // table
       table {
         width: 100%;
-        border-spacing: 1px;
+        border-spacing: 0;
+        border: 1px solid ${token.colorBorder};
+        border-radius: ${token.borderRadius}px;
+        padding: 8px;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
       }
 
       th {
-        background: ${token.colorFillTertiary};
       }
 
-      tr {
+      thead {
+        tr {
+          th {
+            background: ${token.colorFillTertiary};
+            &:first-child {
+              border-top-left-radius: ${token.borderRadius}px;
+              border-bottom-left-radius: ${token.borderRadius}px;
+            }
+            &:last-child {
+              border-top-right-radius: ${token.borderRadius}px;
+              border-bottom-right-radius: ${token.borderRadius}px;
+            }
+          }
+        }
       }
+
       th,
       td {
         padding-block-start: 10px;
         padding-block-end: 10px;
         padding-inline-start: 16px;
         padding-inline-end: 16px;
-        border-bottom: 1px solid ${token.colorBorderSecondary};
       }
 
       // blockquote
       blockquote {
-        font-style: italic;
-
         margin: 16px 0;
         padding: 0 12px;
-        color: ${token.colorTextDescription};
-        border-left: 3px solid ${token.colorBorder};
+        p {
+          font-style: italic;
+          color: ${token.colorTextDescription};
+        }
       }
 
       // list
@@ -124,7 +130,7 @@ export const useStyles = createStyles(({ token, responsive, isDarkMode, css }) =
           margin-inline-start: -24px;
           color: ${token.colorText};
           // hide phantom blank node
-          font-size: 0;
+          font-size: inherit;
           text-align: right;
           line-height: inherit;
 
@@ -135,7 +141,7 @@ export const useStyles = createStyles(({ token, responsive, isDarkMode, css }) =
           > .icon-link::before {
             content: '#';
             color: ${token.colorTextTertiary};
-            font-size: 20px;
+            font-size: inherit;
           }
         }
 

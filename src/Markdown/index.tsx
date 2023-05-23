@@ -1,6 +1,7 @@
 import { Divider, Typography } from 'antd';
 import { memo } from 'react';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { useStyles } from './style';
 
 import Code from './Code';
@@ -21,7 +22,11 @@ const Markdown = memo<MarkdownProps>(({ children, className }: MarkdownProps) =>
   const components: any = { pre: CodeBlock, code: Code, hr: Divider, a: Typography.Link };
   return (
     <Typography>
-      <ReactMarkdown className={cx(styles.container, className)} components={components}>
+      <ReactMarkdown
+        className={cx(styles.container, className)}
+        components={components}
+        remarkPlugins={[remarkGfm]}
+      >
         {children}
       </ReactMarkdown>
     </Typography>
