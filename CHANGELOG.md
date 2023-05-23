@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.6.0](https://github.com/lobehub/lobe-ui/compare/v1.5.0...v1.6.0) (2023-05-23)
+
+### ✨ Features
+
+- **actionicon**: add tooltip feature to ActionIcon component ([5d38627](https://github.com/lobehub/lobe-ui/commit/5d38627))
+
 # [1.5.0](https://github.com/lobehub/lobe-ui/compare/v1.4.0...v1.5.0) (2023-05-23)
 
 ### ✨ Features
