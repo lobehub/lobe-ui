@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import CopyButton from '../CopyButton';
-import SyntaxHighlighter from './SyntaxHighlighter';
+import SyntaxHighlighter, { type SyntaxHighlighterProps } from './SyntaxHighlighter';
 import { useStyles } from './style';
 
-export { SyntaxHighlighter };
+export { SyntaxHighlighter, SyntaxHighlighterProps };
 
 export interface HighlighterProps extends DivProps {
   /**

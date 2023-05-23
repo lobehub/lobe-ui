@@ -1,13 +1,13 @@
 import { Highlight, themes } from 'prism-react-renderer';
 import { memo } from 'react';
 
-export interface HighlighterProps {
+export interface PrismProps {
   children: string;
   language: string;
   isDarkMode: boolean;
 }
 
-export const Prism = memo<HighlighterProps>(({ children, language, isDarkMode }) => {
+export const Prism = memo<PrismProps>(({ children, language, isDarkMode }) => {
   return (
     <Highlight
       theme={isDarkMode ? themes.jettwaveDark : themes.jettwaveLight}

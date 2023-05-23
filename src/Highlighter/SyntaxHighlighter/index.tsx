@@ -9,7 +9,7 @@ import { Prism } from './Prism';
 import { useThemeMode } from 'antd-style';
 import { useStyles } from './style';
 
-type SyntaxHighlighterProps = Pick<HighlighterProps, 'language' | 'children' | 'theme'>;
+export type SyntaxHighlighterProps = Pick<HighlighterProps, 'language' | 'children' | 'theme'>;
 
 const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
   ({ children, language, theme: appearance }) => {
