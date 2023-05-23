@@ -11,12 +11,12 @@ export interface SnippetProps extends DivProps {
   /**
    * @description The symbol to be displayed before the content inside the Snippet component
    */
-  symbol: string;
+  symbol?: string;
   /**
    * @description The language of the content inside the Snippet component
    * @default 'tsx'
    */
-  language: string;
+  language?: string;
   /**
    * @description Whether the Snippet component is copyable or not
    * @default true
