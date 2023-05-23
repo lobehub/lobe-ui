@@ -4,6 +4,11 @@ export const useStyles = createStyles(({ css, token }) => ({
   sidebar: css`
     margin-top: ${token.headerHeight}px;
   `,
+  sidebarContent: css`
+    &.draggable-panel-fixed {
+      overflow-y: scroll;
+    }
+  `,
   sidebarInner: css`
     padding: 16px;
     dl {
