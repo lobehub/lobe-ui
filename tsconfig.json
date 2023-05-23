@@ -13,7 +13,7 @@
       "@@/*": [".dumi/tmp/*"],
       "@/*": ["src/*"],
       "@lobehub/ui": ["src"],
-      "@lobehub/ui/*": ["src/*", "*"]
+      "@lobehub/ui/*": ["src/*"]
     }
   }
 }
