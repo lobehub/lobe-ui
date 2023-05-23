@@ -1,9 +1,7 @@
-import { Icon } from '@/index';
-
+import { Icon, Tooltip, TooltipProps } from '@/index';
+import { DivProps } from '@/types';
 import { LucideIcon } from 'lucide-react';
 import { memo } from 'react';
-
-import { DivProps } from '@/types';
 import { useStyles } from './style';
 
 export type ActionIconSize =
@@ -39,10 +37,36 @@ export interface ActionIconProps extends DivProps {
    * @default 'false'
    */
   glass?: boolean;
+  /**
+   * @description The text shown in the tooltip
+   */
+  title?: string;
+  /**
+   * @description The position of the tooltip relative to the target
+   * @enum ["top","left","right","bottom","topLeft","topRight","bottomLeft","bottomRight","leftTop","leftBottom","rightTop","rightBottom"]
+   * @default "top"
+   */
+  placement?: TooltipProps['placement'];
+  /**
+   * @description Change arrow's visible state and change whether the arrow is pointed at the center of target.
+   * @default false
+   */
+  arrow?: boolean;
 }
 
 const ActionIcon = memo<ActionIconProps>(
-  ({ className, active, icon, size = 'normal', style, glass, ...props }) => {
+  ({
+    className,
+    active,
+    icon,
+    size = 'normal',
+    style,
+    glass,
+    title,
+    placement,
+    arrow = false,
+    ...props
+  }) => {
     const { styles, cx } = useStyles({ active: Boolean(active), glass: Boolean(glass) });
     let blockSize: number;
     let borderRadius: number;
@@ -68,7 +92,8 @@ const ActionIcon = memo<ActionIconProps>(
         borderRadius = size?.borderRadius || 5;
         break;
     }
-    return (
+
+    const actionIconBlock = (
       <div
         className={cx(styles.block, className)}
         style={{ width: blockSize, height: blockSize, borderRadius, ...style }}
@@ -76,6 +101,14 @@ const ActionIcon = memo<ActionIconProps>(
       >
         <Icon size={size === 'site' ? 'small' : size} icon={icon} />
       </div>
+    );
+
+    if (!title) return actionIconBlock;
+
+    return (
+      <Tooltip arrow={arrow} title={title} placement={placement}>
+        {actionIconBlock}
+      </Tooltip>
     );
   },
 );

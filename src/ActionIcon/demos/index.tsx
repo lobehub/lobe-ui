@@ -1,4 +1,5 @@
 import { ActionIcon, ActionIconProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { folder } from 'leva';
 import * as LucideIcon from 'lucide-react';
 
 export default () => {
@@ -14,6 +15,28 @@ export default () => {
         options: LucideIcon,
       },
       active: false,
+      glass: false,
+      tooltip: folder({
+        title: '',
+        arrow: false,
+        placement: {
+          value: 'top',
+          options: [
+            'top',
+            'left',
+            'right',
+            'bottom',
+            'topLeft',
+            'topRight',
+            'bottomLeft',
+            'bottomRight',
+            'leftTop',
+            'leftBottom',
+            'rightTop',
+            'rightBottom',
+          ],
+        },
+      }),
     },
     { store },
   );

@@ -1,9 +1,8 @@
 import { useCopied } from '@/hooks/useCopied';
-import { ActionIcon, ActionIconSize, Tooltip, TooltipProps } from '@/index';
+import { ActionIcon, ActionIconSize, TooltipProps } from '@/index';
 import { DivProps } from '@/types';
 import copy from 'copy-to-clipboard';
 import { Copy } from 'lucide-react';
-import { ReactNode } from 'react';
 
 export interface CopyButtonProps extends DivProps {
   /**
@@ -26,11 +25,6 @@ export interface CopyButtonProps extends DivProps {
    * @default 'right'
    */
   placement?: TooltipProps['placement'];
-  /**
-   * @description A function that returns the children to be rendered
-
-   */
-  render?: (props: { handleCopy: () => void }) => ReactNode;
 }
 
 const CopyButton = ({
@@ -38,21 +32,15 @@ const CopyButton = ({
   className,
   placement = 'right',
   size = 'site',
-  render,
   ...props
 }: CopyButtonProps) => {
   const { copied, setCopied } = useCopied();
 
-  const handleCopy = () => {
-    copy(content);
-    setCopied();
-  };
-
-  const children = render ? (
-    render({ handleCopy })
-  ) : (
+  return (
     <ActionIcon
       {...props}
+      placement={placement}
+      title={copied ? '✅ Success' : 'Copy'}
       icon={Copy}
       className={className}
       size={size}
@@ -62,12 +50,6 @@ const CopyButton = ({
         setCopied();
       }}
     />
-  );
-
-  return (
-    <Tooltip arrow={false} placement={placement} title={copied ? <>✅ Success</> : 'Copy'}>
-      {children}
-    </Tooltip>
   );
 };
 
