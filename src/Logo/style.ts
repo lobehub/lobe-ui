@@ -8,7 +8,7 @@ export const useStyles = createStyles(({ css }) => {
     `,
     extraTitle: css`
       white-space: nowrap;
-      font-weight: 200;
+      font-weight: 300;
     `,
   };
 });

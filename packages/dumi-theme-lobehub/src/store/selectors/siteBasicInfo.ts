@@ -3,7 +3,7 @@ import { SiteStore } from '../useSiteStore';
 /**
  * 站点标题选择器
  */
-export const siteTitleSel = (s: SiteStore) => s.siteData.themeConfig.name;
+export const siteTitleSel = (s: SiteStore) => s.siteData.themeConfig.title;
 
 export const githubSel = (s: SiteStore) =>
   // 优先取 socialLinks 里的 github

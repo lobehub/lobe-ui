@@ -1,5 +1,5 @@
 import { useTheme } from 'antd-style';
-import React from 'react';
+import { memo } from 'react';
 import Divider from './Divider';
 import Logo3D from './Logo3D';
 import LogoFlat from './LogoFlat';
@@ -24,14 +24,7 @@ export interface LogoProps extends DivProps {
   extra?: React.ReactNode;
 }
 
-const Logo: React.FC<LogoProps> = ({
-  type = '3d',
-  size = 32,
-  style,
-  extra,
-  className,
-  ...props
-}) => {
+const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className, ...props }) => {
   const theme = useTheme();
   const { styles, cx } = useStyles();
   let logoComponent: React.ReactNode;
@@ -53,7 +46,7 @@ const Logo: React.FC<LogoProps> = ({
       );
   }
 
-  const extraSize = Math.round((size / 3) * 2);
+  const extraSize = Math.round((size / 3) * 1.9);
 
   return (
     <div className={cx(styles.flexCenter, className)} style={style} {...props}>
@@ -68,6 +61,6 @@ const Logo: React.FC<LogoProps> = ({
       )}
     </div>
   );
-};
+});
 
-export default React.memo(Logo);
+export default Logo;

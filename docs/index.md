@@ -1,12 +1,10 @@
 ---
 hero:
-  title: lobe-ui
-  description: a npm develop template
+  title: Lobe UI
+  description: Lobe UI is an open-source UI component library for building chatbot web apps
   actions:
-    - text: 快速上手
-      link: /guide
-    - text: 完全指南
-      link: /usage
+    - text: Get Started
+      link: /components
 ---
 
 <embed src="../README.md"></embed>

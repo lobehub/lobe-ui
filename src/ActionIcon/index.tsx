@@ -33,11 +33,16 @@ export interface ActionIconProps extends DivProps {
    * @type LucideIcon
    */
   icon: LucideIcon;
+  /**
+   * @description Glass blur style
+   * @default 'false'
+   */
+  glass?: boolean;
 }
 
 const ActionIcon = memo<ActionIconProps>(
-  ({ className, active, icon, size = 'normal', style, ...props }) => {
-    const { styles, cx } = useStyles(active);
+  ({ className, active, icon, size = 'normal', style, glass, ...props }) => {
+    const { styles, cx } = useStyles({ active: Boolean(active), glass: Boolean(glass) });
     let blockSize: number;
     let borderRadius: number;
     switch (size) {

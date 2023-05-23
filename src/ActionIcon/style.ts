@@ -1,30 +1,38 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }, active) => {
-  return {
-    block: css`
-      cursor: pointer;
+export const useStyles = createStyles(
+  ({ css, token }, { active, glass }: { active: boolean; glass: boolean }) => {
+    return {
+      block: css`
+        cursor: pointer;
 
-      display: flex;
-      flex: none;
-      align-items: center;
-      justify-content: center;
+        display: flex;
+        flex: none;
+        align-items: center;
+        justify-content: center;
 
-      color: ${active ? token.colorText : token.colorTextQuaternary};
+        color: ${active ? token.colorText : token.colorTextQuaternary};
 
-      background: ${active ? token.colorFillTertiary : 'transparent'};
+        background: ${active ? token.colorFillTertiary : 'transparent'};
 
-      transition: color 600ms ${token.motionEaseOut}, background-color 100ms ${token.motionEaseOut};
-      backdrop-filter: saturate(180%) blur(10px);
-      &:hover {
-        color: ${token.colorText};
-        background-color: ${active ? token.colorFillSecondary : token.colorFillTertiary};
-      }
+        transition: color 600ms ${token.motionEaseOut},
+          background-color 100ms ${token.motionEaseOut};
 
-      &:active {
-        color: ${token.colorText};
-        background-color: ${token.colorFill};
-      }
-    `,
-  };
-});
+        ${glass &&
+        css`
+          backdrop-filter: saturate(180%) blur(10px);
+        `}
+
+        &:hover {
+          color: ${token.colorText};
+          background-color: ${active ? token.colorFillSecondary : token.colorFillTertiary};
+        }
+
+        &:active {
+          color: ${token.colorText};
+          background-color: ${token.colorFill};
+        }
+      `,
+    };
+  },
+);

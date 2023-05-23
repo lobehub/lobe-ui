@@ -11,23 +11,29 @@ export const useStyles = createStyles(
       container: cx(
         prefix,
         css`
+          overflow: auto;
           position: relative;
           transition: background-color 100ms ${token.motionEaseOut};
+          background-color: ${type === 'block' ? rgba(token.colorBgElevated, 0.6) : 'transparent'};
+          border-radius: ${token.borderRadius}px;
+
           ${type === 'ghost' &&
           css`
             border: 1px solid ${token.colorBorder};
           `}
-          background-color: ${type === 'block' ? rgba(token.colorBgElevated, 0.6) : 'transparent'};
-          border-radius: ${token.borderRadiusLG}px;
-          padding: ${type === 'prue' ? 0 : `16px 24px`};
 
           &:hover {
             background-color: ${type === 'prue' ? 'transparent' : token.colorFillTertiary};
           }
 
+          .prism-code {
+            background: none !important;
+          }
+
           pre {
             margin: 0 !important;
-            padding: 0 !important;
+            padding: ${type === 'prue' ? 0 : `16px 24px`} !important;
+            background: none !important;
           }
 
           code {
