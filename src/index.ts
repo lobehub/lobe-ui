@@ -3,6 +3,7 @@ export { default as Avatar, type AvatarProps } from './Avatar';
 export { default as ContextMenu, type ContextMenuProps } from './ContextMenu';
 export { default as CopyButton, type CopyButtonProps } from './CopyButton';
 export { default as DraggablePanel, type DraggablePanelProps } from './DraggablePanel';
+export { default as EditableMessage, type EditableMessageProps } from './EditableMessage';
 export { default as EditableText, type EditableTextProps } from './EditableText';
 export {
   default as Highlighter,
