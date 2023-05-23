@@ -2,7 +2,7 @@ import { useHover } from 'ahooks';
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
 import type { Enable, NumberSize, Size } from 're-resizable';
 import { HandleClassName, Resizable } from 're-resizable';
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode, memo, useEffect, useMemo, useRef, useState } from 'react';
 import { Center } from 'react-layout-kit';
 import type { Props as RndProps } from 'react-rnd';
 import useControlledState from 'use-merge-value';
@@ -94,6 +94,12 @@ export interface DraggablePanelProps extends DivProps {
    * @type CSSProperties
    */
   hanlderStyle?: React.CSSProperties;
+  children: ReactNode;
+  className?: string;
+  classNames?: {
+    handle?: string;
+    content?: string;
+  };
 }
 
 const DraggablePanel = memo<DraggablePanelProps>(
@@ -118,6 +124,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     showHandlerWhenUnexpand,
     destroyOnClose,
     hanlderStyle,
+    classNames = {},
   }) => {
     const ref = useRef(null);
     const isHovering = useHover(ref);
@@ -210,10 +217,9 @@ const DraggablePanel = memo<DraggablePanelProps>(
     }, [styles, placement]);
 
     const handler = (
-      // @ts-ignore
       <Center
         // @ts-ignore
-        className={cx(styles[`toggle${arrowPlacement}`])}
+        className={cx(styles[`toggle${arrowPlacement}`], classNames.handle)}
         style={{ opacity: isExpand ? (!pin ? 0 : undefined) : showHandlerWhenUnexpand ? 1 : 0 }}
       >
         <Center
@@ -237,7 +243,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
       <Resizable
         {...sizeProps}
         style={style}
-        className={styles.panel}
+        className={cx(styles.panel, classNames.content)}
         enable={canResizing ? (resizing as Enable) : undefined}
         handleClasses={resizeHandleClassNames}
         onResizeStop={(e, direction, ref, delta) => {
