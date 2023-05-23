@@ -20,13 +20,13 @@ const Linker: FC<LinkerProps> = ({ title, link, type }) => {
       case 'prev':
         return (
           <>
-            <ArrowLeftOutlined /> 上一篇
+            <ArrowLeftOutlined /> Previous
           </>
         );
       case 'next':
         return (
           <>
-            下一篇 <ArrowRightOutlined />
+            Next <ArrowRightOutlined />
           </>
         );
     }

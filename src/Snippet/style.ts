@@ -10,7 +10,7 @@ export const useStyles = createStyles(
       align-items: center;
       border-radius: ${token.borderRadius}px;
       gap: 8px;
-      padding: 0 8px;
+      padding: 0 8px 0 12px;
       height: 36px;
       transition:  background-color 100ms ${token.motionEaseOut};
 

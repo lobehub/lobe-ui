@@ -24,6 +24,14 @@ export const useStyles = createStyles(({ token, responsive, isDarkMode, css }) =
     .markdown {
       color: ${isDarkMode ? token.colorTextSecondary : token.colorText};
 
+      h1,
+      h2,
+      h3,
+      h4,
+      h5 {
+        font-weight: 600;
+      }
+
       p {
         margin: 20px auto;
         line-height: 2;

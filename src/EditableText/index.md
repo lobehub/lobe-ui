@@ -5,10 +5,10 @@ title: EditableText
 description: EditableText
 ---
 
-### Default
+## Default
 
 <code src="./demos/index.tsx" center></code>
 
-### APIs
+## APIs
 
 <API></API>
