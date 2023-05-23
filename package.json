@@ -69,6 +69,7 @@
     "antd-style": "^3",
     "chroma-js": "^2",
     "copy-to-clipboard": "^3",
+    "dayjs": "^1",
     "leva": "^0.9.34",
     "lodash": "^4",
     "lucide-react": "latest",

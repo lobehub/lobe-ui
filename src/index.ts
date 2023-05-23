@@ -1,4 +1,5 @@
 export { default as ActionIcon, type ActionIconProps, type ActionIconSize } from './ActionIcon';
+export { default as Avatar, type AvatarProps } from './Avatar';
 export { default as CopyButton, type CopyButtonProps } from './CopyButton';
 export { default as DraggablePanel, type DraggablePanelProps } from './DraggablePanel';
 export { default as EditableText, type EditableTextProps } from './EditableText';
@@ -9,6 +10,7 @@ export {
   type SyntaxHighlighterProps,
 } from './Highlighter';
 export { default as Icon, type IconProps, type IconSize } from './Icon';
+export { default as List } from './List';
 export { default as Logo, type LogoProps } from './Logo';
 export { default as Markdown, type MarkdownProps } from './Markdown';
 export { default as MessageInput, type MessageInputProps } from './MessageInput';
