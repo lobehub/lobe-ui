@@ -1,5 +1,13 @@
 # Changelog
 
+# [1.5.0](https://github.com/lobehub/lobe-ui/compare/v1.4.0...v1.5.0) (2023-05-23)
+
+### ✨ Features
+
+- Add `remark-gfm` to dependencies and modify `dumi-theme-lobehub`'s content styles ([2d24d10](https://github.com/lobehub/lobe-ui/commit/2d24d10))
+- add MessageModal component ([969867e](https://github.com/lobehub/lobe-ui/commit/969867e))
+- **editable-message**: add EditableMessage components ([0986c72](https://github.com/lobehub/lobe-ui/commit/0986c72))
+
 # [1.4.0](https://github.com/lobehub/lobe-ui/compare/v1.3.0...v1.4.0) (2023-05-23)
 
 ### ✨ Features
