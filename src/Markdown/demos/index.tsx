@@ -1,82 +1,79 @@
-import { Markdown } from '@lobehub/ui';
+import { Markdown, MarkdownProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
 
-const content = `针对该代码，需要考虑以下数据场景：
+const content = `# This is an H1
+## This is an H2
+### This is an H3
+##### This is an H4
+##### This is an H5
 
-1. **拖拽节点到画布上**：模拟拖拽一个节点到画布上并释放鼠标。期望画布上会新增一个对应类型的节点。
-2. **拖拽节点到画布外**：模拟拖拽一个节点到画布外并释放鼠标。期望画布上不会新增任何节点。
-3. **拖拽节点时移动鼠标**：模拟拖拽一个节点移动鼠标，期望节点跟随鼠标移动。
-4. **取消拖拽节点**：模拟拖拽一个节点并在拖拽过程中取消拖拽，期望画布上不会新增任何节点。
+The point of reference-style links is not that they’re easier to write. The point is that with reference-style links, your document source is vastly more readable. Compare the above examples: using reference-style links, the paragraph itself is only 81 characters long; with inline-style links, it’s 176 characters; and as raw \`HTML\`, it’s 234 characters. In the raw \`HTML\`, there’s more markup than there is text.
 
-针对以上场景，可以编写如下的 jest 单元测试代码：
+---
+
+> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,
+> consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.
+> Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.
+>
+> Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse
+> id sem consectetuer libero luctus adipiscing.
+
+---
+
+an example | *an example* | **an example**
+
+---
+
+-   Red
+-   Green
+-   Blue
+    -   Red
+    -   Green
+        -   Blue
+
+
+1.  Bird
+1.  McHale
+1.  Parish
+    1.  Bird
+    1.  McHale
+        1.  Parish
+
+---
+
+This is [an example](http://example.com/ "Title") inline link.
+
+<http://example.com/>
+
+---
+
+| title | title | title |
+| --- | --- | --- |
+| content | content | content |
+
+---
 
 \`\`\`javascript
 import { renderHook } from '@testing-library/react-hooks';
 import { act } from 'react-dom/test-utils';
 import { useDropNodeOnCanvas } from './useDropNodeOnCanvas';
+\`\`\`
 
-describe('useDropNodeOnCanvas', () => {
-  it('should add node to canvas when drop node on canvas', () => {
-    const { result } = renderHook(() => useDropNodeOnCanvas());
+`;
 
-    act(() => {
-      result.current.onDragMove({ over: { rect: { left: 0 } }, activatorEvent: { clientX: 100 }, delta: { x: 0 } });
-    });
-    act(() => {
-      result.current.onDragEnd({
-        over: { rect: { left: 0 } },
-        activatorEvent: { clientX: 100, clientY: 100 },
-        active: { data: { current: { type: 'start' } } },
-        delta: { x: 0, y: 0 },
-      });
-    });
-
-    expect(result.current).toBe(false);
-    expect(instance.getNodes().length).toBe(1);
-    expect(instance.getNodes()[0].type).toBe('start');
-  });
-
-  it('should not add node to canvas when drop node outside canvas', () => {
-    const { result } = renderHook(() => useDropNodeOnCanvas());
-
-    act(() => {
-      result.current.onDragMove({ over: null, activatorEvent: { clientX: 100 }, delta: { x: 0 } });
-    });
-    act(() => {
-      result.current.onDragEnd({
-        over: null,
-        activatorEvent: { clientX: 100, clientY: 100 },
-        active: { data: { current: { type: 'start' } } },
-        delta: { x: 0, y: 0 },
-      });
-    });
-
-    expect(result.current).toBe(false);
-    expect(instance.getNodes().length).toBe(0);
-  });
-
-  it('should move node when drag node on canvas', () => {
-    const { result } = renderHook(() => useDropNodeOnCanvas());
-
-    act(() => {
-      result.current.onDragMove({ over: { rect: { left: 0 } }, activatorEvent: { clientX: 100 }, delta: { x: 0 } });
-    });
-
-    expect(result.current).toBe(true);
-  });
-
-  it('should not add node to canvas when cancel drag node', () => {
-    const { result } = renderHook(() => useDropNodeOnCanvas());
-
-    act(() => {
-      result.current.onDragMove({ over: { rect: { left: 0 } }, activatorEvent: { clientX: 100 }, delta: { x: 0 } });
-    });
-    act(() => {
-      result.current.onDragCancel();
-    });
-
-    expect(result.current).toBe(false);
-    expect(instance.getNodes().length).toBe(0);
-  });
-});
-\`\`\``;
-export default () => <Markdown>{content}</Markdown>;
+export default () => {
+  const store = useCreateStore();
+  const options: MarkdownProps | any = useControls(
+    {
+      children: {
+        value: content,
+        rows: true,
+      },
+    },
+    { store },
+  );
+  return (
+    <StroyBook levaStore={store}>
+      <Markdown {...options} />
+    </StroyBook>
+  );
+};

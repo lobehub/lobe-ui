@@ -55,6 +55,7 @@ const CopyButton = ({
       icon={Copy}
       className={className}
       size={size}
+      glass
       onClick={() => {
         copy(content);
         setCopied();

@@ -1,6 +1,6 @@
-import React from 'react';
+import { memo } from 'react';
 
-const Divider: React.FC<SvgProps | any> = (props) => (
+const Divider = memo<SvgProps | any>(({ ...props }) => (
   <svg
     fill="none"
     stroke="currentColor"
@@ -12,6 +12,6 @@ const Divider: React.FC<SvgProps | any> = (props) => (
   >
     <path d="M16.88 3.549L7.12 20.451" />
   </svg>
-);
+));
 
-export default React.memo(Divider);
+export default Divider;

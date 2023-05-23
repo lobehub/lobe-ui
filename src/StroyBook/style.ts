@@ -19,6 +19,7 @@ export const useStyles = createStyles(
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: auto;
         ${!noPadding &&
         css`
           padding: 40px 24px;

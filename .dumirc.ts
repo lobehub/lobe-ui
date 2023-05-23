@@ -5,9 +5,10 @@ const isProd = process.env.NODE_ENV === 'production';
 const isWin = process.platform === 'win32';
 
 const themeConfig = {
+  title: 'Lobe UI',
   name: 'UI',
-  description: 'Empowering your AI dreams with LobeHub',
-  footer: 'LobeHub',
+  description: 'Lobe UI is an open-source UI component library for building chatbot web apps',
+  footer: 'Made with 🤯 by LobeHub',
   socialLinks: {
     github: homepage,
   },
@@ -16,7 +17,7 @@ const themeConfig = {
 export default defineConfig({
   themeConfig,
   locales: [{ id: 'en-US', name: 'English' }],
-  title: 'LobeHub UI Kit',
+  title: 'Lobe UI',
   favicons: ['https://raw.githubusercontent.com/lobehub/favicon/main/dist/favicon.ico'],
   npmClient: 'pnpm',
   base: '/',

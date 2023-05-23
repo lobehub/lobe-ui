@@ -16,8 +16,7 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
     prism: css`
       pre {
         overflow-x: scroll;
-        font-family: 'Hack Nerd Font Mono', 'Hack', 'Fira Code', 'Fira Mono', Menlo, Consolas,
-          'DejaVu Sans Mono', monospace !important;
+        font-family: ${token.fontFamilyCode} !important;
       }
     `,
 

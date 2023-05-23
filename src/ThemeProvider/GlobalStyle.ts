@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'antd-style';
 const GlobalStyle = createGlobalStyle`
 
   body {
-    font-family: 'Segoe UI', SegoeUI, AliPuHui, ${({ theme }) => theme.fontFamily};
+    font-family: ${({ theme }) => theme.fontFamily};
     font-size: ${({ theme }) => theme.fontSize}px;
     line-height: 1;
     color: ${({ theme }) => theme.colorTextBase};
@@ -44,7 +44,7 @@ const GlobalStyle = createGlobalStyle`
   /* 定义滚动槽的样式 */
   ::-webkit-scrollbar {
     width: 0;
-    height: 6px;
+    height: 4px;
     margin-right: 4px;
     background-color: transparent; // 定义滚动槽的背景色
 

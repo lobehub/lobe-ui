@@ -24,7 +24,11 @@ export const StroyBook = memo<StroyBookProps>(
     return (
       <div className={cx(styles.editor, className)} {...props}>
         <div className={styles.left}>{children}</div>
-        <DraggablePanel className={styles.right} placement={mobile ? 'bottom' : 'right'}>
+        <DraggablePanel
+          className={styles.right}
+          placement={mobile ? 'bottom' : 'right'}
+          minWidth={280}
+        >
           <LevaPanel fill store={levaStore} titleBar={false} flat />{' '}
         </DraggablePanel>
       </div>
