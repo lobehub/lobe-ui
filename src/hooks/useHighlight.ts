@@ -13,8 +13,8 @@ export interface ShikiSyntaxTheme {
 }
 
 const THEME: ShikiSyntaxTheme = {
-  dark: 'one-dark-pro',
-  light: 'github-light',
+  dark: 'material-darker',
+  light: 'material-lighter',
 };
 
 export const languageMap = [

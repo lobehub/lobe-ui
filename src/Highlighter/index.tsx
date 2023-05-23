@@ -1,9 +1,8 @@
-import { FC, memo, useEffect } from 'react';
-
 import { useHighlight } from '@/hooks/useHighlight';
 import { useThemeMode } from 'antd-style';
+import { FC, memo, useEffect } from 'react';
 import CopyButton from '../CopyButton';
-import SyntaxHighlighter from './Highlighter';
+import SyntaxHighlighter from './SyntaxHighlighter';
 import { useStyles } from './style';
 
 export interface HighlighterProps extends DivProps {

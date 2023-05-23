@@ -1,7 +1,6 @@
 import { FC } from 'react';
 
-import { Highlighter } from '@/components/Highlighter';
-import { useSiteStore } from '@/store';
+import { Highlighter } from '@lobehub/ui';
 
 interface SourceCodeProps {
   lang: string;
@@ -9,13 +8,7 @@ interface SourceCodeProps {
 }
 
 const SourceCode: FC<SourceCodeProps> = ({ children, lang }) => {
-  const theme = useSiteStore((s) => s.siteData.themeConfig.syntaxTheme);
-
-  return (
-    <Highlighter syntaxThemes={theme} language={lang}>
-      {children}
-    </Highlighter>
-  );
+  return <Highlighter language={lang}>{children}</Highlighter>;
 };
 
 export default SourceCode;
