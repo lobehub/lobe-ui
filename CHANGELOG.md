@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.6.1](https://github.com/lobehub/lobe-ui/compare/v1.6.0...v1.6.1) (2023-05-23)
+
 # [1.6.0](https://github.com/lobehub/lobe-ui/compare/v1.5.0...v1.6.0) (2023-05-23)
 
 ### ✨ Features
