@@ -1,7 +1,7 @@
 import { DraggablePanel } from '@/index';
 import { useResponsive } from 'antd-style';
 import { LevaPanel, useControls, useCreateStore } from 'leva';
-import React from 'react';
+import { memo } from 'react';
 import { useStyles } from './style';
 
 export { useCreateStore, useControls };
@@ -17,23 +17,19 @@ export interface StroyBookProps extends DivProps {
   noPadding?: boolean;
 }
 
-export const StroyBook: React.FC<StroyBookProps> = ({
-  levaStore,
-  noPadding,
-  className,
-  children,
-  ...props
-}) => {
-  const { mobile } = useResponsive();
-  const { styles, cx } = useStyles({ noPadding: Boolean(noPadding), mobile: Boolean(mobile) });
-  return (
-    <div className={cx(styles.editor, className)} {...props}>
-      <div className={styles.left}>{children}</div>
-      <DraggablePanel className={styles.right} placement={mobile ? 'bottom' : 'right'}>
-        <LevaPanel fill store={levaStore} titleBar={false} flat />{' '}
-      </DraggablePanel>
-    </div>
-  );
-};
+export const StroyBook = memo<StroyBookProps>(
+  ({ levaStore, noPadding, className, children, ...props }) => {
+    const { mobile } = useResponsive();
+    const { styles, cx } = useStyles({ noPadding: Boolean(noPadding), mobile: Boolean(mobile) });
+    return (
+      <div className={cx(styles.editor, className)} {...props}>
+        <div className={styles.left}>{children}</div>
+        <DraggablePanel className={styles.right} placement={mobile ? 'bottom' : 'right'}>
+          <LevaPanel fill store={levaStore} titleBar={false} flat />{' '}
+        </DraggablePanel>
+      </div>
+    );
+  },
+);
 
-export default React.memo(StroyBook);
+export default StroyBook;

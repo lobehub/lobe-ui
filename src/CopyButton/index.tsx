@@ -1,10 +1,8 @@
+import { useCopied } from '@/hooks/useCopied';
 import { ActionIcon, ActionIconSize, Tooltip, TooltipProps } from '@/index';
-
 import copy from 'copy-to-clipboard';
 import { Copy } from 'lucide-react';
 import { ReactNode } from 'react';
-
-import { useCopied } from '@/hooks/useCopied';
 
 export interface CopyButtonProps extends DivProps {
   /**

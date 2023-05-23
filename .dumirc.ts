@@ -2,6 +2,7 @@ import { defineConfig } from 'dumi';
 import { homepage } from './package.json';
 
 const isProd = process.env.NODE_ENV === 'production';
+const isWin = process.platform === 'win32';
 
 const themeConfig = {
   name: 'UI',
@@ -21,10 +22,12 @@ export default defineConfig({
   base: '/',
   publicPath: '/',
   ssr: isProd ? {} : false,
-  apiParser: {},
-  resolve: {
-    entryFile: './src/index.ts',
-  },
+  apiParser: isWin ? false : {},
+  resolve: isWin
+    ? undefined
+    : {
+        entryFile: './src/index.ts',
+      },
   define: {
     'process.env': process.env,
   },

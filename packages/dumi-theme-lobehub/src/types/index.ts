@@ -1,4 +1,3 @@
-export type { HighlighterSyntaxTheme } from '../components/Highlighter';
 export * from './apiHeader';
 export * from './config';
 export * from './hero';

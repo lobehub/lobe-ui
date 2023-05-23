@@ -2,7 +2,7 @@
 nav: Components
 group: Common
 title: Tooltip
-description: Semantic vector graphics
+description: The Tooltip component is used to provide additional information to the user when they hover over a specific element.
 ---
 
 ## Default

@@ -1,73 +1,77 @@
 import { createStyles } from 'antd-style';
+import { rgba } from 'polished';
 
-export const useStyles = createStyles(({ token, isDarkMode, css, cx, prefixCls }) => {
-  const prefix = `${prefixCls}-highlighter`;
-  const buttonHoverCls = `${prefix}-hover-btn`;
-  const langHoverCls = `${prefix}-hover-lang`;
+export const useStyles = createStyles(
+  ({ token, css, cx, prefixCls }, type: 'ghost' | 'block' | 'prue') => {
+    const prefix = `${prefixCls}-highlighter`;
+    const buttonHoverCls = `${prefix}-hover-btn`;
+    const langHoverCls = `${prefix}-hover-lang`;
 
-  return {
-    container: cx(
-      prefix,
-      css`
-        position: relative;
+    return {
+      container: cx(
+        prefix,
+        css`
+          position: relative;
+          transition: background-color 100ms ${token.motionEaseOut};
+          ${type === 'ghost' &&
+          css`
+            border: 1px solid ${token.colorBorder};
+          `}
+          background-color: ${type === 'block' ? rgba(token.colorBgElevated, 0.6) : 'transparent'};
+          border-radius: ${token.borderRadiusLG}px;
+          padding: ${type === 'prue' ? 0 : `16px 24px`};
 
-        pre {
-          margin: 0 !important;
-        }
-
-        &:hover {
-          .${buttonHoverCls} {
-            opacity: 1;
+          &:hover {
+            background-color: ${type === 'prue' ? 'transparent' : token.colorFillTertiary};
           }
 
-          .${langHoverCls} {
-            opacity: 1;
+          pre {
+            margin: 0 !important;
+            padding: 0 !important;
           }
-        }
-      `,
-    ),
-    withBackground: cx(
-      `${prefix}-background`,
-      css`
-        pre {
-          padding: 12px !important;
-          background: ${isDarkMode
-            ? token.colorFillQuaternary
-            : token.colorFillTertiary} !important;
-          border-radius: 8px;
-        }
 
-        code {
-          background: transparent !important;
-        }
-      `,
-    ),
+          code {
+            background: transparent !important;
+          }
 
-    button: cx(
-      buttonHoverCls,
-      css`
-        position: absolute;
-        z-index: 51;
-        top: 8px;
-        right: 8px;
+          &:hover {
+            .${buttonHoverCls} {
+              opacity: 1;
+            }
 
-        opacity: 0;
-      `,
-    ),
-    lang: cx(
-      langHoverCls,
-      css`
-        position: absolute;
-        z-index: 50;
-        right: 8px;
-        bottom: 8px;
+            .${langHoverCls} {
+              opacity: 1;
+            }
+          }
+        `,
+      ),
 
-        color: ${token.colorTextPlaceholder};
+      button: cx(
+        buttonHoverCls,
+        css`
+          position: absolute;
+          z-index: 51;
+          top: 8px;
+          right: 8px;
 
-        opacity: 0;
+          opacity: 0;
+        `,
+      ),
+      lang: cx(
+        langHoverCls,
+        css`
+          position: absolute;
+          z-index: 50;
+          right: 8px;
+          bottom: 8px;
 
-        transition: opacity 0.1s;
-      `,
-    ),
-  };
-});
+          color: ${token.colorTextPlaceholder};
+
+          opacity: 0;
+
+          transition: opacity 0.1s;
+        `,
+      ),
+    };
+  },
+);

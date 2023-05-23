@@ -13,10 +13,25 @@ import { createCustomToken, getAntdTheme, getCustomStylish } from '../styles';
 import GlobalStyle from './GlobalStyle';
 
 export interface ThemeProviderProps {
+  /**
+   * @description Custom tokens to be used in the theme
+   */
   token?: any;
+  /**
+   * @description The children of the ThemeProvider component
+   */
   children: React.ReactNode;
+  /**
+   * @description The mode of the theme (light or dark)
+   */
   themeMode?: ThemeMode;
+  /**
+   * @description Whether to inline the styles on server-side rendering or not
+   */
   ssrInline?: boolean;
+  /**
+   * @description Cache for the extracted static styles
+   */
   cache?: typeof extractStaticStyle.cache;
 }
 

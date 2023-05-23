@@ -1,7 +1,6 @@
-import { Highlighter } from '@lobehub/ui';
+import { Highlighter, HighlighterProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
 
-const code = `
-export default ({ children, className }: MarkdownProps) => {
+const code = `export default ({ children, className }: MarkdownProps) => {
   const { styles } = useStyles();
   return (
     <ReactMarkdown
@@ -11,13 +10,32 @@ export default ({ children, className }: MarkdownProps) => {
       {children}
     </ReactMarkdown>
   );
-};
-
-`;
+}`;
 export default () => {
+  const store = useCreateStore();
+  const options: HighlighterProps | any = useControls(
+    {
+      children: {
+        value: code,
+        rows: true,
+      },
+      language: 'tsx',
+      type: {
+        value: 'block',
+        options: ['ghost', 'block', 'prue'],
+      },
+      copyable: true,
+      showLanguage: true,
+      theme: {
+        value: null,
+        options: [null, 'dark', 'light'],
+      },
+    },
+    { store },
+  );
   return (
-    <Highlighter theme={'dark'} language={'tsx'}>
-      {code}
-    </Highlighter>
+    <StroyBook levaStore={store}>
+      <Highlighter {...options} />
+    </StroyBook>
   );
 };

@@ -9,28 +9,26 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
       css`
         .shiki {
           overflow-x: scroll;
-
-          .line {
-            font-family: ${token.fontFamilyHighlighter};
-          }
-        }
-      `,
-    ),
-
-    prism: cx(
-      `${prefix}-prism`,
-      css`
-        code[class*='language-'] {
           background: none !important;
         }
       `,
     ),
+    prism: css`
+      pre {
+        overflow-x: scroll;
+        font-family: 'Hack Nerd Font Mono', 'Hack', 'Fira Code', 'Fira Mono', Menlo, Consolas,
+          'DejaVu Sans Mono', monospace !important;
+      }
+    `,
 
     loading: css`
       position: absolute;
-      top: 8px;
-      right: 12px;
+      top: 0;
+      right: 0;
       color: ${token.colorTextTertiary};
+      padding: 4px 8px;
+      backdrop-filter: saturate(180%) blur(10px);
+      border-radius: ${token.borderRadiusSM};
     `,
   };
 });
