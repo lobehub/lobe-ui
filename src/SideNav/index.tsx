@@ -1,22 +1,6 @@
 import { Space } from 'antd';
 import { memo, ReactNode } from 'react';
-import styled from 'styled-components';
-
-const Layout = styled.div`
-  display: flex;
-  flex: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-
-  width: 64px;
-  height: 100%;
-  min-height: 640px;
-  padding: 16px 0;
-
-  background: ${({ theme }) => theme.colorBgContainer};
-  border-right: 1px solid ${({ theme }) => theme.colorBorder};
-`;
+import { useStyles } from './style';
 
 export interface SideNavProps extends DivProps {
   /**
@@ -33,9 +17,10 @@ export interface SideNavProps extends DivProps {
   bottomActions: ReactNode;
 }
 
-const SideNav = memo<SideNavProps>(({ avatar, topActions, bottomActions, ...props }) => {
+const SideNav = memo<SideNavProps>(({ className, avatar, topActions, bottomActions, ...props }) => {
+  const { styles, cx } = useStyles();
   return (
-    <Layout {...props}>
+    <div className={cx(styles, className)} {...props}>
       <Space size={16} direction="vertical" align="center">
         {avatar}
         <Space size={8} direction="vertical" align="center">
@@ -45,7 +30,7 @@ const SideNav = memo<SideNavProps>(({ avatar, topActions, bottomActions, ...prop
       <Space size={4} direction="vertical" align="center">
         {bottomActions}
       </Space>
-    </Layout>
+    </div>
   );
 });
 

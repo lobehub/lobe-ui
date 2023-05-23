@@ -4,7 +4,7 @@ import { useResponsive } from 'antd-style';
 import { FC, ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import Code from '../CodeSnippet';
+import { Snippet } from '@lobehub/ui';
 
 import { ApiHeaderProps } from '@/index';
 import { useStyles } from './style';
@@ -89,16 +89,9 @@ export const ApiHeader: FC<ApiTitleProps> = memo(
           </div>
         )}
         <Flexbox style={{ marginTop: 16 }} gap={mobile ? 16 : 24}>
-          <Flexbox horizontal={!mobile} gap={mobile ? 12 : 0}>
-            <Typography.Text
-              className={styles.label}
-              type={'secondary'}
-              style={{ display: 'flex', alignItems: 'center' }}
-            >
-              Snippet
-            </Typography.Text>
-            <Code>{importStr}</Code>
-          </Flexbox>
+          <div style={{ display: 'flex' }}>
+            <Snippet>{importStr}</Snippet>
+          </div>
           <Divider dashed style={{ margin: '2px 0' }} />
           <Flexbox horizontal={!mobile} gap={mobile ? 24 : 0} distribution={'space-between'}>
             <Space split={<Divider type={'vertical'} />} wrap>

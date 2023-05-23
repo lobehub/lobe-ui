@@ -1,35 +1,39 @@
 import { useHighlight } from '@/hooks/useHighlight';
 import { Loading3QuartersOutlined as Loading } from '@ant-design/icons';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { Center } from 'react-layout-kit';
 import { shallow } from 'zustand/shallow';
 import type { HighlighterProps } from '../index';
 import { Prism } from './Prism';
-import { GlobalStyle } from './shikiTheme';
+
+import { useThemeMode } from 'antd-style';
 import { useStyles } from './style';
 
 type SyntaxHighlighterProps = Pick<HighlighterProps, 'language' | 'children' | 'theme'>;
 
 const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
-  ({ children, language, theme: appearance = 'light' }) => {
+  ({ children, language, theme: appearance }) => {
     const { styles, theme } = useStyles();
-    const isDarkMode = appearance === 'dark';
-
+    const { isDarkMode } = useThemeMode();
+    const isDarkTheme = appearance ? appearance === 'dark' : isDarkMode;
     const [codeToHtml, isLoading] = useHighlight((s) => [s.codeToHtml, !s.highlighter], shallow);
+
+    useEffect(() => {
+      useHighlight.getState().initHighlighter();
+    }, []);
 
     return (
       <>
-        <GlobalStyle />
         {isLoading ? (
           <div className={styles.prism}>
-            <Prism language={language} isDarkMode={isDarkMode}>
+            <Prism language={language} isDarkMode={isDarkTheme}>
               {children}
             </Prism>
           </div>
         ) : (
           <div
             dangerouslySetInnerHTML={{
-              __html: codeToHtml(children, language, isDarkMode) || '',
+              __html: codeToHtml(children, language, isDarkTheme) || '',
             }}
             className={styles.shiki}
           />

@@ -10,7 +10,7 @@ export interface HighlighterProps {
 export const Prism = memo<HighlighterProps>(({ children, language, isDarkMode }) => {
   return (
     <Highlight
-      theme={isDarkMode ? themes.vsDark : themes.vsLight}
+      theme={isDarkMode ? themes.jettwaveDark : themes.jettwaveLight}
       code={children}
       language={language as any}
     >

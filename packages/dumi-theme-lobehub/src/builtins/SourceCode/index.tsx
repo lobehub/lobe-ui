@@ -1,6 +1,7 @@
-import { FC } from 'react';
-
 import { Highlighter } from '@lobehub/ui';
+import { useTheme } from 'antd-style';
+import { rgba } from 'polished';
+import { FC } from 'react';
 
 interface SourceCodeProps {
   lang: string;
@@ -8,7 +9,12 @@ interface SourceCodeProps {
 }
 
 const SourceCode: FC<SourceCodeProps> = ({ children, lang }) => {
-  return <Highlighter language={lang}>{children}</Highlighter>;
+  const theme = useTheme();
+  return (
+    <Highlighter style={{ background: rgba(theme.colorBgLayout, 0.5) }} language={lang}>
+      {children}
+    </Highlighter>
+  );
 };
 
 export default SourceCode;
