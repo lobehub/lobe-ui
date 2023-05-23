@@ -1,8 +1,8 @@
 ---
 nav: Components
 group: Controls
-title: EditableText
-description: EditableText
+title: Swatches
+description: Swatches
 ---
 
 ## Default

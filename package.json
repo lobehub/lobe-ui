@@ -84,6 +84,7 @@
     "zustand": "^4"
   },
   "devDependencies": {
+    "@ant-design/colors": "^7",
     "@commitlint/cli": "^17",
     "@testing-library/react": "^14",
     "@types/chroma-js": "^2",

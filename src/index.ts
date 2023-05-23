@@ -11,6 +11,7 @@ export {
 export { default as Icon, type IconProps, type IconSize } from './Icon';
 export { default as Logo, type LogoProps } from './Logo';
 export { default as Markdown, type MarkdownProps } from './Markdown';
+export { default as MessageInput, type MessageInputProps } from './MessageInput';
 export { default as SearchBar, type SearchBarProps } from './SearchBar';
 export { default as SideNav, type SideNavProps } from './SideNav';
 export { default as Snippet, type SnippetProps } from './Snippet';
@@ -20,6 +21,7 @@ export {
   useCreateStore,
   type StroyBookProps,
 } from './StroyBook';
+export { default as Swatches, type SwatchesProps } from './Swatches';
 export { default as TabsNav, type TabsNavProps } from './TabsNav';
 export { default as ThemeProvider } from './ThemeProvider';
 export { default as ThemeSwitch, type ThemeSwitchProps } from './ThemeSwitch';
