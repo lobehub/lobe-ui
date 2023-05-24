@@ -1,0 +1,26 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`createStore > should initialize with the correct state 1`] = `
+{
+  "agent": {
+    "content": "",
+    "hash": "",
+    "id": "",
+    "model": "gpt-3.5-turbo",
+  },
+  "changingSystemRole": false,
+  "createAt": -1,
+  "dispatchMessage": [Function],
+  "editingMessageId": null,
+  "generateMessage": [Function],
+  "handleMessageEditing": [Function],
+  "loading": false,
+  "message": "",
+  "messages": [],
+  "removeAgent": [Function],
+  "resendMessage": [Function],
+  "sendMessage": [Function],
+  "updateAgentContent": [Function],
+  "updateAt": -1,
+}
+`;

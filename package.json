@@ -65,12 +65,14 @@
   "dependencies": {
     "@ant-design/icons": "^5",
     "@babel/runtime": "^7",
+    "@dqbd/tiktoken": "^1",
     "@floating-ui/react": "^0.24",
     "ahooks": "^3",
     "antd-style": "^3",
     "chroma-js": "^2",
     "copy-to-clipboard": "^3",
     "dayjs": "^1",
+    "immer": "^10",
     "leva": "^0.9.34",
     "lodash": "^4",
     "lucide-react": "latest",
@@ -83,8 +85,10 @@
     "remark-gfm": "^3.0.1",
     "shiki-es": "^0.2",
     "styled-components": "^6.0.0-rc.1",
+    "ts-md5": "^1",
     "use-merge-value": "^1",
-    "zustand": "^4"
+    "zustand": "^4",
+    "zustand-utils": "^1"
   },
   "devDependencies": {
     "@ant-design/colors": "^7",

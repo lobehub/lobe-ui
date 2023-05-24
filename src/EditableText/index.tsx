@@ -3,7 +3,7 @@ import { Tooltip } from 'antd';
 import { memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import { ControlInput, ControlInputProps } from './ControlInput';
+import { ControlInput, ControlInputProps } from '@/components/ControlInput';
 
 export type EditableTextProps = ControlInputProps;
 const EditableText = memo<EditableTextProps>(({ value, onChange }: ControlInputProps) => {
