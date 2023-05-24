@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.7.0](https://github.com/lobehub/lobe-ui/compare/v1.6.1...v1.7.0) (2023-05-24)
+
+### ✨ Features
+
+- add Conversation component ([1ba8af8](https://github.com/lobehub/lobe-ui/commit/1ba8af8))
+- add EditableMessageList component ([2107a49](https://github.com/lobehub/lobe-ui/commit/2107a49))
+
 ## [1.6.1](https://github.com/lobehub/lobe-ui/compare/v1.6.0...v1.6.1) (2023-05-23)
 
 # [1.6.0](https://github.com/lobehub/lobe-ui/compare/v1.5.0...v1.6.0) (2023-05-23)
