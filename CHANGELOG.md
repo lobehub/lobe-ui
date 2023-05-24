@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.7.1](https://github.com/lobehub/lobe-ui/compare/v1.7.0...v1.7.1) (2023-05-24)
+
+### 🐛 Bug Fixes
+
+- add missing deps ([5cbe3bf](https://github.com/lobehub/lobe-ui/commit/5cbe3bf))
+
 # [1.7.0](https://github.com/lobehub/lobe-ui/compare/v1.6.1...v1.7.0) (2023-05-24)
 
 ### ✨ Features
