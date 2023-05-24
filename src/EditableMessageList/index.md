@@ -1,7 +1,7 @@
 ---
 group: Chat
-title: ChatMessageList
-description: ChatMessageList
+title: EditableMessageList
+description: EditableMessageList
 ---
 
 ## Default
