@@ -32,6 +32,28 @@ export default defineConfig({
   define: {
     'process.env': process.env,
   },
+  mfsu: {
+    exclude: ['@dqbd/tiktoken'],
+  },
+  chainWebpack(config) {
+    config.set('experiments', {
+      ...config.get('experiments'),
+      asyncWebAssembly: true,
+      layers: true,
+    });
+
+    const REG = /\.wasm$/;
+
+    config.module.rule('asset').exclude.add(REG).end();
+
+    config.module
+      .rule('wasm')
+      .test(REG)
+      .exclude.add(/node_modules/)
+      .end()
+      .type('webassembly/async')
+      .end();
+  },
   extraBabelPlugins: [
     [
       'babel-plugin-styled-components',

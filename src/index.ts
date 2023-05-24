@@ -2,6 +2,7 @@ export { default as ActionIcon, type ActionIconProps, type ActionIconSize } from
 export { default as Avatar, type AvatarProps } from './Avatar';
 export type { ChatMessage } from './Chat';
 export { default as ContextMenu, type ContextMenuProps } from './ContextMenu';
+export { default as Conversation, type ConversationProps } from './Conversation';
 export { default as CopyButton, type CopyButtonProps } from './CopyButton';
 export { default as DraggablePanel, type DraggablePanelProps } from './DraggablePanel';
 export { default as EditableMessage, type EditableMessageProps } from './EditableMessage';
