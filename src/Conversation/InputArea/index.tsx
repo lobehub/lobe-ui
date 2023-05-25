@@ -15,7 +15,6 @@ const useStyles = createStyles(({ css, responsive, token }) => ({
     z-index: ${token.zIndexPopupBase};
     bottom: 0;
 
-    width: ${token.contentWidth}px;
     padding-top: 12px;
     padding-bottom: 24px;
 

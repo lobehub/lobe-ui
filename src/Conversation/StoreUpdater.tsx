@@ -16,7 +16,6 @@ const StoreUpdater: FC<StoreUpdaterProps> = ({
   createAt,
   title,
   description,
-  agent,
   messages,
   onAgentChange,
   onMessagesChange,
@@ -25,7 +24,6 @@ const StoreUpdater: FC<StoreUpdaterProps> = ({
 }) => {
   const useStoreUpdater = createStoreUpdater<ChatStore>(useStoreApi());
 
-  useStoreUpdater('agent', agent);
   useStoreUpdater('onAgentChange', onAgentChange);
 
   useStoreUpdater('messages', messages);
