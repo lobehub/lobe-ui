@@ -8,6 +8,8 @@ import {
   type ThemeMode,
 } from 'antd-style';
 import React, { useCallback } from 'react';
+// @ts-ignore
+import ReactFontLoader from 'react-font-loader';
 import { ThemeContext } from 'styled-components';
 import { createCustomToken, getAntdTheme, getCustomStylish } from '../styles';
 import GlobalStyle from './GlobalStyle';
@@ -57,6 +59,9 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ token, children, themeMod
         customStylish={getCustomStylish}
         customToken={getCustomToken}
       >
+        <ReactFontLoader url="https://raw.githubusercontent.com/divspace/hack/master/css/hack.css" />
+        <ReactFontLoader url="https://raw.githubusercontent.com/IKKI2000/harmonyos-fonts/main/css/harmonyos_sans.css" />
+        <ReactFontLoader url="https://raw.githubusercontent.com/IKKI2000/harmonyos-fonts/main/css/harmonyos_sans_sc.css" />
         <GlobalStyle />
         <App style={{ minHeight: 'inherit', width: 'inherit' }}>{children}</App>
       </AntdThemeProvider>

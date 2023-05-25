@@ -85,6 +85,7 @@
     "polished": "^4",
     "prism-react-renderer": "^2",
     "re-resizable": "^6",
+    "react-font-loader": "^2.0.0",
     "react-layout-kit": "^1",
     "react-markdown": "^8",
     "react-rnd": "^10",
