@@ -67,14 +67,13 @@ export const getCustomStylish: GetCustomStylish<SiteStylish> = ({ css, token, is
     `,
     heroTextShadow: css`
       will-change: transform;
-
       text-shadow: 0 8px 20px ${rgba(token.gradientColor2, 0.2)},
         0 8px 60px ${rgba(token.gradientColor3, 0.2)},
         0 8px 80px ${rgba(token.cyan, isDarkMode ? 0.2 : 0.4)};
     `,
     heroBlurBall: css`
-      filter: blur(69px);
       will-change: transform;
+
       background: linear-gradient(
         135deg,
         ${token.gradientColor3} 0%,
@@ -83,6 +82,8 @@ export const getCustomStylish: GetCustomStylish<SiteStylish> = ({ css, token, is
         ${token.cyan} 100%
       );
       background-size: 200% 200%;
+      filter: blur(69px);
+
       animation: glow 10s ease infinite;
 
       @keyframes glow {
@@ -101,15 +102,15 @@ export const getCustomStylish: GetCustomStylish<SiteStylish> = ({ css, token, is
     `,
 
     iconGradientDefault: css`
-      radial-gradient(
+      background-image: radial-gradient(
         100% 100% at 50% 0,
         ${rgba(token.colorSolid, 0.2)} 0,
         ${rgba(token.colorSolid, 0.1)} 100%
-      )`,
+      );
+    `,
 
     blur: css`
       backdrop-filter: blur(7px);
-      // background: ${rgba(token.colorBgBase, 0.5)};
     `,
   };
 };

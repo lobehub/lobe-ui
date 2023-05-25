@@ -7,8 +7,8 @@ export const useStyles = createStyles(({ css }) => {
       align-items: center;
     `,
     extraTitle: css`
-      white-space: nowrap;
       font-weight: 300;
+      white-space: nowrap;
     `,
   };
 });

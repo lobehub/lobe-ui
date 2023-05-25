@@ -32,9 +32,9 @@ export default defineConfig({
   define: {
     'process.env': process.env,
   },
-  mfsu: {
-    exclude: ['@dqbd/tiktoken'],
-  },
+  // mfsu: {
+  //   exclude: ['@dqbd/tiktoken'],
+  // },
   chainWebpack(config) {
     config.set('experiments', {
       ...config.get('experiments'),

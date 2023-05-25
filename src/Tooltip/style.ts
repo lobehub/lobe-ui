@@ -4,14 +4,17 @@ export const useStyles = createStyles(({ css, token }) => {
   return {
     tooltip: css`
       .ant-tooltip-inner {
-        background-color: ${token.colorText};
-        color: ${token.colorBgLayout};
-        padding: 4px 8px;
-        border-radius: ${token.borderRadiusSM}px;
-        min-height: unset;
         display: flex;
         align-items: center;
         justify-content: center;
+
+        min-height: unset;
+        padding: 4px 8px;
+
+        color: ${token.colorBgLayout};
+
+        background-color: ${token.colorText};
+        border-radius: ${token.borderRadiusSM}px;
       }
       .ant-tooltip-arrow {
         &:before,

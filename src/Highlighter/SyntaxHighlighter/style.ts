@@ -24,8 +24,11 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
       position: absolute;
       top: 0;
       right: 0;
-      color: ${token.colorTextTertiary};
+
       padding: 4px 8px;
+
+      color: ${token.colorTextTertiary};
+
       backdrop-filter: saturate(180%) blur(10px);
       border-radius: ${token.borderRadiusSM};
     `,

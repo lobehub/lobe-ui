@@ -4,25 +4,26 @@ import { rgba } from 'polished';
 export const useStyles = createStyles(
   ({ css, token }, type: 'ghost' | 'block') =>
     css`
-      display: flex;
-      max-width: 100%;
       position: relative;
-      align-items: center;
-      border-radius: ${token.borderRadius}px;
-      gap: 8px;
-      padding: 0 8px 0 12px;
-      height: 36px;
-      transition:  background-color 100ms ${token.motionEaseOut};
 
-      ${
-        type === 'block'
-          ? css`
-              background-color: ${rgba(token.colorBgElevated, 0.6)};
-            `
-          : css`
-              border: 1px solid ${token.colorBorder};
-            `
-      }
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      max-width: 100%;
+      height: 36px;
+      padding: 0 8px 0 12px;
+
+      border-radius: ${token.borderRadius}px;
+
+      transition: background-color 100ms ${token.motionEaseOut};
+      ${type === 'block'
+        ? css`
+            background-color: ${rgba(token.colorBgElevated, 0.6)};
+          `
+        : css`
+            border: 1px solid ${token.colorBorder};
+          `}
 
       &:hover {
         background-color: ${token.colorFillTertiary};
@@ -37,11 +38,12 @@ export const useStyles = createStyles(
       }
 
       pre {
-        background: none !important;
-        padding-top: 6px; !important;
         margin: 0 !important;
+        padding-top: 6px !important;
         line-height: 1;
+        background: none !important;
       }
+
       code[class*='language-'] {
         background: none !important;
       }

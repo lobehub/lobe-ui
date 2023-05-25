@@ -3,23 +3,30 @@ import { createStyles } from 'antd-style';
 export const useStyles = createStyles(({ css, token, isDarkMode }) => {
   return {
     container: css`
-       color: ${isDarkMode ? token.colorTextSecondary : token.colorText};
-
-
+      color: ${isDarkMode ? token.colorTextSecondary : token.colorText};
 
       p {
         margin: 20px auto;
-        line-height: 2;
-        word-wrap: break-word;
-        font-size: 14px;
-        color: ${token.colorText};
 
-        &:not(:last-child) {
-          margin-bottom: 1em;
+        font-size: 14px;
+        line-height: 2;
+        color: ${token.colorText};
+        word-wrap: break-word;
+      }
+
+      blockquote {
+        margin: 16px 0;
+        padding: 0 12px;
+        p {
+          font-style: italic;
+          color: ${token.colorTextDescription};
         }
       }
 
-      // hyperlink
+      p:not(:last-child) {
+        margin-bottom: 1em;
+      }
+
       a {
         color: ${token.colorLink};
 
@@ -36,7 +43,6 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
         max-width: 100%;
       }
 
-      // inline code
       > :not([data-code-type='highlighter']) code {
         padding: 2px 6px;
         color: ${isDarkMode ? token['cyan-7'] : token.colorPrimaryText};
@@ -44,22 +50,26 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
         border-radius: 4px;
       }
 
-
-      // table
       table {
-        width: 100%;
         border-spacing: 0;
-        border: 1px solid ${token.colorBorder};
-        border-radius: ${token.borderRadius}px;
-        padding: 8px;
+
+        width: 100%;
         margin-block-start: 1em;
         margin-block-end: 1em;
         margin-inline-start: 0px;
         margin-inline-end: 0px;
+        padding: 8px;
+
+        border: 1px solid ${token.colorBorder};
+        border-radius: ${token.borderRadius}px;
       }
 
-      th {
-
+      th,
+      td {
+        padding-block-start: 10px;
+        padding-block-end: 10px;
+        padding-inline-start: 16px;
+        padding-inline-end: 16px;
       }
 
       thead {
@@ -78,29 +88,9 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
         }
       }
 
-      th,
-      td {
-        padding-block-start: 10px;
-        padding-block-end: 10px;
-        padding-inline-start: 16px;
-        padding-inline-end: 16px;
-      }
-
-      // blockquote
-      blockquote {
-        margin: 16px 0;
-        padding: 0 12px;
-        p {
-          font-style: italic;
-          color: ${token.colorTextDescription};
-        }
-      }
-
-      // list
       ul li {
         line-height: 1.8;
       }
-    }
     `,
 
     code: css`

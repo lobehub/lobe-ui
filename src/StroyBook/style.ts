@@ -7,6 +7,7 @@ export const useStyles = createStyles(
         display: flex;
         align-items: stretch;
         justify-content: stretch;
+
         width: inherit;
         min-height: inherit;
         ${mobile &&
@@ -15,11 +16,12 @@ export const useStyles = createStyles(
         `}
       `,
       left: css`
-        flex: 1;
+        overflow: auto;
         display: flex;
+        flex: 1;
         align-items: center;
         justify-content: center;
-        overflow: auto;
+
         ${!noPadding &&
         css`
           padding: 40px 24px;
@@ -39,6 +41,7 @@ export const useStyles = createStyles(
         --leva-colors-vivid1: ${token.colorWarning};
         --leva-shadows-level1: unset;
         --leva-shadows-level2: unset;
+
         padding: 6px 0;
         background: ${token.colorBgLayout};
         > div {

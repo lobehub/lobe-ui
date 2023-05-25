@@ -11,19 +11,27 @@ export const useStyles = createStyles(
       container: cx(
         prefix,
         css`
-          overflow: auto;
           position: relative;
-          transition: background-color 100ms ${token.motionEaseOut};
+
+          overflow: auto;
+
           background-color: ${type === 'block' ? rgba(token.colorBgElevated, 0.6) : 'transparent'};
           border-radius: ${token.borderRadius}px;
 
+          transition: background-color 100ms ${token.motionEaseOut};
           ${type === 'ghost' &&
           css`
             border: 1px solid ${token.colorBorder};
           `}
-
           &:hover {
             background-color: ${type === 'prue' ? 'transparent' : token.colorFillTertiary};
+            .${buttonHoverCls} {
+              opacity: 1;
+            }
+
+            .${langHoverCls} {
+              opacity: 1;
+            }
           }
 
           .prism-code {
@@ -38,16 +46,6 @@ export const useStyles = createStyles(
 
           code {
             background: transparent !important;
-          }
-
-          &:hover {
-            .${buttonHoverCls} {
-              opacity: 1;
-            }
-
-            .${langHoverCls} {
-              opacity: 1;
-            }
           }
         `,
       ),

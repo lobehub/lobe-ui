@@ -2,37 +2,51 @@ import { createGlobalStyle } from 'antd-style';
 
 const GlobalStyle = createGlobalStyle`
 
-  body {
-    font-family: ${({ theme }) => theme.fontFamily};
-    font-size: ${({ theme }) => theme.fontSize}px;
-    line-height: 1;
-    color: ${({ theme }) => theme.colorTextBase};
+  html,body {
+    --font-settings: "cv01";
+    --font-variations: "opsz" auto;
+
+    overflow-x: hidden;
 
     margin: 0;
     padding: 0;
-    background-color: ${(p) => p.theme.colorBgLayout};
+
+    font-family: ${({ theme }) => theme.fontFamily};
+    font-size: ${({ theme }) => theme.fontSize}px;
+    font-feature-settings: var(--font-settings);
+    font-variation-settings: var(--font-variations);
+    line-height: 1;
+    color: ${({ theme }) => theme.colorTextBase};
+    text-size-adjust: none;
+    text-rendering: optimizelegibility;
+    vertical-align: baseline;
+
+    color-scheme: dark;
+    background-color: ${({ theme }) => theme.colorBgLayout};
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
   }
+
 
   * {
     box-sizing: border-box;
+    vertical-align: baseline;
   }
 
   #root {
 	  min-height: 100vh;
   }
-  /* 定义滚动槽的样式 */
+
   ::-webkit-scrollbar {
     width: 0;
     height: 4px;
-    margin-right: 4px;
-    background-color: transparent; // 定义滚动槽的背景色
+    background-color: transparent;
 
     &-thumb {
-      background-color: ${({ theme }) => theme.colorFill}; // 定义滚动块的背景色
-      border-radius: 4px; // 定义滚动块的圆角半径
+      background-color: ${({ theme }) => theme.colorFill};
+      border-radius: 4px;
     }
 
     &-corner {
