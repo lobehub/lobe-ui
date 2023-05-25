@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.7.3](https://github.com/lobehub/lobe-ui/compare/v1.7.2...v1.7.3) (2023-05-25)
+
 ## [1.7.2](https://github.com/lobehub/lobe-ui/compare/v1.7.1...v1.7.2) (2023-05-25)
 
 ## [1.7.1](https://github.com/lobehub/lobe-ui/compare/v1.7.0...v1.7.1) (2023-05-24)
