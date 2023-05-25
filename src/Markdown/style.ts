@@ -11,6 +11,7 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
         font-size: 14px;
         line-height: 2;
         color: ${token.colorText};
+        text-align: justify;
         word-wrap: break-word;
       }
 

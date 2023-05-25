@@ -53,6 +53,11 @@ const GlobalStyle = createGlobalStyle`
       display: none;
     }
   }
+
+  p {
+    text-align: justify;
+    word-wrap: break-word;
+  }
 `;
 
 export default GlobalStyle;
