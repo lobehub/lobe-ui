@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.8.0](https://github.com/lobehub/lobe-ui/compare/v1.7.3...v1.8.0) (2023-05-25)
+
+### ✨ Features
+
+- **themeprovider**: Add support for new fonts ([79d7865](https://github.com/lobehub/lobe-ui/commit/79d7865))
+
 ## [1.7.3](https://github.com/lobehub/lobe-ui/compare/v1.7.2...v1.7.3) (2023-05-25)
 
 ## [1.7.2](https://github.com/lobehub/lobe-ui/compare/v1.7.1...v1.7.2) (2023-05-25)
