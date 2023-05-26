@@ -1,11 +1,11 @@
-import { EditOutlined } from '@ant-design/icons';
-import { Tooltip } from 'antd';
+import { ControlInput, ControlInputProps } from '@/components/ControlInput';
+import { ActionIcon } from '@/index';
+import { Edit3 } from 'lucide-react';
 import { memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import { ControlInput, ControlInputProps } from '@/components/ControlInput';
-
 export type EditableTextProps = ControlInputProps;
+
 const EditableText = memo<EditableTextProps>(({ value, onChange }: ControlInputProps) => {
   const [edited, setEdited] = useState(false);
   return edited ? (
@@ -19,13 +19,15 @@ const EditableText = memo<EditableTextProps>(({ value, onChange }: ControlInputP
   ) : (
     <Flexbox horizontal gap={8}>
       {value}
-      <Tooltip title={'编辑'}>
-        <EditOutlined
-          onClick={() => {
-            setEdited(!edited);
-          }}
-        />
-      </Tooltip>
+      <ActionIcon
+        title={'Edit'}
+        placement="right"
+        icon={Edit3}
+        size={{ fontSize: 14, blockSize: 24 }}
+        onClick={() => {
+          setEdited(!edited);
+        }}
+      />
     </Flexbox>
   );
 });

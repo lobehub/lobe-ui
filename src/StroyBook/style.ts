@@ -41,6 +41,7 @@ export const useStyles = createStyles(
         --leva-colors-vivid1: ${token.colorWarning};
         --leva-shadows-level1: unset;
         --leva-shadows-level2: unset;
+        --leva-fonts-mono: ${token.fontFamilyCode};
 
         padding: 6px 0;
         background: ${token.colorBgLayout};

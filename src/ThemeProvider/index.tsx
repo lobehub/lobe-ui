@@ -59,7 +59,6 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ token, children, themeMod
         customStylish={getCustomStylish}
         customToken={getCustomToken}
       >
-        <ReactFontLoader url="https://raw.githubusercontent.com/divspace/hack/master/css/hack.css" />
         <ReactFontLoader url="https://raw.githubusercontent.com/IKKI2000/harmonyos-fonts/main/css/harmonyos_sans.css" />
         <ReactFontLoader url="https://raw.githubusercontent.com/IKKI2000/harmonyos-fonts/main/css/harmonyos_sans_sc.css" />
         <GlobalStyle />

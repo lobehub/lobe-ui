@@ -7,7 +7,7 @@ description: SearchBar that includes an input field with a search icon and clear
 
 ## Default
 
-<code src="./demos/index.tsx" center></code>
+<code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
 
