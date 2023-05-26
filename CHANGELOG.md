@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.9.0](https://github.com/lobehub/lobe-ui/compare/v1.8.2...v1.9.0) (2023-05-26)
+
+### ✨ Features
+
+- update SearchBar style ([1fd28be](https://github.com/lobehub/lobe-ui/commit/1fd28be))
+
 ## [1.8.2](https://github.com/lobehub/lobe-ui/compare/v1.8.1...v1.8.2) (2023-05-26)
 
 ## [1.8.1](https://github.com/lobehub/lobe-ui/compare/v1.8.0...v1.8.1) (2023-05-25)
