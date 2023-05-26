@@ -9,7 +9,7 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
         margin: 20px auto;
 
         font-size: 14px;
-        line-height: 2;
+        line-height: 1.8;
         color: ${token.colorText};
         text-align: justify;
         word-wrap: break-word;

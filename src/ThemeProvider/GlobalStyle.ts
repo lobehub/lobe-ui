@@ -3,8 +3,8 @@ import { createGlobalStyle } from 'antd-style';
 const GlobalStyle = createGlobalStyle`
 
   html,body {
-    --font-settings: "cv01";
-    --font-variations: "opsz" auto;
+    --font-settings: "cv01", "tnum", "kern";
+    --font-variations: "opsz" auto, tabular-nums;
 
     overflow-x: hidden;
 
@@ -57,6 +57,13 @@ const GlobalStyle = createGlobalStyle`
   p {
     text-align: justify;
     word-wrap: break-word;
+  }
+
+  code {
+	  font-family: ${({ theme }) => theme.fontFamilyCode} !important;
+	  * {
+		  font-family: inherit !important;
+	  }
   }
 `;
 
