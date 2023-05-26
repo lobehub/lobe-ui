@@ -80,7 +80,7 @@ const ActionIcon = memo<ActionIconProps>(
         borderRadius = 5;
         break;
       case 'small':
-        blockSize = 28;
+        blockSize = 24;
         borderRadius = 5;
         break;
       case 'site':
@@ -99,7 +99,7 @@ const ActionIcon = memo<ActionIconProps>(
         style={{ width: blockSize, height: blockSize, borderRadius, ...style }}
         {...props}
       >
-        <Icon size={size === 'site' ? 'small' : size} icon={icon} />
+        <Icon size={size === 'site' ? 'normal' : size} icon={icon} />
       </div>
     );
 

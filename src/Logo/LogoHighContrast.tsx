@@ -1,3 +1,4 @@
+import { SvgProps } from '@/types';
 import { memo } from 'react';
 
 const LogoHighContrast = memo<SvgProps | any>(({ ...props }) => (

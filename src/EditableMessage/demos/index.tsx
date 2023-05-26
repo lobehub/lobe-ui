@@ -1,21 +1,30 @@
-import { EditableMessage } from '@lobehub/ui';
-import { Button, Divider } from 'antd';
+import { EditableMessage, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { button } from 'leva';
 import { useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 export default () => {
+  const [openModal, setOpenModal] = useState(false);
   const [editing, setEdit] = useState(false);
+  const store = useCreateStore();
+  useControls(
+    {
+      editing: button(() => {
+        setEdit(true);
+      }),
+      openModal: button(() => {
+        setOpenModal(true);
+      }),
+    },
+    { store },
+  );
   return (
-    <Flexbox width={400}>
-      <Button
-        onClick={() => {
-          setEdit(true);
-        }}
-      >
-        编辑
-      </Button>
-      <Divider />
-      <EditableMessage value={'editable text'} editing={editing} onEditingChange={setEdit} />
-    </Flexbox>
+    <StroyBook levaStore={store}>
+      <EditableMessage
+        value={'editable text'}
+        openModal={openModal}
+        editing={editing}
+        onEditingChange={setEdit}
+      />
+    </StroyBook>
   );
 };

@@ -1,3 +1,4 @@
+import { SvgProps } from '@/types';
 import { LucideIcon } from 'lucide-react';
 import { FC, memo } from 'react';
 
@@ -29,12 +30,15 @@ const Icon: FC<IconProps> = ({ icon, size = 'normal', ...props }) => {
   const SvgIcon = icon;
   switch (size) {
     case 'large':
-    case 'normal':
       fontSize = 24;
       strokeWidth = 2;
       break;
-    case 'small':
+    case 'normal':
       fontSize = 20;
+      strokeWidth = 2;
+      break;
+    case 'small':
+      fontSize = 14;
       strokeWidth = 1.5;
       break;
     default:

@@ -23,7 +23,7 @@ const EditableText = memo<EditableTextProps>(({ value, onChange }: ControlInputP
         title={'Edit'}
         placement="right"
         icon={Edit3}
-        size={{ fontSize: 14, blockSize: 24 }}
+        size="small"
         onClick={() => {
           setEdited(!edited);
         }}

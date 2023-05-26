@@ -1,3 +1,4 @@
+import { SvgProps } from '@/types';
 import { memo } from 'react';
 
 const LogoText = memo<SvgProps | any>(({ ...props }) => (

@@ -1,4 +1,6 @@
-import { Button, ConfigProvider, Input, InputProps, InputRef } from 'antd';
+import { ActionIcon, Input, InputProps } from '@/index';
+import { ConfigProvider, InputRef, Space } from 'antd';
+import { RotateCcw, Save } from 'lucide-react';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
 export interface ControlInputProps extends Omit<InputProps, 'onChange' | 'value' | 'onAbort'> {
@@ -13,7 +15,6 @@ export const ControlInput = memo<ControlInputProps>(
     const [input, setInput] = useState<string>(value || '');
     const inputRef = useRef<InputRef>(null);
     const isChineseInput = useRef(false);
-
     const isFocusing = useRef(false);
 
     const updateValue = useCallback(() => {
@@ -59,26 +60,17 @@ export const ControlInput = memo<ControlInputProps>(
             <span />
           ) : (
             <ConfigProvider theme={{ token: { fontSize: 14 } }}>
-              <Button
-                type={'link'}
-                size={'small'}
-                onClick={() => {
-                  setInput(value as string);
-                }}
-                style={{ padding: 0 }}
-              >
-                重置
-              </Button>
-              <Button
-                type={'link'}
-                size={'small'}
-                style={{ padding: 0 }}
-                onClick={() => {
-                  updateValue();
-                }}
-              >
-                保存 ↵
-              </Button>
+              <Space size={2}>
+                <ActionIcon
+                  title="Reset"
+                  icon={RotateCcw}
+                  size="small"
+                  onClick={() => {
+                    setInput(value as string);
+                  }}
+                />
+                <ActionIcon title="✅ Save" icon={Save} size="small" onClick={updateValue} />
+              </Space>
             </ConfigProvider>
           )
         }

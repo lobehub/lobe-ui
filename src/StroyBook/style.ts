@@ -51,8 +51,13 @@ export const useStyles = createStyles(
             background: transparent;
           }
         }
+
         input:checked + label > svg {
           stroke: ${token.colorBorder};
+        }
+
+        button {
+          --leva-colors-accent2: ${token.colorFillSecondary};
         }
       `,
     };

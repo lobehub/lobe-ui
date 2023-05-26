@@ -1,3 +1,4 @@
+import { ImgProps } from '@/types';
 import { memo } from 'react';
 
 const Logo3D = memo<ImgProps | any>(({ ...props }) => (

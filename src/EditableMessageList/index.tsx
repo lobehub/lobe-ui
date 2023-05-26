@@ -1,14 +1,12 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Button, Select } from 'antd';
-import isEqual from 'fast-deep-equal';
-import { memo, useEffect, useReducer } from 'react';
-import { Flexbox } from 'react-layout-kit';
-
 import IconAction from '@/ActionIcon';
 import { ChatMessage, messagesReducer } from '@/Chat';
 import { ControlInput } from '@/components/ControlInput';
-
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Select } from 'antd';
+import isEqual from 'fast-deep-equal';
 import { TrashIcon } from 'lucide-react';
+import { memo, useEffect, useReducer } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 export interface EditableMessageListProps {
   dataSources: ChatMessage[];
@@ -60,8 +58,8 @@ export const EditableMessageList = memo<EditableMessageListProps>(
             />
             <IconAction
               icon={TrashIcon}
-              title={'删除'}
-              size={'small'}
+              placement="right"
+              title="Delete"
               onClick={() => {
                 dispatch({ type: 'deleteMessage', index });
               }}

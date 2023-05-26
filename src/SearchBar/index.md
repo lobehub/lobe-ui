@@ -7,6 +7,8 @@ description: SearchBar that includes an input field with a search icon and clear
 
 ## Default
 
+The rest of the props of Input are exactly the same as the original [input](https://ant.design/components/input).
+
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
