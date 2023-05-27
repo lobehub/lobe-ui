@@ -1,3 +1,4 @@
+import { SvgProps } from '@/types';
 import { memo } from 'react';
 
 const Divider = memo<SvgProps | any>(({ ...props }) => (
