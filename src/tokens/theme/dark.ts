@@ -50,7 +50,7 @@ const darkBaseToken: Partial<AliasToken> = {
   ...errorToken,
   ...infoToken,
 
-  colorTextLightSolid: infoToken.colorBgLayout,
+  colorTextLightSolid: neutralToken.colorBgLayout,
   colorLinkHover: infoToken.colorInfoTextHover,
   colorLink: infoToken.colorInfoText,
   colorLinkActive: infoToken.colorInfoTextActive,
