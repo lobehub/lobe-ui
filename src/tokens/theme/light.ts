@@ -4,54 +4,56 @@ import {
 } from '@/tokens/algorithms/generateColorPalette';
 import { colorScales } from '@/tokens/colors';
 import { AliasToken } from 'antd/es/theme/interface';
+import { baseToken } from './base';
 
-const PrimaryToken = generateColorPalette({
+const primaryToken = generateColorPalette({
   type: 'Primary',
   scale: colorScales.bnw,
   themeMode: 'light',
 });
 
-const NeutralToken = generateColorNeutralPalette({
+const neutralToken = generateColorNeutralPalette({
   scale: colorScales.gray,
   themeMode: 'light',
 });
 
-const SuccessToken = generateColorPalette({
+const successToken = generateColorPalette({
   type: 'Success',
   scale: colorScales.grass,
   themeMode: 'light',
 });
 
-const WarningToken = generateColorPalette({
+const warningToken = generateColorPalette({
   type: 'Warning',
   scale: colorScales.orange,
   themeMode: 'light',
 });
 
-const ErrorToken = generateColorPalette({
+const errorToken = generateColorPalette({
   type: 'Error',
   scale: colorScales.tomato,
   themeMode: 'light',
 });
 
-const InfoToken = generateColorPalette({
+const infoToken = generateColorPalette({
   type: 'Info',
   scale: colorScales.blue,
   themeMode: 'light',
 });
 
 const lightBaseToken: Partial<AliasToken> = {
-  ...PrimaryToken,
-  ...NeutralToken,
-  ...SuccessToken,
-  ...WarningToken,
-  ...ErrorToken,
-  ...InfoToken,
+  ...baseToken,
+  ...primaryToken,
+  ...neutralToken,
+  ...successToken,
+  ...warningToken,
+  ...errorToken,
+  ...infoToken,
 
-  colorTextLightSolid: NeutralToken.colorBgLayout,
-  colorLinkHover: InfoToken.colorInfoTextHover,
-  colorLink: InfoToken.colorInfoText,
-  colorLinkActive: InfoToken.colorInfoTextActive,
+  colorTextLightSolid: neutralToken.colorBgLayout,
+  colorLinkHover: infoToken.colorInfoTextHover,
+  colorLink: infoToken.colorInfoText,
+  colorLinkActive: infoToken.colorInfoTextActive,
 
   boxShadow: '0 12px 20px 6px rgb(104 112 118 / 0.08)',
   boxShadowSecondary:
