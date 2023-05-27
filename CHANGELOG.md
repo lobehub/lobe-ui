@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.11.3](https://github.com/lobehub/lobe-ui/compare/v1.11.2...v1.11.3) (2023-05-27)
+
+### 🐛 Bug Fixes
+
+- **build**: make lobe-ui as pure esm package ([d3aa186](https://github.com/lobehub/lobe-ui/commit/d3aa186))
+
 ## [1.11.2](https://github.com/lobehub/lobe-ui/compare/v1.11.1...v1.11.2) (2023-05-27)
 
 ### 🐛 Bug Fixes
