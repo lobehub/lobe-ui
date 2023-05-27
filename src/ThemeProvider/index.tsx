@@ -1,24 +1,20 @@
+import { lobeCustomStylish, lobeCustomToken, lobeTheme } from '@/styles';
+import { LobeCustomToken } from '@/types/customToken';
 import { App } from 'antd';
 import {
   ThemeProvider as AntdThemeProvider,
   StyleProvider,
   extractStaticStyle,
   setupStyled,
-  type CustomTokenParams,
   type ThemeMode,
 } from 'antd-style';
-import React, { useCallback } from 'react';
+import { memo } from 'react';
 // @ts-ignore
 import ReactFontLoader from 'react-font-loader';
 import { ThemeContext } from 'styled-components';
-import { createCustomToken, getAntdTheme, getCustomStylish } from '../styles';
 import GlobalStyle from './GlobalStyle';
 
 export interface ThemeProviderProps {
-  /**
-   * @description Custom tokens to be used in the theme
-   */
-  token?: any;
   /**
    * @description The children of the ThemeProvider component
    */
@@ -37,27 +33,16 @@ export interface ThemeProviderProps {
   cache?: typeof extractStaticStyle.cache;
 }
 
-const ThemeProvider: React.FC<ThemeProviderProps> = ({ token, children, themeMode }) => {
+const ThemeProvider = memo<ThemeProviderProps>(({ children, themeMode }) => {
   setupStyled({ ThemeContext });
-  const getCustomToken = useCallback(
-    (params: CustomTokenParams) => {
-      const base = createCustomToken(params);
-      if (token) {
-        return { ...base, ...token };
-      } else {
-        return base;
-      }
-    },
-    [token],
-  );
 
   return (
     <StyleProvider speedy={process.env.NODE_ENV === 'production'}>
-      <AntdThemeProvider
+      <AntdThemeProvider<LobeCustomToken>
         themeMode={themeMode}
-        theme={getAntdTheme}
-        customStylish={getCustomStylish}
-        customToken={getCustomToken}
+        theme={lobeTheme}
+        customStylish={lobeCustomStylish}
+        customToken={lobeCustomToken}
       >
         <ReactFontLoader url="https://raw.githubusercontent.com/IKKI2000/harmonyos-fonts/main/css/harmonyos_sans.css" />
         <ReactFontLoader url="https://raw.githubusercontent.com/IKKI2000/harmonyos-fonts/main/css/harmonyos_sans_sc.css" />
@@ -66,6 +51,6 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ token, children, themeMod
       </AntdThemeProvider>
     </StyleProvider>
   );
-};
+});
 
 export default ThemeProvider;

@@ -1,6 +1,6 @@
 import { SiteToken } from '@lobehub/ui/styles';
 import { FooterColumn } from 'rc-footer/es/column';
-import { ApiHeaderConfig, HighlighterSyntaxTheme, IHero } from '../types';
+import { ApiHeaderConfig, IHero } from '../types';
 
 /**
  * @title 页面底部 Footer 组件的配置
@@ -59,12 +59,6 @@ export interface SiteThemeConfig {
    */
   footerConfig?: IFooter;
   /**
-   * 代码高亮主题配置
-   * @type HighlighterSyntaxTheme
-   */
-  syntaxTheme?: HighlighterSyntaxTheme;
-
-  /**
    * 是否隐藏首页的 nav tab，配置为 `false` 则不展示首页的 tab
    */
   hideHomeNav?: boolean;
@@ -86,13 +80,5 @@ export interface SiteThemeConfig {
 }
 
 export type SiteConfigToken = Partial<
-  Pick<
-    SiteToken,
-    | 'headerHeight'
-    | 'footerHeight'
-    | 'sidebarWidth'
-    | 'tocWidth'
-    | 'contentMaxWidth'
-    | 'demoInheritSiteTheme'
-  >
+  Pick<SiteToken, 'headerHeight' | 'footerHeight' | 'sidebarWidth' | 'tocWidth' | 'contentMaxWidth'>
 >;

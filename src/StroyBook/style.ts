@@ -53,7 +53,7 @@ export const useStyles = createStyles(
         }
 
         input:checked + label > svg {
-          stroke: ${token.colorBorder};
+          stroke: ${token.colorBgLayout};
         }
 
         button {

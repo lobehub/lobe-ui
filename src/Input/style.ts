@@ -1,5 +1,4 @@
 import { createStyles } from 'antd-style';
-import { rgba } from 'polished';
 
 export const useStyles = createStyles(({ css, token }, { type }: { type: 'ghost' | 'block' }) => ({
   input: css`
@@ -9,7 +8,7 @@ export const useStyles = createStyles(({ css, token }, { type }: { type: 'ghost'
     height: 36px;
     padding: 0 12px;
 
-    background-color: ${type === 'block' ? rgba(token.colorBgElevated, 0.6) : 'transparent'};
+    background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
     border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
 
     transition: background-color 100ms ${token.motionEaseOut};
@@ -28,7 +27,7 @@ export const useStyles = createStyles(({ css, token }, { type }: { type: 'ghost'
     max-width: 100%;
     padding: 8px 12px;
 
-    background-color: ${type === 'block' ? rgba(token.colorBgElevated, 0.6) : 'transparent'};
+    background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
     border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
 
     transition: background-color 100ms ${token.motionEaseOut};

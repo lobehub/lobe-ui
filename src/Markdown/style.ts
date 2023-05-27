@@ -61,7 +61,7 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
         margin-inline-end: 0px;
         padding: 8px;
 
-        border: 1px solid ${token.colorBorder};
+        border: 1px solid ${token.colorBorderSecondary};
         border-radius: ${token.borderRadius}px;
       }
 
@@ -91,6 +91,10 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
 
       ul li {
         line-height: 1.8;
+      }
+
+      pre {
+        border-radius: ${token.borderRadius}px;
       }
     `,
 

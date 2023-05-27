@@ -11,7 +11,7 @@ export const useStyles = createStyles(
         align-items: center;
         justify-content: center;
 
-        color: ${active ? token.colorText : token.colorTextQuaternary};
+        color: ${active ? token.colorText : token.colorTextTertiary};
 
         background: ${active ? token.colorFillTertiary : 'transparent'};
 
@@ -25,7 +25,7 @@ export const useStyles = createStyles(
 
         &:hover {
           color: ${token.colorText};
-          background-color: ${active ? token.colorFillSecondary : token.colorFillTertiary};
+          background-color: ${token.colorFillSecondary};
         }
 
         &:active {

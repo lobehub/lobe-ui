@@ -33,7 +33,7 @@ export default defineConfig({
     'process.env': process.env,
   },
   mfsu: isWin
-    ? {}
+    ? undefined
     : {
         exclude: ['@dqbd/tiktoken'],
       },

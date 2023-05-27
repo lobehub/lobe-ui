@@ -20,7 +20,11 @@ export interface SiteStylish {
   blur: string;
 }
 
-export const getCustomStylish: GetCustomStylish<SiteStylish> = ({ css, token, isDarkMode }) => {
+export const generateCustomStylish: GetCustomStylish<SiteStylish> = ({
+  css,
+  token,
+  isDarkMode,
+}) => {
   return {
     clickableText: css`
       cursor: pointer;

@@ -1,5 +1,4 @@
 import { createStyles } from 'antd-style';
-import { rgba } from 'polished';
 
 export const useStyles = createStyles(
   ({ token, css, cx, prefixCls }, type: 'ghost' | 'block' | 'prue') => {
@@ -15,7 +14,7 @@ export const useStyles = createStyles(
 
           overflow: auto;
 
-          background-color: ${type === 'block' ? rgba(token.colorBgElevated, 0.6) : 'transparent'};
+          background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
           border-radius: ${token.borderRadius}px;
 
           transition: background-color 100ms ${token.motionEaseOut};

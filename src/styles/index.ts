@@ -1,3 +1,3 @@
-export * from './antdTheme';
-export * from './customStylish';
-export * from './customToken';
+export { generateCustomStylish as lobeCustomStylish } from './algorithms/generateCustomStylish';
+export { generateCustomToken as lobeCustomToken } from './algorithms/generateCustomToken';
+export { generateTheme as lobeTheme } from './algorithms/generateTheme';
