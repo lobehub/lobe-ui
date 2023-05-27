@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.11.0](https://github.com/lobehub/lobe-ui/compare/v1.10.0...v1.11.0) (2023-05-27)
+
+### ✨ Features
+
+- **logo**: Add SvgProps to Divider component signature ([2a4182c](https://github.com/lobehub/lobe-ui/commit/2a4182c))
+- **themeprovider**: Update getAntdTheme function and import getLobeTheme from '@/tokens' ([c1e65e7](https://github.com/lobehub/lobe-ui/commit/c1e65e7))
+
 # [1.10.0](https://github.com/lobehub/lobe-ui/compare/v1.9.0...v1.10.0) (2023-05-26)
 
 ### ✨ Features
