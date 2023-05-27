@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.11.1](https://github.com/lobehub/lobe-ui/compare/v1.11.0...v1.11.1) (2023-05-27)
+
+### 🐛 Bug Fixes
+
+- **build**: add browser platform support to cjs ([c682056](https://github.com/lobehub/lobe-ui/commit/c682056))
+
 # [1.11.0](https://github.com/lobehub/lobe-ui/compare/v1.10.0...v1.11.0) (2023-05-27)
 
 ### ✨ Features
