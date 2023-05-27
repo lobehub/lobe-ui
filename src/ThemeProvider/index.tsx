@@ -1,3 +1,4 @@
+import { lobeCustomStylish, lobeCustomToken, lobeTheme } from '@/styles';
 import { LobeCustomToken } from '@/types/customToken';
 import { App } from 'antd';
 import {
@@ -8,7 +9,6 @@ import {
   type ThemeMode,
 } from 'antd-style';
 import { memo } from 'react';
-import { lobeCustomStylish, lobeCustomToken, lobeTheme } from 'src/styles';
 // @ts-ignore
 import ReactFontLoader from 'react-font-loader';
 import { ThemeContext } from 'styled-components';

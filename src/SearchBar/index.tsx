@@ -27,7 +27,7 @@ const SearchBar = memo<SearchBarProps>(
       const handler = (ev: KeyboardEvent) => {
         if ((isAppleDevice ? ev.metaKey : ev.ctrlKey) && ev.key === shortKey) {
           ev.preventDefault();
-          inputRef.current.focus();
+          inputRef.current?.focus();
         }
       };
 

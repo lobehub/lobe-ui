@@ -1,5 +1,4 @@
 import { createStyles } from 'antd-style';
-import { rgba } from 'polished';
 
 export const useStyles = createStyles(
   ({ css, token }, type: 'ghost' | 'block') =>
@@ -19,7 +18,7 @@ export const useStyles = createStyles(
       transition: background-color 100ms ${token.motionEaseOut};
       ${type === 'block'
         ? css`
-            background-color: ${rgba(token.colorBgElevated, 0.6)};
+            background-color: ${token.colorFillTertiary};
           `
         : css`
             border: 1px solid ${token.colorBorder};
