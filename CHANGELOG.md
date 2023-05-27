@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.11.2](https://github.com/lobehub/lobe-ui/compare/v1.11.1...v1.11.2) (2023-05-27)
+
+### 🐛 Bug Fixes
+
+- **build**: remove cjs support ([dea2da7](https://github.com/lobehub/lobe-ui/commit/dea2da7))
+
 ## [1.11.1](https://github.com/lobehub/lobe-ui/compare/v1.11.0...v1.11.1) (2023-05-27)
 
 ### 🐛 Bug Fixes
