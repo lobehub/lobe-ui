@@ -9,9 +9,10 @@ import {
 } from 'antd-style';
 import React, { useCallback } from 'react';
 // @ts-ignore
+import { getLobeTheme } from '@/tokens';
 import ReactFontLoader from 'react-font-loader';
 import { ThemeContext } from 'styled-components';
-import { createCustomToken, getAntdTheme, getCustomStylish } from '../styles';
+import { createCustomToken, getCustomStylish } from '../styles';
 import GlobalStyle from './GlobalStyle';
 
 export interface ThemeProviderProps {
@@ -55,7 +56,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ token, children, themeMod
     <StyleProvider speedy={process.env.NODE_ENV === 'production'}>
       <AntdThemeProvider
         themeMode={themeMode}
-        theme={getAntdTheme}
+        theme={getLobeTheme}
         customStylish={getCustomStylish}
         customToken={getCustomToken}
       >
