@@ -20,9 +20,9 @@
   "license": "MIT",
   "author": "LobeHub",
   "sideEffects": false,
-  "main": "lib/index.js",
+  "main": "es/index.js",
   "module": "es/index.js",
-  "types": "lib/index.d.ts",
+  "types": "es/index.d.ts",
   "files": [
     "lib",
     "es"
