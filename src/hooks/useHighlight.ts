@@ -1,21 +1,6 @@
-import { getHighlighter, Highlighter, Theme } from 'shiki-es';
+import { themeConfig } from '@/Highlighter/theme';
+import { getHighlighter, Highlighter } from 'shiki-es';
 import { create } from 'zustand';
-
-export interface ShikiSyntaxTheme {
-  /**
-   * @title 暗色模式主题
-   */
-  dark: Theme;
-  /**
-   * @title 亮色模式主题
-   */
-  light: Theme;
-}
-
-const THEME: ShikiSyntaxTheme = {
-  dark: 'material-darker',
-  light: 'material-lighter',
-};
 
 export const languageMap = [
   'javascript',
@@ -62,7 +47,7 @@ export const useHighlight = create<Store>((set, get) => ({
     if (!get().highlighter) {
       const highlighter = await getHighlighter({
         langs: languageMap as any,
-        themes: Object.values(THEME),
+        themes: [themeConfig(true), themeConfig(false)],
       });
       set({ highlighter });
     }
@@ -75,7 +60,7 @@ export const useHighlight = create<Store>((set, get) => ({
     try {
       return highlighter?.codeToHtml(text, {
         lang: language,
-        theme: isDarkMode ? THEME.dark : THEME.light,
+        theme: isDarkMode ? 'dark' : 'light',
       });
     } catch (e) {
       return text;

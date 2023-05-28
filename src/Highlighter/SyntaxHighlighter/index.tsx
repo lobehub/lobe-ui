@@ -33,7 +33,7 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
         ) : (
           <div
             dangerouslySetInnerHTML={{
-              __html: codeToHtml(children, language, isDarkTheme) || '',
+              __html: codeToHtml(children, language, isDarkMode) || '',
             }}
             className={styles.shiki}
           />
