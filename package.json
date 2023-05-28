@@ -1,6 +1,6 @@
 {
   "name": "@lobehub/ui",
-  "version": "1.11.0",
+  "version": "1.11.3",
   "description": "Lobe UI is an open-source UI component library for building chatbot web apps",
   "keywords": [
     "lobehub",
@@ -20,9 +20,9 @@
   "license": "MIT",
   "author": "LobeHub",
   "sideEffects": false,
-  "main": "lib/index.js",
+  "main": "es/index.js",
   "module": "es/index.js",
-  "types": "lib/index.d.ts",
+  "types": "es/index.d.ts",
   "files": [
     "lib",
     "es"

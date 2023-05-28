@@ -6,10 +6,10 @@
 
 <h1>Lobe UI</h1>
 
-Lobe UI is an open-source UI component library for building chatbot web apps
-  
+Lobe UI is an open-source UI component library for building _AIGC_ web apps
+
 [Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
-  
+
 <!-- SHIELD GROUP -->
 
 [![release][release-shield]][release-url]
@@ -21,17 +21,34 @@ Lobe UI is an open-source UI component library for building chatbot web apps
 [![forks][forks-shield]][forks-url]
 [![stargazers][stargazers-shield]][stargazers-url]
 [![issues][issues-shield]][issues-url]
-  
+
 ![](https://github.com/othneildrew/Best-README-Template/raw/master/images/screenshot.png)
 
 </div>
 
 ## 📦 Installation
 
-To install Lobe Commit, run the following command:
+This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
+
+To install Lobe UI, run the following command:
 
 ```bash
 pnpm add @lobehub/ui
+```
+
+## Usage
+
+### Compile with NextJS
+
+by work correct with nextjs ssr, add `transpilePackages: ['@lobehub/ui']` to `next.config.js`. For example:
+
+```js
+// next.config.js
+const nextConfig = {
+  // ...other config
+
+  transpilePackages: ['@lobehub/ui'],
+};
 ```
 
 <div align="right">
@@ -61,7 +78,6 @@ $ pnpm start
 
 </div>
 
-
 ## 🤝 Contributing
 
 <!-- CONTRIBUTION GROUP -->
@@ -90,11 +106,11 @@ $ pnpm start
 </div>
 
 ---
+
 #### 📝 License
 
 Copyright © 2023 [LobeHub][profile-url]. <br />
-This project is [MIT](./LICENSE) licensed. 
-
+This project is [MIT](./LICENSE) licensed.
 
 <!-- LINK GROUP -->
 

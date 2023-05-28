@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.11.3](https://github.com/lobehub/lobe-ui/compare/v1.11.2...v1.11.3) (2023-05-27)
+
+### 🐛 Bug Fixes
+
+- **build**: make lobe-ui as pure esm package ([d3aa186](https://github.com/lobehub/lobe-ui/commit/d3aa186))
+
+## [1.11.2](https://github.com/lobehub/lobe-ui/compare/v1.11.1...v1.11.2) (2023-05-27)
+
+### 🐛 Bug Fixes
+
+- **build**: remove cjs support ([dea2da7](https://github.com/lobehub/lobe-ui/commit/dea2da7))
+
+## [1.11.1](https://github.com/lobehub/lobe-ui/compare/v1.11.0...v1.11.1) (2023-05-27)
+
+### 🐛 Bug Fixes
+
+- **build**: add browser platform support to cjs ([c682056](https://github.com/lobehub/lobe-ui/commit/c682056))
+
 # [1.11.0](https://github.com/lobehub/lobe-ui/compare/v1.10.0...v1.11.0) (2023-05-27)
 
 ### ✨ Features
