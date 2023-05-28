@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.11.4](https://github.com/lobehub/lobe-ui/compare/v1.11.3...v1.11.4) (2023-05-28)
+
 ## [1.11.3](https://github.com/lobehub/lobe-ui/compare/v1.11.2...v1.11.3) (2023-05-27)
 
 ### 🐛 Bug Fixes
