@@ -18,13 +18,14 @@ const Home: FC = memo(() => {
       <Helmet>
         <title>{siteTitle}</title>
       </Helmet>
-
       <Header />
-      <div className={styles.spacing} />
-      <Flexbox align={'center'} gap={80} style={{ minHeight: '60vh' }}>
-        <Hero />
-        <Features />
-      </Flexbox>
+      <main>
+        <div className={styles.spacing} />
+        <Flexbox align={'center'} gap={80} style={{ minHeight: '60vh' }}>
+          <Hero />
+          <Features />
+        </Flexbox>
+      </main>
       <Footer />
     </>
   );

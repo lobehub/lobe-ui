@@ -55,7 +55,7 @@ const Toc: FC<TocProps> = memo(({ items, activeKey, onChange }) => {
   return (
     (items?.length === 0 ? null : mobile ? (
       <ConfigProvider theme={{ token: { fontSize: 12, sizeStep: 3 } }}>
-        <div className={styles.mobileCtn}>
+        <nav className={styles.mobileCtn}>
           <Collapse
             bordered={false}
             ghost
@@ -91,17 +91,17 @@ const Toc: FC<TocProps> = memo(({ items, activeKey, onChange }) => {
               </ConfigProvider>
             </Collapse.Panel>
           </Collapse>
-        </div>
+        </nav>
       </ConfigProvider>
     ) : (
-      <div className={styles.container}>
+      <nav className={styles.container}>
         <h4>Table of Contents</h4>
         <Anchor
           items={linkItems}
           className={styles.anchor}
           targetOffset={theme.headerHeight + 12}
         />
-      </div>
+      </nav>
     )) || null
   );
 });

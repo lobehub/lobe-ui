@@ -268,7 +268,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     );
 
     return (
-      <div
+      <aside
         ref={ref}
         className={cx(
           styles.container,
@@ -280,7 +280,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
       >
         {expandable && showExpand && handler}
         {destroyOnClose ? isExpand && inner : inner}
-      </div>
+      </aside>
     );
   },
 );

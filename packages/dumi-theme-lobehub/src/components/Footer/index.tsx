@@ -15,9 +15,9 @@ const Footer: FC<FooterProps> = ({ columns, bottom, theme }) => {
   const { styles } = useStyles(isEmpty);
 
   return (
-    <div className={styles.container}>
+    <footer className={styles.container}>
       <RcFooter theme={theme} className={styles.footer} columns={columns} bottom={bottom} />
-    </div>
+    </footer>
   );
 };
 

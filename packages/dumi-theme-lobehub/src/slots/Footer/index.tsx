@@ -1,11 +1,10 @@
+import Foot, { FooterProps } from '@/components/Footer';
+import { githubSel, useSiteStore } from '@/store';
+import { IFooter } from '@/types';
 import { Divider } from 'antd';
 import { useResponsive } from 'antd-style';
 import { type FC } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
-
-import Foot, { FooterProps } from '@/components/Footer';
-import { githubSel, useSiteStore } from '@/store';
-import { IFooter } from '@/types';
 import { getColumns } from './columns';
 import { useStyles } from './style';
 

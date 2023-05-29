@@ -21,7 +21,7 @@ const Header: FC = () => {
   const { styles } = useStyle();
 
   return !hasHeader ? null : (
-    <div className={styles.header}>
+    <header className={styles.header}>
       <Flexbox
         horizontal
         distribution={'space-between'}
@@ -66,7 +66,7 @@ const Header: FC = () => {
           </>
         )}
       </Flexbox>
-    </div>
+    </header>
   );
 };
 

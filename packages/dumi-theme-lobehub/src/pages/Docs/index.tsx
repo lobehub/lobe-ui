@@ -71,18 +71,16 @@ const Docs: FC = memo(() => {
   return (
     <>
       {helmetBlock}
-      <div className={styles.layout}>
-        <Header />
-        <div className={styles.view}>
-          {mobile || hideSidebar ? null : <Sidebar />}
-          {hideToc ? null : laptop ? <Toc /> : null}
-          <div className={styles.right}>
-            <div className={styles.spacing} />
-            {docBlock}
-            <Footer />
-          </div>
+      <Header />
+      <main className={styles.main}>
+        {mobile || hideSidebar ? null : <Sidebar />}
+        {hideToc ? null : laptop ? <Toc /> : null}
+        <div className={styles.right}>
+          <div className={styles.spacing} />
+          {docBlock}
+          <Footer />
         </div>
-      </div>
+      </main>
     </>
   );
 });

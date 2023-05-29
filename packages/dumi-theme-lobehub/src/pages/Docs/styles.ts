@@ -2,15 +2,14 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ css, cx, responsive, token }) => ({
   layout: css`
+    overflow: hidden;
+    height: 100vh;
     background-color: ${token.colorBgLayout};
     background-image: linear-gradient(
       180deg,
       ${token.colorBgContainer} 0%,
       rgba(255, 255, 255, 0) 10%
     );
-
-    height: 100vh;
-    overflow: hidden;
 
     ${responsive.mobile} {
       display: flex;
@@ -21,27 +20,29 @@ export const useStyles = createStyles(({ css, cx, responsive, token }) => ({
   toc: css`
     position: sticky;
     top: 100px;
-    width: ${token.tocWidth}px;
-    margin-inline-end: 24px;
-    max-height: 80vh;
+
     overflow: auto;
+    overscroll-behavior: contain;
+
+    width: ${token.tocWidth}px;
+    max-height: 80vh;
     margin-top: 48px;
+    margin-inline-end: 24px;
+
+    -webkit-overflow-scrolling: touch;
 
     ${responsive.mobile} {
       z-index: 300;
       top: ${token.headerHeight + 1}px;
-      margin-top: 0;
       width: 100%;
+      margin-top: 0;
     }
-
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
 
     > h4 {
       margin: 0 0 8px;
-      color: ${token.colorTextDescription};
       font-size: 12px;
       line-height: 1;
+      color: ${token.colorTextDescription};
     }
   `,
   spacing: css`
@@ -50,22 +51,22 @@ export const useStyles = createStyles(({ css, cx, responsive, token }) => ({
       height: ${token.headerHeight + 32}px;
     }
   `,
-  view: css`
-    display: flex;
-    height: 100%;
-    width: 100%;
+  main: css`
     overflow: hidden;
+    display: flex;
+    width: 100%;
+    height: 100vh;
   `,
   right: css`
     overflow-x: hidden;
     overflow-y: auto;
-    height: 100%;
     flex: 1;
+    height: 100%;
   `,
   content: cx(
     css`
-      max-width: 960px;
       width: 100%;
+      max-width: 960px;
       margin: 0 24px;
     `,
     css(
