@@ -144,11 +144,6 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         max-width: 100%;
       }
 
-      code,
-      pre * {
-        font-size: ${token.fontSizeSM}px;
-      }
-
       pre {
         border-radius: ${token.borderRadius}px;
       }
@@ -156,6 +151,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       > :not([data-code-type='highlighter']) code {
         padding: 2px 6px;
 
+        font-size: ${token.fontSizeSM}px;
         color: ${isDarkMode ? token.cyan9A : token.cyan10A};
 
         background: ${isDarkMode ? token.cyan1A : token.cyan3A};

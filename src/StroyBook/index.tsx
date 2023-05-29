@@ -31,7 +31,9 @@ export const StroyBook = memo<StroyBookProps>(
           placement={mobile ? 'bottom' : 'right'}
           minWidth={280}
         >
-          <LevaPanel fill store={levaStore} titleBar={false} flat />{' '}
+          <div className={styles.leva}>
+            <LevaPanel fill store={levaStore} titleBar={false} flat />{' '}
+          </div>
         </DraggablePanel>
       </div>
     );

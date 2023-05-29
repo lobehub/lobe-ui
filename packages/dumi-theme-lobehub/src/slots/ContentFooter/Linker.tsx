@@ -1,9 +1,8 @@
-import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
+import { Icon } from '@lobehub/ui';
 import { Link } from 'dumi';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import type { FC } from 'react';
-
 import { memo, useMemo } from 'react';
-
 import { Flexbox } from 'react-layout-kit';
 import { useStyles } from './Linker.style';
 
@@ -20,13 +19,15 @@ const Linker: FC<LinkerProps> = ({ title, link, type }) => {
       case 'prev':
         return (
           <>
-            <ArrowLeftOutlined /> Previous
+            <Icon icon={ArrowLeft} size={{ fontSize: 14 }} />
+            <span style={{ lineHeight: '14px' }}>Previous</span>
           </>
         );
       case 'next':
         return (
           <>
-            Next <ArrowRightOutlined />
+            <span style={{ lineHeight: '14px' }}>Next</span>
+            <Icon icon={ArrowRight} size={{ fontSize: 14 }} />
           </>
         );
     }

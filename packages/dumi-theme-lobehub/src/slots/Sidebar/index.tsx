@@ -23,7 +23,6 @@ const Sidebar: FC = () => {
       placement="left"
       className={styles.sidebar}
       expand={expand}
-      classNames={{ content: styles.sidebarContent }}
       onExpandChange={setExpand}
     >
       <div className={styles.sidebarInner}>

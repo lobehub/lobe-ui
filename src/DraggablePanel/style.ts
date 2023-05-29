@@ -17,7 +17,7 @@ export const useStyle = createStyles(({ token }, prefix: string) => {
     &:hover,
     &:active {
       &::before {
-        background: ${token.colorPrimary};
+        background: ${token.colorPrimary} !important;
       }
     }
   `;

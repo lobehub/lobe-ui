@@ -4,12 +4,10 @@ export const useStyles = createStyles(({ css, token }) => ({
   sidebar: css`
     margin-top: ${token.headerHeight}px;
   `,
-  sidebarContent: css`
-    &.draggable-panel-fixed {
-      overflow-y: scroll;
-    }
-  `,
   sidebarInner: css`
+    overflow: auto;
+    width: 100%;
+    height: 100%;
     padding: 16px;
     dl {
       margin: 0;
@@ -17,13 +15,15 @@ export const useStyles = createStyles(({ css, token }) => ({
       line-height: 1;
 
       > dt {
-        margin: 8px 0;
-        color: ${token.colorText};
-        font-weight: 500;
-        white-space: nowrap;
         overflow: hidden;
+
+        margin: 8px 0;
+
+        font-weight: 500;
+        color: ${token.colorText};
         text-overflow: ellipsis;
         text-transform: uppercase;
+        white-space: nowrap;
       }
 
       > dd {
@@ -31,18 +31,20 @@ export const useStyles = createStyles(({ css, token }) => ({
         padding: 2px 0;
 
         > a {
-          padding: 6px 12px;
-          border-radius: 6px;
+          overflow: hidden;
           display: block;
+
+          padding: 6px 12px;
+
           font-size: ${token.fontSize}px;
           line-height: ${token.lineHeight};
-          text-decoration: none;
-
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-
           color: ${token.colorTextSecondary};
+          text-decoration: none;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          border-radius: 6px;
+
           transition: color 600ms ${token.motionEaseOut},
             background-color 100ms ${token.motionEaseOut};
           &:hover {

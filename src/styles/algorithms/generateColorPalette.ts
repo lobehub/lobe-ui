@@ -34,10 +34,10 @@ export const generateColorNeutralPalette = ({
   appearance: 'light' | 'dark';
 }): Partial<AliasToken> => {
   return {
-    colorText: scale[`${appearance}A`][12],
-    colorTextSecondary: scale[`${appearance}A`][10],
-    colorTextTertiary: scale[`${appearance}A`][8],
-    colorTextQuaternary: scale[`${appearance}A`][6],
+    colorText: scale[appearance][12],
+    colorTextSecondary: scale[appearance][10],
+    colorTextTertiary: scale[appearance][8],
+    colorTextQuaternary: scale[appearance][6],
     colorBorder: scale[appearance][4],
     colorBorderSecondary: scale[appearance][3],
     colorFill: scale[`${appearance}A`][3],

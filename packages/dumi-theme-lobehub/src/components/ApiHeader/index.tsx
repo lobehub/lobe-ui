@@ -1,12 +1,10 @@
-import { EditOutlined, GithubFilled } from '@ant-design/icons';
+import { ApiHeaderProps } from '@/index';
+import { Icon, Snippet } from '@lobehub/ui';
 import { Divider, Space, Typography } from 'antd';
 import { useResponsive } from 'antd-style';
+import { Edit3, Github } from 'lucide-react';
 import { FC, ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
-
-import { Snippet } from '@lobehub/ui';
-
-import { ApiHeaderProps } from '@/index';
 import { useStyles } from './style';
 
 /**
@@ -63,13 +61,13 @@ export const ApiHeader: FC<ApiTitleProps> = memo(
 
     const items = [
       sourceUrl && {
-        icon: <GithubFilled />,
-        children: '查看源码',
+        icon: <Icon icon={Github} size={{ fontSize: 15 }} />,
+        children: 'Source',
         url: sourceUrl,
       },
       docUrl && {
-        icon: <EditOutlined />,
-        children: '编辑文档',
+        icon: <Icon icon={Edit3} size={{ fontSize: 15 }} />,
+        children: 'Edit',
         url: docUrl,
       },
     ].filter((i) => i) as ServiceItem[];

@@ -28,6 +28,9 @@ export const useStyles = createStyles(
         `}
       `,
       right: css`
+        background: ${token.colorBgLayout};
+      `,
+      leva: css`
         --leva-sizes-controlWidth: 66%;
         --leva-colors-elevation1: ${token.colorFillSecondary};
         --leva-colors-elevation2: transparent;
@@ -43,8 +46,11 @@ export const useStyles = createStyles(
         --leva-shadows-level2: unset;
         --leva-fonts-mono: ${token.fontFamilyCode};
 
+        overflow: auto;
+        width: 100%;
+        height: 100%;
         padding: 6px 0;
-        background: ${token.colorBgLayout};
+
         > div {
           background: transparent;
           > div {

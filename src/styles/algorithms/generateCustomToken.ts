@@ -53,7 +53,7 @@ const generateCustomColorPalette = ({
 };
 
 // @ts-ignore
-export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMode }) => {
+export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMode, token }) => {
   let colorCustomToken: any = {};
   Object.entries(colorScales).forEach(([type, scale]) => {
     colorCustomToken = {
@@ -72,6 +72,7 @@ export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMod
   const colorSolid = isDarkMode ? '#fff' : '#000';
 
   return {
+    ...token,
     ...colorCustomToken,
     headerHeight: 64,
     footerHeight: 300,
