@@ -1,30 +1,30 @@
-import { IntersectionLoad } from '@/components/LazyLoad';
 import { createStyles } from 'antd-style';
 import { IPreviewerProps } from 'dumi/dist/client/theme-api/types';
 import Previewer from 'dumi/theme-default/builtins/Previewer';
 import { rgba } from 'polished';
-import { useMemo } from 'react';
 
-const useStyles = createStyles(({ css, token, prefixCls }, { center, nopadding }: any) => {
+const useStyles = createStyles(({ css, token, prefixCls }) => {
   return {
+    center: css`
+      .dumi-default-previewer-demo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    `,
+    nopadding: css`
+      .dumi-default-previewer-demo {
+        padding: 0;
+      }
+    `,
     container: css`
       .dumi-default-previewer {
-        border-color: ${token.colorBorderSecondary};
+        overflow: hidden;
         display: flex;
         flex-direction: column;
-        overflow: hidden;
+        border-color: ${token.colorBorderSecondary};
         &-demo {
           flex: 1;
-          ${nopadding &&
-          css`
-            padding: 0;
-          `}
-          ${center &&
-          css`
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          `}
 
           &[data-iframe]::before {
             background: ${token.colorFillContent};
@@ -32,8 +32,8 @@ const useStyles = createStyles(({ css, token, prefixCls }, { center, nopadding }
         }
 
         &-meta {
-          border-color: ${token.colorBorderSecondary};
           flex: 1;
+          border-color: ${token.colorBorderSecondary};
 
           .${prefixCls}-highlighter {
             pre {
@@ -134,24 +134,19 @@ export interface PreviewerProps extends IPreviewerProps {
   nopadding?: boolean;
 }
 
-export default (props: IPreviewerProps) => {
-  const { styles, cx } = useStyles(props);
-
-  const height = useMemo(() => {
-    if (typeof props.iframe === 'number') {
-      return props.iframe;
-    }
-    if (props.height) {
-      return props.height;
-    }
-    return 300;
-  }, [props.iframe, props.height]);
+export default ({ center, codePlacement, nopadding, ...props }: PreviewerProps) => {
+  const { styles, cx } = useStyles();
 
   return (
-    <div className={cx(styles.container, styles[props.codePlacement as 'left' | 'right' | 'top'])}>
-      <IntersectionLoad height={height} elementType="section">
-        <Previewer {...props} />
-      </IntersectionLoad>
+    <div
+      className={cx(
+        styles.container,
+        center && styles.center,
+        nopadding && styles.nopadding,
+        styles[codePlacement as 'left' | 'right' | 'top'],
+      )}
+    >
+      <Previewer {...props} />
     </div>
   );
 };
