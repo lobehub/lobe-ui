@@ -1,32 +1,17 @@
 const PresetColors = [
-  'tomato',
   'red',
-  'crimson',
-  'pink',
-  'plum',
-  'purple',
-  'violet',
-  'indigo',
-  'blue',
-  'cyan',
-  'teal',
-  'green',
-  'grass',
+  'volcano',
   'orange',
-  'brown',
-  'sky',
-  'mint',
-  'lime',
-  'yellow',
-  'amber',
-  'bronze',
   'gold',
+  'yellow',
+  'lime',
+  'green',
+  'cyan',
+  'blue',
+  'geekblue',
+  'purple',
+  'magenta',
   'gray',
-  'mauve',
-  'slate',
-  'sage',
-  'olive',
-  'sand',
 ] as const;
 
 export type PresetColorKey = (typeof PresetColors)[number];
@@ -60,7 +45,7 @@ export type ColorPalettesAlpha = {
   [key in `${keyof PresetColorType}${ColorPaletteKeyIndex}A`]: string;
 };
 
-export interface LobeCustomToken {
+export interface LobeCustomToken extends ColorToken, ColorPalettes, ColorPalettesAlpha {
   headerHeight: number;
   footerHeight: number;
   sidebarWidth: number;

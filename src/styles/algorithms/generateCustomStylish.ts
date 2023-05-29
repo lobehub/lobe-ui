@@ -156,10 +156,10 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       > :not([data-code-type='highlighter']) code {
         padding: 2px 6px;
 
-        color: ${isDarkMode ? token.mintText : token.cyan11A};
+        color: ${isDarkMode ? token.cyan10A : token.cyan11A};
 
-        background: ${isDarkMode ? token.mintBg : token.cyanBg};
-        border: 1px solid ${isDarkMode ? token.mintBorderSecondary : token.cyanBorderSecondary};
+        background: ${isDarkMode ? token.cyan2A : token.cyan4A};
+        border: 1px solid ${isDarkMode ? token.cyan2A : token.cyan5A};
         border-radius: ${token.borderRadiusSM}px;
       }
 

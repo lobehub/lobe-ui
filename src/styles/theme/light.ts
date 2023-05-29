@@ -19,7 +19,7 @@ const neutralToken = generateColorNeutralPalette({
 
 const successToken = generateColorPalette({
   type: 'Success',
-  scale: colorScales.grass,
+  scale: colorScales.green,
   appearance: 'light',
 });
 
@@ -31,13 +31,13 @@ const warningToken = generateColorPalette({
 
 const errorToken = generateColorPalette({
   type: 'Error',
-  scale: colorScales.tomato,
+  scale: colorScales.volcano,
   appearance: 'light',
 });
 
 const infoToken = generateColorPalette({
   type: 'Info',
-  scale: colorScales.blue,
+  scale: colorScales.geekblue,
   appearance: 'light',
 });
 

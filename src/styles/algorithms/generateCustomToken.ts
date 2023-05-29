@@ -65,7 +65,7 @@ export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMod
   });
 
   const gradientColor1 = colorScales.blue.darkA[8];
-  const gradientColor2 = isDarkMode ? colorScales.pink.darkA[8] : colorScales.cyan.darkA[8];
+  const gradientColor2 = isDarkMode ? colorScales.magenta.darkA[8] : colorScales.cyan.darkA[8];
   const gradientColor3 = colorScales.purple.darkA[8];
   const colorSolid = isDarkMode ? '#fff' : '#000';
 

@@ -3,38 +3,33 @@ import { ThemeAppearance } from 'antd-style';
 
 export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
   const type = isDarkMode ? 'dark' : 'light';
-  const theme = {
-    red: isDarkMode ? colorScales.tomato[type][9] : colorScales.red[type][10],
-    brightRed: isDarkMode ? colorScales.tomato[type][9] : colorScales.red[type][10],
-    yellow: isDarkMode ? colorScales.amber[type][9] : colorScales.amber[type][10],
-    brightYellow: isDarkMode ? colorScales.yellow[type][9] : colorScales.brown[type][10],
-    green: isDarkMode ? colorScales.lime[type][9] : colorScales.grass[type][10],
-    brightGreen: isDarkMode ? colorScales.lime[type][9] : colorScales.grass[type][10],
-    cyan: '#42b3c2',
-    brightCyan: '#4cd1e0',
-    blue: isDarkMode ? colorScales.sky[type][9] : colorScales.blue[type][10],
-    brightBlue: isDarkMode ? colorScales.sky[type][9] : colorScales.blue[type][10],
-    magenta: '#c162de',
-    brightMagenta: isDarkMode ? colorScales.purple[type][10] : colorScales.violet[type][10],
-    white: isDarkMode ? colorScales.slate[type][10] : colorScales.gray[type][10],
-    brightWhite: isDarkMode ? colorScales.gray[type][11] : colorScales.gray[type][10],
-    black: isDarkMode ? colorScales.slate[type][10] : colorScales.gray[type][10],
-    brightBlack: '#4f5666',
-  };
+  // const theme = {
+  //   red: isDarkMode ? colorScales.tomato[type][9] : colorScales.red[type][10],
+  //   brightRed: isDarkMode ? colorScales.tomato[type][9] : colorScales.red[type][10],
+  //   yellow: isDarkMode ? colorScales.amber[type][9] : colorScales.amber[type][10],
+  //   brightYellow: isDarkMode ? colorScales.yellow[type][9] : colorScales.brown[type][10],
+  //   green: isDarkMode ? colorScales.lime[type][9] : colorScales.grass[type][10],
+  //   brightGreen: isDarkMode ? colorScales.lime[type][9] : colorScales.grass[type][10],
+  //   cyan: '#42b3c2',
+  //   brightCyan: '#4cd1e0',
+  //   blue: isDarkMode ? colorScales.sky[type][9] : colorScales.blue[type][10],
+  //   brightBlue: isDarkMode ? colorScales.sky[type][9] : colorScales.blue[type][10],
+  //   magenta: '#c162de',
+  //   brightMagenta: isDarkMode ? colorScales.purple[type][10] : colorScales.violet[type][10],
+  //   white: isDarkMode ? colorScales.slate[type][10] : colorScales.gray[type][10],
+  //   brightWhite: isDarkMode ? colorScales.gray[type][11] : colorScales.gray[type][10],
+  //   black: isDarkMode ? colorScales.slate[type][10] : colorScales.gray[type][10],
+  //   brightBlack: '#4f5666',
+  // };
 
-  const color0 = '#ffffff';
-  const color1 = '#56b6c2';
-  const color2 = theme.brightMagenta;
-  const color3 = theme.yellow;
-  const color4 = '#abb2bf';
-  const color5 = theme.brightWhite;
-  const color6 = theme.brightBlue;
-  const color7 = theme.yellow;
-  const color8 = '#5c6370';
-  const color9 = theme.brightGreen;
-  const colorA = '#f44747';
-  const colorB = '#BE5046';
-  const colorC = '#7f848e';
+  const color0 = colorScales.gray[type][11];
+  const color1 = isDarkMode ? colorScales.cyan[type][9] : colorScales.cyan[type][9];
+  const color2 = isDarkMode ? colorScales.lime[type][9] : colorScales.green[type][9];
+  const color3 = isDarkMode ? colorScales.red[type][9] : colorScales.volcano[type][9];
+  const color4 = colorScales.gray[type][8];
+  const color6 = isDarkMode ? colorScales.blue[type][9] : colorScales.geekblue[type][9];
+  const color7 = isDarkMode ? colorScales.gold[type][9] : colorScales.orange[type][9];
+  const color9 = isDarkMode ? colorScales.lime[type][9] : colorScales.green[type][9];
 
   return {
     name: type,
@@ -81,7 +76,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         scope:
           'punctuation.definition.delayed.unison,punctuation.definition.list.begin.unison,punctuation.definition.list.end.unison,punctuation.definition.ability.begin.unison,punctuation.definition.ability.end.unison,punctuation.operator.assignment.as.unison,punctuation.separator.pipe.unison,punctuation.separator.delimiter.unison,punctuation.definition.hash.unison',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -102,7 +97,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'support.variable.magic.python',
         scope: 'support.variable.magic.python',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -152,7 +147,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'variable.language.rust',
         scope: 'variable.language.rust',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -166,7 +161,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'regexp constant character-class',
         scope: 'constant.other.character-class.regexp',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -194,7 +189,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'Comment Markup Link',
         scope: 'comment markup.link',
         settings: {
-          foreground: color8,
+          foreground: color4,
         },
       },
       {
@@ -223,14 +218,14 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'deleted.diff',
         scope: 'markup.deleted.diff',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
         name: 'c++ function',
         scope: 'meta.function.c,meta.function.cpp',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -287,7 +282,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'java source',
         scope: 'source.java',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -323,7 +318,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'java variable.name',
         scope: 'meta.definition.variable.name.java',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -409,7 +404,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         scope:
           'variable.other.readwrite,meta.object-literal.key,support.variable.property,support.variable.object.process,support.variable.object.node',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -436,7 +431,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'js/ts console',
         scope: 'support.type.object.console',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -485,7 +480,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'js dom variable',
         scope: 'support.variable.dom,support.variable.property.dom',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -621,7 +616,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'Variables',
         scope: 'variable',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -710,7 +705,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'Class name php',
         scope: 'variable.other.class.php',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -789,7 +784,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         scope:
           'support.type.property-name.toml, support.type.property-name.table.toml, support.type.property-name.array.toml',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -852,7 +847,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'Tags',
         scope: 'entity.name.tag',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -887,7 +882,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'Headings',
         scope: 'markup.heading',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -901,7 +896,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'Units',
         scope: 'keyword.other.unit',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -936,14 +931,14 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: '[VSCODE-CUSTOM] Markdown headings',
         scope: 'entity.name.section.markdown',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
         name: '[VSCODE-CUSTOM] Markdown heading Punctuation Definition',
         scope: 'punctuation.definition.heading.markdown',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1003,21 +998,21 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
           'punctuation.definition.metadata.markdown',
         ],
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
         name: 'beginning.punctuation.definition.list.markdown',
         scope: ['beginning.punctuation.definition.list.markdown'],
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
         name: '[VSCODE-CUSTOM] Markdown Punctuation Definition Link',
         scope: 'punctuation.definition.metadata.markdown',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1080,7 +1075,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'Embedded',
         scope: 'punctuation.section.embedded, variable.interpolation',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1107,7 +1102,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
       {
         scope: 'invalid.illegal.unrecognized-tag.html',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1142,7 +1137,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'Source Json Meta Structure Dictionary Json > String Quoted Json',
         scope: 'source.json meta.structure.dictionary.json > string.quoted.json',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1150,7 +1145,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         scope:
           'source.json meta.structure.dictionary.json > string.quoted.json > punctuation.string',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1173,14 +1168,14 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: '[VSCODE-CUSTOM] JSON Property Name',
         scope: 'support.type.property-name.json',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
         name: '[VSCODE-CUSTOM] JSON Punctuation for Property Name',
         scope: 'support.type.property-name.json punctuation',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1239,7 +1234,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'php illegal.non-null-typehinted',
         scope: 'invalid.illegal.non-null-typehinted.php',
         settings: {
-          foreground: colorA,
+          foreground: color3,
         },
       },
       {
@@ -1390,7 +1385,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'sass selector',
         scope: 'selector.sass',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1419,7 +1414,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'cs local variable',
         scope: 'entity.name.variable.local.cs',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1437,7 +1432,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
       {
         scope: 'token.error-token',
         settings: {
-          foreground: colorA,
+          foreground: color3,
         },
       },
       {
@@ -1489,14 +1484,14 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'js class prop',
         scope: ['meta.property.object'],
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
         name: 'js func parameter',
         scope: ['variable.parameter.function.js'],
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1580,7 +1575,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'html/pug (jade) escaped characters and entities',
         scope: ['constant.character.entity'],
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1604,7 +1599,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'Clojure symbols',
         scope: ['meta.symbol.clojure'],
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1618,7 +1613,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'CoffeeScript Function Argument',
         scope: ['meta.arguments.coffee', 'variable.parameter.function.coffee'],
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1632,7 +1627,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'Makefile prerequisities',
         scope: ['meta.scope.prerequisites.makefile'],
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1660,7 +1655,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'Groovy Variables',
         scope: ['meta.definition.variable.name.groovy'],
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1695,7 +1690,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'SQL Variables',
         scope: ['text.variable', 'text.bracketed'],
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1723,7 +1718,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'heading 3, property',
         scope: ['constant.character.character-class.regexp.xi'],
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1758,7 +1753,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'comments',
         scope: ['beginning.punctuation.definition.list.markdown.xi'],
         settings: {
-          foreground: colorC,
+          foreground: color4,
         },
       },
       {
@@ -1793,7 +1788,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'elements to dim',
         scope: ['punctuation.definition.tag.xi'],
         settings: {
-          foreground: color8,
+          foreground: color4,
         },
       },
       {
@@ -1815,7 +1810,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
           'markup.heading.setext.2.markdown',
         ],
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1829,7 +1824,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'Comments',
         scope: 'comment, punctuation.definition.comment',
         settings: {
-          foreground: colorC,
+          foreground: color4,
           fontStyle: 'italic',
         },
       },
@@ -1837,7 +1832,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: '[VSCODE-CUSTOM] Markdown Quote',
         scope: 'markup.quote.markdown',
         settings: {
-          foreground: color8,
+          foreground: color4,
         },
       },
       {
@@ -1862,14 +1857,14 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
       {
         scope: ['entity.name.variable.field.cs'],
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
         name: 'Deleted',
         scope: 'markup.deleted',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1890,7 +1885,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'punctuation.section.embedded.begin.php',
         scope: ['punctuation.section.embedded.begin.php', 'punctuation.section.embedded.end.php'],
         settings: {
-          foreground: colorB,
+          foreground: color3,
         },
       },
       {
@@ -1911,7 +1906,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'variable.other.constant.property',
         scope: ['variable.other.constant.property'],
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1925,7 +1920,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'c variable readwrite',
         scope: 'variable.other.readwrite.c',
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1958,7 +1953,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
       {
         scope: ['string.regexp'],
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {
@@ -1976,7 +1971,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
       {
         scope: ['log.error'],
         settings: {
-          foreground: color5,
+          foreground: color0,
         },
       },
       {

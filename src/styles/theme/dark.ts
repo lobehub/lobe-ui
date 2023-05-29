@@ -25,19 +25,19 @@ const successToken = generateColorPalette({
 
 const warningToken = generateColorPalette({
   type: 'Warning',
-  scale: colorScales.amber,
+  scale: colorScales.gold,
   appearance: 'dark',
 });
 
 const errorToken = generateColorPalette({
   type: 'Error',
-  scale: colorScales.pink,
+  scale: colorScales.red,
   appearance: 'dark',
 });
 
 const infoToken = generateColorPalette({
   type: 'Info',
-  scale: colorScales.sky,
+  scale: colorScales.blue,
   appearance: 'dark',
 });
 
