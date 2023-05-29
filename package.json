@@ -121,7 +121,7 @@
     "eslint-import-resolver-typescript": "^3.5.5",
     "father": "^4.1.9",
     "husky": "^8.0.3",
-    "jsdom": "^22.0.0",
+    "jsdom": "^22.1.0",
     "lint-staged": "^13.2.2",
     "postcss-styled-syntax": "^0.4.0",
     "prettier": "^2.8.8",
