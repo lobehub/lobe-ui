@@ -1,6 +1,7 @@
 export { default as ActionIcon, type ActionIconProps, type ActionIconSize } from './ActionIcon';
 export { default as Avatar, type AvatarProps } from './Avatar';
 export type { ChatMessage } from './Chat';
+export { default as ColorScales, type ColorScalesProps } from './ColorScales';
 export { default as ContextMenu, type ContextMenuProps } from './ContextMenu';
 export { default as Conversation, type ConversationProps } from './Conversation';
 export { default as CopyButton, type CopyButtonProps } from './CopyButton';
@@ -38,3 +39,4 @@ export { default as TabsNav, type TabsNavProps } from './TabsNav';
 export { default as ThemeProvider } from './ThemeProvider';
 export { default as ThemeSwitch, type ThemeSwitchProps } from './ThemeSwitch';
 export { default as Tooltip, type TooltipProps } from './Tooltip';
+export { colorScales as colors } from './styles/colors';
