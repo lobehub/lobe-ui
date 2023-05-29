@@ -22,7 +22,7 @@ export const generateColorPalette = ({
     [`color${name}Active`]: scale[appearance][7],
     [`color${name}TextHover`]: scale[appearance][10],
     [`color${name}Text`]: scale[appearance][9],
-    [`color${name}Active`]: scale[appearance][7],
+    [`color${name}TextActive`]: scale[appearance][7],
   };
 };
 
@@ -38,8 +38,8 @@ export const generateColorNeutralPalette = ({
     colorTextSecondary: scale[appearance][10],
     colorTextTertiary: scale[appearance][8],
     colorTextQuaternary: scale[appearance][6],
-    colorBorder: scale[`${appearance}A`][4],
-    colorBorderSecondary: scale[`${appearance}A`][3],
+    colorBorder: scale[appearance][4],
+    colorBorderSecondary: scale[appearance][3],
     colorFill: scale[`${appearance}A`][3],
     colorFillSecondary: scale[`${appearance}A`][2],
     colorFillTertiary: scale[`${appearance}A`][1],

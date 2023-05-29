@@ -1,30 +1,8 @@
+import { LobeCustomStylish } from '@/types/customStylish';
 import { GetCustomStylish } from 'antd-style';
 import { rgba } from 'polished';
 
-declare module 'antd-style' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  export interface CustomStylish extends SiteStylish {}
-}
-
-export interface SiteStylish {
-  clickableText: string;
-  resetLinkColor: string;
-
-  heroButtonGradient: string;
-  heroGradient: string;
-  heroTextShadow: string;
-  heroGradientFlow: string;
-  heroBlurBall: string;
-
-  iconGradientDefault: string;
-  blur: string;
-}
-
-export const generateCustomStylish: GetCustomStylish<SiteStylish> = ({
-  css,
-  token,
-  isDarkMode,
-}) => {
+export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({ css, token }) => {
   return {
     clickableText: css`
       cursor: pointer;
@@ -69,12 +47,7 @@ export const generateCustomStylish: GetCustomStylish<SiteStylish> = ({
         }
       }
     `,
-    heroTextShadow: css`
-      will-change: transform;
-      text-shadow: 0 8px 20px ${rgba(token.gradientColor2, 0.2)},
-        0 8px 60px ${rgba(token.gradientColor3, 0.2)},
-        0 8px 80px ${rgba(token.cyan, isDarkMode ? 0.2 : 0.4)};
-    `,
+
     heroBlurBall: css`
       will-change: transform;
 
