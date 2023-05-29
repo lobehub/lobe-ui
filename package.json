@@ -72,7 +72,7 @@
     "@dqbd/tiktoken": "^1.0.7",
     "@floating-ui/react": "^0.24.1",
     "ahooks": "^3.7.7",
-    "antd-style": "^3.1.1",
+    "antd-style": "^3.2.1",
     "chroma-js": "^2.4.2",
     "copy-to-clipboard": "^3.3.3",
     "dayjs": "^1.11.7",
