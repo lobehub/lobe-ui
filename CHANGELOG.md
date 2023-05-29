@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.14.0](https://github.com/lobehub/lobe-ui/compare/v1.13.0...v1.14.0) (2023-05-29)
+
+### ✨ Features
+
+- **colorscales**: Improve user experience by hiding unnecessary elements ([ee8b7be](https://github.com/lobehub/lobe-ui/commit/ee8b7be))
+
 # [1.13.0](https://github.com/lobehub/lobe-ui/compare/v1.12.0...v1.13.0) (2023-05-29)
 
 ### ✨ Features
