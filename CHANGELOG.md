@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.15.0](https://github.com/lobehub/lobe-ui/compare/v1.14.2...v1.15.0) (2023-05-29)
+
+### ✨ Features
+
+- **apiheader**: add configuration for component API header ([1359942](https://github.com/lobehub/lobe-ui/commit/1359942))
+
 ## [1.14.2](https://github.com/lobehub/lobe-ui/compare/v1.14.1...v1.14.2) (2023-05-29)
 
 ## [1.14.1](https://github.com/lobehub/lobe-ui/compare/v1.14.0...v1.14.1) (2023-05-29)
