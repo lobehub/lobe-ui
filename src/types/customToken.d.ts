@@ -18,7 +18,7 @@ export type PresetColorKey = (typeof PresetColors)[number];
 
 export type PresetColorType = Record<PresetColorKey, string>;
 
-type ColorPaletteKeyIndex = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13;
+type ColorPaletteKeyIndex = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
 
 type ColorTokenKey =
   | 'Bg'

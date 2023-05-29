@@ -19,6 +19,7 @@ const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
           <Space key="scale-title" size={2}>
             <div className={styles.scaleRowTitle} key="scale-num" />
             {new Array(scale.light.length).fill('').map((_, index) => {
+              if (index === 0 || index === 12) return null;
               const isMidHighlight = midHighLight === index;
               return (
                 <div className={styles.scaleBox} key={'num' + index}>
@@ -30,7 +31,7 @@ const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
                         fontWeight: isMidHighlight ? 700 : 400,
                       }}
                     >
-                      {index + 1}
+                      {index}
                     </div>
                   </div>
                 </div>

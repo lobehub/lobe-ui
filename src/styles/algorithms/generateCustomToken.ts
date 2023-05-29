@@ -39,10 +39,12 @@ const generateCustomColorPalette = ({
 }): Partial<AliasToken> => {
   const colorStepPalette: { [key: string]: string } = {};
   scale[appearance].forEach((color, index) => {
-    colorStepPalette[`${name}${index + 1}`] = color;
+    if (index === 0 || index === 12) return;
+    colorStepPalette[`${name}${index}`] = color;
   });
   scale[`${appearance}A`].forEach((color, index) => {
-    colorStepPalette[`${name}${index + 1}A`] = color;
+    if (index === 0 || index === 12) return;
+    colorStepPalette[`${name}${index}A`] = color;
   });
   return {
     ...colorStepPalette,
