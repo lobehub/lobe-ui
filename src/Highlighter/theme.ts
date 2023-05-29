@@ -3,25 +3,6 @@ import { ThemeAppearance } from 'antd-style';
 
 export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
   const type = isDarkMode ? 'dark' : 'light';
-  // const theme = {
-  //   red: isDarkMode ? colorScales.tomato[type][9] : colorScales.red[type][10],
-  //   brightRed: isDarkMode ? colorScales.tomato[type][9] : colorScales.red[type][10],
-  //   yellow: isDarkMode ? colorScales.amber[type][9] : colorScales.amber[type][10],
-  //   brightYellow: isDarkMode ? colorScales.yellow[type][9] : colorScales.brown[type][10],
-  //   green: isDarkMode ? colorScales.lime[type][9] : colorScales.grass[type][10],
-  //   brightGreen: isDarkMode ? colorScales.lime[type][9] : colorScales.grass[type][10],
-  //   cyan: '#42b3c2',
-  //   brightCyan: '#4cd1e0',
-  //   blue: isDarkMode ? colorScales.sky[type][9] : colorScales.blue[type][10],
-  //   brightBlue: isDarkMode ? colorScales.sky[type][9] : colorScales.blue[type][10],
-  //   magenta: '#c162de',
-  //   brightMagenta: isDarkMode ? colorScales.purple[type][10] : colorScales.violet[type][10],
-  //   white: isDarkMode ? colorScales.slate[type][10] : colorScales.gray[type][10],
-  //   brightWhite: isDarkMode ? colorScales.gray[type][11] : colorScales.gray[type][10],
-  //   black: isDarkMode ? colorScales.slate[type][10] : colorScales.gray[type][10],
-  //   brightBlack: '#4f5666',
-  // };
-
   const color0 = colorScales.gray[type][11];
   const color1 = isDarkMode ? colorScales.cyan[type][9] : colorScales.cyan[type][9];
   const color2 = isDarkMode ? colorScales.lime[type][9] : colorScales.green[type][9];
@@ -2005,5 +1986,8 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         },
       },
     ],
+    colors: {
+      'editor.foreground': color4,
+    },
   };
 };
