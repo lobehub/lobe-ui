@@ -3,8 +3,19 @@ import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 export interface SwatchesProps {
+  /**
+   * @description An array of colors to be displayed as swatches
+   */
   colors: string[];
+  /**
+   * @description The currently active color
+   * @default undefined
+   */
   activeColor?: string;
+  /**
+   * @description A function to be called when a swatch is selected
+   * @default undefined
+   */
   onSelect?: (c: string | null) => void;
 }
 

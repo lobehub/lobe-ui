@@ -10,11 +10,13 @@ import { useStore } from '@/Chat/store';
 
 export interface AppProps {
   /**
-   * @title 是否只读
+   * @description Whether the component is in readonly mode.
+   * @default false
    */
   readonly?: boolean;
   /**
-   * @title 是否包含系统消息
+   * @description Whether to include system messages in the chat.
+   * @default true
    */
   includeSystem?: boolean;
 }

@@ -5,7 +5,15 @@ import { memo, useEffect, useRef, useState } from 'react';
 import { useStyles } from './style';
 
 export interface SearchBarProps extends InputProps {
+  /**
+   * @description The shortcut key to focus on the input. Only works if `enableShortKey` is true
+   * @default 'f'
+   */
   shortKey?: string;
+  /**
+   * @description Whether to enable the shortcut key to focus on the input
+   * @default false
+   */
   enableShortKey?: boolean;
 }
 

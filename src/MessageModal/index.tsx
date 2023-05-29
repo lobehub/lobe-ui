@@ -1,32 +1,38 @@
+import Markdown from '@/Markdown';
+import MessageInput from '@/MessageInput';
 import { AimOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
-import { createStyles } from 'antd-style';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
-
-import Markdown from '@/Markdown';
-import MessageInput from '@/MessageInput';
-
-const useStyles = createStyles(({ css, prefixCls }) => ({
-  modal: css`
-    height: 70%;
-    .${prefixCls}-modal-header {
-      margin-bottom: 24px;
-    }
-  `,
-  body: css`
-    overflow-y: scroll;
-    max-height: 70vh;
-  `,
-}));
+import { useStyles } from './style';
 
 export interface MessageModalProps {
+  /**
+   * @description Whether the modal is open or not
+   * @default false
+   */
   open?: boolean;
+  /**
+   * @description Callback fired when open state is changed
+   */
   onOpenChange?: (open: boolean) => void;
+  /**
+   * @description Whether the message is being edited or not
+   * @default false
+   */
   editing?: boolean;
+  /**
+   * @description Callback fired when editing state is changed
+   */
   onEditingChange?: (editing: boolean) => void;
+  /**
+   * @description Callback fired when message content is changed
+   */
   onChange?: (text: string) => void;
+  /**
+   * @description The value of the message content
+   */
   value: string;
 }
 

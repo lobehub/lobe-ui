@@ -61,12 +61,12 @@ export const ApiHeader: FC<ApiTitleProps> = memo(
 
     const items = [
       sourceUrl && {
-        icon: <Icon icon={Github} size={{ fontSize: 15 }} />,
+        icon: <Icon icon={Github} />,
         children: 'Source',
         url: sourceUrl,
       },
       docUrl && {
-        icon: <Icon icon={Edit3} size={{ fontSize: 15 }} />,
+        icon: <Icon icon={Edit3} />,
         children: 'Edit',
         url: docUrl,
       },

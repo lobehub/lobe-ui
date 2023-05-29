@@ -19,15 +19,15 @@ const Linker: FC<LinkerProps> = ({ title, link, type }) => {
       case 'prev':
         return (
           <>
-            <Icon icon={ArrowLeft} size={{ fontSize: 14 }} />
-            <span style={{ lineHeight: '14px' }}>Previous</span>
+            <Icon icon={ArrowLeft} />
+            <span style={{ lineHeight: 1 }}>Previous</span>
           </>
         );
       case 'next':
         return (
           <>
-            <span style={{ lineHeight: '14px' }}>Next</span>
-            <Icon icon={ArrowRight} size={{ fontSize: 14 }} />
+            <span style={{ lineHeight: 1 }}>Next</span>
+            <Icon icon={ArrowRight} />
           </>
         );
     }

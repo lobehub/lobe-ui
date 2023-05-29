@@ -6,41 +6,50 @@ import useControlledState from 'use-merge-value';
 
 export interface EditableMessageProps {
   /**
-   * @title 当前文本值
+   * @title The current text value
    */
   value: string;
   /**
-   * @title 值改变时的回调函数
-   * @param value - 改变后的值
+   * @title Callback function when the value changes
+   * @param value - The new value
    */
   onChange?: (value: string) => void;
   /**
-   * @title 是否打开模态框
+   * @title Whether the modal is open or not
    * @default false
    */
   openModal?: boolean;
   /**
-   * @title 模态框打开状态变化的回调函数
-   * @param open - 模态框是否打开
+   * @title Callback function when the modal open state changes
+   * @param open - Whether the modal is open or not
    */
   onOpenChange?: (open: boolean) => void;
   /**
-   * @title 是否处于编辑状态
+   * @title Whether the component is in edit mode or not
    * @default false
    */
   editing?: boolean;
   /**
-   * @title 编辑状态变化的回调函数
-   * @param editing - 是否处于编辑状态
+   * @title Callback function when the editing state changes
+   * @param editing - Whether the component is in edit mode or not
    */
   onEditingChange?: (editing: boolean) => void;
   /**
-   * @title 当文本值为空时是否显示编辑按钮
+   * @title Whether to show the edit button when the text value is empty
    * @default false
    */
   showEditWhenEmpty?: boolean;
+  /**
+   * @title The class name for the Markdown and MessageInput component
+   */
   classNames?: {
+    /**
+     * @title The class name for the Markdown component
+     */
     markdown?: string;
+    /**
+     * @title The class name for the MessageInput component
+     */
     input?: string;
   };
 }

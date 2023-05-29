@@ -1,26 +1,30 @@
 import { Avatar as A } from 'antd';
-import { createStyles } from 'antd-style';
 import { FC } from 'react';
 import { Center } from 'react-layout-kit';
-
-const useStyles = createStyles(({ css, token }) => ({
-  container: css`
-    cursor: pointer;
-
-    > * {
-      cursor: pointer;
-    }
-  `,
-  border: css`
-    border: 1px solid ${token.colorBorder};
-  `,
-}));
+import { useStyles } from './style';
 
 export interface AvatarProps {
+  /**
+   * @description The URL or base64 data of the avatar image
+   */
   avatar?: string;
+  /**
+   * @description The title text to display if avatar is not provided
+   */
   title?: string;
+  /**
+   * @description The size of the avatar in pixels
+   * @default 40
+   */
   size?: number;
+  /**
+   * @description The shape of the avatar
+   * @default 'circle'
+   */
   shape?: 'circle' | 'square';
+  /**
+   * @description The background color of the avatar
+   */
   background?: string;
 }
 

@@ -24,8 +24,8 @@ export interface IconProps extends SvgProps {
   icon: LucideIcon;
 }
 
-const Icon: FC<IconProps> = ({ icon, size = 'normal', ...props }) => {
-  let fontSize: number;
+const Icon: FC<IconProps> = ({ icon, size, ...props }) => {
+  let fontSize: number | string;
   let strokeWidth: number;
   const SvgIcon = icon;
   switch (size) {
@@ -42,8 +42,13 @@ const Icon: FC<IconProps> = ({ icon, size = 'normal', ...props }) => {
       strokeWidth = 1.5;
       break;
     default:
-      fontSize = size?.fontSize || 24;
-      strokeWidth = size?.strokeWidth || 2;
+      if (size) {
+        fontSize = size?.fontSize || 24;
+        strokeWidth = size?.strokeWidth || 2;
+      } else {
+        fontSize = '1em';
+        strokeWidth = 2;
+      }
       break;
   }
 

@@ -9,8 +9,19 @@ import { memo, useEffect, useReducer } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 export interface EditableMessageListProps {
+  /**
+   * @description The data sources to be rendered
+   */
   dataSources: ChatMessage[];
+  /**
+   * @description Callback function triggered when the data sources are changed
+   * @param chatMessages - the updated data sources
+   */
   onChange?: (chatMessages: ChatMessage[]) => void;
+  /**
+   * @description Whether the component is disabled or not
+   * @default false
+   */
   disabled?: boolean;
 }
 

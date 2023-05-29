@@ -5,6 +5,10 @@ import ChatContainer, { AppProps } from './App';
 import StoreUpdater, { StoreUpdaterProps } from './StoreUpdater';
 
 export interface ConversationProps extends StoreUpdaterProps, AppProps {
+  /**
+   * @description Whether to enable devtools or not
+   * @default false
+   */
   devtools?: boolean;
 }
 

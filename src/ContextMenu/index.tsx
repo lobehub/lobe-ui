@@ -29,8 +29,17 @@ import { useStyles } from './style';
 import { GeneralItemType, MenuItemType } from './types';
 
 export interface ContextMenuProps {
+  /**
+   * @description Label for the context menu
+   */
   label?: string;
+  /**
+   * @description Items to be displayed in the context menu
+   */
   items: MenuItemType[];
+  /**
+   * @description Container element for the context menu
+   */
   container?: HTMLElement;
 }
 
