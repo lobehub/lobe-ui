@@ -12,32 +12,26 @@
     "prepare": "npm run build"
   },
   "dependencies": {
+    "@ant-design/icons": "^5",
     "@floating-ui/react": "^0.17",
     "@lobehub/ui": "latest",
-    "animated-scroll-to": "^2",
     "chalk": "^4",
     "fast-deep-equal": "^3",
-    "rc-footer": "^0.6",
-    "react-syntax-highlighter": "^15",
-    "shiki-es": "^0.2"
+    "rc-footer": "^0.6"
   },
   "devDependencies": {
-    "@ant-design/icons": "^5",
     "@emotion/babel-plugin": "^11",
     "@emotion/react": "^11",
     "@testing-library/react": "^13",
-    "@types/react-syntax-highlighter": "^15",
     "@umijs/lint": "^4",
     "@vitest/coverage-c8": "latest",
     "concurrently": "^7",
     "cross-env": "^7",
     "father-plugin-dumi-theme": "^1.0.0-rc.1",
     "history": "^5",
-    "jsdom": "^21",
-    "tilg": "^0.1"
+    "jsdom": "^21"
   },
   "peerDependencies": {
-    "@ant-design/icons": ">=4",
     "dumi": "^2.0.0",
     "react": ">=16.8",
     "react-dom": ">=16.8"
