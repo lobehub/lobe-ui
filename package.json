@@ -119,7 +119,7 @@
     "eslint": "^8.41.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-typescript": "^3.5.5",
-    "father": "^4.1.9",
+    "father": "^4.2.1",
     "husky": "^8.0.3",
     "jsdom": "^22.1.0",
     "lint-staged": "^13.2.2",
