@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.16.0](https://github.com/lobehub/lobe-ui/compare/v1.15.0...v1.16.0) (2023-05-29)
+
+### ✨ Features
+
+- **src/avatar**: Add description prop and update documentation ([6432a0f](https://github.com/lobehub/lobe-ui/commit/6432a0f))
+
 # [1.15.0](https://github.com/lobehub/lobe-ui/compare/v1.14.2...v1.15.0) (2023-05-29)
 
 ### ✨ Features
