@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.12.0](https://github.com/lobehub/lobe-ui/compare/v1.11.4...v1.12.0) (2023-05-29)
+
+### ✨ Features
+
+- add color scales ([21d17aa](https://github.com/lobehub/lobe-ui/commit/21d17aa))
+
 ## [1.11.4](https://github.com/lobehub/lobe-ui/compare/v1.11.3...v1.11.4) (2023-05-28)
 
 ## [1.11.3](https://github.com/lobehub/lobe-ui/compare/v1.11.2...v1.11.3) (2023-05-27)
