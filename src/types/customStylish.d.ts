@@ -10,4 +10,5 @@ export interface LobeCustomStylish {
 
   iconGradientDefault: string;
   blur: string;
+  markdown: string;
 }

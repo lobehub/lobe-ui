@@ -1,41 +1,65 @@
-export interface CustomTokenItem {
-  color1: string;
-  color2: string;
-  color3: string;
-  color4: string;
-  color5: string;
-  color6: string;
-  color7: string;
-  color8: string;
-  color9: string;
-  color10: string;
-  color11: string;
-  color12: string;
-  color13: string;
-  color1A: string;
-  color2A: string;
-  color3A: string;
-  color4A: string;
-  color5A: string;
-  color6A: string;
-  color7A: string;
-  color8A: string;
-  color9A: string;
-  color10A: string;
-  color11A: string;
-  color12A: string;
-  color13A: string;
-  colorBg: string;
-  colorBgHover: string;
-  colorBorder: string;
-  colorBorderHover: string;
-  colorHover: string;
-  color: string;
-  colorActive: string;
-  colorTextHover: string;
-  colorText: string;
-  colorTextActive: string;
-}
+const PresetColors = [
+  'tomato',
+  'red',
+  'crimson',
+  'pink',
+  'plum',
+  'purple',
+  'violet',
+  'indigo',
+  'blue',
+  'cyan',
+  'teal',
+  'green',
+  'grass',
+  'orange',
+  'brown',
+  'sky',
+  'mint',
+  'lime',
+  'yellow',
+  'amber',
+  'bronze',
+  'gold',
+  'gray',
+  'mauve',
+  'slate',
+  'sage',
+  'olive',
+  'sand',
+] as const;
+
+export type PresetColorKey = (typeof PresetColors)[number];
+
+export type PresetColorType = Record<PresetColorKey, string>;
+
+type ColorPaletteKeyIndex = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13;
+
+type ColorTokenKey =
+  | 'Bg'
+  | 'BgHover'
+  | 'Border'
+  | 'BorderSecondary'
+  | 'BorderHover'
+  | 'Hover'
+  | ''
+  | 'Active'
+  | 'TextHover'
+  | 'Text'
+  | 'TextActive';
+
+export type ColorToken = {
+  [key in `${keyof PresetColorType}${ColorTokenKey}`]: string;
+};
+
+export type ColorPalettes = {
+  [key in `${keyof PresetColorType}${ColorPaletteKeyIndex}`]: string;
+};
+
+export type ColorPalettesAlpha = {
+  [key in `${keyof PresetColorType}${ColorPaletteKeyIndex}A`]: string;
+};
+
 export interface LobeCustomToken {
   headerHeight: number;
   footerHeight: number;
@@ -47,34 +71,4 @@ export interface LobeCustomToken {
   gradientColor2: string;
   gradientColor3: string;
   gradientHeroBgG: string;
-
-  tomato: CustomTokenItem;
-  red: CustomTokenItem;
-  crimson: CustomTokenItem;
-  pink: CustomTokenItem;
-  plum: CustomTokenItem;
-  purple: CustomTokenItem;
-  violet: CustomTokenItem;
-  indigo: CustomTokenItem;
-  blue: CustomTokenItem;
-  cyan: CustomTokenItem;
-  teal: CustomTokenItem;
-  green: CustomTokenItem;
-  grass: CustomTokenItem;
-  orange: CustomTokenItem;
-  brown: CustomTokenItem;
-  sky: CustomTokenItem;
-  mint: CustomTokenItem;
-  lime: CustomTokenItem;
-  yellow: CustomTokenItem;
-  amber: CustomTokenItem;
-  bronze: CustomTokenItem;
-  gold: CustomTokenItem;
-  gray: CustomTokenItem;
-  mauve: CustomTokenItem;
-  slate: CustomTokenItem;
-  sage: CustomTokenItem;
-  olive: CustomTokenItem;
-  sand: CustomTokenItem;
-  bnw: CustomTokenItem;
 }

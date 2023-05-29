@@ -5,54 +5,63 @@ import { AliasToken } from 'antd/es/theme/interface';
 import { camelCase } from 'lodash';
 
 const generateColorPalette = ({
+  name,
   scale,
   appearance,
 }: {
+  name: string;
   scale: ColorScaleItem;
   appearance: 'light' | 'dark';
 }) => {
   return {
-    [`colorBg`]: scale[appearance][1],
-    [`colorBgHover`]: scale[appearance][2],
-    [`colorBorder`]: scale[appearance][4],
-    [`colorBorderHover`]: scale[appearance][5],
-    [`colorHover`]: scale[appearance][10],
-    [`color`]: scale[appearance][9],
-    [`colorActive`]: scale[appearance][7],
-    [`colorTextHover`]: scale[appearance][10],
-    [`colorText`]: scale[appearance][9],
-    [`colorTextActive`]: scale[appearance][7],
+    [`${name}Bg`]: scale[`${appearance}A`][1],
+    [`${name}BgHover`]: scale[`${appearance}A`][2],
+    [`${name}Border`]: scale[appearance][4],
+    [`${name}BorderSecondary`]: scale[appearance][3],
+    [`${name}BorderHover`]: scale[appearance][5],
+    [`${name}Hover`]: scale[appearance][10],
+    [`${name}`]: scale[appearance][9],
+    [`${name}Active`]: scale[appearance][7],
+    [`${name}TextHover`]: scale[`${appearance}A`][10],
+    [`${name}Text`]: scale[`${appearance}A`][9],
+    [`${name}TextActive`]: scale[`${appearance}A`][7],
   };
 };
 
 const generateCustomColorPalette = ({
+  name,
   scale,
   appearance,
 }: {
+  name: string;
   scale: ColorScaleItem;
   appearance: 'light' | 'dark';
 }): Partial<AliasToken> => {
   const colorStepPalette: { [key: string]: string } = {};
   scale[appearance].forEach((color, index) => {
-    colorStepPalette[`color${index + 1}`] = color;
+    colorStepPalette[`${name}${index + 1}`] = color;
   });
   scale[`${appearance}A`].forEach((color, index) => {
-    colorStepPalette[`color${index + 1}A`] = color;
+    colorStepPalette[`${name}${index + 1}A`] = color;
   });
   return {
     ...colorStepPalette,
-    ...generateColorPalette({ scale, appearance }),
+    ...generateColorPalette({ name, scale, appearance }),
   };
 };
 
 // @ts-ignore
-export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ token, isDarkMode }) => {
+export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMode }) => {
   let colorCustomToken: any = {};
   Object.entries(colorScales).forEach(([type, scale]) => {
-    colorCustomToken[camelCase(type)] = generateCustomColorPalette({
-      scale,
-      appearance: isDarkMode ? 'dark' : 'light',
-    });
+    colorCustomToken = {
+      ...colorCustomToken,
+      ...generateCustomColorPalette({
+        name: camelCase(type),
+        scale,
+        appearance: isDarkMode ? 'dark' : 'light',
+      }),
+    };
   });
 
   const gradientColor1 = colorScales.blue.darkA[8];
@@ -61,7 +70,6 @@ export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ token, is
   const colorSolid = isDarkMode ? '#fff' : '#000';
 
   return {
-    ...token,
     ...colorCustomToken,
     headerHeight: 64,
     footerHeight: 300,

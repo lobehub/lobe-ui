@@ -23,7 +23,7 @@ const Markdown = memo<MarkdownProps>(({ children, className }: MarkdownProps) =>
   return (
     <Typography>
       <ReactMarkdown
-        className={cx(styles.container, className)}
+        className={cx(styles.markdown, className)}
         components={components}
         remarkPlugins={[remarkGfm]}
       >
