@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.13.0](https://github.com/lobehub/lobe-ui/compare/v1.12.0...v1.13.0) (2023-05-29)
+
+### ✨ Features
+
+- **src/colorscales/index.md**: Add new color scales for Volcano and Orange ([7a6a7ff](https://github.com/lobehub/lobe-ui/commit/7a6a7ff))
+
 # [1.12.0](https://github.com/lobehub/lobe-ui/compare/v1.11.4...v1.12.0) (2023-05-29)
 
 ### ✨ Features
