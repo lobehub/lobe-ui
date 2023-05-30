@@ -99,7 +99,7 @@
   },
   "devDependencies": {
     "@ant-design/colors": "^7.0.0",
-    "@commitlint/cli": "^17.6.3",
+    "@commitlint/cli": "^17.6.5",
     "@testing-library/react": "^14.0.0",
     "@types/chroma-js": "^2.4.0",
     "@types/lodash": "^4.14.195",
