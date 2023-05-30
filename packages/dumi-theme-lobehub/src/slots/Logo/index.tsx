@@ -1,14 +1,12 @@
+import { useSiteStore } from '@/store/useSiteStore';
 import { Logo as SiteLogo } from '@lobehub/ui';
 import { useResponsive } from 'antd-style';
 import { Link } from 'dumi';
 import isEqual from 'fast-deep-equal';
-import { memo, type FC } from 'react';
-
-import { useSiteStore } from '@/store/useSiteStore';
-
+import { memo } from 'react';
 import { useStyles } from './style';
 
-const Logo: FC = () => {
+const Logo = memo(() => {
   const themeConfig = useSiteStore((s) => s.siteData.themeConfig, isEqual);
   const locale = useSiteStore((s) => s.locale, isEqual);
   const { styles, cx } = useStyles();
@@ -28,6 +26,6 @@ const Logo: FC = () => {
       </Link>
     )
   );
-};
+});
 
-export default memo(Logo);
+export default Logo;

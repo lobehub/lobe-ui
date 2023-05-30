@@ -1,7 +1,6 @@
 import { Tabs } from 'antd';
 import { useIntl, useRouteMeta } from 'dumi';
-import { memo, type FC } from 'react';
-
+import { memo } from 'react';
 import { useStyles } from './style';
 
 type IContentTabs = ReturnType<typeof useRouteMeta>['tabs'];
@@ -12,7 +11,7 @@ export interface IContentTabsProps {
   onChange: (tab?: NonNullable<IContentTabs>[0]) => void;
 }
 
-const ContentTabs: FC<IContentTabsProps> = memo(({ tabs, tabKey: key, onChange }) => {
+const ContentTabs = memo<IContentTabsProps>(({ tabs, tabKey: key, onChange }) => {
   const intl = useIntl();
   const { styles } = useStyles();
   // TODO: tab.Extra & tab.Action render

@@ -1,26 +1,26 @@
 import { createStyles } from 'antd-style';
 import { rgba } from 'polished';
 
-export const useStyle = createStyles(({ css, responsive, token }) => ({
-  header: css`
-    top: 0;
-    position: fixed;
-    width: 100%;
-    background-color: ${rgba(token.colorBgLayout, 0.5)};
-    backdrop-filter: saturate(180%) blur(10px);
-    z-index: ${token.zIndexPopupBase - 50};
-    border-bottom: 1px solid ${token.colorSplit};
+export const useStyle = createStyles(({ css, responsive, token, stylish, cx }) => ({
+  header: cx(
+    stylish.blur,
+    css`
+      position: fixed;
+      z-index: ${token.zIndexPopupBase - 50};
+      top: 0;
 
-    grid-area: head;
-    align-self: stretch;
+      grid-area: head;
+      align-self: stretch;
 
-    ${responsive.mobile} {
-      background-color: ${rgba(token.colorBgLayout, 0.8)};
-    }
-  `,
+      width: 100%;
+
+      background-color: ${rgba(token.colorBgLayout, 0.4)};
+      border-bottom: 1px solid ${token.colorSplit};
+    `,
+  ),
   content: css`
-    padding: 0 24px;
     height: 64px;
+    padding: 0 24px;
 
     ${responsive.mobile} {
       padding: 0 12px;
@@ -28,8 +28,8 @@ export const useStyle = createStyles(({ css, responsive, token }) => ({
   `,
   left: css``,
   right: css`
-    flex: 1;
     display: flex;
+    flex: 1;
     justify-content: space-between;
 
     &-aside {
@@ -37,9 +37,9 @@ export const useStyle = createStyles(({ css, responsive, token }) => ({
       align-items: center;
 
       ${responsive.mobile} {
+        justify-content: center;
         margin: 8px 16px;
         padding-top: 24px;
-        justify-content: center;
         border-top: 1px solid ${token.colorBorder};
       }
     }

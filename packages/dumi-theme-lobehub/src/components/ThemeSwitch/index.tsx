@@ -1,8 +1,8 @@
 import { useThemeStore } from '@/store/useThemeStore';
 import { ThemeSwitch as ThemeSwitchBtn } from '@lobehub/ui';
-import { memo, type FC } from 'react';
+import { memo } from 'react';
 
-const ThemeSwitch: FC = () => {
+const ThemeSwitch = memo(() => {
   const themeMode = useThemeStore((s) => s.themeMode);
 
   return (
@@ -13,6 +13,6 @@ const ThemeSwitch: FC = () => {
       }}
     />
   );
-};
+});
 
-export default memo(ThemeSwitch);
+export default ThemeSwitch;

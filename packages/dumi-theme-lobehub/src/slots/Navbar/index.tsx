@@ -3,7 +3,7 @@ import { TabsNav } from '@lobehub/ui';
 import { createStyles } from 'antd-style';
 import { Link, history } from 'dumi';
 import NavbarExtra from 'dumi/theme-default/slots/NavbarExtra';
-import { memo, type FC } from 'react';
+import { memo } from 'react';
 import { shallow } from 'zustand/shallow';
 
 const useStyles = createStyles(({ css, stylish, responsive }) => {
@@ -18,7 +18,7 @@ const useStyles = createStyles(({ css, stylish, responsive }) => {
     `,
   };
 });
-const Navbar: FC = () => {
+const Navbar = memo(() => {
   const { styles } = useStyles();
 
   const nav = useSiteStore((s) => s.navData, shallow);
@@ -46,6 +46,6 @@ const Navbar: FC = () => {
       <NavbarExtra />
     </>
   );
-};
+});
 
-export default memo(Navbar);
+export default Navbar;

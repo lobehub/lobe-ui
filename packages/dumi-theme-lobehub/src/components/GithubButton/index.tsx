@@ -1,10 +1,9 @@
+import { githubSel, useSiteStore } from '@/store';
 import { ActionIcon } from '@lobehub/ui';
 import { Github } from 'lucide-react';
-import { memo, type FC } from 'react';
+import { memo } from 'react';
 
-import { githubSel, useSiteStore } from '@/store';
-
-const GithubButton: FC = () => {
+const GithubButton = memo(() => {
   const repoUrl = useSiteStore(githubSel);
 
   return !repoUrl ? null : (
@@ -12,6 +11,6 @@ const GithubButton: FC = () => {
       <ActionIcon size="site" icon={Github} />
     </a>
   );
-};
+});
 
-export default memo(GithubButton);
+export default GithubButton;

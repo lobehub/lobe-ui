@@ -1,16 +1,14 @@
-import { Helmet } from 'dumi';
-import { memo, type FC } from 'react';
-import { Flexbox } from 'react-layout-kit';
-
+import { useStyles } from '@/pages/Docs/styles';
 import Features from '@/slots/Features';
 import Footer from '@/slots/Footer';
 import Header from '@/slots/Header';
 import Hero from '@/slots/Hero';
-
-import { useStyles } from '@/pages/Docs/styles';
 import { siteTitleSel, useSiteStore } from '@/store';
+import { Helmet } from 'dumi';
+import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
-const Home: FC = memo(() => {
+const Home = memo(() => {
   const siteTitle = useSiteStore(siteTitleSel);
   const { styles } = useStyles();
   return (

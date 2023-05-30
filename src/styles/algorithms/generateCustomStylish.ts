@@ -91,7 +91,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
     `,
 
     blur: css`
-      backdrop-filter: blur(7px);
+      backdrop-filter: saturate(180%) blur(10px);
     `,
 
     markdown: css`

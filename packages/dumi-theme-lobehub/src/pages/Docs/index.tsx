@@ -1,21 +1,18 @@
-import { useResponsive } from 'antd-style';
-import isEqual from 'fast-deep-equal';
-import { memo, type FC } from 'react';
-import { Center, Flexbox } from 'react-layout-kit';
-
+import ApiHeader from '@/slots/ApiHeader';
 import Content from '@/slots/Content';
 import Footer from '@/slots/Footer';
 import Header from '@/slots/Header';
 import Sidebar from '@/slots/Sidebar';
 import Toc from '@/slots/Toc';
-import { Helmet, useOutlet } from 'dumi';
-// @ts-ignore
-import ApiHeader from '@/slots/ApiHeader';
-
 import { isApiPageSel, siteTitleSel, tocAnchorItemSel, useSiteStore } from '@/store';
+import { useResponsive } from 'antd-style';
+import { Helmet, useOutlet } from 'dumi';
+import isEqual from 'fast-deep-equal';
+import { memo } from 'react';
+import { Center, Flexbox } from 'react-layout-kit';
 import { useStyles } from './styles';
 
-const Docs: FC = memo(() => {
+const Docs = memo(() => {
   const outlet = useOutlet();
   const { mobile, laptop } = useResponsive();
   const fm = useSiteStore((s) => s.routeMeta.frontmatter, isEqual);

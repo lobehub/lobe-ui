@@ -1,15 +1,11 @@
+import { IAction } from '@/types';
 import { Button, ConfigProvider } from 'antd';
 import { Link } from 'dumi';
-import { type FC } from 'react';
+import { memo } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
-
-import { IAction } from '@/types';
 import HeroButton from './HeroButton';
 import { useStyles } from './style';
 
-/**
- * @title 头图组件属性
- */
 export interface HeroProps {
   /**
    * @title 标题
@@ -33,7 +29,7 @@ export interface HeroProps {
   actions?: IAction[];
 }
 
-const Hero: FC<HeroProps> = ({ title, description, actions }) => {
+const Hero = memo<HeroProps>(({ title, description, actions }) => {
   const { styles, cx } = useStyles();
 
   return (
@@ -77,6 +73,6 @@ const Hero: FC<HeroProps> = ({ title, description, actions }) => {
       </Center>
     </Flexbox>
   );
-};
+});
 
 export default Hero;

@@ -58,7 +58,7 @@ export const useStyles = createStyles(({ css, token }) => ({
 
           &.active {
             color: ${token.colorText};
-            background-color: ${token.colorFillTertiary};
+            background-color: ${token.colorFillSecondary};
 
             &:hover {
               color: ${token.colorText};
@@ -71,8 +71,6 @@ export const useStyles = createStyles(({ css, token }) => ({
           }
         }
       }
-
-      // divider line & gap
       + dl {
         margin-top: 16px;
         padding-top: 16px;

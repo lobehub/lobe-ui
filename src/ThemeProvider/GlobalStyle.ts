@@ -28,41 +28,50 @@ const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: transparent;
   }
-
+  
 
   * {
-    box-sizing: border-box;
-    vertical-align: baseline;
+	  box-sizing: border-box;
+	  vertical-align: baseline;
+  }
+
+  ::-webkit-scrollbar {
+	  width: 0;
+	  height: 4px;
+	  background-color: transparent;
+
+	  &-thumb {
+		  background-color: transparent;
+		  border-radius: 4px;
+		  transition: background-color 500ms ${({ theme }) => theme.motionEaseOut};
+	  }
+
+	  &-corner {
+		  display: none;
+	  }
   }
 
   #root {
 	  min-height: 100vh;
   }
 
-  ::-webkit-scrollbar {
-    width: 0;
-    height: 4px;
-    background-color: transparent;
-
-    &-thumb {
-      background-color: ${({ theme }) => theme.colorFill};
-      border-radius: 4px;
-    }
-
-    &-corner {
-      display: none;
-    }
-  }
-
   p {
     text-align: justify;
     word-wrap: break-word;
   }
-
+  
   code {
 	  font-family: ${({ theme }) => theme.fontFamilyCode} !important;
 	  * {
 		  font-family: inherit !important;
+	  }
+  }
+
+  *:hover, *:focus {
+	  ::-webkit-scrollbar {
+		  &-thumb {
+			  background-color: ${({ theme }) => theme.colorFill};
+		  }
 	  }
   }
 `;

@@ -1,13 +1,12 @@
+import { useSiteStore } from '@/store/useSiteStore';
 import { DraggablePanel } from '@lobehub/ui';
+import { useResponsive } from 'antd-style';
 import { NavLink } from 'dumi';
 import isEqual from 'fast-deep-equal';
-import { memo, useEffect, useState, type FC } from 'react';
-
-import { useSiteStore } from '@/store/useSiteStore';
-import { useResponsive } from 'antd-style';
+import { memo, useEffect, useState } from 'react';
 import { useStyles } from './style';
 
-const Sidebar: FC = () => {
+const Sidebar = memo(() => {
   const [expand, setExpand] = useState(true);
   const sidebar = useSiteStore((s) => s.sidebar, isEqual);
   const { styles } = useStyles();
@@ -41,6 +40,6 @@ const Sidebar: FC = () => {
       </div>
     </DraggablePanel>
   );
-};
+});
 
-export default memo(Sidebar);
+export default Sidebar;

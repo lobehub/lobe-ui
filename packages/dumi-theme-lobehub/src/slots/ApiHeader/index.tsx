@@ -1,15 +1,13 @@
-import { FC, memo, useMemo } from 'react';
-
 import { ApiHeader as Header } from '@/components/ApiHeader';
 import { apiHeaderSel, useSiteStore } from '@/store';
-
+import { memo, useMemo } from 'react';
 import BundlephobiaFilled from './BundlephobiaFilled';
 import Graph from './Graph';
 import NpmFilled from './NpmFilled';
 import PackagePhobia from './PackagePhobia';
 import Unpkg from './Unpkg';
 
-const ApiHeader: FC = memo(() => {
+const ApiHeader = memo(() => {
   const props = useSiteStore(apiHeaderSel);
   const { pkg } = props;
 

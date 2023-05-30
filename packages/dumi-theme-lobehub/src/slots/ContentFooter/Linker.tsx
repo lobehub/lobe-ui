@@ -1,7 +1,6 @@
 import { Icon } from '@lobehub/ui';
 import { Link } from 'dumi';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import type { FC } from 'react';
 import { memo, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import { useStyles } from './Linker.style';
@@ -12,7 +11,7 @@ interface LinkerProps {
   type?: 'prev' | 'next';
 }
 
-const Linker: FC<LinkerProps> = ({ title, link, type }) => {
+const Linker = memo<LinkerProps>(({ title, link, type }) => {
   const { styles, cx } = useStyles();
   const navContent = useMemo(() => {
     switch (type) {
@@ -49,6 +48,6 @@ const Linker: FC<LinkerProps> = ({ title, link, type }) => {
       </Flexbox>
     </Link>
   );
-};
+});
 
-export default memo(Linker);
+export default Linker;

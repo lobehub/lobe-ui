@@ -1,16 +1,15 @@
 import { StoreUpdater } from '@/components/StoreUpdater';
+import Docs from '@/pages/Docs';
+import Home from '@/pages/Home';
 import { ThemeProvider } from '@lobehub/ui';
 import { extractStaticStyle } from 'antd-style';
 import { Helmet, useIntl, useLocation } from 'dumi';
 import isEqual from 'fast-deep-equal';
-import { memo, useEffect, type FC } from 'react';
+import { memo, useEffect } from 'react';
 
-import Docs from '@/pages/Docs';
-import Home from '@/pages/Home';
+import { isHeroPageSel, useSiteStore, useThemeStore } from '@/store';
 
-import { isHeroPageSel, tokenSel, useSiteStore, useThemeStore } from '@/store';
-
-const DocLayout: FC = memo(() => {
+const DocLayout = memo(() => {
   const intl = useIntl();
   const { hash } = useLocation();
   const fm = useSiteStore((s) => s.routeMeta.frontmatter, isEqual);
@@ -52,16 +51,15 @@ const DocLayout: FC = memo(() => {
 // @ts-ignore
 global.__ANTD_CACHE__ = extractStaticStyle.cache;
 
-export default () => {
+export default memo(() => {
   const themeMode = useThemeStore((st) => st.themeMode, isEqual);
-  const siteToken = useSiteStore(tokenSel, isEqual);
 
   return (
     <>
       <StoreUpdater />
-      <ThemeProvider cache={extractStaticStyle.cache} token={siteToken} themeMode={themeMode}>
+      <ThemeProvider cache={extractStaticStyle.cache} themeMode={themeMode}>
         <DocLayout />
       </ThemeProvider>
     </>
   );
-};
+});

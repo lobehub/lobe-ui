@@ -3,15 +3,14 @@ import { githubSel, useSiteStore } from '@/store';
 import { IFooter } from '@/types';
 import { Divider } from 'antd';
 import { useResponsive } from 'antd-style';
-import { type FC } from 'react';
+import { memo } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 import { getColumns } from './columns';
 import { useStyles } from './style';
 
-const Footer: FC = () => {
+const Footer = memo(() => {
   const { themeConfig, pkg } = useSiteStore((s) => s.siteData);
   const githubUrl = useSiteStore(githubSel);
-
   const { styles, theme } = useStyles();
   const { mobile } = useResponsive();
   if (!themeConfig.footer) return null;
@@ -48,6 +47,6 @@ const Footer: FC = () => {
       }
     />
   );
-};
+});
 
 export default Footer;

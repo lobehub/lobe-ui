@@ -10,13 +10,15 @@ import IconAction from '@/ActionIcon';
 import { useStore } from '@/Chat/store';
 import CopyButton from '@/CopyButton';
 
-const useStyles = createStyles(({ css, token }) => {
+const useStyles = createStyles(({ css, token, stylish, cx }) => {
   return {
-    container: css`
-      background: ${rgba(token.colorBgElevated, 0.2)};
-      backdrop-filter: blur(6px);
-      border-radius: 4px;
-    `,
+    container: cx(
+      stylish.blur,
+      css`
+        background: ${rgba(token.colorBgElevated, 0.2)};
+        border-radius: 4px;
+      `,
+    ),
   };
 });
 

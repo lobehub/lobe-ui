@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
+export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) => {
   const prefix = `${prefixCls}-highlighter`;
 
   return {
@@ -20,17 +20,19 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
       }
     `,
 
-    loading: css`
-      position: absolute;
-      top: 0;
-      right: 0;
+    loading: cx(
+      stylish.blur,
+      css`
+        position: absolute;
+        top: 0;
+        right: 0;
 
-      padding: 4px 8px;
+        padding: 4px 8px;
 
-      color: ${token.colorTextTertiary};
+        color: ${token.colorTextTertiary};
 
-      backdrop-filter: saturate(180%) blur(10px);
-      border-radius: ${token.borderRadiusSM};
-    `,
+        border-radius: ${token.borderRadiusSM};
+      `,
+    ),
   };
 });

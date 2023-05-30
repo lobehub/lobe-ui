@@ -3,14 +3,10 @@ import { Icon, Snippet } from '@lobehub/ui';
 import { Divider, Space, Typography } from 'antd';
 import { useResponsive } from 'antd-style';
 import { Edit3, Github } from 'lucide-react';
-import { FC, ReactNode, memo } from 'react';
+import { ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import { useStyles } from './style';
 
-/**
- * @title API 标题属性
- * @extends ApiHeaderProps
- */
 export interface ApiTitleProps extends ApiHeaderProps {
   /**
    * @title 标题
@@ -23,9 +19,6 @@ export interface ApiTitleProps extends ApiHeaderProps {
   serviceList?: ServiceItem[];
 }
 
-/**
- * @title 服务项
- */
 export interface ServiceItem {
   /**
    * @title 服务标签
@@ -45,7 +38,7 @@ export interface ServiceItem {
   url: string;
 }
 
-export const ApiHeader: FC<ApiTitleProps> = memo(
+export const ApiHeader = memo<ApiTitleProps>(
   ({
     title,
     componentName,

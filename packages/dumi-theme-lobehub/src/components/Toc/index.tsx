@@ -1,16 +1,12 @@
+import { AnchorItem } from '@/types';
 import { ActionIcon } from '@lobehub/ui';
 import { Anchor, Collapse, ConfigProvider } from 'antd';
 import { useResponsive, useTheme } from 'antd-style';
 import { PanelTopClose, PanelTopOpen } from 'lucide-react';
-import { memo, useMemo, type FC } from 'react';
+import { memo, useMemo } from 'react';
 import useControlledState from 'use-merge-value';
-
-import { AnchorItem } from '@/types';
 import { useStyles } from './style';
 
-/**
- * @title 目录组件属性
- */
 export interface TocProps {
   /**
    * @title 目录项列表
@@ -26,7 +22,7 @@ export interface TocProps {
    */
   onChange?: (activeKey: string) => void;
 }
-const Toc: FC<TocProps> = memo(({ items, activeKey, onChange }) => {
+const Toc = memo<TocProps>(({ items, activeKey, onChange }) => {
   const [activeLink, setActiveLink] = useControlledState<string>('', {
     value: activeKey,
     onChange,

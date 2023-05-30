@@ -1,62 +1,69 @@
 import { createStyles } from 'antd-style';
 import { rgba } from 'polished';
 
-export const useStyles = createStyles(({ token, stylish, prefixCls, responsive, css }) => {
+export const useStyles = createStyles(({ token, stylish, prefixCls, responsive, cx, css }) => {
   const fixHeight = 36;
   return {
     container: css`
-      grid-area: toc;
       position: fixed;
+      z-index: 10;
       top: ${token.headerHeight + 64}px;
       right: 0;
-      width: ${token.tocWidth}px;
-      margin-inline-end: 24px;
-      max-height: 80vh;
+
       overflow: auto;
-      z-index: 10;
+      overscroll-behavior: contain;
+      grid-area: toc;
+
+      width: ${token.tocWidth}px;
+      max-height: 80vh;
+      margin-inline-end: 24px;
+
       border-radius: 3px;
+
+      -webkit-overflow-scrolling: touch;
 
       ${responsive.mobile} {
         z-index: 300;
         top: ${token.headerHeight + 1}px;
-        margin-top: 0;
         width: 100%;
+        margin-top: 0;
       }
-
-      overscroll-behavior: contain;
-      -webkit-overflow-scrolling: touch;
 
       > h4 {
         margin: 0 0 8px;
-        color: ${token.colorTextDescription};
         font-size: 12px;
         line-height: 1;
+        color: ${token.colorTextDescription};
       }
     `,
     mobileCtn: css`
       position: fixed;
-      top: ${token.headerHeight}px;
-      height: ${fixHeight}px;
-      width: 100%;
       z-index: 200;
+      top: ${token.headerHeight}px;
+
+      width: 100%;
+      height: ${fixHeight}px;
       .ant-collapse-expand-icon {
         color: ${token.colorTextQuaternary};
       }
     `,
-    expand: css`
-      background-color: ${rgba(token.colorBgLayout, 0.8)};
-      backdrop-filter: saturate(180%) blur(10px);
-      border-radius: 0;
-      border-bottom: 1px solid ${token.colorSplit};
+    expand: cx(
+      stylish.blur,
+      css`
+        z-index: 201;
 
-      box-shadow: ${token.boxShadowSecondary};
-      width: 100%;
-      z-index: 201;
+        width: 100%;
 
-      .${prefixCls}-collapse-header {
-        padding: 8px 16px !important;
-      }
-    `,
+        background-color: ${rgba(token.colorBgLayout, 0.8)};
+        border-bottom: 1px solid ${token.colorSplit};
+        border-radius: 0;
+        box-shadow: ${token.boxShadowSecondary};
+
+        .${prefixCls}-collapse-header {
+          padding: 8px 16px !important;
+        }
+      `,
+    ),
     anchor: css`
       ${stylish.blur}
     `,

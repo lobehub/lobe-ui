@@ -1,9 +1,8 @@
-import { Button } from 'antd';
-import { history, Link, useLocation, useSiteData } from 'dumi';
-import { memo, useEffect, useState, type FC } from 'react';
-
 import NativeSelect from '@/components/NativeSelect';
 import { useSiteStore } from '@/store';
+import { Button } from 'antd';
+import { history, Link, useLocation, useSiteData } from 'dumi';
+import { memo, useEffect, useState } from 'react';
 
 type ILocaleItem = ReturnType<typeof useSiteData>['locales'][0];
 
@@ -52,7 +51,7 @@ const displayLangMap: Record<string, string> = {
   'en-US': 'EN',
 };
 
-const SingleSwitch: FC<{ locale: ILocaleItem; current: ILocaleItem }> = ({ locale, current }) => {
+const SingleSwitch = memo<{ locale: ILocaleItem; current: ILocaleItem }>(({ locale, current }) => {
   const { pathname } = useLocation();
   const [path, setPath] = useState(() =>
     getTargetLocalePath({ pathname, current, target: locale }),
@@ -77,9 +76,9 @@ const SingleSwitch: FC<{ locale: ILocaleItem; current: ILocaleItem }> = ({ local
       </Button>
     </Link>
   );
-};
+});
 
-const LangSwitch: FC = () => {
+const LangSwitch = memo(() => {
   const locales = useSiteStore((s) => s.siteData.locales);
   const current = useSiteStore((s) => s.locale);
 
@@ -124,6 +123,6 @@ const LangSwitch: FC = () => {
     // single language switch
     <SingleSwitch locale={locales.find(({ id }) => id !== current.id)!} current={current} />
   );
-};
+});
 
-export default memo(LangSwitch);
+export default LangSwitch;

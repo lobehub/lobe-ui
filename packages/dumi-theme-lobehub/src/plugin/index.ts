@@ -3,7 +3,6 @@ import chalk from 'chalk';
 import type { IApi } from 'dumi';
 import fs from 'fs';
 import { join } from 'path';
-
 import { getHash } from './utils';
 
 /*

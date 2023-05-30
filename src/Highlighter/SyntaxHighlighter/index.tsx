@@ -1,11 +1,10 @@
 import { useHighlight } from '@/hooks/useHighlight';
 import { Loading3QuartersOutlined as Loading } from '@ant-design/icons';
+import { useThemeMode } from 'antd-style';
 import { memo, useEffect } from 'react';
 import { Center } from 'react-layout-kit';
 import { shallow } from 'zustand/shallow';
 import type { HighlighterProps } from '../index';
-
-import { useThemeMode } from 'antd-style';
 import { useStyles } from './style';
 
 export type SyntaxHighlighterProps = Pick<HighlighterProps, 'language' | 'children' | 'theme'>;
@@ -22,7 +21,7 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(({ children, language }) 
   return (
     <>
       {isLoading ? (
-        <div className={styles.prism}>
+        <div className={styles.shiki}>
           <pre>
             <code>{children}</code>
           </pre>
@@ -39,7 +38,7 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(({ children, language }) 
       {isLoading && (
         <Center horizontal gap={8} className={styles.loading}>
           <Loading spin style={{ color: theme.colorTextTertiary }} />
-          shiki rendering...
+          Highlighting...
         </Center>
       )}
     </>

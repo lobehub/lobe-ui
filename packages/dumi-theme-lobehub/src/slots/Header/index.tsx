@@ -1,20 +1,17 @@
-import { memo, type FC } from 'react';
-import { Flexbox } from 'react-layout-kit';
-
+import Burger from '@/components/Burger';
+import GithubButton from '@/components/GithubButton';
+import ThemeSwitch from '@/components/ThemeSwitch';
 import LangSwitch from '@/slots/LangSwitch';
 import Logo from '@/slots/Logo';
 import Navbar from '@/slots/Navbar';
 import SearchBar from '@/slots/SearchBar';
-
-import Burger from '@/components/Burger';
-import GithubButton from '@/components/GithubButton';
-import ThemeSwitch from '@/components/ThemeSwitch';
-
 import { useSiteStore } from '@/store/useSiteStore';
 import { useResponsive } from 'antd-style';
+import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 import { useStyle } from './style';
 
-const Header: FC = () => {
+const Header = memo(() => {
   const hasHeader = useSiteStore((s) => !!s.routeMeta.frontmatter);
 
   const { mobile } = useResponsive();
@@ -68,6 +65,6 @@ const Header: FC = () => {
       </Flexbox>
     </header>
   );
-};
+});
 
-export default memo(Header);
+export default Header;

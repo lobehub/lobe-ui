@@ -1,38 +1,25 @@
 import { createStyles } from 'antd-style';
 import { rgba } from 'polished';
 
-export const useStyles = createStyles(({ token, prefixCls, cx, css }) => {
+export const useStyles = createStyles(({ token, prefixCls, cx, css, stylish }) => {
   const offset = 6;
 
   return {
     fillRect: css`
-      border-top: 1px dashed ${token.colorBorder};
-      width: 100%;
       flex: 1;
+      width: 100%;
+      border-top: 1px solid ${token.colorBorderSecondary};
     `,
     icon: cx(
       'site-burger-icon',
       css`
         position: relative;
 
-        &,
         &::before,
         &::after {
-          display: inline-block;
-          height: 2px;
-          background: ${token.colorTextSecondary};
-
-          width: 16px;
-
-          transition: all 150ms ease;
-        }
-
-        &::before,
-        &::after {
+          content: '';
           position: absolute;
           left: 0;
-
-          content: '';
         }
 
         &::before {
@@ -41,6 +28,19 @@ export const useStyles = createStyles(({ token, prefixCls, cx, css }) => {
 
         &::after {
           top: -${offset}px;
+        }
+
+        &,
+        &::before,
+        &::after {
+          display: inline-block;
+
+          width: 16px;
+          height: 2px;
+
+          background: ${token.colorTextSecondary};
+
+          transition: all 150ms ease;
         }
       `,
     ),
@@ -64,10 +64,10 @@ export const useStyles = createStyles(({ token, prefixCls, cx, css }) => {
       }
     `,
     container: css`
+      cursor: pointer;
       width: ${token.controlHeight}px;
       height: ${token.controlHeight}px;
       border-radius: ${token.borderRadius}px;
-      cursor: pointer;
     `,
 
     drawerRoot: css`
@@ -79,8 +79,8 @@ export const useStyles = createStyles(({ token, prefixCls, cx, css }) => {
 
       .${prefixCls}-drawer {
         &-mask {
-          background-color: ${rgba(token.colorBgLayout, 0.8)};
-          backdrop-filter: saturate(180%) blur(10px);
+          ${stylish.blur};
+          background-color: ${rgba(token.colorBgLayout, 0.5)};
         }
 
         &-content-wrapper {
@@ -108,10 +108,10 @@ export const useStyles = createStyles(({ token, prefixCls, cx, css }) => {
       }
 
       > .${prefixCls}-menu-item-only-child,.${prefixCls}-menu-submenu-title {
-        border-radius: 0;
-        margin: 0 !important;
         width: 100%;
-        border-top: 1px dashed ${token.colorBorder};
+        margin: 0 !important;
+        border-top: 1px solid ${token.colorBorderSecondary};
+        border-radius: 0;
 
         &:active {
           color: ${token.colorText};
@@ -120,27 +120,31 @@ export const useStyles = createStyles(({ token, prefixCls, cx, css }) => {
       }
 
       .ant-menu-item-group-title {
+        overflow: hidden;
+
         padding: 0;
+
         font-size: 12px;
         font-weight: 500;
-        white-space: nowrap;
-        overflow: hidden;
         text-overflow: ellipsis;
         text-transform: uppercase;
+        white-space: nowrap;
       }
 
       .ant-menu-item-selected {
-        margin: 0;
         width: 100%;
-        border-radius: 0;
+        margin: 0;
+
         color: ${token.colorText};
+
         background: ${token.colorFillSecondary};
+        border-radius: 0;
       }
 
       .ant-menu-item,
       a:before {
-        margin: 0 !important;
         width: 100% !important;
+        margin: 0 !important;
         border-radius: 0 !important;
       }
     `,

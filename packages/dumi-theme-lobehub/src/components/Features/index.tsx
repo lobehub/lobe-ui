@@ -1,12 +1,8 @@
-import { CSSProperties, type FC } from 'react';
-
 import { IFeature } from '@/types';
+import { CSSProperties, memo } from 'react';
 import FeatureItem from './Item';
 import { useStyles } from './style';
 
-/**
- * @title Features Props
- */
 export interface FeaturesProps {
   /**
    * @title Feature items
@@ -19,7 +15,7 @@ export interface FeaturesProps {
   style?: CSSProperties;
 }
 
-const Features: FC<FeaturesProps> = ({ items, style }) => {
+const Features = memo<FeaturesProps>(({ items, style }) => {
   const { styles } = useStyles();
 
   if (!Boolean(items?.length)) return null;
@@ -31,6 +27,6 @@ const Features: FC<FeaturesProps> = ({ items, style }) => {
       })}
     </div>
   );
-};
+});
 
 export default Features;

@@ -1,9 +1,9 @@
 import TOC from '@/components/Toc';
 import { tocAnchorItemSel, useSiteStore } from '@/store';
 import isEqual from 'fast-deep-equal';
-import { memo, type FC } from 'react';
+import { memo } from 'react';
 
-const Toc: FC = memo(() => {
+const Toc = memo(() => {
   const items = useSiteStore(tocAnchorItemSel, isEqual);
 
   return <TOC items={items} />;

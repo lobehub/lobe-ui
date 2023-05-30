@@ -1,14 +1,13 @@
+import { activePathSel, useSiteStore } from '@/store';
 import { Drawer, Menu } from 'antd';
 import { Link } from 'dumi';
 import isEqual from 'fast-deep-equal';
 import { uniq } from 'lodash';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { Center } from 'react-layout-kit';
-
-import { activePathSel, useSiteStore } from '@/store';
 import { useStyles } from './style';
 
-const Burger = () => {
+const Burger = memo(() => {
   const [opened, setOpened] = useState(false);
   const { styles, cx } = useStyles();
 
@@ -41,8 +40,8 @@ const Burger = () => {
           selectedKeys={uniq([activePath, `s-${pathname}`])}
           openKeys={[activePath]}
           className={styles.menu}
-          items={nav.map((item) => ({
-            label: <Link to={item.link}>{item.title}</Link>,
+          items={nav.map<any>((item) => ({
+            label: <Link to={String(item.link)}>{item.title}</Link>,
             key: item.activePath! || item.link,
             children:
               (item.activePath || item.link) === activePath &&
@@ -73,6 +72,6 @@ const Burger = () => {
       </Drawer>
     </Center>
   );
-};
+});
 
 export default Burger;
