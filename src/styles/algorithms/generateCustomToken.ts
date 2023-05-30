@@ -1,6 +1,6 @@
 import { GetCustomToken } from 'antd-style';
 import { AliasToken } from 'antd/es/theme/interface';
-import { camelCase } from 'lodash';
+import { camelCase } from 'lodash-es';
 
 import { ColorScaleItem, colorScales } from '@/styles/colors';
 import { LobeCustomToken } from '@/types/customToken';

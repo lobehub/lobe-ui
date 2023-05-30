@@ -1,7 +1,7 @@
 import { Drawer, Menu } from 'antd';
 import { Link } from 'dumi';
 import isEqual from 'fast-deep-equal';
-import { uniq } from 'lodash';
+import { uniq } from 'lodash-es';
 import { memo, useState } from 'react';
 import { Center } from 'react-layout-kit';
 
