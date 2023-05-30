@@ -1,6 +1,7 @@
-import { SvgProps } from '@/types';
 import { LucideIcon } from 'lucide-react';
 import { FC, memo } from 'react';
+
+import { SvgProps } from '@/types';
 
 export type IconSize =
   | 'large'
@@ -13,15 +14,15 @@ export type IconSize =
 
 export interface IconProps extends SvgProps {
   /**
-   * @description Size of the icon
-   * @default 'normal'
-   */
-  size?: IconSize;
-  /**
    * @description The icon element to be rendered
    * @type LucideIcon
    */
   icon: LucideIcon;
+  /**
+   * @description Size of the icon
+   * @default 'normal'
+   */
+  size?: IconSize;
 }
 
 const Icon: FC<IconProps> = ({ icon, size, ...props }) => {

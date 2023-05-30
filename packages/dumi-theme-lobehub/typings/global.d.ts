@@ -1,6 +1,7 @@
+import 'antd-style';
+
 import { LobeCustomStylish } from '@lobehub/ui/types/customStylish';
 import { LobeCustomToken } from '@lobehub/ui/types/customToken';
-import 'antd-style';
 import { AntdToken } from 'antd-style/lib/types/theme';
 
 declare module 'antd-style' {

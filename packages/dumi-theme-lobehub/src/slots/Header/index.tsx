@@ -1,3 +1,7 @@
+import { useResponsive } from 'antd-style';
+import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
+
 import Burger from '@/components/Burger';
 import GithubButton from '@/components/GithubButton';
 import ThemeSwitch from '@/components/ThemeSwitch';
@@ -6,9 +10,7 @@ import Logo from '@/slots/Logo';
 import Navbar from '@/slots/Navbar';
 import SearchBar from '@/slots/SearchBar';
 import { useSiteStore } from '@/store/useSiteStore';
-import { useResponsive } from 'antd-style';
-import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
 import { useStyle } from './style';
 
 const Header = memo(() => {
@@ -20,18 +22,18 @@ const Header = memo(() => {
   return !hasHeader ? null : (
     <header className={styles.header}>
       <Flexbox
-        horizontal
-        distribution={'space-between'}
         align={'center'}
-        width={'auto'}
         className={styles.content}
+        distribution={'space-between'}
+        horizontal
+        width={'auto'}
       >
         {mobile ? (
           <>
             <Flexbox>
               <Burger />
             </Flexbox>
-            <Flexbox horizontal className={styles.left}>
+            <Flexbox className={styles.left} horizontal>
               <Logo />
             </Flexbox>
             <Flexbox>
@@ -40,7 +42,7 @@ const Header = memo(() => {
           </>
         ) : (
           <>
-            <Flexbox horizontal className={styles.left}>
+            <Flexbox className={styles.left} horizontal>
               <Logo />
             </Flexbox>
             <Flexbox style={{ marginLeft: 48, alignSelf: 'end' }}>
@@ -49,10 +51,10 @@ const Header = memo(() => {
             <section className={styles.right}>
               <div />
               <Flexbox
-                gap={8}
-                horizontal
                 align={'center'}
                 className="dumi-default-header-right-aside"
+                gap={8}
+                horizontal
               >
                 <SearchBar />
                 <LangSwitch />

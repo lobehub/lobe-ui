@@ -1,7 +1,8 @@
+import { apiHeaderSel, flattenSidebarSel, tokenSel } from './selectors';
+
 export * from './selectors';
 export * from './useSiteStore';
 export * from './useThemeStore';
-import { apiHeaderSel, flattenSidebarSel, tokenSel } from './selectors';
 
 /**
  * @title 数据选择器

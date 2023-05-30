@@ -1,7 +1,8 @@
-import FeatureBlock from '@/components/Features';
-import { featuresSel, useSiteStore } from '@/store';
 import { memo } from 'react';
 import { shallow } from 'zustand/shallow';
+
+import FeatureBlock from '@/components/Features';
+import { featuresSel, useSiteStore } from '@/store';
 
 const Features = memo(() => {
   const features = useSiteStore(featuresSel, shallow);

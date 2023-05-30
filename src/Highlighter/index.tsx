@@ -1,9 +1,10 @@
 import { memo } from 'react';
 
 import { DivProps } from '@/types';
+
 import CopyButton from '../CopyButton';
-import SyntaxHighlighter, { type SyntaxHighlighterProps } from './SyntaxHighlighter';
 import { useStyles } from './style';
+import SyntaxHighlighter, { type SyntaxHighlighterProps } from './SyntaxHighlighter';
 
 export { SyntaxHighlighter, SyntaxHighlighterProps };
 
@@ -13,6 +14,11 @@ export interface HighlighterProps extends DivProps {
    */
   children: string;
   /**
+   * @description Whether to show the copy button
+   * @default true
+   */
+  copyable?: boolean;
+  /**
    * @description The language of the code content
    */
   language: string;
@@ -21,11 +27,6 @@ export interface HighlighterProps extends DivProps {
    * @default true
    */
   showLanguage?: boolean;
-  /**
-   * @description Whether to show the copy button
-   * @default true
-   */
-  copyable?: boolean;
   /**
    * @description The theme of the code block
    * @default 'light'
@@ -53,10 +54,10 @@ export const Highlighter = memo<HighlighterProps>(
     const container = cx(styles.container, className);
 
     return (
-      <div data-code-type="highlighter" className={container} style={style}>
-        {copyable && <CopyButton placement="left" content={children} className={styles.button} />}
+      <div className={container} data-code-type="highlighter" style={style}>
+        {copyable && <CopyButton className={styles.button} content={children} placement="left" />}
         {showLanguage && language && <div className={styles.lang}>{language.toLowerCase()}</div>}
-        <SyntaxHighlighter theme={theme} language={language?.toLowerCase()}>
+        <SyntaxHighlighter language={language?.toLowerCase()} theme={theme}>
           {children.trim()}
         </SyntaxHighlighter>
       </div>

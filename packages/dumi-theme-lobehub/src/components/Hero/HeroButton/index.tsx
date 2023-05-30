@@ -1,5 +1,6 @@
 import { Button } from 'antd';
 import { FC, ReactNode } from 'react';
+
 import { useStyles } from './style';
 
 interface HeroButtonProps {
@@ -8,7 +9,7 @@ interface HeroButtonProps {
 const HeroButton: FC<HeroButtonProps> = ({ children }) => {
   const { styles } = useStyles();
   return (
-    <Button size={'large'} shape={'round'} type={'primary'} className={styles.button}>
+    <Button className={styles.button} shape={'round'} size={'large'} type={'primary'}>
       {children}
     </Button>
   );

@@ -1,9 +1,11 @@
+import { AliasToken } from 'antd/es/theme/interface';
+
 import {
   generateColorNeutralPalette,
   generateColorPalette,
 } from '@/styles/algorithms/generateColorPalette';
 import { colorScales } from '@/styles/colors';
-import { AliasToken } from 'antd/es/theme/interface';
+
 import { baseToken } from './base';
 
 const primaryToken = generateColorPalette({

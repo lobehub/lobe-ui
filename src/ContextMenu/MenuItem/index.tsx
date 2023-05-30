@@ -1,6 +1,7 @@
 import { ChevronRightIcon } from 'lucide-react';
 import { forwardRef, ReactNode } from 'react';
 import { Flexbox } from 'react-layout-kit';
+
 import { AltIcon, CommandIcon, ControlIcon, ShiftIcon } from './icons';
 import { useStyles } from './style';
 
@@ -24,12 +25,12 @@ const CODE_MAP: Record<string, 'meta' | 'control' | 'shift' | 'alt'> = {
 };
 
 interface MenuItemProps {
-  label: ReactNode;
-  disabled?: boolean;
   active?: boolean;
-  selected?: boolean;
-  nested?: boolean;
+  disabled?: boolean;
   icon?: ReactNode;
+  label: ReactNode;
+  nested?: boolean;
+  selected?: boolean;
   shortcut?: string[];
 }
 
@@ -40,15 +41,15 @@ const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(
       <button
         type={'button'}
         {...props}
-        ref={ref}
-        role="menuitem"
-        disabled={disabled}
         className={cx(styles.item, {
           [styles.selected]: selected,
           [styles.active]: active,
         })}
+        disabled={disabled}
+        ref={ref}
+        role="menuitem"
       >
-        <Flexbox horizontal gap={8}>
+        <Flexbox gap={8} horizontal>
           {icon && <span>{icon}</span>}
           {label}
         </Flexbox>
@@ -57,7 +58,7 @@ const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(
             <ChevronRightIcon className={styles.arrow} />
           </span>
         ) : shortcut ? (
-          <Flexbox horizontal align={'center'}>
+          <Flexbox align={'center'} horizontal>
             {shortcut.map((c) => {
               const code = CODE_MAP[c.toLowerCase()];
 

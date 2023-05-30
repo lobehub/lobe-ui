@@ -6,20 +6,22 @@ export const useStyles = createStyles(({ css, responsive, token }, isEmpty: bool
   return {
     container: css`
       grid-area: footer;
-      border-top: 1px solid ${token.colorSplit};
-      color: ${token.colorTextDescription};
-      text-align: center;
       align-self: stretch;
 
+      color: ${token.colorTextDescription};
+      text-align: center;
+
+      border-top: 1px solid ${token.colorSplit};
+
       ${responsive.mobile} {
-        border: none;
         flex-direction: column;
+        border: none;
       }
     `,
     footer: css`
-      color: ${token.colorTextSecondary};
       font-size: 14px;
       line-height: 1.5;
+      color: ${token.colorTextSecondary};
       background-color: ${token.colorBgLayout};
 
       &.${prefix} {
@@ -50,20 +52,25 @@ export const useStyles = createStyles(({ css, responsive, token }, isEmpty: bool
         &-column {
           h2 {
             position: relative;
+
             margin: 0 auto;
-            color: ${token.colorText};
-            font-weight: 500;
+
             font-size: 16px;
+            font-weight: 500;
+            color: ${token.colorText};
           }
 
           &-icon {
             position: relative;
             top: -1px;
+
             display: inline-block;
+
             width: 22px;
+            margin-inline-end: 0.5em;
+
             text-align: center;
             vertical-align: middle;
-            margin-inline-end: 0.5em;
 
             > span,
             > svg,
@@ -80,11 +87,14 @@ export const useStyles = createStyles(({ css, responsive, token }, isEmpty: bool
           &-icon {
             position: relative;
             top: -1px;
+
             display: inline-block;
+
             width: 16px;
+            margin-inline-end: 0.4em;
+
             text-align: center;
             vertical-align: middle;
-            margin-inline-end: 0.4em;
 
             > span,
             > svg,
@@ -105,6 +115,7 @@ export const useStyles = createStyles(({ css, responsive, token }, isEmpty: bool
             max-width: 1200px;
             margin: 0 auto;
             padding: 16px 0;
+
             font-size: 16px;
             line-height: 32px;
             text-align: center;

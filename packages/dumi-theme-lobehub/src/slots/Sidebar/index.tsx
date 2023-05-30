@@ -1,9 +1,11 @@
-import { useSiteStore } from '@/store/useSiteStore';
 import { DraggablePanel } from '@lobehub/ui';
 import { useResponsive } from 'antd-style';
 import { NavLink } from 'dumi';
 import isEqual from 'fast-deep-equal';
 import { memo, useEffect, useState } from 'react';
+
+import { useSiteStore } from '@/store/useSiteStore';
+
 import { useStyles } from './style';
 
 const Sidebar = memo(() => {
@@ -19,10 +21,10 @@ const Sidebar = memo(() => {
 
   return isEmptySideBar ? null : (
     <DraggablePanel
-      placement="left"
       className={styles.sidebar}
       expand={expand}
       onExpandChange={setExpand}
+      placement="left"
     >
       <div className={styles.sidebarInner}>
         {sidebar.map((item, i) => (
@@ -30,7 +32,7 @@ const Sidebar = memo(() => {
             {item.title && <dt>{item.title}</dt>}
             {item.children.map((child) => (
               <dd key={child.link}>
-                <NavLink to={child.link} title={child.title} end>
+                <NavLink end title={child.title} to={child.link}>
                   {child.title}
                 </NavLink>
               </dd>

@@ -1,6 +1,7 @@
-import { themeConfig } from '@/Highlighter/theme';
 import { getHighlighter, Highlighter } from 'shiki-es';
 import { create } from 'zustand';
+
+import { themeConfig } from '@/Highlighter/theme';
 
 export const languageMap = [
   'javascript',
@@ -23,6 +24,14 @@ export const languageMap = [
  */
 interface Store {
   /**
+   * @title 将代码转化为 HTML 字符串
+   * @param text - 代码文本
+   * @param language - 代码语言
+   * @param isDarkMode - 是否为暗黑模式
+   * @returns HTML 字符串
+   */
+  codeToHtml: (text: string, language: string, isDarkMode: boolean) => string;
+  /**
    * @title 高亮器对象
    */
   highlighter?: Highlighter;
@@ -31,14 +40,6 @@ interface Store {
    * @returns 初始化 Promise 对象
    */
   initHighlighter: () => Promise<void>;
-  /**
-   * @title 将代码转化为 HTML 字符串
-   * @param text - 代码文本
-   * @param language - 代码语言
-   * @param isDarkMode - 是否为暗黑模式
-   * @returns HTML 字符串
-   */
-  codeToHtml: (text: string, language: string, isDarkMode: boolean) => string;
 }
 
 export const useHighlight = create<Store>((set, get) => ({

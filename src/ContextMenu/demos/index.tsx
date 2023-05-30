@@ -11,13 +11,13 @@ export default () => {
           {
             key: 'copy',
             label: '复制',
-            icon: <Icon size={'small'} icon={CopyIcon} />,
+            icon: <Icon icon={CopyIcon} size={'small'} />,
             shortcut: ['meta', 'C'],
           },
           {
             key: 'selectAll',
             label: '选择全部',
-            icon: <Icon size={'small'} icon={BoxSelectIcon} />,
+            icon: <Icon icon={BoxSelectIcon} size={'small'} />,
             shortcut: ['meta', 'A'],
           },
           { label: '放大', key: 'zoomIn', icon: <ZoomInOutlined /> },

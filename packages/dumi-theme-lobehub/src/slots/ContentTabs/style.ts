@@ -17,8 +17,8 @@ export const useStyles = createStyles(({ token, prefixCls, css }) => {
         transition: background-color 150ms ease-out;
 
         &:first-child {
-          margin-inline: 0 4px;
           margin-block: ${marginBlock}px;
+          margin-inline: 0 4px;
           padding: 4px 12px !important;
         }
 

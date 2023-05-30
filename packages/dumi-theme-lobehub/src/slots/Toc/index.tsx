@@ -1,7 +1,8 @@
-import TOC from '@/components/Toc';
-import { tocAnchorItemSel, useSiteStore } from '@/store';
 import isEqual from 'fast-deep-equal';
 import { memo } from 'react';
+
+import TOC from '@/components/Toc';
+import { tocAnchorItemSel, useSiteStore } from '@/store';
 
 const Toc = memo(() => {
   const items = useSiteStore(tocAnchorItemSel, isEqual);

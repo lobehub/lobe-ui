@@ -1,5 +1,7 @@
-import { IFeature } from '@/types';
 import { CSSProperties, memo } from 'react';
+
+import { IFeature } from '@/types';
+
 import FeatureItem from './Item';
 import { useStyles } from './style';
 

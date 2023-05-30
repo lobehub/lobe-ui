@@ -1,13 +1,14 @@
-import { ActionIcon, Input, InputProps } from '@/index';
 import { ConfigProvider, InputRef, Space } from 'antd';
 import { RotateCcw, Save } from 'lucide-react';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
+import { ActionIcon, Input, InputProps } from '@/index';
+
 export interface ControlInputProps extends Omit<InputProps, 'onChange' | 'value' | 'onAbort'> {
   onChange?: (value: string) => void;
+  onChangeEnd?: (value: string) => void;
   onValueChanging?: (value: string) => void;
   value?: string;
-  onChangeEnd?: (value: string) => void;
 }
 
 export const ControlInput = memo<ControlInputProps>(
@@ -29,16 +30,6 @@ export const ControlInput = memo<ControlInputProps>(
       <Input
         ref={inputRef}
         {...props}
-        value={input}
-        onCompositionStart={() => {
-          isChineseInput.current = true;
-        }}
-        onCompositionEnd={() => {
-          isChineseInput.current = false;
-        }}
-        onFocus={() => {
-          isFocusing.current = true;
-        }}
         onBlur={() => {
           isFocusing.current = false;
           onChangeEnd?.(input);
@@ -46,6 +37,15 @@ export const ControlInput = memo<ControlInputProps>(
         onChange={(e) => {
           setInput(e.target.value);
           onValueChanging?.(e.target.value);
+        }}
+        onCompositionEnd={() => {
+          isChineseInput.current = false;
+        }}
+        onCompositionStart={() => {
+          isChineseInput.current = true;
+        }}
+        onFocus={() => {
+          isFocusing.current = true;
         }}
         onPressEnter={(e) => {
           if (!e.shiftKey && !isChineseInput.current) {
@@ -62,18 +62,19 @@ export const ControlInput = memo<ControlInputProps>(
             <ConfigProvider theme={{ token: { fontSize: 14 } }}>
               <Space size={2}>
                 <ActionIcon
-                  title="Reset"
                   icon={RotateCcw}
-                  size="small"
                   onClick={() => {
                     setInput(value as string);
                   }}
+                  size="small"
+                  title="Reset"
                 />
-                <ActionIcon title="✅ Save" icon={Save} size="small" onClick={updateValue} />
+                <ActionIcon icon={Save} onClick={updateValue} size="small" title="✅ Save" />
               </Space>
             </ConfigProvider>
           )
         }
+        value={input}
       />
     );
   },

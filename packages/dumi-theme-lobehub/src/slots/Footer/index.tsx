@@ -1,10 +1,12 @@
-import Foot, { FooterProps } from '@/components/Footer';
-import { githubSel, useSiteStore } from '@/store';
-import { IFooter } from '@/types';
 import { Divider } from 'antd';
 import { useResponsive } from 'antd-style';
 import { memo } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
+
+import Foot, { FooterProps } from '@/components/Footer';
+import { githubSel, useSiteStore } from '@/store';
+import { IFooter } from '@/types';
+
 import { getColumns } from './columns';
 import { useStyles } from './style';
 
@@ -26,16 +28,14 @@ const Footer = memo(() => {
 
   return (
     <Foot
-      theme={footer?.theme || (theme.appearance as FooterProps['theme'])}
-      columns={columns}
       bottom={
         mobile ? (
           <Center className={styles.container}>
             Copyright © 2022-{new Date().getFullYear()}
             <Flexbox
               align={'center'}
-              horizontal
               dangerouslySetInnerHTML={{ __html: bottomFooter }}
+              horizontal
             ></Flexbox>
           </Center>
         ) : (
@@ -45,6 +45,8 @@ const Footer = memo(() => {
           </Center>
         )
       }
+      columns={columns}
+      theme={footer?.theme || (theme.appearance as FooterProps['theme'])}
     />
   );
 });

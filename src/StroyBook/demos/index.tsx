@@ -1,4 +1,5 @@
 import { StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+
 export default () => {
   const store = useCreateStore();
   const { text, color, fontSize, fontWeight, upperCase } = useControls(

@@ -6,7 +6,6 @@ import { Flexbox } from 'react-layout-kit';
 import { shallow } from 'zustand/shallow';
 
 import { chatSelectors, useStore, useStoreApi } from '../../Chat/store';
-
 import ActionBar from './ActionBar';
 
 const useStyles = createStyles(({ css, responsive, token }) => ({
@@ -73,40 +72,40 @@ export const InputArea = ({}) => {
         },
       }}
     >
-      <Flexbox gap={8} className={styles.container}>
+      <Flexbox className={styles.container} gap={8}>
         <ActionBar />
-        <Flexbox horizontal gap={8} align={'center'} className={styles.boxShadow}>
+        <Flexbox align={'center'} className={styles.boxShadow} gap={8} horizontal>
           <Input.TextArea
-            size={'large'}
-            value={message}
-            placeholder="请输入内容..."
+            autoSize={{ maxRows: 8 }}
+            className={styles.input}
+            disabled={disabled}
             onChange={(e) => {
               storeApi.setState({ message: e.target.value });
-            }}
-            disabled={disabled}
-            autoSize={{ maxRows: 8 }}
-            onCompositionStart={() => {
-              isChineseInput.current = true;
             }}
             onCompositionEnd={() => {
               isChineseInput.current = false;
             }}
-            className={styles.input}
+            onCompositionStart={() => {
+              isChineseInput.current = true;
+            }}
             onPressEnter={(e) => {
               if (!isLoading && !e.shiftKey && !isChineseInput.current) {
                 e.preventDefault();
                 sendMessage();
               }
             }}
+            placeholder="请输入内容..."
+            size={'large'}
+            value={message}
           />
           {mobile ? null : (
             <Button
-              disabled={disabled}
-              loading={isLoading}
-              type="text"
               className={styles.btn}
-              onClick={sendMessage}
+              disabled={disabled}
               icon={<SendOutlined />}
+              loading={isLoading}
+              onClick={sendMessage}
+              type="text"
             />
           )}
         </Flexbox>

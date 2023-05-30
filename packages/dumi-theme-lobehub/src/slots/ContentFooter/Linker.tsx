@@ -3,11 +3,12 @@ import { Link } from 'dumi';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { memo, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
+
 import { useStyles } from './Linker.style';
 
 interface LinkerProps {
-  title: string;
   link: string;
+  title: string;
   type?: 'prev' | 'next';
 }
 
@@ -36,13 +37,13 @@ const Linker = memo<LinkerProps>(({ title, link, type }) => {
     <Link to={link}>
       <Flexbox className={styles.container} gap={8}>
         <Flexbox
-          horizontal
-          gap={4}
           className={cx(styles.nav, type === 'next' && styles.alignmentEnd)}
+          gap={4}
+          horizontal
         >
           {navContent}
         </Flexbox>
-        <Flexbox horizontal className={cx(styles.title, type === 'next' && styles.alignmentEnd)}>
+        <Flexbox className={cx(styles.title, type === 'next' && styles.alignmentEnd)} horizontal>
           {title}
         </Flexbox>
       </Flexbox>

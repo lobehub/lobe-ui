@@ -17,8 +17,8 @@ export const useStyles = createStyles(({ token, prefixCls, css }) => {
         background: ${tokens.background};
 
         .${prefixCls}-alert-message {
-          color: ${tokens.text};
           font-weight: bold;
+          color: ${tokens.text};
         }
 
         .${prefixCls}-alert-description {

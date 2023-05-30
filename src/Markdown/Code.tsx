@@ -1,5 +1,6 @@
-import { useStyles } from '@/Markdown/style';
 import { memo, PropsWithChildren } from 'react';
+
+import { useStyles } from '@/Markdown/style';
 
 const Code = memo((p: PropsWithChildren<any>) => {
   const { styles } = useStyles();

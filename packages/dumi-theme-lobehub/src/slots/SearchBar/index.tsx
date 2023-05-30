@@ -2,6 +2,7 @@ import { SearchBar as Input } from '@lobehub/ui';
 import { useSiteSearch } from 'dumi';
 import SearchResult from 'dumi/theme-default/slots/SearchResult';
 import { memo, useState } from 'react';
+
 import { useStyles } from './style';
 
 const SearchBar = memo(() => {
@@ -13,7 +14,6 @@ const SearchBar = memo(() => {
     <div className={styles.container}>
       <Input
         enableShortKey
-        onFocus={() => setFocusing(true)}
         onBlur={() => {
           // wait for item click
           setTimeout(() => {
@@ -21,6 +21,7 @@ const SearchBar = memo(() => {
           }, 1);
         }}
         onChange={(e) => setKeywords(e.target.value)}
+        onFocus={() => setFocusing(true)}
       />
       {keywords.trim() && focusing && (result.length || !loading) && (
         <div className={styles.popover}>

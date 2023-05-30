@@ -1,4 +1,5 @@
 import { get_encoding } from '@dqbd/tiktoken';
+
 import type { ChatStore } from './store';
 
 const tiktoken = get_encoding('cl100k_base');

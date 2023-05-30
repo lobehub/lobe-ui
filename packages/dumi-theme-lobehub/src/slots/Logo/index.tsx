@@ -1,9 +1,11 @@
-import { useSiteStore } from '@/store/useSiteStore';
 import { Logo as SiteLogo } from '@lobehub/ui';
 import { useResponsive } from 'antd-style';
 import { Link } from 'dumi';
 import isEqual from 'fast-deep-equal';
 import { memo } from 'react';
+
+import { useSiteStore } from '@/store/useSiteStore';
+
 import { useStyles } from './style';
 
 const Logo = memo(() => {
@@ -17,11 +19,11 @@ const Logo = memo(() => {
       <Link className={cx(styles)} to={'base' in locale ? locale.base : '/'}>
         {themeConfig.logo ? (
           <>
-            <img src={themeConfig.logo} height={mobile ? 32 : 36} />
+            <img height={mobile ? 32 : 36} src={themeConfig.logo} />
             {themeConfig.name}
           </>
         ) : (
-          <SiteLogo type="combine" size={mobile ? 32 : 36} extra={themeConfig.name} />
+          <SiteLogo extra={themeConfig.name} size={mobile ? 32 : 36} type="combine" />
         )}
       </Link>
     )

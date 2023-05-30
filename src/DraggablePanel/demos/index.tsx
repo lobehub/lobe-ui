@@ -47,7 +47,7 @@ export default () => {
     { store },
   );
   return (
-    <StroyBook noPadding levaStore={store}>
+    <StroyBook levaStore={store} noPadding>
       <View
         style={['top', 'bottom'].includes(control.placement) ? { flexDirection: 'column' } : {}}
       >

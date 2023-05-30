@@ -1,6 +1,7 @@
-import { LobeCustomStylish } from '@/types/customStylish';
 import { GetCustomStylish } from 'antd-style';
 import { rgba } from 'polished';
+
+import { LobeCustomStylish } from '@/types/customStylish';
 
 export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
   css,

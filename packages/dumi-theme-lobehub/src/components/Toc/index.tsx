@@ -1,21 +1,23 @@
-import { AnchorItem } from '@/types';
 import { ActionIcon } from '@lobehub/ui';
 import { Anchor, Collapse, ConfigProvider } from 'antd';
 import { useResponsive, useTheme } from 'antd-style';
 import { PanelTopClose, PanelTopOpen } from 'lucide-react';
 import { memo, useMemo } from 'react';
 import useControlledState from 'use-merge-value';
+
+import { AnchorItem } from '@/types';
+
 import { useStyles } from './style';
 
 export interface TocProps {
   /**
-   * @title 目录项列表
-   */
-  items: AnchorItem[];
-  /**
    * @title 当前激活的目录项 key 值
    */
   activeKey?: string;
+  /**
+   * @title 目录项列表
+   */
+  items: AnchorItem[];
   /**
    * @title 目录项切换的回调函数
    * @param activeKey - 切换后的目录项 key 值
@@ -54,8 +56,7 @@ const Toc = memo<TocProps>(({ items, activeKey, onChange }) => {
         <nav className={styles.mobileCtn}>
           <Collapse
             bordered={false}
-            ghost
-            expandIconPosition={'end'}
+            className={styles.expand}
             expandIcon={({ isActive }) =>
               isActive ? (
                 <ActionIcon
@@ -69,20 +70,21 @@ const Toc = memo<TocProps>(({ items, activeKey, onChange }) => {
                 />
               )
             }
-            className={styles.expand}
+            expandIconPosition={'end'}
+            ghost
           >
             <Collapse.Panel
               forceRender
-              key={'toc'}
               header={!activeAnchor ? 'TOC' : activeAnchor.title}
+              key={'toc'}
             >
               <ConfigProvider theme={{ token: { fontSize: 14, sizeStep: 4 } }}>
                 <Anchor
+                  items={linkItems}
                   onChange={(currentLink) => {
                     setActiveLink(currentLink.replace('#', ''));
                   }}
                   targetOffset={theme.headerHeight + 12}
-                  items={linkItems}
                 />
               </ConfigProvider>
             </Collapse.Panel>
@@ -93,8 +95,8 @@ const Toc = memo<TocProps>(({ items, activeKey, onChange }) => {
       <nav className={styles.container}>
         <h4>Table of Contents</h4>
         <Anchor
-          items={linkItems}
           className={styles.anchor}
+          items={linkItems}
           targetOffset={theme.headerHeight + 12}
         />
       </nav>

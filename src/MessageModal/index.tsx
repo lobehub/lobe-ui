@@ -1,35 +1,37 @@
-import Markdown from '@/Markdown';
-import MessageInput from '@/MessageInput';
 import { AimOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
+
+import Markdown from '@/Markdown';
+import MessageInput from '@/MessageInput';
+
 import { useStyles } from './style';
 
 export interface MessageModalProps {
-  /**
-   * @description Whether the modal is open or not
-   * @default false
-   */
-  open?: boolean;
-  /**
-   * @description Callback fired when open state is changed
-   */
-  onOpenChange?: (open: boolean) => void;
   /**
    * @description Whether the message is being edited or not
    * @default false
    */
   editing?: boolean;
   /**
+   * @description Callback fired when message content is changed
+   */
+  onChange?: (text: string) => void;
+  /**
    * @description Callback fired when editing state is changed
    */
   onEditingChange?: (editing: boolean) => void;
   /**
-   * @description Callback fired when message content is changed
+   * @description Callback fired when open state is changed
    */
-  onChange?: (text: string) => void;
+  onOpenChange?: (open: boolean) => void;
+  /**
+   * @description Whether the modal is open or not
+   * @default false
+   */
+  open?: boolean;
   /**
    * @description The value of the message content
    */
@@ -52,32 +54,32 @@ const MessageModal = memo<MessageModalProps>(
 
     return (
       <Modal
-        open={expand}
-        width={800}
-        onCancel={() => setExpand(false)}
+        cancelText={'关闭'}
+        className={styles.modal}
+        footer={isEdit ? null : undefined}
         okText={'编辑'}
+        onCancel={() => setExpand(false)}
         onOk={() => {
           setTyping(true);
         }}
-        footer={isEdit ? null : undefined}
-        cancelText={'关闭'}
+        open={expand}
         title={
-          <Flexbox horizontal align={'center'} gap={4}>
+          <Flexbox align={'center'} gap={4} horizontal>
             <AimOutlined />
             提示词
           </Flexbox>
         }
-        className={styles.modal}
+        width={800}
       >
         {isEdit ? (
           <MessageInput
+            defaultValue={value}
+            height={400}
+            onCancel={() => setTyping(false)}
             onConfirm={(text) => {
               setTyping(false);
               onChange?.(text);
             }}
-            onCancel={() => setTyping(false)}
-            defaultValue={value}
-            height={400}
           />
         ) : (
           <Markdown className={styles.body}>{value}</Markdown>

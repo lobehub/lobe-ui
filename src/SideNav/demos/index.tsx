@@ -7,25 +7,21 @@ export default () => {
   return (
     <SideNav
       avatar={<Logo size={40} />}
+      bottomActions={<ActionIcon icon={Settings2} />}
       topActions={
         <>
           <ActionIcon
-            icon={MessageSquare}
-            size="large"
             active={tab === 'chat'}
+            icon={MessageSquare}
             onClick={() => setTab('chat')}
+            size="large"
           />
           <ActionIcon
-            icon={Album}
-            size="large"
             active={tab === 'market'}
+            icon={Album}
             onClick={() => setTab('market')}
+            size="large"
           />
-        </>
-      }
-      bottomActions={
-        <>
-          <ActionIcon icon={Settings2} />
         </>
       }
     />

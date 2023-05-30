@@ -1,9 +1,11 @@
-import { useHighlight } from '@/hooks/useHighlight';
 import { Loading3QuartersOutlined as Loading } from '@ant-design/icons';
 import { useThemeMode } from 'antd-style';
 import { memo, useEffect } from 'react';
 import { Center } from 'react-layout-kit';
 import { shallow } from 'zustand/shallow';
+
+import { useHighlight } from '@/hooks/useHighlight';
+
 import type { HighlighterProps } from '../index';
 import { useStyles } from './style';
 
@@ -28,15 +30,15 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(({ children, language }) 
         </div>
       ) : (
         <div
+          className={styles.shiki}
           dangerouslySetInnerHTML={{
             __html: codeToHtml(children, language, isDarkMode) || '',
           }}
-          className={styles.shiki}
         />
       )}
 
       {isLoading && (
-        <Center horizontal gap={8} className={styles.loading}>
+        <Center className={styles.loading} gap={8} horizontal>
           <Loading spin style={{ color: theme.colorTextTertiary }} />
           Highlighting...
         </Center>

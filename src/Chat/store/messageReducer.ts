@@ -1,21 +1,22 @@
 import { produce } from 'immer';
+
 import { ChatMessage, ChatMessageError, MessageRoleType } from '../types';
 
 export type MessageDispatch =
-  | { type: 'addMessage'; message: ChatMessage }
-  | { type: 'insertMessage'; message: ChatMessage; index: number }
-  | { type: 'deleteMessage'; index: number }
+  | { message: ChatMessage; type: 'addMessage' }
+  | { index: number; message: ChatMessage; type: 'insertMessage' }
+  | { index: number; type: 'deleteMessage' }
   | { type: 'resetMessages' }
-  | { type: 'updateMessage'; index: number; message: string }
-  | { type: 'updateMessageRole'; index: number; role: MessageRoleType }
+  | { index: number; message: string; type: 'updateMessage' }
+  | { index: number; role: MessageRoleType; type: 'updateMessageRole' }
   //
-  | { type: 'addUserMessage'; message: string }
-  | { type: 'updateLatestBotMessage'; responseStream: string[] }
-  | { type: 'updateMessageChoice'; message: string; index: number }
+  | { message: string; type: 'addUserMessage' }
+  | { responseStream: string[]; type: 'updateLatestBotMessage' }
+  | { index: number; message: string; type: 'updateMessageChoice' }
   | {
-      type: 'setErrorMessage';
-      index: number;
       error: ChatMessageError | undefined;
+      index: number;
+      type: 'setErrorMessage';
     };
 
 export const messagesReducer = (state: ChatMessage[], payload: MessageDispatch): ChatMessage[] => {

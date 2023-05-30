@@ -1,7 +1,8 @@
-import { DivProps } from '@/types';
 import { useTheme } from 'antd-style';
-
 import { memo } from 'react';
+
+import { DivProps } from '@/types';
+
 import Divider from './Divider';
 import Logo3D from './Logo3D';
 import LogoFlat from './LogoFlat';
@@ -11,19 +12,19 @@ import { useStyles } from './style';
 
 export interface LogoProps extends DivProps {
   /**
-   * @description Type of the logo to be rendered
-   * @default '3d'
+   * @description Additional React Node to be rendered next to the logo
    */
-  type?: '3d' | 'flat' | 'high-contrast' | 'text' | 'combine';
+  extra?: React.ReactNode;
   /**
    * @description Size of the logo in pixels
    * @default 32
    */
   size?: number;
   /**
-   * @description Additional React Node to be rendered next to the logo
+   * @description Type of the logo to be rendered
+   * @default '3d'
    */
-  extra?: React.ReactNode;
+  type?: '3d' | 'flat' | 'high-contrast' | 'text' | 'combine';
 }
 
 const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className, ...props }) => {

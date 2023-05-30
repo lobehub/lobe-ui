@@ -1,6 +1,8 @@
+import { memo, useMemo } from 'react';
+
 import { ApiHeader as Header } from '@/components/ApiHeader';
 import { apiHeaderSel, useSiteStore } from '@/store';
-import { memo, useMemo } from 'react';
+
 import BundlephobiaFilled from './BundlephobiaFilled';
 import Graph from './Graph';
 import NpmFilled from './NpmFilled';

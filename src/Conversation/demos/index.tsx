@@ -3,6 +3,7 @@
  */
 import { Conversation } from '@lobehub/ui';
 import { Flexbox } from 'react-layout-kit';
+
 import { data } from './data';
 
 export default () => {

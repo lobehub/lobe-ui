@@ -4,19 +4,23 @@ export const useStyles = createStyles(({ css, stylish, cx, token }, prefixCls: s
   container: cx(
     prefixCls,
     css`
-      background: ${token.colorBgElevated};
-      font-size: ${token.fontSize};
-      border: 1px solid ${token.colorBorder};
-      box-shadow: ${token.boxShadowSecondary};
-      border-radius: 8px;
-      box-sizing: border-box;
+      user-select: none;
+      scrollbar-width: none;
+
       overflow-y: auto;
       overscroll-behavior: contain;
-      scrollbar-width: none;
-      padding: 5px;
-      outline: 0;
-      user-select: none;
+
+      box-sizing: border-box;
       width: 160px;
+      padding: 5px;
+
+      font-size: ${token.fontSize};
+
+      background: ${token.colorBgElevated};
+      border: 1px solid ${token.colorBorder};
+      border-radius: 8px;
+      outline: 0;
+      box-shadow: ${token.boxShadowSecondary};
 
       &::-webkit-scrollbar {
         display: none;
@@ -26,19 +30,23 @@ export const useStyles = createStyles(({ css, stylish, cx, token }, prefixCls: s
   button: cx(
     `${prefixCls}-button`,
     css`
+      ${stylish.buttonDefaultHover}
       all: unset;
-      font-size: ${token.fontSize}px;
-      padding: 8px;
-      line-height: 0;
-      background: ${token.colorBgContainer};
-      color: ${token.colorTextSecondary};
-      border-radius: ${token.borderRadius}px;
+
       cursor: default;
       user-select: none;
-      border: 1px solid ${token.colorBorder};
-      -webkit-tap-highlight-color: transparent;
 
-      ${stylish.buttonDefaultHover}
+      padding: 8px;
+
+      font-size: ${token.fontSize}px;
+      line-height: 0;
+      color: ${token.colorTextSecondary};
+
+      background: ${token.colorBgContainer};
+      border: 1px solid ${token.colorBorder};
+      border-radius: ${token.borderRadius}px;
+
+      -webkit-tap-highlight-color: transparent;
 
       &:focus-visible {
         border-color: ${token.colorPrimary};

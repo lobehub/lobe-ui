@@ -2,10 +2,10 @@ import { memo } from 'react';
 
 export default memo(() => (
   <svg
-    width="14px"
     height="14px"
-    viewBox="0 0 14 14"
     version="1.1"
+    viewBox="0 0 14 14"
+    width="14px"
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
   >

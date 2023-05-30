@@ -13,7 +13,7 @@ export default () => {
       >
         open
       </Button>
-      <MessageModal open={open} onOpenChange={setOpen} value={'editable text'} />
+      <MessageModal onOpenChange={setOpen} open={open} value={'editable text'} />
     </>
   );
 };

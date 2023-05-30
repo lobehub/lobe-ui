@@ -4,14 +4,14 @@ import { rgba } from 'polished';
 import { FC } from 'react';
 
 interface SourceCodeProps {
-  lang: string;
   children: string;
+  lang: string;
 }
 
 const SourceCode: FC<SourceCodeProps> = ({ children, lang }) => {
   const theme = useTheme();
   return (
-    <Highlighter style={{ background: rgba(theme.colorBgLayout, 0.5) }} language={lang}>
+    <Highlighter language={lang} style={{ background: rgba(theme.colorBgLayout, 0.5) }}>
       {children}
     </Highlighter>
   );

@@ -1,10 +1,10 @@
 import {
+  autoUpdate,
+  flip,
   FloatingFocusManager,
   FloatingNode,
   FloatingPortal,
   FloatingTree,
-  autoUpdate,
-  flip,
   offset,
   safePolygon,
   shift,
@@ -21,26 +21,26 @@ import {
   useRole,
   useTypeahead,
 } from '@floating-ui/react';
-import { HTMLProps, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
-
 import { Divider } from 'antd';
+import { forwardRef, HTMLProps, useCallback, useEffect, useRef, useState } from 'react';
+
 import MenuItem from './MenuItem';
 import { useStyles } from './style';
 import { GeneralItemType, MenuItemType } from './types';
 
 export interface ContextMenuProps {
   /**
-   * @description Label for the context menu
+   * @description Container element for the context menu
    */
-  label?: string;
+  container?: HTMLElement;
   /**
    * @description Items to be displayed in the context menu
    */
   items: MenuItemType[];
   /**
-   * @description Container element for the context menu
+   * @description Label for the context menu
    */
-  container?: HTMLElement;
+  label?: string;
 }
 
 const MenuComponent = forwardRef<
@@ -258,10 +258,9 @@ const MenuComponent = forwardRef<
     <FloatingNode id={nodeId}>
       {!label ? null : (
         <MenuItem
-          ref={referenceRef as any}
-          nested={isNested}
           label={label}
-          // Indicates this is a nested <Menu /> acting as a <MenuItem />.
+          nested={isNested}
+          ref={referenceRef as any}
           role={isNested ? 'menuitem' : 'menu'}
           {...props}
           {...getReferenceProps({
@@ -275,16 +274,13 @@ const MenuComponent = forwardRef<
         {isOpen && (
           <FloatingFocusManager
             context={context}
-            // Prevent outside content interference.
-            modal={false}
-            // Only initially focus the root floating menu.
             initialFocus={isNested ? -1 : 0}
-            // Only return focus to the root menu's reference when menus close.
+            modal={false}
             returnFocus={!isNested}
           >
             <div
-              ref={refs.setFloating}
               className={styles.container}
+              ref={refs.setFloating}
               style={floatingStyles}
               {...getFloatingProps()}
             >

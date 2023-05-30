@@ -20,10 +20,10 @@ export default () => {
   return (
     <StroyBook levaStore={store}>
       <EditableMessage
-        value={'editable text'}
-        openModal={openModal}
         editing={editing}
         onEditingChange={setEdit}
+        openModal={openModal}
+        value={'editable text'}
       />
     </StroyBook>
   );

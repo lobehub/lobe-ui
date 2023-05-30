@@ -1,6 +1,7 @@
 import { memo, useRef } from 'react';
 
-import { Provider, createChatStore } from '@/Chat/store';
+import { createChatStore, Provider } from '@/Chat/store';
+
 import ChatContainer, { AppProps } from './App';
 import StoreUpdater, { StoreUpdaterProps } from './StoreUpdater';
 

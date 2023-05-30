@@ -1,5 +1,7 @@
-import { AnchorItem } from '@/types';
 import { ISidebarItem } from 'dumi/dist/client/theme-api/types';
+
+import { AnchorItem } from '@/types';
+
 import { SiteStore } from '../useSiteStore';
 
 export * from './apiHeader';

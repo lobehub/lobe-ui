@@ -1,25 +1,18 @@
 import { StateCreator } from 'zustand/vanilla';
 
-import { ChatMessage } from '../types';
-import { FetchSSEOptions, fetchSSE } from '../utils/fetch';
-
 import { LOADING_FLAT } from '../const';
+import { ChatMessage } from '../types';
+import { fetchSSE, FetchSSEOptions } from '../utils/fetch';
 import { ChatState, initialState } from './initialState';
 import { MessageDispatch, messagesReducer } from './messageReducer';
 
 interface ChatAction {
   /**
-   * @title 发送消息
-   * @returns Promise<void>
+   * @title 派发消息
+   * @param payload - 消息分发
+   * @returns void
    */
-  sendMessage: () => Promise<void>;
-  /**
-   * @title 重发消息
-   * @param index - 消息索引
-   * @returns Promise<void>
-   */
-  resendMessage: (index: number) => Promise<void>;
-
+  dispatchMessage: (payload: MessageDispatch) => void;
   generateMessage: (
     message: string,
     messages: ChatMessage[],
@@ -27,17 +20,23 @@ interface ChatAction {
   ) => Promise<void>;
 
   /**
-   * @title 派发消息
-   * @param payload - 消息分发
-   * @returns void
-   */
-  dispatchMessage: (payload: MessageDispatch) => void;
-  /**
    * @title 处理消息编辑
    * @param index - 消息索引或空
    * @returns void
    */
   handleMessageEditing: (index?: number | null) => void;
+
+  /**
+   * @title 重发消息
+   * @param index - 消息索引
+   * @returns Promise<void>
+   */
+  resendMessage: (index: number) => Promise<void>;
+  /**
+   * @title 发送消息
+   * @returns Promise<void>
+   */
+  sendMessage: () => Promise<void>;
 }
 
 export type ChatStore = ChatAction & ChatState;

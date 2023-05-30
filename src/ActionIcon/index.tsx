@@ -1,7 +1,9 @@
-import { Icon, Tooltip, TooltipProps } from '@/index';
-import { DivProps } from '@/types';
 import { LucideIcon } from 'lucide-react';
 import { memo } from 'react';
+
+import { Icon, Tooltip, TooltipProps } from '@/index';
+import { DivProps } from '@/types';
+
 import { useStyles } from './style';
 
 export type ActionIconSize =
@@ -11,9 +13,9 @@ export type ActionIconSize =
   | 'site'
   | {
       blockSize?: number;
+      borderRadius?: number;
       fontSize?: number;
       strokeWidth?: number;
-      borderRadius?: number;
     };
 
 export interface ActionIconProps extends DivProps {
@@ -23,24 +25,20 @@ export interface ActionIconProps extends DivProps {
    */
   active?: boolean;
   /**
-   * @description Size of the icon
-   * @default 'normal'
+   * @description Change arrow's visible state and change whether the arrow is pointed at the center of target.
+   * @default false
    */
-  size?: ActionIconSize;
-  /**
-   * @description The icon element to be rendered
-   * @type LucideIcon
-   */
-  icon: LucideIcon;
+  arrow?: boolean;
   /**
    * @description Glass blur style
    * @default 'false'
    */
   glass?: boolean;
   /**
-   * @description The text shown in the tooltip
+   * @description The icon element to be rendered
+   * @type LucideIcon
    */
-  title?: string;
+  icon: LucideIcon;
   /**
    * @description The position of the tooltip relative to the target
    * @enum ["top","left","right","bottom","topLeft","topRight","bottomLeft","bottomRight","leftTop","leftBottom","rightTop","rightBottom"]
@@ -48,10 +46,14 @@ export interface ActionIconProps extends DivProps {
    */
   placement?: TooltipProps['placement'];
   /**
-   * @description Change arrow's visible state and change whether the arrow is pointed at the center of target.
-   * @default false
+   * @description Size of the icon
+   * @default 'normal'
    */
-  arrow?: boolean;
+  size?: ActionIconSize;
+  /**
+   * @description The text shown in the tooltip
+   */
+  title?: string;
 }
 
 const ActionIcon = memo<ActionIconProps>(
@@ -99,14 +101,14 @@ const ActionIcon = memo<ActionIconProps>(
         style={{ width: blockSize, height: blockSize, borderRadius, ...style }}
         {...props}
       >
-        <Icon size={size === 'site' ? 'normal' : size} icon={icon} />
+        <Icon icon={icon} size={size === 'site' ? 'normal' : size} />
       </div>
     );
 
     if (!title) return actionIconBlock;
 
     return (
-      <Tooltip arrow={arrow} title={title} placement={placement}>
+      <Tooltip arrow={arrow} placement={placement} title={title}>
         {actionIconBlock}
       </Tooltip>
     );

@@ -1,15 +1,16 @@
-import { ColorScaleItem } from '@/styles/colors';
 import { AliasToken } from 'antd/es/theme/interface';
 import { capitalize } from 'lodash';
+
+import { ColorScaleItem } from '@/styles/colors';
 
 export const generateColorPalette = ({
   type,
   scale,
   appearance,
 }: {
-  type: 'Primary' | 'Success' | 'Warning' | 'Error' | 'Info' | string;
-  scale: ColorScaleItem;
   appearance: 'light' | 'dark';
+  scale: ColorScaleItem;
+  type: 'Primary' | 'Success' | 'Warning' | 'Error' | 'Info' | string;
 }): Partial<AliasToken> => {
   const name = capitalize(type);
   return {
@@ -30,8 +31,8 @@ export const generateColorNeutralPalette = ({
   scale,
   appearance,
 }: {
-  scale: ColorScaleItem;
   appearance: 'light' | 'dark';
+  scale: ColorScaleItem;
 }): Partial<AliasToken> => {
   return {
     colorText: scale[appearance][12],

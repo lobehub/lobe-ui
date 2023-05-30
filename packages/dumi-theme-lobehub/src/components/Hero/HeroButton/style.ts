@@ -1,18 +1,18 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, stylish }) => {
+export const useStyles = createStyles(({ css, stylish, cx }) => {
   return {
-    button: css`
-      border: none;
+    button: cx(
+      stylish.heroButtonGradient,
+      stylish.heroGradientFlow,
+      css`
+        background-size: 200% 100%;
+        border: none;
 
-      ${stylish.heroButtonGradient}
-      ${stylish.heroGradientFlow}
-
-      background-size: 200% 100%;
-
-      &:hover {
-        animation: none;
-      }
-    `,
+        &:hover {
+          animation: none;
+        }
+      `,
+    ),
   };
 });

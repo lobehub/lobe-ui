@@ -4,8 +4,8 @@ import { memo } from 'react';
 import { useStyles } from './style';
 
 export interface FooterProps {
-  columns: RcProps['columns'];
   bottom?: RcProps['bottom'];
+  columns: RcProps['columns'];
   theme?: RcProps['theme'];
 }
 
@@ -16,7 +16,7 @@ const Footer = memo<FooterProps>(({ columns, bottom, theme }) => {
 
   return (
     <footer className={styles.container}>
-      <RcFooter theme={theme} className={styles.footer} columns={columns} bottom={bottom} />
+      <RcFooter bottom={bottom} className={styles.footer} columns={columns} theme={theme} />
     </footer>
   );
 });

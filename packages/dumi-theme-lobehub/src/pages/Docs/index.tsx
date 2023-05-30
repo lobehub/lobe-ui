@@ -1,3 +1,9 @@
+import { useResponsive } from 'antd-style';
+import { Helmet, useOutlet } from 'dumi';
+import isEqual from 'fast-deep-equal';
+import { memo } from 'react';
+import { Center, Flexbox } from 'react-layout-kit';
+
 import ApiHeader from '@/slots/ApiHeader';
 import Content from '@/slots/Content';
 import Footer from '@/slots/Footer';
@@ -5,11 +11,7 @@ import Header from '@/slots/Header';
 import Sidebar from '@/slots/Sidebar';
 import Toc from '@/slots/Toc';
 import { isApiPageSel, siteTitleSel, tocAnchorItemSel, useSiteStore } from '@/store';
-import { useResponsive } from 'antd-style';
-import { Helmet, useOutlet } from 'dumi';
-import isEqual from 'fast-deep-equal';
-import { memo } from 'react';
-import { Center, Flexbox } from 'react-layout-kit';
+
 import { useStyles } from './styles';
 
 const Docs = memo(() => {

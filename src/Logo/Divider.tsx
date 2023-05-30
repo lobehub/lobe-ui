@@ -1,13 +1,14 @@
-import { SvgProps } from '@/types';
 import { memo } from 'react';
+
+import { SvgProps } from '@/types';
 
 const Divider = memo<SvgProps | any>(({ ...props }) => (
   <svg
     fill="none"
+    shapeRendering="geometricPrecision"
     stroke="currentColor"
     strokeLinecap="round"
     strokeLinejoin="round"
-    shapeRendering="geometricPrecision"
     viewBox="0 0 24 24"
     {...props}
   >

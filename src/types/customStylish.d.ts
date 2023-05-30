@@ -1,14 +1,14 @@
 export interface LobeCustomStylish {
+  blur: string;
   clickableText: string;
-  resetLinkColor: string;
 
-  heroButtonGradient: string;
-  heroGradient: string;
-
-  heroGradientFlow: string;
   heroBlurBall: string;
+  heroButtonGradient: string;
+
+  heroGradient: string;
+  heroGradientFlow: string;
 
   iconGradientDefault: string;
-  blur: string;
   markdown: string;
+  resetLinkColor: string;
 }

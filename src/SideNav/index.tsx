@@ -1,6 +1,8 @@
-import { DivProps } from '@/types';
 import { Space } from 'antd';
 import { memo, ReactNode } from 'react';
+
+import { DivProps } from '@/types';
+
 import { useStyles } from './style';
 
 export interface SideNavProps extends DivProps {
@@ -9,26 +11,26 @@ export interface SideNavProps extends DivProps {
    */
   avatar?: ReactNode;
   /**
-   * @description Actions to be displayed below the avatar
-   */
-  topActions?: ReactNode;
-  /**
    * @description Actions to be displayed at the bottom of the sidenav
    */
   bottomActions: ReactNode;
+  /**
+   * @description Actions to be displayed below the avatar
+   */
+  topActions?: ReactNode;
 }
 
 const SideNav = memo<SideNavProps>(({ className, avatar, topActions, bottomActions, ...props }) => {
   const { styles, cx } = useStyles();
   return (
     <div className={cx(styles, className)} {...props}>
-      <Space size={16} direction="vertical" align="center">
+      <Space align="center" direction="vertical" size={16}>
         {avatar}
-        <Space size={8} direction="vertical" align="center">
+        <Space align="center" direction="vertical" size={8}>
           {topActions}
         </Space>
       </Space>
-      <Space size={4} direction="vertical" align="center">
+      <Space align="center" direction="vertical" size={4}>
         {bottomActions}
       </Space>
     </div>

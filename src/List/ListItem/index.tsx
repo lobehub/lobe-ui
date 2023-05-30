@@ -4,6 +4,7 @@ import { CSSProperties, HTMLAttributes, ReactNode, forwardRef } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import { convertAlphaToSolid } from '@/utils/colorUtils';
+
 import { getChatItemTime } from './time';
 
 const useStyles = createStyles(({ css, cx, token }) => {
@@ -91,21 +92,32 @@ export interface ListItemProps {
    */
   active: boolean;
   /**
-   * 是否处于加载状态
+   * 头像的 React 节点
    */
-  loading?: boolean;
+  avatar?: ReactNode;
   /**
-   * 标题
+   * 自定义样式类名
    */
-  title: string;
+  className?: string;
+  /**
+   * 自定义样式类名对象
+   * @property time - 时间的样式类名
+   */
+  classNames?: {
+    time?: string;
+  };
+  /**
+   * 日期时间戳
+   */
+  date?: number;
   /**
    * 描述信息
    */
   description?: string;
   /**
-   * 日期时间戳
+   * 是否处于加载状态
    */
-  date?: number;
+  loading?: boolean;
   /**
    * 点击事件回调函数
    */
@@ -120,28 +132,17 @@ export interface ListItemProps {
    */
   renderActions?: ReactNode;
   /**
-   * 头像的 React 节点
+   * 是否显示操作区域
    */
-  avatar?: ReactNode;
-  /**
-   * 自定义样式类名
-   */
-  className?: string;
+  showAction?: boolean;
   /**
    * 自定义样式对象
    */
   style?: CSSProperties;
   /**
-   * 是否显示操作区域
+   * 标题
    */
-  showAction?: boolean;
-  /**
-   * 自定义样式类名对象
-   * @property time - 时间的样式类名
-   */
-  classNames?: {
-    time?: string;
-  };
+  title: string;
 }
 
 const ListItem = forwardRef<HTMLElement, ListItemProps & HTMLAttributes<any>>(
@@ -167,14 +168,14 @@ const ListItem = forwardRef<HTMLElement, ListItemProps & HTMLAttributes<any>>(
 
     return (
       <Flexbox
-        ref={ref}
+        align={'flex-start'}
+        className={cx(styles.container, active && styles.active, className)}
+        distribution={'space-between'}
+        gap={8}
         horizontal
         paddingBlock={8}
-        gap={8}
         paddingInline={'12px 8px'}
-        align={'flex-start'}
-        distribution={'space-between'}
-        className={cx(styles.container, active && styles.active, className)}
+        ref={ref}
         style={style}
         {...props}
         onMouseEnter={() => {
@@ -187,7 +188,7 @@ const ListItem = forwardRef<HTMLElement, ListItemProps & HTMLAttributes<any>>(
         {avatar ?? <MessageOutlined style={{ marginTop: 4 }} />}
 
         <Flexbox className={styles.content}>
-          <Flexbox horizontal distribution={'space-between'}>
+          <Flexbox distribution={'space-between'} horizontal>
             <div className={styles.title}>{title}</div>
           </Flexbox>
           {description && <div className={styles.desc}>{description}</div>}
@@ -198,12 +199,12 @@ const ListItem = forwardRef<HTMLElement, ListItemProps & HTMLAttributes<any>>(
           <LoadingOutlined spin={true} />
         ) : showAction ? (
           <Flexbox
-            horizontal
             gap={4}
-            style={{ display: showAction ? undefined : 'none' }}
+            horizontal
             onClick={(e) => {
               e.stopPropagation();
             }}
+            style={{ display: showAction ? undefined : 'none' }}
           >
             {renderActions}
           </Flexbox>

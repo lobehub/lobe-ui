@@ -7,18 +7,18 @@ export const useStyles = createStyles(({ token, prefixCls, responsive, css, cx }
     container: cx(
       prefix,
       css`
-        max-width: ${token.contentMaxWidth}px;
-
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
         grid-auto-flow: row dense;
         grid-auto-rows: 24px;
+        grid-template-columns: repeat(3, 1fr);
         gap: 16px;
+
+        max-width: ${token.contentMaxWidth}px;
 
         ${responsive({
           mobile: css`
-            flex-direction: column;
             display: flex;
+            flex-direction: column;
           `,
           laptop: {
             gridTemplateColumns: 'repeat(2, 1fr)',

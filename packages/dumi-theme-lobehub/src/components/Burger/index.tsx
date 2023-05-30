@@ -1,10 +1,12 @@
-import { activePathSel, useSiteStore } from '@/store';
 import { Drawer, Menu } from 'antd';
 import { Link } from 'dumi';
 import isEqual from 'fast-deep-equal';
 import { uniq } from 'lodash';
 import { memo, useState } from 'react';
 import { Center } from 'react-layout-kit';
+
+import { activePathSel, useSiteStore } from '@/store';
+
 import { useStyles } from './style';
 
 const Burger = memo(() => {
@@ -26,19 +28,16 @@ const Burger = memo(() => {
       <div className={cx(styles.icon, opened ? styles.active : '')} />
 
       <Drawer
+        bodyStyle={{ padding: 0 }}
+        className={styles.drawer}
+        closeIcon={null}
+        headerStyle={{ display: 'none' }}
         open={opened}
         placement={'left'}
-        closeIcon={null}
         rootClassName={styles.drawerRoot}
-        className={styles.drawer}
         width={'100vw'}
-        headerStyle={{ display: 'none' }}
-        bodyStyle={{ padding: 0 }}
       >
         <Menu
-          mode={'inline'}
-          selectedKeys={uniq([activePath, `s-${pathname}`])}
-          openKeys={[activePath]}
           className={styles.menu}
           items={nav.map<any>((item) => ({
             label: <Link to={String(item.link)}>{item.title}</Link>,
@@ -53,10 +52,10 @@ const Burger = memo(() => {
                     children: group.children.map((item) => ({
                       label: (
                         <Link
-                          to={item.link}
                           onClick={() => {
                             setOpened(false);
                           }}
+                          to={item.link}
                         >
                           {item.title}
                         </Link>
@@ -67,6 +66,9 @@ const Burger = memo(() => {
                 );
               }),
           }))}
+          mode={'inline'}
+          openKeys={[activePath]}
+          selectedKeys={uniq([activePath, `s-${pathname}`])}
         />
         <div className={styles.fillRect} />
       </Drawer>

@@ -13,12 +13,17 @@ const icons = {
 };
 
 const items: MenuProps['items'] = [
-  { label: 'System', icon: <Icon size="small" icon={icons.auto} />, key: 'auto' },
-  { label: 'Light', icon: <Icon size="small" icon={icons.light} />, key: 'light' },
-  { label: 'Dark', icon: <Icon size="small" icon={icons.dark} />, key: 'dark' },
+  { label: 'System', icon: <Icon icon={icons.auto} size="small" />, key: 'auto' },
+  { label: 'Light', icon: <Icon icon={icons.light} size="small" />, key: 'light' },
+  { label: 'Dark', icon: <Icon icon={icons.dark} size="small" />, key: 'dark' },
 ];
 
 export interface ThemeSwitchProps extends DivProps {
+  /**
+   * @description Callback function when the theme mode is switched
+   * @type {(themeMode: ThemeMode) => void}
+   */
+  onThemeSwitch: (themeMode: ThemeMode) => void;
   /**
    * @description Size of the action icon
    * @default {
@@ -33,11 +38,6 @@ export interface ThemeSwitchProps extends DivProps {
    * @type ThemeMode
    */
   themeMode: ThemeMode;
-  /**
-   * @description Callback function when the theme mode is switched
-   * @type {(themeMode: ThemeMode) => void}
-   */
-  onThemeSwitch: (themeMode: ThemeMode) => void;
 }
 
 const ThemeSwitch = memo<ThemeSwitchProps>(
@@ -48,7 +48,7 @@ const ThemeSwitch = memo<ThemeSwitchProps>(
     };
     return (
       <Dropdown menu={menuProps} trigger={['click']} {...props}>
-        <ActionIcon size={size} icon={icons[themeMode]} />
+        <ActionIcon icon={icons[themeMode]} size={size} />
       </Dropdown>
     );
   },

@@ -1,12 +1,13 @@
-import { Space, message } from 'antd';
+import { message, Space } from 'antd';
 import copy from 'copy-to-clipboard';
 import { memo } from 'react';
+
 import { alphaBg, useStyles } from './style';
 
 export interface IScaleRow {
   name: string;
-  title: 'light' | 'lightA' | 'dark' | 'darkA';
   scale: string[];
+  title: 'light' | 'lightA' | 'dark' | 'darkA';
 }
 
 const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
@@ -39,13 +40,13 @@ const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
           <div
             className={styles.scaleBox}
             key={index}
-            title={color}
-            style={style}
             onClick={() => {
               const content = `token.${name}${index}${isAlpha ? 'A' : ''} /* ${color} */`;
               copy(content);
               message.success(content);
             }}
+            style={style}
+            title={color}
           >
             <div className={styles.scaleItem} style={{ backgroundColor: color }} />
           </div>

@@ -1,7 +1,8 @@
-import darkBaseToken from '@/styles/theme/dark';
-import lightBaseToken from '@/styles/theme/light';
 import { ThemeConfig } from 'antd';
 import { GetAntdTheme } from 'antd-style';
+
+import darkBaseToken from '@/styles/theme/dark';
+import lightBaseToken from '@/styles/theme/light';
 
 export const lightTheme: ThemeConfig = {
   token: lightBaseToken,

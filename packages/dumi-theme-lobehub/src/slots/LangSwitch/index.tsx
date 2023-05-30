@@ -1,8 +1,9 @@
-import NativeSelect from '@/components/NativeSelect';
-import { useSiteStore } from '@/store';
 import { Button } from 'antd';
 import { history, Link, useLocation, useSiteData } from 'dumi';
 import { memo, useEffect, useState } from 'react';
+
+import NativeSelect from '@/components/NativeSelect';
+import { useSiteStore } from '@/store';
 
 type ILocaleItem = ReturnType<typeof useSiteData>['locales'][0];
 
@@ -11,8 +12,8 @@ function getTargetLocalePath({
   current,
   target,
 }: {
-  pathname: string;
   current: ILocaleItem;
+  pathname: string;
   target: ILocaleItem;
 }) {
   const clearPath =
@@ -51,7 +52,7 @@ const displayLangMap: Record<string, string> = {
   'en-US': 'EN',
 };
 
-const SingleSwitch = memo<{ locale: ILocaleItem; current: ILocaleItem }>(({ locale, current }) => {
+const SingleSwitch = memo<{ current: ILocaleItem; locale: ILocaleItem }>(({ locale, current }) => {
   const { pathname } = useLocation();
   const [path, setPath] = useState(() =>
     getTargetLocalePath({ pathname, current, target: locale }),
@@ -87,7 +88,6 @@ const LangSwitch = memo(() => {
 
   return locales.length > 2 ? (
     <NativeSelect
-      value={locales.findIndex((l) => l.id === current.id)}
       onChange={(index) => {
         console.log(
           getTargetLocalePath({
@@ -118,10 +118,11 @@ const LangSwitch = memo(() => {
         alignItems: 'center',
         justifyContent: 'center',
       }}
+      value={locales.findIndex((l) => l.id === current.id)}
     />
   ) : (
     // single language switch
-    <SingleSwitch locale={locales.find(({ id }) => id !== current.id)!} current={current} />
+    <SingleSwitch current={current} locale={locales.find(({ id }) => id !== current.id)!} />
   );
 });
 

@@ -3,13 +3,13 @@ import { ForwardedRef, forwardRef, memo } from 'react';
 import { useStyles } from './style';
 
 interface SelectItemProps {
-  value: any;
+  disabled?: boolean;
+  isActive?: boolean;
+  isSelected?: boolean;
   label: any;
   prefixCls: string;
-  isSelected?: boolean;
-  isActive?: boolean;
   ref?: ForwardedRef<HTMLButtonElement>;
-  disabled?: boolean;
+  value: any;
 }
 
 const SelectItem = memo<SelectItemProps>(
@@ -18,17 +18,17 @@ const SelectItem = memo<SelectItemProps>(
 
     return (
       <button
-        type={'button'}
-        key={value}
-        disabled={disabled}
         aria-selected={isSelected}
-        role="option"
-        tabIndex={-1}
         className={cx(styles.item, {
           [styles.selected]: isSelected,
           [styles.active]: isActive,
         })}
+        disabled={disabled}
+        key={value}
         ref={ref}
+        role="option"
+        tabIndex={-1}
+        type={'button'}
         {...props}
       >
         {label}

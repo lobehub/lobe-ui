@@ -1,12 +1,13 @@
-import { DivProps } from '@/types';
 import { useResponsive } from 'antd-style';
 import { LevaPanel, useControls, useCreateStore } from 'leva';
 import { memo } from 'react';
 
+import { DivProps } from '@/types';
+
 import DraggablePanel from '../DraggablePanel';
 import { useStyles } from './style';
 
-export { useCreateStore, useControls };
+export { useControls, useCreateStore };
 export interface StroyBookProps extends DivProps {
   /**
    * @description The Leva store instance to be used by the component
@@ -28,11 +29,11 @@ export const StroyBook = memo<StroyBookProps>(
         <div className={styles.left}>{children}</div>
         <DraggablePanel
           className={styles.right}
-          placement={mobile ? 'bottom' : 'right'}
           minWidth={280}
+          placement={mobile ? 'bottom' : 'right'}
         >
           <div className={styles.leva}>
-            <LevaPanel fill store={levaStore} titleBar={false} flat />{' '}
+            <LevaPanel fill flat store={levaStore} titleBar={false} />{' '}
           </div>
         </DraggablePanel>
       </div>

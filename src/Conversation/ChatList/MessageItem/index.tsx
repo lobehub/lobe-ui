@@ -4,14 +4,13 @@ import { FC, memo, useState } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 import { shallow } from 'zustand/shallow';
 
+import Avatar from '@/Avatar';
+import { LOADING_FLAT } from '@/Chat/const';
+import { useStore } from '@/Chat/store';
 import { ChatMessage } from '@/Chat/types';
 
 import Content from './Content';
 import Toolbar from './Toolbar';
-
-import Avatar from '@/Avatar';
-import { LOADING_FLAT } from '@/Chat/const';
-import { useStore } from '@/Chat/store';
 
 const useStyles = createStyles(({ css, cx, responsive, token }) => {
   const toolbarClassName = 'chat-float-toolbar';
@@ -107,14 +106,14 @@ const MessageItem: FC<MessageItemProps> = memo(
 
     return (
       <>
-        <Flexbox id={`message-item-${index}`} horizontal gap={12} className={styles.container}>
+        <Flexbox className={styles.container} gap={12} horizontal id={`message-item-${index}`}>
           {isEditing || mobile ? null : (
             <Toolbar
-              readonly={readonly}
-              content={content}
-              isUser={isUser}
-              index={index}
               className={styles.floatAction}
+              content={content}
+              index={index}
+              isUser={isUser}
+              readonly={readonly}
             />
           )}
           <Flexbox align={'center'} gap={8}>
@@ -135,33 +134,33 @@ const MessageItem: FC<MessageItemProps> = memo(
                   <Center
                     className={cx(styles.choice, activeChoice === index && styles.choiceActive)}
                     key={index}
-                    tabIndex={10}
+                    onClick={() => {
+                      setActiveChoice(index);
+                    }}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') {
                         setActiveChoice(index);
                       }
                     }}
-                    onClick={() => {
-                      setActiveChoice(index);
-                    }}
+                    tabIndex={10}
                   >
                     {index + 1}
                   </Center>
                 ))}
           </Flexbox>
-          <Flexbox flex={1} className={styles.md}>
+          <Flexbox className={styles.md} flex={1}>
             <Content
               content={displayContent}
-              loading={displayContent === LOADING_FLAT}
               error={error}
               index={index}
+              loading={displayContent === LOADING_FLAT}
               role={role}
             />
           </Flexbox>
         </Flexbox>
         {isSystem && (
           <Divider>
-            <Typography.Text type={'secondary'} style={{ fontWeight: 'normal', fontSize: 14 }}>
+            <Typography.Text style={{ fontWeight: 'normal', fontSize: 14 }} type={'secondary'}>
               开始对话
             </Typography.Text>
           </Divider>

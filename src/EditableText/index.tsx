@@ -1,8 +1,9 @@
-import { ControlInput, ControlInputProps } from '@/components/ControlInput';
-import { ActionIcon } from '@/index';
 import { Edit3 } from 'lucide-react';
 import { memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
+
+import { ControlInput, ControlInputProps } from '@/components/ControlInput';
+import { ActionIcon } from '@/index';
 
 export type EditableTextProps = ControlInputProps;
 
@@ -10,23 +11,23 @@ const EditableText = memo<EditableTextProps>(({ value, onChange }: ControlInputP
   const [edited, setEdited] = useState(false);
   return edited ? (
     <ControlInput
-      value={value as string}
+      onChange={onChange}
       onChangeEnd={() => {
         setEdited(false);
       }}
-      onChange={onChange}
+      value={value as string}
     />
   ) : (
-    <Flexbox horizontal gap={8}>
+    <Flexbox gap={8} horizontal>
       {value}
       <ActionIcon
-        title={'Edit'}
-        placement="right"
         icon={Edit3}
-        size="small"
         onClick={() => {
           setEdited(!edited);
         }}
+        placement="right"
+        size="small"
+        title={'Edit'}
       />
     </Flexbox>
   );

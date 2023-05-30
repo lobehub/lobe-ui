@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { createStoreUpdater } from 'zustand-utils';
-import { InternalChatContext } from '../Chat/types';
 
 import { ChatStore, useStoreApi } from '../Chat/store';
+import { InternalChatContext } from '../Chat/types';
 
 export interface StoreUpdaterProps
   extends Partial<InternalChatContext>,

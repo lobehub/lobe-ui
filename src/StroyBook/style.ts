@@ -1,7 +1,7 @@
 import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(
-  ({ css, token }, { noPadding, mobile }: { noPadding: boolean; mobile: boolean }) => {
+  ({ css, token }, { noPadding, mobile }: { mobile: boolean; noPadding: boolean }) => {
     return {
       editor: css`
         display: flex;

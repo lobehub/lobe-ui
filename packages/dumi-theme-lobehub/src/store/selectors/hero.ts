@@ -1,4 +1,5 @@
 import { IFeature } from '@/types';
+
 import { SiteStore } from '../useSiteStore';
 
 export const isHeroPageSel = (s: SiteStore) => !!s.routeMeta.frontmatter.hero;

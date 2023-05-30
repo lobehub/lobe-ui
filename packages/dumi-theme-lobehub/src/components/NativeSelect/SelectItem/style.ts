@@ -5,20 +5,24 @@ export const useStyles = createStyles(({ css, cx, token }, prefixCls) => ({
     `${prefixCls}-item`,
 
     css`
-      display: block;
       all: unset;
-      width: 100%;
-      padding: 12px 10px;
-      border-radius: 5px;
-      box-sizing: inherit;
+
       user-select: none;
-      line-height: 1;
       scroll-margin: 50px;
 
-      font-weight: normal;
+      display: block;
+
+      box-sizing: inherit;
+      width: 100%;
+      padding: 12px 10px;
+
       font-family: ${token.fontFamily};
+      font-weight: normal;
+      line-height: 1;
       color: ${token.colorText};
+
       background: transparent;
+      border-radius: 5px;
       &:hover {
         background: ${token.colorFillTertiary};
       }
@@ -27,9 +31,9 @@ export const useStyles = createStyles(({ css, cx, token }, prefixCls) => ({
   selected: cx(
     `${prefixCls}-item-selected`,
     css`
+      font-weight: bold;
       color: ${token.colorPrimaryText};
       background: ${token.colorPrimaryBg};
-      font-weight: bold;
       &:hover {
         color: ${token.colorPrimaryTextHover};
         background: ${token.colorPrimaryBgHover};

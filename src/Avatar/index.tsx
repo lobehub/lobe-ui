@@ -1,6 +1,7 @@
 import { Avatar as A } from 'antd';
 import { FC } from 'react';
 import { Center } from 'react-layout-kit';
+
 import { useStyles } from './style';
 
 export interface AvatarProps {
@@ -9,23 +10,23 @@ export interface AvatarProps {
    */
   avatar?: string;
   /**
-   * @description The title text to display if avatar is not provided
+   * @description The background color of the avatar
    */
-  title?: string;
-  /**
-   * @description The size of the avatar in pixels
-   * @default 40
-   */
-  size?: number;
+  background?: string;
   /**
    * @description The shape of the avatar
    * @default 'circle'
    */
   shape?: 'circle' | 'square';
   /**
-   * @description The background color of the avatar
+   * @description The size of the avatar in pixels
+   * @default 40
    */
-  background?: string;
+  size?: number;
+  /**
+   * @description The title text to display if avatar is not provided
+   */
+  title?: string;
 }
 
 const Avatar: FC<AvatarProps> = ({ avatar, title, size = 40, shape = 'circle', background }) => {
@@ -37,6 +38,7 @@ const Avatar: FC<AvatarProps> = ({ avatar, title, size = 40, shape = 'circle', b
 
   return (
     <Center
+      className={styles.container}
       style={{
         width: size,
         height: size,
@@ -44,14 +46,13 @@ const Avatar: FC<AvatarProps> = ({ avatar, title, size = 40, shape = 'circle', b
         backgroundColor,
         borderWidth: isImage ? 1 : 0,
       }}
-      className={styles.container}
     >
       {!avatar ? (
         <A shape={shape} size={size}>
           {title?.slice(0, 2)}
         </A>
       ) : isImage ? (
-        <A shape={shape} size={size} src={avatar} className={styles.border} />
+        <A className={styles.border} shape={shape} size={size} src={avatar} />
       ) : (
         <Center
           className={styles.border}

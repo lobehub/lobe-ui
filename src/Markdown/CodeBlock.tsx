@@ -1,6 +1,7 @@
-import Highlighter from '@/Highlighter';
 import { createStyles } from 'antd-style';
 import { memo } from 'react';
+
+import Highlighter from '@/Highlighter';
 
 const useStyles = createStyles(
   ({ css }) => css`
@@ -23,10 +24,10 @@ const Code = memo((props: any) => {
 
   return (
     <Highlighter
-      type="block"
-      theme={theme.appearance as any}
-      language={className?.replace('language-', '') || 'markdown'}
       className={styles}
+      language={className?.replace('language-', '') || 'markdown'}
+      theme={theme.appearance as any}
+      type="block"
     >
       {children instanceof Array ? (children[0] as string) : children}
     </Highlighter>

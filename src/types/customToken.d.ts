@@ -46,14 +46,14 @@ export type ColorPalettesAlpha = {
 };
 
 export interface LobeCustomToken extends ColorToken, ColorPalettes, ColorPalettesAlpha {
-  headerHeight: number;
-  footerHeight: number;
-  sidebarWidth: number;
-  tocWidth: number;
-  contentMaxWidth: number;
   colorSolid: string;
+  contentMaxWidth: number;
+  footerHeight: number;
   gradientColor1: string;
   gradientColor2: string;
   gradientColor3: string;
   gradientHeroBgG: string;
+  headerHeight: number;
+  sidebarWidth: number;
+  tocWidth: number;
 }

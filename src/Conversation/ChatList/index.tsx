@@ -4,6 +4,7 @@ import { CSSProperties, FC, memo } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
 import { useStore } from '@/Chat/store';
+
 import MessageItem from './MessageItem';
 
 const useStyles = createStyles(({ css, token }) => ({
@@ -22,13 +23,13 @@ const useStyles = createStyles(({ css, token }) => ({
 
 interface ChatListProps {
   /**
-   * @title 是否只读
-   */
-  readonly?: boolean;
-  /**
    * @title 是否包含系统消息
    */
   includeSystem?: boolean;
+  /**
+   * @title 是否只读
+   */
+  readonly?: boolean;
   style?: CSSProperties;
 }
 
@@ -43,11 +44,11 @@ const ChatList: FC<ChatListProps> = memo(({ readonly, includeSystem = false, sty
         // 根据情况确认是否包含系统
         .filter((s) => (!includeSystem ? s.role !== 'system' : !!s))
         .map((item, index: number) => (
-          <MessageItem readonly={readonly} index={index} key={index} {...item} />
+          <MessageItem index={index} key={index} readonly={readonly} {...item} />
         ))}
       {loading ? (
-        <Center id={'for-loading'} className={styles.loading}>
-          <Flexbox horizontal distribution={'space-between'} align={'center'} gap={24}>
+        <Center className={styles.loading} id={'for-loading'}>
+          <Flexbox align={'center'} distribution={'space-between'} gap={24} horizontal>
             <div></div>
             正在生成...
             <div></div>

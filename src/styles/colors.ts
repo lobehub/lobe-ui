@@ -14,27 +14,27 @@ type colorStep = [
   string,
 ];
 export interface ColorScaleItem {
-  light: colorStep;
-  lightA: colorStep;
   dark: colorStep;
   darkA: colorStep;
+  light: colorStep;
+  lightA: colorStep;
 }
 
 export interface ColorScales {
+  blue: ColorScaleItem;
+  bnw: ColorScaleItem;
+  cyan: ColorScaleItem;
+  geekblue: ColorScaleItem;
+  gold: ColorScaleItem;
+  gray: ColorScaleItem;
+  green: ColorScaleItem;
+  lime: ColorScaleItem;
+  magenta: ColorScaleItem;
+  orange: ColorScaleItem;
+  purple: ColorScaleItem;
   red: ColorScaleItem;
   volcano: ColorScaleItem;
-  orange: ColorScaleItem;
-  gold: ColorScaleItem;
   yellow: ColorScaleItem;
-  lime: ColorScaleItem;
-  green: ColorScaleItem;
-  cyan: ColorScaleItem;
-  blue: ColorScaleItem;
-  geekblue: ColorScaleItem;
-  purple: ColorScaleItem;
-  magenta: ColorScaleItem;
-  gray: ColorScaleItem;
-  bnw: ColorScaleItem;
 }
 
 export const colorScales: ColorScales = {

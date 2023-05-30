@@ -1,6 +1,7 @@
 import { memo } from 'react';
 
 import { DivProps } from '@/types';
+
 import CopyButton from '../CopyButton';
 import { SyntaxHighlighter } from '../Highlighter';
 import { useStyles } from './style';
@@ -11,19 +12,19 @@ export interface SnippetProps extends DivProps {
    */
   children: string;
   /**
-   * @description The symbol to be displayed before the content inside the Snippet component
+   * @description Whether the Snippet component is copyable or not
+   * @default true
    */
-  symbol?: string;
+  copyable?: boolean;
   /**
    * @description The language of the content inside the Snippet component
    * @default 'tsx'
    */
   language?: string;
   /**
-   * @description Whether the Snippet component is copyable or not
-   * @default true
+   * @description The symbol to be displayed before the content inside the Snippet component
    */
-  copyable?: boolean;
+  symbol?: string;
   /**
    * @description The type of the Snippet component
    * @default 'ghost'
@@ -40,7 +41,7 @@ const Snippet = memo<SnippetProps>(
         <SyntaxHighlighter language={language}>
           {[symbol, children].filter(Boolean).join(' ')}
         </SyntaxHighlighter>
-        {copyable && <CopyButton size={{ fontSize: 14, blockSize: 24 }} content={children} />}
+        {copyable && <CopyButton content={children} size={{ fontSize: 14, blockSize: 24 }} />}
       </div>
     );
   },

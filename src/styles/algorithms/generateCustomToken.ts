@@ -1,17 +1,18 @@
-import { ColorScaleItem, colorScales } from '@/styles/colors';
-import { LobeCustomToken } from '@/types/customToken';
 import { GetCustomToken } from 'antd-style';
 import { AliasToken } from 'antd/es/theme/interface';
 import { camelCase } from 'lodash';
+
+import { ColorScaleItem, colorScales } from '@/styles/colors';
+import { LobeCustomToken } from '@/types/customToken';
 
 const generateColorPalette = ({
   name,
   scale,
   appearance,
 }: {
+  appearance: 'light' | 'dark';
   name: string;
   scale: ColorScaleItem;
-  appearance: 'light' | 'dark';
 }) => {
   return {
     [`${name}Bg`]: scale[`${appearance}A`][1],
@@ -33,9 +34,9 @@ const generateCustomColorPalette = ({
   scale,
   appearance,
 }: {
+  appearance: 'light' | 'dark';
   name: string;
   scale: ColorScaleItem;
-  appearance: 'light' | 'dark';
 }): Partial<AliasToken> => {
   const colorStepPalette: { [key: string]: string } = {};
   scale[appearance].forEach((color, index) => {

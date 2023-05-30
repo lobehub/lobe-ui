@@ -1,20 +1,19 @@
 import { Alert } from 'antd';
 import { type FC, type ReactNode } from 'react';
+
 import { useStyles } from './style';
 
 const Container: FC<{
-  type: 'info' | 'warning' | 'success' | 'error';
-  title?: string;
   children: ReactNode;
+  title?: string;
+  type: 'info' | 'warning' | 'success' | 'error';
 }> = ({ type, title, children }) => {
   const { styles, cx } = useStyles();
 
   return (
-    <div data-type={type} className={styles.container}>
+    <div className={styles.container} data-type={type}>
       <Alert
-        showIcon
-        type={type}
-        message={title || type.toUpperCase()}
+        className={styles.alert}
         description={
           <div
             className={cx(
@@ -26,7 +25,9 @@ const Container: FC<{
             {children}
           </div>
         }
-        className={styles.alert}
+        message={title || type.toUpperCase()}
+        showIcon
+        type={type}
       />
     </div>
   );

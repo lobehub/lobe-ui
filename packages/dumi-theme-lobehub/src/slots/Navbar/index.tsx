@@ -1,10 +1,11 @@
-import { activePathSel, useSiteStore } from '@/store';
 import { TabsNav } from '@lobehub/ui';
 import { createStyles } from 'antd-style';
-import { Link, history } from 'dumi';
+import { history, Link } from 'dumi';
 import NavbarExtra from 'dumi/theme-default/slots/NavbarExtra';
 import { memo } from 'react';
 import { shallow } from 'zustand/shallow';
+
+import { activePathSel, useSiteStore } from '@/store';
 
 const useStyles = createStyles(({ css, stylish, responsive }) => {
   return {
@@ -27,11 +28,6 @@ const Navbar = memo(() => {
   return (
     <>
       <TabsNav
-        onChange={(path) => {
-          const url = nav.find((i) => i.activePath === path || i.link === path)?.link;
-          if (!url) return;
-          history.push(url);
-        }}
         activeKey={activePath}
         className={styles.tabs}
         items={nav.map((item) => ({
@@ -42,6 +38,11 @@ const Navbar = memo(() => {
           ),
           key: String(item.activePath! || item.link),
         }))}
+        onChange={(path) => {
+          const url = nav.find((i) => i.activePath === path || i.link === path)?.link;
+          if (!url) return;
+          history.push(url);
+        }}
       />
       <NavbarExtra />
     </>

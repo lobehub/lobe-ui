@@ -1,15 +1,17 @@
-import { IFeature } from '@/types';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { Tag } from 'antd';
 import { history, Link } from 'dumi';
 import { memo } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
+
+import { IFeature } from '@/types';
+
 import { useStyles } from './Item.style';
 
-const Image = memo<{ image: string; className?: string; title: string }>(
+const Image = memo<{ className?: string; image: string; title: string }>(
   ({ image, className, title }) => {
     return image.startsWith('http') ? (
-      <img className={className} src={image} alt={title} />
+      <img alt={title} className={className} src={image} />
     ) : (
       <Center className={className}>{image}</Center>
     );
@@ -24,11 +26,6 @@ const FeatureItem = memo<IFeature>(
     return (
       <div
         className={styles.container}
-        style={{
-          gridRow: `span ${rowNum}`,
-          gridColumn: `span ${column || 1}`,
-          cursor: link ? 'pointer' : 'default',
-        }}
         onClick={() => {
           if (!link) return;
 
@@ -38,15 +35,20 @@ const FeatureItem = memo<IFeature>(
             history.push(link);
           }
         }}
+        style={{
+          gridRow: `span ${rowNum}`,
+          gridColumn: `span ${column || 1}`,
+          cursor: link ? 'pointer' : 'default',
+        }}
       >
         <div className={styles.cell}>
           {image && (
-            <Center image-style={imageType} className={styles.imgContainer} style={imageStyle}>
+            <Center className={styles.imgContainer} image-style={imageType} style={imageStyle}>
               <Image className={styles.img} image={image} title={title} />
             </Center>
           )}
           {title && (
-            <Flexbox as={'h3'} horizontal gap={8} align={'center'} className={styles.title}>
+            <Flexbox align={'center'} as={'h3'} className={styles.title} gap={8} horizontal>
               {title}
               {imageType === 'soon' ? (
                 <Tag
@@ -59,7 +61,7 @@ const FeatureItem = memo<IFeature>(
             </Flexbox>
           )}
           {description && (
-            <p dangerouslySetInnerHTML={{ __html: description }} className={styles.desc} />
+            <p className={styles.desc} dangerouslySetInnerHTML={{ __html: description }} />
           )}
           {link && (
             <div className={styles.link}>

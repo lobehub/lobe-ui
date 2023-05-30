@@ -20,22 +20,23 @@ import {
 } from '@floating-ui/react';
 import { CSSProperties, memo, ReactNode, useEffect, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
+
 import SelectItem from './SelectItem';
 import { useStyles } from './style';
 
 interface OptionType {
-  label: ReactNode;
   icon?: ReactNode;
+  label: ReactNode;
   value: string | number | null;
 }
 export interface NativeSelectProps {
-  value?: number;
+  onChange?: (index: number) => void;
   options?: OptionType[];
   prefixCls?: string;
-  onChange?: (index: number) => void;
-  renderValue?: (index: number) => ReactNode;
   renderItem?: (item: OptionType, index: number) => ReactNode;
+  renderValue?: (index: number) => ReactNode;
   style?: CSSProperties;
+  value?: number;
 }
 
 const NativeSelect = memo<NativeSelectProps>(
@@ -142,11 +143,11 @@ const NativeSelect = memo<NativeSelectProps>(
     return (
       <>
         <button
-          type={'button'}
-          ref={refs.setReference}
-          className={styles.button}
           aria-label={'selected-item'}
+          className={styles.button}
+          ref={refs.setReference}
           style={style}
+          type={'button'}
           {...getReferenceProps({
             onTouchStart() {
               setTouch(true);
@@ -164,7 +165,7 @@ const NativeSelect = memo<NativeSelectProps>(
         <FloatingPortal>
           {open && (
             <FloatingOverlay lockScroll={!touch} style={{ zIndex: 3000 }}>
-              <FloatingFocusManager context={context} modal={false} initialFocus={-1}>
+              <FloatingFocusManager context={context} initialFocus={-1} modal={false}>
                 <div
                   ref={refs.setFloating}
                   style={{
@@ -175,8 +176,8 @@ const NativeSelect = memo<NativeSelectProps>(
                 >
                   <div
                     className={styles.container}
-                    style={{ overflowY: 'auto' }}
                     ref={scrollRef}
+                    style={{ overflowY: 'auto' }}
                     {...getFloatingProps({
                       onContextMenu(e) {
                         e.preventDefault();
@@ -186,19 +187,17 @@ const NativeSelect = memo<NativeSelectProps>(
                     {options.map((item, i) => {
                       return (
                         <SelectItem
-                          prefixCls={cls}
-                          key={item.value}
-                          value={item.value}
-                          label={renderItem ? renderItem(item, i) : item.label}
-                          // Prevent immediate selection on touch devices when
-                          // pressing the ScrollArrows
                           disabled={blockSelection}
-                          isSelected={i === selectedIndex}
                           isActive={i === activeIndex}
+                          isSelected={i === selectedIndex}
+                          key={item.value}
+                          label={renderItem ? renderItem(item, i) : item.label}
+                          prefixCls={cls}
                           ref={(node) => {
                             listRef.current[i] = node;
                             listContentRef.current[i] = item.label as string;
                           }}
+                          value={item.value}
                           {...getItemProps({
                             onTouchStart() {
                               allowSelectRef.current = true;

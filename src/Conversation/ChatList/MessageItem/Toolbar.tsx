@@ -23,11 +23,11 @@ const useStyles = createStyles(({ css, token, stylish, cx }) => {
 });
 
 export interface ToolbarProps {
-  index: number;
-  content: string;
-  readonly?: boolean;
   className?: string;
+  content: string;
+  index: number;
   isUser?: boolean;
+  readonly?: boolean;
 }
 
 const Toolbar: FC<ToolbarProps> = memo(({ content, isUser, index, readonly, className }) => {
@@ -39,49 +39,40 @@ const Toolbar: FC<ToolbarProps> = memo(({ content, isUser, index, readonly, clas
   );
 
   return (
-    <Flexbox gap={4} horizontal className={cx(className, styles.container)}>
-      <CopyButton
-        placement={'top'}
-        title={'复制'}
-        content={content}
-        // icon={CopyIcon}
-        size={'small'}
-        // onClick={() => {
-        //   copy(content);
-        // }}
-      />
+    <Flexbox className={cx(className, styles.container)} gap={4} horizontal>
+      <CopyButton content={content} placement={'top'} size={'small'} title={'复制'} />
       {readonly ? null : (
         <>
           <IconAction
-            placement={'top'}
-            title={isUser ? '重新生成回答' : '重新生成'}
             icon={RotateCwIcon}
-            size={'small'}
             onClick={() => {
               resendMessage(isUser ? index + 1 : index);
             }}
+            placement={'top'}
+            size={'small'}
+            title={isUser ? '重新生成回答' : '重新生成'}
           />
 
           <IconAction
-            placement={'top'}
-            title={'编辑'}
             icon={EditIcon}
-            size={'small'}
             onClick={() => handleMessageEditing(index)}
+            placement={'top'}
+            size={'small'}
+            title={'编辑'}
           />
           <Popconfirm
-            title={'确定要删除这条消息吗？'}
             okButtonProps={{ danger: true }}
             onConfirm={() => {
               dispatchMessage({ type: 'deleteMessage', index });
             }}
+            title={'确定要删除这条消息吗？'}
           >
             <IconAction
               // type={'danger'}
-              placement={'top'}
-              title={'删除'}
               icon={TrashIcon}
+              placement={'top'}
               size={'small'}
+              title={'删除'}
             />
           </Popconfirm>
         </>

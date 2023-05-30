@@ -3,16 +3,16 @@ import { memo } from 'react';
 
 export interface PrismProps {
   children: string;
-  language: string;
   isDarkMode: boolean;
+  language: string;
 }
 
 export const Prism = memo<PrismProps>(({ children, language, isDarkMode }) => {
   return (
     <Highlight
-      theme={isDarkMode ? themes.jettwaveDark : themes.jettwaveLight}
       code={children}
       language={language as any}
+      theme={isDarkMode ? themes.jettwaveDark : themes.jettwaveLight}
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre className={className} style={style}>

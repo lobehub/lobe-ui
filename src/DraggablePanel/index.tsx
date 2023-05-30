@@ -2,12 +2,13 @@ import { useHover } from 'ahooks';
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
 import type { Enable, NumberSize, Size } from 're-resizable';
 import { HandleClassName, Resizable } from 're-resizable';
-import { ReactNode, memo, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { Center } from 'react-layout-kit';
 import type { Props as RndProps } from 'react-rnd';
 import useControlledState from 'use-merge-value';
 
 import { DivProps } from '@/types';
+
 import { useStyle } from './style';
 import { revesePlacement } from './utils';
 
@@ -18,63 +19,17 @@ export type placementType = 'right' | 'left' | 'top' | 'bottom';
 
 export interface DraggablePanelProps extends DivProps {
   /**
-   * @description Whether the panel can be pinned or not
-   * @default true
+   * @title The class name for the content and handle component
    */
-  pin?: boolean;
-  /**
-   * @description The mode of the panel, fixed or float
-   * @default 'fixed'
-   */
-  mode?: 'fixed' | 'float';
-  /**
-   * @description The placement of the panel, right, left, top or bottom
-   * @default 'right'
-   */
-  placement: placementType;
-  /**
-   * @description The minimum width of the panel
-   */
-  minWidth?: number;
-  /**
-   * @description The minimum height of the panel
-   */
-  minHeight?: number;
-  /**
-   * @description Whether the panel can be resized or not
-   * @default true
-   */
-  resize?: RndProps['enableResizing'];
-  /**
-   * @description The size of the panel
-   */
-  size?: Partial<Size>;
-  /**
-   * @description Callback function when the size of the panel changes
-   */
-  onSizeChange?: (delta: NumberSize, size?: Size) => void;
-  /**
-   * @description Callback function when the panel is being resized
-   */
-  onSizeDragging?: (delta: NumberSize, size?: Size) => void;
-  /**
-   * @description Whether the panel is expandable or not
-   * @default true
-   */
-  expandable?: boolean;
-  /**
-   * @description Whether the panel is expanded or not
-   */
-  expand?: boolean;
+  classNames?: {
+    content?: string;
+    handle?: string;
+  };
   /**
    * @description The default expand state of the panel
    * @default true
    */
   defaultExpand?: boolean;
-  /**
-   * @description Callback function when the expand state of the panel changes
-   */
-  onExpandChange?: (expand: boolean) => void;
   /**
    * @description The default size of the panel
    */
@@ -85,21 +40,68 @@ export interface DraggablePanelProps extends DivProps {
    */
   destroyOnClose?: boolean;
   /**
-   * @description Whether the panel handler should be shown when unexpanded or not
+   * @description Whether the panel is expanded or not
+   */
+  expand?: boolean;
+  /**
+   * @description Whether the panel is expandable or not
    * @default true
    */
-  showHandlerWhenUnexpand?: boolean;
+  expandable?: boolean;
   /**
    * @description The style of the panel handler
    * @type CSSProperties
    */
   hanlderStyle?: React.CSSProperties;
-  children: ReactNode;
-  className?: string;
-  classNames?: {
-    handle?: string;
-    content?: string;
-  };
+  /**
+   * @description The minimum height of the panel
+   */
+  minHeight?: number;
+  /**
+   * @description The minimum width of the panel
+   */
+  minWidth?: number;
+  /**
+   * @description The mode of the panel, fixed or float
+   * @default 'fixed'
+   */
+  mode?: 'fixed' | 'float';
+  /**
+   * @description Callback function when the expand state of the panel changes
+   */
+  onExpandChange?: (expand: boolean) => void;
+  /**
+   * @description Callback function when the size of the panel changes
+   */
+  onSizeChange?: (delta: NumberSize, size?: Size) => void;
+  /**
+   * @description Callback function when the panel is being resized
+   */
+  onSizeDragging?: (delta: NumberSize, size?: Size) => void;
+  /**
+   * @description Whether the panel can be pinned or not
+   * @default true
+   */
+  pin?: boolean;
+  /**
+   * @description The placement of the panel, right, left, top or bottom
+   * @default 'right'
+   */
+  placement: placementType;
+  /**
+   * @description Whether the panel can be resized or not
+   * @default true
+   */
+  resize?: RndProps['enableResizing'];
+  /**
+   * @description Whether the panel handler should be shown when unexpanded or not
+   * @default true
+   */
+  showHandlerWhenUnexpand?: boolean;
+  /**
+   * @description The size of the panel
+   */
+  size?: Partial<Size>;
 }
 
 const DraggablePanel = memo<DraggablePanelProps>(
@@ -223,10 +225,10 @@ const DraggablePanel = memo<DraggablePanelProps>(
         style={{ opacity: isExpand ? (!pin ? 0 : undefined) : showHandlerWhenUnexpand ? 1 : 0 }}
       >
         <Center
-          style={hanlderStyle}
           onClick={() => {
             setIsExpand(!isExpand);
           }}
+          style={hanlderStyle}
         >
           <div
             className={styles.handlerIcon}
@@ -242,13 +244,11 @@ const DraggablePanel = memo<DraggablePanelProps>(
       // @ts-ignore
       <Resizable
         {...sizeProps}
-        style={style}
         className={cx(styles.panel, classNames.content)}
         enable={canResizing ? (resizing as Enable) : undefined}
         handleClasses={resizeHandleClassNames}
-        onResizeStop={(e, direction, ref, delta) => {
-          setShowExpand(true);
-          onSizeChange?.(delta, {
+        onResize={(_, direction, ref, delta) => {
+          onSizeDragging?.(delta, {
             width: ref.style.width,
             height: ref.style.height,
           });
@@ -256,12 +256,14 @@ const DraggablePanel = memo<DraggablePanelProps>(
         onResizeStart={() => {
           setShowExpand(false);
         }}
-        onResize={(_, direction, ref, delta) => {
-          onSizeDragging?.(delta, {
+        onResizeStop={(e, direction, ref, delta) => {
+          setShowExpand(true);
+          onSizeChange?.(delta, {
             width: ref.style.width,
             height: ref.style.height,
           });
         }}
+        style={style}
       >
         {children}
       </Resizable>
@@ -269,13 +271,13 @@ const DraggablePanel = memo<DraggablePanelProps>(
 
     return (
       <aside
-        ref={ref}
         className={cx(
           styles.container,
           // @ts-ignore
           styles[mode === 'fixed' ? 'fixed' : `${placement}Float`],
           className,
         )}
+        ref={ref}
         style={{ [`border${arrowPlacement}Width`]: 1 }}
       >
         {expandable && showExpand && handler}

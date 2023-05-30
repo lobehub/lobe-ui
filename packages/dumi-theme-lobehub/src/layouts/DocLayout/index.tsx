@@ -1,12 +1,12 @@
-import { StoreUpdater } from '@/components/StoreUpdater';
-import Docs from '@/pages/Docs';
-import Home from '@/pages/Home';
 import { ThemeProvider } from '@lobehub/ui';
 import { extractStaticStyle } from 'antd-style';
 import { Helmet, useIntl, useLocation } from 'dumi';
 import isEqual from 'fast-deep-equal';
 import { memo, useEffect } from 'react';
 
+import { StoreUpdater } from '@/components/StoreUpdater';
+import Docs from '@/pages/Docs';
+import Home from '@/pages/Home';
 import { isHeroPageSel, useSiteStore, useThemeStore } from '@/store';
 
 const DocLayout = memo(() => {
@@ -36,11 +36,11 @@ const DocLayout = memo(() => {
     <>
       <Helmet>
         <html lang={intl.locale.replace(/-.+$/, '')} />
-        {fm.title && <meta property="og:title" content={fm.title} />}
-        {fm.description && <meta name="description" content={fm.description} />}
-        {fm.description && <meta property="og:description" content={fm.description} />}
-        {fm.keywords && <meta name="keywords" content={fm.keywords.join(',')} />}
-        {fm.keywords && <meta property="og:keywords" content={fm.keywords.join(',')} />}
+        {fm.title && <meta content={fm.title} property="og:title" />}
+        {fm.description && <meta content={fm.description} name="description" />}
+        {fm.description && <meta content={fm.description} property="og:description" />}
+        {fm.keywords && <meta content={fm.keywords.join(',')} name="keywords" />}
+        {fm.keywords && <meta content={fm.keywords.join(',')} property="og:keywords" />}
       </Helmet>
 
       {isHomePage ? <Home /> : <Docs />}

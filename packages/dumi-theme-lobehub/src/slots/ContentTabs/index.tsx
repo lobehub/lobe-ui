@@ -1,14 +1,15 @@
 import { Tabs } from 'antd';
 import { useIntl, useRouteMeta } from 'dumi';
 import { memo } from 'react';
+
 import { useStyles } from './style';
 
 type IContentTabs = ReturnType<typeof useRouteMeta>['tabs'];
 
 export interface IContentTabsProps {
-  tabs: IContentTabs;
-  tabKey: string | null;
   onChange: (tab?: NonNullable<IContentTabs>[0]) => void;
+  tabKey: string | null;
+  tabs: IContentTabs;
 }
 
 const ContentTabs = memo<IContentTabsProps>(({ tabs, tabKey: key, onChange }) => {
@@ -18,9 +19,9 @@ const ContentTabs = memo<IContentTabsProps>(({ tabs, tabKey: key, onChange }) =>
 
   return !!tabs && Boolean(tabs?.length) ? (
     <Tabs
-      data-page-tabs
       activeKey={key || 'default'}
       className={styles.cls}
+      data-page-tabs
       items={[
         { key: 'default', value: 'default', label: '文档' },
         ...tabs.map((tab) => ({

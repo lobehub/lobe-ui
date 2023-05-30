@@ -3,22 +3,22 @@ import isEqual from 'fast-deep-equal';
 import { FC, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import { useStore } from '@/Chat/store';
+
 import ChatList from './ChatList';
 import InputArea from './InputArea';
 
-import { useStore } from '@/Chat/store';
-
 export interface AppProps {
-  /**
-   * @description Whether the component is in readonly mode.
-   * @default false
-   */
-  readonly?: boolean;
   /**
    * @description Whether to include system messages in the chat.
    * @default true
    */
   includeSystem?: boolean;
+  /**
+   * @description Whether the component is in readonly mode.
+   * @default false
+   */
+  readonly?: boolean;
 }
 
 const ChatContainer: FC<AppProps> = ({ readonly, includeSystem = true }) => {
@@ -27,10 +27,10 @@ const ChatContainer: FC<AppProps> = ({ readonly, includeSystem = true }) => {
     isEqual,
   );
 
-  if (readonly) return <ChatList readonly includeSystem={includeSystem} />;
+  if (readonly) return <ChatList includeSystem={includeSystem} readonly />;
 
   return (
-    <Flexbox width={'100%'} height={'100%'} gap={24}>
+    <Flexbox gap={24} height={'100%'} width={'100%'}>
       {title || description ? (
         <Flexbox>
           <Typography.Title level={4}>{title}</Typography.Title>

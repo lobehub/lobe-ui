@@ -1,11 +1,12 @@
 import { useEffect, type FC, type ReactNode } from 'react';
+
 import { useStyles } from './Mask.style';
 
 type MaskProps = {
-  visible: boolean;
   children: ReactNode;
-  onMaskClick?: () => void;
   onClose?: () => void;
+  onMaskClick?: () => void;
+  visible: boolean;
 };
 
 export const Mask: FC<MaskProps> = (props) => {

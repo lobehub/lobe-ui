@@ -6,7 +6,11 @@ _test_
 __test__
 
 /node_modules
+**/node_modules
+
 jest*
 /es
 /lib
 /docs
+/dist
+**/dist

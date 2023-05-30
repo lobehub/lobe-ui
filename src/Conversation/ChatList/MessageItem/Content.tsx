@@ -3,11 +3,10 @@ import { Alert, Button, ButtonProps } from 'antd';
 import { FC, memo } from 'react';
 import { shallow } from 'zustand/shallow';
 
+import { useStore } from '@/Chat/store';
 import { ChatMessage } from '@/Chat/types';
 import Markdown from '@/Markdown';
 import MessageInput from '@/MessageInput';
-
-import { useStore } from '@/Chat/store';
 
 export interface ContentProps extends Pick<ChatMessage, 'content' | 'role' | 'error'> {
   index: number;
@@ -68,21 +67,20 @@ const Content: FC<ContentProps> = memo(({ content, role, index, error, loading }
         <Markdown>{content}</Markdown>
       ) : !!error ? null : (
         <div>
-          <LoadingOutlined style={{ fontSize: 20 }} spin />
+          <LoadingOutlined spin style={{ fontSize: 20 }} />
         </div>
       )}
       {error && (
         <Alert
-          type={'error'}
-          showIcon
+          action={<Button onClick={() => resendMessage(index)}>重试</Button>}
           description={
             error.type === 'openai' ? (
               <div>
                 {error.message} （错误码：<code>{error.status}</code>，详情可查看{' '}
                 <a
-                  target={'_blank'}
                   href="https://platform.openai.com/docs/guides/error-codes"
                   rel="noreferrer"
+                  target={'_blank'}
                 >
                   官方文档
                 </a>
@@ -97,8 +95,9 @@ const Content: FC<ContentProps> = memo(({ content, role, index, error, loading }
               ? `请求 OpenAI 服务出错`
               : `会话出错啦（错误码 ${error.status}）`
           }
-          action={<Button onClick={() => resendMessage(index)}>重试</Button>}
+          showIcon
           style={{ marginTop: 12 }}
+          type={'error'}
         />
       )}
     </>

@@ -1,13 +1,15 @@
-import { ColorScaleItem } from '@/styles/colors';
 import { Space } from 'antd';
 import { memo } from 'react';
+
+import { ColorScaleItem } from '@/styles/colors';
+
 import ScaleRow from './ScaleRow';
 import { useStyles } from './style';
 
 export interface ColorScalesProps {
+  midHighLight: number;
   name: string;
   scale: ColorScaleItem;
-  midHighLight: number;
 }
 
 const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
@@ -38,10 +40,10 @@ const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
               );
             })}
           </Space>
-          <ScaleRow name={name} key="light" title="light" scale={scale.light} />
-          <ScaleRow name={name} key="lightA" title="lightA" scale={scale.lightA} />
-          <ScaleRow name={name} key="dark" title="dark" scale={scale.dark} />
-          <ScaleRow name={name} key="darkA" title="darkA" scale={scale.darkA} />
+          <ScaleRow key="light" name={name} scale={scale.light} title="light" />
+          <ScaleRow key="lightA" name={name} scale={scale.lightA} title="lightA" />
+          <ScaleRow key="dark" name={name} scale={scale.dark} title="dark" />
+          <ScaleRow key="darkA" name={name} scale={scale.darkA} title="darkA" />
         </Space>
       </div>
     </div>

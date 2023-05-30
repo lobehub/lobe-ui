@@ -7,6 +7,11 @@ export * from './hero';
  */
 export interface AnchorItem {
   /**
+   * @title 子锚点项
+   * @description 若存在子锚点项，则该锚点项为父锚点项
+   */
+  children?: AnchorItem[];
+  /**
    * @title 锚点项 ID
    */
   id: string;
@@ -14,9 +19,4 @@ export interface AnchorItem {
    * @title 锚点项标题
    */
   title: string;
-  /**
-   * @title 子锚点项
-   * @description 若存在子锚点项，则该锚点项为父锚点项
-   */
-  children?: AnchorItem[];
 }

@@ -4,14 +4,14 @@ import { Flexbox } from 'react-layout-kit';
 
 export interface SwatchesProps {
   /**
-   * @description An array of colors to be displayed as swatches
-   */
-  colors: string[];
-  /**
    * @description The currently active color
    * @default undefined
    */
   activeColor?: string;
+  /**
+   * @description An array of colors to be displayed as swatches
+   */
+  colors: string[];
   /**
    * @description A function to be called when a swatch is selected
    * @default undefined
@@ -23,8 +23,11 @@ const Swatches = memo<SwatchesProps>(({ colors, activeColor, onSelect }) => {
   const theme = useTheme();
 
   return (
-    <Flexbox horizontal gap={8}>
+    <Flexbox gap={8} horizontal>
       <Flexbox
+        onClick={() => {
+          onSelect?.(null);
+        }}
         style={{
           width: 24,
           height: 24,
@@ -33,9 +36,6 @@ const Swatches = memo<SwatchesProps>(({ colors, activeColor, onSelect }) => {
           borderRadius: '50%',
           cursor: 'pointer',
         }}
-        onClick={() => {
-          onSelect?.(null);
-        }}
       />
       {colors.map((c) => {
         const borderColor = c === activeColor ? theme.colorPrimary : 'rgba(0,0,0,0.1)';
@@ -43,6 +43,9 @@ const Swatches = memo<SwatchesProps>(({ colors, activeColor, onSelect }) => {
         return (
           <Flexbox
             key={c}
+            onClick={() => {
+              onSelect?.(c);
+            }}
             style={{
               width: 24,
               height: 24,
@@ -50,9 +53,6 @@ const Swatches = memo<SwatchesProps>(({ colors, activeColor, onSelect }) => {
               boxShadow: `inset 0 0 0px 2px ${borderColor}`,
               borderRadius: '50%',
               cursor: 'pointer',
-            }}
-            onClick={() => {
-              onSelect?.(c);
             }}
           />
         );

@@ -19,8 +19,8 @@ const codeMessage: Record<number, string> = {
 };
 
 export interface FetchSSEOptions {
-  onMessageHandle?: (text: string) => void;
   onErrorHandle?: (error: ChatMessageError) => void;
+  onMessageHandle?: (text: string) => void;
 }
 
 /**

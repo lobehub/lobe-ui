@@ -1,11 +1,12 @@
+import { ConfigProvider, Popconfirm, Tooltip } from 'antd';
 import { createStyles } from 'antd-style';
+import { EraserIcon } from 'lucide-react';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import { shallow } from 'zustand/shallow';
 
 import IconAction from '@/ActionIcon';
-import { ConfigProvider, Popconfirm, Tooltip } from 'antd';
-import { EraserIcon } from 'lucide-react';
+
 import { chatSelectors, useStore } from '../../Chat/store';
 
 const useStyles = createStyles(({ css, token }) => ({
@@ -31,20 +32,20 @@ export const ActionBar = () => {
     <ConfigProvider theme={{ token: { colorText: theme.colorTextSecondary } }}>
       <Flexbox
         align={'center'}
-        direction={'horizontal-reverse'}
-        paddingInline={12}
         className={styles.extra}
+        direction={'horizontal-reverse'}
         gap={8}
+        paddingInline={12}
       >
         <Popconfirm
-          title={'你即将要清空会话，清空后将无法找回。是否清空当前会话？'}
           okButtonProps={{ danger: true }}
           okText={'清空会话'}
           onConfirm={() => {
             dispatchMessage({ type: 'resetMessages' });
           }}
+          title={'你即将要清空会话，清空后将无法找回。是否清空当前会话？'}
         >
-          <IconAction title={'清空当前会话'} size={'small'} icon={EraserIcon as any} />
+          <IconAction icon={EraserIcon as any} size={'small'} title={'清空当前会话'} />
         </Popconfirm>
         <Tooltip
           title={[

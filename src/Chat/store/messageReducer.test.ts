@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
+
 import { ChatMessage } from '../types';
 import { MessageDispatch, messagesReducer } from './messageReducer';
 
