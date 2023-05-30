@@ -53,6 +53,7 @@ export interface DraggablePanelProps extends DivProps {
    * @type CSSProperties
    */
   hanlderStyle?: React.CSSProperties;
+  maxWidth?: number;
   /**
    * @description The minimum height of the panel
    */
@@ -116,6 +117,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     defaultSize: customizeDefaultSize,
     minWidth,
     minHeight,
+    maxWidth,
     onSizeChange,
     onSizeDragging,
     expandable = true,
@@ -192,6 +194,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
       ? {
           minWidth: typeof minWidth === 'number' ? Math.max(minWidth, 0) : 280,
           minHeight: typeof minHeight === 'number' ? Math.max(minHeight, 0) : undefined,
+          maxWidth: typeof maxWidth === 'number' ? Math.max(maxWidth, 0) : undefined,
           defaultSize,
           size: size as Size,
         }

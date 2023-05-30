@@ -9,6 +9,6 @@ export const useStyles = createStyles(({ css, token }) => ({
     }
   `,
   border: css`
-    border: 1px solid ${token.colorBorder};
+    border: 1px solid ${token.colorSplit};
   `,
 }));

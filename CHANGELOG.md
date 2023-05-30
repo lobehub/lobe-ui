@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.17.0](https://github.com/lobehub/lobe-ui/compare/v1.16.2...v1.17.0) (2023-05-30)
+
+### ✨ Features
+
+- **draggable-panel**: add maxWidth prop to DraggablePanel component ([70903dd](https://github.com/lobehub/lobe-ui/commit/70903dd))
+
 ## [1.16.2](https://github.com/lobehub/lobe-ui/compare/v1.16.1...v1.16.2) (2023-05-30)
 
 ## [1.16.1](https://github.com/lobehub/lobe-ui/compare/v1.16.0...v1.16.1) (2023-05-30)
