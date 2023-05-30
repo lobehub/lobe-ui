@@ -1,6 +1,6 @@
 {
   "name": "@lobehub/ui",
-  "version": "1.16.1",
+  "version": "1.16.2",
   "description": "Lobe UI is an open-source UI component library for building chatbot web apps",
   "keywords": [
     "lobehub",
@@ -37,8 +37,7 @@
     "dev:theme": "npm run dev --prefix=packages/dumi-theme-lobehub",
     "docs:build": "npm run build:theme && dumi build",
     "doctor": "father doctor",
-    "lint": "eslint \"{src,tests,packages}/**/*.{js,jsx,ts,tsx}\"",
-    "lint:fix": "eslint \"{src,tests,packages}/**/*.{js,jsx,ts,tsx}\" --fix",
+    "lint": "eslint \"{src,tests,packages}/**/*.{js,jsx,ts,tsx}\" --fix",
     "prepare": "husky install && npm run setup",
     "prepublishOnly": "father doctor && npm run build",
     "prettier": "prettier -c --write \"**/**\"",
