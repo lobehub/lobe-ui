@@ -115,7 +115,6 @@ This project is [MIT](./LICENSE) licensed.
 <!-- LINK GROUP -->
 
 [profile-url]: https://github.com/lobehub
-[issues-url]: https://github.com/lobehub/lobe-ui/issues/new/choose
 [gitpod-url]: https://gitpod.io/#https://github.com/lobehub/lobe-ui
 
 <!-- SHIELD LINK GROUP -->
@@ -160,4 +159,4 @@ This project is [MIT](./LICENSE) licensed.
 <!-- issues -->
 
 [issues-shield]: https://img.shields.io/github/issues/lobehub/lobe-ui.svg?style=flat
-[issues-url]: https://img.shields.io/github/issues/lobehub/lobe-ui.svg?style=flat
+[issues-url]: https://github.com/lobehub/lobe-ui/issues/new/choose

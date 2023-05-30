@@ -38,6 +38,7 @@
     "docs:build": "npm run build:theme && dumi build",
     "doctor": "father doctor",
     "lint": "eslint \"{src,tests,packages}/**/*.{js,jsx,ts,tsx}\" --fix",
+    "lint:md": "remark . -f -q",
     "prepare": "husky install && npm run setup",
     "prepublishOnly": "father doctor && npm run build",
     "prettier": "prettier -c --write \"**/**\"",
@@ -51,7 +52,11 @@
     "type-check": "tsc -p tsconfig-check.json"
   },
   "lint-staged": {
-    "*.{md,json}": [
+    "*.md": [
+      "remark -f -q",
+      "prettier --write --no-error-on-unmatched-pattern"
+    ],
+    "*.json": [
       "prettier --write --no-error-on-unmatched-pattern"
     ],
     "*.{js,jsx}": [
@@ -88,7 +93,6 @@
     "react-layout-kit": "^1",
     "react-markdown": "^8",
     "react-rnd": "^10",
-    "remark-gfm": "^3",
     "shiki-es": "^0",
     "styled-components": "beta",
     "ts-md5": "^1",
@@ -131,6 +135,12 @@
     "prettier-plugin-packagejson": "^2",
     "react": "^18",
     "react-dom": "^18",
+    "remark": "^14",
+    "remark-cli": "^11",
+    "remark-gfm": "^3",
+    "remark-lint": "^9",
+    "remark-lint-list-item-indent": "^3",
+    "remark-preset-lint-recommended": "^6",
     "semantic-release": "^21",
     "semantic-release-config-gitmoji": "^1",
     "stylelint": "^15",

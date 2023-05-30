@@ -62,7 +62,7 @@ const MenuComponent = forwardRef<
   const parentId = useFloatingParentNodeId();
   const isNested = parentId !== null;
 
-  const { refs, floatingStyles, context } = useFloating<HTMLButtonElement>({
+  const { refs, context } = useFloating<HTMLButtonElement>({
     nodeId,
     open: isOpen,
     onOpenChange: setIsOpen,
@@ -278,12 +278,7 @@ const MenuComponent = forwardRef<
             modal={false}
             returnFocus={!isNested}
           >
-            <div
-              className={styles.container}
-              ref={refs.setFloating}
-              style={floatingStyles}
-              {...getFloatingProps()}
-            >
+            <div className={styles.container} ref={refs.setFloating} {...getFloatingProps()}>
               {items?.map(renderMenuItem)}
             </div>
           </FloatingFocusManager>
