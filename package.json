@@ -108,7 +108,7 @@
     "@types/react-dom": "^18.2.4",
     "@umijs/lint": "^4.0.69",
     "@vitest/coverage-c8": "latest",
-    "antd": "^5.5.1",
+    "antd": "^5.5.2",
     "commitlint": "^17.6.3",
     "commitlint-config-gitmoji": "^2.3.1",
     "concurrently": "^8.0.1",
