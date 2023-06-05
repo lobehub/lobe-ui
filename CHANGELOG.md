@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.18.1](https://github.com/lobehub/lobe-ui/compare/v1.18.0...v1.18.1) (2023-06-05)
+
+### 🐛 Bug Fixes
+
+- add types ([58f7b4d](https://github.com/lobehub/lobe-ui/commit/58f7b4d))
+
 # [1.18.0](https://github.com/lobehub/lobe-ui/compare/v1.17.0...v1.18.0) (2023-05-30)
 
 ### ✨ Features
