@@ -24,7 +24,6 @@
   "module": "es/index.js",
   "types": "es/index.d.ts",
   "files": [
-    "lib",
     "es"
   ],
   "scripts": {
@@ -74,7 +73,6 @@
     "@dqbd/tiktoken": "^1",
     "@floating-ui/react": "^0",
     "ahooks": "^3",
-    "antd-style": "^3",
     "chroma-js": "^2",
     "copy-to-clipboard": "^3",
     "dayjs": "^1",
@@ -111,6 +109,7 @@
     "@umijs/lint": "^4",
     "@vitest/coverage-c8": "latest",
     "antd": "^5",
+    "antd-style": "^3",
     "commitlint": "^17",
     "commitlint-config-gitmoji": "^2",
     "concurrently": "^8",
@@ -150,6 +149,7 @@
   },
   "peerDependencies": {
     "antd": ">=5",
+    "antd-style": ">=3",
     "react": ">=18",
     "react-dom": ">=18"
   },

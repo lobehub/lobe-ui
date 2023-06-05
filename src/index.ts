@@ -1,6 +1,6 @@
 export { default as ActionIcon, type ActionIconProps, type ActionIconSize } from './ActionIcon';
 export { default as Avatar, type AvatarProps } from './Avatar';
-export type { ChatMessage } from './Chat';
+export type { ChatMessage, MessageRoleType } from './Chat';
 export { default as ColorScales, type ColorScalesProps } from './ColorScales';
 export { default as ContextMenu, type ContextMenuProps } from './ContextMenu';
 export { default as Conversation, type ConversationProps } from './Conversation';
@@ -14,12 +14,12 @@ export {
 export { default as EditableText, type EditableTextProps } from './EditableText';
 export {
   default as Highlighter,
-  SyntaxHighlighter,
   type HighlighterProps,
+  SyntaxHighlighter,
   type SyntaxHighlighterProps,
 } from './Highlighter';
 export { default as Icon, type IconProps, type IconSize } from './Icon';
-export { Input, TextArea, type InputProps, type TextAreaProps } from './Input';
+export { Input, type InputProps, TextArea, type TextAreaProps } from './Input';
 export { default as List } from './List';
 export { default as Logo, type LogoProps } from './Logo';
 export { default as Markdown, type MarkdownProps } from './Markdown';
@@ -30,13 +30,13 @@ export { default as SideNav, type SideNavProps } from './SideNav';
 export { default as Snippet, type SnippetProps } from './Snippet';
 export {
   default as StroyBook,
+  type StroyBookProps,
   useControls,
   useCreateStore,
-  type StroyBookProps,
 } from './StroyBook';
+export { colorScales as colors } from './styles/colors';
 export { default as Swatches, type SwatchesProps } from './Swatches';
 export { default as TabsNav, type TabsNavProps } from './TabsNav';
 export { default as ThemeProvider } from './ThemeProvider';
 export { default as ThemeSwitch, type ThemeSwitchProps } from './ThemeSwitch';
 export { default as Tooltip, type TooltipProps } from './Tooltip';
-export { colorScales as colors } from './styles/colors';
