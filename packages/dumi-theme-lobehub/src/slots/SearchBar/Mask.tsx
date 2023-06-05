@@ -1,4 +1,4 @@
-import { useEffect, type FC, type ReactNode } from 'react';
+import { type FC, type ReactNode,useEffect } from 'react';
 
 import { useStyles } from './Mask.style';
 
@@ -11,6 +11,7 @@ type MaskProps = {
 
 export const Mask: FC<MaskProps> = (props) => {
   const { styles } = useStyles();
+
   useEffect(() => {
     if (props.visible) {
       document.body.style.overflow = 'hidden';

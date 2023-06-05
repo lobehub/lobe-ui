@@ -20,6 +20,7 @@ export default () => {
     },
     { store },
   );
+
   return (
     <StroyBook levaStore={store}>
       <Icon icon={Settings} size={size} />

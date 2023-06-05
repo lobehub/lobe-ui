@@ -16,6 +16,7 @@ const useStyles = createStyles(
 
 const Code = memo((props: any) => {
   const { styles, theme } = useStyles();
+
   if (!props.children[0]) return null;
 
   const { children, className } = props.children[0].props;
@@ -33,4 +34,5 @@ const Code = memo((props: any) => {
     </Highlighter>
   );
 });
+
 export default Code;

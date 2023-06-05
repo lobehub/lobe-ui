@@ -37,11 +37,13 @@ export const messagesReducer = (state: ChatMessage[], payload: MessageDispatch):
     case 'updateMessage':
       return produce(state, (draftState) => {
         const { index, message } = payload;
+
         draftState[index].content = message;
       });
     case 'updateMessageRole':
       return produce(state, (draftState) => {
         const { index, role } = payload;
+
         draftState[index].role = role;
       });
 
@@ -54,12 +56,14 @@ export const messagesReducer = (state: ChatMessage[], payload: MessageDispatch):
       return produce(state, () => {
         const { responseStream } = payload;
         const newMessage = { role: 'assistant', content: responseStream.join('') };
+
         return [...state.slice(0, -1), newMessage];
       });
 
     case 'setErrorMessage':
       return produce(state, (draftState) => {
         const { index, error } = payload;
+
         draftState[index].error = error;
       });
 

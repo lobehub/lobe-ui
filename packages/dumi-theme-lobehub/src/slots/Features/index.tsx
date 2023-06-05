@@ -7,7 +7,7 @@ import { featuresSel, useSiteStore } from '@/store';
 const Features = memo(() => {
   const features = useSiteStore(featuresSel, shallow);
 
-  if (!Boolean(features?.length)) return null;
+  if (!features?.length) return null;
 
   return <FeatureBlock items={features} style={{ margin: '0 16px' }} />;
 });

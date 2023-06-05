@@ -63,6 +63,7 @@ export const createStore: StateCreator<ChatStore, [['zustand/devtools', never]]>
 
   generateMessage: async (message, messages, options) => {
     const { onResponseStart, request, onResponseFinished } = get();
+
     if (!request) return;
 
     await onResponseStart?.(get().messages);
@@ -79,6 +80,7 @@ export const createStore: StateCreator<ChatStore, [['zustand/devtools', never]]>
 
   sendMessage: async () => {
     const { message, dispatchMessage, generateMessage, messages } = get();
+
     if (!message) return;
 
     set({ message: '' });
@@ -98,6 +100,7 @@ export const createStore: StateCreator<ChatStore, [['zustand/devtools', never]]>
 
         // 滚动到最后一条消息
         const item = document.getElementById('for-loading');
+
         if (!item) return;
 
         item.scrollIntoView({ behavior: 'smooth' });
@@ -111,12 +114,14 @@ export const createStore: StateCreator<ChatStore, [['zustand/devtools', never]]>
   resendMessage: async (index) => {
     const { dispatchMessage, sendMessage, generateMessage, messages } = get();
     const lastMessage = messages.at(-1);
+
     // 用户通过手动删除，造成了他的问题是最后一条消息
     // 这种情况下，相当于用户重新发送消息
     if (messages.length === index && lastMessage?.role === 'user') {
       dispatchMessage({ type: 'deleteMessage', index: index - 1 });
       set({ message: lastMessage.content });
       await sendMessage();
+
       return;
     }
 
@@ -125,6 +130,7 @@ export const createStore: StateCreator<ChatStore, [['zustand/devtools', never]]>
 
     // 上下文消息中最后一条消息
     const userMessage = contextMessages.at(-1)?.content;
+
     if (!userMessage) return;
 
     const targetMsg = messages[index];
@@ -138,6 +144,7 @@ export const createStore: StateCreator<ChatStore, [['zustand/devtools', never]]>
       });
     } else {
       const botPrevMsg = targetMsg.content;
+
       // 保存之前的消息为历史消息
       dispatchMessage({ type: 'updateMessageChoice', message: botPrevMsg, index });
       dispatchMessage({ type: 'updateMessage', message: LOADING_FLAT, index });

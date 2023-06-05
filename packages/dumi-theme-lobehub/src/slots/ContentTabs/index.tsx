@@ -17,7 +17,7 @@ const ContentTabs = memo<IContentTabsProps>(({ tabs, tabKey: key, onChange }) =>
   const { styles } = useStyles();
   // TODO: tab.Extra & tab.Action render
 
-  return !!tabs && Boolean(tabs?.length) ? (
+  return Boolean(tabs) && Boolean(tabs?.length) ? (
     <Tabs
       activeKey={key || 'default'}
       className={styles.cls}

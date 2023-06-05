@@ -39,13 +39,13 @@
     "doctor": "father doctor",
     "lint": "eslint \"{src,tests,packages}/**/*.{js,jsx,ts,tsx}\" --fix",
     "lint:md": "remark . -f -q",
+    "lint:style": "stylelint \"{src,tests,packages}/**/*.{js,jsx,ts,tsx}\" --fix",
     "prepare": "husky install && npm run setup",
     "prepublishOnly": "father doctor && npm run build",
     "prettier": "prettier -c --write \"**/**\"",
     "release": "semantic-release",
     "setup": "dumi setup",
     "start": "dumi dev",
-    "stylelint": "stylelint \"{src,tests,packages}/**/*.{js,jsx,ts,tsx}\" --fix",
     "test": "vitest --passWithNoTests",
     "test:coverage": "vitest run --coverage  --passWithNoTests",
     "test:update": "vitest -u",
@@ -60,14 +60,12 @@
       "prettier --write --no-error-on-unmatched-pattern"
     ],
     "*.{js,jsx}": [
-      "eslint --fix",
-      "stylelint --fix",
-      "prettier --write"
+      "prettier --write",
+      "eslint --fix"
     ],
     "*.{ts,tsx}": [
-      "eslint --fix",
-      "stylelint --fix",
-      "prettier --parser=typescript --write"
+      "prettier --parser=typescript --write",
+      "eslint --fix"
     ]
   },
   "dependencies": {

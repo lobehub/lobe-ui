@@ -12,6 +12,7 @@ export default () => {
     },
     { store },
   );
+
   return (
     <StroyBook levaStore={store}>
       <Input {...controls} />

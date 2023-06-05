@@ -6,6 +6,7 @@ export default () => {
   const [openModal, setOpenModal] = useState(false);
   const [editing, setEdit] = useState(false);
   const store = useCreateStore();
+
   useControls(
     {
       editing: button(() => {
@@ -17,6 +18,7 @@ export default () => {
     },
     { store },
   );
+
   return (
     <StroyBook levaStore={store}>
       <EditableMessage

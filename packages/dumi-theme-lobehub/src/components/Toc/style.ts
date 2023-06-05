@@ -3,6 +3,7 @@ import { rgba } from 'polished';
 
 export const useStyles = createStyles(({ token, stylish, prefixCls, responsive, cx, css }) => {
   const fixHeight = 36;
+
   return {
     container: css`
       position: fixed;

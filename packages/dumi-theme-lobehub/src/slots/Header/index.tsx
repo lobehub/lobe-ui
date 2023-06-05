@@ -14,7 +14,7 @@ import { useSiteStore } from '@/store/useSiteStore';
 import { useStyle } from './style';
 
 const Header = memo(() => {
-  const hasHeader = useSiteStore((s) => !!s.routeMeta.frontmatter);
+  const hasHeader = useSiteStore((s) => Boolean(s.routeMeta.frontmatter));
 
   const { mobile } = useResponsive();
   const { styles } = useStyle();

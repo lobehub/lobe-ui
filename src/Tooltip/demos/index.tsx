@@ -10,6 +10,7 @@ export default () => {
     },
     { store },
   );
+
   return (
     <StroyBook levaStore={store}>
       <Tooltip {...control}>

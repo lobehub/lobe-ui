@@ -35,6 +35,7 @@ const Content: FC<ContentProps> = memo(({ content, role, index, error, loading }
               onClick: () => {
                 dispatchMessage({ type: 'updateMessage', message: text, index });
                 handleMessageEditing(null);
+
                 // 如果是用户的消息，那么重新生成下一条消息
                 if (isUser) {
                   resendMessage(index + 1);
@@ -65,7 +66,7 @@ const Content: FC<ContentProps> = memo(({ content, role, index, error, loading }
     <>
       {!loading ? (
         <Markdown>{content}</Markdown>
-      ) : !!error ? null : (
+      ) : error ? null : (
         <div>
           <LoadingOutlined spin style={{ fontSize: 20 }} />
         </div>

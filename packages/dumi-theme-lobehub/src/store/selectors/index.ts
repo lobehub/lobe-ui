@@ -25,7 +25,9 @@ export const activePathSel = (s: SiteStore) => {
  */
 export const tocAnchorItemSel = (s: SiteStore) => {
   let { toc, frontmatter } = s.routeMeta;
+
   if (s.tabMeta?.toc) toc = s.tabMeta.toc;
+
   if (s.tabMeta?.frontmatter) frontmatter = s.tabMeta.frontmatter as any;
 
   return toc.reduce<AnchorItem[]>((result, item) => {
@@ -39,11 +41,13 @@ export const tocAnchorItemSel = (s: SiteStore) => {
       result.push({ ...item });
     } else if (item.depth === 3 && shouldKeepWith(3)) {
       const parent = result[result.length - 1];
+
       if (parent) {
         parent.children = parent.children || [];
         parent.children.push({ ...item });
       }
     }
+
     return result;
   }, []);
 };

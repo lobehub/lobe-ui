@@ -37,6 +37,7 @@ interface MenuItemProps {
 const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(
   ({ label, icon, disabled, nested, shortcut, active, selected, ...props }, ref) => {
     const { styles, cx } = useStyles();
+
     return (
       <button
         type={'button'}

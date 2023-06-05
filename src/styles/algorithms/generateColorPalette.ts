@@ -13,6 +13,7 @@ export const generateColorPalette = ({
   type: 'Primary' | 'Success' | 'Warning' | 'Error' | 'Info' | string;
 }): Partial<AliasToken> => {
   const name = capitalize(type);
+
   return {
     [`color${name}Bg`]: scale[appearance][1],
     [`color${name}BgHover`]: scale[appearance][2],

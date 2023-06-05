@@ -24,6 +24,7 @@ export const StroyBook = memo<StroyBookProps>(
   ({ levaStore, noPadding, className, children, ...props }) => {
     const { mobile } = useResponsive();
     const { styles, cx } = useStyles({ noPadding: Boolean(noPadding), mobile: Boolean(mobile) });
+
     return (
       <div className={cx(styles.editor, className)} {...props}>
         <div className={styles.left}>{children}</div>

@@ -24,6 +24,7 @@ export interface TabsNavProps {
 
 const TabsNav = memo<TabsNavProps>(({ className, ...props }) => {
   const { styles, cx } = useStyles();
+
   return <Tabs className={cx(styles.tabs, className)} {...props} />;
 });
 

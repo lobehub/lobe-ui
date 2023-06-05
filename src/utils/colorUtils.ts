@@ -14,5 +14,6 @@ export const convertAlphaToSolid = (foreground: string, background: string): str
   ];
 
   const resultColor = chroma(mixedColor);
+
   return resultColor.hex();
 };

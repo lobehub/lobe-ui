@@ -48,5 +48,6 @@ export const getColumns = ({ github }: GetColumnParams) => {
         : undefined,
     ].filter(Boolean) as FooterColumnItem[],
   };
+
   return [resources, community, help, more];
 };

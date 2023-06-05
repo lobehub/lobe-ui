@@ -34,6 +34,7 @@ const SearchBar = memo<SearchBarProps>(
 
     useEffect(() => {
       if (!enableShortKey) return;
+
       const handler = (ev: KeyboardEvent) => {
         if ((isAppleDevice ? ev.metaKey : ev.ctrlKey) && ev.key === shortKey) {
           ev.preventDefault();
@@ -54,7 +55,8 @@ const SearchBar = memo<SearchBarProps>(
           onBlur={() => setShowTag(true)}
           onChange={(e) => {
             setInputValue(e.target.value);
-            setShowTag(e.target.value ? false : true);
+            setShowTag(!e.target.value);
+
             if (onChange) onChange(e);
           }}
           onFocus={() => setShowTag(false)}

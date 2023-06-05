@@ -15,6 +15,7 @@ const Footer = memo(() => {
   const githubUrl = useSiteStore(githubSel);
   const { styles, theme } = useStyles();
   const { mobile } = useResponsive();
+
   if (!themeConfig.footer) return null;
 
   const footer = themeConfig.footerConfig as IFooter;

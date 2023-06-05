@@ -59,6 +59,7 @@ export const InputArea = ({}) => {
   const { mobile } = useResponsive();
 
   const storeApi = useStoreApi();
+
   return (
     <ConfigProvider
       theme={{

@@ -161,6 +161,7 @@ const MenuComponent = forwardRef<
       capture: true,
     });
     window.addEventListener('keydown', onKeyDown, true);
+
     return () => {
       window.removeEventListener('pointermove', onPointerMove, {
         capture: true,
@@ -207,6 +208,7 @@ const MenuComponent = forwardRef<
 
     document.addEventListener('contextmenu', onContextMenu);
     document.addEventListener('mouseup', onMouseUp);
+
     return () => {
       document.removeEventListener('contextmenu', onContextMenu);
       document.removeEventListener('mouseup', onMouseUp);

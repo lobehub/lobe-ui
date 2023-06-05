@@ -1,4 +1,4 @@
-import { ActionIcon, Icon, type ActionIconSize } from '@lobehub/ui';
+import { ActionIcon, type ActionIconSize,Icon } from '@lobehub/ui';
 import { Dropdown, type MenuProps } from 'antd';
 import { ThemeMode } from 'antd-style';
 import { Monitor, Moon, Sun } from 'lucide-react';
@@ -46,6 +46,7 @@ const ThemeSwitch = memo<ThemeSwitchProps>(
       items,
       onClick: (e: any) => onThemeSwitch(e.key),
     };
+
     return (
       <Dropdown menu={menuProps} trigger={['click']} {...props}>
         <ActionIcon icon={icons[themeMode]} size={size} />

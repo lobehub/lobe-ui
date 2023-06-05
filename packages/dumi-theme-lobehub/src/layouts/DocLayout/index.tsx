@@ -8,6 +8,8 @@ import { StoreUpdater } from '@/components/StoreUpdater';
 import Docs from '@/pages/Docs';
 import Home from '@/pages/Home';
 import { isHeroPageSel, useSiteStore, useThemeStore } from '@/store';
+import customStylish from '@/styles/customStylish';
+import customToken from '@/styles/customToken';
 
 const DocLayout = memo(() => {
   const intl = useIntl();
@@ -57,7 +59,12 @@ export default memo(() => {
   return (
     <>
       <StoreUpdater />
-      <ThemeProvider cache={extractStaticStyle.cache} themeMode={themeMode}>
+      <ThemeProvider
+        cache={extractStaticStyle.cache}
+        customStylish={customStylish}
+        customToken={customToken}
+        themeMode={themeMode}
+      >
         <DocLayout />
       </ThemeProvider>
     </>

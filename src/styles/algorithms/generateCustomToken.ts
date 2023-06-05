@@ -1,5 +1,5 @@
-import { GetCustomToken } from 'antd-style';
 import { AliasToken } from 'antd/es/theme/interface';
+import { GetCustomToken } from 'antd-style';
 import { camelCase } from 'lodash-es';
 
 import { ColorScaleItem, colorScales } from '@/styles/colors';
@@ -39,14 +39,18 @@ const generateCustomColorPalette = ({
   scale: ColorScaleItem;
 }): Partial<AliasToken> => {
   const colorStepPalette: { [key: string]: string } = {};
+
   scale[appearance].forEach((color, index) => {
     if (index === 0 || index === 12) return;
+
     colorStepPalette[`${name}${index}`] = color;
   });
   scale[`${appearance}A`].forEach((color, index) => {
     if (index === 0 || index === 12) return;
+
     colorStepPalette[`${name}${index}A`] = color;
   });
+
   return {
     ...colorStepPalette,
     ...generateColorPalette({ name, scale, appearance }),
@@ -54,8 +58,9 @@ const generateCustomColorPalette = ({
 };
 
 // @ts-ignore
-export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMode, token }) => {
+export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMode }) => {
   let colorCustomToken: any = {};
+
   Object.entries(colorScales).forEach(([type, scale]) => {
     colorCustomToken = {
       ...colorCustomToken,
@@ -67,23 +72,5 @@ export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMod
     };
   });
 
-  const gradientColor1 = colorScales.blue.darkA[8];
-  const gradientColor2 = isDarkMode ? colorScales.magenta.darkA[8] : colorScales.cyan.darkA[8];
-  const gradientColor3 = colorScales.purple.darkA[8];
-  const colorSolid = isDarkMode ? '#fff' : '#000';
-
-  return {
-    ...token,
-    ...colorCustomToken,
-    headerHeight: 64,
-    footerHeight: 300,
-    sidebarWidth: 240,
-    tocWidth: 176,
-    contentMaxWidth: 1152,
-    colorSolid,
-    gradientColor1,
-    gradientColor2,
-    gradientColor3,
-    gradientHeroBgG: `radial-gradient(at 80% 20%, ${gradientColor1} 0%, ${gradientColor2} 80%, ${gradientColor3} 130%)`,
-  };
+  return colorCustomToken;
 };

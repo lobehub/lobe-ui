@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 export default () => {
   const [tab, setTab] = useState<string>('chat');
+
   return (
     <SideNav
       avatar={<Logo size={40} />}

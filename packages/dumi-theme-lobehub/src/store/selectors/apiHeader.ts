@@ -13,7 +13,7 @@ export const isApiPageSel = (s: SiteStore) => {
 
   if (s.siteData.themeConfig.apiHeader === false || fm.apiHeader === false) return false;
 
-  if (!!fm.apiHeader) return true;
+  if (fm.apiHeader) return true;
 
   const baseMatch = ['/api', '/components', ...(s.siteData.themeConfig.apiHeader?.match || [])];
 

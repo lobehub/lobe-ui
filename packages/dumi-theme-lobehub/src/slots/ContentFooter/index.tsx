@@ -10,6 +10,7 @@ import Linker from './Linker';
 const ContentFooter = memo(() => {
   const { prev, next } = useSiteStore(contentBottomSel, isEqual);
   const { mobile } = useResponsive();
+
   return (
     <Flexbox
       distribution={'space-between'}

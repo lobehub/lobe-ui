@@ -42,7 +42,7 @@ const ChatList: FC<ChatListProps> = memo(({ readonly, includeSystem = false, sty
     <Flexbox gap={8} style={style}>
       {messages
         // 根据情况确认是否包含系统
-        .filter((s) => (!includeSystem ? s.role !== 'system' : !!s))
+        .filter((s) => (!includeSystem ? s.role !== 'system' : Boolean(s)))
         .map((item, index: number) => (
           <MessageItem index={index} key={index} readonly={readonly} {...item} />
         ))}

@@ -4,6 +4,7 @@ export const useStyles = createStyles(({ token, prefixCls, css }) => {
   const prefix = `.${prefixCls}-tabs`;
 
   const marginBlock = 8;
+
   return {
     cls: css`
       ${prefix}-tab + ${prefix}-tab {

@@ -12,6 +12,7 @@ import { siteTitleSel, useSiteStore } from '@/store';
 const Home = memo(() => {
   const siteTitle = useSiteStore(siteTitleSel);
   const { styles } = useStyles();
+
   return (
     <>
       <Helmet>

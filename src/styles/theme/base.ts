@@ -4,6 +4,7 @@ const FONT_EMOJI = `"Segoe UI Emoji","Segoe UI Symbol","Apple Color Emoji","Twem
 const FONT_EN = `"HarmonyOS Sans","Segoe UI","SF Pro Display",-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif`;
 const FONT_CN = `"HarmonyOS Sans SC","PingFang SC","Hiragino Sans GB","Microsoft Yahei UI","Microsoft Yahei","Source Han Sans CN",sans-serif`;
 const FONT_CODE = `ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace`;
+
 export const baseToken: Partial<AliasToken> = {
   borderRadius: 5,
   borderRadiusXS: 3,

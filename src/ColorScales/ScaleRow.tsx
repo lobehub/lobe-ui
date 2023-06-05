@@ -36,12 +36,14 @@ const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
       </div>
       {scale.map((color, index) => {
         if (index === 0 || index === 12) return null;
+
         return (
           <div
             className={styles.scaleBox}
             key={index}
             onClick={() => {
               const content = `token.${name}${index}${isAlpha ? 'A' : ''} /* ${color} */`;
+
               copy(content);
               message.success(content);
             }}

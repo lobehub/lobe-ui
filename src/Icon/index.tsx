@@ -29,6 +29,7 @@ const Icon: FC<IconProps> = ({ icon, size, ...props }) => {
   let fontSize: number | string;
   let strokeWidth: number;
   const SvgIcon = icon;
+
   switch (size) {
     case 'large':
       fontSize = 24;
@@ -50,6 +51,7 @@ const Icon: FC<IconProps> = ({ icon, size, ...props }) => {
         fontSize = '1em';
         strokeWidth = 2;
       }
+
       break;
   }
 

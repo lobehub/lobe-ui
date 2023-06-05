@@ -9,6 +9,7 @@ export type EditableTextProps = ControlInputProps;
 
 const EditableText = memo<EditableTextProps>(({ value, onChange }: ControlInputProps) => {
   const [edited, setEdited] = useState(false);
+
   return edited ? (
     <ControlInput
       onChange={onChange}

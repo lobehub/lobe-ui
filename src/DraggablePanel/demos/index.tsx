@@ -46,6 +46,7 @@ export default () => {
     },
     { store },
   );
+
   return (
     <StroyBook levaStore={store} noPadding>
       <View

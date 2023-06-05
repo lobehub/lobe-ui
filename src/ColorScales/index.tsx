@@ -14,6 +14,7 @@ export interface ColorScalesProps {
 
 const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
   const { styles } = useStyles();
+
   return (
     <div className={styles.view}>
       <div style={{ padding: '8px 16px 32px 0' }}>
@@ -22,9 +23,11 @@ const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
             <div className={styles.scaleRowTitle} key="scale-num" />
             {new Array(scale.light.length).fill('').map((_, index) => {
               if (index === 0 || index === 12) return null;
+
               const isMidHighlight = midHighLight === index;
+
               return (
-                <div className={styles.scaleBox} key={'num' + index}>
+                <div className={styles.scaleBox} key={`num${index}`}>
                   <div className={styles.scaleBox}>
                     <div
                       className={styles.scaleItem}

@@ -40,7 +40,9 @@ const Navbar = memo(() => {
         }))}
         onChange={(path) => {
           const url = nav.find((i) => i.activePath === path || i.link === path)?.link;
+
           if (!url) return;
+
           history.push(url);
         }}
       />

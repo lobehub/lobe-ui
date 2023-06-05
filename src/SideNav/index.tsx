@@ -22,6 +22,7 @@ export interface SideNavProps extends DivProps {
 
 const SideNav = memo<SideNavProps>(({ className, avatar, topActions, bottomActions, ...props }) => {
   const { styles, cx } = useStyles();
+
   return (
     <div className={cx(styles, className)} {...props}>
       <Space align="center" direction="vertical" size={16}>

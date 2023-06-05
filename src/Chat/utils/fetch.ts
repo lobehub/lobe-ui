@@ -40,6 +40,7 @@ export const fetchSSE = async (fetchFn: () => Promise<Response>, options: FetchS
     };
 
     options.onErrorHandle?.(chatMessageError);
+
     return;
   }
 
@@ -56,6 +57,7 @@ export const fetchSSE = async (fetchFn: () => Promise<Response>, options: FetchS
 
   while (!done) {
     const { value, done: doneReading } = await reader.read();
+
     done = doneReading;
     const chunkValue = decoder.decode(value);
 

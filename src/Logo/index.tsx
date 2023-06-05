@@ -31,6 +31,7 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
   const theme = useTheme();
   const { styles, cx } = useStyles();
   let logoComponent: React.ReactNode;
+
   switch (type) {
     case '3d':
       return <Logo3D style={{ height: size, width: size, ...style }} {...props} />;

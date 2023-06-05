@@ -45,15 +45,4 @@ export type ColorPalettesAlpha = {
   [key in `${keyof PresetColorType}${ColorPaletteKeyIndex}A`]: string;
 };
 
-export interface LobeCustomToken extends ColorToken, ColorPalettes, ColorPalettesAlpha {
-  colorSolid: string;
-  contentMaxWidth: number;
-  footerHeight: number;
-  gradientColor1: string;
-  gradientColor2: string;
-  gradientColor3: string;
-  gradientHeroBgG: string;
-  headerHeight: number;
-  sidebarWidth: number;
-  tocWidth: number;
-}
+export interface LobeCustomToken extends ColorToken, ColorPalettes, ColorPalettesAlpha {}

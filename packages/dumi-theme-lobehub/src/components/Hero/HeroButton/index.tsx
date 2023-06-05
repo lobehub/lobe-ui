@@ -8,6 +8,7 @@ interface HeroButtonProps {
 }
 const HeroButton: FC<HeroButtonProps> = ({ children }) => {
   const { styles } = useStyles();
+
   return (
     <Button className={styles.button} shape={'round'} size={'large'} type={'primary'}>
       {children}

@@ -20,6 +20,7 @@ export default () => {
     },
     { store },
   );
+
   return (
     <StroyBook levaStore={store}>
       <div style={{ color, fontSize, fontWeight }}>{upperCase ? text.toUpperCase() : text}</div>

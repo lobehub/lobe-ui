@@ -50,12 +50,14 @@ export const useHighlight = create<Store>((set, get) => ({
         langs: languageMap as any,
         themes: [themeConfig(true), themeConfig(false)],
       });
+
       set({ highlighter });
     }
   },
 
   codeToHtml: (text, language, isDarkMode) => {
     const { highlighter } = get();
+
     if (!highlighter) return '';
 
     try {

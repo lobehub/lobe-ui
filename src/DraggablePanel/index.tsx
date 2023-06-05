@@ -143,6 +143,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
 
     useEffect(() => {
       if (pin) return;
+
       if (isHovering && !isExpand) {
         setIsExpand(true);
       } else if (!isHovering && isExpand) {

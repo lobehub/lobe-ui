@@ -32,6 +32,7 @@ export default () => {
     },
     { store },
   );
+
   return (
     <StroyBook levaStore={store}>
       <ActionIcon active icon={Settings} size={size} />

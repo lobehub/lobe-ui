@@ -12,6 +12,7 @@ export interface InputProps extends AntdInputProps {
 export const Input = memo<InputProps>(
   forwardRef(({ className, type = 'ghost', ...props }, ref) => {
     const { styles, cx } = useStyles({ type });
+
     return <AntInput className={cx(styles.input, className)} ref={ref} {...props} />;
   }),
 );
@@ -24,6 +25,7 @@ export interface TextAreaProps extends AntdTextAreaProps {
 export const TextArea = memo<TextAreaProps>(
   forwardRef(({ className, type = 'ghost', ...props }, ref) => {
     const { styles, cx } = useStyles({ type });
+
     return <AntInput.TextArea className={cx(styles.textarea, className)} ref={ref} {...props} />;
   }),
 );

@@ -11,6 +11,7 @@ const code = `export default ({ children, className }: MarkdownProps) => {
     </ReactMarkdown>
   );
 }`;
+
 export default () => {
   const store = useCreateStore();
   const options: HighlighterProps | any = useControls(
@@ -33,6 +34,7 @@ export default () => {
     },
     { store },
   );
+
   return (
     <StroyBook levaStore={store}>
       <Highlighter {...options} />

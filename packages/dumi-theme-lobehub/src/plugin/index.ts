@@ -34,6 +34,7 @@ const SSRPlugin = (api: IApi) => {
 
   const addLinkStyle = (html: string, cssFile: string) => {
     const prefix = api.userConfig.publicPath || api.config.publicPath;
+
     return html.replace('</head>', `<link rel="stylesheet" href="${prefix + cssFile}"></head>`);
   };
 

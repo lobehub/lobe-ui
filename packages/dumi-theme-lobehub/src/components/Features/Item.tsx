@@ -21,7 +21,7 @@ const Image = memo<{ className?: string; image: string; title: string }>(
 const FeatureItem = memo<IFeature>(
   ({ imageType, row, column, hero, description, image, title, link, imageStyle, openExternal }) => {
     const rowNum = row || 7;
-    const { styles, theme } = useStyles({ rowNum, hasLink: !!link });
+    const { styles, theme } = useStyles({ rowNum, hasLink: Boolean(link) });
 
     return (
       <div

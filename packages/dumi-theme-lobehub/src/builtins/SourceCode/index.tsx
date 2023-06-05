@@ -10,6 +10,7 @@ interface SourceCodeProps {
 
 const SourceCode: FC<SourceCodeProps> = ({ children, lang }) => {
   const theme = useTheme();
+
   return (
     <Highlighter language={lang} style={{ background: rgba(theme.colorBgLayout, 0.5) }}>
       {children}

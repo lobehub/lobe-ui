@@ -72,6 +72,7 @@ const ActionIcon = memo<ActionIconProps>(
     const { styles, cx } = useStyles({ active: Boolean(active), glass: Boolean(glass) });
     let blockSize: number;
     let borderRadius: number;
+
     switch (size) {
       case 'large':
         blockSize = 44;

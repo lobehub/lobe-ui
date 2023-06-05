@@ -2,7 +2,7 @@ import { IFeature } from '@/types';
 
 import { SiteStore } from '../useSiteStore';
 
-export const isHeroPageSel = (s: SiteStore) => !!s.routeMeta.frontmatter.hero;
+export const isHeroPageSel = (s: SiteStore) => Boolean(s.routeMeta.frontmatter.hero);
 
 const localeValueSel = (s: SiteStore, value: any) => {
   if (!value) return;

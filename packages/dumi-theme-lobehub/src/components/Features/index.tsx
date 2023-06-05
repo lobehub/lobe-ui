@@ -20,7 +20,7 @@ export interface FeaturesProps {
 const Features = memo<FeaturesProps>(({ items, style }) => {
   const { styles } = useStyles();
 
-  if (!Boolean(items?.length)) return null;
+  if (!items?.length) return null;
 
   return (
     <div className={styles.container} style={style}>

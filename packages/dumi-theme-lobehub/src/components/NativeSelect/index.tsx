@@ -62,7 +62,9 @@ const NativeSelect = memo<NativeSelectProps>(
 
     if (!open) {
       if (innerOffset !== 0) setInnerOffset(0);
+
       if (fallback) setFallback(false);
+
       if (blockSelection) setBlockSelection(false);
     }
 
@@ -132,10 +134,10 @@ const NativeSelect = memo<NativeSelectProps>(
         return () => {
           clearTimeout(selectTimeoutRef.current);
         };
-      } else {
-        allowSelectRef.current = false;
-        allowMouseUpRef.current = true;
       }
+
+      allowSelectRef.current = false;
+      allowMouseUpRef.current = true;
     }, [open]);
 
     const { label } = options[selectedIndex] || {};
