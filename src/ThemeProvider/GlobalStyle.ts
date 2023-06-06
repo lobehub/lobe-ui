@@ -62,6 +62,7 @@ const GlobalStyle = createGlobalStyle`
   
   code {
 	  font-family: ${({ theme }) => theme.fontFamilyCode} !important;
+
 	  * {
 		  font-family: inherit !important;
 	  }

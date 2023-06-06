@@ -116,7 +116,7 @@ export const useStyles = createStyles(({ token, responsive, css, cx }) => {
 
       transition: all 0.3s;
 
-      &::-webkit-input-placeholder {
+      &::input-placeholder {
         color: ${token.colorTextPlaceholder};
       }
 

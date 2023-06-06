@@ -8,7 +8,7 @@ export const useStyles = createStyles(({ css, cx, responsive, token }) => ({
     background-image: linear-gradient(
       180deg,
       ${token.colorBgContainer} 0%,
-      rgba(255, 255, 255, 0) 10%
+      rgba(255, 255, 255, 0%) 10%
     );
 
     ${responsive.mobile} {

@@ -49,6 +49,7 @@ export const useStyles = createStyles(({ token, prefixCls, cx, css, stylish }) =
       &::after {
         background: ${token.colorText};
       }
+
       & {
         background: transparent;
       }
@@ -142,7 +143,7 @@ export const useStyles = createStyles(({ token, prefixCls, cx, css, stylish }) =
       }
 
       .ant-menu-item,
-      a:before {
+      a::before {
         width: 100% !important;
         margin: 0 !important;
         border-radius: 0 !important;

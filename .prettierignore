@@ -1,6 +1,8 @@
 **/*.svg
 .umi
 .umi-production
+.idea
+.husky
 /dist
 .dockerignore
 .DS_Store

@@ -1,10 +1,8 @@
 ---
-
 nav: Components
 group: Theme
 title: ThemeProvider
 description: ThemeProvider is a component that provides a theme to all the child components.
-
 ---
 
 ## Default

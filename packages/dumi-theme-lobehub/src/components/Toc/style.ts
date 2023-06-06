@@ -44,6 +44,7 @@ export const useStyles = createStyles(({ token, stylish, prefixCls, responsive, 
 
       width: 100%;
       height: ${fixHeight}px;
+
       .ant-collapse-expand-icon {
         color: ${token.colorTextQuaternary};
       }

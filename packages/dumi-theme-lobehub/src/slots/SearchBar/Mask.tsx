@@ -1,4 +1,4 @@
-import { type FC, type ReactNode,useEffect } from 'react';
+import { type FC, type ReactNode, useEffect } from 'react';
 
 import { useStyles } from './Mask.style';
 

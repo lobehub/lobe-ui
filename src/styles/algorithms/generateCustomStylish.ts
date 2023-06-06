@@ -36,6 +36,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       blockquote {
         margin: 16px 0;
         padding: 0 12px;
+
         p {
           font-style: italic;
           color: ${token.colorTextDescription};
@@ -83,8 +84,8 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         width: 100%;
         margin-block-start: 1em;
         margin-block-end: 1em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
+        margin-inline-start: 0;
+        margin-inline-end: 0;
         padding: 8px;
 
         border: 1px solid ${token.colorBorderSecondary};
@@ -103,10 +104,12 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         tr {
           th {
             background: ${token.colorFillTertiary};
+
             &:first-child {
               border-top-left-radius: ${token.borderRadius}px;
               border-bottom-left-radius: ${token.borderRadius}px;
             }
+
             &:last-child {
               border-top-right-radius: ${token.borderRadius}px;
               border-bottom-right-radius: ${token.borderRadius}px;

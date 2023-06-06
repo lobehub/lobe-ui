@@ -1,10 +1,10 @@
 import { App } from 'antd';
 import {
-  extractStaticStyle,
-  setupStyled,
+  ThemeProvider as AntdThemeProvider,
   StyleProvider,
   type ThemeMode,
-  ThemeProvider as AntdThemeProvider,
+  extractStaticStyle,
+  setupStyled,
 } from 'antd-style';
 import type { CustomStylishParams, CustomTokenParams } from 'antd-style/lib/types/function';
 import { memo } from 'react';

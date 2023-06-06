@@ -23,6 +23,7 @@ export const useStyles = createStyles(({ css, cx, token }, prefixCls) => ({
 
       background: transparent;
       border-radius: 5px;
+
       &:hover {
         background: ${token.colorFillTertiary};
       }
@@ -34,6 +35,7 @@ export const useStyles = createStyles(({ css, cx, token }, prefixCls) => ({
       font-weight: bold;
       color: ${token.colorPrimaryText};
       background: ${token.colorPrimaryBg};
+
       &:hover {
         color: ${token.colorPrimaryTextHover};
         background: ${token.colorPrimaryBgHover};

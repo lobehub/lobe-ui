@@ -9,6 +9,7 @@ export const useStyles = createStyles(
     const typeStylish = css`
       background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
       border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
+
       &:hover {
         background-color: ${type === 'prue' ? 'transparent' : token.colorFillTertiary};
       }

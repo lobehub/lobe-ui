@@ -1,4 +1,4 @@
-import { message, Space } from 'antd';
+import { Space, message } from 'antd';
 import copy from 'copy-to-clipboard';
 import { memo } from 'react';
 

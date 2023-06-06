@@ -1,6 +1,6 @@
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { Tag } from 'antd';
-import { history, Link } from 'dumi';
+import { Link, history } from 'dumi';
 import { memo } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 

@@ -2,7 +2,7 @@ import { StateCreator } from 'zustand/vanilla';
 
 import { LOADING_FLAT } from '../const';
 import { ChatMessage } from '../types';
-import { fetchSSE, FetchSSEOptions } from '../utils/fetch';
+import { FetchSSEOptions, fetchSSE } from '../utils/fetch';
 import { ChatState, initialState } from './initialState';
 import { MessageDispatch, messagesReducer } from './messageReducer';
 

@@ -94,6 +94,7 @@ export const useStyles = createStyles(
         css`
           pointer-events: none;
           color: ${token.colorTextSecondary};
+
           quotient {
             position: relative;
 
@@ -103,7 +104,8 @@ export const useStyles = createStyles(
             padding-left: 12px;
 
             color: ${token.colorTextDescription};
-            &:before {
+
+            &::before {
               content: '';
 
               position: absolute;
@@ -167,6 +169,7 @@ export const useStyles = createStyles(
         a {
           ${stylish.resetLinkColor};
           color: ${token.colorTextDescription};
+
           &:hover {
             color: ${token.colorPrimaryHover};
           }

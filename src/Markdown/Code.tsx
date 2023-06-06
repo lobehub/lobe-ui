@@ -1,4 +1,4 @@
-import { memo, PropsWithChildren } from 'react';
+import { PropsWithChildren, memo } from 'react';
 
 import { useStyles } from '@/Markdown/style';
 

@@ -2,7 +2,7 @@ import { Icon, Snippet } from '@lobehub/ui';
 import { Divider, Space, Typography } from 'antd';
 import { useResponsive } from 'antd-style';
 import { Edit3, Github } from 'lucide-react';
-import { memo, type ReactNode } from 'react';
+import { type ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import { ApiHeaderProps } from '@/index';

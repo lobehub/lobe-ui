@@ -9,6 +9,7 @@ export const useStyles = createStyles(({ token, css }) => ({
 
     background: ${token.colorBgContainer};
     border-radius: 8px;
+
     &:hover {
       background: ${token.colorFillTertiary};
     }

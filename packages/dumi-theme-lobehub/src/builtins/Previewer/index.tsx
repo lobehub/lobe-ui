@@ -23,6 +23,7 @@ const useStyles = createStyles(({ css, token, prefixCls }) => {
         display: flex;
         flex-direction: column;
         border-color: ${token.colorBorderSecondary};
+
         &-demo {
           flex: 1;
 
@@ -104,10 +105,12 @@ const useStyles = createStyles(({ css, token, prefixCls }) => {
     left: css`
       .dumi-default-previewer {
         flex-direction: row-reverse;
+
         &-demo {
           width: 50%;
           border-left: 1px solid ${token.colorBorderSecondary};
         }
+
         &-meta {
           width: 50%;
         }
@@ -117,10 +120,12 @@ const useStyles = createStyles(({ css, token, prefixCls }) => {
     right: css`
       .dumi-default-previewer {
         flex-direction: row;
+
         &-demo {
           width: 50%;
           border-right: 1px solid ${token.colorBorderSecondary};
         }
+
         &-meta {
           width: 50%;
         }

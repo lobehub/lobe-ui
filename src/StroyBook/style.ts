@@ -53,6 +53,7 @@ export const useStyles = createStyles(
 
         > div {
           background: transparent;
+
           > div {
             background: transparent;
           }

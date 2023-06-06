@@ -1,4 +1,4 @@
-import { getHighlighter, Highlighter } from 'shiki-es';
+import { type Highlighter, getHighlighter } from 'shiki-es';
 import { create } from 'zustand';
 
 import { themeConfig } from '@/Highlighter/theme';

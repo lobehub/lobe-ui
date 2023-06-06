@@ -1,10 +1,8 @@
 ---
-
 nav: Components
 group: Common
 title: ActionIcon
 description: ActionIcon is a component used to render an icon with a block around it
-
 ---
 
 ## Default

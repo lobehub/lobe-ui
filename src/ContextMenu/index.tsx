@@ -1,10 +1,10 @@
 import {
-  autoUpdate,
-  flip,
   FloatingFocusManager,
   FloatingNode,
   FloatingPortal,
   FloatingTree,
+  autoUpdate,
+  flip,
   offset,
   safePolygon,
   shift,
@@ -22,7 +22,7 @@ import {
   useTypeahead,
 } from '@floating-ui/react';
 import { Divider } from 'antd';
-import { forwardRef, HTMLProps, useCallback, useEffect, useRef, useState } from 'react';
+import { HTMLProps, forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 
 import MenuItem from './MenuItem';
 import { useStyles } from './style';

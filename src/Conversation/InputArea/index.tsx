@@ -39,6 +39,7 @@ const useStyles = createStyles(({ css, responsive, token }) => ({
     bottom: 8px;
 
     color: ${token.colorTextTertiary};
+
     &:hover {
       color: ${token.colorTextSecondary};
     }

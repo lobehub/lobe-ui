@@ -31,6 +31,7 @@ export const useStyles = createStyles(({ css, cx, token }, type: 'ghost' | 'bloc
         overflow: auto;
         flex: 1;
       }
+
       .prism-code {
         background: none !important;
       }

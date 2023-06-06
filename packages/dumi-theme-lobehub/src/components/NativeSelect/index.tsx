@@ -1,13 +1,13 @@
 import {
-  autoUpdate,
-  flip,
   FloatingFocusManager,
   FloatingOverlay,
   FloatingPortal,
+  SideObject,
+  autoUpdate,
+  flip,
   inner,
   offset,
   shift,
-  SideObject,
   size,
   useClick,
   useDismiss,
@@ -18,7 +18,7 @@ import {
   useRole,
   useTypeahead,
 } from '@floating-ui/react';
-import { CSSProperties, memo, ReactNode, useEffect, useRef, useState } from 'react';
+import { CSSProperties, ReactNode, memo, useEffect, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
 import SelectItem from './SelectItem';

@@ -23,6 +23,7 @@ export const useStyles = createStyles(({ css }) => ({
 
     background-position: 0 0, 0 8px, 8px -8px, -8px 0;
     background-size: 16px 16px;
+
     &:active {
       transform: scale(0.95);
     }

@@ -31,6 +31,7 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
 
       ${prefix}-nav {
         margin-bottom: 0;
+
         &::before {
           display: none;
         }

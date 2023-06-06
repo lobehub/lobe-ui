@@ -1,6 +1,6 @@
 import { TabsNav } from '@lobehub/ui';
 import { createStyles } from 'antd-style';
-import { history, Link } from 'dumi';
+import { Link, history } from 'dumi';
 import NavbarExtra from 'dumi/theme-default/slots/NavbarExtra';
 import { memo } from 'react';
 import { shallow } from 'zustand/shallow';

@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { history, Link, useLocation, useSiteData } from 'dumi';
+import { Link, history, useLocation, useSiteData } from 'dumi';
 import { memo, useEffect, useState } from 'react';
 
 import NativeSelect from '@/components/NativeSelect';

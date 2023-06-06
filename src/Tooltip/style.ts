@@ -16,9 +16,10 @@ export const useStyles = createStyles(({ css, token }) => {
         background-color: ${token.colorText};
         border-radius: ${token.borderRadiusSM}px;
       }
+
       .ant-tooltip-arrow {
-        &:before,
-        &:after {
+        &::before,
+        &::after {
           background: ${token.colorText};
         }
       }

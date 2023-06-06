@@ -1,4 +1,4 @@
-import { createStyles, FullToken } from 'antd-style';
+import { FullToken, createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ token, prefixCls, css }) => {
   // 把首字母大写

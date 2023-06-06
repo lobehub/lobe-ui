@@ -9,6 +9,7 @@ export const useStyles = createStyles(({ css, token }) => ({
     width: 100%;
     height: 100%;
     padding: 16px;
+
     dl {
       margin: 0;
       padding: 0;
@@ -47,10 +48,12 @@ export const useStyles = createStyles(({ css, token }) => ({
 
           transition: color 600ms ${token.motionEaseOut},
             background-color 100ms ${token.motionEaseOut};
+
           &:hover {
             color: ${token.colorText};
             background: ${token.colorFillTertiary};
           }
+
           &:active {
             color: ${token.colorText};
             background-color: ${token.colorFill};
@@ -64,6 +67,7 @@ export const useStyles = createStyles(({ css, token }) => ({
               color: ${token.colorText};
               background: ${token.colorFillSecondary};
             }
+
             &:active {
               color: ${token.colorText};
               background-color: ${token.colorFill};
@@ -71,6 +75,7 @@ export const useStyles = createStyles(({ css, token }) => ({
           }
         }
       }
+
       + dl {
         margin-top: 16px;
         padding-top: 16px;

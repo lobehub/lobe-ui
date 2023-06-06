@@ -125,12 +125,12 @@ export const useStyles = createStyles(({ css, responsive, token }) => {
         }
 
         &-light {
-          color: rgba(0, 0, 0, 0.85);
+          color: rgba(0, 0, 0, 85%);
           background-color: transparent;
 
           h2,
           a {
-            color: rgba(0, 0, 0, 0.85);
+            color: rgba(0, 0, 0, 85%);
           }
         }
 
@@ -140,7 +140,7 @@ export const useStyles = createStyles(({ css, responsive, token }) => {
 
         &-light &-item-separator,
         &-light &-item-description {
-          color: rgba(0, 0, 0, 0.45);
+          color: rgba(0, 0, 0, 45%);
         }
       }
 

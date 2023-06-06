@@ -3,8 +3,8 @@ import { memo } from 'react';
 import { DivProps } from '@/types';
 
 import CopyButton from '../CopyButton';
-import { useStyles } from './style';
 import SyntaxHighlighter, { type SyntaxHighlighterProps } from './SyntaxHighlighter';
+import { useStyles } from './style';
 
 export { SyntaxHighlighter, SyntaxHighlighterProps };
 

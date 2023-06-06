@@ -1,6 +1,5 @@
-import 'dayjs/locale/zh-cn';
-
 import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
 
 dayjs.locale('zh-cn');
 

@@ -1,4 +1,4 @@
-import { ActionIcon, type ActionIconSize,Icon } from '@lobehub/ui';
+import { ActionIcon, type ActionIconSize, Icon } from '@lobehub/ui';
 import { Dropdown, type MenuProps } from 'antd';
 import { ThemeMode } from 'antd-style';
 import { Monitor, Moon, Sun } from 'lucide-react';

@@ -1,5 +1,5 @@
 import { ChevronRightIcon } from 'lucide-react';
-import { forwardRef, ReactNode } from 'react';
+import { ReactNode, forwardRef } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import { AltIcon, CommandIcon, ControlIcon, ShiftIcon } from './icons';

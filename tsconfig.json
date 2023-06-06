@@ -1,5 +1,4 @@
 {
-  "include": ["src", "tests", ".dumi/**/*", ".dumirc.ts", "*.ts"],
   "compilerOptions": {
     "strict": true,
     "declaration": true,
@@ -15,5 +14,6 @@
       "@lobehub/ui": ["src"],
       "@lobehub/ui/*": ["src/*"]
     }
-  }
+  },
+  "include": ["src", "tests", ".dumi/**/*", ".dumirc.ts", "*.ts"]
 }
