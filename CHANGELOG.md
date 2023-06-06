@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.18.2](https://github.com/lobehub/lobe-ui/compare/v1.18.1...v1.18.2) (2023-06-06)
+
+### 🐛 Bug Fixes
+
+- stylelint ([993e145](https://github.com/lobehub/lobe-ui/commit/993e145))
+
 ## [1.18.1](https://github.com/lobehub/lobe-ui/compare/v1.18.0...v1.18.1) (2023-06-05)
 
 ### 🐛 Bug Fixes
