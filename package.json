@@ -18,7 +18,7 @@
     "url": "https://github.com/lobehub/lobe-ui.git"
   },
   "license": "MIT",
-  "author": "LobeHub",
+  "author": "LobeHub <i@lobehub.com>",
   "sideEffects": false,
   "main": "es/index.js",
   "module": "es/index.js",
@@ -52,7 +52,7 @@
   },
   "lint-staged": {
     "*.md": [
-      "remark --quiet --frail --output --",
+      "remark --quiet --output --",
       "prettier --write --no-error-on-unmatched-pattern"
     ],
     "*.json": [
@@ -60,10 +60,12 @@
     ],
     "*.{js,jsx}": [
       "prettier --write",
+      "stylelint --fix",
       "eslint --fix"
     ],
     "*.{ts,tsx}": [
       "prettier --parser=typescript --write",
+      "stylelint --fix",
       "eslint --fix"
     ]
   },

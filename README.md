@@ -28,8 +28,6 @@ Lobe UI is an open-source UI component library for building _AIGC_ web apps
 <details>
 <summary><kbd>Table of contents</kbd></summary>
 
-<!-- TOC -->
-
 #### TOC
 
 - [📦 Installation](#-installation)
