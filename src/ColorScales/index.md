@@ -1,8 +1,10 @@
 ---
+
 nav: Components
 group: Design
 title: ColorScales
 description: An overview of all 13 Lobe Colors scales.
+
 ---
 
 ## Colors

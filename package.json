@@ -37,7 +37,7 @@
     "docs:build": "npm run build:theme && dumi build",
     "doctor": "father doctor",
     "lint": "eslint \"{src,tests,packages}/**/*.{js,jsx,ts,tsx}\" --fix",
-    "lint:md": "remark . -f -q",
+    "lint:md": "remark . --quiet --frail --output",
     "lint:style": "stylelint \"{src,tests,packages}/**/*.{js,jsx,ts,tsx}\" --fix",
     "prepare": "husky install && npm run setup",
     "prepublishOnly": "father doctor && npm run build",
@@ -52,7 +52,7 @@
   },
   "lint-staged": {
     "*.md": [
-      "remark -f -q",
+      "remark --quiet --frail --output --",
       "prettier --write --no-error-on-unmatched-pattern"
     ],
     "*.json": [
@@ -138,6 +138,7 @@
     "remark-lint": "^9",
     "remark-lint-list-item-indent": "^3",
     "remark-preset-lint-recommended": "^6",
+    "remark-toc": "^8",
     "semantic-release": "^21",
     "semantic-release-config-gitmoji": "^1",
     "stylelint": "^15",

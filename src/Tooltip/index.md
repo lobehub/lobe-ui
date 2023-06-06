@@ -1,8 +1,10 @@
 ---
+
 nav: Components
 group: Common
 title: Tooltip
 description: The Tooltip component is used to provide additional information to the user when they hover over a specific element.
+
 ---
 
 ## Default

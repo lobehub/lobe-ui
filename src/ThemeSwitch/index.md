@@ -1,8 +1,10 @@
 ---
+
 nav: Components
 group: Common
 title: ThemeSwitch
 description: ThemeSwitch component is a dropdown menu that allows users to switch between different theme modes.
+
 ---
 
 ## Default
