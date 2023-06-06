@@ -1,7 +1,13 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(
-  ({ css, token }, type: 'ghost' | 'block') =>
+export const useStyles = createStyles(({ css, cx, token }, type: 'ghost' | 'block') => {
+  const typeStylish = css`
+    background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
+    border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
+  `;
+
+  return cx(
+    typeStylish,
     css`
       position: relative;
 
@@ -16,13 +22,6 @@ export const useStyles = createStyles(
       border-radius: ${token.borderRadius}px;
 
       transition: background-color 100ms ${token.motionEaseOut};
-      ${type === 'block'
-        ? css`
-            background-color: ${token.colorFillTertiary};
-          `
-        : css`
-            border: 1px solid ${token.colorBorder};
-          `}
 
       &:hover {
         background-color: ${token.colorFillTertiary};
@@ -47,4 +46,5 @@ export const useStyles = createStyles(
         background: none !important;
       }
     `,
-);
+  );
+});

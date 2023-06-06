@@ -6,24 +6,25 @@ export const useStyles = createStyles(
     const buttonHoverCls = `${prefix}-hover-btn`;
     const langHoverCls = `${prefix}-hover-lang`;
 
+    const typeStylish = css`
+      background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
+      border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
+      &:hover {
+        background-color: ${type === 'prue' ? 'transparent' : token.colorFillTertiary};
+      }
+    `;
+
     return {
       container: cx(
         prefix,
+        typeStylish,
         css`
           position: relative;
-
           overflow: auto;
-
-          background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
           border-radius: ${token.borderRadius}px;
-
           transition: background-color 100ms ${token.motionEaseOut};
-          ${type === 'ghost' &&
-          css`
-            border: 1px solid ${token.colorBorder};
-          `}
+
           &:hover {
-            background-color: ${type === 'prue' ? 'transparent' : token.colorFillTertiary};
             .${buttonHoverCls} {
               opacity: 1;
             }

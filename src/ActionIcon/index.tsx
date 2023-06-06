@@ -40,6 +40,10 @@ export interface ActionIconProps extends DivProps {
    */
   icon: LucideIcon;
   /**
+   * @description Handle click action
+   */
+  onClick?: () => void;
+  /**
    * @description The position of the tooltip relative to the target
    * @enum ["top","left","right","bottom","topLeft","topRight","bottomLeft","bottomRight","leftTop","leftBottom","rightTop","rightBottom"]
    * @default "top"
@@ -50,6 +54,7 @@ export interface ActionIconProps extends DivProps {
    * @default 'normal'
    */
   size?: ActionIconSize;
+
   /**
    * @description The text shown in the tooltip
    */
@@ -67,6 +72,7 @@ const ActionIcon = memo<ActionIconProps>(
     title,
     placement,
     arrow = false,
+    onClick,
     ...props
   }) => {
     const { styles, cx } = useStyles({ active: Boolean(active), glass: Boolean(glass) });
@@ -99,6 +105,7 @@ const ActionIcon = memo<ActionIconProps>(
     const actionIconBlock = (
       <div
         className={cx(styles.block, className)}
+        onClick={onClick}
         style={{ width: blockSize, height: blockSize, borderRadius, ...style }}
         {...props}
       >

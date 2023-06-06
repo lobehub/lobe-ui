@@ -27,11 +27,17 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) =
         top: 0;
         right: 0;
 
-        padding: 4px 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
+        height: 36px;
+        padding: 0 8px;
+
+        font-family: ${token.fontFamilyCode};
         color: ${token.colorTextTertiary};
 
-        border-radius: ${token.borderRadiusSM};
+        border-radius: ${token.borderRadius};
       `,
     ),
   };

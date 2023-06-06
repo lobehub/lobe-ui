@@ -102,6 +102,7 @@
   "devDependencies": {
     "@ant-design/colors": "^7",
     "@commitlint/cli": "^17",
+    "@react-spring/web": "^9",
     "@testing-library/react": "^14",
     "@types/chroma-js": "^2",
     "@types/lodash-es": "^4",
