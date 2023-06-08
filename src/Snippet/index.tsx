@@ -29,7 +29,6 @@ export interface SnippetProps extends DivProps {
    * @description The symbol to be displayed before the content inside the Snippet component
    */
   symbol?: string;
-
   /**
    * @description The type of the Snippet component
    * @default 'ghost'

@@ -1,8 +1,8 @@
 ---
 nav: Components
 group: Common
-title: Spolight
-description: The Snippet component is used to display a code snippet with syntax highlighting. It can be customized with a symbol before the content and a language for syntax highlighting. The component is also copyable with a CopyButton included by default.
+title: Spotlight
+description: The Spotlight component is a customizable React component that displays a circle following the mouse cursor. The circle can be customized in size with the size prop.
 ---
 
 ## Default

@@ -36,6 +36,10 @@ const useMouseOffset = (): any => {
 };
 
 export interface SpotlightProps extends DivProps {
+  /**
+   * @description The size of the spotlight circle
+   * @default 64
+   */
   size?: number;
 }
 
