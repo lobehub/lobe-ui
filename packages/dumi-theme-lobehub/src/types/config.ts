@@ -1,5 +1,6 @@
-import { SiteToken } from '@lobehub/ui/styles';
 import { FooterColumn } from 'rc-footer/es/column';
+
+import { SiteCustomToken } from '@/styles/customToken';
 
 import { ApiHeaderConfig, IHero } from '../types';
 
@@ -81,5 +82,8 @@ export interface SiteThemeConfig {
 }
 
 export type SiteConfigToken = Partial<
-  Pick<SiteToken, 'headerHeight' | 'footerHeight' | 'sidebarWidth' | 'tocWidth' | 'contentMaxWidth'>
+  Pick<
+    SiteCustomToken,
+    'headerHeight' | 'footerHeight' | 'sidebarWidth' | 'tocWidth' | 'contentMaxWidth'
+  >
 >;

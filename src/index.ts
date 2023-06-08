@@ -28,6 +28,7 @@ export { default as MessageModal, type MessageModalProps } from './MessageModal'
 export { default as SearchBar, type SearchBarProps } from './SearchBar';
 export { default as SideNav, type SideNavProps } from './SideNav';
 export { default as Snippet, type SnippetProps } from './Snippet';
+export { default as Spotlight, type SpotlightProps } from './Spotlight';
 export {
   default as StroyBook,
   type StroyBookProps,
@@ -40,3 +41,5 @@ export { default as TabsNav, type TabsNavProps } from './TabsNav';
 export { default as ThemeProvider } from './ThemeProvider';
 export { default as ThemeSwitch, type ThemeSwitchProps } from './ThemeSwitch';
 export { default as Tooltip, type TooltipProps } from './Tooltip';
+export { type LobeCustomStylish } from './types/customStylish';
+export { type LobeCustomToken } from './types/customToken';

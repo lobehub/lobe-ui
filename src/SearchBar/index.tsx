@@ -2,7 +2,7 @@ import { Tag } from 'antd';
 import { Search } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
 
-import { Icon, Input, InputProps } from '@/index';
+import { Icon, Input, InputProps, Spotlight } from '@/index';
 
 import { useStyles } from './style';
 
@@ -17,6 +17,11 @@ export interface SearchBarProps extends InputProps {
    * @default 'f'
    */
   shortKey?: string;
+  /**
+   * @description Whether add spotlight background
+   * @default false
+   */
+  spotlight?: boolean;
 }
 
 const isAppleDevice = /(mac|iphone|ipod|ipad)/i.test(
@@ -26,7 +31,16 @@ const isAppleDevice = /(mac|iphone|ipod|ipad)/i.test(
 const symbol = isAppleDevice ? '⌘' : 'Ctrl';
 
 const SearchBar = memo<SearchBarProps>(
-  ({ className, value, onChange, placeholder, enableShortKey, shortKey = 'f', ...props }) => {
+  ({
+    spotlight,
+    className,
+    value,
+    onChange,
+    placeholder,
+    enableShortKey,
+    shortKey = 'f',
+    ...props
+  }) => {
     const [showTag, setShowTag] = useState<boolean>(true);
     const [inputValue, setInputValue] = useState<SearchBarProps['value']>(value);
     const { styles, cx } = useStyles();
@@ -49,6 +63,7 @@ const SearchBar = memo<SearchBarProps>(
 
     return (
       <div className={styles.search}>
+        {spotlight && <Spotlight />}
         <Input
           allowClear
           className={cx(styles.input, className)}

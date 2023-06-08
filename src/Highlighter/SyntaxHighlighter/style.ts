@@ -24,6 +24,7 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) =
       stylish.blur,
       css`
         position: absolute;
+        z-index: 10;
         top: 0;
         right: 0;
 
@@ -31,7 +32,7 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) =
         align-items: center;
         justify-content: center;
 
-        height: 36px;
+        height: 34px;
         padding: 0 8px;
 
         font-family: ${token.fontFamilyCode};

@@ -1,7 +1,7 @@
 import { LucideIcon } from 'lucide-react';
 import { memo } from 'react';
 
-import { Icon, Tooltip, TooltipProps } from '@/index';
+import { Icon, Spotlight, Tooltip, TooltipProps } from '@/index';
 import { DivProps } from '@/types';
 
 import { useStyles } from './style';
@@ -56,6 +56,11 @@ export interface ActionIconProps extends DivProps {
   size?: ActionIconSize;
 
   /**
+   * @description Whether add spotlight background
+   * @default false
+   */
+  spotlight?: boolean;
+  /**
    * @description The text shown in the tooltip
    */
   title?: string;
@@ -72,6 +77,7 @@ const ActionIcon = memo<ActionIconProps>(
     title,
     placement,
     arrow = false,
+    spotlight,
     onClick,
     ...props
   }) => {
@@ -109,6 +115,7 @@ const ActionIcon = memo<ActionIconProps>(
         style={{ width: blockSize, height: blockSize, borderRadius, ...style }}
         {...props}
       >
+        {spotlight && <Spotlight />}
         <Icon icon={icon} size={size === 'site' ? 'normal' : size} />
       </div>
     );

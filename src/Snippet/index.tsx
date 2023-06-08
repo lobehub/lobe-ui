@@ -1,9 +1,8 @@
 import { memo } from 'react';
 
+import { CopyButton, Spotlight, SyntaxHighlighter } from '@/index';
 import { DivProps } from '@/types';
 
-import CopyButton from '../CopyButton';
-import { SyntaxHighlighter } from '../Highlighter';
 import { useStyles } from './style';
 
 export interface SnippetProps extends DivProps {
@@ -22,9 +21,15 @@ export interface SnippetProps extends DivProps {
    */
   language?: string;
   /**
+   * @description Whether add spotlight background
+   * @default false
+   */
+  spotlight?: boolean;
+  /**
    * @description The symbol to be displayed before the content inside the Snippet component
    */
   symbol?: string;
+
   /**
    * @description The type of the Snippet component
    * @default 'ghost'
@@ -33,11 +38,20 @@ export interface SnippetProps extends DivProps {
 }
 
 const Snippet = memo<SnippetProps>(
-  ({ symbol, language = 'tsx', children, copyable = true, type = 'ghost', ...props }) => {
+  ({
+    symbol,
+    language = 'tsx',
+    children,
+    copyable = true,
+    type = 'ghost',
+    spotlight,
+    ...props
+  }) => {
     const { styles } = useStyles(type);
 
     return (
       <div className={styles} {...props}>
+        {spotlight && <Spotlight />}
         <SyntaxHighlighter language={language}>
           {[symbol, children].filter(Boolean).join(' ')}
         </SyntaxHighlighter>

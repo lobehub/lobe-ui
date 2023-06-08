@@ -8,6 +8,8 @@ export const useStyles = createStyles(
         css`
           cursor: pointer;
 
+          position: relative;
+
           display: flex;
           flex: none;
           align-items: center;

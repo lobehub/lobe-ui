@@ -25,6 +25,11 @@ export const useStyles = createStyles(
 
           &:hover {
             background-color: ${token.colorFillTertiary};
+            border-color: ${token.colorBorder};
+          }
+
+          &:focus {
+            border-color: ${token.colorTextQuaternary};
           }
         `,
       ),
@@ -42,6 +47,11 @@ export const useStyles = createStyles(
 
           &:hover {
             background-color: ${token.colorFillTertiary};
+            border-color: ${token.colorBorder};
+          }
+
+          &:focus {
+            border-color: ${token.colorTextQuaternary};
           }
         `,
       ),

@@ -15,13 +15,13 @@ const SearchBar = memo(() => {
       <Input
         enableShortKey
         onBlur={() => {
-          // wait for item click
           setTimeout(() => {
             setFocusing(false);
           }, 1);
         }}
-        onChange={(e) => setKeywords(e.target.value)}
+        onChange={(e: any) => setKeywords(e.target.value)}
         onFocus={() => setFocusing(true)}
+        spotlight
       />
       {keywords.trim() && focusing && (result.length || !loading) && (
         <div className={styles.popover}>

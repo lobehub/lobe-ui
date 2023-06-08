@@ -8,6 +8,7 @@ export default () => {
       language: 'sh',
       symbol: '$',
       copyable: true,
+      spotlight: false,
       type: {
         value: 'ghost',
         options: ['ghost', 'block'],

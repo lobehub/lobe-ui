@@ -11,6 +11,7 @@ export default () => {
       },
       enableShortKey: true,
       shortKey: 'f',
+      spotlight: false,
     },
     { store },
   );
