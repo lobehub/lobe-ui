@@ -1,5 +1,21 @@
 # Changelog
 
+# [1.19.0](https://github.com/lobehub/lobe-ui/compare/v1.18.2...v1.19.0) (2023-06-08)
+
+### ♻ Code Refactoring
+
+- dumi preview action bar ([8dbe3ac](https://github.com/lobehub/lobe-ui/commit/8dbe3ac))
+
+### ✨ Features
+
+- **spotlight**: add Spotlight components ([f55e805](https://github.com/lobehub/lobe-ui/commit/f55e805))
+
+### 🎫 Chores
+
+- clean ([d7f6cb0](https://github.com/lobehub/lobe-ui/commit/d7f6cb0))
+- update ([02eba87](https://github.com/lobehub/lobe-ui/commit/02eba87))
+- update lint config ([f44bd2c](https://github.com/lobehub/lobe-ui/commit/f44bd2c))
+
 ## [1.18.2](https://github.com/lobehub/lobe-ui/compare/v1.18.1...v1.18.2) (2023-06-06)
 
 ### 🐛 Bug Fixes
