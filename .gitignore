@@ -1,44 +1,43 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Gitignore for LobeHub
+################################################################
+
+# general
+.DS_Store
+.idea
+.vscode
+.history
+.temp
+.env.local
+venv
+temp
+tmp
 
 # dependencies
-**/node_modules
-# roadhog-api-doc ignore
-/src/utils/request-temp.js
-_roadhog-api-doc
+node_modules
+*.log
+*.lock
+package-lock.json
+
+# ci
+.coverage
+.eslintcache
+.stylelintcache
 
 # production
-**/dist
-/.vscode
-/es
-/lib
-
-# misc
-.DS_Store
-storybook-static
-npm-debug.log*
-yarn-error.log
-
-/coverage
-.idea
-package-lock.json
-*bak
-.vscode
-
-# visual studio code
-.history
-*.log
-functions/*
-lambda/mock/index.js
-.temp/**
+dist
+es
+lib
+logs
+test-output
 
 # umi
+.umi
+.umi-production
+.umi-test
 .dumi/tmp*
 
-# screenshot
-screenshot
-.firebase
-example/.temp/*
-.eslintcache
-techUI*
+# husky
 .husky/prepare-commit-msg
-server
+
+# misc
+# add other ignore file below

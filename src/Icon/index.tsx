@@ -1,7 +1,9 @@
 import { LucideIcon } from 'lucide-react';
-import { FC, memo } from 'react';
+import { memo } from 'react';
 
-import { SvgProps } from '@/types';
+import { DivProps } from '@/types';
+
+import { useStyles } from './style';
 
 export type IconSize =
   | 'large'
@@ -12,7 +14,7 @@ export type IconSize =
       strokeWidth?: number;
     };
 
-export interface IconProps extends SvgProps {
+export interface IconProps extends DivProps {
   /**
    * @description The icon element to be rendered
    * @type LucideIcon
@@ -23,12 +25,19 @@ export interface IconProps extends SvgProps {
    * @default 'normal'
    */
   size?: IconSize;
+  /**
+   * @description Rotate icon with animation
+   * @default false
+   */
+  spin?: boolean;
 }
 
-const Icon: FC<IconProps> = ({ icon, size, ...props }) => {
+const Icon = memo<IconProps>(({ icon, size, style, className, spin, ...props }) => {
+  const { styles, cx } = useStyles();
+  const SvgIcon = icon;
+
   let fontSize: number | string;
   let strokeWidth: number;
-  const SvgIcon = icon;
 
   switch (size) {
     case 'large':
@@ -55,7 +64,15 @@ const Icon: FC<IconProps> = ({ icon, size, ...props }) => {
       break;
   }
 
-  return <SvgIcon size={fontSize} strokeWidth={strokeWidth} {...props} />;
-};
+  return (
+    <div
+      className={cx(spin && styles.spin, className)}
+      style={{ width: fontSize, height: fontSize, ...style }}
+      {...props}
+    >
+      <SvgIcon size={fontSize} strokeWidth={strokeWidth} />
+    </div>
+  );
+});
 
-export default memo(Icon);
+export default Icon;

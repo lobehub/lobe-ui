@@ -1,4 +1,4 @@
-import { LucideIcon } from 'lucide-react';
+import { Loader2, LucideIcon } from 'lucide-react';
 import { memo } from 'react';
 
 import { Icon, Spotlight, Tooltip, TooltipProps } from '@/index';
@@ -38,7 +38,11 @@ export interface ActionIconProps extends DivProps {
    * @description The icon element to be rendered
    * @type LucideIcon
    */
-  icon: LucideIcon;
+  icon?: LucideIcon;
+  /**
+   * @description Set the loading status of ActionIcon
+   */
+  loading?: boolean;
   /**
    * @description Handle click action
    */
@@ -49,12 +53,12 @@ export interface ActionIconProps extends DivProps {
    * @default "top"
    */
   placement?: TooltipProps['placement'];
+
   /**
    * @description Size of the icon
    * @default 'normal'
    */
   size?: ActionIconSize;
-
   /**
    * @description Whether add spotlight background
    * @default false
@@ -79,6 +83,8 @@ const ActionIcon = memo<ActionIconProps>(
     arrow = false,
     spotlight,
     onClick,
+    children,
+    loading,
     ...props
   }) => {
     const { styles, cx } = useStyles({ active: Boolean(active), glass: Boolean(glass) });
@@ -108,15 +114,24 @@ const ActionIcon = memo<ActionIconProps>(
         break;
     }
 
+    const content = (
+      <>
+        {icon && <Icon icon={icon} size={size === 'site' ? 'normal' : size} />}
+        {children}
+      </>
+    );
+
+    const spin = <Icon icon={Loader2} size={size === 'site' ? 'normal' : size} spin />;
+
     const actionIconBlock = (
       <div
         className={cx(styles.block, className)}
-        onClick={onClick}
+        onClick={loading ? undefined : onClick}
         style={{ width: blockSize, height: blockSize, borderRadius, ...style }}
         {...props}
       >
         {spotlight && <Spotlight />}
-        <Icon icon={icon} size={size === 'site' ? 'normal' : size} />
+        {loading ? spin : content}
       </div>
     );
 

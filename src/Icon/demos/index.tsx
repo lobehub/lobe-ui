@@ -13,6 +13,7 @@ export default () => {
         value: LucideIcon.Settings,
         options: LucideIcon,
       },
+      spin: false,
     },
     { store },
   );

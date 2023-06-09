@@ -37,6 +37,7 @@ export default () => {
           ],
         },
         spotlight: false,
+        loading: false,
       }),
     },
     { store },

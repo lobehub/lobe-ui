@@ -1,23 +1,11 @@
-import React from 'react';
+import { type HTMLAttributes } from 'react';
 
-export type DivProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLDivElement>,
-  HTMLDivElement
->;
+export type DivProps = HTMLAttributes<HTMLDivElement>;
 
-export type SvgProps = React.DetailedHTMLProps<React.HTMLAttributes<SVGSVGElement>, SVGSVGElement>;
+export type SvgProps = HTMLAttributes<SVGSVGElement>;
 
-export type ImgProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLImageElement>,
-  HTMLImageElement
->;
+export type ImgProps = HTMLAttributes<HTMLImageElement>;
 
-export type InputProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
->;
+export type InputProps = HTMLAttributes<HTMLInputElement>;
 
-export type TextAreaProps = React.DetailedHTMLProps<
-  React.HTMLAttributes<HTMLTextAreaElement>,
-  HTMLTextAreaElement
->;
+export type TextAreaProps = HTMLAttributes<HTMLTextAreaElement>;
