@@ -1,5 +1,5 @@
 import { LucideIcon } from 'lucide-react';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 import { DivProps } from '@/types';
 
@@ -14,28 +14,7 @@ export type IconSize =
       strokeWidth?: number;
     };
 
-export interface IconProps extends DivProps {
-  /**
-   * @description The icon element to be rendered
-   * @type LucideIcon
-   */
-  icon: LucideIcon;
-  /**
-   * @description Size of the icon
-   * @default 'normal'
-   */
-  size?: IconSize;
-  /**
-   * @description Rotate icon with animation
-   * @default false
-   */
-  spin?: boolean;
-}
-
-const Icon = memo<IconProps>(({ icon, size, style, className, spin, ...props }) => {
-  const { styles, cx } = useStyles();
-  const SvgIcon = icon;
-
+const calcSize = (size?: IconSize) => {
   let fontSize: number | string;
   let strokeWidth: number;
 
@@ -60,13 +39,38 @@ const Icon = memo<IconProps>(({ icon, size, style, className, spin, ...props }) 
         fontSize = '1em';
         strokeWidth = 2;
       }
-
       break;
   }
+  return { fontSize, strokeWidth };
+};
+
+export interface IconProps extends DivProps {
+  /**
+   * @description The icon element to be rendered
+   * @type LucideIcon
+   */
+  icon: LucideIcon;
+  /**
+   * @description Size of the icon
+   * @default 'normal'
+   */
+  size?: IconSize;
+  /**
+   * @description Rotate icon with animation
+   * @default false
+   */
+  spin?: boolean;
+}
+
+const Icon = memo<IconProps>(({ icon, size, style, className, spin, ...props }) => {
+  const { styles, cx } = useStyles();
+  const SvgIcon = icon;
+
+  const { fontSize, strokeWidth } = useMemo(() => calcSize(size), [size]);
 
   return (
     <div
-      className={cx(spin && styles.spin, className)}
+      className={cx(styles.icon, spin && styles.spin, className)}
       style={{ width: fontSize, height: fontSize, ...style }}
       {...props}
     >

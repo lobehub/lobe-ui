@@ -1,10 +1,9 @@
-import { Avatar as A } from 'antd';
-import { FC } from 'react';
-import { Center } from 'react-layout-kit';
+import { Avatar as AntAvatar, type AvatarProps as AntAvatarProps } from 'antd';
+import { memo } from 'react';
 
 import { useStyles } from './style';
 
-export interface AvatarProps {
+export interface AvatarProps extends AntAvatarProps {
   /**
    * @description The URL or base64 data of the avatar image
    */
@@ -29,46 +28,27 @@ export interface AvatarProps {
   title?: string;
 }
 
-const Avatar: FC<AvatarProps> = ({ avatar, title, size = 40, shape = 'circle', background }) => {
-  const { styles, theme } = useStyles();
+const Avatar = memo<AvatarProps>(
+  ({ className, avatar, title, size = 40, shape = 'circle', background, ...props }) => {
+    const { styles, cx } = useStyles({ background, size });
 
-  const backgroundColor = background ?? theme.colorBgContainer;
+    const isImage = avatar && ['/', 'http', 'data:'].some((i) => avatar.startsWith(i));
+    const text = isImage ? title : avatar;
 
-  const isImage = avatar && ['/', 'http', 'data:'].some((i) => avatar.startsWith(i));
-
-  return (
-    <Center
-      className={styles.container}
-      style={{
-        width: size,
-        height: size,
-        borderRadius: shape === 'circle' ? '50%' : 6,
-        backgroundColor,
-        borderWidth: isImage ? 1 : 0,
-      }}
-    >
-      {!avatar ? (
-        <A shape={shape} size={size}>
-          {title?.slice(0, 2)}
-        </A>
-      ) : isImage ? (
-        <A className={styles.border} shape={shape} size={size} src={avatar} />
-      ) : (
-        <Center
-          className={styles.border}
-          style={{
-            width: size,
-            height: size,
-            fontSize: size / 2,
-            borderRadius: shape === 'circle' ? '50%' : 6,
-            backgroundColor,
-          }}
-        >
-          {avatar}
-        </Center>
-      )}
-    </Center>
-  );
-};
+    return !isImage ? (
+      <AntAvatar className={cx(styles.avatar, className)} shape={shape} size={size} {...props}>
+        {text?.toUpperCase().slice(0, 2)}
+      </AntAvatar>
+    ) : (
+      <AntAvatar
+        className={cx(styles.avatar, className)}
+        shape={shape}
+        size={size}
+        src={avatar}
+        {...props}
+      />
+    );
+  },
+);
 
 export default Avatar;

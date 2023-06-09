@@ -1,5 +1,5 @@
 import { Loader2, LucideIcon } from 'lucide-react';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 import { Icon, Spotlight, Tooltip, TooltipProps } from '@/index';
 import { DivProps } from '@/types';
@@ -17,6 +17,39 @@ export type ActionIconSize =
       fontSize?: number;
       strokeWidth?: number;
     };
+
+const calcSize = (size?: ActionIconSize) => {
+  let blockSize: number;
+  let borderRadius: number;
+
+  switch (size) {
+    case 'large':
+      blockSize = 44;
+      borderRadius = 8;
+      break;
+    case 'normal':
+      blockSize = 36;
+      borderRadius = 5;
+      break;
+    case 'small':
+      blockSize = 24;
+      borderRadius = 5;
+      break;
+    case 'site':
+      blockSize = 34;
+      borderRadius = 5;
+      break;
+    default:
+      blockSize = size?.blockSize || 36;
+      borderRadius = size?.borderRadius || 5;
+      break;
+  }
+
+  return {
+    blockSize,
+    borderRadius,
+  };
+};
 
 export interface ActionIconProps extends DivProps {
   /**
@@ -88,31 +121,8 @@ const ActionIcon = memo<ActionIconProps>(
     ...props
   }) => {
     const { styles, cx } = useStyles({ active: Boolean(active), glass: Boolean(glass) });
-    let blockSize: number;
-    let borderRadius: number;
 
-    switch (size) {
-      case 'large':
-        blockSize = 44;
-        borderRadius = 8;
-        break;
-      case 'normal':
-        blockSize = 36;
-        borderRadius = 5;
-        break;
-      case 'small':
-        blockSize = 24;
-        borderRadius = 5;
-        break;
-      case 'site':
-        blockSize = 34;
-        borderRadius = 5;
-        break;
-      default:
-        blockSize = size?.blockSize || 36;
-        borderRadius = size?.borderRadius || 5;
-        break;
-    }
+    const { blockSize, borderRadius } = useMemo(() => calcSize(size), [size]);
 
     const content = (
       <>

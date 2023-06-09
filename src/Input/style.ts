@@ -17,7 +17,8 @@ export const useStyles = createStyles(
           height: 36px;
           padding: 0 12px;
 
-          transition: background-color 100ms ${token.motionEaseOut};
+          transition: background-color 100ms ${token.motionEaseOut},
+            border-color 200ms ${token.motionEaseOut};
 
           input {
             background: transparent;
@@ -25,10 +26,13 @@ export const useStyles = createStyles(
 
           &:hover {
             background-color: ${token.colorFillTertiary};
-            border-color: ${token.colorBorder};
           }
 
           &:focus {
+            border-color: ${token.colorTextQuaternary};
+          }
+
+          &.ant-input-affix-wrapper-focused {
             border-color: ${token.colorTextQuaternary};
           }
         `,

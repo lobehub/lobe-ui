@@ -4,20 +4,6 @@ export const useStyles = createStyles(({ css, token }) => ({
   search: css`
     position: relative;
     max-width: 100%;
-
-    .ant-input-affix-wrapper {
-      &:hover {
-        border-color: ${token.colorBorder};
-      }
-    }
-
-    .ant-input-affix-wrapper-focused {
-      border-color: ${token.colorTextQuaternary};
-
-      &:hover {
-        border-color: ${token.colorTextQuaternary};
-      }
-    }
   `,
   input: css`
     position: relative;

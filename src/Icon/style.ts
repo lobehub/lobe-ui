@@ -10,6 +10,11 @@ export const useStyles = createStyles(({ css }) => {
   }
   `;
   return {
+    icon: css`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `,
     spin: css`
       animation: ${spin} 1s linear infinite;
     `,
