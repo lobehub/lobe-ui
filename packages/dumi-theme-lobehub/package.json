@@ -29,7 +29,7 @@
     "cross-env": "^7",
     "father-plugin-dumi-theme": "^1.0.0-rc.1",
     "history": "^5",
-    "jsdom": "^21"
+    "jsdom": "^22"
   },
   "peerDependencies": {
     "dumi": "^2.0.0",
