@@ -1,5 +1,11 @@
 # Changelog
 
+# [1.20.0](https://github.com/lobehub/lobe-ui/compare/v1.19.0...v1.20.0) (2023-06-09)
+
+### ✨ Features
+
+- **icon**: add Icon spin prop and ActionIcon loading state ([9adcda4](https://github.com/lobehub/lobe-ui/commit/9adcda4))
+
 # [1.19.0](https://github.com/lobehub/lobe-ui/compare/v1.18.2...v1.19.0) (2023-06-08)
 
 ### ♻ Code Refactoring
