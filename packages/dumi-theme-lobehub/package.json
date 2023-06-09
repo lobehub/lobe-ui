@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5",
-    "@floating-ui/react": "^0.17",
+    "@floating-ui/react": "^0.24",
     "@lobehub/ui": "latest",
     "chalk": "^4",
     "fast-deep-equal": "^3",
