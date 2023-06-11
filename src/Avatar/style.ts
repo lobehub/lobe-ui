@@ -10,13 +10,19 @@ export const useStyles = createStyles(
       avatar: css`
         cursor: pointer;
 
-        font-size: ${size * 0.5}px;
-        font-weight: 700;
-        line-height: 1;
-        color: ${color};
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         background: ${backgroundColor};
         border: 1px solid ${background ? 'transparent' : token.colorSplit};
+
+        > .ant-avatar-string {
+          font-size: ${size * 0.5}px;
+          font-weight: 700;
+          line-height: 1 !important;
+          color: ${color};
+        }
 
         > * {
           cursor: pointer;

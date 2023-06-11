@@ -36,7 +36,7 @@ export interface HighlighterProps extends DivProps {
    * @description The type of the code block
    * @default 'block'
    */
-  type?: 'ghost' | 'block' | 'prue';
+  type?: 'ghost' | 'block' | 'pure';
 }
 
 export const Highlighter = memo<HighlighterProps>(

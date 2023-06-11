@@ -23,7 +23,7 @@ export default () => {
       language: 'tsx',
       type: {
         value: 'block',
-        options: ['ghost', 'block', 'prue'],
+        options: ['ghost', 'block', 'pure'],
       },
       copyable: true,
       showLanguage: true,

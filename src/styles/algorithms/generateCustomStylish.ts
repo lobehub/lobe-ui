@@ -24,13 +24,18 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       }
 
       p {
-        margin: 20px auto;
+        margin-block-start: 0;
+        margin-block-end: 0;
 
         font-size: 14px;
         line-height: 1.8;
         color: ${token.colorText};
         text-align: justify;
         word-wrap: break-word;
+
+        + * {
+          margin-block-end: 0.5em;
+        }
       }
 
       blockquote {

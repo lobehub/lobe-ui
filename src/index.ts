@@ -1,6 +1,8 @@
 export { default as ActionIcon, type ActionIconProps, type ActionIconSize } from './ActionIcon';
 export { default as Avatar, type AvatarProps } from './Avatar';
 export type { ChatMessage, MessageRoleType } from './Chat';
+export { default as ChatItem, type ChatItemProps } from './ChatItem';
+export { default as ChatList, type ChatListProps } from './ChatList';
 export { default as ColorScales, type ColorScalesProps } from './ColorScales';
 export { default as ContextMenu, type ContextMenuProps } from './ContextMenu';
 export { default as Conversation, type ConversationProps } from './Conversation';

@@ -1,7 +1,7 @@
 import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(
-  ({ token, css, cx, prefixCls }, type: 'ghost' | 'block' | 'prue') => {
+  ({ token, css, cx, prefixCls }, type: 'ghost' | 'block' | 'pure') => {
     const prefix = `${prefixCls}-highlighter`;
     const buttonHoverCls = `${prefix}-hover-btn`;
     const langHoverCls = `${prefix}-hover-lang`;
@@ -11,7 +11,7 @@ export const useStyles = createStyles(
       border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
 
       &:hover {
-        background-color: ${type === 'prue' ? 'transparent' : token.colorFillTertiary};
+        background-color: ${type === 'pure' ? 'transparent' : token.colorFillTertiary};
       }
     `;
 
@@ -41,7 +41,7 @@ export const useStyles = createStyles(
 
           pre {
             margin: 0 !important;
-            padding: ${type === 'prue' ? 0 : `16px 24px`} !important;
+            padding: ${type === 'pure' ? 0 : `16px 24px`} !important;
             background: none !important;
           }
 
