@@ -1,1 +1,1 @@
-module.exports = require('@lobehub/lint/dist/changelog');
+module.exports = require('@lobehub/lint').changelog;

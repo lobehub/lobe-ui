@@ -114,7 +114,6 @@
     "antd": "^5",
     "antd-style": "^3",
     "commitlint": "^17",
-    "commitlint-config-gitmoji": "^2",
     "concurrently": "^8",
     "cross-env": "^7",
     "dumi": "^2",
