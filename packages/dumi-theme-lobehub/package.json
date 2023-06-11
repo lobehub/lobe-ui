@@ -15,7 +15,7 @@
     "@ant-design/icons": "^5",
     "@floating-ui/react": "^0",
     "@lobehub/ui": "latest",
-    "chalk": "^4",
+    "chalk": "^5",
     "fast-deep-equal": "^3",
     "rc-footer": "^0"
   },
