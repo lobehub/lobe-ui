@@ -25,7 +25,7 @@
     "@testing-library/react": "^13",
     "@umijs/lint": "^4",
     "@vitest/coverage-c8": "latest",
-    "concurrently": "^7",
+    "concurrently": "^8",
     "cross-env": "^7",
     "father-plugin-dumi-theme": "^1.0.0-rc.1",
     "history": "^5",
