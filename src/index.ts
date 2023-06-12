@@ -1,4 +1,5 @@
 export { default as ActionIcon, type ActionIconProps, type ActionIconSize } from './ActionIcon';
+export { default as ActionIconGroup, type ActionIconGroupProps } from './ActionIconGroup';
 export { default as Avatar, type AvatarProps } from './Avatar';
 export type { ChatMessage, MessageRoleType } from './Chat';
 export { default as ChatItem, type ChatItemProps } from './ChatItem';

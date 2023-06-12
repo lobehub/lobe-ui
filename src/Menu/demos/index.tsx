@@ -4,7 +4,7 @@ import { BoxSelectIcon, CopyIcon } from 'lucide-react';
 
 export default () => {
   return (
-    <div>
+    <>
       <div>RightClick</div>
       <ContextMenu
         items={[
@@ -32,6 +32,6 @@ export default () => {
           },
         ]}
       />
-    </div>
+    </>
   );
 };

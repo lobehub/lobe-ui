@@ -148,7 +148,13 @@ const ActionIcon = memo<ActionIconProps>(
     if (!title) return actionIconBlock;
 
     return (
-      <Tooltip arrow={arrow} placement={placement} title={title}>
+      <Tooltip
+        arrow={arrow}
+        mouseEnterDelay={1}
+        overlayStyle={{ pointerEvents: 'none' }}
+        placement={placement}
+        title={title}
+      >
         {actionIconBlock}
       </Tooltip>
     );
