@@ -4,6 +4,8 @@ import { memo } from 'react';
 
 import { Avatar, Icon, Markdown } from '@/index';
 import type { DivProps } from '@/types';
+import { MetaData } from '@/types/meta';
+import { formatTime } from '@/utils/formatTime';
 
 import { useStyles } from './style';
 
@@ -11,13 +13,13 @@ const AVATAR_SIZE = 40;
 
 export interface ChatItemProps extends DivProps {
   /**
-   * @description Weather to show alert and alert config
+   * @description Whether to show alert and alert config
    */
   alert?: AlertProps;
   /**
-   * @description URL of the avatar image
+   * @description Avatar config
    */
-  avatar?: string;
+  avatar: MetaData;
   /**
    * @description Whether to add spacing between chat items
    * @default true
@@ -33,10 +35,6 @@ export interface ChatItemProps extends DivProps {
    */
   message?: string;
   /**
-   * @description The name of the chat item
-   */
-  name?: string;
-  /**
    * @description The placement of the chat item
    * @default 'left'
    */
@@ -47,6 +45,15 @@ export interface ChatItemProps extends DivProps {
    */
   primary?: boolean;
   /**
+   * @description Whether to show name of the chat item
+   * @default false
+   */
+  showTitle?: boolean;
+  /**
+   * @description Time of chat message
+   */
+  time?: number;
+  /**
    * @description The type of chat item
    * @default 'block'
    */
@@ -56,7 +63,7 @@ export interface ChatItemProps extends DivProps {
 const ChatItem = memo<ChatItemProps>(
   ({
     className,
-    name,
+    title,
     primary,
     borderSpacing = true,
     loading,
@@ -65,13 +72,27 @@ const ChatItem = memo<ChatItemProps>(
     type = 'block',
     avatar,
     alert,
+    showTitle,
+    time,
     ...props
   }) => {
-    const { cx, styles } = useStyles({ placement, type, name, primary, avatarSize: AVATAR_SIZE });
+    const { cx, styles } = useStyles({
+      placement,
+      type,
+      title,
+      primary,
+      avatarSize: AVATAR_SIZE,
+      showTitle,
+    });
     return (
       <div className={cx(styles.container, className)} {...props}>
         <div className={styles.avatarContainer}>
-          <Avatar avatar={avatar} size={AVATAR_SIZE} />
+          <Avatar
+            avatar={avatar.avatar}
+            background={avatar.backgroundColor}
+            size={AVATAR_SIZE}
+            title={avatar.title}
+          />
           {loading && (
             <div className={styles.loading}>
               <Icon icon={Loader2} size={{ fontSize: 12, strokeWidth: 3 }} spin />
@@ -79,7 +100,14 @@ const ChatItem = memo<ChatItemProps>(
           )}
         </div>
         <div className={styles.messageContainer}>
-          {name && <div className={styles.name}>{name}</div>}
+          <div className={cx(styles.name, 'chat-item-name')}>
+            {showTitle ? avatar.title || 'untitled' : null}
+            {time && (
+              <span className={cx(type === 'pure' && !showTitle && styles.time, 'chat-item-time')}>
+                {formatTime(time)}
+              </span>
+            )}
+          </div>
           {alert ? (
             <Alert showIcon {...alert} />
           ) : (

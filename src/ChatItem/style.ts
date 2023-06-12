@@ -2,18 +2,20 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(
   (
-    { cx, css, token },
+    { cx, css, token, stylish },
     {
       placement,
       type,
-      name,
+      title,
       primary,
       avatarSize,
+      showTitle,
     }: {
       avatarSize: number;
-      name?: string;
       placement?: 'left' | 'right';
       primary?: boolean;
+      showTitle?: boolean;
+      title?: string;
       type?: 'block' | 'pure';
     },
   ) => {
@@ -29,7 +31,7 @@ export const useStyles = createStyles(
     `;
 
     const pureStylish = css`
-      padding-top: ${name ? 0 : '6px'};
+      padding-top: ${title ? 0 : '6px'};
     `;
 
     const pureContainerStylish = css`
@@ -61,6 +63,16 @@ export const useStyles = createStyles(
 
           width: 100%;
           padding: 12px;
+
+          .chat-item-time {
+            display: none;
+          }
+
+          &:hover {
+            .chat-item-time {
+              display: inline-block;
+            }
+          }
         `,
       ),
       loading: css`
@@ -96,6 +108,15 @@ export const useStyles = createStyles(
         }
       `,
       name: css`
+        position: ${showTitle ? 'relative' : 'absolute'};
+        top: ${showTitle ? 'unset' : '-16px'};
+        right: ${placement === 'right' ? '0' : 'unset'};
+        left: ${placement === 'left' ? '0' : 'unset'};
+
+        display: flex;
+        flex-direction: ${placement === 'left' ? 'row' : 'row-reverse'};
+        gap: 4px;
+
         margin-bottom: 6px;
 
         font-size: 12px;
@@ -103,6 +124,21 @@ export const useStyles = createStyles(
         color: ${token.colorTextDescription};
         text-align: ${placement === 'left' ? 'left' : 'right'};
       `,
+      time: cx(
+        stylish.blur,
+        css`
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          padding: 4px 6px;
+
+          line-height: 1;
+
+          background: ${token.colorFillQuaternary};
+          border-radius: ${token.borderRadius}px;
+        `,
+      ),
       message: cx(
         typeStylish,
         css`

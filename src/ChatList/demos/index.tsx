@@ -10,6 +10,7 @@ export default () => {
         value: 'chat',
         options: ['doc', 'chat'],
       },
+      showTitle: false,
     },
     { store },
   );
