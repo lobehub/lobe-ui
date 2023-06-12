@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.22.1](https://github.com/lobehub/lobe-ui/compare/v1.22.0...v1.22.1)
+
+<sup>Released on **2023-06-12**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Fix Highlighter style and add selection style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+##### Code refactoring
+
+- **misc**: Fix Highlighter style and add selection style ([4d5cd85](https://github.com/lobehub/lobe-ui/commit/4d5cd85))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 # [Version 1.22.0](https://github.com/lobehub/lobe-ui/compare/v1.21.1...v1.22.0)
 
 <sup>Released on **2023-06-12**</sup>
