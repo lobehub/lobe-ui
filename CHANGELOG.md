@@ -2,6 +2,31 @@
 
 # Changelog
 
+# [Version 1.22.0](https://github.com/lobehub/lobe-ui/compare/v1.21.1...v1.22.0)
+
+<sup>Released on **2023-06-12**</sup>
+
+#### ✨ Features
+
+- **misc**: Add ActionIconGroup component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+##### What's improved
+
+- **misc**: Add ActionIconGroup component ([eea5bff](https://github.com/lobehub/lobe-ui/commit/eea5bff))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.21.1](https://github.com/lobehub/lobe-ui/compare/v1.21.0...v1.21.1)
 
 <sup>Released on **2023-06-12**</sup>
