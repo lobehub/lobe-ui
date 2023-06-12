@@ -5,20 +5,8 @@ import {
   useControls,
   useCreateStore,
 } from '@lobehub/ui';
-import { Copy, RotateCw } from 'lucide-react';
 
-const items: ActionIconGroupProps['items'] = [
-  {
-    icon: Copy,
-    title: 'Copy',
-    onClick: () => console.log('click Copy'),
-  },
-  {
-    icon: RotateCw,
-    title: 'Regenerate',
-    onClick: () => console.log('click Regenerate'),
-  },
-];
+import { dropdownMenu, items } from './data';
 
 export default () => {
   const store = useCreateStore();
@@ -39,7 +27,7 @@ export default () => {
 
   return (
     <StroyBook levaStore={store}>
-      <ActionIconGroup items={items} {...control} />
+      <ActionIconGroup dropdownMenu={dropdownMenu} items={items} {...control} />
     </StroyBook>
   );
 };

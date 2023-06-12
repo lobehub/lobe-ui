@@ -6,7 +6,7 @@ export const useStyles = createStyles(
     { direction, type }: { direction: 'row' | 'column'; type: 'ghost' | 'block' | 'pure' },
   ) => {
     const typeStylish = css`
-      background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
+      background-color: ${type === 'block' ? token.colorFillTertiary : token.colorFillQuaternary};
       border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
     `;
 

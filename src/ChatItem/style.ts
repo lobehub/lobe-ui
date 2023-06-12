@@ -2,7 +2,7 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(
   (
-    { cx, css, token, stylish },
+    { cx, css, token },
     {
       placement,
       type,
@@ -10,8 +10,10 @@ export const useStyles = createStyles(
       primary,
       avatarSize,
       showTitle,
+      borderSpacing,
     }: {
       avatarSize: number;
+      borderSpacing: boolean;
       placement?: 'left' | 'right';
       primary?: boolean;
       showTitle?: boolean;
@@ -31,12 +33,7 @@ export const useStyles = createStyles(
     `;
 
     const pureContainerStylish = css`
-      border-radius: ${token.borderRadiusLG}px;
       transition: background-color 100ms ${token.motionEaseOut};
-
-      &:hover {
-        background-color: ${token.colorFillTertiary};
-      }
     `;
 
     const typeStylish = type === 'block' ? blockStylish : pureStylish;
@@ -56,13 +53,18 @@ export const useStyles = createStyles(
           width: 100%;
           padding: 12px;
 
-          .chat-item-time {
+          .chat-item-time,
+          .chat-item-actions {
             display: none;
           }
 
           &:hover {
             .chat-item-time {
               display: inline-block;
+            }
+
+            .chat-item-actions {
+              display: flex;
             }
           }
         `,
@@ -116,26 +118,31 @@ export const useStyles = createStyles(
         color: ${token.colorTextDescription};
         text-align: ${placement === 'left' ? 'left' : 'right'};
       `,
-      time: cx(
-        stylish.blur,
-        css`
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          padding: 4px 6px;
-
-          line-height: 1;
-
-          background: ${token.colorFillQuaternary};
-          border-radius: ${token.borderRadius}px;
-        `,
-      ),
       message: cx(
         typeStylish,
         css`
           position: relative;
         `,
+      ),
+      actions: cx(
+        css`
+          position: absolute;
+          display: flex;
+          align-items: flex-start;
+          justify-content: ${placement === 'left' ? 'flex-end' : 'flex-start'};
+        `,
+        type === 'block' && borderSpacing
+          ? css`
+              right: ${placement === 'left' ? '-4px' : 'unset'};
+              bottom: 0;
+              left: ${placement === 'right' ? '-4px' : 'unset'};
+              transform: translateX(${placement === 'left' ? '100%' : '-100%'});
+            `
+          : css`
+              right: ${placement === 'left' ? '0' : 'unset'};
+              bottom: ${type === 'block' ? '-40px' : '-32px'};
+              left: ${placement === 'right' ? '0' : 'unset'};
+            `,
       ),
     };
   },

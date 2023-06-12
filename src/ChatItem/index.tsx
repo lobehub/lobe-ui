@@ -1,6 +1,6 @@
 import { Alert, type AlertProps } from 'antd';
 import { Loader2 } from 'lucide-react';
-import { memo } from 'react';
+import { ReactNode, memo } from 'react';
 
 import { Avatar, Icon, Markdown } from '@/index';
 import type { DivProps } from '@/types';
@@ -12,6 +12,7 @@ import { useStyles } from './style';
 const AVATAR_SIZE = 40;
 
 export interface ChatItemProps extends DivProps {
+  actions?: ReactNode;
   /**
    * @description Whether to show alert and alert config
    */
@@ -62,6 +63,7 @@ export interface ChatItemProps extends DivProps {
 
 const ChatItem = memo<ChatItemProps>(
   ({
+    actions,
     className,
     title,
     primary,
@@ -83,6 +85,7 @@ const ChatItem = memo<ChatItemProps>(
       primary,
       avatarSize: AVATAR_SIZE,
       showTitle,
+      borderSpacing,
     });
     return (
       <div className={cx(styles.container, className)} {...props}>
@@ -102,11 +105,7 @@ const ChatItem = memo<ChatItemProps>(
         <div className={styles.messageContainer}>
           <div className={cx(styles.name, 'chat-item-name')}>
             {showTitle ? avatar.title || 'untitled' : null}
-            {time && (
-              <span className={cx(type === 'pure' && !showTitle && styles.time, 'chat-item-time')}>
-                {formatTime(time)}
-              </span>
-            )}
+            {time && <span className="chat-item-time">{formatTime(time)}</span>}
           </div>
           {alert ? (
             <Alert showIcon {...alert} />
@@ -115,6 +114,7 @@ const ChatItem = memo<ChatItemProps>(
               <Markdown>{String(message || '...')}</Markdown>
             </div>
           )}
+          <div className={cx(styles.actions, 'chat-item-actions')}>{actions}</div>
         </div>
         {borderSpacing && <div style={{ width: AVATAR_SIZE, flex: 'none' }} />}
       </div>
