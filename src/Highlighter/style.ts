@@ -11,14 +11,14 @@ export const useStyles = createStyles(
       border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
 
       &:hover {
-        background-color: ${type === 'pure' ? 'transparent' : token.colorFillTertiary};
+        background-color: ${type === 'block' ? token.colorFillTertiary : token.colorFillQuaternary};
       }
     `;
 
     return {
       container: cx(
         prefix,
-        typeStylish,
+        type !== 'pure' && typeStylish,
         css`
           position: relative;
           overflow: auto;
@@ -56,8 +56,8 @@ export const useStyles = createStyles(
         css`
           position: absolute;
           z-index: 51;
-          top: 8px;
-          right: 8px;
+          top: ${type === 'pure' ? 0 : '8px'};
+          right: ${type === 'pure' ? 0 : '8px'};
 
           opacity: 0;
         `,

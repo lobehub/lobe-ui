@@ -7,7 +7,7 @@ export const useStyles = createStyles(
   ) => {
     const spotlightX = (offset?.x ?? 0) + 'px';
     const spotlightY = (offset?.y ?? 0) + 'px';
-    const spotlightOpacity = outside ? '0' : isDarkMode ? '.1' : '0.07';
+    const spotlightOpacity = outside ? '0' : '.1';
     const spotlightSize = size + 'px';
     return css`
       pointer-events: none;
@@ -19,8 +19,8 @@ export const useStyles = createStyles(
       opacity: ${spotlightOpacity};
       background: radial-gradient(
         ${spotlightSize} circle at ${spotlightX} ${spotlightY},
-        ${token.colorText},
-        transparent
+        ${isDarkMode ? token.colorText : '#fff'},
+        ${!isDarkMode ? token.colorTextQuaternary : 'transparent'}
       );
       border-radius: inherit;
 

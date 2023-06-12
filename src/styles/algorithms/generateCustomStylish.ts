@@ -69,6 +69,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       }
 
       pre {
+        border: none;
         border-radius: ${token.borderRadius}px;
       }
 

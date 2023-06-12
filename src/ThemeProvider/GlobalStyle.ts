@@ -28,11 +28,16 @@ const GlobalStyle = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
     -webkit-tap-highlight-color: transparent;
   }
-  
+
 
   * {
 	  box-sizing: border-box;
 	  vertical-align: baseline;
+  }
+
+  ::selection {
+    color: #000;
+    background: ${({ theme }) => theme.yellow9};
   }
 
   ::-webkit-scrollbar {
@@ -59,7 +64,7 @@ const GlobalStyle = createGlobalStyle`
     text-align: justify;
     word-wrap: break-word;
   }
-  
+
   code {
 	  font-family: ${({ theme }) => theme.fontFamilyCode} !important;
 

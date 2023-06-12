@@ -4,7 +4,7 @@ import { readableColor } from 'polished';
 export const useStyles = createStyles(
   (
     { css, token },
-    { background, size, isEmoji }: { background?: string; isEmoji: boolean; size: number },
+    { background, size, isEmoji }: { background?: string; isEmoji?: boolean; size: number },
   ) => {
     const backgroundColor = background ?? token.colorBgContainer;
     const color = readableColor(backgroundColor);

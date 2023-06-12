@@ -30,9 +30,10 @@ export interface AvatarProps extends AntAvatarProps {
 
 const Avatar = memo<AvatarProps>(
   ({ className, avatar, title, size = 40, shape = 'circle', background, ...props }) => {
-    const isImage = avatar && ['/', 'http', 'data:'].some((i) => avatar.startsWith(i));
-    const isEmoji =
-      avatar && !isImage && /\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g.test(avatar);
+    const isImage = Boolean(avatar && ['/', 'http', 'data:'].some((i) => avatar.startsWith(i)));
+    const isEmoji = Boolean(
+      avatar && !isImage && /\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g.test(avatar),
+    );
 
     const { styles, cx } = useStyles({ background, size, isEmoji });
 

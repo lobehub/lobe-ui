@@ -24,10 +24,6 @@ export const useStyles = createStyles(
       background-color: ${primary ? token.colorFillSecondary : token.colorFillTertiary};
       border-radius: ${token.borderRadiusLG}px;
       transition: background-color 100ms ${token.motionEaseOut};
-
-      &:active {
-        background-color: ${primary ? token.colorFill : token.colorFillSecondary};
-      }
     `;
 
     const pureStylish = css`
@@ -40,10 +36,6 @@ export const useStyles = createStyles(
 
       &:hover {
         background-color: ${token.colorFillTertiary};
-      }
-
-      &:active {
-        background-color: ${token.colorFillSecondary};
       }
     `;
 
