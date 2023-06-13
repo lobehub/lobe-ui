@@ -23,6 +23,7 @@ node_modules
 package-lock.json
 
 # ci
+coverage
 .coverage
 .eslintcache
 .stylelintcache

@@ -5,6 +5,7 @@
 node_modules
 
 # ci
+coverage
 .coverage
 
 # test
