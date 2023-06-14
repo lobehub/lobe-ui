@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.23.1](https://github.com/lobehub/lobe-ui/compare/v1.23.0...v1.23.1)
+
+<sup>Released on **2023-06-14**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Refactor dumi docs layout.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Refactor dumi docs layout ([80fa42f](https://github.com/lobehub/lobe-ui/commit/80fa42f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## Version 1.23.0
 
 <sup>Released on **2023-06-12**</sup>
