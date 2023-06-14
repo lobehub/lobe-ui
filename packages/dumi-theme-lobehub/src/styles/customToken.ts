@@ -25,7 +25,7 @@ const generateCustomToken: GetCustomToken<SiteCustomToken> = ({ isDarkMode }) =>
     footerHeight: 300,
     sidebarWidth: 240,
     tocWidth: 176,
-    contentMaxWidth: 1152,
+    contentMaxWidth: 960,
     colorSolid,
     gradientColor1,
     gradientColor2,

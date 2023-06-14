@@ -1,22 +1,18 @@
 import { createStyles } from 'antd-style';
 import { rgba } from 'polished';
 
-export const useStyles = createStyles(({ token, stylish, prefixCls, responsive, cx, css }) => {
+export const useStyles = createStyles(({ token, stylish, responsive, cx, css }) => {
   const fixHeight = 36;
 
   return {
     container: css`
-      position: fixed;
-      z-index: 10;
+      position: sticky;
       top: ${token.headerHeight + 64}px;
-      right: 0;
 
-      overflow: auto;
       overscroll-behavior: contain;
       grid-area: toc;
 
       width: ${token.tocWidth}px;
-      max-height: 80vh;
       margin-inline-end: 24px;
 
       border-radius: 3px;
@@ -24,8 +20,8 @@ export const useStyles = createStyles(({ token, stylish, prefixCls, responsive, 
       -webkit-overflow-scrolling: touch;
 
       ${responsive.mobile} {
-        z-index: 300;
-        top: ${token.headerHeight + 1}px;
+        position: relative;
+        left: 0;
         width: 100%;
         margin-top: 0;
       }
@@ -38,10 +34,6 @@ export const useStyles = createStyles(({ token, stylish, prefixCls, responsive, 
       }
     `,
     mobileCtn: css`
-      position: fixed;
-      z-index: 200;
-      top: ${token.headerHeight}px;
-
       width: 100%;
       height: ${fixHeight}px;
 
@@ -52,22 +44,34 @@ export const useStyles = createStyles(({ token, stylish, prefixCls, responsive, 
     expand: cx(
       stylish.blur,
       css`
-        z-index: 201;
-
         width: 100%;
 
-        background-color: ${rgba(token.colorBgLayout, 0.8)};
+        background-color: ${rgba(token.colorBgLayout, 0.5)};
         border-bottom: 1px solid ${token.colorSplit};
         border-radius: 0;
         box-shadow: ${token.boxShadowSecondary};
 
-        .${prefixCls}-collapse-header {
+        .ant-collapse-content {
+          overflow: auto;
+        }
+
+        .ant-collapse-header {
+          z-index: 10;
           padding: 8px 16px !important;
+
+          &[aria-expanded='true'] {
+            box-shadow: ${token.boxShadowSecondary};
+          }
         }
       `,
     ),
-    anchor: css`
-      ${stylish.blur}
-    `,
+    anchor: cx(
+      stylish.blur,
+      css`
+        overflow-x: hidden;
+        overflow-y: auto;
+        max-height: 60vh !important;
+      `,
+    ),
   };
 });

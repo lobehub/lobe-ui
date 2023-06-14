@@ -15,9 +15,9 @@ const Footer = memo<FooterProps>(({ columns, bottom, theme }) => {
   const { styles } = useStyles(isEmpty);
 
   return (
-    <footer className={styles.container}>
+    <section className={styles.container}>
       <RcFooter bottom={bottom} className={styles.footer} columns={columns} theme={theme} />
-    </footer>
+    </section>
   );
 });
 

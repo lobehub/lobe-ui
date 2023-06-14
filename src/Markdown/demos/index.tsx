@@ -23,20 +23,21 @@ an example | *an example* | **an example**
 
 ---
 
--   Red
--   Green
--   Blue
-    -   Red
-    -   Green
-        -   Blue
+1. Bird
+1. McHale
+1. Parish
+    1. Bird
+    1. McHale
+        1. Parish
 
+---
 
-1.  Bird
-1.  McHale
-1.  Parish
-    1.  Bird
-    1.  McHale
-        1.  Parish
+- Red
+- Green
+- Blue
+    - Red
+    - Green
+        - Blue
 
 ---
 

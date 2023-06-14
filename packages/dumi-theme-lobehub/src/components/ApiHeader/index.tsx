@@ -82,9 +82,11 @@ export const ApiHeader = memo<ApiTitleProps>(
           </div>
         )}
         <Flexbox gap={mobile ? 16 : 24} style={{ marginTop: 16 }}>
-          <div style={{ display: 'flex' }}>
-            <Snippet spotlight>{importStr}</Snippet>
-          </div>
+          {componentName && (
+            <div style={{ display: 'flex' }}>
+              <Snippet spotlight>{importStr}</Snippet>
+            </div>
+          )}
           <Divider dashed style={{ margin: '2px 0' }} />
           <Flexbox distribution={'space-between'} gap={mobile ? 24 : 0} horizontal={!mobile}>
             <Space split={<Divider type={'vertical'} />} wrap>

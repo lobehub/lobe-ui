@@ -1,19 +1,19 @@
-import { ActionIcon } from '@lobehub/ui';
-import { Anchor, Collapse, ConfigProvider } from 'antd';
-import { useResponsive, useTheme } from 'antd-style';
-import { PanelTopClose, PanelTopOpen } from 'lucide-react';
+import { Anchor, AnchorProps } from 'antd';
+import { useTheme } from 'antd-style';
 import { memo, useMemo } from 'react';
-import useControlledState from 'use-merge-value';
 
 import { AnchorItem } from '@/types';
 
 import { useStyles } from './style';
+
+export { default as TocMobile } from './TocMobile';
 
 export interface TocProps {
   /**
    * @title 当前激活的目录项 key 值
    */
   activeKey?: string;
+  getContainer?: AnchorProps['getContainer'];
   /**
    * @title 目录项列表
    */
@@ -24,16 +24,10 @@ export interface TocProps {
    */
   onChange?: (activeKey: string) => void;
 }
-const Toc = memo<TocProps>(({ items, activeKey, onChange }) => {
-  const [activeLink, setActiveLink] = useControlledState<string>('', {
-    value: activeKey,
-    onChange,
-  });
-  const { styles } = useStyles();
-  const { mobile } = useResponsive();
+const Toc = memo<TocProps>(({ items, getContainer }) => {
+  const { styles, cx } = useStyles();
 
   const theme = useTheme();
-  const activeAnchor = items.find((item) => item.id === activeLink);
 
   const linkItems = useMemo(
     () =>
@@ -51,56 +45,14 @@ const Toc = memo<TocProps>(({ items, activeKey, onChange }) => {
   );
 
   return (
-    (items?.length === 0 ? null : mobile ? (
-      <ConfigProvider theme={{ token: { fontSize: 12, sizeStep: 3 } }}>
-        <nav className={styles.mobileCtn}>
-          <Collapse
-            bordered={false}
-            className={styles.expand}
-            expandIcon={({ isActive }) =>
-              isActive ? (
-                <ActionIcon
-                  icon={PanelTopClose}
-                  size={{ fontSize: 16, strokeWidth: 1, blockSize: 24, borderRadius: 3 }}
-                />
-              ) : (
-                <ActionIcon
-                  icon={PanelTopOpen}
-                  size={{ fontSize: 16, strokeWidth: 1, blockSize: 24, borderRadius: 3 }}
-                />
-              )
-            }
-            expandIconPosition={'end'}
-            ghost
-          >
-            <Collapse.Panel
-              forceRender
-              header={!activeAnchor ? 'TOC' : activeAnchor.title}
-              key={'toc'}
-            >
-              <ConfigProvider theme={{ token: { fontSize: 14, sizeStep: 4 } }}>
-                <Anchor
-                  items={linkItems}
-                  onChange={(currentLink) => {
-                    setActiveLink(currentLink.replace('#', ''));
-                  }}
-                  targetOffset={theme.headerHeight + 12}
-                />
-              </ConfigProvider>
-            </Collapse.Panel>
-          </Collapse>
-        </nav>
-      </ConfigProvider>
-    ) : (
-      <nav className={styles.container}>
-        <h4>Table of Contents</h4>
-        <Anchor
-          className={styles.anchor}
-          items={linkItems}
-          targetOffset={theme.headerHeight + 12}
-        />
-      </nav>
-    )) || null
+    <section className={cx(styles.container, styles.anchor)}>
+      <h4>Table of Contents</h4>
+      <Anchor
+        getContainer={getContainer}
+        items={linkItems}
+        targetOffset={theme.headerHeight + 12}
+      />
+    </section>
   );
 });
 

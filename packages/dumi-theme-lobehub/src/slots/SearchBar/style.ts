@@ -45,43 +45,54 @@ export const useStyles = createStyles(({ token, responsive, css, cx }) => {
       top: 100%;
       inset-inline-end: 0;
 
-      display: flex;
-      flex-direction: column;
+      overflow: auto;
+      overscroll-behavior: contain;
+      flex: 1;
 
       width: 540px;
-      max-height: 460px;
-      margin-top: 18px;
+      min-height: 60px;
+      max-height: 400px;
+      margin-top: 8px;
 
       background-color: ${token.colorBgElevated};
-      border-radius: 8px;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 20%);
+      border: 1px solid ${token.colorBorder};
+      border-radius: ${token.borderRadiusLG}px;
+      box-shadow: ${token.boxShadow};
 
-      &::before {
-        content: '';
+      -webkit-overflow-scrolling: touch;
 
-        position: absolute;
-        bottom: 100%;
-        inset-inline-end: 100px;
+      .dumi-default-search-result {
+        > dl {
+          > dt {
+            color: ${token.colorText};
+            background: ${token.colorFillTertiary};
+          }
 
-        display: inline-block;
+          > dd {
+            > a {
+              > h4 {
+                color: ${token.colorTextSecondary};
+              }
 
-        width: 0;
-        height: 0;
+              > p {
+                color: ${token.colorTextDescription};
+              }
 
-        border: 8px solid transparent;
-        border-bottom-color: #fff;
-      }
+              &:hover {
+                background: ${token.colorFillSecondary};
+              }
+            }
 
-      > section {
-        overflow: auto;
-        overscroll-behavior: contain;
-        flex: 1;
+            + dd {
+              border-color: ${token.colorBorderSecondary};
+            }
+          }
+        }
 
-        min-height: 60px;
-
-        border-radius: inherit;
-
-        -webkit-overflow-scrolling: touch;
+        mark {
+          color: #000;
+          background: ${token.yellow9};
+        }
       }
     `,
 

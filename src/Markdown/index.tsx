@@ -1,4 +1,4 @@
-import { Divider, Typography } from 'antd';
+import { Collapse, Divider, Typography } from 'antd';
 import pangu from 'pangu';
 import { memo } from 'react';
 import ReactMarkdown from 'react-markdown';
@@ -21,7 +21,13 @@ export interface MarkdownProps {
 
 const Markdown = memo<MarkdownProps>(({ children, className }: MarkdownProps) => {
   const { styles, cx } = useStyles();
-  const components: any = { pre: CodeBlock, code: Code, hr: Divider, a: Typography.Link };
+  const components: any = {
+    pre: CodeBlock,
+    code: Code,
+    hr: Divider,
+    a: Typography.Link,
+    details: Collapse,
+  };
 
   return (
     <Typography>

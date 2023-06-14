@@ -50,6 +50,8 @@ export const useStyles = createStyles(({ css, responsive, token }, isEmpty: bool
         }
 
         &-column {
+          text-align: left;
+
           h2 {
             position: relative;
 
@@ -110,13 +112,14 @@ export const useStyles = createStyles(({ css, responsive, token }, isEmpty: bool
         }
 
         &-bottom {
+          color: ${token.colorTextDescription};
+
           &-container {
             width: 100%;
-            max-width: 1200px;
+            max-width: ${token.contentMaxWidth}px;
             margin: 0 auto;
             padding: 16px 0;
 
-            font-size: 16px;
             line-height: 32px;
             text-align: center;
           }
@@ -144,8 +147,6 @@ export const useStyles = createStyles(({ css, responsive, token }, isEmpty: bool
 
       ${responsive.mobile} {
         .${prefix} {
-          text-align: center;
-
           &-container {
             padding: 40px 0;
           }
@@ -157,6 +158,7 @@ export const useStyles = createStyles(({ css, responsive, token }, isEmpty: bool
           &-column {
             display: block;
             margin-bottom: 40px;
+            text-align: center;
 
             &:last-child {
               margin-bottom: 0;

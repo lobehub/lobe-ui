@@ -29,6 +29,12 @@ const GlobalStyle = createGlobalStyle`
     -webkit-tap-highlight-color: transparent;
   }
 
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100vh;
+  }
+
 
   * {
 	  box-sizing: border-box;
@@ -40,21 +46,6 @@ const GlobalStyle = createGlobalStyle`
     background: ${({ theme }) => theme.yellow9};
   }
 
-  ::-webkit-scrollbar {
-	  width: 0;
-	  height: 4px;
-	  background-color: transparent;
-
-	  &-thumb {
-		  background-color: transparent;
-		  border-radius: 4px;
-		  transition: background-color 500ms ${({ theme }) => theme.motionEaseOut};
-	  }
-
-	  &-corner {
-		  display: none;
-	  }
-  }
 
   #root {
 	  min-height: 100vh;
@@ -70,14 +61,6 @@ const GlobalStyle = createGlobalStyle`
 
 	  * {
 		  font-family: inherit !important;
-	  }
-  }
-
-  *:hover, *:focus {
-	  ::-webkit-scrollbar {
-		  &-thumb {
-			  background-color: ${({ theme }) => theme.colorFill};
-		  }
 	  }
   }
 `;

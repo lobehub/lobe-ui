@@ -29,6 +29,10 @@ export const useStyles = createStyles(
       `,
       right: css`
         background: ${token.colorBgLayout};
+
+        .draggable-panel-fixed {
+          width: 100% !important;
+        }
       `,
       leva: css`
         --leva-sizes-controlWidth: 66%;

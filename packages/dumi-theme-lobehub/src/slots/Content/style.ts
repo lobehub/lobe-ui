@@ -11,7 +11,6 @@ export const useStyles = createStyles(({ token, responsive, css, stylish }) => (
 
     background-color: ${token.colorBgContainer};
     border-radius: 10px;
-    box-shadow: ${token.boxShadowTertiary};
 
     &:has([data-page-tabs='true']) {
       padding-top: 8px;
@@ -30,6 +29,8 @@ export const useStyles = createStyles(({ token, responsive, css, stylish }) => (
       h4,
       h5,
       h6 {
+        transition: all 400ms ${token.motionEaseOut};
+
         > a[aria-hidden]:first-child {
           float: left;
 
@@ -53,9 +54,25 @@ export const useStyles = createStyles(({ token, responsive, css, stylish }) => (
           }
         }
 
+        &:hover {
+          color: ${token.colorText};
+        }
+
         &:not(:hover) > a[aria-hidden]:first-child > .icon-link {
           visibility: hidden;
         }
+      }
+
+      h2,
+      h3 {
+        &[id^='version'] {
+          color: ${token.colorText};
+        }
+      }
+
+      ol,
+      ul {
+        padding-inline-start: 18px;
       }
     }
   `,

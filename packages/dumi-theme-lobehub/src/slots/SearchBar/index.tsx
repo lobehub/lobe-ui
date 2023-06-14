@@ -23,11 +23,10 @@ const SearchBar = memo(() => {
         onFocus={() => setFocusing(true)}
         spotlight
       />
+
       {keywords.trim() && focusing && (result.length || !loading) && (
         <div className={styles.popover}>
-          <section>
-            <SearchResult data={result} loading={loading} />
-          </section>
+          <SearchResult data={result} loading={loading} />
         </div>
       )}
     </div>

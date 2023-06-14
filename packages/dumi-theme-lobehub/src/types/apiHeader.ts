@@ -8,7 +8,7 @@ export interface ApiHeaderProps {
    * @title 组件名
    * @description ApiHeader 组件的名称
    */
-  componentName: string;
+  componentName?: string;
   /**
    * @title 是否默认导入
    * @description 是否默认导入组件
@@ -29,7 +29,7 @@ export interface ApiHeaderProps {
    * @title 包名
    * @description ApiHeader 组件所在的包名
    */
-  pkg: string;
+  pkg?: string;
   /**
    * @title 源代码链接
    * @description ApiHeader 组件源代码的链接

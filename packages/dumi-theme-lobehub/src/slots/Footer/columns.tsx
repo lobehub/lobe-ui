@@ -32,7 +32,20 @@ export const getColumns = ({ github }: GetColumnParams) => {
   };
   const community: FooterColumn = {
     title: 'Community',
-    items: [],
+    items: [
+      github && {
+        icon: <Icon icon={Bug} size="small" />,
+        title: 'Report Bug',
+        url: `${github}/issues/new/choose`,
+        openExternal: true,
+      },
+      github && {
+        icon: <Icon icon={GitFork} size="small" />,
+        title: 'Request Feature',
+        url: `${github}/issues/new/choose`,
+        openExternal: true,
+      },
+    ].filter(Boolean) as FooterColumnItem[],
   };
 
   const help: FooterColumn = {
@@ -49,18 +62,6 @@ export const getColumns = ({ github }: GetColumnParams) => {
         title: 'Changelog',
         url: '/changelog',
         LinkComponent: Link,
-      },
-      github && {
-        icon: <Icon icon={Bug} size="small" />,
-        title: 'Report Bug',
-        url: `${github}/issues/new/choose`,
-        openExternal: true,
-      },
-      github && {
-        icon: <Icon icon={GitFork} size="small" />,
-        title: 'Request Feature',
-        url: `${github}/issues/new/choose`,
-        openExternal: true,
       },
     ].filter(Boolean) as FooterColumnItem[],
   };

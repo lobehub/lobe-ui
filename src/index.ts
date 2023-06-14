@@ -23,6 +23,7 @@ export {
 } from './Highlighter';
 export { default as Icon, type IconProps, type IconSize } from './Icon';
 export { Input, type InputProps, TextArea, type TextAreaProps } from './Input';
+export { default as Layout, type LayoutProps } from './Layout';
 export { default as List } from './List';
 export { default as Logo, type LogoProps } from './Logo';
 export { default as Markdown, type MarkdownProps } from './Markdown';

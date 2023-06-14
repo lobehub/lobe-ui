@@ -22,26 +22,26 @@ const ApiHeader = memo(() => {
         url: `https://www.npmjs.com/package/${pkg}`,
       },
       {
-        label: '预览产物',
+        label: 'Check package files',
         icon: <Unpkg />,
         children: 'UNPKG',
         url: `https://unpkg.com/browse/${pkg}/`,
       },
       {
-        label: '查阅产物体积',
+        label: 'Check bundle size',
         icon: <BundlephobiaFilled />,
         children: 'BundlePhobia',
         url: `https://bundlephobia.com/package/${pkg}`,
       },
       {
-        label: '查阅安装包体积',
+        label: 'Check package size',
         icon: <PackagePhobia />,
         children: 'PackagePhobia',
         url: `https://packagephobia.com/result?p=${pkg}`,
       },
 
       {
-        label: '分析依赖图',
+        label: 'Dependence graph',
         icon: <Graph />,
         children: 'Anvaka Graph',
         url: `https://npm.anvaka.com/#/view/2d/${pkg}`,

@@ -11,7 +11,33 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
     blur: css`
       backdrop-filter: saturate(180%) blur(10px);
     `,
+    noScrollbar: css`
+      ::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+        background-color: transparent;
+      }
+    `,
+    bottomScrollbar: css`
+      ::-webkit-scrollbar {
+        width: 0;
+        height: 4px;
+        background-color: transparent;
 
+        &-thumb {
+          background-color: ${token.colorFill};
+          border-radius: 4px;
+          transition: background-color 500ms ${token.motionEaseOut};
+        }
+
+        &-corner {
+          display: none;
+          width: 0;
+          height: 0;
+        }
+      }
+    `,
     markdown: css`
       color: ${isDarkMode ? token.colorTextSecondary : token.colorText};
 
@@ -124,8 +150,30 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         }
       }
 
-      ul li {
+      li {
         line-height: 1.8;
+
+        &::marker {
+          color: ${isDarkMode ? token.cyan9A : token.cyan10A};
+        }
+      }
+
+      details {
+        margin-bottom: 1em;
+        padding: 12px 16px;
+
+        background: ${token.colorFillTertiary};
+        border: 1px solid ${token.colorBorderSecondary};
+        border-radius: ${token.borderRadiusLG}px;
+
+        transition: all 400ms ${token.motionEaseOut};
+      }
+
+      details[open] {
+        summary {
+          padding-bottom: 12px;
+          border-bottom: 1px solid ${token.colorBorder};
+        }
       }
     `,
   };

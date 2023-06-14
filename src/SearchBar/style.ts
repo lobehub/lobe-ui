@@ -17,6 +17,8 @@ export const useStyles = createStyles(({ css, token }) => ({
     top: 50%;
     right: 0;
     transform: translateY(-50%);
+
+    background: ${token.colorBgContainer};
   `,
 
   icon: css`

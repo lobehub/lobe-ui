@@ -38,7 +38,6 @@ export const useStyles = createStyles(({ css, cx, token }, type: 'ghost' | 'bloc
 
       pre {
         margin: 0 !important;
-        padding-top: 6px !important;
         line-height: 1;
         background: none !important;
       }

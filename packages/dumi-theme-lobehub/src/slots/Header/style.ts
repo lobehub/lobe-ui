@@ -1,33 +1,29 @@
 import { createStyles } from 'antd-style';
 import { rgba } from 'polished';
 
-export const useStyle = createStyles(({ css, responsive, token, stylish, cx }) => ({
+export const useStyle = createStyles(({ css, responsive, token, cx }) => ({
   header: cx(
-    stylish.blur,
     css`
-      position: fixed;
-      z-index: ${token.zIndexPopupBase - 50};
-      top: 0;
-
       grid-area: head;
       align-self: stretch;
-
       width: 100%;
-
-      background-color: ${rgba(token.colorBgLayout, 0.4)};
-      border-bottom: 1px solid ${token.colorSplit};
     `,
   ),
   content: css`
     height: 64px;
     padding: 0 24px;
+    background-color: ${rgba(token.colorBgLayout, 0.4)};
+    border-bottom: 1px solid ${token.colorSplit};
 
     ${responsive.mobile} {
       padding: 0 12px;
     }
   `,
-  left: css``,
+  left: css`
+    z-index: 10;
+  `,
   right: css`
+    z-index: 10;
     display: flex;
     flex: 1;
     justify-content: space-between;

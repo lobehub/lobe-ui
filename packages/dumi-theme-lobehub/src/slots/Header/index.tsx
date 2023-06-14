@@ -20,7 +20,7 @@ const Header = memo(() => {
   const { styles } = useStyle();
 
   return !hasHeader ? null : (
-    <header className={styles.header}>
+    <section className={styles.header}>
       <Flexbox
         align={'center'}
         className={styles.content}
@@ -65,7 +65,7 @@ const Header = memo(() => {
           </>
         )}
       </Flexbox>
-    </header>
+    </section>
   );
 });
 
