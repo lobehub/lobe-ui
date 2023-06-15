@@ -6,6 +6,9 @@
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "father build",
     "dev": "father dev",
@@ -15,14 +18,27 @@
     "@ant-design/icons": "^5",
     "@floating-ui/react": "^0",
     "@lobehub/ui": "latest",
+    "ahooks": "^3",
+    "antd": "^5",
+    "antd-style": "^3",
     "chalk": "^4",
-    "fast-deep-equal": "^3"
+    "fast-deep-equal": "^3",
+    "leva": "^0",
+    "lodash-es": "^4",
+    "lucide-react": "latest",
+    "polished": "^4",
+    "react-layout-kit": "^1",
+    "styled-components": "beta",
+    "use-merge-value": "^1",
+    "zustand": "^4"
   },
   "devDependencies": {
     "father-plugin-dumi-theme": "latest",
     "history": "^5"
   },
   "peerDependencies": {
+    "antd": ">=5",
+    "antd-style": ">=3",
     "dumi": ">=2",
     "react": ">=18",
     "react-dom": ">=18"

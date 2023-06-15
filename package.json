@@ -82,6 +82,7 @@
     "chroma-js": "^2",
     "copy-to-clipboard": "^3",
     "dayjs": "^1",
+    "dumi": "^2",
     "fast-deep-equal": "^3",
     "immer": "^10",
     "leva": "^0",
@@ -98,6 +99,7 @@
     "react-rnd": "^10",
     "remark-gfm": "^3",
     "shiki-es": "^0",
+    "styled-components": "beta",
     "ts-md5": "^1",
     "use-merge-value": "^1",
     "zustand": "^4",
@@ -116,7 +118,6 @@
     "commitlint": "^17",
     "concurrently": "^8",
     "cross-env": "^7",
-    "dumi": "^2",
     "dumi-assets-types": "^1",
     "dumi-theme-lobehub": "workspace:latest",
     "eslint": "^8",
@@ -130,7 +131,6 @@
     "remark": "^14",
     "remark-cli": "^11",
     "semantic-release": "^21",
-    "styled-components": "beta",
     "stylelint": "^15",
     "typescript": "^5",
     "vitest": "latest"
@@ -138,6 +138,7 @@
   "peerDependencies": {
     "antd": ">=5",
     "antd-style": ">=3",
+    "dumi": ">=2",
     "react": ">=18",
     "react-dom": ">=18"
   },
