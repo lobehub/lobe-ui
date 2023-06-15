@@ -1,6 +1,5 @@
 import { type HTMLAttributes } from 'react';
 
-export * from './apiHeader';
 export * from './config';
 export * from './hero';
 

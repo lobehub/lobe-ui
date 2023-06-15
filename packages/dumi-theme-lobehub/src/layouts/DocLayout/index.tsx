@@ -19,7 +19,6 @@ import {
   useSiteStore,
   useThemeStore,
 } from '@/store';
-import customStylish from '@/styles/customStylish';
 import customToken from '@/styles/customToken';
 
 const DocLayout = memo(() => {
@@ -116,7 +115,6 @@ export default memo(() => {
       <StoreUpdater />
       <ThemeProvider
         cache={extractStaticStyle.cache}
-        customStylish={customStylish}
         customToken={customToken}
         themeMode={themeMode}
       >

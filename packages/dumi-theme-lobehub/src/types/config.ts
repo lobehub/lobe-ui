@@ -1,8 +1,31 @@
 import { FooterColumn } from 'rc-footer/es/column';
 
-import { SiteCustomToken } from '@/styles/customToken';
+import { SiteCustomToken } from '../styles/customToken';
+import { IHero } from './hero';
 
-import { ApiHeaderConfig, IHero } from '../types';
+export interface ApiHeaderConfig {
+  /**
+   * @title 文档链接
+   * @description 点击 ApiHeader 组件的文档链接跳转的地址
+   */
+  docUrl?: string | false;
+  /**
+   * @title 匹配路由
+   * @description ApiHeader 组件的匹配路由
+   * @default ["/api", "/components"]
+   */
+  match?: string[];
+  /**
+   * @title 组件库包名
+   * @description 可以从 package.json 中引入名称
+   */
+  pkg?: string;
+  /**
+   * @title 源代码链接
+   * @description 点击 ApiHeader 组件的源代码链接跳转的地址
+   */
+  sourceUrl?: string | false;
+}
 
 /**
  * @title 页面底部 Footer 组件的配置

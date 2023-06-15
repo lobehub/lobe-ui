@@ -5,9 +5,54 @@ import { Edit3, Github } from 'lucide-react';
 import { type ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import { ApiHeaderProps } from '@/index';
-
 import { useStyles } from './style';
+
+/**
+ * @title ApiHeaderProps
+ * @category Props
+ * @description ApiHeader 组件的 props 类型定义
+ */
+export interface ApiHeaderProps {
+  /**
+   * @title 组件名
+   * @description ApiHeader 组件的名称
+   */
+  componentName?: string;
+  /**
+   * @title 是否默认导入
+   * @description 是否默认导入组件
+   * @default false
+   */
+  defaultImport?: boolean;
+  /**
+   * @title 描述
+   * @description ApiHeader 组件的描述信息
+   */
+  description?: string;
+  /**
+   * @title 文档链接
+   * @description ApiHeader 组件文档的链接
+   */
+  docUrl?: string;
+  /**
+   * @title 包名
+   * @description ApiHeader 组件所在的包名
+   */
+  pkg?: string;
+  /**
+   * @title 源代码链接
+   * @description ApiHeader 组件源代码的链接
+   */
+  sourceUrl?: string;
+  /**
+   * @title 标题
+   * @description ApiHeader 组件的标题
+   */
+  title: string;
+}
+/**
+ * @title ApiHeader 配置项
+ */
 
 export interface ApiTitleProps extends ApiHeaderProps {
   /**

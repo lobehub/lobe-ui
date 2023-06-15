@@ -7,9 +7,12 @@ import { shallow } from 'zustand/shallow';
 
 import { activePathSel, useSiteStore } from '@/store';
 
-const useStyles = createStyles(({ css, stylish, responsive }) => {
+const useStyles = createStyles(({ css, stylish, token, responsive }) => {
   return {
     tabs: css`
+      .ant-tabs-tab-active a {
+        color: ${token.colorText} !important;
+      }
       ${responsive.mobile} {
         display: none;
       }

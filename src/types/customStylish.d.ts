@@ -4,4 +4,5 @@ export interface LobeCustomStylish {
   gradientAnimation: string;
   markdown: string;
   noScrollbar: string;
+  resetLinkColor: string;
 }

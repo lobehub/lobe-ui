@@ -1,6 +1,6 @@
-import { ApiHeaderConfig, ApiHeaderProps } from '@/types';
-
-import { SiteStore } from '../useSiteStore';
+import type { ApiHeaderProps } from '../../components/ApiHeader';
+import type { ApiHeaderConfig } from '../../types/config';
+import type { SiteStore } from '../useSiteStore';
 import { githubSel } from './siteBasicInfo';
 
 export * from './hero';

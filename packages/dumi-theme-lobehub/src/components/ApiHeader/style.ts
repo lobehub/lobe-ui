@@ -15,7 +15,7 @@ export const useStyles = createStyles(({ css, token, responsive: r, stylish }) =
     line-height: ${token.lineHeightLG}px;
   `,
   text: css`
-    ${stylish.clickableText}
+    ${stylish.resetLinkColor}
   `,
   meta: css``,
 }));

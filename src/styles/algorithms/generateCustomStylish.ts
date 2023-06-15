@@ -62,6 +62,14 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         }
       }
     `,
+    resetLinkColor: css`
+      cursor: pointer;
+      color: ${token.colorTextSecondary};
+
+      &:hover {
+        color: ${token.colorText};
+      }
+    `,
     markdown: css`
       color: ${isDarkMode ? token.colorTextSecondary : token.colorText};
 
