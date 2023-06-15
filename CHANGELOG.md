@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.25.0](https://github.com/lobehub/lobe-ui/compare/v1.24.0...v1.25.0)
+
+<sup>Released on **2023-06-15**</sup>
+
+#### ✨ Features
+
+- **misc**: Better docs theme.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Better docs theme ([f701fde](https://github.com/lobehub/lobe-ui/commit/f701fde))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.24.0](https://github.com/lobehub/lobe-ui/compare/v1.23.1...v1.24.0)
 
 <sup>Released on **2023-06-15**</sup>
