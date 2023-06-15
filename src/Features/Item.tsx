@@ -78,16 +78,14 @@ const Item = memo<FeatureItemProps>(
         {...props}
       >
         <div className={styles.cell}>
-          {image && (
-            <Center className={styles.imgContainer} style={imageStyle}>
-              <Image className={styles.img} image={image} title={title} />
-            </Center>
-          )}
-          {FeatureIcon && (
-            <Center className={styles.imgContainer} style={imageStyle}>
-              <Icon className={styles.img} icon={FeatureIcon} />
-            </Center>
-          )}
+          {image ||
+            (FeatureIcon && (
+              <Center className={styles.imgContainer} style={imageStyle}>
+                {FeatureIcon && <Icon className={styles.img} icon={FeatureIcon} />}
+                {image && <Image className={styles.img} image={image} title={title} />}
+              </Center>
+            ))}
+
           {title && (
             <Flexbox align={'center'} as={'h3'} className={styles.title} gap={8} horizontal>
               {title}

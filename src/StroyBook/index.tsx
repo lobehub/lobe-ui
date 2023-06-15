@@ -23,7 +23,7 @@ export interface StroyBookProps extends DivProps {
 export const StroyBook = memo<StroyBookProps>(
   ({ levaStore, noPadding, className, children, ...props }) => {
     const { mobile } = useResponsive();
-    const { styles, cx } = useStyles({ noPadding: Boolean(noPadding), mobile: Boolean(mobile) });
+    const { styles, cx } = useStyles(Boolean(noPadding));
 
     return (
       <div className={cx(styles.editor, className)} {...props}>

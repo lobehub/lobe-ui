@@ -27,6 +27,7 @@ const themeConfig = {
       text: 'Github',
       icon: 'Github',
       link: homepage,
+      openExternal: true,
     },
     {
       text: 'Get Started',

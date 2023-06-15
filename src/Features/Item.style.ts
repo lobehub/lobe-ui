@@ -8,10 +8,8 @@ export const useStyles = createStyles(
     const titleCls = `${prefix}-title`;
     const imgCls = `${prefix}-img`;
 
-    // 通过简单估计，缩放值乘以 rowNum 就可以得到合适的尺寸
     const scaleUnit = 20;
 
-    // 尺寸工具
     const genSize = (size: number) => css`
       width: ${size}px;
       height: ${size}px;
@@ -116,7 +114,7 @@ export const useStyles = createStyles(
         withTransition,
         css`
           ${genSize(20)};
-          color: ${token.colorWhite};
+          color: ${token.colorText};
         `,
       ),
 
