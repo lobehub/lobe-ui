@@ -1,12 +1,30 @@
-import { ArrowRightOutlined } from '@ant-design/icons';
-import { Tag } from 'antd';
+import { Icon } from '@lobehub/ui';
 import { Link, history } from 'dumi';
-import { memo } from 'react';
+import { ImageContainerType } from 'dumi-theme-lobehub/src';
+import * as LucideIcon from 'lucide-react';
+import { CSSProperties, memo } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
-import { IFeature } from '@/types';
+import type { DivProps } from '@/types';
 
 import { useStyles } from './Item.style';
+
+export interface FeatureItem {
+  column?: number;
+  description?: string;
+  hero?: boolean;
+  icon?: string;
+  image?: string;
+  imageStyle?: CSSProperties;
+  imageType?: ImageContainerType;
+  link?: string;
+  openExternal?: boolean;
+  row?: number;
+  title: string;
+}
+
+// @ts-ignore
+export interface FeatureItemProps extends FeatureItem, DivProps {}
 
 const Image = memo<{ className?: string; image: string; title: string }>(
   ({ image, className, title }) => {
@@ -18,14 +36,30 @@ const Image = memo<{ className?: string; image: string; title: string }>(
   },
 );
 
-const FeatureItem = memo<IFeature>(
-  ({ imageType, row, column, hero, description, image, title, link, imageStyle, openExternal }) => {
+const Item = memo<FeatureItemProps>(
+  ({
+    style,
+    className,
+    row,
+    column,
+    description,
+    image,
+    title,
+    link,
+    icon,
+    imageStyle,
+    openExternal,
+    ...props
+  }) => {
     const rowNum = row || 7;
-    const { styles, theme } = useStyles({ rowNum, hasLink: Boolean(link) });
+    const { styles, cx } = useStyles({ rowNum, hasLink: Boolean(link) });
+
+    // @ts-ignore
+    const FeatureIcon = icon && LucideIcon[icon];
 
     return (
       <div
-        className={styles.container}
+        className={cx(styles.container, className)}
         onClick={() => {
           if (!link) return;
 
@@ -39,25 +73,24 @@ const FeatureItem = memo<IFeature>(
           gridRow: `span ${rowNum}`,
           gridColumn: `span ${column || 1}`,
           cursor: link ? 'pointer' : 'default',
+          ...style,
         }}
+        {...props}
       >
         <div className={styles.cell}>
           {image && (
-            <Center className={styles.imgContainer} image-style={imageType} style={imageStyle}>
+            <Center className={styles.imgContainer} style={imageStyle}>
               <Image className={styles.img} image={image} title={title} />
+            </Center>
+          )}
+          {FeatureIcon && (
+            <Center className={styles.imgContainer} style={imageStyle}>
+              <Icon className={styles.img} icon={FeatureIcon} />
             </Center>
           )}
           {title && (
             <Flexbox align={'center'} as={'h3'} className={styles.title} gap={8} horizontal>
               {title}
-              {imageType === 'soon' ? (
-                <Tag
-                  color={theme.isDarkMode ? 'pink-inverse' : 'cyan-inverse'}
-                  // style={{ border: 'none' }}
-                >
-                  SOON
-                </Tag>
-              ) : null}
             </Flexbox>
           )}
           {description && (
@@ -65,16 +98,13 @@ const FeatureItem = memo<IFeature>(
           )}
           {link && (
             <div className={styles.link}>
-              <Link to={link}>
-                立即了解 <ArrowRightOutlined />
-              </Link>
+              <Link to={link}>Read More</Link>
             </div>
           )}
         </div>
-        {hero && <div className={styles.blur} />}
       </div>
     );
   },
 );
 
-export default FeatureItem;
+export default Item;

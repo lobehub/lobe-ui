@@ -1,18 +1,6 @@
-import { createStyles, keyframes } from 'antd-style';
+import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token, isDarkMode }) => {
-  const gradient = keyframes`
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  `;
-
+export const useStyles = createStyles(({ css, token, isDarkMode, stylish }) => {
   return {
     button: css`
       position: relative;
@@ -21,6 +9,7 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
       border: none;
 
       &::before {
+        ${stylish.gradientAnimation}
         content: '';
 
         position: absolute;
@@ -31,19 +20,7 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
 
         padding: 1px;
 
-        background-image: linear-gradient(
-          -45deg,
-          ${token.gold},
-          ${token.magenta},
-          ${token.geekblue},
-          ${token.cyan}
-        );
-        background-size: 400% 400%;
-        border-radius: inherit;
-
         mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-
-        animation: 5s ${gradient} 5s ease infinite;
 
         mask-composite: xor;
       }
@@ -72,6 +49,7 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
       border-radius: inherit;
     `,
     glow: css`
+      ${stylish.gradientAnimation}
       position: absolute;
       z-index: -1;
       top: 0;
@@ -81,18 +59,8 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
       height: 100%;
 
       opacity: ${isDarkMode ? 0.5 : 0.3};
-      background-image: linear-gradient(
-        -45deg,
-        ${token.gold},
-        ${token.magenta},
-        ${token.geekblue},
-        ${token.cyan}
-      );
-      background-size: 400% 400%;
       filter: blur(${isDarkMode ? 1.5 : 1}em);
       border-radius: inherit;
-
-      animation: 5s ${gradient} 5s ease infinite;
     `,
   };
 });

@@ -94,7 +94,7 @@ const DocLayout = memo(() => {
       asideWidth={theme.sidebarWidth}
       footer={<Footer />}
       header={<Header />}
-      headerHeight={mobile ? theme.headerHeight + 36 : theme.headerHeight}
+      headerHeight={mobile && !isHomePage ? theme.headerHeight + 36 : theme.headerHeight}
       helmet={<HelmetBlock />}
       sidebar={hideSidebar ? null : <Sidebar />}
       toc={hideToc ? null : <Toc />}

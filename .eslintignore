@@ -18,6 +18,7 @@ __test__
 .umi-production
 .umi-test
 .dumi/tmp*
+!.dumirc.ts
 
 # production
 dist

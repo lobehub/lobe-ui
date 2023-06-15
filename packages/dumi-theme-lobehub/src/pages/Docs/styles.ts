@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }) => ({
+export const useStyles = createStyles(({ css, token, stylish }) => ({
   content: css`
     width: 100%;
     max-width: ${token.contentMaxWidth}px;
@@ -43,5 +43,24 @@ export const useStyles = createStyles(({ css, token }) => ({
         }
       }
     }
+  `,
+  background: css`
+    z-index: 0;
+
+    ${stylish.gradientAnimation};
+    filter: blur(100px);
+
+    pointer-events: none;
+
+    width: 60vw;
+    height: 200px;
+
+    right: -20vw;
+    top: -100px;
+    position: absolute;
+
+    opacity: 0.2;
+
+    transform: rotate(4deg);
   `,
 }));

@@ -9,7 +9,7 @@ import useControlledState from 'use-merge-value';
 
 import { DivProps } from '@/types';
 
-import { useStyle } from './style';
+import { useStyles } from './style';
 import { revesePlacement } from './utils';
 
 const DEFAULT_HEIGHT = 180;
@@ -134,7 +134,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     const isHovering = useHover(ref);
     const isVertical = placement === 'top' || placement === 'bottom';
 
-    const { styles, cx } = useStyle('draggable-panel');
+    const { styles, cx } = useStyles('draggable-panel');
 
     const [isExpand, setIsExpand] = useControlledState(defaultExpand, {
       value: expand,

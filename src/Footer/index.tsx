@@ -1,7 +1,7 @@
 import RcFooter, { FooterProps as RcProps } from 'rc-footer';
 import { memo } from 'react';
 
-import { useStyle } from './style';
+import { useStyles } from './style';
 
 export interface FooterProps {
   bottom?: RcProps['bottom'];
@@ -13,7 +13,7 @@ export interface FooterProps {
 const Footer = memo<FooterProps>(({ columns, bottom, theme, contentMaxWidth = 960 }) => {
   const isEmpty = !columns || columns?.length === 0;
 
-  const { styles } = useStyle({ isEmpty, contentMaxWidth });
+  const { styles } = useStyles({ isEmpty, contentMaxWidth });
 
   return (
     <section className={styles.container}>

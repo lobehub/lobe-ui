@@ -1,6 +1,6 @@
-import { Footer } from '@lobehub/ui';
+import { Footer, FooterProps } from '@lobehub/ui';
 
-const data = [
+const columns: FooterProps['columns'] = [
   {
     title: 'Resources',
     items: [
@@ -44,5 +44,5 @@ const data = [
 ];
 
 export default () => {
-  return <Footer bottom="Copyright © 2022" columns={data} />;
+  return <Footer bottom="Copyright © 2022" columns={columns} />;
 };

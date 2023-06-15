@@ -1,8 +1,5 @@
 ---
 hero:
-  title: Lobe UI
-  description: Lobe UI is an open-source UI component library for building chatbot web apps
-  actions:
-    - text: Get Started
-      link: /components
+  title: LobeHub <b>UI Kit</b>
+  description: Lobe UI is an open-source UI component library <br/>for building chatbot web apps
 ---

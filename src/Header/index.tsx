@@ -4,7 +4,7 @@ import { Flexbox } from 'react-layout-kit';
 
 import { DivProps } from '@/types';
 
-import { useStyle } from './style';
+import { useStyles } from './style';
 
 export interface HeaderProps extends DivProps {
   actions?: ReactNode;
@@ -14,7 +14,7 @@ export interface HeaderProps extends DivProps {
 
 const Header = memo<HeaderProps>(({ nav, logo, actions }) => {
   const { mobile } = useResponsive();
-  const { styles } = useStyle();
+  const { styles } = useStyles();
 
   return (
     <section className={styles.header}>
@@ -41,12 +41,7 @@ const Header = memo<HeaderProps>(({ nav, logo, actions }) => {
             <Flexbox style={{ marginLeft: 48, alignSelf: 'end' }}>{nav}</Flexbox>
             <section className={styles.right}>
               <div />
-              <Flexbox
-                align={'center'}
-                className="dumi-default-header-right-aside"
-                gap={8}
-                horizontal
-              >
+              <Flexbox align={'center'} gap={8} horizontal>
                 {actions}
               </Flexbox>
             </section>

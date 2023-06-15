@@ -1,6 +1,6 @@
+import { Hero as H } from '@lobehub/ui';
 import { memo } from 'react';
 
-import HeroComp from '@/components/Hero';
 import { heroActionsSel, heroDescSel, heroTitleSel, useSiteStore } from '@/store';
 
 const Hero = memo(() => {
@@ -8,7 +8,7 @@ const Hero = memo(() => {
   const description = useSiteStore(heroDescSel);
   const actions = useSiteStore(heroActionsSel);
 
-  return <HeroComp actions={actions} description={description} title={title!} />;
+  return <H actions={actions} description={description} title={title!} />;
 });
 
 export default Hero;

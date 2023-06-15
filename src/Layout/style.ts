@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, stylish }, headerHeight: number) => {
+export const useStyles = createStyles(({ css, stylish, responsive }, headerHeight: number) => {
   const baseGlass = css`
     pointer-events: none;
     content: '';
@@ -8,7 +8,7 @@ export const useStyles = createStyles(({ css, stylish }, headerHeight: number) =
 
     position: absolute;
     z-index: -1;
-    inset: -1px 0 -50%;
+    inset: -1px 0 ${responsive.mobile ? '-25%' : '-50%'};
   `;
   return {
     app: css`

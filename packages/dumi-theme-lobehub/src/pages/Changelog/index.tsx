@@ -27,22 +27,25 @@ const Changelog = memo(() => {
   }, []);
 
   return (
-    <Center
-      className={styles.content}
-      style={{
-        padding: mobile ? 0 : 24,
-      }}
-    >
-      <div style={{ padding: mobile ? 16 : 0, width: '100%' }}>
-        <ApiHeader
-          description={fm.description}
-          docUrl={`${repoBase}/blob/master/CHANGELOG.md`}
-          sourceUrl={`${repoBase}/blob/master/CHANGELOG.md`}
-          title={fm.title}
-        />
-      </div>
-      <Content className={styles.changelog}>{outlet}</Content>
-    </Center>
+    <>
+      <div className={styles.background} />
+      <Center
+        className={styles.content}
+        style={{
+          padding: mobile ? 0 : 24,
+        }}
+      >
+        <div style={{ padding: mobile ? 16 : 0, width: '100%' }}>
+          <ApiHeader
+            description={fm.description}
+            docUrl={`${repoBase}/blob/master/CHANGELOG.md`}
+            sourceUrl={`${repoBase}/blob/master/CHANGELOG.md`}
+            title={fm.title}
+          />
+        </div>
+        <Content className={styles.changelog}>{outlet}</Content>
+      </Center>
+    </>
   );
 });
 

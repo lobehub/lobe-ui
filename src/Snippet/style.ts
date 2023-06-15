@@ -6,45 +6,57 @@ export const useStyles = createStyles(({ css, cx, token }, type: 'ghost' | 'bloc
     border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
   `;
 
-  return cx(
-    typeStylish,
-    css`
-      position: relative;
+  return {
+    container: cx(
+      typeStylish,
+      css`
+        position: relative;
 
-      display: flex;
-      gap: 8px;
-      align-items: center;
+        overflow: hidden;
+        display: flex;
+        gap: 8px;
+        align-items: center;
 
-      max-width: 100%;
-      height: 36px;
-      padding: 0 8px 0 12px;
+        max-width: 100%;
+        padding: 0 8px 0 12px;
 
-      border-radius: ${token.borderRadius}px;
+        border-radius: ${token.borderRadius}px;
 
-      transition: background-color 100ms ${token.motionEaseOut};
+        transition: background-color 100ms ${token.motionEaseOut};
 
-      &:hover {
-        background-color: ${token.colorFillTertiary};
-      }
+        &:hover {
+          background-color: ${token.colorFillTertiary};
+        }
 
-      .ant-highlighter-shiki {
-        overflow: auto;
-        flex: 1;
-      }
+        .ant-highlighter-shiki {
+          position: relative;
+          overflow: hidden;
+          flex: 1;
+        }
 
-      .prism-code {
-        background: none !important;
-      }
+        .prism-code {
+          background: none !important;
+        }
 
-      pre {
-        margin: 0 !important;
-        line-height: 1;
-        background: none !important;
-      }
+        pre {
+          overflow-x: auto !important;
+          overflow-y: hidden !important;
+          display: flex;
+          align-items: center;
 
-      code[class*='language-'] {
-        background: none !important;
-      }
-    `,
-  );
+          width: 100%;
+          height: 36px !important;
+          margin: 0 !important;
+
+          line-height: 1;
+
+          background: none !important;
+        }
+
+        code[class*='language-'] {
+          background: none !important;
+        }
+      `,
+    ),
+  };
 });

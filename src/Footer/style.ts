@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 
-export const useStyle = createStyles(
+export const useStyles = createStyles(
   (
     { css, responsive, token },
     { isEmpty, contentMaxWidth }: { contentMaxWidth: number; isEmpty: boolean },

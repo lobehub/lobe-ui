@@ -49,7 +49,7 @@ const Snippet = memo<SnippetProps>(
     const { styles } = useStyles(type);
 
     return (
-      <div className={styles} {...props}>
+      <div className={styles.container} {...props}>
         {spotlight && <Spotlight />}
         <SyntaxHighlighter language={language}>
           {[symbol, children].filter(Boolean).join(' ')}

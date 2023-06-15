@@ -72,7 +72,7 @@ export const ApiHeader = memo<ApiTitleProps>(
       : `import { ${componentName} } from '${pkg}';`;
 
     return (
-      <Flexbox>
+      <Flexbox id={'api-header'}>
         <Typography.Title className={styles.title}>{title}</Typography.Title>
         {description && (
           <div>

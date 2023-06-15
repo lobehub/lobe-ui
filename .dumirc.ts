@@ -22,6 +22,38 @@ const themeConfig = {
     sourceUrl: `{github}/tree/master/src/{atomId}/index.tsx`,
     docUrl: `{github}/tree/master/src/{atomId}/index.md`,
   },
+  actions: [
+    {
+      text: 'Github',
+      icon: 'Github',
+      link: homepage,
+    },
+    {
+      text: 'Get Started',
+      link: '/components/action-icon',
+      type: 'primary',
+    },
+  ],
+  features: [
+    {
+      icon: 'Palette',
+      title: 'Themeable',
+      description:
+        'Provides a simple way to customize default themes, you can change the colors, fonts, breakpoints and everything you need.',
+    },
+    {
+      icon: 'Zap',
+      title: 'Fast',
+      description:
+        'voids unnecessary styles props at runtime, making it more performant than other UI libraries.',
+    },
+    {
+      icon: 'MoonStar',
+      title: 'Light & Dark UI',
+      description:
+        'Automatic dark mode recognition, NextUI automatically changes the theme when detects HTML theme prop changes.',
+    },
+  ],
 };
 
 export default defineConfig({

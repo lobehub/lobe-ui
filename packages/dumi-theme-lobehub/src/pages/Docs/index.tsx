@@ -26,14 +26,17 @@ const Docs = memo(() => {
   }, []);
 
   return (
-    <Center className={styles.content} style={{ padding: mobile ? 0 : 24 }}>
-      {isApiPage ? (
-        <div style={{ padding: mobile ? 16 : 0, width: '100%' }}>
-          <ApiHeader />
-        </div>
-      ) : null}
-      <Content>{outlet}</Content>
-    </Center>
+    <>
+      <div className={styles.background} />
+      <Center className={styles.content} style={{ padding: mobile ? 0 : 24, marginBottom: 48 }}>
+        {isApiPage ? (
+          <div style={{ padding: mobile ? 16 : 0, width: '100%' }}>
+            <ApiHeader />
+          </div>
+        ) : null}
+        <Content>{outlet}</Content>
+      </Center>
+    </>
   );
 });
 

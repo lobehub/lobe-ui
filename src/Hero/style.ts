@@ -1,72 +1,36 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, responsive, token, stylish, isDarkMode }) => ({
+export const useStyles = createStyles(({ css, responsive, token, stylish }) => ({
   container: css`
     position: relative;
     box-sizing: border-box;
     text-align: center;
-
-    + * {
-      position: relative;
-    }
-
-    > p {
-      margin: 32px;
-      font-size: 20px;
-      line-height: 1.6;
-      color: ${token.colorTextSecondary};
-
-      ${responsive({
-        mobile: { fontSize: 16 },
-      })}
-    }
   `,
 
-  titleContainer: css`
-    position: relative;
-  `,
   title: css`
     z-index: 10;
     margin: 0;
-    font-size: 68px;
-    color: transparent;
+    font-size: 100px;
 
     ${responsive({
-      mobile: { fontSize: 40 },
+      mobile: { fontSize: 72, flexDirection: 'column', display: 'flex', lineHeight: 1.2 },
     })}
 
     b {
+      ${stylish.gradientAnimation}
       position: relative;
       z-index: 5;
-      ${stylish.heroGradient};
-      ${stylish.heroGradientFlow}
       background-clip: text;
 
       -webkit-text-fill-color: transparent;
     }
   `,
-  titleShadow: css`
-    position: absolute;
-    z-index: 0;
-    top: 0;
-    left: 0;
-
-    font-size: 68px;
-    font-weight: bold;
-    color: ${isDarkMode ? token.colorWhite : token.colorTextBase};
-
-    ${responsive({
-      mobile: { fontSize: 40 },
-    })}
-
-    b {
-      color: transparent;
-    }
-  `,
 
   desc: css`
+    margin-top: 0;
     font-size: ${token.fontSizeHeading3}px;
     color: ${token.colorTextSecondary};
+    text-align: center;
 
     ${responsive.mobile} {
       margin: 24px 16px;
@@ -77,14 +41,21 @@ export const useStyles = createStyles(({ css, responsive, token, stylish, isDark
   actions: css`
     display: flex;
     justify-content: center;
-    margin-top: 48px;
+    margin-top: 24px;
+
+    button {
+      padding-inline: 32px !important;
+      font-weight: 500;
+    }
 
     ${responsive({
       mobile: { marginTop: 24 },
     })}
   `,
   canvas: css`
-    ${stylish.heroBlurBall}
+    ${stylish.gradientAnimation};
+    filter: blur(100px);
+
     pointer-events: none;
 
     position: absolute;

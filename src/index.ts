@@ -15,9 +15,11 @@ export {
   type EditableMessageListProps,
 } from './EditableMessageList';
 export { default as EditableText, type EditableTextProps } from './EditableText';
+export { type FeatureItem, default as Features, type FeaturesProps } from './Features';
 export { default as Footer, type FooterProps } from './Footer';
 export { default as GradientButton, type GradientButtonProps } from './GradientButton';
 export { default as Header, type HeaderProps } from './Header';
+export { default as Hero, type HeroAction, type HeroProps } from './Hero';
 export {
   default as Highlighter,
   type HighlighterProps,

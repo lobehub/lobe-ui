@@ -1,7 +1,7 @@
 import { createStyles } from 'antd-style';
 import { rgba } from 'polished';
 
-export const useStyle = createStyles(({ css, responsive, token, cx }) => ({
+export const useStyles = createStyles(({ css, responsive, token, cx }) => ({
   header: cx(
     css`
       grid-area: head;

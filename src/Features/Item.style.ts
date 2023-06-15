@@ -1,11 +1,7 @@
 import { createStyles } from 'antd-style';
-import { lighten, rgba } from 'polished';
 
 export const useStyles = createStyles(
-  (
-    { token, prefixCls, responsive, css, stylish, isDarkMode, cx },
-    { rowNum, hasLink }: { hasLink?: boolean; rowNum: number },
-  ) => {
+  ({ token, prefixCls, css, cx }, { rowNum, hasLink }: { hasLink?: boolean; rowNum: number }) => {
     const prefix = `${prefixCls}-features`;
     const coverCls = `${prefix}-cover`;
     const descCls = `${prefix}-description`;
@@ -38,26 +34,22 @@ export const useStyles = createStyles(
 
         padding: 24px;
 
-        background: linear-gradient(
-          135deg,
-          ${token.colorFillContent},
-          ${token.colorFillQuaternary}
-        );
-        border-radius: 24px;
+        background: ${token.colorBgContainer};
+        border-radius: ${token.borderRadiusLG}px;
+
+        p {
+          font-size: 16px;
+          line-height: 1.2;
+          text-align: justify;
+          word-wrap: break-word;
+        }
 
         &:hover {
-          scale: 1.03;
-          background: linear-gradient(
-            135deg,
-            ${lighten(0.5, token.colorFillContent)},
-            ${lighten(0.5, token.colorFillQuaternary)}
-          );
-          box-shadow: inset 0 0 0 1px ${token.colorBorder}, ${token.boxShadowSecondary};
-
           .${coverCls} {
             width: 100%;
             height: ${scaleUnit * rowNum}px;
             padding: 0;
+            background: ${token.colorFillContent};
           }
 
           .${imgCls} {
@@ -104,21 +96,6 @@ export const useStyles = createStyles(
             padding-left: 12px;
 
             color: ${token.colorTextDescription};
-
-            &::before {
-              content: '';
-
-              position: absolute;
-              left: 0;
-
-              display: block;
-
-              width: 4px;
-              height: 100%;
-
-              background: ${isDarkMode ? token.colorPrimary : token.colorPrimaryBgHover};
-              border-radius: 2px;
-            }
           }
         `,
       ),
@@ -130,26 +107,7 @@ export const useStyles = createStyles(
           ${genSize(24)};
           padding: 4px;
           opacity: 0.8;
-          background: ${token.colorFillContent};
-          border-radius: 8px;
-
-          &[image-style='primary'] {
-            background: linear-gradient(135deg, ${token.gradientColor1}, ${token.gradientColor2});
-          }
-
-          &[image-style='light'] {
-            background: ${token.colorBgContainer};
-          }
-
-          &[image-style='soon'] {
-            opacity: 0.5;
-            background: linear-gradient(
-              135deg,
-              ${rgba(token.gradientColor2, 0.3)},
-              ${rgba(token.gradientColor2, 0.3)} 50%,
-              ${rgba(token.gradientColor1, 0.3)}
-            );
-          }
+          border-radius: ${token.borderRadius}px;
         `,
       ),
 
@@ -165,33 +123,6 @@ export const useStyles = createStyles(
       link: css`
         ${withTransition};
         margin-top: 24px;
-
-        a {
-          ${stylish.resetLinkColor};
-          color: ${token.colorTextDescription};
-
-          &:hover {
-            color: ${token.colorPrimaryHover};
-          }
-        }
-      `,
-
-      blur: css`
-        ${stylish.heroBlurBall};
-        pointer-events: none;
-
-        position: absolute;
-        top: 0;
-        left: 0;
-        scale: 2;
-
-        width: 100%;
-        height: 100%;
-
-        opacity: ${isDarkMode ? 0.05 : 0.08};
-        ${responsive.mobile} {
-          display: none;
-        }
       `,
     };
   },

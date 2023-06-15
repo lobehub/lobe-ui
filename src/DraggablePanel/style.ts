@@ -4,7 +4,7 @@ const offset = 16;
 const toggleLength = 40;
 const toggleShort = 16;
 
-export const useStyle = createStyles(({ token }, prefix: string) => {
+export const useStyles = createStyles(({ token }, prefix: string) => {
   const commonHandle = css`
     position: relative;
 

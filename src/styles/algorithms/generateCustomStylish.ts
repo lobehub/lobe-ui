@@ -1,4 +1,4 @@
-import { GetCustomStylish } from 'antd-style';
+import { GetCustomStylish, keyframes } from 'antd-style';
 
 import { LobeCustomStylish } from '@/types/customStylish';
 
@@ -7,9 +7,33 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
   token,
   isDarkMode,
 }) => {
+  const gradient = keyframes`
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  `;
+
   return {
     blur: css`
       backdrop-filter: saturate(180%) blur(10px);
+    `,
+    gradientAnimation: css`
+      background-image: linear-gradient(
+        -45deg,
+        ${token.gold},
+        ${token.magenta},
+        ${token.geekblue},
+        ${token.cyan}
+      );
+      background-size: 400% 400%;
+      border-radius: inherit;
+      animation: 5s ${gradient} 5s ease infinite;
     `,
     noScrollbar: css`
       ::-webkit-scrollbar {
