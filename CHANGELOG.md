@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.25.3](https://github.com/lobehub/lobe-ui/compare/v1.25.2...v1.25.3)
+
+<sup>Released on **2023-06-15**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix ApiHeader encodeURIComponent.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix ApiHeader encodeURIComponent ([18cf950](https://github.com/lobehub/lobe-ui/commit/18cf950))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.25.2](https://github.com/lobehub/lobe-ui/compare/v1.25.1...v1.25.2)
 
 <sup>Released on **2023-06-15**</sup>
