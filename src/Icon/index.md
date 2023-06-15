@@ -1,6 +1,6 @@
 ---
 nav: Components
-group: Common
+group: General
 title: Icon
 description: Icons are graphical symbols used to represent a concept or an action. The `Icon` component is a reusable React component that renders an SVG icon from the `lucide-react` library.
 ---

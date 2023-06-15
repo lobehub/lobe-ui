@@ -33,8 +33,8 @@ export default defineConfig({
   base: '/',
   publicPath: '/',
   ssr: isProd ? {} : false,
-  apiParser: isWin ? false : {},
-  resolve: isWin
+  apiParser: !isProd ? false : {},
+  resolve: !isProd
     ? undefined
     : {
         entryFile: './src/index.ts',

@@ -1,8 +1,7 @@
 ---
 nav: Components
 group: Site
-title: Layout
-description:
+title: Toc
 ---
 
 ## Default

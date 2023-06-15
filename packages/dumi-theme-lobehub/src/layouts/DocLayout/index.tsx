@@ -1,8 +1,7 @@
 import { Layout, ThemeProvider } from '@lobehub/ui';
 import { extractStaticStyle, useResponsive, useTheme } from 'antd-style';
 import { Helmet, useIntl, useLocation } from 'dumi';
-import isEqual from 'fast-deep-equal';
-import { memo, useEffect } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { shallow } from 'zustand/shallow';
 
 import { StoreUpdater } from '@/components/StoreUpdater';
@@ -45,36 +44,8 @@ const DocLayout = memo(() => {
   const shouldHideToc = fm.toc === false || noToc;
   const hideToc = mobile ? shouldHideToc : !laptop || shouldHideToc;
 
-  const helmetBlock = (
-    <Helmet>
-      {!fm.title || isHomePage ? (
-        <title>{siteTitle}</title>
-      ) : (
-        <title>
-          {fm.title} - {siteTitle}
-        </title>
-      )}
-    </Helmet>
-  );
-
-  // handle hash change or visit page hash after async chunk loaded
-  useEffect(() => {
-    const id = hash.replace('#', '');
-
-    if (id) {
-      setTimeout(() => {
-        const elm = document.getElementById(decodeURIComponent(id));
-
-        if (elm) {
-          elm.scrollIntoView();
-          window.scrollBy({ top: -80 });
-        }
-      }, 1);
-    }
-  }, [loading, hash]);
-
-  return (
-    <>
+  const HelmetBlock = useCallback(
+    () => (
       <Helmet>
         <html lang={intl.locale.replace(/-.+$/, '')} />
         {fm.title && <meta content={fm.title} property="og:title" />}
@@ -82,22 +53,55 @@ const DocLayout = memo(() => {
         {fm.description && <meta content={fm.description} property="og:description" />}
         {fm.keywords && <meta content={fm.keywords.join(',')} name="keywords" />}
         {fm.keywords && <meta content={fm.keywords.join(',')} property="og:keywords" />}
+        {!fm.title || isHomePage ? (
+          <title>{siteTitle}</title>
+        ) : (
+          <title>
+            {fm.title} - {siteTitle}
+          </title>
+        )}
       </Helmet>
-      <Layout
-        asideWidth={theme.sidebarWidth}
-        footer={<Footer />}
-        header={<Header />}
-        headerHeight={mobile ? theme.headerHeight + 36 : theme.headerHeight}
-        helmet={helmetBlock}
-        sidebar={hideSidebar ? null : <Sidebar />}
-        toc={hideToc ? null : <Toc />}
-        tocWidth={hideToc ? 0 : theme.tocWidth}
-      >
-        {isHomePage && <Home />}
-        {isChanlogPage && <Changelog />}
-        {!isHomePage && !isChanlogPage && <Docs />}
-      </Layout>
-    </>
+    ),
+    [intl, fm, siteTitle, isHomePage],
+  );
+
+  // handle hash change or visit page hash after async chunk loaded
+  useEffect(() => {
+    const id = hash.replace('#', '');
+
+    if (!id) return;
+    setTimeout(() => {
+      const elm = document.getElementById(decodeURIComponent(id));
+      if (elm) {
+        elm.scrollIntoView();
+        window.scrollBy({ top: -80 });
+      }
+    }, 1);
+  }, [loading, hash]);
+
+  let Page;
+
+  if (isHomePage) {
+    Page = Home;
+  } else if (isChanlogPage) {
+    Page = Changelog;
+  } else {
+    Page = Docs;
+  }
+
+  return (
+    <Layout
+      asideWidth={theme.sidebarWidth}
+      footer={<Footer />}
+      header={<Header />}
+      headerHeight={mobile ? theme.headerHeight + 36 : theme.headerHeight}
+      helmet={<HelmetBlock />}
+      sidebar={hideSidebar ? null : <Sidebar />}
+      toc={hideToc ? null : <Toc />}
+      tocWidth={hideToc ? 0 : theme.tocWidth}
+    >
+      <Page />
+    </Layout>
   );
 });
 
@@ -105,7 +109,7 @@ const DocLayout = memo(() => {
 global.__ANTD_CACHE__ = extractStaticStyle.cache;
 
 export default memo(() => {
-  const themeMode = useThemeStore((st) => st.themeMode, isEqual);
+  const themeMode = useThemeStore((st) => st.themeMode, shallow);
 
   return (
     <>

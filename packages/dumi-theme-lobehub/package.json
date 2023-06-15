@@ -16,8 +16,7 @@
     "@floating-ui/react": "^0",
     "@lobehub/ui": "latest",
     "chalk": "^4",
-    "fast-deep-equal": "^3",
-    "rc-footer": "^0"
+    "fast-deep-equal": "^3"
   },
   "devDependencies": {
     "father-plugin-dumi-theme": "latest",

@@ -3,7 +3,6 @@ import {
   ThemeProvider as AntdThemeProvider,
   StyleProvider,
   type ThemeMode,
-  createStyles,
   extractStaticStyle,
   setupStyled,
 } from 'antd-style';
@@ -45,15 +44,9 @@ export interface ThemeProviderProps {
   themeMode?: ThemeMode;
 }
 
-const useStyled = createStyles(({ stylish, responsive }) =>
-  responsive.mobile ? stylish.noScrollbar : ``,
-);
-
 const ThemeProvider = memo<ThemeProviderProps>(
   ({ children, themeMode, customStylish = () => ({}), customToken = () => ({}) }) => {
     setupStyled({ ThemeContext });
-
-    const { styles } = useStyled();
 
     return (
       <StyleProvider speedy={process.env.NODE_ENV === 'production'}>
@@ -66,9 +59,7 @@ const ThemeProvider = memo<ThemeProviderProps>(
           <ReactFontLoader url="https://raw.githubusercontent.com/IKKI2000/harmonyos-fonts/main/css/harmonyos_sans.css" />
           <ReactFontLoader url="https://raw.githubusercontent.com/IKKI2000/harmonyos-fonts/main/css/harmonyos_sans_sc.css" />
           <GlobalStyle />
-          <App className={styles} style={{ minHeight: 'inherit', width: 'inherit' }}>
-            {children}
-          </App>
+          <App style={{ minHeight: 'inherit', width: 'inherit' }}>{children}</App>
         </AntdThemeProvider>
       </StyleProvider>
     );

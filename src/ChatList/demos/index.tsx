@@ -1,3 +1,6 @@
+/**
+ * iframe: 600
+ */
 import { ChatList, ChatListProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
 
 import { data } from './data';

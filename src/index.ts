@@ -15,6 +15,9 @@ export {
   type EditableMessageListProps,
 } from './EditableMessageList';
 export { default as EditableText, type EditableTextProps } from './EditableText';
+export { default as Footer, type FooterProps } from './Footer';
+export { default as GradientButton, type GradientButtonProps } from './GradientButton';
+export { default as Header, type HeaderProps } from './Header';
 export {
   default as Highlighter,
   type HighlighterProps,
@@ -44,6 +47,7 @@ export { default as Swatches, type SwatchesProps } from './Swatches';
 export { default as TabsNav, type TabsNavProps } from './TabsNav';
 export { default as ThemeProvider } from './ThemeProvider';
 export { default as ThemeSwitch, type ThemeSwitchProps } from './ThemeSwitch';
+export { default as Toc, type TocProps } from './Toc';
 export { default as Tooltip, type TooltipProps } from './Tooltip';
 export { type LobeCustomStylish } from './types/customStylish';
 export { type LobeCustomToken } from './types/customToken';

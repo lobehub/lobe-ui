@@ -1,6 +1,6 @@
 ---
 nav: Components
-group: Common
+group: Data Display
 title: Logo
 description: The Logo component is used to display a logo with various types, including 3D, flat, high-contrast, text, and combined. It can also accept an additional React node to be rendered next to the logo.
 ---

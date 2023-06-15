@@ -1,6 +1,6 @@
 import { useResponsive } from 'antd-style';
 import { useOutlet } from 'dumi';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { Center } from 'react-layout-kit';
 import { shallow } from 'zustand/shallow';
 
@@ -19,8 +19,11 @@ const Docs = memo(() => {
     }),
     shallow,
   );
-
   const { styles } = useStyles();
+
+  useEffect(() => {
+    scrollTo(0, 0);
+  }, []);
 
   return (
     <Center className={styles.content} style={{ padding: mobile ? 0 : 24 }}>

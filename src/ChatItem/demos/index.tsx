@@ -1,3 +1,6 @@
+/**
+ * iframe: 600
+ */
 import {
   ActionIconGroup,
   ChatItem,

@@ -1,6 +1,6 @@
 ---
 nav: Components
-group: Common
+group: General
 title: ActionIconGroup
 description: ActionIconGroup is a component used to render multi buttons
 ---
