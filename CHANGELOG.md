@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.25.4](https://github.com/lobehub/lobe-ui/compare/v1.25.3...v1.25.4)
+
+<sup>Released on **2023-06-15**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Hero and Features components link.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix Hero and Features components link ([7910266](https://github.com/lobehub/lobe-ui/commit/7910266))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.25.3](https://github.com/lobehub/lobe-ui/compare/v1.25.2...v1.25.3)
 
 <sup>Released on **2023-06-15**</sup>
