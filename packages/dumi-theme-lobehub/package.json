@@ -15,7 +15,6 @@
     "prepare": "npm run build"
   },
   "dependencies": {
-    "@ant-design/icons": "^5",
     "@floating-ui/react": "^0",
     "@lobehub/ui": "latest",
     "ahooks": "^3",
@@ -23,12 +22,11 @@
     "antd-style": "^3",
     "chalk": "^4",
     "fast-deep-equal": "^3",
-    "leva": "^0",
     "lodash-es": "^4",
     "lucide-react": "latest",
     "polished": "^4",
     "react-layout-kit": "^1",
-    "styled-components": "beta",
+    "styled-components": "latest",
     "use-merge-value": "^1",
     "zustand": "^4"
   },

@@ -1,6 +1,3 @@
-/**
- * iframe: 600
- */
 import { ChatItem, ChatItemProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
 
 import { avatar } from './data';

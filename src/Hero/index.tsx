@@ -41,17 +41,21 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
                 target={openExternal ? '_blank' : undefined}
               >
                 {type === 'primary' ? (
-                  <GradientButton key={index} size="large">
+                  <GradientButton
+                    icon={ButtonIcon && <Icon icon={ButtonIcon} />}
+                    key={index}
+                    size="large"
+                  >
                     {text}
                   </GradientButton>
                 ) : (
-                  <Button key={index} size="large" type="primary">
-                    <Space align="center">
-                      {ButtonIcon && (
-                        <Icon icon={ButtonIcon} size={{ fontSize: 18, strokeWidth: 2 }} />
-                      )}
-                      {text}
-                    </Space>
+                  <Button
+                    icon={ButtonIcon && <Icon icon={ButtonIcon} />}
+                    key={index}
+                    size="large"
+                    type="primary"
+                  >
+                    {text}
                   </Button>
                 )}
               </a>

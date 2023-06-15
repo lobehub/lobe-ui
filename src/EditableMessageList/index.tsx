@@ -1,13 +1,12 @@
-import { PlusOutlined } from '@ant-design/icons';
 import { Button, Select } from 'antd';
 import isEqual from 'fast-deep-equal';
-import { TrashIcon } from 'lucide-react';
+import { Plus, Trash } from 'lucide-react';
 import { memo, useEffect, useReducer } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import IconAction from '@/ActionIcon';
 import { ChatMessage, messagesReducer } from '@/Chat';
 import { ControlInput } from '@/components/ControlInput';
+import { ActionIcon, Icon } from '@/index';
 
 export interface EditableMessageListProps {
   /**
@@ -53,9 +52,9 @@ export const EditableMessageList = memo<EditableMessageListProps>(
                 dispatch({ type: 'updateMessageRole', index, role: value });
               }}
               options={[
-                { value: 'system', label: '系统' },
-                { value: 'user', label: '输入' },
-                { value: 'assistant', label: '输出' },
+                { value: 'system', label: 'System' },
+                { value: 'user', label: 'Input' },
+                { value: 'assistant', label: 'Output' },
               ]}
               style={{ width: 120 }}
               value={item.role}
@@ -68,12 +67,13 @@ export const EditableMessageList = memo<EditableMessageListProps>(
               placeholder={item.role === 'user' ? '请填入输入的样例内容' : '请填入输出的样例'}
               value={item.content}
             />
-            <IconAction
-              icon={TrashIcon}
+            <ActionIcon
+              icon={Trash}
               onClick={() => {
                 dispatch({ type: 'deleteMessage', index });
               }}
               placement="right"
+              size={{ fontSize: 16 }}
               title="Delete"
             />
           </Flexbox>
@@ -82,7 +82,7 @@ export const EditableMessageList = memo<EditableMessageListProps>(
         <Button
           block
           disabled={disabled}
-          icon={<PlusOutlined />}
+          icon={<Icon icon={Plus} />}
           onClick={() => {
             const lastMeg = chatMessages.at(-1);
 
@@ -92,7 +92,7 @@ export const EditableMessageList = memo<EditableMessageListProps>(
             });
           }}
         >
-          添加一项
+          Add Props
         </Button>
       </Flexbox>
     );

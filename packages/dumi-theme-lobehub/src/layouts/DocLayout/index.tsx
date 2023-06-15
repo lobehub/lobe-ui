@@ -78,6 +78,10 @@ const DocLayout = memo(() => {
     }, 1);
   }, [loading, hash]);
 
+  useEffect(() => {
+    document.body.scrollTo(0, 0);
+  }, [window.location.pathname]);
+
   let Page;
 
   if (isHomePage) {

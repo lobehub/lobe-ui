@@ -98,7 +98,7 @@
     "react-rnd": "^10",
     "remark-gfm": "^3",
     "shiki-es": "^0",
-    "styled-components": "beta",
+    "styled-components": "latest",
     "ts-md5": "^1",
     "use-merge-value": "^1",
     "zustand": "^4",

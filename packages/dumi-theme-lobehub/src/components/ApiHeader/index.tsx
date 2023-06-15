@@ -151,8 +151,8 @@ export const ApiHeader = memo<ApiTitleProps>(
               ))}
             </Space>
             <Space className={styles.meta} split={<Divider type={'vertical'} />}>
-              {items.map((item) => (
-                <a href={item.url} key={item.url} rel="noreferrer" target={'_blank'}>
+              {items.map((item, index) => (
+                <a href={item.url} key={index} rel="noreferrer" target={'_blank'}>
                   <Flexbox align={'center'} className={styles.text} gap={8} horizontal>
                     {item.icon}
                     {item.children}

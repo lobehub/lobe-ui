@@ -1,10 +1,11 @@
-import { Loading3QuartersOutlined as Loading } from '@ant-design/icons';
 import { useThemeMode } from 'antd-style';
+import { Loader2 } from 'lucide-react';
 import { memo, useEffect } from 'react';
 import { Center } from 'react-layout-kit';
 import { shallow } from 'zustand/shallow';
 
 import { useHighlight } from '@/hooks/useHighlight';
+import { Icon } from '@/index';
 
 import type { HighlighterProps } from '../index';
 import { useStyles } from './style';
@@ -12,7 +13,7 @@ import { useStyles } from './style';
 export type SyntaxHighlighterProps = Pick<HighlighterProps, 'language' | 'children' | 'theme'>;
 
 const SyntaxHighlighter = memo<SyntaxHighlighterProps>(({ children, language }) => {
-  const { styles, theme } = useStyles();
+  const { styles } = useStyles();
   const { isDarkMode } = useThemeMode();
   const [codeToHtml, isLoading] = useHighlight((s) => [s.codeToHtml, !s.highlighter], shallow);
 
@@ -39,7 +40,7 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(({ children, language }) 
 
       {isLoading && (
         <Center className={styles.loading} gap={8} horizontal>
-          <Loading spin style={{ color: theme.colorTextTertiary }} />
+          <Icon icon={Loader2} spin />
           Highlighting...
         </Center>
       )}

@@ -1,11 +1,10 @@
-import { AimOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
+import { X } from 'lucide-react';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
-import Markdown from '@/Markdown';
-import MessageInput from '@/MessageInput';
+import { Icon, Markdown, MessageInput } from '@/index';
 
 import { useStyles } from './style';
 
@@ -54,10 +53,11 @@ const MessageModal = memo<MessageModalProps>(
 
     return (
       <Modal
-        cancelText={'关闭'}
+        cancelText={'Cancel'}
         className={styles.modal}
+        closeIcon={<Icon icon={X} />}
         footer={isEdit ? null : undefined}
-        okText={'编辑'}
+        okText={'Edit'}
         onCancel={() => setExpand(false)}
         onOk={() => {
           setTyping(true);
@@ -65,8 +65,7 @@ const MessageModal = memo<MessageModalProps>(
         open={expand}
         title={
           <Flexbox align={'center'} gap={4} horizontal>
-            <AimOutlined />
-            提示词
+            Prompt
           </Flexbox>
         }
         width={800}
