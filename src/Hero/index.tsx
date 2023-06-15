@@ -1,7 +1,6 @@
 import { GradientButton, Icon } from '@lobehub/ui';
 import { Button, ConfigProvider, Space } from 'antd';
 import { useResponsive } from 'antd-style';
-import { Link } from 'dumi';
 import * as LucideIcon from 'lucide-react';
 import { memo, useCallback } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
@@ -35,11 +34,11 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
             const ButtonIcon = icon && LucideIcon[icon];
 
             return (
-              <Link
+              <a
+                href={link}
                 key={text}
                 rel="noreferrer"
                 target={openExternal ? '_blank' : undefined}
-                to={link}
               >
                 {type === 'primary' ? (
                   <GradientButton key={index} size="large">
@@ -55,7 +54,7 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
                     </Space>
                   </Button>
                 )}
-              </Link>
+              </a>
             );
           })}
         </Space>

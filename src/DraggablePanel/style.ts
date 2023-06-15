@@ -25,7 +25,7 @@ export const useStyles = createStyles(({ token }, prefix: string) => {
 
   const commonToggle = css`
     position: absolute;
-    z-index: 1001;
+    z-index: 101;
     opacity: 0;
     transition: all 0.2s ${token.motionEaseOut};
 
@@ -66,7 +66,7 @@ export const useStyles = createStyles(({ token }, prefix: string) => {
 
   const float = css`
     position: absolute;
-    z-index: 2000;
+    z-index: 200;
   `;
 
   return {

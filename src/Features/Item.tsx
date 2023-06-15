@@ -1,5 +1,4 @@
 import { Icon } from '@lobehub/ui';
-import { Link, history } from 'dumi';
 import { ImageContainerType } from 'dumi-theme-lobehub/src';
 import * as LucideIcon from 'lucide-react';
 import { CSSProperties, memo } from 'react';
@@ -60,19 +59,9 @@ const Item = memo<FeatureItemProps>(
     return (
       <div
         className={cx(styles.container, className)}
-        onClick={() => {
-          if (!link) return;
-
-          if (openExternal) {
-            window.open(link);
-          } else {
-            history.push(link);
-          }
-        }}
         style={{
           gridRow: `span ${rowNum}`,
           gridColumn: `span ${column || 1}`,
-          cursor: link ? 'pointer' : 'default',
           ...style,
         }}
         {...props}
@@ -96,7 +85,9 @@ const Item = memo<FeatureItemProps>(
           )}
           {link && (
             <div className={styles.link}>
-              <Link to={link}>Read More</Link>
+              <a href={link} rel="noreferrer" target={openExternal ? '_blank' : undefined}>
+                Read More
+              </a>
             </div>
           )}
         </div>
