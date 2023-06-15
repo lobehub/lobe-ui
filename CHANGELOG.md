@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.24.0](https://github.com/lobehub/lobe-ui/compare/v1.23.1...v1.24.0)
+
+<sup>Released on **2023-06-15**</sup>
+
+#### ✨ Features
+
+- **misc**: Add GradientButton.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add GradientButton ([448cb53](https://github.com/lobehub/lobe-ui/commit/448cb53))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.23.1](https://github.com/lobehub/lobe-ui/compare/v1.23.0...v1.23.1)
 
 <sup>Released on **2023-06-14**</sup>
