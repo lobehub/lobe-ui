@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.25.5](https://github.com/lobehub/lobe-ui/compare/v1.25.4...v1.25.5)
+
+<sup>Released on **2023-06-15**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Icon display size.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix Icon display size ([d3e3a19](https://github.com/lobehub/lobe-ui/commit/d3e3a19))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.25.4](https://github.com/lobehub/lobe-ui/compare/v1.25.3...v1.25.4)
 
 <sup>Released on **2023-06-15**</sup>
