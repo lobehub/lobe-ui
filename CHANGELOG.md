@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.26.2](https://github.com/lobehub/lobe-ui/compare/v1.26.1...v1.26.2)
+
+<sup>Released on **2023-06-16**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Fefactor import and code format.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Fefactor import and code format ([2642199](https://github.com/lobehub/lobe-ui/commit/2642199))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.26.1](https://github.com/lobehub/lobe-ui/compare/v1.26.0...v1.26.1)
 
 <sup>Released on **2023-06-16**</sup>
