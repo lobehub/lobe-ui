@@ -21,27 +21,29 @@ const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
         <Space direction={'vertical'} size={2}>
           <Space key="scale-title" size={2}>
             <div className={styles.scaleRowTitle} key="scale-num" />
-            {new Array(scale.light.length).fill('').map((_, index) => {
-              if (index === 0 || index === 12) return null;
+            {Array.from({ length: scale.light.length })
+              .fill('')
+              .map((_, index) => {
+                if (index === 0 || index === 12) return false;
 
-              const isMidHighlight = midHighLight === index;
+                const isMidHighlight = midHighLight === index;
 
-              return (
-                <div className={styles.scaleBox} key={`num${index}`}>
-                  <div className={styles.scaleBox}>
-                    <div
-                      className={styles.scaleItem}
-                      style={{
-                        opacity: 0.5,
-                        fontWeight: isMidHighlight ? 700 : 400,
-                      }}
-                    >
-                      {index}
+                return (
+                  <div className={styles.scaleBox} key={`num${index}`}>
+                    <div className={styles.scaleBox}>
+                      <div
+                        className={styles.scaleItem}
+                        style={{
+                          fontWeight: isMidHighlight ? 700 : 400,
+                          opacity: 0.5,
+                        }}
+                      >
+                        {index}
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </Space>
           <ScaleRow key="light" name={name} scale={scale.light} title="light" />
           <ScaleRow key="lightA" name={name} scale={scale.lightA} title="lightA" />

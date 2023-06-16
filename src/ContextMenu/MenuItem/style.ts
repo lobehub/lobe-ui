@@ -13,6 +13,15 @@ export const useStyles = createStyles(({ css, cx, token }, prefixCls) => {
   `;
 
   return {
+    active: cx(
+      `${prefixCls}-item-active`,
+      css`
+        background: ${token.colorFillTertiary};
+      `,
+    ),
+    arrow: css`
+      color: ${token.colorTextTertiary};
+    `,
     item: cx(
       `${prefixCls}-item`,
 
@@ -43,17 +52,6 @@ export const useStyles = createStyles(({ css, cx, token }, prefixCls) => {
         }
       `,
     ),
-    selected: cx(`${prefixCls}-item-selected`, selected),
-    active: cx(
-      `${prefixCls}-item-active`,
-      css`
-        background: ${token.colorFillTertiary};
-      `,
-    ),
-    arrow: css`
-      color: ${token.colorTextTertiary};
-    `,
-
     kbd: css`
       display: flex;
       align-items: center;
@@ -68,5 +66,7 @@ export const useStyles = createStyles(({ css, cx, token }, prefixCls) => {
 
       border-radius: 2px;
     `,
+
+    selected: cx(`${prefixCls}-item-selected`, selected),
   };
 });

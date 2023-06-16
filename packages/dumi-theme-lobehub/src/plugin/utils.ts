@@ -1,4 +1,4 @@
-import { createHash } from 'crypto';
+import { createHash } from 'node:crypto';
 
-export const getHash = (str: string, length = 8) =>
-  createHash('md5').update(str).digest('hex').slice(0, length);
+export const getHash = (string_: string, length = 8) =>
+  createHash('md5').update(string_).digest('hex').slice(0, length);

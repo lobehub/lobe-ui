@@ -1,6 +1,8 @@
 import { memo } from 'react';
 
-import { CopyButton, Spotlight, SyntaxHighlighter } from '@/index';
+import CopyButton from '@/CopyButton';
+import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
+import Spotlight from '@/Spotlight';
 import { DivProps } from '@/types';
 
 import { useStyles } from './style';
@@ -54,7 +56,7 @@ const Snippet = memo<SnippetProps>(
         <SyntaxHighlighter language={language}>
           {[symbol, children].filter(Boolean).join(' ')}
         </SyntaxHighlighter>
-        {copyable && <CopyButton content={children} size={{ fontSize: 14, blockSize: 24 }} />}
+        {copyable && <CopyButton content={children} size={{ blockSize: 24, fontSize: 14 }} />}
       </div>
     );
   },

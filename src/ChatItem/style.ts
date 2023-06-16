@@ -39,6 +39,32 @@ export const useStyles = createStyles(
     const typeStylish = type === 'block' ? blockStylish : pureStylish;
 
     return {
+      actions: cx(
+        css`
+          position: absolute;
+          display: flex;
+          align-items: flex-start;
+          justify-content: ${placement === 'left' ? 'flex-end' : 'flex-start'};
+        `,
+        type === 'block' && borderSpacing
+          ? css`
+              right: ${placement === 'left' ? '-4px' : 'unset'};
+              bottom: 0;
+              left: ${placement === 'right' ? '-4px' : 'unset'};
+              transform: translateX(${placement === 'left' ? '100%' : '-100%'});
+            `
+          : css`
+              right: ${placement === 'left' ? '0' : 'unset'};
+              bottom: ${type === 'block' ? '-40px' : '-32px'};
+              left: ${placement === 'right' ? '0' : 'unset'};
+            `,
+      ),
+      avatarContainer: css`
+        position: relative;
+        flex: none;
+        width: ${avatarSize}px;
+        height: ${avatarSize}px;
+      `,
       container: cx(
         type === 'pure' && pureContainerStylish,
         css`
@@ -87,12 +113,12 @@ export const useStyles = createStyles(
         background: ${token.colorPrimary};
         border-radius: 50%;
       `,
-      avatarContainer: css`
-        position: relative;
-        flex: none;
-        width: ${avatarSize}px;
-        height: ${avatarSize}px;
-      `,
+      message: cx(
+        typeStylish,
+        css`
+          position: relative;
+        `,
+      ),
       messageContainer: css`
         position: relative;
 
@@ -118,32 +144,6 @@ export const useStyles = createStyles(
         color: ${token.colorTextDescription};
         text-align: ${placement === 'left' ? 'left' : 'right'};
       `,
-      message: cx(
-        typeStylish,
-        css`
-          position: relative;
-        `,
-      ),
-      actions: cx(
-        css`
-          position: absolute;
-          display: flex;
-          align-items: flex-start;
-          justify-content: ${placement === 'left' ? 'flex-end' : 'flex-start'};
-        `,
-        type === 'block' && borderSpacing
-          ? css`
-              right: ${placement === 'left' ? '-4px' : 'unset'};
-              bottom: 0;
-              left: ${placement === 'right' ? '-4px' : 'unset'};
-              transform: translateX(${placement === 'left' ? '100%' : '-100%'});
-            `
-          : css`
-              right: ${placement === 'left' ? '0' : 'unset'};
-              bottom: ${type === 'block' ? '-40px' : '-32px'};
-              left: ${placement === 'right' ? '0' : 'unset'};
-            `,
-      ),
     };
   },
 );

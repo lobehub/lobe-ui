@@ -9,6 +9,14 @@ export const useStyles = createStyles(
     const fixHeight = 36;
 
     return {
+      anchor: cx(
+        stylish.blur,
+        css`
+          overflow-x: hidden;
+          overflow-y: auto;
+          max-height: 60vh !important;
+        `,
+      ),
       container: css`
         position: sticky;
         top: ${headerHeight + 64}px;
@@ -37,14 +45,6 @@ export const useStyles = createStyles(
           color: ${token.colorTextDescription};
         }
       `,
-      mobileCtn: css`
-        width: 100%;
-        height: ${fixHeight}px;
-
-        .ant-collapse-expand-icon {
-          color: ${token.colorTextQuaternary};
-        }
-      `,
       expand: cx(
         stylish.blur,
         css`
@@ -69,14 +69,14 @@ export const useStyles = createStyles(
           }
         `,
       ),
-      anchor: cx(
-        stylish.blur,
-        css`
-          overflow-x: hidden;
-          overflow-y: auto;
-          max-height: 60vh !important;
-        `,
-      ),
+      mobileCtn: css`
+        width: 100%;
+        height: ${fixHeight}px;
+
+        .ant-collapse-expand-icon {
+          color: ${token.colorTextQuaternary};
+        }
+      `,
     };
   },
 );

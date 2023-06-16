@@ -38,7 +38,7 @@ const Header = memo<HeaderProps>(({ nav, logo, actions }) => {
             <Flexbox className={styles.left} horizontal>
               {logo}
             </Flexbox>
-            <Flexbox style={{ marginLeft: 48, alignSelf: 'end' }}>{nav}</Flexbox>
+            <Flexbox style={{ alignSelf: 'end', marginLeft: 48 }}>{nav}</Flexbox>
             <section className={styles.right}>
               <div />
               <Flexbox align={'center'} gap={8} horizontal>

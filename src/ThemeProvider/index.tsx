@@ -7,11 +7,10 @@ import {
   setupStyled,
 } from 'antd-style';
 import type { CustomStylishParams, CustomTokenParams } from 'antd-style/lib/types/function';
-import { memo } from 'react';
-// @ts-ignore
-import ReactFontLoader from 'react-font-loader';
+import { type ReactNode, memo } from 'react';
 import { ThemeContext } from 'styled-components';
 
+import FontLoader from '@/FontLoader';
 import { lobeCustomStylish, lobeCustomToken, lobeTheme } from '@/styles';
 import { LobeCustomToken } from '@/types/customToken';
 
@@ -25,7 +24,7 @@ export interface ThemeProviderProps {
   /**
    * @description The children of the ThemeProvider component
    */
-  children: React.ReactNode;
+  children: ReactNode;
   /**
    * @description Custom stylish
    */
@@ -56,8 +55,8 @@ const ThemeProvider = memo<ThemeProviderProps>(
           theme={lobeTheme}
           themeMode={themeMode}
         >
-          <ReactFontLoader url="https://raw.githubusercontent.com/IKKI2000/harmonyos-fonts/main/css/harmonyos_sans.css" />
-          <ReactFontLoader url="https://raw.githubusercontent.com/IKKI2000/harmonyos-fonts/main/css/harmonyos_sans_sc.css" />
+          <FontLoader url="https://raw.githubusercontent.com/IKKI2000/harmonyos-fonts/main/css/harmonyos_sans.css" />
+          <FontLoader url="https://raw.githubusercontent.com/IKKI2000/harmonyos-fonts/main/css/harmonyos_sans_sc.css" />
           <GlobalStyle />
           <App style={{ minHeight: 'inherit', width: 'inherit' }}>{children}</App>
         </AntdThemeProvider>

@@ -12,8 +12,8 @@ export const activePathSel = (s: SiteStore) => {
   if (s.location.pathname === '/') return '/';
 
   const item = s.navData
-    .filter((i) => i.link !== '/')
-    .find((i) => s.location.pathname.startsWith(String(i.activePath! || i.link)));
+    .filter((index) => index.link !== '/')
+    .find((index) => s.location.pathname.startsWith(String(index.activePath! || index.link)));
 
   return item?.activePath || item?.link || '';
 };
@@ -29,17 +29,17 @@ export const tocAnchorItemSel = (s: SiteStore) => {
 
   if (s.tabMeta?.frontmatter) frontmatter = s.tabMeta.frontmatter as any;
 
+  const shouldKeepWith = (depth: number) => {
+    if (!frontmatter.tocDepth) return true;
+
+    if (typeof frontmatter.tocDepth === 'number' && frontmatter.tocDepth > depth - 1) return true;
+  };
+
   return toc.reduce<AnchorItem[]>((result, item) => {
-    const shouldKeepWith = (depth: number) => {
-      if (!frontmatter.tocDepth) return true;
-
-      if (typeof frontmatter.tocDepth === 'number' && frontmatter.tocDepth > depth - 1) return true;
-    };
-
     if (item.depth === 2 && shouldKeepWith(2)) {
       result.push({ ...item });
     } else if (item.depth === 3 && shouldKeepWith(3)) {
-      const parent = result[result.length - 1];
+      const parent = result.at(-1);
 
       if (parent) {
         parent.children = parent.children || [];
@@ -56,7 +56,7 @@ export const tocAnchorItemSel = (s: SiteStore) => {
  * @param s
  */
 export const flattenSidebarSel = (s: SiteStore): ISidebarItem[] => {
-  return s.sidebar?.map((i) => i.children).flat() || [];
+  return s.sidebar?.map((index) => index.children).flat() || [];
 };
 
 export const contentBottomSel = (s: SiteStore) => {
@@ -64,5 +64,5 @@ export const contentBottomSel = (s: SiteStore) => {
   const path = s.location.pathname;
   const currentIndex = dataFlatten.findIndex((item) => item.link === path);
 
-  return { prev: dataFlatten[currentIndex - 1], currentIndex, next: dataFlatten[currentIndex + 1] };
+  return { currentIndex, next: dataFlatten[currentIndex + 1], prev: dataFlatten[currentIndex - 1] };
 };

@@ -5,8 +5,8 @@ export default () => {
   const store = useCreateStore();
   const control: TooltipProps | any = useControls(
     {
-      title: 'Example tooltip',
       arrow: false,
+      title: 'Example tooltip',
     },
     { store },
   );

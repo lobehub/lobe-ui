@@ -6,7 +6,7 @@ import { type FC, type ReactNode, useState } from 'react';
 
 import { useStyles } from './style';
 
-const SIZE = { fontSize: 16, strokeWidth: 2, blockSize: 24 };
+const SIZE = { blockSize: 24, fontSize: 16, strokeWidth: 2 };
 
 export interface IPreviewerActionsProps extends IPreviewerProps {
   demoContainer: HTMLDivElement | HTMLIFrameElement;
@@ -64,7 +64,7 @@ const PreviewerActions: FC<IPreviewerActionsProps> = (props) => {
         {!props.forceShowCode && (
           <ActionIcon
             icon={showCode ? Code2 : Code}
-            onClick={() => setShowCode((prev) => !prev)}
+            onClick={() => setShowCode((previous) => !previous)}
             size={SIZE}
             title={intl.formatMessage({
               id: `previewer.actions.code.${showCode ? 'shrink' : 'expand'}`,
@@ -78,8 +78,8 @@ const PreviewerActions: FC<IPreviewerActionsProps> = (props) => {
             {!isSingleFile && (
               <TabsNav
                 activeKey={String(activeKey)}
-                items={files.map(([filename], i) => ({
-                  key: String(i),
+                items={files.map(([filename], index) => ({
+                  key: String(index),
                   label: filename,
                 }))}
                 onChange={(key) => setActiveKey(Number(key))}

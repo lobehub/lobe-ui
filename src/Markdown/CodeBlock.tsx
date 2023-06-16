@@ -14,14 +14,14 @@ const useStyles = createStyles(
   `,
 );
 
-const Code = memo((props: any) => {
+const Code = memo((properties: any) => {
   const { styles, theme } = useStyles();
 
-  if (!props.children[0]) return null;
+  if (!properties.children[0]) return;
 
-  const { children, className } = props.children[0].props;
+  const { children, className } = properties.children[0].props;
 
-  if (!children) return null;
+  if (!children) return;
 
   return (
     <Highlighter
@@ -31,7 +31,7 @@ const Code = memo((props: any) => {
       theme={theme.appearance as any}
       type="block"
     >
-      {children instanceof Array ? (children[0] as string) : children}
+      {Array.isArray(children) ? (children[0] as string) : children}
     </Highlighter>
   );
 });

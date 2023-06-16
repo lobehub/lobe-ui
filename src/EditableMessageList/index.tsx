@@ -4,9 +4,10 @@ import { Plus, Trash } from 'lucide-react';
 import { memo, useEffect, useReducer } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import ActionIcon from '@/ActionIcon';
 import { ChatMessage, messagesReducer } from '@/Chat';
+import Icon from '@/Icon';
 import { ControlInput } from '@/components/ControlInput';
-import { ActionIcon, Icon } from '@/index';
 
 export interface EditableMessageListProps {
   /**
@@ -35,7 +36,7 @@ export const EditableMessageList = memo<EditableMessageListProps>(
       }
     }, [chatMessages]);
 
-    return !dataSources ? null : (
+    return dataSources ? (
       <Flexbox gap={12}>
         {chatMessages.map((item, index) => (
           <Flexbox
@@ -49,12 +50,12 @@ export const EditableMessageList = memo<EditableMessageListProps>(
               disabled={disabled}
               dropdownStyle={{ zIndex: 100 }}
               onChange={(value) => {
-                dispatch({ type: 'updateMessageRole', index, role: value });
+                dispatch({ index, role: value, type: 'updateMessageRole' });
               }}
               options={[
-                { value: 'system', label: 'System' },
-                { value: 'user', label: 'Input' },
-                { value: 'assistant', label: 'Output' },
+                { label: 'System', value: 'system' },
+                { label: 'Input', value: 'user' },
+                { label: 'Output', value: 'assistant' },
               ]}
               style={{ width: 120 }}
               value={item.role}
@@ -62,7 +63,7 @@ export const EditableMessageList = memo<EditableMessageListProps>(
             <ControlInput
               disabled={disabled}
               onChange={(e) => {
-                dispatch({ type: 'updateMessage', index, message: e });
+                dispatch({ index, message: e, type: 'updateMessage' });
               }}
               placeholder={item.role === 'user' ? '请填入输入的样例内容' : '请填入输出的样例'}
               value={item.content}
@@ -70,7 +71,7 @@ export const EditableMessageList = memo<EditableMessageListProps>(
             <ActionIcon
               icon={Trash}
               onClick={() => {
-                dispatch({ type: 'deleteMessage', index });
+                dispatch({ index, type: 'deleteMessage' });
               }}
               placement="right"
               size={{ fontSize: 16 }}
@@ -87,15 +88,15 @@ export const EditableMessageList = memo<EditableMessageListProps>(
             const lastMeg = chatMessages.at(-1);
 
             dispatch({
+              message: { content: '', role: lastMeg?.role === 'user' ? 'assistant' : 'user' },
               type: 'addMessage',
-              message: { role: lastMeg?.role === 'user' ? 'assistant' : 'user', content: '' },
             });
           }}
         >
           Add Props
         </Button>
       </Flexbox>
-    );
+    ) : undefined;
   },
   isEqual,
 );

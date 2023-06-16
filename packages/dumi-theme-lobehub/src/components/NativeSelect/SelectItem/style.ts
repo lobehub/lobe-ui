@@ -1,6 +1,12 @@
 import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ css, cx, token }, prefixCls) => ({
+  active: cx(
+    `${prefixCls}-item-active`,
+    css`
+      background: ${token.colorFillTertiary};
+    `,
+  ),
   item: cx(
     `${prefixCls}-item`,
 
@@ -40,12 +46,6 @@ export const useStyles = createStyles(({ css, cx, token }, prefixCls) => ({
         color: ${token.colorPrimaryTextHover};
         background: ${token.colorPrimaryBgHover};
       }
-    `,
-  ),
-  active: cx(
-    `${prefixCls}-item-active`,
-    css`
-      background: ${token.colorFillTertiary};
     `,
   ),
 }));

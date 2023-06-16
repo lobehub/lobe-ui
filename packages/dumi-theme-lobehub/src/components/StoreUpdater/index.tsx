@@ -9,7 +9,7 @@ import {
   useTabMeta,
 } from 'dumi';
 import isEqual from 'fast-deep-equal';
-import React, { memo, useEffect } from 'react';
+import React, { type DependencyList, type EffectCallback, useEffect } from 'react';
 
 import { SiteStore, useSiteStore } from '@/store/useSiteStore';
 
@@ -17,20 +17,20 @@ const isBrowser = typeof window !== 'undefined';
 
 const SSRInit: Record<string, boolean> = {};
 
-const useReact18xUpdater = (effect: React.EffectCallback, deps?: React.DependencyList) => {
+const useReact18xUpdater = (effect: EffectCallback, deps?: DependencyList) => {
   useEffect(() => {
     (React as any).startTransition(() => {
       effect();
     });
   }, deps);
 };
-const useLegacyUpdater = (effect: React.EffectCallback, deps?: React.DependencyList) => {
+const useLegacyUpdater = (effect: EffectCallback, deps?: DependencyList) => {
   useDebounceEffect(
     () => {
       effect();
     },
     deps,
-    { wait: 32, maxWait: 96 },
+    { maxWait: 96, wait: 32 },
   );
 };
 const useUpdater =
@@ -58,12 +58,12 @@ const useSyncState = <T extends keyof SiteStore>(
 };
 
 const homeNav = {
-  title: 'Home',
-  link: '/',
   activePath: '/',
+  link: '/',
+  title: 'Home',
 };
 
-export const StoreUpdater = memo(() => {
+export const StoreUpdater = () => {
   const siteData = useSiteData();
   const sidebar = useSidebarData();
   const routeMeta = useRouteMeta();
@@ -77,10 +77,10 @@ export const StoreUpdater = memo(() => {
     const { setLoading, ...data } = siteData;
     const {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      siteData: { setLoading: _, ...prevData },
+      siteData: { setLoading: _, ...previousData },
     } = useSiteStore.getState();
 
-    if (isEqual(data, prevData)) return;
+    if (isEqual(data, previousData)) return;
 
     useSiteStore.setState({ siteData });
   });
@@ -97,5 +97,5 @@ export const StoreUpdater = memo(() => {
     useSiteStore.setState({ navData: data });
   });
 
-  return null;
-});
+  return false;
+};

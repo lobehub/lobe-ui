@@ -50,8 +50,8 @@ const Item = memo<FeatureItemProps>(
     openExternal,
     ...props
   }) => {
-    const rowNum = row || 7;
-    const { styles, cx } = useStyles({ rowNum, hasLink: Boolean(link) });
+    const rowNumber = row || 7;
+    const { styles, cx } = useStyles({ hasLink: Boolean(link), rowNum: rowNumber });
 
     // @ts-ignore
     const FeatureIcon = icon && LucideIcon[icon];
@@ -60,8 +60,8 @@ const Item = memo<FeatureItemProps>(
       <div
         className={cx(styles.container, className)}
         style={{
-          gridRow: `span ${rowNum}`,
           gridColumn: `span ${column || 1}`,
+          gridRow: `span ${rowNumber}`,
           ...style,
         }}
         {...props}

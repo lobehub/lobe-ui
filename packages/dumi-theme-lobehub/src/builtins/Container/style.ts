@@ -1,10 +1,10 @@
 import { FullToken, createStyles } from 'antd-style';
 
+const toCamelCase = (string_: string) => {
+  return string_.replaceAll(/( |^)[a-z]/g, (L) => L.toUpperCase());
+};
 export const useStyles = createStyles(({ token, prefixCls, css }) => {
   // 把首字母大写
-  const toCamelCase = (str: string) => {
-    return str.replace(/( |^)[a-z]/g, (L) => L.toUpperCase());
-  };
 
   const overwriteAlert = (type: string) => {
     const tokens = {
@@ -31,6 +31,13 @@ export const useStyles = createStyles(({ token, prefixCls, css }) => {
   };
 
   return {
+    alert: css`
+      border: none;
+
+      .${prefixCls}-alert-message {
+        font-weight: bold;
+      }
+    `,
     container: css`
       margin: 8px 0;
 
@@ -41,13 +48,6 @@ export const useStyles = createStyles(({ token, prefixCls, css }) => {
       ${overwriteAlert('success')}
 
       ${overwriteAlert('error')}
-    `,
-    alert: css`
-      border: none;
-
-      .${prefixCls}-alert-message {
-        font-weight: bold;
-      }
     `,
     desc: css`
       p {

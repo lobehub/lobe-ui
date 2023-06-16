@@ -6,22 +6,22 @@ import { AltIcon, CommandIcon, ControlIcon, ShiftIcon } from './icons';
 import { useStyles } from './style';
 
 const KEYBOARD_ICON_MAP: Record<string, any> = {
-  meta: <CommandIcon />,
+  alt: <AltIcon />,
   control: <ControlIcon />,
 
-  shift: <ShiftIcon />,
-  alt: <AltIcon />,
   enter: '↵',
+  meta: <CommandIcon />,
+  shift: <ShiftIcon />,
 };
 
 const CODE_MAP: Record<string, 'meta' | 'control' | 'shift' | 'alt'> = {
-  meta: 'meta',
-  command: 'meta',
-  cmd: 'meta',
-  ctl: 'control',
-  control: 'control',
-  shift: 'shift',
   alt: 'alt',
+  cmd: 'meta',
+  command: 'meta',
+  control: 'control',
+  ctl: 'control',
+  meta: 'meta',
+  shift: 'shift',
 };
 
 interface MenuItemProps {
@@ -35,19 +35,19 @@ interface MenuItemProps {
 }
 
 const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(
-  ({ label, icon, disabled, nested, shortcut, active, selected, ...props }, ref) => {
+  ({ label, icon, disabled, nested, shortcut, active, selected, ...properties }, reference) => {
     const { styles, cx } = useStyles();
 
     return (
       <button
         type={'button'}
-        {...props}
+        {...properties}
         className={cx(styles.item, {
           [styles.selected]: selected,
           [styles.active]: active,
         })}
         disabled={disabled}
-        ref={ref}
+        ref={reference}
         role="menuitem"
       >
         <Flexbox gap={8} horizontal>
@@ -70,7 +70,7 @@ const MenuItem = forwardRef<HTMLButtonElement, MenuItemProps>(
               );
             })}
           </Flexbox>
-        ) : null}
+        ) : undefined}
       </button>
     );
   },

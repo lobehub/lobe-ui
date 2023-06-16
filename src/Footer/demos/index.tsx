@@ -2,44 +2,44 @@ import { Footer, FooterProps } from '@lobehub/ui';
 
 const columns: FooterProps['columns'] = [
   {
-    title: 'Resources',
     items: [
       {
-        title: '🤯 Lobe UI',
         description: 'AIGC Components',
+        openExternal: true,
+        title: '🤯 Lobe UI',
         url: 'https://github.com/lobehub/lobe-ui',
-        openExternal: true,
       },
       {
-        title: '🤯 Lobe Chat',
         description: 'Chatbot Client',
-        url: 'https://github.com/lobehub/lobe-chat',
         openExternal: true,
+        title: '🤯 Lobe Chat',
+        url: 'https://github.com/lobehub/lobe-chat',
       },
       {
-        title: '🤯 Lobe Flow',
         description: 'Node Flow Editor',
-        url: 'https://github.com/lobehub/lobe-flow',
         openExternal: true,
+        title: '🤯 Lobe Flow',
+        url: 'https://github.com/lobehub/lobe-flow',
       },
     ],
+    title: 'Resources',
   },
   {
-    title: 'More Products',
     items: [
       {
-        title: '💌 Lobe Commit',
         description: 'AI Commit CLI',
-        url: 'https://github.com/lobehub/lobe-commit',
         openExternal: true,
+        title: '💌 Lobe Commit',
+        url: 'https://github.com/lobehub/lobe-commit',
       },
       {
-        title: '📐 Lobe Lint',
         description: 'Lint Config',
-        url: 'https://github.com/lobehub/lobe-lint',
         openExternal: true,
+        title: '📐 Lobe Lint',
+        url: 'https://github.com/lobehub/lobe-lint',
       },
     ],
+    title: 'More Products',
   },
 ];
 

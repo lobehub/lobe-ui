@@ -1,7 +1,8 @@
 import { Copy, Edit, RotateCw, Trash } from 'lucide-react';
 import { memo, useMemo } from 'react';
 
-import { ActionIconGroup, type ActionIconGroupProps, Icon } from '@/index';
+import ActionIconGroup, { type ActionIconGroupProps } from '@/ActionIconGroup';
+import Icon from '@/Icon';
 
 export interface ActionsBarProps extends ActionIconGroupProps {
   primary?: boolean;
@@ -12,11 +13,11 @@ const ActionsBar = memo<ActionsBarProps>(({ primary, items = [], dropdownMenu = 
     () =>
       [
         primary
-          ? { icon: Edit, title: 'Edit', onClick: () => console.log('click Edit') }
+          ? { icon: Edit, onClick: () => console.log('click Edit'), title: 'Edit' }
           : {
               icon: RotateCw,
-              title: 'Regenerate',
               onClick: () => console.log('click Regenerate'),
+              title: 'Regenerate',
             },
         ...items,
       ].filter(Boolean),
@@ -24,35 +25,32 @@ const ActionsBar = memo<ActionsBarProps>(({ primary, items = [], dropdownMenu = 
   );
 
   const groupDropdownMenu: ActionIconGroupProps['dropdownMenu'] = useMemo(
-    () =>
-      dropdownMenu
-        .concat([
-          {
-            key: 'Edit',
-            icon: <Icon icon={Edit} size="small" />,
-            label: 'Edit',
-          },
-          {
-            key: 'Copy',
-            icon: <Icon icon={Copy} size="small" />,
-            label: 'Copy',
-          },
-
-          {
-            key: 'Regenerate',
-            icon: <Icon icon={RotateCw} size="small" />,
-            label: 'Regenerate',
-          },
-          {
-            type: 'divider',
-          },
-          {
-            key: 'Delete',
-            icon: <Icon icon={Trash} size="small" />,
-            label: 'Delete',
-          },
-        ])
-        .filter(Boolean),
+    () => [
+      ...dropdownMenu,
+      {
+        icon: <Icon icon={Edit} size="small" />,
+        key: 'Edit',
+        label: 'Edit',
+      },
+      {
+        icon: <Icon icon={Copy} size="small" />,
+        key: 'Copy',
+        label: 'Copy',
+      },
+      {
+        icon: <Icon icon={RotateCw} size="small" />,
+        key: 'Regenerate',
+        label: 'Regenerate',
+      },
+      {
+        type: 'divider',
+      },
+      {
+        icon: <Icon icon={Trash} size="small" />,
+        key: 'Delete',
+        label: 'Delete',
+      },
+    ],
     [primary, dropdownMenu],
   );
 

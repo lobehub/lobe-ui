@@ -16,20 +16,22 @@ const Linker = memo<LinkerProps>(({ title, link, type }) => {
   const { styles, cx } = useStyles();
   const navContent = useMemo(() => {
     switch (type) {
-      case 'prev':
+      case 'prev': {
         return (
           <>
             <Icon icon={ArrowLeft} />
             <span style={{ lineHeight: 1 }}>Previous</span>
           </>
         );
-      case 'next':
+      }
+      case 'next': {
         return (
           <>
             <span style={{ lineHeight: 1 }}>Next</span>
             <Icon icon={ArrowRight} />
           </>
         );
+      }
     }
   }, [type]);
 

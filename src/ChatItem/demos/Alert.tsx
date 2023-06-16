@@ -6,11 +6,11 @@ export default () => {
   const store = useCreateStore();
   const control: ChatItemProps['alert'] | any = useControls(
     {
-      message: 'Error',
       description: '',
+      message: 'Error',
       type: {
-        value: 'error',
         options: ['success', 'info', 'warning', 'error'],
+        value: 'error',
       },
     },
     { store },

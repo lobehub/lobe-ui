@@ -2,7 +2,9 @@ import { Tag } from 'antd';
 import { Search } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
 
-import { Icon, Input, InputProps, Spotlight } from '@/index';
+import Icon from '@/Icon';
+import { Input, type InputProps } from '@/Input';
+import Spotlight from '@/Spotlight';
 
 import { useStyles } from './style';
 
@@ -25,7 +27,7 @@ export interface SearchBarProps extends InputProps {
 }
 
 const isAppleDevice = /(mac|iphone|ipod|ipad)/i.test(
-  typeof navigator !== 'undefined' ? navigator?.platform : '',
+  typeof navigator === 'undefined' ? '' : navigator?.platform,
 );
 
 const symbol = isAppleDevice ? '⌘' : 'Ctrl';
@@ -39,20 +41,20 @@ const SearchBar = memo<SearchBarProps>(
     placeholder,
     enableShortKey,
     shortKey = 'f',
-    ...props
+    ...properties
   }) => {
     const [showTag, setShowTag] = useState<boolean>(true);
     const [inputValue, setInputValue] = useState<SearchBarProps['value']>(value);
     const { styles, cx } = useStyles();
-    const inputRef: any = useRef<HTMLInputElement>(null);
+    const inputReference: any = useRef<HTMLInputElement>();
 
     useEffect(() => {
       if (!enableShortKey) return;
 
-      const handler = (ev: KeyboardEvent) => {
-        if ((isAppleDevice ? ev.metaKey : ev.ctrlKey) && ev.key === shortKey) {
-          ev.preventDefault();
-          inputRef.current?.focus();
+      const handler = (event_: KeyboardEvent) => {
+        if ((isAppleDevice ? event_.metaKey : event_.ctrlKey) && event_.key === shortKey) {
+          event_.preventDefault();
+          inputReference.current?.focus();
         }
       };
 
@@ -79,9 +81,9 @@ const SearchBar = memo<SearchBarProps>(
           prefix={
             <Icon className={styles.icon} icon={Search} size="small" style={{ marginRight: 4 }} />
           }
-          ref={inputRef}
+          ref={inputReference}
           value={value}
-          {...props}
+          {...properties}
         />
         {enableShortKey && showTag && !inputValue && (
           <Tag className={styles.tag}>

@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import { ChatItem, ChatItemProps } from '@/index';
+import ChatItem, { ChatItemProps } from '@/ChatItem';
 import type { DivProps } from '@/types';
 import { ChatMessage } from '@/types/chatMessage';
 

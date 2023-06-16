@@ -6,11 +6,11 @@ export default () => {
   const store = useCreateStore();
   const control: ChatListProps | any = useControls(
     {
-      type: {
-        value: 'chat',
-        options: ['doc', 'chat'],
-      },
       showTitle: false,
+      type: {
+        options: ['doc', 'chat'],
+        value: 'chat',
+      },
     },
     { store },
   );

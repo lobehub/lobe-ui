@@ -1,4 +1,4 @@
-import { ChatMessage, InternalChatContext, OpenAIRequestParams } from '../types';
+import { ChatMessage, InternalChatContext, OpenAIRequestParameters } from '../types';
 
 export interface ChatState extends InternalChatContext {
   /**
@@ -9,7 +9,7 @@ export interface ChatState extends InternalChatContext {
   /**
    * 编辑中的消息 id
    */
-  editingMessageId?: number | null;
+  editingMessageId?: number | undefined;
   /**
    * @title 加载状态
    * @type {boolean}
@@ -24,15 +24,15 @@ export interface ChatState extends InternalChatContext {
   onMessagesChange?: (messages: ChatMessage[]) => void;
   onResponseFinished?: (session: any) => void;
   onResponseStart?: (messages: ChatMessage[]) => Promise<void>;
-  request?: (params: OpenAIRequestParams) => Promise<Response>;
+  request?: (parameters: OpenAIRequestParameters) => Promise<Response>;
 }
 
 export const initialState: ChatState = {
+  changingSystemRole: false,
+  createAt: -1,
+  editingMessageId: undefined,
+  loading: false,
   message: '',
   messages: [],
-  loading: false,
-  changingSystemRole: false,
-  editingMessageId: null,
-  createAt: -1,
   updateAt: -1,
 };

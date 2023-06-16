@@ -3,31 +3,11 @@ import { rgba } from 'polished';
 
 export const useStyles = createStyles(({ css, token, prefixCls }) => {
   return {
-    pure: css`
-      .dumi-default-previewer {
-        margin: 0;
-        padding: 0;
-        border: none;
-      }
-
-      .dumi-default-previewer-demo {
-        padding: 0;
-      }
-
-      .dumi-default-previewer-meta {
-        display: none;
-      }
-    `,
     center: css`
       .dumi-default-previewer-demo {
         display: flex;
         align-items: center;
         justify-content: center;
-      }
-    `,
-    nopadding: css`
-      .dumi-default-previewer-demo {
-        padding: 0;
       }
     `,
     container: css`
@@ -96,6 +76,56 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
         }
       }
     `,
+    left: css`
+      .dumi-default-previewer {
+        flex-direction: row-reverse;
+
+        &-demo {
+          width: 50%;
+          border-left: 1px solid ${token.colorBorderSecondary};
+        }
+
+        &-meta {
+          width: 50%;
+        }
+      }
+    `,
+    nopadding: css`
+      .dumi-default-previewer-demo {
+        padding: 0;
+      }
+    `,
+    pure: css`
+      .dumi-default-previewer {
+        margin: 0;
+        padding: 0;
+        border: none;
+      }
+
+      .dumi-default-previewer-demo {
+        padding: 0;
+      }
+
+      .dumi-default-previewer-meta {
+        display: none;
+      }
+    `,
+
+    right: css`
+      .dumi-default-previewer {
+        flex-direction: row;
+
+        &-demo {
+          width: 50%;
+          border-right: 1px solid ${token.colorBorderSecondary};
+        }
+
+        &-meta {
+          width: 50%;
+        }
+      }
+    `,
+
     top: css`
       .dumi-default-previewer {
         flex-direction: column-reverse;
@@ -111,36 +141,6 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
 
         &-desc {
           order: 2;
-        }
-      }
-    `,
-
-    left: css`
-      .dumi-default-previewer {
-        flex-direction: row-reverse;
-
-        &-demo {
-          width: 50%;
-          border-left: 1px solid ${token.colorBorderSecondary};
-        }
-
-        &-meta {
-          width: 50%;
-        }
-      }
-    `,
-
-    right: css`
-      .dumi-default-previewer {
-        flex-direction: row;
-
-        &-demo {
-          width: 50%;
-          border-right: 1px solid ${token.colorBorderSecondary};
-        }
-
-        &-meta {
-          width: 50%;
         }
       }
     `,

@@ -78,7 +78,7 @@ export type ChatContextMap = Record<string, Omit<ChatContext, 'systemRole'>>;
 /**
  * 请求数据类型
  */
-export interface OpenAIRequestParams {
+export interface OpenAIRequestParameters {
   /**
    * 中间的聊天记录
    */

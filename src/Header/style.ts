@@ -2,13 +2,6 @@ import { createStyles } from 'antd-style';
 import { rgba } from 'polished';
 
 export const useStyles = createStyles(({ css, responsive, token, cx }) => ({
-  header: cx(
-    css`
-      grid-area: head;
-      align-self: stretch;
-      width: 100%;
-    `,
-  ),
   content: css`
     height: 64px;
     padding: 0 24px;
@@ -19,6 +12,13 @@ export const useStyles = createStyles(({ css, responsive, token, cx }) => ({
       padding: 0 12px;
     }
   `,
+  header: cx(
+    css`
+      grid-area: head;
+      align-self: stretch;
+      width: 100%;
+    `,
+  ),
   left: css`
     z-index: 10;
   `,

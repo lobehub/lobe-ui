@@ -4,18 +4,18 @@ export default () => {
   const store = useCreateStore();
   const { text, color, fontSize, fontWeight, upperCase } = useControls(
     {
-      text: 'StoryBook',
       color: '#ff005b',
-      fontWeight: {
-        value: 'normal',
-        options: ['normal', 'bold'],
-      },
       fontSize: {
-        value: 14,
-        step: 2,
         max: 100,
         min: 4,
+        step: 2,
+        value: 14,
       },
+      fontWeight: {
+        options: ['normal', 'bold'],
+        value: 'normal',
+      },
+      text: 'StoryBook',
       upperCase: false,
     },
     { store },

@@ -2,13 +2,13 @@ import { Hero, HeroProps } from '@lobehub/ui';
 
 const actions: HeroProps['actions'] = [
   {
-    text: 'Github',
     icon: 'Github',
     link: 'https://github.com/lobehub',
+    text: 'Github',
   },
   {
-    text: 'Get Started',
     link: '/components/action-icon',
+    text: 'Get Started',
     type: 'primary',
   },
 ];

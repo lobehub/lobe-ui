@@ -6,16 +6,16 @@ export default () => {
   const size: IconProps['size'] | any = useControls(
     {
       fontSize: {
-        value: 28,
-        step: 4,
-        min: 8,
         max: 100,
+        min: 8,
+        step: 4,
+        value: 28,
       },
       strokeWidth: {
-        value: 2,
-        step: 0.5,
-        min: 1,
         max: 2,
+        min: 1,
+        step: 0.5,
+        value: 2,
       },
     },
     { store },

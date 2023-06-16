@@ -24,7 +24,7 @@ interface ChatAction {
    * @param index - 消息索引或空
    * @returns void
    */
-  handleMessageEditing: (index?: number | null) => void;
+  handleMessageEditing: (index?: number | undefined) => void;
 
   /**
    * @title 重发消息
@@ -50,15 +50,11 @@ export const createStore: StateCreator<ChatStore, [['zustand/devtools', never]]>
     const messages = messagesReducer(get().messages, payload);
 
     set({ messages }, false, {
-      type: `dispatchMessage/${type}`,
       payload: res,
+      type: `dispatchMessage/${type}`,
     });
 
     get().onMessagesChange?.(messages);
-  },
-
-  handleMessageEditing: (index) => {
-    set({ editingMessageId: index });
   },
 
   generateMessage: async (message, messages, options) => {
@@ -78,37 +74,8 @@ export const createStore: StateCreator<ChatStore, [['zustand/devtools', never]]>
     onResponseFinished?.({ messages: get().messages });
   },
 
-  sendMessage: async () => {
-    const { message, dispatchMessage, generateMessage, messages } = get();
-
-    if (!message) return;
-
-    set({ message: '' });
-    dispatchMessage({ type: 'addUserMessage', message });
-
-    // 添加一个空的信息用于放置 ai 响应
-    dispatchMessage({ type: 'addMessage', message: { role: 'assistant', content: LOADING_FLAT } });
-
-    let currentResponse: string[] = [];
-
-    // 生成 messages
-    await generateMessage(message, messages, {
-      onMessageHandle: (text) => {
-        currentResponse = [...currentResponse, text];
-
-        dispatchMessage({ type: 'updateLatestBotMessage', responseStream: currentResponse });
-
-        // 滚动到最后一条消息
-        const item = document.getElementById('for-loading');
-
-        if (!item) return;
-
-        item.scrollIntoView({ behavior: 'smooth' });
-      },
-      onErrorHandle: (error) => {
-        dispatchMessage({ type: 'setErrorMessage', error, index: get().messages.length - 1 });
-      },
-    });
+  handleMessageEditing: (index) => {
+    set({ editingMessageId: index });
   },
 
   resendMessage: async (index) => {
@@ -118,7 +85,7 @@ export const createStore: StateCreator<ChatStore, [['zustand/devtools', never]]>
     // 用户通过手动删除，造成了他的问题是最后一条消息
     // 这种情况下，相当于用户重新发送消息
     if (messages.length === index && lastMessage?.role === 'user') {
-      dispatchMessage({ type: 'deleteMessage', index: index - 1 });
+      dispatchMessage({ index: index - 1, type: 'deleteMessage' });
       set({ message: lastMessage.content });
       await sendMessage();
 
@@ -133,36 +100,69 @@ export const createStore: StateCreator<ChatStore, [['zustand/devtools', never]]>
 
     if (!userMessage) return;
 
-    const targetMsg = messages[index];
+    const targetMessage = messages[index];
 
     // 如果不是 assistant 的消息，那么需要额外插入一条消息
-    if (targetMsg.role !== 'assistant') {
-      dispatchMessage({
-        type: 'insertMessage',
-        index,
-        message: { role: 'assistant', content: LOADING_FLAT },
-      });
-    } else {
-      const botPrevMsg = targetMsg.content;
+    if (targetMessage.role === 'assistant') {
+      const botPreviousMessage = targetMessage.content;
 
       // 保存之前的消息为历史消息
-      dispatchMessage({ type: 'updateMessageChoice', message: botPrevMsg, index });
-      dispatchMessage({ type: 'updateMessage', message: LOADING_FLAT, index });
+      dispatchMessage({ index, message: botPreviousMessage, type: 'updateMessageChoice' });
+      dispatchMessage({ index, message: LOADING_FLAT, type: 'updateMessage' });
+    } else {
+      dispatchMessage({
+        index,
+        message: { content: LOADING_FLAT, role: 'assistant' },
+        type: 'insertMessage',
+      });
     }
 
     // 重置错误信息
-    dispatchMessage({ type: 'setErrorMessage', error: undefined, index });
+    dispatchMessage({ error: undefined, index, type: 'setErrorMessage' });
 
     // 开始更新消息
     let currentResponse: string[] = [];
 
     await generateMessage(userMessage, contextMessages, {
+      onErrorHandle: (error) => {
+        dispatchMessage({ error, index, type: 'setErrorMessage' });
+      },
       onMessageHandle: (text) => {
         currentResponse = [...currentResponse, text];
-        dispatchMessage({ type: 'updateMessage', message: currentResponse.join(''), index });
+        dispatchMessage({ index, message: currentResponse.join(''), type: 'updateMessage' });
       },
+    });
+  },
+
+  sendMessage: async () => {
+    const { message, dispatchMessage, generateMessage, messages } = get();
+
+    if (!message) return;
+
+    set({ message: '' });
+    dispatchMessage({ message, type: 'addUserMessage' });
+
+    // 添加一个空的信息用于放置 ai 响应
+    dispatchMessage({ message: { content: LOADING_FLAT, role: 'assistant' }, type: 'addMessage' });
+
+    let currentResponse: string[] = [];
+
+    // 生成 messages
+    await generateMessage(message, messages, {
       onErrorHandle: (error) => {
-        dispatchMessage({ type: 'setErrorMessage', error, index });
+        dispatchMessage({ error, index: get().messages.length - 1, type: 'setErrorMessage' });
+      },
+      onMessageHandle: (text) => {
+        currentResponse = [...currentResponse, text];
+
+        dispatchMessage({ responseStream: currentResponse, type: 'updateLatestBotMessage' });
+
+        // 滚动到最后一条消息
+        const item = document.querySelector('#for-loading');
+
+        if (!item) return;
+
+        item.scrollIntoView({ behavior: 'smooth' });
       },
     });
   },

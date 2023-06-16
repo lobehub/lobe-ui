@@ -5,13 +5,13 @@ export default () => {
   const control: SnippetProps | any = useControls(
     {
       children: 'pnpm install @lobehub/ui',
-      language: 'sh',
-      symbol: '$',
       copyable: true,
+      language: 'sh',
       spotlight: false,
+      symbol: '$',
       type: {
-        value: 'ghost',
         options: ['ghost', 'block'],
+        value: 'ghost',
       },
     },
     { store },

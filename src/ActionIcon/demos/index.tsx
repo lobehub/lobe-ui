@@ -6,21 +6,20 @@ export default () => {
   const store = useCreateStore();
   const control: ActionIconProps | any = useControls(
     {
-      size: {
-        value: 'large',
-        options: ['large', 'normal', 'small'],
-      },
-      icon: {
-        value: LucideIcon.Settings,
-        options: LucideIcon,
-      },
       active: false,
       glass: false,
+      icon: {
+        options: LucideIcon,
+        value: LucideIcon.Settings,
+      },
+      size: {
+        options: ['large', 'normal', 'small'],
+        value: 'large',
+      },
       tooltip: folder({
-        title: '',
         arrow: false,
+        loading: false,
         placement: {
-          value: 'top',
           options: [
             'top',
             'left',
@@ -35,9 +34,10 @@ export default () => {
             'rightTop',
             'rightBottom',
           ],
+          value: 'top',
         },
         spotlight: false,
-        loading: false,
+        title: '',
       }),
     },
     { store },

@@ -7,15 +7,15 @@ import { useStyles } from './style';
 const useMouseOffset = (): any => {
   const [offset, setOffset] = useState<{ x: number; y: number }>();
   const [outside, setOutside] = useState(true);
-  const ref = useRef<HTMLDivElement>(null);
+  const reference = useRef<HTMLDivElement>();
 
   useEffect(() => {
-    if (ref.current && ref.current.parentElement) {
-      const el = ref.current.parentElement;
+    if (reference.current && reference.current.parentElement) {
+      const element = reference.current.parentElement;
 
       // debounce?
       const onMouseMove = (e: MouseEvent) => {
-        const bound = el.getBoundingClientRect();
+        const bound = element.getBoundingClientRect();
         setOffset({ x: e.clientX - bound.x, y: e.clientY - bound.y });
         setOutside(false);
       };
@@ -23,16 +23,16 @@ const useMouseOffset = (): any => {
       const onMouseLeave = () => {
         setOutside(true);
       };
-      el.addEventListener('mousemove', onMouseMove);
-      el.addEventListener('mouseleave', onMouseLeave);
+      element.addEventListener('mousemove', onMouseMove);
+      element.addEventListener('mouseleave', onMouseLeave);
       return () => {
-        el.removeEventListener('mousemove', onMouseMove);
-        el.removeEventListener('mouseleave', onMouseLeave);
+        element.removeEventListener('mousemove', onMouseMove);
+        element.removeEventListener('mouseleave', onMouseLeave);
       };
     }
   }, []);
 
-  return [offset, outside, ref] as const;
+  return [offset, outside, reference] as const;
 };
 
 export interface SpotlightProps extends DivProps {
@@ -43,11 +43,11 @@ export interface SpotlightProps extends DivProps {
   size?: number;
 }
 
-const Spotlight = memo<SpotlightProps>(({ className, size = 64, ...props }) => {
-  const [offset, outside, ref] = useMouseOffset();
+const Spotlight = memo<SpotlightProps>(({ className, size = 64, ...properties }) => {
+  const [offset, outside, reference] = useMouseOffset();
   const { styles, cx } = useStyles({ offset, outside, size });
 
-  return <div className={cx(styles, className)} ref={ref} {...props} />;
+  return <div className={cx(styles, className)} ref={reference} {...properties} />;
 });
 
 export default Spotlight;

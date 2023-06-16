@@ -65,19 +65,6 @@ export const useStyles = createStyles(
           }
         }
       `,
-      title: cx(
-        titleCls,
-        withTransition,
-        css`
-          pointer-events: none;
-
-          margin: 16px 0;
-
-          font-size: 20px;
-          line-height: ${token.lineHeightHeading3};
-          color: ${token.colorText};
-        `,
-      ),
       desc: cx(
         descCls,
         withTransition,
@@ -97,6 +84,14 @@ export const useStyles = createStyles(
           }
         `,
       ),
+      img: cx(
+        imgCls,
+        withTransition,
+        css`
+          ${genSize(20)};
+          color: ${token.colorText};
+        `,
+      ),
 
       imgContainer: cx(
         coverCls,
@@ -109,19 +104,24 @@ export const useStyles = createStyles(
         `,
       ),
 
-      img: cx(
-        imgCls,
-        withTransition,
-        css`
-          ${genSize(20)};
-          color: ${token.colorText};
-        `,
-      ),
-
       link: css`
         ${withTransition};
         margin-top: 24px;
       `,
+
+      title: cx(
+        titleCls,
+        withTransition,
+        css`
+          pointer-events: none;
+
+          margin: 16px 0;
+
+          font-size: 20px;
+          line-height: ${token.lineHeightHeading3};
+          color: ${token.colorText};
+        `,
+      ),
     };
   },
 );

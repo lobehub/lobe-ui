@@ -1,8 +1,10 @@
 import copy from 'copy-to-clipboard';
 import { Copy } from 'lucide-react';
+import { memo } from 'react';
 
+import ActionIcon, { type ActionIconSize } from '@/ActionIcon';
+import { type TooltipProps } from '@/Tooltip';
 import { useCopied } from '@/hooks/useCopied';
-import { ActionIcon, ActionIconSize, TooltipProps } from '@/index';
 import { DivProps } from '@/types';
 
 export interface CopyButtonProps extends DivProps {
@@ -28,30 +30,26 @@ export interface CopyButtonProps extends DivProps {
   size?: ActionIconSize;
 }
 
-const CopyButton = ({
-  content,
-  className,
-  placement = 'right',
-  size = 'site',
-  ...props
-}: CopyButtonProps) => {
-  const { copied, setCopied } = useCopied();
+const CopyButton = memo<CopyButtonProps>(
+  ({ content, className, placement = 'right', size = 'site', ...props }) => {
+    const { copied, setCopied } = useCopied();
 
-  return (
-    <ActionIcon
-      {...props}
-      className={className}
-      glass
-      icon={Copy}
-      onClick={() => {
-        copy(content);
-        setCopied();
-      }}
-      placement={placement}
-      size={size}
-      title={copied ? '✅ Success' : 'Copy'}
-    />
-  );
-};
+    return (
+      <ActionIcon
+        {...props}
+        className={className}
+        glass
+        icon={Copy}
+        onClick={() => {
+          copy(content);
+          setCopied();
+        }}
+        placement={placement}
+        size={size}
+        title={copied ? '✅ Success' : 'Copy'}
+      />
+    );
+  },
+);
 
 export default CopyButton;

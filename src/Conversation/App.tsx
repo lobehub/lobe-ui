@@ -36,9 +36,9 @@ const ChatContainer: FC<AppProps> = ({ readonly, includeSystem = true }) => {
           <Typography.Title level={4}>{title}</Typography.Title>
           <Typography.Text type={'secondary'}>{description}</Typography.Text>
         </Flexbox>
-      ) : null}
+      ) : undefined}
       <ChatList includeSystem={includeSystem} />
-      {showInput ? <InputArea /> : null}
+      {showInput ? <InputArea /> : undefined}
     </Flexbox>
   );
 };

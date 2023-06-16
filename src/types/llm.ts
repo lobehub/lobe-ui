@@ -13,7 +13,7 @@ export enum LanguageModel {
 }
 
 // 语言模型的设置参数
-export interface LLMParams {
+export interface LMParameters {
   /**
    * 控制生成文本中的惩罚系数，用于减少重复性
    */

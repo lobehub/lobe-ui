@@ -7,22 +7,24 @@ export const useStyles = createStyles(({ cx, css, token }, type: 'normal' | 'low
   let percentStyle;
 
   switch (type) {
-    case 'normal':
+    case 'normal': {
       percentStyle = css`
         color: ${token.colorSuccessText};
       `;
       break;
-    case 'low':
+    }
+    case 'low': {
       percentStyle = css`
         color: ${token.colorWarningText};
       `;
       break;
-    case 'overload':
-    default:
+    }
+    case 'overload': {
       percentStyle = css`
         color: ${token.colorErrorText};
       `;
       break;
+    }
   }
 
   return {

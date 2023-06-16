@@ -41,7 +41,7 @@ const Toolbar: FC<ToolbarProps> = memo(({ content, isUser, index, readonly, clas
   return (
     <Flexbox className={cx(className, styles.container)} gap={4} horizontal>
       <CopyButton content={content} placement={'top'} size={'small'} title={'复制'} />
-      {readonly ? null : (
+      {readonly ? undefined : (
         <>
           <IconAction
             icon={RotateCwIcon}
@@ -63,7 +63,7 @@ const Toolbar: FC<ToolbarProps> = memo(({ content, isUser, index, readonly, clas
           <Popconfirm
             okButtonProps={{ danger: true }}
             onConfirm={() => {
-              dispatchMessage({ type: 'deleteMessage', index });
+              dispatchMessage({ index, type: 'deleteMessage' });
             }}
             title={'确定要删除这条消息吗？'}
           >

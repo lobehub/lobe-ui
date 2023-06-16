@@ -23,7 +23,7 @@ const Footer = styled.div`
 `;
 
 const MockData = ({ text }: { text: string }) =>
-  Array(50)
+  Array.from({ length: 50 })
     .fill('')
     .map((_, index) => <div key={index}>{text}</div>);
 

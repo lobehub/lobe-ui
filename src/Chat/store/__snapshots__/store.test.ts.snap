@@ -11,7 +11,7 @@ exports[`createStore > should initialize with the correct state 1`] = `
   "changingSystemRole": false,
   "createAt": -1,
   "dispatchMessage": [Function],
-  "editingMessageId": null,
+  "editingMessageId": undefined,
   "generateMessage": [Function],
   "handleMessageEditing": [Function],
   "loading": false,

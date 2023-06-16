@@ -4,7 +4,9 @@ import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
-import { Icon, Markdown, MessageInput } from '@/index';
+import Icon from '@/Icon';
+import Markdown from '@/Markdown';
+import MessageInput from '@/MessageInput';
 
 import { useStyles } from './style';
 
@@ -42,13 +44,13 @@ const MessageModal = memo<MessageModalProps>(
     const { styles } = useStyles();
 
     const [isEdit, setTyping] = useControlledState(false, {
-      value: editing,
       onChange: onEditingChange,
+      value: editing,
     });
 
     const [expand, setExpand] = useControlledState(false, {
-      value: open,
       onChange: onOpenChange,
+      value: open,
     });
 
     return (
@@ -56,7 +58,7 @@ const MessageModal = memo<MessageModalProps>(
         cancelText={'Cancel'}
         className={styles.modal}
         closeIcon={<Icon icon={X} />}
-        footer={isEdit ? null : undefined}
+        footer={isEdit ? undefined : undefined}
         okText={'Edit'}
         onCancel={() => setExpand(false)}
         onOk={() => {

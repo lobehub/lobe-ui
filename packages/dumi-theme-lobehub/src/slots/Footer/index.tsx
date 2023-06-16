@@ -16,7 +16,7 @@ const Footer = memo(() => {
   const { styles, theme } = useStyles();
   const { mobile } = useResponsive();
 
-  if (!themeConfig.footer) return null;
+  if (!themeConfig.footer) return;
 
   const footer = themeConfig.footerConfig as IFooter;
 

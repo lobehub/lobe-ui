@@ -2,7 +2,8 @@ import { ConfigProvider, InputRef, Space } from 'antd';
 import { RotateCcw, Save } from 'lucide-react';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 
-import { ActionIcon, Input, InputProps } from '@/index';
+import ActionIcon from '@/ActionIcon';
+import { Input, InputProps } from '@/Input';
 
 export interface ControlInputProps extends Omit<InputProps, 'onChange' | 'value' | 'onAbort'> {
   onChange?: (value: string) => void;
@@ -12,9 +13,9 @@ export interface ControlInputProps extends Omit<InputProps, 'onChange' | 'value'
 }
 
 export const ControlInput = memo<ControlInputProps>(
-  ({ value, onChange, onValueChanging, onChangeEnd, ...props }) => {
+  ({ value, onChange, onValueChanging, onChangeEnd, ...properties }) => {
     const [input, setInput] = useState<string>(value || '');
-    const inputRef = useRef<InputRef>(null);
+    const inputReference = useRef<InputRef>();
     const isChineseInput = useRef(false);
     const isFocusing = useRef(false);
 
@@ -23,13 +24,13 @@ export const ControlInput = memo<ControlInputProps>(
     }, [input]);
 
     useEffect(() => {
-      if (typeof value !== 'undefined') setInput(value);
+      if (value !== undefined) setInput(value);
     }, [value]);
 
     return (
       <Input
-        ref={inputRef}
-        {...props}
+        ref={inputReference}
+        {...properties}
         onBlur={() => {
           isFocusing.current = false;
           onChangeEnd?.(input);

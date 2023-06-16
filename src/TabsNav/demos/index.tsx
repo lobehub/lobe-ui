@@ -5,16 +5,16 @@ export default () => {
     <TabsNav
       items={[
         {
-          label: 'Home',
           key: 'home',
+          label: 'Home',
         },
         {
-          label: 'Components',
           key: 'components',
+          label: 'Components',
         },
         {
-          label: 'Changelog',
           key: 'changelog',
+          label: 'Changelog',
         },
       ]}
     />

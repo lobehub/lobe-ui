@@ -43,18 +43,6 @@ interface Store {
 }
 
 export const useHighlight = create<Store>((set, get) => ({
-  highlighter: undefined,
-  initHighlighter: async () => {
-    if (!get().highlighter) {
-      const highlighter = await getHighlighter({
-        langs: languageMap as any,
-        themes: [themeConfig(true), themeConfig(false)],
-      });
-
-      set({ highlighter });
-    }
-  },
-
   codeToHtml: (text, language, isDarkMode) => {
     const { highlighter } = get();
 
@@ -65,8 +53,20 @@ export const useHighlight = create<Store>((set, get) => ({
         lang: language,
         theme: isDarkMode ? 'dark' : 'light',
       });
-    } catch (e) {
+    } catch {
       return text;
+    }
+  },
+  highlighter: undefined,
+
+  initHighlighter: async () => {
+    if (!get().highlighter) {
+      const highlighter = await getHighlighter({
+        langs: languageMap as any,
+        themes: [themeConfig(true), themeConfig(false)],
+      });
+
+      set({ highlighter });
     }
   },
 }));

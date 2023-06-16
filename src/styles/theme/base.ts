@@ -7,9 +7,9 @@ const FONT_CODE = `ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation
 
 export const baseToken: Partial<AliasToken> = {
   borderRadius: 5,
-  borderRadiusXS: 3,
-  borderRadiusSM: 3,
   borderRadiusLG: 8,
+  borderRadiusSM: 3,
+  borderRadiusXS: 3,
   controlHeight: 36,
   fontFamily: [FONT_EN, FONT_CN, FONT_EMOJI].join(','),
   fontFamilyCode: [FONT_CODE, FONT_CN, FONT_EMOJI].join(','),

@@ -20,7 +20,7 @@ export const useStyles = createStyles(
       background: radial-gradient(
         ${spotlightSize} circle at ${spotlightX} ${spotlightY},
         ${isDarkMode ? token.colorText : '#fff'},
-        ${!isDarkMode ? token.colorTextQuaternary : 'transparent'}
+        ${isDarkMode ? 'transparent' : token.colorTextQuaternary}
       );
       border-radius: inherit;
 

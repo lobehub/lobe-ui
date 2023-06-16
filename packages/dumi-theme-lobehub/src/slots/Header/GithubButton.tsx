@@ -7,11 +7,11 @@ import { githubSel, useSiteStore } from '@/store';
 const GithubButton = memo(() => {
   const repoUrl = useSiteStore(githubSel);
 
-  return !repoUrl ? null : (
+  return repoUrl ? (
     <a href={repoUrl} rel="noreferrer" target={'_blank'}>
       <ActionIcon icon={Github} size="site" />
     </a>
-  );
+  ) : undefined;
 });
 
 export default GithubButton;

@@ -1,5 +1,5 @@
 import { useTheme } from 'antd-style';
-import { memo } from 'react';
+import { type ReactNode, memo } from 'react';
 
 import { DivProps } from '@/types';
 
@@ -14,7 +14,7 @@ export interface LogoProps extends DivProps {
   /**
    * @description Additional React Node to be rendered next to the logo
    */
-  extra?: React.ReactNode;
+  extra?: ReactNode;
   /**
    * @description Size of the logo in pixels
    * @default 32
@@ -30,24 +30,29 @@ export interface LogoProps extends DivProps {
 const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className, ...props }) => {
   const theme = useTheme();
   const { styles, cx } = useStyles();
-  let logoComponent: React.ReactNode;
+  let logoComponent: ReactNode;
 
   switch (type) {
-    case '3d':
+    case '3d': {
       return <Logo3D style={{ height: size, width: size, ...style }} {...props} />;
-    case 'flat':
+    }
+    case 'flat': {
       return <LogoFlat style={{ height: size, width: size, ...style }} {...props} />;
-    case 'high-contrast':
+    }
+    case 'high-contrast': {
       return <LogoHighContrast style={{ height: size, width: size, ...style }} {...props} />;
-    case 'text':
+    }
+    case 'text': {
       return <LogoText style={{ height: size, width: 'auto', ...style }} {...props} />;
-    case 'combine':
+    }
+    case 'combine': {
       logoComponent = (
         <>
           <Logo3D style={{ height: size, width: size }} />
-          <LogoText style={{ marginLeft: Math.round(size / 4), height: size, width: 'auto' }} />
+          <LogoText style={{ height: size, marginLeft: Math.round(size / 4), width: 'auto' }} />
         </>
       );
+    }
   }
 
   const extraSize = Math.round((size / 3) * 1.9);
@@ -57,7 +62,7 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
       {logoComponent}
       {extra && (
         <>
-          <Divider style={{ height: extraSize, width: extraSize, color: theme.colorBorder }} />
+          <Divider style={{ color: theme.colorBorder, height: extraSize, width: extraSize }} />
           <div className={styles.extraTitle} style={{ fontSize: extraSize }}>
             {extra}
           </div>

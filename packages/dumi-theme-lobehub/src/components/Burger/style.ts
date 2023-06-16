@@ -5,6 +5,61 @@ export const useStyles = createStyles(({ token, prefixCls, cx, css, stylish }) =
   const offset = 6;
 
   return {
+    active: css`
+      &::before,
+      &::after {
+        background: ${token.colorText};
+      }
+
+      & {
+        background: transparent;
+      }
+
+      &::before {
+        top: 0;
+        transform: rotate(-135deg);
+      }
+
+      &::after {
+        top: 0;
+        transform: rotate(135deg);
+      }
+    `,
+    container: css`
+      cursor: pointer;
+      width: ${token.controlHeight}px;
+      height: ${token.controlHeight}px;
+      border-radius: ${token.borderRadius}px;
+    `,
+    drawer: css`
+      &.${prefixCls}-drawer-content {
+        background: transparent;
+      }
+
+      .${prefixCls}-drawer-body {
+        display: flex;
+        flex-direction: column;
+      }
+    `,
+    drawerRoot: css`
+      top: ${token.headerHeight + 1}px;
+
+      :focus-visible {
+        outline: none;
+      }
+
+      .${prefixCls}-drawer {
+        &-mask {
+          ${stylish.blur};
+          background-color: ${rgba(token.colorBgLayout, 0.5)};
+        }
+
+        &-content-wrapper {
+          box-shadow: none;
+        }
+      }
+    `,
+
     fillRect: css`
       flex: 1;
       width: 100%;
@@ -44,61 +99,6 @@ export const useStyles = createStyles(({ token, prefixCls, cx, css, stylish }) =
         }
       `,
     ),
-    active: css`
-      &::before,
-      &::after {
-        background: ${token.colorText};
-      }
-
-      & {
-        background: transparent;
-      }
-
-      &::before {
-        top: 0;
-        transform: rotate(-135deg);
-      }
-
-      &::after {
-        top: 0;
-        transform: rotate(135deg);
-      }
-    `,
-    container: css`
-      cursor: pointer;
-      width: ${token.controlHeight}px;
-      height: ${token.controlHeight}px;
-      border-radius: ${token.borderRadius}px;
-    `,
-
-    drawerRoot: css`
-      top: ${token.headerHeight + 1}px;
-
-      :focus-visible {
-        outline: none;
-      }
-
-      .${prefixCls}-drawer {
-        &-mask {
-          ${stylish.blur};
-          background-color: ${rgba(token.colorBgLayout, 0.5)};
-        }
-
-        &-content-wrapper {
-          box-shadow: none;
-        }
-      }
-    `,
-    drawer: css`
-      &.${prefixCls}-drawer-content {
-        background: transparent;
-      }
-
-      .${prefixCls}-drawer-body {
-        display: flex;
-        flex-direction: column;
-      }
-    `,
 
     menu: css`
       background: transparent;

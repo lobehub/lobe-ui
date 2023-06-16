@@ -71,6 +71,27 @@ export const useStyles = createStyles(({ token }) => {
   `;
 
   return {
+    bottomFloat: cx(
+      float,
+      css`
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+      `,
+    ),
+    bottomHandle: cx(
+      `${prefix}-bottom-handle`,
+      css`
+        ${commonHandle};
+
+        &::before {
+          bottom: 50%;
+          width: 100%;
+          height: 2px;
+        }
+      `,
+    ),
     container: cx(
       prefix,
       css`
@@ -87,6 +108,18 @@ export const useStyles = createStyles(({ token }) => {
     fixed: css`
       position: relative;
     `,
+    fullscreen: css`
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    `,
+    handlerIcon: css`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ${token.motionEaseOut};
+    `,
     leftFloat: cx(
       float,
       css`
@@ -94,6 +127,25 @@ export const useStyles = createStyles(({ token }) => {
         bottom: 0;
         left: 0;
         height: 100%;
+      `,
+    ),
+    leftHandle: cx(
+      css`
+        ${commonHandle};
+
+        &::before {
+          left: 50%;
+          width: 2px;
+          height: 100%;
+        }
+      `,
+      `${prefix}-left-handle`,
+    ),
+    panel: cx(
+      `${prefix}-fixed`,
+      css`
+        overflow: hidden;
+        transition: all 0.2s ${token.motionEaseOut};
       `,
     ),
     rightFloat: cx(
@@ -105,22 +157,35 @@ export const useStyles = createStyles(({ token }) => {
         height: 100%;
       `,
     ),
-    topFloat: cx(
-      float,
+    rightHandle: cx(
       css`
-        top: 0;
-        right: 0;
-        left: 0;
-        width: 100%;
+        ${commonHandle};
+        &::before {
+          right: 50%;
+          width: 2px;
+          height: 100%;
+        }
       `,
+      `${prefix}-right-handle`,
     ),
-    bottomFloat: cx(
-      float,
+    toggleBottom: cx(
+      `${prefix}-toggle`,
+      `${prefix}-toggle-bottom`,
+      commonToggle,
       css`
-        right: 0;
-        bottom: 0;
-        left: 0;
+        bottom: -${offset}px;
         width: 100%;
+        height: ${toggleShort}px;
+
+        > div {
+          left: 50%;
+
+          width: ${toggleLength}px;
+          height: 16px;
+          margin-left: -20px;
+
+          border-radius: 0 0 4px 4px;
+        }
       `,
     ),
     toggleLeft: cx(
@@ -183,61 +248,14 @@ export const useStyles = createStyles(({ token }) => {
         }
       `,
     ),
-    toggleBottom: cx(
-      `${prefix}-toggle`,
-      `${prefix}-toggle-bottom`,
-      commonToggle,
+    topFloat: cx(
+      float,
       css`
-        bottom: -${offset}px;
+        top: 0;
+        right: 0;
+        left: 0;
         width: 100%;
-        height: ${toggleShort}px;
-
-        > div {
-          left: 50%;
-
-          width: ${toggleLength}px;
-          height: 16px;
-          margin-left: -20px;
-
-          border-radius: 0 0 4px 4px;
-        }
       `,
-    ),
-    panel: cx(
-      `${prefix}-fixed`,
-      css`
-        overflow: hidden;
-        transition: all 0.2s ${token.motionEaseOut};
-      `,
-    ),
-    handlerIcon: css`
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ${token.motionEaseOut};
-    `,
-    leftHandle: cx(
-      css`
-        ${commonHandle};
-
-        &::before {
-          left: 50%;
-          width: 2px;
-          height: 100%;
-        }
-      `,
-      `${prefix}-left-handle`,
-    ),
-    rightHandle: cx(
-      css`
-        ${commonHandle};
-        &::before {
-          right: 50%;
-          width: 2px;
-          height: 100%;
-        }
-      `,
-      `${prefix}-right-handle`,
     ),
     topHandle: cx(
       `${prefix}-top-handle`,
@@ -251,23 +269,5 @@ export const useStyles = createStyles(({ token }) => {
         }
       `,
     ),
-    bottomHandle: cx(
-      `${prefix}-bottom-handle`,
-      css`
-        ${commonHandle};
-
-        &::before {
-          bottom: 50%;
-          width: 100%;
-          height: 2px;
-        }
-      `,
-    ),
-    fullscreen: css`
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    `,
   };
 });

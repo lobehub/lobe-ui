@@ -24,7 +24,7 @@ const SearchBar = memo(() => {
         spotlight
       />
 
-      {keywords.trim() && focusing && (result.length || !loading) && (
+      {keywords.trim() && focusing && (result.length > 0 || !loading) && (
         <div className={styles.popover}>
           <SearchResult data={result} loading={loading} />
         </div>

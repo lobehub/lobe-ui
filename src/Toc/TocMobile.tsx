@@ -23,21 +23,21 @@ export interface TocMobileProps {
 
 export const mapItems = (items: AnchorItem[]) =>
   items.map((item) => ({
-    href: `#${item.id}`,
-    title: item.title,
-    key: item.id,
     children: item.children?.map((child) => ({
       href: `#${child.id}`,
-      title: child?.title,
       key: child.id,
+      title: child?.title,
     })),
+    href: `#${item.id}`,
+    key: item.id,
+    title: item.title,
   }));
 
 const TocMobile = memo<TocMobileProps>(
   ({ items, activeKey, onChange, getContainer, headerHeight = 64, tocWidth = 176 }) => {
     const [activeLink, setActiveLink] = useControlledState<string>('', {
-      value: activeKey,
       onChange,
+      value: activeKey,
     });
     const { styles } = useStyles({ headerHeight, tocWidth });
 
@@ -53,12 +53,12 @@ const TocMobile = memo<TocMobileProps>(
               isActive ? (
                 <ActionIcon
                   icon={PanelTopClose}
-                  size={{ fontSize: 16, strokeWidth: 1, blockSize: 24, borderRadius: 3 }}
+                  size={{ blockSize: 24, borderRadius: 3, fontSize: 16, strokeWidth: 1 }}
                 />
               ) : (
                 <ActionIcon
                   icon={PanelTopOpen}
-                  size={{ fontSize: 16, strokeWidth: 1, blockSize: 24, borderRadius: 3 }}
+                  size={{ blockSize: 24, borderRadius: 3, fontSize: 16, strokeWidth: 1 }}
                 />
               )
             }
@@ -67,7 +67,7 @@ const TocMobile = memo<TocMobileProps>(
           >
             <Collapse.Panel
               forceRender
-              header={!activeAnchor ? 'TOC' : activeAnchor.title}
+              header={activeAnchor ? activeAnchor.title : 'TOC'}
               key={'toc'}
             >
               <ConfigProvider theme={{ token: { fontSize: 14, sizeStep: 4 } }}>

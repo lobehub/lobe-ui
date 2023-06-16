@@ -4,14 +4,14 @@ export default () => {
   const store = useCreateStore();
   const controls: SearchBarProps | any = useControls(
     {
-      placeholder: 'Type keywords...',
-      type: {
-        value: 'ghost',
-        options: ['ghost', 'block'],
-      },
       enableShortKey: true,
+      placeholder: 'Type keywords...',
       shortKey: 'f',
       spotlight: false,
+      type: {
+        options: ['ghost', 'block'],
+        value: 'ghost',
+      },
     },
     { store },
   );

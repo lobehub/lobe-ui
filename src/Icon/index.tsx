@@ -19,19 +19,22 @@ const calcSize = (size?: IconSize) => {
   let strokeWidth: number;
 
   switch (size) {
-    case 'large':
+    case 'large': {
       fontSize = 24;
       strokeWidth = 2;
       break;
-    case 'normal':
+    }
+    case 'normal': {
       fontSize = 20;
       strokeWidth = 2;
       break;
-    case 'small':
+    }
+    case 'small': {
       fontSize = 14;
       strokeWidth = 1.5;
       break;
-    default:
+    }
+    default: {
       if (size) {
         fontSize = size?.fontSize || 24;
         strokeWidth = size?.strokeWidth || 2;
@@ -40,6 +43,7 @@ const calcSize = (size?: IconSize) => {
         strokeWidth = 2;
       }
       break;
+    }
   }
   return { fontSize, strokeWidth };
 };

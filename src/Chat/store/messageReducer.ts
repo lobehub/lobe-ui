@@ -21,69 +21,80 @@ export type MessageDispatch =
 
 export const messagesReducer = (state: ChatMessage[], payload: MessageDispatch): ChatMessage[] => {
   switch (payload.type) {
-    case 'addMessage':
+    case 'addMessage': {
       return [...state, payload.message];
+    }
 
-    case 'insertMessage':
+    case 'insertMessage': {
       return produce(state, (draftState) => {
         draftState.splice(payload.index, 0, payload.message);
       });
+    }
 
-    case 'deleteMessage':
-      return state.filter((_, i) => i !== payload.index);
-    case 'resetMessages':
+    case 'deleteMessage': {
+      return state.filter((_, index) => index !== payload.index);
+    }
+    case 'resetMessages': {
       return [];
+    }
 
-    case 'updateMessage':
+    case 'updateMessage': {
       return produce(state, (draftState) => {
         const { index, message } = payload;
 
         draftState[index].content = message;
       });
-    case 'updateMessageRole':
+    }
+    case 'updateMessageRole': {
       return produce(state, (draftState) => {
         const { index, role } = payload;
 
         draftState[index].role = role;
       });
+    }
 
-    case 'addUserMessage':
+    case 'addUserMessage': {
       return produce(state, (draftState) => {
-        draftState.push({ role: 'user', content: payload.message });
+        draftState.push({ content: payload.message, role: 'user' });
       });
+    }
 
-    case 'updateLatestBotMessage':
+    case 'updateLatestBotMessage': {
       return produce(state, () => {
         const { responseStream } = payload;
-        const newMessage = { role: 'assistant', content: responseStream.join('') };
+        const newMessage = { content: responseStream.join(''), role: 'assistant' };
 
         return [...state.slice(0, -1), newMessage];
       });
+    }
 
-    case 'setErrorMessage':
+    case 'setErrorMessage': {
       return produce(state, (draftState) => {
         const { index, error } = payload;
 
         draftState[index].error = error;
       });
+    }
 
-    case 'updateMessageChoice':
+    case 'updateMessageChoice': {
       return produce(state, (draftState) => {
         const { index, message } = payload;
 
         const botMessage = draftState[index];
-        const prevMsg = botMessage.content;
+        const previousMessage = botMessage.content;
 
         botMessage.content = message;
 
         if (botMessage.choices) {
-          botMessage.choices.push(prevMsg);
+          botMessage.choices.push(previousMessage);
         } else {
-          botMessage.choices = [prevMsg];
+          botMessage.choices = [previousMessage];
         }
       });
+    }
 
-    default:
-      throw Error('暂未实现的 type，请检查 reducer');
+    default: {
+      throw new Error('暂未实现的 type，请检查 reducer');
+    }
   }
 };

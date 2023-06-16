@@ -21,7 +21,7 @@ import {
 } from '@/store';
 import customToken from '@/styles/customToken';
 
-const DocLayout = memo(() => {
+const DocumentLayout = memo(() => {
   const intl = useIntl();
   const { hash } = useLocation();
   const theme = useTheme();
@@ -30,11 +30,11 @@ const DocLayout = memo(() => {
   const { fm, noToc, siteTitle, isHomePage, loading, isChanlogPage } = useSiteStore(
     (s) => ({
       fm: s.routeMeta.frontmatter,
-      noToc: tocAnchorItemSel(s).length === 0,
-      siteTitle: siteTitleSel(s),
+      isChanlogPage: s.location.pathname === '/changelog',
       isHomePage: isHeroPageSel(s),
       loading: s.siteData.loading,
-      isChanlogPage: s.location.pathname === '/changelog',
+      noToc: tocAnchorItemSel(s).length === 0,
+      siteTitle: siteTitleSel(s),
     }),
     shallow,
   );
@@ -70,7 +70,7 @@ const DocLayout = memo(() => {
 
     if (!id) return;
     setTimeout(() => {
-      const elm = document.getElementById(decodeURIComponent(id));
+      const elm = document.querySelector(`#${decodeURIComponent(id)}`);
       if (elm) {
         elm.scrollIntoView();
         window.scrollBy({ top: -80 });
@@ -99,8 +99,8 @@ const DocLayout = memo(() => {
       header={<Header />}
       headerHeight={mobile && !isHomePage ? theme.headerHeight + 36 : theme.headerHeight}
       helmet={<HelmetBlock />}
-      sidebar={hideSidebar ? null : <Sidebar />}
-      toc={hideToc ? null : <Toc />}
+      sidebar={hideSidebar ? undefined : <Sidebar />}
+      toc={hideToc ? undefined : <Toc />}
       tocWidth={hideToc ? 0 : theme.tocWidth}
     >
       <Page />
@@ -122,7 +122,7 @@ export default memo(() => {
         customToken={customToken}
         themeMode={themeMode}
       >
-        <DocLayout />
+        <DocumentLayout />
       </ThemeProvider>
     </>
   );

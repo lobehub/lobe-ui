@@ -1,8 +1,8 @@
 import { extractStaticStyle } from 'antd-style';
 import chalk from 'chalk';
 import type { IApi } from 'dumi';
-import fs from 'fs';
-import { join } from 'path';
+import fs from 'node:fs';
+import { join } from 'node:path';
 
 import { getHash } from './utils';
 
@@ -49,7 +49,7 @@ const SSRPlugin = (api: IApi) => {
         // 提取 antd-style 样式到独立 css 文件
         const styles = extractStaticStyle(file.content, { antdCache });
 
-        styles.forEach((result) => {
+        for (const result of styles) {
           api.logger.event(
             `${chalk.yellow(file.path)} include ${chalk.blue`[${result.key}]`} ${chalk.yellow(
               result.ids.length,
@@ -59,7 +59,7 @@ const SSRPlugin = (api: IApi) => {
           const cssFile = writeCSSFile(result.key, result.ids.join(''), result.css);
 
           file.content = addLinkStyle(file.content, cssFile);
-        });
+        }
 
         return file;
       }),

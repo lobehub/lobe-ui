@@ -1,12 +1,11 @@
 import { memo } from 'react';
 
-import { CopyButton, Spotlight } from '@/index';
+import CopyButton from '@/CopyButton';
+import Spotlight from '@/Spotlight';
 import { DivProps } from '@/types';
 
-import SyntaxHighlighter, { type SyntaxHighlighterProps } from './SyntaxHighlighter';
+import SyntaxHighlighter from './SyntaxHighlighter';
 import { useStyles } from './style';
-
-export { SyntaxHighlighter, SyntaxHighlighterProps };
 
 export interface HighlighterProps extends DivProps {
   /**
@@ -74,3 +73,5 @@ export const Highlighter = memo<HighlighterProps>(
 );
 
 export default Highlighter;
+
+export { default as SyntaxHighlighter, type SyntaxHighlighterProps } from './SyntaxHighlighter';

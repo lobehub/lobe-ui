@@ -14,10 +14,10 @@ export interface ConversationProps extends StoreUpdaterProps, AppProps {
 }
 
 const Conversation = memo<ConversationProps>(({ readonly, devtools, includeSystem, ...res }) => {
-  const ref = useRef(() => createChatStore(devtools));
+  const reference = useRef(() => createChatStore(devtools));
 
   return (
-    <Provider createStore={ref.current}>
+    <Provider createStore={reference.current}>
       <ChatContainer includeSystem={includeSystem} readonly={readonly} />
       <StoreUpdater {...res} />
     </Provider>

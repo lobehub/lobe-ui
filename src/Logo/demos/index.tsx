@@ -5,14 +5,14 @@ export default () => {
   const control: LogoProps | any = useControls(
     {
       size: {
-        value: 64,
-        step: 4,
-        min: 16,
         max: 240,
+        min: 16,
+        step: 4,
+        value: 64,
       },
       type: {
-        value: '3d',
         options: ['3d', 'flat', 'high-contrast', 'text', 'combine'],
+        value: '3d',
       },
     },
     { store },

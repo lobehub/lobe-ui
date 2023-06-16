@@ -40,20 +40,20 @@ const generateCustomColorPalette = ({
 }): Partial<AliasToken> => {
   const colorStepPalette: { [key: string]: string } = {};
 
-  scale[appearance].forEach((color, index) => {
-    if (index === 0 || index === 12) return;
+  for (const [index, color] of scale[appearance].entries()) {
+    if (index === 0 || index === 12) continue;
 
     colorStepPalette[`${name}${index}`] = color;
-  });
-  scale[`${appearance}A`].forEach((color, index) => {
-    if (index === 0 || index === 12) return;
+  }
+  for (const [index, color] of scale[`${appearance}A`].entries()) {
+    if (index === 0 || index === 12) continue;
 
     colorStepPalette[`${name}${index}A`] = color;
-  });
+  }
 
   return {
     ...colorStepPalette,
-    ...generateColorPalette({ name, scale, appearance }),
+    ...generateColorPalette({ appearance, name, scale }),
   };
 };
 
@@ -61,16 +61,16 @@ const generateCustomColorPalette = ({
 export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMode }) => {
   let colorCustomToken: any = {};
 
-  Object.entries(colorScales).forEach(([type, scale]) => {
+  for (const [type, scale] of Object.entries(colorScales)) {
     colorCustomToken = {
       ...colorCustomToken,
       ...generateCustomColorPalette({
+        appearance: isDarkMode ? 'dark' : 'light',
         name: camelCase(type),
         scale,
-        appearance: isDarkMode ? 'dark' : 'light',
       }),
     };
-  });
+  }
 
   return colorCustomToken;
 };

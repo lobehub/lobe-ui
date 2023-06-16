@@ -27,9 +27,9 @@ import { useStyles } from './style';
 interface OptionType {
   icon?: ReactNode;
   label: ReactNode;
-  value: string | number | null;
+  value: string | number | undefined;
 }
-export interface NativeSelectProps {
+export interface NativeSelectProperties {
   onChange?: (index: number) => void;
   options?: OptionType[];
   prefixCls?: string;
@@ -39,22 +39,22 @@ export interface NativeSelectProps {
   value?: number;
 }
 
-const NativeSelect = memo<NativeSelectProps>(
+const NativeSelect = memo<NativeSelectProperties>(
   ({ options = [], value, prefixCls, onChange, renderValue, renderItem, style }) => {
     const cls = prefixCls ?? 'native-select';
-    const [selectedIndex, setSelectedIndex] = useControlledState<number>(0, { value, onChange });
+    const [selectedIndex, setSelectedIndex] = useControlledState<number>(0, { onChange, value });
 
     const { styles } = useStyles(cls);
-    const listRef = useRef<Array<HTMLElement | null>>([]);
-    const listContentRef = useRef<Array<string | null>>([]);
-    const overflowRef = useRef<SideObject>(null);
-    const allowSelectRef = useRef(false);
-    const allowMouseUpRef = useRef(true);
-    const selectTimeoutRef = useRef<any>();
-    const scrollRef = useRef<HTMLDivElement>(null);
+    const listReference = useRef<Array<HTMLElement | undefined>>([]);
+    const listContentReference = useRef<Array<string | undefined>>([]);
+    const overflowReference = useRef<SideObject>();
+    const allowSelectReference = useRef(false);
+    const allowMouseUpReference = useRef(true);
+    const selectTimeoutReference = useRef<any>();
+    const scrollReference = useRef<HTMLDivElement>();
 
     const [open, setOpen] = useState(false);
-    const [activeIndex, setActiveIndex] = useState<number | null>(null);
+    const [activeIndex, setActiveIndex] = useState<number | undefined>();
     const [fallback, setFallback] = useState(false);
     const [innerOffset, setInnerOffset] = useState(0);
     const [touch, setTouch] = useState(false);
@@ -69,17 +69,13 @@ const NativeSelect = memo<NativeSelectProps>(
     }
 
     const { x, y, strategy, refs, context } = useFloating({
-      placement: 'bottom-start',
-      open,
-      onOpenChange: setOpen,
-      whileElementsMounted: autoUpdate,
       middleware: fallback
         ? [
             offset(5),
             touch ? shift({ crossAxis: true, padding: 10 }) : flip({ padding: 10 }),
             size({
               apply({ availableHeight }) {
-                Object.assign(scrollRef.current?.style ?? {}, {
+                Object.assign(scrollReference.current?.style ?? {}, {
                   maxHeight: `${availableHeight}px`,
                 });
               },
@@ -88,18 +84,22 @@ const NativeSelect = memo<NativeSelectProps>(
           ]
         : [
             inner({
-              listRef,
-              overflowRef,
-              scrollRef,
               index: selectedIndex,
+              listRef: listReference,
+              minItemsVisible: touch ? 8 : 4,
               offset: innerOffset,
               onFallbackChange: setFallback,
+              overflowRef: overflowReference,
               padding: 10,
-              minItemsVisible: touch ? 8 : 4,
               referenceOverflowThreshold: 20,
+              scrollRef: scrollReference,
             }),
             offset({ crossAxis: -4 }),
           ],
+      onOpenChange: setOpen,
+      open,
+      placement: 'bottom-start',
+      whileElementsMounted: autoUpdate,
     });
 
     const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([
@@ -109,35 +109,35 @@ const NativeSelect = memo<NativeSelectProps>(
       useInnerOffset(context, {
         enabled: !fallback,
         onChange: setInnerOffset,
-        overflowRef,
-        scrollRef,
+        overflowRef: overflowReference,
+        scrollRef: scrollReference,
       }),
       useListNavigation(context, {
-        listRef,
         activeIndex,
-        selectedIndex,
+        listRef: listReference,
         onNavigate: setActiveIndex,
+        selectedIndex,
       }),
       useTypeahead(context, {
-        listRef: listContentRef,
         activeIndex,
+        listRef: listContentReference,
         onMatch: open ? setActiveIndex : setSelectedIndex,
       }),
     ]);
 
     useEffect(() => {
       if (open) {
-        selectTimeoutRef.current = setTimeout(() => {
-          allowSelectRef.current = true;
+        selectTimeoutReference.current = setTimeout(() => {
+          allowSelectReference.current = true;
         }, 300);
 
         return () => {
-          clearTimeout(selectTimeoutRef.current);
+          clearTimeout(selectTimeoutReference.current);
         };
       }
 
-      allowSelectRef.current = false;
-      allowMouseUpRef.current = true;
+      allowSelectReference.current = false;
+      allowMouseUpReference.current = true;
     }, [open]);
 
     const { label } = options[selectedIndex] || {};
@@ -151,13 +151,13 @@ const NativeSelect = memo<NativeSelectProps>(
           style={style}
           type={'button'}
           {...getReferenceProps({
-            onTouchStart() {
-              setTouch(true);
-            },
             onPointerMove({ pointerType }) {
               if (pointerType === 'mouse') {
                 setTouch(false);
               }
+            },
+            onTouchStart() {
+              setTouch(true);
             },
           })}
         >
@@ -171,14 +171,14 @@ const NativeSelect = memo<NativeSelectProps>(
                 <div
                   ref={refs.setFloating}
                   style={{
+                    left: x ?? 0,
                     position: strategy,
                     top: y ?? 0,
-                    left: x ?? 0,
                   }}
                 >
                   <div
                     className={styles.container}
-                    ref={scrollRef}
+                    ref={scrollReference}
                     style={{ overflowY: 'auto' }}
                     {...getFloatingProps({
                       onContextMenu(e) {
@@ -186,50 +186,50 @@ const NativeSelect = memo<NativeSelectProps>(
                       },
                     })}
                   >
-                    {options.map((item, i) => {
+                    {options.map((item, index) => {
                       return (
                         <SelectItem
                           disabled={blockSelection}
-                          isActive={i === activeIndex}
-                          isSelected={i === selectedIndex}
+                          isActive={index === activeIndex}
+                          isSelected={index === selectedIndex}
                           key={item.value}
-                          label={renderItem ? renderItem(item, i) : item.label}
+                          label={renderItem ? renderItem(item, index) : item.label}
                           prefixCls={cls}
                           ref={(node) => {
-                            listRef.current[i] = node;
-                            listContentRef.current[i] = item.label as string;
+                            listReference.current[index] = node;
+                            listContentReference.current[index] = item.label as string;
                           }}
                           value={item.value}
                           {...getItemProps({
-                            onTouchStart() {
-                              allowSelectRef.current = true;
-                              allowMouseUpRef.current = false;
-                            },
-                            onKeyDown() {
-                              allowSelectRef.current = true;
-                            },
                             onClick() {
-                              if (allowSelectRef.current) {
-                                setSelectedIndex(i);
+                              if (allowSelectReference.current) {
+                                setSelectedIndex(index);
                                 setOpen(false);
                               }
                             },
+                            onKeyDown() {
+                              allowSelectReference.current = true;
+                            },
                             onMouseUp() {
-                              if (!allowMouseUpRef.current) {
+                              if (!allowMouseUpReference.current) {
                                 return;
                               }
 
-                              if (allowSelectRef.current) {
-                                setSelectedIndex(i);
+                              if (allowSelectReference.current) {
+                                setSelectedIndex(index);
                                 setOpen(false);
                               }
 
                               // On touch devices, prevent the element from
                               // immediately closing `onClick` by deferring it
-                              clearTimeout(selectTimeoutRef.current);
-                              selectTimeoutRef.current = setTimeout(() => {
-                                allowSelectRef.current = true;
+                              clearTimeout(selectTimeoutReference.current);
+                              selectTimeoutReference.current = setTimeout(() => {
+                                allowSelectReference.current = true;
                               });
+                            },
+                            onTouchStart() {
+                              allowSelectReference.current = true;
+                              allowMouseUpReference.current = false;
                             },
                           })}
                         />

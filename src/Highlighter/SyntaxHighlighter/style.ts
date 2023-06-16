@@ -4,22 +4,6 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) =
   const prefix = `${prefixCls}-highlighter`;
 
   return {
-    shiki: cx(
-      `${prefix}-shiki`,
-      css`
-        .shiki {
-          overflow-x: scroll;
-          background: none !important;
-        }
-      `,
-    ),
-    prism: css`
-      pre {
-        overflow-x: scroll;
-        font-family: ${token.fontFamilyCode} !important;
-      }
-    `,
-
     loading: cx(
       stylish.blur,
       css`
@@ -39,6 +23,22 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) =
         color: ${token.colorTextTertiary};
 
         border-radius: ${token.borderRadius};
+      `,
+    ),
+    prism: css`
+      pre {
+        overflow-x: scroll;
+        font-family: ${token.fontFamilyCode} !important;
+      }
+    `,
+
+    shiki: cx(
+      `${prefix}-shiki`,
+      css`
+        .shiki {
+          overflow-x: scroll;
+          background: none !important;
+        }
       `,
     ),
   };

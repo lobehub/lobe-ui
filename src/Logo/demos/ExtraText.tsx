@@ -4,13 +4,13 @@ export default () => {
   const store = useCreateStore();
   const control: LogoProps | any = useControls(
     {
-      size: {
-        value: 64,
-        step: 4,
-        min: 16,
-        max: 240,
-      },
       extra: 'UI',
+      size: {
+        max: 240,
+        min: 16,
+        step: 4,
+        value: 64,
+      },
     },
     { store },
   );

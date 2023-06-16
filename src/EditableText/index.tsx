@@ -2,8 +2,8 @@ import { Edit3 } from 'lucide-react';
 import { memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import ActionIcon from '@/ActionIcon';
 import { ControlInput, ControlInputProps } from '@/components/ControlInput';
-import { ActionIcon } from '@/index';
 
 export type EditableTextProps = ControlInputProps;
 

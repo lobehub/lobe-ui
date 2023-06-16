@@ -9,7 +9,7 @@ const Features = memo(() => {
   const features = useSiteStore(featuresSel, shallow);
   const theme = useTheme();
 
-  if (!features?.length) return null;
+  if (!features?.length) return;
 
   return (
     <F contentMaxWidth={theme.contentMaxWidth} items={features} style={{ margin: '0 16px' }} />

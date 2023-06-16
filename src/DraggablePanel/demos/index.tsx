@@ -22,27 +22,27 @@ export default () => {
   const store = useCreateStore();
   const control: DraggablePanelProps | any = useControls(
     {
-      pin: true,
-      mode: {
-        value: 'fixed',
-        options: ['fixed', 'float'],
-      },
-      placement: {
-        value: 'left',
-        options: ['left', 'right', 'top', 'bottom'],
+      defaultExpand: true,
+      destroyOnClose: false,
+      expandable: true,
+      minHeight: {
+        step: 1,
+        value: 0,
       },
       minWidth: {
-        value: 0,
         step: 1,
-      },
-      minHeight: {
         value: 0,
-        step: 1,
       },
-      expandable: true,
-      defaultExpand: true,
+      mode: {
+        options: ['fixed', 'float'],
+        value: 'fixed',
+      },
+      pin: true,
+      placement: {
+        options: ['left', 'right', 'top', 'bottom'],
+        value: 'left',
+      },
       showHandlerWhenUnexpand: false,
-      destroyOnClose: false,
     },
     { store },
   );

@@ -8,14 +8,14 @@ import { DivProps } from '@/types';
 
 const icons = {
   auto: Monitor,
-  light: Sun,
   dark: Moon,
+  light: Sun,
 };
 
 const items: MenuProps['items'] = [
-  { label: 'System', icon: <Icon icon={icons.auto} size="small" />, key: 'auto' },
-  { label: 'Light', icon: <Icon icon={icons.light} size="small" />, key: 'light' },
-  { label: 'Dark', icon: <Icon icon={icons.dark} size="small" />, key: 'dark' },
+  { icon: <Icon icon={icons.auto} size="small" />, key: 'auto', label: 'System' },
+  { icon: <Icon icon={icons.light} size="small" />, key: 'light', label: 'Light' },
+  { icon: <Icon icon={icons.dark} size="small" />, key: 'dark', label: 'Dark' },
 ];
 
 export interface ThemeSwitchProps extends DivProps {

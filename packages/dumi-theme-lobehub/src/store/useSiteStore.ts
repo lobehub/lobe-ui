@@ -46,38 +46,46 @@ export interface SiteStore {
 }
 
 const initialState: SiteStore = {
+  locale: { id: 'zh-CN', name: '中文', suffix: '' },
+  location: {
+    hash: '',
+    key: '',
+    pathname: '',
+    search: '',
+    state: '',
+  },
+  navData: [],
+
+  routeMeta: {
+    // @ts-ignore
+    frontmatter: {},
+
+    tabs: undefined,
+
+    texts: [],
+
+    toc: [],
+  },
+
+  sidebar: [],
+
   siteData: {
+    components: {},
+
+    demos: {},
+
+    entryExports: {},
+
+    loading: true,
+
+    locales: [],
+
+    pkg: {},
     // @ts-ignore
     setLoading: undefined,
-    loading: true,
-    pkg: {},
-    components: {},
-    demos: {},
-    locales: [],
-    entryExports: {},
     // @ts-ignore
     themeConfig: {},
   },
-  sidebar: [],
-  navData: [],
-
-  location: {
-    pathname: '',
-    state: '',
-    search: '',
-    hash: '',
-    key: '',
-  },
-
-  routeMeta: {
-    toc: [],
-    texts: [],
-    tabs: undefined,
-    // @ts-ignore
-    frontmatter: {},
-  },
-
-  locale: { id: 'zh-CN', name: '中文', suffix: '' },
 };
 
 export const useSiteStore = create<SiteStore>()(

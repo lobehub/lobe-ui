@@ -4,8 +4,8 @@ import { memo, useEffect } from 'react';
 import { Center } from 'react-layout-kit';
 import { shallow } from 'zustand/shallow';
 
+import Icon from '@/Icon';
 import { useHighlight } from '@/hooks/useHighlight';
-import { Icon } from '@/index';
 
 import type { HighlighterProps } from '../index';
 import { useStyles } from './style';

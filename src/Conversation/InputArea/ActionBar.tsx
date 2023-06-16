@@ -49,8 +49,8 @@ export const ActionBar = () => {
         </Popconfirm>
         <Tooltip
           title={[
-            agentToken > 0 ? `角色定义: ${agentToken}` : null,
-            messagesToken > 0 ? `会话: ${messagesToken}` : null,
+            agentToken > 0 ? `角色定义: ${agentToken}` : undefined,
+            messagesToken > 0 ? `会话: ${messagesToken}` : undefined,
           ]
             .filter(Boolean)
             .join('  |  ')}
@@ -59,7 +59,7 @@ export const ActionBar = () => {
         </Tooltip>
       </Flexbox>
     </ConfigProvider>
-  ) : null;
+  ) : undefined;
 };
 
 export default memo(ActionBar);

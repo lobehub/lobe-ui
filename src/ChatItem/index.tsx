@@ -78,19 +78,19 @@ const ChatItem = memo<ChatItemProps>(
     alert,
     showTitle,
     time,
-    ...props
+    ...properties
   }) => {
     const { cx, styles } = useStyles({
-      placement,
-      type,
-      title,
-      primary,
       avatarSize: AVATAR_SIZE,
-      showTitle,
       borderSpacing,
+      placement,
+      primary,
+      showTitle,
+      title,
+      type,
     });
     return (
-      <div className={cx(styles.container, className)} {...props}>
+      <div className={cx(styles.container, className)} {...properties}>
         <div className={styles.avatarContainer}>
           <Avatar
             avatar={avatar.avatar}
@@ -106,7 +106,7 @@ const ChatItem = memo<ChatItemProps>(
         </div>
         <div className={styles.messageContainer}>
           <div className={cx(styles.name, 'chat-item-name')}>
-            {showTitle ? avatar.title || 'untitled' : null}
+            {showTitle ? avatar.title || 'untitled' : undefined}
             {time && <span className="chat-item-time">{formatTime(time)}</span>}
           </div>
           {alert ? (
@@ -118,7 +118,7 @@ const ChatItem = memo<ChatItemProps>(
           )}
           <div className={cx(styles.actions, 'chat-item-actions')}>{actions}</div>
         </div>
-        {borderSpacing && <div style={{ width: AVATAR_SIZE, flex: 'none' }} />}
+        {borderSpacing && <div style={{ flex: 'none', width: AVATAR_SIZE }} />}
       </div>
     );
   },

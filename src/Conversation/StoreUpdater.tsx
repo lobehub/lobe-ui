@@ -37,7 +37,7 @@ const StoreUpdater: FC<StoreUpdaterProps> = ({
   useStoreUpdater('createAt', createAt);
   useStoreUpdater('updateAt', updateAt);
 
-  return null;
+  return false;
 };
 
 export default StoreUpdater;

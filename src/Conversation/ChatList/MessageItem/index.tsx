@@ -16,6 +16,24 @@ const useStyles = createStyles(({ css, cx, responsive, token }) => {
   const toolbarClassName = 'chat-float-toolbar';
 
   return {
+    assistant: css``,
+
+    choice: css`
+      cursor: pointer;
+
+      width: 20px;
+      height: 20px;
+
+      font-size: 12px;
+      color: ${token.colorTextTertiary};
+
+      background: ${token.colorFillContent};
+      border-radius: 50%;
+    `,
+    choiceActive: css`
+      color: ${token.colorTextLightSolid};
+      background: ${token.colorPrimary};
+    `,
     container: css`
       position: relative;
       padding: 12px;
@@ -33,21 +51,6 @@ const useStyles = createStyles(({ css, cx, responsive, token }) => {
         }
       }
     `,
-
-    user: css`
-      background: linear-gradient(to right, ${token.green3}, ${token.gold3});
-    `,
-    system: css`
-      filter: invert(1);
-    `,
-    assistant: css``,
-    md: css`
-      overflow: scroll;
-      max-width: 100%;
-      .${responsive.mobile} {
-        max-width: 100%;
-      }
-    `,
     floatAction: cx(
       toolbarClassName,
       css`
@@ -59,22 +62,19 @@ const useStyles = createStyles(({ css, cx, responsive, token }) => {
         opacity: 0;
       `,
     ),
-
-    choice: css`
-      cursor: pointer;
-
-      width: 20px;
-      height: 20px;
-
-      font-size: 12px;
-      color: ${token.colorTextTertiary};
-
-      background: ${token.colorFillContent};
-      border-radius: 50%;
+    md: css`
+      overflow: scroll;
+      max-width: 100%;
+      .${responsive.mobile} {
+        max-width: 100%;
+      }
     `,
-    choiceActive: css`
-      color: ${token.colorTextLightSolid};
-      background: ${token.colorPrimary};
+
+    system: css`
+      filter: invert(1);
+    `,
+    user: css`
+      background: linear-gradient(to right, ${token.green3}, ${token.gold3});
     `,
   };
 });
@@ -96,7 +96,7 @@ const MessageItem: FC<MessageItemProps> = memo(
 
     const isEditing = editingMessageId === index;
 
-    const fullChoices = !choices ? [content] : [content, ...choices];
+    const fullChoices = choices ? [content, ...choices] : [content];
 
     const displayContent = fullChoices[activeChoice];
 
@@ -107,7 +107,7 @@ const MessageItem: FC<MessageItemProps> = memo(
     return (
       <>
         <Flexbox className={styles.container} gap={12} horizontal id={`message-item-${index}`}>
-          {isEditing || mobile ? null : (
+          {isEditing || mobile ? undefined : (
             <Toolbar
               className={styles.floatAction}
               content={content}
@@ -128,9 +128,8 @@ const MessageItem: FC<MessageItemProps> = memo(
                 // className={cx(styles[role])}
               />
             </ConfigProvider>
-            {!choices
-              ? null
-              : fullChoices.map((choice, index) => (
+            {choices
+              ? fullChoices.map((choice, index) => (
                   <Center
                     className={cx(styles.choice, activeChoice === index && styles.choiceActive)}
                     key={index}
@@ -146,7 +145,8 @@ const MessageItem: FC<MessageItemProps> = memo(
                   >
                     {index + 1}
                   </Center>
-                ))}
+                ))
+              : undefined}
           </Flexbox>
           <Flexbox className={styles.md} flex={1}>
             <Content
@@ -160,7 +160,7 @@ const MessageItem: FC<MessageItemProps> = memo(
         </Flexbox>
         {isSystem && (
           <Divider>
-            <Typography.Text style={{ fontWeight: 'normal', fontSize: 14 }} type={'secondary'}>
+            <Typography.Text style={{ fontSize: 14, fontWeight: 'normal' }} type={'secondary'}>
               开始对话
             </Typography.Text>
           </Divider>

@@ -21,16 +21,16 @@ const generateCustomToken: GetCustomToken<SiteCustomToken> = ({ isDarkMode }) =>
   const colorSolid = isDarkMode ? '#fff' : '#000';
 
   return {
-    headerHeight: 64,
-    footerHeight: 300,
-    sidebarWidth: 240,
-    tocWidth: 176,
-    contentMaxWidth: 960,
     colorSolid,
+    contentMaxWidth: 960,
+    footerHeight: 300,
     gradientColor1,
     gradientColor2,
     gradientColor3,
     gradientHeroBgG: `radial-gradient(at 80% 20%, ${gradientColor1} 0%, ${gradientColor2} 80%, ${gradientColor3} 130%)`,
+    headerHeight: 64,
+    sidebarWidth: 240,
+    tocWidth: 176,
   };
 };
 

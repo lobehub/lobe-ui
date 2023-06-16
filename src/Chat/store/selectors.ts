@@ -32,11 +32,11 @@ const agentTokenCount = (s: ChatStore) => agentContentTokens(s).length;
 const messagesTokenCount = (s: ChatStore) => messagesTokens(s).length;
 
 export const chatSelectors = {
-  totalTokenCount,
   agentTokenCount,
+  disableInput: disableInputSel,
   messagesTokenCount,
 
-  totalTokens,
   messagesTokens,
-  disableInput: disableInputSel,
+  totalTokenCount,
+  totalTokens,
 };

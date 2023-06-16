@@ -4,13 +4,13 @@ export default () => {
   const store = useCreateStore();
   const control: TokenTagProps | any = useControls(
     {
-      value: {
-        value: 1000,
-        step: 1,
-      },
       maxValue: {
-        value: 5000,
         step: 1,
+        value: 5000,
+      },
+      value: {
+        step: 1,
+        value: 1000,
       },
     },
     { store },

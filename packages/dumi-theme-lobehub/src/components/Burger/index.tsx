@@ -30,7 +30,7 @@ const Burger = memo(() => {
       <Drawer
         bodyStyle={{ padding: 0 }}
         className={styles.drawer}
-        closeIcon={null}
+        closeIcon={undefined}
         headerStyle={{ display: 'none' }}
         open={opened}
         placement={'left'}
@@ -40,16 +40,13 @@ const Burger = memo(() => {
         <Menu
           className={styles.menu}
           items={nav.map<any>((item) => ({
-            label: <Link to={String(item.link)}>{item.title}</Link>,
-            key: item.activePath! || item.link,
             children:
               (item.activePath || item.link) === activePath &&
               sidebar?.map((group) => {
                 return (
                   !group.link && {
-                    label: group.title,
-                    type: 'group',
                     children: group.children.map((item) => ({
+                      key: `s-${item.link}`,
                       label: (
                         <Link
                           onClick={() => {
@@ -60,11 +57,14 @@ const Burger = memo(() => {
                           {item.title}
                         </Link>
                       ),
-                      key: `s-${item.link}`,
                     })),
+                    label: group.title,
+                    type: 'group',
                   }
                 );
               }),
+            key: item.activePath! || item.link,
+            label: <Link to={String(item.link)}>{item.title}</Link>,
           }))}
           mode={'inline'}
           openKeys={[activePath]}

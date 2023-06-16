@@ -14,11 +14,11 @@ const Toc = memo(() => {
   const [spacing, setSpacing] = useState<number>(GAP);
 
   useEffect(() => {
-    const ApiTitle = document.getElementById('api-header');
+    const ApiTitle = document.querySelector('#api-header');
     if (ApiTitle) setSpacing(ApiTitle.clientHeight + GAP);
   }, [window.location.href, items]);
 
-  if (items?.length < 1) return null;
+  if (items?.length < 1) return;
 
   return (
     <>

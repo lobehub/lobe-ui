@@ -10,36 +10,37 @@ export const useStyles = createStyles(({ token, responsive, css, cx }) => {
         display: none;
       }
     `,
-    shortcut: cx(
-      'site-header-shortcut',
-      css`
-        pointer-events: none;
+    input: css`
+      box-sizing: border-box;
+      width: 280px;
+      height: ${token.controlHeightLG}px;
+      padding: 0;
+      padding-inline-start: 40px;
+      padding-inline-end: 12px;
 
-        position: absolute;
-        top: 50%;
-        inset-inline-end: 11px;
-        transform: translateY(-50%);
+      font-size: 14px;
+      color: ${token.colorTextSecondary};
 
-        display: inline-block;
+      background-color: transparent;
+      border: 1px solid ${token.colorBorder};
+      border-radius: 20px;
+      outline: none;
 
-        padding: 4px 8px;
+      transition: all 0.3s;
 
-        font-size: 12px;
-        line-height: 1;
-        color: ${token.colorTextDescription};
-        white-space: nowrap;
+      &::input-placeholder {
+        color: ${token.colorTextPlaceholder};
+      }
 
-        background-color: ${token.colorFillSecondary};
-        border: 1px solid ${token.colorBorderSecondary};
-        border-radius: 11px;
+      &:focus {
+        background: ${token.colorBgElevated};
+        border-color: ${token.colorBorderSecondary};
 
-        transition: all 0.3s;
-
-        ${responsive.mobile} {
-          display: none;
+        ~ .site-header-shortcut {
+          opacity: 0;
         }
-      `,
-    ),
+      }
+    `,
     popover: css`
       position: absolute;
       top: 100%;
@@ -96,6 +97,36 @@ export const useStyles = createStyles(({ token, responsive, css, cx }) => {
       }
     `,
 
+    shortcut: cx(
+      'site-header-shortcut',
+      css`
+        pointer-events: none;
+
+        position: absolute;
+        top: 50%;
+        inset-inline-end: 11px;
+        transform: translateY(-50%);
+
+        display: inline-block;
+
+        padding: 4px 8px;
+
+        font-size: 12px;
+        line-height: 1;
+        color: ${token.colorTextDescription};
+        white-space: nowrap;
+
+        background-color: ${token.colorFillSecondary};
+        border: 1px solid ${token.colorBorderSecondary};
+        border-radius: 11px;
+
+        transition: all 0.3s;
+
+        ${responsive.mobile} {
+          display: none;
+        }
+      `,
+    ),
     svg: cx(
       css`
         position: absolute;
@@ -109,36 +140,5 @@ export const useStyles = createStyles(({ token, responsive, css, cx }) => {
         color: ${token.colorTextPlaceholder};
       `,
     ),
-    input: css`
-      box-sizing: border-box;
-      width: 280px;
-      height: ${token.controlHeightLG}px;
-      padding: 0;
-      padding-inline-start: 40px;
-      padding-inline-end: 12px;
-
-      font-size: 14px;
-      color: ${token.colorTextSecondary};
-
-      background-color: transparent;
-      border: 1px solid ${token.colorBorder};
-      border-radius: 20px;
-      outline: none;
-
-      transition: all 0.3s;
-
-      &::input-placeholder {
-        color: ${token.colorTextPlaceholder};
-      }
-
-      &:focus {
-        background: ${token.colorBgElevated};
-        border-color: ${token.colorBorderSecondary};
-
-        ~ .site-header-shortcut {
-          opacity: 0;
-        }
-      }
-    `,
   };
 });

@@ -8,16 +8,16 @@ import { useStore } from '@/Chat/store';
 import MessageItem from './MessageItem';
 
 const useStyles = createStyles(({ css, token }) => ({
-  loading: css`
-    padding: 12px;
-    background: ${token.colorFillQuaternary};
-    border-radius: 8px;
-  `,
   btn: css`
     font-size: 12px;
     color: ${token.colorTextSecondary};
     background: transparent;
     border: 2px solid ${token.colorBorderSecondary} !important;
+  `,
+  loading: css`
+    padding: 12px;
+    background: ${token.colorFillQuaternary};
+    border-radius: 8px;
   `,
 }));
 
@@ -38,11 +38,11 @@ const ChatList: FC<ChatListProps> = memo(({ readonly, includeSystem = false, sty
   const { styles } = useStyles();
   const [messages, loading] = useStore((s) => [s.messages, s.loading], isEqual);
 
-  return !messages || messages.length === 0 ? null : (
+  return !messages || messages.length === 0 ? undefined : (
     <Flexbox gap={8} style={style}>
       {messages
         // 根据情况确认是否包含系统
-        .filter((s) => (!includeSystem ? s.role !== 'system' : Boolean(s)))
+        .filter((s) => (includeSystem ? Boolean(s) : s.role !== 'system'))
         .map((item, index: number) => (
           <MessageItem index={index} key={index} readonly={readonly} {...item} />
         ))}
@@ -57,7 +57,7 @@ const ChatList: FC<ChatListProps> = memo(({ readonly, includeSystem = false, sty
             {/*</Button>*/}
           </Flexbox>
         </Center>
-      ) : null}
+      ) : undefined}
     </Flexbox>
   );
 });

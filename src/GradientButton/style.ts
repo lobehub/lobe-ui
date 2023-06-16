@@ -2,6 +2,18 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ css, token, isDarkMode, stylish }) => {
   return {
+    bg: css`
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      background: ${token.colorBgLayout};
+      border-radius: inherit;
+    `,
     button: css`
       position: relative;
       z-index: 1;
@@ -35,18 +47,6 @@ export const useStyles = createStyles(({ css, token, isDarkMode, stylish }) => {
           mask: unset;
         }
       }
-    `,
-    bg: css`
-      position: absolute;
-      z-index: -1;
-      top: 0;
-      left: 0;
-
-      width: 100%;
-      height: 100%;
-
-      background: ${token.colorBgLayout};
-      border-radius: inherit;
     `,
     glow: css`
       ${stylish.gradientAnimation}

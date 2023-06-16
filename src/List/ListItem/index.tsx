@@ -1,87 +1,9 @@
 import { LoadingOutlined, MessageOutlined } from '@ant-design/icons';
-import { createStyles } from 'antd-style';
-import { CSSProperties, HTMLAttributes, ReactNode, forwardRef } from 'react';
+import { CSSProperties, HTMLAttributes, ReactNode, forwardRef, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import { convertAlphaToSolid } from '@/utils/colorUtils';
-
+import { useStyles } from './style';
 import { getChatItemTime } from './time';
-
-const useStyles = createStyles(({ css, cx, token }) => {
-  const textOverlay = css`
-    --overlay-background: ${token.colorBgLayout};
-
-    position: absolute;
-    z-index: 10;
-    top: 0;
-    right: 0;
-
-    width: 32px;
-    height: 44px;
-
-    background: linear-gradient(to right, transparent, var(--overlay-background));
-  `;
-
-  const overlayColor = convertAlphaToSolid(token.colorFillContent, token.colorBgLayout);
-
-  const hoverOverlay = css`
-    .${cx(textOverlay)} {
-      --overlay-background: ${overlayColor};
-    }
-  `;
-
-  return {
-    container: css`
-      cursor: pointer;
-      color: ${token.colorTextTertiary};
-      border-radius: 8px;
-
-      &:hover {
-        background: ${token.colorFillContent};
-        ${hoverOverlay}
-      }
-    `,
-    active: css`
-      color: ${token.colorText};
-      background: ${token.colorFillContent};
-
-      ${hoverOverlay}
-    `,
-
-    content: css`
-      position: relative;
-      overflow: hidden;
-      flex: 1;
-    `,
-
-    title: css`
-      overflow: hidden;
-
-      width: 100%;
-
-      font-size: 0.9em;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    `,
-    time: css`
-      font-size: 12px;
-      color: ${token.colorTextPlaceholder};
-    `,
-    desc: css`
-      overflow: hidden;
-
-      width: 100%;
-      margin-top: 2px;
-
-      font-size: 0.75em;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-
-      opacity: 0.5;
-    `,
-    textOverlay,
-  };
-});
 
 /**
  * 卡片列表项的属性
@@ -145,75 +67,77 @@ export interface ListItemProps {
   title: string;
 }
 
-const ListItem = forwardRef<HTMLElement, ListItemProps & HTMLAttributes<any>>(
-  (
-    {
-      active,
-      avatar,
-      loading,
-      description,
-      date,
-      title,
-      onHoverChange,
-      renderActions,
-      className,
-      style,
-      showAction,
-      classNames = {},
-      ...props
-    },
-    ref,
-  ) => {
-    const { styles, cx } = useStyles();
+const ListItem = memo(
+  forwardRef<HTMLElement, ListItemProps & HTMLAttributes<any>>(
+    (
+      {
+        active,
+        avatar,
+        loading,
+        description,
+        date,
+        title,
+        onHoverChange,
+        renderActions,
+        className,
+        style,
+        showAction,
+        classNames = {},
+        ...props
+      },
+      reference,
+    ) => {
+      const { styles, cx } = useStyles();
 
-    return (
-      <Flexbox
-        align={'flex-start'}
-        className={cx(styles.container, active && styles.active, className)}
-        distribution={'space-between'}
-        gap={8}
-        horizontal
-        paddingBlock={8}
-        paddingInline={'12px 8px'}
-        ref={ref}
-        style={style}
-        {...props}
-        onMouseEnter={() => {
-          onHoverChange?.(true);
-        }}
-        onMouseLeave={() => {
-          onHoverChange?.(false);
-        }}
-      >
-        {avatar ?? <MessageOutlined style={{ marginTop: 4 }} />}
+      return (
+        <Flexbox
+          align={'flex-start'}
+          className={cx(styles.container, active && styles.active, className)}
+          distribution={'space-between'}
+          gap={8}
+          horizontal
+          paddingBlock={8}
+          paddingInline={'12px 8px'}
+          ref={reference}
+          style={style}
+          {...props}
+          onMouseEnter={() => {
+            onHoverChange?.(true);
+          }}
+          onMouseLeave={() => {
+            onHoverChange?.(false);
+          }}
+        >
+          {avatar ?? <MessageOutlined style={{ marginTop: 4 }} />}
 
-        <Flexbox className={styles.content}>
-          <Flexbox distribution={'space-between'} horizontal>
-            <div className={styles.title}>{title}</div>
+          <Flexbox className={styles.content}>
+            <Flexbox distribution={'space-between'} horizontal>
+              <div className={styles.title}>{title}</div>
+            </Flexbox>
+            {description && <div className={styles.desc}>{description}</div>}
+            <div className={styles.textOverlay} />
           </Flexbox>
-          {description && <div className={styles.desc}>{description}</div>}
-          <div className={styles.textOverlay} />
+
+          {loading ? (
+            <LoadingOutlined spin={true} />
+          ) : showAction ? (
+            <Flexbox
+              gap={4}
+              horizontal
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              style={{ display: showAction ? undefined : 'none' }}
+            >
+              {renderActions}
+            </Flexbox>
+          ) : (
+            date && <div className={cx(styles.time, classNames.time)}>{getChatItemTime(date)}</div>
+          )}
         </Flexbox>
-
-        {loading ? (
-          <LoadingOutlined spin={true} />
-        ) : showAction ? (
-          <Flexbox
-            gap={4}
-            horizontal
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            style={{ display: showAction ? undefined : 'none' }}
-          >
-            {renderActions}
-          </Flexbox>
-        ) : (
-          date && <div className={cx(styles.time, classNames.time)}>{getChatItemTime(date)}</div>
-        )}
-      </Flexbox>
-    );
-  },
+      );
+    },
+  ),
 );
 
 export default ListItem;

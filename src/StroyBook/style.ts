@@ -26,15 +26,6 @@ export const useStyles = createStyles(({ css, token, responsive }, noPadding: bo
         padding: 40px 24px;
       `}
     `,
-    right: css`
-      background: ${token.colorBgLayout};
-
-      ${responsive.mobile} {
-        .draggable-panel-fixed {
-          width: 100% !important;
-        }
-      }
-    `,
     leva: css`
       --leva-sizes-controlWidth: 66%;
       --leva-colors-elevation1: ${token.colorFillSecondary};
@@ -70,6 +61,15 @@ export const useStyles = createStyles(({ css, token, responsive }, noPadding: bo
 
       button {
         --leva-colors-accent2: ${token.colorFillSecondary};
+      }
+    `,
+    right: css`
+      background: ${token.colorBgLayout};
+
+      ${responsive.mobile} {
+        .draggable-panel-fixed {
+          width: 100% !important;
+        }
       }
     `,
   };

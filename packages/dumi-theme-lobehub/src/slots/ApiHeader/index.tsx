@@ -14,38 +14,38 @@ const ApiHeader = memo(() => {
   const { pkg } = props;
 
   const packages = useMemo(() => {
-    const pkgURL = encodeURIComponent(String(pkg));
+    const packageURL = encodeURIComponent(String(pkg));
     return [
       {
-        label: 'NPM',
-        icon: <NpmFilled />,
         children: 'NPM',
-        url: `https://www.npmjs.com/package/${pkgURL}`,
+        icon: <NpmFilled />,
+        label: 'NPM',
+        url: `https://www.npmjs.com/package/${packageURL}`,
       },
       {
-        label: 'Check package files',
-        icon: <Unpkg />,
         children: 'UNPKG',
-        url: `https://unpkg.com/browse/${pkgURL}/`,
+        icon: <Unpkg />,
+        label: 'Check package files',
+        url: `https://unpkg.com/browse/${packageURL}/`,
       },
       {
-        label: 'Check bundle size',
-        icon: <BundlephobiaFilled />,
         children: 'BundlePhobia',
-        url: `https://bundlephobia.com/package/${pkgURL}`,
+        icon: <BundlephobiaFilled />,
+        label: 'Check bundle size',
+        url: `https://bundlephobia.com/package/${packageURL}`,
       },
       {
-        label: 'Check package size',
-        icon: <PackagePhobia />,
         children: 'PackagePhobia',
-        url: `https://packagephobia.com/result?p=${pkgURL}`,
+        icon: <PackagePhobia />,
+        label: 'Check package size',
+        url: `https://packagephobia.com/result?p=${packageURL}`,
       },
 
       {
-        label: 'Dependence graph',
-        icon: <Graph />,
         children: 'Anvaka Graph',
-        url: `https://npm.anvaka.com/#/view/2d/${encodeURIComponent(pkgURL)}`,
+        icon: <Graph />,
+        label: 'Dependence graph',
+        url: `https://npm.anvaka.com/#/view/2d/${encodeURIComponent(packageURL)}`,
       },
     ];
   }, [pkg]);

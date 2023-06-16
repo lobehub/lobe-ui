@@ -4,10 +4,13 @@ import type { SiteStore } from '../useSiteStore';
 import { githubSel } from './siteBasicInfo';
 
 export * from './hero';
-/**
- * 判断是否需要 ApiHeader
- * @param s
- */
+
+const haseUrl = (config: false | string | undefined) => {
+  if (config === false) return false;
+
+  return typeof config === 'string';
+};
+
 export const isApiPageSel = (s: SiteStore) => {
   const fm = s.routeMeta.frontmatter;
 
@@ -26,30 +29,24 @@ export const apiHeaderSel = (s: SiteStore): ApiHeaderProps => {
   const localeId = s.locale.id;
 
   // 统一的路径匹配替换方法
-  const replaceUrl = (rawStr: string) => {
-    return rawStr
+  const replaceUrl = (rawString: string) => {
+    return rawString
       .replace('{github}', REPO_BASE)
       .replace('{atomId}', fm.atomId || '')
       .replace('{title}', fm.title)
       .replace('{locale}', localeId);
   };
 
-  const haseUrl = (config: false | string | undefined) => {
-    if (config === false) return false;
-
-    return typeof config === 'string';
-  };
-
   const {
-    pkg = s.siteData.pkg.name,
+    pkg: package_ = s.siteData.pkg.name,
     sourceUrl: sourceUrlMatch,
-    docUrl: docUrlMatch,
+    docUrl: documentUrlMatch,
   } = (s.siteData.themeConfig.apiHeader || {}) as ApiHeaderConfig;
 
   // 1. 兜底默认使用文档的 apiHeader.pkg
   // 2. 如果 themeConfig 里配置了 pkg， 则使用配置的 pkg
   // 3. 兜底使用 package.json 中的 name
-  const displayPackage = fm.apiHeader?.pkg || pkg;
+  const displayPackage = fm.apiHeader?.pkg || package_;
 
   // 1. 默认使用文档的 fm.atomId
   // 2. 兜底到文档 title
@@ -63,16 +60,17 @@ export const apiHeaderSel = (s: SiteStore): ApiHeaderProps => {
     fm.apiHeader?.sourceUrl ||
     (haseUrl(sourceUrlMatch) ? replaceUrl(sourceUrlMatch as string) : undefined);
 
-  const docUrl =
-    fm.apiHeader?.docUrl || (haseUrl(docUrlMatch) ? replaceUrl(docUrlMatch as string) : undefined);
+  const documentUrl =
+    fm.apiHeader?.docUrl ||
+    (haseUrl(documentUrlMatch) ? replaceUrl(documentUrlMatch as string) : undefined);
 
   return {
-    title: fm.title,
-    description: fm.description,
-    pkg: displayPackage,
-    defaultImport,
     componentName,
+    defaultImport,
+    description: fm.description,
+    docUrl: documentUrl,
+    pkg: displayPackage,
     sourceUrl,
-    docUrl,
+    title: fm.title,
   };
 };

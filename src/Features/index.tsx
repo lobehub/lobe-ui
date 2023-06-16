@@ -15,13 +15,13 @@ export interface FeaturesProps extends DivProps {
 }
 
 const Features = memo<FeaturesProps>(
-  ({ items, contentMaxWidth = 960, className, itemClassName, itemStyle, ...props }) => {
+  ({ items, contentMaxWidth = 960, className, itemClassName, itemStyle, ...properties }) => {
     const { cx, styles } = useStyles(contentMaxWidth);
 
-    if (!items?.length) return null;
+    if (!items?.length) return;
 
     return (
-      <div className={cx(styles.container, className)} {...props}>
+      <div className={cx(styles.container, className)} {...properties}>
         {items!.map((item) => {
           return <Item className={itemClassName} key={item.title} style={itemStyle} {...item} />;
         })}

@@ -2,7 +2,7 @@ import { useHover } from 'ahooks';
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
 import type { Enable, NumberSize, Size } from 're-resizable';
 import { HandleClassName, Resizable } from 're-resizable';
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { type CSSProperties, memo, useEffect, useMemo, useRef, useState } from 'react';
 import { Center } from 'react-layout-kit';
 import type { Props as RndProps } from 'react-rnd';
 import useControlledState from 'use-merge-value';
@@ -53,7 +53,7 @@ export interface DraggablePanelProps extends DivProps {
    * @description The style of the panel handler
    * @type CSSProperties
    */
-  hanlderStyle?: React.CSSProperties;
+  hanlderStyle?: CSSProperties;
   maxHeight?: number;
   maxWidth?: number;
   /**
@@ -134,15 +134,15 @@ const DraggablePanel = memo<DraggablePanelProps>(
     hanlderStyle,
     classNames = {},
   }) => {
-    const ref = useRef(null);
-    const isHovering = useHover(ref);
+    const reference: any = useRef();
+    const isHovering = useHover(reference);
     const isVertical = placement === 'top' || placement === 'bottom';
 
     const { styles, cx } = useStyles();
 
     const [isExpand, setIsExpand] = useControlledState(defaultExpand, {
-      value: expand,
       onChange: onExpandChange,
+      value: expand,
     });
 
     useEffect(() => {
@@ -168,14 +168,14 @@ const DraggablePanel = memo<DraggablePanelProps>(
     }, [canResizing, placement]);
 
     const resizing = {
-      top: false,
       bottom: false,
-      right: false,
-      left: false,
-      topRight: false,
-      bottomRight: false,
       bottomLeft: false,
+      bottomRight: false,
+      left: false,
+      right: false,
+      top: false,
       topLeft: false,
+      topRight: false,
       [revesePlacement(placement)]: true,
       ...(resize as Enable),
     };
@@ -183,25 +183,25 @@ const DraggablePanel = memo<DraggablePanelProps>(
     const defaultSize: Size = useMemo(() => {
       if (isVertical)
         return {
-          width: '100%',
           height: DEFAULT_HEIGHT,
+          width: '100%',
           ...customizeDefaultSize,
         };
 
       return {
-        width: DEFAULT_WIDTH,
         height: '100%',
+        width: DEFAULT_WIDTH,
         ...customizeDefaultSize,
       };
     }, [isVertical]);
 
     const sizeProps = isExpand
       ? {
-          minWidth: typeof minWidth === 'number' ? Math.max(minWidth, 0) : minWidth,
-          minHeight: typeof minHeight === 'number' ? Math.max(minHeight, 0) : minHeight,
-          maxWidth: typeof maxWidth === 'number' ? Math.max(maxWidth, 0) : maxWidth,
-          maxHeight: typeof maxHeight === 'number' ? Math.max(maxHeight, 0) : maxHeight,
           defaultSize,
+          maxHeight: typeof maxHeight === 'number' ? Math.max(maxHeight, 0) : maxHeight,
+          maxWidth: typeof maxWidth === 'number' ? Math.max(maxWidth, 0) : maxWidth,
+          minHeight: typeof minHeight === 'number' ? Math.max(minHeight, 0) : minHeight,
+          minWidth: typeof minWidth === 'number' ? Math.max(minWidth, 0) : minWidth,
           size: size as Size,
         }
       : isVertical
@@ -216,14 +216,18 @@ const DraggablePanel = memo<DraggablePanelProps>(
 
     const { Arrow, className: arrowPlacement } = useMemo(() => {
       switch (placement) {
-        case 'top':
-          return { className: 'Bottom', Arrow: ChevronDown };
-        case 'bottom':
-          return { className: 'Top', Arrow: ChevronUp };
-        case 'right':
-          return { className: 'Left', Arrow: ChevronLeft };
-        case 'left':
-          return { className: 'Right', Arrow: ChevronRight };
+        case 'top': {
+          return { Arrow: ChevronDown, className: 'Bottom' };
+        }
+        case 'bottom': {
+          return { Arrow: ChevronUp, className: 'Top' };
+        }
+        case 'right': {
+          return { Arrow: ChevronLeft, className: 'Left' };
+        }
+        case 'left': {
+          return { Arrow: ChevronRight, className: 'Right' };
+        }
       }
     }, [styles, placement]);
 
@@ -231,7 +235,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
       <Center
         // @ts-ignore
         className={cx(styles[`toggle${arrowPlacement}`], classNames.handle)}
-        style={{ opacity: isExpand ? (!pin ? 0 : undefined) : showHandlerWhenUnexpand ? 1 : 0 }}
+        style={{ opacity: isExpand ? (pin ? undefined : 0) : showHandlerWhenUnexpand ? 1 : 0 }}
       >
         <Center
           onClick={() => {
@@ -256,20 +260,20 @@ const DraggablePanel = memo<DraggablePanelProps>(
         className={cx(styles.panel, classNames.content)}
         enable={canResizing ? (resizing as Enable) : undefined}
         handleClasses={resizeHandleClassNames}
-        onResize={(_, direction, ref, delta) => {
+        onResize={(_, direction, reference_, delta) => {
           onSizeDragging?.(delta, {
-            width: ref.style.width,
-            height: ref.style.height,
+            height: reference_.style.height,
+            width: reference_.style.width,
           });
         }}
         onResizeStart={() => {
           setShowExpand(false);
         }}
-        onResizeStop={(e, direction, ref, delta) => {
+        onResizeStop={(e, direction, reference_, delta) => {
           setShowExpand(true);
           onSizeChange?.(delta, {
-            width: ref.style.width,
-            height: ref.style.height,
+            height: reference_.style.height,
+            width: reference_.style.width,
           });
         }}
         style={style}
@@ -288,7 +292,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
           styles[mode === 'fixed' ? 'fixed' : `${placement}Float`],
           className,
         )}
-        ref={ref}
+        ref={reference}
         style={{ [`border${arrowPlacement}Width`]: 1 }}
       >
         {expandable && showExpand && handler}

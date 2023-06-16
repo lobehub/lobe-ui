@@ -2,13 +2,17 @@ import { placementType } from './index';
 
 export const revesePlacement = (placement: placementType) => {
   switch (placement) {
-    case 'bottom':
+    case 'bottom': {
       return 'top';
-    case 'top':
+    }
+    case 'top': {
       return 'bottom';
-    case 'right':
+    }
+    case 'right': {
       return 'left';
-    case 'left':
+    }
+    case 'left': {
       return 'right';
+    }
   }
 };

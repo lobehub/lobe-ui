@@ -16,7 +16,7 @@ export interface SwatchesProps {
    * @description A function to be called when a swatch is selected
    * @default undefined
    */
-  onSelect?: (c: string | null) => void;
+  onSelect?: (c?: string | undefined) => void;
 }
 
 const Swatches = memo<SwatchesProps>(({ colors, activeColor, onSelect }) => {
@@ -26,15 +26,15 @@ const Swatches = memo<SwatchesProps>(({ colors, activeColor, onSelect }) => {
     <Flexbox gap={8} horizontal>
       <Flexbox
         onClick={() => {
-          onSelect?.(null);
+          onSelect?.();
         }}
         style={{
-          width: 24,
-          height: 24,
           background: theme.colorBgContainer,
-          boxShadow: `inset 0 0 0px 2px ${!activeColor ? theme.colorPrimary : 'rgba(0,0,0,0.1)'}`,
           borderRadius: '50%',
+          boxShadow: `inset 0 0 0px 2px ${activeColor ? 'rgba(0,0,0,0.1)' : theme.colorPrimary}`,
           cursor: 'pointer',
+          height: 24,
+          width: 24,
         }}
       />
       {colors.map((c) => {
@@ -47,12 +47,12 @@ const Swatches = memo<SwatchesProps>(({ colors, activeColor, onSelect }) => {
               onSelect?.(c);
             }}
             style={{
-              width: 24,
-              height: 24,
               background: c,
-              boxShadow: `inset 0 0 0px 2px ${borderColor}`,
               borderRadius: '50%',
+              boxShadow: `inset 0 0 0px 2px ${borderColor}`,
               cursor: 'pointer',
+              height: 24,
+              width: 24,
             }}
           />
         );

@@ -17,16 +17,19 @@ const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
   let isAlpha = false;
 
   switch (title) {
-    case 'lightA':
-      style = { backgroundColor: '#fff', background: alphaBg.light };
+    case 'lightA': {
+      style = { background: alphaBg.light, backgroundColor: '#fff' };
       isAlpha = true;
       break;
-    case 'darkA':
-      style = { backgroundColor: '#000', background: alphaBg.dark };
+    }
+    case 'darkA': {
+      style = { background: alphaBg.dark, backgroundColor: '#000' };
       isAlpha = true;
       break;
-    default:
+    }
+    default: {
       break;
+    }
   }
 
   return (
@@ -35,7 +38,7 @@ const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
         <div className={styles.text}>{title}</div>
       </div>
       {scale.map((color, index) => {
-        if (index === 0 || index === 12) return null;
+        if (index === 0 || index === 12) return false;
 
         return (
           <div

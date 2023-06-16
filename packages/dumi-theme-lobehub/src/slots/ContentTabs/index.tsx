@@ -6,13 +6,13 @@ import { useStyles } from './style';
 
 type IContentTabs = ReturnType<typeof useRouteMeta>['tabs'];
 
-export interface IContentTabsProps {
+export interface IContentTabsProperties {
   onChange: (tab?: NonNullable<IContentTabs>[0]) => void;
-  tabKey: string | null;
+  tabKey: string | undefined;
   tabs: IContentTabs;
 }
 
-const ContentTabs = memo<IContentTabsProps>(({ tabs, tabKey: key, onChange }) => {
+const ContentTabs = memo<IContentTabsProperties>(({ tabs, tabKey: key, onChange }) => {
   const intl = useIntl();
   const { styles } = useStyles();
   // TODO: tab.Extra & tab.Action render
@@ -23,13 +23,13 @@ const ContentTabs = memo<IContentTabsProps>(({ tabs, tabKey: key, onChange }) =>
       className={styles.cls}
       data-page-tabs
       items={[
-        { key: 'default', value: 'default', label: '文档' },
+        { key: 'default', label: '文档', value: 'default' },
         ...tabs.map((tab) => ({
           key: tab.key,
-          value: tab.key,
           label: tab.titleIntlId
             ? intl.formatMessage({ id: tab.titleIntlId })
             : tab.meta.frontmatter.title,
+          value: tab.key,
         })),
       ]}
       onChange={(key) => {
@@ -40,7 +40,7 @@ const ContentTabs = memo<IContentTabsProps>(({ tabs, tabKey: key, onChange }) =>
         }
       }}
     />
-  ) : null;
+  ) : undefined;
 });
 
 export default ContentTabs;

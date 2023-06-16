@@ -1,6 +1,9 @@
 import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ token, css }) => ({
+  alignmentEnd: css`
+    justify-content: flex-end;
+  `,
   container: css`
     cursor: pointer;
 
@@ -18,11 +21,8 @@ export const useStyles = createStyles(({ token, css }) => ({
     font-size: 12px;
     color: ${token.colorTextTertiary};
   `,
+
   title: css`
     font-size: 16px;
-  `,
-
-  alignmentEnd: css`
-    justify-content: flex-end;
   `,
 }));

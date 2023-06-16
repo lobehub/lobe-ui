@@ -66,8 +66,8 @@ export default () => {
   const options: MarkdownProps | any = useControls(
     {
       children: {
-        value: content,
         rows: true,
+        value: content,
       },
     },
     { store },

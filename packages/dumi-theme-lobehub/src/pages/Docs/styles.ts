@@ -1,11 +1,24 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token, stylish }) => ({
-  content: css`
-    width: 100%;
-    max-width: ${token.contentMaxWidth}px;
-    margin: 0 auto;
-  `,
+export const useStyles = createStyles(({ cx, css, token, stylish }) => ({
+  background: cx(
+    stylish.gradientAnimation,
+    css`
+      pointer-events: none;
+
+      position: absolute;
+      z-index: 0;
+      top: -100px;
+      right: -20vw;
+      transform: rotate(4deg);
+
+      width: 60vw;
+      height: 200px;
+
+      opacity: 0.2;
+      filter: blur(100px);
+    `,
+  ),
   changelog: css`
     .markdown {
       font-size: 16px;
@@ -44,23 +57,9 @@ export const useStyles = createStyles(({ css, token, stylish }) => ({
       }
     }
   `,
-  background: css`
-    z-index: 0;
-
-    ${stylish.gradientAnimation};
-    filter: blur(100px);
-
-    pointer-events: none;
-
-    width: 60vw;
-    height: 200px;
-
-    right: -20vw;
-    top: -100px;
-    position: absolute;
-
-    opacity: 0.2;
-
-    transform: rotate(4deg);
+  content: css`
+    width: 100%;
+    max-width: ${token.contentMaxWidth}px;
+    margin: 0 auto;
   `,
 }));

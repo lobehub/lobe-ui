@@ -13,7 +13,7 @@ interface SelectItemProps {
 }
 
 const SelectItem = memo<SelectItemProps>(
-  forwardRef(({ value, label, prefixCls, isSelected, isActive, disabled, ...props }, ref) => {
+  forwardRef(({ value, label, prefixCls, isSelected, isActive, disabled, ...props }, reference) => {
     const { styles, cx } = useStyles(prefixCls);
 
     return (
@@ -25,7 +25,7 @@ const SelectItem = memo<SelectItemProps>(
         })}
         disabled={disabled}
         key={value}
-        ref={ref}
+        ref={reference}
         role="option"
         tabIndex={-1}
         type={'button'}

@@ -46,16 +46,18 @@ export interface ContextMenuProps {
 const MenuComponent = forwardRef<
   HTMLButtonElement,
   ContextMenuProps & HTMLProps<HTMLButtonElement>
->(({ items, label, container, ...props }, forwardedRef) => {
+>(({ items, label, container, ...props }, forwardedReference) => {
   const { styles } = useStyles();
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [allowHover, setAllowHover] = useState(false);
 
-  const listItemsRef = useRef<Array<HTMLButtonElement | null>>([]);
-  const listContentRef = useRef<string[]>(items.map((item) => (item as GeneralItemType).label));
+  const listItemsReference = useRef<Array<HTMLButtonElement | null>>([]);
+  const listContentReference = useRef<string[]>(
+    items.map((item) => (item as GeneralItemType).label),
+  );
 
-  const allowMouseUpCloseRef = useRef(false);
+  const allowMouseUpCloseReference = useRef(false);
 
   const tree = useFloatingTree();
   const nodeId = useFloatingNodeId();
@@ -63,43 +65,43 @@ const MenuComponent = forwardRef<
   const isNested = parentId !== null;
 
   const { refs, context } = useFloating<HTMLButtonElement>({
-    nodeId,
-    open: isOpen,
-    onOpenChange: setIsOpen,
-    placement: isNested ? 'right-start' : 'bottom-start',
     middleware: [
-      offset({ mainAxis: isNested ? 0 : 4, alignmentAxis: isNested ? -4 : 0 }),
+      offset({ alignmentAxis: isNested ? -4 : 0, mainAxis: isNested ? 0 : 4 }),
       flip(),
       shift(),
     ],
+    nodeId,
+    onOpenChange: setIsOpen,
+    open: isOpen,
+    placement: isNested ? 'right-start' : 'bottom-start',
     whileElementsMounted: autoUpdate,
   });
 
   const hover = useHover(context, {
-    enabled: isNested && allowHover,
     delay: { open: 75 },
+    enabled: isNested && allowHover,
     handleClose: safePolygon({
       blockPointerEvents: true,
     }),
   });
   const click = useClick(context, {
     event: 'mousedown',
-    toggle: !isNested || !allowHover,
     ignoreMouse: isNested,
+    toggle: !isNested || !allowHover,
   });
   const role = useRole(context, { role: 'menu' });
   const dismiss = useDismiss(context);
   const listNavigation = useListNavigation(context, {
-    listRef: listItemsRef,
     activeIndex,
+    listRef: listItemsReference,
     nested: isNested,
     onNavigate: setActiveIndex,
   });
   const typeahead = useTypeahead(context, {
-    enabled: isOpen,
-    listRef: listContentRef,
-    onMatch: isOpen ? setActiveIndex : undefined,
     activeIndex,
+    enabled: isOpen,
+    listRef: listContentReference,
+    onMatch: isOpen ? setActiveIndex : undefined,
   });
 
   const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([
@@ -138,7 +140,7 @@ const MenuComponent = forwardRef<
 
   useEffect(() => {
     if (isOpen && tree) {
-      tree.events.emit('menuopen', { parentId, nodeId });
+      tree.events.emit('menuopen', { nodeId, parentId });
     }
   }, [tree, isOpen, nodeId, parentId]);
 
@@ -157,8 +159,8 @@ const MenuComponent = forwardRef<
     }
 
     window.addEventListener('pointermove', onPointerMove, {
-      once: true,
       capture: true,
+      once: true,
     });
     window.addEventListener('keydown', onKeyDown, true);
 
@@ -179,14 +181,14 @@ const MenuComponent = forwardRef<
       refs.setPositionReference({
         getBoundingClientRect() {
           return {
-            width: 0,
+            bottom: e.clientY,
             height: 0,
+            left: e.clientX,
+            right: e.clientX,
+            top: e.clientY,
+            width: 0,
             x: e.clientX,
             y: e.clientY,
-            top: e.clientY,
-            right: e.clientX,
-            bottom: e.clientY,
-            left: e.clientX,
           };
         },
       });
@@ -194,14 +196,14 @@ const MenuComponent = forwardRef<
       setIsOpen(true);
       clearTimeout(timeout);
 
-      allowMouseUpCloseRef.current = false;
+      allowMouseUpCloseReference.current = false;
       timeout = window.setTimeout(() => {
-        allowMouseUpCloseRef.current = true;
+        allowMouseUpCloseReference.current = true;
       }, 300);
     }
 
     function onMouseUp() {
-      if (allowMouseUpCloseRef.current) {
+      if (allowMouseUpCloseReference.current) {
         setIsOpen(false);
       }
     }
@@ -225,15 +227,12 @@ const MenuComponent = forwardRef<
       const data = item as GeneralItemType;
 
       const props = {
-        label: data.label,
-        key: data.key,
-        icon: data.icon,
-        shortcut: data.shortcut,
         active: activeIndex === index,
+        icon: data.icon,
+        key: data.key,
+        label: data.label,
+        shortcut: data.shortcut,
         ...getItemProps({
-          ref(node: HTMLButtonElement) {
-            listItemsRef.current[index] = node;
-          },
           onClick() {
             data.onClick?.();
             setIsOpen(false);
@@ -241,6 +240,9 @@ const MenuComponent = forwardRef<
           onMouseUp() {
             data.onClick?.();
             setIsOpen(false);
+          },
+          ref(node: HTMLButtonElement) {
+            listItemsReference.current[index] = node;
           },
         }),
       };
@@ -254,15 +256,15 @@ const MenuComponent = forwardRef<
     [activeIndex],
   );
 
-  const referenceRef = useMergeRefs([refs.setReference, forwardedRef]);
+  const referenceReference = useMergeRefs([refs.setReference, forwardedReference]);
 
   return (
     <FloatingNode id={nodeId}>
-      {!label ? null : (
+      {label ? (
         <MenuItem
           label={label}
           nested={isNested}
-          ref={referenceRef as any}
+          ref={referenceReference as any}
           role={isNested ? 'menuitem' : 'menu'}
           {...props}
           {...getReferenceProps({
@@ -271,7 +273,7 @@ const MenuComponent = forwardRef<
             },
           })}
         />
-      )}
+      ) : null}
       <FloatingPortal>
         {isOpen && (
           <FloatingFocusManager
@@ -291,9 +293,9 @@ const MenuComponent = forwardRef<
 });
 
 const ContextMenu = forwardRef<HTMLButtonElement, ContextMenuProps & HTMLProps<HTMLButtonElement>>(
-  (props, ref) => (
+  (props, reference) => (
     <FloatingTree>
-      <MenuComponent {...props} ref={ref} />
+      <MenuComponent {...props} ref={reference} />
     </FloatingTree>
   ),
 );

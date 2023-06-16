@@ -17,13 +17,13 @@ export const useStyles = createStyles(
           max-width: ${contentMaxWidth}px;
 
           ${responsive({
+            laptop: {
+              gridTemplateColumns: 'repeat(2, 1fr)',
+            },
             mobile: css`
               display: flex;
               flex-direction: column;
             `,
-            laptop: {
-              gridTemplateColumns: 'repeat(2, 1fr)',
-            },
           })}
         `,
       ),

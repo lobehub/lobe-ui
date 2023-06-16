@@ -4,35 +4,35 @@ import { Copy, RotateCw, Trash } from 'lucide-react';
 
 export const avatar: MetaData = {
   avatar: '😎',
-  title: 'Advertiser',
   backgroundColor: '#E8DA5A',
+  title: 'Advertiser',
 };
 
 export const items: ActionIconGroupProps['items'] = [
   {
     icon: RotateCw,
-    title: 'Regenerate',
     onClick: () => console.log('click Regenerate'),
+    title: 'Regenerate',
   },
 ];
 
 export const dropdownMenu: ActionIconGroupProps['dropdownMenu'] = [
   {
-    key: 'Copy',
     icon: <Icon icon={Copy} size="small" />,
+    key: 'Copy',
     label: 'Copy',
   },
   {
-    key: 'Regenerate',
     icon: <Icon icon={RotateCw} size="small" />,
+    key: 'Regenerate',
     label: 'Regenerate',
   },
   {
     type: 'divider',
   },
   {
-    key: 'Delete',
     icon: <Icon icon={Trash} size="small" />,
+    key: 'Delete',
     label: 'Delete',
   },
 ];

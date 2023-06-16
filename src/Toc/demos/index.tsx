@@ -2,12 +2,12 @@ import { StroyBook, Toc, type TocProps, useControls, useCreateStore } from '@lob
 
 const items: TocProps['items'] = [
   {
-    title: 'Default',
     id: 'Default',
+    title: 'Default',
   },
   {
-    title: 'APIs',
     id: 'APIs',
+    title: 'APIs',
   },
 ];
 export default () => {

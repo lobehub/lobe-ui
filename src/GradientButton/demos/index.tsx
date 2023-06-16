@@ -12,8 +12,8 @@ export default () => {
     {
       children: 'Get a Demo',
       size: {
-        value: 'large',
         options: ['large', 'normal', 'small'],
+        value: 'large',
       },
     },
     { store },

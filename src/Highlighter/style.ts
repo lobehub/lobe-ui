@@ -16,6 +16,18 @@ export const useStyles = createStyles(
     `;
 
     return {
+      button: cx(
+        buttonHoverCls,
+        css`
+          position: absolute;
+          z-index: 51;
+          top: ${type === 'pure' ? 0 : '8px'};
+          right: ${type === 'pure' ? 0 : '8px'};
+
+          opacity: 0;
+        `,
+      ),
+
       container: cx(
         prefix,
         type !== 'pure' && typeStylish,
@@ -48,18 +60,6 @@ export const useStyles = createStyles(
           code {
             background: transparent !important;
           }
-        `,
-      ),
-
-      button: cx(
-        buttonHoverCls,
-        css`
-          position: absolute;
-          z-index: 51;
-          top: ${type === 'pure' ? 0 : '8px'};
-          right: ${type === 'pure' ? 0 : '8px'};
-
-          opacity: 0;
         `,
       ),
       lang: cx(

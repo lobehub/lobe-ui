@@ -3,7 +3,7 @@ import { cx } from 'antd-style';
 import { memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import { TextArea, type TextAreaProps } from '@/index';
+import { TextArea, type TextAreaProps } from '@/Input';
 
 /**
  * @title MessageInputProps
@@ -40,7 +40,7 @@ export interface MessageInputProps {
 
 const MessageInput = memo<MessageInputProps>(
   ({ type, onCancel, defaultValue, onConfirm, renderButtons, height, className }) => {
-    const [tempSystemRole, setRole] = useState<string>(defaultValue || '');
+    const [temporarySystemRole, setRole] = useState<string>(defaultValue || '');
 
     return (
       <Flexbox gap={8}>
@@ -52,18 +52,18 @@ const MessageInput = memo<MessageInputProps>(
           placeholder={'例如：你是一名擅长翻译的翻译官，请将用户所输入的英文都翻译为中文。'}
           style={{ height: height ?? 200 }}
           type={type}
-          value={tempSystemRole}
+          value={temporarySystemRole}
         />
         <Flexbox direction={'horizontal-reverse'} gap={8}>
           {renderButtons ? (
-            renderButtons(tempSystemRole).map((buttonProps, index) => (
+            renderButtons(temporarySystemRole).map((buttonProps, index) => (
               <Button key={index} {...buttonProps} />
             ))
           ) : (
             <>
               <Button
                 onClick={() => {
-                  onConfirm?.(tempSystemRole);
+                  onConfirm?.(temporarySystemRole);
                 }}
                 type="primary"
               >

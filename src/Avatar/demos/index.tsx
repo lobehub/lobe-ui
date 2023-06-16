@@ -6,15 +6,15 @@ export default () => {
     {
       avatar: 'https://raw.githubusercontent.com/lobehub/favicon/main/icon.png',
       background: '#FEE064',
-      size: {
-        value: 40,
-        step: 1,
-        min: 16,
-        max: 128,
-      },
       shape: {
-        value: 'circle',
         options: ['circle', 'square'],
+        value: 'circle',
+      },
+      size: {
+        max: 128,
+        min: 16,
+        step: 1,
+        value: 40,
       },
       title: 'cm',
     },

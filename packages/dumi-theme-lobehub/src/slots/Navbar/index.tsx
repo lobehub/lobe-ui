@@ -9,6 +9,9 @@ import { activePathSel, useSiteStore } from '@/store';
 
 const useStyles = createStyles(({ css, stylish, token, responsive }) => {
   return {
+    link: css`
+      ${stylish.resetLinkColor}
+    `,
     tabs: css`
       .ant-tabs-tab-active a {
         color: ${token.colorText} !important;
@@ -16,9 +19,6 @@ const useStyles = createStyles(({ css, stylish, token, responsive }) => {
       ${responsive.mobile} {
         display: none;
       }
-    `,
-    link: css`
-      ${stylish.resetLinkColor}
     `,
   };
 });
@@ -34,15 +34,15 @@ const Navbar = memo(() => {
         activeKey={activePath}
         className={styles.tabs}
         items={nav.map((item) => ({
+          key: String(item.activePath! || item.link),
           label: (
             <Link className={styles.link} to={String(item.link)}>
               {item.title}
             </Link>
           ),
-          key: String(item.activePath! || item.link),
         }))}
         onChange={(path) => {
-          const url = nav.find((i) => i.activePath === path || i.link === path)?.link;
+          const url = nav.find((index) => index.activePath === path || index.link === path)?.link;
 
           if (!url) return;
 

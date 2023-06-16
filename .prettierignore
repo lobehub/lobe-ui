@@ -11,6 +11,7 @@
 .env.local
 .husky
 .npmrc
+.gitkeep
 venv
 temp
 tmp
@@ -28,6 +29,8 @@ coverage
 .eslintcache
 .stylelintcache
 test-output
+__snapshots__
+*.snap
 
 # production
 dist

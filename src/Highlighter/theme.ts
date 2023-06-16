@@ -13,12 +13,29 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
   const colorBlue = isDarkMode ? colorScales.blue[type][9] : colorScales.geekblue[type][9];
 
   return {
+    colors: {
+      'editor.foreground': colorTextSecondary,
+    },
     name: type,
-    type,
     semanticHighlighting: true,
     semanticTokenColors: {
-      enumMember: {
+      'annotation:dart': {
+        foreground: colorGreen,
+      },
+      'enumMember': {
         foreground: colorBlue,
+      },
+      'macro': {
+        foreground: colorGreen,
+      },
+      'parameter.label:dart': {
+        foreground: colorTextTertiary,
+      },
+      'property:dart': {
+        foreground: colorGreen,
+      },
+      'tomlArrayKey': {
+        foreground: colorRed,
       },
       'variable.constant': {
         foreground: colorGreen,
@@ -28,21 +45,6 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
       },
       'variable:dart': {
         foreground: colorGreen,
-      },
-      'property:dart': {
-        foreground: colorGreen,
-      },
-      'annotation:dart': {
-        foreground: colorGreen,
-      },
-      'parameter.label:dart': {
-        foreground: colorTextTertiary,
-      },
-      macro: {
-        foreground: colorGreen,
-      },
-      tomlArrayKey: {
-        foreground: colorRed,
       },
     },
     tokenColors: [
@@ -1212,8 +1214,8 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         },
       },
       {
-        name: 'php illegal.non-null-typehinted',
-        scope: 'invalid.illegal.non-null-typehinted.php',
+        name: 'php illegal.non-undefined-typehinted',
+        scope: 'invalid.illegal.non-undefined-typehinted.php',
         settings: {
           foreground: colorRed,
         },
@@ -1805,8 +1807,8 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'Comments',
         scope: 'comment, punctuation.definition.comment',
         settings: {
-          foreground: colorTextTertiary,
           fontStyle: 'italic',
+          foreground: colorTextTertiary,
         },
       },
       {
@@ -1986,8 +1988,6 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         },
       },
     ],
-    colors: {
-      'editor.foreground': colorTextSecondary,
-    },
+    type,
   };
 };

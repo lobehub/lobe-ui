@@ -30,31 +30,31 @@ const Content: FC<ContentProps> = memo(({ content, role, index, error, loading }
         renderButtons={(text) =>
           [
             {
-              type: 'primary',
               children: isUser ? '更新并重新生成' : '更新',
               onClick: () => {
-                dispatchMessage({ type: 'updateMessage', message: text, index });
-                handleMessageEditing(null);
+                dispatchMessage({ index, message: text, type: 'updateMessage' });
+                handleMessageEditing();
 
                 // 如果是用户的消息，那么重新生成下一条消息
                 if (isUser) {
                   resendMessage(index + 1);
                 }
               },
+              type: 'primary',
             },
             isUser
               ? {
                   children: '仅更新',
                   onClick: () => {
-                    dispatchMessage({ type: 'updateMessage', message: text, index });
-                    handleMessageEditing(null);
+                    dispatchMessage({ index, message: text, type: 'updateMessage' });
+                    handleMessageEditing();
                   },
                 }
-              : null,
+              : undefined,
             {
-              type: 'text',
               children: '取消',
-              onClick: () => handleMessageEditing(null),
+              onClick: () => handleMessageEditing(),
+              type: 'text',
             },
           ].filter(Boolean) as ButtonProps[]
         }
@@ -64,12 +64,14 @@ const Content: FC<ContentProps> = memo(({ content, role, index, error, loading }
 
   return (
     <>
-      {!loading ? (
+      {loading ? (
+        error ? undefined : (
+          <div>
+            <LoadingOutlined spin style={{ fontSize: 20 }} />
+          </div>
+        )
+      ) : (
         <Markdown>{content}</Markdown>
-      ) : error ? null : (
-        <div>
-          <LoadingOutlined spin style={{ fontSize: 20 }} />
-        </div>
       )}
       {error && (
         <Alert

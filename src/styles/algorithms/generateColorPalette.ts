@@ -36,20 +36,20 @@ export const generateColorNeutralPalette = ({
   scale: ColorScaleItem;
 }): Partial<AliasToken> => {
   return {
-    colorText: scale[appearance][12],
-    colorTextSecondary: scale[appearance][10],
-    colorTextTertiary: scale[appearance][8],
-    colorTextQuaternary: scale[appearance][6],
-    colorBorder: scale[appearance][4],
-    colorBorderSecondary: scale[appearance][3],
-    colorFill: scale[`${appearance}A`][3],
-    colorFillSecondary: scale[`${appearance}A`][2],
-    colorFillTertiary: scale[`${appearance}A`][1],
-    colorFillQuaternary: scale[`${appearance}A`][0],
     colorBgContainer: appearance === 'dark' ? scale[appearance][1] : scale[appearance][0],
     colorBgElevated: appearance === 'dark' ? scale[appearance][2] : scale[appearance][0],
     colorBgLayout: appearance === 'dark' ? scale[appearance][0] : scale[appearance][1],
-    colorBgSpotlight: scale[appearance][5],
     colorBgMask: scale.lightA[8],
+    colorBgSpotlight: scale[appearance][5],
+    colorBorder: scale[appearance][4],
+    colorBorderSecondary: scale[appearance][3],
+    colorFill: scale[`${appearance}A`][3],
+    colorFillQuaternary: scale[`${appearance}A`][0],
+    colorFillSecondary: scale[`${appearance}A`][2],
+    colorFillTertiary: scale[`${appearance}A`][1],
+    colorText: scale[appearance][12],
+    colorTextQuaternary: scale[appearance][6],
+    colorTextSecondary: scale[appearance][10],
+    colorTextTertiary: scale[appearance][8],
   };
 };

@@ -13,7 +13,7 @@ export interface FooterProps {
 const Footer = memo<FooterProps>(({ columns, bottom, theme, contentMaxWidth = 960 }) => {
   const isEmpty = !columns || columns?.length === 0;
 
-  const { styles } = useStyles({ isEmpty, contentMaxWidth });
+  const { styles } = useStyles({ contentMaxWidth, isEmpty });
 
   return (
     <section className={styles.container}>

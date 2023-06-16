@@ -28,15 +28,18 @@ export interface FetchSSEOptions {
  * @param fetchFn
  * @param options
  */
-export const fetchSSE = async (fetchFn: () => Promise<Response>, options: FetchSSEOptions = {}) => {
-  const response = await fetchFn();
+export const fetchSSE = async (
+  fetchFunction: () => Promise<Response>,
+  options: FetchSSEOptions = {},
+) => {
+  const response = await fetchFunction();
 
   // 如果不 ok 说明有连接请求错误
   if (!response.ok) {
     const chatMessageError: ChatMessageError = {
-      type: 'chatbot',
       message: codeMessage[response.status],
       status: response.status,
+      type: 'chatbot',
     };
 
     options.onErrorHandle?.(chatMessageError);

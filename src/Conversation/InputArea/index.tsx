@@ -9,6 +9,23 @@ import { chatSelectors, useStore, useStoreApi } from '../../Chat/store';
 import ActionBar from './ActionBar';
 
 const useStyles = createStyles(({ css, responsive, token }) => ({
+  boxShadow: css`
+    position: relative;
+    border-radius: 8px;
+    box-shadow: ${token.boxShadowSecondary};
+  `,
+  btn: css`
+    position: absolute;
+    z-index: 10;
+    right: 8px;
+    bottom: 8px;
+
+    color: ${token.colorTextTertiary};
+
+    &:hover {
+      color: ${token.colorTextSecondary};
+    }
+  `,
   container: css`
     position: sticky;
     z-index: ${token.zIndexPopupBase};
@@ -23,33 +40,16 @@ const useStyles = createStyles(({ css, responsive, token }) => ({
       width: 100%;
     }
   `,
-  boxShadow: css`
-    position: relative;
-    border-radius: 8px;
-    box-shadow: ${token.boxShadowSecondary};
+  extra: css`
+    color: ${token.colorTextTertiary};
   `,
   input: css`
     width: 100%;
     border-radius: 8px;
   `,
-  btn: css`
-    position: absolute;
-    z-index: 10;
-    right: 8px;
-    bottom: 8px;
-
-    color: ${token.colorTextTertiary};
-
-    &:hover {
-      color: ${token.colorTextSecondary};
-    }
-  `,
-  extra: css`
-    color: ${token.colorTextTertiary};
-  `,
 }));
 
-export const InputArea = ({}) => {
+export const InputArea = () => {
   const [message, sendMessage, isLoading, disabled] = useStore(
     (s) => [s.message, s.sendMessage, s.loading, chatSelectors.disableInput(s)],
     shallow,
@@ -66,11 +66,11 @@ export const InputArea = ({}) => {
       theme={{
         token: {
           borderRadius: 4,
-          fontSize: 16,
           colorBgContainer: theme.colorBgElevated,
-          controlHeightLG: 48,
           colorBorder: 'transparent',
           colorPrimaryHover: 'transparent',
+          controlHeightLG: 48,
+          fontSize: 16,
         },
       }}
     >
@@ -100,7 +100,7 @@ export const InputArea = ({}) => {
             size={'large'}
             value={message}
           />
-          {mobile ? null : (
+          {mobile ? undefined : (
             <Button
               className={styles.btn}
               disabled={disabled}

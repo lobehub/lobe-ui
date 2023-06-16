@@ -16,7 +16,7 @@ const Header = memo(() => {
   const hasHeader = useSiteStore((s) => Boolean(s.routeMeta.frontmatter));
 
   const { mobile } = useResponsive();
-  if (!hasHeader) return null;
+  if (!hasHeader) return;
 
   return (
     <Head

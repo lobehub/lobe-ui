@@ -10,7 +10,7 @@ import { isApiPageSel, useSiteStore } from '@/store';
 
 import { useStyles } from './styles';
 
-const Docs = memo(() => {
+const Documents = memo(() => {
   const outlet = useOutlet();
   const { mobile } = useResponsive();
   const { isApiPage } = useSiteStore(
@@ -24,16 +24,16 @@ const Docs = memo(() => {
   return (
     <>
       <div className={styles.background} />
-      <Center className={styles.content} style={{ padding: mobile ? 0 : 24, marginBottom: 48 }}>
+      <Center className={styles.content} style={{ marginBottom: 48, padding: mobile ? 0 : 24 }}>
         {isApiPage ? (
           <div style={{ padding: mobile ? 16 : 0, width: '100%' }}>
             <ApiHeader />
           </div>
-        ) : null}
+        ) : undefined}
         <Content>{outlet}</Content>
       </Center>
     </>
   );
 });
 
-export default Docs;
+export default Documents;

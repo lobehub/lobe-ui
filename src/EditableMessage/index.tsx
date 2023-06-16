@@ -67,13 +67,13 @@ const EditableMessage = memo<EditableMessageProps>(
     showEditWhenEmpty = false,
   }) => {
     const [isEdit, setTyping] = useControlledState(false, {
-      value: editing,
       onChange: onEditingChange,
+      value: editing,
     });
 
     const [expand, setExpand] = useControlledState<boolean>(false, {
-      value: openModal,
       onChange: onOpenChange,
+      value: openModal,
     });
 
     return !value && showEditWhenEmpty ? (

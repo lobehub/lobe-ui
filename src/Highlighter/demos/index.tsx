@@ -17,19 +17,19 @@ export default () => {
   const options: HighlighterProps | any = useControls(
     {
       children: {
-        value: code,
         rows: true,
-      },
-      language: 'tsx',
-      type: {
-        value: 'block',
-        options: ['ghost', 'block', 'pure'],
+        value: code,
       },
       copyable: true,
+      language: 'tsx',
       showLanguage: true,
       theme: {
-        value: null,
-        options: [null, 'dark', 'light'],
+        options: [undefined, 'dark', 'light'],
+        value: undefined,
+      },
+      type: {
+        options: ['ghost', 'block', 'pure'],
+        value: 'block',
       },
     },
     { store },

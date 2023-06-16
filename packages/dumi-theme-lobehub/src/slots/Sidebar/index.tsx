@@ -11,10 +11,10 @@ const Sidebar = memo(() => {
   const { styles } = useStyles();
   const isEmptySideBar = !sidebar || sidebar.length === 0;
 
-  return isEmptySideBar ? null : (
+  return isEmptySideBar ? undefined : (
     <section className={styles.sidebarInner}>
-      {sidebar.map((item, i) => (
-        <dl key={String(i)}>
+      {sidebar.map((item, index) => (
+        <dl key={String(index)}>
           {item.title && <dt>{item.title}</dt>}
           {item.children.map((child) => (
             <dd key={child.link}>

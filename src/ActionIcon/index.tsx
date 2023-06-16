@@ -1,7 +1,9 @@
 import { Loader2, LucideIcon } from 'lucide-react';
 import { memo, useMemo } from 'react';
 
-import { Icon, Spotlight, Tooltip, TooltipProps } from '@/index';
+import Icon from '@/Icon';
+import Spotlight from '@/Spotlight';
+import Tooltip, { type TooltipProps } from '@/Tooltip';
 import { DivProps } from '@/types';
 
 import { useStyles } from './style';
@@ -23,26 +25,31 @@ const calcSize = (size?: ActionIconSize) => {
   let borderRadius: number;
 
   switch (size) {
-    case 'large':
+    case 'large': {
       blockSize = 44;
       borderRadius = 8;
       break;
-    case 'normal':
+    }
+    case 'normal': {
       blockSize = 36;
       borderRadius = 5;
       break;
-    case 'small':
+    }
+    case 'small': {
       blockSize = 24;
       borderRadius = 5;
       break;
-    case 'site':
+    }
+    case 'site': {
       blockSize = 34;
       borderRadius = 5;
       break;
-    default:
+    }
+    default: {
       blockSize = size?.blockSize || 36;
       borderRadius = size?.borderRadius || 5;
       break;
+    }
   }
 
   return {
@@ -137,7 +144,7 @@ const ActionIcon = memo<ActionIconProps>(
       <div
         className={cx(styles.block, className)}
         onClick={loading ? undefined : onClick}
-        style={{ width: blockSize, height: blockSize, borderRadius, ...style }}
+        style={{ borderRadius, height: blockSize, width: blockSize, ...style }}
         {...props}
       >
         {spotlight && <Spotlight />}

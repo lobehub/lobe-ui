@@ -33,44 +33,44 @@ function getTargetLocalePath({
 }
 
 const languageMap: Record<string, string> = {
-  'zh-CN': '🇨🇳',
+  'de-DE': '🇩🇪',
   'en-US': '🇺🇸',
-  'jp-JP': '🇯🇵',
-  'ko-KR': '🇰🇷',
-  'ru-RU': '🇷🇺',
   'es-ES': '🇪🇸',
   'fr-FR': '🇫🇷',
-  'de-DE': '🇩🇪',
-  'pt-BR': '🇧🇷',
   'it-IT': '🇮🇹',
+  'jp-JP': '🇯🇵',
+  'ko-KR': '🇰🇷',
+  'pt-BR': '🇧🇷',
+  'ru-RU': '🇷🇺',
   'tr-TR': '🇹🇷',
   'vi-VN': '🇻🇳',
+  'zh-CN': '🇨🇳',
 };
 
 const displayLangMap: Record<string, string> = {
-  'zh-CN': '中',
   'en-US': 'EN',
+  'zh-CN': '中',
 };
 
 const SingleSwitch = memo<{ current: ILocaleItem; locale: ILocaleItem }>(({ locale, current }) => {
   const { pathname } = useLocation();
   const [path, setPath] = useState(() =>
-    getTargetLocalePath({ pathname, current, target: locale }),
+    getTargetLocalePath({ current, pathname, target: locale }),
   );
 
   useEffect(() => {
-    setPath(getTargetLocalePath({ pathname, current, target: locale }));
+    setPath(getTargetLocalePath({ current, pathname, target: locale }));
   }, [pathname, current.id, locale.id]);
 
   return (
     <Link to={path}>
       <Button
         style={{
+          alignItems: 'center',
+          display: 'flex',
+          justifyContent: 'center',
           minWidth: 34,
           padding: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
         }}
       >
         {displayLangMap[locale.id]}
@@ -84,39 +84,39 @@ const LangSwitch = memo(() => {
   const current = useSiteStore((s) => s.locale);
 
   // do not render in single language
-  if (locales.length <= 1) return null;
+  if (locales.length <= 1) return;
 
   return locales.length > 2 ? (
     <NativeSelect
       onChange={(index) => {
         console.log(
           getTargetLocalePath({
-            pathname: location.pathname,
             current,
+            pathname: location.pathname,
             target: locales[index],
           }),
         );
 
         history.push(
           getTargetLocalePath({
-            pathname: location.pathname,
             current,
+            pathname: location.pathname,
             target: locales[index],
           }),
         );
       }}
       options={locales.map((item) => ({
-        value: item.id,
         label: displayLangMap[item.id],
+        value: item.id,
       }))}
       renderItem={(item, index) => `${languageMap[locales[index].id]} ${locales[index].name}`}
       style={{
+        alignItems: 'center',
+        display: 'flex',
         height: 32,
+        justifyContent: 'center',
         minWidth: 32,
         padding: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
       }}
       value={locales.findIndex((l) => l.id === current.id)}
     />

@@ -2,7 +2,8 @@ import { Button } from 'antd';
 import { Maximize2, Minimize2 } from 'lucide-react';
 import { ReactNode, memo, useCallback, useEffect, useRef, useState } from 'react';
 
-import { ActionIcon, TextArea } from '@/index';
+import ActionIcon from '@/ActionIcon';
+import { TextArea } from '@/Input';
 import type { DivProps } from '@/types';
 
 import { useStyles } from './style';

@@ -16,10 +16,10 @@ export const Prism = memo<PrismProps>(({ children, language, isDarkMode }) => {
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre className={className} style={style}>
-          {tokens.map((line, i) => (
-            <div key={i} {...getLineProps({ line, key: i })}>
+          {tokens.map((line, index) => (
+            <div key={index} {...getLineProps({ key: index, line })}>
               {line.map((token, key) => (
-                <span key={i} {...getTokenProps({ token, key })} />
+                <span key={index} {...getTokenProps({ key, token })} />
               ))}
             </div>
           ))}

@@ -23,26 +23,6 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
     blur: css`
       backdrop-filter: saturate(180%) blur(10px);
     `,
-    gradientAnimation: css`
-      background-image: linear-gradient(
-        -45deg,
-        ${token.gold},
-        ${token.magenta},
-        ${token.geekblue},
-        ${token.cyan}
-      );
-      background-size: 400% 400%;
-      border-radius: inherit;
-      animation: 5s ${gradient} 5s ease infinite;
-    `,
-    noScrollbar: css`
-      ::-webkit-scrollbar {
-        display: none;
-        width: 0;
-        height: 0;
-        background-color: transparent;
-      }
-    `,
     bottomScrollbar: css`
       ::-webkit-scrollbar {
         width: 0;
@@ -62,13 +42,17 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         }
       }
     `,
-    resetLinkColor: css`
-      cursor: pointer;
-      color: ${token.colorTextSecondary};
-
-      &:hover {
-        color: ${token.colorText};
-      }
+    gradientAnimation: css`
+      background-image: linear-gradient(
+        -45deg,
+        ${token.gold},
+        ${token.magenta},
+        ${token.geekblue},
+        ${token.cyan}
+      );
+      background-size: 400% 400%;
+      border-radius: inherit;
+      animation: 5s ${gradient} 5s ease infinite;
     `,
     markdown: css`
       color: ${isDarkMode ? token.colorTextSecondary : token.colorText};
@@ -206,6 +190,22 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
           padding-bottom: 12px;
           border-bottom: 1px solid ${token.colorBorder};
         }
+      }
+    `,
+    noScrollbar: css`
+      ::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+        background-color: transparent;
+      }
+    `,
+    resetLinkColor: css`
+      cursor: pointer;
+      color: ${token.colorTextSecondary};
+
+      &:hover {
+        color: ${token.colorText};
       }
     `,
   };

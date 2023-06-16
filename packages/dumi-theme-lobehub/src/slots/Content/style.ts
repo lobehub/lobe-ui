@@ -23,6 +23,13 @@ export const useStyles = createStyles(({ token, responsive, css, stylish }) => (
 
     .markdown {
       ${stylish.markdown};
+      h2,
+      h3 {
+        &[id^='version'] {
+          color: ${token.colorText};
+        }
+      }
+
       h1,
       h2,
       h3,
@@ -60,13 +67,6 @@ export const useStyles = createStyles(({ token, responsive, css, stylish }) => (
 
         &:not(:hover) > a[aria-hidden]:first-child > .icon-link {
           visibility: hidden;
-        }
-      }
-
-      h2,
-      h3 {
-        &[id^='version'] {
-          color: ${token.colorText};
         }
       }
 

@@ -101,18 +101,18 @@ export const ApiHeader = memo<ApiTitleProps>(
 
     const items = [
       sourceUrl && {
-        icon: <Icon icon={Github} />,
         children: 'Source',
+        icon: <Icon icon={Github} />,
         url: sourceUrl,
       },
       docUrl && {
-        icon: <Icon icon={Edit3} />,
         children: 'Edit',
+        icon: <Icon icon={Edit3} />,
         url: docUrl,
       },
-    ].filter((i) => i) as ServiceItem[];
+    ].filter(Boolean) as ServiceItem[];
 
-    const importStr = defaultImport
+    const importString = defaultImport
       ? `import ${componentName} from '${pkg}';`
       : `import { ${componentName} } from '${pkg}';`;
 
@@ -129,7 +129,7 @@ export const ApiHeader = memo<ApiTitleProps>(
         <Flexbox gap={mobile ? 16 : 24} style={{ marginTop: 16 }}>
           {componentName && (
             <div style={{ display: 'flex' }}>
-              <Snippet spotlight>{importStr}</Snippet>
+              <Snippet spotlight>{importString}</Snippet>
             </div>
           )}
           <Divider dashed style={{ margin: '2px 0' }} />

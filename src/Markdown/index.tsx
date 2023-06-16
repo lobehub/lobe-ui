@@ -22,11 +22,11 @@ export interface MarkdownProps {
 const Markdown = memo<MarkdownProps>(({ children, className }: MarkdownProps) => {
   const { styles, cx } = useStyles();
   const components: any = {
-    pre: CodeBlock,
-    code: Code,
-    hr: Divider,
     a: Typography.Link,
+    code: Code,
     details: Collapse,
+    hr: Divider,
+    pre: CodeBlock,
   };
 
   return (
