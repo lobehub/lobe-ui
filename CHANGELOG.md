@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.26.3](https://github.com/lobehub/lobe-ui/compare/v1.26.2...v1.26.3)
+
+<sup>Released on **2023-06-16**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix types.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix types ([98021cb](https://github.com/lobehub/lobe-ui/commit/98021cb))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.26.2](https://github.com/lobehub/lobe-ui/compare/v1.26.1...v1.26.2)
 
 <sup>Released on **2023-06-16**</sup>
