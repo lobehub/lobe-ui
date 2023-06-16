@@ -48,11 +48,13 @@ export interface DraggablePanelProps extends DivProps {
    * @default true
    */
   expandable?: boolean;
+  fullscreen?: boolean;
   /**
    * @description The style of the panel handler
    * @type CSSProperties
    */
   hanlderStyle?: React.CSSProperties;
+  maxHeight?: number;
   maxWidth?: number;
   /**
    * @description The minimum height of the panel
@@ -107,6 +109,8 @@ export interface DraggablePanelProps extends DivProps {
 
 const DraggablePanel = memo<DraggablePanelProps>(
   ({
+    fullscreen,
+    maxHeight,
     pin = 'true',
     mode = 'fixed',
     children,
@@ -134,7 +138,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     const isHovering = useHover(ref);
     const isVertical = placement === 'top' || placement === 'bottom';
 
-    const { styles, cx } = useStyles('draggable-panel');
+    const { styles, cx } = useStyles();
 
     const [isExpand, setIsExpand] = useControlledState(defaultExpand, {
       value: expand,
@@ -193,9 +197,10 @@ const DraggablePanel = memo<DraggablePanelProps>(
 
     const sizeProps = isExpand
       ? {
-          minWidth: typeof minWidth === 'number' ? Math.max(minWidth, 0) : 280,
-          minHeight: typeof minHeight === 'number' ? Math.max(minHeight, 0) : undefined,
-          maxWidth: typeof maxWidth === 'number' ? Math.max(maxWidth, 0) : undefined,
+          minWidth: typeof minWidth === 'number' ? Math.max(minWidth, 0) : minWidth,
+          minHeight: typeof minHeight === 'number' ? Math.max(minHeight, 0) : minHeight,
+          maxWidth: typeof maxWidth === 'number' ? Math.max(maxWidth, 0) : maxWidth,
+          maxHeight: typeof maxHeight === 'number' ? Math.max(maxHeight, 0) : maxHeight,
           defaultSize,
           size: size as Size,
         }
@@ -272,6 +277,8 @@ const DraggablePanel = memo<DraggablePanelProps>(
         {children}
       </Resizable>
     );
+
+    if (fullscreen) return <div className={cx(styles.fullscreen, className)}>{children}</div>;
 
     return (
       <aside

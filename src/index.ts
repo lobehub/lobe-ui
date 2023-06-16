@@ -2,6 +2,7 @@ export { default as ActionIcon, type ActionIconProps, type ActionIconSize } from
 export { default as ActionIconGroup, type ActionIconGroupProps } from './ActionIconGroup';
 export { default as Avatar, type AvatarProps } from './Avatar';
 export type { ChatMessage, MessageRoleType } from './Chat';
+export { default as ChatInputArea, type ChatInputAreaProps } from './ChatInputArea';
 export { default as ChatItem, type ChatItemProps } from './ChatItem';
 export { default as ChatList, type ChatListProps } from './ChatList';
 export { default as ColorScales, type ColorScalesProps } from './ColorScales';
@@ -50,6 +51,7 @@ export { default as TabsNav, type TabsNavProps } from './TabsNav';
 export { default as ThemeProvider } from './ThemeProvider';
 export { default as ThemeSwitch, type ThemeSwitchProps } from './ThemeSwitch';
 export { default as Toc, type TocProps } from './Toc';
+export { default as TokenTag, type TokenTagProps } from './TokenTag';
 export { default as Tooltip, type TooltipProps } from './Tooltip';
 export { type LobeCustomStylish } from './types/customStylish';
 export { type LobeCustomToken } from './types/customToken';

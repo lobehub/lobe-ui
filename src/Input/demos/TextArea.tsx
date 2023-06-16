@@ -7,7 +7,7 @@ export default () => {
       placeholder: 'Type keywords...',
       type: {
         value: 'ghost',
-        options: ['ghost', 'block'],
+        options: ['ghost', 'block', 'pure'],
       },
     },
     { store },

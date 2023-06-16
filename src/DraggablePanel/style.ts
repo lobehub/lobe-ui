@@ -3,8 +3,9 @@ import { createStyles, css, cx } from 'antd-style';
 const offset = 16;
 const toggleLength = 40;
 const toggleShort = 16;
+const prefix = 'draggable-panel';
 
-export const useStyles = createStyles(({ token }, prefix: string) => {
+export const useStyles = createStyles(({ token }) => {
   const commonHandle = css`
     position: relative;
 
@@ -262,5 +263,11 @@ export const useStyles = createStyles(({ token }, prefix: string) => {
         }
       `,
     ),
+    fullscreen: css`
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    `,
   };
 });
