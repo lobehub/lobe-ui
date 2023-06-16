@@ -27,9 +27,9 @@ import { useStyles } from './style';
 interface OptionType {
   icon?: ReactNode;
   label: ReactNode;
-  value: string | number | undefined;
+  value: string | number | null;
 }
-export interface NativeSelectProperties {
+export interface NativeSelectProps {
   onChange?: (index: number) => void;
   options?: OptionType[];
   prefixCls?: string;
@@ -39,22 +39,22 @@ export interface NativeSelectProperties {
   value?: number;
 }
 
-const NativeSelect = memo<NativeSelectProperties>(
+const NativeSelect = memo<NativeSelectProps>(
   ({ options = [], value, prefixCls, onChange, renderValue, renderItem, style }) => {
     const cls = prefixCls ?? 'native-select';
     const [selectedIndex, setSelectedIndex] = useControlledState<number>(0, { onChange, value });
 
     const { styles } = useStyles(cls);
-    const listReference = useRef<Array<HTMLElement | undefined>>([]);
-    const listContentReference = useRef<Array<string | undefined>>([]);
-    const overflowReference = useRef<SideObject>();
+    const listReference = useRef<Array<HTMLElement | null>>([]);
+    const listContentReference = useRef<Array<string | null>>([]);
+    const overflowReference = useRef<SideObject>(null);
     const allowSelectReference = useRef(false);
     const allowMouseUpReference = useRef(true);
     const selectTimeoutReference = useRef<any>();
-    const scrollReference = useRef<HTMLDivElement>();
+    const scrollReference = useRef<HTMLDivElement>(null);
 
     const [open, setOpen] = useState(false);
-    const [activeIndex, setActiveIndex] = useState<number | undefined>();
+    const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const [fallback, setFallback] = useState(false);
     const [innerOffset, setInnerOffset] = useState(0);
     const [touch, setTouch] = useState(false);

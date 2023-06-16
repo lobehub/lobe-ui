@@ -6,18 +6,18 @@ import { useStyles } from './style';
 
 type IContentTabs = ReturnType<typeof useRouteMeta>['tabs'];
 
-export interface IContentTabsProperties {
+export interface ContentTabsProps {
   onChange: (tab?: NonNullable<IContentTabs>[0]) => void;
   tabKey: string | undefined;
   tabs: IContentTabs;
 }
 
-const ContentTabs = memo<IContentTabsProperties>(({ tabs, tabKey: key, onChange }) => {
+const ContentTabs = memo<ContentTabsProps>(({ tabs, tabKey: key, onChange }) => {
   const intl = useIntl();
   const { styles } = useStyles();
   // TODO: tab.Extra & tab.Action render
 
-  return Boolean(tabs) && Boolean(tabs?.length) ? (
+  return tabs && tabs?.length > 0 ? (
     <Tabs
       activeKey={key || 'default'}
       className={styles.cls}
