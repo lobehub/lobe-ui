@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.26.1](https://github.com/lobehub/lobe-ui/compare/v1.26.0...v1.26.1)
+
+<sup>Released on **2023-06-16**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix recursive deps.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix recursive deps ([c90ddc3](https://github.com/lobehub/lobe-ui/commit/c90ddc3))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.26.0](https://github.com/lobehub/lobe-ui/compare/v1.25.5...v1.26.0)
 
 <sup>Released on **2023-06-16**</sup>
