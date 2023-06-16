@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.26.0](https://github.com/lobehub/lobe-ui/compare/v1.25.5...v1.26.0)
+
+<sup>Released on **2023-06-16**</sup>
+
+#### ✨ Features
+
+- **misc**: Add ChatInputArea.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add ChatInputArea ([b1303f1](https://github.com/lobehub/lobe-ui/commit/b1303f1))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.25.5](https://github.com/lobehub/lobe-ui/compare/v1.25.4...v1.25.5)
 
 <sup>Released on **2023-06-15**</sup>
