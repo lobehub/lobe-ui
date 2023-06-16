@@ -2,7 +2,9 @@ import { Alert, type AlertProps } from 'antd';
 import { Loader2 } from 'lucide-react';
 import { ReactNode, memo } from 'react';
 
-import { Avatar, Icon, Markdown } from '@/index';
+import Avatar from '@/Avatar';
+import Icon from '@/Icon';
+import Markdown from '@/Markdown';
 import type { DivProps } from '@/types';
 import { MetaData } from '@/types/meta';
 import { formatTime } from '@/utils/formatTime';
