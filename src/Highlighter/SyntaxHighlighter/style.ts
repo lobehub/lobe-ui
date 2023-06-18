@@ -27,7 +27,7 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) =
     ),
     prism: css`
       pre {
-        overflow-x: scroll;
+        overflow: auto;
         font-family: ${token.fontFamilyCode} !important;
       }
     `,
@@ -36,7 +36,7 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) =
       `${prefix}-shiki`,
       css`
         .shiki {
-          overflow-x: scroll;
+          overflow-x: auto;
           background: none !important;
         }
       `,

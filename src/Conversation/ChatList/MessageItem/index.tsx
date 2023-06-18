@@ -63,7 +63,8 @@ const useStyles = createStyles(({ css, cx, responsive, token }) => {
       `,
     ),
     md: css`
-      overflow: scroll;
+      overflow-x: hidden;
+      overflow-y: auto;
       max-width: 100%;
       .${responsive.mobile} {
         max-width: 100%;

@@ -5,6 +5,7 @@ import { memo, useCallback, useEffect } from 'react';
 import { shallow } from 'zustand/shallow';
 
 import { StoreUpdater } from '@/components/StoreUpdater';
+import GlobalStyle from '@/layouts/DocLayout/GlobalStyle';
 import Changelog from '@/pages/Changelog';
 import Docs from '@/pages/Docs';
 import Home from '@/pages/Home';
@@ -122,6 +123,7 @@ export default memo(() => {
         customToken={customToken}
         themeMode={themeMode}
       >
+        <GlobalStyle />
         <DocumentLayout />
       </ThemeProvider>
     </>

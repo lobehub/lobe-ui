@@ -2,7 +2,8 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ css, prefixCls }) => ({
   body: css`
-    overflow-y: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
     max-height: 70vh;
   `,
   modal: css`
