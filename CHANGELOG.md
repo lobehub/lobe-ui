@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.26.4](https://github.com/lobehub/lobe-ui/compare/v1.26.3...v1.26.4)
+
+<sup>Released on **2023-06-18**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update style files in DocLayout and related components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update style files in DocLayout and related components ([f11803a](https://github.com/lobehub/lobe-ui/commit/f11803a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.26.3](https://github.com/lobehub/lobe-ui/compare/v1.26.2...v1.26.3)
 
 <sup>Released on **2023-06-16**</sup>
