@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.27.0](https://github.com/lobehub/lobe-ui/compare/v1.26.4...v1.27.0)
+
+<sup>Released on **2023-06-18**</sup>
+
+#### ✨ Features
+
+- **header**: Add className and style prop support for logo, nav, and actions.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **header**: Add className and style prop support for logo, nav, and actions ([e0e604e](https://github.com/lobehub/lobe-ui/commit/e0e604e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.26.4](https://github.com/lobehub/lobe-ui/compare/v1.26.3...v1.26.4)
 
 <sup>Released on **2023-06-18**</sup>
