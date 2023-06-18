@@ -25,7 +25,7 @@ export const useStyles = createStyles(({ css, stylish, responsive }, headerHeigh
       overflow-x: hidden;
       overflow-y: auto;
       width: 100%;
-      height: calc(100vh - 64px);
+      height: calc(100vh - ${headerHeight}px);
     `,
     content: css`
       position: relative;

@@ -33,7 +33,6 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     overflow-x: hidden;
-    overflow-y: auto;
     height: 100vh;
   }
 
@@ -59,37 +58,39 @@ const GlobalStyle = createGlobalStyle`
     background: ${({ theme }) => theme.yellow9};
   }
 
-  * {
-    box-sizing: border-box;
-    vertical-align: baseline;
+  @media only screen and (min-width: 574px) {
+    * {
+      box-sizing: border-box;
+      vertical-align: baseline;
 
-    ::-webkit-scrollbar {
-      cursor: pointer;
-      width: 4px;
-      height: 4px;
-      background-color: transparent;
-    }
+      ::-webkit-scrollbar {
+        cursor: pointer;
+        width: 4px;
+        height: 4px;
+        background-color: transparent;
+      }
 
-    ::-webkit-scrollbar-thumb {
-      cursor: pointer;
-      background-color: transparent;
-      border-radius: 2px;
-      transition: background-color 500ms ${({ theme }) => theme.motionEaseOut};
+      ::-webkit-scrollbar-thumb {
+        cursor: pointer;
+        background-color: transparent;
+        border-radius: 2px;
+        transition: background-color 500ms ${({ theme }) => theme.motionEaseOut};
+
+        &:hover {
+          background-color: ${({ theme }) => theme.colorText};
+        }
+      }
+
+      ::-webkit-scrollbar-corner {
+        display: none;
+        width: 0;
+        height: 0;
+      }
 
       &:hover {
-        background-color: ${({ theme }) => theme.colorText};
-      }
-    }
-
-    ::-webkit-scrollbar-corner {
-      display: none;
-      width: 0;
-      height: 0;
-    }
-
-    &:hover {
-      ::-webkit-scrollbar-thumb {
-        background-color: ${({ theme }) => theme.colorFill};
+        ::-webkit-scrollbar-thumb {
+          background-color: ${({ theme }) => theme.colorFill};
+        }
       }
     }
   }
