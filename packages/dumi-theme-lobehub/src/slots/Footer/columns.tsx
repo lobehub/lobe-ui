@@ -12,19 +12,19 @@ export const getColumns = ({ github }: GetColumnParameters) => {
       {
         description: 'AIGC Components',
         openExternal: true,
-        title: '🤯 Lobe UI',
+        title: 'Lobe UI',
         url: 'https://github.com/lobehub/lobe-ui',
       },
       {
         description: 'Chatbot Client',
         openExternal: true,
-        title: '🤯 Lobe Chat',
+        title: 'Lobe Chat',
         url: 'https://github.com/lobehub/lobe-chat',
       },
       {
         description: 'Node Flow Editor',
         openExternal: true,
-        title: '🤯 Lobe Flow',
+        title: 'Lobe Flow',
         url: 'https://github.com/lobehub/lobe-flow',
       },
     ],

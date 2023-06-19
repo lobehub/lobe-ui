@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img width="160" src="https://raw.githubusercontent.com/lobehub/.github/main/profile/Logo.webp">
+<img width="160" src="https://npm.elemecdn.com/@lobehub/assets/logo/logo-3d.webp">
 
 <h1>Lobe UI</h1>
 
@@ -21,7 +21,7 @@ Lobe UI is an open-source UI component library for building _AIGC_ web apps
 [![stargazers][stargazers-shield]][stargazers-url]
 [![issues][issues-shield]][issues-url]
 
-![](https://github.com/othneildrew/Best-README-Template/raw/master/images/screenshot.png)
+![](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
 
 </div>
 

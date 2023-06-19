@@ -55,8 +55,9 @@ const ThemeProvider = memo<ThemeProviderProps>(
           theme={lobeTheme}
           themeMode={themeMode}
         >
-          <FontLoader url="https://raw.githubusercontent.com/IKKI2000/harmonyos-fonts/main/css/harmonyos_sans.css" />
-          <FontLoader url="https://raw.githubusercontent.com/IKKI2000/harmonyos-fonts/main/css/harmonyos_sans_sc.css" />
+          <FontLoader url="https://npm.elemecdn.com/@lobehub/assets@1.2.0/webfonts/css/hack-nerd-font-mono.css" />
+          <FontLoader url="https://npm.elemecdn.com/@lobehub/assets@1.2.0/webfonts/css/harmonyos-sans.css" />
+          <FontLoader url="https://npm.elemecdn.com/@lobehub/assets@1.2.0/webfonts/css/harmonyos-sans-sc.css" />
           <GlobalStyle />
           <App style={{ minHeight: 'inherit', width: 'inherit' }}>{children}</App>
         </AntdThemeProvider>

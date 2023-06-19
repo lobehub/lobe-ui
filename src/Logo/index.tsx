@@ -4,7 +4,6 @@ import { type ReactNode, memo } from 'react';
 import { DivProps } from '@/types';
 
 import Divider from './Divider';
-import Logo3D from './Logo3D';
 import LogoFlat from './LogoFlat';
 import LogoHighContrast from './LogoHighContrast';
 import LogoText from './LogoText';
@@ -34,7 +33,14 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
 
   switch (type) {
     case '3d': {
-      return <Logo3D style={{ height: size, width: size, ...style }} {...props} />;
+      return (
+        <img
+          alt="lobehub"
+          src="https://npm.elemecdn.com/@lobehub/assets/logo/logo-3d.webp"
+          style={{ height: size, width: size, ...style }}
+          {...props}
+        />
+      );
     }
     case 'flat': {
       return <LogoFlat style={{ height: size, width: size, ...style }} {...props} />;
@@ -48,7 +54,11 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
     case 'combine': {
       logoComponent = (
         <>
-          <Logo3D style={{ height: size, width: size }} />
+          <img
+            alt="lobehub"
+            src="https://npm.elemecdn.com/@lobehub/assets/logo/logo-3d.webp"
+            style={{ height: size, width: size, ...style }}
+          />
           <LogoText style={{ height: size, marginLeft: Math.round(size / 4), width: 'auto' }} />
         </>
       );

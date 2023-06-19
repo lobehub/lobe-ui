@@ -96,7 +96,7 @@ export default defineConfig({
       },
     ],
   ],
-  favicons: ['https://raw.githubusercontent.com/lobehub/favicon/main/dist/favicon.ico'],
+  favicons: ['https://npm.elemecdn.com/@lobehub/assets/favicons/favicon.ico'],
   locales: [{ id: 'en-US', name: 'English' }],
   mfsu: isWin
     ? undefined

@@ -4,7 +4,7 @@ export default () => {
   const store = useCreateStore();
   const control: ActionIconProps | any = useControls(
     {
-      avatar: 'https://raw.githubusercontent.com/lobehub/favicon/main/icon.png',
+      avatar: 'https://npm.elemecdn.com/@lobehub/assets/logo/logo-3d.webp',
       background: '#FEE064',
       shape: {
         options: ['circle', 'square'],
