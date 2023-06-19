@@ -1,38 +1,28 @@
-import {
-  blue,
-  cyan,
-  geekblue,
-  gold,
-  green,
-  lime,
-  magenta,
-  orange,
-  purple,
-  red,
-  volcano,
-  yellow,
-} from '@ant-design/colors';
 import { Swatches } from '@lobehub/ui';
-
-const STEP = 4;
+import { useTheme } from 'antd-style';
+import { useState } from 'react';
 
 export default () => {
+  const [activeColor, setActiveColor] = useState<string>();
+  const theme = useTheme();
   return (
     <Swatches
+      activeColor={activeColor}
       colors={[
-        red[STEP],
-        orange[STEP],
-        gold[STEP],
-        yellow[STEP],
-        lime[STEP],
-        green[STEP],
-        cyan[STEP],
-        blue[STEP],
-        geekblue[STEP],
-        purple[STEP],
-        magenta[STEP],
-        volcano[STEP],
+        theme.red,
+        theme.orange,
+        theme.gold,
+        theme.yellow,
+        theme.lime,
+        theme.green,
+        theme.cyan,
+        theme.blue,
+        theme.geekblue,
+        theme.purple,
+        theme.magenta,
+        theme.volcano,
       ]}
+      onSelect={setActiveColor}
     />
   );
 };

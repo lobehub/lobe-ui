@@ -62,10 +62,6 @@ export const useStyles = createStyles(
           .ant-collapse-header {
             z-index: 10;
             padding: 8px 16px !important;
-
-            &[aria-expanded='true'] {
-              box-shadow: ${token.boxShadowSecondary};
-            }
           }
         `,
       ),

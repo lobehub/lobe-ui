@@ -2,6 +2,8 @@ import { useTheme } from 'antd-style';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import { useStyles } from './style';
+
 export interface SwatchesProps {
   /**
    * @description The currently active color
@@ -17,42 +19,40 @@ export interface SwatchesProps {
    * @default undefined
    */
   onSelect?: (c?: string | undefined) => void;
+  /**
+   * @description The size of swatch
+   * @default 24
+   */
+  size?: number;
 }
 
-const Swatches = memo<SwatchesProps>(({ colors, activeColor, onSelect }) => {
+const Swatches = memo<SwatchesProps>(({ colors, activeColor, onSelect, size = 24 }) => {
   const theme = useTheme();
+  const { cx, styles } = useStyles(size);
 
   return (
     <Flexbox gap={8} horizontal>
       <Flexbox
+        className={cx(styles.container, !activeColor && styles.active)}
         onClick={() => {
           onSelect?.();
         }}
         style={{
           background: theme.colorBgContainer,
-          borderRadius: '50%',
-          boxShadow: `inset 0 0 0px 2px ${activeColor ? 'rgba(0,0,0,0.1)' : theme.colorPrimary}`,
-          cursor: 'pointer',
-          height: 24,
-          width: 24,
         }}
       />
       {colors.map((c) => {
-        const borderColor = c === activeColor ? theme.colorPrimary : 'rgba(0,0,0,0.1)';
+        const isActive = c === activeColor;
 
         return (
           <Flexbox
+            className={cx(styles.container, isActive && styles.active)}
             key={c}
             onClick={() => {
               onSelect?.(c);
             }}
             style={{
               background: c,
-              borderRadius: '50%',
-              boxShadow: `inset 0 0 0px 2px ${borderColor}`,
-              cursor: 'pointer',
-              height: 24,
-              width: 24,
             }}
           />
         );

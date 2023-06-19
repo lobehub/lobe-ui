@@ -3,10 +3,10 @@ import { createStyles, keyframes } from 'antd-style';
 export const useStyles = createStyles(({ css }) => {
   const spin = keyframes`
   0% {
-    transform: rotate(0deg);
+    rotate: 0deg;
   }
   100% {
-    transform: rotate(360deg);
+    rotate: 360deg;
   }
   `;
   return {

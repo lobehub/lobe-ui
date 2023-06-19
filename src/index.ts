@@ -1,6 +1,7 @@
 export { default as ActionIcon, type ActionIconProps, type ActionIconSize } from './ActionIcon';
 export { default as ActionIconGroup, type ActionIconGroupProps } from './ActionIconGroup';
 export { default as Avatar, type AvatarProps } from './Avatar';
+export { default as Burger, type BurgerProps } from './Burger';
 export type { ChatMessage, MessageRoleType } from './Chat';
 export { default as ChatInputArea, type ChatInputAreaProps } from './ChatInputArea';
 export { default as ChatItem, type ChatItemProps } from './ChatItem';
@@ -69,5 +70,4 @@ export { default as ThemeSwitch, type ThemeSwitchProps } from './ThemeSwitch';
 export { default as Toc, type TocProps } from './Toc';
 export { default as TokenTag, type TokenTagProps } from './TokenTag';
 export { default as Tooltip, type TooltipProps } from './Tooltip';
-export { type LobeCustomStylish } from './types/customStylish';
-export { type LobeCustomToken } from './types/customToken';
+export type * from './types';

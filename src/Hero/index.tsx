@@ -1,5 +1,5 @@
 import { GradientButton, Icon } from '@lobehub/ui';
-import { Button, ConfigProvider, Space } from 'antd';
+import { Button, ConfigProvider } from 'antd';
 import { useResponsive } from 'antd-style';
 import * as LucideIcon from 'lucide-react';
 import { memo, useCallback } from 'react';
@@ -28,7 +28,7 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
   const ButtonGroups = useCallback(
     () =>
       Boolean(actions?.length) && (
-        <Space className={styles.actions} direction={mobile ? 'vertical' : 'horizontal'} size={24}>
+        <div className={styles.actions}>
           {actions!.map(({ text, link, openExternal, icon, type }, index) => {
             // @ts-ignore
             const ButtonIcon = icon && LucideIcon[icon];
@@ -42,6 +42,7 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
               >
                 {type === 'primary' ? (
                   <GradientButton
+                    block={mobile}
                     icon={ButtonIcon && <Icon icon={ButtonIcon} />}
                     key={index}
                     size="large"
@@ -50,6 +51,7 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
                   </GradientButton>
                 ) : (
                   <Button
+                    block={mobile}
                     icon={ButtonIcon && <Icon icon={ButtonIcon} />}
                     key={index}
                     size="large"
@@ -61,7 +63,7 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
               </a>
             );
           })}
-        </Space>
+        </div>
       ),
     [actions],
   );

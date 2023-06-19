@@ -4,13 +4,11 @@ const GlobalStyle = createGlobalStyle`
 
 #nprogress {
   .bar {
-    z-index: 9999;
     background: ${({ theme }) => theme.colorText};
   }
-
-
+	
   .peg {
-    box-shadow: none;
+	  display: none !important;
   }
 
   .spinner {

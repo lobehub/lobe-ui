@@ -9,27 +9,30 @@ import { useStyles } from './style';
 export interface LayoutHeaderProps extends DivProps {
   headerHeight?: number;
 }
-export const LayoutHeader = memo<LayoutHeaderProps>(({ headerHeight, children, ...props }) => {
-  const { styles } = useStyles(headerHeight);
-  return (
-    <header
-      className={styles.header}
-      style={{
-        height: headerHeight,
-      }}
-      {...props}
-    >
-      <div className={styles.glass} />
-      {children}
-    </header>
-  );
-});
+export const LayoutHeader = memo<LayoutHeaderProps>(
+  ({ headerHeight, children, className, style, ...props }) => {
+    const { cx, styles } = useStyles(headerHeight);
+    return (
+      <header
+        className={cx(styles.header, className)}
+        style={{
+          height: headerHeight,
+          ...style,
+        }}
+        {...props}
+      >
+        <div className={styles.glass} />
+        {children}
+      </header>
+    );
+  },
+);
 
 export type LayoutMainProps = DivProps;
-export const LayoutMain = memo<LayoutMainProps>(({ children, ...props }) => {
-  const { styles } = useStyles();
+export const LayoutMain = memo<LayoutMainProps>(({ children, className, ...props }) => {
+  const { cx, styles } = useStyles();
   return (
-    <main className={styles.main} {...props}>
+    <main className={cx(styles.main, className)} {...props}>
       {children}
     </main>
   );
@@ -38,23 +41,29 @@ export const LayoutMain = memo<LayoutMainProps>(({ children, ...props }) => {
 export interface LayoutSidebarProps extends DivProps {
   headerHeight?: number;
 }
-export const LayoutSidebar = memo<LayoutSidebarProps>(({ headerHeight, children, ...props }) => {
-  const { styles } = useStyles(headerHeight);
-  return (
-    <aside className={styles.aside} style={{ top: headerHeight }} {...props}>
-      {children}
-    </aside>
-  );
-});
+export const LayoutSidebar = memo<LayoutSidebarProps>(
+  ({ headerHeight, children, className, style, ...props }) => {
+    const { cx, styles } = useStyles(headerHeight);
+    return (
+      <aside
+        className={cx(styles.aside, className)}
+        style={{ top: headerHeight, ...style }}
+        {...props}
+      >
+        {children}
+      </aside>
+    );
+  },
+);
 
 export interface LayoutSidebarInnerProps extends DivProps {
   headerHeight?: number;
 }
 export const LayoutSidebarInner = memo<LayoutSidebarInnerProps>(
-  ({ headerHeight, children, ...props }) => {
-    const { styles } = useStyles(headerHeight);
+  ({ headerHeight, children, className, ...props }) => {
+    const { cx, styles } = useStyles(headerHeight);
     return (
-      <div className={styles.asideInner} {...props}>
+      <div className={cx(styles.asideInner, className)} {...props}>
         {children}
       </div>
     );
@@ -64,20 +73,26 @@ export const LayoutSidebarInner = memo<LayoutSidebarInnerProps>(
 export interface LayoutTocProps extends DivProps {
   tocWidth?: number;
 }
-export const LayoutToc = memo<LayoutTocProps>(({ tocWidth, children, ...props }) => {
-  const { styles } = useStyles();
-  return (
-    <nav className={styles.toc} style={{ width: tocWidth }} {...props}>
-      {children}
-    </nav>
-  );
-});
+export const LayoutToc = memo<LayoutTocProps>(
+  ({ tocWidth, style, className, children, ...props }) => {
+    const { cx, styles } = useStyles();
+    return (
+      <nav
+        className={cx(styles.toc, className)}
+        style={tocWidth ? { width: tocWidth, ...style } : style}
+        {...props}
+      >
+        {children}
+      </nav>
+    );
+  },
+);
 
 export type LayoutFooterProps = DivProps;
-export const LayoutFooter = memo<LayoutFooterProps>(({ children, ...props }) => {
-  const { styles } = useStyles();
+export const LayoutFooter = memo<LayoutFooterProps>(({ children, className, ...props }) => {
+  const { cx, styles } = useStyles();
   return (
-    <footer className={styles.footer} {...props}>
+    <footer className={cx(styles.footer, className)} {...props}>
       {children}
     </footer>
   );
@@ -111,7 +126,7 @@ const Layout = memo<LayoutProps>(
         {header && (
           <LayoutHeader headerHeight={headerHeight}>
             {header}
-            {mobile && toc && <LayoutToc tocWidth={tocWidth}>{toc}</LayoutToc>}
+            {mobile && toc && <LayoutToc>{toc}</LayoutToc>}
           </LayoutHeader>
         )}
         <LayoutMain>

@@ -58,11 +58,13 @@ const GlobalStyle = createGlobalStyle`
     background: ${({ theme }) => theme.yellow9};
   }
 
+  * {
+	  box-sizing: border-box;
+	  vertical-align: baseline;
+  }
+
   @media only screen and (min-width: 574px) {
     * {
-      box-sizing: border-box;
-      vertical-align: baseline;
-
       ::-webkit-scrollbar {
         cursor: pointer;
         width: 4px;

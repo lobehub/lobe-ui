@@ -28,19 +28,29 @@ const DocumentLayout = memo(() => {
   const theme = useTheme();
   const { mobile, laptop } = useResponsive();
 
-  const { fm, noToc, siteTitle, isHomePage, loading, isChanlogPage } = useSiteStore(
-    (s) => ({
+  const { fm, noToc, siteTitle, page, loading } = useSiteStore((s) => {
+    const isChanlogPage = s.location.pathname === '/changelog';
+    const isHomePage = isHeroPageSel(s);
+    let page;
+
+    if (isHomePage) {
+      page = 'home';
+    } else if (isChanlogPage) {
+      page = 'changelog';
+    } else {
+      page = 'docs';
+    }
+
+    return {
       fm: s.routeMeta.frontmatter,
-      isChanlogPage: s.location.pathname === '/changelog',
-      isHomePage: isHeroPageSel(s),
       loading: s.siteData.loading,
       noToc: tocAnchorItemSel(s).length === 0,
+      page: page,
       siteTitle: siteTitleSel(s),
-    }),
-    shallow,
-  );
+    };
+  }, shallow);
 
-  const hideSidebar = isHomePage || isChanlogPage || mobile || fm.sidebar === false;
+  const hideSidebar = page !== 'docs' || mobile || fm.sidebar === false;
   const shouldHideToc = fm.toc === false || noToc;
   const hideToc = mobile ? shouldHideToc : !laptop || shouldHideToc;
 
@@ -53,7 +63,7 @@ const DocumentLayout = memo(() => {
         {fm.description && <meta content={fm.description} property="og:description" />}
         {fm.keywords && <meta content={fm.keywords.join(',')} name="keywords" />}
         {fm.keywords && <meta content={fm.keywords.join(',')} property="og:keywords" />}
-        {!fm.title || isHomePage ? (
+        {!fm.title || page === 'home' ? (
           <title>{siteTitle}</title>
         ) : (
           <title>
@@ -62,7 +72,7 @@ const DocumentLayout = memo(() => {
         )}
       </Helmet>
     ),
-    [intl, fm, siteTitle, isHomePage],
+    [intl, fm, siteTitle, page === 'home'],
   );
 
   // handle hash change or visit page hash after async chunk loaded
@@ -83,28 +93,20 @@ const DocumentLayout = memo(() => {
     document.body.scrollTo(0, 0);
   }, [window.location.pathname]);
 
-  let Page;
-
-  if (isHomePage) {
-    Page = Home;
-  } else if (isChanlogPage) {
-    Page = Changelog;
-  } else {
-    Page = Docs;
-  }
-
   return (
     <Layout
       asideWidth={theme.sidebarWidth}
       footer={<Footer />}
       header={<Header />}
-      headerHeight={mobile && !isHomePage ? theme.headerHeight + 36 : theme.headerHeight}
+      headerHeight={mobile && page !== 'home' ? theme.headerHeight + 36 : theme.headerHeight}
       helmet={<HelmetBlock />}
       sidebar={hideSidebar ? undefined : <Sidebar />}
       toc={hideToc ? undefined : <Toc />}
       tocWidth={hideToc ? 0 : theme.tocWidth}
     >
-      <Page />
+      {page === 'home' && <Home />}
+      {page === 'changelog' && <Changelog />}
+      {page === 'docs' && <Docs />}
     </Layout>
   );
 });

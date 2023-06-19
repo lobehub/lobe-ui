@@ -19,7 +19,7 @@ export const useStyles = createStyles(
 
           background: ${active ? token.colorFillTertiary : 'transparent'};
 
-          transition: color 600ms ${token.motionEaseOut}, transform 400ms ${token.motionEaseOut},
+          transition: color 600ms ${token.motionEaseOut}, scale 400ms ${token.motionEaseOut},
             background-color 100ms ${token.motionEaseOut};
 
           &:hover {
@@ -28,7 +28,7 @@ export const useStyles = createStyles(
           }
 
           &:active {
-            transform: scale(0.8);
+            scale: 0.8;
             color: ${token.colorText};
             background-color: ${token.colorFill};
           }

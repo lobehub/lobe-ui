@@ -3,6 +3,7 @@ import { createStyles } from 'antd-style';
 export const useStyles = createStyles(({ cx, css, responsive, token, stylish }) => ({
   actions: css`
     display: flex;
+    gap: 24px;
     justify-content: center;
     margin-top: 24px;
 
@@ -11,9 +12,16 @@ export const useStyles = createStyles(({ cx, css, responsive, token, stylish }) 
       font-weight: 500;
     }
 
-    ${responsive({
-      mobile: { marginTop: 24 },
-    })}
+    ${responsive.mobile} {
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+      margin-top: 24px;
+
+      button {
+        width: 100%;
+      }
+    }
   `,
 
   canvas: cx(
