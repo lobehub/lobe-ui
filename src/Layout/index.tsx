@@ -99,15 +99,46 @@ export const LayoutFooter = memo<LayoutFooterProps>(({ children, className, ...p
 });
 
 export interface LayoutProps {
+  /**
+   * @description Width of the sidebar
+   */
   asideWidth?: number;
+  /**
+   * @description Children of the layout
+   */
   children?: ReactNode;
+  /**
+   * @description Content of the layout
+   */
   content?: ReactNode;
+  /**
+   * @description Footer of the layout
+   */
   footer?: ReactNode;
+  /**
+   * @description Header of the layout
+   */
   header?: ReactNode;
+  /**
+   * @description Height of the header
+   * @default 64
+   */
   headerHeight?: number;
+  /**
+   * @description Helmet of the layout
+   */
   helmet?: ReactNode;
+  /**
+   * @description Sidebar of the layout
+   */
   sidebar?: ReactNode;
+  /**
+   * @description Table of contents of the layout
+   */
   toc?: ReactNode;
+  /**
+   * @description Width of the table of contents
+   */
   tocWidth?: number;
 }
 

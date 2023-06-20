@@ -9,11 +9,30 @@ import { DivProps } from '@/types';
 import { useStyles } from './style';
 
 export interface BurgerProps extends DivProps {
+  /**
+   * @description The height of the header component
+   * @default 64
+   */
   headerHeight?: number;
+  /**
+   * @description The items to be displayed in the menu
+   */
   items: MenuProps['items'];
+  /**
+   * @description The keys of the currently open sub-menus
+   */
   openKeys?: MenuProps['openKeys'];
+  /**
+   * @description Whether the menu is currently open or not
+   */
   opened: boolean;
+  /**
+   * @description The keys of the currently selected menu items
+   */
   selectedKeys?: MenuProps['selectedKeys'];
+  /**
+   * @description A callback function to set the opened state
+   */
   setOpened: (state: boolean) => void;
 }
 

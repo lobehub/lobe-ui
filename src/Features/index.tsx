@@ -8,9 +8,22 @@ import { useStyles } from './style';
 export type { FeatureItem } from './Item';
 
 export interface FeaturesProps extends DivProps {
+  /**
+   * @description The maximum width of the content
+   * @default 960
+   */
   contentMaxWidth?: number;
+  /**
+   * @description The class name of the item
+   */
   itemClassName?: string;
+  /**
+   * @description The style of the item
+   */
   itemStyle?: CSSProperties;
+  /**
+   * @description The array of feature items
+   */
   items: FeatureItem[];
 }
 

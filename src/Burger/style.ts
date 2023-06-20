@@ -73,11 +73,12 @@ export const useStyles = createStyles(({ token, css, stylish }, headerHeight: nu
       }
 
       .ant-menu-item-group-title {
-        padding-top: 4px;
-        padding-bottom: 4px;
+        padding-top: 8px;
+        padding-bottom: 8px;
 
         font-size: 12px;
         font-weight: 500;
+        line-height: 1;
         text-overflow: ellipsis;
         text-transform: uppercase;
         white-space: nowrap;

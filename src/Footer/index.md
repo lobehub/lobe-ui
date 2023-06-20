@@ -2,6 +2,7 @@
 nav: Components
 group: Site
 title: Footer
+description: The Footer component is used to display a website footer.
 ---
 
 ## Default

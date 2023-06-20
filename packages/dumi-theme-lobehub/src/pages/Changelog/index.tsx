@@ -1,5 +1,6 @@
 import { useResponsive } from 'antd-style';
 import { useOutlet } from 'dumi';
+import isEqual from 'fast-deep-equal';
 import { memo } from 'react';
 import { Center } from 'react-layout-kit';
 import { shallow } from 'zustand/shallow';
@@ -12,12 +13,18 @@ import { githubSel, useSiteStore } from '@/store';
 const Changelog = memo(() => {
   const outlet = useOutlet();
   const { mobile } = useResponsive();
-  const { fm, repoBase } = useSiteStore(
+  const { repoBase } = useSiteStore(
     (s) => ({
-      fm: s.routeMeta.frontmatter,
       repoBase: githubSel(s),
     }),
     shallow,
+  );
+
+  const { fm } = useSiteStore(
+    (s) => ({
+      fm: s.routeMeta.frontmatter,
+    }),
+    isEqual,
   );
 
   const { styles } = useStyles();

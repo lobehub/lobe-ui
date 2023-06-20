@@ -4,6 +4,10 @@ import { memo } from 'react';
 import { useStyles } from './style';
 
 export interface GradientButtonProps extends ButtonProps {
+  /**
+   * @description Whether the button should spin or not
+   * @default false
+   */
   spin?: boolean;
 }
 

@@ -8,8 +8,19 @@ import { DivProps } from '@/types';
 import { useStyles } from './style';
 
 export interface ActionIconGroupProps extends DivProps {
+  /**
+   * @description The direction of the icons
+   * @default "row"
+   */
   direction?: 'row' | 'column';
+  /**
+   * @description The menu items for the dropdown
+   */
   dropdownMenu?: MenuProps['items'];
+  /**
+   * @description The items to be rendered
+   * @default []
+   */
   items?: ActionIconProps[];
   /**
    * @description The position of the tooltip relative to the target
@@ -17,13 +28,13 @@ export interface ActionIconGroupProps extends DivProps {
    */
   placement?: ActionIconProps['placement'];
   /**
-   * @description Whether add spotlight background
+   * @description Whether to add a spotlight background
    * @default true
    */
   spotlight?: boolean;
   /**
    * @description The type of the group
-   * @default 'block'
+   * @default "block"
    */
   type?: 'ghost' | 'block' | 'pure';
 }

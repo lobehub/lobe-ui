@@ -5,36 +5,36 @@ import { Flexbox } from 'react-layout-kit';
 
 import { TextArea, type TextAreaProps } from '@/Input';
 
-/**
- * @title MessageInputProps
- * @category Props
- * @description MessageInput 组件的 Props
- */
 export interface MessageInputProps {
+  /**
+   * @description Additional className to apply to the component.
+   */
   className?: string;
   /**
-   * @title 默认值
-   * @description 输入框的默认值
+   * @description The default value of the input box.
    */
   defaultValue?: string;
+  /**
+   * @description The height of the input box.
+   */
   height?: number;
   /**
-   * @title 取消回调函数
-   * @description 用户点击取消按钮后的回调函数
+   * @description Callback function triggered when user clicks on the cancel button.
    */
   onCancel?: () => void;
   /**
-   * @title 确认回调函数
-   * @description 用户点击确认按钮后的回调函数
-   * @param text - 用户输入的文本
+   * @description Callback function triggered when user clicks on the confirm button.
+   * @param text - The text input by the user.
    */
   onConfirm?: (text: string) => void;
   /**
-   * @title 渲染按钮
-   * @description 自定义渲染底部按钮
-   * @param text - 用户输入的文本
+   * @description Custom rendering of the bottom buttons.
+   * @param text - The text input by the user.
    */
   renderButtons?: (text: string) => ButtonProps[];
+  /**
+   * @description The type of the input box.
+   */
   type?: TextAreaProps['type'];
 }
 

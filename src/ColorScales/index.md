@@ -2,7 +2,7 @@
 nav: Components
 group: Theme
 title: ColorScales
-description: An overview of all 13 Lobe Colors scales.
+description: The ColorScales component is a memoized component used to display a color scale. It receives props containing the name of the scale, the color scale items, and a number representing the index of the mid-highlight. The component renders a set of ScaleRow components, each representing a different part of the color scale.
 ---
 
 ## Colors

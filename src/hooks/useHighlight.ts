@@ -24,20 +24,20 @@ export const languageMap = [
  */
 interface Store {
   /**
-   * @title 将代码转化为 HTML 字符串
-   * @param text - 代码文本
-   * @param language - 代码语言
-   * @param isDarkMode - 是否为暗黑模式
-   * @returns HTML 字符串
+   * @title Convert code to HTML string
+   * @param text - The code text
+   * @param language - The language of the code
+   * @param isDarkMode - Whether it's in dark mode or not
+   * @returns HTML string
    */
   codeToHtml: (text: string, language: string, isDarkMode: boolean) => string;
   /**
-   * @title 高亮器对象
+   * @title Highlighter object
    */
   highlighter?: Highlighter;
   /**
-   * @title 初始化高亮器对象
-   * @returns 初始化 Promise 对象
+   * @title Initialize the highlighter object
+   * @returns Initialization promise object
    */
   initHighlighter: () => Promise<void>;
 }

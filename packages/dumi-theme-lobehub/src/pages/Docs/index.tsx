@@ -13,12 +13,7 @@ import { useStyles } from './styles';
 const Documents = memo(() => {
   const outlet = useOutlet();
   const { mobile } = useResponsive();
-  const { isApiPage } = useSiteStore(
-    (s) => ({
-      isApiPage: isApiPageSel(s),
-    }),
-    shallow,
-  );
+  const isApiPage = useSiteStore(isApiPageSel, shallow);
   const { styles } = useStyles();
 
   return (

@@ -56,6 +56,8 @@ const GlobalStyle = createGlobalStyle`
   ::selection {
     color: #000;
     background: ${({ theme }) => theme.yellow9};
+
+	  -webkit-text-fill-color: unset !important;
   }
 
   * {

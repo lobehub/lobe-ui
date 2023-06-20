@@ -5,6 +5,10 @@ import { default as TocMobile, type TocMobileProps, mapItems } from './TocMobile
 import { useStyles } from './style';
 
 export interface TocProps extends TocMobileProps {
+  /**
+   * @description Whether the component is being rendered on a mobile device or not
+   * @default false
+   */
   isMobile?: boolean;
 }
 const Toc = memo<TocProps>(

@@ -1,9 +1,11 @@
 import { Layout, ThemeProvider } from '@lobehub/ui';
 import { extractStaticStyle, useResponsive, useTheme } from 'antd-style';
 import { Helmet, useIntl, useLocation } from 'dumi';
+import isEqual from 'fast-deep-equal';
 import { memo, useCallback, useEffect } from 'react';
 import { shallow } from 'zustand/shallow';
 
+import Favicons from '@/components/Favicons';
 import { StoreUpdater } from '@/components/StoreUpdater';
 import GlobalStyle from '@/layouts/DocLayout/GlobalStyle';
 import Changelog from '@/pages/Changelog';
@@ -28,7 +30,7 @@ const DocumentLayout = memo(() => {
   const theme = useTheme();
   const { mobile, laptop } = useResponsive();
 
-  const { fm, noToc, siteTitle, page, loading } = useSiteStore((s) => {
+  const { loading, page, siteTitle, noToc } = useSiteStore((s) => {
     const isChanlogPage = s.location.pathname === '/changelog';
     const isHomePage = isHeroPageSel(s);
     let page;
@@ -42,13 +44,14 @@ const DocumentLayout = memo(() => {
     }
 
     return {
-      fm: s.routeMeta.frontmatter,
       loading: s.siteData.loading,
       noToc: tocAnchorItemSel(s).length === 0,
       page: page,
       siteTitle: siteTitleSel(s),
     };
   }, shallow);
+
+  const fm = useSiteStore((s) => s.routeMeta.frontmatter, isEqual);
 
   const hideSidebar = page !== 'docs' || mobile || fm.sidebar === false;
   const shouldHideToc = fm.toc === false || noToc;
@@ -70,39 +73,9 @@ const DocumentLayout = memo(() => {
             {fm.title} - {siteTitle}
           </title>
         )}
-        <link
-          href="https://npm.elemecdn.com/@lobehub/assets/favicons/apple-touch-icon.png"
-          rel="apple-touch-icon"
-          sizes="180x180"
-        />
-        <link
-          href="https://npm.elemecdn.com/@lobehub/assets/favicons/favicon-32x32.png"
-          rel="icon"
-          sizes="32x32"
-          type="image/png"
-        />
-        <link
-          href="https://npm.elemecdn.com/@lobehub/assets/favicons/favicon-16x16.png"
-          rel="icon"
-          sizes="16x16"
-          type="image/png"
-        />
-        <link
-          href="https://npm.elemecdn.com/@lobehub/assets/favicons/site.webmanifest"
-          rel="manifest"
-        />
-        <link
-          color="#000000"
-          href="https://npm.elemecdn.com/@lobehub/assets/favicons/safari-pinned-tab.svg"
-          rel="mask-icon"
-        />
-        <meta content="LobeHub" name="apple-mobile-web-app-title" />
-        <meta content="LobeHub" name="application-name" />
-        <meta content="#000000" name="msapplication-TileColor" />
-        <meta content="#000000" name="theme-color" />
       </Helmet>
     ),
-    [intl, fm, siteTitle, page === 'home'],
+    [intl, fm, siteTitle, page],
   );
 
   // handle hash change or visit page hash after async chunk loaded
@@ -121,23 +94,25 @@ const DocumentLayout = memo(() => {
 
   useEffect(() => {
     document.body.scrollTo(0, 0);
-  }, [window.location.pathname]);
+  }, [siteTitle]);
 
   return (
-    <Layout
-      asideWidth={theme.sidebarWidth}
-      footer={<Footer />}
-      header={<Header />}
-      headerHeight={mobile && page !== 'home' ? theme.headerHeight + 36 : theme.headerHeight}
-      helmet={<HelmetBlock />}
-      sidebar={hideSidebar ? undefined : <Sidebar />}
-      toc={hideToc ? undefined : <Toc />}
-      tocWidth={hideToc ? 0 : theme.tocWidth}
-    >
-      {page === 'home' && <Home />}
-      {page === 'changelog' && <Changelog />}
-      {page === 'docs' && <Docs />}
-    </Layout>
+    <>
+      <HelmetBlock />
+      <Layout
+        asideWidth={theme.sidebarWidth}
+        footer={<Footer />}
+        header={<Header />}
+        headerHeight={mobile && page !== 'home' ? theme.headerHeight + 36 : theme.headerHeight}
+        sidebar={hideSidebar ? undefined : <Sidebar />}
+        toc={hideToc ? undefined : <Toc />}
+        tocWidth={hideToc ? 0 : theme.tocWidth}
+      >
+        {page === 'home' && <Home />}
+        {page === 'changelog' && <Changelog />}
+        {page === 'docs' && <Docs />}
+      </Layout>
+    </>
   );
 });
 
@@ -149,6 +124,7 @@ export default memo(() => {
 
   return (
     <>
+      <Favicons />
       <StoreUpdater />
       <ThemeProvider
         cache={extractStaticStyle.cache}

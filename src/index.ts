@@ -18,6 +18,7 @@ export {
 } from './EditableMessageList';
 export { default as EditableText, type EditableTextProps } from './EditableText';
 export { type FeatureItem, default as Features, type FeaturesProps } from './Features';
+export { default as FluentEmoji, type FluentEmojiProps } from './FluentEmoji';
 export { default as FontLoader, type FontLoaderProps } from './FontLoader';
 export { default as Footer, type FooterProps } from './Footer';
 export { default as GradientButton, type GradientButtonProps } from './GradientButton';

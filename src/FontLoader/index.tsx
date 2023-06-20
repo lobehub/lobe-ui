@@ -8,6 +8,9 @@ const createElement = (url: string) => {
 };
 
 export interface FontLoaderProps {
+  /**
+   * @description The URL of the font to load
+   */
   url: string;
 }
 

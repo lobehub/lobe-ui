@@ -1,3 +1,4 @@
+import isEqual from 'fast-deep-equal';
 import { memo, useMemo } from 'react';
 
 import { ApiHeader as Header } from '@/components/ApiHeader';
@@ -10,7 +11,7 @@ import PackagePhobia from './PackagePhobia';
 import Unpkg from './Unpkg';
 
 const ApiHeader = memo(() => {
-  const props = useSiteStore(apiHeaderSel);
+  const props = useSiteStore(apiHeaderSel, isEqual);
   const { pkg } = props;
 
   const packages = useMemo(() => {

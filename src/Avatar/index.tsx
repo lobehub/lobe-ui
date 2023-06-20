@@ -1,6 +1,9 @@
 import { Avatar as AntAvatar, type AvatarProps as AntAvatarProps } from 'antd';
 import { memo } from 'react';
 
+import FluentEmoji from '@/FluentEmoji';
+import { getEmoji } from '@/utils/getEmojiByCharacter';
+
 import { useStyles } from './style';
 
 export interface AvatarProps extends AntAvatarProps {
@@ -33,13 +36,11 @@ const Avatar = memo<AvatarProps>(
     const isImage = Boolean(
       avatar && ['/', 'http', 'data:'].some((index) => avatar.startsWith(index)),
     );
-    const isEmoji = Boolean(
-      avatar && !isImage && /\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g.test(avatar),
-    );
+    const emoji = avatar && !isImage && getEmoji(avatar);
 
-    const { styles, cx } = useStyles({ background, isEmoji, size });
+    const { styles, cx } = useStyles({ background, isEmoji: Boolean(emoji), size });
 
-    const text = isImage ? title : avatar;
+    const text = String(isImage ? title : avatar);
 
     return isImage ? (
       <AntAvatar
@@ -51,7 +52,7 @@ const Avatar = memo<AvatarProps>(
       />
     ) : (
       <AntAvatar className={cx(styles.avatar, className)} shape={shape} size={size} {...props}>
-        {isEmoji ? text : text?.toUpperCase().slice(0, 2)}
+        {emoji ? <FluentEmoji emoji={emoji} size={size} /> : text?.toUpperCase().slice(0, 2)}
       </AntAvatar>
     );
   },

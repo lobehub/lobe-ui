@@ -1,13 +1,27 @@
-import RcFooter, { FooterProps as RcProps } from 'rc-footer';
-import { memo } from 'react';
+import RcFooter, { type FooterProps as RcProps } from 'rc-footer';
+import { type ReactNode, memo } from 'react';
 
 import { useStyles } from './style';
 
 export interface FooterProps {
-  bottom?: RcProps['bottom'];
+  /**
+   * @description The bottom content of the footer
+   */
+  bottom?: ReactNode;
+  /**
+   * @description The columns of the footer
+   */
   columns: RcProps['columns'];
+  /**
+   * @description The maximum width of the content in the footer
+   * @type number
+   * @default 960
+   */
   contentMaxWidth?: number;
-  theme?: RcProps['theme'];
+  /**
+   * @description The theme of the footer
+   */
+  theme?: 'light' | 'dark';
 }
 
 const Footer = memo<FooterProps>(({ columns, bottom, theme, contentMaxWidth = 960 }) => {

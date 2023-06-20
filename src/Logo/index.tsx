@@ -4,10 +4,9 @@ import { type ReactNode, memo } from 'react';
 import { DivProps } from '@/types';
 
 import Divider from './Divider';
-import LogoFlat from './LogoFlat';
 import LogoHighContrast from './LogoHighContrast';
 import LogoText from './LogoText';
-import { useStyles } from './style';
+import { LOGO_3D, LOGO_FLAT, useStyles } from './style';
 
 export interface LogoProps extends DivProps {
   /**
@@ -36,14 +35,14 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
       return (
         <img
           alt="lobehub"
-          src="https://npm.elemecdn.com/@lobehub/assets/logo/logo-3d.webp"
+          src={LOGO_3D}
           style={{ height: size, width: size, ...style }}
           {...props}
         />
       );
     }
     case 'flat': {
-      return <LogoFlat style={{ height: size, width: size, ...style }} {...props} />;
+      return <img alt="lobehub" src={LOGO_FLAT} style={{ height: size, width: size, ...style }} />;
     }
     case 'high-contrast': {
       return <LogoHighContrast style={{ height: size, width: size, ...style }} {...props} />;
@@ -54,11 +53,7 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
     case 'combine': {
       logoComponent = (
         <>
-          <img
-            alt="lobehub"
-            src="https://npm.elemecdn.com/@lobehub/assets/logo/logo-3d.webp"
-            style={{ height: size, width: size, ...style }}
-          />
+          <img alt="lobehub" src={LOGO_3D} style={{ height: size, width: size }} />
           <LogoText style={{ height: size, marginLeft: Math.round(size / 4), width: 'auto' }} />
         </>
       );

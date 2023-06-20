@@ -9,16 +9,57 @@ import type { DivProps } from '@/types';
 import { useStyles } from './style';
 
 export interface ChatInputAreaProps extends DivProps {
+  /**
+   * @description Actions to be displayed in the left of actions bar
+   */
   actions?: ReactNode;
+  /**
+   * @description Default value of the input
+   */
   defaultValue?: string;
+  /**
+   * @description Whether the input is disabled or not
+   * @default false
+   */
   disabled?: boolean;
+  /**
+   * @description Whether the input is expanded or not
+   * @default false
+   */
   expand?: boolean;
+  /**
+   * @description Footer to be displayed below input area
+   */
   footer?: ReactNode;
+  /**
+   * @description Whether the input is in loading state or not
+   * @default false
+   */
   loading?: boolean;
+  /**
+   * @description Minimum height of the input area
+   * @default 200
+   */
   minHeight?: number;
+  /**
+   * @description Callback function when the expand state changes
+   * @param expand - Whether the input is expanded or not
+   */
   onExpandChange?: (expand: boolean) => void;
+  /**
+   * @description Callback function when the input value changes
+   * @param value - The current value of the input
+   */
   onInputChange?: (value: string) => void;
+  /**
+   * @description Callback function when the send button is clicked
+   * @param value - The current value of the input
+   */
   onSend?: (value: string) => void;
+  /**
+   * @description Placeholder text of the input
+   * @default 'Type something to chat...'
+   */
   placeholder?: string;
 }
 

@@ -41,27 +41,41 @@ export interface ThemeProviderProps {
    * @description The mode of the theme (light or dark)
    */
   themeMode?: ThemeMode;
+  /**
+   * @description Webfont loader css strings
+   */
+  webfonts?: string[];
 }
 
 const ThemeProvider = memo<ThemeProviderProps>(
-  ({ children, themeMode, customStylish = () => ({}), customToken = () => ({}) }) => {
+  ({
+    children,
+    themeMode,
+    customStylish = () => ({}),
+    customToken = () => ({}),
+    webfonts = [
+      'https://npm.elemecdn.com/@lobehub/webfont-mono/css/index.css',
+      'https://npm.elemecdn.com/@lobehub/webfont-harmony-sans/css/index.css',
+      'https://npm.elemecdn.com/@lobehub/webfont-harmony-sans-sc/css/index.css',
+    ],
+  }) => {
     setupStyled({ ThemeContext });
 
     return (
-      <StyleProvider speedy={process.env.NODE_ENV === 'production'}>
-        <AntdThemeProvider<LobeCustomToken>
-          customStylish={(theme) => ({ ...lobeCustomStylish(theme), ...customStylish(theme) })}
-          customToken={(theme) => ({ ...lobeCustomToken(theme), ...customToken(theme) })}
-          theme={lobeTheme}
-          themeMode={themeMode}
-        >
-          <FontLoader url="https://npm.elemecdn.com/@lobehub/assets@1.2.0/webfonts/css/hack-nerd-font-mono.css" />
-          <FontLoader url="https://npm.elemecdn.com/@lobehub/assets@1.2.0/webfonts/css/harmonyos-sans.css" />
-          <FontLoader url="https://npm.elemecdn.com/@lobehub/assets@1.2.0/webfonts/css/harmonyos-sans-sc.css" />
-          <GlobalStyle />
-          <App style={{ minHeight: 'inherit', width: 'inherit' }}>{children}</App>
-        </AntdThemeProvider>
-      </StyleProvider>
+      <>
+        {webfonts && webfonts.map((webfont, index) => <FontLoader key={index} url={webfont} />)}
+        <StyleProvider speedy={process.env.NODE_ENV === 'production'}>
+          <AntdThemeProvider<LobeCustomToken>
+            customStylish={(theme) => ({ ...lobeCustomStylish(theme), ...customStylish(theme) })}
+            customToken={(theme) => ({ ...lobeCustomToken(theme), ...customToken(theme) })}
+            theme={lobeTheme}
+            themeMode={themeMode}
+          >
+            <GlobalStyle />
+            <App style={{ minHeight: 'inherit', width: 'inherit' }}>{children}</App>
+          </AntdThemeProvider>
+        </StyleProvider>
+      </>
     );
   },
 );

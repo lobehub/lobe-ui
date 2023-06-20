@@ -1,12 +1,12 @@
 import { Features as F } from '@lobehub/ui';
 import { useTheme } from 'antd-style';
+import isEqual from 'fast-deep-equal';
 import { memo } from 'react';
-import { shallow } from 'zustand/shallow';
 
 import { featuresSel, useSiteStore } from '@/store';
 
 const Features = memo(() => {
-  const features = useSiteStore(featuresSel, shallow);
+  const features = useSiteStore(featuresSel, isEqual);
   const theme = useTheme();
 
   if (!features?.length) return;
