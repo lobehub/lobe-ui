@@ -8,7 +8,6 @@ export { default as ChatItem, type ChatItemProps } from './ChatItem';
 export { default as ChatList, type ChatListProps } from './ChatList';
 export { default as ColorScales, type ColorScalesProps } from './ColorScales';
 export { default as ContextMenu, type ContextMenuProps } from './ContextMenu';
-export { default as Conversation, type ConversationProps } from './Conversation';
 export { default as CopyButton, type CopyButtonProps } from './CopyButton';
 export { default as DraggablePanel, type DraggablePanelProps } from './DraggablePanel';
 export { default as EditableMessage, type EditableMessageProps } from './EditableMessage';

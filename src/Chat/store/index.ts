@@ -9,5 +9,4 @@ export const createChatStore = (showDevtools = false) =>
 export const { Provider, useStore, useStoreApi } = createContext<StoreApi<ChatStore>>();
 
 export { type MessageDispatch, messagesReducer } from './messageReducer';
-export * from './selectors';
 export type { ChatStore } from './store';

@@ -73,7 +73,6 @@
     "@ant-design/colors": "^7",
     "@ant-design/icons": "^5",
     "@babel/runtime": "^7",
-    "@dqbd/tiktoken": "^1",
     "@floating-ui/react": "^0",
     "@react-spring/web": "^9",
     "ahooks": "^3",

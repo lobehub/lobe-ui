@@ -63,25 +63,6 @@ const themeConfig = {
 export default defineConfig({
   apiParser: isProduction ? {} : false,
   base: '/',
-  chainWebpack(config: any) {
-    config.set('experiments', {
-      ...config.get('experiments'),
-      asyncWebAssembly: true,
-      layers: true,
-    });
-
-    const REG = /\.wasm$/;
-
-    config.module.rule('asset').exclude.add(REG).end();
-
-    config.module
-      .rule('wasm')
-      .test(REG)
-      .exclude.add(/node_modules/)
-      .end()
-      .type('webassembly/async')
-      .end();
-  },
   define: {
     'process.env': process.env,
   },
@@ -96,13 +77,9 @@ export default defineConfig({
       },
     ],
   ],
-  favicons: ['https://npm.elemecdn.com/@lobehub/assets/favicons/favicon.ico'],
+  favicons: ['https://npm.elemecdn.com/@lobehub/assets-favicons/assets/favicon.ico'],
   locales: [{ id: 'en-US', name: 'English' }],
-  mfsu: isWin
-    ? undefined
-    : {
-        exclude: ['@dqbd/tiktoken'],
-      },
+  mfsu: isWin ? undefined : {},
   npmClient: 'pnpm',
   publicPath: '/',
   resolve: isProduction
