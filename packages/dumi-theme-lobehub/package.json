@@ -20,7 +20,7 @@
     "ahooks": "^3",
     "antd": "^5",
     "antd-style": "^3",
-    "chalk": "^4",
+    "chalk": "^5",
     "fast-deep-equal": "^3",
     "lodash-es": "^4",
     "lucide-react": "latest",
