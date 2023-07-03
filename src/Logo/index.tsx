@@ -48,7 +48,13 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
       return <LogoHighContrast style={{ height: size, width: size, ...style }} {...props} />;
     }
     case 'text': {
-      return <LogoText style={{ height: size, width: 'auto', ...style }} {...props} />;
+      return (
+        <LogoText
+          className={className}
+          style={{ height: size, width: 'auto', ...style }}
+          {...props}
+        />
+      );
     }
     case 'combine': {
       logoComponent = (
