@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img width="160" src="https://npm.elemecdn.com/@lobehub/assets-logo/assets/logo-3d.webp">
+<img width="160" src="https://npm.elemecdn.com/@lobehub/assets-logo@1.0.0/assets/logo-3d.webp">
 
 <h1>Lobe UI</h1>
 

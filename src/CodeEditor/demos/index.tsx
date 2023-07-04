@@ -1,6 +1,7 @@
 import { CodeEditor } from '@lobehub/ui';
-import { content } from '@lobehub/ui/Markdown/demos/data';
 import { useState } from 'react';
+
+import { content } from '../../Markdown/demos/data';
 
 export default () => {
   const [code, setCode] = useState<string>(content);

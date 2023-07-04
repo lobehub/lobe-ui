@@ -1,7 +1,8 @@
 import { EditableMessage, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
-import { content } from '@lobehub/ui/Markdown/demos/data';
 import { button } from 'leva';
 import { useState } from 'react';
+
+import { content } from '../../Markdown/demos/data';
 
 export default () => {
   const [openModal, setOpenModal] = useState(false);
