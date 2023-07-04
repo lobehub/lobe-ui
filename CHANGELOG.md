@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.31.0](https://github.com/lobehub/lobe-ui/compare/v1.30.0...v1.31.0)
+
+<sup>Released on **2023-07-04**</sup>
+
+#### ✨ Features
+
+- **misc**: Add `CodeEditor`.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add `CodeEditor` ([3a83a2a](https://github.com/lobehub/lobe-ui/commit/3a83a2a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.30.0](https://github.com/lobehub/lobe-ui/compare/v1.29.2...v1.30.0)
 
 <sup>Released on **2023-07-04**</sup>
