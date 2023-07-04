@@ -12,7 +12,7 @@ const setting = {
 
 export default () => {
   return (
-    <Form initialValues={setting} style={{ width: 500 }}>
+    <Form initialValues={setting} onFinish={console.table} style={{ width: 500 }}>
       <FormGroup icon={Palette} title={'Theme Settings'}>
         <FormItem desc={'Editor language'} label={'Language'} name="i18n">
           <Select

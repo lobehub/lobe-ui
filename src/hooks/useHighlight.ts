@@ -1,4 +1,4 @@
-import { type Highlighter, getHighlighter } from 'shiki-es';
+import { type Highlighter, type HighlighterOptions, getHighlighter } from 'shiki-es';
 import { create } from 'zustand';
 
 import { themeConfig } from '@/Highlighter/theme';
@@ -39,7 +39,7 @@ interface Store {
    * @title Initialize the highlighter object
    * @returns Initialization promise object
    */
-  initHighlighter: () => Promise<void>;
+  initHighlighter: (options?: HighlighterOptions) => Promise<void>;
 }
 
 export const useHighlight = create<Store>((set, get) => ({
@@ -59,11 +59,11 @@ export const useHighlight = create<Store>((set, get) => ({
   },
   highlighter: undefined,
 
-  initHighlighter: async () => {
+  initHighlighter: async (options) => {
     if (!get().highlighter) {
       const highlighter = await getHighlighter({
-        langs: languageMap as any,
-        themes: [themeConfig(true), themeConfig(false)],
+        langs: options?.langs || (languageMap as any),
+        themes: options?.themes || [themeConfig(true), themeConfig(false)],
       });
 
       set({ highlighter });

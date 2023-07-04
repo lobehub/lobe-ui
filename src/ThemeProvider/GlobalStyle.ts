@@ -98,6 +98,27 @@ const GlobalStyle = createGlobalStyle`
       }
     }
   }
+
+  .ant-tooltip-inner {
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+
+	  min-height: unset;
+	  padding: 4px 8px;
+
+	  color: ${({ theme }) => theme.colorBgLayout};
+
+	  background-color: ${({ theme }) => theme.colorText};
+	  border-radius: ${({ theme }) => theme.borderRadiusSM}px;
+  }
+
+  .ant-tooltip-arrow {
+	  &::before,
+	  &::after {
+		  background: ${({ theme }) => theme.colorText};
+	  }
+  }
 `;
 
 export default GlobalStyle;

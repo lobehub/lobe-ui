@@ -2,24 +2,29 @@ import { useThemeMode } from 'antd-style';
 import { Loader2 } from 'lucide-react';
 import { memo, useEffect } from 'react';
 import { Center } from 'react-layout-kit';
+import { HighlighterOptions } from 'shiki-es';
 import { shallow } from 'zustand/shallow';
 
 import Icon from '@/Icon';
 import { useHighlight } from '@/hooks/useHighlight';
 
-import type { HighlighterProps } from '../index';
 import { useStyles } from './style';
 
-export type SyntaxHighlighterProps = Pick<HighlighterProps, 'language' | 'children' | 'theme'>;
+export interface SyntaxHighlighterProps {
+  children: string;
+  language: string;
+  options?: HighlighterOptions;
+  theme?: 'dark' | 'light';
+}
 
-const SyntaxHighlighter = memo<SyntaxHighlighterProps>(({ children, language }) => {
+const SyntaxHighlighter = memo<SyntaxHighlighterProps>(({ children, language, options }) => {
   const { styles } = useStyles();
   const { isDarkMode } = useThemeMode();
   const [codeToHtml, isLoading] = useHighlight((s) => [s.codeToHtml, !s.highlighter], shallow);
 
   useEffect(() => {
-    useHighlight.getState().initHighlighter();
-  }, []);
+    useHighlight.getState().initHighlighter(options);
+  }, [options]);
 
   return (
     <>

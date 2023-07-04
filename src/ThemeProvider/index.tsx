@@ -33,6 +33,7 @@ export interface ThemeProviderProps {
    * @description Custom extra token
    */
   customToken?: (theme: CustomTokenParams) => { [key: string]: any };
+  enableWebfonts?: boolean;
   /**
    * @description Whether to inline the styles on server-side rendering or not
    */
@@ -53,6 +54,7 @@ const ThemeProvider = memo<ThemeProviderProps>(
     themeMode,
     customStylish = () => ({}),
     customToken = () => ({}),
+    enableWebfonts = true,
     webfonts = [
       'https://npm.elemecdn.com/@lobehub/webfont-mono/css/index.css',
       'https://npm.elemecdn.com/@lobehub/webfont-harmony-sans/css/index.css',
@@ -63,7 +65,9 @@ const ThemeProvider = memo<ThemeProviderProps>(
 
     return (
       <>
-        {webfonts && webfonts.map((webfont, index) => <FontLoader key={index} url={webfont} />)}
+        {enableWebfonts &&
+          webfonts?.length > 0 &&
+          webfonts.map((webfont, index) => <FontLoader key={index} url={webfont} />)}
         <StyleProvider speedy={process.env.NODE_ENV === 'production'}>
           <AntdThemeProvider<LobeCustomToken>
             customStylish={(theme) => ({ ...lobeCustomStylish(theme), ...customStylish(theme) })}
