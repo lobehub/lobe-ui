@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.32.0](https://github.com/lobehub/lobe-ui/compare/v1.31.3...v1.32.0)
+
+<sup>Released on **2023-07-04**</sup>
+
+#### ✨ Features
+
+- **actionicongroup**: Add onActionClick prop and update UI.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **actionicongroup**: Add onActionClick prop and update UI ([22bb028](https://github.com/lobehub/lobe-ui/commit/22bb028))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.31.3](https://github.com/lobehub/lobe-ui/compare/v1.31.2...v1.31.3)
 
 <sup>Released on **2023-07-04**</sup>
