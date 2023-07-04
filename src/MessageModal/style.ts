@@ -7,7 +7,6 @@ export const useStyles = createStyles(({ css, prefixCls }) => ({
     max-height: 70vh;
   `,
   modal: css`
-    height: 70%;
     .${prefixCls}-modal-header {
       margin-bottom: 24px;
     }

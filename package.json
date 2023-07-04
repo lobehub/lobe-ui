@@ -95,6 +95,7 @@
     "react-layout-kit": "^1",
     "react-markdown": "^8",
     "react-rnd": "^10",
+    "react-simple-code-editor": "^0",
     "remark-gfm": "^3",
     "shiki-es": "^0",
     "styled-components": "latest",

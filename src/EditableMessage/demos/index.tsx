@@ -1,4 +1,5 @@
 import { EditableMessage, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { content } from '@lobehub/ui/Markdown/demos/data';
 import { button } from 'leva';
 import { useState } from 'react';
 
@@ -24,8 +25,9 @@ export default () => {
       <EditableMessage
         editing={editing}
         onEditingChange={setEdit}
+        onOpenChange={setOpenModal}
         openModal={openModal}
-        value={'editable text'}
+        value={content}
       />
     </StroyBook>
   );

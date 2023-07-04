@@ -58,7 +58,7 @@ const MessageModal = memo<MessageModalProps>(
         cancelText={'Cancel'}
         className={styles.modal}
         closeIcon={<Icon icon={X} />}
-        footer={isEdit ? undefined : undefined}
+        footer={isEdit ? null : undefined}
         okText={'Edit'}
         onCancel={() => setExpand(false)}
         onOk={() => {
@@ -75,7 +75,7 @@ const MessageModal = memo<MessageModalProps>(
         {isEdit ? (
           <MessageInput
             defaultValue={value}
-            height={400}
+            height="70vh"
             onCancel={() => setTyping(false)}
             onConfirm={(text) => {
               setTyping(false);

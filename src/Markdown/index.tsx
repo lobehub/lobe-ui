@@ -19,7 +19,7 @@ export interface MarkdownProps {
   className?: string;
 }
 
-const Markdown = memo<MarkdownProps>(({ children, className }: MarkdownProps) => {
+const Markdown = memo<MarkdownProps>(({ children, className, ...props }) => {
   const { styles, cx } = useStyles();
   const components: any = {
     a: Typography.Link,
@@ -35,6 +35,7 @@ const Markdown = memo<MarkdownProps>(({ children, className }: MarkdownProps) =>
         className={cx(styles.markdown, className)}
         components={components}
         remarkPlugins={[remarkGfm]}
+        {...props}
       >
         {pangu.spacing(children)}
       </ReactMarkdown>

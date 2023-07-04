@@ -3,7 +3,7 @@ import { createStyles } from 'antd-style';
 export const useStyles = createStyles(({ css, token }, size: number) => {
   return {
     active: css`
-      box-shadow: inset 0 0 0 2px ${token.colorPrimary};
+      box-shadow: inset 0 0 0 2px ${token.colorText};
     `,
     container: css`
       cursor: pointer;

@@ -1,11 +1,12 @@
 import { Button, ButtonProps } from 'antd';
-import { cx } from 'antd-style';
-import { memo, useState } from 'react';
+import { type CSSProperties, memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import { TextArea, type TextAreaProps } from '@/Input';
+import CodeEditor from '@/CodeEditor';
+import { type TextAreaProps } from '@/Input';
+import { DivProps } from '@/types';
 
-export interface MessageInputProps {
+export interface MessageInputProps extends DivProps {
   /**
    * @description Additional className to apply to the component.
    */
@@ -14,10 +15,7 @@ export interface MessageInputProps {
    * @description The default value of the input box.
    */
   defaultValue?: string;
-  /**
-   * @description The height of the input box.
-   */
-  height?: number;
+  height?: number | string;
   /**
    * @description Callback function triggered when user clicks on the cancel button.
    */
@@ -32,6 +30,8 @@ export interface MessageInputProps {
    * @param text - The text input by the user.
    */
   renderButtons?: (text: string) => ButtonProps[];
+  textareaClassname?: string;
+  textareaStyle?: CSSProperties;
   /**
    * @description The type of the input box.
    */
@@ -39,21 +39,34 @@ export interface MessageInputProps {
 }
 
 const MessageInput = memo<MessageInputProps>(
-  ({ type, onCancel, defaultValue, onConfirm, renderButtons, height, className }) => {
+  ({
+    type = 'ghost',
+    onCancel,
+    defaultValue,
+    onConfirm,
+    renderButtons,
+    textareaStyle,
+    textareaClassname,
+    height = 'fit-content',
+    ...props
+  }) => {
     const [temporarySystemRole, setRole] = useState<string>(defaultValue || '');
 
     return (
-      <Flexbox gap={8}>
-        <TextArea
-          className={cx('nowheel', className)}
-          onChange={(e) => {
-            setRole(e.target.value);
+      <Flexbox gap={8} {...props}>
+        <CodeEditor
+          className={textareaClassname}
+          language="md"
+          onValueChange={(value: string) => {
+            setRole(value);
           }}
           placeholder={'例如：你是一名擅长翻译的翻译官，请将用户所输入的英文都翻译为中文。'}
-          style={{ height: height ?? 200 }}
+          resize={false}
+          style={{ height: height, ...textareaStyle }}
           type={type}
           value={temporarySystemRole}
         />
+
         <Flexbox direction={'horizontal-reverse'} gap={8}>
           {renderButtons ? (
             renderButtons(temporarySystemRole).map((buttonProps, index) => (
@@ -69,10 +82,7 @@ const MessageInput = memo<MessageInputProps>(
               >
                 Confirm
               </Button>
-
-              <Button onClick={onCancel} type="text">
-                Cancel
-              </Button>
+              <Button onClick={onCancel}>Cancel</Button>
             </>
           )}
         </Flexbox>

@@ -6,6 +6,7 @@ export type { ChatMessage, MessageRoleType } from './Chat';
 export { default as ChatInputArea, type ChatInputAreaProps } from './ChatInputArea';
 export { default as ChatItem, type ChatItemProps } from './ChatItem';
 export { default as ChatList, type ChatListProps } from './ChatList';
+export { default as CodeEditor, type CodeEditorProps } from './CodeEditor';
 export { default as ColorScales, type ColorScalesProps } from './ColorScales';
 export { default as ContextMenu, type ContextMenuProps } from './ContextMenu';
 export { default as CopyButton, type CopyButtonProps } from './CopyButton';
