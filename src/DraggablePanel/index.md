@@ -9,6 +9,10 @@ description: DraggablePanel is a panel that can be dragged and resized. It suppo
 
 <code src="./demos/index.tsx" noPadding></code>
 
+## Layout
+
+<code src="./demos/Layout.tsx" noPadding></code>
+
 ## APIs
 
 <API></API>

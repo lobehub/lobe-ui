@@ -21,13 +21,8 @@ const themeConfig = {
   ],
   apiHeader: {
     docUrl: `{github}/tree/master/src/{atomId}/index.md`,
-
-    // 匹配路由，默认为 /api 或 /components
     match: ['/components'],
-
-    // 组件库包名，可以从 package.json 中引入名称
     pkg: name,
-    // github 会匹配 themeConfig.github 字段
     sourceUrl: `{github}/tree/master/src/{atomId}/index.tsx`,
   },
   description: 'Lobe UI is an open-source UI component library for building chatbot web apps',
@@ -71,10 +66,11 @@ export default defineConfig({
       'babel-plugin-styled-components',
       {
         displayName: process.env.NODE_ENV === 'development',
-        minify: true,
+        minify: isProduction,
         pure: true,
         transpileTemplateLiterals: true,
       },
+      'antd-style',
     ],
   ],
   favicons: ['https://npm.elemecdn.com/@lobehub/assets-favicons/assets/favicon.ico'],
