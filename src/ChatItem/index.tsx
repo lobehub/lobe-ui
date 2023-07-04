@@ -3,9 +3,8 @@ import { Loader2 } from 'lucide-react';
 import { ReactNode, memo } from 'react';
 
 import Avatar from '@/Avatar';
+import EditableMessage from '@/EditableMessage';
 import Icon from '@/Icon';
-import Markdown from '@/Markdown';
-import type { DivProps } from '@/types';
 import { MetaData } from '@/types/meta';
 import { formatTime } from '@/utils/formatTime';
 
@@ -13,7 +12,7 @@ import { useStyles } from './style';
 
 const AVATAR_SIZE = 40;
 
-export interface ChatItemProps extends DivProps {
+export interface ChatItemProps {
   actions?: ReactNode;
   /**
    * @description Whether to show alert and alert config
@@ -28,6 +27,12 @@ export interface ChatItemProps extends DivProps {
    * @default true
    */
   borderSpacing?: boolean;
+  className?: string;
+  /**
+   * @title Whether the component is in edit mode or not
+   * @default false
+   */
+  editing?: boolean;
   /**
    * @description Whether to show a loading spinner
    * @default false
@@ -37,6 +42,16 @@ export interface ChatItemProps extends DivProps {
    * @description The message to be displayed
    */
   message?: string;
+  /**
+   * @title Callback function when the value changes
+   * @param value - The new value
+   */
+  onChange?: (value: string) => void;
+  /**
+   * @title Callback function when the editing state changes
+   * @param editing - Whether the component is in edit mode or not
+   */
+  onEditingChange?: (editing: boolean) => void;
   /**
    * @description The placement of the chat item
    * @default 'left'
@@ -67,7 +82,7 @@ const ChatItem = memo<ChatItemProps>(
   ({
     actions,
     className,
-    title,
+
     primary,
     borderSpacing = true,
     loading,
@@ -78,6 +93,9 @@ const ChatItem = memo<ChatItemProps>(
     alert,
     showTitle,
     time,
+    editing,
+    onChange,
+    onEditingChange,
     ...properties
   }) => {
     const { cx, styles } = useStyles({
@@ -86,7 +104,7 @@ const ChatItem = memo<ChatItemProps>(
       placement,
       primary,
       showTitle,
-      title,
+      title: avatar.title,
       type,
     });
     return (
@@ -112,11 +130,16 @@ const ChatItem = memo<ChatItemProps>(
           {alert ? (
             <Alert showIcon {...alert} />
           ) : (
-            <div className={styles.message}>
-              <Markdown>{String(message || '...')}</Markdown>
+            <div className={styles.message} style={editing ? { padding: 12 } : {}}>
+              <EditableMessage
+                editing={editing}
+                onChange={onChange}
+                onEditingChange={onEditingChange}
+                value={String(message || '...')}
+              />
             </div>
           )}
-          <div className={cx(styles.actions, 'chat-item-actions')}>{actions}</div>
+          {!editing && <div className={cx(styles.actions, 'chat-item-actions')}>{actions}</div>}
         </div>
         {borderSpacing && <div style={{ flex: 'none', width: AVATAR_SIZE }} />}
       </div>

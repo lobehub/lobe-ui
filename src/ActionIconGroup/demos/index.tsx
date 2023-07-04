@@ -27,7 +27,12 @@ export default () => {
 
   return (
     <StroyBook levaStore={store}>
-      <ActionIconGroup dropdownMenu={dropdownMenu} items={items} {...control} />
+      <ActionIconGroup
+        dropdownMenu={dropdownMenu}
+        items={items}
+        onActionClick={(key) => console.log(key)}
+        {...control}
+      />
     </StroyBook>
   );
 };

@@ -6,10 +6,12 @@ import {
   useControls,
   useCreateStore,
 } from '@lobehub/ui';
+import { useState } from 'react';
 
 import { avatar, dropdownMenu, items } from './data';
 
 export default () => {
+  const [edit, setEdit] = useState(false);
   const store = useCreateStore();
   const control: ChatItemProps | any = useControls(
     {
@@ -38,9 +40,23 @@ export default () => {
   return (
     <StroyBook levaStore={store}>
       <ChatItem
-        avatar={avatar}
         {...control}
-        actions={<ActionIconGroup dropdownMenu={dropdownMenu} items={items} type="ghost" />}
+        actions={
+          <ActionIconGroup
+            dropdownMenu={dropdownMenu}
+            items={items}
+            onActionClick={(key) => {
+              console.log(key);
+              if (key === 'edit') {
+                setEdit(true);
+              }
+            }}
+            type="ghost"
+          />
+        }
+        avatar={avatar}
+        editing={edit}
+        onEditingChange={setEdit}
       />
     </StroyBook>
   );

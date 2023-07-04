@@ -1,6 +1,6 @@
-import { type ActionIconGroupProps, Icon } from '@lobehub/ui';
+import { type ActionIconGroupProps } from '@lobehub/ui';
 import { MetaData } from '@lobehub/ui/types/meta';
-import { Copy, RotateCw, Trash } from 'lucide-react';
+import { Copy, Edit, RotateCw, Trash } from 'lucide-react';
 
 export const avatar: MetaData = {
   avatar: '😎',
@@ -10,29 +10,29 @@ export const avatar: MetaData = {
 
 export const items: ActionIconGroupProps['items'] = [
   {
-    icon: RotateCw,
-    onClick: () => console.log('click Regenerate'),
-    title: 'Regenerate',
+    icon: Edit,
+    key: 'edit',
+    label: 'Edit',
   },
 ];
 
 export const dropdownMenu: ActionIconGroupProps['dropdownMenu'] = [
   {
-    icon: <Icon icon={Copy} size="small" />,
-    key: 'Copy',
+    icon: Copy,
+    key: 'copy',
     label: 'Copy',
   },
   {
-    icon: <Icon icon={RotateCw} size="small" />,
-    key: 'Regenerate',
+    icon: RotateCw,
+    key: 'regenerate',
     label: 'Regenerate',
   },
   {
     type: 'divider',
   },
   {
-    icon: <Icon icon={Trash} size="small" />,
-    key: 'Delete',
+    icon: Trash,
+    key: 'delete',
     label: 'Delete',
   },
 ];

@@ -1,11 +1,17 @@
-import { ActionIcon, ActionIconProps, Spotlight } from '@lobehub/ui';
-import { Dropdown, type MenuProps } from 'antd';
-import { MoreHorizontal } from 'lucide-react';
+import { ActionIcon, ActionIconProps, Icon, Spotlight } from '@lobehub/ui';
+import { Dropdown } from 'antd';
+import { type LucideIcon, MoreHorizontal } from 'lucide-react';
 import { memo } from 'react';
 
 import { DivProps } from '@/types';
 
 import { useStyles } from './style';
+
+interface ActionIconGroupItems {
+  icon: LucideIcon;
+  key: string;
+  label: string;
+}
 
 export interface ActionIconGroupProps extends DivProps {
   /**
@@ -16,12 +22,13 @@ export interface ActionIconGroupProps extends DivProps {
   /**
    * @description The menu items for the dropdown
    */
-  dropdownMenu?: MenuProps['items'];
+  dropdownMenu?: (ActionIconGroupItems | { type: 'divider' })[];
   /**
    * @description The items to be rendered
    * @default []
    */
-  items?: ActionIconProps[];
+  items?: ActionIconGroupItems[];
+  onActionClick: (key: string) => void;
   /**
    * @description The position of the tooltip relative to the target
    * @enum ["top","left","right","bottom","topLeft","topRight","bottomLeft","bottomRight","leftTop","leftBottom","rightTop","rightBottom"]
@@ -47,6 +54,7 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
     spotlight = true,
     direction = 'row',
     dropdownMenu = [],
+    onActionClick = () => {},
     ...props
   }) => {
     const { styles } = useStyles({ direction, type });
@@ -56,11 +64,30 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
     return (
       <div className={styles.container} {...props}>
         {spotlight && <Spotlight />}
-        {items.map((item, index) => (
-          <ActionIcon key={index} placement={tooltipsPlacement} size="small" {...item} />
+        {items.map((item) => (
+          <ActionIcon
+            icon={item.icon}
+            key={item.key}
+            onClick={() => onActionClick(item.key)}
+            placement={tooltipsPlacement}
+            size="small"
+            title={item.label}
+          />
         ))}
         {dropdownMenu && (
-          <Dropdown menu={{ items: dropdownMenu }} trigger={['click']}>
+          <Dropdown
+            menu={{
+              items: dropdownMenu.map((item: any) => {
+                if (item.type) return item;
+                return {
+                  ...item,
+                  icon: <Icon icon={item.icon} size="small" />,
+                  onClick: () => onActionClick(item.key),
+                };
+              }),
+            }}
+            trigger={['click']}
+          >
             <ActionIcon
               icon={MoreHorizontal}
               key="more"

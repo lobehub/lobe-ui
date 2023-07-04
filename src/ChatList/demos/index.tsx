@@ -17,7 +17,7 @@ export default () => {
 
   return (
     <StroyBook levaStore={store}>
-      <ChatList data={data} {...control} />
+      <ChatList data={data} {...control} onActionClick={(key) => console.log(key)} />
     </StroyBook>
   );
 };

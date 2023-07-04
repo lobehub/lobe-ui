@@ -2,7 +2,6 @@ import { Copy, Edit, RotateCw, Trash } from 'lucide-react';
 import { memo, useMemo } from 'react';
 
 import ActionIconGroup, { type ActionIconGroupProps } from '@/ActionIconGroup';
-import Icon from '@/Icon';
 
 export interface ActionsBarProps extends ActionIconGroupProps {
   primary?: boolean;
@@ -13,11 +12,11 @@ const ActionsBar = memo<ActionsBarProps>(({ primary, items = [], dropdownMenu = 
     () =>
       [
         primary
-          ? { icon: Edit, onClick: () => console.log('click Edit'), title: 'Edit' }
+          ? { icon: Edit, key: 'edit', label: 'Edit' }
           : {
               icon: RotateCw,
-              onClick: () => console.log('click Regenerate'),
-              title: 'Regenerate',
+              key: 'regenerate',
+              label: 'Regenerate',
             },
         ...items,
       ].filter(Boolean),
@@ -28,26 +27,26 @@ const ActionsBar = memo<ActionsBarProps>(({ primary, items = [], dropdownMenu = 
     () => [
       ...dropdownMenu,
       {
-        icon: <Icon icon={Edit} size="small" />,
-        key: 'Edit',
+        icon: Edit,
+        key: 'edit',
         label: 'Edit',
       },
       {
-        icon: <Icon icon={Copy} size="small" />,
-        key: 'Copy',
+        icon: Copy,
+        key: 'copy',
         label: 'Copy',
       },
       {
-        icon: <Icon icon={RotateCw} size="small" />,
-        key: 'Regenerate',
+        icon: RotateCw,
+        key: 'regenerate',
         label: 'Regenerate',
       },
       {
         type: 'divider',
       },
       {
-        icon: <Icon icon={Trash} size="small" />,
-        key: 'Delete',
+        icon: Trash,
+        key: 'Ddelete',
         label: 'Delete',
       },
     ],

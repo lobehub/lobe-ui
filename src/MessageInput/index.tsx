@@ -40,13 +40,14 @@ export interface MessageInputProps extends DivProps {
 
 const MessageInput = memo<MessageInputProps>(
   ({
-    type = 'ghost',
+    type = 'pure',
     onCancel,
     defaultValue,
     onConfirm,
     renderButtons,
     textareaStyle,
     textareaClassname,
+    placeholder = 'Type something...',
     height = 'fit-content',
     ...props
   }) => {
@@ -60,17 +61,16 @@ const MessageInput = memo<MessageInputProps>(
           onValueChange={(value: string) => {
             setRole(value);
           }}
-          placeholder={'例如：你是一名擅长翻译的翻译官，请将用户所输入的英文都翻译为中文。'}
+          placeholder={placeholder}
           resize={false}
           style={{ height: height, ...textareaStyle }}
           type={type}
           value={temporarySystemRole}
         />
-
         <Flexbox direction={'horizontal-reverse'} gap={8}>
           {renderButtons ? (
             renderButtons(temporarySystemRole).map((buttonProps, index) => (
-              <Button key={index} {...buttonProps} />
+              <Button key={index} size="small" {...buttonProps} />
             ))
           ) : (
             <>
@@ -78,11 +78,14 @@ const MessageInput = memo<MessageInputProps>(
                 onClick={() => {
                   onConfirm?.(temporarySystemRole);
                 }}
+                size="small"
                 type="primary"
               >
                 Confirm
               </Button>
-              <Button onClick={onCancel}>Cancel</Button>
+              <Button onClick={onCancel} size="small">
+                Cancel
+              </Button>
             </>
           )}
         </Flexbox>

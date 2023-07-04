@@ -27,7 +27,6 @@ const Code = memo((properties: any) => {
     <Highlighter
       className={styles}
       language={className?.replace('language-', '') || 'markdown'}
-      spotlight
       theme={theme.appearance as any}
       type="block"
     >
