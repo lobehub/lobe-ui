@@ -1,6 +1,6 @@
-import { ConfigProvider, InputRef, Space } from 'antd';
+import { ConfigProvider, Space } from 'antd';
 import { RotateCcw, Save } from 'lucide-react';
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import { forwardRef, memo, useCallback, useEffect, useRef, useState } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 import { Input, InputProps } from '@/Input';
@@ -25,9 +25,9 @@ export interface ControlInputProps extends Omit<InputProps, 'onChange' | 'value'
 }
 
 export const ControlInput = memo<ControlInputProps>(
-  ({ value, onChange, onValueChanging, onChangeEnd, ...properties }) => {
+  forwardRef(({ value, onChange, onValueChanging, onChangeEnd, ...props }, reference) => {
     const [input, setInput] = useState<string>(value || '');
-    const inputReference = useRef<InputRef>();
+
     const isChineseInput = useRef(false);
     const isFocusing = useRef(false);
 
@@ -41,8 +41,6 @@ export const ControlInput = memo<ControlInputProps>(
 
     return (
       <Input
-        ref={inputReference}
-        {...properties}
         onBlur={() => {
           isFocusing.current = false;
           onChangeEnd?.(input);
@@ -68,6 +66,7 @@ export const ControlInput = memo<ControlInputProps>(
             onChangeEnd?.(input);
           }
         }}
+        ref={reference}
         suffix={
           value === input ? (
             <span />
@@ -88,7 +87,8 @@ export const ControlInput = memo<ControlInputProps>(
           )
         }
         value={input}
+        {...props}
       />
     );
-  },
+  }),
 );
