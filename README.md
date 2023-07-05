@@ -6,8 +6,6 @@
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
 <img height="120" src="https://npm.elemecdn.com/fluentui-emoji/icons/modern/lollipop.svg">
 
-
-
 <h1>Lobe UI</h1>
 
 Lobe UI is an open-source UI component library for building _AIGC_ web apps

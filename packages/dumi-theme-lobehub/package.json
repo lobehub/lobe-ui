@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@floating-ui/react": "^0",
+    "@giscus/react": "^2",
     "@lobehub/ui": "latest",
     "ahooks": "^3",
     "antd": "^5",
