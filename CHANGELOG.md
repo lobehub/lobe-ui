@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.33.0](https://github.com/lobehub/lobe-ui/compare/v1.32.0...v1.33.0)
+
+<sup>Released on **2023-07-05**</sup>
+
+#### ✨ Features
+
+- **misc**: Add `Giscus`.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add `Giscus` ([4c9b291](https://github.com/lobehub/lobe-ui/commit/4c9b291))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.32.0](https://github.com/lobehub/lobe-ui/compare/v1.31.3...v1.32.0)
 
 <sup>Released on **2023-07-04**</sup>
