@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.34.0](https://github.com/lobehub/lobe-ui/compare/v1.33.0...v1.34.0)
+
+<sup>Released on **2023-07-06**</sup>
+
+#### ✨ Features
+
+- **giscus**: Support lobe theme.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **giscus**: Support lobe theme ([93d285e](https://github.com/lobehub/lobe-ui/commit/93d285e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.33.0](https://github.com/lobehub/lobe-ui/compare/v1.32.0...v1.33.0)
 
 <sup>Released on **2023-07-05**</sup>
