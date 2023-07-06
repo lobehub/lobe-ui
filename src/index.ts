@@ -43,6 +43,7 @@ export { default as FormFooter, type FormFooterProps } from './Form/components/F
 export { default as FormGroup, type FormGroupProps } from './Form/components/FormGroup';
 export { default as FormItem, type FormItemProps } from './Form/components/FormItem';
 export { default as FormTitle, type FormTitleProps } from './Form/components/FormTitle';
+export { default as Giscus, type GiscusProps } from './Giscus';
 export { default as GradientButton, type GradientButtonProps } from './GradientButton';
 export { default as Header, type HeaderProps } from './Header';
 export { default as Hero, type HeroAction, type HeroProps } from './Hero';

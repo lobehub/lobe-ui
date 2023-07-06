@@ -70,7 +70,6 @@ export default defineConfig({
         pure: true,
         transpileTemplateLiterals: true,
       },
-      'antd-style',
     ],
   ],
   favicons: ['https://npm.elemecdn.com/@lobehub/assets-favicons/assets/favicon.ico'],
