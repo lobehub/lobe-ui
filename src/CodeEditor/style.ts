@@ -12,7 +12,8 @@ export const useStyles = createStyles(
       border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorderSecondary};
       border-radius: ${token.borderRadius}px;
 
-      transition: background-color 100ms ${token.motionEaseOut},
+      transition:
+        background-color 100ms ${token.motionEaseOut},
         border-color 200ms ${token.motionEaseOut};
 
       &:hover {

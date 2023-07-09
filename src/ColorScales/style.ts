@@ -15,7 +15,11 @@ export const useStyles = createStyles(({ css, token }) => ({
     width: 48px;
     height: 32px;
 
-    background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+    background-position:
+      0 0,
+      0 8px,
+      8px -8px,
+      -8px 0;
     background-size: 16px 16px;
 
     transition: scale 400ms ${token.motionEaseOut};

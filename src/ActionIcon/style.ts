@@ -19,7 +19,9 @@ export const useStyles = createStyles(
 
           background: ${active ? token.colorFillTertiary : 'transparent'};
 
-          transition: color 600ms ${token.motionEaseOut}, scale 400ms ${token.motionEaseOut},
+          transition:
+            color 600ms ${token.motionEaseOut},
+            scale 400ms ${token.motionEaseOut},
             background-color 100ms ${token.motionEaseOut};
 
           &:hover {

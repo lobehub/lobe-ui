@@ -12,13 +12,11 @@ export const useStyles = createStyles(({ css, responsive, token, cx }) => ({
       padding: 0 12px;
     }
   `,
-  header: cx(
-    css`
-      grid-area: head;
-      align-self: stretch;
-      width: 100%;
-    `,
-  ),
+  header: cx(css`
+    grid-area: head;
+    align-self: stretch;
+    width: 100%;
+  `),
   left: css`
     z-index: 10;
   `,

@@ -32,7 +32,9 @@ export const useStyles = createStyles(({ css, token, isDarkMode, stylish }) => {
 
         padding: 1px;
 
-        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
 
         mask-composite: xor;
       }
