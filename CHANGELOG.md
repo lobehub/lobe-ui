@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.34.1](https://github.com/lobehub/lobe-ui/compare/v1.34.0...v1.34.1)
+
+<sup>Released on **2023-07-09**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Remove monorepo.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Remove monorepo ([ec91005](https://github.com/lobehub/lobe-ui/commit/ec91005))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.34.0](https://github.com/lobehub/lobe-ui/compare/v1.33.0...v1.34.0)
 
 <sup>Released on **2023-07-06**</sup>
