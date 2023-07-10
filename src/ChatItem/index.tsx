@@ -13,43 +13,46 @@ import { useStyles } from './style';
 const AVATAR_SIZE = 40;
 
 export interface ChatItemProps {
+  /**
+   * @description Actions to be displayed in the chat item
+   */
   actions?: ReactNode;
   /**
-   * @description Whether to show alert and alert config
+   * @description Props for Alert component
    */
   alert?: AlertProps;
   /**
-   * @description Avatar config
+   * @description Metadata for the avatar
    */
   avatar: MetaData;
   /**
-   * @description Whether to add spacing between chat items
-   * @default true
+   * @description Whether to add border spacing
    */
-  borderSpacing?: boolean;
+  borderSpacing?: number | string;
+  /**
+   * @description Custom CSS class name for the chat item
+   */
   className?: string;
   /**
-   * @title Whether the component is in edit mode or not
-   * @default false
+   * @description Whether the chat item is in editing mode
    */
   editing?: boolean;
   /**
-   * @description Whether to show a loading spinner
-   * @default false
+   * @description Whether the chat item is in loading state
    */
   loading?: boolean;
   /**
-   * @description The message to be displayed
+   * @description The message content of the chat item
    */
   message?: string;
   /**
-   * @title Callback function when the value changes
-   * @param value - The new value
+   * @description Callback when the message content changes
+   * @param value - The new message content
    */
   onChange?: (value: string) => void;
   /**
-   * @title Callback function when the editing state changes
-   * @param editing - Whether the component is in edit mode or not
+   * @description Callback when the editing mode changes
+   * @param editing - The new editing mode
    */
   onEditingChange?: (editing: boolean) => void;
   /**
@@ -59,20 +62,18 @@ export interface ChatItemProps {
   placement?: 'left' | 'right';
   /**
    * @description Whether the chat item is primary
-   * @default false
    */
   primary?: boolean;
   /**
-   * @description Whether to show name of the chat item
-   * @default false
+   * @description Whether to show the title of the chat item
    */
   showTitle?: boolean;
   /**
-   * @description Time of chat message
+   * @description The timestamp of the chat item
    */
   time?: number;
   /**
-   * @description The type of chat item
+   * @description The type of the chat item
    * @default 'block'
    */
   type?: 'block' | 'pure';
@@ -82,9 +83,8 @@ const ChatItem = memo<ChatItemProps>(
   ({
     actions,
     className,
-
     primary,
-    borderSpacing = true,
+    borderSpacing,
     loading,
     message,
     placement = 'left',
@@ -100,7 +100,6 @@ const ChatItem = memo<ChatItemProps>(
   }) => {
     const { cx, styles } = useStyles({
       avatarSize: AVATAR_SIZE,
-      borderSpacing,
       placement,
       primary,
       showTitle,
@@ -123,25 +122,31 @@ const ChatItem = memo<ChatItemProps>(
           )}
         </div>
         <div className={styles.messageContainer}>
-          <div className={cx(styles.name, 'chat-item-name')}>
+          <title className={styles.name}>
             {showTitle ? avatar.title || 'untitled' : undefined}
-            {time && <span className="chat-item-time">{formatTime(time)}</span>}
+            {time && <time>{formatTime(time)}</time>}
+          </title>
+          <div className={styles.messageContent}>
+            {alert ? (
+              <Alert className={styles.alert} showIcon {...alert} />
+            ) : (
+              <div className={styles.message} style={editing ? { padding: 12 } : {}}>
+                <EditableMessage
+                  editing={editing}
+                  onChange={onChange}
+                  onEditingChange={onEditingChange}
+                  value={String(message || '...')}
+                />
+              </div>
+            )}
+            {!editing && (
+              <div className={styles.actions} role="chat-item-actions">
+                {actions}
+              </div>
+            )}
           </div>
-          {alert ? (
-            <Alert showIcon {...alert} />
-          ) : (
-            <div className={styles.message} style={editing ? { padding: 12 } : {}}>
-              <EditableMessage
-                editing={editing}
-                onChange={onChange}
-                onEditingChange={onEditingChange}
-                value={String(message || '...')}
-              />
-            </div>
-          )}
-          {!editing && <div className={cx(styles.actions, 'chat-item-actions')}>{actions}</div>}
         </div>
-        {borderSpacing && <div style={{ flex: 'none', width: AVATAR_SIZE }} />}
+        {borderSpacing && <div style={{ flex: 'none', width: borderSpacing }} />}
       </div>
     );
   },

@@ -73,6 +73,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         line-height: 1.8;
         color: ${token.colorText};
         text-align: justify;
+        word-break: break-all;
         word-wrap: break-word;
 
         + * {

@@ -10,10 +10,8 @@ export const useStyles = createStyles(
       primary,
       avatarSize,
       showTitle,
-      borderSpacing,
     }: {
       avatarSize: number;
-      borderSpacing: boolean;
       placement?: 'left' | 'right';
       primary?: boolean;
       showTitle?: boolean;
@@ -39,26 +37,43 @@ export const useStyles = createStyles(
     const typeStylish = type === 'block' ? blockStylish : pureStylish;
 
     return {
-      actions: cx(
-        css`
-          position: absolute;
-          display: flex;
-          align-items: flex-start;
-          justify-content: ${placement === 'left' ? 'flex-end' : 'flex-start'};
-        `,
-        type === 'block' && borderSpacing
-          ? css`
-              right: ${placement === 'left' ? '-4px' : 'unset'};
-              bottom: 0;
-              left: ${placement === 'right' ? '-4px' : 'unset'};
-              transform: translateX(${placement === 'left' ? '100%' : '-100%'});
-            `
-          : css`
-              right: ${placement === 'left' ? '0' : 'unset'};
-              bottom: ${type === 'block' ? '-40px' : '-32px'};
-              left: ${placement === 'right' ? '0' : 'unset'};
-            `,
-      ),
+      actions: css`
+        display: flex;
+        align-items: flex-start;
+        align-self: ${type === 'block'
+          ? 'flex-end'
+          : placement === 'left'
+          ? 'flex-start'
+          : 'flex-end'};
+        justify-content: ${placement === 'left' ? 'flex-end' : 'flex-start'};
+      `,
+      alert: css`
+        span[role='img'] {
+          align-self: flex-start;
+          width: 16px;
+          height: 16px;
+          margin-top: 3px;
+        }
+
+        .ant-alert-description {
+          text-align: justify;
+          word-break: break-all;
+          word-wrap: break-word;
+        }
+
+        &.ant-alert-with-description {
+          padding-block: 12px;
+          padding-inline: 12px;
+
+          .ant-alert-message {
+            font-size: 14px;
+            font-weight: 600;
+            text-align: justify;
+            word-break: break-all;
+            word-wrap: break-word;
+          }
+        }
+      `,
       avatarContainer: css`
         position: relative;
         flex: none;
@@ -79,18 +94,27 @@ export const useStyles = createStyles(
           width: 100%;
           padding: 12px;
 
-          .chat-item-time,
-          .chat-item-actions {
-            display: none;
+          time {
+            display: inline-block;
+            white-space: nowrap;
+          }
+
+          div[role='chat-item-actions'] {
+            display: flex;
+          }
+
+          time,
+          div[role='chat-item-actions'] {
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 200ms ${token.motionEaseOut};
           }
 
           &:hover {
-            .chat-item-time {
-              display: inline-block;
-            }
-
-            .chat-item-actions {
-              display: flex;
+            time,
+            div[role='chat-item-actions'] {
+              pointer-events: unset;
+              opacity: 1;
             }
           }
         `,
@@ -121,11 +145,21 @@ export const useStyles = createStyles(
       ),
       messageContainer: css`
         position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: ${placement === 'left' ? 'flex-start' : 'flex-end'};
+      `,
+      messageContent: css`
+        position: revert;
 
-        .ant-alert-with-description {
-          padding-block: 12px;
-          padding-inline: 12px;
-        }
+        display: flex;
+        flex-direction: ${type === 'block'
+          ? placement === 'left'
+            ? 'row'
+            : 'row-reverse'
+          : 'column'};
+        gap: 8px;
+        align-items: ${placement === 'left' ? 'flex-start' : 'flex-end'};
       `,
       name: css`
         position: ${showTitle ? 'relative' : 'absolute'};

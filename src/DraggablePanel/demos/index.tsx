@@ -55,7 +55,7 @@ export default () => {
         {['top', 'left'].includes(control.placement) ? (
           <>
             <DraggablePanel {...control}>
-              <Container>DraggablePanel</Container>
+              <Container>Draggable Panel</Container>
             </DraggablePanel>
             <Container style={{ flex: 1 }}>Content</Container>
           </>
@@ -63,7 +63,7 @@ export default () => {
           <>
             <Container style={{ flex: 1 }}>Content</Container>
             <DraggablePanel {...control}>
-              <Container>DraggablePanel</Container>
+              <Container>Draggable Panel</Container>
             </DraggablePanel>
           </>
         )}

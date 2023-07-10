@@ -114,6 +114,7 @@
     "@types/react-dom": "^18",
     "@vitest/coverage-v8": "latest",
     "antd-style": "^3",
+    "babel-plugin-antd-style": "latest",
     "commitlint": "^17",
     "concurrently": "^8",
     "cross-env": "^7",

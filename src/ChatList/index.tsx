@@ -12,7 +12,12 @@ export interface ChatListProps extends DivProps {
    * @description Data of chat messages to be displayed
    */
   data: ChatMessage[];
-  onActionClick: (actionKey: string, messageId: string) => void;
+  /**
+   * @description Callback function triggered when an action is clicked
+   * @param {string} actionKey - The key of the action
+   * @param {string} messageId - The id of the message
+   */
+  onActionClick?: (actionKey: string, messageId: string) => void;
   /**
    * @description Whether to show name of the chat item
    * @default false
@@ -26,7 +31,7 @@ export interface ChatListProps extends DivProps {
 }
 
 const ChatList = memo<ChatListProps>(
-  ({ onActionClick, className, data, type = 'chat', showTitle, ...props }) => {
+  ({ onActionClick = () => {}, className, data, type = 'chat', showTitle, ...props }) => {
     const { cx, styles } = useStyles();
 
     return (
@@ -40,7 +45,6 @@ const ChatList = memo<ChatListProps>(
               />
             }
             avatar={item.meta}
-            borderSpacing={type === 'chat'}
             key={item.id}
             message={item.content}
             placement={type === 'chat' ? (item.role === 'user' ? 'right' : 'left') : 'left'}

@@ -15,7 +15,6 @@ export default () => {
   const store = useCreateStore();
   const control: ChatItemProps | any = useControls(
     {
-      borderSpacing: true,
       loading: false,
       message: {
         rows: true,

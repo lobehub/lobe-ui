@@ -26,7 +26,6 @@ const themeConfig = {
     sourceUrl: `{github}/tree/master/src/{atomId}/index.tsx`,
   },
   description: 'Lobe UI is an open-source UI component library for building chatbot web apps',
-
   features: [
     {
       description:
@@ -47,9 +46,17 @@ const themeConfig = {
       title: 'Light & Dark UI',
     },
   ],
+
   footer: 'Made with 🤯 by LobeHub',
+  giscus: {
+    category: 'Q&A',
+    categoryId: 'DIC_kwDOJloKoM4CXsCu',
+    repo: 'lobehub/lobe-ui',
+    repoId: 'R_kgDOJloKoA',
+  },
   name: 'UI',
   socialLinks: {
+    discord: 'https://discord.gg/AYFPHvv2jT',
     github: homepage,
   },
   title: 'Lobe UI',
@@ -62,6 +69,7 @@ export default defineConfig({
     'process.env': process.env,
   },
   extraBabelPlugins: [
+    'babel-plugin-antd-style',
     [
       'babel-plugin-styled-components',
       {
@@ -84,6 +92,13 @@ export default defineConfig({
     : undefined,
 
   ssr: isProduction ? {} : false,
+  styles: [
+    `html, body { background: transparent;  }
+
+  @media (prefers-color-scheme: dark) {
+    html, body { background: #000; }
+  }`,
+  ],
   themeConfig,
   title: 'Lobe UI',
 });

@@ -156,7 +156,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     }, [pin, isHovering, isExpand]);
 
     const [showExpand, setShowExpand] = useState(true);
-
+    const [isResizing, setIsResizing] = useState(false);
     const canResizing = resize !== false && isExpand;
 
     const resizeHandleClassNames: HandleClassName = useMemo(() => {
@@ -267,16 +267,21 @@ const DraggablePanel = memo<DraggablePanelProps>(
           });
         }}
         onResizeStart={() => {
+          setIsResizing(true);
           setShowExpand(false);
         }}
         onResizeStop={(e, direction, reference_, delta) => {
+          setIsResizing(false);
           setShowExpand(true);
           onSizeChange?.(delta, {
             height: reference_.style.height,
             width: reference_.style.width,
           });
         }}
-        style={style}
+        style={{
+          transition: isResizing ? 'unset' : undefined,
+          ...style,
+        }}
       >
         {children}
       </Resizable>
@@ -293,7 +298,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
           className,
         )}
         ref={reference}
-        style={{ [`border${arrowPlacement}Width`]: 1 }}
+        style={isExpand ? { [`border${arrowPlacement}Width`]: 1 } : {}}
       >
         {expandable && showExpand && handler}
         {destroyOnClose ? isExpand && inner : inner}
