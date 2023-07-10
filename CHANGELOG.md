@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.36.0](https://github.com/lobehub/lobe-ui/compare/v1.35.0...v1.36.0)
+
+<sup>Released on **2023-07-10**</sup>
+
+#### ✨ Features
+
+- **misc**: Enhance functionality and usability of ChatInputArea component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Enhance functionality and usability of ChatInputArea component ([6c36a25](https://github.com/lobehub/lobe-ui/commit/6c36a25))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.35.0](https://github.com/lobehub/lobe-ui/compare/v1.34.1...v1.35.0)
 
 <sup>Released on **2023-07-10**</sup>
