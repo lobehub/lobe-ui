@@ -46,7 +46,7 @@ const ActionsBar = memo<ActionsBarProps>(({ primary, items = [], dropdownMenu = 
       },
       {
         icon: Trash,
-        key: 'Ddelete',
+        key: 'delete',
         label: 'Delete',
       },
     ],
