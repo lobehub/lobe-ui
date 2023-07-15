@@ -1,8 +1,7 @@
+import { useLocalStorageState } from 'ahooks';
 import { kebabCase } from 'lodash-es';
-import { Loader2 } from 'lucide-react';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
-import Icon from '@/Icon';
 import { DivProps } from '@/types';
 import { getEmojiNameByCharacter } from '@/utils/getEmojiByCharacter';
 
@@ -26,23 +25,36 @@ export interface FluentEmojiProps extends DivProps {
 }
 
 const FluentEmoji = memo<FluentEmojiProps>(
-  ({ emoji, className, style, type = 'modern', size = 40, ...props }) => {
-    const [loading, setLoading] = useState(true);
+  ({ emoji, className, style, type = 'modern', size = 40 }) => {
     const [loadingFail, setLoadingFail] = useState(false);
+    const [emojiUrl, setEmojiUrl] = useLocalStorageState<{ [key: string]: string }>(
+      'lobe-ui-emoji',
+      {
+        defaultValue: {},
+      },
+    );
     const { cx, styles } = useStyles();
 
     useEffect(() => {
-      setLoading(true);
-    }, [emoji]);
+      if (emojiUrl?.[emoji] || emojiUrl?.[emoji] === 'none') return;
+      const emojiName = getEmojiNameByCharacter(emoji);
+      if (emojiName) {
+        setEmojiUrl({
+          ...emojiUrl,
+          [emoji]: `https://npm.elemecdn.com/fluentui-emoji/icons/${type}/${kebabCase(
+            emojiName,
+          )}.svg`,
+        });
+      } else {
+        setEmojiUrl({ ...emojiUrl, [emoji]: 'none' });
+      }
+    }, [emoji, emojiUrl]);
 
-    const emojiName = useMemo(() => getEmojiNameByCharacter(emoji), [emoji]);
-
-    if (!emojiName || loadingFail)
+    if (emojiUrl?.[emoji] === 'none' || loadingFail)
       return (
         <div
           className={cx(styles.container, className)}
           style={{ fontSize: size, height: size, width: size, ...style }}
-          {...props}
         >
           {emoji}
         </div>
@@ -52,20 +64,13 @@ const FluentEmoji = memo<FluentEmojiProps>(
       <div
         className={cx(styles.container, className)}
         style={{ height: size, width: size, ...style }}
-        {...props}
       >
-        {loading && (
-          <div className={styles.loading}>
-            <Icon icon={Loader2} size={{ fontSize: size * 0.75 }} spin />
-          </div>
-        )}
         <img
-          alt={emojiName}
+          alt={emoji}
           height="100%"
+          loading="lazy"
           onError={() => setLoadingFail(true)}
-          onLoad={() => setLoading(false)}
-          src={`https://npm.elemecdn.com/fluentui-emoji/icons/${type}/${kebabCase(emojiName)}.svg`}
-          style={{ opacity: loading ? 0 : 1 }}
+          src={emojiUrl?.[emoji]}
           width="100%"
         />
       </div>
