@@ -4,7 +4,7 @@ import { convertAlphaToSolid } from '@/utils/colorUtils';
 
 export const useStyles = createStyles(({ css, cx, token }) => {
   const textOverlay = css`
-    --overlay-background: ${token.colorBgLayout};
+    --overlay-background: ${token.colorBgContainer};
 
     position: absolute;
     z-index: 10;
@@ -17,7 +17,7 @@ export const useStyles = createStyles(({ css, cx, token }) => {
     background: linear-gradient(to right, transparent, var(--overlay-background));
   `;
 
-  const overlayColor = convertAlphaToSolid(token.colorFillContent, token.colorBgLayout);
+  const overlayColor = convertAlphaToSolid(token.colorFillContent, token.colorBgContainer);
 
   const hoverOverlay = css`
     .${cx(textOverlay)} {
@@ -35,7 +35,6 @@ export const useStyles = createStyles(({ css, cx, token }) => {
     container: css`
       cursor: pointer;
       color: ${token.colorTextTertiary};
-      border-radius: 8px;
 
       &:hover {
         background: ${token.colorFillContent};
@@ -55,11 +54,10 @@ export const useStyles = createStyles(({ css, cx, token }) => {
       width: 100%;
       margin-top: 2px;
 
-      font-size: 0.75em;
+      font-size: 12px;
+      color: ${token.colorTextDescription};
       text-overflow: ellipsis;
       white-space: nowrap;
-
-      opacity: 0.5;
     `,
     textOverlay,
     time: css`
@@ -71,7 +69,7 @@ export const useStyles = createStyles(({ css, cx, token }) => {
 
       width: 100%;
 
-      font-size: 0.9em;
+      font-size: 16px;
       text-overflow: ellipsis;
       white-space: nowrap;
     `,

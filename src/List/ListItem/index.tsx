@@ -82,6 +82,7 @@ const ListItem = memo(
         className,
         style,
         showAction,
+        children,
         classNames = {},
         ...props
       },
@@ -96,8 +97,8 @@ const ListItem = memo(
           distribution={'space-between'}
           gap={8}
           horizontal
-          paddingBlock={8}
-          paddingInline={'12px 8px'}
+          paddingBlock={12}
+          paddingInline={16}
           ref={reference}
           style={style}
           {...props}
@@ -134,6 +135,7 @@ const ListItem = memo(
           ) : (
             date && <div className={cx(styles.time, classNames.time)}>{getChatItemTime(date)}</div>
           )}
+          {children}
         </Flexbox>
       );
     },
