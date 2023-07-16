@@ -31,7 +31,7 @@ export interface ChatListProps extends DivProps {
 }
 
 const ChatList = memo<ChatListProps>(
-  ({ onActionClick = () => {}, className, data, type = 'chat', showTitle, ...props }) => {
+  ({ onActionClick, className, data, type = 'chat', showTitle, ...props }) => {
     const { cx, styles } = useStyles();
 
     return (
@@ -40,7 +40,9 @@ const ChatList = memo<ChatListProps>(
           <ChatItem
             actions={
               <ActionsBar
-                onActionClick={(actionKey) => onActionClick(actionKey, item.id)}
+                onActionClick={
+                  onActionClick ? (actionKey) => onActionClick?.(actionKey, item.id) : undefined
+                }
                 primary={item.role === 'user'}
               />
             }

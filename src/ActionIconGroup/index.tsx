@@ -28,7 +28,7 @@ export interface ActionIconGroupProps extends DivProps {
    * @default []
    */
   items?: ActionIconGroupItems[];
-  onActionClick: (key: string) => void;
+  onActionClick?: (key: string) => void;
   /**
    * @description The position of the tooltip relative to the target
    * @enum ["top","left","right","bottom","topLeft","topRight","bottomLeft","bottomRight","leftTop","leftBottom","rightTop","rightBottom"]
@@ -54,7 +54,7 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
     spotlight = true,
     direction = 'row',
     dropdownMenu = [],
-    onActionClick = () => {},
+    onActionClick,
     ...props
   }) => {
     const { styles } = useStyles({ direction, type });
@@ -68,7 +68,7 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
           <ActionIcon
             icon={item.icon}
             key={item.key}
-            onClick={() => onActionClick(item.key)}
+            onClick={onActionClick ? () => onActionClick?.(item.key) : undefined}
             placement={tooltipsPlacement}
             size="small"
             title={item.label}
@@ -82,7 +82,7 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
                 return {
                   ...item,
                   icon: <Icon icon={item.icon} size="small" />,
-                  onClick: () => onActionClick(item.key),
+                  onClick: onActionClick ? () => onActionClick(item.key) : undefined,
                 };
               }),
             }}
