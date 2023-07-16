@@ -1,5 +1,5 @@
 import { Loader2, LucideIcon } from 'lucide-react';
-import { memo, useMemo } from 'react';
+import { forwardRef, useMemo } from 'react';
 
 import Icon from '@/Icon';
 import Spotlight from '@/Spotlight';
@@ -107,23 +107,26 @@ export interface ActionIconProps extends DivProps {
   title?: string;
 }
 
-const ActionIcon = memo<ActionIconProps>(
-  ({
-    className,
-    active,
-    icon,
-    size = 'normal',
-    style,
-    glass,
-    title,
-    placement,
-    arrow = false,
-    spotlight,
-    onClick,
-    children,
-    loading,
-    ...props
-  }) => {
+const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
+  (
+    {
+      className,
+      active,
+      icon,
+      size = 'normal',
+      style,
+      glass,
+      title,
+      placement,
+      arrow = false,
+      spotlight,
+      onClick,
+      children,
+      loading,
+      ...props
+    },
+    ref,
+  ) => {
     const { styles, cx } = useStyles({ active: Boolean(active), glass: Boolean(glass) });
 
     const { blockSize, borderRadius } = useMemo(() => calcSize(size), [size]);
@@ -141,6 +144,7 @@ const ActionIcon = memo<ActionIconProps>(
       <div
         className={cx(styles.block, className)}
         onClick={loading ? undefined : onClick}
+        ref={ref}
         style={{ borderRadius, height: blockSize, width: blockSize, ...style }}
         {...props}
       >
