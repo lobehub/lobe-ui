@@ -53,7 +53,7 @@ This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908
 To install Lobe UI, run the following command:
 
 ```bash
-pnpm add @lobehub/ui
+pnpm i -S @lobehub/ui
 ```
 
 <div align="right">
