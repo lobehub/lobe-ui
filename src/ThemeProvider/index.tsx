@@ -7,7 +7,7 @@ import {
   setupStyled,
 } from 'antd-style';
 import type { CustomStylishParams, CustomTokenParams } from 'antd-style/lib/types/function';
-import { type ReactNode, memo } from 'react';
+import { type ReactNode, memo, useCallback, useEffect } from 'react';
 import { ThemeContext } from 'styled-components';
 
 import FontLoader from '@/FontLoader';
@@ -52,8 +52,8 @@ const ThemeProvider = memo<ThemeProviderProps>(
   ({
     children,
     themeMode,
-    customStylish = () => ({}),
-    customToken = () => ({}),
+    customStylish,
+    customToken,
     enableWebfonts = true,
     webfonts = [
       'https://npm.elemecdn.com/@lobehub/webfont-mono/css/index.css',
@@ -61,7 +61,32 @@ const ThemeProvider = memo<ThemeProviderProps>(
       'https://npm.elemecdn.com/@lobehub/webfont-harmony-sans-sc/css/index.css',
     ],
   }) => {
-    setupStyled({ ThemeContext });
+    useEffect(() => {
+      setupStyled({ ThemeContext });
+    }, []);
+
+    const stylish = useCallback(
+      (theme: CustomStylishParams) => {
+        let stylish = {};
+        if (customStylish) {
+          stylish = customStylish(theme);
+        }
+        return { ...lobeCustomStylish(theme), ...stylish };
+      },
+      [customStylish],
+    );
+
+    const token = useCallback(
+      (theme: CustomTokenParams) => {
+        let token = {};
+
+        if (customToken) {
+          token = customToken(theme);
+        }
+        return { ...lobeCustomToken(theme), ...token };
+      },
+      [customToken],
+    );
 
     return (
       <>
@@ -70,8 +95,8 @@ const ThemeProvider = memo<ThemeProviderProps>(
           webfonts.map((webfont, index) => <FontLoader key={index} url={webfont} />)}
         <StyleProvider speedy={process.env.NODE_ENV === 'production'}>
           <AntdThemeProvider<LobeCustomToken>
-            customStylish={(theme) => ({ ...lobeCustomStylish(theme), ...customStylish(theme) })}
-            customToken={(theme) => ({ ...lobeCustomToken(theme), ...customToken(theme) })}
+            customStylish={stylish}
+            customToken={token}
             theme={lobeTheme}
             themeMode={themeMode}
           >
