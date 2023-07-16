@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.39.1](https://github.com/lobehub/lobe-ui/compare/v1.39.0...v1.39.1)
+
+<sup>Released on **2023-07-16**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix types.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix types ([e6cc1a4](https://github.com/lobehub/lobe-ui/commit/e6cc1a4))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.39.0](https://github.com/lobehub/lobe-ui/compare/v1.38.5...v1.39.0)
 
 <sup>Released on **2023-07-16**</sup>
