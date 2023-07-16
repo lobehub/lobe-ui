@@ -6,7 +6,7 @@ import { useStyles } from './style';
 
 export interface FormGroupProps extends CollapseProps {
   children: ReactNode;
-  icon: IconProps['icon'];
+  icon?: IconProps['icon'];
   title: string;
 }
 
@@ -22,7 +22,7 @@ const FormGroup = memo<FormGroupProps>(({ className, icon, title, children, ...p
           key: 1,
           label: (
             <div className={styles.title}>
-              <Icon icon={icon} />
+              {icon && <Icon icon={icon} />}
               {title}
             </div>
           ),

@@ -9,7 +9,7 @@ import { useStyles } from './style';
 
 export interface ItemGroup {
   children: FormItemProps[];
-  icon: LucideIcon;
+  icon?: LucideIcon;
   title: string;
 }
 
@@ -24,7 +24,7 @@ const Form = memo<FormProps>(({ className, footer, items, children, ...props }) 
   return (
     <AntForm className={cx(styles.form, className)} colon={false} layout="horizontal" {...props}>
       {items?.map((group, groupIndex) => (
-        <FormGroup icon={group.icon} key={groupIndex} title={group.title}>
+        <FormGroup icon={group?.icon} key={groupIndex} title={group.title}>
           {group.children.map((item, itemIndex) => {
             return <FormItem divider={itemIndex !== 0} key={itemIndex} {...item} />;
           })}
