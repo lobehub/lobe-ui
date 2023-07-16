@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.38.5](https://github.com/lobehub/lobe-ui/compare/v1.38.4...v1.38.5)
+
+<sup>Released on **2023-07-16**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: 修正找不到 ref 的报错.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: 修正找不到 ref 的报错 ([c4f7cbc](https://github.com/lobehub/lobe-ui/commit/c4f7cbc))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.38.4](https://github.com/lobehub/lobe-ui/compare/v1.38.3...v1.38.4)
 
 <sup>Released on **2023-07-16**</sup>
