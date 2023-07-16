@@ -1,4 +1,3 @@
-import { useLocalStorageState } from 'ahooks';
 import { kebabCase } from 'lodash-es';
 import { memo, useEffect, useState } from 'react';
 
@@ -27,12 +26,7 @@ export interface FluentEmojiProps extends DivProps {
 const FluentEmoji = memo<FluentEmojiProps>(
   ({ emoji, className, style, type = 'modern', size = 40 }) => {
     const [loadingFail, setLoadingFail] = useState(false);
-    const [emojiUrl, setEmojiUrl] = useLocalStorageState<{ [key: string]: string }>(
-      'lobe-ui-emoji',
-      {
-        defaultValue: {},
-      },
-    );
+    const [emojiUrl, setEmojiUrl] = useState<{ [key: string]: string }>({});
     const { cx, styles } = useStyles();
 
     useEffect(() => {
