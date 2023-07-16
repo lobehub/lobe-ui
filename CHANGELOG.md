@@ -2,6 +2,23 @@
 
 # Changelog
 
+### [Version 1.38.4](https://github.com/lobehub/lobe-ui/compare/v1.38.3...v1.38.4)
+
+<sup>Released on **2023-07-16**</sup>
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.38.3](https://github.com/lobehub/lobe-ui/compare/v1.38.2...v1.38.3)
 
 <sup>Released on **2023-07-16**</sup>
