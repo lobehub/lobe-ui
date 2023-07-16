@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [Version 1.39.0](https://github.com/lobehub/lobe-ui/compare/v1.38.5...v1.39.0)
+
+<sup>Released on **2023-07-16**</sup>
+
+#### ✨ Features
+
+- **misc**: Add ChatHeader component with specific functionality and styling.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix types.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add ChatHeader component with specific functionality and styling ([c7f5747](https://github.com/lobehub/lobe-ui/commit/c7f5747))
+
+#### What's fixed
+
+- **misc**: Fix types ([68a3c01](https://github.com/lobehub/lobe-ui/commit/68a3c01))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.38.5](https://github.com/lobehub/lobe-ui/compare/v1.38.4...v1.38.5)
 
 <sup>Released on **2023-07-16**</sup>
