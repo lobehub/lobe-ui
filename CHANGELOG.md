@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.38.1](https://github.com/lobehub/lobe-ui/compare/v1.38.0...v1.38.1)
+
+<sup>Released on **2023-07-16**</sup>
+
+#### ♻ Code Refactoring
+
+- **fluentemoji**: Replace useLocalStorageState with useState hook.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **fluentemoji**: Replace useLocalStorageState with useState hook ([a61706a](https://github.com/lobehub/lobe-ui/commit/a61706a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.38.0](https://github.com/lobehub/lobe-ui/compare/v1.37.0...v1.38.0)
 
 <sup>Released on **2023-07-15**</sup>
