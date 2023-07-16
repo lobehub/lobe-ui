@@ -66,25 +66,12 @@ const ThemeProvider = memo<ThemeProviderProps>(
     }, []);
 
     const stylish = useCallback(
-      (theme: CustomStylishParams) => {
-        let stylish = {};
-        if (customStylish) {
-          stylish = customStylish(theme);
-        }
-        return { ...lobeCustomStylish(theme), ...stylish };
-      },
+      (theme: CustomStylishParams) => ({ ...lobeCustomStylish(theme), ...customStylish?.(theme) }),
       [customStylish],
     );
 
     const token = useCallback(
-      (theme: CustomTokenParams) => {
-        let token = {};
-
-        if (customToken) {
-          token = customToken(theme);
-        }
-        return { ...lobeCustomToken(theme), ...token };
-      },
+      (theme: CustomTokenParams) => ({ ...lobeCustomToken(theme), ...customToken?.(theme) }),
       [customToken],
     );
 

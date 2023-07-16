@@ -83,10 +83,7 @@ export interface ActionIconProps extends DivProps {
    * @description Set the loading status of ActionIcon
    */
   loading?: boolean;
-  /**
-   * @description Handle click action
-   */
-  onClick?: () => void;
+
   /**
    * @description The position of the tooltip relative to the target
    * @enum ["top","left","right","bottom","topLeft","topRight","bottomLeft","bottomRight","leftTop","leftBottom","rightTop","rightBottom"]
