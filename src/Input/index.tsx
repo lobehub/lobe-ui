@@ -1,6 +1,6 @@
 import { Input as AntInput, type InputProps as AntdInputProps, type InputRef } from 'antd';
 import { TextAreaProps as AntdTextAreaProps, TextAreaRef } from 'antd/es/input/TextArea';
-import { type Ref, forwardRef, memo } from 'react';
+import { type Ref, forwardRef } from 'react';
 
 import { useStyles } from './style';
 
@@ -16,8 +16,8 @@ export interface InputProps extends AntdInputProps {
   type?: 'ghost' | 'block' | 'pure';
 }
 
-export const Input = memo<InputProps>(
-  forwardRef(({ className, type = 'ghost', ...props }, reference) => {
+export const Input = forwardRef<InputRef, InputProps>(
+  ({ className, type = 'ghost', ...props }, reference) => {
     const { styles, cx } = useStyles({ type });
 
     return (
@@ -28,7 +28,7 @@ export const Input = memo<InputProps>(
         {...props}
       />
     );
-  }),
+  },
 );
 
 export interface TextAreaProps extends AntdTextAreaProps {
