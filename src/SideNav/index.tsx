@@ -1,5 +1,5 @@
-import { Space } from 'antd';
 import { ReactNode, memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import { DivProps } from '@/types';
 
@@ -25,15 +25,15 @@ const SideNav = memo<SideNavProps>(({ className, avatar, topActions, bottomActio
 
   return (
     <div className={cx(styles, className)} {...props}>
-      <Space align="center" direction="vertical" size={16}>
+      <Flexbox align="center" direction="vertical" gap={16}>
         {avatar}
-        <Space align="center" direction="vertical" size={8}>
+        <Flexbox align="center" direction="vertical" gap={8}>
           {topActions}
-        </Space>
-      </Space>
-      <Space align="center" direction="vertical" size={4}>
+        </Flexbox>
+      </Flexbox>
+      <Flexbox align="center" direction="vertical" gap={4}>
         {bottomActions}
-      </Space>
+      </Flexbox>
     </div>
   );
 });
