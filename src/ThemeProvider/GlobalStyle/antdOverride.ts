@@ -21,4 +21,8 @@ export default (token: Theme) => css`
       background: ${token.colorText} !important;
     }
   }
+
+  .ant-switch-handle::before {
+    background: ${token.colorBgContainer} !important;
+  }
 `;

@@ -10,18 +10,20 @@ const { Item } = Form;
 export interface FormItemProps extends AntdFormItemProps {
   desc?: string;
   divider?: boolean;
+  hidden?: boolean;
   minWidth?: string | number;
+  tag?: string;
 }
 
 const FormItem = memo<FormItemProps>(
-  ({ desc, minWidth, className, label, children, divider, ...props }) => {
+  ({ desc, tag, minWidth, className, label, children, divider, ...props }) => {
     const { cx, styles } = useStyles(minWidth);
     return (
       <>
         {divider && <FormDivider />}
         <Item
           className={cx(styles.item, className)}
-          label={desc ? <FormTitle desc={desc} title={String(label)} /> : label}
+          label={<FormTitle desc={desc} tag={tag} title={String(label)} />}
           {...props}
         >
           {children}

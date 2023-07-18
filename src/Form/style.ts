@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css }) => ({
+export const useStyles = createStyles(({ css, token }) => ({
   footer: css`
     display: flex;
     gap: 8px;
@@ -34,6 +34,11 @@ export const useStyles = createStyles(({ css }) => ({
       position: relative;
       flex: 0;
       min-width: unset !important;
+    }
+
+    .ant-collapse-item {
+      overflow: hidden !important;
+      border-radius: ${token.borderRadius}px !important;
     }
   `,
 }));

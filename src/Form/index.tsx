@@ -1,6 +1,6 @@
-import { Form as AntForm, FormProps as AntFormProps } from 'antd';
+import { Form as AntForm, FormProps as AntFormProps, type FormInstance } from 'antd';
 import { LucideIcon } from 'lucide-react';
-import { type ReactNode, memo } from 'react';
+import { type ReactNode, forwardRef } from 'react';
 
 import FormFooter from './components/FormFooter';
 import FormGroup from './components/FormGroup';
@@ -20,27 +20,37 @@ export interface FormProps extends AntFormProps {
   items?: ItemGroup[];
 }
 
-const Form = memo<FormProps>(({ className, itemMinWidth, footer, items, children, ...props }) => {
-  const { cx, styles } = useStyles();
-  return (
-    <AntForm className={cx(styles.form, className)} colon={false} layout="horizontal" {...props}>
-      {items?.map((group, groupIndex) => (
-        <FormGroup icon={group?.icon} key={groupIndex} title={group.title}>
-          {group.children.map((item, itemIndex) => {
-            return (
-              <FormItem
-                divider={itemIndex !== 0}
-                key={itemIndex}
-                minWidth={itemMinWidth}
-                {...item}
-              />
-            );
-          })}
-        </FormGroup>
-      ))}
-      {children}
-      {footer && <FormFooter>{footer}</FormFooter>}
-    </AntForm>
-  );
-});
+const Form = forwardRef<FormInstance, FormProps>(
+  ({ className, itemMinWidth, footer, items, children, ...props }, ref) => {
+    const { cx, styles } = useStyles();
+    return (
+      <AntForm
+        className={cx(styles.form, className)}
+        colon={false}
+        layout="horizontal"
+        ref={ref}
+        {...props}
+      >
+        {items?.map((group, groupIndex) => (
+          <FormGroup icon={group?.icon} key={groupIndex} title={group.title}>
+            {group.children
+              .filter((item) => !item.hidden)
+              .map((item, itemIndex) => {
+                return (
+                  <FormItem
+                    divider={itemIndex !== 0}
+                    key={itemIndex}
+                    minWidth={itemMinWidth}
+                    {...item}
+                  />
+                );
+              })}
+          </FormGroup>
+        ))}
+        {children}
+        {footer && <FormFooter>{footer}</FormFooter>}
+      </AntForm>
+    );
+  },
+);
 export default Form;
