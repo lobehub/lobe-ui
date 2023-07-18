@@ -16,17 +16,25 @@ export interface ItemGroup {
 export interface FormProps extends AntFormProps {
   children?: ReactNode;
   footer?: ReactNode;
+  itemMinWidth?: FormItemProps['minWidth'];
   items?: ItemGroup[];
 }
 
-const Form = memo<FormProps>(({ className, footer, items, children, ...props }) => {
+const Form = memo<FormProps>(({ className, itemMinWidth, footer, items, children, ...props }) => {
   const { cx, styles } = useStyles();
   return (
     <AntForm className={cx(styles.form, className)} colon={false} layout="horizontal" {...props}>
       {items?.map((group, groupIndex) => (
         <FormGroup icon={group?.icon} key={groupIndex} title={group.title}>
           {group.children.map((item, itemIndex) => {
-            return <FormItem divider={itemIndex !== 0} key={itemIndex} {...item} />;
+            return (
+              <FormItem
+                divider={itemIndex !== 0}
+                key={itemIndex}
+                minWidth={itemMinWidth}
+                {...item}
+              />
+            );
           })}
         </FormGroup>
       ))}

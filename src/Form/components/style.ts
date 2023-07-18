@@ -1,6 +1,7 @@
 import { createStyles } from 'antd-style';
+import { isNumber } from 'lodash-es';
 
-export const useStyles = createStyles(({ css, token }) => ({
+export const useStyles = createStyles(({ css, token }, itemMinWidth?: string | number) => ({
   footer: css`
     display: flex;
     gap: 8px;
@@ -11,7 +12,7 @@ export const useStyles = createStyles(({ css, token }) => ({
 
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
 
     text-align: left;
 
@@ -23,7 +24,7 @@ export const useStyles = createStyles(({ css, token }) => ({
     > small {
       display: block;
 
-      line-height: 1.1;
+      line-height: 1;
       color: ${token.colorTextDescription};
       word-wrap: break-word;
       white-space: pre-wrap;
@@ -43,6 +44,12 @@ export const useStyles = createStyles(({ css, token }) => ({
       padding-top: 0 !important;
       padding-bottom: 0 !important;
     }
+
+    .ant-form-item-label {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
   `,
   item: css`
     padding: 8px 0;
@@ -55,6 +62,13 @@ export const useStyles = createStyles(({ css, token }) => ({
         flex-grow: unset !important;
       }
     }
+
+    ${itemMinWidth &&
+    css`
+      .ant-form-item-control {
+        width: ${isNumber(itemMinWidth) ? `${itemMinWidth}px` : itemMinWidth};
+      }
+    `}
   `,
   title: css`
     display: flex;

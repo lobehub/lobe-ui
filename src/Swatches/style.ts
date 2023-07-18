@@ -3,7 +3,7 @@ import { createStyles } from 'antd-style';
 export const useStyles = createStyles(({ css, token }, size: number) => {
   return {
     active: css`
-      box-shadow: inset 0 0 0 2px ${token.colorText};
+      box-shadow: 0 0 0 2px ${token.colorTextTertiary};
     `,
     container: css`
       cursor: pointer;
@@ -13,9 +13,15 @@ export const useStyles = createStyles(({ css, token }, size: number) => {
 
       background: ${token.colorBgContainer};
       border-radius: 50%;
-      box-shadow: inset 0 0 0 1px ${token.colorFill};
+      box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
 
-      transition: scale 400ms ${token.motionEaseOut};
+      transition:
+        scale 400ms ${token.motionEaseOut},
+        box-shadow 100ms ${token.motionEaseOut};
+
+      &:hover {
+        box-shadow: 0 0 0 3px ${token.colorText};
+      }
 
       &:active {
         scale: 0.8;

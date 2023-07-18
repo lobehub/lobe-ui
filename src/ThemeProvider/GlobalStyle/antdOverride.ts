@@ -9,16 +9,16 @@ export default (token: Theme) => css`
     min-height: unset;
     padding: 4px 8px;
 
-    color: ${token.colorBgLayout};
+    color: ${token.colorBgLayout} !important;
 
-    background-color: ${token.colorText};
-    border-radius: ${token.borderRadiusSM}px;
+    background-color: ${token.colorText} !important;
+    border-radius: ${token.borderRadiusSM}px !important;
   }
 
   .ant-tooltip-arrow {
     &::before,
     &::after {
-      background: ${token.colorText};
+      background: ${token.colorText} !important;
     }
   }
 `;

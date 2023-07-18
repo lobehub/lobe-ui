@@ -13,18 +13,18 @@ export const generateColorPalette = ({
   type: 'Primary' | 'Success' | 'Warning' | 'Error' | 'Info' | string;
 }): Partial<AliasToken> => {
   const name = capitalize(type);
-
+  const isDarkMode = appearance === 'dark';
   return {
     [`color${name}Bg`]: scale[appearance][1],
     [`color${name}BgHover`]: scale[appearance][2],
     [`color${name}Border`]: scale[appearance][4],
-    [`color${name}BorderHover`]: scale[appearance][5],
-    [`color${name}Hover`]: scale[appearance][10],
+    [`color${name}BorderHover`]: scale[appearance][isDarkMode ? 5 : 3],
+    [`color${name}Hover`]: scale[appearance][isDarkMode ? 10 : 8],
     [`color${name}`]: scale[appearance][9],
-    [`color${name}Active`]: scale[appearance][7],
-    [`color${name}TextHover`]: scale[appearance][10],
+    [`color${name}Active`]: scale[appearance][isDarkMode ? 7 : 10],
+    [`color${name}TextHover`]: scale[appearance][isDarkMode ? 10 : 8],
     [`color${name}Text`]: scale[appearance][9],
-    [`color${name}TextActive`]: scale[appearance][7],
+    [`color${name}TextActive`]: scale[appearance][isDarkMode ? 7 : 10],
   };
 };
 

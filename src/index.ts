@@ -87,7 +87,7 @@ export {
   useControls,
   useCreateStore,
 } from './StroyBook';
-export { colorScales as colors } from './styles/colors';
+export * from './styles';
 export { default as Swatches, type SwatchesProps } from './Swatches';
 export { default as TabsNav, type TabsNavProps } from './TabsNav';
 export { default as ThemeProvider } from './ThemeProvider';

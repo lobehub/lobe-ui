@@ -5,7 +5,7 @@ import { DivProps } from '@/types';
 import { useStyles } from './style';
 
 export interface FormTitleProps extends DivProps {
-  desc: string;
+  desc?: string;
   title: string;
 }
 
@@ -14,7 +14,7 @@ const FormTitle = memo<FormTitleProps>(({ className, title, desc }) => {
   return (
     <div className={cx(styles.formTitle, className)}>
       <div>{title}</div>
-      <small>{desc}</small>
+      {desc && <small>{desc}</small>}
     </div>
   );
 });
