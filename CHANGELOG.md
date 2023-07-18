@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [Version 1.42.0](https://github.com/lobehub/lobe-ui/compare/v1.41.0...v1.42.0)
+
+<sup>Released on **2023-07-18**</sup>
+
+#### ✨ Features
+
+- **misc**: Implement theme switch component and add color palettes for different themes.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix sidebar layout.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Implement theme switch component and add color palettes for different themes ([6c42e5f](https://github.com/lobehub/lobe-ui/commit/6c42e5f))
+
+#### What's fixed
+
+- **misc**: Fix sidebar layout ([c62db06](https://github.com/lobehub/lobe-ui/commit/c62db06))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.41.0](https://github.com/lobehub/lobe-ui/compare/v1.40.0...v1.41.0)
 
 <sup>Released on **2023-07-18**</sup>
