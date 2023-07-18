@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.43.0](https://github.com/lobehub/lobe-ui/compare/v1.42.0...v1.43.0)
+
+<sup>Released on **2023-07-18**</sup>
+
+#### ✨ Features
+
+- **misc**: Add new props and functionality to components, update styles, and adjust form layout.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add new props and functionality to components, update styles, and adjust form layout ([d16f239](https://github.com/lobehub/lobe-ui/commit/d16f239))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.42.0](https://github.com/lobehub/lobe-ui/compare/v1.41.0...v1.42.0)
 
 <sup>Released on **2023-07-18**</sup>
