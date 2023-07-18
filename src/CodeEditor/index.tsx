@@ -1,12 +1,10 @@
-import { InputRef } from 'antd';
+import { type TextAreaRef } from 'antd/es/input/TextArea';
 import {
   type CSSProperties,
   type FocusEventHandler,
   type KeyboardEventHandler,
   type MouseEventHandler,
-  type Ref,
   forwardRef,
-  memo,
 } from 'react';
 import Editor from 'react-simple-code-editor';
 
@@ -34,7 +32,6 @@ export interface CodeEditorProps {
   placeholder?: string;
   preClassName?: string;
   readOnly?: boolean;
-  ref?: Ref<InputRef>;
   required?: boolean;
   resize?: boolean;
   style?: CSSProperties;
@@ -46,45 +43,43 @@ export interface CodeEditorProps {
   value: string;
 }
 
-const CodeEditor = memo<CodeEditorProps>(
-  forwardRef(
-    (
-      {
-        style,
-        language,
-        theme,
-        value,
-        onValueChange,
-        resize = true,
-        className,
-        textareaClassName,
-        type = 'ghost',
-        ...props
-      },
-      reference: any,
-    ) => {
-      const { styles, cx } = useStyles({ resize, type });
-      return (
-        <div className={cx(styles.container, className)} style={style}>
-          {/* @ts-ignore */}
-          <Editor
-            className={styles.editor}
-            highlight={(code) => (
-              <SyntaxHighlighter language={language} theme={theme}>
-                {code}
-              </SyntaxHighlighter>
-            )}
-            onValueChange={onValueChange}
-            padding={0}
-            ref={reference}
-            textareaClassName={cx(styles.textarea, textareaClassName)}
-            value={value}
-            {...props}
-          />
-        </div>
-      );
+const CodeEditor = forwardRef<TextAreaRef, CodeEditorProps>(
+  (
+    {
+      style,
+      language,
+      theme,
+      value,
+      onValueChange,
+      resize = true,
+      className,
+      textareaClassName,
+      type = 'ghost',
+      ...props
     },
-  ),
+    ref,
+  ) => {
+    const { styles, cx } = useStyles({ resize, type });
+    return (
+      <div className={cx(styles.container, className)} style={style}>
+        {/* @ts-ignore */}
+        <Editor
+          className={styles.editor}
+          highlight={(code) => (
+            <SyntaxHighlighter language={language} theme={theme}>
+              {code}
+            </SyntaxHighlighter>
+          )}
+          onValueChange={onValueChange}
+          padding={0}
+          ref={ref as any}
+          textareaClassName={cx(styles.textarea, textareaClassName)}
+          value={value}
+          {...props}
+        />
+      </div>
+    );
+  },
 );
 
 export default CodeEditor;

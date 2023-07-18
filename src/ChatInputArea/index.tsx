@@ -1,10 +1,9 @@
-import { Button } from 'antd';
+import { Button, type InputRef } from 'antd';
 import { Maximize2, Minimize2 } from 'lucide-react';
 import {
   CSSProperties,
   ReactNode,
   forwardRef,
-  memo,
   useCallback,
   useEffect,
   useRef,
@@ -87,104 +86,102 @@ export interface ChatInputAreaProps extends TextAreaProps {
   textareaStyle?: CSSProperties;
 }
 
-const ChatInputArea = memo<ChatInputAreaProps>(
-  forwardRef(
-    (
-      {
-        textareaClassName,
-        style,
-        textareaStyle,
-        minHeight = 200,
-        className,
-        actions,
-        footer,
-        expand,
-        placeholder = 'Type something to chat...',
-        onExpandChange,
-        onSend,
-        defaultValue = '',
-        loading,
-        disabled,
-        onInputChange,
-        onPressEnter,
-        onCompositionStart,
-        onCompositionEnd,
-        onBlur,
-        onChange,
-        ...props
-      },
-      reference,
-    ) => {
-      const isChineseInput = useRef(false);
-      const [value, setValue] = useState<string>(defaultValue);
-      const { cx, styles } = useStyles();
-
-      const handleExpandClick = useCallback(() => {
-        if (onExpandChange) onExpandChange(!expand);
-      }, [expand]);
-
-      const handleSend = useCallback(() => {
-        if (disabled) return;
-        if (onSend) onSend(value);
-        setValue('');
-      }, [disabled, value]);
-
-      useEffect(() => {
-        if (onInputChange) onInputChange(value);
-      }, [value]);
-
-      return (
-        <section className={cx(styles.container, className)} style={{ minHeight, ...style }}>
-          <div className={styles.actionsBar}>
-            <div className={styles.actionLeft}>{actions}</div>
-            <div className={styles.actionsRight}>
-              <ActionIcon icon={expand ? Minimize2 : Maximize2} onClick={handleExpandClick} />
-            </div>
-          </div>
-          <TextArea
-            className={cx(styles.textarea, textareaClassName)}
-            defaultValue={defaultValue}
-            ref={reference}
-            style={textareaStyle}
-            {...props}
-            onBlur={(e) => {
-              if (onBlur) onBlur(e);
-              setValue(e.target.value);
-            }}
-            onChange={(e) => {
-              if (onChange) onChange(e);
-              setValue(e.target.value);
-            }}
-            onCompositionEnd={(e) => {
-              if (onCompositionEnd) onCompositionEnd(e);
-              isChineseInput.current = false;
-            }}
-            onCompositionStart={(e) => {
-              if (onCompositionStart) onCompositionStart(e);
-              isChineseInput.current = true;
-            }}
-            onPressEnter={(e) => {
-              if (onPressEnter) onPressEnter(e);
-              if (!loading && !e.shiftKey && !isChineseInput.current) {
-                e.preventDefault();
-                handleSend();
-              }
-            }}
-            placeholder={placeholder}
-            resize={false}
-            type="pure"
-            value={value}
-          />
-          <div className={styles.footerBar}>
-            {footer}
-            <Button disabled={disabled} loading={loading} onClick={handleSend} type="primary">
-              Send
-            </Button>
-          </div>
-        </section>
-      );
+const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
+  (
+    {
+      textareaClassName,
+      style,
+      textareaStyle,
+      minHeight = 200,
+      className,
+      actions,
+      footer,
+      expand,
+      placeholder = 'Type something to chat...',
+      onExpandChange,
+      onSend,
+      defaultValue = '',
+      loading,
+      disabled,
+      onInputChange,
+      onPressEnter,
+      onCompositionStart,
+      onCompositionEnd,
+      onBlur,
+      onChange,
+      ...props
     },
-  ),
+    ref,
+  ) => {
+    const isChineseInput = useRef(false);
+    const [value, setValue] = useState<string>(defaultValue);
+    const { cx, styles } = useStyles();
+
+    const handleExpandClick = useCallback(() => {
+      if (onExpandChange) onExpandChange(!expand);
+    }, [expand]);
+
+    const handleSend = useCallback(() => {
+      if (disabled) return;
+      if (onSend) onSend(value);
+      setValue('');
+    }, [disabled, value]);
+
+    useEffect(() => {
+      if (onInputChange) onInputChange(value);
+    }, [value]);
+
+    return (
+      <section className={cx(styles.container, className)} style={{ minHeight, ...style }}>
+        <div className={styles.actionsBar}>
+          <div className={styles.actionLeft}>{actions}</div>
+          <div className={styles.actionsRight}>
+            <ActionIcon icon={expand ? Minimize2 : Maximize2} onClick={handleExpandClick} />
+          </div>
+        </div>
+        <TextArea
+          className={cx(styles.textarea, textareaClassName)}
+          defaultValue={defaultValue}
+          ref={ref}
+          style={textareaStyle}
+          {...props}
+          onBlur={(e) => {
+            if (onBlur) onBlur(e);
+            setValue(e.target.value);
+          }}
+          onChange={(e) => {
+            if (onChange) onChange(e);
+            setValue(e.target.value);
+          }}
+          onCompositionEnd={(e) => {
+            if (onCompositionEnd) onCompositionEnd(e);
+            isChineseInput.current = false;
+          }}
+          onCompositionStart={(e) => {
+            if (onCompositionStart) onCompositionStart(e);
+            isChineseInput.current = true;
+          }}
+          onPressEnter={(e) => {
+            if (onPressEnter) onPressEnter(e);
+            if (!loading && !e.shiftKey && !isChineseInput.current) {
+              e.preventDefault();
+              handleSend();
+            }
+          }}
+          placeholder={placeholder}
+          resize={false}
+          type="pure"
+          value={value}
+        />
+        <div className={styles.footerBar}>
+          {footer}
+          <Button disabled={disabled} loading={loading} onClick={handleSend} type="primary">
+            Send
+          </Button>
+        </div>
+      </section>
+    );
+  },
 );
 
 export default ChatInputArea;

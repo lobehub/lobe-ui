@@ -105,6 +105,11 @@ export interface ActionIconProps extends DivProps {
    * @description The text shown in the tooltip
    */
   title?: string;
+  /**
+   * @description Mouse enter delay of tooltip
+   * @default 0.5
+   */
+  tooltipDelay?: number;
 }
 
 const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
@@ -123,6 +128,7 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
       onClick,
       children,
       loading,
+      tooltipDelay = 0.5,
       ...props
     },
     ref,
@@ -158,7 +164,7 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
     return (
       <Tooltip
         arrow={arrow}
-        mouseEnterDelay={1}
+        mouseEnterDelay={tooltipDelay}
         overlayStyle={{ pointerEvents: 'none' }}
         placement={placement}
         title={title}
