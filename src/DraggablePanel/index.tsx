@@ -54,6 +54,7 @@ export interface DraggablePanelProps extends DivProps {
    * @type CSSProperties
    */
   hanlderStyle?: CSSProperties;
+  headerHeight?: number;
   maxHeight?: number;
   maxWidth?: number;
   /**
@@ -109,6 +110,7 @@ export interface DraggablePanelProps extends DivProps {
 
 const DraggablePanel = memo<DraggablePanelProps>(
   ({
+    headerHeight = 0,
     fullscreen,
     maxHeight,
     pin = 'true',
@@ -138,7 +140,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     const isHovering = useHover(reference);
     const isVertical = placement === 'top' || placement === 'bottom';
 
-    const { styles, cx } = useStyles();
+    const { styles, cx } = useStyles(headerHeight);
 
     const [isExpand, setIsExpand] = useControlledState(defaultExpand, {
       onChange: onExpandChange,

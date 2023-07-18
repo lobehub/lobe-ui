@@ -23,6 +23,9 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
     blur: css`
       backdrop-filter: saturate(180%) blur(10px);
     `,
+    blurStrong: css`
+      backdrop-filter: blur(36px);
+    `,
     bottomScrollbar: css`
       ::-webkit-scrollbar {
         width: 0;

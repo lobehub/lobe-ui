@@ -5,7 +5,7 @@ const toggleLength = 40;
 const toggleShort = 16;
 const prefix = 'draggable-panel';
 
-export const useStyles = createStyles(({ token }) => {
+export const useStyles = createStyles(({ token }, headerHeight: number) => {
   const commonHandle = css`
     position: relative;
 
@@ -110,9 +110,12 @@ export const useStyles = createStyles(({ token }) => {
     `,
     fullscreen: css`
       position: absolute;
-      inset: 0;
+      inset: ${headerHeight}px 0 0 0;
+
       width: 100%;
-      height: 100%;
+      height: calc(100% - ${headerHeight}px);
+
+      background: ${token.colorBgLayout};
     `,
     handlerIcon: css`
       display: flex;
@@ -123,10 +126,10 @@ export const useStyles = createStyles(({ token }) => {
     leftFloat: cx(
       float,
       css`
-        top: 0;
+        top: ${headerHeight}px;
         bottom: 0;
         left: 0;
-        height: 100%;
+        height: calc(100% - ${headerHeight}px);
       `,
     ),
     leftHandle: cx(
@@ -151,10 +154,10 @@ export const useStyles = createStyles(({ token }) => {
     rightFloat: cx(
       float,
       css`
-        top: 0;
+        top: ${headerHeight}px;
         right: 0;
         bottom: 0;
-        height: 100%;
+        height: calc(100% - ${headerHeight}px);
       `,
     ),
     rightHandle: cx(
@@ -251,7 +254,7 @@ export const useStyles = createStyles(({ token }) => {
     topFloat: cx(
       float,
       css`
-        top: 0;
+        top: ${headerHeight}px;
         right: 0;
         left: 0;
         width: 100%;

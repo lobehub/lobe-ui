@@ -1,8 +1,9 @@
 import { createStyles } from 'antd-style';
+import { rgba } from 'polished';
 
 export const useStyles = createStyles(
   (
-    { cx, css, token },
+    { cx, css, token, isDarkMode },
     {
       placement,
       type,
@@ -21,7 +22,13 @@ export const useStyles = createStyles(
   ) => {
     const blockStylish = css`
       padding: 8px 12px;
-      background-color: ${primary ? token.colorFillSecondary : token.colorFillTertiary};
+      background-color: ${primary
+        ? isDarkMode
+          ? token.colorFillSecondary
+          : rgba(token.colorPrimary, 0.08)
+        : isDarkMode
+        ? token.colorFillTertiary
+        : token.colorBgContainer};
       border-radius: ${token.borderRadiusLG}px;
       transition: background-color 100ms ${token.motionEaseOut};
     `;
