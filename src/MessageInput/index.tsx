@@ -54,7 +54,7 @@ const MessageInput = memo<MessageInputProps>(
     const [temporarySystemRole, setRole] = useState<string>(defaultValue || '');
 
     return (
-      <Flexbox gap={8} {...props}>
+      <Flexbox gap={8} style={{ flex: 1, width: '100%' }} {...props}>
         <CodeEditor
           className={textareaClassname}
           language="md"
@@ -63,7 +63,7 @@ const MessageInput = memo<MessageInputProps>(
           }}
           placeholder={placeholder}
           resize={false}
-          style={{ height: height, ...textareaStyle }}
+          style={{ height: height, minHeight: '100%', ...textareaStyle }}
           type={type}
           value={temporarySystemRole}
         />

@@ -5,7 +5,7 @@ import { colorScales } from '@/styles/colors';
 export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
   const type = isDarkMode ? 'dark' : 'light';
   const colorText = colorScales.gray[type][11];
-  const colorTextSecondary = colorScales.gray[type][10];
+  // const colorTextSecondary = colorScales.gray[type][10];
   const colorTextTertiary = colorScales.gray[type][7];
   const colorRed = isDarkMode ? colorScales.red[type][9] : colorScales.volcano[type][9];
   const colorOrange = isDarkMode ? colorScales.gold[type][9] : colorScales.orange[type][9];
@@ -14,7 +14,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
 
   return {
     colors: {
-      'editor.foreground': colorTextSecondary,
+      'editor.foreground': colorText,
     },
     name: type,
     semanticHighlighting: true,
@@ -865,7 +865,14 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'Headings',
         scope: 'markup.heading',
         settings: {
-          foreground: colorText,
+          fontStyle: 'bold',
+        },
+      },
+      {
+        name: 'FencedCode',
+        scope: 'punctuation.definition.markdown, fenced_code.block.language.markdown',
+        settings: {
+          foreground: colorRed,
         },
       },
       {

@@ -38,7 +38,6 @@ export interface CodeEditorProps {
   tabSize?: number;
   textareaClassName?: string;
   textareaId?: string;
-  theme?: SyntaxHighlighterProps['theme'];
   type?: 'ghost' | 'block' | 'pure';
   value: string;
 }
@@ -48,7 +47,7 @@ const CodeEditor = forwardRef<TextAreaRef, CodeEditorProps>(
     {
       style,
       language,
-      theme,
+
       value,
       onValueChange,
       resize = true,
@@ -65,11 +64,7 @@ const CodeEditor = forwardRef<TextAreaRef, CodeEditorProps>(
         {/* @ts-ignore */}
         <Editor
           className={styles.editor}
-          highlight={(code) => (
-            <SyntaxHighlighter language={language} theme={theme}>
-              {code}
-            </SyntaxHighlighter>
-          )}
+          highlight={(code) => <SyntaxHighlighter language={language}>{code}</SyntaxHighlighter>}
           onValueChange={onValueChange}
           padding={0}
           ref={ref as any}

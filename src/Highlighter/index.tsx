@@ -32,11 +32,6 @@ export interface HighlighterProps extends DivProps {
    */
   spotlight?: boolean;
   /**
-   * @description The theme of the code block
-   * @default 'light'
-   */
-  theme?: 'dark' | 'light';
-  /**
    * @description The type of the code block
    * @default 'block'
    */
@@ -49,7 +44,6 @@ export const Highlighter = memo<HighlighterProps>(
     language,
     className,
     style,
-    theme,
     copyable = true,
     showLanguage = true,
     type = 'block',
@@ -64,9 +58,7 @@ export const Highlighter = memo<HighlighterProps>(
         {spotlight && <Spotlight size={240} />}
         {copyable && <CopyButton className={styles.button} content={children} placement="left" />}
         {showLanguage && language && <div className={styles.lang}>{language.toLowerCase()}</div>}
-        <SyntaxHighlighter language={language?.toLowerCase()} theme={theme}>
-          {children.trim()}
-        </SyntaxHighlighter>
+        <SyntaxHighlighter language={language?.toLowerCase()}>{children.trim()}</SyntaxHighlighter>
       </div>
     );
   },

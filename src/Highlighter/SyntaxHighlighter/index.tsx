@@ -14,7 +14,6 @@ export interface SyntaxHighlighterProps {
   children: string;
   language: string;
   options?: HighlighterOptions;
-  theme?: 'dark' | 'light';
 }
 
 const SyntaxHighlighter = memo<SyntaxHighlighterProps>(({ children, language, options }) => {
@@ -29,11 +28,7 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(({ children, language, op
   return (
     <>
       {isLoading ? (
-        <div className={styles.shiki}>
-          <pre>
-            <code>{children}</code>
-          </pre>
-        </div>
+        <code>{children}</code>
       ) : (
         <div
           className={styles.shiki}

@@ -15,7 +15,7 @@ const useStyles = createStyles(
 );
 
 const Code = memo((properties: any) => {
-  const { styles, theme } = useStyles();
+  const { styles } = useStyles();
 
   if (!properties.children[0]) return;
 
@@ -27,7 +27,6 @@ const Code = memo((properties: any) => {
     <Highlighter
       className={styles}
       language={className?.replace('language-', '') || 'markdown'}
-      theme={theme.appearance as any}
       type="block"
     >
       {Array.isArray(children) ? (children[0] as string) : children}

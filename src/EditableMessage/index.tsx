@@ -44,6 +44,7 @@ export interface EditableMessageProps {
    * @default false
    */
   openModal?: boolean;
+  placeholder?: string;
   /**
    * @title Whether to show the edit button when the text value is empty
    * @default false
@@ -64,6 +65,7 @@ const EditableMessage = memo<EditableMessageProps>(
     editing,
     openModal,
     onOpenChange,
+    placeholder = 'Type something...',
     showEditWhenEmpty = false,
   }) => {
     const [isEdit, setTyping] = useControlledState(false, {
@@ -79,10 +81,13 @@ const EditableMessage = memo<EditableMessageProps>(
     return !value && showEditWhenEmpty ? (
       <MessageInput
         className={classNames.input}
+        defaultValue={value}
+        onCancel={() => setTyping(false)}
         onConfirm={(text) => {
           onChange?.(text);
           setTyping(false);
         }}
+        placeholder={placeholder}
       />
     ) : (
       <>
@@ -105,6 +110,7 @@ const EditableMessage = memo<EditableMessageProps>(
               onChange?.(text);
               setTyping(false);
             }}
+            placeholder={placeholder}
           />
         ) : (
           <Markdown className={classNames.markdown}>{value}</Markdown>

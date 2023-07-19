@@ -13,6 +13,7 @@ import {
 import ActionIcon from '@/ActionIcon';
 import { TextArea, type TextAreaProps } from '@/Input';
 
+import InputHighlight from './InputHighlight';
 import { useStyles } from './style';
 
 export interface ChatInputAreaProps extends TextAreaProps {
@@ -139,40 +140,44 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
             <ActionIcon icon={expand ? Minimize2 : Maximize2} onClick={handleExpandClick} />
           </div>
         </div>
-        <TextArea
-          className={cx(styles.textarea, textareaClassName)}
-          defaultValue={defaultValue}
-          ref={ref}
-          style={textareaStyle}
-          {...props}
-          onBlur={(e) => {
-            if (onBlur) onBlur(e);
-            setValue(e.target.value);
-          }}
-          onChange={(e) => {
-            if (onChange) onChange(e);
-            setValue(e.target.value);
-          }}
-          onCompositionEnd={(e) => {
-            if (onCompositionEnd) onCompositionEnd(e);
-            isChineseInput.current = false;
-          }}
-          onCompositionStart={(e) => {
-            if (onCompositionStart) onCompositionStart(e);
-            isChineseInput.current = true;
-          }}
-          onPressEnter={(e) => {
-            if (onPressEnter) onPressEnter(e);
-            if (!loading && !e.shiftKey && !isChineseInput.current) {
-              e.preventDefault();
-              handleSend();
-            }
-          }}
-          placeholder={placeholder}
-          resize={false}
-          type="pure"
-          value={value}
-        />
+        <div className={styles.textareaContainer}>
+          <InputHighlight target={'lobe-chat-input-area'} value={value} />
+          <TextArea
+            className={cx(styles.textarea, textareaClassName)}
+            defaultValue={defaultValue}
+            id={'lobe-chat-input-area'}
+            ref={ref}
+            style={textareaStyle}
+            {...props}
+            onBlur={(e) => {
+              if (onBlur) onBlur(e);
+              setValue(e.target.value);
+            }}
+            onChange={(e) => {
+              if (onChange) onChange(e);
+              setValue(e.target.value);
+            }}
+            onCompositionEnd={(e) => {
+              if (onCompositionEnd) onCompositionEnd(e);
+              isChineseInput.current = false;
+            }}
+            onCompositionStart={(e) => {
+              if (onCompositionStart) onCompositionStart(e);
+              isChineseInput.current = true;
+            }}
+            onPressEnter={(e) => {
+              if (onPressEnter) onPressEnter(e);
+              if (!loading && !e.shiftKey && !isChineseInput.current) {
+                e.preventDefault();
+                handleSend();
+              }
+            }}
+            placeholder={placeholder}
+            resize={false}
+            type="pure"
+            value={value}
+          />
+        </div>
         <div className={styles.footerBar}>
           {footer}
           <Button disabled={disabled} loading={loading} onClick={handleSend} type="primary">

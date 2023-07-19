@@ -1,10 +1,7 @@
 import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(
-  (
-    { cx, css, token, isDarkMode },
-    { type, resize }: { resize: boolean; type: 'ghost' | 'block' | 'pure' },
-  ) => {
+  ({ cx, css, token }, { type, resize }: { resize: boolean; type: 'ghost' | 'block' | 'pure' }) => {
     const typeStylish = css`
       padding: 8px 12px;
 
@@ -29,15 +26,22 @@ export const useStyles = createStyles(
         css`
           overflow-x: hidden;
           overflow-y: auto;
+          width: 100%;
           height: fit-content;
         `,
       ),
       editor: css`
         resize: ${resize ? 'vertical' : 'none'};
         height: fit-content;
+        min-height: 100%;
         font-family: ${token.fontFamilyCode} !important;
 
+        textarea {
+          min-height: 36px !important;
+        }
+
         pre {
+          min-height: 36px !important;
           word-wrap: break-word;
           white-space: pre-wrap;
 
@@ -49,15 +53,17 @@ export const useStyles = createStyles(
       textarea: css`
         overflow-x: hidden;
         overflow-y: auto;
+
         height: 100% !important;
+
+        color: transparent !important;
+
+        caret-color: ${token.colorText};
+
+        -webkit-text-fill-color: unset !important;
 
         &::placeholder {
           color: ${token.colorTextQuaternary};
-        }
-
-        &::selection {
-          color: #000;
-          background: ${isDarkMode ? token.yellow3A : token.yellow6A};
         }
 
         &:focus {
