@@ -2,6 +2,40 @@
 
 # Changelog
 
+## [Version 1.45.0](https://github.com/lobehub/lobe-ui/compare/v1.44.0...v1.45.0)
+
+<sup>Released on **2023-07-19**</sup>
+
+#### ✨ Features
+
+- **misc**: Add code highlighting component and update styling in ChatInputArea, Add new props and improve customization options in components.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix antd 5.7.1 ButtonProps.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add code highlighting component and update styling in ChatInputArea ([a9a316f](https://github.com/lobehub/lobe-ui/commit/a9a316f))
+- **misc**: Add new props and improve customization options in components ([f73bf0a](https://github.com/lobehub/lobe-ui/commit/f73bf0a))
+
+#### What's fixed
+
+- **misc**: Fix antd 5.7.1 ButtonProps ([7dcbf47](https://github.com/lobehub/lobe-ui/commit/7dcbf47))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.44.0](https://github.com/lobehub/lobe-ui/compare/v1.43.0...v1.44.0)
 
 <sup>Released on **2023-07-18**</sup>
