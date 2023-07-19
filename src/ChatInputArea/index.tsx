@@ -77,6 +77,9 @@ export interface ChatInputAreaProps extends TextAreaProps {
    * @description CSS styles for the component
    */
   style?: CSSProperties;
+  text?: {
+    send?: string;
+  };
   /**
    * @description Additional class name for the textarea element
    */
@@ -90,6 +93,7 @@ export interface ChatInputAreaProps extends TextAreaProps {
 const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
   (
     {
+      text,
       textareaClassName,
       style,
       textareaStyle,
@@ -181,7 +185,7 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
         <div className={styles.footerBar}>
           {footer}
           <Button disabled={disabled} loading={loading} onClick={handleSend} type="primary">
-            Send
+            {text?.send || 'Send'}
           </Button>
         </div>
       </section>

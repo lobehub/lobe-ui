@@ -1,6 +1,6 @@
 import { Collapse, Divider, Typography } from 'antd';
 import pangu from 'pangu';
-import { memo } from 'react';
+import { CSSProperties, memo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -17,10 +17,11 @@ export interface MarkdownProps {
    * @description The class name for the Markdown component
    */
   className?: string;
+  style?: CSSProperties;
 }
 
-const Markdown = memo<MarkdownProps>(({ children, className, ...props }) => {
-  const { styles, cx } = useStyles();
+const Markdown = memo<MarkdownProps>(({ children, className, style, ...props }) => {
+  const { styles } = useStyles();
   const components: any = {
     a: Typography.Link,
     code: Code,
@@ -30,9 +31,9 @@ const Markdown = memo<MarkdownProps>(({ children, className, ...props }) => {
   };
 
   return (
-    <Typography>
+    <Typography className={className} style={style}>
       <ReactMarkdown
-        className={cx(styles.markdown, className)}
+        className={styles.markdown}
         components={components}
         remarkPlugins={[remarkGfm]}
         {...props}

@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { CSSProperties, memo } from 'react';
 import useControlledState from 'use-merge-value';
 
 import Markdown from '@/Markdown';
@@ -50,6 +50,16 @@ export interface EditableMessageProps {
    * @default false
    */
   showEditWhenEmpty?: boolean;
+  style?: {
+    /**
+     * @title The style for the MessageInput component
+     */
+    input?: CSSProperties;
+    /**
+     * @title The style for the Markdown component
+     */
+    markdown?: CSSProperties;
+  };
   /**
    * @title The current text value
    */
@@ -67,6 +77,7 @@ const EditableMessage = memo<EditableMessageProps>(
     onOpenChange,
     placeholder = 'Type something...',
     showEditWhenEmpty = false,
+    style,
   }) => {
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
@@ -80,7 +91,7 @@ const EditableMessage = memo<EditableMessageProps>(
 
     return !value && showEditWhenEmpty ? (
       <MessageInput
-        className={classNames.input}
+        className={classNames?.input}
         defaultValue={value}
         onCancel={() => setTyping(false)}
         onConfirm={(text) => {
@@ -88,6 +99,7 @@ const EditableMessage = memo<EditableMessageProps>(
           setTyping(false);
         }}
         placeholder={placeholder}
+        style={style?.input}
       />
     ) : (
       <>
@@ -103,7 +115,7 @@ const EditableMessage = memo<EditableMessageProps>(
         />
         {!expand && isEdit ? (
           <MessageInput
-            className={classNames.input}
+            className={classNames?.input}
             defaultValue={value}
             onCancel={() => setTyping(false)}
             onConfirm={(text) => {
@@ -111,9 +123,12 @@ const EditableMessage = memo<EditableMessageProps>(
               setTyping(false);
             }}
             placeholder={placeholder}
+            style={style?.input}
           />
         ) : (
-          <Markdown className={classNames.markdown}>{value}</Markdown>
+          <Markdown className={classNames?.markdown} style={style?.markdown}>
+            {value}
+          </Markdown>
         )}
       </>
     );

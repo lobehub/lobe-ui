@@ -30,6 +30,10 @@ export interface MessageInputProps extends DivProps {
    * @param text - The text input by the user.
    */
   renderButtons?: (text: string) => ButtonProps[];
+  text?: {
+    cancel?: string;
+    confirm?: string;
+  };
   textareaClassname?: string;
   textareaStyle?: CSSProperties;
   /**
@@ -40,6 +44,7 @@ export interface MessageInputProps extends DivProps {
 
 const MessageInput = memo<MessageInputProps>(
   ({
+    text,
     type = 'pure',
     onCancel,
     defaultValue,
@@ -81,10 +86,10 @@ const MessageInput = memo<MessageInputProps>(
                 size="small"
                 type="primary"
               >
-                Confirm
+                {text?.confirm || 'Confirm'}
               </Button>
               <Button onClick={onCancel} size="small">
-                Cancel
+                {text?.cancel || 'Cancel'}
               </Button>
             </>
           )}

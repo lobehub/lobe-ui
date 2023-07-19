@@ -1,9 +1,11 @@
-import { Button, ButtonProps } from 'antd';
-import { memo } from 'react';
+import { Button, type ButtonProps } from 'antd';
+import { ReactNode, memo } from 'react';
 
 import { useStyles } from './style';
 
 export interface GradientButtonProps extends ButtonProps {
+  children?: ReactNode;
+  className?: string;
   /**
    * @description Whether the button should spin or not
    * @default false
