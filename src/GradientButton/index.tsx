@@ -1,19 +1,11 @@
 import { Button, type ButtonProps } from 'antd';
-import { ReactNode, memo } from 'react';
+import { memo } from 'react';
 
 import { useStyles } from './style';
 
-export interface GradientButtonProps extends ButtonProps {
-  children?: ReactNode;
-  className?: string;
-  /**
-   * @description Whether the button should spin or not
-   * @default false
-   */
-  spin?: boolean;
-}
+export type GradientButtonProps = ButtonProps;
 
-const GradientButton = memo<GradientButtonProps>(({ children, className, ...props }) => {
+const GradientButton = memo<ButtonProps>(({ children, className, ...props }) => {
   const { styles, cx } = useStyles();
 
   return (
