@@ -3,4 +3,6 @@ export { generateCustomTheme as lobeCustomTheme } from './algorithms/generateCus
 export { generateCustomToken as lobeCustomToken } from './algorithms/generateCustomToken';
 export { generateTheme as lobeTheme } from './algorithms/generateTheme';
 export { colorScales as colors } from './colors';
+export { colorScales } from './colors';
 export * from './customTheme';
+export { neutralColorScales } from './neutralColors';
