@@ -1,3 +1,7 @@
+export {
+  generateColorNeutralPalette,
+  generateColorPalette,
+} from './algorithms/generateColorPalette';
 export { generateCustomStylish as lobeCustomStylish } from './algorithms/generateCustomStylish';
 export { generateCustomTheme as lobeCustomTheme } from './algorithms/generateCustomTheme';
 export { generateCustomToken as lobeCustomToken } from './algorithms/generateCustomToken';
