@@ -84,6 +84,7 @@ export interface ChatInputAreaProps extends TextAreaProps {
    * @description Additional class name for the textarea element
    */
   textareaClassName?: string;
+  textareaId?: string;
   /**
    * @description CSS styles for the textarea element
    */
@@ -114,6 +115,7 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
       onCompositionEnd,
       onBlur,
       onChange,
+      textareaId = 'lobe-chat-input-area',
       ...props
     },
     ref,
@@ -145,11 +147,11 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
           </div>
         </div>
         <div className={styles.textareaContainer}>
-          <InputHighlight target={'lobe-chat-input-area'} value={value} />
+          <InputHighlight target={textareaId} value={value} />
           <TextArea
             className={cx(styles.textarea, textareaClassName)}
             defaultValue={defaultValue}
-            id={'lobe-chat-input-area'}
+            id={textareaId}
             ref={ref}
             style={textareaStyle}
             {...props}

@@ -1,5 +1,5 @@
 import { useScroll, useSize } from 'ahooks';
-import { memo, useEffect, useRef } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 
 import { SyntaxHighlighter } from '@/Highlighter';
 
@@ -12,10 +12,14 @@ interface InputHighlightProps {
 
 const InputHighlight = memo<InputHighlightProps>(({ value, target }) => {
   const ref: any = useRef(null);
+  const [nativeTextarea, setNativeTextarea] = useState<HTMLTextAreaElement>();
 
   const { styles } = useStyles();
 
-  const nativeTextarea = document.querySelector(`#${target}`);
+  useEffect(() => {
+    if (!nativeTextarea)
+      setNativeTextarea(document.querySelector(`#${target}`) as HTMLTextAreaElement);
+  }, []);
 
   const size = useSize(nativeTextarea);
   const scroll = useScroll(nativeTextarea);
