@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.46.0](https://github.com/lobehub/lobe-ui/compare/v1.45.0...v1.46.0)
+
+<sup>Released on **2023-07-20**</sup>
+
+#### ✨ Features
+
+- **misc**: Export "getEmoji" function and "neutralColorScales" variable.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Export "getEmoji" function and "neutralColorScales" variable ([24dac43](https://github.com/lobehub/lobe-ui/commit/24dac43))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.45.0](https://github.com/lobehub/lobe-ui/compare/v1.44.0...v1.45.0)
 
 <sup>Released on **2023-07-19**</sup>
