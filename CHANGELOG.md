@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.46.1](https://github.com/lobehub/lobe-ui/compare/v1.46.0...v1.46.1)
+
+<sup>Released on **2023-07-20**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Add exports for two functions and rename export function.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Add exports for two functions and rename export function ([ef047aa](https://github.com/lobehub/lobe-ui/commit/ef047aa))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.46.0](https://github.com/lobehub/lobe-ui/compare/v1.45.0...v1.46.0)
 
 <sup>Released on **2023-07-20**</sup>
