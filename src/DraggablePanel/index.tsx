@@ -113,7 +113,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     headerHeight = 0,
     fullscreen,
     maxHeight,
-    pin = 'true',
+    pin = true,
     mode = 'fixed',
     children,
     placement = 'right',
