@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.48.0](https://github.com/lobehub/lobe-ui/compare/v1.47.0...v1.48.0)
+
+<sup>Released on **2023-07-20**</sup>
+
+#### ✨ Features
+
+- **misc**: Modify border color in ChatHeader and update "pin" variable in DraggablePanel.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Modify border color in ChatHeader and update "pin" variable in DraggablePanel ([bec00f6](https://github.com/lobehub/lobe-ui/commit/bec00f6))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.47.0](https://github.com/lobehub/lobe-ui/compare/v1.46.1...v1.47.0)
 
 <sup>Released on **2023-07-20**</sup>
