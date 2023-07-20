@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.47.0](https://github.com/lobehub/lobe-ui/compare/v1.46.1...v1.47.0)
+
+<sup>Released on **2023-07-20**</sup>
+
+#### ✨ Features
+
+- **misc**: Add useState and useEffect hooks to InputHighlight component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add useState and useEffect hooks to InputHighlight component ([64a24fb](https://github.com/lobehub/lobe-ui/commit/64a24fb))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.46.1](https://github.com/lobehub/lobe-ui/compare/v1.46.0...v1.46.1)
 
 <sup>Released on **2023-07-20**</sup>
