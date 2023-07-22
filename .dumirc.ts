@@ -91,7 +91,7 @@ export default defineConfig({
       }
     : undefined,
 
-  ssr: isProduction ? {} : false,
+  // ssr: isProduction ? {} : false,
   styles: [
     `html, body { background: transparent;  }
 
