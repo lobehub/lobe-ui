@@ -15,6 +15,7 @@ export interface MessageInputProps extends DivProps {
    * @description The default value of the input box.
    */
   defaultValue?: string;
+  editButtonSize?: 'small' | 'middle';
   height?: number | string;
   /**
    * @description Callback function triggered when user clicks on the cancel button.
@@ -54,6 +55,7 @@ const MessageInput = memo<MessageInputProps>(
     textareaClassname,
     placeholder = 'Type something...',
     height = 'fit-content',
+    editButtonSize = 'middle',
     ...props
   }) => {
     const [temporarySystemRole, setRole] = useState<string>(defaultValue || '');
@@ -85,11 +87,14 @@ const MessageInput = memo<MessageInputProps>(
                 onClick={() => {
                   onConfirm?.(temporarySystemRole);
                 }}
+                size={editButtonSize}
                 type="primary"
               >
                 {text?.confirm || 'Confirm'}
               </Button>
-              <Button onClick={onCancel}>{text?.cancel || 'Cancel'}</Button>
+              <Button onClick={onCancel} size={editButtonSize}>
+                {text?.cancel || 'Cancel'}
+              </Button>
             </>
           )}
         </Flexbox>

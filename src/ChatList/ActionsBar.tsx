@@ -11,13 +11,11 @@ const ActionsBar = memo<ActionsBarProps>(({ primary, items = [], dropdownMenu = 
   const groupItems: ActionIconGroupProps['items'] = useMemo(
     () =>
       [
-        primary
-          ? { icon: Edit, key: 'edit', label: 'Edit' }
-          : {
-              icon: RotateCw,
-              key: 'regenerate',
-              label: 'Regenerate',
-            },
+        {
+          icon: RotateCw,
+          key: 'regenerate',
+          label: 'Regenerate',
+        },
         {
           icon: Copy,
           key: 'copy',

@@ -126,6 +126,18 @@ export const useStyles = createStyles(
           }
         `,
       ),
+      editingContainer: css`
+        padding-block: 8px;
+        border: 1px solid ${token.colorPrimaryBorder};
+
+        &:active,
+        &:hover {
+          border-color: ${token.colorPrimary};
+        }
+      `,
+      editingInput: css`
+        min-height: 80px;
+      `,
       loading: css`
         position: absolute;
         right: ${placement === 'left' ? '-4px' : 'unset'};

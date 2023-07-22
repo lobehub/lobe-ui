@@ -135,15 +135,18 @@ const ChatItem = memo<ChatItemProps>(
             {alert ? (
               <Alert className={styles.alert} showIcon {...alert} />
             ) : (
-              <Flexbox className={styles.message} style={editing ? { padding: 12 } : {}}>
+              <Flexbox className={cx(styles.message, editing && styles.editingContainer)}>
                 <EditableMessage
+                  classNames={{ input: styles.editingInput }}
+                  editButtonSize={'small'}
                   editing={editing}
                   onChange={onChange}
                   onEditingChange={onEditingChange}
                   value={String(message || '...')}
                 />
-
-                {messageExtra ? <div className={styles.messageExtra}>{messageExtra}</div> : null}
+                {messageExtra && !editing ? (
+                  <div className={styles.messageExtra}>{messageExtra}</div>
+                ) : null}
               </Flexbox>
             )}
             {!editing && (

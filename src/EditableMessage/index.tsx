@@ -19,6 +19,7 @@ export interface EditableMessageProps {
      */
     markdown?: string;
   };
+  editButtonSize?: 'small' | 'middle';
   /**
    * @title Whether the component is in edit mode or not
    * @default false
@@ -78,6 +79,7 @@ const EditableMessage = memo<EditableMessageProps>(
     placeholder = 'Type something...',
     showEditWhenEmpty = false,
     styles,
+    editButtonSize,
   }) => {
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
@@ -93,6 +95,7 @@ const EditableMessage = memo<EditableMessageProps>(
       <MessageInput
         className={classNames?.input}
         defaultValue={value}
+        editButtonSize={editButtonSize}
         onCancel={() => setTyping(false)}
         onConfirm={(text) => {
           onChange?.(text);
@@ -117,6 +120,7 @@ const EditableMessage = memo<EditableMessageProps>(
           <MessageInput
             className={classNames?.input}
             defaultValue={value}
+            editButtonSize={editButtonSize}
             onCancel={() => setTyping(false)}
             onConfirm={(text) => {
               onChange?.(text);
