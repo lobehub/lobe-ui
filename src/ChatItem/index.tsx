@@ -1,6 +1,7 @@
 import { Alert, type AlertProps } from 'antd';
 import { Loader2 } from 'lucide-react';
 import { ReactNode, memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import Avatar from '@/Avatar';
 import EditableMessage from '@/EditableMessage';
@@ -45,6 +46,7 @@ export interface ChatItemProps {
    * @description The message content of the chat item
    */
   message?: string;
+  messageExtra?: ReactNode;
   /**
    * @description Callback when the message content changes
    * @param value - The new message content
@@ -68,6 +70,7 @@ export interface ChatItemProps {
    * @description Whether to show the title of the chat item
    */
   showTitle?: boolean;
+
   /**
    * @description The timestamp of the chat item
    */
@@ -96,6 +99,7 @@ const ChatItem = memo<ChatItemProps>(
     editing,
     onChange,
     onEditingChange,
+    messageExtra,
     ...properties
   }) => {
     const { cx, styles } = useStyles({
@@ -106,6 +110,7 @@ const ChatItem = memo<ChatItemProps>(
       title: avatar.title,
       type,
     });
+
     return (
       <div className={cx(styles.container, className)} {...properties}>
         <div className={styles.avatarContainer}>
@@ -130,14 +135,16 @@ const ChatItem = memo<ChatItemProps>(
             {alert ? (
               <Alert className={styles.alert} showIcon {...alert} />
             ) : (
-              <div className={styles.message} style={editing ? { padding: 12 } : {}}>
+              <Flexbox className={styles.message} style={editing ? { padding: 12 } : {}}>
                 <EditableMessage
                   editing={editing}
                   onChange={onChange}
                   onEditingChange={onEditingChange}
                   value={String(message || '...')}
                 />
-              </div>
+
+                {messageExtra ? <div className={styles.messageExtra}>{messageExtra}</div> : null}
+              </Flexbox>
             )}
             {!editing && (
               <div className={styles.actions} role="chat-item-actions">

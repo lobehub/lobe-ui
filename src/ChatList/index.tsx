@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { ReactNode, memo } from 'react';
 
 import ChatItem, { ChatItemProps } from '@/ChatItem';
 import type { DivProps } from '@/types';
@@ -18,6 +18,7 @@ export interface ChatListProps extends DivProps {
    * @param {string} messageId - The id of the message
    */
   onActionClick?: (actionKey: string, messageId: string) => void;
+  renderMessageExtra?: (props: ChatMessage) => ReactNode;
   /**
    * @description Whether to show name of the chat item
    * @default false
@@ -31,31 +32,44 @@ export interface ChatListProps extends DivProps {
 }
 
 const ChatList = memo<ChatListProps>(
-  ({ onActionClick, className, data, type = 'chat', showTitle, ...props }) => {
+  ({
+    onActionClick,
+    renderMessageExtra: MessageExtra,
+    className,
+    data,
+    type = 'chat',
+    showTitle,
+    ...props
+  }) => {
     const { cx, styles } = useStyles();
 
     return (
       <div className={cx(styles.container, className)} {...props}>
-        {data.map((item) => (
-          <ChatItem
-            actions={
-              <ActionsBar
-                onActionClick={
-                  onActionClick ? (actionKey) => onActionClick?.(actionKey, item.id) : undefined
-                }
-                primary={item.role === 'user'}
-              />
-            }
-            avatar={item.meta}
-            key={item.id}
-            message={item.content}
-            placement={type === 'chat' ? (item.role === 'user' ? 'right' : 'left') : 'left'}
-            primary={item.role === 'user'}
-            showTitle={showTitle}
-            time={item.updateAt || item.createAt}
-            type={type === 'chat' ? 'block' : 'pure'}
-          />
-        ))}
+        {data.map((item) => {
+          const renderMessageExtra = MessageExtra ? <MessageExtra {...item} /> : undefined;
+
+          return (
+            <ChatItem
+              actions={
+                <ActionsBar
+                  onActionClick={
+                    onActionClick ? (actionKey) => onActionClick?.(actionKey, item.id) : undefined
+                  }
+                  primary={item.role === 'user'}
+                />
+              }
+              avatar={item.meta}
+              key={item.id}
+              message={item.content}
+              messageExtra={renderMessageExtra}
+              placement={type === 'chat' ? (item.role === 'user' ? 'right' : 'left') : 'left'}
+              primary={item.role === 'user'}
+              showTitle={showTitle}
+              time={item.updateAt || item.createAt}
+              type={type === 'chat' ? 'block' : 'pure'}
+            />
+          );
+        })}
       </div>
     );
   },

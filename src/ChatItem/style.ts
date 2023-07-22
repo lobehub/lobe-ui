@@ -168,6 +168,7 @@ export const useStyles = createStyles(
         gap: 8px;
         align-items: ${placement === 'left' ? 'flex-start' : 'flex-end'};
       `,
+      messageExtra: cx('message-extra'),
       name: css`
         position: ${showTitle ? 'relative' : 'absolute'};
         top: ${showTitle ? 'unset' : '-16px'};
