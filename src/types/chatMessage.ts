@@ -23,7 +23,7 @@ export interface ChatMessage extends BaseDataModel {
   // 扩展字段
   extra?: {
     // 翻译
-    translate: {
+    translate?: {
       target: string;
       to: string;
     };

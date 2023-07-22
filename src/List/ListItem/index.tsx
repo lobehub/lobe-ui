@@ -35,7 +35,7 @@ export interface ListItemProps {
   /**
    * 描述信息
    */
-  description?: string;
+  description?: ReactNode;
   /**
    * 是否处于加载状态
    */
@@ -64,7 +64,7 @@ export interface ListItemProps {
   /**
    * 标题
    */
-  title: string;
+  title: ReactNode;
 }
 
 const ListItem = memo(
