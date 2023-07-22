@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.49.0](https://github.com/lobehub/lobe-ui/compare/v1.48.1...v1.49.0)
+
+<sup>Released on **2023-07-22**</sup>
+
+#### ✨ Features
+
+- **misc**: 支持 renderMessageExtra.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: 支持 renderMessageExtra ([0f9692e](https://github.com/lobehub/lobe-ui/commit/0f9692e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.48.1](https://github.com/lobehub/lobe-ui/compare/v1.48.0...v1.48.1)
 
 <sup>Released on **2023-07-22**</sup>
