@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.48.1](https://github.com/lobehub/lobe-ui/compare/v1.48.0...v1.48.1)
+
+<sup>Released on **2023-07-22**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix input style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix input style ([bd51c6c](https://github.com/lobehub/lobe-ui/commit/bd51c6c))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.48.0](https://github.com/lobehub/lobe-ui/compare/v1.47.0...v1.48.0)
 
 <sup>Released on **2023-07-20**</sup>
