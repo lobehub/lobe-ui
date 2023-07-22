@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.49.1](https://github.com/lobehub/lobe-ui/compare/v1.49.0...v1.49.1)
+
+<sup>Released on **2023-07-22**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: 优化类型.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: 优化类型 ([c2d9547](https://github.com/lobehub/lobe-ui/commit/c2d9547))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.49.0](https://github.com/lobehub/lobe-ui/compare/v1.48.1...v1.49.0)
 
 <sup>Released on **2023-07-22**</sup>
