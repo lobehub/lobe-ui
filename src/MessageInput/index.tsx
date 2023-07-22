@@ -59,19 +59,21 @@ const MessageInput = memo<MessageInputProps>(
     const [temporarySystemRole, setRole] = useState<string>(defaultValue || '');
 
     return (
-      <Flexbox gap={8} style={{ flex: 1, width: '100%' }} {...props}>
-        <CodeEditor
-          className={textareaClassname}
-          language="md"
-          onValueChange={(value: string) => {
-            setRole(value);
-          }}
-          placeholder={placeholder}
-          resize={false}
-          style={{ height: height, minHeight: '100%', ...textareaStyle }}
-          type={type}
-          value={temporarySystemRole}
-        />
+      <>
+        <Flexbox gap={8} style={{ flex: 1, width: '100%' }} {...props}>
+          <CodeEditor
+            className={textareaClassname}
+            language="md"
+            onValueChange={(value: string) => {
+              setRole(value);
+            }}
+            placeholder={placeholder}
+            resize={false}
+            style={{ height: height, minHeight: '100%', ...textareaStyle }}
+            type={type}
+            value={temporarySystemRole}
+          />
+        </Flexbox>
         <Flexbox direction={'horizontal-reverse'} gap={8}>
           {renderButtons ? (
             renderButtons(temporarySystemRole).map((buttonProps, index) => (
@@ -83,18 +85,15 @@ const MessageInput = memo<MessageInputProps>(
                 onClick={() => {
                   onConfirm?.(temporarySystemRole);
                 }}
-                size="small"
                 type="primary"
               >
                 {text?.confirm || 'Confirm'}
               </Button>
-              <Button onClick={onCancel} size="small">
-                {text?.cancel || 'Cancel'}
-              </Button>
+              <Button onClick={onCancel}>{text?.cancel || 'Cancel'}</Button>
             </>
           )}
         </Flexbox>
-      </Flexbox>
+      </>
     );
   },
 );

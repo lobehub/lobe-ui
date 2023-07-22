@@ -50,7 +50,7 @@ export interface EditableMessageProps {
    * @default false
    */
   showEditWhenEmpty?: boolean;
-  style?: {
+  styles?: {
     /**
      * @title The style for the MessageInput component
      */
@@ -77,7 +77,7 @@ const EditableMessage = memo<EditableMessageProps>(
     onOpenChange,
     placeholder = 'Type something...',
     showEditWhenEmpty = false,
-    style,
+    styles,
   }) => {
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
@@ -99,7 +99,7 @@ const EditableMessage = memo<EditableMessageProps>(
           setTyping(false);
         }}
         placeholder={placeholder}
-        style={style?.input}
+        style={styles?.input}
       />
     ) : (
       <>
@@ -123,10 +123,10 @@ const EditableMessage = memo<EditableMessageProps>(
               setTyping(false);
             }}
             placeholder={placeholder}
-            style={style?.input}
+            style={styles?.input}
           />
         ) : (
-          <Markdown className={classNames?.markdown} style={style?.markdown}>
+          <Markdown className={classNames?.markdown} style={styles?.markdown}>
             {value}
           </Markdown>
         )}
