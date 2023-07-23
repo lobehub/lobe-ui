@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.51.0](https://github.com/lobehub/lobe-ui/compare/v1.50.1...v1.51.0)
+
+<sup>Released on **2023-07-23**</sup>
+
+#### ✨ Features
+
+- **misc**: 兼容插件模式.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: 兼容插件模式 ([aedfa53](https://github.com/lobehub/lobe-ui/commit/aedfa53))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.50.1](https://github.com/lobehub/lobe-ui/compare/v1.50.0...v1.50.1)
 
 <sup>Released on **2023-07-23**</sup>
