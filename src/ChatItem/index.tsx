@@ -45,13 +45,14 @@ export interface ChatItemProps {
   /**
    * @description The message content of the chat item
    */
-  message?: string;
+  message?: ReactNode;
   messageExtra?: ReactNode;
   /**
    * @description Callback when the message content changes
    * @param value - The new message content
    */
   onChange?: (value: string) => void;
+
   /**
    * @description Callback when the editing mode changes
    * @param editing - The new editing mode
@@ -66,6 +67,7 @@ export interface ChatItemProps {
    * @description Whether the chat item is primary
    */
   primary?: boolean;
+  renderMessage?: (content: ReactNode) => ReactNode;
   /**
    * @description Whether to show the title of the chat item
    */
@@ -100,6 +102,7 @@ const ChatItem = memo<ChatItemProps>(
     onChange,
     onEditingChange,
     messageExtra,
+    renderMessage,
     ...properties
   }) => {
     const { cx, styles } = useStyles({
@@ -110,6 +113,18 @@ const ChatItem = memo<ChatItemProps>(
       title: avatar.title,
       type,
     });
+
+    const content = (
+      <EditableMessage
+        classNames={{ input: styles.editingInput }}
+        editButtonSize={'small'}
+        editing={editing}
+        onChange={onChange}
+        onEditingChange={onEditingChange}
+        value={String(message || '...')}
+      />
+    );
+    const messageContent = renderMessage ? renderMessage(content) : content;
 
     return (
       <div className={cx(styles.container, className)} {...properties}>
@@ -136,14 +151,7 @@ const ChatItem = memo<ChatItemProps>(
               <Alert className={styles.alert} showIcon {...alert} />
             ) : (
               <Flexbox className={cx(styles.message, editing && styles.editingContainer)}>
-                <EditableMessage
-                  classNames={{ input: styles.editingInput }}
-                  editButtonSize={'small'}
-                  editing={editing}
-                  onChange={onChange}
-                  onEditingChange={onEditingChange}
-                  value={String(message || '...')}
-                />
+                {messageContent}
                 {messageExtra && !editing ? (
                   <div className={styles.messageExtra}>{messageExtra}</div>
                 ) : null}

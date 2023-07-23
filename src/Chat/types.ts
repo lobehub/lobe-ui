@@ -1,6 +1,6 @@
 export type InternalChatContext = Omit<ChatContext, 'id'>;
 
-export type MessageRoleType = 'user' | 'system' | 'assistant';
+export type MessageRoleType = 'user' | 'system' | 'assistant' | 'function';
 
 /**
  * 聊天消息错误对象

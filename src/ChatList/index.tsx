@@ -1,6 +1,6 @@
 import { App } from 'antd';
 import copy from 'copy-to-clipboard';
-import { ReactNode, memo, useState } from 'react';
+import { ReactNode, memo, useCallback, useState } from 'react';
 
 import ChatItem, { ChatItemProps } from '@/ChatItem';
 import type { DivProps } from '@/types';
@@ -9,7 +9,10 @@ import { ChatMessage } from '@/types/chatMessage';
 import ActionsBar from './ActionsBar';
 import { useStyles } from './style';
 
-type MessageExtra = (props: ChatMessage) => ReactNode;
+export type MessageExtra = (props: ChatMessage) => ReactNode;
+
+export type RenderMessage = (content: ReactNode, message: ChatMessage) => ReactNode;
+
 export interface ChatListProps extends DivProps {
   /**
    * @description Data of chat messages to be displayed
@@ -22,6 +25,7 @@ export interface ChatListProps extends DivProps {
    */
   onActionClick?: (actionKey: string, messageId: string) => void;
   onMessageChange?: (id: string, content: string) => void;
+  renderMessage?: RenderMessage;
   renderMessageExtra?: MessageExtra;
   /**
    * @description Whether to show name of the chat item
@@ -39,6 +43,7 @@ export interface ItemProps extends ChatMessage {
   MessageExtra?: MessageExtra;
   onActionClick?: (actionKey: string, messageId: string) => void;
   onMessageChange?: (id: string, content: string) => void;
+  renderMessage?: RenderMessage;
   showTitle?: boolean;
   type: 'docs' | 'chat';
 }
@@ -49,6 +54,7 @@ const Item = ({
   onActionClick,
   onMessageChange,
   type,
+  renderMessage,
   ...item
 }: ItemProps) => {
   const renderMessageExtra = MessageExtra ? <MessageExtra {...item} /> : undefined;
@@ -56,6 +62,12 @@ const Item = ({
   const [editing, setEditing] = useState(false);
 
   const { message } = App.useApp();
+
+  const innerRenderMessage = useCallback(
+    (content: ReactNode) => renderMessage?.(content, item),
+    [renderMessage],
+  );
+
   return (
     <ChatItem
       actions={
@@ -87,6 +99,7 @@ const Item = ({
       onEditingChange={setEditing}
       placement={type === 'chat' ? (item.role === 'user' ? 'right' : 'left') : 'left'}
       primary={item.role === 'user'}
+      renderMessage={renderMessage ? innerRenderMessage : undefined}
       showTitle={showTitle}
       time={item.updateAt || item.createAt}
       type={type === 'chat' ? 'block' : 'pure'}
@@ -103,6 +116,7 @@ const ChatList = memo<ChatListProps>(
     type = 'chat',
     showTitle,
     onMessageChange,
+    renderMessage,
     ...props
   }) => {
     const { cx, styles } = useStyles();
@@ -115,6 +129,7 @@ const ChatList = memo<ChatListProps>(
             key={item.id}
             onActionClick={onActionClick}
             onMessageChange={onMessageChange}
+            renderMessage={renderMessage}
             showTitle={showTitle}
             type={type}
             {...item}
