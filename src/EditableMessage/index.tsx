@@ -106,16 +106,6 @@ const EditableMessage = memo<EditableMessageProps>(
       />
     ) : (
       <>
-        <MessageModal
-          editing={isEdit}
-          onChange={(text) => {
-            onChange?.(text);
-          }}
-          onEditingChange={setTyping}
-          onOpenChange={setExpand}
-          open={expand}
-          value={value}
-        />
         {!expand && isEdit ? (
           <MessageInput
             className={classNames?.input}
@@ -134,6 +124,16 @@ const EditableMessage = memo<EditableMessageProps>(
             {value}
           </Markdown>
         )}
+        <MessageModal
+          editing={isEdit}
+          onChange={(text) => {
+            onChange?.(text);
+          }}
+          onEditingChange={setTyping}
+          onOpenChange={setExpand}
+          open={expand}
+          value={value}
+        />
       </>
     );
   },
