@@ -1,5 +1,4 @@
 import { Button, type InputRef } from 'antd';
-import { Maximize2, Minimize2 } from 'lucide-react';
 import {
   CSSProperties,
   ReactNode,
@@ -10,17 +9,13 @@ import {
   useState,
 } from 'react';
 
-import ActionIcon from '@/ActionIcon';
 import { TextArea, type TextAreaProps } from '@/Input';
 
+import Action, { ActionProps } from './Action';
 import InputHighlight from './InputHighlight';
 import { useStyles } from './style';
 
-export interface ChatInputAreaProps extends TextAreaProps {
-  /**
-   * @description Actions to be displayed in the input area
-   */
-  actions?: ReactNode;
+export interface ChatInputAreaProps extends ActionProps, TextAreaProps {
   /**
    * @description Additional class name for the component
    */
@@ -35,11 +30,6 @@ export interface ChatInputAreaProps extends TextAreaProps {
    */
   disabled?: boolean;
   /**
-   * @description Whether the input area is expanded
-   * @default false
-   */
-  expand?: boolean;
-  /**
    * @description Footer content to be displayed below the input area
    */
   footer?: ReactNode;
@@ -53,11 +43,6 @@ export interface ChatInputAreaProps extends TextAreaProps {
    * @default 200
    */
   minHeight?: number;
-  /**
-   * @description Callback function when the expand state changes
-   * @param expand - Whether the input area is expanded
-   */
-  onExpandChange?: (expand: boolean) => void;
   /**
    * @description Callback function when the input value changes
    * @param value - The current value of the input area
@@ -120,13 +105,9 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
     },
     ref,
   ) => {
+    const { cx, styles } = useStyles();
     const isChineseInput = useRef(false);
     const [value, setValue] = useState<string>(defaultValue);
-    const { cx, styles } = useStyles();
-
-    const handleExpandClick = useCallback(() => {
-      if (onExpandChange) onExpandChange(!expand);
-    }, [expand]);
 
     const handleSend = useCallback(() => {
       if (disabled) return;
@@ -140,12 +121,7 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
 
     return (
       <section className={cx(styles.container, className)} style={{ minHeight, ...style }}>
-        <div className={styles.actionsBar}>
-          <div className={styles.actionLeft}>{actions}</div>
-          <div className={styles.actionsRight}>
-            <ActionIcon icon={expand ? Minimize2 : Maximize2} onClick={handleExpandClick} />
-          </div>
-        </div>
+        <Action actions={actions} expand={expand} onExpandChange={onExpandChange} />
         <div className={styles.textareaContainer}>
           <InputHighlight target={textareaId} value={value} />
           <TextArea
