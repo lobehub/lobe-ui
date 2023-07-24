@@ -32,7 +32,15 @@ export interface AvatarProps extends AntAvatarProps {
 }
 
 const Avatar = memo<AvatarProps>(
-  ({ className, avatar, title, size = 40, shape = 'circle', background, ...props }) => {
+  ({
+    className,
+    avatar,
+    title,
+    size = 40,
+    shape = 'circle',
+    background = 'rgba(0,0,0,0)',
+    ...props
+  }) => {
     const isImage = Boolean(
       avatar && ['/', 'http', 'data:'].some((index) => avatar.startsWith(index)),
     );
@@ -52,7 +60,7 @@ const Avatar = memo<AvatarProps>(
       />
     ) : (
       <AntAvatar className={cx(styles.avatar, className)} shape={shape} size={size} {...props}>
-        {emoji ? <FluentEmoji emoji={emoji} size={size} /> : text?.toUpperCase().slice(0, 2)}
+        {emoji ? <FluentEmoji emoji={emoji} size={size * 0.8} /> : text?.toUpperCase().slice(0, 2)}
       </AntAvatar>
     );
   },
