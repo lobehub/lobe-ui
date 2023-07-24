@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.55.1](https://github.com/lobehub/lobe-ui/compare/v1.55.0...v1.55.1)
+
+<sup>Released on **2023-07-24**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix tokenTag ref.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix tokenTag ref ([bc3f2c2](https://github.com/lobehub/lobe-ui/commit/bc3f2c2))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.55.0](https://github.com/lobehub/lobe-ui/compare/v1.54.0...v1.55.0)
 
 <sup>Released on **2023-07-24**</sup>
