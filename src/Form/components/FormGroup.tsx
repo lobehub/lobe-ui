@@ -6,11 +6,12 @@ import { useStyles } from './style';
 
 export interface FormGroupProps extends CollapseProps {
   children: ReactNode;
+  extra?: ReactNode;
   icon?: IconProps['icon'];
   title: string;
 }
 
-const FormGroup = memo<FormGroupProps>(({ className, icon, title, children, ...props }) => {
+const FormGroup = memo<FormGroupProps>(({ className, icon, title, children, extra, ...props }) => {
   const { cx, styles } = useStyles();
   return (
     <Collapse
@@ -19,6 +20,7 @@ const FormGroup = memo<FormGroupProps>(({ className, icon, title, children, ...p
       items={[
         {
           children,
+          extra,
           key: 1,
           label: (
             <div className={styles.title}>

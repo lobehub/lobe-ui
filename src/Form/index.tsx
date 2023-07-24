@@ -9,6 +9,7 @@ import { useStyles } from './style';
 
 export interface ItemGroup {
   children: FormItemProps[];
+  extra?: ReactNode;
   icon?: LucideIcon;
   title: string;
 }
@@ -32,7 +33,7 @@ const Form = forwardRef<FormInstance, FormProps>(
         {...props}
       >
         {items?.map((group, groupIndex) => (
-          <FormGroup icon={group?.icon} key={groupIndex} title={group.title}>
+          <FormGroup extra={group?.extra} icon={group?.icon} key={groupIndex} title={group.title}>
             {group.children
               .filter((item) => !item.hidden)
               .map((item, itemIndex) => {
