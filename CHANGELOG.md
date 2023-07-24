@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.55.0](https://github.com/lobehub/lobe-ui/compare/v1.54.0...v1.55.0)
+
+<sup>Released on **2023-07-24**</sup>
+
+#### ✨ Features
+
+- **misc**: Add new props and import MessageModal component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add new props and import MessageModal component ([b47892c](https://github.com/lobehub/lobe-ui/commit/b47892c))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.54.0](https://github.com/lobehub/lobe-ui/compare/v1.53.0...v1.54.0)
 
 <sup>Released on **2023-07-24**</sup>
