@@ -1,17 +1,16 @@
 import { Form as AntForm, FormProps as AntFormProps, type FormInstance } from 'antd';
-import { LucideIcon } from 'lucide-react';
 import { type ReactNode, forwardRef } from 'react';
 
 import FormFooter from './components/FormFooter';
-import FormGroup from './components/FormGroup';
-import FormItem, { FormItemProps } from './components/FormItem';
+import FormGroup, { type FormGroupProps } from './components/FormGroup';
+import FormItem, { type FormItemProps } from './components/FormItem';
 import { useStyles } from './style';
 
 export interface ItemGroup {
   children: FormItemProps[];
-  extra?: ReactNode;
-  icon?: LucideIcon;
-  title: string;
+  extra?: FormGroupProps['extra'];
+  icon?: FormGroupProps['icon'];
+  title: FormGroupProps['title'];
 }
 
 export interface FormProps extends AntFormProps {
