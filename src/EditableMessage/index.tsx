@@ -3,7 +3,7 @@ import useControlledState from 'use-merge-value';
 
 import Markdown from '@/Markdown';
 import MessageInput from '@/MessageInput';
-import MessageModal from '@/MessageModal';
+import MessageModal, { type MessageModalProps } from '@/MessageModal';
 
 export interface EditableMessageProps {
   /**
@@ -61,6 +61,7 @@ export interface EditableMessageProps {
      */
     markdown?: CSSProperties;
   };
+  text?: MessageModalProps['text'];
   /**
    * @title The current text value
    */
@@ -80,6 +81,7 @@ const EditableMessage = memo<EditableMessageProps>(
     showEditWhenEmpty = false,
     styles,
     editButtonSize,
+    text,
   }) => {
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
@@ -121,17 +123,20 @@ const EditableMessage = memo<EditableMessageProps>(
           />
         ) : (
           <Markdown className={classNames?.markdown} style={styles?.markdown}>
-            {value}
+            {value || placeholder}
           </Markdown>
         )}
         <MessageModal
           editing={isEdit}
-          onChange={(text) => {
-            onChange?.(text);
-          }}
+          onChange={(text) => onChange?.(text)}
           onEditingChange={setTyping}
-          onOpenChange={setExpand}
+          onOpenChange={(e) => {
+            setExpand(e);
+            setTyping(false);
+          }}
           open={expand}
+          placeholder={placeholder}
+          text={text}
           value={value}
         />
       </>

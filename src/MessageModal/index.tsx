@@ -33,6 +33,13 @@ export interface MessageModalProps {
    * @default false
    */
   open?: boolean;
+  placeholder?: string;
+  text?: {
+    cancel?: string;
+    confirm?: string;
+    edit?: string;
+    title?: string;
+  };
   /**
    * @description The value of the message content
    */
@@ -40,7 +47,7 @@ export interface MessageModalProps {
 }
 
 const MessageModal = memo<MessageModalProps>(
-  ({ editing, open, onOpenChange, onEditingChange, value, onChange }) => {
+  ({ editing, open, onOpenChange, onEditingChange, placeholder, value, onChange, text }) => {
     const { styles } = useStyles();
 
     const [isEdit, setTyping] = useControlledState(false, {
@@ -55,11 +62,11 @@ const MessageModal = memo<MessageModalProps>(
 
     return (
       <Modal
-        cancelText={'Cancel'}
+        cancelText={text?.cancel || 'Cancel'}
         className={styles.modal}
         closeIcon={<Icon icon={X} />}
         footer={isEdit ? null : undefined}
-        okText={'Edit'}
+        okText={text?.edit || 'Edit'}
         onCancel={() => setExpand(false)}
         onOk={() => {
           setTyping(true);
@@ -67,7 +74,7 @@ const MessageModal = memo<MessageModalProps>(
         open={expand}
         title={
           <Flexbox align={'center'} gap={4} horizontal>
-            Prompt
+            {text?.title || 'Prompt'}
           </Flexbox>
         }
         width={800}
@@ -81,9 +88,16 @@ const MessageModal = memo<MessageModalProps>(
               setTyping(false);
               onChange?.(text);
             }}
+            placeholder={placeholder}
+            text={{
+              cancel: text?.cancel,
+              confirm: text?.confirm,
+            }}
           />
         ) : (
-          <Markdown className={styles.body}>{value}</Markdown>
+          <Markdown className={styles.body} style={value ? {} : { opacity: 0.5 }}>
+            {String(value || placeholder)}
+          </Markdown>
         )}
       </Modal>
     );
