@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.54.0](https://github.com/lobehub/lobe-ui/compare/v1.53.0...v1.54.0)
+
+<sup>Released on **2023-07-24**</sup>
+
+#### ✨ Features
+
+- **avatar**: Add default values for background prop and modify size of FluentEmoji component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **avatar**: Add default values for background prop and modify size of FluentEmoji component ([4b7d547](https://github.com/lobehub/lobe-ui/commit/4b7d547))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.53.0](https://github.com/lobehub/lobe-ui/compare/v1.52.0...v1.53.0)
 
 <sup>Released on **2023-07-24**</sup>
