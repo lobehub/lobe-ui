@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.55.2](https://github.com/lobehub/lobe-ui/compare/v1.55.1...v1.55.2)
+
+<sup>Released on **2023-07-25**</sup>
+
+#### 💄 Styles
+
+- **misc**: 优化 ChatList ActionBar 数量.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: 优化 ChatList ActionBar 数量, closes [#35](https://github.com/lobehub/lobe-ui/issues/35) ([883f77f](https://github.com/lobehub/lobe-ui/commit/883f77f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.55.1](https://github.com/lobehub/lobe-ui/compare/v1.55.0...v1.55.1)
 
 <sup>Released on **2023-07-24**</sup>
