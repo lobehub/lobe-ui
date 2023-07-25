@@ -16,16 +16,17 @@ const ActionsBar = memo<ActionsBarProps>(({ primary, items = [], dropdownMenu = 
           key: 'regenerate',
           label: 'Regenerate',
         },
-        {
-          icon: Copy,
-          key: 'copy',
-          label: 'Copy',
-        },
-        {
-          icon: Edit,
-          key: 'edit',
-          label: 'Edit',
-        },
+        primary
+          ? {
+              icon: Edit,
+              key: 'edit',
+              label: 'Edit',
+            }
+          : {
+              icon: Copy,
+              key: 'copy',
+              label: 'Copy',
+            },
         ...items,
       ].filter(Boolean),
     [primary, items],
