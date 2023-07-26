@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.57.0](https://github.com/lobehub/lobe-ui/compare/v1.56.0...v1.57.0)
+
+<sup>Released on **2023-07-26**</sup>
+
+#### ✨ Features
+
+- **fluentemoji**: Add dependency and create fallback variable.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **fluentemoji**: Add dependency and create fallback variable ([a76123d](https://github.com/lobehub/lobe-ui/commit/a76123d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.56.0](https://github.com/lobehub/lobe-ui/compare/v1.55.2...v1.56.0)
 
 <sup>Released on **2023-07-26**</sup>
