@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.58.0](https://github.com/lobehub/lobe-ui/compare/v1.57.0...v1.58.0)
+
+<sup>Released on **2023-07-26**</sup>
+
+#### ✨ Features
+
+- **components**: Add "color" and "fill" props to ActionIcon and Icon components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **components**: Add "color" and "fill" props to ActionIcon and Icon components ([1b5a7c9](https://github.com/lobehub/lobe-ui/commit/1b5a7c9))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.57.0](https://github.com/lobehub/lobe-ui/compare/v1.56.0...v1.57.0)
 
 <sup>Released on **2023-07-26**</sup>
