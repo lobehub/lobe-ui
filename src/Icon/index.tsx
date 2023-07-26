@@ -49,6 +49,8 @@ const calcSize = (size?: IconSize) => {
 };
 
 export interface IconProps extends DivProps {
+  color?: string;
+  fill?: string;
   /**
    * @description The icon element to be rendered
    * @type LucideIcon
@@ -66,7 +68,7 @@ export interface IconProps extends DivProps {
   spin?: boolean;
 }
 
-const Icon = memo<IconProps>(({ icon, size, className, spin, ...props }) => {
+const Icon = memo<IconProps>(({ icon, size, color, fill, className, spin, ...props }) => {
   const { styles, cx } = useStyles();
   const SvgIcon = icon;
 
@@ -75,6 +77,8 @@ const Icon = memo<IconProps>(({ icon, size, className, spin, ...props }) => {
   return (
     <span className={cx('anticon', spin && styles.spin, className)} role="img" {...props}>
       <SvgIcon
+        color={color}
+        fill={fill}
         focusable={false}
         height={fontSize}
         size={fontSize}

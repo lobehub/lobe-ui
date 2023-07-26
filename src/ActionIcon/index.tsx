@@ -1,7 +1,7 @@
-import { Loader2, LucideIcon } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { forwardRef, useMemo } from 'react';
 
-import Icon from '@/Icon';
+import Icon, { type IconProps } from '@/Icon';
 import Spotlight from '@/Spotlight';
 import Tooltip, { type TooltipProps } from '@/Tooltip';
 import { DivProps } from '@/types';
@@ -69,6 +69,8 @@ export interface ActionIconProps extends DivProps {
    * @default false
    */
   arrow?: boolean;
+  color?: IconProps['color'];
+  fill?: IconProps['fill'];
   /**
    * @description Glass blur style
    * @default 'false'
@@ -78,7 +80,7 @@ export interface ActionIconProps extends DivProps {
    * @description The icon element to be rendered
    * @type LucideIcon
    */
-  icon?: LucideIcon;
+  icon?: IconProps['icon'];
   /**
    * @description Set the loading status of ActionIcon
    */
@@ -115,6 +117,8 @@ export interface ActionIconProps extends DivProps {
 const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
   (
     {
+      color,
+      fill,
       className,
       active,
       icon,
@@ -139,12 +143,16 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
 
     const content = (
       <>
-        {icon && <Icon icon={icon} size={size === 'site' ? 'normal' : size} />}
+        {icon && (
+          <Icon color={color} fill={fill} icon={icon} size={size === 'site' ? 'normal' : size} />
+        )}
         {children}
       </>
     );
 
-    const spin = <Icon icon={Loader2} size={size === 'site' ? 'normal' : size} spin />;
+    const spin = (
+      <Icon color={color} icon={Loader2} size={size === 'site' ? 'normal' : size} spin />
+    );
 
     const actionIconBlock = (
       <div
