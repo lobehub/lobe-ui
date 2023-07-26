@@ -10,6 +10,10 @@ export interface TokenTagProps extends DivProps {
    * @description Maximum value for the token
    */
   maxValue: number;
+  text?: {
+    overload?: string;
+    tokens?: string;
+  };
   /**
    * @description Current value of the token
    */
@@ -17,7 +21,7 @@ export interface TokenTagProps extends DivProps {
 }
 
 const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
-  ({ className, maxValue, value, ...props }, ref) => {
+  ({ className, maxValue, value, text, ...props }, ref) => {
     const valueLeft = maxValue - value;
     const percent = valueLeft / maxValue;
     let type: 'normal' | 'low' | 'overload';
@@ -39,7 +43,7 @@ const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
     return (
       <div className={cx(styles.container, className)} ref={ref} {...props}>
         <FluentEmoji emoji={emoji} size={ICON_SIZE} />
-        {valueLeft > 0 ? `Tokens ${valueLeft}` : `Overload`}
+        {valueLeft > 0 ? text?.tokens || `Tokens ${valueLeft}` : text?.overload || 'Overload'}
       </div>
     );
   },

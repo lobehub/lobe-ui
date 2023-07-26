@@ -7,6 +7,7 @@ import { getEmoji } from '@/utils/getEmojiByCharacter';
 import { useStyles } from './style';
 
 export interface AvatarProps extends AntAvatarProps {
+  animation?: boolean;
   /**
    * @description The URL or base64 data of the avatar image
    */
@@ -36,6 +37,7 @@ const Avatar = memo<AvatarProps>(
     className,
     avatar,
     title,
+    animation,
     size = 40,
     shape = 'circle',
     background = 'rgba(0,0,0,0)',
@@ -60,7 +62,11 @@ const Avatar = memo<AvatarProps>(
       />
     ) : (
       <AntAvatar className={cx(styles.avatar, className)} shape={shape} size={size} {...props}>
-        {emoji ? <FluentEmoji emoji={emoji} size={size * 0.8} /> : text?.toUpperCase().slice(0, 2)}
+        {emoji ? (
+          <FluentEmoji emoji={emoji} size={size * 0.8} type={animation ? 'anim' : '3d'} />
+        ) : (
+          text?.toUpperCase().slice(0, 2)
+        )}
       </AntAvatar>
     );
   },

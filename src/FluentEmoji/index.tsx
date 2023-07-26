@@ -1,6 +1,7 @@
 import { kebabCase } from 'lodash-es';
-import { memo, useEffect, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 
+import { genEmojiUrl } from '@/FluentEmoji/genEmojiUrl';
 import { DivProps } from '@/types';
 import { getEmojiNameByCharacter } from '@/utils/getEmojiByCharacter';
 
@@ -18,37 +19,52 @@ export interface FluentEmojiProps extends DivProps {
   size?: number;
   /**
    * @description The type of the FluentUI emoji set to be used
-   * @default 'modern'
+   * @default '3d'
    */
-  type?: 'modern' | 'flat' | 'high-contrast';
+  type?: 'modern' | 'flat' | 'high-contrast' | 'anim' | '3d' | 'pure';
 }
 
 const FluentEmoji = memo<FluentEmojiProps>(
-  ({ emoji, className, style, type = 'modern', size = 40 }) => {
+  ({ emoji, className, style, type = '3d', size = 40 }) => {
     const [loadingFail, setLoadingFail] = useState(false);
-    const [emojiUrl, setEmojiUrl] = useState<{ [key: string]: string }>({});
+
     const { cx, styles } = useStyles();
 
-    useEffect(() => {
-      if (emojiUrl?.[emoji] || emojiUrl?.[emoji] === 'none') return;
+    const emojiUrl = useMemo(() => {
+      if (type === 'pure') return;
       const emojiName = getEmojiNameByCharacter(emoji);
-      if (emojiName) {
-        setEmojiUrl({
-          ...emojiUrl,
-          [emoji]: `https://npm.elemecdn.com/fluentui-emoji/icons/${type}/${kebabCase(
-            emojiName,
-          )}.svg`,
-        });
-      } else {
-        setEmojiUrl({ ...emojiUrl, [emoji]: 'none' });
+      if (!emojiName) return;
+      switch (type) {
+        case 'modern':
+        case 'flat':
+        case 'high-contrast': {
+          return genEmojiUrl('elem', {
+            path: `icons/${type}/${kebabCase(emojiName)}.svg`,
+            pkg: 'fluentui-emoji',
+          });
+        }
+        case 'anim': {
+          return genEmojiUrl('aliyun', {
+            path: `assets/${emojiName}.webp`,
+            pkg: '@lobehub/assets-emoji-anim',
+            version: '1.0.0',
+          });
+        }
+        case '3d': {
+          return genEmojiUrl('aliyun', {
+            path: `assets/${emojiName}.webp`,
+            pkg: '@lobehub/assets-emoji',
+            version: '1.3.0',
+          });
+        }
       }
-    }, [emoji, emojiUrl]);
+    }, [type]);
 
-    if (emojiUrl?.[emoji] === 'none' || loadingFail)
+    if (type === 'pure' || !emojiUrl || loadingFail)
       return (
         <div
           className={cx(styles.container, className)}
-          style={{ fontSize: size, height: size, width: size, ...style }}
+          style={{ fontSize: size * 0.9, height: size, width: size, ...style }}
         >
           {emoji}
         </div>
@@ -64,7 +80,7 @@ const FluentEmoji = memo<FluentEmojiProps>(
           height="100%"
           loading="lazy"
           onError={() => setLoadingFail(true)}
-          src={emojiUrl?.[emoji]}
+          src={emojiUrl}
           width="100%"
         />
       </div>

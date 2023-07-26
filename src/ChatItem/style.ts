@@ -24,10 +24,10 @@ export const useStyles = createStyles(
       padding: 8px 12px;
       background-color: ${primary
         ? isDarkMode
-          ? token.colorFillSecondary
+          ? token.colorFill
           : rgba(token.colorPrimary, 0.08)
         : isDarkMode
-        ? token.colorFillTertiary
+        ? token.colorFillSecondary
         : token.colorBgContainer};
       border-radius: ${token.borderRadiusLG}px;
       transition: background-color 100ms ${token.motionEaseOut};
@@ -127,12 +127,12 @@ export const useStyles = createStyles(
         `,
       ),
       editingContainer: css`
-        padding-block: 8px;
-        border: 1px solid ${token.colorPrimaryBorder};
+        padding: 8px 12px 12px;
+        border: 1px solid ${token.colorBorderSecondary};
 
         &:active,
         &:hover {
-          border-color: ${token.colorPrimary};
+          border-color: ${token.colorBorder};
         }
       `,
       editingInput: css`

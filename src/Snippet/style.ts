@@ -18,6 +18,7 @@ export const useStyles = createStyles(({ css, cx, token }, type: 'ghost' | 'bloc
         align-items: center;
 
         max-width: 100%;
+        height: 38px;
         padding: 0 8px 0 12px;
 
         border-radius: ${token.borderRadius}px;

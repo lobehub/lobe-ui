@@ -2,9 +2,13 @@ import {
   FluentEmoji,
   type FluentEmojiProps,
   StroyBook,
+  getEmoji,
+  getEmojiNameByCharacter,
   useControls,
   useCreateStore,
 } from '@lobehub/ui';
+import { Button } from 'antd';
+import { Flexbox } from 'react-layout-kit';
 
 export default () => {
   const store = useCreateStore();
@@ -15,11 +19,7 @@ export default () => {
         max: 128,
         min: 16,
         step: 1,
-        value: 72,
-      },
-      type: {
-        options: ['modern', 'flat', 'high-contrast'],
-        value: 'modern',
+        value: 64,
       },
     },
     { store },
@@ -27,7 +27,17 @@ export default () => {
 
   return (
     <StroyBook levaStore={store}>
-      <FluentEmoji {...control} />
+      <Flexbox align={'center'} gap={8}>
+        <Flexbox gap={8} horizontal>
+          <FluentEmoji type={'anim'} {...control} />
+          <FluentEmoji type={'3d'} {...control} />
+          <FluentEmoji type={'modern'} {...control} />
+          <FluentEmoji type={'flat'} {...control} />
+          <FluentEmoji type={'high-contrast'} {...control} />
+          <FluentEmoji type={'pure'} {...control} />
+        </Flexbox>
+        <Button icon={getEmoji(control.emoji)}>{getEmojiNameByCharacter(control.emoji)}</Button>
+      </Flexbox>
     </StroyBook>
   );
 };

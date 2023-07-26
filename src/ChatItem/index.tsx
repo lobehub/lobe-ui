@@ -4,7 +4,7 @@ import { ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import Avatar from '@/Avatar';
-import EditableMessage from '@/EditableMessage';
+import EditableMessage, { type EditableMessageProps } from '@/EditableMessage';
 import Icon from '@/Icon';
 import { MetaData } from '@/types/meta';
 import { formatTime } from '@/utils/formatTime';
@@ -52,7 +52,6 @@ export interface ChatItemProps {
    * @param value - The new message content
    */
   onChange?: (value: string) => void;
-
   /**
    * @description Callback when the editing mode changes
    * @param editing - The new editing mode
@@ -63,6 +62,7 @@ export interface ChatItemProps {
    * @default 'left'
    */
   placement?: 'left' | 'right';
+
   /**
    * @description Whether the chat item is primary
    */
@@ -72,7 +72,7 @@ export interface ChatItemProps {
    * @description Whether to show the title of the chat item
    */
   showTitle?: boolean;
-
+  text?: EditableMessageProps['text'];
   /**
    * @description The timestamp of the chat item
    */
@@ -103,6 +103,7 @@ const ChatItem = memo<ChatItemProps>(
     onEditingChange,
     messageExtra,
     renderMessage,
+    text,
     ...properties
   }) => {
     const { cx, styles } = useStyles({
@@ -121,6 +122,7 @@ const ChatItem = memo<ChatItemProps>(
         editing={editing}
         onChange={onChange}
         onEditingChange={onEditingChange}
+        text={text}
         value={String(message || '...')}
       />
     );
@@ -130,6 +132,7 @@ const ChatItem = memo<ChatItemProps>(
       <div className={cx(styles.container, className)} {...properties}>
         <div className={styles.avatarContainer}>
           <Avatar
+            animation={loading}
             avatar={avatar.avatar}
             background={avatar.backgroundColor}
             size={AVATAR_SIZE}

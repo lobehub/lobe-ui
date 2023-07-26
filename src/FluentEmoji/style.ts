@@ -4,6 +4,11 @@ export const useStyles = createStyles(({ css, token }) => {
   return {
     container: css`
       position: relative;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
       line-height: 1;
       text-align: center;
     `,

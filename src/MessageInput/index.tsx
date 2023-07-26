@@ -6,6 +6,8 @@ import CodeEditor from '@/CodeEditor';
 import { type TextAreaProps } from '@/Input';
 import { DivProps } from '@/types';
 
+import { useStyles } from './style';
+
 export interface MessageInputProps extends DivProps {
   /**
    * @description Additional className to apply to the component.
@@ -59,12 +61,13 @@ const MessageInput = memo<MessageInputProps>(
     ...props
   }) => {
     const [temporarySystemRole, setRole] = useState<string>(defaultValue || '');
+    const { cx, styles } = useStyles();
 
     return (
-      <>
+      <Flexbox gap={8}>
         <Flexbox gap={8} style={{ flex: 1, width: '100%' }} {...props}>
           <CodeEditor
-            className={textareaClassname}
+            className={cx(styles, textareaClassname)}
             language="md"
             onValueChange={(value: string) => {
               setRole(value);
@@ -72,6 +75,7 @@ const MessageInput = memo<MessageInputProps>(
             placeholder={placeholder}
             resize={false}
             style={{ height: height, minHeight: '100%', ...textareaStyle }}
+            textareaClassName={cx(styles, textareaClassname)}
             type={type}
             value={temporarySystemRole}
           />
@@ -98,7 +102,7 @@ const MessageInput = memo<MessageInputProps>(
             </>
           )}
         </Flexbox>
-      </>
+      </Flexbox>
     );
   },
 );

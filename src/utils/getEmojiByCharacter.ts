@@ -1,5 +1,5 @@
+import emojilib from '@lobehub/emojilib';
 import emojiRegex from 'emoji-regex';
-import emojilib from 'emojilib';
 
 export const getEmoji = (emoji: string): string | undefined => {
   const regex = emojiRegex();
@@ -11,5 +11,5 @@ export const getEmojiNameByCharacter = (emoji: string): string | undefined => {
   const pureEmoji = getEmoji(emoji);
   if (!pureEmoji) return;
   const EmojiLab: any = emojilib;
-  return EmojiLab?.[pureEmoji]?.[0];
+  return EmojiLab?.[pureEmoji];
 };

@@ -2,16 +2,29 @@ import { App } from 'antd';
 import copy from 'copy-to-clipboard';
 import { ReactNode, memo, useCallback, useState } from 'react';
 
-import ChatItem, { ChatItemProps } from '@/ChatItem';
+import ChatItem, { type ChatItemProps } from '@/ChatItem';
 import type { DivProps } from '@/types';
 import { ChatMessage } from '@/types/chatMessage';
 
-import ActionsBar from './ActionsBar';
+import ActionsBar, { type ActionsBarProps } from './ActionsBar';
 import { useStyles } from './style';
 
 export type MessageExtra = (props: ChatMessage) => ReactNode;
 
 export type RenderMessage = (content: ReactNode, message: ChatMessage) => ReactNode;
+
+export interface ItemProps extends ChatMessage {
+  MessageExtra?: MessageExtra;
+  onActionClick?: (actionKey: string, messageId: string) => void;
+  onMessageChange?: (id: string, content: string) => void;
+  renderMessage?: RenderMessage;
+  showTitle?: boolean;
+  text?: ChatItemProps['text'] &
+    ActionsBarProps['text'] & {
+      copySuccess?: string;
+    };
+  type: 'docs' | 'chat';
+}
 
 export interface ChatListProps extends DivProps {
   /**
@@ -32,20 +45,12 @@ export interface ChatListProps extends DivProps {
    * @default false
    */
   showTitle?: ChatItemProps['showTitle'];
+  text?: ItemProps['text'];
   /**
    * @description Type of chat list
    * @default 'chat'
    */
   type?: 'docs' | 'chat';
-}
-
-export interface ItemProps extends ChatMessage {
-  MessageExtra?: MessageExtra;
-  onActionClick?: (actionKey: string, messageId: string) => void;
-  onMessageChange?: (id: string, content: string) => void;
-  renderMessage?: RenderMessage;
-  showTitle?: boolean;
-  type: 'docs' | 'chat';
 }
 
 const Item = ({
@@ -54,6 +59,7 @@ const Item = ({
   onActionClick,
   onMessageChange,
   type,
+  text,
   renderMessage,
   ...item
 }: ItemProps) => {
@@ -76,17 +82,18 @@ const Item = ({
             switch (actionKey) {
               case 'copy': {
                 copy(item.content);
-                message.success('复制成功');
+                message.success(text?.copySuccess || 'Copy Success');
                 break;
               }
               case 'edit': {
-                console.log('editing');
                 setEditing(true);
+                break;
               }
             }
             onActionClick?.(actionKey, item.id);
           }}
           primary={item.role === 'user'}
+          text={text}
         />
       }
       avatar={item.meta}
@@ -101,6 +108,7 @@ const Item = ({
       primary={item.role === 'user'}
       renderMessage={renderMessage ? innerRenderMessage : undefined}
       showTitle={showTitle}
+      text={text}
       time={item.updateAt || item.createAt}
       type={type === 'chat' ? 'block' : 'pure'}
     />
@@ -114,6 +122,7 @@ const ChatList = memo<ChatListProps>(
     className,
     data,
     type = 'chat',
+    text,
     showTitle,
     onMessageChange,
     renderMessage,
@@ -131,6 +140,7 @@ const ChatList = memo<ChatListProps>(
             onMessageChange={onMessageChange}
             renderMessage={renderMessage}
             showTitle={showTitle}
+            text={text}
             type={type}
             {...item}
           />

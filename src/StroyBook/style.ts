@@ -21,6 +21,8 @@ export const useStyles = createStyles(({ css, token, responsive }, noPadding: bo
       align-items: center;
       justify-content: center;
 
+      position: relative;
+
       ${!noPadding &&
       css`
         padding: 40px 24px;
