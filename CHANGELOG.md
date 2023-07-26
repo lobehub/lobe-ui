@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.56.0](https://github.com/lobehub/lobe-ui/compare/v1.55.2...v1.56.0)
+
+<sup>Released on **2023-07-26**</sup>
+
+#### ✨ Features
+
+- **misc**: Add new dependency, update styles and functionality, and enhance emoji display.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add new dependency, update styles and functionality, and enhance emoji display ([12ffd53](https://github.com/lobehub/lobe-ui/commit/12ffd53))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.55.2](https://github.com/lobehub/lobe-ui/compare/v1.55.1...v1.55.2)
 
 <sup>Released on **2023-07-25**</sup>
