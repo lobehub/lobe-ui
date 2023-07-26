@@ -58,9 +58,11 @@ const FluentEmoji = memo<FluentEmojiProps>(
           });
         }
       }
-    }, [type]);
+    }, [type, emoji]);
 
-    if (type === 'pure' || !emojiUrl || loadingFail)
+    const isFallback = useMemo(() => type === 'pure' || !emojiUrl || loadingFail, []);
+
+    if (isFallback)
       return (
         <div
           className={cx(styles.container, className)}
