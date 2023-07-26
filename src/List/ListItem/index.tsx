@@ -92,13 +92,7 @@ const ListItem = memo(
 
       return (
         <Flexbox
-          align={'flex-start'}
           className={cx(styles.container, active && styles.active, className)}
-          distribution={'space-between'}
-          gap={8}
-          horizontal
-          paddingBlock={12}
-          paddingInline={16}
           ref={reference}
           style={style}
           {...props}
@@ -109,33 +103,44 @@ const ListItem = memo(
             onHoverChange?.(false);
           }}
         >
-          {avatar ?? <MessageOutlined style={{ marginTop: 4 }} />}
+          <Flexbox
+            align={'flex-start'}
+            className={styles.inner}
+            distribution={'space-between'}
+            gap={8}
+            horizontal
+            paddingBlock={12}
+            paddingInline={16}
+          >
+            {avatar ?? <MessageOutlined style={{ marginTop: 4 }} />}
 
-          <Flexbox className={styles.content}>
-            <Flexbox distribution={'space-between'} horizontal>
-              <div className={styles.title}>{title}</div>
+            <Flexbox className={styles.content}>
+              <Flexbox distribution={'space-between'} horizontal>
+                <div className={styles.title}>{title}</div>
+              </Flexbox>
+              {description && <div className={styles.desc}>{description}</div>}
             </Flexbox>
-            {description && <div className={styles.desc}>{description}</div>}
-            <div className={styles.textOverlay} />
+
+            {loading ? (
+              <LoadingOutlined spin={true} />
+            ) : showAction ? (
+              <Flexbox
+                gap={4}
+                horizontal
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                style={{ display: showAction ? undefined : 'none' }}
+              >
+                {renderActions}
+              </Flexbox>
+            ) : (
+              date && (
+                <div className={cx(styles.time, classNames.time)}>{getChatItemTime(date)}</div>
+              )
+            )}
+            {children}
           </Flexbox>
-
-          {loading ? (
-            <LoadingOutlined spin={true} />
-          ) : showAction ? (
-            <Flexbox
-              gap={4}
-              horizontal
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-              style={{ display: showAction ? undefined : 'none' }}
-            >
-              {renderActions}
-            </Flexbox>
-          ) : (
-            date && <div className={cx(styles.time, classNames.time)}>{getChatItemTime(date)}</div>
-          )}
-          {children}
         </Flexbox>
       );
     },

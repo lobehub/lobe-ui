@@ -78,7 +78,7 @@ const Icon = memo<IconProps>(({ icon, size, color, fill, className, spin, ...pro
     <span className={cx('anticon', spin && styles.spin, className)} role="img" {...props}>
       <SvgIcon
         color={color}
-        fill={fill}
+        fill={fill ?? 'transparent'}
         focusable={false}
         height={fontSize}
         size={fontSize}
