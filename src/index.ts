@@ -5,7 +5,14 @@ export { default as Burger, type BurgerProps } from './Burger';
 export { default as ChatHeader, type ChatHeaderProps } from './ChatHeader';
 export { default as ChatInputArea, type ChatInputAreaProps } from './ChatInputArea';
 export { default as ChatItem, type ChatItemProps } from './ChatItem';
-export { default as ChatList, type ChatListProps } from './ChatList';
+export type {
+  ChatListProps,
+  OnActionClick,
+  OnMessageChange,
+  RenderErrorMessage,
+  RenderMessage,
+} from './ChatList';
+export { default as ChatList } from './ChatList';
 export { default as CodeEditor, type CodeEditorProps } from './CodeEditor';
 export { default as ColorScales, type ColorScalesProps } from './ColorScales';
 export { default as ContextMenu, type ContextMenuProps } from './ContextMenu';

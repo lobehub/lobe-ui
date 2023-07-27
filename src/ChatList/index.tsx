@@ -12,6 +12,7 @@ export interface ChatListProps extends DivProps, ListItemProps {
   data: ChatMessage[];
   loadingId?: string;
 }
+export type { OnActionClick, OnMessageChange, RenderErrorMessage, RenderMessage } from './Item';
 
 const ChatList = memo<ChatListProps>(
   ({
@@ -25,6 +26,7 @@ const ChatList = memo<ChatListProps>(
     onMessageChange,
     renderMessage,
     renderErrorMessage,
+    loadingId,
     ...props
   }) => {
     const { cx, styles } = useStyles();
@@ -34,6 +36,7 @@ const ChatList = memo<ChatListProps>(
         {data.map((item) => (
           <Item
             key={item.id}
+            loading={loadingId === item.id}
             onActionClick={onActionClick}
             onMessageChange={onMessageChange}
             renderErrorMessage={renderErrorMessage}

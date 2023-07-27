@@ -11,24 +11,44 @@ export type OnMessageChange = (id: string, content: string) => void;
 export type MessageExtra = (props: ChatMessage) => ReactNode;
 export type OnActionClick = (actionKey: string, messageId: string) => void;
 export type RenderMessage = (content: ReactNode, message: ChatMessage) => ReactNode;
-export type RenderErrorMessage = (error: ChatMessageError) => ReactNode;
+export type RenderErrorMessage = (error: ChatMessageError, message: ChatMessage) => ReactNode;
 
 export interface ListItemProps {
+  loading?: boolean;
+  /**
+   * @description 点击操作按钮的回调函数
+   */
   onActionClick?: OnActionClick;
+  /**
+   * @description 消息变化的回调函数
+   */
   onMessageChange?: OnMessageChange;
+  /**
+   * @description 渲染错误消息的函数
+   */
   renderErrorMessage?: RenderErrorMessage;
+  /**
+   * @description 渲染消息的函数
+   */
   renderMessage?: RenderMessage;
+  /**
+   * @description 渲染消息额外内容的函数
+   */
   renderMessageExtra?: MessageExtra;
   /**
-   * @description Whether to show name of the chat item
+   * @description 是否显示聊天项的名称
    * @default false
-   */ showTitle?: boolean;
+   */
+  showTitle?: boolean;
+  /**
+   * @description 文本内容
+   */
   text?: ChatItemProps['text'] &
     ActionsBarProps['text'] & {
       copySuccess?: string;
     };
   /**
-   * @description Type of chat list
+   * @description 聊天列表的类型
    * @default 'chat'
    */
   type?: 'docs' | 'chat';
@@ -44,6 +64,7 @@ const Item = memo<ChatMessage & ListItemProps>(
     text,
     renderMessage,
     renderErrorMessage,
+    loading,
     ...item
   }) => {
     const renderMessageExtra = MessageExtra ? <MessageExtra {...item} /> : undefined;
@@ -84,11 +105,12 @@ const Item = memo<ChatMessage & ListItemProps>(
         error={
           item.error
             ? {
-                description: renderErrorMessage ? renderErrorMessage(item.error) : undefined,
+                description: renderErrorMessage?.(item.error, item),
                 message: item.error?.message,
               }
             : undefined
         }
+        loading={loading}
         message={item.content}
         messageExtra={renderMessageExtra}
         onChange={(value) => {
