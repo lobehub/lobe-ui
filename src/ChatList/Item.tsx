@@ -80,6 +80,7 @@ const Item = memo<ChatMessage & ListItemProps>(
 
     return (
       <ChatItem
+        ErrorMessage={item.error ? renderErrorMessage?.(item.error, item) : undefined}
         actions={
           <ActionsBar
             onActionClick={(actionKey) => {
@@ -105,7 +106,6 @@ const Item = memo<ChatMessage & ListItemProps>(
         error={
           item.error
             ? {
-                description: renderErrorMessage?.(item.error, item),
                 message: item.error?.message,
               }
             : undefined

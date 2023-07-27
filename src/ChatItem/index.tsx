@@ -14,6 +14,7 @@ import { useStyles } from './style';
 const AVATAR_SIZE = 40;
 
 export interface ChatItemProps {
+  ErrorMessage?: ReactNode;
   /**
    * @description Actions to be displayed in the chat item
    */
@@ -103,6 +104,7 @@ const ChatItem = memo<ChatItemProps>(
     messageExtra,
     renderMessage,
     text,
+    ErrorMessage,
     ...properties
   }) => {
     const { cx, styles } = useStyles({
@@ -150,7 +152,10 @@ const ChatItem = memo<ChatItemProps>(
           </title>
           <div className={styles.messageContent}>
             {error ? (
-              <Alert className={styles.alert} showIcon type={'error'} {...error} />
+              <Flexbox gap={8}>
+                <Alert className={styles.alert} showIcon type={'error'} {...error} />
+                {ErrorMessage}
+              </Flexbox>
             ) : (
               <Flexbox className={cx(styles.message, editing && styles.editingContainer)}>
                 {messageContent}
