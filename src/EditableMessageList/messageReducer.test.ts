@@ -1,10 +1,10 @@
+import { LLMMessage } from '@lobehub/ui';
 import { beforeEach, describe, expect, it } from 'vitest';
 
-import { ChatMessage } from '../types';
 import { MessageDispatch, messagesReducer } from './messageReducer';
 
 describe('messagesReducer', () => {
-  let initialState: ChatMessage[];
+  let initialState: LLMMessage[];
 
   beforeEach(() => {
     initialState = [
@@ -14,7 +14,7 @@ describe('messagesReducer', () => {
   });
 
   it('should add a message', () => {
-    const newMessage: ChatMessage = { content: 'How are you?', role: 'user' };
+    const newMessage: LLMMessage = { content: 'How are you?', role: 'user' };
     const action: MessageDispatch = { message: newMessage, type: 'addMessage' };
     const newState = messagesReducer(initialState, action);
 
@@ -51,7 +51,7 @@ describe('messagesReducer', () => {
 
   it('should set error message correctly', () => {
     const action: MessageDispatch = {
-      error: { message: 'Not Found', status: 404, type: 'chatbot' },
+      error: { message: 'Not Found' },
       index: 0,
       type: 'setErrorMessage',
     };
@@ -60,7 +60,7 @@ describe('messagesReducer', () => {
     expect(newState).toEqual([
       {
         content: 'Hello!',
-        error: { message: 'Not Found', status: 404, type: 'chatbot' },
+        error: { message: 'Not Found' },
         role: 'user',
       },
       { content: 'Hi there!', role: 'assistant' },

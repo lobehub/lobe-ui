@@ -4,7 +4,7 @@ import { avatar } from './data';
 
 export default () => {
   const store = useCreateStore();
-  const control: ChatItemProps['alert'] | any = useControls(
+  const control: ChatItemProps['error'] | any = useControls(
     {
       description: '',
       message: 'Error',
@@ -18,7 +18,7 @@ export default () => {
 
   return (
     <StroyBook levaStore={store}>
-      <ChatItem alert={control} avatar={avatar} />
+      <ChatItem avatar={avatar} error={control} />
     </StroyBook>
   );
 };

@@ -19,10 +19,6 @@ export interface ChatItemProps {
    */
   actions?: ReactNode;
   /**
-   * @description Props for Alert component
-   */
-  alert?: AlertProps;
-  /**
    * @description Metadata for the avatar
    */
   avatar: MetaData;
@@ -38,6 +34,10 @@ export interface ChatItemProps {
    * @description Whether the chat item is in editing mode
    */
   editing?: boolean;
+  /**
+   * @description Props for Error render
+   */
+  error?: AlertProps;
   /**
    * @description Whether the chat item is in loading state
    */
@@ -62,7 +62,6 @@ export interface ChatItemProps {
    * @default 'left'
    */
   placement?: 'left' | 'right';
-
   /**
    * @description Whether the chat item is primary
    */
@@ -95,7 +94,7 @@ const ChatItem = memo<ChatItemProps>(
     placement = 'left',
     type = 'block',
     avatar,
-    alert,
+    error,
     showTitle,
     time,
     editing,
@@ -150,8 +149,8 @@ const ChatItem = memo<ChatItemProps>(
             {time && <time>{formatTime(time)}</time>}
           </title>
           <div className={styles.messageContent}>
-            {alert ? (
-              <Alert className={styles.alert} showIcon {...alert} />
+            {error ? (
+              <Alert className={styles.alert} showIcon type={'error'} {...error} />
             ) : (
               <Flexbox className={cx(styles.message, editing && styles.editingContainer)}>
                 {messageContent}

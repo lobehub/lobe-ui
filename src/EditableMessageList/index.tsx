@@ -5,15 +5,17 @@ import { memo, useEffect, useReducer } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
-import { ChatMessage, messagesReducer } from '@/Chat';
 import Icon from '@/Icon';
 import { ControlInput } from '@/components/ControlInput';
+import { LLMMessage } from '@/types/llm';
+
+import { messagesReducer } from './messageReducer';
 
 export interface EditableMessageListProps {
   /**
    * @description The data sources to be rendered
    */
-  dataSources: ChatMessage[];
+  dataSources: LLMMessage[];
   /**
    * @description Whether the component is disabled or not
    * @default false
@@ -23,7 +25,7 @@ export interface EditableMessageListProps {
    * @description Callback function triggered when the data sources are changed
    * @param chatMessages - the updated data sources
    */
-  onChange?: (chatMessages: ChatMessage[]) => void;
+  onChange?: (chatMessages: LLMMessage[]) => void;
 }
 
 export const EditableMessageList = memo<EditableMessageListProps>(

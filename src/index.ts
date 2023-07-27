@@ -2,7 +2,6 @@ export { default as ActionIcon, type ActionIconProps, type ActionIconSize } from
 export { default as ActionIconGroup, type ActionIconGroupProps } from './ActionIconGroup';
 export { default as Avatar, type AvatarProps } from './Avatar';
 export { default as Burger, type BurgerProps } from './Burger';
-export type { ChatMessage, MessageRoleType } from './Chat';
 export { default as ChatHeader, type ChatHeaderProps } from './ChatHeader';
 export { default as ChatInputArea, type ChatInputAreaProps } from './ChatInputArea';
 export { default as ChatItem, type ChatItemProps } from './ChatItem';

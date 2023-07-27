@@ -1,10 +1,11 @@
 import { produce } from 'immer';
 
-import { ChatMessage, ChatMessageError, MessageRoleType } from '../types';
+import { ChatMessageError, MessageRoleType } from '@/types';
+import { LLMMessage } from '@/types/llm';
 
 export type MessageDispatch =
-  | { message: ChatMessage; type: 'addMessage' }
-  | { index: number; message: ChatMessage; type: 'insertMessage' }
+  | { message: LLMMessage; type: 'addMessage' }
+  | { index: number; message: LLMMessage; type: 'insertMessage' }
   | { index: number; type: 'deleteMessage' }
   | { type: 'resetMessages' }
   | { index: number; message: string; type: 'updateMessage' }
@@ -19,7 +20,7 @@ export type MessageDispatch =
       type: 'setErrorMessage';
     };
 
-export const messagesReducer = (state: ChatMessage[], payload: MessageDispatch): ChatMessage[] => {
+export const messagesReducer = (state: LLMMessage[], payload: MessageDispatch): LLMMessage[] => {
   switch (payload.type) {
     case 'addMessage': {
       return [...state, payload.message];
@@ -73,23 +74,6 @@ export const messagesReducer = (state: ChatMessage[], payload: MessageDispatch):
         const { index, error } = payload;
 
         draftState[index].error = error;
-      });
-    }
-
-    case 'updateMessageChoice': {
-      return produce(state, (draftState) => {
-        const { index, message } = payload;
-
-        const botMessage = draftState[index];
-        const previousMessage = botMessage.content;
-
-        botMessage.content = message;
-
-        if (botMessage.choices) {
-          botMessage.choices.push(previousMessage);
-        } else {
-          botMessage.choices = [previousMessage];
-        }
       });
     }
 

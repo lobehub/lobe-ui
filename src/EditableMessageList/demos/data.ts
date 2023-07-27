@@ -1,6 +1,6 @@
-import { ChatMessage } from '@/Chat';
+import { LLMMessage } from '@lobehub/ui';
 
-export const data: ChatMessage[] = [
+export const data: LLMMessage[] = [
   {
     content:
       '| **量化等级**   | **最低 GPU 显存**（推理） | **最低 GPU 显存**（高效参数微调） |\n| -------------- | ------------------------- | --------------------------------- |\n| FP16（无量化） | 13 GB                     | 14 GB                             |\n| INT8           | 8 GB                     | 9 GB                             |\n| INT4           | 6 GB                      | 7 GB                              |\n\n请解释 FP16 、INT8、INT4 的意思？',
