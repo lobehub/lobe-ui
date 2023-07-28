@@ -2,6 +2,47 @@
 
 # Changelog
 
+## [Version 1.60.0](https://github.com/lobehub/lobe-ui/compare/v1.59.0...v1.60.0)
+
+<sup>Released on **2023-07-28**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: 重构 ChatItem 相关的代码.
+
+#### ✨ Features
+
+- **misc**: 支持 loading 渲染.
+
+#### 💄 Styles
+
+- **misc**: 优化 Chat Error 展示样式.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: 重构 ChatItem 相关的代码 ([caa4a6f](https://github.com/lobehub/lobe-ui/commit/caa4a6f))
+
+#### What's improved
+
+- **misc**: 支持 loading 渲染 ([1626f26](https://github.com/lobehub/lobe-ui/commit/1626f26))
+
+#### Styles
+
+- **misc**: 优化 Chat Error 展示样式 ([11a0db2](https://github.com/lobehub/lobe-ui/commit/11a0db2))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.59.0](https://github.com/lobehub/lobe-ui/compare/v1.58.0...v1.59.0)
 
 <sup>Released on **2023-07-26**</sup>
