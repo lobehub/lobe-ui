@@ -75,7 +75,7 @@ const Item = memo<ChatMessage & ListItemProps>(
 
     const innerRenderMessage = useCallback(
       (content: ReactNode) => renderMessage?.(content, item),
-      [renderMessage],
+      [renderMessage, item],
     );
 
     return (
