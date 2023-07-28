@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.60.1](https://github.com/lobehub/lobe-ui/compare/v1.60.0...v1.60.1)
+
+<sup>Released on **2023-07-28**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: 修正 renderMessage 问题.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: 修正 renderMessage 问题 ([9616f1a](https://github.com/lobehub/lobe-ui/commit/9616f1a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.60.0](https://github.com/lobehub/lobe-ui/compare/v1.59.0...v1.60.0)
 
 <sup>Released on **2023-07-28**</sup>
