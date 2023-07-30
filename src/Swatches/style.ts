@@ -13,7 +13,7 @@ export const useStyles = createStyles(({ css, token }, size: number) => {
 
       background: ${token.colorBgContainer};
       border-radius: 50%;
-      box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
+      box-shadow: inset 0 0 0 2px ${token.colorSplit};
 
       transition:
         scale 400ms ${token.motionEaseOut},
