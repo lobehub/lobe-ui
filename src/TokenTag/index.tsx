@@ -7,6 +7,10 @@ import { ICON_SIZE, useStyles } from './style';
 
 export interface TokenTagProps extends DivProps {
   /**
+   * @default 'left'
+   */
+  displayMode?: 'left' | 'used';
+  /**
    * @description Maximum value for the token
    */
   maxValue: number;
@@ -21,7 +25,7 @@ export interface TokenTagProps extends DivProps {
 }
 
 const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
-  ({ className, maxValue, value, text, ...props }, ref) => {
+  ({ className, displayMode = 'left', maxValue, value, text, ...props }, ref) => {
     const valueLeft = maxValue - value;
     const percent = valueLeft / maxValue;
     let type: 'normal' | 'low' | 'overload';
@@ -43,7 +47,9 @@ const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
     return (
       <div className={cx(styles.container, className)} ref={ref} {...props}>
         <FluentEmoji emoji={emoji} size={ICON_SIZE} />
-        {valueLeft > 0 ? text?.tokens || `Tokens ${valueLeft}` : text?.overload || 'Overload'}
+        {valueLeft > 0
+          ? text?.tokens || `Tokens ${displayMode === 'left' ? valueLeft : value}`
+          : text?.overload || 'Overload'}
       </div>
     );
   },
