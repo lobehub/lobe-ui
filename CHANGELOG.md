@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.61.0](https://github.com/lobehub/lobe-ui/compare/v1.60.2...v1.61.0)
+
+<sup>Released on **2023-07-30**</sup>
+
+#### ✨ Features
+
+- **misc**: 优化 EditableText 与 ControlInput 组件以支持标题编辑需求.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: 优化 EditableText 与 ControlInput 组件以支持标题编辑需求 ([bb585ba](https://github.com/lobehub/lobe-ui/commit/bb585ba))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.60.2](https://github.com/lobehub/lobe-ui/compare/v1.60.1...v1.60.2)
 
 <sup>Released on **2023-07-30**</sup>
