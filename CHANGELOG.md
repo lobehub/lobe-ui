@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.60.2](https://github.com/lobehub/lobe-ui/compare/v1.60.1...v1.60.2)
+
+<sup>Released on **2023-07-30**</sup>
+
+#### 💄 Styles
+
+- **misc**: 优化 Swatch 分割线颜色.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: 优化 Swatch 分割线颜色 ([7426c5a](https://github.com/lobehub/lobe-ui/commit/7426c5a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.60.1](https://github.com/lobehub/lobe-ui/compare/v1.60.0...v1.60.1)
 
 <sup>Released on **2023-07-28**</sup>
