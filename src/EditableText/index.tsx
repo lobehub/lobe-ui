@@ -1,37 +1,50 @@
 import { Edit3 } from 'lucide-react';
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
+import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
 import { ControlInput, ControlInputProps } from '@/components/ControlInput';
 
-export type EditableTextProps = ControlInputProps;
+export interface EditableTextProps extends ControlInputProps {
+  editing?: boolean;
+  onEditingChange?: (editing: boolean) => void;
+  showEditIcon?: boolean;
+}
 
-const EditableText = memo<EditableTextProps>(({ value, onChange }: ControlInputProps) => {
-  const [edited, setEdited] = useState(false);
+const EditableText = memo<EditableTextProps>(
+  ({ value, showEditIcon = true, onChange, editing, onEditingChange, ...props }) => {
+    const [edited, setEdited] = useControlledState(false, {
+      onChange: onEditingChange,
+      value: editing,
+    });
 
-  return edited ? (
-    <ControlInput
-      onChange={onChange}
-      onChangeEnd={() => {
-        setEdited(false);
-      }}
-      value={value as string}
-    />
-  ) : (
-    <Flexbox gap={8} horizontal>
-      {value}
-      <ActionIcon
-        icon={Edit3}
-        onClick={() => {
-          setEdited(!edited);
+    return edited ? (
+      <ControlInput
+        onChange={onChange}
+        onChangeEnd={() => {
+          setEdited(false);
         }}
-        placement="right"
-        size="small"
-        title={'Edit'}
+        value={value as string}
+        {...props}
       />
-    </Flexbox>
-  );
-});
+    ) : (
+      <Flexbox gap={8} horizontal>
+        {value}
+        {showEditIcon && (
+          <ActionIcon
+            icon={Edit3}
+            onClick={() => {
+              setEdited(!edited);
+            }}
+            placement="right"
+            size="small"
+            title={'Edit'}
+          />
+        )}
+      </Flexbox>
+    );
+  },
+);
 
 export default EditableText;

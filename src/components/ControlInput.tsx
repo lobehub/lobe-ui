@@ -41,6 +41,7 @@ export const ControlInput = forwardRef<InputRef, ControlInputProps>(
 
     return (
       <Input
+        autoFocus
         onBlur={() => {
           isFocusing.current = false;
           onChangeEnd?.(input);
