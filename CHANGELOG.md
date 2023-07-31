@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.64.0](https://github.com/lobehub/lobe-ui/compare/v1.63.0...v1.64.0)
+
+<sup>Released on **2023-07-31**</sup>
+
+#### ✨ Features
+
+- **misc**: Import `useHover` and `useRef` hooks, update `displayMode` prop, use `useHover` in `TokenTag` component, and modify component styling.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Import `useHover` and `useRef` hooks, update `displayMode` prop, use `useHover` in `TokenTag` component, and modify component styling ([b0ecdba](https://github.com/lobehub/lobe-ui/commit/b0ecdba))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.63.0](https://github.com/lobehub/lobe-ui/compare/v1.62.0...v1.63.0)
 
 <sup>Released on **2023-07-31**</sup>
