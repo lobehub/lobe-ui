@@ -1,10 +1,16 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }) => {
+export const useStyles = createStyles(({ css, token }, pin: boolean) => {
   return {
+    actions: css`
+      position: absolute;
+      top: 50%;
+      right: 16px;
+      transform: translateY(-50%);
+    `,
     active: css`
       color: ${token.colorText};
-      background-color: ${token.colorFillTertiary};
+      background-color: ${token.colorFillSecondary};
 
       &:hover {
         background-color: ${token.colorFill};
@@ -13,14 +19,15 @@ export const useStyles = createStyles(({ css, token }) => {
     container: css`
       cursor: pointer;
       color: ${token.colorTextTertiary};
+      background: ${pin ? token.colorFillTertiary : 'transparent'};
       transition: background-color 200ms ${token.motionEaseOut};
 
       &:active {
-        background-color: ${token.colorFill} !important;
+        background-color: ${pin ? token.colorFill : token.colorFillSecondary} !important;
       }
 
       &:hover {
-        background-color: ${token.colorFillSecondary};
+        background-color: ${pin ? token.colorFill : token.colorFillTertiary};
       }
     `,
     content: css`
@@ -40,12 +47,8 @@ export const useStyles = createStyles(({ css, token }) => {
       white-space: nowrap;
     `,
 
-    inner: css`
-      transition: scale 400ms ${token.motionEaseOut};
-
-      &:active {
-        scale: 0.95;
-      }
+    pin: css`
+      background-color: ${token.colorFillTertiary};
     `,
 
     time: css`

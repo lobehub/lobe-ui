@@ -38,6 +38,7 @@ export const useStyles = createStyles(
     `;
 
     const pureContainerStylish = css`
+      margin-bottom: -16px;
       transition: background-color 100ms ${token.motionEaseOut};
     `;
 
@@ -126,17 +127,24 @@ export const useStyles = createStyles(
           }
         `,
       ),
-      editingContainer: css`
-        padding: 8px 12px 12px;
-        border: 1px solid ${token.colorBorderSecondary};
+      editingContainer: cx(
+        css`
+          padding: 8px 12px 12px;
+          border: 1px solid ${token.colorBorderSecondary};
 
-        &:active,
-        &:hover {
-          border-color: ${token.colorBorder};
-        }
-      `,
+          &:active,
+          &:hover {
+            border-color: ${token.colorBorder};
+          }
+        `,
+        type === 'pure' &&
+          css`
+            background: ${token.colorFillQuaternary};
+            border-radius: ${token.borderRadius}px;
+          `,
+      ),
       editingInput: css`
-        min-height: 80px;
+        min-height: 32px;
       `,
       loading: css`
         position: absolute;

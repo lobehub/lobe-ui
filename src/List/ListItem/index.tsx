@@ -10,9 +10,14 @@ import { getChatItemTime } from './time';
  */
 export interface ListItemProps {
   /**
+   * 渲染操作区域的 React 节点
+   */
+  actions?: ReactNode;
+  /**
    * 是否处于激活状态
    */
   active: boolean;
+  addon?: ReactNode;
   /**
    * 头像的 React 节点
    */
@@ -49,10 +54,8 @@ export interface ListItemProps {
    * @param hover - 是否悬停
    */
   onHoverChange?: (hover: boolean) => void;
-  /**
-   * 渲染操作区域的 React 节点
-   */
-  renderActions?: ReactNode;
+
+  pin?: boolean;
   /**
    * 是否显示操作区域
    */
@@ -68,7 +71,7 @@ export interface ListItemProps {
 }
 
 const ListItem = memo(
-  forwardRef<HTMLElement, ListItemProps & HTMLAttributes<any>>(
+  forwardRef<HTMLDivElement, ListItemProps & HTMLAttributes<any>>(
     (
       {
         active,
@@ -78,34 +81,34 @@ const ListItem = memo(
         date,
         title,
         onHoverChange,
-        renderActions,
+        actions,
         className,
         style,
         showAction,
         children,
         classNames = {},
+        pin,
         ...props
       },
-      reference,
+      ref,
     ) => {
-      const { styles, cx } = useStyles();
+      const { styles, cx } = useStyles(pin);
 
       return (
-        <Flexbox
+        <div
           className={cx(styles.container, active && styles.active, className)}
-          ref={reference}
-          style={style}
-          {...props}
           onMouseEnter={() => {
             onHoverChange?.(true);
           }}
           onMouseLeave={() => {
             onHoverChange?.(false);
           }}
+          ref={ref}
+          style={style}
+          {...props}
         >
           <Flexbox
             align={'flex-start'}
-            className={styles.inner}
             distribution={'space-between'}
             gap={8}
             horizontal
@@ -125,14 +128,16 @@ const ListItem = memo(
               <LoadingOutlined spin={true} />
             ) : showAction ? (
               <Flexbox
+                className={styles.actions}
                 gap={4}
                 horizontal
                 onClick={(e) => {
+                  e.preventDefault();
                   e.stopPropagation();
                 }}
                 style={{ display: showAction ? undefined : 'none' }}
               >
-                {renderActions}
+                {actions}
               </Flexbox>
             ) : (
               date && (
@@ -141,7 +146,7 @@ const ListItem = memo(
             )}
             {children}
           </Flexbox>
-        </Flexbox>
+        </div>
       );
     },
   ),

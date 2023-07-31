@@ -105,6 +105,7 @@ const EditableMessage = memo<EditableMessageProps>(
         }}
         placeholder={placeholder}
         style={styles?.input}
+        text={text}
       />
     ) : (
       <>
@@ -120,6 +121,7 @@ const EditableMessage = memo<EditableMessageProps>(
             }}
             placeholder={placeholder}
             style={styles?.input}
+            text={text}
           />
         ) : (
           <Markdown className={classNames?.markdown} style={styles?.markdown}>
