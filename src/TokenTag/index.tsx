@@ -1,4 +1,5 @@
-import { forwardRef } from 'react';
+import { useHover } from 'ahooks';
+import { forwardRef, useRef } from 'react';
 
 import FluentEmoji from '@/FluentEmoji';
 import { DivProps } from '@/types';
@@ -9,14 +10,16 @@ export interface TokenTagProps extends DivProps {
   /**
    * @default 'left'
    */
-  displayMode?: 'left' | 'used';
+  displayMode?: 'remained' | 'used';
   /**
    * @description Maximum value for the token
    */
   maxValue: number;
   text?: {
     overload?: string;
+    remained?: string;
     tokens?: string;
+    used?: string;
   };
   /**
    * @description Current value of the token
@@ -25,7 +28,10 @@ export interface TokenTagProps extends DivProps {
 }
 
 const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
-  ({ className, displayMode = 'left', maxValue, value, text, ...props }, ref) => {
+  ({ className, displayMode = 'remained', maxValue, value, text, ...props }, ref) => {
+    const reference: any = useRef(ref);
+    const isHovering = useHover(reference);
+
     const valueLeft = maxValue - value;
     const percent = valueLeft / maxValue;
     let type: 'normal' | 'low' | 'overload';
@@ -45,10 +51,14 @@ const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
     const { styles, cx } = useStyles(type);
 
     return (
-      <div className={cx(styles.container, className)} ref={ref} {...props}>
+      <div className={cx(styles.container, className)} ref={reference} {...props}>
         <FluentEmoji emoji={emoji} size={ICON_SIZE} />
         {valueLeft > 0
-          ? text?.tokens || `Tokens ${displayMode === 'left' ? valueLeft : value}`
+          ? [
+              displayMode === 'remained' ? text?.remained || 'Remained' : text?.used || 'Used',
+              displayMode === 'remained' ? valueLeft : value,
+              isHovering ? text?.tokens || 'Tokens' : '',
+            ].join(' ')
           : text?.overload || 'Overload'}
       </div>
     );

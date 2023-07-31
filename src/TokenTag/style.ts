@@ -35,13 +35,17 @@ export const useStyles = createStyles(({ cx, css, token }, type: 'normal' | 'low
 
         overflow: hidden;
         display: flex;
+        flex: 0;
         gap: 4px;
         align-items: center;
 
+        min-width: fit-content;
         height: ${HEIGHT}px;
         padding: 0 ${(HEIGHT - ICON_SIZE) * 1.2}px 0 ${(HEIGHT - ICON_SIZE) / 2}px;
 
         font-family: ${token.fontFamilyCode};
+        font-size: 13px;
+        line-height: 1;
 
         background: ${token.colorFillSecondary};
         border-radius: ${HEIGHT / 2}px;
