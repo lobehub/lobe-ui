@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.65.0](https://github.com/lobehub/lobe-ui/compare/v1.64.0...v1.65.0)
+
+<sup>Released on **2023-08-01**</sup>
+
+#### ✨ Features
+
+- **misc**: 支持 InputArea 右侧区域的自定义.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: 支持 InputArea 右侧区域的自定义 ([1d272dd](https://github.com/lobehub/lobe-ui/commit/1d272dd))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.64.0](https://github.com/lobehub/lobe-ui/compare/v1.63.0...v1.64.0)
 
 <sup>Released on **2023-07-31**</sup>
