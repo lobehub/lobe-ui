@@ -1,7 +1,7 @@
 {
   "name": "@lobehub/ui",
   "version": "1.64.0",
-  "description": "Lobe UI is an open-source UI component library for building chatbot web apps",
+  "description": "Lobe UI is an open-source UI component library for building AIGC web apps",
   "keywords": [
     "lobehub",
     "components",

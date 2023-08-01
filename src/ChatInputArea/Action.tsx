@@ -36,11 +36,12 @@ export interface ActionProps {
    * @description Actions to be displayed in the input area
    */
   actions?: ReactNode;
+  actionsRight?: ReactNode;
   expand?: boolean;
   onExpandChange?: (expand: boolean) => void;
 }
 
-const Action = memo<ActionProps>(({ actions, expand, onExpandChange }) => {
+const Action = memo<ActionProps>(({ actions, actionsRight, expand, onExpandChange }) => {
   const { styles } = useStyles();
 
   const handleExpandClick = useCallback(() => {
@@ -51,6 +52,7 @@ const Action = memo<ActionProps>(({ actions, expand, onExpandChange }) => {
     <div className={styles.actionsBar}>
       <div className={styles.actionLeft}>{actions}</div>
       <div className={styles.actionsRight}>
+        {actionsRight}
         <ActionIcon icon={expand ? Minimize2 : Maximize2} onClick={handleExpandClick} />
       </div>
     </div>

@@ -101,6 +101,7 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
       onBlur,
       onChange,
       textareaId = 'lobe-chat-input-area',
+      actionsRight,
       ...props
     },
     ref,
@@ -121,7 +122,12 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
 
     return (
       <section className={cx(styles.container, className)} style={{ minHeight, ...style }}>
-        <Action actions={actions} expand={expand} onExpandChange={onExpandChange} />
+        <Action
+          actions={actions}
+          actionsRight={actionsRight}
+          expand={expand}
+          onExpandChange={onExpandChange}
+        />
         <div className={styles.textareaContainer}>
           <InputHighlight target={textareaId} value={value} />
           <TextArea
