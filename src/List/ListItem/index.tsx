@@ -87,6 +87,7 @@ const ListItem = memo(
         showAction,
         children,
         classNames = {},
+        addon,
         pin,
         ...props
       },
@@ -117,32 +118,41 @@ const ListItem = memo(
           >
             {avatar ?? <MessageOutlined style={{ marginTop: 4 }} />}
 
-            <Flexbox className={styles.content}>
+            <Flexbox className={styles.content} gap={8}>
               <Flexbox distribution={'space-between'} horizontal>
                 <div className={styles.title}>{title}</div>
               </Flexbox>
               {description && <div className={styles.desc}>{description}</div>}
+              {addon}
             </Flexbox>
 
             {loading ? (
               <LoadingOutlined spin={true} />
-            ) : showAction ? (
-              <Flexbox
-                className={styles.actions}
-                gap={4}
-                horizontal
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
-                style={{ display: showAction ? undefined : 'none' }}
-              >
-                {actions}
-              </Flexbox>
             ) : (
-              date && (
-                <div className={cx(styles.time, classNames.time)}>{getChatItemTime(date)}</div>
-              )
+              <>
+                {showAction && (
+                  <Flexbox
+                    className={styles.actions}
+                    gap={4}
+                    horizontal
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
+                    style={{ display: showAction ? undefined : 'none' }}
+                  >
+                    {actions}
+                  </Flexbox>
+                )}
+                {date && (
+                  <div
+                    className={cx(styles.time, classNames.time)}
+                    style={showAction ? { opacity: 0 } : {}}
+                  >
+                    {getChatItemTime(date)}
+                  </div>
+                )}
+              </>
             )}
             {children}
           </Flexbox>

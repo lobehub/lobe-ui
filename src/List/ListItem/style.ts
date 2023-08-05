@@ -34,14 +34,15 @@ export const useStyles = createStyles(({ css, token }, pin: boolean) => {
       position: relative;
       overflow: hidden;
       flex: 1;
+      padding-top: 6px;
     `,
     desc: css`
       overflow: hidden;
 
       width: 100%;
-      margin-top: 2px;
 
       font-size: 12px;
+      line-height: 1;
       color: ${token.colorTextDescription};
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -61,6 +62,7 @@ export const useStyles = createStyles(({ css, token }, pin: boolean) => {
       width: 100%;
 
       font-size: 16px;
+      line-height: 1;
       color: ${token.colorText};
       text-overflow: ellipsis;
       white-space: nowrap;
