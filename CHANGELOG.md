@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.67.0](https://github.com/lobehub/lobe-ui/compare/v1.66.0...v1.67.0)
+
+<sup>Released on **2023-08-05**</sup>
+
+#### ✨ Features
+
+- **chatlist**: Update logic for rendering chat items based on role.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **chatlist**: Update logic for rendering chat items based on role ([fc59b17](https://github.com/lobehub/lobe-ui/commit/fc59b17))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.66.0](https://github.com/lobehub/lobe-ui/compare/v1.65.0...v1.66.0)
 
 <sup>Released on **2023-08-05**</sup>
