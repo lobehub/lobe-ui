@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.66.0](https://github.com/lobehub/lobe-ui/compare/v1.65.0...v1.66.0)
+
+<sup>Released on **2023-08-05**</sup>
+
+#### ✨ Features
+
+- **misc**: Add new prop and update rendering logic in ChatList and ListItem components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add new prop and update rendering logic in ChatList and ListItem components ([f0fdd27](https://github.com/lobehub/lobe-ui/commit/f0fdd27))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.65.0](https://github.com/lobehub/lobe-ui/compare/v1.64.0...v1.65.0)
 
 <sup>Released on **2023-08-01**</sup>
