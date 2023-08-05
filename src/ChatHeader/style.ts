@@ -9,6 +9,7 @@ export const useStyles = createStyles(({ css, token, stylish, cx }) => {
         position: absolute;
         z-index: 10;
 
+        overflow: hidden;
         grid-area: header;
         align-self: stretch;
 
@@ -23,5 +24,15 @@ export const useStyles = createStyles(({ css, token, stylish, cx }) => {
         border-bottom: 1px solid ${token.colorBorder};
       `,
     ),
+    left: css`
+      position: relative;
+      overflow: hidden;
+      flex: 1;
+    `,
+    right: css`
+      position: relative;
+      overflow: hidden;
+      flex: none;
+    `,
   };
 });
