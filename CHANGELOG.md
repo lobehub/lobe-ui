@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.68.0](https://github.com/lobehub/lobe-ui/compare/v1.67.0...v1.68.0)
+
+<sup>Released on **2023-08-05**</sup>
+
+#### ✨ Features
+
+- **misc**: Add new optional props and modify JSX structure and styles in ChatHeader component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add new optional props and modify JSX structure and styles in ChatHeader component ([7d6ede5](https://github.com/lobehub/lobe-ui/commit/7d6ede5))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.67.0](https://github.com/lobehub/lobe-ui/compare/v1.66.0...v1.67.0)
 
 <sup>Released on **2023-08-05**</sup>
