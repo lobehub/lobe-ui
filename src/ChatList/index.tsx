@@ -53,10 +53,10 @@ const ChatList = memo<ChatListProps>(
             type,
             ...item,
           };
-          if (renderItem && renderItem[item.role]) {
-            return renderItem[item.role]({ key, ...props });
-          }
-          return <Item key={key} {...props} />;
+
+          const Render = renderItem && renderItem[item.role] ? renderItem[item.role] : Item;
+
+          return <Render key={key} {...props} />;
         })}
       </div>
     );
