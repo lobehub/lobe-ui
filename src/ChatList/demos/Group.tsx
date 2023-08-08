@@ -1,6 +1,6 @@
 import { ChatList, ChatListProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
 
-import { data } from './data';
+import { groupData } from './data';
 
 export default () => {
   const store = useCreateStore();
@@ -18,10 +18,10 @@ export default () => {
   return (
     <StroyBook levaStore={store}>
       <ChatList
-        data={data}
-        style={{ width: '100%' }}
+        data={groupData}
         {...control}
         onActionClick={(key) => console.log(key)}
+        style={{ width: '100%' }}
       />
     </StroyBook>
   );

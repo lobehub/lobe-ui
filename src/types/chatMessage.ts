@@ -13,7 +13,7 @@ export interface ChatMessageError {
   type?: string;
 }
 
-export interface ChatMessage extends BaseDataModel {
+export interface SingleChatMessage extends BaseDataModel {
   /**
    * @title 内容
    * @description 消息内容
@@ -30,7 +30,7 @@ export interface ChatMessage extends BaseDataModel {
       to: string;
     };
   } & Record<string, any>;
-  parentId?: string;
+
   // 引用
   quotaId?: string;
   /**
@@ -38,4 +38,9 @@ export interface ChatMessage extends BaseDataModel {
    * @description 消息发送者的角色
    */
   role: MessageRoleType;
+}
+
+export interface ChatMessage extends SingleChatMessage {
+  children?: SingleChatMessage[];
+  parentId?: string;
 }

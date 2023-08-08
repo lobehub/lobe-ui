@@ -12,7 +12,7 @@ export const useStyles = createStyles(
       avatarSize,
       showTitle,
     }: {
-      avatarSize: number;
+      avatarSize?: number;
       placement?: 'left' | 'right';
       primary?: boolean;
       showTitle?: boolean;
@@ -87,6 +87,9 @@ export const useStyles = createStyles(
         flex: none;
         width: ${avatarSize}px;
         height: ${avatarSize}px;
+      `,
+      avatarGroupContainer: css`
+        width: ${avatarSize}px;
       `,
       container: cx(
         type === 'pure' && pureContainerStylish,

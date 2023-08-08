@@ -9,6 +9,10 @@ description: ChatList is a component used to display a list of chat messages. It
 
 <code src="./demos/index.tsx" nopadding></code>
 
+## Group
+
+<code src="./demos/Group.tsx" nopadding></code>
+
 ## APIs
 
 <API></API>

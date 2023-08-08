@@ -1,7 +1,8 @@
-import { ReactNode, memo } from 'react';
+import { memo } from 'react';
 
-import type { ChatMessage, DivProps, MessageRoleType } from '@/types';
+import type { ChatMessage, DivProps } from '@/types';
 
+import Group from './Group';
 import Item, { ListItemProps } from './Item';
 import { useStyles } from './style';
 
@@ -11,11 +12,6 @@ export interface ChatListProps extends DivProps, ListItemProps {
    */
   data: ChatMessage[];
   loadingId?: string;
-  renderItem?: {
-    [role: MessageRoleType | string]: (
-      data: { key: string } & ChatMessage & ListItemProps,
-    ) => ReactNode;
-  };
 }
 export type { OnActionClick, OnMessageChange, RenderErrorMessage, RenderMessage } from './Item';
 
@@ -40,23 +36,30 @@ const ChatList = memo<ChatListProps>(
     return (
       <div className={cx(styles.container, className)} {...props}>
         {data.map((item) => {
-          const key = item.id;
           const props = {
             loading: loadingId === item.id,
             onActionClick,
             onMessageChange,
             renderErrorMessage,
+            renderItem,
             renderMessage,
             renderMessageExtra: MessageExtra,
             showTitle,
             text,
             type,
-            ...item,
           };
 
-          const Render = renderItem && renderItem[item.role] ? renderItem[item.role] : Item;
+          if (item.children && item.children?.length > 0) {
+            return (
+              <Group
+                data={item.children.map((childrenItem) => ({ ...props, ...childrenItem }))}
+                key={item.children[0].id}
+                meta={item.meta}
+              />
+            );
+          }
 
-          return <Render key={key} {...props} />;
+          return <Item key={item.id} {...props} {...item} />;
         })}
       </div>
     );
