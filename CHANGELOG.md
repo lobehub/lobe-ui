@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.69.0](https://github.com/lobehub/lobe-ui/compare/v1.68.0...v1.69.0)
+
+<sup>Released on **2023-08-08**</sup>
+
+#### ✨ Features
+
+- **misc**: Implement chat item feature.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Implement chat item feature ([1d60060](https://github.com/lobehub/lobe-ui/commit/1d60060))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.68.0](https://github.com/lobehub/lobe-ui/compare/v1.67.0...v1.68.0)
 
 <sup>Released on **2023-08-05**</sup>
