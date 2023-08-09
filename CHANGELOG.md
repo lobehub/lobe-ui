@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.70.0](https://github.com/lobehub/lobe-ui/compare/v1.69.0...v1.70.0)
+
+<sup>Released on **2023-08-09**</sup>
+
+#### ✨ Features
+
+- **misc**: Add new files and modify existing ones for grid background and showcase.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add new files and modify existing ones for grid background and showcase ([5b1dfa4](https://github.com/lobehub/lobe-ui/commit/5b1dfa4))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.69.0](https://github.com/lobehub/lobe-ui/compare/v1.68.0...v1.69.0)
 
 <sup>Released on **2023-08-08**</sup>
