@@ -52,6 +52,8 @@ export { default as FormItem, type FormItemProps } from './Form/components/FormI
 export { default as FormTitle, type FormTitleProps } from './Form/components/FormTitle';
 export { default as Giscus, type GiscusProps } from './Giscus';
 export { default as GradientButton, type GradientButtonProps } from './GradientButton';
+export { default as GridBackground, type GridBackgroundProps } from './GridBackground';
+export { default as GridShowcase, type GridShowcaseProps } from './GridBackground/GridShowcase';
 export { default as Header, type HeaderProps } from './Header';
 export { default as Hero, type HeroAction, type HeroProps } from './Hero';
 export {
