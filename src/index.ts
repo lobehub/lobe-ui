@@ -82,6 +82,7 @@ export {
 } from './Layout';
 export { default as List } from './List';
 export { default as Logo, type LogoProps } from './Logo';
+export { default as LogoThree, type LogoThreeProps } from './LogoThree';
 export { default as Markdown, type MarkdownProps } from './Markdown';
 export { default as MessageInput, type MessageInputProps } from './MessageInput';
 export { default as MessageModal, type MessageModalProps } from './MessageModal';
