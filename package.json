@@ -105,8 +105,8 @@
     "three": "^0.150",
     "ts-md5": "^1",
     "use-merge-value": "^1",
-    "zustand": "^4",
-    "zustand-utils": "^1"
+    "zustand": "^4.4.1",
+    "zustand-utils": "^1.3.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^17",
