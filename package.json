@@ -75,6 +75,7 @@
     "@floating-ui/react": "^0",
     "@giscus/react": "^2",
     "@lobehub/emojilib": "latest",
+    "@react-spring/three": "^9",
     "@react-spring/web": "^9",
     "@react-three/drei": "^9",
     "@react-three/fiber": "^8",
