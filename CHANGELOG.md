@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.72.1](https://github.com/lobehub/lobe-ui/compare/v1.72.0...v1.72.1)
+
+<sup>Released on **2023-08-11**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Update zustand usage to v4.4.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Update zustand usage to v4.4, closes [#40](https://github.com/lobehub/lobe-ui/issues/40) ([8de6c80](https://github.com/lobehub/lobe-ui/commit/8de6c80))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.72.0](https://github.com/lobehub/lobe-ui/compare/v1.71.0...v1.72.0)
 
 <sup>Released on **2023-08-11**</sup>
