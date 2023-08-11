@@ -2,6 +2,40 @@
 
 # Changelog
 
+## [Version 1.71.0](https://github.com/lobehub/lobe-ui/compare/v1.70.0...v1.71.0)
+
+<sup>Released on **2023-08-11**</sup>
+
+#### ✨ Features
+
+- **misc**: Add LogoThree component to Lobe UI, Import component, add and remove features, modify code, and update tsconfig.json.
+
+#### 🐛 Bug Fixes
+
+- **misc**: 移除不必要的 hover 效果.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add LogoThree component to Lobe UI ([0122bf7](https://github.com/lobehub/lobe-ui/commit/0122bf7))
+- **misc**: Import component, add and remove features, modify code, and update tsconfig.json ([d330b20](https://github.com/lobehub/lobe-ui/commit/d330b20))
+
+#### What's fixed
+
+- **misc**: 移除不必要的 hover 效果 ([b1d1ecd](https://github.com/lobehub/lobe-ui/commit/b1d1ecd))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.70.0](https://github.com/lobehub/lobe-ui/compare/v1.69.0...v1.70.0)
 
 <sup>Released on **2023-08-09**</sup>
