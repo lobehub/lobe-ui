@@ -1,5 +1,6 @@
 import { type Highlighter, type HighlighterOptions, getHighlighter } from 'shiki-es';
-import { create } from 'zustand';
+import { shallow } from 'zustand/shallow';
+import { createWithEqualityFn } from 'zustand/traditional';
 
 import { themeConfig } from '@/Highlighter/theme';
 
@@ -42,31 +43,34 @@ interface Store {
   initHighlighter: (options?: HighlighterOptions) => Promise<void>;
 }
 
-export const useHighlight = create<Store>((set, get) => ({
-  codeToHtml: (text, language, isDarkMode) => {
-    const { highlighter } = get();
+export const useHighlight = createWithEqualityFn<Store>(
+  (set, get) => ({
+    codeToHtml: (text, language, isDarkMode) => {
+      const { highlighter } = get();
 
-    if (!highlighter) return '';
+      if (!highlighter) return '';
 
-    try {
-      return highlighter?.codeToHtml(text, {
-        lang: language,
-        theme: isDarkMode ? 'dark' : 'light',
-      });
-    } catch {
-      return text;
-    }
-  },
-  highlighter: undefined,
+      try {
+        return highlighter?.codeToHtml(text, {
+          lang: language,
+          theme: isDarkMode ? 'dark' : 'light',
+        });
+      } catch {
+        return text;
+      }
+    },
+    highlighter: undefined,
 
-  initHighlighter: async (options) => {
-    if (!get().highlighter) {
-      const highlighter = await getHighlighter({
-        langs: options?.langs || (languageMap as any),
-        themes: options?.themes || [themeConfig(true), themeConfig(false)],
-      });
+    initHighlighter: async (options) => {
+      if (!get().highlighter) {
+        const highlighter = await getHighlighter({
+          langs: options?.langs || (languageMap as any),
+          themes: options?.themes || [themeConfig(true), themeConfig(false)],
+        });
 
-      set({ highlighter });
-    }
-  },
-}));
+        set({ highlighter });
+      }
+    },
+  }),
+  shallow,
+);

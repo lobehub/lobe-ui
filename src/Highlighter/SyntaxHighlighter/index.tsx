@@ -3,7 +3,6 @@ import { Loader2 } from 'lucide-react';
 import { memo, useEffect } from 'react';
 import { Center } from 'react-layout-kit';
 import { HighlighterOptions } from 'shiki-es';
-import { shallow } from 'zustand/shallow';
 
 import Icon from '@/Icon';
 import { useHighlight } from '@/hooks/useHighlight';
@@ -19,7 +18,7 @@ export interface SyntaxHighlighterProps {
 const SyntaxHighlighter = memo<SyntaxHighlighterProps>(({ children, language, options }) => {
   const { styles } = useStyles();
   const { isDarkMode } = useThemeMode();
-  const [codeToHtml, isLoading] = useHighlight((s) => [s.codeToHtml, !s.highlighter], shallow);
+  const [codeToHtml, isLoading] = useHighlight((s) => [s.codeToHtml, !s.highlighter]);
 
   useEffect(() => {
     useHighlight.getState().initHighlighter(options);
