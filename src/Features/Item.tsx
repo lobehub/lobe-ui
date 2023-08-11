@@ -1,8 +1,7 @@
-import { Icon } from '@lobehub/ui';
-import * as LucideIcon from 'lucide-react';
 import { CSSProperties, memo } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
+import Icon, { IconProps } from '@/Icon';
 import type { DivProps } from '@/types';
 
 import { useStyles } from './Item.style';
@@ -23,7 +22,7 @@ export interface FeatureItem {
   /**
    * @description The name of the icon to display on the feature item.
    */
-  icon?: string;
+  icon?: IconProps['icon'];
   /**
    * @description The URL of the image to display on the feature item.
    */
@@ -59,12 +58,14 @@ export interface FeatureItem {
 // @ts-ignore
 export interface FeatureItemProps extends FeatureItem, DivProps {}
 
-const Image = memo<{ className?: string; image: string; title: string }>(
-  ({ image, className, title }) => {
+const Image = memo<{ className?: string; image: string; style?: CSSProperties; title: string }>(
+  ({ image, className, title, style }) => {
     return image.startsWith('http') ? (
-      <img alt={title} className={className} src={image} />
+      <img alt={title} className={className} src={image} style={style} />
     ) : (
-      <Center className={className}>{image}</Center>
+      <Center className={className} style={style}>
+        {image}
+      </Center>
     );
   },
 );
@@ -87,9 +88,6 @@ const Item = memo<FeatureItemProps>(
     const rowNumber = row || 7;
     const { styles, cx } = useStyles({ hasLink: Boolean(link), rowNum: rowNumber });
 
-    // @ts-ignore
-    const FeatureIcon = icon && LucideIcon[icon];
-
     return (
       <div
         className={cx(styles.container, className)}
@@ -102,13 +100,12 @@ const Item = memo<FeatureItemProps>(
       >
         <div className={styles.cell}>
           {image ||
-            (FeatureIcon && (
+            (icon && (
               <Center className={styles.imgContainer} style={imageStyle}>
-                {FeatureIcon && <Icon className={styles.img} icon={FeatureIcon} />}
+                {icon && <Icon className={styles.img} icon={icon} />}
                 {image && <Image className={styles.img} image={image} title={title} />}
               </Center>
             ))}
-
           {title && (
             <Flexbox align={'center'} as={'h3'} className={styles.title} gap={8} horizontal>
               {title}

@@ -32,6 +32,7 @@ const GridShowcase = memo<GridShowcaseProps>(
           colorBack={rgba(theme.colorText, 0.24)}
           colorFront={theme.colorText}
           random
+          reverse
           showBackground
           style={{ zIndex: 0 }}
         />
