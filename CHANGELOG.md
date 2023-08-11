@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.72.0](https://github.com/lobehub/lobe-ui/compare/v1.71.0...v1.72.0)
+
+<sup>Released on **2023-08-11**</sup>
+
+#### ✨ Features
+
+- **misc**: Add @react-spring/three dependency and implement hover state and rotation in Logo.tsx.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add @react-spring/three dependency and implement hover state and rotation in Logo.tsx ([7fb62c5](https://github.com/lobehub/lobe-ui/commit/7fb62c5))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.71.0](https://github.com/lobehub/lobe-ui/compare/v1.70.0...v1.71.0)
 
 <sup>Released on **2023-08-11**</sup>
