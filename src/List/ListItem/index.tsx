@@ -1,5 +1,5 @@
 import { LoadingOutlined, MessageOutlined } from '@ant-design/icons';
-import { CSSProperties, HTMLAttributes, ReactNode, forwardRef, memo } from 'react';
+import { CSSProperties, HTMLAttributes, ReactNode, forwardRef } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import { useStyles } from './style';
@@ -70,96 +70,94 @@ export interface ListItemProps {
   title: ReactNode;
 }
 
-const ListItem = memo(
-  forwardRef<HTMLDivElement, ListItemProps & HTMLAttributes<any>>(
-    (
-      {
-        active,
-        avatar,
-        loading,
-        description,
-        date,
-        title,
-        onHoverChange,
-        actions,
-        className,
-        style,
-        showAction,
-        children,
-        classNames = {},
-        addon,
-        pin,
-        ...props
-      },
-      ref,
-    ) => {
-      const { styles, cx } = useStyles(pin);
-
-      return (
-        <div
-          className={cx(styles.container, active && styles.active, className)}
-          onMouseEnter={() => {
-            onHoverChange?.(true);
-          }}
-          onMouseLeave={() => {
-            onHoverChange?.(false);
-          }}
-          ref={ref}
-          style={style}
-          {...props}
-        >
-          <Flexbox
-            align={'flex-start'}
-            distribution={'space-between'}
-            gap={8}
-            horizontal
-            paddingBlock={12}
-            paddingInline={16}
-          >
-            {avatar ?? <MessageOutlined style={{ marginTop: 4 }} />}
-
-            <Flexbox className={styles.content} gap={8}>
-              <Flexbox distribution={'space-between'} horizontal>
-                <div className={styles.title}>{title}</div>
-              </Flexbox>
-              {description && <div className={styles.desc}>{description}</div>}
-              {addon}
-            </Flexbox>
-
-            {loading ? (
-              <LoadingOutlined spin={true} />
-            ) : (
-              <>
-                {showAction && (
-                  <Flexbox
-                    className={styles.actions}
-                    gap={4}
-                    horizontal
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
-                    style={{ display: showAction ? undefined : 'none' }}
-                  >
-                    {actions}
-                  </Flexbox>
-                )}
-                {date && (
-                  <div
-                    className={cx(styles.time, classNames.time)}
-                    style={showAction ? { opacity: 0 } : {}}
-                  >
-                    {getChatItemTime(date)}
-                  </div>
-                )}
-              </>
-            )}
-            {children}
-          </Flexbox>
-        </div>
-      );
+const ListItem = forwardRef<HTMLDivElement, ListItemProps & HTMLAttributes<any>>(
+  (
+    {
+      active,
+      avatar,
+      loading,
+      description,
+      date,
+      title,
+      onHoverChange,
+      actions,
+      className,
+      style,
+      showAction,
+      children,
+      classNames,
+      addon,
+      pin,
+      ...props
     },
-  ),
+    ref,
+  ) => {
+    const { styles, cx } = useStyles();
+
+    return (
+      <div
+        className={cx(styles.container, active && styles.active, pin && styles.pin, className)}
+        onMouseEnter={() => {
+          onHoverChange?.(true);
+        }}
+        onMouseLeave={() => {
+          onHoverChange?.(false);
+        }}
+        ref={ref}
+        style={style}
+        {...props}
+      >
+        <Flexbox
+          align={'flex-start'}
+          distribution={'space-between'}
+          gap={8}
+          horizontal
+          paddingBlock={12}
+          paddingInline={16}
+        >
+          {avatar ?? <MessageOutlined style={{ marginTop: 4 }} />}
+
+          <Flexbox className={styles.content} gap={8}>
+            <Flexbox distribution={'space-between'} horizontal>
+              <div className={styles.title}>{title}</div>
+            </Flexbox>
+            {description && <div className={styles.desc}>{description}</div>}
+            {addon}
+          </Flexbox>
+
+          {loading ? (
+            <LoadingOutlined spin={true} />
+          ) : (
+            <>
+              {showAction && (
+                <Flexbox
+                  className={styles.actions}
+                  gap={4}
+                  horizontal
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                  style={{ display: showAction ? undefined : 'none' }}
+                >
+                  {actions}
+                </Flexbox>
+              )}
+              {date && (
+                <div
+                  className={cx(styles.time, classNames?.time)}
+                  style={showAction ? { opacity: 0 } : {}}
+                >
+                  {getChatItemTime(date)}
+                </div>
+              )}
+            </>
+          )}
+          {children}
+        </Flexbox>
+      </div>
+    );
+  },
 );
 
 export default ListItem;
