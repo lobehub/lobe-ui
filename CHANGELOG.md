@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.72.3](https://github.com/lobehub/lobe-ui/compare/v1.72.2...v1.72.3)
+
+<sup>Released on **2023-08-13**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: 移除 pangu 依赖.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: 移除 pangu 依赖 ([0ab0abf](https://github.com/lobehub/lobe-ui/commit/0ab0abf))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.72.2](https://github.com/lobehub/lobe-ui/compare/v1.72.1...v1.72.2)
 
 <sup>Released on **2023-08-12**</sup>
