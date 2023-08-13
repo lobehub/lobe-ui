@@ -95,67 +95,64 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps & HTMLAttributes<any>>
     const { styles, cx } = useStyles();
 
     return (
-      <div
+      <Flexbox
+        align={'flex-start'}
         className={cx(styles.container, active && styles.active, pin && styles.pin, className)}
+        distribution={'space-between'}
+        gap={8}
+        horizontal
         onMouseEnter={() => {
           onHoverChange?.(true);
         }}
         onMouseLeave={() => {
           onHoverChange?.(false);
         }}
+        paddingBlock={12}
+        paddingInline={16}
         ref={ref}
         style={style}
         {...props}
       >
-        <Flexbox
-          align={'flex-start'}
-          distribution={'space-between'}
-          gap={8}
-          horizontal
-          paddingBlock={12}
-          paddingInline={16}
-        >
-          {avatar ?? <MessageOutlined style={{ marginTop: 4 }} />}
+        {avatar ?? <MessageOutlined style={{ marginTop: 4 }} />}
 
-          <Flexbox className={styles.content} gap={8}>
-            <Flexbox distribution={'space-between'} horizontal>
-              <div className={styles.title}>{title}</div>
-            </Flexbox>
-            {description && <div className={styles.desc}>{description}</div>}
-            {addon}
+        <Flexbox className={styles.content} gap={8}>
+          <Flexbox distribution={'space-between'} horizontal>
+            <div className={styles.title}>{title}</div>
           </Flexbox>
-
-          {loading ? (
-            <LoadingOutlined spin={true} />
-          ) : (
-            <>
-              {showAction && (
-                <Flexbox
-                  className={styles.actions}
-                  gap={4}
-                  horizontal
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                  }}
-                  style={{ display: showAction ? undefined : 'none' }}
-                >
-                  {actions}
-                </Flexbox>
-              )}
-              {date && (
-                <div
-                  className={cx(styles.time, classNames?.time)}
-                  style={showAction ? { opacity: 0 } : {}}
-                >
-                  {getChatItemTime(date)}
-                </div>
-              )}
-            </>
-          )}
-          {children}
+          {description && <div className={styles.desc}>{description}</div>}
+          {addon}
         </Flexbox>
-      </div>
+
+        {loading ? (
+          <LoadingOutlined spin={true} />
+        ) : (
+          <>
+            {showAction && (
+              <Flexbox
+                className={styles.actions}
+                gap={4}
+                horizontal
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }}
+                style={{ display: showAction ? undefined : 'none' }}
+              >
+                {actions}
+              </Flexbox>
+            )}
+            {date && (
+              <div
+                className={cx(styles.time, classNames?.time)}
+                style={showAction ? { opacity: 0 } : {}}
+              >
+                {getChatItemTime(date)}
+              </div>
+            )}
+          </>
+        )}
+        {children}
+      </Flexbox>
     );
   },
 );
