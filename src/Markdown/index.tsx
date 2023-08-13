@@ -1,5 +1,4 @@
 import { Collapse, Divider, Typography } from 'antd';
-import pangu from 'pangu';
 import { CSSProperties, memo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -38,7 +37,7 @@ const Markdown = memo<MarkdownProps>(({ children, className, style, ...props }) 
         remarkPlugins={[remarkGfm]}
         {...props}
       >
-        {pangu.spacing(children)}
+        {children}
       </ReactMarkdown>
     </Typography>
   );
