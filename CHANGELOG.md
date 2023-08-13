@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.72.5](https://github.com/lobehub/lobe-ui/compare/v1.72.4...v1.72.5)
+
+<sup>Released on **2023-08-13**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: 修正 List Item 样式问题.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: 修正 List Item 样式问题 ([b31e8a8](https://github.com/lobehub/lobe-ui/commit/b31e8a8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.72.4](https://github.com/lobehub/lobe-ui/compare/v1.72.3...v1.72.4)
 
 <sup>Released on **2023-08-13**</sup>
