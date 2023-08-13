@@ -64,11 +64,11 @@ const SearchBar = memo<SearchBarProps>(
     }, []);
 
     return (
-      <div className={styles.search}>
+      <div className={cx(styles.search, className)}>
         {spotlight && <Spotlight />}
         <Input
           allowClear
-          className={cx(styles.input, className)}
+          className={styles.input}
           onBlur={() => setShowTag(true)}
           onChange={(e) => {
             setInputValue(e.target.value);
