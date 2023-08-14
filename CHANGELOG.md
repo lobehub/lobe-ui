@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.72.8](https://github.com/lobehub/lobe-ui/compare/v1.72.7...v1.72.8)
+
+<sup>Released on **2023-08-14**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update MessageInput style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update MessageInput style ([986bded](https://github.com/lobehub/lobe-ui/commit/986bded))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.72.7](https://github.com/lobehub/lobe-ui/compare/v1.72.6...v1.72.7)
 
 <sup>Released on **2023-08-14**</sup>
