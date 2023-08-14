@@ -13,6 +13,7 @@ export interface MessageInputProps extends DivProps {
    * @description Additional className to apply to the component.
    */
   className?: string;
+  classNames?: TextAreaProps['classNames'];
   /**
    * @description The default value of the input box.
    */
@@ -23,12 +24,12 @@ export interface MessageInputProps extends DivProps {
    * @description Callback function triggered when user clicks on the cancel button.
    */
   onCancel?: () => void;
+
   /**
    * @description Callback function triggered when user clicks on the confirm button.
    * @param text - The text input by the user.
    */
   onConfirm?: (text: string) => void;
-
   /**
    * @description Custom rendering of the bottom buttons.
    * @param text - The text input by the user.
@@ -57,10 +58,9 @@ const MessageInput = memo<MessageInputProps>(
     textareaStyle,
     textareaClassname,
     placeholder = 'Type something...',
-    height = 'fit-content',
     style,
     editButtonSize = 'middle',
-
+    classNames,
     ...props
   }) => {
     const [temporarySystemRole, setRole] = useState<string>(defaultValue || '');
@@ -69,12 +69,14 @@ const MessageInput = memo<MessageInputProps>(
     return (
       <Flexbox gap={16} style={{ flex: 1, width: '100%', ...style }} {...props}>
         <TextArea
+          autoSize
           className={cx(styles, textareaClassname)}
+          classNames={classNames}
           onBlur={(e) => setRole(e.target.value)}
           onChange={(e) => setRole(e.target.value)}
           placeholder={placeholder}
           resize={false}
-          style={{ height: height, minHeight: '100%', ...textareaStyle }}
+          style={textareaStyle}
           type={type}
           value={temporarySystemRole}
         />
