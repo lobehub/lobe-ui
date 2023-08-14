@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.72.7](https://github.com/lobehub/lobe-ui/compare/v1.72.6...v1.72.7)
+
+<sup>Released on **2023-08-14**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: 修复 ChatItem 编辑态宽度过小的问题.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: 修复 ChatItem 编辑态宽度过小的问题 ([daa2aa1](https://github.com/lobehub/lobe-ui/commit/daa2aa1))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.72.6](https://github.com/lobehub/lobe-ui/compare/v1.72.5...v1.72.6)
 
 <sup>Released on **2023-08-14**</sup>
