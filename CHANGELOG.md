@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.72.6](https://github.com/lobehub/lobe-ui/compare/v1.72.5...v1.72.6)
+
+<sup>Released on **2023-08-14**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Remove input highlight.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Remove input highlight ([3bef2d8](https://github.com/lobehub/lobe-ui/commit/3bef2d8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.72.5](https://github.com/lobehub/lobe-ui/compare/v1.72.4...v1.72.5)
 
 <sup>Released on **2023-08-13**</sup>
