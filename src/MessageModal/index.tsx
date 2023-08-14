@@ -1,12 +1,12 @@
 import { Modal } from 'antd';
 import { X } from 'lucide-react';
-import { memo } from 'react';
+import { CSSProperties, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
 import Icon from '@/Icon';
 import Markdown from '@/Markdown';
-import MessageInput from '@/MessageInput';
+import MessageInput, { type MessageInputProps } from '@/MessageInput';
 
 import { useStyles } from './style';
 
@@ -16,6 +16,7 @@ export interface MessageModalProps {
    * @default false
    */
   editing?: boolean;
+  height?: MessageInputProps['height'];
   /**
    * @description Callback fired when message content is changed
    */
@@ -47,7 +48,17 @@ export interface MessageModalProps {
 }
 
 const MessageModal = memo<MessageModalProps>(
-  ({ editing, open, onOpenChange, onEditingChange, placeholder, value, onChange, text }) => {
+  ({
+    editing,
+    open,
+    height = 'auto',
+    onOpenChange,
+    onEditingChange,
+    placeholder,
+    value,
+    onChange,
+    text,
+  }) => {
     const { styles } = useStyles();
 
     const [isEdit, setTyping] = useControlledState(false, {
@@ -59,6 +70,13 @@ const MessageModal = memo<MessageModalProps>(
       onChange: onOpenChange,
       value: open,
     });
+
+    const isAutoSize = height === 'auto';
+    const markdownStyle: CSSProperties = {
+      height: isAutoSize ? 'unset' : height,
+      overflowX: 'hidden',
+      overflowY: 'auto',
+    };
 
     return (
       <Modal
@@ -82,7 +100,7 @@ const MessageModal = memo<MessageModalProps>(
         {isEdit ? (
           <MessageInput
             defaultValue={value}
-            height="70vh"
+            height={height}
             onCancel={() => setTyping(false)}
             onConfirm={(text) => {
               setTyping(false);
@@ -93,9 +111,13 @@ const MessageModal = memo<MessageModalProps>(
               cancel: text?.cancel,
               confirm: text?.confirm,
             }}
+            type={'block'}
           />
         ) : (
-          <Markdown className={styles.body} style={value ? {} : { opacity: 0.5 }}>
+          <Markdown
+            className={styles.body}
+            style={value ? markdownStyle : { ...markdownStyle, opacity: 0.5 }}
+          >
             {String(value || placeholder)}
           </Markdown>
         )}

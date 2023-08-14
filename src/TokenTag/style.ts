@@ -3,53 +3,65 @@ import { createStyles } from 'antd-style';
 const HEIGHT = 28;
 export const ICON_SIZE = 20;
 
-export const useStyles = createStyles(({ cx, css, token }, type: 'normal' | 'low' | 'overload') => {
-  let percentStyle;
+export const useStyles = createStyles(
+  (
+    { cx, css, token },
+    { type, shape }: { shape: 'round' | 'square'; type: 'normal' | 'low' | 'overload' },
+  ) => {
+    let percentStyle;
 
-  switch (type) {
-    case 'normal': {
-      percentStyle = css`
-        color: ${token.colorSuccessText};
-      `;
-      break;
+    switch (type) {
+      case 'normal': {
+        percentStyle = css`
+          color: ${token.colorSuccessText};
+        `;
+        break;
+      }
+      case 'low': {
+        percentStyle = css`
+          color: ${token.colorWarningText};
+        `;
+        break;
+      }
+      case 'overload': {
+        percentStyle = css`
+          color: ${token.colorErrorText};
+        `;
+        break;
+      }
     }
-    case 'low': {
-      percentStyle = css`
-        color: ${token.colorWarningText};
-      `;
-      break;
-    }
-    case 'overload': {
-      percentStyle = css`
-        color: ${token.colorErrorText};
-      `;
-      break;
-    }
-  }
 
-  return {
-    container: cx(
-      percentStyle,
-      css`
-        user-select: none;
+    const roundStylish = css`
+      padding: 0 ${(HEIGHT - ICON_SIZE) * 1.2}px 0 ${(HEIGHT - ICON_SIZE) / 2}px;
+      background: ${token.colorFillSecondary};
+      border-radius: ${HEIGHT / 2}px;
+    `;
 
-        overflow: hidden;
-        display: flex;
-        flex: 0;
-        gap: 4px;
-        align-items: center;
+    const squareStylish = css`
+      border-radius: ${token.borderRadiusSM}px;
+    `;
 
-        min-width: fit-content;
-        height: ${HEIGHT}px;
-        padding: 0 ${(HEIGHT - ICON_SIZE) * 1.2}px 0 ${(HEIGHT - ICON_SIZE) / 2}px;
+    return {
+      container: cx(
+        percentStyle,
+        shape === 'round' ? roundStylish : squareStylish,
+        css`
+          user-select: none;
 
-        font-family: ${token.fontFamilyCode};
-        font-size: 13px;
-        line-height: 1;
+          overflow: hidden;
+          display: flex;
+          flex: 0;
+          gap: 4px;
+          align-items: center;
 
-        background: ${token.colorFillSecondary};
-        border-radius: ${HEIGHT / 2}px;
-      `,
-    ),
-  };
-});
+          min-width: fit-content;
+          height: ${HEIGHT}px;
+
+          font-family: ${token.fontFamilyCode};
+          font-size: 13px;
+          line-height: 1;
+        `,
+      ),
+    };
+  },
+);

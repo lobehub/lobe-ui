@@ -7,8 +7,11 @@ export const useStyles = createStyles(({ css, prefixCls }) => ({
     max-height: 70vh;
   `,
   modal: css`
+    .${prefixCls}-modal-content {
+      padding: 16px;
+    }
     .${prefixCls}-modal-header {
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
   `,
 }));

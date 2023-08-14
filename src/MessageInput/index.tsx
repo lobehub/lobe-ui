@@ -18,7 +18,7 @@ export interface MessageInputProps extends DivProps {
    */
   defaultValue?: string;
   editButtonSize?: ButtonProps['size'];
-  height?: number | string;
+  height?: number | 'auto' | string;
   /**
    * @description Callback function triggered when user clicks on the cancel button.
    */
@@ -57,7 +57,7 @@ const MessageInput = memo<MessageInputProps>(
     textareaStyle,
     textareaClassname,
     placeholder = 'Type something...',
-    height = 'fit-content',
+    height = 'auto',
     style,
     editButtonSize = 'middle',
 
@@ -66,15 +66,18 @@ const MessageInput = memo<MessageInputProps>(
     const [temporarySystemRole, setRole] = useState<string>(defaultValue || '');
     const { cx, styles } = useStyles();
 
+    const isAutoSize = height === 'auto';
+
     return (
       <Flexbox gap={16} style={{ flex: 1, width: '100%', ...style }} {...props}>
         <TextArea
+          autoSize={isAutoSize}
           className={cx(styles, textareaClassname)}
           onBlur={(e) => setRole(e.target.value)}
           onChange={(e) => setRole(e.target.value)}
           placeholder={placeholder}
           resize={false}
-          style={{ height: height, minHeight: '100%', ...textareaStyle }}
+          style={{ height: isAutoSize ? 'unset' : height, minHeight: '100%', ...textareaStyle }}
           type={type}
           value={temporarySystemRole}
         />

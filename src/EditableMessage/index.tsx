@@ -25,7 +25,8 @@ export interface EditableMessageProps {
    * @default false
    */
   editing?: boolean;
-  height?: number;
+  height?: MessageInputProps['height'];
+  inputType?: MessageInputProps['type'];
   /**
    * @title Callback function when the value changes
    * @param value - The new value
@@ -82,6 +83,7 @@ const EditableMessage = memo<EditableMessageProps>(
     showEditWhenEmpty = false,
     styles,
     height,
+    inputType,
     editButtonSize,
     text,
   }) => {
@@ -95,9 +97,10 @@ const EditableMessage = memo<EditableMessageProps>(
       value: openModal,
     });
 
+    const isAutoSize = height === 'auto';
+
     const input = (
       <MessageInput
-        className={classNames?.input}
         defaultValue={value}
         editButtonSize={editButtonSize}
         height={height}
@@ -109,6 +112,8 @@ const EditableMessage = memo<EditableMessageProps>(
         placeholder={placeholder}
         style={styles?.input}
         text={text}
+        textareaClassname={classNames?.input}
+        type={inputType}
       />
     );
 
@@ -122,7 +127,7 @@ const EditableMessage = memo<EditableMessageProps>(
           <Markdown
             className={classNames?.markdown}
             style={{
-              height,
+              height: isAutoSize ? 'unset' : height,
               overflowX: 'hidden',
               overflowY: 'auto',
               ...styles?.markdown,
@@ -133,6 +138,7 @@ const EditableMessage = memo<EditableMessageProps>(
         )}
         <MessageModal
           editing={isEdit}
+          height={height}
           onChange={(text) => onChange?.(text)}
           onEditingChange={setTyping}
           onOpenChange={(e) => {

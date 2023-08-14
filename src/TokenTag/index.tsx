@@ -14,6 +14,7 @@ export interface TokenTagProps extends DivProps {
    * @description Maximum value for the token
    */
   maxValue: number;
+  shape?: 'round' | 'square';
   text?: {
     overload?: string;
     remained?: string;
@@ -26,7 +27,10 @@ export interface TokenTagProps extends DivProps {
 }
 
 const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
-  ({ className, displayMode = 'remained', maxValue, value, text, ...props }, ref) => {
+  (
+    { className, displayMode = 'remained', maxValue, value, text, shape = 'round', ...props },
+    ref,
+  ) => {
     const valueLeft = maxValue - value;
     const percent = valueLeft / maxValue;
     let type: 'normal' | 'low' | 'overload';
@@ -43,7 +47,7 @@ const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
       emoji = '🤯';
     }
 
-    const { styles, cx } = useStyles(type);
+    const { styles, cx } = useStyles({ shape, type });
 
     return (
       <div className={cx(styles.container, className)} ref={ref} {...props}>

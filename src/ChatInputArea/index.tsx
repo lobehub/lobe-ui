@@ -95,7 +95,7 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
       onExpandChange,
       onSend,
       defaultValue = '',
-      loading = true,
+      loading,
       disabled,
       onInputChange,
       onPressEnter,
