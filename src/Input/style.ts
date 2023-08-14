@@ -42,6 +42,7 @@ export const useStyles = createStyles(
           position: relative;
           max-width: 100%;
           padding: ${type === 'pure' ? '0' : '8px 12px'};
+          border-radius: ${type === 'pure' ? '0' : `${token.borderRadius}px`};
 
           textarea {
             background: transparent;

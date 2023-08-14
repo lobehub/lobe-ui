@@ -1,4 +1,5 @@
 import { Button, type InputRef } from 'antd';
+import { Loader2 } from 'lucide-react';
 import {
   CSSProperties,
   ReactNode,
@@ -9,10 +10,10 @@ import {
   useState,
 } from 'react';
 
+import Icon from '@/Icon';
 import { TextArea, type TextAreaProps } from '@/Input';
 
 import Action, { ActionProps } from './Action';
-import InputHighlight from './InputHighlight';
 import { useStyles } from './style';
 
 export interface ChatInputAreaProps extends ActionProps, TextAreaProps {
@@ -53,6 +54,7 @@ export interface ChatInputAreaProps extends ActionProps, TextAreaProps {
    * @param value - The current value of the input area
    */
   onSend?: (value: string) => void;
+  onStop?: () => void;
   /**
    * @description Placeholder text for the input area
    * @default 'Type something to chat...'
@@ -64,6 +66,7 @@ export interface ChatInputAreaProps extends ActionProps, TextAreaProps {
   style?: CSSProperties;
   text?: {
     send?: string;
+    stop?: string;
   };
   /**
    * @description Additional class name for the textarea element
@@ -92,7 +95,7 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
       onExpandChange,
       onSend,
       defaultValue = '',
-      loading,
+      loading = true,
       disabled,
       onInputChange,
       onPressEnter,
@@ -102,6 +105,7 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
       onChange,
       textareaId = 'lobe-chat-input-area',
       actionsRight,
+      onStop,
       ...props
     },
     ref,
@@ -111,7 +115,7 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
     const [value, setValue] = useState<string>(defaultValue);
 
     const handleSend = useCallback(() => {
-      if (disabled) return;
+      if (loading && disabled) return;
       if (onSend) onSend(value);
       setValue('');
     }, [disabled, value]);
@@ -129,7 +133,6 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
           onExpandChange={onExpandChange}
         />
         <div className={styles.textareaContainer}>
-          <InputHighlight target={textareaId} value={value} />
           <TextArea
             className={cx(styles.textarea, textareaClassName)}
             defaultValue={defaultValue}
@@ -168,9 +171,19 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
         </div>
         <div className={styles.footerBar}>
           {footer}
-          <Button disabled={disabled} loading={loading} onClick={handleSend} type="primary">
-            {text?.send || 'Send'}
-          </Button>
+          {loading ? (
+            <Button
+              disabled={disabled}
+              icon={loading && <Icon icon={Loader2} spin />}
+              onClick={onStop}
+            >
+              {text?.stop || 'Stop'}
+            </Button>
+          ) : (
+            <Button disabled={disabled} onClick={handleSend} type={'primary'}>
+              {text?.send || 'Send'}
+            </Button>
+          )}
         </div>
       </section>
     );

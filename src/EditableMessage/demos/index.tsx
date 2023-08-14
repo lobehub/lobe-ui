@@ -25,6 +25,7 @@ export default () => {
     <StroyBook levaStore={store}>
       <EditableMessage
         editing={editing}
+        height={500}
         onEditingChange={setEdit}
         onOpenChange={setOpenModal}
         openModal={openModal}

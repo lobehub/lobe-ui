@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }) => {
+export const useStyles = createStyles(({ css }) => {
   return {
     actionLeft: css`
       display: flex;
@@ -43,38 +43,10 @@ export const useStyles = createStyles(({ css, token }) => {
 
       padding: 0 24px;
     `,
-    highlight: css`
-      pointer-events: none;
-
-      position: absolute;
-      inset: 0;
-
-      overflow-x: hidden;
-      overflow-y: auto;
-
-      padding: 0 24px;
-
-      .shiki {
-        margin: 0;
-      }
-
-      pre {
-        font-family: ${token.fontFamilyCode} !important;
-        line-height: 1.5;
-        color: ${token.colorSuccess};
-        word-wrap: break-word;
-        white-space: pre-wrap;
-      }
-    `,
     textarea: css`
       height: 100% !important;
       padding: 0 24px;
-
-      font-family: ${token.fontFamilyCode} !important;
       line-height: 1.5;
-      color: transparent;
-
-      caret-color: ${token.colorText};
     `,
     textareaContainer: css`
       position: relative;

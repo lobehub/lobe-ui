@@ -2,7 +2,7 @@ import { Button, ButtonProps } from 'antd';
 import { type CSSProperties, memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import CodeEditor from '@/CodeEditor';
+import { TextArea } from '@/Input';
 import { type TextAreaProps } from '@/Input';
 import { DivProps } from '@/types';
 
@@ -17,7 +17,7 @@ export interface MessageInputProps extends DivProps {
    * @description The default value of the input box.
    */
   defaultValue?: string;
-  editButtonSize?: 'small' | 'middle';
+  editButtonSize?: ButtonProps['size'];
   height?: number | string;
   /**
    * @description Callback function triggered when user clicks on the cancel button.
@@ -28,6 +28,7 @@ export interface MessageInputProps extends DivProps {
    * @param text - The text input by the user.
    */
   onConfirm?: (text: string) => void;
+
   /**
    * @description Custom rendering of the bottom buttons.
    * @param text - The text input by the user.
@@ -57,29 +58,26 @@ const MessageInput = memo<MessageInputProps>(
     textareaClassname,
     placeholder = 'Type something...',
     height = 'fit-content',
+    style,
     editButtonSize = 'middle',
+
     ...props
   }) => {
     const [temporarySystemRole, setRole] = useState<string>(defaultValue || '');
     const { cx, styles } = useStyles();
 
     return (
-      <Flexbox gap={8}>
-        <Flexbox gap={8} style={{ flex: 1, width: '100%' }} {...props}>
-          <CodeEditor
-            className={cx(styles, textareaClassname)}
-            language="md"
-            onValueChange={(value: string) => {
-              setRole(value);
-            }}
-            placeholder={placeholder}
-            resize={false}
-            style={{ height: height, minHeight: '100%', ...textareaStyle }}
-            textareaClassName={cx(styles, textareaClassname)}
-            type={type}
-            value={temporarySystemRole}
-          />
-        </Flexbox>
+      <Flexbox gap={16} style={{ flex: 1, width: '100%', ...style }} {...props}>
+        <TextArea
+          className={cx(styles, textareaClassname)}
+          onBlur={(e) => setRole(e.target.value)}
+          onChange={(e) => setRole(e.target.value)}
+          placeholder={placeholder}
+          resize={false}
+          style={{ height: height, minHeight: '100%', ...textareaStyle }}
+          type={type}
+          value={temporarySystemRole}
+        />
         <Flexbox direction={'horizontal-reverse'} gap={8}>
           {renderButtons ? (
             renderButtons(temporarySystemRole).map((buttonProps, index) => (

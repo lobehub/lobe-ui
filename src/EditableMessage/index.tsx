@@ -2,7 +2,7 @@ import { CSSProperties, memo } from 'react';
 import useControlledState from 'use-merge-value';
 
 import Markdown from '@/Markdown';
-import MessageInput from '@/MessageInput';
+import MessageInput, { type MessageInputProps } from '@/MessageInput';
 import MessageModal, { type MessageModalProps } from '@/MessageModal';
 
 export interface EditableMessageProps {
@@ -19,12 +19,13 @@ export interface EditableMessageProps {
      */
     markdown?: string;
   };
-  editButtonSize?: 'small' | 'middle';
+  editButtonSize?: MessageInputProps['editButtonSize'];
   /**
    * @title Whether the component is in edit mode or not
    * @default false
    */
   editing?: boolean;
+  height?: number;
   /**
    * @title Callback function when the value changes
    * @param value - The new value
@@ -80,6 +81,7 @@ const EditableMessage = memo<EditableMessageProps>(
     placeholder = 'Type something...',
     showEditWhenEmpty = false,
     styles,
+    height,
     editButtonSize,
     text,
   }) => {
@@ -93,11 +95,12 @@ const EditableMessage = memo<EditableMessageProps>(
       value: openModal,
     });
 
-    return !value && showEditWhenEmpty ? (
+    const input = (
       <MessageInput
         className={classNames?.input}
         defaultValue={value}
         editButtonSize={editButtonSize}
+        height={height}
         onCancel={() => setTyping(false)}
         onConfirm={(text) => {
           onChange?.(text);
@@ -107,24 +110,24 @@ const EditableMessage = memo<EditableMessageProps>(
         style={styles?.input}
         text={text}
       />
-    ) : (
+    );
+
+    if (!value && showEditWhenEmpty) return input;
+
+    return (
       <>
         {!expand && isEdit ? (
-          <MessageInput
-            className={classNames?.input}
-            defaultValue={value}
-            editButtonSize={editButtonSize}
-            onCancel={() => setTyping(false)}
-            onConfirm={(text) => {
-              onChange?.(text);
-              setTyping(false);
-            }}
-            placeholder={placeholder}
-            style={styles?.input}
-            text={text}
-          />
+          input
         ) : (
-          <Markdown className={classNames?.markdown} style={styles?.markdown}>
+          <Markdown
+            className={classNames?.markdown}
+            style={{
+              height,
+              overflowX: 'hidden',
+              overflowY: 'auto',
+              ...styles?.markdown,
+            }}
+          >
             {value || placeholder}
           </Markdown>
         )}
