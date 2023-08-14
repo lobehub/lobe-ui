@@ -36,7 +36,7 @@ const Loading = memo<LoadingProps>(
 
     const content = (
       <EditableMessage
-        classNames={{ input: styles.editingInput }}
+        classNames={{ textarea: styles.editingInput }}
         editButtonSize={'small'}
         editing={editing}
         onChange={onChange}

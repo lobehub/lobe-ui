@@ -147,7 +147,7 @@ export const useStyles = createStyles(
           `,
       ),
       editingInput: css`
-        min-height: 32px;
+        min-width: 800px !important;
       `,
       loading: css`
         position: absolute;

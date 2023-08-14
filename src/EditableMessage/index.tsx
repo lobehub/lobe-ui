@@ -18,6 +18,7 @@ export interface EditableMessageProps {
      * @title The class name for the Markdown component
      */
     markdown?: string;
+    textarea?: string;
   };
   editButtonSize?: MessageInputProps['editButtonSize'];
   /**
@@ -101,6 +102,8 @@ const EditableMessage = memo<EditableMessageProps>(
 
     const input = (
       <MessageInput
+        className={classNames?.input}
+        classNames={{ textarea: classNames?.textarea }}
         defaultValue={value}
         editButtonSize={editButtonSize}
         height={height}
