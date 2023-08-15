@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.73.0](https://github.com/lobehub/lobe-ui/compare/v1.72.8...v1.73.0)
+
+<sup>Released on **2023-08-15**</sup>
+
+#### ✨ Features
+
+- **misc**: Add new components, modify existing components, and export components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add new components, modify existing components, and export components ([a6addc2](https://github.com/lobehub/lobe-ui/commit/a6addc2))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.72.8](https://github.com/lobehub/lobe-ui/compare/v1.72.7...v1.72.8)
 
 <sup>Released on **2023-08-14**</sup>
