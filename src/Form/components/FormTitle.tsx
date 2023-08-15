@@ -1,7 +1,7 @@
-import { Tag } from 'antd';
 import { ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import Tag from '@/Tag';
 import { DivProps } from '@/types';
 
 import { useStyles } from './style';

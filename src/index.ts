@@ -3,6 +3,10 @@ export { default as ActionIconGroup, type ActionIconGroupProps } from './ActionI
 export { default as Avatar, type AvatarProps } from './Avatar';
 export { default as Burger, type BurgerProps } from './Burger';
 export { default as ChatHeader, type ChatHeaderProps } from './ChatHeader';
+export {
+  default as ChatHeaderTitle,
+  type ChatHeaderTitleProps,
+} from './ChatHeader/ChatHeaderTitle';
 export { default as ChatInputArea, type ChatInputAreaProps } from './ChatInputArea';
 export { default as ChatItem, type ChatItemProps } from './ChatItem';
 export type {
@@ -63,6 +67,7 @@ export {
   type SyntaxHighlighterProps,
 } from './Highlighter';
 export { default as Icon, type IconProps, type IconSize } from './Icon';
+export * from './Icon/icons';
 export { Input, type InputProps, TextArea, type TextAreaProps } from './Input';
 export {
   default as Layout,
@@ -88,6 +93,7 @@ export { default as MessageInput, type MessageInputProps } from './MessageInput'
 export { default as MessageModal, type MessageModalProps } from './MessageModal';
 export { default as SearchBar, type SearchBarProps } from './SearchBar';
 export { default as SideNav, type SideNavProps } from './SideNav';
+export { default as SliderWithInput, type SliderWithInputProps } from './SliderWithInput';
 export { default as Snippet, type SnippetProps } from './Snippet';
 export { default as Spotlight, type SpotlightProps } from './Spotlight';
 export {
@@ -99,6 +105,7 @@ export {
 export * from './styles';
 export { default as Swatches, type SwatchesProps } from './Swatches';
 export { default as TabsNav, type TabsNavProps } from './TabsNav';
+export { default as Tag, type TagProps } from './Tag';
 export { default as ThemeProvider } from './ThemeProvider';
 export { default as ThemeSwitch, type ThemeSwitchProps } from './ThemeSwitch';
 export { default as Toc, type TocProps } from './Toc';

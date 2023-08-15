@@ -1,4 +1,5 @@
 import { GetCustomStylish, keyframes } from 'antd-style';
+import { readableColor } from 'polished';
 
 import { LobeCustomStylish } from '@/types/customStylish';
 
@@ -7,6 +8,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
   token,
   isDarkMode,
 }) => {
+  const cyan = isDarkMode ? token.cyan9A : token.cyan10A;
   const gradient = keyframes`
     0% {
       background-position: 0% 50%;
@@ -84,6 +86,10 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         }
       }
 
+      > *:last-child {
+        margin-bottom: 0 !important;
+      }
+
       blockquote {
         margin: 16px 0;
         padding: 0 12px;
@@ -117,6 +123,11 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       pre {
         border: none;
         border-radius: ${token.borderRadius}px;
+
+        > code {
+          padding: 0 !important;
+          border: none !important;
+        }
       }
 
       > :not([data-code-type='highlighter']) code {
@@ -170,11 +181,53 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         }
       }
 
-      li {
-        line-height: 1.8;
+      > ol > li {
+        margin-left: 0;
+      }
 
-        &::marker {
-          color: ${isDarkMode ? token.cyan9A : token.cyan10A};
+      ol {
+        counter-reset: steps;
+        margin-left: 0;
+        list-style: none;
+
+        li {
+          counter-increment: steps;
+
+          &::before {
+            content: counter(steps);
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 1.1rem;
+            height: 1.1rem;
+            margin-right: 0.5em;
+
+            font-size: 0.8em;
+            font-weight: 500;
+            line-height: 1;
+            color: ${readableColor(cyan)};
+
+            background: ${cyan};
+            border-radius: 50%;
+          }
+        }
+
+        ol li::before {
+          color: ${token.colorTextSecondary};
+          background: ${token.colorFill};
+        }
+      }
+
+      > ul {
+        > li {
+          line-height: 1.8;
+          list-style-type: disc;
+
+          &::marker {
+            color: ${cyan};
+          }
         }
       }
 

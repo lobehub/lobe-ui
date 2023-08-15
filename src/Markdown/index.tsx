@@ -25,7 +25,7 @@ const Markdown = memo<MarkdownProps>(({ children, className, style, ...props }) 
     a: Typography.Link,
     code: Code,
     details: Collapse,
-    hr: Divider,
+    hr: () => <Divider style={{ marginBottom: '1em', marginTop: 0 }} />,
     pre: CodeBlock,
   };
 
