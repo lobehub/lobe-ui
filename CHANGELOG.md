@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [Version 1.77.0](https://github.com/lobehub/lobe-ui/compare/v1.76.0...v1.77.0)
+
+<sup>Released on **2023-08-15**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Replace CDN.
+
+#### ✨ Features
+
+- **misc**: Add Meta component for generating meta tags and links.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Replace CDN ([a51ef94](https://github.com/lobehub/lobe-ui/commit/a51ef94))
+
+#### What's improved
+
+- **misc**: Add Meta component for generating meta tags and links ([c5ea0e2](https://github.com/lobehub/lobe-ui/commit/c5ea0e2))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.76.0](https://github.com/lobehub/lobe-ui/compare/v1.75.0...v1.76.0)
 
 <sup>Released on **2023-08-15**</sup>
