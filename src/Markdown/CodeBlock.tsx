@@ -26,6 +26,7 @@ const Code = memo((properties: any) => {
   return (
     <Highlighter
       className={styles}
+      copyButtonSize={{ blockSize: 28, fontSize: 16 }}
       language={className?.replace('language-', '') || 'markdown'}
       type="block"
     >

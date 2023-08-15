@@ -1,7 +1,8 @@
 import { memo } from 'react';
 
-import CopyButton from '@/CopyButton';
+import CopyButton, { type CopyButtonProps } from '@/CopyButton';
 import Spotlight from '@/Spotlight';
+import Tag from '@/Tag';
 import { DivProps } from '@/types';
 
 import SyntaxHighlighter from './SyntaxHighlighter';
@@ -12,6 +13,7 @@ export interface HighlighterProps extends DivProps {
    * @description The code content to be highlighted
    */
   children: string;
+  copyButtonSize?: CopyButtonProps['size'];
   /**
    * @description Whether to show the copy button
    * @default true
@@ -40,6 +42,7 @@ export interface HighlighterProps extends DivProps {
 
 export const Highlighter = memo<HighlighterProps>(
   ({
+    copyButtonSize = 'site',
     children,
     language,
     className,
@@ -56,8 +59,15 @@ export const Highlighter = memo<HighlighterProps>(
     return (
       <div className={container} data-code-type="highlighter" style={style} {...props}>
         {spotlight && <Spotlight size={240} />}
-        {copyable && <CopyButton className={styles.button} content={children} placement="left" />}
-        {showLanguage && language && <div className={styles.lang}>{language.toLowerCase()}</div>}
+        {copyable && (
+          <CopyButton
+            className={styles.button}
+            content={children}
+            placement="left"
+            size={copyButtonSize}
+          />
+        )}
+        {showLanguage && language && <Tag className={styles.lang}>{language.toLowerCase()}</Tag>}
         <SyntaxHighlighter language={language?.toLowerCase()}>{children.trim()}</SyntaxHighlighter>
       </div>
     );
