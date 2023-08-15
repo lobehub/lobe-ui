@@ -1,6 +1,8 @@
 import { Collapse, Divider, Typography } from 'antd';
 import { CSSProperties, memo } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 
 import Code from './Code';
@@ -31,14 +33,28 @@ const Markdown = memo<MarkdownProps>(({ children, className, style, ...props }) 
 
   return (
     <Typography className={className} style={style}>
-      <ReactMarkdown
-        className={styles.markdown}
-        components={components}
-        remarkPlugins={[remarkGfm]}
-        {...props}
+      <ErrorBoundary
+        fallback={
+          <ReactMarkdown
+            className={styles.markdown}
+            components={components}
+            remarkPlugins={[remarkGfm]}
+            {...props}
+          >
+            {children}
+          </ReactMarkdown>
+        }
       >
-        {children}
-      </ReactMarkdown>
+        <ReactMarkdown
+          className={styles.markdown}
+          components={components}
+          rehypePlugins={[rehypeRaw]}
+          remarkPlugins={[remarkGfm]}
+          {...props}
+        >
+          {children}
+        </ReactMarkdown>
+      </ErrorBoundary>
     </Typography>
   );
 });
