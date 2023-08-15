@@ -5,7 +5,7 @@ export const ICON_SIZE = 20;
 
 export const useStyles = createStyles(
   (
-    { cx, css, token },
+    { cx, css, token, isDarkMode },
     { type, shape }: { shape: 'round' | 'square'; type: 'normal' | 'low' | 'overload' },
   ) => {
     let percentStyle;
@@ -33,7 +33,7 @@ export const useStyles = createStyles(
 
     const roundStylish = css`
       padding: 0 ${(HEIGHT - ICON_SIZE) * 1.2}px 0 ${(HEIGHT - ICON_SIZE) / 2}px;
-      background: ${token.colorFillSecondary};
+      background: ${isDarkMode ? token.colorFillSecondary : token.colorFillTertiary};
       border-radius: ${HEIGHT / 2}px;
     `;
 

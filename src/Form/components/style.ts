@@ -48,6 +48,7 @@ export const useStyles = createStyles(
         `,
       css`
         .ant-collapse-header {
+          align-items: center !important;
           border-radius: 0 !important;
         }
 
@@ -63,6 +64,9 @@ export const useStyles = createStyles(
         }
       `,
     ),
+    icon: css`
+      transition: all 100ms ${token.motionEaseOut};
+    `,
     item: css`
       padding: 8px 0;
 
