@@ -1,5 +1,6 @@
 import { useTheme } from 'antd-style';
 import { type ReactNode, memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import { DivProps } from '@/types';
 
@@ -27,12 +28,12 @@ export interface LogoProps extends DivProps {
 
 const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className, ...props }) => {
   const theme = useTheme();
-  const { styles, cx } = useStyles();
+  const { styles } = useStyles();
   let logoComponent: ReactNode;
 
   switch (type) {
     case '3d': {
-      return (
+      logoComponent = (
         <img
           alt="lobehub"
           src={LOGO_3D}
@@ -40,21 +41,29 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
           {...props}
         />
       );
+      break;
     }
     case 'flat': {
-      return <img alt="lobehub" src={LOGO_FLAT} style={{ height: size, width: size, ...style }} />;
+      logoComponent = (
+        <img alt="lobehub" src={LOGO_FLAT} style={{ height: size, width: size, ...style }} />
+      );
+      break;
     }
     case 'high-contrast': {
-      return <LogoHighContrast style={{ height: size, width: size, ...style }} {...props} />;
+      logoComponent = (
+        <LogoHighContrast style={{ height: size, width: size, ...style }} {...props} />
+      );
+      break;
     }
     case 'text': {
-      return (
+      logoComponent = (
         <LogoText
           className={className}
           style={{ height: size, width: 'auto', ...style }}
           {...props}
         />
       );
+      break;
     }
     case 'combine': {
       logoComponent = (
@@ -63,23 +72,22 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
           <LogoText style={{ height: size, marginLeft: Math.round(size / 4), width: 'auto' }} />
         </>
       );
+      break;
     }
   }
+
+  if (!extra) return logoComponent;
 
   const extraSize = Math.round((size / 3) * 1.9);
 
   return (
-    <div className={cx(styles.flexCenter, className)} style={style} {...props}>
+    <Flexbox align={'center'} className={className} horizontal style={style} {...props}>
       {logoComponent}
-      {extra && (
-        <>
-          <Divider style={{ color: theme.colorBorder, height: extraSize, width: extraSize }} />
-          <div className={styles.extraTitle} style={{ fontSize: extraSize }}>
-            {extra}
-          </div>
-        </>
-      )}
-    </div>
+      <Divider style={{ color: theme.colorFill, height: extraSize, width: extraSize }} />
+      <div className={styles.extraTitle} style={{ fontSize: extraSize }}>
+        {extra}
+      </div>
+    </Flexbox>
   );
 });
 
