@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.75.0](https://github.com/lobehub/lobe-ui/compare/v1.74.0...v1.75.0)
+
+<sup>Released on **2023-08-15**</sup>
+
+#### ✨ Features
+
+- **misc**: Add import statement for 'ChevronDown' icon and expandIcon component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add import statement for 'ChevronDown' icon and expandIcon component ([1a6ea96](https://github.com/lobehub/lobe-ui/commit/1a6ea96))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.74.0](https://github.com/lobehub/lobe-ui/compare/v1.73.0...v1.74.0)
 
 <sup>Released on **2023-08-15**</sup>
