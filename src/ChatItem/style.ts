@@ -103,7 +103,7 @@ export const useStyles = createStyles(
           justify-content: revert;
 
           width: 100%;
-          padding: 12px;
+          padding: 12px 16px;
 
           time {
             display: inline-block;

@@ -7,7 +7,7 @@ description: The GradientButton component is a customized button component built
 
 ## Default
 
-<code src="./demos/index.tsx" nopadding></code>
+<code src="./demos/index.tsx" ></code>
 
 ## APIs
 

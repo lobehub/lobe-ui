@@ -1,6 +1,7 @@
 export { default as ActionIcon, type ActionIconProps, type ActionIconSize } from './ActionIcon';
 export { default as ActionIconGroup, type ActionIconGroupProps } from './ActionIconGroup';
 export { default as Avatar, type AvatarProps } from './Avatar';
+export { default as BackBottom, type BackBottomProps } from './BackBottom';
 export { default as Burger, type BurgerProps } from './Burger';
 export { default as ChatHeader, type ChatHeaderProps } from './ChatHeader';
 export {
