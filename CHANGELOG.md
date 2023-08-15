@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.78.0](https://github.com/lobehub/lobe-ui/compare/v1.77.0...v1.78.0)
+
+<sup>Released on **2023-08-15**</sup>
+
+#### ✨ Features
+
+- **misc**: Add new features to Highlighter and CodeBlock components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add new features to Highlighter and CodeBlock components ([f35d147](https://github.com/lobehub/lobe-ui/commit/f35d147))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.77.0](https://github.com/lobehub/lobe-ui/compare/v1.76.0...v1.77.0)
 
 <sup>Released on **2023-08-15**</sup>
