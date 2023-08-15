@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.76.0](https://github.com/lobehub/lobe-ui/compare/v1.75.0...v1.76.0)
+
+<sup>Released on **2023-08-15**</sup>
+
+#### ✨ Features
+
+- **misc**: Add new dependencies and ErrorBoundary components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add new dependencies and ErrorBoundary components ([9db343a](https://github.com/lobehub/lobe-ui/commit/9db343a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.75.0](https://github.com/lobehub/lobe-ui/compare/v1.74.0...v1.75.0)
 
 <sup>Released on **2023-08-15**</sup>
