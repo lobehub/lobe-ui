@@ -11,8 +11,8 @@ export const useStyles = createStyles(({ token, css, stylish, cx }, visible: boo
       padding-inline: 12px !important;
 
       opacity: ${visible ? 1 : 0};
-      background: ${token.colorFill};
-      border: none !important;
+      background: ${token.colorFillSecondary};
+      border-color: ${token.colorFillTertiary} !important;
       border-radius: 16px !important;
     `,
   ),

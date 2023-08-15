@@ -1,10 +1,11 @@
 const UNPKG_API = 'https://unpkg.com';
 const ALIYUN_API = 'https://registry.npmmirror.com';
 
+export type CDN = 'aliyun' | 'unpkg';
 interface CdnApi {
   path: string;
   pkg: string;
-  proxy?: 'aliyun' | 'unpkg';
+  proxy?: CDN;
   version: string;
 }
 

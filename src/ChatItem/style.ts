@@ -1,5 +1,4 @@
 import { createStyles } from 'antd-style';
-import { rgba } from 'polished';
 
 export const useStyles = createStyles(
   (
@@ -25,7 +24,7 @@ export const useStyles = createStyles(
       background-color: ${primary
         ? isDarkMode
           ? token.colorFill
-          : rgba(token.colorPrimary, 0.08)
+          : token.colorBgElevated
         : isDarkMode
         ? token.colorFillSecondary
         : token.colorBgContainer};
