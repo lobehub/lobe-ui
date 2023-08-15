@@ -120,7 +120,8 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         max-width: 100%;
       }
 
-      pre {
+      pre,
+      [data-code-type='highlighter'] {
         border: none;
         border-radius: ${token.borderRadius}px;
 

@@ -113,4 +113,5 @@ export { default as Toc, type TocProps } from './Toc';
 export { default as TokenTag, type TokenTagProps } from './TokenTag';
 export { default as Tooltip, type TooltipProps } from './Tooltip';
 export type * from './types';
+export { genCdnUrl } from './utils/genCdnUrl';
 export { getEmoji, getEmojiNameByCharacter } from './utils/getEmojiByCharacter';

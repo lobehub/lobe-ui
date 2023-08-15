@@ -1,11 +1,22 @@
-import { ActionIconProps, Avatar, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import {
+  ActionIconProps,
+  Avatar,
+  StroyBook,
+  genCdnUrl,
+  useControls,
+  useCreateStore,
+} from '@lobehub/ui';
 
 export default () => {
   const store = useCreateStore();
   const control: ActionIconProps | any = useControls(
     {
       animation: false,
-      avatar: 'https://npm.elemecdn.com/@lobehub/assets/logo/logo-3d.webp',
+      avatar: genCdnUrl({
+        path: 'assets/logo-3d.webp',
+        pkg: '@lobehub/assets-logo',
+        version: '1.1.0',
+      }),
       background: '#FEE064',
       shape: {
         options: ['circle', 'square'],

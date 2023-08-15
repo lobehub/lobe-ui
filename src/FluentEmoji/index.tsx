@@ -1,8 +1,8 @@
 import { kebabCase } from 'lodash-es';
 import { memo, useMemo, useState } from 'react';
 
-import { genEmojiUrl } from '@/FluentEmoji/genEmojiUrl';
 import { DivProps } from '@/types';
+import { genCdnUrl } from '@/utils/genCdnUrl';
 import { getEmojiNameByCharacter } from '@/utils/getEmojiByCharacter';
 
 import { useStyles } from './style';
@@ -38,20 +38,21 @@ const FluentEmoji = memo<FluentEmojiProps>(
         case 'modern':
         case 'flat':
         case 'high-contrast': {
-          return genEmojiUrl('elem', {
+          return genCdnUrl({
             path: `icons/${type}/${kebabCase(emojiName)}.svg`,
             pkg: 'fluentui-emoji',
+            version: '0.0.8',
           });
         }
         case 'anim': {
-          return genEmojiUrl('aliyun', {
+          return genCdnUrl({
             path: `assets/${emojiName}.webp`,
             pkg: '@lobehub/assets-emoji-anim',
             version: '1.0.0',
           });
         }
         case '3d': {
-          return genEmojiUrl('aliyun', {
+          return genCdnUrl({
             path: `assets/${emojiName}.webp`,
             pkg: '@lobehub/assets-emoji',
             version: '1.3.0',

@@ -13,6 +13,7 @@ import { ThemeContext } from 'styled-components';
 import FontLoader from '@/FontLoader';
 import { lobeCustomStylish, lobeCustomToken, lobeTheme } from '@/styles';
 import { LobeCustomToken } from '@/types/customToken';
+import { genCdnUrl } from '@/utils/genCdnUrl';
 
 import GlobalStyle from './GlobalStyle';
 
@@ -56,9 +57,13 @@ const ThemeProvider = memo<ThemeProviderProps>(
     customToken,
     enableWebfonts = true,
     webfonts = [
-      'https://npm.elemecdn.com/@lobehub/webfont-mono/css/index.css',
-      'https://npm.elemecdn.com/@lobehub/webfont-harmony-sans/css/index.css',
-      'https://npm.elemecdn.com/@lobehub/webfont-harmony-sans-sc/css/index.css',
+      genCdnUrl({ path: 'css/index.css', pkg: '@lobehub/webfont-mono', version: '1.0.0' }),
+      genCdnUrl({ path: 'css/index.css', pkg: '@lobehub/webfont-harmony-sans', version: '1.0.0' }),
+      genCdnUrl({
+        path: 'css/index.css',
+        pkg: '@lobehub/webfont-harmony-sans-sc',
+        version: '1.0.0',
+      }),
     ],
   }) => {
     useEffect(() => {
