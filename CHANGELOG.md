@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.81.0](https://github.com/lobehub/lobe-ui/compare/v1.80.0...v1.81.0)
+
+<sup>Released on **2023-08-16**</sup>
+
+#### ✨ Features
+
+- **mobiletabbar**: Add optional onClick function to MobileTabBarItemProps.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **mobiletabbar**: Add optional onClick function to MobileTabBarItemProps ([db7e907](https://github.com/lobehub/lobe-ui/commit/db7e907))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.80.0](https://github.com/lobehub/lobe-ui/compare/v1.79.0...v1.80.0)
 
 <sup>Released on **2023-08-16**</sup>
