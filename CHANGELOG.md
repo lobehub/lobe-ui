@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.80.0](https://github.com/lobehub/lobe-ui/compare/v1.79.0...v1.80.0)
+
+<sup>Released on **2023-08-16**</sup>
+
+#### ✨ Features
+
+- **misc**: Introduce conditional rendering and new components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Introduce conditional rendering and new components ([8530207](https://github.com/lobehub/lobe-ui/commit/8530207))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.79.0](https://github.com/lobehub/lobe-ui/compare/v1.78.0...v1.79.0)
 
 <sup>Released on **2023-08-15**</sup>
