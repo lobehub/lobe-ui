@@ -4,18 +4,9 @@ import { ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 const useStyles = createStyles(({ cx, css, token }) => ({
-  count: css`
-    display: flex;
-    align-items: center;
-
-    height: 20px;
-    padding: 0 8px;
-
-    font-size: 12px;
+  small: css`
+    padding: 2px 6px;
     line-height: 1;
-
-    background: ${token.colorFillTertiary};
-    border: ${token.borderRadius}px;
   `,
   tag: cx(css`
     color: ${token.colorTextSecondary} !important;
@@ -31,13 +22,18 @@ const useStyles = createStyles(({ cx, css, token }) => ({
 
 export interface TagProps extends AntTagProps {
   icon?: ReactNode;
+  size?: 'default' | 'small';
 }
 
-const Tag = memo<TagProps>(({ icon, children, ...props }) => {
-  const { styles } = useStyles();
+const Tag = memo<TagProps>(({ icon, children, size = 'default', ...props }) => {
+  const { styles, cx } = useStyles();
 
   return (
-    <AntTag bordered={false} className={styles.tag} {...props}>
+    <AntTag
+      bordered={false}
+      className={cx(styles.tag, size === 'small' && styles.small)}
+      {...props}
+    >
       <Flexbox align={'center'} gap={4} horizontal>
         {icon}
         {children}
