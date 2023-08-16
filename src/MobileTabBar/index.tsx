@@ -8,6 +8,7 @@ import { useStyles } from './style';
 export interface MobileTabBarItemProps {
   icon: ReactNode | ((active: boolean) => ReactNode);
   key: string;
+  onClick?: () => void;
   title: ReactNode | ((active: boolean) => ReactNode);
 }
 
@@ -44,7 +45,10 @@ const MobileTabBar = memo<MobileTabBarProps>(
                 gap={4}
                 justify={'center'}
                 key={item.key}
-                onClick={() => setCurrentActive(item.key)}
+                onClick={() => {
+                  setCurrentActive(item.key);
+                  item?.onClick?.();
+                }}
               >
                 <Flexbox align={'center'} className={styles.icon} justify={'center'}>
                   {typeof item.icon === 'function' ? item.icon(active) : item.icon}
