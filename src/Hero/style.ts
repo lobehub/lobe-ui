@@ -81,6 +81,10 @@ export const useStyles = createStyles(({ cx, css, responsive, token, stylish }) 
       background-clip: text;
 
       -webkit-text-fill-color: transparent;
+
+      &::selection {
+        -webkit-text-fill-color: #000 !important;
+      }
     }
   `,
 }));
