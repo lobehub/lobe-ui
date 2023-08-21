@@ -39,7 +39,7 @@ const MobileTabBar = memo<MobileTabBarProps>(
       <Flexbox className={cx(styles.container, className)} style={style}>
         <Flexbox align={'center'} className={styles.inner} horizontal justify={'space-around'}>
           {items.map((item) => {
-            const active = activeKey ? item.key === activeKey : item.key === currentActive;
+            const active = item.key === currentActive;
             return (
               <Flexbox
                 align={'center'}
