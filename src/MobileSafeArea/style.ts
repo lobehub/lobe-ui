@@ -7,7 +7,7 @@ export const useStyles = createStyles(({ css }) => {
     `,
     container: css`
       overflow: hidden;
-      flex: 0;
+      flex: none;
       width: 100vw;
     `,
     top: css`

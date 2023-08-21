@@ -2,7 +2,7 @@ import { createStyles } from 'antd-style';
 import { isNumber } from 'lodash-es';
 
 export const useStyles = createStyles(
-  ({ css, cx, token, isDarkMode }, itemMinWidth?: string | number) => ({
+  ({ css, cx, token, isDarkMode, responsive }, itemMinWidth?: string | number) => ({
     footer: css`
       display: flex;
       gap: 8px;
@@ -85,6 +85,20 @@ export const useStyles = createStyles(
           width: ${isNumber(itemMinWidth) ? `${itemMinWidth}px` : itemMinWidth};
         }
       `}
+
+      ${responsive.mobile} {
+        padding: 16px 0;
+
+        .ant-row {
+          flex-direction: column;
+          gap: 4px;
+        }
+
+        .ant-form-item-control {
+          flex: 1;
+          width: 100%;
+        }
+      }
     `,
     title: css`
       display: flex;

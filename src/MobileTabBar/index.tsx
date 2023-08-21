@@ -1,5 +1,6 @@
-import { CSSProperties, ReactNode, memo, useEffect, useState } from 'react';
+import { CSSProperties, ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
+import useControlledState from 'use-merge-value';
 
 import MobileSafeArea from '@/MobileSafeArea';
 
@@ -24,14 +25,15 @@ export interface MobileTabBarProps {
 
 const MobileTabBar = memo<MobileTabBarProps>(
   ({ className, safeArea = true, style, items, activeKey, defaultActiveKey, onChange }) => {
-    const [currentActive, setCurrentActive] = useState(
-      activeKey || defaultActiveKey || items[0].key,
+    const [currentActive, setCurrentActive] = useControlledState<string>(
+      defaultActiveKey || items[0].key,
+      {
+        defaultValue: defaultActiveKey,
+        onChange,
+        value: activeKey,
+      },
     );
     const { styles, cx } = useStyles();
-
-    useEffect(() => {
-      onChange?.(currentActive as string);
-    }, [currentActive]);
 
     return (
       <Flexbox className={cx(styles.container, className)} style={style}>

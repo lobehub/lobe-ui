@@ -31,7 +31,7 @@ const Swatches = memo<SwatchesProps>(({ colors, activeColor, onSelect, size = 24
   const { cx, styles } = useStyles(size);
 
   return (
-    <Flexbox gap={8} horizontal>
+    <Flexbox gap={8} horizontal style={{ flexWrap: 'wrap' }}>
       <Flexbox
         className={cx(styles.container, !activeColor && styles.active)}
         onClick={() => {

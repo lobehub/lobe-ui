@@ -51,7 +51,7 @@ const MobileNavBar = memo<MobileNavBarProps>(
 
     return (
       <Flexbox className={cx(styles.container, className)} style={style}>
-        {safeArea && <MobileSafeArea position={'bottom'} />}
+        {safeArea && <MobileSafeArea position={'top'} />}
         <Flexbox
           align={'center'}
           className={styles.inner}

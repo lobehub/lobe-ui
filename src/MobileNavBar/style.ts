@@ -10,7 +10,7 @@ export const useStyles = createStyles(({ css, token, cx, stylish }) => {
       stylish.blurStrong,
       css`
         overflow: hidden;
-        flex: 0;
+        flex: none;
 
         width: 100vw;
 
