@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.81.1](https://github.com/lobehub/lobe-ui/compare/v1.81.0...v1.81.1)
+
+<sup>Released on **2023-08-21**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update styles for components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update styles for components ([ab24be1](https://github.com/lobehub/lobe-ui/commit/ab24be1))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.81.0](https://github.com/lobehub/lobe-ui/compare/v1.80.0...v1.81.0)
 
 <sup>Released on **2023-08-16**</sup>
