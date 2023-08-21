@@ -79,7 +79,6 @@ export const useStyles = createStyles(({ cx, css, responsive, token, stylish }) 
       position: relative;
       z-index: 5;
       background-clip: text;
-
       -webkit-text-fill-color: transparent;
 
       &::selection {
