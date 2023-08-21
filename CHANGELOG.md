@@ -2,6 +2,33 @@
 
 # Changelog
 
+## [Version 1.82.0](https://github.com/lobehub/lobe-ui/compare/v1.81.1...v1.82.0)
+
+<sup>Released on **2023-08-21**</sup>
+
+#### ✨ Features
+
+- **mobiletabbar**: Modify condition for determining active item.
+- **misc**: Update Changelog.md and package.json.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **mobiletabbar**: Modify condition for determining active item ([0b86faa](https://github.com/lobehub/lobe-ui/commit/0b86faa))
+- **misc**: Update Changelog.md and package.json ([eaa8d56](https://github.com/lobehub/lobe-ui/commit/eaa8d56))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.81.1](https://github.com/lobehub/lobe-ui/compare/v1.81.0...v1.81.1)
 
 <sup>Released on **2023-08-21**</sup>
