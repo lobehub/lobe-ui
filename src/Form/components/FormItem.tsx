@@ -24,7 +24,7 @@ const FormItem = memo<FormItemProps>(
         {divider && <FormDivider />}
         <Item
           className={cx(styles.item, className)}
-          label={<FormTitle avatar={avatar} desc={desc} tag={tag} title={String(label)} />}
+          label={<FormTitle avatar={avatar} desc={desc} tag={tag} title={label as any} />}
           {...props}
         >
           {children}
