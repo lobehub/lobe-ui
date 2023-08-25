@@ -1,5 +1,5 @@
 import { Form as AntForm, FormProps as AntFormProps, type FormInstance } from 'antd';
-import { type ReactNode, forwardRef } from 'react';
+import { type ReactNode, RefAttributes, forwardRef } from 'react';
 
 import FormFooter from './components/FormFooter';
 import FormGroup, { type FormGroupProps } from './components/FormGroup';
@@ -20,7 +20,7 @@ export interface FormProps extends AntFormProps {
   items?: ItemGroup[];
 }
 
-const Form = forwardRef<FormInstance, FormProps>(
+const FormParent = forwardRef<FormInstance, FormProps>(
   ({ className, itemMinWidth, footer, items, children, ...props }, ref) => {
     const { cx, styles } = useStyles();
     return (
@@ -53,4 +53,16 @@ const Form = forwardRef<FormInstance, FormProps>(
     );
   },
 );
+
+export interface IForm {
+  (props: FormProps & RefAttributes<FormInstance>): ReactNode;
+  Group: typeof FormGroup;
+  Item: typeof FormItem;
+}
+
+const Form = FormParent as unknown as IForm;
+
+Form.Item = FormItem;
+Form.Group = FormGroup;
+
 export default Form;

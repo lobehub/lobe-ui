@@ -8,7 +8,7 @@ import { useStyles } from './style';
 
 export interface FormTitleProps extends DivProps {
   avatar?: ReactNode;
-  desc?: string;
+  desc?: ReactNode;
   tag?: string;
   title: string;
 }
