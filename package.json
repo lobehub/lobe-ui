@@ -102,7 +102,7 @@
     "react-simple-code-editor": "^0",
     "rehype-raw": "^6",
     "remark-gfm": "^3",
-    "shiki-es": "^0",
+    "shikiji": "^0",
     "styled-components": "^6",
     "three": "^0.150",
     "ts-md5": "^1",

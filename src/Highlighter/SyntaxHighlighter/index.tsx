@@ -2,7 +2,7 @@ import { useThemeMode } from 'antd-style';
 import { Loader2 } from 'lucide-react';
 import { memo, useEffect } from 'react';
 import { Center } from 'react-layout-kit';
-import { HighlighterOptions } from 'shiki-es';
+import { type HighlighterCoreOptions } from 'shikiji';
 
 import Icon from '@/Icon';
 import { useHighlight } from '@/hooks/useHighlight';
@@ -12,7 +12,7 @@ import { useStyles } from './style';
 export interface SyntaxHighlighterProps {
   children: string;
   language: string;
-  options?: HighlighterOptions;
+  options?: HighlighterCoreOptions;
 }
 
 const SyntaxHighlighter = memo<SyntaxHighlighterProps>(({ children, language, options }) => {

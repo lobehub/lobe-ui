@@ -1,4 +1,4 @@
-import { Collapse, Divider, Typography } from 'antd';
+import { Collapse, Divider, Image, Typography } from 'antd';
 import { CSSProperties, memo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ReactMarkdown from 'react-markdown';
@@ -28,6 +28,7 @@ const Markdown = memo<MarkdownProps>(({ children, className, style, ...props }) 
     code: Code,
     details: Collapse,
     hr: () => <Divider style={{ marginBottom: '1em', marginTop: 0 }} />,
+    img: Image,
     pre: CodeBlock,
   };
 

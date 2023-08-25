@@ -1,4 +1,4 @@
-import { type Highlighter, type HighlighterOptions, getHighlighter } from 'shiki-es';
+import { type Highlighter, type HighlighterCoreOptions, getHighlighter } from 'shikiji';
 import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
 
@@ -40,7 +40,7 @@ interface Store {
    * @title Initialize the highlighter object
    * @returns Initialization promise object
    */
-  initHighlighter: (options?: HighlighterOptions) => Promise<void>;
+  initHighlighter: (options?: HighlighterCoreOptions) => Promise<void>;
 }
 
 export const useHighlight = createWithEqualityFn<Store>(
