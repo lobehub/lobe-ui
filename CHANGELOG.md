@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.84.1](https://github.com/lobehub/lobe-ui/compare/v1.84.0...v1.84.1)
+
+<sup>Released on **2023-08-26**</sup>
+
+#### 💄 Styles
+
+- **misc**: 优化 tag 样式.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: 优化 tag 样式 ([4b62f5e](https://github.com/lobehub/lobe-ui/commit/4b62f5e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.84.0](https://github.com/lobehub/lobe-ui/compare/v1.83.0...v1.84.0)
 
 <sup>Released on **2023-08-26**</sup>
