@@ -21,6 +21,7 @@ const useStyles = createStyles(({ css, token }) => ({
   `,
   tag: css`
     flex: none;
+    align-items: baseline;
   `,
   title: css`
     overflow: hidden;
