@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.84.0](https://github.com/lobehub/lobe-ui/compare/v1.83.0...v1.84.0)
+
+<sup>Released on **2023-08-26**</sup>
+
+#### ✨ Features
+
+- **misc**: 暴露 Form 子组件.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: 暴露 Form 子组件 ([85e6047](https://github.com/lobehub/lobe-ui/commit/85e6047))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.83.0](https://github.com/lobehub/lobe-ui/compare/v1.82.1...v1.83.0)
 
 <sup>Released on **2023-08-25**</sup>
