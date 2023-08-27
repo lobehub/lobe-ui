@@ -21,12 +21,13 @@ export interface FormProps extends AntFormProps {
 }
 
 const FormParent = forwardRef<FormInstance, FormProps>(
-  ({ className, itemMinWidth, footer, items, children, ...props }, ref) => {
+  ({ className, itemMinWidth, footer, form, items, children, ...props }, ref) => {
     const { cx, styles } = useStyles();
     return (
       <AntForm
         className={cx(styles.form, className)}
         colon={false}
+        form={form}
         layout="horizontal"
         ref={ref}
         {...props}
