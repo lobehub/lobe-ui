@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.84.2](https://github.com/lobehub/lobe-ui/compare/v1.84.1...v1.84.2)
+
+<sup>Released on **2023-08-27**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: 补充 form props.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: 补充 form props ([9a1107b](https://github.com/lobehub/lobe-ui/commit/9a1107b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.84.1](https://github.com/lobehub/lobe-ui/compare/v1.84.0...v1.84.1)
 
 <sup>Released on **2023-08-26**</sup>
