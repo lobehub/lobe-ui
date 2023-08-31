@@ -137,6 +137,19 @@ $ pnpm start
 
 </div>
 
+## 🔗 More Products
+
+- **[🤖 Lobe Chat][lobe-chat] :** An open-source, extensible (Function Calling), high-performance chatbot framework. It supports one-click free deployment of your private ChatGPT/LLM web application.
+- **[🤯 Lobe Theme][lobe-theme] :** The modern theme for stable diffusion webui, exquisite interface design, highly customizable UI, and efficiency boosting features.
+- **[🌏 Lobe i18n][lobe-i18n] :** Lobe i18n is an automation tool for the i18n (internationalization) translation process, powered by ChatGPT. It supports features such as automatic splitting of large files, incremental updates, and customization options for the OpenAI model, API proxy, and temperature.
+- **[💌 Lobe Commit][lobe-commit] :** Lobe Commit is a CLI tool that leverages Langchain/ChatGPT to generate Gitmoji-based commit messages.
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
 ---
 
 #### 📝 License
@@ -192,3 +205,10 @@ This project is [MIT](./LICENSE) licensed.
 
 [issues-shield]: https://img.shields.io/github/issues/lobehub/lobe-ui.svg?style=flat
 [issues-url]: https://github.com/lobehub/lobe-ui/issues/new/choose
+
+<!-- products -->
+
+[lobe-chat]: https://github.com/lobehub/lobe-chat
+[lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme
+[lobe-commit]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-commit
+[lobe-i18n]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-i18n
