@@ -132,7 +132,7 @@
     "father": "^4",
     "husky": "^8",
     "jsdom": "^22",
-    "lint-staged": "^13",
+    "lint-staged": "^14",
     "prettier": "^3",
     "react": "^18",
     "react-dom": "^18",
