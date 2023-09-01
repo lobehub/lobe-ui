@@ -104,7 +104,7 @@
     "remark-gfm": "^3",
     "shikiji": "^0",
     "styled-components": "^6",
-    "three": "^0.150",
+    "three": "^0.156",
     "ts-md5": "^1",
     "use-merge-value": "^1",
     "zustand": "^4.4.1",
