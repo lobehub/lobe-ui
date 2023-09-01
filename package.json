@@ -119,7 +119,7 @@
     "@types/pangu": "^4",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "@types/three": "^0.149",
+    "@types/three": "^0.155",
     "@vitest/coverage-v8": "latest",
     "antd-style": "^3",
     "babel-plugin-antd-style": "latest",
