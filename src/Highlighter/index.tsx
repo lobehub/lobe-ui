@@ -68,7 +68,7 @@ export const Highlighter = memo<HighlighterProps>(
           />
         )}
         {showLanguage && language && <Tag className={styles.lang}>{language.toLowerCase()}</Tag>}
-        <SyntaxHighlighter language={language?.toLowerCase()}>{children.trim()}</SyntaxHighlighter>
+        <SyntaxHighlighter language={language?.toLowerCase()}>{children?.trim()}</SyntaxHighlighter>
       </div>
     );
   },
