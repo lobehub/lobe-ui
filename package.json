@@ -100,7 +100,7 @@
     "react-markdown": "^8",
     "react-rnd": "^10",
     "react-simple-code-editor": "^0",
-    "rehype-raw": "^7",
+    "rehype-raw": "^6",
     "remark-gfm": "^3",
     "shikiji": "^0",
     "styled-components": "^6",
