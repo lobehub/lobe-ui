@@ -13,6 +13,8 @@ export const languageMap = [
   'md',
   'less',
   'css',
+  'python',
+  'py',
   'typescript',
   'ts',
   'tsx',
