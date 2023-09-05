@@ -1,5 +1,4 @@
 import { GetCustomStylish, keyframes } from 'antd-style';
-import { readableColor } from 'polished';
 
 import { LobeCustomStylish } from '@/types/customStylish';
 
@@ -8,7 +7,6 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
   token,
   isDarkMode,
 }) => {
-  const cyan = isDarkMode ? token.cyan9A : token.cyan10A;
   const gradient = keyframes`
     0% {
       background-position: 0% 50%;
@@ -20,6 +18,9 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       background-position: 0% 50%;
     }
   `;
+
+  const cyanColor = isDarkMode ? token.cyan9A : token.cyan11A;
+  const cyanBackground = isDarkMode ? token.cyan2A : token.cyan6A;
 
   return {
     blur: css`
@@ -135,10 +136,10 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         padding: 2px 6px;
 
         font-size: ${token.fontSizeSM}px;
-        color: ${isDarkMode ? token.cyan9A : token.cyan10A};
+        color: ${cyanColor};
 
-        background: ${isDarkMode ? token.cyan1A : token.cyan3A};
-        border: 1px solid ${isDarkMode ? token.cyan1A : token.cyan4A};
+        background: ${cyanBackground};
+        border: 1px solid ${isDarkMode ? token.cyan1A : token.cyan6A};
         border-radius: ${token.borderRadiusSM}px;
       }
 
@@ -193,24 +194,30 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
 
         li {
           counter-increment: steps;
+          word-break: break-all;
 
           &::before {
             content: counter(steps);
 
-            display: inline-flex;
+            scale: 0.8;
+
+            unicode-bidi: isolate;
+            display: inline-flex !important;
             align-items: center;
             justify-content: center;
 
-            width: 1.1rem;
-            height: 1.1rem;
+            width: 1.4em;
+            min-width: 1.4em;
+            max-width: 1.4em;
+            height: 1.4em;
             margin-right: 0.5em;
 
-            font-size: 0.8em;
-            font-weight: 500;
+            font-family: ${token.fontFamilyCode};
+            font-size: 1em;
             line-height: 1;
-            color: ${readableColor(cyan)};
+            color: ${cyanColor};
 
-            background: ${cyan};
+            background: ${cyanBackground};
             border-radius: 50%;
           }
         }
@@ -221,13 +228,19 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         }
       }
 
+      ul {
+        > li::marker {
+          color: ${token.colorTextDescription};
+        }
+      }
+
       > ul {
         > li {
           line-height: 1.8;
           list-style-type: disc;
 
           &::marker {
-            color: ${cyan};
+            color: ${isDarkMode ? token.cyan9A : token.cyan10A} !important;
           }
         }
       }

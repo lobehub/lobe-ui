@@ -8,7 +8,6 @@ import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
-import Code from './Code';
 import CodeBlock from './CodeBlock';
 import { useStyles } from './style';
 
@@ -28,7 +27,6 @@ const Markdown = memo<MarkdownProps>(({ children, className, style, ...props }) 
   const { styles } = useStyles();
   const components: any = {
     a: Typography.Link,
-    code: Code,
     details: Collapse,
     hr: () => <Divider style={{ marginBottom: '1em', marginTop: 0 }} />,
     img: Image,
