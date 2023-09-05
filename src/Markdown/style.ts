@@ -8,7 +8,6 @@ export const useStyles = createStyles(({ css, token, isDarkMode, stylish }) => {
       color: ${isDarkMode ? token.cyan8 : token.pink7};
       border-radius: 4px;
     `,
-
     markdown: stylish.markdown,
   };
 });

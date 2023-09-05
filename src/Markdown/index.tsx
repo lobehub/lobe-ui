@@ -1,9 +1,12 @@
 import { Collapse, Divider, Image, Typography } from 'antd';
+import 'katex/dist/katex.min.css';
 import { CSSProperties, memo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ReactMarkdown from 'react-markdown';
+import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 
 import Code from './Code';
 import CodeBlock from './CodeBlock';
@@ -49,8 +52,8 @@ const Markdown = memo<MarkdownProps>(({ children, className, style, ...props }) 
         <ReactMarkdown
           className={styles.markdown}
           components={components}
-          rehypePlugins={[rehypeRaw]}
-          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeRaw, rehypeKatex]}
+          remarkPlugins={[remarkGfm, remarkMath]}
           {...props}
         >
           {children}
