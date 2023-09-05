@@ -2,6 +2,32 @@
 
 # Changelog
 
+### [Version 1.86.1](https://github.com/lobehub/lobe-ui/compare/v1.86.0...v1.86.1)
+
+<sup>Released on **2023-09-05**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix markdown code style, Fix markdown ol style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix markdown code style ([1e82066](https://github.com/lobehub/lobe-ui/commit/1e82066))
+- **misc**: Fix markdown ol style ([98e9922](https://github.com/lobehub/lobe-ui/commit/98e9922))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.86.0](https://github.com/lobehub/lobe-ui/compare/v1.85.0...v1.86.0)
 
 <sup>Released on **2023-09-05**</sup>
