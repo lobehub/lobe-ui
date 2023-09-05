@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.86.0](https://github.com/lobehub/lobe-ui/compare/v1.85.0...v1.86.0)
+
+<sup>Released on **2023-09-05**</sup>
+
+#### ✨ Features
+
+- **misc**: Add remark-math.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add remark-math ([725d30e](https://github.com/lobehub/lobe-ui/commit/725d30e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.85.0](https://github.com/lobehub/lobe-ui/compare/v1.84.2...v1.85.0)
 
 <sup>Released on **2023-09-04**</sup>
