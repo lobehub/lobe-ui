@@ -2,6 +2,41 @@
 
 # Changelog
 
+### [Version 1.86.4](https://github.com/lobehub/lobe-ui/compare/v1.86.3...v1.86.4)
+
+<sup>Released on **2023-09-06**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Update index.tsx.
+
+#### 💄 Styles
+
+- **misc**: Fix ol style, Update generateCustomStylish.ts, Update generateCustomStylish.ts.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Update index.tsx ([820f8c2](https://github.com/lobehub/lobe-ui/commit/820f8c2))
+
+#### Styles
+
+- **misc**: Fix ol style ([f89fa26](https://github.com/lobehub/lobe-ui/commit/f89fa26))
+- **misc**: Update generateCustomStylish.ts ([e752b0e](https://github.com/lobehub/lobe-ui/commit/e752b0e))
+- **misc**: Update generateCustomStylish.ts ([cf4776f](https://github.com/lobehub/lobe-ui/commit/cf4776f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.86.3](https://github.com/lobehub/lobe-ui/compare/v1.86.2...v1.86.3)
 
 <sup>Released on **2023-09-06**</sup>
