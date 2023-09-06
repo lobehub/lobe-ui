@@ -155,6 +155,10 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
 
         border: 1px solid ${token.colorBorderSecondary};
         border-radius: ${token.borderRadius}px;
+
+        code {
+          display: inline-flex;
+        }
       }
 
       th,
