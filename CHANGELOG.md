@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.87.1](https://github.com/lobehub/lobe-ui/compare/v1.87.0...v1.87.1)
+
+<sup>Released on **2023-09-06**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update styles for form, message modal, and search bar components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update styles for form, message modal, and search bar components ([9d2fa63](https://github.com/lobehub/lobe-ui/commit/9d2fa63))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.87.0](https://github.com/lobehub/lobe-ui/compare/v1.86.4...v1.87.0)
 
 <sup>Released on **2023-09-06**</sup>
