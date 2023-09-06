@@ -79,6 +79,10 @@ export const useStyles = createStyles(
         }
       }
 
+      .ant-form-item-required::before {
+        align-self: flex-start;
+      }
+
       ${itemMinWidth &&
       css`
         .ant-form-item-control {

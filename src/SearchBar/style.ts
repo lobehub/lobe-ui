@@ -22,6 +22,6 @@ export const useStyles = createStyles(({ css, token }) => ({
     right: 0;
     transform: translateY(-50%);
 
-    background: ${token.colorBgContainer};
+    color: ${token.colorTextDescription};
   `,
 }));

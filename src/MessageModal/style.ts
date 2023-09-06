@@ -14,4 +14,7 @@ export const useStyles = createStyles(({ css, prefixCls }) => ({
       margin-bottom: 16px;
     }
   `,
+  root: css`
+    backdrop-filter: blur(2px);
+  `,
 }));

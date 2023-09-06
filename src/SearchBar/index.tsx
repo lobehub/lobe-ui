@@ -1,10 +1,10 @@
-import { Tag } from 'antd';
 import { Search } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
 
 import Icon from '@/Icon';
 import { Input, type InputProps } from '@/Input';
 import Spotlight from '@/Spotlight';
+import Tag from '@/Tag';
 
 import { useStyles } from './style';
 

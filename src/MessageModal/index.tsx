@@ -96,6 +96,7 @@ const MessageModal = memo<MessageModalProps>(
           </Flexbox>
         }
         width={800}
+        wrapClassName={styles.root}
       >
         {isEdit ? (
           <MessageInput
