@@ -39,6 +39,7 @@ const Loading = memo<LoadingProps>(
         classNames={{ textarea: styles.editingInput }}
         editButtonSize={'small'}
         editing={editing}
+        fullFeaturedCodeBlock
         onChange={onChange}
         onEditingChange={onEditingChange}
         text={text}

@@ -62,6 +62,10 @@ export const useStyles = createStyles(
           }
         `,
       ),
+      header: css`
+        padding: 4px 8px;
+        background: ${token.colorFillQuaternary};
+      `,
       lang: cx(
         langHoverCls,
         stylish.blur,
@@ -79,6 +83,14 @@ export const useStyles = createStyles(
           transition: opacity 0.1s;
         `,
       ),
+      select: css`
+        .ant-select-selection-item {
+          min-width: 100px;
+          padding-inline-end: 0 !important;
+          color: ${token.colorTextDescription};
+          text-align: center;
+        }
+      `,
     };
   },
 );

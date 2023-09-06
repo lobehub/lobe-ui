@@ -46,12 +46,13 @@ const Snippet = memo<SnippetProps>(
     copyable = true,
     type = 'ghost',
     spotlight,
+    className,
     ...props
   }) => {
-    const { styles } = useStyles(type);
+    const { styles, cx } = useStyles(type);
 
     return (
-      <div className={styles.container} {...props}>
+      <div className={cx(styles.container, className)} {...props}>
         {spotlight && <Spotlight />}
         <SyntaxHighlighter language={language}>
           {[symbol, children].filter(Boolean).join(' ')}

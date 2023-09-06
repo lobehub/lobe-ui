@@ -10,6 +10,7 @@ export default () => {
         rows: true,
         value: content,
       },
+      fullFeaturedCodeBlock: false,
     },
     { store },
   );

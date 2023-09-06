@@ -2,9 +2,10 @@ import { createStyles } from 'antd-style';
 import { memo } from 'react';
 
 import Highlighter from '@/Highlighter';
+import Snippet from '@/Snippet';
 
-const useStyles = createStyles(
-  ({ css }) => css`
+const useStyles = createStyles(({ css }) => ({
+  container: css`
     :not(:last-child) {
       margin-block-start: 1em;
       margin-block-end: 1em;
@@ -12,10 +13,21 @@ const useStyles = createStyles(
       margin-inline-end: 0;
     }
   `,
-);
+  highlight: css`
+    pre {
+      padding: 12px !important;
+    }
+  `,
+}));
 
-const Code = memo((properties: any) => {
-  const { styles } = useStyles();
+const countLines = (str: string): number => {
+  const regex = /\n/g;
+  const matches = str.match(regex);
+  return matches ? matches.length : 1;
+};
+
+const Code = memo(({ fullFeatured, ...properties }: any) => {
+  const { styles, cx } = useStyles();
 
   if (!properties.children[0]) return;
 
@@ -23,16 +35,38 @@ const Code = memo((properties: any) => {
 
   if (!children) return;
 
+  const content = Array.isArray(children) ? (children[0] as string) : children;
+
+  if (countLines(content) === 1 && content.length <= 60) {
+    return (
+      <Snippet
+        className={styles.container}
+        data-code-type="highlighter"
+        language={className?.replace('language-', '') || 'markdown'}
+        type={'block'}
+      >
+        {content}
+      </Snippet>
+    );
+  }
+
   return (
     <Highlighter
-      className={styles}
+      className={cx(styles.container, styles.highlight)}
       copyButtonSize={{ blockSize: 28, fontSize: 16 }}
+      fullFeatured={fullFeatured}
       language={className?.replace('language-', '') || 'markdown'}
       type="block"
     >
-      {Array.isArray(children) ? (children[0] as string) : children}
+      {content}
     </Highlighter>
   );
 });
 
-export default Code;
+export const CodeLite = memo((properties: any) => {
+  return <Code {...properties} />;
+});
+
+export const CodeFullFeatured = memo((properties: any) => {
+  return <Code fullFeatured {...properties} />;
+});

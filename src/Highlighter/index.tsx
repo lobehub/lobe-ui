@@ -5,6 +5,7 @@ import Spotlight from '@/Spotlight';
 import Tag from '@/Tag';
 import { DivProps } from '@/types';
 
+import FullFeatured from './FullFeatured';
 import SyntaxHighlighter from './SyntaxHighlighter';
 import { useStyles } from './style';
 
@@ -19,6 +20,7 @@ export interface HighlighterProps extends DivProps {
    * @default true
    */
   copyable?: boolean;
+  fullFeatured?: boolean;
   /**
    * @description The language of the code content
    */
@@ -42,6 +44,7 @@ export interface HighlighterProps extends DivProps {
 
 export const Highlighter = memo<HighlighterProps>(
   ({
+    fullFeatured,
     copyButtonSize = 'site',
     children,
     language,
@@ -55,6 +58,13 @@ export const Highlighter = memo<HighlighterProps>(
   }) => {
     const { styles, cx } = useStyles(type);
     const container = cx(styles.container, className);
+
+    if (fullFeatured)
+      return (
+        <FullFeatured className={className} language={language} style={style} {...props}>
+          {children}
+        </FullFeatured>
+      );
 
     return (
       <div className={container} data-code-type="highlighter" style={style} {...props}>
