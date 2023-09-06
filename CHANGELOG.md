@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.87.2](https://github.com/lobehub/lobe-ui/compare/v1.87.1...v1.87.2)
+
+<sup>Released on **2023-09-06**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix ssr error.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix ssr error ([b4c9656](https://github.com/lobehub/lobe-ui/commit/b4c9656))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.87.1](https://github.com/lobehub/lobe-ui/compare/v1.87.0...v1.87.1)
 
 <sup>Released on **2023-09-06**</sup>
