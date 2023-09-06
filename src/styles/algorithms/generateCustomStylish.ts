@@ -61,7 +61,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       animation: 5s ${gradient} 5s ease infinite;
     `,
     markdown: css`
-      color: ${isDarkMode ? token.colorTextSecondary : token.colorText};
+      color: ${token.colorText};
 
       h1,
       h2,
