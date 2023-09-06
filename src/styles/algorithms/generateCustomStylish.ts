@@ -187,69 +187,22 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         }
       }
 
-      > ol > li {
-        margin-left: 0;
+      > ol > li::marker {
+        color: ${isDarkMode ? token.cyan9A : token.cyan10A} !important;
       }
 
-      ol {
-        counter-reset: steps;
-        margin-left: 0;
-        list-style: none;
-
-        li {
-          counter-increment: steps;
-          word-break: break-all;
-
-          > p {
-            display: inline;
-          }
-
-          &::before {
-            content: counter(steps);
-
-            scale: 0.8;
-
-            unicode-bidi: isolate;
-            display: inline-flex !important;
-            align-items: center;
-            justify-content: center;
-
-            width: 1.4em;
-            min-width: 1.4em;
-            max-width: 1.4em;
-            height: 1.4em;
-            margin-right: 0.5em;
-
-            font-family: ${token.fontFamilyCode};
-            font-size: 1em;
-            line-height: 1;
-            color: ${cyanColor};
-
-            background: ${cyanBackground};
-            border-radius: 50%;
-          }
-        }
-
-        ol li::before {
-          color: ${token.colorTextSecondary};
-          background: ${token.colorFill};
+      > ul > li {
+        line-height: 1.8;
+        list-style-type: disc;
+        &::marker {
+          color: ${isDarkMode ? token.cyan9A : token.cyan10A} !important;
         }
       }
 
+      ol,
       ul {
         > li::marker {
           color: ${token.colorTextDescription};
-        }
-      }
-
-      > ul {
-        > li {
-          line-height: 1.8;
-          list-style-type: disc;
-
-          &::marker {
-            color: ${isDarkMode ? token.cyan9A : token.cyan10A} !important;
-          }
         }
       }
 
