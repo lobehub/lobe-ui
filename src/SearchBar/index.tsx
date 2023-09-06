@@ -26,12 +26,6 @@ export interface SearchBarProps extends InputProps {
   spotlight?: boolean;
 }
 
-const isAppleDevice = /(mac|iphone|ipod|ipad)/i.test(
-  typeof navigator === 'undefined' ? '' : navigator?.platform,
-);
-
-const symbol = isAppleDevice ? '⌘' : 'Ctrl';
-
 const SearchBar = memo<SearchBarProps>(
   ({
     spotlight,
@@ -43,6 +37,7 @@ const SearchBar = memo<SearchBarProps>(
     shortKey = 'f',
     ...properties
   }) => {
+    const [symbol, setSymbol] = useState('Ctrl');
     const [showTag, setShowTag] = useState<boolean>(true);
     const [inputValue, setInputValue] = useState<SearchBarProps['value']>(value);
     const { styles, cx } = useStyles();
@@ -50,6 +45,14 @@ const SearchBar = memo<SearchBarProps>(
 
     useEffect(() => {
       if (!enableShortKey) return;
+
+      const isAppleDevice = /(mac|iphone|ipod|ipad)/i.test(
+        typeof navigator === 'undefined' ? '' : navigator?.platform,
+      );
+
+      if (isAppleDevice) {
+        setSymbol('⌘');
+      }
 
       const handler = (event_: KeyboardEvent) => {
         if ((isAppleDevice ? event_.metaKey : event_.ctrlKey) && event_.key === shortKey) {
