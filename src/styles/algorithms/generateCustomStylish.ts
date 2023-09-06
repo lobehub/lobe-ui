@@ -196,6 +196,10 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
           counter-increment: steps;
           word-break: break-all;
 
+          > p {
+            display: inline;
+          }
+
           &::before {
             content: counter(steps);
 
