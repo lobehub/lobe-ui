@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.87.0](https://github.com/lobehub/lobe-ui/compare/v1.86.4...v1.87.0)
+
+<sup>Released on **2023-09-06**</sup>
+
+#### ✨ Features
+
+- **misc**: Add new features to React components and Markdown module.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add new features to React components and Markdown module ([de45aa6](https://github.com/lobehub/lobe-ui/commit/de45aa6))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.86.4](https://github.com/lobehub/lobe-ui/compare/v1.86.3...v1.86.4)
 
 <sup>Released on **2023-09-06**</sup>
