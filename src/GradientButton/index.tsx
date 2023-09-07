@@ -3,18 +3,21 @@ import { memo } from 'react';
 
 import { useStyles } from './style';
 
-export type GradientButtonProps = ButtonProps;
+export interface GradientButtonProps extends ButtonProps {
+  glow?: boolean;
+}
 
-const GradientButton = memo<ButtonProps>(({ children, className, ...props }) => {
-  const { styles, cx } = useStyles();
+const GradientButton = memo<GradientButtonProps>(
+  ({ glow = true, children, className, size = 'large', ...props }) => {
+    const { styles, cx } = useStyles(size);
 
-  return (
-    <Button className={cx(styles.button, className)} {...props}>
-      <div className={styles.glow} />
-      <div className={styles.bg} />
-      {children}
-    </Button>
-  );
-});
+    return (
+      <Button className={cx(styles.button, className)} size={size} {...props}>
+        {glow && <div className={styles.glow} />}
+        {children}
+      </Button>
+    );
+  },
+);
 
 export default GradientButton;

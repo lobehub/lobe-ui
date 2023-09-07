@@ -11,6 +11,7 @@ export default () => {
   const control: GradientButtonProps | any = useControls(
     {
       children: 'Get a Demo',
+      glow: true,
       size: {
         options: ['large', 'normal', 'small'],
         value: 'large',

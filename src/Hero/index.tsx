@@ -5,6 +5,8 @@ import * as LucideIcon from 'lucide-react';
 import { memo, useCallback } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
+import GridBackground from '@/GridBackground';
+
 import { useStyles } from './style';
 
 export interface HeroAction {
@@ -97,15 +99,18 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
 
   return (
     <ConfigProvider theme={{ token: { fontSize: 16 } }}>
-      <Flexbox className={styles.container} distribution={'center'} horizontal>
-        <div className={styles.canvas}></div>
-        <Center>
-          {title && <h1 className={styles.title} dangerouslySetInnerHTML={{ __html: title }} />}
-          {description && (
-            <p className={styles.desc} dangerouslySetInnerHTML={{ __html: description }} />
-          )}
-          <ButtonGroups />
-        </Center>
+      <Flexbox align={'center'}>
+        <Flexbox className={styles.container} distribution={'center'} horizontal>
+          <div className={styles.canvas}></div>
+          <Center>
+            {title && <h1 className={styles.title} dangerouslySetInnerHTML={{ __html: title }} />}
+            {description && (
+              <p className={styles.desc} dangerouslySetInnerHTML={{ __html: description }} />
+            )}
+            <ButtonGroups />
+          </Center>
+        </Flexbox>
+        <GridBackground animation random strokeWidth={4} style={{ maxWidth: 960, width: '120%' }} />
       </Flexbox>
     </ConfigProvider>
   );

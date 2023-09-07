@@ -4,4 +4,4 @@ hero:
   description: Lobe UI is an open-source UI component library <br/>for building chatbot web apps
 ---
 
-<code src="./index.tsx" ></code>
+<code src="./index.tsx" inline></code>

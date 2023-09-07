@@ -108,6 +108,7 @@ export { default as SideNav, type SideNavProps } from './SideNav';
 export { default as SliderWithInput, type SliderWithInputProps } from './SliderWithInput';
 export { default as Snippet, type SnippetProps } from './Snippet';
 export { default as Spotlight, type SpotlightProps } from './Spotlight';
+export { default as SpotlightCard, type SpotlightCardProps } from './SpotlightCard';
 export {
   default as StroyBook,
   type StroyBookProps,

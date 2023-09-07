@@ -38,12 +38,12 @@ const GridBackground = memo<GridBackgroundProps>(
   }) => {
     const ref = useRef(null);
     const size = useSize(ref);
-    const { styles, cx } = useStyles({ backgroundColor, reverse });
+    const { styles, cx, theme } = useStyles({ backgroundColor, reverse });
 
     const gridProps: GridProps = useMemo(
       () => ({
         className: styles.highlight,
-        color: colorFront,
+        color: colorFront || theme.colorText,
         strokeWidth,
       }),
       [reverse, colorFront, strokeWidth],
@@ -82,7 +82,11 @@ const GridBackground = memo<GridBackgroundProps>(
         style={flip ? { transform: 'scaleY(-1)', ...style } : style}
         {...props}
       >
-        <Grid color={colorBack} strokeWidth={strokeWidth} style={{ zIndex: 2 }} />
+        <Grid
+          color={colorBack || theme.colorBorder}
+          strokeWidth={strokeWidth}
+          style={{ zIndex: 2 }}
+        />
         {animation && <HighlightGrid />}
         {showBackground && (
           <div

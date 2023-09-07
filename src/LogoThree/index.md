@@ -1,6 +1,6 @@
 ---
 nav: Components
-group: Other
+group: Theme
 title: LogoThree
 ---
 

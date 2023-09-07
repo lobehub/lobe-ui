@@ -7,7 +7,7 @@ description: The Features component is used to display a list of feature items. 
 
 ## Default
 
-<code src="./demos/index.tsx" nopadding></code>
+<code src="./demos/index.tsx" ></code>
 
 ## APIs
 

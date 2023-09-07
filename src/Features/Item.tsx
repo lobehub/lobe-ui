@@ -4,7 +4,7 @@ import { Center, Flexbox } from 'react-layout-kit';
 import Icon, { IconProps } from '@/Icon';
 import type { DivProps } from '@/types';
 
-import { useStyles } from './Item.style';
+import { useStyles } from './style';
 
 export interface FeatureItem {
   /**
