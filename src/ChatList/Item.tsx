@@ -1,6 +1,6 @@
 import { App } from 'antd';
 import copy from 'copy-to-clipboard';
-import { ReactNode, memo, useCallback, useMemo, useState } from 'react';
+import { FC, ReactNode, memo, useCallback, useMemo, useState } from 'react';
 
 import ChatItem, { type ChatItemProps } from '@/ChatItem';
 import { ChatMessage, ChatMessageError, MessageRoleType } from '@/types/chatMessage';
@@ -8,7 +8,7 @@ import { ChatMessage, ChatMessageError, MessageRoleType } from '@/types/chatMess
 import ActionsBar, { type ActionsBarProps } from './ActionsBar';
 
 export type OnMessageChange = (id: string, content: string) => void;
-export type MessageExtra = (props: ChatMessage) => ReactNode;
+export type MessageExtra = FC<ChatMessage>;
 export type OnActionClick = (actionKey: string, messageId: string) => void;
 export type RenderMessage = (content: ReactNode, message: ChatMessage) => ReactNode;
 export type RenderErrorMessage = (error: ChatMessageError, message: ChatMessage) => ReactNode;
