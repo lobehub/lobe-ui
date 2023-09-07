@@ -1,6 +1,6 @@
 import { App } from 'antd';
 import copy from 'copy-to-clipboard';
-import { FC, ReactNode, memo, useCallback, useMemo, useState } from 'react';
+import { type FC, type ReactNode, memo, useCallback, useMemo, useState } from 'react';
 
 import ChatItem, { type ChatItemProps } from '@/ChatItem';
 import { ChatMessage, ChatMessageError, MessageRoleType } from '@/types/chatMessage';
