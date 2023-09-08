@@ -1,12 +1,12 @@
 ---
 nav: Components
-group: General
-title: BackButton
+group: Chat
+title: BackBottom
 ---
 
 ## Default
 
-<code src="./demos/index.tsx" nopadding></code>
+<code src="./demos/index.tsx"></code>
 
 ## APIs
 
