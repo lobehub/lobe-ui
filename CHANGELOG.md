@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.88.1](https://github.com/lobehub/lobe-ui/compare/v1.88.0...v1.88.1)
+
+<sup>Released on **2023-09-08**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix typo.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix typo ([5bd0712](https://github.com/lobehub/lobe-ui/commit/5bd0712))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.88.0](https://github.com/lobehub/lobe-ui/compare/v1.87.2...v1.88.0)
 
 <sup>Released on **2023-09-08**</sup>
