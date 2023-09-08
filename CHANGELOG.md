@@ -2,6 +2,40 @@
 
 # Changelog
 
+## [Version 1.88.0](https://github.com/lobehub/lobe-ui/compare/v1.87.2...v1.88.0)
+
+<sup>Released on **2023-09-08**</sup>
+
+#### ✨ Features
+
+- **misc**: Implement SpotlightCard component in Lobe UI, Replace 'Nav' component with 'GroupNav' component.
+
+#### 🐛 Bug Fixes
+
+- **deps**: Fix father version.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Implement SpotlightCard component in Lobe UI ([f400cfe](https://github.com/lobehub/lobe-ui/commit/f400cfe))
+- **misc**: Replace 'Nav' component with 'GroupNav' component ([a1128d6](https://github.com/lobehub/lobe-ui/commit/a1128d6))
+
+#### What's fixed
+
+- **deps**: Fix father version ([945a9e8](https://github.com/lobehub/lobe-ui/commit/945a9e8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.87.2](https://github.com/lobehub/lobe-ui/compare/v1.87.1...v1.87.2)
 
 <sup>Released on **2023-09-06**</sup>
