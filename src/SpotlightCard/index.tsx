@@ -6,15 +6,27 @@ import SpotlightCardItem from './SpotlightCardItem';
 import { CHILDREN_CLASSNAME, useStyles } from './style';
 
 export interface SpotlightCardProps<T = any> extends DivProps {
+  borderRadius?: number;
   columns?: string;
   gap?: number;
   items: T[];
   renderItem: (item: T) => ReactNode;
+  size?: number;
 }
 
 const SpotlightCard = memo<SpotlightCardProps>(
-  ({ items, renderItem, className, columns = '1fr 1fr 1fr', gap = 12, style, ...props }) => {
-    const { styles, cx } = useStyles();
+  ({
+    items,
+    renderItem,
+    className,
+    columns = '1fr 1fr 1fr',
+    gap = 12,
+    style,
+    size = 800,
+    borderRadius = 12,
+    ...props
+  }) => {
+    const { styles, cx } = useStyles({ borderRadius, size });
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -46,7 +58,12 @@ const SpotlightCard = memo<SpotlightCardProps>(
         {items.map((item, index) => {
           const children = renderItem(item);
           return (
-            <SpotlightCardItem className={CHILDREN_CLASSNAME} key={index}>
+            <SpotlightCardItem
+              borderRadius={borderRadius}
+              className={CHILDREN_CLASSNAME}
+              key={index}
+              size={size}
+            >
               {children}
             </SpotlightCardItem>
           );

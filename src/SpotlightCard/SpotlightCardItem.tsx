@@ -5,14 +5,25 @@ import { DivProps } from '@/types';
 
 import { useStyles } from './style';
 
-const SpotlightCardItem = memo<DivProps>(({ children, className, ...props }) => {
-  const { styles, cx } = useStyles();
+export interface SpotlightCardItemProps extends DivProps {
+  borderRadius: number;
+  size: number;
+}
 
-  return (
-    <div className={cx(className, styles.itemContainer)} {...props}>
-      <Flexbox className={styles.content}>{children}</Flexbox>
-    </div>
-  );
-});
+const SpotlightCardItem = memo<SpotlightCardItemProps>(
+  ({ children, className, style, borderRadius, size, ...props }) => {
+    const { styles, cx } = useStyles({ borderRadius, size });
+
+    return (
+      <div
+        className={cx(className, styles.itemContainer)}
+        style={{ borderRadius, ...style }}
+        {...props}
+      >
+        <Flexbox className={styles.content}>{children}</Flexbox>
+      </div>
+    );
+  },
+);
 
 export default SpotlightCardItem;
