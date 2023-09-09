@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.91.0](https://github.com/lobehub/lobe-ui/compare/v1.90.0...v1.91.0)
+
+<sup>Released on **2023-09-09**</sup>
+
+#### ✨ Features
+
+- **misc**: Add borderRadius and size props to SpotlightCardItem and SpotlightCard components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add borderRadius and size props to SpotlightCardItem and SpotlightCard components ([f48d3ac](https://github.com/lobehub/lobe-ui/commit/f48d3ac))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.90.0](https://github.com/lobehub/lobe-ui/compare/v1.89.0...v1.90.0)
 
 <sup>Released on **2023-09-09**</sup>
