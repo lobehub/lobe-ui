@@ -1,14 +1,7 @@
 import { Button, type InputRef } from 'antd';
 import { Loader2 } from 'lucide-react';
-import {
-  CSSProperties,
-  ReactNode,
-  forwardRef,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { CSSProperties, ReactNode, forwardRef, useCallback, useRef } from 'react';
+import useControlledState from 'use-merge-value';
 
 import Icon from '@/Icon';
 import { TextArea, type TextAreaProps } from '@/Input';
@@ -77,6 +70,7 @@ export interface ChatInputAreaProps extends ActionProps, TextAreaProps {
    * @description CSS styles for the textarea element
    */
   textareaStyle?: CSSProperties;
+  value?: string;
 }
 
 const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
@@ -106,23 +100,24 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
       textareaId = 'lobe-chat-input-area',
       actionsRight,
       onStop,
+      value,
       ...props
     },
     ref,
   ) => {
+    const [currentValue, setCurrentValue] = useControlledState<string>(defaultValue, {
+      defaultValue,
+      onChange: onInputChange,
+      value,
+    });
     const { cx, styles } = useStyles();
     const isChineseInput = useRef(false);
-    const [value, setValue] = useState<string>(defaultValue);
 
     const handleSend = useCallback(() => {
       if (loading && disabled) return;
-      if (onSend) onSend(value);
-      setValue('');
-    }, [disabled, value]);
-
-    useEffect(() => {
-      if (onInputChange) onInputChange(value);
-    }, [value]);
+      if (onSend) onSend(currentValue);
+      setCurrentValue('');
+    }, [disabled, currentValue]);
 
     return (
       <section className={cx(styles.container, className)} style={{ minHeight, ...style }}>
@@ -142,11 +137,11 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
             {...props}
             onBlur={(e) => {
               if (onBlur) onBlur(e);
-              setValue(e.target.value);
+              setCurrentValue(e.target.value);
             }}
             onChange={(e) => {
               if (onChange) onChange(e);
-              setValue(e.target.value);
+              setCurrentValue(e.target.value);
             }}
             onCompositionEnd={(e) => {
               if (onCompositionEnd) onCompositionEnd(e);
@@ -166,7 +161,7 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaProps>(
             placeholder={placeholder}
             resize={false}
             type="pure"
-            value={value}
+            value={currentValue}
           />
         </div>
         <div className={styles.footerBar}>
