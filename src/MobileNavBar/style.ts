@@ -11,15 +11,12 @@ export const useStyles = createStyles(({ css, token, cx, stylish }) => {
       css`
         overflow: hidden;
         flex: none;
-
         width: 100vw;
-
         background: linear-gradient(
           to bottom,
           ${rgba(token.colorBgLayout, 0.8)},
           ${rgba(token.colorBgLayout, 0.4)}
         );
-        border-bottom: 1px solid ${token.colorBorder};
       `,
     ),
     inner: css`
