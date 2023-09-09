@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.89.0](https://github.com/lobehub/lobe-ui/compare/v1.88.1...v1.89.0)
+
+<sup>Released on **2023-09-09**</sup>
+
+#### ✨ Features
+
+- **misc**: Add "use-merge-value" and "useControlledState" hooks to ChatInputArea.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add "use-merge-value" and "useControlledState" hooks to ChatInputArea ([d92f839](https://github.com/lobehub/lobe-ui/commit/d92f839))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.88.1](https://github.com/lobehub/lobe-ui/compare/v1.88.0...v1.88.1)
 
 <sup>Released on **2023-09-08**</sup>
