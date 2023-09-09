@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.90.0](https://github.com/lobehub/lobe-ui/compare/v1.89.0...v1.90.0)
+
+<sup>Released on **2023-09-09**</sup>
+
+#### ✨ Features
+
+- **misc**: Update CSS styles in MobileNavBar and MobileTabBar components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update CSS styles in MobileNavBar and MobileTabBar components ([03250c6](https://github.com/lobehub/lobe-ui/commit/03250c6))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.89.0](https://github.com/lobehub/lobe-ui/compare/v1.88.1...v1.89.0)
 
 <sup>Released on **2023-09-09**</sup>
