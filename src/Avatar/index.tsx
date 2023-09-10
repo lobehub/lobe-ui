@@ -1,5 +1,5 @@
 import { Avatar as AntAvatar, type AvatarProps as AntAvatarProps } from 'antd';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 import FluentEmoji from '@/FluentEmoji';
 import { getEmoji } from '@/utils/getEmojiByCharacter';
@@ -46,7 +46,7 @@ const Avatar = memo<AvatarProps>(
     const isImage = Boolean(
       avatar && ['/', 'http', 'data:'].some((index) => avatar.startsWith(index)),
     );
-    const emoji = avatar && !isImage && getEmoji(avatar);
+    const emoji = useMemo(() => avatar && !isImage && getEmoji(avatar), [avatar]);
 
     const { styles, cx } = useStyles({ background, isEmoji: Boolean(emoji), size });
 

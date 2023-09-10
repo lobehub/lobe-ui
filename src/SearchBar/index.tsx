@@ -1,5 +1,6 @@
 import { Search } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
+import useControlledState from 'use-merge-value';
 
 import Icon from '@/Icon';
 import { Input, type InputProps } from '@/Input';
@@ -9,11 +10,13 @@ import Tag from '@/Tag';
 import { useStyles } from './style';
 
 export interface SearchBarProps extends InputProps {
+  defaultValue?: string;
   /**
    * @description Whether to enable the shortcut key to focus on the input
    * @default false
    */
   enableShortKey?: boolean;
+  onInputChange?: (value: string) => void;
   /**
    * @description The shortcut key to focus on the input. Only works if `enableShortKey` is true
    * @default 'f'
@@ -24,22 +27,28 @@ export interface SearchBarProps extends InputProps {
    * @default false
    */
   spotlight?: boolean;
+  value?: string;
 }
 
 const SearchBar = memo<SearchBarProps>(
   ({
+    defaultValue,
     spotlight,
     className,
     value,
-    onChange,
+    onInputChange,
     placeholder,
     enableShortKey,
     shortKey = 'f',
     ...properties
   }) => {
+    const [inputValue, setInputValue] = useControlledState<string>(defaultValue as any, {
+      defaultValue,
+      onChange: onInputChange,
+      value,
+    });
     const [symbol, setSymbol] = useState('Ctrl');
     const [showTag, setShowTag] = useState<boolean>(true);
-    const [inputValue, setInputValue] = useState<SearchBarProps['value']>(value);
     const { styles, cx } = useStyles();
     const inputReference: any = useRef<HTMLInputElement>();
 
@@ -76,8 +85,6 @@ const SearchBar = memo<SearchBarProps>(
           onChange={(e) => {
             setInputValue(e.target.value);
             setShowTag(!e.target.value);
-
-            if (onChange) onChange(e);
           }}
           onFocus={() => setShowTag(false)}
           placeholder={placeholder ?? 'Type keywords...'}

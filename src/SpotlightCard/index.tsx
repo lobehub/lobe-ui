@@ -1,4 +1,5 @@
-import { ReactNode, memo, useEffect, useRef } from 'react';
+import { isNumber } from 'lodash-es';
+import { ReactNode, memo, useEffect, useMemo, useRef } from 'react';
 
 import { DivProps } from '@/types';
 
@@ -7,7 +8,7 @@ import { CHILDREN_CLASSNAME, useStyles } from './style';
 
 export interface SpotlightCardProps<T = any> extends DivProps {
   borderRadius?: number;
-  columns?: string;
+  columns?: string | number;
   gap?: number;
   items: T[];
   renderItem: (item: T) => ReactNode;
@@ -19,7 +20,7 @@ const SpotlightCard = memo<SpotlightCardProps>(
     items,
     renderItem,
     className,
-    columns = '1fr 1fr 1fr',
+    columns = 3,
     gap = 12,
     style,
     size = 800,
@@ -28,6 +29,11 @@ const SpotlightCard = memo<SpotlightCardProps>(
   }) => {
     const { styles, cx } = useStyles({ borderRadius, size });
     const ref = useRef<HTMLDivElement>(null);
+
+    const gridColumns = useMemo(
+      () => (isNumber(columns) ? Array.from({ length: columns }).fill('1fr').join(' ') : columns),
+      [columns],
+    );
 
     useEffect(() => {
       if (!ref.current) return;
@@ -52,7 +58,7 @@ const SpotlightCard = memo<SpotlightCardProps>(
       <div
         className={cx(styles.container, styles.grid, className)}
         ref={ref}
-        style={{ gap, gridTemplateColumns: columns, ...style }}
+        style={{ gap, gridTemplateColumns: gridColumns, ...style }}
         {...props}
       >
         {items.map((item, index) => {

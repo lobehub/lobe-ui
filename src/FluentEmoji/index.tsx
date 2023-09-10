@@ -61,9 +61,7 @@ const FluentEmoji = memo<FluentEmojiProps>(
       }
     }, [type, emoji]);
 
-    const isFallback = useMemo(() => type === 'pure' || !emojiUrl || loadingFail, []);
-
-    if (isFallback)
+    if (type === 'pure' || !emojiUrl || loadingFail)
       return (
         <div
           className={cx(styles.container, className)}
