@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.93.0](https://github.com/lobehub/lobe-ui/compare/v1.92.0...v1.93.0)
+
+<sup>Released on **2023-09-11**</sup>
+
+#### ✨ Features
+
+- **misc**: Add chat input component with event handlers, styling, and props.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add chat input component with event handlers, styling, and props ([3a16540](https://github.com/lobehub/lobe-ui/commit/3a16540))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.92.0](https://github.com/lobehub/lobe-ui/compare/v1.91.0...v1.92.0)
 
 <sup>Released on **2023-09-10**</sup>
