@@ -16,7 +16,7 @@ const SpotlightCardItem = memo<SpotlightCardItemProps>(
 
     return (
       <div
-        className={cx(className, styles.itemContainer)}
+        className={cx(styles.itemContainer, className)}
         style={{ borderRadius, ...style }}
         {...props}
       >

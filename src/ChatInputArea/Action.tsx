@@ -1,4 +1,4 @@
-import { createStyles } from 'antd-style';
+import { createStyles, useResponsive } from 'antd-style';
 import { Maximize2, Minimize2 } from 'lucide-react';
 import { ReactNode, memo, useCallback } from 'react';
 
@@ -43,7 +43,7 @@ export interface ActionProps {
 
 const Action = memo<ActionProps>(({ actions, actionsRight, expand, onExpandChange }) => {
   const { styles } = useStyles();
-
+  const { mobile } = useResponsive();
   const handleExpandClick = useCallback(() => {
     if (onExpandChange) onExpandChange(!expand);
   }, [expand]);
@@ -53,7 +53,9 @@ const Action = memo<ActionProps>(({ actions, actionsRight, expand, onExpandChang
       <div className={styles.actionLeft}>{actions}</div>
       <div className={styles.actionsRight}>
         {actionsRight}
-        <ActionIcon icon={expand ? Minimize2 : Maximize2} onClick={handleExpandClick} />
+        {!mobile && (
+          <ActionIcon icon={expand ? Minimize2 : Maximize2} onClick={handleExpandClick} />
+        )}
       </div>
     </div>
   );

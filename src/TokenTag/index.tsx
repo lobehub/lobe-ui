@@ -1,3 +1,4 @@
+import { useResponsive } from 'antd-style';
 import { forwardRef } from 'react';
 
 import FluentEmoji from '@/FluentEmoji';
@@ -31,6 +32,7 @@ const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
     { className, displayMode = 'remained', maxValue, value, text, shape = 'round', ...props },
     ref,
   ) => {
+    const { mobile } = useResponsive();
     const valueLeft = maxValue - value;
     const percent = valueLeft / maxValue;
     let type: 'normal' | 'low' | 'overload';
@@ -54,7 +56,11 @@ const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
         <FluentEmoji emoji={emoji} size={ICON_SIZE} />
         {valueLeft > 0
           ? [
-              displayMode === 'remained' ? text?.remained || 'Remained' : text?.used || 'Used',
+              mobile
+                ? ''
+                : displayMode === 'remained'
+                ? text?.remained || 'Remained'
+                : text?.used || 'Used',
               displayMode === 'remained' ? valueLeft : value,
             ].join(' ')
           : text?.overload || 'Overload'}

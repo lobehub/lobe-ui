@@ -16,10 +16,6 @@ export interface ChatItemProps {
   avatar: MetaData;
   avatarAddon?: ReactNode;
   /**
-   * @description Whether to add border spacing
-   */
-  borderSpacing?: number | string;
-  /**
    * @description Custom CSS class name for the chat item
    */
   className?: string;

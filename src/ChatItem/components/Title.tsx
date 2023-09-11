@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import { ChatItemProps } from '@/ChatItem';
 import { formatTime } from '@/utils/formatTime';
@@ -16,10 +17,10 @@ const Title = memo<TitleProps>(({ showTitle, placement, time, avatar }) => {
   const { styles } = useStyles({ placement, showTitle });
 
   return (
-    <title className={styles.name}>
+    <Flexbox className={styles.name} gap={4} horizontal>
       {showTitle ? avatar.title || 'untitled' : undefined}
       {time && <time>{formatTime(time)}</time>}
-    </title>
+    </Flexbox>
   );
 });
 

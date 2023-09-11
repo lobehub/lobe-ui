@@ -1,9 +1,7 @@
 import { memo } from 'react';
 
-import { ChatItemProps } from '@/ChatItem';
-
 export interface BorderSpacingProps {
-  borderSpacing?: ChatItemProps['borderSpacing'];
+  borderSpacing?: number;
 }
 
 const BorderSpacing = memo<BorderSpacingProps>(({ borderSpacing }) => {

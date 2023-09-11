@@ -30,12 +30,18 @@ export const useStyles = createStyles(
           }
 
           &:active {
-            scale: 0.8;
             color: ${token.colorText};
             background-color: ${token.colorFill};
           }
         `,
       ),
+      icon: css`
+        transition: scale 400ms ${token.motionEaseOut};
+
+        &:active {
+          scale: 0.8;
+        }
+      `,
     };
   },
 );

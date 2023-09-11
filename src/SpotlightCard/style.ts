@@ -38,12 +38,13 @@ export const useStyles = createStyles(
 
       position: relative;
 
+      overflow: hidden;
       display: flex;
       flex-direction: column;
 
       width: 100%;
 
-      background: ${rgba(token.colorBorder, 0.5)};
+      background: ${rgba(token.colorBorderSecondary, 0.75)};
       border-radius: ${borderRadius}px;
 
       &::before,

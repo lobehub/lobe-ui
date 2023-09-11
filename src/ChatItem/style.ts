@@ -2,7 +2,7 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(
   (
-    { cx, css, token, isDarkMode },
+    { cx, css, token, isDarkMode, responsive },
     {
       placement,
       type,
@@ -10,8 +10,10 @@ export const useStyles = createStyles(
       primary,
       avatarSize,
       showTitle,
+      editing,
     }: {
       avatarSize?: number;
+      editing?: boolean;
       placement?: 'left' | 'right';
       primary?: boolean;
       showTitle?: boolean;
@@ -43,17 +45,30 @@ export const useStyles = createStyles(
 
     const typeStylish = type === 'block' ? blockStylish : pureStylish;
 
+    const editingStylish =
+      editing &&
+      css`
+        width: 100%;
+      `;
+
     return {
-      actions: css`
-        display: flex;
-        align-items: flex-start;
-        align-self: ${type === 'block'
-          ? 'flex-end'
-          : placement === 'left'
-          ? 'flex-start'
-          : 'flex-end'};
-        justify-content: ${placement === 'left' ? 'flex-end' : 'flex-start'};
-      `,
+      actions: cx(
+        css`
+          display: flex;
+          align-items: flex-start;
+          align-self: ${type === 'block'
+            ? 'flex-end'
+            : placement === 'left'
+            ? 'flex-start'
+            : 'flex-end'};
+          justify-content: ${placement === 'left' ? 'flex-end' : 'flex-start'};
+        `,
+        editing &&
+          css`
+            pointer-events: none !important;
+            opacity: 0 !important;
+          `,
+      ),
       alert: css`
         span[role='img'] {
           align-self: flex-start;
@@ -97,11 +112,10 @@ export const useStyles = createStyles(
 
           display: flex;
           flex-direction: ${placement === 'left' ? 'row' : 'row-reverse'};
-          gap: 12px;
-          align-items: flex-start;
           justify-content: revert;
 
           width: 100%;
+          max-width: 100vw;
           padding: 12px 16px;
 
           time {
@@ -127,9 +141,14 @@ export const useStyles = createStyles(
               opacity: 1;
             }
           }
+
+          ${responsive.mobile} {
+            padding: 4px 16px;
+          }
         `,
       ),
       editingContainer: cx(
+        editingStylish,
         css`
           padding: 8px 12px 12px;
           border: 1px solid ${token.colorBorderSecondary};
@@ -146,7 +165,7 @@ export const useStyles = createStyles(
           `,
       ),
       editingInput: css`
-        min-width: 800px !important;
+        width: 100%;
       `,
       loading: css`
         position: absolute;
@@ -172,24 +191,30 @@ export const useStyles = createStyles(
           position: relative;
         `,
       ),
-      messageContainer: css`
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        align-items: ${placement === 'left' ? 'flex-start' : 'flex-end'};
-      `,
-      messageContent: css`
-        position: revert;
+      messageContainer: cx(
+        editingStylish,
+        css`
+          position: relative;
+          align-items: ${placement === 'left' ? 'flex-start' : 'flex-end'};
+        `,
+      ),
+      messageContent: cx(
+        editingStylish,
+        css`
+          position: relative;
+          overflow-x: hidden;
+          flex-direction: ${type === 'block'
+            ? placement === 'left'
+              ? 'row'
+              : 'row-reverse'
+            : 'column'};
+          align-items: ${placement === 'left' ? 'flex-start' : 'flex-end'};
 
-        display: flex;
-        flex-direction: ${type === 'block'
-          ? placement === 'left'
-            ? 'row'
-            : 'row-reverse'
-          : 'column'};
-        gap: 8px;
-        align-items: ${placement === 'left' ? 'flex-start' : 'flex-end'};
-      `,
+          ${responsive.mobile} {
+            flex-direction: column;
+          }
+        `,
+      ),
       messageExtra: cx('message-extra'),
       name: css`
         position: ${showTitle ? 'relative' : 'absolute'};
@@ -197,9 +222,7 @@ export const useStyles = createStyles(
         right: ${placement === 'right' ? '0' : 'unset'};
         left: ${placement === 'left' ? '0' : 'unset'};
 
-        display: flex;
         flex-direction: ${placement === 'left' ? 'row' : 'row-reverse'};
-        gap: 4px;
 
         margin-bottom: 6px;
 

@@ -1,4 +1,6 @@
+import { useResponsive } from 'antd-style';
 import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import Actions from './components/Actions';
 import Avatar from './components/Avatar';
@@ -9,6 +11,8 @@ import Title from './components/Title';
 import { useStyles } from './style';
 import type { ChatItemProps } from './type';
 
+const MOBILE_AVATAR_SIZE = 32;
+
 const ChatItem = memo<ChatItemProps>(
   ({
     avatarAddon,
@@ -16,7 +20,6 @@ const ChatItem = memo<ChatItemProps>(
     actions,
     className,
     primary,
-    borderSpacing,
     loading,
     message,
     placement = 'left',
@@ -34,7 +37,9 @@ const ChatItem = memo<ChatItemProps>(
     ErrorMessage,
     ...props
   }) => {
+    const { mobile } = useResponsive();
     const { cx, styles } = useStyles({
+      editing,
       placement,
       primary,
       showTitle,
@@ -43,17 +48,23 @@ const ChatItem = memo<ChatItemProps>(
     });
 
     return (
-      <div className={cx(styles.container, className)} {...props}>
+      <Flexbox
+        className={cx(styles.container, className)}
+        gap={mobile ? 6 : 12}
+        horizontal
+        {...props}
+      >
         <Avatar
           addon={avatarAddon}
           avatar={avatar}
           loading={loading}
           onClick={onAvatarClick}
           placement={placement}
+          size={mobile ? MOBILE_AVATAR_SIZE : undefined}
         />
-        <div className={styles.messageContainer}>
+        <Flexbox className={styles.messageContainer}>
           <Title avatar={avatar} placement={placement} showTitle={showTitle} time={time} />
-          <div className={styles.messageContent}>
+          <Flexbox className={styles.messageContent} gap={8}>
             {error ? (
               <ErrorContent ErrorMessage={ErrorMessage} error={error} placement={placement} />
             ) : (
@@ -70,11 +81,11 @@ const ChatItem = memo<ChatItemProps>(
                 type={type}
               />
             )}
-            {!editing && <Actions actions={actions} placement={placement} type={type} />}
-          </div>
-        </div>
-        <BorderSpacing borderSpacing={borderSpacing} />
-      </div>
+            <Actions actions={actions} editing={editing} placement={placement} type={type} />
+          </Flexbox>
+        </Flexbox>
+        {mobile && type === 'block' && <BorderSpacing borderSpacing={MOBILE_AVATAR_SIZE} />}
+      </Flexbox>
     );
   },
 );

@@ -144,7 +144,13 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
     const content = (
       <>
         {icon && (
-          <Icon color={color} fill={fill} icon={icon} size={size === 'site' ? 'normal' : size} />
+          <Icon
+            className={styles.icon}
+            color={color}
+            fill={fill}
+            icon={icon}
+            size={size === 'site' ? 'normal' : size}
+          />
         )}
         {children}
       </>

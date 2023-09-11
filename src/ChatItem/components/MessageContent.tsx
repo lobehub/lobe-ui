@@ -32,11 +32,11 @@ const Loading = memo<LoadingProps>(
     type,
     primary,
   }) => {
-    const { cx, styles } = useStyles({ placement, primary, type });
+    const { cx, styles } = useStyles({ editing, placement, primary, type });
 
     const content = (
       <EditableMessage
-        classNames={{ textarea: styles.editingInput }}
+        classNames={{ input: styles.editingInput }}
         editButtonSize={'small'}
         editing={editing}
         fullFeaturedCodeBlock

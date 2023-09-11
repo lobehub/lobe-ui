@@ -13,6 +13,7 @@ export interface SpotlightCardProps<T = any> extends DivProps {
   items: T[];
   renderItem: (item: T) => ReactNode;
   size?: number;
+  spotlight?: boolean;
 }
 
 const SpotlightCard = memo<SpotlightCardProps>(
@@ -25,6 +26,7 @@ const SpotlightCard = memo<SpotlightCardProps>(
     style,
     size = 800,
     borderRadius = 12,
+    spotlight = true,
     ...props
   }) => {
     const { styles, cx } = useStyles({ borderRadius, size });
@@ -37,6 +39,7 @@ const SpotlightCard = memo<SpotlightCardProps>(
 
     useEffect(() => {
       if (!ref.current) return;
+      if (!spotlight) return;
       const fn = (e: MouseEvent) => {
         for (const card of document.querySelectorAll(`.${CHILDREN_CLASSNAME}`)) {
           const rect = card.getBoundingClientRect(),
