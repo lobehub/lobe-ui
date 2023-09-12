@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.94.0](https://github.com/lobehub/lobe-ui/compare/v1.93.0...v1.94.0)
+
+<sup>Released on **2023-09-12**</sup>
+
+#### ✨ Features
+
+- **misc**: Add showSearch prop to select component, and extand langs.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add showSearch prop to select component, and extand langs ([280e8cf](https://github.com/lobehub/lobe-ui/commit/280e8cf))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.93.0](https://github.com/lobehub/lobe-ui/compare/v1.92.0...v1.93.0)
 
 <sup>Released on **2023-09-11**</sup>
