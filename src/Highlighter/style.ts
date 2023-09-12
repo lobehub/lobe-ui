@@ -90,6 +90,10 @@ export const useStyles = createStyles(
           color: ${token.colorTextDescription};
           text-align: center;
         }
+
+        input {
+          text-align: center;
+        }
       `,
     };
   },

@@ -1,26 +1,15 @@
-import { type Highlighter, type HighlighterCoreOptions, getHighlighter } from 'shikiji';
+import {
+  type Highlighter,
+  type HighlighterCoreOptions,
+  bundledLanguages,
+  getHighlighter,
+} from 'shikiji';
 import { shallow } from 'zustand/shallow';
 import { createWithEqualityFn } from 'zustand/traditional';
 
 import { themeConfig } from '@/Highlighter/theme';
 
-export const languageMap = [
-  'javascript',
-  'js',
-  'jsx',
-  'json',
-  'markdown',
-  'md',
-  'less',
-  'css',
-  'python',
-  'py',
-  'typescript',
-  'ts',
-  'tsx',
-  'diff',
-  'bash',
-] as const;
+export const languageMap = Object.keys(bundledLanguages);
 
 /**
  * @title 代码高亮的存储对象

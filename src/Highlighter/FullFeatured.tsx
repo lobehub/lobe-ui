@@ -49,6 +49,7 @@ export const Highlighter = memo<HighlighterProps>(
               className={styles.select}
               onSelect={setLang}
               options={options}
+              showSearch
               size={'small'}
               suffixIcon={false}
               value={lang.toLowerCase()}
