@@ -8,53 +8,29 @@ on:
       - rc
 
 jobs:
-  test:
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Install deps
-        run: pnpm install
-
-      - name: Test
-        run: pnpm run test
-
   release:
-    needs: test
     name: Release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2
-        with:
-          version: 8
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+      - name: Install bun
+        uses: oven-sh/setup-bun@v1
 
       - name: Install deps
-        run: pnpm install
+        run: bun i
+
+      - name: CI
+        run: bun run ci
+
+      - name: Test
+        run: bun run test
 
       - name: build
-        run: pnpm run build
+        run: bun run build
 
       - name: release
-        run: pnpm run release
+        run: bun run release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

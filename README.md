@@ -108,30 +108,7 @@ $ pnpm start
 
 ## 🤝 Contributing
 
-<!-- CONTRIBUTION GROUP -->
-
-> 📊 Total: <kbd>**6**</kbd>
-
-<a href="https://github.com/canisminor1990" title="canisminor1990">
-  <img src="https://avatars.githubusercontent.com/u/17870709?v=4" width="50" />
-</a>
-<a href="https://github.com/arvinxx" title="arvinxx">
-  <img src="https://avatars.githubusercontent.com/u/28616219?v=4" width="50" />
-</a>
-<a href="https://github.com/apps/dependabot" title="dependabot[bot]">
-  <img src="https://avatars.githubusercontent.com/in/29110?v=4" width="50" />
-</a>
-<a href="https://github.com/actions-user" title="actions-user">
-  <img src="https://avatars.githubusercontent.com/u/65916846?v=4" width="50" />
-</a>
-<a href="https://github.com/Wxh16144" title="Wxh16144">
-  <img src="https://avatars.githubusercontent.com/u/32004925?v=4" width="50" />
-</a>
-<a href="https://github.com/meganjohnson96" title="meganjohnson96">
-  <img src="https://avatars.githubusercontent.com/u/136729222?v=4" width="50" />
-</a>
-
-<!-- CONTRIBUTION END -->
+[![][contributors-contrib]][contributors-url]
 
 <div align="right">
 
@@ -166,6 +143,7 @@ This project is [MIT](./LICENSE) licensed.
 [ci-release-url]: https://github.com/lobehub/lobe-ui/actions?query=workflow%3ARelease%20CI
 [ci-test-shield]: https://github.com/lobehub/lobe-ui/workflows/Test%20CI/badge.svg
 [ci-test-url]: https://github.com/lobehub/lobe-ui/actions?query=workflow%3ATest%20CI
+[contributors-contrib]: https://contrib.rocks/image?repo=lobehub/lobe-ui
 [contributors-shield]: https://img.shields.io/github/contributors/lobehub/lobe-ui.svg?style=flat
 [contributors-url]: https://github.com/lobehub/lobe-ui/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/lobehub/lobe-ui.svg?style=flat

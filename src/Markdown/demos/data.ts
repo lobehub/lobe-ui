@@ -59,4 +59,30 @@ import { renderHook } from '@testing-library/react-hooks';
 import { act } from 'react-dom/test-utils';
 import { useDropNodeOnCanvas } from './useDropNodeOnCanvas';
 \`\`\`
+
+---
+
+以下是一段Markdown格式的LaTeX数学公式：
+
+我是一个行内公式：$E=mc^2$
+
+我是一个独立公式：
+$$
+\\sum_{i=1}^{n} x_i = x_1 + x_2 + \\ldots + x_n
+$$
+
+我是一个带有分式的公式：
+$$
+\\frac{{n!}}{{k!(n-k)!}} = \\binom{n}{k}
+$$
+
+我是一个带有上下标的公式：
+$$
+x^{2} + y^{2} = r^{2}
+$$
+
+我是一个带有积分符号的公式：
+$$
+\\int_{a}^{b} f(x) \\, dx
+$$
 `;

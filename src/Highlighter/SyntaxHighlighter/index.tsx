@@ -1,8 +1,7 @@
 import { useThemeMode } from 'antd-style';
 import { Loader2 } from 'lucide-react';
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 import { Center } from 'react-layout-kit';
-import { type HighlighterCoreOptions } from 'shikiji';
 
 import Icon from '@/Icon';
 import { useHighlight } from '@/hooks/useHighlight';
@@ -13,18 +12,14 @@ import { useStyles } from './style';
 export interface SyntaxHighlighterProps extends DivProps {
   children: string;
   language: string;
-  options?: HighlighterCoreOptions;
 }
 
 const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
-  ({ children, language, options, className, style }) => {
+  ({ children, language, className, style }) => {
     const { styles, cx } = useStyles();
     const { isDarkMode } = useThemeMode();
-    const [codeToHtml, isLoading] = useHighlight((s) => [s.codeToHtml, !s.highlighter]);
 
-    useEffect(() => {
-      useHighlight.getState().initHighlighter(options);
-    }, [options]);
+    const { isLoading, data } = useHighlight(children, language, isDarkMode);
 
     return (
       <>
@@ -36,7 +31,7 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
           <div
             className={cx(styles.shiki, className)}
             dangerouslySetInnerHTML={{
-              __html: codeToHtml(children, language, isDarkMode) || '',
+              __html: data as string,
             }}
             style={style}
           />

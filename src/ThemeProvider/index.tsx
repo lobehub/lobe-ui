@@ -64,6 +64,7 @@ const ThemeProvider = memo<ThemeProviderProps>(
         pkg: '@lobehub/webfont-harmony-sans-sc',
         version: '1.0.0',
       }),
+      genCdnUrl({ path: 'dist/katex.min.css', pkg: 'katex', version: '0.16.8' }),
     ],
   }) => {
     useEffect(() => {

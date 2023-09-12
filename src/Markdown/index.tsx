@@ -1,5 +1,4 @@
 import { Collapse, Divider, Image, Typography } from 'antd';
-import 'katex/dist/katex.min.css';
 import { CSSProperties, memo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ReactMarkdown from 'react-markdown';
