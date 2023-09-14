@@ -27,9 +27,9 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
       codeToHtml(children.trim(), { lang: language, theme: themeConfig(isDarkMode) }).then(
         (code) => {
           setData(code);
+          setIsLoading(false);
         },
       );
-      setIsLoading(false);
     }, [children, language, isDarkMode]);
 
     return (
