@@ -31,7 +31,6 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) =
         font-family: ${token.fontFamilyCode} !important;
       }
     `,
-
     shiki: cx(
       `${prefix}-shiki`,
       css`
@@ -46,5 +45,8 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) =
         }
       `,
     ),
+    unshiki: css`
+      padding: 8px;
+    `,
   };
 });

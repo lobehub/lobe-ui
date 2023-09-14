@@ -1,11 +1,10 @@
 import { useThemeMode } from 'antd-style';
 import { Loader2 } from 'lucide-react';
-import { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
 import { Center } from 'react-layout-kit';
-import { codeToHtml } from 'shikiji';
 
-import { themeConfig } from '@/Highlighter/theme';
 import Icon from '@/Icon';
+import { useHighlight } from '@/hooks/useHighlight';
 import { DivProps } from '@/types';
 
 import { useStyles } from './style';
@@ -19,23 +18,14 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
   ({ children, language, className, style }) => {
     const { styles, cx } = useStyles();
     const { isDarkMode } = useThemeMode();
-    const [isLoading, setIsLoading] = useState(true);
-    const [data, setData] = useState('');
+    const useCodeToHtml = useHighlight((s) => s.useCodeToHtml);
 
-    useEffect(() => {
-      setIsLoading(true);
-      codeToHtml(children.trim(), { lang: language, theme: themeConfig(isDarkMode) }).then(
-        (code) => {
-          setData(code);
-          setIsLoading(false);
-        },
-      );
-    }, [children, language, isDarkMode]);
+    const { data, isLoading } = useCodeToHtml(children.trim(), language, isDarkMode);
 
     return (
       <>
         {isLoading ? (
-          <code className={className} style={style}>
+          <code className={cx(styles.unshiki, className)} style={style}>
             {children}
           </code>
         ) : (
