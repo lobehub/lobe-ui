@@ -46,7 +46,7 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) =
       `,
     ),
     unshiki: css`
-      padding: 8px;
+      color: ${token.colorTextDescription};
     `,
   };
 });

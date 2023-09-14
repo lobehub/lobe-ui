@@ -3,22 +3,21 @@ import useSWR from 'swr';
 
 import { themeConfig } from '@/Highlighter/theme';
 
-import languageMap from './languageMap';
-
 export const FALLBACK_LANG = 'markdown';
-const FALLBACK_LANGS = ['ts', 'typescript', 'js', 'javascript', 'markdown', 'md'];
-const THEME = [themeConfig(true), themeConfig(false)];
+
+const FALLBACK_LANGS = [FALLBACK_LANG];
 
 let cacheHighlighter: Highlighter;
 
-const initHighlighter = async (): Promise<Highlighter> => {
+const initHighlighter = async (lang?: any): Promise<Highlighter> => {
   let highlighter = cacheHighlighter;
-  if (highlighter) {
+  if (highlighter && FALLBACK_LANGS.includes(lang)) {
     return highlighter;
   } else {
+    FALLBACK_LANGS.push(lang);
     highlighter = await getHighlighter({
       langs: FALLBACK_LANGS,
-      themes: THEME,
+      themes: [themeConfig(true), themeConfig(false)],
     });
     cacheHighlighter = highlighter;
     return highlighter;
@@ -30,21 +29,14 @@ export const useHighlight = (text: string, language: string, isDarkMode: boolean
     const theme = isDarkMode ? 'dark' : 'light';
     let lang = language;
     try {
-      const highlighter = await initHighlighter();
-      if (!FALLBACK_LANGS.includes(lang)) {
-        if (languageMap.includes(lang)) {
-          await highlighter?.loadLanguage(lang as any);
-        } else {
-          lang = FALLBACK_LANG;
-        }
-      }
+      const highlighter = await initHighlighter(language);
       const html = await highlighter?.codeToHtml(text, {
         lang,
         theme,
       });
       return html;
     } catch {
-      return `<code>${text}</code>`;
+      return `<pre><code>${text}</code></pre>`;
     }
   });
 

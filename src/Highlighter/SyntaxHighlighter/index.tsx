@@ -24,9 +24,11 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
     return (
       <>
         {isLoading ? (
-          <code className={cx(styles.unshiki, className)} style={style}>
-            {children}
-          </code>
+          <div className={cx(styles.unshiki, className)} style={style}>
+            <pre>
+              <code>{children}</code>
+            </pre>
+          </div>
         ) : (
           <div
             className={cx(styles.shiki, className)}
