@@ -9,7 +9,7 @@ const FALLBACK_LANGS = [FALLBACK_LANG];
 
 let cacheHighlighter: Highlighter;
 
-const initHighlighter = async (lang?: any): Promise<Highlighter> => {
+const initHighlighter = async (lang: string): Promise<Highlighter> => {
   let highlighter = cacheHighlighter;
   if (highlighter && FALLBACK_LANGS.includes(lang)) {
     return highlighter;
@@ -26,13 +26,11 @@ const initHighlighter = async (lang?: any): Promise<Highlighter> => {
 
 export const useHighlight = (text: string, language: string, isDarkMode: boolean) =>
   useSWR([text, language, Number(isDarkMode)].join('-'), async () => {
-    const theme = isDarkMode ? 'dark' : 'light';
-    let lang = language;
     try {
       const highlighter = await initHighlighter(language);
-      const html = await highlighter?.codeToHtml(text, {
-        lang,
-        theme,
+      const html = highlighter?.codeToHtml(text, {
+        lang: language,
+        theme: isDarkMode ? 'dark' : 'light',
       });
       return html;
     } catch {

@@ -217,4 +217,4 @@ export default [
   'yml',
   'zsh',
   '文言',
-];
+] as const;
