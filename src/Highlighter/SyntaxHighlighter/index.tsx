@@ -18,9 +18,8 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
   ({ children, language, className, style }) => {
     const { styles, cx } = useStyles();
     const { isDarkMode } = useThemeMode();
-    const useCodeToHtml = useHighlight((s) => s.useCodeToHtml);
 
-    const { data, isLoading } = useCodeToHtml(children.trim(), language, isDarkMode);
+    const { data, isLoading } = useHighlight(children.trim(), language, isDarkMode);
 
     return (
       <>
