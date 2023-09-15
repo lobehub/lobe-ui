@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.94.7](https://github.com/lobehub/lobe-ui/compare/v1.94.6...v1.94.7)
+
+<sup>Released on **2023-09-15**</sup>
+
+#### 🐛 Bug Fixes
+
+- **chat-item**: Fix flexbox.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **chat-item**: Fix flexbox ([58721bd](https://github.com/lobehub/lobe-ui/commit/58721bd))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.94.6](https://github.com/lobehub/lobe-ui/compare/v1.94.5...v1.94.6)
 
 <sup>Released on **2023-09-14**</sup>
