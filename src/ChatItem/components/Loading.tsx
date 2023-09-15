@@ -1,5 +1,6 @@
 import { Loader2 } from 'lucide-react';
 import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import { ChatItemProps } from '@/ChatItem';
 import Icon from '@/Icon';
@@ -17,9 +18,9 @@ const Loading = memo<LoadingProps>(({ loading, placement }) => {
   if (!loading) return null;
 
   return (
-    <div className={styles.loading}>
+    <Flexbox align={'center'} className={styles.loading} justify={'center'}>
       <Icon icon={Loader2} size={{ fontSize: 12, strokeWidth: 3 }} spin />
-    </div>
+    </Flexbox>
   );
 });
 

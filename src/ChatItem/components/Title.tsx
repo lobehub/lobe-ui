@@ -17,7 +17,11 @@ const Title = memo<TitleProps>(({ showTitle, placement, time, avatar }) => {
   const { styles } = useStyles({ placement, showTitle });
 
   return (
-    <Flexbox className={styles.name} gap={4} horizontal>
+    <Flexbox
+      className={styles.name}
+      direction={placement === 'left' ? 'horizontal' : 'horizontal-reverse'}
+      gap={4}
+    >
       {showTitle ? avatar.title || 'untitled' : undefined}
       {time && <time>{formatTime(time)}</time>}
     </Flexbox>

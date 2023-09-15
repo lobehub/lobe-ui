@@ -54,8 +54,6 @@ export const useStyles = createStyles(
     return {
       actions: cx(
         css`
-          display: flex;
-          align-items: flex-start;
           align-self: ${type === 'block'
             ? 'flex-end'
             : placement === 'left'
@@ -109,11 +107,6 @@ export const useStyles = createStyles(
         type === 'pure' && pureContainerStylish,
         css`
           position: relative;
-
-          display: flex;
-          flex-direction: ${placement === 'left' ? 'row' : 'row-reverse'};
-          justify-content: revert;
-
           width: 100%;
           max-width: 100vw;
           padding: 12px 16px;
@@ -173,10 +166,6 @@ export const useStyles = createStyles(
         bottom: 0;
         left: ${placement === 'right' ? '-4px' : 'unset'};
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
         width: 16px;
         height: 16px;
 
@@ -195,7 +184,6 @@ export const useStyles = createStyles(
         editingStylish,
         css`
           position: relative;
-          align-items: ${placement === 'left' ? 'flex-start' : 'flex-end'};
         `,
       ),
       messageContent: cx(
@@ -203,15 +191,9 @@ export const useStyles = createStyles(
         css`
           position: relative;
           overflow-x: hidden;
-          flex-direction: ${type === 'block'
-            ? placement === 'left'
-              ? 'row'
-              : 'row-reverse'
-            : 'column'};
-          align-items: ${placement === 'left' ? 'flex-start' : 'flex-end'};
 
           ${responsive.mobile} {
-            flex-direction: column;
+            flex-direction: column !important;
           }
         `,
       ),
@@ -221,8 +203,6 @@ export const useStyles = createStyles(
         top: ${showTitle ? 'unset' : '-16px'};
         right: ${placement === 'right' ? '0' : 'unset'};
         left: ${placement === 'left' ? '0' : 'unset'};
-
-        flex-direction: ${placement === 'left' ? 'row' : 'row-reverse'};
 
         margin-bottom: 6px;
 

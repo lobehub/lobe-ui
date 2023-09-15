@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import { ChatItemProps } from '@/ChatItem';
 
@@ -15,9 +16,9 @@ const Actions = memo<ActionsProps>(({ actions, placement, type, editing }) => {
   const { styles } = useStyles({ editing, placement, type });
 
   return (
-    <div className={styles.actions} role="chat-item-actions">
+    <Flexbox align={'flex-start'} className={styles.actions} role="chat-item-actions">
       {actions}
-    </div>
+    </Flexbox>
   );
 });
 

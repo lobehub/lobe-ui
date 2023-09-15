@@ -50,8 +50,8 @@ const ChatItem = memo<ChatItemProps>(
     return (
       <Flexbox
         className={cx(styles.container, className)}
+        direction={placement === 'left' ? 'horizontal' : 'horizontal-reverse'}
         gap={mobile ? 6 : 12}
-        horizontal
         {...props}
       >
         <Avatar
@@ -62,9 +62,23 @@ const ChatItem = memo<ChatItemProps>(
           placement={placement}
           size={mobile ? MOBILE_AVATAR_SIZE : undefined}
         />
-        <Flexbox className={styles.messageContainer}>
+        <Flexbox
+          align={placement === 'left' ? 'flex-start' : 'flex-end'}
+          className={styles.messageContainer}
+        >
           <Title avatar={avatar} placement={placement} showTitle={showTitle} time={time} />
-          <Flexbox className={styles.messageContent} gap={8}>
+          <Flexbox
+            align={placement === 'left' ? 'flex-start' : 'flex-end'}
+            className={styles.messageContent}
+            direction={
+              type === 'block'
+                ? placement === 'left'
+                  ? 'horizontal'
+                  : 'horizontal-reverse'
+                : 'vertical'
+            }
+            gap={8}
+          >
             {error ? (
               <ErrorContent ErrorMessage={ErrorMessage} error={error} placement={placement} />
             ) : (
