@@ -17,7 +17,8 @@ Lobe UI is an open-source UI component library for building _AIGC_ web apps
 [![release][release-shield]][release-url]
 [![releaseDate][release-date-shield]][release-date-url]
 [![ciTest][ci-test-shield]][ci-test-url]
-[![ciRelease][ci-release-shield]][ci-release-url] <br/>
+[![ciRelease][ci-release-shield]][ci-release-url] [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flobehub%2Flobe-ui.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Flobehub%2Flobe-ui?ref=badge_shield)
+<br/>
 [![contributors][contributors-shield]][contributors-url]
 [![forks][forks-shield]][forks-url]
 [![stargazers][stargazers-shield]][stargazers-url]
@@ -162,3 +163,6 @@ This project is [MIT](./LICENSE) licensed.
 [release-url]: https://www.npmjs.com/package/@lobehub/ui
 [stargazers-shield]: https://img.shields.io/github/stars/lobehub/lobe-ui.svg?style=flat
 [stargazers-url]: https://github.com/lobehub/lobe-ui/stargazers
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flobehub%2Flobe-ui.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Flobehub%2Flobe-ui?ref=badge_large)
