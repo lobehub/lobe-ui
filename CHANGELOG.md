@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.95.0](https://github.com/lobehub/lobe-ui/compare/v1.94.7...v1.95.0)
+
+<sup>Released on **2023-09-16**</sup>
+
+#### ✨ Features
+
+- **config-provider**: Support custom cdn.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **config-provider**: Support custom cdn, closes [#39](https://github.com/lobehub/lobe-ui/issues/39) ([8899285](https://github.com/lobehub/lobe-ui/commit/8899285))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.94.7](https://github.com/lobehub/lobe-ui/compare/v1.94.6...v1.94.7)
 
 <sup>Released on **2023-09-15**</sup>
