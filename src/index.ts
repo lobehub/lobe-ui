@@ -20,6 +20,7 @@ export type {
 export { default as ChatList } from './ChatList';
 export { default as CodeEditor, type CodeEditorProps } from './CodeEditor';
 export { default as ColorScales, type ColorScalesProps } from './ColorScales';
+export { type Config, default as ConfigProvider, useCdnFn } from './ConfigProvider';
 export { default as ContextMenu, type ContextMenuProps } from './ContextMenu';
 export { default as CopyButton, type CopyButtonProps } from './CopyButton';
 export { default as DraggablePanel, type DraggablePanelProps } from './DraggablePanel';

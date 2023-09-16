@@ -1,13 +1,9 @@
-import {
-  ActionIconProps,
-  Avatar,
-  StroyBook,
-  genCdnUrl,
-  useControls,
-  useCreateStore,
-} from '@lobehub/ui';
+import { ActionIconProps, Avatar, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+
+import { useCdnFn } from '@/ConfigProvider';
 
 export default () => {
+  const genCdnUrl = useCdnFn();
   const store = useCreateStore();
   const control: ActionIconProps | any = useControls(
     {

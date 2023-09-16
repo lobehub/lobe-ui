@@ -1,6 +1,6 @@
 import { memo, useCallback } from 'react';
 
-import { genCdnUrl } from '@/utils/genCdnUrl';
+import { useCdnFn } from '@/ConfigProvider';
 
 export interface MetaProps {
   title?: string;
@@ -8,6 +8,7 @@ export interface MetaProps {
 }
 
 const Meta = memo<MetaProps>(({ title = 'LobeHub', withManifest }) => {
+  const genCdnUrl = useCdnFn();
   const genAssets = useCallback(
     (path: string) =>
       genCdnUrl({

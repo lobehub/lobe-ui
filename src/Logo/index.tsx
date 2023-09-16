@@ -2,6 +2,7 @@ import { useTheme } from 'antd-style';
 import { type ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import { useCdnFn } from '@/ConfigProvider';
 import { DivProps } from '@/types';
 
 import Divider from './Divider';
@@ -27,6 +28,7 @@ export interface LogoProps extends DivProps {
 }
 
 const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className, ...props }) => {
+  const genCdnUrl = useCdnFn();
   const theme = useTheme();
   const { styles } = useStyles();
   let logoComponent: ReactNode;
@@ -36,7 +38,7 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
       logoComponent = (
         <img
           alt="lobehub"
-          src={LOGO_3D}
+          src={genCdnUrl(LOGO_3D)}
           style={{ height: size, width: size, ...style }}
           {...props}
         />
@@ -45,7 +47,11 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
     }
     case 'flat': {
       logoComponent = (
-        <img alt="lobehub" src={LOGO_FLAT} style={{ height: size, width: size, ...style }} />
+        <img
+          alt="lobehub"
+          src={genCdnUrl(LOGO_FLAT)}
+          style={{ height: size, width: size, ...style }}
+        />
       );
       break;
     }
@@ -68,7 +74,7 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
     case 'combine': {
       logoComponent = (
         <>
-          <img alt="lobehub" src={LOGO_3D} style={{ height: size, width: size }} />
+          <img alt="lobehub" src={genCdnUrl(LOGO_3D)} style={{ height: size, width: size }} />
           <LogoText style={{ height: size, marginLeft: Math.round(size / 4), width: 'auto' }} />
         </>
       );

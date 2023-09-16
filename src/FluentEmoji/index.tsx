@@ -1,8 +1,8 @@
 import { kebabCase } from 'lodash-es';
 import { memo, useMemo, useState } from 'react';
 
+import { useCdnFn } from '@/ConfigProvider';
 import { DivProps } from '@/types';
-import { genCdnUrl } from '@/utils/genCdnUrl';
 import { getEmojiNameByCharacter } from '@/utils/getEmojiByCharacter';
 
 import { useStyles } from './style';
@@ -26,6 +26,7 @@ export interface FluentEmojiProps extends DivProps {
 
 const FluentEmoji = memo<FluentEmojiProps>(
   ({ emoji, className, style, type = '3d', size = 40 }) => {
+    const genCdnUrl = useCdnFn();
     const [loadingFail, setLoadingFail] = useState(false);
 
     const { cx, styles } = useStyles();

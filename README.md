@@ -10,20 +10,24 @@
 
 Lobe UI is an open-source UI component library for building _AIGC_ web apps
 
-[Changelog](./CHANGELOG.md) · [Report Bug][issues-url] · [Request Feature][issues-url]
+[Changelog](./CHANGELOG.md) · [Report Bug][github-issues-link] · [Request Feature][github-issues-link]
 
 <!-- SHIELD GROUP -->
 
-[![release][release-shield]][release-url]
-[![releaseDate][release-date-shield]][release-date-url]
-[![ciTest][ci-test-shield]][ci-test-url]
-[![ciRelease][ci-release-shield]][ci-release-url] <br/>
-[![contributors][contributors-shield]][contributors-url]
-[![forks][forks-shield]][forks-url]
-[![stargazers][stargazers-shield]][stargazers-url]
-[![issues][issues-shield]][issues-url]
+[![][npm-release-shield]][npm-release-link]
+[![][vercel-shield]][vercel-link]
+[![][discord-shield]][discord-link]
+[![][npm-downloads-shield]][npm-downloads-link]
+[![][github-releasedate-shield]][github-releasedate-link]
+[![][github-action-test-shield]][github-action-test-link]
+[![][github-action-release-shield]][github-action-release-link]<br/>
+[![][github-contributors-shield]][github-contributors-link]
+[![][github-forks-shield]][github-forks-link]
+[![][github-stars-shield]][github-stars-link]
+[![][github-issues-shield]][github-issues-link]
+[![][github-license-shield]][github-license-link]
 
-![](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/rainbow.png)
+![](https://github-production-user-asset-6210df.s3.amazonaws.com/17870709/268452017-960ab8a1-e4b7-4648-beb1-77daf4b6034a.png)
 
 </div>
 
@@ -33,8 +37,6 @@ Lobe UI is an open-source UI component library for building _AIGC_ web apps
 #### TOC
 
 - [📦 Installation](#-installation)
-
-- [🤯 Usage](#-usage)
 
   - [Compile with NextJS](#compile-with-nextjs)
 
@@ -54,21 +56,16 @@ This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908
 
 To install Lobe UI, run the following command:
 
+[![][bun-shield]][bun-link]
+
 ```bash
-pnpm i -S @lobehub/ui
+$ bun add @lobehub/ui
 ```
-
-<div align="right">
-
-[![][back-to-top]](#readme-top)
-
-</div>
-
-## 🤯 Usage
 
 ### Compile with NextJS
 
-by work correct with nextjs ssr, add `transpilePackages: ['@lobehub/ui']` to `next.config.js`. For example:
+> **Note**\
+> By work correct with nextjs ssr, add `transpilePackages: ['@lobehub/ui']` to `next.config.js`. For example:
 
 ```js
 // next.config.js
@@ -87,17 +84,17 @@ const nextConfig = {
 
 ## ⌨️ Local Development
 
-You can use Gitpod for online development:
+You can use Github Codespaces for online development:
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)][gitpod-url]
+[![][codespaces-shield]][codespaces-link]
 
 Or clone it for local development:
 
 ```bash
 $ git clone https://github.com/lobehub/lobe-ui.git
 $ cd lobe-ui
-$ pnpm install
-$ pnpm start
+$ bun install
+$ bun start
 ```
 
 <div align="right">
@@ -107,6 +104,10 @@ $ pnpm start
 </div>
 
 ## 🤝 Contributing
+
+Contributions of all types are more than welcome, if you are interested in contributing code, feel free to check out our GitHub [Issues][github-issues-link] to get stuck in to show us what you’re made of.
+
+[![][pr-welcome-shield]][pr-welcome-link]
 
 [![][contributors-contrib]][contributors-url]
 
@@ -131,7 +132,11 @@ $ pnpm start
 
 ---
 
-#### 📝 License
+<details><summary><h4>📝 License</h4></summary>
+
+[![][fossa-license-shield]][fossa-license-link]
+
+</details>
 
 Copyright © 2023 [LobeHub][profile-url]. <br />
 This project is [MIT](./LICENSE) licensed.
@@ -139,26 +144,42 @@ This project is [MIT](./LICENSE) licensed.
 <!-- LINK GROUP -->
 
 [back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
-[ci-release-shield]: https://github.com/lobehub/lobe-ui/workflows/Release%20CI/badge.svg
-[ci-release-url]: https://github.com/lobehub/lobe-ui/actions?query=workflow%3ARelease%20CI
-[ci-test-shield]: https://github.com/lobehub/lobe-ui/workflows/Test%20CI/badge.svg
-[ci-test-url]: https://github.com/lobehub/lobe-ui/actions?query=workflow%3ATest%20CI
+[bun-link]: https://bun.sh
+[bun-shield]: https://img.shields.io/badge/-speedup%20with%20bun-black?logo=bun&style=for-the-badge
+[codespaces-link]: https://codespaces.new/lobehub/lobe-ui
+[codespaces-shield]: https://github.com/codespaces/badge.svg
 [contributors-contrib]: https://contrib.rocks/image?repo=lobehub/lobe-ui
-[contributors-shield]: https://img.shields.io/github/contributors/lobehub/lobe-ui.svg?style=flat
 [contributors-url]: https://github.com/lobehub/lobe-ui/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/lobehub/lobe-ui.svg?style=flat
-[forks-url]: https://github.com/lobehub/lobe-ui/network/members
-[gitpod-url]: https://gitpod.io/#https://github.com/lobehub/lobe-ui
-[issues-shield]: https://img.shields.io/github/issues/lobehub/lobe-ui.svg?style=flat
-[issues-url]: https://github.com/lobehub/lobe-ui/issues/new/choose
+[discord-link]: https://discord.gg/AYFPHvv2jT
+[discord-shield]: https://img.shields.io/discord/1127171173982154893?color=5865F2&label=discord&labelColor=black&logo=discord&logoColor=white&style=flat-square
+[fossa-license-link]: https://app.fossa.com/projects/git%2Bgithub.com%2Flobehub%2Flobe-ui
+[fossa-license-shield]: https://app.fossa.com/api/projects/git%2Bgithub.com%2Flobehub%2Flobe-ui.svg?type=large
+[github-action-release-link]: https://github.com/actions/workflows/lobehub/lobe-ui/release.yml
+[github-action-release-shield]: https://img.shields.io/github/actions/workflow/status/lobehub/lobe-ui/release.yml?label=release&labelColor=black&logo=githubactions&logoColor=white&style=flat-square
+[github-action-test-link]: https://github.com/actions/workflows/lobehub/lobe-ui/test.yml
+[github-action-test-shield]: https://img.shields.io/github/actions/workflow/status/lobehub/lobe-ui/test.yml?label=test&labelColor=black&logo=githubactions&logoColor=white&style=flat-square
+[github-contributors-link]: https://github.com/lobehub/lobe-ui/graphs/contributors
+[github-contributors-shield]: https://img.shields.io/github/contributors/lobehub/lobe-ui?color=c4f042&labelColor=black&style=flat-square
+[github-forks-link]: https://github.com/lobehub/lobe-ui/network/members
+[github-forks-shield]: https://img.shields.io/github/forks/lobehub/lobe-ui?color=8ae8ff&labelColor=black&style=flat-square
+[github-issues-link]: https://github.com/lobehub/lobe-ui/issues
+[github-issues-shield]: https://img.shields.io/github/issues/lobehub/lobe-ui?color=ff80eb&labelColor=black&style=flat-square
+[github-license-link]: https://github.com/lobehub/lobe-ui/blob/master/LICENSE
+[github-license-shield]: https://img.shields.io/github/license/lobehub/lobe-ui?color=white&labelColor=black&style=flat-square
+[github-releasedate-link]: https://github.com/lobehub/lobe-ui/releases
+[github-releasedate-shield]: https://img.shields.io/github/release-date/lobehub/lobe-ui?labelColor=black&style=flat-square
+[github-stars-link]: https://github.com/lobehub/lobe-ui/network/stargazers
+[github-stars-shield]: https://img.shields.io/github/stars/lobehub/lobe-ui?color=ffcb47&labelColor=black&style=flat-square
 [lobe-chat]: https://github.com/lobehub/lobe-chat
 [lobe-commit]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-commit
 [lobe-i18n]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-i18n
 [lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme
+[npm-downloads-link]: https://www.npmjs.com/package/@lobehub/ui
+[npm-downloads-shield]: https://img.shields.io/npm/dt/@lobehub/ui?labelColor=black&style=flat-square
+[npm-release-link]: https://www.npmjs.com/package/@lobehub/ui
+[npm-release-shield]: https://img.shields.io/npm/v/@lobehub/ui?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
+[pr-welcome-link]: https://github.com/lobehub/lobe-chat/pulls
+[pr-welcome-shield]: https://img.shields.io/badge/🤯_pr_welcome-%E2%86%92-ffcb47?labelColor=black&style=for-the-badge
 [profile-url]: https://github.com/lobehub
-[release-date-shield]: https://img.shields.io/github/release-date/lobehub/lobe-ui?style=flat
-[release-date-url]: https://github.com/lobehub/lobe-ui/releases
-[release-shield]: https://img.shields.io/npm/v/@lobehub/ui?label=%F0%9F%A4%AF%20NPM
-[release-url]: https://www.npmjs.com/package/@lobehub/ui
-[stargazers-shield]: https://img.shields.io/github/stars/lobehub/lobe-ui.svg?style=flat
-[stargazers-url]: https://github.com/lobehub/lobe-ui/stargazers
+[vercel-link]: https://ui.lobehub.com
+[vercel-shield]: https://img.shields.io/website?down_message=offline&label=vercel&labelColor=black&logo=vercel&style=flat-square&up_message=online&url=https%3A%2F%2Fui.lobehub.com

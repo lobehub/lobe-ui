@@ -10,10 +10,10 @@ import type { CustomStylishParams, CustomTokenParams } from 'antd-style/lib/type
 import { type ReactNode, memo, useCallback, useEffect } from 'react';
 import { ThemeContext } from 'styled-components';
 
+import { useCdnFn } from '@/ConfigProvider';
 import FontLoader from '@/FontLoader';
 import { lobeCustomStylish, lobeCustomToken, lobeTheme } from '@/styles';
 import { LobeCustomToken } from '@/types/customToken';
-import { genCdnUrl } from '@/utils/genCdnUrl';
 
 import GlobalStyle from './GlobalStyle';
 
@@ -50,23 +50,23 @@ export interface ThemeProviderProps {
 }
 
 const ThemeProvider = memo<ThemeProviderProps>(
-  ({
-    children,
-    themeMode,
-    customStylish,
-    customToken,
-    enableWebfonts = true,
-    webfonts = [
+  ({ children, themeMode, customStylish, customToken, enableWebfonts = true, webfonts }) => {
+    const genCdnUrl = useCdnFn();
+    const webfontUrls = webfonts || [
       genCdnUrl({ path: 'css/index.css', pkg: '@lobehub/webfont-mono', version: '1.0.0' }),
-      genCdnUrl({ path: 'css/index.css', pkg: '@lobehub/webfont-harmony-sans', version: '1.0.0' }),
+      genCdnUrl({
+        path: 'css/index.css',
+        pkg: '@lobehub/webfont-harmony-sans',
+        version: '1.0.0',
+      }),
       genCdnUrl({
         path: 'css/index.css',
         pkg: '@lobehub/webfont-harmony-sans-sc',
         version: '1.0.0',
       }),
       genCdnUrl({ path: 'dist/katex.min.css', pkg: 'katex', version: '0.16.8' }),
-    ],
-  }) => {
+    ];
+
     useEffect(() => {
       setupStyled({ ThemeContext });
     }, []);
@@ -84,8 +84,8 @@ const ThemeProvider = memo<ThemeProviderProps>(
     return (
       <>
         {enableWebfonts &&
-          webfonts?.length > 0 &&
-          webfonts.map((webfont, index) => <FontLoader key={index} url={webfont} />)}
+          webfontUrls?.length > 0 &&
+          webfontUrls.map((webfont, index) => <FontLoader key={index} url={webfont} />)}
         <StyleProvider speedy={process.env.NODE_ENV === 'production'}>
           <AntdThemeProvider<LobeCustomToken>
             customStylish={stylish}
