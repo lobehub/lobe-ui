@@ -1,5 +1,4 @@
 import { defineConfig } from 'dumi';
-import { Github } from 'lucide-react';
 
 import { homepage, name } from './package.json';
 
@@ -9,7 +8,6 @@ const isWin = process.platform === 'win32';
 const themeConfig = {
   actions: [
     {
-      icon: Github,
       link: homepage,
       openExternal: true,
       text: 'Github',
@@ -26,8 +24,9 @@ const themeConfig = {
     pkg: name,
     sourceUrl: `{github}/tree/master/src/{atomId}/index.tsx`,
   },
-  description: 'Lobe UI is an open-source UI component library for building chatbot web apps',
+  description: 'Lobe UI is an open-source UI component library for building AIGC web apps',
   footer: 'Made with 🤯 by LobeHub',
+
   giscus: {
     category: 'Q&A',
     categoryId: 'DIC_kwDOJloKoM4CXsCu',
@@ -35,6 +34,14 @@ const themeConfig = {
     repoId: 'R_kgDOJloKoA',
   },
   name: 'UI',
+  nav: [
+    { link: '/components/action-icon', title: 'Components' },
+    { link: 'https://ant.design/components/overview', mode: 'override', title: 'AntdComponents' },
+    { link: '/colors', title: 'Colors' },
+    { link: 'https://lucide.dev/icons', mode: 'override', title: 'Icons' },
+    { link: 'https://ant-design.github.io/antd-style', mode: 'override', title: 'CSSinJS' },
+    { link: '/changelog', title: 'Changelog' },
+  ],
   socialLinks: {
     discord: 'https://discord.gg/AYFPHvv2jT',
     github: homepage,
@@ -70,8 +77,7 @@ export default defineConfig({
         entryFile: './src/index.ts',
       }
     : undefined,
-
-  // ssr: isProduction ? {} : false,
+  sitemap: { hostname: 'https://ui.lobehub.com' },
   styles: [
     `html, body { background: transparent;  }
 

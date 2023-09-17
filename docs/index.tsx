@@ -1,5 +1,7 @@
-import { Features, FeaturesProps } from '@lobehub/ui';
+import { Features, FeaturesProps, Highlighter } from '@lobehub/ui';
+import { useTheme } from 'antd-style';
 import { MoonStar, Palette, Zap } from 'lucide-react';
+import { Center } from 'react-layout-kit';
 
 const items: FeaturesProps['items'] = [
   {
@@ -22,6 +24,38 @@ const items: FeaturesProps['items'] = [
   },
 ];
 
+const example = `import { ThemeProvider, Button } from '@lobehub/ui'
+import { Button } from 'antd'
+
+export default () => (
+  <ThemeProvider>
+    <Button>Hello AIGC</Button>
+  </ThemeProvider>
+)`;
+
 export default () => {
-  return <Features items={items} />;
+  const theme = useTheme();
+  return (
+    <Center gap={16}>
+      <Center>
+        <h2 style={{ fontSize: 20 }}>🤯 Start building your AIGC app now</h2>
+        <div style={{ color: theme.colorTextDescription, textAlign: 'center' }}>
+          The LobeUI components are developed based on{' '}
+          <a href={'https://ant.design/components/overview'} rel="noreferrer" target={'_blank'}>
+            Antd components
+          </a>
+          , fully compatible with Antd components, <br />
+          and it is recommended to use{' '}
+          <a href={'https://ant-design.github.io/antd-style'} rel="noreferrer" target={'_blank'}>
+            antd-style
+          </a>{' '}
+          as the default css-in-js styling solution.
+        </div>
+      </Center>
+      <Highlighter language={'tsx'} style={{ width: '100%' }} type={'ghost'}>
+        {example}
+      </Highlighter>
+      <Features items={items} />
+    </Center>
+  );
 };
