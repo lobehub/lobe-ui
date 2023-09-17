@@ -83,6 +83,30 @@ const nextConfig = {
 
 </div>
 
+## 🤯 Usage
+
+> **Note**\
+> The LobeUI components are developed based on [Antd](https://ant.design/components/overview/), fully compatible with Antd components,
+> and it is recommended to use [antd-style](https://ant-design.github.io/antd-style/) as the default css-in-js styling solution.
+
+```tsx
+import { ThemeProvider, Button } from '@lobehub/ui'
+import { Button } from 'antd'
+
+export default () => (
+  <ThemeProvider>
+    <Button>Hello AIGC</Button>
+  </ThemeProvider>
+)
+```
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
+
 ## ⌨️ Local Development
 
 You can use Github Codespaces for online development:
