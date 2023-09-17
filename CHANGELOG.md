@@ -2,7 +2,7 @@
 
 # Changelog
 
-## [Version 1.95.0](https://github.com/lobehub/lobe-ui/compare/v1.94.7...v1.95.0)
+## [Version 1.95.0](https://github.com/lobehub/lobe-ui/compare/v1.94.7...v1.95.0)
 
 <sup>Released on **2023-09-16**</sup>
 
@@ -27,7 +27,7 @@
 
 </div>
 
-### [Version 1.94.7](https://github.com/lobehub/lobe-ui/compare/v1.94.6...v1.94.7)
+### [Version 1.94.7](https://github.com/lobehub/lobe-ui/compare/v1.94.6...v1.94.7)
 
 <sup>Released on **2023-09-15**</sup>
 
@@ -52,7 +52,7 @@
 
 </div>
 
-### [Version 1.94.6](https://github.com/lobehub/lobe-ui/compare/v1.94.5...v1.94.6)
+### [Version 1.94.6](https://github.com/lobehub/lobe-ui/compare/v1.94.5...v1.94.6)
 
 <sup>Released on **2023-09-14**</sup>
 
@@ -77,7 +77,7 @@
 
 </div>
 
-### [Version 1.94.5](https://github.com/lobehub/lobe-ui/compare/v1.94.4...v1.94.5)
+### [Version 1.94.5](https://github.com/lobehub/lobe-ui/compare/v1.94.4...v1.94.5)
 
 <sup>Released on **2023-09-14**</sup>
 
@@ -102,7 +102,7 @@
 
 </div>
 
-### [Version 1.94.4](https://github.com/lobehub/lobe-ui/compare/v1.94.3...v1.94.4)
+### [Version 1.94.4](https://github.com/lobehub/lobe-ui/compare/v1.94.3...v1.94.4)
 
 <sup>Released on **2023-09-14**</sup>
 
@@ -127,7 +127,7 @@
 
 </div>
 
-### [Version 1.94.3](https://github.com/lobehub/lobe-ui/compare/v1.94.2...v1.94.3)
+### [Version 1.94.3](https://github.com/lobehub/lobe-ui/compare/v1.94.2...v1.94.3)
 
 <sup>Released on **2023-09-14**</sup>
 
@@ -152,7 +152,7 @@
 
 </div>
 
-### [Version 1.94.2](https://github.com/lobehub/lobe-ui/compare/v1.94.1...v1.94.2)
+### [Version 1.94.2](https://github.com/lobehub/lobe-ui/compare/v1.94.1...v1.94.2)
 
 <sup>Released on **2023-09-14**</sup>
 
@@ -177,7 +177,7 @@
 
 </div>
 
-### [Version 1.94.1](https://github.com/lobehub/lobe-ui/compare/v1.94.0...v1.94.1)
+### [Version 1.94.1](https://github.com/lobehub/lobe-ui/compare/v1.94.0...v1.94.1)
 
 <sup>Released on **2023-09-12**</sup>
 
@@ -202,7 +202,7 @@
 
 </div>
 
-## [Version 1.94.0](https://github.com/lobehub/lobe-ui/compare/v1.93.0...v1.94.0)
+## [Version 1.94.0](https://github.com/lobehub/lobe-ui/compare/v1.93.0...v1.94.0)
 
 <sup>Released on **2023-09-12**</sup>
 
@@ -227,7 +227,7 @@
 
 </div>
 
-## [Version 1.93.0](https://github.com/lobehub/lobe-ui/compare/v1.92.0...v1.93.0)
+## [Version 1.93.0](https://github.com/lobehub/lobe-ui/compare/v1.92.0...v1.93.0)
 
 <sup>Released on **2023-09-11**</sup>
 
@@ -252,7 +252,7 @@
 
 </div>
 
-## [Version 1.92.0](https://github.com/lobehub/lobe-ui/compare/v1.91.0...v1.92.0)
+## [Version 1.92.0](https://github.com/lobehub/lobe-ui/compare/v1.91.0...v1.92.0)
 
 <sup>Released on **2023-09-10**</sup>
 
@@ -277,7 +277,7 @@
 
 </div>
 
-## [Version 1.91.0](https://github.com/lobehub/lobe-ui/compare/v1.90.0...v1.91.0)
+## [Version 1.91.0](https://github.com/lobehub/lobe-ui/compare/v1.90.0...v1.91.0)
 
 <sup>Released on **2023-09-09**</sup>
 
@@ -302,7 +302,7 @@
 
 </div>
 
-## [Version 1.90.0](https://github.com/lobehub/lobe-ui/compare/v1.89.0...v1.90.0)
+## [Version 1.90.0](https://github.com/lobehub/lobe-ui/compare/v1.89.0...v1.90.0)
 
 <sup>Released on **2023-09-09**</sup>
 
@@ -327,7 +327,7 @@
 
 </div>
 
-## [Version 1.89.0](https://github.com/lobehub/lobe-ui/compare/v1.88.1...v1.89.0)
+## [Version 1.89.0](https://github.com/lobehub/lobe-ui/compare/v1.88.1...v1.89.0)
 
 <sup>Released on **2023-09-09**</sup>
 
@@ -352,7 +352,7 @@
 
 </div>
 
-### [Version 1.88.1](https://github.com/lobehub/lobe-ui/compare/v1.88.0...v1.88.1)
+### [Version 1.88.1](https://github.com/lobehub/lobe-ui/compare/v1.88.0...v1.88.1)
 
 <sup>Released on **2023-09-08**</sup>
 
@@ -377,7 +377,7 @@
 
 </div>
 
-## [Version 1.88.0](https://github.com/lobehub/lobe-ui/compare/v1.87.2...v1.88.0)
+## [Version 1.88.0](https://github.com/lobehub/lobe-ui/compare/v1.87.2...v1.88.0)
 
 <sup>Released on **2023-09-08**</sup>
 
@@ -411,7 +411,7 @@
 
 </div>
 
-### [Version 1.87.2](https://github.com/lobehub/lobe-ui/compare/v1.87.1...v1.87.2)
+### [Version 1.87.2](https://github.com/lobehub/lobe-ui/compare/v1.87.1...v1.87.2)
 
 <sup>Released on **2023-09-06**</sup>
 
@@ -436,7 +436,7 @@
 
 </div>
 
-### [Version 1.87.1](https://github.com/lobehub/lobe-ui/compare/v1.87.0...v1.87.1)
+### [Version 1.87.1](https://github.com/lobehub/lobe-ui/compare/v1.87.0...v1.87.1)
 
 <sup>Released on **2023-09-06**</sup>
 
@@ -461,7 +461,7 @@
 
 </div>
 
-## [Version 1.87.0](https://github.com/lobehub/lobe-ui/compare/v1.86.4...v1.87.0)
+## [Version 1.87.0](https://github.com/lobehub/lobe-ui/compare/v1.86.4...v1.87.0)
 
 <sup>Released on **2023-09-06**</sup>
 
@@ -486,7 +486,7 @@
 
 </div>
 
-### [Version 1.86.4](https://github.com/lobehub/lobe-ui/compare/v1.86.3...v1.86.4)
+### [Version 1.86.4](https://github.com/lobehub/lobe-ui/compare/v1.86.3...v1.86.4)
 
 <sup>Released on **2023-09-06**</sup>
 
@@ -521,7 +521,7 @@
 
 </div>
 
-### [Version 1.86.3](https://github.com/lobehub/lobe-ui/compare/v1.86.2...v1.86.3)
+### [Version 1.86.3](https://github.com/lobehub/lobe-ui/compare/v1.86.2...v1.86.3)
 
 <sup>Released on **2023-09-06**</sup>
 
@@ -546,7 +546,7 @@
 
 </div>
 
-### [Version 1.86.2](https://github.com/lobehub/lobe-ui/compare/v1.86.1...v1.86.2)
+### [Version 1.86.2](https://github.com/lobehub/lobe-ui/compare/v1.86.1...v1.86.2)
 
 <sup>Released on **2023-09-06**</sup>
 
@@ -571,7 +571,7 @@
 
 </div>
 
-### [Version 1.86.1](https://github.com/lobehub/lobe-ui/compare/v1.86.0...v1.86.1)
+### [Version 1.86.1](https://github.com/lobehub/lobe-ui/compare/v1.86.0...v1.86.1)
 
 <sup>Released on **2023-09-05**</sup>
 
@@ -597,7 +597,7 @@
 
 </div>
 
-## [Version 1.86.0](https://github.com/lobehub/lobe-ui/compare/v1.85.0...v1.86.0)
+## [Version 1.86.0](https://github.com/lobehub/lobe-ui/compare/v1.85.0...v1.86.0)
 
 <sup>Released on **2023-09-05**</sup>
 
@@ -622,7 +622,7 @@
 
 </div>
 
-## [Version 1.85.0](https://github.com/lobehub/lobe-ui/compare/v1.84.2...v1.85.0)
+## [Version 1.85.0](https://github.com/lobehub/lobe-ui/compare/v1.84.2...v1.85.0)
 
 <sup>Released on **2023-09-04**</sup>
 
@@ -657,7 +657,7 @@
 
 </div>
 
-### [Version 1.84.2](https://github.com/lobehub/lobe-ui/compare/v1.84.1...v1.84.2)
+### [Version 1.84.2](https://github.com/lobehub/lobe-ui/compare/v1.84.1...v1.84.2)
 
 <sup>Released on **2023-08-27**</sup>
 
@@ -682,7 +682,7 @@
 
 </div>
 
-### [Version 1.84.1](https://github.com/lobehub/lobe-ui/compare/v1.84.0...v1.84.1)
+### [Version 1.84.1](https://github.com/lobehub/lobe-ui/compare/v1.84.0...v1.84.1)
 
 <sup>Released on **2023-08-26**</sup>
 
@@ -707,7 +707,7 @@
 
 </div>
 
-## [Version 1.84.0](https://github.com/lobehub/lobe-ui/compare/v1.83.0...v1.84.0)
+## [Version 1.84.0](https://github.com/lobehub/lobe-ui/compare/v1.83.0...v1.84.0)
 
 <sup>Released on **2023-08-26**</sup>
 
@@ -732,7 +732,7 @@
 
 </div>
 
-## [Version 1.83.0](https://github.com/lobehub/lobe-ui/compare/v1.82.1...v1.83.0)
+## [Version 1.83.0](https://github.com/lobehub/lobe-ui/compare/v1.82.1...v1.83.0)
 
 <sup>Released on **2023-08-25**</sup>
 
@@ -757,7 +757,7 @@
 
 </div>
 
-### [Version 1.82.1](https://github.com/lobehub/lobe-ui/compare/v1.82.0...v1.82.1)
+### [Version 1.82.1](https://github.com/lobehub/lobe-ui/compare/v1.82.0...v1.82.1)
 
 <sup>Released on **2023-08-22**</sup>
 
@@ -782,7 +782,7 @@
 
 </div>
 
-## [Version 1.82.0](https://github.com/lobehub/lobe-ui/compare/v1.81.1...v1.82.0)
+## [Version 1.82.0](https://github.com/lobehub/lobe-ui/compare/v1.81.1...v1.82.0)
 
 <sup>Released on **2023-08-21**</sup>
 
@@ -809,7 +809,7 @@
 
 </div>
 
-### [Version 1.81.1](https://github.com/lobehub/lobe-ui/compare/v1.81.0...v1.81.1)
+### [Version 1.81.1](https://github.com/lobehub/lobe-ui/compare/v1.81.0...v1.81.1)
 
 <sup>Released on **2023-08-21**</sup>
 
@@ -834,7 +834,7 @@
 
 </div>
 
-## [Version 1.81.0](https://github.com/lobehub/lobe-ui/compare/v1.80.0...v1.81.0)
+## [Version 1.81.0](https://github.com/lobehub/lobe-ui/compare/v1.80.0...v1.81.0)
 
 <sup>Released on **2023-08-16**</sup>
 
@@ -859,7 +859,7 @@
 
 </div>
 
-## [Version 1.80.0](https://github.com/lobehub/lobe-ui/compare/v1.79.0...v1.80.0)
+## [Version 1.80.0](https://github.com/lobehub/lobe-ui/compare/v1.79.0...v1.80.0)
 
 <sup>Released on **2023-08-16**</sup>
 
@@ -884,7 +884,7 @@
 
 </div>
 
-## [Version 1.79.0](https://github.com/lobehub/lobe-ui/compare/v1.78.0...v1.79.0)
+## [Version 1.79.0](https://github.com/lobehub/lobe-ui/compare/v1.78.0...v1.79.0)
 
 <sup>Released on **2023-08-15**</sup>
 
@@ -909,7 +909,7 @@
 
 </div>
 
-## [Version 1.78.0](https://github.com/lobehub/lobe-ui/compare/v1.77.0...v1.78.0)
+## [Version 1.78.0](https://github.com/lobehub/lobe-ui/compare/v1.77.0...v1.78.0)
 
 <sup>Released on **2023-08-15**</sup>
 
@@ -934,7 +934,7 @@
 
 </div>
 
-## [Version 1.77.0](https://github.com/lobehub/lobe-ui/compare/v1.76.0...v1.77.0)
+## [Version 1.77.0](https://github.com/lobehub/lobe-ui/compare/v1.76.0...v1.77.0)
 
 <sup>Released on **2023-08-15**</sup>
 
@@ -967,7 +967,7 @@
 
 </div>
 
-## [Version 1.76.0](https://github.com/lobehub/lobe-ui/compare/v1.75.0...v1.76.0)
+## [Version 1.76.0](https://github.com/lobehub/lobe-ui/compare/v1.75.0...v1.76.0)
 
 <sup>Released on **2023-08-15**</sup>
 
@@ -992,7 +992,7 @@
 
 </div>
 
-## [Version 1.75.0](https://github.com/lobehub/lobe-ui/compare/v1.74.0...v1.75.0)
+## [Version 1.75.0](https://github.com/lobehub/lobe-ui/compare/v1.74.0...v1.75.0)
 
 <sup>Released on **2023-08-15**</sup>
 
@@ -1017,7 +1017,7 @@
 
 </div>
 
-## [Version 1.74.0](https://github.com/lobehub/lobe-ui/compare/v1.73.0...v1.74.0)
+## [Version 1.74.0](https://github.com/lobehub/lobe-ui/compare/v1.73.0...v1.74.0)
 
 <sup>Released on **2023-08-15**</sup>
 
@@ -1042,7 +1042,7 @@
 
 </div>
 
-## [Version 1.73.0](https://github.com/lobehub/lobe-ui/compare/v1.72.8...v1.73.0)
+## [Version 1.73.0](https://github.com/lobehub/lobe-ui/compare/v1.72.8...v1.73.0)
 
 <sup>Released on **2023-08-15**</sup>
 
@@ -1067,7 +1067,7 @@
 
 </div>
 
-### [Version 1.72.8](https://github.com/lobehub/lobe-ui/compare/v1.72.7...v1.72.8)
+### [Version 1.72.8](https://github.com/lobehub/lobe-ui/compare/v1.72.7...v1.72.8)
 
 <sup>Released on **2023-08-14**</sup>
 
@@ -1092,7 +1092,7 @@
 
 </div>
 
-### [Version 1.72.7](https://github.com/lobehub/lobe-ui/compare/v1.72.6...v1.72.7)
+### [Version 1.72.7](https://github.com/lobehub/lobe-ui/compare/v1.72.6...v1.72.7)
 
 <sup>Released on **2023-08-14**</sup>
 
@@ -1117,7 +1117,7 @@
 
 </div>
 
-### [Version 1.72.6](https://github.com/lobehub/lobe-ui/compare/v1.72.5...v1.72.6)
+### [Version 1.72.6](https://github.com/lobehub/lobe-ui/compare/v1.72.5...v1.72.6)
 
 <sup>Released on **2023-08-14**</sup>
 
@@ -1142,7 +1142,7 @@
 
 </div>
 
-### [Version 1.72.5](https://github.com/lobehub/lobe-ui/compare/v1.72.4...v1.72.5)
+### [Version 1.72.5](https://github.com/lobehub/lobe-ui/compare/v1.72.4...v1.72.5)
 
 <sup>Released on **2023-08-13**</sup>
 
@@ -1167,7 +1167,7 @@
 
 </div>
 
-### [Version 1.72.4](https://github.com/lobehub/lobe-ui/compare/v1.72.3...v1.72.4)
+### [Version 1.72.4](https://github.com/lobehub/lobe-ui/compare/v1.72.3...v1.72.4)
 
 <sup>Released on **2023-08-13**</sup>
 
@@ -1192,7 +1192,7 @@
 
 </div>
 
-### [Version 1.72.3](https://github.com/lobehub/lobe-ui/compare/v1.72.2...v1.72.3)
+### [Version 1.72.3](https://github.com/lobehub/lobe-ui/compare/v1.72.2...v1.72.3)
 
 <sup>Released on **2023-08-13**</sup>
 
@@ -1217,7 +1217,7 @@
 
 </div>
 
-### [Version 1.72.2](https://github.com/lobehub/lobe-ui/compare/v1.72.1...v1.72.2)
+### [Version 1.72.2](https://github.com/lobehub/lobe-ui/compare/v1.72.1...v1.72.2)
 
 <sup>Released on **2023-08-12**</sup>
 
@@ -1234,7 +1234,7 @@
 
 </div>
 
-### [Version 1.72.1](https://github.com/lobehub/lobe-ui/compare/v1.72.0...v1.72.1)
+### [Version 1.72.1](https://github.com/lobehub/lobe-ui/compare/v1.72.0...v1.72.1)
 
 <sup>Released on **2023-08-11**</sup>
 
@@ -1259,7 +1259,7 @@
 
 </div>
 
-## [Version 1.72.0](https://github.com/lobehub/lobe-ui/compare/v1.71.0...v1.72.0)
+## [Version 1.72.0](https://github.com/lobehub/lobe-ui/compare/v1.71.0...v1.72.0)
 
 <sup>Released on **2023-08-11**</sup>
 
@@ -1284,7 +1284,7 @@
 
 </div>
 
-## [Version 1.71.0](https://github.com/lobehub/lobe-ui/compare/v1.70.0...v1.71.0)
+## [Version 1.71.0](https://github.com/lobehub/lobe-ui/compare/v1.70.0...v1.71.0)
 
 <sup>Released on **2023-08-11**</sup>
 
@@ -1318,7 +1318,7 @@
 
 </div>
 
-## [Version 1.70.0](https://github.com/lobehub/lobe-ui/compare/v1.69.0...v1.70.0)
+## [Version 1.70.0](https://github.com/lobehub/lobe-ui/compare/v1.69.0...v1.70.0)
 
 <sup>Released on **2023-08-09**</sup>
 
@@ -1343,7 +1343,7 @@
 
 </div>
 
-## [Version 1.69.0](https://github.com/lobehub/lobe-ui/compare/v1.68.0...v1.69.0)
+## [Version 1.69.0](https://github.com/lobehub/lobe-ui/compare/v1.68.0...v1.69.0)
 
 <sup>Released on **2023-08-08**</sup>
 
@@ -1368,7 +1368,7 @@
 
 </div>
 
-## [Version 1.68.0](https://github.com/lobehub/lobe-ui/compare/v1.67.0...v1.68.0)
+## [Version 1.68.0](https://github.com/lobehub/lobe-ui/compare/v1.67.0...v1.68.0)
 
 <sup>Released on **2023-08-05**</sup>
 
@@ -1393,7 +1393,7 @@
 
 </div>
 
-## [Version 1.67.0](https://github.com/lobehub/lobe-ui/compare/v1.66.0...v1.67.0)
+## [Version 1.67.0](https://github.com/lobehub/lobe-ui/compare/v1.66.0...v1.67.0)
 
 <sup>Released on **2023-08-05**</sup>
 
@@ -1418,7 +1418,7 @@
 
 </div>
 
-## [Version 1.66.0](https://github.com/lobehub/lobe-ui/compare/v1.65.0...v1.66.0)
+## [Version 1.66.0](https://github.com/lobehub/lobe-ui/compare/v1.65.0...v1.66.0)
 
 <sup>Released on **2023-08-05**</sup>
 
@@ -1443,7 +1443,7 @@
 
 </div>
 
-## [Version 1.65.0](https://github.com/lobehub/lobe-ui/compare/v1.64.0...v1.65.0)
+## [Version 1.65.0](https://github.com/lobehub/lobe-ui/compare/v1.64.0...v1.65.0)
 
 <sup>Released on **2023-08-01**</sup>
 
@@ -1468,7 +1468,7 @@
 
 </div>
 
-## [Version 1.64.0](https://github.com/lobehub/lobe-ui/compare/v1.63.0...v1.64.0)
+## [Version 1.64.0](https://github.com/lobehub/lobe-ui/compare/v1.63.0...v1.64.0)
 
 <sup>Released on **2023-07-31**</sup>
 
@@ -1493,7 +1493,7 @@
 
 </div>
 
-## [Version 1.63.0](https://github.com/lobehub/lobe-ui/compare/v1.62.0...v1.63.0)
+## [Version 1.63.0](https://github.com/lobehub/lobe-ui/compare/v1.62.0...v1.63.0)
 
 <sup>Released on **2023-07-31**</sup>
 
@@ -1518,7 +1518,7 @@
 
 </div>
 
-## [Version 1.62.0](https://github.com/lobehub/lobe-ui/compare/v1.61.0...v1.62.0)
+## [Version 1.62.0](https://github.com/lobehub/lobe-ui/compare/v1.61.0...v1.62.0)
 
 <sup>Released on **2023-07-30**</sup>
 
@@ -1543,7 +1543,7 @@
 
 </div>
 
-## [Version 1.61.0](https://github.com/lobehub/lobe-ui/compare/v1.60.2...v1.61.0)
+## [Version 1.61.0](https://github.com/lobehub/lobe-ui/compare/v1.60.2...v1.61.0)
 
 <sup>Released on **2023-07-30**</sup>
 
@@ -1568,7 +1568,7 @@
 
 </div>
 
-### [Version 1.60.2](https://github.com/lobehub/lobe-ui/compare/v1.60.1...v1.60.2)
+### [Version 1.60.2](https://github.com/lobehub/lobe-ui/compare/v1.60.1...v1.60.2)
 
 <sup>Released on **2023-07-30**</sup>
 
@@ -1593,7 +1593,7 @@
 
 </div>
 
-### [Version 1.60.1](https://github.com/lobehub/lobe-ui/compare/v1.60.0...v1.60.1)
+### [Version 1.60.1](https://github.com/lobehub/lobe-ui/compare/v1.60.0...v1.60.1)
 
 <sup>Released on **2023-07-28**</sup>
 
@@ -1618,7 +1618,7 @@
 
 </div>
 
-## [Version 1.60.0](https://github.com/lobehub/lobe-ui/compare/v1.59.0...v1.60.0)
+## [Version 1.60.0](https://github.com/lobehub/lobe-ui/compare/v1.59.0...v1.60.0)
 
 <sup>Released on **2023-07-28**</sup>
 
@@ -1659,7 +1659,7 @@
 
 </div>
 
-## [Version 1.59.0](https://github.com/lobehub/lobe-ui/compare/v1.58.0...v1.59.0)
+## [Version 1.59.0](https://github.com/lobehub/lobe-ui/compare/v1.58.0...v1.59.0)
 
 <sup>Released on **2023-07-26**</sup>
 
@@ -1684,7 +1684,7 @@
 
 </div>
 
-## [Version 1.58.0](https://github.com/lobehub/lobe-ui/compare/v1.57.0...v1.58.0)
+## [Version 1.58.0](https://github.com/lobehub/lobe-ui/compare/v1.57.0...v1.58.0)
 
 <sup>Released on **2023-07-26**</sup>
 
@@ -1709,7 +1709,7 @@
 
 </div>
 
-## [Version 1.57.0](https://github.com/lobehub/lobe-ui/compare/v1.56.0...v1.57.0)
+## [Version 1.57.0](https://github.com/lobehub/lobe-ui/compare/v1.56.0...v1.57.0)
 
 <sup>Released on **2023-07-26**</sup>
 
@@ -1734,7 +1734,7 @@
 
 </div>
 
-## [Version 1.56.0](https://github.com/lobehub/lobe-ui/compare/v1.55.2...v1.56.0)
+## [Version 1.56.0](https://github.com/lobehub/lobe-ui/compare/v1.55.2...v1.56.0)
 
 <sup>Released on **2023-07-26**</sup>
 
@@ -1759,7 +1759,7 @@
 
 </div>
 
-### [Version 1.55.2](https://github.com/lobehub/lobe-ui/compare/v1.55.1...v1.55.2)
+### [Version 1.55.2](https://github.com/lobehub/lobe-ui/compare/v1.55.1...v1.55.2)
 
 <sup>Released on **2023-07-25**</sup>
 
@@ -1774,7 +1774,7 @@
 
 #### Styles
 
-- **misc**: 优化 ChatList ActionBar 数量, closes [#35](https://github.com/lobehub/lobe-ui/issues/35) ([883f77f](https://github.com/lobehub/lobe-ui/commit/883f77f))
+- **misc**: 优化 ChatList ActionBar 数量，closes [#35](https://github.com/lobehub/lobe-ui/issues/35) ([883f77f](https://github.com/lobehub/lobe-ui/commit/883f77f))
 
 </details>
 
@@ -1784,7 +1784,7 @@
 
 </div>
 
-### [Version 1.55.1](https://github.com/lobehub/lobe-ui/compare/v1.55.0...v1.55.1)
+### [Version 1.55.1](https://github.com/lobehub/lobe-ui/compare/v1.55.0...v1.55.1)
 
 <sup>Released on **2023-07-24**</sup>
 
@@ -1809,7 +1809,7 @@
 
 </div>
 
-## [Version 1.55.0](https://github.com/lobehub/lobe-ui/compare/v1.54.0...v1.55.0)
+## [Version 1.55.0](https://github.com/lobehub/lobe-ui/compare/v1.54.0...v1.55.0)
 
 <sup>Released on **2023-07-24**</sup>
 
@@ -1834,7 +1834,7 @@
 
 </div>
 
-## [Version 1.54.0](https://github.com/lobehub/lobe-ui/compare/v1.53.0...v1.54.0)
+## [Version 1.54.0](https://github.com/lobehub/lobe-ui/compare/v1.53.0...v1.54.0)
 
 <sup>Released on **2023-07-24**</sup>
 
@@ -1859,7 +1859,7 @@
 
 </div>
 
-## [Version 1.53.0](https://github.com/lobehub/lobe-ui/compare/v1.52.0...v1.53.0)
+## [Version 1.53.0](https://github.com/lobehub/lobe-ui/compare/v1.52.0...v1.53.0)
 
 <sup>Released on **2023-07-24**</sup>
 
@@ -1884,7 +1884,7 @@
 
 </div>
 
-## [Version 1.52.0](https://github.com/lobehub/lobe-ui/compare/v1.51.0...v1.52.0)
+## [Version 1.52.0](https://github.com/lobehub/lobe-ui/compare/v1.51.0...v1.52.0)
 
 <sup>Released on **2023-07-24**</sup>
 
@@ -1909,7 +1909,7 @@
 
 </div>
 
-## [Version 1.51.0](https://github.com/lobehub/lobe-ui/compare/v1.50.1...v1.51.0)
+## [Version 1.51.0](https://github.com/lobehub/lobe-ui/compare/v1.50.1...v1.51.0)
 
 <sup>Released on **2023-07-23**</sup>
 
@@ -1934,7 +1934,7 @@
 
 </div>
 
-### [Version 1.50.1](https://github.com/lobehub/lobe-ui/compare/v1.50.0...v1.50.1)
+### [Version 1.50.1](https://github.com/lobehub/lobe-ui/compare/v1.50.0...v1.50.1)
 
 <sup>Released on **2023-07-23**</sup>
 
@@ -1951,7 +1951,7 @@
 
 </div>
 
-## [Version 1.50.0](https://github.com/lobehub/lobe-ui/compare/v1.49.1...v1.50.0)
+## [Version 1.50.0](https://github.com/lobehub/lobe-ui/compare/v1.49.1...v1.50.0)
 
 <sup>Released on **2023-07-22**</sup>
 
@@ -1976,7 +1976,7 @@
 
 </div>
 
-### [Version 1.49.1](https://github.com/lobehub/lobe-ui/compare/v1.49.0...v1.49.1)
+### [Version 1.49.1](https://github.com/lobehub/lobe-ui/compare/v1.49.0...v1.49.1)
 
 <sup>Released on **2023-07-22**</sup>
 
@@ -2001,7 +2001,7 @@
 
 </div>
 
-## [Version 1.49.0](https://github.com/lobehub/lobe-ui/compare/v1.48.1...v1.49.0)
+## [Version 1.49.0](https://github.com/lobehub/lobe-ui/compare/v1.48.1...v1.49.0)
 
 <sup>Released on **2023-07-22**</sup>
 
@@ -2026,7 +2026,7 @@
 
 </div>
 
-### [Version 1.48.1](https://github.com/lobehub/lobe-ui/compare/v1.48.0...v1.48.1)
+### [Version 1.48.1](https://github.com/lobehub/lobe-ui/compare/v1.48.0...v1.48.1)
 
 <sup>Released on **2023-07-22**</sup>
 
@@ -2051,7 +2051,7 @@
 
 </div>
 
-## [Version 1.48.0](https://github.com/lobehub/lobe-ui/compare/v1.47.0...v1.48.0)
+## [Version 1.48.0](https://github.com/lobehub/lobe-ui/compare/v1.47.0...v1.48.0)
 
 <sup>Released on **2023-07-20**</sup>
 
@@ -2076,7 +2076,7 @@
 
 </div>
 
-## [Version 1.47.0](https://github.com/lobehub/lobe-ui/compare/v1.46.1...v1.47.0)
+## [Version 1.47.0](https://github.com/lobehub/lobe-ui/compare/v1.46.1...v1.47.0)
 
 <sup>Released on **2023-07-20**</sup>
 
@@ -2101,7 +2101,7 @@
 
 </div>
 
-### [Version 1.46.1](https://github.com/lobehub/lobe-ui/compare/v1.46.0...v1.46.1)
+### [Version 1.46.1](https://github.com/lobehub/lobe-ui/compare/v1.46.0...v1.46.1)
 
 <sup>Released on **2023-07-20**</sup>
 
@@ -2126,7 +2126,7 @@
 
 </div>
 
-## [Version 1.46.0](https://github.com/lobehub/lobe-ui/compare/v1.45.0...v1.46.0)
+## [Version 1.46.0](https://github.com/lobehub/lobe-ui/compare/v1.45.0...v1.46.0)
 
 <sup>Released on **2023-07-20**</sup>
 
@@ -2151,7 +2151,7 @@
 
 </div>
 
-## [Version 1.45.0](https://github.com/lobehub/lobe-ui/compare/v1.44.0...v1.45.0)
+## [Version 1.45.0](https://github.com/lobehub/lobe-ui/compare/v1.44.0...v1.45.0)
 
 <sup>Released on **2023-07-19**</sup>
 
@@ -2185,7 +2185,7 @@
 
 </div>
 
-## [Version 1.44.0](https://github.com/lobehub/lobe-ui/compare/v1.43.0...v1.44.0)
+## [Version 1.44.0](https://github.com/lobehub/lobe-ui/compare/v1.43.0...v1.44.0)
 
 <sup>Released on **2023-07-18**</sup>
 
@@ -2210,7 +2210,7 @@
 
 </div>
 
-## [Version 1.43.0](https://github.com/lobehub/lobe-ui/compare/v1.42.0...v1.43.0)
+## [Version 1.43.0](https://github.com/lobehub/lobe-ui/compare/v1.42.0...v1.43.0)
 
 <sup>Released on **2023-07-18**</sup>
 
@@ -2235,7 +2235,7 @@
 
 </div>
 
-## [Version 1.42.0](https://github.com/lobehub/lobe-ui/compare/v1.41.0...v1.42.0)
+## [Version 1.42.0](https://github.com/lobehub/lobe-ui/compare/v1.41.0...v1.42.0)
 
 <sup>Released on **2023-07-18**</sup>
 
@@ -2268,7 +2268,7 @@
 
 </div>
 
-## [Version 1.41.0](https://github.com/lobehub/lobe-ui/compare/v1.40.0...v1.41.0)
+## [Version 1.41.0](https://github.com/lobehub/lobe-ui/compare/v1.40.0...v1.41.0)
 
 <sup>Released on **2023-07-18**</sup>
 
@@ -2293,7 +2293,7 @@
 
 </div>
 
-## [Version 1.40.0](https://github.com/lobehub/lobe-ui/compare/v1.39.3...v1.40.0)
+## [Version 1.40.0](https://github.com/lobehub/lobe-ui/compare/v1.39.3...v1.40.0)
 
 <sup>Released on **2023-07-18**</sup>
 
@@ -2318,7 +2318,7 @@
 
 </div>
 
-### [Version 1.39.3](https://github.com/lobehub/lobe-ui/compare/v1.39.2...v1.39.3)
+### [Version 1.39.3](https://github.com/lobehub/lobe-ui/compare/v1.39.2...v1.39.3)
 
 <sup>Released on **2023-07-17**</sup>
 
@@ -2343,7 +2343,7 @@
 
 </div>
 
-### [Version 1.39.2](https://github.com/lobehub/lobe-ui/compare/v1.39.1...v1.39.2)
+### [Version 1.39.2](https://github.com/lobehub/lobe-ui/compare/v1.39.1...v1.39.2)
 
 <sup>Released on **2023-07-16**</sup>
 
@@ -2368,7 +2368,7 @@
 
 </div>
 
-### [Version 1.39.1](https://github.com/lobehub/lobe-ui/compare/v1.39.0...v1.39.1)
+### [Version 1.39.1](https://github.com/lobehub/lobe-ui/compare/v1.39.0...v1.39.1)
 
 <sup>Released on **2023-07-16**</sup>
 
@@ -2393,7 +2393,7 @@
 
 </div>
 
-## [Version 1.39.0](https://github.com/lobehub/lobe-ui/compare/v1.38.5...v1.39.0)
+## [Version 1.39.0](https://github.com/lobehub/lobe-ui/compare/v1.38.5...v1.39.0)
 
 <sup>Released on **2023-07-16**</sup>
 
@@ -2426,7 +2426,7 @@
 
 </div>
 
-### [Version 1.38.5](https://github.com/lobehub/lobe-ui/compare/v1.38.4...v1.38.5)
+### [Version 1.38.5](https://github.com/lobehub/lobe-ui/compare/v1.38.4...v1.38.5)
 
 <sup>Released on **2023-07-16**</sup>
 
@@ -2451,7 +2451,7 @@
 
 </div>
 
-### [Version 1.38.4](https://github.com/lobehub/lobe-ui/compare/v1.38.3...v1.38.4)
+### [Version 1.38.4](https://github.com/lobehub/lobe-ui/compare/v1.38.3...v1.38.4)
 
 <sup>Released on **2023-07-16**</sup>
 
@@ -2468,7 +2468,7 @@
 
 </div>
 
-### [Version 1.38.3](https://github.com/lobehub/lobe-ui/compare/v1.38.2...v1.38.3)
+### [Version 1.38.3](https://github.com/lobehub/lobe-ui/compare/v1.38.2...v1.38.3)
 
 <sup>Released on **2023-07-16**</sup>
 
@@ -2493,7 +2493,7 @@
 
 </div>
 
-### [Version 1.38.2](https://github.com/lobehub/lobe-ui/compare/v1.38.1...v1.38.2)
+### [Version 1.38.2](https://github.com/lobehub/lobe-ui/compare/v1.38.1...v1.38.2)
 
 <sup>Released on **2023-07-16**</sup>
 
@@ -2510,7 +2510,7 @@
 
 </div>
 
-### [Version 1.38.1](https://github.com/lobehub/lobe-ui/compare/v1.38.0...v1.38.1)
+### [Version 1.38.1](https://github.com/lobehub/lobe-ui/compare/v1.38.0...v1.38.1)
 
 <sup>Released on **2023-07-16**</sup>
 
@@ -2535,7 +2535,7 @@
 
 </div>
 
-## [Version 1.38.0](https://github.com/lobehub/lobe-ui/compare/v1.37.0...v1.38.0)
+## [Version 1.38.0](https://github.com/lobehub/lobe-ui/compare/v1.37.0...v1.38.0)
 
 <sup>Released on **2023-07-15**</sup>
 
@@ -2560,7 +2560,7 @@
 
 </div>
 
-## [Version 1.37.0](https://github.com/lobehub/lobe-ui/compare/v1.36.1...v1.37.0)
+## [Version 1.37.0](https://github.com/lobehub/lobe-ui/compare/v1.36.1...v1.37.0)
 
 <sup>Released on **2023-07-15**</sup>
 
@@ -2585,7 +2585,7 @@
 
 </div>
 
-### [Version 1.36.1](https://github.com/lobehub/lobe-ui/compare/v1.36.0...v1.36.1)
+### [Version 1.36.1](https://github.com/lobehub/lobe-ui/compare/v1.36.0...v1.36.1)
 
 <sup>Released on **2023-07-11**</sup>
 
@@ -2610,7 +2610,7 @@
 
 </div>
 
-## [Version 1.36.0](https://github.com/lobehub/lobe-ui/compare/v1.35.0...v1.36.0)
+## [Version 1.36.0](https://github.com/lobehub/lobe-ui/compare/v1.35.0...v1.36.0)
 
 <sup>Released on **2023-07-10**</sup>
 
@@ -2635,7 +2635,7 @@
 
 </div>
 
-## [Version 1.35.0](https://github.com/lobehub/lobe-ui/compare/v1.34.1...v1.35.0)
+## [Version 1.35.0](https://github.com/lobehub/lobe-ui/compare/v1.34.1...v1.35.0)
 
 <sup>Released on **2023-07-10**</sup>
 
@@ -2660,7 +2660,7 @@
 
 </div>
 
-### [Version 1.34.1](https://github.com/lobehub/lobe-ui/compare/v1.34.0...v1.34.1)
+### [Version 1.34.1](https://github.com/lobehub/lobe-ui/compare/v1.34.0...v1.34.1)
 
 <sup>Released on **2023-07-09**</sup>
 
@@ -2685,7 +2685,7 @@
 
 </div>
 
-## [Version 1.34.0](https://github.com/lobehub/lobe-ui/compare/v1.33.0...v1.34.0)
+## [Version 1.34.0](https://github.com/lobehub/lobe-ui/compare/v1.33.0...v1.34.0)
 
 <sup>Released on **2023-07-06**</sup>
 
@@ -2710,7 +2710,7 @@
 
 </div>
 
-## [Version 1.33.0](https://github.com/lobehub/lobe-ui/compare/v1.32.0...v1.33.0)
+## [Version 1.33.0](https://github.com/lobehub/lobe-ui/compare/v1.32.0...v1.33.0)
 
 <sup>Released on **2023-07-05**</sup>
 
@@ -2735,7 +2735,7 @@
 
 </div>
 
-## [Version 1.32.0](https://github.com/lobehub/lobe-ui/compare/v1.31.3...v1.32.0)
+## [Version 1.32.0](https://github.com/lobehub/lobe-ui/compare/v1.31.3...v1.32.0)
 
 <sup>Released on **2023-07-04**</sup>
 
@@ -2760,7 +2760,7 @@
 
 </div>
 
-### [Version 1.31.3](https://github.com/lobehub/lobe-ui/compare/v1.31.2...v1.31.3)
+### [Version 1.31.3](https://github.com/lobehub/lobe-ui/compare/v1.31.2...v1.31.3)
 
 <sup>Released on **2023-07-04**</sup>
 
@@ -2785,7 +2785,7 @@
 
 </div>
 
-### [Version 1.31.2](https://github.com/lobehub/lobe-ui/compare/v1.31.1...v1.31.2)
+### [Version 1.31.2](https://github.com/lobehub/lobe-ui/compare/v1.31.1...v1.31.2)
 
 <sup>Released on **2023-07-04**</sup>
 
@@ -2810,7 +2810,7 @@
 
 </div>
 
-### [Version 1.31.1](https://github.com/lobehub/lobe-ui/compare/v1.31.0...v1.31.1)
+### [Version 1.31.1](https://github.com/lobehub/lobe-ui/compare/v1.31.0...v1.31.1)
 
 <sup>Released on **2023-07-04**</sup>
 
@@ -2835,7 +2835,7 @@
 
 </div>
 
-## [Version 1.31.0](https://github.com/lobehub/lobe-ui/compare/v1.30.0...v1.31.0)
+## [Version 1.31.0](https://github.com/lobehub/lobe-ui/compare/v1.30.0...v1.31.0)
 
 <sup>Released on **2023-07-04**</sup>
 
@@ -2860,7 +2860,7 @@
 
 </div>
 
-## [Version 1.30.0](https://github.com/lobehub/lobe-ui/compare/v1.29.2...v1.30.0)
+## [Version 1.30.0](https://github.com/lobehub/lobe-ui/compare/v1.29.2...v1.30.0)
 
 <sup>Released on **2023-07-04**</sup>
 
@@ -2885,7 +2885,7 @@
 
 </div>
 
-### [Version 1.29.2](https://github.com/lobehub/lobe-ui/compare/v1.29.1...v1.29.2)
+### [Version 1.29.2](https://github.com/lobehub/lobe-ui/compare/v1.29.1...v1.29.2)
 
 <sup>Released on **2023-07-03**</sup>
 
@@ -2910,7 +2910,7 @@
 
 </div>
 
-### [Version 1.29.1](https://github.com/lobehub/lobe-ui/compare/v1.29.0...v1.29.1)
+### [Version 1.29.1](https://github.com/lobehub/lobe-ui/compare/v1.29.0...v1.29.1)
 
 <sup>Released on **2023-06-21**</sup>
 
@@ -2935,7 +2935,7 @@
 
 </div>
 
-## [Version 1.29.0](https://github.com/lobehub/lobe-ui/compare/v1.28.0...v1.29.0)
+## [Version 1.29.0](https://github.com/lobehub/lobe-ui/compare/v1.28.0...v1.29.0)
 
 <sup>Released on **2023-06-20**</sup>
 
@@ -2960,7 +2960,7 @@
 
 </div>
 
-## [Version 1.28.0](https://github.com/lobehub/lobe-ui/compare/v1.27.1...v1.28.0)
+## [Version 1.28.0](https://github.com/lobehub/lobe-ui/compare/v1.27.1...v1.28.0)
 
 <sup>Released on **2023-06-19**</sup>
 
@@ -2985,7 +2985,7 @@
 
 </div>
 
-### [Version 1.27.1](https://github.com/lobehub/lobe-ui/compare/v1.27.0...v1.27.1)
+### [Version 1.27.1](https://github.com/lobehub/lobe-ui/compare/v1.27.0...v1.27.1)
 
 <sup>Released on **2023-06-19**</sup>
 
@@ -3010,7 +3010,7 @@
 
 </div>
 
-## [Version 1.27.0](https://github.com/lobehub/lobe-ui/compare/v1.26.4...v1.27.0)
+## [Version 1.27.0](https://github.com/lobehub/lobe-ui/compare/v1.26.4...v1.27.0)
 
 <sup>Released on **2023-06-18**</sup>
 
@@ -3035,7 +3035,7 @@
 
 </div>
 
-### [Version 1.26.4](https://github.com/lobehub/lobe-ui/compare/v1.26.3...v1.26.4)
+### [Version 1.26.4](https://github.com/lobehub/lobe-ui/compare/v1.26.3...v1.26.4)
 
 <sup>Released on **2023-06-18**</sup>
 
@@ -3060,7 +3060,7 @@
 
 </div>
 
-### [Version 1.26.3](https://github.com/lobehub/lobe-ui/compare/v1.26.2...v1.26.3)
+### [Version 1.26.3](https://github.com/lobehub/lobe-ui/compare/v1.26.2...v1.26.3)
 
 <sup>Released on **2023-06-16**</sup>
 
@@ -3085,7 +3085,7 @@
 
 </div>
 
-### [Version 1.26.2](https://github.com/lobehub/lobe-ui/compare/v1.26.1...v1.26.2)
+### [Version 1.26.2](https://github.com/lobehub/lobe-ui/compare/v1.26.1...v1.26.2)
 
 <sup>Released on **2023-06-16**</sup>
 
@@ -3110,7 +3110,7 @@
 
 </div>
 
-### [Version 1.26.1](https://github.com/lobehub/lobe-ui/compare/v1.26.0...v1.26.1)
+### [Version 1.26.1](https://github.com/lobehub/lobe-ui/compare/v1.26.0...v1.26.1)
 
 <sup>Released on **2023-06-16**</sup>
 
@@ -3135,7 +3135,7 @@
 
 </div>
 
-## [Version 1.26.0](https://github.com/lobehub/lobe-ui/compare/v1.25.5...v1.26.0)
+## [Version 1.26.0](https://github.com/lobehub/lobe-ui/compare/v1.25.5...v1.26.0)
 
 <sup>Released on **2023-06-16**</sup>
 
@@ -3160,7 +3160,7 @@
 
 </div>
 
-### [Version 1.25.5](https://github.com/lobehub/lobe-ui/compare/v1.25.4...v1.25.5)
+### [Version 1.25.5](https://github.com/lobehub/lobe-ui/compare/v1.25.4...v1.25.5)
 
 <sup>Released on **2023-06-15**</sup>
 
@@ -3185,7 +3185,7 @@
 
 </div>
 
-### [Version 1.25.4](https://github.com/lobehub/lobe-ui/compare/v1.25.3...v1.25.4)
+### [Version 1.25.4](https://github.com/lobehub/lobe-ui/compare/v1.25.3...v1.25.4)
 
 <sup>Released on **2023-06-15**</sup>
 
@@ -3210,7 +3210,7 @@
 
 </div>
 
-### [Version 1.25.3](https://github.com/lobehub/lobe-ui/compare/v1.25.2...v1.25.3)
+### [Version 1.25.3](https://github.com/lobehub/lobe-ui/compare/v1.25.2...v1.25.3)
 
 <sup>Released on **2023-06-15**</sup>
 
@@ -3235,7 +3235,7 @@
 
 </div>
 
-### [Version 1.25.2](https://github.com/lobehub/lobe-ui/compare/v1.25.1...v1.25.2)
+### [Version 1.25.2](https://github.com/lobehub/lobe-ui/compare/v1.25.1...v1.25.2)
 
 <sup>Released on **2023-06-15**</sup>
 
@@ -3260,7 +3260,7 @@
 
 </div>
 
-### [Version 1.25.1](https://github.com/lobehub/lobe-ui/compare/v1.25.0...v1.25.1)
+### [Version 1.25.1](https://github.com/lobehub/lobe-ui/compare/v1.25.0...v1.25.1)
 
 <sup>Released on **2023-06-15**</sup>
 
@@ -3285,7 +3285,7 @@
 
 </div>
 
-## [Version 1.25.0](https://github.com/lobehub/lobe-ui/compare/v1.24.0...v1.25.0)
+## [Version 1.25.0](https://github.com/lobehub/lobe-ui/compare/v1.24.0...v1.25.0)
 
 <sup>Released on **2023-06-15**</sup>
 
@@ -3310,7 +3310,7 @@
 
 </div>
 
-## [Version 1.24.0](https://github.com/lobehub/lobe-ui/compare/v1.23.1...v1.24.0)
+## [Version 1.24.0](https://github.com/lobehub/lobe-ui/compare/v1.23.1...v1.24.0)
 
 <sup>Released on **2023-06-15**</sup>
 
@@ -3335,7 +3335,7 @@
 
 </div>
 
-### [Version 1.23.1](https://github.com/lobehub/lobe-ui/compare/v1.23.0...v1.23.1)
+### [Version 1.23.1](https://github.com/lobehub/lobe-ui/compare/v1.23.0...v1.23.1)
 
 <sup>Released on **2023-06-14**</sup>
 
@@ -3360,7 +3360,7 @@
 
 </div>
 
-## Version 1.23.0
+## Version 1.23.0
 
 <sup>Released on **2023-06-12**</sup>
 
@@ -3385,7 +3385,7 @@
 
 </div>
 
-### Version 1.22.1
+### Version 1.22.1
 
 <sup>Released on **2023-06-12**</sup>
 
@@ -3410,7 +3410,7 @@
 
 </div>
 
-## Version 1.22.0
+## Version 1.22.0
 
 <sup>Released on **2023-06-12**</sup>
 
@@ -3435,7 +3435,7 @@
 
 </div>
 
-### Version 1.21.1
+### Version 1.21.1
 
 <sup>Released on **2023-06-12**</sup>
 
@@ -3460,7 +3460,7 @@
 
 </div>
 
-## Version 1.21.0
+## Version 1.21.0
 
 <sup>Released on **2023-06-11**</sup>
 
@@ -3485,7 +3485,7 @@
 
 </div>
 
-### Version 1.20.1
+### Version 1.20.1
 
 <sup>Released on **2023-06-11**</sup>
 
@@ -3510,7 +3510,7 @@
 
 </div>
 
-## Version 1.20.0
+## Version 1.20.0
 
 <sup>Released on **2023-06-09**</sup>
 
@@ -3535,7 +3535,7 @@
 
 </div>
 
-## Version 1.19.0
+## Version 1.19.0
 
 <sup>Released on **2023-06-08**</sup>
 
@@ -3568,7 +3568,7 @@
 
 </div>
 
-### Version 1.18.2
+### Version 1.18.2
 
 <sup>Released on **2023-06-06**</sup>
 
@@ -3593,7 +3593,7 @@
 
 </div>
 
-### Version 1.18.1
+### Version 1.18.1
 
 <sup>Released on **2023-06-05**</sup>
 
@@ -3626,7 +3626,7 @@
 
 </div>
 
-## Version 1.18.0
+## Version 1.18.0
 
 <sup>Released on **2023-05-30**</sup>
 
@@ -3651,7 +3651,7 @@
 
 </div>
 
-## Version 1.17.0
+## Version 1.17.0
 
 <sup>Released on **2023-05-30**</sup>
 
@@ -3684,7 +3684,7 @@
 
 </div>
 
-### Version 1.16.2
+### Version 1.16.2
 
 <sup>Released on **2023-05-30**</sup>
 
@@ -3701,7 +3701,7 @@
 
 </div>
 
-### Version 1.16.1
+### Version 1.16.1
 
 <sup>Released on **2023-05-30**</sup>
 
@@ -3726,7 +3726,7 @@
 
 </div>
 
-## Version 1.16.0
+## Version 1.16.0
 
 <sup>Released on **2023-05-29**</sup>
 
@@ -3751,7 +3751,7 @@
 
 </div>
 
-## Version 1.15.0
+## Version 1.15.0
 
 <sup>Released on **2023-05-29**</sup>
 
@@ -3776,7 +3776,7 @@
 
 </div>
 
-### Version 1.14.2
+### Version 1.14.2
 
 <sup>Released on **2023-05-29**</sup>
 
@@ -3793,7 +3793,7 @@
 
 </div>
 
-### Version 1.14.1
+### Version 1.14.1
 
 <sup>Released on **2023-05-29**</sup>
 
@@ -3810,7 +3810,7 @@
 
 </div>
 
-## Version 1.14.0
+## Version 1.14.0
 
 <sup>Released on **2023-05-29**</sup>
 
@@ -3835,7 +3835,7 @@
 
 </div>
 
-## Version 1.13.0
+## Version 1.13.0
 
 <sup>Released on **2023-05-29**</sup>
 
@@ -3868,7 +3868,7 @@
 
 </div>
 
-## Version 1.12.0
+## Version 1.12.0
 
 <sup>Released on **2023-05-29**</sup>
 
@@ -3901,7 +3901,7 @@
 
 </div>
 
-### Version 1.11.4
+### Version 1.11.4
 
 <sup>Released on **2023-05-28**</sup>
 
@@ -3918,7 +3918,7 @@
 
 </div>
 
-### Version 1.11.3
+### Version 1.11.3
 
 <sup>Released on **2023-05-27**</sup>
 
@@ -3943,7 +3943,7 @@
 
 </div>
 
-### Version 1.11.2
+### Version 1.11.2
 
 <sup>Released on **2023-05-27**</sup>
 
@@ -3968,7 +3968,7 @@
 
 </div>
 
-### Version 1.11.1
+### Version 1.11.1
 
 <sup>Released on **2023-05-27**</sup>
 
@@ -3993,7 +3993,7 @@
 
 </div>
 
-## Version 1.11.0
+## Version 1.11.0
 
 <sup>Released on **2023-05-27**</sup>
 
@@ -4028,7 +4028,7 @@
 
 </div>
 
-## Version 1.10.0
+## Version 1.10.0
 
 <sup>Released on **2023-05-26**</sup>
 
@@ -4053,7 +4053,7 @@
 
 </div>
 
-## Version 1.9.0
+## Version 1.9.0
 
 <sup>Released on **2023-05-26**</sup>
 
@@ -4078,7 +4078,7 @@
 
 </div>
 
-### Version 1.8.2
+### Version 1.8.2
 
 <sup>Released on **2023-05-26**</sup>
 
@@ -4095,7 +4095,7 @@
 
 </div>
 
-### Version 1.8.1
+### Version 1.8.1
 
 <sup>Released on **2023-05-25**</sup>
 
@@ -4112,7 +4112,7 @@
 
 </div>
 
-## Version 1.8.0
+## Version 1.8.0
 
 <sup>Released on **2023-05-25**</sup>
 
@@ -4137,7 +4137,7 @@
 
 </div>
 
-### Version 1.7.3
+### Version 1.7.3
 
 <sup>Released on **2023-05-25**</sup>
 
@@ -4154,7 +4154,7 @@
 
 </div>
 
-### Version 1.7.2
+### Version 1.7.2
 
 <sup>Released on **2023-05-25**</sup>
 
@@ -4171,7 +4171,7 @@
 
 </div>
 
-### Version 1.7.1
+### Version 1.7.1
 
 <sup>Released on **2023-05-24**</sup>
 
@@ -4196,7 +4196,7 @@
 
 </div>
 
-## Version 1.7.0
+## Version 1.7.0
 
 <sup>Released on **2023-05-24**</sup>
 
@@ -4222,7 +4222,7 @@
 
 </div>
 
-### Version 1.6.1
+### Version 1.6.1
 
 <sup>Released on **2023-05-23**</sup>
 
@@ -4239,7 +4239,7 @@
 
 </div>
 
-## Version 1.6.0
+## Version 1.6.0
 
 <sup>Released on **2023-05-23**</sup>
 
@@ -4264,7 +4264,7 @@
 
 </div>
 
-## Version 1.5.0
+## Version 1.5.0
 
 <sup>Released on **2023-05-23**</sup>
 
@@ -4292,7 +4292,7 @@
 
 </div>
 
-## Version 1.4.0
+## Version 1.4.0
 
 <sup>Released on **2023-05-23**</sup>
 
@@ -4319,7 +4319,7 @@
 
 </div>
 
-## Version 1.3.0
+## Version 1.3.0
 
 <sup>Released on **2023-05-23**</sup>
 
@@ -4330,7 +4330,7 @@
 #### ✨ Features
 
 - **highlighter**: Add export for SyntaxHighlighterProps.
-- **misc**: Add Snippet, 新增 EditableText、SearchBar 组件, 新增 Highlighter、Markdown 组件, 新增 MessageInput、Swatches 组件.
+- **misc**: Add Snippet, 新增 EditableText、SearchBar 组件，新增 Highlighter、Markdown 组件，新增 MessageInput、Swatches 组件.
 
 #### 🐛 Bug Fixes
 
@@ -4365,7 +4365,7 @@
 
 </div>
 
-## Version 1.2.0
+## Version 1.2.0
 
 <sup>Released on **2023-05-22**</sup>
 
@@ -4390,7 +4390,7 @@
 
 </div>
 
-## Version 1.1.0
+## Version 1.1.0
 
 <sup>Released on **2023-05-21**</sup>
 
@@ -4423,7 +4423,7 @@
 
 </div>
 
-## Version 1.0.0
+## Version 1.0.0
 
 <sup>Released on **2023-05-21**</sup>
 

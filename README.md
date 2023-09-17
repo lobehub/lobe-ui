@@ -27,7 +27,7 @@ Lobe UI is an open-source UI component library for building _AIGC_ web apps
 [![][github-issues-shield]][github-issues-link]
 [![][github-license-shield]][github-license-link]
 
-![](https://github-production-user-asset-6210df.s3.amazonaws.com/17870709/268452017-960ab8a1-e4b7-4648-beb1-77daf4b6034a.png)
+[![][banner]][vercel-link]
 
 </div>
 
@@ -52,7 +52,8 @@ Lobe UI is an open-source UI component library for building _AIGC_ web apps
 
 ## 📦 Installation
 
-This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
+> **Important**\
+> This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
 
 To install Lobe UI, run the following command:
 
@@ -109,7 +110,7 @@ Contributions of all types are more than welcome, if you are interested in contr
 
 [![][pr-welcome-shield]][pr-welcome-link]
 
-[![][contributors-contrib]][contributors-url]
+[![][contributors-contrib]][contributors-link]
 
 <div align="right">
 
@@ -138,18 +139,19 @@ Contributions of all types are more than welcome, if you are interested in contr
 
 </details>
 
-Copyright © 2023 [LobeHub][profile-url]. <br />
+Copyright © 2023 [LobeHub][profile-link]. <br />
 This project is [MIT](./LICENSE) licensed.
 
 <!-- LINK GROUP -->
 
 [back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
+[banner]: https://github-production-user-asset-6210df.s3.amazonaws.com/17870709/268452017-960ab8a1-e4b7-4648-beb1-77daf4b6034a.png
 [bun-link]: https://bun.sh
 [bun-shield]: https://img.shields.io/badge/-speedup%20with%20bun-black?logo=bun&style=for-the-badge
 [codespaces-link]: https://codespaces.new/lobehub/lobe-ui
 [codespaces-shield]: https://github.com/codespaces/badge.svg
 [contributors-contrib]: https://contrib.rocks/image?repo=lobehub/lobe-ui
-[contributors-url]: https://github.com/lobehub/lobe-ui/graphs/contributors
+[contributors-link]: https://github.com/lobehub/lobe-ui/graphs/contributors
 [discord-link]: https://discord.gg/AYFPHvv2jT
 [discord-shield]: https://img.shields.io/discord/1127171173982154893?color=5865F2&label=discord&labelColor=black&logo=discord&logoColor=white&style=flat-square
 [fossa-license-link]: https://app.fossa.com/projects/git%2Bgithub.com%2Flobehub%2Flobe-ui
@@ -180,6 +182,6 @@ This project is [MIT](./LICENSE) licensed.
 [npm-release-shield]: https://img.shields.io/npm/v/@lobehub/ui?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
 [pr-welcome-link]: https://github.com/lobehub/lobe-chat/pulls
 [pr-welcome-shield]: https://img.shields.io/badge/🤯_pr_welcome-%E2%86%92-ffcb47?labelColor=black&style=for-the-badge
-[profile-url]: https://github.com/lobehub
+[profile-link]: https://github.com/lobehub
 [vercel-link]: https://ui.lobehub.com
 [vercel-shield]: https://img.shields.io/website?down_message=offline&label=vercel&labelColor=black&logo=vercel&style=flat-square&up_message=online&url=https%3A%2F%2Fui.lobehub.com
