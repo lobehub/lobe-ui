@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useRef } from 'react';
 
 const createElement = (url: string) => {
   const element = document.createElement('link');
@@ -15,11 +15,17 @@ export interface FontLoaderProps {
 }
 
 const FontLoader = memo<FontLoaderProps>(({ url }) => {
+  const loadRef = useRef(false);
+
   useEffect(() => {
+    if (loadRef.current) return;
+    loadRef.current = true;
+
     const element = createElement(url);
     document.head.append(element);
   }, []);
-  return false;
+
+  return null;
 });
 
 export default FontLoader;
