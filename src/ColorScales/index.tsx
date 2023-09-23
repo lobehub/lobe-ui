@@ -1,7 +1,7 @@
 import { Space } from 'antd';
 import { memo } from 'react';
 
-import { ColorScaleItem } from '@/styles/colors';
+import { ColorScaleItem } from '@/styles/colors/colors';
 
 import ScaleRow from './ScaleRow';
 import { useStyles } from './style';

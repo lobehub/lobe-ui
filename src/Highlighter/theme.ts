@@ -1,6 +1,6 @@
 import { ThemeAppearance } from 'antd-style';
 
-import { colorScales } from '@/styles/colors';
+import { colorScales } from '@/styles/colors/colors';
 
 export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
   const type = isDarkMode ? 'dark' : 'light';
