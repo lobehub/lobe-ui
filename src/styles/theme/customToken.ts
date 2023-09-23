@@ -2,7 +2,7 @@ import { GetCustomToken } from 'antd-style';
 import { AliasToken } from 'antd/es/theme/interface';
 import { camelCase } from 'lodash-es';
 
-import { ColorScaleItem, colorScales } from '@/styles/colors';
+import { ColorScaleItem, colorScales } from '@/styles/colors/colors';
 import { LobeCustomToken } from '@/types/customToken';
 
 const generateColorPalette = ({
@@ -57,7 +57,6 @@ const generateCustomColorPalette = ({
   };
 };
 
-// @ts-ignore
 export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMode }) => {
   let colorCustomToken: any = {};
 

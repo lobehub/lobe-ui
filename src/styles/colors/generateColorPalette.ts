@@ -1,7 +1,7 @@
 import { AliasToken } from 'antd/es/theme/interface';
 import { capitalize } from 'lodash-es';
 
-import { ColorScaleItem } from '@/styles/colors';
+import { ColorScaleItem } from '@/styles/colors/colors';
 
 export const generateColorPalette = ({
   type,
