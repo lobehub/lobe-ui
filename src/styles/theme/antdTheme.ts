@@ -30,8 +30,9 @@ export const createLobeAntdTheme = ({
     algorithm: isDark ? darkAlgorithm : lightAlgorithm,
     token: {
       ...baseToken,
-      colorBgBase: neutralColor,
-      colorPrimary: primaryColor,
+      // @ts-ignore
+      neutralColor,
+      primaryColor,
     },
   };
 };
