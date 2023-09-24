@@ -103,7 +103,7 @@
     "rehype-katex": "^6",
     "rehype-raw": "^6",
     "remark-gfm": "^3",
-    "remark-math": "^5",
+    "remark-math": "^6.0.0",
     "shikiji": "^0",
     "styled-components": "^6",
     "swr": "^2",
