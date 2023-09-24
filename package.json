@@ -100,7 +100,7 @@
     "react-markdown": "^8",
     "react-rnd": "^10",
     "react-simple-code-editor": "^0",
-    "rehype-katex": "^6",
+    "rehype-katex": "^7.0.0",
     "rehype-raw": "^6",
     "remark-gfm": "^3",
     "remark-math": "^5",
