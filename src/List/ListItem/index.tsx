@@ -132,7 +132,7 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps & HTMLAttributes<any>>
                 className={styles.actions}
                 gap={4}
                 horizontal
-                onClick={(e) => {
+                onClick={(e:any) => {
                   e.preventDefault();
                   e.stopPropagation();
                 }}
