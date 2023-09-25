@@ -23,10 +23,6 @@ export default () => {
       copyable: true,
       language: 'tsx',
       showLanguage: true,
-      theme: {
-        options: [undefined, 'dark', 'light'],
-        value: undefined,
-      },
       type: {
         options: ['ghost', 'block', 'pure'],
         value: 'block',
