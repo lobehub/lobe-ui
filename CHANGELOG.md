@@ -1,7 +1,48 @@
 <a name="readme-top"></a>
 
 # Changelog
- 
+
+### [Version 1.96.1-beta.1](https://github.com/lobehub/lobe-ui/compare/v1.96.0...v1.96.1-beta.1)
+
+<sup>Released on **2023-09-25**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Refactor ThemeProvider to fix antd theme not work with map token, refactor ThemeProvider to fix antd theme not work with map token.
+
+#### 🐛 Bug Fixes
+
+- **font-loader**: Fix duplicate load font.
+
+#### 💄 Styles
+
+- **hightlight**: Remove theme prop use ThemeProvider to control it (close.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Refactor ThemeProvider to fix antd theme not work with map token ([cffe0ac](https://github.com/lobehub/lobe-ui/commit/cffe0ac))
+- **misc**: Refactor ThemeProvider to fix antd theme not work with map token ([c3d36d2](https://github.com/lobehub/lobe-ui/commit/c3d36d2))
+
+#### What's fixed
+
+- **font-loader**: Fix duplicate load font ([baf56ac](https://github.com/lobehub/lobe-ui/commit/baf56ac))
+
+#### Styles
+
+- **hightlight**: Remove theme prop use ThemeProvider to control it (close, closes [#57](https://github.com/lobehub/lobe-ui/issues/57) ([4f5c314](https://github.com/lobehub/lobe-ui/commit/4f5c314))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
 
 ## [Version 1.96.0](https://github.com/lobehub/lobe-ui/compare/v1.95.0...v1.96.0)
 
@@ -19,7 +60,6 @@
 
 <details>
 <summary><kbd>Improvements and Fixes</kbd></summary>
-
 
 #### Code refactoring
 
