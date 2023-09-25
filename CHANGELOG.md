@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.96.1](https://github.com/lobehub/lobe-ui/compare/v1.96.0...v1.96.1)
+
+<sup>Released on **2023-09-25**</sup>
+
+#### ♻ Code Refactoring
+
+- **theme**: Refactor the token theme.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **theme**: Refactor the token theme, closes [#58](https://github.com/lobehub/lobe-ui/issues/58) ([d4ea059](https://github.com/lobehub/lobe-ui/commit/d4ea059))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.96.1-beta.1](https://github.com/lobehub/lobe-ui/compare/v1.96.0...v1.96.1-beta.1)
 
 <sup>Released on **2023-09-25**</sup>
