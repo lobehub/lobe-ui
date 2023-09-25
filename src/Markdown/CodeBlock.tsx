@@ -30,11 +30,11 @@ const countLines = (str: string): number => {
 const Code = memo(({ fullFeatured, ...properties }: any) => {
   const { styles, cx } = useStyles();
 
-  if (!properties.children[0]) return;
+  if (!properties.children[0]) return null;
 
   const { children, className } = properties.children[0].props;
 
-  if (!children) return;
+  if (!children) return null;
 
   const content = Array.isArray(children) ? (children[0] as string) : children;
   const lang = className?.replace('language-', '') || FALLBACK_LANG;

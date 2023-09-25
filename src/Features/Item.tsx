@@ -55,8 +55,7 @@ export interface FeatureItem {
   title: string;
 }
 
-// @ts-ignore
-export interface FeatureItemProps extends FeatureItem, DivProps {}
+export interface FeatureItemProps extends FeatureItem, Omit<DivProps, 'title'> {}
 
 const Image = memo<{ className?: string; image: string; style?: CSSProperties; title: string }>(
   ({ image, className, title, style }) => {

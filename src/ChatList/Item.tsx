@@ -31,7 +31,7 @@ export interface ListItemProps {
   renderItem?: {
     [role: MessageRoleType | string]: (
       data: { key: string } & ChatMessage & ListItemProps,
-    ) => ReactNode;
+    ) => ReturnType<FC>;
   };
   /**
    * @description 渲染消息的函数

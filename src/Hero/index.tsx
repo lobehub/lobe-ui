@@ -56,7 +56,7 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
 
   const ButtonGroups = useCallback(
     () =>
-      Boolean(actions?.length) && (
+      actions?.length ? (
         <div className={styles.actions}>
           {actions!.map(({ text, link, openExternal, icon, type }, index) => {
             // @ts-ignore
@@ -93,7 +93,7 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
             );
           })}
         </div>
-      ),
+      ) : null,
     [actions],
   );
 

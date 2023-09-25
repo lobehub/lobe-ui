@@ -27,7 +27,7 @@ export interface FeaturesProps extends DivProps {
 
 const Features = memo<FeaturesProps>(
   ({ items, className, itemClassName, itemStyle, maxWidth = 960, style, ...props }) => {
-    if (!items?.length) return;
+    if (!items?.length) return null;
 
     return (
       <SpotlightCard

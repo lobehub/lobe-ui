@@ -98,7 +98,7 @@ export const EditableMessageList = memo<EditableMessageListProps>(
           Add Props
         </Button>
       </Flexbox>
-    ) : undefined;
+    ) : null;
   },
   isEqual,
 );
