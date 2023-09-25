@@ -3,10 +3,8 @@ import { AliasToken } from 'antd/es/theme/interface';
 import {
   generateColorNeutralPalette,
   generateColorPalette,
-} from '@/styles/algorithms/generateColorPalette';
-import { colorScales } from '@/styles/colors';
-
-import { baseToken } from './base';
+} from '@/styles/colors/generateColorPalette';
+import { colorScales } from '@/styles/colors/colors';
 
 const primaryToken = generateColorPalette({
   appearance: 'dark',
@@ -44,7 +42,6 @@ const infoToken = generateColorPalette({
 });
 
 const darkBaseToken: Partial<AliasToken> = {
-  ...baseToken,
   ...primaryToken,
   ...neutralToken,
   ...successToken,

@@ -1,6 +1,11 @@
 import { Theme, css } from 'antd-style';
+import { readableColor } from 'polished';
 
 export default (token: Theme) => css`
+  .ant-btn-primary {
+    color: ${readableColor(token.colorPrimary)} !important;
+  }
+
   .ant-tooltip-inner {
     display: flex;
     align-items: center;

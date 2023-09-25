@@ -1,48 +1,37 @@
 import { App } from 'antd';
 import {
   ThemeProvider as AntdThemeProvider,
+  ThemeProviderProps as AntdThemeProviderProps,
+  CustomStylishParams,
+  CustomTokenParams,
+  GetAntdTheme,
   StyleProvider,
-  type ThemeMode,
-  extractStaticStyle,
   setupStyled,
 } from 'antd-style';
-import type { CustomStylishParams, CustomTokenParams } from 'antd-style/lib/types/function';
-import { type ReactNode, memo, useCallback, useEffect } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { ThemeContext } from 'styled-components';
 
 import { useCdnFn } from '@/ConfigProvider';
 import FontLoader from '@/FontLoader';
-import { lobeCustomStylish, lobeCustomToken, lobeTheme } from '@/styles';
+import { NeutralColors, PrimaryColors, lobeCustomStylish, lobeCustomToken } from '@/styles';
+import { createLobeAntdTheme } from '@/styles/theme/antdTheme';
 import { LobeCustomToken } from '@/types/customToken';
 
 import GlobalStyle from './GlobalStyle';
 
-export interface ThemeProviderProps {
-  /**
-   * @description Cache for the extracted static styles
-   */
-  cache?: typeof extractStaticStyle.cache;
-  /**
-   * @description The children of the ThemeProvider component
-   */
-  children: ReactNode;
-  /**
-   * @description Custom stylish
-   */
+export interface ThemeProviderProps extends Omit<AntdThemeProviderProps<any>, 'theme'> {
   customStylish?: (theme: CustomStylishParams) => { [key: string]: any };
+
+  customTheme?: {
+    neutralColor?: NeutralColors;
+    primaryColor?: PrimaryColors;
+  };
   /**
    * @description Custom extra token
    */
   customToken?: (theme: CustomTokenParams) => { [key: string]: any };
+
   enableWebfonts?: boolean;
-  /**
-   * @description Whether to inline the styles on server-side rendering or not
-   */
-  ssrInline?: boolean;
-  /**
-   * @description The mode of the theme (light or dark)
-   */
-  themeMode?: ThemeMode;
   /**
    * @description Webfont loader css strings
    */
@@ -50,7 +39,15 @@ export interface ThemeProviderProps {
 }
 
 const ThemeProvider = memo<ThemeProviderProps>(
-  ({ children, themeMode, customStylish, customToken, enableWebfonts = true, webfonts }) => {
+  ({
+    children,
+    customStylish,
+    customToken,
+    enableWebfonts = true,
+    webfonts,
+    customTheme = {},
+    ...res
+  }) => {
     const genCdnUrl = useCdnFn();
     const webfontUrls = webfonts || [
       genCdnUrl({ path: 'css/index.css', pkg: '@lobehub/webfont-mono', version: '1.0.0' }),
@@ -81,17 +78,27 @@ const ThemeProvider = memo<ThemeProviderProps>(
       [customToken],
     );
 
+    const theme = useCallback<GetAntdTheme>(
+      (appearance) =>
+        createLobeAntdTheme({
+          appearance,
+          neutralColor: customTheme.neutralColor,
+          primaryColor: customTheme.primaryColor,
+        }),
+      [customTheme.primaryColor, customTheme.neutralColor],
+    );
+
     return (
       <>
         {enableWebfonts &&
           webfontUrls?.length > 0 &&
-          webfontUrls.map((webfont, index) => <FontLoader key={index} url={webfont} />)}
+          webfontUrls.map((webfont) => <FontLoader key={webfont} url={webfont} />)}
         <StyleProvider speedy={process.env.NODE_ENV === 'production'}>
           <AntdThemeProvider<LobeCustomToken>
             customStylish={stylish}
             customToken={token}
-            theme={lobeTheme}
-            themeMode={themeMode}
+            {...res}
+            theme={theme}
           >
             <GlobalStyle />
             <App style={{ minHeight: 'inherit', width: 'inherit' }}>{children}</App>

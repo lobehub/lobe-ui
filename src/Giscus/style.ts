@@ -1,7 +1,7 @@
 import { Theme, css } from 'antd-style';
 import { readableColor, rgba } from 'polished';
 
-import { colorScales } from '@/styles/colors';
+import { colorScales } from '@/styles/colors/colors';
 
 export const genStyles = (token: Theme, isDarkMode: boolean) => {
   const type = isDarkMode ? 'dark' : 'light';

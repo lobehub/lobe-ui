@@ -1,5 +1,5 @@
-import { colorScales } from '@/styles/colors';
-import { neutralColorScales } from '@/styles/neutralColors';
+import { colorScales } from '@/styles/colors/colors';
+import { neutralColorScales } from '@/styles/colors/neutralColors';
 
 export const primaryColors = {
   blue: colorScales.blue.dark[9],
