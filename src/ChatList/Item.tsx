@@ -52,6 +52,7 @@ export interface ListItemProps {
   text?: ChatItemProps['text'] &
     ActionsBarProps['text'] & {
       copySuccess?: string;
+      history?: string;
     };
   /**
    * @description 聊天列表的类型

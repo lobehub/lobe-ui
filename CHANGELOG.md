@@ -1,27 +1,25 @@
 <a name="readme-top"></a>
 
 # Changelog
+ 
 
-### [Version 1.95.1-beta.1](https://github.com/lobehub/lobe-ui/compare/v1.95.0...v1.95.1-beta.1)
+## [Version 1.96.0](https://github.com/lobehub/lobe-ui/compare/v1.95.0...v1.96.0)
 
 <sup>Released on **2023-09-25**</sup>
 
-#### ♻ Code Refactoring
+#### ✨ Features
 
-- **misc**: Refactor ThemeProvider to fix antd theme not work with map token, refactor ThemeProvider to fix antd theme not work with map token.
+- **chat-list**: Add `HistoryDivider`.
 
 #### 🐛 Bug Fixes
 
-- **font-loader**: Fix duplicate load font.
-
-#### 💄 Styles
-
-- **hightlight**: Remove theme prop use ThemeProvider to control it (close.
+- **list-item**: Fix type.
 
 <br/>
 
 <details>
 <summary><kbd>Improvements and Fixes</kbd></summary>
+
 
 #### Code refactoring
 
@@ -35,6 +33,14 @@
 #### Styles
 
 - **hightlight**: Remove theme prop use ThemeProvider to control it (close, closes [#57](https://github.com/lobehub/lobe-ui/issues/57) ([4f5c314](https://github.com/lobehub/lobe-ui/commit/4f5c314))
+
+#### What's improved
+
+- **chat-list**: Add `HistoryDivider` ([1707cdb](https://github.com/lobehub/lobe-ui/commit/1707cdb))
+
+#### What's fixed
+
+- **list-item**: Fix type ([bcb9e41](https://github.com/lobehub/lobe-ui/commit/bcb9e41))
 
 </details>
 
