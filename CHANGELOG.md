@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.96.2](https://github.com/lobehub/lobe-ui/compare/v1.96.1...v1.96.2)
+
+<sup>Released on **2023-09-26**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Replace static `prefixCls` with dynamic `prefixCls`.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Replace static `prefixCls` with dynamic `prefixCls` ([ecc924a](https://github.com/lobehub/lobe-ui/commit/ecc924a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.96.1](https://github.com/lobehub/lobe-ui/compare/v1.96.0...v1.96.1)
 
 <sup>Released on **2023-09-25**</sup>
