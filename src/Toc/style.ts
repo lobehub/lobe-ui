@@ -3,7 +3,7 @@ import { rgba } from 'polished';
 
 export const useStyles = createStyles(
   (
-    { token, stylish, responsive, cx, css },
+    { token, stylish, responsive, cx, css, prefixCls },
     { tocWidth, headerHeight }: { headerHeight: number; tocWidth: number },
   ) => {
     const fixHeight = 36;
@@ -55,11 +55,11 @@ export const useStyles = createStyles(
           border-radius: 0;
           box-shadow: ${token.boxShadowSecondary};
 
-          .ant-collapse-content {
+          .${prefixCls}-collapse-content {
             overflow: auto;
           }
 
-          .ant-collapse-header {
+          .${prefixCls}-collapse-header {
             z-index: 10;
             padding: 8px 16px !important;
           }
@@ -69,7 +69,7 @@ export const useStyles = createStyles(
         width: 100%;
         height: ${fixHeight}px;
 
-        .ant-collapse-expand-icon {
+        .${prefixCls}-collapse-expand-icon {
           color: ${token.colorTextQuaternary};
         }
       `,

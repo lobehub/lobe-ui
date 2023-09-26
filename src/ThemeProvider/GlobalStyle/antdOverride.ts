@@ -2,11 +2,11 @@ import { Theme, css } from 'antd-style';
 import { readableColor } from 'polished';
 
 export default (token: Theme) => css`
-  .ant-btn-primary {
+  .${token.prefixCls}-btn-primary {
     color: ${readableColor(token.colorPrimary)} !important;
   }
 
-  .ant-tooltip-inner {
+  .${token.prefixCls}-tooltip-inner {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,14 +20,14 @@ export default (token: Theme) => css`
     border-radius: ${token.borderRadiusSM}px !important;
   }
 
-  .ant-tooltip-arrow {
+  .${token.prefixCls}-tooltip-arrow {
     &::before,
     &::after {
       background: ${token.colorText} !important;
     }
   }
 
-  .ant-switch-handle::before {
+  .${token.prefixCls}-switch-handle::before {
     background: ${token.colorBgContainer} !important;
   }
 `;

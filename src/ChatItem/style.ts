@@ -2,7 +2,7 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(
   (
-    { cx, css, token, isDarkMode, responsive },
+    { cx, css, token, isDarkMode, responsive, prefixCls },
     {
       placement,
       type,
@@ -75,17 +75,17 @@ export const useStyles = createStyles(
           margin-top: 3px;
         }
 
-        .ant-alert-description {
+        .${prefixCls}-alert-description {
           text-align: justify;
           word-break: break-all;
           word-wrap: break-word;
         }
 
-        &.ant-alert-with-description {
+        &.${prefixCls}-alert-with-description {
           padding-block: 12px;
           padding-inline: 12px;
 
-          .ant-alert-message {
+          .${prefixCls}-alert-message {
             font-size: 14px;
             font-weight: 600;
             text-align: justify;

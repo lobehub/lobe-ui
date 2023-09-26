@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }) => ({
+export const useStyles = createStyles(({ css, token, prefixCls }) => ({
   footer: css`
     display: flex;
     gap: 8px;
@@ -11,32 +11,32 @@ export const useStyles = createStyles(({ css, token }) => ({
     flex-direction: column;
     gap: 16px;
 
-    .ant-form-item {
+    .${prefixCls}-form-item {
       margin: 0 !important;
     }
 
-    .ant-form-item .ant-form-item-label > label {
+    .${prefixCls}-form-item .${prefixCls}-form-item-label > label {
       height: unset;
     }
 
-    .ant-row {
+    .${prefixCls}-row {
       position: relative;
       flex-wrap: nowrap;
     }
 
-    .ant-form-item-label {
+    .${prefixCls}-form-item-label {
       position: relative;
       flex: 1;
       max-width: 100%;
     }
 
-    .ant-form-item-control {
+    .${prefixCls}-form-item-control {
       position: relative;
       flex: 0;
       min-width: unset !important;
     }
 
-    .ant-collapse-item {
+    .${prefixCls}-collapse-item {
       overflow: hidden !important;
       border-radius: ${token.borderRadius}px !important;
     }
