@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, cx, token }, type: 'ghost' | 'block') => {
+export const useStyles = createStyles(({ css, cx, token, prefixCls }, type: 'ghost' | 'block') => {
   const typeStylish = css`
     background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
     border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
@@ -29,7 +29,7 @@ export const useStyles = createStyles(({ css, cx, token }, type: 'ghost' | 'bloc
           background-color: ${token.colorFillTertiary};
         }
 
-        .ant-highlighter-shiki {
+        .${prefixCls}-highlighter-shiki {
           position: relative;
           overflow: hidden;
           flex: 1;

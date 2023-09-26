@@ -1,9 +1,9 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }) => {
+export const useStyles = createStyles(({ css, token, prefixCls }) => {
   return {
     tooltip: css`
-      .ant-tooltip-inner {
+      .${prefixCls}-tooltip-inner {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -17,7 +17,7 @@ export const useStyles = createStyles(({ css, token }) => {
         border-radius: ${token.borderRadiusSM}px;
       }
 
-      .ant-tooltip-arrow {
+      .${prefixCls}-tooltip-arrow {
         &::before,
         &::after {
           background: ${token.colorText};

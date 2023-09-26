@@ -3,7 +3,7 @@ import { readableColor } from 'polished';
 
 export const useStyles = createStyles(
   (
-    { css, token },
+    { css, token, prefixCls },
     { background, size, isEmoji }: { background?: string; isEmoji?: boolean; size: number },
   ) => {
     const backgroundColor = background ?? token.colorBgContainer;
@@ -20,7 +20,7 @@ export const useStyles = createStyles(
         background: ${backgroundColor};
         border: 1px solid ${background ? 'transparent' : token.colorSplit};
 
-        > .ant-avatar-string {
+        > .${prefixCls}-avatar-string {
           font-size: ${size * (isEmoji ? 0.7 : 0.5)}px;
           font-weight: 700;
           line-height: 1 !important;

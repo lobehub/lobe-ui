@@ -84,7 +84,7 @@ export const useStyles = createStyles(
         `,
       ),
       select: css`
-        .ant-select-selection-item {
+        .${prefixCls}-select-selection-item {
           min-width: 100px;
           padding-inline-end: 0 !important;
           color: ${token.colorTextDescription};

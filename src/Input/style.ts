@@ -1,7 +1,7 @@
 import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(
-  ({ cx, css, token }, { type }: { type: 'ghost' | 'block' | 'pure' }) => {
+  ({ cx, css, token, prefixCls }, { type }: { type: 'ghost' | 'block' | 'pure' }) => {
     const typeStylish = css`
       background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
       border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
@@ -17,7 +17,7 @@ export const useStyles = createStyles(
         border-color: ${token.colorTextQuaternary};
       }
 
-      &.ant-input-affix-wrapper-focused {
+      &.${prefixCls}-input-affix-wrapper-focused {
         border-color: ${token.colorTextQuaternary};
       }
     `;

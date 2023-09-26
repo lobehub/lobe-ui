@@ -2,7 +2,7 @@ import { createStyles } from 'antd-style';
 import { isNumber } from 'lodash-es';
 
 export const useStyles = createStyles(
-  ({ css, cx, token, isDarkMode, responsive }, itemMinWidth?: string | number) => ({
+  ({ css, cx, token, isDarkMode, responsive, prefixCls }, itemMinWidth?: string | number) => ({
     footer: css`
       display: flex;
       gap: 8px;
@@ -31,33 +31,33 @@ export const useStyles = createStyles(
         white-space: pre-wrap;
       }
 
-      .ant-tag {
+      .${prefixCls}-tag {
         font-family: ${token.fontFamilyCode};
       }
     `,
     group: cx(
       isDarkMode &&
         css`
-          .ant-collapse-content {
+          .${prefixCls}-collapse-content {
             background: transparent;
           }
 
-          .ant-collapse-header {
+          .${prefixCls}-collapse-header {
             background: ${token.colorFillTertiary};
           }
         `,
       css`
-        .ant-collapse-header {
+        .${prefixCls}-collapse-header {
           align-items: center !important;
           border-radius: 0 !important;
         }
 
-        .ant-collapse-content-box {
+        .${prefixCls}-collapse-content-box {
           padding-top: 0 !important;
           padding-bottom: 0 !important;
         }
 
-        .ant-form-item-label {
+        .${prefixCls}-form-item-label {
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -70,7 +70,7 @@ export const useStyles = createStyles(
     item: css`
       padding: 8px 0;
 
-      .ant-row {
+      .${prefixCls}-row {
         justify-content: space-between;
 
         > div {
@@ -79,13 +79,13 @@ export const useStyles = createStyles(
         }
       }
 
-      .ant-form-item-required::before {
+      .${prefixCls}-form-item-required::before {
         align-self: flex-start;
       }
 
       ${itemMinWidth &&
       css`
-        .ant-form-item-control {
+        .${prefixCls}-form-item-control {
           width: ${isNumber(itemMinWidth) ? `${itemMinWidth}px` : itemMinWidth};
         }
       `}
@@ -93,12 +93,12 @@ export const useStyles = createStyles(
       ${responsive.mobile} {
         padding: 16px 0;
 
-        .ant-row {
+        .${prefixCls}-row {
           flex-direction: column;
           gap: 4px;
         }
 
-        .ant-form-item-control {
+        .${prefixCls}-form-item-control {
           flex: 1;
           width: 100%;
         }

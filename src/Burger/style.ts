@@ -1,121 +1,122 @@
 import { createStyles } from 'antd-style';
 import { rgba } from 'polished';
 
-export const useStyles = createStyles(({ token, css, stylish }, headerHeight: number) => {
-  return {
-    container: css`
-      cursor: pointer;
-      width: ${token.controlHeight}px;
-      height: ${token.controlHeight}px;
-      border-radius: ${token.borderRadius}px;
-    `,
-    drawer: css`
-      &.ant-drawer-content {
-        background: transparent;
-      }
-
-      .ant-drawer-body {
-        display: flex;
-        flex-direction: column;
-      }
-    `,
-    drawerRoot: css`
-      top: ${headerHeight + 1}px;
-
-      :focus-visible {
-        outline: none;
-      }
-
-      .ant-drawer {
-        &-mask {
-          ${stylish.blur};
-          background-color: ${rgba(token.colorBgLayout, 0.5)};
+export const useStyles = createStyles(
+  ({ token, css, stylish, prefixCls }, headerHeight: number) => {
+    return {
+      container: css`
+        cursor: pointer;
+        width: ${token.controlHeight}px;
+        height: ${token.controlHeight}px;
+        border-radius: ${token.borderRadius}px;
+      `,
+      drawer: css`
+        &.${prefixCls}-drawer-content {
+          background: transparent;
         }
 
-        &-content-wrapper {
-          box-shadow: none;
+        .${prefixCls}-drawer-body {
+          display: flex;
+          flex-direction: column;
         }
-      }
-    `,
+      `,
+      drawerRoot: css`
+        top: ${headerHeight + 1}px;
 
-    fillRect: css`
-      flex: 1;
-      width: 100%;
-      border-top: none;
-    `,
+        :focus-visible {
+          outline: none;
+        }
 
-    menu: css`
-      background: transparent;
-      border-inline-end: transparent !important;
+        .${prefixCls}-drawer {
+          &-mask {
+            ${stylish.blur};
+            background-color: ${rgba(token.colorBgLayout, 0.5)};
+          }
 
-      > .ant-menu-item-only-child,
-      .ant-menu-submenu-title {
+          &-content-wrapper {
+            box-shadow: none;
+          }
+        }
+      `,
+
+      fillRect: css`
+        flex: 1;
         width: 100%;
-        margin: 0 !important;
         border-top: none;
-        border-radius: 0;
+      `,
 
-        &:active {
-          color: ${token.colorText};
-          background-color: ${token.colorFill};
+      menu: css`
+        background: transparent;
+        border-inline-end: transparent !important;
+
+        > .${prefixCls}-menu-item-only-child, .${prefixCls}-menu-submenu-title {
+          width: 100%;
+          margin: 0 !important;
+          border-top: none;
+          border-radius: 0;
+
+          &:active {
+            color: ${token.colorText};
+            background-color: ${token.colorFill};
+          }
         }
-      }
 
-      .ant-menu-item-only-child:first-child {
-        border-top: none;
-      }
+        .${prefixCls}-menu-item-only-child:first-child {
+          border-top: none;
+        }
 
-      .ant-menu-submenu-title[aria-expanded='true'] {
-        a {
+        .${prefixCls}-menu-submenu-title[aria-expanded='true'] {
+          a {
+            font-weight: 600;
+            color: ${token.colorText} !important;
+          }
+        }
+
+        .${prefixCls}-menu-item-group-title {
+          padding-top: 8px;
+          padding-bottom: 8px;
+
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 1;
+          text-overflow: ellipsis;
+          text-transform: uppercase;
+          white-space: nowrap;
+
+          background: ${token.colorFillSecondary};
+        }
+
+        .${prefixCls}-menu-item {
+          width: calc(100% - 16px) !important;
+          margin: 8px !important;
+          border-radius: ${token.borderRadius}px;
+
+          &:hover,
+          &:active {
+            color: ${token.colorText} !important;
+            background: ${token.colorFillSecondary} !important;
+          }
+        }
+
+        .${prefixCls}-menu-item-active {
+          width: calc(100% - 16px) !important;
+          margin: 8px !important;
+          background: ${token.colorFillSecondary};
+          border-radius: ${token.borderRadius}px;
+        }
+
+        .${prefixCls}-menu-item-selected {
           font-weight: 600;
-          color: ${token.colorText} !important;
+          color: ${token.colorBgLayout};
+          background: ${token.colorText};
+
+          &:hover,
+          &:active {
+            color: ${token.colorBgLayout} !important;
+            background: ${token.colorText} !important;
+          }
         }
-      }
-
-      .ant-menu-item-group-title {
-        padding-top: 8px;
-        padding-bottom: 8px;
-
-        font-size: 12px;
-        font-weight: 500;
-        line-height: 1;
-        text-overflow: ellipsis;
-        text-transform: uppercase;
-        white-space: nowrap;
-
-        background: ${token.colorFillSecondary};
-      }
-
-      .ant-menu-item {
-        width: calc(100% - 16px) !important;
-        margin: 8px !important;
-        border-radius: ${token.borderRadius}px;
-
-        &:hover,
-        &:active {
-          color: ${token.colorText} !important;
-          background: ${token.colorFillSecondary} !important;
-        }
-      }
-
-      .ant-menu-item-active {
-        width: calc(100% - 16px) !important;
-        margin: 8px !important;
-        background: ${token.colorFillSecondary};
-        border-radius: ${token.borderRadius}px;
-      }
-
-      .ant-menu-item-selected {
-        font-weight: 600;
-        color: ${token.colorBgLayout};
-        background: ${token.colorText};
-
-        &:hover,
-        &:active {
-          color: ${token.colorBgLayout} !important;
-          background: ${token.colorText} !important;
-        }
-      }
-    `,
-  };
-});
+      `,
+    };
+  },
+);
