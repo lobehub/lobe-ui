@@ -1,4 +1,4 @@
-import { Modal as AntModal, ConfigProvider, ModalProps } from 'antd';
+import { Modal as AntModal, type ModalProps as AntModalProps, ConfigProvider } from 'antd';
 import { createStyles } from 'antd-style';
 import { X } from 'lucide-react';
 import { lighten } from 'polished';
@@ -38,6 +38,8 @@ const useStyles = createStyles(({ css, token, prefixCls }) => ({
   `,
 }));
 
+export type ModalProps = AntModalProps;
+
 const Modal = memo<ModalProps>(
   ({ children, title, className, wrapClassName, width = 700, ...props }) => {
     const { styles, cx, theme } = useStyles();
@@ -69,5 +71,3 @@ const Modal = memo<ModalProps>(
 );
 
 export default Modal;
-
-export { ModalProps } from 'antd';
