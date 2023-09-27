@@ -6,6 +6,7 @@ import useControlledState from 'use-merge-value';
 
 import Icon from '@/Icon';
 import { Input, type InputProps } from '@/Input';
+import MobileSafeArea from '@/MobileSafeArea';
 
 import Action from './Action';
 import { useStyles } from './style.mobile';
@@ -17,6 +18,7 @@ export type ChatInputAreaMobile = ChatInputBase &
     inputId?: string;
     inputStyle?: CSSProperties;
     minHeight?: number;
+    safeArea?: boolean;
   };
 
 const ChatInputArea = forwardRef<InputRef, ChatInputAreaMobile>(
@@ -28,7 +30,7 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaMobile>(
       minHeight = 200,
       className,
       actions,
-
+      safeArea = true,
       expand,
       placeholder = 'Type something to chat...',
       onExpandChange,
@@ -124,6 +126,7 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaMobile>(
             )}
           </div>
         </Flexbox>
+        {safeArea && <MobileSafeArea position={'bottom'} />}
       </Flexbox>
     );
   },
