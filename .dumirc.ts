@@ -77,7 +77,6 @@ export default defineConfig({
         entryFile: './src/index.ts',
       }
     : undefined,
-  sitemap: { hostname: 'https://ui.lobehub.com' },
   styles: [
     `html, body { background: transparent;  }
 
