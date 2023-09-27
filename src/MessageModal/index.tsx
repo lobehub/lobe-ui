@@ -1,14 +1,9 @@
-import { Modal } from 'antd';
-import { X } from 'lucide-react';
 import { CSSProperties, memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
-import Icon from '@/Icon';
 import Markdown from '@/Markdown';
 import MessageInput, { type MessageInputProps } from '@/MessageInput';
-
-import { useStyles } from './style';
+import Modal from '@/Modal';
 
 export interface MessageModalProps {
   /**
@@ -59,8 +54,6 @@ const MessageModal = memo<MessageModalProps>(
     onChange,
     text,
   }) => {
-    const { styles } = useStyles();
-
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
       value: editing,
@@ -81,22 +74,12 @@ const MessageModal = memo<MessageModalProps>(
     return (
       <Modal
         cancelText={text?.cancel || 'Cancel'}
-        className={styles.modal}
-        closeIcon={<Icon icon={X} />}
         footer={isEdit ? null : undefined}
         okText={text?.edit || 'Edit'}
         onCancel={() => setExpand(false)}
-        onOk={() => {
-          setTyping(true);
-        }}
+        onOk={() => setTyping(true)}
         open={expand}
-        title={
-          <Flexbox align={'center'} gap={4} horizontal>
-            {text?.title || 'Prompt'}
-          </Flexbox>
-        }
-        width={800}
-        wrapClassName={styles.root}
+        title={text?.title || 'Prompt'}
       >
         {isEdit ? (
           <MessageInput
@@ -115,10 +98,7 @@ const MessageModal = memo<MessageModalProps>(
             type={'block'}
           />
         ) : (
-          <Markdown
-            className={styles.body}
-            style={value ? markdownStyle : { ...markdownStyle, opacity: 0.5 }}
-          >
+          <Markdown style={value ? markdownStyle : { ...markdownStyle, opacity: 0.5 }}>
             {String(value || placeholder)}
           </Markdown>
         )}

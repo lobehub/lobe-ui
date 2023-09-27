@@ -65,7 +65,7 @@ export const Highlighter = memo<HighlighterProps>(
           language={lang?.toLowerCase()}
           style={expand ? {} : { height: 0, overflow: 'hidden' }}
         >
-          {children?.trim()}
+          {children}
         </SyntaxHighlighter>
       </div>
     );

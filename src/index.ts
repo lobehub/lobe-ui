@@ -105,6 +105,7 @@ export {
   type MobileTabBarItemProps,
   type MobileTabBarProps,
 } from './MobileTabBar';
+export { default as Modal, type ModalProps } from './Modal';
 export { default as SearchBar, type SearchBarProps } from './SearchBar';
 export {
   default as SelectWithImg,

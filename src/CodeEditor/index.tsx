@@ -47,7 +47,6 @@ const CodeEditor = forwardRef<TextAreaRef, CodeEditorProps>(
     {
       style,
       language,
-
       value,
       onValueChange,
       resize = true,

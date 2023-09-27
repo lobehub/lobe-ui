@@ -19,7 +19,7 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
     const { styles, cx } = useStyles();
     const { isDarkMode } = useThemeMode();
 
-    const { data, isLoading } = useHighlight(children.trim(), language, isDarkMode);
+    const { data, isLoading } = useHighlight(children, language, isDarkMode);
 
     return (
       <>
