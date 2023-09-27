@@ -26,10 +26,7 @@ const useStyles = createStyles(({ css, token, prefixCls }) => ({
     }
     .${prefixCls}-modal-content {
       overflow: hidden;
-
-      max-height: 70vh;
       padding: 0;
-
       border: 1px solid ${token.colorSplit};
       border-radius: ${token.borderRadiusLG}px;
     }
