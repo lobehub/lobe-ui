@@ -2,7 +2,7 @@ import { Button, ButtonProps } from 'antd';
 import { type CSSProperties, memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import CodeEditor from '@/CodeEditor';
+import { TextArea } from '@/Input';
 import { type TextAreaProps } from '@/Input';
 import { DivProps } from '@/types';
 
@@ -58,9 +58,12 @@ const MessageInput = memo<MessageInputProps>(
     textareaStyle,
     textareaClassname,
     placeholder = 'Type something...',
+
     height = 'auto',
+
     style,
     editButtonSize = 'middle',
+    classNames,
     ...props
   }) => {
     const [temporarySystemRole, setRole] = useState<string>(defaultValue || '');
@@ -70,11 +73,12 @@ const MessageInput = memo<MessageInputProps>(
 
     return (
       <Flexbox gap={16} style={{ flex: 1, width: '100%', ...style }} {...props}>
-        <CodeEditor
+        <TextArea
+          autoSize={isAutoSize}
           className={cx(styles, textareaClassname)}
-          language={'md'}
+          classNames={classNames}
           onBlur={(e) => setRole(e.target.value)}
-          onValueChange={(e) => setRole(e)}
+          onChange={(e) => setRole(e.target.value)}
           placeholder={placeholder}
           resize={false}
           style={{ height: isAutoSize ? 'unset' : height, minHeight: '100%', ...textareaStyle }}
