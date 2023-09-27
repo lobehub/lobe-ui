@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.97.1](https://github.com/lobehub/lobe-ui/compare/v1.97.0...v1.97.1)
+
+<sup>Released on **2023-09-27**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix ChatList map key.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix ChatList map key ([baf1cf3](https://github.com/lobehub/lobe-ui/commit/baf1cf3))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.97.0](https://github.com/lobehub/lobe-ui/compare/v1.96.2...v1.97.0)
 
 <sup>Released on **2023-09-27**</sup>
