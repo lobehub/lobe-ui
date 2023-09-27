@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { Fragment, memo } from 'react';
 
 import type { ChatMessage, DivProps } from '@/types';
 
@@ -62,22 +62,21 @@ const ChatList = memo<ChatListProps>(
 
           if (item.children && item.children?.length > 0) {
             return (
-              <>
+              <Fragment key={item.children[0].id}>
                 <HistoryDivider enable={enableHistoryDivider} text={text} />
                 <Group
                   data={item.children.map((childrenItem) => ({ ...props, ...childrenItem }))}
-                  key={item.children[0].id}
                   meta={item.meta}
                 />
-              </>
+              </Fragment>
             );
           }
 
           return (
-            <>
+            <Fragment key={item.id}>
               <HistoryDivider enable={enableHistoryDivider} text={text} />
-              <Item key={item.id} {...props} {...item} />
-            </>
+              <Item {...props} {...item} />
+            </Fragment>
           );
         })}
       </div>

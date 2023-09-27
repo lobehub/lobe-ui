@@ -8,10 +8,10 @@ export interface CdnApi {
   path: string;
   pkg: string;
   proxy?: CDN;
-  version: string;
+  version?: string;
 }
 
-export const genCdnUrl = ({ pkg, version, path, proxy }: CdnApi): string => {
+export const genCdnUrl = ({ pkg, version = 'latest', path, proxy }: CdnApi): string => {
   switch (proxy) {
     case 'unpkg': {
       return urlJoin(UNPKG_API, `${pkg}@${version}`, path);
