@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.98.2](https://github.com/lobehub/lobe-ui/compare/v1.98.1...v1.98.2)
+
+<sup>Released on **2023-09-27**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix MessageInput.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix MessageInput ([83b9dc5](https://github.com/lobehub/lobe-ui/commit/83b9dc5))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.98.1](https://github.com/lobehub/lobe-ui/compare/v1.98.0...v1.98.1)
 
 <sup>Released on **2023-09-27**</sup>
