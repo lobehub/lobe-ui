@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.98.0](https://github.com/lobehub/lobe-ui/compare/v1.97.1...v1.98.0)
+
+<sup>Released on **2023-09-27**</sup>
+
+#### ✨ Features
+
+- **misc**: Add new features and update multiple components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add new features and update multiple components ([a523abe](https://github.com/lobehub/lobe-ui/commit/a523abe))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.97.1](https://github.com/lobehub/lobe-ui/compare/v1.97.0...v1.97.1)
 
 <sup>Released on **2023-09-27**</sup>
