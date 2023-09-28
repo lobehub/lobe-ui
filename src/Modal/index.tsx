@@ -83,8 +83,10 @@ const Modal = memo<ModalProps>(
         className={cx(styles.content, className)}
         closable
         closeIcon={<Icon icon={X} size={{ fontSize: 20 }} />}
+        destroyOnClose={destroyOnClose}
         maskClosable
         onCancel={onCancel}
+        open={open}
         title={title}
         width={width}
         wrapClassName={cx(styles.wrap, wrapClassName)}
