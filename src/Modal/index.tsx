@@ -4,10 +4,9 @@ import { createStyles, useResponsive } from 'antd-style';
 import { X } from 'lucide-react';
 import { memo } from 'react';
 
+import ActionIcon from '@/ActionIcon';
 import Icon from '@/Icon';
 import MobileSafeArea from '@/MobileSafeArea';
-
-import { ActionIcon } from '../../es';
 
 const useStyles = createStyles(({ css, token, prefixCls }) => ({
   content: css`
