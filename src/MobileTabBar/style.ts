@@ -11,7 +11,10 @@ export const useStyles = createStyles(({ css, token, cx, stylish, isDarkMode }) 
       css`
         overflow: hidden;
         flex: none;
+
         width: 100vw;
+        padding-bottom: 12px;
+
         background: ${rgba(isDarkMode ? token.colorBgLayout : token.colorBgContainer, 0.5)};
       `,
     ),

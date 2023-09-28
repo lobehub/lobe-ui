@@ -1,10 +1,13 @@
-import { Modal as AntModal, type ModalProps as AntModalProps, ConfigProvider } from 'antd';
-import { createStyles } from 'antd-style';
+import { Modal as AntModal, type ModalProps as AntModalProps } from 'antd';
+import { Drawer } from 'antd';
+import { createStyles, useResponsive } from 'antd-style';
 import { X } from 'lucide-react';
-import { lighten } from 'polished';
 import { memo } from 'react';
 
 import Icon from '@/Icon';
+import MobileSafeArea from '@/MobileSafeArea';
+
+import { ActionIcon } from '../../es';
 
 const useStyles = createStyles(({ css, token, prefixCls }) => ({
   content: css`
@@ -41,31 +44,54 @@ const useStyles = createStyles(({ css, token, prefixCls }) => ({
 export type ModalProps = AntModalProps;
 
 const Modal = memo<ModalProps>(
-  ({ children, title, className, wrapClassName, width = 700, ...props }) => {
+  ({
+    children,
+    title,
+    className,
+    wrapClassName,
+    width = 700,
+    onCancel,
+    open,
+    destroyOnClose,
+    ...props
+  }) => {
+    const { mobile } = useResponsive();
     const { styles, cx, theme } = useStyles();
 
-    return (
-      <ConfigProvider
-        theme={{
-          token: {
-            colorBgElevated: lighten(0.005, theme.colorBgContainer),
-          },
-        }}
-      >
-        <AntModal
-          centered
-          className={cx(styles.content, className)}
-          closable
-          closeIcon={<Icon icon={X} size={{ fontSize: 20 }} />}
-          maskClosable
+    if (mobile)
+      return (
+        <Drawer
+          bodyStyle={{ padding: 0 }}
+          closeIcon={<ActionIcon icon={X} size={{ blockSize: 32, fontSize: 20 }} />}
+          destroyOnClose={destroyOnClose}
+          drawerStyle={{ background: theme.colorBgContainer }}
+          headerStyle={{ padding: '8px 4px' }}
+          height={'75vh'}
+          maskClassName={cx(styles.wrap, wrapClassName)}
+          onClose={onCancel as any}
+          open={open}
+          placement={'bottom'}
           title={title}
-          width={width}
-          wrapClassName={cx(styles.wrap, wrapClassName)}
-          {...props}
         >
           {children}
-        </AntModal>
-      </ConfigProvider>
+          <MobileSafeArea position={'bottom'} />
+        </Drawer>
+      );
+
+    return (
+      <AntModal
+        className={cx(styles.content, className)}
+        closable
+        closeIcon={<Icon icon={X} size={{ fontSize: 20 }} />}
+        maskClosable
+        onCancel={onCancel}
+        title={title}
+        width={width}
+        wrapClassName={cx(styles.wrap, wrapClassName)}
+        {...props}
+      >
+        {children}
+      </AntModal>
     );
   },
 );

@@ -1,5 +1,6 @@
 import { createStyles } from 'antd-style';
 import { isNumber } from 'lodash-es';
+import { rgba } from 'polished';
 
 export const useStyles = createStyles(
   ({ css, cx, token, isDarkMode, responsive, prefixCls }, itemMinWidth?: string | number) => ({
@@ -93,16 +94,34 @@ export const useStyles = createStyles(
       ${responsive.mobile} {
         padding: 16px 0;
 
-        .${prefixCls}-row {
-          flex-direction: column;
-          gap: 4px;
-        }
+        ${itemMinWidth
+          ? css`
+              .${prefixCls}-row {
+                flex-direction: column;
+                gap: 4px;
+              }
 
-        .${prefixCls}-form-item-control {
-          flex: 1;
-          width: 100%;
-        }
+              .${prefixCls}-form-item-control {
+                flex: 1;
+                width: 100%;
+              }
+            `
+          : css`
+              .${prefixCls}-row {
+                flex-wrap: wrap;
+                gap: 4px;
+              }
+            `}
       }
+    `,
+    mobileGroupBody: css`
+      padding: 0 16px;
+      background: ${token.colorFillQuaternary};
+      border-top: 1px solid ${rgba(token.colorBorderSecondary, 0.5)};
+      border-bottom: 1px solid ${rgba(token.colorBorderSecondary, 0.5)};
+    `,
+    mobileGroupHeader: css`
+      padding: 16px;
     `,
     title: css`
       display: flex;
@@ -114,6 +133,12 @@ export const useStyles = createStyles(
 
       .anticon {
         color: ${token.colorPrimary};
+      }
+
+      ${responsive.mobile} {
+        font-size: 14px;
+        font-weight: 400;
+        opacity: 0.5;
       }
     `,
   }),

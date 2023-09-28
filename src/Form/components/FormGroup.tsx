@@ -1,7 +1,9 @@
 import { Icon, type IconProps } from '@lobehub/ui';
 import { Collapse, type CollapseProps } from 'antd';
+import { useResponsive } from 'antd-style';
 import { ChevronDown } from 'lucide-react';
 import { type ReactNode, memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import { useStyles } from './style';
 
@@ -13,7 +15,27 @@ export interface FormGroupProps extends CollapseProps {
 }
 
 const FormGroup = memo<FormGroupProps>(({ className, icon, title, children, extra, ...props }) => {
+  const { mobile } = useResponsive();
   const { cx, styles } = useStyles();
+
+  const titleContent = (
+    <div className={styles.title}>
+      {icon && <Icon icon={icon} />}
+      {title}
+    </div>
+  );
+
+  if (mobile)
+    return (
+      <Flexbox className={className}>
+        <Flexbox className={styles.mobileGroupHeader} horizontal justify={'space-between'}>
+          {titleContent}
+          {extra}
+        </Flexbox>
+        <div className={styles.mobileGroupBody}>{children}</div>
+      </Flexbox>
+    );
+
   return (
     <Collapse
       className={cx(styles.group, className)}
@@ -31,12 +53,7 @@ const FormGroup = memo<FormGroupProps>(({ className, icon, title, children, extr
           children,
           extra,
           key: 1,
-          label: (
-            <div className={styles.title}>
-              {icon && <Icon icon={icon} />}
-              {title}
-            </div>
-          ),
+          label: titleContent,
         },
       ]}
       key={1}
