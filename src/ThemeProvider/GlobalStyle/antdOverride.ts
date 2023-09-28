@@ -6,8 +6,8 @@ export default (token: Theme) => css`
     box-shadow: none;
   }
 
-  .${token.prefixCls}-btn-primary:not(.${token.prefixCls}-btn-dangerous) {
-    color: ${readableColor(token.colorPrimary)};
+  .${token.prefixCls}-btn-primary {
+    color: ${readableColor(token.colorPrimary)} !important;
 
     &:hover {
       color: ${readableColor(token.colorPrimary)} !important;
@@ -52,7 +52,6 @@ export default (token: Theme) => css`
     }
 
     .${token.prefixCls}-alert-description {
-      text-align: justify;
       word-break: break-all;
       word-wrap: break-word;
     }
@@ -64,7 +63,6 @@ export default (token: Theme) => css`
       .${token.prefixCls}-alert-message {
         font-size: 14px;
         font-weight: 600;
-        text-align: justify;
         word-break: break-all;
         word-wrap: break-word;
       }

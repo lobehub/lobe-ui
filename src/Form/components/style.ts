@@ -69,7 +69,7 @@ export const useStyles = createStyles(
       transition: all 100ms ${token.motionEaseOut};
     `,
     item: css`
-      padding: 8px 0;
+      padding: 16px 0;
 
       .${prefixCls}-row {
         justify-content: space-between;
@@ -112,6 +112,11 @@ export const useStyles = createStyles(
                 gap: 4px;
               }
             `}
+      }
+    `,
+    itemNoDivider: css`
+      &:not(:first-child) {
+        padding-top: 0;
       }
     `,
     mobileGroupBody: css`

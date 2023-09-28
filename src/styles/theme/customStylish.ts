@@ -78,7 +78,6 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         font-size: 14px;
         line-height: 1.8;
         color: ${token.colorText};
-        text-align: justify;
         word-break: break-all;
         word-wrap: break-word;
 
@@ -194,6 +193,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       > ul > li {
         line-height: 1.8;
         list-style-type: disc;
+
         &::marker {
           color: ${isDarkMode ? token.cyan9A : token.cyan10A} !important;
         }

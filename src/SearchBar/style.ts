@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }) => ({
+export const useStyles = createStyles(({ css, token, stylish, cx }) => ({
   icon: css`
     color: ${token.colorTextPlaceholder};
   `,
@@ -13,15 +13,18 @@ export const useStyles = createStyles(({ css, token }) => ({
     max-width: 100%;
   `,
 
-  tag: css`
-    pointer-events: none;
+  tag: cx(
+    stylish.blur,
+    css`
+      pointer-events: none;
 
-    position: absolute;
-    z-index: 5;
-    top: 50%;
-    right: 0;
-    transform: translateY(-50%);
+      position: absolute;
+      z-index: 5;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
 
-    color: ${token.colorTextDescription};
-  `,
+      color: ${token.colorTextDescription};
+    `,
+  ),
 }));

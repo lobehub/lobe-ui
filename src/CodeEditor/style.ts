@@ -42,8 +42,6 @@ export const useStyles = createStyles(
 
         pre {
           min-height: 36px !important;
-
-          text-align: justify;
           word-break: break-all;
           word-wrap: break-word;
           white-space: pre-wrap;
@@ -60,7 +58,6 @@ export const useStyles = createStyles(
         height: 100% !important;
 
         color: transparent !important;
-        text-align: justify !important;
         word-break: break-all !important;
         word-wrap: break-word !important;
 

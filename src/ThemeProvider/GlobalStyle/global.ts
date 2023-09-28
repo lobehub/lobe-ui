@@ -49,7 +49,6 @@ export default (token: Theme) => css`
   }
 
   p {
-    text-align: justify;
     word-wrap: break-word;
   }
 
