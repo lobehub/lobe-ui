@@ -2,6 +2,48 @@
 
 # Changelog
 
+## [Version 1.99.0](https://github.com/lobehub/lobe-ui/compare/v1.98.4...v1.99.0)
+
+<sup>Released on **2023-09-28**</sup>
+
+#### ✨ Features
+
+- **misc**: Add useResponsive hook and conditional rendering in FormGroup and index.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Modal, Fix type.
+
+#### 💄 Styles
+
+- **misc**: Update CSS styles for ChatItem component and override Ant Design styles.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add useResponsive hook and conditional rendering in FormGroup and index ([134b604](https://github.com/lobehub/lobe-ui/commit/134b604))
+
+#### What's fixed
+
+- **misc**: Fix Modal ([c88a7dd](https://github.com/lobehub/lobe-ui/commit/c88a7dd))
+- **misc**: Fix type ([8fce1d8](https://github.com/lobehub/lobe-ui/commit/8fce1d8))
+
+#### Styles
+
+- **misc**: Update CSS styles for ChatItem component and override Ant Design styles ([95b1b97](https://github.com/lobehub/lobe-ui/commit/95b1b97))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.98.4](https://github.com/lobehub/lobe-ui/compare/v1.98.3...v1.98.4)
 
 <sup>Released on **2023-09-28**</sup>
