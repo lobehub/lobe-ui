@@ -15,6 +15,7 @@ const useStyles = createStyles(({ css, token }) => ({
     width: 100%;
 
     font-size: 12px;
+    line-height: 1;
     color: ${token.colorTextTertiary};
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -28,11 +29,13 @@ const useStyles = createStyles(({ css, token }) => ({
 
     font-size: 16px;
     font-weight: bold;
+    line-height: 1;
     text-overflow: ellipsis;
     white-space: nowrap;
   `,
   titleContainer: css`
     flex: 1;
+    line-height: 1;
   `,
   titleWithDesc: css`
     overflow: hidden;
@@ -50,28 +53,29 @@ export interface ChatHeaderTitleProps {
 
 const ChatHeaderTitle = memo<ChatHeaderTitleProps>(({ title, desc, tag }) => {
   const { styles } = useStyles();
+
+  const tagContent = tag && (
+    <Flexbox align={'center'} className={styles.tag} horizontal>
+      {tag}
+    </Flexbox>
+  );
+
   if (desc)
     return (
-      <Flexbox className={styles.container}>
+      <Flexbox className={styles.container} gap={4}>
         <Flexbox align={'center'} className={styles.titleContainer} gap={8} horizontal>
           <div className={styles.titleWithDesc}>{title}</div>
-          {tag && (
-            <Flexbox className={styles.tag} horizontal>
-              {tag}
-            </Flexbox>
-          )}
+          {tagContent}
         </Flexbox>
-        <Flexbox align={'center'} horizontal>
-          <div className={styles.desc}>{desc}</div>
+        <Flexbox align={'center'} className={styles.desc} horizontal>
+          {desc}
         </Flexbox>
       </Flexbox>
     );
   return (
     <Flexbox align={'center'} className={styles.container} gap={8} horizontal>
       <div className={styles.title}>{title}</div>
-      <Flexbox className={styles.tag} horizontal>
-        {tag}
-      </Flexbox>
+      {tagContent}
     </Flexbox>
   );
 });

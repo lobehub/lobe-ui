@@ -3,7 +3,6 @@ import { CSSProperties, memo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ReactMarkdown from 'react-markdown';
 import rehypeKatex from 'rehype-katex';
-import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
@@ -51,7 +50,7 @@ const Markdown = memo<MarkdownProps>(
           <ReactMarkdown
             className={styles.markdown}
             components={components}
-            rehypePlugins={[rehypeRaw, rehypeKatex]}
+            rehypePlugins={[rehypeKatex]}
             remarkPlugins={[remarkGfm, remarkMath]}
             {...props}
           >
