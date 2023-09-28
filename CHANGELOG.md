@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.98.3](https://github.com/lobehub/lobe-ui/compare/v1.98.2...v1.98.3)
+
+<sup>Released on **2023-09-28**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Remove dependency "rehype-raw".
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Remove dependency "rehype-raw" ([085d3ce](https://github.com/lobehub/lobe-ui/commit/085d3ce))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.98.2](https://github.com/lobehub/lobe-ui/compare/v1.98.1...v1.98.2)
 
 <sup>Released on **2023-09-27**</sup>
