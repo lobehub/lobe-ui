@@ -34,7 +34,7 @@ export const useStyles = createStyles(({ css, token }) => {
       position: relative;
       overflow: hidden;
       flex: 1;
-      padding-top: 6px;
+      align-self: center;
     `,
     desc: css`
       overflow: hidden;
