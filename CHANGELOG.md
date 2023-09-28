@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.99.1](https://github.com/lobehub/lobe-ui/compare/v1.99.0...v1.99.1)
+
+<sup>Released on **2023-09-28**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update style files.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update style files ([c9dcadd](https://github.com/lobehub/lobe-ui/commit/c9dcadd))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.99.0](https://github.com/lobehub/lobe-ui/compare/v1.98.4...v1.99.0)
 
 <sup>Released on **2023-09-28**</sup>
