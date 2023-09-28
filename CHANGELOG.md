@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.98.4](https://github.com/lobehub/lobe-ui/compare/v1.98.3...v1.98.4)
+
+<sup>Released on **2023-09-28**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix ListItem style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix ListItem style ([c55a049](https://github.com/lobehub/lobe-ui/commit/c55a049))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.98.3](https://github.com/lobehub/lobe-ui/compare/v1.98.2...v1.98.3)
 
 <sup>Released on **2023-09-28**</sup>
