@@ -2,8 +2,20 @@ import { Theme, css } from 'antd-style';
 import { readableColor } from 'polished';
 
 export default (token: Theme) => css`
-  .${token.prefixCls}-btn-primary {
-    color: ${readableColor(token.colorPrimary)} !important;
+  .${token.prefixCls}-btn {
+    box-shadow: none;
+  }
+
+  .${token.prefixCls}-btn-primary:not(.${token.prefixCls}-btn-dangerous) {
+    color: ${readableColor(token.colorPrimary)};
+
+    &:hover {
+      color: ${readableColor(token.colorPrimary)} !important;
+    }
+
+    &:active {
+      color: ${readableColor(token.colorPrimaryActive)} !important;
+    }
   }
 
   .${token.prefixCls}-tooltip-inner {
@@ -29,5 +41,39 @@ export default (token: Theme) => css`
 
   .${token.prefixCls}-switch-handle::before {
     background: ${token.colorBgContainer} !important;
+  }
+
+  .${token.prefixCls}-alert {
+    span[role='img'] {
+      align-self: flex-start;
+      width: 16px;
+      height: 16px;
+      margin-top: 3px;
+    }
+
+    .${token.prefixCls}-alert-description {
+      text-align: justify;
+      word-break: break-all;
+      word-wrap: break-word;
+    }
+
+    &.${token.prefixCls}-alert-with-description {
+      padding-block: 12px;
+      padding-inline: 12px;
+
+      .${token.prefixCls}-alert-message {
+        font-size: 14px;
+        font-weight: 600;
+        text-align: justify;
+        word-break: break-all;
+        word-wrap: break-word;
+      }
+    }
+  }
+
+  @media (max-width: 575px) {
+    .${token.prefixCls}-tooltip {
+      display: none !important;
+    }
   }
 `;

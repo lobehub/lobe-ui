@@ -2,7 +2,7 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(
   (
-    { cx, css, token, isDarkMode, responsive, prefixCls },
+    { cx, css, token, isDarkMode, responsive },
     {
       placement,
       type,
@@ -67,33 +67,7 @@ export const useStyles = createStyles(
             opacity: 0 !important;
           `,
       ),
-      alert: css`
-        span[role='img'] {
-          align-self: flex-start;
-          width: 16px;
-          height: 16px;
-          margin-top: 3px;
-        }
-
-        .${prefixCls}-alert-description {
-          text-align: justify;
-          word-break: break-all;
-          word-wrap: break-word;
-        }
-
-        &.${prefixCls}-alert-with-description {
-          padding-block: 12px;
-          padding-inline: 12px;
-
-          .${prefixCls}-alert-message {
-            font-size: 14px;
-            font-weight: 600;
-            text-align: justify;
-            word-break: break-all;
-            word-wrap: break-word;
-          }
-        }
-      `,
+      alert: css``,
       avatarContainer: css`
         position: relative;
         flex: none;
