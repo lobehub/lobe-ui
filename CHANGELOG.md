@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.101.0](https://github.com/lobehub/lobe-ui/compare/v1.100.0...v1.101.0)
+
+<sup>Released on **2023-09-29**</sup>
+
+#### ✨ Features
+
+- **misc**: Add responsive parameter to useStyles function in src/Form/style.ts.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add responsive parameter to useStyles function in src/Form/style.ts ([f28601d](https://github.com/lobehub/lobe-ui/commit/f28601d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.100.0](https://github.com/lobehub/lobe-ui/compare/v1.99.1...v1.100.0)
 
 <sup>Released on **2023-09-29**</sup>
