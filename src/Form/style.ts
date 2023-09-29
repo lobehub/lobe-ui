@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token, prefixCls }) => ({
+export const useStyles = createStyles(({ css, token, prefixCls, responsive }) => ({
   footer: css`
     display: flex;
     gap: 8px;
@@ -10,6 +10,10 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => ({
     display: flex;
     flex-direction: column;
     gap: 16px;
+
+    ${responsive.mobile} {
+      gap: 0;
+    }
 
     .${prefixCls}-form-item {
       margin: 0 !important;
