@@ -1,7 +1,7 @@
 import { createStyles } from 'antd-style';
 import { rgba } from 'polished';
 
-export const useStyles = createStyles(({ css, token, cx, stylish, isDarkMode }) => {
+export const useStyles = createStyles(({ css, token, cx, stylish }) => {
   return {
     active: css`
       color: ${token.colorPrimary};
@@ -15,7 +15,7 @@ export const useStyles = createStyles(({ css, token, cx, stylish, isDarkMode }) 
         width: 100vw;
         padding-bottom: 12px;
 
-        background: ${rgba(isDarkMode ? token.colorBgLayout : token.colorBgContainer, 0.5)};
+        background: ${rgba(token.colorBgLayout, 0.5)};
       `,
     ),
     icon: css`

@@ -1,6 +1,5 @@
 import { createStyles } from 'antd-style';
 import { isNumber } from 'lodash-es';
-import { rgba } from 'polished';
 
 export const useStyles = createStyles(
   ({ css, cx, token, isDarkMode, responsive, prefixCls }, itemMinWidth?: string | number) => ({
@@ -121,12 +120,11 @@ export const useStyles = createStyles(
     `,
     mobileGroupBody: css`
       padding: 0 16px;
-      background: ${token.colorFillQuaternary};
-      border-top: 1px solid ${rgba(token.colorBorderSecondary, 0.5)};
-      border-bottom: 1px solid ${rgba(token.colorBorderSecondary, 0.5)};
+      background: ${token.colorBgContainer};
     `,
     mobileGroupHeader: css`
       padding: 16px;
+      background: ${token.colorBgLayout};
     `,
     title: css`
       display: flex;
