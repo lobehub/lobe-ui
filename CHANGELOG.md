@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.100.0](https://github.com/lobehub/lobe-ui/compare/v1.99.1...v1.100.0)
+
+<sup>Released on **2023-09-29**</sup>
+
+#### ✨ Features
+
+- **misc**: Add opacity to FormDivider and change background color of mobileGroupBody and MobileTabBar.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add opacity to FormDivider and change background color of mobileGroupBody and MobileTabBar ([9ea2bdb](https://github.com/lobehub/lobe-ui/commit/9ea2bdb))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.99.1](https://github.com/lobehub/lobe-ui/compare/v1.99.0...v1.99.1)
 
 <sup>Released on **2023-09-28**</sup>
