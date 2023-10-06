@@ -1,7 +1,8 @@
-import { Modal as AntModal, type ModalProps as AntModalProps } from 'antd';
+import { Modal as AntModal, type ModalProps as AntModalProps, ConfigProvider } from 'antd';
 import { Drawer } from 'antd';
 import { createStyles, useResponsive } from 'antd-style';
 import { X } from 'lucide-react';
+import { lighten } from 'polished';
 import { memo } from 'react';
 
 import ActionIcon from '@/ActionIcon';
@@ -78,21 +79,29 @@ const Modal = memo<ModalProps>(
       );
 
     return (
-      <AntModal
-        className={cx(styles.content, className)}
-        closable
-        closeIcon={<Icon icon={X} size={{ fontSize: 20 }} />}
-        destroyOnClose={destroyOnClose}
-        maskClosable
-        onCancel={onCancel}
-        open={open}
-        title={title}
-        width={width}
-        wrapClassName={cx(styles.wrap, wrapClassName)}
-        {...props}
+      <ConfigProvider
+        theme={{
+          token: {
+            colorBgElevated: lighten(0.005, theme.colorBgContainer),
+          },
+        }}
       >
-        {children}
-      </AntModal>
+        <AntModal
+          className={cx(styles.content, className)}
+          closable
+          closeIcon={<Icon icon={X} size={{ fontSize: 20 }} />}
+          destroyOnClose={destroyOnClose}
+          maskClosable
+          onCancel={onCancel}
+          open={open}
+          title={title}
+          width={width}
+          wrapClassName={cx(styles.wrap, wrapClassName)}
+          {...props}
+        >
+          {children}
+        </AntModal>
+      </ConfigProvider>
     );
   },
 );
