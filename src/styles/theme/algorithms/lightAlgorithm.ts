@@ -11,8 +11,8 @@ import { ColorScaleItem, colorScales } from '@/styles/colors/colors';
 import lightBaseToken from '@/styles/theme/token/light';
 
 export const lightAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
-  const primaryColor = seedToken.colorPrimary as PrimaryColors;
-  const neutralColor = seedToken.colorBgBase as NeutralColors;
+  const primaryColor = (seedToken as any).primaryColor as PrimaryColors;
+  const neutralColor = (seedToken as any).neutralColor as NeutralColors;
 
   let primaryTokens = {};
   let neutralTokens = {};
