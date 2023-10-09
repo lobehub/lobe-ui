@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.101.2](https://github.com/lobehub/lobe-ui/compare/v1.101.1...v1.101.2)
+
+<sup>Released on **2023-10-09**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix light algorithm.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix light algorithm ([566ded9](https://github.com/lobehub/lobe-ui/commit/566ded9))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.101.1](https://github.com/lobehub/lobe-ui/compare/v1.101.0...v1.101.1)
 
 <sup>Released on **2023-10-06**</sup>
