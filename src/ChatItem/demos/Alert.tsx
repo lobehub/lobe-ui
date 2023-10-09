@@ -1,4 +1,4 @@
-import { ChatItem, ChatItemProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { ChatItem, ChatItemProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 
 import { avatar } from './data';
 
@@ -17,8 +17,8 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <ChatItem avatar={avatar} error={control} />
-    </StroyBook>
+    </StoryBook>
   );
 };

@@ -118,11 +118,19 @@ export { default as Snippet, type SnippetProps } from './Snippet';
 export { default as Spotlight, type SpotlightProps } from './Spotlight';
 export { default as SpotlightCard, type SpotlightCardProps } from './SpotlightCard';
 export {
+  default as StoryBook,
+  type StoryBookProps,
+  /**
+   * @deprecated Use `StoryBookProps` instead. It was a typo.
+   */
   default as StroyBook,
-  type StroyBookProps,
+  /**
+   * @deprecated Use `StoryBookProps` instead. It was a typo.
+   */
+  type StoryBookProps as StroyBookProps,
   useControls,
   useCreateStore,
-} from './StroyBook';
+} from './StoryBook';
 export * from './styles';
 export { default as Swatches, type SwatchesProps } from './Swatches';
 export { default as TabsNav, type TabsNavProps } from './TabsNav';

@@ -1,4 +1,4 @@
-import { StroyBook, Tooltip, TooltipProps, useControls, useCreateStore } from '@lobehub/ui';
+import { StoryBook, Tooltip, TooltipProps, useControls, useCreateStore } from '@lobehub/ui';
 import { Button } from 'antd';
 
 export default () => {
@@ -12,10 +12,10 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <Tooltip {...control}>
         <Button type="primary">Tooltip</Button>
       </Tooltip>
-    </StroyBook>
+    </StoryBook>
   );
 };

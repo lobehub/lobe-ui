@@ -1,4 +1,4 @@
-import { ActionIcon, ActionIconProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { ActionIcon, ActionIconProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 import { Settings } from 'lucide-react';
 
 export default () => {
@@ -34,8 +34,8 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <ActionIcon active icon={Settings} size={size} />
-    </StroyBook>
+    </StoryBook>
   );
 };

@@ -1,4 +1,4 @@
-import { ChatHeader, ChatHeaderProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { ChatHeader, ChatHeaderProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 
 export default () => {
   const store = useCreateStore();
@@ -10,9 +10,9 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store} noPadding>
+    <StoryBook levaStore={store} noPadding>
       <ChatHeader {...control} left={<div>Left</div>} right={<div>Right</div>} />
       <div style={{ height: 100 }} />
-    </StroyBook>
+    </StoryBook>
   );
 };

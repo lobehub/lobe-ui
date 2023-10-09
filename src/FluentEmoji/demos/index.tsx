@@ -1,7 +1,7 @@
 import {
   FluentEmoji,
   type FluentEmojiProps,
-  StroyBook,
+  StoryBook,
   getEmoji,
   getEmojiNameByCharacter,
   useControls,
@@ -26,7 +26,7 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <Flexbox align={'center'} gap={8}>
         <Flexbox gap={8} horizontal>
           <FluentEmoji type={'anim'} {...control} />
@@ -38,6 +38,6 @@ export default () => {
         </Flexbox>
         <Button icon={getEmoji(control.emoji)}>{getEmojiNameByCharacter(control.emoji)}</Button>
       </Flexbox>
-    </StroyBook>
+    </StoryBook>
   );
 };

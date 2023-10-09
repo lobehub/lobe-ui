@@ -1,4 +1,4 @@
-import { ActionIconProps, Avatar, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { ActionIconProps, Avatar, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 
 import { useCdnFn } from '@/ConfigProvider';
 
@@ -30,8 +30,8 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <Avatar {...control} />
-    </StroyBook>
+    </StoryBook>
   );
 };

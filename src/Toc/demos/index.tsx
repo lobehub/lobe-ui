@@ -1,4 +1,4 @@
-import { StroyBook, Toc, type TocProps, useControls, useCreateStore } from '@lobehub/ui';
+import { StoryBook, Toc, type TocProps, useControls, useCreateStore } from '@lobehub/ui';
 
 const items: TocProps['items'] = [
   {
@@ -19,8 +19,8 @@ export default () => {
     { store },
   );
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <Toc items={items} {...controls} />
-    </StroyBook>
+    </StoryBook>
   );
 };

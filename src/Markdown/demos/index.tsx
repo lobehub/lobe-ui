@@ -1,4 +1,4 @@
-import { Markdown, MarkdownProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { Markdown, MarkdownProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 
 import { content } from './data';
 
@@ -16,8 +16,8 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <Markdown {...options} />
-    </StroyBook>
+    </StoryBook>
   );
 };

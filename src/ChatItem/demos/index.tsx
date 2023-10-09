@@ -2,7 +2,7 @@ import {
   ActionIconGroup,
   ChatItem,
   ChatItemProps,
-  StroyBook,
+  StoryBook,
   useControls,
   useCreateStore,
 } from '@lobehub/ui';
@@ -37,7 +37,7 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <ChatItem
         {...control}
         actions={
@@ -57,6 +57,6 @@ export default () => {
         editing={edit}
         onEditingChange={setEdit}
       />
-    </StroyBook>
+    </StoryBook>
   );
 };

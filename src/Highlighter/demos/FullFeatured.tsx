@@ -1,4 +1,4 @@
-import { Highlighter, HighlighterProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { Highlighter, HighlighterProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 
 const code = `export default ({ children, className }: MarkdownProps) => {
   const { styles } = useStyles();
@@ -32,8 +32,8 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <Highlighter fullFeatured {...options} />
-    </StroyBook>
+    </StoryBook>
   );
 };
