@@ -1,4 +1,4 @@
-import { EditableMessage, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { EditableMessage, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 import { button } from 'leva';
 import { useState } from 'react';
 
@@ -22,7 +22,7 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <EditableMessage
         editing={editing}
         onEditingChange={setEdit}
@@ -30,6 +30,6 @@ export default () => {
         openModal={openModal}
         value={content}
       />
-    </StroyBook>
+    </StoryBook>
   );
 };

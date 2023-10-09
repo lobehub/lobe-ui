@@ -1,4 +1,4 @@
-import { StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 
 export default () => {
   const store = useCreateStore();
@@ -22,8 +22,8 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <div style={{ color, fontSize, fontWeight }}>{upperCase ? text.toUpperCase() : text}</div>
-    </StroyBook>
+    </StoryBook>
   );
 };

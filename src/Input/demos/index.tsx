@@ -1,4 +1,4 @@
-import { Input, InputProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { Input, InputProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 
 export default () => {
   const store = useCreateStore();
@@ -14,8 +14,8 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <Input {...controls} />
-    </StroyBook>
+    </StoryBook>
   );
 };

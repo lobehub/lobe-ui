@@ -1,4 +1,4 @@
-import { StroyBook, TokenTag, TokenTagProps, useControls, useCreateStore } from '@lobehub/ui';
+import { StoryBook, TokenTag, TokenTagProps, useControls, useCreateStore } from '@lobehub/ui';
 
 export default () => {
   const store = useCreateStore();
@@ -17,8 +17,8 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <TokenTag {...control} />
-    </StroyBook>
+    </StoryBook>
   );
 };

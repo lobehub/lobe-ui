@@ -1,4 +1,4 @@
-import { StroyBook, TextArea, TextAreaProps, useControls, useCreateStore } from '@lobehub/ui';
+import { StoryBook, TextArea, TextAreaProps, useControls, useCreateStore } from '@lobehub/ui';
 
 export default () => {
   const store = useCreateStore();
@@ -14,8 +14,8 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <TextArea {...controls} />
-    </StroyBook>
+    </StoryBook>
   );
 };

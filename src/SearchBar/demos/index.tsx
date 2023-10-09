@@ -1,4 +1,4 @@
-import { SearchBar, SearchBarProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { SearchBar, SearchBarProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 
 export default () => {
   const store = useCreateStore();
@@ -17,8 +17,8 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <SearchBar {...controls} />
-    </StroyBook>
+    </StoryBook>
   );
 };

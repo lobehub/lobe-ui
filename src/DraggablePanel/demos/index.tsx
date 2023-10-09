@@ -1,7 +1,7 @@
 import {
   DraggablePanel,
   DraggablePanelProps,
-  StroyBook,
+  StoryBook,
   useControls,
   useCreateStore,
 } from '@lobehub/ui';
@@ -48,7 +48,7 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store} noPadding>
+    <StoryBook levaStore={store} noPadding>
       <View
         style={['top', 'bottom'].includes(control.placement) ? { flexDirection: 'column' } : {}}
       >
@@ -68,6 +68,6 @@ export default () => {
           </>
         )}
       </View>
-    </StroyBook>
+    </StoryBook>
   );
 };

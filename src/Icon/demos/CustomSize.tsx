@@ -1,4 +1,4 @@
-import { Icon, IconProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { Icon, IconProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 import { Settings } from 'lucide-react';
 
 export default () => {
@@ -22,8 +22,8 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <Icon icon={Settings} size={size} />
-    </StroyBook>
+    </StoryBook>
   );
 };

@@ -7,7 +7,7 @@ import { DivProps } from '@/types';
 import DraggablePanel from '../DraggablePanel';
 import { useStyles } from './style';
 
-export interface StroyBookProps extends DivProps {
+export interface StoryBookProps extends DivProps {
   /**
    * @description The Leva store instance to be used by the component
    * @type levaStore
@@ -19,7 +19,7 @@ export interface StroyBookProps extends DivProps {
   noPadding?: boolean;
 }
 
-export const StroyBook = memo<StroyBookProps>(
+export const StoryBook = memo<StoryBookProps>(
   ({ levaStore, noPadding, className, children, ...props }) => {
     const { mobile } = useResponsive();
     const { styles, cx } = useStyles(Boolean(noPadding));
@@ -41,6 +41,6 @@ export const StroyBook = memo<StroyBookProps>(
   },
 );
 
-export default StroyBook;
+export default StoryBook;
 
 export { useControls, useCreateStore } from 'leva';

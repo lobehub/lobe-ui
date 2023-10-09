@@ -1,4 +1,4 @@
-import { ChatList, ChatListProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { ChatList, ChatListProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 
 import { groupData } from './data';
 
@@ -16,13 +16,13 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <ChatList
         data={groupData}
         {...control}
         onActionClick={(key) => console.log(key)}
         style={{ width: '100%' }}
       />
-    </StroyBook>
+    </StoryBook>
   );
 };

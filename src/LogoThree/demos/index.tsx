@@ -1,4 +1,4 @@
-import { LogoThree, LogoThreeProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { LogoThree, LogoThreeProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 
 export default () => {
   const store = useCreateStore();
@@ -15,8 +15,8 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <LogoThree style={{ width: '100%' }} {...control} />
-    </StroyBook>
+    </StoryBook>
   );
 };

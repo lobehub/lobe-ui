@@ -1,4 +1,4 @@
-import { Snippet, SnippetProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { Snippet, SnippetProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 
 export default () => {
   const store = useCreateStore();
@@ -18,8 +18,8 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <Snippet {...control} />
-    </StroyBook>
+    </StoryBook>
   );
 };

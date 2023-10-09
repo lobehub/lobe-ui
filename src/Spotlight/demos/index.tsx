@@ -1,4 +1,4 @@
-import { Spotlight, SpotlightProps, StroyBook, useControls, useCreateStore } from '@lobehub/ui';
+import { Spotlight, SpotlightProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 import styled from 'styled-components';
 
 const Card = styled.div`
@@ -22,10 +22,10 @@ export default () => {
   );
 
   return (
-    <StroyBook levaStore={store}>
+    <StoryBook levaStore={store}>
       <Card>
         <Spotlight {...control} />
       </Card>
-    </StroyBook>
+    </StoryBook>
   );
 };
