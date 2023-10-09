@@ -2,6 +2,32 @@
 
 # Changelog
 
+### [Version 1.101.3](https://github.com/lobehub/lobe-ui/compare/v1.101.2...v1.101.3)
+
+<sup>Released on **2023-10-09**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Rename folder name, rename StroyBook with StoryBook.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Rename folder name ([b27f3e5](https://github.com/lobehub/lobe-ui/commit/b27f3e5))
+- **misc**: Rename StroyBook with StoryBook ([8dfba16](https://github.com/lobehub/lobe-ui/commit/8dfba16))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.101.2](https://github.com/lobehub/lobe-ui/compare/v1.101.1...v1.101.2)
 
 <sup>Released on **2023-10-09**</sup>
