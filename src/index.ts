@@ -122,7 +122,7 @@ export {
   type StroyBookProps,
   useControls,
   useCreateStore,
-} from './StroyBook';
+} from './StoryBook';
 export * from './styles';
 export { default as Swatches, type SwatchesProps } from './Swatches';
 export { default as TabsNav, type TabsNavProps } from './TabsNav';
