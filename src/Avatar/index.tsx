@@ -46,7 +46,7 @@ const Avatar = memo<AvatarProps>(
     const isImage = Boolean(
       avatar && ['/', 'http', 'data:'].some((index) => avatar.startsWith(index)),
     );
-    const isBase64 = Boolean (avatar.startsWith('data'));
+    const isBase64 = Boolean(avatar.startsWith('data'));
     const emoji = useMemo(() => avatar && !isImage && getEmoji(avatar), [avatar]);
 
     const { styles, cx } = useStyles({ background, isEmoji: Boolean(emoji), size });
