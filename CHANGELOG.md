@@ -2,6 +2,33 @@
 
 # Changelog
 
+## [Version 1.103.0](https://github.com/lobehub/lobe-ui/compare/v1.102.0...v1.103.0)
+
+<sup>Released on **2023-10-11**</sup>
+
+#### ✨ Features
+
+- **index-tsx**: Make "proxy" property optional in Config interface.
+- **misc**: Modify image attributes and add new Img component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **index-tsx**: Make "proxy" property optional in Config interface ([e4b381d](https://github.com/lobehub/lobe-ui/commit/e4b381d))
+- **misc**: Modify image attributes and add new Img component ([6dbd307](https://github.com/lobehub/lobe-ui/commit/6dbd307))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.102.0](https://github.com/lobehub/lobe-ui/compare/v1.101.3...v1.102.0)
 
 <sup>Released on **2023-10-11**</sup>
