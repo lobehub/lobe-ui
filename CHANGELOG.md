@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.102.0](https://github.com/lobehub/lobe-ui/compare/v1.101.3...v1.102.0)
+
+<sup>Released on **2023-10-11**</sup>
+
+#### ✨ Features
+
+- **misc**: Add new component "Img" and make changes to multiple components and styles.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add new component "Img" and make changes to multiple components and styles ([40a6ea0](https://github.com/lobehub/lobe-ui/commit/40a6ea0))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.101.3](https://github.com/lobehub/lobe-ui/compare/v1.101.2...v1.101.3)
 
 <sup>Released on **2023-10-09**</sup>
