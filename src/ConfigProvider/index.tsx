@@ -6,7 +6,7 @@ type CdnFn = ({ pkg, version, path }: CdnApi) => string;
 export interface Config {
   customCdnFn?: CdnFn;
   imgAs?: ElementType;
-  proxy: CDN | 'custom';
+  proxy?: CDN | 'custom';
 }
 
 export const ConfigContext = createContext<Config | null>(null);
@@ -21,7 +21,7 @@ export const useCdnFn = (): CdnFn => {
   const config = useContext(ConfigContext);
 
   if (!config) return fallback;
-  if (config.proxy !== 'custom')
+  if (config?.proxy !== 'custom')
     return ({ pkg, version, path }) =>
       genCdnUrl({ path, pkg, proxy: config.proxy as any, version });
   return config?.customCdnFn || fallback;
