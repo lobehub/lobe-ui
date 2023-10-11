@@ -46,6 +46,7 @@ const Avatar = memo<AvatarProps>(
     const isImage = Boolean(
       avatar && ['/', 'http', 'data:'].some((index) => avatar.startsWith(index)),
     );
+    const isBase64 = Boolean (avatar.startsWith('data'));
     const emoji = useMemo(() => avatar && !isImage && getEmoji(avatar), [avatar]);
 
     const { styles, cx } = useStyles({ background, isEmoji: Boolean(emoji), size });
@@ -57,7 +58,8 @@ const Avatar = memo<AvatarProps>(
         className={cx(styles.avatar, className)}
         shape={shape}
         size={size}
-        srcSet={avatar}
+        src={isBase64 ? avatar : undefined}
+        srcSet={isBase64 ? undefined : avatar}
         {...props}
       />
     ) : (
