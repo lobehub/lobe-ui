@@ -1,14 +1,15 @@
-import { ReactNode, createContext, memo, useContext } from 'react';
+import { ElementType, ReactNode, createContext, memo, useContext } from 'react';
 
 import { CDN, CdnApi, genCdnUrl } from '@/utils/genCdnUrl';
 
 type CdnFn = ({ pkg, version, path }: CdnApi) => string;
 export interface Config {
   customCdnFn?: CdnFn;
+  imgAs?: ElementType;
   proxy: CDN | 'custom';
 }
 
-const ConfigContext = createContext<Config | null>(null);
+export const ConfigContext = createContext<Config | null>(null);
 
 const ConfigProvider = memo<{ children: ReactNode; config: Config }>(({ children, config }) => {
   return <ConfigContext.Provider value={config}>{children}</ConfigContext.Provider>;

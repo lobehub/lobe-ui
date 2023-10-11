@@ -30,7 +30,7 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaMobile>(
       minHeight = 200,
       className,
       actions,
-      safeArea = true,
+      safeArea,
       expand,
       placeholder = 'Type something to chat...',
       onExpandChange,

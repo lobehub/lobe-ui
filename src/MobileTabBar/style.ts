@@ -1,23 +1,21 @@
 import { createStyles } from 'antd-style';
 import { rgba } from 'polished';
 
-export const useStyles = createStyles(({ css, token, cx, stylish }) => {
+export const useStyles = createStyles(({ css, token }) => {
   return {
     active: css`
       color: ${token.colorPrimary};
     `,
-    container: cx(
-      stylish.blur,
-      css`
-        overflow: hidden;
-        flex: none;
+    container: css`
+      overflow: hidden;
+      flex: none;
 
-        width: 100vw;
-        padding-bottom: 12px;
+      width: 100vw;
 
-        background: ${rgba(token.colorBgLayout, 0.5)};
-      `,
-    ),
+      background: ${token.colorBgLayout};
+      border-top: 1px solid ${rgba(token.colorBorder, 0.25)};
+    `,
+
     icon: css`
       width: 24px;
       height: 24px;

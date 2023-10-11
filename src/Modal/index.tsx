@@ -1,5 +1,4 @@
-import { Modal as AntModal, type ModalProps as AntModalProps, ConfigProvider } from 'antd';
-import { Drawer } from 'antd';
+import { Modal as AntModal, type ModalProps as AntModalProps, ConfigProvider, Drawer } from 'antd';
 import { createStyles, useResponsive } from 'antd-style';
 import { X } from 'lucide-react';
 import { lighten } from 'polished';
@@ -7,7 +6,6 @@ import { memo } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 import Icon from '@/Icon';
-import MobileSafeArea from '@/MobileSafeArea';
 
 const useStyles = createStyles(({ css, token, prefixCls }) => ({
   content: css`
@@ -64,7 +62,9 @@ const Modal = memo<ModalProps>(
           bodyStyle={{ padding: 0 }}
           closeIcon={<ActionIcon icon={X} size={{ blockSize: 32, fontSize: 20 }} />}
           destroyOnClose={destroyOnClose}
-          drawerStyle={{ background: theme.colorBgContainer }}
+          drawerStyle={{
+            background: `linear-gradient(to bottom, ${theme.colorBgContainer}, ${theme.colorBgLayout})`,
+          }}
           headerStyle={{ padding: '8px 4px' }}
           height={'75vh'}
           maskClassName={cx(styles.wrap, wrapClassName)}
@@ -74,7 +74,6 @@ const Modal = memo<ModalProps>(
           title={title}
         >
           {children}
-          <MobileSafeArea position={'bottom'} />
         </Drawer>
       );
 

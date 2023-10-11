@@ -24,7 +24,7 @@ export interface MobileTabBarProps {
 }
 
 const MobileTabBar = memo<MobileTabBarProps>(
-  ({ className, safeArea = true, style, items, activeKey, defaultActiveKey, onChange }) => {
+  ({ className, safeArea, style, items, activeKey, defaultActiveKey, onChange }) => {
     const [currentActive, setCurrentActive] = useControlledState<string>(
       defaultActiveKey || items[0].key,
       {

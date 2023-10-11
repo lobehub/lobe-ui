@@ -3,6 +3,7 @@ import { type ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import { useCdnFn } from '@/ConfigProvider';
+import Img from '@/Img';
 import { DivProps } from '@/types';
 
 import Divider from './Divider';
@@ -36,7 +37,7 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
   switch (type) {
     case '3d': {
       logoComponent = (
-        <img
+        <Img
           alt="lobehub"
           src={genCdnUrl(LOGO_3D)}
           style={{ height: size, width: size, ...style }}
@@ -47,7 +48,7 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
     }
     case 'flat': {
       logoComponent = (
-        <img
+        <Img
           alt="lobehub"
           src={genCdnUrl(LOGO_FLAT)}
           style={{ height: size, width: size, ...style }}
@@ -74,7 +75,7 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
     case 'combine': {
       logoComponent = (
         <>
-          <img alt="lobehub" src={genCdnUrl(LOGO_3D)} style={{ height: size, width: size }} />
+          <Img alt="lobehub" src={genCdnUrl(LOGO_3D)} style={{ height: size, width: size }} />
           <LogoText style={{ height: size, marginLeft: Math.round(size / 4), width: 'auto' }} />
         </>
       );

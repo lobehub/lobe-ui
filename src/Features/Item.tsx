@@ -2,6 +2,7 @@ import { CSSProperties, memo } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
 import Icon, { IconProps } from '@/Icon';
+import Img from '@/Img';
 import type { DivProps } from '@/types';
 
 import { useStyles } from './style';
@@ -61,7 +62,7 @@ export interface FeatureItemProps extends FeatureItem, DivProps {}
 const Image = memo<{ className?: string; image: string; style?: CSSProperties; title: string }>(
   ({ image, className, title, style }) => {
     return image.startsWith('http') ? (
-      <img alt={title} className={className} src={image} style={style} />
+      <Img alt={title} className={className} src={image} style={style} />
     ) : (
       <Center className={className} style={style}>
         {image}

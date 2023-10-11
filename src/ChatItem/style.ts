@@ -90,12 +90,12 @@ export const useStyles = createStyles(
             white-space: nowrap;
           }
 
-          div[role='chat-item-actions'] {
+          div[role='widget'] {
             display: flex;
           }
 
           time,
-          div[role='chat-item-actions'] {
+          div[role='widget'] {
             pointer-events: none;
             opacity: 0;
             transition: opacity 200ms ${token.motionEaseOut};
@@ -103,7 +103,7 @@ export const useStyles = createStyles(
 
           &:hover {
             time,
-            div[role='chat-item-actions'] {
+            div[role='widget'] {
               pointer-events: unset;
               opacity: 1;
             }

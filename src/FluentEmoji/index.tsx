@@ -2,6 +2,7 @@ import { kebabCase } from 'lodash-es';
 import { memo, useMemo, useState } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
+import Img from '@/Img';
 import { DivProps } from '@/types';
 import { getEmojiNameByCharacter } from '@/utils/getEmojiByCharacter';
 
@@ -77,7 +78,7 @@ const FluentEmoji = memo<FluentEmojiProps>(
         className={cx(styles.container, className)}
         style={{ height: size, width: size, ...style }}
       >
-        <img
+        <Img
           alt={emoji}
           height="100%"
           loading="lazy"

@@ -4,6 +4,8 @@ import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import useMergeState from 'use-merge-value';
 
+import Img from '@/Img';
+
 import { useStyles } from './style';
 
 export interface EmptyCardProps extends DivProps {
@@ -48,7 +50,7 @@ const EmptyCard = memo<EmptyCardProps>(
           size={{ blockSize: 24, fontSize: 16 }}
         />
         {cover && (
-          <img alt={alt} className={styles.image} height={height} src={cover} width={width} />
+          <Img alt={alt} className={styles.image} height={height} src={cover} width={width} />
         )}
         <div className={styles.content}>
           {title && <h3>{title}</h3>}

@@ -57,7 +57,7 @@ const Avatar = memo<AvatarProps>(
         className={cx(styles.avatar, className)}
         shape={shape}
         size={size}
-        src={avatar}
+        srcSet={avatar}
         {...props}
       />
     ) : (
