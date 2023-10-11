@@ -4,6 +4,8 @@ import { type CSSProperties, ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
+import Img from '@/Img';
+
 import { useStyles } from './styles';
 
 export interface SelectWithImgOptionItem {
@@ -72,14 +74,9 @@ const SelectWithImg = memo<SelectWithImgProps>(
                   width,
                 }}
               >
-                <div
-                  className={styles.img}
-                  style={{
-                    backgroundImage: `url(${item.img})`,
-                    height,
-                    width,
-                  }}
-                />
+                <div className={styles.img}>
+                  <Img height={height} src={item.img} width={width} />
+                </div>
               </div>
               <Flexbox align={'center'} gap={4} horizontal>
                 {item.icon && <Icon icon={item.icon} />}

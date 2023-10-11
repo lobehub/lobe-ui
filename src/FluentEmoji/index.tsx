@@ -80,11 +80,10 @@ const FluentEmoji = memo<FluentEmojiProps>(
       >
         <Img
           alt={emoji}
-          height="100%"
-          loading="lazy"
+          height={size}
           onError={() => setLoadingFail(true)}
           src={emojiUrl}
-          width="100%"
+          width={size}
         />
       </div>
     );

@@ -39,8 +39,10 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
       logoComponent = (
         <Img
           alt="lobehub"
+          height={size}
           src={genCdnUrl(LOGO_3D)}
-          style={{ height: size, width: size, ...style }}
+          style={style}
+          width={size}
           {...props}
         />
       );
@@ -48,25 +50,21 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
     }
     case 'flat': {
       logoComponent = (
-        <Img
-          alt="lobehub"
-          src={genCdnUrl(LOGO_FLAT)}
-          style={{ height: size, width: size, ...style }}
-        />
+        <Img alt="lobehub" height={size} src={genCdnUrl(LOGO_FLAT)} style={style} width={size} />
       );
       break;
     }
     case 'high-contrast': {
-      logoComponent = (
-        <LogoHighContrast style={{ height: size, width: size, ...style }} {...props} />
-      );
+      logoComponent = <LogoHighContrast height={size} style={style} width={size} {...props} />;
       break;
     }
     case 'text': {
       logoComponent = (
         <LogoText
           className={className}
-          style={{ height: size, width: 'auto', ...style }}
+          height={size}
+          style={style}
+          width={size * 2.9375}
           {...props}
         />
       );
@@ -75,7 +73,7 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
     case 'combine': {
       logoComponent = (
         <>
-          <Img alt="lobehub" src={genCdnUrl(LOGO_3D)} style={{ height: size, width: size }} />
+          <Img alt="lobehub" height={size} src={genCdnUrl(LOGO_3D)} width={size} />
           <LogoText style={{ height: size, marginLeft: Math.round(size / 4), width: 'auto' }} />
         </>
       );

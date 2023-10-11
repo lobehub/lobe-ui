@@ -10,13 +10,25 @@ export const useStyles = createStyles(({ css, token, cx }) => {
 
   const img = cx(
     css`
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
+      position: relative;
+      overflow: hidden;
       border-radius: ${token.borderRadius}px;
-      box-shadow: inset 0 0 0 2px ${token.colorSplit};
-
       transition: all 100ms ${token.motionEaseOut};
+
+      &::before {
+        content: '';
+
+        position: absolute;
+        inset: 0;
+
+        display: block;
+
+        width: 100%;
+        height: 100%;
+
+        border-radius: inherit;
+        box-shadow: inset 0 0 0 2px ${token.colorSplit};
+      }
     `,
     hover,
   );
@@ -33,7 +45,7 @@ export const useStyles = createStyles(({ css, token, cx }) => {
     imgActive: css`
       box-shadow: 0 0 0 2px ${token.colorTextTertiary};
 
-      .${img} {
+      .${img}:before {
         box-shadow: none;
       }
     `,
