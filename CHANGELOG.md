@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.103.2](https://github.com/lobehub/lobe-ui/compare/v1.103.1...v1.103.2)
+
+<sup>Released on **2023-10-16**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Refactor ChatList.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Refactor ChatList ([0a23256](https://github.com/lobehub/lobe-ui/commit/0a23256))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.103.1](https://github.com/lobehub/lobe-ui/compare/v1.103.0...v1.103.1)
 
 <sup>Released on **2023-10-11**</sup>
