@@ -5,7 +5,6 @@ import { EditableMessageProps } from '@/EditableMessage';
 import { MetaData } from '@/types';
 
 export interface ChatItemProps {
-  ErrorMessage?: ReactNode;
   /**
    * @description Actions to be displayed in the chat item
    */
@@ -27,6 +26,7 @@ export interface ChatItemProps {
    * @description Props for Error render
    */
   error?: AlertProps;
+  errorMessage?: ReactNode;
   /**
    * @description Whether the chat item is in loading state
    */

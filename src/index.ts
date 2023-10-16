@@ -14,8 +14,11 @@ export type {
   ChatListProps,
   OnActionClick,
   OnMessageChange,
+  RenderAction,
   RenderErrorMessage,
+  RenderItem,
   RenderMessage,
+  RenderMessageExtra,
 } from './ChatList';
 export { default as ChatList } from './ChatList';
 export { default as CodeEditor, type CodeEditorProps } from './CodeEditor';
@@ -69,6 +72,7 @@ export {
   SyntaxHighlighter,
   type SyntaxHighlighterProps,
 } from './Highlighter';
+export { useChatListActionsBar } from './hooks/useChatListActionsBar';
 export { default as Icon, type IconProps, type IconSize } from './Icon';
 export * from './Icon/icons';
 export { Input, type InputProps, TextArea, type TextAreaProps } from './Input';

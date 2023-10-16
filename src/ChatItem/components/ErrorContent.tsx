@@ -7,18 +7,18 @@ import { ChatItemProps } from '@/ChatItem';
 import { useStyles } from '../style';
 
 export interface ErrorContentProps {
-  ErrorMessage?: ChatItemProps['ErrorMessage'];
   error?: ChatItemProps['error'];
+  message?: ChatItemProps['errorMessage'];
   placement?: ChatItemProps['placement'];
 }
 
-const ErrorContent = memo<ErrorContentProps>(({ ErrorMessage, error, placement }) => {
+const ErrorContent = memo<ErrorContentProps>(({ message, error, placement }) => {
   const { styles } = useStyles({ placement });
 
   return (
     <Flexbox gap={8}>
       <Alert className={styles.alert} showIcon type={'error'} {...error} />
-      {ErrorMessage}
+      {message}
     </Flexbox>
   );
 });

@@ -1,29 +1,32 @@
-import { BaseDataModel } from './meta';
+import { PluginRequestPayload } from '@lobehub/chat-plugin-sdk';
 
-export type MessageRoleType = 'user' | 'system' | 'assistant' | 'function';
+import { ErrorType } from './error';
+import { LLMRoleType } from './llm';
+import { BaseDataModel } from './meta';
 
 /**
  * 聊天消息错误对象
  */
 export interface ChatMessageError {
-  /**
-   * 错误信息
-   */
+  body?: any;
   message: string;
-  type?: string;
+  type: ErrorType;
+}
+export interface OpenAIFunctionCall {
+  arguments?: string;
+  name: string;
 }
 
-export interface SingleChatMessage extends BaseDataModel {
+export interface ChatMessage extends BaseDataModel {
   /**
    * @title 内容
    * @description 消息内容
    */
   content: string;
-
-  error?: ChatMessageError;
-
+  error?: any;
   // 扩展字段
   extra?: {
+    fromModel?: string;
     // 翻译
     translate?: {
       target: string;
@@ -31,16 +34,28 @@ export interface SingleChatMessage extends BaseDataModel {
     };
   } & Record<string, any>;
 
+  /**
+   * replace with plugin
+   * @deprecated
+   */
+  function_call?: OpenAIFunctionCall;
+  name?: string;
+
+  parentId?: string;
+
+  plugin?: PluginRequestPayload;
+
   // 引用
   quotaId?: string;
   /**
    * 角色
    * @description 消息发送者的角色
    */
-  role: MessageRoleType;
+  role: LLMRoleType;
+  /**
+   * 保存到主题的消息
+   */
+  topicId?: string;
 }
 
-export interface ChatMessage extends SingleChatMessage {
-  children?: SingleChatMessage[];
-  parentId?: string;
-}
+export type ChatMessageMap = Record<string, ChatMessage>;

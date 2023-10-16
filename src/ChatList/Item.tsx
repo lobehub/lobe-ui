@@ -1,17 +1,21 @@
 import { App } from 'antd';
 import copy from 'copy-to-clipboard';
-import { type FC, type ReactNode, memo, useCallback, useMemo, useState } from 'react';
+import { FC, ReactNode, memo, useCallback, useMemo, useState } from 'react';
 
 import ChatItem, { type ChatItemProps } from '@/ChatItem';
-import { ChatMessage, ChatMessageError, MessageRoleType } from '@/types/chatMessage';
+import { ChatMessage } from '@/types/chatMessage';
+import { LLMRoleType } from '@/types/llm';
 
 import ActionsBar, { type ActionsBarProps } from './ActionsBar';
 
 export type OnMessageChange = (id: string, content: string) => void;
-export type MessageExtra = FC<ChatMessage>;
 export type OnActionClick = (actionKey: string, messageId: string) => void;
-export type RenderMessage = (content: ReactNode, message: ChatMessage) => ReactNode;
-export type RenderErrorMessage = (error: ChatMessageError, message: ChatMessage) => ReactNode;
+export type RenderRole = LLMRoleType | 'default' | string;
+export type RenderItem = FC<{ key: string } & ChatMessage & ListItemProps>;
+export type RenderMessage = FC<ChatMessage>;
+export type RenderMessageExtra = FC<ChatMessage>;
+export type RenderErrorMessage = FC<ChatMessage>;
+export type RenderAction = FC<ActionsBarProps & ChatMessage>;
 
 export interface ListItemProps {
   groupNav?: ChatItemProps['avatarAddon'];
@@ -24,23 +28,30 @@ export interface ListItemProps {
    * @description 消息变化的回调函数
    */
   onMessageChange?: OnMessageChange;
+  renderActions?: {
+    [role: RenderRole]: RenderAction;
+  };
   /**
    * @description 渲染错误消息的函数
    */
-  renderErrorMessage?: RenderErrorMessage;
-  renderItem?: {
-    [role: MessageRoleType | string]: (
-      data: { key: string } & ChatMessage & ListItemProps,
-    ) => ReactNode;
+  renderErrorMessages?: {
+    [errorType: 'default' | string]: RenderErrorMessage;
+  };
+  renderItems?: {
+    [role: RenderRole]: RenderItem;
   };
   /**
    * @description 渲染消息的函数
    */
-  renderMessage?: RenderMessage;
+  renderMessages?: {
+    [role: RenderRole]: RenderMessage;
+  };
   /**
    * @description 渲染消息额外内容的函数
    */
-  renderMessageExtra?: MessageExtra;
+  renderMessagesExtra?: {
+    [role: RenderRole]: RenderMessageExtra;
+  };
   /**
    * @description 是否显示聊天项的名称
    * @default false
@@ -53,6 +64,8 @@ export interface ListItemProps {
     ActionsBarProps['text'] & {
       copySuccess?: string;
       history?: string;
+    } & {
+      [key: string]: string;
     };
   /**
    * @description 聊天列表的类型
@@ -65,81 +78,115 @@ export type ChatListItemProps = ChatMessage & ListItemProps;
 
 const Item = memo<ChatListItemProps>((props) => {
   const {
-    renderMessageExtra: MessageExtra,
+    renderMessagesExtra,
     showTitle,
     onActionClick,
     onMessageChange,
     type,
     text,
-    renderMessage,
-    renderErrorMessage,
+    renderMessages,
+    renderErrorMessages,
+    renderActions,
     loading,
     groupNav,
-    renderItem,
+    renderItems,
     ...item
   } = props;
-
-  const renderMessageExtra = MessageExtra ? <MessageExtra {...item} /> : undefined;
 
   const [editing, setEditing] = useState(false);
 
   const { message } = App.useApp();
 
+  const RenderItem = useMemo(() => {
+    if (!renderItems || !item?.role) return;
+    if (renderItems?.[item.role]) return renderItems[item.role];
+    if (renderItems?.['default']) return renderItems['default'];
+  }, [renderItems, item]);
+
   const innerRenderMessage = useCallback(
-    (content: ReactNode) => renderMessage?.(content, item),
-    [renderMessage, item],
+    (content: ReactNode) => {
+      if (!renderMessages || !item?.role) return;
+      let RenderFunction;
+      if (renderMessages?.[item.role]) RenderFunction = renderMessages[item.role];
+      if (renderMessages?.['default']) RenderFunction = renderMessages['default'];
+      if (!RenderFunction) return;
+      return <RenderFunction {...item} content={content as any} />;
+    },
+    [renderMessages, item],
   );
 
-  const RenderItem = useMemo(
-    () => (renderItem && renderItem[item.role] ? renderItem[item.role] : undefined),
-    [renderItem],
-  );
+  const MessageExtra = useCallback(() => {
+    if (!renderMessagesExtra || !item?.role) return;
+    let RenderFunction;
+    if (renderMessagesExtra?.[item.role]) RenderFunction = renderMessagesExtra[item.role];
+    if (renderMessagesExtra?.['default']) RenderFunction = renderMessagesExtra['default'];
+    if (!RenderFunction) return;
+    return <RenderFunction {...item} />;
+  }, [renderMessagesExtra, item]);
+
+  const ErrorMessage = useCallback(() => {
+    if (!renderErrorMessages || !item?.error?.type) return;
+    let RenderFunction;
+    if (renderErrorMessages?.[item.error.type])
+      RenderFunction = renderErrorMessages[item.error.type];
+    if (renderErrorMessages?.['default']) RenderFunction = renderErrorMessages['default'];
+    if (!RenderFunction) return;
+    return <RenderFunction {...item} />;
+  }, [renderErrorMessages, item.error]);
+
+  const Actions = useCallback(() => {
+    if (!renderActions || !item?.role) return;
+    let RenderFunction;
+    if (renderActions?.[item.role]) RenderFunction = renderActions[item.role];
+    if (renderActions?.['default']) RenderFunction = renderActions['default'];
+    if (!RenderFunction) RenderFunction = ActionsBar;
+    return (
+      <RenderFunction
+        {...item}
+        onActionClick={(actionKey) => {
+          switch (actionKey) {
+            case 'copy': {
+              copy(item.content);
+              message.success(text?.copySuccess || 'Copy Success');
+              break;
+            }
+            case 'edit': {
+              setEditing(true);
+              break;
+            }
+          }
+          onActionClick?.(actionKey, item.id);
+        }}
+        text={text}
+      />
+    );
+  }, [renderActions, item, text, onActionClick]);
+
+  const error = useMemo(() => {
+    if (!item.error) return;
+    return {
+      message: item.error?.message,
+    };
+  }, [item.error]);
 
   if (RenderItem) return <RenderItem key={item.id} {...props} />;
 
   return (
     <ChatItem
-      ErrorMessage={item.error ? renderErrorMessage?.(item.error, item) : undefined}
-      actions={
-        <ActionsBar
-          onActionClick={(actionKey) => {
-            switch (actionKey) {
-              case 'copy': {
-                copy(item.content);
-                message.success(text?.copySuccess || 'Copy Success');
-                break;
-              }
-              case 'edit': {
-                setEditing(true);
-                break;
-              }
-            }
-            onActionClick?.(actionKey, item.id);
-          }}
-          primary={item.role === 'user'}
-          text={text}
-        />
-      }
+      actions={<Actions />}
       avatar={item.meta}
       avatarAddon={groupNav}
       editing={editing}
-      error={
-        item.error
-          ? {
-              message: item.error?.message,
-            }
-          : undefined
-      }
+      error={error}
+      errorMessage={<ErrorMessage />}
       loading={loading}
       message={item.content}
-      messageExtra={renderMessageExtra}
-      onChange={(value) => {
-        onMessageChange?.(item.id, value);
-      }}
+      messageExtra={<MessageExtra />}
+      onChange={(value) => onMessageChange?.(item.id, value)}
       onEditingChange={setEditing}
       placement={type === 'chat' ? (item.role === 'user' ? 'right' : 'left') : 'left'}
       primary={item.role === 'user'}
-      renderMessage={renderMessage ? innerRenderMessage : undefined}
+      renderMessage={innerRenderMessage}
       showTitle={showTitle}
       text={text}
       time={item.updateAt || item.createAt}

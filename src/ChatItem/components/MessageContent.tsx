@@ -1,3 +1,4 @@
+import { useResponsive } from 'antd-style';
 import { type ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
@@ -33,6 +34,7 @@ const Loading = memo<LoadingProps>(
     primary,
   }) => {
     const { cx, styles } = useStyles({ editing, placement, primary, type });
+    const { mobile } = useResponsive();
 
     const content = (
       <EditableMessage
@@ -42,6 +44,7 @@ const Loading = memo<LoadingProps>(
         fullFeaturedCodeBlock
         onChange={onChange}
         onEditingChange={onEditingChange}
+        openModal={mobile ? editing : undefined}
         text={text}
         value={String(message || '...')}
       />

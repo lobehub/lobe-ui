@@ -1,3 +1,4 @@
+import { useResponsive } from 'antd-style';
 import { CSSProperties, memo } from 'react';
 import useControlledState from 'use-merge-value';
 
@@ -54,6 +55,8 @@ const MessageModal = memo<MessageModalProps>(
     onChange,
     text,
   }) => {
+    const { mobile } = useResponsive();
+
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
       value: editing,
@@ -73,6 +76,7 @@ const MessageModal = memo<MessageModalProps>(
 
     return (
       <Modal
+        bodyStyle={mobile ? { padding: 16 } : {}}
         cancelText={text?.cancel || 'Cancel'}
         footer={isEdit ? null : undefined}
         okText={text?.edit || 'Edit'}

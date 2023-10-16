@@ -7,9 +7,7 @@ import Tag from '@/Tag';
 
 interface HistoryDividerProps {
   enable?: boolean;
-  text?: {
-    history?: string;
-  };
+  text?: string;
 }
 
 const HistoryDivider = memo<HistoryDividerProps>(({ enable, text }) => {
@@ -18,7 +16,7 @@ const HistoryDivider = memo<HistoryDividerProps>(({ enable, text }) => {
   return (
     <div style={{ padding: '0 20px' }}>
       <Divider>
-        <Tag icon={<Icon icon={Timer} />}>{text?.history || 'History Message'}</Tag>
+        <Tag icon={<Icon icon={Timer} />}>{text || 'History Message'}</Tag>
       </Divider>
     </div>
   );

@@ -75,6 +75,7 @@
     "@babel/runtime": "^7",
     "@floating-ui/react": "^0",
     "@giscus/react": "^2",
+    "@lobehub/chat-plugin-sdk": "latest",
     "@lobehub/emojilib": "latest",
     "@react-spring/three": "^9",
     "@react-spring/web": "^9",

@@ -1,7 +1,7 @@
 import { produce } from 'immer';
 
-import { ChatMessageError, MessageRoleType } from '@/types';
-import { LLMMessage } from '@/types/llm';
+import { ChatMessageError } from '@/types/chatMessage';
+import { LLMMessage, LLMRoleType } from '@/types/llm';
 
 export type MessageDispatch =
   | { message: LLMMessage; type: 'addMessage' }
@@ -9,7 +9,7 @@ export type MessageDispatch =
   | { index: number; type: 'deleteMessage' }
   | { type: 'resetMessages' }
   | { index: number; message: string; type: 'updateMessage' }
-  | { index: number; role: MessageRoleType; type: 'updateMessageRole' }
+  | { index: number; role: LLMRoleType; type: 'updateMessageRole' }
   //
   | { message: string; type: 'addUserMessage' }
   | { responseStream: string[]; type: 'updateLatestBotMessage' }
@@ -73,6 +73,7 @@ export const messagesReducer = (state: LLMMessage[], payload: MessageDispatch): 
       return produce(state, (draftState) => {
         const { index, error } = payload;
 
+        // @ts-ignore
         draftState[index].error = error;
       });
     }

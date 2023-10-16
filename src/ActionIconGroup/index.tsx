@@ -7,7 +7,7 @@ import { DivProps } from '@/types';
 
 import { useStyles } from './style';
 
-interface ActionIconGroupItems {
+export interface ActionIconGroupItems {
   icon: LucideIcon;
   key: string;
   label: string;

@@ -51,6 +51,7 @@ const Modal = memo<ModalProps>(
     onCancel,
     open,
     destroyOnClose,
+    bodyStyle,
     ...props
   }) => {
     const { mobile } = useResponsive();
@@ -59,7 +60,7 @@ const Modal = memo<ModalProps>(
     if (mobile)
       return (
         <Drawer
-          bodyStyle={{ padding: 0 }}
+          bodyStyle={bodyStyle || { padding: 0 }}
           closeIcon={<ActionIcon icon={X} size={{ blockSize: 32, fontSize: 20 }} />}
           destroyOnClose={destroyOnClose}
           drawerStyle={{
@@ -86,6 +87,7 @@ const Modal = memo<ModalProps>(
         }}
       >
         <AntModal
+          bodyStyle={bodyStyle}
           className={cx(styles.content, className)}
           closable
           closeIcon={<Icon icon={X} size={{ fontSize: 20 }} />}

@@ -1,10 +1,10 @@
-import { Copy, Edit, RotateCw, Trash } from 'lucide-react';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 
 import ActionIconGroup, { type ActionIconGroupProps } from '@/ActionIconGroup';
+import { useChatListActionsBar } from '@/hooks/useChatListActionsBar';
+import { ChatMessage } from '@/types';
 
 export interface ActionsBarProps extends ActionIconGroupProps {
-  primary?: boolean;
   text?: {
     copy?: string;
     delete?: string;
@@ -13,71 +13,16 @@ export interface ActionsBarProps extends ActionIconGroupProps {
   };
 }
 
-const ActionsBar = memo<ActionsBarProps>(
-  ({ primary, text, items = [], dropdownMenu = [], ...props }) => {
-    const groupItems: ActionIconGroupProps['items'] = useMemo(
-      () =>
-        [
-          {
-            icon: RotateCw,
-            key: 'regenerate',
-            label: text?.regenerate || 'Regenerate',
-          },
-          primary
-            ? {
-                icon: Edit,
-                key: 'edit',
-                label: text?.edit || 'Edit',
-              }
-            : {
-                icon: Copy,
-                key: 'copy',
-                label: text?.copy || 'Copy',
-              },
-          ...items,
-        ].filter(Boolean),
-      [primary, items],
-    );
-
-    const groupDropdownMenu: ActionIconGroupProps['dropdownMenu'] = useMemo(
-      () => [
-        ...dropdownMenu,
-        {
-          icon: Edit,
-          key: 'edit',
-          label: text?.edit || 'Edit',
-        },
-        {
-          icon: Copy,
-          key: 'copy',
-          label: text?.copy || 'Copy',
-        },
-        {
-          icon: RotateCw,
-          key: 'regenerate',
-          label: text?.regenerate || 'Regenerate',
-        },
-        {
-          type: 'divider',
-        },
-        {
-          icon: Trash,
-          key: 'delete',
-          label: text?.delete || 'Delete',
-        },
-      ],
-      [primary, dropdownMenu],
-    );
-
-    return (
-      <ActionIconGroup
-        dropdownMenu={groupDropdownMenu}
-        items={groupItems}
-        type="ghost"
-        {...props}
-      />
-    );
-  },
-);
+const ActionsBar = memo<ActionsBarProps & ChatMessage>(({ role, text, ...props }) => {
+  const { regenerate, edit, copy, divider, del } = useChatListActionsBar(text);
+  return (
+    <ActionIconGroup
+      dropdownMenu={[edit, copy, regenerate, divider, del]}
+      items={[regenerate, role === 'user' ? edit : copy]}
+      type="ghost"
+      {...props}
+    />
+  );
+});
 
 export default ActionsBar;

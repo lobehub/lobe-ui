@@ -34,7 +34,7 @@ const ChatItem = memo<ChatItemProps>(
     messageExtra,
     renderMessage,
     text,
-    ErrorMessage,
+    errorMessage,
     ...props
   }) => {
     const { mobile } = useResponsive();
@@ -80,7 +80,7 @@ const ChatItem = memo<ChatItemProps>(
             gap={8}
           >
             {error ? (
-              <ErrorContent ErrorMessage={ErrorMessage} error={error} placement={placement} />
+              <ErrorContent error={error} message={errorMessage} placement={placement} />
             ) : (
               <MessageContent
                 editing={editing}
