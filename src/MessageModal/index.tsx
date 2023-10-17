@@ -76,13 +76,13 @@ const MessageModal = memo<MessageModalProps>(
 
     return (
       <Modal
-        bodyStyle={mobile ? { padding: 16 } : {}}
         cancelText={text?.cancel || 'Cancel'}
         footer={isEdit ? null : undefined}
         okText={text?.edit || 'Edit'}
         onCancel={() => setExpand(false)}
         onOk={() => setTyping(true)}
         open={expand}
+        styles={mobile ? { body: { padding: 16 } } : {}}
         title={text?.title || 'Prompt'}
       >
         {isEdit ? (

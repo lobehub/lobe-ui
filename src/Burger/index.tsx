@@ -59,13 +59,15 @@ const Burger = memo<BurgerProps>(
       >
         <ActionIcon icon={opened ? X : MenuIcon} size="site" />
         <Drawer
-          bodyStyle={{ padding: 0 }}
           className={styles.drawer}
           closeIcon={undefined}
-          headerStyle={{ display: 'none' }}
           open={opened}
           placement={'left'}
           rootClassName={styles.drawerRoot}
+          styles={{
+            body: { padding: 0 },
+            header: { display: 'none' },
+          }}
           width={'100vw'}
         >
           <Menu

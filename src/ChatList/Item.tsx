@@ -24,7 +24,7 @@ export interface ListItemProps {
    * @description 点击操作按钮的回调函数
    */
   onActionsClick?: {
-    [role: RenderRole]: OnActionClick;
+    [actionKey: string]: OnActionClick;
   };
   /**
    * @description 消息变化的回调函数
@@ -109,7 +109,7 @@ const Item = memo<ChatListItemProps>((props) => {
   }, [renderItems?.[item.role]]);
 
   const RenderMessage = useCallback(
-    ({ editableContent, data }: { data: ChatMessage, editableContent: ReactNode; }) => {
+    ({ editableContent, data }: { data: ChatMessage; editableContent: ReactNode }) => {
       if (!renderMessages || !item?.role) return;
       let RenderFunction;
       if (renderMessages?.[item.role]) RenderFunction = renderMessages[item.role];
@@ -147,22 +147,6 @@ const Item = memo<ChatListItemProps>((props) => {
     [renderErrorMessages?.[item?.error?.type]],
   );
 
-  const onActionClick = useCallback(
-    (actionKey: string, data: ChatMessage) => {
-      if (!actionKey) return;
-      const handleActionClick: { [role: RenderRole]: OnActionClick } = {
-        copy: (data) => {
-          copy(data.content);
-          message.success(text?.copySuccess || 'Copy Success');
-        },
-        edit: () => setEditing(true),
-        ...onActionsClick,
-      };
-      return () => handleActionClick?.[actionKey]?.(data);
-    },
-    [onActionsClick?.[item.role], text],
-  );
-
   const Actions = useCallback(
     ({ data }: { data: ChatMessage }) => {
       if (!renderActions || !item?.role) return;
@@ -170,15 +154,25 @@ const Item = memo<ChatListItemProps>((props) => {
       if (renderActions?.[item.role]) RenderFunction = renderActions[item.role];
       if (renderActions?.['default']) RenderFunction = renderActions['default'];
       if (!RenderFunction) RenderFunction = ActionsBar;
+
+      const handleActionClick: ListItemProps['onActionsClick'] = {
+        copy: ({ content }) => {
+          copy(content);
+          message.success(text?.copySuccess || 'Copy Success');
+        },
+        edit: () => setEditing(true),
+        ...onActionsClick,
+      };
+
       return (
         <RenderFunction
           {...data}
-          onActionClick={(actionKey) => onActionClick(actionKey, data)}
+          onActionClick={(actionKey) => handleActionClick?.[actionKey]?.(data)}
           text={text}
         />
       );
     },
-    [renderActions?.[item.role], text, onActionClick],
+    [renderActions?.[item.role], text, onActionsClick],
   );
 
   const error = useMemo(() => {

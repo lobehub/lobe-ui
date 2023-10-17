@@ -16,7 +16,7 @@ const Actions = memo<ActionsProps>(({ actions, placement, type, editing }) => {
   const { styles } = useStyles({ editing, placement, type });
 
   return (
-    <Flexbox align={'flex-start'} className={styles.actions} role="widget">
+    <Flexbox align={'flex-start'} className={styles.actions} role="menubar">
       {actions}
     </Flexbox>
   );

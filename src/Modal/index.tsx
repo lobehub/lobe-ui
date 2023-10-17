@@ -51,7 +51,6 @@ const Modal = memo<ModalProps>(
     onCancel,
     open,
     destroyOnClose,
-    bodyStyle,
     ...props
   }) => {
     const { mobile } = useResponsive();
@@ -60,18 +59,21 @@ const Modal = memo<ModalProps>(
     if (mobile)
       return (
         <Drawer
-          bodyStyle={bodyStyle || { padding: 0 }}
           closeIcon={<ActionIcon icon={X} size={{ blockSize: 32, fontSize: 20 }} />}
           destroyOnClose={destroyOnClose}
           drawerStyle={{
             background: `linear-gradient(to bottom, ${theme.colorBgContainer}, ${theme.colorBgLayout})`,
           }}
-          headerStyle={{ padding: '8px 4px' }}
           height={'75vh'}
           maskClassName={cx(styles.wrap, wrapClassName)}
           onClose={onCancel as any}
           open={open}
           placement={'bottom'}
+          styles={{
+            body: { padding: 0 },
+            header: { padding: '8px 4px' },
+            ...props.styles,
+          }}
           title={title}
         >
           {children}
@@ -87,7 +89,6 @@ const Modal = memo<ModalProps>(
         }}
       >
         <AntModal
-          bodyStyle={bodyStyle}
           className={cx(styles.content, className)}
           closable
           closeIcon={<Icon icon={X} size={{ fontSize: 20 }} />}
