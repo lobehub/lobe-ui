@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.104.0](https://github.com/lobehub/lobe-ui/compare/v1.103.3...v1.104.0)
+
+<sup>Released on **2023-10-17**</sup>
+
+#### ✨ Features
+
+- **misc**: Update ChatList onActionsClick.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update ChatList onActionsClick ([1113677](https://github.com/lobehub/lobe-ui/commit/1113677))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.103.3](https://github.com/lobehub/lobe-ui/compare/v1.103.2...v1.103.3)
 
 <sup>Released on **2023-10-17**</sup>
