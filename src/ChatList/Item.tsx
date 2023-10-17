@@ -12,7 +12,7 @@ export type OnMessageChange = (id: string, content: string) => void;
 export type OnActionClick = (actionKey: string, messageId: string) => void;
 export type RenderRole = LLMRoleType | 'default' | string;
 export type RenderItem = FC<{ key: string } & ChatMessage & ListItemProps>;
-export type RenderMessage = FC<ChatMessage>;
+export type RenderMessage = FC<ChatMessage & { editableContent: ReactNode }>;
 export type RenderMessageExtra = FC<ChatMessage>;
 export type RenderErrorMessage = FC<ChatMessage>;
 export type RenderAction = FC<ActionsBarProps & ChatMessage>;
@@ -99,18 +99,22 @@ const Item = memo<ChatListItemProps>((props) => {
 
   const RenderItem = useMemo(() => {
     if (!renderItems || !item?.role) return;
-    if (renderItems?.[item.role]) return renderItems[item.role];
-    if (renderItems?.['default']) return renderItems['default'];
+    let renderFunction;
+    if (renderItems?.[item.role]) renderFunction = renderItems[item.role];
+    if (!renderFunction && renderItems?.['default']) renderFunction = renderItems['default'];
+    if (!renderFunction) return;
+    return renderFunction;
   }, [renderItems, item]);
 
   const innerRenderMessage = useCallback(
-    (content: ReactNode) => {
+    (editableContent: ReactNode) => {
       if (!renderMessages || !item?.role) return;
       let RenderFunction;
       if (renderMessages?.[item.role]) RenderFunction = renderMessages[item.role];
-      if (renderMessages?.['default']) RenderFunction = renderMessages['default'];
+      if (!RenderFunction && renderMessages?.['default'])
+        RenderFunction = renderMessages['default'];
       if (!RenderFunction) return;
-      return <RenderFunction {...item} content={content as any} />;
+      return <RenderFunction {...item} editableContent={editableContent} />;
     },
     [renderMessages, item],
   );
@@ -120,7 +124,7 @@ const Item = memo<ChatListItemProps>((props) => {
     let RenderFunction;
     if (renderMessagesExtra?.[item.role]) RenderFunction = renderMessagesExtra[item.role];
     if (renderMessagesExtra?.['default']) RenderFunction = renderMessagesExtra['default'];
-    if (!RenderFunction) return;
+    if (!RenderFunction && !RenderFunction) return;
     return <RenderFunction {...item} />;
   }, [renderMessagesExtra, item]);
 
@@ -129,7 +133,8 @@ const Item = memo<ChatListItemProps>((props) => {
     let RenderFunction;
     if (renderErrorMessages?.[item.error.type])
       RenderFunction = renderErrorMessages[item.error.type];
-    if (renderErrorMessages?.['default']) RenderFunction = renderErrorMessages['default'];
+    if (!RenderFunction && renderErrorMessages?.['default'])
+      RenderFunction = renderErrorMessages['default'];
     if (!RenderFunction) return;
     return <RenderFunction {...item} />;
   }, [renderErrorMessages, item.error]);
