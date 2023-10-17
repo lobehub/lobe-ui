@@ -64,17 +64,18 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
     return (
       <div className={styles.container} {...props}>
         {spotlight && <Spotlight />}
-        {items.map((item) => (
-          <ActionIcon
-            icon={item.icon}
-            key={item.key}
-            onClick={onActionClick ? () => onActionClick?.(item.key) : undefined}
-            placement={tooltipsPlacement}
-            size="small"
-            title={item.label}
-          />
-        ))}
-        {dropdownMenu && (
+        {items?.length > 0 &&
+          items.map((item) => (
+            <ActionIcon
+              icon={item.icon}
+              key={item.key}
+              onClick={onActionClick ? () => onActionClick?.(item.key) : undefined}
+              placement={tooltipsPlacement}
+              size="small"
+              title={item.label}
+            />
+          ))}
+        {dropdownMenu?.length > 0 && (
           <Dropdown
             menu={{
               items: dropdownMenu.map((item: any) => {

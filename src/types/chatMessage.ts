@@ -25,14 +25,7 @@ export interface ChatMessage extends BaseDataModel {
   content: string;
   error?: any;
   // 扩展字段
-  extra?: {
-    fromModel?: string;
-    // 翻译
-    translate?: {
-      target: string;
-      to: string;
-    };
-  } & Record<string, any>;
+  extra?: any;
 
   /**
    * replace with plugin

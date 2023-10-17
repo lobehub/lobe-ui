@@ -21,6 +21,7 @@ export type {
   RenderMessageExtra,
 } from './ChatList';
 export { default as ChatList } from './ChatList';
+export { default as ActionsBar, type ActionsBarProps } from './ChatList/ActionsBar';
 export { default as CodeEditor, type CodeEditorProps } from './CodeEditor';
 export { default as ColorScales, type ColorScalesProps } from './ColorScales';
 export { type Config, default as ConfigProvider, useCdnFn } from './ConfigProvider';
