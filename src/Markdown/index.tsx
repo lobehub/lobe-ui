@@ -19,11 +19,12 @@ export interface MarkdownProps {
    */
   className?: string;
   fullFeaturedCodeBlock?: boolean;
+  onDoubleClick?: () => void;
   style?: CSSProperties;
 }
 
 const Markdown = memo<MarkdownProps>(
-  ({ children, className, style, fullFeaturedCodeBlock, ...props }) => {
+  ({ children, className, style, fullFeaturedCodeBlock, onDoubleClick, ...props }) => {
     const { styles } = useStyles();
     const components: any = {
       a: Typography.Link,
@@ -34,7 +35,7 @@ const Markdown = memo<MarkdownProps>(
     };
 
     return (
-      <Typography className={className} style={style}>
+      <Typography className={className} onDoubleClick={onDoubleClick} style={style}>
         <ErrorBoundary
           fallback={
             <ReactMarkdown

@@ -196,6 +196,7 @@ const Item = memo<ChatListItemProps>((props) => {
       message={item.content}
       messageExtra={<MessageExtra data={item} />}
       onChange={(value) => onMessageChange?.(item.id, value)}
+      onDoubleClick={(e) => e.altKey && setEditing(true)}
       onEditingChange={setEditing}
       placement={type === 'chat' ? (item.role === 'user' ? 'right' : 'left') : 'left'}
       primary={item.role === 'user'}

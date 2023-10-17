@@ -7,11 +7,12 @@ import EditableMessage from '@/EditableMessage';
 
 import { useStyles } from '../style';
 
-export interface LoadingProps {
+export interface MessageContentProps {
   editing?: ChatItemProps['editing'];
   message?: ReactNode;
   messageExtra?: ChatItemProps['messageExtra'];
   onChange?: ChatItemProps['onChange'];
+  onDoubleClick?: ChatItemProps['onDoubleClick'];
   onEditingChange?: ChatItemProps['onEditingChange'];
   placement?: ChatItemProps['placement'];
   primary?: ChatItemProps['primary'];
@@ -20,7 +21,7 @@ export interface LoadingProps {
   type?: ChatItemProps['type'];
 }
 
-const Loading = memo<LoadingProps>(
+const MessageContent = memo<MessageContentProps>(
   ({
     editing,
     onChange,
@@ -32,6 +33,7 @@ const Loading = memo<LoadingProps>(
     renderMessage,
     type,
     primary,
+    onDoubleClick,
   }) => {
     const { cx, styles } = useStyles({ editing, placement, primary, type });
     const { mobile } = useResponsive();
@@ -52,7 +54,10 @@ const Loading = memo<LoadingProps>(
     const messageContent = renderMessage ? renderMessage(content) : content;
 
     return (
-      <Flexbox className={cx(styles.message, editing && styles.editingContainer)}>
+      <Flexbox
+        className={cx(styles.message, editing && styles.editingContainer)}
+        onDoubleClick={onDoubleClick}
+      >
         {messageContent}
         {messageExtra && !editing ? (
           <div className={styles.messageExtra}>{messageExtra}</div>
@@ -62,4 +67,4 @@ const Loading = memo<LoadingProps>(
   },
 );
 
-export default Loading;
+export default MessageContent;

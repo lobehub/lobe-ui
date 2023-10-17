@@ -35,6 +35,7 @@ const ChatItem = memo<ChatItemProps>(
     renderMessage,
     text,
     errorMessage,
+    onDoubleClick,
     ...props
   }) => {
     const { mobile } = useResponsive();
@@ -87,6 +88,7 @@ const ChatItem = memo<ChatItemProps>(
                 message={message}
                 messageExtra={messageExtra}
                 onChange={onChange}
+                onDoubleClick={onDoubleClick}
                 onEditingChange={onEditingChange}
                 placement={placement}
                 primary={primary}

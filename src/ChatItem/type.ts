@@ -2,7 +2,7 @@ import { AlertProps } from 'antd';
 import { ReactNode } from 'react';
 
 import { EditableMessageProps } from '@/EditableMessage';
-import { MetaData } from '@/types';
+import { DivProps, MetaData } from '@/types';
 
 export interface ChatItemProps {
   /**
@@ -42,6 +42,7 @@ export interface ChatItemProps {
    * @param value - The new message content
    */
   onChange?: (value: string) => void;
+  onDoubleClick?: DivProps['onDoubleClick'];
   /**
    * @description Callback when the editing mode changes
    * @param editing - The new editing mode
