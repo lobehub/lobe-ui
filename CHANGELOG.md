@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.103.3](https://github.com/lobehub/lobe-ui/compare/v1.103.2...v1.103.3)
+
+<sup>Released on **2023-10-17**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix ChatList render.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix ChatList render ([71a2701](https://github.com/lobehub/lobe-ui/commit/71a2701))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.103.2](https://github.com/lobehub/lobe-ui/compare/v1.103.1...v1.103.2)
 
 <sup>Released on **2023-10-16**</sup>
