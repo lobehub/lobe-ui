@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.106.0](https://github.com/lobehub/lobe-ui/compare/v1.105.0...v1.106.0)
+
+<sup>Released on **2023-10-17**</sup>
+
+#### ✨ Features
+
+- **misc**: Enable double-click functionality in Item component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Enable double-click functionality in Item component ([498f004](https://github.com/lobehub/lobe-ui/commit/498f004))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.105.0](https://github.com/lobehub/lobe-ui/compare/v1.104.3...v1.105.0)
 
 <sup>Released on **2023-10-17**</sup>
