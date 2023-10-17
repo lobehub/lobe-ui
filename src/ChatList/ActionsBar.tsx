@@ -2,7 +2,6 @@ import { memo } from 'react';
 
 import ActionIconGroup, { type ActionIconGroupProps } from '@/ActionIconGroup';
 import { useChatListActionsBar } from '@/hooks/useChatListActionsBar';
-import { ChatMessage } from '@/types';
 
 export interface ActionsBarProps extends ActionIconGroupProps {
   text?: {
@@ -13,12 +12,12 @@ export interface ActionsBarProps extends ActionIconGroupProps {
   };
 }
 
-const ActionsBar = memo<ActionsBarProps & ChatMessage>(({ role, text, ...props }) => {
+const ActionsBar = memo<ActionsBarProps>(({ text, ...props }) => {
   const { regenerate, edit, copy, divider, del } = useChatListActionsBar(text);
   return (
     <ActionIconGroup
       dropdownMenu={[edit, copy, regenerate, divider, del]}
-      items={[regenerate, role === 'user' ? edit : copy]}
+      items={[regenerate, edit]}
       type="ghost"
       {...props}
     />
