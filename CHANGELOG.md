@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.105.0](https://github.com/lobehub/lobe-ui/compare/v1.104.3...v1.105.0)
+
+<sup>Released on **2023-10-17**</sup>
+
+#### ✨ Features
+
+- **misc**: Add onDoubleClick prop to multiple components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add onDoubleClick prop to multiple components ([01eaf3c](https://github.com/lobehub/lobe-ui/commit/01eaf3c))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.104.3](https://github.com/lobehub/lobe-ui/compare/v1.104.2...v1.104.3)
 
 <sup>Released on **2023-10-17**</sup>
