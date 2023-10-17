@@ -27,7 +27,7 @@ export type {
 
 const ChatList = memo<ChatListProps>(
   ({
-    onActionClick,
+    onActionsClick,
     renderMessagesExtra,
     className,
     data,
@@ -51,7 +51,7 @@ const ChatList = memo<ChatListProps>(
         {data.map((item, index) => {
           const itemProps = {
             loading: loadingId === item.id,
-            onActionClick,
+            onActionsClick,
             onMessageChange,
             renderActions,
             renderErrorMessages,

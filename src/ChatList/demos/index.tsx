@@ -17,12 +17,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <ChatList
-        data={data}
-        style={{ width: '100%' }}
-        {...control}
-        onActionClick={(key) => console.log(key)}
-      />
+      <ChatList data={data} style={{ width: '100%' }} {...control} />
     </StoryBook>
   );
 };

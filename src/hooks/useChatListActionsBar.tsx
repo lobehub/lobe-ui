@@ -24,7 +24,7 @@ export const useChatListActionsBar = (text?: {
     },
     del: {
       icon: Trash,
-      key: 'delete',
+      key: 'del',
       label: text?.delete || 'Delete',
     },
     divider: {

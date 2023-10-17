@@ -9,7 +9,7 @@ import { LLMRoleType } from '@/types/llm';
 import ActionsBar, { type ActionsBarProps } from './ActionsBar';
 
 export type OnMessageChange = (id: string, content: string) => void;
-export type OnActionClick = (actionKey: string, messageId: string) => void;
+export type OnActionClick = (props: ChatMessage) => void;
 export type RenderRole = LLMRoleType | 'default' | string;
 export type RenderItem = FC<{ key: string } & ChatMessage & ListItemProps>;
 export type RenderMessage = FC<ChatMessage & { editableContent: ReactNode }>;
@@ -23,13 +23,15 @@ export interface ListItemProps {
   /**
    * @description 点击操作按钮的回调函数
    */
-  onActionClick?: OnActionClick;
+  onActionsClick?: {
+    [role: RenderRole]: OnActionClick;
+  };
   /**
    * @description 消息变化的回调函数
    */
   onMessageChange?: OnMessageChange;
   renderActions?: {
-    [role: RenderRole]: RenderAction;
+    [actionKey: string]: RenderAction;
   };
   /**
    * @description 渲染错误消息的函数
@@ -80,7 +82,7 @@ const Item = memo<ChatListItemProps>((props) => {
   const {
     renderMessagesExtra,
     showTitle,
-    onActionClick,
+    onActionsClick,
     onMessageChange,
     type,
     text,
@@ -104,68 +106,80 @@ const Item = memo<ChatListItemProps>((props) => {
     if (!renderFunction && renderItems?.['default']) renderFunction = renderItems['default'];
     if (!renderFunction) return;
     return renderFunction;
-  }, [renderItems, item]);
+  }, [renderItems?.[item.role]]);
 
-  const innerRenderMessage = useCallback(
-    (editableContent: ReactNode) => {
+  const RenderMessage = useCallback(
+    ({ editableContent, data }: { data: ChatMessage, editableContent: ReactNode; }) => {
       if (!renderMessages || !item?.role) return;
       let RenderFunction;
       if (renderMessages?.[item.role]) RenderFunction = renderMessages[item.role];
       if (!RenderFunction && renderMessages?.['default'])
         RenderFunction = renderMessages['default'];
       if (!RenderFunction) return;
-      return <RenderFunction {...item} editableContent={editableContent} />;
+      return <RenderFunction {...data} editableContent={editableContent} />;
     },
-    [renderMessages, item],
+    [renderMessages?.[item.role]],
   );
 
-  const MessageExtra = useCallback(() => {
-    if (!renderMessagesExtra || !item?.role) return;
-    let RenderFunction;
-    if (renderMessagesExtra?.[item.role]) RenderFunction = renderMessagesExtra[item.role];
-    if (renderMessagesExtra?.['default']) RenderFunction = renderMessagesExtra['default'];
-    if (!RenderFunction && !RenderFunction) return;
-    return <RenderFunction {...item} />;
-  }, [renderMessagesExtra, item]);
+  const MessageExtra = useCallback(
+    ({ data }: { data: ChatMessage }) => {
+      if (!renderMessagesExtra || !item?.role) return;
+      let RenderFunction;
+      if (renderMessagesExtra?.[item.role]) RenderFunction = renderMessagesExtra[item.role];
+      if (renderMessagesExtra?.['default']) RenderFunction = renderMessagesExtra['default'];
+      if (!RenderFunction && !RenderFunction) return;
+      return <RenderFunction {...data} />;
+    },
+    [renderMessagesExtra?.[item.role]],
+  );
 
-  const ErrorMessage = useCallback(() => {
-    if (!renderErrorMessages || !item?.error?.type) return;
-    let RenderFunction;
-    if (renderErrorMessages?.[item.error.type])
-      RenderFunction = renderErrorMessages[item.error.type];
-    if (!RenderFunction && renderErrorMessages?.['default'])
-      RenderFunction = renderErrorMessages['default'];
-    if (!RenderFunction) return;
-    return <RenderFunction {...item} />;
-  }, [renderErrorMessages, item.error]);
+  const ErrorMessage = useCallback(
+    ({ data }: { data: ChatMessage }) => {
+      if (!renderErrorMessages || !item?.error?.type) return;
+      let RenderFunction;
+      if (renderErrorMessages?.[item.error.type])
+        RenderFunction = renderErrorMessages[item.error.type];
+      if (!RenderFunction && renderErrorMessages?.['default'])
+        RenderFunction = renderErrorMessages['default'];
+      if (!RenderFunction) return;
+      return <RenderFunction {...data} />;
+    },
+    [renderErrorMessages?.[item?.error?.type]],
+  );
 
-  const Actions = useCallback(() => {
-    if (!renderActions || !item?.role) return;
-    let RenderFunction;
-    if (renderActions?.[item.role]) RenderFunction = renderActions[item.role];
-    if (renderActions?.['default']) RenderFunction = renderActions['default'];
-    if (!RenderFunction) RenderFunction = ActionsBar;
-    return (
-      <RenderFunction
-        {...item}
-        onActionClick={(actionKey) => {
-          switch (actionKey) {
-            case 'copy': {
-              copy(item.content);
-              message.success(text?.copySuccess || 'Copy Success');
-              break;
-            }
-            case 'edit': {
-              setEditing(true);
-              break;
-            }
-          }
-          onActionClick?.(actionKey, item.id);
-        }}
-        text={text}
-      />
-    );
-  }, [renderActions, item, text, onActionClick]);
+  const onActionClick = useCallback(
+    (actionKey: string, data: ChatMessage) => {
+      if (!actionKey) return;
+      const handleActionClick: { [role: RenderRole]: OnActionClick } = {
+        copy: (data) => {
+          copy(data.content);
+          message.success(text?.copySuccess || 'Copy Success');
+        },
+        edit: () => setEditing(true),
+        ...onActionsClick,
+      };
+      return () => handleActionClick?.[actionKey]?.(data);
+    },
+    [onActionsClick?.[item.role], text],
+  );
+
+  const Actions = useCallback(
+    ({ data }: { data: ChatMessage }) => {
+      if (!renderActions || !item?.role) return;
+      let RenderFunction;
+      if (renderActions?.[item.role]) RenderFunction = renderActions[item.role];
+      if (renderActions?.['default']) RenderFunction = renderActions['default'];
+      if (!RenderFunction) RenderFunction = ActionsBar;
+      return (
+        <RenderFunction
+          {...data}
+          onActionClick={(actionKey) => onActionClick(actionKey, data)}
+          text={text}
+        />
+      );
+    },
+    [renderActions?.[item.role], text, onActionClick],
+  );
 
   const error = useMemo(() => {
     if (!item.error) return;
@@ -178,20 +192,22 @@ const Item = memo<ChatListItemProps>((props) => {
 
   return (
     <ChatItem
-      actions={<Actions />}
+      actions={<Actions data={item} />}
       avatar={item.meta}
       avatarAddon={groupNav}
       editing={editing}
       error={error}
-      errorMessage={<ErrorMessage />}
+      errorMessage={<ErrorMessage data={item} />}
       loading={loading}
       message={item.content}
-      messageExtra={<MessageExtra />}
+      messageExtra={<MessageExtra data={item} />}
       onChange={(value) => onMessageChange?.(item.id, value)}
       onEditingChange={setEditing}
       placement={type === 'chat' ? (item.role === 'user' ? 'right' : 'left') : 'left'}
       primary={item.role === 'user'}
-      renderMessage={innerRenderMessage}
+      renderMessage={(editableContent) => (
+        <RenderMessage data={item} editableContent={editableContent} />
+      )}
       showTitle={showTitle}
       text={text}
       time={item.updateAt || item.createAt}
