@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.104.2](https://github.com/lobehub/lobe-ui/compare/v1.104.1...v1.104.2)
+
+<sup>Released on **2023-10-17**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Refactor ActionsBar.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Refactor ActionsBar ([5220382](https://github.com/lobehub/lobe-ui/commit/5220382))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.104.1](https://github.com/lobehub/lobe-ui/compare/v1.104.0...v1.104.1)
 
 <sup>Released on **2023-10-17**</sup>
