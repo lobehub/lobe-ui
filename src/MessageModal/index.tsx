@@ -1,17 +1,18 @@
 import { useResponsive } from 'antd-style';
-import { CSSProperties, memo } from 'react';
+import { CSSProperties, ReactNode, memo } from 'react';
 import useControlledState from 'use-merge-value';
 
 import Markdown from '@/Markdown';
 import MessageInput, { type MessageInputProps } from '@/MessageInput';
-import Modal from '@/Modal';
+import Modal, { type ModalProps } from '@/Modal';
 
-export interface MessageModalProps {
+export interface MessageModalProps extends Pick<ModalProps, 'open' | 'footer'> {
   /**
    * @description Whether the message is being edited or not
    * @default false
    */
   editing?: boolean;
+  extra?: ReactNode;
   height?: MessageInputProps['height'];
   /**
    * @description Callback fired when message content is changed
@@ -29,7 +30,6 @@ export interface MessageModalProps {
    * @description Whether the modal is open or not
    * @default false
    */
-  open?: boolean;
   placeholder?: string;
   text?: {
     cancel?: string;
@@ -54,6 +54,8 @@ const MessageModal = memo<MessageModalProps>(
     value,
     onChange,
     text,
+    footer,
+    extra,
   }) => {
     const { mobile } = useResponsive();
 
@@ -77,7 +79,7 @@ const MessageModal = memo<MessageModalProps>(
     return (
       <Modal
         cancelText={text?.cancel || 'Cancel'}
-        footer={isEdit ? null : undefined}
+        footer={isEdit ? null : footer}
         okText={text?.edit || 'Edit'}
         onCancel={() => setExpand(false)}
         onOk={() => setTyping(true)}
@@ -102,9 +104,12 @@ const MessageModal = memo<MessageModalProps>(
             type={'block'}
           />
         ) : (
-          <Markdown style={value ? markdownStyle : { ...markdownStyle, opacity: 0.5 }}>
-            {String(value || placeholder)}
-          </Markdown>
+          <>
+            {extra}
+            <Markdown style={value ? markdownStyle : { ...markdownStyle, opacity: 0.5 }}>
+              {String(value || placeholder)}
+            </Markdown>
+          </>
         )}
       </Modal>
     );

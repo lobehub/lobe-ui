@@ -29,6 +29,10 @@ export interface EditableMessageProps {
   fullFeaturedCodeBlock?: boolean;
   height?: MessageInputProps['height'];
   inputType?: MessageInputProps['type'];
+  model?: {
+    extra?: MessageModalProps['extra'];
+    footer?: MessageModalProps['footer'];
+  };
   /**
    * @title Callback function when the value changes
    * @param value - The new value
@@ -89,6 +93,7 @@ const EditableMessage = memo<EditableMessageProps>(
     editButtonSize,
     text,
     fullFeaturedCodeBlock,
+    model,
   }) => {
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
@@ -144,6 +149,8 @@ const EditableMessage = memo<EditableMessageProps>(
         )}
         <MessageModal
           editing={isEdit}
+          extra={model?.extra}
+          footer={model?.footer}
           height={height}
           onChange={(text) => onChange?.(text)}
           onEditingChange={setTyping}
