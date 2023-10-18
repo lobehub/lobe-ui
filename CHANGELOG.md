@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.107.0](https://github.com/lobehub/lobe-ui/compare/v1.106.2...v1.107.0)
+
+<sup>Released on **2023-10-18**</sup>
+
+#### ✨ Features
+
+- **misc**: Add onClick and style props to Avatar component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add onClick and style props to Avatar component ([d31caba](https://github.com/lobehub/lobe-ui/commit/d31caba))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.106.2](https://github.com/lobehub/lobe-ui/compare/v1.106.1...v1.106.2)
 
 <sup>Released on **2023-10-18**</sup>
