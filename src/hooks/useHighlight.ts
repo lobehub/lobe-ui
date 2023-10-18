@@ -14,17 +14,21 @@ let cacheHighlighter: Highlighter;
 const initHighlighter = async (lang: string): Promise<Highlighter> => {
   let highlighter = cacheHighlighter;
   const language = lang.toLowerCase()
-  if (highlighter && FALLBACK_LANGS.includes(language)) {
-    return highlighter;
-  } else {
-    if (languageMap.includes(language) && !FALLBACK_LANGS.includes(language)) FALLBACK_LANGS.push(language);
-    highlighter = await getHighlighter({
-      langs: FALLBACK_LANGS,
-      themes: [themeConfig(true), themeConfig(false)],
-    });
-    cacheHighlighter = highlighter;
-    return highlighter;
+  
+  if (highlighter && FALLBACK_LANGS.includes(language)) return highlighter
+
+  if (languageMap.includes(language) && !FALLBACK_LANGS.includes(language)) {
+    FALLBACK_LANGS.push(language);
   }
+  
+  highlighter = await getHighlighter({
+    langs: FALLBACK_LANGS,
+    themes: [themeConfig(true), themeConfig(false)],
+  });
+  
+  cacheHighlighter = highlighter;
+  
+  return highlighter;
 };
 
 export const useHighlight = (text: string, lang: string, isDarkMode: boolean) =>
