@@ -13,6 +13,12 @@ export interface ActionIconGroupItems {
   label: string;
 }
 
+export interface ActionEvent {
+  item: ActionIconGroupItems;
+  key: string;
+  keyPath: string[];
+}
+
 export interface ActionIconGroupProps extends DivProps {
   /**
    * @description The direction of the icons
@@ -28,7 +34,7 @@ export interface ActionIconGroupProps extends DivProps {
    * @default []
    */
   items?: ActionIconGroupItems[];
-  onActionClick?: (key: string) => void;
+  onActionClick?: (action: ActionEvent) => void;
   /**
    * @description The position of the tooltip relative to the target
    * @enum ["top","left","right","bottom","topLeft","topRight","bottomLeft","bottomRight","leftTop","leftBottom","rightTop","rightBottom"]
@@ -69,7 +75,11 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
             <ActionIcon
               icon={item.icon}
               key={item.key}
-              onClick={onActionClick ? () => onActionClick?.(item.key) : undefined}
+              onClick={
+                onActionClick
+                  ? () => onActionClick?.({ item, key: item.key, keyPath: [item.key] })
+                  : undefined
+              }
               placement={tooltipsPlacement}
               size="small"
               title={item.label}
@@ -83,7 +93,14 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
                 return {
                   ...item,
                   icon: <Icon icon={item.icon} size="small" />,
-                  onClick: onActionClick ? () => onActionClick(item.key) : undefined,
+                  onClick: onActionClick
+                    ? (info: ActionEvent) =>
+                        onActionClick({
+                          item,
+                          key: info.key,
+                          keyPath: info.keyPath,
+                        })
+                    : undefined,
                 };
               }),
             }}

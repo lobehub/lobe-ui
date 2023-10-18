@@ -44,9 +44,8 @@ export default () => {
           <ActionIconGroup
             dropdownMenu={dropdownMenu}
             items={items}
-            onActionClick={(key) => {
-              console.log(key);
-              if (key === 'edit') {
+            onActionClick={(action) => {
+              if (action.key === 'edit') {
                 setEdit(true);
               }
             }}

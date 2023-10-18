@@ -2,6 +2,7 @@ import { App } from 'antd';
 import copy from 'copy-to-clipboard';
 import { FC, ReactNode, memo, useCallback, useMemo, useState } from 'react';
 
+import { ActionEvent } from '@/ActionIconGroup';
 import ChatItem, { type ChatItemProps } from '@/ChatItem';
 import { ChatMessage } from '@/types/chatMessage';
 import { LLMRoleType } from '@/types/llm';
@@ -9,7 +10,7 @@ import { LLMRoleType } from '@/types/llm';
 import ActionsBar, { type ActionsBarProps } from './ActionsBar';
 
 export type OnMessageChange = (id: string, content: string) => void;
-export type OnActionClick = (props: ChatMessage) => void;
+export type OnActionClick = (action: ActionEvent, message: ChatMessage) => void;
 export type RenderRole = LLMRoleType | 'default' | string;
 export type RenderItem = FC<{ key: string } & ChatMessage & ListItemProps>;
 export type RenderMessage = FC<ChatMessage & { editableContent: ReactNode }>;
@@ -23,9 +24,7 @@ export interface ListItemProps {
   /**
    * @description 点击操作按钮的回调函数
    */
-  onActionsClick?: {
-    [actionKey: string]: OnActionClick;
-  };
+  onActionsClick?: OnActionClick;
   /**
    * @description 消息变化的回调函数
    */
@@ -155,19 +154,25 @@ const Item = memo<ChatListItemProps>((props) => {
       if (renderActions?.['default']) RenderFunction = renderActions['default'];
       if (!RenderFunction) RenderFunction = ActionsBar;
 
-      const handleActionClick: ListItemProps['onActionsClick'] = {
-        copy: ({ content }) => {
-          copy(content);
-          message.success(text?.copySuccess || 'Copy Success');
-        },
-        edit: () => setEditing(true),
-        ...onActionsClick,
+      const handleActionClick: ListItemProps['onActionsClick'] = (action, data) => {
+        switch (action.key) {
+          case 'copy': {
+            copy(data.content);
+            message.success(text?.copySuccess || 'Copy Success');
+            break;
+          }
+          case 'edit': {
+            setEditing(true);
+          }
+        }
+
+        onActionsClick?.(action, data);
       };
 
       return (
         <RenderFunction
           {...data}
-          onActionClick={(actionKey) => handleActionClick?.[actionKey]?.(data)}
+          onActionClick={(actionKey) => handleActionClick?.(actionKey, data)}
           text={text}
         />
       );
