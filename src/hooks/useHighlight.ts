@@ -3,7 +3,9 @@ import useSWR from 'swr';
 
 import { themeConfig } from '@/Highlighter/theme';
 
-export const FALLBACK_LANG = 'markdown';
+import languageMap from './languageMap'
+
+export const FALLBACK_LANG = 'txt';
 
 const FALLBACK_LANGS = [FALLBACK_LANG];
 
@@ -29,7 +31,7 @@ export const useHighlight = (text: string, language: string, isDarkMode: boolean
     try {
       const highlighter = await initHighlighter(language);
       const html = highlighter?.codeToHtml(text, {
-        lang: language,
+        lang: languageMap.includes(language) ? language : FALLBACK_LANG,
         theme: isDarkMode ? 'dark' : 'light',
       });
       return html;
