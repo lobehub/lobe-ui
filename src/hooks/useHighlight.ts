@@ -34,8 +34,8 @@ const initHighlighter = async (lang: string): Promise<Highlighter> => {
 export const useHighlight = (text: string, lang: string, isDarkMode: boolean) =>
   useSWR([lang.toLowerCase(), isDarkMode ? 'dark' : 'light', text].join('-'), async () => {
     try {
-      const highlighter = await initHighlighter(language);
       const language = lang.toLowerCase()
+      const highlighter = await initHighlighter(language);
       const html = highlighter?.codeToHtml(text, {
         lang: languageMap.includes(language) ? language : FALLBACK_LANG,
         theme: isDarkMode ? 'dark' : 'light',
