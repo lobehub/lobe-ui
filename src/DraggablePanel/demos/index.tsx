@@ -5,18 +5,7 @@ import {
   useControls,
   useCreateStore,
 } from '@lobehub/ui';
-import styled from 'styled-components';
-
-const View = styled.div`
-  position: relative;
-  display: flex;
-  width: 100%;
-  height: 100%;
-`;
-
-const Container = styled.div`
-  padding: 24px;
-`;
+import { Flexbox } from 'react-layout-kit';
 
 export default () => {
   const store = useCreateStore();
@@ -49,25 +38,33 @@ export default () => {
 
   return (
     <StoryBook levaStore={store} noPadding>
-      <View
-        style={['top', 'bottom'].includes(control.placement) ? { flexDirection: 'column' } : {}}
+      <Flexbox
+        style={
+          ['top', 'bottom'].includes(control.placement)
+            ? { flexDirection: 'column', position: 'relative' }
+            : { position: 'relative' }
+        }
       >
         {['top', 'left'].includes(control.placement) ? (
           <>
             <DraggablePanel {...control}>
-              <Container>Draggable Panel</Container>
+              <Flexbox padding={24}>Draggable Panel</Flexbox>
             </DraggablePanel>
-            <Container style={{ flex: 1 }}>Content</Container>
+            <Flexbox padding={24} style={{ flex: 1 }}>
+              Content
+            </Flexbox>
           </>
         ) : (
           <>
-            <Container style={{ flex: 1 }}>Content</Container>
+            <Flexbox padding={24} style={{ flex: 1 }}>
+              Content
+            </Flexbox>
             <DraggablePanel {...control}>
-              <Container>Draggable Panel</Container>
+              <Flexbox padding={24}>Draggable Panel</Flexbox>
             </DraggablePanel>
           </>
         )}
-      </View>
+      </Flexbox>
     </StoryBook>
   );
 };

@@ -6,10 +6,8 @@ import {
   CustomTokenParams,
   GetAntdTheme,
   StyleProvider,
-  setupStyled,
 } from 'antd-style';
-import { memo, useCallback, useEffect } from 'react';
-import { ThemeContext } from 'styled-components';
+import { memo, useCallback } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
 import FontLoader from '@/FontLoader';
@@ -63,10 +61,6 @@ const ThemeProvider = memo<ThemeProviderProps>(
       }),
       genCdnUrl({ path: 'dist/katex.min.css', pkg: 'katex', version: '0.16.8' }),
     ];
-
-    useEffect(() => {
-      setupStyled({ ThemeContext });
-    }, []);
 
     const stylish = useCallback(
       (theme: CustomStylishParams) => ({ ...lobeCustomStylish(theme), ...customStylish?.(theme) }),

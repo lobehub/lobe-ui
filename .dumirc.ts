@@ -55,18 +55,7 @@ export default defineConfig({
   define: {
     'process.env': process.env,
   },
-  extraBabelPlugins: [
-    'babel-plugin-antd-style',
-    [
-      'babel-plugin-styled-components',
-      {
-        displayName: process.env.NODE_ENV === 'development',
-        minify: isProduction,
-        pure: true,
-        transpileTemplateLiterals: true,
-      },
-    ],
-  ],
+  extraBabelPlugins: ['babel-plugin-antd-style'],
   favicons: ['https://npm.elemecdn.com/@lobehub/assets-favicons/assets/favicon.ico'],
   locales: [{ id: 'en-US', name: 'English' }],
   mfsu: isWin ? undefined : {},

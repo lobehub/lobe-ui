@@ -105,7 +105,6 @@
     "remark-gfm": "^3",
     "remark-math": "^5",
     "shikiji": "^0",
-    "styled-components": "^6",
     "swr": "^2",
     "three": "^0.150",
     "ts-md5": "^1",
@@ -143,6 +142,7 @@
     "remark": "^14",
     "remark-cli": "^11",
     "semantic-release": "^21",
+    "styled-components": "^6",
     "stylelint": "^15",
     "typescript": "^5",
     "vitest": "latest"
