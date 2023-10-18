@@ -2,6 +2,36 @@
 
 # Changelog
 
+### [Version 1.106.1](https://github.com/lobehub/lobe-ui/compare/v1.106.0...v1.106.1)
+
+<sup>Released on **2023-10-18**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix type, Update useHighlight.ts, Update useHighlight.ts, Update useHighlight.ts, Update useHighlight.ts, Update useHighlight.ts.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix type ([403fc7c](https://github.com/lobehub/lobe-ui/commit/403fc7c))
+- **misc**: Update useHighlight.ts ([c88a729](https://github.com/lobehub/lobe-ui/commit/c88a729))
+- **misc**: Update useHighlight.ts ([b8bf32d](https://github.com/lobehub/lobe-ui/commit/b8bf32d))
+- **misc**: Update useHighlight.ts ([7c259d5](https://github.com/lobehub/lobe-ui/commit/7c259d5))
+- **misc**: Update useHighlight.ts ([0a8f702](https://github.com/lobehub/lobe-ui/commit/0a8f702))
+- **misc**: Update useHighlight.ts ([1ecd5b7](https://github.com/lobehub/lobe-ui/commit/1ecd5b7))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.106.0](https://github.com/lobehub/lobe-ui/compare/v1.105.0...v1.106.0)
 
 <sup>Released on **2023-10-17**</sup>
