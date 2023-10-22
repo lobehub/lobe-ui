@@ -126,7 +126,7 @@
     "@vitest/coverage-v8": "latest",
     "antd-style": "^3",
     "babel-plugin-antd-style": "latest",
-    "commitlint": "^17",
+    "commitlint": "^18.0.0",
     "concurrently": "^8",
     "cross-env": "^7",
     "dumi": "^2",
