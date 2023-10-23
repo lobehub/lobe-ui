@@ -141,7 +141,7 @@
     "react-dom": "^18",
     "remark": "^14",
     "remark-cli": "^11",
-    "semantic-release": "^22",
+    "semantic-release": "^21",
     "styled-components": "^6",
     "stylelint": "^15",
     "typescript": "^5",
