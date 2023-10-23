@@ -132,7 +132,7 @@
     "dumi": "^2",
     "dumi-theme-lobehub": "latest",
     "eslint": "^8",
-    "father": "4.3.1",
+    "father": "4.3.6",
     "husky": "^8",
     "jsdom": "^22",
     "lint-staged": "^15.0.0",
