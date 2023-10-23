@@ -106,7 +106,7 @@
     "remark-math": "^5",
     "shikiji": "^0",
     "swr": "^2",
-    "three": "^0.15",
+    "three": "^0.157",
     "ts-md5": "^1",
     "url-join": "^5",
     "use-merge-value": "^1",
