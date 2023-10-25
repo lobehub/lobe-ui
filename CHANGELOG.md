@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.107.1](https://github.com/lobehub/lobe-ui/compare/v1.107.0...v1.107.1)
+
+<sup>Released on **2023-10-25**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix antd as peer not deps.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix antd as peer not deps ([787670a](https://github.com/lobehub/lobe-ui/commit/787670a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.107.0](https://github.com/lobehub/lobe-ui/compare/v1.106.2...v1.107.0)
 
 <sup>Released on **2023-10-18**</sup>
