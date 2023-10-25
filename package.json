@@ -82,7 +82,6 @@
     "@react-three/drei": "^9",
     "@react-three/fiber": "^8",
     "ahooks": "^3",
-    "antd": "^5",
     "chroma-js": "^2",
     "copy-to-clipboard": "^3",
     "dayjs": "^1",
