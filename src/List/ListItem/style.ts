@@ -50,7 +50,7 @@ export const useStyles = createStyles(({ css, token }) => {
 
     pin: css`
       position: absolute;
-      top: 4px;
+      top: 6px;
       right: 6px;
     `,
     time: css`
@@ -70,9 +70,11 @@ export const useStyles = createStyles(({ css, token }) => {
       white-space: nowrap;
     `,
     triangle: css`
+      width: 12px;
+      height: 12px;
+      clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
       border-radius: 2px;
-      fill: ${token.colorPrimaryBorder};
-      stroke: ${token.colorPrimaryBorder};
+      background: ${token.colorPrimaryBorder};
     `,
   };
 });

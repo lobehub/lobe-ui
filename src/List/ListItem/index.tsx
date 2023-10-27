@@ -115,14 +115,7 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps & HTMLAttributes<any>>
       >
         {pin && (
           <div className={styles.pin}>
-            <svg height="12" viewBox="0 0 200 200" width="12">
-              <polygon
-                className={styles.triangle}
-                points="0,0 200,0 200,200"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <div className={styles.triangle}></div>
           </div>
         )}
         {avatar ?? <MessageOutlined style={{ marginTop: 4 }} />}
