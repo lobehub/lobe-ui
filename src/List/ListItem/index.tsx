@@ -97,7 +97,7 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps & HTMLAttributes<any>>
     return (
       <Flexbox
         align={'flex-start'}
-        className={cx(styles.container, active && styles.active, pin && styles.pin, className)}
+        className={cx(styles.container, active && styles.active, className)}
         distribution={'space-between'}
         gap={8}
         horizontal
@@ -113,6 +113,18 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps & HTMLAttributes<any>>
         style={style}
         {...props}
       >
+        {pin && (
+          <div className={styles.pin}>
+            <svg height="12" viewBox="0 0 200 200" width="12">
+              <polygon
+                className={styles.triangle}
+                points="0,0 200,0 200,200"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+        )}
         {avatar ?? <MessageOutlined style={{ marginTop: 4 }} />}
 
         <Flexbox className={styles.content} gap={8}>

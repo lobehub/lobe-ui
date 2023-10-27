@@ -49,21 +49,15 @@ export const useStyles = createStyles(({ css, token }) => {
     `,
 
     pin: css`
-      background-color: ${token.colorFillTertiary};
-
-      &:active {
-        background-color: ${token.colorFill} !important;
-      }
-
-      &:hover {
-        background-color: ${token.colorFill};
-      }
+      position: absolute;
+      top: 4px;
+      right: 6px;
     `,
-
     time: css`
       font-size: 12px;
       color: ${token.colorTextPlaceholder};
     `,
+
     title: css`
       overflow: hidden;
 
@@ -74,6 +68,11 @@ export const useStyles = createStyles(({ css, token }) => {
       color: ${token.colorText};
       text-overflow: ellipsis;
       white-space: nowrap;
+    `,
+    triangle: css`
+      border-radius: 2px;
+      fill: ${token.colorPrimaryBorder};
+      stroke: ${token.colorPrimaryBorder};
     `,
   };
 });
