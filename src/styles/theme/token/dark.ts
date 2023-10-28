@@ -1,10 +1,10 @@
 import { AliasToken } from 'antd/es/theme/interface';
 
+import { colorScales } from '@/styles/colors/colors';
 import {
   generateColorNeutralPalette,
   generateColorPalette,
 } from '@/styles/colors/generateColorPalette';
-import { colorScales } from '@/styles/colors/colors';
 
 const primaryToken = generateColorPalette({
   appearance: 'dark',
@@ -49,8 +49,9 @@ const darkBaseToken: Partial<AliasToken> = {
   ...errorToken,
   ...infoToken,
 
-  boxShadow: '0 12px 20px 6px rgb(0 0 0 / 0.08)',
-  boxShadowSecondary: '0 2px 8px 2px rgb(0 0 0 / 0.07), 0 2px 4px -1px rgb(0 0 0 / 0.04)',
+  boxShadow: '0 20px 20px -8px rgba(0, 0, 0, 0.24)',
+  boxShadowSecondary: '0 8px 16px -4px rgba(0, 0, 0, 0.2)',
+  boxShadowTertiary: '0 3px 1px -1px rgba(26, 26, 26, 0.06)',
   colorLink: infoToken.colorInfoText,
   colorLinkActive: infoToken.colorInfoTextActive,
 

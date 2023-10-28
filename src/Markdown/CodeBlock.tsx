@@ -8,10 +8,8 @@ import { FALLBACK_LANG } from '@/hooks/useHighlight';
 const useStyles = createStyles(({ css }) => ({
   container: css`
     :not(:last-child) {
-      margin-block-start: 1em;
-      margin-block-end: 1em;
-      margin-inline-start: 0;
-      margin-inline-end: 0;
+      margin-block: 1em 1em;
+      margin-inline: 0 0;
     }
   `,
   highlight: css`
@@ -27,12 +25,12 @@ const countLines = (str: string): number => {
   return matches ? matches.length : 1;
 };
 
-const Code = memo(({ fullFeatured, ...properties }: any) => {
+const Code = memo(({ fullFeatured, ...props }: any) => {
   const { styles, cx } = useStyles();
 
-  if (!properties.children[0]) return;
+  if (!props.children[0]) return;
 
-  const { children, className } = properties.children[0].props;
+  const { children, className } = props.children[0].props;
 
   if (!children) return;
 
@@ -64,10 +62,10 @@ const Code = memo(({ fullFeatured, ...properties }: any) => {
   );
 });
 
-export const CodeLite = memo((properties: any) => {
-  return <Code {...properties} />;
+export const CodeLite = memo((props: any) => {
+  return <Code {...props} />;
 });
 
-export const CodeFullFeatured = memo((properties: any) => {
-  return <Code fullFeatured {...properties} />;
+export const CodeFullFeatured = memo((props: any) => {
+  return <Code fullFeatured {...props} />;
 });

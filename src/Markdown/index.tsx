@@ -2,6 +2,7 @@ import { Collapse, Divider, Image, Typography } from 'antd';
 import { CSSProperties, memo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ReactMarkdown from 'react-markdown';
+import { Components } from 'react-markdown/lib/ast-to-react';
 import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
@@ -26,11 +27,11 @@ export interface MarkdownProps {
 const Markdown = memo<MarkdownProps>(
   ({ children, className, style, fullFeaturedCodeBlock, onDoubleClick, ...props }) => {
     const { styles } = useStyles();
-    const components: any = {
-      a: Typography.Link,
-      details: Collapse,
+    const components: Components = {
+      a: (props: any) => <Typography.Link {...props} rel="noopener noreferrer" target="_blank" />,
+      details: (props: any) => <Collapse {...props} />,
       hr: () => <Divider style={{ marginBottom: '1em', marginTop: 0 }} />,
-      img: Image,
+      img: (props: any) => <Image {...props} />,
       pre: fullFeaturedCodeBlock ? CodeFullFeatured : CodeLite,
     };
 

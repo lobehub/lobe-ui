@@ -72,8 +72,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       }
 
       p {
-        margin-block-start: 0;
-        margin-block-end: 0;
+        margin-block: 0 0;
 
         font-size: 14px;
         line-height: 1.8;
@@ -146,10 +145,8 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         border-spacing: 0;
 
         width: 100%;
-        margin-block-start: 1em;
-        margin-block-end: 1em;
-        margin-inline-start: 0;
-        margin-inline-end: 0;
+        margin-block: 1em 1em;
+        margin-inline: 0 0;
         padding: 8px;
 
         border: 1px solid ${token.colorBorderSecondary};
@@ -162,10 +159,8 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
 
       th,
       td {
-        padding-block-start: 10px;
-        padding-block-end: 10px;
-        padding-inline-start: 16px;
-        padding-inline-end: 16px;
+        padding-block: 10px 10px;
+        padding-inline: 16px 16px;
       }
 
       thead {
@@ -222,6 +217,37 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
           padding-bottom: 12px;
           border-bottom: 1px solid ${token.colorBorder};
         }
+      }
+    `,
+    markdownInChat: css`
+      h1 {
+        margin-top: 0;
+        margin-block-start: 0;
+        font-size: 2em;
+      }
+
+      h2 {
+        margin-top: 0;
+        margin-block-start: 0;
+        font-size: 1.6em;
+      }
+
+      h3 {
+        margin-top: 0;
+        margin-block-start: 0;
+        font-size: 1.4em;
+      }
+
+      h4 {
+        margin-top: 0;
+        margin-block-start: 0;
+        font-size: 1.2em;
+      }
+
+      h5 {
+        margin-top: 0;
+        margin-block-start: 0;
+        font-size: 1.1em;
       }
     `,
     noScrollbar: css`

@@ -1,10 +1,14 @@
-import { useResponsive } from 'antd-style';
+import { createStyles, useResponsive } from 'antd-style';
 import { CSSProperties, ReactNode, memo } from 'react';
 import useControlledState from 'use-merge-value';
 
 import Markdown from '@/Markdown';
 import MessageInput, { type MessageInputProps } from '@/MessageInput';
 import Modal, { type ModalProps } from '@/Modal';
+
+const useStyles = createStyles(({ stylish }) => ({
+  markdown: stylish.markdownInChat,
+}));
 
 export interface MessageModalProps extends Pick<ModalProps, 'open' | 'footer'> {
   /**
@@ -58,6 +62,7 @@ const MessageModal = memo<MessageModalProps>(
     extra,
   }) => {
     const { mobile } = useResponsive();
+    const { styles } = useStyles();
 
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
@@ -106,7 +111,10 @@ const MessageModal = memo<MessageModalProps>(
         ) : (
           <>
             {extra}
-            <Markdown style={value ? markdownStyle : { ...markdownStyle, opacity: 0.5 }}>
+            <Markdown
+              className={styles.markdown}
+              style={value ? markdownStyle : { ...markdownStyle, opacity: 0.5 }}
+            >
               {String(value || placeholder)}
             </Markdown>
           </>
