@@ -70,11 +70,13 @@ export const useStyles = createStyles(({ css, token }) => {
       white-space: nowrap;
     `,
     triangle: css`
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
+
+      opacity: 0.5;
+      background: ${token.colorPrimaryBorder};
       clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
       border-radius: 2px;
-      background: ${token.colorPrimaryBorder};
     `,
   };
 });
