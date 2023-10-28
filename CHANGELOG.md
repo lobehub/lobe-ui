@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.108.0](https://github.com/lobehub/lobe-ui/compare/v1.107.3...v1.108.0)
+
+<sup>Released on **2023-10-28**</sup>
+
+#### ✨ Features
+
+- **misc**: Introduce new features and make code updates in multiple files.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Introduce new features and make code updates in multiple files ([983fd5c](https://github.com/lobehub/lobe-ui/commit/983fd5c))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.107.3](https://github.com/lobehub/lobe-ui/compare/v1.107.2...v1.107.3)
 
 <sup>Released on **2023-10-27**</sup>
