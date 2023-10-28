@@ -93,7 +93,7 @@ export {
   LayoutToc,
   type LayoutTocProps,
 } from './Layout';
-export { default as List } from './List';
+export { default as List, type ListItemProps } from './List';
 export { default as Logo, type LogoProps } from './Logo';
 export { default as LogoThree, type LogoThreeProps } from './LogoThree';
 export { default as Markdown, type MarkdownProps } from './Markdown';

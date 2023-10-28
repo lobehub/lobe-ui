@@ -110,7 +110,7 @@ export const useStyles = createStyles(
           }
 
           ${responsive.mobile} {
-            padding: 4px 16px;
+            padding: 4px 8px;
           }
         `,
       ),

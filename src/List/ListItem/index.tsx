@@ -107,8 +107,7 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps & HTMLAttributes<any>>
         onMouseLeave={() => {
           onHoverChange?.(false);
         }}
-        paddingBlock={12}
-        paddingInline={16}
+        padding={12}
         ref={ref}
         style={style}
         {...props}
