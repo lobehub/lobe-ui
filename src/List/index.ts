@@ -4,5 +4,5 @@ const List = {
   Item: ListItem,
 };
 
-export { ListItemProps } from './ListItem';
+export type { ListItemProps } from './ListItem';
 export default List;
