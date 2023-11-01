@@ -1,4 +1,4 @@
-import { flatten } from 'lodash';
+import { flatten } from 'lodash-es';
 
 import azureVoiceList from '../data/azureVoiceListLite.json';
 
