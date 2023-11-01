@@ -1,4 +1,3 @@
-import { SpeechSynthesisOutputFormat } from 'microsoft-cognitiveservices-speech-sdk';
 import { v4 as uuidv4 } from 'uuid';
 
 import { type SsmlOptions, genSSML } from '../utils/genSSML';
@@ -13,8 +12,7 @@ export const postMicrosoftSpeech = async (
       SpeakTriggerSource: 'AccTuningPagePlayButton',
     },
     ssml: genSSML(text, options),
-    // ttsAudioFormat: 'audio-24khz-160kbitrate-mono-mp3',
-    ttsAudioFormat: SpeechSynthesisOutputFormat.Webm16Khz16BitMonoOpus,
+    ttsAudioFormat: 'audio-24khz-160kbitrate-mono-mp3',
   });
 
   const DEFAULT_HEADERS = {
@@ -28,7 +26,7 @@ export const postMicrosoftSpeech = async (
     'sec-ch-ua-mobile': '?0',
     'sec-ch-ua-platform': '"Windows"',
     'sec-fetch-dest': 'empty',
-    'sec-fetch-mode': 'cors',
+    'sec-fetch-mode': 'no-cors',
     'sec-fetch-site': 'same-site',
     'user-agent':
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36',
@@ -41,6 +39,7 @@ export const postMicrosoftSpeech = async (
         body: data,
         headers: DEFAULT_HEADERS,
         method: 'POST',
+        mode: 'no-cors',
         // @ts-ignore
         responseType: 'arraybuffer',
       },

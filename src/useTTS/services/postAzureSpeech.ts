@@ -23,7 +23,7 @@ export const postAzureSpeech = async (
 ): Promise<Buffer> => {
   const speechConfig = SpeechConfig.fromSubscription(env.SPEECH_KEY, env.SPEECH_REGION);
   speechConfig.setProperty(PropertyId.SpeechServiceResponse_RequestSentenceBoundary, 'true');
-  speechConfig.speechSynthesisOutputFormat = SpeechSynthesisOutputFormat.Webm16Khz16BitMonoOpus;
+  speechConfig.speechSynthesisOutputFormat = SpeechSynthesisOutputFormat.Webm24Khz16BitMonoOpus;
 
   const audioConfig = AudioConfig.fromDefaultSpeakerOutput();
   const synthesizer: SpeechSynthesizer | null = new SpeechSynthesizer(speechConfig, audioConfig);
