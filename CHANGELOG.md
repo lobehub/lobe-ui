@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.110.0](https://github.com/lobehub/lobe-ui/compare/v1.109.1...v1.110.0)
+
+<sup>Released on **2023-11-01**</sup>
+
+#### ✨ Features
+
+- **wip**: Tts.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **wip**: Tts ([7e49e84](https://github.com/lobehub/lobe-ui/commit/7e49e84))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.109.1](https://github.com/lobehub/lobe-ui/compare/v1.109.0...v1.109.1)
 
 <sup>Released on **2023-11-01**</sup>
