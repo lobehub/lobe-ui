@@ -1,6 +1,6 @@
 import { Document, ServiceProvider } from 'ssml-document';
 
-type StyleName =
+export type StyleName =
   | 'affectionate'
   | 'angry'
   | 'calm'
