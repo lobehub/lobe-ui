@@ -4,10 +4,10 @@ import { Mic, StopCircle } from 'lucide-react';
 import { Flexbox } from 'react-layout-kit';
 
 export default () => {
-  const { text, start, stop, isProcessing } = useSpeechRecognition('zh-CN');
+  const { text, start, stop, isLoading } = useSpeechRecognition('zh-CN');
   return (
     <Flexbox gap={8}>
-      {isProcessing ? (
+      {isLoading ? (
         <Button block icon={<Icon icon={StopCircle} />} onClick={stop}>
           Stop
         </Button>

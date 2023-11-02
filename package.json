@@ -93,6 +93,7 @@
     "lodash-es": "^4",
     "lucide-react": "latest",
     "microsoft-cognitiveservices-speech-sdk": "^1",
+    "msedge-tts": "^1",
     "polished": "^4",
     "prism-react-renderer": "^2",
     "rc-footer": "^0",

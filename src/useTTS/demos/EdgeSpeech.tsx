@@ -1,36 +1,29 @@
-import { Icon, StoryBook, getSpeechSynthesVoiceList, useSpeechSynthes } from '@lobehub/ui';
+import {
+  Icon,
+  StoryBook,
+  getEdgeVoiceList,
+  useControls,
+  useCreateStore,
+  useEdgeSpeech,
+} from '@lobehub/ui';
 import { Button, Input } from 'antd';
 import { StopCircle, Volume2 } from 'lucide-react';
 import { Flexbox } from 'react-layout-kit';
 
-import { useControls, useCreateStore } from '@/index';
-
-const defaultText = '这是一段使用 Speech Synthes 的语音演示';
+const defaultText = '这是一段使用 Edge Speech 的语音演示';
 
 export default () => {
   const store = useCreateStore();
   const options: any = useControls(
     {
       name: {
-        options: getSpeechSynthesVoiceList(),
-        value: '婷婷',
-      },
-      pitch: {
-        max: 2,
-        min: 0,
-        step: 0.1,
-        value: 1,
-      },
-      rate: {
-        max: 2,
-        min: 0,
-        step: 0.1,
-        value: 1,
+        options: getEdgeVoiceList(),
+        value: 'zh-CN-YunxiaNeural',
       },
     },
     { store },
   );
-  const { setText, isLoading, start, stop } = useSpeechSynthes(defaultText, options);
+  const { setText, isLoading, start, stop } = useEdgeSpeech(defaultText, options);
   return (
     <StoryBook levaStore={store}>
       <Flexbox gap={8}>

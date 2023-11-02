@@ -1,2155 +1,2155 @@
 {
   "af-ZA": [
     {
-      "localName": "Adri",
+      "localeName": "Adri",
       "name": "af-ZA-AdriNeural"
     },
     {
-      "localName": "Willem",
+      "localeName": "Willem",
       "name": "af-ZA-WillemNeural"
     }
   ],
   "am-ET": [
     {
-      "localName": "መቅደስ",
+      "localeName": "መቅደስ",
       "name": "am-ET-MekdesNeural"
     },
     {
-      "localName": "አምሀ",
+      "localeName": "አምሀ",
       "name": "am-ET-AmehaNeural"
     }
   ],
   "ar-AE": [
     {
-      "localName": "حمدان",
+      "localeName": "حمدان",
       "name": "ar-AE-HamdanNeural"
     },
     {
-      "localName": "فاطمة",
+      "localeName": "فاطمة",
       "name": "ar-AE-FatimaNeural"
     }
   ],
   "ar-BH": [
     {
-      "localName": "علي",
+      "localeName": "علي",
       "name": "ar-BH-AliNeural"
     },
     {
-      "localName": "ليلى",
+      "localeName": "ليلى",
       "name": "ar-BH-LailaNeural"
     }
   ],
   "ar-DZ": [
     {
-      "localName": "أمينة",
+      "localeName": "أمينة",
       "name": "ar-DZ-AminaNeural"
     },
     {
-      "localName": "إسماعيل",
+      "localeName": "إسماعيل",
       "name": "ar-DZ-IsmaelNeural"
     }
   ],
   "ar-EG": [
     {
-      "localName": "سلمى",
+      "localeName": "سلمى",
       "name": "ar-EG-SalmaNeural"
     },
     {
-      "localName": "شاكر",
+      "localeName": "شاكر",
       "name": "ar-EG-ShakirNeural"
     }
   ],
   "ar-IQ": [
     {
-      "localName": "باسل",
+      "localeName": "باسل",
       "name": "ar-IQ-BasselNeural"
     },
     {
-      "localName": "رنا",
+      "localeName": "رنا",
       "name": "ar-IQ-RanaNeural"
     }
   ],
   "ar-JO": [
     {
-      "localName": "تيم",
+      "localeName": "تيم",
       "name": "ar-JO-TaimNeural"
     },
     {
-      "localName": "سناء",
+      "localeName": "سناء",
       "name": "ar-JO-SanaNeural"
     }
   ],
   "ar-KW": [
     {
-      "localName": "فهد",
+      "localeName": "فهد",
       "name": "ar-KW-FahedNeural"
     },
     {
-      "localName": "نورا",
+      "localeName": "نورا",
       "name": "ar-KW-NouraNeural"
     }
   ],
   "ar-LB": [
     {
-      "localName": "رامي",
+      "localeName": "رامي",
       "name": "ar-LB-RamiNeural"
     },
     {
-      "localName": "ليلى",
+      "localeName": "ليلى",
       "name": "ar-LB-LaylaNeural"
     }
   ],
   "ar-LY": [
     {
-      "localName": "أحمد",
+      "localeName": "أحمد",
       "name": "ar-LY-OmarNeural"
     },
     {
-      "localName": "إيمان",
+      "localeName": "إيمان",
       "name": "ar-LY-ImanNeural"
     }
   ],
   "ar-MA": [
     {
-      "localName": "جمال",
+      "localeName": "جمال",
       "name": "ar-MA-JamalNeural"
     },
     {
-      "localName": "منى",
+      "localeName": "منى",
       "name": "ar-MA-MounaNeural"
     }
   ],
   "ar-OM": [
     {
-      "localName": "عائشة",
+      "localeName": "عائشة",
       "name": "ar-OM-AyshaNeural"
     },
     {
-      "localName": "عبدالله",
+      "localeName": "عبدالله",
       "name": "ar-OM-AbdullahNeural"
     }
   ],
   "ar-QA": [
     {
-      "localName": "أمل",
+      "localeName": "أمل",
       "name": "ar-QA-AmalNeural"
     },
     {
-      "localName": "معاذ",
+      "localeName": "معاذ",
       "name": "ar-QA-MoazNeural"
     }
   ],
   "ar-SA": [
     {
-      "localName": "حامد",
+      "localeName": "حامد",
       "name": "ar-SA-HamedNeural"
     },
     {
-      "localName": "زارية",
+      "localeName": "زارية",
       "name": "ar-SA-ZariyahNeural"
     }
   ],
   "ar-SY": [
     {
-      "localName": "أماني",
+      "localeName": "أماني",
       "name": "ar-SY-AmanyNeural"
     },
     {
-      "localName": "ليث",
+      "localeName": "ليث",
       "name": "ar-SY-LaithNeural"
     }
   ],
   "ar-TN": [
     {
-      "localName": "ريم",
+      "localeName": "ريم",
       "name": "ar-TN-ReemNeural"
     },
     {
-      "localName": "هادي",
+      "localeName": "هادي",
       "name": "ar-TN-HediNeural"
     }
   ],
   "ar-YE": [
     {
-      "localName": "صالح",
+      "localeName": "صالح",
       "name": "ar-YE-SalehNeural"
     },
     {
-      "localName": "مريم",
+      "localeName": "مريم",
       "name": "ar-YE-MaryamNeural"
     }
   ],
   "az-AZ": [
     {
-      "localName": "Babək",
+      "localeName": "Babək",
       "name": "az-AZ-BabekNeural"
     },
     {
-      "localName": "Banu",
+      "localeName": "Banu",
       "name": "az-AZ-BanuNeural"
     }
   ],
   "bg-BG": [
     {
-      "localName": "Борислав",
+      "localeName": "Борислав",
       "name": "bg-BG-BorislavNeural"
     },
     {
-      "localName": "Калина",
+      "localeName": "Калина",
       "name": "bg-BG-KalinaNeural"
     }
   ],
   "bn-BD": [
     {
-      "localName": "নবনীতা",
+      "localeName": "নবনীতা",
       "name": "bn-BD-NabanitaNeural"
     },
     {
-      "localName": "প্রদ্বীপ",
+      "localeName": "প্রদ্বীপ",
       "name": "bn-BD-PradeepNeural"
     }
   ],
   "bn-IN": [
     {
-      "localName": "তানিশা",
+      "localeName": "তানিশা",
       "name": "bn-IN-TanishaaNeural"
     },
     {
-      "localName": "ভাস্কর",
+      "localeName": "ভাস্কর",
       "name": "bn-IN-BashkarNeural"
     }
   ],
   "bs-BA": [
     {
-      "localName": "Goran",
+      "localeName": "Goran",
       "name": "bs-BA-GoranNeural"
     },
     {
-      "localName": "Vesna",
+      "localeName": "Vesna",
       "name": "bs-BA-VesnaNeural"
     }
   ],
   "ca-ES": [
     {
-      "localName": "Alba",
+      "localeName": "Alba",
       "name": "ca-ES-AlbaNeural"
     },
     {
-      "localName": "Enric",
+      "localeName": "Enric",
       "name": "ca-ES-EnricNeural"
     },
     {
-      "localName": "Joana",
+      "localeName": "Joana",
       "name": "ca-ES-JoanaNeural"
     }
   ],
   "cs-CZ": [
     {
-      "localName": "Antonín",
+      "localeName": "Antonín",
       "name": "cs-CZ-AntoninNeural"
     },
     {
-      "localName": "Vlasta",
+      "localeName": "Vlasta",
       "name": "cs-CZ-VlastaNeural"
     }
   ],
   "cy-GB": [
     {
-      "localName": "Aled",
+      "localeName": "Aled",
       "name": "cy-GB-AledNeural"
     },
     {
-      "localName": "Nia",
+      "localeName": "Nia",
       "name": "cy-GB-NiaNeural"
     }
   ],
   "da-DK": [
     {
-      "localName": "Christel",
+      "localeName": "Christel",
       "name": "da-DK-ChristelNeural"
     },
     {
-      "localName": "Jeppe",
+      "localeName": "Jeppe",
       "name": "da-DK-JeppeNeural"
     }
   ],
   "de-AT": [
     {
-      "localName": "Ingrid",
+      "localeName": "Ingrid",
       "name": "de-AT-IngridNeural"
     },
     {
-      "localName": "Jonas",
+      "localeName": "Jonas",
       "name": "de-AT-JonasNeural"
     }
   ],
   "de-CH": [
     {
-      "localName": "Jan",
+      "localeName": "Jan",
       "name": "de-CH-JanNeural"
     },
     {
-      "localName": "Leni",
+      "localeName": "Leni",
       "name": "de-CH-LeniNeural"
     }
   ],
   "de-DE": [
     {
-      "localName": "Amala",
+      "localeName": "Amala",
       "name": "de-DE-AmalaNeural"
     },
     {
-      "localName": "Bernd",
+      "localeName": "Bernd",
       "name": "de-DE-BerndNeural"
     },
     {
-      "localName": "Christoph",
+      "localeName": "Christoph",
       "name": "de-DE-ChristophNeural"
     },
     {
-      "localName": "Conrad",
+      "localeName": "Conrad",
       "name": "de-DE-ConradNeural"
     },
     {
-      "localName": "Elke",
+      "localeName": "Elke",
       "name": "de-DE-ElkeNeural"
     },
     {
-      "localName": "Gisela",
+      "localeName": "Gisela",
       "name": "de-DE-GiselaNeural"
     },
     {
-      "localName": "Kasper",
+      "localeName": "Kasper",
       "name": "de-DE-KasperNeural"
     },
     {
-      "localName": "Katja",
+      "localeName": "Katja",
       "name": "de-DE-KatjaNeural"
     },
     {
-      "localName": "Killian",
+      "localeName": "Killian",
       "name": "de-DE-KillianNeural"
     },
     {
-      "localName": "Klarissa",
+      "localeName": "Klarissa",
       "name": "de-DE-KlarissaNeural"
     },
     {
-      "localName": "Klaus",
+      "localeName": "Klaus",
       "name": "de-DE-KlausNeural"
     },
     {
-      "localName": "Louisa",
+      "localeName": "Louisa",
       "name": "de-DE-LouisaNeural"
     },
     {
-      "localName": "Maja",
+      "localeName": "Maja",
       "name": "de-DE-MajaNeural"
     },
     {
-      "localName": "Ralf",
+      "localeName": "Ralf",
       "name": "de-DE-RalfNeural"
     },
     {
-      "localName": "Tanja",
+      "localeName": "Tanja",
       "name": "de-DE-TanjaNeural"
     }
   ],
   "el-GR": [
     {
-      "localName": "Αθηνά",
+      "localeName": "Αθηνά",
       "name": "el-GR-AthinaNeural"
     },
     {
-      "localName": "Νέστορας",
+      "localeName": "Νέστορας",
       "name": "el-GR-NestorasNeural"
     }
   ],
   "en-AU": [
     {
-      "localName": "Annette",
+      "localeName": "Annette",
       "name": "en-AU-AnnetteNeural"
     },
     {
-      "localName": "Carly",
+      "localeName": "Carly",
       "name": "en-AU-CarlyNeural"
     },
     {
-      "localName": "Darren",
+      "localeName": "Darren",
       "name": "en-AU-DarrenNeural"
     },
     {
-      "localName": "Duncan",
+      "localeName": "Duncan",
       "name": "en-AU-DuncanNeural"
     },
     {
-      "localName": "Elsie",
+      "localeName": "Elsie",
       "name": "en-AU-ElsieNeural"
     },
     {
-      "localName": "Freya",
+      "localeName": "Freya",
       "name": "en-AU-FreyaNeural"
     },
     {
-      "localName": "Joanne",
+      "localeName": "Joanne",
       "name": "en-AU-JoanneNeural"
     },
     {
-      "localName": "Ken",
+      "localeName": "Ken",
       "name": "en-AU-KenNeural"
     },
     {
-      "localName": "Kim",
+      "localeName": "Kim",
       "name": "en-AU-KimNeural"
     },
     {
-      "localName": "Natasha",
+      "localeName": "Natasha",
       "name": "en-AU-NatashaNeural"
     },
     {
-      "localName": "Neil",
+      "localeName": "Neil",
       "name": "en-AU-NeilNeural"
     },
     {
-      "localName": "Tim",
+      "localeName": "Tim",
       "name": "en-AU-TimNeural"
     },
     {
-      "localName": "Tina",
+      "localeName": "Tina",
       "name": "en-AU-TinaNeural"
     },
     {
-      "localName": "William",
+      "localeName": "William",
       "name": "en-AU-WilliamNeural"
     }
   ],
   "en-CA": [
     {
-      "localName": "Clara",
+      "localeName": "Clara",
       "name": "en-CA-ClaraNeural"
     },
     {
-      "localName": "Liam",
+      "localeName": "Liam",
       "name": "en-CA-LiamNeural"
     }
   ],
   "en-GB": [
     {
-      "localName": "Abbi",
+      "localeName": "Abbi",
       "name": "en-GB-AbbiNeural"
     },
     {
-      "localName": "Alfie",
+      "localeName": "Alfie",
       "name": "en-GB-AlfieNeural"
     },
     {
-      "localName": "Bella",
+      "localeName": "Bella",
       "name": "en-GB-BellaNeural"
     },
     {
-      "localName": "Elliot",
+      "localeName": "Elliot",
       "name": "en-GB-ElliotNeural"
     },
     {
-      "localName": "Ethan",
+      "localeName": "Ethan",
       "name": "en-GB-EthanNeural"
     },
     {
-      "localName": "Hollie",
+      "localeName": "Hollie",
       "name": "en-GB-HollieNeural"
     },
     {
-      "localName": "Libby",
+      "localeName": "Libby",
       "name": "en-GB-LibbyNeural"
     },
     {
-      "localName": "Maisie",
+      "localeName": "Maisie",
       "name": "en-GB-MaisieNeural"
     },
     {
-      "localName": "Mia",
+      "localeName": "Mia",
       "name": "en-GB-MiaNeural"
     },
     {
-      "localName": "Noah",
+      "localeName": "Noah",
       "name": "en-GB-NoahNeural"
     },
     {
-      "localName": "Oliver",
+      "localeName": "Oliver",
       "name": "en-GB-OliverNeural"
     },
     {
-      "localName": "Olivia",
+      "localeName": "Olivia",
       "name": "en-GB-OliviaNeural"
     },
     {
-      "localName": "Ryan",
+      "localeName": "Ryan",
       "name": "en-GB-RyanNeural"
     },
     {
-      "localName": "Sonia",
+      "localeName": "Sonia",
       "name": "en-GB-SoniaNeural"
     },
     {
-      "localName": "Thomas",
+      "localeName": "Thomas",
       "name": "en-GB-ThomasNeural"
     }
   ],
   "en-HK": [
     {
-      "localName": "Sam",
+      "localeName": "Sam",
       "name": "en-HK-SamNeural"
     },
     {
-      "localName": "Yan",
+      "localeName": "Yan",
       "name": "en-HK-YanNeural"
     }
   ],
   "en-IE": [
     {
-      "localName": "Connor",
+      "localeName": "Connor",
       "name": "en-IE-ConnorNeural"
     },
     {
-      "localName": "Emily",
+      "localeName": "Emily",
       "name": "en-IE-EmilyNeural"
     }
   ],
   "en-IN": [
     {
-      "localName": "Neerja",
+      "localeName": "Neerja",
       "name": "en-IN-NeerjaNeural"
     },
     {
-      "localName": "Prabhat",
+      "localeName": "Prabhat",
       "name": "en-IN-PrabhatNeural"
     }
   ],
   "en-KE": [
     {
-      "localName": "Asilia",
+      "localeName": "Asilia",
       "name": "en-KE-AsiliaNeural"
     },
     {
-      "localName": "Chilemba",
+      "localeName": "Chilemba",
       "name": "en-KE-ChilembaNeural"
     }
   ],
   "en-NG": [
     {
-      "localName": "Abeo",
+      "localeName": "Abeo",
       "name": "en-NG-AbeoNeural"
     },
     {
-      "localName": "Ezinne",
+      "localeName": "Ezinne",
       "name": "en-NG-EzinneNeural"
     }
   ],
   "en-NZ": [
     {
-      "localName": "Mitchell",
+      "localeName": "Mitchell",
       "name": "en-NZ-MitchellNeural"
     },
     {
-      "localName": "Molly",
+      "localeName": "Molly",
       "name": "en-NZ-MollyNeural"
     }
   ],
   "en-PH": [
     {
-      "localName": "James",
+      "localeName": "James",
       "name": "en-PH-JamesNeural"
     },
     {
-      "localName": "Rosa",
+      "localeName": "Rosa",
       "name": "en-PH-RosaNeural"
     }
   ],
   "en-SG": [
     {
-      "localName": "Luna",
+      "localeName": "Luna",
       "name": "en-SG-LunaNeural"
     },
     {
-      "localName": "Wayne",
+      "localeName": "Wayne",
       "name": "en-SG-WayneNeural"
     }
   ],
   "en-TZ": [
     {
-      "localName": "Elimu",
+      "localeName": "Elimu",
       "name": "en-TZ-ElimuNeural"
     },
     {
-      "localName": "Imani",
+      "localeName": "Imani",
       "name": "en-TZ-ImaniNeural"
     }
   ],
   "en-US": [
     {
-      "localName": "AIGenerate1",
+      "localeName": "AIGenerate1",
       "name": "en-US-AIGenerate1Neural"
     },
     {
-      "localName": "AIGenerate2",
+      "localeName": "AIGenerate2",
       "name": "en-US-AIGenerate2Neural"
     },
     {
-      "localName": "Amber",
+      "localeName": "Amber",
       "name": "en-US-AmberNeural"
     },
     {
-      "localName": "Ana",
+      "localeName": "Ana",
       "name": "en-US-AnaNeural"
     },
     {
-      "localName": "Andrew",
+      "localeName": "Andrew",
       "name": "en-US-AndrewNeural"
     },
     {
-      "localName": "Aria",
+      "localeName": "Aria",
       "name": "en-US-AriaNeural"
     },
     {
-      "localName": "Ashley",
+      "localeName": "Ashley",
       "name": "en-US-AshleyNeural"
     },
     {
-      "localName": "Blue",
+      "localeName": "Blue",
       "name": "en-US-BlueNeural"
     },
     {
-      "localName": "Brandon",
+      "localeName": "Brandon",
       "name": "en-US-BrandonNeural"
     },
     {
-      "localName": "Brian",
+      "localeName": "Brian",
       "name": "en-US-BrianNeural"
     },
     {
-      "localName": "Christopher",
+      "localeName": "Christopher",
       "name": "en-US-ChristopherNeural"
     },
     {
-      "localName": "Cora",
+      "localeName": "Cora",
       "name": "en-US-CoraNeural"
     },
     {
-      "localName": "Davis",
+      "localeName": "Davis",
       "name": "en-US-DavisNeural"
     },
     {
-      "localName": "Elizabeth",
+      "localeName": "Elizabeth",
       "name": "en-US-ElizabethNeural"
     },
     {
-      "localName": "Emma",
+      "localeName": "Emma",
       "name": "en-US-EmmaNeural"
     },
     {
-      "localName": "Eric",
+      "localeName": "Eric",
       "name": "en-US-EricNeural"
     },
     {
-      "localName": "Guy",
+      "localeName": "Guy",
       "name": "en-US-GuyNeural"
     },
     {
-      "localName": "Jacob",
+      "localeName": "Jacob",
       "name": "en-US-JacobNeural"
     },
     {
-      "localName": "Jane",
+      "localeName": "Jane",
       "name": "en-US-JaneNeural"
     },
     {
-      "localName": "Jason",
+      "localeName": "Jason",
       "name": "en-US-JasonNeural"
     },
     {
-      "localName": "Jenny",
+      "localeName": "Jenny",
       "name": "en-US-JennyNeural"
     },
     {
-      "localName": "Jenny Multilingual",
+      "localeName": "Jenny Multilingual",
       "name": "en-US-JennyMultilingualNeural"
     },
     {
-      "localName": "Jenny Multilingual V2",
+      "localeName": "Jenny Multilingual V2",
       "name": "en-US-JennyMultilingualV2Neural"
     },
     {
-      "localName": "Michelle",
+      "localeName": "Michelle",
       "name": "en-US-MichelleNeural"
     },
     {
-      "localName": "Monica",
+      "localeName": "Monica",
       "name": "en-US-MonicaNeural"
     },
     {
-      "localName": "Nancy",
+      "localeName": "Nancy",
       "name": "en-US-NancyNeural"
     },
     {
-      "localName": "Roger",
+      "localeName": "Roger",
       "name": "en-US-RogerNeural"
     },
     {
-      "localName": "Ryan Multilingual",
+      "localeName": "Ryan Multilingual",
       "name": "en-US-RyanMultilingualNeural"
     },
     {
-      "localName": "Sara",
+      "localeName": "Sara",
       "name": "en-US-SaraNeural"
     },
     {
-      "localName": "Steffan",
+      "localeName": "Steffan",
       "name": "en-US-SteffanNeural"
     },
     {
-      "localName": "Tony",
+      "localeName": "Tony",
       "name": "en-US-TonyNeural"
     }
   ],
   "en-ZA": [
     {
-      "localName": "Leah",
+      "localeName": "Leah",
       "name": "en-ZA-LeahNeural"
     },
     {
-      "localName": "Luke",
+      "localeName": "Luke",
       "name": "en-ZA-LukeNeural"
     }
   ],
   "es-AR": [
     {
-      "localName": "Elena",
+      "localeName": "Elena",
       "name": "es-AR-ElenaNeural"
     },
     {
-      "localName": "Tomas",
+      "localeName": "Tomas",
       "name": "es-AR-TomasNeural"
     }
   ],
   "es-BO": [
     {
-      "localName": "Marcelo",
+      "localeName": "Marcelo",
       "name": "es-BO-MarceloNeural"
     },
     {
-      "localName": "Sofia",
+      "localeName": "Sofia",
       "name": "es-BO-SofiaNeural"
     }
   ],
   "es-CL": [
     {
-      "localName": "Catalina",
+      "localeName": "Catalina",
       "name": "es-CL-CatalinaNeural"
     },
     {
-      "localName": "Lorenzo",
+      "localeName": "Lorenzo",
       "name": "es-CL-LorenzoNeural"
     }
   ],
   "es-CO": [
     {
-      "localName": "Gonzalo",
+      "localeName": "Gonzalo",
       "name": "es-CO-GonzaloNeural"
     },
     {
-      "localName": "Salome",
+      "localeName": "Salome",
       "name": "es-CO-SalomeNeural"
     }
   ],
   "es-CR": [
     {
-      "localName": "Juan",
+      "localeName": "Juan",
       "name": "es-CR-JuanNeural"
     },
     {
-      "localName": "María",
+      "localeName": "María",
       "name": "es-CR-MariaNeural"
     }
   ],
   "es-CU": [
     {
-      "localName": "Belkys",
+      "localeName": "Belkys",
       "name": "es-CU-BelkysNeural"
     },
     {
-      "localName": "Manuel",
+      "localeName": "Manuel",
       "name": "es-CU-ManuelNeural"
     }
   ],
   "es-DO": [
     {
-      "localName": "Emilio",
+      "localeName": "Emilio",
       "name": "es-DO-EmilioNeural"
     },
     {
-      "localName": "Ramona",
+      "localeName": "Ramona",
       "name": "es-DO-RamonaNeural"
     }
   ],
   "es-EC": [
     {
-      "localName": "Andrea",
+      "localeName": "Andrea",
       "name": "es-EC-AndreaNeural"
     },
     {
-      "localName": "Luis",
+      "localeName": "Luis",
       "name": "es-EC-LuisNeural"
     }
   ],
   "es-ES": [
     {
-      "localName": "Abril",
+      "localeName": "Abril",
       "name": "es-ES-AbrilNeural"
     },
     {
-      "localName": "Álvaro",
+      "localeName": "Álvaro",
       "name": "es-ES-AlvaroNeural"
     },
     {
-      "localName": "Arnau",
+      "localeName": "Arnau",
       "name": "es-ES-ArnauNeural"
     },
     {
-      "localName": "Dario",
+      "localeName": "Dario",
       "name": "es-ES-DarioNeural"
     },
     {
-      "localName": "Elias",
+      "localeName": "Elias",
       "name": "es-ES-EliasNeural"
     },
     {
-      "localName": "Elvira",
+      "localeName": "Elvira",
       "name": "es-ES-ElviraNeural"
     },
     {
-      "localName": "Estrella",
+      "localeName": "Estrella",
       "name": "es-ES-EstrellaNeural"
     },
     {
-      "localName": "Irene",
+      "localeName": "Irene",
       "name": "es-ES-IreneNeural"
     },
     {
-      "localName": "Laia",
+      "localeName": "Laia",
       "name": "es-ES-LaiaNeural"
     },
     {
-      "localName": "Lia",
+      "localeName": "Lia",
       "name": "es-ES-LiaNeural"
     },
     {
-      "localName": "Nil",
+      "localeName": "Nil",
       "name": "es-ES-NilNeural"
     },
     {
-      "localName": "Saul",
+      "localeName": "Saul",
       "name": "es-ES-SaulNeural"
     },
     {
-      "localName": "Teo",
+      "localeName": "Teo",
       "name": "es-ES-TeoNeural"
     },
     {
-      "localName": "Triana",
+      "localeName": "Triana",
       "name": "es-ES-TrianaNeural"
     },
     {
-      "localName": "Vera",
+      "localeName": "Vera",
       "name": "es-ES-VeraNeural"
     }
   ],
   "es-GQ": [
     {
-      "localName": "Javier",
+      "localeName": "Javier",
       "name": "es-GQ-JavierNeural"
     },
     {
-      "localName": "Teresa",
+      "localeName": "Teresa",
       "name": "es-GQ-TeresaNeural"
     }
   ],
   "es-GT": [
     {
-      "localName": "Andrés",
+      "localeName": "Andrés",
       "name": "es-GT-AndresNeural"
     },
     {
-      "localName": "Marta",
+      "localeName": "Marta",
       "name": "es-GT-MartaNeural"
     }
   ],
   "es-HN": [
     {
-      "localName": "Carlos",
+      "localeName": "Carlos",
       "name": "es-HN-CarlosNeural"
     },
     {
-      "localName": "Karla",
+      "localeName": "Karla",
       "name": "es-HN-KarlaNeural"
     }
   ],
   "es-MX": [
     {
-      "localName": "Beatriz",
+      "localeName": "Beatriz",
       "name": "es-MX-BeatrizNeural"
     },
     {
-      "localName": "Candela",
+      "localeName": "Candela",
       "name": "es-MX-CandelaNeural"
     },
     {
-      "localName": "Carlota",
+      "localeName": "Carlota",
       "name": "es-MX-CarlotaNeural"
     },
     {
-      "localName": "Cecilio",
+      "localeName": "Cecilio",
       "name": "es-MX-CecilioNeural"
     },
     {
-      "localName": "Dalia",
+      "localeName": "Dalia",
       "name": "es-MX-DaliaNeural"
     },
     {
-      "localName": "Gerardo",
+      "localeName": "Gerardo",
       "name": "es-MX-GerardoNeural"
     },
     {
-      "localName": "Jorge",
+      "localeName": "Jorge",
       "name": "es-MX-JorgeNeural"
     },
     {
-      "localName": "Larissa",
+      "localeName": "Larissa",
       "name": "es-MX-LarissaNeural"
     },
     {
-      "localName": "Liberto",
+      "localeName": "Liberto",
       "name": "es-MX-LibertoNeural"
     },
     {
-      "localName": "Luciano",
+      "localeName": "Luciano",
       "name": "es-MX-LucianoNeural"
     },
     {
-      "localName": "Marina",
+      "localeName": "Marina",
       "name": "es-MX-MarinaNeural"
     },
     {
-      "localName": "Nuria",
+      "localeName": "Nuria",
       "name": "es-MX-NuriaNeural"
     },
     {
-      "localName": "Pelayo",
+      "localeName": "Pelayo",
       "name": "es-MX-PelayoNeural"
     },
     {
-      "localName": "Renata",
+      "localeName": "Renata",
       "name": "es-MX-RenataNeural"
     },
     {
-      "localName": "Yago",
+      "localeName": "Yago",
       "name": "es-MX-YagoNeural"
     }
   ],
   "es-NI": [
     {
-      "localName": "Federico",
+      "localeName": "Federico",
       "name": "es-NI-FedericoNeural"
     },
     {
-      "localName": "Yolanda",
+      "localeName": "Yolanda",
       "name": "es-NI-YolandaNeural"
     }
   ],
   "es-PA": [
     {
-      "localName": "Margarita",
+      "localeName": "Margarita",
       "name": "es-PA-MargaritaNeural"
     },
     {
-      "localName": "Roberto",
+      "localeName": "Roberto",
       "name": "es-PA-RobertoNeural"
     }
   ],
   "es-PE": [
     {
-      "localName": "Alex",
+      "localeName": "Alex",
       "name": "es-PE-AlexNeural"
     },
     {
-      "localName": "Camila",
+      "localeName": "Camila",
       "name": "es-PE-CamilaNeural"
     }
   ],
   "es-PR": [
     {
-      "localName": "Karina",
+      "localeName": "Karina",
       "name": "es-PR-KarinaNeural"
     },
     {
-      "localName": "Víctor",
+      "localeName": "Víctor",
       "name": "es-PR-VictorNeural"
     }
   ],
   "es-PY": [
     {
-      "localName": "Mario",
+      "localeName": "Mario",
       "name": "es-PY-MarioNeural"
     },
     {
-      "localName": "Tania",
+      "localeName": "Tania",
       "name": "es-PY-TaniaNeural"
     }
   ],
   "es-SV": [
     {
-      "localName": "Lorena",
+      "localeName": "Lorena",
       "name": "es-SV-LorenaNeural"
     },
     {
-      "localName": "Rodrigo",
+      "localeName": "Rodrigo",
       "name": "es-SV-RodrigoNeural"
     }
   ],
   "es-US": [
     {
-      "localName": "Alonso",
+      "localeName": "Alonso",
       "name": "es-US-AlonsoNeural"
     },
     {
-      "localName": "Paloma",
+      "localeName": "Paloma",
       "name": "es-US-PalomaNeural"
     }
   ],
   "es-UY": [
     {
-      "localName": "Mateo",
+      "localeName": "Mateo",
       "name": "es-UY-MateoNeural"
     },
     {
-      "localName": "Valentina",
+      "localeName": "Valentina",
       "name": "es-UY-ValentinaNeural"
     }
   ],
   "es-VE": [
     {
-      "localName": "Paola",
+      "localeName": "Paola",
       "name": "es-VE-PaolaNeural"
     },
     {
-      "localName": "Sebastián",
+      "localeName": "Sebastián",
       "name": "es-VE-SebastianNeural"
     }
   ],
   "et-EE": [
     {
-      "localName": "Anu",
+      "localeName": "Anu",
       "name": "et-EE-AnuNeural"
     },
     {
-      "localName": "Kert",
+      "localeName": "Kert",
       "name": "et-EE-KertNeural"
     }
   ],
   "eu-ES": [
     {
-      "localName": "Ainhoa",
+      "localeName": "Ainhoa",
       "name": "eu-ES-AinhoaNeural"
     },
     {
-      "localName": "Ander",
+      "localeName": "Ander",
       "name": "eu-ES-AnderNeural"
     }
   ],
   "fa-IR": [
     {
-      "localName": "دلارا",
+      "localeName": "دلارا",
       "name": "fa-IR-DilaraNeural"
     },
     {
-      "localName": "فرید",
+      "localeName": "فرید",
       "name": "fa-IR-FaridNeural"
     }
   ],
   "fi-FI": [
     {
-      "localName": "Harri",
+      "localeName": "Harri",
       "name": "fi-FI-HarriNeural"
     },
     {
-      "localName": "Noora",
+      "localeName": "Noora",
       "name": "fi-FI-NooraNeural"
     },
     {
-      "localName": "Selma",
+      "localeName": "Selma",
       "name": "fi-FI-SelmaNeural"
     }
   ],
   "fil-PH": [
     {
-      "localName": "Angelo",
+      "localeName": "Angelo",
       "name": "fil-PH-AngeloNeural"
     },
     {
-      "localName": "Blessica",
+      "localeName": "Blessica",
       "name": "fil-PH-BlessicaNeural"
     }
   ],
   "fr-BE": [
     {
-      "localName": "Charline",
+      "localeName": "Charline",
       "name": "fr-BE-CharlineNeural"
     },
     {
-      "localName": "Gerard",
+      "localeName": "Gerard",
       "name": "fr-BE-GerardNeural"
     }
   ],
   "fr-CA": [
     {
-      "localName": "Antoine",
+      "localeName": "Antoine",
       "name": "fr-CA-AntoineNeural"
     },
     {
-      "localName": "Jean",
+      "localeName": "Jean",
       "name": "fr-CA-JeanNeural"
     },
     {
-      "localName": "Sylvie",
+      "localeName": "Sylvie",
       "name": "fr-CA-SylvieNeural"
     }
   ],
   "fr-CH": [
     {
-      "localName": "Ariane",
+      "localeName": "Ariane",
       "name": "fr-CH-ArianeNeural"
     },
     {
-      "localName": "Fabrice",
+      "localeName": "Fabrice",
       "name": "fr-CH-FabriceNeural"
     }
   ],
   "fr-FR": [
     {
-      "localName": "Alain",
+      "localeName": "Alain",
       "name": "fr-FR-AlainNeural"
     },
     {
-      "localName": "Brigitte",
+      "localeName": "Brigitte",
       "name": "fr-FR-BrigitteNeural"
     },
     {
-      "localName": "Celeste",
+      "localeName": "Celeste",
       "name": "fr-FR-CelesteNeural"
     },
     {
-      "localName": "Claude",
+      "localeName": "Claude",
       "name": "fr-FR-ClaudeNeural"
     },
     {
-      "localName": "Coralie",
+      "localeName": "Coralie",
       "name": "fr-FR-CoralieNeural"
     },
     {
-      "localName": "Denise",
+      "localeName": "Denise",
       "name": "fr-FR-DeniseNeural"
     },
     {
-      "localName": "Eloise",
+      "localeName": "Eloise",
       "name": "fr-FR-EloiseNeural"
     },
     {
-      "localName": "Henri",
+      "localeName": "Henri",
       "name": "fr-FR-HenriNeural"
     },
     {
-      "localName": "Jacqueline",
+      "localeName": "Jacqueline",
       "name": "fr-FR-JacquelineNeural"
     },
     {
-      "localName": "Jerome",
+      "localeName": "Jerome",
       "name": "fr-FR-JeromeNeural"
     },
     {
-      "localName": "Josephine",
+      "localeName": "Josephine",
       "name": "fr-FR-JosephineNeural"
     },
     {
-      "localName": "Maurice",
+      "localeName": "Maurice",
       "name": "fr-FR-MauriceNeural"
     },
     {
-      "localName": "Yves",
+      "localeName": "Yves",
       "name": "fr-FR-YvesNeural"
     },
     {
-      "localName": "Yvette",
+      "localeName": "Yvette",
       "name": "fr-FR-YvetteNeural"
     }
   ],
   "ga-IE": [
     {
-      "localName": "Colm",
+      "localeName": "Colm",
       "name": "ga-IE-ColmNeural"
     },
     {
-      "localName": "Orla",
+      "localeName": "Orla",
       "name": "ga-IE-OrlaNeural"
     }
   ],
   "gl-ES": [
     {
-      "localName": "Roi",
+      "localeName": "Roi",
       "name": "gl-ES-RoiNeural"
     },
     {
-      "localName": "Sabela",
+      "localeName": "Sabela",
       "name": "gl-ES-SabelaNeural"
     }
   ],
   "gu-IN": [
     {
-      "localName": "ધ્વની",
+      "localeName": "ધ્વની",
       "name": "gu-IN-DhwaniNeural"
     },
     {
-      "localName": "નિરંજન",
+      "localeName": "નિરંજન",
       "name": "gu-IN-NiranjanNeural"
     }
   ],
   "he-IL": [
     {
-      "localName": "אברי",
+      "localeName": "אברי",
       "name": "he-IL-AvriNeural"
     },
     {
-      "localName": "הילה",
+      "localeName": "הילה",
       "name": "he-IL-HilaNeural"
     }
   ],
   "hi-IN": [
     {
-      "localName": "मधुर",
+      "localeName": "मधुर",
       "name": "hi-IN-MadhurNeural"
     },
     {
-      "localName": "स्वरा",
+      "localeName": "स्वरा",
       "name": "hi-IN-SwaraNeural"
     }
   ],
   "hr-HR": [
     {
-      "localName": "Gabrijela",
+      "localeName": "Gabrijela",
       "name": "hr-HR-GabrijelaNeural"
     },
     {
-      "localName": "Srećko",
+      "localeName": "Srećko",
       "name": "hr-HR-SreckoNeural"
     }
   ],
   "hu-HU": [
     {
-      "localName": "Noémi",
+      "localeName": "Noémi",
       "name": "hu-HU-NoemiNeural"
     },
     {
-      "localName": "Tamás",
+      "localeName": "Tamás",
       "name": "hu-HU-TamasNeural"
     }
   ],
   "hy-AM": [
     {
-      "localName": "Անահիտ",
+      "localeName": "Անահիտ",
       "name": "hy-AM-AnahitNeural"
     },
     {
-      "localName": "Հայկ",
+      "localeName": "Հայկ",
       "name": "hy-AM-HaykNeural"
     }
   ],
   "id-ID": [
     {
-      "localName": "Ardi",
+      "localeName": "Ardi",
       "name": "id-ID-ArdiNeural"
     },
     {
-      "localName": "Gadis",
+      "localeName": "Gadis",
       "name": "id-ID-GadisNeural"
     }
   ],
   "is-IS": [
     {
-      "localName": "Guðrún",
+      "localeName": "Guðrún",
       "name": "is-IS-GudrunNeural"
     },
     {
-      "localName": "Gunnar",
+      "localeName": "Gunnar",
       "name": "is-IS-GunnarNeural"
     }
   ],
   "it-IT": [
     {
-      "localName": "Benigno",
+      "localeName": "Benigno",
       "name": "it-IT-BenignoNeural"
     },
     {
-      "localName": "Calimero",
+      "localeName": "Calimero",
       "name": "it-IT-CalimeroNeural"
     },
     {
-      "localName": "Cataldo",
+      "localeName": "Cataldo",
       "name": "it-IT-CataldoNeural"
     },
     {
-      "localName": "Diego",
+      "localeName": "Diego",
       "name": "it-IT-DiegoNeural"
     },
     {
-      "localName": "Elsa",
+      "localeName": "Elsa",
       "name": "it-IT-ElsaNeural"
     },
     {
-      "localName": "Fabiola",
+      "localeName": "Fabiola",
       "name": "it-IT-FabiolaNeural"
     },
     {
-      "localName": "Fiamma",
+      "localeName": "Fiamma",
       "name": "it-IT-FiammaNeural"
     },
     {
-      "localName": "Gianni",
+      "localeName": "Gianni",
       "name": "it-IT-GianniNeural"
     },
     {
-      "localName": "Imelda",
+      "localeName": "Imelda",
       "name": "it-IT-ImeldaNeural"
     },
     {
-      "localName": "Irma",
+      "localeName": "Irma",
       "name": "it-IT-IrmaNeural"
     },
     {
-      "localName": "Isabella",
+      "localeName": "Isabella",
       "name": "it-IT-IsabellaNeural"
     },
     {
-      "localName": "Lisandro",
+      "localeName": "Lisandro",
       "name": "it-IT-LisandroNeural"
     },
     {
-      "localName": "Palmira",
+      "localeName": "Palmira",
       "name": "it-IT-PalmiraNeural"
     },
     {
-      "localName": "Pierina",
+      "localeName": "Pierina",
       "name": "it-IT-PierinaNeural"
     },
     {
-      "localName": "Rinaldo",
+      "localeName": "Rinaldo",
       "name": "it-IT-RinaldoNeural"
     }
   ],
   "ja-JP": [
     {
-      "localName": "七海",
+      "localeName": "七海",
       "name": "ja-JP-NanamiNeural"
     },
     {
-      "localName": "圭太",
+      "localeName": "圭太",
       "name": "ja-JP-KeitaNeural"
     },
     {
-      "localName": "大智",
+      "localeName": "大智",
       "name": "ja-JP-DaichiNeural"
     },
     {
-      "localName": "志織",
+      "localeName": "志織",
       "name": "ja-JP-ShioriNeural"
     },
     {
-      "localName": "直紀",
+      "localeName": "直紀",
       "name": "ja-JP-NaokiNeural"
     },
     {
-      "localName": "真夕",
+      "localeName": "真夕",
       "name": "ja-JP-MayuNeural"
     },
     {
-      "localName": "碧衣",
+      "localeName": "碧衣",
       "name": "ja-JP-AoiNeural"
     }
   ],
   "jv-ID": [
     {
-      "localName": "Dimas",
+      "localeName": "Dimas",
       "name": "jv-ID-DimasNeural"
     },
     {
-      "localName": "Siti",
+      "localeName": "Siti",
       "name": "jv-ID-SitiNeural"
     }
   ],
   "ka-GE": [
     {
-      "localName": "გიორგი",
+      "localeName": "გიორგი",
       "name": "ka-GE-GiorgiNeural"
     },
     {
-      "localName": "ეკა",
+      "localeName": "ეკა",
       "name": "ka-GE-EkaNeural"
     }
   ],
   "kk-KZ": [
     {
-      "localName": "Айгүл",
+      "localeName": "Айгүл",
       "name": "kk-KZ-AigulNeural"
     },
     {
-      "localName": "Дәулет",
+      "localeName": "Дәулет",
       "name": "kk-KZ-DauletNeural"
     }
   ],
   "km-KH": [
     {
-      "localName": "ពិសិដ្ឋ",
+      "localeName": "ពិសិដ្ឋ",
       "name": "km-KH-PisethNeural"
     },
     {
-      "localName": "ស្រីមុំ",
+      "localeName": "ស្រីមុំ",
       "name": "km-KH-SreymomNeural"
     }
   ],
   "kn-IN": [
     {
-      "localName": "ಗಗನ್",
+      "localeName": "ಗಗನ್",
       "name": "kn-IN-GaganNeural"
     },
     {
-      "localName": "ಸಪ್ನಾ",
+      "localeName": "ಸಪ್ನಾ",
       "name": "kn-IN-SapnaNeural"
     }
   ],
   "ko-KR": [
     {
-      "localName": "국민",
+      "localeName": "국민",
       "name": "ko-KR-GookMinNeural"
     },
     {
-      "localName": "봉진",
+      "localeName": "봉진",
       "name": "ko-KR-BongJinNeural"
     },
     {
-      "localName": "서현",
+      "localeName": "서현",
       "name": "ko-KR-SeoHyeonNeural"
     },
     {
-      "localName": "선히",
+      "localeName": "선히",
       "name": "ko-KR-SunHiNeural"
     },
     {
-      "localName": "순복",
+      "localeName": "순복",
       "name": "ko-KR-SoonBokNeural"
     },
     {
-      "localName": "유진",
+      "localeName": "유진",
       "name": "ko-KR-YuJinNeural"
     },
     {
-      "localName": "인준",
+      "localeName": "인준",
       "name": "ko-KR-InJoonNeural"
     },
     {
-      "localName": "지민",
+      "localeName": "지민",
       "name": "ko-KR-JiMinNeural"
     }
   ],
   "lo-LA": [
     {
-      "localName": "ແກ້ວມະນີ",
+      "localeName": "ແກ້ວມະນີ",
       "name": "lo-LA-KeomanyNeural"
     },
     {
-      "localName": "ຈັນທະວົງ",
+      "localeName": "ຈັນທະວົງ",
       "name": "lo-LA-ChanthavongNeural"
     }
   ],
   "lt-LT": [
     {
-      "localName": "Leonas",
+      "localeName": "Leonas",
       "name": "lt-LT-LeonasNeural"
     },
     {
-      "localName": "Ona",
+      "localeName": "Ona",
       "name": "lt-LT-OnaNeural"
     }
   ],
   "lv-LV": [
     {
-      "localName": "Everita",
+      "localeName": "Everita",
       "name": "lv-LV-EveritaNeural"
     },
     {
-      "localName": "Nils",
+      "localeName": "Nils",
       "name": "lv-LV-NilsNeural"
     }
   ],
   "mk-MK": [
     {
-      "localName": "Александар",
+      "localeName": "Александар",
       "name": "mk-MK-AleksandarNeural"
     },
     {
-      "localName": "Марија",
+      "localeName": "Марија",
       "name": "mk-MK-MarijaNeural"
     }
   ],
   "ml-IN": [
     {
-      "localName": "മിഥുൻ",
+      "localeName": "മിഥുൻ",
       "name": "ml-IN-MidhunNeural"
     },
     {
-      "localName": "ശോഭന",
+      "localeName": "ശോഭന",
       "name": "ml-IN-SobhanaNeural"
     }
   ],
   "mn-MN": [
     {
-      "localName": "Батаа",
+      "localeName": "Батаа",
       "name": "mn-MN-BataaNeural"
     },
     {
-      "localName": "Есүй",
+      "localeName": "Есүй",
       "name": "mn-MN-YesuiNeural"
     }
   ],
   "mr-IN": [
     {
-      "localName": "आरोही",
+      "localeName": "आरोही",
       "name": "mr-IN-AarohiNeural"
     },
     {
-      "localName": "मनोहर",
+      "localeName": "मनोहर",
       "name": "mr-IN-ManoharNeural"
     }
   ],
   "ms-MY": [
     {
-      "localName": "Osman",
+      "localeName": "Osman",
       "name": "ms-MY-OsmanNeural"
     },
     {
-      "localName": "Yasmin",
+      "localeName": "Yasmin",
       "name": "ms-MY-YasminNeural"
     }
   ],
   "mt-MT": [
     {
-      "localName": "Grace",
+      "localeName": "Grace",
       "name": "mt-MT-GraceNeural"
     },
     {
-      "localName": "Joseph",
+      "localeName": "Joseph",
       "name": "mt-MT-JosephNeural"
     }
   ],
   "my-MM": [
     {
-      "localName": "နီလာ",
+      "localeName": "နီလာ",
       "name": "my-MM-NilarNeural"
     },
     {
-      "localName": "သီဟ",
+      "localeName": "သီဟ",
       "name": "my-MM-ThihaNeural"
     }
   ],
   "nb-NO": [
     {
-      "localName": "Finn",
+      "localeName": "Finn",
       "name": "nb-NO-FinnNeural"
     },
     {
-      "localName": "Iselin",
+      "localeName": "Iselin",
       "name": "nb-NO-IselinNeural"
     },
     {
-      "localName": "Pernille",
+      "localeName": "Pernille",
       "name": "nb-NO-PernilleNeural"
     }
   ],
   "ne-NP": [
     {
-      "localName": "सागर",
+      "localeName": "सागर",
       "name": "ne-NP-SagarNeural"
     },
     {
-      "localName": "हेमकला",
+      "localeName": "हेमकला",
       "name": "ne-NP-HemkalaNeural"
     }
   ],
   "nl-BE": [
     {
-      "localName": "Arnaud",
+      "localeName": "Arnaud",
       "name": "nl-BE-ArnaudNeural"
     },
     {
-      "localName": "Dena",
+      "localeName": "Dena",
       "name": "nl-BE-DenaNeural"
     }
   ],
   "nl-NL": [
     {
-      "localName": "Colette",
+      "localeName": "Colette",
       "name": "nl-NL-ColetteNeural"
     },
     {
-      "localName": "Fenna",
+      "localeName": "Fenna",
       "name": "nl-NL-FennaNeural"
     },
     {
-      "localName": "Maarten",
+      "localeName": "Maarten",
       "name": "nl-NL-MaartenNeural"
     }
   ],
   "pl-PL": [
     {
-      "localName": "Agnieszka",
+      "localeName": "Agnieszka",
       "name": "pl-PL-AgnieszkaNeural"
     },
     {
-      "localName": "Marek",
+      "localeName": "Marek",
       "name": "pl-PL-MarekNeural"
     },
     {
-      "localName": "Zofia",
+      "localeName": "Zofia",
       "name": "pl-PL-ZofiaNeural"
     }
   ],
   "ps-AF": [
     {
-      "localName": " ګل نواز",
+      "localeName": " ګل نواز",
       "name": "ps-AF-GulNawazNeural"
     },
     {
-      "localName": "لطيفه",
+      "localeName": "لطيفه",
       "name": "ps-AF-LatifaNeural"
     }
   ],
   "pt-BR": [
     {
-      "localName": "Antônio",
+      "localeName": "Antônio",
       "name": "pt-BR-AntonioNeural"
     },
     {
-      "localName": "Brenda",
+      "localeName": "Brenda",
       "name": "pt-BR-BrendaNeural"
     },
     {
-      "localName": "Donato",
+      "localeName": "Donato",
       "name": "pt-BR-DonatoNeural"
     },
     {
-      "localName": "Elza",
+      "localeName": "Elza",
       "name": "pt-BR-ElzaNeural"
     },
     {
-      "localName": "Fabio",
+      "localeName": "Fabio",
       "name": "pt-BR-FabioNeural"
     },
     {
-      "localName": "Francisca",
+      "localeName": "Francisca",
       "name": "pt-BR-FranciscaNeural"
     },
     {
-      "localName": "Giovanna",
+      "localeName": "Giovanna",
       "name": "pt-BR-GiovannaNeural"
     },
     {
-      "localName": "Humberto",
+      "localeName": "Humberto",
       "name": "pt-BR-HumbertoNeural"
     },
     {
-      "localName": "Julio",
+      "localeName": "Julio",
       "name": "pt-BR-JulioNeural"
     },
     {
-      "localName": "Leila",
+      "localeName": "Leila",
       "name": "pt-BR-LeilaNeural"
     },
     {
-      "localName": "Leticia",
+      "localeName": "Leticia",
       "name": "pt-BR-LeticiaNeural"
     },
     {
-      "localName": "Manuela",
+      "localeName": "Manuela",
       "name": "pt-BR-ManuelaNeural"
     },
     {
-      "localName": "Nicolau",
+      "localeName": "Nicolau",
       "name": "pt-BR-NicolauNeural"
     },
     {
-      "localName": "Valerio",
+      "localeName": "Valerio",
       "name": "pt-BR-ValerioNeural"
     },
     {
-      "localName": "Yara",
+      "localeName": "Yara",
       "name": "pt-BR-YaraNeural"
     }
   ],
   "pt-PT": [
     {
-      "localName": "Duarte",
+      "localeName": "Duarte",
       "name": "pt-PT-DuarteNeural"
     },
     {
-      "localName": "Fernanda",
+      "localeName": "Fernanda",
       "name": "pt-PT-FernandaNeural"
     },
     {
-      "localName": "Raquel",
+      "localeName": "Raquel",
       "name": "pt-PT-RaquelNeural"
     }
   ],
   "ro-RO": [
     {
-      "localName": "Alina",
+      "localeName": "Alina",
       "name": "ro-RO-AlinaNeural"
     },
     {
-      "localName": "Emil",
+      "localeName": "Emil",
       "name": "ro-RO-EmilNeural"
     }
   ],
   "ru-RU": [
     {
-      "localName": "Дария",
+      "localeName": "Дария",
       "name": "ru-RU-DariyaNeural"
     },
     {
-      "localName": "Дмитрий",
+      "localeName": "Дмитрий",
       "name": "ru-RU-DmitryNeural"
     },
     {
-      "localName": "Светлана",
+      "localeName": "Светлана",
       "name": "ru-RU-SvetlanaNeural"
     }
   ],
   "si-LK": [
     {
-      "localName": "තිළිණි",
+      "localeName": "තිළිණි",
       "name": "si-LK-ThiliniNeural"
     },
     {
-      "localName": "සමීර",
+      "localeName": "සමීර",
       "name": "si-LK-SameeraNeural"
     }
   ],
   "sk-SK": [
     {
-      "localName": "Lukáš",
+      "localeName": "Lukáš",
       "name": "sk-SK-LukasNeural"
     },
     {
-      "localName": "Viktória",
+      "localeName": "Viktória",
       "name": "sk-SK-ViktoriaNeural"
     }
   ],
   "sl-SI": [
     {
-      "localName": "Petra",
+      "localeName": "Petra",
       "name": "sl-SI-PetraNeural"
     },
     {
-      "localName": "Rok",
+      "localeName": "Rok",
       "name": "sl-SI-RokNeural"
     }
   ],
   "so-SO": [
     {
-      "localName": "Muuse",
+      "localeName": "Muuse",
       "name": "so-SO-MuuseNeural"
     },
     {
-      "localName": "Ubax",
+      "localeName": "Ubax",
       "name": "so-SO-UbaxNeural"
     }
   ],
   "sq-AL": [
     {
-      "localName": "Anila",
+      "localeName": "Anila",
       "name": "sq-AL-AnilaNeural"
     },
     {
-      "localName": "Ilir",
+      "localeName": "Ilir",
       "name": "sq-AL-IlirNeural"
     }
   ],
   "sr-Latn": [
     {
-      "localName": "Nicholas",
+      "localeName": "Nicholas",
       "name": "sr-Latn-RS-NicholasNeural"
     },
     {
-      "localName": "Sophie",
+      "localeName": "Sophie",
       "name": "sr-Latn-RS-SophieNeural"
     }
   ],
   "sr-RS": [
     {
-      "localName": "Никола",
+      "localeName": "Никола",
       "name": "sr-RS-NicholasNeural"
     },
     {
-      "localName": "Софија",
+      "localeName": "Софија",
       "name": "sr-RS-SophieNeural"
     }
   ],
   "su-ID": [
     {
-      "localName": "Jajang",
+      "localeName": "Jajang",
       "name": "su-ID-JajangNeural"
     },
     {
-      "localName": "Tuti",
+      "localeName": "Tuti",
       "name": "su-ID-TutiNeural"
     }
   ],
   "sv-SE": [
     {
-      "localName": "Hillevi",
+      "localeName": "Hillevi",
       "name": "sv-SE-HilleviNeural"
     },
     {
-      "localName": "Mattias",
+      "localeName": "Mattias",
       "name": "sv-SE-MattiasNeural"
     },
     {
-      "localName": "Sofie",
+      "localeName": "Sofie",
       "name": "sv-SE-SofieNeural"
     }
   ],
   "sw-KE": [
     {
-      "localName": "Rafiki",
+      "localeName": "Rafiki",
       "name": "sw-KE-RafikiNeural"
     },
     {
-      "localName": "Zuri",
+      "localeName": "Zuri",
       "name": "sw-KE-ZuriNeural"
     }
   ],
   "sw-TZ": [
     {
-      "localName": "Daudi",
+      "localeName": "Daudi",
       "name": "sw-TZ-DaudiNeural"
     },
     {
-      "localName": "Rehema",
+      "localeName": "Rehema",
       "name": "sw-TZ-RehemaNeural"
     }
   ],
   "ta-IN": [
     {
-      "localName": "பல்லவி",
+      "localeName": "பல்லவி",
       "name": "ta-IN-PallaviNeural"
     },
     {
-      "localName": "வள்ளுவர்",
+      "localeName": "வள்ளுவர்",
       "name": "ta-IN-ValluvarNeural"
     }
   ],
   "ta-LK": [
     {
-      "localName": "குமார்",
+      "localeName": "குமார்",
       "name": "ta-LK-KumarNeural"
     },
     {
-      "localName": "சரண்யா",
+      "localeName": "சரண்யா",
       "name": "ta-LK-SaranyaNeural"
     }
   ],
   "ta-MY": [
     {
-      "localName": "கனி",
+      "localeName": "கனி",
       "name": "ta-MY-KaniNeural"
     },
     {
-      "localName": "சூர்யா",
+      "localeName": "சூர்யா",
       "name": "ta-MY-SuryaNeural"
     }
   ],
   "ta-SG": [
     {
-      "localName": "அன்பு",
+      "localeName": "அன்பு",
       "name": "ta-SG-AnbuNeural"
     },
     {
-      "localName": "வெண்பா",
+      "localeName": "வெண்பா",
       "name": "ta-SG-VenbaNeural"
     }
   ],
   "te-IN": [
     {
-      "localName": "మోహన్",
+      "localeName": "మోహన్",
       "name": "te-IN-MohanNeural"
     },
     {
-      "localName": "శ్రుతి",
+      "localeName": "శ్రుతి",
       "name": "te-IN-ShrutiNeural"
     }
   ],
   "th-TH": [
     {
-      "localName": "นิวัฒน์",
+      "localeName": "นิวัฒน์",
       "name": "th-TH-NiwatNeural"
     },
     {
-      "localName": "เปรมวดี",
+      "localeName": "เปรมวดี",
       "name": "th-TH-PremwadeeNeural"
     },
     {
-      "localName": "อัจฉรา",
+      "localeName": "อัจฉรา",
       "name": "th-TH-AcharaNeural"
     }
   ],
   "tr-TR": [
     {
-      "localName": "Ahmet",
+      "localeName": "Ahmet",
       "name": "tr-TR-AhmetNeural"
     },
     {
-      "localName": "Emel",
+      "localeName": "Emel",
       "name": "tr-TR-EmelNeural"
     }
   ],
   "uk-UA": [
     {
-      "localName": "Остап",
+      "localeName": "Остап",
       "name": "uk-UA-OstapNeural"
     },
     {
-      "localName": "Поліна",
+      "localeName": "Поліна",
       "name": "uk-UA-PolinaNeural"
     }
   ],
   "ur-IN": [
     {
-      "localName": "سلمان",
+      "localeName": "سلمان",
       "name": "ur-IN-SalmanNeural"
     },
     {
-      "localName": "گل",
+      "localeName": "گل",
       "name": "ur-IN-GulNeural"
     }
   ],
   "ur-PK": [
     {
-      "localName": "اسد",
+      "localeName": "اسد",
       "name": "ur-PK-AsadNeural"
     },
     {
-      "localName": "عظمیٰ",
+      "localeName": "عظمیٰ",
       "name": "ur-PK-UzmaNeural"
     }
   ],
   "uz-UZ": [
     {
-      "localName": "Madina",
+      "localeName": "Madina",
       "name": "uz-UZ-MadinaNeural"
     },
     {
-      "localName": "Sardor",
+      "localeName": "Sardor",
       "name": "uz-UZ-SardorNeural"
     }
   ],
   "vi-VN": [
     {
-      "localName": "Hoài My",
+      "localeName": "Hoài My",
       "name": "vi-VN-HoaiMyNeural"
     },
     {
-      "localName": "Nam Minh",
+      "localeName": "Nam Minh",
       "name": "vi-VN-NamMinhNeural"
     }
   ],
   "zh-CN": [
     {
-      "localName": "云健",
+      "localeName": "云健",
       "name": "zh-CN-YunjianNeural"
     },
     {
-      "localName": "云哲",
+      "localeName": "云哲",
       "name": "wuu-CN-YunzheNeural"
     },
     {
-      "localName": "云夏",
+      "localeName": "云夏",
       "name": "zh-CN-YunxiaNeural"
     },
     {
-      "localName": "云奇",
+      "localeName": "云奇",
       "name": "zh-CN-guangxi-YunqiNeural"
     },
     {
-      "localName": "云希",
+      "localeName": "云希",
       "name": "zh-CN-sichuan-YunxiNeural"
     },
     {
-      "localName": "云希",
+      "localeName": "云希",
       "name": "zh-CN-YunxiNeural"
     },
     {
-      "localName": "云扬",
+      "localeName": "云扬",
       "name": "zh-CN-YunyangNeural"
     },
     {
-      "localName": "云杰",
+      "localeName": "云杰",
       "name": "zh-CN-YunjieNeural"
     },
     {
-      "localName": "云松",
+      "localeName": "云松",
       "name": "yue-CN-YunSongNeural"
     },
     {
-      "localName": "云枫",
+      "localeName": "云枫",
       "name": "zh-CN-YunfengNeural"
     },
     {
-      "localName": "云泽",
+      "localeName": "云泽",
       "name": "zh-CN-YunzeNeural"
     },
     {
-      "localName": "云登",
+      "localeName": "云登",
       "name": "zh-CN-henan-YundengNeural"
     },
     {
-      "localName": "云皓",
+      "localeName": "云皓",
       "name": "zh-CN-YunhaoNeural"
     },
     {
-      "localName": "云翔",
+      "localeName": "云翔",
       "name": "zh-CN-shandong-YunxiangNeural"
     },
     {
-      "localName": "云彪",
+      "localeName": "云彪",
       "name": "zh-CN-liaoning-YunbiaoNeural"
     },
     {
-      "localName": "云野",
+      "localeName": "云野",
       "name": "zh-CN-YunyeNeural"
     },
     {
-      "localName": "晓伊",
+      "localeName": "晓伊",
       "name": "zh-CN-XiaoyiNeural"
     },
     {
-      "localName": "晓北",
+      "localeName": "晓北",
       "name": "zh-CN-liaoning-XiaobeiNeural"
     },
     {
-      "localName": "晓双",
+      "localeName": "晓双",
       "name": "zh-CN-XiaoshuangNeural"
     },
     {
-      "localName": "晓妮",
+      "localeName": "晓妮",
       "name": "zh-CN-shaanxi-XiaoniNeural"
     },
     {
-      "localName": "晓彤",
+      "localeName": "晓彤",
       "name": "wuu-CN-XiaotongNeural"
     },
     {
-      "localName": "晓悠",
+      "localeName": "晓悠",
       "name": "zh-CN-XiaoyouNeural"
     },
     {
-      "localName": "晓敏",
+      "localeName": "晓敏",
       "name": "yue-CN-XiaoMinNeural"
     },
     {
-      "localName": "晓晓",
+      "localeName": "晓晓",
       "name": "zh-CN-XiaoxiaoNeural"
     },
     {
-      "localName": "晓柔",
+      "localeName": "晓柔",
       "name": "zh-CN-XiaorouNeural"
     },
     {
-      "localName": "晓梦",
+      "localeName": "晓梦",
       "name": "zh-CN-XiaomengNeural"
     },
     {
-      "localName": "晓涵",
+      "localeName": "晓涵",
       "name": "zh-CN-XiaohanNeural"
     },
     {
-      "localName": "晓甄",
+      "localeName": "晓甄",
       "name": "zh-CN-XiaozhenNeural"
     },
     {
-      "localName": "晓睿",
+      "localeName": "晓睿",
       "name": "zh-CN-XiaoruiNeural"
     },
     {
-      "localName": "晓秋",
+      "localeName": "晓秋",
       "name": "zh-CN-XiaoqiuNeural"
     },
     {
-      "localName": "晓萱",
+      "localeName": "晓萱",
       "name": "zh-CN-XiaoxuanNeural"
     },
     {
-      "localName": "晓辰",
+      "localeName": "晓辰",
       "name": "zh-CN-XiaochenNeural"
     },
     {
-      "localName": "晓颜",
+      "localeName": "晓颜",
       "name": "zh-CN-XiaoyanNeural"
     },
     {
-      "localName": "晓墨",
+      "localeName": "晓墨",
       "name": "zh-CN-XiaomoNeural"
     }
   ],
   "zh-HK": [
     {
-      "localName": "曉佳",
+      "localeName": "曉佳",
       "name": "zh-HK-HiuGaaiNeural"
     },
     {
-      "localName": "曉曼",
+      "localeName": "曉曼",
       "name": "zh-HK-HiuMaanNeural"
     },
     {
-      "localName": "雲龍",
+      "localeName": "雲龍",
       "name": "zh-HK-WanLungNeural"
     }
   ],
   "zh-TW": [
     {
-      "localName": "曉臻",
+      "localeName": "曉臻",
       "name": "zh-TW-HsiaoChenNeural"
     },
     {
-      "localName": "曉雨",
+      "localeName": "曉雨",
       "name": "zh-TW-HsiaoYuNeural"
     },
     {
-      "localName": "雲哲",
+      "localeName": "雲哲",
       "name": "zh-TW-YunJheNeural"
     }
   ],
   "zu-ZA": [
     {
-      "localName": "Thando",
+      "localeName": "Thando",
       "name": "zu-ZA-ThandoNeural"
     },
     {
-      "localName": "Themba",
+      "localeName": "Themba",
       "name": "zu-ZA-ThembaNeural"
     }
   ]

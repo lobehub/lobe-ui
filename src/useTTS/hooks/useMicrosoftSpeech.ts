@@ -15,9 +15,8 @@ export const useMicrosoftSpeech = (defaultText: string, options: SsmlOptions) =>
         setShouldFetch(false);
         console.error(error);
       },
-      onSuccess: (data) => {
+      onSuccess: () => {
         setShouldFetch(false);
-        console.log(data);
       },
     },
   );

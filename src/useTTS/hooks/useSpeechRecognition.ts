@@ -5,7 +5,7 @@ const SpeechRecognition =
 
 export const useSpeechRecognition = (locale: string) => {
   const [text, setText] = useState<string>('');
-  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [finalStop, setFinalStop] = useState<boolean>(false);
   const recognition = new SpeechRecognition();
   recognition.lang = locale;
@@ -14,16 +14,16 @@ export const useSpeechRecognition = (locale: string) => {
 
   const handleStop = () => {
     recognition.abort();
-    setIsProcessing(false);
+    setIsLoading(false);
   };
 
   recognition.onstart = () => {
     setFinalStop(false);
-    setIsProcessing(true);
+    setIsLoading(true);
     setText('');
   };
   recognition.onend = () => {
-    setIsProcessing(false);
+    setIsLoading(false);
     setFinalStop(true);
   };
 
@@ -35,7 +35,7 @@ export const useSpeechRecognition = (locale: string) => {
   };
 
   return {
-    isProcessing,
+    isLoading,
     start: () => recognition.start(),
     stop: () => handleStop(),
     text,

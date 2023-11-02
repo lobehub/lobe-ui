@@ -15,9 +15,8 @@ export const useAzureSpeech = (defaultText: string, options: SsmlOptions, env: A
         setShouldFetch(false);
         console.error(error);
       },
-      onSuccess: (data) => {
+      onSuccess: () => {
         setShouldFetch(false);
-        console.log(data);
       },
     },
   );

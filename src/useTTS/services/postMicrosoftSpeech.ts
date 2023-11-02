@@ -44,6 +44,7 @@ export const postMicrosoftSpeech = async (
         responseType: 'arraybuffer',
       },
     );
+
     return await response.arrayBuffer();
   } catch (error) {
     console.error(error);

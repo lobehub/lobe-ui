@@ -1,7 +1,7 @@
 ---
 nav: Components
 group: TTS
-title: useMicrosoftSpeech
+title: useEdgeSpeech
 ---
 
 ## useSpeechRecognition
@@ -10,8 +10,8 @@ title: useMicrosoftSpeech
 
 ## useSpeechSynthes
 
-<code src="./demos/SpeechSynthes.tsx" center></code>
+<code src="./demos/SpeechSynthes.tsx" nopadding></code>
 
-## useMicrosoftSpeech
+## useEdgeSpeech
 
-<code src="./demos/MicrosoftSpeech.tsx" center></code>
+<code src="./demos/EdgeSpeech.tsx" nopadding></code>
