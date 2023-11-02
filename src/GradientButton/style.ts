@@ -23,8 +23,6 @@ export const useStyles = createStyles(
       }
     }
 
-    console.log(token.borderRadius);
-
     return {
       button: css`
         position: relative;
