@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.111.0](https://github.com/lobehub/lobe-ui/compare/v1.110.0...v1.111.0)
+
+<sup>Released on **2023-11-02**</sup>
+
+#### ✨ Features
+
+- **misc**: Add TTS hooks.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add TTS hooks ([e82f047](https://github.com/lobehub/lobe-ui/commit/e82f047))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.110.0](https://github.com/lobehub/lobe-ui/compare/v1.109.1...v1.110.0)
 
 <sup>Released on **2023-11-01**</sup>
