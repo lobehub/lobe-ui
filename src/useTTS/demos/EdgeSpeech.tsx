@@ -23,13 +23,17 @@ export default () => {
     },
     { store },
   );
-  const { setText, isLoading, start, stop } = useEdgeSpeech(defaultText, options);
+  const { setText, isLoading, isPlaying, start, stop } = useEdgeSpeech(defaultText, options);
   return (
     <StoryBook levaStore={store}>
       <Flexbox gap={8}>
-        {isLoading ? (
+        {isPlaying ? (
           <Button block icon={<Icon icon={StopCircle} />} onClick={stop}>
             Stop
+          </Button>
+        ) : isLoading ? (
+          <Button block loading onClick={stop}>
+            Generating...
           </Button>
         ) : (
           <Button block icon={<Icon icon={Volume2} />} onClick={start} type={'primary'}>

@@ -1,40 +1,54 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import useSWR from 'swr';
 
 import { postEdgeSpeech } from '../services/postEdgeSpeech';
 import { SsmlOptions } from '../utils/genSSML';
 
 export const useEdgeSpeech = (defaultText: string, options: SsmlOptions) => {
-  const [data, setData] = useState<AudioBufferSourceNode>();
+  const [data, setDate] = useState<AudioBufferSourceNode>();
   const [text, setText] = useState<string>(defaultText);
   const [shouldFetch, setShouldFetch] = useState<boolean>(false);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
   const { isLoading } = useSWR(
     shouldFetch ? [options.name, text].join('-') : null,
-    () => postEdgeSpeech(text, options, { setData, setIsPlaying, setShouldFetch }),
+    () => postEdgeSpeech(text, options),
     {
       onError: () => setShouldFetch(false),
-      onSuccess: () => setShouldFetch(false),
+      onSuccess: (audioBufferSource) => {
+        setShouldFetch(false);
+        setIsPlaying(true);
+        setDate(audioBufferSource);
+        audioBufferSource.start();
+        audioBufferSource.addEventListener('ended', () => {
+          setShouldFetch(false);
+          setIsPlaying(false);
+        });
+      },
     },
   );
 
-  const start = useCallback(() => {
-    setShouldFetch(true);
-    setIsPlaying(true);
-  }, [data]);
-
-  const stop = useCallback(() => {
-    setShouldFetch(false);
-    setIsPlaying(false);
-    data?.stop();
-  }, [data]);
-
   return {
     data,
-    isLoading: isLoading || isPlaying,
+    isLoading: isLoading,
+    isPlaying: isPlaying,
     setText,
-    start,
-    stop,
+    start: () => {
+      if (isPlaying || shouldFetch) return;
+      setShouldFetch(true);
+      if (!data) return;
+      try {
+        setIsPlaying(true);
+        data?.start();
+      } catch {}
+    },
+    stop: () => {
+      if (!isPlaying) return;
+      setShouldFetch(false);
+      setIsPlaying(false);
+      try {
+        data?.stop();
+      } catch {}
+    },
   };
 };
