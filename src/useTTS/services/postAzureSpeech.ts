@@ -10,33 +10,38 @@ import {
 
 import { type SsmlOptions, genSSML } from '../utils/genSSML';
 
-export interface AzureSpeechEnv {
-  SPEECH_KEY: string;
-  SPEECH_REGION: string;
+export interface AzureSpeechOptions extends SsmlOptions {
+  api: {
+    key: string;
+    region: string;
+  };
 }
 
 // 纯文本生成语音
 export const postAzureSpeech = async (
   text: string,
-  options: SsmlOptions,
-  env: AzureSpeechEnv,
-): Promise<Buffer> => {
-  const speechConfig = SpeechConfig.fromSubscription(env.SPEECH_KEY, env.SPEECH_REGION);
+  { api, ...options }: AzureSpeechOptions,
+): Promise<AudioBufferSourceNode> => {
+  const key = api.key || process.env.AZURE_SPEECH_KEY || '';
+  const region = api.key || process.env.AZURE_SPEECH_REGION || '';
+  const speechConfig = SpeechConfig.fromSubscription(key, region);
   speechConfig.setProperty(PropertyId.SpeechServiceResponse_RequestSentenceBoundary, 'true');
   speechConfig.speechSynthesisOutputFormat = SpeechSynthesisOutputFormat.Webm24Khz16BitMonoOpus;
 
   const audioConfig = AudioConfig.fromDefaultSpeakerOutput();
   const synthesizer: SpeechSynthesizer | null = new SpeechSynthesizer(speechConfig, audioConfig);
 
-  const completeCb = (
+  const completeCb = async (
     result: SpeechSynthesisResult,
-    resolve: (value: Buffer) => void,
-    reject: (err?: any) => void,
+    resolve: (value: AudioBufferSourceNode) => void,
   ) => {
     if (result.reason === ResultReason.SynthesizingAudioCompleted) {
-      resolve(Buffer.from(result.audioData));
-    } else {
-      reject(result);
+      const audioData = result.audioData;
+      const audioContext = new AudioContext();
+      const audioBufferSource = audioContext.createBufferSource();
+      audioBufferSource.buffer = await audioContext.decodeAudioData(audioData);
+      audioBufferSource.connect(audioContext.destination);
+      resolve(audioBufferSource);
     }
     synthesizer.close();
   };
@@ -46,10 +51,10 @@ export const postAzureSpeech = async (
     synthesizer.close();
   };
 
-  return new Promise<Buffer>((resolve, reject) => {
+  return new Promise<AudioBufferSourceNode>((resolve, reject) => {
     synthesizer.speakSsmlAsync(
       genSSML(text, options),
-      (result) => completeCb(result, resolve, reject),
+      (result) => completeCb(result, resolve),
       (err) => errCb(err, reject),
     );
   });

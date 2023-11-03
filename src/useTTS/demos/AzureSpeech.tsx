@@ -1,21 +1,31 @@
-import { Icon, StoryBook, getEdgeVoiceList, useMicrosoftSpeech } from '@lobehub/ui';
+import { Icon, StoryBook, getEdgeVoiceList, useAzureSpeech } from '@lobehub/ui';
 import { Button, Input } from 'antd';
 import { StopCircle, Volume2 } from 'lucide-react';
 import { Flexbox } from 'react-layout-kit';
 
 import { useControls, useCreateStore } from '@/index';
 
-const defaultText = '这是一段使用 Microsoft Speech 的语音演示';
+const defaultText = '这是一段使用 Azure Speech 的语音演示';
 
-const API = 'https://lobe-tts-preview.vercel.app/api/index';
 export default () => {
   const store = useCreateStore();
+
+  const api: any = useControls(
+    {
+      key: {
+        label: 'AZURE_SPEECH_KEY',
+        value: '',
+      },
+      region: {
+        label: 'AZURE_SPEECH_REGION',
+        value: '',
+      },
+    },
+    { store },
+  );
+
   const options: any = useControls(
     {
-      api: {
-        label: 'MICROSOFT_SPEECH_PROXY_URL',
-        value: API,
-      },
       name: {
         options: getEdgeVoiceList(),
         value: 'zh-CN-YunxiaNeural',
@@ -51,7 +61,10 @@ export default () => {
     },
     { store },
   );
-  const { setText, isLoading, isPlaying, start, stop } = useMicrosoftSpeech(defaultText, options);
+  const { setText, isLoading, isPlaying, start, stop } = useAzureSpeech(defaultText, {
+    api,
+    ...options,
+  });
   return (
     <StoryBook levaStore={store}>
       <Flexbox gap={8}>

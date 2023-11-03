@@ -10,8 +10,8 @@ export const useSpeechSynthes = (defaultText: string, options: SsmlOptions) => {
   const speechSynthesisUtterance = useMemo(() => {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.voice = voiceList.find((item) => item.name === options.name) as any;
-    if (options.pitch) utterance.pitch = options.pitch;
-    if (options.rate) utterance.rate = options.rate;
+    if (options.pitch) utterance.pitch = options.pitch * 10;
+    if (options.rate) utterance.rate = options.rate * 10;
     return utterance;
   }, [text, voiceList, options]);
 
