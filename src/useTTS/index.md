@@ -8,6 +8,10 @@ title: useEdgeSpeech
 
 <code src="./demos/SpeechRecognition.tsx" nopadding></code>
 
+## usePersistedSpeechRecognition
+
+<code src="./demos/PersistedSpeechRecognition.tsx" nopadding></code>
+
 ## useSpeechSynthes
 
 <code src="./demos/SpeechSynthes.tsx" nopadding></code>

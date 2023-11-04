@@ -10,7 +10,8 @@ import { LLMRoleType } from '@/types/llm';
 import ActionsBar, { type ActionsBarProps } from './ActionsBar';
 
 export type OnMessageChange = (id: string, content: string) => void;
-export type OnActionClick = (action: ActionEvent, message: ChatMessage) => void;
+export type OnActionsClick = (action: ActionEvent, message: ChatMessage) => void;
+export type OnAvatatsClick = (role: RenderRole) => ChatItemProps['onAvatarClick'];
 export type RenderRole = LLMRoleType | 'default' | string;
 export type RenderItem = FC<{ key: string } & ChatMessage & ListItemProps>;
 export type RenderMessage = FC<ChatMessage & { editableContent: ReactNode }>;
@@ -24,7 +25,8 @@ export interface ListItemProps {
   /**
    * @description 点击操作按钮的回调函数
    */
-  onActionsClick?: OnActionClick;
+  onActionsClick?: OnActionsClick;
+  onAvatarsClick?: OnAvatatsClick;
   /**
    * @description 消息变化的回调函数
    */
@@ -82,6 +84,7 @@ const Item = memo<ChatListItemProps>((props) => {
     renderMessagesExtra,
     showTitle,
     onActionsClick,
+    onAvatarsClick,
     onMessageChange,
     type,
     text,
@@ -200,6 +203,7 @@ const Item = memo<ChatListItemProps>((props) => {
       loading={loading}
       message={item.content}
       messageExtra={<MessageExtra data={item} />}
+      onAvatarClick={onAvatarsClick?.(item.role)}
       onChange={(value) => onMessageChange?.(item.id, value)}
       onDoubleClick={(e) => {
         if (item.id === 'default' || item.error) return;

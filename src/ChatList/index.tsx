@@ -16,7 +16,8 @@ export interface ChatListProps extends DivProps, ListItemProps {
   loadingId?: string;
 }
 export type {
-  OnActionClick,
+  OnActionsClick,
+  OnAvatatsClick,
   OnMessageChange,
   RenderAction,
   RenderErrorMessage,

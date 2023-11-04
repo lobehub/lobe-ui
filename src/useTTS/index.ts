@@ -1,7 +1,7 @@
 export { useAzureSpeech } from './hooks/useAzureSpeech';
 export { useEdgeSpeech } from './hooks/useEdgeSpeech';
 export { useMicrosoftSpeech } from './hooks/useMicrosoftSpeech';
-export { usePressSpeechRecognition } from './hooks/usePressSpeechRecognition';
+export { usePersistedSpeechRecognition } from './hooks/usePersistedSpeechRecognition';
 export { useSpeechRecognition } from './hooks/useSpeechRecognition';
 export { useSpeechSynthes } from './hooks/useSpeechSynthes';
 export {

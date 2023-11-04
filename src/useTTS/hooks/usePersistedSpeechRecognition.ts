@@ -2,18 +2,17 @@ import { useEffect, useState } from 'react';
 
 import { useSpeechRecognition } from './useSpeechRecognition';
 
-export const usePressSpeechRecognition = (locale: string) => {
+export const usePersistedSpeechRecognition = (locale: string) => {
   const [texts, setTexts] = useState<string[]>([]);
   const [isGLobalLoading, setIsGlobalLoading] = useState<boolean>(false);
   const { text, stop, start, isLoading } = useSpeechRecognition(locale);
 
   useEffect(() => {
-    if (!isLoading && text && texts.at(-1) !== text) {
-      setTexts([...texts, text]);
-      stop();
+    if (isGLobalLoading && !isLoading) {
+      if (text) setTexts([...texts, text]);
       start();
     }
-  }, [isLoading, texts, text]);
+  }, [isLoading, texts, text, start, isGLobalLoading]);
 
   return {
     isLoading: isGLobalLoading,

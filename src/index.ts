@@ -12,7 +12,8 @@ export { default as ChatInputArea, type ChatInputAreaProps } from './ChatInputAr
 export { default as ChatItem, type ChatItemProps } from './ChatItem';
 export type {
   ChatListProps,
-  OnActionClick,
+  OnActionsClick,
+  OnAvatatsClick,
   OnMessageChange,
   RenderAction,
   RenderErrorMessage,
