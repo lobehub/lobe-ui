@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.114.0](https://github.com/lobehub/lobe-ui/compare/v1.113.0...v1.114.0)
+
+<sup>Released on **2023-11-04**</sup>
+
+#### ✨ Features
+
+- **misc**: Add EmojiPicker component and update Avatar component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add EmojiPicker component and update Avatar component ([22aa45d](https://github.com/lobehub/lobe-ui/commit/22aa45d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.113.0](https://github.com/lobehub/lobe-ui/compare/v1.112.0...v1.113.0)
 
 <sup>Released on **2023-11-04**</sup>
