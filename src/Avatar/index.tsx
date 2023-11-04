@@ -41,7 +41,6 @@ const Avatar = memo<AvatarProps>(
     size = 40,
     shape = 'circle',
     background = 'rgba(0,0,0,0)',
-    onClick,
     style,
     ...props
   }) => {
@@ -57,9 +56,10 @@ const Avatar = memo<AvatarProps>(
 
     const avatarProps = {
       className: cx(styles.avatar, className),
-      shape: shape,
+      shape,
       size,
-      style: onClick ? style : { cursor: 'default', ...style },
+      style: props?.onClick ? style : { cursor: 'default', ...style },
+      ...props,
     };
 
     return isImage ? (
@@ -67,10 +67,9 @@ const Avatar = memo<AvatarProps>(
         src={isBase64 ? avatar : undefined}
         srcSet={isBase64 ? undefined : avatar}
         {...avatarProps}
-        {...props}
       />
     ) : (
-      <AntAvatar {...avatarProps} {...props}>
+      <AntAvatar {...avatarProps}>
         {emoji ? (
           <FluentEmoji emoji={emoji} size={size * 0.8} type={animation ? 'anim' : '3d'} />
         ) : (

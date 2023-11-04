@@ -51,6 +51,7 @@ export {
   type EditableMessageListProps,
 } from './EditableMessageList';
 export { default as EditableText, type EditableTextProps } from './EditableText';
+export { default as EmojiPicker, type EmojiPickerProps } from './EmojiPicker';
 export { default as EmptyCard, type EmptyCardProps } from './EmptyCard';
 export { type FeatureItem, default as Features, type FeaturesProps } from './Features';
 export { default as FluentEmoji, type FluentEmojiProps } from './FluentEmoji';

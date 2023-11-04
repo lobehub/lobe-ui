@@ -73,6 +73,8 @@
     "@ant-design/colors": "^7",
     "@ant-design/icons": "^5",
     "@babel/runtime": "^7",
+    "@emoji-mart/data": "^1",
+    "@emoji-mart/react": "^1",
     "@floating-ui/react": "^0",
     "@giscus/react": "^2",
     "@lobehub/chat-plugin-sdk": "latest",
