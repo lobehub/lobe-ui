@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.115.0](https://github.com/lobehub/lobe-ui/compare/v1.114.2...v1.115.0)
+
+<sup>Released on **2023-11-07**</sup>
+
+#### ✨ Features
+
+- **misc**: Add spline logo.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add spline logo ([bff8c22](https://github.com/lobehub/lobe-ui/commit/bff8c22))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.114.2](https://github.com/lobehub/lobe-ui/compare/v1.114.1...v1.114.2)
 
 <sup>Released on **2023-11-07**</sup>
