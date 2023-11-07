@@ -1,14 +1,20 @@
-import { LogoThree, LogoThreeProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import { LogoSpline, LogoThreeProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 
 export default () => {
   const store = useCreateStore();
   const control: LogoThreeProps | any = useControls(
     {
-      size: {
+      height: {
         max: 640,
         min: 24,
         step: 1,
-        value: 200,
+        value: 400,
+      },
+      width: {
+        max: 640,
+        min: 24,
+        step: 1,
+        value: 640,
       },
     },
     { store },
@@ -16,7 +22,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <LogoThree style={{ width: '100%' }} {...control} />
+      <LogoSpline {...control} />
     </StoryBook>
   );
 };

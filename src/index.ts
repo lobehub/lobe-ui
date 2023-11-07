@@ -98,6 +98,7 @@ export {
 export { default as List, type ListItemProps } from './List';
 export { default as Logo, type LogoProps } from './Logo';
 export { default as LogoThree, type LogoThreeProps } from './LogoThree';
+export { default as LogoSpline, type LogoSplineProps } from './LogoThree/LogoSpline';
 export { default as Markdown, type MarkdownProps } from './Markdown';
 export { default as MessageInput, type MessageInputProps } from './MessageInput';
 export { default as MessageModal, type MessageModalProps } from './MessageModal';

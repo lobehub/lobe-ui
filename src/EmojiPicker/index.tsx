@@ -1,9 +1,9 @@
 import data from '@emoji-mart/data';
-import defaultI18n from '@emoji-mart/data/i18n/en.json';
 import Picker from '@emoji-mart/react';
 import { Avatar } from '@lobehub/ui';
 import { Popover } from 'antd';
-import { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
+import useSWR from 'swr';
 import useMergeState from 'use-merge-value';
 
 import { useStyles } from './style';
@@ -25,24 +25,17 @@ const EmojiPicker = memo<EmojiPickerProps>(
     locale = 'en-US',
   }) => {
     const { styles } = useStyles();
-    const [i18n, setI18n] = useState(defaultI18n);
+
+    const { data: i18n } = useSWR(
+      locale,
+      async () => await import(`@emoji-mart/data/i18n/${locale.split('-')[0]}.json`),
+    );
 
     const [ava, setAva] = useMergeState('🤖', {
       defaultValue: defaultAvatar,
       onChange,
       value,
     });
-
-    const getI18n = async (localeName: string) => {
-      const i18n = await import(`@emoji-mart/data/i18n/${localeName}.json`);
-      setI18n(i18n);
-    };
-
-    useEffect(() => {
-      if (locale === 'en-US') return;
-      const localeName = locale.split('-')[0];
-      getI18n(localeName);
-    }, [locale]);
 
     return (
       <Popover
