@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.114.2](https://github.com/lobehub/lobe-ui/compare/v1.114.1...v1.114.2)
+
+<sup>Released on **2023-11-07**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Remove tts temporally to fix app build.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Remove tts temporally to fix app build ([02e67b7](https://github.com/lobehub/lobe-ui/commit/02e67b7))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.114.1](https://github.com/lobehub/lobe-ui/compare/v1.114.0...v1.114.1)
 
 <sup>Released on **2023-11-04**</sup>
