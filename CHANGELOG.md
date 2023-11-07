@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.115.1](https://github.com/lobehub/lobe-ui/compare/v1.115.0...v1.115.1)
+
+<sup>Released on **2023-11-07**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Add loading to ThreeLogo.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Add loading to ThreeLogo ([9206e6c](https://github.com/lobehub/lobe-ui/commit/9206e6c))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.115.0](https://github.com/lobehub/lobe-ui/compare/v1.114.2...v1.115.0)
 
 <sup>Released on **2023-11-07**</sup>
