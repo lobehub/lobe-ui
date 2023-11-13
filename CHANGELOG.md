@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.115.2](https://github.com/lobehub/lobe-ui/compare/v1.115.1...v1.115.2)
+
+<sup>Released on **2023-11-13**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix ChatList demo.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix ChatList demo ([3058fa7](https://github.com/lobehub/lobe-ui/commit/3058fa7))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.115.1](https://github.com/lobehub/lobe-ui/compare/v1.115.0...v1.115.1)
 
 <sup>Released on **2023-11-07**</sup>
