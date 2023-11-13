@@ -46,7 +46,7 @@ export interface ContextMenuProps {
 const MenuComponent = forwardRef<
   HTMLButtonElement,
   ContextMenuProps & HTMLProps<HTMLButtonElement>
->(({ items, label, container, ...props }, forwardedReference) => {
+>(({ items, label, container, ...rest }, forwardedReference) => {
   const { styles } = useStyles();
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
@@ -266,7 +266,7 @@ const MenuComponent = forwardRef<
           nested={isNested}
           ref={referenceReference as any}
           role={isNested ? 'menuitem' : 'menu'}
-          {...props}
+          {...rest}
           {...getReferenceProps({
             onClick(event) {
               event.stopPropagation();

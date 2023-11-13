@@ -12,11 +12,11 @@ export interface GridShowcaseProps extends DivProps {
 }
 
 const GridShowcase = memo<GridShowcaseProps>(
-  ({ style, children, backgroundColor = '#001dff', ...props }) => {
+  ({ style, children, backgroundColor = '#001dff', ...rest }) => {
     const theme = useTheme();
 
     return (
-      <div style={{ position: 'relative', ...style }} {...props}>
+      <div style={{ position: 'relative', ...style }} {...rest}>
         <GridBackground
           animation
           colorBack={rgba(theme.colorText, 0.12)}

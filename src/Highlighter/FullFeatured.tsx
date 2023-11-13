@@ -28,14 +28,14 @@ const options: SelectProps['options'] = languageMap.map((item) => ({
 }));
 
 export const Highlighter = memo<HighlighterProps>(
-  ({ children, language = 'markdown', className, style, ...props }) => {
+  ({ children, language = 'markdown', className, style, ...rest }) => {
     const [expand, setExpand] = useState(true);
     const [lang, setLang] = useState(language);
     const { styles, cx } = useStyles('block');
     const container = cx(styles.container, className);
 
     return (
-      <div className={container} data-code-type="highlighter" style={style} {...props}>
+      <div className={container} data-code-type="highlighter" style={style} {...rest}>
         <Flexbox align={'center'} className={styles.header} horizontal justify={'space-between'}>
           <ActionIcon
             icon={expand ? ChevronDown : ChevronRight}

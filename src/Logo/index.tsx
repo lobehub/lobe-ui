@@ -28,7 +28,7 @@ export interface LogoProps extends DivProps {
   type?: '3d' | 'flat' | 'high-contrast' | 'text' | 'combine';
 }
 
-const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className, ...props }) => {
+const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className, ...rest }) => {
   const genCdnUrl = useCdnFn();
   const theme = useTheme();
   const { styles } = useStyles();
@@ -43,7 +43,7 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
           src={genCdnUrl(LOGO_3D)}
           style={style}
           width={size}
-          {...props}
+          {...rest}
         />
       );
       break;
@@ -55,7 +55,7 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
       break;
     }
     case 'high-contrast': {
-      logoComponent = <LogoHighContrast height={size} style={style} width={size} {...props} />;
+      logoComponent = <LogoHighContrast height={size} style={style} width={size} {...rest} />;
       break;
     }
     case 'text': {
@@ -65,7 +65,7 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
           height={size}
           style={style}
           width={size * 2.9375}
-          {...props}
+          {...rest}
         />
       );
       break;
@@ -86,7 +86,7 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
   const extraSize = Math.round((size / 3) * 1.9);
 
   return (
-    <Flexbox align={'center'} className={className} horizontal style={style} {...props}>
+    <Flexbox align={'center'} className={className} horizontal style={style} {...rest}>
       {logoComponent}
       <Divider style={{ color: theme.colorFill, height: extraSize, width: extraSize }} />
       <div className={styles.extraTitle} style={{ fontSize: extraSize }}>

@@ -8,9 +8,9 @@ export interface MobileSafeAreaProps extends DivProps {
   position: 'top' | 'bottom';
 }
 
-const MobileSafeArea = memo<MobileSafeAreaProps>(({ position, className, ...props }) => {
+const MobileSafeArea = memo<MobileSafeAreaProps>(({ position, className, ...rest }) => {
   const { styles, cx } = useStyles();
-  return <div className={cx(styles.container, styles[position], className)} {...props} />;
+  return <div className={cx(styles.container, styles[position], className)} {...rest} />;
 });
 
 export default MobileSafeArea;

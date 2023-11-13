@@ -1,4 +1,11 @@
-import { ChatList, ChatListProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import {
+  ActionsBar,
+  ChatList,
+  ChatListProps,
+  StoryBook,
+  useControls,
+  useCreateStore,
+} from '@lobehub/ui';
 
 import { data } from './data';
 
@@ -17,7 +24,15 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <ChatList data={data} style={{ width: '100%' }} {...control} />
+      <ChatList
+        data={data}
+        renderActions={ActionsBar}
+        renderMessages={{
+          default: ({ id, editableContent }) => <div id={id}>{editableContent}</div>,
+        }}
+        style={{ width: '100%' }}
+        {...control}
+      />
     </StoryBook>
   );
 };

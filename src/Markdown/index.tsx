@@ -25,7 +25,7 @@ export interface MarkdownProps {
 }
 
 const Markdown = memo<MarkdownProps>(
-  ({ children, className, style, fullFeaturedCodeBlock, onDoubleClick, ...props }) => {
+  ({ children, className, style, fullFeaturedCodeBlock, onDoubleClick, ...rest }) => {
     const { styles } = useStyles();
     const components: Components = {
       a: (props: any) => <Typography.Link {...props} rel="noopener noreferrer" target="_blank" />,
@@ -43,7 +43,7 @@ const Markdown = memo<MarkdownProps>(
               className={styles.markdown}
               components={components}
               remarkPlugins={[remarkGfm]}
-              {...props}
+              {...rest}
             >
               {children}
             </ReactMarkdown>
@@ -54,7 +54,7 @@ const Markdown = memo<MarkdownProps>(
             components={components}
             rehypePlugins={[rehypeKatex]}
             remarkPlugins={[remarkGfm, remarkMath]}
-            {...props}
+            {...rest}
           >
             {children}
           </ReactMarkdown>

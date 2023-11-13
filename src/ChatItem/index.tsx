@@ -36,7 +36,7 @@ const ChatItem = memo<ChatItemProps>(
     text,
     errorMessage,
     onDoubleClick,
-    ...props
+    ...rest
   }) => {
     const { mobile } = useResponsive();
     const { cx, styles } = useStyles({
@@ -53,7 +53,7 @@ const ChatItem = memo<ChatItemProps>(
         className={cx(styles.container, className)}
         direction={placement === 'left' ? 'horizontal' : 'horizontal-reverse'}
         gap={mobile ? 6 : 12}
-        {...props}
+        {...rest}
       >
         <Avatar
           addon={avatarAddon}

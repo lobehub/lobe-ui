@@ -42,12 +42,12 @@ const Avatar = memo<AvatarProps>(
     shape = 'circle',
     background = 'rgba(0,0,0,0)',
     style,
-    ...props
+    ...rest
   }) => {
     const isImage = Boolean(
       avatar && ['/', 'http', 'data:'].some((index) => avatar.startsWith(index)),
     );
-    const isBase64 = Boolean(avatar?.startsWith('data'));
+
     const emoji = useMemo(() => avatar && !isImage && getEmoji(avatar), [avatar]);
 
     const { styles, cx } = useStyles({ background, isEmoji: Boolean(emoji), size });
@@ -58,16 +58,12 @@ const Avatar = memo<AvatarProps>(
       className: cx(styles.avatar, className),
       shape,
       size,
-      style: props?.onClick ? style : { cursor: 'default', ...style },
-      ...props,
+      style: rest?.onClick ? style : { cursor: 'default', ...style },
+      ...rest,
     };
 
     return isImage ? (
-      <AntAvatar
-        src={isBase64 ? avatar : undefined}
-        srcSet={isBase64 ? undefined : avatar}
-        {...avatarProps}
-      />
+      <AntAvatar src={avatar} {...avatarProps} />
     ) : (
       <AntAvatar {...avatarProps}>
         {emoji ? (

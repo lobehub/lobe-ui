@@ -46,7 +46,7 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaDesktop>(
       actionsRight,
       onStop,
       value,
-      ...props
+      ...rest
     },
     ref,
   ) => {
@@ -79,7 +79,7 @@ const ChatInputArea = forwardRef<InputRef, ChatInputAreaDesktop>(
             id={textareaId}
             ref={ref}
             style={textareaStyle}
-            {...props}
+            {...rest}
             onBlur={(e) => {
               if (onBlur) onBlur(e);
               setCurrentValue(e.target.value);

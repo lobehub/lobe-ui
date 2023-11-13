@@ -223,31 +223,31 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       h1 {
         margin-top: 0;
         margin-block-start: 0;
-        font-size: 2em;
+        font-size: 1.6em;
       }
 
       h2 {
         margin-top: 0;
         margin-block-start: 0;
-        font-size: 1.6em;
+        font-size: 1.4em;
       }
 
       h3 {
         margin-top: 0;
         margin-block-start: 0;
-        font-size: 1.4em;
+        font-size: 1.2em;
       }
 
       h4 {
         margin-top: 0;
         margin-block-start: 0;
-        font-size: 1.2em;
+        font-size: 1.1em;
       }
 
       h5 {
         margin-top: 0;
         margin-block-start: 0;
-        font-size: 1.1em;
+        font-size: 1em;
       }
     `,
     noScrollbar: css`

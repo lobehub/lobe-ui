@@ -84,7 +84,7 @@ const Item = memo<FeatureItemProps>(
     icon,
     imageStyle,
     openExternal,
-    ...props
+    ...rest
   }) => {
     const rowNumber = row || 7;
     const { styles, cx } = useStyles({ hasLink: Boolean(link), rowNum: rowNumber });
@@ -97,7 +97,7 @@ const Item = memo<FeatureItemProps>(
           gridRow: `span ${rowNumber}`,
           ...style,
         }}
-        {...props}
+        {...rest}
       >
         <div className={styles.cell}>
           {image ||

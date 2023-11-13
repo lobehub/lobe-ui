@@ -26,7 +26,7 @@ export interface FeaturesProps extends DivProps {
 }
 
 const Features = memo<FeaturesProps>(
-  ({ items, className, itemClassName, itemStyle, maxWidth = 960, style, ...props }) => {
+  ({ items, className, itemClassName, itemStyle, maxWidth = 960, style, ...rest }) => {
     if (!items?.length) return;
 
     return (
@@ -37,7 +37,7 @@ const Features = memo<FeaturesProps>(
           <Item className={itemClassName} key={item.title} style={itemStyle} {...item} />
         )}
         style={{ maxWidth, ...style }}
-        {...props}
+        {...rest}
       />
     );
   },

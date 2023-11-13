@@ -21,7 +21,7 @@ export interface FormProps extends AntFormProps {
 }
 
 const FormParent = forwardRef<FormInstance, FormProps>(
-  ({ className, itemMinWidth, footer, form, items, children, ...props }, ref) => {
+  ({ className, itemMinWidth, footer, form, items, children, ...rest }, ref) => {
     const { cx, styles } = useStyles();
     return (
       <AntForm
@@ -30,7 +30,7 @@ const FormParent = forwardRef<FormInstance, FormProps>(
         form={form}
         layout="horizontal"
         ref={ref}
-        {...props}
+        {...rest}
       >
         {items?.map((group, groupIndex) => (
           <FormGroup extra={group?.extra} icon={group?.icon} key={groupIndex} title={group.title}>

@@ -88,7 +88,7 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps & HTMLAttributes<any>>
       classNames,
       addon,
       pin,
-      ...props
+      ...rest
     },
     ref,
   ) => {
@@ -110,7 +110,7 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps & HTMLAttributes<any>>
         padding={12}
         ref={ref}
         style={style}
-        {...props}
+        {...rest}
       >
         {pin && (
           <div className={styles.pin}>

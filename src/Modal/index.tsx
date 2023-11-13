@@ -33,8 +33,7 @@ const useStyles = createStyles(({ css, token, prefixCls }) => ({
     }
   `,
   wrap: css`
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden auto;
     backdrop-filter: blur(2px);
   `,
 }));
@@ -51,7 +50,7 @@ const Modal = memo<ModalProps>(
     onCancel,
     open,
     destroyOnClose,
-    ...props
+    ...rest
   }) => {
     const { mobile } = useResponsive();
     const { styles, cx, theme } = useStyles();
@@ -72,7 +71,7 @@ const Modal = memo<ModalProps>(
           styles={{
             body: { padding: 0 },
             header: { padding: '8px 4px' },
-            ...props.styles,
+            ...rest.styles,
           }}
           title={title}
         >
@@ -99,7 +98,7 @@ const Modal = memo<ModalProps>(
           title={title}
           width={width}
           wrapClassName={cx(styles.wrap, wrapClassName)}
-          {...props}
+          {...rest}
         >
           {children}
         </AntModal>

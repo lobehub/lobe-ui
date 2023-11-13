@@ -27,7 +27,7 @@ export interface GridProps extends DivProps {
   strokeWidth?: number;
 }
 
-const Grid = memo<GridProps>(({ color = '#fff', strokeWidth = 3, linePick, ...props }) => {
+const Grid = memo<GridProps>(({ color = '#fff', strokeWidth = 3, linePick, ...rest }) => {
   const isUnpick = isUndefined(linePick);
 
   const showLine = useCallback((l: Line) => isUnpick || linePick === l, [linePick]);
@@ -67,7 +67,7 @@ const Grid = memo<GridProps>(({ color = '#fff', strokeWidth = 3, linePick, ...pr
   );
 
   return (
-    <div {...props}>
+    <div {...rest}>
       <svg style={{ width: '100%' }} viewBox="0 0 3728 422" xmlns="http://www.w3.org/2000/svg">
         <g fill="none" fillRule="evenodd" stroke={color} strokeWidth={strokeWidth}>
           {vLine}

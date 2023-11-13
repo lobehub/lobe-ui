@@ -17,7 +17,7 @@ export interface FormItemProps extends AntdFormItemProps {
 }
 
 const FormItem = memo<FormItemProps>(
-  ({ desc, tag, minWidth, avatar, className, label, children, divider, ...props }) => {
+  ({ desc, tag, minWidth, avatar, className, label, children, divider, ...rest }) => {
     const { cx, styles } = useStyles(minWidth);
     return (
       <>
@@ -25,7 +25,7 @@ const FormItem = memo<FormItemProps>(
         <Item
           className={cx(styles.item, !divider && styles.itemNoDivider, className)}
           label={<FormTitle avatar={avatar} desc={desc} tag={tag} title={label as any} />}
-          {...props}
+          {...rest}
         >
           {children}
         </Item>

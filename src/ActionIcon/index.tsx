@@ -133,7 +133,7 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
       children,
       loading,
       tooltipDelay = 0.5,
-      ...props
+      ...rest
     },
     ref,
   ) => {
@@ -166,7 +166,7 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
         onClick={loading ? undefined : onClick}
         ref={ref}
         style={{ borderRadius, height: blockSize, width: blockSize, ...style }}
-        {...props}
+        {...rest}
       >
         {spotlight && <Spotlight />}
         {loading ? spin : content}

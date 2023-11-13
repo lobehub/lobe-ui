@@ -31,12 +31,12 @@ export interface CopyButtonProps extends DivProps {
 }
 
 const CopyButton = memo<CopyButtonProps>(
-  ({ content, className, placement = 'right', size = 'site', ...props }) => {
+  ({ content, className, placement = 'right', size = 'site', ...rest }) => {
     const { copied, setCopied } = useCopied();
 
     return (
       <ActionIcon
-        {...props}
+        {...rest}
         className={className}
         glass
         icon={Copy}

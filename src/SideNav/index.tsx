@@ -20,11 +20,11 @@ export interface SideNavProps extends DivProps {
   topActions?: ReactNode;
 }
 
-const SideNav = memo<SideNavProps>(({ className, avatar, topActions, bottomActions, ...props }) => {
+const SideNav = memo<SideNavProps>(({ className, avatar, topActions, bottomActions, ...rest }) => {
   const { styles, cx } = useStyles();
 
   return (
-    <div className={cx(styles, className)} {...props}>
+    <div className={cx(styles, className)} {...rest}>
       <Flexbox align="center" direction="vertical" gap={16}>
         {avatar}
         <Flexbox align="center" direction="vertical" gap={8}>

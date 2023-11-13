@@ -27,7 +27,7 @@ const SpotlightCard = memo<SpotlightCardProps>(
     size = 800,
     borderRadius = 12,
     spotlight = true,
-    ...props
+    ...rest
   }) => {
     const { styles, cx } = useStyles({ borderRadius, size });
     const ref = useRef<HTMLDivElement>(null);
@@ -62,7 +62,7 @@ const SpotlightCard = memo<SpotlightCardProps>(
         className={cx(styles.container, styles.grid, className)}
         ref={ref}
         style={{ gap, gridTemplateColumns: gridColumns, ...style }}
-        {...props}
+        {...rest}
       >
         {items.map((item, index) => {
           const children = renderItem(item);

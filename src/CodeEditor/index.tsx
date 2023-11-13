@@ -53,7 +53,7 @@ const CodeEditor = forwardRef<TextAreaRef, CodeEditorProps>(
       className,
       textareaClassName,
       type = 'ghost',
-      ...props
+      ...rest
     },
     ref,
   ) => {
@@ -69,7 +69,7 @@ const CodeEditor = forwardRef<TextAreaRef, CodeEditorProps>(
           ref={ref as any}
           textareaClassName={cx(styles.textarea, textareaClassName)}
           value={value}
-          {...props}
+          {...rest}
         />
       </div>
     );

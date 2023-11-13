@@ -25,15 +25,11 @@ export interface TagProps extends AntTagProps {
   size?: 'default' | 'small';
 }
 
-const Tag = memo<TagProps>(({ icon, children, size = 'default', ...props }) => {
+const Tag = memo<TagProps>(({ icon, children, size = 'default', ...rest }) => {
   const { styles, cx } = useStyles();
 
   return (
-    <AntTag
-      bordered={false}
-      className={cx(styles.tag, size === 'small' && styles.small)}
-      {...props}
-    >
+    <AntTag bordered={false} className={cx(styles.tag, size === 'small' && styles.small)} {...rest}>
       <Flexbox align={'center'} gap={4} horizontal>
         {icon}
         {children}

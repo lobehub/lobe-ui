@@ -10,7 +10,7 @@ export interface LayoutHeaderProps extends DivProps {
   headerHeight?: number;
 }
 export const LayoutHeader = memo<LayoutHeaderProps>(
-  ({ headerHeight, children, className, style, ...props }) => {
+  ({ headerHeight, children, className, style, ...rest }) => {
     const { cx, styles } = useStyles(headerHeight);
     return (
       <header
@@ -19,7 +19,7 @@ export const LayoutHeader = memo<LayoutHeaderProps>(
           height: headerHeight,
           ...style,
         }}
-        {...props}
+        {...rest}
       >
         <div className={styles.glass} />
         {children}
@@ -29,10 +29,10 @@ export const LayoutHeader = memo<LayoutHeaderProps>(
 );
 
 export type LayoutMainProps = DivProps;
-export const LayoutMain = memo<LayoutMainProps>(({ children, className, ...props }) => {
+export const LayoutMain = memo<LayoutMainProps>(({ children, className, ...rest }) => {
   const { cx, styles } = useStyles();
   return (
-    <main className={cx(styles.main, className)} {...props}>
+    <main className={cx(styles.main, className)} {...rest}>
       {children}
     </main>
   );
@@ -42,13 +42,13 @@ export interface LayoutSidebarProps extends DivProps {
   headerHeight?: number;
 }
 export const LayoutSidebar = memo<LayoutSidebarProps>(
-  ({ headerHeight, children, className, style, ...props }) => {
+  ({ headerHeight, children, className, style, ...rest }) => {
     const { cx, styles } = useStyles(headerHeight);
     return (
       <aside
         className={cx(styles.aside, className)}
         style={{ top: headerHeight, ...style }}
-        {...props}
+        {...rest}
       >
         {children}
       </aside>
@@ -60,10 +60,10 @@ export interface LayoutSidebarInnerProps extends DivProps {
   headerHeight?: number;
 }
 export const LayoutSidebarInner = memo<LayoutSidebarInnerProps>(
-  ({ headerHeight, children, className, ...props }) => {
+  ({ headerHeight, children, className, ...rest }) => {
     const { cx, styles } = useStyles(headerHeight);
     return (
-      <div className={cx(styles.asideInner, className)} {...props}>
+      <div className={cx(styles.asideInner, className)} {...rest}>
         {children}
       </div>
     );
@@ -74,13 +74,13 @@ export interface LayoutTocProps extends DivProps {
   tocWidth?: number;
 }
 export const LayoutToc = memo<LayoutTocProps>(
-  ({ tocWidth, style, className, children, ...props }) => {
+  ({ tocWidth, style, className, children, ...rest }) => {
     const { cx, styles } = useStyles();
     return (
       <nav
         className={cx(styles.toc, className)}
         style={tocWidth ? { width: tocWidth, ...style } : style}
-        {...props}
+        {...rest}
       >
         {children}
       </nav>
@@ -89,10 +89,10 @@ export const LayoutToc = memo<LayoutTocProps>(
 );
 
 export type LayoutFooterProps = DivProps;
-export const LayoutFooter = memo<LayoutFooterProps>(({ children, className, ...props }) => {
+export const LayoutFooter = memo<LayoutFooterProps>(({ children, className, ...rest }) => {
   const { cx, styles } = useStyles();
   return (
-    <footer className={cx(styles.footer, className)} {...props}>
+    <footer className={cx(styles.footer, className)} {...rest}>
       {children}
     </footer>
   );

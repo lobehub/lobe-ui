@@ -20,12 +20,12 @@ export interface StoryBookProps extends DivProps {
 }
 
 export const StoryBook = memo<StoryBookProps>(
-  ({ levaStore, noPadding, className, children, ...props }) => {
+  ({ levaStore, noPadding, className, children, ...rest }) => {
     const { mobile } = useResponsive();
     const { styles, cx } = useStyles(Boolean(noPadding));
 
     return (
-      <div className={cx(styles.editor, className)} {...props}>
+      <div className={cx(styles.editor, className)} {...rest}>
         <div className={styles.left}>{children}</div>
         <DraggablePanel
           className={styles.right}

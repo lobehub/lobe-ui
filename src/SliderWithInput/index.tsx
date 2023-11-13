@@ -22,7 +22,7 @@ const SliderWithInput = memo<SliderWithInputProps>(
     style,
     className,
     disabled,
-    ...props
+    ...rest
   }) => {
     const handleOnchange = useCallback((value: number | null) => {
       if (Number.isNaN(value) || isNull(value)) return;
@@ -47,7 +47,7 @@ const SliderWithInput = memo<SliderWithInputProps>(
           style={size === 'small' ? { flex: 1, margin: 0 } : { flex: 1 }}
           tooltip={{ open: false }}
           value={typeof value === 'number' ? value : 0}
-          {...props}
+          {...rest}
         />
         <InputNumber
           controls={size !== 'small' || controls}

@@ -57,13 +57,13 @@ const Header = memo<HeaderProps>(
     logoStyle,
     navStyle,
     className,
-    ...props
+    ...rest
   }) => {
     const { mobile } = useResponsive();
     const { cx, styles } = useStyles();
 
     return (
-      <section className={cx(styles.header, className)} {...props}>
+      <section className={cx(styles.header, className)} {...rest}>
         <Flexbox
           align={'center'}
           className={styles.content}

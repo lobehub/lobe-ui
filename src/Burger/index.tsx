@@ -37,16 +37,7 @@ export interface BurgerProps extends DivProps {
 }
 
 const Burger = memo<BurgerProps>(
-  ({
-    items,
-    openKeys,
-    selectedKeys,
-    opened,
-    setOpened,
-    className,
-    headerHeight = 64,
-    ...props
-  }) => {
+  ({ items, openKeys, selectedKeys, opened, setOpened, className, headerHeight = 64, ...rest }) => {
     const { cx, styles } = useStyles(headerHeight);
 
     return (
@@ -55,7 +46,7 @@ const Burger = memo<BurgerProps>(
         onClick={() => {
           setOpened(!opened);
         }}
-        {...props}
+        {...rest}
       >
         <ActionIcon icon={opened ? X : MenuIcon} size="site" />
         <Drawer

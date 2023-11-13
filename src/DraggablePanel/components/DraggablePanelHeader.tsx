@@ -15,7 +15,7 @@ export interface DraggablePanelHeaderProps extends DivProps {
 }
 
 const DraggablePanelHeader = memo<DraggablePanelHeaderProps>(
-  ({ pin, setPin, className, setExpand, title, position = 'left', ...props }) => {
+  ({ pin, setPin, className, setExpand, title, position = 'left', ...rest }) => {
     const { cx, styles } = useStyles();
     const panelIcon = (
       <ActionIcon
@@ -33,7 +33,7 @@ const DraggablePanelHeader = memo<DraggablePanelHeaderProps>(
       />
     );
     return (
-      <div className={cx(styles.header, className)} {...props}>
+      <div className={cx(styles.header, className)} {...rest}>
         {position === 'left' ? panelIcon : pinIcon}
         {title}
         {position === 'left' ? pinIcon : panelIcon}

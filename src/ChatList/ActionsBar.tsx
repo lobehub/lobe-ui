@@ -12,14 +12,14 @@ export interface ActionsBarProps extends ActionIconGroupProps {
   };
 }
 
-const ActionsBar = memo<ActionsBarProps>(({ text, ...props }) => {
+const ActionsBar = memo<ActionsBarProps>(({ text, ...rest }) => {
   const { regenerate, edit, copy, divider, del } = useChatListActionsBar(text);
   return (
     <ActionIconGroup
       dropdownMenu={[edit, copy, regenerate, divider, del]}
       items={[regenerate, edit]}
       type="ghost"
-      {...props}
+      {...rest}
     />
   );
 });

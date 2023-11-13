@@ -54,20 +54,20 @@ export const Highlighter = memo<HighlighterProps>(
     showLanguage = true,
     type = 'block',
     spotlight,
-    ...props
+    ...rest
   }) => {
     const { styles, cx } = useStyles(type);
     const container = cx(styles.container, className);
 
     if (fullFeatured)
       return (
-        <FullFeatured className={className} language={language} style={style} {...props}>
+        <FullFeatured className={className} language={language} style={style} {...rest}>
           {children}
         </FullFeatured>
       );
 
     return (
-      <div className={container} data-code-type="highlighter" style={style} {...props}>
+      <div className={container} data-code-type="highlighter" style={style} {...rest}>
         {spotlight && <Spotlight size={240} />}
         {copyable && (
           <CopyButton

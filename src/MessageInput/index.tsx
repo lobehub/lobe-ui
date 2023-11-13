@@ -64,7 +64,7 @@ const MessageInput = memo<MessageInputProps>(
     style,
     editButtonSize = 'middle',
     classNames,
-    ...props
+    ...rest
   }) => {
     const [temporarySystemRole, setRole] = useState<string>(defaultValue || '');
     const { cx, styles } = useStyles();
@@ -72,7 +72,7 @@ const MessageInput = memo<MessageInputProps>(
     const isAutoSize = height === 'auto';
 
     return (
-      <Flexbox gap={16} style={{ flex: 1, width: '100%', ...style }} {...props}>
+      <Flexbox gap={16} style={{ flex: 1, width: '100%', ...style }} {...rest}>
         <TextArea
           autoSize={isAutoSize}
           className={cx(styles, textareaClassname)}

@@ -20,7 +20,7 @@ const Giscus = memo<GiscusProps>(
     id = 'giscus',
     loading = 'lazy',
     emitMetadata = '0',
-    ...props
+    ...rest
   }) => {
     const token = useTheme();
     const { isDarkMode } = useThemeMode();
@@ -41,7 +41,7 @@ const Giscus = memo<GiscusProps>(
           mapping={mapping}
           reactionsEnabled={reactionsEnabled}
           theme={`data:text/css;base64,${giscusTheme}`}
-          {...props}
+          {...rest}
         />
       </div>
     );

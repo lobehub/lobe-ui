@@ -22,10 +22,10 @@ export interface TabsNavProps {
   onChange?: (activeKey: string) => void;
 }
 
-const TabsNav = memo<TabsNavProps>(({ className, ...props }) => {
+const TabsNav = memo<TabsNavProps>(({ className, ...rest }) => {
   const { styles, cx } = useStyles();
 
-  return <Tabs className={cx(styles.tabs, className)} {...props} />;
+  return <Tabs className={cx(styles.tabs, className)} {...rest} />;
 });
 
 export default TabsNav;

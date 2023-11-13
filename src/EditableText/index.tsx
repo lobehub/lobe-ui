@@ -13,7 +13,7 @@ export interface EditableTextProps extends ControlInputProps {
 }
 
 const EditableText = memo<EditableTextProps>(
-  ({ value, showEditIcon = true, onChange, editing, onEditingChange, ...props }) => {
+  ({ value, showEditIcon = true, onChange, editing, onEditingChange, ...rest }) => {
     const [edited, setEdited] = useControlledState(false, {
       onChange: onEditingChange,
       value: editing,
@@ -26,7 +26,7 @@ const EditableText = memo<EditableTextProps>(
           setEdited(false);
         }}
         value={value as string}
-        {...props}
+        {...rest}
       />
     ) : (
       <Flexbox gap={8} horizontal>

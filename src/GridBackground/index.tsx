@@ -34,7 +34,7 @@ const GridBackground = memo<GridBackgroundProps>(
     strokeWidth,
     style,
     animation,
-    ...props
+    ...rest
   }) => {
     const ref = useRef(null);
     const size = useSize(ref);
@@ -80,7 +80,7 @@ const GridBackground = memo<GridBackgroundProps>(
         className={cx(styles.container, className)}
         ref={ref}
         style={flip ? { transform: 'scaleY(-1)', ...style } : style}
-        {...props}
+        {...rest}
       >
         <Grid
           color={colorBack || theme.colorBorder}

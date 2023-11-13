@@ -29,7 +29,7 @@ export interface TokenTagProps extends DivProps {
 
 const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
   (
-    { className, displayMode = 'remained', maxValue, value, text, shape = 'round', ...props },
+    { className, displayMode = 'remained', maxValue, value, text, shape = 'round', ...rest },
     ref,
   ) => {
     const { mobile } = useResponsive();
@@ -52,7 +52,7 @@ const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
     const { styles, cx } = useStyles({ shape, type });
 
     return (
-      <div className={cx(styles.container, className)} ref={ref} {...props}>
+      <div className={cx(styles.container, className)} ref={ref} {...rest}>
         <FluentEmoji emoji={emoji} size={ICON_SIZE} />
         {valueLeft > 0
           ? [

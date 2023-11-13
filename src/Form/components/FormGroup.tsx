@@ -14,7 +14,7 @@ export interface FormGroupProps extends CollapseProps {
   title: string;
 }
 
-const FormGroup = memo<FormGroupProps>(({ className, icon, title, children, extra, ...props }) => {
+const FormGroup = memo<FormGroupProps>(({ className, icon, title, children, extra, ...rest }) => {
   const { mobile } = useResponsive();
   const { cx, styles } = useStyles();
 
@@ -57,7 +57,7 @@ const FormGroup = memo<FormGroupProps>(({ className, icon, title, children, extr
         },
       ]}
       key={1}
-      {...props}
+      {...rest}
     />
   );
 });

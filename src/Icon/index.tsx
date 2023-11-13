@@ -68,14 +68,14 @@ export interface IconProps extends DivProps {
   spin?: boolean;
 }
 
-const Icon = memo<IconProps>(({ icon, size, color, fill, className, spin, ...props }) => {
+const Icon = memo<IconProps>(({ icon, size, color, fill, className, spin, ...rest }) => {
   const { styles, cx } = useStyles();
   const SvgIcon = icon;
 
   const { fontSize, strokeWidth } = useMemo(() => calcSize(size), [size]);
 
   return (
-    <span className={cx('anticon', spin && styles.spin, className)} role="img" {...props}>
+    <span className={cx('anticon', spin && styles.spin, className)} role="img" {...rest}>
       <SvgIcon
         color={color}
         fill={fill ?? 'transparent'}

@@ -11,14 +11,14 @@ export interface SpotlightCardItemProps extends DivProps {
 }
 
 const SpotlightCardItem = memo<SpotlightCardItemProps>(
-  ({ children, className, style, borderRadius, size, ...props }) => {
+  ({ children, className, style, borderRadius, size, ...rest }) => {
     const { styles, cx } = useStyles({ borderRadius, size });
 
     return (
       <div
         className={cx(styles.itemContainer, className)}
         style={{ borderRadius, ...style }}
-        {...props}
+        {...rest}
       >
         <Flexbox className={styles.content}>{children}</Flexbox>
       </div>

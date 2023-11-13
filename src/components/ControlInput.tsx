@@ -25,7 +25,7 @@ export interface ControlInputProps extends Omit<InputProps, 'onChange' | 'value'
 }
 
 export const ControlInput = forwardRef<InputRef, ControlInputProps>(
-  ({ value, onChange, onValueChanging, onChangeEnd, ...props }, ref) => {
+  ({ value, onChange, onValueChanging, onChangeEnd, ...rest }, ref) => {
     const [input, setInput] = useState<string>(value || '');
 
     const isChineseInput = useRef(false);
@@ -88,7 +88,7 @@ export const ControlInput = forwardRef<InputRef, ControlInputProps>(
           )
         }
         value={input}
-        {...props}
+        {...rest}
       />
     );
   },

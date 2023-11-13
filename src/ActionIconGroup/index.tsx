@@ -61,14 +61,14 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
     direction = 'row',
     dropdownMenu = [],
     onActionClick,
-    ...props
+    ...rest
   }) => {
     const { styles } = useStyles({ direction, type });
 
     const tooltipsPlacement = placement || (direction === 'column' ? 'right' : 'top');
 
     return (
-      <div className={styles.container} {...props}>
+      <div className={styles.container} {...rest}>
         {spotlight && <Spotlight />}
         {items?.length > 0 &&
           items.map((item) => (

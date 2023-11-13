@@ -6,10 +6,10 @@ import { useStyles } from './style';
 
 export type FormFooterProps = DivProps;
 
-const FormFooter = memo<FormFooterProps>(({ className, children, ...props }) => {
+const FormFooter = memo<FormFooterProps>(({ className, children, ...rest }) => {
   const { cx, styles } = useStyles();
   return (
-    <div className={cx(styles.footer, className)} {...props}>
+    <div className={cx(styles.footer, className)} {...rest}>
       {children}
     </div>
   );

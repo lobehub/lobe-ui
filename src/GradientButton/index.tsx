@@ -8,11 +8,11 @@ export interface GradientButtonProps extends ButtonProps {
 }
 
 const GradientButton = memo<GradientButtonProps>(
-  ({ glow = true, children, className, size = 'large', ...props }) => {
+  ({ glow = true, children, className, size = 'large', ...rest }) => {
     const { styles, cx } = useStyles(size);
 
     return (
-      <Button className={cx(styles.button, className)} size={size} {...props}>
+      <Button className={cx(styles.button, className)} size={size} {...rest}>
         {glow && <div className={styles.glow} />}
         {children}
       </Button>

@@ -44,12 +44,12 @@ const ChatList = memo<ChatListProps>(
     enableHistoryCount,
     renderActions,
     historyCount = 0,
-    ...props
+    ...rest
   }) => {
     const { cx, styles } = useStyles();
 
     return (
-      <div className={cx(styles.container, className)} {...props}>
+      <div className={cx(styles.container, className)} {...rest}>
         {data.map((item, index) => {
           const itemProps = {
             loading: loadingId === item.id,

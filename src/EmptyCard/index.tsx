@@ -31,7 +31,7 @@ const EmptyCard = memo<EmptyCardProps>(
     desc,
     width,
     height,
-    ...props
+    ...rest
   }) => {
     const [value, setValue] = useMergeState(true, {
       defaultValue: defaultVisible,
@@ -42,7 +42,7 @@ const EmptyCard = memo<EmptyCardProps>(
     const { styles } = useStyles();
     if (!value) return null;
     return (
-      <Flexbox className={styles.container} {...props}>
+      <Flexbox className={styles.container} {...rest}>
         <ActionIcon
           className={styles.close}
           icon={X}

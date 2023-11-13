@@ -25,12 +25,12 @@ const countLines = (str: string): number => {
   return matches ? matches.length : 1;
 };
 
-const Code = memo(({ fullFeatured, ...props }: any) => {
+const Code = memo(({ fullFeatured, ...rest }: any) => {
   const { styles, cx } = useStyles();
 
-  if (!props.children[0]) return;
+  if (!rest.children[0]) return;
 
-  const { children, className } = props.children[0].props;
+  const { children, className } = rest.children[0].props;
 
   if (!children) return;
 
