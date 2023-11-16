@@ -81,6 +81,7 @@
     "@lobehub/emojilib": "latest",
     "@react-spring/web": "^9",
     "@splinetool/react-spline": "^2.2.6",
+    "@splinetool/runtime": "^0.9.504",
     "ahooks": "^3",
     "chroma-js": "^2",
     "copy-to-clipboard": "^3",
