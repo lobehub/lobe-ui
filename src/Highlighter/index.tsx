@@ -1,13 +1,14 @@
-import { memo } from 'react';
+import { Suspense, lazy, memo } from 'react';
 
 import CopyButton, { type CopyButtonProps } from '@/CopyButton';
-import Spotlight from '@/Spotlight';
 import Tag from '@/Tag';
 import { DivProps } from '@/types';
 
 import FullFeatured from './FullFeatured';
 import SyntaxHighlighter from './SyntaxHighlighter';
 import { useStyles } from './style';
+
+const Spotlight = lazy(() => import('@/Spotlight'));
 
 export interface HighlighterProps extends DivProps {
   /**
@@ -68,7 +69,7 @@ export const Highlighter = memo<HighlighterProps>(
 
     return (
       <div className={container} data-code-type="highlighter" style={style} {...rest}>
-        {spotlight && <Spotlight size={240} />}
+        <Suspense fallback={null}>{spotlight && <Spotlight size={240} />}</Suspense>
         {copyable && (
           <CopyButton
             className={styles.button}

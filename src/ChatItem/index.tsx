@@ -1,15 +1,16 @@
 import { useResponsive } from 'antd-style';
-import { memo } from 'react';
+import { Suspense, lazy, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import Actions from './components/Actions';
 import Avatar from './components/Avatar';
 import BorderSpacing from './components/BorderSpacing';
-import ErrorContent from './components/ErrorContent';
 import MessageContent from './components/MessageContent';
 import Title from './components/Title';
 import { useStyles } from './style';
 import type { ChatItemProps } from './type';
+
+const Actions = lazy(() => import('./components/Actions'));
+const ErrorContent = lazy(() => import('./components/ErrorContent'));
 
 const MOBILE_AVATAR_SIZE = 32;
 
@@ -81,7 +82,9 @@ const ChatItem = memo<ChatItemProps>(
             gap={8}
           >
             {error ? (
-              <ErrorContent error={error} message={errorMessage} placement={placement} />
+              <Suspense fallback={null}>
+                <ErrorContent error={error} message={errorMessage} placement={placement} />
+              </Suspense>
             ) : (
               <MessageContent
                 editing={editing}
@@ -97,7 +100,9 @@ const ChatItem = memo<ChatItemProps>(
                 type={type}
               />
             )}
-            <Actions actions={actions} editing={editing} placement={placement} type={type} />
+            <Suspense fallback={null}>
+              <Actions actions={actions} editing={editing} placement={placement} type={type} />
+            </Suspense>
           </Flexbox>
         </Flexbox>
         {mobile && type === 'block' && <BorderSpacing borderSpacing={MOBILE_AVATAR_SIZE} />}

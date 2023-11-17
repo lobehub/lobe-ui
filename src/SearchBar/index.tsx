@@ -1,13 +1,14 @@
 import { Search } from 'lucide-react';
-import { memo, useEffect, useRef, useState } from 'react';
+import { Suspense, lazy, memo, useEffect, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
 import Icon from '@/Icon';
 import { Input, type InputProps } from '@/Input';
-import Spotlight from '@/Spotlight';
 import Tag from '@/Tag';
 
 import { useStyles } from './style';
+
+const Spotlight = lazy(() => import('@/Spotlight'));
 
 export interface SearchBarProps extends InputProps {
   defaultValue?: string;
@@ -77,7 +78,7 @@ const SearchBar = memo<SearchBarProps>(
 
     return (
       <div className={cx(styles.search, className)}>
-        {spotlight && <Spotlight />}
+        <Suspense fallback={null}>{spotlight && <Spotlight />}</Suspense>
         <Input
           allowClear
           className={styles.input}

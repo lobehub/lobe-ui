@@ -1,10 +1,13 @@
 import { createStyles } from 'antd-style';
-import { CSSProperties, memo } from 'react';
+import { CSSProperties, Suspense, lazy, memo } from 'react';
 import useControlledState from 'use-merge-value';
 
 import Markdown from '@/Markdown';
-import MessageInput, { type MessageInputProps } from '@/MessageInput';
-import MessageModal, { type MessageModalProps } from '@/MessageModal';
+import type { MessageInputProps } from '@/MessageInput';
+import type { MessageModalProps } from '@/MessageModal';
+
+const MessageInput = lazy(() => import('@/MessageInput'));
+const MessageModal = lazy(() => import('@/MessageModal'));
 
 const useStyles = createStyles(({ stylish }) => ({
   markdown: stylish.markdownInChat,
@@ -114,23 +117,25 @@ const EditableMessage = memo<EditableMessageProps>(
     const isAutoSize = height === 'auto';
 
     const input = (
-      <MessageInput
-        className={classNames?.input}
-        classNames={{ textarea: classNames?.textarea }}
-        defaultValue={value}
-        editButtonSize={editButtonSize}
-        height={height}
-        onCancel={() => setTyping(false)}
-        onConfirm={(text) => {
-          onChange?.(text);
-          setTyping(false);
-        }}
-        placeholder={placeholder}
-        style={stylesProps?.input}
-        text={text}
-        textareaClassname={classNames?.input}
-        type={inputType}
-      />
+      <Suspense fallback={null}>
+        <MessageInput
+          className={classNames?.input}
+          classNames={{ textarea: classNames?.textarea }}
+          defaultValue={value}
+          editButtonSize={editButtonSize}
+          height={height}
+          onCancel={() => setTyping(false)}
+          onConfirm={(text) => {
+            onChange?.(text);
+            setTyping(false);
+          }}
+          placeholder={placeholder}
+          style={stylesProps?.input}
+          text={text}
+          textareaClassname={classNames?.input}
+          type={inputType}
+        />
+      </Suspense>
     );
 
     if (!value && showEditWhenEmpty) return input;
@@ -153,22 +158,24 @@ const EditableMessage = memo<EditableMessageProps>(
             {value || placeholder}
           </Markdown>
         )}
-        <MessageModal
-          editing={isEdit}
-          extra={model?.extra}
-          footer={model?.footer}
-          height={height}
-          onChange={(text) => onChange?.(text)}
-          onEditingChange={setTyping}
-          onOpenChange={(e) => {
-            setExpand(e);
-            setTyping(false);
-          }}
-          open={expand}
-          placeholder={placeholder}
-          text={text}
-          value={value}
-        />
+        <Suspense fallback={null}>
+          <MessageModal
+            editing={isEdit}
+            extra={model?.extra}
+            footer={model?.footer}
+            height={height}
+            onChange={(text) => onChange?.(text)}
+            onEditingChange={setTyping}
+            onOpenChange={(e) => {
+              setExpand(e);
+              setTyping(false);
+            }}
+            open={expand}
+            placeholder={placeholder}
+            text={text}
+            value={value}
+          />
+        </Suspense>
       </>
     );
   },
