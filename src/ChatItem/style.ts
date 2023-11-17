@@ -67,7 +67,6 @@ export const useStyles = createStyles(
             opacity: 0 !important;
           `,
       ),
-      alert: css``,
       avatarContainer: css`
         position: relative;
         flex: none;
@@ -134,6 +133,11 @@ export const useStyles = createStyles(
       editingInput: css`
         width: 100%;
       `,
+      errorContent: css`
+        ${responsive.mobile} {
+          width: 100%;
+        }
+      `,
       loading: css`
         position: absolute;
         right: ${placement === 'left' ? '-4px' : 'unset'};
@@ -158,6 +162,10 @@ export const useStyles = createStyles(
         editingStylish,
         css`
           position: relative;
+
+          ${responsive.mobile} {
+            max-width: 100%;
+          }
         `,
       ),
       messageContent: cx(
@@ -168,6 +176,7 @@ export const useStyles = createStyles(
 
           ${responsive.mobile} {
             flex-direction: column !important;
+            width: 100%;
           }
         `,
       ),
