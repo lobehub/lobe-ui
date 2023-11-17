@@ -43,32 +43,6 @@ export default (token: Theme) => css`
     background: ${token.colorBgContainer} !important;
   }
 
-  .${token.prefixCls}-alert {
-    span[role='img'] {
-      align-self: flex-start;
-      width: 16px;
-      height: 16px;
-      margin-top: 3px;
-    }
-
-    .${token.prefixCls}-alert-description {
-      word-break: break-all;
-      word-wrap: break-word;
-    }
-
-    &.${token.prefixCls}-alert-with-description {
-      padding-block: 12px;
-      padding-inline: 12px;
-
-      .${token.prefixCls}-alert-message {
-        font-size: 14px;
-        font-weight: 600;
-        word-break: break-all;
-        word-wrap: break-word;
-      }
-    }
-  }
-
   @media (max-width: 575px) {
     .${token.prefixCls}-tooltip {
       display: none !important;
