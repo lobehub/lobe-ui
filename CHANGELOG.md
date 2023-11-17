@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.115.4](https://github.com/lobehub/lobe-ui/compare/v1.115.3...v1.115.4)
+
+<sup>Released on **2023-11-17**</sup>
+
+#### 💄 Styles
+
+- **misc**: Error 兼容移动端样式.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Error 兼容移动端样式 ([8081667](https://github.com/lobehub/lobe-ui/commit/8081667))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.115.3](https://github.com/lobehub/lobe-ui/compare/v1.115.2...v1.115.3)
 
 <sup>Released on **2023-11-16**</sup>
