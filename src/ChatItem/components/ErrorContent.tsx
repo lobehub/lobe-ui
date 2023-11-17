@@ -16,9 +16,8 @@ const ErrorContent = memo<ErrorContentProps>(({ message, error, placement }) => 
   const { styles } = useStyles({ placement });
 
   return (
-    <Flexbox className={styles.errorContent} gap={8}>
-      <Alert closable={false} showIcon type={'error'} {...error} />
-      {message}
+    <Flexbox className={styles.errorContainer}>
+      <Alert closable={false} extra={message} showIcon type={'error'} {...error} />
     </Flexbox>
   );
 });

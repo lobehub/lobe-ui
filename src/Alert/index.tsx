@@ -1,7 +1,16 @@
-import { type AlertProps as AntAlertProps, Alert as AntdAlert } from 'antd';
+import { type AlertProps as AntAlertProps, Alert as AntdAlert, message } from 'antd';
 import { camelCase } from 'lodash-es';
-import { AlertTriangle, CheckCircle, Info, X, XCircle } from 'lucide-react';
-import { memo } from 'react';
+import {
+  AlertTriangle,
+  CheckCircle,
+  ChevronDown,
+  ChevronRight,
+  Info,
+  X,
+  XCircle,
+} from 'lucide-react';
+import { type ReactNode, memo, useState } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
 import Icon from '@/Icon';
@@ -9,8 +18,16 @@ import Icon from '@/Icon';
 import { useStyles } from './style';
 
 export interface AlertProps extends AntAlertProps {
+  classNames?: {
+    alert?: string;
+    container?: string;
+  };
   colorfulText?: boolean;
-  styleType?: 'block' | 'ghost' | 'pure';
+  extra?: ReactNode;
+  text?: {
+    detail?: string;
+  };
+  variant?: 'default' | 'block' | 'ghost' | 'pure';
 }
 
 const typeIcons = {
@@ -26,30 +43,37 @@ const colors = (theme: any, type: string = 'info', ...keys: string[]) =>
 const Alert = memo<AlertProps>(
   ({
     closeIcon,
-    closable,
+    closable = false,
     description,
-    showIcon,
+    showIcon = true,
     type = 'info',
-    styleType,
+    variant,
     icon,
     colorfulText = true,
     style,
+    extra,
+    classNames,
+    text,
     ...rest
   }) => {
+    const [expand, setExpand] = useState(true);
     const { theme, styles, cx } = useStyles({
       closable: !!closable,
       hasTitle: !!description,
       showIcon: !!showIcon,
     });
 
-    return (
+    const alert = (
       <AntdAlert
         className={cx(
           styles.container,
           colorfulText && styles.colorfulText,
-          styleType === 'block' && styles.styleBlock,
-          styleType === 'ghost' && styles.styleGhost,
-          styleType === 'pure' && styles.stylePure,
+          !!extra && styles.hasExtra,
+          variant === 'block' && styles.variantBlock,
+          variant === 'ghost' && styles.variantGhost,
+          variant === 'pure' && styles.variantPure,
+          classNames?.alert,
+          !extra && styles.container,
         )}
         closable={closable}
         closeIcon={closeIcon || <ActionIcon color={colors(theme, type)} icon={X} size={'small'} />}
@@ -60,6 +84,51 @@ const Alert = memo<AlertProps>(
         type={type}
         {...rest}
       />
+    );
+
+    if (!extra) return alert;
+
+    return (
+      <Flexbox className={classNames?.container}>
+        {alert}
+        <Flexbox
+          className={cx(
+            styles.extra,
+            variant === 'block' && styles.variantBlock,
+            variant === 'ghost' && styles.variantGhost,
+            variant === 'pure' && styles.variantPure,
+          )}
+          style={{
+            background: colors(theme, type, 'bg'),
+            borderColor: colors(theme, type, 'border'),
+            color: colors(theme, type),
+            fontSize: description ? 14 : 12,
+          }}
+        >
+          <Flexbox
+            align={'center'}
+            className={cx(styles.extraHeader, variant === 'pure' && styles.variantPureExtraHeader)}
+            gap={message ? 6 : 10}
+            horizontal
+            style={{
+              borderColor: colors(theme, type, 'border'),
+            }}
+          >
+            <ActionIcon
+              color={colorfulText ? colors(theme, type) : undefined}
+              icon={expand ? ChevronDown : ChevronRight}
+              onClick={() => setExpand(!expand)}
+              size={{ blockSize: 24, fontSize: 18 }}
+            />
+            <div>{text?.detail || 'Show Details'}</div>
+          </Flexbox>
+          {expand && (
+            <div className={cx(styles.extraBody, variant === 'pure' && styles.variantPure)}>
+              {extra}
+            </div>
+          )}
+        </Flexbox>
+      </Flexbox>
     );
   },
 );

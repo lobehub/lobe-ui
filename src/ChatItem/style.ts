@@ -54,6 +54,7 @@ export const useStyles = createStyles(
     return {
       actions: cx(
         css`
+          flex: none;
           align-self: ${type === 'block'
             ? 'flex-end'
             : placement === 'left'
@@ -80,9 +81,12 @@ export const useStyles = createStyles(
         type === 'pure' && pureContainerStylish,
         css`
           position: relative;
+
+          overflow: hidden;
+
           width: 100%;
           max-width: 100vw;
-          padding: 12px 16px;
+          padding: 16px;
 
           time {
             display: inline-block;
@@ -133,11 +137,12 @@ export const useStyles = createStyles(
       editingInput: css`
         width: 100%;
       `,
-      errorContent: css`
-        ${responsive.mobile} {
-          width: 100%;
-        }
+      errorContainer: css`
+        position: relative;
+        overflow: hidden;
+        width: 100%;
       `,
+
       loading: css`
         position: absolute;
         right: ${placement === 'left' ? '-4px' : 'unset'};
@@ -162,10 +167,11 @@ export const useStyles = createStyles(
         editingStylish,
         css`
           position: relative;
+          overflow: hidden;
+          max-width: 100%;
 
           ${responsive.mobile} {
             overflow-x: auto;
-            max-width: 100%;
           }
         `,
       ),
@@ -174,10 +180,10 @@ export const useStyles = createStyles(
         css`
           position: relative;
           overflow-x: hidden;
+          max-width: 100%;
 
           ${responsive.mobile} {
             flex-direction: column !important;
-            width: 100%;
           }
         `,
       ),
