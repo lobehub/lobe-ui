@@ -1,5 +1,3 @@
-import { PluginRequestPayload } from '@lobehub/chat-plugin-sdk';
-
 import { ErrorType } from './error';
 import { LLMRoleType } from './llm';
 import { BaseDataModel } from './meta';
@@ -36,7 +34,7 @@ export interface ChatMessage extends BaseDataModel {
 
   parentId?: string;
 
-  plugin?: PluginRequestPayload;
+  plugin?: any;
 
   // 引用
   quotaId?: string;

@@ -77,7 +77,6 @@
     "@emoji-mart/react": "^1",
     "@floating-ui/react": "^0",
     "@giscus/react": "^2",
-    "@lobehub/chat-plugin-sdk": "latest",
     "@lobehub/emojilib": "latest",
     "@react-spring/web": "^9",
     "@splinetool/react-spline": "^2.2.6",
