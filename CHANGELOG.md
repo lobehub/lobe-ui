@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.116.3](https://github.com/lobehub/lobe-ui/compare/v1.116.2...v1.116.3)
+
+<sup>Released on **2023-11-17**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Clean deps.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Clean deps ([bfb859f](https://github.com/lobehub/lobe-ui/commit/bfb859f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.116.2](https://github.com/lobehub/lobe-ui/compare/v1.116.1...v1.116.2)
 
 <sup>Released on **2023-11-17**</sup>
