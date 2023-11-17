@@ -164,6 +164,7 @@ export const useStyles = createStyles(
           position: relative;
 
           ${responsive.mobile} {
+            overflow-x: auto;
             max-width: 100%;
           }
         `,
