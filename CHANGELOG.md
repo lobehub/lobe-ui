@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.116.1](https://github.com/lobehub/lobe-ui/compare/v1.116.0...v1.116.1)
+
+<sup>Released on **2023-11-17**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix ChatList error scroll error.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix ChatList error scroll error ([9a7e7e8](https://github.com/lobehub/lobe-ui/commit/9a7e7e8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.116.0](https://github.com/lobehub/lobe-ui/compare/v1.115.4...v1.116.0)
 
 <sup>Released on **2023-11-17**</sup>
