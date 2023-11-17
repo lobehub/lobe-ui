@@ -3,6 +3,7 @@ import copy from 'copy-to-clipboard';
 import { FC, ReactNode, memo, useCallback, useMemo, useState } from 'react';
 
 import { ActionEvent } from '@/ActionIconGroup';
+import type { AlertProps } from '@/Alert';
 import ChatItem, { type ChatItemProps } from '@/ChatItem';
 import { ChatMessage } from '@/types/chatMessage';
 import { LLMRoleType } from '@/types/llm';
@@ -16,7 +17,10 @@ export type RenderRole = LLMRoleType | 'default' | string;
 export type RenderItem = FC<{ key: string } & ChatMessage & ListItemProps>;
 export type RenderMessage = FC<ChatMessage & { editableContent: ReactNode }>;
 export type RenderMessageExtra = FC<ChatMessage>;
-export type RenderErrorMessage = FC<ChatMessage>;
+export interface RenderErrorMessage {
+  Render?: FC<ChatMessage>;
+  config?: AlertProps;
+}
 export type RenderAction = FC<ActionsBarProps & ChatMessage>;
 
 export interface ListItemProps {
@@ -129,7 +133,7 @@ const Item = memo<ChatListItemProps>((props) => {
       let RenderFunction;
       if (renderMessagesExtra?.[item.role]) RenderFunction = renderMessagesExtra[item.role];
       if (renderMessagesExtra?.['default']) RenderFunction = renderMessagesExtra['default'];
-      if (!RenderFunction && !RenderFunction) return;
+      if (!RenderFunction) return;
       return <RenderFunction {...data} />;
     },
     [renderMessagesExtra?.[item.role]],
@@ -140,9 +144,9 @@ const Item = memo<ChatListItemProps>((props) => {
       if (!renderErrorMessages || !item?.error?.type) return;
       let RenderFunction;
       if (renderErrorMessages?.[item.error.type])
-        RenderFunction = renderErrorMessages[item.error.type];
+        RenderFunction = renderErrorMessages[item.error.type].Render;
       if (!RenderFunction && renderErrorMessages?.['default'])
-        RenderFunction = renderErrorMessages['default'];
+        RenderFunction = renderErrorMessages['default'].Render;
       if (!RenderFunction) return;
       return <RenderFunction {...data} />;
     },
@@ -185,10 +189,16 @@ const Item = memo<ChatListItemProps>((props) => {
 
   const error = useMemo(() => {
     if (!item.error) return;
+    const message = item.error?.message;
+    let alertConfig = {};
+    if (item.error.type && renderErrorMessages?.[item.error.type]) {
+      alertConfig = renderErrorMessages[item.error.type]?.config as AlertProps;
+    }
     return {
-      message: item.error?.message,
+      message,
+      ...alertConfig,
     };
-  }, [item.error]);
+  }, [renderErrorMessages, item.error]);
 
   if (RenderItem) return <RenderItem key={item.id} {...props} />;
 

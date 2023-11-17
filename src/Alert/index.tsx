@@ -24,6 +24,8 @@ export interface AlertProps extends AntAlertProps {
   };
   colorfulText?: boolean;
   extra?: ReactNode;
+  extraDefaultExpand?: boolean;
+  extraIsolate?: boolean;
   text?: {
     detail?: string;
   };
@@ -54,26 +56,30 @@ const Alert = memo<AlertProps>(
     extra,
     classNames,
     text,
+    extraDefaultExpand = false,
+    extraIsolate,
     ...rest
   }) => {
-    const [expand, setExpand] = useState(true);
+    const [expand, setExpand] = useState(extraDefaultExpand);
     const { theme, styles, cx } = useStyles({
       closable: !!closable,
       hasTitle: !!description,
       showIcon: !!showIcon,
     });
 
+    const isInsideExtra = !extraIsolate && !!extra;
+
     const alert = (
       <AntdAlert
         className={cx(
           styles.container,
           colorfulText && styles.colorfulText,
-          !!extra && styles.hasExtra,
+          !!isInsideExtra && styles.hasExtra,
           variant === 'block' && styles.variantBlock,
           variant === 'ghost' && styles.variantGhost,
           variant === 'pure' && styles.variantPure,
           classNames?.alert,
-          !extra && styles.container,
+          !isInsideExtra && styles.container,
         )}
         closable={closable}
         closeIcon={closeIcon || <ActionIcon color={colors(theme, type)} icon={X} size={'small'} />}
@@ -87,6 +93,14 @@ const Alert = memo<AlertProps>(
     );
 
     if (!extra) return alert;
+
+    if (extraIsolate)
+      return (
+        <Flexbox className={classNames?.container} gap={8}>
+          {alert}
+          {extra}
+        </Flexbox>
+      );
 
     return (
       <Flexbox className={classNames?.container}>

@@ -82,6 +82,7 @@ export const useStyles = createStyles(
         border-top: 1px dashed;
       `,
       hasExtra: css`
+        border-bottom: none;
         border-bottom-right-radius: 0;
         border-bottom-left-radius: 0;
       `,
