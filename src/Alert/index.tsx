@@ -10,7 +10,7 @@ import { useStyles } from './style';
 
 export interface AlertProps extends AntAlertProps {
   colorfulText?: boolean;
-  styleType: 'block' | 'ghost' | 'pure';
+  styleType?: 'block' | 'ghost' | 'pure';
 }
 
 const typeIcons = {
@@ -37,9 +37,9 @@ const Alert = memo<AlertProps>(
     ...rest
   }) => {
     const { theme, styles, cx } = useStyles({
-      closable,
+      closable: !!closable,
       hasTitle: !!description,
-      showIcon,
+      showIcon: !!showIcon,
     });
 
     return (
@@ -54,9 +54,9 @@ const Alert = memo<AlertProps>(
         closable={closable}
         closeIcon={closeIcon || <ActionIcon color={colors(theme, type)} icon={X} size={'small'} />}
         description={description}
-        icon={<Icon icon={typeIcons[type] || icon} />}
+        icon={<Icon icon={typeIcons[type] || icon} size={{ fontSize: description ? 24 : 18 }} />}
         showIcon={showIcon}
-        style={{ color: colors(theme, type), ...style }}
+        style={{ color: colorfulText ? colors(theme, type) : undefined, ...style }}
         type={type}
         {...rest}
       />

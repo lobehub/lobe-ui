@@ -1,7 +1,7 @@
-import { Alert } from 'antd';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import Alert from '@/Alert';
 import { ChatItemProps } from '@/ChatItem';
 
 import { useStyles } from '../style';
@@ -17,7 +17,7 @@ const ErrorContent = memo<ErrorContentProps>(({ message, error, placement }) => 
 
   return (
     <Flexbox className={styles.errorContent} gap={8}>
-      <Alert showIcon type={'error'} {...error} />
+      <Alert closable={false} showIcon type={'error'} {...error} />
       {message}
     </Flexbox>
   );

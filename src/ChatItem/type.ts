@@ -1,6 +1,6 @@
-import { AlertProps } from 'antd';
 import { ReactNode } from 'react';
 
+import { AlertProps } from '@/Alert';
 import { EditableMessageProps } from '@/EditableMessage';
 import { DivProps, MetaData } from '@/types';
 

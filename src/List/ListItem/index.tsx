@@ -1,6 +1,8 @@
-import { LoadingOutlined, MessageOutlined } from '@ant-design/icons';
+import { Loader2, MessageSquare } from 'lucide-react';
 import { CSSProperties, HTMLAttributes, ReactNode, forwardRef } from 'react';
 import { Flexbox } from 'react-layout-kit';
+
+import Icon from '@/Icon';
 
 import { useStyles } from './style';
 import { getChatItemTime } from './time';
@@ -117,7 +119,7 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps & HTMLAttributes<any>>
             <div className={styles.triangle}></div>
           </div>
         )}
-        {avatar ?? <MessageOutlined style={{ marginTop: 4 }} />}
+        {avatar ?? <Icon icon={MessageSquare} style={{ marginTop: 4 }} />}
 
         <Flexbox className={styles.content} gap={8}>
           <Flexbox distribution={'space-between'} horizontal>
@@ -128,7 +130,7 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps & HTMLAttributes<any>>
         </Flexbox>
 
         {loading ? (
-          <LoadingOutlined spin={true} />
+          <Icon icon={Loader2} spin />
         ) : (
           <>
             {showAction && (
