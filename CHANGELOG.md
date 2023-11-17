@@ -2,6 +2,32 @@
 
 # Changelog
 
+## [Version 1.117.0](https://github.com/lobehub/lobe-ui/compare/v1.116.3...v1.117.0)
+
+<sup>Released on **2023-11-17**</sup>
+
+#### ✨ Features
+
+- **misc**: Add Alert, Add Alert component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add Alert ([36ba265](https://github.com/lobehub/lobe-ui/commit/36ba265))
+- **misc**: Add Alert component ([acf84e2](https://github.com/lobehub/lobe-ui/commit/acf84e2))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.116.3](https://github.com/lobehub/lobe-ui/compare/v1.116.2...v1.116.3)
 
 <sup>Released on **2023-11-17**</sup>
