@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.118.0](https://github.com/lobehub/lobe-ui/compare/v1.117.0...v1.118.0)
+
+<sup>Released on **2023-11-17**</sup>
+
+#### ✨ Features
+
+- **misc**: Add exrta to Alert.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add exrta to Alert ([7c21f47](https://github.com/lobehub/lobe-ui/commit/7c21f47))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.117.0](https://github.com/lobehub/lobe-ui/compare/v1.116.3...v1.117.0)
 
 <sup>Released on **2023-11-17**</sup>
