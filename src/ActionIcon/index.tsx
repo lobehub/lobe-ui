@@ -1,25 +1,64 @@
 import { Loader2 } from 'lucide-react';
-import { Suspense, forwardRef, lazy, useMemo } from 'react';
+import { forwardRef, useMemo } from 'react';
 
-import Icon, { type IconProps, type IconSizeConfig, type IconSizeType } from '@/Icon';
-import type { TooltipProps } from '@/Tooltip';
+import Icon, { type IconProps } from '@/Icon';
+import Spotlight from '@/Spotlight';
+import Tooltip, { type TooltipProps } from '@/Tooltip';
+import { DivProps } from '@/types';
 
-import { calcSize } from './calcSize';
 import { useStyles } from './style';
 
-const Tooltip = lazy(() => import('@/Tooltip'));
-const Spotlight = lazy(() => import('@/Spotlight'));
+export type ActionIconSize =
+  | 'large'
+  | 'normal'
+  | 'small'
+  | 'site'
+  | {
+      blockSize?: number;
+      borderRadius?: number;
+      fontSize?: number;
+      strokeWidth?: number;
+    };
 
-interface ActionIconSizeConfig extends IconSizeConfig {
-  blockSize?: number;
-  borderRadius?: number;
-}
+const calcSize = (size?: ActionIconSize) => {
+  let blockSize: number;
+  let borderRadius: number;
 
-type ActionIconSizeType = 'site' | IconSizeType;
+  switch (size) {
+    case 'large': {
+      blockSize = 44;
+      borderRadius = 8;
+      break;
+    }
+    case 'normal': {
+      blockSize = 36;
+      borderRadius = 5;
+      break;
+    }
+    case 'small': {
+      blockSize = 24;
+      borderRadius = 5;
+      break;
+    }
+    case 'site': {
+      blockSize = 34;
+      borderRadius = 5;
+      break;
+    }
+    default: {
+      blockSize = size?.blockSize || 36;
+      borderRadius = size?.borderRadius || 5;
+      break;
+    }
+  }
 
-export type ActionIconSize = ActionIconSizeType | ActionIconSizeConfig;
+  return {
+    blockSize,
+    borderRadius,
+  };
+};
 
-export interface ActionIconProps extends Omit<IconProps, 'size' | 'icon'> {
+export interface ActionIconProps extends DivProps {
   /**
    * @description Whether the icon is active or not
    * @default false
@@ -30,16 +69,23 @@ export interface ActionIconProps extends Omit<IconProps, 'size' | 'icon'> {
    * @default false
    */
   arrow?: boolean;
+  color?: IconProps['color'];
+  fill?: IconProps['fill'];
   /**
    * @description Glass blur style
    * @default 'false'
    */
   glass?: boolean;
+  /**
+   * @description The icon element to be rendered
+   * @type LucideIcon
+   */
   icon?: IconProps['icon'];
   /**
    * @description Set the loading status of ActionIcon
    */
   loading?: boolean;
+
   /**
    * @description The position of the tooltip relative to the target
    * @enum ["top","left","right","bottom","topLeft","topRight","bottomLeft","bottomRight","leftTop","leftBottom","rightTop","rightBottom"]
@@ -87,28 +133,32 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
       children,
       loading,
       tooltipDelay = 0.5,
-      fillOpacity,
-      fillRule,
-      focusable,
       ...rest
     },
     ref,
   ) => {
     const { styles, cx } = useStyles({ active: Boolean(active), glass: Boolean(glass) });
+
     const { blockSize, borderRadius } = useMemo(() => calcSize(size), [size]);
 
-    const iconProps = {
-      color,
-      fill,
-      fillOpacity,
-      fillRule,
-      focusable,
-      size: size === 'site' ? 'normal' : size,
-    };
+    const content = (
+      <>
+        {icon && (
+          <Icon
+            className={styles.icon}
+            color={color}
+            fill={fill}
+            icon={icon}
+            size={size === 'site' ? 'normal' : size}
+          />
+        )}
+        {children}
+      </>
+    );
 
-    const content = icon && <Icon className={styles.icon} icon={icon} {...iconProps} />;
-
-    const spin = <Icon icon={Loader2} {...iconProps} spin />;
+    const spin = (
+      <Icon color={color} icon={Loader2} size={size === 'site' ? 'normal' : size} spin />
+    );
 
     const actionIconBlock = (
       <div
@@ -118,26 +168,23 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
         style={{ borderRadius, height: blockSize, width: blockSize, ...style }}
         {...rest}
       >
-        <Suspense fallback={null}>{spotlight && <Spotlight />}</Suspense>
+        {spotlight && <Spotlight />}
         {loading ? spin : content}
-        {children}
       </div>
     );
 
     if (!title) return actionIconBlock;
 
     return (
-      <Suspense fallback={actionIconBlock}>
-        <Tooltip
-          arrow={arrow}
-          mouseEnterDelay={tooltipDelay}
-          overlayStyle={{ pointerEvents: 'none' }}
-          placement={placement}
-          title={title}
-        >
-          {actionIconBlock}
-        </Tooltip>
-      </Suspense>
+      <Tooltip
+        arrow={arrow}
+        mouseEnterDelay={tooltipDelay}
+        overlayStyle={{ pointerEvents: 'none' }}
+        placement={placement}
+        title={title}
+      >
+        {actionIconBlock}
+      </Tooltip>
     );
   },
 );

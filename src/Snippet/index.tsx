@@ -1,12 +1,11 @@
-import { Suspense, lazy, memo } from 'react';
+import { memo } from 'react';
 
 import CopyButton from '@/CopyButton';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
+import Spotlight from '@/Spotlight';
 import { DivProps } from '@/types';
 
 import { useStyles } from './style';
-
-const Spotlight = lazy(() => import('@/Spotlight'));
 
 export interface SnippetProps extends DivProps {
   /**
@@ -54,7 +53,7 @@ const Snippet = memo<SnippetProps>(
 
     return (
       <div className={cx(styles.container, className)} {...rest}>
-        <Suspense fallback={null}>{spotlight && <Spotlight />}</Suspense>
+        {spotlight && <Spotlight />}
         <SyntaxHighlighter language={language}>
           {[symbol, children].filter(Boolean).join(' ')}
         </SyntaxHighlighter>

@@ -1,6 +1,6 @@
 import GiscusComponent, { type GiscusProps as GiscusComponentProps } from '@giscus/react';
 import { useTheme, useThemeMode } from 'antd-style';
-import { type CSSProperties, memo, useMemo } from 'react';
+import { CSSProperties, memo, useMemo } from 'react';
 
 import { formatLang, genStyles } from './style';
 
