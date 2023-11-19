@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.118.2](https://github.com/lobehub/lobe-ui/compare/v1.118.1...v1.118.2)
+
+<sup>Released on **2023-11-19**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix line height in chat item.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix line height in chat item ([7d2f8a2](https://github.com/lobehub/lobe-ui/commit/7d2f8a2))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.118.1](https://github.com/lobehub/lobe-ui/compare/v1.118.0...v1.118.1)
 
 <sup>Released on **2023-11-17**</sup>
