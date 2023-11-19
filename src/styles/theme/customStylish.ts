@@ -251,14 +251,14 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       }
 
       p {
-        line-height: 1.8;
+        line-height: 1.8 !important;
 
         + * {
-          margin-block-end: 0.5em;
+          margin-block-end: 0.5em !important;
         }
 
         &:not(:last-child) {
-          margin-bottom: 1em;
+          margin-bottom: 1em !important;
         }
       }
     `,
