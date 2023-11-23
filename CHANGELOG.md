@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.119.0](https://github.com/lobehub/lobe-ui/compare/v1.118.2...v1.119.0)
+
+<sup>Released on **2023-11-23**</sup>
+
+#### ✨ Features
+
+- **misc**: Add banner prop to Alert component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add banner prop to Alert component ([d4a9323](https://github.com/lobehub/lobe-ui/commit/d4a9323))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.118.2](https://github.com/lobehub/lobe-ui/compare/v1.118.1...v1.118.2)
 
 <sup>Released on **2023-11-19**</sup>
