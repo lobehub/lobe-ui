@@ -15,6 +15,8 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
 
         background-color: ${token.colorText};
         border-radius: ${token.borderRadiusSM}px;
+
+        word-break: break-all;
       }
 
       .${prefixCls}-tooltip-arrow {
