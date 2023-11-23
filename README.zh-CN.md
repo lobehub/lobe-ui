@@ -8,9 +8,9 @@
 
 <h1>Lobe UI</h1>
 
-Lobe UI is an open-source UI component library for building _AIGC_ web apps
+Lobe UI 是一个用于构建 _AIGC_ 网页应用的开源 UI 组件库
 
-English ・ [简体中文](./README.zh-CN.md) ・ [Changelog](./CHANGELOG.md) · [Report Bug][github-issues-link] · [Request Feature][github-issues-link]
+[English](./README.md) ・ 简体中文 ・ [更新日志](./CHANGELOG.md) · [报告问题][github-issues-link] · [请求功能][github-issues-link]
 
 <!-- SHIELD GROUP -->
 
@@ -32,27 +32,27 @@ English ・ [简体中文](./README.zh-CN.md) ・ [Changelog](./CHANGELOG.md) ·
 </div>
 
 <details>
-<summary><kbd>Table of contents</kbd></summary>
+<summary><kbd>目录</kbd></summary>
 
-#### TOC
+#### 目录
 
-- [📦 Installation](#-installation)
-  - [Compile with NextJS](#compile-with-nextjs)
-- [🤯 Usage](#-usage)
-- [⌨️ Local Development](#️-local-development)
-- [🤝 Contributing](#-contributing)
-- [🔗 More Products](#-more-products)
+- [📦 安装](#-安装)
+  - [使用 NextJS 编译](#使用-nextjs-编译)
+- [🤯 使用](#-使用)
+- [⌨️ 本地开发](#️-本地开发)
+- [🤝 贡献](#-贡献)
+- [🔗 更多产品](#-更多产品)
 
 ####
 
 </details>
 
-## 📦 Installation
+## 📦 安装
 
 > \[!IMPORTANT]\
-> This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
+> 该包仅支持 [ESM](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)。
 
-To install Lobe UI, run the following command:
+要安装 Lobe UI，请运行以下命令：
 
 [![][bun-shield]][bun-link]
 
@@ -60,15 +60,15 @@ To install Lobe UI, run the following command:
 $ bun add @lobehub/ui
 ```
 
-### Compile with NextJS
+### 使用 NextJS 编译
 
 > \[!NOTE]\
-> By work correct with nextjs ssr, add `transpilePackages: ['@lobehub/ui']` to `next.config.js`. For example:
+> 为了正确使用 nextjs ssr，请在 `next.config.js` 中添加 `transpilePackages: ['@lobehub/ui']`。例如：
 
 ```js
 // next.config.js
 const nextConfig = {
-  // ...other config
+  // ...其他配置
 
   transpilePackages: ['@lobehub/ui'],
 };
@@ -80,11 +80,11 @@ const nextConfig = {
 
 </div>
 
-## 🤯 Usage
+## 🤯 使用
 
 > \[!NOTE]\
-> The LobeUI components are developed based on [Antd](https://ant.design/components/overview/), fully compatible with Antd components,
-> and it is recommended to use [antd-style](https://ant-design.github.io/antd-style/) as the default css-in-js styling solution.
+> LobeUI 组件是基于 [Antd](https://ant.design/components/overview/) 开发的，完全兼容 Antd 组件，
+> 推荐使用 [antd-style](https://ant-design.github.io/antd-style/) 作为默认的 css-in-js 样式解决方案。
 
 ```tsx
 import { ThemeProvider, Button } from '@lobehub/ui'
@@ -103,13 +103,13 @@ export default () => (
 
 </div>
 
-## ⌨️ Local Development
+## ⌨️ 本地开发
 
-You can use Github Codespaces for online development:
+您可以使用 Github Codespaces 进行在线开发：
 
 [![][codespaces-shield]][codespaces-link]
 
-Or clone it for local development:
+或者克隆到本地进行开发：
 
 ```bash
 $ git clone https://github.com/lobehub/lobe-ui.git
@@ -124,9 +124,9 @@ $ bun start
 
 </div>
 
-## 🤝 Contributing
+## 🤝 贡献
 
-Contributions of all types are more than welcome, if you are interested in contributing code, feel free to check out our GitHub [Issues][github-issues-link] to get stuck in to show us what you’re made of.
+欢迎各种类型的贡献，如果您有兴趣贡献代码，请随时查看我们的 GitHub [问题][github-issues-link]，并展示您的才华。
 
 [![][pr-welcome-shield]][pr-welcome-link]
 
@@ -138,12 +138,12 @@ Contributions of all types are more than welcome, if you are interested in contr
 
 </div>
 
-## 🔗 More Products
+## 🔗 更多产品
 
-- **[🤖 Lobe Chat][lobe-chat] :** An open-source, extensible (Function Calling), high-performance chatbot framework. It supports one-click free deployment of your private ChatGPT/LLM web application.
-- **[🤯 Lobe Theme][lobe-theme] :** The modern theme for stable diffusion webui, exquisite interface design, highly customizable UI, and efficiency boosting features.
-- **[🌏 Lobe i18n][lobe-i18n] :** Lobe i18n is an automation tool for the i18n (internationalization) translation process, powered by ChatGPT. It supports features such as automatic splitting of large files, incremental updates, and customization options for the OpenAI model, API proxy, and temperature.
-- **[💌 Lobe Commit][lobe-commit] :** Lobe Commit is a CLI tool that leverages Langchain/ChatGPT to generate Gitmoji-based commit messages.
+- **[🤖 Lobe Chat][lobe-chat] :** 一个开源、可扩展（函数调用）、高性能的聊天机器人框架。支持一键免费部署私有 ChatGPT/LLM 网页应用程序。
+- **[🤯 Lobe Theme][lobe-theme] :** 稳定扩散 WebUI 的现代主题，精美的界面设计，高度可定制的 UI 和提高效率的功能。
+- **[🌏 Lobe i18n][lobe-i18n] :** Lobe i18n 是一个由 ChatGPT 提供支持的自动化工具，用于 i18n（国际化）翻译过程。它支持诸如大文件的自动拆分、增量更新和对 OpenAI 模型、API 代理和温度的自定义选项等功能。
+- **[💌 Lobe Commit][lobe-commit] :** Lobe Commit 是一个利用 Langchain/ChatGPT 生成基于 Gitmoji 的提交消息的 CLI 工具。
 
 <div align="right">
 
