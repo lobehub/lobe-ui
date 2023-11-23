@@ -1,14 +1,12 @@
 import { Loader2 } from 'lucide-react';
-import { Suspense, forwardRef, lazy, useMemo } from 'react';
+import { forwardRef, useMemo } from 'react';
 
 import Icon, { type IconProps, type IconSizeConfig, type IconSizeType } from '@/Icon';
-import type { TooltipProps } from '@/Tooltip';
+import Spotlight from '@/Spotlight';
+import Tooltip, { type TooltipProps } from '@/Tooltip';
 
 import { calcSize } from './calcSize';
 import { useStyles } from './style';
-
-const Tooltip = lazy(() => import('@/Tooltip'));
-const Spotlight = lazy(() => import('@/Spotlight'));
 
 interface ActionIconSizeConfig extends IconSizeConfig {
   blockSize?: number;
@@ -118,7 +116,7 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
         style={{ borderRadius, height: blockSize, width: blockSize, ...style }}
         {...rest}
       >
-        <Suspense fallback={null}>{spotlight && <Spotlight />}</Suspense>
+        {spotlight && <Spotlight />}
         {loading ? spin : content}
         {children}
       </div>
@@ -127,17 +125,15 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
     if (!title) return actionIconBlock;
 
     return (
-      <Suspense fallback={actionIconBlock}>
-        <Tooltip
-          arrow={arrow}
-          mouseEnterDelay={tooltipDelay}
-          overlayStyle={{ pointerEvents: 'none' }}
-          placement={placement}
-          title={title}
-        >
-          {actionIconBlock}
-        </Tooltip>
-      </Suspense>
+      <Tooltip
+        arrow={arrow}
+        mouseEnterDelay={tooltipDelay}
+        overlayStyle={{ pointerEvents: 'none' }}
+        placement={placement}
+        title={title}
+      >
+        {actionIconBlock}
+      </Tooltip>
     );
   },
 );

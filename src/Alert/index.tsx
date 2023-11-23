@@ -58,6 +58,7 @@ const Alert = memo<AlertProps>(
     text,
     extraDefaultExpand = false,
     extraIsolate,
+    banner,
     ...rest
   }) => {
     const [expand, setExpand] = useState(extraDefaultExpand);
@@ -71,6 +72,7 @@ const Alert = memo<AlertProps>(
 
     const alert = (
       <AntdAlert
+        banner={banner}
         className={cx(
           styles.container,
           colorfulText && styles.colorfulText,
@@ -108,6 +110,7 @@ const Alert = memo<AlertProps>(
         <Flexbox
           className={cx(
             styles.extra,
+            banner && styles.banner,
             variant === 'block' && styles.variantBlock,
             variant === 'ghost' && styles.variantGhost,
             variant === 'pure' && styles.variantPure,

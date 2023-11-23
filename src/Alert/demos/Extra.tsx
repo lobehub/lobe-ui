@@ -1,4 +1,11 @@
-import { Alert, Highlighter } from '@lobehub/ui';
+import {
+  Alert,
+  AlertProps,
+  Highlighter,
+  StoryBook,
+  useControls,
+  useCreateStore,
+} from '@lobehub/ui';
 
 const demoError = {
   details: {
@@ -13,16 +20,36 @@ const demoError = {
   ],
 };
 export default () => {
+  const store = useCreateStore();
+  const control: AlertProps | any = useControls(
+    {
+      banner: false,
+      closable: false,
+      colorfulText: true,
+      description: 'Alert Title',
+      message: 'Informational Notes',
+      showIcon: true,
+      type: {
+        options: ['info', 'success', 'warning', 'error'],
+        value: 'info',
+      },
+      variant: {
+        options: ['', 'block', 'ghost', 'pure'],
+        value: '',
+      },
+    },
+    { store },
+  );
   return (
-    <Alert
-      extra={
-        <Highlighter copyButtonSize={'small'} language={'json'} type={'pure'}>
-          {JSON.stringify(demoError, null, 2)}
-        </Highlighter>
-      }
-      message={'Quest error'}
-      showIcon
-      type={'error'}
-    />
+    <StoryBook levaStore={store}>
+      <Alert
+        extra={
+          <Highlighter copyButtonSize={'small'} language={'json'} type={'pure'}>
+            {JSON.stringify(demoError, null, 2)}
+          </Highlighter>
+        }
+        {...control}
+      />
+    </StoryBook>
   );
 };

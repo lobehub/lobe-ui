@@ -12,6 +12,10 @@ export const useStyles = createStyles(
     const baseBlockPadding = hasTitle ? 16 : 8;
     const baseInlinePadding = hasTitle ? 16 : 12;
     return {
+      banner: css`
+        border: none;
+        border-radius: 0;
+      `,
       colorfulText: css`
         .${prefixCls}-alert-message,.${prefixCls}-alert-description {
           color: inherit;

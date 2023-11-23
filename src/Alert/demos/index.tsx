@@ -10,13 +10,13 @@ export default () => {
       description: 'Alert Title',
       message: 'Informational Notes',
       showIcon: true,
-      styleType: {
-        options: ['', 'block', 'ghost', 'pure'],
-        value: '',
-      },
       type: {
         options: ['info', 'success', 'warning', 'error'],
         value: 'info',
+      },
+      variant: {
+        options: ['', 'block', 'ghost', 'pure'],
+        value: '',
       },
     },
     { store },

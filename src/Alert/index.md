@@ -10,7 +10,7 @@ title: Alert
 
 ## Extra
 
-<code src="./demos/Extra.tsx" center></code>
+<code src="./demos/Extra.tsx" nopadding></code>
 
 ## APIs
 
