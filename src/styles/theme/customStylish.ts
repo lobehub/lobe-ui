@@ -119,11 +119,13 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
 
         > code {
           padding: 0 !important;
+          background: unset !important;
           border: none !important;
+          border-radius: unset !important;
         }
       }
 
-      > :not([data-code-type='highlighter']) code {
+      *:not([data-code-type='highlighter'], pre) code {
         padding: 2px 6px;
 
         font-size: ${token.fontSizeSM}px;
