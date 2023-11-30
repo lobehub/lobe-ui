@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.119.1](https://github.com/lobehub/lobe-ui/compare/v1.119.0...v1.119.1)
+
+<sup>Released on **2023-11-30**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix warp in markdown render.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix warp in markdown render ([c5b4f6b](https://github.com/lobehub/lobe-ui/commit/c5b4f6b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.119.0](https://github.com/lobehub/lobe-ui/compare/v1.118.2...v1.119.0)
 
 <sup>Released on **2023-11-23**</sup>
