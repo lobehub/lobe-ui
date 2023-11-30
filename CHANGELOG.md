@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.119.2](https://github.com/lobehub/lobe-ui/compare/v1.119.1...v1.119.2)
+
+<sup>Released on **2023-11-30**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix inline code style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix inline code style ([5a378cc](https://github.com/lobehub/lobe-ui/commit/5a378cc))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.119.1](https://github.com/lobehub/lobe-ui/compare/v1.119.0...v1.119.1)
 
 <sup>Released on **2023-11-30**</sup>
