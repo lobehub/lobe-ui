@@ -73,12 +73,9 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
 
       p {
         margin-block: 0 0;
-
         font-size: 14px;
         line-height: 2;
         color: ${token.colorText};
-        word-break: break-all;
-        word-wrap: break-word;
 
         + * {
           margin-block-end: 1em;
@@ -252,6 +249,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
 
       p {
         line-height: 1.8 !important;
+        white-space: pre-wrap !important;
 
         + * {
           margin-block-end: 0.5em !important;
