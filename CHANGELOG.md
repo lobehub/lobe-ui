@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.120.2](https://github.com/lobehub/lobe-ui/compare/v1.120.1...v1.120.2)
+
+<sup>Released on **2023-12-01**</sup>
+
+#### 💄 Styles
+
+- **misc**: Add objectFit props to images.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Add objectFit props to images ([7e29b7d](https://github.com/lobehub/lobe-ui/commit/7e29b7d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.120.1](https://github.com/lobehub/lobe-ui/compare/v1.120.0...v1.120.1)
 
 <sup>Released on **2023-12-01**</sup>
