@@ -13,6 +13,7 @@ export interface ImageProps extends AntImageProps {
   alwaysShowActions?: boolean;
   isLoading?: boolean;
   minSize?: number | string;
+  objectFit?: 'cover' | 'contain';
   size?: number | string;
 }
 
@@ -26,9 +27,10 @@ const Image = memo<ImageProps>(
     size = '100%',
     actions,
     alwaysShowActions,
+    objectFit = 'cover',
     ...rest
   }) => {
-    const { styles, cx, theme } = useStyles({ alwaysShowActions, minSize, size });
+    const { styles, cx, theme } = useStyles({ alwaysShowActions, minSize, objectFit, size });
     const mergePreivew = usePreview(preview);
 
     if (isLoading)

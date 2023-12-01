@@ -8,7 +8,13 @@ export const useStyles = createStyles(
       minSize,
       size,
       alwaysShowActions,
-    }: { alwaysShowActions?: boolean; minSize?: number | string; size?: number | string } = {},
+      objectFit,
+    }: {
+      alwaysShowActions?: boolean;
+      minSize?: number | string;
+      objectFit?: string;
+      size?: number | string;
+    } = {},
   ) => {
     const SIZE = typeof size === 'number' ? `${size}px` : size;
     const MIN_SIZE = typeof minSize === 'number' ? `${minSize}px` : minSize;
@@ -38,7 +44,7 @@ export const useStyles = createStyles(
           height: ${SIZE} !important;
           min-height: ${MIN_SIZE} !important;
 
-          object-fit: contain;
+          object-fit: ${objectFit || 'cover'};
         }
       `,
       imageOff: isDarkMode
