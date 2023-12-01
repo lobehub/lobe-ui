@@ -10,9 +10,10 @@ import { useStyles } from './style';
 
 export interface ImageProps extends AntImageProps {
   actions?: ReactNode;
+  alwaysShowActions?: boolean;
   isLoading?: boolean;
-  minSize?: number;
-  size?: number;
+  minSize?: number | string;
+  size?: number | string;
 }
 
 const Image = memo<ImageProps>(
@@ -24,9 +25,10 @@ const Image = memo<ImageProps>(
     minSize = 64,
     size = '100%',
     actions,
+    alwaysShowActions,
     ...rest
   }) => {
-    const { styles, cx, theme } = useStyles({ minSize, size });
+    const { styles, cx, theme } = useStyles({ alwaysShowActions, minSize, size });
     const mergePreivew = usePreview(preview);
 
     if (isLoading)

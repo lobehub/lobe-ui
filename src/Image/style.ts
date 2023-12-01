@@ -4,7 +4,11 @@ import { rgba } from 'polished';
 export const useStyles = createStyles(
   (
     { css, token, cx, stylish, isDarkMode },
-    { minSize, size }: { minSize?: number | string; size?: number | string } = {},
+    {
+      minSize,
+      size,
+      alwaysShowActions,
+    }: { alwaysShowActions?: boolean; minSize?: number | string; size?: number | string } = {},
   ) => {
     const SIZE = typeof size === 'number' ? `${size}px` : size;
     const MIN_SIZE = typeof minSize === 'number' ? `${minSize}px` : minSize;
@@ -17,7 +21,7 @@ export const useStyles = createStyles(
       top: 0;
       right: 0;
 
-      opacity: 0;
+      opacity: ${alwaysShowActions ? 1 : 0};
     `);
 
     return {
