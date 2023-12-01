@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.120.0](https://github.com/lobehub/lobe-ui/compare/v1.119.4...v1.120.0)
+
+<sup>Released on **2023-12-01**</sup>
+
+#### ✨ Features
+
+- **misc**: Add Image and ImageGallery.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add Image and ImageGallery ([21fd1bc](https://github.com/lobehub/lobe-ui/commit/21fd1bc))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.119.4](https://github.com/lobehub/lobe-ui/compare/v1.119.3...v1.119.4)
 
 <sup>Released on **2023-12-01**</sup>
