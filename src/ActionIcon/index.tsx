@@ -28,6 +28,7 @@ export interface ActionIconProps extends Omit<IconProps, 'size' | 'icon'> {
    * @default false
    */
   arrow?: boolean;
+  disable?: boolean;
   /**
    * @description Glass blur style
    * @default 'false'
@@ -38,13 +39,13 @@ export interface ActionIconProps extends Omit<IconProps, 'size' | 'icon'> {
    * @description Set the loading status of ActionIcon
    */
   loading?: boolean;
+
   /**
    * @description The position of the tooltip relative to the target
    * @enum ["top","left","right","bottom","topLeft","topRight","bottomLeft","bottomRight","leftTop","leftBottom","rightTop","rightBottom"]
    * @default "top"
    */
   placement?: TooltipProps['placement'];
-
   /**
    * @description Size of the icon
    * @default 'normal'
@@ -88,6 +89,7 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
       fillOpacity,
       fillRule,
       focusable,
+      disable,
       ...rest
     },
     ref,
@@ -110,8 +112,8 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
 
     const actionIconBlock = (
       <div
-        className={cx(styles.block, className)}
-        onClick={loading ? undefined : onClick}
+        className={cx(styles.block, disable ? styles.disabled : styles.normal, className)}
+        onClick={loading || disable ? undefined : onClick}
         ref={ref}
         style={{ borderRadius, height: blockSize, width: blockSize, ...style }}
         {...rest}

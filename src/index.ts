@@ -79,6 +79,8 @@ export {
 export { useChatListActionsBar } from './hooks/useChatListActionsBar';
 export { default as Icon, type IconProps, type IconSize } from './Icon';
 export * from './Icon/icons';
+export { default as Image, type ImageProps } from './Image';
+export { default as ImageGallery, type ImageGalleryProps } from './Image/ImageGallery';
 export { Input, type InputProps, TextArea, type TextAreaProps } from './Input';
 export {
   default as Layout,

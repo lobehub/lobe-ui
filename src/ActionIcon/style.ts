@@ -6,8 +6,6 @@ export const useStyles = createStyles(
       block: cx(
         glass && stylish.blur,
         css`
-          cursor: pointer;
-
           position: relative;
 
           display: flex;
@@ -23,23 +21,30 @@ export const useStyles = createStyles(
             color 600ms ${token.motionEaseOut},
             scale 400ms ${token.motionEaseOut},
             background-color 100ms ${token.motionEaseOut};
-
-          &:hover {
-            color: ${token.colorText};
-            background-color: ${token.colorFillSecondary};
-          }
-
-          &:active {
-            color: ${token.colorText};
-            background-color: ${token.colorFill};
-          }
         `,
       ),
+      disabled: css`
+        cursor: not-allowed;
+        opacity: 0.5;
+      `,
       icon: css`
         transition: scale 400ms ${token.motionEaseOut};
 
         &:active {
           scale: 0.8;
+        }
+      `,
+      normal: css`
+        cursor: pointer;
+
+        &:hover {
+          color: ${token.colorText};
+          background-color: ${token.colorFillSecondary};
+        }
+
+        &:active {
+          color: ${token.colorText};
+          background-color: ${token.colorFill};
         }
       `,
     };

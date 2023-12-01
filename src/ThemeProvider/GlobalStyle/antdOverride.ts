@@ -1,5 +1,5 @@
 import { Theme, css } from 'antd-style';
-import { readableColor } from 'polished';
+import { readableColor, rgba } from 'polished';
 
 export default (token: Theme) => css`
   .${token.prefixCls}-btn {
@@ -41,6 +41,22 @@ export default (token: Theme) => css`
 
   .${token.prefixCls}-switch-handle::before {
     background: ${token.colorBgContainer} !important;
+  }
+
+  .${token.prefixCls}-image-preview-close,
+    .${token.prefixCls}-image-preview-switch-right,.${token.prefixCls}-image-preview-switch-left {
+    ${token.stylish.blur};
+    border-radius: ${token.borderRadiusLG}px;
+    background: ${rgba(token.colorBgMask, 0.1)};
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
   }
 
   @media (max-width: 575px) {
