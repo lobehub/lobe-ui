@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.120.4](https://github.com/lobehub/lobe-ui/compare/v1.120.3...v1.120.4)
+
+<sup>Released on **2023-12-02**</sup>
+
+#### 💄 Styles
+
+- **misc**: Remove playholder fallback in editable message.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Remove playholder fallback in editable message ([cfe797d](https://github.com/lobehub/lobe-ui/commit/cfe797d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.120.3](https://github.com/lobehub/lobe-ui/compare/v1.120.2...v1.120.3)
 
 <sup>Released on **2023-12-02**</sup>
