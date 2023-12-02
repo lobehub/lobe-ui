@@ -8,7 +8,7 @@ import {
   ZoomIn,
   ZoomOut,
 } from 'lucide-react';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
@@ -16,18 +16,26 @@ import Icon from '@/Icon';
 import Preview from '@/Image/Preview';
 import { useStyles } from '@/Image/style';
 
+export type PreviewOptions = any & {
+  toolbarAddon?: ReactNode;
+};
+
 export const usePreview = ({
   onVisibleChange,
   styles: previewStyle = {},
+  minScale = 0.32,
+  maxScale = 32,
+  toolbarAddon,
   ...rest
-}: ImageProps['preview'] | any = {}): ImageProps['preview'] => {
+}: PreviewOptions = {}): ImageProps['preview'] => {
   const [visible, setVisible] = useState(false);
   const { styles } = useStyles();
 
   return {
     closeIcon: <Icon icon={X} size={{ fontSize: 18, strokeWidth: 3 }} />,
     imageRender: (node) => <Preview visible={visible}>{node}</Preview>,
-
+    maxScale,
+    minScale,
     onVisibleChange: (e) => {
       setVisible(e);
       onVisibleChange?.(e);
@@ -46,8 +54,14 @@ export const usePreview = ({
         <ActionIcon color={'#fff'} icon={FlipVertical} onClick={onFlipY} />
         <ActionIcon color={'#fff'} icon={RotateCcw} onClick={onRotateLeft} />
         <ActionIcon color={'#fff'} icon={RotateCw} onClick={onRotateRight} />
-        <ActionIcon color={'#fff'} disable={scale === 1} icon={ZoomOut} onClick={onZoomOut} />
-        <ActionIcon color={'#fff'} disable={scale === 50} icon={ZoomIn} onClick={onZoomIn} />
+        <ActionIcon
+          color={'#fff'}
+          disable={scale === minScale}
+          icon={ZoomOut}
+          onClick={onZoomOut}
+        />
+        <ActionIcon color={'#fff'} disable={scale === maxScale} icon={ZoomIn} onClick={onZoomIn} />
+        {toolbarAddon}
       </Flexbox>
     ),
     // @ts-ignore

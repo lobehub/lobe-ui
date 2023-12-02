@@ -15,7 +15,11 @@ export interface ImageProps extends AntImageProps {
   isLoading?: boolean;
   minSize?: number | string;
   objectFit?: 'cover' | 'contain';
+  preview?: AntImageProps['preview'] & {
+    toolbarAddon?: ReactNode;
+  } & any;
   size?: number | string;
+  toolbarAddon?: ReactNode;
 }
 
 const Image = memo<ImageProps>(
