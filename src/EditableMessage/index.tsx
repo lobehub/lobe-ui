@@ -90,7 +90,7 @@ const EditableMessage = memo<EditableMessageProps>(
     editing,
     openModal,
     onOpenChange,
-    placeholder = 'Type something...',
+    placeholder,
     showEditWhenEmpty = false,
     styles: stylesProps,
     height,
@@ -150,7 +150,7 @@ const EditableMessage = memo<EditableMessageProps>(
               ...stylesProps?.markdown,
             }}
           >
-            {value || placeholder}
+            {value || placeholder || ''}
           </Markdown>
         )}
         <MessageModal
