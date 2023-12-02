@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.120.5](https://github.com/lobehub/lobe-ui/compare/v1.120.4...v1.120.5)
+
+<sup>Released on **2023-12-02**</sup>
+
+#### 💄 Styles
+
+- **misc**: Modify minsacle in image preview.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Modify minsacle in image preview ([a38cd61](https://github.com/lobehub/lobe-ui/commit/a38cd61))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.120.4](https://github.com/lobehub/lobe-ui/compare/v1.120.3...v1.120.4)
 
 <sup>Released on **2023-12-02**</sup>
