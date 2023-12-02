@@ -22,25 +22,34 @@ export interface MarkdownProps {
    * @description The class name for the Markdown component
    */
   className?: string;
+  enableImageGallery?: boolean;
   fullFeaturedCodeBlock?: boolean;
   onDoubleClick?: () => void;
   style?: CSSProperties;
 }
 
 const Markdown = memo<MarkdownProps>(
-  ({ children, className, style, fullFeaturedCodeBlock, onDoubleClick, ...rest }) => {
+  ({
+    children,
+    className,
+    style,
+    fullFeaturedCodeBlock,
+    onDoubleClick,
+    enableImageGallery = true,
+    ...rest
+  }) => {
     const { styles } = useStyles();
     const components: Components = {
       a: (props: any) => <Typography.Link {...props} rel="noopener noreferrer" target="_blank" />,
       details: (props: any) => <Collapse {...props} />,
       hr: () => <Divider style={{ marginBottom: '1em', marginTop: 0 }} />,
-      img: (props: any) => <Image {...props} />,
+      img: enableImageGallery ? (props: any) => <Image {...props} /> : undefined,
       pre: fullFeaturedCodeBlock ? CodeFullFeatured : CodeLite,
     };
 
     return (
       <Typography className={className} onDoubleClick={onDoubleClick} style={style}>
-        <ImageGallery>
+        <ImageGallery enable={enableImageGallery}>
           <ErrorBoundary
             fallback={
               <ReactMarkdown

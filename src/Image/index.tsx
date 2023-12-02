@@ -1,4 +1,5 @@
 import { Image as AntImage, type ImageProps as AntImageProps, Skeleton } from 'antd';
+import { useResponsive } from 'antd-style';
 import { Eye } from 'lucide-react';
 import { ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
@@ -30,6 +31,7 @@ const Image = memo<ImageProps>(
     objectFit = 'cover',
     ...rest
   }) => {
+    const { mobile } = useResponsive();
     const { styles, cx, theme } = useStyles({ alwaysShowActions, minSize, objectFit, size });
     const mergePreivew = usePreview(preview);
 
@@ -54,7 +56,7 @@ const Image = memo<ImageProps>(
           fallback={styles.imageOff}
           loading={'lazy'}
           preview={{
-            mask: actions ? <div /> : <Icon icon={Eye} size={'normal'} />,
+            mask: mobile ? false : actions ? <div /> : <Icon icon={Eye} size={'normal'} />,
             ...(mergePreivew as any),
           }}
           wrapperClassName={styles.image}
