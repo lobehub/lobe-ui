@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.120.3](https://github.com/lobehub/lobe-ui/compare/v1.120.2...v1.120.3)
+
+<sup>Released on **2023-12-02**</sup>
+
+#### 💄 Styles
+
+- **misc**: Remove image hover in mobile mode.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Remove image hover in mobile mode ([3167fb5](https://github.com/lobehub/lobe-ui/commit/3167fb5))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.120.2](https://github.com/lobehub/lobe-ui/compare/v1.120.1...v1.120.2)
 
 <sup>Released on **2023-12-01**</sup>
