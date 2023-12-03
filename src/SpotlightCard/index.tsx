@@ -19,7 +19,7 @@ export interface SpotlightCardProps<T = any> extends DivProps {
 const SpotlightCard = memo<SpotlightCardProps>(
   ({
     items,
-    renderItem,
+    renderItem: Content,
     className,
     columns = 3,
     gap = 12,
@@ -65,7 +65,6 @@ const SpotlightCard = memo<SpotlightCardProps>(
         {...rest}
       >
         {items.map((item, index) => {
-          const children = renderItem(item);
           return (
             <SpotlightCardItem
               borderRadius={borderRadius}
@@ -73,7 +72,7 @@ const SpotlightCard = memo<SpotlightCardProps>(
               key={index}
               size={size}
             >
-              {children}
+              <Content {...item} />
             </SpotlightCardItem>
           );
         })}
