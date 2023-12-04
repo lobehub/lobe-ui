@@ -7,7 +7,7 @@ import FormItem, { type FormItemProps } from './components/FormItem';
 import { useStyles } from './style';
 
 export interface ItemGroup {
-  children: FormItemProps[];
+  children: FormItemProps[] | ReactNode;
   extra?: FormGroupProps['extra'];
   icon?: FormGroupProps['icon'];
   title: FormGroupProps['title'];
@@ -34,18 +34,20 @@ const FormParent = forwardRef<FormInstance, FormProps>(
       >
         {items?.map((group, groupIndex) => (
           <FormGroup extra={group?.extra} icon={group?.icon} key={groupIndex} title={group.title}>
-            {group.children
-              .filter((item) => !item.hidden)
-              .map((item, itemIndex) => {
-                return (
-                  <FormItem
-                    divider={itemIndex !== 0}
-                    key={itemIndex}
-                    minWidth={itemMinWidth}
-                    {...item}
-                  />
-                );
-              })}
+            {Array.isArray(group.children)
+              ? group.children
+                  .filter((item) => !item.hidden)
+                  .map((item, itemIndex) => {
+                    return (
+                      <FormItem
+                        divider={itemIndex !== 0}
+                        key={itemIndex}
+                        minWidth={itemMinWidth}
+                        {...item}
+                      />
+                    );
+                  })
+              : group.children}
           </FormGroup>
         ))}
         {children}
