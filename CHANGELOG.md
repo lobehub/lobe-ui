@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.120.9](https://github.com/lobehub/lobe-ui/compare/v1.120.8...v1.120.9)
+
+<sup>Released on **2023-12-08**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix ChatInputArea style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix ChatInputArea style ([b9c89db](https://github.com/lobehub/lobe-ui/commit/b9c89db))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.120.8](https://github.com/lobehub/lobe-ui/compare/v1.120.7...v1.120.8)
 
 <sup>Released on **2023-12-08**</sup>
