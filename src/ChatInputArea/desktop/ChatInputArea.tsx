@@ -90,6 +90,7 @@ const ChatInputArea = forwardRef<TextAreaRef, ChatInputAreaProps>(
                 setFullscreen(false);
               }}
               ref={ref}
+              type={'pure'}
               {...rest}
             />
           </div>
