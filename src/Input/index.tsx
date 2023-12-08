@@ -13,14 +13,14 @@ export interface InputProps extends AntdInputProps {
 }
 
 export const Input = forwardRef<InputRef, InputProps>(
-  ({ className, type = 'ghost', ...rest }, reference) => {
+  ({ className, type = 'ghost', ...rest }, ref) => {
     const { styles, cx } = useStyles({ type });
 
     return (
       <AntInput
         bordered={type !== 'pure'}
         className={cx(styles.input, className)}
-        ref={reference}
+        ref={ref}
         {...rest}
       />
     );
@@ -41,14 +41,14 @@ export interface TextAreaProps extends AntdTextAreaProps {
 }
 
 export const TextArea = forwardRef<TextAreaRef, TextAreaProps>(
-  ({ className, type = 'ghost', resize = true, style, ...rest }, reference) => {
+  ({ className, type = 'ghost', resize = true, style, ...rest }, ref) => {
     const { styles, cx } = useStyles({ type });
 
     return (
       <AntInput.TextArea
         bordered={type !== 'pure'}
         className={cx(styles.textarea, className)}
-        ref={reference}
+        ref={ref}
         style={resize ? style : { resize: 'none', ...style }}
         {...rest}
       />

@@ -65,7 +65,7 @@ const Markdown = memo<MarkdownProps>(
             <ReactMarkdown
               className={styles.markdown}
               components={components}
-              rehypePlugins={[rehypeKatex]}
+              rehypePlugins={[rehypeKatex] as any}
               remarkPlugins={[remarkGfm, remarkMath]}
               {...rest}
             >

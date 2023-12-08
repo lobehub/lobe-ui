@@ -90,7 +90,7 @@ const MessageModal = memo<MessageModalProps>(
         onOk={() => setTyping(true)}
         open={expand}
         styles={mobile ? { body: { padding: 16 } } : {}}
-        title={text?.title || 'Prompt'}
+        title={text?.title}
       >
         {isEdit ? (
           <MessageInput
@@ -102,11 +102,13 @@ const MessageModal = memo<MessageModalProps>(
               onChange?.(text);
             }}
             placeholder={placeholder}
+            style={mobile ? { height: '100%' } : {}}
             text={{
               cancel: text?.cancel,
               confirm: text?.confirm,
             }}
-            type={'block'}
+            textareaStyle={mobile ? { flex: 1, minHeight: 'unset' } : {}}
+            type={mobile ? 'pure' : 'block'}
           />
         ) : (
           <>

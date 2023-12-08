@@ -52,7 +52,7 @@ const BackBottom = memo<BackBottomProps>(
         onClick={scrollToBottom}
         ref={ref}
         size={'small'}
-        style={{ bottom: 16, position: 'absolute', right: 16, ...style }}
+        style={style}
       >
         {text || 'Back to bottom'}
       </Button>

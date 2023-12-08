@@ -9,7 +9,7 @@ export {
   default as ChatHeaderTitle,
   type ChatHeaderTitleProps,
 } from './ChatHeader/ChatHeaderTitle';
-export { default as ChatInputArea, type ChatInputAreaProps } from './ChatInputArea';
+export * from './ChatInputArea';
 export { default as ChatItem, type ChatItemProps } from './ChatItem';
 export type {
   ChatListProps,

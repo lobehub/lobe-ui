@@ -9,6 +9,10 @@ description: The ChatInputArea component is used to display a chat input area wi
 
 <code src="./demos/index.tsx" nopadding></code>
 
+## Mobile
+
+<code src="./demos/Mobile.tsx" nopadding></code>
+
 ## APIs
 
 <API></API>

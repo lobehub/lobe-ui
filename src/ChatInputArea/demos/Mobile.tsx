@@ -1,8 +1,8 @@
 import {
   ActionIcon,
   ChatInputActionBar,
-  ChatInputArea,
-  ChatSendButton,
+  MobileChatInputArea,
+  MobileChatSendButton,
   TokenTag,
 } from '@lobehub/ui';
 import { Eraser, Languages } from 'lucide-react';
@@ -19,8 +19,8 @@ export default () => {
   return (
     <View>
       <div style={{ flex: 1 }}></div>
-      <ChatInputArea
-        bottomAddons={<ChatSendButton />}
+      <MobileChatInputArea
+        textAreaRightAddons={<MobileChatSendButton />}
         topAddons={
           <ChatInputActionBar
             leftAddons={

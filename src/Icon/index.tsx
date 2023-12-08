@@ -7,7 +7,7 @@ import { DivProps } from '@/types';
 import { useStyles } from './style';
 
 export interface IconSizeConfig extends Pick<LucideProps, 'strokeWidth' | 'absoluteStrokeWidth'> {
-  fontSize?: number;
+  fontSize?: number | string;
 }
 export type IconSizeType = 'large' | 'normal' | 'small';
 export type IconSize = IconSizeType | IconSizeConfig;

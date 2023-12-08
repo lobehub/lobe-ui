@@ -9,8 +9,8 @@ import { calcSize } from './calcSize';
 import { useStyles } from './style';
 
 interface ActionIconSizeConfig extends IconSizeConfig {
-  blockSize?: number;
-  borderRadius?: number;
+  blockSize?: number | string;
+  borderRadius?: number | string;
 }
 
 type ActionIconSizeType = 'site' | IconSizeType;

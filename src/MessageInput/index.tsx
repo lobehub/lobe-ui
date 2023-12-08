@@ -58,9 +58,7 @@ const MessageInput = memo<MessageInputProps>(
     textareaStyle,
     textareaClassname,
     placeholder,
-
     height = 'auto',
-
     style,
     editButtonSize = 'middle',
     classNames,

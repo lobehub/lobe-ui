@@ -1,8 +1,8 @@
 import { ActionIconSize } from '@/ActionIcon/index';
 
 export const calcSize = (size?: ActionIconSize) => {
-  let blockSize: number;
-  let borderRadius: number;
+  let blockSize: number | string;
+  let borderRadius: number | string;
 
   switch (size) {
     case 'large': {
