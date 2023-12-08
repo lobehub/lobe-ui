@@ -25,7 +25,7 @@ const useStyles = createStyles(({ css, token }) => {
   return {
     container: css`
       padding: 12px 0;
-      background: ${token.colorBgLayout};
+      background: ${token.colorFillQuaternary};
       border-top: 1px solid ${rgba(token.colorBorder, 0.25)};
     `,
     fullscreen: css`
@@ -33,7 +33,7 @@ const useStyles = createStyles(({ css, token }) => {
     `,
     fullscreenButton: css`
       position: absolute;
-      right: 14px;
+      left: 14px;
     `,
     fullscreenTextArea: css`
       flex: 1;
@@ -88,12 +88,14 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
     const InnerContainer: FC<PropsWithChildren> = useCallback(
       ({ children }) =>
         fullscreen ? (
-          <Flexbox className={styles.inner} gap={8} style={{ paddingTop: 36 }}>
-            {children}
-            <Flexbox horizontal justify={'space-between'}>
-              {textAreaLeftAddons || <div />}
-              {textAreaRightAddons || <div />}
+          <Flexbox className={styles.inner} gap={8}>
+            <Flexbox gap={8} horizontal justify={'flex-end'}>
+              {textAreaLeftAddons}
+              {textAreaRightAddons}
             </Flexbox>
+            {children}
+            {topAddons}
+            {bottomAddons}
           </Flexbox>
         ) : (
           <Flexbox align={'flex-end'} className={styles.inner} gap={8} horizontal>
@@ -113,9 +115,7 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
         gap={12}
         style={style}
       >
-        {topAddons && (
-          <Flexbox style={showAddons ? {} : { height: 0, overflow: 'hidden' }}>{topAddons}</Flexbox>
-        )}
+        {topAddons && <Flexbox style={showAddons ? {} : { display: 'none' }}>{topAddons}</Flexbox>}
         <Flexbox
           className={cx(fullscreen && styles.fullscreen)}
           ref={containerRef}
@@ -128,6 +128,7 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
               icon={fullscreen ? ChevronDown : ChevronUp}
               onClick={() => setFullscreen(!fullscreen)}
               size={{ blockSize: 24, borderRadius: '50%', fontSize: 14 }}
+              style={fullscreen ? { top: 6 } : {}}
             />
           )}
           <InnerContainer>
@@ -144,9 +145,7 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
           </InnerContainer>
         </Flexbox>
         {bottomAddons && (
-          <Flexbox style={showAddons ? {} : { height: 0, overflow: 'hidden' }}>
-            {bottomAddons}
-          </Flexbox>
+          <Flexbox style={showAddons ? {} : { display: 'none' }}>{bottomAddons}</Flexbox>
         )}
       </Flexbox>
     );

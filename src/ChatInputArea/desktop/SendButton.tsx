@@ -46,13 +46,13 @@ const ChatSendButton = memo<ChatSendButtonProps>(
             style={{ color: theme.colorTextDescription, fontSize: 12, marginRight: 12 }}
           >
             <Icon icon={CornerDownLeft} />
-            <span>{texts?.warp || 'Warp'}</span>
+            <span>{texts?.send || 'Send'}</span>
             <span>/</span>
             <Flexbox horizontal>
               <Icon icon={ArrowBigUp} />
               <Icon icon={CornerDownLeft} />
             </Flexbox>
-            <span>{texts?.send || 'Send'}</span>
+            <span>{texts?.warp || 'Warp'}</span>
           </Flexbox>
           {rightAddons}
           {loading ? (

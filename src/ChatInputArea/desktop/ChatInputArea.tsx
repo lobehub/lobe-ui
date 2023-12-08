@@ -1,7 +1,6 @@
 import { createStyles } from 'antd-style';
 import { TextAreaRef } from 'antd/es/input/TextArea';
 import { ReactNode, forwardRef } from 'react';
-import useMergeState from 'use-merge-value';
 
 import DraggablePanel, { type DraggablePanelProps } from '@/DraggablePanel';
 
@@ -51,7 +50,7 @@ const ChatInputArea = forwardRef<TextAreaRef, ChatInputAreaProps>(
       className,
       style,
       classNames,
-      expand = false,
+      expand = true,
       setExpand,
       bottomAddons,
       topAddons,
@@ -62,17 +61,13 @@ const ChatInputArea = forwardRef<TextAreaRef, ChatInputAreaProps>(
     },
     ref,
   ) => {
-    const [fullscreen, setFullscreen] = useMergeState<boolean>(expand, {
-      defaultValue: expand,
-      onChange: setExpand,
-    });
     const { styles } = useStyles();
 
     return (
       <DraggablePanel
         className={className}
         classNames={classNames}
-        fullscreen={fullscreen}
+        fullscreen={expand}
         headerHeight={heights?.headerHeight}
         minHeight={heights?.minHeight}
         onSizeChange={onSizeChange}
@@ -87,7 +82,7 @@ const ChatInputArea = forwardRef<TextAreaRef, ChatInputAreaProps>(
               className={styles.textarea}
               onSend={() => {
                 onSend?.();
-                setFullscreen(false);
+                setExpand?.(false);
               }}
               ref={ref}
               type={'pure'}
