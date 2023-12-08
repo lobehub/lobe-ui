@@ -15,7 +15,6 @@ import {
   useState,
 } from 'react';
 import { Flexbox } from 'react-layout-kit';
-import useMergeState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
 
@@ -28,14 +27,14 @@ const useStyles = createStyles(({ css, token }) => {
       background: ${token.colorFillQuaternary};
       border-top: 1px solid ${rgba(token.colorBorder, 0.25)};
     `,
-    fullscreen: css`
+    expand: css`
       height: 100%;
     `,
-    fullscreenButton: css`
+    expandButton: css`
       position: absolute;
       left: 14px;
     `,
-    fullscreenTextArea: css`
+    expandTextArea: css`
       flex: 1;
     `,
     inner: css`
@@ -66,7 +65,10 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
       bottomAddons,
       expand = false,
       setExpand,
-      ...rest
+      onSend,
+      onInput,
+      loading,
+      value,
     },
     ref,
   ) => {
@@ -75,10 +77,6 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
     const size = useSize(containerRef);
     const [showFullscreen, setShowFullscreen] = useState<boolean>(false);
     const [isFocused, setIsFocused] = useState<boolean>(false);
-    const [fullscreen, setFullscreen] = useMergeState<boolean>(expand, {
-      defaultValue: expand,
-      onChange: setExpand,
-    });
 
     useEffect(() => {
       if (!size?.height) return;
@@ -87,7 +85,7 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
 
     const InnerContainer: FC<PropsWithChildren> = useCallback(
       ({ children }) =>
-        fullscreen ? (
+        expand ? (
           <Flexbox className={styles.inner} gap={8}>
             <Flexbox gap={8} horizontal justify={'flex-end'}>
               {textAreaLeftAddons}
@@ -104,43 +102,46 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
             {textAreaRightAddons}
           </Flexbox>
         ),
-      [fullscreen],
+      [expand],
     );
 
-    const showAddons = !fullscreen && !isFocused;
+    const showAddons = !expand && !isFocused;
 
     return (
       <Flexbox
-        className={cx(styles.container, fullscreen && styles.fullscreen, className)}
+        className={cx(styles.container, expand && styles.expand, className)}
         gap={12}
         style={style}
       >
         {topAddons && <Flexbox style={showAddons ? {} : { display: 'none' }}>{topAddons}</Flexbox>}
         <Flexbox
-          className={cx(fullscreen && styles.fullscreen)}
+          className={cx(expand && styles.expand)}
           ref={containerRef}
           style={{ position: 'relative' }}
         >
           {showFullscreen && (
             <ActionIcon
               active
-              className={styles.fullscreenButton}
-              icon={fullscreen ? ChevronDown : ChevronUp}
-              onClick={() => setFullscreen(!fullscreen)}
+              className={styles.expandButton}
+              icon={expand ? ChevronDown : ChevronUp}
+              onClick={() => setExpand?.(!expand)}
               size={{ blockSize: 24, borderRadius: '50%', fontSize: 14 }}
-              style={fullscreen ? { top: 6 } : {}}
+              style={expand ? { top: 6 } : {}}
             />
           )}
           <InnerContainer>
             <ChatInputAreaInner
-              autoSize={fullscreen ? false : { maxRows: 6, minRows: 0 }}
-              className={cx(fullscreen && styles.fullscreenTextArea)}
+              autoSize={expand ? false : { maxRows: 6, minRows: 0 }}
+              className={cx(expand && styles.expandTextArea)}
+              loading={loading}
               onBlur={() => setIsFocused(false)}
               onFocus={() => setIsFocused(true)}
+              onInput={onInput}
+              onSend={onSend}
               ref={ref}
               style={{ height: 36, paddingBlock: 6 }}
-              type={fullscreen ? 'pure' : 'block'}
-              {...rest}
+              type={expand ? 'pure' : 'block'}
+              value={value}
             />
           </InnerContainer>
         </Flexbox>

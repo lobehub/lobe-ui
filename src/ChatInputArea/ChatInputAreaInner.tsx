@@ -1,5 +1,5 @@
 import { TextAreaRef } from 'antd/es/input/TextArea';
-import { CSSProperties, forwardRef, useRef } from 'react';
+import { CSSProperties, forwardRef, memo, useRef } from 'react';
 
 import { TextArea, TextAreaProps } from '@/Input';
 
@@ -64,4 +64,4 @@ const ChatInputAreaInner = forwardRef<TextAreaRef, ChatInputAreaInnerProps>(
   },
 );
 
-export default ChatInputAreaInner;
+export default memo(ChatInputAreaInner);

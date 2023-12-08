@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 import { TextAreaRef } from 'antd/es/input/TextArea';
-import { ReactNode, forwardRef } from 'react';
+import { ReactNode, forwardRef, memo } from 'react';
 
 import DraggablePanel, { type DraggablePanelProps } from '@/DraggablePanel';
 
@@ -57,7 +57,9 @@ const ChatInputArea = forwardRef<TextAreaRef, ChatInputAreaProps>(
       onSizeChange,
       heights,
       onSend,
-      ...rest
+      onInput,
+      loading,
+      value,
     },
     ref,
   ) => {
@@ -80,13 +82,15 @@ const ChatInputArea = forwardRef<TextAreaRef, ChatInputAreaProps>(
           <div className={styles.textareaContainer}>
             <ChatInputAreaInner
               className={styles.textarea}
+              loading={loading}
+              onInput={onInput}
               onSend={() => {
                 onSend?.();
                 setExpand?.(false);
               }}
               ref={ref}
               type={'pure'}
-              {...rest}
+              value={value}
             />
           </div>
           {bottomAddons}
@@ -96,4 +100,4 @@ const ChatInputArea = forwardRef<TextAreaRef, ChatInputAreaProps>(
   },
 );
 
-export default ChatInputArea;
+export default memo(ChatInputArea);
