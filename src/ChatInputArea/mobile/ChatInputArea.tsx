@@ -102,7 +102,7 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
             {textAreaRightAddons}
           </Flexbox>
         ),
-      [expand],
+      [expand, loading],
     );
 
     const showAddons = !expand && !isFocused;
