@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.120.11](https://github.com/lobehub/lobe-ui/compare/v1.120.10...v1.120.11)
+
+<sup>Released on **2023-12-10**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: The mobile end cannot stop generating.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: The mobile end cannot stop generating ([ef3d67a](https://github.com/lobehub/lobe-ui/commit/ef3d67a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.120.10](https://github.com/lobehub/lobe-ui/compare/v1.120.9...v1.120.10)
 
 <sup>Released on **2023-12-08**</sup>
