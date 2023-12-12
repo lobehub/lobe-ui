@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.120.12](https://github.com/lobehub/lobe-ui/compare/v1.120.11...v1.120.12)
+
+<sup>Released on **2023-12-12**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: ChatInputArea should add maxHeight api.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: ChatInputArea should add maxHeight api ([c4f9f32](https://github.com/lobehub/lobe-ui/commit/c4f9f32))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.120.11](https://github.com/lobehub/lobe-ui/compare/v1.120.10...v1.120.11)
 
 <sup>Released on **2023-12-10**</sup>
