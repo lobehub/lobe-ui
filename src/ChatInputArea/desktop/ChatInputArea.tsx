@@ -37,6 +37,7 @@ export interface ChatInputAreaProps extends Omit<ChatInputAreaInnerProps, 'class
   heights?: {
     headerHeight?: number;
     inputHeight?: number;
+    maxHeight?: number;
     minHeight?: number;
   };
   onSizeChange?: DraggablePanelProps['onSizeChange'];
@@ -71,6 +72,7 @@ const ChatInputArea = forwardRef<TextAreaRef, ChatInputAreaProps>(
         classNames={classNames}
         fullscreen={expand}
         headerHeight={heights?.headerHeight}
+        maxHeight={heights?.maxHeight}
         minHeight={heights?.minHeight}
         onSizeChange={onSizeChange}
         placement="bottom"
