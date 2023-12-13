@@ -2,6 +2,10 @@ import { Theme, css } from 'antd-style';
 import { readableColor, rgba } from 'polished';
 
 export default (token: Theme) => css`
+  .${token.prefixCls}-checkbox-inner:after {
+    border-color: ${readableColor(token.colorPrimary)} !important;
+  }
+
   .${token.prefixCls}-btn {
     box-shadow: none;
   }

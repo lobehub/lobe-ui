@@ -24,12 +24,11 @@ const items: FeaturesProps['items'] = [
   },
 ];
 
-const example = `import { ThemeProvider, Button } from '@lobehub/ui'
-import { Button } from 'antd'
+const example = `import { ThemeProvider, GradientButton } from '@lobehub/ui'
 
 export default () => (
   <ThemeProvider>
-    <Button>Hello AIGC</Button>
+    <GradientButton>Hello AIGC</GradientButton>
   </ThemeProvider>
 )`;
 
