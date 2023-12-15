@@ -28,8 +28,8 @@ export const useStyles = createStyles(
           ? token.colorFill
           : token.colorBgElevated
         : isDarkMode
-        ? token.colorFillSecondary
-        : token.colorBgContainer};
+          ? token.colorFillSecondary
+          : token.colorBgContainer};
       border-radius: ${token.borderRadiusLG}px;
       transition: background-color 100ms ${token.motionEaseOut};
     `;
@@ -58,8 +58,8 @@ export const useStyles = createStyles(
           align-self: ${type === 'block'
             ? 'flex-end'
             : placement === 'left'
-            ? 'flex-start'
-            : 'flex-end'};
+              ? 'flex-start'
+              : 'flex-end'};
           justify-content: ${placement === 'left' ? 'flex-end' : 'flex-start'};
         `,
         editing &&
@@ -161,6 +161,10 @@ export const useStyles = createStyles(
         typeStylish,
         css`
           position: relative;
+
+          ${responsive.mobile} {
+            width: 100%;
+          }
         `,
       ),
       messageContainer: cx(
