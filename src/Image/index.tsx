@@ -1,5 +1,5 @@
 import { Image as AntImage, type ImageProps as AntImageProps, Skeleton } from 'antd';
-import { useResponsive } from 'antd-style';
+import { useResponsive, useThemeMode } from 'antd-style';
 import { Eye } from 'lucide-react';
 import { ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
@@ -36,6 +36,7 @@ const Image = memo<ImageProps>(
     ...rest
   }) => {
     const { mobile } = useResponsive();
+    const { isDarkMode } = useThemeMode();
     const { styles, cx, theme } = useStyles({ alwaysShowActions, minSize, objectFit, size });
     const mergePreivew = usePreview(preview);
 
@@ -57,7 +58,11 @@ const Image = memo<ImageProps>(
       <Flexbox className={cx(styles.imageWrapper, wrapperClassName)} style={style}>
         {actions && <div className={styles.actions}>{actions}</div>}
         <AntImage
-          fallback={styles.imageOff}
+          fallback={
+            isDarkMode
+              ? 'https://gw.alipayobjects.com/zos/kitchen/nhzBb%24r0Cm/image_off_dark.webp'
+              : 'https://gw.alipayobjects.com/zos/kitchen/QAvkgt30Ys/image_off_light.webp'
+          }
           loading={'lazy'}
           preview={{
             mask: mobile ? false : actions ? <div /> : <Icon icon={Eye} size={'normal'} />,

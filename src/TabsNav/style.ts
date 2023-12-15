@@ -7,6 +7,15 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
   const paddingVertical = 6;
 
   return {
+    compact: css`
+      .${prefixCls}-tabs-tab {
+        margin: 4px !important;
+
+        + .${prefixCls}-tabs-tab {
+          margin: 4px !important;
+        }
+      }
+    `,
     tabs: css`
       ${prefix}-tab + ${prefix}-tab {
         margin: ${marginHoriz}px 4px !important;

@@ -20,12 +20,18 @@ export interface TabsNavProps {
    * @description Callback function that is triggered when a tab is changed
    */
   onChange?: (activeKey: string) => void;
+  variant?: 'default' | 'compact';
 }
 
-const TabsNav = memo<TabsNavProps>(({ className, ...rest }) => {
+const TabsNav = memo<TabsNavProps>(({ className, variant, ...rest }) => {
   const { styles, cx } = useStyles();
 
-  return <Tabs className={cx(styles.tabs, className)} {...rest} />;
+  return (
+    <Tabs
+      className={cx(styles.tabs, variant === 'compact' && styles.compact, className)}
+      {...rest}
+    />
+  );
 });
 
 export default TabsNav;

@@ -48,7 +48,12 @@ const Markdown = memo<MarkdownProps>(
     };
 
     return (
-      <Typography className={className} onDoubleClick={onDoubleClick} style={style}>
+      <Typography
+        className={className}
+        data-code-type="markdown"
+        onDoubleClick={onDoubleClick}
+        style={style}
+      >
         <ImageGallery enable={enableImageGallery}>
           <ErrorBoundary
             fallback={

@@ -3,7 +3,7 @@ import { rgba } from 'polished';
 
 export const useStyles = createStyles(
   (
-    { css, token, cx, stylish, isDarkMode },
+    { css, token, cx, stylish },
     {
       minSize,
       size,
@@ -47,9 +47,6 @@ export const useStyles = createStyles(
           object-fit: ${objectFit || 'cover'};
         }
       `,
-      imageOff: isDarkMode
-        ? 'https://gw.alipayobjects.com/zos/kitchen/BpCkC%26aex5/image_off_dark.webp'
-        : 'https://gw.alipayobjects.com/zos/kitchen/AYB4XBJBSA/image_off_light.webp',
       imageWrapper: css`
         position: relative;
 
