@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.120.15](https://github.com/lobehub/lobe-ui/compare/v1.120.14...v1.120.15)
+
+<sup>Released on **2023-12-15**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix function message width on mobile.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix function message width on mobile ([777396f](https://github.com/lobehub/lobe-ui/commit/777396f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.120.14](https://github.com/lobehub/lobe-ui/compare/v1.120.13...v1.120.14)
 
 <sup>Released on **2023-12-15**</sup>
