@@ -7,25 +7,16 @@ import { type DivProps } from '@/types';
 
 import { useStyles } from './style';
 
-export interface DraggablePanelHeaderProps extends DivProps {
+export interface DraggablePanelHeaderProps extends Omit<DivProps, 'children'> {
   pin?: boolean;
   position?: 'left' | 'right';
   setExpand?: (expand: boolean) => void;
   setPin?: (pin: boolean) => void;
-  title: string;
+  title?: string;
 }
 
 const DraggablePanelHeader = memo<DraggablePanelHeaderProps>((props) => {
-  const {
-    pin,
-    setPin,
-    className,
-    setExpand,
-    title,
-    position = 'left',
-    children = title,
-    ...rest
-  } = props;
+  const { pin, setPin, className, setExpand, title, position = 'left', ...rest } = props;
   const { cx, styles } = useStyles();
 
   const [isPinned, setIsPinned] = useControlledState(false, {
@@ -51,7 +42,7 @@ const DraggablePanelHeader = memo<DraggablePanelHeaderProps>((props) => {
   return (
     <div className={cx(styles.header, className)} {...rest}>
       {position === 'left' ? panelIcon : pinIcon}
-      {children}
+      {title}
       {position === 'left' ? pinIcon : panelIcon}
     </div>
   );
