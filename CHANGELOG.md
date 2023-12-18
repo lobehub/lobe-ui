@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.120.16](https://github.com/lobehub/lobe-ui/compare/v1.120.15...v1.120.16)
+
+<sup>Released on **2023-12-18**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: DraggablePanelHeader children not working.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: DraggablePanelHeader children not working ([1ba6291](https://github.com/lobehub/lobe-ui/commit/1ba6291))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.120.15](https://github.com/lobehub/lobe-ui/compare/v1.120.14...v1.120.15)
 
 <sup>Released on **2023-12-15**</sup>
