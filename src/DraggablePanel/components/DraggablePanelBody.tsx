@@ -6,13 +6,9 @@ import { useStyles } from './style';
 
 export type DraggablePanelBodyProps = DivProps;
 
-const DraggablePanelBody = memo<DraggablePanelBodyProps>(({ className, children, ...rest }) => {
+const DraggablePanelBody = memo<DraggablePanelBodyProps>(({ className, ...rest }) => {
   const { cx, styles } = useStyles();
-  return (
-    <div className={cx(styles.body, className)} {...rest}>
-      {children}
-    </div>
-  );
+  return <div className={cx(styles.body, className)} {...rest} />;
 });
 
 export default DraggablePanelBody;
