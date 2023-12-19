@@ -2,10 +2,11 @@ import { InputNumber, type InputNumberProps, Slider } from 'antd';
 import { SliderSingleProps } from 'antd/es/slider';
 import { isNull } from 'lodash-es';
 import { memo, useCallback } from 'react';
-import { Flexbox } from 'react-layout-kit';
+import { CommonSpaceNumber, Flexbox } from 'react-layout-kit';
 
 export interface SliderWithInputProps extends SliderSingleProps {
   controls?: InputNumberProps['controls'];
+  gap?: CommonSpaceNumber | number;
   size?: InputNumberProps['size'];
 }
 
@@ -19,6 +20,7 @@ const SliderWithInput = memo<SliderWithInputProps>(
     defaultValue,
     size,
     controls,
+    gap,
     style,
     className,
     disabled,
@@ -34,7 +36,7 @@ const SliderWithInput = memo<SliderWithInputProps>(
         align={'center'}
         className={className}
         direction={'horizontal'}
-        gap={8}
+        gap={gap ?? 8}
         style={style}
       >
         <Slider
