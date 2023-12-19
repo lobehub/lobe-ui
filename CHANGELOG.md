@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.121.0](https://github.com/lobehub/lobe-ui/compare/v1.120.16...v1.121.0)
+
+<sup>Released on **2023-12-19**</sup>
+
+#### ✨ Features
+
+- **misc**: Add gap props to SliderWithInput.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add gap props to SliderWithInput ([f1a3898](https://github.com/lobehub/lobe-ui/commit/f1a3898))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.120.16](https://github.com/lobehub/lobe-ui/compare/v1.120.15...v1.120.16)
 
 <sup>Released on **2023-12-18**</sup>
