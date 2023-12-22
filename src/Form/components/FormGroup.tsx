@@ -19,10 +19,10 @@ const FormGroup = memo<FormGroupProps>(({ className, icon, title, children, extr
   const { cx, styles } = useStyles();
 
   const titleContent = (
-    <div className={styles.title}>
+    <Flexbox className={styles.title} gap={8} horizontal>
       {icon && <Icon icon={icon} />}
       {title}
-    </div>
+    </Flexbox>
   );
 
   if (mobile)

@@ -1,5 +1,6 @@
 import { useResponsive } from 'antd-style';
 import { forwardRef } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import FluentEmoji from '@/FluentEmoji';
 import { DivProps } from '@/types';
@@ -52,7 +53,15 @@ const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
     const { styles, cx } = useStyles({ shape, type });
 
     return (
-      <div className={cx(styles.container, className)} ref={ref} {...rest}>
+      <Flexbox
+        align={'center'}
+        className={cx(styles.container, className)}
+        flex={'none'}
+        gap={4}
+        horizontal
+        ref={ref}
+        {...rest}
+      >
         <FluentEmoji emoji={emoji} size={ICON_SIZE} />
         {valueLeft > 0
           ? [
@@ -64,7 +73,7 @@ const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
               displayMode === 'remained' ? valueLeft : value,
             ].join(' ')
           : text?.overload || 'Overload'}
-      </div>
+      </Flexbox>
     );
   },
 );

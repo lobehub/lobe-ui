@@ -1,17 +1,15 @@
 import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import { DivProps } from '@/types';
-
-import { useStyles } from './style';
 
 export type FormFooterProps = DivProps;
 
 const FormFooter = memo<FormFooterProps>(({ className, children, ...rest }) => {
-  const { cx, styles } = useStyles();
   return (
-    <div className={cx(styles.footer, className)} {...rest}>
+    <Flexbox className={className} gap={8} justify={'flex-end'} {...rest} horizontal>
       {children}
-    </div>
+    </Flexbox>
   );
 });
 

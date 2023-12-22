@@ -29,26 +29,14 @@ export const useStyles = createStyles(({ css, token }) => ({
     }
   `,
   scaleItem: css`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     width: 100%;
     height: 100%;
   `,
   scaleRowTitle: css`
-    display: flex;
-    align-items: center;
     width: 64px;
     height: 32px;
   `,
   text: css`
     opacity: 0.5;
-  `,
-  view: css`
-    display: flex;
-    flex: 1;
-    align-items: center;
-    justify-content: center;
   `,
 }));

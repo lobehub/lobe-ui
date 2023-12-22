@@ -63,6 +63,14 @@ export default (token: Theme) => css`
     padding: 0;
   }
 
+  .${token.prefixCls}-dropdown {
+    .${token.prefixCls}-dropdown-menu {
+      border: 1px solid ${token.colorBorderSecondary};
+      border-radius: ${token.borderRadius}px !important;
+      box-shadow: ${token.boxShadowSecondary};
+    }
+  }
+
   @media (max-width: 575px) {
     .${token.prefixCls}-tooltip {
       display: none !important;

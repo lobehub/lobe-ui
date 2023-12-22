@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import { type DivProps } from '@/types';
 
@@ -8,7 +9,17 @@ export type DraggablePanelFooterProps = DivProps;
 
 const DraggablePanelFooter = memo<DraggablePanelFooterProps>(({ className, ...rest }) => {
   const { cx, styles } = useStyles();
-  return <div className={cx(styles.footer, className)} {...rest} />;
+  return (
+    <Flexbox
+      align={'center'}
+      className={cx(styles.footer, className)}
+      flex={'none'}
+      gap={8}
+      horizontal
+      justify={'flex-start'}
+      {...rest}
+    />
+  );
 });
 
 export default DraggablePanelFooter;

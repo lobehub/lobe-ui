@@ -49,10 +49,6 @@ export const useStyles = createStyles(
           user-select: none;
 
           overflow: hidden;
-          display: flex;
-          flex: 0;
-          gap: 4px;
-          align-items: center;
 
           min-width: fit-content;
           height: ${HEIGHT}px;

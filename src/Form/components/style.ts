@@ -3,18 +3,8 @@ import { isNumber } from 'lodash-es';
 
 export const useStyles = createStyles(
   ({ css, cx, token, isDarkMode, responsive, prefixCls }, itemMinWidth?: string | number) => ({
-    footer: css`
-      display: flex;
-      gap: 8px;
-      justify-content: flex-end;
-    `,
     formTitle: css`
       position: relative;
-
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-
       text-align: left;
 
       > div {
@@ -127,10 +117,7 @@ export const useStyles = createStyles(
       background: ${token.colorBgLayout};
     `,
     title: css`
-      display: flex;
-      gap: 8px;
       align-items: center;
-
       font-size: 16px;
       font-weight: 600;
 

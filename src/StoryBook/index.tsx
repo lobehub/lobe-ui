@@ -1,6 +1,7 @@
 import { useResponsive } from 'antd-style';
 import { LevaPanel } from 'leva';
 import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import { DivProps } from '@/types';
 
@@ -25,8 +26,16 @@ export const StoryBook = memo<StoryBookProps>(
     const { styles, cx } = useStyles(Boolean(noPadding));
 
     return (
-      <div className={cx(styles.editor, className)} {...rest}>
-        <div className={styles.left}>{children}</div>
+      <Flexbox
+        align={'stretch'}
+        className={cx(styles.editor, className)}
+        horizontal={!mobile}
+        justify={'stretch'}
+        {...rest}
+      >
+        <Flexbox align={'center'} className={styles.left} flex={1} justify={'center'}>
+          {children}
+        </Flexbox>
         <DraggablePanel
           className={styles.right}
           minWidth={280}
@@ -36,7 +45,7 @@ export const StoryBook = memo<StoryBookProps>(
             <LevaPanel fill flat store={levaStore} titleBar={false} />{' '}
           </div>
         </DraggablePanel>
-      </div>
+      </Flexbox>
     );
   },
 );

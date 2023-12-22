@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import CopyButton from '@/CopyButton';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
@@ -52,13 +53,19 @@ const Snippet = memo<SnippetProps>(
     const { styles, cx } = useStyles(type);
 
     return (
-      <div className={cx(styles.container, className)} {...rest}>
+      <Flexbox
+        align={'center'}
+        className={cx(styles.container, className)}
+        gap={8}
+        horizontal
+        {...rest}
+      >
         {spotlight && <Spotlight />}
         <SyntaxHighlighter language={language}>
           {[symbol, children].filter(Boolean).join(' ')}
         </SyntaxHighlighter>
         {copyable && <CopyButton content={children} size={{ blockSize: 24, fontSize: 14 }} />}
-      </div>
+      </Flexbox>
     );
   },
 );

@@ -1,11 +1,6 @@
 import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ css, token, prefixCls, responsive }) => ({
-  footer: css`
-    display: flex;
-    gap: 8px;
-    justify-content: flex-end;
-  `,
   form: css`
     display: flex;
     flex-direction: column;

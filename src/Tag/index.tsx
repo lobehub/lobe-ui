@@ -9,6 +9,7 @@ const useStyles = createStyles(({ cx, css, token }) => ({
     line-height: 1;
   `,
   tag: cx(css`
+    user-select: none;
     color: ${token.colorTextSecondary} !important;
     background: ${token.colorFillSecondary};
     border: ${token.borderRadius}px;

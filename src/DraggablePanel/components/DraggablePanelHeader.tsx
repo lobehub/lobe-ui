@@ -1,6 +1,7 @@
 import { ActionIcon } from '@lobehub/ui';
 import { PanelLeft, Pin, PinOff } from 'lucide-react';
 import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
 import { type DivProps } from '@/types';
@@ -40,11 +41,19 @@ const DraggablePanelHeader = memo<DraggablePanelHeaderProps>((props) => {
     />
   );
   return (
-    <div className={cx(styles.header, className)} {...rest}>
+    <Flexbox
+      align={'center'}
+      className={cx(styles.header, className)}
+      flex={'none'}
+      gap={8}
+      horizontal
+      justify={'space-between'}
+      {...rest}
+    >
       {position === 'left' ? panelIcon : pinIcon}
       {title}
       {position === 'left' ? pinIcon : panelIcon}
-    </div>
+    </Flexbox>
   );
 });
 

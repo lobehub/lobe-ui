@@ -8,10 +8,7 @@ export const useStyles = createStyles(
         css`
           position: relative;
 
-          display: flex;
           flex: none;
-          align-items: center;
-          justify-content: center;
 
           color: ${active ? token.colorText : token.colorTextTertiary};
 

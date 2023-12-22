@@ -57,7 +57,7 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
   const ButtonGroups = useCallback(
     () =>
       Boolean(actions?.length) && (
-        <div className={styles.actions}>
+        <Flexbox className={styles.actions} gap={24} horizontal justify={'center'}>
           {actions!.map(({ text, link, openExternal, icon, type }, index) => {
             // @ts-ignore
             const ButtonIcon = icon && LucideIcon[icon];
@@ -92,7 +92,7 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
               </a>
             );
           })}
-        </div>
+        </Flexbox>
       ),
     [actions],
   );

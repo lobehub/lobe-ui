@@ -2,6 +2,7 @@ import { ActionIcon, ActionIconProps, Icon, Spotlight } from '@lobehub/ui';
 import { Dropdown } from 'antd';
 import { type LucideIcon, MoreHorizontal } from 'lucide-react';
 import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import { DivProps } from '@/types';
 
@@ -63,12 +64,12 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
     onActionClick,
     ...rest
   }) => {
-    const { styles } = useStyles({ direction, type });
+    const { styles } = useStyles({ type });
 
     const tooltipsPlacement = placement || (direction === 'column' ? 'right' : 'top');
 
     return (
-      <div className={styles.container} {...rest}>
+      <Flexbox className={styles.container} horizontal={direction === 'row'} {...rest}>
         {spotlight && <Spotlight />}
         {items?.length > 0 &&
           items.map((item) => (
@@ -114,7 +115,7 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
             />
           </Dropdown>
         )}
-      </div>
+      </Flexbox>
     );
   },
 );

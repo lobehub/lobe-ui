@@ -12,7 +12,6 @@ export default () => {
   return (
     <StoryBook levaStore={store} noPadding>
       <ChatHeader {...control} left={<div>Left</div>} right={<div>Right</div>} />
-      <div style={{ height: 100 }} />
     </StoryBook>
   );
 };

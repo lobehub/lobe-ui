@@ -1,26 +1,18 @@
 import { Layout } from '@lobehub/ui';
-import styled from 'styled-components';
+import { createStyles } from 'antd-style';
+import { Flexbox } from 'react-layout-kit';
 
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  height: 100%;
-
-  background: ${({ theme }) => theme.cyan5A};
-  border-bottom: 1px solid ${({ theme }) => theme.colorBorder};
-`;
-
-const Footer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  height: 36px;
-
-  border-top: 1px solid ${({ theme }) => theme.colorBorder};
-`;
+const useStyles = createStyles(({ css, token }) => ({
+  footer: css`
+    height: 36px;
+    border-top: 1px solid ${token.colorBorder};
+  `,
+  header: css`
+    height: 100%;
+    background: ${token.cyan5A};
+    border-bottom: 1px solid ${token.colorBorder};
+  `,
+}));
 
 const MockData = ({ text }: { text: string }) =>
   Array.from({ length: 50 })
@@ -28,11 +20,20 @@ const MockData = ({ text }: { text: string }) =>
     .map((_, index) => <div key={index}>{text}</div>);
 
 export default () => {
+  const { styles } = useStyles();
   return (
     <div style={{ height: 400, overflow: 'auto' }}>
       <Layout
-        footer={<Footer>FOOTER</Footer>}
-        header={<Header>HEADER</Header>}
+        footer={
+          <Flexbox align={'center'} className={styles.footer} justify={'center'}>
+            FOOTER
+          </Flexbox>
+        }
+        header={
+          <Flexbox align={'center'} className={styles.header} justify={'center'}>
+            HEADER
+          </Flexbox>
+        }
         sidebar={<MockData text="SIDEBAR" />}
         toc={'TOC'}
       >

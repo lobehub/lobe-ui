@@ -1,19 +1,22 @@
 import { Spotlight, SpotlightProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
-import styled from 'styled-components';
+import { createStyles } from 'antd-style';
 
-const Card = styled.div`
-  position: relative;
+const useStyles = createStyles(({ css, token }) => ({
+  card: css`
+    position: relative;
 
-  width: 100%;
-  height: 36px;
+    width: 100%;
+    height: 36px;
 
-  background: ${({ theme }) => theme.colorBgLayout};
-  border: 1px solid ${({ theme }) => theme.colorBorder};
-  border-radius: ${({ theme }) => theme.borderRadius}px;
-`;
+    background: ${token.colorBgLayout};
+    border: 1px solid ${token.colorBorder};
+    border-radius: ${token.borderRadius}px;
+  `,
+}));
 
 export default () => {
   const store = useCreateStore();
+  const { styles } = useStyles();
   const control: SpotlightProps | any = useControls(
     {
       size: 64,
@@ -23,9 +26,9 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Card>
+      <div className={styles.card}>
         <Spotlight {...control} />
-      </Card>
+      </div>
     </StoryBook>
   );
 };

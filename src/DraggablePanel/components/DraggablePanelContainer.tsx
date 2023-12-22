@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import { type DivProps } from '@/types';
 
@@ -8,7 +9,7 @@ export type DraggablePanelContainerProps = DivProps;
 
 const DraggablePanelContainer = memo<DraggablePanelContainerProps>(({ className, ...rest }) => {
   const { cx, styles } = useStyles();
-  return <div className={cx(styles.container, className)} {...rest} />;
+  return <Flexbox className={cx(styles.container, className)} {...rest} />;
 });
 
 export default DraggablePanelContainer;

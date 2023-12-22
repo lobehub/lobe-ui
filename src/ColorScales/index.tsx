@@ -1,5 +1,6 @@
 import { Space } from 'antd';
 import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import { ColorScaleItem } from '@/styles/colors/colors';
 
@@ -25,11 +26,11 @@ const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
   const { styles } = useStyles();
 
   return (
-    <div className={styles.view}>
+    <Flexbox align={'center'} flex={1} horizontal justify={'center'}>
       <div style={{ padding: '8px 16px 32px 0' }}>
         <Space direction={'vertical'} size={2}>
           <Space key="scale-title" size={2}>
-            <div className={styles.scaleRowTitle} key="scale-num" />
+            <Flexbox align={'center'} className={styles.scaleRowTitle} horizontal key="scale-num" />
             {Array.from({ length: scale.light.length })
               .fill('')
               .map((_, index) => {
@@ -40,15 +41,18 @@ const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
                 return (
                   <div className={styles.scaleBox} key={`num${index}`}>
                     <div className={styles.scaleBox}>
-                      <div
+                      <Flexbox
+                        align={'center'}
                         className={styles.scaleItem}
+                        horizontal
+                        justify={'center'}
                         style={{
                           fontWeight: isMidHighlight ? 700 : 400,
                           opacity: 0.5,
                         }}
                       >
                         {index}
-                      </div>
+                      </Flexbox>
                     </div>
                   </div>
                 );
@@ -60,7 +64,7 @@ const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
           <ScaleRow key="darkA" name={name} scale={scale.darkA} title="darkA" />
         </Space>
       </div>
-    </div>
+    </Flexbox>
   );
 });
 

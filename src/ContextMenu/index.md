@@ -7,7 +7,7 @@ description: The ContextMenu component is used to display a contextual menu. It 
 
 ## Default
 
-<code src="./demos/index.tsx" center></code>
+<code src="./demos/index.tsx" center nopadding></code>
 
 ## APIs
 

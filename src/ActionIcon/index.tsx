@@ -1,5 +1,6 @@
 import { Loader2 } from 'lucide-react';
 import { forwardRef, useMemo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import Icon, { type IconProps, type IconSizeConfig, type IconSizeType } from '@/Icon';
 import Spotlight from '@/Spotlight';
@@ -111,8 +112,10 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
     const spin = <Icon icon={Loader2} {...iconProps} spin />;
 
     const actionIconBlock = (
-      <div
+      <Flexbox
+        align={'center'}
         className={cx(styles.block, disable ? styles.disabled : styles.normal, className)}
+        justify={'center'}
         onClick={loading || disable ? undefined : onClick}
         ref={ref}
         style={{ borderRadius, height: blockSize, width: blockSize, ...style }}
@@ -121,7 +124,7 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
         {spotlight && <Spotlight />}
         {loading ? spin : content}
         {children}
-      </div>
+      </Flexbox>
     );
 
     if (!title) return actionIconBlock;

@@ -90,7 +90,7 @@ const MessageModal = memo<MessageModalProps>(
         onOk={() => setTyping(true)}
         open={expand}
         styles={mobile ? { body: { padding: 16 } } : {}}
-        title={text?.title}
+        title={text?.title || ' '}
       >
         {isEdit ? (
           <MessageInput

@@ -6,18 +6,11 @@ import {
   TokenTag,
 } from '@lobehub/ui';
 import { Eraser, Languages } from 'lucide-react';
-import styled from 'styled-components';
-
-const View = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 400px;
-`;
+import { Flexbox } from 'react-layout-kit';
 
 export default () => {
   return (
-    <View>
+    <Flexbox style={{ height: 400, position: 'relative' }}>
       <div style={{ flex: 1 }}></div>
       <ChatInputArea
         bottomAddons={<ChatSendButton />}
@@ -33,6 +26,6 @@ export default () => {
           />
         }
       />
-    </View>
+    </Flexbox>
   );
 };

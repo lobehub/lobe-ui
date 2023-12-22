@@ -1,6 +1,7 @@
 import { Space, message } from 'antd';
 import copy from 'copy-to-clipboard';
 import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import { alphaBg, useStyles } from './style';
 
@@ -53,7 +54,13 @@ const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
             style={style}
             title={color}
           >
-            <div className={styles.scaleItem} style={{ backgroundColor: color }} />
+            <Flexbox
+              align={'center'}
+              className={styles.scaleItem}
+              horizontal
+              justify={'center'}
+              style={{ backgroundColor: color }}
+            />
           </div>
         );
       })}

@@ -39,8 +39,6 @@ export const useStyles = createStyles(
       position: relative;
 
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
 
       width: 100%;
 

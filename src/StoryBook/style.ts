@@ -3,24 +3,11 @@ import { createStyles } from 'antd-style';
 export const useStyles = createStyles(({ css, token, responsive }, noPadding: boolean) => {
   return {
     editor: css`
-      display: flex;
-      align-items: stretch;
-      justify-content: stretch;
-
       width: inherit;
       min-height: inherit;
-
-      ${responsive.mobile} {
-        flex-direction: column;
-      }
     `,
     left: css`
       overflow: auto;
-      display: flex;
-      flex: 1;
-      align-items: center;
-      justify-content: center;
-
       position: relative;
 
       ${!noPadding &&

@@ -13,9 +13,6 @@ export const useStyles = createStyles(({ css, cx, token, prefixCls }, type: 'gho
         position: relative;
 
         overflow: hidden;
-        display: flex;
-        gap: 8px;
-        align-items: center;
 
         max-width: 100%;
         height: 38px;

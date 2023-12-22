@@ -24,7 +24,13 @@ const SideNav = memo<SideNavProps>(({ className, avatar, topActions, bottomActio
   const { styles, cx } = useStyles();
 
   return (
-    <div className={cx(styles, className)} {...rest}>
+    <Flexbox
+      align={'center'}
+      className={cx(styles, className)}
+      flex={'none'}
+      justify={'space-between'}
+      {...rest}
+    >
       <Flexbox align="center" direction="vertical" gap={16}>
         {avatar}
         <Flexbox align="center" direction="vertical" gap={8}>
@@ -34,7 +40,7 @@ const SideNav = memo<SideNavProps>(({ className, avatar, topActions, bottomActio
       <Flexbox align="center" direction="vertical" gap={4}>
         {bottomActions}
       </Flexbox>
-    </div>
+    </Flexbox>
   );
 });
 

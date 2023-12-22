@@ -15,13 +15,13 @@ const SpotlightCardItem = memo<SpotlightCardItemProps>(
     const { styles, cx } = useStyles({ borderRadius, size });
 
     return (
-      <div
+      <Flexbox
         className={cx(styles.itemContainer, className)}
         style={{ borderRadius, ...style }}
         {...rest}
       >
         <Flexbox className={styles.content}>{children}</Flexbox>
-      </div>
+      </Flexbox>
     );
   },
 );

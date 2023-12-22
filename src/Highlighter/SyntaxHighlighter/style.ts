@@ -12,10 +12,6 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) =
         top: 0;
         right: 0;
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
         height: 34px;
         padding: 0 8px;
 

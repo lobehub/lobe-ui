@@ -102,12 +102,18 @@ const Header = memo<HeaderProps>(
               >
                 {nav}
               </Flexbox>
-              <section className={cx(styles.right, actionsClassName)} style={actionsStyle}>
+              <Flexbox
+                className={cx(styles.right, actionsClassName)}
+                flex={1}
+                horizontal
+                justify={'space-between'}
+                style={actionsStyle}
+              >
                 <div />
                 <Flexbox align={'center'} gap={8} horizontal>
                   {actions}
                 </Flexbox>
-              </section>
+              </Flexbox>
             </>
           )}
         </Flexbox>

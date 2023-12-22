@@ -1,7 +1,7 @@
 import { useThemeMode } from 'antd-style';
 import { Loader2 } from 'lucide-react';
 import { memo } from 'react';
-import { Center } from 'react-layout-kit';
+import { Flexbox } from 'react-layout-kit';
 
 import Icon from '@/Icon';
 import { useHighlight } from '@/hooks/useHighlight';
@@ -39,10 +39,16 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
           />
         )}
         {isLoading && (
-          <Center className={styles.loading} gap={8} horizontal>
+          <Flexbox
+            align={'center'}
+            className={styles.loading}
+            gap={8}
+            horizontal
+            justify={'center'}
+          >
             <Icon icon={Loader2} spin />
             Highlighting...
-          </Center>
+          </Flexbox>
         )}
       </>
     );
