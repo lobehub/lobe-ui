@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [Version 1.122.0](https://github.com/lobehub/lobe-ui/compare/v1.121.0...v1.122.0)
+
+<sup>Released on **2023-12-22**</sup>
+
+#### ✨ Features
+
+- **misc**: Add GaussianBackground.
+
+#### 💄 Styles
+
+- **misc**: Remove styled-components and dayjs locales define.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add GaussianBackground ([62a5eac](https://github.com/lobehub/lobe-ui/commit/62a5eac))
+
+#### Styles
+
+- **misc**: Remove styled-components and dayjs locales define ([c917ec5](https://github.com/lobehub/lobe-ui/commit/c917ec5))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.121.0](https://github.com/lobehub/lobe-ui/compare/v1.120.16...v1.121.0)
 
 <sup>Released on **2023-12-19**</sup>
