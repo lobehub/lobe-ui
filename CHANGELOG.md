@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.122.2](https://github.com/lobehub/lobe-ui/compare/v1.122.1...v1.122.2)
+
+<sup>Released on **2023-12-22**</sup>
+
+#### 💄 Styles
+
+- **misc**: Rename Form itemsType.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Rename Form itemsType ([cdf4d2c](https://github.com/lobehub/lobe-ui/commit/cdf4d2c))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.122.1](https://github.com/lobehub/lobe-ui/compare/v1.122.0...v1.122.1)
 
 <sup>Released on **2023-12-22**</sup>
