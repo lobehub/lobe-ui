@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.123.0](https://github.com/lobehub/lobe-ui/compare/v1.122.2...v1.123.0)
+
+<sup>Released on **2023-12-22**</sup>
+
+#### ✨ Features
+
+- **misc**: Use memo wrapper in markdown.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Use memo wrapper in markdown ([6db3b7a](https://github.com/lobehub/lobe-ui/commit/6db3b7a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.122.2](https://github.com/lobehub/lobe-ui/compare/v1.122.1...v1.122.2)
 
 <sup>Released on **2023-12-22**</sup>
