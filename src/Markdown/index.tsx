@@ -28,6 +28,13 @@ export interface MarkdownProps {
   style?: CSSProperties;
 }
 
+const MemoAlink = memo((props: any) => (
+  <Typography.Link {...props} rel="noopener noreferrer" target="_blank" />
+));
+const MemoDetails = memo((props: any) => <Collapse {...props} />);
+const MemoHr = memo(() => <Divider style={{ marginBottom: '1em', marginTop: 0 }} />);
+const MemoImage = memo((props: any) => <Image {...props} />);
+
 const Markdown = memo<MarkdownProps>(
   ({
     children,
@@ -40,10 +47,10 @@ const Markdown = memo<MarkdownProps>(
   }) => {
     const { styles } = useStyles();
     const components: Components = {
-      a: (props: any) => <Typography.Link {...props} rel="noopener noreferrer" target="_blank" />,
-      details: (props: any) => <Collapse {...props} />,
-      hr: () => <Divider style={{ marginBottom: '1em', marginTop: 0 }} />,
-      img: enableImageGallery ? (props: any) => <Image {...props} /> : undefined,
+      a: MemoAlink,
+      details: MemoDetails,
+      hr: MemoHr,
+      img: enableImageGallery ? MemoImage : undefined,
       pre: fullFeaturedCodeBlock ? CodeFullFeatured : CodeLite,
     };
 
