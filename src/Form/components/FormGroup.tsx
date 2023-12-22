@@ -6,7 +6,7 @@ import { type ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 export type FormVariant = 'default' | 'block' | 'ghost' | 'pure';
-export type ItemsType = 'tree' | 'flat';
+export type ItemsType = 'group' | 'flat';
 
 export const useStyles = createStyles(
   ({ css, cx, token, isDarkMode, responsive, prefixCls }, variant: FormVariant) => {

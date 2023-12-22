@@ -32,7 +32,7 @@ const FormParent = forwardRef<FormInstance, FormProps>(
       form,
       items = [],
       children,
-      itemsType = 'tree',
+      itemsType = 'group',
       variant = 'default',
       ...rest
     },
@@ -68,7 +68,7 @@ const FormParent = forwardRef<FormInstance, FormProps>(
         {...rest}
       >
         {items?.length > 0 ? (
-          itemsType === 'tree' ? (
+          itemsType === 'group' ? (
             (items as ItemGroup[])?.map((item, i) => mapTree(item, i))
           ) : (
             <FormGroup itemsType={'flat'} variant={variant}>
