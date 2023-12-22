@@ -13,6 +13,10 @@ description: High performance Form component with data scope management. Includi
 
 <code src="./demos/Data.tsx" center></code>
 
+## Flat Type
+
+<code src="./demos/Flat.tsx" center></code>
+
 ## APIs
 
 <API></API>

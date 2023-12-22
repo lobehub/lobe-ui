@@ -1,10 +1,34 @@
+import { createStyles } from 'antd-style';
 import { ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import Tag from '@/Tag';
 import { DivProps } from '@/types';
 
-import { useStyles } from './style';
+export const useStyles = createStyles(({ css, token, prefixCls }) => ({
+  formTitle: css`
+    position: relative;
+    text-align: left;
+
+    > div {
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    > small {
+      display: block;
+
+      line-height: 1.2;
+      color: ${token.colorTextDescription};
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+
+    .${prefixCls}-tag {
+      font-family: ${token.fontFamilyCode};
+    }
+  `,
+}));
 
 export interface FormTitleProps extends DivProps {
   avatar?: ReactNode;

@@ -97,7 +97,6 @@ export default () => {
       initialValues={setting}
       items={items}
       onFinish={console.table}
-      style={{ width: 500 }}
     />
   );
 };

@@ -1,11 +1,68 @@
 import { FormItemProps as AntdFormItemProps, Form } from 'antd';
+import { createStyles } from 'antd-style';
+import { isNumber } from 'lodash-es';
 import { memo } from 'react';
 
 import FormDivider from './FormDivider';
 import FormTitle, { type FormTitleProps } from './FormTitle';
-import { useStyles } from './style';
 
 const { Item } = Form;
+
+export const useStyles = createStyles(
+  ({ css, responsive, prefixCls }, itemMinWidth?: string | number) => ({
+    item: css`
+      padding: 16px 0;
+
+      .${prefixCls}-row {
+        justify-content: space-between;
+
+        > div {
+          flex: unset !important;
+          flex-grow: unset !important;
+        }
+      }
+
+      .${prefixCls}-form-item-required::before {
+        align-self: flex-start;
+      }
+
+      ${itemMinWidth &&
+      css`
+        .${prefixCls}-form-item-control {
+          width: ${isNumber(itemMinWidth) ? `${itemMinWidth}px` : itemMinWidth};
+        }
+      `}
+
+      ${responsive.mobile} {
+        padding: 16px 0;
+
+        ${itemMinWidth
+          ? css`
+              .${prefixCls}-row {
+                flex-direction: column;
+                gap: 4px;
+              }
+
+              .${prefixCls}-form-item-control {
+                flex: 1;
+                width: 100%;
+              }
+            `
+          : css`
+              .${prefixCls}-row {
+                flex-wrap: wrap;
+                gap: 4px;
+              }
+            `}
+      }
+    `,
+    itemNoDivider: css`
+      &:not(:first-child) {
+        padding-top: 0;
+      }
+    `,
+  }),
+);
 
 export interface FormItemProps extends AntdFormItemProps {
   avatar?: FormTitleProps['avatar'];
