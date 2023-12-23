@@ -36,9 +36,9 @@ export const usePreview = ({
     imageRender: (node) => <Preview visible={visible}>{node}</Preview>,
     maxScale,
     minScale,
-    onVisibleChange: (e) => {
-      setVisible(e);
-      onVisibleChange?.(e);
+    onVisibleChange: (visible: boolean, prevVisible: boolean, current: number) => {
+      setVisible(visible);
+      onVisibleChange?.(visible, prevVisible, current);
     },
 
     styles: { mask: { backdropFilter: 'blur(2px)' }, ...previewStyle },
