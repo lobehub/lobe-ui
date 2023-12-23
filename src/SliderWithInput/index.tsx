@@ -20,7 +20,7 @@ const SliderWithInput = memo<SliderWithInputProps>(
     defaultValue,
     size,
     controls,
-    gap,
+    gap = 16,
     style,
     className,
     disabled,
@@ -36,7 +36,7 @@ const SliderWithInput = memo<SliderWithInputProps>(
         align={'center'}
         className={className}
         direction={'horizontal'}
-        gap={gap ?? 8}
+        gap={gap}
         style={style}
       >
         <Slider

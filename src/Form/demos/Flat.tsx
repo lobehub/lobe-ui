@@ -33,11 +33,20 @@ const items: FormProps['items'] = [
     children: <Switch />,
     desc: 'Reduce the blur effect and background flow color, which can improve smoothness and save CPU usage',
     label: 'Reduce Animation',
+    minWidth: undefined,
     name: 'liteAnimation',
     valuePropName: 'checked',
   },
 ];
 
 export default () => {
-  return <Form initialValues={setting} items={items} itemsType={'flat'} onFinish={console.table} />;
+  return (
+    <Form
+      initialValues={setting}
+      itemMinWidth={'max(30%,240px)'}
+      items={items}
+      itemsType={'flat'}
+      onFinish={console.table}
+    />
+  );
 };

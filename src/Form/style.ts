@@ -35,15 +35,14 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
 
     .${prefixCls}-form-item-row {
       align-items: center;
+      ${responsive.mobile} {
+        align-items: stretch;
+      }
     }
 
     .${prefixCls}-form-item-control {
       position: relative;
-
-      display: flex;
       flex: 0;
-      align-items: center;
-
       min-width: unset !important;
     }
 

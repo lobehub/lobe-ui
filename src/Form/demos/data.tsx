@@ -1,16 +1,9 @@
-import { Form, type FormProps } from '@lobehub/ui';
-import { Button, InputNumber, Segmented, Select, Switch } from 'antd';
+import { InputNumber, Segmented, Select, Switch } from 'antd';
 import { Palette, PanelLeftClose } from 'lucide-react';
 
-const setting = {
-  i18n: 'en',
-  liteAnimation: false,
-  sidebarExpand: true,
-  sidebarFixedMode: 'float',
-  sidebarWidth: 300,
-};
+import { FormProps } from '@/Form';
 
-const items: FormProps['items'] = [
+export const items: FormProps['items'] = [
   {
     children: [
       {
@@ -36,6 +29,7 @@ const items: FormProps['items'] = [
         children: <Switch />,
         desc: 'Reduce the blur effect and background flow color, which can improve smoothness and save CPU usage',
         label: 'Reduce Animation',
+        minWidth: undefined,
         name: 'liteAnimation',
         valuePropName: 'checked',
       },
@@ -49,6 +43,7 @@ const items: FormProps['items'] = [
         children: <Switch />,
         desc: 'Whether to expand the sidebar by default when starting',
         label: 'Default Expand',
+        minWidth: undefined,
         name: 'sidebarExpand',
         valuePropName: 'checked',
       },
@@ -69,12 +64,14 @@ const items: FormProps['items'] = [
         ),
         desc: 'Fixed as grid mode for constant display, auto-expand when the mouse moves to the side in floating mode',
         label: 'Display Mode',
+        minWidth: undefined,
         name: 'sidebarFixedMode',
       },
       {
         children: <InputNumber />,
         desc: 'Default width of the sidebar when starting',
         label: 'Default Width',
+        minWidth: undefined,
         name: 'sidebarWidth',
       },
     ],
@@ -82,21 +79,3 @@ const items: FormProps['items'] = [
     title: 'Quick Setting Sidebar',
   },
 ];
-
-export default () => {
-  return (
-    <Form
-      footer={
-        <>
-          <Button htmlType="button">Reset</Button>
-          <Button htmlType="submit" type="primary">
-            Submit
-          </Button>
-        </>
-      }
-      initialValues={setting}
-      items={items}
-      onFinish={console.table}
-    />
-  );
-};

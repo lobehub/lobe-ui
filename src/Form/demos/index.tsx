@@ -1,6 +1,7 @@
-import { Form, FormFooter, FormGroup, FormItem } from '@lobehub/ui';
-import { Button, InputNumber, Segmented, Select, Switch } from 'antd';
-import { Palette, PanelLeftClose } from 'lucide-react';
+import { Form, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import { Button } from 'antd';
+
+import { items } from '@/Form/demos/data';
 
 const setting = {
   i18n: 'en',
@@ -11,80 +12,35 @@ const setting = {
 };
 
 export default () => {
+  const store = useCreateStore();
+
+  const { variant }: any = useControls(
+    {
+      variant: {
+        options: ['default', 'block', 'ghost', 'pure'],
+        value: 'default',
+      },
+    },
+    { store },
+  );
+
   return (
-    <Form initialValues={setting} onFinish={console.table}>
-      <FormGroup icon={Palette} title={'Theme Settings'}>
-        <FormItem desc={'Editor language'} label={'Language'} name="i18n">
-          <Select
-            options={[
-              {
-                label: 'English',
-                value: 'en',
-              },
-              {
-                label: '简体中文',
-                value: 'zh_CN',
-              },
-            ]}
-          />
-        </FormItem>
-        <FormItem
-          desc={
-            'Reduce the blur effect and background flow color, which can improve smoothness and save CPU usage'
-          }
-          divider
-          label={'Reduce Animation'}
-          name="liteAnimation"
-          valuePropName="checked"
-        >
-          <Switch />
-        </FormItem>
-      </FormGroup>
-      <FormGroup icon={PanelLeftClose} title={'Quick Setting Sidebar'}>
-        <FormItem
-          desc={'Whether to expand the sidebar by default when starting'}
-          label={'Default Expand'}
-          name="sidebarExpand"
-          valuePropName="checked"
-        >
-          <Switch />
-        </FormItem>
-        <FormItem
-          desc={
-            'Fixed as grid mode for constant display, auto-expand when the mouse moves to the side in floating mode'
-          }
-          divider
-          label={'Display Mode'}
-          name="sidebarFixedMode"
-        >
-          <Segmented
-            options={[
-              {
-                label: 'Fixed',
-                value: 'fixed',
-              },
-              {
-                label: 'Float',
-                value: 'float',
-              },
-            ]}
-          />
-        </FormItem>
-        <FormItem
-          desc={'Default width of the sidebar when starting'}
-          divider
-          label={'Default Width'}
-          name="sidebarWidth"
-        >
-          <InputNumber />
-        </FormItem>
-      </FormGroup>
-      <FormFooter>
-        <Button htmlType="button">Reset</Button>
-        <Button htmlType="submit" type="primary">
-          Submit
-        </Button>
-      </FormFooter>
-    </Form>
+    <StoryBook levaStore={store}>
+      <Form
+        footer={
+          <>
+            <Button htmlType="button">Reset</Button>
+            <Button htmlType="submit" type="primary">
+              Submit
+            </Button>
+          </>
+        }
+        initialValues={setting}
+        itemMinWidth={'max(30%,240px)'}
+        items={items}
+        onFinish={console.table}
+        variant={variant}
+      />
+    </StoryBook>
   );
 };
