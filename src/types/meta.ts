@@ -1,9 +1,11 @@
+import { type ReactNode } from 'react';
+
 export interface MetaData {
   /**
    * 角色头像
    * @description 可选参数，如果不传则使用默认头像
    */
-  avatar?: string;
+  avatar?: string | ReactNode;
   /**
    *  背景色
    * @description 可选参数，如果不传则使用默认背景色
