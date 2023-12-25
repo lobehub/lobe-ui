@@ -83,6 +83,7 @@ export const useStyles = createStyles(
           `,
         css`
           overflow: hidden;
+          flex: none;
 
           .${prefixCls}-collapse-item {
             border: none;
