@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.124.0](https://github.com/lobehub/lobe-ui/compare/v1.123.1...v1.124.0)
+
+<sup>Released on **2023-12-25**</sup>
+
+#### ✨ Features
+
+- **misc**: Avatar supports ReactNode.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Avatar supports ReactNode ([e93b196](https://github.com/lobehub/lobe-ui/commit/e93b196))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.123.1](https://github.com/lobehub/lobe-ui/compare/v1.123.0...v1.123.1)
 
 <sup>Released on **2023-12-23**</sup>
