@@ -1,5 +1,5 @@
 import { Avatar as AntAvatar, type AvatarProps as AntAvatarProps } from 'antd';
-import { memo, useMemo } from 'react';
+import { type ReactNode, isValidElement, memo, useMemo } from 'react';
 
 import FluentEmoji from '@/FluentEmoji';
 import { getEmoji } from '@/utils/getEmojiByCharacter';
@@ -11,7 +11,7 @@ export interface AvatarProps extends AntAvatarProps {
   /**
    * @description The URL or base64 data of the avatar image
    */
-  avatar?: string;
+  avatar?: string | ReactNode;
   /**
    * @description The background color of the avatar
    */
@@ -44,15 +44,21 @@ const Avatar = memo<AvatarProps>(
     style,
     ...rest
   }) => {
-    const isImage = Boolean(
-      avatar && ['/', 'http', 'data:'].some((index) => avatar.startsWith(index)),
+    const isStringAvatar = typeof avatar === 'string';
+    const isDefaultAntAvatar = Boolean(
+      avatar &&
+        (['/', 'http', 'data:'].some((index) => isStringAvatar && avatar.startsWith(index)) ||
+          isValidElement(avatar)),
     );
 
-    const emoji = useMemo(() => avatar && !isImage && getEmoji(avatar), [avatar]);
+    const emoji = useMemo(
+      () => avatar && !isDefaultAntAvatar && isStringAvatar && getEmoji(avatar),
+      [avatar],
+    );
 
     const { styles, cx } = useStyles({ background, isEmoji: Boolean(emoji), size });
 
-    const text = String(isImage ? title : avatar);
+    const text = String(isDefaultAntAvatar ? title : avatar);
 
     const avatarProps = {
       className: cx(styles.avatar, className),
@@ -62,7 +68,7 @@ const Avatar = memo<AvatarProps>(
       ...rest,
     };
 
-    return isImage ? (
+    return isDefaultAntAvatar ? (
       <AntAvatar src={avatar} {...avatarProps} />
     ) : (
       <AntAvatar {...avatarProps}>
