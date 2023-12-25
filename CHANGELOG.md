@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.124.1](https://github.com/lobehub/lobe-ui/compare/v1.124.0...v1.124.1)
+
+<sup>Released on **2023-12-25**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix form flex.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix form flex ([e74f274](https://github.com/lobehub/lobe-ui/commit/e74f274))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.124.0](https://github.com/lobehub/lobe-ui/compare/v1.123.1...v1.124.0)
 
 <sup>Released on **2023-12-25**</sup>
