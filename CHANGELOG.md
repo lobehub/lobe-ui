@@ -2,6 +2,49 @@
 
 # Changelog
 
+## [Version 1.125.0](https://github.com/lobehub/lobe-ui/compare/v1.124.2...v1.125.0)
+
+<sup>Released on **2023-12-26**</sup>
+
+#### ✨ Features
+
+- **misc**: Update Modal components.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix type, Lock @types/react, Refactor Modal component to handle dynamic content height.
+
+#### 💄 Styles
+
+- **misc**: Update Modal and Form style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update Modal components ([2ad18c4](https://github.com/lobehub/lobe-ui/commit/2ad18c4))
+
+#### What's fixed
+
+- **misc**: Fix type ([9f2de1f](https://github.com/lobehub/lobe-ui/commit/9f2de1f))
+- **misc**: Lock @types/react ([7841e80](https://github.com/lobehub/lobe-ui/commit/7841e80))
+- **misc**: Refactor Modal component to handle dynamic content height ([5b79dfd](https://github.com/lobehub/lobe-ui/commit/5b79dfd))
+
+#### Styles
+
+- **misc**: Update Modal and Form style ([34de436](https://github.com/lobehub/lobe-ui/commit/34de436))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.124.2](https://github.com/lobehub/lobe-ui/compare/v1.124.1...v1.124.2)
 
 <sup>Released on **2023-12-26**</sup>
