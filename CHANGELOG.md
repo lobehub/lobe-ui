@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.124.2](https://github.com/lobehub/lobe-ui/compare/v1.124.1...v1.124.2)
+
+<sup>Released on **2023-12-26**</sup>
+
+#### 💄 Styles
+
+- **misc**: Add props to Burger add ActionIcon.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Add props to Burger add ActionIcon ([eba50fa](https://github.com/lobehub/lobe-ui/commit/eba50fa))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.124.1](https://github.com/lobehub/lobe-ui/compare/v1.124.0...v1.124.1)
 
 <sup>Released on **2023-12-25**</sup>
