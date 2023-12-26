@@ -23,9 +23,9 @@ export default () => {
         Open Modal
       </Button>
       <Modal onCancel={handleCancel} onOk={handleOk} open={isModalOpen} title="Basic Modal">
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
+        {Array.from({ length: 20 }).map((_, index) => (
+          <p key={index}>Some contents...</p>
+        ))}
       </Modal>
     </>
   );

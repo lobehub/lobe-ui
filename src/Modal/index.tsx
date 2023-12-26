@@ -7,10 +7,11 @@ import { memo } from 'react';
 import ActionIcon from '@/ActionIcon';
 import Icon from '@/Icon';
 
-const useStyles = createStyles(({ css, token, prefixCls }) => ({
+const useStyles = createStyles(({ css, token, prefixCls }, props: { maxHeight: string }) => ({
   content: css`
     .${prefixCls}-modal-body {
-      overflow: hidden;
+      overflow: scroll;
+      max-height: ${props.maxHeight};
       padding: 0 16px 16px;
     }
     .${prefixCls}-modal-footer {
@@ -38,7 +39,9 @@ const useStyles = createStyles(({ css, token, prefixCls }) => ({
   `,
 }));
 
-export type ModalProps = AntModalProps;
+export type ModalProps = AntModalProps & {
+  maxHeight?: string;
+};
 
 const Modal = memo<ModalProps>(
   ({
@@ -50,10 +53,11 @@ const Modal = memo<ModalProps>(
     onCancel,
     open,
     destroyOnClose,
+    maxHeight = 'calc(70vh - 108px)', // or none; 108px = header + footer height;
     ...rest
   }) => {
     const { mobile } = useResponsive();
-    const { styles, cx, theme } = useStyles();
+    const { styles, cx, theme } = useStyles({ maxHeight });
 
     if (mobile)
       return (
