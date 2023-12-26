@@ -2,7 +2,12 @@ import { Loader2 } from 'lucide-react';
 import { forwardRef, useMemo } from 'react';
 import { Flexbox, type FlexboxProps } from 'react-layout-kit';
 
-import Icon, { type IconProps, type IconSizeConfig, type IconSizeType } from '@/Icon';
+import Icon, {
+  type IconProps,
+  type IconSizeConfig,
+  type IconSizeType,
+  LucideIconProps,
+} from '@/Icon';
 import Spotlight from '@/Spotlight';
 import Tooltip, { type TooltipProps } from '@/Tooltip';
 
@@ -18,7 +23,7 @@ type ActionIconSizeType = 'site' | IconSizeType;
 
 export type ActionIconSize = ActionIconSizeType | ActionIconSizeConfig;
 
-export interface ActionIconProps extends Omit<IconProps, 'size' | 'icon'>, FlexboxProps {
+export interface ActionIconProps extends LucideIconProps, FlexboxProps {
   /**
    * @description Whether the icon is active or not
    * @default false
@@ -52,6 +57,7 @@ export interface ActionIconProps extends Omit<IconProps, 'size' | 'icon'>, Flexb
    * @default 'normal'
    */
   size?: ActionIconSize;
+  spin?: boolean;
   /**
    * @description Whether add spotlight background
    * @default false

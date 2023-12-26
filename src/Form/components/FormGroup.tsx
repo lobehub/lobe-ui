@@ -1,9 +1,10 @@
-import { Icon, type IconProps } from '@lobehub/ui';
 import { Collapse, type CollapseProps } from 'antd';
 import { createStyles, useResponsive } from 'antd-style';
 import { ChevronDown } from 'lucide-react';
 import { type ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
+
+import Icon, { type IconProps } from '@/Icon';
 
 export type FormVariant = 'default' | 'block' | 'ghost' | 'pure';
 export type ItemsType = 'group' | 'flat';
@@ -110,7 +111,9 @@ export const useStyles = createStyles(
       icon: css`
         transition: all 100ms ${token.motionEaseOut};
       `,
-
+      mobileFlatGroup: css`
+        border-radius: ${token.borderRadiusLG}px;
+      `,
       mobileGroupBody: css`
         padding: 0 16px;
         background: ${token.colorBgContainer};
@@ -173,8 +176,8 @@ const FormGroup = memo<FormGroupProps>(
     if (itemsType === 'flat') {
       if (mobile)
         return (
-          <Flexbox className={className}>
-            <div className={styles.mobileGroupBody}>{children}</div>
+          <Flexbox className={cx(styles.mobileFlatGroup, styles.mobileGroupBody, className)}>
+            {children}
           </Flexbox>
         );
       return <Flexbox className={cx(styles.flatGroup, className)}>{children}</Flexbox>;

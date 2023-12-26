@@ -1,49 +1,25 @@
-import { Button, ButtonProps } from 'antd';
-import { type CSSProperties, memo, useState } from 'react';
+import { ButtonProps } from 'antd';
+import { type CSSProperties, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
+import useMergeState from 'use-merge-value';
 
 import { TextArea } from '@/Input';
 import { type TextAreaProps } from '@/Input';
 import { DivProps } from '@/types';
 
+import MessageInputFooter, { type MessageInputFooterProps } from './MessageInputFooter';
 import { useStyles } from './style';
 
-export interface MessageInputProps extends DivProps {
-  /**
-   * @description Additional className to apply to the component.
-   */
+export interface MessageInputProps extends MessageInputFooterProps, DivProps {
   className?: string;
   classNames?: TextAreaProps['classNames'];
-  /**
-   * @description The default value of the input box.
-   */
   defaultValue?: string;
   editButtonSize?: ButtonProps['size'];
   height?: number | 'auto' | string;
-  /**
-   * @description Callback function triggered when user clicks on the cancel button.
-   */
-  onCancel?: () => void;
-
-  /**
-   * @description Callback function triggered when user clicks on the confirm button.
-   * @param text - The text input by the user.
-   */
-  onConfirm?: (text: string) => void;
-  /**
-   * @description Custom rendering of the bottom buttons.
-   * @param text - The text input by the user.
-   */
-  renderButtons?: (text: string) => ButtonProps[];
-  text?: {
-    cancel?: string;
-    confirm?: string;
-  };
+  setTemporarySystemRole?: (value: string) => void;
+  showFooter?: boolean;
   textareaClassname?: string;
   textareaStyle?: CSSProperties;
-  /**
-   * @description The type of the input box.
-   */
   type?: TextAreaProps['type'];
 }
 
@@ -61,10 +37,15 @@ const MessageInput = memo<MessageInputProps>(
     height = 'auto',
     style,
     editButtonSize = 'middle',
+    showFooter = true,
     classNames,
+    setTemporarySystemRole,
     ...rest
   }) => {
-    const [temporarySystemRole, setRole] = useState<string>(defaultValue || '');
+    const [role, setRole] = useMergeState(defaultValue || '', {
+      defaultValue,
+      onChange: setTemporarySystemRole,
+    });
     const { cx, styles } = useStyles();
 
     const isAutoSize = height === 'auto';
@@ -81,30 +62,18 @@ const MessageInput = memo<MessageInputProps>(
           resize={false}
           style={{ height: isAutoSize ? 'unset' : height, minHeight: '100%', ...textareaStyle }}
           type={type}
-          value={temporarySystemRole}
+          value={role}
         />
-        <Flexbox direction={'horizontal-reverse'} gap={8}>
-          {renderButtons ? (
-            renderButtons(temporarySystemRole).map((buttonProps, index) => (
-              <Button key={index} size="small" {...buttonProps} />
-            ))
-          ) : (
-            <>
-              <Button
-                onClick={() => {
-                  onConfirm?.(temporarySystemRole);
-                }}
-                size={editButtonSize}
-                type="primary"
-              >
-                {text?.confirm || 'Confirm'}
-              </Button>
-              <Button onClick={onCancel} size={editButtonSize}>
-                {text?.cancel || 'Cancel'}
-              </Button>
-            </>
-          )}
-        </Flexbox>
+        {showFooter && (
+          <MessageInputFooter
+            editButtonSize={editButtonSize}
+            onCancel={onCancel}
+            onConfirm={onConfirm}
+            renderButtons={renderButtons}
+            temporarySystemRole={role}
+            text={text}
+          />
+        )}
       </Flexbox>
     );
   },

@@ -1,9 +1,11 @@
-import { ActionIcon, ActionIconProps, Icon, Spotlight } from '@lobehub/ui';
 import { Dropdown } from 'antd';
 import { type LucideIcon, MoreHorizontal } from 'lucide-react';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import ActionIcon, { type ActionIconProps } from '@/ActionIcon';
+import Icon from '@/Icon';
+import Spotlight from '@/Spotlight';
 import { DivProps } from '@/types';
 
 import { useStyles } from './style';

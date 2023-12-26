@@ -1,10 +1,11 @@
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
-import { Avatar } from '@lobehub/ui';
 import { Popover } from 'antd';
 import { memo } from 'react';
 import useSWR from 'swr';
 import useMergeState from 'use-merge-value';
+
+import Avatar from '@/Avatar';
 
 import { useStyles } from './style';
 

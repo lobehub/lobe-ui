@@ -1,10 +1,11 @@
-import { ActionIcon, DivProps } from '@lobehub/ui';
 import { X } from 'lucide-react';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import useMergeState from 'use-merge-value';
 
+import ActionIcon from '@/ActionIcon';
 import Img from '@/Img';
+import type { DivProps } from '@/types';
 
 import { useStyles } from './style';
 

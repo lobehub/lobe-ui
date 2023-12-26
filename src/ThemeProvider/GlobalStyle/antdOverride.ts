@@ -10,7 +10,7 @@ export default (token: Theme) => css`
     box-shadow: none;
   }
 
-  .${token.prefixCls}-btn-primary {
+  .${token.prefixCls}-btn-primary:not(:disabled) {
     color: ${readableColor(token.colorPrimary)} !important;
 
     &:hover {
