@@ -1,23 +1,25 @@
 import { Drawer, Menu, MenuProps } from 'antd';
 import { MenuIcon, X } from 'lucide-react';
-import { memo } from 'react';
+import { CSSProperties, memo } from 'react';
 import { Center } from 'react-layout-kit';
 
-import ActionIcon from '@/ActionIcon';
-import { DivProps } from '@/types';
+import ActionIcon, { type ActionIconProps } from '@/ActionIcon';
 
 import { useStyles } from './style';
 
-export interface BurgerProps extends DivProps {
+export interface BurgerProps {
+  className?: string;
   /**
    * @description The height of the header component
    * @default 64
    */
   headerHeight?: number;
+  icon?: ActionIconProps;
   /**
    * @description The items to be displayed in the menu
    */
   items: MenuProps['items'];
+  onClick?: MenuProps['onClick'];
   /**
    * @description The keys of the currently open sub-menus
    */
@@ -34,10 +36,22 @@ export interface BurgerProps extends DivProps {
    * @description A callback function to set the opened state
    */
   setOpened: (state: boolean) => void;
+  style?: CSSProperties;
 }
 
 const Burger = memo<BurgerProps>(
-  ({ items, openKeys, selectedKeys, opened, setOpened, className, headerHeight = 64, ...rest }) => {
+  ({
+    items,
+    openKeys,
+    selectedKeys,
+    opened,
+    setOpened,
+    className,
+    headerHeight = 64,
+    onClick,
+    icon = {},
+    ...rest
+  }) => {
     const { cx, styles } = useStyles(headerHeight);
 
     return (
@@ -48,7 +62,7 @@ const Burger = memo<BurgerProps>(
         }}
         {...rest}
       >
-        <ActionIcon icon={opened ? X : MenuIcon} size="site" />
+        <ActionIcon icon={opened ? X : MenuIcon} size="site" {...icon} />
         <Drawer
           className={styles.drawer}
           closeIcon={undefined}
@@ -65,6 +79,7 @@ const Burger = memo<BurgerProps>(
             className={styles.menu}
             items={items}
             mode={'inline'}
+            onClick={onClick}
             openKeys={openKeys}
             selectedKeys={selectedKeys}
           />
