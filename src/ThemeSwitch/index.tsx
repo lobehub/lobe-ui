@@ -1,10 +1,11 @@
-import { ActionIcon, type ActionIconSize, Icon } from '@lobehub/ui';
 import { Dropdown, type MenuProps, Select } from 'antd';
 import { ThemeMode } from 'antd-style';
 import { Monitor, Moon, Sun } from 'lucide-react';
 import { memo, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import ActionIcon, { type ActionIconSize } from '@/ActionIcon';
+import Icon from '@/Icon';
 import { DivProps } from '@/types';
 
 const icons = {

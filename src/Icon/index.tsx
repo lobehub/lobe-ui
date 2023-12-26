@@ -12,9 +12,11 @@ export interface IconSizeConfig extends Pick<LucideProps, 'strokeWidth' | 'absol
 export type IconSizeType = 'large' | 'normal' | 'small';
 export type IconSize = IconSizeType | IconSizeConfig;
 
-export interface IconProps
-  extends DivProps,
-    Pick<LucideProps, 'fill' | 'fillRule' | 'fillOpacity' | 'color' | 'focusable'> {
+export type LucideIconProps = Pick<
+  LucideProps,
+  'fill' | 'fillRule' | 'fillOpacity' | 'color' | 'focusable'
+>;
+export interface IconProps extends DivProps, LucideIconProps {
   /**
    * @description The icon element to be rendered
    * @type LucideIcon

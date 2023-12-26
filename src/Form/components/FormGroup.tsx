@@ -1,9 +1,10 @@
-import { Icon, type IconProps } from '@lobehub/ui';
 import { Collapse, type CollapseProps } from 'antd';
 import { createStyles, useResponsive } from 'antd-style';
 import { ChevronDown } from 'lucide-react';
 import { type ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
+
+import Icon, { type IconProps } from '@/Icon';
 
 export type FormVariant = 'default' | 'block' | 'ghost' | 'pure';
 export type ItemsType = 'group' | 'flat';

@@ -159,7 +159,7 @@ const Modal = memo<ModalProps>(
           open={open}
           styles={{
             body: {
-              paddingBlock: `0 ${footer === false ? '16px' : 0}`,
+              paddingBlock: `0 ${footer === null ? '16px' : 0}`,
               paddingInline: paddings?.desktop ?? 16,
               ...body,
             },

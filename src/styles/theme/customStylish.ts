@@ -176,16 +176,19 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         }
       }
 
-      > ol > li::marker {
-        color: ${isDarkMode ? token.cyan9A : token.cyan10A} !important;
+      > ul > li {
+        list-style-type: disc;
       }
 
-      > ul > li {
-        line-height: 1.8;
-        list-style-type: disc;
+      > ol,
+      > ul {
+        > li {
+          margin-left: 24px;
+          line-height: 1.8;
 
-        &::marker {
-          color: ${isDarkMode ? token.cyan9A : token.cyan10A} !important;
+          &::marker {
+            color: ${isDarkMode ? token.cyan9A : token.cyan10A} !important;
+          }
         }
       }
 

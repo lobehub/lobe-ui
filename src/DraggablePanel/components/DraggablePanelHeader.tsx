@@ -1,9 +1,9 @@
-import { ActionIcon } from '@lobehub/ui';
 import { PanelLeft, Pin, PinOff } from 'lucide-react';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
+import ActionIcon from '@/ActionIcon';
 import { type DivProps } from '@/types';
 
 import { useStyles } from './style';

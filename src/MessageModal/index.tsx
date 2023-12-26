@@ -1,9 +1,10 @@
 import { createStyles, useResponsive } from 'antd-style';
-import { CSSProperties, ReactNode, memo } from 'react';
+import { CSSProperties, ReactNode, memo, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
 import Markdown from '@/Markdown';
 import MessageInput, { type MessageInputProps } from '@/MessageInput';
+import MessageInputFooter from '@/MessageInput/MessageInputFooter';
 import Modal, { type ModalProps } from '@/Modal';
 
 const useStyles = createStyles(({ stylish }) => ({
@@ -63,7 +64,7 @@ const MessageModal = memo<MessageModalProps>(
   }) => {
     const { mobile } = useResponsive();
     const { styles } = useStyles();
-
+    const [role, setRole] = useState(value);
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
       value: editing,
@@ -85,7 +86,24 @@ const MessageModal = memo<MessageModalProps>(
       <Modal
         allowFullscreen
         cancelText={text?.cancel || 'Cancel'}
-        footer={isEdit ? null : footer}
+        footer={
+          isEdit ? (
+            <MessageInputFooter
+              onCancel={() => setTyping(false)}
+              onConfirm={(text) => {
+                setTyping(false);
+                onChange?.(text);
+              }}
+              temporarySystemRole={role}
+              text={{
+                cancel: text?.cancel,
+                confirm: text?.confirm,
+              }}
+            />
+          ) : (
+            footer
+          )
+        }
         okText={text?.edit || 'Edit'}
         onCancel={() => setExpand(false)}
         onOk={() => setTyping(true)}
@@ -94,19 +112,12 @@ const MessageModal = memo<MessageModalProps>(
       >
         {isEdit ? (
           <MessageInput
-            defaultValue={value}
+            defaultValue={role}
             height={height}
-            onCancel={() => setTyping(false)}
-            onConfirm={(text) => {
-              setTyping(false);
-              onChange?.(text);
-            }}
             placeholder={placeholder}
+            setTemporarySystemRole={setRole}
+            showFooter={false}
             style={mobile ? { height: '100%' } : {}}
-            text={{
-              cancel: text?.cancel,
-              confirm: text?.confirm,
-            }}
             textareaStyle={mobile ? { flex: 1, minHeight: 'unset' } : {}}
             type={mobile ? 'pure' : 'block'}
           />

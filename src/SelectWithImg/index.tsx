@@ -1,9 +1,9 @@
-import { Icon, IconProps } from '@lobehub/ui';
 import { SelectProps } from 'antd';
 import { type CSSProperties, ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
+import Icon, { IconProps } from '@/Icon';
 import Img from '@/Img';
 
 import { useStyles } from './styles';

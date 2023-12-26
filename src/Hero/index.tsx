@@ -1,11 +1,12 @@
-import { GradientButton, Icon } from '@lobehub/ui';
 import { Button, ConfigProvider } from 'antd';
 import { useResponsive } from 'antd-style';
 import * as LucideIcon from 'lucide-react';
 import { memo, useCallback } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
+import GradientButton from '@/GradientButton';
 import GridBackground from '@/GridBackground';
+import Icon from '@/Icon';
 
 import { useStyles } from './style';
 

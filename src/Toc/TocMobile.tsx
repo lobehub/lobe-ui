@@ -1,8 +1,9 @@
-import { ActionIcon } from '@lobehub/ui';
 import { Anchor, AnchorProps, Collapse, ConfigProvider } from 'antd';
 import { PanelTopClose, PanelTopOpen } from 'lucide-react';
 import { memo } from 'react';
 import useControlledState from 'use-merge-value';
+
+import ActionIcon from '@/ActionIcon';
 
 import { useStyles } from './style';
 
