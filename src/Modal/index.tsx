@@ -1,81 +1,138 @@
 import { Modal as AntModal, type ModalProps as AntModalProps, ConfigProvider, Drawer } from 'antd';
 import { createStyles, useResponsive } from 'antd-style';
-import { X } from 'lucide-react';
+import { Maximize2, Minimize2, X } from 'lucide-react';
 import { lighten } from 'polished';
-import { memo } from 'react';
+import { ReactNode, memo, useState } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 import Icon from '@/Icon';
 
-const useStyles = createStyles(({ css, token, prefixCls }, props: { maxHeight: string }) => ({
-  content: css`
-    .${prefixCls}-modal-body {
-      overflow: scroll;
-      max-height: ${props.maxHeight};
-      padding: 0 16px 16px;
-    }
-    .${prefixCls}-modal-footer {
-      padding: 0 16px 16px;
-    }
-    .${prefixCls}-modal-header {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-      justify-content: center;
+const HEADER_HEIGHT = 56;
+const FOOTER_HEIGHT = 68;
 
-      margin-bottom: 0;
-      padding: 16px;
-    }
-    .${prefixCls}-modal-content {
-      overflow: hidden;
-      padding: 0;
-      border: 1px solid ${token.colorSplit};
-      border-radius: ${token.borderRadiusLG}px;
-    }
-  `,
-  wrap: css`
-    overflow: hidden auto;
-    backdrop-filter: blur(2px);
-  `,
-}));
+const useStyles = createStyles(
+  ({ cx, css, token, prefixCls }, { maxHeight }: { maxHeight: string }) => {
+    return {
+      content: cx(
+        maxHeight &&
+          css`
+            .${prefixCls}-modal-body {
+              overflow: auto;
+              max-height: ${maxHeight};
+            }
+          `,
+        css`
+          .${prefixCls}-modal-footer {
+            margin: 0;
+            padding: 16px;
+          }
+          .${prefixCls}-modal-header {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            justify-content: center;
+
+            height: 56px;
+            margin-bottom: 0;
+            padding: 16px;
+          }
+          .${prefixCls}-modal-content {
+            overflow: hidden;
+            padding: 0;
+            border: 1px solid ${token.colorSplit};
+            border-radius: ${token.borderRadiusLG}px;
+          }
+        `,
+      ),
+      drawerContent: css`
+        .${prefixCls}-drawer-close {
+          padding: 0;
+        }
+        .${prefixCls}-drawer-wrapper-body {
+          background: linear-gradient(to bottom, ${token.colorBgContainer}, ${token.colorBgLayout});
+        }
+        .${prefixCls}-drawer-header {
+          padding: 8px;
+        }
+
+        .${prefixCls}-drawer-footer {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+
+          padding: 16px;
+
+          border: none;
+        }
+      `,
+      wrap: css`
+        overflow: hidden auto;
+        backdrop-filter: blur(2px);
+      `,
+    };
+  },
+);
 
 export type ModalProps = AntModalProps & {
+  allowFullscreen?: boolean;
   maxHeight?: string;
+  paddings?: {
+    desktop?: number;
+    mobile?: number;
+  };
 };
 
 const Modal = memo<ModalProps>(
   ({
+    allowFullscreen,
     children,
-    title,
+    title = ' ',
     className,
     wrapClassName,
     width = 700,
     onCancel,
     open,
     destroyOnClose,
-    maxHeight = 'calc(70vh - 108px)', // or none; 108px = header + footer height;
+    paddings,
+    maxHeight = '75vh',
+    footer,
+    styles: stylesProps = {},
     ...rest
   }) => {
+    const [fullscreen, setFullscreen] = useState(false);
     const { mobile } = useResponsive();
-    const { styles, cx, theme } = useStyles({ maxHeight });
-
+    const { styles, cx, theme } = useStyles({
+      maxHeight:
+        maxHeight && `calc(${maxHeight} - ${HEADER_HEIGHT + (footer ? FOOTER_HEIGHT : 0)}px)`,
+    });
+    const { body, ...restStyles } = stylesProps;
     if (mobile)
       return (
         <Drawer
-          closeIcon={<ActionIcon icon={X} size={{ blockSize: 32, fontSize: 20 }} />}
+          className={cx(styles.drawerContent, className)}
+          closeIcon={<ActionIcon icon={X} />}
           destroyOnClose={destroyOnClose}
-          drawerStyle={{
-            background: `linear-gradient(to bottom, ${theme.colorBgContainer}, ${theme.colorBgLayout})`,
-          }}
-          height={'75vh'}
+          extra={
+            allowFullscreen && (
+              <ActionIcon
+                icon={fullscreen ? Minimize2 : Maximize2}
+                onClick={() => setFullscreen(!fullscreen)}
+              />
+            )
+          }
+          footer={footer as ReactNode}
+          height={fullscreen ? '100vh' : maxHeight}
           maskClassName={cx(styles.wrap, wrapClassName)}
           onClose={onCancel as any}
           open={open}
           placement={'bottom'}
           styles={{
-            body: { padding: 0 },
-            header: { padding: '8px 4px' },
-            ...rest.styles,
+            body: {
+              paddingBlock: `16px ${footer ? 0 : '16px'}`,
+              paddingInline: paddings?.desktop ?? 16,
+              ...body,
+            },
+            ...restStyles,
           }}
           title={title}
         >
@@ -96,9 +153,18 @@ const Modal = memo<ModalProps>(
           closable
           closeIcon={<Icon icon={X} size={{ fontSize: 20 }} />}
           destroyOnClose={destroyOnClose}
+          footer={footer}
           maskClosable
           onCancel={onCancel}
           open={open}
+          styles={{
+            body: {
+              paddingBlock: `0 ${footer === false ? '16px' : 0}`,
+              paddingInline: paddings?.desktop ?? 16,
+              ...body,
+            },
+            ...restStyles,
+          }}
           title={title}
           width={width}
           wrapClassName={cx(styles.wrap, wrapClassName)}
