@@ -111,7 +111,9 @@ export const useStyles = createStyles(
       icon: css`
         transition: all 100ms ${token.motionEaseOut};
       `,
-
+      mobileFlatGroup: css`
+        border-radius: ${token.borderRadiusLG}px;
+      `,
       mobileGroupBody: css`
         padding: 0 16px;
         background: ${token.colorBgContainer};
@@ -174,8 +176,8 @@ const FormGroup = memo<FormGroupProps>(
     if (itemsType === 'flat') {
       if (mobile)
         return (
-          <Flexbox className={className}>
-            <div className={styles.mobileGroupBody}>{children}</div>
+          <Flexbox className={cx(styles.mobileFlatGroup, styles.mobileGroupBody, className)}>
+            {children}
           </Flexbox>
         );
       return <Flexbox className={cx(styles.flatGroup, className)}>{children}</Flexbox>;

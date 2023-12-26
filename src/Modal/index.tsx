@@ -1,5 +1,6 @@
 import { Modal as AntModal, type ModalProps as AntModalProps, ConfigProvider, Drawer } from 'antd';
 import { createStyles, useResponsive } from 'antd-style';
+import { isNumber } from 'lodash-es';
 import { Maximize2, Minimize2, X } from 'lucide-react';
 import { lighten } from 'polished';
 import { ReactNode, memo, useState } from 'react';
@@ -11,7 +12,7 @@ const HEADER_HEIGHT = 56;
 const FOOTER_HEIGHT = 68;
 
 const useStyles = createStyles(
-  ({ cx, css, token, prefixCls }, { maxHeight }: { maxHeight: string }) => {
+  ({ cx, css, token, prefixCls }, { maxHeight }: { maxHeight?: string }) => {
     return {
       content: cx(
         maxHeight &&
@@ -75,7 +76,7 @@ const useStyles = createStyles(
 
 export type ModalProps = AntModalProps & {
   allowFullscreen?: boolean;
-  maxHeight?: string;
+  maxHeight?: string | number | false;
   paddings?: {
     desktop?: number;
     mobile?: number;
@@ -102,8 +103,11 @@ const Modal = memo<ModalProps>(
     const [fullscreen, setFullscreen] = useState(false);
     const { mobile } = useResponsive();
     const { styles, cx, theme } = useStyles({
-      maxHeight:
-        maxHeight && `calc(${maxHeight} - ${HEADER_HEIGHT + (footer ? FOOTER_HEIGHT : 0)}px)`,
+      maxHeight: maxHeight
+        ? `calc(${isNumber(maxHeight) ? `${maxHeight}px` : maxHeight} - ${
+            HEADER_HEIGHT + (footer ? FOOTER_HEIGHT : 0)
+          }px)`
+        : undefined,
     });
     const { body, ...restStyles } = stylesProps;
     if (mobile)
@@ -121,7 +125,7 @@ const Modal = memo<ModalProps>(
             )
           }
           footer={footer as ReactNode}
-          height={fullscreen ? '100vh' : maxHeight}
+          height={fullscreen ? '100vh' : maxHeight || '75vh'}
           maskClassName={cx(styles.wrap, wrapClassName)}
           onClose={onCancel as any}
           open={open}
