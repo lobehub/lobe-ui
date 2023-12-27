@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.125.2](https://github.com/lobehub/lobe-ui/compare/v1.125.1...v1.125.2)
+
+<sup>Released on **2023-12-27**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: The `props` of the chat input section do not work.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: The `props` of the chat input section do not work ([e367f8f](https://github.com/lobehub/lobe-ui/commit/e367f8f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.125.1](https://github.com/lobehub/lobe-ui/compare/v1.125.0...v1.125.1)
 
 <sup>Released on **2023-12-27**</sup>
