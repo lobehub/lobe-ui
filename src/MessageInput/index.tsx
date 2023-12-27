@@ -10,17 +10,18 @@ import { DivProps } from '@/types';
 import MessageInputFooter, { type MessageInputFooterProps } from './MessageInputFooter';
 import { useStyles } from './style';
 
-export interface MessageInputProps extends MessageInputFooterProps, DivProps {
+export interface MessageInputProps extends MessageInputFooterProps, Omit<DivProps, 'onChange'> {
   className?: string;
   classNames?: TextAreaProps['classNames'];
   defaultValue?: string;
   editButtonSize?: ButtonProps['size'];
   height?: number | 'auto' | string;
-  setTemporarySystemRole?: (value: string) => void;
+  onChange?: (value: string) => void;
   showFooter?: boolean;
   textareaClassname?: string;
   textareaStyle?: CSSProperties;
   type?: TextAreaProps['type'];
+  value?: string;
 }
 
 const MessageInput = memo<MessageInputProps>(
@@ -28,6 +29,7 @@ const MessageInput = memo<MessageInputProps>(
     text,
     type = 'pure',
     onCancel,
+    value,
     defaultValue,
     onConfirm,
     renderButtons,
@@ -39,13 +41,10 @@ const MessageInput = memo<MessageInputProps>(
     editButtonSize = 'middle',
     showFooter = true,
     classNames,
-    setTemporarySystemRole,
+    onChange,
     ...rest
   }) => {
-    const [role, setRole] = useMergeState(defaultValue || '', {
-      defaultValue,
-      onChange: setTemporarySystemRole,
-    });
+    const [message, setMessage] = useMergeState('', { defaultValue, onChange, value });
     const { cx, styles } = useStyles();
 
     const isAutoSize = height === 'auto';
@@ -56,13 +55,13 @@ const MessageInput = memo<MessageInputProps>(
           autoSize={isAutoSize}
           className={cx(styles, textareaClassname)}
           classNames={classNames}
-          onBlur={(e) => setRole(e.target.value)}
-          onChange={(e) => setRole(e.target.value)}
+          onBlur={(e) => setMessage(e.target.value)}
+          onChange={(e) => setMessage(e.target.value)}
           placeholder={placeholder}
           resize={false}
           style={{ height: isAutoSize ? 'unset' : height, minHeight: '100%', ...textareaStyle }}
           type={type}
-          value={role}
+          value={message}
         />
         {showFooter && (
           <MessageInputFooter
@@ -70,8 +69,8 @@ const MessageInput = memo<MessageInputProps>(
             onCancel={onCancel}
             onConfirm={onConfirm}
             renderButtons={renderButtons}
-            temporarySystemRole={role}
             text={text}
+            value={message}
           />
         )}
       </Flexbox>
