@@ -60,6 +60,7 @@ const ChatInputArea = forwardRef<TextAreaRef, ChatInputAreaProps>(
       onSend,
       onInput,
       loading,
+      onBlur,
       value,
     },
     ref,
@@ -85,6 +86,7 @@ const ChatInputArea = forwardRef<TextAreaRef, ChatInputAreaProps>(
             <ChatInputAreaInner
               className={styles.textarea}
               loading={loading}
+              onBlur={onBlur}
               onInput={onInput}
               onSend={() => {
                 onSend?.();
