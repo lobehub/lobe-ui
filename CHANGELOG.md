@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.125.3](https://github.com/lobehub/lobe-ui/compare/v1.125.2...v1.125.3)
+
+<sup>Released on **2023-12-27**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix message modal.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix message modal, closes [#107](https://github.com/lobehub/lobe-ui/issues/107) ([5bafec2](https://github.com/lobehub/lobe-ui/commit/5bafec2))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.125.2](https://github.com/lobehub/lobe-ui/compare/v1.125.1...v1.125.2)
 
 <sup>Released on **2023-12-27**</sup>
