@@ -1,5 +1,5 @@
 import { createStyles, useResponsive } from 'antd-style';
-import { CSSProperties, ReactNode, memo, useState } from 'react';
+import { CSSProperties, ReactNode, memo } from 'react';
 import useControlledState from 'use-merge-value';
 
 import Markdown from '@/Markdown';
@@ -12,6 +12,7 @@ const useStyles = createStyles(({ stylish }) => ({
 }));
 
 export interface MessageModalProps extends Pick<ModalProps, 'open' | 'footer'> {
+  defaultValue?: string;
   /**
    * @description Whether the message is being edited or not
    * @default false
@@ -57,6 +58,7 @@ const MessageModal = memo<MessageModalProps>(
     onEditingChange,
     placeholder,
     value,
+    defaultValue,
     onChange,
     text,
     footer,
@@ -64,7 +66,7 @@ const MessageModal = memo<MessageModalProps>(
   }) => {
     const { mobile } = useResponsive();
     const { styles } = useStyles();
-    const [role, setRole] = useState(value);
+    const [message, setMessage] = useControlledState('', { defaultValue, onChange, value });
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
       value: editing,
@@ -94,11 +96,11 @@ const MessageModal = memo<MessageModalProps>(
                 setTyping(false);
                 onChange?.(text);
               }}
-              temporarySystemRole={role}
               text={{
                 cancel: text?.cancel,
                 confirm: text?.confirm,
               }}
+              value={message}
             />
           ) : (
             footer
@@ -112,10 +114,10 @@ const MessageModal = memo<MessageModalProps>(
       >
         {isEdit ? (
           <MessageInput
-            defaultValue={role}
+            defaultValue={message}
             height={height}
+            onChange={setMessage}
             placeholder={placeholder}
-            setTemporarySystemRole={setRole}
             showFooter={false}
             style={mobile ? { height: '100%' } : {}}
             textareaStyle={mobile ? { flex: 1, minHeight: 'unset' } : {}}

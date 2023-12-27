@@ -7,26 +7,26 @@ export interface MessageInputFooterProps {
   onCancel?: () => void;
   onConfirm?: (text: string) => void;
   renderButtons?: (text: string) => ButtonProps[];
-  temporarySystemRole?: string;
   text?: {
     cancel?: string;
     confirm?: string;
   };
+  value?: string;
 }
 
 const MessageInputFooter = memo<MessageInputFooterProps>(
-  ({ text, renderButtons, onConfirm, temporarySystemRole, editButtonSize, onCancel }) => {
+  ({ text, renderButtons, onConfirm, value, editButtonSize, onCancel }) => {
     return (
       <Flexbox direction={'horizontal-reverse'} gap={8}>
-        {renderButtons && temporarySystemRole ? (
-          renderButtons(temporarySystemRole).map((buttonProps, index) => (
+        {renderButtons && value ? (
+          renderButtons(value).map((buttonProps, index) => (
             <Button key={index} size="small" {...buttonProps} />
           ))
         ) : (
           <>
             <Button
               onClick={() => {
-                onConfirm?.(temporarySystemRole || '');
+                onConfirm?.(value || '');
               }}
               size={editButtonSize}
               type="primary"
