@@ -153,22 +153,24 @@ const EditableMessage = memo<EditableMessageProps>(
             {value || placeholder || ''}
           </Markdown>
         )}
-        <MessageModal
-          editing={isEdit}
-          extra={model?.extra}
-          footer={model?.footer}
-          height={height}
-          onChange={(text) => onChange?.(text)}
-          onEditingChange={setTyping}
-          onOpenChange={(e) => {
-            setExpand(e);
-            setTyping(false);
-          }}
-          open={expand}
-          placeholder={placeholder}
-          text={text}
-          value={value}
-        />
+        {expand && (
+          <MessageModal
+            editing={isEdit}
+            extra={model?.extra}
+            footer={model?.footer}
+            height={height}
+            onChange={onChange}
+            onEditingChange={setTyping}
+            onOpenChange={(e) => {
+              setExpand(e);
+              setTyping(false);
+            }}
+            open={expand}
+            placeholder={placeholder}
+            text={text}
+            value={value}
+          />
+        )}
       </>
     );
   },
