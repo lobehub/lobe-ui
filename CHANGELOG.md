@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.125.5](https://github.com/lobehub/lobe-ui/compare/v1.125.4...v1.125.5)
+
+<sup>Released on **2023-12-28**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix editable message.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix editable message ([fa9741c](https://github.com/lobehub/lobe-ui/commit/fa9741c))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.125.4](https://github.com/lobehub/lobe-ui/compare/v1.125.3...v1.125.4)
 
 <sup>Released on **2023-12-28**</sup>
