@@ -4,7 +4,6 @@ import useControlledState from 'use-merge-value';
 
 import Markdown from '@/Markdown';
 import MessageInput, { type MessageInputProps } from '@/MessageInput';
-import MessageInputFooter from '@/MessageInput/MessageInputFooter';
 import Modal, { type ModalProps } from '@/Modal';
 
 const useStyles = createStyles(({ stylish }) => ({
@@ -58,21 +57,21 @@ const MessageModal = memo<MessageModalProps>(
     onEditingChange,
     placeholder,
     value,
-    defaultValue,
     onChange,
     text,
     footer,
+    defaultValue,
     extra,
   }) => {
     const { mobile } = useResponsive();
     const { styles } = useStyles();
-    const [message, setMessage] = useControlledState('', { defaultValue, onChange, value });
+
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
       value: editing,
     });
 
-    const [expand, setExpand] = useControlledState(false, {
+    const [showModal, setShowModal] = useControlledState(false, {
       onChange: onOpenChange,
       value: open,
     });
@@ -88,38 +87,32 @@ const MessageModal = memo<MessageModalProps>(
       <Modal
         allowFullscreen
         cancelText={text?.cancel || 'Cancel'}
-        footer={
-          isEdit ? (
-            <MessageInputFooter
-              onCancel={() => setTyping(false)}
-              onConfirm={(text) => {
-                setTyping(false);
-                onChange?.(text);
-              }}
-              text={{
-                cancel: text?.cancel,
-                confirm: text?.confirm,
-              }}
-              value={message}
-            />
-          ) : (
-            footer
-          )
-        }
+        destroyOnClose
+        footer={isEdit ? null : footer}
         okText={text?.edit || 'Edit'}
-        onCancel={() => setExpand(false)}
+        onCancel={() => {
+          setShowModal(false);
+          setTyping(false);
+        }}
         onOk={() => setTyping(true)}
-        open={expand}
+        open={showModal}
         title={text?.title}
       >
-        {isEdit ? (
+        {showModal && isEdit ? (
           <MessageInput
-            defaultValue={message}
+            defaultValue={defaultValue || value}
             height={height}
-            onChange={setMessage}
+            onCancel={() => setTyping(false)}
+            onConfirm={(text) => {
+              setTyping(false);
+              onChange?.(text);
+            }}
             placeholder={placeholder}
-            showFooter={false}
             style={mobile ? { height: '100%' } : {}}
+            text={{
+              cancel: text?.cancel,
+              confirm: text?.confirm,
+            }}
             textareaStyle={mobile ? { flex: 1, minHeight: 'unset' } : {}}
             type={mobile ? 'pure' : 'block'}
           />
