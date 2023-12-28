@@ -1,10 +1,13 @@
+import { Button } from 'antd';
 import { createStyles, useResponsive } from 'antd-style';
-import { CSSProperties, ReactNode, memo } from 'react';
+import { CSSProperties, ReactNode, memo, useState } from 'react';
+import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
+import { TextArea } from '@/Input';
 import Markdown from '@/Markdown';
-import MessageInput, { type MessageInputProps } from '@/MessageInput';
-import MessageInputFooter from '@/MessageInput/MessageInputFooter';
+import { type MessageInputProps } from '@/MessageInput';
+import { useStyles as useTextStyles } from '@/MessageInput/style';
 import Modal, { type ModalProps } from '@/Modal';
 
 const useStyles = createStyles(({ stylish }) => ({
@@ -12,7 +15,6 @@ const useStyles = createStyles(({ stylish }) => ({
 }));
 
 export interface MessageModalProps extends Pick<ModalProps, 'open' | 'footer'> {
-  defaultValue?: string;
   /**
    * @description Whether the message is being edited or not
    * @default false
@@ -58,7 +60,6 @@ const MessageModal = memo<MessageModalProps>(
     onEditingChange,
     placeholder,
     value,
-    defaultValue,
     onChange,
     text,
     footer,
@@ -66,16 +67,18 @@ const MessageModal = memo<MessageModalProps>(
   }) => {
     const { mobile } = useResponsive();
     const { styles } = useStyles();
-    const [message, setMessage] = useControlledState('', { defaultValue, onChange, value });
+    const { styles: textStyles } = useTextStyles();
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
       value: editing,
     });
 
-    const [expand, setExpand] = useControlledState(false, {
+    const [showModal, setShowModal] = useControlledState(false, {
       onChange: onOpenChange,
       value: open,
     });
+
+    const [temporaryValue, setValue] = useState(value);
 
     const isAutoSize = height === 'auto';
     const markdownStyle: CSSProperties = {
@@ -84,44 +87,62 @@ const MessageModal = memo<MessageModalProps>(
       overflowY: 'auto',
     };
 
+    const modalFooter = isEdit ? (
+      <Flexbox direction={'horizontal-reverse'} gap={8}>
+        <Button
+          onClick={() => {
+            setTyping(false);
+            onChange?.(temporaryValue);
+            setValue(value);
+          }}
+          type="primary"
+        >
+          {text?.confirm || 'Confirm'}
+        </Button>
+        <Button
+          onClick={() => {
+            setTyping(false);
+            setValue(value);
+          }}
+        >
+          {text?.cancel || 'Cancel'}
+        </Button>
+      </Flexbox>
+    ) : (
+      footer
+    );
+
     return (
       <Modal
         allowFullscreen
         cancelText={text?.cancel || 'Cancel'}
-        footer={
-          isEdit ? (
-            <MessageInputFooter
-              onCancel={() => setTyping(false)}
-              onConfirm={(text) => {
-                setTyping(false);
-                onChange?.(text);
-              }}
-              text={{
-                cancel: text?.cancel,
-                confirm: text?.confirm,
-              }}
-              value={message}
-            />
-          ) : (
-            footer
-          )
-        }
+        destroyOnClose
+        footer={modalFooter}
         okText={text?.edit || 'Edit'}
-        onCancel={() => setExpand(false)}
+        onCancel={() => {
+          setShowModal(false);
+          setTyping(false);
+          setValue(value);
+        }}
         onOk={() => setTyping(true)}
-        open={expand}
+        open={showModal}
         title={text?.title}
       >
         {isEdit ? (
-          <MessageInput
-            defaultValue={message}
-            height={height}
-            onChange={setMessage}
+          <TextArea
+            autoSize={isAutoSize}
+            className={textStyles}
+            onBlur={(e) => setValue(e.target.value)}
+            onChange={(e) => setValue(e.target.value)}
             placeholder={placeholder}
-            showFooter={false}
-            style={mobile ? { height: '100%' } : {}}
-            textareaStyle={mobile ? { flex: 1, minHeight: 'unset' } : {}}
+            resize={false}
+            style={{
+              flex: mobile ? 1 : undefined,
+              height: isAutoSize ? 'unset' : height,
+              minHeight: mobile ? 'unset' : '100%',
+            }}
             type={mobile ? 'pure' : 'block'}
+            value={temporaryValue}
           />
         ) : (
           <>
