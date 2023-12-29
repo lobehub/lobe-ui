@@ -1,5 +1,4 @@
 import { Space, message } from 'antd';
-import copy from 'copy-to-clipboard';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
@@ -45,10 +44,10 @@ const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
           <div
             className={styles.scaleBox}
             key={index}
-            onClick={() => {
+            onClick={async () => {
               const content = `token.${name}${index}${isAlpha ? 'A' : ''} /* ${color} */`;
 
-              copy(content);
+              await navigator.clipboard.writeText(content);
               message.success(content);
             }}
             style={style}

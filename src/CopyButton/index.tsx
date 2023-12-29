@@ -1,4 +1,3 @@
-import copy from 'copy-to-clipboard';
 import { Copy } from 'lucide-react';
 import { memo } from 'react';
 
@@ -40,8 +39,8 @@ const CopyButton = memo<CopyButtonProps>(
         className={className}
         glass
         icon={Copy}
-        onClick={() => {
-          copy(content);
+        onClick={async () => {
+          await navigator.clipboard.writeText(content);
           setCopied();
         }}
         placement={placement}
