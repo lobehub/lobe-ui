@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.125.6](https://github.com/lobehub/lobe-ui/compare/v1.125.5...v1.125.6)
+
+<sup>Released on **2023-12-30**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Use `clipboard.writeText` to replace `copy-to-clipboard`.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Use `clipboard.writeText` to replace `copy-to-clipboard`, closes [#110](https://github.com/lobehub/lobe-ui/issues/110) ([97a95e2](https://github.com/lobehub/lobe-ui/commit/97a95e2))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.125.5](https://github.com/lobehub/lobe-ui/compare/v1.125.4...v1.125.5)
 
 <sup>Released on **2023-12-28**</sup>
