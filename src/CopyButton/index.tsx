@@ -5,6 +5,7 @@ import ActionIcon, { type ActionIconSize } from '@/ActionIcon';
 import { type TooltipProps } from '@/Tooltip';
 import { useCopied } from '@/hooks/useCopied';
 import { DivProps } from '@/types';
+import { copyToClipboard } from '@/utils/copyToClipboard';
 
 export interface CopyButtonProps extends DivProps {
   /**
@@ -40,7 +41,7 @@ const CopyButton = memo<CopyButtonProps>(
         glass
         icon={Copy}
         onClick={async () => {
-          await navigator.clipboard.writeText(content);
+          await copyToClipboard(content);
           setCopied();
         }}
         placement={placement}

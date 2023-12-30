@@ -2,6 +2,8 @@ import { Space, message } from 'antd';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import { copyToClipboard } from '@/utils/copyToClipboard';
+
 import { alphaBg, useStyles } from './style';
 
 export interface IScaleRow {
@@ -47,7 +49,7 @@ const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
             onClick={async () => {
               const content = `token.${name}${index}${isAlpha ? 'A' : ''} /* ${color} */`;
 
-              await navigator.clipboard.writeText(content);
+              await copyToClipboard(content);
               message.success(content);
             }}
             style={style}

@@ -6,6 +6,7 @@ import type { AlertProps } from '@/Alert';
 import ChatItem, { type ChatItemProps } from '@/ChatItem';
 import { ChatMessage } from '@/types/chatMessage';
 import { LLMRoleType } from '@/types/llm';
+import { copyToClipboard } from '@/utils/copyToClipboard';
 
 import ActionsBar, { type ActionsBarProps } from './ActionsBar';
 
@@ -163,7 +164,7 @@ const Item = memo<ChatListItemProps>((props) => {
       const handleActionClick: ListItemProps['onActionsClick'] = async (action, data) => {
         switch (action.key) {
           case 'copy': {
-            await navigator.clipboard.writeText(data.content);
+            await copyToClipboard(data.content);
             message.success(text?.copySuccess || 'Copy Success');
             break;
           }
