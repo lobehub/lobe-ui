@@ -1,5 +1,4 @@
 import { App } from 'antd';
-import copy from 'copy-to-clipboard';
 import { FC, ReactNode, memo, useCallback, useMemo, useState } from 'react';
 
 import { ActionEvent } from '@/ActionIconGroup';
@@ -7,6 +6,7 @@ import type { AlertProps } from '@/Alert';
 import ChatItem, { type ChatItemProps } from '@/ChatItem';
 import { ChatMessage } from '@/types/chatMessage';
 import { LLMRoleType } from '@/types/llm';
+import { copyToClipboard } from '@/utils/copyToClipboard';
 
 import ActionsBar, { type ActionsBarProps } from './ActionsBar';
 
@@ -161,10 +161,10 @@ const Item = memo<ChatListItemProps>((props) => {
       if (renderActions?.['default']) RenderFunction = renderActions['default'];
       if (!RenderFunction) RenderFunction = ActionsBar;
 
-      const handleActionClick: ListItemProps['onActionsClick'] = (action, data) => {
+      const handleActionClick: ListItemProps['onActionsClick'] = async (action, data) => {
         switch (action.key) {
           case 'copy': {
-            copy(data.content);
+            await copyToClipboard(data.content);
             message.success(text?.copySuccess || 'Copy Success');
             break;
           }
