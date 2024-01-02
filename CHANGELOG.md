@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.125.7](https://github.com/lobehub/lobe-ui/compare/v1.125.6...v1.125.7)
+
+<sup>Released on **2024-01-02**</sup>
+
+#### 💄 Styles
+
+- **misc**: Export copyToClipboard.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Export copyToClipboard ([1dfddf5](https://github.com/lobehub/lobe-ui/commit/1dfddf5))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.125.6](https://github.com/lobehub/lobe-ui/compare/v1.125.5...v1.125.6)
 
 <sup>Released on **2023-12-30**</sup>
