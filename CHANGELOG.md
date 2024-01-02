@@ -378,10 +378,6 @@
 
 - **misc**: Add GaussianBackground.
 
-#### 💄 Styles
-
-- **misc**: Remove styled-components and dayjs locales define.
-
 <br/>
 
 <details>
@@ -390,10 +386,6 @@
 #### What's improved
 
 - **misc**: Add GaussianBackground ([62a5eac](https://github.com/lobehub/lobe-ui/commit/62a5eac))
-
-#### Styles
-
-- **misc**: Remove styled-components and dayjs locales define ([c917ec5](https://github.com/lobehub/lobe-ui/commit/c917ec5))
 
 </details>
 

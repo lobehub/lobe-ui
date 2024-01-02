@@ -1,5 +1,9 @@
 export { default as ActionIcon, type ActionIconProps, type ActionIconSize } from './ActionIcon';
-export { default as ActionIconGroup, type ActionIconGroupProps } from './ActionIconGroup';
+export {
+  type ActionEvent,
+  default as ActionIconGroup,
+  type ActionIconGroupProps,
+} from './ActionIconGroup';
 export { default as Alert, type AlertProps } from './Alert';
 export { default as Avatar, type AvatarProps } from './Avatar';
 export { default as BackBottom, type BackBottomProps } from './BackBottom';
@@ -154,5 +158,6 @@ export { default as Toc, type TocProps } from './Toc';
 export { default as TokenTag, type TokenTagProps } from './TokenTag';
 export { default as Tooltip, type TooltipProps } from './Tooltip';
 export type * from './types';
+export { copyToClipboard } from './utils/copyToClipboard';
 export { type CDN, genCdnUrl } from './utils/genCdnUrl';
 export { getEmoji, getEmojiNameByCharacter } from './utils/getEmojiByCharacter';
