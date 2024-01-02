@@ -2,6 +2,7 @@ export { default as ActionIcon, type ActionIconProps, type ActionIconSize } from
 export {
   type ActionEvent,
   default as ActionIconGroup,
+  type ActionIconGroupItems,
   type ActionIconGroupProps,
 } from './ActionIconGroup';
 export { default as Alert, type AlertProps } from './Alert';
