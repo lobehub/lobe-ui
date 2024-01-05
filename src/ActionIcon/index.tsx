@@ -97,6 +97,7 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
       fillRule,
       focusable,
       disable,
+      spin: iconSpinning,
       ...rest
     },
     ref,
@@ -113,7 +114,9 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
       size: size === 'site' ? 'normal' : size,
     };
 
-    const content = icon && <Icon className={styles.icon} icon={icon} {...iconProps} />;
+    const content = icon && (
+      <Icon className={styles.icon} icon={icon} {...iconProps} spin={iconSpinning} />
+    );
 
     const spin = <Icon icon={Loader2} {...iconProps} spin />;
 
