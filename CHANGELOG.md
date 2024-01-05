@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.125.9](https://github.com/lobehub/lobe-ui/compare/v1.125.8...v1.125.9)
+
+<sup>Released on **2024-01-05**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix action-icon spin props not working.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix action-icon spin props not working ([e5ec29a](https://github.com/lobehub/lobe-ui/commit/e5ec29a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.125.8](https://github.com/lobehub/lobe-ui/compare/v1.125.7...v1.125.8)
 
 <sup>Released on **2024-01-02**</sup>
