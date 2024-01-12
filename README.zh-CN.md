@@ -138,6 +138,23 @@ $ bun start
 
 </div>
 
+## 🩷 感谢赞助
+
+每一分支持都珍贵无比，汇聚成我们支持的璀璨银河！你就像一颗划破夜空的流星，瞬间点亮我们前行的道路。感谢你对我们的信任 —— 你的支持笔就像星辰导航，一次又一次地为项目指明前进的光芒。
+
+<a href="https://opencollective.com/lobehub" target="_blank">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/lobehub/.github/blob/main/static/sponsor-dark.png?raw=true">
+    <img  src="https://github.com/lobehub/.github/blob/main/static/sponsor-light.png?raw=true">
+  </picture>
+</a>
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
 ## 🔗 更多产品
 
 - **[🤖 Lobe Chat][lobe-chat] :** 一个开源、可扩展（函数调用）、高性能的聊天机器人框架。支持一键免费部署私有 ChatGPT/LLM 网页应用程序。
