@@ -138,6 +138,23 @@ Contributions of all types are more than welcome, if you are interested in contr
 
 </div>
 
+## 🩷 Sponsor
+
+Every bit counts and your one-time donation sparkles in our galaxy of support! You're a shooting star, making a swift and bright impact on our journey. Thank you for believing in us – your generosity guides us toward our mission, one brilliant flash at a time.
+
+<a href="https://opencollective.com/lobehub" target="_blank">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/lobehub/.github/blob/main/static/sponsor-dark.png?raw=true">
+    <img  src="https://github.com/lobehub/.github/blob/main/static/sponsor-light.png?raw=true">
+  </picture>
+</a>
+
+<div align="right">
+
+[![][back-to-top]](#readme-top)
+
+</div>
+
 ## 🔗 More Products
 
 - **[🤖 Lobe Chat][lobe-chat] :** An open-source, extensible (Function Calling), high-performance chatbot framework. It supports one-click free deployment of your private ChatGPT/LLM web application.
