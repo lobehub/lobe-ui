@@ -1,4 +1,12 @@
-import { Collapse, Divider, Typography } from 'antd';
+import {
+  Collapse,
+  CollapseProps,
+  Divider,
+  DividerProps,
+  ImageProps,
+  Typography,
+  TypographyProps,
+} from 'antd';
 import { CSSProperties, memo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import ReactMarkdown from 'react-markdown';
@@ -22,6 +30,13 @@ export interface MarkdownProps {
    * @description The class name for the Markdown component
    */
   className?: string;
+  componentProps?: {
+    a?: TypographyProps['Link'] & HTMLAnchorElement;
+    details?: CollapseProps;
+    hr?: DividerProps;
+    img?: ImageProps;
+    pre?: any;
+  };
   enableImageGallery?: boolean;
   fullFeaturedCodeBlock?: boolean;
   onDoubleClick?: () => void;
@@ -29,10 +44,12 @@ export interface MarkdownProps {
 }
 
 const MemoAlink = memo((props: any) => (
-  <Typography.Link {...props} rel="noopener noreferrer" target="_blank" />
+  <Typography.Link rel="noopener noreferrer" target="_blank" {...props} />
 ));
 const MemoDetails = memo((props: any) => <Collapse {...props} />);
-const MemoHr = memo(() => <Divider style={{ marginBottom: '1em', marginTop: 0 }} />);
+const MemoHr = memo((props: any) => (
+  <Divider {...props} style={{ marginBottom: '1em', marginTop: 0, ...props?.style }} />
+));
 const MemoImage = memo((props: any) => <Image {...props} />);
 
 const Markdown = memo<MarkdownProps>(
@@ -43,15 +60,23 @@ const Markdown = memo<MarkdownProps>(
     fullFeaturedCodeBlock,
     onDoubleClick,
     enableImageGallery = true,
+    componentProps,
     ...rest
   }) => {
     const { styles } = useStyles();
     const components: Components = {
-      a: MemoAlink,
-      details: MemoDetails,
-      hr: MemoHr,
-      img: enableImageGallery ? MemoImage : undefined,
-      pre: fullFeaturedCodeBlock ? CodeFullFeatured : CodeLite,
+      a: (props) => <MemoAlink {...props} {...componentProps?.a} />,
+      details: (props) => <MemoDetails {...props} {...componentProps?.details} />,
+      hr: (props) => <MemoHr {...props} {...componentProps?.hr} />,
+      img: enableImageGallery
+        ? (props) => <MemoImage {...props} {...componentProps?.img} />
+        : undefined,
+      pre: (props) =>
+        fullFeaturedCodeBlock ? (
+          <CodeFullFeatured {...props} {...componentProps?.pre} />
+        ) : (
+          <CodeLite {...props} {...componentProps?.pre} />
+        ),
     };
 
     return (
