@@ -91,3 +91,19 @@ $$
 \\int_{a}^{b} f(x) \\, dx
 $$
 `;
+
+export const content2 = `# Customize Markdown Components
+## Customize Anchor Behavior
+This is [an example](http://example.com/ "Title") inline link.
+
+<http://example.com/>
+
+
+## Customize Hr
+
+---
+
+## Customize Image Display
+
+![](https://gw.alipayobjects.com/zos/kitchen/sLO%24gbrQtp/lobe-chat.webp)
+`;
