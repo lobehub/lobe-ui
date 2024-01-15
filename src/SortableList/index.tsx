@@ -6,7 +6,13 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
-import { SortableContext, arrayMove, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
+import { restrictToVerticalAxis, restrictToWindowEdges } from '@dnd-kit/modifiers';
+import {
+  SortableContext,
+  arrayMove,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 import { Fragment, type ReactNode, memo, useMemo, useState } from 'react';
 import { Flexbox, type FlexboxProps } from 'react-layout-kit';
 
@@ -39,6 +45,7 @@ const SortableListParent = memo<SortableListProps>(
 
     return (
       <DndContext
+        modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
         onDragCancel={() => {
           setActive(null);
         }}
@@ -56,7 +63,7 @@ const SortableListParent = memo<SortableListProps>(
         }}
         sensors={sensors}
       >
-        <SortableContext items={items}>
+        <SortableContext items={items} strategy={verticalListSortingStrategy}>
           <Flexbox as={'ul'} className={styles.container} gap={gap} {...rest}>
             {items.map((item) => (
               <Fragment key={item.id}>{renderItem(item)}</Fragment>
