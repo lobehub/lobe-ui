@@ -5,19 +5,23 @@ import { ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import Icon from '@/Icon';
-import usePreview from '@/Image/usePreview';
 
 import { useStyles } from './style';
+import usePreview from './usePreview';
 
 export interface ImageProps extends AntImageProps {
   actions?: ReactNode;
   alwaysShowActions?: boolean;
+  classNames?: {
+    image?: string;
+    wrapper?: string;
+  };
   isLoading?: boolean;
   minSize?: number | string;
   objectFit?: 'cover' | 'contain';
   preview?: AntImageProps['preview'] & {
     toolbarAddon?: ReactNode;
-  } & any;
+  };
   size?: number | string;
   toolbarAddon?: ReactNode;
 }
@@ -26,13 +30,14 @@ const Image = memo<ImageProps>(
   ({
     wrapperClassName,
     style,
-    preview = {},
+    preview,
     isLoading,
     minSize = 64,
     size = '100%',
     actions,
     alwaysShowActions,
     objectFit = 'cover',
+    classNames = {},
     ...rest
   }) => {
     const { mobile } = useResponsive();
@@ -58,17 +63,22 @@ const Image = memo<ImageProps>(
       <Flexbox className={cx(styles.imageWrapper, wrapperClassName)} style={style}>
         {actions && <div className={styles.actions}>{actions}</div>}
         <AntImage
+          className={classNames.image}
           fallback={
             isDarkMode
               ? 'https://gw.alipayobjects.com/zos/kitchen/nhzBb%24r0Cm/image_off_dark.webp'
               : 'https://gw.alipayobjects.com/zos/kitchen/QAvkgt30Ys/image_off_light.webp'
           }
           loading={'lazy'}
-          preview={{
-            mask: mobile ? false : actions ? <div /> : <Icon icon={Eye} size={'normal'} />,
-            ...(mergePreivew as any),
-          }}
-          wrapperClassName={styles.image}
+          preview={
+            preview === false
+              ? false
+              : {
+                  mask: mobile ? false : actions ? <div /> : <Icon icon={Eye} size={'normal'} />,
+                  ...(mergePreivew as any),
+                }
+          }
+          wrapperClassName={cx(styles.image, classNames.wrapper)}
           {...rest}
         />
       </Flexbox>
