@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [Version 1.128.0](https://github.com/lobehub/lobe-ui/compare/v1.127.0...v1.128.0)
+
+<sup>Released on **2024-01-15**</sup>
+
+#### ✨ Features
+
+- **misc**: Add SortableList.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Form type.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add SortableList ([f94ad36](https://github.com/lobehub/lobe-ui/commit/f94ad36))
+
+#### What's fixed
+
+- **misc**: Fix Form type ([d0d509e](https://github.com/lobehub/lobe-ui/commit/d0d509e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.127.0](https://github.com/lobehub/lobe-ui/compare/v1.126.0...v1.127.0)
 
 <sup>Released on **2024-01-15**</sup>
