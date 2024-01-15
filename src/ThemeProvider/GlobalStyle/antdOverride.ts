@@ -63,12 +63,15 @@ export default (token: Theme) => css`
     padding: 0;
   }
 
-  .${token.prefixCls}-dropdown {
-    .${token.prefixCls}-dropdown-menu {
-      border: 1px solid ${token.colorBorderSecondary};
-      border-radius: ${token.borderRadius}px !important;
-      box-shadow: ${token.boxShadowSecondary};
-    }
+  .${token.prefixCls}-popover-inner {
+    border: 1px solid ${token.colorBorderSecondary};
+    box-shadow: ${token.boxShadowSecondary};
+  }
+
+  ul.${token.prefixCls}-dropdown-menu {
+    border: 1px solid ${token.colorBorderSecondary};
+    border-radius: ${token.borderRadius}px !important;
+    box-shadow: ${token.boxShadowSecondary};
   }
 
   @media (max-width: 575px) {
