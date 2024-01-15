@@ -14,7 +14,7 @@ export interface ItemGroup {
   title: FormGroupProps['title'];
 }
 
-export interface FormProps extends AntFormProps {
+export interface FormProps extends Omit<AntFormProps, 'variant'> {
   children?: ReactNode;
   footer?: ReactNode;
   itemMinWidth?: FormItemProps['minWidth'];
