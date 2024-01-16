@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.128.2](https://github.com/lobehub/lobe-ui/compare/v1.128.1...v1.128.2)
+
+<sup>Released on **2024-01-16**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Support loading onClick.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Support loading onClick ([40b188e](https://github.com/lobehub/lobe-ui/commit/40b188e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.128.1](https://github.com/lobehub/lobe-ui/compare/v1.128.0...v1.128.1)
 
 <sup>Released on **2024-01-15**</sup>
