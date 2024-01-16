@@ -28,7 +28,9 @@ const useStyles = createStyles(({ css, token }) => {
       border-top: 1px solid ${rgba(token.colorBorder, 0.25)};
     `,
     expand: css`
+      position: absolute;
       height: 100%;
+      background: ${token.colorBgLayout};
     `,
     expandButton: css`
       position: absolute;
