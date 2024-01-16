@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.128.3](https://github.com/lobehub/lobe-ui/compare/v1.128.2...v1.128.3)
+
+<sup>Released on **2024-01-16**</sup>
+
+#### 💄 Styles
+
+- **misc**: Use dvh instand of vh.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Use dvh instand of vh ([2fb3b99](https://github.com/lobehub/lobe-ui/commit/2fb3b99))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.128.2](https://github.com/lobehub/lobe-ui/compare/v1.128.1...v1.128.2)
 
 <sup>Released on **2024-01-16**</sup>
