@@ -38,6 +38,7 @@ const Image = memo<ImageProps>(
     alwaysShowActions,
     objectFit = 'cover',
     classNames = {},
+    onClick,
     ...rest
   }) => {
     const { mobile } = useResponsive();
@@ -47,16 +48,18 @@ const Image = memo<ImageProps>(
 
     if (isLoading)
       return (
-        <Skeleton.Avatar
-          active
-          style={{
-            borderRadius: theme.borderRadius,
-            height: size,
-            minHeight: minSize,
-            minWidth: minSize,
-            width: size,
-          }}
-        />
+        <div onClick={onClick}>
+          <Skeleton.Avatar
+            active
+            style={{
+              borderRadius: theme.borderRadius,
+              height: size,
+              minHeight: minSize,
+              minWidth: minSize,
+              width: size,
+            }}
+          />
+        </div>
       );
 
     return (
@@ -70,6 +73,7 @@ const Image = memo<ImageProps>(
               : 'https://gw.alipayobjects.com/zos/kitchen/QAvkgt30Ys/image_off_light.webp'
           }
           loading={'lazy'}
+          onClick={onClick}
           preview={
             preview === false
               ? false
