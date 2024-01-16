@@ -14,7 +14,7 @@ export const useStyles = createStyles(({ css, stylish, responsive }, headerHeigh
     app: css`
       overflow-x: hidden;
       overflow-y: auto;
-      height: 100vh;
+      height: 100dvh;
     `,
     aside: css`
       position: sticky;
@@ -25,7 +25,7 @@ export const useStyles = createStyles(({ css, stylish, responsive }, headerHeigh
       overflow-x: hidden;
       overflow-y: auto;
       width: 100%;
-      height: calc(100vh - ${headerHeight}px);
+      height: calc(100dvh - ${headerHeight}px);
     `,
     content: css`
       position: relative;

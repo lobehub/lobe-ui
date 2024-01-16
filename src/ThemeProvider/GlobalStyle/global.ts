@@ -33,11 +33,11 @@ export default (token: Theme) => css`
 
   body {
     overflow-x: hidden;
-    height: 100vh;
+    height: 100dvh;
   }
 
   #root {
-    min-height: 100vh;
+    min-height: 100dvh;
   }
 
   code {

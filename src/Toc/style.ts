@@ -14,7 +14,7 @@ export const useStyles = createStyles(
         css`
           overflow-x: hidden;
           overflow-y: auto;
-          max-height: 60vh !important;
+          max-height: 60dvh !important;
         `,
       ),
       container: css`
