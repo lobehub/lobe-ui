@@ -135,10 +135,17 @@ const DraggablePanel = memo<DraggablePanelProps>(
     destroyOnClose,
     hanlderStyle,
     classNames = {},
+    dir,
   }) => {
     const reference: any = useRef();
     const isHovering = useHover(reference);
     const isVertical = placement === 'top' || placement === 'bottom';
+
+    let internalPlacement = placement;
+    // reverse the placement when dir is rtl
+    if (dir === 'rtl' && ['left', 'right'].includes(placement)) {
+      internalPlacement = internalPlacement === 'left' ? 'right' : 'left';
+    }
 
     const { styles, cx } = useStyles(headerHeight);
 
@@ -165,9 +172,9 @@ const DraggablePanel = memo<DraggablePanelProps>(
       if (!canResizing) return {};
 
       return {
-        [revesePlacement(placement)]: styles[`${revesePlacement(placement)}Handle`],
+        [revesePlacement(internalPlacement)]: styles[`${revesePlacement(internalPlacement)}Handle`],
       };
-    }, [canResizing, placement]);
+    }, [canResizing, internalPlacement]);
 
     const resizing = {
       bottom: false,
@@ -178,7 +185,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
       top: false,
       topLeft: false,
       topRight: false,
-      [revesePlacement(placement)]: true,
+      [revesePlacement(internalPlacement)]: true,
       ...(resize as Enable),
     };
 
@@ -207,17 +214,17 @@ const DraggablePanel = memo<DraggablePanelProps>(
           size: size as Size,
         }
       : isVertical
-      ? {
-          minHeight: 0,
-          size: { height: 0 },
-        }
-      : {
-          minWidth: 0,
-          size: { width: 0 },
-        };
+        ? {
+            minHeight: 0,
+            size: { height: 0 },
+          }
+        : {
+            minWidth: 0,
+            size: { width: 0 },
+          };
 
     const { Arrow, className: arrowPlacement } = useMemo(() => {
-      switch (placement) {
+      switch (internalPlacement) {
         case 'top': {
           return { Arrow: ChevronDown, className: 'Bottom' };
         }
@@ -231,7 +238,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
           return { Arrow: ChevronRight, className: 'Right' };
         }
       }
-    }, [styles, placement]);
+    }, [styles, internalPlacement]);
 
     const handler = (
       <Center
@@ -296,9 +303,10 @@ const DraggablePanel = memo<DraggablePanelProps>(
         className={cx(
           styles.container,
           // @ts-ignore
-          styles[mode === 'fixed' ? 'fixed' : `${placement}Float`],
+          styles[mode === 'fixed' ? 'fixed' : `${internalPlacement}Float`],
           className,
         )}
+        dir={dir}
         ref={reference}
         style={isExpand ? { [`border${arrowPlacement}Width`]: 1 } : {}}
       >
