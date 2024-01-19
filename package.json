@@ -31,7 +31,6 @@
     "build:watch": "father dev",
     "ci": "npm run lint && npm run type-check",
     "clean": "rm -r es lib dist coverage .dumi/tmp .eslintcache node_modules/.cache",
-    "dev": "father dev",
     "docs:build": "dumi build",
     "docs:build-analyze": "ANALYZE=1 dumi build",
     "docs:dev": "dumi dev",
