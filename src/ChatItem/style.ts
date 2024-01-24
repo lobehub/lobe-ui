@@ -9,7 +9,6 @@ export const useStyles = createStyles(
       title,
       primary,
       avatarSize,
-      showTitle,
       editing,
     }: {
       avatarSize?: number;
@@ -173,6 +172,7 @@ export const useStyles = createStyles(
           position: relative;
           overflow: hidden;
           max-width: 100%;
+          margin-top: -16px;
 
           ${responsive.mobile} {
             overflow-x: auto;
@@ -193,11 +193,6 @@ export const useStyles = createStyles(
       ),
       messageExtra: cx('message-extra'),
       name: css`
-        position: ${showTitle ? 'relative' : 'absolute'};
-        top: ${showTitle ? 'unset' : '-16px'};
-        right: ${placement === 'right' ? '0' : 'unset'};
-        left: ${placement === 'left' ? '0' : 'unset'};
-
         margin-bottom: 6px;
 
         font-size: 12px;
