@@ -10,12 +10,14 @@ export const useStyles = createStyles(
       primary,
       avatarSize,
       editing,
+      time,
     }: {
       avatarSize?: number;
       editing?: boolean;
       placement?: 'left' | 'right';
       primary?: boolean;
       showTitle?: boolean;
+      time?: number;
       title?: string;
       type?: 'block' | 'pure';
     },
@@ -172,7 +174,7 @@ export const useStyles = createStyles(
           position: relative;
           overflow: hidden;
           max-width: 100%;
-          margin-top: -16px;
+          margin-top: ${time ? -16 : 0}px;
 
           ${responsive.mobile} {
             overflow-x: auto;
