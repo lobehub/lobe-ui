@@ -82,9 +82,6 @@ export const useStyles = createStyles(
         type === 'pure' && pureContainerStylish,
         css`
           position: relative;
-
-          overflow: hidden;
-
           width: 100%;
           max-width: 100vw;
           padding: 16px;
