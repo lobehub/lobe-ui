@@ -2,6 +2,33 @@
 
 # Changelog
 
+### [Version 1.128.5](https://github.com/lobehub/lobe-ui/compare/v1.128.4...v1.128.5)
+
+<sup>Released on **2024-01-25**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: No display of time, No display of time, No display of time on mobile.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: No display of time ([4ea7314](https://github.com/lobehub/lobe-ui/commit/4ea7314))
+- **misc**: No display of time ([0b6f78c](https://github.com/lobehub/lobe-ui/commit/0b6f78c))
+- **misc**: No display of time on mobile ([b1ad391](https://github.com/lobehub/lobe-ui/commit/b1ad391))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.128.4](https://github.com/lobehub/lobe-ui/compare/v1.128.3...v1.128.4)
 
 <sup>Released on **2024-01-16**</sup>
