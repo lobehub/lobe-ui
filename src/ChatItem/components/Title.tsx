@@ -14,7 +14,7 @@ export interface TitleProps {
 }
 
 const Title = memo<TitleProps>(({ showTitle, placement, time, avatar }) => {
-  const { styles } = useStyles({ placement, showTitle });
+  const { styles } = useStyles({ placement, showTitle, time });
 
   return (
     <Flexbox

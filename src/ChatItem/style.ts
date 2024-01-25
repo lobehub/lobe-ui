@@ -9,14 +9,15 @@ export const useStyles = createStyles(
       title,
       primary,
       avatarSize,
-      showTitle,
       editing,
+      time,
     }: {
       avatarSize?: number;
       editing?: boolean;
       placement?: 'left' | 'right';
       primary?: boolean;
       showTitle?: boolean;
+      time?: number;
       title?: string;
       type?: 'block' | 'pure';
     },
@@ -81,9 +82,6 @@ export const useStyles = createStyles(
         type === 'pure' && pureContainerStylish,
         css`
           position: relative;
-
-          overflow: hidden;
-
           width: 100%;
           max-width: 100vw;
           padding: 16px;
@@ -173,6 +171,7 @@ export const useStyles = createStyles(
           position: relative;
           overflow: hidden;
           max-width: 100%;
+          margin-top: ${time ? -16 : 0}px;
 
           ${responsive.mobile} {
             overflow-x: auto;
@@ -193,11 +192,6 @@ export const useStyles = createStyles(
       ),
       messageExtra: cx('message-extra'),
       name: css`
-        position: ${showTitle ? 'relative' : 'absolute'};
-        top: ${showTitle ? 'unset' : '-16px'};
-        right: ${placement === 'right' ? '0' : 'unset'};
-        left: ${placement === 'left' ? '0' : 'unset'};
-
         margin-bottom: 6px;
 
         font-size: 12px;

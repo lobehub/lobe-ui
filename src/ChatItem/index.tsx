@@ -44,6 +44,7 @@ const ChatItem = memo<ChatItemProps>(
       placement,
       primary,
       showTitle,
+      time,
       title: avatar.title,
       type,
     });
