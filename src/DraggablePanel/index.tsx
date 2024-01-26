@@ -1,8 +1,9 @@
 import { useHover } from 'ahooks';
+import { ConfigProvider } from 'antd';
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
 import type { Enable, NumberSize, Size } from 're-resizable';
 import { HandleClassName, Resizable } from 're-resizable';
-import { type CSSProperties, memo, useEffect, useMemo, useRef, useState } from 'react';
+import { type CSSProperties, memo, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Center } from 'react-layout-kit';
 import type { Props as RndProps } from 'react-rnd';
 import useControlledState from 'use-merge-value';
@@ -141,9 +142,13 @@ const DraggablePanel = memo<DraggablePanelProps>(
     const isHovering = useHover(reference);
     const isVertical = placement === 'top' || placement === 'bottom';
 
+    // inherit direction from Ant Design ConfigProvider
+    const { direction: antdDirection } = useContext(ConfigProvider.ConfigContext);
+    const direction = dir ?? antdDirection;
+
     let internalPlacement = placement;
     // reverse the placement when dir is rtl
-    if (dir === 'rtl' && ['left', 'right'].includes(placement)) {
+    if (direction === 'rtl' && ['left', 'right'].includes(placement)) {
       internalPlacement = internalPlacement === 'left' ? 'right' : 'left';
     }
 
