@@ -63,7 +63,7 @@ $ bun add @lobehub/ui
 ### Compile with NextJS
 
 > \[!NOTE]\
-> By work correct with nextjs ssr, add `transpilePackages: ['@lobehub/ui']` to `next.config.js`. For example:
+> By work correct with nextjs page router SSR, add `transpilePackages: ['@lobehub/ui']` to `next.config.js`. For example:
 
 ```js
 // next.config.js
