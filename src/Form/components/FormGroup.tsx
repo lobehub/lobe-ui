@@ -145,7 +145,7 @@ export interface FormGroupProps extends CollapseProps {
   children: ReactNode;
   defaultActive?: boolean;
   extra?: ReactNode;
-  icon?: IconProps['icon'];
+  icon?: IconProps['icon'] | ReactNode;
   itemsType?: ItemsType;
   title?: string;
   variant?: FormVariant;
@@ -168,7 +168,7 @@ const FormGroup = memo<FormGroupProps>(
 
     const titleContent = (
       <Flexbox className={styles.title} gap={8} horizontal>
-        {icon && <Icon icon={icon} />}
+        {icon && typeof icon === 'function' ? <Icon icon={icon} /> : icon}
         {title}
       </Flexbox>
     );
