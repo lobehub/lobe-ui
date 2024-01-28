@@ -20,8 +20,8 @@ export const useStyles = createStyles(({ css, token, stylish, cx }) => ({
 
       position: absolute;
       z-index: 5;
-      top: 50%;
-      right: 0;
+      inset-block-start: 50%;
+      inset-inline-end: 12px;
       transform: translateY(-50%);
 
       color: ${token.colorTextDescription};
