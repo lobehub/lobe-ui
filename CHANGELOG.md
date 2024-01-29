@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.128.8](https://github.com/lobehub/lobe-ui/compare/v1.128.7...v1.128.8)
+
+<sup>Released on **2024-01-29**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Revert to fix.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Revert to fix ([20acfdc](https://github.com/lobehub/lobe-ui/commit/20acfdc))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.128.7](https://github.com/lobehub/lobe-ui/compare/v1.128.6...v1.128.7)
 
 <sup>Released on **2024-01-28**</sup>
