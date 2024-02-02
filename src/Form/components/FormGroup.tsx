@@ -147,7 +147,7 @@ export interface FormGroupProps extends CollapseProps {
   extra?: ReactNode;
   icon?: IconProps['icon'];
   itemsType?: ItemsType;
-  title?: string;
+  title?: ReactNode;
   variant?: FormVariant;
 }
 
