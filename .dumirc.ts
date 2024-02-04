@@ -36,9 +36,10 @@ const themeConfig = {
   name: 'UI',
   nav: [
     { link: '/components/action-icon', title: 'Components' },
-    { link: 'https://ant.design/components/overview', mode: 'override', title: 'AntdComponents' },
     { link: '/colors', title: 'Colors' },
-    { link: 'https://lucide.dev/icons', mode: 'override', title: 'Icons' },
+    { link: 'http://icons.lobehub.com', mode: 'override', title: 'Icons' },
+    { link: 'https://ant.design/components/overview', mode: 'override', title: 'Antd Components' },
+    { link: 'https://lucide.dev/icons', mode: 'override', title: 'Lucide Icons' },
     { link: 'https://ant-design.github.io/antd-style', mode: 'override', title: 'CSSinJS' },
     { link: '/changelog', title: 'Changelog' },
   ],
