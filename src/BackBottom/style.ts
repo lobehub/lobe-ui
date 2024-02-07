@@ -8,8 +8,8 @@ export const useStyles = createStyles(({ token, css, stylish, cx, responsive }, 
       pointer-events: ${visible ? 'all' : 'none'};
 
       position: absolute;
-      right: 16px;
-      bottom: 16px;
+      inset-block-end: 16px;
+      inset-inline-end: 16px;
       transform: translateY(${visible ? 0 : '16px'});
 
       padding-inline: 12px !important;
@@ -20,10 +20,10 @@ export const useStyles = createStyles(({ token, css, stylish, cx, responsive }, 
       border-radius: 16px !important;
 
       ${responsive.mobile} {
-        right: 0;
-        border-right: none;
-        border-top-right-radius: 0 !important;
-        border-bottom-right-radius: 0 !important;
+        inset-inline-end: 0;
+        border-inline-end: none;
+        border-start-end-radius: 0 !important;
+        border-end-end-radius: 0 !important;
       }
     `,
   ),

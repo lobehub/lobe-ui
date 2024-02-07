@@ -6,8 +6,7 @@ export default (token: Theme) => css`
     --font-settings: 'cv01', 'tnum', 'kern';
     --font-variations: 'opsz' auto, tabular-nums;
 
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden auto;
 
     margin: 0;
     padding: 0;

@@ -18,8 +18,10 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
     `,
     tabs: css`
       ${prefix}-tab + ${prefix}-tab {
-        margin: ${marginHoriz}px 4px !important;
-        padding: 0 12px !important;
+        margin-block: ${marginHoriz}px !important;
+        margin-inline: 4px !important;
+        padding-block: 0 !important;
+        padding-inline: 12px !important;
       }
 
       ${prefix}-tab {
@@ -27,8 +29,10 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
         transition: background-color 100ms ease-out;
 
         &:first-child {
-          margin: ${marginHoriz}px 4px ${marginHoriz}px 0;
-          padding: ${paddingVertical}px 12px !important;
+          margin-block: ${marginHoriz}px;
+          margin-inline: 0 4px;
+          padding-block: ${paddingVertical}px !important;
+          padding-inline: 12px !important;
         }
 
         &:hover {
@@ -39,7 +43,7 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
       }
 
       ${prefix}-nav {
-        margin-bottom: 0;
+        margin-block-end: 0;
 
         &::before {
           display: none;

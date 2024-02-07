@@ -28,7 +28,8 @@ export default (token: Theme) => css`
     justify-content: center;
 
     min-height: unset;
-    padding: 4px 8px;
+    padding-block: 4px;
+    padding-inline: 8px;
 
     color: ${token.colorBgLayout} !important;
 

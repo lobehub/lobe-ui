@@ -19,7 +19,8 @@ export const useStyles = createStyles(({ css, token }) => {
       height: 44px;
       min-height: 44px;
       max-height: 44px;
-      padding: 0 6px;
+      padding-block: 0;
+      padding-inline: 6px;
     `,
     left: css`
       justify-content: flex-start;

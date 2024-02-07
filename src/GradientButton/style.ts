@@ -36,8 +36,8 @@ export const useStyles = createStyles(
 
           position: absolute;
           z-index: -1;
-          top: 1px;
-          left: 1px;
+          inset-block-start: 1px;
+          inset-inline-start: 1px;
 
           width: calc(100% - 2px);
           height: calc(100% - 2px);
@@ -50,8 +50,8 @@ export const useStyles = createStyles(
         ${stylish.gradientAnimation}
         position: absolute;
         z-index: -2;
-        top: 0;
-        left: 0;
+        inset-block-start: 0;
+        inset-inline-start: 0;
 
         width: 100%;
         height: 100%;

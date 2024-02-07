@@ -21,8 +21,8 @@ export const useStyles = createStyles(
         css`
           position: absolute;
           z-index: 2;
-          top: ${type === 'pure' ? 0 : '8px'};
-          right: ${type === 'pure' ? 0 : '8px'};
+          inset-block-start: ${type === 'pure' ? 0 : '8px'};
+          inset-inline-end: ${type === 'pure' ? 0 : '8px'};
 
           opacity: 0;
         `,
@@ -63,7 +63,8 @@ export const useStyles = createStyles(
         `,
       ),
       header: css`
-        padding: 4px 8px;
+        padding-block: 4px;
+        padding-inline: 8px;
         background: ${token.colorFillQuaternary};
       `,
       lang: cx(
@@ -72,8 +73,8 @@ export const useStyles = createStyles(
         css`
           position: absolute;
           z-index: 2;
-          right: 0;
-          bottom: 8px;
+          inset-block-end: 8px;
+          inset-inline-end: 0;
 
           font-family: ${token.fontFamilyCode};
           color: ${token.colorTextSecondary};

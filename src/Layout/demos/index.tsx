@@ -5,12 +5,12 @@ import { Flexbox } from 'react-layout-kit';
 const useStyles = createStyles(({ css, token }) => ({
   footer: css`
     height: 36px;
-    border-top: 1px solid ${token.colorBorder};
+    border-block-start: 1px solid ${token.colorBorder};
   `,
   header: css`
     height: 100%;
     background: ${token.cyan5A};
-    border-bottom: 1px solid ${token.colorBorder};
+    border-block-end: 1px solid ${token.colorBorder};
   `,
 }));
 

@@ -5,7 +5,8 @@ import { Flexbox } from 'react-layout-kit';
 
 const useStyles = createStyles(({ cx, css, token }) => ({
   small: css`
-    padding: 2px 6px;
+    padding-block: 2px;
+    padding-inline: 6px;
     line-height: 1;
   `,
   tag: cx(css`

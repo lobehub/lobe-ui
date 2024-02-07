@@ -23,7 +23,9 @@ export const useStyles = createStyles(
     },
   ) => {
     const blockStylish = css`
-      padding: 8px 12px;
+      padding-block: 8px;
+      padding-inline: 12px;
+
       background-color: ${primary
         ? isDarkMode
           ? token.colorFill
@@ -32,15 +34,16 @@ export const useStyles = createStyles(
           ? token.colorFillSecondary
           : token.colorBgContainer};
       border-radius: ${token.borderRadiusLG}px;
+
       transition: background-color 100ms ${token.motionEaseOut};
     `;
 
     const pureStylish = css`
-      padding-top: ${title ? 0 : '6px'};
+      padding-block-start: ${title ? 0 : '6px'};
     `;
 
     const pureContainerStylish = css`
-      margin-bottom: -16px;
+      margin-block-end: -16px;
       transition: background-color 100ms ${token.motionEaseOut};
     `;
 
@@ -111,14 +114,16 @@ export const useStyles = createStyles(
           }
 
           ${responsive.mobile} {
-            padding: 4px 8px;
+            padding-block: 4px;
+            padding-inline: 8px;
           }
         `,
       ),
       editingContainer: cx(
         editingStylish,
         css`
-          padding: 8px 12px 12px;
+          padding-block: 8px 12px;
+          padding-inline: 12px;
           border: 1px solid ${token.colorBorderSecondary};
 
           &:active,
@@ -143,9 +148,9 @@ export const useStyles = createStyles(
 
       loading: css`
         position: absolute;
-        right: ${placement === 'left' ? '-4px' : 'unset'};
-        bottom: 0;
-        left: ${placement === 'right' ? '-4px' : 'unset'};
+        inset-block-end: 0;
+        inset-inline: ${placement === 'right' ? '-4px' : 'unset'}
+          ${placement === 'left' ? '-4px' : 'unset'};
 
         width: 16px;
         height: 16px;
@@ -171,7 +176,7 @@ export const useStyles = createStyles(
           position: relative;
           overflow: hidden;
           max-width: 100%;
-          margin-top: ${time ? -16 : 0}px;
+          margin-block-start: ${time ? -16 : 0}px;
 
           ${responsive.mobile} {
             overflow-x: auto;
@@ -192,7 +197,7 @@ export const useStyles = createStyles(
       ),
       messageExtra: cx('message-extra'),
       name: css`
-        margin-bottom: 6px;
+        margin-block-end: 6px;
 
         font-size: 12px;
         line-height: 1;

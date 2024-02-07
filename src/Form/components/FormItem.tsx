@@ -11,7 +11,8 @@ const { Item } = Form;
 export const useStyles = createStyles(
   ({ css, responsive, prefixCls }, itemMinWidth?: string | number) => ({
     item: css`
-      padding: 16px 0;
+      padding-block: 16px;
+      padding-inline: 0;
 
       .${prefixCls}-row {
         justify-content: space-between;
@@ -34,7 +35,8 @@ export const useStyles = createStyles(
       `}
 
       ${responsive.mobile} {
-        padding: 16px 0;
+        padding-block: 16px;
+        padding-inline: 0;
 
         ${itemMinWidth
           ? css`
@@ -58,7 +60,7 @@ export const useStyles = createStyles(
     `,
     itemNoDivider: css`
       &:not(:first-child) {
-        padding-top: 0;
+        padding-block-start: 0;
       }
     `,
   }),

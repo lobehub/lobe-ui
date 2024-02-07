@@ -21,7 +21,7 @@ export const useStyles = createStyles(
         }
       `,
       drawerRoot: css`
-        top: ${headerHeight + 1}px;
+        inset-block-start: ${headerHeight + 1}px;
 
         :focus-visible {
           outline: none;
@@ -42,7 +42,7 @@ export const useStyles = createStyles(
       fillRect: css`
         flex: 1;
         width: 100%;
-        border-top: none;
+        border-block-start: none;
       `,
 
       menu: css`
@@ -52,7 +52,7 @@ export const useStyles = createStyles(
         > .${prefixCls}-menu-item-only-child, .${prefixCls}-menu-submenu-title {
           width: 100%;
           margin: 0 !important;
-          border-top: none;
+          border-block-start: none;
           border-radius: 0;
 
           &:active {
@@ -62,7 +62,7 @@ export const useStyles = createStyles(
         }
 
         .${prefixCls}-menu-item-only-child:first-child {
-          border-top: none;
+          border-block-start: none;
         }
 
         .${prefixCls}-menu-submenu-title[aria-expanded='true'] {
@@ -73,8 +73,7 @@ export const useStyles = createStyles(
         }
 
         .${prefixCls}-menu-item-group-title {
-          padding-top: 8px;
-          padding-bottom: 8px;
+          padding-block: 8px;
 
           font-size: 12px;
           font-weight: 500;

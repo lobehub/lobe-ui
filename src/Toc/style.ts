@@ -12,14 +12,13 @@ export const useStyles = createStyles(
       anchor: cx(
         stylish.blur,
         css`
-          overflow-x: hidden;
-          overflow-y: auto;
+          overflow: hidden auto;
           max-height: 60dvh !important;
         `,
       ),
       container: css`
         position: sticky;
-        top: ${headerHeight + 64}px;
+        inset-block-start: ${headerHeight + 64}px;
 
         overscroll-behavior: contain;
         grid-area: toc;
@@ -33,13 +32,15 @@ export const useStyles = createStyles(
 
         ${responsive.mobile} {
           position: relative;
-          left: 0;
+          inset-inline-start: 0;
           width: 100%;
-          margin-top: 0;
+          margin-block-start: 0;
         }
 
         > h4 {
-          margin: 0 0 8px;
+          margin-block: 0 8px;
+          margin-inline: 0;
+
           font-size: 12px;
           line-height: 1;
           color: ${token.colorTextDescription};
@@ -51,7 +52,7 @@ export const useStyles = createStyles(
           width: 100%;
 
           background-color: ${rgba(token.colorBgLayout, 0.5)};
-          border-bottom: 1px solid ${token.colorSplit};
+          border-block-end: 1px solid ${token.colorSplit};
           border-radius: 0;
           box-shadow: ${token.boxShadowSecondary};
 
@@ -61,7 +62,8 @@ export const useStyles = createStyles(
 
           .${prefixCls}-collapse-header {
             z-index: 10;
-            padding: 8px 16px !important;
+            padding-block: 8px !important;
+            padding-inline: 16px !important;
           }
         `,
       ),

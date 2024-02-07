@@ -16,7 +16,8 @@ export const useStyles = createStyles(({ css, cx, token, prefixCls }, type: 'gho
 
         max-width: 100%;
         height: 38px;
-        padding: 0 8px 0 12px;
+        padding-block: 0;
+        padding-inline: 12px 8px;
 
         border-radius: ${token.borderRadius}px;
 
@@ -37,8 +38,7 @@ export const useStyles = createStyles(({ css, cx, token, prefixCls }, type: 'gho
         }
 
         pre {
-          overflow-x: auto !important;
-          overflow-y: hidden !important;
+          overflow: auto hidden !important;
           display: flex;
           align-items: center;
 

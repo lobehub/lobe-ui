@@ -15,7 +15,7 @@ export const useStyles = createStyles(
         color: ${token.colorTextDescription};
         text-align: center;
 
-        border-top: 1px solid ${token.colorSplit};
+        border-block-start: 1px solid ${token.colorSplit};
 
         ${responsive.mobile} {
           flex-direction: column;
@@ -54,12 +54,13 @@ export const useStyles = createStyles(
           }
 
           &-column {
-            text-align: left;
+            text-align: start;
 
             h2 {
               position: relative;
 
-              margin: 0 auto;
+              margin-block: 0;
+              margin-inline: auto;
 
               font-size: 16px;
               font-weight: 500;
@@ -68,7 +69,7 @@ export const useStyles = createStyles(
 
             &-icon {
               position: relative;
-              top: -1px;
+              inset-block-start: -1px;
 
               display: inline-block;
 
@@ -88,11 +89,12 @@ export const useStyles = createStyles(
           }
 
           &-item {
-            margin: 12px 0;
+            margin-block: 12px;
+            margin-inline: 0;
 
             &-icon {
               position: relative;
-              top: -1px;
+              inset-block-start: -1px;
 
               display: inline-block;
 
@@ -111,7 +113,8 @@ export const useStyles = createStyles(
             }
 
             &-separator {
-              margin: 0 0.3em;
+              margin-block: 0;
+              margin-inline: 0.3em;
             }
           }
 
@@ -121,8 +124,10 @@ export const useStyles = createStyles(
             &-container {
               width: 100%;
               max-width: ${contentMaxWidth}px;
-              margin: 0 auto;
-              padding: 16px 0;
+              margin-block: 0;
+              margin-inline: auto;
+              padding-block: 16px;
+              padding-inline: 0;
 
               line-height: 32px;
               text-align: center;
@@ -140,7 +145,7 @@ export const useStyles = createStyles(
           }
 
           &-light &-bottom-container {
-            border-top-color: #e8e8e8;
+            border-block-start-color: #e8e8e8;
           }
 
           &-light &-item-separator,
@@ -152,7 +157,8 @@ export const useStyles = createStyles(
         ${responsive.mobile} {
           .${prefix} {
             &-container {
-              padding: 40px 0;
+              padding-block: 40px;
+              padding-inline: 0;
             }
 
             &-columns {
@@ -161,11 +167,11 @@ export const useStyles = createStyles(
 
             &-column {
               display: block;
-              margin-bottom: 40px;
+              margin-block-end: 40px;
               text-align: center;
 
               &:last-child {
-                margin-bottom: 0;
+                margin-block-end: 0;
               }
             }
           }

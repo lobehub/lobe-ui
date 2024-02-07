@@ -3,8 +3,8 @@ import { createStyles } from 'antd-style';
 export const useStyles = createStyles(({ css, token, isDarkMode }) => ({
   close: css`
     position: absolute;
-    top: 8px;
-    right: 8px;
+    inset-block-start: 8px;
+    inset-inline-end: 8px;
   `,
   container: css`
     position: relative;
@@ -20,7 +20,8 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => ({
     border-radius: ${token.borderRadius}px;
   `,
   content: css`
-    padding: 0 16px 16px;
+    padding-block: 0 16px;
+    padding-inline: 16px;
   `,
   desc: css`
     color: ${token.colorTextDescription};

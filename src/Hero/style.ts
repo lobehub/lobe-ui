@@ -2,7 +2,7 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ cx, css, responsive, token, stylish }) => ({
   actions: css`
-    margin-top: 24px;
+    margin-block-start: 24px;
 
     button {
       padding-inline: 32px !important;
@@ -13,7 +13,7 @@ export const useStyles = createStyles(({ cx, css, responsive, token, stylish }) 
       flex-direction: column;
       gap: 16px;
       width: 100%;
-      margin-top: 24px;
+      margin-block-start: 24px;
 
       button {
         width: 100%;
@@ -28,8 +28,8 @@ export const useStyles = createStyles(({ cx, css, responsive, token, stylish }) 
 
       position: absolute;
       z-index: 10;
-      top: -250px;
-      left: 50%;
+      inset-block-start: -250px;
+      inset-inline-start: 50%;
       transform: translateX(-50%) scale(1.5);
 
       width: 600px;
@@ -52,13 +52,14 @@ export const useStyles = createStyles(({ cx, css, responsive, token, stylish }) 
   `,
 
   desc: css`
-    margin-top: 0;
+    margin-block-start: 0;
     font-size: ${token.fontSizeHeading3}px;
     color: ${token.colorTextSecondary};
     text-align: center;
 
     ${responsive.mobile} {
-      margin: 24px 16px;
+      margin-block: 24px;
+      margin-inline: 16px;
       font-size: ${token.fontSizeHeading5}px;
     }
   `,

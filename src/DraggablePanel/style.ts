@@ -74,9 +74,8 @@ export const useStyles = createStyles(({ token }, headerHeight: number) => {
     bottomFloat: cx(
       float,
       css`
-        right: 0;
-        bottom: 0;
-        left: 0;
+        inset-block-end: 0;
+        inset-inline: 0 0;
         width: 100%;
       `,
     ),
@@ -86,7 +85,7 @@ export const useStyles = createStyles(({ token }, headerHeight: number) => {
         ${commonHandle};
 
         &::before {
-          bottom: 50%;
+          inset-block-end: 50%;
           width: 100%;
           height: 2px;
         }
@@ -110,7 +109,8 @@ export const useStyles = createStyles(({ token }, headerHeight: number) => {
     `,
     fullscreen: css`
       position: absolute;
-      inset: ${headerHeight}px 0 0 0;
+      inset-block: ${headerHeight}px 0;
+      inset-inline: 0;
 
       width: 100%;
       height: calc(100% - ${headerHeight}px);
@@ -126,9 +126,8 @@ export const useStyles = createStyles(({ token }, headerHeight: number) => {
     leftFloat: cx(
       float,
       css`
-        top: ${headerHeight}px;
-        bottom: 0;
-        left: 0;
+        inset-block: ${headerHeight}px 0;
+        inset-inline-start: 0;
         height: calc(100% - ${headerHeight}px);
       `,
     ),
@@ -137,7 +136,7 @@ export const useStyles = createStyles(({ token }, headerHeight: number) => {
         ${commonHandle};
 
         &::before {
-          left: 50%;
+          inset-inline-start: 50%;
           width: 2px;
           height: 100%;
         }
@@ -154,9 +153,8 @@ export const useStyles = createStyles(({ token }, headerHeight: number) => {
     rightFloat: cx(
       float,
       css`
-        top: ${headerHeight}px;
-        right: 0;
-        bottom: 0;
+        inset-block: ${headerHeight}px 0;
+        inset-inline-end: 0;
         height: calc(100% - ${headerHeight}px);
       `,
     ),
@@ -164,7 +162,7 @@ export const useStyles = createStyles(({ token }, headerHeight: number) => {
       css`
         ${commonHandle};
         &::before {
-          right: 50%;
+          inset-inline-end: 50%;
           width: 2px;
           height: 100%;
         }
@@ -176,16 +174,16 @@ export const useStyles = createStyles(({ token }, headerHeight: number) => {
       `${prefix}-toggle-bottom`,
       commonToggle,
       css`
-        bottom: -${offset}px;
+        inset-block-end: -${offset}px;
         width: 100%;
         height: ${toggleShort}px;
 
         > div {
-          left: 50%;
+          inset-inline-start: 50%;
 
           width: ${toggleLength}px;
           height: 16px;
-          margin-left: -20px;
+          margin-inline-start: -20px;
 
           border-radius: 0 0 4px 4px;
         }
@@ -196,16 +194,16 @@ export const useStyles = createStyles(({ token }, headerHeight: number) => {
       `${prefix}-toggle-left`,
       commonToggle,
       css`
-        left: -${offset}px;
+        inset-inline-start: -${offset}px;
         width: ${toggleShort}px;
         height: 100%;
 
         > div {
-          top: 50%;
+          inset-block-start: 50%;
 
           width: ${toggleShort}px;
           height: ${toggleLength}px;
-          margin-top: -20px;
+          margin-block-start: -20px;
 
           border-radius: 4px 0 0 4px;
         }
@@ -216,16 +214,16 @@ export const useStyles = createStyles(({ token }, headerHeight: number) => {
       `${prefix}-toggle-right`,
       commonToggle,
       css`
-        right: -${offset}px;
+        inset-inline-end: -${offset}px;
         width: ${toggleShort}px;
         height: 100%;
 
         > div {
-          top: 50%;
+          inset-block-start: 50%;
 
           width: ${toggleShort}px;
           height: ${toggleLength}px;
-          margin-top: -20px;
+          margin-block-start: -20px;
 
           border-radius: 0 4px 4px 0;
         }
@@ -236,16 +234,16 @@ export const useStyles = createStyles(({ token }, headerHeight: number) => {
       `${prefix}-toggle-top`,
       commonToggle,
       css`
-        top: -${offset}px;
+        inset-block-start: -${offset}px;
         width: 100%;
         height: ${toggleShort}px;
 
         > div {
-          left: 50%;
+          inset-inline-start: 50%;
 
           width: ${toggleLength}px;
           height: ${toggleShort}px;
-          margin-left: -20px;
+          margin-inline-start: -20px;
 
           border-radius: 4px 4px 0 0;
         }
@@ -254,9 +252,8 @@ export const useStyles = createStyles(({ token }, headerHeight: number) => {
     topFloat: cx(
       float,
       css`
-        top: ${headerHeight}px;
-        right: 0;
-        left: 0;
+        inset-block-start: ${headerHeight}px;
+        inset-inline: 0 0;
         width: 100%;
       `,
     ),
@@ -266,7 +263,7 @@ export const useStyles = createStyles(({ token }, headerHeight: number) => {
         ${commonHandle};
 
         &::before {
-          top: 50%;
+          inset-block-start: 50%;
           width: 100%;
           height: 2px;
         }

@@ -9,11 +9,12 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) =
       css`
         position: absolute;
         z-index: 10;
-        top: 0;
-        right: 0;
+        inset-block-start: 0;
+        inset-inline-end: 0;
 
         height: 34px;
-        padding: 0 8px;
+        padding-block: 0;
+        padding-inline: 8px;
 
         font-family: ${token.fontFamilyCode};
         color: ${token.colorTextTertiary};

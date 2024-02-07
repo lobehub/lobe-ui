@@ -13,7 +13,7 @@ export const useStyles = createStyles(({ css, token }) => {
       width: 100vw;
 
       background: ${token.colorBgLayout};
-      border-top: 1px solid ${rgba(token.colorBorder, 0.25)};
+      border-block-start: 1px solid ${rgba(token.colorBorder, 0.25)};
     `,
 
     icon: css`

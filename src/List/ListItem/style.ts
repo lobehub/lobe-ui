@@ -4,8 +4,8 @@ export const useStyles = createStyles(({ css, token }) => {
   return {
     actions: css`
       position: absolute;
-      top: 50%;
-      right: 16px;
+      inset-block-start: 50%;
+      inset-inline-end: 16px;
       transform: translateY(-50%);
     `,
     active: css`
@@ -50,8 +50,8 @@ export const useStyles = createStyles(({ css, token }) => {
 
     pin: css`
       position: absolute;
-      top: 6px;
-      right: 6px;
+      inset-block-start: 6px;
+      inset-inline-end: 6px;
     `,
     time: css`
       font-size: 12px;

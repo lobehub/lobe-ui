@@ -12,7 +12,8 @@ export const useStyles = createStyles(({ css, token, responsive }, noPadding: bo
 
       ${!noPadding &&
       css`
-        padding: 40px 24px;
+        padding-block: 40px;
+        padding-inline: 24px;
       `}
     `,
     leva: css`
@@ -32,9 +33,11 @@ export const useStyles = createStyles(({ css, token, responsive }, noPadding: bo
       --leva-fonts-mono: ${token.fontFamilyCode};
 
       overflow: auto;
+
       width: 100%;
       height: 100%;
-      padding: 6px 0;
+      padding-block: 6px;
+      padding-inline: 0;
 
       > div {
         background: transparent;
