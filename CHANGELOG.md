@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.129.2](https://github.com/lobehub/lobe-ui/compare/v1.129.1...v1.129.2)
+
+<sup>Released on **2024-02-22**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix SelectWithImg aria label.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix SelectWithImg aria label ([fb7844a](https://github.com/lobehub/lobe-ui/commit/fb7844a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.129.1](https://github.com/lobehub/lobe-ui/compare/v1.129.0...v1.129.1)
 
 <sup>Released on **2024-02-02**</sup>
