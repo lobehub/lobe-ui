@@ -9,6 +9,7 @@ import Img from '@/Img';
 import { useStyles } from './styles';
 
 export interface SelectWithImgOptionItem {
+  ariaLabel?: string;
   icon?: IconProps['icon'];
   img: string;
   label: ReactNode;
@@ -75,7 +76,12 @@ const SelectWithImg = memo<SelectWithImgProps>(
                 }}
               >
                 <div className={styles.img}>
-                  <Img height={height} src={item.img} width={width} />
+                  <Img
+                    alt={typeof item.label === 'string' ? item.label : item.ariaLabel}
+                    height={height}
+                    src={item.img}
+                    width={width}
+                  />
                 </div>
               </div>
               <Flexbox align={'center'} gap={4} horizontal>
