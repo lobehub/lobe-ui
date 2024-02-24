@@ -9,6 +9,7 @@ export const useStyles = createStyles(({ css, token }) => {
     container: css`
       overflow: hidden;
       flex: none;
+      user-select: none;
 
       width: 100vw;
 
