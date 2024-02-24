@@ -38,7 +38,8 @@ export const useStyles = createStyles(({ css, token }) => {
       width: 100%;
 
       font-size: 12px;
-      line-height: 1;
+      line-height: 1.125em;
+      margin-top: -0.125em;
       text-align: center;
       text-overflow: ellipsis;
       white-space: nowrap;
