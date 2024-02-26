@@ -137,7 +137,9 @@ const Alert = memo<AlertProps>(
               onClick={() => setExpand(!expand)}
               size={{ blockSize: 24, fontSize: 18 }}
             />
-            <div>{text?.detail || 'Show Details'}</div>
+            <div className={cx(styles.expandText)} onClick={() => setExpand(!expand)}>
+              {text?.detail || 'Show Details'}
+            </div>
           </Flexbox>
           {expand && (
             <div className={cx(styles.extraBody, variant === 'pure' && styles.variantPure)}>
