@@ -80,7 +80,7 @@
     "@emoji-mart/data": "^1",
     "@emoji-mart/react": "^1",
     "@floating-ui/react": "^0",
-    "@giscus/react": "^2",
+    "@giscus/react": "^3.0.0",
     "@lobehub/emojilib": "latest",
     "@react-spring/web": "^9",
     "@splinetool/react-spline": "^2",
