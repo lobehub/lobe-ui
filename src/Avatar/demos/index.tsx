@@ -11,7 +11,7 @@ export default () => {
       avatar: genCdnUrl({
         path: 'assets/logo-3d.webp',
         pkg: '@lobehub/assets-logo',
-        version: '1.1.0',
+        version: 'latest',
       }),
       background: '#FEE064',
       shape: {
