@@ -62,6 +62,11 @@ export const useStyles = createStyles(
             }
           `,
       ),
+      expandText: css`
+        &:hover {
+          cursor: pointer;
+        }
+      `,
       extra: css`
         position: relative;
 
