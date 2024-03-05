@@ -97,7 +97,7 @@
     "lucide-react": "latest",
     "polished": "^4",
     "prism-react-renderer": "^2",
-    "query-string": "^8",
+    "query-string": "^9.0.0",
     "rc-footer": "^0",
     "re-resizable": "^6",
     "react-error-boundary": "^4",
