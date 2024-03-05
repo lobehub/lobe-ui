@@ -8,12 +8,12 @@ export const useStyles = createStyles(({ css, stylish, responsive }, headerHeigh
 
     position: absolute;
     z-index: -1;
-    inset: -1px 0 ${responsive.mobile ? '-25%' : '-50%'};
+    inset-block: -1px ${responsive.mobile ? '-25%' : '-50%'};
+    inset-inline: 0;
   `;
   return {
     app: css`
-      overflow-x: hidden;
-      overflow-y: auto;
+      overflow: hidden auto;
       height: 100dvh;
     `,
     aside: css`
@@ -22,8 +22,7 @@ export const useStyles = createStyles(({ css, stylish, responsive }, headerHeigh
       height: 100%;
     `,
     asideInner: css`
-      overflow-x: hidden;
-      overflow-y: auto;
+      overflow: hidden auto;
       width: 100%;
       height: calc(100dvh - ${headerHeight}px);
     `,
@@ -53,7 +52,7 @@ export const useStyles = createStyles(({ css, stylish, responsive }, headerHeigh
     header: css`
       position: sticky;
       z-index: 999;
-      top: 0;
+      inset-block-start: 0;
       max-width: 100%;
     `,
     main: css`

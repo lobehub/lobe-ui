@@ -8,7 +8,7 @@ import { DivProps } from '@/types';
 export const useStyles = createStyles(({ css, token, prefixCls }) => ({
   formTitle: css`
     position: relative;
-    text-align: left;
+    text-align: start;
 
     > div {
       font-weight: 500;

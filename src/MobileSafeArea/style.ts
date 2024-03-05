@@ -3,7 +3,7 @@ import { createStyles } from 'antd-style';
 export const useStyles = createStyles(({ css }) => {
   return {
     bottom: css`
-      padding-bottom: env(safe-area-inset-bottom);
+      padding-block-end: env(safe-area-inset-bottom);
     `,
     container: css`
       overflow: hidden;
@@ -11,7 +11,7 @@ export const useStyles = createStyles(({ css }) => {
       width: 100vw;
     `,
     top: css`
-      padding-top: env(safe-area-inset-top);
+      padding-block-start: env(safe-area-inset-top);
     `,
   };
 });

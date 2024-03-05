@@ -31,9 +31,9 @@ export const useStyles = createStyles(
           align-items: flex-start;
 
           max-width: 100%;
-          padding-right: ${closable ? baseInlinePadding : baseInlinePadding * 1.5}px;
-          padding-left: ${showIcon ? baseInlinePadding : baseInlinePadding * 1.5}px;
           padding-block: ${baseBlockPadding}px;
+          padding-inline: ${showIcon ? baseInlinePadding : baseInlinePadding * 1.5}px
+            ${closable ? baseInlinePadding : baseInlinePadding * 1.5}px;
 
           .${prefixCls}-alert-message {
             font-weight: ${hasTitle ? 600 : 400};
@@ -70,9 +70,9 @@ export const useStyles = createStyles(
         max-width: 100%;
 
         border: 1px solid;
-        border-top: none;
-        border-bottom-right-radius: ${token.borderRadiusLG}px;
-        border-bottom-left-radius: ${token.borderRadiusLG}px;
+        border-block-start: none;
+        border-end-start-radius: ${token.borderRadiusLG}px;
+        border-end-end-radius: ${token.borderRadiusLG}px;
       `,
       extraBody: css`
         overflow-x: auto;
@@ -83,12 +83,12 @@ export const useStyles = createStyles(
       extraHeader: css`
         padding-block: ${baseBlockPadding * 0.75}px;
         padding-inline: ${baseInlinePadding * 0.75}px;
-        border-top: 1px dashed;
+        border-block-start: 1px dashed;
       `,
       hasExtra: css`
-        border-bottom: none;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
+        border-block-end: none;
+        border-end-start-radius: 0;
+        border-end-end-radius: 0;
       `,
       variantBlock: css`
         border: none;
@@ -102,8 +102,8 @@ export const useStyles = createStyles(
         border: none;
       `,
       variantPureExtraHeader: css`
-        margin-top: ${baseBlockPadding}px;
-        margin-left: ${-baseInlinePadding * 0.25}px;
+        margin-block-start: ${baseBlockPadding}px;
+        margin-inline-start: ${-baseInlinePadding * 0.25}px;
         padding-inline: 0;
       `,
     };

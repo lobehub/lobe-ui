@@ -21,7 +21,7 @@ export const useStyles = createStyles(({ css, token, stylish, cx }) => {
           ${rgba(token.colorBgLayout, 0.8)},
           ${rgba(token.colorBgLayout, 0.4)}
         );
-        border-bottom: 1px solid ${token.colorBorder};
+        border-block-end: 1px solid ${token.colorBorder};
       `,
     ),
     left: css`

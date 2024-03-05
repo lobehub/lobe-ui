@@ -3,7 +3,8 @@ import { createStyles } from 'antd-style';
 export const useStyles = createStyles(
   ({ cx, css, token }, { type, resize }: { resize: boolean; type: 'ghost' | 'block' | 'pure' }) => {
     const typeStylish = css`
-      padding: 8px 12px;
+      padding-block: 8px;
+      padding-inline: 12px;
 
       background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
       border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorderSecondary};
@@ -24,8 +25,7 @@ export const useStyles = createStyles(
       container: cx(
         type !== 'pure' && typeStylish,
         css`
-          overflow-x: hidden;
-          overflow-y: auto;
+          overflow: hidden auto;
           width: 100%;
           height: fit-content;
         `,
@@ -52,8 +52,7 @@ export const useStyles = createStyles(
         }
       `,
       textarea: css`
-        overflow-x: hidden;
-        overflow-y: auto;
+        overflow: hidden auto;
 
         height: 100% !important;
 

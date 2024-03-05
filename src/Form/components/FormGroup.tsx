@@ -96,8 +96,7 @@ export const useStyles = createStyles(
           }
 
           .${prefixCls}-collapse-content-box {
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
+            padding-block: 0 !important;
           }
 
           .${prefixCls}-form-item-label {
@@ -115,7 +114,8 @@ export const useStyles = createStyles(
         border-radius: ${token.borderRadiusLG}px;
       `,
       mobileGroupBody: css`
-        padding: 0 16px;
+        padding-block: 0;
+        padding-inline: 16px;
         background: ${token.colorBgContainer};
       `,
       mobileGroupHeader: css`

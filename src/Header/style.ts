@@ -4,12 +4,15 @@ import { rgba } from 'polished';
 export const useStyles = createStyles(({ css, responsive, token, cx }) => ({
   content: css`
     height: 64px;
-    padding: 0 24px;
+    padding-block: 0;
+    padding-inline: 24px;
+
     background-color: ${rgba(token.colorBgLayout, 0.4)};
-    border-bottom: 1px solid ${token.colorSplit};
+    border-block-end: 1px solid ${token.colorSplit};
 
     ${responsive.mobile} {
-      padding: 0 12px;
+      padding-block: 0;
+      padding-inline: 12px;
     }
   `,
   header: cx(css`
@@ -29,9 +32,12 @@ export const useStyles = createStyles(({ css, responsive, token, cx }) => ({
 
       ${responsive.mobile} {
         justify-content: center;
-        margin: 8px 16px;
-        padding-top: 24px;
-        border-top: 1px solid ${token.colorBorder};
+
+        margin-block: 8px;
+        margin-inline: 16px;
+        padding-block-start: 24px;
+
+        border-block-start: 1px solid ${token.colorBorder};
       }
     }
   `,

@@ -24,10 +24,9 @@ import ChatInputAreaInner, { type ChatInputAreaInnerProps } from '../ChatInputAr
 const useStyles = createStyles(({ css, token }) => {
   return {
     container: css`
-      padding-top: 12px;
-      padding-bottom: 12px;
+      padding-block: 12px 12px;
       background: ${token.colorFillQuaternary};
-      border-top: 1px solid ${rgba(token.colorBorder, 0.25)};
+      border-block-start: 1px solid ${rgba(token.colorBorder, 0.25)};
     `,
     expand: css`
       position: absolute;
@@ -36,14 +35,15 @@ const useStyles = createStyles(({ css, token }) => {
     `,
     expandButton: css`
       position: absolute;
-      left: 14px;
+      inset-inline-start: 14px;
     `,
     expandTextArea: css`
       flex: 1;
     `,
     inner: css`
       height: inherit;
-      padding: 0 8px;
+      padding-block: 0;
+      padding-inline: 8px;
     `,
   };
 });

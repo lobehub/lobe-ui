@@ -34,7 +34,7 @@ const useStyles = createStyles(
             justify-content: center;
 
             height: 56px;
-            margin-bottom: 0;
+            margin-block-end: 0;
             padding: 16px;
           }
           .${prefixCls}-modal-content {

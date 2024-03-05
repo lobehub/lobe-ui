@@ -16,11 +16,13 @@ const useStyles = createStyles(({ css }) => {
       gap: 8px;
 
       height: 100%;
-      padding: 12px 0 16px;
+      padding-block: 12px 16px;
+      padding-inline: 0;
     `,
     textarea: css`
       height: 100% !important;
-      padding: 0 24px;
+      padding-block: 0;
+      padding-inline: 24px;
       line-height: 1.5;
     `,
     textareaContainer: css`

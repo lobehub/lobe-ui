@@ -6,7 +6,8 @@ export const useStyles = createStyles(({ css, token, stylish, cx }) => ({
   `,
   input: css`
     position: relative;
-    padding: 0 8px 0 12px;
+    padding-block: 0;
+    padding-inline: 12px 8px;
   `,
   search: css`
     position: relative;

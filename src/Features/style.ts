@@ -39,7 +39,7 @@ export const useStyles = createStyles(
         p {
           font-size: 16px;
           line-height: 1.2;
-          text-align: left;
+          text-align: start;
           word-break: break-word;
         }
 
@@ -78,8 +78,9 @@ export const useStyles = createStyles(
 
             display: block;
 
-            margin: 12px 0;
-            padding-left: 12px;
+            margin-block: 12px;
+            margin-inline: 0;
+            padding-inline-start: 12px;
 
             color: ${token.colorTextDescription};
           }
@@ -107,7 +108,7 @@ export const useStyles = createStyles(
 
       link: css`
         ${withTransition};
-        margin-top: 24px;
+        margin-block-start: 24px;
       `,
 
       title: cx(
@@ -116,7 +117,8 @@ export const useStyles = createStyles(
         css`
           pointer-events: none;
 
-          margin: 16px 0;
+          margin-block: 16px;
+          margin-inline: 0;
 
           font-size: 20px;
           line-height: ${token.lineHeightHeading3};

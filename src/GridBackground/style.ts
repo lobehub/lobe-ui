@@ -35,8 +35,8 @@ export const useStyles = createStyles(
     return {
       background: css`
         position: absolute;
-        top: ${60 - height / 2}%;
-        left: ${50 - width / 2}%;
+        inset-block-start: ${60 - height / 2}%;
+        inset-inline-start: ${50 - width / 2}%;
         transform: rotateX(60deg);
 
         width: ${width}%;

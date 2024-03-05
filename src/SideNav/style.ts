@@ -5,9 +5,10 @@ export const useStyles = createStyles(
     width: 64px;
     height: 100%;
     min-height: 640px;
-    padding: 16px 0;
+    padding-block: 16px;
+    padding-inline: 0;
 
     background: ${token.colorBgContainer};
-    border-right: 1px solid ${token.colorBorder};
+    border-inline-end: 1px solid ${token.colorBorder};
   `,
 );

@@ -24,8 +24,8 @@ export const useStyles = createStyles(
 
       position: absolute;
       z-index: 1;
-      top: 0;
-      right: 0;
+      inset-block-start: 0;
+      inset-inline-end: 0;
 
       opacity: ${alwaysShowActions ? 1 : 0};
     `);

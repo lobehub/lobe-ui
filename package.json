@@ -150,6 +150,7 @@
     "remark-cli": "^11",
     "semantic-release": "^21",
     "stylelint": "^15",
+    "stylelint-use-logical-spec": "^5.0.1",
     "typescript": "^5",
     "vitest": "latest"
   },

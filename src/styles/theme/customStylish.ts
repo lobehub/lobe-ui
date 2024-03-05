@@ -82,13 +82,15 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         }
 
         &:not(:last-child) {
-          margin-bottom: 1.5em;
+          margin-block-end: 1.5em;
         }
       }
 
       blockquote {
-        margin: 16px 0;
-        padding: 0 12px;
+        margin-block: 16px;
+        margin-inline: 0;
+        padding-block: 0;
+        padding-inline: 12px;
 
         p {
           font-style: italic;
@@ -126,7 +128,8 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       }
 
       *:not([data-code-type='highlighter'], pre) code {
-        padding: 2px 6px;
+        padding-block: 2px;
+        padding-inline: 6px;
 
         font-size: ${token.fontSizeSM}px;
         color: ${cyanColor};
@@ -164,13 +167,13 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
             background: ${token.colorFillTertiary};
 
             &:first-child {
-              border-top-left-radius: ${token.borderRadius}px;
-              border-bottom-left-radius: ${token.borderRadius}px;
+              border-start-start-radius: ${token.borderRadius}px;
+              border-end-start-radius: ${token.borderRadius}px;
             }
 
             &:last-child {
-              border-top-right-radius: ${token.borderRadius}px;
-              border-bottom-right-radius: ${token.borderRadius}px;
+              border-start-end-radius: ${token.borderRadius}px;
+              border-end-end-radius: ${token.borderRadius}px;
             }
           }
         }
@@ -183,7 +186,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       > ol,
       > ul {
         > li {
-          margin-left: 24px;
+          margin-inline-start: 24px;
           line-height: 1.8;
 
           &::marker {
@@ -200,8 +203,9 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       }
 
       details {
-        margin-bottom: 1em;
-        padding: 12px 16px;
+        margin-block-end: 1em;
+        padding-block: 12px;
+        padding-inline: 16px;
 
         background: ${token.colorFillTertiary};
         border: 1px solid ${token.colorBorderSecondary};
@@ -212,44 +216,39 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
 
       details[open] {
         summary {
-          padding-bottom: 12px;
-          border-bottom: 1px solid ${token.colorBorder};
+          padding-block-end: 12px;
+          border-block-end: 1px solid ${token.colorBorder};
         }
       }
     `,
     markdownInChat: css`
       h1 {
-        margin-top: 0;
         margin-block-start: 0;
         font-size: 1.6em;
       }
 
       h2 {
-        margin-top: 0;
         margin-block-start: 0;
         font-size: 1.4em;
       }
 
       h3 {
-        margin-top: 0;
         margin-block-start: 0;
         font-size: 1.2em;
       }
 
       h4 {
-        margin-top: 0;
         margin-block-start: 0;
         font-size: 1.1em;
       }
 
       h5 {
-        margin-top: 0;
         margin-block-start: 0;
         font-size: 1em;
       }
 
       > *:last-child {
-        margin-bottom: 0 !important;
+        margin-block-end: 0 !important;
       }
 
       p {
@@ -261,7 +260,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         }
 
         &:not(:last-child) {
-          margin-bottom: 1em !important;
+          margin-block-end: 1em !important;
         }
       }
     `,

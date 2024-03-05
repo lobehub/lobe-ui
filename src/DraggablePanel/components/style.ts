@@ -2,8 +2,7 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ css, token }) => ({
   body: css`
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden auto;
     padding: 16px;
   `,
   container: css`
@@ -11,12 +10,14 @@ export const useStyles = createStyles(({ css, token }) => ({
     overflow: hidden;
   `,
   footer: css`
-    padding: 8px 16px;
-    border-top: 1px solid ${token.colorBorderSecondary};
+    padding-block: 8px;
+    padding-inline: 16px;
+    border-block-start: 1px solid ${token.colorBorderSecondary};
   `,
   header: css`
-    padding: 8px 16px;
+    padding-block: 8px;
+    padding-inline: 16px;
     font-weight: 500;
-    border-bottom: 1px solid ${token.colorBorderSecondary};
+    border-block-end: 1px solid ${token.colorBorderSecondary};
   `,
 }));
