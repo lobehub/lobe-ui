@@ -84,7 +84,7 @@
     "@lobehub/emojilib": "latest",
     "@react-spring/web": "^9",
     "@splinetool/react-spline": "^2",
-    "@splinetool/runtime": "^0.9",
+    "@splinetool/runtime": "^1.0.0",
     "ahooks": "^3",
     "chroma-js": "^2",
     "dayjs": "^1",
