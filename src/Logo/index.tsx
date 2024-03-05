@@ -2,14 +2,15 @@ import { useTheme } from 'antd-style';
 import { type ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import { useCdnFn } from '@/ConfigProvider';
-import Img from '@/Img';
 import { DivProps } from '@/types';
 
+import { Logo3dCDN, LogoFlatCDN, LogoHighContrastCDN, LogoTextCDN } from './CDN';
 import Divider from './Divider';
+import Logo3D from './Logo3D';
+import LogoFlat from './LogoFlat';
 import LogoHighContrast from './LogoHighContrast';
 import LogoText from './LogoText';
-import { LOGO_3D, LOGO_FLAT, useStyles } from './style';
+import { useStyles } from './style';
 
 export interface LogoProps extends DivProps {
   /**
@@ -26,74 +27,82 @@ export interface LogoProps extends DivProps {
    * @default '3d'
    */
   type?: '3d' | 'flat' | 'high-contrast' | 'text' | 'combine';
+  /**
+   * @description Use cdn or not
+   */
+  withCDN?: boolean;
 }
 
-const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className, ...rest }) => {
-  const genCdnUrl = useCdnFn();
-  const theme = useTheme();
-  const { styles } = useStyles();
-  let logoComponent: ReactNode;
+const Logo = memo<LogoProps>(
+  ({ type = '3d', size = 32, style, extra, className, withCDN, ...rest }) => {
+    const theme = useTheme();
+    const { styles } = useStyles();
+    let logoComponent: ReactNode;
 
-  switch (type) {
-    case '3d': {
-      logoComponent = (
-        <Img
-          alt="lobehub"
-          height={size}
-          src={genCdnUrl(LOGO_3D)}
-          style={style}
-          width={size}
-          {...rest}
-        />
-      );
-      break;
-    }
-    case 'flat': {
-      logoComponent = (
-        <Img alt="lobehub" height={size} src={genCdnUrl(LOGO_FLAT)} style={style} width={size} />
-      );
-      break;
-    }
-    case 'high-contrast': {
-      logoComponent = <LogoHighContrast height={size} style={style} width={size} {...rest} />;
-      break;
-    }
-    case 'text': {
-      logoComponent = (
-        <LogoText
-          className={className}
-          height={size}
-          style={style}
-          width={size * 2.9375}
-          {...rest}
-        />
-      );
-      break;
-    }
-    case 'combine': {
-      logoComponent = (
-        <>
-          <Img alt="lobehub" height={size} src={genCdnUrl(LOGO_3D)} width={size} />
-          <LogoText style={{ height: size, marginLeft: Math.round(size / 4), width: 'auto' }} />
-        </>
-      );
-      break;
-    }
-  }
+    const ThreeRender = withCDN ? Logo3dCDN : Logo3D;
+    const FlatRender = withCDN ? LogoFlatCDN : LogoFlat;
+    const HCRender = withCDN ? LogoHighContrast : LogoHighContrastCDN;
+    const TextRender = withCDN ? LogoText : LogoTextCDN;
 
-  if (!extra) return logoComponent;
+    switch (type) {
+      case '3d': {
+        logoComponent = <ThreeRender size={size} style={style} {...rest} />;
+        break;
+      }
+      case 'flat': {
+        logoComponent = <FlatRender size={size} style={style} {...(rest as any)} />;
+        break;
+      }
+      case 'high-contrast': {
+        logoComponent = <HCRender size={size} style={style} {...(rest as any)} />;
+        break;
+      }
+      case 'text': {
+        logoComponent = (
+          <TextRender className={className} size={size} style={style} {...(rest as any)} />
+        );
+        break;
+      }
+      case 'combine': {
+        logoComponent = (
+          <>
+            <ThreeRender size={size} />
+            <TextRender size={size} style={{ marginLeft: Math.round(size / 4) }} />
+          </>
+        );
 
-  const extraSize = Math.round((size / 3) * 1.9);
+        if (!extra)
+          logoComponent = (
+            <Flexbox align={'center'} className={className} flex={'none'} horizontal style={style}>
+              {logoComponent}
+            </Flexbox>
+          );
 
-  return (
-    <Flexbox align={'center'} className={className} horizontal style={style} {...rest}>
-      {logoComponent}
-      <Divider style={{ color: theme.colorFill, height: extraSize, width: extraSize }} />
-      <div className={styles.extraTitle} style={{ fontSize: extraSize }}>
-        {extra}
-      </div>
-    </Flexbox>
-  );
-});
+        break;
+      }
+    }
+
+    if (!extra) return logoComponent;
+
+    const extraSize = Math.round((size / 3) * 1.9);
+
+    return (
+      <Flexbox
+        align={'center'}
+        className={className}
+        flex={'none'}
+        horizontal
+        style={style}
+        {...rest}
+      >
+        {logoComponent}
+        <Divider size={extraSize} style={{ color: theme.colorFill }} />
+        <div className={styles.extraTitle} style={{ fontSize: extraSize }}>
+          {extra}
+        </div>
+      </Flexbox>
+    );
+  },
+);
 
 export default Logo;

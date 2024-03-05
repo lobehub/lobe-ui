@@ -11,6 +11,7 @@ export default () => {
         step: 4,
         value: 64,
       },
+      withCDN: false,
     },
     { store },
   );
