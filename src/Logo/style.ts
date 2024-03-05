@@ -10,16 +10,6 @@ export const LOGO_FLAT = {
   pkg: '@lobehub/assets-logo',
   version: 'latest',
 };
-export const LOGO_TEXT = {
-  path: 'assets/logo-text.svg',
-  pkg: '@lobehub/assets-logo',
-  version: 'latest',
-};
-export const LOGO_HIGH_CONTRAST = {
-  path: 'assets/logo-high-contrast.svg',
-  pkg: '@lobehub/assets-logo',
-  version: 'latest',
-};
 
 export const useStyles = createStyles(({ css }) => {
   return {

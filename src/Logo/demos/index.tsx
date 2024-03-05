@@ -14,7 +14,6 @@ export default () => {
         options: ['3d', 'flat', 'high-contrast', 'text', 'combine'],
         value: '3d',
       },
-      withCDN: false,
     },
     { store },
   );
