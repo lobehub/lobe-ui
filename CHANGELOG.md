@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.131.0](https://github.com/lobehub/lobe-ui/compare/v1.130.0...v1.131.0)
+
+<sup>Released on **2024-03-05**</sup>
+
+#### ✨ Features
+
+- **misc**: Click Show Details can expand text.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Click Show Details can expand text ([12a22b3](https://github.com/lobehub/lobe-ui/commit/12a22b3))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.130.0](https://github.com/lobehub/lobe-ui/compare/v1.129.2...v1.130.0)
 
 <sup>Released on **2024-03-05**</sup>
