@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.131.1](https://github.com/lobehub/lobe-ui/compare/v1.131.0...v1.131.1)
+
+<sup>Released on **2024-03-05**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Revert "✨ feat: Use ReactSVG to load svg logos".
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Revert "✨ feat: Use ReactSVG to load svg logos" ([c1900b8](https://github.com/lobehub/lobe-ui/commit/c1900b8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.131.0](https://github.com/lobehub/lobe-ui/compare/v1.130.0...v1.131.0)
 
 <sup>Released on **2024-03-05**</sup>
