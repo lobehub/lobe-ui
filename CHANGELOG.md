@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [Version 1.130.0](https://github.com/lobehub/lobe-ui/compare/v1.129.2...v1.130.0)
+
+<sup>Released on **2024-03-05**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Update version to 'latest' for vendor assets.
+
+#### ✨ Features
+
+- **misc**: Use ReactSVG to load svg logos.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Update version to 'latest' for vendor assets ([2fa3acc](https://github.com/lobehub/lobe-ui/commit/2fa3acc))
+
+#### What's improved
+
+- **misc**: Use ReactSVG to load svg logos ([1d0b79f](https://github.com/lobehub/lobe-ui/commit/1d0b79f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.129.2](https://github.com/lobehub/lobe-ui/compare/v1.129.1...v1.129.2)
 
 <sup>Released on **2024-02-22**</sup>
