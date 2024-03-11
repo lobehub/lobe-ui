@@ -30,6 +30,7 @@ export interface ThemeProviderProps extends Omit<AntdThemeProviderProps<any>, 't
   customToken?: (theme: CustomTokenParams) => { [key: string]: any };
 
   enableWebfonts?: boolean;
+  enableGlobalStyle?: boolean;
   /**
    * @description Webfont loader css strings
    */
@@ -42,6 +43,7 @@ const ThemeProvider = memo<ThemeProviderProps>(
     customStylish,
     customToken,
     enableWebfonts = true,
+    enableGlobalStyle = true,
     webfonts,
     customTheme = {},
     ...res
@@ -94,7 +96,7 @@ const ThemeProvider = memo<ThemeProviderProps>(
             {...res}
             theme={theme}
           >
-            <GlobalStyle />
+            {enableGlobalStyle && <GlobalStyle />}
             <App style={{ minHeight: 'inherit', width: 'inherit' }}>{children}</App>
           </AntdThemeProvider>
         </StyleProvider>
