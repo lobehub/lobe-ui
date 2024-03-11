@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.132.2](https://github.com/lobehub/lobe-ui/compare/v1.132.1...v1.132.2)
+
+<sup>Released on **2024-03-11**</sup>
+
+#### 💄 Styles
+
+- **misc**: Add enableGlobalStyle to ThemProvider props.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Add enableGlobalStyle to ThemProvider props ([d7c5b06](https://github.com/lobehub/lobe-ui/commit/d7c5b06))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.132.1](https://github.com/lobehub/lobe-ui/compare/v1.132.0...v1.132.1)
 
 <sup>Released on **2024-03-05**</sup>
