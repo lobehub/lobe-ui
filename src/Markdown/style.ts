@@ -2,7 +2,7 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(
   (
-    { css },
+    { css, token },
     {
       fontSize = 14,
       headerMultiple = 0.25,
@@ -16,6 +16,7 @@ export const useStyles = createStyles(
         --lobe-markdown-header-multiple: ${headerMultiple};
         --lobe-markdown-margin-multiple: ${marginMultiple};
         --lobe-markdown-line-height: ${lineHeight};
+        --lobe-markdown-border-radius: ${token.borderRadius};
 
         margin-block: ${marginMultiple * -0.75}em;
       `,

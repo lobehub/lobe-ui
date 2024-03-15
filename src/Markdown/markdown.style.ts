@@ -16,6 +16,7 @@ export const useStyles = createStyles(
         --lobe-markdown-header-multiple: ${headerMultiple};
         --lobe-markdown-margin-multiple: ${marginMultiple};
         --lobe-markdown-line-height: ${lineHeight};
+        --lobe-markdown-border-radius: ${token.borderRadiusLG};
 
         position: relative;
 
@@ -70,7 +71,7 @@ export const useStyles = createStyles(
           padding-inline: 1em;
 
           background: ${token.colorFillTertiary};
-          border-radius: ${token.borderRadius}px;
+          border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
           box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
 
           summary {
@@ -177,8 +178,9 @@ export const useStyles = createStyles(
 
         > img,
         > p > img {
-          border-radius: ${token.borderRadius}px;
-          box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
+          margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
+          border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
+          box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
         }
       `,
       kbd: css`
@@ -295,7 +297,7 @@ export const useStyles = createStyles(
           overflow-wrap: break-word;
 
           background: ${token.colorFillQuaternary};
-          border-radius: ${token.borderRadius}px;
+          border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
           box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
 
           thead {
@@ -318,8 +320,9 @@ export const useStyles = createStyles(
       video: css`
         > video,
         > p > video {
-          border-radius: ${token.borderRadius}px;
-          box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
+          margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
+          border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
+          box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
         }
 
         video {

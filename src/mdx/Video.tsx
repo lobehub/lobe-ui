@@ -29,7 +29,11 @@ const Video: FC<VideoProps> = ({ style, width = 840, height, cover, inStep, ...r
   return (
     <LobeVideo
       height={size.height}
-      style={{ marginBlock: 'calc(var(--lobe-markdown-margin-multiple) * 1em)', ...style }}
+      style={{
+        borderRadius: 'calc(var(--lobe-markdown-border-radius) * 1px)',
+        marginBlock: 'calc(var(--lobe-markdown-margin-multiple) * 1em)',
+        ...style,
+      }}
       width={size.width}
       {...rest}
     />

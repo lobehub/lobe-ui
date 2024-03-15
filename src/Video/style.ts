@@ -51,7 +51,7 @@ export const useStyles = createStyles(
         margin-block: 0 1em;
 
         background: ${rgba(token.colorBgLayout, 0.25)};
-        border-radius: ${token.borderRadius}px;
+        border-radius: ${token.borderRadiusLG}px;
         box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
 
         &:hover {

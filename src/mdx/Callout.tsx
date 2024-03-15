@@ -7,7 +7,7 @@ import type { ReactNode } from 'react';
 import { FC } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-const useStyles = createStyles(({ css, token }) => {
+const useStyles = createStyles(({ css }) => {
   return {
     container: css`
       --lobe-markdown-margin-multiple: 1;
@@ -20,7 +20,7 @@ const useStyles = createStyles(({ css, token }) => {
       padding-inline: 1em;
 
       border: 1px solid transparent;
-      border-radius: ${token.borderRadius}px;
+      border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
     `,
     content: css`
       margin-block: calc(var(--lobe-markdown-margin-multiple) * -1em);

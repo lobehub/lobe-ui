@@ -37,7 +37,11 @@ const Image: FC<ImageProps> = ({
     <LobeImage
       alt={alt}
       height={size.height}
-      style={{ marginBlock: 'calc(var(--lobe-markdown-margin-multiple) * 1em)', ...style }}
+      style={{
+        borderRadius: 'calc(var(--lobe-markdown-border-radius) * 1px)',
+        marginBlock: 'calc(var(--lobe-markdown-margin-multiple) * 1em)',
+        ...style,
+      }}
       width={size.width}
       {...rest}
     />
