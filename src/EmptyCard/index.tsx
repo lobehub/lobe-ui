@@ -10,13 +10,13 @@ import { DivProps, ImgProps } from '@/types';
 
 import { useStyles } from './style';
 
-export interface EmptyCardProps<T = ImgProps & ImageProps> extends DivProps {
+export interface EmptyCardProps extends DivProps {
   alt?: string;
   cover?: string;
   defaultVisible?: boolean;
   desc: string;
   height?: number;
-  imageProps?: T;
+  imageProps?: ImgProps & ImageProps & { priority?:boolean };
   onVisibleChange?: (visible: boolean) => void;
   title: string;
   visible?: boolean;
