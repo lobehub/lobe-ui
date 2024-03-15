@@ -8,6 +8,7 @@ import { FALLBACK_LANG } from '@/hooks/useHighlight';
 const useStyles = createStyles(({ css, token }) => ({
   container: css`
     margin-block: 1em;
+    border-radius: ${token.borderRadius}px;
     box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
   `,
   highlight: css`
@@ -39,7 +40,7 @@ const Code = memo(({ fullFeatured, ...rest }: any) => {
   content = content.trim();
 
   const lang = className?.replace('language-', '') || FALLBACK_LANG;
-  if (countLines(content) < 1 && content.length <= 60) {
+  if (countLines(content) <= 1 && content.length <= 60) {
     return (
       <Snippet
         className={styles.container}

@@ -20,7 +20,7 @@ const useStyles = createStyles(({ css, token }) => {
       padding-inline: 1em;
 
       border: 1px solid transparent;
-      border-radius: ${token.borderRadiusLG}px;
+      border-radius: ${token.borderRadius}px;
     `,
     content: css`
       margin-block: calc(var(--lobe-markdown-margin-multiple) * -1em);

@@ -60,7 +60,7 @@ export const useStyles = createStyles(
 
           background: ${token.colorFillSecondary};
           border: 1px solid ${token.colorBorderSecondary};
-          border-radius: ${token.borderRadiusLG}px;
+          border-radius: 0.25em;
         }
       `,
       details: css`
@@ -70,7 +70,7 @@ export const useStyles = createStyles(
           padding-inline: 1em;
 
           background: ${token.colorFillTertiary};
-          border-radius: ${token.borderRadiusLG}px;
+          border-radius: ${token.borderRadius}px;
           box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
 
           summary {
@@ -174,6 +174,12 @@ export const useStyles = createStyles(
         img {
           max-width: 100%;
         }
+
+        > img,
+        > p > img {
+          border-radius: ${token.borderRadius}px;
+          box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
+        }
       `,
       kbd: css`
         kbd {
@@ -209,14 +215,20 @@ export const useStyles = createStyles(
       `,
       list: css`
         li {
-          margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
+          margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.4em);
         }
 
         ul,
         ol {
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
           margin-inline-start: 1em;
+          padding-inline-start: 0;
           list-style-position: outside;
+
+          ul,
+          ol {
+            margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.4em);
+          }
 
           li {
             margin-inline-start: 1em;
@@ -225,12 +237,6 @@ export const useStyles = createStyles(
 
         ol {
           list-style: auto;
-
-          li {
-            &::marker {
-              opacity: 0.75;
-            }
-          }
         }
 
         ul {
@@ -289,7 +295,7 @@ export const useStyles = createStyles(
           overflow-wrap: break-word;
 
           background: ${token.colorFillQuaternary};
-          border-radius: ${token.borderRadiusLG}px;
+          border-radius: ${token.borderRadius}px;
           box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
 
           thead {
@@ -310,6 +316,12 @@ export const useStyles = createStyles(
         }
       `,
       video: css`
+        > video,
+        > p > video {
+          border-radius: ${token.borderRadius}px;
+          box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
+        }
+
         video {
           max-width: 100%;
         }
