@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.132.6](https://github.com/lobehub/lobe-ui/compare/v1.132.5...v1.132.6)
+
+<sup>Released on **2024-03-15**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Markdown demos and fix SearchBar style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Markdown demos and fix SearchBar style ([16026e4](https://github.com/lobehub/lobe-ui/commit/16026e4))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.132.5](https://github.com/lobehub/lobe-ui/compare/v1.132.4...v1.132.5)
 
 <sup>Released on **2024-03-15**</sup>
