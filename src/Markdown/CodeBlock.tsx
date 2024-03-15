@@ -1,23 +1,8 @@
-import { createStyles } from 'antd-style';
 import { memo } from 'react';
 
-import Highlighter from '@/Highlighter';
-import Snippet from '@/Snippet';
 import { FALLBACK_LANG } from '@/hooks/useHighlight';
 
-const useStyles = createStyles(({ css }) => ({
-  container: css`
-    :not(:last-child) {
-      margin-block: 1em 1em;
-      margin-inline: 0 0;
-    }
-  `,
-  highlight: css`
-    pre {
-      padding: 12px !important;
-    }
-  `,
-}));
+import Pre, { PreSingleLine } from '../mdx/Pre';
 
 const countLines = (str: string): number => {
   const regex = /\n/g;
@@ -25,47 +10,44 @@ const countLines = (str: string): number => {
   return matches ? matches.length : 1;
 };
 
-const Code = memo(({ fullFeatured, ...rest }: any) => {
-  const { styles, cx } = useStyles();
+const useCode = (raw: any) => {
+  if (!raw) return;
 
-  if (!rest.children[0]) return;
-
-  const { children, className } = rest.children[0].props;
+  const { children, className } = raw.props;
 
   if (!children) return;
 
   const content = Array.isArray(children) ? (children[0] as string) : children;
+
   const lang = className?.replace('language-', '') || FALLBACK_LANG;
-  if (countLines(content) === 1 && content.length <= 60) {
-    return (
-      <Snippet
-        className={styles.container}
-        data-code-type="highlighter"
-        language={lang}
-        type={'block'}
-      >
-        {content}
-      </Snippet>
-    );
-  }
+
+  const isSingleLine = countLines(content) <= 1 && content.length <= 6;
+
+  return {
+    content,
+    isSingleLine,
+    lang,
+  };
+};
+
+const CodeBlock = memo(({ fullFeatured, ...rest }: any) => {
+  const code = useCode(rest?.children?.[0]);
+
+  if (!code) return;
+
+  if (code.isSingleLine) return <PreSingleLine lang={code.lang}>{code.content}</PreSingleLine>;
 
   return (
-    <Highlighter
-      className={cx(styles.container, styles.highlight)}
-      copyButtonSize={{ blockSize: 28, fontSize: 16 }}
-      fullFeatured={fullFeatured}
-      language={lang}
-      type="block"
-    >
-      {content}
-    </Highlighter>
+    <Pre fullFeatured={fullFeatured} lang={code.lang}>
+      {code.content}
+    </Pre>
   );
 });
 
 export const CodeLite = memo((props: any) => {
-  return <Code {...props} />;
+  return <CodeBlock {...props} />;
 });
 
 export const CodeFullFeatured = memo((props: any) => {
-  return <Code fullFeatured {...props} />;
+  return <CodeBlock fullFeatured {...props} />;
 });

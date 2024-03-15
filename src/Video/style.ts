@@ -1,58 +1,44 @@
 import { createStyles } from 'antd-style';
-import { rgba } from 'polished';
 
 export const useStyles = createStyles(
   (
-    { css, token, cx, stylish },
+    { css, token, cx },
     {
       minSize,
       size,
-      alwaysShowActions,
-      objectFit,
       borderless,
     }: {
-      alwaysShowActions?: boolean;
       borderless?: boolean;
       minSize?: number | string;
-      objectFit?: string;
       size?: number | string;
     } = {},
   ) => {
     const SIZE = typeof size === 'number' ? `${size}px` : size;
     const MIN_SIZE = typeof minSize === 'number' ? `${minSize}px` : minSize;
 
-    const actions = cx(css`
-      cursor: pointer;
+    const preview = cx(css`
+      pointer-events: none;
 
       position: absolute;
       z-index: 1;
-      inset-block-start: 0;
-      inset-inline-end: 0;
+      inset: 0;
 
-      opacity: ${alwaysShowActions ? 1 : 0};
+      width: 100%;
+      height: auto;
+
+      opacity: 0;
+      background: rgba(0, 0, 0, 50%);
+
+      transition: opacity 0.3s;
     `);
 
     return {
-      actions,
-      image: css`
-        position: relative;
-        overflow: hidden;
-        width: 100% !important;
-        height: auto !important;
-
-        img {
-          width: 100% !important;
-          min-width: ${MIN_SIZE} !important;
-          max-width: ${SIZE} !important;
-          height: auto !important;
-          min-height: ${MIN_SIZE} !important;
-          max-height: ${SIZE} !important;
-
-          object-fit: ${objectFit || 'cover'};
-        }
+      preview,
+      video: css`
+        cursor: pointer;
+        width: 100%;
       `,
-
-      imageWrapper: cx(
+      videoWrapper: cx(
         borderless
           ? css`
               box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
@@ -65,8 +51,10 @@ export const useStyles = createStyles(
 
           overflow: hidden;
 
+          width: 100%;
           min-width: ${MIN_SIZE};
           max-width: ${SIZE};
+          height: auto;
           min-height: ${MIN_SIZE};
           max-height: ${SIZE};
           margin-block: 0 1em;
@@ -75,19 +63,10 @@ export const useStyles = createStyles(
           border-radius: ${token.borderRadiusLG}px;
 
           &:hover {
-            .${actions} {
+            .${preview} {
               opacity: 1;
             }
           }
-        `,
-      ),
-
-      toolbar: cx(
-        stylish.blur,
-        css`
-          padding: 4px;
-          background: ${rgba(token.colorBgMask, 0.1)};
-          border-radius: ${token.borderRadiusLG}px;
         `,
       ),
     };

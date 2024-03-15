@@ -1,6 +1,6 @@
 import { Markdown, MarkdownProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 
-import { content } from './data';
+import { code } from './data';
 
 export default () => {
   const store = useCreateStore();
@@ -9,7 +9,7 @@ export default () => {
       allowHtml: true,
       children: {
         rows: true,
-        value: content,
+        value: code,
       },
       fullFeaturedCodeBlock: true,
     },

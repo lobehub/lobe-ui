@@ -12,6 +12,7 @@ import usePreview from './usePreview';
 export interface ImageProps extends AntImageProps {
   actions?: ReactNode;
   alwaysShowActions?: boolean;
+  borderless?: boolean;
   classNames?: {
     image?: string;
     wrapper?: string;
@@ -39,11 +40,20 @@ const Image = memo<ImageProps>(
     objectFit = 'cover',
     classNames = {},
     onClick,
+    width,
+    height,
+    borderless,
     ...rest
   }) => {
     const { mobile } = useResponsive();
     const { isDarkMode } = useThemeMode();
-    const { styles, cx, theme } = useStyles({ alwaysShowActions, minSize, objectFit, size });
+    const { styles, cx, theme } = useStyles({
+      alwaysShowActions,
+      borderless,
+      minSize,
+      objectFit,
+      size,
+    });
     const mergePreivew = usePreview(preview);
 
     if (isLoading)
@@ -53,10 +63,12 @@ const Image = memo<ImageProps>(
             active
             style={{
               borderRadius: theme.borderRadius,
-              height: size,
+              height,
+              maxHeight: size,
+              maxWidth: size,
               minHeight: minSize,
               minWidth: minSize,
-              width: size,
+              width,
             }}
           />
         </div>
@@ -72,6 +84,7 @@ const Image = memo<ImageProps>(
               ? 'https://gw.alipayobjects.com/zos/kitchen/nhzBb%24r0Cm/image_off_dark.webp'
               : 'https://gw.alipayobjects.com/zos/kitchen/QAvkgt30Ys/image_off_light.webp'
           }
+          height={height}
           loading={'lazy'}
           onClick={onClick}
           preview={
@@ -82,6 +95,7 @@ const Image = memo<ImageProps>(
                   ...(mergePreivew as any),
                 }
           }
+          width={width}
           wrapperClassName={cx(styles.image, classNames.wrapper)}
           {...rest}
         />

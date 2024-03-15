@@ -1,30 +1,25 @@
 import { createStyles } from 'antd-style';
-import { rgba } from 'polished';
 
-export const useStyles = createStyles(({ stylish, token, css }) => {
-  return {
-    image: css`
-      overflow: hidden;
-      width: 100%;
-      height: 100%;
+export const useStyles = createStyles(
+  (
+    { css, token },
+    {
+      fontSize = 14,
+      headerMultiple = 0.25,
+      marginMultiple = 1,
+      lineHeight = 1.6,
+    }: { fontSize?: number; headerMultiple?: number; lineHeight?: number; marginMultiple?: number },
+  ) => {
+    return {
+      chat: css`
+        --lobe-markdown-font-size: ${fontSize}px;
+        --lobe-markdown-header-multiple: ${headerMultiple};
+        --lobe-markdown-margin-multiple: ${marginMultiple};
+        --lobe-markdown-line-height: ${lineHeight};
+        --lobe-markdown-border-radius: ${token.borderRadius};
 
-      img {
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: contain;
-      }
-    `,
-    imageWrapper: css`
-      position: relative;
-
-      overflow: hidden;
-
-      margin-block: 0 1em;
-
-      background: ${rgba(token.colorBgLayout, 0.25)};
-      border-radius: ${token.borderRadius}px;
-      box-shadow: 0 0 0 1px ${token.colorFillTertiary};
-    `,
-    markdown: stylish.markdown,
-  };
-});
+        margin-block: ${marginMultiple * -0.75}em;
+      `,
+    };
+  },
+);

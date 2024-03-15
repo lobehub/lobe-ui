@@ -1,14 +1,9 @@
-import { createStyles } from 'antd-style';
 import { CSSProperties, memo } from 'react';
 import useControlledState from 'use-merge-value';
 
 import Markdown from '@/Markdown';
 import MessageInput, { type MessageInputProps } from '@/MessageInput';
 import MessageModal, { type MessageModalProps } from '@/MessageModal';
-
-const useStyles = createStyles(({ stylish }) => ({
-  markdown: stylish.markdownInChat,
-}));
 
 export interface EditableMessageProps {
   /**
@@ -31,6 +26,7 @@ export interface EditableMessageProps {
    * @default false
    */
   editing?: boolean;
+  fontSize?: number;
   fullFeaturedCodeBlock?: boolean;
   height?: MessageInputProps['height'];
   inputType?: MessageInputProps['type'];
@@ -99,8 +95,8 @@ const EditableMessage = memo<EditableMessageProps>(
     text,
     fullFeaturedCodeBlock,
     model,
+    fontSize,
   }) => {
-    const { styles, cx } = useStyles();
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
       value: editing,
@@ -141,7 +137,8 @@ const EditableMessage = memo<EditableMessageProps>(
           input
         ) : (
           <Markdown
-            className={cx(styles.markdown, classNames?.markdown)}
+            className={classNames?.markdown}
+            fontSize={fontSize}
             fullFeaturedCodeBlock={fullFeaturedCodeBlock}
             style={{
               height: isAutoSize ? 'unset' : height,
@@ -149,6 +146,7 @@ const EditableMessage = memo<EditableMessageProps>(
               overflowY: 'auto',
               ...stylesProps?.markdown,
             }}
+            variant={'chat'}
           >
             {value || placeholder || ''}
           </Markdown>
