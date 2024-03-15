@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.132.4](https://github.com/lobehub/lobe-ui/compare/v1.132.3...v1.132.4)
+
+<sup>Released on **2024-03-15**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix image props for EmptyCard.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix image props for EmptyCard ([ba5c171](https://github.com/lobehub/lobe-ui/commit/ba5c171))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.132.3](https://github.com/lobehub/lobe-ui/compare/v1.132.2...v1.132.3)
 
 <sup>Released on **2024-03-15**</sup>
