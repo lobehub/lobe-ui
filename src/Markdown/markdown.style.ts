@@ -102,10 +102,8 @@ export const useStyles = createStyles(
           }
 
           &[open] {
-            padding-block-end: 0;
-
             summary {
-              padding-block-end: 12px;
+              padding-block-end: 0.75em;
               border-block-end: 1px dashed ${token.colorBorder};
 
               &::before {

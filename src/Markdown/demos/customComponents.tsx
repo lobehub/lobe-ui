@@ -30,7 +30,7 @@ export default () => {
           },
           img: {
             style: {
-              border: '5px groove #ccc',
+              border: '5px solid green',
               borderRadius: '20px',
             },
           },
