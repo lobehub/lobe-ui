@@ -26,6 +26,7 @@ export interface EditableMessageProps {
    * @default false
    */
   editing?: boolean;
+  fontSize?: number;
   fullFeaturedCodeBlock?: boolean;
   height?: MessageInputProps['height'];
   inputType?: MessageInputProps['type'];
@@ -94,6 +95,7 @@ const EditableMessage = memo<EditableMessageProps>(
     text,
     fullFeaturedCodeBlock,
     model,
+    fontSize,
   }) => {
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
@@ -136,6 +138,7 @@ const EditableMessage = memo<EditableMessageProps>(
         ) : (
           <Markdown
             className={classNames?.markdown}
+            fontSize={fontSize}
             fullFeaturedCodeBlock={fullFeaturedCodeBlock}
             style={{
               height: isAutoSize ? 'unset' : height,

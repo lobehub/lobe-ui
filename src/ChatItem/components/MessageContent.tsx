@@ -9,6 +9,7 @@ import { useStyles } from '../style';
 
 export interface MessageContentProps {
   editing?: ChatItemProps['editing'];
+  fontSize?: number;
   message?: ReactNode;
   messageExtra?: ChatItemProps['messageExtra'];
   onChange?: ChatItemProps['onChange'];
@@ -34,6 +35,7 @@ const MessageContent = memo<MessageContentProps>(
     type,
     primary,
     onDoubleClick,
+    fontSize,
   }) => {
     const { cx, styles } = useStyles({ editing, placement, primary, type });
     const { mobile } = useResponsive();
@@ -43,6 +45,7 @@ const MessageContent = memo<MessageContentProps>(
         classNames={{ input: styles.editingInput }}
         editButtonSize={'small'}
         editing={editing}
+        fontSize={fontSize}
         fullFeaturedCodeBlock
         onChange={onChange}
         onEditingChange={onEditingChange}

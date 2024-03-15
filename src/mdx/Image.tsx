@@ -4,6 +4,7 @@ import LobeImage from '../Image';
 
 export interface ImageProps {
   alt: string;
+  borderless?: boolean;
   className?: string;
   cover?: boolean;
   height?: number;

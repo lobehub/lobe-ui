@@ -180,7 +180,7 @@ export const useStyles = createStyles(
         > p > img {
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
           border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
-          box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
+          box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
         }
       `,
       kbd: css`
@@ -322,7 +322,7 @@ export const useStyles = createStyles(
         > p > video {
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
           border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
-          box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
+          box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
         }
 
         video {

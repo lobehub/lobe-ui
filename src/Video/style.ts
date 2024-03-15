@@ -1,5 +1,4 @@
 import { createStyles } from 'antd-style';
-import { rgba } from 'polished';
 
 export const useStyles = createStyles(
   (
@@ -7,7 +6,9 @@ export const useStyles = createStyles(
     {
       minSize,
       size,
+      borderless,
     }: {
+      borderless?: boolean;
       minSize?: number | string;
       size?: number | string;
     } = {},
@@ -37,29 +38,37 @@ export const useStyles = createStyles(
         cursor: pointer;
         width: 100%;
       `,
-      videoWrapper: css`
-        position: relative;
+      videoWrapper: cx(
+        borderless
+          ? css`
+              box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
+            `
+          : css`
+              box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
+            `,
+        css`
+          position: relative;
 
-        overflow: hidden;
+          overflow: hidden;
 
-        width: 100%;
-        min-width: ${MIN_SIZE};
-        max-width: ${SIZE};
-        height: auto;
-        min-height: ${MIN_SIZE};
-        max-height: ${SIZE};
-        margin-block: 0 1em;
+          width: 100%;
+          min-width: ${MIN_SIZE};
+          max-width: ${SIZE};
+          height: auto;
+          min-height: ${MIN_SIZE};
+          max-height: ${SIZE};
+          margin-block: 0 1em;
 
-        background: ${rgba(token.colorBgLayout, 0.25)};
-        border-radius: ${token.borderRadiusLG}px;
-        box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
+          background: ${token.colorFillTertiary};
+          border-radius: ${token.borderRadiusLG}px;
 
-        &:hover {
-          .${preview} {
-            opacity: 1;
+          &:hover {
+            .${preview} {
+              opacity: 1;
+            }
           }
-        }
-      `,
+        `,
+      ),
     };
   },
 );

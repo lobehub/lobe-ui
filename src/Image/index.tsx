@@ -12,6 +12,7 @@ import usePreview from './usePreview';
 export interface ImageProps extends AntImageProps {
   actions?: ReactNode;
   alwaysShowActions?: boolean;
+  borderless?: boolean;
   classNames?: {
     image?: string;
     wrapper?: string;
@@ -41,11 +42,18 @@ const Image = memo<ImageProps>(
     onClick,
     width,
     height,
+    borderless,
     ...rest
   }) => {
     const { mobile } = useResponsive();
     const { isDarkMode } = useThemeMode();
-    const { styles, cx, theme } = useStyles({ alwaysShowActions, minSize, objectFit, size });
+    const { styles, cx, theme } = useStyles({
+      alwaysShowActions,
+      borderless,
+      minSize,
+      objectFit,
+      size,
+    });
     const mergePreivew = usePreview(preview);
 
     if (isLoading)

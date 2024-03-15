@@ -30,7 +30,7 @@ const useCode = (raw: any) => {
   };
 };
 
-const Code = memo(({ fullFeatured, ...rest }: any) => {
+const CodeBlock = memo(({ fullFeatured, ...rest }: any) => {
   const code = useCode(rest?.children?.[0]);
 
   if (!code) return;
@@ -45,9 +45,9 @@ const Code = memo(({ fullFeatured, ...rest }: any) => {
 });
 
 export const CodeLite = memo((props: any) => {
-  return <Code {...props} />;
+  return <CodeBlock {...props} />;
 });
 
 export const CodeFullFeatured = memo((props: any) => {
-  return <Code fullFeatured {...props} />;
+  return <CodeBlock fullFeatured {...props} />;
 });

@@ -9,8 +9,10 @@ export const useStyles = createStyles(
       size,
       alwaysShowActions,
       objectFit,
+      borderless,
     }: {
       alwaysShowActions?: boolean;
+      borderless?: boolean;
       minSize?: number | string;
       objectFit?: string;
       size?: number | string;
@@ -49,27 +51,36 @@ export const useStyles = createStyles(
           object-fit: ${objectFit || 'cover'};
         }
       `,
-      imageWrapper: css`
-        position: relative;
 
-        overflow: hidden;
+      imageWrapper: cx(
+        borderless
+          ? css`
+              box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
+            `
+          : css`
+              box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
+            `,
+        css`
+          position: relative;
 
-        min-width: ${MIN_SIZE};
-        max-width: ${SIZE};
-        min-height: ${MIN_SIZE};
-        max-height: ${SIZE};
-        margin-block: 0 1em;
+          overflow: hidden;
 
-        background: ${rgba(token.colorBgLayout, 0.25)};
-        border-radius: ${token.borderRadiusLG}px;
-        box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
+          min-width: ${MIN_SIZE};
+          max-width: ${SIZE};
+          min-height: ${MIN_SIZE};
+          max-height: ${SIZE};
+          margin-block: 0 1em;
 
-        &:hover {
-          .${actions} {
-            opacity: 1;
+          background: ${token.colorFillTertiary};
+          border-radius: ${token.borderRadiusLG}px;
+
+          &:hover {
+            .${actions} {
+              opacity: 1;
+            }
           }
-        }
-      `,
+        `,
+      ),
 
       toolbar: cx(
         stylish.blur,

@@ -10,6 +10,7 @@ import { useStyles } from './style';
 
 export interface VideoProps extends DivProps {
   autoplay?: boolean;
+  borderless?: boolean;
   classNames?: {
     video?: string;
     wrapper?: string;
@@ -43,11 +44,13 @@ const Video = memo<VideoProps>(
     onMouseLeave,
     preview = true,
     isLoading,
+    borderless,
     ...rest
   }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [showControls, setShowControls] = useState(false);
     const { cx, styles, theme } = useStyles({
+      borderless,
       minSize,
       size,
     });

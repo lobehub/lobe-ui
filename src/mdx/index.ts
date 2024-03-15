@@ -13,6 +13,4 @@ export const mdxComponents: Record<string, FC<any>> = {
   Image,
   LobeCallout: Callout,
   Video,
-  img: Image,
-  video: Video,
 };

@@ -6,9 +6,9 @@ import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
-import Image, { type ImageProps } from '@/Image';
 import ImageGallery from '@/Image/ImageGallery';
-import Video, { type VideoProps } from '@/Video';
+import Image, { type ImageProps } from '@/mdx/Image';
+import Video, { type VideoProps } from '@/mdx/Video';
 
 import { CodeFullFeatured, CodeLite } from './CodeBlock';
 import type { TypographyProps } from './Typography';

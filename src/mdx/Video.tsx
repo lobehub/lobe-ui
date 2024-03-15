@@ -3,6 +3,7 @@ import { CSSProperties, FC } from 'react';
 import LobeVideo from '../Video';
 
 export interface VideoProps {
+  borderless?: boolean;
   className?: string;
   cover?: boolean;
   height?: number;

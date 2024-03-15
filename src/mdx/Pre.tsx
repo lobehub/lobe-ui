@@ -1,5 +1,5 @@
 import { createStyles } from 'antd-style';
-import { CSSProperties, memo } from 'react';
+import { CSSProperties, FC } from 'react';
 
 import Highlighter from '@/Highlighter';
 import Snippet from '@/Snippet';
@@ -26,41 +26,48 @@ export interface PreProps {
   style?: CSSProperties;
 }
 
-export const Pre = memo<PreProps>(
-  ({ fullFeatured, lang = FALLBACK_LANG, children, className, style }) => {
-    const { styles, cx } = useStyles();
+export const Pre: FC<PreProps> = ({
+  fullFeatured,
+  lang = FALLBACK_LANG,
+  children,
+  className,
+  style,
+}) => {
+  const { styles, cx } = useStyles();
 
-    return (
-      <Highlighter
-        className={cx(styles.container, styles.highlight, className)}
-        copyButtonSize={{ blockSize: 28, fontSize: 16 }}
-        fullFeatured={fullFeatured}
-        language={lang}
-        style={style}
-        type="block"
-      >
-        {children}
-      </Highlighter>
-    );
-  },
-);
+  return (
+    <Highlighter
+      className={cx(styles.container, styles.highlight, className)}
+      copyButtonSize={{ blockSize: 28, fontSize: 16 }}
+      fullFeatured={fullFeatured}
+      language={lang}
+      style={style}
+      type="block"
+    >
+      {children}
+    </Highlighter>
+  );
+};
 
-export const PreSingleLine = memo<Omit<PreProps, 'fullFeatured'>>(
-  ({ lang = FALLBACK_LANG, children, className, style }) => {
-    const { cx, styles } = useStyles();
+export const PreSingleLine: FC<Omit<PreProps, 'fullFeatured'>> = ({
+  lang = FALLBACK_LANG,
+  children,
+  className,
+  style,
+}) => {
+  const { cx, styles } = useStyles();
 
-    return (
-      <Snippet
-        className={cx(styles.container, className)}
-        data-code-type="highlighter"
-        language={lang}
-        style={style}
-        type={'block'}
-      >
-        {children}
-      </Snippet>
-    );
-  },
-);
+  return (
+    <Snippet
+      className={cx(styles.container, className)}
+      data-code-type="highlighter"
+      language={lang}
+      style={style}
+      type={'block'}
+    >
+      {children}
+    </Snippet>
+  );
+};
 
 export default Pre;
