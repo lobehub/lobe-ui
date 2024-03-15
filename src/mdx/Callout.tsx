@@ -1,5 +1,6 @@
 import { Icon } from '@lobehub/ui';
 import { createStyles } from 'antd-style';
+import { isString } from 'lodash-es';
 import { Info, Lightbulb, MessageSquareWarning, OctagonAlert, TriangleAlert } from 'lucide-react';
 import { rgba } from 'polished';
 import type { ReactNode } from 'react';
@@ -9,14 +10,20 @@ import { Flexbox } from 'react-layout-kit';
 const useStyles = createStyles(({ css, token }) => {
   return {
     container: css`
-      overflow: hidden;
+      --lobe-markdown-margin-multiple: 1;
 
-      margin-block: 1em;
-      padding-block: 0.75em;
+      overflow: hidden;
+      gap: 0.75em;
+
+      margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
+      padding-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
       padding-inline: 1em;
 
       border: 1px solid transparent;
       border-radius: ${token.borderRadiusLG}px;
+    `,
+    content: css`
+      margin-block: calc(var(--lobe-markdown-margin-multiple) * -1em);
 
       p {
         color: inherit !important;
@@ -64,7 +71,6 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info' }) => {
     <Flexbox
       align={'flex-start'}
       className={styles.container}
-      gap={8}
       horizontal
       style={{
         background: rgba(color, 0.1),
@@ -73,7 +79,7 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info' }) => {
       }}
     >
       <Icon icon={icon} size={{ fontSize: '1.2em' }} style={{ marginBlock: '0.2em' }} />
-      {children}
+      <div className={styles.content}>{isString(children) ? <p>{children}</p> : children}</div>
     </Flexbox>
   );
 };

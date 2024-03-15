@@ -35,14 +35,16 @@ export const useStyles = createStyles(
       image: css`
         position: relative;
         overflow: hidden;
-        width: 100%;
-        height: 100%;
+        width: 100% !important;
+        height: auto !important;
 
         img {
-          width: ${SIZE} !important;
+          width: 100% !important;
           min-width: ${MIN_SIZE} !important;
-          height: ${SIZE} !important;
+          max-width: ${SIZE} !important;
+          height: auto !important;
           min-height: ${MIN_SIZE} !important;
+          max-height: ${SIZE} !important;
 
           object-fit: ${objectFit || 'cover'};
         }
@@ -52,15 +54,15 @@ export const useStyles = createStyles(
 
         overflow: hidden;
 
-        width: ${SIZE};
         min-width: ${MIN_SIZE};
-        height: ${SIZE};
+        max-width: ${SIZE};
         min-height: ${MIN_SIZE};
+        max-height: ${SIZE};
         margin-block: 0 1em;
 
         background: ${rgba(token.colorBgLayout, 0.25)};
-        border-radius: ${token.borderRadius}px;
-        box-shadow: inset 0 0 0 1px ${token.colorFillTertiary};
+        border-radius: ${token.borderRadiusLG}px;
+        box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
 
         &:hover {
           .${actions} {

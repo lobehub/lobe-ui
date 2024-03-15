@@ -11,17 +11,13 @@ import ImageGallery from '@/Image/ImageGallery';
 import Video, { type VideoProps } from '@/Video';
 
 import { CodeFullFeatured, CodeLite } from './CodeBlock';
+import type { TypographyProps } from './Typography';
+import { useStyles as useMarkdownStyles } from './markdown.style';
 import { useStyles } from './style';
 
-export interface MarkdownProps {
+export interface MarkdownProps extends TypographyProps {
   allowHtml?: boolean;
-  /**
-   * @description The markdown content to be rendered
-   */
   children: string;
-  /**
-   * @description The class name for the Markdown component
-   */
   className?: string;
   componentProps?: {
     img?: ImageProps;
@@ -29,10 +25,7 @@ export interface MarkdownProps {
     video?: VideoProps;
   };
   enableImageGallery?: boolean;
-  fontSize?: number;
   fullFeaturedCodeBlock?: boolean;
-  headerMultiple?: number;
-
   onDoubleClick?: () => void;
   style?: CSSProperties;
   variant?: 'normal' | 'chat';
@@ -50,10 +43,12 @@ const Markdown = memo<MarkdownProps>(
     allowHtml,
     fontSize,
     headerMultiple,
+    marginMultiple,
     variant = 'normal',
     ...rest
   }) => {
-    const { cx, styles } = useStyles({ fontSize, headerMultiple: headerMultiple });
+    const { cx, styles } = useStyles({ fontSize, headerMultiple, marginMultiple });
+    const { styles: mdStyles } = useMarkdownStyles({ fontSize, headerMultiple, marginMultiple });
 
     const components: Components = useMemo(
       () => ({
@@ -86,7 +81,24 @@ const Markdown = memo<MarkdownProps>(
       >
         <ImageGallery enable={enableImageGallery}>
           <ReactMarkdown
-            className={cx(styles.markdown, variant === 'chat' && styles.chat)}
+            className={cx(
+              mdStyles.__root,
+              mdStyles.a,
+              mdStyles.blockquote,
+              mdStyles.code,
+              mdStyles.details,
+              mdStyles.header,
+              mdStyles.hr,
+              mdStyles.img,
+              mdStyles.kbd,
+              mdStyles.list,
+              mdStyles.p,
+              mdStyles.pre,
+              mdStyles.strong,
+              mdStyles.table,
+              mdStyles.video,
+              variant === 'chat' && styles.chat,
+            )}
             components={components}
             rehypePlugins={rehypePlugins}
             remarkPlugins={remarkPlugins}

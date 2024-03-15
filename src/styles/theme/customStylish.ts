@@ -60,6 +60,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
     markdown: css`
       --lobe-markdown-font-size: 16px;
       --lobe-markdown-header-multiple: 1;
+      --lobe-markdown-margin-multiple: 1.5;
 
       position: relative;
 
@@ -69,13 +70,19 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       line-height: 1.6;
       word-break: break-word;
 
+      p {
+        margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
+        line-height: 1.6;
+        letter-spacing: 0.02em;
+      }
+
       h1,
       h2,
       h3,
       h4,
       h5 {
         margin-block: max(
-          calc(var(--lobe-markdown-header-multiple) * 1em),
+          calc(var(--lobe-markdown-header-multiple) * var(--lobe-markdown-margin-multiple) * 0.5em),
           var(--lobe-markdown-font-size)
         );
         font-weight: 600;
@@ -109,13 +116,14 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         font-size: calc(var(--lobe-markdown-font-size) * 1);
       }
 
+      li {
+        margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
+      }
+
       ul,
       ol {
-        margin-block-end: 1em;
+        margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
         margin-inline-start: 1em;
-        padding-inline-start: 1em;
-        padding-inline-start: 0;
-
         list-style-position: outside;
 
         li {
@@ -196,7 +204,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       }
 
       blockquote {
-        margin-block: 1em;
+        margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
         margin-inline: 0;
         padding-block: 0;
         padding-inline: 1em;
@@ -207,7 +215,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       }
 
       hr {
-        margin-block: 1em;
+        margin-block: calc(var(--lobe-markdown-margin-multiple) * 1.5em);
 
         border-color: ${token.colorBorderSecondary};
         border-style: dashed;
@@ -218,7 +226,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       }
 
       details {
-        margin-block: 1em;
+        margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
         padding-block: 0.75em;
         padding-inline: 1em;
 
@@ -280,7 +288,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
 
         box-sizing: border-box;
         width: 100%;
-        margin-block: 1em;
+        margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
 
         text-align: start;
         overflow-wrap: break-word;
@@ -302,6 +310,8 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       td {
         padding-block: 0.75em;
         padding-inline: 1em;
+        text-align: start;
+        vertical-align: top;
       }
 
       pre,
@@ -318,9 +328,6 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
           border: none !important;
         }
       }
-    `,
-    markdownInChat: css`
-      margin-block: -0.75em;
     `,
     noScrollbar: css`
       ::-webkit-scrollbar {

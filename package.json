@@ -29,7 +29,7 @@
     "mdx.js"
   ],
   "scripts": {
-    "build": "father build && build:entry",
+    "build": "father build && npm run build:entry",
     "build:entry": "tsc mdx.ts --declaration",
     "build:watch": "father dev",
     "ci": "npm run lint:circular && npm run lint && npm run type-check",

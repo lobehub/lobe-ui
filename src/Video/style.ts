@@ -8,9 +8,7 @@ export const useStyles = createStyles(
       minSize,
       size,
     }: {
-      alwaysShowActions?: boolean;
       minSize?: number | string;
-      objectFit?: string;
       size?: number | string;
     } = {},
   ) => {
@@ -25,7 +23,7 @@ export const useStyles = createStyles(
       inset: 0;
 
       width: 100%;
-      height: 100%;
+      height: auto;
 
       opacity: 0;
       background: rgba(0, 0, 0, 50%);
@@ -44,15 +42,17 @@ export const useStyles = createStyles(
 
         overflow: hidden;
 
-        width: ${SIZE};
+        width: 100%;
         min-width: ${MIN_SIZE};
-        height: ${SIZE};
+        max-width: ${SIZE};
+        height: auto;
         min-height: ${MIN_SIZE};
+        max-height: ${SIZE};
         margin-block: 0 1em;
 
         background: ${rgba(token.colorBgLayout, 0.25)};
-        border-radius: ${token.borderRadius}px;
-        box-shadow: 0 0 0 1px ${token.colorFillTertiary};
+        border-radius: ${token.borderRadiusLG}px;
+        box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
 
         &:hover {
           .${preview} {

@@ -1,3 +1,4 @@
+import { Skeleton } from 'antd';
 import { PlayIcon } from 'lucide-react';
 import { memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
@@ -13,6 +14,7 @@ export interface VideoProps extends DivProps {
     video?: string;
     wrapper?: string;
   };
+  height?: number | string;
   isLoading?: boolean;
   loop?: boolean;
   minSize?: number | string;
@@ -23,6 +25,7 @@ export interface VideoProps extends DivProps {
   preview?: boolean;
   size?: number | string;
   src: string;
+  width?: number | string;
 }
 
 const Video = memo<VideoProps>(
@@ -33,15 +36,21 @@ const Video = memo<VideoProps>(
     classNames,
     className,
     minSize,
-    size,
+    size = '100%',
+    width,
+    height,
     onMouseEnter,
     onMouseLeave,
     preview = true,
+    isLoading,
     ...rest
   }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [showControls, setShowControls] = useState(false);
-    const { cx, styles } = useStyles({ minSize, size });
+    const { cx, styles, theme } = useStyles({
+      minSize,
+      size,
+    });
     const onVideoMouseEnter = (e: any) => {
       setShowControls(true);
       onMouseEnter?.(e);
@@ -51,17 +60,33 @@ const Video = memo<VideoProps>(
       onMouseLeave?.(e);
     };
 
+    if (isLoading)
+      return (
+        <Skeleton.Avatar
+          active
+          style={{
+            borderRadius: theme.borderRadius,
+            height,
+            maxHeight: size,
+            maxWidth: size,
+            minHeight: minSize,
+            minWidth: minSize,
+            width,
+          }}
+        />
+      );
+
     return (
       <Flexbox className={cx(styles.videoWrapper, classNames?.wrapper)} style={style}>
         {preview && !isPlaying && (
           <Flexbox align={'center'} className={styles.preview} justify={'center'}>
-            <Icon icon={PlayIcon} size={'normal'} />
+            <Icon color={'#fff'} icon={PlayIcon} size={'normal'} />
           </Flexbox>
         )}
         <video
           className={cx(styles.video, classNames?.video, className)}
           controls={showControls}
-          height={'auto'}
+          height={height}
           onEnded={() => setIsPlaying(false)}
           onMouseEnter={onVideoMouseEnter}
           onMouseLeave={onVideoMouseLeave}
@@ -69,7 +94,11 @@ const Video = memo<VideoProps>(
           onPlay={() => setIsPlaying(true)}
           onPlaying={() => setIsPlaying(true)}
           preload={preload}
-          width={'100%'}
+          style={{
+            height: 'auto',
+            width: '100%',
+          }}
+          width={width}
           {...(rest as any)}
         >
           <source src={src} />

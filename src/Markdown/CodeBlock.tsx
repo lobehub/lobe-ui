@@ -34,9 +34,12 @@ const Code = memo(({ fullFeatured, ...rest }: any) => {
 
   if (!children) return;
 
-  const content = Array.isArray(children) ? (children[0] as string) : children;
+  let content = Array.isArray(children) ? (children[0] as string) : children;
+
+  content = content.trim();
+
   const lang = className?.replace('language-', '') || FALLBACK_LANG;
-  if (countLines(content) === 1 && content.length <= 60) {
+  if (countLines(content) < 1 && content.length <= 60) {
     return (
       <Snippet
         className={styles.container}
