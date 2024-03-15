@@ -1,27 +1,20 @@
-import {
-  Collapse,
-  CollapseProps,
-  Divider,
-  DividerProps,
-  ImageProps,
-  Typography,
-  TypographyProps,
-} from 'antd';
-import { CSSProperties, memo } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
+import { CSSProperties, memo, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Components } from 'react-markdown/lib/ast-to-react';
 import rehypeKatex from 'rehype-katex';
+import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
-import Image from '@/Image';
+import Image, { type ImageProps } from '@/Image';
 import ImageGallery from '@/Image/ImageGallery';
+import Video, { type VideoProps } from '@/Video';
 
 import { CodeFullFeatured, CodeLite } from './CodeBlock';
 import { useStyles } from './style';
 
 export interface MarkdownProps {
+  allowHtml?: boolean;
   /**
    * @description The markdown content to be rendered
    */
@@ -31,26 +24,19 @@ export interface MarkdownProps {
    */
   className?: string;
   componentProps?: {
-    a?: TypographyProps['Link'] & HTMLAnchorElement;
-    details?: CollapseProps;
-    hr?: DividerProps;
     img?: ImageProps;
     pre?: any;
+    video?: VideoProps;
   };
   enableImageGallery?: boolean;
+  fontSize?: number;
   fullFeaturedCodeBlock?: boolean;
+  headerMultiple?: number;
+
   onDoubleClick?: () => void;
   style?: CSSProperties;
+  variant?: 'normal' | 'chat';
 }
-
-const MemoAlink = memo((props: any) => (
-  <Typography.Link rel="noopener noreferrer" target="_blank" {...props} />
-));
-const MemoDetails = memo((props: any) => <Collapse {...props} />);
-const MemoHr = memo((props: any) => (
-  <Divider {...props} style={{ marginBottom: '1em', marginTop: 0, ...props?.style }} />
-));
-const MemoImage = memo((props: any) => <Image {...props} />);
 
 const Markdown = memo<MarkdownProps>(
   ({
@@ -61,56 +47,55 @@ const Markdown = memo<MarkdownProps>(
     onDoubleClick,
     enableImageGallery = true,
     componentProps,
+    allowHtml,
+    fontSize,
+    headerMultiple,
+    variant = 'normal',
     ...rest
   }) => {
-    const { styles } = useStyles();
-    const components: Components = {
-      a: (props) => <MemoAlink {...props} {...componentProps?.a} />,
-      details: (props) => <MemoDetails {...props} {...componentProps?.details} />,
-      hr: (props) => <MemoHr {...props} {...componentProps?.hr} />,
-      img: enableImageGallery
-        ? (props) => <MemoImage {...props} {...componentProps?.img} />
-        : undefined,
-      pre: (props) =>
-        fullFeaturedCodeBlock ? (
-          <CodeFullFeatured {...props} {...componentProps?.pre} />
-        ) : (
-          <CodeLite {...props} {...componentProps?.pre} />
-        ),
-    };
+    const { cx, styles } = useStyles({ fontSize, headerMultiple: headerMultiple });
+
+    const components: Components = useMemo(
+      () => ({
+        img: enableImageGallery
+          ? (props: any) => <Image {...props} {...componentProps?.img} />
+          : undefined,
+        pre: (props: any) =>
+          fullFeaturedCodeBlock ? (
+            <CodeFullFeatured {...props} {...componentProps?.pre} />
+          ) : (
+            <CodeLite {...props} {...componentProps?.pre} />
+          ),
+        video: (props: any) => <Video {...props} {...componentProps?.video} />,
+      }),
+      [componentProps, enableImageGallery, fullFeaturedCodeBlock],
+    );
+
+    const rehypePlugins = useMemo(
+      () => [allowHtml && rehypeRaw, rehypeKatex].filter(Boolean) as any,
+      [allowHtml],
+    );
+    const remarkPlugins = useMemo(() => [remarkGfm, remarkMath], []);
 
     return (
-      <Typography
+      <article
         className={className}
         data-code-type="markdown"
         onDoubleClick={onDoubleClick}
         style={style}
       >
         <ImageGallery enable={enableImageGallery}>
-          <ErrorBoundary
-            fallback={
-              <ReactMarkdown
-                className={styles.markdown}
-                components={components}
-                remarkPlugins={[remarkGfm]}
-                {...rest}
-              >
-                {children}
-              </ReactMarkdown>
-            }
+          <ReactMarkdown
+            className={cx(styles.markdown, variant === 'chat' && styles.chat)}
+            components={components}
+            rehypePlugins={rehypePlugins}
+            remarkPlugins={remarkPlugins}
+            {...rest}
           >
-            <ReactMarkdown
-              className={styles.markdown}
-              components={components}
-              rehypePlugins={[rehypeKatex] as any}
-              remarkPlugins={[remarkGfm, remarkMath]}
-              {...rest}
-            >
-              {children}
-            </ReactMarkdown>
-          </ErrorBoundary>
+            {children}
+          </ReactMarkdown>
         </ImageGallery>
-      </Typography>
+      </article>
     );
   },
 );

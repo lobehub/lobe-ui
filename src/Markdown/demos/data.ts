@@ -24,6 +24,10 @@ an example | *an example* | **an example**
 ![](https://gw.alipayobjects.com/zos/kitchen/sLO%24gbrQtp/lobe-chat.webp)
 ![](https://gw.alipayobjects.com/zos/kitchen/8Ab%24hLJ5ur/cover.webp)
 
+<video
+  poster="https://gw.alipayobjects.com/zos/kitchen/sLO%24gbrQtp/lobe-chat.webp"
+  src="https://github.com/lobehub/lobe-chat/assets/28616219/f29475a3-f346-4196-a435-41a6373ab9e2"/>
+
 ---
 
 1. Bird
@@ -93,17 +97,63 @@ $$
 `;
 
 export const content2 = `# Customize Markdown Components
-## Customize Anchor Behavior
+#### Customize Anchor Behavior
 This is [an example](http://example.com/ "Title") inline link.
 
 <http://example.com/>
 
 
-## Customize Hr
+#### Customize Hr
 
 ---
 
-## Customize Image Display
+#### Customize Image Display
 
 ![](https://gw.alipayobjects.com/zos/kitchen/sLO%24gbrQtp/lobe-chat.webp)
+`;
+
+export const code = `
+
+#### transformerNotationDiff
+
+\`\`\`ts
+export function foo() {
+  console.log('hewwo') // [!code --]
+  console.log('hello') // [!code ++]
+}
+\`\`\`
+
+#### transformerNotationHighlight
+
+\`\`\`ts
+export function foo() {
+  console.log('Highlighted') // [!code highlight]
+}
+\`\`\`
+
+#### transformerNotationWordHighlight
+
+\`\`\`ts
+export function foo() { // [!code word:Hello]
+  const msg = 'Hello World'
+  console.log(msg) // 打印 Hello World
+}
+\`\`\`
+
+#### transformerNotationFocus
+
+\`\`\`ts
+export function foo() {
+  console.log('Focused') // [!code focus]
+}
+\`\`\`
+
+#### transformerNotationErrorLevel
+
+\`\`\`ts
+export function foo() {
+  console.error('Error') // [!code error]
+  console.warn('Warning') // [!code warning]
+}
+\`\`\`
 `;

@@ -5,16 +5,14 @@ import Highlighter from '@/Highlighter';
 import Snippet from '@/Snippet';
 import { FALLBACK_LANG } from '@/hooks/useHighlight';
 
-const useStyles = createStyles(({ css }) => ({
+const useStyles = createStyles(({ css, token }) => ({
   container: css`
-    :not(:last-child) {
-      margin-block: 1em 1em;
-      margin-inline: 0 0;
-    }
+    margin-block: 1em;
+    box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
   `,
   highlight: css`
     pre {
-      padding: 12px !important;
+      padding: 1em !important;
     }
   `,
 }));
@@ -27,6 +25,8 @@ const countLines = (str: string): number => {
 
 const Code = memo(({ fullFeatured, ...rest }: any) => {
   const { styles, cx } = useStyles();
+
+  console.log(rest);
 
   if (!rest.children[0]) return;
 

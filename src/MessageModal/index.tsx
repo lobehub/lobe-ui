@@ -1,5 +1,5 @@
 import { Button } from 'antd';
-import { createStyles, useResponsive } from 'antd-style';
+import { useResponsive } from 'antd-style';
 import { CSSProperties, ReactNode, memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
@@ -9,10 +9,6 @@ import Markdown from '@/Markdown';
 import { type MessageInputProps } from '@/MessageInput';
 import { useStyles as useTextStyles } from '@/MessageInput/style';
 import Modal, { type ModalProps } from '@/Modal';
-
-const useStyles = createStyles(({ stylish }) => ({
-  markdown: stylish.markdownInChat,
-}));
 
 export interface MessageModalProps extends Pick<ModalProps, 'open' | 'footer'> {
   /**
@@ -66,7 +62,7 @@ const MessageModal = memo<MessageModalProps>(
     extra,
   }) => {
     const { mobile } = useResponsive();
-    const { styles } = useStyles();
+
     const { styles: textStyles } = useTextStyles();
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
@@ -148,8 +144,8 @@ const MessageModal = memo<MessageModalProps>(
           <>
             {extra}
             <Markdown
-              className={styles.markdown}
               style={value ? markdownStyle : { ...markdownStyle, opacity: 0.5 }}
+              variant={'chat'}
             >
               {String(value || placeholder)}
             </Markdown>

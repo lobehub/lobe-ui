@@ -85,6 +85,8 @@ export const useStyles = createStyles(
         `,
       ),
       select: css`
+        user-select: none;
+        color: ${token.colorTextDescription};
         .${prefixCls}-select-selection-item {
           min-width: 100px;
           padding-inline-end: 0 !important;
