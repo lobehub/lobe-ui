@@ -10,7 +10,9 @@
       "@@/*": [".dumi/tmp/*"],
       "@/*": ["src/*"],
       "@lobehub/ui": ["src"],
-      "@lobehub/ui/*": ["src/*"]
+      "@lobehub/ui/*": ["src/*"],
+      "@lobehub/ui/mdx": ["src/mdx"],
+      "@lobehub/ui/mdx/*": ["src/mdx/*"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
