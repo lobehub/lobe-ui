@@ -109,10 +109,16 @@ const Card: FC<CardProps> = ({ icon, title, desc, href, iconProps, image, ...res
   );
 };
 
-const Cards: FC<PropsWithChildren> = ({ children }) => {
+const _Cards: FC<PropsWithChildren> = ({ children }) => {
   const { styles } = useStyles();
   return <div className={styles.container}>{children}</div>;
 };
 
+export type CardsProps = typeof _Cards & {
+  Card: typeof Card;
+};
+
+const Cards = _Cards as CardsProps;
+Cards.Card = Card;
+
 export default Cards;
-export { Card };

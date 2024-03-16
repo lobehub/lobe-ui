@@ -1,5 +1,5 @@
 export { default as Callout, type CalloutProps } from './Callout';
-export { Card, type CardProps, default as Cards } from './Cards';
+export { default as Cards, type CardsProps } from './Cards';
 export { default as FileTree, type FileTreeProps } from './FileTree';
 export { default as Image, type ImageProps } from './Image';
 export { default as mdxComponents } from './mdxComponents';
