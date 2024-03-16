@@ -67,6 +67,10 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info' }) => {
 
   const { icon, color } = selectedType;
 
+  let content = children;
+
+  if (isString(children)) content = <p>{children}</p>;
+
   return (
     <Flexbox
       align={'flex-start'}
@@ -79,7 +83,7 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info' }) => {
       }}
     >
       <Icon icon={icon} size={{ fontSize: '1.2em' }} style={{ marginBlock: '0.2em' }} />
-      <div className={styles.content}>{isString(children) ? <p>{children}</p> : children}</div>
+      <div className={styles.content}>{content}</div>
     </Flexbox>
   );
 };

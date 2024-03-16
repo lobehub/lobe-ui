@@ -1,5 +1,5 @@
 import { createStyles } from 'antd-style';
-import { isString } from 'lodash-es';
+import { isArray, isString } from 'lodash-es';
 import { FC, ReactNode, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
@@ -34,7 +34,12 @@ export interface _TabItemProps {
 
 const _TabItem: FC<_TabItemProps> = ({ children }) => {
   const { styles } = useStyles();
-  return <div className={styles.body}>{isString(children) ? <p>{children}</p> : children}</div>;
+
+  let content = children;
+
+  if (isString(children) || isArray(children)) content = <p>{children}</p>;
+
+  return <div className={styles.body}>{content}</div>;
 };
 
 export interface _TabsProps {

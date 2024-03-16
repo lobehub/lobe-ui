@@ -6,7 +6,7 @@ import A from '../A';
 import Icon, { type IconProps } from '../Icon';
 import Img from '../Img';
 
-const useStyles = createStyles(({ css, cx, token }) => {
+const useStyles = createStyles(({ css, cx, token }, rows?: number) => {
   const icon = cx(css`
     margin-block: 0.1em;
     opacity: 0.5;
@@ -19,6 +19,8 @@ const useStyles = createStyles(({ css, cx, token }) => {
       --lobe-markdown-margin-multiple: 1;
 
       overflow: hidden;
+
+      height: 100%;
 
       color: ${token.colorText};
 
@@ -52,7 +54,7 @@ const useStyles = createStyles(({ css, cx, token }) => {
     `,
 
     container: css`
-      --rows: 3;
+      --rows: ${rows};
 
       display: grid;
       grid-template-columns: repeat(
@@ -61,6 +63,10 @@ const useStyles = createStyles(({ css, cx, token }) => {
       );
       gap: 1em;
       margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
+
+      > div {
+        margin: 0 !important;
+      }
     `,
     content: css`
       gap: 0.75em;
@@ -109,8 +115,12 @@ const Card: FC<CardProps> = ({ icon, title, desc, href, iconProps, image, ...res
   );
 };
 
-const _Cards: FC<PropsWithChildren> = ({ children }) => {
-  const { styles } = useStyles();
+interface _CardsProps extends PropsWithChildren {
+  rows?: number;
+}
+
+const _Cards: FC<_CardsProps> = ({ children, rows = 3 }) => {
+  const { styles } = useStyles(rows);
   return <div className={styles.container}>{children}</div>;
 };
 
