@@ -5,14 +5,16 @@ import Highlighter from '@/Highlighter';
 import Snippet from '@/Snippet';
 import { FALLBACK_LANG } from '@/hooks/useHighlight';
 
-const useStyles = createStyles(({ css, token }) => ({
+const useStyles = createStyles(({ css }) => ({
   container: css`
+    overflow: hidden;
     margin-block: 1em;
     border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
-    box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
+    box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
   `,
   highlight: css`
     pre {
+      overflow-x: hidden !important;
       padding: 1em !important;
     }
   `,

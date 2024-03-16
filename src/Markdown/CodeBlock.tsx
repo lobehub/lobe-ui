@@ -17,11 +17,11 @@ const useCode = (raw: any) => {
 
   if (!children) return;
 
-  const content = Array.isArray(children) ? (children[0] as string) : children;
+  const content = (Array.isArray(children) ? (children[0] as string) : children).trim();
 
   const lang = className?.replace('language-', '') || FALLBACK_LANG;
 
-  const isSingleLine = countLines(content) <= 1 && content.length <= 6;
+  const isSingleLine = countLines(content) <= 1 && content.length <= 48;
 
   return {
     content,

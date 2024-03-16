@@ -4,6 +4,7 @@ import { CDN, CdnApi, genCdnUrl } from '@/utils/genCdnUrl';
 
 type CdnFn = ({ pkg, version, path }: CdnApi) => string;
 export interface Config {
+  aAs?: ElementType;
   customCdnFn?: CdnFn;
   imgAs?: ElementType;
   proxy?: CDN | 'custom';

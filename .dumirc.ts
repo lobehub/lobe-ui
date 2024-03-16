@@ -20,7 +20,7 @@ const themeConfig = {
   ],
   apiHeader: {
     docUrl: `{github}/tree/master/src/{atomId}/index.md`,
-    match: ['/components'],
+    match: ['/components', '/mdx'],
     pkg: name,
     sourceUrl: `{github}/tree/master/src/{atomId}/index.tsx`,
   },
@@ -36,6 +36,7 @@ const themeConfig = {
   name: 'UI',
   nav: [
     { link: '/components/action-icon', title: 'Components' },
+    { link: '/mdx/callout', title: 'Mdx' },
     { link: '/colors', title: 'Colors' },
     { link: 'http://icons.lobehub.com', mode: 'override', title: 'Icons' },
     { link: 'https://ant.design/components/overview', mode: 'override', title: 'Antd Components' },

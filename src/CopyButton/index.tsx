@@ -1,4 +1,4 @@
-import { Copy } from 'lucide-react';
+import { Check, Copy } from 'lucide-react';
 import { memo } from 'react';
 
 import ActionIcon, { type ActionIconSize } from '@/ActionIcon';
@@ -37,16 +37,17 @@ const CopyButton = memo<CopyButtonProps>(
     return (
       <ActionIcon
         {...rest}
+        active={copied}
         className={className}
         glass
-        icon={Copy}
+        icon={copied ? Check : Copy}
         onClick={async () => {
           await copyToClipboard(content);
           setCopied();
         }}
         placement={placement}
         size={size}
-        title={copied ? '✅ Success' : 'Copy'}
+        title={'Copy'}
       />
     );
   },

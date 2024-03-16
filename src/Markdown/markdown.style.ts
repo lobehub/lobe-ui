@@ -1,4 +1,5 @@
 import { createStyles } from 'antd-style';
+import { rgba } from 'polished';
 
 export const useStyles = createStyles(
   (
@@ -17,6 +18,9 @@ export const useStyles = createStyles(
         --lobe-markdown-margin-multiple: ${marginMultiple};
         --lobe-markdown-line-height: ${lineHeight};
         --lobe-markdown-border-radius: ${token.borderRadiusLG};
+        --lobe-markdown-border-color: ${isDarkMode
+          ? token.colorBorderSecondary
+          : rgba(token.colorBorderSecondary, 0.5)};
 
         position: relative;
 
@@ -51,6 +55,7 @@ export const useStyles = createStyles(
         code:not(:has(span)) {
           display: inline-block;
 
+          margin-inline: 0.25em;
           padding-block: 0.2em;
           padding-inline: 0.4em;
 
@@ -60,7 +65,7 @@ export const useStyles = createStyles(
           word-break: break-word;
 
           background: ${token.colorFillSecondary};
-          border: 1px solid ${token.colorBorderSecondary};
+          border: 1px solid var(--lobe-markdown-border-color);
           border-radius: 0.25em;
         }
       `,
@@ -72,7 +77,7 @@ export const useStyles = createStyles(
 
           background: ${token.colorFillTertiary};
           border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
-          box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
+          box-shadow: inset 0 0 0 1px var(--lobe-markdown-border-color);
 
           summary {
             cursor: pointer;
@@ -178,7 +183,7 @@ export const useStyles = createStyles(
         > p > img {
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
           border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
-          box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
+          box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
         }
       `,
       kbd: css`
@@ -215,7 +220,7 @@ export const useStyles = createStyles(
       `,
       list: css`
         li {
-          margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.4em);
+          margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.33em);
         }
 
         ul,
@@ -227,7 +232,7 @@ export const useStyles = createStyles(
 
           ul,
           ol {
-            margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.4em);
+            margin-block: 0;
           }
 
           li {
@@ -296,14 +301,14 @@ export const useStyles = createStyles(
 
           background: ${token.colorFillQuaternary};
           border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
-          box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
+          box-shadow: inset 0 0 0 1px var(--lobe-markdown-border-color);
 
           thead {
             background: ${token.colorFillQuaternary};
           }
 
           tr {
-            box-shadow: inset 0 -1px 0 ${token.colorBorderSecondary};
+            box-shadow: inset 0 1px 0 var(--lobe-markdown-border-color);
           }
 
           th,
@@ -320,7 +325,7 @@ export const useStyles = createStyles(
         > p > video {
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
           border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
-          box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
+          box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
         }
 
         video {

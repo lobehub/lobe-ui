@@ -1,5 +1,4 @@
 import { Select, type SelectProps } from 'antd';
-import { useResponsive } from 'antd-style';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
@@ -30,7 +29,6 @@ const options: SelectProps['options'] = languageMap.map((item) => ({
 
 export const Highlighter = memo<HighlighterProps>(
   ({ children, language = 'markdown', className, style, ...rest }) => {
-    const { mobile } = useResponsive();
     const [expand, setExpand] = useState(true);
     const [lang, setLang] = useState(language);
     const { styles, cx } = useStyles('block');
@@ -44,21 +42,15 @@ export const Highlighter = memo<HighlighterProps>(
             onClick={() => setExpand(!expand)}
             size={{ blockSize: 24, fontSize: 14, strokeWidth: 3 }}
           />
-
-          {mobile ? (
-            <span className={styles.select}>{lang.toLowerCase()}</span>
-          ) : (
-            <Select
-              className={styles.select}
-              onSelect={setLang}
-              options={options}
-              size={'small'}
-              suffixIcon={false}
-              value={lang.toLowerCase()}
-              variant={'borderless'}
-            />
-          )}
-
+          <Select
+            className={styles.select}
+            onSelect={setLang}
+            options={options}
+            size={'small'}
+            suffixIcon={false}
+            value={lang.toLowerCase()}
+            variant={'borderless'}
+          />
           <CopyButton
             content={children}
             placement="left"

@@ -77,7 +77,7 @@ const Markdown = memo<MarkdownProps>(
         className={className}
         data-code-type="markdown"
         onDoubleClick={onDoubleClick}
-        style={style}
+        style={{ overflow: 'hidden', ...style }}
       >
         <ImageGallery enable={enableImageGallery}>
           <ReactMarkdown
