@@ -1,7 +1,7 @@
 ---
 nav: Mdx
 group: Built-ins
-title: Callout
+title: Steps
 apiHeader:
   pkg: '@lobehub/ui/mdx'
   docUrl: '{github}/tree/master/docs/mdx/{atomId}/index.md'
@@ -11,7 +11,3 @@ apiHeader:
 ## Example
 
 <code src="./demos/index.tsx" ></code>
-
-## Usage
-
-<code src="./demos/story.tsx" nopadding></code>

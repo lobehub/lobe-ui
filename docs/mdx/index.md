@@ -2,7 +2,6 @@
 nav: Mdx
 group: Components
 title: mdxComponents
-description: A built-in component to show important information to the reader.
 atomId: mdxComponents
 apiHeader:
   pkg: '@lobehub/ui/mdx'
