@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.133.0](https://github.com/lobehub/lobe-ui/compare/v1.132.7...v1.133.0)
+
+<sup>Released on **2024-03-16**</sup>
+
+#### ✨ Features
+
+- **misc**: Add Mdx Components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add Mdx Components ([03f272a](https://github.com/lobehub/lobe-ui/commit/03f272a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.132.7](https://github.com/lobehub/lobe-ui/compare/v1.132.6...v1.132.7)
 
 <sup>Released on **2024-03-16**</sup>
