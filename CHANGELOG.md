@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.133.2](https://github.com/lobehub/lobe-ui/compare/v1.133.1...v1.133.2)
+
+<sup>Released on **2024-03-16**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Callout.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix Callout ([29fec19](https://github.com/lobehub/lobe-ui/commit/29fec19))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.133.1](https://github.com/lobehub/lobe-ui/compare/v1.133.0...v1.133.1)
 
 <sup>Released on **2024-03-16**</sup>
