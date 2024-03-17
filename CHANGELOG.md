@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.133.7](https://github.com/lobehub/lobe-ui/compare/v1.133.6...v1.133.7)
+
+<sup>Released on **2024-03-17**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix mdx export.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix mdx export ([9694a30](https://github.com/lobehub/lobe-ui/commit/9694a30))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.133.6](https://github.com/lobehub/lobe-ui/compare/v1.133.5...v1.133.6)
 
 <sup>Released on **2024-03-17**</sup>
