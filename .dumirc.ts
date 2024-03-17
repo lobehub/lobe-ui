@@ -1,4 +1,5 @@
 import { defineConfig } from 'dumi';
+import { resolve } from 'node:path';
 
 import { homepage, name } from './package.json';
 
@@ -52,6 +53,9 @@ const themeConfig = {
 };
 
 export default defineConfig({
+  alias: {
+    '@lobehub/ui/mdx': resolve(__dirname, './src/mdx'),
+  },
   apiParser: isProduction ? {} : false,
   base: '/',
   define: {
