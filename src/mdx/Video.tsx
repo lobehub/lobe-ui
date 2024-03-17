@@ -1,6 +1,6 @@
 import { CSSProperties, FC } from 'react';
 
-import LobeVideo from '../Video';
+import LobeVideo from '@/Video';
 
 export interface VideoProps {
   borderless?: boolean;

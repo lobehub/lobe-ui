@@ -1,6 +1,6 @@
 import { CSSProperties, FC } from 'react';
 
-import LobeImage from '../Image';
+import LobeImage from '@/Image';
 
 export interface ImageProps {
   alt: string;

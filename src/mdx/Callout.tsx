@@ -1,4 +1,3 @@
-import { Icon } from '@lobehub/ui';
 import { createStyles } from 'antd-style';
 import { isString } from 'lodash-es';
 import { Info, Lightbulb, MessageSquareWarning, OctagonAlert, TriangleAlert } from 'lucide-react';
@@ -6,6 +5,8 @@ import { rgba } from 'polished';
 import type { ReactNode } from 'react';
 import { FC } from 'react';
 import { Flexbox } from 'react-layout-kit';
+
+import Icon from '@/Icon';
 
 const useStyles = createStyles(({ css }) => {
   return {

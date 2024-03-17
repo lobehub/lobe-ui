@@ -2,9 +2,9 @@ import { createStyles } from 'antd-style';
 import { FC, PropsWithChildren } from 'react';
 import { Flexbox, type FlexboxProps } from 'react-layout-kit';
 
-import A from '../A';
-import Icon, { type IconProps } from '../Icon';
-import Img from '../Img';
+import A from '@/A';
+import Icon, { type IconProps } from '@/Icon';
+import Img from '@/Img';
 
 const useStyles = createStyles(({ css, cx, token }, rows?: number) => {
   const icon = cx(css`

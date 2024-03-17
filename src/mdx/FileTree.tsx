@@ -3,7 +3,7 @@ import { FileIcon, FolderIcon, FolderOpen } from 'lucide-react';
 import { FC, ReactNode, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import Icon, { type IconProps } from '../Icon';
+import Icon, { type IconProps } from '@/Icon';
 
 const useStyles = createStyles(({ css, token }) => {
   return {

@@ -1,5 +1,3 @@
-import { FC } from 'react';
-
 import Callout from './Callout';
 import Cards from './Cards';
 import FileTree from './FileTree';
@@ -8,7 +6,7 @@ import Steps from './Steps';
 import Tabs from './Tabs';
 import Video from './Video';
 
-const mdxComponents: Record<string, FC<any>> = {
+const mdxComponents = {
   Callout,
   Cards,
   FileTree,

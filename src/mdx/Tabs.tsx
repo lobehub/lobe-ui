@@ -3,7 +3,7 @@ import { isString } from 'lodash-es';
 import { FC, ReactNode, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import TabsNav from '../TabsNav';
+import TabsNav from '@/TabsNav';
 
 const useStyles = createStyles(({ css, token, prefixCls }) => {
   return {
