@@ -67,7 +67,7 @@ export default (token: Theme) => css`
     * {
       ::-webkit-scrollbar {
         cursor: pointer;
-        width: 4px;
+        width: 0;
         height: 4px;
         background-color: transparent;
       }
