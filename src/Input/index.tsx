@@ -18,9 +18,9 @@ export const Input = forwardRef<InputRef, InputProps>(
 
     return (
       <AntInput
-        bordered={type !== 'pure'}
         className={cx(styles.input, className)}
         ref={ref}
+        variant={type === 'pure' ? 'borderless' : undefined}
         {...rest}
       />
     );
@@ -46,10 +46,10 @@ export const TextArea = forwardRef<TextAreaRef, TextAreaProps>(
 
     return (
       <AntInput.TextArea
-        bordered={type !== 'pure'}
         className={cx(styles.textarea, className)}
         ref={ref}
         style={resize ? style : { resize: 'none', ...style }}
+        variant={type === 'pure' ? 'borderless' : undefined}
         {...rest}
       />
     );
