@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.133.3](https://github.com/lobehub/lobe-ui/compare/v1.133.2...v1.133.3)
+
+<sup>Released on **2024-03-17**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix build.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix build ([ebafa1e](https://github.com/lobehub/lobe-ui/commit/ebafa1e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.133.2](https://github.com/lobehub/lobe-ui/compare/v1.133.1...v1.133.2)
 
 <sup>Released on **2024-03-16**</sup>
