@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.133.8](https://github.com/lobehub/lobe-ui/compare/v1.133.7...v1.133.8)
+
+<sup>Released on **2024-03-17**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix Input props.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix Input props ([9b2a910](https://github.com/lobehub/lobe-ui/commit/9b2a910))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.133.7](https://github.com/lobehub/lobe-ui/compare/v1.133.6...v1.133.7)
 
 <sup>Released on **2024-03-17**</sup>
