@@ -19,5 +19,6 @@
     "strict": true,
     "types": ["vitest/globals"]
   },
-  "include": ["src", "docs", "tests", ".dumirc.ts", "*.ts"]
+  "exclude": ["mdx.d.ts"],
+  "include": ["src", "docs", "tests", ".dumirc.ts", ".fatherrc.ts"]
 }

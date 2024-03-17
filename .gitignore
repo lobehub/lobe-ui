@@ -43,5 +43,3 @@ test-output
 # misc
 # add other ignore file below
 bun.lockb
-mdx.d.ts
-mdx.js
