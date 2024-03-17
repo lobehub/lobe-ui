@@ -110,6 +110,7 @@ export { default as LogoThree, type LogoThreeProps } from './LogoThree';
 export { default as LogoSpline, type LogoSplineProps } from './LogoThree/LogoSpline';
 export { default as Markdown, type MarkdownProps } from './Markdown';
 export { Typography, type TypographyProps } from './Markdown/Typography';
+export { mdxComponents, Pre, PreSingleLine } from './mdx';
 export { default as MessageInput, type MessageInputProps } from './MessageInput';
 export { default as MessageModal, type MessageModalProps } from './MessageModal';
 export { default as MobileNavBar, type MobileNavBarProps } from './MobileNavBar';
