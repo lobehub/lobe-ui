@@ -7,7 +7,7 @@ import {
   GetAntdTheme,
   StyleProvider,
 } from 'antd-style';
-import { memo, useCallback } from 'react';
+import { CSSProperties, memo, useCallback } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
 import FontLoader from '@/FontLoader';
@@ -18,19 +18,20 @@ import { LobeCustomToken } from '@/types/customToken';
 import GlobalStyle from './GlobalStyle';
 
 export interface ThemeProviderProps extends Omit<AntdThemeProviderProps<any>, 'theme'> {
+  className?: string;
   customStylish?: (theme: CustomStylishParams) => { [key: string]: any };
-
   customTheme?: {
     neutralColor?: NeutralColors;
     primaryColor?: PrimaryColors;
   };
+
   /**
    * @description Custom extra token
    */
   customToken?: (theme: CustomTokenParams) => { [key: string]: any };
-
-  enableWebfonts?: boolean;
   enableGlobalStyle?: boolean;
+  enableWebfonts?: boolean;
+  style?: CSSProperties;
   /**
    * @description Webfont loader css strings
    */
@@ -46,6 +47,8 @@ const ThemeProvider = memo<ThemeProviderProps>(
     enableGlobalStyle = true,
     webfonts,
     customTheme = {},
+    className,
+    style,
     ...res
   }) => {
     const genCdnUrl = useCdnFn();
@@ -97,7 +100,9 @@ const ThemeProvider = memo<ThemeProviderProps>(
             theme={theme}
           >
             {enableGlobalStyle && <GlobalStyle />}
-            <App style={{ minHeight: 'inherit', width: 'inherit' }}>{children}</App>
+            <App className={className} style={{ minHeight: 'inherit', width: 'inherit', ...style }}>
+              {children}
+            </App>
           </AntdThemeProvider>
         </StyleProvider>
       </>
