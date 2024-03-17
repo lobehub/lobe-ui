@@ -29,6 +29,11 @@ const useStyles = createStyles(({ css }) => {
         color: inherit !important;
       }
     `,
+    underlineAnchor: css`
+      a {
+        text-decoration: underline;
+      }
+    `,
   };
 });
 
@@ -38,7 +43,7 @@ export interface CalloutProps {
 }
 
 const Callout: FC<CalloutProps> = ({ children, type = 'info' }) => {
-  const { styles, theme } = useStyles();
+  const { cx, styles, theme } = useStyles();
 
   const typeConfig = {
     error: {
@@ -69,7 +74,7 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info' }) => {
 
   let content = children;
 
-  if (isString(children)) content = <p>{children}</p>;
+  if (isString(children) || isString((children as any[])?.[0])) content = <p>{children}</p>;
 
   return (
     <Flexbox
@@ -83,7 +88,7 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info' }) => {
       }}
     >
       <Icon icon={icon} size={{ fontSize: '1.2em' }} style={{ marginBlock: '0.2em' }} />
-      <div className={styles.content}>{content}</div>
+      <div className={cx(styles.content, type === 'info' && styles.underlineAnchor)}>{content}</div>
     </Flexbox>
   );
 };

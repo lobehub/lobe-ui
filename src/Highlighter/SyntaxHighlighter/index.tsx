@@ -47,7 +47,6 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
             justify={'center'}
           >
             <Icon icon={Loader2} spin />
-            Highlighting...
           </Flexbox>
         )}
       </>
