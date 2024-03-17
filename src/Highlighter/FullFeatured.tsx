@@ -1,6 +1,6 @@
 import { Select, type SelectProps } from 'antd';
 import { ChevronDown, ChevronRight } from 'lucide-react';
-import { memo, useState } from 'react';
+import { ReactNode, memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
@@ -12,10 +12,13 @@ import SyntaxHighlighter from './SyntaxHighlighter';
 import { useStyles } from './style';
 
 export interface HighlighterProps extends DivProps {
+  allowChangeLanguage?: boolean;
   /**
    * @description The code content to be highlighted
    */
   children: string;
+  fileName?: string;
+  icon?: ReactNode;
   /**
    * @description The language of the code content
    */
@@ -28,7 +31,16 @@ const options: SelectProps['options'] = languageMap.map((item) => ({
 }));
 
 export const Highlighter = memo<HighlighterProps>(
-  ({ children, language = 'markdown', className, style, ...rest }) => {
+  ({
+    children,
+    language = 'markdown',
+    className,
+    style,
+    allowChangeLanguage = true,
+    fileName,
+    icon,
+    ...rest
+  }) => {
     const [expand, setExpand] = useState(true);
     const [lang, setLang] = useState(language);
     const { styles, cx } = useStyles('block');
@@ -42,15 +54,23 @@ export const Highlighter = memo<HighlighterProps>(
             onClick={() => setExpand(!expand)}
             size={{ blockSize: 24, fontSize: 14, strokeWidth: 3 }}
           />
-          <Select
-            className={styles.select}
-            onSelect={setLang}
-            options={options}
-            size={'small'}
-            suffixIcon={false}
-            value={lang.toLowerCase()}
-            variant={'borderless'}
-          />
+          {allowChangeLanguage && !fileName ? (
+            <Select
+              className={styles.select}
+              onSelect={setLang}
+              options={options}
+              size={'small'}
+              suffixIcon={false}
+              value={lang.toLowerCase()}
+              variant={'borderless'}
+            />
+          ) : (
+            <Flexbox align={'center'} className={styles.select} gap={2} horizontal>
+              {icon}
+              <span>{fileName || lang}</span>
+            </Flexbox>
+          )}
+
           <CopyButton
             content={children}
             placement="left"

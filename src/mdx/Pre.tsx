@@ -1,5 +1,5 @@
 import { createStyles } from 'antd-style';
-import { CSSProperties, FC } from 'react';
+import { CSSProperties, FC, ReactNode } from 'react';
 
 import Highlighter from '@/Highlighter';
 import Snippet from '@/Snippet';
@@ -10,7 +10,7 @@ const useStyles = createStyles(({ css }) => ({
     overflow: hidden;
     margin-block: 1em;
     border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
-    box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
+    box-shadow: inset 0 0 0 1px var(--lobe-markdown-border-color);
   `,
   highlight: css`
     pre {
@@ -21,27 +21,36 @@ const useStyles = createStyles(({ css }) => ({
 }));
 
 export interface PreProps {
+  allowChangeLanguage?: boolean;
   children: string;
   className?: string;
+  fileName?: string;
   fullFeatured?: boolean;
+  icon?: ReactNode;
   lang: string;
   style?: CSSProperties;
 }
 
 export const Pre: FC<PreProps> = ({
   fullFeatured,
+  fileName,
+  allowChangeLanguage,
   lang = FALLBACK_LANG,
   children,
   className,
   style,
+  icon,
 }) => {
   const { styles, cx } = useStyles();
 
   return (
     <Highlighter
+      allowChangeLanguage={allowChangeLanguage}
       className={cx(styles.container, styles.highlight, className)}
       copyButtonSize={{ blockSize: 28, fontSize: 16 }}
+      fileName={fileName}
       fullFeatured={fullFeatured}
+      icon={icon}
       language={lang}
       style={style}
       type="block"

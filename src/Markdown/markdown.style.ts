@@ -28,7 +28,7 @@ export const useStyles = createStyles(
 
         font-size: var(--lobe-markdown-font-size);
         line-height: var(--lobe-markdown-line-height);
-        word-break: break-word;
+        word-break: auto-phrase;
       `,
       a: css`
         a {
@@ -53,7 +53,7 @@ export const useStyles = createStyles(
       `,
       code: css`
         code:not(:has(span)) {
-          display: inline-block;
+          display: inline;
 
           margin-inline: 0.25em;
           padding-block: 0.2em;
@@ -62,7 +62,7 @@ export const useStyles = createStyles(
           font-family: ${token.fontFamilyCode};
           font-size: 0.875em;
           line-height: 1;
-          word-break: break-word;
+          word-break: auto-phrase;
 
           background: ${token.colorFillSecondary};
           border: 1px solid var(--lobe-markdown-border-color);
@@ -189,9 +189,6 @@ export const useStyles = createStyles(
       kbd: css`
         kbd {
           cursor: default;
-          user-select: none;
-
-          transform: translateY(-0.2em);
 
           display: inline-block;
 
@@ -204,18 +201,11 @@ export const useStyles = createStyles(
           font-size: 0.875em;
           font-weight: 500;
           line-height: 1;
-          color: ${token.colorBgLayout};
           text-align: center;
 
-          background: ${isDarkMode ? token.colorText : '#333'};
-          border: 1px solid ${isDarkMode ? token.colorTextSecondary : '#000'};
+          background: ${token.colorBgLayout};
+          border: 1px solid ${token.colorBorderSecondary};
           border-radius: 0.25em;
-          box-shadow: 0 2px 0 1px ${isDarkMode ? token.colorTextSecondary : '#000'};
-
-          &:hover {
-            transform: translateY(0);
-            box-shadow: none;
-          }
         }
       `,
       list: css`
@@ -287,8 +277,8 @@ export const useStyles = createStyles(
       `,
       table: css`
         table {
-          overflow: hidden;
-          display: table;
+          overflow: auto hidden;
+          display: block;
           border-spacing: 0;
           border-collapse: collapse;
 

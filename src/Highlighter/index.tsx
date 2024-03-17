@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { ReactNode, memo } from 'react';
 
 import CopyButton, { type CopyButtonProps } from '@/CopyButton';
 import Spotlight from '@/Spotlight';
@@ -10,6 +10,7 @@ import SyntaxHighlighter from './SyntaxHighlighter';
 import { useStyles } from './style';
 
 export interface HighlighterProps extends DivProps {
+  allowChangeLanguage?: boolean;
   /**
    * @description The code content to be highlighted
    */
@@ -20,7 +21,9 @@ export interface HighlighterProps extends DivProps {
    * @default true
    */
   copyable?: boolean;
+  fileName?: string;
   fullFeatured?: boolean;
+  icon?: ReactNode;
   /**
    * @description The language of the code content
    */
@@ -54,6 +57,9 @@ export const Highlighter = memo<HighlighterProps>(
     showLanguage = true,
     type = 'block',
     spotlight,
+    allowChangeLanguage = true,
+    fileName,
+    icon,
     ...rest
   }) => {
     const { styles, cx } = useStyles(type);
@@ -61,7 +67,15 @@ export const Highlighter = memo<HighlighterProps>(
 
     if (fullFeatured)
       return (
-        <FullFeatured className={className} language={language} style={style} {...rest}>
+        <FullFeatured
+          allowChangeLanguage={allowChangeLanguage}
+          className={className}
+          fileName={fileName}
+          icon={icon}
+          language={language}
+          style={style}
+          {...rest}
+        >
           {children}
         </FullFeatured>
       );

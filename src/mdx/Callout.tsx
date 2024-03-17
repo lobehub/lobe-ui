@@ -1,5 +1,4 @@
 import { createStyles } from 'antd-style';
-import { isString } from 'lodash-es';
 import { Info, Lightbulb, MessageSquareWarning, OctagonAlert, TriangleAlert } from 'lucide-react';
 import { rgba } from 'polished';
 import type { ReactNode } from 'react';
@@ -25,6 +24,10 @@ const useStyles = createStyles(({ css }) => {
     `,
     content: css`
       margin-block: calc(var(--lobe-markdown-margin-multiple) * -1em);
+
+      > div {
+        margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
+      }
 
       p {
         color: inherit !important;
@@ -73,10 +76,6 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info' }) => {
 
   const { icon, color } = selectedType;
 
-  let content = children;
-
-  if (isString(children) || isString((children as any[])?.[0])) content = <p>{children}</p>;
-
   return (
     <Flexbox
       align={'flex-start'}
@@ -89,7 +88,9 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info' }) => {
       }}
     >
       <Icon icon={icon} size={{ fontSize: '1.2em' }} style={{ marginBlock: '0.2em' }} />
-      <div className={cx(styles.content, type === 'info' && styles.underlineAnchor)}>{content}</div>
+      <div className={cx(styles.content, type === 'info' && styles.underlineAnchor)}>
+        <div>{children}</div>
+      </div>
     </Flexbox>
   );
 };

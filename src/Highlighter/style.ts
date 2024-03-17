@@ -86,6 +86,7 @@ export const useStyles = createStyles(
       ),
       select: css`
         user-select: none;
+        font-size: 14px;
         color: ${token.colorTextDescription};
         .${prefixCls}-select-selection-item {
           min-width: 100px;
