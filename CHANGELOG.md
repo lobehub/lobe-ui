@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.133.12](https://github.com/lobehub/lobe-ui/compare/v1.133.11...v1.133.12)
+
+<sup>Released on **2024-03-17**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Wrapper with client flag.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Wrapper with client flag ([6021493](https://github.com/lobehub/lobe-ui/commit/6021493))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.133.11](https://github.com/lobehub/lobe-ui/compare/v1.133.10...v1.133.11)
 
 <sup>Released on **2024-03-17**</sup>
