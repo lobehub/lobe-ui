@@ -283,7 +283,8 @@ export const useStyles = createStyles(
           border-collapse: collapse;
 
           box-sizing: border-box;
-          width: 100%;
+          width: fit-content;
+          max-width: 100%;
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
 
           text-align: start;

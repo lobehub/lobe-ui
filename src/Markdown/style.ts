@@ -19,6 +19,32 @@ export const useStyles = createStyles(
         --lobe-markdown-border-radius: ${token.borderRadius};
 
         margin-block: ${marginMultiple * -0.75}em;
+
+        ol,
+        ul {
+          li {
+            &::marker {
+              color: ${token.cyan};
+            }
+
+            li {
+              &::marker {
+                color: ${token.colorTextSecondary};
+              }
+            }
+          }
+        }
+
+        ul {
+          list-style: unset;
+
+          li {
+            &::before {
+              content: unset;
+              display: unset;
+            }
+          }
+        }
       `,
     };
   },

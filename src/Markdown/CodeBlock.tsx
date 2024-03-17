@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { FC } from 'react';
 
 import { FALLBACK_LANG } from '@/hooks/useHighlight';
 
@@ -30,7 +30,7 @@ const useCode = (raw: any) => {
   };
 };
 
-const CodeBlock = memo(({ fullFeatured, ...rest }: any) => {
+const CodeBlock: FC<any> = ({ fullFeatured, ...rest }) => {
   const code = useCode(rest?.children?.[0]);
 
   if (!code) return;
@@ -42,12 +42,12 @@ const CodeBlock = memo(({ fullFeatured, ...rest }: any) => {
       {code.content}
     </Pre>
   );
-});
+};
 
-export const CodeLite = memo((props: any) => {
+export const CodeLite: FC<any> = (props) => {
   return <CodeBlock {...props} />;
-});
+};
 
-export const CodeFullFeatured = memo((props: any) => {
+export const CodeFullFeatured: FC<any> = (props) => {
   return <CodeBlock fullFeatured {...props} />;
-});
+};
