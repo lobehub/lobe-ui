@@ -1,3 +1,5 @@
+'use client';
+
 import { createStyles } from 'antd-style';
 import { FC, PropsWithChildren } from 'react';
 import { Flexbox, type FlexboxProps } from 'react-layout-kit';

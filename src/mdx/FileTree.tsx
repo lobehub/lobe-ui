@@ -1,3 +1,5 @@
+'use client';
+
 import { createStyles } from 'antd-style';
 import { FileIcon, FolderIcon, FolderOpen } from 'lucide-react';
 import { FC, ReactNode, useState } from 'react';

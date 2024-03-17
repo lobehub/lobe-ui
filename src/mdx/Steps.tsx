@@ -1,3 +1,5 @@
+'use client';
+
 import { createStyles } from 'antd-style';
 import { FC, PropsWithChildren } from 'react';
 
@@ -29,10 +31,6 @@ const useStyles = createStyles(({ css, token }) => {
       h3 {
         counter-increment: step;
 
-        &:not(:first-child) {
-          margin-block-start: 2em;
-        }
-
         &::before {
           content: counter(step);
 
@@ -55,6 +53,10 @@ const useStyles = createStyles(({ css, token }) => {
           background: ${token.colorBgElevated};
           border-radius: 9999px;
           box-shadow: 0 0 0 2px ${token.colorBgLayout};
+        }
+
+        &:not(:first-child) {
+          margin-block-start: 2em;
         }
       }
     `,

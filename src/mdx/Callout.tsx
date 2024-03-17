@@ -1,3 +1,5 @@
+'use client';
+
 import { createStyles } from 'antd-style';
 import { Info, Lightbulb, MessageSquareWarning, OctagonAlert, TriangleAlert } from 'lucide-react';
 import { rgba } from 'polished';

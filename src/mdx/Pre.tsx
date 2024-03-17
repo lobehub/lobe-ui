@@ -1,3 +1,5 @@
+'use client';
+
 import { createStyles } from 'antd-style';
 import { CSSProperties, FC, ReactNode } from 'react';
 

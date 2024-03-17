@@ -1,3 +1,5 @@
+'use client';
+
 import { CSSProperties, FC } from 'react';
 
 import LobeImage from '@/Image';

@@ -1,3 +1,5 @@
+'use client';
+
 import { createStyles } from 'antd-style';
 import { FC, ReactNode, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';

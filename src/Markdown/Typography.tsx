@@ -1,3 +1,5 @@
+'use client';
+
 import { CSSProperties, FC, PropsWithChildren } from 'react';
 
 import { useStyles } from './markdown.style';
