@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.134.0](https://github.com/lobehub/lobe-ui/compare/v1.133.12...v1.134.0)
+
+<sup>Released on **2024-03-17**</sup>
+
+#### ✨ Features
+
+- **misc**: Support rsc usage.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Support rsc usage ([c99e511](https://github.com/lobehub/lobe-ui/commit/c99e511))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.133.12](https://github.com/lobehub/lobe-ui/compare/v1.133.11...v1.133.12)
 
 <sup>Released on **2024-03-17**</sup>
