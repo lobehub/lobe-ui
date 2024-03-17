@@ -1,3 +1,5 @@
+'use client';
+
 import { useSize } from 'ahooks';
 import { shuffle } from 'lodash-es';
 import { memo, useCallback, useMemo, useRef } from 'react';

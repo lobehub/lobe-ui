@@ -1,3 +1,5 @@
+'use client';
+
 import { Fragment, memo } from 'react';
 
 import type { ChatMessage, DivProps } from '@/types';

@@ -1,3 +1,5 @@
+'use client';
+
 import { type AlertProps as AntAlertProps, Alert as AntdAlert, message } from 'antd';
 import { camelCase } from 'lodash-es';
 import {

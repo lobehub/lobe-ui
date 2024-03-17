@@ -1,3 +1,5 @@
+'use client';
+
 import { CSSProperties, memo, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Components } from 'react-markdown/lib/ast-to-react';

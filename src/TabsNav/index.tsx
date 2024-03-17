@@ -1,3 +1,5 @@
+'use client';
+
 import { Tabs, TabsProps } from 'antd';
 import { memo } from 'react';
 

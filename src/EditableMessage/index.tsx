@@ -1,3 +1,5 @@
+'use client';
+
 import { CSSProperties, memo } from 'react';
 import useControlledState from 'use-merge-value';
 

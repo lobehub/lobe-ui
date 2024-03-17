@@ -1,3 +1,5 @@
+'use client';
+
 import { SelectProps } from 'antd';
 import { type CSSProperties, ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';

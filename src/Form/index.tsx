@@ -1,3 +1,5 @@
+'use client';
+
 import { Form as AntForm, FormProps as AntFormProps, type FormInstance } from 'antd';
 import { type ReactNode, RefAttributes, forwardRef } from 'react';
 

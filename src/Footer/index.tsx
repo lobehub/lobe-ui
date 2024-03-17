@@ -1,3 +1,5 @@
+'use client';
+
 import RcFooter, { type FooterProps as RcProps } from 'rc-footer';
 import { type ReactNode, memo } from 'react';
 

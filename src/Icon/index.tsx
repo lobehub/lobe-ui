@@ -1,3 +1,5 @@
+'use client';
+
 import { LucideIcon, LucideProps } from 'lucide-react';
 import { forwardRef, useMemo } from 'react';
 

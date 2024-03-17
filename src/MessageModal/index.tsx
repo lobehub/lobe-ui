@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from 'antd';
 import { useResponsive } from 'antd-style';
 import { CSSProperties, ReactNode, memo, useState } from 'react';

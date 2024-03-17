@@ -1,3 +1,5 @@
+'use client';
+
 import { Dropdown, type DropdownProps } from 'antd';
 import { memo } from 'react';
 

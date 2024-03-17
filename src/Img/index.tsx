@@ -1,3 +1,5 @@
+'use client';
+
 import { ImageProps } from 'antd';
 import { ElementType, createElement, forwardRef, useContext, useMemo } from 'react';
 

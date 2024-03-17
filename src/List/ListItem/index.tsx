@@ -1,3 +1,5 @@
+'use client';
+
 import { Loader2, MessageSquare } from 'lucide-react';
 import { CSSProperties, HTMLAttributes, ReactNode, forwardRef } from 'react';
 import { Flexbox } from 'react-layout-kit';

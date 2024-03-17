@@ -1,3 +1,5 @@
+'use client';
+
 import { Dropdown, type MenuProps, Select } from 'antd';
 import { ThemeMode } from 'antd-style';
 import { Monitor, Moon, Sun } from 'lucide-react';

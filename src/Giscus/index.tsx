@@ -1,3 +1,5 @@
+'use client';
+
 import GiscusComponent, { type GiscusProps as GiscusComponentProps } from '@giscus/react';
 import { useTheme, useThemeMode } from 'antd-style';
 import { CSSProperties, memo, useMemo } from 'react';

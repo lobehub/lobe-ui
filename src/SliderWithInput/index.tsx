@@ -1,3 +1,5 @@
+'use client';
+
 import { InputNumber, type InputNumberProps, Slider } from 'antd';
 import { SliderSingleProps } from 'antd/es/slider';
 import { isNull } from 'lodash-es';

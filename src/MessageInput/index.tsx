@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, ButtonProps } from 'antd';
 import { type CSSProperties, memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';

@@ -1,3 +1,5 @@
+'use client';
+
 import { Search } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';

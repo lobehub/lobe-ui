@@ -1,3 +1,5 @@
+'use client';
+
 import { useHover } from 'ahooks';
 import { ConfigProvider } from 'antd';
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';

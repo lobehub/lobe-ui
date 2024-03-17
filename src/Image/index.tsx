@@ -1,3 +1,5 @@
+'use client';
+
 import { Image as AntImage, type ImageProps as AntImageProps, Skeleton } from 'antd';
 import { useResponsive, useThemeMode } from 'antd-style';
 import { Eye } from 'lucide-react';

@@ -1,3 +1,5 @@
+'use client';
+
 import { ImageProps } from 'antd';
 import { X } from 'lucide-react';
 import { memo } from 'react';
@@ -16,7 +18,7 @@ export interface EmptyCardProps extends DivProps {
   defaultVisible?: boolean;
   desc: string;
   height?: number;
-  imageProps?: ImgProps & ImageProps & { priority?:boolean };
+  imageProps?: ImgProps & ImageProps & { priority?: boolean };
   onVisibleChange?: (visible: boolean) => void;
   title: string;
   visible?: boolean;

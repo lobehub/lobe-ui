@@ -1,3 +1,5 @@
+'use client';
+
 import { CSSProperties, ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';

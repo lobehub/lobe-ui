@@ -1,3 +1,5 @@
+'use client';
+
 import { memo, useEffect, useRef } from 'react';
 
 const createElement = (url: string) => {

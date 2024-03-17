@@ -1,3 +1,5 @@
+'use client';
+
 import { ReactNode, memo } from 'react';
 
 import CopyButton, { type CopyButtonProps } from '@/CopyButton';

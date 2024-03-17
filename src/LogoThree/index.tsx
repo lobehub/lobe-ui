@@ -1,3 +1,5 @@
+'use client';
+
 import Spline, { type SplineProps } from '@splinetool/react-spline';
 import { CSSProperties, memo, useState } from 'react';
 

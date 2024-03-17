@@ -1,3 +1,5 @@
+'use client';
+
 import { Skeleton } from 'antd';
 import { PlayIcon } from 'lucide-react';
 import { memo, useState } from 'react';

@@ -1,3 +1,5 @@
+'use client';
+
 import { Avatar as AntAvatar, type AvatarProps as AntAvatarProps } from 'antd';
 import { type ReactNode, isValidElement, memo, useMemo } from 'react';
 

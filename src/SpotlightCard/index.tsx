@@ -1,3 +1,5 @@
+'use client';
+
 import { isNumber } from 'lodash-es';
 import { ReactNode, memo, useEffect, useMemo, useRef } from 'react';
 

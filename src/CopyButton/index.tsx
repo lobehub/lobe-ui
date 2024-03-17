@@ -1,3 +1,5 @@
+'use client';
+
 import { Check, Copy } from 'lucide-react';
 import { memo } from 'react';
 

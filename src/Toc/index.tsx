@@ -1,3 +1,5 @@
+'use client';
+
 import { Anchor } from 'antd';
 import { memo } from 'react';
 

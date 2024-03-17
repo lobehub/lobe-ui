@@ -1,3 +1,5 @@
+'use client';
+
 import { useResponsive } from 'antd-style';
 import { ReactNode, memo, useEffect, useState } from 'react';
 

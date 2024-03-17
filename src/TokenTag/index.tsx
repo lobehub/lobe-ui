@@ -1,3 +1,5 @@
+'use client';
+
 import { useResponsive } from 'antd-style';
 import { forwardRef } from 'react';
 import { Flexbox } from 'react-layout-kit';
@@ -68,8 +70,8 @@ const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
               mobile
                 ? ''
                 : displayMode === 'remained'
-                ? text?.remained || 'Remained'
-                : text?.used || 'Used',
+                  ? text?.remained || 'Remained'
+                  : text?.used || 'Used',
               displayMode === 'remained' ? valueLeft : value,
             ].join(' ')
           : text?.overload || 'Overload'}

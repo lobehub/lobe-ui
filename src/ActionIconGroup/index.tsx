@@ -1,3 +1,5 @@
+'use client';
+
 import { Dropdown } from 'antd';
 import { type LucideIcon, MoreHorizontal } from 'lucide-react';
 import { memo } from 'react';

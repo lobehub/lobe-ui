@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, type ButtonProps } from 'antd';
 import { memo } from 'react';
 

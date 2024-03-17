@@ -1,3 +1,5 @@
+'use client';
+
 import { useScroll } from 'ahooks';
 import type { Target } from 'ahooks/lib/useScroll';
 import { type BackTopProps, Button } from 'antd';

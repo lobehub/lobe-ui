@@ -1,3 +1,5 @@
+'use client';
+
 import { CSSProperties, memo } from 'react';
 
 import SpotlightCard, { SpotlightCardProps } from '@/SpotlightCard';

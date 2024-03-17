@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, Select } from 'antd';
 import isEqual from 'fast-deep-equal';
 import { Plus, Trash } from 'lucide-react';

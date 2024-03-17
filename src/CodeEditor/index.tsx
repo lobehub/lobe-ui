@@ -1,3 +1,5 @@
+'use client';
+
 import { type TextAreaRef } from 'antd/es/input/TextArea';
 import {
   type CSSProperties,

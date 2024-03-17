@@ -1,3 +1,5 @@
+'use client';
+
 import { kebabCase } from 'lodash-es';
 import { memo, useMemo, useState } from 'react';
 

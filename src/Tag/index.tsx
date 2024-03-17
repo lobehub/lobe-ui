@@ -1,3 +1,5 @@
+'use client';
+
 import { Tag as AntTag, type TagProps as AntTagProps } from 'antd';
 import { createStyles } from 'antd-style';
 import { ReactNode, memo } from 'react';

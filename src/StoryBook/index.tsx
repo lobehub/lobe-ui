@@ -1,3 +1,5 @@
+'use client';
+
 import { useResponsive } from 'antd-style';
 import { LevaPanel } from 'leva';
 import { memo } from 'react';

@@ -1,3 +1,5 @@
+'use client';
+
 import { Edit3 } from 'lucide-react';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';

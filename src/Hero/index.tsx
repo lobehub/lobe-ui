@@ -1,3 +1,5 @@
+'use client';
+
 import { Button, ConfigProvider } from 'antd';
 import { useResponsive } from 'antd-style';
 import * as LucideIcon from 'lucide-react';

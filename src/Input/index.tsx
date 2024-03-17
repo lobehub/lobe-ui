@@ -1,3 +1,5 @@
+'use client';
+
 import { Input as AntInput, type InputProps as AntdInputProps, type InputRef } from 'antd';
 import { TextAreaProps as AntdTextAreaProps, type TextAreaRef } from 'antd/es/input/TextArea';
 import { forwardRef } from 'react';

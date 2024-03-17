@@ -1,3 +1,5 @@
+'use client';
+
 import { Loader2 } from 'lucide-react';
 import { forwardRef, useMemo } from 'react';
 import { Flexbox, type FlexboxProps } from 'react-layout-kit';

@@ -1,3 +1,5 @@
+'use client';
+
 import { Modal as AntModal, type ModalProps as AntModalProps, ConfigProvider, Drawer } from 'antd';
 import { createStyles, useResponsive } from 'antd-style';
 import { isNumber } from 'lodash-es';

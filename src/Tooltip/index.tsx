@@ -1,3 +1,5 @@
+'use client';
+
 import { Tooltip as AntdTooltip, TooltipProps as AntdTooltipProps } from 'antd';
 import { memo } from 'react';
 
