@@ -59,7 +59,7 @@ const useStyles = createStyles(({ css, cx, token }, rows?: number) => {
       display: grid;
       grid-template-columns: repeat(
         auto-fill,
-        minmax(max(250px, calc((100% - 1rem * 2) / var(--rows))), 1fr)
+        minmax(max(250px, calc((100% - 1em * 2) / var(--rows))), 1fr)
       );
       gap: 1em;
       margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
