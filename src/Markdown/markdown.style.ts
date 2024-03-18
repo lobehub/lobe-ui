@@ -25,10 +25,11 @@ export const useStyles = createStyles(
         position: relative;
 
         width: 100%;
+        padding-inline: 1px;
 
         font-size: var(--lobe-markdown-font-size);
         line-height: var(--lobe-markdown-line-height);
-        word-break: auto-phrase;
+        word-break: break-word;
       `,
       a: css`
         a {
@@ -62,7 +63,7 @@ export const useStyles = createStyles(
           font-family: ${token.fontFamilyCode};
           font-size: 0.875em;
           line-height: 1;
-          word-break: auto-phrase;
+          word-break: break-word;
 
           background: ${token.colorFillSecondary};
           border: 1px solid var(--lobe-markdown-border-color);
@@ -77,7 +78,7 @@ export const useStyles = createStyles(
 
           background: ${token.colorFillTertiary};
           border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
-          box-shadow: inset 0 0 0 1px var(--lobe-markdown-border-color);
+          box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
 
           summary {
             cursor: pointer;
@@ -288,18 +289,23 @@ export const useStyles = createStyles(
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
 
           text-align: start;
+          word-break: auto-phrase;
           overflow-wrap: break-word;
 
           background: ${token.colorFillQuaternary};
           border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
-          box-shadow: inset 0 0 0 1px var(--lobe-markdown-border-color);
+          box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
+
+          code {
+            word-break: auto-phrase;
+          }
 
           thead {
             background: ${token.colorFillQuaternary};
           }
 
           tr {
-            box-shadow: inset 0 1px 0 var(--lobe-markdown-border-color);
+            box-shadow: 0 1px 0 var(--lobe-markdown-border-color);
           }
 
           th,

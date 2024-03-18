@@ -39,11 +39,9 @@ export default () => {
   return (
     <StoryBook levaStore={store} noPadding>
       <Flexbox
-        style={
-          ['top', 'bottom'].includes(control.placement)
-            ? { flexDirection: 'column', position: 'relative' }
-            : { position: 'relative' }
-        }
+        height={'100%'}
+        horizontal={['left', 'right'].includes(control.placement)}
+        width={'100%'}
       >
         {['top', 'left'].includes(control.placement) ? (
           <>

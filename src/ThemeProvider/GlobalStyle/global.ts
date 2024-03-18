@@ -1,13 +1,19 @@
 import { Theme, css } from 'antd-style';
 
 export default (token: Theme) => css`
-  html,
-  body {
+  :root {
     --font-settings: 'cv01', 'tnum', 'kern';
     --font-variations: 'opsz' auto, tabular-nums;
+  }
 
+  html {
+    color-scheme: ${token.isDarkMode ? 'dark' : 'light'};
+  }
+
+  body {
     overflow: hidden auto;
 
+    min-height: 100vh;
     margin: 0;
     padding: 0;
 
@@ -19,9 +25,9 @@ export default (token: Theme) => css`
     color: ${token.colorTextBase};
     text-size-adjust: none;
     text-rendering: optimizelegibility;
+    word-wrap: break-word;
     vertical-align: baseline;
 
-    color-scheme: dark;
     background-color: ${token.colorBgLayout};
 
     -webkit-font-smoothing: antialiased;
@@ -30,25 +36,12 @@ export default (token: Theme) => css`
     -webkit-tap-highlight-color: transparent;
   }
 
-  body {
-    overflow-x: hidden;
-    height: 100dvh;
-  }
-
-  #root {
-    min-height: 100dvh;
-  }
-
   code {
     font-family: ${token.fontFamilyCode} !important;
 
     span {
       font-family: ${token.fontFamilyCode} !important;
     }
-  }
-
-  p {
-    word-wrap: break-word;
   }
 
   ::selection {

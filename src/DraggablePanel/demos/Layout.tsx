@@ -12,7 +12,12 @@ export default () => {
   const [expand, setExpand] = useState(true);
   const [pin, setPin] = useState(true);
   return (
-    <Flexbox style={{ height: '100%', minHeight: 500, position: 'relative', width: '100%' }}>
+    <Flexbox
+      height={'100%'}
+      horizontal
+      style={{ minHeight: 500, position: 'relative' }}
+      width={'100%'}
+    >
       <DraggablePanel
         expand={expand}
         mode={pin ? 'fixed' : 'float'}

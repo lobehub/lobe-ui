@@ -25,9 +25,13 @@ export const useStyles = createStyles(({ token }, headerHeight: number) => {
   `;
 
   const commonToggle = css`
+    pointer-events: none;
+
     position: absolute;
     z-index: 101;
+
     opacity: 0;
+
     transition: all 0.2s ${token.motionEaseOut};
 
     &:hover {
@@ -39,6 +43,7 @@ export const useStyles = createStyles(({ token }, headerHeight: number) => {
     }
 
     > div {
+      pointer-events: all;
       cursor: pointer;
 
       position: absolute;
