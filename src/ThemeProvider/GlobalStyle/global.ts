@@ -62,38 +62,4 @@ export default (token: Theme) => css`
     box-sizing: border-box;
     vertical-align: baseline;
   }
-
-  @media only screen and (min-width: 574px) {
-    * {
-      ::-webkit-scrollbar {
-        cursor: pointer;
-        width: 0;
-        height: 4px;
-        background-color: transparent;
-      }
-
-      ::-webkit-scrollbar-thumb {
-        cursor: pointer;
-        background-color: transparent;
-        border-radius: 2px;
-        transition: background-color 500ms ${token.motionEaseOut};
-
-        &:hover {
-          background-color: ${token.colorText};
-        }
-      }
-
-      ::-webkit-scrollbar-corner {
-        display: none;
-        width: 0;
-        height: 0;
-      }
-
-      &:hover {
-        ::-webkit-scrollbar-thumb {
-          background-color: ${token.colorFill};
-        }
-      }
-    }
-  }
 `;
