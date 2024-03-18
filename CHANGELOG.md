@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.134.3](https://github.com/lobehub/lobe-ui/compare/v1.134.2...v1.134.3)
+
+<sup>Released on **2024-03-18**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix global style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix global style ([3c54485](https://github.com/lobehub/lobe-ui/commit/3c54485))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.134.2](https://github.com/lobehub/lobe-ui/compare/v1.134.1...v1.134.2)
 
 <sup>Released on **2024-03-18**</sup>
