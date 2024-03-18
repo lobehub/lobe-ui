@@ -1,3 +1,5 @@
+'use client';
+
 import { Drawer, Menu, MenuProps } from 'antd';
 import { MenuIcon, X } from 'lucide-react';
 import { CSSProperties, memo } from 'react';

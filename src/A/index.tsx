@@ -1,3 +1,5 @@
+'use client';
+
 import { AnchorProps } from 'antd';
 import { ElementType, createElement, forwardRef, useContext, useMemo } from 'react';
 
