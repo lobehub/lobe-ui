@@ -5,10 +5,11 @@ import { FC, PropsWithChildren } from 'react';
 import { Flexbox, type FlexboxProps } from 'react-layout-kit';
 
 import A from '@/A';
+import Grid from '@/Grid';
 import Icon, { type IconProps } from '@/Icon';
 import Img from '@/Img';
 
-const useStyles = createStyles(({ css, cx, token }, rows?: number) => {
+const useStyles = createStyles(({ css, cx, token }) => {
   const icon = cx(css`
     margin-block: 0.1em;
     opacity: 0.5;
@@ -56,14 +57,6 @@ const useStyles = createStyles(({ css, cx, token }, rows?: number) => {
     `,
 
     container: css`
-      --rows: ${rows};
-
-      display: grid;
-      grid-template-columns: repeat(
-        auto-fill,
-        minmax(max(250px, calc((100% - 1em * 2) / var(--rows))), 1fr)
-      );
-      gap: 1em;
       margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
 
       > div {
@@ -118,12 +111,17 @@ const Card: FC<CardProps> = ({ icon, title, desc, href, iconProps, image, ...res
 };
 
 interface _CardsProps extends PropsWithChildren {
+  maxItemWidth?: string | number;
   rows?: number;
 }
 
-const _Cards: FC<_CardsProps> = ({ children, rows = 3 }) => {
-  const { styles } = useStyles(rows);
-  return <div className={styles.container}>{children}</div>;
+const _Cards: FC<_CardsProps> = ({ children, maxItemWidth = 250, rows = 3 }) => {
+  const { styles } = useStyles();
+  return (
+    <Grid className={styles.container} maxItemWidth={maxItemWidth} rows={rows}>
+      {children}
+    </Grid>
+  );
 };
 
 export type CardsProps = typeof _Cards & {

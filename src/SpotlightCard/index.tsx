@@ -1,8 +1,8 @@
 'use client';
 
-import { isNumber } from 'lodash-es';
-import { ReactNode, memo, useEffect, useMemo, useRef } from 'react';
+import { ReactNode, memo, useEffect, useRef } from 'react';
 
+import Grid from '@/Grid';
 import { DivProps } from '@/types';
 
 import SpotlightCardItem from './SpotlightCardItem';
@@ -10,9 +10,10 @@ import { CHILDREN_CLASSNAME, useStyles } from './style';
 
 export interface SpotlightCardProps<T = any> extends DivProps {
   borderRadius?: number;
-  columns?: string | number;
-  gap?: number;
+  columns?: number;
+  gap?: number | string;
   items: T[];
+  maxItemWidth?: string | number;
   renderItem: (item: T) => ReactNode;
   size?: number;
   spotlight?: boolean;
@@ -22,9 +23,10 @@ const SpotlightCard = memo<SpotlightCardProps>(
   ({
     items,
     renderItem: Content,
+    maxItemWidth,
     className,
     columns = 3,
-    gap = 12,
+    gap = '1em',
     style,
     size = 800,
     borderRadius = 12,
@@ -33,11 +35,6 @@ const SpotlightCard = memo<SpotlightCardProps>(
   }) => {
     const { styles, cx } = useStyles({ borderRadius, size });
     const ref = useRef<HTMLDivElement>(null);
-
-    const gridColumns = useMemo(
-      () => (isNumber(columns) ? Array.from({ length: columns }).fill('1fr').join(' ') : columns),
-      [columns],
-    );
 
     useEffect(() => {
       if (!ref.current) return;
@@ -60,10 +57,13 @@ const SpotlightCard = memo<SpotlightCardProps>(
     }, []);
 
     return (
-      <div
+      <Grid
         className={cx(styles.container, styles.grid, className)}
+        gap={gap}
+        maxItemWidth={maxItemWidth}
         ref={ref}
-        style={{ gap, gridTemplateColumns: gridColumns, ...style }}
+        rows={columns}
+        style={style}
         {...rest}
       >
         {items.map((item, index) => {
@@ -78,7 +78,7 @@ const SpotlightCard = memo<SpotlightCardProps>(
             </SpotlightCardItem>
           );
         })}
-      </div>
+      </Grid>
     );
   },
 );

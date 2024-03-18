@@ -72,6 +72,7 @@ export { default as FormTitle, type FormTitleProps } from './Form/components/For
 export { default as GaussianBackground, type GaussianBackgroundProps } from './GaussianBackground';
 export { default as Giscus, type GiscusProps } from './Giscus';
 export { default as GradientButton, type GradientButtonProps } from './GradientButton';
+export { default as Grid, type GridProps } from './Grid';
 export { default as GridBackground, type GridBackgroundProps } from './GridBackground';
 export { default as GridShowcase, type GridShowcaseProps } from './GridBackground/GridShowcase';
 export { default as Header, type HeaderProps } from './Header';

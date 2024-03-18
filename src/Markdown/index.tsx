@@ -47,9 +47,10 @@ const Markdown = memo<MarkdownProps>(
     headerMultiple,
     marginMultiple,
     variant = 'normal',
+    lineHeight,
     ...rest
   }) => {
-    const { cx, styles } = useStyles({ fontSize, headerMultiple, marginMultiple });
+    const { cx, styles } = useStyles({ fontSize, headerMultiple, lineHeight, marginMultiple });
     const { styles: mdStyles } = useMarkdownStyles({ fontSize, headerMultiple, marginMultiple });
 
     const components: Components = useMemo(
