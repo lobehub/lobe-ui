@@ -351,7 +351,7 @@ export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
         name: 'css comma',
         scope: 'punctuation.separator.list.comma.css',
         settings: {
-          foreground: colorTextTertiary,
+          foreground: colorText,
         },
       },
       {

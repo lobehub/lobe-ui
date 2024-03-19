@@ -54,7 +54,7 @@ export const useStyles = createStyles(
           pre {
             margin: 0 !important;
             padding: ${type === 'pure' ? 0 : `16px 24px`} !important;
-            white-space: normal;
+            white-space: break-spaces;
             background: none !important;
           }
 

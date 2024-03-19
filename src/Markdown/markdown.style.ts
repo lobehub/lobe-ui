@@ -64,7 +64,7 @@ export const useStyles = createStyles(
           font-size: 0.875em;
           line-height: 1;
           word-break: break-word;
-          white-space: normal;
+          white-space: break-spaces;
 
           background: ${token.colorFillSecondary};
           border: 1px solid var(--lobe-markdown-border-color);
@@ -259,7 +259,7 @@ export const useStyles = createStyles(
       pre: css`
         pre,
         [data-code-type='highlighter'] {
-          white-space: normal;
+          white-space: break-spaces;
           border: none;
 
           > code {
