@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.135.1](https://github.com/lobehub/lobe-ui/compare/v1.135.0...v1.135.1)
+
+<sup>Released on **2024-03-19**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix pre wrap in safari.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix pre wrap in safari ([14bea77](https://github.com/lobehub/lobe-ui/commit/14bea77))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.135.0](https://github.com/lobehub/lobe-ui/compare/v1.134.3...v1.135.0)
 
 <sup>Released on **2024-03-18**</sup>
