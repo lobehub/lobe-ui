@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.135.3](https://github.com/lobehub/lobe-ui/compare/v1.135.2...v1.135.3)
+
+<sup>Released on **2024-03-21**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix markdown header lineheight.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix markdown header lineheight ([6c4c453](https://github.com/lobehub/lobe-ui/commit/6c4c453))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.135.2](https://github.com/lobehub/lobe-ui/compare/v1.135.1...v1.135.2)
 
 <sup>Released on **2024-03-19**</sup>
