@@ -2,7 +2,7 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(
   (
-    { css, token },
+    { css, token, isDarkMode },
     {
       fontSize = 14,
       headerMultiple = 0.25,
@@ -10,6 +10,7 @@ export const useStyles = createStyles(
       lineHeight = 1.6,
     }: { fontSize?: number; headerMultiple?: number; lineHeight?: number; marginMultiple?: number },
   ) => {
+    const cyanColor = isDarkMode ? token.cyan9A : token.cyan11A;
     return {
       chat: css`
         --lobe-markdown-font-size: ${fontSize}px;
@@ -24,7 +25,7 @@ export const useStyles = createStyles(
         ul {
           li {
             &::marker {
-              color: ${token.cyan};
+              color: ${cyanColor};
             }
 
             li {

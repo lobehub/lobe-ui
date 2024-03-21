@@ -133,6 +133,7 @@ export const useStyles = createStyles(
             var(--lobe-markdown-font-size)
           );
           font-weight: 600;
+          line-height: 1.25;
         }
 
         h1 {
