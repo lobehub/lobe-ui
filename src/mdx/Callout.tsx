@@ -89,7 +89,7 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info' }) => {
         color,
       }}
     >
-      <Icon icon={icon} size={{ fontSize: '1.2em' }} style={{ marginBlock: '0.2em' }} />
+      <Icon icon={icon} size={{ fontSize: '1.2em' }} style={{ marginBlock: '0.25em' }} />
       <div className={cx(styles.content, type === 'info' && styles.underlineAnchor)}>
         <div>{children}</div>
       </div>

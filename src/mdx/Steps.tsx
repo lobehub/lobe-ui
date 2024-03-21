@@ -42,7 +42,7 @@ const useStyles = createStyles(({ css, token }) => {
 
           width: 1.8em;
           height: 1.8em;
-          margin-block-start: 0.3em;
+          margin-block-start: -0.05em;
 
           font-size: 0.8em;
           font-weight: 500;
