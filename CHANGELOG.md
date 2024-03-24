@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.136.0](https://github.com/lobehub/lobe-ui/compare/v1.135.4...v1.136.0)
+
+<sup>Released on **2024-03-24**</sup>
+
+#### ✨ Features
+
+- **misc**: Update Burder.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update Burder ([ff42d9c](https://github.com/lobehub/lobe-ui/commit/ff42d9c))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.135.4](https://github.com/lobehub/lobe-ui/compare/v1.135.3...v1.135.4)
 
 <sup>Released on **2024-03-21**</sup>
