@@ -1,6 +1,6 @@
 'use client';
 
-import { Drawer, Menu, MenuProps } from 'antd';
+import { Drawer, type DrawerProps, Menu, type MenuProps } from 'antd';
 import { MenuIcon, X } from 'lucide-react';
 import { CSSProperties, memo } from 'react';
 import { Center } from 'react-layout-kit';
@@ -11,12 +11,14 @@ import { useStyles } from './style';
 
 export interface BurgerProps {
   className?: string;
+  drawerProps?: Partial<Omit<DrawerProps, 'items' | 'opened' | 'setOpened'>>;
+  fullscreen?: boolean;
   /**
    * @description The height of the header component
    * @default 64
    */
   headerHeight?: number;
-  icon?: ActionIconProps;
+  iconProps?: Partial<ActionIconProps>;
   /**
    * @description The items to be displayed in the menu
    */
@@ -30,6 +32,7 @@ export interface BurgerProps {
    * @description Whether the menu is currently open or not
    */
   opened: boolean;
+  rootClassName?: string;
   /**
    * @description The keys of the currently selected menu items
    */
@@ -51,10 +54,13 @@ const Burger = memo<BurgerProps>(
     className,
     headerHeight = 64,
     onClick,
-    icon = {},
+    iconProps,
+    rootClassName,
+    fullscreen,
+    drawerProps,
     ...rest
   }) => {
-    const { cx, styles } = useStyles(headerHeight);
+    const { cx, styles } = useStyles({ fullscreen, headerHeight });
 
     return (
       <Center
@@ -64,18 +70,19 @@ const Burger = memo<BurgerProps>(
         }}
         {...rest}
       >
-        <ActionIcon icon={opened ? X : MenuIcon} size="site" {...icon} />
+        <ActionIcon icon={opened ? X : MenuIcon} size="site" {...iconProps} />
         <Drawer
-          className={styles.drawer}
           closeIcon={undefined}
           open={opened}
           placement={'left'}
-          rootClassName={styles.drawerRoot}
+          width={'100vw'}
+          {...drawerProps}
+          className={styles.drawer}
+          rootClassName={cx(styles.drawerRoot, rootClassName)}
           styles={{
             body: { padding: 0 },
             header: { display: 'none' },
           }}
-          width={'100vw'}
         >
           <Menu
             className={styles.menu}

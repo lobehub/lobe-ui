@@ -100,11 +100,12 @@ export interface DraggablePanelProps extends DivProps {
    * @default true
    */
   resize?: RndProps['enableResizing'];
+  showHandlerWhenUnexpand?: boolean;
   /**
    * @description Whether the panel handler should be shown when unexpanded or not
    * @default true
    */
-  showHandlerWhenUnexpand?: boolean;
+  showHandlerWideArea?: boolean;
   /**
    * @description The size of the panel
    */
@@ -122,6 +123,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     placement = 'right',
     resize,
     style,
+    showHandlerWideArea = true,
     size,
     defaultSize: customizeDefaultSize,
     minWidth,
@@ -154,7 +156,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
       internalPlacement = internalPlacement === 'left' ? 'right' : 'left';
     }
 
-    const { styles, cx } = useStyles(headerHeight);
+    const { styles, cx } = useStyles({ headerHeight, showHandlerWideArea });
 
     const [isExpand, setIsExpand] = useControlledState(defaultExpand, {
       onChange: onExpandChange,

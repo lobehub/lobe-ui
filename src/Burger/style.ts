@@ -2,7 +2,10 @@ import { createStyles } from 'antd-style';
 import { rgba } from 'polished';
 
 export const useStyles = createStyles(
-  ({ token, css, stylish, prefixCls }, headerHeight: number) => {
+  (
+    { token, css, stylish, prefixCls },
+    { fullscreen, headerHeight }: { fullscreen?: boolean; headerHeight: number },
+  ) => {
     return {
       container: css`
         cursor: pointer;
@@ -21,7 +24,7 @@ export const useStyles = createStyles(
         }
       `,
       drawerRoot: css`
-        inset-block-start: ${headerHeight + 1}px;
+        inset-block-start: ${fullscreen ? 0 : headerHeight + 1}px;
 
         :focus-visible {
           outline: none;
@@ -46,6 +49,7 @@ export const useStyles = createStyles(
       `,
 
       menu: css`
+        padding-block-start: ${fullscreen ? headerHeight : 0}px;
         background: transparent;
         border-inline-end: transparent !important;
 
