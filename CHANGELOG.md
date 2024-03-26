@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.137.0](https://github.com/lobehub/lobe-ui/compare/v1.136.3...v1.137.0)
+
+<sup>Released on **2024-03-26**</sup>
+
+#### ✨ Features
+
+- **misc**: Support imgUnoptimized in CP.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Support imgUnoptimized in CP ([545d911](https://github.com/lobehub/lobe-ui/commit/545d911))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.136.3](https://github.com/lobehub/lobe-ui/compare/v1.136.2...v1.136.3)
 
 <sup>Released on **2024-03-26**</sup>
