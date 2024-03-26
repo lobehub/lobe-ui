@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.137.3](https://github.com/lobehub/lobe-ui/compare/v1.137.2...v1.137.3)
+
+<sup>Released on **2024-03-26**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Revert version change to static the image cdn cache control.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Revert version change to static the image cdn cache control ([de54673](https://github.com/lobehub/lobe-ui/commit/de54673))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.137.2](https://github.com/lobehub/lobe-ui/compare/v1.137.1...v1.137.2)
 
 <sup>Released on **2024-03-26**</sup>
