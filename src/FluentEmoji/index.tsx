@@ -53,14 +53,14 @@ const FluentEmoji = memo<FluentEmojiProps>(
           return genCdnUrl({
             path: `assets/${emojiName}.webp`,
             pkg: '@lobehub/assets-emoji-anim',
-            version: 'latest',
+            version: '1.0.0',
           });
         }
         case '3d': {
           return genCdnUrl({
             path: `assets/${emojiName}.webp`,
             pkg: '@lobehub/assets-emoji',
-            version: 'latest',
+            version: '1.3.0',
           });
         }
       }

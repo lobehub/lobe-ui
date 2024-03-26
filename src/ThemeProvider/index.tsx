@@ -55,16 +55,16 @@ const ThemeProvider = memo<ThemeProviderProps>(
   }) => {
     const genCdnUrl = useCdnFn();
     const webfontUrls = webfonts || [
-      genCdnUrl({ path: 'css/index.css', pkg: '@lobehub/webfont-mono', version: 'latest' }),
+      genCdnUrl({ path: 'css/index.css', pkg: '@lobehub/webfont-mono', version: '1.0.0' }),
       genCdnUrl({
         path: 'css/index.css',
         pkg: '@lobehub/webfont-harmony-sans',
-        version: 'latest',
+        version: '1.0.0',
       }),
       genCdnUrl({
         path: 'css/index.css',
         pkg: '@lobehub/webfont-harmony-sans-sc',
-        version: 'latest',
+        version: '1.0.0',
       }),
       genCdnUrl({ path: 'dist/katex.min.css', pkg: 'katex', version: '0.16.8' }),
     ];
