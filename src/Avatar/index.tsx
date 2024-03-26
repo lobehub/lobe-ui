@@ -32,6 +32,7 @@ export interface AvatarProps extends AntAvatarProps {
    * @description The title text to display if avatar is not provided
    */
   title?: string;
+  unoptimized?: boolean;
 }
 
 const Avatar = memo<AvatarProps>(
@@ -44,6 +45,7 @@ const Avatar = memo<AvatarProps>(
     shape = 'circle',
     background = 'rgba(0,0,0,0)',
     style,
+    unoptimized = false,
     ...rest
   }) => {
     const isStringAvatar = typeof avatar === 'string';
@@ -75,7 +77,12 @@ const Avatar = memo<AvatarProps>(
     ) : (
       <AntAvatar {...avatarProps}>
         {emoji ? (
-          <FluentEmoji emoji={emoji} size={size * 0.8} type={animation ? 'anim' : '3d'} />
+          <FluentEmoji
+            emoji={emoji}
+            size={size * 0.8}
+            type={animation ? 'anim' : '3d'}
+            unoptimized={unoptimized}
+          />
         ) : (
           text?.toUpperCase().slice(0, 2)
         )}

@@ -24,6 +24,7 @@ export interface TokenTagProps extends DivProps {
     remained?: string;
     used?: string;
   };
+  unoptimized?: boolean;
   /**
    * @description Current value of the token
    */
@@ -32,7 +33,16 @@ export interface TokenTagProps extends DivProps {
 
 const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
   (
-    { className, displayMode = 'remained', maxValue, value, text, shape = 'round', ...rest },
+    {
+      className,
+      displayMode = 'remained',
+      maxValue,
+      value,
+      text,
+      shape = 'round',
+      unoptimized = false,
+      ...rest
+    },
     ref,
   ) => {
     const { mobile } = useResponsive();
@@ -64,7 +74,7 @@ const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
         ref={ref}
         {...rest}
       >
-        <FluentEmoji emoji={emoji} size={ICON_SIZE} />
+        <FluentEmoji emoji={emoji} size={ICON_SIZE} unoptimized={unoptimized} />
         {valueLeft > 0
           ? [
               mobile

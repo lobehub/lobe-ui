@@ -25,10 +25,11 @@ export interface FluentEmojiProps extends DivProps {
    * @default '3d'
    */
   type?: 'modern' | 'flat' | 'high-contrast' | 'anim' | '3d' | 'pure';
+  unoptimized?: boolean;
 }
 
 const FluentEmoji = memo<FluentEmojiProps>(
-  ({ emoji, className, style, type = '3d', size = 40 }) => {
+  ({ emoji, className, style, type = '3d', size = 40, unoptimized = false }) => {
     const genCdnUrl = useCdnFn();
     const [loadingFail, setLoadingFail] = useState(false);
 
@@ -85,6 +86,7 @@ const FluentEmoji = memo<FluentEmojiProps>(
           height={size}
           onError={() => setLoadingFail(true)}
           src={emojiUrl}
+          unoptimized={unoptimized}
           width={size}
         />
       </div>
