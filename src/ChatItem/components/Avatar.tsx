@@ -18,7 +18,7 @@ export interface AvatarProps {
 }
 
 const Avatar = memo<AvatarProps>(
-  ({ loading, avatar, placement, unoptimized = false, addon, onClick, size = 40 }) => {
+  ({ loading, avatar, placement, unoptimized, addon, onClick, size = 40 }) => {
     const { styles } = useStyles({ avatarSize: size });
     const avatarContent = (
       <div className={styles.avatarContainer}>

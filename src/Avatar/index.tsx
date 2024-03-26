@@ -45,7 +45,7 @@ const Avatar = memo<AvatarProps>(
     shape = 'circle',
     background = 'rgba(0,0,0,0)',
     style,
-    unoptimized = false,
+    unoptimized,
     ...rest
   }) => {
     const isStringAvatar = typeof avatar === 'string';
