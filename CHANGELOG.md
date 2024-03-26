@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.136.3](https://github.com/lobehub/lobe-ui/compare/v1.136.2...v1.136.3)
+
+<sup>Released on **2024-03-26**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix missing unoptimized for chatItem.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix missing unoptimized for chatItem ([7bc1978](https://github.com/lobehub/lobe-ui/commit/7bc1978))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.136.2](https://github.com/lobehub/lobe-ui/compare/v1.136.1...v1.136.2)
 
 <sup>Released on **2024-03-26**</sup>
