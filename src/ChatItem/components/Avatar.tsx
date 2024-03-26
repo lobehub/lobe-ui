@@ -14,31 +14,35 @@ export interface AvatarProps {
   onClick?: ChatItemProps['onAvatarClick'];
   placement?: ChatItemProps['placement'];
   size?: number;
+  unoptimized?: boolean;
 }
 
-const Avatar = memo<AvatarProps>(({ loading, avatar, placement, addon, onClick, size = 40 }) => {
-  const { styles } = useStyles({ avatarSize: size });
-  const avatarContent = (
-    <div className={styles.avatarContainer}>
-      <A
-        animation={loading}
-        avatar={avatar.avatar}
-        background={avatar.backgroundColor}
-        onClick={onClick}
-        size={size}
-        title={avatar.title}
-      />
-      <Loading loading={loading} placement={placement} />
-    </div>
-  );
+const Avatar = memo<AvatarProps>(
+  ({ loading, avatar, placement, unoptimized = false, addon, onClick, size = 40 }) => {
+    const { styles } = useStyles({ avatarSize: size });
+    const avatarContent = (
+      <div className={styles.avatarContainer}>
+        <A
+          animation={loading}
+          avatar={avatar.avatar}
+          background={avatar.backgroundColor}
+          onClick={onClick}
+          size={size}
+          title={avatar.title}
+          unoptimized={unoptimized}
+        />
+        <Loading loading={loading} placement={placement} />
+      </div>
+    );
 
-  if (!addon) return avatarContent;
-  return (
-    <Flexbox align={'center'} className={styles.avatarGroupContainer} gap={8}>
-      {avatarContent}
-      {addon}
-    </Flexbox>
-  );
-});
+    if (!addon) return avatarContent;
+    return (
+      <Flexbox align={'center'} className={styles.avatarGroupContainer} gap={8}>
+        {avatarContent}
+        {addon}
+      </Flexbox>
+    );
+  },
+);
 
 export default Avatar;
