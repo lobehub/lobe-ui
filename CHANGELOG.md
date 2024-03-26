@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.137.4](https://github.com/lobehub/lobe-ui/compare/v1.137.3...v1.137.4)
+
+<sup>Released on **2024-03-26**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix missing unoptimized in SelectWithImg.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix missing unoptimized in SelectWithImg ([5ce6b54](https://github.com/lobehub/lobe-ui/commit/5ce6b54))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.137.3](https://github.com/lobehub/lobe-ui/compare/v1.137.2...v1.137.3)
 
 <sup>Released on **2024-03-26**</sup>
