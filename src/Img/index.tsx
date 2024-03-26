@@ -9,12 +9,20 @@ import { ImgProps } from '@/types';
 const createContainer = (as: ElementType) =>
   forwardRef((props: any, ref) => createElement(as, { ...props, ref }));
 
-const Img = forwardRef<any, ImgProps & ImageProps & { unoptimized?: boolean }>((props, ref) => {
-  const config = useContext(ConfigContext);
+const Img = forwardRef<any, ImgProps & ImageProps & { unoptimized?: boolean }>(
+  ({ unoptimized, ...res }, ref) => {
+    const config = useContext(ConfigContext);
 
-  const ImgContainer = useMemo(() => createContainer(config?.imgAs || 'img'), [config]);
+    const ImgContainer = useMemo(() => createContainer(config?.imgAs || 'img'), [config]);
 
-  return <ImgContainer ref={ref} {...props} />;
-});
+    return (
+      <ImgContainer
+        ref={ref}
+        unoptimized={unoptimized === undefined ? config?.imgUnoptimized : unoptimized}
+        {...res}
+      />
+    );
+  },
+);
 
 export default Img;

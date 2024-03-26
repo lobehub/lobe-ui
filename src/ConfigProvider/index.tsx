@@ -7,6 +7,7 @@ export interface Config {
   aAs?: ElementType;
   customCdnFn?: CdnFn;
   imgAs?: ElementType;
+  imgUnoptimized?: boolean;
   proxy?: CDN | 'custom';
 }
 

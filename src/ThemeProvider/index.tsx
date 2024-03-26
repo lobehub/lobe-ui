@@ -112,4 +112,6 @@ const ThemeProvider = memo<ThemeProviderProps>(
   },
 );
 
+ThemeProvider.displayName = 'LobeThemeProvider';
+
 export default ThemeProvider;
