@@ -32,6 +32,7 @@ export interface SelectWithImgProps {
   styles?: {
     img?: CSSProperties;
   };
+  unoptimized?: boolean;
   value?: SelectProps['value'];
   width?: number;
 }
@@ -48,6 +49,7 @@ const SelectWithImg = memo<SelectWithImgProps>(
     height = 86,
     styles: outStyles = {},
     classNames = {},
+    unoptimized,
   }) => {
     const [currentValue, setCurrentValue] = useControlledState<string>(defaultValue, {
       defaultValue,
@@ -82,6 +84,7 @@ const SelectWithImg = memo<SelectWithImgProps>(
                     alt={typeof item.label === 'string' ? item.label : item.ariaLabel}
                     height={height}
                     src={item.img}
+                    unoptimized={unoptimized}
                     width={width}
                   />
                 </div>
