@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 import { AlertProps } from '@/Alert';
+import { AvatarProps } from '@/Avatar';
 import { EditableMessageProps } from '@/EditableMessage';
 import { DivProps, MetaData } from '@/types';
 
@@ -14,6 +15,7 @@ export interface ChatItemProps {
    */
   avatar: MetaData;
   avatarAddon?: ReactNode;
+  avatarProps?: AvatarProps;
   /**
    * @description Custom CSS class name for the chat item
    */
