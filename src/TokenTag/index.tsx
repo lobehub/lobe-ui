@@ -40,7 +40,7 @@ const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
       value,
       text,
       shape = 'round',
-      unoptimized = false,
+      unoptimized,
       ...rest
     },
     ref,
