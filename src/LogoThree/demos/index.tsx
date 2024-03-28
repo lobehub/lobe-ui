@@ -16,7 +16,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <LogoThree style={{ width: '100%' }} {...control} />
+      <LogoThree {...control} />
     </StoryBook>
   );
 };

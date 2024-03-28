@@ -125,14 +125,15 @@ export const useStyles = createStyles(
         h2,
         h3,
         h4,
-        h5 {
+        h5,
+        h6 {
           margin-block: max(
             calc(
               var(--lobe-markdown-header-multiple) * var(--lobe-markdown-margin-multiple) * 0.4em
             ),
             var(--lobe-markdown-font-size)
           );
-          font-weight: 600;
+          font-weight: bold;
           line-height: 1.25;
         }
 
@@ -160,7 +161,8 @@ export const useStyles = createStyles(
           );
         }
 
-        h5 {
+        h5,
+        h6 {
           font-size: calc(var(--lobe-markdown-font-size) * 1);
         }
       `,
