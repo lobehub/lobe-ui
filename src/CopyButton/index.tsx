@@ -3,49 +3,32 @@
 import { Check, Copy } from 'lucide-react';
 import { memo } from 'react';
 
-import ActionIcon, { type ActionIconSize } from '@/ActionIcon';
-import { type TooltipProps } from '@/Tooltip';
+import ActionIcon, { type ActionIconProps } from '@/ActionIcon';
 import { useCopied } from '@/hooks/useCopied';
-import { DivProps } from '@/types';
 import { copyToClipboard } from '@/utils/copyToClipboard';
 
-export interface CopyButtonProps extends DivProps {
-  /**
-   * @description Additional class name
-   */
-  className?: string;
+export interface CopyButtonProps extends ActionIconProps {
   /**
    * @description The text content to be copied
    */
   content: string;
-  /**
-   * @description The placement of the tooltip
-   * @enum ['top', 'left', 'right', 'bottom', 'topLeft', 'topRight', 'bottomLeft', 'bottomRight', 'leftTop', 'leftBottom', 'rightTop', 'rightBottom']
-   * @default 'right'
-   */
-  placement?: TooltipProps['placement'];
-  /**
-   * @description The size of the icon
-   * @enum ['large', 'normal', 'small', 'site']
-   * @default 'site'
-   */
-  size?: ActionIconSize;
 }
 
 const CopyButton = memo<CopyButtonProps>(
-  ({ content, className, placement = 'right', size = 'site', ...rest }) => {
+  ({ content, placement = 'right', size = 'site', icon, glass = true, onClick, ...rest }) => {
     const { copied, setCopied } = useCopied();
+    const Icon = icon || Copy;
 
     return (
       <ActionIcon
+        glass={glass}
         {...rest}
         active={copied}
-        className={className}
-        glass
-        icon={copied ? Check : Copy}
-        onClick={async () => {
+        icon={copied ? Check : Icon}
+        onClick={async (e) => {
           await copyToClipboard(content);
           setCopied();
+          onClick?.(e);
         }}
         placement={placement}
         size={size}
