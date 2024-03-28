@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.137.5](https://github.com/lobehub/lobe-ui/compare/v1.137.4...v1.137.5)
+
+<sup>Released on **2024-03-28**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update LogoThree loading.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update LogoThree loading ([7547eed](https://github.com/lobehub/lobe-ui/commit/7547eed))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.137.4](https://github.com/lobehub/lobe-ui/compare/v1.137.3...v1.137.4)
 
 <sup>Released on **2024-03-26**</sup>
