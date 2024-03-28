@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.137.6](https://github.com/lobehub/lobe-ui/compare/v1.137.5...v1.137.6)
+
+<sup>Released on **2024-03-28**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix LogoSpline Props.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix LogoSpline Props ([225ebab](https://github.com/lobehub/lobe-ui/commit/225ebab))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.137.5](https://github.com/lobehub/lobe-ui/compare/v1.137.4...v1.137.5)
 
 <sup>Released on **2024-03-28**</sup>
