@@ -111,6 +111,7 @@
     "react-simple-code-editor": "^0",
     "rehype-katex": "^6",
     "rehype-raw": "^7",
+    "remark-breaks": "^4.0.0",
     "remark-gfm": "^3",
     "remark-math": "^5",
     "shiki": "^1",

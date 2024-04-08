@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import { Components } from 'react-markdown/lib/ast-to-react';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
+import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
@@ -73,7 +74,7 @@ const Markdown = memo<MarkdownProps>(
       () => [allowHtml && rehypeRaw, rehypeKatex].filter(Boolean) as any,
       [allowHtml],
     );
-    const remarkPlugins = useMemo(() => [remarkGfm, remarkMath], []);
+    const remarkPlugins = useMemo(() => [remarkGfm, remarkMath, remarkBreaks], []);
 
     return (
       <article
