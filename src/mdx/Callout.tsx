@@ -1,7 +1,7 @@
 'use client';
 
 import { createStyles } from 'antd-style';
-import { Info, Lightbulb, MessageSquareWarning, OctagonAlert, TriangleAlert } from 'lucide-react';
+import { AlertOctagon, AlertTriangle, Info, Lightbulb, MessageSquareWarning } from 'lucide-react';
 import { rgba } from 'polished';
 import type { ReactNode } from 'react';
 import { FC } from 'react';
@@ -54,7 +54,7 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info' }) => {
   const typeConfig = {
     error: {
       color: theme.colorError,
-      icon: OctagonAlert,
+      icon: AlertOctagon,
     },
     important: {
       color: theme.purple,
@@ -70,7 +70,7 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info' }) => {
     },
     warning: {
       color: theme.colorWarning,
-      icon: TriangleAlert,
+      icon: AlertTriangle,
     },
   };
 

@@ -2,10 +2,11 @@
 nav: Mdx
 group: Built-ins
 title: Cards
+atomId: 'Cards, Card'
 apiHeader:
   pkg: '@lobehub/ui/mdx'
-  docUrl: '{github}/tree/master/docs/mdx/{atomId}/index.md'
-  sourceUrl: '{github}/tree/master/src/mdx/{atomId}/index.tsx'
+  docUrl: 'https://github.com/lobehub/lobe-ui/tree/master/docs/mdx/Cards/index.md'
+  sourceUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/mdx/Cards/index.tsx'
 ---
 
 ## Example

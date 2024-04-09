@@ -6,15 +6,10 @@ import { Flexbox } from 'react-layout-kit';
 
 import TabsNav from '@/TabsNav';
 
+import Tab from './Tab';
+
 const useStyles = createStyles(({ css, token, prefixCls }) => {
   return {
-    body: css`
-      padding-inline: 1em;
-
-      > div {
-        margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
-      }
-    `,
     container: css`
       --lobe-markdown-margin-multiple: 1;
 
@@ -33,20 +28,6 @@ const useStyles = createStyles(({ css, token, prefixCls }) => {
     `,
   };
 });
-
-export interface _TabItemProps {
-  children: ReactNode;
-}
-
-const _TabItem: FC<_TabItemProps> = ({ children }) => {
-  const { styles } = useStyles();
-
-  return (
-    <div className={styles.body}>
-      <div>{children}</div>
-    </div>
-  );
-};
 
 export interface _TabsProps {
   children: ReactNode[];
@@ -78,10 +59,10 @@ const _Tabs: FC<_TabsProps> = ({ defaultIndex = '0', items, children }) => {
 };
 
 export type TabsProps = typeof _Tabs & {
-  Tab: typeof _TabItem;
+  Tab: typeof Tab;
 };
 
 const Tabs = _Tabs as TabsProps;
-Tabs.Tab = _TabItem;
+Tabs.Tab = Tab;
 
 export default Tabs;

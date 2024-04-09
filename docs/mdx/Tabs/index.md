@@ -2,10 +2,11 @@
 nav: Mdx
 group: Built-ins
 title: Tabs
+atomId: 'Tabs, Tab'
 apiHeader:
   pkg: '@lobehub/ui/mdx'
-  docUrl: '{github}/tree/master/docs/mdx/{atomId}/index.md'
-  sourceUrl: '{github}/tree/master/src/mdx/{atomId}/index.tsx'
+  docUrl: 'https://github.com/lobehub/lobe-ui/tree/master/docs/mdx/Tabs/index.md'
+  sourceUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/mdx/Tabs/index.tsx'
 ---
 
 ## Example
