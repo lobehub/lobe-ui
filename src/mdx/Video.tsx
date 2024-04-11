@@ -18,7 +18,7 @@ export interface VideoProps {
 
 const Video: FC<VideoProps> = ({ style, width = 840, height, cover, inStep, ...rest }) => {
   const size = cover
-    ? { height: 315, width: 840 }
+    ? { height: 480, width: 840 }
     : inStep
       ? {
           height,
@@ -32,6 +32,7 @@ const Video: FC<VideoProps> = ({ style, width = 840, height, cover, inStep, ...r
   return (
     <LobeVideo
       height={size.height}
+      preview={false}
       style={{
         borderRadius: 'calc(var(--lobe-markdown-border-radius) * 1px)',
         marginBlock: 'calc(var(--lobe-markdown-margin-multiple) * 1em)',

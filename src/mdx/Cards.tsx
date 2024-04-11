@@ -5,8 +5,6 @@ import { FC, PropsWithChildren } from 'react';
 
 import Grid from '@/Grid';
 
-import Card from './Card';
-
 const useStyles = createStyles(({ css }) => {
   return {
     container: css`
@@ -19,12 +17,12 @@ const useStyles = createStyles(({ css }) => {
   };
 });
 
-interface _CardsProps extends PropsWithChildren {
+export interface CardsProps extends PropsWithChildren {
   maxItemWidth?: string | number;
   rows?: number;
 }
 
-const _Cards: FC<_CardsProps> = ({ children, maxItemWidth = 250, rows = 3 }) => {
+const Cards: FC<CardsProps> = ({ children, maxItemWidth = 250, rows = 3 }) => {
   const { styles } = useStyles();
   return (
     <Grid className={styles.container} maxItemWidth={maxItemWidth} rows={rows}>
@@ -32,12 +30,5 @@ const _Cards: FC<_CardsProps> = ({ children, maxItemWidth = 250, rows = 3 }) => 
     </Grid>
   );
 };
-
-export type CardsProps = typeof _Cards & {
-  Card: typeof Card;
-};
-
-const Cards = _Cards as CardsProps;
-Cards.Card = Card;
 
 export default Cards;

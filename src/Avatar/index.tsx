@@ -4,6 +4,7 @@ import { Avatar as AntAvatar, type AvatarProps as AntAvatarProps } from 'antd';
 import { type ReactNode, isValidElement, memo, useMemo } from 'react';
 
 import FluentEmoji from '@/FluentEmoji';
+import Img from '@/Img';
 import { getEmoji } from '@/utils/getEmojiByCharacter';
 
 import { useStyles } from './style';
@@ -73,7 +74,16 @@ const Avatar = memo<AvatarProps>(
     };
 
     return isDefaultAntAvatar ? (
-      <AntAvatar src={avatar} {...avatarProps} />
+      <AntAvatar
+        src={
+          typeof avatar === 'string' ? (
+            <Img alt={title} height={size} src={avatar} width={size} />
+          ) : (
+            avatar
+          )
+        }
+        {...avatarProps}
+      />
     ) : (
       <AntAvatar {...avatarProps}>
         {emoji ? (

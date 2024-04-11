@@ -6,8 +6,6 @@ import { Flexbox } from 'react-layout-kit';
 
 import TabsNav from '@/TabsNav';
 
-import Tab from './Tab';
-
 const useStyles = createStyles(({ css, token, prefixCls }) => {
   return {
     container: css`
@@ -29,13 +27,13 @@ const useStyles = createStyles(({ css, token, prefixCls }) => {
   };
 });
 
-export interface _TabsProps {
+export interface TabsProps {
   children: ReactNode[];
   defaultIndex?: number | string;
   items: string[];
 }
 
-const _Tabs: FC<_TabsProps> = ({ defaultIndex = '0', items, children }) => {
+const Tabs: FC<TabsProps> = ({ defaultIndex = '0', items, children }) => {
   const [activeIndex, setActiveIndex] = useState<string>(String(defaultIndex));
   const { styles } = useStyles();
 
@@ -57,12 +55,5 @@ const _Tabs: FC<_TabsProps> = ({ defaultIndex = '0', items, children }) => {
     </Flexbox>
   );
 };
-
-export type TabsProps = typeof _Tabs & {
-  Tab: typeof Tab;
-};
-
-const Tabs = _Tabs as TabsProps;
-Tabs.Tab = Tab;
 
 export default Tabs;
