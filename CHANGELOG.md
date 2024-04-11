@@ -2,6 +2,32 @@
 
 # Changelog
 
+### [Version 1.138.1](https://github.com/lobehub/lobe-ui/compare/v1.138.0...v1.138.1)
+
+<sup>Released on **2024-04-11**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update mdx style, Update mdx style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update mdx style ([572ec18](https://github.com/lobehub/lobe-ui/commit/572ec18))
+- **misc**: Update mdx style ([dc8c6d0](https://github.com/lobehub/lobe-ui/commit/dc8c6d0))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.138.0](https://github.com/lobehub/lobe-ui/compare/v1.137.7...v1.138.0)
 
 <sup>Released on **2024-04-09**</sup>
