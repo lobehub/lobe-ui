@@ -37,6 +37,14 @@ export default (token: Theme) => css`
     -webkit-tap-highlight-color: transparent;
   }
 
+  code {
+    font-family: ${token.fontFamilyCode} !important;
+
+    span {
+      font-family: ${token.fontFamilyCode} !important;
+    }
+  }
+
   ::selection {
     color: #000;
     background: ${token.yellow9};
