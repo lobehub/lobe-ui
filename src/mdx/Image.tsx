@@ -17,7 +17,7 @@ export interface ImageProps {
 }
 const Image: FC<ImageProps> = ({
   style,
-  width = 840,
+  width = 800,
   height,
   cover,
   inStep,
@@ -25,11 +25,11 @@ const Image: FC<ImageProps> = ({
   ...rest
 }) => {
   const size = cover
-    ? { height: 480, width: 840 }
+    ? { height: 300, width: 800 }
     : inStep
       ? {
           height,
-          width: 790,
+          width: 780,
         }
       : {
           height,
