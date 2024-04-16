@@ -74,7 +74,10 @@ const Markdown = memo<MarkdownProps>(
       () => [allowHtml && rehypeRaw, rehypeKatex].filter(Boolean) as any,
       [allowHtml],
     );
-    const remarkPlugins = useMemo(() => [remarkGfm, remarkMath, remarkBreaks], []);
+    const remarkPlugins = useMemo(
+      () => [remarkGfm, remarkMath, variant === 'chat' && remarkBreaks].filter(Boolean) as any, 
+      [variant]
+    );
 
     return (
       <article
