@@ -16,13 +16,13 @@ export interface VideoProps {
   width?: number;
 }
 
-const Video: FC<VideoProps> = ({ style, width = 840, height, cover, inStep, ...rest }) => {
+const Video: FC<VideoProps> = ({ style, width = 800, height, cover, inStep, ...rest }) => {
   const size = cover
-    ? { height: 315, width: 840 }
+    ? { height: 300, width: 800 }
     : inStep
       ? {
           height,
-          width: 790,
+          width: 780,
         }
       : {
           height,
@@ -32,6 +32,7 @@ const Video: FC<VideoProps> = ({ style, width = 840, height, cover, inStep, ...r
   return (
     <LobeVideo
       height={size.height}
+      preview={false}
       style={{
         borderRadius: 'calc(var(--lobe-markdown-border-radius) * 1px)',
         marginBlock: 'calc(var(--lobe-markdown-margin-multiple) * 1em)',

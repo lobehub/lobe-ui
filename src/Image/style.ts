@@ -61,6 +61,8 @@ export const useStyles = createStyles(
               box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
             `,
         css`
+          cursor: pointer;
+
           position: relative;
 
           overflow: hidden;

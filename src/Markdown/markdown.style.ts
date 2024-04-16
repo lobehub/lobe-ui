@@ -294,6 +294,7 @@ export const useStyles = createStyles(
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
 
           text-align: start;
+          text-wrap: balance;
           word-break: auto-phrase;
           overflow-wrap: break-word;
 
@@ -318,7 +319,6 @@ export const useStyles = createStyles(
             padding-block: 0.75em;
             padding-inline: 1em;
             text-align: start;
-            vertical-align: top;
           }
         }
       `,

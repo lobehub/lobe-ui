@@ -8,13 +8,6 @@ import TabsNav from '@/TabsNav';
 
 const useStyles = createStyles(({ css, token, prefixCls }) => {
   return {
-    body: css`
-      padding-inline: 1em;
-
-      > div {
-        margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
-      }
-    `,
     container: css`
       --lobe-markdown-margin-multiple: 1;
 
@@ -34,27 +27,13 @@ const useStyles = createStyles(({ css, token, prefixCls }) => {
   };
 });
 
-export interface _TabItemProps {
-  children: ReactNode;
-}
-
-const _TabItem: FC<_TabItemProps> = ({ children }) => {
-  const { styles } = useStyles();
-
-  return (
-    <div className={styles.body}>
-      <div>{children}</div>
-    </div>
-  );
-};
-
-export interface _TabsProps {
+export interface TabsProps {
   children: ReactNode[];
   defaultIndex?: number | string;
   items: string[];
 }
 
-const _Tabs: FC<_TabsProps> = ({ defaultIndex = '0', items, children }) => {
+const Tabs: FC<TabsProps> = ({ defaultIndex = '0', items, children }) => {
   const [activeIndex, setActiveIndex] = useState<string>(String(defaultIndex));
   const { styles } = useStyles();
 
@@ -76,12 +55,5 @@ const _Tabs: FC<_TabsProps> = ({ defaultIndex = '0', items, children }) => {
     </Flexbox>
   );
 };
-
-export type TabsProps = typeof _Tabs & {
-  Tab: typeof _TabItem;
-};
-
-const Tabs = _Tabs as TabsProps;
-Tabs.Tab = _TabItem;
 
 export default Tabs;

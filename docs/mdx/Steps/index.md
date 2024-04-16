@@ -4,8 +4,8 @@ group: Built-ins
 title: Steps
 apiHeader:
   pkg: '@lobehub/ui/mdx'
-  docUrl: '{github}/tree/master/docs/mdx/{atomId}/index.md'
-  sourceUrl: '{github}/tree/master/src/mdx/{atomId}/index.tsx'
+  docUrl: 'https://github.com/lobehub/lobe-ui/tree/master/docs/mdx/Steps/index.md'
+  sourceUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/mdx/Steps/index.tsx'
 ---
 
 ## Example

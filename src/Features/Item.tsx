@@ -1,6 +1,7 @@
 import { CSSProperties, memo } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
+import A from '@/A';
 import Icon, { IconProps } from '@/Icon';
 import Img from '@/Img';
 import type { DivProps } from '@/types';
@@ -117,9 +118,9 @@ const Item = memo<FeatureItemProps>(
           )}
           {link && (
             <div className={styles.link}>
-              <a href={link} rel="noreferrer" target={openExternal ? '_blank' : undefined}>
+              <A href={link} rel="noreferrer" target={openExternal ? '_blank' : undefined}>
                 Read More
-              </a>
+              </A>
             </div>
           )}
         </div>

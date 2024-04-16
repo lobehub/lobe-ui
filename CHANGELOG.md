@@ -2,6 +2,82 @@
 
 # Changelog
 
+### [Version 1.138.2](https://github.com/lobehub/lobe-ui/compare/v1.138.1...v1.138.2)
+
+<sup>Released on **2024-04-13**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix mdx image size.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix mdx image size ([d9c4316](https://github.com/lobehub/lobe-ui/commit/d9c4316))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version 1.138.1](https://github.com/lobehub/lobe-ui/compare/v1.138.0...v1.138.1)
+
+<sup>Released on **2024-04-11**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update mdx style, Update mdx style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update mdx style ([572ec18](https://github.com/lobehub/lobe-ui/commit/572ec18))
+- **misc**: Update mdx style ([dc8c6d0](https://github.com/lobehub/lobe-ui/commit/dc8c6d0))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+## [Version 1.138.0](https://github.com/lobehub/lobe-ui/compare/v1.137.7...v1.138.0)
+
+<sup>Released on **2024-04-09**</sup>
+
+#### ✨ Features
+
+- **misc**: Update mdx components to next rsc.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update mdx components to next rsc ([276effc](https://github.com/lobehub/lobe-ui/commit/276effc))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.137.7](https://github.com/lobehub/lobe-ui/compare/v1.137.6...v1.137.7)
 
 <sup>Released on **2024-03-29**</sup>

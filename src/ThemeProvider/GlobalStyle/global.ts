@@ -22,6 +22,8 @@ export default (token: Theme) => css`
     font-size: ${token.fontSize}px;
     font-feature-settings: var(--font-settings);
     font-variation-settings: var(--font-variations);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     line-height: 1;
     color: ${token.colorTextBase};
     text-size-adjust: none;
@@ -31,8 +33,6 @@ export default (token: Theme) => css`
 
     background-color: ${token.colorBgLayout};
 
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     -webkit-overflow-scrolling: touch;
     -webkit-tap-highlight-color: transparent;
   }
@@ -53,6 +53,8 @@ export default (token: Theme) => css`
   }
 
   * {
+    scrollbar-color: ${token.colorFill} transparent;
+    scrollbar-width: thin;
     box-sizing: border-box;
     vertical-align: baseline;
   }
