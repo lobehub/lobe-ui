@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.138.3](https://github.com/lobehub/lobe-ui/compare/v1.138.2...v1.138.3)
+
+<sup>Released on **2024-04-16**</sup>
+
+#### 💄 Styles
+
+- **misc**: Support hard breaks.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Support hard breaks, closes [#139](https://github.com/lobehub/lobe-ui/issues/139) ([7b58a47](https://github.com/lobehub/lobe-ui/commit/7b58a47))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.138.2](https://github.com/lobehub/lobe-ui/compare/v1.138.1...v1.138.2)
 
 <sup>Released on **2024-04-13**</sup>
