@@ -1,6 +1,6 @@
 'use client';
 
-import { Search } from 'lucide-react';
+import { LucideLoader2, Search } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
@@ -18,6 +18,7 @@ export interface SearchBarProps extends InputProps {
    * @default false
    */
   enableShortKey?: boolean;
+  loading?: boolean;
   onInputChange?: (value: string) => void;
   /**
    * @description The shortcut key to focus on the input. Only works if `enableShortKey` is true
@@ -42,6 +43,7 @@ const SearchBar = memo<SearchBarProps>(
     placeholder,
     enableShortKey,
     shortKey = 'f',
+    loading,
     ...properties
   }) => {
     const [inputValue, setInputValue] = useControlledState<string>(defaultValue as any, {
@@ -91,7 +93,13 @@ const SearchBar = memo<SearchBarProps>(
           onFocus={() => setShowTag(false)}
           placeholder={placeholder ?? 'Type keywords...'}
           prefix={
-            <Icon className={styles.icon} icon={Search} size="small" style={{ marginRight: 4 }} />
+            <Icon
+              className={styles.icon}
+              icon={loading ? LucideLoader2 : Search}
+              size="small"
+              spin={loading}
+              style={{ marginRight: 4 }}
+            />
           }
           ref={inputReference}
           value={value}

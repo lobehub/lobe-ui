@@ -5,6 +5,7 @@ export default () => {
   const controls: SearchBarProps | any = useControls(
     {
       enableShortKey: true,
+      loading: false,
       placeholder: 'Type keywords...',
       shortKey: 'f',
       spotlight: false,
