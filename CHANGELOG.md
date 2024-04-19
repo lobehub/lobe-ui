@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.138.6](https://github.com/lobehub/lobe-ui/compare/v1.138.5...v1.138.6)
+
+<sup>Released on **2024-04-19**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Avatar alt.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix Avatar alt ([a5ae750](https://github.com/lobehub/lobe-ui/commit/a5ae750))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.138.5](https://github.com/lobehub/lobe-ui/compare/v1.138.4...v1.138.5)
 
 <sup>Released on **2024-04-18**</sup>
