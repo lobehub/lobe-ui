@@ -77,7 +77,13 @@ const Avatar = memo<AvatarProps>(
       <AntAvatar
         src={
           typeof avatar === 'string' ? (
-            <Img alt={title} height={size} src={avatar} width={size} />
+            <Img
+              alt={avatarProps.alt || title}
+              height={size}
+              loading={'lazy'}
+              src={avatar}
+              width={size}
+            />
           ) : (
             avatar
           )
