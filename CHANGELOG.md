@@ -2,6 +2,32 @@
 
 # Changelog
 
+### [Version 1.138.8](https://github.com/lobehub/lobe-ui/compare/v1.138.7...v1.138.8)
+
+<sup>Released on **2024-04-22**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix spline, Fix type.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix spline ([b6b26c0](https://github.com/lobehub/lobe-ui/commit/b6b26c0))
+- **misc**: Fix type ([03e24d8](https://github.com/lobehub/lobe-ui/commit/03e24d8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.138.7](https://github.com/lobehub/lobe-ui/compare/v1.138.6...v1.138.7)
 
 <sup>Released on **2024-04-22**</sup>
