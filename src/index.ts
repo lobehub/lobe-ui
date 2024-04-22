@@ -135,6 +135,7 @@ export { default as SideNav, type SideNavProps } from './SideNav';
 export { default as SliderWithInput, type SliderWithInputProps } from './SliderWithInput';
 export { default as Snippet, type SnippetProps } from './Snippet';
 export { default as SortableList, type SortableListProps } from './SortableList';
+export { default as Spline, type SplineProps } from './Spline';
 export { default as Spotlight, type SpotlightProps } from './Spotlight';
 export { default as SpotlightCard, type SpotlightCardProps } from './SpotlightCard';
 export {
