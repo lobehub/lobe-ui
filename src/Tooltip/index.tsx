@@ -9,8 +9,8 @@ export type TooltipProps = AntdTooltipProps;
 
 const Tooltip = memo<TooltipProps>(({ className, arrow = false, ...rest }) => {
   const { styles, cx } = useStyles();
-
-  return <AntdTooltip arrow={arrow} overlayClassName={cx(styles.tooltip, className)} {...rest} />;
+  const isMobile = /android|iphone|ipad|ipod/i.test(navigator.userAgent);
+  return <AntdTooltip arrow={arrow} overlayClassName={cx(styles.tooltip, className)} trigger={isMobile ? 'click' : 'hover'} {...rest} />;
 });
 
 export default Tooltip;
