@@ -1,19 +1,12 @@
 'use client';
 
-import { CSSProperties, FC } from 'react';
+import { FC } from 'react';
 
-import LobeImage from '@/Image';
+import LobeImage, { type ImageProps as LobeImageProps } from '@/Image';
 
-export interface ImageProps {
-  alt: string;
-  borderless?: boolean;
-  className?: string;
+export interface ImageProps extends LobeImageProps {
   cover?: boolean;
-  height?: number;
   inStep?: boolean;
-  src: string;
-  style?: CSSProperties;
-  width?: number;
 }
 const Image: FC<ImageProps> = ({
   style,

@@ -3,9 +3,8 @@
 import { createStyles } from 'antd-style';
 import { AlertOctagon, AlertTriangle, Info, Lightbulb, MessageSquareWarning } from 'lucide-react';
 import { rgba } from 'polished';
-import type { ReactNode } from 'react';
 import { FC } from 'react';
-import { Flexbox } from 'react-layout-kit';
+import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
 import Icon from '@/Icon';
 
@@ -43,12 +42,11 @@ const useStyles = createStyles(({ css }) => {
   };
 });
 
-export interface CalloutProps {
-  children: ReactNode;
+export interface CalloutProps extends FlexboxProps {
   type?: 'tip' | 'error' | 'important' | 'info' | 'warning';
 }
 
-const Callout: FC<CalloutProps> = ({ children, type = 'info' }) => {
+const Callout: FC<CalloutProps> = ({ children, type = 'info', className, style, ...rest }) => {
   const { cx, styles, theme } = useStyles();
 
   const typeConfig = {
@@ -81,13 +79,15 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info' }) => {
   return (
     <Flexbox
       align={'flex-start'}
-      className={styles.container}
+      className={cx(styles.container, className)}
       horizontal
       style={{
         background: rgba(color, 0.1),
         borderColor: rgba(color, 0.5),
         color,
+        ...style,
       }}
+      {...rest}
     >
       <Icon icon={icon} size={{ fontSize: '1.2em' }} style={{ marginBlock: '0.25em' }} />
       <div className={cx(styles.content, type === 'info' && styles.underlineAnchor)}>

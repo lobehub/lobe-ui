@@ -1,7 +1,9 @@
 'use client';
 
 import { createStyles } from 'antd-style';
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
+
+import { DivProps } from '@/types';
 
 const useStyles = createStyles(({ css }) => {
   return {
@@ -15,15 +17,13 @@ const useStyles = createStyles(({ css }) => {
   };
 });
 
-export interface TabProps {
-  children: ReactNode;
-}
+export type TabProps = DivProps;
 
-const Tab: FC<TabProps> = ({ children }) => {
-  const { styles } = useStyles();
+const Tab: FC<TabProps> = ({ children, className, ...rest }) => {
+  const { cx, styles } = useStyles();
 
   return (
-    <div className={styles.body}>
+    <div className={cx(styles.body, className)} {...rest}>
       <div>{children}</div>
     </div>
   );

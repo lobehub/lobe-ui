@@ -3,6 +3,7 @@ import Card from './Card';
 import Cards from './Cards';
 import FileTree from './FileTree';
 import Image from './Image';
+import Link from './Link';
 import Steps from './Steps';
 import Tab from './Tab';
 import Tabs from './Tabs';
@@ -18,6 +19,7 @@ const mdxComponents = {
   Tab,
   Tabs,
   Video,
+  a: Link,
 };
 
 export default mdxComponents;

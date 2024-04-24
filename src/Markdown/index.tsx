@@ -1,5 +1,6 @@
 'use client';
 
+import type { AnchorProps } from 'antd';
 import { CSSProperties, memo, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Components } from 'react-markdown/lib/ast-to-react';
@@ -11,7 +12,10 @@ import remarkMath from 'remark-math';
 
 import ImageGallery from '@/Image/ImageGallery';
 import Image, { type ImageProps } from '@/mdx/Image';
+import Link from '@/mdx/Link';
+import type { PreProps } from '@/mdx/Pre';
 import Video, { type VideoProps } from '@/mdx/Video';
+import type { AProps } from '@/types';
 
 import { CodeFullFeatured, CodeLite } from './CodeBlock';
 import type { TypographyProps } from './Typography';
@@ -23,9 +27,10 @@ export interface MarkdownProps extends TypographyProps {
   children: string;
   className?: string;
   componentProps?: {
-    img?: ImageProps;
-    pre?: any;
-    video?: VideoProps;
+    a?: Partial<AProps & AnchorProps>;
+    img?: Partial<ImageProps>;
+    pre?: Partial<PreProps>;
+    video?: Partial<VideoProps>;
   };
   enableImageGallery?: boolean;
   fullFeaturedCodeBlock?: boolean;
@@ -56,6 +61,7 @@ const Markdown = memo<MarkdownProps>(
 
     const components: Components = useMemo(
       () => ({
+        a: (props: any) => <Link {...props} {...componentProps?.a} />,
         img: enableImageGallery
           ? (props: any) => <Image {...props} {...componentProps?.img} />
           : undefined,
@@ -75,8 +81,8 @@ const Markdown = memo<MarkdownProps>(
       [allowHtml],
     );
     const remarkPlugins = useMemo(
-      () => [remarkGfm, remarkMath, variant === 'chat' && remarkBreaks].filter(Boolean) as any, 
-      [variant]
+      () => [remarkGfm, remarkMath, variant === 'chat' && remarkBreaks].filter(Boolean) as any,
+      [variant],
     );
 
     return (
