@@ -72,12 +72,12 @@ export interface CardProps extends Omit<FlexboxProps, 'children'> {
   title: string;
 }
 
-const Card: FC<CardProps> = ({ icon, title, desc, href, iconProps, image, ...rest }) => {
-  const { styles } = useStyles();
+const Card: FC<CardProps> = ({ icon, title, desc, href, iconProps, className, image, ...rest }) => {
+  const { cx, styles } = useStyles();
 
   return (
     <A href={href}>
-      <Flexbox align={'flex-start'} className={styles.card} {...rest}>
+      <Flexbox align={'flex-start'} className={cx(styles.card, className)} {...rest}>
         {image && (
           <Img
             alt={title}

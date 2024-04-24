@@ -1,19 +1,12 @@
 'use client';
 
-import { CSSProperties, FC } from 'react';
+import { FC } from 'react';
 
-import LobeVideo from '@/Video';
+import LobeVideo, { type VideoProps as LobeVideoProps } from '@/Video';
 
-export interface VideoProps {
-  borderless?: boolean;
-  className?: string;
+export interface VideoProps extends LobeVideoProps {
   cover?: boolean;
-  height?: number;
   inStep?: boolean;
-  poster?: string;
-  src: string;
-  style?: CSSProperties;
-  width?: number;
 }
 
 const Video: FC<VideoProps> = ({ style, width = 800, height, cover, inStep, ...rest }) => {

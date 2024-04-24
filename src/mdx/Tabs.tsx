@@ -2,9 +2,9 @@
 
 import { createStyles } from 'antd-style';
 import { FC, ReactNode, useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
+import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
-import TabsNav from '@/TabsNav';
+import TabsNav, { type TabsNavProps } from '@/TabsNav';
 
 const useStyles = createStyles(({ css, token, prefixCls }) => {
   return {
@@ -27,29 +27,42 @@ const useStyles = createStyles(({ css, token, prefixCls }) => {
   };
 });
 
-export interface TabsProps {
+export interface TabsProps extends Omit<FlexboxProps, 'children'> {
   children: ReactNode[];
   defaultIndex?: number | string;
   items: string[];
+  tabNavProps?: Partial<TabsNavProps>;
 }
 
-const Tabs: FC<TabsProps> = ({ defaultIndex = '0', items, children }) => {
+const Tabs: FC<TabsProps> = ({
+  defaultIndex = '0',
+  items,
+  children,
+  className,
+  tabNavProps = {},
+  ...rest
+}) => {
+  const { className: tabNavClassName, onChange, ...tabNavRest } = tabNavProps;
   const [activeIndex, setActiveIndex] = useState<string>(String(defaultIndex));
-  const { styles } = useStyles();
+  const { cx, styles } = useStyles();
 
   const index = Number(activeIndex);
 
   return (
-    <Flexbox className={styles.container}>
+    <Flexbox className={cx(styles.container, className)} {...rest}>
       <TabsNav
         activeKey={activeIndex}
-        className={styles.header}
+        className={cx(styles.header, tabNavClassName)}
         items={items.map((item, i) => ({
           key: String(i),
           label: item,
         }))}
-        onChange={setActiveIndex}
+        onChange={(v) => {
+          setActiveIndex(v);
+          onChange?.(v);
+        }}
         variant={'compact'}
+        {...tabNavRest}
       />
       {children?.[index] || ''}
     </Flexbox>

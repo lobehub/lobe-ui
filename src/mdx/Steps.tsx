@@ -1,7 +1,9 @@
 'use client';
 
 import { createStyles } from 'antd-style';
-import { FC, PropsWithChildren } from 'react';
+import { FC } from 'react';
+
+import { DivProps } from '@/types';
 
 const useStyles = createStyles(({ css, token }) => {
   return {
@@ -63,10 +65,14 @@ const useStyles = createStyles(({ css, token }) => {
   };
 });
 
-const Steps: FC<PropsWithChildren> = ({ children }) => {
-  const { styles } = useStyles();
+const Steps: FC<DivProps> = ({ children, className, ...rest }) => {
+  const { cx, styles } = useStyles();
 
-  return <div className={styles.container}>{children}</div>;
+  return (
+    <div className={cx(styles.container, className)} {...rest}>
+      {children}
+    </div>
+  );
 };
 
 export default Steps;

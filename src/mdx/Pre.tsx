@@ -1,10 +1,10 @@
 'use client';
 
 import { createStyles } from 'antd-style';
-import { CSSProperties, FC, ReactNode } from 'react';
+import { FC } from 'react';
 
-import Highlighter from '@/Highlighter';
-import Snippet from '@/Snippet';
+import Highlighter, { type HighlighterProps } from '@/Highlighter';
+import Snippet, { type SnippetProps } from '@/Snippet';
 import { FALLBACK_LANG } from '@/hooks/useHighlight';
 
 const useStyles = createStyles(({ css }) => ({
@@ -22,26 +22,18 @@ const useStyles = createStyles(({ css }) => ({
   `,
 }));
 
-export interface PreProps {
-  allowChangeLanguage?: boolean;
-  children: string;
-  className?: string;
-  fileName?: string;
-  fullFeatured?: boolean;
-  icon?: ReactNode;
-  lang: string;
-  style?: CSSProperties;
-}
+export type PreProps = HighlighterProps;
 
 export const Pre: FC<PreProps> = ({
   fullFeatured,
   fileName,
   allowChangeLanguage,
-  lang = FALLBACK_LANG,
+  language = FALLBACK_LANG,
   children,
   className,
   style,
   icon,
+  ...rest
 }) => {
   const { styles, cx } = useStyles();
 
@@ -53,20 +45,22 @@ export const Pre: FC<PreProps> = ({
       fileName={fileName}
       fullFeatured={fullFeatured}
       icon={icon}
-      language={lang}
+      language={language}
       style={style}
       type="block"
+      {...rest}
     >
       {children}
     </Highlighter>
   );
 };
 
-export const PreSingleLine: FC<Omit<PreProps, 'fullFeatured'>> = ({
-  lang = FALLBACK_LANG,
+export const PreSingleLine: FC<SnippetProps> = ({
+  language = FALLBACK_LANG,
   children,
   className,
   style,
+  ...rest
 }) => {
   const { cx, styles } = useStyles();
 
@@ -74,9 +68,10 @@ export const PreSingleLine: FC<Omit<PreProps, 'fullFeatured'>> = ({
     <Snippet
       className={cx(styles.container, className)}
       data-code-type="highlighter"
-      language={lang}
+      language={language}
       style={style}
       type={'block'}
+      {...rest}
     >
       {children}
     </Snippet>

@@ -1,12 +1,12 @@
 'use client';
 
-import Spline, { type SplineProps } from '@splinetool/react-spline';
 import { CSSProperties, memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import { useCdnFn } from '@/ConfigProvider';
 import Img from '@/Img';
 import { LOGO_3D } from '@/Logo/style';
+import Spline, { type SplineProps } from '@/Spline';
 
 export interface LogoThreeProps extends Partial<SplineProps> {
   className?: string;

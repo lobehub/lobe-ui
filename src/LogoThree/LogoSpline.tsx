@@ -1,6 +1,7 @@
-import Spline, { type SplineProps } from '@splinetool/react-spline';
 import { useThemeMode } from 'antd-style';
 import { CSSProperties, memo, useState } from 'react';
+
+import Spline, { type SplineProps } from '@/Spline';
 
 import Loading from './Loading';
 

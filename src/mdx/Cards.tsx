@@ -1,9 +1,9 @@
 'use client';
 
 import { createStyles } from 'antd-style';
-import { FC, PropsWithChildren } from 'react';
+import { FC } from 'react';
 
-import Grid from '@/Grid';
+import Grid, { type GridProps } from '@/Grid';
 
 const useStyles = createStyles(({ css }) => {
   return {
@@ -17,15 +17,17 @@ const useStyles = createStyles(({ css }) => {
   };
 });
 
-export interface CardsProps extends PropsWithChildren {
-  maxItemWidth?: string | number;
-  rows?: number;
-}
+export type CardsProps = GridProps;
 
-const Cards: FC<CardsProps> = ({ children, maxItemWidth = 250, rows = 3 }) => {
-  const { styles } = useStyles();
+const Cards: FC<CardsProps> = ({ children, className, maxItemWidth = 250, rows = 3, ...rest }) => {
+  const { cx, styles } = useStyles();
   return (
-    <Grid className={styles.container} maxItemWidth={maxItemWidth} rows={rows}>
+    <Grid
+      className={cx(styles.container, className)}
+      maxItemWidth={maxItemWidth}
+      rows={rows}
+      {...rest}
+    >
       {children}
     </Grid>
   );
