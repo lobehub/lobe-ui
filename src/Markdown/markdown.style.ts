@@ -216,6 +216,10 @@ export const useStyles = createStyles(
       list: css`
         li {
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.33em);
+
+          p {
+            display: inline;
+          }
         }
 
         ul,
