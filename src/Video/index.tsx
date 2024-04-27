@@ -89,9 +89,11 @@ const Video = memo<VideoProps>(
           </Flexbox>
         )}
         <video
+          autoPlay
           className={cx(styles.video, classNames?.video, className)}
           controls={showControls}
           height={height}
+          muted
           onEnded={() => setIsPlaying(false)}
           onMouseEnter={onVideoMouseEnter}
           onMouseLeave={onVideoMouseLeave}
