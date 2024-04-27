@@ -3,7 +3,7 @@ import { ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import Tag from '@/Tag';
-import { DivProps } from '@/types';
+import { type DivProps } from '@/types';
 
 export const useStyles = createStyles(({ css, token, prefixCls }) => ({
   formTitle: css`

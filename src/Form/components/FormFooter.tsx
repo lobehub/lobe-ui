@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import { DivProps } from '@/types';
+import { type DivProps } from '@/types';
 
 export type FormFooterProps = DivProps;
 

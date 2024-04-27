@@ -65,7 +65,7 @@ const FormParent = forwardRef<FormInstance, FormProps>(
         className={cx(styles.form, className)}
         colon={false}
         form={form}
-        layout="horizontal"
+        layout={'horizontal'}
         ref={ref}
         {...rest}
       >
@@ -91,11 +91,13 @@ export interface IForm {
   (props: FormProps & RefAttributes<FormInstance>): ReactNode;
   Group: typeof FormGroup;
   Item: typeof FormItem;
+  useForm: typeof AntForm.useForm;
 }
 
 const Form = FormParent as unknown as IForm;
 
 Form.Item = FormItem;
 Form.Group = FormGroup;
+Form.useForm = AntForm.useForm;
 
 export default Form;
