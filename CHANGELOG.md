@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.138.12](https://github.com/lobehub/lobe-ui/compare/v1.138.11...v1.138.12)
+
+<sup>Released on **2024-04-27**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix md render <p> in <li>.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix md render <p> in <li> ([cf75d6a](https://github.com/lobehub/lobe-ui/commit/cf75d6a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.138.11](https://github.com/lobehub/lobe-ui/compare/v1.138.10...v1.138.11)
 
 <sup>Released on **2024-04-27**</sup>
