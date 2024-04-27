@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.138.14](https://github.com/lobehub/lobe-ui/compare/v1.138.13...v1.138.14)
+
+<sup>Released on **2024-04-27**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Make video autoplay.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Make video autoplay ([7508fc0](https://github.com/lobehub/lobe-ui/commit/7508fc0))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.138.13](https://github.com/lobehub/lobe-ui/compare/v1.138.12...v1.138.13)
 
 <sup>Released on **2024-04-27**</sup>
