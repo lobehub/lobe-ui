@@ -1,10 +1,9 @@
-import { AnchorProps } from 'antd';
 import { FC } from 'react';
 
 import A from '@/A';
 import { AProps } from '@/types';
 
-export type LinkProps = AProps & AnchorProps;
+export type LinkProps = AProps;
 
 const Link: FC<LinkProps> = ({ href, target, ...rest }) => {
   const isNewWindow = href?.startsWith('http');

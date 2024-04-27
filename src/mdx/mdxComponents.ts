@@ -1,3 +1,5 @@
+import type { MDXComponents } from 'mdx/types';
+
 import Callout from './Callout';
 import Card from './Card';
 import Cards from './Cards';
@@ -9,7 +11,7 @@ import Tab from './Tab';
 import Tabs from './Tabs';
 import Video from './Video';
 
-const mdxComponents = {
+const mdxComponents: MDXComponents = {
   Callout,
   Card,
   Cards,
