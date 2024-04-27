@@ -5,6 +5,7 @@ export { default as File, type FileProps } from './File';
 export { default as FileTree, type FileTreeProps } from './FileTree';
 export { default as Folder, type FolderProps } from './Folder';
 export { default as Image, type ImageProps } from './Image';
+export { default as Link, type LinkProps } from './Link';
 export { default as mdxComponents } from './mdxComponents';
 export { default as Pre, type PreProps, PreSingleLine } from './Pre';
 export { default as Steps } from './Steps';
