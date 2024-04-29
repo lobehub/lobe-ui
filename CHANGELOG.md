@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.138.15](https://github.com/lobehub/lobe-ui/compare/v1.138.14...v1.138.15)
+
+<sup>Released on **2024-04-29**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Form.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Form ([5ef398e](https://github.com/lobehub/lobe-ui/commit/5ef398e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.138.14](https://github.com/lobehub/lobe-ui/compare/v1.138.13...v1.138.14)
 
 <sup>Released on **2024-04-27**</sup>
