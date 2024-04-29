@@ -51,4 +51,7 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
       border-radius: ${token.borderRadius}px !important;
     }
   `,
+  pure: css`
+    gap: 64px;
+  `,
 }));

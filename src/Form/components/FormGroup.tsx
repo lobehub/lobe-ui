@@ -23,6 +23,7 @@ export const useStyles = createStyles(({ css, cx, token, isDarkMode, responsive,
     }
 
     .${prefixCls}-collapse-content {
+      background: transparent;
       border-color: ${token.colorFillSecondary};
     }
 

@@ -62,7 +62,7 @@ const FormParent = forwardRef<FormInstance, FormProps>(
 
     return (
       <AntForm
-        className={cx(styles.form, className)}
+        className={cx(styles.form, variant === 'pure' && styles.pure, className)}
         colon={false}
         form={form}
         layout={'horizontal'}
