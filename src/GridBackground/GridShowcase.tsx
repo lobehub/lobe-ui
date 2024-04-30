@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from 'antd-style';
 import { rgba } from 'polished';
 import { memo } from 'react';
