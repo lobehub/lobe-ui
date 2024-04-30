@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.138.17](https://github.com/lobehub/lobe-ui/compare/v1.138.16...v1.138.17)
+
+<sup>Released on **2024-04-30**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update GridShowcaseProps.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update GridShowcaseProps ([e9890dc](https://github.com/lobehub/lobe-ui/commit/e9890dc))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.138.16](https://github.com/lobehub/lobe-ui/compare/v1.138.15...v1.138.16)
 
 <sup>Released on **2024-04-30**</sup>
