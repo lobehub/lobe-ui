@@ -109,6 +109,7 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
                 };
               }),
             }}
+            overlayStyle={{ maxHeight: '50%', overflow: 'auto' }}
             trigger={['click']}
           >
             <ActionIcon
