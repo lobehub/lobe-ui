@@ -31,7 +31,6 @@ const useStyles = createStyles(({ css, token }) => {
     expand: css`
       position: absolute;
       height: 100%;
-      background: ${token.colorBgLayout};
     `,
     expandButton: css`
       position: absolute;
