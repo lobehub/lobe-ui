@@ -52,6 +52,7 @@ export interface MobileChatInputAreaProps extends ChatInputAreaInnerProps {
   expand?: boolean;
   setExpand?: (expand: boolean) => void;
   style?: CSSProperties;
+  safeArea?: boolean;
   textAreaLeftAddons?: ReactNode;
   textAreaRightAddons?: ReactNode;
   topAddons?: ReactNode;
