@@ -7,9 +7,10 @@ export const useStyles = createStyles(({ css, token }) => {
       color: ${token.colorPrimary};
     `,
     container: css`
+      user-select: none;
+
       overflow: hidden;
       flex: none;
-      user-select: none;
 
       width: 100vw;
 
@@ -31,16 +32,16 @@ export const useStyles = createStyles(({ css, token }) => {
       cursor: pointer;
       width: 48px;
       height: 48px;
-      color: ${token.colorTextSecondary};
+      color: ${token.colorTextDescription};
     `,
     title: css`
       overflow: hidden;
 
       width: 100%;
+      margin-block-start: -0.125em;
 
       font-size: 12px;
       line-height: 1.125em;
-      margin-top: -0.125em;
       text-align: center;
       text-overflow: ellipsis;
       white-space: nowrap;
