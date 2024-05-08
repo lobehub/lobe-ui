@@ -15,6 +15,7 @@ import {
   useState,
 } from 'react';
 import { Flexbox } from 'react-layout-kit';
+import MobileSafeArea from "@/MobileSafeArea"
 
 import ActionIcon from '@/ActionIcon';
 
@@ -73,6 +74,7 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
       onInput,
       loading,
       value,
+      safeArea
     },
     ref,
   ) => {
@@ -152,6 +154,7 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
         {bottomAddons && (
           <Flexbox style={showAddons ? {} : { display: 'none' }}>{bottomAddons}</Flexbox>
         )}
+        {safeArea && !isFocused && <MobileSafeArea position={'bottom'} />}
       </Flexbox>
     );
   },
