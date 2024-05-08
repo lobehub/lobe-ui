@@ -127,7 +127,7 @@ const Modal = memo<ModalProps>(
             )
           }
           footer={footer as ReactNode}
-          height={fullscreen ? '100%' : maxHeight || '75vh'}
+          height={fullscreen ? 'calc(100% - env(safe-area-inset-top))' : maxHeight || '75vh'}
           maskClassName={cx(styles.wrap, wrapClassName)}
           onClose={onCancel as any}
           open={open}
