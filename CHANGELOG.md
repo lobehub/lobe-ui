@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.138.23](https://github.com/lobehub/lobe-ui/compare/v1.138.22...v1.138.23)
+
+<sup>Released on **2024-05-08**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Fullscreen in PWA.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix Fullscreen in PWA ([7ab1c94](https://github.com/lobehub/lobe-ui/commit/7ab1c94))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.138.22](https://github.com/lobehub/lobe-ui/compare/v1.138.21...v1.138.22)
 
 <sup>Released on **2024-05-08**</sup>
