@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.138.22](https://github.com/lobehub/lobe-ui/compare/v1.138.21...v1.138.22)
+
+<sup>Released on **2024-05-08**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Drawer in pwa.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Drawer in pwa ([3c460b4](https://github.com/lobehub/lobe-ui/commit/3c460b4))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.138.21](https://github.com/lobehub/lobe-ui/compare/v1.138.20...v1.138.21)
 
 <sup>Released on **2024-05-08**</sup>
