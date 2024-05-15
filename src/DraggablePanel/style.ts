@@ -32,7 +32,7 @@ export const useStyles = createStyles(
       pointer-events: ${showHandlerWideArea ? 'all' : 'none'};
 
       position: absolute;
-      z-index: 101;
+      z-index: 10;
 
       opacity: 0;
 
