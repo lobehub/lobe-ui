@@ -141,6 +141,7 @@ const Modal = memo<ModalProps>(
             ...restStyles,
           }}
           title={title}
+          {...rest}
         >
           {children}
         </Drawer>
