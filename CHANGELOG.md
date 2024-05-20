@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.138.26](https://github.com/lobehub/lobe-ui/compare/v1.138.25...v1.138.26)
+
+<sup>Released on **2024-05-20**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Add ref to avatar.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Add ref to avatar ([7ebaf4d](https://github.com/lobehub/lobe-ui/commit/7ebaf4d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.138.25](https://github.com/lobehub/lobe-ui/compare/v1.138.24...v1.138.25)
 
 <sup>Released on **2024-05-15**</sup>
