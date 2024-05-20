@@ -1,7 +1,7 @@
 'use client';
 
 import { Avatar as AntAvatar, type AvatarProps as AntAvatarProps } from 'antd';
-import { type ReactNode, isValidElement, memo, useMemo } from 'react';
+import { type ReactNode, forwardRef, isValidElement, useMemo } from 'react';
 
 import FluentEmoji from '@/FluentEmoji';
 import Img from '@/Img';
@@ -36,19 +36,22 @@ export interface AvatarProps extends AntAvatarProps {
   unoptimized?: boolean;
 }
 
-const Avatar = memo<AvatarProps>(
-  ({
-    className,
-    avatar,
-    title,
-    animation,
-    size = 40,
-    shape = 'circle',
-    background = 'rgba(0,0,0,0)',
-    style,
-    unoptimized,
-    ...rest
-  }) => {
+const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
+  (
+    {
+      className,
+      avatar,
+      title,
+      animation,
+      size = 40,
+      shape = 'circle',
+      background = 'rgba(0,0,0,0)',
+      style,
+      unoptimized,
+      ...rest
+    },
+    ref,
+  ) => {
     const isStringAvatar = typeof avatar === 'string';
     const isDefaultAntAvatar = Boolean(
       avatar &&
@@ -75,6 +78,7 @@ const Avatar = memo<AvatarProps>(
 
     return isDefaultAntAvatar ? (
       <AntAvatar
+        ref={ref}
         src={
           typeof avatar === 'string' ? (
             <Img
@@ -91,7 +95,7 @@ const Avatar = memo<AvatarProps>(
         {...avatarProps}
       />
     ) : (
-      <AntAvatar {...avatarProps}>
+      <AntAvatar ref={ref} {...avatarProps}>
         {emoji ? (
           <FluentEmoji
             emoji={emoji}
