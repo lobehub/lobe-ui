@@ -74,10 +74,3 @@ export default (token: Theme) => css`
     border-radius: ${token.borderRadius}px !important;
     box-shadow: ${token.boxShadowSecondary};
   }
-
-  @media (max-width: 575px) {
-    .${token.prefixCls}-tooltip {
-      display: none !important;
-    }
-  }
-`;
