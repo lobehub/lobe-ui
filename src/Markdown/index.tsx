@@ -58,12 +58,23 @@ const Markdown = memo<MarkdownProps>(
   }) => {
     const { cx, styles } = useStyles({ fontSize, headerMultiple, lineHeight, marginMultiple });
     const { styles: mdStyles } = useMarkdownStyles({ fontSize, headerMultiple, marginMultiple });
+    const isChatMode = variant === 'chat';
 
     const components: Components = useMemo(
       () => ({
         a: (props: any) => <Link {...props} {...componentProps?.a} />,
         img: enableImageGallery
-          ? (props: any) => <Image {...props} {...componentProps?.img} />
+          ? (props: any) => (
+              <Image
+                {...props}
+                {...componentProps?.img}
+                style={
+                  isChatMode
+                    ? { height: 'auto', maxWidth: 640, ...componentProps?.img?.style }
+                    : componentProps?.img?.style
+                }
+              />
+            )
           : undefined,
         pre: (props: any) =>
           fullFeaturedCodeBlock ? (
@@ -81,8 +92,8 @@ const Markdown = memo<MarkdownProps>(
       [allowHtml],
     );
     const remarkPlugins = useMemo(
-      () => [remarkGfm, remarkMath, variant === 'chat' && remarkBreaks].filter(Boolean) as any,
-      [variant],
+      () => [remarkGfm, remarkMath, isChatMode && remarkBreaks].filter(Boolean) as any,
+      [isChatMode],
     );
 
     return (
@@ -110,7 +121,7 @@ const Markdown = memo<MarkdownProps>(
               mdStyles.strong,
               mdStyles.table,
               mdStyles.video,
-              variant === 'chat' && styles.chat,
+              isChatMode && styles.chat,
             )}
             components={components}
             rehypePlugins={rehypePlugins}
