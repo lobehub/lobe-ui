@@ -74,3 +74,4 @@ export default (token: Theme) => css`
     border-radius: ${token.borderRadius}px !important;
     box-shadow: ${token.boxShadowSecondary};
   }
+`;
