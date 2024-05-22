@@ -78,6 +78,7 @@ const useStyles = createStyles(
 
 export type ModalProps = AntModalProps & {
   allowFullscreen?: boolean;
+  enableResponsive?: boolean;
   maxHeight?: string | number | false;
   paddings?: {
     desktop?: number;
@@ -98,6 +99,7 @@ const Modal = memo<ModalProps>(
     destroyOnClose,
     paddings,
     maxHeight = '75dvh',
+    enableResponsive = true,
     footer,
     styles: stylesProps = {},
     ...rest
@@ -112,7 +114,7 @@ const Modal = memo<ModalProps>(
         : undefined,
     });
     const { body, ...restStyles } = stylesProps;
-    if (mobile)
+    if (enableResponsive && mobile)
       return (
         <Drawer
           className={cx(styles.drawerContent, className)}
