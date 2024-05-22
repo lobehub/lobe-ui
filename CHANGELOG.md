@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.139.1](https://github.com/lobehub/lobe-ui/compare/v1.139.0...v1.139.1)
+
+<sup>Released on **2024-05-22**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix image max width in markdown chat mode.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix image max width in markdown chat mode ([495b522](https://github.com/lobehub/lobe-ui/commit/495b522))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.139.0](https://github.com/lobehub/lobe-ui/compare/v1.138.26...v1.139.0)
 
 <sup>Released on **2024-05-22**</sup>
