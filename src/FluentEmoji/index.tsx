@@ -28,7 +28,7 @@ export interface FluentEmojiProps extends DivProps {
 }
 
 const FluentEmoji = memo<FluentEmojiProps>(
-  ({ emoji, className, style, type = EmojiType.ThreeD, size = 40, unoptimized }) => {
+  ({ emoji, className, style, type = '3d', size = 40, unoptimized }) => {
     const [loadingFail, setLoadingFail] = useState(false);
 
     const { cx, styles } = useStyles();

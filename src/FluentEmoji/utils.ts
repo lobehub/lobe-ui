@@ -1,11 +1,4 @@
-export enum EmojiType {
-  Anim = 'anim',
-  Flat = 'flat',
-  Modern = 'modern',
-  Mono = 'mono',
-  Pure = 'pure',
-  ThreeD = '3d',
-}
+export type EmojiType = 'anim' | 'flat' | 'modern' | 'mono' | 'pure' | '3d';
 
 function isFlagEmoji(emoji: string) {
   const flagRegex = /(?:\uD83C[\uDDE6-\uDDFF]){2}/;
@@ -19,7 +12,7 @@ function emojiToUnicode(emoji: string) {
 export const genEmojiUrl = (emoji: string, type: EmojiType) => {
   if (isFlagEmoji(emoji))
     return `https://jsdelivr.lobehub-inc.cn/gh/RealityRipple/emoji/noto/${emojiToUnicode(emoji)}.png`;
-  if (type === EmojiType.Pure) return null;
-  const ext = [EmojiType.Anim, EmojiType.ThreeD].includes(type) ? 'webp' : 'svg';
+  if (type === 'pure') return null;
+  const ext = ['anim', '3d'].includes(type) ? 'webp' : 'svg';
   return `https://jsdelivr.lobehub-inc.cn/gh/lobehub/fluent-emoji/packages/${type}/assets/${emojiToUnicode(emoji)}.${ext}`;
 };
