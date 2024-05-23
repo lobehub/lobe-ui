@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.140.0](https://github.com/lobehub/lobe-ui/compare/v1.139.1...v1.140.0)
+
+<sup>Released on **2024-05-23**</sup>
+
+#### ✨ Features
+
+- **misc**: Update fluent emoji.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update fluent emoji ([10da232](https://github.com/lobehub/lobe-ui/commit/10da232))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.139.1](https://github.com/lobehub/lobe-ui/compare/v1.139.0...v1.139.1)
 
 <sup>Released on **2024-05-22**</sup>
