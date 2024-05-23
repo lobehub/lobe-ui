@@ -33,7 +33,7 @@ export default () => {
           <FluentEmoji type={'3d'} {...control} />
           <FluentEmoji type={'modern'} {...control} />
           <FluentEmoji type={'flat'} {...control} />
-          <FluentEmoji type={'high-contrast'} {...control} />
+          <FluentEmoji type={'mono'} {...control} />
           <FluentEmoji type={'pure'} {...control} />
         </Flexbox>
         <Button icon={getEmoji(control.emoji)}>{getEmojiNameByCharacter(control.emoji)}</Button>

@@ -4,6 +4,7 @@ import { Avatar as AntAvatar, type AvatarProps as AntAvatarProps } from 'antd';
 import { type ReactNode, forwardRef, isValidElement, useMemo } from 'react';
 
 import FluentEmoji from '@/FluentEmoji';
+import { EmojiType } from '@/FluentEmoji/utils';
 import Img from '@/Img';
 import { getEmoji } from '@/utils/getEmojiByCharacter';
 
@@ -100,7 +101,7 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
           <FluentEmoji
             emoji={emoji}
             size={size * 0.8}
-            type={animation ? 'anim' : '3d'}
+            type={animation ? EmojiType.Anim : EmojiType.ThreeD}
             unoptimized={unoptimized}
           />
         ) : (

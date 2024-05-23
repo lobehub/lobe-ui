@@ -1,14 +1,13 @@
 'use client';
 
-import { kebabCase } from 'lodash-es';
 import { memo, useMemo, useState } from 'react';
+import { Center } from 'react-layout-kit';
 
-import { useCdnFn } from '@/ConfigProvider';
 import Img from '@/Img';
 import { DivProps } from '@/types';
-import { getEmojiNameByCharacter } from '@/utils/getEmojiByCharacter';
 
 import { useStyles } from './style';
+import { EmojiType, genEmojiUrl } from './utils';
 
 export interface FluentEmojiProps extends DivProps {
   /**
@@ -24,73 +23,43 @@ export interface FluentEmojiProps extends DivProps {
    * @description The type of the FluentUI emoji set to be used
    * @default '3d'
    */
-  type?: 'modern' | 'flat' | 'high-contrast' | 'anim' | '3d' | 'pure';
+  type?: EmojiType;
   unoptimized?: boolean;
 }
 
 const FluentEmoji = memo<FluentEmojiProps>(
-  ({ emoji, className, style, type = '3d', size = 40, unoptimized }) => {
-    const genCdnUrl = useCdnFn();
+  ({ emoji, className, style, type = EmojiType.ThreeD, size = 40, unoptimized }) => {
     const [loadingFail, setLoadingFail] = useState(false);
 
     const { cx, styles } = useStyles();
 
-    const emojiUrl = useMemo(() => {
-      if (type === 'pure') return;
-      const emojiName = getEmojiNameByCharacter(emoji);
-      if (!emojiName) return;
-      switch (type) {
-        case 'modern':
-        case 'flat':
-        case 'high-contrast': {
-          return genCdnUrl({
-            path: `icons/${type}/${kebabCase(emojiName)}.svg`,
-            pkg: 'fluentui-emoji',
-            version: '0.0.8',
-          });
-        }
-        case 'anim': {
-          return genCdnUrl({
-            path: `assets/${emojiName}.webp`,
-            pkg: '@lobehub/assets-emoji-anim',
-            version: '1.0.0',
-          });
-        }
-        case '3d': {
-          return genCdnUrl({
-            path: `assets/${emojiName}.webp`,
-            pkg: '@lobehub/assets-emoji',
-            version: '1.3.0',
-          });
-        }
-      }
-    }, [type, emoji]);
+    const emojiUrl = useMemo(() => genEmojiUrl(emoji, type), [type, emoji]);
 
     if (type === 'pure' || !emojiUrl || loadingFail)
       return (
-        <div
+        <Center
           className={cx(styles.container, className)}
-          style={{ fontSize: size * 0.9, height: size, width: size, ...style }}
+          flex={'none'}
+          height={size}
+          style={{ fontSize: size * 0.9, ...style }}
+          width={size}
         >
           {emoji}
-        </div>
+        </Center>
       );
 
     return (
-      <div
-        className={cx(styles.container, className)}
-        style={{ height: size, width: size, ...style }}
-      >
-        <Img
-          alt={emoji}
-          height={size}
-          loading={'lazy'}
-          onError={() => setLoadingFail(true)}
-          src={emojiUrl}
-          unoptimized={unoptimized}
-          width={size}
-        />
-      </div>
+      <Img
+        alt={emoji}
+        className={className}
+        height={size}
+        loading={'lazy'}
+        onError={() => setLoadingFail(true)}
+        src={emojiUrl}
+        style={{ flex: 'none', ...style }}
+        unoptimized={unoptimized}
+        width={size}
+      />
     );
   },
 );

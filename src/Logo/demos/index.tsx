@@ -11,7 +11,7 @@ export default () => {
         value: 64,
       },
       type: {
-        options: ['3d', 'flat', 'high-contrast', 'text', 'combine'],
+        options: ['3d', 'flat', 'mono', 'text', 'combine'],
         value: '3d',
       },
     },

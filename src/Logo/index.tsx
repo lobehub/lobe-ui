@@ -9,9 +9,8 @@ import Img from '@/Img';
 import { DivProps } from '@/types';
 
 import Divider from './Divider';
-import LogoHighContrast from './LogoHighContrast';
 import LogoText from './LogoText';
-import { LOGO_3D, LOGO_FLAT, useStyles } from './style';
+import { LOGO_3D, useStyles } from './style';
 
 export interface LogoProps extends DivProps {
   /**
@@ -27,7 +26,7 @@ export interface LogoProps extends DivProps {
    * @description Type of the logo to be rendered
    * @default '3d'
    */
-  type?: '3d' | 'flat' | 'high-contrast' | 'text' | 'combine';
+  type?: '3d' | 'flat' | 'mono' | 'text' | 'combine';
 }
 
 const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className, ...rest }) => {
@@ -40,9 +39,9 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
     case '3d': {
       logoComponent = (
         <Img
-          alt="lobehub"
+          alt="LobeHub"
           height={size}
-          src={genCdnUrl(LOGO_3D)}
+          src={'https://hub-apac-1.lobeobjects.space/logo-3d.webp'}
           style={style}
           width={size}
           {...rest}
@@ -52,33 +51,49 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
     }
     case 'flat': {
       logoComponent = (
-        <Img alt="lobehub" height={size} src={genCdnUrl(LOGO_FLAT)} style={style} width={size} />
+        <Img
+          alt="LobeHub"
+          height={size}
+          src={'https://hub-apac-1.lobeobjects.space/logo-flat.svg'}
+          style={style}
+          width={size}
+        />
       );
       break;
     }
-    case 'high-contrast': {
-      logoComponent = <LogoHighContrast height={size} style={style} width={size} {...rest} />;
+    case 'mono': {
+      logoComponent = (
+        <Img
+          alt="LobeHub"
+          height={size}
+          src={'https://hub-apac-1.lobeobjects.space/logo-mono.svg'}
+          style={style}
+          width={size}
+        />
+      );
       break;
     }
     case 'text': {
       logoComponent = (
-        <LogoText
-          className={className}
-          height={size}
-          style={style}
-          width={size * 2.9375}
-          {...rest}
-        />
+        <LogoText className={className} size={size} style={style} {...(rest as any)} />
       );
       break;
     }
     case 'combine': {
       logoComponent = (
         <>
-          <Img alt="lobehub" height={size} src={genCdnUrl(LOGO_3D)} width={size} />
-          <LogoText style={{ height: size, marginLeft: Math.round(size / 4), width: 'auto' }} />
+          <Img alt="LobeHub" height={size} src={genCdnUrl(LOGO_3D)} width={size} />
+          <LogoText size={size} style={{ marginLeft: Math.round(size / 4) }} />
         </>
       );
+
+      if (!extra)
+        logoComponent = (
+          <Flexbox align={'center'} className={className} flex={'none'} horizontal style={style}>
+            {logoComponent}
+          </Flexbox>
+        );
+
       break;
     }
   }
@@ -88,9 +103,16 @@ const Logo = memo<LogoProps>(({ type = '3d', size = 32, style, extra, className,
   const extraSize = Math.round((size / 3) * 1.9);
 
   return (
-    <Flexbox align={'center'} className={className} horizontal style={style} {...rest}>
+    <Flexbox
+      align={'center'}
+      className={className}
+      flex={'none'}
+      horizontal
+      style={style}
+      {...rest}
+    >
       {logoComponent}
-      <Divider style={{ color: theme.colorFill, height: extraSize, width: extraSize }} />
+      <Divider size={extraSize} style={{ color: theme.colorFill }} />
       <div className={styles.extraTitle} style={{ fontSize: extraSize }}>
         {extra}
       </div>
