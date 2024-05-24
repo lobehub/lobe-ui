@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.140.3](https://github.com/lobehub/lobe-ui/compare/v1.140.2...v1.140.3)
+
+<sup>Released on **2024-05-24**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Refactor fluent emoji.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Refactor fluent emoji ([6e09de5](https://github.com/lobehub/lobe-ui/commit/6e09de5))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.140.2](https://github.com/lobehub/lobe-ui/compare/v1.140.1...v1.140.2)
 
 <sup>Released on **2024-05-24**</sup>
