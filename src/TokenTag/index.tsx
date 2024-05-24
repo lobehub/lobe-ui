@@ -1,6 +1,7 @@
 'use client';
 
 import { useResponsive } from 'antd-style';
+import numeral from 'numeral';
 import { forwardRef } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
@@ -8,6 +9,8 @@ import FluentEmoji from '@/FluentEmoji';
 import { DivProps } from '@/types';
 
 import { ICON_SIZE, useStyles } from './style';
+
+const format = (number: number) => numeral(number).format('0,0');
 
 export interface TokenTagProps extends DivProps {
   /**
@@ -82,7 +85,7 @@ const TokenTag = forwardRef<HTMLDivElement, TokenTagProps>(
                 : displayMode === 'remained'
                   ? text?.remained || 'Remained'
                   : text?.used || 'Used',
-              displayMode === 'remained' ? valueLeft : value,
+              displayMode === 'remained' ? format(valueLeft) : format(value),
             ].join(' ')
           : text?.overload || 'Overload'}
       </Flexbox>
