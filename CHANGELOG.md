@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.141.1](https://github.com/lobehub/lobe-ui/compare/v1.141.0...v1.141.1)
+
+<sup>Released on **2024-05-24**</sup>
+
+#### 💄 Styles
+
+- **misc**: Format value in TokenTag.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Format value in TokenTag ([815cfef](https://github.com/lobehub/lobe-ui/commit/815cfef))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.141.0](https://github.com/lobehub/lobe-ui/compare/v1.140.3...v1.141.0)
 
 <sup>Released on **2024-05-24**</sup>
