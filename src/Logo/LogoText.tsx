@@ -8,7 +8,7 @@ const LogoText = memo<SvgProps & DivProps & { size?: number }>(
       fill="currentColor"
       fillRule="evenodd"
       height={size}
-      style={{ flex: 'none', lineHeight: 1, width: 'fit-content', ...style }}
+      style={{ flex: 'none', lineHeight: 1, ...style }}
       viewBox="0 0 940 320"
       xmlns="http://www.w3.org/2000/svg"
       {...rest}
