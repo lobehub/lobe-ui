@@ -1,5 +1,3 @@
-import { CdnFn, JsdelivrFn } from '@/ConfigProvider';
-
 export type EmojiType = 'anim' | 'flat' | 'modern' | 'mono' | 'pure' | '3d';
 
 export function isFlagEmoji(emoji: string) {
@@ -11,11 +9,20 @@ export function emojiToUnicode(emoji: string) {
   return [...emoji].map((char) => char?.codePointAt(0)?.toString(16)).join('-');
 }
 
-export const genEmojiUrl = (
-  emoji: string,
-  type: EmojiType,
-  { genCdnUrl, genJsdelivrUrl }: { genCdnUrl: CdnFn; genJsdelivrUrl: JsdelivrFn },
-) => {
+export function emojiAnimPkg(emoji: string) {
+  const mainPart = emojiToUnicode(emoji).split('-')[0];
+  if (mainPart < '1f469') {
+    return '@lobehub/fluent-emoji-anim-1';
+  } else if (mainPart >= '1f469' && mainPart < '1f620') {
+    return '@lobehub/fluent-emoji-anim-2';
+  } else if (mainPart >= '1f620' && mainPart < '1f9a0') {
+    return '@lobehub/fluent-emoji-anim-3';
+  } else {
+    return '@lobehub/fluent-emoji-anim-4';
+  }
+}
+
+export const genEmojiUrl = (emoji: string, type: EmojiType) => {
   const ext = ['anim', '3d'].includes(type) ? 'webp' : 'svg';
 
   switch (type) {
@@ -23,38 +30,39 @@ export const genEmojiUrl = (
       return null;
     }
     case 'anim': {
-      return genJsdelivrUrl({
-        path: `packages/${type}/assets/${emojiToUnicode(emoji)}.${ext}`,
-        repo: 'lobehub/fluent-emoji',
-      });
+      return {
+        path: `assets/${emojiToUnicode(emoji)}.${ext}`,
+        pkg: emojiAnimPkg(emoji),
+        version: '1.0.0',
+      };
     }
     case '3d': {
-      return genCdnUrl({
+      return {
         path: `assets/${emojiToUnicode(emoji)}.${ext}`,
         pkg: '@lobehub/fluent-emoji-3d',
         version: '1.1.0',
-      });
+      };
     }
     case 'flat': {
-      return genCdnUrl({
+      return {
         path: `assets/${emojiToUnicode(emoji)}.${ext}`,
         pkg: '@lobehub/fluent-emoji-flat',
         version: '1.1.0',
-      });
+      };
     }
     case 'modern': {
-      return genCdnUrl({
+      return {
         path: `assets/${emojiToUnicode(emoji)}.${ext}`,
         pkg: '@lobehub/fluent-emoji-modern',
         version: '1.0.0',
-      });
+      };
     }
     case 'mono': {
-      return genCdnUrl({
+      return {
         path: `assets/${emojiToUnicode(emoji)}.${ext}`,
         pkg: '@lobehub/fluent-emoji-mono',
         version: '1.1.0',
-      });
+      };
     }
   }
 };

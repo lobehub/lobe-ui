@@ -3,7 +3,7 @@
 import { memo, useMemo, useState } from 'react';
 import { Center } from 'react-layout-kit';
 
-import { useCdnFn, useJsdelivrFn } from '@/ConfigProvider';
+import { useCdnFn } from '@/ConfigProvider';
 import Img from '@/Img';
 import { DivProps } from '@/types';
 
@@ -31,16 +31,10 @@ export interface FluentEmojiProps extends DivProps {
 const FluentEmoji = memo<FluentEmojiProps>(
   ({ emoji, className, style, type = '3d', size = 40, unoptimized }) => {
     const [loadingFail, setLoadingFail] = useState(false);
-    const genJsdelivrUrl = useJsdelivrFn();
     const genCdnUrl = useCdnFn();
     const { cx, styles } = useStyles();
 
-    const emojiUrl = useMemo(
-      () => genEmojiUrl(emoji, type, { genCdnUrl, genJsdelivrUrl }),
-      [type, emoji, genJsdelivrUrl, genCdnUrl],
-    );
-
-    console.log(emojiUrl);
+    const emojiUrl = useMemo(() => genEmojiUrl(emoji, type), [type, emoji]);
 
     if (type === 'pure' || !emojiUrl || loadingFail)
       return (
@@ -62,7 +56,7 @@ const FluentEmoji = memo<FluentEmojiProps>(
         height={size}
         loading={'lazy'}
         onError={() => setLoadingFail(true)}
-        src={emojiUrl}
+        src={genCdnUrl(emojiUrl)}
         style={{ flex: 'none', ...style }}
         unoptimized={unoptimized}
         width={size}

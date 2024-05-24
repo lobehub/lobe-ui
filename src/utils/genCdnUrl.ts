@@ -22,24 +22,24 @@ export const genCdnUrl = ({ pkg, version = 'latest', path, proxy }: CdnApi): str
   }
 };
 
-export type JsdelivrCDN = 'jsdelivr' | 'lobehub';
-
-const JSDELIVR_API = 'https://fastly.jsdelivr.net';
-const LOBEHUB_API = 'https://jsdelivr.lobeobjects.space';
-
-export interface JsdelivrApi {
-  path: string;
-  proxy?: JsdelivrCDN;
-  repo: string;
-}
-
-export const genJsdelivrUrl = ({ path, proxy, repo }: JsdelivrApi): string => {
-  switch (proxy) {
-    case 'jsdelivr': {
-      return urlJoin(JSDELIVR_API, 'gh', repo, path);
-    }
-    default: {
-      return urlJoin(LOBEHUB_API, 'gh', repo, path);
-    }
-  }
-};
+// export type JsdelivrCDN = 'jsdelivr' | 'lobehub';
+//
+// const JSDELIVR_API = 'https://fastly.jsdelivr.net';
+// const LOBEHUB_API = 'https://jsdelivr.lobeobjects.space';
+//
+// export interface JsdelivrApi {
+//   path: string;
+//   proxy?: JsdelivrCDN;
+//   repo: string;
+// }
+//
+// export const genJsdelivrUrl = ({ path, proxy, repo }: JsdelivrApi): string => {
+//   switch (proxy) {
+//     case 'jsdelivr': {
+//       return urlJoin(JSDELIVR_API, 'gh', repo, path);
+//     }
+//     default: {
+//       return urlJoin(LOBEHUB_API, 'gh', repo, path);
+//     }
+//   }
+// };

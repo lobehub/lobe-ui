@@ -1,22 +1,15 @@
 import { ElementType, ReactNode, createContext, memo, useContext } from 'react';
 
-import {
-  CDN,
-  CdnApi,
-  JsdelivrApi,
-  JsdelivrCDN,
-  genCdnUrl,
-  genJsdelivrUrl,
-} from '@/utils/genCdnUrl';
+import { CDN, CdnApi, genCdnUrl } from '@/utils/genCdnUrl';
 
 export interface Config {
   aAs?: ElementType;
   customCdnFn?: CdnFn;
-  customJsdelivrFn?: JsdelivrFn;
   imgAs?: ElementType;
   imgUnoptimized?: boolean;
-  jsdelivrProxy?: JsdelivrCDN | 'custom';
   proxy?: CDN | 'custom';
+  // customJsdelivrFn?: JsdelivrFn;
+  // jsdelivrProxy?: JsdelivrCDN | 'custom';
 }
 
 export const ConfigContext = createContext<Config | null>(null);
@@ -41,17 +34,18 @@ export const useCdnFn = (): CdnFn => {
 };
 
 // useJsdelivrFn
-export type JsdelivrFn = ({ repo, path }: JsdelivrApi) => string;
-
-const JsdelivrFallback: JsdelivrFn = ({ repo, path }) =>
-  genJsdelivrUrl({ path, proxy: 'lobehub', repo });
-
-export const useJsdelivrFn = (): JsdelivrFn => {
-  const config = useContext(ConfigContext);
-  if (!config) return JsdelivrFallback;
-  if (config?.proxy !== 'custom')
-    return ({ repo, path }) => genJsdelivrUrl({ path, proxy: config.proxy as any, repo });
-  return config?.customJsdelivrFn || JsdelivrFallback;
-};
+// export type JsdelivrFn = ({ repo, path }: JsdelivrApi) => string;
+//
+// const JsdelivrFallback: JsdelivrFn = ({ repo, path }) =>
+//   genJsdelivrUrl({ path, proxy: 'lobehub', repo });
+//
+// export const useJsdelivrFn = (): JsdelivrFn => {
+//   const config = useContext(ConfigContext);
+//   if (!config) return JsdelivrFallback;
+//   if (config?.proxy !== 'custom')
+//     return ({ repo, path }) => genJsdelivrUrl({ path, proxy: config.proxy as any, repo });
+//   return config?.customJsdelivrFn || JsdelivrFallback;
+// };
+//
 
 export default ConfigProvider;
