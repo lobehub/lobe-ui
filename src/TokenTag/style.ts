@@ -54,7 +54,6 @@ export const useStyles = createStyles(
           min-width: fit-content;
           height: ${HEIGHT}px;
 
-          font-family: ${token.fontFamilyCode};
           font-size: 13px;
           line-height: 1;
         `,
