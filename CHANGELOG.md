@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.141.3](https://github.com/lobehub/lobe-ui/compare/v1.141.2...v1.141.3)
+
+<sup>Released on **2024-05-27**</sup>
+
+#### 💄 Styles
+
+- **misc**: Display mobile `tooltip` correctly.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Display mobile `tooltip` correctly, closes [#151](https://github.com/lobehub/lobe-ui/issues/151) ([fa72237](https://github.com/lobehub/lobe-ui/commit/fa72237))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.141.2](https://github.com/lobehub/lobe-ui/compare/v1.141.1...v1.141.2)
 
 <sup>Released on **2024-05-25**</sup>
