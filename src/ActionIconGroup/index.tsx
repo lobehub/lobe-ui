@@ -16,6 +16,7 @@ export interface ActionIconGroupItems {
   icon: LucideIcon;
   key: string;
   label: string;
+  disable?: boolean;
 }
 
 export interface ActionEvent {
@@ -88,6 +89,7 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
               placement={tooltipsPlacement}
               size="small"
               title={item.label}
+              disable={item.disable}
             />
           ))}
         {dropdownMenu?.length > 0 && (

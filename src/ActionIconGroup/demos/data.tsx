@@ -11,6 +11,7 @@ export const items: ActionIconGroupProps['items'] = [
     icon: RotateCw,
     key: 'regenerate',
     label: 'Regenerate',
+    disable: true,
   },
 ];
 
