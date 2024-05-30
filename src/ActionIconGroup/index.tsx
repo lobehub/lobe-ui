@@ -6,7 +6,7 @@ import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon, { type ActionIconProps } from '@/ActionIcon';
-import Icon from '@/Icon';
+import Icon, { IconSizeType } from '@/Icon';
 import Spotlight from '@/Spotlight';
 import { DivProps } from '@/types';
 
@@ -47,6 +47,11 @@ export interface ActionIconGroupProps extends DivProps {
    */
   placement?: ActionIconProps['placement'];
   /**
+   * @description The size of the group
+   * @default "small"
+   */
+  size?: IconSizeType;
+  /**
    * @description Whether to add a spotlight background
    * @default true
    */
@@ -67,6 +72,7 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
     direction = 'row',
     dropdownMenu = [],
     onActionClick,
+    size = 'small',
     ...rest
   }) => {
     const { styles } = useStyles({ type });
@@ -88,7 +94,7 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
                   : undefined
               }
               placement={tooltipsPlacement}
-              size="small"
+              size={size}
               title={item.label}
             />
           ))}
@@ -100,7 +106,7 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
                 return {
                   ...item,
                   disabled: item.disable,
-                  icon: <Icon icon={item.icon} size="small" />,
+                  icon: <Icon icon={item.icon} size={size} />,
                   onClick: onActionClick
                     ? (info: ActionEvent) =>
                         onActionClick({
@@ -118,7 +124,7 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
               icon={MoreHorizontal}
               key="more"
               placement={tooltipsPlacement}
-              size="small"
+              size={size}
             />
           </Dropdown>
         )}

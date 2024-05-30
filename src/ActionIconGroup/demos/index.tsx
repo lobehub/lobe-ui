@@ -16,6 +16,10 @@ export default () => {
         options: ['row', 'column'],
         value: 'row',
       },
+      size: {
+        options: ['small', 'normal', 'large'],
+        value: 'small',
+      },
       spotlight: true,
       type: {
         options: ['ghost', 'block', 'pure'],
