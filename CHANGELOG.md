@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.142.0](https://github.com/lobehub/lobe-ui/compare/v1.141.3...v1.142.0)
+
+<sup>Released on **2024-05-30**</sup>
+
+#### ✨ Features
+
+- **ActionIconGroup**: Items support `disable` props.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **ActionIconGroup**: Items support `disable` props, closes [#158](https://github.com/lobehub/lobe-ui/issues/158) ([afb1472](https://github.com/lobehub/lobe-ui/commit/afb1472))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.141.3](https://github.com/lobehub/lobe-ui/compare/v1.141.2...v1.141.3)
 
 <sup>Released on **2024-05-27**</sup>
