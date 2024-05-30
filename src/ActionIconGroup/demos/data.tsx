@@ -8,6 +8,7 @@ export const items: ActionIconGroupProps['items'] = [
     label: 'Copy',
   },
   {
+    disable: true,
     icon: RotateCw,
     key: 'regenerate',
     label: 'Regenerate',
@@ -21,6 +22,7 @@ export const dropdownMenu: ActionIconGroupProps['dropdownMenu'] = [
     label: 'Copy',
   },
   {
+    disable: true,
     icon: RotateCw,
     key: 'regenerate',
     label: 'Regenerate',

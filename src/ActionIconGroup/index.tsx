@@ -13,6 +13,7 @@ import { DivProps } from '@/types';
 import { useStyles } from './style';
 
 export interface ActionIconGroupItems {
+  disable?: boolean;
   icon: LucideIcon;
   key: string;
   label: string;
@@ -78,6 +79,7 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
         {items?.length > 0 &&
           items.map((item) => (
             <ActionIcon
+              disable={item.disable}
               icon={item.icon}
               key={item.key}
               onClick={
@@ -97,6 +99,7 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
                 if (item.type) return item;
                 return {
                   ...item,
+                  disabled: item.disable,
                   icon: <Icon icon={item.icon} size="small" />,
                   onClick: onActionClick
                     ? (info: ActionEvent) =>
