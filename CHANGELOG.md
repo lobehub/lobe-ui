@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.142.1](https://github.com/lobehub/lobe-ui/compare/v1.142.0...v1.142.1)
+
+<sup>Released on **2024-05-30**</sup>
+
+#### 💄 Styles
+
+- **ActionIconGroup**: Support size prop.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **ActionIconGroup**: Support size prop, closes [#159](https://github.com/lobehub/lobe-ui/issues/159) ([2d977fa](https://github.com/lobehub/lobe-ui/commit/2d977fa))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.142.0](https://github.com/lobehub/lobe-ui/compare/v1.141.3...v1.142.0)
 
 <sup>Released on **2024-05-30**</sup>
