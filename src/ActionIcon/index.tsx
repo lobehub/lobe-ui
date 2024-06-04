@@ -145,7 +145,7 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
       <Tooltip
         arrow={arrow}
         mouseEnterDelay={tooltipDelay}
-        overlayStyle={{ pointerEvents: 'none' }}
+        overlayStyle={{ pointerEvents: 'none', maxWidth: '500px' }}
         placement={placement}
         title={title}
       >
