@@ -51,9 +51,12 @@ const ChatInputAreaInner = forwardRef<TextAreaRef, ChatInputAreaInnerProps>(
         }}
         onPressEnter={(e) => {
           onPressEnter?.(e);
-          if (!loading && !e.shiftKey && !isChineseInput.current) {
-            e.preventDefault();
-            onSend?.();
+          const isMobile = /Mobi|Android|iPhone/i.test(navigator.userAgent);
+          if (!loading && !isChineseInput.current) {
+            if ((!isMobile && !e.shiftKey) || (isMobile && e.shiftKey)) {
+              e.preventDefault();
+              onSend?.();
+            }
           }
         }}
         ref={ref}
