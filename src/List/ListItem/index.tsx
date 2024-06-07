@@ -152,7 +152,7 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps & HTMLAttributes<any>>
             {date && (
               <div
                 className={cx(styles.time, classNames?.time)}
-                style={showAction ? { opacity: 0 } : {}}
+                style={showAction ? { display: 'none' } : {}}
               >
                 {getChatItemTime(date)}
               </div>
