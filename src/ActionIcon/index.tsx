@@ -47,7 +47,7 @@ export interface ActionIconProps extends LucideIconProps, FlexboxProps {
    * @description Set the loading status of ActionIcon
    */
   loading?: boolean;
-
+  overlayStyle?: React.CSSProperties;
   /**
    * @description The position of the tooltip relative to the target
    * @enum ["top","left","right","bottom","topLeft","topRight","bottomLeft","bottomRight","leftTop","leftBottom","rightTop","rightBottom"]
@@ -94,6 +94,7 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
       onClick,
       children,
       loading,
+      overlayStyle,
       tooltipDelay = 0.5,
       fillOpacity,
       fillRule,
@@ -145,7 +146,7 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
       <Tooltip
         arrow={arrow}
         mouseEnterDelay={tooltipDelay}
-        overlayStyle={{ pointerEvents: 'none', maxWidth: '500px' }}
+        overlayStyle={{ pointerEvents: 'none', ...overlayStyle }}
         placement={placement}
         title={title}
       >
