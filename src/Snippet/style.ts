@@ -1,63 +1,61 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(
-  ({ css, cx, token, prefixCls, stylish }, type: 'ghost' | 'block') => {
-    const typeStylish = css`
-      background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
-      border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
-    `;
+export const useStyles = createStyles(({ css, cx, token, prefixCls }, type: 'ghost' | 'block') => {
+  const typeStylish = css`
+    background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
+    border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
+  `;
 
-    return {
-      container: cx(
-        typeStylish,
-        css`
+  return {
+    container: cx(
+      typeStylish,
+      css`
+        position: relative;
+
+        overflow: hidden;
+
+        max-width: 100%;
+        height: 38px;
+        padding-block: 0;
+        padding-inline: 12px 8px;
+
+        border-radius: ${token.borderRadius}px;
+
+        transition: background-color 100ms ${token.motionEaseOut};
+
+        &:hover {
+          background-color: ${token.colorFillTertiary};
+        }
+
+        .${prefixCls}-highlighter-shiki {
           position: relative;
-
           overflow: hidden;
+          flex: 1;
+        }
 
-          max-width: 100%;
-          height: 38px;
-          padding-block: 0;
-          padding-inline: 12px 8px;
+        .prism-code {
+          background: none !important;
+        }
 
-          border-radius: ${token.borderRadius}px;
+        pre {
+          overflow: auto hidden !important;
+          display: flex;
+          align-items: center;
 
-          transition: background-color 100ms ${token.motionEaseOut};
+          width: 100%;
+          height: 36px !important;
+          margin: 0 !important;
 
-          &:hover {
-            background-color: ${token.colorFillTertiary};
-          }
+          line-height: 1;
+          text-wrap: nowrap !important;
 
-          .${prefixCls}-highlighter-shiki {
-            position: relative;
-            overflow: hidden;
-            flex: 1;
-          }
+          background: none !important;
+        }
 
-          .prism-code {
-            background: none !important;
-          }
-
-          pre {
-            ${stylish.noScrollbar};
-            overflow: auto hidden !important;
-            display: flex;
-            align-items: center;
-
-            width: 100%;
-            height: 36px !important;
-            margin: 0 !important;
-
-            line-height: 1;
-
-            background: none !important;
-          }
-
-          code[class*='language-'] {
-            background: none !important;
-          }
-        `,
-      ),
-    };
-  },
-);
+        code[class*='language-'] {
+          background: none !important;
+        }
+      `,
+    ),
+  };
+});
