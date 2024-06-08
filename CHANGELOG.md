@@ -2,6 +2,32 @@
 
 # Changelog
 
+### [Version 1.142.2](https://github.com/lobehub/lobe-ui/compare/v1.142.1...v1.142.2)
+
+<sup>Released on **2024-06-08**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Snippet warp, Fix type.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix Snippet warp ([f65b4e3](https://github.com/lobehub/lobe-ui/commit/f65b4e3))
+- **misc**: Fix type ([6897be9](https://github.com/lobehub/lobe-ui/commit/6897be9))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.142.1](https://github.com/lobehub/lobe-ui/compare/v1.142.0...v1.142.1)
 
 <sup>Released on **2024-05-30**</sup>
