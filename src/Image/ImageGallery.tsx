@@ -1,7 +1,7 @@
 import { Image, ImageProps } from 'antd';
 import { PropsWithChildren, ReactNode, memo } from 'react';
 
-import usePreview from '@/Image/usePreview';
+import usePreview, { PreviewOptions } from '@/Image/usePreview';
 
 const { PreviewGroup } = Image;
 
@@ -19,7 +19,7 @@ const ImageGallery = memo<ImageGalleryProps>(({ items, children, enable = true, 
   if (!enable) return children;
 
   return (
-    <PreviewGroup items={items} preview={mergePreivew}>
+    <PreviewGroup items={items} preview={mergePreivew as PreviewOptions}>
       {children}
     </PreviewGroup>
   );

@@ -212,6 +212,7 @@ const FormGroup = memo<FormGroupProps>(
     return (
       <Collapse
         className={cx(styles.group, variantStyle, className)}
+        collapsible={variant === 'pure' ? 'icon' : undefined}
         defaultActiveKey={defaultActive ? [1] : undefined}
         expandIcon={({ isActive }) =>
           variant === 'pure' ? null : (
