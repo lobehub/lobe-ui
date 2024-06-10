@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { Loader2 } from 'lucide-react';
 import { forwardRef, useMemo } from 'react';
 import { Flexbox, type FlexboxProps } from 'react-layout-kit';
@@ -48,7 +47,7 @@ export interface ActionIconProps extends LucideIconProps, FlexboxProps {
    * @description Set the loading status of ActionIcon
    */
   loading?: boolean;
-  overlayStyle?: React.CSSProperties;
+  overlayStyle?: CSSProperties;
   /**
    * @description The position of the tooltip relative to the target
    * @enum ["top","left","right","bottom","topLeft","topRight","bottomLeft","bottomRight","leftTop","leftBottom","rightTop","rightBottom"]
