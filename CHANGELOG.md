@@ -2,6 +2,39 @@
 
 # Changelog
 
+### [Version 1.142.4](https://github.com/lobehub/lobe-ui/compare/v1.142.3...v1.142.4)
+
+<sup>Released on **2024-06-10**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix type.
+
+#### 💄 Styles
+
+- **misc**: Tiny fix.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix type ([b4069a6](https://github.com/lobehub/lobe-ui/commit/b4069a6))
+
+#### Styles
+
+- **misc**: Tiny fix, closes [#165](https://github.com/lobehub/lobe-ui/issues/165) ([7646556](https://github.com/lobehub/lobe-ui/commit/7646556))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.142.3](https://github.com/lobehub/lobe-ui/compare/v1.142.2...v1.142.3)
 
 <sup>Released on **2024-06-09**</sup>
