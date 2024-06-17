@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.143.3](https://github.com/lobehub/lobe-ui/compare/v1.143.2...v1.143.3)
+
+<sup>Released on **2024-06-17**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Logo3d.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix Logo3d ([507324c](https://github.com/lobehub/lobe-ui/commit/507324c))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.143.2](https://github.com/lobehub/lobe-ui/compare/v1.143.1...v1.143.2)
 
 <sup>Released on **2024-06-17**</sup>
