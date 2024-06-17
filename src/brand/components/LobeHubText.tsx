@@ -2,7 +2,7 @@ import { memo } from 'react';
 
 import { DivProps, SvgProps } from '@/types';
 
-const LogoText = memo<SvgProps & DivProps & { size?: number }>(
+const LobeHubText = memo<SvgProps & DivProps & { size?: number }>(
   ({ size = '1em', style, ...rest }) => (
     <svg
       fill="currentColor"
@@ -19,4 +19,4 @@ const LogoText = memo<SvgProps & DivProps & { size?: number }>(
   ),
 );
 
-export default LogoText;
+export default LobeHubText;

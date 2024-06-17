@@ -8,6 +8,7 @@ export {
 export { default as Alert, type AlertProps } from './Alert';
 export { default as Avatar, type AvatarProps } from './Avatar';
 export { default as BackBottom, type BackBottomProps } from './BackBottom';
+export { default as Logo, type LobeHubProps as LogoProps } from './brand/LobeHub';
 export { default as Burger, type BurgerProps } from './Burger';
 export { default as ChatHeader, type ChatHeaderProps } from './ChatHeader';
 export {
@@ -106,7 +107,6 @@ export {
   type LayoutTocProps,
 } from './Layout';
 export { default as List, type ListItemProps } from './List';
-export { default as Logo, type LogoProps } from './Logo';
 export { default as LogoThree, type LogoThreeProps } from './LogoThree';
 export { default as LogoSpline, type LogoSplineProps } from './LogoThree/LogoSpline';
 export { default as Markdown, type MarkdownProps } from './Markdown';

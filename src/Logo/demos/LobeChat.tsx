@@ -1,9 +1,9 @@
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui';
-import { LobeHub, LobeHubProps } from '@lobehub/ui/brand';
+import { LobeChat, LobeChatProps } from '@lobehub/ui/brand';
 
 export default () => {
   const store = useCreateStore();
-  const control: LobeHubProps | any = useControls(
+  const control: LobeChatProps | any = useControls(
     {
       size: {
         max: 240,
@@ -13,7 +13,7 @@ export default () => {
       },
       type: {
         options: ['3d', 'flat', 'mono', 'text', 'combine'],
-        value: '3d',
+        value: 'combine',
       },
     },
     { store },
@@ -21,7 +21,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <LobeHub {...control} />
+      <LobeChat {...control} />
     </StoryBook>
   );
 };

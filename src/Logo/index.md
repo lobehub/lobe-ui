@@ -13,6 +13,6 @@ description: The Logo component is used to display a logo with various types, in
 
 <code src="./demos/ExtraText.tsx" nopadding></code>
 
-## APIs
+## LobeChat
 
-<API></API>
+<code src="./demos/LobeChat.tsx" nopadding></code>

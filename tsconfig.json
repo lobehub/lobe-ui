@@ -12,13 +12,15 @@
       "@lobehub/ui": ["src"],
       "@lobehub/ui/*": ["src/*"],
       "@lobehub/ui/mdx": ["src/mdx"],
-      "@lobehub/ui/mdx/*": ["src/mdx/*"]
+      "@lobehub/ui/mdx/*": ["src/mdx/*"],
+      "@lobehub/ui/brand": ["src/brand"],
+      "@lobehub/ui/brand/*": ["src/brand/*"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
     "types": ["vitest/globals"]
   },
-  "exclude": ["mdx.d.ts"],
+  "exclude": ["mdx.d.ts", "brand.d.ts"],
   "include": ["src", "docs", "tests", ".dumirc.ts", ".fatherrc.ts"]
 }

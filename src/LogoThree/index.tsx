@@ -5,8 +5,13 @@ import { Flexbox } from 'react-layout-kit';
 
 import { useCdnFn } from '@/ConfigProvider';
 import Img from '@/Img';
-import { LOGO_3D } from '@/Logo/style';
 import Spline, { type SplineProps } from '@/Spline';
+
+const LOGO_3D = {
+  path: 'assets/logo-3d.webp',
+  pkg: '@lobehub/assets-logo',
+  version: '1.2.0',
+};
 
 export interface LogoThreeProps extends Partial<SplineProps> {
   className?: string;
