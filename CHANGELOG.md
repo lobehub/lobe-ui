@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.143.0](https://github.com/lobehub/lobe-ui/compare/v1.142.4...v1.143.0)
+
+<sup>Released on **2024-06-17**</sup>
+
+#### ✨ Features
+
+- **misc**: Add LobeChat Brand.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add LobeChat Brand ([89b5287](https://github.com/lobehub/lobe-ui/commit/89b5287))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.142.4](https://github.com/lobehub/lobe-ui/compare/v1.142.3...v1.142.4)
 
 <sup>Released on **2024-06-10**</sup>
