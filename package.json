@@ -26,7 +26,9 @@
   "files": [
     "es",
     "mdx.d.ts",
-    "mdx.js"
+    "mdx.js",
+    "brand.d.ts",
+    "brand.js"
   ],
   "scripts": {
     "build": "father build",
