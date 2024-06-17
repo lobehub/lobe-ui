@@ -4,13 +4,15 @@ import { useTheme } from 'antd-style';
 import { type ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import { useCdnFn } from '@/ConfigProvider';
 import Img from '@/Img';
 import { DivProps } from '@/types';
 
 import Divider from './components/Divider';
 import LogoText from './components/LobeHubText';
-import { LOGO_3D, useStyles } from './style';
+import Logo3d from './components/Logo3d';
+import LogoFlat from './components/LogoFlat';
+import LogoMono from './components/LogoMono';
+import { useStyles } from './style';
 
 export interface LobeHubProps extends DivProps {
   /**
@@ -31,47 +33,21 @@ export interface LobeHubProps extends DivProps {
 
 const LobeHub = memo<LobeHubProps>(
   ({ type = '3d', size = 32, style, extra, className, ...rest }) => {
-    const genCdnUrl = useCdnFn();
     const theme = useTheme();
     const { styles } = useStyles();
     let logoComponent: ReactNode;
 
     switch (type) {
       case '3d': {
-        logoComponent = (
-          <Img
-            alt="LobeHub"
-            height={size}
-            src={'https://hub-apac-1.lobeobjects.space/logo-3d.webp'}
-            style={style}
-            width={size}
-            {...rest}
-          />
-        );
+        logoComponent = <Logo3d size={size} {...rest} />;
         break;
       }
       case 'flat': {
-        logoComponent = (
-          <Img
-            alt="LobeHub"
-            height={size}
-            src={'https://hub-apac-1.lobeobjects.space/logo-flat.svg'}
-            style={style}
-            width={size}
-          />
-        );
+        logoComponent = <LogoFlat size={size} style={style} />;
         break;
       }
       case 'mono': {
-        logoComponent = (
-          <Img
-            alt="LobeHub"
-            height={size}
-            src={'https://hub-apac-1.lobeobjects.space/logo-mono.svg'}
-            style={style}
-            width={size}
-          />
-        );
+        logoComponent = <LogoMono size={size} style={style} />;
         break;
       }
       case 'text': {
@@ -83,7 +59,12 @@ const LobeHub = memo<LobeHubProps>(
       case 'combine': {
         logoComponent = (
           <>
-            <Img alt="LobeHub" height={size} src={genCdnUrl(LOGO_3D)} width={size} />
+            <Img
+              alt="LobeHub"
+              height={size}
+              src={'https://hub-apac-1.lobeobjects.space/logo-3d.webp'}
+              width={size}
+            />
             <LogoText size={size} style={{ marginLeft: Math.round(size / 4) }} />
           </>
         );

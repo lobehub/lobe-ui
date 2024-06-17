@@ -1,5 +1,6 @@
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui';
-import { LobeHub, LobeHubProps } from '@lobehub/ui/brand';
+
+import { LobeHub, LobeHubProps } from '@/brand';
 
 export default () => {
   const store = useCreateStore();

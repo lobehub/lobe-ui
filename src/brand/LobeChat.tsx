@@ -10,6 +10,9 @@ import { DivProps } from '@/types';
 
 import Divider from './components/Divider';
 import LogoText from './components/LobeChatText';
+import Logo3d from './components/Logo3d';
+import LogoFlat from './components/LogoFlat';
+import LogoMono from './components/LogoMono';
 import { LOGO_3D, useStyles } from './style';
 
 export interface LobeChatProps extends DivProps {
@@ -38,40 +41,15 @@ const LobeChat = memo<LobeChatProps>(
 
     switch (type) {
       case '3d': {
-        logoComponent = (
-          <Img
-            alt="LobeChat"
-            height={size}
-            src={'https://hub-apac-1.lobeobjects.space/logo-3d.webp'}
-            style={style}
-            width={size}
-            {...rest}
-          />
-        );
+        logoComponent = <Logo3d alt={'LobeChat'} size={size} {...rest} />;
         break;
       }
       case 'flat': {
-        logoComponent = (
-          <Img
-            alt="LobeChat"
-            height={size}
-            src={'https://hub-apac-1.lobeobjects.space/logo-flat.svg'}
-            style={style}
-            width={size}
-          />
-        );
+        logoComponent = <LogoFlat size={size} style={style} />;
         break;
       }
       case 'mono': {
-        logoComponent = (
-          <Img
-            alt="LobeChat"
-            height={size}
-            src={'https://hub-apac-1.lobeobjects.space/logo-mono.svg'}
-            style={style}
-            width={size}
-          />
-        );
+        logoComponent = <LogoMono size={size} style={style} />;
         break;
       }
       case 'text': {
