@@ -4,7 +4,6 @@ import { useTheme } from 'antd-style';
 import { type ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import Img from '@/Img';
 import { DivProps } from '@/types';
 
 import Divider from './components/Divider';
@@ -59,12 +58,7 @@ const LobeHub = memo<LobeHubProps>(
       case 'combine': {
         logoComponent = (
           <>
-            <Img
-              alt="LobeHub"
-              height={size}
-              src={'https://hub-apac-1.lobeobjects.space/logo-3d.webp'}
-              width={size}
-            />
+            <Logo3d alt="LobeChat" size={size} />
             <LogoText size={size} style={{ marginLeft: Math.round(size / 4) }} />
           </>
         );
