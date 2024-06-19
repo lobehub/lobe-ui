@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.143.5](https://github.com/lobehub/lobe-ui/compare/v1.143.4...v1.143.5)
+
+<sup>Released on **2024-06-19**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix markdown.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix markdown ([ebd5f7a](https://github.com/lobehub/lobe-ui/commit/ebd5f7a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.143.4](https://github.com/lobehub/lobe-ui/compare/v1.143.3...v1.143.4)
 
 <sup>Released on **2024-06-19**</sup>
