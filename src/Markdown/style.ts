@@ -22,7 +22,7 @@ export const useStyles = createStyles(
         margin-block: ${marginMultiple * -0.75}em;
 
         /* 解决只有一个子节点时高度坍缩的问题 */
-        :only-child {
+        :first-child:not(:has(*)) {
           margin-block: 0;
         }
 
