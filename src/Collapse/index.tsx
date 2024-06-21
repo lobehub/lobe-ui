@@ -22,9 +22,12 @@ export interface CollapseProps extends AntdCollapseProps {
 
 const Collapse = memo<CollapseProps>(
   ({ style, variant = 'default', gap = 0, className, padding, ...rest }) => {
+    const bodyPadding = typeof padding === 'object' ? padding.body : padding;
+    const headerPadding = typeof padding === 'object' ? padding.header : padding;
+
     const { cx, styles } = useStyles({
-      bodyPadding: (typeof padding === 'object' ? padding.body : padding) || '12px 16px',
-      headerPadding: (typeof padding === 'object' ? padding.header : padding) || '12px 16px',
+      bodyPadding: bodyPadding === undefined ? '12px 16px' : bodyPadding,
+      headerPadding: headerPadding === undefined ? '12px 16px' : headerPadding,
       isSplit: !!gap,
     });
 
