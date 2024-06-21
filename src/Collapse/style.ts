@@ -80,26 +80,24 @@ export const useStyles = createStyles(
     );
 
     const defaultStyle = cx(
-      css`
-        .${prefixCls}-collapse-item:not(:last-child) {
-          .${prefixCls}-collapse-header {
-            border-block-end: 1px solid ${token.colorBorderSecondary};
-          }
-        }
-      `,
       isSplit
         ? css`
             background: transparent;
             .${prefixCls}-collapse-item {
               overflow: hidden;
               background: ${token.colorFillQuaternary};
-              border: 1px solid ${token.colorBorderSecondary};
+              border: 1px solid ${token.colorBorderSecondary} !important;
               border-radius: ${token.borderRadiusLG}px !important;
             }
           `
         : css`
             background: ${token.colorFillQuaternary};
             border-radius: ${token.borderRadiusLG}px;
+            .${prefixCls}-collapse-item:not(:last-child) {
+              .${prefixCls}-collapse-header {
+                border-block-end: 1px solid ${token.colorBorderSecondary};
+              }
+            }
           `,
     );
 
