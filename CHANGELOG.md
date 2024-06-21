@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.144.3](https://github.com/lobehub/lobe-ui/compare/v1.144.2...v1.144.3)
+
+<sup>Released on **2024-06-21**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Table style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Table style ([982a73d](https://github.com/lobehub/lobe-ui/commit/982a73d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.144.2](https://github.com/lobehub/lobe-ui/compare/v1.144.1...v1.144.2)
 
 <sup>Released on **2024-06-21**</sup>
