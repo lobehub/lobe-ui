@@ -2,6 +2,32 @@
 
 # Changelog
 
+### [Version 1.144.1](https://github.com/lobehub/lobe-ui/compare/v1.144.0...v1.144.1)
+
+<sup>Released on **2024-06-21**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix Collapse style, Fix Collapse style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix Collapse style ([e75cf1a](https://github.com/lobehub/lobe-ui/commit/e75cf1a))
+- **misc**: Fix Collapse style ([b24a38a](https://github.com/lobehub/lobe-ui/commit/b24a38a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.144.0](https://github.com/lobehub/lobe-ui/compare/v1.143.5...v1.144.0)
 
 <sup>Released on **2024-06-21**</sup>
