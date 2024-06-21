@@ -301,7 +301,7 @@ export const useStyles = createStyles(
 
           text-align: start;
           text-indent: initial;
-          text-wrap: balance;
+          text-wrap: pretty;
           word-break: auto-phrase;
           overflow-wrap: break-word;
 
@@ -323,7 +323,7 @@ export const useStyles = createStyles(
 
           th,
           td {
-            min-width: 100px;
+            min-width: 120px;
             padding-block: 0.75em;
             padding-inline: 1em;
             text-align: start;
