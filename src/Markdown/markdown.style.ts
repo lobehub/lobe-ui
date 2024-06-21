@@ -323,6 +323,7 @@ export const useStyles = createStyles(
 
           th,
           td {
+            min-width: 100px;
             padding-block: 0.75em;
             padding-inline: 1em;
             text-align: start;
