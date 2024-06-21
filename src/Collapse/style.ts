@@ -31,17 +31,24 @@ export const useStyles = createStyles(
     `;
 
     const blockStyle = cx(
+      css`
+        background: transparent !important;
+        .${prefixCls}-collapse-item {
+          background: ${token.colorFillQuaternary} !important;
+        }
+
+        .${prefixCls}-collapse-header {
+          background: ${token.colorFillTertiary} !important;
+        }
+      `,
       isSplit
         ? css`
-            background: transparent;
             .${prefixCls}-collapse-item {
               overflow: hidden;
-              background: ${token.colorFillQuaternary};
               border-radius: ${token.borderRadiusLG}px !important;
             }
           `
         : css`
-            background: ${token.colorFillQuaternary};
             border-radius: ${token.borderRadiusLG}px;
           `,
     );
@@ -80,22 +87,30 @@ export const useStyles = createStyles(
     );
 
     const defaultStyle = cx(
+      css`
+        background: transparent !important;
+        .${prefixCls}-collapse-item {
+          background: transparent !important;
+        }
+
+        .${prefixCls}-collapse-header {
+          background: ${token.colorFillTertiary} !important;
+        }
+      `,
       isSplit
         ? css`
             background: transparent;
             .${prefixCls}-collapse-item {
               overflow: hidden;
-              background: ${token.colorFillQuaternary};
               border: 1px solid ${token.colorBorderSecondary} !important;
               border-radius: ${token.borderRadiusLG}px !important;
             }
           `
         : css`
-            background: ${token.colorFillQuaternary};
             border-radius: ${token.borderRadiusLG}px;
-            .${prefixCls}-collapse-item:not(:last-child) {
+            .${prefixCls}-collapse-item:not(:first-child) {
               .${prefixCls}-collapse-header {
-                border-block-end: 1px solid ${token.colorBorderSecondary};
+                border-block-start: 1px solid ${token.colorBorderSecondary};
               }
             }
           `,
