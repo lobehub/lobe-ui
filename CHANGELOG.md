@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.144.0](https://github.com/lobehub/lobe-ui/compare/v1.143.5...v1.144.0)
+
+<sup>Released on **2024-06-21**</sup>
+
+#### ✨ Features
+
+- **misc**: Add Collapse.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add Collapse ([343d762](https://github.com/lobehub/lobe-ui/commit/343d762))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.143.5](https://github.com/lobehub/lobe-ui/compare/v1.143.4...v1.143.5)
 
 <sup>Released on **2024-06-19**</sup>
