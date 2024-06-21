@@ -30,13 +30,8 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) =
 
         .shiki {
           overflow-x: auto;
-
           margin: 0;
           padding: 0;
-
-          text-wrap: wrap;
-          word-break: break-word;
-
           background: none !important;
 
           code {

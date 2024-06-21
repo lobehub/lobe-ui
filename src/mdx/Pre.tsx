@@ -14,12 +14,6 @@ const useStyles = createStyles(({ css }) => ({
     border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
     box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
   `,
-  highlight: css`
-    pre {
-      overflow-x: hidden !important;
-      padding: 1em !important;
-    }
-  `,
 }));
 
 export type PreProps = HighlighterProps;
@@ -40,7 +34,7 @@ export const Pre: FC<PreProps> = ({
   return (
     <Highlighter
       allowChangeLanguage={allowChangeLanguage}
-      className={cx(styles.container, styles.highlight, className)}
+      className={cx(styles.container, className)}
       copyButtonSize={{ blockSize: 28, fontSize: 16 }}
       fileName={fileName}
       fullFeatured={fullFeatured}

@@ -52,13 +52,18 @@ export const useStyles = createStyles(
           }
 
           pre {
+            overflow: auto hidden;
+
             margin: 0 !important;
-            padding: ${type === 'pure' ? 0 : `16px 24px`} !important;
+            padding: ${type === 'pure' ? 0 : `16px`} !important;
+
             white-space: break-spaces;
+
             background: none !important;
           }
 
           code {
+            text-wrap: nowrap !important;
             background: transparent !important;
           }
         `,

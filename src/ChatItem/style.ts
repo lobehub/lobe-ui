@@ -164,6 +164,8 @@ export const useStyles = createStyles(
         typeStylish,
         css`
           position: relative;
+          overflow: hidden;
+          max-width: 100%;
 
           ${responsive.mobile} {
             width: 100%;
@@ -187,7 +189,7 @@ export const useStyles = createStyles(
         editingStylish,
         css`
           position: relative;
-          overflow-x: hidden;
+          overflow: hidden;
           max-width: 100%;
 
           ${responsive.mobile} {

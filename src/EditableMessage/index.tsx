@@ -144,8 +144,6 @@ const EditableMessage = memo<EditableMessageProps>(
             fullFeaturedCodeBlock={fullFeaturedCodeBlock}
             style={{
               height: isAutoSize ? 'unset' : height,
-              overflowX: 'hidden',
-              overflowY: 'auto',
               ...stylesProps?.markdown,
             }}
             variant={'chat'}

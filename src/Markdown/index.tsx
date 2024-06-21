@@ -98,10 +98,10 @@ const Markdown = memo<MarkdownProps>(
 
     return (
       <article
-        className={className}
+        className={cx(styles.root, className)}
         data-code-type="markdown"
         onDoubleClick={onDoubleClick}
-        style={{ overflow: 'hidden', ...style }}
+        style={style}
       >
         <ImageGallery enable={enableImageGallery}>
           <ReactMarkdown

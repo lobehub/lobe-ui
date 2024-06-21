@@ -25,6 +25,7 @@ export const useStyles = createStyles(
         position: relative;
 
         width: 100%;
+        max-width: 100%;
         padding-inline: 1px;
 
         font-size: var(--lobe-markdown-font-size);
@@ -287,17 +288,19 @@ export const useStyles = createStyles(
       `,
       table: css`
         table {
+          unicode-bidi: isolate;
           overflow: auto hidden;
           display: block;
           border-spacing: 0;
           border-collapse: collapse;
 
           box-sizing: border-box;
-          width: fit-content;
+          width: max-content;
           max-width: 100%;
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
 
           text-align: start;
+          text-indent: initial;
           text-wrap: balance;
           word-break: auto-phrase;
           overflow-wrap: break-word;

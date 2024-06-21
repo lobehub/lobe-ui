@@ -52,6 +52,11 @@ export const useStyles = createStyles(
           }
         }
       `,
+      root: css`
+        position: relative;
+        overflow: hidden;
+        max-width: 100%;
+      `,
     };
   },
 );
