@@ -13,7 +13,7 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
         padding-inline: 8px;
 
         color: ${token.colorBgLayout};
-        word-break: break-all;
+        word-break: normal;
 
         background-color: ${token.colorText};
         border-radius: ${token.borderRadiusSM}px;
