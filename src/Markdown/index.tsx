@@ -11,7 +11,6 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
 import ImageGallery from '@/Image/ImageGallery';
-import { preprocessLaTeX } from '@/Markdown/preprocessLaTeX';
 import Image, { type ImageProps } from '@/mdx/Image';
 import Link from '@/mdx/Link';
 import type { PreProps } from '@/mdx/Pre';
@@ -22,6 +21,7 @@ import { CodeFullFeatured, CodeLite } from './CodeBlock';
 import type { TypographyProps } from './Typography';
 import { useStyles as useMarkdownStyles } from './markdown.style';
 import { useStyles } from './style';
+import { escapeBrackets, escapeDollarNumber } from './utils';
 
 export interface MarkdownProps extends TypographyProps {
   allowHtml?: boolean;
@@ -62,6 +62,11 @@ const Markdown = memo<MarkdownProps>(
     const { cx, styles } = useStyles({ fontSize, headerMultiple, lineHeight, marginMultiple });
     const { styles: mdStyles } = useMarkdownStyles({ fontSize, headerMultiple, marginMultiple });
     const isChatMode = variant === 'chat';
+
+    const escapedContent = useMemo(() => {
+      if (!enableLatex) return children;
+      return escapeBrackets(escapeDollarNumber(children));
+    }, [children, enableLatex]);
 
     const components: Components = useMemo(
       () => ({
@@ -132,7 +137,7 @@ const Markdown = memo<MarkdownProps>(
             remarkPlugins={remarkPlugins}
             {...rest}
           >
-            {enableLatex ? preprocessLaTeX(children) : children}
+            {escapedContent}
           </ReactMarkdown>
         </ImageGallery>
       </article>
