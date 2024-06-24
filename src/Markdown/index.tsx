@@ -21,6 +21,7 @@ import { CodeFullFeatured, CodeLite } from './CodeBlock';
 import type { TypographyProps } from './Typography';
 import { useStyles as useMarkdownStyles } from './markdown.style';
 import { useStyles } from './style';
+import { escapeBrackets, escapeDollarNumber, escapeMhchem } from './utils';
 
 export interface MarkdownProps extends TypographyProps {
   allowHtml?: boolean;
@@ -33,6 +34,7 @@ export interface MarkdownProps extends TypographyProps {
     video?: Partial<VideoProps>;
   };
   enableImageGallery?: boolean;
+  enableLatex?: boolean;
   fullFeaturedCodeBlock?: boolean;
   onDoubleClick?: () => void;
   style?: CSSProperties;
@@ -46,6 +48,7 @@ const Markdown = memo<MarkdownProps>(
     style,
     fullFeaturedCodeBlock,
     onDoubleClick,
+    enableLatex = true,
     enableImageGallery = true,
     componentProps,
     allowHtml,
@@ -59,6 +62,11 @@ const Markdown = memo<MarkdownProps>(
     const { cx, styles } = useStyles({ fontSize, headerMultiple, lineHeight, marginMultiple });
     const { styles: mdStyles } = useMarkdownStyles({ fontSize, headerMultiple, marginMultiple });
     const isChatMode = variant === 'chat';
+
+    const escapedContent = useMemo(() => {
+      if (!enableLatex) return children;
+      return escapeMhchem(escapeBrackets(escapeDollarNumber(children)));
+    }, [children, enableLatex]);
 
     const components: Components = useMemo(
       () => ({
@@ -88,11 +96,12 @@ const Markdown = memo<MarkdownProps>(
     );
 
     const rehypePlugins = useMemo(
-      () => [allowHtml && rehypeRaw, rehypeKatex].filter(Boolean) as any,
+      () => [allowHtml && rehypeRaw, enableLatex && rehypeKatex].filter(Boolean) as any,
       [allowHtml],
     );
     const remarkPlugins = useMemo(
-      () => [remarkGfm, remarkMath, isChatMode && remarkBreaks].filter(Boolean) as any,
+      () =>
+        [remarkGfm, enableLatex && remarkMath, isChatMode && remarkBreaks].filter(Boolean) as any,
       [isChatMode],
     );
 
@@ -128,7 +137,7 @@ const Markdown = memo<MarkdownProps>(
             remarkPlugins={remarkPlugins}
             {...rest}
           >
-            {children}
+            {escapedContent}
           </ReactMarkdown>
         </ImageGallery>
       </article>
