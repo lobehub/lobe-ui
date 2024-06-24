@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.144.5](https://github.com/lobehub/lobe-ui/compare/v1.144.4...v1.144.5)
+
+<sup>Released on **2024-06-24**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix LaTeX Render.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix LaTeX Render, closes [#168](https://github.com/lobehub/lobe-ui/issues/168) ([ee0b740](https://github.com/lobehub/lobe-ui/commit/ee0b740))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.144.4](https://github.com/lobehub/lobe-ui/compare/v1.144.3...v1.144.4)
 
 <sup>Released on **2024-06-24**</sup>
