@@ -21,7 +21,7 @@ import { CodeFullFeatured, CodeLite } from './CodeBlock';
 import type { TypographyProps } from './Typography';
 import { useStyles as useMarkdownStyles } from './markdown.style';
 import { useStyles } from './style';
-import { escapeBrackets, escapeDollarNumber } from './utils';
+import { escapeBrackets, escapeDollarNumber, escapeMhchem } from './utils';
 
 export interface MarkdownProps extends TypographyProps {
   allowHtml?: boolean;
@@ -65,7 +65,7 @@ const Markdown = memo<MarkdownProps>(
 
     const escapedContent = useMemo(() => {
       if (!enableLatex) return children;
-      return escapeBrackets(escapeDollarNumber(children));
+      return escapeMhchem(escapeBrackets(escapeDollarNumber(children)));
     }, [children, enableLatex]);
 
     const components: Components = useMemo(

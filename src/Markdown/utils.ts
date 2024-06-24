@@ -28,3 +28,7 @@ export function escapeBrackets(text: string) {
     return match;
   });
 }
+
+export function escapeMhchem(text: string) {
+  return text.replaceAll('$\\ce{', '$\\\\ce{').replaceAll('$\\pu{', '$\\\\pu{');
+}
