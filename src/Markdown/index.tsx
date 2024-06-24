@@ -11,6 +11,7 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
 import ImageGallery from '@/Image/ImageGallery';
+import { preprocessLaTeX } from '@/Markdown/preprocessLaTeX';
 import Image, { type ImageProps } from '@/mdx/Image';
 import Link from '@/mdx/Link';
 import type { PreProps } from '@/mdx/Pre';
@@ -33,6 +34,7 @@ export interface MarkdownProps extends TypographyProps {
     video?: Partial<VideoProps>;
   };
   enableImageGallery?: boolean;
+  enableLatex?: boolean;
   fullFeaturedCodeBlock?: boolean;
   onDoubleClick?: () => void;
   style?: CSSProperties;
@@ -46,6 +48,7 @@ const Markdown = memo<MarkdownProps>(
     style,
     fullFeaturedCodeBlock,
     onDoubleClick,
+    enableLatex = true,
     enableImageGallery = true,
     componentProps,
     allowHtml,
@@ -88,11 +91,12 @@ const Markdown = memo<MarkdownProps>(
     );
 
     const rehypePlugins = useMemo(
-      () => [allowHtml && rehypeRaw, rehypeKatex].filter(Boolean) as any,
+      () => [allowHtml && rehypeRaw, enableLatex && rehypeKatex].filter(Boolean) as any,
       [allowHtml],
     );
     const remarkPlugins = useMemo(
-      () => [remarkGfm, remarkMath, isChatMode && remarkBreaks].filter(Boolean) as any,
+      () =>
+        [remarkGfm, enableLatex && remarkMath, isChatMode && remarkBreaks].filter(Boolean) as any,
       [isChatMode],
     );
 
@@ -128,7 +132,7 @@ const Markdown = memo<MarkdownProps>(
             remarkPlugins={remarkPlugins}
             {...rest}
           >
-            {children}
+            {enableLatex ? preprocessLaTeX(children) : children}
           </ReactMarkdown>
         </ImageGallery>
       </article>
