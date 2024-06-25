@@ -5,7 +5,9 @@ import { memo, useMemo } from 'react';
 
 import { DivProps, SvgProps } from '@/types';
 
-export interface FileTypeIconProps extends SvgProps {
+type IconProps = SvgProps & DivProps;
+
+export interface FileTypeIconProps extends IconProps {
   color?: string;
   filetype?: string;
   size?: number;
@@ -13,7 +15,7 @@ export interface FileTypeIconProps extends SvgProps {
   variant?: 'color' | 'mono';
 }
 
-const FileTypeIcon = memo<FileTypeIconProps & DivProps>(
+const FileTypeIcon = memo<FileTypeIconProps>(
   ({ color, filetype, type = 'file', size = 48, style, variant, ...rest }) => {
     const theme = useTheme();
     const fontSize = useMemo(() => {

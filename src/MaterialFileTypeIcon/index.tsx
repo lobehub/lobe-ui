@@ -10,7 +10,7 @@ import { DivProps } from '@/types';
 
 import { getIconUrlForDirectoryPath, getIconUrlForFilePath } from './utils';
 
-export interface MaterialFileTypeIconProps {
+export interface MaterialFileTypeIconProps extends DivProps {
   filename: string;
   open?: boolean;
   size?: number;
@@ -18,7 +18,7 @@ export interface MaterialFileTypeIconProps {
   variant?: 'pure' | 'file' | 'folder';
 }
 
-const MaterialFileTypeIcon = memo<MaterialFileTypeIconProps & DivProps>(
+const MaterialFileTypeIcon = memo<MaterialFileTypeIconProps>(
   ({ filename, size = 48, variant = 'pure', type, style, open, ...rest }) => {
     const genCdnUrl = useCdnFn();
     const ICONS_URL = genCdnUrl({
