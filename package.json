@@ -88,7 +88,6 @@
     "@react-spring/web": "^9.7.3",
     "@shikijs/transformers": "^1.7.0",
     "@splinetool/runtime": "^0.9.526",
-    "ahooks": "^3.8.0",
     "chroma-js": "^2.4.2",
     "dayjs": "^1.11.11",
     "emoji-mart": "^5.6.0",
@@ -97,7 +96,6 @@
     "immer": "^10.1.1",
     "leva": "^0.9.35",
     "lodash-es": "^4.17.21",
-    "lucide-react": "latest",
     "numeral": "^2.0.6",
     "polished": "^4.3.1",
     "prism-react-renderer": "^2.3.1",
@@ -163,8 +161,10 @@
     "vitest": "~1.2.2"
   },
   "peerDependencies": {
+    "ahooks": ">=3",
     "antd": ">=5.13.0",
     "antd-style": ">=3",
+    "lucide-react": ">=0.396.0",
     "react": ">=18",
     "react-dom": ">=18"
   },
