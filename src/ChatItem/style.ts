@@ -205,6 +205,8 @@ export const useStyles = createStyles(
         line-height: 1;
         color: ${token.colorTextDescription};
         text-align: ${placement === 'left' ? 'left' : 'right'};
+
+        pointer-events: none;
       `,
     };
   },
