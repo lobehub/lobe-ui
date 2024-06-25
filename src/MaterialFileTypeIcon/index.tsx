@@ -15,7 +15,7 @@ export interface MaterialFileTypeIconProps {
   open?: boolean;
   size?: number;
   type?: 'file' | 'folder';
-  variant?: 'pure' | 'file';
+  variant?: 'pure' | 'file' | 'folder';
 }
 
 const MaterialFileTypeIcon = memo<MaterialFileTypeIconProps & DivProps>(
@@ -44,7 +44,7 @@ const MaterialFileTypeIcon = memo<MaterialFileTypeIconProps & DivProps>(
         width={size}
         {...rest}
       >
-        <FileTypeIcon type={type} variant={'mono'} />
+        <FileTypeIcon type={variant} variant={'mono'} />
         <Img
           height={size / 2}
           src={iconUrl}

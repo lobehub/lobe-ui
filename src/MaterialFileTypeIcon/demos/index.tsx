@@ -21,7 +21,7 @@ export default () => {
         value: 'file',
       },
       variant: {
-        options: ['pure', 'file'],
+        options: ['pure', 'file', 'folder'],
         value: 'pure',
       },
     },
