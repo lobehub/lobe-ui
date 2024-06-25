@@ -62,6 +62,7 @@ export { default as EditableText, type EditableTextProps } from './EditableText'
 export { default as EmojiPicker, type EmojiPickerProps } from './EmojiPicker';
 export { default as EmptyCard, type EmptyCardProps } from './EmptyCard';
 export { type FeatureItem, default as Features, type FeaturesProps } from './Features';
+export { default as FileTypeIcon, type FileTypeIconProps } from './FileTypeIcon';
 export { default as FluentEmoji, type FluentEmojiProps } from './FluentEmoji';
 export { default as FontLoader, type FontLoaderProps } from './FontLoader';
 export { default as Footer, type FooterProps } from './Footer';
@@ -112,6 +113,10 @@ export { default as LogoThree, type LogoThreeProps } from './LogoThree';
 export { default as LogoSpline, type LogoSplineProps } from './LogoThree/LogoSpline';
 export { default as Markdown, type MarkdownProps } from './Markdown';
 export { Typography, type TypographyProps } from './Markdown/Typography';
+export {
+  default as MaterialFileTypeIcon,
+  type MaterialFileTypeIconProps,
+} from './MaterialFileTypeIcon';
 export { default as MessageInput, type MessageInputProps } from './MessageInput';
 export { default as MessageModal, type MessageModalProps } from './MessageModal';
 export { default as MobileNavBar, type MobileNavBarProps } from './MobileNavBar';
