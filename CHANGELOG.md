@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [Version 1.145.0](https://github.com/lobehub/lobe-ui/compare/v1.144.5...v1.145.0)
+
+<sup>Released on **2024-06-25**</sup>
+
+#### ✨ Features
+
+- **misc**: Add FileTypeIcon.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix dir name.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add FileTypeIcon ([e43086f](https://github.com/lobehub/lobe-ui/commit/e43086f))
+
+#### What's fixed
+
+- **misc**: Fix dir name ([d91dc53](https://github.com/lobehub/lobe-ui/commit/d91dc53))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.144.5](https://github.com/lobehub/lobe-ui/compare/v1.144.4...v1.144.5)
 
 <sup>Released on **2024-06-24**</sup>
