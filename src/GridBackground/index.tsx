@@ -2,7 +2,7 @@
 
 import { useSize } from 'ahooks';
 import { shuffle } from 'lodash-es';
-import { memo, useCallback, useMemo, useRef } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { DivProps } from '@/types';
 
@@ -21,6 +21,8 @@ export interface GridBackgroundProps extends DivProps {
   showBackground?: boolean;
   strokeWidth?: number;
 }
+
+const initialGroup = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
 const GridBackground = memo<GridBackgroundProps>(
   ({
@@ -51,14 +53,18 @@ const GridBackground = memo<GridBackgroundProps>(
       [reverse, colorFront, strokeWidth],
     );
 
+    const [group, setGroup] = useState(random ? initialGroup : undefined);
+    useEffect(() => {
+      setGroup(random ? shuffle(initialGroup) : undefined);
+    }, [random]);
+
     const HighlightGrid = useCallback(() => {
-      if (!random)
+      if (!group)
         return <Grid style={{ '--duration': `${animationDuration}s` } as any} {...gridProps} />;
 
-      const group = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
       return (
         <>
-          {shuffle(group).map((item, index) => {
+          {group.map((item, index) => {
             return (
               <Grid
                 key={item}
@@ -75,7 +81,7 @@ const GridBackground = memo<GridBackgroundProps>(
           })}
         </>
       );
-    }, [random, animationDuration, gridProps]);
+    }, [group, animationDuration, gridProps]);
 
     return (
       <div
