@@ -2,6 +2,39 @@
 
 # Changelog
 
+### [Version 1.145.3](https://github.com/lobehub/lobe-ui/compare/v1.145.2...v1.145.3)
+
+<sup>Released on **2024-06-25**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Hydration mismatch in grid background.
+
+#### 💄 Styles
+
+- **misc**: Increase gaps between ChatItem.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Hydration mismatch in grid background, closes [#171](https://github.com/lobehub/lobe-ui/issues/171) ([bbe43c4](https://github.com/lobehub/lobe-ui/commit/bbe43c4))
+
+#### Styles
+
+- **misc**: Increase gaps between ChatItem, closes [#170](https://github.com/lobehub/lobe-ui/issues/170) ([dd487de](https://github.com/lobehub/lobe-ui/commit/dd487de))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.145.2](https://github.com/lobehub/lobe-ui/compare/v1.145.1...v1.145.2)
 
 <sup>Released on **2024-06-25**</sup>
