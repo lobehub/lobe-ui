@@ -22,6 +22,8 @@ export interface GridBackgroundProps extends DivProps {
   strokeWidth?: number;
 }
 
+const initialGroup = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+
 const GridBackground = memo<GridBackgroundProps>(
   ({
     flip,
@@ -51,20 +53,18 @@ const GridBackground = memo<GridBackgroundProps>(
       [reverse, colorFront, strokeWidth],
     );
 
-    const [randomGroup, setRandomGroup] = useState(
-      random ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] : undefined,
-    );
+    const [group, setGroup] = useState(random ? initialGroup : undefined);
     useEffect(() => {
-      setRandomGroup((randomGroup) => (randomGroup ? shuffle(randomGroup) : randomGroup));
-    }, []);
+      setGroup(random ? shuffle(initialGroup) : undefined);
+    }, [random]);
 
     const HighlightGrid = useCallback(() => {
-      if (!randomGroup)
+      if (!group)
         return <Grid style={{ '--duration': `${animationDuration}s` } as any} {...gridProps} />;
 
       return (
         <>
-          {randomGroup.map((item, index) => {
+          {group.map((item, index) => {
             return (
               <Grid
                 key={item}
@@ -81,7 +81,7 @@ const GridBackground = memo<GridBackgroundProps>(
           })}
         </>
       );
-    }, [randomGroup, animationDuration, gridProps]);
+    }, [group, animationDuration, gridProps]);
 
     return (
       <div
