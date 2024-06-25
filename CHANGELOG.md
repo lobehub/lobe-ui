@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.145.2](https://github.com/lobehub/lobe-ui/compare/v1.145.1...v1.145.2)
+
+<sup>Released on **2024-06-25**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix type.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix type ([6b289c9](https://github.com/lobehub/lobe-ui/commit/6b289c9))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.145.1](https://github.com/lobehub/lobe-ui/compare/v1.145.0...v1.145.1)
 
 <sup>Released on **2024-06-25**</sup>
