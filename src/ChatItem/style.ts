@@ -114,7 +114,7 @@ export const useStyles = createStyles(
           }
 
           ${responsive.mobile} {
-            padding-block: 4px;
+            padding-block: ${type === 'pure' ? '12px' : '6px'};
             padding-inline: 8px;
           }
         `,
@@ -205,6 +205,8 @@ export const useStyles = createStyles(
         line-height: 1;
         color: ${token.colorTextDescription};
         text-align: ${placement === 'left' ? 'left' : 'right'};
+
+        pointer-events: none;
       `,
     };
   },
