@@ -114,7 +114,7 @@ export const useStyles = createStyles(
           }
 
           ${responsive.mobile} {
-            padding-block: 4px;
+            padding-block: ${type === 'pure' ? '12px' : '6px'};
             padding-inline: 8px;
           }
         `,
