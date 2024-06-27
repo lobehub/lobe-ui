@@ -1,6 +1,6 @@
 import { placementType } from './index';
 
-export const revesePlacement = (placement: placementType) => {
+export const reversePlacement = (placement: placementType) => {
   switch (placement) {
     case 'bottom': {
       return 'top';
