@@ -13,7 +13,7 @@ import useControlledState from 'use-merge-value';
 import { DivProps } from '@/types';
 
 import { useStyles } from './style';
-import { revesePlacement } from './utils';
+import { reversePlacement } from './utils';
 
 const DEFAULT_HEIGHT = 180;
 const DEFAULT_WIDTH = 280;
@@ -56,6 +56,8 @@ export interface DraggablePanelProps extends DivProps {
    * @description The style of the panel handler
    * @type CSSProperties
    */
+  handlerStyle?: CSSProperties;
+  /** @deprecated please use `handlerStyle` instead */
   hanlderStyle?: CSSProperties;
   headerHeight?: number;
   maxHeight?: number;
@@ -139,6 +141,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     showHandlerWhenUnexpand,
     destroyOnClose,
     hanlderStyle,
+    handlerStyle,
     classNames = {},
     dir,
   }) => {
@@ -181,7 +184,8 @@ const DraggablePanel = memo<DraggablePanelProps>(
       if (!canResizing) return {};
 
       return {
-        [revesePlacement(internalPlacement)]: styles[`${revesePlacement(internalPlacement)}Handle`],
+        [reversePlacement(internalPlacement)]:
+          styles[`${reversePlacement(internalPlacement)}Handle`],
       };
     }, [canResizing, internalPlacement]);
 
@@ -194,7 +198,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
       top: false,
       topLeft: false,
       topRight: false,
-      [revesePlacement(internalPlacement)]: true,
+      [reversePlacement(internalPlacement)]: true,
       ...(resize as Enable),
     };
 
@@ -259,7 +263,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
           onClick={() => {
             setIsExpand(!isExpand);
           }}
-          style={hanlderStyle}
+          style={handlerStyle || hanlderStyle}
         >
           <div
             className={styles.handlerIcon}
