@@ -144,7 +144,7 @@
     "dpdm": "^3.14.0",
     "dumi": "2.2.17",
     "dumi-theme-lobehub": "^1.8.1",
-    "eslint": "^8.57.0",
+    "eslint": "^9.0.0",
     "father": "4.3.1",
     "husky": "^9.0.11",
     "jsdom": "^24.1.0",
