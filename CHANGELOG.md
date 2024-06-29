@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.146.2](https://github.com/lobehub/lobe-ui/compare/v1.146.1...v1.146.2)
+
+<sup>Released on **2024-06-29**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update ChatHeader style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update ChatHeader style ([1947931](https://github.com/lobehub/lobe-ui/commit/1947931))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.146.1](https://github.com/lobehub/lobe-ui/compare/v1.146.0...v1.146.1)
 
 <sup>Released on **2024-06-29**</sup>
