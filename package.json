@@ -158,7 +158,7 @@
     "stylelint": "^15.11.0",
     "stylelint-use-logical-spec": "^5.0.1",
     "typescript": "^5.5.2",
-    "vitest": "~1.2.2"
+    "vitest": "~1.6.0"
   },
   "peerDependencies": {
     "ahooks": ">=3",
