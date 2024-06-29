@@ -87,7 +87,7 @@
     "@lobehub/emojilib": "latest",
     "@react-spring/web": "^9.7.3",
     "@shikijs/transformers": "^1.10.0",
-    "@splinetool/runtime": "^0.9.526",
+    "@splinetool/runtime": "^1.0.0",
     "chroma-js": "^2.4.2",
     "dayjs": "^1.11.11",
     "emoji-mart": "^5.6.0",
