@@ -3,6 +3,10 @@ import { rgba } from 'polished';
 
 export const useStyles = createStyles(({ css, token, stylish, cx }) => {
   return {
+    center: css`
+      position: relative;
+      overflow: hidden;
+    `,
     container: cx(
       stylish.blurStrong,
       css`

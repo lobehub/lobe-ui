@@ -11,22 +11,24 @@ import { useStyles } from './style';
 
 export interface ChatHeaderProps extends DivProps {
   classNames?: {
+    center?: string;
     left?: string;
     right?: string;
   };
-  contentStyles?: {
-    left?: CSSProperties;
-    right?: CSSProperties;
-  };
   gap?: {
+    center?: number;
     left?: number;
     right?: number;
   };
-
   left?: ReactNode;
   onBackClick?: () => void;
   right?: ReactNode;
   showBackButton?: boolean;
+  styles?: {
+    center?: CSSProperties;
+    left?: CSSProperties;
+    right?: CSSProperties;
+  };
 }
 const ChatHeader = memo<ChatHeaderProps>(
   ({
@@ -34,11 +36,12 @@ const ChatHeader = memo<ChatHeaderProps>(
     right,
     className,
     style,
-    contentStyles,
+    styles: contentStyles,
     classNames,
     showBackButton,
     onBackClick,
     gap,
+    children,
   }) => {
     const { cx, styles } = useStyles();
 
@@ -68,6 +71,17 @@ const ChatHeader = memo<ChatHeaderProps>(
           )}
           {left}
         </Flexbox>
+        {children && (
+          <Flexbox
+            align={'center'}
+            className={cx(styles.center, classNames?.center)}
+            gap={gap?.center || 12}
+            horizontal
+            style={contentStyles?.center}
+          >
+            {children}
+          </Flexbox>
+        )}
         <Flexbox
           align={'center'}
           className={cx(styles.right, classNames?.right)}
