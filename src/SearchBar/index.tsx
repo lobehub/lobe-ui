@@ -12,7 +12,7 @@ import Tag from '@/Tag';
 import { useStyles } from './style';
 
 export interface SearchBarProps extends Omit<InputProps, 'styles' | 'classNames'> {
-  classNames: {
+  classNames?: {
     input?: string;
     shortKey?: string;
   };
@@ -37,7 +37,7 @@ export interface SearchBarProps extends Omit<InputProps, 'styles' | 'classNames'
   shortKey?: string;
   spotlight?: boolean;
 
-  styles: {
+  styles?: {
     input?: CSSProperties;
     shortKey?: CSSProperties;
   };
@@ -61,8 +61,8 @@ const SearchBar = memo<SearchBarProps>(
     onBlur,
     onPressEnter,
     onFocus,
-    styles: { input: inputStyle, shortKey: shortKeyStyle },
-    classNames: { input: inputClassName, shortKey: shortKeyClassName },
+    styles: { input: inputStyle, shortKey: shortKeyStyle } = {},
+    classNames: { input: inputClassName, shortKey: shortKeyClassName } = {},
     ...rest
   }) => {
     const [inputValue, setInputValue] = useControlledState<string>(defaultValue as any, {
