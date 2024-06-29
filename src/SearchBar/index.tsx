@@ -1,7 +1,7 @@
 'use client';
 
 import { LucideLoader2, Search } from 'lucide-react';
-import { memo, useEffect, useRef, useState } from 'react';
+import { CSSProperties, memo, useEffect, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
 import Icon from '@/Icon';
@@ -11,7 +11,11 @@ import Tag from '@/Tag';
 
 import { useStyles } from './style';
 
-export interface SearchBarProps extends InputProps {
+export interface SearchBarProps extends Omit<InputProps, 'styles' | 'classNames'> {
+  classNames: {
+    input?: string;
+    shortKey?: string;
+  };
   defaultValue?: string;
   /**
    * @description Whether to enable the shortcut key to focus on the input
@@ -19,17 +23,24 @@ export interface SearchBarProps extends InputProps {
    */
   enableShortKey?: boolean;
   loading?: boolean;
+
   onInputChange?: (value: string) => void;
+  /**
+   * @description Whether add spotlight background
+   * @default false
+   */
+  onSearch?: (value: string) => void;
   /**
    * @description The shortcut key to focus on the input. Only works if `enableShortKey` is true
    * @default 'f'
    */
   shortKey?: string;
-  /**
-   * @description Whether add spotlight background
-   * @default false
-   */
   spotlight?: boolean;
+
+  styles: {
+    input?: CSSProperties;
+    shortKey?: CSSProperties;
+  };
   value?: string;
 }
 
@@ -43,8 +54,16 @@ const SearchBar = memo<SearchBarProps>(
     placeholder,
     enableShortKey,
     shortKey = 'f',
+    onSearch,
     loading,
-    ...properties
+    style,
+    onChange,
+    onBlur,
+    onPressEnter,
+    onFocus,
+    styles: { input: inputStyle, shortKey: shortKeyStyle },
+    classNames: { input: inputClassName, shortKey: shortKeyClassName },
+    ...rest
   }) => {
     const [inputValue, setInputValue] = useControlledState<string>(defaultValue as any, {
       defaultValue,
@@ -80,17 +99,37 @@ const SearchBar = memo<SearchBarProps>(
     }, []);
 
     return (
-      <div className={cx(styles.search, className)}>
+      <div className={cx(styles.search, className)} style={style}>
         {spotlight && <Spotlight />}
         <Input
           allowClear
-          className={styles.input}
-          onBlur={() => setShowTag(true)}
-          onChange={(e) => {
+          className={cx(styles.input, inputClassName)}
+          onBlur={(e) => {
+            onBlur?.(e);
             setInputValue(e.target.value);
-            setShowTag(!e.target.value);
+
+            if (!e.target.value) {
+              setShowTag(true);
+            }
           }}
-          onFocus={() => setShowTag(false)}
+          onChange={(e) => {
+            onChange?.(e);
+            setInputValue(e.target.value);
+            if (e.target.value) {
+              setShowTag(false);
+            } else {
+              setShowTag(true);
+              onSearch?.(e.target.value);
+            }
+          }}
+          onFocus={(e) => {
+            onFocus?.(e);
+            setShowTag(false);
+          }}
+          onPressEnter={(e) => {
+            onPressEnter?.(e);
+            onSearch?.(inputValue);
+          }}
           placeholder={placeholder ?? 'Type keywords...'}
           prefix={
             <Icon
@@ -102,11 +141,12 @@ const SearchBar = memo<SearchBarProps>(
             />
           }
           ref={inputReference}
+          style={inputStyle}
           value={value}
-          {...properties}
+          {...rest}
         />
         {enableShortKey && showTag && !inputValue && (
-          <Tag className={styles.tag}>
+          <Tag className={cx(styles.tag, shortKeyClassName)} style={shortKeyStyle}>
             {symbol} {shortKey.toUpperCase()}
           </Tag>
         )}
