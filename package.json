@@ -136,7 +136,7 @@
     "@types/react": "18.2.40",
     "@types/react-dom": "^18.3.0",
     "@types/uuid": "^10.0.0",
-    "@vitest/coverage-v8": "~1.2.2",
+    "@vitest/coverage-v8": "~1.6.0",
     "babel-plugin-antd-style": "^1.0.4",
     "commitlint": "^19.3.0",
     "concurrently": "^8.2.2",
