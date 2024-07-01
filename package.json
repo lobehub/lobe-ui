@@ -82,7 +82,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@emoji-mart/data": "^1.2.1",
     "@emoji-mart/react": "^1.1.1",
-    "@floating-ui/react": "^0.26.18",
+    "@floating-ui/react": "^0.26.19",
     "@giscus/react": "^3.0.0",
     "@lobehub/emojilib": "latest",
     "@react-spring/web": "^9.7.3",
@@ -125,7 +125,7 @@
   "devDependencies": {
     "@ant-design/icons": "^5.3.7",
     "@commitlint/cli": "^19.3.0",
-    "@lobehub/lint": "^1.23.4",
+    "@lobehub/lint": "^1.24.2",
     "@testing-library/react": "^14.3.1",
     "@types/chroma-js": "^2.4.4",
     "@types/lodash-es": "^4.17.12",
@@ -156,7 +156,6 @@
     "remark-cli": "^11.0.0",
     "semantic-release": "^21.1.2",
     "stylelint": "^15.11.0",
-    "stylelint-use-logical-spec": "^5.0.1",
     "typescript": "^5.5.2",
     "vitest": "~1.2.2"
   },

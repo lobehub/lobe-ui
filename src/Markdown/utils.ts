@@ -6,7 +6,7 @@ export function escapeDollarNumber(text: string) {
     const nextChar = text[i + 1] || ' ';
 
     if (char === '$' && nextChar >= '0' && nextChar <= '9') {
-      char = '\\$';
+      char = String.raw`\$`;
     }
 
     escapedText += char;
@@ -30,5 +30,7 @@ export function escapeBrackets(text: string) {
 }
 
 export function escapeMhchem(text: string) {
-  return text.replaceAll('$\\ce{', '$\\\\ce{').replaceAll('$\\pu{', '$\\\\pu{');
+  return text
+    .replaceAll(String.raw`$\ce{`, String.raw`$\\ce{`)
+    .replaceAll(String.raw`$\pu{`, String.raw`$\\pu{`);
 }

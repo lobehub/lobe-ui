@@ -15,9 +15,9 @@ import {
   useState,
 } from 'react';
 import { Flexbox } from 'react-layout-kit';
-import MobileSafeArea from "@/MobileSafeArea"
 
 import ActionIcon from '@/ActionIcon';
+import MobileSafeArea from '@/MobileSafeArea';
 
 import ChatInputAreaInner, { type ChatInputAreaInnerProps } from '../ChatInputAreaInner';
 
@@ -51,9 +51,9 @@ const useStyles = createStyles(({ css, token }) => {
 export interface MobileChatInputAreaProps extends ChatInputAreaInnerProps {
   bottomAddons?: ReactNode;
   expand?: boolean;
+  safeArea?: boolean;
   setExpand?: (expand: boolean) => void;
   style?: CSSProperties;
-  safeArea?: boolean;
   textAreaLeftAddons?: ReactNode;
   textAreaRightAddons?: ReactNode;
   topAddons?: ReactNode;
@@ -74,7 +74,7 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
       onInput,
       loading,
       value,
-      safeArea
+      safeArea,
     },
     ref,
   ) => {

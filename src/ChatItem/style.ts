@@ -199,14 +199,14 @@ export const useStyles = createStyles(
       ),
       messageExtra: cx('message-extra'),
       name: css`
+        pointer-events: none;
+
         margin-block-end: 6px;
 
         font-size: 12px;
         line-height: 1;
         color: ${token.colorTextDescription};
         text-align: ${placement === 'left' ? 'left' : 'right'};
-
-        pointer-events: none;
       `,
     };
   },
