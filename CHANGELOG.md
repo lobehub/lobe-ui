@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.146.3](https://github.com/lobehub/lobe-ui/compare/v1.146.2...v1.146.3)
+
+<sup>Released on **2024-07-01**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update stylelint.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update stylelint ([8d78464](https://github.com/lobehub/lobe-ui/commit/8d78464))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.146.2](https://github.com/lobehub/lobe-ui/compare/v1.146.1...v1.146.2)
 
 <sup>Released on **2024-06-29**</sup>
