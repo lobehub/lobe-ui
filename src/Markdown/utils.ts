@@ -1,22 +1,39 @@
 export function escapeDollarNumber(text: string): string {
   let escapedText = '';
-  let inLatexFormula = false;
-  for (let i = 0; i < text.length; i += 1) {
+  let inCodeBlock = false;
+  let inSingleLineCodeBlock = false;
+  let i = 0;
+  while (i < text.length) {
     let char = text[i];
-    const nextChar = text[i + 1] || ' ';
-    if (char === '$') {
-      if (nextChar === '$') {
-        i += 1;
-        escapedText += '$$';
-      } else {
-        inLatexFormula = !inLatexFormula;
+    if (char === '`') {
+      let tickCount = 1;
+      while (text[i + tickCount] === '`') {
+        tickCount++;
       }
-      continue;
+      if (tickCount === 3) {
+        inCodeBlock = !inCodeBlock;
+        escapedText += '```';
+        i += tickCount;
+        continue;
+      } else if (tickCount === 1) {
+        inSingleLineCodeBlock = !inSingleLineCodeBlock;
+        escapedText += '`';
+        i += tickCount;
+        continue;
+      }
     }
-    if (inLatexFormula && char === '$' && nextChar >= '0' && nextChar <= '9') {
+    if (
+      !inCodeBlock &&
+      !inSingleLineCodeBlock &&
+      char === '$' &&
+      i + 1 < text.length &&
+      text[i + 1] >= '0' &&
+      text[i + 1] <= '9'
+    ) {
       char = '\\$';
     }
     escapedText += char;
+    i++;
   }
   return escapedText;
 }
