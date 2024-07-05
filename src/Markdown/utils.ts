@@ -1,17 +1,23 @@
-export function escapeDollarNumber(text: string) {
+export function escapeDollarNumber(text: string): string {
   let escapedText = '';
-
+  let inLatexFormula = false;
   for (let i = 0; i < text.length; i += 1) {
     let char = text[i];
     const nextChar = text[i + 1] || ' ';
-
-    if (char === '$' && nextChar >= '0' && nextChar <= '9') {
+    if (char === '$') {
+      if (nextChar === '$') {
+        i += 1;
+        escapedText += '$$';
+      } else {
+        inLatexFormula = !inLatexFormula;
+      }
+      continue;
+    }
+    if (inLatexFormula && char === '$' && nextChar >= '0' && nextChar <= '9') {
       char = '\\$';
     }
-
     escapedText += char;
   }
-
   return escapedText;
 }
 
