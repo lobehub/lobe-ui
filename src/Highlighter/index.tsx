@@ -94,7 +94,9 @@ export const Highlighter = memo<HighlighterProps>(
           />
         )}
         {showLanguage && language && <Tag className={styles.lang}>{language.toLowerCase()}</Tag>}
-        <SyntaxHighlighter language={language?.toLowerCase()}>{children}</SyntaxHighlighter>
+        <div className={styles.scroller}>
+          <SyntaxHighlighter language={language?.toLowerCase()}>{children}</SyntaxHighlighter>
+        </div>
       </div>
     );
   },

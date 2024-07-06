@@ -33,7 +33,7 @@ export const useStyles = createStyles(
         type !== 'pure' && typeStylish,
         css`
           position: relative;
-          overflow: auto;
+          overflow: hidden;
           border-radius: ${token.borderRadius}px;
           transition: background-color 100ms ${token.motionEaseOut};
 
@@ -90,6 +90,11 @@ export const useStyles = createStyles(
           transition: opacity 0.1s;
         `,
       ),
+      scroller: css`
+        overflow: auto;
+        width: 100%;
+        height: 100%;
+      `,
       select: css`
         user-select: none;
         font-size: 14px;
