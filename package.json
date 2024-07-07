@@ -107,7 +107,7 @@
     "react-markdown": "^8.0.7",
     "react-merge-refs": "^2.1.1",
     "react-rnd": "^10.4.11",
-    "react-simple-code-editor": "^0.13.1",
+    "react-simple-code-editor": "^0.14.0",
     "rehype-katex": "^6.0.3",
     "rehype-raw": "^7.0.0",
     "remark-breaks": "^4.0.0",
