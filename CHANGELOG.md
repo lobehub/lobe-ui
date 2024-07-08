@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.146.6](https://github.com/lobehub/lobe-ui/compare/v1.146.5...v1.146.6)
+
+<sup>Released on **2024-07-08**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix `desc` layout issue of `Form`.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix `desc` layout issue of `Form`, closes [#180](https://github.com/lobehub/lobe-ui/issues/180) ([88c41e8](https://github.com/lobehub/lobe-ui/commit/88c41e8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.146.5](https://github.com/lobehub/lobe-ui/compare/v1.146.4...v1.146.5)
 
 <sup>Released on **2024-07-08**</sup>
