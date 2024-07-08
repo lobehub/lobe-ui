@@ -2,6 +2,32 @@
 
 # Changelog
 
+### [Version 1.146.5](https://github.com/lobehub/lobe-ui/compare/v1.146.4...v1.146.5)
+
+<sup>Released on **2024-07-08**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Extra Backslash in Code Blocks ($0 -> /$0), highlighter scroll bugs.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Extra Backslash in Code Blocks ($0 -> /$0), closes [#177](https://github.com/lobehub/lobe-ui/issues/177) ([f77df56](https://github.com/lobehub/lobe-ui/commit/f77df56))
+- **misc**: Highlighter scroll bugs, closes [#178](https://github.com/lobehub/lobe-ui/issues/178) ([079bc9a](https://github.com/lobehub/lobe-ui/commit/079bc9a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.146.4](https://github.com/lobehub/lobe-ui/compare/v1.146.3...v1.146.4)
 
 <sup>Released on **2024-07-01**</sup>
