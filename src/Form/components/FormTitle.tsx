@@ -18,7 +18,7 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => ({
     > small {
       display: block;
 
-      line-height: 1.2;
+      line-height: 1.44;
       color: ${token.colorTextDescription};
       word-wrap: break-word;
       white-space: pre-wrap;
@@ -40,12 +40,21 @@ export interface FormTitleProps extends DivProps {
 const FormTitle = memo<FormTitleProps>(({ className, tag, title, desc, avatar }) => {
   const { cx, styles } = useStyles();
   const titleNode = (
-    <Flexbox className={cx(styles.formTitle, className)} gap={6}>
+    <Flexbox className={cx(styles.formTitle, className)}>
       <Flexbox align={'center'} direction={'horizontal'} gap={8}>
         {title}
         {tag && <Tag>{tag}</Tag>}
       </Flexbox>
-      {desc && <small>{desc}</small>}
+      {desc && (
+        <small
+          style={{
+            marginBottom: 2,
+            marginTop: 6,
+          }}
+        >
+          {desc}
+        </small>
+      )}
     </Flexbox>
   );
 
