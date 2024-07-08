@@ -18,7 +18,7 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => ({
     > small {
       display: block;
 
-      line-height: 1.2;
+      line-height: 1.44;
       color: ${token.colorTextDescription};
       word-wrap: break-word;
       white-space: pre-wrap;
@@ -48,7 +48,7 @@ const FormTitle = memo<FormTitleProps>(({ className, tag, title, desc, avatar })
       {desc && (
         <small
           style={{
-            marginBottom: 6,
+            marginBottom: 2,
             marginTop: 6,
           }}
         >
