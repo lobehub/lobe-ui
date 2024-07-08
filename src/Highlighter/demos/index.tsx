@@ -33,7 +33,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Highlighter {...options} />
+      <Highlighter {...options} style={{ ...options.style, width: '100%' }} />
     </StoryBook>
   );
 };
