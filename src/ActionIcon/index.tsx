@@ -1,7 +1,14 @@
 'use client';
 
 import { Loader2 } from 'lucide-react';
-import { type CSSProperties, forwardRef, useMemo } from 'react';
+import {
+  type CSSProperties,
+  MouseEventHandler,
+  forwardRef,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
 import { Flexbox, type FlexboxProps } from 'react-layout-kit';
 
 import Icon, {
@@ -123,13 +130,24 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
 
     const spin = <Icon icon={Loader2} {...iconProps} spin />;
 
+    const [tooltipOpen, setTooltipOpen] = useState(false);
+
+    const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(
+      (event) => {
+        if (loading || disable) return;
+        setTooltipOpen(false);
+        onClick?.(event);
+      },
+      [loading, disable, setTooltipOpen, onClick],
+    );
+
     const actionIconBlock = (
       <Flexbox
         align={'center'}
         className={cx(styles.block, disable ? styles.disabled : styles.normal, className)}
         horizontal
         justify={'center'}
-        onClick={loading || disable ? undefined : onClick}
+        onClick={handleClick}
         ref={ref}
         style={{ borderRadius, height: blockSize, width: blockSize, ...style }}
         {...rest}
@@ -146,6 +164,8 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
       <Tooltip
         arrow={arrow}
         mouseEnterDelay={tooltipDelay}
+        onOpenChange={setTooltipOpen}
+        open={tooltipOpen}
         overlayStyle={{ pointerEvents: 'none', ...overlayStyle }}
         placement={placement}
         title={title}
