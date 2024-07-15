@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.146.7](https://github.com/lobehub/lobe-ui/compare/v1.146.6...v1.146.7)
+
+<sup>Released on **2024-07-15**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Hide tooltip on clicking action icon.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Hide tooltip on clicking action icon, closes [#183](https://github.com/lobehub/lobe-ui/issues/183) ([4e81d94](https://github.com/lobehub/lobe-ui/commit/4e81d94))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.146.6](https://github.com/lobehub/lobe-ui/compare/v1.146.5...v1.146.6)
 
 <sup>Released on **2024-07-08**</sup>
