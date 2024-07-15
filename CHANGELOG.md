@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.146.8](https://github.com/lobehub/lobe-ui/compare/v1.146.7...v1.146.8)
+
+<sup>Released on **2024-07-15**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Alert contents should not break in the middle of a word.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Alert contents should not break in the middle of a word, closes [#184](https://github.com/lobehub/lobe-ui/issues/184) ([e16882f](https://github.com/lobehub/lobe-ui/commit/e16882f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.146.7](https://github.com/lobehub/lobe-ui/compare/v1.146.6...v1.146.7)
 
 <sup>Released on **2024-07-15**</sup>
