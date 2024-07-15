@@ -38,7 +38,7 @@ export const useStyles = createStyles(
           .${prefixCls}-alert-message {
             font-weight: ${hasTitle ? 600 : 400};
             line-height: 24px;
-            word-break: break-all;
+            word-break: normal;
           }
           .${prefixCls}-alert-icon {
             display: flex;
@@ -57,7 +57,7 @@ export const useStyles = createStyles(
           css`
             .${prefixCls}-alert-description {
               line-height: 1.5;
-              word-break: break-all;
+              word-break: normal;
               opacity: 0.75;
             }
           `,
