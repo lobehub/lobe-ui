@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.146.9](https://github.com/lobehub/lobe-ui/compare/v1.146.8...v1.146.9)
+
+<sup>Released on **2024-07-18**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix XSS.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix XSS, closes [#176](https://github.com/lobehub/lobe-ui/issues/176) ([4ea87cf](https://github.com/lobehub/lobe-ui/commit/4ea87cf))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.146.8](https://github.com/lobehub/lobe-ui/compare/v1.146.7...v1.146.8)
 
 <sup>Released on **2024-07-15**</sup>
