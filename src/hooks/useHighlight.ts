@@ -58,7 +58,7 @@ export const useHighlight = (text: string, lang: string, isDarkMode: boolean) =>
         });
         return html;
       } catch {
-        return `<pre><code>${text}</code></pre>`;
+        return '';
       }
     },
     { revalidateOnFocus: false },

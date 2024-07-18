@@ -23,7 +23,7 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
 
     return (
       <>
-        {isLoading ? (
+        {isLoading || !data ? (
           <div className={cx(styles.unshiki, className)} style={style}>
             <pre>
               <code>{children.trim()}</code>
