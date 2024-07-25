@@ -95,6 +95,13 @@ $$
 $$
 \\int_{a}^{b} f(x) \\, dx
 $$
+
+---
+
+我是一个嵌套测试：
+\`\`\`
+$1
+\`\`\`
 `;
 
 export const content2 = `# Customize Markdown Components
