@@ -63,7 +63,6 @@ export const useStyles = createStyles(
           }
 
           code {
-            text-wrap: nowrap !important;
             background: transparent !important;
           }
         `,
@@ -90,6 +89,11 @@ export const useStyles = createStyles(
           transition: opacity 0.1s;
         `,
       ),
+      nowrap: css`
+        code {
+          text-wrap: nowrap !important;
+        }
+      `,
       scroller: css`
         overflow: auto;
         width: 100%;

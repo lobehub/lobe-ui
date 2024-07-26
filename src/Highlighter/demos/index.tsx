@@ -27,6 +27,7 @@ export default () => {
         options: ['ghost', 'block', 'pure'],
         value: 'block',
       },
+      wrap: false,
     },
     { store },
   );

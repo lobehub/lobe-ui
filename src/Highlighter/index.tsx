@@ -45,6 +45,7 @@ export interface HighlighterProps extends DivProps {
    * @default 'block'
    */
   type?: 'ghost' | 'block' | 'pure';
+  wrap?: boolean;
 }
 
 export const Highlighter = memo<HighlighterProps>(
@@ -62,10 +63,11 @@ export const Highlighter = memo<HighlighterProps>(
     allowChangeLanguage = true,
     fileName,
     icon,
+    wrap,
     ...rest
   }) => {
     const { styles, cx } = useStyles(type);
-    const container = cx(styles.container, className);
+    const container = cx(styles.container, !wrap && styles.nowrap, className);
 
     if (fullFeatured)
       return (
