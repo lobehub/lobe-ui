@@ -5,7 +5,7 @@ import { AvatarProps } from '@/Avatar';
 import { EditableMessageProps } from '@/EditableMessage';
 import { DivProps, MetaData } from '@/types';
 
-export interface ChatItemProps {
+export interface ChatItemProps extends FlexboxProps {
   /**
    * @description Actions to be displayed in the chat item
    */
