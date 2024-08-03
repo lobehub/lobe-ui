@@ -24,7 +24,10 @@ export function fixMarkdownBold(text: string): string {
     if (char === '*') {
       count++;
       if (count % 2 === 0) {
-        if (i + 1 < text.length && text[i + 1] !== ' ') {
+        const prevChar = i > 0 ? text[i - 1] : '';
+        const isPrevCharAlphanumeric = /[a-zA-Z0-9]/.test(prevChar);
+
+        if (i + 1 < text.length && text[i + 1] !== ' ' && !isPrevCharAlphanumeric) {
           result += '* ';
         } else {
           result += '*';
