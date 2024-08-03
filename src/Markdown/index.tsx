@@ -62,15 +62,10 @@ const Markdown = memo<MarkdownProps>(
     const { cx, styles } = useStyles({ fontSize, headerMultiple, lineHeight, marginMultiple });
     const { styles: mdStyles } = useMarkdownStyles({ fontSize, headerMultiple, marginMultiple });
     const isChatMode = variant === 'chat';
-
-    const escapedContent = useMemo(() => {
-      if (!enableLatex) return children;
-      return fixMarkdownBold(escapeMhchem(escapeBrackets(children)));
-    }, [children, enableLatex]);
     
     const escapedContent = useMemo(() => {
-      if (!enableLatex) return children;
-      return escapeMhchem(escapeBrackets(children));
+      if (!enableLatex) return fixMarkdownBold(children);
+      return fixMarkdownBold(escapeMhchem(escapeBrackets(children)));
     }, [children, enableLatex]);
 
     const components: Components = useMemo(
