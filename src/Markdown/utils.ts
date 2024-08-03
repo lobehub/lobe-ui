@@ -18,31 +18,35 @@ export function escapeMhchem(text: string) {
 
 export function fixMarkdownBold(text: string): string {
   let count = 0;
+  let count2 = 0;
   let result = '';
   for (let i = 0; i < text.length; i++) {
     const char = text[i];
     if (char === '*') {
       count++;
-      if (count % 2 === 0) {
-        const prevChar = i > 0 ? text[i - 1] : '';
-        const nextChar = i + 1 < text.length ? text[i + 1] : '';
+      if (count === 2) {
+        count2++;
+      }
+      if (count > 2) {
+        result += char;
+        continue;
+      }
+      if (count === 2 && count2 % 2 === 0) {
+        const prevChar = i > 0 ? text[i - 2] : '';
         const isPrevCharAlphanumeric = /[a-zA-Z0-9]/.test(prevChar);
-        const isNextCharAlphanumeric = /[a-zA-Z0-9]/.test(nextChar);
 
-        if (!isPrevCharAlphanumeric && isNextCharAlphanumeric) {
-          result += '*';
-        } else if (isPrevCharAlphanumeric && !isNextCharAlphanumeric) {
-          result += '*';
-        } else {
+        if (i + 1 < text.length && text[i + 1] !== ' ' && !isPrevCharAlphanumeric) {
           result += '* ';
+        } else {
+          result += '*';
         }
       } else {
         result += '*';
       }
     } else {
       result += char;
+      count = 0;
     }
   }
   return result;
 }
-
