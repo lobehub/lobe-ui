@@ -15,3 +15,26 @@ export function escapeBrackets(text: string) {
 export function escapeMhchem(text: string) {
   return text.replaceAll('$\\ce{', '$\\\\ce{').replaceAll('$\\pu{', '$\\\\pu{');
 }
+
+export function fixMarkdownBold(text: string): string {
+  let count = 0;
+  let result = '';
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    if (char === '*') {
+      count++;
+      if (count % 2 === 0) {
+        if (i + 1 < text.length && text[i + 1] !== ' ') {
+          result += '* ';
+        } else {
+          result += '*';
+        }
+      } else {
+        result += '*';
+      }
+    } else {
+      result += char;
+    }
+  }
+  return result;
+}
