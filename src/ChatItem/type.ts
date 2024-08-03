@@ -1,12 +1,11 @@
 import { ReactNode } from 'react';
-import { FlexboxProps } from 'react-layout-kit';
 
 import { AlertProps } from '@/Alert';
 import { AvatarProps } from '@/Avatar';
 import { EditableMessageProps } from '@/EditableMessage';
 import { DivProps, MetaData } from '@/types';
 
-export interface ChatItemProps extends FlexboxProps {
+export interface ChatItemProps {
   /**
    * @description Actions to be displayed in the chat item
    */
