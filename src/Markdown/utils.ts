@@ -25,12 +25,16 @@ export function fixMarkdownBold(text: string): string {
       count++;
       if (count % 2 === 0) {
         const prevChar = i > 0 ? text[i - 1] : '';
+        const nextChar = i + 1 < text.length ? text[i + 1] : '';
         const isPrevCharAlphanumeric = /[a-zA-Z0-9]/.test(prevChar);
+        const isNextCharAlphanumeric = /[a-zA-Z0-9]/.test(nextChar);
 
-        if (i + 1 < text.length && text[i + 1] !== ' ' && !isPrevCharAlphanumeric) {
-          result += '* ';
-        } else {
+        if (!isPrevCharAlphanumeric && isNextCharAlphanumeric) {
           result += '*';
+        } else if (isPrevCharAlphanumeric && !isNextCharAlphanumeric) {
+          result += '*';
+        } else {
+          result += '* ';
         }
       } else {
         result += '*';
@@ -41,3 +45,4 @@ export function fixMarkdownBold(text: string): string {
   }
   return result;
 }
+
