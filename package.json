@@ -142,7 +142,7 @@
     "concurrently": "^8.2.2",
     "cross-env": "^7.0.3",
     "dpdm": "^3.14.0",
-    "dumi": "2.2.17",
+    "dumi": "2.4.7",
     "dumi-theme-lobehub": "^1.8.1",
     "eslint": "^8.57.0",
     "father": "4.3.1",
