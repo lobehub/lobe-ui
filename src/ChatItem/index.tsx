@@ -40,6 +40,8 @@ const ChatItem = memo<ChatItemProps>(
     errorMessage,
     onDoubleClick,
     fontSize,
+    aboveMessage,
+    belowMessage,
     ...rest
   }) => {
     const { mobile } = useResponsive();
@@ -74,6 +76,7 @@ const ChatItem = memo<ChatItemProps>(
           className={styles.messageContainer}
         >
           <Title avatar={avatar} placement={placement} showTitle={showTitle} time={time} />
+          {aboveMessage}
           <Flexbox
             align={placement === 'left' ? 'flex-start' : 'flex-end'}
             className={styles.messageContent}
@@ -106,6 +109,7 @@ const ChatItem = memo<ChatItemProps>(
             )}
             <Actions actions={actions} editing={editing} placement={placement} type={type} />
           </Flexbox>
+          {belowMessage}
         </Flexbox>
         {mobile && type === 'block' && <BorderSpacing borderSpacing={MOBILE_AVATAR_SIZE} />}
       </Flexbox>
