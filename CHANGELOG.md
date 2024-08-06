@@ -2,6 +2,39 @@
 
 # Changelog
 
+### [Version 1.147.1](https://github.com/lobehub/lobe-ui/compare/v1.147.0...v1.147.1)
+
+<sup>Released on **2024-08-06**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Handling invalid Markdown bold.
+
+#### 💄 Styles
+
+- **misc**: Add new props to ChatItem.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Handling invalid Markdown bold, closes [#190](https://github.com/lobehub/lobe-ui/issues/190) ([3a21228](https://github.com/lobehub/lobe-ui/commit/3a21228))
+
+#### Styles
+
+- **misc**: Add new props to ChatItem ([f9cb396](https://github.com/lobehub/lobe-ui/commit/f9cb396))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.147.0](https://github.com/lobehub/lobe-ui/compare/v1.146.9...v1.147.0)
 
 <sup>Released on **2024-07-26**</sup>
