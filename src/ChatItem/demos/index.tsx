@@ -15,6 +15,8 @@ export default () => {
   const store = useCreateStore();
   const control: ChatItemProps | any = useControls(
     {
+      aboveMessage: '',
+      belowMessage: '',
       loading: false,
       message: {
         rows: true,

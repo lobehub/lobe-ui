@@ -1,11 +1,13 @@
 import { ReactNode } from 'react';
+import { FlexboxProps } from 'react-layout-kit';
 
 import { AlertProps } from '@/Alert';
 import { AvatarProps } from '@/Avatar';
 import { EditableMessageProps } from '@/EditableMessage';
 import { DivProps, MetaData } from '@/types';
 
-export interface ChatItemProps {
+export interface ChatItemProps extends Omit<FlexboxProps, 'children' | 'onChange'> {
+  aboveMessage?: ReactNode;
   /**
    * @description Actions to be displayed in the chat item
    */
@@ -16,10 +18,7 @@ export interface ChatItemProps {
   avatar: MetaData;
   avatarAddon?: ReactNode;
   avatarProps?: AvatarProps;
-  /**
-   * @description Custom CSS class name for the chat item
-   */
-  className?: string;
+  belowMessage?: ReactNode;
   /**
    * @description Whether the chat item is in editing mode
    */
