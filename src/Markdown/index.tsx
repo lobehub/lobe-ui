@@ -21,7 +21,7 @@ import { CodeFullFeatured, CodeLite } from './CodeBlock';
 import type { TypographyProps } from './Typography';
 import { useStyles as useMarkdownStyles } from './markdown.style';
 import { useStyles } from './style';
-import { escapeBrackets, escapeMhchem } from './utils';
+import { escapeBrackets, escapeMhchem, fixMarkdownBold } from './utils';
 
 export interface MarkdownProps extends TypographyProps {
   allowHtml?: boolean;
@@ -62,10 +62,10 @@ const Markdown = memo<MarkdownProps>(
     const { cx, styles } = useStyles({ fontSize, headerMultiple, lineHeight, marginMultiple });
     const { styles: mdStyles } = useMarkdownStyles({ fontSize, headerMultiple, marginMultiple });
     const isChatMode = variant === 'chat';
-
+    
     const escapedContent = useMemo(() => {
-      if (!enableLatex) return children;
-      return escapeMhchem(escapeBrackets(children));
+      if (!enableLatex) return fixMarkdownBold(children);
+      return fixMarkdownBold(escapeMhchem(escapeBrackets(children)));
     }, [children, enableLatex]);
 
     const components: Components = useMemo(
