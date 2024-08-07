@@ -4,6 +4,7 @@ import { FlexboxProps } from 'react-layout-kit';
 import { AlertProps } from '@/Alert';
 import { AvatarProps } from '@/Avatar';
 import { EditableMessageProps } from '@/EditableMessage';
+import type { MarkdownProps } from '@/Markdown';
 import { DivProps, MetaData } from '@/types';
 
 export interface ChatItemProps extends Omit<FlexboxProps, 'children' | 'onChange'> {
@@ -33,6 +34,7 @@ export interface ChatItemProps extends Omit<FlexboxProps, 'children' | 'onChange
    * @description Whether the chat item is in loading state
    */
   loading?: boolean;
+  markdownProps?: Omit<MarkdownProps, 'className' | 'style' | 'children'>;
   /**
    * @description The message content of the chat item
    */

@@ -3,7 +3,7 @@
 import { CSSProperties, memo } from 'react';
 import useControlledState from 'use-merge-value';
 
-import Markdown from '@/Markdown';
+import Markdown, { type MarkdownProps } from '@/Markdown';
 import MessageInput, { type MessageInputProps } from '@/MessageInput';
 import MessageModal, { type MessageModalProps } from '@/MessageModal';
 
@@ -32,6 +32,7 @@ export interface EditableMessageProps {
   fullFeaturedCodeBlock?: boolean;
   height?: MessageInputProps['height'];
   inputType?: MessageInputProps['type'];
+  markdownProps?: Omit<MarkdownProps, 'className' | 'style' | 'children'>;
   model?: {
     extra?: MessageModalProps['extra'];
     footer?: MessageModalProps['footer'];
@@ -98,6 +99,7 @@ const EditableMessage = memo<EditableMessageProps>(
     fullFeaturedCodeBlock,
     model,
     fontSize,
+    markdownProps,
   }) => {
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
@@ -147,6 +149,7 @@ const EditableMessage = memo<EditableMessageProps>(
               ...stylesProps?.markdown,
             }}
             variant={'chat'}
+            {...markdownProps}
           >
             {value || placeholder || ''}
           </Markdown>

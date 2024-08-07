@@ -4,12 +4,14 @@ import { Flexbox } from 'react-layout-kit';
 
 import { ChatItemProps } from '@/ChatItem';
 import EditableMessage from '@/EditableMessage';
+import type { MarkdownProps } from '@/Markdown';
 
 import { useStyles } from '../style';
 
 export interface MessageContentProps {
   editing?: ChatItemProps['editing'];
   fontSize?: number;
+  markdownProps?: Omit<MarkdownProps, 'className' | 'style' | 'children'>;
   message?: ReactNode;
   messageExtra?: ChatItemProps['messageExtra'];
   onChange?: ChatItemProps['onChange'];
@@ -36,6 +38,7 @@ const MessageContent = memo<MessageContentProps>(
     primary,
     onDoubleClick,
     fontSize,
+    markdownProps,
   }) => {
     const { cx, styles } = useStyles({ editing, placement, primary, type });
     const { mobile } = useResponsive();
@@ -47,6 +50,7 @@ const MessageContent = memo<MessageContentProps>(
         editing={editing}
         fontSize={fontSize}
         fullFeaturedCodeBlock
+        markdownProps={markdownProps}
         onChange={onChange}
         onEditingChange={onEditingChange}
         openModal={mobile ? editing : undefined}
