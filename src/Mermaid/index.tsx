@@ -1,5 +1,3 @@
-'use client';
-
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
@@ -7,27 +5,26 @@ import CopyButton from '@/CopyButton';
 import Tag from '@/Tag';
 
 import FullFeatured from './FullFeatured';
-import SyntaxHighlighter from './SyntaxHighlighter';
 import { useStyles } from './style';
-import { HighlighterProps } from './type';
+import { MermaidProps } from './type';
+import { useMermaid } from './useMermaid';
 
-export const Highlighter = memo<HighlighterProps>(
+const Mermaid = memo<MermaidProps>(
   ({
-    fullFeatured,
-    copyButtonSize = 'site',
     children,
-    language = 'markdown',
-    className,
-    style,
+    copyButtonSize = 'site',
+    fullFeatured,
     copyable = true,
     showLanguage = true,
+    style,
     type = 'block',
-    wrap,
+    className,
     bodyRender,
     actionsRender,
     ...rest
   }) => {
-    const { styles, cx } = useStyles(type);
+    const { cx, styles } = useStyles(type);
+    const MermaidRender = useMermaid(children);
 
     const originalActions = copyable && (
       <CopyButton content={children} placement="left" size={copyButtonSize} />
@@ -37,53 +34,50 @@ export const Highlighter = memo<HighlighterProps>(
       ? actionsRender({
           actionIconSize: copyButtonSize,
           content: children,
-          language,
           originalNode: originalActions,
         })
       : originalActions;
 
-    const originalBody = (
-      <SyntaxHighlighter language={language?.toLowerCase()}>{children}</SyntaxHighlighter>
-    );
+    const defaultBody = <MermaidRender />;
 
     const body = bodyRender
-      ? bodyRender({ content: children, language, originalNode: originalBody })
-      : originalBody;
+      ? bodyRender({ content: children, originalNode: defaultBody })
+      : defaultBody;
 
     if (fullFeatured)
       return (
         <FullFeatured
           actionsRender={actionsRender}
           bodyRender={bodyRender}
+          className={className}
+          content={children}
           copyable={copyable}
-          language={language}
           showLanguage={showLanguage}
+          style={style}
           type={type}
-          wrap={wrap}
           {...rest}
         >
-          {children}
+          {body}
         </FullFeatured>
       );
 
     return (
       <div
-        className={cx(styles.container, !wrap && styles.nowrap, className)}
-        data-code-type="highlighter"
+        className={cx(styles.container, className)}
+        data-code-type="mermaid"
         style={style}
         {...rest}
       >
         <Flexbox align={'center'} className={styles.button} flex={'none'} gap={4} horizontal>
           {actions}
         </Flexbox>
-        {showLanguage && language && <Tag className={styles.lang}>{language.toLowerCase()}</Tag>}
+        {showLanguage && <Tag className={styles.lang}>mermaid</Tag>}
         <div className={styles.scroller}>{body}</div>
       </div>
     );
   },
 );
 
-export default Highlighter;
+export default Mermaid;
 
-export { default as SyntaxHighlighter, type SyntaxHighlighterProps } from './SyntaxHighlighter';
-export { type HighlighterProps } from './type';
+export { type MermaidProps } from './type';

@@ -10,10 +10,12 @@ import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
+import { type HighlighterProps } from '@/Highlighter';
 import ImageGallery from '@/Image/ImageGallery';
+import { type MermaidProps } from '@/Mermaid';
 import Image, { type ImageProps } from '@/mdx/Image';
 import Link from '@/mdx/Link';
-import type { PreProps } from '@/mdx/Pre';
+import { type PreProps } from '@/mdx/Pre';
 import Video, { type VideoProps } from '@/mdx/Video';
 import type { AProps } from '@/types';
 
@@ -29,12 +31,15 @@ export interface MarkdownProps extends TypographyProps {
   className?: string;
   componentProps?: {
     a?: Partial<AProps & AnchorProps>;
+    highlight?: Partial<HighlighterProps>;
     img?: Partial<ImageProps>;
+    mermaid?: Partial<MermaidProps>;
     pre?: Partial<PreProps>;
     video?: Partial<VideoProps>;
   };
   enableImageGallery?: boolean;
   enableLatex?: boolean;
+  enableMermaid?: boolean;
   fullFeaturedCodeBlock?: boolean;
   onDoubleClick?: () => void;
   style?: CSSProperties;
@@ -49,6 +54,7 @@ const Markdown = memo<MarkdownProps>(
     fullFeaturedCodeBlock,
     onDoubleClick,
     enableLatex = true,
+    enableMermaid = true,
     enableImageGallery = true,
     componentProps,
     allowHtml,
@@ -59,10 +65,16 @@ const Markdown = memo<MarkdownProps>(
     lineHeight,
     ...rest
   }) => {
-    const { cx, styles } = useStyles({ fontSize, headerMultiple, lineHeight, marginMultiple });
+    const { cx, styles } = useStyles({
+      fontSize,
+      headerMultiple,
+      lineHeight,
+      marginMultiple,
+    });
     const { styles: mdStyles } = useMarkdownStyles({ fontSize, headerMultiple, marginMultiple });
+
     const isChatMode = variant === 'chat';
-    
+
     const escapedContent = useMemo(() => {
       if (!enableLatex) return fixMarkdownBold(children);
       return fixMarkdownBold(escapeMhchem(escapeBrackets(children)));
@@ -86,13 +98,25 @@ const Markdown = memo<MarkdownProps>(
           : undefined,
         pre: (props: any) =>
           fullFeaturedCodeBlock ? (
-            <CodeFullFeatured {...props} {...componentProps?.pre} />
+            <CodeFullFeatured
+              enableMermaid={enableMermaid}
+              highlight={componentProps?.highlight}
+              mermaid={componentProps?.mermaid}
+              {...props}
+              {...componentProps?.pre}
+            />
           ) : (
-            <CodeLite {...props} {...componentProps?.pre} />
+            <CodeLite
+              enableMermaid={enableMermaid}
+              highlight={componentProps?.highlight}
+              mermaid={componentProps?.mermaid}
+              {...props}
+              {...componentProps?.pre}
+            />
           ),
         video: (props: any) => <Video {...props} {...componentProps?.video} />,
       }),
-      [componentProps, enableImageGallery, fullFeaturedCodeBlock],
+      [componentProps, enableImageGallery, enableMermaid, fullFeaturedCodeBlock],
     );
 
     const rehypePlugins = useMemo(

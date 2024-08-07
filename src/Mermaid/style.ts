@@ -65,6 +65,11 @@ export const useStyles = createStyles(
           code {
             background: transparent !important;
           }
+
+          svg {
+            height: fit-content;
+            line-height: 1.2;
+          }
         `,
       ),
       header: css`
@@ -90,11 +95,6 @@ export const useStyles = createStyles(
           transition: opacity 0.1s;
         `,
       ),
-      nowrap: css`
-        code {
-          text-wrap: nowrap !important;
-        }
-      `,
       scroller: css`
         overflow: auto;
         width: 100%;

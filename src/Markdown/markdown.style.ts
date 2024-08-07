@@ -31,6 +31,10 @@ export const useStyles = createStyles(
         font-size: var(--lobe-markdown-font-size);
         line-height: var(--lobe-markdown-line-height);
         word-break: break-word;
+
+        svg {
+          line-height: 1;
+        }
       `,
       a: css`
         a {

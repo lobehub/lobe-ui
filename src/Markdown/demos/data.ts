@@ -70,6 +70,19 @@ import { act } from 'react-dom/test-utils';
 import { useDropNodeOnCanvas } from './useDropNodeOnCanvas';
 \`\`\`
 
+
+\`\`\`mermaid
+graph TD
+A[Enter Chart Definition] --> B(Preview)
+B --> C{decide}
+C --> D[Keep]
+C --> E[Edit Definition]
+E --> B
+D --> F[Save Image and Code]
+F --> B
+\`\`\`
+
+
 ---
 
 以下是一段Markdown格式的LaTeX数学公式：

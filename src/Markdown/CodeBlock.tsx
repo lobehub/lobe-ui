@@ -1,8 +1,10 @@
 import { FC } from 'react';
 
+import { type HighlighterProps } from '@/Highlighter';
+import { type MermaidProps } from '@/Mermaid';
 import { FALLBACK_LANG } from '@/hooks/useHighlight';
 
-import Pre, { type PreProps, PreSingleLine } from '../mdx/Pre';
+import Pre, { PreMermaid, PreSingleLine } from '../mdx/Pre';
 
 const countLines = (str: string): number => {
   const regex = /\n/g;
@@ -10,7 +12,7 @@ const countLines = (str: string): number => {
   return matches ? matches.length : 1;
 };
 
-const useCode = (raw: any) => {
+export const useCode = (raw: any) => {
   if (!raw) return;
 
   const { children, className } = raw.props;
@@ -30,24 +32,46 @@ const useCode = (raw: any) => {
   };
 };
 
-const CodeBlock: FC<Partial<PreProps>> = ({ fullFeatured, ...rest }) => {
+interface CodeBlockProps {
+  children: any;
+  enableMermaid?: boolean;
+  fullFeatured?: boolean;
+  highlight?: HighlighterProps;
+  mermaid?: MermaidProps;
+}
+
+const CodeBlock: FC<CodeBlockProps> = ({
+  fullFeatured,
+  enableMermaid,
+  highlight,
+  mermaid,
+  ...rest
+}) => {
   const code = useCode(rest?.children?.[0]);
 
   if (!code) return;
 
-  if (code.isSingleLine) return <PreSingleLine language={code.lang}>{code.content}</PreSingleLine>;
+  if (enableMermaid && code.lang === 'mermaid')
+    return (
+      <PreMermaid fullFeatured={fullFeatured} {...mermaid}>
+        {code.content}
+      </PreMermaid>
+    );
+
+  if (!highlight && code.isSingleLine)
+    return <PreSingleLine language={code.lang}>{code.content}</PreSingleLine>;
 
   return (
-    <Pre fullFeatured={fullFeatured} language={code.lang} {...rest}>
+    <Pre fullFeatured={fullFeatured} language={code.lang} {...highlight} {...rest}>
       {code.content}
     </Pre>
   );
 };
 
-export const CodeLite: FC<Partial<PreProps>> = (props) => {
+export const CodeLite: FC<CodeBlockProps> = (props) => {
   return <CodeBlock {...props} />;
 };
 
-export const CodeFullFeatured: FC<Partial<PreProps>> = (props) => {
+export const CodeFullFeatured: FC<CodeBlockProps> = (props) => {
   return <CodeBlock fullFeatured {...props} />;
 };

@@ -4,6 +4,7 @@ import { createStyles } from 'antd-style';
 import { FC } from 'react';
 
 import Highlighter, { type HighlighterProps } from '@/Highlighter';
+import Mermaid, { type MermaidProps } from '@/Mermaid';
 import Snippet, { type SnippetProps } from '@/Snippet';
 import { FALLBACK_LANG } from '@/hooks/useHighlight';
 
@@ -69,6 +70,29 @@ export const PreSingleLine: FC<SnippetProps> = ({
     >
       {children}
     </Snippet>
+  );
+};
+
+export const PreMermaid: FC<MermaidProps> = ({
+  fullFeatured,
+  children,
+  className,
+  style,
+  ...rest
+}) => {
+  const { styles, cx } = useStyles();
+
+  return (
+    <Mermaid
+      className={cx(styles.container, className)}
+      copyButtonSize={{ blockSize: 28, fontSize: 16 }}
+      fullFeatured={fullFeatured}
+      style={style}
+      type="block"
+      {...rest}
+    >
+      {children}
+    </Mermaid>
   );
 };
 

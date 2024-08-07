@@ -117,6 +117,7 @@ export {
   default as MaterialFileTypeIcon,
   type MaterialFileTypeIconProps,
 } from './MaterialFileTypeIcon';
+export { default as Mermaid, type MermaidProps } from './Mermaid';
 export { default as MessageInput, type MessageInputProps } from './MessageInput';
 export { default as MessageModal, type MessageModalProps } from './MessageModal';
 export { default as MobileNavBar, type MobileNavBarProps } from './MobileNavBar';

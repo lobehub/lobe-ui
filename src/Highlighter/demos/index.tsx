@@ -1,16 +1,6 @@
 import { Highlighter, HighlighterProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
 
-const code = `export default ({ children, className }: MarkdownProps) => {
-  const { styles } = useStyles();
-  return (
-    <ReactMarkdown
-      className={cx(styles.container, className)}
-      components={{ pre: CodeBlock, code: Code }}
-    >
-      {children}
-    </ReactMarkdown>
-  );
-}`;
+import { code } from './data';
 
 export default () => {
   const store = useCreateStore();

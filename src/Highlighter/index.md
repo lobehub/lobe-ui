@@ -13,6 +13,10 @@ description: The Highlighter component is used to display syntax-highlighted cod
 
 <code src="./demos/FullFeatured.tsx" nopadding></code>
 
+## Actions Render
+
+<code src="./demos/ActionsRender.tsx"></code>
+
 ## APIs
 
 <API></API>
