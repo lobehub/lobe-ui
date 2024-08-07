@@ -17,7 +17,7 @@ const useCode = (raw: any) => {
 
   if (!children) return;
 
-  const content = (Array.isArray(children) ? (children[0] as string) : children).trim();
+  const content = (Array.isArray(children) ? (children[0] as string) : children);
 
   const lang = className?.replace('language-', '') || FALLBACK_LANG;
 
