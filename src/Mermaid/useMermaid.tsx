@@ -1,8 +1,9 @@
 import { useTheme } from 'antd-style';
 import mermaid from 'mermaid';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export const useMermaid = (content: string) => {
+  const [mermaidContent, setMermaidContent] = useState<string>();
   const theme = useTheme();
   useEffect(() => {
     mermaid.initialize({
@@ -11,6 +12,8 @@ export const useMermaid = (content: string) => {
       startOnLoad: true,
       theme: 'base',
       themeVariables: {
+        errorBkgColor: theme.colorError,
+        errorTextColor: theme.colorText,
         fontSize: 14,
         lineColor: theme.colorBorderSecondary,
         primaryBorderColor: theme.colorPrimaryBorder,
@@ -21,7 +24,19 @@ export const useMermaid = (content: string) => {
       },
     });
     mermaid.contentLoaded();
-  }, [content, theme.isDarkMode]);
+  }, [mermaidContent, theme.isDarkMode]);
+
+  const checkSyntax = async (textStr: string) => {
+    try {
+      if (await mermaid.parse(textStr)) {
+        setMermaidContent(textStr);
+      }
+    } catch {}
+  };
+
+  useEffect(() => {
+    checkSyntax(content);
+  }, [content]);
 
   return useCallback(() => {
     return (
@@ -35,8 +50,8 @@ export const useMermaid = (content: string) => {
           overflow: 'auto',
         }}
       >
-        {content}
+        {mermaidContent}
       </pre>
     );
-  }, [content, theme.isDarkMode]);
+  }, [mermaidContent, theme.isDarkMode]);
 };

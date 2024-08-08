@@ -11,6 +11,7 @@ import { DivProps } from '@/types';
 import { getIconUrlForDirectoryPath, getIconUrlForFilePath } from './utils';
 
 export interface MaterialFileTypeIconProps extends DivProps {
+  fallbackUnknownType?: boolean;
   filename: string;
   open?: boolean;
   size?: number;
@@ -19,7 +20,16 @@ export interface MaterialFileTypeIconProps extends DivProps {
 }
 
 const MaterialFileTypeIcon = memo<MaterialFileTypeIconProps>(
-  ({ filename, size = 48, variant = 'pure', type, style, open, ...rest }) => {
+  ({
+    fallbackUnknownType = true,
+    filename,
+    size = 48,
+    variant = 'pure',
+    type,
+    style,
+    open,
+    ...rest
+  }) => {
     const genCdnUrl = useCdnFn();
     const ICONS_URL = genCdnUrl({
       path: 'assets',
@@ -29,9 +39,19 @@ const MaterialFileTypeIcon = memo<MaterialFileTypeIconProps>(
 
     const iconUrl: string = useMemo(() => {
       return type === 'file'
-        ? getIconUrlForFilePath(filename, ICONS_URL)
-        : getIconUrlForDirectoryPath(filename, ICONS_URL, open);
+        ? getIconUrlForFilePath({ fallbackUnknownType, iconsUrl: ICONS_URL, path: filename })
+        : getIconUrlForDirectoryPath({
+            fallbackUnknownType,
+            iconsUrl: ICONS_URL,
+            open,
+            path: filename,
+          });
     }, [ICONS_URL, type, filename, open]);
+
+    if (!iconUrl)
+      return (
+        <FileTypeIcon filetype={filename.split('.')[1]} size={size} type={type} variant={'mono'} />
+      );
 
     if (variant === 'pure')
       return <Img height={size} src={iconUrl} style={style} width={size} {...rest} />;
