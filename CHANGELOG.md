@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [Version 1.149.0](https://github.com/lobehub/lobe-ui/compare/v1.148.2...v1.149.0)
+
+<sup>Released on **2024-08-12**</sup>
+
+#### ✨ Features
+
+- **misc**: Add props to MobileChatSendButton.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Don't trim codeBlock.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add props to MobileChatSendButton, closes [#193](https://github.com/lobehub/lobe-ui/issues/193) ([9099427](https://github.com/lobehub/lobe-ui/commit/9099427))
+
+#### What's fixed
+
+- **misc**: Don't trim codeBlock, closes [#192](https://github.com/lobehub/lobe-ui/issues/192) ([820bcd9](https://github.com/lobehub/lobe-ui/commit/820bcd9))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.148.2](https://github.com/lobehub/lobe-ui/compare/v1.148.1...v1.148.2)
 
 <sup>Released on **2024-08-08**</sup>
