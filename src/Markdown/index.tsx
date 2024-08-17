@@ -3,12 +3,13 @@
 import type { AnchorProps } from 'antd';
 import { CSSProperties, memo, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Components } from 'react-markdown/lib/ast-to-react';
+import type { Components } from 'react-markdown/lib/ast-to-react';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
+import type { Pluggable } from 'unified';
 
 import { type HighlighterProps } from '@/Highlighter';
 import ImageGallery from '@/Image/ImageGallery';
@@ -37,11 +38,14 @@ export interface MarkdownProps extends TypographyProps {
     pre?: Partial<PreProps>;
     video?: Partial<VideoProps>;
   };
+  components?: Components;
   enableImageGallery?: boolean;
   enableLatex?: boolean;
   enableMermaid?: boolean;
   fullFeaturedCodeBlock?: boolean;
   onDoubleClick?: () => void;
+  rehypePlugins?: Pluggable[];
+  remarkPlugins?: Pluggable[];
   style?: CSSProperties;
   variant?: 'normal' | 'chat';
 }
@@ -63,6 +67,9 @@ const Markdown = memo<MarkdownProps>(
     marginMultiple,
     variant = 'normal',
     lineHeight,
+    rehypePlugins = [],
+    remarkPlugins = [],
+    components = {},
     ...rest
   }) => {
     const { cx, styles } = useStyles({
@@ -80,7 +87,7 @@ const Markdown = memo<MarkdownProps>(
       return fixMarkdownBold(escapeMhchem(escapeBrackets(children)));
     }, [children, enableLatex]);
 
-    const components: Components = useMemo(
+    const componentsCache: Components = useMemo(
       () => ({
         a: (props: any) => <Link {...props} {...componentProps?.a} />,
         img: enableImageGallery
@@ -119,14 +126,14 @@ const Markdown = memo<MarkdownProps>(
       [componentProps, enableImageGallery, enableMermaid, fullFeaturedCodeBlock],
     );
 
-    const rehypePlugins = useMemo(
+    const rehypePluginsCache = useMemo(
       () => [allowHtml && rehypeRaw, enableLatex && rehypeKatex].filter(Boolean) as any,
-      [allowHtml],
+      [allowHtml, enableLatex],
     );
-    const remarkPlugins = useMemo(
+    const remarkPluginsCache = useMemo(
       () =>
         [remarkGfm, enableLatex && remarkMath, isChatMode && remarkBreaks].filter(Boolean) as any,
-      [isChatMode],
+      [isChatMode, enableLatex],
     );
 
     return (
@@ -156,9 +163,9 @@ const Markdown = memo<MarkdownProps>(
               mdStyles.video,
               isChatMode && styles.chat,
             )}
-            components={components}
-            rehypePlugins={rehypePlugins}
-            remarkPlugins={remarkPlugins}
+            components={{ ...componentsCache, ...components }}
+            rehypePlugins={[...rehypePluginsCache, ...rehypePlugins]}
+            remarkPlugins={[...remarkPluginsCache, ...remarkPlugins]}
             {...rest}
           >
             {escapedContent}

@@ -166,7 +166,8 @@
     "antd-style": ">=3",
     "lucide-react": ">=0.396.0",
     "react": ">=18",
-    "react-dom": ">=18"
+    "react-dom": ">=18",
+    "unified": ">=10.0.0"
   },
   "publishConfig": {
     "access": "public",
