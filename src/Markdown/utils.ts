@@ -38,7 +38,7 @@ export function fixMarkdownBold(text: string): string {
       continue;
     }
 
-    if (char === '*') {
+    if (char === '*' && !inInlineCode && !inCodeBlock) {
       count++;
       if (count === 2) {
         count2++;
