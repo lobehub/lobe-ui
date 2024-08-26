@@ -1,5 +1,5 @@
 {
-  "name": "@lobehub/ui",
+  "name": "@unitalkai/ui",
   "version": "1.150.0",
   "description": "Lobe UI is an open-source UI component library for building AIGC web apps",
   "keywords": [
@@ -9,16 +9,16 @@
     "react components",
     "react ui"
   ],
-  "homepage": "https://github.com/lobehub/lobe-ui",
+  "homepage": "https://github.com/unitalkai/lobe-ui",
   "bugs": {
-    "url": "https://github.com/lobehub/lobe-ui/issues/new"
+    "url": "https://github.com/unitalkai/lobe-ui/issues/new"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lobehub/lobe-ui.git"
+    "url": "https://github.com/unitalkai/lobe-ui.git"
   },
   "license": "MIT",
-  "author": "LobeHub <i@lobehub.com>",
+  "author": "Unitalkai <i@unitalk.com>",
   "sideEffects": false,
   "main": "es/index.js",
   "module": "es/index.js",
