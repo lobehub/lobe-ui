@@ -3,7 +3,7 @@
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { Popover } from 'antd';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import useSWR from 'swr';
 import useMergeState from 'use-merge-value';
 
@@ -27,6 +27,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
     onChange,
     locale = 'en-US',
   }) => {
+    const [open, setOpen] = useState(false);
     const { styles } = useStyles();
 
     const { data: i18n } = useSWR(
@@ -43,23 +44,32 @@ const EmojiPicker = memo<EmojiPickerProps>(
 
     return (
       <Popover
+        arrow={false}
         content={
-          <div className={styles.picker}>
+          <div className={styles.picker} onBlur={() => setOpen(false)}>
             <Picker
               data={data}
               i18n={i18n}
               locale={locale.split('-')[0]}
-              onEmojiSelect={(e: any) => setAva(e.native)}
+              onEmojiSelect={(e: any) => {
+                setAva(e.native);
+                setOpen(false);
+              }}
               skinTonePosition={'none'}
               theme={'auto'}
             />
           </div>
         }
+        open={open}
         placement={'left'}
         rootClassName={styles.popover}
-        trigger={'click'}
+        trigger={['click']}
       >
-        <div className={styles.avatar} style={{ width: 'fit-content' }}>
+        <div
+          className={styles.avatar}
+          onClick={() => setOpen(true)}
+          style={{ width: 'fit-content' }}
+        >
           <Avatar avatar={ava} background={backgroundColor} size={44} />
         </div>
       </Popover>
