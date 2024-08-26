@@ -2,6 +2,32 @@
 
 # Changelog
 
+## [Version 1.150.0](https://github.com/lobehub/lobe-ui/compare/v1.149.3...v1.150.0)
+
+<sup>Released on **2024-08-26**</sup>
+
+#### ✨ Features
+
+- **misc**: Add custom tab, Add upload to EmojiPicker.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add custom tab ([4ceeb9c](https://github.com/lobehub/lobe-ui/commit/4ceeb9c))
+- **misc**: Add upload to EmojiPicker ([b9232c0](https://github.com/lobehub/lobe-ui/commit/b9232c0))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.149.3](https://github.com/lobehub/lobe-ui/compare/v1.149.2...v1.149.3)
 
 <sup>Released on **2024-08-26**</sup>
