@@ -1,4 +1,4 @@
-import { ActionIcon, Collapse, CollapseProps } from '@lobehub/ui';
+import { ActionIcon, Collapse, CollapseProps } from '@unitalkai/ui';
 import { SettingsIcon } from 'lucide-react';
 import { Flexbox } from 'react-layout-kit';
 

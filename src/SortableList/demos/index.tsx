@@ -1,4 +1,4 @@
-import { SortableList, type SortableListProps } from '@lobehub/ui';
+import { SortableList, type SortableListProps } from '@unitalkai/ui';
 import { useState } from 'react';
 
 const data: SortableListProps['items'] = [

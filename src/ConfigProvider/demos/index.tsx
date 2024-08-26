@@ -1,4 +1,4 @@
-import { ConfigProvider, Logo } from '@lobehub/ui';
+import { ConfigProvider, Logo } from '@unitalkai/ui';
 
 export default () => {
   return (

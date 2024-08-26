@@ -1,5 +1,5 @@
 import { ZoomInOutlined, ZoomOutOutlined } from '@ant-design/icons';
-import { ContextMenu, Icon } from '@lobehub/ui';
+import { ContextMenu, Icon } from '@unitalkai/ui';
 import { BoxSelectIcon, CopyIcon } from 'lucide-react';
 import { Flexbox } from 'react-layout-kit';
 

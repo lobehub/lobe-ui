@@ -1,4 +1,4 @@
-import { CodeEditor } from '@lobehub/ui';
+import { CodeEditor } from '@unitalkai/ui';
 import { useState } from 'react';
 
 import { content } from '../../Markdown/demos/data';

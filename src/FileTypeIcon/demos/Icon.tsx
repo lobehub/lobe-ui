@@ -1,4 +1,4 @@
-import { FileTypeIcon, Icon } from '@lobehub/ui';
+import { FileTypeIcon, Icon } from '@unitalkai/ui';
 import { createStyles, useTheme } from 'antd-style';
 import { ArrowUpIcon, PlusIcon } from 'lucide-react';
 import { Center, Flexbox } from 'react-layout-kit';

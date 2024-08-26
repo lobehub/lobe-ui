@@ -1,4 +1,4 @@
-import { type ActionIconGroupProps } from '@lobehub/ui';
+import { type ActionIconGroupProps } from '@unitalkai/ui';
 import { Copy, RotateCw, Trash } from 'lucide-react';
 
 export const items: ActionIconGroupProps['items'] = [

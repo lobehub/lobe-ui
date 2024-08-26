@@ -4,7 +4,7 @@ group: Built-ins
 title: Tabs
 atomId: 'Tabs, Tab'
 apiHeader:
-  pkg: '@lobehub/ui/mdx'
+  pkg: '@unitalkai/ui/mdx'
   docUrl: 'https://github.com/unitalkai/lobe-ui/tree/master/docs/mdx/Tabs/index.md'
   sourceUrl: 'https://github.com/unitalkai/lobe-ui/tree/master/src/mdx/Tabs/index.tsx'
 ---

@@ -1,4 +1,4 @@
-import { ActionIcon, Mermaid } from '@lobehub/ui';
+import { ActionIcon, Mermaid } from '@unitalkai/ui';
 import { AlertCircleIcon } from 'lucide-react';
 
 import { code } from './data';

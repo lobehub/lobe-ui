@@ -1,4 +1,4 @@
-import { ThemeSwitch } from '@lobehub/ui';
+import { ThemeSwitch } from '@unitalkai/ui';
 import { type ThemeMode } from 'antd-style';
 import { useState } from 'react';
 

@@ -1,4 +1,4 @@
-import { StoryBook, Tooltip, TooltipProps, useControls, useCreateStore } from '@lobehub/ui';
+import { StoryBook, Tooltip, TooltipProps, useControls, useCreateStore } from '@unitalkai/ui';
 import { Button } from 'antd';
 
 export default () => {

@@ -6,7 +6,7 @@ import {
   getEmojiNameByCharacter,
   useControls,
   useCreateStore,
-} from '@lobehub/ui';
+} from '@unitalkai/ui';
 import { Button } from 'antd';
 import { Flexbox } from 'react-layout-kit';
 

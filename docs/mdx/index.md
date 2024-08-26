@@ -4,7 +4,7 @@ group: Components
 title: mdxComponents
 atomId: mdxComponents
 apiHeader:
-  pkg: '@lobehub/ui/mdx'
+  pkg: '@unitalkai/ui/mdx'
   docUrl: 'https://github.com/unitalkai/lobe-ui/tree/master/docs/mdx/index.md'
   sourceUrl: 'https://github.com/unitalkai/lobe-ui/tree/master/src/mdx/mdxComponents.ts'
 ---
@@ -12,7 +12,7 @@ apiHeader:
 ## Usage
 
 ```ts
-import { mdxComponents } from '@lobehub/ui/mdx';
+import { mdxComponents } from '@unitalkai/ui/mdx';
 import { RemoteContent } from 'nextra/components';
 
 const RemoteMDX = (props: any) => (

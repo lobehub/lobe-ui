@@ -1,4 +1,4 @@
-import { ActionIconProps, Avatar, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import { ActionIconProps, Avatar, StoryBook, useControls, useCreateStore } from '@unitalkai/ui';
 
 import { useCdnFn } from '@/ConfigProvider';
 

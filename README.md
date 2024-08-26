@@ -58,20 +58,20 @@ To install Lobe UI, run the following command:
 [![][bun-shield]][bun-link]
 
 ```bash
-$ bun add @lobehub/ui
+$ bun add @unitalkai/ui
 ```
 
 ### Compile with NextJS
 
 > \[!NOTE]\
-> By work correct with nextjs page router SSR, add `transpilePackages: ['@lobehub/ui']` to `next.config.js`. For example:
+> By work correct with nextjs page router SSR, add `transpilePackages: ['@unitalkai/ui']` to `next.config.js`. For example:
 
 ```js
 // next.config.js
 const nextConfig = {
   // ...other config
 
-  transpilePackages: ['@lobehub/ui'],
+  transpilePackages: ['@unitalkai/ui'],
 };
 ```
 
@@ -88,7 +88,7 @@ const nextConfig = {
 > and it is recommended to use [antd-style](https://ant-design.github.io/antd-style/) as the default css-in-js styling solution.
 
 ```tsx
-import { ThemeProvider, Button } from '@lobehub/ui'
+import { ThemeProvider, Button } from '@unitalkai/ui'
 import { Button } from 'antd'
 
 export default () => (
@@ -216,10 +216,10 @@ This project is [MIT](./LICENSE) licensed.
 [lobe-i18n]: https://github.com/unitalkai/lobe-commit/tree/master/packages/lobe-i18n
 [lobe-icons]: https://github.com/unitalkai/lobe-icons
 [lobe-theme]: https://github.com/unitalkai/sd-webui-lobe-theme
-[npm-downloads-link]: https://www.npmjs.com/package/@lobehub/ui
-[npm-downloads-shield]: https://img.shields.io/npm/dt/@lobehub/ui?labelColor=black&style=flat-square
-[npm-release-link]: https://www.npmjs.com/package/@lobehub/ui
-[npm-release-shield]: https://img.shields.io/npm/v/@lobehub/ui?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
+[npm-downloads-link]: https://www.npmjs.com/package/@unitalkai/ui
+[npm-downloads-shield]: https://img.shields.io/npm/dt/@unitalkai/ui?labelColor=black&style=flat-square
+[npm-release-link]: https://www.npmjs.com/package/@unitalkai/ui
+[npm-release-shield]: https://img.shields.io/npm/v/@unitalkai/ui?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
 [pr-welcome-link]: https://github.com/unitalkai/lobe-chat/pulls
 [pr-welcome-shield]: https://img.shields.io/badge/🤯_pr_welcome-%E2%86%92-ffcb47?labelColor=black&style=for-the-badge
 [profile-link]: https://github.com/unitalkai

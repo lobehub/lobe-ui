@@ -1,4 +1,4 @@
-import { EmojiPicker } from '@lobehub/ui';
+import { EmojiPicker } from '@unitalkai/ui';
 
 const LOGO = 'https://registry.npmmirror.com/@lobehub/assets-logo/1.2.0/files/assets/logo-3d.webp';
 

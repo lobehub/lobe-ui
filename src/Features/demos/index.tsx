@@ -1,4 +1,4 @@
-import { Features, FeaturesProps } from '@lobehub/ui';
+import { Features, FeaturesProps } from '@unitalkai/ui';
 import { MoonStar, Palette, Zap } from 'lucide-react';
 
 const items: FeaturesProps['items'] = [

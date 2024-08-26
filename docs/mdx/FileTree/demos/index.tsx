@@ -1,5 +1,5 @@
-import { Typography } from '@lobehub/ui';
-import { File, FileTree, Folder } from '@lobehub/ui/mdx';
+import { Typography } from '@unitalkai/ui';
+import { File, FileTree, Folder } from '@unitalkai/ui/mdx';
 
 export default () => (
   <Typography>

@@ -1,4 +1,4 @@
-import { MessageInput } from '@lobehub/ui';
+import { MessageInput } from '@unitalkai/ui';
 import { Divider } from 'antd';
 import { useState } from 'react';
 import { Flexbox } from 'react-layout-kit';

@@ -1,4 +1,4 @@
-import { EmptyCard } from '@lobehub/ui';
+import { EmptyCard } from '@unitalkai/ui';
 
 export default () => {
   return (

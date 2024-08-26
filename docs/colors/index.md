@@ -9,7 +9,7 @@ description: The ColorScales component is a memoized component used to display a
 ### Red
 
 ```tsx
-import { ColorScales, colors } from '@lobehub/ui';
+import { ColorScales, colors } from '@unitalkai/ui';
 
 export default () => <ColorScales name="red" scale={colors.red} midHighLight={9} />;
 ```
@@ -17,7 +17,7 @@ export default () => <ColorScales name="red" scale={colors.red} midHighLight={9}
 ### Volcano
 
 ```tsx
-import { ColorScales, colors } from '@lobehub/ui';
+import { ColorScales, colors } from '@unitalkai/ui';
 
 export default () => <ColorScales name="volcano" scale={colors.volcano} midHighLight={9} />;
 ```
@@ -25,7 +25,7 @@ export default () => <ColorScales name="volcano" scale={colors.volcano} midHighL
 ### Orange
 
 ```tsx
-import { ColorScales, colors } from '@lobehub/ui';
+import { ColorScales, colors } from '@unitalkai/ui';
 
 export default () => <ColorScales name="orange" scale={colors.orange} midHighLight={9} />;
 ```
@@ -33,7 +33,7 @@ export default () => <ColorScales name="orange" scale={colors.orange} midHighLig
 ### Gold
 
 ```tsx
-import { ColorScales, colors } from '@lobehub/ui';
+import { ColorScales, colors } from '@unitalkai/ui';
 
 export default () => <ColorScales name="gold" scale={colors.gold} midHighLight={9} />;
 ```
@@ -41,7 +41,7 @@ export default () => <ColorScales name="gold" scale={colors.gold} midHighLight={
 ### Yellow
 
 ```tsx
-import { ColorScales, colors } from '@lobehub/ui';
+import { ColorScales, colors } from '@unitalkai/ui';
 
 export default () => <ColorScales name="yellow" scale={colors.yellow} midHighLight={9} />;
 ```
@@ -49,7 +49,7 @@ export default () => <ColorScales name="yellow" scale={colors.yellow} midHighLig
 ### Lime
 
 ```tsx
-import { ColorScales, colors } from '@lobehub/ui';
+import { ColorScales, colors } from '@unitalkai/ui';
 
 export default () => <ColorScales name="lime" scale={colors.lime} midHighLight={9} />;
 ```
@@ -57,7 +57,7 @@ export default () => <ColorScales name="lime" scale={colors.lime} midHighLight={
 ### Green
 
 ```tsx
-import { ColorScales, colors } from '@lobehub/ui';
+import { ColorScales, colors } from '@unitalkai/ui';
 
 export default () => <ColorScales name="green" scale={colors.green} midHighLight={9} />;
 ```
@@ -65,7 +65,7 @@ export default () => <ColorScales name="green" scale={colors.green} midHighLight
 ### Cyan
 
 ```tsx
-import { ColorScales, colors } from '@lobehub/ui';
+import { ColorScales, colors } from '@unitalkai/ui';
 
 export default () => <ColorScales name="cyan" scale={colors.cyan} midHighLight={9} />;
 ```
@@ -73,7 +73,7 @@ export default () => <ColorScales name="cyan" scale={colors.cyan} midHighLight={
 ### Blue
 
 ```tsx
-import { ColorScales, colors } from '@lobehub/ui';
+import { ColorScales, colors } from '@unitalkai/ui';
 
 export default () => <ColorScales name="blue" scale={colors.blue} midHighLight={9} />;
 ```
@@ -81,7 +81,7 @@ export default () => <ColorScales name="blue" scale={colors.blue} midHighLight={
 ### Geekblue
 
 ```tsx
-import { ColorScales, colors } from '@lobehub/ui';
+import { ColorScales, colors } from '@unitalkai/ui';
 
 export default () => <ColorScales name="geekblue" scale={colors.geekblue} midHighLight={9} />;
 ```
@@ -89,7 +89,7 @@ export default () => <ColorScales name="geekblue" scale={colors.geekblue} midHig
 ### Purple
 
 ```tsx
-import { ColorScales, colors } from '@lobehub/ui';
+import { ColorScales, colors } from '@unitalkai/ui';
 
 export default () => <ColorScales name="purple" scale={colors.purple} midHighLight={9} />;
 ```
@@ -97,7 +97,7 @@ export default () => <ColorScales name="purple" scale={colors.purple} midHighLig
 ### Magenta
 
 ```tsx
-import { ColorScales, colors } from '@lobehub/ui';
+import { ColorScales, colors } from '@unitalkai/ui';
 
 export default () => <ColorScales name="magenta" scale={colors.magenta} midHighLight={9} />;
 ```
@@ -107,7 +107,7 @@ export default () => <ColorScales name="magenta" scale={colors.magenta} midHighL
 ### Gray
 
 ```tsx
-import { ColorScales, colors } from '@lobehub/ui';
+import { ColorScales, colors } from '@unitalkai/ui';
 
 export default () => <ColorScales name="gray" scale={colors.gray} midHighLight={9} />;
 ```

@@ -1,4 +1,4 @@
-import { Input, InputProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import { Input, InputProps, StoryBook, useControls, useCreateStore } from '@unitalkai/ui';
 
 export default () => {
   const store = useCreateStore();

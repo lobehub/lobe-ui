@@ -24,7 +24,7 @@ export default [
       'Lobe UI is an open-source UI component library for building AIGC web apps. Version: 1.68.0 was published by arvinxx.',
     favicon:
       'https://serpapi.com/searches/64e83bc4c9990330f48fd62f/images/f40516e98093ab4c002d39bf835b3922a78893068fa9ff7249d46b96a844cc8f.png',
-    title: '@lobehub/ui - npm Package Overview - Socket',
+    title: '@unitalkai/ui - npm Package Overview - Socket',
   },
   {
     content:

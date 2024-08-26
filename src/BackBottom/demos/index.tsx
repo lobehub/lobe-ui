@@ -1,4 +1,4 @@
-import { BackBottom } from '@lobehub/ui';
+import { BackBottom } from '@unitalkai/ui';
 import { useRef } from 'react';
 
 export default () => {

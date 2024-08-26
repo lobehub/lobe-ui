@@ -1,5 +1,5 @@
-import { StoryBook, Typography, useControls, useCreateStore } from '@lobehub/ui';
-import { Callout } from '@lobehub/ui/mdx';
+import { StoryBook, Typography, useControls, useCreateStore } from '@unitalkai/ui';
+import { Callout } from '@unitalkai/ui/mdx';
 
 export default () => {
   const store = useCreateStore();

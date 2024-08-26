@@ -1,4 +1,4 @@
-import { StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@unitalkai/ui';
 
 import { LobeChat, LobeChatProps } from '@/brand';
 

@@ -1,4 +1,4 @@
-import { StoryBook, TabsNav, useControls, useCreateStore } from '@lobehub/ui';
+import { StoryBook, TabsNav, useControls, useCreateStore } from '@unitalkai/ui';
 
 export default () => {
   const store = useCreateStore();

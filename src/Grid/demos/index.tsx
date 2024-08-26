@@ -1,4 +1,4 @@
-import { Grid, GridProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import { Grid, GridProps, StoryBook, useControls, useCreateStore } from '@unitalkai/ui';
 
 export default () => {
   const store = useCreateStore();

@@ -1,5 +1,5 @@
-import { Typography } from '@lobehub/ui';
-import { Tab, Tabs } from '@lobehub/ui/mdx';
+import { Typography } from '@unitalkai/ui';
+import { Tab, Tabs } from '@unitalkai/ui/mdx';
 
 export default () => (
   <Typography>

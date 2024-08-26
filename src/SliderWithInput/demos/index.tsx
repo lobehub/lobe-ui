@@ -1,4 +1,4 @@
-import { SliderWithInput } from '@lobehub/ui';
+import { SliderWithInput } from '@unitalkai/ui';
 
 export default () => {
   return <SliderWithInput />;

@@ -1,4 +1,4 @@
-import { Features, FeaturesProps, Highlighter } from '@lobehub/ui';
+import { Features, FeaturesProps, Highlighter } from '@unitalkai/ui';
 import { useTheme } from 'antd-style';
 import { MoonStar, Palette, Zap } from 'lucide-react';
 import { Center } from 'react-layout-kit';
@@ -24,7 +24,7 @@ const items: FeaturesProps['items'] = [
   },
 ];
 
-const example = `import { ThemeProvider, GradientButton } from '@lobehub/ui'
+const example = `import { ThemeProvider, GradientButton } from '@unitalkai/ui'
 
 export default () => (
   <ThemeProvider>

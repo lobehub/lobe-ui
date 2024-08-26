@@ -3,7 +3,7 @@ nav: Mdx
 group: Built-ins
 title: Steps
 apiHeader:
-  pkg: '@lobehub/ui/mdx'
+  pkg: '@unitalkai/ui/mdx'
   docUrl: 'https://github.com/unitalkai/lobe-ui/tree/master/docs/mdx/Steps/index.md'
   sourceUrl: 'https://github.com/unitalkai/lobe-ui/tree/master/src/mdx/Steps/index.tsx'
 ---

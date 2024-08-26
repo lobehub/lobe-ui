@@ -1,7 +1,7 @@
 /**
  * iframe: true
  */
-import { ActionIcon, MobileNavBar, MobileNavBarTitle, Tag } from '@lobehub/ui';
+import { ActionIcon, MobileNavBar, MobileNavBarTitle, Tag } from '@unitalkai/ui';
 import { MessageCircle } from 'lucide-react';
 
 export default () => {

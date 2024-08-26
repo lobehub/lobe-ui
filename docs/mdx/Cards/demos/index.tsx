@@ -1,5 +1,5 @@
-import { Typography } from '@lobehub/ui';
-import { Card, Cards } from '@lobehub/ui/mdx';
+import { Typography } from '@unitalkai/ui';
+import { Card, Cards } from '@unitalkai/ui/mdx';
 import { Warehouse } from 'lucide-react';
 
 export default () => (

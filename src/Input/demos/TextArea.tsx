@@ -1,4 +1,4 @@
-import { StoryBook, TextArea, TextAreaProps, useControls, useCreateStore } from '@lobehub/ui';
+import { StoryBook, TextArea, TextAreaProps, useControls, useCreateStore } from '@unitalkai/ui';
 
 export default () => {
   const store = useCreateStore();

@@ -1,4 +1,4 @@
-import { ActionIcon, Logo, SideNav } from '@lobehub/ui';
+import { ActionIcon, Logo, SideNav } from '@unitalkai/ui';
 import { Album, MessageSquare, Settings2 } from 'lucide-react';
 import { useState } from 'react';
 

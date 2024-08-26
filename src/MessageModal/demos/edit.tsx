@@ -1,4 +1,4 @@
-import { MessageModal } from '@lobehub/ui';
+import { MessageModal } from '@unitalkai/ui';
 import { Button, Divider } from 'antd';
 import { useState } from 'react';
 

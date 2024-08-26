@@ -1,4 +1,4 @@
-import { EditableMessageList } from '@lobehub/ui';
+import { EditableMessageList } from '@unitalkai/ui';
 
 import { data } from './data';
 

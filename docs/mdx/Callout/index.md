@@ -3,7 +3,7 @@ nav: Mdx
 group: Built-ins
 title: Callout
 apiHeader:
-  pkg: '@lobehub/ui/mdx'
+  pkg: '@unitalkai/ui/mdx'
   docUrl: 'https://github.com/unitalkai/lobe-ui/tree/master/docs/mdx/Callout/index.md'
   sourceUrl: 'https://github.com/unitalkai/lobe-ui/tree/master/src/mdx/Callout/index.tsx'
 ---

@@ -5,7 +5,7 @@ import {
   StoryBook,
   useControls,
   useCreateStore,
-} from '@lobehub/ui';
+} from '@unitalkai/ui';
 import { useState } from 'react';
 
 import { avatar, dropdownMenu, items } from './data';

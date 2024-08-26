@@ -1,4 +1,4 @@
-import { ActionIcon, Highlighter } from '@lobehub/ui';
+import { ActionIcon, Highlighter } from '@unitalkai/ui';
 import { AlertCircleIcon } from 'lucide-react';
 
 import { code } from './data';

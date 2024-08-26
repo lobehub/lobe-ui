@@ -15,7 +15,7 @@ The `proxy` provides two CDN resolution addresses, `aliyun` and `unpkg`, with `a
 At the same time, it provides custom CDN configuration, set `proxy` to `custom` and configure through the `customCdnFn` attribute.
 
 ```ts
-import { ConfigProvider, Logo } from '@lobehub/ui';
+import { ConfigProvider, Logo } from '@unitalkai/ui';
 
 export default () => {
   return (

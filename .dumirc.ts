@@ -54,7 +54,7 @@ const themeConfig = {
 
 export default defineConfig({
   alias: {
-    '@lobehub/ui/mdx': resolve(__dirname, './src/mdx'),
+    '@unitalkai/ui/mdx': resolve(__dirname, './src/mdx'),
   },
   apiParser: isProduction ? {} : false,
   base: '/',

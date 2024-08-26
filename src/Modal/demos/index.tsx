@@ -1,4 +1,4 @@
-import { Modal } from '@lobehub/ui';
+import { Modal } from '@unitalkai/ui';
 import { Button, Typography } from 'antd';
 import { useState } from 'react';
 

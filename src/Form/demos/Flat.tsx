@@ -1,4 +1,4 @@
-import { Form, type FormProps } from '@lobehub/ui';
+import { Form, type FormProps } from '@unitalkai/ui';
 import { Select, Switch } from 'antd';
 
 const setting = {

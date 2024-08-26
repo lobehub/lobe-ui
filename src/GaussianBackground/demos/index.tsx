@@ -1,6 +1,5 @@
-import { GaussianBackground, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import { GaussianBackground, StoryBook, useControls, useCreateStore } from '@unitalkai/ui';
 import { useTheme } from 'antd-style';
-import React from 'react';
 
 export default () => {
   const theme = useTheme();

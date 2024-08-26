@@ -1,4 +1,4 @@
-import { EmojiPicker, Icon, Tooltip } from '@lobehub/ui';
+import { EmojiPicker, Icon, Tooltip } from '@unitalkai/ui';
 import { Button } from 'antd';
 import { SunIcon } from 'lucide-react';
 

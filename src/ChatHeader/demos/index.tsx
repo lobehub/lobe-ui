@@ -1,4 +1,4 @@
-import { ChatHeader, ChatHeaderProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import { ChatHeader, ChatHeaderProps, StoryBook, useControls, useCreateStore } from '@unitalkai/ui';
 
 export default () => {
   const store = useCreateStore();

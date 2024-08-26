@@ -1,4 +1,4 @@
-import { Alert, AlertProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import { Alert, AlertProps, StoryBook, useControls, useCreateStore } from '@unitalkai/ui';
 
 export default () => {
   const store = useCreateStore();

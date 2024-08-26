@@ -1,4 +1,4 @@
-import { Mermaid, MermaidProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import { Mermaid, MermaidProps, StoryBook, useControls, useCreateStore } from '@unitalkai/ui';
 
 import { code } from './data';
 

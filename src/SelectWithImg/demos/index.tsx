@@ -1,4 +1,4 @@
-import { SelectWithImg } from '@lobehub/ui';
+import { SelectWithImg } from '@unitalkai/ui';
 import { useState } from 'react';
 
 export default () => {

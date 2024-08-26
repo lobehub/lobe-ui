@@ -1,4 +1,4 @@
-import { Markdown, MarkdownProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import { Markdown, MarkdownProps, StoryBook, useControls, useCreateStore } from '@unitalkai/ui';
 
 import { code } from './data';
 

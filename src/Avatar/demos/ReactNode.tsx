@@ -1,5 +1,5 @@
 import { UserOutlined } from '@ant-design/icons';
-import { Avatar } from '@lobehub/ui';
+import { Avatar } from '@unitalkai/ui';
 
 export default () => {
   return <Avatar avatar={<UserOutlined />} />;
