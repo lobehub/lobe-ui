@@ -3,7 +3,7 @@ import { Hero, HeroProps } from '@lobehub/ui';
 const actions: HeroProps['actions'] = [
   {
     icon: 'Github',
-    link: 'https://github.com/lobehub',
+    link: 'https://github.com/unitalkai',
     text: 'Github',
   },
   {

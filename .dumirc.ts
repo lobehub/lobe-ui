@@ -31,7 +31,7 @@ const themeConfig = {
   giscus: {
     category: 'Q&A',
     categoryId: 'DIC_kwDOJloKoM4CXsCu',
-    repo: 'lobehub/lobe-ui',
+    repo: 'unitalkai/lobe-ui',
     repoId: 'R_kgDOJloKoA',
   },
   name: 'UI',

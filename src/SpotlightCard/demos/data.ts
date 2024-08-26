@@ -8,10 +8,10 @@ export default [
   },
   {
     content:
-      'Lobe UI is an open-source UI component library for building AIGC web apps - GitHub - lobehub/lobe-ui: Lobe UI is an open-source UI component library for ...',
+      'Lobe UI is an open-source UI component library for building AIGC web apps - GitHub - unitalkai/lobe-ui: Lobe UI is an open-source UI component library for ...',
     favicon:
       'https://serpapi.com/searches/64e83bc4c9990330f48fd62f/images/f40516e98093ab4c002d39bf835b3922f7d5cfce4fde91906aba32fa8a7f31b2.png',
-    title: 'lobehub/lobe-ui - GitHub',
+    title: 'unitalkai/lobe-ui - GitHub',
   },
   {
     content: 'Meet the LobeHub: Empowering your AI dreams with LobeHub.',

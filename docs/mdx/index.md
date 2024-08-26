@@ -5,8 +5,8 @@ title: mdxComponents
 atomId: mdxComponents
 apiHeader:
   pkg: '@lobehub/ui/mdx'
-  docUrl: 'https://github.com/lobehub/lobe-ui/tree/master/docs/mdx/index.md'
-  sourceUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/mdx/mdxComponents.ts'
+  docUrl: 'https://github.com/unitalkai/lobe-ui/tree/master/docs/mdx/index.md'
+  sourceUrl: 'https://github.com/unitalkai/lobe-ui/tree/master/src/mdx/mdxComponents.ts'
 ---
 
 ## Usage

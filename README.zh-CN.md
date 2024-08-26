@@ -112,7 +112,7 @@ export default () => (
 或者克隆到本地进行开发：
 
 ```bash
-$ git clone https://github.com/lobehub/lobe-ui.git
+$ git clone https://github.com/unitalkai/lobe-ui.git
 $ cd lobe-ui
 $ bun install
 $ bun start
@@ -144,8 +144,8 @@ $ bun start
 
 <a href="https://opencollective.com/lobehub" target="_blank">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/lobehub/.github/blob/main/static/sponsor-dark.png?raw=true">
-    <img  src="https://github.com/lobehub/.github/blob/main/static/sponsor-light.png?raw=true">
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/unitalkai/.github/blob/main/static/sponsor-dark.png?raw=true">
+    <img  src="https://github.com/unitalkai/.github/blob/main/static/sponsor-light.png?raw=true">
   </picture>
 </a>
 
@@ -185,40 +185,40 @@ This project is [MIT](./LICENSE) licensed.
 [banner]: https://github-production-user-asset-6210df.s3.amazonaws.com/17870709/268452017-960ab8a1-e4b7-4648-beb1-77daf4b6034a.png
 [bun-link]: https://bun.sh
 [bun-shield]: https://img.shields.io/badge/-speedup%20with%20bun-black?logo=bun&style=for-the-badge
-[codespaces-link]: https://codespaces.new/lobehub/lobe-ui
+[codespaces-link]: https://codespaces.new/unitalkai/lobe-ui
 [codespaces-shield]: https://github.com/codespaces/badge.svg
-[contributors-contrib]: https://contrib.rocks/image?repo=lobehub/lobe-ui
-[contributors-link]: https://github.com/lobehub/lobe-ui/graphs/contributors
+[contributors-contrib]: https://contrib.rocks/image?repo=unitalkai/lobe-ui
+[contributors-link]: https://github.com/unitalkai/lobe-ui/graphs/contributors
 [discord-link]: https://discord.gg/AYFPHvv2jT
 [discord-shield]: https://img.shields.io/discord/1127171173982154893?color=5865F2&label=discord&labelColor=black&logo=discord&logoColor=white&style=flat-square
 [fossa-license-link]: https://app.fossa.com/projects/git%2Bgithub.com%2Flobehub%2Flobe-ui
 [fossa-license-shield]: https://app.fossa.com/api/projects/git%2Bgithub.com%2Flobehub%2Flobe-ui.svg?type=large
-[github-action-release-link]: https://github.com/actions/workflows/lobehub/lobe-ui/release.yml
-[github-action-release-shield]: https://img.shields.io/github/actions/workflow/status/lobehub/lobe-ui/release.yml?label=release&labelColor=black&logo=githubactions&logoColor=white&style=flat-square
-[github-action-test-link]: https://github.com/actions/workflows/lobehub/lobe-ui/test.yml
-[github-action-test-shield]: https://img.shields.io/github/actions/workflow/status/lobehub/lobe-ui/test.yml?label=test&labelColor=black&logo=githubactions&logoColor=white&style=flat-square
-[github-contributors-link]: https://github.com/lobehub/lobe-ui/graphs/contributors
-[github-contributors-shield]: https://img.shields.io/github/contributors/lobehub/lobe-ui?color=c4f042&labelColor=black&style=flat-square
-[github-forks-link]: https://github.com/lobehub/lobe-ui/network/members
-[github-forks-shield]: https://img.shields.io/github/forks/lobehub/lobe-ui?color=8ae8ff&labelColor=black&style=flat-square
-[github-issues-link]: https://github.com/lobehub/lobe-ui/issues
-[github-issues-shield]: https://img.shields.io/github/issues/lobehub/lobe-ui?color=ff80eb&labelColor=black&style=flat-square
-[github-license-link]: https://github.com/lobehub/lobe-ui/blob/master/LICENSE
-[github-license-shield]: https://img.shields.io/github/license/lobehub/lobe-ui?color=white&labelColor=black&style=flat-square
-[github-releasedate-link]: https://github.com/lobehub/lobe-ui/releases
-[github-releasedate-shield]: https://img.shields.io/github/release-date/lobehub/lobe-ui?labelColor=black&style=flat-square
-[github-stars-link]: https://github.com/lobehub/lobe-ui/network/stargazers
-[github-stars-shield]: https://img.shields.io/github/stars/lobehub/lobe-ui?color=ffcb47&labelColor=black&style=flat-square
-[lobe-chat]: https://github.com/lobehub/lobe-chat
-[lobe-commit]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-commit
-[lobe-i18n]: https://github.com/lobehub/lobe-commit/tree/master/packages/lobe-i18n
-[lobe-theme]: https://github.com/lobehub/sd-webui-lobe-theme
+[github-action-release-link]: https://github.com/actions/workflows/unitalkai/lobe-ui/release.yml
+[github-action-release-shield]: https://img.shields.io/github/actions/workflow/status/unitalkai/lobe-ui/release.yml?label=release&labelColor=black&logo=githubactions&logoColor=white&style=flat-square
+[github-action-test-link]: https://github.com/actions/workflows/unitalkai/lobe-ui/test.yml
+[github-action-test-shield]: https://img.shields.io/github/actions/workflow/status/unitalkai/lobe-ui/test.yml?label=test&labelColor=black&logo=githubactions&logoColor=white&style=flat-square
+[github-contributors-link]: https://github.com/unitalkai/lobe-ui/graphs/contributors
+[github-contributors-shield]: https://img.shields.io/github/contributors/unitalkai/lobe-ui?color=c4f042&labelColor=black&style=flat-square
+[github-forks-link]: https://github.com/unitalkai/lobe-ui/network/members
+[github-forks-shield]: https://img.shields.io/github/forks/unitalkai/lobe-ui?color=8ae8ff&labelColor=black&style=flat-square
+[github-issues-link]: https://github.com/unitalkai/lobe-ui/issues
+[github-issues-shield]: https://img.shields.io/github/issues/unitalkai/lobe-ui?color=ff80eb&labelColor=black&style=flat-square
+[github-license-link]: https://github.com/unitalkai/lobe-ui/blob/master/LICENSE
+[github-license-shield]: https://img.shields.io/github/license/unitalkai/lobe-ui?color=white&labelColor=black&style=flat-square
+[github-releasedate-link]: https://github.com/unitalkai/lobe-ui/releases
+[github-releasedate-shield]: https://img.shields.io/github/release-date/unitalkai/lobe-ui?labelColor=black&style=flat-square
+[github-stars-link]: https://github.com/unitalkai/lobe-ui/network/stargazers
+[github-stars-shield]: https://img.shields.io/github/stars/unitalkai/lobe-ui?color=ffcb47&labelColor=black&style=flat-square
+[lobe-chat]: https://github.com/unitalkai/lobe-chat
+[lobe-commit]: https://github.com/unitalkai/lobe-commit/tree/master/packages/lobe-commit
+[lobe-i18n]: https://github.com/unitalkai/lobe-commit/tree/master/packages/lobe-i18n
+[lobe-theme]: https://github.com/unitalkai/sd-webui-lobe-theme
 [npm-downloads-link]: https://www.npmjs.com/package/@lobehub/ui
 [npm-downloads-shield]: https://img.shields.io/npm/dt/@lobehub/ui?labelColor=black&style=flat-square
 [npm-release-link]: https://www.npmjs.com/package/@lobehub/ui
 [npm-release-shield]: https://img.shields.io/npm/v/@lobehub/ui?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
-[pr-welcome-link]: https://github.com/lobehub/lobe-chat/pulls
+[pr-welcome-link]: https://github.com/unitalkai/lobe-chat/pulls
 [pr-welcome-shield]: https://img.shields.io/badge/🤯_pr_welcome-%E2%86%92-ffcb47?labelColor=black&style=for-the-badge
-[profile-link]: https://github.com/lobehub
+[profile-link]: https://github.com/unitalkai
 [vercel-link]: https://ui.lobehub.com
 [vercel-shield]: https://img.shields.io/website?down_message=offline&label=vercel&labelColor=black&logo=vercel&style=flat-square&up_message=online&url=https%3A%2F%2Fui.lobehub.com
