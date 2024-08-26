@@ -6,7 +6,7 @@
 <img height="120" src="https://gw.alipayobjects.com/zos/kitchen/qJ3l3EPsdW/split.svg">
 <img height="120" src="https://registry.npmmirror.com/@lobehub/assets-emoji/1.3.0/files/assets/lollipop.webp">
 
-<h1>Lobe UI</h1>
+<h1>Unitalk UI base on Lobe UI</h1>
 
 Lobe UI is an open-source UI component library for building _AIGC_ web apps
 
