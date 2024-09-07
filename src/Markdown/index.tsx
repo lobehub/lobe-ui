@@ -87,7 +87,7 @@ const Markdown = memo<MarkdownProps>(
       return fixMarkdownBold(escapeMhchem(escapeBrackets(children)));
     }, [children, enableLatex]);
 
-    const componentsCache: Components = useMemo(
+    const memoComponents: Components = useMemo(
       () => ({
         a: (props: any) => <Link {...props} {...componentProps?.a} />,
         img: enableImageGallery
@@ -122,18 +122,31 @@ const Markdown = memo<MarkdownProps>(
             />
           ),
         video: (props: any) => <Video {...props} {...componentProps?.video} />,
+        ...components,
       }),
-      [componentProps, enableImageGallery, enableMermaid, fullFeaturedCodeBlock],
+      [
+        ...Object.values(components || {}),
+        ...Object.values(componentProps || {}),
+        enableImageGallery,
+        enableMermaid,
+        fullFeaturedCodeBlock,
+      ],
     );
 
-    const rehypePluginsCache = useMemo(
-      () => [allowHtml && rehypeRaw, enableLatex && rehypeKatex].filter(Boolean) as any,
-      [allowHtml, enableLatex],
-    );
-    const remarkPluginsCache = useMemo(
+    const memoRehypePlugins = useMemo(
       () =>
-        [remarkGfm, enableLatex && remarkMath, isChatMode && remarkBreaks].filter(Boolean) as any,
-      [isChatMode, enableLatex],
+        [allowHtml && rehypeRaw, enableLatex && rehypeKatex, ...rehypePlugins].filter(
+          Boolean,
+        ) as any,
+      [allowHtml, enableLatex, ...rehypePlugins],
+    );
+
+    const memoRemarkPlugins = useMemo(
+      () =>
+        [remarkGfm, enableLatex && remarkMath, isChatMode && remarkBreaks, ...remarkPlugins].filter(
+          Boolean,
+        ) as any,
+      [isChatMode, enableLatex, ...remarkPlugins],
     );
 
     return (
@@ -163,9 +176,9 @@ const Markdown = memo<MarkdownProps>(
               mdStyles.video,
               isChatMode && styles.chat,
             )}
-            components={{ ...componentsCache, ...components }}
-            rehypePlugins={[...rehypePluginsCache, ...rehypePlugins]}
-            remarkPlugins={[...remarkPluginsCache, ...remarkPlugins]}
+            components={memoComponents}
+            rehypePlugins={memoRehypePlugins}
+            remarkPlugins={memoRemarkPlugins}
             {...rest}
           >
             {escapedContent}
