@@ -1,7 +1,7 @@
 'use client';
 
 import type { AnchorProps } from 'antd';
-import { CSSProperties, memo, useMemo } from 'react';
+import { CSSProperties, ReactNode, memo, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import type { Components } from 'react-markdown/lib/ast-to-react';
 import rehypeKatex from 'rehype-katex';
@@ -39,6 +39,7 @@ export interface MarkdownProps extends TypographyProps {
     video?: Partial<VideoProps>;
   };
   components?: Components;
+  customRender?: (dom: ReactNode, context: { text: string }) => ReactNode;
   enableImageGallery?: boolean;
   enableLatex?: boolean;
   enableMermaid?: boolean;
@@ -70,6 +71,7 @@ const Markdown = memo<MarkdownProps>(
     rehypePlugins = [],
     remarkPlugins = [],
     components = {},
+    customRender,
     ...rest
   }) => {
     const { cx, styles } = useStyles({
@@ -149,6 +151,41 @@ const Markdown = memo<MarkdownProps>(
       [isChatMode, enableLatex, ...remarkPlugins],
     );
 
+    const defaultDOM = (
+      <ImageGallery enable={enableImageGallery}>
+        <ReactMarkdown
+          className={cx(
+            mdStyles.__root,
+            mdStyles.a,
+            mdStyles.blockquote,
+            mdStyles.code,
+            mdStyles.details,
+            mdStyles.header,
+            mdStyles.hr,
+            mdStyles.img,
+            mdStyles.kbd,
+            mdStyles.list,
+            mdStyles.p,
+            mdStyles.pre,
+            mdStyles.strong,
+            mdStyles.table,
+            mdStyles.video,
+            isChatMode && styles.chat,
+          )}
+          components={memoComponents}
+          rehypePlugins={memoRehypePlugins}
+          remarkPlugins={memoRemarkPlugins}
+          {...rest}
+        >
+          {escapedContent}
+        </ReactMarkdown>
+      </ImageGallery>
+    );
+
+    const markdownContent = customRender
+      ? customRender(defaultDOM, { text: escapedContent })
+      : defaultDOM;
+
     return (
       <article
         className={cx(styles.root, className)}
@@ -156,34 +193,7 @@ const Markdown = memo<MarkdownProps>(
         onDoubleClick={onDoubleClick}
         style={style}
       >
-        <ImageGallery enable={enableImageGallery}>
-          <ReactMarkdown
-            className={cx(
-              mdStyles.__root,
-              mdStyles.a,
-              mdStyles.blockquote,
-              mdStyles.code,
-              mdStyles.details,
-              mdStyles.header,
-              mdStyles.hr,
-              mdStyles.img,
-              mdStyles.kbd,
-              mdStyles.list,
-              mdStyles.p,
-              mdStyles.pre,
-              mdStyles.strong,
-              mdStyles.table,
-              mdStyles.video,
-              isChatMode && styles.chat,
-            )}
-            components={memoComponents}
-            rehypePlugins={memoRehypePlugins}
-            remarkPlugins={memoRemarkPlugins}
-            {...rest}
-          >
-            {escapedContent}
-          </ReactMarkdown>
-        </ImageGallery>
+        {markdownContent}
       </article>
     );
   },
