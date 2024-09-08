@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.150.2](https://github.com/lobehub/lobe-ui/compare/v1.150.1...v1.150.2)
+
+<sup>Released on **2024-09-08**</sup>
+
+#### 💄 Styles
+
+- **misc**: Support custom markdown render.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Support custom markdown render ([bf27f0b](https://github.com/lobehub/lobe-ui/commit/bf27f0b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.150.1](https://github.com/lobehub/lobe-ui/compare/v1.150.0...v1.150.1)
 
 <sup>Released on **2024-09-07**</sup>
