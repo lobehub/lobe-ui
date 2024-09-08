@@ -81,7 +81,7 @@ const MessageInput = memo<MessageInputProps>(
           onChange={(e) => setValue(e.target.value)}
           placeholder={placeholder}
           resize={false}
-          style={{ height: isAutoSize ? 'unset' : height, minHeight: '100%', ...textareaStyle }}
+          style={textareaStyle}
           type={type}
           value={temporaryValue}
         />
