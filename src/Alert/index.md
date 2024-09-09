@@ -2,6 +2,7 @@
 nav: Components
 group: Feedback
 title: Alert
+description: Alert is a component used to display important messages or notifications to the user. It can be customized with different types, icons, and actions.
 ---
 
 ## Default

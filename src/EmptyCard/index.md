@@ -2,6 +2,7 @@
 nav: Components
 group: Data Display
 title: EmptyCard
+description: EmptyCard is a component used to display an empty state with an optional cover image and description.
 ---
 
 ## Default
