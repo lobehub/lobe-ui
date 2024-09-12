@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.150.4](https://github.com/lobehub/lobe-ui/compare/v1.150.3...v1.150.4)
+
+<sup>Released on **2024-09-12**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix highlight classname.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix highlight classname ([cc9dc73](https://github.com/lobehub/lobe-ui/commit/cc9dc73))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.150.3](https://github.com/lobehub/lobe-ui/compare/v1.150.2...v1.150.3)
 
 <sup>Released on **2024-09-08**</sup>
