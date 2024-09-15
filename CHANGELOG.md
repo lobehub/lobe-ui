@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.150.5](https://github.com/lobehub/lobe-ui/compare/v1.150.4...v1.150.5)
+
+<sup>Released on **2024-09-15**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Improve rehypePlugins and remarkPlugins props.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Improve rehypePlugins and remarkPlugins props ([2b15328](https://github.com/lobehub/lobe-ui/commit/2b15328))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.150.4](https://github.com/lobehub/lobe-ui/compare/v1.150.3...v1.150.4)
 
 <sup>Released on **2024-09-12**</sup>
