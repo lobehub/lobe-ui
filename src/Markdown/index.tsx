@@ -68,8 +68,8 @@ const Markdown = memo<MarkdownProps>(
     marginMultiple,
     variant = 'normal',
     lineHeight,
-    rehypePlugins = [],
-    remarkPlugins = [],
+    rehypePlugins,
+    remarkPlugins,
     components = {},
     customRender,
     ...rest
@@ -135,20 +135,26 @@ const Markdown = memo<MarkdownProps>(
       ],
     );
 
+    const innerRehypePlugins = Array.isArray(rehypePlugins) ? rehypePlugins : [rehypePlugins];
+
     const memoRehypePlugins = useMemo(
       () =>
-        [allowHtml && rehypeRaw, enableLatex && rehypeKatex, ...rehypePlugins].filter(
+        [allowHtml && rehypeRaw, enableLatex && rehypeKatex, ...innerRehypePlugins].filter(
           Boolean,
         ) as any,
-      [allowHtml, enableLatex, ...rehypePlugins],
+      [allowHtml, enableLatex, ...innerRehypePlugins],
     );
 
+    const innerRemarkPlugins = Array.isArray(remarkPlugins) ? remarkPlugins : [remarkPlugins];
     const memoRemarkPlugins = useMemo(
       () =>
-        [remarkGfm, enableLatex && remarkMath, isChatMode && remarkBreaks, ...remarkPlugins].filter(
-          Boolean,
-        ) as any,
-      [isChatMode, enableLatex, ...remarkPlugins],
+        [
+          remarkGfm,
+          enableLatex && remarkMath,
+          isChatMode && remarkBreaks,
+          ...innerRemarkPlugins,
+        ].filter(Boolean) as any,
+      [isChatMode, enableLatex, ...innerRemarkPlugins],
     );
 
     const defaultDOM = (
