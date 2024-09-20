@@ -62,7 +62,7 @@ export default defineConfig({
     'process.env': process.env,
   },
   extraBabelPlugins: ['babel-plugin-antd-style'],
-  favicons: ['https://npm.elemecdn.com/@lobehub/assets-favicons/assets/favicon.ico'],
+  favicons: ['https://lobehub.com/favicon.ico'],
   locales: [{ id: 'en-US', name: 'English' }],
   mfsu: isWin ? undefined : {},
   npmClient: 'pnpm',
@@ -72,6 +72,9 @@ export default defineConfig({
         entryFile: './src/index.ts',
       }
     : undefined,
+  sitemap: {
+    hostname: 'https://ui.lobehub.com',
+  },
   styles: [
     `html, body { background: transparent;  }
 
