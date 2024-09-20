@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.151.0](https://github.com/lobehub/lobe-ui/compare/v1.150.5...v1.151.0)
+
+<sup>Released on **2024-09-20**</sup>
+
+#### ✨ Features
+
+- **misc**: Add sitemap.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add sitemap ([c43a8cd](https://github.com/lobehub/lobe-ui/commit/c43a8cd))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.150.5](https://github.com/lobehub/lobe-ui/compare/v1.150.4...v1.150.5)
 
 <sup>Released on **2024-09-15**</sup>
