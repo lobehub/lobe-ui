@@ -37,12 +37,11 @@ const themeConfig = {
   name: 'UI',
   nav: [
     { link: '/components/action-icon', title: 'Components' },
+    { link: '/brand/lobehub', title: 'Brand' },
     { link: '/mdx/callout', title: 'Mdx' },
+    { link: 'https://icons.lobehub.com', mode: 'override', title: 'Icons' },
+    { link: 'https://charts.lobehub.com', mode: 'override', title: 'Charts' },
     { link: '/colors', title: 'Colors' },
-    { link: 'http://icons.lobehub.com', mode: 'override', title: 'Icons' },
-    { link: 'https://ant.design/components/overview', mode: 'override', title: 'Antd Components' },
-    { link: 'https://lucide.dev/icons', mode: 'override', title: 'Lucide Icons' },
-    { link: 'https://ant-design.github.io/antd-style', mode: 'override', title: 'CSSinJS' },
     { link: '/changelog', title: 'Changelog' },
   ],
   socialLinks: {
@@ -54,6 +53,7 @@ const themeConfig = {
 
 export default defineConfig({
   alias: {
+    '@lobehub/ui/brand': resolve(__dirname, './src/brand'),
     '@lobehub/ui/mdx': resolve(__dirname, './src/mdx'),
   },
   apiParser: isProduction ? {} : false,

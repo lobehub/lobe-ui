@@ -1,5 +1,6 @@
 'use client';
 
+import { Tag, TagProps } from 'antd';
 import { createStyles } from 'antd-style';
 import { FC } from 'react';
 import { Flexbox, type FlexboxProps } from 'react-layout-kit';
@@ -17,7 +18,7 @@ const useStyles = createStyles(({ css, cx, token }) => {
 
   return {
     card: css`
-      --lobe-markdown-header-multiple: 0;
+      --lobe-markdown-header-multiple: 0.2;
       --lobe-markdown-margin-multiple: 1;
 
       overflow: hidden;
@@ -55,9 +56,8 @@ const useStyles = createStyles(({ css, cx, token }) => {
       }
     `,
     content: css`
-      gap: 0.75em;
       width: 100%;
-      padding: 1em;
+      padding: 1.4em;
     `,
     icon,
   };
@@ -69,10 +69,23 @@ export interface CardProps extends Omit<FlexboxProps, 'children'> {
   icon?: IconProps['icon'];
   iconProps?: Omit<IconProps, 'icon'>;
   image?: string;
+  tag?: string;
+  tagColor?: TagProps['color'];
   title: string;
 }
 
-const Card: FC<CardProps> = ({ icon, title, desc, href, iconProps, className, image, ...rest }) => {
+const Card: FC<CardProps> = ({
+  tag,
+  tagColor = 'success',
+  icon,
+  title,
+  desc,
+  href,
+  iconProps,
+  className,
+  image,
+  ...rest
+}) => {
   const { cx, styles } = useStyles();
 
   return (
@@ -87,20 +100,30 @@ const Card: FC<CardProps> = ({ icon, title, desc, href, iconProps, className, im
             width={250}
           />
         )}
-
+        {tag && (
+          <Flexbox align={'flex-start'} className={styles.content} style={{ paddingBottom: 0 }}>
+            <Tag
+              bordered={false}
+              color={tagColor}
+              style={{ borderRadius: '1em', fontSize: '0.8em' }}
+            >
+              {tag}
+            </Tag>
+          </Flexbox>
+        )}
         <Flexbox
           align={desc ? 'flex-start' : 'center'}
           className={styles.content}
+          gap={'0.75em'}
           horizontal
-          {...rest}
         >
           {!image && icon && (
             <Icon className={styles.icon} icon={icon} size={{ fontSize: '1.5em' }} {...iconProps} />
           )}
-          <div>
+          <Flexbox gap={'0.2em'}>
             <h3>{title}</h3>
             {desc && <p>{desc}</p>}
-          </div>
+          </Flexbox>
         </Flexbox>
       </Flexbox>
     </A>
