@@ -20,9 +20,25 @@ export function fixMarkdownBold(text: string): string {
   let count = 0;
   let count2 = 0;
   let result = '';
+  let inCodeBlock = false;
+  let inInlineCode = false;
+
   for (let i = 0; i < text.length; i++) {
     const char = text[i];
-    if (char === '*') {
+    
+    if (text.slice(i, i + 3) === '```') {
+      inCodeBlock = !inCodeBlock;
+      result += '```';
+      i += 2;
+      continue;
+    }
+    if (char === '`') {
+      inInlineCode = !inInlineCode;
+      result += '`';
+      continue;
+    }
+
+    if (char === '*' && !inInlineCode && !inCodeBlock) {
       count++;
       if (count === 2) {
         count2++;
