@@ -2,6 +2,40 @@
 
 # Changelog
 
+### [Version 1.151.1](https://github.com/lobehub/lobe-ui/compare/v1.151.0...v1.151.1)
+
+<sup>Released on **2024-09-23**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Ignore \*\* in code blocks, Lock umi.
+
+#### 💄 Styles
+
+- **misc**: Fallback some style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Ignore \*\* in code blocks, closes [#196](https://github.com/lobehub/lobe-ui/issues/196) ([19ec269](https://github.com/lobehub/lobe-ui/commit/19ec269))
+- **misc**: Lock umi ([8e9cf40](https://github.com/lobehub/lobe-ui/commit/8e9cf40))
+
+#### Styles
+
+- **misc**: Fallback some style ([7b0dbc1](https://github.com/lobehub/lobe-ui/commit/7b0dbc1))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.151.0](https://github.com/lobehub/lobe-ui/compare/v1.150.5...v1.151.0)
 
 <sup>Released on **2024-09-20**</sup>
