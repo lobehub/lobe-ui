@@ -20,7 +20,6 @@ export default () => {
         options: ['small', 'normal', 'large'],
         value: 'small',
       },
-      spotlight: true,
       type: {
         options: ['ghost', 'block', 'pure'],
         value: 'block',

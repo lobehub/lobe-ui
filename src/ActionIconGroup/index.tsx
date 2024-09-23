@@ -7,7 +7,6 @@ import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon, { type ActionIconProps } from '@/ActionIcon';
 import Icon, { IconSizeType } from '@/Icon';
-import Spotlight from '@/Spotlight';
 import { DivProps } from '@/types';
 
 import { useStyles } from './style';
@@ -68,7 +67,6 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
     type = 'block',
     items = [],
     placement,
-    spotlight = true,
     direction = 'row',
     dropdownMenu = [],
     onActionClick,
@@ -81,7 +79,6 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
 
     return (
       <Flexbox className={styles.container} horizontal={direction === 'row'} {...rest}>
-        {spotlight && <Spotlight />}
         {items?.length > 0 &&
           items.map((item) => (
             <ActionIcon

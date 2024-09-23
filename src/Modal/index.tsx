@@ -70,7 +70,6 @@ const useStyles = createStyles(
       `,
       wrap: css`
         overflow: hidden auto;
-        backdrop-filter: blur(2px);
       `,
     };
   },
