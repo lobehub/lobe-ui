@@ -76,7 +76,7 @@ export interface CardProps extends Omit<FlexboxProps, 'children'> {
 
 const Card: FC<CardProps> = ({
   tag,
-  tagColor = 'success',
+  tagColor = 'blue',
   icon,
   title,
   desc,
@@ -101,11 +101,21 @@ const Card: FC<CardProps> = ({
           />
         )}
         {tag && (
-          <Flexbox align={'flex-start'} className={styles.content} style={{ paddingBottom: 0 }}>
+          <Flexbox
+            align={'flex-start'}
+            className={styles.content}
+            style={{ paddingBottom: '0.2em', paddingTop: '1.8em' }}
+          >
             <Tag
               bordered={false}
               color={tagColor}
-              style={{ borderRadius: '1em', fontSize: '0.8em' }}
+              style={{
+                borderRadius: '1em',
+                fontSize: '0.8em',
+                fontWeight: 500,
+                paddingBlock: '0.1em',
+                paddingInline: '0.6em',
+              }}
             >
               {tag}
             </Tag>
