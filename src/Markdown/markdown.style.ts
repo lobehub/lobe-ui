@@ -263,7 +263,10 @@ export const useStyles = createStyles(
       `,
       p: css`
         p {
-          margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
+          /* stylelint-disable declaration-block-no-redundant-longhand-properties */
+          margin-block-start: calc(var(--lobe-markdown-margin-multiple) * 1em);
+          margin-block-end: calc(var(--lobe-markdown-margin-multiple) * 1em);
+          /* stylelint-enable declaration-block-no-redundant-longhand-properties */
           line-height: var(--lobe-markdown-line-height);
           letter-spacing: 0.02em;
         }
