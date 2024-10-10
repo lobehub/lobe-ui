@@ -2,6 +2,333 @@
 
 # Changelog
 
+### [Version 1.151.4](https://github.com/lobehub/lobe-ui/compare/v1.151.3...v1.151.4)
+
+<sup>Released on **2024-09-23**</sup>
+
+#### 💄 Styles
+
+- **misc**: Rollback chat header style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Rollback chat header style ([3129afc](https://github.com/lobehub/lobe-ui/commit/3129afc))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version 1.151.3](https://github.com/lobehub/lobe-ui/compare/v1.151.2...v1.151.3)
+
+<sup>Released on **2024-09-23**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Card style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Card style ([5a4dbfd](https://github.com/lobehub/lobe-ui/commit/5a4dbfd))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version 1.151.2](https://github.com/lobehub/lobe-ui/compare/v1.151.1...v1.151.2)
+
+<sup>Released on **2024-09-23**</sup>
+
+#### 💄 Styles
+
+- **misc**: Add new card style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Add new card style ([38778e6](https://github.com/lobehub/lobe-ui/commit/38778e6))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version 1.151.1](https://github.com/lobehub/lobe-ui/compare/v1.151.0...v1.151.1)
+
+<sup>Released on **2024-09-23**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Ignore \*\* in code blocks, Lock umi.
+
+#### 💄 Styles
+
+- **misc**: Fallback some style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Ignore \*\* in code blocks, closes [#196](https://github.com/lobehub/lobe-ui/issues/196) ([19ec269](https://github.com/lobehub/lobe-ui/commit/19ec269))
+- **misc**: Lock umi ([8e9cf40](https://github.com/lobehub/lobe-ui/commit/8e9cf40))
+
+#### Styles
+
+- **misc**: Fallback some style ([7b0dbc1](https://github.com/lobehub/lobe-ui/commit/7b0dbc1))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+## [Version 1.151.0](https://github.com/lobehub/lobe-ui/compare/v1.150.5...v1.151.0)
+
+<sup>Released on **2024-09-20**</sup>
+
+#### ✨ Features
+
+- **misc**: Add sitemap.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add sitemap ([c43a8cd](https://github.com/lobehub/lobe-ui/commit/c43a8cd))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version 1.150.5](https://github.com/lobehub/lobe-ui/compare/v1.150.4...v1.150.5)
+
+<sup>Released on **2024-09-15**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Improve rehypePlugins and remarkPlugins props.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Improve rehypePlugins and remarkPlugins props ([2b15328](https://github.com/lobehub/lobe-ui/commit/2b15328))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version 1.150.4](https://github.com/lobehub/lobe-ui/compare/v1.150.3...v1.150.4)
+
+<sup>Released on **2024-09-12**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix highlight classname.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix highlight classname ([cc9dc73](https://github.com/lobehub/lobe-ui/commit/cc9dc73))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version 1.150.3](https://github.com/lobehub/lobe-ui/compare/v1.150.2...v1.150.3)
+
+<sup>Released on **2024-09-08**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix chat mode edit button.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix chat mode edit button, closes [#206](https://github.com/lobehub/lobe-ui/issues/206) ([fd312ce](https://github.com/lobehub/lobe-ui/commit/fd312ce))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version 1.150.2](https://github.com/lobehub/lobe-ui/compare/v1.150.1...v1.150.2)
+
+<sup>Released on **2024-09-08**</sup>
+
+#### 💄 Styles
+
+- **misc**: Support custom markdown render.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Support custom markdown render ([bf27f0b](https://github.com/lobehub/lobe-ui/commit/bf27f0b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version 1.150.1](https://github.com/lobehub/lobe-ui/compare/v1.150.0...v1.150.1)
+
+<sup>Released on **2024-09-07**</sup>
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+## [Version 1.150.0](https://github.com/lobehub/lobe-ui/compare/v1.149.3...v1.150.0)
+
+<sup>Released on **2024-08-26**</sup>
+
+#### ✨ Features
+
+- **misc**: Add custom tab, Add upload to EmojiPicker.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add custom tab ([4ceeb9c](https://github.com/lobehub/lobe-ui/commit/4ceeb9c))
+- **misc**: Add upload to EmojiPicker ([b9232c0](https://github.com/lobehub/lobe-ui/commit/b9232c0))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version 1.149.3](https://github.com/lobehub/lobe-ui/compare/v1.149.2...v1.149.3)
+
+<sup>Released on **2024-08-26**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix EmojiPicker.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix EmojiPicker ([9ea8503](https://github.com/lobehub/lobe-ui/commit/9ea8503))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version 1.149.2](https://github.com/lobehub/lobe-ui/compare/v1.149.1...v1.149.2)
+
+<sup>Released on **2024-08-17**</sup>
+
+#### 💄 Styles
+
+- **misc**: Add props to Markdown.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Add props to Markdown ([bd2c66b](https://github.com/lobehub/lobe-ui/commit/bd2c66b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.149.1](https://github.com/lobehub/lobe-ui/compare/v1.149.0...v1.149.1)
 
 <sup>Released on **2024-08-13**</sup>

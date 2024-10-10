@@ -1,14 +1,15 @@
 'use client';
 
 import type { AnchorProps } from 'antd';
-import { CSSProperties, memo, useMemo } from 'react';
+import { CSSProperties, ReactNode, memo, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Components } from 'react-markdown/lib/ast-to-react';
+import type { Components } from 'react-markdown/lib/ast-to-react';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import remarkBreaks from 'remark-breaks';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
+import type { Pluggable } from 'unified';
 
 import { type HighlighterProps } from '@/Highlighter';
 import ImageGallery from '@/Image/ImageGallery';
@@ -37,11 +38,15 @@ export interface MarkdownProps extends TypographyProps {
     pre?: Partial<PreProps>;
     video?: Partial<VideoProps>;
   };
+  components?: Components;
+  customRender?: (dom: ReactNode, context: { text: string }) => ReactNode;
   enableImageGallery?: boolean;
   enableLatex?: boolean;
   enableMermaid?: boolean;
   fullFeaturedCodeBlock?: boolean;
   onDoubleClick?: () => void;
+  rehypePlugins?: Pluggable[];
+  remarkPlugins?: Pluggable[];
   style?: CSSProperties;
   variant?: 'normal' | 'chat';
 }
@@ -63,6 +68,10 @@ const Markdown = memo<MarkdownProps>(
     marginMultiple,
     variant = 'normal',
     lineHeight,
+    rehypePlugins,
+    remarkPlugins,
+    components = {},
+    customRender,
     ...rest
   }) => {
     const { cx, styles } = useStyles({
@@ -80,7 +89,7 @@ const Markdown = memo<MarkdownProps>(
       return fixMarkdownBold(escapeMhchem(escapeBrackets(children)));
     }, [children, enableLatex]);
 
-    const components: Components = useMemo(
+    const memoComponents: Components = useMemo(
       () => ({
         a: (props: any) => <Link {...props} {...componentProps?.a} />,
         img: enableImageGallery
@@ -115,19 +124,73 @@ const Markdown = memo<MarkdownProps>(
             />
           ),
         video: (props: any) => <Video {...props} {...componentProps?.video} />,
+        ...components,
       }),
-      [componentProps, enableImageGallery, enableMermaid, fullFeaturedCodeBlock],
+      [
+        ...Object.values(components || {}),
+        ...Object.values(componentProps || {}),
+        enableImageGallery,
+        enableMermaid,
+        fullFeaturedCodeBlock,
+      ],
     );
 
-    const rehypePlugins = useMemo(
-      () => [allowHtml && rehypeRaw, enableLatex && rehypeKatex].filter(Boolean) as any,
-      [allowHtml],
-    );
-    const remarkPlugins = useMemo(
+    const innerRehypePlugins = Array.isArray(rehypePlugins) ? rehypePlugins : [rehypePlugins];
+
+    const memoRehypePlugins = useMemo(
       () =>
-        [remarkGfm, enableLatex && remarkMath, isChatMode && remarkBreaks].filter(Boolean) as any,
-      [isChatMode],
+        [allowHtml && rehypeRaw, enableLatex && rehypeKatex, ...innerRehypePlugins].filter(
+          Boolean,
+        ) as any,
+      [allowHtml, enableLatex, ...innerRehypePlugins],
     );
+
+    const innerRemarkPlugins = Array.isArray(remarkPlugins) ? remarkPlugins : [remarkPlugins];
+    const memoRemarkPlugins = useMemo(
+      () =>
+        [
+          remarkGfm,
+          enableLatex && remarkMath,
+          isChatMode && remarkBreaks,
+          ...innerRemarkPlugins,
+        ].filter(Boolean) as any,
+      [isChatMode, enableLatex, ...innerRemarkPlugins],
+    );
+
+    const defaultDOM = (
+      <ImageGallery enable={enableImageGallery}>
+        <ReactMarkdown
+          className={cx(
+            mdStyles.__root,
+            mdStyles.a,
+            mdStyles.blockquote,
+            mdStyles.code,
+            mdStyles.details,
+            mdStyles.header,
+            mdStyles.hr,
+            mdStyles.img,
+            mdStyles.kbd,
+            mdStyles.list,
+            mdStyles.p,
+            mdStyles.pre,
+            mdStyles.strong,
+            mdStyles.table,
+            mdStyles.video,
+            isChatMode && styles.chat,
+          )}
+          components={memoComponents}
+          rehypePlugins={memoRehypePlugins}
+          remarkPlugins={memoRemarkPlugins}
+          {...rest}
+        >
+          {escapedContent}
+        </ReactMarkdown>
+      </ImageGallery>
+    );
+
+    const markdownContent = customRender
+      ? customRender(defaultDOM, { text: escapedContent })
+      : defaultDOM;
 
     return (
       <article
@@ -136,34 +199,7 @@ const Markdown = memo<MarkdownProps>(
         onDoubleClick={onDoubleClick}
         style={style}
       >
-        <ImageGallery enable={enableImageGallery}>
-          <ReactMarkdown
-            className={cx(
-              mdStyles.__root,
-              mdStyles.a,
-              mdStyles.blockquote,
-              mdStyles.code,
-              mdStyles.details,
-              mdStyles.header,
-              mdStyles.hr,
-              mdStyles.img,
-              mdStyles.kbd,
-              mdStyles.list,
-              mdStyles.p,
-              mdStyles.pre,
-              mdStyles.strong,
-              mdStyles.table,
-              mdStyles.video,
-              isChatMode && styles.chat,
-            )}
-            components={components}
-            rehypePlugins={rehypePlugins}
-            remarkPlugins={remarkPlugins}
-            {...rest}
-          >
-            {escapedContent}
-          </ReactMarkdown>
-        </ImageGallery>
+        {markdownContent}
       </article>
     );
   },

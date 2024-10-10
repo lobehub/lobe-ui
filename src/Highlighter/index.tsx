@@ -55,6 +55,7 @@ export const Highlighter = memo<HighlighterProps>(
         <FullFeatured
           actionsRender={actionsRender}
           bodyRender={bodyRender}
+          className={className}
           copyable={copyable}
           language={language}
           showLanguage={showLanguage}

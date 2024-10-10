@@ -29,4 +29,37 @@ describe('fixMarkdownBold', () => {
   it('should handle asterisks within words', () => {
     expect(fixMarkdownBold('t*e*st')).toBe('t*e*st');
   });
+
+  it('should ignore bold markers inside inline code', () => {
+    expect(fixMarkdownBold('This is `**not bold**`')).toBe('This is `**not bold**`');
+    expect(fixMarkdownBold('`**code**` and **bold**')).toBe('`**code**` and **bold**');
+    expect(fixMarkdownBold('`**` and **bold**')).toBe('`**` and **bold**');
+  });
+
+  it('should ignore bold markers inside code blocks', () => {
+    const codeBlock = `
+    \`\`\`
+    **123：**456**789:**123
+    \`\`\`
+    `;
+    expect(fixMarkdownBold(codeBlock)).toBe(codeBlock);
+  });
+
+  it('should handle text with mixed content in code blocks', () => {
+    const text = `
+    **bold text**
+    \`\`\`
+    n**0.5
+    \`\`\`
+    More **bold text**
+    `;
+    const expected = `
+    **bold text**
+    \`\`\`
+    n**0.5
+    \`\`\`
+    More **bold text**
+    `;
+    expect(fixMarkdownBold(text)).toBe(expected);
+  });
 });
