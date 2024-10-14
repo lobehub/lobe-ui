@@ -62,4 +62,11 @@ describe('fixMarkdownBold', () => {
     `;
     expect(fixMarkdownBold(text)).toBe(expected);
   });
+
+  it('should not have a space after a bold character other than symbols', () => {
+    expect(fixMarkdownBold('你**我**他')).toBe('你**我**他');
+    expect(fixMarkdownBold('你**我：**他')).toBe('你**我：** 他');
+    expect(fixMarkdownBold('你**我:**他')).toBe('你**我:** 他');
+    // expect(fixMarkdownBold('你**我: **他')).toBe('你**我:** 他'); // TODO: 先去掉加粗部分末尾空格，再在**后添加空格
+  });
 });
