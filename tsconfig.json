@@ -6,6 +6,7 @@
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "moduleResolution": "node",
     "paths": {
       "@@/*": [".dumi/tmp/*"],
       "@/*": ["src/*"],
