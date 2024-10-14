@@ -49,9 +49,9 @@ export function fixMarkdownBold(text: string): string {
       }
       if (count === 2 && count2 % 2 === 0) {
         const prevChar = i > 0 ? text[i - 2] : '';
-        const isPrevCharAlphanumeric = /[a-zA-Z0-9]/.test(prevChar);
+        const isPrevCharSymbol = /[\p{P}\p{S}]/u.test(prevChar);
 
-        if (i + 1 < text.length && text[i + 1] !== ' ' && !isPrevCharAlphanumeric) {
+        if (i + 1 < text.length && text[i + 1] !== ' ' && isPrevCharSymbol) {
           result += '* ';
         } else {
           result += '*';
