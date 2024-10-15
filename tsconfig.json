@@ -6,6 +6,8 @@
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
     "paths": {
       "@@/*": [".dumi/tmp/*"],
       "@/*": ["src/*"],
@@ -19,6 +21,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
+    "target": "es6",
     "types": ["vitest/globals"]
   },
   "exclude": ["mdx.d.ts", "brand.d.ts"],
