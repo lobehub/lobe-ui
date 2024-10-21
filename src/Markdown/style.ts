@@ -52,6 +52,11 @@ export const useStyles = createStyles(
           }
         }
       `,
+      latex: css`
+        .katex-html {
+          overflow: scroll hidden;
+        }
+      `,
       root: css`
         position: relative;
         overflow: hidden;
