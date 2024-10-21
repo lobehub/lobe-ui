@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.151.6](https://github.com/lobehub/lobe-ui/compare/v1.151.5...v1.151.6)
+
+<sup>Released on **2024-10-21**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix latex style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix latex style, closes [#215](https://github.com/lobehub/lobe-ui/issues/215) ([caebc6d](https://github.com/lobehub/lobe-ui/commit/caebc6d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.151.5](https://github.com/lobehub/lobe-ui/compare/v1.151.4...v1.151.5)
 
 <sup>Released on **2024-10-14**</sup>
