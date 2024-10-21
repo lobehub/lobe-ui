@@ -176,6 +176,7 @@ const Markdown = memo<MarkdownProps>(
             mdStyles.strong,
             mdStyles.table,
             mdStyles.video,
+            enableLatex && styles.latex,
             isChatMode && styles.chat,
           )}
           components={memoComponents}
