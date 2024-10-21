@@ -89,24 +89,36 @@ F --> B
 
 我是一个行内公式：$E=mc^2$
 
-我是一个独立公式：
+我是一个独立的傅里叶公式：
 $$
-\\sum_{i=1}^{n} x_i = x_1 + x_2 + \\ldots + x_n
+f(x) = a_0 + \\sum_{n=1}^{\\infty} \\left( a_n \\cos(nx) + b_n \\sin(nx) \\right)
 $$
 
-我是一个带有分式的公式：
+其中，带有积分符号的项：
 $$
-\\frac{{n!}}{{k!(n-k)!}} = \\binom{n}{k}
+a_0 = \\frac{1}{2\\pi} \\int_{-\\pi}^{\\pi} f(x) \\, dx
 $$
+
+$$
+a_n = \\frac{1}{\\pi} \\int_{-\\pi}^{\\pi} f(x) \\cos(nx) \\, dx \\quad \\text{for} \\quad n \\geq 1
+$$
+
+$$
+b_n = \\frac{1}{\\pi} \\int_{-\\pi}^{\\pi} f(x) \\sin(nx) \\, dx \\quad \\text{for} \\quad n \\geq 1
+$$
+
+我是一个带有分式、测试长度超长的泰勒公式：
+
+$$
+\\begin{equation}
+f(x) = f(a) + f'(a)(x - a) + \\frac{f''(a)}{2!}(x - a)^2 + \\frac{f'''(a)}{3!}(x - a)^3 + \\cdots + \\frac{f^{(n)}(a)}{n!}(x - a)^n + R_n(x)
+\\end{equation}
+$$
+
 
 我是一个带有上下标的公式：
 $$
 x^{2} + y^{2} = r^{2}
-$$
-
-我是一个带有积分符号的公式：
-$$
-\\int_{a}^{b} f(x) \\, dx
 $$
 
 ---

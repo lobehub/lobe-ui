@@ -54,7 +54,23 @@ export const useStyles = createStyles(
       `,
       latex: css`
         .katex-html {
-          overflow: scroll hidden;
+          overflow: auto hidden;
+          padding: 3px;
+
+          .base {
+            margin-block: 0;
+            margin-inline: auto;
+          }
+        }
+
+        .katex-html:has(span.tag) {
+          display: flex !important;
+        }
+
+        .katex-html > .tag {
+          position: relative !important;
+          float: right;
+          margin-inline-start: 0.25rem;
         }
       `,
       root: css`
