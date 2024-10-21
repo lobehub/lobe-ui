@@ -11,7 +11,7 @@ const themeConfig = {
     {
       link: homepage,
       openExternal: true,
-      text: 'Github',
+      text: 'GitHub',
     },
     {
       link: '/components/action-icon',
