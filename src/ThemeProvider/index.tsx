@@ -9,6 +9,7 @@ import {
   GetAntdTheme,
   StyleProvider,
 } from 'antd-style';
+import { merge } from 'lodash-es';
 import { CSSProperties, memo, useCallback } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
@@ -19,25 +20,25 @@ import { LobeCustomToken } from '@/types/customToken';
 
 import GlobalStyle from './GlobalStyle';
 
-export interface ThemeProviderProps extends Omit<AntdThemeProviderProps<any>, 'theme'> {
+export interface ThemeProviderProps extends AntdThemeProviderProps<any> {
   className?: string;
+  /**
+   * @description Webfont loader css strings
+   */
+  customFonts?: string[];
   customStylish?: (theme: CustomStylishParams) => { [key: string]: any };
+
   customTheme?: {
     neutralColor?: NeutralColors;
     primaryColor?: PrimaryColors;
   };
-
   /**
    * @description Custom extra token
    */
   customToken?: (theme: CustomTokenParams) => { [key: string]: any };
+  enableCustomFonts?: boolean;
   enableGlobalStyle?: boolean;
-  enableWebfonts?: boolean;
   style?: CSSProperties;
-  /**
-   * @description Webfont loader css strings
-   */
-  webfonts?: string[];
 }
 
 const ThemeProvider = memo<ThemeProviderProps>(
@@ -45,16 +46,17 @@ const ThemeProvider = memo<ThemeProviderProps>(
     children,
     customStylish,
     customToken,
-    enableWebfonts = true,
+    enableCustomFonts = true,
     enableGlobalStyle = true,
-    webfonts,
+    customFonts,
     customTheme = {},
     className,
     style,
+    theme: antdTheme,
     ...res
   }) => {
     const genCdnUrl = useCdnFn();
-    const webfontUrls = webfonts || [
+    const webfontUrls = customFonts || [
       genCdnUrl({ path: 'css/index.css', pkg: '@lobehub/webfont-mono', version: '1.0.0' }),
       genCdnUrl({
         path: 'css/index.css',
@@ -80,18 +82,20 @@ const ThemeProvider = memo<ThemeProviderProps>(
     );
 
     const theme = useCallback<GetAntdTheme>(
-      (appearance) =>
-        createLobeAntdTheme({
+      (appearance) => {
+        const lobeTheme = createLobeAntdTheme({
           appearance,
           neutralColor: customTheme.neutralColor,
           primaryColor: customTheme.primaryColor,
-        }),
-      [customTheme.primaryColor, customTheme.neutralColor],
+        });
+        return merge(lobeTheme, antdTheme);
+      },
+      [customTheme.primaryColor, customTheme.neutralColor, antdTheme],
     );
 
     return (
       <>
-        {enableWebfonts &&
+        {enableCustomFonts &&
           webfontUrls?.length > 0 &&
           webfontUrls.map((webfont) => <FontLoader key={webfont} url={webfont} />)}
         <StyleProvider speedy={process.env.NODE_ENV === 'production'}>
