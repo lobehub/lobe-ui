@@ -159,7 +159,7 @@
     "semantic-release": "^21.1.2",
     "stylelint": "^15.11.0",
     "typescript": "^5.5.4",
-    "umi": "4.3.16",
+    "umi": "4.3.34",
     "unist-util-is": "^6.0.0",
     "unist-util-visit": "^5.0.0",
     "vitest": "~1.2.2"
