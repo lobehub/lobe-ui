@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.152.1](https://github.com/lobehub/lobe-ui/compare/v1.152.0...v1.152.1)
+
+<sup>Released on **2024-11-20**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix InnerContainer in MobileChatInputArea (fix.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix InnerContainer in MobileChatInputArea (fix, closes [#222](https://github.com/lobehub/lobe-ui/issues/222) ([e8919fa](https://github.com/lobehub/lobe-ui/commit/e8919fa))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.152.0](https://github.com/lobehub/lobe-ui/compare/v1.151.6...v1.152.0)
 
 <sup>Released on **2024-10-28**</sup>
