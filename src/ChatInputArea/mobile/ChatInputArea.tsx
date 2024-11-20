@@ -89,23 +89,30 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
       setShowFullscreen(size.height > 72);
     }, [size]);
 
-    const InnerContainer: FC<PropsWithChildren> = useCallback(
-      ({ children }) =>
+    const InnerContainer: FC<
+      PropsWithChildren & {
+        bottomAddons?: ReactNode;
+        textAreaLeftAddons?: ReactNode;
+        textAreaRightAddons?: ReactNode;
+        topAddons?: ReactNode;
+      }
+    > = useCallback(
+      ({ children, ...r }) =>
         expand ? (
           <Flexbox className={styles.inner} gap={8}>
             <Flexbox gap={8} horizontal justify={'flex-end'}>
-              {textAreaLeftAddons}
-              {textAreaRightAddons}
+              {r.textAreaLeftAddons}
+              {r.textAreaRightAddons}
             </Flexbox>
             {children}
-            {topAddons}
-            {bottomAddons}
+            {r.topAddons}
+            {r.bottomAddons}
           </Flexbox>
         ) : (
           <Flexbox align={'flex-end'} className={styles.inner} gap={8} horizontal>
-            {textAreaLeftAddons}
+            {r.textAreaLeftAddons}
             {children}
-            {textAreaRightAddons}
+            {r.textAreaRightAddons}
           </Flexbox>
         ),
       [expand, loading],
@@ -135,7 +142,12 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
               style={expand ? { top: 6 } : {}}
             />
           )}
-          <InnerContainer>
+          <InnerContainer
+            bottomAddons={bottomAddons}
+            textAreaLeftAddons={textAreaLeftAddons}
+            textAreaRightAddons={textAreaRightAddons}
+            topAddons={topAddons}
+          >
             <ChatInputAreaInner
               autoSize={expand ? false : { maxRows: 6, minRows: 0 }}
               className={cx(expand && styles.expandTextArea)}
