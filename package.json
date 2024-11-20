@@ -141,7 +141,7 @@
     "@vitest/coverage-v8": "~1.2.2",
     "babel-plugin-antd-style": "^1.0.4",
     "commitlint": "^19.6.0",
-    "concurrently": "^8.2.2",
+    "concurrently": "^9.0.0",
     "cross-env": "^7.0.3",
     "dpdm": "^3.14.0",
     "dumi": "2.2.17",
