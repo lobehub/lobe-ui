@@ -150,7 +150,7 @@ const Item = memo<ChatListItemProps>((props) => {
       if (!RenderFunction) return;
       return <RenderFunction {...data} />;
     },
-    [renderErrorMessages?.[item?.error?.type]],
+    [renderErrorMessages],
   );
 
   const Actions = useCallback(

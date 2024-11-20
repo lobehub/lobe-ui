@@ -21,7 +21,7 @@ export interface ChatMessage extends BaseDataModel {
    * @description 消息内容
    */
   content: string;
-  error?: any;
+  error?: ChatMessageError;
   // 扩展字段
   extra?: any;
 
