@@ -18,8 +18,13 @@ export const useStyles = createStyles(({ css, token }) => {
     `,
     container: css`
       cursor: pointer;
+
+      position: relative;
+
       color: ${token.colorTextTertiary};
+
       background: transparent;
+
       transition: background-color 200ms ${token.motionEaseOut};
 
       &:active {
