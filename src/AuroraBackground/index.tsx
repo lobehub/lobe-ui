@@ -76,6 +76,8 @@ const useStyles = createStyles(({ isDarkMode, css }) => {
 
       will-change: transform;
 
+      max-height: 100vh;
+
       &::after {
         ${background};
         position: absolute;
