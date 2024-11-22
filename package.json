@@ -43,7 +43,7 @@
     "lint:circular": "dpdm src/**/*.{ts,tsx}  --warning false  --tree false  --exit-code circular:1  -T true",
     "lint:md": "remark . --quiet --frail --output",
     "lint:style": "stylelint \"{src,tests}/**/*.{js,jsx,ts,tsx}\" --fix",
-    "prepare": "husky install && npm run setup",
+    "prepare": "husky && npm run setup",
     "prepublishOnly": "father doctor && npm run build",
     "prettier": "prettier -c --write --no-error-on-unmatched-pattern \"**/**\"",
     "pull": "git pull",
