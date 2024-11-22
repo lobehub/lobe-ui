@@ -148,7 +148,7 @@
     "dumi-theme-lobehub": "^1.8.2",
     "eslint": "^8.57.1",
     "father": "^4.5.1",
-    "husky": "9.0.11",
+    "husky": "9.1.7",
     "jsdom": "^24.1.3",
     "lint-staged": "^15.2.10",
     "prettier": "^3.3.3",
