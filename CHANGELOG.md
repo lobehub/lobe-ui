@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.152.3](https://github.com/lobehub/lobe-ui/compare/v1.152.2...v1.152.3)
+
+<sup>Released on **2024-11-22**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Update dumi.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Update dumi ([18a7beb](https://github.com/lobehub/lobe-ui/commit/18a7beb))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.152.2](https://github.com/lobehub/lobe-ui/compare/v1.152.1...v1.152.2)
 
 <sup>Released on **2024-11-20**</sup>
