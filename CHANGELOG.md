@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.153.0](https://github.com/lobehub/lobe-ui/compare/v1.152.3...v1.153.0)
+
+<sup>Released on **2024-11-22**</sup>
+
+#### ✨ Features
+
+- **misc**: Add AuroraBackground.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add AuroraBackground ([dfcc635](https://github.com/lobehub/lobe-ui/commit/dfcc635))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.152.3](https://github.com/lobehub/lobe-ui/compare/v1.152.2...v1.152.3)
 
 <sup>Released on **2024-11-22**</sup>
