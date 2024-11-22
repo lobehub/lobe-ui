@@ -6,6 +6,7 @@ export {
   type ActionIconGroupProps,
 } from './ActionIconGroup';
 export { default as Alert, type AlertProps } from './Alert';
+export { default as AuroraBackground } from './AuroraBackground';
 export { default as Avatar, type AvatarProps } from './Avatar';
 export { default as BackBottom, type BackBottomProps } from './BackBottom';
 export { default as Logo, type LobeHubProps as LogoProps } from './brand/LobeHub';
@@ -155,7 +156,7 @@ export * from './styles';
 export { default as Swatches, type SwatchesProps } from './Swatches';
 export { default as TabsNav, type TabsNavProps } from './TabsNav';
 export { default as Tag, type TagProps } from './Tag';
-export { default as ThemeProvider } from './ThemeProvider';
+export { default as ThemeProvider, type ThemeProviderProps } from './ThemeProvider';
 export { default as Meta, type MetaProps } from './ThemeProvider/Meta';
 export { default as ThemeSwitch, type ThemeSwitchProps } from './ThemeSwitch';
 export { default as Toc, type TocProps } from './Toc';

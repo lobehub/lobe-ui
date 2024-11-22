@@ -6,8 +6,8 @@ import * as LucideIcon from 'lucide-react';
 import { memo, useCallback } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
+import AuroraBackground from '@/AuroraBackground';
 import GradientButton from '@/GradientButton';
-import GridBackground from '@/GridBackground';
 import Icon from '@/Icon';
 
 import { useStyles } from './style';
@@ -101,21 +101,22 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
   );
 
   return (
-    <ConfigProvider theme={{ token: { fontSize: 16 } }}>
-      <Flexbox align={'center'}>
-        <Flexbox className={styles.container} distribution={'center'} horizontal>
-          <div className={styles.canvas}></div>
-          <Center>
-            {title && <h1 className={styles.title} dangerouslySetInnerHTML={{ __html: title }} />}
-            {description && (
-              <p className={styles.desc} dangerouslySetInnerHTML={{ __html: description }} />
-            )}
-            <ButtonGroups />
-          </Center>
+    <>
+      <AuroraBackground />
+      <ConfigProvider theme={{ token: { fontSize: 16 } }}>
+        <Flexbox align={'center'} style={{ zIndex: 1 }}>
+          <Flexbox className={styles.container} distribution={'center'} horizontal>
+            <Center>
+              {title && <h1 className={styles.title} dangerouslySetInnerHTML={{ __html: title }} />}
+              {description && (
+                <p className={styles.desc} dangerouslySetInnerHTML={{ __html: description }} />
+              )}
+              <ButtonGroups />
+            </Center>
+          </Flexbox>
         </Flexbox>
-        <GridBackground animation random strokeWidth={4} style={{ maxWidth: 960, width: '120%' }} />
-      </Flexbox>
-    </ConfigProvider>
+      </ConfigProvider>
+    </>
   );
 });
 

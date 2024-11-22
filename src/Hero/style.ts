@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ cx, css, responsive, token, stylish }) => ({
+export const useStyles = createStyles(({ css, responsive, token, stylish }) => ({
   actions: css`
     margin-block-start: 24px;
 
@@ -20,30 +20,6 @@ export const useStyles = createStyles(({ cx, css, responsive, token, stylish }) 
       }
     }
   `,
-
-  canvas: cx(
-    stylish.gradientAnimation,
-    css`
-      pointer-events: none;
-
-      position: absolute;
-      z-index: 10;
-      inset-block-start: -250px;
-      inset-inline-start: 50%;
-      transform: translateX(-50%) scale(1.5);
-
-      width: 600px;
-      height: 400px;
-
-      opacity: 0.2;
-      filter: blur(100px);
-
-      ${responsive.mobile} {
-        width: 200px;
-        height: 300px;
-      }
-    `,
-  ),
 
   container: css`
     position: relative;
