@@ -88,7 +88,7 @@
     "@react-spring/web": "^9.7.5",
     "@shikijs/transformers": "^1.23.1",
     "@splinetool/runtime": "^0.9.526",
-    "chroma-js": "^2.6.0",
+    "chroma-js": "^3.0.0",
     "dayjs": "^1.11.13",
     "emoji-mart": "^5.6.0",
     "emoji-regex": "^10.4.0",
