@@ -78,12 +78,7 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
               );
 
             return openExternal ? (
-              <A
-                href={link}
-                key={text}
-                rel="noreferrer"
-                target={openExternal ? '_blank' : undefined}
-              >
+              <A href={link} key={text} target={openExternal ? '_blank' : undefined}>
                 {content}
               </A>
             ) : (
