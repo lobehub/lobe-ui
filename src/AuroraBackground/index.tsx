@@ -4,7 +4,7 @@ import { createStyles, keyframes } from 'antd-style';
 import { memo } from 'react';
 import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
-const useStyles = createStyles(({ isDarkMode, css }) => {
+const useStyles = createStyles(({ isDarkMode, css, responsive }) => {
   const aurora = keyframes`
   0% {
     background-position: 50% 50%, 50% 50%;
@@ -91,6 +91,11 @@ const useStyles = createStyles(({ isDarkMode, css }) => {
         mix-blend-mode: difference;
         background-attachment: fixed;
         background-size: 200%, 100%;
+      }
+
+      ${responsive.mobile} {
+        transform: scale(2);
+        max-height: 25vh;
       }
     `,
     wrapper: css`

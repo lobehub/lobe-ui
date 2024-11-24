@@ -41,12 +41,12 @@ export const useStyles = createStyles(({ css, responsive, token, stylish }) => (
   `,
   title: css`
     z-index: 10;
-    margin: 0;
-    font-size: 100px;
 
-    ${responsive({
-      mobile: { display: 'flex', flexDirection: 'column', fontSize: 72, lineHeight: 1.2 },
-    })}
+    margin: 0;
+
+    font-size: min(100px, 10vw);
+    line-height: 1.2;
+    text-align: center;
 
     b {
       ${stylish.gradientAnimation}
@@ -59,6 +59,10 @@ export const useStyles = createStyles(({ css, responsive, token, stylish }) => (
       &::selection {
         -webkit-text-fill-color: #000 !important;
       }
+    }
+
+    ${responsive.mobile} {
+      font-size: 64px;
     }
   `,
 }));

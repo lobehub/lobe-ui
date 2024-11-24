@@ -1,4 +1,4 @@
-import { Features, FeaturesProps, Highlighter } from '@lobehub/ui';
+import { Features, FeaturesProps, Highlighter, Snippet } from '@lobehub/ui';
 import { useTheme } from 'antd-style';
 import { MoonStar, Palette, Zap } from 'lucide-react';
 import { Center } from 'react-layout-kit';
@@ -35,11 +35,12 @@ export default () => (
 export default () => {
   const theme = useTheme();
   return (
-    <Center gap={16}>
+    <Center gap={48}>
       <Center>
         <h2 style={{ fontSize: 20 }}>🤯 Start building your AIGC app now</h2>
+        <Snippet language={'bash'}>{'$ bun add @lobehub/ui'}</Snippet>
         <div style={{ color: theme.colorTextDescription, textAlign: 'center' }}>
-          The LobeUI components are developed based on{' '}
+          The Lobe UI components are developed based on{' '}
           <a href={'https://ant.design/components/overview'} rel="noreferrer" target={'_blank'}>
             Antd components
           </a>

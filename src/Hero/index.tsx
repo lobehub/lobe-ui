@@ -107,7 +107,16 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
         <Flexbox align={'center'} style={{ zIndex: 1 }}>
           <Flexbox className={styles.container} distribution={'center'} horizontal>
             <Center>
-              {title && <h1 className={styles.title} dangerouslySetInnerHTML={{ __html: title }} />}
+              {title && (
+                <Center
+                  as={'h1'}
+                  className={styles.title}
+                  dangerouslySetInnerHTML={{ __html: title }}
+                  gap={'0.25em'}
+                  horizontal
+                  wrap={'wrap'}
+                />
+              )}
               {description && (
                 <p className={styles.desc} dangerouslySetInnerHTML={{ __html: description }} />
               )}
