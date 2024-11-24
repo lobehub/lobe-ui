@@ -44,3 +44,4 @@ test-output
 # add other ignore file below
 bun.lockb
 *.patch
+./server

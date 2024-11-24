@@ -2,10 +2,12 @@
 
 import { Button, ConfigProvider } from 'antd';
 import { useResponsive } from 'antd-style';
-import * as LucideIcon from 'lucide-react';
+import { Link } from 'dumi';
+import { Github } from 'lucide-react';
 import { memo, useCallback } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
+import A from '@/A';
 import AuroraBackground from '@/AuroraBackground';
 import GradientButton from '@/GradientButton';
 import Icon from '@/Icon';
@@ -63,36 +65,31 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
         <Flexbox className={styles.actions} gap={24} horizontal justify={'center'}>
           {actions!.map(({ text, link, openExternal, icon, type }, index) => {
             // @ts-ignore
-            const ButtonIcon = icon && LucideIcon[icon];
+            const ButtonIcon = icon === 'Github' ? <Icon icon={Github} /> : icon;
+            const content =
+              type === 'primary' ? (
+                <GradientButton block={mobile} icon={ButtonIcon} key={index} size="large">
+                  {text}
+                </GradientButton>
+              ) : (
+                <Button block={mobile} icon={ButtonIcon} key={index} size="large" type="primary">
+                  {text}
+                </Button>
+              );
 
-            return (
-              <a
+            return openExternal ? (
+              <A
                 href={link}
                 key={text}
                 rel="noreferrer"
                 target={openExternal ? '_blank' : undefined}
               >
-                {type === 'primary' ? (
-                  <GradientButton
-                    block={mobile}
-                    icon={ButtonIcon && <Icon icon={ButtonIcon} />}
-                    key={index}
-                    size="large"
-                  >
-                    {text}
-                  </GradientButton>
-                ) : (
-                  <Button
-                    block={mobile}
-                    icon={ButtonIcon && <Icon icon={ButtonIcon} />}
-                    key={index}
-                    size="large"
-                    type="primary"
-                  >
-                    {text}
-                  </Button>
-                )}
-              </a>
+                {content}
+              </A>
+            ) : (
+              <Link key={text} to={link}>
+                {content}
+              </Link>
             );
           })}
         </Flexbox>

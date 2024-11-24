@@ -21,6 +21,7 @@ const nav: INavItem[] = [
 const themeConfig: SiteThemeConfig = {
   actions: [
     {
+      icon: 'Github',
       link: homepage,
       openExternal: true,
       text: 'GitHub',
@@ -39,7 +40,7 @@ const themeConfig: SiteThemeConfig = {
   },
   apiHeader: {
     docUrl: `{github}/tree/master/src/{atomId}/index.md`,
-    match: ['/components', '/mdx'],
+    match: ['/components', '/brand', '/mdx'],
     pkg: name,
     sourceUrl: `{github}/tree/master/src/{atomId}/index.tsx`,
   },
@@ -50,6 +51,7 @@ const themeConfig: SiteThemeConfig = {
     repo: 'lobehub/lobe-ui',
     repoId: 'R_kgDOJloKoA',
   },
+  lastUpdated: true,
   metadata: {
     openGraph: {
       image:
@@ -79,8 +81,10 @@ export default defineConfig({
   define: {
     'process.env': process.env,
   },
+  exportStatic: {},
   extraBabelPlugins: ['babel-plugin-antd-style'],
   favicons: ['https://lobehub.com/favicon.ico'],
+  jsMinifier: 'swc',
   locales: [{ id: 'en-US', name: 'English' }],
   mfsu: isWin ? undefined : {},
   npmClient: 'pnpm',
@@ -93,6 +97,7 @@ export default defineConfig({
   sitemap: {
     hostname: 'https://ui.lobehub.com',
   },
+  ssr: isProduction ? {} : false,
   styles: [
     `html, body { background: transparent;  }
 
