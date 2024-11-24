@@ -77,7 +77,7 @@
   "dependencies": {
     "@babel/runtime": "^7.26.0",
     "@dnd-kit/core": "^6.2.0",
-    "@dnd-kit/modifiers": "^7.0.0",
+    "@dnd-kit/modifiers": "^8.0.0",
     "@dnd-kit/sortable": "^8.0.0",
     "@dnd-kit/utilities": "^3.2.2",
     "@emoji-mart/data": "^1.2.1",
