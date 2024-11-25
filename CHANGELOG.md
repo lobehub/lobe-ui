@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.153.4](https://github.com/lobehub/lobe-ui/compare/v1.153.3...v1.153.4)
+
+<sup>Released on **2024-11-25**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix ssrInline.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix ssrInline ([3d2c569](https://github.com/lobehub/lobe-ui/commit/3d2c569))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.153.3](https://github.com/lobehub/lobe-ui/compare/v1.153.2...v1.153.3)
 
 <sup>Released on **2024-11-24**</sup>
