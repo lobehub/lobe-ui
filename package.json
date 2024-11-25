@@ -165,13 +165,14 @@
     "vitest": "~1.2.2"
   },
   "peerDependencies": {
+    "@ant-design/cssinjs": ">=1",
     "ahooks": ">=3",
     "antd": ">=5.13.0",
     "antd-style": ">=3",
     "lucide-react": ">=0.396.0",
     "react": ">=18",
     "react-dom": ">=18",
-    "unified": ">=10.0.0"
+    "unified": ">=10"
   },
   "publishConfig": {
     "access": "public",

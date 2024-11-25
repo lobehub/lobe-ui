@@ -1,5 +1,6 @@
 'use client';
 
+import { StyleProviderProps as AntdStyleProviderProps } from '@ant-design/cssinjs';
 import { App } from 'antd';
 import {
   ThemeProvider as AntdThemeProvider,
@@ -20,14 +21,16 @@ import { LobeCustomToken } from '@/types/customToken';
 
 import GlobalStyle from './GlobalStyle';
 
-export interface ThemeProviderProps extends AntdThemeProviderProps<any> {
+export interface ThemeProviderProps
+  extends AntdThemeProviderProps<any>,
+    Pick<AntdStyleProviderProps, 'cache' | 'ssrInline'> {
   className?: string;
   /**
    * @description Webfont loader css strings
    */
   customFonts?: string[];
-  customStylish?: (theme: CustomStylishParams) => { [key: string]: any };
 
+  customStylish?: (theme: CustomStylishParams) => { [key: string]: any };
   customTheme?: {
     neutralColor?: NeutralColors;
     primaryColor?: PrimaryColors;
@@ -52,8 +55,10 @@ const ThemeProvider = memo<ThemeProviderProps>(
     customTheme = {},
     className,
     style,
+    cache,
+    ssrInline,
     theme: antdTheme,
-    ...res
+    ...rest
   }) => {
     const genCdnUrl = useCdnFn();
     const webfontUrls = customFonts || [
@@ -98,12 +103,17 @@ const ThemeProvider = memo<ThemeProviderProps>(
         {enableCustomFonts &&
           webfontUrls?.length > 0 &&
           webfontUrls.map((webfont) => <FontLoader key={webfont} url={webfont} />)}
-        <StyleProvider speedy={process.env.NODE_ENV === 'production'}>
+        <StyleProvider
+          cache={cache}
+          prefix={rest?.prefixCls}
+          speedy={process.env.NODE_ENV === 'production'}
+          ssrInline={ssrInline}
+        >
           <AntdThemeProvider<LobeCustomToken>
             customStylish={stylish}
             customToken={token}
-            {...res}
             theme={theme}
+            {...rest}
           >
             {enableGlobalStyle && <GlobalStyle />}
             <App className={className} style={{ minHeight: 'inherit', width: 'inherit', ...style }}>
