@@ -2,9 +2,8 @@
 
 import { Button, ConfigProvider } from 'antd';
 import { useResponsive } from 'antd-style';
-import { Link } from 'dumi';
 import { Github } from 'lucide-react';
-import { memo, useCallback } from 'react';
+import { ElementType, memo, useCallback } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
 import A from '@/A';
@@ -40,6 +39,7 @@ export interface HeroAction {
 }
 
 export interface HeroProps {
+  Link?: ElementType;
   /**
    * @description Array of action buttons to be displayed
    * @default []
@@ -55,9 +55,11 @@ export interface HeroProps {
   title?: string;
 }
 
-const Hero = memo<HeroProps>(({ title, description, actions }) => {
+const Hero = memo<HeroProps>(({ title, description, actions, Link }) => {
   const { styles } = useStyles();
   const { mobile } = useResponsive();
+
+  const LinkRender = Link || A;
 
   const ButtonGroups = useCallback(
     () =>
@@ -82,9 +84,9 @@ const Hero = memo<HeroProps>(({ title, description, actions }) => {
                 {content}
               </A>
             ) : (
-              <Link key={text} to={link}>
+              <LinkRender key={text} to={link}>
                 {content}
-              </Link>
+              </LinkRender>
             );
           })}
         </Flexbox>
