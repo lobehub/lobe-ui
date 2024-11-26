@@ -7,7 +7,7 @@ import { Maximize2, Minimize2, X } from 'lucide-react';
 import { lighten } from 'polished';
 import { ReactNode, memo, useState } from 'react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon, { type ActionIconProps } from '@/ActionIcon';
 import Icon from '@/Icon';
 
 const HEADER_HEIGHT = 56;
@@ -77,6 +77,7 @@ const useStyles = createStyles(
 
 export type ModalProps = AntModalProps & {
   allowFullscreen?: boolean;
+  closeIconProps?: ActionIconProps;
   enableResponsive?: boolean;
   maxHeight?: string | number | false;
   paddings?: {
@@ -99,6 +100,7 @@ const Modal = memo<ModalProps>(
     paddings,
     maxHeight = '75dvh',
     enableResponsive = true,
+    closeIconProps,
     footer,
     styles: stylesProps = {},
     ...rest
@@ -117,7 +119,7 @@ const Modal = memo<ModalProps>(
       return (
         <Drawer
           className={cx(styles.drawerContent, className)}
-          closeIcon={<ActionIcon icon={X} />}
+          closeIcon={<ActionIcon icon={X} {...closeIconProps} />}
           destroyOnClose={destroyOnClose}
           extra={
             allowFullscreen && (
