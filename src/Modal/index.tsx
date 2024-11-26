@@ -77,7 +77,7 @@ const useStyles = createStyles(
 
 export type ModalProps = AntModalProps & {
   allowFullscreen?: boolean;
-  closeIconProps?: ActionIconProps;
+  closeIconProps?: Omit<ActionIconProps, 'size'>;
   enableResponsive?: boolean;
   maxHeight?: string | number | false;
   paddings?: {
@@ -119,7 +119,7 @@ const Modal = memo<ModalProps>(
       return (
         <Drawer
           className={cx(styles.drawerContent, className)}
-          closeIcon={<ActionIcon icon={X} {...closeIconProps} />}
+          closeIcon={<ActionIcon icon={X} />}
           destroyOnClose={destroyOnClose}
           extra={
             allowFullscreen && (
@@ -161,7 +161,7 @@ const Modal = memo<ModalProps>(
         <AntModal
           className={cx(styles.content, className)}
           closable
-          closeIcon={<Icon icon={X} size={{ fontSize: 20 }} />}
+          closeIcon={<Icon icon={X} size={{ fontSize: 20 }} {...closeIconProps} />}
           destroyOnClose={destroyOnClose}
           footer={footer}
           maskClosable
