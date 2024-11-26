@@ -64,7 +64,7 @@ const Hero = memo<HeroProps>(({ title, description, actions, Link }) => {
   const ButtonGroups = useCallback(
     () =>
       Boolean(actions?.length) && (
-        <Flexbox className={styles.actions} gap={24} horizontal justify={'center'}>
+        <Flexbox className={styles.actions} gap={16} horizontal justify={'center'}>
           {actions!.map(({ text, link, openExternal, icon, type }, index) => {
             // @ts-ignore
             const ButtonIcon = icon === 'Github' ? <Icon icon={Github} /> : icon;

@@ -42,15 +42,12 @@ export const useStyles = createStyles(({ css, token }) => {
       align-self: center;
     `,
     desc: css`
-      overflow: hidden;
-
       width: 100%;
+      margin: 0 !important;
 
       font-size: 12px;
-      line-height: 1;
+      line-height: 1.2 !important;
       color: ${token.colorTextDescription};
-      text-overflow: ellipsis;
-      white-space: nowrap;
     `,
 
     pin: css`
@@ -64,15 +61,13 @@ export const useStyles = createStyles(({ css, token }) => {
     `,
 
     title: css`
-      overflow: hidden;
-
       width: 100%;
+      margin: 0 !important;
 
-      font-size: 16px;
-      line-height: 1;
+      font-size: 14px !important;
+      font-weight: 500 !important;
+      line-height: 1.2 !important;
       color: ${token.colorText};
-      text-overflow: ellipsis;
-      white-space: nowrap;
     `,
     triangle: css`
       width: 10px;

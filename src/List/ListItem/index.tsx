@@ -1,5 +1,6 @@
 'use client';
 
+import { Typography } from 'antd';
 import { Loader2, MessageSquare } from 'lucide-react';
 import { ReactNode, forwardRef } from 'react';
 import { Flexbox, FlexboxProps } from 'react-layout-kit';
@@ -8,6 +9,8 @@ import Icon from '@/Icon';
 
 import { useStyles } from './style';
 import { getChatItemTime } from './time';
+
+const { Title, Paragraph } = Typography;
 
 export interface ListItemProps extends Omit<FlexboxProps, 'title'> {
   actions?: ReactNode;
@@ -74,14 +77,20 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
             <div className={styles.triangle}></div>
           </div>
         )}
-        {avatar ?? <Icon icon={MessageSquare} style={{ marginTop: 4 }} />}
 
-        <Flexbox className={styles.content} gap={8}>
-          <Flexbox distribution={'space-between'} horizontal>
-            <div className={styles.title}>{title}</div>
+        <Flexbox align={'flex-start'} flex={1} gap={8} horizontal style={{ overflow: 'hidden' }}>
+          {avatar ?? <Icon icon={MessageSquare} style={{ marginTop: 4 }} />}
+          <Flexbox className={styles.content} gap={4}>
+            <Title className={styles.title} ellipsis={{ rows: 1 }} level={3}>
+              {title}
+            </Title>
+            {description && (
+              <Paragraph className={styles.desc} ellipsis={{ rows: 1 }}>
+                {description}
+              </Paragraph>
+            )}
+            {addon}
           </Flexbox>
-          {description && <div className={styles.desc}>{description}</div>}
-          {addon}
         </Flexbox>
 
         {loading ? (
@@ -105,7 +114,7 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
             {date && (
               <div
                 className={cx(styles.time, classNames?.time)}
-                style={showAction ? { display: 'none' } : {}}
+                style={showAction ? { opacity: 0 } : {}}
               >
                 {getChatItemTime(date)}
               </div>
