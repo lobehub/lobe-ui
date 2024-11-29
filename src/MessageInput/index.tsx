@@ -32,6 +32,7 @@ export interface MessageInputProps extends DivProps {
    * @param text - The text input by the user.
    */
   onConfirm?: (text: string) => void;
+  placeholder?: string;
   /**
    * @description Custom rendering of the bottom buttons.
    * @param text - The text input by the user.

@@ -7,6 +7,8 @@ description: The FluentEmoji component is used to display an emoji with the Flue
 
 ## Default
 
+Find details in <https://fluent-emoji.lobehub.com>
+
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs

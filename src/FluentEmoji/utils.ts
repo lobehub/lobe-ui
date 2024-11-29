@@ -33,35 +33,35 @@ export const genEmojiUrl = (emoji: string, type: EmojiType) => {
       return {
         path: `assets/${emojiToUnicode(emoji)}.${ext}`,
         pkg: emojiAnimPkg(emoji),
-        version: '1.0.0',
+        version: 'latest',
       };
     }
     case '3d': {
       return {
         path: `assets/${emojiToUnicode(emoji)}.${ext}`,
         pkg: '@lobehub/fluent-emoji-3d',
-        version: '1.1.0',
+        version: 'latest',
       };
     }
     case 'flat': {
       return {
         path: `assets/${emojiToUnicode(emoji)}.${ext}`,
         pkg: '@lobehub/fluent-emoji-flat',
-        version: '1.1.0',
+        version: 'latest',
       };
     }
     case 'modern': {
       return {
         path: `assets/${emojiToUnicode(emoji)}.${ext}`,
         pkg: '@lobehub/fluent-emoji-modern',
-        version: '1.0.0',
+        version: 'latest',
       };
     }
     case 'mono': {
       return {
         path: `assets/${emojiToUnicode(emoji)}.${ext}`,
         pkg: '@lobehub/fluent-emoji-mono',
-        version: '1.1.0',
+        version: 'latest',
       };
     }
   }

@@ -165,5 +165,4 @@ export { default as Tooltip, type TooltipProps } from './Tooltip';
 export type * from './types';
 export { copyToClipboard } from './utils/copyToClipboard';
 export { type CDN, genCdnUrl } from './utils/genCdnUrl';
-export { getEmoji, getEmojiNameByCharacter } from './utils/getEmojiByCharacter';
 export { default as Video, type VideoProps } from './Video';

@@ -1,9 +1,8 @@
+import { getEmoji, getEmojiNameByCharacter } from '@lobehub/fluent-emoji';
 import {
   FluentEmoji,
   type FluentEmojiProps,
   StoryBook,
-  getEmoji,
-  getEmojiNameByCharacter,
   useControls,
   useCreateStore,
 } from '@lobehub/ui';

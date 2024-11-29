@@ -1,11 +1,11 @@
 'use client';
 
+import { getEmoji } from '@lobehub/fluent-emoji';
 import { Avatar as AntAvatar, type AvatarProps as AntAvatarProps } from 'antd';
 import { type ReactNode, forwardRef, isValidElement, useMemo } from 'react';
 
 import FluentEmoji from '@/FluentEmoji';
 import Img from '@/Img';
-import { getEmoji } from '@/utils/getEmojiByCharacter';
 
 import { useStyles } from './style';
 
