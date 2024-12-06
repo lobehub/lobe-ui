@@ -18,7 +18,7 @@ export const useHighlight = (text: string, lang: string, isDarkMode: boolean) =>
     async () => {
       try {
         const language = lang.toLowerCase();
-        const html = await codeToHtml(text, {
+        return codeToHtml(text, {
           lang: language,
           theme: themeConfig(isDarkMode),
           transformers: [
@@ -29,7 +29,6 @@ export const useHighlight = (text: string, lang: string, isDarkMode: boolean) =>
             transformerNotationErrorLevel(),
           ],
         });
-        return html;
       } catch {
         return text;
       }
