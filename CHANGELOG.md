@@ -2,6 +2,40 @@
 
 # Changelog
 
+### [Version 1.153.10](https://github.com/lobehub/lobe-ui/compare/v1.153.9...v1.153.10)
+
+<sup>Released on **2024-12-06**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix shiki, Fix shiki.
+
+#### 💄 Styles
+
+- **misc**: Update useHighlight.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix shiki ([d1a8285](https://github.com/lobehub/lobe-ui/commit/d1a8285))
+- **misc**: Fix shiki ([090591e](https://github.com/lobehub/lobe-ui/commit/090591e))
+
+#### Styles
+
+- **misc**: Update useHighlight ([8bf4b29](https://github.com/lobehub/lobe-ui/commit/8bf4b29))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.153.9](https://github.com/lobehub/lobe-ui/compare/v1.153.8...v1.153.9)
 
 <sup>Released on **2024-11-29**</sup>
