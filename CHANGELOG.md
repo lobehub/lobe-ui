@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.153.11](https://github.com/lobehub/lobe-ui/compare/v1.153.10...v1.153.11)
+
+<sup>Released on **2024-12-07**</sup>
+
+#### 💄 Styles
+
+- **misc**: Opt peerDependencies.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Opt peerDependencies ([d7cc3e6](https://github.com/lobehub/lobe-ui/commit/d7cc3e6))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.153.10](https://github.com/lobehub/lobe-ui/compare/v1.153.9...v1.153.10)
 
 <sup>Released on **2024-12-06**</sup>
