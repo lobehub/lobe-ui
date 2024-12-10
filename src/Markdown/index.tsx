@@ -14,10 +14,10 @@ import type { Pluggable } from 'unified';
 import { type HighlighterProps } from '@/Highlighter';
 import ImageGallery from '@/Image/ImageGallery';
 import { type MermaidProps } from '@/Mermaid';
-import Image, { type ImageProps } from '@/mdx/Image';
-import Link from '@/mdx/Link';
-import { type PreProps } from '@/mdx/Pre';
-import Video, { type VideoProps } from '@/mdx/Video';
+import Image, { type ImageProps } from '@/mdx/mdxComponents/Image';
+import Link from '@/mdx/mdxComponents/Link';
+import { type PreProps } from '@/mdx/mdxComponents/Pre';
+import Video, { type VideoProps } from '@/mdx/mdxComponents/Video';
 import type { AProps } from '@/types';
 
 import { CodeFullFeatured, CodeLite } from './CodeBlock';

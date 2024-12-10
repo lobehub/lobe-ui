@@ -1,4 +1,5 @@
-import { Snippet, SnippetProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import { Snippet, SnippetProps } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();

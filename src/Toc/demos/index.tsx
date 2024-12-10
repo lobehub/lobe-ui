@@ -1,4 +1,5 @@
-import { StoryBook, Toc, type TocProps, useControls, useCreateStore } from '@lobehub/ui';
+import { Toc, type TocProps } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 const items: TocProps['items'] = [
   {

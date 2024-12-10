@@ -1,7 +1,6 @@
-import { ActionIcon, Collapse, CollapseProps, StoryBook } from '@lobehub/ui';
+import { ActionIcon, Collapse, CollapseProps } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { SettingsIcon } from 'lucide-react';
-
-import { useControls, useCreateStore } from '@/index';
 
 const items: CollapseProps['items'] = [
   {

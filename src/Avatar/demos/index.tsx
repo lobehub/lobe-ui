@@ -1,4 +1,5 @@
-import { ActionIconProps, Avatar, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import { type ActionIconProps, Avatar } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 import { useCdnFn } from '@/ConfigProvider';
 

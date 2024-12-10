@@ -6,8 +6,8 @@ import useControlledState from 'use-merge-value';
 
 import Icon from '@/Icon';
 import { Input, type InputProps } from '@/Input';
-import Spotlight from '@/Spotlight';
 import Tag from '@/Tag';
+import Spotlight from '@/awesome/Spotlight';
 
 import { useStyles } from './style';
 

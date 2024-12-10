@@ -10,8 +10,11 @@ const isWin = process.platform === 'win32';
 
 const nav: INavItem[] = [
   { link: '/components/action-icon', title: 'Components' },
-  { link: '/brand/lobehub', title: 'Brand' },
-  { link: '/mdx/callout', title: 'Mdx' },
+  { link: '/components/chat/chat-input-area', title: 'Chat' },
+  { link: '/components/mobile/mobile-chat-input-area', title: 'Mobile' },
+  { link: '/components/awesome/features', title: 'Awesome' },
+  { link: '/components/brand/lobe-hub', title: 'Brand' },
+  { link: '/components/mdx/callout', title: 'Mdx' },
   { link: 'https://icons.lobehub.com', mode: 'override', title: 'Icons' },
   { link: 'https://charts.lobehub.com', mode: 'override', title: 'Charts' },
   { link: '/colors', title: 'Colors' },
@@ -40,7 +43,7 @@ const themeConfig: SiteThemeConfig = {
   },
   apiHeader: {
     docUrl: `{github}/tree/master/src/{atomId}/index.md`,
-    match: ['/components', '/brand', '/mdx'],
+    match: ['/components'],
     pkg: name,
     sourceUrl: `{github}/tree/master/src/{atomId}/index.tsx`,
   },
@@ -73,8 +76,12 @@ const themeConfig: SiteThemeConfig = {
 
 export default defineConfig({
   alias: {
+    '@lobehub/ui/awesome': resolve(__dirname, './src/awesome'),
     '@lobehub/ui/brand': resolve(__dirname, './src/brand'),
+    '@lobehub/ui/chat': resolve(__dirname, './src/chat'),
     '@lobehub/ui/mdx': resolve(__dirname, './src/mdx'),
+    '@lobehub/ui/mobile': resolve(__dirname, './src/mobile'),
+    '@lobehub/ui/storybook': resolve(__dirname, './src/storybook'),
   },
   apiParser: isProduction ? {} : false,
   base: '/',
@@ -89,11 +96,18 @@ export default defineConfig({
   mfsu: isWin ? undefined : {},
   npmClient: 'pnpm',
   publicPath: '/',
-  resolve: isProduction
-    ? {
-        entryFile: './src/index.ts',
-      }
-    : undefined,
+  resolve: {
+    atomDirs: [
+      { dir: 'src', type: 'component' },
+      { dir: 'src/awesome', subType: 'awesome', type: 'component' },
+      { dir: 'src/chat', subType: 'chat', type: 'component' },
+      { dir: 'src/mobile', subType: 'mobile', type: 'component' },
+      { dir: 'src/brand', subType: 'brand', type: 'component' },
+      { dir: 'src/mdx', subType: 'mdx', type: 'component' },
+      { dir: 'src/storybook', subType: 'storybook', type: 'component' },
+    ],
+    entryFile: isProduction ? './src/index.ts' : undefined,
+  },
   sitemap: {
     hostname: 'https://ui.lobehub.com',
   },

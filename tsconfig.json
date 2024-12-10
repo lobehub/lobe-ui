@@ -16,7 +16,15 @@
       "@lobehub/ui/mdx": ["src/mdx"],
       "@lobehub/ui/mdx/*": ["src/mdx/*"],
       "@lobehub/ui/brand": ["src/brand"],
-      "@lobehub/ui/brand/*": ["src/brand/*"]
+      "@lobehub/ui/brand/*": ["src/brand/*"],
+      "@lobehub/ui/mobile": ["src/mobile"],
+      "@lobehub/ui/mobile/*": ["src/mobile/*"],
+      "@lobehub/ui/chat": ["src/chat"],
+      "@lobehub/ui/chat/*": ["src/chat/*"],
+      "@lobehub/ui/storybook": ["src/storybook"],
+      "@lobehub/ui/storybook/*": ["src/storybook/*"],
+      "@lobehub/ui/awesome": ["src/awesome"],
+      "@lobehub/ui/awesome/*": ["src/awesome/*"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,

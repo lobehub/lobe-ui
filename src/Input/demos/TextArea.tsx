@@ -1,4 +1,5 @@
-import { StoryBook, TextArea, TextAreaProps, useControls, useCreateStore } from '@lobehub/ui';
+import { TextArea, TextAreaProps } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();

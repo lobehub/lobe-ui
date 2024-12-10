@@ -1,4 +1,5 @@
-import { ActionIcon, ActionIconProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import { ActionIcon, ActionIconProps } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { folder } from 'leva';
 import * as LucideIcon from 'lucide-react';
 

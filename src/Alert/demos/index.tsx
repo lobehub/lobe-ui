@@ -1,4 +1,5 @@
-import { Alert, AlertProps, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import { Alert, AlertProps } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();

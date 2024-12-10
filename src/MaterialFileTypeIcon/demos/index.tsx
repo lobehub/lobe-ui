@@ -1,10 +1,5 @@
-import {
-  MaterialFileTypeIcon,
-  MaterialFileTypeIconProps,
-  StoryBook,
-  useControls,
-  useCreateStore,
-} from '@lobehub/ui';
+import { MaterialFileTypeIcon, MaterialFileTypeIconProps } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();

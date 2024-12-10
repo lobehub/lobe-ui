@@ -17,8 +17,8 @@ import Icon, {
   type IconSizeType,
   LucideIconProps,
 } from '@/Icon';
-import Spotlight from '@/Spotlight';
 import Tooltip, { type TooltipProps } from '@/Tooltip';
+import Spotlight from '@/awesome/Spotlight';
 
 import { calcSize } from './calcSize';
 import { useStyles } from './style';

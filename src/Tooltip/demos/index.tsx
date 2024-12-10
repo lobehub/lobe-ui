@@ -1,4 +1,5 @@
-import { StoryBook, Tooltip, TooltipProps, useControls, useCreateStore } from '@lobehub/ui';
+import { Tooltip, TooltipProps } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { Button } from 'antd';
 
 export default () => {

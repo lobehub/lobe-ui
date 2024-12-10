@@ -1,11 +1,5 @@
-import {
-  Alert,
-  AlertProps,
-  Highlighter,
-  StoryBook,
-  useControls,
-  useCreateStore,
-} from '@lobehub/ui';
+import { Alert, AlertProps, Highlighter } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 const demoError = {
   details: {

@@ -1,10 +1,9 @@
+import Pre, { PreMermaid, PreSingleLine } from '@lobehub/ui/mdx/mdxComponents/Pre';
 import { FC } from 'react';
 
 import { type HighlighterProps } from '@/Highlighter';
 import { type MermaidProps } from '@/Mermaid';
 import { FALLBACK_LANG } from '@/hooks/useHighlight';
-
-import Pre, { PreMermaid, PreSingleLine } from '../mdx/Pre';
 
 const countLines = (str: string): number => {
   const regex = /\n/g;
@@ -19,7 +18,7 @@ export const useCode = (raw: any) => {
 
   if (!children) return;
 
-  const content = (Array.isArray(children) ? (children[0] as string) : children);
+  const content = Array.isArray(children) ? (children[0] as string) : children;
 
   const lang = className?.replace('language-', '') || FALLBACK_LANG;
 

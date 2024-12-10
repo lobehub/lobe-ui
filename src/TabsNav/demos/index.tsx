@@ -1,4 +1,5 @@
-import { StoryBook, TabsNav, useControls, useCreateStore } from '@lobehub/ui';
+import { TabsNav } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();

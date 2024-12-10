@@ -1,4 +1,5 @@
-import { Form, StoryBook, useControls, useCreateStore } from '@lobehub/ui';
+import { Form } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { Button } from 'antd';
 
 import { items } from '@/Form/demos/data';

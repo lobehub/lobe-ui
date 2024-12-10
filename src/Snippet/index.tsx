@@ -5,7 +5,7 @@ import { Flexbox } from 'react-layout-kit';
 
 import CopyButton from '@/CopyButton';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
-import Spotlight from '@/Spotlight';
+import Spotlight from '@/awesome/Spotlight';
 import { DivProps } from '@/types';
 
 import { useStyles } from './style';
