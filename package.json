@@ -25,10 +25,18 @@
   "types": "es/index.d.ts",
   "files": [
     "es",
+    "awesome.d.ts",
+    "awesome.js",
+    "brand.d.ts",
+    "brand.js",
+    "chat.d.ts",
+    "chat.js",
     "mdx.d.ts",
     "mdx.js",
-    "brand.d.ts",
-    "brand.js"
+    "mobile.d.ts",
+    "mobile.js",
+    "storybook.d.ts",
+    "storybook.js"
   ],
   "scripts": {
     "build": "father build",
