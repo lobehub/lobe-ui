@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.153.12](https://github.com/lobehub/lobe-ui/compare/v1.153.11...v1.153.12)
+
+<sup>Released on **2024-12-10**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Split package.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Split package ([b3779de](https://github.com/lobehub/lobe-ui/commit/b3779de))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.153.11](https://github.com/lobehub/lobe-ui/compare/v1.153.10...v1.153.11)
 
 <sup>Released on **2024-12-07**</sup>
