@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.153.13](https://github.com/lobehub/lobe-ui/compare/v1.153.12...v1.153.13)
+
+<sup>Released on **2024-12-10**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix files in package.json.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix files in package.json ([b187ad1](https://github.com/lobehub/lobe-ui/commit/b187ad1))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.153.12](https://github.com/lobehub/lobe-ui/compare/v1.153.11...v1.153.12)
 
 <sup>Released on **2024-12-10**</sup>
