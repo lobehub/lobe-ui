@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.153.15](https://github.com/lobehub/lobe-ui/compare/v1.153.14...v1.153.15)
+
+<sup>Released on **2024-12-13**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix useHighlight.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix useHighlight ([7067207](https://github.com/lobehub/lobe-ui/commit/7067207))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.153.14](https://github.com/lobehub/lobe-ui/compare/v1.153.13...v1.153.14)
 
 <sup>Released on **2024-12-12**</sup>
