@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.153.16](https://github.com/lobehub/lobe-ui/compare/v1.153.15...v1.153.16)
+
+<sup>Released on **2024-12-13**</sup>
+
+#### 💄 Styles
+
+- **misc**: Add error output when shiki failed to highlight.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Add error output when shiki failed to highlight, closes [#234](https://github.com/lobehub/lobe-ui/issues/234) ([ef6729e](https://github.com/lobehub/lobe-ui/commit/ef6729e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.153.15](https://github.com/lobehub/lobe-ui/compare/v1.153.14...v1.153.15)
 
 <sup>Released on **2024-12-13**</sup>
