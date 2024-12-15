@@ -1,6 +1,5 @@
 'use client';
 
-import { StyleProviderProps as AntdStyleProviderProps } from '@ant-design/cssinjs';
 import { App } from 'antd';
 import {
   ThemeProvider as AntdThemeProvider,
@@ -8,10 +7,9 @@ import {
   CustomStylishParams,
   CustomTokenParams,
   GetAntdTheme,
-  StyleProvider,
 } from 'antd-style';
 import { merge } from 'lodash-es';
-import { CSSProperties, memo, useCallback } from 'react';
+import { CSSProperties, memo, useCallback, useMemo } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
 import FontLoader from '@/FontLoader';
@@ -21,9 +19,7 @@ import { LobeCustomToken } from '@/types/customToken';
 
 import GlobalStyle from './GlobalStyle';
 
-export interface ThemeProviderProps
-  extends AntdThemeProviderProps<any>,
-    Pick<AntdStyleProviderProps, 'cache' | 'ssrInline'> {
+export interface ThemeProviderProps extends AntdThemeProviderProps<any> {
   className?: string;
   /**
    * @description Webfont loader css strings
@@ -55,26 +51,27 @@ const ThemeProvider = memo<ThemeProviderProps>(
     customTheme = {},
     className,
     style,
-    cache,
-    ssrInline,
     theme: antdTheme,
     ...rest
   }) => {
     const genCdnUrl = useCdnFn();
-    const webfontUrls = customFonts || [
-      genCdnUrl({ path: 'css/index.css', pkg: '@lobehub/webfont-mono', version: '1.0.0' }),
-      genCdnUrl({
-        path: 'css/index.css',
-        pkg: '@lobehub/webfont-harmony-sans',
-        version: '1.0.0',
-      }),
-      genCdnUrl({
-        path: 'css/index.css',
-        pkg: '@lobehub/webfont-harmony-sans-sc',
-        version: '1.0.0',
-      }),
-      genCdnUrl({ path: 'dist/katex.min.css', pkg: 'katex', version: '0.16.8' }),
-    ];
+
+    const webfontUrls = useMemo(
+      () =>
+        customFonts || [
+          genCdnUrl({ path: 'css/index.css', pkg: '@lobehub/webfont-mono' }),
+          genCdnUrl({
+            path: 'css/index.css',
+            pkg: '@lobehub/webfont-harmony-sans',
+          }),
+          genCdnUrl({
+            path: 'css/index.css',
+            pkg: '@lobehub/webfont-harmony-sans-sc',
+          }),
+          genCdnUrl({ path: 'dist/katex.min.css', pkg: 'katex' }),
+        ],
+      [customFonts, genCdnUrl],
+    );
 
     const stylish = useCallback(
       (theme: CustomStylishParams) => ({ ...lobeCustomStylish(theme), ...customStylish?.(theme) }),
@@ -103,24 +100,17 @@ const ThemeProvider = memo<ThemeProviderProps>(
         {enableCustomFonts &&
           webfontUrls?.length > 0 &&
           webfontUrls.map((webfont) => <FontLoader key={webfont} url={webfont} />)}
-        <StyleProvider
-          cache={cache}
-          prefix={rest?.prefixCls}
-          speedy={process.env.NODE_ENV === 'production'}
-          ssrInline={ssrInline}
+        <AntdThemeProvider<LobeCustomToken>
+          customStylish={stylish}
+          customToken={token}
+          theme={theme}
+          {...rest}
         >
-          <AntdThemeProvider<LobeCustomToken>
-            customStylish={stylish}
-            customToken={token}
-            theme={theme}
-            {...rest}
-          >
-            {enableGlobalStyle && <GlobalStyle />}
-            <App className={className} style={{ minHeight: 'inherit', width: 'inherit', ...style }}>
-              {children}
-            </App>
-          </AntdThemeProvider>
-        </StyleProvider>
+          {enableGlobalStyle && <GlobalStyle />}
+          <App className={className} style={{ minHeight: 'inherit', width: 'inherit', ...style }}>
+            {children}
+          </App>
+        </AntdThemeProvider>
       </>
     );
   },
