@@ -15,24 +15,33 @@ export interface CopyButtonProps extends ActionIconProps {
 }
 
 const CopyButton = memo<CopyButtonProps>(
-  ({ content, placement = 'right', size = 'site', icon, glass = true, onClick, ...rest }) => {
+  ({
+    active,
+    content,
+    placement = 'right',
+    size = 'site',
+    icon,
+    glass = true,
+    onClick,
+    ...rest
+  }) => {
     const { copied, setCopied } = useCopied();
     const Icon = icon || Copy;
 
     return (
       <ActionIcon
         glass={glass}
+        placement={placement}
+        size={size}
+        title={'Copy'}
         {...rest}
-        active={copied}
+        active={active || copied}
         icon={copied ? Check : Icon}
         onClick={async (e) => {
           await copyToClipboard(content);
           setCopied();
           onClick?.(e);
         }}
-        placement={placement}
-        size={size}
-        title={'Copy'}
       />
     );
   },
