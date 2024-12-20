@@ -30,9 +30,10 @@ export const HighlighterFullFeatured = memo<HighlighterProps>(
     actionsRender,
     copyable,
     type,
+    defalutExpand = true,
     ...rest
   }) => {
-    const [expand, setExpand] = useState(true);
+    const [expand, setExpand] = useState(defalutExpand);
     const [lang, setLang] = useState(language);
     const { styles, cx } = useStyles(type);
 
