@@ -23,6 +23,11 @@ export interface HighlighterProps extends DivProps {
    * @default true
    */
   copyable?: boolean;
+  /**
+   * @description Whether to expand code blocks by default
+   * @default true
+   */
+  defalutExpand?: boolean;
   fileName?: string;
   fullFeatured?: boolean;
   icon?: ReactNode;
