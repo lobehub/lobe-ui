@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.154.1](https://github.com/lobehub/lobe-ui/compare/v1.154.0...v1.154.1)
+
+<sup>Released on **2024-12-23**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Modal props.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Modal props ([383d343](https://github.com/lobehub/lobe-ui/commit/383d343))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.154.0](https://github.com/lobehub/lobe-ui/compare/v1.153.18...v1.154.0)
 
 <sup>Released on **2024-12-20**</sup>
