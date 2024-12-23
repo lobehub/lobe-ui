@@ -7,7 +7,7 @@ import { Maximize2, Minimize2, X } from 'lucide-react';
 import { lighten } from 'polished';
 import { ReactNode, memo, useState } from 'react';
 
-import ActionIcon, { type ActionIconProps } from '@/ActionIcon';
+import ActionIcon from '@/ActionIcon';
 import Icon from '@/Icon';
 
 const HEADER_HEIGHT = 56;
@@ -77,7 +77,6 @@ const useStyles = createStyles(
 
 export type ModalProps = AntModalProps & {
   allowFullscreen?: boolean;
-  closeIconProps?: Omit<ActionIconProps, 'size'>;
   enableResponsive?: boolean;
   maxHeight?: string | number | false;
   paddings?: {
@@ -100,7 +99,6 @@ const Modal = memo<ModalProps>(
     paddings,
     maxHeight = '75dvh',
     enableResponsive = true,
-    closeIconProps,
     footer,
     styles: stylesProps = {},
     ...rest
@@ -161,7 +159,7 @@ const Modal = memo<ModalProps>(
         <AntModal
           className={cx(styles.content, className)}
           closable
-          closeIcon={<Icon icon={X} size={{ fontSize: 20 }} {...closeIconProps} />}
+          closeIcon={<Icon icon={X} size={{ fontSize: 20 }} />}
           destroyOnClose={destroyOnClose}
           footer={footer}
           maskClosable
