@@ -2,15 +2,17 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ css, token, prefixCls, responsive }) => ({
   footer: css`
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline: 0;
+
     width: calc(100% + 32px);
     margin: -16px;
     padding: 16px;
+
     background: ${token.colorBgContainer};
     ${responsive.mobile} {
       position: fixed;
-      inset-block-end: 0;
-      inset-inline: 0;
-
       width: 100%;
       margin: 0;
     }
@@ -24,6 +26,7 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
     ${responsive.mobile} {
       .${prefixCls}-form-group-title {
         font-size: 14px;
+        font-weight: normal;
       }
 
       .${prefixCls}-form-group {

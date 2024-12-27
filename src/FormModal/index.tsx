@@ -125,7 +125,6 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
         styles={{
           ...modalStyles,
           body: {
-            paddingBottom: mobile ? 68 : undefined,
             paddingTop: mobile ? 0 : undefined,
             ...modalStyles?.body,
           },
@@ -162,7 +161,10 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
           gap={gap || (variant === 'pure' ? 24 : gap)}
           onFinish={onFinish}
           ref={ref}
-          style={formStyle}
+          style={{
+            paddingBottom: 68,
+            ...formStyle,
+          }}
           styles={{
             footer: footerStyle,
           }}
