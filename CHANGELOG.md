@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.155.4](https://github.com/lobehub/lobe-ui/compare/v1.155.3...v1.155.4)
+
+<sup>Released on **2024-12-27**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Form footer style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Form footer style ([9f58c9a](https://github.com/lobehub/lobe-ui/commit/9f58c9a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.155.3](https://github.com/lobehub/lobe-ui/compare/v1.155.2...v1.155.3)
 
 <sup>Released on **2024-12-27**</sup>
