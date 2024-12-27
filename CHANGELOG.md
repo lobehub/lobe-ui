@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.155.3](https://github.com/lobehub/lobe-ui/compare/v1.155.2...v1.155.3)
+
+<sup>Released on **2024-12-27**</sup>
+
+#### 💄 Styles
+
+- **misc**: Support Multi Form.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Support Multi Form ([c941be4](https://github.com/lobehub/lobe-ui/commit/c941be4))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.155.2](https://github.com/lobehub/lobe-ui/compare/v1.155.1...v1.155.2)
 
 <sup>Released on **2024-12-27**</sup>
