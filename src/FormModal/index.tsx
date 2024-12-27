@@ -1,7 +1,6 @@
 import { Button } from 'antd';
 import { useResponsive } from 'antd-style';
 import { forwardRef } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import Form, { type FormInstance, type FormProps } from '@/Form';
 import Modal, { type ModalProps } from '@/Modal';
@@ -59,7 +58,6 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
       style,
       closable,
       styles = {},
-      children,
       allowFullscreen,
       title,
       wrapClassName,
@@ -137,23 +135,12 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
       >
         <Form
           className={cx(s.form, formClassName)}
+          classNames={{
+            footer: cx(s.footer, footerClassName),
+          }}
           clearOnDestroy={destroyOnClose}
-          gap={gap || (variant === 'pure' ? 24 : gap)}
-          onFinish={onFinish}
-          ref={ref}
-          style={formStyle}
-          variant={variant}
-          {...rest}
-        >
-          {children}
-          <Flexbox
-            className={cx(s.footer, footerClassName)}
-            gap={8}
-            horizontal
-            style={footerStyle}
-            width={'100%'}
-          >
-            {footer || (
+          footer={
+            footer || (
               <Button
                 block
                 htmlType="submit"
@@ -168,9 +155,18 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
               >
                 {submitText || 'Submit'}
               </Button>
-            )}
-          </Flexbox>
-        </Form>
+            )
+          }
+          gap={gap || (variant === 'pure' ? 24 : gap)}
+          onFinish={onFinish}
+          ref={ref}
+          style={formStyle}
+          styles={{
+            footer: footerStyle,
+          }}
+          variant={variant}
+          {...rest}
+        />
       </Modal>
     );
   },

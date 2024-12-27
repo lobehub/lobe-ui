@@ -18,4 +18,4 @@ title: FormModal
 
 ## APIs
 
-<API id="FormModal"></API>
+<API></API>

@@ -1,7 +1,7 @@
 'use client';
 
 import { Form as AntForm, FormProps as AntFormProps, type FormInstance } from 'antd';
-import { type ReactNode, RefAttributes, forwardRef } from 'react';
+import { CSSProperties, type ReactNode, RefAttributes, forwardRef } from 'react';
 
 import FormFooter from './components/FormFooter';
 import FormGroup, { type FormGroupProps, FormVariant, ItemsType } from './components/FormGroup';
@@ -18,12 +18,18 @@ export interface ItemGroup {
 
 export interface FormProps extends Omit<AntFormProps, 'variant'> {
   children?: ReactNode;
+  classNames?: {
+    footer?: string;
+  };
   collapsible?: boolean;
   footer?: ReactNode;
   gap?: number | string;
   itemMinWidth?: FormItemProps['minWidth'];
   items?: ItemGroup[] | FormItemProps[];
   itemsType?: ItemsType;
+  styles?: {
+    footer?: CSSProperties;
+  };
   variant?: FormVariant;
 }
 
@@ -41,11 +47,13 @@ const FormParent = forwardRef<FormInstance, FormProps>(
       gap,
       style,
       collapsible,
+      classNames = {},
+      styles = {},
       ...rest
     },
     ref,
   ) => {
-    const { cx, styles } = useStyles();
+    const { cx, styles: s } = useStyles();
 
     const mapFlat = (item: FormItemProps, itemIndex: number) => (
       <FormItem divider={itemIndex !== 0} key={itemIndex} minWidth={itemMinWidth} {...item} />
@@ -68,7 +76,7 @@ const FormParent = forwardRef<FormInstance, FormProps>(
 
     return (
       <AntForm
-        className={cx(styles.form, variant === 'pure' && styles.pure, styles.mobile, className)}
+        className={cx(s.form, variant === 'pure' && s.pure, s.mobile, className)}
         colon={false}
         form={form}
         layout={'horizontal'}
@@ -91,7 +99,11 @@ const FormParent = forwardRef<FormInstance, FormProps>(
           )
         ) : undefined}
         {children}
-        {footer && <FormFooter>{footer}</FormFooter>}
+        {footer && (
+          <FormFooter className={classNames?.footer} style={styles?.footer}>
+            {footer}
+          </FormFooter>
+        )}
       </AntForm>
     );
   },

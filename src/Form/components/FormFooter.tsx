@@ -7,9 +7,9 @@ import { type DivProps } from '@/types';
 
 export type FormFooterProps = DivProps;
 
-const FormFooter = memo<FormFooterProps>(({ className, children, ...rest }) => {
+const FormFooter = memo<FormFooterProps>(({ children, ...rest }) => {
   return (
-    <Flexbox className={className} gap={8} justify={'flex-end'} {...rest} horizontal>
+    <Flexbox gap={8} horizontal justify={'flex-end'} {...rest}>
       {children}
     </Flexbox>
   );

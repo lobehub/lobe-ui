@@ -1,9 +1,15 @@
 import { Form, FormModal } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { Button, InputNumber, Segmented, Select, Switch } from 'antd';
+import { Button } from 'antd';
 import { useState } from 'react';
 
+import { items } from './data';
+
 const { useForm } = Form;
+
+// @ts-ignore
+const [formItem1, formItem2] = items;
+
 const setting = {
   i18n: 'en',
   liteAnimation: false,
@@ -33,14 +39,6 @@ export default () => {
     setIsModalOpen(true);
   };
 
-  const handleSubmit = () => {
-    setLoading(true);
-    setTimeout(() => {
-      form.submit();
-      setLoading(false);
-    }, 2000);
-  };
-
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -52,14 +50,18 @@ export default () => {
       </Button>
       <Form.Provider
         onFormFinish={(_, { values }) => {
+          setLoading(true);
           console.table(values);
+          setTimeout(() => {
+            setLoading(false);
+            setIsModalOpen(false);
+          }, 2000);
         }}
       >
         <FormModal
           form={form}
           initialValues={setting}
           onCancel={handleCancel}
-          onSubmit={handleSubmit}
           open={isModalOpen}
           submitLoading={loading}
           title="Form Modal"
@@ -67,88 +69,14 @@ export default () => {
           <Form
             form={form}
             itemMinWidth={'max(30%,240px)'}
-            items={[
-              {
-                children: [
-                  {
-                    children: (
-                      <Select
-                        options={[
-                          {
-                            label: 'English',
-                            value: 'en',
-                          },
-                          {
-                            label: '简体中文',
-                            value: 'zh_CN',
-                          },
-                        ]}
-                      />
-                    ),
-                    desc: 'Editor language',
-                    label: 'Language',
-                    name: 'i18n',
-                  },
-                  {
-                    children: <Switch />,
-                    desc: 'Reduce the blur effect and background flow color, which can improve smoothness and save CPU usage',
-                    label: 'Reduce Animation',
-                    minWidth: undefined,
-                    name: 'liteAnimation',
-                    valuePropName: 'checked',
-                  },
-                ],
-                title: 'Theme Settings',
-              },
-            ]}
+            items={[formItem1]}
             itemsType={'group'}
             variant={variant}
           />
           <Form
             form={form}
             itemMinWidth={'max(30%,240px)'}
-            items={[
-              {
-                children: [
-                  {
-                    children: <Switch />,
-                    desc: 'Whether to expand the sidebar by default when starting',
-                    label: 'Default Expand',
-                    minWidth: undefined,
-                    name: 'sidebarExpand',
-                    valuePropName: 'checked',
-                  },
-                  {
-                    children: (
-                      <Segmented
-                        options={[
-                          {
-                            label: 'Fixed',
-                            value: 'fixed',
-                          },
-                          {
-                            label: 'Float',
-                            value: 'float',
-                          },
-                        ]}
-                      />
-                    ),
-                    desc: 'Fixed as grid mode for constant display, auto-expand when the mouse moves to the side in floating mode',
-                    label: 'Display Mode',
-                    minWidth: undefined,
-                    name: 'sidebarFixedMode',
-                  },
-                  {
-                    children: <InputNumber />,
-                    desc: 'Default width of the sidebar when starting',
-                    label: 'Default Width',
-                    minWidth: undefined,
-                    name: 'sidebarWidth',
-                  },
-                ],
-                title: 'Quick Setting Sidebar',
-              },
-            ]}
+            items={[formItem2]}
             itemsType={'group'}
             variant={variant}
           />
