@@ -87,6 +87,7 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
       variant = 'pure',
       gap,
       onSubmit,
+      children,
       ...rest
     },
     ref,
@@ -124,6 +125,7 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
         styles={{
           ...modalStyles,
           body: {
+            paddingBottom: mobile ? 68 : undefined,
             paddingTop: mobile ? 0 : undefined,
             ...modalStyles?.body,
           },
@@ -166,7 +168,9 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
           }}
           variant={variant}
           {...rest}
-        />
+        >
+          {children}
+        </Form>
       </Modal>
     );
   },
