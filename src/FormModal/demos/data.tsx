@@ -1,6 +1,5 @@
 import type { FormProps } from '@lobehub/ui';
 import { InputNumber, Segmented, Select, Switch } from 'antd';
-import { Palette, PanelLeftClose } from 'lucide-react';
 
 export const items: FormProps['items'] = [
   {
@@ -33,7 +32,6 @@ export const items: FormProps['items'] = [
         valuePropName: 'checked',
       },
     ],
-    icon: Palette,
     title: 'Theme Settings',
   },
   {
@@ -74,7 +72,6 @@ export const items: FormProps['items'] = [
         name: 'sidebarWidth',
       },
     ],
-    icon: PanelLeftClose,
     title: 'Quick Setting Sidebar',
   },
 ];

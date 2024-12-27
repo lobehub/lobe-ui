@@ -97,7 +97,7 @@ const FormParent = forwardRef<FormInstance, FormProps>(
   },
 );
 
-export { FormInstance } from 'antd';
+export type { FormInstance } from 'antd';
 
 export interface IForm {
   (props: FormProps & RefAttributes<FormInstance>): ReactNode;
