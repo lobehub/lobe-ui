@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.155.0](https://github.com/lobehub/lobe-ui/compare/v1.154.1...v1.155.0)
+
+<sup>Released on **2024-12-27**</sup>
+
+#### ✨ Features
+
+- **misc**: Add FormModal.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add FormModal ([8fad511](https://github.com/lobehub/lobe-ui/commit/8fad511))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.154.1](https://github.com/lobehub/lobe-ui/compare/v1.154.0...v1.154.1)
 
 <sup>Released on **2024-12-23**</sup>
