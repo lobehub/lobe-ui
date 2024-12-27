@@ -42,12 +42,13 @@ export interface FormModalProps extends PickModalProps, PickFormProps {
   classNames?: {
     form?: FormProps['className'];
   } & ModalProps['classNames'];
-  finishButtonProps?: ModalProps['okButtonProps'];
-  finishLoading?: ModalProps['confirmLoading'];
-  finishText?: ModalProps['okText'];
+  onSubmit?: ModalProps['onOk'];
   styles?: {
     form?: FormProps['style'];
   } & ModalProps['styles'];
+  submitButtonProps?: ModalProps['okButtonProps'];
+  submitLoading?: ModalProps['confirmLoading'];
+  submitText?: ModalProps['okText'];
 }
 
 const FormModal = forwardRef<FormInstance, FormModalProps>(
@@ -81,12 +82,13 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
       forceRender,
       loading,
       footer,
-      finishButtonProps,
-      finishLoading,
+      submitButtonProps,
+      submitLoading,
       onFinish,
-      finishText,
+      submitText,
       variant = 'pure',
       gap,
+      onSubmit,
       ...rest
     },
     ref,
@@ -106,7 +108,7 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
         classNames={modalClassNames}
         closable={closable}
         closeIcon={closeIcon}
-        confirmLoading={finishLoading}
+        confirmLoading={submitLoading}
         destroyOnClose={destroyOnClose}
         enableResponsive={enableResponsive}
         focusTriggerAfterClose={focusTriggerAfterClose}
@@ -155,15 +157,16 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
               <Button
                 block
                 htmlType="submit"
-                loading={finishLoading}
+                loading={submitLoading}
+                onClick={onSubmit}
                 type={'primary'}
-                {...finishButtonProps}
+                {...submitButtonProps}
                 style={{
                   flex: 1,
-                  ...finishButtonProps?.style,
+                  ...submitButtonProps?.style,
                 }}
               >
-                {finishText || 'Submit'}
+                {submitText || 'Submit'}
               </Button>
             )}
           </Flexbox>

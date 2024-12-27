@@ -52,7 +52,6 @@ export default () => {
         Open Modal
       </Button>
       <FormModal
-        finishLoading={loading}
         initialValues={setting}
         itemMinWidth={'max(30%,240px)'}
         items={items}
@@ -60,6 +59,7 @@ export default () => {
         onCancel={handleCancel}
         onFinish={handleFinish}
         open={isModalOpen}
+        submitLoading={loading}
         title="Form Modal"
         variant={variant}
       />

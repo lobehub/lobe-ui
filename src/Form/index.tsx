@@ -103,6 +103,7 @@ export interface IForm {
   (props: FormProps & RefAttributes<FormInstance>): ReactNode;
   Group: typeof FormGroup;
   Item: typeof FormItem;
+  Provider: typeof AntForm.Provider;
   useForm: typeof AntForm.useForm;
 }
 
@@ -111,5 +112,6 @@ const Form = FormParent as unknown as IForm;
 Form.Item = FormItem;
 Form.Group = FormGroup;
 Form.useForm = AntForm.useForm;
+Form.Provider = AntForm.Provider;
 
 export default Form;

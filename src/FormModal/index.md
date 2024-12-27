@@ -12,6 +12,10 @@ title: FormModal
 
 <code src="./demos/Flat.tsx" nopadding></code>
 
+## Multi Form
+
+<code src="./demos/MultiForm.tsx" nopadding></code>
+
 ## APIs
 
-<API></API>
+<API id="FormModal"></API>
