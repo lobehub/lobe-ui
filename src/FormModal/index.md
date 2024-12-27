@@ -15,7 +15,3 @@ title: FormModal
 ## Multi Form
 
 <code src="./demos/MultiForm.tsx" nopadding></code>
-
-## APIs
-
-<API></API>
