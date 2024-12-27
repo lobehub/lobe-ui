@@ -8,7 +8,8 @@ import { useStyles } from './style';
 
 export type Variant = 'default' | 'block' | 'ghost' | 'pure';
 
-export interface CollapseProps extends AntdCollapseProps {
+export interface CollapseProps extends Omit<AntdCollapseProps, 'collapsible'> {
+  collapsible?: boolean;
   gap?: number;
   padding?:
     | number
@@ -21,13 +22,13 @@ export interface CollapseProps extends AntdCollapseProps {
 }
 
 const Collapse = memo<CollapseProps>(
-  ({ style, variant = 'default', gap = 0, className, padding, ...rest }) => {
+  ({ style, variant = 'default', gap = 0, className, padding, collapsible = true, ...rest }) => {
     const bodyPadding = typeof padding === 'object' ? padding.body : padding;
     const headerPadding = typeof padding === 'object' ? padding.header : padding;
 
     const { cx, styles } = useStyles({
-      bodyPadding: bodyPadding === undefined ? '12px 16px' : bodyPadding,
-      headerPadding: headerPadding === undefined ? '12px 16px' : headerPadding,
+      bodyPadding,
+      headerPadding,
       isSplit: !!gap,
     });
 
@@ -41,7 +42,12 @@ const Collapse = memo<CollapseProps>(
     return (
       <AntdCollapse
         bordered={!gap && (variant === 'default' || variant === 'ghost')}
-        className={cx(styles.group, variantStyle, className)}
+        className={cx(
+          styles.group,
+          !collapsible && styles.hideCollapsibleIcon,
+          variantStyle,
+          className,
+        )}
         expandIcon={({ isActive }) => (
           <Icon
             className={styles.icon}

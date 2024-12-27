@@ -51,7 +51,20 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
       border-radius: ${token.borderRadius}px !important;
     }
   `,
+  mobile: css`
+    ${responsive.mobile} {
+      gap: 0 !important;
+    }
+  `,
   pure: css`
     gap: 64px;
+    .${prefixCls}-collapse-content-box {
+      .${prefixCls}-form-item:first-child {
+        border-block-start: 1px solid ${token.colorFillSecondary};
+      }
+    }
+    ${responsive.mobile} {
+      border-block-start: unset;
+    }
   `,
 }));

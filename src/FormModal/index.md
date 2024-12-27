@@ -1,15 +1,14 @@
 ---
 nav: Components
 group: Data Entry
-title: Form
-description: High performance Form component with data scope management. Including data collection, verification, and styles.
+title: FormModal
 ---
 
 ## Default
 
 <code src="./demos/index.tsx" nopadding></code>
 
-## Flat Type
+## Flat
 
 <code src="./demos/Flat.tsx" nopadding></code>
 

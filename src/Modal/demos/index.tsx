@@ -22,13 +22,7 @@ export default () => {
       <Button onClick={showModal} type="primary">
         Open Modal
       </Button>
-      <Modal
-        footer={<Button type={'primary'}>Demo</Button>}
-        onCancel={handleCancel}
-        onOk={handleOk}
-        open={isModalOpen}
-        title="Basic Modal"
-      >
+      <Modal onCancel={handleCancel} onOk={handleOk} open={isModalOpen} title="Basic Modal">
         <Typography.Paragraph>
           {Array.from({ length: 200 }).fill('Some contents').join(' ')}
         </Typography.Paragraph>

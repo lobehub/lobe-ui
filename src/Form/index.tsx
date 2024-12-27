@@ -18,7 +18,9 @@ export interface ItemGroup {
 
 export interface FormProps extends Omit<AntFormProps, 'variant'> {
   children?: ReactNode;
+  collapsible?: boolean;
   footer?: ReactNode;
+  gap?: number | string;
   itemMinWidth?: FormItemProps['minWidth'];
   items?: ItemGroup[] | FormItemProps[];
   itemsType?: ItemsType;
@@ -36,6 +38,9 @@ const FormParent = forwardRef<FormInstance, FormProps>(
       children,
       itemsType = 'group',
       variant = 'default',
+      gap,
+      style,
+      collapsible,
       ...rest
     },
     ref,
@@ -47,6 +52,7 @@ const FormParent = forwardRef<FormInstance, FormProps>(
     );
     const mapTree = (group: ItemGroup, groupIndex: number) => (
       <FormGroup
+        collapsible={collapsible}
         defaultActive={group?.defaultActive}
         extra={group?.extra}
         icon={group?.icon}
@@ -62,11 +68,15 @@ const FormParent = forwardRef<FormInstance, FormProps>(
 
     return (
       <AntForm
-        className={cx(styles.form, variant === 'pure' && styles.pure, className)}
+        className={cx(styles.form, variant === 'pure' && styles.pure, styles.mobile, className)}
         colon={false}
         form={form}
         layout={'horizontal'}
         ref={ref}
+        style={{
+          gap,
+          ...style,
+        }}
         {...rest}
       >
         {items?.length > 0 ? (

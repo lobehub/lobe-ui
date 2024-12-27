@@ -15,6 +15,10 @@ export const useStyles = createStyles(
         padding-block: 16px;
         padding-inline: 0;
 
+        .${prefixCls}-form-item-label {
+          text-align: start;
+        }
+
         .${prefixCls}-row {
           gap: 12px;
           justify-content: space-between;

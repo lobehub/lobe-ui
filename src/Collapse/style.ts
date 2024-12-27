@@ -5,9 +5,9 @@ export const useStyles = createStyles(
     { css, cx, token, isDarkMode, prefixCls },
     {
       isSplit,
-      bodyPadding,
-      headerPadding,
-    }: { bodyPadding: number | string; headerPadding: number | string; isSplit: boolean },
+      bodyPadding = '12px 16px',
+      headerPadding = '12px 16px',
+    }: { bodyPadding?: number | string; headerPadding?: number | string; isSplit?: boolean },
   ) => {
     const pureStyle = css`
       background: transparent;
@@ -171,6 +171,11 @@ export const useStyles = createStyles(
           }
         `,
       ),
+      hideCollapsibleIcon: css`
+        .${prefixCls}-collapse-expand-icon {
+          display: none !important;
+        }
+      `,
 
       icon: css`
         transition: all 100ms ${token.motionEaseOut};

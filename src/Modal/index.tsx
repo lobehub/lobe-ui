@@ -1,7 +1,13 @@
 'use client';
 
-import { Modal as AntModal, type ModalProps as AntModalProps, ConfigProvider, Drawer } from 'antd';
-import { createStyles, useResponsive } from 'antd-style';
+import {
+  Modal as AntModal,
+  type ModalProps as AntModalProps,
+  Button,
+  ConfigProvider,
+  Drawer,
+} from 'antd';
+import { useResponsive } from 'antd-style';
 import { isNumber } from 'lodash-es';
 import { Maximize2, Minimize2, X } from 'lucide-react';
 import { lighten } from 'polished';
@@ -10,72 +16,9 @@ import { ReactNode, memo, useState } from 'react';
 import ActionIcon from '@/ActionIcon';
 import Icon from '@/Icon';
 
-const HEADER_HEIGHT = 56;
-const FOOTER_HEIGHT = 68;
+import { FOOTER_HEIGHT, HEADER_HEIGHT, useStyles } from './style';
 
-const useStyles = createStyles(
-  ({ cx, css, token, prefixCls }, { maxHeight }: { maxHeight?: string }) => {
-    return {
-      content: cx(
-        maxHeight &&
-          css`
-            .${prefixCls}-modal-body {
-              overflow: auto;
-              max-height: ${maxHeight};
-            }
-          `,
-        css`
-          .${prefixCls}-modal-footer {
-            margin: 0;
-            padding: 16px;
-          }
-          .${prefixCls}-modal-header {
-            display: flex;
-            gap: 4px;
-            align-items: center;
-            justify-content: center;
-
-            height: 56px;
-            margin-block-end: 0;
-            padding: 16px;
-          }
-          .${prefixCls}-modal-content {
-            overflow: hidden;
-            padding: 0;
-            border: 1px solid ${token.colorSplit};
-            border-radius: ${token.borderRadiusLG}px;
-          }
-        `,
-      ),
-      drawerContent: css`
-        .${prefixCls}-drawer-close {
-          padding: 0;
-        }
-        .${prefixCls}-drawer-wrapper-body {
-          background: linear-gradient(to bottom, ${token.colorBgContainer}, ${token.colorBgLayout});
-        }
-        .${prefixCls}-drawer-header {
-          padding: 8px;
-        }
-
-        .${prefixCls}-drawer-footer {
-          display: flex;
-          align-items: center;
-          justify-content: flex-end;
-
-          padding: 16px;
-
-          border: none;
-        }
-      `,
-      wrap: css`
-        overflow: hidden auto;
-      `,
-    };
-  },
-);
-
-export type ModalProps = AntModalProps & {
+export type ModalProps = Omit<AntModalProps, 'okType'> & {
   allowFullscreen?: boolean;
   enableResponsive?: boolean;
   maxHeight?: string | number | false;
@@ -101,6 +44,12 @@ const Modal = memo<ModalProps>(
     enableResponsive = true,
     footer,
     styles: stylesProps = {},
+    okText,
+    onOk,
+    cancelText,
+    okButtonProps,
+    cancelButtonProps,
+    confirmLoading,
     ...rest
   }) => {
     const [fullscreen, setFullscreen] = useState(false);
@@ -113,6 +62,7 @@ const Modal = memo<ModalProps>(
         : undefined,
     });
     const { body, ...restStyles } = stylesProps;
+    const hideFooter = footer === false || footer === null;
     if (enableResponsive && mobile)
       return (
         <Drawer
@@ -127,7 +77,29 @@ const Modal = memo<ModalProps>(
               />
             )
           }
-          footer={footer as ReactNode}
+          footer={
+            hideFooter
+              ? null
+              : (footer as ReactNode) || (
+                  <>
+                    <Button onClick={onCancel as any} {...cancelButtonProps}>
+                      {cancelText || 'Cancel'}
+                    </Button>
+                    <Button
+                      loading={confirmLoading}
+                      onClick={onOk as any}
+                      type="primary"
+                      {...okButtonProps}
+                      style={{
+                        marginInlineStart: 8,
+                        ...okButtonProps?.style,
+                      }}
+                    >
+                      {okText || 'OK'}
+                    </Button>
+                  </>
+                )
+          }
           height={fullscreen ? 'calc(100% - env(safe-area-inset-top))' : maxHeight || '75vh'}
           maskClassName={cx(styles.wrap, wrapClassName)}
           onClose={onCancel as any}
@@ -157,13 +129,19 @@ const Modal = memo<ModalProps>(
         }}
       >
         <AntModal
+          cancelButtonProps={cancelButtonProps}
+          cancelText={cancelText}
           className={cx(styles.content, className)}
           closable
           closeIcon={<Icon icon={X} size={{ fontSize: 20 }} />}
+          confirmLoading={confirmLoading}
           destroyOnClose={destroyOnClose}
-          footer={footer}
+          footer={hideFooter ? null : footer}
           maskClosable
+          okButtonProps={okButtonProps}
+          okText={okText}
           onCancel={onCancel}
+          onOk={onOk}
           open={open}
           styles={{
             body: {

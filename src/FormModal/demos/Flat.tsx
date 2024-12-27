@@ -1,6 +1,7 @@
-import { Form, type FormProps } from '@lobehub/ui';
+import { FormModal, type FormProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { Select, Switch } from 'antd';
+import { Button, Select, Switch } from 'antd';
+import { useState } from 'react';
 
 const setting = {
   i18n: 'en',
@@ -41,26 +42,53 @@ const items: FormProps['items'] = [
 ];
 
 export default () => {
+  const [loading, setLoading] = useState(false);
   const store = useCreateStore();
 
   const { variant }: any = useControls(
     {
       variant: {
         options: ['default', 'block', 'ghost', 'pure'],
-        value: 'default',
+        value: 'pure',
       },
     },
     { store },
   );
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleFinish: FormProps['onFinish'] = (v) => {
+    setLoading(true);
+    console.table(v);
+    setTimeout(() => {
+      setLoading(false);
+      setIsModalOpen(false);
+    }, 2000);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <StoryBook levaStore={store}>
-      <Form
+      <Button onClick={showModal} type="primary">
+        Open Modal
+      </Button>
+      <FormModal
+        finishLoading={loading}
         initialValues={setting}
         itemMinWidth={'max(30%,240px)'}
         items={items}
         itemsType={'flat'}
-        onFinish={console.table}
+        onCancel={handleCancel}
+        onFinish={handleFinish}
+        open={isModalOpen}
+        title="Form Modal"
         variant={variant}
       />
     </StoryBook>
