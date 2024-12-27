@@ -79,7 +79,7 @@ const FormParent = forwardRef<FormInstance, FormProps>(
         }}
         {...rest}
       >
-        {items?.length > 0 ? (
+        {items && items?.length > 0 ? (
           itemsType === 'group' ? (
             (items as ItemGroup[])?.map((item, i) => mapTree(item, i))
           ) : (
@@ -89,13 +89,15 @@ const FormParent = forwardRef<FormInstance, FormProps>(
                 .map((item, i) => mapFlat(item, i))}
             </FormGroup>
           )
-        ) : null}
+        ) : undefined}
         {children}
         {footer && <FormFooter>{footer}</FormFooter>}
       </AntForm>
     );
   },
 );
+
+export { FormInstance } from 'antd';
 
 export interface IForm {
   (props: FormProps & RefAttributes<FormInstance>): ReactNode;

@@ -8,7 +8,7 @@ title: FormModal
 
 <code src="./demos/index.tsx" nopadding></code>
 
-## Flat
+## Flat Type
 
 <code src="./demos/Flat.tsx" nopadding></code>
 

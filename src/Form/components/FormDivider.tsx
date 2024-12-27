@@ -1,3 +1,5 @@
+'use client';
+
 import { Divider as AntDivider, DividerProps } from 'antd';
 import { memo } from 'react';
 

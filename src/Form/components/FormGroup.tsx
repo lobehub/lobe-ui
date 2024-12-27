@@ -1,3 +1,5 @@
+'use client';
+
 import { createStyles, useResponsive } from 'antd-style';
 import { isUndefined } from 'lodash-es';
 import { type ReactNode, memo } from 'react';

@@ -1,3 +1,5 @@
+'use client';
+
 import { FormItemProps as AntdFormItemProps, Form } from 'antd';
 import { createStyles } from 'antd-style';
 import { isNumber } from 'lodash-es';

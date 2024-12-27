@@ -1,42 +1,44 @@
-import { Button, FormInstance } from 'antd';
+import { Button } from 'antd';
 import { useResponsive } from 'antd-style';
 import { forwardRef } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import Form, { type FormProps } from '@/Form';
+import Form, { type FormInstance, type FormProps } from '@/Form';
 import Modal, { type ModalProps } from '@/Modal';
 
 import { useStyles } from './style';
 
-export interface FormModalProps
-  extends Omit<FormProps, 'className' | 'style' | 'title'>,
-    Pick<
-      ModalProps,
-      | 'style'
-      | 'className'
-      | 'allowFullscreen'
-      | 'title'
-      | 'wrapClassName'
-      | 'width'
-      | 'onCancel'
-      | 'open'
-      | 'centered'
-      | 'destroyOnClose'
-      | 'paddings'
-      | 'maxHeight'
-      | 'enableResponsive'
-      | 'afterClose'
-      | 'afterOpenChange'
-      | 'zIndex'
-      | 'mask'
-      | 'getContainer'
-      | 'keyboard'
-      | 'forceRender'
-      | 'focusTriggerAfterClose'
-      | 'closable'
-      | 'loading'
-      | 'closeIcon'
-    > {
+type PickModalProps = Pick<
+  ModalProps,
+  | 'style'
+  | 'className'
+  | 'allowFullscreen'
+  | 'title'
+  | 'wrapClassName'
+  | 'width'
+  | 'onCancel'
+  | 'open'
+  | 'centered'
+  | 'destroyOnClose'
+  | 'paddings'
+  | 'maxHeight'
+  | 'enableResponsive'
+  | 'afterClose'
+  | 'afterOpenChange'
+  | 'zIndex'
+  | 'mask'
+  | 'getContainer'
+  | 'keyboard'
+  | 'forceRender'
+  | 'focusTriggerAfterClose'
+  | 'closable'
+  | 'loading'
+  | 'closeIcon'
+>;
+
+type PickFormProps = Omit<FormProps, 'className' | 'style' | 'title'>;
+
+export interface FormModalProps extends PickModalProps, PickFormProps {
   classNames?: {
     form?: FormProps['className'];
   } & ModalProps['classNames'];
@@ -91,8 +93,8 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
   ) => {
     const { mobile } = useResponsive();
     const { cx, styles: s } = useStyles();
-    const { form: formClassName, ...modalClassNames } = classNames;
-    const { form: formStyle, ...modalStyles } = styles;
+    const { form: formClassName, footer: footerClassName, ...modalClassNames } = classNames;
+    const { form: formStyle, footer: footerStyle, ...modalStyles } = styles;
 
     return (
       <Modal
@@ -132,7 +134,7 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
         zIndex={zIndex}
       >
         <Form
-          className={cx(formClassName, s.form)}
+          className={cx(s.form, formClassName)}
           clearOnDestroy={destroyOnClose}
           gap={gap || (variant === 'pure' ? 24 : gap)}
           onFinish={onFinish}
@@ -142,7 +144,13 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
           {...rest}
         >
           {children}
-          <Flexbox className={s.footer} gap={8} horizontal width={'100%'}>
+          <Flexbox
+            className={cx(s.footer, footerClassName)}
+            gap={8}
+            horizontal
+            style={footerStyle}
+            width={'100%'}
+          >
             {footer || (
               <Button
                 block

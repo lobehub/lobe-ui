@@ -1,7 +1,6 @@
+import type { FormProps } from '@lobehub/ui';
 import { InputNumber, Segmented, Select, Switch } from 'antd';
 import { Palette, PanelLeftClose } from 'lucide-react';
-
-import { FormProps } from '@/Form';
 
 export const items: FormProps['items'] = [
   {
