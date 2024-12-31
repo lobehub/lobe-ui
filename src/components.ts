@@ -38,10 +38,14 @@ export { default as FileTypeIcon, type FileTypeIconProps } from './FileTypeIcon'
 export { default as FluentEmoji, type FluentEmojiProps } from './FluentEmoji';
 export { default as FontLoader, type FontLoaderProps } from './FontLoader';
 export { default as Footer, type FooterProps } from './Footer';
-export { default as Form, type FormInstance, type FormProps, type ItemGroup } from './Form';
+export { default as Form, type FormInstance, type FormProps } from './Form';
 export { default as FormDivider, type FormDividerProps } from './Form/components/FormDivider';
 export { default as FormFooter, type FormFooterProps } from './Form/components/FormFooter';
-export { default as FormGroup, type FormGroupProps } from './Form/components/FormGroup';
+export {
+  default as FormGroup,
+  type FormGroupProps,
+  type ItemGroup,
+} from './Form/components/FormGroup';
 export { default as FormItem, type FormItemProps } from './Form/components/FormItem';
 export { default as FormTitle, type FormTitleProps } from './Form/components/FormTitle';
 export { default as FormModal, type FormModalProps } from './FormModal';

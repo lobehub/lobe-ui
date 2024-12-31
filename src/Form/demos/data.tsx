@@ -34,6 +34,7 @@ export const items: FormProps['items'] = [
       },
     ],
     icon: Palette,
+    key: 'theme',
     title: 'Theme Settings',
   },
   {
@@ -75,6 +76,7 @@ export const items: FormProps['items'] = [
       },
     ],
     icon: PanelLeftClose,
+    key: 'sidebar',
     title: 'Quick Setting Sidebar',
   },
 ];

@@ -15,8 +15,9 @@ const setting = {
 export default () => {
   const store = useCreateStore();
 
-  const { variant }: any = useControls(
+  const { collapsible, variant }: any = useControls(
     {
+      collapsible: true,
       variant: {
         options: ['default', 'block', 'ghost', 'pure'],
         value: 'default',
@@ -28,6 +29,8 @@ export default () => {
   return (
     <StoryBook levaStore={store}>
       <Form
+        collapsible={collapsible}
+        defaultActiveKey={['theme']}
         footer={
           <>
             <Button htmlType="button">Reset</Button>
@@ -39,6 +42,7 @@ export default () => {
         initialValues={setting}
         itemMinWidth={'max(30%,240px)'}
         items={items}
+        onCollapse={console.log}
         onFinish={console.table}
         variant={variant}
       />

@@ -48,6 +48,7 @@ const Collapse = memo<CollapseProps>(
           variantStyle,
           className,
         )}
+        collapsible={collapsible ? 'header' : 'icon'}
         expandIcon={({ isActive }) => (
           <Icon
             className={styles.icon}

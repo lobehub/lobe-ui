@@ -6,6 +6,7 @@ import { type ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import Collapse, { type CollapseProps } from '@/Collapse';
+import type { FormItemProps } from '@/Form/components/FormItem';
 import Icon, { type IconProps } from '@/Icon';
 
 export type FormVariant = 'default' | 'block' | 'ghost' | 'pure';
@@ -75,13 +76,27 @@ export const useStyles = createStyles(({ css, token, responsive }) => {
   };
 });
 
-export interface FormGroupProps extends Omit<CollapseProps, 'collapsible'> {
+export interface ItemGroup {
+  children: FormItemProps[] | ReactNode;
+  collapsible?: boolean;
+  defaultActive?: boolean;
+  extra?: ReactNode;
+  icon?: IconProps['icon'];
+  key?: string;
+  title: ReactNode;
+  variant?: FormVariant;
+}
+
+export interface FormGroupProps
+  extends Omit<CollapseProps, 'collapsible' | 'items' | 'defaultActiveKey' | 'activeKey'> {
+  active?: boolean;
   children: ReactNode;
   collapsible?: boolean;
   defaultActive?: boolean;
   extra?: ReactNode;
   icon?: IconProps['icon'];
-  itemsType?: ItemsType;
+  key?: string | number;
+  onCollapse?: (active: boolean) => void;
   title?: ReactNode;
   variant?: FormVariant;
 }
@@ -93,10 +108,12 @@ const FormGroup = memo<FormGroupProps>(
     title,
     children,
     extra,
-    itemsType,
     variant = 'default',
     defaultActive = true,
     collapsible,
+    active,
+    key = 'group',
+    onCollapse,
     ...rest
   }) => {
     const { mobile } = useResponsive();
@@ -106,13 +123,6 @@ const FormGroup = memo<FormGroupProps>(
     const groupTitleClassName = `${prefixCls}-form-group-title`;
     const groupHeaderClassName = `${prefixCls}-form-group-header`;
     const groupContentClassName = `${prefixCls}-form-group-content`;
-
-    const variantStyle = cx(
-      variant === 'default' && styles.defaultStyle,
-      variant === 'block' && styles.blockStyle,
-      variant === 'ghost' && styles.ghostStyle,
-      variant === 'pure' && styles.pureStyle,
-    );
 
     const defaultCollapsible = isUndefined(collapsible) ? variant !== 'pure' : collapsible;
 
@@ -126,20 +136,6 @@ const FormGroup = memo<FormGroupProps>(
         {title}
       </Flexbox>
     );
-
-    if (itemsType === 'flat') {
-      return mobile ? (
-        <Flexbox
-          className={cx(groupClassName, styles.mobileFlatGroup, styles.mobileGroupBody, className)}
-        >
-          {children}
-        </Flexbox>
-      ) : (
-        <Flexbox className={cx(groupClassName, styles.flatGroup, variantStyle, className)}>
-          {children}
-        </Flexbox>
-      );
-    }
 
     if (mobile)
       return (
@@ -158,18 +154,19 @@ const FormGroup = memo<FormGroupProps>(
 
     return (
       <Collapse
+        activeKey={isUndefined(active) ? undefined : active ? [key] : []}
         className={cx(groupClassName, className)}
         collapsible={defaultCollapsible}
-        defaultActiveKey={defaultActive ? [1] : undefined}
+        defaultActiveKey={defaultActive ? [key] : undefined}
         items={[
           {
             children,
             extra,
-            key: 1,
+            key,
             label: titleContent,
           },
         ]}
-        key={1}
+        onChange={(v) => onCollapse?.(v.length > 0)}
         variant={variant}
         {...rest}
       />

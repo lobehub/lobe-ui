@@ -13,6 +13,10 @@ description: High performance Form component with data scope management. Includi
 
 <code src="./demos/Flat.tsx" nopadding></code>
 
+## State Control
+
+<code src="./demos/StateControl.tsx" nopadding></code>
+
 ## APIs
 
 | Property           | Description                                                                                                                                                    | Type                                                                                                                                                    | Default      |
@@ -48,17 +52,21 @@ description: High performance Form component with data scope management. Includi
 | itemsType          | The type of items in the form. `default` is the default type, `flat` is the flat type.                                                                         | `group` \| `flat`                                                                                                                                       | `group`      |
 | footer             | The footer of the form                                                                                                                                         | ReactNode                                                                                                                                               | -            |
 | collapsible        | Whether the form is collapsible                                                                                                                                | boolean                                                                                                                                                 | true         |
+| activeKey          | Key of the active panel                                                                                                                                        | (string\|number)\[]                                                                                                                                     | -            |
+| defaultActiveKey   | Key of the initial active panel                                                                                                                                | (string\|number)\[]                                                                                                                                     | -            |
+| onCollapse         | Callback function executed when active panel is changed                                                                                                        | (activeKeys:(string\|number)\[]) => void                                                                                                                | -            |
 
 ## Form.Group
 
-| Property      | Description                         | Type       | Default |
-| ------------- | ----------------------------------- | ---------- | ------- |
-| title         | Title of the group                  | ReactNode  | -       |
-| children      | Items in the group                  | ReactNode  | -       |
-| icon          | Icon of the group                   | LucideIcon | -       |
-| defaultActive | Whether the group is default active | boolean    | true    |
-| extra         | Extra content of the group          | ReactNode  | -       |
-| collapsible   | Whether the group is collapsible    | boolean    | true    |
+| Property      | Description                         | Type           | Default |
+| ------------- | ----------------------------------- | -------------- | ------- |
+| key           | Key of the group                    | string\|number | -       |
+| title         | Title of the group                  | ReactNode      | -       |
+| children      | Items in the group                  | ReactNode      | -       |
+| icon          | Icon of the group                   | LucideIcon     | -       |
+| defaultActive | Whether the group is default active | boolean        | true    |
+| extra         | Extra content of the group          | ReactNode      | -       |
+| collapsible   | Whether the group is collapsible    | boolean        | true    |
 
 ## Form.Item
 
