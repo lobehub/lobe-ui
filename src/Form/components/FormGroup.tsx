@@ -95,7 +95,7 @@ export interface FormGroupProps
   defaultActive?: boolean;
   extra?: ReactNode;
   icon?: IconProps['icon'];
-  key?: string | number;
+  keyValue?: string | number;
   onCollapse?: (active: boolean) => void;
   title?: ReactNode;
   variant?: FormVariant;
@@ -112,7 +112,7 @@ const FormGroup = memo<FormGroupProps>(
     defaultActive = true,
     collapsible,
     active,
-    key = 'group',
+    keyValue = 'group',
     onCollapse,
     ...rest
   }) => {
@@ -154,15 +154,15 @@ const FormGroup = memo<FormGroupProps>(
 
     return (
       <Collapse
-        activeKey={isUndefined(active) ? undefined : active ? [key] : []}
+        activeKey={isUndefined(active) ? undefined : active ? [keyValue] : []}
         className={cx(groupClassName, className)}
         collapsible={defaultCollapsible}
-        defaultActiveKey={defaultActive ? [key] : undefined}
+        defaultActiveKey={defaultActive ? [keyValue] : undefined}
         items={[
           {
             children,
             extra,
-            key,
+            key: keyValue,
             label: titleContent,
           },
         ]}

@@ -6,18 +6,14 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
     inset-block-end: 0;
     inset-inline: 0;
 
-    width: calc(100% + 32px);
-    margin: -16px;
+    width: 100%;
+    margin: 0;
     padding: 16px;
 
     background: ${token.colorBgContainer};
-    ${responsive.mobile} {
-      position: fixed;
-      width: 100%;
-      margin: 0;
-    }
   `,
   form: css`
+    position: static;
     .${prefixCls}-form-group-title {
       font-size: 15px;
       font-weight: 500;

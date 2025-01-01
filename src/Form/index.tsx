@@ -74,6 +74,7 @@ const FormParent = forwardRef<FormInstance, FormProps>(
           extra={group?.extra}
           icon={group?.icon}
           key={key}
+          keyValue={key}
           onCollapse={(active) => {
             let keys: (string | number)[] = activeKey || defaultActiveKey || [];
             keys = keys.filter((k) => k !== key);

@@ -162,7 +162,7 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
           onFinish={onFinish}
           ref={ref}
           style={{
-            paddingBottom: 68,
+            paddingBottom: 56,
             ...formStyle,
           }}
           styles={{
