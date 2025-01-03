@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.156.1](https://github.com/lobehub/lobe-ui/compare/v1.156.0...v1.156.1)
+
+<sup>Released on **2025-01-03**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix sideEffects.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix sideEffects ([19253fa](https://github.com/lobehub/lobe-ui/commit/19253fa))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.156.0](https://github.com/lobehub/lobe-ui/compare/v1.155.8...v1.156.0)
 
 <sup>Released on **2025-01-03**</sup>
