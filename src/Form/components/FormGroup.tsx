@@ -12,7 +12,7 @@ import Icon, { type IconProps } from '@/Icon';
 export type FormVariant = 'default' | 'block' | 'ghost' | 'pure';
 export type ItemsType = 'group' | 'flat';
 
-export const useStyles = createStyles(({ css, token, responsive }) => {
+export const useStyles = createStyles(({ prefixCls, css, token, responsive }) => {
   return {
     blockStyle: css`
       background: ${token.colorFillQuaternary};
@@ -46,6 +46,13 @@ export const useStyles = createStyles(({ css, token, responsive }) => {
     mobileGroupHeader: css`
       padding: 16px;
       background: ${token.colorBgLayout};
+    `,
+    pure: css`
+      .${prefixCls}-collapse-content-box {
+        .${prefixCls}-form-item:first-child {
+          border-block-start: 1px solid ${token.colorFillSecondary};
+        }
+      }
     `,
     pureStyle: css`
       padding: 0;
@@ -155,7 +162,7 @@ const FormGroup = memo<FormGroupProps>(
     return (
       <Collapse
         activeKey={isUndefined(active) ? undefined : active ? [keyValue] : []}
-        className={cx(groupClassName, className)}
+        className={cx(groupClassName, variant === 'pure' && styles.pure, className)}
         collapsible={defaultCollapsible}
         defaultActiveKey={defaultActive ? [keyValue] : undefined}
         items={[

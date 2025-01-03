@@ -58,11 +58,6 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
   `,
   pure: css`
     gap: 64px;
-    .${prefixCls}-collapse-content-box {
-      .${prefixCls}-form-item:first-child {
-        border-block-start: 1px solid ${token.colorFillSecondary};
-      }
-    }
     ${responsive.mobile} {
       border-block-start: unset;
     }
