@@ -1,3 +1,4 @@
+export { default as BrandLoading, type BrandLoadingProps } from './BrandLoading';
 export { default as LobeChat, type LobeChatProps } from './LobeChat';
 export { default as LobeChatText } from './LobeChatText';
 export { default as LobeHub, type LobeHubProps } from './LobeHub';

@@ -1,0 +1,32 @@
+@keyframes draw {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fill {
+  30% {
+    fill-opacity: 20%;
+  }
+
+  100% {
+    fill-opacity: 100%;
+  }
+}
+
+.lobe-brand-loading path {
+  fill: currentcolor;
+  fill-opacity: 0%;
+  stroke: currentcolor;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  stroke-width: 0.25em;
+
+  animation:
+    draw 2s ease-in-out infinite,
+    fill 2s linear infinite;
+}
