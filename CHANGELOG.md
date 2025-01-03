@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.156.3](https://github.com/lobehub/lobe-ui/compare/v1.156.2...v1.156.3)
+
+<sup>Released on **2025-01-03**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix BrandLoading size.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix BrandLoading size ([ccb9c4f](https://github.com/lobehub/lobe-ui/commit/ccb9c4f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.156.2](https://github.com/lobehub/lobe-ui/compare/v1.156.1...v1.156.2)
 
 <sup>Released on **2025-01-03**</sup>
