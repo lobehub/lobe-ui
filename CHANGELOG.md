@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.156.2](https://github.com/lobehub/lobe-ui/compare/v1.156.1...v1.156.2)
+
+<sup>Released on **2025-01-03**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix form group style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix form group style ([69ec600](https://github.com/lobehub/lobe-ui/commit/69ec600))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.156.1](https://github.com/lobehub/lobe-ui/compare/v1.156.0...v1.156.1)
 
 <sup>Released on **2025-01-03**</sup>
