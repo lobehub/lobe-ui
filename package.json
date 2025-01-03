@@ -19,7 +19,9 @@
   },
   "license": "MIT",
   "author": "LobeHub <i@lobehub.com>",
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "main": "es/index.js",
   "module": "es/index.js",
   "types": "es/index.d.ts",
