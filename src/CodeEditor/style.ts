@@ -1,7 +1,16 @@
 import { createStyles } from 'antd-style';
+import { isNumber } from 'lodash-es';
 
 export const useStyles = createStyles(
-  ({ cx, css, token }, { type, resize }: { resize: boolean; type: 'ghost' | 'block' | 'pure' }) => {
+  (
+    { cx, css, token },
+    {
+      type,
+      resize,
+      fontSize,
+    }: { fontSize: string | number; resize: boolean; type: 'ghost' | 'block' | 'pure' },
+  ) => {
+    const size = isNumber(fontSize) ? `${fontSize}px` : fontSize;
     const typeStylish = css`
       padding-block: 8px;
       padding-inline: 12px;
@@ -28,6 +37,11 @@ export const useStyles = createStyles(
           overflow: hidden auto;
           width: 100%;
           height: fit-content;
+
+          * {
+            font-size: ${size} !important;
+            line-height: 1.5 !important;
+          }
         `,
       ),
       editor: css`

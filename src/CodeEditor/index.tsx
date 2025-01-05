@@ -18,6 +18,7 @@ export interface CodeEditorProps {
   autoFocus?: boolean;
   className?: string;
   disabled?: boolean;
+  fontSize?: number | string;
   form?: string;
   ignoreTabKey?: boolean;
   insertSpaces?: boolean;
@@ -55,11 +56,12 @@ const CodeEditor = forwardRef<TextAreaRef, CodeEditorProps>(
       className,
       textareaClassName,
       type = 'ghost',
+      fontSize = 12,
       ...rest
     },
     ref,
   ) => {
-    const { styles, cx } = useStyles({ resize, type });
+    const { styles, cx } = useStyles({ fontSize, resize, type });
     return (
       <div className={cx(styles.container, className)} style={style}>
         {/* @ts-ignore */}
