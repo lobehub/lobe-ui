@@ -29,25 +29,27 @@ export const Highlighter = memo<HighlighterProps>(
   }) => {
     const { styles, cx } = useStyles(type);
 
+    const tirmedChildren = children.trim();
+
     const originalActions = copyable && (
-      <CopyButton content={children} placement="left" size={copyButtonSize} />
+      <CopyButton content={tirmedChildren} placement="left" size={copyButtonSize} />
     );
 
     const actions = actionsRender
       ? actionsRender({
           actionIconSize: copyButtonSize,
-          content: children,
+          content: tirmedChildren,
           language,
           originalNode: originalActions,
         })
       : originalActions;
 
     const originalBody = (
-      <SyntaxHighlighter language={language?.toLowerCase()}>{children}</SyntaxHighlighter>
+      <SyntaxHighlighter language={language?.toLowerCase()}>{tirmedChildren}</SyntaxHighlighter>
     );
 
     const body = bodyRender
-      ? bodyRender({ content: children, language, originalNode: originalBody })
+      ? bodyRender({ content: tirmedChildren, language, originalNode: originalBody })
       : originalBody;
 
     if (fullFeatured)
@@ -63,7 +65,7 @@ export const Highlighter = memo<HighlighterProps>(
           wrap={wrap}
           {...rest}
         >
-          {children}
+          {tirmedChildren}
         </FullFeatured>
       );
 

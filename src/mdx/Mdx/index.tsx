@@ -11,6 +11,7 @@ import type { Pluggable } from 'unified';
 
 import Alert from '@/Alert';
 import { Typography, type TypographyProps } from '@/Markdown/Typography';
+import { useStyles } from '@/Markdown/style';
 import { escapeBrackets, escapeMhchem, fixMarkdownBold } from '@/Markdown/utils';
 
 import mdxComponents from '../mdxComponents';
@@ -29,6 +30,7 @@ export interface MdxProps extends Omit<TypographyProps, 'children'> {
   onDoubleClick?: () => void;
   rehypePlugins?: Pluggable[];
   remarkPlugins?: Pluggable[];
+  variant?: 'normal' | 'chat';
 }
 
 const Mdx = memo<MdxProps>(
@@ -43,8 +45,22 @@ const Mdx = memo<MdxProps>(
     remarkPlugins,
     components = {},
     fallback = null,
+    fontSize,
+    headerMultiple,
+    lineHeight,
+    marginMultiple,
+    variant,
     ...rest
   }) => {
+    const { cx, styles } = useStyles({
+      fontSize,
+      headerMultiple,
+      lineHeight,
+      marginMultiple,
+    });
+
+    const isChatMode = variant === 'chat';
+
     const [MDXContent, setMDXContent] = useState<any>(() => () => null);
 
     const escapedContent = useMemo(() => {
@@ -112,7 +128,11 @@ const Mdx = memo<MdxProps>(
     if (!MDXContent) return fallback;
 
     return (
-      <Typography className={className} style={style} {...rest}>
+      <Typography
+        className={cx(enableLatex && styles.latex, isChatMode && styles.chat, className)}
+        style={style}
+        {...rest}
+      >
         <MDXContent components={memoComponents} />
       </Typography>
     );

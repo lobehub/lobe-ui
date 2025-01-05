@@ -54,6 +54,8 @@ const Snippet = memo<SnippetProps>(
   }) => {
     const { styles, cx } = useStyles(type);
 
+    const tirmedChildren = children.trim();
+
     return (
       <Flexbox
         align={'center'}
@@ -64,9 +66,9 @@ const Snippet = memo<SnippetProps>(
       >
         {spotlight && <Spotlight />}
         <SyntaxHighlighter language={language}>
-          {[symbol, children].filter(Boolean).join(' ')}
+          {[symbol, tirmedChildren].filter(Boolean).join(' ')}
         </SyntaxHighlighter>
-        {copyable && <CopyButton content={children} size={{ blockSize: 24, fontSize: 14 }} />}
+        {copyable && <CopyButton content={tirmedChildren} size={{ blockSize: 24, fontSize: 14 }} />}
       </Flexbox>
     );
   },
