@@ -97,6 +97,8 @@
     "@floating-ui/react": "^0.26.28",
     "@giscus/react": "^3.0.0",
     "@lobehub/fluent-emoji": "^1.0.1",
+    "@mdx-js/mdx": "^2.3.0",
+    "@mdx-js/react": "^2.3.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@react-spring/web": "^9.7.5",
     "@shikijs/transformers": "^1.24.0",

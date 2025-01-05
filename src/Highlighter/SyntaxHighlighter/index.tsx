@@ -19,14 +19,14 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
     const { styles, cx } = useStyles();
     const { isDarkMode } = useThemeMode();
 
-    const { data, isLoading } = useHighlight(children.trim(), language, isDarkMode);
+    const { data, isLoading } = useHighlight(children, language, isDarkMode);
 
     return (
       <>
         {isLoading || !data ? (
           <div className={cx(styles.unshiki, className)} style={style}>
             <pre>
-              <code>{children.trim()}</code>
+              <code>{children}</code>
             </pre>
           </div>
         ) : (

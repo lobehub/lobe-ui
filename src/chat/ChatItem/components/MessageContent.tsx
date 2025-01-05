@@ -55,7 +55,7 @@ const MessageContent = memo<MessageContentProps>(
         onEditingChange={onEditingChange}
         openModal={mobile ? editing : undefined}
         text={text}
-        value={message ? String(message).trim() : ''}
+        value={message ? String(message) : ''}
       />
     );
     const messageContent = renderMessage ? renderMessage(content) : content;

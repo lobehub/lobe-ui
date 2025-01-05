@@ -32,8 +32,7 @@ function rehypeAntArtifact() {
                     }
                     return '';
                   })
-                  .join('')
-                  .trim(),
+                  .join(''),
               },
             ],
             properties: attributes,
