@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.157.1](https://github.com/lobehub/lobe-ui/compare/v1.157.0...v1.157.1)
+
+<sup>Released on **2025-01-05**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Mdx style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Mdx style ([fa0665d](https://github.com/lobehub/lobe-ui/commit/fa0665d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.157.0](https://github.com/lobehub/lobe-ui/compare/v1.156.4...v1.157.0)
 
 <sup>Released on **2025-01-05**</sup>
