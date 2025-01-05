@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.156.4](https://github.com/lobehub/lobe-ui/compare/v1.156.3...v1.156.4)
+
+<sup>Released on **2025-01-05**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix CodeEditor.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix CodeEditor ([90569fc](https://github.com/lobehub/lobe-ui/commit/90569fc))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.156.3](https://github.com/lobehub/lobe-ui/compare/v1.156.2...v1.156.3)
 
 <sup>Released on **2025-01-03**</sup>
