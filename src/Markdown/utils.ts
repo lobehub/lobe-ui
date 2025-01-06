@@ -25,7 +25,7 @@ export function fixMarkdownBold(text: string): string {
 
   for (let i = 0; i < text.length; i++) {
     const char = text[i];
-    
+
     if (text.slice(i, i + 3) === '```') {
       inCodeBlock = !inCodeBlock;
       result += '```';
@@ -51,11 +51,7 @@ export function fixMarkdownBold(text: string): string {
         const prevChar = i > 0 ? text[i - 2] : '';
         const isPrevCharSymbol = /[\p{P}\p{S}]/u.test(prevChar);
 
-        if (i + 1 < text.length && text[i + 1] !== ' ' && isPrevCharSymbol) {
-          result += '* ';
-        } else {
-          result += '*';
-        }
+        result += i + 1 < text.length && text[i + 1] !== ' ' && isPrevCharSymbol ? '* ' : '*';
       } else {
         result += '*';
       }

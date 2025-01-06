@@ -30,8 +30,8 @@ export const useHighlight = (text: string, lang: string, isDarkMode: boolean) =>
           transformerNotationErrorLevel(),
         ],
       });
-    } catch (e) {
-      console.error("shiki Highlight error:", e)
+    } catch (error) {
+      console.error('shiki Highlight error:', error);
       return text;
     }
   });
