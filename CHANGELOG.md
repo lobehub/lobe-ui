@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [Version 1.158.0](https://github.com/lobehub/lobe-ui/compare/v1.157.1...v1.158.0)
+
+<sup>Released on **2025-01-06**</sup>
+
+#### ✨ Features
+
+- **misc**: Support React 19.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix deps.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Support React 19 ([f6b2a29](https://github.com/lobehub/lobe-ui/commit/f6b2a29))
+
+#### What's fixed
+
+- **misc**: Fix deps ([3264d2a](https://github.com/lobehub/lobe-ui/commit/3264d2a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.157.1](https://github.com/lobehub/lobe-ui/compare/v1.157.0...v1.157.1)
 
 <sup>Released on **2025-01-05**</sup>
