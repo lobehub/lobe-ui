@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.158.1](https://github.com/lobehub/lobe-ui/compare/v1.158.0...v1.158.1)
+
+<sup>Released on **2025-01-06**</sup>
+
+#### 💄 Styles
+
+- **misc**: Add clean-publish.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Add clean-publish ([fc3d7a6](https://github.com/lobehub/lobe-ui/commit/fc3d7a6))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.158.0](https://github.com/lobehub/lobe-ui/compare/v1.157.1...v1.158.0)
 
 <sup>Released on **2025-01-06**</sup>
