@@ -145,8 +145,8 @@ const DraggablePanel = memo<DraggablePanelProps>(
     classNames = {},
     dir,
   }) => {
-    const reference: any = useRef();
-    const isHovering = useHover(reference);
+    const ref = useRef<HTMLDivElement>(null);
+    const isHovering = useHover(ref);
     const isVertical = placement === 'top' || placement === 'bottom';
 
     // inherit direction from Ant Design ConfigProvider
@@ -320,7 +320,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
           className,
         )}
         dir={dir}
-        ref={reference}
+        ref={ref}
         style={isExpand ? { [`border${arrowPlacement}Width`]: 1 } : {}}
       >
         {expandable && showExpand && handler}

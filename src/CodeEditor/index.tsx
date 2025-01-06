@@ -531,6 +531,7 @@ const Editor = forwardRef<Ref<null | { session: { history: History } }>, CodeEdi
             onKeyUp={onKeyUp}
             placeholder={placeholder}
             readOnly={readOnly}
+            // @ts-ignore
             ref={(c) => (inputRef.current = c)}
             required={required}
             spellCheck={false}

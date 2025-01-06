@@ -9,7 +9,7 @@ import { useStyles } from './style';
 const useMouseOffset = (): any => {
   const [offset, setOffset] = useState<{ x: number; y: number }>();
   const [outside, setOutside] = useState(true);
-  const reference = useRef<HTMLDivElement>();
+  const reference = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (reference.current && reference.current.parentElement) {

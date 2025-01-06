@@ -133,7 +133,7 @@ const Markdown = memo<MarkdownProps>(
         enableMermaid,
         fullFeaturedCodeBlock,
       ],
-    );
+    ) as Components;
 
     const innerRehypePlugins = Array.isArray(rehypePlugins) ? rehypePlugins : [rehypePlugins];
 

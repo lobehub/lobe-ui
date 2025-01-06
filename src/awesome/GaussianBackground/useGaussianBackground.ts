@@ -2,10 +2,10 @@ import { RefObject, useCallback, useEffect, useState } from 'react';
 
 import GaussianBackgroundClient, { ColorLayer } from './vendor/gaussianBackground';
 
-export const useGaussianBackground = (ref: RefObject<HTMLCanvasElement>) => {
+export const useGaussianBackground = (ref: RefObject<HTMLCanvasElement | null>) => {
   const [client, setClient] = useState<GaussianBackgroundClient>();
   useEffect(() => {
-    if (!ref.current) return;
+    if (!ref?.current) return;
     setClient(new GaussianBackgroundClient(ref.current));
   }, []);
 

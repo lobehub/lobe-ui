@@ -73,7 +73,7 @@ const SearchBar = memo<SearchBarProps>(
     const [symbol, setSymbol] = useState('Ctrl');
     const [showTag, setShowTag] = useState<boolean>(true);
     const { styles, cx } = useStyles();
-    const inputReference: any = useRef<HTMLInputElement>();
+    const inputReference: any = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
       if (!enableShortKey) return;

@@ -23,6 +23,6 @@ const mdxComponents: MDXComponents = {
   Tabs,
   Video,
   a: Link,
-};
+} as MDXComponents;
 
 export default mdxComponents;

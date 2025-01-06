@@ -5,8 +5,10 @@ interface PreviewProps extends PropsWithChildren {
 }
 
 const Preview = memo<PreviewProps>(({ children, visible }) => {
-  const ref = useRef<any>();
+  const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    if (!ref.current) return;
+
     const handleDisableZoom = (event: any) => {
       event.preventDefault();
     };
