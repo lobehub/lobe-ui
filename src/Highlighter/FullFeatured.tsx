@@ -1,13 +1,12 @@
 import { Select, type SelectProps } from 'antd';
 import { ChevronDown, ChevronRight } from 'lucide-react';
-import { memo, useState } from 'react';
+import { ReactNode, memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
 import { languageMap } from '@/hooks/useHighlight';
 
-import SyntaxHighlighter from './SyntaxHighlighter';
 import { useStyles } from './style';
 import { HighlighterProps } from './type';
 
@@ -16,9 +15,15 @@ const options: SelectProps['options'] = languageMap.map((item) => ({
   value: item.toLowerCase(),
 }));
 
-export const HighlighterFullFeatured = memo<HighlighterProps>(
+interface HighlighterFullFeaturedProps extends Omit<HighlighterProps, 'children'> {
+  children: ReactNode;
+  content: string;
+}
+
+export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps>(
   ({
     children,
+    content,
     language,
     showLanguage,
     className,
@@ -26,7 +31,6 @@ export const HighlighterFullFeatured = memo<HighlighterProps>(
     allowChangeLanguage = true,
     fileName,
     icon,
-    bodyRender,
     actionsRender,
     copyable,
     type,
@@ -40,29 +44,17 @@ export const HighlighterFullFeatured = memo<HighlighterProps>(
     const size = { blockSize: 24, fontSize: 14, strokeWidth: 2 };
 
     const origianlActions = copyable && (
-      <CopyButton content={children} placement="left" size={size} />
+      <CopyButton content={content} placement="left" size={size} />
     );
 
     const actions = actionsRender
       ? actionsRender({
           actionIconSize: size,
-          content: children,
+          content,
           language,
           originalNode: origianlActions,
         })
       : origianlActions;
-
-    const originalBody = (
-      <SyntaxHighlighter
-        language={lang?.toLowerCase()}
-        style={expand ? {} : { height: 0, overflow: 'hidden' }}
-      >
-        {children}
-      </SyntaxHighlighter>
-    );
-    const body = bodyRender
-      ? bodyRender({ content: children, language, originalNode: originalBody })
-      : originalBody;
 
     return (
       <div
@@ -105,12 +97,10 @@ export const HighlighterFullFeatured = memo<HighlighterProps>(
             {actions}
           </Flexbox>
         </Flexbox>
-        {body}
+        {children}
       </div>
     );
   },
 );
 
 export default HighlighterFullFeatured;
-
-export { default as SyntaxHighlighter, type SyntaxHighlighterProps } from './SyntaxHighlighter';

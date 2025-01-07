@@ -28,6 +28,7 @@ export interface HighlighterProps extends DivProps {
    * @default true
    */
   defalutExpand?: boolean;
+  enableTransformer?: boolean;
   fileName?: string;
   fullFeatured?: boolean;
   icon?: ReactNode;

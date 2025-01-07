@@ -24,7 +24,8 @@ const Mermaid = memo<MermaidProps>(
     ...rest
   }) => {
     const { cx, styles } = useStyles(type);
-    const MermaidRender = useMermaid(children);
+    const tirmedChildren = children.trim();
+    const MermaidRender = useMermaid(tirmedChildren);
 
     const originalActions = copyable && (
       <CopyButton content={children} placement="left" size={copyButtonSize} />
@@ -41,7 +42,7 @@ const Mermaid = memo<MermaidProps>(
     const defaultBody = <MermaidRender />;
 
     const body = bodyRender
-      ? bodyRender({ content: children, originalNode: defaultBody })
+      ? bodyRender({ content: tirmedChildren, originalNode: defaultBody })
       : defaultBody;
 
     if (fullFeatured)
@@ -50,7 +51,7 @@ const Mermaid = memo<MermaidProps>(
           actionsRender={actionsRender}
           bodyRender={bodyRender}
           className={className}
-          content={children}
+          content={tirmedChildren}
           copyable={copyable}
           showLanguage={showLanguage}
           style={style}

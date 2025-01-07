@@ -29,7 +29,9 @@
       "@lobehub/ui/storybook": ["src/storybook"],
       "@lobehub/ui/storybook/*": ["src/storybook/*"],
       "@lobehub/ui/awesome": ["src/awesome"],
-      "@lobehub/ui/awesome/*": ["src/awesome/*"]
+      "@lobehub/ui/awesome/*": ["src/awesome/*"],
+      "@lobehub/ui/color": ["src/color"],
+      "@lobehub/ui/color/*": ["src/color/*"]
     }
   },
   "exclude": [

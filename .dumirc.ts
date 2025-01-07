@@ -17,7 +17,7 @@ const nav: INavItem[] = [
   { link: '/components/mdx/callout', title: 'Mdx' },
   { link: 'https://icons.lobehub.com', mode: 'override', title: 'Icons' },
   { link: 'https://charts.lobehub.com', mode: 'override', title: 'Charts' },
-  { link: '/colors', title: 'Colors' },
+  { link: '/components/color/color-scales', title: 'Colors' },
   { link: '/changelog', title: 'Changelog' },
 ];
 
@@ -79,6 +79,7 @@ export default defineConfig({
     '@lobehub/ui/awesome': resolve(__dirname, './src/awesome'),
     '@lobehub/ui/brand': resolve(__dirname, './src/brand'),
     '@lobehub/ui/chat': resolve(__dirname, './src/chat'),
+    '@lobehub/ui/color': resolve(__dirname, './src/color'),
     '@lobehub/ui/mdx': resolve(__dirname, './src/mdx'),
     '@lobehub/ui/mobile': resolve(__dirname, './src/mobile'),
     '@lobehub/ui/storybook': resolve(__dirname, './src/storybook'),
@@ -105,6 +106,7 @@ export default defineConfig({
       { dir: 'src/brand', subType: 'brand', type: 'component' },
       { dir: 'src/mdx', subType: 'mdx', type: 'component' },
       { dir: 'src/storybook', subType: 'storybook', type: 'component' },
+      { dir: 'src/color', subType: 'color', type: 'component' },
     ],
     entryFile: isProduction ? './src/index.ts' : undefined,
   },

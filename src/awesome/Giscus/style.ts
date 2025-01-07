@@ -1,24 +1,23 @@
-import { Theme, css } from 'antd-style';
+import { css, useTheme } from 'antd-style';
 import { readableColor, rgba } from 'polished';
+import { useMemo } from 'react';
 
-import { colorScales } from '@/styles/colors/colors';
-
-export const genStyles = (token: Theme, isDarkMode: boolean) => {
-  const type = isDarkMode ? 'dark' : 'light';
-  const colorText = colorScales.gray[type][11];
-  const colorTextSecondary = colorScales.gray[type][10];
-  const colorTextTertiary = colorScales.gray[type][7];
-  const colorRed = isDarkMode ? colorScales.red[type][9] : colorScales.volcano[type][9];
-  const colorOrange = isDarkMode ? colorScales.gold[type][9] : colorScales.orange[type][9];
-  const colorGreen = isDarkMode ? colorScales.lime[type][9] : colorScales.green[type][9];
-  const colorBlue = isDarkMode ? colorScales.blue[type][9] : colorScales.geekblue[type][9];
-  const loaderContainer = isDarkMode
+export const useStyles = () => {
+  const theme = useTheme();
+  const colorText = theme.colorText;
+  const colorTextSecondary = theme.colorTextSecondary;
+  const colorTextTertiary = theme.colorTextTertiary;
+  const colorRed = theme.colorError;
+  const colorOrange = theme.colorWarning;
+  const colorGreen = theme.colorSuccess;
+  const colorBlue = theme.colorInfo;
+  const loaderContainer = theme.isDarkMode
     ? 'https://github.com/images/modules/pulls/progressive-disclosure-line-dark.svg'
     : 'https://github.com/images/modules/pulls/progressive-disclosure-line.svg';
-  const loadingImage = isDarkMode
+  const loadingImage = theme.isDarkMode
     ? 'https://github.githubassets.com/images/mona-loading-dark.gif'
     : 'https://github.githubassets.com/images/mona-loading-default.gif';
-  return css`
+  const { styles } = css`
     main {
       --color-prettylights-syntax-comment: ${colorTextTertiary};
       --color-prettylights-syntax-constant: ${colorGreen};
@@ -50,59 +49,59 @@ export const genStyles = (token: Theme, isDarkMode: boolean) => {
       --color-prettylights-syntax-brackethighlighter-angle: ${colorTextSecondary};
       --color-prettylights-syntax-sublimelinter-gutter-mark: ${colorTextTertiary};
       --color-prettylights-syntax-constant-other-reference-link: ${colorBlue};
-      --color-btn-text: ${token.colorText};
-      --color-btn-bg: ${token.colorFillTertiary};
-      --color-btn-border: ${token.colorBorderSecondary};
+      --color-btn-text: ${theme.colorText};
+      --color-btn-bg: ${theme.colorFillTertiary};
+      --color-btn-border: ${theme.colorBorderSecondary};
       --color-btn-shadow: 0 0 transparent;
       --color-btn-inset-shadow: 0 0 transparent;
-      --color-btn-hover-bg: ${token.colorFillSecondary};
-      --color-btn-hover-border: ${token.colorBorder};
-      --color-btn-active-bg: ${token.colorFillSecondary};
-      --color-btn-active-border: ${token.colorBorder};
-      --color-btn-selected-bg: ${token.colorFillSecondary};
-      --color-btn-primary-text: ${readableColor(token.colorPrimary)};
-      --color-btn-primary-bg: ${token.colorPrimary};
-      --color-btn-primary-border: ${token.colorPrimaryBorder};
+      --color-btn-hover-bg: ${theme.colorFillSecondary};
+      --color-btn-hover-border: ${theme.colorBorder};
+      --color-btn-active-bg: ${theme.colorFillSecondary};
+      --color-btn-active-border: ${theme.colorBorder};
+      --color-btn-selected-bg: ${theme.colorFillSecondary};
+      --color-btn-primary-text: ${readableColor(theme.colorPrimary)};
+      --color-btn-primary-bg: ${theme.colorPrimary};
+      --color-btn-primary-border: ${theme.colorPrimaryBorder};
       --color-btn-primary-shadow: 0 0 transparent;
       --color-btn-primary-inset-shadow: 0 0 transparent;
-      --color-btn-primary-hover-bg: ${token.colorPrimaryHover};
-      --color-btn-primary-hover-border: ${token.colorPrimaryBorderHover};
-      --color-btn-primary-selected-bg: ${token.colorPrimaryActive};
+      --color-btn-primary-hover-bg: ${theme.colorPrimaryHover};
+      --color-btn-primary-hover-border: ${theme.colorPrimaryBorderHover};
+      --color-btn-primary-selected-bg: ${theme.colorPrimaryActive};
       --color-btn-primary-selected-shadow: 0 0 transparent;
-      --color-btn-primary-disabled-text: ${rgba(readableColor(token.colorPrimary), 0.5)};
-      --color-btn-primary-disabled-bg: ${rgba(token.colorPrimary, 0.5)};
-      --color-btn-primary-disabled-border: ${rgba(token.colorPrimaryBorder, 0.5)};
-      --color-action-list-item-default-hover-bg: ${token.colorFillQuaternary};
-      --color-segmented-control-bg: ${token.colorFillTertiary};
+      --color-btn-primary-disabled-text: ${rgba(readableColor(theme.colorPrimary), 0.5)};
+      --color-btn-primary-disabled-bg: ${rgba(theme.colorPrimary, 0.5)};
+      --color-btn-primary-disabled-border: ${rgba(theme.colorPrimaryBorder, 0.5)};
+      --color-action-list-item-default-hover-bg: ${theme.colorFillQuaternary};
+      --color-segmented-control-bg: ${theme.colorFillTertiary};
       --color-segmented-control-button-bg: transparent;
-      --color-segmented-control-button-selected-border: ${token.colorBorder};
-      --color-fg-default: ${token.colorText};
-      --color-fg-muted: ${token.colorTextSecondary};
-      --color-fg-subtle: ${token.colorTextQuaternary};
+      --color-segmented-control-button-selected-border: ${theme.colorBorder};
+      --color-fg-default: ${theme.colorText};
+      --color-fg-muted: ${theme.colorTextSecondary};
+      --color-fg-subtle: ${theme.colorTextQuaternary};
       --color-canvas-default: transparent;
-      --color-canvas-overlay: ${token.colorBgElevated};
+      --color-canvas-overlay: ${theme.colorBgElevated};
       --color-canvas-inset: transparent;
-      --color-canvas-subtle: ${token.colorFillQuaternary};
-      --color-border-default: ${token.colorBorder};
-      --color-border-muted: ${token.colorBorderSecondary};
-      --color-neutral-muted: ${token.colorFillQuaternary};
-      --color-neutral-subtle: ${token.colorFillTertiary};
-      --color-accent-fg: ${token.colorInfo};
-      --color-accent-emphasis: ${token.colorInfoBorderHover};
-      --color-accent-muted: ${token.colorInfoBorder};
-      --color-accent-subtle: ${token.colorInfoBg};
-      --color-success-fg: ${token.colorSuccess};
-      --color-attention-fg: ${token.colorWarning};
-      --color-attention-muted: ${token.colorWarningBorder};
-      --color-attention-subtle: ${token.colorWarningBg};
-      --color-danger-fg: ${token.colorError};
-      --color-danger-muted: ${token.colorErrorBorder};
-      --color-danger-subtle: ${token.colorErrorBg};
+      --color-canvas-subtle: ${theme.colorFillQuaternary};
+      --color-border-default: ${theme.colorBorder};
+      --color-border-muted: ${theme.colorBorderSecondary};
+      --color-neutral-muted: ${theme.colorFillQuaternary};
+      --color-neutral-subtle: ${theme.colorFillTertiary};
+      --color-accent-fg: ${theme.colorInfo};
+      --color-accent-emphasis: ${theme.colorInfoBorderHover};
+      --color-accent-muted: ${theme.colorInfoBorder};
+      --color-accent-subtle: ${theme.colorInfoBg};
+      --color-success-fg: ${theme.colorSuccess};
+      --color-attention-fg: ${theme.colorWarning};
+      --color-attention-muted: ${theme.colorWarningBorder};
+      --color-attention-subtle: ${theme.colorWarningBg};
+      --color-danger-fg: ${theme.colorError};
+      --color-danger-muted: ${theme.colorErrorBorder};
+      --color-danger-subtle: ${theme.colorErrorBg};
       --color-primer-shadow-inset: 0 0 transparent;
-      --color-scale-gray-7: ${token.colorBgContainer};
-      --color-scale-blue-8: ${token.colorInfoBg};
-      --color-social-reaction-bg-hover: ${token.colorFillSecondary};
-      --color-social-reaction-bg-reacted-hover: ${token.colorInfoBgHover};
+      --color-scale-gray-7: ${theme.colorBgContainer};
+      --color-scale-blue-8: ${theme.colorInfoBg};
+      --color-social-reaction-bg-hover: ${theme.colorFillSecondary};
+      --color-social-reaction-bg-reacted-hover: ${theme.colorInfoBgHover};
 
       .markdown pre {
         color: ${colorText};
@@ -127,8 +126,8 @@ export const genStyles = (token: Theme, isDarkMode: boolean) => {
       }
 
       .gsc-emoji-button.has-reacted {
-        border-color: ${token.colorInfoBorderHover};
-        border-radius: ${token.borderRadius}px;
+        border-color: ${theme.colorInfoBorderHover};
+        border-radius: ${theme.borderRadius}px;
       }
 
       .gsc-loading-image {
@@ -136,6 +135,8 @@ export const genStyles = (token: Theme, isDarkMode: boolean) => {
       }
     }
   `;
+
+  return useMemo(() => `data:text/css;base64,${btoa(styles)}`, [styles]);
 };
 
 export const formatLang = (lang: string) => {

@@ -1,19 +1,32 @@
-import { colorScales } from '@/styles/colors/colors';
-import { neutralColorScales } from '@/styles/colors/neutralColors';
+import {
+  blue,
+  cyan,
+  geekblue,
+  gold,
+  green,
+  lime,
+  magenta,
+  orange,
+  purple,
+  red,
+  volcano,
+  yellow,
+} from '@/color/colors';
+import { mauve, olive, sage, sand, slate } from '@/color/neutrals';
 
 export const primaryColors = {
-  blue: colorScales.blue.dark[9],
-  cyan: colorScales.cyan.dark[9],
-  geekblue: colorScales.geekblue.dark[9],
-  gold: colorScales.gold.dark[9],
-  green: colorScales.green.dark[9],
-  lime: colorScales.lime.dark[9],
-  magenta: colorScales.magenta.dark[9],
-  orange: colorScales.orange.dark[9],
-  purple: colorScales.purple.dark[9],
-  red: colorScales.red.dark[9],
-  volcano: colorScales.volcano.dark[9],
-  yellow: colorScales.yellow.dark[9],
+  blue: blue.dark[9],
+  cyan: cyan.dark[9],
+  geekblue: geekblue.dark[9],
+  gold: gold.dark[9],
+  green: green.dark[9],
+  lime: lime.dark[9],
+  magenta: magenta.dark[9],
+  orange: orange.dark[9],
+  purple: purple.dark[9],
+  red: red.dark[9],
+  volcano: volcano.dark[9],
+  yellow: yellow.dark[9],
 };
 
 export type PrimaryColorsObj = typeof primaryColors;
@@ -33,11 +46,11 @@ export const primaryColorsSwatches = [
   primaryColors.volcano,
 ];
 export const neutralColors = {
-  mauve: neutralColorScales.mauve.dark[9],
-  olive: neutralColorScales.olive.dark[9],
-  sage: neutralColorScales.sage.dark[9],
-  sand: neutralColorScales.sand.dark[9],
-  slate: neutralColorScales.slate.dark[9],
+  mauve: mauve.dark[9],
+  olive: olive.dark[9],
+  sage: sage.dark[9],
+  sand: sand.dark[9],
+  slate: slate.dark[9],
 };
 export const neutralColorsSwatches = [
   neutralColors.mauve,

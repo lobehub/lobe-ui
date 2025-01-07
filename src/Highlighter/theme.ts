@@ -1,16 +1,15 @@
 import { ThemeAppearance } from 'antd-style';
 
-import { colorScales } from '@/styles/colors/colors';
+import { blue, geekblue, gold, gray, green, lime, orange, red, volcano } from '@/color/colors';
 
 export const themeConfig: any = (isDarkMode: ThemeAppearance) => {
   const type = isDarkMode ? 'dark' : 'light';
-  const colorText = colorScales.gray[type][11];
-  // const colorTextSecondary = colorScales.gray[type][10];
-  const colorTextTertiary = colorScales.gray[type][7];
-  const colorRed = isDarkMode ? colorScales.red[type][9] : colorScales.volcano[type][9];
-  const colorOrange = isDarkMode ? colorScales.gold[type][9] : colorScales.orange[type][9];
-  const colorGreen = isDarkMode ? colorScales.lime[type][9] : colorScales.green[type][9];
-  const colorBlue = isDarkMode ? colorScales.blue[type][9] : colorScales.geekblue[type][9];
+  const colorText = gray[type][11];
+  const colorTextTertiary = gray[type][7];
+  const colorRed = isDarkMode ? red[type][9] : volcano[type][9];
+  const colorOrange = isDarkMode ? gold[type][9] : orange[type][9];
+  const colorGreen = isDarkMode ? lime[type][9] : green[type][9];
+  const colorBlue = isDarkMode ? blue[type][9] : geekblue[type][9];
 
   return {
     colors: {

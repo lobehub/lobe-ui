@@ -76,25 +76,28 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
       ...rest,
     };
 
-    return isDefaultAntAvatar ? (
-      <AntAvatar
-        ref={ref}
-        src={
-          typeof avatar === 'string' ? (
-            <Img
-              alt={avatarProps.alt || title}
-              height={size}
-              loading={'lazy'}
-              src={avatar}
-              width={size}
-            />
-          ) : (
-            avatar
-          )
-        }
-        {...avatarProps}
-      />
-    ) : (
+    if (isDefaultAntAvatar)
+      return (
+        <AntAvatar
+          ref={ref}
+          src={
+            typeof avatar === 'string' ? (
+              <Img
+                alt={avatarProps.alt || title}
+                height={size}
+                loading={'lazy'}
+                src={avatar}
+                width={size}
+              />
+            ) : (
+              avatar
+            )
+          }
+          {...avatarProps}
+        />
+      );
+
+    return (
       <AntAvatar ref={ref} {...avatarProps}>
         {emoji ? (
           <FluentEmoji

@@ -19,7 +19,14 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Markdown {...options} />
+      <Markdown
+        componentProps={{
+          highlight: {
+            enableTransformer: true,
+          },
+        }}
+        {...options}
+      />
     </StoryBook>
   );
 };

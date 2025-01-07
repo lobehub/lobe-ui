@@ -1,43 +1,41 @@
 import { AliasToken } from 'antd/es/theme/interface';
 
-import { colorScales } from '@/styles/colors/colors';
-import {
-  generateColorNeutralPalette,
-  generateColorPalette,
-} from '@/styles/colors/generateColorPalette';
+import { blue, gold, gray, lime, primary, red } from '@/color/colors';
+
+import { generateColorNeutralPalette, generateColorPalette } from '../generateColorPalette';
 
 const primaryToken = generateColorPalette({
   appearance: 'dark',
-  scale: colorScales.bnw,
+  scale: primary,
   type: 'Primary',
 });
 
 const neutralToken = generateColorNeutralPalette({
   appearance: 'dark',
-  scale: colorScales.gray,
+  scale: gray,
 });
 
 const successToken = generateColorPalette({
   appearance: 'dark',
-  scale: colorScales.lime,
+  scale: lime,
   type: 'Success',
 });
 
 const warningToken = generateColorPalette({
   appearance: 'dark',
-  scale: colorScales.gold,
+  scale: gold,
   type: 'Warning',
 });
 
 const errorToken = generateColorPalette({
   appearance: 'dark',
-  scale: colorScales.red,
+  scale: red,
   type: 'Error',
 });
 
 const infoToken = generateColorPalette({
   appearance: 'dark',
-  scale: colorScales.blue,
+  scale: blue,
   type: 'Info',
 });
 

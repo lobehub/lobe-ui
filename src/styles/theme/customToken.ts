@@ -2,7 +2,8 @@ import { GetCustomToken } from 'antd-style';
 import { AliasToken } from 'antd/es/theme/interface';
 import { camelCase } from 'lodash-es';
 
-import { ColorScaleItem, colorScales } from '@/styles/colors/colors';
+import { colorScales } from '@/color/colors';
+import type { ColorScaleItem } from '@/color/types';
 import { LobeCustomToken } from '@/types/customToken';
 
 const generateColorPalette = ({

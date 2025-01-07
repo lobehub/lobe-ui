@@ -1,4 +1,3 @@
-import { useThemeMode } from 'antd-style';
 import { Loader2 } from 'lucide-react';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
@@ -11,15 +10,14 @@ import { useStyles } from './style';
 
 export interface SyntaxHighlighterProps extends DivProps {
   children: string;
+  enableTransformer?: boolean;
   language: string;
 }
 
 const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
-  ({ children, language, className, style }) => {
+  ({ children, language, className, style, enableTransformer }) => {
     const { styles, cx } = useStyles();
-    const { isDarkMode } = useThemeMode();
-
-    const { data, isLoading } = useHighlight(children, language, isDarkMode);
+    const { data, isLoading } = useHighlight(children, language, enableTransformer);
 
     return (
       <>

@@ -25,6 +25,7 @@ export const Highlighter = memo<HighlighterProps>(
     wrap,
     bodyRender,
     actionsRender,
+    enableTransformer,
     ...rest
   }) => {
     const { styles, cx } = useStyles(type);
@@ -45,7 +46,9 @@ export const Highlighter = memo<HighlighterProps>(
       : originalActions;
 
     const originalBody = (
-      <SyntaxHighlighter language={language?.toLowerCase()}>{tirmedChildren}</SyntaxHighlighter>
+      <SyntaxHighlighter enableTransformer={enableTransformer} language={language?.toLowerCase()}>
+        {tirmedChildren}
+      </SyntaxHighlighter>
     );
 
     const body = bodyRender
@@ -58,14 +61,16 @@ export const Highlighter = memo<HighlighterProps>(
           actionsRender={actionsRender}
           bodyRender={bodyRender}
           className={className}
+          content={tirmedChildren}
           copyable={copyable}
+          enableTransformer={enableTransformer}
           language={language}
           showLanguage={showLanguage}
           type={type}
           wrap={wrap}
           {...rest}
         >
-          {tirmedChildren}
+          {body}
         </FullFeatured>
       );
 
