@@ -25,47 +25,49 @@ export const useStyles = createStyles(
         overflow: hidden;
       `,
 
-      container: css`
-        ${withTransition};
-        position: relative;
-        z-index: 1;
+      container: cx(
+        withTransition,
+        css`
+          position: relative;
+          z-index: 1;
 
-        padding: 24px;
-        height: 228px;
-        max-height: 228px;
+          overflow: hidden;
 
-        overflow: hidden;
+          height: 228px;
+          max-height: 228px;
+          padding: 24px;
 
-        p {
-          font-size: 16px;
-          line-height: 1.2;
-          text-align: start;
-          word-break: break-word;
-        }
-
-        &:hover {
-          .${coverCls} {
-            width: 100%;
-            height: ${scaleUnit * rowNum}px;
-            padding: 0;
-            background: ${token.colorFillContent};
+          p {
+            font-size: 16px;
+            line-height: 1.2;
+            text-align: start;
+            word-break: break-word;
           }
 
-          .${imgCls} {
-            ${genSize(100)};
-          }
+          &:hover {
+            .${coverCls} {
+              width: 100%;
+              height: ${scaleUnit * rowNum}px;
+              padding: 0;
+              background: ${token.colorFillContent};
+            }
 
-          .${descCls} {
-            position: absolute;
-            visibility: hidden;
-            opacity: 0;
-          }
+            .${imgCls} {
+              ${genSize(100)};
+            }
 
-          .${titleCls} {
-            font-size: ${hasLink ? 14 : 20}px;
+            .${descCls} {
+              position: absolute;
+              visibility: hidden;
+              opacity: 0;
+            }
+
+            .${titleCls} {
+              font-size: ${hasLink ? 14 : 20}px;
+            }
           }
-        }
-      `,
+        `,
+      ),
       desc: cx(
         descCls,
         withTransition,

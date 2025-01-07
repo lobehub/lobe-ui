@@ -3,7 +3,7 @@
 import type { AnchorProps } from 'antd';
 import { CSSProperties, ReactNode, memo, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
-import type { Components } from 'react-markdown/lib/ast-to-react';
+import { Components } from 'react-markdown/lib';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import remarkBreaks from 'remark-breaks';
