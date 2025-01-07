@@ -1,14 +1,7 @@
 'use client';
 
 import { Loader2 } from 'lucide-react';
-import {
-  type CSSProperties,
-  MouseEventHandler,
-  forwardRef,
-  useCallback,
-  useMemo,
-  useState,
-} from 'react';
+import { MouseEventHandler, forwardRef, useCallback, useMemo, useState } from 'react';
 import { Flexbox, type FlexboxProps } from 'react-layout-kit';
 
 import Icon, {
@@ -43,6 +36,7 @@ export interface ActionIconProps extends LucideIconProps, FlexboxProps {
    * @default false
    */
   arrow?: boolean;
+  classNames?: TooltipProps['classNames'];
   disable?: boolean;
   /**
    * @description Glass blur style
@@ -54,7 +48,8 @@ export interface ActionIconProps extends LucideIconProps, FlexboxProps {
    * @description Set the loading status of ActionIcon
    */
   loading?: boolean;
-  overlayStyle?: CSSProperties;
+  overlayClassName?: TooltipProps['overlayClassName'];
+  overlayStyle?: TooltipProps['overlayStyle'];
   /**
    * @description The position of the tooltip relative to the target
    * @enum ["top","left","right","bottom","topLeft","topRight","bottomLeft","bottomRight","leftTop","leftBottom","rightTop","rightBottom"]
@@ -72,6 +67,7 @@ export interface ActionIconProps extends LucideIconProps, FlexboxProps {
    * @default false
    */
   spotlight?: boolean;
+  styles?: TooltipProps['styles'];
   /**
    * @description The text shown in the tooltip
    */
@@ -101,18 +97,18 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
       onClick,
       children,
       loading,
-      overlayStyle,
       tooltipDelay = 0.5,
       fillOpacity,
       fillRule,
       focusable,
       disable,
       spin: iconSpinning,
+      styles,
       ...rest
     },
     ref,
   ) => {
-    const { styles, cx } = useStyles({ active: Boolean(active), glass: Boolean(glass) });
+    const { styles: s, cx } = useStyles({ active: Boolean(active), glass: Boolean(glass) });
     const { blockSize, borderRadius } = useMemo(() => calcSize(size), [size]);
 
     const iconProps = {
@@ -125,7 +121,7 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
     };
 
     const content = icon && (
-      <Icon className={styles.icon} icon={icon} {...iconProps} spin={iconSpinning} />
+      <Icon className={s.icon} icon={icon} {...iconProps} spin={iconSpinning} />
     );
 
     const spin = <Icon icon={Loader2} {...iconProps} spin />;
@@ -144,7 +140,7 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
     const actionIconBlock = (
       <Flexbox
         align={'center'}
-        className={cx(styles.block, disable ? styles.disabled : styles.normal, className)}
+        className={cx(s.block, disable ? s.disabled : s.normal, className)}
         horizontal
         justify={'center'}
         onClick={handleClick}
@@ -166,8 +162,11 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
         mouseEnterDelay={tooltipDelay}
         onOpenChange={setTooltipOpen}
         open={tooltipOpen}
-        overlayStyle={{ pointerEvents: 'none', ...overlayStyle }}
         placement={placement}
+        styles={{
+          ...styles,
+          root: { pointerEvents: 'none', ...styles?.root },
+        }}
         title={title}
       >
         {actionIconBlock}

@@ -10,7 +10,15 @@ export type TooltipProps = AntdTooltipProps;
 const Tooltip = memo<TooltipProps>(({ className, arrow = false, ...rest }) => {
   const { styles, cx } = useStyles();
 
-  return <AntdTooltip arrow={arrow} overlayClassName={cx(styles.tooltip, className)} {...rest} />;
+  return (
+    <AntdTooltip
+      arrow={arrow}
+      classNames={{
+        root: cx(styles.tooltip, className),
+      }}
+      {...rest}
+    />
+  );
 });
 
 export default Tooltip;
