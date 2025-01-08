@@ -49,19 +49,20 @@ export default (token: Theme) => css`
   }
 
   .${token.prefixCls}-image-preview-close,
-    .${token.prefixCls}-image-preview-switch-right,.${token.prefixCls}-image-preview-switch-left {
-    ${token.stylish.blur};
-    border-radius: ${token.borderRadiusLG}px;
-    background: ${rgba(token.colorBgMask, 0.1)};
-
-    width: 32px;
-    height: 32px;
-
+    .${token.prefixCls}-image-preview-switch-right,
+    .${token.prefixCls}-image-preview-switch-left {
     display: flex;
     align-items: center;
     justify-content: center;
 
+    width: 32px;
+    height: 32px;
     padding: 0;
+
+    background: ${rgba(token.colorBgMask, 0.1)};
+    border-radius: ${token.borderRadiusLG}px;
+
+    ${token.stylish.blur};
   }
 
   .${token.prefixCls}-popover-inner {

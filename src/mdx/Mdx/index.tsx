@@ -10,12 +10,15 @@ import remarkMath from 'remark-math';
 import type { Pluggable } from 'unified';
 
 import Alert from '@/Alert';
+import ImageGallery from '@/Image/ImageGallery';
 import { Typography, type TypographyProps } from '@/Markdown/Typography';
 import { useStyles } from '@/Markdown/style';
 import { escapeBrackets, escapeMhchem, fixMarkdownBold } from '@/Markdown/utils';
 
 import mdxComponents from '../mdxComponents';
 import CodeBlock from '../mdxComponents/CodeBlock';
+import Image from '../mdxComponents/Image';
+import Video from '../mdxComponents/Video';
 
 const runtime = process.env.NODE_ENV === 'production' ? jsxRuntime : jsxDevRuntime;
 
@@ -39,6 +42,7 @@ const Mdx = memo<MdxProps>(
     className,
     style,
     fullFeaturedCodeBlock = true,
+    enableImageGallery = true,
     enableLatex = true,
     enableMermaid = true,
     rehypePlugins,
@@ -84,6 +88,7 @@ const Mdx = memo<MdxProps>(
       const list: any = {};
       Object.entries({
         ...mdxComponents,
+        img: Image,
         pre: (props: any) => (
           <CodeBlock
             {...props}
@@ -91,6 +96,7 @@ const Mdx = memo<MdxProps>(
             fullFeatured={fullFeaturedCodeBlock}
           />
         ),
+        video: Video,
         ...components,
       }).forEach(([key, Render]: any) => {
         list[key] = (props: any) => <Render {...props} />;
@@ -130,10 +136,13 @@ const Mdx = memo<MdxProps>(
     return (
       <Typography
         className={cx(enableLatex && styles.latex, isChatMode && styles.chat, className)}
+        data-code-type="mdx"
         style={style}
         {...rest}
       >
-        <MDXContent components={memoComponents} />
+        <ImageGallery enable={enableImageGallery}>
+          <MDXContent components={memoComponents} />
+        </ImageGallery>
       </Typography>
     );
   },

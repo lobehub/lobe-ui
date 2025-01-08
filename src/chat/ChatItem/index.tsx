@@ -66,6 +66,7 @@ const ChatItem = memo<ChatItemProps>(
         <Avatar
           {...avatarProps}
           addon={avatarAddon}
+          alt={avatarProps?.alt || avatar.title || 'avatar'}
           avatar={avatar}
           loading={loading}
           onClick={onAvatarClick}

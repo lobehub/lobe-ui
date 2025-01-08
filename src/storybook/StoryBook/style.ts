@@ -1,21 +1,22 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token, responsive }, noPadding: boolean) => {
+export const useStyles = createStyles(({ cx, css, token, responsive }, noPadding: boolean) => {
   return {
     editor: css`
       width: inherit;
       min-height: inherit;
     `,
-    left: css`
-      overflow: auto;
-      position: relative;
-
-      ${!noPadding &&
+    left: cx(
       css`
-        padding-block: 40px;
-        padding-inline: 24px;
-      `}
-    `,
+        position: relative;
+        overflow: auto;
+      `,
+      !noPadding &&
+        css`
+          padding-block: 40px;
+          padding-inline: 24px;
+        `,
+    ),
     leva: css`
       --leva-sizes-controlWidth: 66%;
       --leva-colors-elevation1: ${token.colorFillSecondary};
