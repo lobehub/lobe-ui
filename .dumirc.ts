@@ -65,7 +65,7 @@ const themeConfig: SiteThemeConfig = {
   nav,
   prefersColor: {
     default: 'dark',
-    switch: false,
+    switch: true,
   },
   socialLinks: {
     discord: 'https://discord.gg/AYFPHvv2jT',
@@ -86,6 +86,9 @@ export default defineConfig({
   },
   apiParser: isProduction ? {} : false,
   base: '/',
+  codeSplitting: {
+    jsStrategy: 'granularChunks',
+  },
   define: {
     'process.env': process.env,
   },
@@ -93,7 +96,6 @@ export default defineConfig({
   favicons: ['https://lobehub.com/favicon.ico'],
   jsMinifier: 'swc',
   locales: [{ id: 'en-US', name: 'English' }],
-  mako: isWin ? false : {},
   mfsu: isWin ? undefined : {},
   npmClient: 'pnpm',
   publicPath: '/',
@@ -113,6 +115,7 @@ export default defineConfig({
   sitemap: {
     hostname: 'https://ui.lobehub.com',
   },
+  ssr: isProduction ? {} : false,
   styles: [
     `html, body { background: transparent;  }
 
