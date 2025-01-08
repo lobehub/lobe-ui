@@ -86,9 +86,6 @@ export default defineConfig({
   },
   apiParser: isProduction ? {} : false,
   base: '/',
-  codeSplitting: {
-    jsStrategy: 'granularChunks',
-  },
   define: {
     'process.env': process.env,
   },
