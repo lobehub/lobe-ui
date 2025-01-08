@@ -38,7 +38,9 @@
     "mobile.d.ts",
     "mobile.js",
     "storybook.d.ts",
-    "storybook.js"
+    "storybook.js",
+    "color.d.ts",
+    "color.js"
   ],
   "scripts": {
     "build": "father build",
