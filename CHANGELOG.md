@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.163.0](https://github.com/lobehub/lobe-ui/compare/v1.162.0...v1.163.0)
+
+<sup>Released on **2025-01-08**</sup>
+
+#### ✨ Features
+
+- **misc**: Update remark.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update remark, closes [#241](https://github.com/lobehub/lobe-ui/issues/241) ([83af9c0](https://github.com/lobehub/lobe-ui/commit/83af9c0))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.162.0](https://github.com/lobehub/lobe-ui/compare/v1.161.0...v1.162.0)
 
 <sup>Released on **2025-01-07**</sup>
