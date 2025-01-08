@@ -1,6 +1,6 @@
 import { defineConfig } from 'dumi';
-import { SiteThemeConfig } from 'dumi-theme-lobehub';
-import { INavItem } from 'dumi/dist/client/theme-api/types';
+import type { SiteThemeConfig } from 'dumi-theme-lobehub';
+import type { INavItem } from 'dumi/dist/client/theme-api/types';
 import { resolve } from 'node:path';
 
 import { description, homepage, name } from './package.json';
@@ -15,9 +15,9 @@ const nav: INavItem[] = [
   { link: '/components/awesome/features', title: 'Awesome' },
   { link: '/components/brand/lobe-hub', title: 'Brand' },
   { link: '/components/mdx/callout', title: 'Mdx' },
+  { link: '/components/color/color-scales', title: 'Colors' },
   { link: 'https://icons.lobehub.com', mode: 'override', title: 'Icons' },
   { link: 'https://charts.lobehub.com', mode: 'override', title: 'Charts' },
-  { link: '/components/color/color-scales', title: 'Colors' },
   { link: '/changelog', title: 'Changelog' },
 ];
 
