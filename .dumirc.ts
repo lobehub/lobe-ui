@@ -15,7 +15,7 @@ const nav: INavItem[] = [
   { link: '/components/awesome/features', title: 'Awesome' },
   { link: '/components/brand/lobe-hub', title: 'Brand' },
   { link: '/components/mdx/callout', title: 'Mdx' },
-  { link: '/components/color/color-scales', title: 'Colors' },
+  { link: '/components/color/color-scales', title: 'Color' },
   { link: 'https://icons.lobehub.com', mode: 'override', title: 'Icons' },
   { link: 'https://charts.lobehub.com', mode: 'override', title: 'Charts' },
   { link: '/changelog', title: 'Changelog' },

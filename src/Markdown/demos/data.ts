@@ -147,7 +147,7 @@ This is [an example](http://example.com/ "Title") inline link.
 
 export const code = `
 
-#### transformerNotationDiff
+#### Notation Diff
 
 \`\`\`ts
 export function foo() {
@@ -156,7 +156,7 @@ export function foo() {
 }
 \`\`\`
 
-#### transformerNotationHighlight
+#### Notation Highlight
 
 \`\`\`ts
 export function foo() {
@@ -164,7 +164,7 @@ export function foo() {
 }
 \`\`\`
 
-#### transformerNotationWordHighlight
+#### Notation WordHighlight
 
 \`\`\`ts
 export function foo() { // [!code word:Hello]
@@ -173,7 +173,7 @@ export function foo() { // [!code word:Hello]
 }
 \`\`\`
 
-#### transformerNotationFocus
+#### Notation Focus
 
 \`\`\`ts
 export function foo() {
@@ -181,7 +181,7 @@ export function foo() {
 }
 \`\`\`
 
-#### transformerNotationErrorLevel
+#### Notation ErrorLevel
 
 \`\`\`ts
 export function foo() {

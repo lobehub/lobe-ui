@@ -44,9 +44,10 @@ const CodeBlock: FC<CodeBlockProps> = ({
   enableMermaid,
   highlight,
   mermaid,
+  children,
   ...rest
 }) => {
-  const code = useCode(rest?.children?.[0]);
+  const code = useCode(children);
 
   if (!code) return;
 
