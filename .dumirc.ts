@@ -89,6 +89,7 @@ export default defineConfig({
   define: {
     'process.env': process.env,
   },
+  exportStatic: {},
   extraBabelPlugins: ['babel-plugin-antd-style'],
   favicons: ['https://lobehub.com/favicon.ico'],
   jsMinifier: 'swc',
@@ -109,15 +110,10 @@ export default defineConfig({
     ],
     entryFile: isProduction ? './src/index.ts' : undefined,
   },
-  scripts: [
-    {
-      'data-domain': 'ui.lobehub.com',
-      'src': 'https://plausible.lobehub-inc.cn/js/script.js',
-    },
-  ],
   sitemap: {
     hostname: 'https://ui.lobehub.com',
   },
+  ssr: isProduction ? {} : false,
   styles: [
     `html, body { background: transparent;  }
 

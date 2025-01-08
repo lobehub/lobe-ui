@@ -142,7 +142,6 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^5.5.2",
-    "@babel/runtime": "^7.26.0",
     "@commitlint/cli": "^19.6.1",
     "@lobehub/lint": "^1.25.3",
     "@testing-library/react": "^16.1.0",
