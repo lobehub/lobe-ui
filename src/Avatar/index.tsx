@@ -48,6 +48,7 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
       background = 'rgba(0,0,0,0)',
       style,
       unoptimized,
+      alt,
       ...rest
     },
     ref,
@@ -69,6 +70,7 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
     const text = String(isDefaultAntAvatar ? title : avatar);
 
     const avatarProps = {
+      alt: alt || title || 'avatar',
       className: cx(styles.avatar, className),
       shape,
       size,
@@ -83,10 +85,11 @@ const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
           src={
             typeof avatar === 'string' ? (
               <Img
-                alt={avatarProps.alt || title}
+                alt={avatarProps.alt}
                 height={size}
                 loading={'lazy'}
                 src={avatar}
+                unoptimized={unoptimized}
                 width={size}
               />
             ) : (

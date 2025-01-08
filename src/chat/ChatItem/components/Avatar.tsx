@@ -9,6 +9,7 @@ import Loading from './Loading';
 
 export interface AvatarProps {
   addon?: ChatItemProps['avatarAddon'];
+  alt?: string;
   avatar: ChatItemProps['avatar'];
   loading?: ChatItemProps['loading'];
   onClick?: ChatItemProps['onAvatarClick'];
@@ -18,11 +19,12 @@ export interface AvatarProps {
 }
 
 const Avatar = memo<AvatarProps>(
-  ({ loading, avatar, placement, unoptimized, addon, onClick, size = 40 }) => {
+  ({ loading, avatar, placement, unoptimized, addon, onClick, size = 40, alt }) => {
     const { styles } = useStyles({ avatarSize: size });
     const avatarContent = (
       <div className={styles.avatarContainer}>
         <A
+          alt={alt || avatar.title}
           animation={loading}
           avatar={avatar.avatar}
           background={avatar.backgroundColor}
