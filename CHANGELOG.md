@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.163.1](https://github.com/lobehub/lobe-ui/compare/v1.163.0...v1.163.1)
+
+<sup>Released on **2025-01-08**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix @splinetool/runtime.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix @splinetool/runtime ([a6ecb39](https://github.com/lobehub/lobe-ui/commit/a6ecb39))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.163.0](https://github.com/lobehub/lobe-ui/compare/v1.162.0...v1.163.0)
 
 <sup>Released on **2025-01-08**</sup>
