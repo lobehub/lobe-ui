@@ -65,7 +65,7 @@ const themeConfig: SiteThemeConfig = {
   nav,
   prefersColor: {
     default: 'dark',
-    switch: true,
+    switch: false,
   },
   socialLinks: {
     discord: 'https://discord.gg/AYFPHvv2jT',
