@@ -40,7 +40,9 @@
     "storybook.d.ts",
     "storybook.js",
     "color.d.ts",
-    "color.js"
+    "color.js",
+    "icons.d.ts",
+    "icons.js"
   ],
   "scripts": {
     "build": "father build && npm run build:packages",
