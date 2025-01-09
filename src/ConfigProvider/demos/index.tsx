@@ -1,9 +1,10 @@
-import { ConfigProvider, Logo } from '@lobehub/ui';
+import { ConfigProvider } from '@lobehub/ui';
+import { LobeHub } from '@lobehub/ui/brand';
 
 export default () => {
   return (
     <ConfigProvider config={{ proxy: 'unpkg' }}>
-      <Logo />
+      <LobeHub />
     </ConfigProvider>
   );
 };

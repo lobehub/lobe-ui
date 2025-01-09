@@ -1,4 +1,5 @@
-import { ActionIcon, Logo, SideNav } from '@lobehub/ui';
+import { ActionIcon, SideNav } from '@lobehub/ui';
+import { LobeHub } from '@lobehub/ui/brand';
 import { Album, MessageSquare, Settings2 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -7,7 +8,7 @@ export default () => {
 
   return (
     <SideNav
-      avatar={<Logo size={40} />}
+      avatar={<LobeHub size={40} />}
       bottomActions={<ActionIcon icon={Settings2} />}
       topActions={
         <>

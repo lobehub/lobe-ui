@@ -33,7 +33,6 @@ export {
 export { default as EditableText, type EditableTextProps } from './EditableText';
 export { default as EmojiPicker, type EmojiPickerProps } from './EmojiPicker';
 export { default as EmptyCard, type EmptyCardProps } from './EmptyCard';
-export { default as FileTypeIcon, type FileTypeIconProps } from './FileTypeIcon';
 export { default as FluentEmoji, type FluentEmojiProps } from './FluentEmoji';
 export { default as FontLoader, type FontLoaderProps } from './FontLoader';
 export { default as Footer, type FooterProps } from './Footer';
@@ -81,10 +80,6 @@ export {
 export { default as List, type ListItemProps } from './List';
 export { default as Markdown, type MarkdownProps } from './Markdown';
 export { Typography, type TypographyProps } from './Markdown/Typography';
-export {
-  default as MaterialFileTypeIcon,
-  type MaterialFileTypeIconProps,
-} from './MaterialFileTypeIcon';
 export { default as Mermaid, type MermaidProps } from './Mermaid';
 export { default as Modal, type ModalProps } from './Modal';
 export { default as SearchBar, type SearchBarProps } from './SearchBar';
