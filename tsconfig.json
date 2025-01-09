@@ -42,7 +42,8 @@
     "mobile.d.ts",
     "chat.d.ts",
     "storybook.d.ts",
-    "awesome.d.ts"
+    "awesome.d.ts",
+    "icons.d.ts"
   ],
   "include": ["src", "docs", "tests", ".dumirc.ts", ".fatherrc.ts"]
 }

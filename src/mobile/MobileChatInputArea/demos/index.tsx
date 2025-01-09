@@ -7,7 +7,7 @@ import { Flexbox } from 'react-layout-kit';
 export default () => {
   return (
     <Flexbox style={{ height: 400, position: 'relative' }}>
-      <div style={{ flex: 1 }}></div>
+      <div style={{ flex: 1 }} />
       <MobileChatInputArea
         textAreaRightAddons={<MobileChatSendButton />}
         topAddons={

@@ -74,7 +74,7 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
       >
         {pin && (
           <div className={styles.pin}>
-            <div className={styles.triangle}></div>
+            <div className={styles.triangle} />
           </div>
         )}
 

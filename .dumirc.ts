@@ -84,10 +84,11 @@ const themeConfig: SiteThemeConfig = {
   title: 'Lobe UI',
 };
 
+const alias: Record<string, string> = {};
+for (const pkg of packages) alias[`@lobehub/ui/${pkg}`] = resolve(__dirname, `./src/${pkg}`);
+
 export default defineConfig({
-  alias: {
-    ...packages.map((pkg) => [`@lobehub/ui/${pkg}`, resolve(__dirname, `./src/${pkg}`)]),
-  },
+  alias,
   apiParser: isProduction ? {} : false,
   base: '/',
   define: {
