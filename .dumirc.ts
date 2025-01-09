@@ -8,6 +8,17 @@ import { description, homepage, name } from './package.json';
 const isProduction = process.env.NODE_ENV === 'production';
 const isWin = process.platform === 'win32';
 
+export const packages = [
+  'awesome',
+  'brand',
+  'chat',
+  'color',
+  'icons',
+  'mdx',
+  'mobile',
+  'storybook',
+];
+
 const nav: INavItem[] = [
   { link: '/components/action-icon', title: 'Components' },
   { link: '/components/chat/chat-input-area', title: 'Chat' },
@@ -16,8 +27,7 @@ const nav: INavItem[] = [
   { link: '/components/brand/lobe-hub', title: 'Brand' },
   { link: '/components/mdx/callout', title: 'Mdx' },
   { link: '/components/color/color-scales', title: 'Color' },
-  { link: 'https://icons.lobehub.com', mode: 'override', title: 'Icons' },
-  { link: 'https://charts.lobehub.com', mode: 'override', title: 'Charts' },
+  { link: '/components/icons/file-type-icon', mode: 'override', title: 'Icons' },
   { link: '/changelog', title: 'Changelog' },
 ];
 
@@ -76,13 +86,7 @@ const themeConfig: SiteThemeConfig = {
 
 export default defineConfig({
   alias: {
-    '@lobehub/ui/awesome': resolve(__dirname, './src/awesome'),
-    '@lobehub/ui/brand': resolve(__dirname, './src/brand'),
-    '@lobehub/ui/chat': resolve(__dirname, './src/chat'),
-    '@lobehub/ui/color': resolve(__dirname, './src/color'),
-    '@lobehub/ui/mdx': resolve(__dirname, './src/mdx'),
-    '@lobehub/ui/mobile': resolve(__dirname, './src/mobile'),
-    '@lobehub/ui/storybook': resolve(__dirname, './src/storybook'),
+    ...packages.map((pkg) => [`@lobehub/ui/${pkg}`, resolve(__dirname, `./src/${pkg}`)]),
   },
   apiParser: isProduction ? {} : false,
   base: '/',
@@ -100,13 +104,7 @@ export default defineConfig({
   resolve: {
     atomDirs: [
       { dir: 'src', type: 'component' },
-      { dir: 'src/awesome', subType: 'awesome', type: 'component' },
-      { dir: 'src/chat', subType: 'chat', type: 'component' },
-      { dir: 'src/mobile', subType: 'mobile', type: 'component' },
-      { dir: 'src/brand', subType: 'brand', type: 'component' },
-      { dir: 'src/mdx', subType: 'mdx', type: 'component' },
-      { dir: 'src/storybook', subType: 'storybook', type: 'component' },
-      { dir: 'src/color', subType: 'color', type: 'component' },
+      ...packages.map((pkg) => ({ dir: `src/${pkg}`, subType: pkg, type: 'component' })),
     ],
     entryFile: isProduction ? './src/index.ts' : undefined,
   },

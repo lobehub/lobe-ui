@@ -1,4 +1,4 @@
-import { LogoSpline, LogoThreeProps } from '@lobehub/ui';
+import { LogoSpline, LogoThreeProps } from '@lobehub/ui/brand';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {

@@ -31,7 +31,9 @@
       "@lobehub/ui/awesome": ["src/awesome"],
       "@lobehub/ui/awesome/*": ["src/awesome/*"],
       "@lobehub/ui/color": ["src/color"],
-      "@lobehub/ui/color/*": ["src/color/*"]
+      "@lobehub/ui/color/*": ["src/color/*"],
+      "@lobehub/ui/icons": ["src/icons"],
+      "@lobehub/ui/icons/*": ["src/icons/*"]
     }
   },
   "exclude": [
