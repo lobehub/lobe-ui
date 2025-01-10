@@ -10,7 +10,7 @@
 
 @keyframes fill {
   30% {
-    fill-opacity: 20%;
+    fill-opacity: 5%;
   }
 
   100% {
@@ -27,6 +27,6 @@
   stroke-width: 0.25em;
 
   animation:
-    draw 2s ease-in-out infinite,
-    fill 2s linear infinite;
+    draw 2s cubic-bezier(0.4, 0, 0.2, 1) infinite,
+    fill 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
