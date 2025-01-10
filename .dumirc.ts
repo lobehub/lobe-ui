@@ -27,7 +27,6 @@ const nav: INavItem[] = [
   { link: '/components/brand/lobe-hub', title: 'Brand' },
   { link: '/components/mdx/callout', title: 'Mdx' },
   { link: '/components/color/color-scales', title: 'Color' },
-  { link: '/components/icons/file-type-icon', mode: 'override', title: 'Icons' },
   { link: '/changelog', title: 'Changelog' },
 ];
 

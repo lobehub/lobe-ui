@@ -1,12 +1,13 @@
-import { FileTypeIcon, FileTypeIconProps } from '@lobehub/ui/icons';
+import { MaterialFileTypeIcon, MaterialFileTypeIconProps } from '@lobehub/ui';
+
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const control: FileTypeIconProps | any = useControls(
+  const control: MaterialFileTypeIconProps | any = useControls(
     {
-      color: '#F54838',
-      filetype: 'pdf',
+      filename: 'xxx.pdf',
+      open: false,
       size: {
         step: 1,
         value: 48,
@@ -16,8 +17,8 @@ export default () => {
         value: 'file',
       },
       variant: {
-        options: ['color', 'mono'],
-        value: 'color',
+        options: ['pure', 'file', 'folder'],
+        value: 'pure',
       },
     },
     { store },
@@ -25,7 +26,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <FileTypeIcon {...control} />
+      <MaterialFileTypeIcon {...control} />
     </StoryBook>
   );
 };
