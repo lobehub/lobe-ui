@@ -4,8 +4,8 @@ import { memo, useMemo } from 'react';
 import { Center } from 'react-layout-kit';
 
 import { useCdnFn } from '@/ConfigProvider';
+import FileTypeIcon from '@/FileTypeIcon';
 import Img from '@/Img';
-import FileTypeIcon from '@/icons/FileTypeIcon';
 import { DivProps } from '@/types';
 
 import { getIconUrlForDirectoryPath, getIconUrlForFilePath } from './utils';
