@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.164.2](https://github.com/lobehub/lobe-ui/compare/v1.164.1...v1.164.2)
+
+<sup>Released on **2025-01-10**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix file type icon.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix file type icon, closes [#243](https://github.com/lobehub/lobe-ui/issues/243) ([03817d3](https://github.com/lobehub/lobe-ui/commit/03817d3))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.164.1](https://github.com/lobehub/lobe-ui/compare/v1.164.0...v1.164.1)
 
 <sup>Released on **2025-01-10**</sup>
