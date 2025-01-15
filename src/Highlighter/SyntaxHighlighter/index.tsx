@@ -35,6 +35,7 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
             dangerouslySetInnerHTML={{
               __html: data as string,
             }}
+            dir="ltr"
             style={style}
           />
         )}

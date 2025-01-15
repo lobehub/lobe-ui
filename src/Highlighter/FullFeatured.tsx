@@ -28,7 +28,7 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps>(
     showLanguage,
     className,
     style,
-    allowChangeLanguage = true,
+    allowChangeLanguage = false,
     fileName,
     icon,
     actionsRender,
