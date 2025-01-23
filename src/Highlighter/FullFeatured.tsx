@@ -97,7 +97,7 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps>(
             {actions}
           </Flexbox>
         </Flexbox>
-        {children}
+        <div style={expand ? {} : { height: 0, overflow: 'hidden' }}>{children}</div>
       </div>
     );
   },
