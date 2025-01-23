@@ -1,12 +1,13 @@
 import { Select, type SelectProps } from 'antd';
 import { ChevronDown, ChevronRight } from 'lucide-react';
-import { ReactNode, memo, useState } from 'react';
+import React, { ReactNode, memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
 import { languageMap } from '@/hooks/useHighlight';
 
+import SyntaxHighlighter from './SyntaxHighlighter';
 import { useStyles } from './style';
 import { HighlighterProps } from './type';
 
@@ -19,6 +20,20 @@ interface HighlighterFullFeaturedProps extends Omit<HighlighterProps, 'children'
   children: ReactNode;
   content: string;
 }
+
+const convertChildrenToString = (children: ReactNode): string => {
+  return React.Children.toArray(children)
+    .map((child) => {
+      if (typeof child === 'string' || typeof child === 'number') {
+        return child;
+      }
+      if (React.isValidElement(child)) {
+        return convertChildrenToString((child as any).props.children);
+      }
+      return '';
+    })
+    .join('');
+};
 
 export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps>(
   ({
@@ -55,6 +70,8 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps>(
           originalNode: origianlActions,
         })
       : origianlActions;
+
+    const childrenString = convertChildrenToString(children).trim();
 
     return (
       <div
@@ -97,7 +114,7 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps>(
             {actions}
           </Flexbox>
         </Flexbox>
-        {children}
+        <SyntaxHighlighter language={lang}>{childrenString}</SyntaxHighlighter>
       </div>
     );
   },
