@@ -11,7 +11,7 @@ import FormTitle, { type FormTitleProps } from './FormTitle';
 const { Item } = Form;
 
 export const useStyles = createStyles(
-  ({ css, responsive, prefixCls }, itemMinWidth?: string | number) => ({
+  ({ css, responsive, prefixCls }, { minWidth }: { minWidth?: string | number }) => ({
     item: css`
       &.${prefixCls}-form-item {
         padding-block: 16px;
@@ -59,7 +59,7 @@ export const useStyles = createStyles(
     `,
     itemMinWidth: css`
       .${prefixCls}-form-item-control {
-        width: ${isNumber(itemMinWidth) ? `${itemMinWidth}px` : itemMinWidth};
+        width: ${isNumber(minWidth) ? `${minWidth}px` : minWidth};
       }
       ${responsive.mobile} {
         .${prefixCls}-row {
@@ -78,6 +78,13 @@ export const useStyles = createStyles(
         padding-block-start: 0;
       }
     `,
+    verticalLayout: css`
+      &.${prefixCls}-form-item {
+        .${prefixCls}-row {
+          align-items: stretch;
+        }
+      }
+    `,
   }),
 );
 
@@ -91,8 +98,9 @@ export interface FormItemProps extends AntdFormItemProps {
 }
 
 const FormItem = memo<FormItemProps>(
-  ({ desc, tag, minWidth, avatar, className, label, children, divider, ...rest }) => {
-    const { cx, styles } = useStyles(minWidth);
+  ({ desc, tag, minWidth, avatar, className, label, children, divider, layout, ...rest }) => {
+    const { cx, styles } = useStyles({ minWidth });
+    const isVertical = layout === 'vertical';
     return (
       <>
         {divider && <FormDivider />}
@@ -101,9 +109,11 @@ const FormItem = memo<FormItemProps>(
             styles.item,
             Boolean(minWidth) && styles.itemMinWidth,
             !divider && styles.itemNoDivider,
+            isVertical && styles.verticalLayout,
             className,
           )}
           label={<FormTitle avatar={avatar} desc={desc} tag={tag} title={label as any} />}
+          layout={layout}
           {...rest}
         >
           {children}
