@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.164.4](https://github.com/lobehub/lobe-ui/compare/v1.164.3...v1.164.4)
+
+<sup>Released on **2025-01-24**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Code block direction.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Code block direction, closes [#247](https://github.com/lobehub/lobe-ui/issues/247) ([33c8746](https://github.com/lobehub/lobe-ui/commit/33c8746))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.164.3](https://github.com/lobehub/lobe-ui/compare/v1.164.2...v1.164.3)
 
 <sup>Released on **2025-01-14**</sup>
