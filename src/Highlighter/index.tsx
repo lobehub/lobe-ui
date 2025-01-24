@@ -32,6 +32,23 @@ export const Highlighter = memo<HighlighterProps>(
 
     const tirmedChildren = children.trim();
 
+    if (fullFeatured)
+      return (
+        <FullFeatured
+          actionsRender={actionsRender}
+          bodyRender={bodyRender}
+          className={className}
+          content={tirmedChildren}
+          copyable={copyable}
+          enableTransformer={enableTransformer}
+          language={language}
+          showLanguage={showLanguage}
+          type={type}
+          wrap={wrap}
+          {...rest}
+        />
+      );
+
     const originalActions = copyable && (
       <CopyButton content={tirmedChildren} placement="left" size={copyButtonSize} />
     );
@@ -54,25 +71,6 @@ export const Highlighter = memo<HighlighterProps>(
     const body = bodyRender
       ? bodyRender({ content: tirmedChildren, language, originalNode: originalBody })
       : originalBody;
-
-    if (fullFeatured)
-      return (
-        <FullFeatured
-          actionsRender={actionsRender}
-          bodyRender={bodyRender}
-          className={className}
-          content={tirmedChildren}
-          copyable={copyable}
-          enableTransformer={enableTransformer}
-          language={language}
-          showLanguage={showLanguage}
-          type={type}
-          wrap={wrap}
-          {...rest}
-        >
-          {body}
-        </FullFeatured>
-      );
 
     return (
       <div

@@ -1,10 +1,11 @@
 import { Select, type SelectProps } from 'antd';
 import { ChevronDown, ChevronRight } from 'lucide-react';
-import { ReactNode, memo, useState } from 'react';
+import { memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
+import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
 import { languageMap } from '@/hooks/useHighlight';
 
 import { useStyles } from './style';
@@ -16,13 +17,11 @@ const options: SelectProps['options'] = languageMap.map((item) => ({
 }));
 
 interface HighlighterFullFeaturedProps extends Omit<HighlighterProps, 'children'> {
-  children: ReactNode;
   content: string;
 }
 
 export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps>(
   ({
-    children,
     content,
     language,
     showLanguage,
@@ -35,6 +34,8 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps>(
     copyable,
     type,
     defalutExpand = true,
+    bodyRender,
+    enableTransformer,
     ...rest
   }) => {
     const [expand, setExpand] = useState(defalutExpand);
@@ -55,6 +56,16 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps>(
           originalNode: origianlActions,
         })
       : origianlActions;
+
+    const originalBody = (
+      <SyntaxHighlighter enableTransformer={enableTransformer} language={lang?.toLowerCase()}>
+        {content}
+      </SyntaxHighlighter>
+    );
+
+    const body = bodyRender
+      ? bodyRender({ content, language: lang, originalNode: originalBody })
+      : originalBody;
 
     return (
       <div
@@ -97,7 +108,7 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps>(
             {actions}
           </Flexbox>
         </Flexbox>
-        <div style={expand ? {} : { height: 0, overflow: 'hidden' }}>{children}</div>
+        <div style={expand ? {} : { height: 0, overflow: 'hidden' }}>{body}</div>
       </div>
     );
   },
