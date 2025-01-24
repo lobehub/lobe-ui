@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.164.6](https://github.com/lobehub/lobe-ui/compare/v1.164.5...v1.164.6)
+
+<sup>Released on **2025-01-24**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Form vertical layout.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix Form vertical layout ([13bbb75](https://github.com/lobehub/lobe-ui/commit/13bbb75))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.164.5](https://github.com/lobehub/lobe-ui/compare/v1.164.4...v1.164.5)
 
 <sup>Released on **2025-01-24**</sup>
