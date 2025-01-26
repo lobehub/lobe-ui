@@ -23,6 +23,7 @@ import type { AProps } from '@/types';
 import { CodeFullFeatured, CodeLite } from './CodeBlock';
 import type { TypographyProps } from './Typography';
 import { useStyles as useMarkdownStyles } from './markdown.style';
+import { rehypeKatexDir } from './rehypePlugin';
 import { useStyles } from './style';
 import { escapeBrackets, escapeMhchem, fixMarkdownBold } from './utils';
 
@@ -139,9 +140,12 @@ const Markdown = memo<MarkdownProps>(
 
     const memoRehypePlugins = useMemo(
       () =>
-        [allowHtml && rehypeRaw, enableLatex && rehypeKatex, ...innerRehypePlugins].filter(
-          Boolean,
-        ) as any,
+        [
+          allowHtml && rehypeRaw,
+          enableLatex && rehypeKatex,
+          enableLatex && rehypeKatexDir,
+          ...innerRehypePlugins,
+        ].filter(Boolean) as any,
       [allowHtml, enableLatex, ...innerRehypePlugins],
     );
 
