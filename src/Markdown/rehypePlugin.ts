@@ -1,4 +1,5 @@
-// 自定义插件：katex-directive.js
+// katex-directive
+// 给 class="katex" 的节点加上 dir="ltr" 属性
 import type { Node } from 'unist';
 import { visit } from 'unist-util-visit';
 
