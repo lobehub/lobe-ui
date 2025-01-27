@@ -76,12 +76,10 @@ const MessageContent = memo<MessageContentProps>(
             overflow: 'hidden',
             transformOrigin: 'top', // 关键声明
           }}
-          transition={{
-            bounce: 0.15,
-            duration: 0.25,
-            layout: { duration: 0.2, ease: 'easeOut', type: 'tween' },
-            type: 'spring',
-          }}
+          // transition={{
+          //   layout: { duration: 0.2, ease: 'easeOut', type: 'tween' },
+          //   type: 'spring',
+          // }}
         >
           <motion.div layout="position">
             {messageContent}
