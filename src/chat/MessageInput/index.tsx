@@ -1,12 +1,15 @@
 'use client';
 
 import { Button, ButtonProps } from 'antd';
+import { CommandIcon, CornerDownLeft, OptionIcon } from 'lucide-react';
 import { type CSSProperties, memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import Icon from '@/Icon';
 import { TextArea } from '@/Input';
 import { type TextAreaProps } from '@/Input';
 import { DivProps } from '@/types';
+import { isMacLike } from '@/utils/platform';
 
 import { useStyles } from './style';
 
@@ -38,6 +41,7 @@ export interface MessageInputProps extends DivProps {
    * @param text - The text input by the user.
    */
   renderButtons?: (text: string) => ButtonProps[];
+  shortcut?: boolean;
   text?: {
     cancel?: string;
     confirm?: string;
@@ -65,6 +69,7 @@ const MessageInput = memo<MessageInputProps>(
     style,
     editButtonSize = 'middle',
     classNames,
+    shortcut,
     ...rest
   }) => {
     const [temporaryValue, setValue] = useState<string>(defaultValue || '');
@@ -80,6 +85,15 @@ const MessageInput = memo<MessageInputProps>(
           classNames={classNames}
           onBlur={(e) => setValue(e.target.value)}
           onChange={(e) => setValue(e.target.value)}
+          onPressEnter={
+            shortcut
+              ? (e) => {
+                  if (isMacLike ? e.metaKey : e.ctrlKey) {
+                    onConfirm?.(temporaryValue);
+                  }
+                }
+              : undefined
+          }
           placeholder={placeholder}
           resize={false}
           style={textareaStyle}
@@ -101,6 +115,12 @@ const MessageInput = memo<MessageInputProps>(
                 type="primary"
               >
                 {text?.confirm || 'Confirm'}
+                {shortcut && (
+                  <Flexbox gap={4} horizontal>
+                    <Icon icon={isMacLike ? CommandIcon : OptionIcon} size={{ fontSize: 12 }} />
+                    <Icon icon={CornerDownLeft} size={{ fontSize: 12 }} />
+                  </Flexbox>
+                )}
               </Button>
               <Button onClick={onCancel} size={editButtonSize}>
                 {text?.cancel || 'Cancel'}

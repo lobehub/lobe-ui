@@ -126,6 +126,7 @@ const EditableMessage = memo<EditableMessageProps>(
           setTyping(false);
         }}
         placeholder={placeholder}
+        shortcut
         style={stylesProps?.input}
         text={text}
         textareaClassname={classNames?.input}
