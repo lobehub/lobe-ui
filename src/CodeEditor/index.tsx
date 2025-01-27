@@ -16,6 +16,7 @@ import {
 import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
 import { useStyles } from '@/CodeEditor/style';
+import { isMacLike } from '@/utils/platform';
 
 import SyntaxHighlighter from '../Highlighter/SyntaxHighlighter';
 
@@ -78,10 +79,6 @@ const HISTORY_TIME_GAP = 3000;
 
 const isWindows =
   typeof window !== 'undefined' && 'navigator' in window && /win/i.test(navigator.platform);
-const isMacLike =
-  typeof window !== 'undefined' &&
-  'navigator' in window &&
-  /(mac|iphone|ipod|ipad)/i.test(navigator.platform);
 
 const getLines = (text: string, position: number) =>
   text.slice(0, Math.max(0, position)).split('\n');
