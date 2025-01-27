@@ -43,13 +43,13 @@ const Swatches = memo<SwatchesProps>(({ colors, activeColor, onSelect, size = 24
           background: theme.colorBgContainer,
         }}
       />
-      {colors.map((c) => {
+      {colors.map((c, index) => {
         const isActive = c === activeColor;
 
         return (
           <Flexbox
             className={cx(styles.container, isActive && styles.active)}
-            key={c}
+            key={`${c}_${index}`}
             onClick={() => {
               onSelect?.(c);
             }}
