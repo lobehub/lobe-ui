@@ -1,7 +1,7 @@
 'use client';
 
 import { Button, ButtonProps } from 'antd';
-import { CommandIcon, CornerDownLeft, OptionIcon } from 'lucide-react';
+import { ChevronUpIcon, CommandIcon, CornerDownLeft } from 'lucide-react';
 import { type CSSProperties, memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
@@ -117,7 +117,7 @@ const MessageInput = memo<MessageInputProps>(
                 {text?.confirm || 'Confirm'}
                 {shortcut && (
                   <Flexbox gap={4} horizontal>
-                    <Icon icon={isMacLike ? CommandIcon : OptionIcon} size={{ fontSize: 12 }} />
+                    <Icon icon={isMacLike ? CommandIcon : ChevronUpIcon} size={{ fontSize: 12 }} />
                     <Icon icon={CornerDownLeft} size={{ fontSize: 12 }} />
                   </Flexbox>
                 )}
