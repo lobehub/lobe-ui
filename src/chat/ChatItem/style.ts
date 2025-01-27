@@ -25,6 +25,7 @@ export const useStyles = createStyles(
     const blockStylish = css`
       padding-block: 8px;
       padding-inline: 12px;
+      border-radius: ${token.borderRadiusLG}px;
 
       background-color: ${primary
         ? isDarkMode
@@ -33,7 +34,6 @@ export const useStyles = createStyles(
         : isDarkMode
           ? token.colorFillSecondary
           : token.colorBgContainer};
-      border-radius: ${token.borderRadiusLG}px;
 
       transition: background-color 100ms ${token.motionEaseOut};
     `;
@@ -133,8 +133,8 @@ export const useStyles = createStyles(
         `,
         type === 'pure' &&
           css`
-            background: ${token.colorFillQuaternary};
             border-radius: ${token.borderRadius}px;
+            background: ${token.colorFillQuaternary};
           `,
       ),
       editingInput: css`
@@ -154,17 +154,18 @@ export const useStyles = createStyles(
 
         width: 16px;
         height: 16px;
+        border-radius: 50%;
 
         color: ${token.colorBgLayout};
 
         background: ${token.colorPrimary};
-        border-radius: 50%;
       `,
       message: cx(
         typeStylish,
         css`
           position: relative;
           overflow: hidden;
+          display: flex;
           max-width: 100%;
 
           ${responsive.mobile} {

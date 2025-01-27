@@ -1,4 +1,5 @@
 import { useResponsive } from 'antd-style';
+import { motion } from 'motion/react';
 import { type ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
@@ -65,10 +66,30 @@ const MessageContent = memo<MessageContentProps>(
         className={cx(styles.message, editing && styles.editingContainer)}
         onDoubleClick={onDoubleClick}
       >
-        {messageContent}
-        {messageExtra && !editing ? (
-          <div className={styles.messageExtra}>{messageExtra}</div>
-        ) : null}
+        <motion.div
+          layout={'size'}
+          style={{
+            // 双重定位起点
+            height: 'auto',
+            // 从顶部开始动画
+            originY: 0,
+            overflow: 'hidden',
+            transformOrigin: 'top', // 关键声明
+          }}
+          transition={{
+            bounce: 0.15,
+            duration: 0.25,
+            layout: { duration: 0.2, ease: 'easeOut', type: 'tween' },
+            type: 'spring',
+          }}
+        >
+          <motion.div layout="position">
+            {messageContent}
+            {messageExtra && !editing ? (
+              <div className={styles.messageExtra}>{messageExtra}</div>
+            ) : null}
+          </motion.div>
+        </motion.div>
       </Flexbox>
     );
   },
