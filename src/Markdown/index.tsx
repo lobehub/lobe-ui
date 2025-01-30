@@ -1,7 +1,7 @@
 'use client';
 
 import type { AnchorProps } from 'antd';
-import { CSSProperties, ReactNode, memo, useMemo } from 'react';
+import { CSSProperties, FC, ReactNode, memo, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Components } from 'react-markdown/lib';
 import rehypeKatex from 'rehype-katex';
@@ -39,7 +39,7 @@ export interface MarkdownProps extends TypographyProps {
     pre?: Partial<PreProps>;
     video?: Partial<VideoProps>;
   };
-  components?: Components;
+  components?: Components & Record<string, FC>;
   customRender?: (dom: ReactNode, context: { text: string }) => ReactNode;
   enableImageGallery?: boolean;
   enableLatex?: boolean;
@@ -47,6 +47,11 @@ export interface MarkdownProps extends TypographyProps {
   fullFeaturedCodeBlock?: boolean;
   onDoubleClick?: () => void;
   rehypePlugins?: Pluggable[];
+  /**
+   * passThrough elements to rehype-raw plugin
+   * combine with components prop to render custom elements
+   */
+  rehypeRawElements?: string[];
   remarkPlugins?: Pluggable[];
   style?: CSSProperties;
   variant?: 'normal' | 'chat';
@@ -73,6 +78,7 @@ const Markdown = memo<MarkdownProps>(
     remarkPlugins,
     components = {},
     customRender,
+    rehypeRawElements,
     ...rest
   }) => {
     const { cx, styles } = useStyles({
@@ -138,15 +144,23 @@ const Markdown = memo<MarkdownProps>(
 
     const innerRehypePlugins = Array.isArray(rehypePlugins) ? rehypePlugins : [rehypePlugins];
 
+    const memoRehypeRaw = useMemo(() => {
+      if (allowHtml) return rehypeRaw;
+      if (rehypeRawElements && rehypeRawElements.length > 0)
+        return [rehypeRaw, { passThrough: rehypeRawElements }];
+
+      return;
+    }, [allowHtml, rehypeRawElements]);
+
     const memoRehypePlugins = useMemo(
       () =>
         [
-          allowHtml && rehypeRaw,
+          memoRehypeRaw,
           enableLatex && rehypeKatex,
           enableLatex && rehypeKatexDir,
           ...innerRehypePlugins,
         ].filter(Boolean) as any,
-      [allowHtml, enableLatex, ...innerRehypePlugins],
+      [memoRehypeRaw, enableLatex, ...innerRehypePlugins],
     );
 
     const innerRemarkPlugins = Array.isArray(remarkPlugins) ? remarkPlugins : [remarkPlugins];
