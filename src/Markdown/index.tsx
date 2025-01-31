@@ -1,7 +1,7 @@
 'use client';
 
 import type { AnchorProps } from 'antd';
-import { CSSProperties, ReactNode, memo, useMemo } from 'react';
+import { CSSProperties, FC, ReactNode, memo, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Components } from 'react-markdown/lib';
 import rehypeKatex from 'rehype-katex';
@@ -39,7 +39,7 @@ export interface MarkdownProps extends TypographyProps {
     pre?: Partial<PreProps>;
     video?: Partial<VideoProps>;
   };
-  components?: Components;
+  components?: Components & Record<string, FC>;
   customRender?: (dom: ReactNode, context: { text: string }) => ReactNode;
   enableImageGallery?: boolean;
   enableLatex?: boolean;
@@ -171,7 +171,6 @@ const Markdown = memo<MarkdownProps>(
     const defaultDOM = (
       <ImageGallery enable={enableImageGallery}>
         <ReactMarkdown
-
           className={cx(
             mdStyles.__root,
             mdStyles.a,

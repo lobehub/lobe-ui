@@ -1,6 +1,7 @@
 import { Markdown } from '@lobehub/ui';
 import { Button } from 'antd';
-import { cloneDeep } from 'lodash-es';
+import { useTheme } from 'antd-style';
+import { toMarkdown } from 'mdast-util-to-markdown';
 import { PropsWithChildren, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import { SKIP, visit } from 'unist-util-visit';
@@ -8,9 +9,9 @@ import { SKIP, visit } from 'unist-util-visit';
 import { fullThinking, partialThinking } from './content';
 
 const Think = ({ children }: PropsWithChildren) => {
-  console.log(children);
+  const theme = useTheme();
   return (
-    <div style={{ background: '#888', padding: 12 }}>
+    <div style={{ background: theme.colorBgElevated, padding: 12 }}>
       here is a custom think comp:
       <Markdown>{children as string}</Markdown>
     </div>
@@ -18,50 +19,55 @@ const Think = ({ children }: PropsWithChildren) => {
 };
 
 const remarkCaptureThink = () => {
-  return (tree) => {
-    let inThink = false;
-    let thinkStartIndex = -1;
-
-    console.log('remark:', cloneDeep(tree));
-    // 第一遍遍历：定位 <think> 和 </think> 的边界
+  return (tree: any) => {
     visit(tree, 'html', (node, index: number, parent) => {
       if (node.value === '<think>') {
-        thinkStartIndex = index as number;
-        inThink = true;
-        return SKIP; // 停止当前分支的遍历
-      }
+        const startIndex = index;
+        let endIndex = startIndex + 1;
+        let hasCloseTag = false;
 
-      if (node.value === '</think>' || inThink) {
-        // 收集两个 html 节点之间的所有内容
-        const capturedNodes = parent.children.slice(thinkStartIndex + 1, index);
+        // 查找闭合标签
+        while (endIndex < parent.children.length) {
+          const sibling = parent.children[endIndex];
+          if (sibling.type === 'html' && sibling.value === '</think>') {
+            hasCloseTag = true;
+            break;
+          }
+          endIndex++;
+        }
 
-        // 构造自定义节点
+        // 计算需要删除的节点范围
+        const deleteCount = hasCloseTag
+          ? endIndex - startIndex + 1
+          : parent.children.length - startIndex;
+
+        // 提取内容节点
+        const contentNodes = parent.children.slice(
+          startIndex + 1,
+          hasCloseTag ? endIndex : undefined,
+        );
+
+        // 转换为 Markdown 字符串
+        const content = contentNodes
+          .map((n) => toMarkdown(n))
+          .join('\n\n')
+          .trim();
+
+        // 创建自定义节点
         const thinkNode = {
           data: {
-            hChildren: [
-              {
-                type: 'text',
-                value: capturedNodes
-                  .map((n) => (n.type === 'paragraph' ? n.children[0].value + '\n\n' : n.value))
-                  .join('')
-                  .trim()
-                  .replace(/\n$/, ''),
-              },
-            ],
+            hChildren: [{ type: 'text', value: content }],
             hName: 'think',
           },
-          position: {
-            end: node.position.end,
-            start: parent.children[thinkStartIndex].position.start,
-          },
+          position: node.position,
           type: 'thinkBlock',
         };
 
         // 替换原始节点
-        parent.children.splice(thinkStartIndex, index - thinkStartIndex + 1, thinkNode);
+        parent.children.splice(startIndex, deleteCount, thinkNode);
 
-        inThink = false;
-        return [SKIP, index - (index - thinkStartIndex)]; // 调整遍历位置
+        // 跳过已处理的节点
+        return [SKIP, startIndex + 1];
       }
     });
   };
@@ -72,22 +78,10 @@ export default () => {
   return (
     <div>
       <Flexbox gap={4} horizontal>
-        <Button
-          onClick={() => {
-            setContent(fullThinking);
-          }}
-        >
-          完整
-        </Button>
-        <Button
-          onClick={() => {
-            setContent(partialThinking);
-          }}
-        >
-          部分
-        </Button>
+        <Button onClick={() => setContent(fullThinking)}>完整</Button>
+        <Button onClick={() => setContent(partialThinking)}>部分</Button>
       </Flexbox>
-      <Markdown components={{ think: Think }} remarkPluginsAhead={[remarkCaptureThink]}>
+      <Markdown components={{ think: Think }} remarkPlugins={[remarkCaptureThink]}>
         {displayContent}
       </Markdown>
     </div>
