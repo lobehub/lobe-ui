@@ -7,6 +7,28 @@ const Think = ({ children }: PropsWithChildren) => {
   );
 };
 
+const code = `
+import { visit } from 'unist-util-visit';
+
+function rehypeExtractThink() {
+  return (tree) => {
+    visit(tree, 'html', (node, index, parent) => {
+      const thinkMatch = node.value.match(/<think>([\\s\\S]*?)<\\/think>/i);
+      if (thinkMatch) {
+        const content = thinkMatch[1];
+        const thinkNode = {
+          type: 'element',
+          tagName: 'think',
+          properties: {},
+          children: [{ type: 'text', value: content }],
+        };
+        parent.children.splice(index, 1, thinkNode);
+      }
+    });
+  };
+}
+`;
+
 const content = `<think>
 
 嗯，用户问的是“9.8比9.11大吗？”我需要仔细分析这个问题。首先，可能有两种理解：一种是数值比较，另一种是日期比较。
@@ -20,6 +42,10 @@ const content = `<think>
 不过根据常见的数学问题，可能用户是在问数值比较，所以正确答案是9.8确实比9.11大，因为0.8大于0.11。不过需要提醒用户注意小数位数的不同，可能容易混淆。比如有人可能会误以为9.8是9.08，而9.11是9.11，这时候比较的话9.11更大。但根据数学规则，小数点后的位数应该对齐，所以9.8等于9.80，确实大于9.11。
 
 另外，需要确认用户是否了解小数的比较方法，特别是不同位数的小数如何比较。比如从高位到低位依次比较，十分位、百分位等。所以9.8的十分位是8，而9.11的十分位是1，所以直接得出9.8更大。
+
+\`\`\`js
+${code}
+\`\`\`
 
 总结来说，如果问题中的9.8和9.11是数字，那么9.8更大；如果是日期，则9.11更大。但根据常规数学问题，应该回答数值比较的情况，即9.8更大，并解释小数比较的方法。同时需要指出可能的歧义，确保用户明确自己问题的类型。
 

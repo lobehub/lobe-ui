@@ -1,7 +1,7 @@
 import { Markdown } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
-import { markdownElements } from './MarkdownElements';
+import { markdownElements } from '../MarkdownElements';
 import { removeLineBreaksInAntArtifact } from './utils';
 
 const code = `好的,让我来用新的视角解释一下"睡觉"这个词。
