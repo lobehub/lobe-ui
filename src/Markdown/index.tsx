@@ -48,6 +48,7 @@ export interface MarkdownProps extends TypographyProps {
   onDoubleClick?: () => void;
   rehypePlugins?: Pluggable[];
   remarkPlugins?: Pluggable[];
+  remarkPluginsAhead?: Pluggable[];
   style?: CSSProperties;
   variant?: 'normal' | 'chat';
 }
@@ -71,6 +72,7 @@ const Markdown = memo<MarkdownProps>(
     lineHeight,
     rehypePlugins,
     remarkPlugins,
+    remarkPluginsAhead,
     components = {},
     customRender,
     ...rest
@@ -150,20 +152,26 @@ const Markdown = memo<MarkdownProps>(
     );
 
     const innerRemarkPlugins = Array.isArray(remarkPlugins) ? remarkPlugins : [remarkPlugins];
+    const innerRemarkPluginsAhead = Array.isArray(remarkPluginsAhead)
+      ? remarkPluginsAhead
+      : [remarkPluginsAhead];
+
     const memoRemarkPlugins = useMemo(
       () =>
         [
+          ...innerRemarkPluginsAhead,
           remarkGfm,
           enableLatex && remarkMath,
           isChatMode && remarkBreaks,
           ...innerRemarkPlugins,
         ].filter(Boolean) as any,
-      [isChatMode, enableLatex, ...innerRemarkPlugins],
+      [isChatMode, enableLatex, ...innerRemarkPluginsAhead, ...innerRemarkPlugins],
     );
 
     const defaultDOM = (
       <ImageGallery enable={enableImageGallery}>
         <ReactMarkdown
+
           className={cx(
             mdStyles.__root,
             mdStyles.a,
