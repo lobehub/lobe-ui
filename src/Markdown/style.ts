@@ -19,13 +19,6 @@ export const useStyles = createStyles(
         --lobe-markdown-line-height: ${lineHeight};
         --lobe-markdown-border-radius: ${token.borderRadius};
 
-        margin-block: ${marginMultiple * -0.75}em;
-
-        /* 解决只有一个子节点时高度坍缩的问题 */
-        :first-child:not(:has(*)) {
-          margin-block: 0;
-        }
-
         ol,
         ul {
           li {
@@ -86,13 +79,13 @@ export const useStyles = createStyles(
           margin-inline: 0.2em;
           padding-block: 0.05em;
           padding-inline: 0.4em;
+          border: 1px solid ${token.colorBorderSecondary};
+          border-radius: 0.25em;
 
           font-size: 0.75em;
           vertical-align: super !important;
 
           background: ${token.colorFillTertiary};
-          border: 1px solid ${token.colorBorderSecondary};
-          border-radius: 0.25em;
         }
 
         section.footnotes {
@@ -121,12 +114,11 @@ export const useStyles = createStyles(
             margin: 0 !important;
             padding-block: 0 !important;
             padding-inline: 0 0.4em !important;
+            border: 1px solid ${token.colorBorderSecondary};
+            border-radius: 0.25em;
 
             text-overflow: ellipsis;
             white-space: nowrap;
-
-            border: 1px solid ${token.colorBorderSecondary};
-            border-radius: 0.25em;
 
             &::before {
               content: counter(list-item);

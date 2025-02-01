@@ -205,14 +205,14 @@ const Markdown = memo<MarkdownProps>(
       : defaultDOM;
 
     return (
-      <article
+      <div
         className={cx(styles.root, className)}
         data-code-type="markdown"
         onDoubleClick={onDoubleClick}
         style={style}
       >
         {markdownContent}
-      </article>
+      </div>
     );
   },
 );

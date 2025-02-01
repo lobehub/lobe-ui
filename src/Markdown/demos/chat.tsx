@@ -3,13 +3,17 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 import { content } from '@/Markdown/demos/data';
 
+const thinking = `<thinking>
+this is a thinking
+<thinking>
+`;
 export default () => {
   const store = useCreateStore();
   const options: MarkdownProps | any = useControls(
     {
       children: {
         rows: true,
-        value: content,
+        value: thinking + '\n\n' + content,
       },
       variant: {
         options: ['normal', 'chat'],
