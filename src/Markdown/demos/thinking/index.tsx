@@ -20,9 +20,9 @@ const Think = ({ children }: PropsWithChildren) => {
 
 const remarkCaptureThink = () => {
   return (tree: any) => {
-    visit(tree, 'html', (node, index: number, parent) => {
+    visit(tree, 'html', (node, index, parent) => {
       if (node.value === '<think>') {
-        const startIndex = index;
+        const startIndex = index as number;
         let endIndex = startIndex + 1;
         let hasCloseTag = false;
 
@@ -49,7 +49,7 @@ const remarkCaptureThink = () => {
 
         // 转换为 Markdown 字符串
         const content = contentNodes
-          .map((n) => toMarkdown(n))
+          .map((n: any) => toMarkdown(n))
           .join('\n\n')
           .trim();
 
