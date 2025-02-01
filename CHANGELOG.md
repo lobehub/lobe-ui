@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.164.10](https://github.com/lobehub/lobe-ui/compare/v1.164.9...v1.164.10)
+
+<sup>Released on **2025-02-01**</sup>
+
+#### 💄 Styles
+
+- **misc**: Add remark plugin ahead.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Add remark plugin ahead, closes [#257](https://github.com/lobehub/lobe-ui/issues/257) ([9904ba0](https://github.com/lobehub/lobe-ui/commit/9904ba0))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.164.9](https://github.com/lobehub/lobe-ui/compare/v1.164.8...v1.164.9)
 
 <sup>Released on **2025-02-01**</sup>
