@@ -4,8 +4,8 @@ import { useTheme } from 'antd-style';
 import { PropsWithChildren, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import { fullThinking, ollama, partialThinking } from './content';
-import { remarkCaptureThink } from './remarkPlugin';
+import { fullThinking, inlineMode, ollama, partialThinking } from './content';
+import { normalizeThinkTags, remarkCaptureThink } from './remarkPlugin';
 
 const Think = ({ children }: PropsWithChildren) => {
   const theme = useTheme();
@@ -25,9 +25,10 @@ export default () => {
         <Button onClick={() => setContent(fullThinking)}>完整</Button>
         <Button onClick={() => setContent(partialThinking)}>部分</Button>
         <Button onClick={() => setContent(ollama)}>未换行</Button>
+        <Button onClick={() => setContent(inlineMode)}>inline</Button>
       </Flexbox>
       <Markdown components={{ think: Think }} remarkPlugins={[remarkCaptureThink]}>
-        {displayContent}
+        {normalizeThinkTags(displayContent)}
       </Markdown>
     </div>
   );

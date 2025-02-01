@@ -78,3 +78,5 @@ export const ollama = `<think>
 5. **无大气情况**：如果地球没有大气层，阳光会直接到达地面，天空可能呈现深灰色或黑色。
 
 总结来说，天空呈现蓝色主要是因为蓝色光能够穿透大气层并被散射到我们眼中。`;
+
+export const inlineMode = `<think>inline</think>`;
