@@ -51,10 +51,9 @@ export const useStyles = createStyles(
           margin-inline: 0;
           padding-block: 0;
           padding-inline: 1em;
+          border-inline-start: solid 4px ${token.colorBorder};
 
           color: ${token.colorTextSecondary};
-
-          border-inline-start: solid 4px ${token.colorBorder};
         }
       `,
       code: css`
@@ -64,6 +63,8 @@ export const useStyles = createStyles(
           margin-inline: 0.25em;
           padding-block: 0.2em;
           padding-inline: 0.4em;
+          border: 1px solid var(--lobe-markdown-border-color);
+          border-radius: 0.25em;
 
           font-family: ${token.fontFamilyCode};
           font-size: 0.875em;
@@ -72,8 +73,6 @@ export const useStyles = createStyles(
           white-space: break-spaces;
 
           background: ${token.colorFillSecondary};
-          border: 1px solid var(--lobe-markdown-border-color);
-          border-radius: 0.25em;
         }
       `,
       details: css`
@@ -81,9 +80,9 @@ export const useStyles = createStyles(
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
           padding-block: 0.75em;
           padding-inline: 1em;
+          border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
 
           background: ${token.colorFillTertiary};
-          border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
           box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
 
           summary {
@@ -103,11 +102,10 @@ export const useStyles = createStyles(
 
               width: 0.4em;
               height: 0.4em;
-
-              font-family: ${token.fontFamily};
-
               border-block-end: 1.5px solid ${token.colorTextSecondary};
               border-inline-end: 1.5px solid ${token.colorTextSecondary};
+
+              font-family: ${token.fontFamily};
 
               transition: transform 200ms ${token.motionEaseOut};
             }
@@ -174,7 +172,6 @@ export const useStyles = createStyles(
       hr: css`
         hr {
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1.5em);
-
           border-color: ${token.colorBorderSecondary};
           border-style: dashed;
           border-width: 1px;
@@ -206,6 +203,8 @@ export const useStyles = createStyles(
           margin-inline: 0.25em;
           padding-block: 0.2em;
           padding-inline: 0.4em;
+          border: 1px solid ${token.colorBorderSecondary};
+          border-radius: 0.25em;
 
           font-family: ${token.fontFamily};
           font-size: 0.875em;
@@ -214,8 +213,6 @@ export const useStyles = createStyles(
           text-align: center;
 
           background: ${token.colorBgLayout};
-          border: 1px solid ${token.colorBorderSecondary};
-          border-radius: 0.25em;
         }
       `,
       list: css`
@@ -263,28 +260,32 @@ export const useStyles = createStyles(
       `,
       p: css`
         p {
-          /* stylelint-disable declaration-block-no-redundant-longhand-properties */
-          margin-block-start: calc(var(--lobe-markdown-margin-multiple) * 1em);
-          margin-block-end: calc(var(--lobe-markdown-margin-multiple) * 1em);
-          /* stylelint-enable declaration-block-no-redundant-longhand-properties */
+          margin-block: 4px;
           line-height: var(--lobe-markdown-line-height);
           letter-spacing: 0.02em;
+        }
+
+        p:not(:first-child) {
+          margin-block-start: calc(var(--lobe-markdown-margin-multiple) * 1em);
+        }
+
+        p:not(:last-child) {
+          margin-block-end: calc(var(--lobe-markdown-margin-multiple) * 1em);
         }
       `,
       pre: css`
         pre,
         [data-code-type='highlighter'] {
-          white-space: break-spaces;
           border: none;
+          white-space: break-spaces;
 
           > code {
             padding: 0 !important;
+            border: none !important;
 
             font-family: ${token.fontFamilyCode};
             font-size: 0.875em;
             line-height: 1.6;
-
-            border: none !important;
           }
         }
       `,
@@ -305,6 +306,7 @@ export const useStyles = createStyles(
           width: max-content;
           max-width: 100%;
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
+          border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
 
           text-align: start;
           text-indent: initial;
@@ -313,7 +315,6 @@ export const useStyles = createStyles(
           overflow-wrap: break-word;
 
           background: ${token.colorFillQuaternary};
-          border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
           box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
 
           code {

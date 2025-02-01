@@ -1,7 +1,7 @@
 'use client';
 
 import type { AnchorProps } from 'antd';
-import { CSSProperties, ReactNode, memo, useMemo } from 'react';
+import { CSSProperties, FC, ReactNode, memo, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Components } from 'react-markdown/lib';
 import rehypeKatex from 'rehype-katex';
@@ -39,7 +39,7 @@ export interface MarkdownProps extends TypographyProps {
     pre?: Partial<PreProps>;
     video?: Partial<VideoProps>;
   };
-  components?: Components;
+  components?: Components & Record<string, FC>;
   customRender?: (dom: ReactNode, context: { text: string }) => ReactNode;
   enableImageGallery?: boolean;
   enableLatex?: boolean;
@@ -48,6 +48,7 @@ export interface MarkdownProps extends TypographyProps {
   onDoubleClick?: () => void;
   rehypePlugins?: Pluggable[];
   remarkPlugins?: Pluggable[];
+  remarkPluginsAhead?: Pluggable[];
   style?: CSSProperties;
   variant?: 'normal' | 'chat';
 }
@@ -71,6 +72,7 @@ const Markdown = memo<MarkdownProps>(
     lineHeight,
     rehypePlugins,
     remarkPlugins,
+    remarkPluginsAhead,
     components = {},
     customRender,
     ...rest
@@ -150,15 +152,20 @@ const Markdown = memo<MarkdownProps>(
     );
 
     const innerRemarkPlugins = Array.isArray(remarkPlugins) ? remarkPlugins : [remarkPlugins];
+    const innerRemarkPluginsAhead = Array.isArray(remarkPluginsAhead)
+      ? remarkPluginsAhead
+      : [remarkPluginsAhead];
+
     const memoRemarkPlugins = useMemo(
       () =>
         [
+          ...innerRemarkPluginsAhead,
           remarkGfm,
           enableLatex && remarkMath,
           isChatMode && remarkBreaks,
           ...innerRemarkPlugins,
         ].filter(Boolean) as any,
-      [isChatMode, enableLatex, ...innerRemarkPlugins],
+      [isChatMode, enableLatex, ...innerRemarkPluginsAhead, ...innerRemarkPlugins],
     );
 
     const defaultDOM = (
@@ -198,14 +205,14 @@ const Markdown = memo<MarkdownProps>(
       : defaultDOM;
 
     return (
-      <article
+      <div
         className={cx(styles.root, className)}
         data-code-type="markdown"
         onDoubleClick={onDoubleClick}
         style={style}
       >
         {markdownContent}
-      </article>
+      </div>
     );
   },
 );

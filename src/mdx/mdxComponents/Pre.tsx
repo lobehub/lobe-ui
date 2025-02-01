@@ -78,6 +78,7 @@ export const PreMermaid: FC<MermaidProps> = ({
   children,
   className,
   style,
+  type,
   ...rest
 }) => {
   const { styles, cx } = useStyles();
@@ -88,7 +89,7 @@ export const PreMermaid: FC<MermaidProps> = ({
       copyButtonSize={{ blockSize: 28, fontSize: 16 }}
       fullFeatured={fullFeatured}
       style={style}
-      type="block"
+      type={type || 'pure'}
       {...rest}
     >
       {children}
