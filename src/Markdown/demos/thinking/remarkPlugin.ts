@@ -17,7 +17,7 @@ export const normalizeThinkTags = (markdown: string) => {
 };
 
 export const remarkCaptureThink = () => {
-  return (tree: any, file: any) => {
+  return (tree: any) => {
     visit(tree, 'html', (node, index, parent) => {
       if (node.value === '<think>') {
         const startIndex = index as number;
