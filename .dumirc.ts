@@ -26,6 +26,7 @@ const nav: INavItem[] = [
   { link: '/components/awesome/features', title: 'Awesome' },
   { link: '/components/brand/lobe-hub', title: 'Brand' },
   { link: '/components/mdx/callout', title: 'Mdx' },
+  { link: '/components/icons/auth0', title: 'Icons' },
   { link: '/components/color/color-scales', title: 'Color' },
   { link: '/changelog', title: 'Changelog' },
 ];
