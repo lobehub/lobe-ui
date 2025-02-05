@@ -15,18 +15,19 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) =
         height: 34px;
         padding-block: 0;
         padding-inline: 8px;
+        border-radius: ${token.borderRadius};
 
         font-family: ${token.fontFamilyCode};
         color: ${token.colorTextTertiary};
-
-        border-radius: ${token.borderRadius};
       `,
     ),
     shiki: cx(
       `${prefix}-shiki`,
       css`
+        direction: ltr;
         margin: 0;
         padding: 0;
+        text-align: start;
 
         .shiki {
           overflow-x: auto;
@@ -69,10 +70,10 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) =
           .highlighted-word {
             padding-block: 0.1em;
             padding-inline: 0.2em;
-
-            background: ${token.colorFillTertiary};
             border: 1px solid ${token.colorBorderSecondary};
             border-radius: ${token.borderRadius}px;
+
+            background: ${token.colorFillTertiary};
           }
 
           .diff {
