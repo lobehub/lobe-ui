@@ -162,7 +162,7 @@ const Markdown = memo<MarkdownProps>(
           ...innerRemarkPluginsAhead,
           remarkGfm,
           enableLatex && remarkMath,
-          isChatMode,
+          isChatMode && remarkBreaks,
           ...innerRemarkPlugins,
         ].filter(Boolean) as any,
       [isChatMode, enableLatex, ...innerRemarkPluginsAhead, ...innerRemarkPlugins],
