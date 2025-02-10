@@ -15,7 +15,7 @@ export const useMermaid = (content: string) => {
         errorBkgColor: theme.colorError,
         errorTextColor: theme.colorText,
         fontSize: 14,
-        lineColor: theme.colorBorderSecondary,
+        lineColor: theme.colorText,
         primaryBorderColor: theme.colorPrimaryBorder,
         primaryColor: theme.colorPrimaryBg,
         primaryTextColor: theme.colorText,
