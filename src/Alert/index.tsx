@@ -6,6 +6,7 @@ import {
   AlertTriangle,
   CheckCircle,
   ChevronDown,
+  ChevronLeft,
   ChevronRight,
   Info,
   X,
@@ -16,6 +17,7 @@ import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
 import Icon from '@/Icon';
+import { useDirection } from '@/hooks/useDirection';
 
 import { useStyles } from './style';
 
@@ -69,6 +71,7 @@ const Alert = memo<AlertProps>(
       hasTitle: !!description,
       showIcon: !!showIcon,
     });
+    const direction = useDirection();
 
     const isInsideExtra = !extraIsolate && !!extra;
 
@@ -135,7 +138,7 @@ const Alert = memo<AlertProps>(
           >
             <ActionIcon
               color={colorfulText ? colors(theme, type) : undefined}
-              icon={expand ? ChevronDown : ChevronRight}
+              icon={expand ? ChevronDown : direction === 'rtl' ? ChevronLeft : ChevronRight}
               onClick={() => setExpand(!expand)}
               size={{ blockSize: 24, fontSize: 18 }}
             />

@@ -1,11 +1,12 @@
 import { Select, type SelectProps } from 'antd';
-import { ChevronDown, ChevronRight } from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
+import { useDirection } from '@/hooks/useDirection';
 import { languageMap } from '@/hooks/useHighlight';
 
 import { useStyles } from './style';
@@ -41,6 +42,7 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps>(
     const [expand, setExpand] = useState(defalutExpand);
     const [lang, setLang] = useState(language);
     const { styles, cx } = useStyles(type);
+    const direction = useDirection();
 
     const size = { blockSize: 24, fontSize: 14, strokeWidth: 2 };
 
@@ -76,7 +78,7 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps>(
       >
         <Flexbox align={'center'} className={styles.header} horizontal justify={'space-between'}>
           <ActionIcon
-            icon={expand ? ChevronDown : ChevronRight}
+            icon={expand ? ChevronDown : direction === 'rtl' ? ChevronLeft : ChevronRight}
             onClick={() => setExpand(!expand)}
             size={{ blockSize: 24, fontSize: 14, strokeWidth: 3 }}
           />

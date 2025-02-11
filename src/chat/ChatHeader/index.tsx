@@ -1,10 +1,11 @@
 'use client';
 
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { CSSProperties, ReactNode, memo } from 'react';
 import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
+import { useDirection } from '@/hooks/useDirection';
 
 import { useStyles } from './style';
 
@@ -44,6 +45,7 @@ const ChatHeader = memo<ChatHeaderProps>(
     ...rest
   }) => {
     const { cx, styles } = useStyles();
+    const direction = useDirection();
 
     return (
       <Flexbox
@@ -65,7 +67,7 @@ const ChatHeader = memo<ChatHeaderProps>(
         >
           {showBackButton && (
             <ActionIcon
-              icon={ChevronLeft}
+              icon={direction === 'rtl' ? ChevronRight : ChevronLeft}
               onClick={() => onBackClick?.()}
               size={{ fontSize: 24 }}
               style={{ marginRight: gaps?.left ? -gaps.left / 2 : -6 }}

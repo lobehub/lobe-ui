@@ -1,8 +1,9 @@
 import { createStyles } from 'antd-style';
-import { ChevronDown, ChevronRight, SparkleIcon } from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight, SparkleIcon } from 'lucide-react';
 import { PropsWithChildren, memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import { useDirection } from '@/hooks/useDirection';
 import { Icon } from '@/index';
 
 const useStyles = createStyles(({ css, token, isDarkMode }) => ({
@@ -12,11 +13,11 @@ const useStyles = createStyles(({ css, token, isDarkMode }) => ({
     padding-block: 8px;
     padding-inline: 12px;
     padding-inline-end: 12px;
+    border-radius: 8px;
 
     color: ${token.colorText};
 
     background: ${token.colorFillTertiary};
-    border-radius: 8px;
 
     &:hover {
       background: ${isDarkMode ? '' : token.colorFillSecondary};
@@ -35,6 +36,7 @@ const useStyles = createStyles(({ css, token, isDarkMode }) => ({
 
 const Render = memo<PropsWithChildren>(({ children }) => {
   const { styles, theme } = useStyles();
+  const direction = useDirection();
 
   const [showDetail, setShowDetail] = useState(false);
 
@@ -51,7 +53,7 @@ const Render = memo<PropsWithChildren>(({ children }) => {
         <Flexbox gap={8} horizontal>
           <Icon color={theme.purple} icon={SparkleIcon} /> Thinking...
         </Flexbox>
-        <Icon icon={showDetail ? ChevronDown : ChevronRight} />
+        <Icon icon={showDetail ? ChevronDown : direction === 'rtl' ? ChevronLeft : ChevronRight} />
       </Flexbox>
       {showDetail && children}
     </Flexbox>
