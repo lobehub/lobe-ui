@@ -1,9 +1,10 @@
-import { PanelLeft, Pin, PinOff } from 'lucide-react';
+import { PanelLeft, PanelRight, Pin, PinOff } from 'lucide-react';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
+import { useDirection } from '@/hooks/useDirection';
 import { type DivProps } from '@/types';
 
 import { useStyles } from './style';
@@ -19,6 +20,7 @@ export interface DraggablePanelHeaderProps extends Omit<DivProps, 'children'> {
 const DraggablePanelHeader = memo<DraggablePanelHeaderProps>((props) => {
   const { pin, setPin, className, setExpand, title, position = 'left', ...rest } = props;
   const { cx, styles } = useStyles();
+  const direction = useDirection();
 
   const [isPinned, setIsPinned] = useControlledState(false, {
     onChange: setPin,
@@ -27,7 +29,7 @@ const DraggablePanelHeader = memo<DraggablePanelHeaderProps>((props) => {
 
   const panelIcon = (
     <ActionIcon
-      icon={PanelLeft}
+      icon={direction === 'rtl' ? PanelRight : PanelLeft}
       onClick={() => setExpand?.(false)}
       size={{ blockSize: 24, fontSize: 14 }}
     />
