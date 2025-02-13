@@ -53,6 +53,10 @@ export interface ChatItemProps extends Omit<FlexboxProps, 'children' | 'onChange
    */
   onEditingChange?: (editing: boolean) => void;
   /**
+   * @default "..."
+   */
+  placeholderMessage?: string;
+  /**
    * @description The placement of the chat item
    * @default 'left'
    */
