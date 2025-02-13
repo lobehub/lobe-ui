@@ -15,7 +15,11 @@ apiHeader:
 
 ## Alert
 
-<code src="./demos/Alert.tsx" nopadding></code>
+<code src="./demos/Alert.tsx" nopadding></code> <code src="./demos/AlertWithDefaultMessagePlacehoder.tsx" nopadding></code>
+
+## AlertWithContent
+
+<code src="./demos/AlertWithContent.tsx" nopadding></code>
 
 ## APIs
 

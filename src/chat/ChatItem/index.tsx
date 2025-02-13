@@ -25,6 +25,7 @@ const ChatItem = memo<ChatItemProps>(
     primary,
     loading,
     message,
+    placeholderMessage = '...',
     placement = 'left',
     type = 'block',
     avatar,
@@ -91,25 +92,34 @@ const ChatItem = memo<ChatItemProps>(
             }
             gap={8}
           >
-            {error ? (
-              <ErrorContent error={error} message={errorMessage} placement={placement} />
-            ) : (
-              <MessageContent
-                editing={editing}
-                fontSize={fontSize}
-                markdownProps={markdownProps}
-                message={message}
-                messageExtra={messageExtra}
-                onChange={onChange}
-                onDoubleClick={onDoubleClick}
-                onEditingChange={onEditingChange}
-                placement={placement}
-                primary={primary}
-                renderMessage={renderMessage}
-                text={text}
-                type={type}
-              />
-            )}
+            <Flexbox>
+              {error && (message === placeholderMessage || !message) ? (
+                <ErrorContent error={error} message={errorMessage} placement={placement} />
+              ) : (
+                <MessageContent
+                  editing={editing}
+                  fontSize={fontSize}
+                  markdownProps={markdownProps}
+                  message={message}
+                  messageExtra={
+                    <>
+                      {error && (
+                        <ErrorContent error={error} message={errorMessage} placement={placement} />
+                      )}
+                      {messageExtra}
+                    </>
+                  }
+                  onChange={onChange}
+                  onDoubleClick={onDoubleClick}
+                  onEditingChange={onEditingChange}
+                  placement={placement}
+                  primary={primary}
+                  renderMessage={renderMessage}
+                  text={text}
+                  type={type}
+                />
+              )}
+            </Flexbox>
             <Actions actions={actions} editing={editing} placement={placement} type={type} />
           </Flexbox>
           {belowMessage}
