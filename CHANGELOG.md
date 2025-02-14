@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.164.13](https://github.com/lobehub/lobe-ui/compare/v1.164.12...v1.164.13)
+
+<sup>Released on **2025-02-14**</sup>
+
+#### 💄 Styles
+
+- **misc**: Highlight Mermaid arrow color.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Highlight Mermaid arrow color, closes [#260](https://github.com/lobehub/lobe-ui/issues/260) ([5e2af6e](https://github.com/lobehub/lobe-ui/commit/5e2af6e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.164.12](https://github.com/lobehub/lobe-ui/compare/v1.164.11...v1.164.12)
 
 <sup>Released on **2025-02-13**</sup>
