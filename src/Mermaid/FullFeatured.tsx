@@ -1,9 +1,10 @@
-import { ChevronDown, ChevronRight } from 'lucide-react';
+import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { ReactNode, memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
+import { useDirection } from '@/hooks/useDirection';
 
 import { useStyles } from './style';
 import { MermaidProps } from './type';
@@ -13,6 +14,7 @@ export const MermaidFullFeatured = memo<
 >(({ showLanguage, content, children, className, copyable, actionsRender, style, ...rest }) => {
   const [expand, setExpand] = useState(true);
   const { styles, cx } = useStyles('block');
+  const direction = useDirection();
   const container = cx(styles.container, className);
 
   const size = { blockSize: 24, fontSize: 14, strokeWidth: 2 };
@@ -27,7 +29,7 @@ export const MermaidFullFeatured = memo<
     <div className={container} data-code-type="mermaid" style={style} {...rest}>
       <Flexbox align={'center'} className={styles.header} horizontal justify={'space-between'}>
         <ActionIcon
-          icon={expand ? ChevronDown : ChevronRight}
+          icon={expand ? ChevronDown : direction === 'rtl' ? ChevronLeft : ChevronRight}
           onClick={() => setExpand(!expand)}
           size={{ blockSize: 24, fontSize: 14, strokeWidth: 3 }}
         />
