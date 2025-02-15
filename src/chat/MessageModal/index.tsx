@@ -6,11 +6,12 @@ import { CSSProperties, ReactNode, memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
-import { TextArea } from '@/Input';
 import Markdown from '@/Markdown';
 import Modal, { type ModalProps } from '@/Modal';
 import { type MessageInputProps } from '@/chat/MessageInput';
 import { useStyles as useTextStyles } from '@/chat/MessageInput/style';
+
+import MessageTextArea from './TextArea';
 
 export interface MessageModalProps extends Pick<ModalProps, 'open' | 'footer'> {
   /**
@@ -76,7 +77,7 @@ const MessageModal = memo<MessageModalProps>(
       value: open,
     });
 
-    const [temporaryValue, setValue] = useState(value);
+    const [temporaryValue, setMessage] = useState(value);
 
     const isAutoSize = height === 'auto';
     const markdownStyle: CSSProperties = {
@@ -91,7 +92,7 @@ const MessageModal = memo<MessageModalProps>(
           onClick={() => {
             setTyping(false);
             onChange?.(temporaryValue);
-            setValue(value);
+            setMessage(value);
           }}
           type="primary"
         >
@@ -100,7 +101,7 @@ const MessageModal = memo<MessageModalProps>(
         <Button
           onClick={() => {
             setTyping(false);
-            setValue(value);
+            setMessage(value);
           }}
         >
           {text?.cancel || 'Cancel'}
@@ -120,18 +121,18 @@ const MessageModal = memo<MessageModalProps>(
         onCancel={() => {
           setShowModal(false);
           setTyping(false);
-          setValue(value);
+          setMessage(value);
         }}
         onOk={() => setTyping(true)}
         open={showModal}
         title={text?.title}
       >
         {isEdit ? (
-          <TextArea
+          <MessageTextArea
             autoSize={isAutoSize}
             className={textStyles}
-            onBlur={(e) => setValue(e.target.value)}
-            onChange={(e) => setValue(e.target.value)}
+            defaultValue={value}
+            onChange={(value) => setMessage(value)}
             placeholder={placeholder}
             resize={false}
             style={{
@@ -140,7 +141,6 @@ const MessageModal = memo<MessageModalProps>(
               minHeight: mobile ? 'unset' : '100%',
             }}
             type={mobile ? 'pure' : 'block'}
-            value={temporaryValue}
           />
         ) : (
           <>
