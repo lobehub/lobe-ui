@@ -3,7 +3,7 @@
 import { InputNumber, type InputNumberProps, Slider } from 'antd';
 import { SliderSingleProps } from 'antd/es/slider';
 import { isNull } from 'lodash-es';
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 import { CommonSpaceNumber, Flexbox } from 'react-layout-kit';
 
 export interface SliderWithInputProps extends SliderSingleProps {
@@ -28,10 +28,10 @@ const SliderWithInput = memo<SliderWithInputProps>(
     disabled,
     ...rest
   }) => {
-    const handleOnchange = useCallback((value: number | null) => {
+    const handleOnchange = (value: number | null) => {
       if (Number.isNaN(value) || isNull(value)) return;
       onChange?.(value);
-    }, []);
+    };
 
     return (
       <Flexbox
