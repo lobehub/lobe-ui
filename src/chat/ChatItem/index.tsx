@@ -92,7 +92,7 @@ const ChatItem = memo<ChatItemProps>(
             }
             gap={8}
           >
-            <Flexbox>
+            <Flexbox width={'100%'}>
               {error && (message === placeholderMessage || !message) ? (
                 <ErrorContent error={error} message={errorMessage} placement={placement} />
               ) : (
