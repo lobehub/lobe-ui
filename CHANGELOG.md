@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.164.14](https://github.com/lobehub/lobe-ui/compare/v1.164.13...v1.164.14)
+
+<sup>Released on **2025-02-15**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Improve editing width issue.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Improve editing width issue, closes [#264](https://github.com/lobehub/lobe-ui/issues/264) ([b1b4e5b](https://github.com/lobehub/lobe-ui/commit/b1b4e5b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.164.13](https://github.com/lobehub/lobe-ui/compare/v1.164.12...v1.164.13)
 
 <sup>Released on **2025-02-14**</sup>
