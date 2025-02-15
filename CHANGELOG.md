@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.164.16](https://github.com/lobehub/lobe-ui/compare/v1.164.15...v1.164.16)
+
+<sup>Released on **2025-02-15**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Message Modal input issue.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix Message Modal input issue, closes [#266](https://github.com/lobehub/lobe-ui/issues/266) ([80ff385](https://github.com/lobehub/lobe-ui/commit/80ff385))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.164.15](https://github.com/lobehub/lobe-ui/compare/v1.164.14...v1.164.15)
 
 <sup>Released on **2025-02-15**</sup>
