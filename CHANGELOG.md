@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.164.15](https://github.com/lobehub/lobe-ui/compare/v1.164.14...v1.164.15)
+
+<sup>Released on **2025-02-15**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix slider onchange not correctly.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix slider onchange not correctly, closes [#265](https://github.com/lobehub/lobe-ui/issues/265) ([8986fc7](https://github.com/lobehub/lobe-ui/commit/8986fc7))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.164.14](https://github.com/lobehub/lobe-ui/compare/v1.164.13...v1.164.14)
 
 <sup>Released on **2025-02-15**</sup>
