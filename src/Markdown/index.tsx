@@ -25,11 +25,12 @@ import type { TypographyProps } from './Typography';
 import { useStyles as useMarkdownStyles } from './markdown.style';
 import { rehypeKatexDir } from './rehypePlugin';
 import { useStyles } from './style';
-import { escapeBrackets, escapeMhchem, fixMarkdownBold } from './utils';
+import { escapeBrackets, escapeMhchem, fixMarkdownBold, transformCitations } from './utils';
 
 export interface MarkdownProps extends TypographyProps {
   allowHtml?: boolean;
   children: string;
+  citations?: string[];
   className?: string;
   componentProps?: {
     a?: Partial<AProps & AnchorProps>;
@@ -89,7 +90,7 @@ const Markdown = memo<MarkdownProps>(
 
     const escapedContent = useMemo(() => {
       if (!enableLatex) return fixMarkdownBold(children);
-      return fixMarkdownBold(escapeMhchem(escapeBrackets(children)));
+      return transformCitations(fixMarkdownBold(escapeMhchem(escapeBrackets(children))));
     }, [children, enableLatex]);
 
     const memoComponents: Components = useMemo(
