@@ -68,7 +68,7 @@ export const transformCitations = (
   citationIds: string[] = ['1', '2', '3', '4', '5', '6', '7'],
 ) => {
   // 生成动态正则表达式模式
-  const pattern = new RegExp(`\\[(${citationIds.join('|')})\\]`, 'g');
+  const pattern = new RegExp(`[(${citationIds.join('|')})]`, 'g');
 
   return rawContent
     .replace(pattern, (match, id) => `[#${id}](citation-${id})`)
