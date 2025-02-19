@@ -23,6 +23,8 @@ const useStyles = createStyles(({ css, token }) => ({
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
 
+    max-width: 400px;
+
     text-overflow: ellipsis;
   `,
 }));
