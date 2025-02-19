@@ -24,5 +24,9 @@ const code = `杭州今天和未来几天的天气预报如下：
 `;
 
 export default () => {
-  return <Markdown citations={citations}>{code}</Markdown>;
+  return (
+    <Markdown citations={citations} showCitations>
+      {code}
+    </Markdown>
+  );
 };

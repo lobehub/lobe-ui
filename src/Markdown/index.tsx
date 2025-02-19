@@ -14,12 +14,14 @@ import type { Pluggable } from 'unified';
 import { type HighlighterProps } from '@/Highlighter';
 import ImageGallery from '@/Image/ImageGallery';
 import { type MermaidProps } from '@/Mermaid';
+import SearchResultCards from '@/SearchResultCards';
 import Image, { type ImageProps } from '@/mdx/mdxComponents/Image';
 import Link from '@/mdx/mdxComponents/Link';
 import { type PreProps } from '@/mdx/mdxComponents/Pre';
 import Section from '@/mdx/mdxComponents/Section';
 import Video, { type VideoProps } from '@/mdx/mdxComponents/Video';
 import type { AProps } from '@/types';
+import { CitationItem } from '@/types/citation';
 
 import { CodeFullFeatured, CodeLite } from './CodeBlock';
 import type { TypographyProps } from './Typography';
@@ -32,7 +34,7 @@ import { escapeBrackets, escapeMhchem, fixMarkdownBold, transformCitations } fro
 export interface MarkdownProps extends TypographyProps {
   allowHtml?: boolean;
   children: string;
-  citations?: string[];
+  citations?: string[] | CitationItem[];
   className?: string;
   componentProps?: {
     a?: Partial<AProps & AnchorProps>;
@@ -52,6 +54,7 @@ export interface MarkdownProps extends TypographyProps {
   rehypePlugins?: Pluggable[];
   remarkPlugins?: Pluggable[];
   remarkPluginsAhead?: Pluggable[];
+  showCitations?: boolean;
   style?: CSSProperties;
   variant?: 'normal' | 'chat';
 }
@@ -71,6 +74,7 @@ const Markdown = memo<MarkdownProps>(
     fontSize,
     headerMultiple,
     marginMultiple,
+    showCitations,
     variant = 'normal',
     lineHeight,
     rehypePlugins,
@@ -78,6 +82,7 @@ const Markdown = memo<MarkdownProps>(
     remarkPluginsAhead,
     components = {},
     customRender,
+    citations,
     ...rest
   }) => {
     const { cx, styles } = useStyles({
@@ -95,9 +100,21 @@ const Markdown = memo<MarkdownProps>(
       return transformCitations(fixMarkdownBold(escapeMhchem(escapeBrackets(children))));
     }, [children, enableLatex]);
 
+    const objCitations: CitationItem[] = useMemo(() => {
+      return (
+        citations?.map((item) => {
+          if (typeof item === 'string') {
+            return { title: item, url: item };
+          }
+
+          return item;
+        }) || []
+      );
+    }, [...(citations || [])]);
+
     const memoComponents: Components = useMemo(
       () => ({
-        a: (props: any) => <Link {...props} {...componentProps?.a} />,
+        a: (props: any) => <Link citations={objCitations} {...props} {...componentProps?.a} />,
         img: enableImageGallery
           ? (props: any) => (
               <Image
@@ -129,7 +146,7 @@ const Markdown = memo<MarkdownProps>(
               {...componentProps?.pre}
             />
           ),
-        section: (props: any) => <Section {...props} />,
+        section: (props: any) => <Section showCitations={showCitations} {...props} />,
         video: (props: any) => <Video {...props} {...componentProps?.video} />,
         ...components,
       }),
@@ -139,6 +156,8 @@ const Markdown = memo<MarkdownProps>(
         enableImageGallery,
         enableMermaid,
         fullFeaturedCodeBlock,
+        ...objCitations,
+        showCitations,
       ],
     ) as Components;
 
@@ -217,6 +236,11 @@ const Markdown = memo<MarkdownProps>(
         onDoubleClick={onDoubleClick}
         style={style}
       >
+        {showCitations && objCitations.length > 0 && (
+          <div className={'citations'} style={{ marginBottom: 12 }}>
+            <SearchResultCards dataSource={objCitations} />
+          </div>
+        )}
         {markdownContent}
       </div>
     );

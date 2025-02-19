@@ -5,12 +5,14 @@ import { isEmpty } from 'lodash-es';
 import { ReactNode } from 'react';
 
 import PopoverPanel from '@/mdx/mdxComponents/Citation/PopoverPanel';
+import { CitationItem } from '@/types/citation';
 
 const useStyles = createStyles(({ css, token }) => ({
   container: css`
     display: inline-flex;
-    vertical-align: text-top;
     line-height: var(--lobe-markdown-line-height);
+    vertical-align: text-top;
+
     a {
       color: inherit;
     }
@@ -28,6 +30,7 @@ const useStyles = createStyles(({ css, token }) => ({
     vertical-align: top;
 
     background: ${token.colorFillSecondary};
+
     transition: all 100ms ${token.motionEaseOut};
   `,
   hover: css`
@@ -45,12 +48,8 @@ const useStyles = createStyles(({ css, token }) => ({
 
 interface CitationProps {
   children?: ReactNode;
-  citationDetail?: {
-    alt?: string;
-    desc?: string;
-    title?: string;
-    url: string;
-  };
+  citationDetail?: CitationItem;
+  citations?: string[];
   href?: string;
   id: string;
   inSup?: boolean;

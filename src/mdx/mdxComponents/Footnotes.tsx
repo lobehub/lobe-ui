@@ -1,8 +1,7 @@
 import { createStyles } from 'antd-style';
 import { ReactNode, useMemo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
-import SearchResultCard from '@/SearchResultCard';
+import SearchResultCards from '@/SearchResultCards';
 
 const useStyles = createStyles(({ css, token }) => ({
   fallback: css`
@@ -62,12 +61,6 @@ const useStyles = createStyles(({ css, token }) => ({
     }
   `,
 }));
-interface FootnoteLink {
-  alt?: string;
-  id: string;
-  title?: string;
-  url: string;
-}
 
 interface FootnotesProps {
   'children': ReactNode;
@@ -91,15 +84,7 @@ const Footnotes = ({ children, ...res }: FootnotesProps) => {
   const isError = links.length === 0;
   return (
     <section className={cx('footnotes', isError && styles.fallback)} data-footnotes="true">
-      {isError ? (
-        children
-      ) : (
-        <Flexbox gap={12} horizontal style={{ minHeight: 80, overflowX: 'scroll', width: '100%' }}>
-          {links.map((link: FootnoteLink) => (
-            <SearchResultCard key={link.id} {...link} />
-          ))}
-        </Flexbox>
-      )}
+      {isError ? children : <SearchResultCards dataSource={links} />}
     </section>
   );
 };

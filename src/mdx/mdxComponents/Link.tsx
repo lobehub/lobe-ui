@@ -2,19 +2,21 @@ import { FC } from 'react';
 
 import A from '@/A';
 import { AProps } from '@/types';
+import { CitationItem } from '@/types/citation';
 import { safeParseJSON } from '@/utils/safeParseJSON';
 
 import Citation from './Citation';
 
 export interface LinkProps extends AProps {
   'aria-describedby'?: string;
+  'citations'?: CitationItem[];
   'data-footnote-ref'?: boolean;
   'data-link'?: string;
   'id'?: string;
   'node': any;
 }
 
-const Link: FC<LinkProps> = ({ href, target, ...rest }) => {
+const Link: FC<LinkProps> = ({ href, target, citations, ...rest }) => {
   // [^1] 格式类型
   if (rest['data-footnote-ref']) {
     return (
@@ -28,7 +30,15 @@ const Link: FC<LinkProps> = ({ href, target, ...rest }) => {
   const match = href?.match(/citation-(\d+)/);
 
   if (match) {
-    return <Citation id={match[1]}>{match[1]}</Citation>;
+    const index = Number.parseInt(match[1]) - 1;
+
+    const detail = citations?.[index];
+
+    return (
+      <Citation citationDetail={detail} id={match[1]}>
+        {match[1]}
+      </Citation>
+    );
   }
 
   const isNewWindow = href?.startsWith('http');

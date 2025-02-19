@@ -1,11 +1,22 @@
 'use client';
 
-import { Popover, Typography } from 'antd';
+import { Popover } from 'antd';
 import { createStyles } from 'antd-style';
+import { ArrowRightIcon } from 'lucide-react';
 import { ReactNode, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import Icon from '@/Icon';
+
 const useStyles = createStyles(({ css, token }) => ({
+  link: css`
+    cursor: pointer;
+    color: ${token.colorTextSecondary};
+
+    :hover {
+      color: ${token.colorText};
+    }
+  `,
   url: css`
     overflow: hidden;
     display: -webkit-box;
@@ -52,16 +63,18 @@ const PopoverPanel = ({ children, usePopover, title, alt, url }: PopoverPanelPro
       arrow={false}
       content={
         <Flexbox gap={8}>
-          <Flexbox align={'center'} gap={4} horizontal>
-            <img
-              alt={alt || title || url}
-              height={14}
-              src={`https://icons.duckduckgo.com/ip3/${host}.ico`}
-              width={14}
-            />
-            <Typography.Text className={styles.url} type={'secondary'}>
-              {domain}
-            </Typography.Text>
+          <Flexbox className={styles.link} gap={12} horizontal justify={'space-between'}>
+            <Flexbox align={'center'} gap={4} horizontal>
+              <img
+                alt={alt || title || url}
+                height={14}
+                src={`https://icons.duckduckgo.com/ip3/${host}.ico`}
+                style={{ borderRadius: 4 }}
+                width={14}
+              />
+              <span className={styles.url}>{domain}</span>
+            </Flexbox>
+            <Icon icon={ArrowRightIcon} />
           </Flexbox>
           {displayTitle}
         </Flexbox>
