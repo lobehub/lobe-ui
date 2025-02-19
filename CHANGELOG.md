@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.165.1](https://github.com/lobehub/lobe-ui/compare/v1.165.0...v1.165.1)
+
+<sup>Released on **2025-02-19**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix citation panel url max width.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix citation panel url max width ([cf2ad75](https://github.com/lobehub/lobe-ui/commit/cf2ad75))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.165.0](https://github.com/lobehub/lobe-ui/compare/v1.164.16...v1.165.0)
 
 <sup>Released on **2025-02-19**</sup>
