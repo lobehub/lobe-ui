@@ -63,12 +63,13 @@ export function fixMarkdownBold(text: string): string {
   return result;
 }
 
-export const transformCitations = (
-  rawContent: string,
-  citationIds: string[] = ['1', '2', '3', '4', '5', '6', '7'],
-) => {
+export const transformCitations = (rawContent: string, length: number = 40) => {
   // 生成动态正则表达式模式
-  const pattern = new RegExp(`\\[(${citationIds.join('|')})\\]`, 'g');
+  const idx = Array.from({ length })
+    .fill('')
+    .map((_, index) => index + 1);
+
+  const pattern = new RegExp(`\\[(${idx.join('|')})\\]`, 'g');
 
   return rawContent
     .replaceAll(pattern, (match, id) => `[#citation-${id}](citation-${id})`)

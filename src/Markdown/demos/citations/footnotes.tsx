@@ -1,4 +1,4 @@
-import { Markdown } from '@lobehub/ui';
+import { Markdown } from '@/index';
 
 const code = `
 是的,我了解 ToDesktop。ToDesktop 是一个专门用于将 Web 应用转换成桌面应用的构建工具平台。以下是它的主要特点：

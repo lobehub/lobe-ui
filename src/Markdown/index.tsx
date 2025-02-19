@@ -96,7 +96,10 @@ const Markdown = memo<MarkdownProps>(
 
     const escapedContent = useMemo(() => {
       if (!enableLatex) return fixMarkdownBold(children);
-      return transformCitations(fixMarkdownBold(escapeMhchem(escapeBrackets(children))));
+      return transformCitations(
+        fixMarkdownBold(escapeMhchem(escapeBrackets(children))),
+        citations?.length,
+      );
     }, [children, enableLatex]);
 
     const objCitations: CitationItem[] = useMemo(() => {
