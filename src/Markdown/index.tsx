@@ -17,19 +17,23 @@ import { type MermaidProps } from '@/Mermaid';
 import Image, { type ImageProps } from '@/mdx/mdxComponents/Image';
 import Link from '@/mdx/mdxComponents/Link';
 import { type PreProps } from '@/mdx/mdxComponents/Pre';
+import Section from '@/mdx/mdxComponents/Section';
 import Video, { type VideoProps } from '@/mdx/mdxComponents/Video';
 import type { AProps } from '@/types';
+import { CitationItem } from '@/types/citation';
 
 import { CodeFullFeatured, CodeLite } from './CodeBlock';
 import type { TypographyProps } from './Typography';
 import { useStyles as useMarkdownStyles } from './markdown.style';
-import { rehypeKatexDir } from './rehypePlugin';
+import { rehypeFootnoteLinks, remarkCustomFootnotes } from './plugins/footnote';
+import { rehypeKatexDir } from './plugins/katexDir';
 import { useStyles } from './style';
-import { escapeBrackets, escapeMhchem, fixMarkdownBold } from './utils';
+import { escapeBrackets, escapeMhchem, fixMarkdownBold, transformCitations } from './utils';
 
 export interface MarkdownProps extends TypographyProps {
   allowHtml?: boolean;
   children: string;
+  citations?: CitationItem[];
   className?: string;
   componentProps?: {
     a?: Partial<AProps & AnchorProps>;
@@ -49,6 +53,7 @@ export interface MarkdownProps extends TypographyProps {
   rehypePlugins?: Pluggable[];
   remarkPlugins?: Pluggable[];
   remarkPluginsAhead?: Pluggable[];
+  showFootnotes?: boolean;
   style?: CSSProperties;
   variant?: 'normal' | 'chat';
 }
@@ -68,6 +73,7 @@ const Markdown = memo<MarkdownProps>(
     fontSize,
     headerMultiple,
     marginMultiple,
+    showFootnotes,
     variant = 'normal',
     lineHeight,
     rehypePlugins,
@@ -75,6 +81,7 @@ const Markdown = memo<MarkdownProps>(
     remarkPluginsAhead,
     components = {},
     customRender,
+    citations,
     ...rest
   }) => {
     const { cx, styles } = useStyles({
@@ -89,12 +96,15 @@ const Markdown = memo<MarkdownProps>(
 
     const escapedContent = useMemo(() => {
       if (!enableLatex) return fixMarkdownBold(children);
-      return fixMarkdownBold(escapeMhchem(escapeBrackets(children)));
+      return transformCitations(
+        fixMarkdownBold(escapeMhchem(escapeBrackets(children))),
+        citations?.length,
+      );
     }, [children, enableLatex]);
 
     const memoComponents: Components = useMemo(
       () => ({
-        a: (props: any) => <Link {...props} {...componentProps?.a} />,
+        a: (props: any) => <Link citations={citations} {...props} {...componentProps?.a} />,
         img: enableImageGallery
           ? (props: any) => (
               <Image
@@ -126,6 +136,7 @@ const Markdown = memo<MarkdownProps>(
               {...componentProps?.pre}
             />
           ),
+        section: (props: any) => <Section showCitations={showFootnotes} {...props} />,
         video: (props: any) => <Video {...props} {...componentProps?.video} />,
         ...components,
       }),
@@ -135,6 +146,8 @@ const Markdown = memo<MarkdownProps>(
         enableImageGallery,
         enableMermaid,
         fullFeaturedCodeBlock,
+        ...(citations || []),
+        showFootnotes,
       ],
     ) as Components;
 
@@ -146,6 +159,7 @@ const Markdown = memo<MarkdownProps>(
           allowHtml && rehypeRaw,
           enableLatex && rehypeKatex,
           enableLatex && rehypeKatexDir,
+          rehypeFootnoteLinks,
           ...innerRehypePlugins,
         ].filter(Boolean) as any,
       [allowHtml, enableLatex, ...innerRehypePlugins],
@@ -161,6 +175,7 @@ const Markdown = memo<MarkdownProps>(
         [
           ...innerRemarkPluginsAhead,
           remarkGfm,
+          remarkCustomFootnotes,
           enableLatex && remarkMath,
           isChatMode && remarkBreaks,
           ...innerRemarkPlugins,

@@ -76,73 +76,7 @@ export const useStyles = createStyles(
         }
 
         sup:has(a[aria-describedby='footnote-label']) {
-          margin-inline: 0.2em;
-          padding-block: 0.05em;
-          padding-inline: 0.4em;
-          border: 1px solid ${token.colorBorderSecondary};
-          border-radius: 0.25em;
-
-          font-size: 0.75em;
           vertical-align: super !important;
-
-          background: ${token.colorFillTertiary};
-        }
-
-        section.footnotes {
-          padding-block: 1em;
-          font-size: 0.875em;
-          color: ${token.colorTextSecondary};
-
-          ol {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5em;
-
-            margin: 0;
-            padding: 0;
-
-            list-style-type: none;
-          }
-
-          ol li {
-            position: relative;
-
-            overflow: hidden;
-            display: flex;
-            flex-direction: row;
-
-            margin: 0 !important;
-            padding-block: 0 !important;
-            padding-inline: 0 0.4em !important;
-            border: 1px solid ${token.colorBorderSecondary};
-            border-radius: 0.25em;
-
-            text-overflow: ellipsis;
-            white-space: nowrap;
-
-            &::before {
-              content: counter(list-item);
-              counter-increment: list-item;
-
-              display: block;
-
-              margin-inline-end: 0.4em;
-              padding-inline: 0.6em;
-
-              background: ${token.colorFillSecondary};
-            }
-
-            p,
-            a {
-              overflow: hidden;
-
-              margin: 0 !important;
-              padding: 0 !important;
-
-              text-overflow: ellipsis;
-              white-space: nowrap;
-            }
-          }
         }
       `,
     };
