@@ -49,9 +49,25 @@ export const rehypeFootnoteLinks = () => (tree: any, file: any) => {
       const sortedLinks = Object.entries(linksData)
         .sort(([a], [b]) => a.localeCompare(b))
         .map(([id, data]) => ({ id, ...data }));
-
       // 注入数据属性
       node.properties['data-footnote-links'] = JSON.stringify(sortedLinks);
+    }
+
+    if (node.tagName === 'sup') {
+      const link = node.children.find((n: any) => n.tagName === 'a');
+
+      if (link) {
+        // a node example
+        // {
+        //     "href": "#user-content-fn-3",
+        //     "id": "user-content-fnref-3-2",
+        //     "dataFootnoteRef": true,
+        // }
+        const linkRefIndex = link.properties?.id?.replace(/^user-content-fnref-/, '')[0];
+
+        if (linkRefIndex !== undefined)
+          link.properties['data-link'] = JSON.stringify(linksData[linkRefIndex]);
+      }
     }
   });
 };

@@ -2,12 +2,14 @@ import { FC } from 'react';
 
 import A from '@/A';
 import { AProps } from '@/types';
+import { safeParseJSON } from '@/utils/safeParseJSON';
 
 import Citation from './Citation';
 
 export interface LinkProps extends AProps {
   'aria-describedby'?: string;
   'data-footnote-ref'?: boolean;
+  'data-link'?: string;
   'id'?: string;
   'node': any;
 }
@@ -16,7 +18,7 @@ const Link: FC<LinkProps> = ({ href, target, ...rest }) => {
   // [^1] 格式类型
   if (rest['data-footnote-ref']) {
     return (
-      <Citation href={href} id={rest.id!} inSup>
+      <Citation citationDetail={safeParseJSON(rest['data-link'])} href={href} id={rest.id!} inSup>
         {rest.children}
       </Citation>
     );
