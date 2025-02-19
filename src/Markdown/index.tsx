@@ -33,7 +33,7 @@ import { escapeBrackets, escapeMhchem, fixMarkdownBold, transformCitations } fro
 export interface MarkdownProps extends TypographyProps {
   allowHtml?: boolean;
   children: string;
-  citations?: string[] | CitationItem[];
+  citations?: CitationItem[];
   className?: string;
   componentProps?: {
     a?: Partial<AProps & AnchorProps>;
@@ -102,21 +102,9 @@ const Markdown = memo<MarkdownProps>(
       );
     }, [children, enableLatex]);
 
-    const objCitations: CitationItem[] = useMemo(() => {
-      return (
-        citations?.map((item) => {
-          if (typeof item === 'string') {
-            return { title: item, url: item };
-          }
-
-          return item;
-        }) || []
-      );
-    }, [...(citations || [])]);
-
     const memoComponents: Components = useMemo(
       () => ({
-        a: (props: any) => <Link citations={objCitations} {...props} {...componentProps?.a} />,
+        a: (props: any) => <Link citations={citations} {...props} {...componentProps?.a} />,
         img: enableImageGallery
           ? (props: any) => (
               <Image
@@ -158,7 +146,7 @@ const Markdown = memo<MarkdownProps>(
         enableImageGallery,
         enableMermaid,
         fullFeaturedCodeBlock,
-        ...objCitations,
+        ...(citations || []),
         showFootnotes,
       ],
     ) as Components;
