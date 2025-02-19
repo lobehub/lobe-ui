@@ -1,9 +1,7 @@
-import { Markdown } from '@lobehub/ui';
+import { Markdown, SearchResultCards } from '@lobehub/ui';
 import { Divider, Radio } from 'antd';
 import { useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
-
-import SearchResultCards from '@/SearchResultCards';
 
 import { normalizeThinkTags, remarkCaptureThink } from '../thinking/remarkPlugin';
 import { cases } from './cases';

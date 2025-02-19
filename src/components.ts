@@ -88,6 +88,7 @@ export {
 export { default as Mermaid, type MermaidProps } from './Mermaid';
 export { default as Modal, type ModalProps } from './Modal';
 export { default as SearchBar, type SearchBarProps } from './SearchBar';
+export { default as SearchResultCards, type SearchResultCardsProps } from './SearchResultCards';
 export {
   default as SelectWithImg,
   type SelectWithImgOptionItem,

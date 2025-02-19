@@ -10,7 +10,7 @@ export interface SearchResultItem {
   url: string;
 }
 
-interface SearchResultCardsProps {
+export interface SearchResultCardsProps {
   dataSource: string[] | SearchResultItem[];
 }
 
