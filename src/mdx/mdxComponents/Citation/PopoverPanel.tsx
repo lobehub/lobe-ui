@@ -63,7 +63,15 @@ const PopoverPanel = ({ children, usePopover, title, alt, url }: PopoverPanelPro
       arrow={false}
       content={
         <Flexbox gap={8}>
-          <Flexbox className={styles.link} gap={12} horizontal justify={'space-between'}>
+          <Flexbox
+            className={styles.link}
+            gap={12}
+            horizontal
+            justify={'space-between'}
+            onClick={() => {
+              window.open(url, '_blank');
+            }}
+          >
             <Flexbox align={'center'} gap={4} horizontal>
               <img
                 alt={alt || title || url}

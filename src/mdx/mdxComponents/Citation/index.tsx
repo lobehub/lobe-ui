@@ -11,7 +11,7 @@ const useStyles = createStyles(({ css, token }) => ({
   container: css`
     display: inline-flex;
     line-height: var(--lobe-markdown-line-height);
-    vertical-align: text-top;
+    vertical-align: baseline;
 
     a {
       color: inherit;
@@ -58,6 +58,7 @@ interface CitationProps {
 const Citation = ({ children, href, inSup, id, citationDetail }: CitationProps) => {
   const { styles, cx } = useStyles();
   const usePopover = !isEmpty(citationDetail);
+  const url = citationDetail?.url || href;
 
   // [^1] 格式类型
   if (inSup) {
@@ -68,7 +69,7 @@ const Citation = ({ children, href, inSup, id, citationDetail }: CitationProps) 
             aria-describedby="footnote-label"
             className={cx(styles.content, styles.hover)}
             data-footnote-ref="true"
-            href={citationDetail?.url || href}
+            href={url}
             id={id}
             rel="noreferrer"
             target={citationDetail?.url ? '_blank' : undefined}
@@ -83,8 +84,13 @@ const Citation = ({ children, href, inSup, id, citationDetail }: CitationProps) 
   return (
     <PopoverPanel {...citationDetail} usePopover={usePopover}>
       <sup className={cx(styles.container, styles.supContainer)}>
-        {href ? (
-          <a className={cx(styles.content, styles.hover)} href={href}>
+        {url ? (
+          <a
+            className={cx(styles.content, styles.hover)}
+            href={url}
+            rel="noreferrer"
+            target={'_blank'}
+          >
             {children}
           </a>
         ) : (

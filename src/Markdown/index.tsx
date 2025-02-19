@@ -14,7 +14,6 @@ import type { Pluggable } from 'unified';
 import { type HighlighterProps } from '@/Highlighter';
 import ImageGallery from '@/Image/ImageGallery';
 import { type MermaidProps } from '@/Mermaid';
-import SearchResultCards from '@/SearchResultCards';
 import Image, { type ImageProps } from '@/mdx/mdxComponents/Image';
 import Link from '@/mdx/mdxComponents/Link';
 import { type PreProps } from '@/mdx/mdxComponents/Pre';
@@ -54,7 +53,7 @@ export interface MarkdownProps extends TypographyProps {
   rehypePlugins?: Pluggable[];
   remarkPlugins?: Pluggable[];
   remarkPluginsAhead?: Pluggable[];
-  showCitations?: boolean;
+  showFootnotes?: boolean;
   style?: CSSProperties;
   variant?: 'normal' | 'chat';
 }
@@ -74,7 +73,7 @@ const Markdown = memo<MarkdownProps>(
     fontSize,
     headerMultiple,
     marginMultiple,
-    showCitations,
+    showFootnotes,
     variant = 'normal',
     lineHeight,
     rehypePlugins,
@@ -146,7 +145,7 @@ const Markdown = memo<MarkdownProps>(
               {...componentProps?.pre}
             />
           ),
-        section: (props: any) => <Section showCitations={showCitations} {...props} />,
+        section: (props: any) => <Section showCitations={showFootnotes} {...props} />,
         video: (props: any) => <Video {...props} {...componentProps?.video} />,
         ...components,
       }),
@@ -157,7 +156,7 @@ const Markdown = memo<MarkdownProps>(
         enableMermaid,
         fullFeaturedCodeBlock,
         ...objCitations,
-        showCitations,
+        showFootnotes,
       ],
     ) as Components;
 
@@ -236,11 +235,6 @@ const Markdown = memo<MarkdownProps>(
         onDoubleClick={onDoubleClick}
         style={style}
       >
-        {showCitations && objCitations.length > 0 && (
-          <div className={'citations'} style={{ marginBottom: 12 }}>
-            <SearchResultCards dataSource={objCitations} />
-          </div>
-        )}
         {markdownContent}
       </div>
     );

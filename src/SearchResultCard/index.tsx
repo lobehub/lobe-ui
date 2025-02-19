@@ -7,16 +7,16 @@ const useStyles = createStyles(({ css, token }) => ({
   container: css`
     cursor: pointer;
 
+    min-width: 160px;
+    max-width: 160px;
     height: 100%;
     padding: 8px;
-    min-width: 160px;
-    max-width: 240px;
+    border-radius: 8px;
 
     font-size: 12px;
     color: initial;
 
     background: ${token.colorFillQuaternary};
-    border-radius: 8px;
 
     &:hover {
       background: ${token.colorFillTertiary};

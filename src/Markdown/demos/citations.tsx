@@ -1,5 +1,7 @@
 import { Markdown } from '@lobehub/ui';
 
+import SearchResultCards from '@/SearchResultCards';
+
 const citations = [
   'https://www.weather.com.cn/weather/101210101.shtml',
   'https://tianqi.moji.com/weather/china/zhejiang/hangzhou',
@@ -25,8 +27,13 @@ const code = `杭州今天和未来几天的天气预报如下：
 
 export default () => {
   return (
-    <Markdown citations={citations} showCitations>
-      {code}
-    </Markdown>
+    <>
+      <div className={'citations'} style={{ marginBottom: 12 }}>
+        <SearchResultCards dataSource={citations.map((item) => ({ title: item, url: item }))} />
+      </div>
+      <Markdown citations={citations} variant={'chat'}>
+        {code}
+      </Markdown>
+    </>
   );
 };

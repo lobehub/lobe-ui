@@ -5,6 +5,7 @@ import Footnotes from '@/mdx/mdxComponents/Footnotes';
 interface SectionProps {
   'children': ReactNode;
   'data-footnotes'?: boolean;
+  'showFootnotes'?: boolean;
 }
 
 const Section = (props: SectionProps) => {
