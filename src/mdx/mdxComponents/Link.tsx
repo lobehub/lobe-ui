@@ -6,10 +6,23 @@ import { AProps } from '@/types';
 import Citation from './Citation';
 
 export interface LinkProps extends AProps {
-  node: any;
+  'aria-describedby'?: string;
+  'data-footnote-ref'?: boolean;
+  'id'?: string;
+  'node': any;
 }
 
 const Link: FC<LinkProps> = ({ href, target, ...rest }) => {
+  // [^1] 格式类型
+  if (rest['data-footnote-ref']) {
+    return (
+      <Citation href={href} id={rest.id!} inSup>
+        {rest.children}
+      </Citation>
+    );
+  }
+
+  // [1] 格式类型，搭配 citations 注入
   const match = href?.match(/citation-(\d+)/);
 
   if (match) {

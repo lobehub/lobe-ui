@@ -17,13 +17,15 @@ import { type MermaidProps } from '@/Mermaid';
 import Image, { type ImageProps } from '@/mdx/mdxComponents/Image';
 import Link from '@/mdx/mdxComponents/Link';
 import { type PreProps } from '@/mdx/mdxComponents/Pre';
+import Section from '@/mdx/mdxComponents/Section';
 import Video, { type VideoProps } from '@/mdx/mdxComponents/Video';
 import type { AProps } from '@/types';
 
 import { CodeFullFeatured, CodeLite } from './CodeBlock';
 import type { TypographyProps } from './Typography';
 import { useStyles as useMarkdownStyles } from './markdown.style';
-import { rehypeKatexDir } from './rehypePlugin';
+import { rehypeFootnoteLinks, remarkCustomFootnotes } from './plugins/footnote';
+import { rehypeKatexDir } from './plugins/katexDir';
 import { useStyles } from './style';
 import { escapeBrackets, escapeMhchem, fixMarkdownBold, transformCitations } from './utils';
 
@@ -127,6 +129,7 @@ const Markdown = memo<MarkdownProps>(
               {...componentProps?.pre}
             />
           ),
+        section: (props: any) => <Section {...props} />,
         video: (props: any) => <Video {...props} {...componentProps?.video} />,
         ...components,
       }),
@@ -147,6 +150,7 @@ const Markdown = memo<MarkdownProps>(
           allowHtml && rehypeRaw,
           enableLatex && rehypeKatex,
           enableLatex && rehypeKatexDir,
+          rehypeFootnoteLinks,
           ...innerRehypePlugins,
         ].filter(Boolean) as any,
       [allowHtml, enableLatex, ...innerRehypePlugins],
@@ -162,6 +166,7 @@ const Markdown = memo<MarkdownProps>(
         [
           ...innerRemarkPluginsAhead,
           remarkGfm,
+          remarkCustomFootnotes,
           enableLatex && remarkMath,
           isChatMode && remarkBreaks,
           ...innerRemarkPlugins,
