@@ -37,5 +37,5 @@ ToDesktop 特别适合以下场景：
 `;
 
 export default () => {
-  return <Markdown>{code}</Markdown>;
+  return <Markdown enableCustomFootnotes>{code}</Markdown>;
 };
