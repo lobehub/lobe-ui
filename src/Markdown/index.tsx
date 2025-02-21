@@ -177,12 +177,18 @@ const Markdown = memo<MarkdownProps>(
         [
           ...innerRemarkPluginsAhead,
           remarkGfm,
-          remarkCustomFootnotes,
+          enableCustomFootnotes && remarkCustomFootnotes,
           enableLatex && remarkMath,
           isChatMode && remarkBreaks,
           ...innerRemarkPlugins,
         ].filter(Boolean) as any,
-      [isChatMode, enableLatex, ...innerRemarkPluginsAhead, ...innerRemarkPlugins],
+      [
+        isChatMode,
+        enableCustomFootnotes,
+        enableLatex,
+        ...innerRemarkPluginsAhead,
+        ...innerRemarkPlugins,
+      ],
     );
 
     const defaultDOM = (
