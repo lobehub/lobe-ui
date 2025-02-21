@@ -45,6 +45,7 @@ export interface MarkdownProps extends TypographyProps {
   };
   components?: Components & Record<string, FC>;
   customRender?: (dom: ReactNode, context: { text: string }) => ReactNode;
+  enableCustomFootnotes?: boolean;
   enableImageGallery?: boolean;
   enableLatex?: boolean;
   enableMermaid?: boolean;
@@ -68,6 +69,7 @@ const Markdown = memo<MarkdownProps>(
     enableLatex = true,
     enableMermaid = true,
     enableImageGallery = true,
+    enableCustomFootnotes,
     componentProps,
     allowHtml,
     fontSize,
@@ -159,10 +161,10 @@ const Markdown = memo<MarkdownProps>(
           allowHtml && rehypeRaw,
           enableLatex && rehypeKatex,
           enableLatex && rehypeKatexDir,
-          rehypeFootnoteLinks,
+          enableCustomFootnotes && rehypeFootnoteLinks,
           ...innerRehypePlugins,
         ].filter(Boolean) as any,
-      [allowHtml, enableLatex, ...innerRehypePlugins],
+      [allowHtml, enableLatex, enableCustomFootnotes, ...innerRehypePlugins],
     );
 
     const innerRemarkPlugins = Array.isArray(remarkPlugins) ? remarkPlugins : [remarkPlugins];
@@ -175,12 +177,18 @@ const Markdown = memo<MarkdownProps>(
         [
           ...innerRemarkPluginsAhead,
           remarkGfm,
-          remarkCustomFootnotes,
+          enableCustomFootnotes && remarkCustomFootnotes,
           enableLatex && remarkMath,
           isChatMode && remarkBreaks,
           ...innerRemarkPlugins,
         ].filter(Boolean) as any,
-      [isChatMode, enableLatex, ...innerRemarkPluginsAhead, ...innerRemarkPlugins],
+      [
+        isChatMode,
+        enableCustomFootnotes,
+        enableLatex,
+        ...innerRemarkPluginsAhead,
+        ...innerRemarkPlugins,
+      ],
     );
 
     const defaultDOM = (

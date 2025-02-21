@@ -40,6 +40,7 @@ export default () => {
             </Flexbox>
           ),
         }}
+        enableCustomFootnotes
         remarkPlugins={[remarkCaptureThink]}
         variant={'chat'}
       >
