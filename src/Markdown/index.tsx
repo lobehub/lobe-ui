@@ -98,11 +98,12 @@ const Markdown = memo<MarkdownProps>(
 
     const escapedContent = useMemo(() => {
       if (!enableLatex) return fixMarkdownBold(children);
-      return transformCitations(
-        fixMarkdownBold(escapeMhchem(escapeBrackets(children))),
-        citations?.length,
-      );
-    }, [children, enableLatex]);
+
+      const defaultValue = fixMarkdownBold(escapeMhchem(escapeBrackets(children)));
+      if (enableCustomFootnotes) return transformCitations(defaultValue, citations?.length);
+
+      return defaultValue;
+    }, [children, enableLatex, enableCustomFootnotes]);
 
     const memoComponents: Components = useMemo(
       () => ({
