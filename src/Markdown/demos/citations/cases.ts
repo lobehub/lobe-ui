@@ -23,6 +23,31 @@ export const cases = {
 `,
   },
 
+  inCode: {
+    markdown: `抱歉刚才的显示有误。\`coord[1]\` 就是一个普通的列表索引操作，表示访问列表中索引为1的元素。
+
+让我解释一下列表索引：
+\`\`\`python
+coord = [1, 2, 3, 4]  # 一个包含4个元素的列表
+# 索引:  0  1  2  3
+
+coord[0]  # 结果为 1
+coord[1]  # 结果为 2
+coord[2]  # 结果为 3
+coord[3]  # 结果为 4
+\`\`\`
+
+所以在之前的例子中：
+\`\`\`python
+rectangles = [[1, 2, 3, 4]]  # 一个矩形坐标 [x1, y1, x2, y2]
+
+# coord[1] 表示获取 y1 的值（即2）
+# coord[0] 表示获取 x1 的值（即1）
+\`\`\`
+
+刚才显示的 \`coord[#citation-1](citation-1)\` 是一个格式错误，正确的写法就是 \`coord[1]\`。这是最基本的列表索引操作，用于获取列表中指定位置的元素。`,
+  },
+
   withThinking: {
     citations: [
       'https://finance.sina.com.cn/stock/relnews/cn/2025-02-14/doc-inekknpr4619577.shtml',

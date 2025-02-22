@@ -21,15 +21,18 @@ export default () => {
         options={[
           { label: '普通case', value: 'general' },
           { label: '带 thinking', value: 'withThinking' },
+          { label: '代码块', value: 'inCode' },
         ]}
         value={current}
       />
       <Divider />
-      <div className={'citations'} style={{ marginBottom: 12 }}>
-        <SearchResultCards
-          dataSource={state.citations.map((item: string) => ({ title: item, url: item }))}
-        />
-      </div>
+      {state.citations && (
+        <div className={'citations'} style={{ marginBottom: 12 }}>
+          <SearchResultCards
+            dataSource={state.citations.map((item: string) => ({ title: item, url: item }))}
+          />
+        </div>
+      )}
       <Markdown
         citations={state.citations}
         components={{
