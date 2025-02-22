@@ -63,7 +63,7 @@ export function fixMarkdownBold(text: string): string {
   return result;
 }
 
-export const transformCitations = (rawContent: string, length: number = 40) => {
+export const transformCitations = (rawContent: string, length: number = 0) => {
   // 生成动态正则表达式模式
   const idx = Array.from({ length })
     .fill('')
