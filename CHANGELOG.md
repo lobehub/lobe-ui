@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.165.4](https://github.com/lobehub/lobe-ui/compare/v1.165.3...v1.165.4)
+
+<sup>Released on **2025-02-22**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix footnote issue.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix footnote issue, closes [#275](https://github.com/lobehub/lobe-ui/issues/275) ([f2bbd04](https://github.com/lobehub/lobe-ui/commit/f2bbd04))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.165.3](https://github.com/lobehub/lobe-ui/compare/v1.165.2...v1.165.3)
 
 <sup>Released on **2025-02-21**</sup>
