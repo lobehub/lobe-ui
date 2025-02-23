@@ -106,7 +106,7 @@
     "@mdx-js/mdx": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
     "@radix-ui/react-slot": "^1.1.1",
-    "@shikijs/transformers": "^1.26.1",
+    "@shikijs/transformers": "^3.0.0",
     "@splinetool/runtime": "0.9.526",
     "ahooks": "^3.8.4",
     "antd-style": "^3.7.1",
