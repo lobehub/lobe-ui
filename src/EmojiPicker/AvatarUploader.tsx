@@ -1,10 +1,11 @@
 import { Button, type GetProp, Upload, type UploadProps, message } from 'antd';
-import { ChevronLeftIcon, ImageUpIcon } from 'lucide-react';
+import { ChevronLeftIcon, ChevronRightIcon, ImageUpIcon } from 'lucide-react';
 import { memo, useCallback, useRef, useState } from 'react';
 import AvatarEditor from 'react-avatar-editor';
 import { Center, Flexbox } from 'react-layout-kit';
 
 import Icon from '@/Icon';
+import { useDirection } from '@/hooks/useDirection';
 
 import { useStyles } from './style';
 
@@ -36,6 +37,7 @@ const AvatarUploader = memo<AvatarUploaderProps>(
     const editor = useRef<any>(null);
     const [previewImage, setPreviewImage] = useState('');
     const { styles } = useStyles();
+    const direction = useDirection();
 
     const beforeUpload = useCallback((file: FileType) => {
       const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -90,7 +92,7 @@ const AvatarUploader = memo<AvatarUploaderProps>(
             </Flexbox>
             <Flexbox gap={8} horizontal style={{ position: 'relative' }} width={'100%'}>
               <Button
-                icon={<Icon icon={ChevronLeftIcon} />}
+                icon={<Icon icon={direction === 'rtl' ? ChevronRightIcon : ChevronLeftIcon} />}
                 onClick={() => setPreviewImage('')}
                 style={{ flex: 'none' }}
               />

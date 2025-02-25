@@ -1,10 +1,11 @@
 'use client';
 
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { CSSProperties, ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
+import { useDirection } from '@/hooks/useDirection';
 import MobileSafeArea from '@/mobile/MobileSafeArea';
 
 import { useStyles } from './style';
@@ -50,6 +51,7 @@ const MobileNavBar = memo<MobileNavBarProps>(
     contentStyles,
   }) => {
     const { styles, cx } = useStyles();
+    const direction = useDirection();
 
     return (
       <Flexbox className={cx(styles.container, className)} style={style}>
@@ -71,7 +73,7 @@ const MobileNavBar = memo<MobileNavBarProps>(
           >
             {showBackButton && (
               <ActionIcon
-                icon={ChevronLeft}
+                icon={direction === 'rtl' ? ChevronRight : ChevronLeft}
                 onClick={() => onBackClick?.()}
                 size={{ fontSize: 24 }}
               />
