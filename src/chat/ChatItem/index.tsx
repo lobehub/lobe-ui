@@ -1,7 +1,7 @@
 'use client';
 
 import { useResponsive } from 'antd-style';
-import { memo } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import Actions from './components/Actions';
@@ -57,6 +57,42 @@ const ChatItem = memo<ChatItemProps>(
       type,
     });
 
+    // 在 ChatItem 组件中添加
+    const contentRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [layoutMode, setLayoutMode] = useState<'horizontal' | 'vertical'>(
+      type === 'block' ? 'horizontal' : 'vertical',
+    );
+
+    // 使用 ResizeObserver 监控内容和容器尺寸
+    useEffect(() => {
+      if (type === 'pure') {
+        setLayoutMode('vertical');
+        return;
+      }
+
+      if (!contentRef.current || !containerRef.current) return;
+
+      const observer = new ResizeObserver(() => {
+        if (!contentRef.current || !containerRef.current) return;
+
+        const containerWidth = containerRef.current.clientWidth;
+        const contentWidth = contentRef.current.scrollWidth; // 使用scrollWidth获取实际内容宽度
+
+        // 预留给Actions的最小空间 (根据实际Actions大小调整)
+        const actionsMinWidth = 54;
+
+        console.log(contentWidth, actionsMinWidth, containerWidth);
+        // 只有当内容宽度 + Actions最小宽度 > 容器宽度时才切换布局
+        setLayoutMode(contentWidth + actionsMinWidth > containerWidth ? 'vertical' : 'horizontal');
+      });
+
+      observer.observe(contentRef.current);
+      observer.observe(containerRef.current);
+
+      return () => observer.disconnect();
+    }, [type]);
+
     return (
       <Flexbox
         className={cx(styles.container, className)}
@@ -77,14 +113,16 @@ const ChatItem = memo<ChatItemProps>(
         <Flexbox
           align={placement === 'left' ? 'flex-start' : 'flex-end'}
           className={styles.messageContainer}
+          ref={containerRef}
         >
           <Title avatar={avatar} placement={placement} showTitle={showTitle} time={time} />
           {aboveMessage}
           <Flexbox
             align={placement === 'left' ? 'flex-start' : 'flex-end'}
             className={styles.messageContent}
+            data-layout={layoutMode} // 添加数据属性以方便样式选择
             direction={
-              type === 'block'
+              layoutMode === 'horizontal'
                 ? placement === 'left'
                   ? 'horizontal'
                   : 'horizontal-reverse'
@@ -92,7 +130,7 @@ const ChatItem = memo<ChatItemProps>(
             }
             gap={8}
           >
-            <Flexbox width={'100%'}>
+            <Flexbox ref={contentRef} width={'100%'}>
               {error && (message === placeholderMessage || !message) ? (
                 <ErrorContent error={error} message={errorMessage} placement={placement} />
               ) : (
