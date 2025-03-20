@@ -8,9 +8,12 @@ export const useMermaid = (content: string) => {
   useEffect(() => {
     mermaid.initialize({
       fontFamily: theme.fontFamilyCode,
+      gantt: {
+        useWidth: 1920,
+      },
       securityLevel: 'loose',
       startOnLoad: true,
-      theme: 'base',
+      theme: theme.isDarkMode ? 'dark' : 'default',
       themeVariables: {
         errorBkgColor: theme.colorError,
         errorTextColor: theme.colorText,
