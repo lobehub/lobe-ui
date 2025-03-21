@@ -5,13 +5,11 @@ import {
   transformerNotationHighlight,
   transformerNotationWordHighlight,
 } from '@shikijs/transformers';
-import { useThemeMode } from 'antd-style';
+import { useTheme, useThemeMode } from 'antd-style';
 import { useMemo } from 'react';
 import { codeToHtml } from 'shiki';
 import useSWR from 'swr';
 import { Md5 } from 'ts-md5';
-
-import { themeConfig } from '@/Highlighter/theme';
 
 import languageMap from './languageMap';
 
@@ -24,7 +22,7 @@ export const useHighlight = (text: string, lang: string, enableTransformer?: boo
     () => (languageMap.includes(language as any) ? language : FALLBACK_LANG),
     [language],
   );
-  const theme = useMemo(() => themeConfig(isDarkMode), [isDarkMode]);
+  const theme = useTheme();
   const transformers = useMemo(() => {
     if (!enableTransformer) return;
     return [
@@ -41,8 +39,32 @@ export const useHighlight = (text: string, lang: string, enableTransformer?: boo
   return useSWR([matchedLanguage, isDarkMode ? 'd' : 'l', key].join('-'), async () => {
     try {
       return codeToHtml(text, {
+        colorReplacements: {
+          'slack-dark': {
+            '#4ec9b0': theme.yellow,
+            '#569cd6': theme.colorError,
+            '#6a9955': theme.gray,
+            '#9cdcfe': theme.colorText,
+            '#b5cea8': theme.purple10,
+            '#c586c0': theme.colorInfo,
+            '#ce9178': theme.colorSuccess,
+            '#dcdcaa': theme.colorWarning,
+            '#e6e6e6': theme.colorText,
+          },
+          'slack-ochin': {
+            '#002339': theme.colorText,
+            '#0991b6': theme.colorError,
+            '#174781': theme.purple10,
+            '#2f86d2': theme.colorText,
+            '#357b42': theme.gray,
+            '#7b30d0': theme.colorInfo,
+            '#7eb233': theme.colorWarningTextActive,
+            '#a44185': theme.colorSuccess,
+            '#dc3eb7': theme.yellow11,
+          },
+        },
         lang: matchedLanguage,
-        theme,
+        theme: isDarkMode ? 'slack-dark' : 'slack-ochin',
         transformers,
       });
     } catch (error) {
