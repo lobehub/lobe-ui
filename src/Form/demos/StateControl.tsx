@@ -1,8 +1,10 @@
 import { Form, type FormProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { InputNumber, Segmented, Select, Switch } from 'antd';
-import { Palette, PanelLeftClose } from 'lucide-react';
+import { Palette, PanelLeftClose, PanelRightClose } from 'lucide-react';
 import { useState } from 'react';
+
+import { useDirection } from '@/hooks/useDirection';
 
 const setting = {
   i18n: 'en',
@@ -21,6 +23,7 @@ export default () => {
   const [active, setActive] = useState<ActiveKey[]>([ActiveKey.Theme, ActiveKey.Sidebar]);
 
   const store = useCreateStore();
+  const direction = useDirection();
 
   const { variant }: any = useControls(
     {
@@ -125,7 +128,7 @@ export default () => {
           value={active.includes(ActiveKey.Sidebar)}
         />
       ),
-      icon: PanelLeftClose,
+      icon: direction === 'rtl' ? PanelRightClose : PanelLeftClose,
       key: ActiveKey.Sidebar,
       title: 'Quick Setting Sidebar',
     },
