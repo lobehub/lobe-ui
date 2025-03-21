@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.165.8](https://github.com/lobehub/lobe-ui/compare/v1.165.7...v1.165.8)
+
+<sup>Released on **2025-03-21**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix shiki theme (resolve.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix shiki theme (resolve, closes [#292](https://github.com/lobehub/lobe-ui/issues/292) ([35d8738](https://github.com/lobehub/lobe-ui/commit/35d8738))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.165.7](https://github.com/lobehub/lobe-ui/compare/v1.165.6...v1.165.7)
 
 <sup>Released on **2025-03-20**</sup>
