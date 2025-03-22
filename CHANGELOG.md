@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [Version 1.166.0](https://github.com/lobehub/lobe-ui/compare/v1.165.8...v1.166.0)
+
+<sup>Released on **2025-03-22**</sup>
+
+#### ✨ Features
+
+- **misc**: Add zoom & pan support to mermaid.
+
+#### 💄 Styles
+
+- **misc**: Update mermaid theme.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add zoom & pan support to mermaid ([abe9ea9](https://github.com/lobehub/lobe-ui/commit/abe9ea9))
+
+#### Styles
+
+- **misc**: Update mermaid theme ([d986574](https://github.com/lobehub/lobe-ui/commit/d986574))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.165.8](https://github.com/lobehub/lobe-ui/compare/v1.165.7...v1.165.8)
 
 <sup>Released on **2025-03-21**</sup>
