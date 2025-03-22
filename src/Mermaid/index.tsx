@@ -18,6 +18,7 @@ const Mermaid = memo<MermaidProps>(
     showLanguage = true,
     style,
     type = 'block',
+    enablePanZoom,
     className,
     bodyRender,
     actionsRender,
@@ -25,7 +26,9 @@ const Mermaid = memo<MermaidProps>(
   }) => {
     const { cx, styles } = useStyles(type);
     const tirmedChildren = children.trim();
-    const MermaidRender = useMermaid(tirmedChildren);
+    const MermaidRender = useMermaid(tirmedChildren, {
+      enablePanZoom: fullFeatured ? true : enablePanZoom,
+    });
 
     const originalActions = copyable && (
       <CopyButton content={children} placement="left" size={copyButtonSize} />
@@ -53,6 +56,7 @@ const Mermaid = memo<MermaidProps>(
           className={className}
           content={tirmedChildren}
           copyable={copyable}
+          enablePanZoom={enablePanZoom}
           showLanguage={showLanguage}
           style={style}
           type={type}
@@ -72,7 +76,7 @@ const Mermaid = memo<MermaidProps>(
         <Flexbox align={'center'} className={styles.button} flex={'none'} gap={4} horizontal>
           {actions}
         </Flexbox>
-        {showLanguage && <Tag className={styles.lang}>mermaid</Tag>}
+        {!enablePanZoom && showLanguage && <Tag className={styles.lang}>Mermaid</Tag>}
         <div className={styles.scroller}>{body}</div>
       </div>
     );

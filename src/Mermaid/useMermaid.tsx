@@ -1,8 +1,15 @@
 import { useTheme } from 'antd-style';
 import mermaid from 'mermaid';
 import { useCallback, useEffect, useState } from 'react';
+import { Center } from 'react-layout-kit';
+import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 
-export const useMermaid = (content: string) => {
+import Controls from './Controls';
+
+export const useMermaid = (
+  content: string,
+  { enablePanZoom }: { enablePanZoom?: boolean } = {},
+) => {
   const [mermaidContent, setMermaidContent] = useState<string>();
   const theme = useTheme();
   useEffect(() => {
@@ -13,10 +20,11 @@ export const useMermaid = (content: string) => {
       },
       securityLevel: 'loose',
       startOnLoad: true,
+
       theme: theme.isDarkMode ? 'dark' : 'neutral',
       themeVariables: {
-        errorBkgColor: theme.colorErrorBg,
-        errorTextColor: theme.colorErrorText,
+        errorBkgColor: theme.colorTextDescription,
+        errorTextColor: theme.colorTextDescription,
         fontFamily: theme.fontFamily,
         fontSize: 14,
         lineColor: theme.colorTextSecondary,
@@ -55,19 +63,29 @@ export const useMermaid = (content: string) => {
   }, [content]);
 
   return useCallback(() => {
+    if (enablePanZoom) {
+      return (
+        <TransformWrapper>
+          <Controls />
+          <TransformComponent
+            contentClass={'mermaid'}
+            contentStyle={{
+              padding: 16,
+            }}
+            wrapperStyle={{
+              minHeight: 240,
+              width: '100%',
+            }}
+          >
+            {mermaidContent}
+          </TransformComponent>
+        </TransformWrapper>
+      );
+    }
     return (
-      <pre
-        className={'mermaid'}
-        style={{
-          alignItems: 'center',
-          display: 'flex',
-          fontSize: 14,
-          justifyContent: 'center',
-          overflow: 'auto',
-        }}
-      >
+      <Center as={'pre'} className={'mermaid'} padding={16}>
         {mermaidContent}
-      </pre>
+      </Center>
     );
-  }, [mermaidContent, theme.isDarkMode]);
+  }, [mermaidContent, theme.isDarkMode, enablePanZoom]);
 };
