@@ -119,6 +119,10 @@ export const useStyles = createStyles(
           text-align: center;
         }
       `,
+      zoomPanContainer: css`
+        width: 100%;
+        min-height: 240px;
+      `,
     };
   },
 );

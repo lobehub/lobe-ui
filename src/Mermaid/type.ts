@@ -14,6 +14,8 @@ export interface MermaidProps extends DivProps {
   children: string;
   copyButtonSize?: CopyButtonProps['size'];
   copyable?: boolean;
+  enablePanZoom?: boolean;
+  fileName?: string;
   fullFeatured?: boolean;
   showLanguage?: boolean;
   type?: 'ghost' | 'block' | 'pure';
