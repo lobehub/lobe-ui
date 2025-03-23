@@ -13,7 +13,7 @@ export interface LinkProps extends AProps {
   'data-footnote-ref'?: boolean;
   'data-link'?: string;
   'id'?: string;
-  'node': any;
+  'node'?: any;
 }
 
 const Link: FC<LinkProps> = ({ href, target, citations, ...rest }) => {
