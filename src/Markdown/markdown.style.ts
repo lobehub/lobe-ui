@@ -35,8 +35,8 @@ export const useStyles = createStyles(
         word-break: break-word;
 
         ${IGNORE_CLASSNAME} {
-          font-size: ${token.fontSize};
-          line-height: ${token.lineHeight};
+          font-size: 14px;
+          line-height: 1.5;
         }
       `,
       a: css`

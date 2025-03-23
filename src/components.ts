@@ -57,7 +57,8 @@ export {
   type SyntaxHighlighterProps,
 } from './Highlighter';
 export { useChatListActionsBar } from './hooks/useChatListActionsBar';
-export { default as HotKeys, type HotKeysProps } from './HotKeys';
+export { default as Hotkey, type HotkeyProps } from './Hotkey';
+export { default as HotkeyInput, type HotkeyInputProps } from './HotkeyInput';
 export { default as Icon, type IconProps, type IconSize } from './Icon';
 export * from './Icon/icons';
 export { default as Image, type ImageProps } from './Image';

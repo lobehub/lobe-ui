@@ -1,16 +1,25 @@
 'use client';
 
 import { isString } from 'lodash-es';
-import { Command, Delete, Option } from 'lucide-react';
-import { type CSSProperties, memo, useEffect, useState } from 'react';
+import { ChevronUpIcon, Command, Delete, Option } from 'lucide-react';
+import { type CSSProperties, memo, useEffect, useMemo, useState } from 'react';
 import { Flexbox, type FlexboxProps } from 'react-layout-kit';
 
 import Icon from '@/Icon';
 
-import { ALT_KEY, BACKSPACE_KEY, META_KEY, useStyles } from './style';
-import { splitKeysByPlus, startCase } from './utils';
+import { useStyles } from './style';
+import {
+  ALT_KEY,
+  BACKSPACE_KEY,
+  CONTROL_KEY,
+  META_KEY,
+  MOD_KEY,
+  checkIsAppleDevice,
+  splitKeysByPlus,
+  startCase,
+} from './utils';
 
-export interface HotKeysProps extends Omit<FlexboxProps, 'children'> {
+export interface HotkeyProps extends Omit<FlexboxProps, 'children'> {
   classNames?: {
     descClassName?: string;
     kbdClassName?: string;
@@ -26,7 +35,7 @@ export interface HotKeysProps extends Omit<FlexboxProps, 'children'> {
   };
 }
 
-const HotKeys = memo<HotKeysProps>(
+const Hotkey = memo<HotkeyProps>(
   ({
     classNames,
     styles,
@@ -42,22 +51,19 @@ const HotKeys = memo<HotKeysProps>(
     const { cx, styles: s } = useStyles(inverseTheme);
     const [keysGroup, setKeysGroup] = useState(splitKeysByPlus(keys));
     const visibility = typeof window === 'undefined' ? 'hidden' : 'visible';
+    const isAppleDevice = useMemo(() => checkIsAppleDevice(isApple), [isApple]);
 
     useEffect(() => {
-      const isAppleDevice =
-        isApple === undefined
-          ? /(mac|iphone|ipod|ipad)/i.test(
-              typeof navigator === 'undefined' ? '' : navigator?.platform,
-            )
-          : isApple;
       const mapping: Record<string, any> = {
         [ALT_KEY]: isAppleDevice ? <Icon icon={Option} /> : 'alt',
         [BACKSPACE_KEY]: isAppleDevice ? <Icon icon={Delete} /> : 'backspace',
-        [META_KEY]: isAppleDevice ? <Icon icon={Command} /> : 'ctrl',
+        [CONTROL_KEY]: isAppleDevice ? <Icon icon={ChevronUpIcon} /> : 'ctrl',
+        [META_KEY]: isAppleDevice ? <Icon icon={Command} /> : 'win',
+        [MOD_KEY]: isAppleDevice ? <Icon icon={Command} /> : 'ctrl',
       };
       const newValue = splitKeysByPlus(keys).map((k) => mapping[k] ?? k);
       setKeysGroup(newValue);
-    }, [keys, isApple]);
+    }, [keys, isAppleDevice]);
 
     return (
       <Flexbox
@@ -104,4 +110,4 @@ const HotKeys = memo<HotKeysProps>(
   },
 );
 
-export default HotKeys;
+export default Hotkey;

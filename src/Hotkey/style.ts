@@ -1,10 +1,6 @@
 import { createStyles } from 'antd-style';
 import { rgba } from 'polished';
 
-export const ALT_KEY = 'alt';
-export const META_KEY = 'mod';
-export const BACKSPACE_KEY = 'backspace';
-
 export const useStyles = createStyles(
   ({ css, token }, inverseTheme: boolean) => css`
     kbd {

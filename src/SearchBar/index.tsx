@@ -5,7 +5,7 @@ import { CSSProperties, memo, useRef, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import useControlledState from 'use-merge-value';
 
-import HotKeys from '@/HotKeys';
+import Hotkey from '@/Hotkey';
 import Icon from '@/Icon';
 import { Input, type InputProps } from '@/Input';
 import Spotlight from '@/awesome/Spotlight';
@@ -136,7 +136,7 @@ const SearchBar = memo<SearchBarProps>(
           {...rest}
         />
         {enableShortKey && showTag && !inputValue && (
-          <HotKeys
+          <Hotkey
             className={cx(styles.tag, shortKeyClassName)}
             compact
             keys={hotKey}
