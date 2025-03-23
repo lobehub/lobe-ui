@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.167.0](https://github.com/lobehub/lobe-ui/compare/v1.166.2...v1.167.0)
+
+<sup>Released on **2025-03-23**</sup>
+
+#### ✨ Features
+
+- **misc**: Add Hotkeys.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add Hotkeys ([0d56289](https://github.com/lobehub/lobe-ui/commit/0d56289))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.166.2](https://github.com/lobehub/lobe-ui/compare/v1.166.1...v1.166.2)
 
 <sup>Released on **2025-03-23**</sup>
