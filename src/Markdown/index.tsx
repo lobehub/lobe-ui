@@ -211,6 +211,7 @@ const Markdown = memo<MarkdownProps>(
             mdStyles.strong,
             mdStyles.table,
             mdStyles.video,
+            mdStyles.svg,
             enableLatex && styles.latex,
             isChatMode && styles.chat,
           )}

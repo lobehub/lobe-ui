@@ -22,10 +22,12 @@ export const useStyles = createStyles(({ css, token, stylish, cx }) => ({
       position: absolute;
       z-index: 5;
       inset-block-start: 50%;
-      inset-inline-end: 0;
+      inset-inline-end: 6px;
       transform: translateY(-50%);
 
-      color: ${token.colorTextDescription};
+      kbd {
+        color: ${token.colorTextDescription};
+      }
     `,
   ),
 }));

@@ -1,6 +1,8 @@
 import { createStyles } from 'antd-style';
 import { rgba } from 'polished';
 
+const IGNORE_CLASSNAME = '.ignore-markdown-style';
+
 export const useStyles = createStyles(
   (
     { token, isDarkMode, css },
@@ -32,12 +34,13 @@ export const useStyles = createStyles(
         line-height: var(--lobe-markdown-line-height);
         word-break: break-word;
 
-        svg {
-          line-height: 1;
+        ${IGNORE_CLASSNAME} {
+          font-size: ${token.fontSize};
+          line-height: ${token.lineHeight};
         }
       `,
       a: css`
-        a {
+        a:not(${IGNORE_CLASSNAME} a) {
           color: ${token.colorInfoText};
 
           &:hover {
@@ -46,43 +49,46 @@ export const useStyles = createStyles(
         }
       `,
       blockquote: css`
-        blockquote {
+        blockquote:not(${IGNORE_CLASSNAME} blockquote) {
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
           margin-inline: 0;
           padding-block: 0;
           padding-inline: 1em;
-          border-inline-start: solid 4px ${token.colorBorder};
 
           color: ${token.colorTextSecondary};
+
+          border-inline-start: solid 4px ${token.colorBorder};
         }
       `,
       code: css`
-        code:not(:has(span)) {
-          display: inline;
+        code:not(${IGNORE_CLASSNAME} code) {
+          &:not(:has(span)) {
+            display: inline;
 
-          margin-inline: 0.25em;
-          padding-block: 0.2em;
-          padding-inline: 0.4em;
-          border: 1px solid var(--lobe-markdown-border-color);
-          border-radius: 0.25em;
+            margin-inline: 0.25em;
+            padding-block: 0.2em;
+            padding-inline: 0.4em;
 
-          font-family: ${token.fontFamilyCode};
-          font-size: 0.875em;
-          line-height: 1;
-          word-break: break-word;
-          white-space: break-spaces;
+            font-family: ${token.fontFamilyCode};
+            font-size: 0.875em;
+            line-height: 1;
+            word-break: break-word;
+            white-space: break-spaces;
 
-          background: ${token.colorFillSecondary};
+            background: ${token.colorFillSecondary};
+            border: 1px solid var(--lobe-markdown-border-color);
+            border-radius: 0.25em;
+          }
         }
       `,
       details: css`
-        details {
+        details:not(${IGNORE_CLASSNAME} details) {
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
           padding-block: 0.75em;
           padding-inline: 1em;
-          border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
 
           background: ${token.colorFillTertiary};
+          border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
           box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
 
           summary {
@@ -102,10 +108,11 @@ export const useStyles = createStyles(
 
               width: 0.4em;
               height: 0.4em;
-              border-block-end: 1.5px solid ${token.colorTextSecondary};
-              border-inline-end: 1.5px solid ${token.colorTextSecondary};
 
               font-family: ${token.fontFamily};
+
+              border-block-end: 1.5px solid ${token.colorTextSecondary};
+              border-inline-end: 1.5px solid ${token.colorTextSecondary};
 
               transition: transform 200ms ${token.motionEaseOut};
             }
@@ -124,12 +131,12 @@ export const useStyles = createStyles(
         }
       `,
       header: css`
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
+        h1:not(${IGNORE_CLASSNAME} h1),
+        h2:not(${IGNORE_CLASSNAME} h2),
+        h3:not(${IGNORE_CLASSNAME} h3),
+        h4:not(${IGNORE_CLASSNAME} h4),
+        h5:not(${IGNORE_CLASSNAME} h5),
+        h6:not(${IGNORE_CLASSNAME} h6) {
           margin-block: max(
             calc(
               var(--lobe-markdown-header-multiple) * var(--lobe-markdown-margin-multiple) * 0.4em
@@ -140,38 +147,39 @@ export const useStyles = createStyles(
           line-height: 1.25;
         }
 
-        h1 {
+        h1:not(${IGNORE_CLASSNAME} h1) {
           font-size: calc(
             var(--lobe-markdown-font-size) * (1 + 1.5 * var(--lobe-markdown-header-multiple))
           );
         }
 
-        h2 {
+        h2:not(${IGNORE_CLASSNAME} h2) {
           font-size: calc(
             var(--lobe-markdown-font-size) * (1 + var(--lobe-markdown-header-multiple))
           );
         }
 
-        h3 {
+        h3:not(${IGNORE_CLASSNAME} h3) {
           font-size: calc(
             var(--lobe-markdown-font-size) * (1 + 0.5 * var(--lobe-markdown-header-multiple))
           );
         }
 
-        h4 {
+        h4:not(${IGNORE_CLASSNAME} h4) {
           font-size: calc(
             var(--lobe-markdown-font-size) * (1 + 0.25 * var(--lobe-markdown-header-multiple))
           );
         }
 
-        h5,
-        h6 {
+        h5:not(${IGNORE_CLASSNAME} h5),
+        h6:not(${IGNORE_CLASSNAME} h6) {
           font-size: calc(var(--lobe-markdown-font-size) * 1);
         }
       `,
       hr: css`
-        hr {
+        hr:not(${IGNORE_CLASSNAME} hr) {
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1.5em);
+
           border-color: ${token.colorBorderSecondary};
           border-style: dashed;
           border-width: 1px;
@@ -180,9 +188,8 @@ export const useStyles = createStyles(
           border-inline-end: none;
         }
       `,
-
       img: css`
-        img {
+        img:not(${IGNORE_CLASSNAME} img) {
           max-width: 100%;
         }
 
@@ -193,8 +200,9 @@ export const useStyles = createStyles(
           box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
         }
       `,
+
       kbd: css`
-        kbd {
+        kbd:not(${IGNORE_CLASSNAME} kbd) {
           cursor: default;
 
           display: inline-block;
@@ -203,8 +211,6 @@ export const useStyles = createStyles(
           margin-inline: 0.25em;
           padding-block: 0.2em;
           padding-inline: 0.4em;
-          border: 1px solid ${token.colorBorderSecondary};
-          border-radius: 0.25em;
 
           font-family: ${token.fontFamily};
           font-size: 0.875em;
@@ -213,10 +219,12 @@ export const useStyles = createStyles(
           text-align: center;
 
           background: ${token.colorBgLayout};
+          border: 1px solid ${token.colorBorderSecondary};
+          border-radius: 0.25em;
         }
       `,
       list: css`
-        li {
+        li:not(${IGNORE_CLASSNAME} li) {
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.33em);
 
           p {
@@ -224,8 +232,8 @@ export const useStyles = createStyles(
           }
         }
 
-        ul,
-        ol {
+        ul:not(${IGNORE_CLASSNAME} ul),
+        ol:not(${IGNORE_CLASSNAME} ol) {
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
           margin-inline-start: 1em;
           padding-inline-start: 0;
@@ -241,11 +249,11 @@ export const useStyles = createStyles(
           }
         }
 
-        ol {
+        ol:not(${IGNORE_CLASSNAME} ol) {
           list-style: auto;
         }
 
-        ul {
+        ul:not(${IGNORE_CLASSNAME} ul) {
           list-style-type: none;
 
           li {
@@ -259,43 +267,49 @@ export const useStyles = createStyles(
         }
       `,
       p: css`
-        p {
+        p:not(${IGNORE_CLASSNAME} kbd) {
           margin-block: 4px;
           line-height: var(--lobe-markdown-line-height);
           letter-spacing: 0.02em;
-        }
 
-        p:not(:first-child) {
-          margin-block-start: calc(var(--lobe-markdown-margin-multiple) * 1em);
-        }
+          &:not(:first-child) {
+            margin-block-start: calc(var(--lobe-markdown-margin-multiple) * 1em);
+          }
 
-        p:not(:last-child) {
-          margin-block-end: calc(var(--lobe-markdown-margin-multiple) * 1em);
+          &:not(:last-child) {
+            margin-block-end: calc(var(--lobe-markdown-margin-multiple) * 1em);
+          }
         }
       `,
       pre: css`
-        pre,
+        pre:not(${IGNORE_CLASSNAME} pre),
         [data-code-type='highlighter'] {
-          border: none;
           white-space: break-spaces;
+          border: none;
 
           > code {
             padding: 0 !important;
-            border: none !important;
 
             font-family: ${token.fontFamilyCode};
             font-size: 0.875em;
             line-height: 1.6;
+
+            border: none !important;
           }
         }
       `,
       strong: css`
-        strong {
+        strong:not(${IGNORE_CLASSNAME} strong) {
           font-weight: 600;
         }
       `,
+      svg: css`
+        svg:not(${IGNORE_CLASSNAME} svg) {
+          line-height: 1;
+        }
+      `,
       table: css`
-        table {
+        table:not(${IGNORE_CLASSNAME} table) {
           unicode-bidi: isolate;
           overflow: auto hidden;
           display: block;
@@ -306,7 +320,6 @@ export const useStyles = createStyles(
           width: max-content;
           max-width: 100%;
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
-          border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
 
           text-align: start;
           text-indent: initial;
@@ -315,6 +328,7 @@ export const useStyles = createStyles(
           overflow-wrap: break-word;
 
           background: ${token.colorFillQuaternary};
+          border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
           box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
 
           code {
@@ -339,14 +353,14 @@ export const useStyles = createStyles(
         }
       `,
       video: css`
-        > video,
-        > p > video {
+        > video:not(${IGNORE_CLASSNAME} video),
+        > p:not(${IGNORE_CLASSNAME} p) > video {
           margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
           border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
           box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
         }
 
-        video {
+        video:not(${IGNORE_CLASSNAME} video) {
           max-width: 100%;
         }
       `,

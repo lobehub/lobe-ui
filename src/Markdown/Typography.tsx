@@ -42,6 +42,7 @@ export const Typography: FC<TypographyProps> = ({
         styles.strong,
         styles.table,
         styles.video,
+        styles.svg,
         className,
       )}
       {...rest}

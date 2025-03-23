@@ -1,12 +1,13 @@
 'use client';
 
 import { LucideLoader2, Search } from 'lucide-react';
-import { CSSProperties, memo, useEffect, useRef, useState } from 'react';
+import { CSSProperties, memo, useRef, useState } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 import useControlledState from 'use-merge-value';
 
+import HotKeys from '@/HotKeys';
 import Icon from '@/Icon';
 import { Input, type InputProps } from '@/Input';
-import Tag from '@/Tag';
 import Spotlight from '@/awesome/Spotlight';
 
 import { useStyles } from './style';
@@ -70,33 +71,22 @@ const SearchBar = memo<SearchBarProps>(
       onChange: onInputChange,
       value,
     });
-    const [symbol, setSymbol] = useState('Ctrl');
+
     const [showTag, setShowTag] = useState<boolean>(true);
     const { styles, cx } = useStyles();
     const inputReference: any = useRef<HTMLInputElement>(null);
-
-    useEffect(() => {
-      if (!enableShortKey) return;
-
-      const isAppleDevice = /(mac|iphone|ipod|ipad)/i.test(
-        typeof navigator === 'undefined' ? '' : navigator?.platform,
-      );
-
-      if (isAppleDevice) {
-        setSymbol('⌘');
-      }
-
-      const handler = (event_: KeyboardEvent) => {
-        if ((isAppleDevice ? event_.metaKey : event_.ctrlKey) && event_.key === shortKey) {
-          event_.preventDefault();
-          inputReference.current?.focus();
-        }
-      };
-
-      document.addEventListener('keydown', handler);
-
-      return () => document.removeEventListener('keydown', handler);
-    }, []);
+    const hotKey = ['mod', shortKey.toLowerCase()].join('+');
+    useHotkeys(
+      hotKey,
+      () => {
+        if (!enableShortKey) return;
+        inputReference.current?.focus();
+      },
+      {
+        enableOnFormTags: true,
+        preventDefault: true,
+      },
+    );
 
     return (
       <div className={cx(styles.search, className)} style={style}>
@@ -146,9 +136,12 @@ const SearchBar = memo<SearchBarProps>(
           {...rest}
         />
         {enableShortKey && showTag && !inputValue && (
-          <Tag className={cx(styles.tag, shortKeyClassName)} style={shortKeyStyle}>
-            {symbol} {shortKey.toUpperCase()}
-          </Tag>
+          <HotKeys
+            className={cx(styles.tag, shortKeyClassName)}
+            compact
+            keys={hotKey}
+            style={shortKeyStyle}
+          />
         )}
       </div>
     );
