@@ -146,7 +146,7 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {
-    "@ant-design/icons": "^5.6.1",
+    "@ant-design/icons": "^6.0.0",
     "@commitlint/cli": "^19.8.0",
     "@lobehub/lint": "^1.25.7",
     "@testing-library/react": "^16.2.0",
