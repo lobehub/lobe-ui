@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.166.2](https://github.com/lobehub/lobe-ui/compare/v1.166.1...v1.166.2)
+
+<sup>Released on **2025-03-23**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Make `node` prop in LinkProps optional.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Make `node` prop in LinkProps optional, closes [#295](https://github.com/lobehub/lobe-ui/issues/295) ([def6287](https://github.com/lobehub/lobe-ui/commit/def6287))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.166.1](https://github.com/lobehub/lobe-ui/compare/v1.166.0...v1.166.1)
 
 <sup>Released on **2025-03-22**</sup>
