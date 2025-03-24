@@ -19,6 +19,10 @@ The point of reference-style links is not that they’re easier to write. The po
 
 an example | *an example* | **an example**
 
+~~这是删除线~~ (两个波浪线)
+
+~这不会被渲染为删除线~ (单个波浪线)
+
 ---
 
 ![](https://gw.alipayobjects.com/zos/kitchen/sLO%24gbrQtp/lobe-chat.webp)

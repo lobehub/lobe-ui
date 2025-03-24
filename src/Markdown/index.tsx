@@ -177,7 +177,7 @@ const Markdown = memo<MarkdownProps>(
       () =>
         [
           ...innerRemarkPluginsAhead,
-          remarkGfm,
+          [remarkGfm, { singleTilde: false }],
           enableCustomFootnotes && remarkCustomFootnotes,
           enableLatex && remarkMath,
           isChatMode && remarkBreaks,
