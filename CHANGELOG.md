@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.168.3](https://github.com/lobehub/lobe-ui/compare/v1.168.2...v1.168.3)
+
+<sup>Released on **2025-03-24**</sup>
+
+#### 💄 Styles
+
+- **misc**: Add Hotkey support to Tooltip.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Add Hotkey support to Tooltip ([f04f13d](https://github.com/lobehub/lobe-ui/commit/f04f13d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.168.2](https://github.com/lobehub/lobe-ui/compare/v1.168.1...v1.168.2)
 
 <sup>Released on **2025-03-24**</sup>
