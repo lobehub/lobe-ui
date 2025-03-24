@@ -13,6 +13,7 @@ export interface ChatItemProps extends Omit<FlexboxProps, 'children' | 'onChange
    * @description Actions to be displayed in the chat item
    */
   actions?: ReactNode;
+  actionsWrapWidth?: number;
   /**
    * @description Metadata for the avatar
    */
