@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.168.2](https://github.com/lobehub/lobe-ui/compare/v1.168.1...v1.168.2)
+
+<sup>Released on **2025-03-24**</sup>
+
+#### 💄 Styles
+
+- **misc**: Export KeyMap.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Export KeyMap ([173c013](https://github.com/lobehub/lobe-ui/commit/173c013))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.168.1](https://github.com/lobehub/lobe-ui/compare/v1.168.0...v1.168.1)
 
 <sup>Released on **2025-03-24**</sup>
