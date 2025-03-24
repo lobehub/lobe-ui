@@ -2,7 +2,7 @@ import { HotkeyInput, type HotkeyInputProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { useState } from 'react';
 
-const DEFAULT_VALUE = 'mod+k';
+const DEFAULT_VALUE = 'alt+k';
 
 export default () => {
   const store = useCreateStore();
@@ -14,9 +14,10 @@ export default () => {
       defaultValue: DEFAULT_VALUE,
       disabled: false,
       placeholder: 'Press keys to record shortcut',
+      resetValue: DEFAULT_VALUE,
       variant: {
-        options: ['ghost', 'block', 'pure'],
-        value: 'ghost',
+        options: ['default', 'ghost', 'block', 'pure'],
+        value: 'default',
       },
     },
     { store },

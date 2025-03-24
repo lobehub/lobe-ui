@@ -1,9 +1,14 @@
 import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(
-  ({ cx, css, token, prefixCls }, { variant }: { variant: 'ghost' | 'block' | 'pure' }) => {
+  (
+    { cx, css, token, prefixCls },
+    { variant }: { variant: 'default' | 'ghost' | 'block' | 'pure' },
+  ) => {
     const typeStylish = css`
-      background-color: ${variant === 'block' ? token.colorFillTertiary : 'transparent'};
+      background-color: ${variant === 'block' || variant === 'default'
+        ? token.colorFillTertiary
+        : 'transparent'};
       border: 1px solid ${variant === 'block' ? 'transparent' : token.colorBorder};
       border-radius: ${token.borderRadius}px;
       transition:

@@ -1,10 +1,11 @@
 'use client';
 
-import { InputRef } from 'antd';
+import type { InputProps, InputRef } from 'antd';
 import { isEqual } from 'lodash-es';
 import { Undo2Icon } from 'lucide-react';
 import {
   type CSSProperties,
+  type FocusEvent,
   type MouseEvent,
   memo,
   useCallback,
@@ -15,6 +16,7 @@ import {
 } from 'react';
 import { useHotkeys, useRecordHotkeys } from 'react-hotkeys-hook';
 import { Flexbox } from 'react-layout-kit';
+import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
 import Hotkey from '@/Hotkey';
@@ -32,8 +34,11 @@ export interface HotkeyInputProps {
   disabled?: boolean;
   hotkeyConflicts?: string[];
   isApple?: boolean;
+  onBlur?: InputProps['onBlur'];
   onChange?: (value: string) => void;
   onConflict?: (conflictKey: string) => void;
+  onFocus?: InputProps['onFocus'];
+  onReset?: (currentValue: string, resetValue: string) => void;
   placeholder?: string;
   resetValue?: string;
   style?: CSSProperties;
@@ -43,14 +48,14 @@ export interface HotkeyInputProps {
     reset?: string;
   };
   value?: string;
-  variant?: 'ghost' | 'block' | 'pure';
+  variant?: 'default' | 'ghost' | 'block' | 'pure';
 }
 
 const HotkeyInput = memo<HotkeyInputProps>(
   ({
     value = '',
     defaultValue = '',
-    resetValue,
+    resetValue = '',
     onChange,
     onConflict,
     placeholder = 'Press keys to record shortcut',
@@ -59,9 +64,13 @@ const HotkeyInput = memo<HotkeyInputProps>(
     style,
     className,
     hotkeyConflicts = [],
-    variant = 'ghost',
+    variant = 'default',
+
     texts,
     isApple,
+    onBlur,
+    onReset,
+    onFocus,
   }) => {
     const [isFocused, setIsFocused] = useState(false);
     const [hasConflict, setHasConflict] = useState(false);
@@ -69,10 +78,14 @@ const HotkeyInput = memo<HotkeyInputProps>(
     const inputRef = useRef<InputRef>(null);
     const { cx, styles } = useStyles({ variant });
     const isAppleDevice = useMemo(() => checkIsAppleDevice(isApple), [isApple]);
+    const [hotkeyValue, setHotkeyValue] = useControlledState(defaultValue, {
+      defaultValue,
+      onChange,
+      value,
+    });
 
     // 使用 useRecordHotkeys 处理快捷键录入
     const [recordedKeys, { start, stop, isRecording, resetKeys }] = useRecordHotkeys();
-    const oldValue = resetValue || defaultValue;
 
     useHotkeys(
       '*',
@@ -85,6 +98,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
         enabled: isRecording && !disabled,
         keydown: false,
         keyup: true,
+        preventDefault: true,
       },
     );
 
@@ -135,7 +149,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
     const checkHotkeyConflict = useCallback(
       (newHotkey: string): boolean => {
         return hotkeyConflicts
-          .filter((conflictKey) => conflictKey !== oldValue)
+          .filter((conflictKey) => conflictKey !== resetValue)
           .some((conflictKey) => {
             const newKeys = splitKeysByPlus(newHotkey);
             const conflictKeys = splitKeysByPlus(conflictKey);
@@ -160,39 +174,57 @@ const HotkeyInput = memo<HotkeyInputProps>(
         // 检查冲突
         const conflict = checkHotkeyConflict(newKeysString);
         if (conflict) {
-          console.log('conflict');
           setHasConflict(true);
           onConflict?.(newKeysString);
         } else {
           setHasConflict(false);
-          onChange?.(newKeysString);
+          setHotkeyValue?.(newKeysString);
         }
       }
-    }, [recordedKeys, isRecording, isValid, keysString, checkHotkeyConflict, onChange, onConflict]);
+    }, [
+      recordedKeys,
+      isRecording,
+      isValid,
+      keysString,
+      checkHotkeyConflict,
+      setHotkeyValue,
+      onConflict,
+    ]);
 
     // 处理输入框焦点
-    const handleFocus = () => {
+    const handleFocus = (e: FocusEvent<HTMLInputElement>) => {
       if (disabled) return;
       setIsFocused(true);
       setHasConflict(false);
       setHasInvalidCombination(false);
       start(); // 开始记录
+      onFocus?.(e);
     };
 
-    const handleBlur = () => {
+    const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
       setIsFocused(false);
       stop(); // 停止记录
+      onBlur?.(e);
     };
 
     // 重置功能
     const handleReset = (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
-      onChange?.(oldValue);
+      setHotkeyValue?.(resetValue);
       resetKeys();
       setHasConflict(false);
       setHasInvalidCombination(false);
-      handleBlur();
+      setIsFocused(false);
+      stop(); // 停止记录
+      onReset?.(hotkeyValue, resetValue);
+    };
+
+    const handleClick = (e: MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (disabled || isFocused) return;
+      inputRef.current?.focus();
     };
 
     return (
@@ -214,15 +246,15 @@ const HotkeyInput = memo<HotkeyInputProps>(
           )}
           horizontal
           justify={'space-between'}
-          onClick={() => !disabled && !isFocused && inputRef.current?.focus()}
+          onClick={handleClick}
         >
           <div style={{ pointerEvents: 'none' }}>
             {isRecording ? (
               <span className={styles.placeholder}>
                 {keys.length > 0 ? <Hotkey keys={keysString} /> : placeholder}
               </span>
-            ) : value ? (
-              <Hotkey keys={value} />
+            ) : hotkeyValue ? (
+              <Hotkey keys={hotkeyValue} />
             ) : (
               <span className={styles.placeholder}>{placeholder}</span>
             )}
@@ -239,7 +271,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
             style={{ pointerEvents: 'none' }}
           />
 
-          {allowReset && value && value !== oldValue && !disabled && (
+          {allowReset && hotkeyValue && hotkeyValue !== resetValue && !disabled && (
             <ActionIcon
               active
               icon={Undo2Icon}
