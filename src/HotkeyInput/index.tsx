@@ -35,6 +35,7 @@ export interface HotkeyInputProps {
   onChange?: (value: string) => void;
   onConflict?: (conflictKey: string) => void;
   placeholder?: string;
+  resetValue?: string;
   style?: CSSProperties;
   texts?: {
     conflicts?: string;
@@ -49,6 +50,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
   ({
     value = '',
     defaultValue = '',
+    resetValue,
     onChange,
     onConflict,
     placeholder = 'Press keys to record shortcut',
@@ -70,6 +72,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
 
     // 使用 useRecordHotkeys 处理快捷键录入
     const [recordedKeys, { start, stop, isRecording, resetKeys }] = useRecordHotkeys();
+    const oldValue = resetValue || defaultValue;
 
     useHotkeys(
       '*',
@@ -131,11 +134,13 @@ const HotkeyInput = memo<HotkeyInputProps>(
     // 检查快捷键冲突
     const checkHotkeyConflict = useCallback(
       (newHotkey: string): boolean => {
-        return hotkeyConflicts.some((conflictKey) => {
-          const newKeys = splitKeysByPlus(newHotkey);
-          const conflictKeys = splitKeysByPlus(conflictKey);
-          return isEqual(newKeys.sort(), conflictKeys.sort());
-        });
+        return hotkeyConflicts
+          .filter((conflictKey) => conflictKey !== oldValue)
+          .some((conflictKey) => {
+            const newKeys = splitKeysByPlus(newHotkey);
+            const conflictKeys = splitKeysByPlus(conflictKey);
+            return isEqual(newKeys.sort(), conflictKeys.sort());
+          });
       },
       [hotkeyConflicts],
     );
@@ -183,7 +188,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
     const handleReset = (e: MouseEvent) => {
       e.preventDefault();
       e.stopPropagation();
-      onChange?.(defaultValue);
+      onChange?.(oldValue);
       resetKeys();
       setHasConflict(false);
       setHasInvalidCombination(false);
@@ -234,7 +239,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
             style={{ pointerEvents: 'none' }}
           />
 
-          {allowReset && value && value !== defaultValue && !disabled && (
+          {allowReset && value && value !== oldValue && !disabled && (
             <ActionIcon
               active
               icon={Undo2Icon}
