@@ -24,51 +24,34 @@ import Icon from '@/Icon';
 import LeftClickIcon from './components/LeftClickIcon';
 import RightClickIcon from './components/RightClickIcon';
 import { useStyles } from './style';
-import {
-  ALT_KEY,
-  BACKSPACE_KEY,
-  CONTROL_KEY,
-  DOWN_KEY,
-  ENTER_KEY,
-  LEFT_CLICK_KEY,
-  LEFT_KEY,
-  META_KEY,
-  MID_CLICK_KEY,
-  MOD_KEY,
-  RIGHT_CLICK_KEY,
-  RIGHT_KEY,
-  SHIFT_KEY,
-  SPACE_KEY,
-  TAB_KEY,
-  UP_KEY,
-  checkIsAppleDevice,
-  splitKeysByPlus,
-  startCase,
-} from './utils';
+import { KeyMap } from './type';
+import { checkIsAppleDevice, splitKeysByPlus, startCase } from './utils';
 
 const mappingKey = (isAppleDevice: boolean) => ({
-  [ALT_KEY]: isAppleDevice ? <Icon icon={Option} /> : 'Alt',
-  [BACKSPACE_KEY]: isAppleDevice ? <Icon icon={Delete} /> : 'Backspace',
-  [CONTROL_KEY]: isAppleDevice ? <Icon icon={ChevronUpIcon} /> : 'Ctrl',
-  [DOWN_KEY]: <Icon icon={ArrowDownIcon} />,
-  [ENTER_KEY]: isAppleDevice ? <Icon icon={CornerDownLeftIcon} /> : 'Enter',
-  [LEFT_CLICK_KEY]: <Icon icon={LeftClickIcon} size={{ fontSize: '1.15em', strokeWidth: 1.75 }} />,
-  [LEFT_KEY]: <Icon icon={ArrowLeftIcon} />,
-  [META_KEY]: isAppleDevice ? <Icon icon={Command} /> : <Icon icon={Grid2X2Icon} />,
-  [MID_CLICK_KEY]: <Icon icon={MouseIcon} size={{ fontSize: '1.15em', strokeWidth: 1.75 }} />,
-  [MOD_KEY]: isAppleDevice ? <Icon icon={Command} /> : 'Ctrl',
-  [RIGHT_CLICK_KEY]: (
+  [KeyMap.Alt]: isAppleDevice ? <Icon icon={Option} /> : 'Alt',
+  [KeyMap.Backspace]: isAppleDevice ? <Icon icon={Delete} /> : 'Backspace',
+  [KeyMap.Ctrl]: isAppleDevice ? <Icon icon={ChevronUpIcon} /> : 'Ctrl',
+  [KeyMap.Down]: <Icon icon={ArrowDownIcon} />,
+  [KeyMap.Enter]: isAppleDevice ? <Icon icon={CornerDownLeftIcon} /> : 'Enter',
+  [KeyMap.LeftClick]: (
+    <Icon icon={LeftClickIcon} size={{ fontSize: '1.15em', strokeWidth: 1.75 }} />
+  ),
+  [KeyMap.Left]: <Icon icon={ArrowLeftIcon} />,
+  [KeyMap.Meta]: isAppleDevice ? <Icon icon={Command} /> : <Icon icon={Grid2X2Icon} />,
+  [KeyMap.MiddleClick]: <Icon icon={MouseIcon} size={{ fontSize: '1.15em', strokeWidth: 1.75 }} />,
+  [KeyMap.Mod]: isAppleDevice ? <Icon icon={Command} /> : 'Ctrl',
+  [KeyMap.RightClick]: (
     <Icon icon={RightClickIcon} size={{ fontSize: '1.15em', strokeWidth: 1.75 }} />
   ),
-  [RIGHT_KEY]: <Icon icon={ArrowRightIcon} />,
-  [SHIFT_KEY]: isAppleDevice ? (
+  [KeyMap.Right]: <Icon icon={ArrowRightIcon} />,
+  [KeyMap.Shift]: isAppleDevice ? (
     <Icon icon={ArrowBigUpIcon} size={{ fontSize: '1.15em', strokeWidth: 1.75 }} />
   ) : (
     'Shift'
   ),
-  [SPACE_KEY]: <Icon icon={SpaceIcon} />,
-  [TAB_KEY]: isAppleDevice ? <Icon icon={ArrowRightToLineIcon} /> : 'Tab',
-  [UP_KEY]: <Icon icon={ArrowUpIcon} />,
+  [KeyMap.Space]: <Icon icon={SpaceIcon} />,
+  [KeyMap.Tab]: isAppleDevice ? <Icon icon={ArrowRightToLineIcon} /> : 'Tab',
+  [KeyMap.Up]: <Icon icon={ArrowUpIcon} />,
 });
 
 export interface HotkeyProps extends Omit<FlexboxProps, 'children'> {
