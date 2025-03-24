@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.168.6](https://github.com/lobehub/lobe-ui/compare/v1.168.5...v1.168.6)
+
+<sup>Released on **2025-03-24**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update remark-gfm config.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update remark-gfm config ([e4f4466](https://github.com/lobehub/lobe-ui/commit/e4f4466))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.168.5](https://github.com/lobehub/lobe-ui/compare/v1.168.4...v1.168.5)
 
 <sup>Released on **2025-03-24**</sup>
