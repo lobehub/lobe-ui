@@ -13,7 +13,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useRecordHotkeys } from 'react-hotkeys-hook';
+import { useHotkeys, useRecordHotkeys } from 'react-hotkeys-hook';
 import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
@@ -69,7 +69,21 @@ const HotkeyInput = memo<HotkeyInputProps>(
     const isAppleDevice = useMemo(() => checkIsAppleDevice(isApple), [isApple]);
 
     // 使用 useRecordHotkeys 处理快捷键录入
-    const [recordedKeys, { start, stop, isRecording }] = useRecordHotkeys();
+    const [recordedKeys, { start, stop, isRecording, resetKeys }] = useRecordHotkeys();
+
+    useHotkeys(
+      '*',
+      () => {
+        inputRef.current?.blur();
+      },
+      {
+        enableOnContentEditable: true,
+        enableOnFormTags: true,
+        enabled: isRecording && !disabled,
+        keydown: false,
+        keyup: true,
+      },
+    );
 
     // 处理按键，保证格式正确：修饰键在前，最多一个非修饰键在后
     const formatKeys = useCallback((keysSet: Set<string>) => {
@@ -141,6 +155,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
         // 检查冲突
         const conflict = checkHotkeyConflict(newKeysString);
         if (conflict) {
+          console.log('conflict');
           setHasConflict(true);
           onConflict?.(newKeysString);
         } else {
@@ -151,31 +166,29 @@ const HotkeyInput = memo<HotkeyInputProps>(
     }, [recordedKeys, isRecording, isValid, keysString, checkHotkeyConflict, onChange, onConflict]);
 
     // 处理输入框焦点
-    const handleFocus = useCallback(() => {
+    const handleFocus = () => {
       if (disabled) return;
       setIsFocused(true);
       setHasConflict(false);
       setHasInvalidCombination(false);
       start(); // 开始记录
-    }, [disabled, start]);
+    };
 
-    const handleBlur = useCallback(() => {
+    const handleBlur = () => {
       setIsFocused(false);
       stop(); // 停止记录
-    }, [stop]);
+    };
 
     // 重置功能
-    const handleReset = useCallback(
-      (e: MouseEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        onChange?.(defaultValue);
-        setHasConflict(false);
-        setHasInvalidCombination(false);
-        inputRef.current?.blur();
-      },
-      [onChange, defaultValue],
-    );
+    const handleReset = (e: MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      onChange?.(defaultValue);
+      resetKeys();
+      setHasConflict(false);
+      setHasInvalidCombination(false);
+      handleBlur();
+    };
 
     return (
       <Flexbox

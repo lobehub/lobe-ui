@@ -25,7 +25,7 @@ export default () => {
   return (
     <StoryBook levaStore={store}>
       <HotkeyInput
-        hotkeyConflicts={['mod+k']}
+        hotkeyConflicts={['mod+m']}
         onChange={(value) => {
           setShortcut(value);
           console.log(value);

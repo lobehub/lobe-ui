@@ -1,23 +1,75 @@
 'use client';
 
-import { isString } from 'lodash-es';
-import { ChevronUpIcon, Command, Delete, Option } from 'lucide-react';
+import {
+  ArrowBigUpIcon,
+  ArrowDownIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ArrowRightToLineIcon,
+  ArrowUpIcon,
+  ChevronUpIcon,
+  Command,
+  CornerDownLeftIcon,
+  Delete,
+  Grid2X2Icon,
+  MouseIcon,
+  Option,
+  SpaceIcon,
+} from 'lucide-react';
 import { type CSSProperties, memo, useEffect, useMemo, useState } from 'react';
 import { Flexbox, type FlexboxProps } from 'react-layout-kit';
 
 import Icon from '@/Icon';
 
+import LeftClickIcon from './components/LeftClickIcon';
+import RightClickIcon from './components/RightClickIcon';
 import { useStyles } from './style';
 import {
   ALT_KEY,
   BACKSPACE_KEY,
   CONTROL_KEY,
+  DOWN_KEY,
+  ENTER_KEY,
+  LEFT_CLICK_KEY,
+  LEFT_KEY,
   META_KEY,
+  MID_CLICK_KEY,
   MOD_KEY,
+  RIGHT_CLICK_KEY,
+  RIGHT_KEY,
+  SHIFT_KEY,
+  SPACE_KEY,
+  TAB_KEY,
+  UP_KEY,
   checkIsAppleDevice,
   splitKeysByPlus,
   startCase,
 } from './utils';
+
+const mappingKey = (isAppleDevice: boolean) => ({
+  [ALT_KEY]: isAppleDevice ? <Icon icon={Option} /> : 'Alt',
+  [BACKSPACE_KEY]: isAppleDevice ? <Icon icon={Delete} /> : 'Backspace',
+  [CONTROL_KEY]: isAppleDevice ? <Icon icon={ChevronUpIcon} /> : 'Ctrl',
+  [DOWN_KEY]: <Icon icon={ArrowDownIcon} />,
+  [ENTER_KEY]: isAppleDevice ? <Icon icon={CornerDownLeftIcon} /> : 'Enter',
+  [LEFT_CLICK_KEY]: <Icon icon={LeftClickIcon} size={{ fontSize: '1.15em', strokeWidth: 1.75 }} />,
+  [LEFT_KEY]: <Icon icon={ArrowLeftIcon} />,
+  [META_KEY]: isAppleDevice ? <Icon icon={Command} /> : <Icon icon={Grid2X2Icon} />,
+  [MID_CLICK_KEY]: <Icon icon={MouseIcon} size={{ fontSize: '1.15em', strokeWidth: 1.75 }} />,
+  [MOD_KEY]: isAppleDevice ? <Icon icon={Command} /> : 'Ctrl',
+  [RIGHT_CLICK_KEY]: (
+    <Icon icon={RightClickIcon} size={{ fontSize: '1.15em', strokeWidth: 1.75 }} />
+  ),
+  [RIGHT_KEY]: <Icon icon={ArrowRightIcon} />,
+  [SHIFT_KEY]: isAppleDevice ? (
+    <Icon icon={ArrowBigUpIcon} size={{ fontSize: '1.15em', strokeWidth: 1.75 }} />
+  ) : (
+    'Shift'
+  ),
+  [SPACE_KEY]: <Icon icon={SpaceIcon} />,
+  [TAB_KEY]: isAppleDevice ? <Icon icon={ArrowRightToLineIcon} /> : 'Tab',
+  [UP_KEY]: <Icon icon={ArrowUpIcon} />,
+});
 
 export interface HotkeyProps extends Omit<FlexboxProps, 'children'> {
   classNames?: {
@@ -54,16 +106,11 @@ const Hotkey = memo<HotkeyProps>(
     const isAppleDevice = useMemo(() => checkIsAppleDevice(isApple), [isApple]);
 
     useEffect(() => {
-      const mapping: Record<string, any> = {
-        [ALT_KEY]: isAppleDevice ? <Icon icon={Option} /> : 'alt',
-        [BACKSPACE_KEY]: isAppleDevice ? <Icon icon={Delete} /> : 'backspace',
-        [CONTROL_KEY]: isAppleDevice ? <Icon icon={ChevronUpIcon} /> : 'ctrl',
-        [META_KEY]: isAppleDevice ? <Icon icon={Command} /> : 'win',
-        [MOD_KEY]: isAppleDevice ? <Icon icon={Command} /> : 'ctrl',
-      };
-      const newValue = splitKeysByPlus(keys).map((k) => mapping[k] ?? k);
+      const newValue = splitKeysByPlus(keys);
       setKeysGroup(newValue);
-    }, [keys, isAppleDevice]);
+    }, [keys]);
+
+    const mapping: Record<string, any> = useMemo(() => mappingKey(isAppleDevice), [isAppleDevice]);
 
     return (
       <Flexbox
@@ -95,13 +142,13 @@ const Hotkey = memo<HotkeyProps>(
             style={styles?.kbdStyle}
           >
             {keysGroup.map((key, index) => (
-              <div key={index}>{isString(key) ? startCase(key) : key}</div>
+              <div key={index}>{mapping[key] ?? startCase(key)}</div>
             ))}
           </Flexbox>
         ) : (
           keysGroup.map((key, index) => (
             <kbd className={classNames?.descClassName} key={index} style={styles?.kbdStyle}>
-              {isString(key) ? startCase(key) : key}
+              {mapping[key] ?? startCase(key)}
             </kbd>
           ))
         )}

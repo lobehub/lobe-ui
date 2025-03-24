@@ -1,6 +1,6 @@
 ---
 nav: Components
-group: Data Display
+group: Data Entry
 title: HotkeyInput
 ---
 
