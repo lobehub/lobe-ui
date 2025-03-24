@@ -7,6 +7,7 @@ export default () => {
   const control: TooltipProps | any = useControls(
     {
       arrow: false,
+      hotkey: 'mod+k',
       title: 'Example tooltip',
     },
     { store },

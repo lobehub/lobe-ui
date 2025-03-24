@@ -60,7 +60,6 @@ export interface HotkeyProps extends Omit<FlexboxProps, 'children'> {
     kbdClassName?: string;
   };
   compact?: boolean;
-  desc?: string;
   inverseTheme?: boolean;
   isApple?: boolean;
   keys: string;
@@ -71,18 +70,7 @@ export interface HotkeyProps extends Omit<FlexboxProps, 'children'> {
 }
 
 const Hotkey = memo<HotkeyProps>(
-  ({
-    classNames,
-    styles,
-    keys,
-    desc,
-    inverseTheme,
-    isApple,
-    compact,
-    className,
-    style,
-    ...rest
-  }) => {
+  ({ classNames, styles, keys, inverseTheme, isApple, compact, className, style, ...rest }) => {
     const { cx, styles: s } = useStyles(inverseTheme);
     const [keysGroup, setKeysGroup] = useState(splitKeysByPlus(keys));
     const visibility = typeof window === 'undefined' ? 'hidden' : 'visible';
@@ -104,17 +92,6 @@ const Hotkey = memo<HotkeyProps>(
         style={{ visibility, ...style }}
         {...rest}
       >
-        {desc && (
-          <span
-            className={classNames?.descClassName}
-            style={{
-              marginRight: 10,
-              ...styles?.descStyle,
-            }}
-          >
-            {desc}
-          </span>
-        )}
         {compact ? (
           <Flexbox
             align={'center'}

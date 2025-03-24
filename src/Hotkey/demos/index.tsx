@@ -6,7 +6,6 @@ export default () => {
   const control: HotkeyProps | any = useControls(
     {
       compact: false,
-      desc: 'New Topic',
       inverseTheme: false,
       keys: 'mod+k',
     },
