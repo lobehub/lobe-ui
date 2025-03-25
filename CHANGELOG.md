@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.168.10](https://github.com/lobehub/lobe-ui/compare/v1.168.9...v1.168.10)
+
+<sup>Released on **2025-03-25**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update KeyMapEnum.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update KeyMapEnum ([affde66](https://github.com/lobehub/lobe-ui/commit/affde66))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.168.9](https://github.com/lobehub/lobe-ui/compare/v1.168.8...v1.168.9)
 
 <sup>Released on **2025-03-25**</sup>
