@@ -54,7 +54,7 @@ const SearchBar = memo<SearchBarProps>(
     onInputChange,
     placeholder,
     enableShortKey,
-    shortKey = 'f',
+    shortKey = 'mod+k',
     onSearch,
     loading,
     style,
@@ -75,9 +75,9 @@ const SearchBar = memo<SearchBarProps>(
     const [showTag, setShowTag] = useState<boolean>(true);
     const { styles, cx } = useStyles();
     const inputReference: any = useRef<HTMLInputElement>(null);
-    const hotKey = ['mod', shortKey.toLowerCase()].join('+');
+    const hotkey = shortKey.includes('+') ? shortKey : `mod+${shortKey}`;
     useHotkeys(
-      hotKey,
+      hotkey,
       () => {
         if (!enableShortKey) return;
         inputReference.current?.focus();
@@ -139,7 +139,7 @@ const SearchBar = memo<SearchBarProps>(
           <Hotkey
             className={cx(styles.tag, shortKeyClassName)}
             compact
-            keys={hotKey}
+            keys={hotkey}
             style={shortKeyStyle}
           />
         )}
