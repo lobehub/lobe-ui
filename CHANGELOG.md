@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.168.12](https://github.com/lobehub/lobe-ui/compare/v1.168.11...v1.168.12)
+
+<sup>Released on **2025-03-25**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update EditableMessage hotkey display.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update EditableMessage hotkey display ([0172722](https://github.com/lobehub/lobe-ui/commit/0172722))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.168.11](https://github.com/lobehub/lobe-ui/compare/v1.168.10...v1.168.11)
 
 <sup>Released on **2025-03-25**</sup>
