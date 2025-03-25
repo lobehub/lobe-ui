@@ -22,7 +22,9 @@ import { Flexbox, type FlexboxProps } from 'react-layout-kit';
 import Icon from '@/Icon';
 
 import LeftClickIcon from './components/LeftClickIcon';
+import LeftDoubleClickIcon from './components/LeftDoubleClickIcon';
 import RightClickIcon from './components/RightClickIcon';
+import RightDoubleClickIcon from './components/RightDoubleClickIcon';
 import { useStyles } from './style';
 import { KeyMap } from './type';
 import { checkIsAppleDevice, splitKeysByPlus, startCase } from './utils';
@@ -33,15 +35,19 @@ const mappingKey = (isAppleDevice: boolean) => ({
   [KeyMap.Ctrl]: isAppleDevice ? <Icon icon={ChevronUpIcon} /> : 'Ctrl',
   [KeyMap.Down]: <Icon icon={ArrowDownIcon} />,
   [KeyMap.Enter]: isAppleDevice ? <Icon icon={CornerDownLeftIcon} /> : 'Enter',
-  [KeyMap.LeftClick]: (
-    <Icon icon={LeftClickIcon} size={{ fontSize: '1.15em', strokeWidth: 1.75 }} />
-  ),
+  [KeyMap.LeftClick]: <Icon icon={LeftClickIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />,
   [KeyMap.Left]: <Icon icon={ArrowLeftIcon} />,
   [KeyMap.Meta]: isAppleDevice ? <Icon icon={Command} /> : <Icon icon={Grid2X2Icon} />,
-  [KeyMap.MiddleClick]: <Icon icon={MouseIcon} size={{ fontSize: '1.15em', strokeWidth: 1.75 }} />,
+  [KeyMap.MiddleClick]: <Icon icon={MouseIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />,
   [KeyMap.Mod]: isAppleDevice ? <Icon icon={Command} /> : 'Ctrl',
   [KeyMap.RightClick]: (
-    <Icon icon={RightClickIcon} size={{ fontSize: '1.15em', strokeWidth: 1.75 }} />
+    <Icon icon={RightClickIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />
+  ),
+  [KeyMap.RightDoubleClick]: (
+    <Icon icon={RightDoubleClickIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />
+  ),
+  [KeyMap.LeftDoubleClick]: (
+    <Icon icon={LeftDoubleClickIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />
   ),
   [KeyMap.Right]: <Icon icon={ArrowRightIcon} />,
   [KeyMap.Shift]: isAppleDevice ? (
