@@ -58,7 +58,8 @@ export {
 } from './Highlighter';
 export { useChatListActionsBar } from './hooks/useChatListActionsBar';
 export { default as Hotkey, type HotkeyProps } from './Hotkey';
-export { KeyMap } from './Hotkey/type';
+export { KeyMapEnum } from './Hotkey/type';
+export { combineKeys } from './Hotkey/utils';
 export { default as HotkeyInput, type HotkeyInputProps } from './HotkeyInput';
 export { default as Icon, type IconProps, type IconSize } from './Icon';
 export * from './Icon/icons';

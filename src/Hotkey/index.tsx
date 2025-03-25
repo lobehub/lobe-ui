@@ -26,38 +26,53 @@ import LeftDoubleClickIcon from './components/LeftDoubleClickIcon';
 import RightClickIcon from './components/RightClickIcon';
 import RightDoubleClickIcon from './components/RightDoubleClickIcon';
 import { useStyles } from './style';
-import { KeyMap } from './type';
+import { KeyMapEnum } from './type';
 import { checkIsAppleDevice, splitKeysByPlus, startCase } from './utils';
 
 const mappingKey = (isAppleDevice: boolean) => ({
-  [KeyMap.Alt]: isAppleDevice ? <Icon icon={Option} /> : 'Alt',
-  [KeyMap.Backspace]: isAppleDevice ? <Icon icon={Delete} /> : 'Backspace',
-  [KeyMap.Ctrl]: isAppleDevice ? <Icon icon={ChevronUpIcon} /> : 'Ctrl',
-  [KeyMap.Down]: <Icon icon={ArrowDownIcon} />,
-  [KeyMap.Enter]: isAppleDevice ? <Icon icon={CornerDownLeftIcon} /> : 'Enter',
-  [KeyMap.LeftClick]: <Icon icon={LeftClickIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />,
-  [KeyMap.Left]: <Icon icon={ArrowLeftIcon} />,
-  [KeyMap.Meta]: isAppleDevice ? <Icon icon={Command} /> : <Icon icon={Grid2X2Icon} />,
-  [KeyMap.MiddleClick]: <Icon icon={MouseIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />,
-  [KeyMap.Mod]: isAppleDevice ? <Icon icon={Command} /> : 'Ctrl',
-  [KeyMap.RightClick]: (
+  [KeyMapEnum.Alt]: isAppleDevice ? <Icon icon={Option} /> : 'Alt',
+  [KeyMapEnum.Backspace]: isAppleDevice ? <Icon icon={Delete} /> : 'Backspace',
+  [KeyMapEnum.Ctrl]: isAppleDevice ? <Icon icon={ChevronUpIcon} /> : 'Ctrl',
+  [KeyMapEnum.Down]: <Icon icon={ArrowDownIcon} />,
+  [KeyMapEnum.Enter]: isAppleDevice ? <Icon icon={CornerDownLeftIcon} /> : 'Enter',
+  [KeyMapEnum.LeftClick]: (
+    <Icon icon={LeftClickIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />
+  ),
+  [KeyMapEnum.Left]: <Icon icon={ArrowLeftIcon} />,
+  [KeyMapEnum.Meta]: isAppleDevice ? <Icon icon={Command} /> : <Icon icon={Grid2X2Icon} />,
+  [KeyMapEnum.MiddleClick]: (
+    <Icon icon={MouseIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />
+  ),
+  [KeyMapEnum.Mod]: isAppleDevice ? <Icon icon={Command} /> : 'Ctrl',
+  [KeyMapEnum.RightClick]: (
     <Icon icon={RightClickIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />
   ),
-  [KeyMap.RightDoubleClick]: (
+  [KeyMapEnum.RightDoubleClick]: (
     <Icon icon={RightDoubleClickIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />
   ),
-  [KeyMap.LeftDoubleClick]: (
+  [KeyMapEnum.LeftDoubleClick]: (
     <Icon icon={LeftDoubleClickIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />
   ),
-  [KeyMap.Right]: <Icon icon={ArrowRightIcon} />,
-  [KeyMap.Shift]: isAppleDevice ? (
+  [KeyMapEnum.Right]: <Icon icon={ArrowRightIcon} />,
+  [KeyMapEnum.Shift]: isAppleDevice ? (
     <Icon icon={ArrowBigUpIcon} size={{ fontSize: '1.15em', strokeWidth: 1.75 }} />
   ) : (
     'Shift'
   ),
-  [KeyMap.Space]: <Icon icon={SpaceIcon} />,
-  [KeyMap.Tab]: isAppleDevice ? <Icon icon={ArrowRightToLineIcon} /> : 'Tab',
-  [KeyMap.Up]: <Icon icon={ArrowUpIcon} />,
+  [KeyMapEnum.Space]: <Icon icon={SpaceIcon} />,
+  [KeyMapEnum.Tab]: isAppleDevice ? <Icon icon={ArrowRightToLineIcon} /> : 'Tab',
+  [KeyMapEnum.Up]: <Icon icon={ArrowUpIcon} />,
+  [KeyMapEnum.Comma]: ',',
+  [KeyMapEnum.Period]: '.',
+  [KeyMapEnum.Slash]: '/',
+  [KeyMapEnum.Semicolon]: ';',
+  [KeyMapEnum.Quote]: "'",
+  [KeyMapEnum.Backquote]: '`',
+  [KeyMapEnum.Backslash]: '\\',
+  [KeyMapEnum.BracketLeft]: '[',
+  [KeyMapEnum.BracketRight]: ']',
+  [KeyMapEnum.Minus]: '-',
+  [KeyMapEnum.Equal]: '=',
 });
 
 export interface HotkeyProps extends Omit<FlexboxProps, 'children'> {

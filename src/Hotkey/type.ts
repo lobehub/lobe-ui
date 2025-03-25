@@ -1,20 +1,31 @@
-export const enum KeyMap {
-  Alt = 'alt',
-  Backspace = 'backspace',
-  Ctrl = 'ctrl',
-  Down = 'down',
-  Enter = 'enter',
-  Left = 'left',
-  LeftClick = 'left-click',
-  LeftDoubleClick = 'left-double-click',
-  Meta = 'meta',
-  MiddleClick = 'middle-click',
-  Mod = 'mod',
-  Right = 'right',
-  RightClick = 'right-click',
-  RightDoubleClick = 'right-double-click',
-  Shift = 'shift',
-  Space = 'space',
-  Tab = 'tab',
-  Up = 'up',
-}
+export const KeyMapEnum = {
+  Alt: 'alt',
+  Backquote: 'backquote', // `
+  Backslash: 'backslash', // \
+  Backspace: 'backspace',
+  BracketLeft: 'bracketleft', // [
+  BracketRight: 'bracketright', // ]
+  Comma: 'comma', // ,
+  Ctrl: 'ctrl',
+  Down: 'down',
+  Enter: 'enter',
+  Equal: 'equal', // =
+  Left: 'left',
+  LeftClick: 'left-click',
+  LeftDoubleClick: 'left-double-click',
+  Meta: 'meta', // Command on Mac, Win on Win
+  MiddleClick: 'middle-click',
+  Minus: 'minus', // -
+  Mod: 'mod', // Command on Mac, Ctrl on Win
+  Period: 'period', // .
+  Quote: 'quote', // '
+  Right: 'right',
+  RightClick: 'right-click',
+  RightDoubleClick: 'right-double-click',
+  Semicolon: 'semicolon', // ;
+  Shift: 'shift',
+  Slash: 'slash', // /
+  Space: 'space',
+  Tab: 'tab',
+  Up: 'up',
+} as const;

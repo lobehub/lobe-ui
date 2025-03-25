@@ -1,10 +1,7 @@
+import { KeyMapEnum } from './type';
+
 export const splitKeysByPlus = (keys: string): string[] => {
-  const placeholder = 'PLACEHOLDER';
-  const parts = keys.replaceAll('++', `+${placeholder}`).split('+');
-  return parts.filter(Boolean).map((part) => {
-    if (part === placeholder) return '+';
-    return part;
-  });
+  return keys.replaceAll('++', `+${KeyMapEnum.Equal}`).split('+');
 };
 
 export const startCase = (str: string): string => {
@@ -26,3 +23,5 @@ export const checkIsAppleDevice = (isApple?: boolean) => {
   const userAgent = navigator.userAgent.toLowerCase();
   return /mac|iphone|ipod|ipad|ios/i.test(userAgent);
 };
+
+export const combineKeys = (keys: string[]): string => keys.join('+');

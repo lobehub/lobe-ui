@@ -1,8 +1,8 @@
 import { createLucideIcon } from 'lucide-react';
 
-import { KeyMap } from '../type';
+import { KeyMapEnum } from '../type';
 
-const Icon = createLucideIcon(KeyMap.RightClick, [
+const Icon = createLucideIcon(KeyMapEnum.RightClick, [
   [
     'path',
     {
