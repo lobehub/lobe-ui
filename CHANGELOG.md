@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.168.7](https://github.com/lobehub/lobe-ui/compare/v1.168.6...v1.168.7)
+
+<sup>Released on **2025-03-25**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Remove chat item log.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Remove chat item log, closes [#302](https://github.com/lobehub/lobe-ui/issues/302) ([7718c2b](https://github.com/lobehub/lobe-ui/commit/7718c2b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.168.6](https://github.com/lobehub/lobe-ui/compare/v1.168.5...v1.168.6)
 
 <sup>Released on **2025-03-24**</sup>
