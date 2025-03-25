@@ -11,7 +11,7 @@ apiHeader:
 
 ## Default
 
-<code src="./demos/index.tsx" nopadding></code> <code src="./demos/table.tsx" nopadding></code> <code src="./demos/Editing.tsx"></code>
+<code src="./demos/index.tsx" nopadding></code> <code src="./demos/table.tsx" nopadding></code> <code src="./demos/code.tsx" nopadding></code> <code src="./demos/Editing.tsx"></code>
 
 ## Alert
 
