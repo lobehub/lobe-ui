@@ -49,7 +49,10 @@ export const useStyles = createStyles(
       input: cx(
         variant !== 'pure' && typeStylish,
         css`
+          cursor: pointer;
+
           position: relative;
+
           max-width: 100%;
           height: ${variant === 'pure' ? 'unset' : '36px'};
           padding: ${variant === 'pure' ? '0' : '0 12px'};
