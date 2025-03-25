@@ -1,15 +1,16 @@
 'use client';
 
 import { Button, ButtonProps } from 'antd';
-import { ChevronUpIcon, CommandIcon, CornerDownLeft } from 'lucide-react';
 import { type CSSProperties, memo, useState } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { Flexbox } from 'react-layout-kit';
 
-import Icon from '@/Icon';
+import Hotkey from '@/Hotkey';
+import { KeyMapEnum } from '@/Hotkey/type';
+import { combineKeys } from '@/Hotkey/utils';
 import { TextArea } from '@/Input';
 import { type TextAreaProps } from '@/Input';
 import { DivProps } from '@/types';
-import { isMacLike } from '@/utils/platform';
 
 import { useStyles } from './style';
 
@@ -74,8 +75,14 @@ const MessageInput = memo<MessageInputProps>(
   }) => {
     const [temporaryValue, setValue] = useState<string>(defaultValue || '');
     const { cx, styles } = useStyles();
-
+    const hotkey = combineKeys([KeyMapEnum.Mod, KeyMapEnum.Enter]);
     const isAutoSize = height === 'auto';
+
+    useHotkeys(hotkey, () => onConfirm?.(temporaryValue), {
+      enableOnFormTags: true,
+      enabled: shortcut,
+      preventDefault: true,
+    });
 
     return (
       <Flexbox gap={16} style={{ flex: 1, width: '100%', ...style }} {...rest}>
@@ -85,15 +92,6 @@ const MessageInput = memo<MessageInputProps>(
           classNames={classNames}
           onBlur={(e) => setValue(e.target.value)}
           onChange={(e) => setValue(e.target.value)}
-          onPressEnter={
-            shortcut
-              ? (e) => {
-                  if (isMacLike ? e.metaKey : e.ctrlKey) {
-                    onConfirm?.(temporaryValue);
-                  }
-                }
-              : undefined
-          }
           placeholder={placeholder}
           resize={false}
           style={textareaStyle}
@@ -108,18 +106,13 @@ const MessageInput = memo<MessageInputProps>(
           ) : (
             <>
               <Button
-                onClick={() => {
-                  onConfirm?.(temporaryValue);
-                }}
+                onClick={() => onConfirm?.(temporaryValue)}
                 size={editButtonSize}
                 type="primary"
               >
                 {text?.confirm || 'Confirm'}
                 {shortcut && (
-                  <Flexbox gap={4} horizontal>
-                    <Icon icon={isMacLike ? CommandIcon : ChevronUpIcon} size={{ fontSize: 12 }} />
-                    <Icon icon={CornerDownLeft} size={{ fontSize: 12 }} />
-                  </Flexbox>
+                  <Hotkey inverseTheme keys={combineKeys([KeyMapEnum.Mod, KeyMapEnum.Enter])} />
                 )}
               </Button>
               <Button onClick={onCancel} size={editButtonSize}>
