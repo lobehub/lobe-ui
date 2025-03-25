@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.168.9](https://github.com/lobehub/lobe-ui/compare/v1.168.8...v1.168.9)
+
+<sup>Released on **2025-03-25**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update SearchBar hotkey.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update SearchBar hotkey ([029e3a3](https://github.com/lobehub/lobe-ui/commit/029e3a3))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.168.8](https://github.com/lobehub/lobe-ui/compare/v1.168.7...v1.168.8)
 
 <sup>Released on **2025-03-25**</sup>
