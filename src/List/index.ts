@@ -1,3 +1,5 @@
+'use client';
+
 import ListItem from './ListItem';
 
 const List = {

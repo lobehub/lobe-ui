@@ -1,3 +1,5 @@
+'use client';
+
 import { useSize } from 'ahooks';
 import { createStyles } from 'antd-style';
 import { TextAreaRef } from 'antd/es/input/TextArea';

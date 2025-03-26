@@ -1,3 +1,5 @@
+'use client';
+
 import { Typography } from 'antd';
 import { createStyles } from 'antd-style';
 import { memo, useMemo } from 'react';
@@ -11,12 +13,12 @@ const useStyles = createStyles(({ css, token }) => ({
     max-width: 160px;
     height: 100%;
     padding: 8px;
-    border-radius: 8px;
 
     font-size: 12px;
     color: initial;
 
     background: ${token.colorFillQuaternary};
+    border-radius: 8px;
 
     &:hover {
       background: ${token.colorFillTertiary};

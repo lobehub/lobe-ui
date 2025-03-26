@@ -1,3 +1,5 @@
+'use client';
+
 import { TextAreaRef } from 'antd/es/input/TextArea';
 import { CSSProperties, forwardRef, memo, useRef } from 'react';
 

@@ -1,3 +1,5 @@
+'use client';
+
 import { PanelLeft, Pin, PinOff } from 'lucide-react';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';

@@ -1,3 +1,5 @@
+'use client';
+
 import { Collapse as AntdCollapse, CollapseProps as AntdCollapseProps } from 'antd';
 import { ChevronDown } from 'lucide-react';
 import { memo } from 'react';

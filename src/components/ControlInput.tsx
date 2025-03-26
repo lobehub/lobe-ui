@@ -1,3 +1,5 @@
+'use client';
+
 import { ConfigProvider, type InputRef, Space } from 'antd';
 import { RotateCcw, Save } from 'lucide-react';
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react';

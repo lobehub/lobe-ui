@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from 'antd-style';
 import { Loader2, SendHorizontal } from 'lucide-react';
 import { readableColor } from 'polished';
