@@ -1,3 +1,5 @@
+'use client';
+
 import { Image, ImageProps } from 'antd';
 import { PropsWithChildren, ReactNode, memo } from 'react';
 

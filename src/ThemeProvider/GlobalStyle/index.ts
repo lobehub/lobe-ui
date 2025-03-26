@@ -1,3 +1,5 @@
+'use client';
+
 import { createGlobalStyle } from 'antd-style';
 
 import antdOverride from './antdOverride';
