@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.168.16](https://github.com/lobehub/lobe-ui/compare/v1.168.15...v1.168.16)
+
+<sup>Released on **2025-03-26**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix use client.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix use client ([9c7ae09](https://github.com/lobehub/lobe-ui/commit/9c7ae09))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.168.15](https://github.com/lobehub/lobe-ui/compare/v1.168.14...v1.168.15)
 
 <sup>Released on **2025-03-26**</sup>
