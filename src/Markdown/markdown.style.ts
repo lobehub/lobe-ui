@@ -239,12 +239,12 @@ export const useStyles = createStyles(
           padding-inline-start: 0;
           list-style-position: outside;
 
-          ul,
-          ol {
+          > ul,
+          > ol {
             margin-block: 0;
           }
 
-          li {
+          > li {
             margin-inline-start: 1em;
           }
         }
@@ -256,7 +256,7 @@ export const useStyles = createStyles(
         ul:not(${IGNORE_CLASSNAME} ul) {
           list-style-type: none;
 
-          li {
+          > li {
             &::before {
               content: '-';
               display: inline-block;

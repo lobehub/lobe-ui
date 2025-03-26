@@ -13,7 +13,7 @@ export default () => {
   const state = cases[current];
 
   return (
-    <>
+    <Flexbox padding={16}>
       <Radio.Group
         onChange={(e) => {
           setCurrent(e.target.value);
@@ -49,6 +49,6 @@ export default () => {
       >
         {normalizeThinkTags(state.markdown)}
       </Markdown>
-    </>
+    </Flexbox>
   );
 };

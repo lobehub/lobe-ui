@@ -12,7 +12,7 @@ const Think = ({ children }: PropsWithChildren) => {
   return (
     <div style={{ background: theme.colorBgElevated, padding: 12 }}>
       here is a custom think comp:
-      <Markdown>{children as string}</Markdown>
+      <Markdown variant={'chat'}>{children as string}</Markdown>
     </div>
   );
 };
@@ -27,7 +27,7 @@ export default () => {
         <Button onClick={() => setContent(ollama)}>未换行</Button>
         <Button onClick={() => setContent(inlineMode)}>inline</Button>
       </Flexbox>
-      <Markdown components={{ think: Think }} remarkPlugins={[remarkCaptureThink]}>
+      <Markdown components={{ think: Think }} remarkPlugins={[remarkCaptureThink]} variant={'chat'}>
         {normalizeThinkTags(displayContent)}
       </Markdown>
     </div>

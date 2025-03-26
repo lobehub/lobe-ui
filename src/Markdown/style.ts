@@ -21,12 +21,12 @@ export const useStyles = createStyles(
 
         ol,
         ul {
-          li {
+          > li {
             &::marker {
               color: ${cyanColor} !important;
             }
 
-            li {
+            > li {
               &::marker {
                 color: ${token.colorTextSecondary} !important;
               }
@@ -37,7 +37,7 @@ export const useStyles = createStyles(
         ul {
           list-style: unset;
 
-          li {
+          > li {
             &::before {
               content: unset;
               display: unset;

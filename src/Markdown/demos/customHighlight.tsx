@@ -1,5 +1,6 @@
 import { ActionIcon, Markdown } from '@lobehub/ui';
 import { AlertCircleIcon } from 'lucide-react';
+import { Flexbox } from 'react-layout-kit';
 
 const code = `\`\`\`tsx
 export default ({ children, className }: MarkdownProps) => {
@@ -18,26 +19,28 @@ export default ({ children, className }: MarkdownProps) => {
 
 export default () => {
   return (
-    <Markdown
-      componentProps={{
-        highlight: {
-          actionsRender: ({ content, actionIconSize, language, originalNode }) => {
-            return (
-              <>
-                {originalNode}
-                <ActionIcon
-                  icon={AlertCircleIcon}
-                  onClick={() => alert(language + content)}
-                  size={actionIconSize}
-                />
-              </>
-            );
+    <Flexbox padding={16}>
+      <Markdown
+        componentProps={{
+          highlight: {
+            actionsRender: ({ content, actionIconSize, language, originalNode }) => {
+              return (
+                <>
+                  {originalNode}
+                  <ActionIcon
+                    icon={AlertCircleIcon}
+                    onClick={() => alert(language + content)}
+                    size={actionIconSize}
+                  />
+                </>
+              );
+            },
           },
-        },
-      }}
-      fullFeaturedCodeBlock
-    >
-      {code}
-    </Markdown>
+        }}
+        fullFeaturedCodeBlock
+      >
+        {code}
+      </Markdown>
+    </Flexbox>
   );
 };

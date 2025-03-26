@@ -7,35 +7,37 @@ description: Markdown is a React component used to render markdown text. It supp
 
 ## Default
 
-<code src="./demos/index.tsx" nopadding></code>
+<code src="./demos/index.tsx" iframe nopadding></code>
 
 ## Chat Mode
 
-<code src="./demos/chat.tsx" nopadding></code>
+<code src="./demos/chat.tsx" iframe nopadding></code>
 
 ## Shiki Transformers
 
-<code src="./demos/transformer.tsx" nopadding></code>
+<code src="./demos/transformer.tsx" iframe nopadding></code>
 
 ## Custom Markdown Components
 
-<code src="./demos/customComponents.tsx" nopadding></code>
+<code src="./demos/customComponents.tsx" iframe nopadding></code>
 
 ## Custom Highlight
 
-<code src="./demos/customHighlight.tsx"></code>
+<code iframe src="./demos/customHighlight.tsx"></code>
 
 ## Citations
 
-<code src="./demos/citations/index.tsx"></code> <code src="./demos/citations/footnotes.tsx"></code>
+<code iframe src="./demos/citations/index.tsx"></code>
+
+<code iframe src="./demos/citations/footnotes.tsx"></code>
 
 ## Think
 
-<code src="./demos/thinking/index.tsx"></code>
+<code iframe src="./demos/thinking/index.tsx"></code>
 
 ## Custom Plugins
 
-<code src="./demos/customPlugins/index.tsx" nopadding></code>
+<code iframe src="./demos/customPlugins/index.tsx" nopadding></code>
 
 ## APIs
 

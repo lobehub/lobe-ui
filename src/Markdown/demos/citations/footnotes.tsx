@@ -1,3 +1,5 @@
+import { Flexbox } from 'react-layout-kit';
+
 import { Markdown } from '@/index';
 
 const code = `
@@ -37,5 +39,11 @@ ToDesktop 特别适合以下场景：
 `;
 
 export default () => {
-  return <Markdown enableCustomFootnotes>{code}</Markdown>;
+  return (
+    <Flexbox padding={16}>
+      <Markdown enableCustomFootnotes variant={'chat'}>
+        {code}
+      </Markdown>
+    </Flexbox>
+  );
 };

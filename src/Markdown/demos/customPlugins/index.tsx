@@ -55,7 +55,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Markdown {...config} />
+      <Markdown variant={'chat'} {...config} />
     </StoryBook>
   );
 };

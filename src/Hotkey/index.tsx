@@ -139,3 +139,5 @@ const Hotkey = memo<HotkeyProps>(
 );
 
 export default Hotkey;
+export { KeyMapEnum } from './type';
+export { combineKeys } from './utils';
