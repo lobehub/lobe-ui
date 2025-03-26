@@ -89,3 +89,6 @@ const SearchResultCard = memo<SearchResultCardProps>(({ url, title, alt }) => {
 });
 
 export default SearchResultCard;
+
+
+export { useStyles, SearchResultCard };
