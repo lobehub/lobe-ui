@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.168.13](https://github.com/lobehub/lobe-ui/compare/v1.168.12...v1.168.13)
+
+<sup>Released on **2025-03-26**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update border color.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update border color ([0aa59fe](https://github.com/lobehub/lobe-ui/commit/0aa59fe))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.168.12](https://github.com/lobehub/lobe-ui/compare/v1.168.11...v1.168.12)
 
 <sup>Released on **2025-03-25**</sup>
