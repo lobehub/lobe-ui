@@ -156,3 +156,6 @@ export const useHighlight = (
 };
 
 export { default as languageMap } from './languageMap';
+
+
+export { highlightCache, MD5_LENGTH_THRESHOLD, loadShiki, shikiPromise, escapeHtml };
