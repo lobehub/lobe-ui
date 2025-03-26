@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from 'antd';
 import { useResponsive } from 'antd-style';
 import { forwardRef } from 'react';

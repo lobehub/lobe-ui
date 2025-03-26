@@ -1,3 +1,5 @@
+'use client';
+
 import { Copy, Edit, RotateCw, Trash } from 'lucide-react';
 import { useMemo } from 'react';
 

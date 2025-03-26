@@ -1,3 +1,5 @@
+'use client';
+
 import { ElementType, ReactNode, createContext, memo, useContext } from 'react';
 
 import { CDN, CdnApi, genCdnUrl } from '@/utils/genCdnUrl';
