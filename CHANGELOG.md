@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.168.18](https://github.com/lobehub/lobe-ui/compare/v1.168.17...v1.168.18)
+
+<sup>Released on **2025-03-26**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Refactor markdown.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Refactor markdown, closes [#311](https://github.com/lobehub/lobe-ui/issues/311) ([02c48c8](https://github.com/lobehub/lobe-ui/commit/02c48c8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.168.17](https://github.com/lobehub/lobe-ui/compare/v1.168.16...v1.168.17)
 
 <sup>Released on **2025-03-26**</sup>
