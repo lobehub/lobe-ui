@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 
-import { escapeHtml } from '../src/hooks/useHighlight';
+import {
+  MD5_LENGTH_THRESHOLD,
+  escapeHtml,
+  highlightCache,
+  loadShiki,
+  shikiPromise,
+} from '../src/hooks/useHighlight';
 
 describe('escapeHtml', () => {
   it('should escape HTML special characters', () => {
@@ -34,5 +40,53 @@ describe('escapeHtml', () => {
     const input = '<script>alert("&\'test\'")</script>';
     const expected = '&lt;script&gt;alert(&quot;&amp;&#039;test&#039;&quot;)&lt;/script&gt;';
     expect(escapeHtml(input)).toBe(expected);
+  });
+});
+
+describe('highlightCache', () => {
+  it('should be initialized as empty Map', () => {
+    expect(highlightCache).toBeInstanceOf(Map);
+    expect(highlightCache.size).toBe(0);
+  });
+
+  it('should store and retrieve values', () => {
+    highlightCache.set('test-key', 'test-value');
+    expect(highlightCache.get('test-key')).toBe('test-value');
+    highlightCache.clear();
+  });
+
+  it('should handle overwriting existing values', () => {
+    highlightCache.set('test-key', 'value1');
+    highlightCache.set('test-key', 'value2');
+    expect(highlightCache.get('test-key')).toBe('value2');
+    highlightCache.clear();
+  });
+});
+
+describe('MD5_LENGTH_THRESHOLD', () => {
+  it('should be set to 10000', () => {
+    expect(MD5_LENGTH_THRESHOLD).toBe(10_000);
+  });
+});
+
+describe('loadShiki', () => {
+  it('should return a Promise', () => {
+    expect(loadShiki()).toBeInstanceOf(Promise);
+  });
+
+  it('should eventually resolve to a function', async () => {
+    const codeToHtml = await loadShiki();
+    expect(typeof codeToHtml).toBe('function');
+  });
+});
+
+describe('shikiPromise', () => {
+  it('should be a Promise', () => {
+    expect(shikiPromise).toBeInstanceOf(Promise);
+  });
+
+  it('should resolve to a function', async () => {
+    const codeToHtml = await shikiPromise;
+    expect(typeof codeToHtml).toBe('function');
   });
 });
