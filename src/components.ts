@@ -82,7 +82,7 @@ export {
 } from './Layout';
 export { default as List, type ListItemProps } from './List';
 export { default as Markdown, type MarkdownProps } from './Markdown';
-export { Typography, type TypographyProps } from './Markdown/Typography';
+export { default as Typography, type TypographyProps } from './Markdown/Typography';
 export {
   default as MaterialFileTypeIcon,
   type MaterialFileTypeIconProps,

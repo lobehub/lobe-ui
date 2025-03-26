@@ -1,19 +1,19 @@
 'use client';
 
-import { CSSProperties, FC, PropsWithChildren } from 'react';
+import { FC } from 'react';
+
+import { DivProps } from '@/types';
 
 import { useStyles } from './markdown.style';
 
-export interface TypographyProps extends PropsWithChildren {
-  className?: string;
+export interface TypographyProps extends DivProps {
   fontSize?: number;
   headerMultiple?: number;
   lineHeight?: number;
   marginMultiple?: number;
-  style?: CSSProperties;
 }
 
-export const Typography: FC<TypographyProps> = ({
+const Typography: FC<TypographyProps> = ({
   children,
   className,
   fontSize,
@@ -25,29 +25,10 @@ export const Typography: FC<TypographyProps> = ({
   const { cx, styles } = useStyles({ fontSize, headerMultiple, lineHeight, marginMultiple });
 
   return (
-    <article
-      className={cx(
-        styles.__root,
-        styles.a,
-        styles.blockquote,
-        styles.code,
-        styles.details,
-        styles.header,
-        styles.hr,
-        styles.img,
-        styles.kbd,
-        styles.list,
-        styles.p,
-        styles.pre,
-        styles.strong,
-        styles.table,
-        styles.video,
-        styles.svg,
-        className,
-      )}
-      {...rest}
-    >
+    <article className={cx(styles, className)} {...rest}>
       {children}
     </article>
   );
 };
+
+export default Typography;

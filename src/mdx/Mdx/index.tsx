@@ -11,7 +11,7 @@ import type { Pluggable } from 'unified';
 
 import Alert from '@/Alert';
 import ImageGallery from '@/Image/ImageGallery';
-import { Typography, type TypographyProps } from '@/Markdown/Typography';
+import Typography, { type TypographyProps } from '@/Markdown/Typography';
 import { useStyles } from '@/Markdown/style';
 import { escapeBrackets, escapeMhchem, fixMarkdownBold } from '@/Markdown/utils';
 

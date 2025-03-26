@@ -5,23 +5,22 @@ import { content } from './data';
 
 export default () => {
   const store = useCreateStore();
-  const { children, variant }: MarkdownProps | any = useControls(
+  const { children, ...rest }: MarkdownProps | any = useControls(
     {
       children: {
         rows: true,
         value: content,
       },
-      variant: {
-        options: ['normal', 'chat'],
-        value: 'chat',
-      },
+      fullFeaturedCodeBlock: true,
     },
     { store },
   );
 
   return (
     <StoryBook levaStore={store}>
-      <Markdown variant={variant}>{children}</Markdown>
+      <Markdown variant={'chat'} {...rest}>
+        {children}
+      </Markdown>
     </StoryBook>
   );
 };

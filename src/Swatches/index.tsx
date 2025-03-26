@@ -1,12 +1,15 @@
 'use client';
 
-import { useTheme } from 'antd-style';
+import { CheckIcon } from 'lucide-react';
+import { darken } from 'polished';
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+import { Center, Flexbox, FlexboxProps } from 'react-layout-kit';
+
+import Icon from '@/Icon';
 
 import { useStyles } from './style';
 
-export interface SwatchesProps {
+export interface SwatchesProps extends Omit<FlexboxProps, 'onSelect'> {
   /**
    * @description The currently active color
    * @default undefined
@@ -28,39 +31,38 @@ export interface SwatchesProps {
   size?: number;
 }
 
-const Swatches = memo<SwatchesProps>(({ colors, activeColor, onSelect, size = 24 }) => {
-  const theme = useTheme();
-  const { cx, styles } = useStyles(size);
+const Swatches = memo<SwatchesProps>(
+  ({ style, colors, activeColor, onSelect, size = 24, ...rest }) => {
+    const { cx, styles } = useStyles(size);
 
-  return (
-    <Flexbox gap={8} horizontal style={{ flexWrap: 'wrap' }}>
-      <Flexbox
-        className={cx(styles.container, !activeColor && styles.active)}
-        onClick={() => {
-          onSelect?.();
-        }}
-        style={{
-          background: theme.colorBgContainer,
-        }}
-      />
-      {colors.map((c, index) => {
-        const isActive = c === activeColor;
-
-        return (
-          <Flexbox
-            className={cx(styles.container, isActive && styles.active)}
-            key={`${c}_${index}`}
-            onClick={() => {
-              onSelect?.(c);
-            }}
-            style={{
-              background: c,
-            }}
-          />
-        );
-      })}
-    </Flexbox>
-  );
-});
+    return (
+      <Flexbox gap={8} horizontal style={{ flexWrap: 'wrap', ...style }} {...rest}>
+        {colors.map((c, index) => {
+          const isActive = c === activeColor;
+          return (
+            <Center
+              className={cx(styles.container, isActive && styles.active)}
+              key={`${c}_${index}`}
+              onClick={() => {
+                onSelect?.(c);
+              }}
+              style={{
+                background: c,
+              }}
+            >
+              {isActive && (
+                <Icon
+                  color={darken(0.3, c)}
+                  icon={CheckIcon}
+                  size={{ fontSize: 14, strokeWidth: 4 }}
+                />
+              )}
+            </Center>
+          );
+        })}
+      </Flexbox>
+    );
+  },
+);
 
 export default Swatches;

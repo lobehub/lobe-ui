@@ -44,5 +44,4 @@ export const genCdnUrl = ({ pkg, version = 'latest', path, proxy }: CdnApi): str
 //   }
 // };
 
-
-export { UNPKG_API, ALIYUN_API };
+export { ALIYUN_API, UNPKG_API };

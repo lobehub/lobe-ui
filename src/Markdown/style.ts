@@ -1,80 +1,66 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(
-  (
-    { css, token, isDarkMode },
-    {
-      fontSize = 14,
-      headerMultiple = 0.25,
-      marginMultiple = 1,
-      lineHeight = 1.6,
-    }: { fontSize?: number; headerMultiple?: number; lineHeight?: number; marginMultiple?: number },
-  ) => {
-    const cyanColor = isDarkMode ? token.cyan9A : token.cyan11A;
-    return {
-      chat: css`
-        --lobe-markdown-font-size: ${fontSize}px;
-        --lobe-markdown-header-multiple: ${headerMultiple};
-        --lobe-markdown-margin-multiple: ${marginMultiple};
-        --lobe-markdown-line-height: ${lineHeight};
-        --lobe-markdown-border-radius: ${token.borderRadius};
+export const useStyles = createStyles(({ css, token, isDarkMode }) => {
+  const cyanColor = isDarkMode ? token.cyan9A : token.cyan11A;
+  return {
+    chat: css`
+      --lobe-markdown-border-radius: ${token.borderRadius};
 
-        ol,
-        ul {
+      ol,
+      ul {
+        > li {
+          &::marker {
+            color: ${cyanColor} !important;
+          }
+
           > li {
             &::marker {
-              color: ${cyanColor} !important;
-            }
-
-            > li {
-              &::marker {
-                color: ${token.colorTextSecondary} !important;
-              }
+              color: ${token.colorTextSecondary} !important;
             }
           }
         }
+      }
 
-        ul {
-          list-style: unset;
+      ul {
+        list-style: unset;
 
-          > li {
-            &::before {
-              content: unset;
-              display: unset;
-            }
+        > li {
+          &::before {
+            content: unset;
+            display: unset;
           }
         }
-      `,
-      latex: css`
-        .katex-html {
-          overflow: auto hidden;
-          padding: 3px;
+      }
+    `,
+    latex: css`
+      .katex-html {
+        overflow: auto hidden;
+        padding: 3px;
 
-          .base {
-            margin-block: 0;
-            margin-inline: auto;
-          }
-
-          .tag {
-            position: relative !important;
-            display: inline-block;
-            padding-inline-start: 0.5rem;
-          }
-        }
-      `,
-      root: css`
-        position: relative;
-        overflow: hidden;
-        max-width: 100%;
-
-        #footnote-label {
-          display: none;
+        .base {
+          margin-block: 0;
+          margin-inline: auto;
         }
 
-        sup:has(a[aria-describedby='footnote-label']) {
-          vertical-align: super !important;
+        .tag {
+          position: relative !important;
+          display: inline-block;
+          padding-inline-start: 0.5rem;
         }
-      `,
-    };
-  },
-);
+      }
+    `,
+    root: css`
+      position: relative;
+      overflow: hidden;
+      max-width: 100%;
+
+      #footnote-label {
+        display: none;
+      }
+
+      sup:has(a[aria-describedby='footnote-label']) {
+        vertical-align: super !important;
+      }
+    `,
+  };
+});
