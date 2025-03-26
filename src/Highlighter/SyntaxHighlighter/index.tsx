@@ -21,24 +21,25 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
     const { styles, cx } = useStyles();
     const { data, isLoading } = useHighlight(children, language, enableTransformer);
 
+    if (!data)
+      return (
+        <div className={cx(styles.unshiki, className)} style={style}>
+          <pre>
+            <code>{children}</code>
+          </pre>
+        </div>
+      );
+
     return (
       <>
-        {isLoading || !data ? (
-          <div className={cx(styles.unshiki, className)} style={style}>
-            <pre>
-              <code>{children}</code>
-            </pre>
-          </div>
-        ) : (
-          <div
-            className={cx(styles.shiki, className)}
-            dangerouslySetInnerHTML={{
-              __html: data as string,
-            }}
-            dir="ltr"
-            style={style}
-          />
-        )}
+        <div
+          className={cx(styles.shiki, className)}
+          dangerouslySetInnerHTML={{
+            __html: data as string,
+          }}
+          dir="ltr"
+          style={style}
+        />
         {isLoading && (
           <Flexbox
             align={'center'}

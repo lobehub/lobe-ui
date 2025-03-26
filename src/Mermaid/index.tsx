@@ -1,5 +1,6 @@
 'use client';
 
+import { isUndefined } from 'lodash-es';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
@@ -7,9 +8,10 @@ import CopyButton from '@/CopyButton';
 import Tag from '@/Tag';
 
 import FullFeatured from './FullFeatured';
+import MermaidContainer from './components/MermaidContainer';
+import MermaidZoomableContainer from './components/MermaidZoomableContainer';
 import { useStyles } from './style';
 import { MermaidProps } from './type';
-import { useMermaid } from './useMermaid';
 
 const Mermaid = memo<MermaidProps>(
   ({
@@ -28,12 +30,9 @@ const Mermaid = memo<MermaidProps>(
   }) => {
     const { cx, styles } = useStyles(type);
     const tirmedChildren = children.trim();
-    const MermaidRender = useMermaid(tirmedChildren, {
-      enablePanZoom: fullFeatured ? true : enablePanZoom,
-    });
 
     const originalActions = copyable && (
-      <CopyButton content={children} placement="left" size={copyButtonSize} />
+      <CopyButton content={tirmedChildren} placement="left" size={copyButtonSize} />
     );
 
     const actions = actionsRender
@@ -44,7 +43,12 @@ const Mermaid = memo<MermaidProps>(
         })
       : originalActions;
 
-    const defaultBody = <MermaidRender />;
+    const defaultBody =
+      enablePanZoom || (isUndefined(enablePanZoom) && fullFeatured) ? (
+        <MermaidZoomableContainer>{tirmedChildren}</MermaidZoomableContainer>
+      ) : (
+        <MermaidContainer>{tirmedChildren}</MermaidContainer>
+      );
 
     const body = bodyRender
       ? bodyRender({ content: tirmedChildren, originalNode: defaultBody })
@@ -58,7 +62,6 @@ const Mermaid = memo<MermaidProps>(
           className={className}
           content={tirmedChildren}
           copyable={copyable}
-          enablePanZoom={enablePanZoom}
           showLanguage={showLanguage}
           style={style}
           type={type}
