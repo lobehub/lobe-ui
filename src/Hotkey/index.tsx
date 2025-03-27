@@ -88,11 +88,24 @@ export interface HotkeyProps extends Omit<FlexboxProps, 'children'> {
     descStyle?: CSSProperties;
     kbdStyle?: CSSProperties;
   };
+  variant?: 'default' | 'pure';
 }
 
 const Hotkey = memo<HotkeyProps>(
-  ({ classNames, styles, keys, inverseTheme, isApple, compact, className, style, ...rest }) => {
+  ({
+    variant = 'default',
+    classNames,
+    styles,
+    keys,
+    inverseTheme,
+    isApple,
+    compact,
+    className,
+    style,
+    ...rest
+  }) => {
     const { cx, styles: s } = useStyles(inverseTheme);
+    const isPure = variant === 'pure';
     const [keysGroup, setKeysGroup] = useState(splitKeysByPlus(keys));
     const visibility = typeof window === 'undefined' ? 'hidden' : 'visible';
     const isAppleDevice = useMemo(() => checkIsAppleDevice(isApple), [isApple]);
@@ -113,7 +126,9 @@ const Hotkey = memo<HotkeyProps>(
         style={{ visibility, ...style }}
         {...rest}
       >
-        {compact ? (
+        {isPure ? (
+          keysGroup.map((key, index) => <span key={index}>{mapping[key] ?? startCase(key)}</span>)
+        ) : compact ? (
           <Flexbox
             align={'center'}
             as={'kbd'}

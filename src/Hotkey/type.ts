@@ -10,6 +10,7 @@ export const KeyMapEnum = {
   Down: 'down',
   Enter: 'enter',
   Equal: 'equal', // =
+  Esc: 'esc',
   Left: 'left',
   LeftClick: 'left-click',
   LeftDoubleClick: 'left-double-click',

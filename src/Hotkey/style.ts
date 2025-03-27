@@ -3,6 +3,8 @@ import { rgba } from 'polished';
 
 export const useStyles = createStyles(
   ({ css, token }, inverseTheme: boolean) => css`
+    color: ${inverseTheme ? token.colorTextTertiary : token.colorTextSecondary};
+
     kbd {
       overflow: hidden;
       display: flex;
@@ -18,7 +20,7 @@ export const useStyles = createStyles(
       font-family: ${token.fontFamily};
       font-size: 12px;
       line-height: 1.1;
-      color: ${inverseTheme ? token.colorTextTertiary : token.colorTextSecondary};
+      color: inherit;
       text-align: center;
       white-space: nowrap;
 

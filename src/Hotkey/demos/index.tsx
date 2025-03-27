@@ -8,6 +8,10 @@ export default () => {
       compact: false,
       inverseTheme: false,
       keys: 'mod+k',
+      variant: {
+        options: ['pure', 'default'],
+        value: 'default',
+      },
     },
     { store },
   );

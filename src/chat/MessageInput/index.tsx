@@ -5,11 +5,11 @@ import { type CSSProperties, memo, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { Flexbox } from 'react-layout-kit';
 
-import Hotkey from '@/Hotkey';
 import { KeyMapEnum } from '@/Hotkey/type';
 import { combineKeys } from '@/Hotkey/utils';
 import { TextArea } from '@/Input';
 import { type TextAreaProps } from '@/Input';
+import Tooltip from '@/Tooltip';
 import { DivProps } from '@/types';
 
 import { useStyles } from './style';
@@ -75,14 +75,38 @@ const MessageInput = memo<MessageInputProps>(
   }) => {
     const [temporaryValue, setValue] = useState<string>(defaultValue || '');
     const { cx, styles } = useStyles();
-    const hotkey = combineKeys([KeyMapEnum.Mod, KeyMapEnum.Enter]);
+    const confirmHotkey = combineKeys([KeyMapEnum.Mod, KeyMapEnum.Enter]);
+    const confirmText = text?.confirm || 'Confirm';
+    const cancelHotkey = combineKeys([KeyMapEnum.Esc]);
+    const cancelText = text?.cancel || 'Cancel';
     const isAutoSize = height === 'auto';
 
-    useHotkeys(hotkey, () => onConfirm?.(temporaryValue), {
+    const handleConfirm = () => onConfirm?.(temporaryValue);
+    const handleCancel = () => onCancel?.();
+
+    useHotkeys(confirmHotkey, handleConfirm, {
       enableOnFormTags: true,
       enabled: shortcut,
       preventDefault: true,
     });
+
+    useHotkeys(cancelHotkey, handleCancel, {
+      enableOnFormTags: true,
+      enabled: shortcut,
+      preventDefault: true,
+    });
+
+    const confirmButton = (
+      <Button onClick={handleConfirm} size={editButtonSize} type="primary">
+        {confirmText}
+      </Button>
+    );
+
+    const cancllButton = (
+      <Button onClick={handleCancel} size={editButtonSize}>
+        {text?.cancel || 'Cancel'}
+      </Button>
+    );
 
     return (
       <Flexbox gap={16} style={{ flex: 1, width: '100%', ...style }} {...rest}>
@@ -105,19 +129,20 @@ const MessageInput = memo<MessageInputProps>(
             ))
           ) : (
             <>
-              <Button
-                onClick={() => onConfirm?.(temporaryValue)}
-                size={editButtonSize}
-                type="primary"
-              >
-                {text?.confirm || 'Confirm'}
-                {shortcut && (
-                  <Hotkey inverseTheme keys={combineKeys([KeyMapEnum.Mod, KeyMapEnum.Enter])} />
-                )}
-              </Button>
-              <Button onClick={onCancel} size={editButtonSize}>
-                {text?.cancel || 'Cancel'}
-              </Button>
+              {shortcut ? (
+                <Tooltip hotkey={confirmHotkey} title={confirmText}>
+                  {confirmButton}
+                </Tooltip>
+              ) : (
+                confirmButton
+              )}
+              {shortcut ? (
+                <Tooltip hotkey={cancelHotkey} title={cancelText}>
+                  {cancllButton}
+                </Tooltip>
+              ) : (
+                cancllButton
+              )}
             </>
           )}
         </Flexbox>
