@@ -101,7 +101,7 @@ export const useHighlight = (
     // 长文本使用 hash
     const hash = text.length < MD5_LENGTH_THRESHOLD ? text : Md5.hashStr(text);
     return [matchedLanguage, isDarkMode ? 'd' : 'l', hash].join('-');
-  }, [matchedLanguage, isDarkMode]);
+  }, [text, matchedLanguage, isDarkMode]);
 
   // 使用SWR获取高亮HTML
   return useSWR(
@@ -157,5 +157,4 @@ export const useHighlight = (
 
 export { default as languageMap } from './languageMap';
 
-
-export { highlightCache, MD5_LENGTH_THRESHOLD, loadShiki, shikiPromise, escapeHtml };
+export { escapeHtml, highlightCache, loadShiki, MD5_LENGTH_THRESHOLD, shikiPromise };
