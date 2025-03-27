@@ -22,21 +22,17 @@ export const useMermaid = (id: string, content: string): SWRResponse<string, Err
   // 用于存储最近一次有效的内容
   const [validContent, setValidContent] = useState<string>('');
 
-  console.log(id, content);
-
   // 为长内容生成哈希键
   const cacheKey = useMemo((): string => {
     const hash = content.length < MD5_LENGTH_THRESHOLD ? content : Md5.hashStr(content);
-    return `mermaid-${hash}`;
-  }, [content]);
+    return `mermaid-${id}-${hash}`;
+  }, [content, id]);
 
   return useSWR(
     cacheKey,
     async (): Promise<string> => {
       // 检查缓存中是否已验证过
-      if (mermaidCache.has(cacheKey)) {
-        return validContent;
-      }
+      if (mermaidCache.has(cacheKey)) return validContent;
 
       try {
         const mermaidInstance = await mermaidPromise;
@@ -48,7 +44,6 @@ export const useMermaid = (id: string, content: string): SWRResponse<string, Err
         if (isValid) {
           // 更新有效内容状态
           const { svg } = await mermaidInstance.render(id, content);
-          console.log(svg);
           setValidContent(svg);
           // 缓存验证结果
           mermaidCache.set(cacheKey, true);
