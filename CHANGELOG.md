@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.169.0](https://github.com/lobehub/lobe-ui/compare/v1.168.21...v1.169.0)
+
+<sup>Released on **2025-03-28**</sup>
+
+#### ✨ Features
+
+- **misc**: Add Draw.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add Draw ([d190493](https://github.com/lobehub/lobe-ui/commit/d190493))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.168.21](https://github.com/lobehub/lobe-ui/compare/v1.168.20...v1.168.21)
 
 <sup>Released on **2025-03-27**</sup>
