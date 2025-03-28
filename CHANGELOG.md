@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.169.2](https://github.com/lobehub/lobe-ui/compare/v1.169.1...v1.169.2)
+
+<sup>Released on **2025-03-28**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix export.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix export ([b99d129](https://github.com/lobehub/lobe-ui/commit/b99d129))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.169.1](https://github.com/lobehub/lobe-ui/compare/v1.169.0...v1.169.1)
 
 <sup>Released on **2025-03-28**</sup>
