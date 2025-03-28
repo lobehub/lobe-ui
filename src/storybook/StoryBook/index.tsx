@@ -2,15 +2,14 @@
 
 import { useResponsive } from 'antd-style';
 import { LevaPanel } from 'leva';
-import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+import { forwardRef } from 'react';
+import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
 import DraggablePanel from '@/DraggablePanel';
-import { DivProps } from '@/types';
 
 import { useStyles } from './style';
 
-export interface StoryBookProps extends DivProps {
+export interface StoryBookProps extends FlexboxProps {
   /**
    * @description The Leva store instance to be used by the component
    * @type levaStore
@@ -22,8 +21,8 @@ export interface StoryBookProps extends DivProps {
   noPadding?: boolean;
 }
 
-export const StoryBook = memo<StoryBookProps>(
-  ({ levaStore, noPadding, className, children, ...rest }) => {
+export const StoryBook = forwardRef<HTMLDivElement, StoryBookProps>(
+  ({ levaStore, noPadding, className, children, ...rest }, ref) => {
     const { mobile } = useResponsive();
     const { styles, cx } = useStyles(Boolean(noPadding));
 
@@ -33,6 +32,7 @@ export const StoryBook = memo<StoryBookProps>(
         className={cx(styles.editor, className)}
         horizontal={!mobile}
         justify={'stretch'}
+        ref={ref}
         {...rest}
       >
         <Flexbox align={'center'} className={styles.left} flex={1} justify={'center'}>

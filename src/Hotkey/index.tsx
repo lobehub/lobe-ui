@@ -121,7 +121,7 @@ const Hotkey = memo<HotkeyProps>(
       <Flexbox
         align={'center'}
         className={cx(s, className)}
-        gap={2}
+        gap={isPure ? 6 : 2}
         horizontal
         style={{ visibility, ...style }}
         {...rest}
