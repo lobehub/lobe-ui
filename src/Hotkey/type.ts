@@ -19,6 +19,8 @@ export const KeyMapEnum = {
   Minus: 'minus', // -
   Mod: 'mod', // Command on Mac, Ctrl on Win
   Period: 'period', // .
+  Plus: 'equal', // +
+  QuestionMark: 'slash', // ?
   Quote: 'quote', // '
   Right: 'right',
   RightClick: 'right-click',

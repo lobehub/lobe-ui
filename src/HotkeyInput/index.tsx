@@ -271,7 +271,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
             style={{ pointerEvents: 'none' }}
           />
 
-          {allowReset && hotkeyValue && hotkeyValue !== resetValue && !disabled && (
+          {!isFocused && allowReset && hotkeyValue && hotkeyValue !== resetValue && !disabled && (
             <ActionIcon
               active
               icon={Undo2Icon}
