@@ -1,11 +1,11 @@
-import { Draw, type DrawProps } from '@lobehub/ui';
+import { Drawer, type DrawerProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { useRef } from 'react';
 
 export default () => {
   const store = useCreateStore();
   const ref = useRef(null);
-  const control: DrawProps | any = useControls(
+  const control: DrawerProps | any = useControls(
     {
       containerMaxWidth: 1024,
       height: 600,
@@ -22,9 +22,9 @@ export default () => {
 
   return (
     <StoryBook height={800} levaStore={store} noPadding ref={ref}>
-      <Draw getContainer={false} sidebar={<div>sidebar</div>} {...control}>
+      <Drawer getContainer={false} sidebar={<div>sidebar</div>} {...control}>
         content
-      </Draw>
+      </Drawer>
     </StoryBook>
   );
 };

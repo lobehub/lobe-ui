@@ -1,6 +1,6 @@
 'use client';
 
-import { Drawer as AntdDraw, type DrawerProps as AntdDrawerProps } from 'antd';
+import { Drawer as AntdDrawer, type DrawerProps as AntdDrawerProps } from 'antd';
 import { useTheme } from 'antd-style';
 import { XIcon } from 'lucide-react';
 import { CSSProperties, ReactNode, memo, useMemo } from 'react';
@@ -8,7 +8,7 @@ import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
 
-export interface DrawProps extends Omit<AntdDrawerProps, 'styles' | 'classNames'> {
+export interface DrawerProps extends Omit<AntdDrawerProps, 'styles' | 'classNames'> {
   classNames?: AntdDrawerProps['classNames'] & {
     bodyContent?: string;
     extra?: string;
@@ -25,7 +25,7 @@ export interface DrawProps extends Omit<AntdDrawerProps, 'styles' | 'classNames'
   };
 }
 
-const Draw = memo<DrawProps>(
+const Drawer = memo<DrawerProps>(
   ({
     onClose,
     containerMaxWidth = 1024,
@@ -95,7 +95,7 @@ const Draw = memo<DrawProps>(
     );
 
     return (
-      <AntdDraw
+      <AntdDrawer
         classNames={classNames}
         closable={false}
         extra={noHeader ? undefined : extraNode}
@@ -193,9 +193,9 @@ const Draw = memo<DrawProps>(
             children
           )}
         </Flexbox>
-      </AntdDraw>
+      </AntdDrawer>
     );
   },
 );
 
-export default Draw;
+export default Drawer;

@@ -30,7 +30,7 @@ export {
   default as DraggablePanelHeader,
   type DraggablePanelHeaderProps,
 } from './DraggablePanel/components/DraggablePanelHeader';
-export { default as Draw, type DrawProps } from './Draw';
+export { default as Drawer, type DrawerProps } from './Drawer';
 export { default as EditableText, type EditableTextProps } from './EditableText';
 export { default as EmojiPicker, type EmojiPickerProps } from './EmojiPicker';
 export { default as EmptyCard, type EmptyCardProps } from './EmptyCard';

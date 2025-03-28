@@ -1,7 +1,7 @@
 ---
 nav: Components
 group: Feedback
-title: Draw
+title: Drawer
 ---
 
 ## Default
