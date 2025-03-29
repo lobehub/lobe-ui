@@ -1,10 +1,11 @@
 'use client';
 
+import { Button } from 'antd';
 import { useResponsive } from 'antd-style';
 import { forwardRef } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import Form, { type FormInstance, type FormProps } from '@/Form';
-import { type FormSubmitFooterProps } from '@/Form/components/FormSubmitFooter';
 import Modal, { type ModalProps } from '@/Modal';
 
 import { useStyles } from './style';
@@ -43,11 +44,13 @@ export interface FormModalProps extends PickModalProps, PickFormProps {
   classNames?: {
     form?: FormProps['className'];
   } & ModalProps['classNames'];
-  footerProps?: FormSubmitFooterProps;
   onSubmit?: ModalProps['onOk'];
   styles?: {
     form?: FormProps['style'];
   } & ModalProps['styles'];
+  submitButtonProps?: ModalProps['okButtonProps'];
+  submitLoading?: ModalProps['confirmLoading'];
+  submitText?: ModalProps['okText'];
 }
 
 const FormModal = forwardRef<FormInstance, FormModalProps>(
@@ -80,12 +83,13 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
       forceRender,
       loading,
       footer,
-      footerProps,
+      submitButtonProps,
+      submitLoading,
       onFinish,
-
+      submitText,
       variant = 'pure',
       gap,
-
+      onSubmit,
       children,
       ...rest
     },
@@ -93,7 +97,7 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
   ) => {
     const { mobile } = useResponsive();
     const { cx, styles: s } = useStyles();
-    const { form: formClassName, ...modalClassNames } = classNames;
+    const { form: formClassName, footer: footerClassName, ...modalClassNames } = classNames;
     const { form: formStyle, ...modalStyles } = styles;
 
     return (
@@ -106,6 +110,7 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
         classNames={modalClassNames}
         closable={closable}
         closeIcon={closeIcon}
+        confirmLoading={submitLoading}
         destroyOnClose={destroyOnClose}
         enableResponsive={enableResponsive}
         focusTriggerAfterClose={focusTriggerAfterClose}
@@ -137,10 +142,27 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
           clearOnDestroy={destroyOnClose}
           footer={
             footer || (
-              <Form.SubmitFooter
-                {...footerProps}
-                className={cx(s.footer, footerProps?.className)}
-              />
+              <Flexbox
+                align={'center'}
+                className={cx(s.footer, footerClassName)}
+                gap={8}
+                horizontal
+              >
+                <Button
+                  block
+                  htmlType="submit"
+                  loading={submitLoading}
+                  onClick={onSubmit}
+                  type={'primary'}
+                  {...submitButtonProps}
+                  style={{
+                    flex: 1,
+                    ...submitButtonProps?.style,
+                  }}
+                >
+                  {submitText || 'Submit'}
+                </Button>
+              </Flexbox>
             )
           }
           gap={gap || (variant === 'pure' ? 24 : gap)}
