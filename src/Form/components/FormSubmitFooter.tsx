@@ -1,6 +1,7 @@
 import { Button, type ButtonProps, Form } from 'antd';
 import { createStyles } from 'antd-style';
 import isEqual from 'fast-deep-equal';
+import { motion } from 'framer-motion';
 import { merge } from 'lodash-es';
 import { InfoIcon } from 'lucide-react';
 import { ReactNode, memo, useEffect, useState } from 'react';
@@ -101,7 +102,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
 
     const content = (
       <>
-        {hasUnsavedChanges && (
+        {(float || hasUnsavedChanges) && (
           <>
             <Icon
               color={theme.colorTextDescription}
@@ -122,7 +123,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
           </>
         )}
         {children}
-        {enableReset && hasUnsavedChanges && (
+        {enableReset && (float || hasUnsavedChanges) && (
           <Button
             color="default"
             htmlType="button"
@@ -166,10 +167,27 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
       );
 
     return (
-      hasUnsavedChanges && (
+      <motion.div
+        animate={hasUnsavedChanges ? 'visible' : 'hidden'}
+        className={styles.floatFooter}
+        initial={'hidden'}
+        transition={{ duration: 0.1, ease: 'easeOut' }}
+        variants={{
+          hidden: {
+            opacity: 0,
+            x: '-50%',
+            y: 20,
+          },
+          visible: {
+            opacity: 1,
+            x: '-50%',
+            y: 0,
+          },
+        }}
+      >
         <Flexbox
           align={'center'}
-          className={cx(styles.floatFooter, className)}
+          className={className}
           gap={8}
           horizontal
           justify={'center'}
@@ -177,7 +195,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
         >
           {content}
         </Flexbox>
-      )
+      </motion.div>
     );
   },
 );

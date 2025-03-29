@@ -38,14 +38,12 @@ export default () => {
   return (
     <StoryBook levaStore={store}>
       <Form
-        defaultActiveKey={['theme']}
         footer={<Form.SubmitFooter {...rest} />}
         form={form}
         initialValues={data}
         itemMinWidth={'max(30%,240px)'}
         items={(items as any)[0].children}
         itemsType={'flat'}
-        onCollapse={console.log}
         onFinish={handleSubmit}
         variant={variant}
       />
