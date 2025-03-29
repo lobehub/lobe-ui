@@ -7,9 +7,6 @@ import { items } from '@/Form/demos/data';
 const setting = {
   i18n: 'en',
   liteAnimation: false,
-  sidebarExpand: true,
-  sidebarFixedMode: 'float',
-  sidebarWidth: 300,
 };
 
 export default () => {
@@ -17,9 +14,11 @@ export default () => {
   const [form] = Form.useForm();
   const [data, setData] = useState(setting);
 
-  const { collapsible, variant }: any = useControls(
+  const { variant, ...rest }: any = useControls(
     {
-      collapsible: true,
+      enableReset: true,
+      enableUnsavedWarning: true,
+      float: true,
       variant: {
         options: ['default', 'block', 'ghost', 'pure'],
         value: 'default',
@@ -29,6 +28,9 @@ export default () => {
   );
 
   const handleSubmit = async (values: any) => {
+    await new Promise((resolve) => {
+      setTimeout(resolve, 1000);
+    });
     setData(values);
     console.log('submit:', values);
   };
@@ -36,13 +38,12 @@ export default () => {
   return (
     <StoryBook levaStore={store}>
       <Form
-        collapsible={collapsible}
-        defaultActiveKey={['theme']}
+        footer={<Form.SubmitFooter {...rest} />}
         form={form}
         initialValues={data}
         itemMinWidth={'max(30%,240px)'}
-        items={items}
-        onCollapse={console.log}
+        items={(items as any)[0].children}
+        itemsType={'flat'}
         onFinish={handleSubmit}
         variant={variant}
       />

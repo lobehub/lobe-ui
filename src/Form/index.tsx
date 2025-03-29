@@ -2,24 +2,22 @@
 
 import { Form as AntForm, FormProps as AntFormProps, type FormInstance } from 'antd';
 import { isUndefined } from 'lodash-es';
-import { CSSProperties, type ReactNode, RefAttributes, forwardRef } from 'react';
+import { type ReactNode, RefAttributes, forwardRef, useState } from 'react';
 
 import FormFlatGroup from './components/FormFlatGroup';
-import FormFooter from './components/FormFooter';
 import FormGroup, {
   type FormVariant,
   type ItemGroup,
   type ItemsType,
 } from './components/FormGroup';
 import FormItem, { type FormItemProps } from './components/FormItem';
+import { FormProvider } from './components/FormProvider';
+import FormSubmitFooter from './components/FormSubmitFooter';
 import { useStyles } from './style';
 
 export interface FormProps extends Omit<AntFormProps, 'variant'> {
   activeKey?: (string | number)[];
   children?: ReactNode;
-  classNames?: {
-    footer?: string;
-  };
   collapsible?: boolean;
   defaultActiveKey?: (string | number)[];
   footer?: ReactNode;
@@ -28,9 +26,6 @@ export interface FormProps extends Omit<AntFormProps, 'variant'> {
   items?: ItemGroup[] | FormItemProps[];
   itemsType?: ItemsType;
   onCollapse?: (key: (string | number)[]) => void;
-  styles?: {
-    footer?: CSSProperties;
-  };
   variant?: FormVariant;
 }
 
@@ -48,16 +43,17 @@ const FormParent = forwardRef<FormInstance, FormProps>(
       gap,
       style,
       collapsible,
-      classNames = {},
-      styles = {},
       defaultActiveKey,
+      initialValues,
       activeKey,
       onCollapse,
+      onFinish,
       ...rest
     },
     ref,
   ) => {
     const { cx, styles: s } = useStyles();
+    const [submitLoading, setSubmitLoading] = useState(false);
 
     const mapFlat = (item: FormItemProps, itemIndex: number) => (
       <FormItem divider={itemIndex !== 0} key={itemIndex} minWidth={itemMinWidth} {...item} />
@@ -91,36 +87,47 @@ const FormParent = forwardRef<FormInstance, FormProps>(
     };
 
     return (
-      <AntForm
-        className={cx(s.form, variant === 'pure' && s.pure, s.mobile, className)}
-        colon={false}
-        form={form}
-        layout={'horizontal'}
-        ref={ref}
-        style={{
-          gap,
-          ...style,
+      <FormProvider
+        config={{
+          form,
+          initialValues,
+          submitLoading,
         }}
-        {...rest}
       >
-        {items && items?.length > 0 ? (
-          itemsType === 'group' ? (
-            (items as ItemGroup[])?.map((item, i) => mapTree(item, i))
-          ) : (
-            <FormFlatGroup variant={variant}>
-              {(items as FormItemProps[])
-                ?.filter((item) => !item.hidden)
-                .map((item, i) => mapFlat(item, i))}
-            </FormFlatGroup>
-          )
-        ) : undefined}
-        {children}
-        {footer && (
-          <FormFooter className={classNames?.footer} style={styles?.footer}>
-            {footer}
-          </FormFooter>
-        )}
-      </AntForm>
+        <AntForm
+          className={cx(s.form, variant === 'pure' && s.pure, s.mobile, className)}
+          colon={false}
+          form={form}
+          initialValues={initialValues}
+          layout={'horizontal'}
+          onFinish={async (...finishProps) => {
+            if (!onFinish) return;
+            setSubmitLoading(true);
+            await onFinish(...finishProps);
+            setSubmitLoading(false);
+          }}
+          ref={ref}
+          style={{
+            gap,
+            ...style,
+          }}
+          {...rest}
+        >
+          {items && items?.length > 0 ? (
+            itemsType === 'group' ? (
+              (items as ItemGroup[])?.map((item, i) => mapTree(item, i))
+            ) : (
+              <FormFlatGroup variant={variant}>
+                {(items as FormItemProps[])
+                  ?.filter((item) => !item.hidden)
+                  .map((item, i) => mapFlat(item, i))}
+              </FormFlatGroup>
+            )
+          ) : undefined}
+          {children}
+          {footer}
+        </AntForm>
+      </FormProvider>
     );
   },
 );
@@ -132,6 +139,7 @@ export interface IForm {
   Group: typeof FormGroup;
   Item: typeof FormItem;
   Provider: typeof AntForm.Provider;
+  SubmitFooter: typeof FormSubmitFooter;
   useForm: typeof AntForm.useForm;
 }
 
@@ -141,5 +149,6 @@ Form.Item = FormItem;
 Form.Group = FormGroup;
 Form.useForm = AntForm.useForm;
 Form.Provider = AntForm.Provider;
+Form.SubmitFooter = FormSubmitFooter;
 
 export default Form;

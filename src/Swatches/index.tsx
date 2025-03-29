@@ -33,10 +33,19 @@ export interface SwatchesProps extends Omit<FlexboxProps, 'onSelect'> {
 
 const Swatches = memo<SwatchesProps>(
   ({ style, colors, activeColor, onSelect, size = 24, ...rest }) => {
-    const { cx, styles } = useStyles(size);
+    const { cx, styles, theme } = useStyles(size);
 
     return (
       <Flexbox gap={8} horizontal style={{ flexWrap: 'wrap', ...style }} {...rest}>
+        <Flexbox
+          className={cx(styles.container, !activeColor && styles.active)}
+          onClick={() => {
+            onSelect?.();
+          }}
+          style={{
+            background: theme.colorBgContainer,
+          }}
+        />
         {colors.map((c, index) => {
           const isActive = c === activeColor;
           return (

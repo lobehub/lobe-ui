@@ -1,8 +1,10 @@
 import { createStyles } from 'antd-style';
+import { rgba } from 'polished';
 
 export const useStyles = createStyles(({ css, token, prefixCls, responsive }) => ({
   footer: css`
     position: absolute;
+    z-index: 10;
     inset-block-end: 0;
     inset-inline: 0;
 
@@ -10,7 +12,11 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
     margin: 0;
     padding: 16px;
 
-    background: ${token.colorBgContainer};
+    background: linear-gradient(
+      to bottom,
+      ${rgba(token.colorBgContainer, 0)} 0%,
+      ${token.colorBgContainer} 10%
+    );
   `,
   form: css`
     position: static;

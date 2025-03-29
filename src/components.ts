@@ -47,6 +47,7 @@ export {
   type ItemGroup,
 } from './Form/components/FormGroup';
 export { default as FormItem, type FormItemProps } from './Form/components/FormItem';
+export { type FormSubmitFooterProps } from './Form/components/FormSubmitFooter';
 export { default as FormTitle, type FormTitleProps } from './Form/components/FormTitle';
 export { default as FormModal, type FormModalProps } from './FormModal';
 export { default as Grid, type GridProps } from './Grid';

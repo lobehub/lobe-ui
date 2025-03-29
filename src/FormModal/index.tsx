@@ -3,6 +3,7 @@
 import { Button } from 'antd';
 import { useResponsive } from 'antd-style';
 import { forwardRef } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import Form, { type FormInstance, type FormProps } from '@/Form';
 import Modal, { type ModalProps } from '@/Modal';
@@ -97,7 +98,7 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
     const { mobile } = useResponsive();
     const { cx, styles: s } = useStyles();
     const { form: formClassName, footer: footerClassName, ...modalClassNames } = classNames;
-    const { form: formStyle, footer: footerStyle, ...modalStyles } = styles;
+    const { form: formStyle, ...modalStyles } = styles;
 
     return (
       <Modal
@@ -138,26 +139,30 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
       >
         <Form
           className={cx(s.form, formClassName)}
-          classNames={{
-            footer: cx(s.footer, footerClassName),
-          }}
           clearOnDestroy={destroyOnClose}
           footer={
             footer || (
-              <Button
-                block
-                htmlType="submit"
-                loading={submitLoading}
-                onClick={onSubmit}
-                type={'primary'}
-                {...submitButtonProps}
-                style={{
-                  flex: 1,
-                  ...submitButtonProps?.style,
-                }}
+              <Flexbox
+                align={'center'}
+                className={cx(s.footer, footerClassName)}
+                gap={8}
+                horizontal
               >
-                {submitText || 'Submit'}
-              </Button>
+                <Button
+                  block
+                  htmlType="submit"
+                  loading={submitLoading}
+                  onClick={onSubmit}
+                  type={'primary'}
+                  {...submitButtonProps}
+                  style={{
+                    flex: 1,
+                    ...submitButtonProps?.style,
+                  }}
+                >
+                  {submitText || 'Submit'}
+                </Button>
+              </Flexbox>
             )
           }
           gap={gap || (variant === 'pure' ? 24 : gap)}
@@ -166,9 +171,6 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
           style={{
             paddingBottom: 56,
             ...formStyle,
-          }}
-          styles={{
-            footer: footerStyle,
           }}
           variant={variant}
           {...rest}
