@@ -71,7 +71,7 @@ const items: FormProps['items'] = [
 ];
 
 export default () => {
-  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState({});
   const store = useCreateStore();
 
   const { variant }: any = useControls(
@@ -90,13 +90,13 @@ export default () => {
     setIsModalOpen(true);
   };
 
-  const handleFinish: FormProps['onFinish'] = (v) => {
-    setLoading(true);
+  const handleFinish: FormProps['onFinish'] = async (v) => {
+    await new Promise((resolve) => {
+      setTimeout(resolve, 2000);
+    });
+    setData(v);
+    setIsModalOpen(false);
     console.table(v);
-    setTimeout(() => {
-      setLoading(false);
-      setIsModalOpen(false);
-    }, 2000);
   };
 
   const handleCancel = () => {
@@ -109,6 +109,7 @@ export default () => {
         Open Modal
       </Button>
       <FormModal
+        initialValues={data}
         itemMinWidth={'max(30%,240px)'}
         items={items}
         itemsType={'flat'}
@@ -116,7 +117,6 @@ export default () => {
         onFinish={handleFinish}
         open={isModalOpen}
         scrollToFirstError={{ behavior: 'instant', block: 'end', focus: true }}
-        submitLoading={loading}
         title="Form Modal"
         variant={variant}
       />

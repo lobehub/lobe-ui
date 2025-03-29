@@ -17,6 +17,10 @@ description: High performance Form component with data scope management. Includi
 
 <code src="./demos/StateControl.tsx" nopadding></code>
 
+## Submit Footer
+
+<code src="./demos/SubmitFooter.tsx" nopadding></code>
+
 ## APIs
 
 | Property           | Description                                                                                                                                                    | Type                                                                                                                                                    | Default      |

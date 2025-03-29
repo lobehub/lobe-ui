@@ -36,7 +36,7 @@ export const useStyles = createStyles(({ prefixCls, css, token, responsive }) =>
       transition: all 100ms ${token.motionEaseOut};
     `,
     mobileFlatGroup: css`
-      border-radius: ${token.borderRadiusLG}px;
+      border-radius: 0;
     `,
     mobileGroupBody: css`
       padding-block: 0;
