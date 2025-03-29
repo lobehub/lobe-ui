@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.169.3](https://github.com/lobehub/lobe-ui/compare/v1.169.2...v1.169.3)
+
+<sup>Released on **2025-03-29**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Refacotr form.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Refacotr form, closes [#315](https://github.com/lobehub/lobe-ui/issues/315) ([472f1c8](https://github.com/lobehub/lobe-ui/commit/472f1c8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.169.2](https://github.com/lobehub/lobe-ui/compare/v1.169.1...v1.169.2)
 
 <sup>Released on **2025-03-28**</sup>
