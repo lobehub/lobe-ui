@@ -12,7 +12,7 @@ export default () => {
       enableColorSwatches: true,
       gap: {
         step: 1,
-        value: 4,
+        value: 6,
       },
       shape: {
         options: ['circle', 'square'],
@@ -33,7 +33,7 @@ export default () => {
       <ColorSwatches
         colors={[
           {
-            color: '',
+            color: 'rgba(0, 0, 0, 0)',
             label: 'Default',
           },
           {

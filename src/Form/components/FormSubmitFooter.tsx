@@ -45,10 +45,10 @@ export interface FormSubmitFooterProps extends FlexboxProps {
   float?: boolean;
   onReset?: () => void;
   resetButtonProps?: Omit<ButtonProps, 'children'>;
-  resetText?: ReactNode;
   saveButtonProps?: Omit<ButtonProps, 'children'>;
-  saveText?: ReactNode;
   texts?: {
+    reset?: string;
+    submit?: string;
     unSaved?: string;
     unSavedWarning?: string;
   };
@@ -59,8 +59,6 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
     enableReset = true,
     buttonProps,
     float,
-    saveText = 'Submit',
-    resetText = 'Reset',
     onReset,
     saveButtonProps,
     resetButtonProps,
@@ -135,7 +133,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
             {...buttonProps}
             {...resetButtonProps}
           >
-            {resetText}
+            {texts?.reset || 'Reset'}
           </Button>
         )}
         <Button
@@ -146,7 +144,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
           {...buttonProps}
           {...saveButtonProps}
         >
-          {saveText}
+          {texts?.submit || 'Submit'}
         </Button>
       </>
     );

@@ -3,7 +3,7 @@ import { createStyles } from 'antd-style';
 export const useStyles = createStyles(({ css, token, prefixCls }, size: number) => {
   return {
     active: css`
-      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 20%);
+      box-shadow: inset 0 0 0 1px ${token.colorFill};
     `,
     conic: css`
       background: conic-gradient(
@@ -37,7 +37,7 @@ export const useStyles = createStyles(({ css, token, prefixCls }, size: number) 
       min-height: ${size}px;
 
       background: ${token.colorBgContainer};
-      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 5%);
+      box-shadow: inset 0 0 0 1px ${token.colorFillSecondary};
 
       &:hover {
         box-shadow:
@@ -57,11 +57,11 @@ export const useStyles = createStyles(({ css, token, prefixCls }, size: number) 
       padding: 0;
 
       border: none;
-      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 5%);
+      box-shadow: inset 0 0 0 1px ${token.colorFillSecondary};
 
       &:hover {
         box-shadow:
-          inset 0 0 0 1px rgba(0, 0, 0, 5%),
+          inset 0 0 0 1px ${token.colorFillSecondary},
           0 0 0 2px ${token.colorText};
       }
 
@@ -71,6 +71,16 @@ export const useStyles = createStyles(({ css, token, prefixCls }, size: number) 
         border: none;
         border-radius: inherit;
       }
+    `,
+
+    transparent: css`
+      background-image: conic-gradient(
+        ${token.colorFillSecondary} 25%,
+        transparent 25% 50%,
+        ${token.colorFillSecondary} 50% 75%,
+        transparent 75% 100%
+      );
+      background-size: 50% 50%;
     `,
   };
 });

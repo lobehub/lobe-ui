@@ -1,6 +1,7 @@
 'use client';
 
 import { ColorPicker } from 'antd';
+import chroma from 'chroma-js';
 import { CheckIcon } from 'lucide-react';
 import { readableColor, rgba } from 'polished';
 import { memo } from 'react';
@@ -57,18 +58,23 @@ const ColorSwatches = memo<ColorSwatchesProps>(
       active && active !== theme.colorPrimary && !colors.some((c) => c.color === active);
 
     return (
-      <Flexbox gap={4} horizontal style={{ flexWrap: 'wrap', ...style }} {...rest}>
+      <Flexbox gap={6} horizontal style={{ flexWrap: 'wrap', ...style }} {...rest}>
         {enableColorSwatches &&
           colors.map((c) => {
             const color = c.color || theme.colorPrimary;
             const isActive = (!active && !c.color) || color === active;
+            const isTransparent = c.color === 'transparent' || chroma(c.color).alpha() === 0;
             return (
               <Tooltip key={c.label} title={c.label}>
                 <Center
-                  className={cx(styles.container, isActive && styles.active)}
+                  className={cx(
+                    styles.container,
+                    isTransparent && styles.transparent,
+                    isActive && styles.active,
+                  )}
                   onClick={() => setActive(c.color || undefined)}
                   style={{
-                    background: color,
+                    background: isTransparent ? undefined : color,
                     borderRadius: shape === 'circle' ? '50%' : theme.borderRadius,
                   }}
                 >
