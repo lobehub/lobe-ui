@@ -2,6 +2,39 @@
 
 # Changelog
 
+### [Version 1.170.1](https://github.com/lobehub/lobe-ui/compare/v1.170.0...v1.170.1)
+
+<sup>Released on **2025-03-30**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix mermaid on switch theme.
+
+#### 💄 Styles
+
+- **misc**: Fix Form style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix mermaid on switch theme ([aba43ee](https://github.com/lobehub/lobe-ui/commit/aba43ee))
+
+#### Styles
+
+- **misc**: Fix Form style ([2e5e202](https://github.com/lobehub/lobe-ui/commit/2e5e202))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 1.170.0](https://github.com/lobehub/lobe-ui/compare/v1.169.3...v1.170.0)
 
 <sup>Released on **2025-03-30**</sup>
