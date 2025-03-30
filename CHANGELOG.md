@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.170.4](https://github.com/lobehub/lobe-ui/compare/v1.170.3...v1.170.4)
+
+<sup>Released on **2025-03-30**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Avatar.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix Avatar ([851ba65](https://github.com/lobehub/lobe-ui/commit/851ba65))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.170.3](https://github.com/lobehub/lobe-ui/compare/v1.170.2...v1.170.3)
 
 <sup>Released on **2025-03-30**</sup>
