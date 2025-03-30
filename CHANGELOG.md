@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.170.2](https://github.com/lobehub/lobe-ui/compare/v1.170.1...v1.170.2)
+
+<sup>Released on **2025-03-30**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix ColorSwatches switch.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix ColorSwatches switch ([51e4ccc](https://github.com/lobehub/lobe-ui/commit/51e4ccc))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.170.1](https://github.com/lobehub/lobe-ui/compare/v1.170.0...v1.170.1)
 
 <sup>Released on **2025-03-30**</sup>
