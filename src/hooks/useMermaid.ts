@@ -1,6 +1,6 @@
 import { useTheme } from 'antd-style';
 import type { MermaidConfig } from 'mermaid/dist/config.type';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import useSWR, { SWRResponse } from 'swr';
 import { Md5 } from 'ts-md5';
 
@@ -13,61 +13,6 @@ const loadMermaid = () => {
   return import('mermaid').then((mod) => mod.default);
 };
 const mermaidPromise = loadMermaid();
-
-/**
- * 初始化 Mermaid 配置
- */
-export const useMermaidInit = () => {
-  const theme = useTheme();
-
-  // 提取主题相关配置到 useMemo 中
-  const mermaidConfig: MermaidConfig = useMemo(
-    () => ({
-      fontFamily: theme.fontFamilyCode,
-      gantt: {
-        useWidth: 1920,
-      },
-      securityLevel: 'loose',
-      startOnLoad: false,
-      theme: theme.isDarkMode ? 'dark' : 'neutral',
-      themeVariables: {
-        errorBkgColor: theme.colorTextDescription,
-        errorTextColor: theme.colorTextDescription,
-        fontFamily: theme.fontFamily,
-        fontSize: 14,
-        lineColor: theme.colorTextSecondary,
-        mainBkg: theme.colorBgContainer,
-        noteBkgColor: theme.colorInfoBg,
-        noteTextColor: theme.colorInfoText,
-        pie1: theme.geekblue,
-        pie2: theme.colorWarning,
-        pie3: theme.colorSuccess,
-        pie4: theme.colorError,
-        primaryBorderColor: theme.colorBorder,
-        primaryColor: theme.colorBgContainer,
-        primaryTextColor: theme.colorText,
-        secondaryBorderColor: theme.colorInfoBorder,
-        secondaryColor: theme.colorInfoBg,
-        secondaryTextColor: theme.colorInfoText,
-        tertiaryBorderColor: theme.colorSuccessBorder,
-        tertiaryColor: theme.colorSuccessBg,
-        tertiaryTextColor: theme.colorSuccessText,
-        textColor: theme.colorText,
-      },
-    }),
-    [theme.isDarkMode],
-  );
-
-  // 初始化 mermaid 配置
-  useEffect(() => {
-    const initMermaid = async () => {
-      const mermaidInstance = await mermaidPromise;
-      if (!mermaidInstance) return;
-      mermaidInstance.initialize(mermaidConfig);
-    };
-    initMermaid();
-  }, [mermaidConfig]);
-};
 
 /**
  * 验证并处理 Mermaid 图表内容

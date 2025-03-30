@@ -25,7 +25,7 @@ export interface ColorSwatchesProps extends Omit<FlexboxProps, 'onChange'> {
   onChange?: (color?: string) => void;
   shape?: 'circle' | 'square';
   size?: number;
-  texts: {
+  texts?: {
     custom: string;
     presets: string;
   };
