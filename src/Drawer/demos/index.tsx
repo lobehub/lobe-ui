@@ -22,8 +22,20 @@ export default () => {
 
   return (
     <StoryBook height={800} levaStore={store} noPadding ref={ref}>
-      <Drawer getContainer={false} sidebar={<div>sidebar</div>} {...control}>
-        content
+      <Drawer
+        getContainer={false}
+        sidebar={Array.from({ length: 50 })
+          .fill('')
+          .map((_, i) => (
+            <div key={i}>sidebar</div>
+          ))}
+        {...control}
+      >
+        {Array.from({ length: 50 })
+          .fill('')
+          .map((_, i) => (
+            <div key={i}>content</div>
+          ))}
       </Drawer>
     </StoryBook>
   );

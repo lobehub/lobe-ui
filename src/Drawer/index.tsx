@@ -6,14 +6,17 @@ import { XIcon } from 'lucide-react';
 import { CSSProperties, ReactNode, memo, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon, { type ActionIconProps } from '@/ActionIcon';
 
 export interface DrawerProps extends Omit<AntdDrawerProps, 'styles' | 'classNames'> {
   classNames?: AntdDrawerProps['classNames'] & {
     bodyContent?: string;
     extra?: string;
+    sidebar?: string;
+    sidebarContent?: string;
     title?: string;
   };
+  closeIconProps?: ActionIconProps;
   containerMaxWidth?: number;
   noHeader?: boolean;
   sidebar?: ReactNode;
@@ -21,6 +24,8 @@ export interface DrawerProps extends Omit<AntdDrawerProps, 'styles' | 'className
   styles?: AntdDrawerProps['styles'] & {
     bodyContent?: CSSProperties;
     extra?: CSSProperties;
+    sidebar?: CSSProperties;
+    sidebarContent?: CSSProperties;
     title?: CSSProperties;
   };
 }
@@ -37,9 +42,11 @@ const Drawer = memo<DrawerProps>(
     height,
     width,
     extra,
+    closeIconProps,
     noHeader,
     sidebarWidth = 280,
     sidebar,
+    closeIcon,
     ...rest
   }) => {
     const theme = useTheme();
@@ -90,7 +97,9 @@ const Drawer = memo<DrawerProps>(
         }}
       >
         {extra}
-        <ActionIcon icon={XIcon} onClick={onClose} size={'site'} />
+        {closeIcon || (
+          <ActionIcon icon={XIcon} onClick={onClose} size={'site'} {...closeIconProps} />
+        )}
       </Flexbox>
     );
 
@@ -166,24 +175,32 @@ const Drawer = memo<DrawerProps>(
           {sidebar ? (
             <>
               <Flexbox
+                className={classNames?.sidebar}
                 paddingBlock={12}
                 paddingInline={16}
                 style={{
                   background: theme.colorBgContainer,
                   borderRight: `1px solid ${theme.colorBorderSecondary}`,
                   height: '100%',
+                  overflowX: 'hidden',
+                  overflowY: 'auto',
+                  ...styles?.sidebar,
                 }}
                 width={sidebarWidth}
               >
                 {sidebar}
               </Flexbox>
               <Flexbox
+                className={classNames?.sidebarContent}
                 flex={1}
                 paddingBlock={12}
                 paddingInline={16}
                 style={{
                   background: theme.colorBgLayout,
                   height: '100%',
+                  overflowX: 'hidden',
+                  overflowY: 'auto',
+                  ...styles?.sidebarContent,
                 }}
               >
                 {children}
