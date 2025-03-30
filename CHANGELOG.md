@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 1.170.0](https://github.com/lobehub/lobe-ui/compare/v1.169.3...v1.170.0)
+
+<sup>Released on **2025-03-30**</sup>
+
+#### ✨ Features
+
+- **misc**: Add ColorSwatches.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add ColorSwatches ([e5aa646](https://github.com/lobehub/lobe-ui/commit/e5aa646))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.169.3](https://github.com/lobehub/lobe-ui/compare/v1.169.2...v1.169.3)
 
 <sup>Released on **2025-03-29**</sup>
