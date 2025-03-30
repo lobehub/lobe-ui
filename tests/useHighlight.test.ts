@@ -3,7 +3,6 @@ import { describe, expect, it } from 'vitest';
 import {
   MD5_LENGTH_THRESHOLD,
   escapeHtml,
-  highlightCache,
   loadShiki,
   shikiPromise,
 } from '../src/hooks/useHighlight';
@@ -40,26 +39,6 @@ describe('escapeHtml', () => {
     const input = '<script>alert("&\'test\'")</script>';
     const expected = '&lt;script&gt;alert(&quot;&amp;&#039;test&#039;&quot;)&lt;/script&gt;';
     expect(escapeHtml(input)).toBe(expected);
-  });
-});
-
-describe('highlightCache', () => {
-  it('should be initialized as empty Map', () => {
-    expect(highlightCache).toBeInstanceOf(Map);
-    expect(highlightCache.size).toBe(0);
-  });
-
-  it('should store and retrieve values', () => {
-    highlightCache.set('test-key', 'test-value');
-    expect(highlightCache.get('test-key')).toBe('test-value');
-    highlightCache.clear();
-  });
-
-  it('should handle overwriting existing values', () => {
-    highlightCache.set('test-key', 'value1');
-    highlightCache.set('test-key', 'value2');
-    expect(highlightCache.get('test-key')).toBe('value2');
-    highlightCache.clear();
   });
 });
 

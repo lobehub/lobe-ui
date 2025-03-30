@@ -15,7 +15,6 @@ import languageMap from './languageMap';
 export const FALLBACK_LANG = 'txt';
 
 // 应用级缓存，避免重复计算
-const highlightCache = new Map<string, string>();
 const MD5_LENGTH_THRESHOLD = 10_000; // 超过该长度使用异步MD5
 
 // 颜色替换映射类型
@@ -107,11 +106,6 @@ export const useHighlight = (
   return useSWR(
     cacheKey,
     async (): Promise<string> => {
-      // 检查内存缓存
-      if (cacheKey && highlightCache.has(cacheKey)) {
-        return highlightCache.get(cacheKey)!;
-      }
-
       try {
         // 尝试完整渲染
         const codeToHtml = await shikiPromise;
@@ -122,8 +116,6 @@ export const useHighlight = (
           transformers,
         });
 
-        // 缓存结果
-        if (cacheKey) highlightCache.set(cacheKey, html);
         return html;
       } catch (error) {
         console.error('高级渲染失败:', error);
@@ -135,13 +127,10 @@ export const useHighlight = (
             lang: matchedLanguage,
             theme: isDarkMode ? 'dark-plus' : 'light-plus',
           });
-
-          if (cacheKey) highlightCache.set(cacheKey, html);
           return html;
         } catch {
           // 最终降级到纯文本
           const fallbackHtml = `<pre class="fallback"><code>${escapeHtml(text)}</code></pre>`;
-          if (cacheKey) highlightCache.set(cacheKey, fallbackHtml);
           return fallbackHtml;
         }
       }
@@ -157,4 +146,4 @@ export const useHighlight = (
 
 export { default as languageMap } from './languageMap';
 
-export { escapeHtml, highlightCache, loadShiki, MD5_LENGTH_THRESHOLD, shikiPromise };
+export { escapeHtml, loadShiki, MD5_LENGTH_THRESHOLD, shikiPromise };
