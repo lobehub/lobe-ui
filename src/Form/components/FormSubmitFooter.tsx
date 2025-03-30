@@ -82,22 +82,21 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
       setHasUnsavedChanges(!isEqual(v, initialValues));
     }, [values, initialValues, submitLoading]);
 
+    const fn = (e: BeforeUnloadEvent) => {
+      if (hasUnsavedChanges) {
+        e.returnValue =
+          texts?.unSavedWarning || 'You have unsaved changes. Are you sure you want to leave?';
+      } else {
+        delete e.returnValue;
+      }
+    };
+
     useEffect(() => {
       if (!enableUnsavedWarning) return;
       if (typeof window === 'undefined' || !hasUnsavedChanges) return;
       // 添加离开页面的提示
-      window.addEventListener('beforeunload', (e) => {
-        if (hasUnsavedChanges) {
-          e.preventDefault();
-          e.returnValue =
-            texts?.unSavedWarning || 'You have unsaved changes. Are you sure you want to leave?';
-        }
-      });
-
-      return () => {
-        // eslint-disable-next-line unicorn/no-invalid-remove-event-listener
-        window.removeEventListener('beforeunload', () => {});
-      };
+      window.addEventListener('beforeunload', fn);
+      return () => window.removeEventListener('beforeunload', fn);
     }, [enableUnsavedWarning, hasUnsavedChanges]);
 
     const content = (

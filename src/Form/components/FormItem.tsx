@@ -5,6 +5,8 @@ import { createStyles } from 'antd-style';
 import { isNumber } from 'lodash-es';
 import { memo } from 'react';
 
+import { FormVariant } from '@/Form/components/FormGroup';
+
 import FormDivider from './FormDivider';
 import FormTitle, { type FormTitleProps } from './FormTitle';
 
@@ -95,15 +97,34 @@ export interface FormItemProps extends AntdFormItemProps {
   hidden?: boolean;
   minWidth?: string | number;
   tag?: FormTitleProps['tag'];
+  variant?: FormVariant;
 }
 
 const FormItem = memo<FormItemProps>(
-  ({ desc, tag, minWidth, avatar, className, label, children, divider, layout, ...rest }) => {
+  ({
+    desc,
+    tag,
+    minWidth,
+    avatar,
+    className,
+    label,
+    children,
+    divider,
+    layout,
+    variant,
+    ...rest
+  }) => {
     const { cx, styles } = useStyles({ minWidth });
     const isVertical = layout === 'vertical';
     return (
       <>
-        {divider && <FormDivider />}
+        {divider && (
+          <FormDivider
+            style={{
+              opacity: variant === 'pure' ? 0 : undefined,
+            }}
+          />
+        )}
         <Item
           className={cx(
             styles.item,

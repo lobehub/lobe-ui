@@ -56,7 +56,13 @@ const FormParent = forwardRef<FormInstance, FormProps>(
     const [submitLoading, setSubmitLoading] = useState(false);
 
     const mapFlat = (item: FormItemProps, itemIndex: number) => (
-      <FormItem divider={itemIndex !== 0} key={itemIndex} minWidth={itemMinWidth} {...item} />
+      <FormItem
+        divider={itemIndex !== 0}
+        key={itemIndex}
+        minWidth={itemMinWidth}
+        variant={variant}
+        {...item}
+      />
     );
     const mapTree = (group: ItemGroup, groupIndex: number) => {
       const key = group?.key || groupIndex;

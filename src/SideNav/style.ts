@@ -9,6 +9,6 @@ export const useStyles = createStyles(
     padding-inline: 0;
 
     background: ${token.colorBgContainer};
-    border-inline-end: 1px solid ${token.colorBorder};
+    border-inline-end: 1px solid ${token.colorBorderSecondary};
   `,
 );

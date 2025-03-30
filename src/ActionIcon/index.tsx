@@ -77,6 +77,7 @@ export interface ActionIconProps extends LucideIconProps, FlexboxProps {
    * @default 0.5
    */
   tooltipDelay?: number;
+  variant?: 'default' | 'block' | 'ghost';
 }
 
 const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
@@ -88,6 +89,7 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
       active,
       icon,
       size = 'normal',
+      variant = 'default',
       style,
       glass,
       title,
@@ -108,7 +110,11 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
     },
     ref,
   ) => {
-    const { styles: s, cx } = useStyles({ active: Boolean(active), glass: Boolean(glass) });
+    const { styles: s, cx } = useStyles({
+      active: Boolean(active),
+      glass: Boolean(glass),
+      variant,
+    });
     const { blockSize, borderRadius } = useMemo(() => calcSize(size), [size]);
 
     const iconProps = {

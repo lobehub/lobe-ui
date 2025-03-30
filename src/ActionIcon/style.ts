@@ -1,10 +1,24 @@
 import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(
-  ({ css, token, stylish, cx }, { active, glass }: { active: boolean; glass: boolean }) => {
+  (
+    { css, token, stylish, cx },
+    {
+      active,
+      glass,
+      variant,
+    }: { active: boolean; glass: boolean; variant: 'default' | 'block' | 'ghost' },
+  ) => {
+    const isBlock = variant === 'block';
+    const isGhost = variant === 'ghost';
+
     return {
       block: cx(
         glass && stylish.blur,
+        isGhost &&
+          css`
+            border: 1px solid ${token.colorBorderSecondary};
+          `,
         css`
           position: relative;
 
@@ -12,7 +26,7 @@ export const useStyles = createStyles(
 
           color: ${active ? token.colorText : token.colorTextTertiary};
 
-          background: ${active ? token.colorFillTertiary : 'transparent'};
+          background: ${active || isBlock ? token.colorFillTertiary : 'transparent'};
 
           transition:
             color 600ms ${token.motionEaseOut},

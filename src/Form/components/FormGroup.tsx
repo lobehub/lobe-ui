@@ -31,6 +31,7 @@ export const useStyles = createStyles(({ prefixCls, css, token, responsive }) =>
     ghostStyle: css`
       background: transparent;
       border: 1px solid ${token.colorBorderSecondary};
+      border-radius: ${token.borderRadiusLG}px;
     `,
     icon: css`
       transition: all 100ms ${token.motionEaseOut};

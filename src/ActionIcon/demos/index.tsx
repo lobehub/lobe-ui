@@ -40,6 +40,10 @@ export default () => {
         spotlight: false,
         title: '',
       }),
+      variant: {
+        options: ['default', 'block', 'ghost'],
+        value: 'default',
+      },
     },
     { store },
   );
