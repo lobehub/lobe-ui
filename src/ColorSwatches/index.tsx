@@ -66,7 +66,7 @@ const ColorSwatches = memo<ColorSwatchesProps>(
               <Tooltip key={c.label} title={c.label}>
                 <Center
                   className={cx(styles.container, isActive && styles.active)}
-                  onClick={() => setActive(color)}
+                  onClick={() => setActive(c.color)}
                   style={{
                     background: color,
                     borderRadius: shape === 'circle' ? '50%' : theme.borderRadius,
@@ -91,7 +91,7 @@ const ColorSwatches = memo<ColorSwatchesProps>(
             <Center style={{ position: 'relative' }}>
               {isCustomActive && (
                 <Icon
-                  color={rgba(readableColor(active), 0.33)}
+                  color={enableColorSwatches ? '#222' : rgba(readableColor(active), 0.33)}
                   icon={CheckIcon}
                   size={{ fontSize: 14, strokeWidth: 4 }}
                   style={{
@@ -103,20 +103,34 @@ const ColorSwatches = memo<ColorSwatchesProps>(
               )}
               <ColorPicker
                 arrow={false}
-                className={cx(styles.picker, isCustomActive && styles.active)}
+                className={cx(
+                  styles.picker,
+                  enableColorSwatches && styles.conic,
+                  isCustomActive && styles.active,
+                )}
                 disabledAlpha
                 format={'hex'}
-                onChangeComplete={(c) => setActive(c.toHexString())}
-                presets={[
-                  {
-                    colors: colors.map((c) => c.color),
-                    label: texts?.presets || 'Presets',
-                  },
-                ]}
+                onChangeComplete={(c) => {
+                  if (c.toHexString() === theme.colorPrimary) {
+                    setActive('');
+                  } else {
+                    setActive(c.toHexString());
+                  }
+                }}
+                presets={
+                  enableColorSwatches
+                    ? undefined
+                    : [
+                        {
+                          colors: colors.map((c) => c.color),
+                          label: texts?.presets || 'Presets',
+                        },
+                      ]
+                }
                 style={{
                   borderRadius: shape === 'circle' ? '50%' : theme.borderRadius,
                 }}
-                value={active}
+                value={enableColorSwatches ? undefined : active}
               />
             </Center>
           </Tooltip>
