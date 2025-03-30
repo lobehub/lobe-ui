@@ -7,7 +7,7 @@ export const useStyles = createStyles(
     { background, size, isEmoji }: { background?: string; isEmoji?: boolean; size: number },
   ) => {
     const backgroundColor = background ?? token.colorBgContainer;
-    const color = readableColor(backgroundColor);
+    const color = backgroundColor ? readableColor(backgroundColor) : token.colorText;
 
     return {
       avatar: css`

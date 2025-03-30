@@ -66,7 +66,7 @@ const ColorSwatches = memo<ColorSwatchesProps>(
               <Tooltip key={c.label} title={c.label}>
                 <Center
                   className={cx(styles.container, isActive && styles.active)}
-                  onClick={() => setActive(c.color)}
+                  onClick={() => setActive(c.color || undefined)}
                   style={{
                     background: color,
                     borderRadius: shape === 'circle' ? '50%' : theme.borderRadius,
