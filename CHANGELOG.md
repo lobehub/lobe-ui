@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.170.6](https://github.com/lobehub/lobe-ui/compare/v1.170.5...v1.170.6)
+
+<sup>Released on **2025-03-30**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Drawer style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Drawer style ([80261d8](https://github.com/lobehub/lobe-ui/commit/80261d8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.170.5](https://github.com/lobehub/lobe-ui/compare/v1.170.4...v1.170.5)
 
 <sup>Released on **2025-03-30**</sup>
