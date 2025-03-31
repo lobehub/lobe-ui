@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 1.170.8](https://github.com/lobehub/lobe-ui/compare/v1.170.7...v1.170.8)
+
+<sup>Released on **2025-03-31**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update darkmode style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update darkmode style ([72f6b63](https://github.com/lobehub/lobe-ui/commit/72f6b63))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 1.170.7](https://github.com/lobehub/lobe-ui/compare/v1.170.6...v1.170.7)
 
 <sup>Released on **2025-03-31**</sup>
