@@ -379,3 +379,6 @@ export const useStyles = createStyles(
     );
   },
 );
+
+
+export { IGNORE_CLASSNAME };
