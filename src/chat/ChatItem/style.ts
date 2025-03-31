@@ -29,7 +29,7 @@ export const useStyles = createStyles(
       background-color: ${primary
         ? isDarkMode
           ? token.colorFill
-          : token.colorBgElevated
+          : token.colorBgContainer
         : isDarkMode
           ? token.colorFillSecondary
           : token.colorBgContainer};

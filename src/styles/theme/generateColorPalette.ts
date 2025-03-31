@@ -36,9 +36,9 @@ export const generateColorNeutralPalette = ({
   scale: ColorScaleItem;
 }): Partial<AliasToken> => {
   return {
-    colorBgContainer: appearance === 'dark' ? scale[appearance][1] : scale[appearance][0],
+    colorBgContainer: appearance === 'dark' ? scale[appearance][1] : scale[appearance][1],
     colorBgElevated: appearance === 'dark' ? scale[appearance][2] : scale[appearance][0],
-    colorBgLayout: appearance === 'dark' ? scale[appearance][0] : scale[appearance][1],
+    colorBgLayout: appearance === 'dark' ? scale[appearance][0] : scale[appearance][0],
     colorBgMask: scale.lightA[8],
     colorBgSpotlight: scale[appearance][4],
     colorBorder: scale[appearance][3],
