@@ -1,11 +1,10 @@
 import { createStyles } from 'antd-style';
-import { rgba } from 'polished';
 
 const IGNORE_CLASSNAME = '.ignore-markdown-style';
 
 export const useStyles = createStyles(
   (
-    { cx, token, isDarkMode, css },
+    { cx, token, css },
     {
       fontSize = 16,
       headerMultiple = 1,
@@ -19,9 +18,7 @@ export const useStyles = createStyles(
       --lobe-markdown-margin-multiple: ${marginMultiple};
       --lobe-markdown-line-height: ${lineHeight};
       --lobe-markdown-border-radius: ${token.borderRadiusLG};
-      --lobe-markdown-border-color: ${isDarkMode
-        ? token.colorBorderSecondary
-        : rgba(token.colorBorderSecondary, 0.5)};
+      --lobe-markdown-border-color: ${token.colorFillQuaternary};
 
       position: relative;
 

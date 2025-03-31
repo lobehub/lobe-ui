@@ -1,13 +1,13 @@
 import { createStyles } from 'antd-style';
+import { rgba } from 'polished';
 
 export const useStyles = createStyles(
   (
-    { cx, css, token, isDarkMode, responsive },
+    { cx, css, token, responsive },
     {
       placement,
       type,
       title,
-      primary,
       avatarSize,
       editing,
       time,
@@ -26,16 +26,9 @@ export const useStyles = createStyles(
       padding-block: 8px;
       padding-inline: 12px;
 
-      background-color: ${primary
-        ? isDarkMode
-          ? token.colorFill
-          : token.colorBgElevated
-        : isDarkMode
-          ? token.colorFillSecondary
-          : token.colorBgContainer};
+      background-color: ${token.colorBgContainer};
+      border: 1px solid ${rgba(token.colorBorderSecondary, 0.66)};
       border-radius: ${token.borderRadiusLG}px;
-
-      transition: background-color 100ms ${token.motionEaseOut};
     `;
 
     const pureStylish = css`

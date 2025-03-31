@@ -2,7 +2,7 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ css, cx, token, prefixCls }, type: 'ghost' | 'block') => {
   const typeStylish = css`
-    background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
+    background-color: ${type === 'block' ? token.colorFillQuaternary : 'transparent'};
     border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
   `;
 

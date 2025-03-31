@@ -7,12 +7,8 @@ export const useStyles = createStyles(
     const langHoverCls = `${prefix}-hover-lang`;
 
     const typeStylish = css`
-      background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
-      border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
-
-      &:hover {
-        background-color: ${type === 'block' ? token.colorFillTertiary : token.colorFillQuaternary};
-      }
+      background-color: ${type === 'block' ? token.colorFillQuaternary : 'transparent'};
+      border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorderSecondary};
     `;
 
     return {
