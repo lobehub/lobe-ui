@@ -1,18 +1,19 @@
 import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(
-  ({ token, css, cx, prefixCls, stylish }, type: 'ghost' | 'block' | 'pure') => {
+  ({ token, css, cx, prefixCls, stylish, isDarkMode }, type: 'ghost' | 'block' | 'pure') => {
     const prefix = `${prefixCls}-highlighter`;
     const buttonHoverCls = `${prefix}-hover-btn`;
     const langHoverCls = `${prefix}-hover-lang`;
 
     const typeStylish = css`
-      background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
+      background-color: ${type === 'block'
+        ? isDarkMode
+          ? token.colorFillTertiary
+          : token.colorBgLayout
+        : 'transparent'};
       border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
-
-      &:hover {
-        background-color: ${type === 'block' ? token.colorFillTertiary : token.colorFillQuaternary};
-      }
+      box-shadow: ${type === 'block' ? token.boxShadowTertiary : 'none'};
     `;
 
     return {
