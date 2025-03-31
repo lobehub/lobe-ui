@@ -187,9 +187,9 @@ describe('generateColorNeutralPalette', () => {
     });
 
     expect(palette).toEqual({
-      colorBgContainer: mockColorScale.light[0],
+      colorBgContainer: mockColorScale.light[1],
       colorBgElevated: mockColorScale.light[0],
-      colorBgLayout: mockColorScale.light[1],
+      colorBgLayout: mockColorScale.light[0],
       colorBgMask: mockColorScale.lightA[8],
       colorBgSpotlight: mockColorScale.light[4],
       colorBorder: mockColorScale.light[3],
