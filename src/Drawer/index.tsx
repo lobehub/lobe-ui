@@ -121,7 +121,7 @@ const Drawer = memo<DrawerProps>(
           },
           content: {
             background: sidebar
-              ? `linear-gradient(to right, ${theme.colorBgContainer} 49.9%, ${theme.colorBgLayout} 50%)`
+              ? `linear-gradient(to right, ${theme.colorBgLayout} 49.9%, ${theme.colorBgContainer} 50%)`
               : theme.colorBgContainer,
             ...styles?.content,
           },
@@ -179,7 +179,7 @@ const Drawer = memo<DrawerProps>(
                 paddingBlock={12}
                 paddingInline={16}
                 style={{
-                  background: theme.colorBgContainer,
+                  background: theme.colorBgLayout,
                   borderRight: `1px solid ${theme.colorBorderSecondary}`,
                   height: '100%',
                   overflowX: 'hidden',
@@ -196,7 +196,7 @@ const Drawer = memo<DrawerProps>(
                 paddingBlock={12}
                 paddingInline={16}
                 style={{
-                  background: theme.colorBgLayout,
+                  background: theme.colorBgContainer,
                   height: '100%',
                   overflowX: 'hidden',
                   overflowY: 'auto',

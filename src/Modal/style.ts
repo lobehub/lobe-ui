@@ -38,10 +38,6 @@ export const useStyles = createStyles(
         `,
       ),
       drawerContent: css`
-        &.${prefixCls}-drawer-content {
-          background: ${token.colorBgContainer};
-        }
-
         .${prefixCls}-drawer-close {
           padding: 0;
         }

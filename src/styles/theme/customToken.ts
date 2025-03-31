@@ -1,6 +1,7 @@
 import { GetCustomToken } from 'antd-style';
 import { AliasToken } from 'antd/es/theme/interface';
 import { camelCase } from 'lodash-es';
+import { mix } from 'polished';
 
 import { colorScales } from '@/color/colors';
 import type { ColorScaleItem } from '@/color/types';
@@ -58,7 +59,7 @@ const generateCustomColorPalette = ({
   };
 };
 
-export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMode }) => {
+export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMode, token }) => {
   let colorCustomToken: any = {};
 
   for (const [type, scale] of Object.entries(colorScales)) {
@@ -72,5 +73,8 @@ export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMod
     };
   }
 
-  return colorCustomToken;
+  return {
+    ...colorCustomToken,
+    colorBgContainerSecondary: mix(0.5, token.colorBgLayout, token.colorBgContainer),
+  };
 };
