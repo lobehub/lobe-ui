@@ -4,7 +4,7 @@ export const HEADER_HEIGHT = 56;
 export const FOOTER_HEIGHT = 68;
 
 export const useStyles = createStyles(
-  ({ cx, css, token, prefixCls }, { maxHeight }: { maxHeight?: string }) => {
+  ({ cx, css, token, prefixCls, isDarkMode }, { maxHeight }: { maxHeight?: string }) => {
     return {
       content: cx(
         maxHeight &&
@@ -39,7 +39,7 @@ export const useStyles = createStyles(
       ),
       drawerContent: css`
         &.${prefixCls}-drawer-content {
-          background: ${token.colorBgContainer};
+          background: ${isDarkMode ? token.colorBgContainer : token.colorBgElevated};
         }
 
         .${prefixCls}-drawer-close {

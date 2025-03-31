@@ -122,7 +122,9 @@ const Drawer = memo<DrawerProps>(
           content: {
             background: sidebar
               ? `linear-gradient(to right, ${theme.colorBgContainer} 49.9%, ${theme.colorBgLayout} 50%)`
-              : theme.colorBgContainer,
+              : theme.isDarkMode
+                ? theme.colorBgContainer
+                : theme.colorBgElevated,
             ...styles?.content,
           },
           header: {

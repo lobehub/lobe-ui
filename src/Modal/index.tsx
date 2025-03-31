@@ -1,16 +1,9 @@
 'use client';
 
-import {
-  Modal as AntModal,
-  type ModalProps as AntModalProps,
-  Button,
-  ConfigProvider,
-  Drawer,
-} from 'antd';
+import { Modal as AntModal, type ModalProps as AntModalProps, Button, Drawer } from 'antd';
 import { useResponsive } from 'antd-style';
 import { isNumber } from 'lodash-es';
 import { Maximize2, Minimize2, X } from 'lucide-react';
-import { lighten } from 'polished';
 import { ReactNode, memo, useState } from 'react';
 
 import ActionIcon from '@/ActionIcon';
@@ -54,7 +47,7 @@ const Modal = memo<ModalProps>(
   }) => {
     const [fullscreen, setFullscreen] = useState(false);
     const { mobile } = useResponsive();
-    const { styles, cx, theme } = useStyles({
+    const { styles, cx } = useStyles({
       maxHeight: maxHeight
         ? `calc(${isNumber(maxHeight) ? `${maxHeight}px` : maxHeight} - ${
             HEADER_HEIGHT + (footer ? FOOTER_HEIGHT : 0)
@@ -121,44 +114,36 @@ const Modal = memo<ModalProps>(
       );
 
     return (
-      <ConfigProvider
-        theme={{
-          token: {
-            colorBgElevated: lighten(0.005, theme.colorBgContainer),
+      <AntModal
+        cancelButtonProps={cancelButtonProps}
+        cancelText={cancelText}
+        className={cx(styles.content, className)}
+        closable
+        closeIcon={<Icon icon={X} size={{ fontSize: 20 }} />}
+        confirmLoading={confirmLoading}
+        destroyOnClose={destroyOnClose}
+        footer={hideFooter ? null : footer}
+        maskClosable
+        okButtonProps={okButtonProps}
+        okText={okText}
+        onCancel={onCancel}
+        onOk={onOk}
+        open={open}
+        styles={{
+          body: {
+            paddingBlock: `0 ${footer === null ? '16px' : 0}`,
+            paddingInline: paddings?.desktop ?? 16,
+            ...body,
           },
+          ...restStyles,
         }}
+        title={title}
+        width={width}
+        wrapClassName={cx(styles.wrap, wrapClassName)}
+        {...rest}
       >
-        <AntModal
-          cancelButtonProps={cancelButtonProps}
-          cancelText={cancelText}
-          className={cx(styles.content, className)}
-          closable
-          closeIcon={<Icon icon={X} size={{ fontSize: 20 }} />}
-          confirmLoading={confirmLoading}
-          destroyOnClose={destroyOnClose}
-          footer={hideFooter ? null : footer}
-          maskClosable
-          okButtonProps={okButtonProps}
-          okText={okText}
-          onCancel={onCancel}
-          onOk={onOk}
-          open={open}
-          styles={{
-            body: {
-              paddingBlock: `0 ${footer === null ? '16px' : 0}`,
-              paddingInline: paddings?.desktop ?? 16,
-              ...body,
-            },
-            ...restStyles,
-          }}
-          title={title}
-          width={width}
-          wrapClassName={cx(styles.wrap, wrapClassName)}
-          {...rest}
-        >
-          {children}
-        </AntModal>
-      </ConfigProvider>
+        {children}
+      </AntModal>
     );
   },
 );
