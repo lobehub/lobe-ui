@@ -1,11 +1,23 @@
-import { ActionIcon, Image } from '@lobehub/ui';
-import { Trash } from 'lucide-react';
+import { HighlighterProps, Image } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
+  const store = useCreateStore();
+  const options: HighlighterProps | any = useControls(
+    {
+      alt: 'Image',
+      preview: true,
+      src: 'https://registry.npmmirror.com/@lobehub/fluent-emoji-3d/latest/files/assets/1f5bc-fe0f.webp',
+      variant: {
+        options: ['filled', 'outlined', 'borderless'],
+        value: 'filled',
+      },
+    },
+    { store },
+  );
   return (
-    <Image
-      actions={<ActionIcon active color={'#fff'} glass icon={Trash} size={'small'} />}
-      src={'https://gw.alipayobjects.com/zos/kitchen/sLO%24gbrQtp/lobe-chat.webp'}
-    />
+    <StoryBook levaStore={store}>
+      <Image {...options} />
+    </StoryBook>
   );
 };

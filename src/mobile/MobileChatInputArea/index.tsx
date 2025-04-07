@@ -1,10 +1,8 @@
 'use client';
 
 import { useSize } from 'ahooks';
-import { createStyles } from 'antd-style';
 import { TextAreaRef } from 'antd/es/input/TextArea';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { rgba } from 'polished';
 import {
   CSSProperties,
   FC,
@@ -24,32 +22,7 @@ import ChatInputAreaInner, {
 } from '@/chat/ChatInputArea/ChatInputAreaInner';
 import MobileSafeArea from '@/mobile/MobileSafeArea';
 
-const useStyles = createStyles(({ css, token }) => {
-  return {
-    container: css`
-      flex: none;
-      padding-block: 12px;
-      background: ${token.colorFillQuaternary};
-      border-block-start: 1px solid ${rgba(token.colorBorder, 0.25)};
-    `,
-    expand: css`
-      position: absolute;
-      height: 100%;
-    `,
-    expandButton: css`
-      position: absolute;
-      inset-inline-start: 14px;
-    `,
-    expandTextArea: css`
-      flex: 1;
-    `,
-    inner: css`
-      height: inherit;
-      padding-block: 0;
-      padding-inline: 8px;
-    `,
-  };
-});
+import { useStyles } from './style';
 
 export interface MobileChatInputAreaProps extends ChatInputAreaInnerProps {
   bottomAddons?: ReactNode;
@@ -141,7 +114,7 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
               className={styles.expandButton}
               icon={expand ? ChevronDown : ChevronUp}
               onClick={() => setExpand?.(!expand)}
-              size={{ blockSize: 24, borderRadius: '50%', fontSize: 14 }}
+              size={{ blockSize: 24, borderRadius: '50%', size: 14 }}
               style={expand ? { top: 6 } : {}}
             />
           )}
@@ -161,8 +134,8 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
               onSend={onSend}
               ref={ref}
               style={{ height: 36, paddingBlock: 6 }}
-              type={expand ? 'pure' : 'block'}
               value={value}
+              variant={expand ? 'borderless' : 'filled'}
             />
           </InnerContainer>
         </Flexbox>
@@ -174,5 +147,7 @@ const MobileChatInputArea = forwardRef<TextAreaRef, MobileChatInputAreaProps>(
     );
   },
 );
+
+MobileChatInputArea.displayName = 'MobileChatInputArea';
 
 export default MobileChatInputArea;

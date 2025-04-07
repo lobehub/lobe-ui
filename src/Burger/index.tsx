@@ -13,35 +13,18 @@ export interface BurgerProps {
   className?: string;
   drawerProps?: Partial<Omit<DrawerProps, 'items' | 'opened' | 'setOpened'>>;
   fullscreen?: boolean;
-  /**
-   * @description The height of the header component
-   * @default 64
-   */
   headerHeight?: number;
   iconProps?: Partial<ActionIconProps>;
-  /**
-   * @description The items to be displayed in the menu
-   */
   items: MenuProps['items'];
   onClick?: MenuProps['onClick'];
-  /**
-   * @description The keys of the currently open sub-menus
-   */
   openKeys?: MenuProps['openKeys'];
-  /**
-   * @description Whether the menu is currently open or not
-   */
   opened: boolean;
   rootClassName?: string;
-  /**
-   * @description The keys of the currently selected menu items
-   */
   selectedKeys?: MenuProps['selectedKeys'];
-  /**
-   * @description A callback function to set the opened state
-   */
   setOpened: (state: boolean) => void;
+  size?: ActionIconProps['size'];
   style?: CSSProperties;
+  variant?: ActionIconProps['variant'];
 }
 
 const Burger = memo<BurgerProps>(
@@ -55,6 +38,8 @@ const Burger = memo<BurgerProps>(
     headerHeight = 64,
     onClick,
     iconProps,
+    size,
+    variant,
     rootClassName,
     fullscreen,
     drawerProps,
@@ -70,7 +55,7 @@ const Burger = memo<BurgerProps>(
         }}
         {...rest}
       >
-        <ActionIcon icon={opened ? X : MenuIcon} size="site" {...iconProps} />
+        <ActionIcon icon={opened ? X : MenuIcon} size={size} variant={variant} {...iconProps} />
         <Drawer
           closeIcon={undefined}
           open={opened}
@@ -98,5 +83,7 @@ const Burger = memo<BurgerProps>(
     );
   },
 );
+
+Burger.displayName = 'Burger';
 
 export default Burger;

@@ -1,10 +1,10 @@
 'use client';
 
-import { Button } from 'antd';
 import { useResponsive } from 'antd-style';
 import { forwardRef } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import Button, { type ButtonProps } from '@/Button';
 import Form, { type FormInstance, type FormProps } from '@/Form';
 import Modal, { type ModalProps } from '@/Modal';
 
@@ -16,14 +16,13 @@ type PickModalProps = Pick<
   | 'className'
   | 'allowFullscreen'
   | 'title'
-  | 'wrapClassName'
   | 'width'
   | 'onCancel'
   | 'open'
   | 'centered'
   | 'destroyOnClose'
   | 'paddings'
-  | 'maxHeight'
+  | 'height'
   | 'enableResponsive'
   | 'afterClose'
   | 'afterOpenChange'
@@ -48,7 +47,7 @@ export interface FormModalProps extends PickModalProps, PickFormProps {
   styles?: {
     form?: FormProps['style'];
   } & ModalProps['styles'];
-  submitButtonProps?: ModalProps['okButtonProps'];
+  submitButtonProps?: ButtonProps;
   submitLoading?: ModalProps['confirmLoading'];
   submitText?: ModalProps['okText'];
 }
@@ -63,7 +62,7 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
       styles = {},
       allowFullscreen,
       title,
-      wrapClassName,
+
       afterOpenChange,
       width,
       onCancel,
@@ -73,7 +72,7 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
       destroyOnClose,
       closeIcon,
       paddings,
-      maxHeight,
+      height,
       enableResponsive,
       zIndex,
       mask,
@@ -87,7 +86,7 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
       submitLoading,
       onFinish,
       submitText,
-      variant = 'pure',
+      variant = 'borderless',
       gap,
       onSubmit,
       children,
@@ -117,10 +116,10 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
         footer={null}
         forceRender={forceRender}
         getContainer={getContainer}
+        height={height}
         keyboard={keyboard}
         loading={loading}
         mask={mask}
-        maxHeight={maxHeight}
         onCancel={onCancel}
         open={open}
         paddings={paddings}
@@ -134,7 +133,6 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
         }}
         title={title}
         width={width}
-        wrapClassName={wrapClassName}
         zIndex={zIndex}
       >
         <Form
@@ -165,7 +163,7 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
               </Flexbox>
             )
           }
-          gap={gap || (variant === 'pure' ? 24 : gap)}
+          gap={gap || (variant === 'borderless' ? 24 : gap)}
           onFinish={onFinish}
           ref={ref}
           style={{
@@ -181,5 +179,7 @@ const FormModal = forwardRef<FormInstance, FormModalProps>(
     );
   },
 );
+
+FormModal.displayName = 'FormModal';
 
 export default FormModal;

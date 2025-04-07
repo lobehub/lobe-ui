@@ -11,19 +11,8 @@ import { useStyles } from './style';
 import { EmojiType, genEmojiUrl } from './utils';
 
 export interface FluentEmojiProps extends DivProps {
-  /**
-   * @description The emoji character to be rendered
-   */
   emoji: string;
-  /**
-   * @description Size of the emoji
-   * @default 40
-   */
   size?: number;
-  /**
-   * @description The type of the FluentUI emoji set to be used
-   * @default '3d'
-   */
   type?: EmojiType;
   unoptimized?: boolean;
 }
@@ -42,6 +31,7 @@ const FluentEmoji = memo<FluentEmojiProps>(
           className={cx(styles.container, className)}
           flex={'none'}
           height={size}
+          role={'img'}
           style={{ fontSize: size * 0.9, ...style }}
           width={size}
         >
@@ -64,5 +54,7 @@ const FluentEmoji = memo<FluentEmojiProps>(
     );
   },
 );
+
+FluentEmoji.displayName = 'FluentEmoji';
 
 export default FluentEmoji;

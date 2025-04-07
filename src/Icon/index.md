@@ -2,18 +2,18 @@
 nav: Components
 group: General
 title: Icon
-description: Icons are graphical symbols used to represent a concept or an action. The `Icon` component is a reusable React component that renders an SVG icon from the `lucide-react` library.
+description: Icon is a component based on lucide-react that provides rich icon selection and customization options
 ---
 
-## Default
+## Introduction
 
-Search icons in [`Lucide Icon`](https://lucide.dev/)
+Icon is a reusable React component for rendering SVG icons from the `lucide-react` library. It provides a simple yet powerful API to customize the appearance and behavior of icons.
+
+## Basic Usage
+
+Search for available icons in [`Lucide Icon`](https://lucide.dev/)
 
 <code src="./demos/index.tsx" nopadding></code>
-
-## CustomSize
-
-<code src="./demos/CustomSize.tsx" nopadding></code>
 
 ## APIs
 

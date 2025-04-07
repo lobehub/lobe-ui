@@ -1,52 +1,142 @@
 import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ css, token, prefixCls }) => {
-  const prefix = `.${prefixCls}-tabs`;
-
-  const marginHoriz = 16;
-  const paddingVertical = 6;
-
   return {
     compact: css`
-      .${prefixCls}-tabs-tab {
-        margin: 4px !important;
+      &.${prefixCls}-tabs {
+        .${prefixCls}-tabs-tab {
+          margin: 4px;
 
-        + .${prefixCls}-tabs-tab {
-          margin: 4px !important;
+          + .${prefixCls}-tabs-tab {
+            margin: 4px;
+          }
         }
       }
     `,
-    tabs: css`
-      ${prefix}-tab + ${prefix}-tab {
-        margin-block: ${marginHoriz}px !important;
-        margin-inline: 4px !important;
-        padding-block: 0 !important;
-        padding-inline: 12px !important;
-      }
+    dropdown: css`
+      .${prefixCls}-tabs-dropdown-menu {
+        padding: 4px;
+        border: 1px solid ${token.colorBorderSecondary};
 
-      ${prefix}-tab {
-        color: ${token.colorTextSecondary};
-        transition: background-color 100ms ease-out;
-
-        &:first-child {
-          margin-block: ${marginHoriz}px;
-          margin-inline: 0 4px;
-          padding-block: ${paddingVertical}px !important;
-          padding-inline: 12px !important;
-        }
-
-        &:hover {
-          color: ${token.colorText} !important;
-          background: ${token.colorFillTertiary};
+        .${prefixCls}-tabs-dropdown-menu-item {
           border-radius: ${token.borderRadius}px;
         }
       }
-
-      ${prefix}-nav {
-        margin-block-end: 0;
-
-        &::before {
+    `,
+    hideHolder: css`
+      &.${prefixCls}-tabs {
+        .${prefixCls}-tabs-content-holder {
           display: none;
+        }
+
+        .${prefixCls}-tabs-nav {
+          margin: 0;
+
+          &::before {
+            display: none;
+          }
+        }
+      }
+    `,
+
+    margin: css`
+      &.${prefixCls}-tabs {
+        .${prefixCls}-tabs-tab {
+          margin: 8px;
+
+          + .${prefixCls}-tabs-tab {
+            margin: 8px;
+          }
+        }
+      }
+    `,
+    point: css`
+      &.${prefixCls}-tabs {
+        &.${prefixCls}-tabs-top {
+          .${prefixCls}-tabs-ink-bar {
+            width: 8px !important;
+            height: 4px;
+            border-start-start-radius: 4px;
+            border-start-end-radius: 4px;
+          }
+        }
+
+        &.${prefixCls}-tabs-bottom {
+          .${prefixCls}-tabs-ink-bar {
+            width: 8px !important;
+            height: 4px;
+            border-end-start-radius: 4px;
+            border-end-end-radius: 4px;
+          }
+        }
+
+        &.${prefixCls}-tabs-left {
+          .${prefixCls}-tabs-ink-bar {
+            width: 4px;
+            height: 8px !important;
+            border-start-start-radius: 4px;
+            border-end-start-radius: 4px;
+          }
+        }
+
+        &.${prefixCls}-tabs-right {
+          .${prefixCls}-tabs-ink-bar {
+            width: 4px;
+            height: 8px !important;
+            border-start-end-radius: 4px;
+            border-end-end-radius: 4px;
+          }
+        }
+      }
+    `,
+    root: css`
+      &.${prefixCls}-tabs {
+        .${prefixCls}-tabs-tab {
+          padding-block: 8px;
+          padding-inline: 12px;
+          color: ${token.colorTextSecondary};
+          transition: background-color 100ms ease-out;
+
+          &:hover {
+            color: ${token.colorText};
+            background: ${token.colorFillTertiary};
+            border-radius: ${token.borderRadius}px;
+          }
+        }
+      }
+    `,
+    rounded: css`
+      &.${prefixCls}-tabs {
+        &.${prefixCls}-tabs-top {
+          .${prefixCls}-tabs-ink-bar {
+            height: 3px;
+            border-start-start-radius: 3px;
+            border-start-end-radius: 3px;
+          }
+        }
+
+        &.${prefixCls}-tabs-bottom {
+          .${prefixCls}-tabs-ink-bar {
+            height: 3px;
+            border-end-start-radius: 3px;
+            border-end-end-radius: 3px;
+          }
+        }
+
+        &.${prefixCls}-tabs-left {
+          .${prefixCls}-tabs-ink-bar {
+            width: 3px;
+            border-start-start-radius: 3px;
+            border-end-start-radius: 3px;
+          }
+        }
+
+        &.${prefixCls}-tabs-right {
+          .${prefixCls}-tabs-ink-bar {
+            width: 3px;
+            border-start-end-radius: 3px;
+            border-end-end-radius: 3px;
+          }
         }
       }
     `,

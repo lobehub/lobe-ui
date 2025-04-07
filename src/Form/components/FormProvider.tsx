@@ -1,3 +1,5 @@
+'use client';
+
 import type { FormProps } from 'antd';
 import { ReactNode, createContext, memo, useContext } from 'react';
 

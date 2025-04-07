@@ -23,4 +23,6 @@ const LobeChatText: FC<SvgProps & DivProps & { size?: number }> = ({
   </svg>
 );
 
+LobeChatText.displayName = 'LobeChatText';
+
 export default LobeChatText;

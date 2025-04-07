@@ -1,54 +1,86 @@
 'use client';
 
-import { isUndefined } from 'lodash-es';
-import { memo } from 'react';
+import { cva } from 'class-variance-authority';
+import { memo, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import CopyButton from '@/CopyButton';
+import { useStyles } from '@/Highlighter/style';
 import Tag from '@/Tag';
 
 import FullFeatured from './FullFeatured';
-import MermaidContainer from './components/MermaidContainer';
-import MermaidZoomableContainer from './components/MermaidZoomableContainer';
-import { useStyles } from './style';
+import SyntaxMermaid from './SyntaxMermaid';
 import { MermaidProps } from './type';
 
 const Mermaid = memo<MermaidProps>(
   ({
     children,
-    copyButtonSize = 'site',
+    actionIconSize,
     fullFeatured,
     copyable = true,
     showLanguage = true,
+    language = 'mermaid',
     style,
-    type = 'block',
-    enablePanZoom,
+    variant = 'filled',
+    shadow,
+    enablePanZoom = true,
+    defaultExpand = true,
     className,
     bodyRender,
     actionsRender,
+    theme,
     ...rest
   }) => {
-    const { cx, styles } = useStyles(type);
+    const { cx, styles } = useStyles();
+
+    const variants = useMemo(
+      () =>
+        cva(styles.root, {
+          defaultVariants: {
+            shadow: false,
+            variant: 'filled',
+            wrap: false,
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: styles.filled,
+              outlined: styles.outlined,
+              borderless: styles.borderless,
+            },
+            shadow: {
+              false: null,
+              true: styles.shadow,
+            },
+            wrap: {
+              false: styles.nowrap,
+              true: null,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
+
     const tirmedChildren = children.trim();
 
     const originalActions = copyable && (
-      <CopyButton content={tirmedChildren} placement="left" size={copyButtonSize} />
+      <CopyButton content={tirmedChildren} size={actionIconSize} />
     );
 
     const actions = actionsRender
       ? actionsRender({
-          actionIconSize: copyButtonSize,
+          actionIconSize,
           content: children,
           originalNode: originalActions,
         })
       : originalActions;
 
-    const defaultBody =
-      enablePanZoom || (isUndefined(enablePanZoom) && fullFeatured) ? (
-        <MermaidZoomableContainer>{tirmedChildren}</MermaidZoomableContainer>
-      ) : (
-        <MermaidContainer>{tirmedChildren}</MermaidContainer>
-      );
+    const defaultBody = (
+      <SyntaxMermaid enablePanZoom={enablePanZoom} theme={theme} variant={variant}>
+        {tirmedChildren}
+      </SyntaxMermaid>
+    );
 
     const body = bodyRender
       ? bodyRender({ content: tirmedChildren, originalNode: defaultBody })
@@ -58,13 +90,15 @@ const Mermaid = memo<MermaidProps>(
       return (
         <FullFeatured
           actionsRender={actionsRender}
-          bodyRender={bodyRender}
           className={className}
           content={tirmedChildren}
           copyable={copyable}
+          defaultExpand={defaultExpand}
+          language={language}
+          shadow={shadow}
           showLanguage={showLanguage}
           style={style}
-          type={type}
+          variant={variant}
           {...rest}
         >
           {body}
@@ -73,20 +107,22 @@ const Mermaid = memo<MermaidProps>(
 
     return (
       <div
-        className={cx(styles.container, className)}
+        className={cx(variants({ shadow, variant }), className)}
         data-code-type="mermaid"
         style={style}
         {...rest}
       >
-        <Flexbox align={'center'} className={styles.button} flex={'none'} gap={4} horizontal>
+        <Flexbox align={'center'} className={styles.actions} flex={'none'} gap={4} horizontal>
           {actions}
         </Flexbox>
-        {!enablePanZoom && showLanguage && <Tag className={styles.lang}>Mermaid</Tag>}
-        <div className={styles.scroller}>{body}</div>
+        {showLanguage && <Tag className={styles.lang}>{language.toLowerCase()}</Tag>}
+        {body}
       </div>
     );
   },
 );
+
+Mermaid.displayName = 'Mermaid';
 
 export default Mermaid;
 

@@ -8,59 +8,54 @@ import {
   Drawer,
 } from 'antd';
 import { useResponsive } from 'antd-style';
-import { isNumber } from 'lodash-es';
 import { Maximize2, Minimize2, X } from 'lucide-react';
-import { ReactNode, memo, useState } from 'react';
+import { ReactNode, forwardRef, useState } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 import Icon from '@/Icon';
 
-import { FOOTER_HEIGHT, HEADER_HEIGHT, useStyles } from './style';
+import { useStyles } from './style';
 
-export type ModalProps = Omit<AntModalProps, 'okType'> & {
+export type ModalProps = Omit<AntModalProps, 'okType' | 'wrapClassName'> & {
   allowFullscreen?: boolean;
   enableResponsive?: boolean;
-  maxHeight?: string | number | false;
   paddings?: {
     desktop?: number;
     mobile?: number;
   };
 };
 
-const Modal = memo<ModalProps>(
-  ({
-    allowFullscreen,
-    children,
-    title = ' ',
-    className,
-    wrapClassName,
-    width = 700,
-    onCancel,
-    open,
-    destroyOnClose,
-    paddings,
-    maxHeight = '75dvh',
-    enableResponsive = true,
-    footer,
-    styles: stylesProps = {},
-    okText,
-    onOk,
-    cancelText,
-    okButtonProps,
-    cancelButtonProps,
-    confirmLoading,
-    ...rest
-  }) => {
+const Modal = forwardRef<HTMLDivElement, ModalProps>(
+  (
+    {
+      allowFullscreen,
+      children,
+      title = ' ',
+      className,
+      classNames,
+      width = 700,
+      onCancel,
+      open,
+      destroyOnClose,
+      paddings,
+      height = '75dvh',
+      enableResponsive = true,
+      footer,
+      styles: customStyles,
+      okText,
+      onOk,
+      cancelText,
+      okButtonProps,
+      cancelButtonProps,
+      confirmLoading,
+      ...rest
+    },
+    ref,
+  ) => {
     const [fullscreen, setFullscreen] = useState(false);
     const { mobile } = useResponsive();
-    const { styles, cx, theme } = useStyles({
-      maxHeight: maxHeight
-        ? `calc(${isNumber(maxHeight) ? `${maxHeight}px` : maxHeight} - ${
-            HEADER_HEIGHT + (footer ? FOOTER_HEIGHT : 0)
-          }px)`
-        : undefined,
-    });
-    const { body, ...restStyles } = stylesProps;
+    const { styles, cx, theme } = useStyles();
+    const { body, ...restStyles } = customStyles || {};
     const hideFooter = footer === false || footer === null;
     if (enableResponsive && mobile)
       return (
@@ -73,6 +68,10 @@ const Modal = memo<ModalProps>(
         >
           <Drawer
             className={cx(styles.drawerContent, className)}
+            classNames={{
+              ...classNames,
+              wrapper: cx(styles.wrap, classNames?.wrapper),
+            }}
             closeIcon={<ActionIcon icon={X} />}
             destroyOnClose={destroyOnClose}
             extra={
@@ -111,10 +110,10 @@ const Modal = memo<ModalProps>(
                     </>
                   )
             }
-            height={fullscreen ? 'calc(100% - env(safe-area-inset-top))' : maxHeight || '75vh'}
-            maskClassName={cx(styles.wrap, wrapClassName)}
+            height={fullscreen ? 'calc(100% - env(safe-area-inset-top))' : height}
             onClose={onCancel as any}
             open={open}
+            panelRef={ref}
             placement={'bottom'}
             styles={{
               body: {
@@ -148,8 +147,12 @@ const Modal = memo<ModalProps>(
           }}
           cancelText={cancelText}
           className={cx(styles.content, className)}
+          classNames={{
+            ...classNames,
+            wrapper: cx(styles.wrap, classNames?.wrapper),
+          }}
           closable
-          closeIcon={<Icon icon={X} size={{ fontSize: 20 }} />}
+          closeIcon={<Icon icon={X} size={20} />}
           confirmLoading={confirmLoading}
           destroyOnClose={destroyOnClose}
           footer={hideFooter ? null : footer}
@@ -159,8 +162,11 @@ const Modal = memo<ModalProps>(
           onCancel={onCancel}
           onOk={onOk}
           open={open}
+          panelRef={ref}
           styles={{
             body: {
+              maxHeight: height,
+              overflow: 'hidden auto',
               paddingBlock: `0 ${footer === null ? '16px' : 0}`,
               paddingInline: paddings?.desktop ?? 16,
               ...body,
@@ -169,7 +175,6 @@ const Modal = memo<ModalProps>(
           }}
           title={title}
           width={width}
-          wrapClassName={cx(styles.wrap, wrapClassName)}
           {...rest}
         >
           {children}
@@ -178,5 +183,7 @@ const Modal = memo<ModalProps>(
     );
   },
 );
+
+Modal.displayName = 'Modal';
 
 export default Modal;

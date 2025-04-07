@@ -8,20 +8,6 @@ export const useStyles = createStyles(
     const prefix = `rc-footer`;
 
     return {
-      container: css`
-        grid-area: footer;
-        align-self: stretch;
-
-        color: ${token.colorTextDescription};
-        text-align: center;
-
-        border-block-start: 1px solid ${token.colorSplit};
-
-        ${responsive.mobile} {
-          flex-direction: column;
-          border: none;
-        }
-      `,
       footer: css`
         font-size: 14px;
         line-height: 1.5;
@@ -175,6 +161,17 @@ export const useStyles = createStyles(
               }
             }
           }
+        }
+      `,
+      root: css`
+        grid-area: footer;
+        align-self: stretch;
+        color: ${token.colorTextDescription};
+        border-block-start: 1px solid ${token.colorSplit};
+
+        ${responsive.mobile} {
+          flex-direction: column;
+          border: none;
         }
       `,
     };

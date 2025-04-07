@@ -1,36 +1,30 @@
 import { ActionIcon, Avatar, List, ListItemProps } from '@lobehub/ui';
 import { MoreHorizontalIcon } from 'lucide-react';
-import { Flexbox } from 'react-layout-kit';
+import { useState } from 'react';
 
-const { Item } = List;
+const items: ListItemProps[] = [
+  {
+    actions: <ActionIcon icon={MoreHorizontalIcon} />,
+    avatar: <Avatar avatar={'😊'} />,
+    date: Date.now(),
+    description: 'Description 1',
+    key: '1',
+    pin: true,
+    showAction: true,
+    title: 'Item 1',
+  },
+  {
+    actions: <ActionIcon icon={MoreHorizontalIcon} />,
+    avatar: <Avatar avatar={'😊'} />,
+    date: Date.now(),
+    description: 'Description 2',
+    key: '2',
+    title: 'Item 2',
+  },
+];
 
 export default () => {
-  const items: ListItemProps[] = [
-    {
-      actions: <ActionIcon icon={MoreHorizontalIcon} />,
-      active: false,
-      avatar: <Avatar avatar={'😊'} />,
-      date: Date.now(),
-      description: 'Description 1',
-      pin: true,
-      showAction: true,
-      title: 'Item 1',
-    },
-    {
-      actions: <ActionIcon icon={MoreHorizontalIcon} />,
-      active: false,
-      avatar: <Avatar avatar={'😊'} />,
-      date: Date.now(),
-      description: 'Description 2',
-      title: 'Item 2',
-    },
-  ];
+  const [active, setActive] = useState(items[0].key);
 
-  return (
-    <Flexbox>
-      {items.map((item, index) => (
-        <Item key={index} {...item} />
-      ))}
-    </Flexbox>
-  );
+  return <List activeKey={active} items={items} onClick={({ key }) => setActive(key)} />;
 };

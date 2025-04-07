@@ -1,5 +1,4 @@
 import { createStyles } from 'antd-style';
-import { rgba } from 'polished';
 
 export const useStyles = createStyles(({ css, token }) => {
   return {
@@ -15,7 +14,7 @@ export const useStyles = createStyles(({ css, token }) => {
       width: 100vw;
 
       background: ${token.colorBgLayout};
-      border-block-start: 1px solid ${rgba(token.colorBorder, 0.25)};
+      border-block-start: 1px solid ${token.colorFillTertiary};
     `,
 
     icon: css`

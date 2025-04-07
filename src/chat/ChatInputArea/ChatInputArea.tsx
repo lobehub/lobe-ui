@@ -2,7 +2,7 @@
 
 import { createStyles } from 'antd-style';
 import { TextAreaRef } from 'antd/es/input/TextArea';
-import { ReactNode, forwardRef, memo } from 'react';
+import { ReactNode, forwardRef } from 'react';
 
 import DraggablePanel, { type DraggablePanelProps } from '@/DraggablePanel';
 
@@ -91,7 +91,6 @@ const ChatInputArea = forwardRef<TextAreaRef, ChatInputAreaProps>(
                 setExpand?.(false);
               }}
               ref={ref}
-              type={'pure'}
               {...rest}
             />
           </div>
@@ -102,4 +101,4 @@ const ChatInputArea = forwardRef<TextAreaRef, ChatInputAreaProps>(
   },
 );
 
-export default memo(ChatInputArea);
+export default ChatInputArea;

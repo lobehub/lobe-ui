@@ -1,6 +1,6 @@
-import { FormModal, type FormProps } from '@lobehub/ui';
+import { Button, FormModal, type FormProps, InputNumber, Select } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { Button, InputNumber, Segmented, Select, Switch } from 'antd';
+import { Segmented, Switch } from 'antd';
 import { useState } from 'react';
 
 const items: FormProps['items'] = [

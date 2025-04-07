@@ -1,188 +1,42 @@
 'use client';
 
-import { useResponsive } from 'antd-style';
-import { ReactNode, memo, useEffect, useState } from 'react';
+import { type ReactNode } from 'react';
 
-import DraggablePanel from '@/DraggablePanel';
-import { DivProps } from '@/types';
+import LayoutParent, { type LayoutProps } from './Layout';
+import LayoutFooter from './components/LayoutFooter';
+import LayoutHeader from './components/LayoutHeader';
+import LayoutMain from './components/LayoutMain';
+import LayoutSidebar from './components/LayoutSidebar';
+import LayoutSidebarInner from './components/LayoutSidebarInner';
+import LayoutToc from './components/LayoutToc';
 
-import { useStyles } from './style';
-
-export interface LayoutHeaderProps extends DivProps {
-  headerHeight?: number;
-}
-export const LayoutHeader = memo<LayoutHeaderProps>(
-  ({ headerHeight, children, className, style, ...rest }) => {
-    const { cx, styles } = useStyles(headerHeight);
-    return (
-      <header
-        className={cx(styles.header, className)}
-        style={{
-          height: headerHeight,
-          ...style,
-        }}
-        {...rest}
-      >
-        <div className={styles.glass} />
-        {children}
-      </header>
-    );
-  },
-);
-
-export type LayoutMainProps = DivProps;
-export const LayoutMain = memo<LayoutMainProps>(({ children, className, ...rest }) => {
-  const { cx, styles } = useStyles();
-  return (
-    <main className={cx(styles.main, className)} {...rest}>
-      {children}
-    </main>
-  );
-});
-
-export interface LayoutSidebarProps extends DivProps {
-  headerHeight?: number;
-}
-export const LayoutSidebar = memo<LayoutSidebarProps>(
-  ({ headerHeight, children, className, style, ...rest }) => {
-    const { cx, styles } = useStyles(headerHeight);
-    return (
-      <aside
-        className={cx(styles.aside, className)}
-        style={{ top: headerHeight, ...style }}
-        {...rest}
-      >
-        {children}
-      </aside>
-    );
-  },
-);
-
-export interface LayoutSidebarInnerProps extends DivProps {
-  headerHeight?: number;
-}
-export const LayoutSidebarInner = memo<LayoutSidebarInnerProps>(
-  ({ headerHeight, children, className, ...rest }) => {
-    const { cx, styles } = useStyles(headerHeight);
-    return (
-      <div className={cx(styles.asideInner, className)} {...rest}>
-        {children}
-      </div>
-    );
-  },
-);
-
-export interface LayoutTocProps extends DivProps {
-  tocWidth?: number;
-}
-export const LayoutToc = memo<LayoutTocProps>(
-  ({ tocWidth, style, className, children, ...rest }) => {
-    const { cx, styles } = useStyles();
-    return (
-      <nav
-        className={cx(styles.toc, className)}
-        style={tocWidth ? { width: tocWidth, ...style } : style}
-        {...rest}
-      >
-        {children}
-      </nav>
-    );
-  },
-);
-
-export type LayoutFooterProps = DivProps;
-export const LayoutFooter = memo<LayoutFooterProps>(({ children, className, ...rest }) => {
-  const { cx, styles } = useStyles();
-  return (
-    <footer className={cx(styles.footer, className)} {...rest}>
-      {children}
-    </footer>
-  );
-});
-
-export interface LayoutProps {
-  /**
-   * @description Width of the sidebar
-   */
-  asideWidth?: number;
-  /**
-   * @description Children of the layout
-   */
-  children?: ReactNode;
-  /**
-   * @description Content of the layout
-   */
-  content?: ReactNode;
-  /**
-   * @description Footer of the layout
-   */
-  footer?: ReactNode;
-  /**
-   * @description Header of the layout
-   */
-  header?: ReactNode;
-  /**
-   * @description Height of the header
-   * @default 64
-   */
-  headerHeight?: number;
-  /**
-   * @description Helmet of the layout
-   */
-  helmet?: ReactNode;
-  /**
-   * @description Sidebar of the layout
-   */
-  sidebar?: ReactNode;
-  /**
-   * @description Table of contents of the layout
-   */
-  toc?: ReactNode;
-  /**
-   * @description Width of the table of contents
-   */
-  tocWidth?: number;
+export interface ILayout {
+  (props: LayoutProps): ReactNode;
+  Footer: typeof LayoutFooter;
+  Header: typeof LayoutHeader;
+  Main: typeof LayoutMain;
+  Sidebar: typeof LayoutSidebar;
+  SidebarInner: typeof LayoutSidebarInner;
+  Toc: typeof LayoutToc;
 }
 
-const Layout = memo<LayoutProps>(
-  ({ helmet, headerHeight = 64, header, footer, sidebar, asideWidth, toc, children, tocWidth }) => {
-    const { styles } = useStyles(headerHeight);
-    const { mobile, laptop } = useResponsive();
-    const [expand, setExpand] = useState(true);
-    useEffect(() => {
-      setExpand(Boolean(laptop));
-    }, [laptop]);
+const Layout = LayoutParent as unknown as ILayout;
 
-    return (
-      <>
-        {helmet}
-        {header && (
-          <LayoutHeader headerHeight={headerHeight}>
-            {header}
-            {mobile && toc && <LayoutToc>{toc}</LayoutToc>}
-          </LayoutHeader>
-        )}
-        <LayoutMain>
-          {!mobile && !sidebar && <nav style={{ width: tocWidth }} />}
-          {!mobile && sidebar && (
-            <LayoutSidebar headerHeight={headerHeight}>
-              <DraggablePanel
-                expand={expand}
-                maxWidth={asideWidth}
-                onExpandChange={setExpand}
-                placement="left"
-              >
-                <LayoutSidebarInner headerHeight={headerHeight}>{sidebar}</LayoutSidebarInner>
-              </DraggablePanel>
-            </LayoutSidebar>
-          )}
-          <section className={styles.content}>{children}</section>
-          {!mobile && toc && <LayoutToc tocWidth={tocWidth}>{toc}</LayoutToc>}
-        </LayoutMain>
-        {footer && <LayoutFooter>{footer}</LayoutFooter>}
-      </>
-    );
-  },
-);
+Layout.Footer = LayoutFooter;
+Layout.Header = LayoutHeader;
+Layout.Toc = LayoutToc;
+Layout.Sidebar = LayoutSidebar;
+Layout.SidebarInner = LayoutSidebarInner;
+Layout.Main = LayoutMain;
 
 export default Layout;
+export { default as LayoutFooter, type LayoutFooterProps } from './components/LayoutFooter';
+export { default as LayoutHeader, type LayoutHeaderProps } from './components/LayoutHeader';
+export { default as LayoutMain, type LayoutMainProps } from './components/LayoutMain';
+export { default as LayoutSidebar, type LayoutSidebarProps } from './components/LayoutSidebar';
+export {
+  default as LayoutSidebarInner,
+  type LayoutSidebarInnerProps,
+} from './components/LayoutSidebarInner';
+export { default as LayoutToc, type LayoutTocProps } from './components/LayoutToc';
+export type { LayoutProps } from './Layout';

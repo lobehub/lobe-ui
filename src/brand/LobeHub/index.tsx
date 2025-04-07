@@ -14,19 +14,8 @@ import { DivProps } from '@/types';
 import { useStyles } from './style';
 
 export interface LobeHubProps extends DivProps {
-  /**
-   * @description Additional React Node to be rendered next to the logo
-   */
   extra?: ReactNode;
-  /**
-   * @description Size of the logo in pixels
-   * @default 32
-   */
   size?: number;
-  /**
-   * @description Type of the logo to be rendered
-   * @default '3d'
-   */
   type?: '3d' | 'flat' | 'mono' | 'text' | 'combine';
 }
 
@@ -96,5 +85,7 @@ const LobeHub = memo<LobeHubProps>(
     );
   },
 );
+
+LobeHub.displayName = 'LobeHubBrand';
 
 export default LobeHub;

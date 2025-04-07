@@ -276,20 +276,8 @@ export const useStyles = createStyles(
       }
     `;
     const pre = css`
-      pre:not(${IGNORE_CLASSNAME} pre),
-      [data-code-type='highlighter'] {
-        white-space: break-spaces;
-        border: none;
-
-        > code {
-          padding: 0 !important;
-
-          font-family: ${token.fontFamilyCode};
-          font-size: 0.875em;
-          line-height: 1.6;
-
-          border: none !important;
-        }
+      pre {
+        font-size: calc(var(--lobe-markdown-font-size) * 0.85);
       }
     `;
     const strong = css`
@@ -359,23 +347,25 @@ export const useStyles = createStyles(
       }
     `;
 
-    return cx(
-      __root,
-      a,
-      blockquote,
-      code,
-      details,
-      header,
-      hr,
-      img,
-      kbd,
-      list,
-      p,
-      pre,
-      strong,
-      svg,
-      table,
-      video,
-    );
+    return {
+      root: __root,
+      variant: cx(
+        a,
+        blockquote,
+        code,
+        details,
+        header,
+        hr,
+        img,
+        kbd,
+        list,
+        p,
+        pre,
+        strong,
+        svg,
+        table,
+        video,
+      ),
+    };
   },
 );

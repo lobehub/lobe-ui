@@ -43,4 +43,6 @@ const Giscus = memo<GiscusProps>(
   },
 );
 
+Giscus.displayName = 'Giscus';
+
 export default Giscus;

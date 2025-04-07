@@ -7,8 +7,14 @@ export default () => {
   const ref = useRef(null);
   const control: DrawerProps | any = useControls(
     {
-      containerMaxWidth: 1024,
-      height: 600,
+      containerMaxWidth: {
+        step: 1,
+        value: 1024,
+      },
+      height: {
+        step: 1,
+        value: 600,
+      },
       noHeader: true,
       open: true,
       placement: {
@@ -22,15 +28,7 @@ export default () => {
 
   return (
     <StoryBook height={800} levaStore={store} noPadding ref={ref}>
-      <Drawer
-        getContainer={false}
-        sidebar={Array.from({ length: 50 })
-          .fill('')
-          .map((_, i) => (
-            <div key={i}>sidebar</div>
-          ))}
-        {...control}
-      >
+      <Drawer getContainer={false} {...control}>
         {Array.from({ length: 50 })
           .fill('')
           .map((_, i) => (

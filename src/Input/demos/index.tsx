@@ -6,9 +6,10 @@ export default () => {
   const controls: InputProps | any = useControls(
     {
       placeholder: 'Type keywords...',
-      type: {
-        options: ['ghost', 'block', 'pure'],
-        value: 'ghost',
+      shadow: false,
+      variant: {
+        options: ['outlined', 'borderless', 'filled'],
+        value: 'filled',
       },
     },
     { store },

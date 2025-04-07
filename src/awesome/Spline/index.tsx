@@ -147,6 +147,8 @@ const Spline = forwardRef<HTMLDivElement, SplineProps>(
   },
 );
 
+Spline.displayName = 'Spline';
+
 export default Spline;
 
 export { type SPEObject, type SplineEvent, type SplineEventName } from '@splinetool/runtime';

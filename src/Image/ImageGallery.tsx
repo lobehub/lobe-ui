@@ -1,9 +1,9 @@
 'use client';
 
-import { Image, ImageProps } from 'antd';
-import { PropsWithChildren, ReactNode, memo } from 'react';
+import { Image, type ImageProps } from 'antd';
+import { type PropsWithChildren, type ReactNode, memo } from 'react';
 
-import usePreview, { PreviewOptions } from '@/Image/usePreview';
+import usePreview, { type PreviewOptions } from './components/usePreview';
 
 const { PreviewGroup } = Image;
 
@@ -26,5 +26,7 @@ const ImageGallery = memo<ImageGalleryProps>(({ items, children, enable = true, 
     </PreviewGroup>
   );
 });
+
+ImageGallery.displayName = 'ImageGallery';
 
 export default ImageGallery;

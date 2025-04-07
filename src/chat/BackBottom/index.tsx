@@ -2,7 +2,7 @@
 
 import { useScroll } from 'ahooks';
 import type { Target } from 'ahooks/lib/useScroll';
-import { type BackTopProps, Button } from 'antd';
+import { type BackTopProps } from 'antd';
 import { ListEnd } from 'lucide-react';
 import {
   type CSSProperties,
@@ -13,7 +13,7 @@ import {
   useState,
 } from 'react';
 
-import Icon from '@/Icon';
+import Button from '@/Button';
 
 import { useStyles } from './style';
 
@@ -30,7 +30,7 @@ const BackBottom = memo<BackBottomProps>(
   ({ visibilityHeight = 240, target, onClick, style, className, text }) => {
     const [visible, setVisible] = useState<boolean>(false);
     const { styles, cx } = useStyles(visible);
-    const ref = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
+    const ref = useRef<HTMLButtonElement>(null);
     const current = (target as any)?.current;
     const scrollHeight = current?.scrollHeight || 0;
     const clientHeight = current?.clientHeight || 0;
@@ -50,16 +50,21 @@ const BackBottom = memo<BackBottomProps>(
     return (
       <Button
         className={cx(styles, className)}
-        icon={<Icon icon={ListEnd} />}
+        glass
+        icon={ListEnd}
         onClick={scrollToBottom}
         ref={ref}
+        shape={'round'}
         size={'small'}
         style={style}
+        variant={'filled'}
       >
         {text || 'Back to bottom'}
       </Button>
     );
   },
 );
+
+BackBottom.displayName = 'BackBottom';
 
 export default BackBottom;

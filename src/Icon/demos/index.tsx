@@ -11,8 +11,8 @@ export default () => {
         value: LucideIcon.Settings,
       },
       size: {
-        options: ['large', 'normal', 'small'],
-        value: 'large',
+        options: ['large', 'middle', 'small'],
+        value: 'middle',
       },
       spin: false,
     },

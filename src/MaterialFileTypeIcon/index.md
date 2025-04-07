@@ -1,6 +1,7 @@
 ---
 nav: Components
 title: MaterialFileTypeIcon
+group: Data Display
 ---
 
 ## Default

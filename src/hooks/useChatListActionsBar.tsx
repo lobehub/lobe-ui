@@ -3,14 +3,14 @@
 import { Copy, Edit, RotateCw, Trash } from 'lucide-react';
 import { useMemo } from 'react';
 
-import { ActionIconGroupItems } from '@/ActionIconGroup';
+import type { ItemType } from '@/ActionIconGroup';
 
 interface ChatListActionsBar {
-  copy: ActionIconGroupItems;
-  del: ActionIconGroupItems;
+  copy: ItemType;
+  del: ItemType;
   divider: { type: 'divider' };
-  edit: ActionIconGroupItems;
-  regenerate: ActionIconGroupItems;
+  edit: ItemType;
+  regenerate: ItemType;
 }
 
 export const useChatListActionsBar = (text?: {

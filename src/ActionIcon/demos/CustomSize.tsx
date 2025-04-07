@@ -18,7 +18,7 @@ export default () => {
         step: 2,
         value: 10,
       },
-      fontSize: {
+      size: {
         max: 100,
         min: 8,
         step: 4,

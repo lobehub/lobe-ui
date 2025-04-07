@@ -1,4 +1,6 @@
-import { Button, type ButtonProps, Form } from 'antd';
+'use client';
+
+import { Form } from 'antd';
 import { createStyles } from 'antd-style';
 import isEqual from 'fast-deep-equal';
 import { motion } from 'framer-motion';
@@ -7,6 +9,7 @@ import { InfoIcon } from 'lucide-react';
 import { ReactNode, memo, useEffect, useState } from 'react';
 import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
+import Button, { type ButtonProps } from '@/Button';
 import Icon from '@/Icon';
 
 import { useFormContext } from './FormProvider';
@@ -104,7 +107,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
             <Icon
               color={theme.colorTextDescription}
               icon={InfoIcon}
-              size={{ fontSize: 12 }}
+              size={12}
               style={{ marginLeft: 8 }}
             />
             <span
@@ -122,7 +125,6 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
         {children}
         {enableReset && (float || hasUnsavedChanges) && (
           <Button
-            color="default"
             htmlType="button"
             onClick={() => {
               form?.resetFields();
@@ -196,5 +198,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
     );
   },
 );
+
+FormSubmitFooter.displayName = 'FormSubmitFooter';
 
 export default FormSubmitFooter;

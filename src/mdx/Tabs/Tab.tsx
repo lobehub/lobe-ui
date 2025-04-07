@@ -29,4 +29,6 @@ const Tab: FC<TabProps> = ({ children, className, ...rest }) => {
   );
 };
 
+Tab.displayName = 'MdxTab';
+
 export default Tab;

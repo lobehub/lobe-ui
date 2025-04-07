@@ -3,7 +3,7 @@
 import { Popover } from 'antd';
 import { createStyles } from 'antd-style';
 import { ArrowRightIcon } from 'lucide-react';
-import { ReactNode, memo, useMemo } from 'react';
+import { type FC, type ReactNode, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import Icon from '@/Icon';
@@ -37,7 +37,7 @@ interface PopoverPanelProps {
   usePopover?: boolean;
 }
 
-const PopoverPanel = memo(({ children, usePopover, title, alt, url }: PopoverPanelProps) => {
+const PopoverPanel: FC<PopoverPanelProps> = ({ children, usePopover, title, alt, url }) => {
   const { styles } = useStyles();
 
   const [displayTitle, domain, host] = useMemo(() => {
@@ -96,6 +96,8 @@ const PopoverPanel = memo(({ children, usePopover, title, alt, url }: PopoverPan
   ) : (
     children
   );
-});
+};
+
+PopoverPanel.displayName = 'MdxPopoverPanel';
 
 export default PopoverPanel;

@@ -1,45 +1,69 @@
 'use client';
 
 import { Tag as AntTag, type TagProps as AntTagProps } from 'antd';
-import { createStyles } from 'antd-style';
-import { ReactNode, memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+import { cva } from 'class-variance-authority';
+import { mix, readableColor } from 'polished';
+import { forwardRef, useMemo } from 'react';
 
-const useStyles = createStyles(({ cx, css, token }) => ({
-  small: css`
-    padding-block: 2px;
-    padding-inline: 6px;
-    line-height: 1;
-  `,
-  tag: cx(css`
-    user-select: none;
-    color: ${token.colorTextSecondary} !important;
-    background: ${token.colorFillSecondary};
-    border: ${token.borderRadius}px;
-
-    &:hover {
-      color: ${token.colorText};
-      background: ${token.colorFill};
-    }
-  `),
-}));
+import { useStyles } from './styles';
 
 export interface TagProps extends AntTagProps {
-  icon?: ReactNode;
-  size?: 'default' | 'small';
+  size?: 'small' | 'middle' | 'large';
+  variant?: 'filled' | 'outlined' | 'borderless';
 }
 
-const Tag = memo<TagProps>(({ icon, children, size = 'default', ...rest }) => {
-  const { styles, cx } = useStyles();
+const Tag = forwardRef<HTMLDivElement, TagProps>(
+  ({ size = 'middle', color, variant = 'filled', children, onClick, style, ...rest }, ref) => {
+    const { styles, cx } = useStyles();
 
-  return (
-    <AntTag bordered={false} className={cx(styles.tag, size === 'small' && styles.small)} {...rest}>
-      <Flexbox align={'center'} gap={4} horizontal>
-        {icon}
+    const variants = useMemo(
+      () =>
+        cva(styles.root, {
+          defaultVariants: {
+            size: 'middle',
+            variant: 'filled',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: styles.filled,
+              outlined: styles.outlined,
+              borderless: styles.borderless,
+            },
+            size: {
+              small: styles.small,
+              middle: null,
+              large: styles.large,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
+
+    const isHexColor = color && color.startsWith('#');
+
+    return (
+      <AntTag
+        bordered={false}
+        className={cx(variants({ size, variant }))}
+        color={color}
+        onClick={onClick}
+        ref={ref}
+        style={{
+          color: isHexColor ? mix(0.75, readableColor(color), color) : undefined,
+          cursor: onClick ? 'pointer' : undefined,
+          fontWeight: isHexColor ? 500 : undefined,
+          ...style,
+        }}
+        {...rest}
+      >
         {children}
-      </Flexbox>
-    </AntTag>
-  );
-});
+      </AntTag>
+    );
+  },
+);
+
+Tag.displayName = 'Tag';
 
 export default Tag;

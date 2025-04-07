@@ -1,5 +1,6 @@
 'use client';
 
+import { cva } from 'class-variance-authority';
 import {
   ArrowBigUpIcon,
   ArrowDownIcon,
@@ -17,7 +18,7 @@ import {
   SpaceIcon,
 } from 'lucide-react';
 import { type CSSProperties, memo, useEffect, useMemo, useState } from 'react';
-import { Flexbox, type FlexboxProps } from 'react-layout-kit';
+import { Center, Flexbox, type FlexboxProps } from 'react-layout-kit';
 
 import Icon from '@/Icon';
 
@@ -35,27 +36,23 @@ const mappingKey = (isAppleDevice: boolean) => ({
   [KeyMapEnum.Ctrl]: isAppleDevice ? <Icon icon={ChevronUpIcon} /> : 'Ctrl',
   [KeyMapEnum.Down]: <Icon icon={ArrowDownIcon} />,
   [KeyMapEnum.Enter]: isAppleDevice ? <Icon icon={CornerDownLeftIcon} /> : 'Enter',
-  [KeyMapEnum.LeftClick]: (
-    <Icon icon={LeftClickIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />
-  ),
+  [KeyMapEnum.LeftClick]: <Icon icon={LeftClickIcon} size={{ size: '1.2em', strokeWidth: 1.75 }} />,
   [KeyMapEnum.Left]: <Icon icon={ArrowLeftIcon} />,
   [KeyMapEnum.Meta]: isAppleDevice ? <Icon icon={Command} /> : <Icon icon={Grid2X2Icon} />,
-  [KeyMapEnum.MiddleClick]: (
-    <Icon icon={MouseIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />
-  ),
+  [KeyMapEnum.MiddleClick]: <Icon icon={MouseIcon} size={{ size: '1.2em', strokeWidth: 1.75 }} />,
   [KeyMapEnum.Mod]: isAppleDevice ? <Icon icon={Command} /> : 'Ctrl',
   [KeyMapEnum.RightClick]: (
-    <Icon icon={RightClickIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />
+    <Icon icon={RightClickIcon} size={{ size: '1.2em', strokeWidth: 1.75 }} />
   ),
   [KeyMapEnum.RightDoubleClick]: (
-    <Icon icon={RightDoubleClickIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />
+    <Icon icon={RightDoubleClickIcon} size={{ size: '1.2em', strokeWidth: 1.75 }} />
   ),
   [KeyMapEnum.LeftDoubleClick]: (
-    <Icon icon={LeftDoubleClickIcon} size={{ fontSize: '1.2em', strokeWidth: 1.75 }} />
+    <Icon icon={LeftDoubleClickIcon} size={{ size: '1.2em', strokeWidth: 1.75 }} />
   ),
   [KeyMapEnum.Right]: <Icon icon={ArrowRightIcon} />,
   [KeyMapEnum.Shift]: isAppleDevice ? (
-    <Icon icon={ArrowBigUpIcon} size={{ fontSize: '1.15em', strokeWidth: 1.75 }} />
+    <Icon icon={ArrowBigUpIcon} size={{ size: '1.15em', strokeWidth: 1.75 }} />
   ) : (
     'Shift'
   ),
@@ -77,7 +74,6 @@ const mappingKey = (isAppleDevice: boolean) => ({
 
 export interface HotkeyProps extends Omit<FlexboxProps, 'children'> {
   classNames?: {
-    descClassName?: string;
     kbdClassName?: string;
   };
   compact?: boolean;
@@ -85,17 +81,16 @@ export interface HotkeyProps extends Omit<FlexboxProps, 'children'> {
   isApple?: boolean;
   keys: string;
   styles?: {
-    descStyle?: CSSProperties;
     kbdStyle?: CSSProperties;
   };
-  variant?: 'default' | 'pure';
+  variant?: 'filled' | 'outlined' | 'borderless';
 }
 
 const Hotkey = memo<HotkeyProps>(
   ({
-    variant = 'default',
+    variant = 'filled',
     classNames,
-    styles,
+    styles: customStyles,
     keys,
     inverseTheme,
     isApple,
@@ -104,11 +99,35 @@ const Hotkey = memo<HotkeyProps>(
     style,
     ...rest
   }) => {
-    const { cx, styles: s } = useStyles(inverseTheme);
-    const isPure = variant === 'pure';
+    const { cx, styles } = useStyles();
+    const isBorderless = variant === 'borderless';
     const [keysGroup, setKeysGroup] = useState(splitKeysByPlus(keys));
     const visibility = typeof window === 'undefined' ? 'hidden' : 'visible';
     const isAppleDevice = useMemo(() => checkIsAppleDevice(isApple), [isApple]);
+
+    const variants = useMemo(
+      () =>
+        cva(styles.root, {
+          defaultVariants: {
+            inverseTheme: false,
+            variant: 'filled',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: styles.filled,
+              outlined: styles.outlined,
+              borderless: styles.borderless,
+            },
+            inverseTheme: {
+              false: null,
+              true: styles.inverseTheme,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
 
     useEffect(() => {
       const newValue = splitKeysByPlus(keys);
@@ -120,38 +139,42 @@ const Hotkey = memo<HotkeyProps>(
     return (
       <Flexbox
         align={'center'}
-        className={cx(s, className)}
-        gap={isPure ? 6 : 2}
+        className={className}
+        gap={isBorderless ? 6 : 2}
         horizontal
         style={{ visibility, ...style }}
         {...rest}
       >
-        {isPure ? (
-          keysGroup.map((key, index) => <span key={index}>{mapping[key] ?? startCase(key)}</span>)
-        ) : compact ? (
-          <Flexbox
-            align={'center'}
+        {compact || isBorderless ? (
+          <Center
             as={'kbd'}
-            className={classNames?.descClassName}
-            gap={4}
+            className={cx(variants({ inverseTheme, variant }), classNames?.kbdClassName)}
+            gap={6}
             horizontal
-            style={styles?.kbdStyle}
+            style={customStyles?.kbdStyle}
           >
             {keysGroup.map((key, index) => (
               <div key={index}>{mapping[key] ?? startCase(key)}</div>
             ))}
-          </Flexbox>
+          </Center>
         ) : (
           keysGroup.map((key, index) => (
-            <kbd className={classNames?.descClassName} key={index} style={styles?.kbdStyle}>
+            <Center
+              as={'kbd'}
+              className={cx(variants({ inverseTheme, variant }), classNames?.kbdClassName)}
+              key={index}
+              style={customStyles?.kbdStyle}
+            >
               {mapping[key] ?? startCase(key)}
-            </kbd>
+            </Center>
           ))
         )}
       </Flexbox>
     );
   },
 );
+
+Hotkey.displayName = 'Hotkey';
 
 export default Hotkey;
 export { KeyMapEnum } from './type';

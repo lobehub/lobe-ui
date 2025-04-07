@@ -2,7 +2,7 @@
 
 import { Typography } from 'antd';
 import { Loader2, MessageSquare } from 'lucide-react';
-import { ReactNode, forwardRef } from 'react';
+import { CSSProperties, ReactNode, forwardRef } from 'react';
 import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
 import Icon from '@/Icon';
@@ -18,15 +18,30 @@ export interface ListItemProps extends Omit<FlexboxProps, 'title'> {
   addon?: ReactNode;
   avatar?: ReactNode;
   classNames?: {
-    time?: string;
+    actions?: string;
+    container?: string;
+    content?: string;
+    date?: string;
+    desc?: string;
+    pin?: string;
+    title?: string;
   };
   date?: number;
   description?: ReactNode;
+  key: string;
   loading?: boolean;
-  onClick?: () => void;
   onHoverChange?: (hover: boolean) => void;
   pin?: boolean;
   showAction?: boolean;
+  styles?: {
+    actions?: CSSProperties;
+    container?: CSSProperties;
+    content?: CSSProperties;
+    date?: CSSProperties;
+    desc?: CSSProperties;
+    pin?: CSSProperties;
+    title?: CSSProperties;
+  };
   title: ReactNode;
 }
 
@@ -48,16 +63,49 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
       classNames,
       addon,
       pin,
+      styles: customStyles,
       ...rest
     },
     ref,
   ) => {
     const { styles, cx } = useStyles();
 
+    const loadingNode = <Icon icon={Loader2} spin />;
+
+    const pinNode = pin && (
+      <div className={cx(styles.pin, classNames?.pin)} style={customStyles?.pin}>
+        <div className={styles.triangle} />
+      </div>
+    );
+
+    const actionsNode = actions && (
+      <Flexbox
+        className={cx(styles.actions, classNames?.actions)}
+        gap={4}
+        horizontal
+        onClick={(e: any) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+        style={{ display: showAction ? undefined : 'none', ...customStyles?.actions }}
+      >
+        {actions}
+      </Flexbox>
+    );
+
+    const timeNode = date && (
+      <div
+        className={cx(styles.date, classNames?.date)}
+        style={{ opacity: showAction ? 0 : undefined, ...customStyles?.date }}
+      >
+        {getChatItemTime(date)}
+      </div>
+    );
+
     return (
       <Flexbox
         align={'flex-start'}
-        className={cx(styles.container, active && styles.active, className)}
+        className={cx(styles.root, active && styles.active, className)}
         distribution={'space-between'}
         gap={8}
         horizontal
@@ -72,53 +120,47 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
         style={style}
         {...rest}
       >
-        {pin && (
-          <div className={styles.pin}>
-            <div className={styles.triangle} />
-          </div>
-        )}
-
-        <Flexbox align={'flex-start'} flex={1} gap={8} horizontal style={{ overflow: 'hidden' }}>
+        {pinNode}
+        <Flexbox
+          align={'flex-start'}
+          className={classNames?.container}
+          flex={1}
+          gap={8}
+          horizontal
+          style={{ overflow: 'hidden', ...customStyles?.container }}
+        >
           {avatar ?? <Icon icon={MessageSquare} style={{ marginTop: 4 }} />}
-          <Flexbox className={styles.content} gap={4}>
-            <Title className={styles.title} ellipsis={{ rows: 1 }} level={3}>
+          <Flexbox
+            className={cx(styles.content, classNames?.content)}
+            gap={4}
+            style={customStyles?.content}
+          >
+            <Title
+              className={cx(styles.title, classNames?.title)}
+              ellipsis={{ rows: 1 }}
+              level={3}
+              style={customStyles?.title}
+            >
               {title}
             </Title>
             {description && (
-              <Paragraph className={styles.desc} ellipsis={{ rows: 1 }}>
+              <Paragraph
+                className={cx(styles.desc, classNames?.desc)}
+                ellipsis={{ rows: 1 }}
+                style={customStyles?.desc}
+              >
                 {description}
               </Paragraph>
             )}
             {addon}
           </Flexbox>
         </Flexbox>
-
         {loading ? (
-          <Icon icon={Loader2} spin />
+          loadingNode
         ) : (
           <>
-            {showAction && (
-              <Flexbox
-                className={styles.actions}
-                gap={4}
-                horizontal
-                onClick={(e: any) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
-                style={{ display: showAction ? undefined : 'none' }}
-              >
-                {actions}
-              </Flexbox>
-            )}
-            {date && (
-              <div
-                className={cx(styles.time, classNames?.time)}
-                style={showAction ? { opacity: 0 } : {}}
-              >
-                {getChatItemTime(date)}
-              </div>
-            )}
+            {actionsNode}
+            {timeNode}
           </>
         )}
         {children}
@@ -126,5 +168,7 @@ const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
     );
   },
 );
+
+ListItem.displayName = 'ListItem';
 
 export default ListItem;

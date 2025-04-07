@@ -1,13 +1,15 @@
 'use client';
 
-import { Dropdown, type MenuProps, Select } from 'antd';
+import { Select } from 'antd';
 import { ThemeMode } from 'antd-style';
 import { Monitor, Moon, Sun } from 'lucide-react';
 import { memo, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import ActionIcon, { type ActionIconSize } from '@/ActionIcon';
+import ActionIcon, { type ActionIconProps } from '@/ActionIcon';
+import Dropdown from '@/Dropdown';
 import Icon from '@/Icon';
+import { ItemType } from '@/Menu';
 import { DivProps } from '@/types';
 
 const icons = {
@@ -22,31 +24,16 @@ export interface ThemeSwitchProps extends DivProps {
     dark: string;
     light: string;
   };
-  /**
-   * @description Callback function when the theme mode is switched
-   * @type {(themeMode: ThemeMode) => void}
-   */
   onThemeSwitch: (themeMode: ThemeMode) => void;
-  /**
-   * @description Size of the action icon
-   * @default {
-   *   blockSize: 34,
-   *   fontSize: 20,
-   *   strokeWidth: 1.5,
-   * }
-   */
-  size?: ActionIconSize;
-  /**
-   * @description The theme mode of the component
-   * @type ThemeMode
-   */
+  size?: ActionIconProps['size'];
   themeMode: ThemeMode;
   type?: 'icon' | 'select';
+  variant?: ActionIconProps['variant'];
 }
 
 const ThemeSwitch = memo<ThemeSwitchProps>(
   ({
-    size = 'site',
+    size,
     themeMode,
     onThemeSwitch,
     type = 'icon',
@@ -56,47 +43,55 @@ const ThemeSwitch = memo<ThemeSwitchProps>(
       light: 'Light',
     },
     className,
+    variant,
     style,
   }) => {
-    const items: MenuProps['items'] = useMemo(
+    const items: ItemType[] = useMemo(
       () => [
-        { icon: <Icon icon={icons.auto} size="small" />, key: 'auto', label: labels.auto },
-        { icon: <Icon icon={icons.light} size="small" />, key: 'light', label: labels.light },
-        { icon: <Icon icon={icons.dark} size="small" />, key: 'dark', label: labels.dark },
+        { icon: icons.auto, key: 'auto', label: labels.auto },
+        { icon: icons.light, key: 'light', label: labels.light },
+        { icon: icons.dark, key: 'dark', label: labels.dark },
       ],
       [labels],
     );
 
-    if (type === 'select') {
-      return (
-        <Select
+    return type === 'select' ? (
+      <Select
+        className={className}
+        defaultValue={themeMode}
+        onChange={onThemeSwitch}
+        options={items.map((item: any) => ({
+          label: (
+            <Flexbox align={'center'} gap={8} horizontal>
+              <Icon icon={item.icon} />
+              {item.label}
+            </Flexbox>
+          ),
+          value: item.key,
+        }))}
+        style={style}
+        variant={variant}
+      />
+    ) : (
+      <Dropdown
+        menu={{
+          items,
+          onClick: (e) => onThemeSwitch(e.key as ThemeMode),
+        }}
+        trigger={['click']}
+      >
+        <ActionIcon
           className={className}
-          defaultValue={themeMode}
-          onChange={onThemeSwitch}
-          options={items.map((item: any) => ({
-            label: (
-              <Flexbox direction={'horizontal'} gap={8}>
-                {item.icon}
-                {item.label}
-              </Flexbox>
-            ),
-            value: item.key,
-          }))}
+          icon={icons[themeMode]}
+          size={size}
           style={style}
+          variant={variant}
         />
-      );
-    } else {
-      const menuProps: MenuProps = {
-        items,
-        onClick: (e: any) => onThemeSwitch(e.key),
-      };
-      return (
-        <Dropdown menu={menuProps} trigger={['click']}>
-          <ActionIcon className={className} icon={icons[themeMode]} size={size} style={style} />
-        </Dropdown>
-      );
-    }
+      </Dropdown>
+    );
   },
 );
+
+ThemeSwitch.displayName = 'ThemeSwitch';
 
 export default ThemeSwitch;

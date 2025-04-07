@@ -42,4 +42,6 @@ const GridShowcase = memo<GridShowcaseProps>(
   },
 );
 
+GridShowcase.displayName = 'GridShowcase';
+
 export default GridShowcase;

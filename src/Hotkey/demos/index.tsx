@@ -9,8 +9,8 @@ export default () => {
       inverseTheme: false,
       keys: 'mod+k',
       variant: {
-        options: ['pure', 'default'],
-        value: 'default',
+        options: ['filled', 'outlined', 'borderless'],
+        value: 'filled',
       },
     },
     { store },

@@ -1,6 +1,3 @@
-/**
- * iframe: true
- */
 import { Icon } from '@lobehub/ui';
 import { MobileTabBar, type MobileTabBarProps } from '@lobehub/ui/mobile';
 import { MessageCircle } from 'lucide-react';
@@ -24,5 +21,5 @@ const items: MobileTabBarProps['items'] = [
 ];
 
 export default () => {
-  return <MobileTabBar items={items} style={{ bottom: 0, left: 0, position: 'absolute' }} />;
+  return <MobileTabBar items={items} style={{ width: '100%' }} />;
 };

@@ -1,59 +1,55 @@
 'use client';
 
 import { Input as AntInput, type InputProps as AntdInputProps, type InputRef } from 'antd';
-import { TextAreaProps as AntdTextAreaProps, type TextAreaRef } from 'antd/es/input/TextArea';
-import { forwardRef } from 'react';
+import { cva } from 'class-variance-authority';
+import { forwardRef, useMemo } from 'react';
 
 import { useStyles } from './style';
 
 export interface InputProps extends AntdInputProps {
-  /**
-   * @description Type of the input
-   * @default 'ghost'
-   */
-  type?: 'ghost' | 'block' | 'pure';
+  shadow?: boolean;
 }
 
-export const Input = forwardRef<InputRef, InputProps>(
-  ({ className, type = 'ghost', ...rest }, ref) => {
-    const { styles, cx } = useStyles({ type });
+const Input = forwardRef<InputRef, InputProps>(
+  ({ variant = 'filled', shadow, className, ...rest }, ref) => {
+    const { styles, cx } = useStyles();
+
+    const variants = useMemo(
+      () =>
+        cva(styles.root, {
+          defaultVariants: {
+            shadow: false,
+            variant: 'filled',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: styles.filled,
+              outlined: styles.outlined,
+              borderless: styles.borderless,
+              underlined: null,
+            },
+            shadow: {
+              false: null,
+              true: styles.shadow,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
 
     return (
       <AntInput
-        className={cx(styles.input, className)}
+        className={cx(variants({ shadow, variant }), className)}
         ref={ref}
-        variant={type === 'pure' ? 'borderless' : undefined}
+        variant={variant}
         {...rest}
       />
     );
   },
 );
 
-export interface TextAreaProps extends AntdTextAreaProps {
-  /**
-   * @description Whether to enable resizing of the textarea
-   * @default true
-   */
-  resize?: boolean;
-  /**
-   * @description Type of the textarea
-   * @default 'ghost'
-   */
-  type?: 'ghost' | 'block' | 'pure';
-}
+Input.displayName = 'Input';
 
-export const TextArea = forwardRef<TextAreaRef, TextAreaProps>(
-  ({ className, type = 'ghost', resize = true, style, ...rest }, ref) => {
-    const { styles, cx } = useStyles({ type });
-
-    return (
-      <AntInput.TextArea
-        className={cx(styles.textarea, className)}
-        ref={ref}
-        style={resize ? style : { resize: 'none', ...style }}
-        variant={type === 'pure' ? 'borderless' : undefined}
-        {...rest}
-      />
-    );
-  },
-);
+export default Input;

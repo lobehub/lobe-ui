@@ -1,7 +1,8 @@
 'use client';
 
-import { Button, type ButtonProps } from 'antd';
 import { memo } from 'react';
+
+import Button, { type ButtonProps } from '@/Button';
 
 import { useStyles } from './style';
 
@@ -14,12 +15,14 @@ const GradientButton = memo<GradientButtonProps>(
     const { styles, cx } = useStyles(size);
 
     return (
-      <Button className={cx(styles.button, className)} size={size} {...rest}>
+      <Button className={cx(styles.button, className)} size={size} variant={'text'} {...rest}>
         {glow && <div className={styles.glow} />}
         {children}
       </Button>
     );
   },
 );
+
+GradientButton.displayName = 'GradientButton';
 
 export default GradientButton;

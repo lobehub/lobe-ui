@@ -1,7 +1,13 @@
 import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ css, token, prefixCls, responsive }) => ({
-  form: css`
+  borderless: css`
+    gap: 64px;
+    ${responsive.mobile} {
+      border-block-start: unset;
+    }
+  `,
+  root: css`
     position: relative;
 
     display: flex;
@@ -9,10 +15,6 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
     gap: 16px;
 
     width: 100%;
-
-    ${responsive.mobile} {
-      gap: 0;
-    }
 
     .${prefixCls}-form-item {
       margin: 0 !important;
@@ -50,16 +52,9 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
       overflow: hidden !important;
       border-radius: ${token.borderRadius}px !important;
     }
-  `,
-  mobile: css`
+
     ${responsive.mobile} {
       gap: 0 !important;
-    }
-  `,
-  pure: css`
-    gap: 64px;
-    ${responsive.mobile} {
-      border-block-start: unset;
     }
   `,
 }));

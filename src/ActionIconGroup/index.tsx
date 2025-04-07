@@ -1,133 +1,157 @@
 'use client';
 
-import { Dropdown } from 'antd';
-import { type LucideIcon, MoreHorizontal } from 'lucide-react';
-import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+import { cva } from 'class-variance-authority';
+import { MoreHorizontal } from 'lucide-react';
+import { forwardRef, useMemo } from 'react';
+import { Center, CenterProps } from 'react-layout-kit';
 
 import ActionIcon, { type ActionIconProps } from '@/ActionIcon';
-import Icon, { IconSizeType } from '@/Icon';
-import { DivProps } from '@/types';
+import Dropdown, { type DropdownProps } from '@/Dropdown';
+import type { MenuInfo, MenuItemType } from '@/Menu';
+import type { TooltipProps } from '@/Tooltip';
 
 import { useStyles } from './style';
 
-export interface ActionIconGroupItems {
-  disable?: boolean;
-  icon: LucideIcon;
-  key: string;
-  label: string;
+export interface ItemType extends MenuItemType {
+  tooltipProps?: TooltipProps;
 }
 
-export interface ActionEvent {
-  item: ActionIconGroupItems;
-  key: string;
-  keyPath: string[];
-}
+export type ActionEvent = Pick<MenuInfo, 'key' | 'keyPath' | 'domEvent'>;
 
-export interface ActionIconGroupProps extends DivProps {
-  /**
-   * @description The direction of the icons
-   * @default "row"
-   */
-  direction?: 'row' | 'column';
-  /**
-   * @description The menu items for the dropdown
-   */
-  dropdownMenu?: (ActionIconGroupItems | { type: 'divider' })[];
-  /**
-   * @description The items to be rendered
-   * @default []
-   */
-  items?: ActionIconGroupItems[];
+export interface ActionIconGroupProps extends CenterProps {
+  actionIconProps?: Partial<Omit<ActionIconProps, 'icon' | 'size'>>;
+  disabled?: boolean;
+  glass?: boolean;
+  items?: ItemType[];
+  menu?: DropdownProps['menu'];
   onActionClick?: (action: ActionEvent) => void;
-  /**
-   * @description The position of the tooltip relative to the target
-   * @enum ["top","left","right","bottom","topLeft","topRight","bottomLeft","bottomRight","leftTop","leftBottom","rightTop","rightBottom"]
-   */
-  placement?: ActionIconProps['placement'];
-  /**
-   * @description The size of the group
-   * @default "small"
-   */
-  size?: IconSizeType;
-  /**
-   * @description Whether to add a spotlight background
-   * @default true
-   */
-  spotlight?: boolean;
-  /**
-   * @description The type of the group
-   * @default "block"
-   */
-  type?: 'ghost' | 'block' | 'pure';
+  shadow?: boolean;
+  size?: ActionIconProps['size'];
+  variant?: 'filled' | 'outlined' | 'borderless';
 }
 
-const ActionIconGroup = memo<ActionIconGroupProps>(
-  ({
-    type = 'block',
-    items = [],
-    placement,
-    direction = 'row',
-    dropdownMenu = [],
-    onActionClick,
-    size = 'small',
-    ...rest
-  }) => {
-    const { styles } = useStyles({ type });
+const ActionIconGroup = forwardRef<HTMLDivElement, ActionIconGroupProps>(
+  (
+    {
+      variant = 'filled',
+      disabled,
+      shadow,
+      glass,
+      actionIconProps,
+      items = [],
+      horizontal = true,
+      menu,
+      onActionClick,
+      className,
+      size = 'small',
+      ...rest
+    },
+    ref,
+  ) => {
+    const { cx, styles } = useStyles();
 
-    const tooltipsPlacement = placement || (direction === 'column' ? 'right' : 'top');
+    const variants = useMemo(
+      () =>
+        cva(styles.root, {
+          defaultVariants: {
+            disabled: false,
+            glass: false,
+            shadow: false,
+            variant: 'filled',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: styles.filled,
+              outlined: styles.outlined,
+              borderless: styles.borderless,
+            },
+            glass: {
+              false: null,
+              true: styles.glass,
+            },
+            shadow: {
+              false: null,
+              true: styles.shadow,
+            },
+            disabled: {
+              false: null,
+              true: styles.disabled,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
+
+    const tooltipPlacement = useMemo(
+      () => (actionIconProps?.tooltipProps?.placement || horizontal ? 'top' : 'right'),
+      [actionIconProps, horizontal],
+    );
 
     return (
-      <Flexbox className={styles.container} horizontal={direction === 'row'} {...rest}>
+      <Center
+        className={cx(variants({ disabled, glass, shadow, variant }), className)}
+        horizontal={horizontal}
+        padding={2}
+        ref={ref}
+        {...rest}
+      >
         {items?.length > 0 &&
-          items.map((item) => (
-            <ActionIcon
-              disable={item.disable}
-              icon={item.icon}
-              key={item.key}
-              onClick={
-                onActionClick
-                  ? () => onActionClick?.({ item, key: item.key, keyPath: [item.key] })
-                  : undefined
-              }
-              placement={tooltipsPlacement}
-              size={size}
-              title={item.label}
-            />
-          ))}
-        {dropdownMenu?.length > 0 && (
+          items.map((item) => {
+            const { icon, key, label, onClick, danger, ...itemRest } = item;
+            return (
+              <ActionIcon
+                danger={danger}
+                icon={icon}
+                key={key}
+                onClick={(e) => {
+                  onActionClick?.({
+                    domEvent: e,
+                    key: String(key),
+                    keyPath: [String(key)],
+                  });
+                  onClick?.(e as any);
+                }}
+                size={size}
+                title={label}
+                {...actionIconProps}
+                disabled={disabled || itemRest?.disabled}
+                tooltipProps={{
+                  placement: itemRest?.tooltipProps?.placement || tooltipPlacement,
+                  ...itemRest?.tooltipProps,
+                }}
+              />
+            );
+          })}
+        {menu && (
           <Dropdown
             menu={{
-              items: dropdownMenu.map((item: any) => {
-                if (item.type) return item;
-                return {
-                  ...item,
-                  disabled: item.disable,
-                  icon: <Icon icon={item.icon} size={size} />,
-                  onClick: onActionClick
-                    ? (info: ActionEvent) =>
-                        onActionClick({
-                          item,
-                          key: info.key,
-                          keyPath: info.keyPath,
-                        })
-                    : undefined,
-                };
-              }),
+              ...menu,
+              onClick: (item) => {
+                onActionClick?.(item);
+              },
             }}
             trigger={['click']}
           >
             <ActionIcon
+              disabled={disabled}
               icon={MoreHorizontal}
               key="more"
-              placement={tooltipsPlacement}
               size={size}
+              {...actionIconProps}
+              tooltipProps={{
+                placement: tooltipPlacement,
+                ...actionIconProps?.tooltipProps,
+              }}
             />
           </Dropdown>
         )}
-      </Flexbox>
+      </Center>
     );
   },
 );
+
+ActionIconGroup.displayName = 'ActionIconGroup';
 
 export default ActionIconGroup;

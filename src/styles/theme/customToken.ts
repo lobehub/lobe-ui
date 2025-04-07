@@ -5,7 +5,7 @@ import { mix } from 'polished';
 
 import { colorScales } from '@/color/colors';
 import type { ColorScaleItem } from '@/color/types';
-import { LobeCustomToken } from '@/types/customToken';
+import type { LobeCustomToken } from '@/types/customToken';
 
 const generateColorPalette = ({
   name,
@@ -16,18 +16,23 @@ const generateColorPalette = ({
   name: string;
   scale: ColorScaleItem;
 }) => {
+  const isDarkMode = appearance === 'dark';
   return {
+    [`${name}Fill`]: scale[`${appearance}A`][isDarkMode ? 3 : 4],
+    [`${name}FillSecondary`]: scale[`${appearance}A`][isDarkMode ? 2 : 3],
+    [`${name}FillTertiary`]: scale[`${appearance}A`][isDarkMode ? 1 : 2],
+    [`${name}FillQuaternary`]: scale[`${appearance}A`][isDarkMode ? 0 : 1],
     [`${name}Bg`]: scale[`${appearance}A`][1],
     [`${name}BgHover`]: scale[`${appearance}A`][2],
     [`${name}Border`]: scale[appearance][4],
     [`${name}BorderSecondary`]: scale[appearance][3],
-    [`${name}BorderHover`]: scale[appearance][5],
-    [`${name}Hover`]: scale[appearance][10],
+    [`${name}BorderHover`]: scale[appearance][isDarkMode ? 5 : 3],
+    [`${name}Hover`]: scale[appearance][isDarkMode ? 10 : 8],
     [`${name}`]: scale[appearance][9],
-    [`${name}Active`]: scale[appearance][7],
-    [`${name}TextHover`]: scale[`${appearance}A`][10],
+    [`${name}Active`]: scale[appearance][isDarkMode ? 7 : 10],
+    [`${name}TextHover`]: scale[`${appearance}A`][isDarkMode ? 10 : 8],
     [`${name}Text`]: scale[`${appearance}A`][9],
-    [`${name}TextActive`]: scale[`${appearance}A`][7],
+    [`${name}TextActive`]: scale[`${appearance}A`][isDarkMode ? 7 : 10],
   };
 };
 

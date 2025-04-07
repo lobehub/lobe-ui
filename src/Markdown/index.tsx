@@ -1,7 +1,8 @@
 'use client';
 
 import type { AnchorProps } from 'antd';
-import { CSSProperties, FC, ReactNode, memo, useCallback, useMemo } from 'react';
+import { cva } from 'class-variance-authority';
+import { CSSProperties, FC, ReactNode, forwardRef, useCallback, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Components } from 'react-markdown/lib';
 import rehypeKatex from 'rehype-katex';
@@ -69,7 +70,7 @@ export interface MarkdownProps extends TypographyProps {
   remarkPluginsAhead?: Pluggable[];
   showFootnotes?: boolean;
   style?: CSSProperties;
-  variant?: 'normal' | 'chat';
+  variant?: 'default' | 'chat';
 }
 
 // 使用工厂函数处理插件，减少组件中的逻辑负担
@@ -136,35 +137,61 @@ const createPlugins = (props: {
   };
 };
 
-const Markdown = memo<MarkdownProps>(
-  ({
-    children,
-    className,
-    style,
-    fullFeaturedCodeBlock,
-    onDoubleClick,
-    enableLatex = true,
-    enableMermaid = true,
-    enableImageGallery = true,
-    enableCustomFootnotes,
-    componentProps,
-    allowHtml,
-    fontSize = 14,
-    headerMultiple = 0.25,
-    marginMultiple = 1,
-    showFootnotes,
-    variant = 'normal',
-    lineHeight = 1.6,
-    rehypePlugins,
-    remarkPlugins,
-    remarkPluginsAhead,
-    components = {},
-    customRender,
-    citations,
-    ...rest
-  }) => {
+const Markdown = forwardRef<HTMLDivElement, MarkdownProps>(
+  (
+    {
+      children,
+      className,
+      style,
+      fullFeaturedCodeBlock,
+      onDoubleClick,
+      enableLatex = true,
+      enableMermaid = true,
+      enableImageGallery = true,
+      enableCustomFootnotes,
+      componentProps,
+      allowHtml,
+      fontSize = 14,
+      headerMultiple = 0.25,
+      marginMultiple = 1,
+      showFootnotes,
+      variant = 'default',
+      lineHeight = 1.6,
+      rehypePlugins,
+      remarkPlugins,
+      remarkPluginsAhead,
+      components = {},
+      customRender,
+      citations,
+      ...rest
+    },
+    ref,
+  ) => {
     const { cx, styles } = useStyles();
     const isChatMode = variant === 'chat';
+
+    const variants = useMemo(
+      () =>
+        cva(styles.root, {
+          defaultVariants: {
+            enableLatex: true,
+            variant: 'default',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              default: null,
+              chat: styles.chat,
+            },
+            enableLatex: {
+              true: styles.latex,
+              false: null,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
 
     // 计算缓存键
     const cacheKey = useMemo(() => {
@@ -224,17 +251,7 @@ const Markdown = memo<MarkdownProps>(
     );
 
     const renderImage = useCallback(
-      (props: any) => (
-        <Image
-          {...props}
-          {...componentProps?.img}
-          style={
-            isChatMode
-              ? { height: 'auto', maxWidth: 640, ...componentProps?.img?.style }
-              : componentProps?.img?.style
-          }
-        />
-      ),
+      (props: any) => <Image {...props} {...componentProps?.img} />,
       [isChatMode, componentProps?.img],
     );
 
@@ -320,18 +337,14 @@ const Markdown = memo<MarkdownProps>(
 
     return (
       <Typography
-        className={cx(
-          styles.root,
-          enableLatex && styles.latex,
-          isChatMode && styles.chat,
-          className,
-        )}
+        className={cx(variants({ enableLatex, variant }), className)}
         data-code-type="markdown"
         fontSize={fontSize}
         headerMultiple={headerMultiple}
         lineHeight={lineHeight}
         marginMultiple={marginMultiple}
         onDoubleClick={onDoubleClick}
+        ref={ref}
         style={style}
         {...rest}
       >
@@ -340,5 +353,7 @@ const Markdown = memo<MarkdownProps>(
     );
   },
 );
+
+Markdown.displayName = 'Markdown';
 
 export default Markdown;

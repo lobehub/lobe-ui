@@ -1,186 +1,91 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(
-  (
-    { css, cx, token, isDarkMode, prefixCls },
-    {
-      isSplit,
-      bodyPadding = '12px 16px',
-      headerPadding = '12px 16px',
-    }: { bodyPadding?: number | string; headerPadding?: number | string; isSplit?: boolean },
-  ) => {
-    const pureStyle = css`
-      background: transparent;
-      border-radius: 0;
+export const DEFAULT_PADDING = '12px 16px';
 
-      .${prefixCls}-collapse-header {
-        padding-inline: 0 !important;
-        background: transparent !important;
-      }
+export const getPadding = (padding?: number | string) =>
+  !padding && padding !== 0 ? DEFAULT_PADDING : padding;
 
-      .${prefixCls}-collapse-content {
-        background: transparent;
-        border-color: ${token.colorFillSecondary};
-      }
-
-      .${prefixCls}-collapse-content-box {
-        padding-inline: 2px !important;
-        background: transparent;
-        border-radius: 0;
-      }
-    `;
-
-    const blockStyle = cx(
-      css`
-        background: transparent !important;
+export const useStyles = createStyles(({ css, token, prefixCls }) => {
+  return {
+    filled: css`
+      &.${prefixCls}-collapse {
+        .${prefixCls}-collapse-header {
+          background: ${token.colorFillTertiary};
+        }
         .${prefixCls}-collapse-item {
-          background: ${token.colorFillQuaternary} !important;
+          background: ${token.colorFillQuaternary};
         }
-
-        .${prefixCls}-collapse-header {
-          background: ${token.colorFillTertiary} !important;
-        }
-      `,
-      isSplit
-        ? css`
-            .${prefixCls}-collapse-item {
-              overflow: hidden;
-              border-radius: ${token.borderRadiusLG}px !important;
-            }
-          `
-        : css`
-            border-radius: ${token.borderRadiusLG}px;
-          `,
-    );
-    const ghostStyle = cx(
-      css`
-        background: transparent;
-
-        .${prefixCls}-collapse-header {
-          background: transparent !important;
-        }
-
-        .${prefixCls}-collapse-content-box {
-          background: transparent;
-        }
-      `,
-      isSplit
-        ? css`
-            .${prefixCls}-collapse-item {
-              overflow: hidden;
-              border: 1px solid ${token.colorBorderSecondary} !important;
-              border-radius: ${token.borderRadiusLG}px !important;
-              &.${prefixCls}-collapse-item-active {
-                .${prefixCls}-collapse-content-box {
-                  border-block-start: 1px solid ${token.colorBorderSecondary} !important;
-                }
-              }
-            }
-          `
-        : css`
-            .${prefixCls}-collapse-item:not(:first-child) {
-              .${prefixCls}-collapse-header {
-                border-block-start: 1px solid ${token.colorBorderSecondary};
-              }
-            }
-          `,
-    );
-
-    const defaultStyle = cx(
-      css`
-        background: transparent !important;
+      }
+    `,
+    gapOutlined: css`
+      &.${prefixCls}-collapse {
         .${prefixCls}-collapse-item {
-          background: transparent !important;
+          box-shadow: 0 0 0 1px ${token.colorFillSecondary} inset;
         }
-
-        .${prefixCls}-collapse-header {
-          background: ${token.colorFillTertiary} !important;
-        }
-      `,
-      isSplit
-        ? css`
-            background: transparent;
-            .${prefixCls}-collapse-item {
-              overflow: hidden;
-              border: 1px solid ${token.colorBorderSecondary} !important;
-              border-radius: ${token.borderRadiusLG}px !important;
-            }
-          `
-        : css`
-            border-radius: ${token.borderRadiusLG}px;
-            .${prefixCls}-collapse-item:not(:first-child) {
-              .${prefixCls}-collapse-header {
-                border-block-start: 1px solid ${token.colorBorderSecondary};
-              }
-            }
-          `,
-    );
-
-    return {
-      blockStyle,
-      defaultStyle,
-      flatGroup: css`
-        overflow: hidden;
-        padding-inline: 16px;
-      `,
-      ghostStyle,
-      group: cx(
-        isDarkMode &&
-          css`
-            .${prefixCls}-collapse-content {
-              background: transparent;
-              border-color: ${token.colorBorderSecondary};
-            }
-
-            .${prefixCls}-collapse-header {
-              background: ${token.colorFillTertiary};
-            }
-          `,
-        css`
+      }
+    `,
+    gapRoot: css`
+      &.${prefixCls}-collapse {
+        display: flex;
+        flex-direction: column;
+        border: none;
+        box-shadow: none;
+        .${prefixCls}-collapse-item {
           overflow: hidden;
+          border: none;
+          border-radius: ${token.borderRadiusLG}px;
+        }
+      }
+    `,
+    hideCollapsibleIcon: css`
+      .${prefixCls}-collapse-expand-icon {
+        display: none !important;
+      }
+    `,
+    icon: css`
+      cursor: pointer;
+      transition: all 100ms ${token.motionEaseOut};
+    `,
+    outlined: css`
+      &.${prefixCls}-collapse {
+        box-shadow: 0 0 0 1px ${token.colorFillTertiary} inset;
+        .${prefixCls}-collapse-item .${prefixCls}-collapse-header {
+          transition: none;
+        }
+        .${prefixCls}-collapse-item-active .${prefixCls}-collapse-header {
+          border-block-end: 1px solid ${token.colorFillTertiary};
+        }
+        .${prefixCls}-collapse-item:not(:first-child) {
+          .${prefixCls}-collapse-header {
+            border-block-start: 1px solid ${token.colorFillTertiary};
+          }
+        }
+      }
+    `,
+    root: css`
+      &.${prefixCls}-collapse {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        background: transparent;
+
+        .${prefixCls}-collapse-header {
           display: flex;
           flex: none;
-          flex-direction: column;
+          gap: 0.75em;
+          align-items: center;
 
-          .${prefixCls}-collapse-item {
-            border: none;
-          }
+          border-radius: 0 !important;
 
-          .${prefixCls}-collapse-extra {
-            margin-inline-start: 16px;
+          .${prefixCls}-collapse-expand-icon {
+            padding: 0;
           }
-
-          .${prefixCls}-collapse-header {
-            align-items: center !important;
-            padding: ${typeof headerPadding === 'string'
-              ? headerPadding
-              : `${headerPadding}px`} !important;
-            border-radius: 0 !important;
-          }
-
-          .${prefixCls}-collapse-content-box {
-            padding: ${typeof bodyPadding === 'string'
-              ? bodyPadding
-              : `${bodyPadding}px`} !important;
-          }
-
-          .${prefixCls}-form-item-label {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-          }
-        `,
-      ),
-      hideCollapsibleIcon: css`
-        .${prefixCls}-collapse-expand-icon {
-          display: none !important;
         }
-      `,
 
-      icon: css`
-        transition: all 100ms ${token.motionEaseOut};
-      `,
-      pureStyle,
-    };
-  },
-);
+        .${prefixCls}-collapse-content {
+          background: transparent;
+        }
+      }
+    `,
+  };
+});

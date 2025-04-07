@@ -15,7 +15,7 @@ export default () => {
       },
       minWidth: {
         step: 1,
-        value: 0,
+        value: 100,
       },
       mode: {
         options: ['fixed', 'float'],
@@ -26,7 +26,7 @@ export default () => {
         options: ['left', 'right', 'top', 'bottom'],
         value: 'left',
       },
-      showHandlerWhenUnexpand: false,
+      showHandleWhenCollapsed: false,
     },
     { store },
   );

@@ -15,6 +15,10 @@ The rest of the props of Input are exactly the same as the original [input](http
 
 <code src="./demos/TextArea.tsx" nopadding></code>
 
+## InputNumber
+
+<code src="./demos/InputNumber.tsx" nopadding></code>
+
 ## APIs
 
 <API></API>

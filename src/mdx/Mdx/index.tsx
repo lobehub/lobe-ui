@@ -148,4 +148,6 @@ const Mdx = memo<MdxProps>(
   },
 );
 
+Mdx.displayName = 'Mdx';
+
 export default Mdx;

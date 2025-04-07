@@ -6,7 +6,11 @@ title: Tag
 
 ## Default
 
-<code src="./demos/index.tsx" center></code>
+<code src="./demos/index.tsx" nopadding></code>
+
+## Color
+
+<code src="./demos/Color.tsx" center></code>
 
 ## APIs
 

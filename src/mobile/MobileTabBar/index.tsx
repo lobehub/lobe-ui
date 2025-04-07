@@ -1,8 +1,8 @@
 'use client';
 
-import { CSSProperties, ReactNode, memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
-import useControlledState from 'use-merge-value';
+import { ReactNode, forwardRef } from 'react';
+import { Flexbox, FlexboxProps } from 'react-layout-kit';
+import useMergeState from 'use-merge-value';
 
 import MobileSafeArea from '@/mobile/MobileSafeArea';
 
@@ -15,19 +15,17 @@ export interface MobileTabBarItemProps {
   title: ReactNode | ((active: boolean) => ReactNode);
 }
 
-export interface MobileTabBarProps {
+export interface MobileTabBarProps extends Omit<FlexboxProps, 'onChange'> {
   activeKey?: string;
-  className?: string;
   defaultActiveKey?: string;
   items: MobileTabBarItemProps[];
   onChange?: (key: string) => void;
   safeArea?: boolean;
-  style?: CSSProperties;
 }
 
-const MobileTabBar = memo<MobileTabBarProps>(
-  ({ className, safeArea, style, items, activeKey, defaultActiveKey, onChange }) => {
-    const [currentActive, setCurrentActive] = useControlledState<string>(
+const MobileTabBar = forwardRef<HTMLDivElement, MobileTabBarProps>(
+  ({ className, safeArea, items, activeKey, defaultActiveKey, onChange, ...rest }, ref) => {
+    const [currentActive, setCurrentActive] = useMergeState<string>(
       defaultActiveKey || items[0].key,
       {
         defaultValue: defaultActiveKey,
@@ -38,8 +36,13 @@ const MobileTabBar = memo<MobileTabBarProps>(
     const { styles, cx } = useStyles();
 
     return (
-      <Flexbox className={cx(styles.container, className)} style={style}>
-        <Flexbox align={'center'} className={styles.inner} horizontal justify={'space-around'}>
+      <Flexbox as={'footer'} className={cx(styles.container, className)} ref={ref} {...rest}>
+        <Flexbox
+          align={'center'}
+          className={cx(styles.inner, className)}
+          horizontal
+          justify={'space-around'}
+        >
           {items.map((item) => {
             const active = item.key === currentActive;
             return (
@@ -69,5 +72,7 @@ const MobileTabBar = memo<MobileTabBarProps>(
     );
   },
 );
+
+MobileTabBar.displayName = 'MobileTabBar';
 
 export default MobileTabBar;

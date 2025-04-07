@@ -67,15 +67,17 @@ export default (token: Theme) => {
       ${token.stylish.blur};
     }
 
-    .${token.prefixCls}-popover-inner {
-      border: 1px solid ${token.colorBorderSecondary};
-      box-shadow: ${token.boxShadowSecondary};
+    .${token.prefixCls}-popover-inner,
+      .${token.prefixCls}-dropdown-menu,
+      .${token.prefixCls}-select-dropdown {
+      border-radius: ${token.borderRadius}px !important;
+      box-shadow:
+        0 0 0 1px ${token.colorFillTertiary},
+        ${token.boxShadowSecondary} !important;
     }
 
-    ul.${token.prefixCls}-dropdown-menu {
-      border: 1px solid ${token.colorBorderSecondary};
-      border-radius: ${token.borderRadius}px !important;
-      box-shadow: ${token.boxShadowSecondary};
+    .${token.prefixCls}-modal-content {
+      border: 1px solid ${token.colorBorderSecondary} !important;
     }
 
     .${token.prefixCls}-radio-wrapper

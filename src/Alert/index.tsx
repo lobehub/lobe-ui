@@ -1,6 +1,7 @@
 'use client';
 
 import { type AlertProps as AntAlertProps, Alert as AntdAlert, message } from 'antd';
+import { cva } from 'class-variance-authority';
 import { camelCase } from 'lodash-es';
 import {
   AlertTriangle,
@@ -11,15 +12,15 @@ import {
   X,
   XCircle,
 } from 'lucide-react';
-import { type ReactNode, memo, useState } from 'react';
+import { type ReactNode, memo, useMemo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
-import Icon from '@/Icon';
+import Icon, { IconProps } from '@/Icon';
 
 import { useStyles } from './style';
 
-export interface AlertProps extends AntAlertProps {
+export interface AlertProps extends Omit<AntAlertProps, 'icon'> {
   classNames?: {
     alert?: string;
     container?: string;
@@ -28,10 +29,13 @@ export interface AlertProps extends AntAlertProps {
   extra?: ReactNode;
   extraDefaultExpand?: boolean;
   extraIsolate?: boolean;
+  glass?: boolean;
+  icon?: IconProps['icon'];
+  iconProps?: Omit<IconProps, 'icon'>;
   text?: {
     detail?: string;
   };
-  variant?: 'default' | 'block' | 'ghost' | 'pure';
+  variant?: 'filled' | 'outlined' | 'borderless';
 }
 
 const typeIcons = {
@@ -51,9 +55,10 @@ const Alert = memo<AlertProps>(
     description,
     showIcon = true,
     type = 'info',
-    variant,
+    glass,
     icon,
     colorfulText = true,
+    iconProps,
     style,
     extra,
     classNames,
@@ -61,6 +66,7 @@ const Alert = memo<AlertProps>(
     extraDefaultExpand = false,
     extraIsolate,
     banner,
+    variant = 'filled',
     ...rest
   }) => {
     const [expand, setExpand] = useState(extraDefaultExpand);
@@ -70,27 +76,125 @@ const Alert = memo<AlertProps>(
       showIcon: !!showIcon,
     });
 
-    const isInsideExtra = !extraIsolate && !!extra;
+    const variants = useMemo(
+      () =>
+        cva(styles.root, {
+          defaultVariants: {
+            colorfulText: true,
+            glass: false,
+            variant: 'filled',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: styles.filled,
+              outlined: styles.outlined,
+              borderless: styles.borderless,
+            },
+            glass: {
+              false: null,
+              true: styles.glass,
+            },
+            colorfulText: {
+              false: null,
+              true: styles.colorfulText,
+            },
+            hasExtra: {
+              false: null,
+              true: styles.hasExtra,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
+
+    const extraVariants = useMemo(
+      () =>
+        cva(styles.extra, {
+          defaultVariants: {
+            variant: 'filled',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: styles.filled,
+              outlined: styles.outlined,
+              borderless: styles.borderless,
+            },
+            banner: {
+              false: null,
+              true: styles.banner,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
+
+    const extraHeaderVariants = useMemo(
+      () =>
+        cva(styles.extraHeader, {
+          defaultVariants: {
+            variant: 'filled',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: null,
+              outlined: null,
+              borderless: styles.borderlessExtraHeader,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
+
+    const extraBodyVariants = useMemo(
+      () =>
+        cva(styles.extraBody, {
+          defaultVariants: {
+            variant: 'filled',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: null,
+              outlined: null,
+              borderless: styles.borderless,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
+
+    const isInsideExtra = Boolean(!extraIsolate && !!extra);
 
     const alert = (
       <AntdAlert
         banner={banner}
         className={cx(
-          styles.container,
-          colorfulText && styles.colorfulText,
-          !!isInsideExtra && styles.hasExtra,
-          variant === 'block' && styles.variantBlock,
-          variant === 'ghost' && styles.variantGhost,
-          variant === 'pure' && styles.variantPure,
+          variants({
+            colorfulText,
+            glass,
+            hasExtra: isInsideExtra,
+            variant,
+          }),
           classNames?.alert,
-          !isInsideExtra && styles.container,
         )}
         closable={closable}
         closeIcon={closeIcon || <ActionIcon color={colors(theme, type)} icon={X} size={'small'} />}
         description={description}
-        icon={<Icon icon={typeIcons[type] || icon} size={{ fontSize: description ? 24 : 18 }} />}
+        icon={<Icon icon={typeIcons[type] || icon} size={description ? 24 : 18} {...iconProps} />}
         showIcon={showIcon}
-        style={{ color: colorfulText ? colors(theme, type) : undefined, ...style }}
+        style={{
+          background: colors(theme, type, 'fillTertiary'),
+          borderColor: colors(theme, type, 'fillTertiary'),
+          color: colorfulText ? colors(theme, type) : undefined,
+          ...style,
+        }}
         type={type}
         {...rest}
       />
@@ -110,48 +214,40 @@ const Alert = memo<AlertProps>(
       <Flexbox className={classNames?.container}>
         {alert}
         <Flexbox
-          className={cx(
-            styles.extra,
-            banner && styles.banner,
-            variant === 'block' && styles.variantBlock,
-            variant === 'ghost' && styles.variantGhost,
-            variant === 'pure' && styles.variantPure,
-          )}
+          className={extraVariants({ banner, variant })}
           style={{
-            background: colors(theme, type, 'bg'),
-            borderColor: colors(theme, type, 'border'),
+            background: colors(theme, type, 'fillTertiary'),
+            borderColor: colors(theme, type, 'fillTertiary'),
             color: colors(theme, type),
             fontSize: description ? 14 : 12,
           }}
         >
           <Flexbox
             align={'center'}
-            className={cx(styles.extraHeader, variant === 'pure' && styles.variantPureExtraHeader)}
+            className={extraHeaderVariants({ variant })}
             gap={message ? 6 : 10}
             horizontal
             style={{
-              borderColor: colors(theme, type, 'border'),
+              borderColor: colors(theme, type, 'fillSecondary'),
             }}
           >
             <ActionIcon
-              color={colorfulText ? colors(theme, type) : undefined}
+              color={colors(theme, type)}
               icon={expand ? ChevronDown : ChevronRight}
               onClick={() => setExpand(!expand)}
-              size={{ blockSize: 24, fontSize: 18 }}
+              size={18}
             />
             <div className={cx(styles.expandText)} onClick={() => setExpand(!expand)}>
               {text?.detail || 'Show Details'}
             </div>
           </Flexbox>
-          {expand && (
-            <div className={cx(styles.extraBody, variant === 'pure' && styles.variantPure)}>
-              {extra}
-            </div>
-          )}
+          {expand && <div className={extraBodyVariants({ variant })}>{extra}</div>}
         </Flexbox>
       </Flexbox>
     );
   },
 );
+
+Alert.displayName = 'Alert';
 
 export default Alert;

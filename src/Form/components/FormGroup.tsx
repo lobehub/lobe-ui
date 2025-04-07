@@ -1,44 +1,19 @@
 'use client';
 
 import { createStyles, useResponsive } from 'antd-style';
+import { cva } from 'class-variance-authority';
 import { isUndefined } from 'lodash-es';
-import { type ReactNode, memo } from 'react';
+import { type ReactNode, forwardRef, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import Collapse, { type CollapseProps } from '@/Collapse';
 import type { FormItemProps } from '@/Form/components/FormItem';
 import Icon, { type IconProps } from '@/Icon';
 
-export type FormVariant = 'default' | 'block' | 'ghost' | 'pure';
-export type ItemsType = 'group' | 'flat';
+import type { FormVariant } from '../type';
 
-export const useStyles = createStyles(({ prefixCls, css, token, responsive }) => {
+export const useStyles = createStyles(({ css, token, responsive }) => {
   return {
-    blockStyle: css`
-      background: ${token.colorFillQuaternary};
-      border: none;
-      border-radius: ${token.borderRadiusLG}px;
-    `,
-    defaultStyle: css`
-      background: ${token.colorFillQuaternary};
-      border: 1px solid ${token.colorBorderSecondary};
-      border-radius: ${token.borderRadiusLG}px;
-    `,
-    flatGroup: css`
-      overflow: hidden;
-      padding-inline: 16px;
-    `,
-    ghostStyle: css`
-      background: transparent;
-      border: 1px solid ${token.colorBorderSecondary};
-      border-radius: ${token.borderRadiusLG}px;
-    `,
-    icon: css`
-      transition: all 100ms ${token.motionEaseOut};
-    `,
-    mobileFlatGroup: css`
-      border-radius: 0;
-    `,
     mobileGroupBody: css`
       padding-block: 0;
       padding-inline: 16px;
@@ -48,33 +23,17 @@ export const useStyles = createStyles(({ prefixCls, css, token, responsive }) =>
       padding: 16px;
       background: ${token.colorBgLayout};
     `,
-    pure: css`
-      .${prefixCls}-collapse-content-box {
-        .${prefixCls}-form-item:first-child {
-          border-block-start: 1px solid ${token.colorFillSecondary};
-        }
-      }
-    `,
-    pureStyle: css`
-      padding: 0;
-      background: transparent;
-      border: none;
-      border-radius: 0;
-    `,
-    pureTitle: css`
-      font-size: 18px;
-      font-weight: 700;
-      line-height: 24px;
-    `,
     title: css`
       align-items: center;
       font-size: 16px;
       font-weight: 600;
-
-      .anticon {
-        color: ${token.colorPrimary};
-      }
-
+    `,
+    titleBorderless: css`
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 24px;
+    `,
+    titleMobile: css`
       ${responsive.mobile} {
         font-size: 14px;
         font-weight: 400;
@@ -84,7 +43,7 @@ export const useStyles = createStyles(({ prefixCls, css, token, responsive }) =>
   };
 });
 
-export interface ItemGroup {
+export interface FormGroupItem {
   children: FormItemProps[] | ReactNode;
   collapsible?: boolean;
   defaultActive?: boolean;
@@ -109,37 +68,51 @@ export interface FormGroupProps
   variant?: FormVariant;
 }
 
-const FormGroup = memo<FormGroupProps>(
-  ({
-    className,
-    icon,
-    title,
-    children,
-    extra,
-    variant = 'default',
-    defaultActive = true,
-    collapsible,
-    active,
-    keyValue = 'group',
-    onCollapse,
-    ...rest
-  }) => {
+const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>(
+  (
+    {
+      className,
+      icon,
+      title,
+      children,
+      extra,
+      variant = 'borderless',
+      defaultActive = true,
+      collapsible,
+      active,
+      keyValue = 'group',
+      onCollapse,
+      ...rest
+    },
+    ref,
+  ) => {
     const { mobile } = useResponsive();
-    const { cx, styles, prefixCls } = useStyles(variant);
+    const { cx, styles } = useStyles(variant);
+    const isBorderless = variant === 'borderless';
 
-    const groupClassName = `${prefixCls}-form-group`;
-    const groupTitleClassName = `${prefixCls}-form-group-title`;
-    const groupHeaderClassName = `${prefixCls}-form-group-header`;
-    const groupContentClassName = `${prefixCls}-form-group-content`;
+    const defaultCollapsible = isUndefined(collapsible) ? isBorderless : collapsible;
 
-    const defaultCollapsible = isUndefined(collapsible) ? variant !== 'pure' : collapsible;
+    const titleVariants = useMemo(
+      () =>
+        cva(styles.title, {
+          defaultVariants: {
+            variant: 'borderless',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: null,
+              outlined: null,
+              borderless: styles.titleBorderless,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
 
     const titleContent = (
-      <Flexbox
-        className={cx(groupTitleClassName, styles.title, variant === 'pure' && styles.pureTitle)}
-        gap={8}
-        horizontal
-      >
+      <Flexbox className={cx(titleVariants({ variant }), styles.titleMobile)} gap={8} horizontal>
         {icon && <Icon icon={icon} />}
         {title}
       </Flexbox>
@@ -147,23 +120,19 @@ const FormGroup = memo<FormGroupProps>(
 
     if (mobile)
       return (
-        <Flexbox className={cx(groupClassName, className)}>
-          <Flexbox
-            className={cx(groupHeaderClassName, styles.mobileGroupHeader)}
-            horizontal
-            justify={'space-between'}
-          >
+        <Flexbox className={className} ref={ref}>
+          <Flexbox className={styles.mobileGroupHeader} horizontal justify={'space-between'}>
             {titleContent}
             {extra}
           </Flexbox>
-          <div className={cx(groupContentClassName, styles.mobileGroupBody)}>{children}</div>
+          <div className={styles.mobileGroupBody}>{children}</div>
         </Flexbox>
       );
 
     return (
       <Collapse
         activeKey={isUndefined(active) ? undefined : active ? [keyValue] : []}
-        className={cx(groupClassName, variant === 'pure' && styles.pure, className)}
+        className={className}
         collapsible={defaultCollapsible}
         defaultActiveKey={defaultActive ? [keyValue] : undefined}
         items={[
@@ -175,11 +144,14 @@ const FormGroup = memo<FormGroupProps>(
           },
         ]}
         onChange={(v) => onCollapse?.(v.length > 0)}
+        ref={ref}
         variant={variant}
         {...rest}
       />
     );
   },
 );
+
+FormGroup.displayName = 'FormGroup';
 
 export default FormGroup;

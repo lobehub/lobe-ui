@@ -1,7 +1,7 @@
 import { App } from 'antd';
 import { FC, ReactNode, memo, useCallback, useMemo, useState } from 'react';
 
-import { ActionEvent } from '@/ActionIconGroup';
+import type { ActionEvent } from '@/ActionIconGroup';
 import type { AlertProps } from '@/Alert';
 import ChatItem, { type ChatItemProps } from '@/chat/ChatItem';
 import { ChatMessage } from '@/types/chatMessage';
