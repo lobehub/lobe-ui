@@ -173,7 +173,7 @@
     "cross-env": "^7.0.3",
     "dpdm": "^3.14.0",
     "dumi": "^2.4.18",
-    "dumi-theme-lobehub": "^1.15.2",
+    "dumi-theme-lobehub": "https://pkg.pr.new/lobehub/dumi-theme-lobehub@63",
     "eslint": "^8.57.1",
     "father": "^4.5.2",
     "husky": "^9.1.7",
