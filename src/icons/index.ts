@@ -4,6 +4,7 @@ export { default as Authentik, type CompoundedIcon as AuthentikProps } from './A
 export { default as Casdoor, type CompoundedIcon as CasdoorProps } from './Casdoor';
 export { default as Clerk, type CompoundedIcon as ClerkProps } from './Clerk';
 export { default as Logto, type CompoundedIcon as LogtoProps } from './Logto';
+export * from './lucideExtra';
 export {
   default as MicrosoftEntra,
   type CompoundedIcon as MicrosoftEntraProps,
