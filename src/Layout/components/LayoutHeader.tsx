@@ -21,7 +21,6 @@ export const LayoutHeader = memo<LayoutHeaderProps>(
         }}
         {...rest}
       >
-        <div className={styles.glass} />
         {children}
       </header>
     );

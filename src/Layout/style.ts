@@ -1,16 +1,6 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, stylish, responsive }, headerHeight: number) => {
-  const baseGlass = css`
-    pointer-events: none;
-    content: '';
-    user-select: none;
-
-    position: absolute;
-    z-index: -1;
-    inset-block: -1px ${responsive.mobile ? '-25%' : '-50%'};
-    inset-inline: 0;
-  `;
+export const useStyles = createStyles(({ cx, css, stylish }, headerHeight: number) => {
   return {
     app: css`
       overflow: hidden auto;
@@ -36,25 +26,15 @@ export const useStyles = createStyles(({ css, stylish, responsive }, headerHeigh
       position: relative;
       max-width: 100%;
     `,
-    glass: css`
-      z-index: 0;
-
-      &::before {
-        ${stylish.blur};
-        ${baseGlass};
-        mask-image: linear-gradient(to bottom, black ${headerHeight}px, transparent);
-      }
-
-      &::after {
-        ${baseGlass};
-      }
-    `,
-    header: css`
-      position: sticky;
-      z-index: 999;
-      inset-block-start: 0;
-      max-width: 100%;
-    `,
+    header: cx(
+      stylish.blur,
+      css`
+        position: sticky;
+        z-index: 999;
+        inset-block-start: 0;
+        max-width: 100%;
+      `,
+    ),
     main: css`
       position: relative;
       display: flex;

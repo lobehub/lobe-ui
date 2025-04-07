@@ -33,7 +33,7 @@ export const useStyles = createStyles(({ css, responsive, token }) => ({
     padding-inline: 24px;
 
     background-color: ${rgba(token.colorBgLayout, 0.4)};
-    border-block-end: 1px solid ${token.colorSplit};
+    border-block-end: 1px solid ${token.colorBorderSecondary};
 
     ${responsive.mobile} {
       padding-block: 0;
