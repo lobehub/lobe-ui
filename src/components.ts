@@ -56,7 +56,6 @@ export { useChatListActionsBar } from './hooks/useChatListActionsBar';
 export { combineKeys, default as Hotkey, type HotkeyProps, KeyMapEnum } from './Hotkey';
 export { default as HotkeyInput, type HotkeyInputProps } from './HotkeyInput';
 export { default as Icon, type IconProps, type IconSize } from './Icon';
-export * from './Icon/icons';
 export { default as Image, type ImageProps } from './Image';
 export { default as ImageGallery, type ImageGalleryProps } from './Image/ImageGallery';
 export { default as ImageSelect, type ImageSelectItem, type ImageSelectProps } from './ImageSelect';
