@@ -8,11 +8,12 @@ export default () => {
       children: 'pnpm install @lobehub/ui',
       copyable: true,
       language: 'sh',
+      prefix: '$',
+      shadow: false,
       spotlight: false,
-      symbol: '$',
-      type: {
-        options: ['ghost', 'block'],
-        value: 'ghost',
+      variant: {
+        options: ['filled', 'outlined', 'borderless'],
+        value: 'filled',
       },
     },
     { store },

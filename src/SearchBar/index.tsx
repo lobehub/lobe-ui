@@ -1,13 +1,13 @@
 'use client';
 
 import { LucideLoader2, Search } from 'lucide-react';
-import { CSSProperties, memo, useRef, useState } from 'react';
+import { type CSSProperties, memo, useRef, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import useControlledState from 'use-merge-value';
 
 import Hotkey from '@/Hotkey';
 import Icon from '@/Icon';
-import { Input, type InputProps } from '@/Input';
+import Input, { type InputProps } from '@/Input';
 import Spotlight from '@/awesome/Spotlight';
 
 import { useStyles } from './style';
@@ -18,26 +18,12 @@ export interface SearchBarProps extends Omit<InputProps, 'styles' | 'classNames'
     shortKey?: string;
   };
   defaultValue?: string;
-  /**
-   * @description Whether to enable the shortcut key to focus on the input
-   * @default false
-   */
   enableShortKey?: boolean;
   loading?: boolean;
-
   onInputChange?: (value: string) => void;
-  /**
-   * @description Whether add spotlight background
-   * @default false
-   */
   onSearch?: (value: string) => void;
-  /**
-   * @description The shortcut key to focus on the input. Only works if `enableShortKey` is true
-   * @default 'f'
-   */
   shortKey?: string;
   spotlight?: boolean;
-
   styles?: {
     input?: CSSProperties;
     shortKey?: CSSProperties;
@@ -47,7 +33,7 @@ export interface SearchBarProps extends Omit<InputProps, 'styles' | 'classNames'
 
 const SearchBar = memo<SearchBarProps>(
   ({
-    defaultValue,
+    defaultValue = '',
     spotlight,
     className,
     value,
@@ -66,7 +52,7 @@ const SearchBar = memo<SearchBarProps>(
     classNames: { input: inputClassName, shortKey: shortKeyClassName } = {},
     ...rest
   }) => {
-    const [inputValue, setInputValue] = useControlledState<string>(defaultValue as any, {
+    const [inputValue, setInputValue] = useControlledState(defaultValue, {
       defaultValue,
       onChange: onInputChange,
       value,
@@ -76,6 +62,7 @@ const SearchBar = memo<SearchBarProps>(
     const { styles, cx } = useStyles();
     const inputReference: any = useRef<HTMLInputElement>(null);
     const hotkey = shortKey.includes('+') ? shortKey : `mod+${shortKey}`;
+
     useHotkeys(
       hotkey,
       () => {
@@ -93,24 +80,16 @@ const SearchBar = memo<SearchBarProps>(
         {spotlight && <Spotlight />}
         <Input
           allowClear
-          className={cx(styles.input, inputClassName)}
+          className={inputClassName}
           onBlur={(e) => {
             onBlur?.(e);
             setInputValue(e.target.value);
-
-            if (!e.target.value) {
-              setShowTag(true);
-            }
+            setShowTag(true);
           }}
           onChange={(e) => {
-            onChange?.(e);
             setInputValue(e.target.value);
-            if (e.target.value) {
-              setShowTag(false);
-            } else {
-              setShowTag(true);
-              onSearch?.(e.target.value);
-            }
+            onChange?.(e);
+            onSearch?.(e.target.value);
           }}
           onFocus={(e) => {
             onFocus?.(e);
@@ -147,5 +126,7 @@ const SearchBar = memo<SearchBarProps>(
     );
   },
 );
+
+SearchBar.displayName = 'SearchBar';
 
 export default SearchBar;

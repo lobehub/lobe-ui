@@ -1,77 +1,88 @@
 'use client';
 
-import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+import { cva } from 'class-variance-authority';
+import { forwardRef, useMemo } from 'react';
+import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
 import CopyButton from '@/CopyButton';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
 import Spotlight from '@/awesome/Spotlight';
-import { DivProps } from '@/types';
 
 import { useStyles } from './style';
 
-export interface SnippetProps extends DivProps {
-  /**
-   * @description The content to be displayed inside the Snippet component
-   */
+export interface SnippetProps extends FlexboxProps {
   children: string;
-  /**
-   * @description Whether the Snippet component is copyable or not
-   * @default true
-   */
   copyable?: boolean;
-  /**
-   * @description The language of the content inside the Snippet component
-   * @default 'tsx'
-   */
   language?: string;
-  /**
-   * @description Whether add spotlight background
-   * @default false
-   */
+  prefix?: string;
+  shadow?: boolean;
   spotlight?: boolean;
-  /**
-   * @description The symbol to be displayed before the content inside the Snippet component
-   */
-  symbol?: string;
-  /**
-   * @description The type of the Snippet component
-   * @default 'ghost'
-   */
-  type?: 'ghost' | 'block';
+  variant?: 'filled' | 'outlined' | 'borderless';
 }
 
-const Snippet = memo<SnippetProps>(
-  ({
-    symbol,
-    language = 'tsx',
-    children,
-    copyable = true,
-    type = 'ghost',
-    spotlight,
-    className,
-    ...rest
-  }) => {
-    const { styles, cx } = useStyles(type);
+const Snippet = forwardRef<HTMLDivElement, SnippetProps>(
+  (
+    {
+      prefix,
+      language = 'tsx',
+      children,
+      copyable = true,
+      variant = 'filled',
+      spotlight,
+      shadow,
+      className,
+      ...rest
+    },
+    ref,
+  ) => {
+    const { styles, cx } = useStyles();
+
+    const variants = useMemo(
+      () =>
+        cva(styles.root, {
+          defaultVariants: {
+            shadow: false,
+            variant: 'filled',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: styles.filled,
+              outlined: styles.outlined,
+              borderless: styles.borderless,
+            },
+            shadow: {
+              false: null,
+              true: styles.shadow,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
 
     const tirmedChildren = children.trim();
 
     return (
       <Flexbox
         align={'center'}
-        className={cx(styles.container, className)}
+        className={cx(variants({ shadow, variant }), className)}
+        data-code-type="highlighter"
         gap={8}
         horizontal
+        ref={ref}
         {...rest}
       >
         {spotlight && <Spotlight />}
-        <SyntaxHighlighter language={language}>
-          {[symbol, tirmedChildren].filter(Boolean).join(' ')}
+        <SyntaxHighlighter className={styles.hightlight} language={language}>
+          {[prefix, tirmedChildren].filter(Boolean).join(' ')}
         </SyntaxHighlighter>
-        {copyable && <CopyButton content={tirmedChildren} size={{ blockSize: 24, fontSize: 14 }} />}
+        {copyable && <CopyButton content={tirmedChildren} size={'small'} />}
       </Flexbox>
     );
   },
 );
+
+Snippet.displayName = 'Snippet';
 
 export default Snippet;

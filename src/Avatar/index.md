@@ -9,13 +9,17 @@ description: Avatar is a component that displays a user's profile picture or ini
 
 <code src="./demos/index.tsx" nopadding></code>
 
-## ReactNode
+## Text
 
-<code src="./demos/ReactNode.tsx" center></code>
+<code src="./demos/Text.tsx" center></code>
 
-## Emoji
+## Bordered
 
-<code src="./demos/Emoji.tsx" center></code>
+<code src="./demos/Bordered.tsx" center></code>
+
+## Group
+
+<code src="./demos/Group.tsx" nopadding></code>
 
 ## APIs
 

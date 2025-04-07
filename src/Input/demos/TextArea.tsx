@@ -6,9 +6,11 @@ export default () => {
   const controls: TextAreaProps | any = useControls(
     {
       placeholder: 'Type keywords...',
-      type: {
-        options: ['ghost', 'block', 'pure'],
-        value: 'ghost',
+      resize: false,
+      shadow: false,
+      variant: {
+        options: ['outlined', 'borderless', 'filled'],
+        value: 'filled',
       },
     },
     { store },

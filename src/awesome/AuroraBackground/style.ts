@@ -11,7 +11,8 @@ export const useStyles = createStyles(({ cx, isDarkMode, css, responsive }) => {
 `;
 
   const dark = css`
-    background-image: repeating-linear-gradient(
+    background-image:
+      repeating-linear-gradient(
         100deg,
         rgb(0, 0, 0) 0%,
         rgb(0, 0, 0) 7%,
@@ -30,7 +31,8 @@ export const useStyles = createStyles(({ cx, isDarkMode, css, responsive }) => {
   `;
 
   const light = css`
-    background-image: repeating-linear-gradient(
+    background-image:
+      repeating-linear-gradient(
         100deg,
         rgb(255, 255, 255) 0%,
         rgb(255, 255, 255) 7%,

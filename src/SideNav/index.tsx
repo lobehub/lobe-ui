@@ -1,24 +1,13 @@
 'use client';
 
 import { ReactNode, memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
-
-import { DivProps } from '@/types';
+import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
 import { useStyles } from './style';
 
-export interface SideNavProps extends DivProps {
-  /**
-   * @description Avatar to be displayed at the top of the sidenav
-   */
+export interface SideNavProps extends FlexboxProps {
   avatar?: ReactNode;
-  /**
-   * @description Actions to be displayed at the bottom of the sidenav
-   */
   bottomActions: ReactNode;
-  /**
-   * @description Actions to be displayed below the avatar
-   */
   topActions?: ReactNode;
 }
 
@@ -45,5 +34,7 @@ const SideNav = memo<SideNavProps>(({ className, avatar, topActions, bottomActio
     </Flexbox>
   );
 });
+
+SideNav.displayName = 'SideNav';
 
 export default SideNav;

@@ -3,14 +3,15 @@
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { Popover } from 'antd';
-import { Loader2Icon, SmileIcon, TrashIcon, UploadIcon } from 'lucide-react';
-import { CSSProperties, ReactNode, memo, useEffect, useRef, useState } from 'react';
-import { Center, CenterProps, Flexbox } from 'react-layout-kit';
+import { SmileIcon, TrashIcon, UploadIcon } from 'lucide-react';
+import { CSSProperties, ReactNode, memo, useRef, useState } from 'react';
+import { Flexbox } from 'react-layout-kit';
 import useSWR from 'swr';
 import useMergeState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
 import Avatar from '@/Avatar';
+import type { AvatarProps } from '@/Avatar/Avatar';
 import Icon from '@/Icon';
 import TabsNav, { TabsNavProps } from '@/TabsNav';
 import Tooltip from '@/Tooltip';
@@ -41,10 +42,9 @@ export interface CustomTab {
   value: string;
 }
 
-export interface EmojiPickerProps extends Omit<CenterProps, 'onChange'> {
+export interface EmojiPickerProps extends Omit<AvatarProps, 'onChange' | 'avatar'> {
   allowDelete?: boolean;
   allowUpload?: boolean;
-  backgroundColor?: string;
   compressSize?: number;
   customEmojis?: CustomEmoji[];
   customTabs?: CustomTab[];
@@ -69,7 +69,6 @@ const EmojiPicker = memo<EmojiPickerProps>(
   ({
     value,
     defaultAvatar = DEFAULT_AVATAR,
-    backgroundColor = 'rgba(0,0,0,0)',
     onChange,
     locale = 'en-US',
     allowUpload,
@@ -78,18 +77,16 @@ const EmojiPicker = memo<EmojiPickerProps>(
     onDelete,
     compressSize = 256,
     customEmojis,
-    loading,
-    size = 44,
-    onClick,
-    onUpload,
     className,
+    loading,
+    onUpload,
     customTabs = [],
     popupClassName,
     popupStyle,
     ...rest
   }) => {
     const ref = useRef<HTMLDivElement>(null);
-    const [active, setActive] = useState(false);
+
     const [tab, setTab] = useState<'emoji' | 'upload'>('emoji');
     const [open, setOpen] = useState(false);
     const { cx, styles, theme } = useStyles();
@@ -97,7 +94,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
     const { data: i18n } = useSWR(
       locale,
       async () => await import(`@emoji-mart/data/i18n/${locale.split('-')[0]}.json`),
-      { revalidateOnFocus: false },
+      { revalidateOnFocus: false, revalidateOnMount: false },
     );
 
     const [ava, setAva] = useMergeState(defaultAvatar, {
@@ -106,29 +103,17 @@ const EmojiPicker = memo<EmojiPickerProps>(
       value,
     });
 
-    const handleClickOutside = (e: any) => {
-      if (!ref.current) return;
-      if (open && !active && e.target !== ref.current) {
-        setOpen(false);
-      }
-    };
-
     const handleAvatarChange = (emoji: string) => {
       setAva(emoji);
       setOpen(false);
     };
-
-    useEffect(() => {
-      document.addEventListener('click', handleClickOutside);
-      return () => document.removeEventListener('click', handleClickOutside);
-    }, [active, open]);
 
     const items: TabsNavProps['items'] = [
       {
         key: 'emoji',
         label: (
           <Tooltip title={texts?.emoji || 'Emoji'}>
-            <Icon icon={SmileIcon} size={{ fontSize: 20, strokeWidth: 2.5 }} />
+            <Icon icon={SmileIcon} size={{ size: 20, strokeWidth: 2.5 }} />
           </Tooltip>
         ),
       },
@@ -136,7 +121,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
         key: 'upload',
         label: (
           <Tooltip title={texts?.upload || 'Upload'}>
-            <Icon icon={UploadIcon} size={{ fontSize: 20, strokeWidth: 2.5 }} />
+            <Icon icon={UploadIcon} size={{ size: 20, strokeWidth: 2.5 }} />
           </Tooltip>
         ),
       },
@@ -145,100 +130,81 @@ const EmojiPicker = memo<EmojiPickerProps>(
 
     const showTabs = items && items.length > 1;
 
+    const content = (
+      <Flexbox
+        className={cx(styles.picker, popupClassName)}
+        ref={ref}
+        style={{ minWidth: 310, paddingTop: showTabs ? 4 : 0, ...popupStyle }}
+      >
+        {showTabs && (
+          <Flexbox align={'center'} horizontal justify={'space-between'} paddingInline={10}>
+            <TabsNav activeKey={tab} compact items={items} onChange={(key) => setTab(key as any)} />
+            {allowDelete && (
+              <ActionIcon
+                icon={TrashIcon}
+                onClick={() => {
+                  handleAvatarChange(defaultAvatar);
+                  onDelete?.();
+                }}
+                size={20}
+                title={texts?.delete || 'Delete'}
+              />
+            )}
+          </Flexbox>
+        )}
+        {tab === 'emoji' && (
+          <Picker
+            custom={customEmojis}
+            data={data}
+            i18n={i18n}
+            icons={'outline'}
+            locale={locale.split('-')[0]}
+            navPosition={showTabs ? 'bottom' : 'top'}
+            onEmojiSelect={(e: any) => handleAvatarChange(e.src || e.native)}
+            previewPosition={'none'}
+            skinTonePosition={'none'}
+            theme={theme.isDarkMode ? 'dark' : 'light'}
+          />
+        )}
+        {tab === 'upload' && (
+          <AvatarUploader
+            compressSize={compressSize}
+            onChange={handleAvatarChange}
+            onUpload={onUpload}
+            texts={texts}
+          />
+        )}
+        {customTabs.map(
+          (item) =>
+            tab === item.value && (
+              <Flexbox key={item.value} padding={10}>
+                {item.render(handleAvatarChange)}
+              </Flexbox>
+            ),
+        )}
+      </Flexbox>
+    );
+
     return (
       <Popover
         arrow={false}
-        content={
-          <Flexbox
-            className={cx(styles.picker, popupClassName)}
-            onMouseEnter={() => setActive(true)}
-            onMouseLeave={() => setActive(false)}
-            ref={ref}
-            style={{ minWidth: 310, paddingTop: showTabs ? 4 : 0, ...popupStyle }}
-          >
-            {showTabs && (
-              <Flexbox align={'center'} horizontal justify={'space-between'} paddingInline={10}>
-                <TabsNav
-                  activeKey={tab}
-                  items={items}
-                  onChange={(key) => setTab(key as any)}
-                  variant={'compact'}
-                />
-                {allowDelete && (
-                  <ActionIcon
-                    icon={TrashIcon}
-                    onClick={() => {
-                      handleAvatarChange(defaultAvatar);
-                      onDelete?.();
-                    }}
-                    size={{ fontSize: 20, strokeWidth: 2.5 }}
-                    title={texts?.delete || 'Delete'}
-                  />
-                )}
-              </Flexbox>
-            )}
-            {tab === 'emoji' && (
-              <Picker
-                custom={customEmojis}
-                data={data}
-                i18n={i18n}
-                icons={'outline'}
-                locale={locale.split('-')[0]}
-                navPosition={showTabs ? 'bottom' : 'top'}
-                onEmojiSelect={(e: any) => handleAvatarChange(e.src || e.native)}
-                previewPosition={'none'}
-                skinTonePosition={'none'}
-                theme={theme.isDarkMode ? 'dark' : 'light'}
-              />
-            )}
-            {tab === 'upload' && (
-              <AvatarUploader
-                compressSize={compressSize}
-                onChange={handleAvatarChange}
-                onUpload={onUpload}
-                texts={texts}
-              />
-            )}
-            {customTabs.map(
-              (item) =>
-                tab === item.value && (
-                  <Flexbox key={item.value} padding={10}>
-                    {item.render(handleAvatarChange)}
-                  </Flexbox>
-                ),
-            )}
-          </Flexbox>
-        }
+        content={content}
         destroyTooltipOnHide={true}
+        onOpenChange={(v) => {
+          if (loading) return;
+          setOpen(v);
+        }}
         open={open}
-        placement={'bottomLeft'}
+        placement={'bottomRight'}
         rootClassName={styles.popover}
         trigger={['click']}
       >
-        <Center
-          className={cx(styles.avatar, className)}
-          flex={'none'}
-          height={size}
-          onClick={(e) => {
-            if (loading) return;
-            setOpen(!open);
-            onClick?.(e);
-          }}
-          onMouseEnter={() => setActive(true)}
-          onMouseLeave={() => setActive(false)}
-          width={size}
-          {...rest}
-        >
-          {loading && (
-            <Center className={styles.loading} height={'100%'} width={'100%'}>
-              <Icon icon={Loader2Icon} size={{ fontSize: size / 2 }} spin />
-            </Center>
-          )}
-          <Avatar avatar={ava} background={backgroundColor} size={size} />
-        </Center>
+        <Avatar avatar={ava} className={cx(styles.root, className)} loading={loading} {...rest} />
       </Popover>
     );
   },
 );
+
+EmojiPicker.displayName = 'EmojiPicker';
 
 export default EmojiPicker;

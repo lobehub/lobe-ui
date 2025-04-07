@@ -4,11 +4,20 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 export default () => {
   const store = useCreateStore();
 
-  const { variant }: any = useControls(
+  const controls: any = useControls(
     {
+      compact: false,
+      size: {
+        options: ['small', 'middle', 'large'],
+        value: 'middle',
+      },
+      tabPosition: {
+        options: ['top', 'bottom', 'left', 'right'],
+        value: 'top',
+      },
       variant: {
-        options: ['default', 'compact'],
-        value: 'default',
+        options: ['rounded', 'square', 'point'],
+        value: 'rounded',
       },
     },
     { store },
@@ -27,11 +36,15 @@ export default () => {
             label: 'Components',
           },
           {
+            key: 'color',
+            label: 'Color',
+          },
+          {
             key: 'changelog',
             label: 'Changelog',
           },
         ]}
-        variant={variant}
+        {...controls}
       />
     </StoryBook>
   );

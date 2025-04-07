@@ -1,41 +1,11 @@
 'use client';
 
-import { memo, useEffect, useRef, useState } from 'react';
+import { memo } from 'react';
 
 import { DivProps } from '@/types';
 
 import { useStyles } from './style';
-
-const useMouseOffset = (): any => {
-  const [offset, setOffset] = useState<{ x: number; y: number }>();
-  const [outside, setOutside] = useState(true);
-  const reference = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (reference.current && reference.current.parentElement) {
-      const element = reference.current.parentElement;
-
-      // debounce?
-      const onMouseMove = (e: MouseEvent) => {
-        const bound = element.getBoundingClientRect();
-        setOffset({ x: e.clientX - bound.x, y: e.clientY - bound.y });
-        setOutside(false);
-      };
-
-      const onMouseLeave = () => {
-        setOutside(true);
-      };
-      element.addEventListener('mousemove', onMouseMove);
-      element.addEventListener('mouseleave', onMouseLeave);
-      return () => {
-        element.removeEventListener('mousemove', onMouseMove);
-        element.removeEventListener('mouseleave', onMouseLeave);
-      };
-    }
-  }, []);
-
-  return [offset, outside, reference] as const;
-};
+import { useMouseOffset } from './useMouseOffset';
 
 export interface SpotlightProps extends DivProps {
   /**
@@ -51,5 +21,7 @@ const Spotlight = memo<SpotlightProps>(({ className, size = 64, ...properties })
 
   return <div className={cx(styles, className)} ref={reference} {...properties} />;
 });
+
+Spotlight.displayName = 'Spotlight';
 
 export default Spotlight;

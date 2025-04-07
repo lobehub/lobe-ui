@@ -1,6 +1,5 @@
 'use client';
 
-import { Tag, TagProps } from 'antd';
 import { createStyles } from 'antd-style';
 import { FC } from 'react';
 import { Flexbox, type FlexboxProps } from 'react-layout-kit';
@@ -8,6 +7,7 @@ import { Flexbox, type FlexboxProps } from 'react-layout-kit';
 import A from '@/A';
 import Icon, { type IconProps } from '@/Icon';
 import Img from '@/Img';
+import Tag, { type TagProps } from '@/Tag';
 
 const useStyles = createStyles(({ css, cx, token }) => {
   const icon = cx(css`
@@ -107,7 +107,6 @@ const Card: FC<CardProps> = ({
             style={{ paddingBottom: '0.2em', paddingTop: '1.8em' }}
           >
             <Tag
-              bordered={false}
               color={tagColor}
               style={{
                 borderRadius: '1em',
@@ -128,7 +127,7 @@ const Card: FC<CardProps> = ({
           horizontal
         >
           {!image && icon && (
-            <Icon className={styles.icon} icon={icon} size={{ fontSize: '1.5em' }} {...iconProps} />
+            <Icon className={styles.icon} icon={icon} size={{ size: '1.5em' }} {...iconProps} />
           )}
           <Flexbox gap={'0.2em'}>
             <h3>{title}</h3>
@@ -139,5 +138,7 @@ const Card: FC<CardProps> = ({
     </A>
   );
 };
+
+Card.displayName = 'MdxCard';
 
 export default Card;

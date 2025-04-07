@@ -1,6 +1,7 @@
 ---
 nav: Components
 title: FileTypeIcon
+group: Data Display
 ---
 
 ## Default

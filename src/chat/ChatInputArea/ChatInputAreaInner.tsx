@@ -1,9 +1,9 @@
 'use client';
 
 import { TextAreaRef } from 'antd/es/input/TextArea';
-import { CSSProperties, forwardRef, memo, useRef } from 'react';
+import { CSSProperties, forwardRef, useRef } from 'react';
 
-import { TextArea, TextAreaProps } from '@/Input';
+import TextArea, { type TextAreaProps } from '@/Input/TextArea';
 
 export interface ChatInputAreaInnerProps extends Omit<TextAreaProps, 'onInput'> {
   className?: string;
@@ -65,10 +65,11 @@ const ChatInputAreaInner = forwardRef<TextAreaRef, ChatInputAreaInnerProps>(
         }}
         ref={ref}
         resize={resize}
+        variant={'borderless'}
         {...rest}
       />
     );
   },
 );
 
-export default memo(ChatInputAreaInner);
+export default ChatInputAreaInner;

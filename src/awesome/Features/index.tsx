@@ -12,17 +12,8 @@ export type { FeatureItem } from './Item';
 export interface FeaturesProps extends DivProps {
   columns?: SpotlightCardProps['columns'];
   gap?: SpotlightCardProps['gap'];
-  /**
-   * @description The class name of the item
-   */
   itemClassName?: string;
-  /**
-   * @description The style of the item
-   */
   itemStyle?: CSSProperties;
-  /**
-   * @description The array of feature items
-   */
   items: FeatureItem[];
   maxWidth?: number;
 }
@@ -44,5 +35,7 @@ const Features = memo<FeaturesProps>(
     );
   },
 );
+
+Features.displayName = 'Features';
 
 export default Features;

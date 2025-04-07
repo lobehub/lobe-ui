@@ -1,6 +1,6 @@
 import { AliasToken } from 'antd/es/theme/interface';
 
-import { geekblue, gray, green, orange, primary, volcano } from '@/color/colors';
+import { geekblue, gold, gray, green, primary, volcano } from '@/color/colors';
 
 import { generateColorNeutralPalette, generateColorPalette } from '../generateColorPalette';
 
@@ -23,7 +23,7 @@ const successToken = generateColorPalette({
 
 const warningToken = generateColorPalette({
   appearance: 'light',
-  scale: orange,
+  scale: gold,
   type: 'Warning',
 });
 

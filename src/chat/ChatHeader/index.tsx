@@ -67,7 +67,6 @@ const ChatHeader = memo<ChatHeaderProps>(
             <ActionIcon
               icon={ChevronLeft}
               onClick={() => onBackClick?.()}
-              size={{ fontSize: 24 }}
               style={{ marginRight: gaps?.left ? -gaps.left / 2 : -6 }}
             />
           )}
@@ -99,5 +98,7 @@ const ChatHeader = memo<ChatHeaderProps>(
     );
   },
 );
+
+ChatHeader.displayName = 'ChatHeader';
 
 export default ChatHeader;

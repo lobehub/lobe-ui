@@ -347,62 +347,6 @@ export default () => {
 };
 ```
 
-### Block Diagrams Documentation
-
-```tsx
-import { Mermaid } from '@lobehub/ui';
-
-const block = `block-beta
-columns 1
-  db(("DB"))
-  blockArrowId6<["&nbsp;&nbsp;&nbsp;"]>(down)
-  block:ID
-    A
-    B["A wide one in the middle"]
-    C
-  end
-  space
-  D
-  ID --> D
-  C --> D
-  style B fill:#969,stroke:#333,stroke-width:4px
-`;
-
-export default () => {
-  return <Mermaid>{block}</Mermaid>;
-};
-```
-
-### Packet Diagram
-
-```tsx
-import { Mermaid } from '@lobehub/ui';
-
-const packet = `packet-beta
-0-15: "Source Port"
-16-31: "Destination Port"
-32-63: "Sequence Number"
-64-95: "Acknowledgment Number"
-96-99: "Data Offset"
-100-105: "Reserved"
-106: "URG"
-107: "ACK"
-108: "PSH"
-109: "RST"
-110: "SYN"
-111: "FIN"
-112-127: "Window"
-128-143: "Checksum"
-144-159: "Urgent Pointer"
-160-191: "(Options and Padding)"
-192-255: "Data (variable length)"
-`;
-
-export default () => {
-  return <Mermaid>{packet}</Mermaid>;
-};
-```
-
 ### Kanban Diagram
 
 ```tsx

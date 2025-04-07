@@ -15,4 +15,6 @@ const BrandLoading: FC<BrandLoadingProps & SvgProps & DivProps> = ({ size, text,
   return <RenderText className={'lobe-brand-loading'} size={size} {...rest} />;
 };
 
+BrandLoading.displayName = 'BrandLoading';
+
 export default BrandLoading;

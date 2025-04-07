@@ -1,10 +1,11 @@
+import type { MermaidConfig } from 'mermaid/dist/config.type';
 import { ReactNode } from 'react';
 
 import type { ActionIconProps } from '@/ActionIcon';
-import type { CopyButtonProps } from '@/CopyButton';
 import { DivProps } from '@/types';
 
 export interface MermaidProps extends DivProps {
+  actionIconSize?: ActionIconProps['size'];
   actionsRender?: (props: {
     actionIconSize: ActionIconProps['size'];
     content: string;
@@ -12,11 +13,14 @@ export interface MermaidProps extends DivProps {
   }) => ReactNode;
   bodyRender?: (props: { content: string; originalNode: ReactNode }) => ReactNode;
   children: string;
-  copyButtonSize?: CopyButtonProps['size'];
   copyable?: boolean;
+  defaultExpand?: boolean;
   enablePanZoom?: boolean;
   fileName?: string;
   fullFeatured?: boolean;
+  language?: string;
+  shadow?: boolean;
   showLanguage?: boolean;
-  type?: 'ghost' | 'block' | 'pure';
+  theme?: 'lobe-theme' | MermaidConfig['theme'];
+  variant?: 'filled' | 'outlined' | 'borderless';
 }

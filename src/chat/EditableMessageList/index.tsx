@@ -1,32 +1,21 @@
 'use client';
 
-import { Button, Select } from 'antd';
 import isEqual from 'fast-deep-equal';
 import { Plus, Trash } from 'lucide-react';
 import { memo, useEffect, useReducer } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
-import Icon from '@/Icon';
-import { ControlInput } from '@/components/ControlInput';
+import Button from '@/Button';
+import ControlInput from '@/EditableText/ControlInput';
+import Select from '@/Select';
 import { LLMMessage } from '@/types/llm';
 
 import { messagesReducer } from './messageReducer';
 
 export interface EditableMessageListProps {
-  /**
-   * @description The data sources to be rendered
-   */
   dataSources: LLMMessage[];
-  /**
-   * @description Whether the component is disabled or not
-   * @default false
-   */
   disabled?: boolean;
-  /**
-   * @description Callback function triggered when the data sources are changed
-   * @param chatMessages - the updated data sources
-   */
   onChange?: (chatMessages: LLMMessage[]) => void;
 }
 
@@ -77,9 +66,8 @@ export const EditableMessageList = memo<EditableMessageListProps>(
               onClick={() => {
                 dispatch({ index, type: 'deleteMessage' });
               }}
-              placement="right"
-              size={{ fontSize: 16 }}
               title="Delete"
+              variant={'filled'}
             />
           </Flexbox>
         ))}
@@ -87,7 +75,7 @@ export const EditableMessageList = memo<EditableMessageListProps>(
         <Button
           block
           disabled={disabled}
-          icon={<Icon icon={Plus} />}
+          icon={Plus}
           onClick={() => {
             const lastMeg = chatMessages.at(-1);
 
@@ -104,5 +92,7 @@ export const EditableMessageList = memo<EditableMessageListProps>(
   },
   isEqual,
 );
+
+EditableMessageList.displayName = 'EditableMessageList';
 
 export default EditableMessageList;

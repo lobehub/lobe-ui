@@ -1,62 +1,92 @@
 'use client';
 
 import { Image as AntImage, type ImageProps as AntImageProps, Skeleton } from 'antd';
-import { useResponsive, useThemeMode } from 'antd-style';
-import { Eye } from 'lucide-react';
-import { ReactNode, memo } from 'react';
+import { useThemeMode } from 'antd-style';
+import { cva } from 'class-variance-authority';
+import { type CSSProperties, type ReactNode, forwardRef, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import Icon from '@/Icon';
-
+import usePreview from './components/usePreview';
 import { useStyles } from './style';
-import usePreview from './usePreview';
 
 export interface ImageProps extends AntImageProps {
   actions?: ReactNode;
   alwaysShowActions?: boolean;
-  borderless?: boolean;
   classNames?: {
     image?: string;
     wrapper?: string;
   };
   isLoading?: boolean;
-  minSize?: number | string;
+  maxHeight?: number | string;
+  maxWidth?: number | string;
+  minHeight?: number | string;
+  minWidth?: number | string;
   objectFit?: 'cover' | 'contain';
   preview?: AntImageProps['preview'] & {
     toolbarAddon?: ReactNode;
   };
   size?: number | string;
+  styles?: {
+    image?: CSSProperties;
+    wrapper?: CSSProperties;
+  };
   toolbarAddon?: ReactNode;
+  variant?: 'borderless' | 'filled' | 'outlined';
 }
 
-const Image = memo<ImageProps>(
-  ({
-    wrapperClassName,
-    style,
-    preview,
-    isLoading,
-    minSize = 64,
-    size = '100%',
-    actions,
-    alwaysShowActions,
-    objectFit = 'cover',
-    classNames = {},
-    onClick,
-    width,
-    height,
-    borderless,
-    ...rest
-  }) => {
-    const { mobile } = useResponsive();
+const Image = forwardRef<HTMLDivElement, ImageProps>(
+  (
+    {
+      style,
+      preview,
+      isLoading,
+      maxHeight = '100%',
+      maxWidth = '100%',
+      minHeight,
+      minWidth,
+      actions,
+      className,
+      alwaysShowActions,
+      variant = 'filled',
+      objectFit = 'cover',
+      classNames,
+      styles: customStyles,
+      onClick,
+      width,
+      height,
+      ...rest
+    },
+    ref,
+  ) => {
     const { isDarkMode } = useThemeMode();
     const { styles, cx, theme } = useStyles({
       alwaysShowActions,
-      borderless,
-      minSize,
+      maxHeight,
+      maxWidth,
+      minHeight,
+      minWidth,
       objectFit,
-      size,
     });
     const mergePreivew = usePreview(preview);
+
+    const variants = useMemo(
+      () =>
+        cva(styles.root, {
+          defaultVariants: {
+            variant: 'filled',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: styles.filled,
+              outlined: styles.outlined,
+              borderless: styles.borderless,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
 
     if (isLoading)
       return (
@@ -66,10 +96,10 @@ const Image = memo<ImageProps>(
             style={{
               borderRadius: theme.borderRadius,
               height,
-              maxHeight: size,
-              maxWidth: size,
-              minHeight: minSize,
-              minWidth: minSize,
+              maxHeight,
+              maxWidth,
+              minHeight,
+              minWidth,
               width,
             }}
           />
@@ -77,10 +107,10 @@ const Image = memo<ImageProps>(
       );
 
     return (
-      <Flexbox className={cx(styles.imageWrapper, wrapperClassName)} style={style}>
+      <Flexbox className={cx(variants({ variant }), className)} ref={ref} style={style}>
         {actions && <div className={styles.actions}>{actions}</div>}
         <AntImage
-          className={classNames.image}
+          className={classNames?.image}
           fallback={
             isDarkMode
               ? 'https://gw.alipayobjects.com/zos/kitchen/nhzBb%24r0Cm/image_off_dark.webp'
@@ -93,17 +123,21 @@ const Image = memo<ImageProps>(
             preview === false
               ? false
               : {
-                  mask: mobile ? false : actions ? <div /> : <Icon icon={Eye} size={'normal'} />,
+                  mask: false,
                   ...(mergePreivew as any),
                 }
           }
+          style={customStyles?.image}
           width={width}
-          wrapperClassName={cx(styles.image, classNames.wrapper)}
+          wrapperClassName={cx(styles.image, classNames?.wrapper)}
+          wrapperStyle={customStyles?.wrapper}
           {...rest}
         />
       </Flexbox>
     );
   },
 );
+
+Image.displayName = 'Image';
 
 export default Image;

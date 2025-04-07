@@ -5,9 +5,18 @@ export default () => {
   const store = useCreateStore();
   const control: TokenTagProps | any = useControls(
     {
+      hideText: false,
       maxValue: {
         step: 1,
         value: 5000,
+      },
+      mode: {
+        options: ['remained', 'used'],
+        value: 'remained',
+      },
+      shape: {
+        options: ['round', 'square'],
+        value: 'round',
       },
       value: {
         step: 1,

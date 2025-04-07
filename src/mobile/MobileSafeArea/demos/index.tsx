@@ -1,6 +1,3 @@
-/**
- * iframe: true
- */
 import { MobileSafeArea } from '@lobehub/ui/mobile';
 import { Flexbox } from 'react-layout-kit';
 

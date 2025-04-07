@@ -83,4 +83,6 @@ const SpotlightCard = memo<SpotlightCardProps>(
   },
 );
 
+SpotlightCard.displayName = 'SpotlightCard';
+
 export default SpotlightCard;

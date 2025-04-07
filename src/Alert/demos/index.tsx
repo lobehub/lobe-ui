@@ -9,6 +9,7 @@ export default () => {
       closable: false,
       colorfulText: true,
       description: 'Alert Title',
+      glass: false,
       message: 'Informational Notes',
       showIcon: true,
       type: {
@@ -16,8 +17,8 @@ export default () => {
         value: 'info',
       },
       variant: {
-        options: ['', 'block', 'ghost', 'pure'],
-        value: '',
+        options: ['filled', 'outlined', 'borderless'],
+        value: 'filled',
       },
     },
     { store },

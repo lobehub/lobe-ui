@@ -15,12 +15,12 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { Fragment, type ReactNode, memo, useMemo, useState } from 'react';
+import { Fragment, type ReactNode, forwardRef, useMemo, useState } from 'react';
 import { Flexbox, type FlexboxProps } from 'react-layout-kit';
 
-import DragHandle from './DragHandle';
-import SortableItem from './SortableItem';
-import SortableOverlay from './SortableOverlay';
+import DragHandle from './components/DragHandle';
+import SortableItem from './components/SortableItem';
+import SortableOverlay from './components/SortableOverlay';
 import { useStyles } from './style';
 
 interface BaseItem {
@@ -33,8 +33,8 @@ export interface SortableListProps extends Omit<FlexboxProps, 'onChange'> {
   renderItem(item: BaseItem): ReactNode;
 }
 
-const SortableListParent = memo<SortableListProps>(
-  ({ items, onChange, renderItem, gap = 8, ...rest }) => {
+const SortableListParent = forwardRef<HTMLUListElement, SortableListProps>(
+  ({ items, onChange, renderItem, gap = 8, ...rest }, ref) => {
     const [active, setActive] = useState<Active | null>(null);
     const { styles } = useStyles();
     const activeItem = useMemo(() => items.find((item) => item.id === active?.id), [active, items]);
@@ -66,7 +66,7 @@ const SortableListParent = memo<SortableListProps>(
         sensors={sensors}
       >
         <SortableContext items={items} strategy={verticalListSortingStrategy}>
-          <Flexbox as={'ul'} className={styles.container} gap={gap} {...rest}>
+          <Flexbox as={'ul'} className={styles.container} gap={gap} ref={ref} {...rest}>
             {items.map((item) => (
               <Fragment key={item.id}>{renderItem(item)}</Fragment>
             ))}
@@ -77,6 +77,8 @@ const SortableListParent = memo<SortableListProps>(
     );
   },
 );
+
+SortableListParent.displayName = 'SortableList';
 
 export interface ISortableList {
   (props: SortableListProps): ReactNode;

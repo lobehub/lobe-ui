@@ -1,6 +1,5 @@
 import { ActionIcon, ActionIconProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { folder } from 'leva';
 import * as LucideIcon from 'lucide-react';
 
 export default () => {
@@ -8,41 +7,23 @@ export default () => {
   const control: ActionIconProps | any = useControls(
     {
       active: false,
+      danger: false,
+      disabled: false,
       glass: false,
       icon: {
         options: LucideIcon,
         value: LucideIcon.Settings,
       },
+      loading: false,
+      shadow: false,
       size: {
-        options: ['large', 'normal', 'small'],
-        value: 'large',
+        options: ['large', 'middle', 'small'],
+        value: 'middle',
       },
-      tooltip: folder({
-        arrow: false,
-        loading: false,
-        placement: {
-          options: [
-            'top',
-            'left',
-            'right',
-            'bottom',
-            'topLeft',
-            'topRight',
-            'bottomLeft',
-            'bottomRight',
-            'leftTop',
-            'leftBottom',
-            'rightTop',
-            'rightBottom',
-          ],
-          value: 'top',
-        },
-        spotlight: false,
-        title: '',
-      }),
+      title: 'Settings',
       variant: {
-        options: ['default', 'block', 'ghost'],
-        value: 'default',
+        options: ['borderless', 'filled', 'outlined'],
+        value: 'borderless',
       },
     },
     { store },

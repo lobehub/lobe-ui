@@ -3,14 +3,11 @@
 import { Anchor } from 'antd';
 import { memo } from 'react';
 
-import { default as TocMobile, type TocMobileProps, mapItems } from './TocMobile';
+import { default as TocMobile, type TocMobileProps } from './TocMobile';
 import { useStyles } from './style';
+import { mapItems } from './utils';
 
 export interface TocProps extends TocMobileProps {
-  /**
-   * @description Whether the component is being rendered on a mobile device or not
-   * @default false
-   */
   isMobile?: boolean;
 }
 const Toc = memo<TocProps>(
@@ -39,5 +36,7 @@ const Toc = memo<TocProps>(
     );
   },
 );
+
+Toc.displayName = 'Toc';
 
 export default Toc;

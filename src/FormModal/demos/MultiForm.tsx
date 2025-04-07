@@ -1,6 +1,5 @@
-import { Form, FormModal } from '@lobehub/ui';
+import { Button, Form, FormModal } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { Button } from 'antd';
 import { useState } from 'react';
 
 import { items } from './data';

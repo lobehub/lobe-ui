@@ -1,38 +1,27 @@
 'use client';
 
 import { LucideIcon, LucideProps } from 'lucide-react';
-import { forwardRef, useMemo } from 'react';
+import { FC, forwardRef, useMemo } from 'react';
 
-import { calcSize } from '@/Icon/calcSize';
 import { DivProps } from '@/types';
 
 import { useStyles } from './style';
+import { calcSize } from './utils';
 
 export interface IconSizeConfig extends Pick<LucideProps, 'strokeWidth' | 'absoluteStrokeWidth'> {
-  fontSize?: number | string;
+  size?: number | string;
 }
-export type IconSizeType = 'large' | 'normal' | 'small';
-export type IconSize = IconSizeType | IconSizeConfig;
+export type IconSizeType = 'large' | 'middle' | 'small';
+export type IconSize = number | IconSizeType | IconSizeConfig;
 
 export type LucideIconProps = Pick<
   LucideProps,
   'fill' | 'fillRule' | 'fillOpacity' | 'color' | 'focusable'
 >;
+
 export interface IconProps extends DivProps, LucideIconProps {
-  /**
-   * @description The icon element to be rendered
-   * @type LucideIcon
-   */
-  icon: LucideIcon;
-  /**
-   * @description Size of the icon
-   * @default 'normal'
-   */
+  icon?: LucideIcon | FC<any>;
   size?: IconSize;
-  /**
-   * @description Rotate icon with animation
-   * @default false
-   */
   spin?: boolean;
 }
 
@@ -40,7 +29,7 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(
   (
     {
       icon,
-      size,
+      size: iconSize,
       color,
       fill = 'transparent',
       className,
@@ -55,7 +44,9 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(
     const { styles, cx } = useStyles();
     const SvgIcon = icon;
 
-    const { fontSize, ...restSize } = useMemo(() => calcSize(size), [size]);
+    const { size, ...restSize } = useMemo(() => calcSize(iconSize), [iconSize]);
+
+    if (!SvgIcon) return null;
 
     return (
       <span className={cx('anticon', spin && styles.spin, className)} role="img" {...rest}>
@@ -65,15 +56,17 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(
           fillOpacity={fillOpacity}
           fillRule={fillRule}
           focusable={focusable}
-          height={fontSize}
+          height={size}
           ref={ref}
-          size={fontSize}
-          width={fontSize}
+          size={size}
+          width={size}
           {...restSize}
         />
       </span>
     );
   },
 );
+
+Icon.displayName = 'Icon';
 
 export default Icon;

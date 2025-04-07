@@ -21,4 +21,6 @@ const LobeHubText: FC<SvgProps & DivProps & { size?: number }> = ({
   </svg>
 );
 
+LobeHubText.displayName = 'LobeHubText';
+
 export default LobeHubText;

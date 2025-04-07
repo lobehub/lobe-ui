@@ -1,5 +1,5 @@
-import { Modal } from '@lobehub/ui';
-import { Button, Typography } from 'antd';
+import { Button, Modal } from '@lobehub/ui';
+import { Typography } from 'antd';
 import { useState } from 'react';
 
 export default () => {

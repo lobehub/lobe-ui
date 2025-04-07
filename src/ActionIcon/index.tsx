@@ -1,8 +1,9 @@
 'use client';
 
+import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
-import { MouseEventHandler, forwardRef, useCallback, useMemo, useState } from 'react';
-import { Flexbox, type FlexboxProps } from 'react-layout-kit';
+import { MouseEventHandler, forwardRef, useCallback, useMemo } from 'react';
+import { Center, CenterProps } from 'react-layout-kit';
 
 import Icon, {
   type IconProps,
@@ -11,77 +12,32 @@ import Icon, {
   LucideIconProps,
 } from '@/Icon';
 import Tooltip, { type TooltipProps } from '@/Tooltip';
-import Spotlight from '@/awesome/Spotlight';
 
-import { calcSize } from './calcSize';
 import { useStyles } from './style';
+import { calcSize } from './utils';
 
 interface ActionIconSizeConfig extends IconSizeConfig {
   blockSize?: number | string;
   borderRadius?: number | string;
 }
 
-type ActionIconSizeType = 'site' | IconSizeType;
+export type ActionIconSize = number | IconSizeType | ActionIconSizeConfig;
 
-export type ActionIconSize = ActionIconSizeType | ActionIconSizeConfig;
-
-export interface ActionIconProps extends LucideIconProps, FlexboxProps {
-  /**
-   * @description Whether the icon is active or not
-   * @default false
-   */
+export interface ActionIconProps
+  extends Partial<LucideIconProps>,
+    Omit<CenterProps, 'title' | 'children'> {
   active?: boolean;
-  /**
-   * @description Change arrow's visible state and change whether the arrow is pointed at the center of target.
-   * @default false
-   */
-  arrow?: boolean;
-  classNames?: TooltipProps['classNames'];
-  disable?: boolean;
-  /**
-   * @description Glass blur style
-   * @default 'false'
-   */
+  danger?: boolean;
+  disabled?: boolean;
   glass?: boolean;
   icon?: IconProps['icon'];
-  /**
-   * @description Set the loading status of ActionIcon
-   */
   loading?: boolean;
-  overlayClassName?: TooltipProps['overlayClassName'];
-  overlayStyle?: TooltipProps['overlayStyle'];
-  /**
-   * @description The position of the tooltip relative to the target
-   * @enum ["top","left","right","bottom","topLeft","topRight","bottomLeft","bottomRight","leftTop","leftBottom","rightTop","rightBottom"]
-   * @default "top"
-   */
-  placement?: TooltipProps['placement'];
-  /**
-   * @description Size of the icon
-   * @default 'normal'
-   */
+  shadow?: boolean;
   size?: ActionIconSize;
   spin?: boolean;
-  /**
-   * @description Whether add spotlight background
-   * @default false
-   */
-  spotlight?: boolean;
-  styles?: TooltipProps['styles'];
-  /**
-   * @description The text shown in the tooltip
-   */
-  title?: string;
-  /**
-   * @description Mouse enter delay of tooltip
-   * @default 0.5
-   */
-  tooltipDelay?: number;
-  /**
-   * @description Hotkey to display in tooltip
-   */
-  tooltipHotkey?: string;
-  variant?: 'default' | 'block' | 'ghost';
+  title?: TooltipProps['title'];
+  tooltipProps?: Omit<TooltipProps, 'title'>;
+  variant?: 'borderless' | 'filled' | 'outlined';
 }
 
 const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
@@ -92,99 +48,140 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
       className,
       active,
       icon,
-      size = 'normal',
-      variant = 'default',
+      size = 'middle',
+      variant = 'borderless',
       style,
       glass,
       title,
-      placement,
-      arrow = false,
-      spotlight,
       onClick,
-      children,
       loading,
-      tooltipDelay = 0.5,
-      tooltipHotkey,
       fillOpacity,
       fillRule,
       focusable,
-      disable,
+      shadow,
+      disabled,
       spin: iconSpinning,
-      styles,
+      tooltipProps,
+      danger,
       ...rest
     },
     ref,
   ) => {
-    const { styles: s, cx } = useStyles({
-      active: Boolean(active),
-      glass: Boolean(glass),
-      variant,
-    });
+    const { styles, cx } = useStyles();
     const { blockSize, borderRadius } = useMemo(() => calcSize(size), [size]);
-
-    const iconProps = {
-      color,
-      fill,
-      fillOpacity,
-      fillRule,
-      focusable,
-      size: size === 'site' ? 'normal' : size,
-    };
-
-    const content = icon && (
-      <Icon className={s.icon} icon={icon} {...iconProps} spin={iconSpinning} />
+    const variants = useMemo(
+      () =>
+        cva(styles.root, {
+          compoundVariants: [
+            {
+              className: styles.dangerFilled,
+              danger: true,
+              variant: 'filled',
+            },
+            {
+              className: styles.dangerBorderless,
+              danger: true,
+              variant: 'borderless',
+            },
+            {
+              className: styles.dangerOutlined,
+              danger: true,
+              variant: 'outlined',
+            },
+          ],
+          defaultVariants: {
+            active: false,
+            danger: false,
+            disabled: false,
+            glass: false,
+            shadow: false,
+            variant: 'borderless',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: styles.filled,
+              outlined: styles.outlined,
+              borderless: styles.borderless,
+            },
+            glass: {
+              false: null,
+              true: styles.glass,
+            },
+            shadow: {
+              false: null,
+              true: styles.shadow,
+            },
+            active: {
+              false: null,
+              true: styles.active,
+            },
+            danger: {
+              false: null,
+              true: styles.dangerRoot,
+            },
+            disabled: {
+              false: null,
+              true: styles.disabled,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
     );
-
-    const spin = <Icon icon={Loader2} {...iconProps} spin />;
-
-    const [tooltipOpen, setTooltipOpen] = useState(false);
 
     const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(
       (event) => {
-        if (loading || disable) return;
-        setTooltipOpen(false);
+        if (loading || disabled) return;
         onClick?.(event);
       },
-      [loading, disable, setTooltipOpen, onClick],
+      [loading, disabled, onClick],
     );
 
-    const actionIconBlock = (
-      <Flexbox
-        align={'center'}
-        className={cx(s.block, disable ? s.disabled : s.normal, className)}
+    const node = (
+      <Center
+        className={cx(variants({ active, danger, disabled, glass, shadow, variant }), className)}
+        flex={'none'}
         horizontal
-        justify={'center'}
         onClick={handleClick}
         ref={ref}
+        role="button"
         style={{ borderRadius, height: blockSize, width: blockSize, ...style }}
+        tabIndex={disabled ? -1 : 0}
         {...rest}
       >
-        {spotlight && <Spotlight />}
-        {loading ? spin : content}
-        {children}
-      </Flexbox>
+        {icon && (
+          <Icon
+            color={color}
+            fill={fill}
+            fillOpacity={fillOpacity}
+            fillRule={fillRule}
+            focusable={focusable}
+            icon={loading ? Loader2 : icon}
+            size={size}
+            spin={loading ? true : iconSpinning}
+          />
+        )}
+      </Center>
     );
 
-    if (!title) return actionIconBlock;
+    if (!title) return node;
 
     return (
       <Tooltip
-        arrow={arrow}
-        hotkey={tooltipHotkey}
-        mouseEnterDelay={tooltipDelay}
-        onOpenChange={setTooltipOpen}
-        open={tooltipOpen}
-        placement={placement}
-        styles={{
-          ...styles,
-          root: { pointerEvents: 'none', ...styles?.root },
-        }}
         title={title}
+        {...tooltipProps}
+        styles={{
+          ...tooltipProps?.styles,
+          root: { pointerEvents: 'none', ...tooltipProps?.styles?.root },
+        }}
       >
-        {actionIconBlock}
+        {node}
       </Tooltip>
     );
   },
 );
+
+ActionIcon.displayName = 'ActionIcon';
 
 export default ActionIcon;

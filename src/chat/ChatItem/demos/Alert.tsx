@@ -38,7 +38,7 @@ export default () => {
         avatar={avatar}
         error={control}
         errorMessage={
-          <Highlighter copyButtonSize={'small'} language={'json'} type={'pure'}>
+          <Highlighter actionIconSize={'small'} language={'json'} variant={'borderless'}>
             {JSON.stringify(demoError, null, 2)}
           </Highlighter>
         }

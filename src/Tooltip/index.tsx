@@ -1,7 +1,8 @@
 'use client';
 
 import { Tooltip as AntdTooltip, type TooltipProps as AntdTooltipProps } from 'antd';
-import { ReactNode, memo } from 'react';
+import { TooltipRef } from 'antd/lib/tooltip';
+import { ReactNode, forwardRef } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import Hotkey, { type HotkeyProps } from '@/Hotkey';
@@ -14,8 +15,8 @@ export type TooltipProps = Omit<AntdTooltipProps, 'title'> & {
   title: ReactNode;
 };
 
-const Tooltip = memo<TooltipProps>(
-  ({ hotkey, className, arrow = false, title, hotkeyProps, ...rest }) => {
+const Tooltip = forwardRef<TooltipRef, TooltipProps>(
+  ({ hotkey, className, arrow = false, title, hotkeyProps, ...rest }, ref) => {
     const { styles, cx } = useStyles();
 
     return (
@@ -24,6 +25,7 @@ const Tooltip = memo<TooltipProps>(
         classNames={{
           root: cx(styles.tooltip, className),
         }}
+        ref={ref}
         title={
           hotkey ? (
             <Flexbox align={'center'} gap={8} horizontal justify={'space-between'}>

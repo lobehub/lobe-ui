@@ -16,9 +16,10 @@ const ActionsBar = memo<ActionsBarProps>(({ text, ...rest }) => {
   const { regenerate, edit, copy, divider, del } = useChatListActionsBar(text);
   return (
     <ActionIconGroup
-      dropdownMenu={[edit, copy, regenerate, divider, del]}
       items={[regenerate, edit]}
-      type="ghost"
+      menu={{
+        items: [edit, copy, regenerate, divider, del],
+      }}
       {...rest}
     />
   );

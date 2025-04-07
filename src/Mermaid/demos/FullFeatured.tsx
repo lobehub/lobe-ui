@@ -1,4 +1,4 @@
-import { Mermaid, MermaidProps } from '@lobehub/ui';
+import { Mermaid, MermaidProps, mermaidThemes } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 import { code } from './data';
@@ -12,11 +12,16 @@ export default () => {
         value: code,
       },
       copyable: true,
-      language: 'tsx',
+      enablePanZoom: true,
+      shadow: false,
       showLanguage: true,
-      type: {
-        options: ['ghost', 'block', 'pure'],
-        value: 'block',
+      theme: {
+        options: mermaidThemes.map((item) => item.id),
+        value: mermaidThemes[0].id,
+      },
+      variant: {
+        options: ['filled', 'outlined', 'borderless'],
+        value: 'filled',
       },
     },
     { store },

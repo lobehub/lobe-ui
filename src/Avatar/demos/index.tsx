@@ -1,20 +1,16 @@
 import { type ActionIconProps, Avatar } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
-import { useCdnFn } from '@/ConfigProvider';
-
 export default () => {
-  const genCdnUrl = useCdnFn();
   const store = useCreateStore();
   const control: ActionIconProps | any = useControls(
     {
       animation: false,
-      avatar: genCdnUrl({
-        path: 'assets/logo-3d.webp',
-        pkg: '@lobehub/assets-logo',
-        version: 'latest',
-      }),
+      avatar: '😀',
       background: '#FEE064',
+      bordered: false,
+      loading: false,
+      shadow: false,
       shape: {
         options: ['circle', 'square'],
         value: 'circle',
@@ -23,9 +19,13 @@ export default () => {
         max: 128,
         min: 16,
         step: 1,
-        value: 40,
+        value: 100,
       },
       title: 'cm',
+      variant: {
+        options: ['borderless', 'filled', 'outlined'],
+        value: 'borderless',
+      },
     },
     { store },
   );

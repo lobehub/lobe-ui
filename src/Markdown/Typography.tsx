@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import { forwardRef } from 'react';
 
 import { DivProps } from '@/types';
 
@@ -13,22 +13,17 @@ export interface TypographyProps extends DivProps {
   marginMultiple?: number;
 }
 
-const Typography: FC<TypographyProps> = ({
-  children,
-  className,
-  fontSize,
-  headerMultiple,
-  marginMultiple,
-  lineHeight,
-  ...rest
-}) => {
-  const { cx, styles } = useStyles({ fontSize, headerMultiple, lineHeight, marginMultiple });
+const Typography = forwardRef<HTMLDivElement, TypographyProps>(
+  ({ children, className, fontSize, headerMultiple, marginMultiple, lineHeight, ...rest }, ref) => {
+    const { cx, styles } = useStyles({ fontSize, headerMultiple, lineHeight, marginMultiple });
+    return (
+      <article className={cx(styles.root, styles.variant, className)} ref={ref} {...rest}>
+        {children}
+      </article>
+    );
+  },
+);
 
-  return (
-    <article className={cx(styles, className)} {...rest}>
-      {children}
-    </article>
-  );
-};
+Typography.displayName = 'Typography';
 
 export default Typography;

@@ -1,3 +1,5 @@
+'use client';
+
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
@@ -25,5 +27,7 @@ const SpotlightCardItem = memo<SpotlightCardItemProps>(
     );
   },
 );
+
+SpotlightCardItem.displayName = 'SpotlightCardItem';
 
 export default SpotlightCardItem;

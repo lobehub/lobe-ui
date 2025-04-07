@@ -15,9 +15,10 @@ export default () => {
       disabled: false,
       placeholder: 'Press keys to record shortcut',
       resetValue: DEFAULT_VALUE,
+      shadow: false,
       variant: {
-        options: ['default', 'ghost', 'block', 'pure'],
-        value: 'default',
+        options: ['filled', 'outlined', 'borderless'],
+        value: 'filled',
       },
     },
     { store },

@@ -25,14 +25,13 @@ export default () => {
     <ChatItem
       actions={
         <ActionIconGroup
-          dropdownMenu={dropdownMenu}
           items={items}
+          menu={dropdownMenu}
           onActionClick={(action) => {
             if (action.key === 'edit') {
               setEdit(true);
             }
           }}
-          type="ghost"
         />
       }
       avatar={avatar}

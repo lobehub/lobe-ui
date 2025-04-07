@@ -1,12 +1,12 @@
-import { Button } from 'antd';
 import { useTheme } from 'antd-style';
 import { ArrowBigUp, CornerDownLeft, Loader2 } from 'lucide-react';
-import { CSSProperties, ReactNode, memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+import { CSSProperties, ReactNode, forwardRef } from 'react';
+import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
+import Button from '@/Button';
 import Icon from '@/Icon';
 
-export interface ChatSendButtonProps {
+export interface ChatSendButtonProps extends FlexboxProps {
   className?: string;
   leftAddons?: ReactNode;
   loading?: boolean;
@@ -21,20 +21,20 @@ export interface ChatSendButtonProps {
   };
 }
 
-const ChatSendButton = memo<ChatSendButtonProps>(
-  ({ className, style, leftAddons, rightAddons, texts, onSend, loading, onStop }) => {
+const ChatSendButton = forwardRef<HTMLDivElement, ChatSendButtonProps>(
+  ({ leftAddons, rightAddons, texts, onSend, loading, onStop, ...rest }, ref) => {
     const theme = useTheme();
 
     return (
       <Flexbox
         align={'end'}
-        className={className}
         distribution={'space-between'}
         flex={'none'}
         gap={8}
         horizontal
         padding={'0 24px'}
-        style={style}
+        ref={ref}
+        {...rest}
       >
         <Flexbox align={'center'} gap={8} horizontal>
           {leftAddons}
@@ -56,7 +56,7 @@ const ChatSendButton = memo<ChatSendButtonProps>(
           </Flexbox>
           {rightAddons}
           {loading ? (
-            <Button icon={loading && <Icon icon={Loader2} spin />} onClick={onStop}>
+            <Button icon={loading && Loader2} onClick={onStop}>
               {texts?.stop || 'Stop'}
             </Button>
           ) : (
@@ -69,5 +69,7 @@ const ChatSendButton = memo<ChatSendButtonProps>(
     );
   },
 );
+
+ChatSendButton.displayName = 'ChatSendButton';
 
 export default ChatSendButton;

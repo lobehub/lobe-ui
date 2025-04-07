@@ -3,23 +3,27 @@ import { rgba } from 'polished';
 
 export const useStyles = createStyles(
   (
-    { css, token, cx, stylish },
+    { css, token, cx, stylish, prefixCls },
     {
-      minSize,
-      size,
+      maxHeight,
+      maxWidth,
+      minWidth,
+      minHeight,
       alwaysShowActions,
       objectFit,
-      borderless,
     }: {
       alwaysShowActions?: boolean;
-      borderless?: boolean;
-      minSize?: number | string;
+      maxHeight?: number | string;
+      maxWidth?: number | string;
+      minHeight?: number | string;
+      minWidth?: number | string;
       objectFit?: string;
-      size?: number | string;
     } = {},
   ) => {
-    const SIZE = typeof size === 'number' ? `${size}px` : size;
-    const MIN_SIZE = typeof minSize === 'number' ? `${minSize}px` : minSize;
+    const MAX_HEIGHT = typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight;
+    const MAX_WIDTH = typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth;
+    const MIN_HEIGHT = typeof minHeight === 'number' ? `${minHeight}px` : minHeight;
+    const MIN_WIDTH = typeof minWidth === 'number' ? `${minWidth}px` : minWidth;
 
     const actions = cx(css`
       cursor: pointer;
@@ -34,61 +38,60 @@ export const useStyles = createStyles(
 
     return {
       actions,
+      borderless: stylish.variantBorderlessWithoutHover,
+      filled: stylish.variantFilledWithoutHover,
       image: css`
         position: relative;
         overflow: hidden;
-        width: 100% !important;
-        height: auto !important;
+        width: 100%;
+        height: auto;
 
-        img {
-          width: 100% !important;
-          min-width: ${MIN_SIZE} !important;
-          max-width: ${SIZE} !important;
-          height: auto !important;
-          min-height: ${MIN_SIZE} !important;
-          max-height: ${SIZE} !important;
+        .${prefixCls}-image-img {
+          width: 100%;
+          min-width: ${MIN_WIDTH};
+          max-width: ${MAX_WIDTH};
+          height: auto;
+          min-height: ${MIN_HEIGHT};
+          max-height: ${MAX_HEIGHT};
 
           object-fit: ${objectFit || 'cover'};
         }
       `,
-
-      imageWrapper: cx(
-        borderless
-          ? css`
-              box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
-            `
-          : css`
-              box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
-            `,
+      mask: cx(
+        stylish.blur,
         css`
-          cursor: pointer;
-
-          position: relative;
-
-          overflow: hidden;
-
-          min-width: ${MIN_SIZE};
-          max-width: ${SIZE};
-          min-height: ${MIN_SIZE};
-          max-height: ${SIZE};
-          margin-block: 0 1em;
-
-          background: ${token.colorFillTertiary};
-          border-radius: ${token.borderRadiusLG}px;
-
-          &:hover {
-            .${actions} {
-              opacity: 1;
-            }
-          }
+          backdrop-filter: blur(8px);
         `,
       ),
+      outlined: stylish.variantOutlinedWithoutHover,
+      preview: css`
+        img {
+          width: 100%;
+        }
+      `,
+      root: css`
+        cursor: pointer;
+        user-select: none;
+
+        position: relative;
+
+        overflow: hidden;
+
+        border-radius: ${token.borderRadius}px;
+
+        &:hover {
+          .${actions} {
+            opacity: 1;
+          }
+        }
+      `,
 
       toolbar: cx(
         stylish.blur,
+        stylish.variantOutlinedWithoutHover,
         css`
           padding: 4px;
-          background: ${rgba(token.colorBgMask, 0.1)};
+          background: ${rgba(token.colorBgMask, 0.5)};
           border-radius: ${token.borderRadiusLG}px;
         `,
       ),

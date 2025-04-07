@@ -1,120 +1,118 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(
-  ({ token, css, cx, prefixCls, stylish }, type: 'ghost' | 'block' | 'pure') => {
-    const prefix = `${prefixCls}-highlighter`;
-    const buttonHoverCls = `${prefix}-hover-btn`;
-    const langHoverCls = `${prefix}-hover-lang`;
+export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) => {
+  const prefix = `${prefixCls}-highlighter`;
+  const actionsHoverCls = `${prefix}-highlighter-hover-actions`;
+  const langHoverCls = `${prefix}-highlighter-hover-lang`;
+  const expandCls = `${prefix}-highlighter-body-expand`;
 
-    const typeStylish = css`
-      background-color: ${type === 'block' ? token.colorFillQuaternary : 'transparent'};
-      border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorderSecondary};
-    `;
-
-    return {
-      button: cx(
-        buttonHoverCls,
-        css`
-          position: absolute;
-          z-index: 2;
-          inset-block-start: ${type === 'pure' ? 0 : '8px'};
-          inset-inline-end: ${type === 'pure' ? 0 : '8px'};
-
-          opacity: 0;
-        `,
-      ),
-
-      container: cx(
-        prefix,
-        type !== 'pure' && typeStylish,
-        css`
-          position: relative;
-          overflow: hidden;
-          border-radius: ${token.borderRadius}px;
-          transition: background-color 100ms ${token.motionEaseOut};
-
-          &:hover {
-            .${buttonHoverCls} {
-              opacity: 1;
-            }
-
-            .${langHoverCls} {
-              opacity: 1;
-            }
-          }
-
-          .prism-code {
-            background: none !important;
-          }
-
-          pre {
-            overflow: auto hidden;
-
-            margin: 0 !important;
-            padding: ${type === 'pure' ? 0 : `16px`} !important;
-
-            white-space: break-spaces;
-
-            background: none !important;
-          }
-
-          code {
-            background: transparent !important;
-          }
-        `,
-      ),
-      header: css`
-        position: relative;
-        padding-block: 4px;
-        padding-inline: 8px;
-        background: ${token.colorFillQuaternary};
-      `,
-      lang: cx(
-        langHoverCls,
-        stylish.blur,
-        css`
-          position: absolute;
-          z-index: 2;
-          inset-block-end: 8px;
-          inset-inline-end: 0;
-
-          font-family: ${token.fontFamilyCode};
-          color: ${token.colorTextSecondary};
-
-          opacity: 0;
-
-          transition: opacity 0.1s;
-        `,
-      ),
-      nowrap: css`
-        code {
-          text-wrap: nowrap !important;
-        }
-      `,
-      scroller: css`
-        overflow: auto;
-        width: 100%;
-        height: 100%;
-      `,
-      select: css`
-        user-select: none;
-
+  return {
+    actions: cx(
+      actionsHoverCls,
+      css`
         position: absolute;
-        inset-inline-start: 50%;
-        transform: translateX(-50%);
+        z-index: 2;
+        inset-block-start: 8px;
+        inset-inline-end: 8px;
 
-        min-width: 100px;
+        opacity: 0;
+      `,
+    ),
+    bodyCollapsed: css`
+      display: none;
+      height: 0;
+    `,
+    bodyExpand: cx(expandCls),
+    bodyRoot: css`
+      overflow: hidden;
+    `,
+    borderless: stylish.variantBorderlessWithoutHover,
+    filled: stylish.variantFilledWithoutHover,
+    headerBorderless: css`
+      padding-inline: 0;
+    `,
 
-        font-size: 14px;
-        color: ${token.colorTextDescription};
-        text-align: center;
-        .${prefixCls}-select-selection-item {
-          min-width: 100px;
-          padding-inline-end: 0 !important;
-          color: ${token.colorTextDescription};
-          text-align: center;
+    headerFilled: css`
+      background: ${token.colorFillQuaternary};
+    `,
+
+    headerOutlined: css`
+      & + .${expandCls} {
+        border-block-start: 1px solid ${token.colorFillQuaternary};
+      }
+    `,
+
+    headerRoot: css`
+      position: relative;
+      padding: 4px;
+    `,
+
+    lang: cx(
+      langHoverCls,
+      stylish.blur,
+      css`
+        position: absolute;
+        z-index: 2;
+        inset-block-end: 8px;
+        inset-inline-end: 0;
+
+        font-family: ${token.fontFamilyCode};
+        color: ${token.colorTextSecondary};
+
+        opacity: 0;
+
+        transition: opacity 0.1s;
+      `,
+    ),
+    nowrap: css`
+      pre,
+      code {
+        text-wrap: nowrap;
+      }
+    `,
+    outlined: stylish.variantOutlinedWithoutHover,
+    root: cx(
+      prefix,
+      css`
+        position: relative;
+        overflow: hidden;
+        border-radius: ${token.borderRadius}px;
+        transition: background-color 100ms ${token.motionEaseOut};
+
+        &:hover {
+          .${actionsHoverCls} {
+            opacity: 1;
+          }
+
+          .${langHoverCls} {
+            opacity: 1;
+          }
+        }
+
+        code {
+          background: transparent !important;
         }
       `,
-    };
-  },
-);
+    ),
+    select: css`
+      user-select: none;
+
+      position: absolute;
+      inset-inline-start: 50%;
+      transform: translateX(-50%);
+
+      min-width: 100px;
+
+      font-size: 14px;
+      color: ${token.colorTextDescription};
+      text-align: center;
+    `,
+    shadow: stylish.shadow,
+    wrap: css`
+      pre,
+      code {
+        text-wrap: wrap;
+      }
+    `,
+  };
+});

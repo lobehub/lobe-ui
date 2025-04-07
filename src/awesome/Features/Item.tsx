@@ -1,3 +1,6 @@
+'use client';
+
+import { Typography } from 'antd';
 import { CSSProperties, memo } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
@@ -9,56 +12,20 @@ import type { DivProps } from '@/types';
 import { useStyles } from './style';
 
 export interface FeatureItem {
-  /**
-   * @description The number of columns the item spans.
-   */
   column?: number;
-  /**
-   * @description The description of the feature item.
-   */
   description?: string;
-  /**
-   * @description Whether this item is a hero item.
-   */
   hero?: boolean;
-  /**
-   * @description The name of the icon to display on the feature item.
-   */
   icon?: IconProps['icon'];
-  /**
-   * @description The URL of the image to display on the feature item.
-   */
   image?: string;
-  /**
-   * @description The CSS style of the image to display on the feature item.
-   */
   imageStyle?: CSSProperties;
-  /**
-   * @description The type of the image to display on the feature item.
-   * @default 'normal'
-   */
   imageType?: 'light' | 'primary' | 'soon';
-  /**
-   * @description The link to navigate to when clicking on the feature item.
-   */
   link?: string;
-  /**
-   * @description Whether to open the link in a new tab when clicking on the feature item.
-   * @default false
-   */
   openExternal?: boolean;
-  /**
-   * @description The number of rows the item spans.
-   */
   row?: number;
-  /**
-   * @description The title of the feature item.
-   */
   title: string;
 }
 
-// @ts-ignore
-export interface FeatureItemProps extends FeatureItem, DivProps {}
+export interface FeatureItemProps extends FeatureItem, Omit<DivProps, 'title'> {}
 
 const Image = memo<{ className?: string; image: string; style?: CSSProperties; title: string }>(
   ({ image, className, title, style }) => {
@@ -114,7 +81,14 @@ const Item = memo<FeatureItemProps>(
             </Flexbox>
           )}
           {description && (
-            <p className={styles.desc} dangerouslySetInnerHTML={{ __html: description }} />
+            <Typography.Paragraph
+              className={styles.desc}
+              ellipsis={{
+                rows: 4,
+              }}
+            >
+              {description}
+            </Typography.Paragraph>
           )}
           {link && (
             <div className={styles.link}>
@@ -128,5 +102,7 @@ const Item = memo<FeatureItemProps>(
     );
   },
 );
+
+Item.displayName = 'FeatureItem';
 
 export default Item;

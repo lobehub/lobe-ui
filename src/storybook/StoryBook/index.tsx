@@ -3,7 +3,7 @@
 import { useResponsive } from 'antd-style';
 import { LevaPanel } from 'leva';
 import { forwardRef } from 'react';
-import { Flexbox, FlexboxProps } from 'react-layout-kit';
+import { Center, Flexbox, FlexboxProps } from 'react-layout-kit';
 
 import DraggablePanel from '@/DraggablePanel';
 
@@ -33,11 +33,10 @@ export const StoryBook = forwardRef<HTMLDivElement, StoryBookProps>(
         horizontal={!mobile}
         justify={'stretch'}
         ref={ref}
-        {...rest}
       >
-        <Flexbox align={'center'} className={styles.left} flex={1} justify={'center'}>
+        <Center className={styles.left} flex={1} {...rest}>
           {children}
-        </Flexbox>
+        </Center>
         <DraggablePanel
           className={styles.right}
           minWidth={280}

@@ -97,9 +97,7 @@ const Drawer = memo<DrawerProps>(
         }}
       >
         {extra}
-        {closeIcon || (
-          <ActionIcon icon={XIcon} onClick={onClose} size={'site'} {...closeIconProps} />
-        )}
+        {closeIcon || <ActionIcon icon={XIcon} onClick={onClose} {...closeIconProps} />}
       </Flexbox>
     );
 
@@ -214,5 +212,7 @@ const Drawer = memo<DrawerProps>(
     );
   },
 );
+
+Drawer.displayName = 'Drawer';
 
 export default Drawer;

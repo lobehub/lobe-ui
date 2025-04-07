@@ -1,16 +1,78 @@
 import { createStyles, css, cx } from 'antd-style';
 
-const offset = 16;
-const toggleLength = 40;
-const toggleShort = 16;
-const prefix = 'draggable-panel';
+// Layout constants
+const LAYOUT = {
+  offset: 16,
+  toggleLength: 40,
+  toggleShort: 16,
+};
 
 export const useStyles = createStyles(
   (
-    { token },
-    { headerHeight, showHandlerWideArea }: { headerHeight: number; showHandlerWideArea: boolean },
+    { prefixCls, token, stylish },
+    { headerHeight, showHandleWideArea }: { headerHeight: number; showHandleWideArea: boolean },
   ) => {
-    const commonHandle = css`
+    const prefix = `${prefixCls}-draggable-panel`;
+
+    // Base styles
+    const borderStyles = {
+      borderBottom: css`
+        border-block-end-width: 1px;
+      `,
+      borderLeft: css`
+        border-inline-start-width: 1px;
+      `,
+      borderRight: css`
+        border-inline-end-width: 1px;
+      `,
+      borderTop: css`
+        border-block-start-width: 1px;
+      `,
+    };
+
+    // Position styles
+    const float = css`
+      position: absolute;
+      z-index: 200;
+    `;
+
+    const floatPositions = {
+      bottomFloat: cx(
+        float,
+        css`
+          inset-block-end: 0;
+          inset-inline: 0 0;
+          width: 100%;
+        `,
+      ),
+      leftFloat: cx(
+        float,
+        css`
+          inset-block: ${headerHeight}px 0;
+          inset-inline-start: 0;
+          height: calc(100% - ${headerHeight}px);
+        `,
+      ),
+      rightFloat: cx(
+        float,
+        css`
+          inset-block: ${headerHeight}px 0;
+          inset-inline-end: 0;
+          height: calc(100% - ${headerHeight}px);
+        `,
+      ),
+      topFloat: cx(
+        float,
+        css`
+          inset-block-start: ${headerHeight}px;
+          inset-inline: 0 0;
+          width: 100%;
+        `,
+      ),
+    };
+
+    // Handle styles
+    const handleBaseStyle = css`
       position: relative;
 
       &::before {
@@ -28,8 +90,53 @@ export const useStyles = createStyles(
       }
     `;
 
-    const commonToggle = css`
-      pointer-events: ${showHandlerWideArea ? 'all' : 'none'};
+    const handleStyles = {
+      handleBottom: cx(
+        `${prefix}-bottom-handle`,
+        css`
+          &::before {
+            inset-block-end: 50%;
+            width: 100%;
+            height: 2px;
+          }
+        `,
+      ),
+      handleLeft: cx(
+        `${prefix}-left-handle`,
+        css`
+          &::before {
+            inset-inline-start: 50%;
+            width: 2px;
+            height: 100%;
+          }
+        `,
+      ),
+      handleRight: cx(
+        `${prefix}-right-handle`,
+        css`
+          &::before {
+            inset-inline-end: 50%;
+            width: 2px;
+            height: 100%;
+          }
+        `,
+      ),
+      handleRoot: handleBaseStyle,
+      handleTop: cx(
+        `${prefix}-top-handle`,
+        css`
+          &::before {
+            inset-block-start: 50%;
+            width: 100%;
+            height: 2px;
+          }
+        `,
+      ),
+    };
+
+    // Toggle styles
+    const toggleBaseStyle = css`
+      pointer-events: ${showHandleWideArea ? 'all' : 'none'};
 
       position: absolute;
       z-index: 10;
@@ -38,15 +145,13 @@ export const useStyles = createStyles(
 
       transition: all 0.2s ${token.motionEaseOut};
 
-      &:hover {
-        opacity: 1 !important;
-      }
-
+      &:hover,
       &:active {
         opacity: 1 !important;
       }
 
       > div {
+        ${stylish.variantFilled};
         pointer-events: all;
         cursor: pointer;
 
@@ -54,65 +159,96 @@ export const useStyles = createStyles(
 
         color: ${token.colorTextTertiary};
 
-        background: ${token.colorFillTertiary};
-        border-color: ${token.colorBorderSecondary};
-        border-style: solid;
-        border-width: 1px;
-        border-radius: 4px;
-
         transition: all 0.2s ${token.motionEaseOut};
 
         &:hover {
           color: ${token.colorTextSecondary};
-          background: ${token.colorFillSecondary};
         }
 
         &:active {
           color: ${token.colorText};
-          background: ${token.colorFill};
         }
       }
     `;
 
-    const float = css`
-      position: absolute;
-      z-index: 200;
-    `;
-
-    return {
-      bottomFloat: cx(
-        float,
+    const toggleStyles = {
+      toggleBottom: cx(
+        `${prefix}-toggle-bottom`,
         css`
-          inset-block-end: 0;
-          inset-inline: 0 0;
+          inset-block-end: -${LAYOUT.offset}px;
           width: 100%;
-        `,
-      ),
-      bottomHandle: cx(
-        `${prefix}-bottom-handle`,
-        css`
-          ${commonHandle};
+          height: ${LAYOUT.toggleShort}px;
 
-          &::before {
-            inset-block-end: 50%;
-            width: 100%;
-            height: 2px;
+          > div {
+            inset-inline-start: 50%;
+
+            width: ${LAYOUT.toggleLength}px;
+            height: ${LAYOUT.toggleShort}px;
+            margin-inline-start: -20px;
+
+            border-radius: 0 0 4px 4px;
           }
         `,
       ),
-      container: cx(
-        prefix,
+      toggleLeft: cx(
+        `${prefix}-toggle-left`,
         css`
-          flex-shrink: 0;
-          border: 0 solid ${token.colorBorderSecondary};
+          inset-inline-start: -${LAYOUT.offset}px;
+          width: ${LAYOUT.toggleShort}px;
+          height: 100%;
 
-          &:hover {
-            .${prefix}-toggle {
-              opacity: 1;
-            }
+          > div {
+            inset-block-start: 50%;
+
+            width: ${LAYOUT.toggleShort}px;
+            height: ${LAYOUT.toggleLength}px;
+            margin-block-start: -20px;
+
+            border-radius: 4px 0 0 4px;
           }
         `,
       ),
+      toggleRight: cx(
+        `${prefix}-toggle-right`,
+        css`
+          inset-inline-end: -${LAYOUT.offset}px;
+          width: ${LAYOUT.toggleShort}px;
+          height: 100%;
+
+          > div {
+            inset-block-start: 50%;
+
+            width: ${LAYOUT.toggleShort}px;
+            height: ${LAYOUT.toggleLength}px;
+            margin-block-start: -20px;
+
+            border-radius: 0 4px 4px 0;
+          }
+        `,
+      ),
+      toggleRoot: toggleBaseStyle,
+      toggleTop: cx(
+        `${prefix}-toggle-top`,
+        css`
+          inset-block-start: -${LAYOUT.offset}px;
+          width: 100%;
+          height: ${LAYOUT.toggleShort}px;
+
+          > div {
+            inset-inline-start: 50%;
+
+            width: ${LAYOUT.toggleLength}px;
+            height: ${LAYOUT.toggleShort}px;
+            margin-inline-start: -20px;
+
+            border-radius: 4px 4px 0 0;
+          }
+        `,
+      ),
+    };
+
+    // Additional component styles
+    const componentStyles = {
       fixed: css`
         position: relative;
       `,
@@ -127,31 +263,8 @@ export const useStyles = createStyles(
         background: ${token.colorBgLayout};
       `,
       handlerIcon: css`
-        display: flex;
-        align-items: center;
-        justify-content: center;
         transition: all 0.2s ${token.motionEaseOut};
       `,
-      leftFloat: cx(
-        float,
-        css`
-          inset-block: ${headerHeight}px 0;
-          inset-inline-start: 0;
-          height: calc(100% - ${headerHeight}px);
-        `,
-      ),
-      leftHandle: cx(
-        css`
-          ${commonHandle};
-
-          &::before {
-            inset-inline-start: 50%;
-            width: 2px;
-            height: 100%;
-          }
-        `,
-        `${prefix}-left-handle`,
-      ),
       panel: cx(
         `${prefix}-fixed`,
         css`
@@ -159,125 +272,27 @@ export const useStyles = createStyles(
           transition: all 0.2s ${token.motionEaseOut};
         `,
       ),
-      rightFloat: cx(
-        float,
+      root: cx(
+        prefix,
         css`
-          inset-block: ${headerHeight}px 0;
-          inset-inline-end: 0;
-          height: calc(100% - ${headerHeight}px);
-        `,
-      ),
-      rightHandle: cx(
-        css`
-          ${commonHandle};
-          &::before {
-            inset-inline-end: 50%;
-            width: 2px;
-            height: 100%;
-          }
-        `,
-        `${prefix}-right-handle`,
-      ),
-      toggleBottom: cx(
-        `${prefix}-toggle`,
-        `${prefix}-toggle-bottom`,
-        commonToggle,
-        css`
-          inset-block-end: -${offset}px;
-          width: 100%;
-          height: ${toggleShort}px;
+          flex-shrink: 0;
+          border: 0 solid ${token.colorBorderSecondary};
 
-          > div {
-            inset-inline-start: 50%;
-
-            width: ${toggleLength}px;
-            height: 16px;
-            margin-inline-start: -20px;
-
-            border-radius: 0 0 4px 4px;
+          &:hover {
+            .${prefix}-toggle {
+              opacity: 1;
+            }
           }
         `,
       ),
-      toggleLeft: cx(
-        `${prefix}-toggle`,
-        `${prefix}-toggle-left`,
-        commonToggle,
-        css`
-          inset-inline-start: -${offset}px;
-          width: ${toggleShort}px;
-          height: 100%;
+    };
 
-          > div {
-            inset-block-start: 50%;
-
-            width: ${toggleShort}px;
-            height: ${toggleLength}px;
-            margin-block-start: -20px;
-
-            border-radius: 4px 0 0 4px;
-          }
-        `,
-      ),
-      toggleRight: cx(
-        `${prefix}-toggle`,
-        `${prefix}-toggle-right`,
-        commonToggle,
-        css`
-          inset-inline-end: -${offset}px;
-          width: ${toggleShort}px;
-          height: 100%;
-
-          > div {
-            inset-block-start: 50%;
-
-            width: ${toggleShort}px;
-            height: ${toggleLength}px;
-            margin-block-start: -20px;
-
-            border-radius: 0 4px 4px 0;
-          }
-        `,
-      ),
-      toggleTop: cx(
-        `${prefix}-toggle`,
-        `${prefix}-toggle-top`,
-        commonToggle,
-        css`
-          inset-block-start: -${offset}px;
-          width: 100%;
-          height: ${toggleShort}px;
-
-          > div {
-            inset-inline-start: 50%;
-
-            width: ${toggleLength}px;
-            height: ${toggleShort}px;
-            margin-inline-start: -20px;
-
-            border-radius: 4px 4px 0 0;
-          }
-        `,
-      ),
-      topFloat: cx(
-        float,
-        css`
-          inset-block-start: ${headerHeight}px;
-          inset-inline: 0 0;
-          width: 100%;
-        `,
-      ),
-      topHandle: cx(
-        `${prefix}-top-handle`,
-        css`
-          ${commonHandle};
-
-          &::before {
-            inset-block-start: 50%;
-            width: 100%;
-            height: 2px;
-          }
-        `,
-      ),
+    return {
+      ...borderStyles,
+      ...floatPositions,
+      ...handleStyles,
+      ...toggleStyles,
+      ...componentStyles,
     };
   },
 );

@@ -1,7 +1,7 @@
 import { isUndefined } from 'lodash-es';
 import { memo, useCallback } from 'react';
 
-import { DivProps } from '@/types';
+import { SvgProps } from '@/types';
 
 enum Line {
   l7,
@@ -21,7 +21,7 @@ enum Line {
   r7,
 }
 
-export interface GridProps extends DivProps {
+export interface GridProps extends SvgProps {
   color?: string;
   linePick?: Line;
   strokeWidth?: number;
@@ -67,15 +67,20 @@ const Grid = memo<GridProps>(({ color = '#fff', strokeWidth = 3, linePick, ...re
   );
 
   return (
-    <div {...rest}>
-      <svg style={{ width: '100%' }} viewBox="0 0 3728 422" xmlns="http://www.w3.org/2000/svg">
-        <g fill="none" fillRule="evenodd" stroke={color} strokeWidth={strokeWidth}>
-          {vLine}
-          {hLine}
-        </g>
-      </svg>
-    </div>
+    <svg
+      style={{ width: '100%' }}
+      viewBox="0 0 3728 422"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
+      <g fill="none" fillRule="evenodd" stroke={color} strokeWidth={strokeWidth}>
+        {vLine}
+        {hLine}
+      </g>
+    </svg>
   );
 });
+
+Grid.displayName = 'Grid';
 
 export default Grid;

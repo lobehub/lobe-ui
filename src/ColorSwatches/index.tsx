@@ -82,7 +82,7 @@ const ColorSwatches = memo<ColorSwatchesProps>(
                     <Icon
                       color={rgba(readableColor(color), 0.33)}
                       icon={CheckIcon}
-                      size={{ fontSize: 14, strokeWidth: 4 }}
+                      size={{ size: 14, strokeWidth: 4 }}
                       style={{
                         pointerEvents: 'none',
                       }}
@@ -94,51 +94,38 @@ const ColorSwatches = memo<ColorSwatchesProps>(
           })}
         {enableColorPicker && (
           <Tooltip title={texts?.custom || 'Custom'}>
-            <Center style={{ position: 'relative' }}>
-              {isCustomActive && (
-                <Icon
-                  color={enableColorSwatches ? '#222' : rgba(readableColor(active), 0.33)}
-                  icon={CheckIcon}
-                  size={{ fontSize: 14, strokeWidth: 4 }}
-                  style={{
-                    pointerEvents: 'none',
-                    position: 'absolute',
-                    zIndex: 1,
-                  }}
-                />
+            <ColorPicker
+              arrow={false}
+              className={cx(
+                styles.picker,
+                enableColorSwatches && styles.conic,
+                isCustomActive && styles.active,
               )}
-              <ColorPicker
-                arrow={false}
-                className={cx(
-                  styles.picker,
-                  enableColorSwatches && styles.conic,
-                  isCustomActive && styles.active,
-                )}
-                disabledAlpha
-                format={'hex'}
-                onChangeComplete={(c) => {
-                  if (c.toHexString() === theme.colorPrimary) {
-                    setActive('');
-                  } else {
-                    setActive(c.toHexString());
-                  }
-                }}
-                presets={
-                  enableColorSwatches
-                    ? undefined
-                    : [
-                        {
-                          colors: colors.map((c) => c.color),
-                          label: texts?.presets || 'Presets',
-                        },
-                      ]
+              defaultValue={theme.colorPrimary}
+              disabledAlpha
+              format={'hex'}
+              onChangeComplete={(c) => {
+                if (c.toHexString() === theme.colorPrimary) {
+                  setActive('');
+                } else {
+                  setActive(c.toHexString());
                 }
-                style={{
-                  borderRadius: shape === 'circle' ? '50%' : theme.borderRadius,
-                }}
-                value={enableColorSwatches ? undefined : active}
-              />
-            </Center>
+              }}
+              presets={
+                enableColorSwatches
+                  ? undefined
+                  : [
+                      {
+                        colors: colors.map((c) => c.color),
+                        label: texts?.presets || 'Presets',
+                      },
+                    ]
+              }
+              style={{
+                borderRadius: shape === 'circle' ? '50%' : theme.borderRadius,
+              }}
+              value={enableColorSwatches ? undefined : active}
+            />
           </Tooltip>
         )}
       </Flexbox>

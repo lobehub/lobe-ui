@@ -1,28 +1,22 @@
 'use client';
 
 import { ChevronLeft } from 'lucide-react';
-import { CSSProperties, ReactNode, memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+import { CSSProperties, ReactNode, forwardRef } from 'react';
+import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
 import MobileSafeArea from '@/mobile/MobileSafeArea';
 
 import { useStyles } from './style';
 
-export interface MobileNavBarProps {
+export interface MobileNavBarProps extends FlexboxProps {
   center?: ReactNode;
-  className?: string;
   classNames?: {
     center?: string;
     left?: string;
     right?: string;
   };
-  contentStyles?: {
-    center?: CSSProperties;
-    left?: CSSProperties;
-    right?: CSSProperties;
-  };
-  gap?: {
+  gaps?: {
     center?: number;
     left?: number;
     right?: number;
@@ -32,27 +26,42 @@ export interface MobileNavBarProps {
   right?: ReactNode;
   safeArea?: boolean;
   showBackButton?: boolean;
-  style?: CSSProperties;
+  styles?: {
+    center?: CSSProperties;
+    left?: CSSProperties;
+    right?: CSSProperties;
+  };
 }
 
-const MobileNavBar = memo<MobileNavBarProps>(
-  ({
-    className,
-    safeArea = true,
-    style,
-    center,
-    left,
-    right,
-    gap,
-    classNames,
-    onBackClick,
-    showBackButton,
-    contentStyles,
-  }) => {
+const MobileNavBar = forwardRef<HTMLDivElement, MobileNavBarProps>(
+  (
+    {
+      className,
+      safeArea = true,
+      style,
+      center,
+      left,
+      right,
+      gaps,
+      classNames,
+      onBackClick,
+      showBackButton,
+      styles: custmStyles,
+      children,
+      ...rest
+    },
+    ref,
+  ) => {
     const { styles, cx } = useStyles();
 
     return (
-      <Flexbox className={cx(styles.container, className)} style={style}>
+      <Flexbox
+        as={'header'}
+        className={cx(styles.container, className)}
+        ref={ref}
+        style={style}
+        {...rest}
+      >
         {safeArea && <MobileSafeArea position={'top'} />}
         <Flexbox
           align={'center'}
@@ -65,37 +74,32 @@ const MobileNavBar = memo<MobileNavBarProps>(
             align={'center'}
             className={cx(styles.left, classNames?.left)}
             flex={1}
-            gap={gap?.left}
+            gap={gaps?.left}
             horizontal
-            style={contentStyles?.left}
+            style={custmStyles?.left}
           >
-            {showBackButton && (
-              <ActionIcon
-                icon={ChevronLeft}
-                onClick={() => onBackClick?.()}
-                size={{ fontSize: 24 }}
-              />
-            )}
+            {showBackButton && <ActionIcon icon={ChevronLeft} onClick={() => onBackClick?.()} />}
             {left}
           </Flexbox>
           <Flexbox
             align={'center'}
             className={cx(styles.center, classNames?.center)}
             flex={1}
-            gap={gap?.center}
+            gap={gaps?.center}
             horizontal
             justify={'center'}
-            style={contentStyles?.center}
+            style={custmStyles?.center}
           >
+            {children}
             {center}
           </Flexbox>
           <Flexbox
             align={'center'}
             className={cx(styles.right, classNames?.right)}
             flex={1}
-            gap={gap?.right}
+            gap={gaps?.right}
             horizontal
-            style={contentStyles?.right}
+            style={custmStyles?.right}
           >
             {right}
           </Flexbox>
@@ -104,5 +108,7 @@ const MobileNavBar = memo<MobileNavBarProps>(
     );
   },
 );
+
+MobileNavBar.displayName = 'MobileNavBar';
 
 export default MobileNavBar;

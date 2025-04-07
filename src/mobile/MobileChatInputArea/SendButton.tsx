@@ -1,42 +1,37 @@
 'use client';
 
-import { useTheme } from 'antd-style';
-import { Loader2, SendHorizontal } from 'lucide-react';
-import { readableColor } from 'polished';
-import { memo } from 'react';
+import { SendHorizontal } from 'lucide-react';
+import { forwardRef } from 'react';
 
-import ActionIcon, { ActionIconProps, type ActionIconSize } from '@/ActionIcon';
+import Button, { type ButtonProps } from '@/Button';
 
-export interface MobileChatSendButtonProps extends Omit<ActionIconProps, 'loading'> {
-  loading?: boolean;
-  onSend?: () => void;
-  onStop?: () => void;
+export interface MobileChatSendButtonProps extends Omit<ButtonProps, 'onClick'> {
+  onSend?: ButtonProps['onClick'];
+  onStop?: ButtonProps['onClick'];
 }
 
-const MobileChatSendButton = memo<MobileChatSendButtonProps>(
-  ({ loading, onStop, onSend, ...rest }) => {
-    const theme = useTheme();
-    const size: ActionIconSize = {
-      blockSize: 36,
-      fontSize: 16,
-    };
-
-    return loading ? (
-      <ActionIcon active icon={Loader2} onClick={onStop} size={size} spin {...rest} />
-    ) : (
-      <ActionIcon
+const MobileChatSendButton = forwardRef<HTMLButtonElement, MobileChatSendButtonProps>(
+  ({ loading, onStop, onSend, ...rest }, ref) => {
+    return (
+      <Button
         icon={SendHorizontal}
-        onClick={onSend}
-        size={size}
-        style={{
-          background: theme.colorPrimary,
-          color: readableColor(theme.colorPrimary),
-          flex: 'none',
+        loading={loading}
+        onClick={(e) => {
+          e.preventDefault();
+          if (loading) {
+            onStop?.(e);
+          } else {
+            onSend?.(e);
+          }
         }}
+        ref={ref}
+        type={'primary'}
         {...rest}
       />
     );
   },
 );
+
+MobileChatSendButton.displayName = 'MobileChatSendButton';
 
 export default MobileChatSendButton;

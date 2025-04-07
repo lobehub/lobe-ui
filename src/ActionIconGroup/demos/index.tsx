@@ -7,17 +7,16 @@ export default () => {
   const store = useCreateStore();
   const control: ActionIconGroupProps | any = useControls(
     {
-      direction: {
-        options: ['row', 'column'],
-        value: 'row',
-      },
+      disabled: false,
+      horizontal: true,
+      shadow: false,
       size: {
         options: ['small', 'normal', 'large'],
         value: 'small',
       },
-      type: {
-        options: ['ghost', 'block', 'pure'],
-        value: 'block',
+      variant: {
+        options: ['filled', 'outlined', 'borderless'],
+        value: 'filled',
       },
     },
     { store },
@@ -26,8 +25,8 @@ export default () => {
   return (
     <StoryBook levaStore={store}>
       <ActionIconGroup
-        dropdownMenu={dropdownMenu}
         items={items}
+        menu={dropdownMenu}
         onActionClick={(key) => console.log(key)}
         {...control}
       />

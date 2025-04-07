@@ -77,4 +77,6 @@ const MaterialFileTypeIcon = memo<MaterialFileTypeIconProps>(
   },
 );
 
+MaterialFileTypeIcon.displayName = 'MaterialFileTypeIcon';
+
 export default MaterialFileTypeIcon;

@@ -1,74 +1,88 @@
 'use client';
 
 import { createStyles } from 'antd-style';
-import { ReactNode, memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+import { CSSProperties, ReactNode, forwardRef } from 'react';
+import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
-import Tag from '@/Tag';
-import { type DivProps } from '@/types';
+import Tag, { type TagProps } from '@/Tag';
 
-export const useStyles = createStyles(({ css, token, prefixCls }) => ({
-  formTitle: css`
+export const useStyles = createStyles(({ css, token }) => ({
+  content: css`
     position: relative;
     text-align: start;
+  `,
 
-    > div {
-      font-weight: 500;
-      line-height: 1;
-    }
+  desc: css`
+    display: block;
 
-    > small {
-      display: block;
-
-      line-height: 1.44;
-      color: ${token.colorTextDescription};
-      word-wrap: break-word;
-      white-space: pre-wrap;
-    }
-
-    .${prefixCls}-tag {
-      font-family: ${token.fontFamilyCode};
-    }
+    line-height: 1.44;
+    color: ${token.colorTextDescription};
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  `,
+  title: css`
+    font-weight: 500;
+    line-height: 1;
   `,
 }));
 
-export interface FormTitleProps extends DivProps {
+export interface FormTitleProps extends Omit<FlexboxProps, 'title'> {
   avatar?: ReactNode;
+  classNames?: {
+    content?: string;
+    desc?: string;
+    tag?: string;
+    title?: string;
+  };
   desc?: ReactNode;
+  styles?: {
+    content?: CSSProperties;
+    desc?: CSSProperties;
+    tag?: CSSProperties;
+    title?: CSSProperties;
+  };
   tag?: string;
-  title: string;
+  tagProps?: Omit<TagProps, 'children'>;
+  title: ReactNode;
 }
 
-const FormTitle = memo<FormTitleProps>(({ className, tag, title, desc, avatar }) => {
-  const { cx, styles } = useStyles();
-  const titleNode = (
-    <Flexbox className={cx(styles.formTitle, className)}>
-      <Flexbox align={'center'} direction={'horizontal'} gap={8}>
-        {title}
-        {tag && <Tag>{tag}</Tag>}
-      </Flexbox>
-      {desc && (
-        <small
-          style={{
-            marginBottom: 2,
-            marginTop: 6,
-          }}
-        >
-          {desc}
-        </small>
-      )}
-    </Flexbox>
-  );
+const FormTitle = forwardRef<HTMLDivElement, FormTitleProps>(
+  ({ tag, title, desc, avatar, classNames, styles: customStyles, ...rest }, ref) => {
+    const { cx, styles } = useStyles();
 
-  if (avatar) {
     return (
-      <Flexbox align={`center`} gap={8} horizontal>
+      <Flexbox align={`center`} gap={8} horizontal ref={ref} {...rest}>
         {avatar}
-        {titleNode}
+        <Flexbox
+          className={cx(styles.content, classNames?.content)}
+          gap={8}
+          style={customStyles?.content}
+        >
+          <Flexbox
+            align={'center'}
+            className={cx(styles.title, classNames?.title)}
+            direction={'horizontal'}
+            gap={8}
+            style={customStyles?.title}
+          >
+            {title}
+            {tag && (
+              <Tag className={classNames?.tag} style={customStyles?.tag}>
+                {tag}
+              </Tag>
+            )}
+          </Flexbox>
+          {desc && (
+            <small className={cx(styles.desc, classNames?.desc)} style={customStyles?.desc}>
+              {desc}
+            </small>
+          )}
+        </Flexbox>
       </Flexbox>
     );
-  }
-  return titleNode;
-});
+  },
+);
+
+FormTitle.displayName = 'FormTitle';
 
 export default FormTitle;

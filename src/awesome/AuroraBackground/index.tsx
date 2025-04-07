@@ -19,4 +19,6 @@ const AuroraBackground = memo<FlexboxProps>(({ children, ...rest }) => {
   );
 });
 
+AuroraBackground.displayName = 'AuroraBackground';
+
 export default AuroraBackground;

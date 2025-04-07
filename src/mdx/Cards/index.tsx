@@ -1,21 +1,10 @@
 'use client';
 
-import { createStyles } from 'antd-style';
-import { FC } from 'react';
+import type { FC } from 'react';
 
 import Grid, { type GridProps } from '@/Grid';
 
-const useStyles = createStyles(({ css }) => {
-  return {
-    container: css`
-      margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
-
-      > div {
-        margin: 0 !important;
-      }
-    `,
-  };
-});
+import { useStyles } from './style';
 
 export type CardsProps = GridProps;
 
@@ -32,5 +21,7 @@ const Cards: FC<CardsProps> = ({ children, className, maxItemWidth = 250, rows =
     </Grid>
   );
 };
+
+Cards.displayName = 'MdxCards';
 
 export default Cards;

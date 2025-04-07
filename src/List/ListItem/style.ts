@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }) => {
+export const useStyles = createStyles(({ cx, css, token, prefixCls, stylish }) => {
   return {
     actions: css`
       position: absolute;
@@ -8,46 +8,26 @@ export const useStyles = createStyles(({ css, token }) => {
       inset-inline-end: 16px;
       transform: translateY(-50%);
     `,
-    active: css`
-      color: ${token.colorText};
-      background-color: ${token.colorFillSecondary};
-
-      &:hover {
-        background-color: ${token.colorFill};
-      }
-    `,
-    container: css`
-      cursor: pointer;
-
-      position: relative;
-
-      color: ${token.colorTextTertiary};
-
-      background: transparent;
-
-      transition: background-color 200ms ${token.motionEaseOut};
-
-      &:active {
-        background-color: ${token.colorFillSecondary};
-      }
-
-      &:hover {
-        background-color: ${token.colorFillTertiary};
-      }
-    `,
+    active: stylish.active,
     content: css`
       position: relative;
       overflow: hidden;
       flex: 1;
       align-self: center;
     `,
-    desc: css`
-      width: 100%;
-      margin: 0 !important;
-
+    date: css`
       font-size: 12px;
-      line-height: 1.2 !important;
-      color: ${token.colorTextDescription};
+      color: ${token.colorTextPlaceholder};
+    `,
+    desc: css`
+      &.${prefixCls}-typography {
+        width: 100%;
+        margin: 0;
+
+        font-size: 12px;
+        line-height: 1.2;
+        color: ${token.colorTextDescription};
+      }
     `,
 
     pin: css`
@@ -55,19 +35,26 @@ export const useStyles = createStyles(({ css, token }) => {
       inset-block-start: 6px;
       inset-inline-end: 6px;
     `,
-    time: css`
-      font-size: 12px;
-      color: ${token.colorTextPlaceholder};
-    `,
+    root: cx(
+      stylish.variantBorderless,
+      css`
+        cursor: pointer;
+        position: relative;
+        color: ${token.colorTextTertiary};
+        border-radius: ${token.borderRadius}px;
+      `,
+    ),
 
     title: css`
-      width: 100%;
-      margin: 0 !important;
+      &.${prefixCls}-typography {
+        width: 100%;
+        margin: 0;
 
-      font-size: 14px !important;
-      font-weight: 500 !important;
-      line-height: 1.2 !important;
-      color: ${token.colorText};
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.2;
+        color: ${token.colorText};
+      }
     `,
     triangle: css`
       width: 10px;

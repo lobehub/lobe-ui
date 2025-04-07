@@ -8,11 +8,12 @@ export default () => {
       enableShortKey: true,
       loading: false,
       placeholder: 'Type keywords...',
+      shadow: false,
       shortKey: 'f',
       spotlight: false,
-      type: {
-        options: ['ghost', 'block'],
-        value: 'ghost',
+      variant: {
+        options: ['outlined', 'borderless', 'filled'],
+        value: 'filled',
       },
     },
     { store },

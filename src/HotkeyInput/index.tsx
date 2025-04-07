@@ -1,6 +1,7 @@
 'use client';
 
 import type { InputProps, InputRef } from 'antd';
+import { cva } from 'class-variance-authority';
 import { isEqual } from 'lodash-es';
 import { Undo2Icon } from 'lucide-react';
 import {
@@ -41,6 +42,7 @@ export interface HotkeyInputProps {
   onReset?: (currentValue: string, resetValue: string) => void;
   placeholder?: string;
   resetValue?: string;
+  shadow?: boolean;
   style?: CSSProperties;
   texts?: {
     conflicts?: string;
@@ -48,7 +50,7 @@ export interface HotkeyInputProps {
     reset?: string;
   };
   value?: string;
-  variant?: 'default' | 'ghost' | 'block' | 'pure';
+  variant?: 'filled' | 'borderless' | 'outlined';
 }
 
 const HotkeyInput = memo<HotkeyInputProps>(
@@ -59,13 +61,13 @@ const HotkeyInput = memo<HotkeyInputProps>(
     onChange,
     onConflict,
     placeholder = 'Press keys to record shortcut',
-    disabled = false,
+    disabled,
+    shadow,
     allowReset = true,
     style,
     className,
     hotkeyConflicts = [],
-    variant = 'default',
-
+    variant = 'filled',
     texts,
     isApple,
     onBlur,
@@ -76,13 +78,51 @@ const HotkeyInput = memo<HotkeyInputProps>(
     const [hasConflict, setHasConflict] = useState(false);
     const [hasInvalidCombination, setHasInvalidCombination] = useState(false);
     const inputRef = useRef<InputRef>(null);
-    const { cx, styles } = useStyles({ variant });
+    const { cx, styles } = useStyles();
     const isAppleDevice = useMemo(() => checkIsAppleDevice(isApple), [isApple]);
     const [hotkeyValue, setHotkeyValue] = useControlledState(defaultValue, {
       defaultValue,
       onChange,
       value,
     });
+
+    const variants = useMemo(
+      () =>
+        cva(styles.root, {
+          defaultVariants: {
+            disabled: false,
+            error: false,
+            shadow: false,
+            variant: 'filled',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: styles.filled,
+              outlined: styles.outlined,
+              borderless: styles.borderless,
+            },
+            shadow: {
+              false: null,
+              true: styles.shadow,
+            },
+            focused: {
+              false: null,
+              true: styles.focused,
+            },
+            error: {
+              fales: null,
+              true: styles.error,
+            },
+            disabled: {
+              false: null,
+              true: styles.disabled,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
 
     // 使用 useRecordHotkeys 处理快捷键录入
     const [recordedKeys, { start, stop, isRecording, resetKeys }] = useRecordHotkeys();
@@ -239,10 +279,13 @@ const HotkeyInput = memo<HotkeyInputProps>(
         <Flexbox
           align={'center'}
           className={cx(
-            styles.input,
-            isFocused && styles.inputFocused,
-            (hasConflict || hasInvalidCombination) && styles.inputError,
-            disabled && styles.inputDisabled,
+            variants({
+              disabled,
+              error: hasConflict || hasInvalidCombination,
+              focused: isFocused,
+              shadow,
+              variant,
+            }),
           )}
           horizontal
           justify={'space-between'}
@@ -273,11 +316,11 @@ const HotkeyInput = memo<HotkeyInputProps>(
 
           {!isFocused && allowReset && hotkeyValue && hotkeyValue !== resetValue && !disabled && (
             <ActionIcon
-              active
               icon={Undo2Icon}
               onClick={handleReset}
               size={'small'}
               title={texts?.reset || 'Reset to default'}
+              variant={'filled'}
             />
           )}
         </Flexbox>
@@ -296,5 +339,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
     );
   },
 );
+
+HotkeyInput.displayName = 'HotkeyInput';
 
 export default HotkeyInput;

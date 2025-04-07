@@ -1,4 +1,4 @@
-import { placementType } from './index';
+import { placementType } from './DraggablePanel';
 
 export const reversePlacement = (placement: placementType) => {
   switch (placement) {

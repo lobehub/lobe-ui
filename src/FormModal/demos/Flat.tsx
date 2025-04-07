@@ -1,6 +1,6 @@
-import { FormModal, type FormProps } from '@lobehub/ui';
+import { Button, FormModal, type FormProps, Select } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { Button, Select, Switch } from 'antd';
+import { Switch } from 'antd';
 import { useState } from 'react';
 
 const setting = {
