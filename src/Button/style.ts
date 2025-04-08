@@ -18,6 +18,10 @@ export const useStyles = createStyles(({ css, token, stylish, prefixCls }) => {
             border-color: ${token.colorBorder};
           }
         }
+
+        > .${prefixCls}-btn-icon {
+          display: flex;
+        }
       }
     `,
     shadow: css`

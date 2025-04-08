@@ -1,7 +1,7 @@
 'use client';
 
 import { LucideIcon, LucideProps } from 'lucide-react';
-import { FC, forwardRef, useMemo } from 'react';
+import { FC, ReactNode, forwardRef, useMemo } from 'react';
 
 import { DivProps } from '@/types';
 
@@ -20,6 +20,7 @@ export type LucideIconProps = Pick<
 >;
 
 export interface IconProps extends DivProps, LucideIconProps {
+  children?: ReactNode;
   icon?: LucideIcon | FC<any>;
   size?: IconSize;
   spin?: boolean;
@@ -37,6 +38,7 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(
       spin,
       fillRule,
       fillOpacity,
+      children,
       ...rest
     },
     ref,
@@ -46,22 +48,23 @@ const Icon = forwardRef<SVGSVGElement, IconProps>(
 
     const { size, ...restSize } = useMemo(() => calcSize(iconSize), [iconSize]);
 
-    if (!SvgIcon) return null;
-
     return (
       <span className={cx('anticon', spin && styles.spin, className)} role="img" {...rest}>
-        <SvgIcon
-          color={color}
-          fill={fill}
-          fillOpacity={fillOpacity}
-          fillRule={fillRule}
-          focusable={focusable}
-          height={size}
-          ref={ref}
-          size={size}
-          width={size}
-          {...restSize}
-        />
+        {SvgIcon && (
+          <SvgIcon
+            color={color}
+            fill={fill}
+            fillOpacity={fillOpacity}
+            fillRule={fillRule}
+            focusable={focusable}
+            height={size}
+            ref={ref}
+            size={size}
+            width={size}
+            {...restSize}
+          />
+        )}
+        {children}
       </span>
     );
   },

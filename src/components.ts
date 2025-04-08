@@ -108,7 +108,7 @@ export { default as SliderWithInput, type SliderWithInputProps } from './SliderW
 export { default as Snippet, type SnippetProps } from './Snippet';
 export { default as SortableList, type SortableListProps } from './SortableList';
 export * from './styles';
-export { default as TabsNav, type TabsNavProps } from './TabsNav';
+export { default as Tabs, type TabsProps } from './Tabs';
 export { default as Tag, type TagProps } from './Tag';
 export { default as ThemeProvider, type ThemeProviderProps } from './ThemeProvider';
 export { default as Meta, type MetaProps } from './ThemeProvider/Meta';

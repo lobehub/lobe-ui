@@ -1,4 +1,8 @@
-export { default as AuroraBackground } from './AuroraBackground';
+export { default as AuroraBackground, type AuroraBackgroundProps } from './AuroraBackground';
+export {
+  default as BottomGradientButton,
+  type BottomGradientButtonProps,
+} from './BottomGradientButton';
 export { type FeatureItem, default as Features, type FeaturesProps } from './Features';
 export { default as Giscus, type GiscusProps } from './Giscus';
 export { default as GradientButton, type GradientButtonProps } from './GradientButton';

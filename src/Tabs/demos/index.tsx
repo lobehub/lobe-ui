@@ -1,4 +1,4 @@
-import { TabsNav } from '@lobehub/ui';
+import { Tabs } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
@@ -25,7 +25,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <TabsNav
+      <Tabs
         items={[
           {
             key: 'home',

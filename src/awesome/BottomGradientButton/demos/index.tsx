@@ -1,9 +1,9 @@
-import { GradientButton, type GradientButtonProps } from '@lobehub/ui/awesome';
+import { BottomGradientButton, type BottomGradientButtonProps } from '@lobehub/ui/awesome';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const control: GradientButtonProps | any = useControls(
+  const control: BottomGradientButtonProps | any = useControls(
     {
       children: 'Get a Demo',
       glow: true,
@@ -17,7 +17,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <GradientButton {...control} />
+      <BottomGradientButton {...control} />
     </StoryBook>
   );
 };

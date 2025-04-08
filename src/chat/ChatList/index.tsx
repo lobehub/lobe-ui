@@ -2,7 +2,8 @@
 
 import { Fragment, memo } from 'react';
 
-import type { ChatMessage, DivProps } from '@/types';
+import type { DivProps } from '@/types';
+import type { ChatMessage } from '@/types/chat';
 
 import HistoryDivider from './HistoryDivider';
 import Item, { ListItemProps } from './Item';

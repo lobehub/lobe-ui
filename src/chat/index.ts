@@ -1,3 +1,4 @@
+export * from '../types/chat';
 export { default as BackBottom, type BackBottomProps } from './BackBottom';
 export { default as ChatHeader, type ChatHeaderProps } from './ChatHeader';
 export {
