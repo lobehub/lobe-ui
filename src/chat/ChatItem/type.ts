@@ -4,8 +4,9 @@ import { FlexboxProps } from 'react-layout-kit';
 import { AlertProps } from '@/Alert';
 import { AvatarProps } from '@/Avatar';
 import type { MarkdownProps } from '@/Markdown';
-import { EditableMessageProps } from '@/chat/EditableMessage';
-import { DivProps, MetaData } from '@/types';
+import type { EditableMessageProps } from '@/chat/EditableMessage';
+import type { DivProps } from '@/types';
+import type { MetaData } from '@/types/chat';
 
 export interface ChatItemProps extends Omit<FlexboxProps, 'children' | 'onChange'> {
   aboveMessage?: ReactNode;

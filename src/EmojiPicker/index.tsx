@@ -13,7 +13,7 @@ import ActionIcon from '@/ActionIcon';
 import Avatar from '@/Avatar';
 import type { AvatarProps } from '@/Avatar/Avatar';
 import Icon from '@/Icon';
-import TabsNav, { TabsNavProps } from '@/TabsNav';
+import Tabs, { TabsProps } from '@/Tabs';
 import Tooltip from '@/Tooltip';
 
 import AvatarUploader, { type AvatarUploaderProps } from './AvatarUploader';
@@ -108,7 +108,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
       setOpen(false);
     };
 
-    const items: TabsNavProps['items'] = [
+    const items: TabsProps['items'] = [
       {
         key: 'emoji',
         label: (
@@ -126,7 +126,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
         ),
       },
       ...customTabs.map((tab) => ({ key: tab.value, label: tab.label })),
-    ].filter(Boolean) as TabsNavProps['items'];
+    ].filter(Boolean) as TabsProps['items'];
 
     const showTabs = items && items.length > 1;
 
@@ -138,7 +138,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
       >
         {showTabs && (
           <Flexbox align={'center'} horizontal justify={'space-between'} paddingInline={10}>
-            <TabsNav activeKey={tab} compact items={items} onChange={(key) => setTab(key as any)} />
+            <Tabs activeKey={tab} compact items={items} onChange={(key) => setTab(key as any)} />
             {allowDelete && (
               <ActionIcon
                 icon={TrashIcon}
