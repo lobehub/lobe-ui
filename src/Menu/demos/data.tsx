@@ -18,22 +18,12 @@ export const items: ItemType[] = [
   {
     children: [
       {
-        children: [
-          { key: 'setting:1', label: 'Option 1' },
-          { key: 'setting:2', label: 'Option 2' },
-        ],
-        key: 'group:1',
-        label: 'group 1',
-        type: 'group',
+        key: '3',
+        label: 'Navigation Three',
       },
       {
-        children: [
-          { key: 'setting:3', label: 'Option 3' },
-          { key: 'setting:4', label: 'Option 4' },
-        ],
-        key: 'group:2',
-        label: 'group 2',
-        type: 'group',
+        key: '4',
+        label: 'Navigation Four',
       },
     ],
     icon: <Icon icon={SettingsIcon} />,

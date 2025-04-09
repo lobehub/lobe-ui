@@ -22,6 +22,9 @@ export const useStyles = createStyles(({ cx, css, token, stylish, prefixCls }) =
 
       .${prefixCls}-menu-sub.${prefixCls}-menu-inline {
         background: transparent;
+        > .${prefixCls}-menu-item {
+          padding-inline-start: 36px !important;
+        }
       }
 
       .${prefixCls}-menu-item-divider {

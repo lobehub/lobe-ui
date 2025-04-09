@@ -21,7 +21,7 @@ export const mapItems = (item: ItemType): AntdItemType => {
       const { children, icon, ...rest } = item as any;
       return {
         children: children ? children?.map((i: any) => mapItems(i)) : undefined,
-        icon: isValidElement(icon) ? icon : <Icon icon={icon} size={'small'} />,
+        icon: icon ? isValidElement(icon) ? icon : <Icon icon={icon} size={'small'} /> : undefined,
         ...rest,
       };
     }
