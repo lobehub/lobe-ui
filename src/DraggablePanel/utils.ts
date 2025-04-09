@@ -1,6 +1,6 @@
-import { placementType } from './DraggablePanel';
+import type { DraggablePanelProps } from './type';
 
-export const reversePlacement = (placement: placementType) => {
+export const reversePlacement = (placement: DraggablePanelProps['placement']) => {
   switch (placement) {
     case 'bottom': {
       return 'top';

@@ -3,7 +3,7 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const controls: InputProps | any = useControls(
+  const controls = useControls(
     {
       placeholder: 'Type keywords...',
       shadow: false,
@@ -13,7 +13,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as InputProps;
 
   return (
     <StoryBook levaStore={store}>

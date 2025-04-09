@@ -1,9 +1,9 @@
-import { HighlighterProps, Video } from '@lobehub/ui';
+import { Video, type VideoProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const options: HighlighterProps | any = useControls(
+  const options = useControls(
     {
       poster: 'https://gw.alipayobjects.com/zos/kitchen/sLO%24gbrQtp/lobe-chat.webp',
       preview: true,
@@ -14,7 +14,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as VideoProps;
   return (
     <StoryBook levaStore={store}>
       <Video {...options} />

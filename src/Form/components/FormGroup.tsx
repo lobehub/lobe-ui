@@ -1,91 +1,32 @@
 'use client';
 
-import { createStyles, useResponsive } from 'antd-style';
+import { useResponsive } from 'antd-style';
 import { cva } from 'class-variance-authority';
 import { isUndefined } from 'lodash-es';
-import { type ReactNode, forwardRef, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import Collapse, { type CollapseProps } from '@/Collapse';
-import type { FormItemProps } from '@/Form/components/FormItem';
-import Icon, { type IconProps } from '@/Icon';
+import Collapse from '@/Collapse';
+import Icon from '@/Icon';
 
-import type { FormVariant } from '../type';
+import { useGroupStyles as useStyles } from '../style';
+import type { FormGroupProps } from '../type';
 
-export const useStyles = createStyles(({ css, token, responsive }) => {
-  return {
-    mobileGroupBody: css`
-      padding-block: 0;
-      padding-inline: 16px;
-      background: ${token.colorBgContainer};
-    `,
-    mobileGroupHeader: css`
-      padding: 16px;
-      background: ${token.colorBgLayout};
-    `,
-    title: css`
-      align-items: center;
-      font-size: 16px;
-      font-weight: 600;
-    `,
-    titleBorderless: css`
-      font-size: 18px;
-      font-weight: 700;
-      line-height: 24px;
-    `,
-    titleMobile: css`
-      ${responsive.mobile} {
-        font-size: 14px;
-        font-weight: 400;
-        opacity: 0.5;
-      }
-    `,
-  };
-});
-
-export interface FormGroupItem {
-  children: FormItemProps[] | ReactNode;
-  collapsible?: boolean;
-  defaultActive?: boolean;
-  extra?: ReactNode;
-  icon?: IconProps['icon'];
-  key?: string;
-  title: ReactNode;
-  variant?: FormVariant;
-}
-
-export interface FormGroupProps
-  extends Omit<CollapseProps, 'collapsible' | 'items' | 'defaultActiveKey' | 'activeKey'> {
-  active?: boolean;
-  children: ReactNode;
-  collapsible?: boolean;
-  defaultActive?: boolean;
-  extra?: ReactNode;
-  icon?: IconProps['icon'];
-  keyValue?: string | number;
-  onCollapse?: (active: boolean) => void;
-  title?: ReactNode;
-  variant?: FormVariant;
-}
-
-const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>(
-  (
-    {
-      className,
-      icon,
-      title,
-      children,
-      extra,
-      variant = 'borderless',
-      defaultActive = true,
-      collapsible,
-      active,
-      keyValue = 'group',
-      onCollapse,
-      ...rest
-    },
-    ref,
-  ) => {
+const FormGroup = memo<FormGroupProps>(
+  ({
+    className,
+    icon,
+    title,
+    children,
+    extra,
+    variant = 'borderless',
+    defaultActive = true,
+    collapsible,
+    active,
+    keyValue = 'group',
+    onCollapse,
+    ...rest
+  }) => {
     const { mobile } = useResponsive();
     const { cx, styles } = useStyles(variant);
     const isBorderless = variant === 'borderless';
@@ -120,7 +61,7 @@ const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>(
 
     if (mobile)
       return (
-        <Flexbox className={className} ref={ref}>
+        <Flexbox className={className}>
           <Flexbox className={styles.mobileGroupHeader} horizontal justify={'space-between'}>
             {titleContent}
             {extra}
@@ -144,7 +85,6 @@ const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>(
           },
         ]}
         onChange={(v) => onCollapse?.(v.length > 0)}
-        ref={ref}
         variant={variant}
         {...rest}
       />

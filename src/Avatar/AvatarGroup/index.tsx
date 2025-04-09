@@ -1,66 +1,31 @@
 'use client';
 
-import { type CSSProperties, forwardRef } from 'react';
-import { Flexbox, type FlexboxProps } from 'react-layout-kit';
+import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
-import Avatar, { type AvatarProps } from '../Avatar';
+import Avatar from '../Avatar';
+import type { AvatarGroupProps } from '../type';
 import { useStyles } from './style';
 
-interface AvatarGroupItem
-  extends Pick<
-    AvatarProps,
-    'avatar' | 'title' | 'alt' | 'onClick' | 'style' | 'className' | 'loading'
-  > {
-  key: string;
-}
-
-export interface AvatarGroupProps
-  extends Pick<
-      AvatarProps,
-      | 'variant'
-      | 'bordered'
-      | 'shadow'
-      | 'size'
-      | 'background'
-      | 'animation'
-      | 'draggable'
-      | 'shape'
-    >,
-    Omit<FlexboxProps, 'children' | 'onClick'> {
-  classNames?: {
-    avatar?: string;
-    count?: string;
-  };
-  items: AvatarGroupItem[];
-  max?: number;
-  onClick?: (props: { item: AvatarGroupItem; key: string }) => void;
-  styles?: {
-    avatar?: CSSProperties;
-    count?: CSSProperties;
-  };
-}
-
-const AvatarGroup = forwardRef<HTMLDivElement, AvatarGroupProps>(
-  (
-    {
-      items,
-      max,
-      gap,
-      variant = 'borderless',
-      bordered,
-      shadow,
-      size = 48,
-      background,
-      animation,
-      draggable,
-      classNames,
-      shape,
-      styles: customStyles,
-      onClick,
-      ...rest
-    },
+const AvatarGroup = memo<AvatarGroupProps>(
+  ({
+    items,
+    max,
+    gap,
+    variant = 'borderless',
+    bordered,
+    shadow,
+    size = 48,
+    background,
+    animation,
+    draggable,
+    classNames,
+    shape,
+    styles: customStyles,
+    onClick,
     ref,
-  ) => {
+    ...rest
+  }) => {
     const { cx, styles } = useStyles();
     const avatars = max ? items.slice(0, max) : items;
     const restAvatars = items.slice(max, items.length);

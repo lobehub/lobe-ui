@@ -6,7 +6,7 @@ import { items } from './data';
 export default () => {
   const store = useCreateStore();
 
-  const control: CollapseProps | any = useControls(
+  const control = useControls(
     {
       accordion: false,
       collapsible: true,
@@ -26,7 +26,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as CollapseProps;
 
   return (
     <StoryBook levaStore={store}>

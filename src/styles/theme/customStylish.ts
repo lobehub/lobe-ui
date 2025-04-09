@@ -177,6 +177,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       box-shadow: inset 0 0 0 1px ${token.colorFillQuaternary};
     `,
     variantOutlined: css`
+      background: none;
       box-shadow: inset 0 0 0 1px ${token.colorFillQuaternary};
 
       &:hover {
@@ -190,6 +191,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       }
     `,
     variantOutlinedDanger: css`
+      background: none;
       box-shadow: inset 0 0 0 1px ${token.colorErrorFillQuaternary};
 
       &:hover {
@@ -203,6 +205,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       }
     `,
     variantOutlinedWithoutHover: css`
+      background: none;
       box-shadow: inset 0 0 0 1px ${token.colorFillQuaternary};
     `,
   };

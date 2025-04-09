@@ -1,40 +1,38 @@
 'use client';
 
-import { Form as AntForm, type FormInstance } from 'antd';
+import { Form as AntForm } from 'antd';
 import { cva } from 'class-variance-authority';
 import { isUndefined } from 'lodash-es';
-import { forwardRef, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 
 import FormFlatGroup from './components/FormFlatGroup';
-import FormGroup, { type FormGroupItem } from './components/FormGroup';
-import FormItem, { type FormItemProps } from './components/FormItem';
+import FormGroup from './components/FormGroup';
+import FormItem from './components/FormItem';
 import { FormProvider } from './components/FormProvider';
 import { useStyles } from './style';
-import type { FormProps } from './type';
+import type { FormGroupItemType, FormItemProps, FormProps } from './type';
 
-const Form = forwardRef<FormInstance, FormProps>(
-  (
-    {
-      className,
-      itemMinWidth,
-      footer,
-      form,
-      items = [],
-      children,
-      itemsType = 'group',
-      variant = 'borderless',
-      gap,
-      style,
-      collapsible,
-      defaultActiveKey,
-      initialValues,
-      activeKey,
-      onCollapse,
-      onFinish,
-      ...rest
-    },
+const Form = memo<FormProps>(
+  ({
+    className,
+    itemMinWidth,
+    footer,
+    form,
+    items = [],
+    children,
+    itemsType = 'group',
+    variant = 'borderless',
+    gap,
+    style,
+    collapsible,
+    defaultActiveKey,
+    initialValues,
+    activeKey,
+    onCollapse,
+    onFinish,
     ref,
-  ) => {
+    ...rest
+  }) => {
     const { cx, styles } = useStyles();
     const [submitLoading, setSubmitLoading] = useState(false);
 
@@ -71,7 +69,7 @@ const Form = forwardRef<FormInstance, FormProps>(
     );
 
     const mapTree = useCallback(
-      (group: FormGroupItem, groupIndex: number) => {
+      (group: FormGroupItemType, groupIndex: number) => {
         const key = group?.key || groupIndex;
         return (
           <FormGroup
@@ -131,7 +129,7 @@ const Form = forwardRef<FormInstance, FormProps>(
         >
           {items && items?.length > 0 ? (
             itemsType === 'group' ? (
-              (items as FormGroupItem[])?.map((item, i) => mapTree(item, i))
+              (items as FormGroupItemType[])?.map((item, i) => mapTree(item, i))
             ) : (
               <FormFlatGroup variant={variant}>
                 {(items as FormItemProps[])

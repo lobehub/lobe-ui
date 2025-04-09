@@ -2,13 +2,9 @@
 
 import { memo } from 'react';
 
-import { DivProps } from '@/types';
-
 import { useStyles } from '../style';
+import type { LayoutSidebarInnerProps } from '../type';
 
-export interface LayoutSidebarInnerProps extends DivProps {
-  headerHeight?: number;
-}
 export const LayoutSidebarInner = memo<LayoutSidebarInnerProps>(
   ({ headerHeight, children, className, ...rest }) => {
     const { cx, styles } = useStyles(headerHeight);

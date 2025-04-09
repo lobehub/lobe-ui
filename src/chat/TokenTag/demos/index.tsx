@@ -3,7 +3,7 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const control: TokenTagProps | any = useControls(
+  const control = useControls(
     {
       hideText: false,
       maxValue: {
@@ -24,7 +24,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as TokenTagProps;
 
   return (
     <StoryBook levaStore={store}>

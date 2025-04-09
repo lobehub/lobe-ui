@@ -1,20 +1,20 @@
-import type { DropdownProps } from '@lobehub/ui';
+import { type DropdownProps, Icon } from '@lobehub/ui';
 import { BoxSelectIcon, CopyIcon, ZoomInIcon, ZoomOutIcon } from 'lucide-react';
 
 export const menu: DropdownProps['menu'] = {
   items: [
     {
-      icon: CopyIcon,
+      icon: <Icon icon={CopyIcon} />,
       key: 'copy',
       label: '复制',
     },
     {
-      icon: BoxSelectIcon,
+      icon: <Icon icon={BoxSelectIcon} />,
       key: 'selectAll',
       label: '选择全部',
     },
-    { icon: ZoomInIcon, key: 'zoomIn', label: '放大' },
-    { icon: ZoomOutIcon, key: 'zoomOut', label: '缩小' },
+    { icon: <Icon icon={ZoomInIcon} />, key: 'zoomIn', label: '放大' },
+    { icon: <Icon icon={ZoomOutIcon} />, key: 'zoomOut', label: '缩小' },
     {
       children: [
         { key: '1', label: '文件1' },

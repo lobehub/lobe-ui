@@ -8,7 +8,7 @@ export default () => {
   const store = useCreateStore();
   const [shortcut, setShortcut] = useState(DEFAULT_VALUE);
 
-  const controls: HotkeyInputProps | any = useControls(
+  const controls = useControls(
     {
       allowReset: true,
       defaultValue: DEFAULT_VALUE,
@@ -22,7 +22,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as HotkeyInputProps;
 
   return (
     <StoryBook levaStore={store}>

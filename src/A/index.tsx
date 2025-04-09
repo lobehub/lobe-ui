@@ -1,20 +1,19 @@
 'use client';
 
-import { type ElementType, createElement, forwardRef, useContext, useMemo } from 'react';
+import { type ElementType, type Ref, createElement, memo, use, useMemo } from 'react';
 
 import { ConfigContext } from '@/ConfigProvider';
 import type { AProps } from '@/types';
 
-const createContainer = (as: ElementType) =>
-  forwardRef((props: any, ref) => createElement(as, { ...props, ref }));
+const createContainer = (as: ElementType) => memo((props: any) => createElement(as, props));
 
-const A = forwardRef<any, AProps>((props, ref) => {
-  const config = useContext(ConfigContext);
+const A = memo<AProps & { ref?: Ref<HTMLAnchorElement> }>((props) => {
+  const config = use(ConfigContext);
   const render = config?.aAs || 'a';
 
   const AContainer = useMemo(() => createContainer(render), [render]);
 
-  return <AContainer ref={ref} {...props} />;
+  return <AContainer {...props} />;
 });
 
 A.displayName = 'A';

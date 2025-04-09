@@ -3,14 +3,8 @@
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import { DivProps } from '@/types';
-
 import { useStyles } from './style';
-
-export interface SpotlightCardItemProps extends DivProps {
-  borderRadius: number;
-  size: number;
-}
+import type { SpotlightCardItemProps } from './type';
 
 const SpotlightCardItem = memo<SpotlightCardItemProps>(
   ({ children, className, style, borderRadius, size, ...rest }) => {

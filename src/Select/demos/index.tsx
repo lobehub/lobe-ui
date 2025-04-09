@@ -7,7 +7,7 @@ const handleChange = (value: string) => {
 
 export default () => {
   const store = useCreateStore();
-  const controls: SelectProps | any = useControls(
+  const controls = useControls(
     {
       placeholder: 'Type keywords...',
       shadow: false,
@@ -17,7 +17,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as SelectProps;
 
   return (
     <StoryBook gap={16} levaStore={store}>

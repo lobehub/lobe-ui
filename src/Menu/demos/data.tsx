@@ -1,14 +1,14 @@
-import { ItemType } from '@lobehub/ui';
+import { Icon, type ItemType } from '@lobehub/ui';
 import { AppleIcon, MailIcon, SettingsIcon } from 'lucide-react';
 
 export const items: ItemType[] = [
   {
-    icon: MailIcon,
+    icon: <Icon icon={MailIcon} />,
     key: 'mail',
     label: 'Navigation One',
   },
   {
-    icon: AppleIcon,
+    icon: <Icon icon={AppleIcon} />,
     key: 'app',
     label: 'Navigation Two',
   },
@@ -34,7 +34,7 @@ export const items: ItemType[] = [
         type: 'group',
       },
     ],
-    icon: SettingsIcon,
+    icon: <Icon icon={SettingsIcon} />,
     key: 'SubMenu',
     label: 'Navigation Three - Submenu',
   },
@@ -49,7 +49,7 @@ export const groupItems: ItemType[] = [
         label: 'Navigation One',
       },
       {
-        icon: AppleIcon,
+        icon: <Icon icon={AppleIcon} />,
         key: '2',
         label: 'Navigation Two',
       },
@@ -61,12 +61,12 @@ export const groupItems: ItemType[] = [
   {
     children: [
       {
-        icon: MailIcon,
+        icon: <Icon icon={MailIcon} />,
         key: '3',
         label: 'Navigation One',
       },
       {
-        icon: AppleIcon,
+        icon: <Icon icon={AppleIcon} />,
         key: '4',
         label: 'Navigation Two',
       },

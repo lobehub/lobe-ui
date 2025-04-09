@@ -6,7 +6,7 @@ export default () => {
   const theme = useTheme();
   const store = useCreateStore();
 
-  const controls: ColorSwatchesProps | any = useControls(
+  const controls = useControls(
     {
       enableColorPicker: false,
       enableColorSwatches: true,
@@ -26,67 +26,67 @@ export default () => {
     {
       store,
     },
-  );
+  ) as ColorSwatchesProps;
 
   return (
     <StoryBook levaStore={store}>
       <ColorSwatches
+        {...controls}
         colors={[
           {
             color: 'rgba(0, 0, 0, 0)',
-            label: 'Default',
+            title: 'Default',
           },
           {
             color: theme.red,
-            label: 'Red',
+            title: 'Red',
           },
           {
             color: theme.orange,
-            label: 'Orange',
+            title: 'Orange',
           },
           {
             color: theme.gold,
-            label: 'Gold',
+            title: 'Gold',
           },
           {
             color: theme.yellow,
-            label: 'Yellow',
+            title: 'Yellow',
           },
           {
             color: theme.lime,
-            label: 'Lime',
+            title: 'Lime',
           },
           {
             color: theme.green,
-            label: 'Green',
+            title: 'Green',
           },
           {
             color: theme.cyan,
-            label: 'Cyan',
+            title: 'Cyan',
           },
           {
             color: theme.blue,
-            label: 'Blue',
+            title: 'Blue',
           },
           {
             color: theme.geekblue,
-            namlabele: 'Geekblue',
+            title: 'Geekblue',
           },
           {
             color: theme.purple,
-            label: 'Purple',
+            title: 'Purple',
           },
           {
             color: theme.magenta,
-            label: 'Magenta',
+            title: 'Magenta',
           },
           {
             color: theme.volcano,
-            label: 'Volcano',
+            title: 'Volcano',
           },
         ]}
         onChange={(color) => console.log(color)}
-        {...controls}
       />
     </StoryBook>
   );

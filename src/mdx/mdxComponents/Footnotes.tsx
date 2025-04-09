@@ -3,7 +3,7 @@
 import { createStyles } from 'antd-style';
 import { type FC, type ReactNode, useMemo } from 'react';
 
-import SearchResultCards from '@/SearchResultCards';
+import { SearchResultCards } from '@/SearchBar';
 
 const useStyles = createStyles(({ css, token }) => ({
   fallback: css`

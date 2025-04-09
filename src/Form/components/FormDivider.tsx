@@ -1,12 +1,10 @@
 'use client';
 
-import { Divider as AntDivider, type DividerProps } from 'antd';
+import { Divider as AntDivider } from 'antd';
 import { createStyles } from 'antd-style';
 import { memo } from 'react';
 
-export interface FormDividerProps extends DividerProps {
-  visible?: boolean;
-}
+import type { FormDividerProps } from '../type';
 
 const useStyles = createStyles(({ css }) => {
   return {

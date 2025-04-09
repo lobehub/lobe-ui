@@ -1,60 +1,42 @@
 'use client';
 
 import { getEmoji } from '@lobehub/fluent-emoji';
-import { Avatar as AntAvatar, type AvatarProps as AntAvatarProps } from 'antd';
+import { Avatar as AntAvatar } from 'antd';
 import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
 import { readableColor } from 'polished';
-import { type ReactNode, forwardRef, isValidElement, useMemo } from 'react';
+import { isValidElement, memo, useMemo } from 'react';
 import { Center } from 'react-layout-kit';
 
 import FluentEmoji from '@/FluentEmoji';
 import Icon from '@/Icon';
 import Img from '@/Img';
-import Tooltip, { type TooltipProps } from '@/Tooltip';
+import Tooltip from '@/Tooltip';
 
 import { useStyles } from './style';
+import type { AvatarProps } from './type';
 
-export interface AvatarProps extends AntAvatarProps {
-  animation?: boolean;
-  avatar?: string | ReactNode;
-  background?: string;
-  bordered?: boolean;
-  borderedColor?: string;
-  loading?: boolean;
-  shadow?: boolean;
-  shape?: 'circle' | 'square';
-  size?: number;
-  sliceText?: boolean;
-  title?: string;
-  tooltipProps?: Omit<TooltipProps, 'title'>;
-  unoptimized?: boolean;
-  variant?: 'borderless' | 'filled' | 'outlined';
-}
-
-const Avatar = forwardRef<HTMLDivElement, AvatarProps>(
-  (
-    {
-      bordered,
-      className,
-      avatar,
-      title,
-      animation,
-      size = 48,
-      shape = 'circle',
-      background,
-      borderedColor,
-      style,
-      unoptimized,
-      alt,
-      variant = 'borderless',
-      shadow,
-      loading,
-      sliceText = true,
-      ...rest
-    },
+const Avatar = memo<AvatarProps>(
+  ({
+    bordered,
+    className,
+    avatar,
+    title,
+    animation,
+    size = 48,
+    shape = 'circle',
+    background,
+    borderedColor,
+    style,
+    unoptimized,
+    alt,
+    variant = 'borderless',
+    shadow,
+    loading,
+    sliceText = true,
     ref,
-  ) => {
+    ...rest
+  }) => {
     const isStringAvatar = typeof avatar === 'string';
 
     const isDefaultAntAvatar = useMemo(

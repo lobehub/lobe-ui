@@ -3,7 +3,7 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const control: SnippetProps | any = useControls(
+  const control = useControls(
     {
       children: 'pnpm install @lobehub/ui',
       copyable: true,
@@ -17,7 +17,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as SnippetProps;
 
   return (
     <StoryBook levaStore={store}>

@@ -6,15 +6,14 @@ import { cva } from 'class-variance-authority';
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
 import type { Enable, NumberSize, Size } from 're-resizable';
 import { Resizable } from 're-resizable';
-import { CSSProperties, memo, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, use, useEffect, useMemo, useRef, useState } from 'react';
 import { Center } from 'react-layout-kit';
-import type { Props as RndProps } from 'react-rnd';
 import useControlledState from 'use-merge-value';
 
 import Icon from '@/Icon';
-import { DivProps } from '@/types';
 
 import { useStyles } from './style';
+import type { DraggablePanelProps } from './type';
 import { reversePlacement } from './utils';
 
 // Constants
@@ -26,40 +25,6 @@ const DEFAULT_MODE = 'fixed';
 const DEFAULT_EXPANDABLE = true;
 const DEFAULT_EXPAND = true;
 const DEFAULT_SHOW_HANDLE_WIDE_AREA = true;
-
-export type placementType = 'right' | 'left' | 'top' | 'bottom';
-
-export interface DraggablePanelProps extends DivProps {
-  classNames?: {
-    content?: string;
-    handle?: string;
-  };
-  defaultExpand?: boolean;
-  defaultSize?: Partial<Size>;
-  destroyOnClose?: boolean;
-  expand?: boolean;
-  expandable?: boolean;
-  fullscreen?: boolean;
-  headerHeight?: number;
-  maxHeight?: number;
-  maxWidth?: number;
-  minHeight?: number;
-  minWidth?: number;
-  mode?: 'fixed' | 'float';
-  onExpandChange?: (expand: boolean) => void;
-  onSizeChange?: (delta: NumberSize, size?: Size) => void;
-  onSizeDragging?: (delta: NumberSize, size?: Size) => void;
-  pin?: boolean;
-  placement: placementType;
-  resize?: RndProps['enableResizing'];
-  showHandleWhenCollapsed?: boolean;
-  showHandleWideArea?: boolean;
-  size?: Partial<Size>;
-  styles?: {
-    content?: CSSProperties;
-    handle?: CSSProperties;
-  };
-}
 
 const DraggablePanel = memo<DraggablePanelProps>(
   ({
@@ -96,7 +61,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     const isVertical = placement === 'top' || placement === 'bottom';
 
     // inherit direction from Ant Design ConfigProvider
-    const { direction: antdDirection } = useContext(ConfigProvider.ConfigContext);
+    const { direction: antdDirection } = use(ConfigProvider.ConfigContext);
     const direction = dir ?? antdDirection;
 
     // Handle RTL direction

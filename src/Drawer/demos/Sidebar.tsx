@@ -5,7 +5,7 @@ import { useRef } from 'react';
 export default () => {
   const store = useCreateStore();
   const ref = useRef(null);
-  const control: DrawerProps | any = useControls(
+  const control = useControls(
     {
       containerMaxWidth: {
         step: 1,
@@ -28,7 +28,7 @@ export default () => {
       title: 'Drawer',
     },
     { store },
-  );
+  ) as DrawerProps;
 
   return (
     <StoryBook height={800} levaStore={store} noPadding ref={ref}>

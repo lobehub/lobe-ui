@@ -2,72 +2,38 @@
 
 import { Typography } from 'antd';
 import { Loader2, MessageSquare } from 'lucide-react';
-import { CSSProperties, ReactNode, forwardRef } from 'react';
-import { Flexbox, FlexboxProps } from 'react-layout-kit';
+import { memo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import Icon from '@/Icon';
 
+import type { ListItemProps } from '../type';
 import { useStyles } from './style';
 import { getChatItemTime } from './time';
 
 const { Title, Paragraph } = Typography;
 
-export interface ListItemProps extends Omit<FlexboxProps, 'title'> {
-  actions?: ReactNode;
-  active?: boolean;
-  addon?: ReactNode;
-  avatar?: ReactNode;
-  classNames?: {
-    actions?: string;
-    container?: string;
-    content?: string;
-    date?: string;
-    desc?: string;
-    pin?: string;
-    title?: string;
-  };
-  date?: number;
-  description?: ReactNode;
-  key: string;
-  loading?: boolean;
-  onHoverChange?: (hover: boolean) => void;
-  pin?: boolean;
-  showAction?: boolean;
-  styles?: {
-    actions?: CSSProperties;
-    container?: CSSProperties;
-    content?: CSSProperties;
-    date?: CSSProperties;
-    desc?: CSSProperties;
-    pin?: CSSProperties;
-    title?: CSSProperties;
-  };
-  title: ReactNode;
-}
-
-const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
-  (
-    {
-      active,
-      avatar,
-      loading,
-      description,
-      date,
-      title,
-      onHoverChange,
-      actions,
-      className,
-      style,
-      showAction,
-      children,
-      classNames,
-      addon,
-      pin,
-      styles: customStyles,
-      ...rest
-    },
+const ListItem = memo<ListItemProps>(
+  ({
     ref,
-  ) => {
+    active,
+    avatar,
+    loading,
+    description,
+    date,
+    title,
+    onHoverChange,
+    actions,
+    className,
+    style,
+    showAction,
+    children,
+    classNames,
+    addon,
+    pin,
+    styles: customStyles,
+    ...rest
+  }) => {
     const { styles, cx } = useStyles();
 
     const loadingNode = <Icon icon={Loader2} spin />;

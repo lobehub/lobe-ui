@@ -18,8 +18,8 @@ export const useStyles = createStyles(({ cx, css, token, isDarkMode, stylish }) 
     root: css`
       overflow: hidden;
 
-      min-width: 16px;
-      height: 22px;
+      min-width: 1.8em;
+      height: 1.8em;
       padding-block: 0;
       padding-inline: 8px;
 

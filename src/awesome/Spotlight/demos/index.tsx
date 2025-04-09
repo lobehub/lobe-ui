@@ -18,12 +18,12 @@ const useStyles = createStyles(({ css, token }) => ({
 export default () => {
   const store = useCreateStore();
   const { styles } = useStyles();
-  const control: SpotlightProps | any = useControls(
+  const control = useControls(
     {
       size: 64,
     },
     { store },
-  );
+  ) as SpotlightProps;
 
   return (
     <StoryBook levaStore={store}>

@@ -5,8 +5,8 @@ import { AlertProps } from '@/Alert';
 import { AvatarProps } from '@/Avatar';
 import type { MarkdownProps } from '@/Markdown';
 import type { EditableMessageProps } from '@/chat/EditableMessage';
+import type { MetaData } from '@/chat/types';
 import type { DivProps } from '@/types';
-import type { MetaData } from '@/types/chat';
 
 export interface ChatItemProps extends Omit<FlexboxProps, 'children' | 'onChange'> {
   aboveMessage?: ReactNode;

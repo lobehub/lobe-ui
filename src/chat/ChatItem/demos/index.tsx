@@ -8,7 +8,7 @@ import { avatar, dropdownMenu, items } from './data';
 export default () => {
   const [edit, setEdit] = useState(false);
   const store = useCreateStore();
-  const control: ChatItemProps | any = useControls(
+  const control = useControls(
     {
       aboveMessage: '',
       belowMessage: '',
@@ -31,7 +31,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as ChatItemProps;
 
   return (
     <StoryBook levaStore={store}>

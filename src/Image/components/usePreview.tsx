@@ -1,35 +1,35 @@
-import { ImageProps } from 'antd';
+import { ImageProps as AntdImageProps } from 'antd';
+import { isObject } from 'lodash-es';
 import { X } from 'lucide-react';
-import type { ImagePreviewType } from 'rc-image';
-import { type ReactNode, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import Icon from '@/Icon';
 
 import { useStyles } from '../style';
+import { ImageProps } from '../type';
 import Preview from './Preview';
 import Toolbar from './Toolbar';
 
-export interface PreviewOptions extends ImagePreviewType {
-  toolbarAddon?: ReactNode;
-}
-
-export const usePreview = (props: PreviewOptions = {}): ImageProps['preview'] => {
+export const usePreview = (props: ImageProps['preview']): AntdImageProps['preview'] => {
   const [visible, setVisible] = useState(false);
   const { cx, styles } = useStyles();
-  const {
-    onVisibleChange,
-    styles: previewStyle = {},
-    minScale = 0.32,
-    maxScale = 32,
-    toolbarAddon,
-    rootClassName,
-    imageRender,
-    toolbarRender,
-    ...rest
-  } = props;
 
-  return useMemo(
-    () => ({
+  return useMemo(() => {
+    if (!isObject(props)) return props;
+
+    const {
+      onVisibleChange,
+      styles: previewStyle = {},
+      minScale = 0.32,
+      maxScale = 32,
+      toolbarAddon,
+      rootClassName,
+      imageRender,
+      toolbarRender,
+      ...rest
+    } = props;
+
+    return {
       closeIcon: <Icon color={'#fff'} icon={X} />,
       imageRender: (originalNode, info) => {
         const node = <Preview visible={visible}>{originalNode}</Preview>;
@@ -54,9 +54,8 @@ export const usePreview = (props: PreviewOptions = {}): ImageProps['preview'] =>
         return originalNode;
       },
       ...rest,
-    }),
-    [props, visible, styles],
-  );
+    };
+  }, [props, visible, styles]);
 };
 
 export default usePreview;

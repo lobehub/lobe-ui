@@ -1,9 +1,9 @@
-import { ActionIconGroupProps, GuideCard } from '@lobehub/ui';
+import { GuideCard, type GuideCardProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const control: ActionIconGroupProps | any = useControls(
+  const control = useControls(
     {
       closable: true,
       cover:
@@ -18,7 +18,7 @@ export default () => {
       width: 200,
     },
     { store },
-  );
+  ) as GuideCardProps;
 
   return (
     <StoryBook levaStore={store}>

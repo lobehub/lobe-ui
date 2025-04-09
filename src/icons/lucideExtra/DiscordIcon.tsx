@@ -1,6 +1,6 @@
-import { type LucideIcon, createLucideIcon } from 'lucide-react';
+import { createLucideIcon } from 'lucide-react';
 
-const Discord: LucideIcon = createLucideIcon('Discord', [
+const DiscordIcon = createLucideIcon('Discord', [
   [
     'path',
     {
@@ -28,6 +28,6 @@ const Discord: LucideIcon = createLucideIcon('Discord', [
   ],
 ]);
 
-const DiscordIcon = (props: LucideIcon) => <Discord style={{ overflow: 'visible' }} {...props} />;
+DiscordIcon.displayName = 'DiscordIcon';
 
-export default DiscordIcon as LucideIcon;
+export default DiscordIcon;

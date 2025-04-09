@@ -5,7 +5,7 @@ import { code } from './data';
 
 export default () => {
   const store = useCreateStore();
-  const options: MarkdownProps | any = useControls(
+  const options = useControls(
     {
       allowHtml: true,
       children: {
@@ -15,7 +15,7 @@ export default () => {
       fullFeaturedCodeBlock: true,
     },
     { store },
-  );
+  ) as MarkdownProps;
 
   return (
     <StoryBook levaStore={store}>

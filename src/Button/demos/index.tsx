@@ -4,7 +4,7 @@ import * as LucideIcon from 'lucide-react';
 
 export default () => {
   const store = useCreateStore();
-  const control: ButtonProps | any = useControls(
+  const control = useControls(
     {
       danger: false,
       disabled: false,
@@ -29,7 +29,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as ButtonProps;
 
   return (
     <StoryBook levaStore={store}>

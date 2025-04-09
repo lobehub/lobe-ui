@@ -3,7 +3,7 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const control: FileTypeIconProps | any = useControls(
+  const control = useControls(
     {
       color: '#F54838',
       filetype: 'pdf',
@@ -21,7 +21,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as FileTypeIconProps;
 
   return (
     <StoryBook levaStore={store}>

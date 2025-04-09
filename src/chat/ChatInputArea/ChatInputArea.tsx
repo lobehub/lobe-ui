@@ -1,71 +1,28 @@
 'use client';
 
-import { createStyles } from 'antd-style';
-import { TextAreaRef } from 'antd/es/input/TextArea';
-import { ReactNode, forwardRef } from 'react';
+import { memo } from 'react';
 
-import DraggablePanel, { type DraggablePanelProps } from '@/DraggablePanel';
+import DraggablePanel from '@/DraggablePanel';
 
-import ChatInputAreaInner, { type ChatInputAreaInnerProps } from './ChatInputAreaInner';
+import ChatInputAreaInner from './components/ChatInputAreaInner';
+import { useStyles } from './style';
+import type { ChatInputAreaProps } from './type';
 
-const useStyles = createStyles(({ css }) => {
-  return {
-    container: css`
-      position: relative;
-
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-
-      height: 100%;
-      padding-block: 12px 16px;
-      padding-inline: 0;
-    `,
-    textarea: css`
-      height: 100% !important;
-      padding-block: 0;
-      padding-inline: 24px;
-      line-height: 1.5;
-    `,
-    textareaContainer: css`
-      position: relative;
-      flex: 1;
-    `,
-  };
-});
-
-export interface ChatInputAreaProps extends Omit<ChatInputAreaInnerProps, 'classNames'> {
-  bottomAddons?: ReactNode;
-  classNames?: DraggablePanelProps['classNames'];
-  expand?: boolean;
-  heights?: {
-    headerHeight?: number;
-    inputHeight?: number;
-    maxHeight?: number;
-    minHeight?: number;
-  };
-  onSizeChange?: DraggablePanelProps['onSizeChange'];
-  setExpand?: (expand: boolean) => void;
-  topAddons?: ReactNode;
-}
-
-const ChatInputArea = forwardRef<TextAreaRef, ChatInputAreaProps>(
-  (
-    {
-      className,
-      style,
-      classNames,
-      expand = true,
-      setExpand,
-      bottomAddons,
-      topAddons,
-      onSizeChange,
-      heights,
-      onSend,
-      ...rest
-    },
+const ChatInputArea = memo<ChatInputAreaProps>(
+  ({
     ref,
-  ) => {
+    className,
+    style,
+    classNames,
+    expand = true,
+    setExpand,
+    bottomAddons,
+    topAddons,
+    onSizeChange,
+    heights,
+    onSend,
+    ...rest
+  }) => {
     const { styles } = useStyles();
 
     return (

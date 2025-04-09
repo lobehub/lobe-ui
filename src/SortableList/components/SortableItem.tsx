@@ -78,7 +78,7 @@ const SortableItem = memo<SortableItemProps>(
     );
 
     return (
-      <SortableItemContext.Provider value={context}>
+      <SortableItemContext value={context}>
         <Flexbox
           align={'center'}
           as={'li'}
@@ -96,7 +96,7 @@ const SortableItem = memo<SortableItemProps>(
         >
           {children}
         </Flexbox>
-      </SortableItemContext.Provider>
+      </SortableItemContext>
     );
   },
 );

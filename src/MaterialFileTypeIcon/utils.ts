@@ -1,5 +1,5 @@
 import iconMap from './icon-map.json';
-import type { FileExtensionsKey, FileNamesKey, FolderNamesKey } from './types';
+import type { FileExtensionsKey, FileNamesKey, FolderNamesKey } from './type';
 
 function getFileExtension(fileName: string): string {
   return fileName.slice(Math.max(0, fileName.lastIndexOf('.') + 1));

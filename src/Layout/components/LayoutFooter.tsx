@@ -2,11 +2,9 @@
 
 import { memo } from 'react';
 
-import { DivProps } from '@/types';
-
 import { useStyles } from '../style';
+import type { LayoutFooterProps } from '../type';
 
-export type LayoutFooterProps = DivProps;
 export const LayoutFooter = memo<LayoutFooterProps>(({ children, className, ...rest }) => {
   const { cx, styles } = useStyles();
   return (

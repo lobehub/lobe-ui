@@ -1,17 +1,14 @@
 'use client';
 
-import { InputNumber as AntInputNumber, type InputNumberProps as AntdInputNumberProps } from 'antd';
+import { InputNumber as AntInputNumber } from 'antd';
 import { cva } from 'class-variance-authority';
-import { forwardRef, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 
 import { useStyles } from './style';
+import type { InputNumberProps } from './type';
 
-export interface InputNumberProps extends AntdInputNumberProps {
-  shadow?: boolean;
-}
-
-const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
-  ({ variant = 'filled', shadow, className, ...rest }, ref) => {
+const InputNumber = memo<InputNumberProps>(
+  ({ ref, variant = 'filled', shadow, className, ...rest }) => {
     const { styles, cx } = useStyles();
 
     const variants = useMemo(

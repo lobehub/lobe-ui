@@ -3,14 +3,10 @@
 import { useTheme } from 'antd-style';
 import { rgba } from 'polished';
 import { memo } from 'react';
-import { Flexbox, FlexboxProps } from 'react-layout-kit';
+import { Flexbox } from 'react-layout-kit';
 
-import GridBackground, { type GridBackgroundProps } from './index';
-
-export interface GridShowcaseProps extends FlexboxProps {
-  backgroundColor?: GridBackgroundProps['backgroundColor'];
-  innerProps?: FlexboxProps;
-}
+import GridBackground from './GridBackground';
+import type { GridShowcaseProps } from './type';
 
 const GridShowcase = memo<GridShowcaseProps>(
   ({ style, children, backgroundColor = '#001dff', innerProps, ...rest }) => {

@@ -1,10 +1,10 @@
-import { Tabs } from '@lobehub/ui';
+import { Tabs, type TabsProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
 
-  const controls: any = useControls(
+  const controls = useControls(
     {
       compact: false,
       size: {
@@ -21,7 +21,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as TabsProps;
 
   return (
     <StoryBook levaStore={store}>

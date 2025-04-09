@@ -1,7 +1,7 @@
 'use client';
 
 import { useResponsive } from 'antd-style';
-import { ReactNode, memo, useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import DraggablePanel from '@/DraggablePanel';
 
@@ -12,19 +12,7 @@ import LayoutSidebar from './components/LayoutSidebar';
 import LayoutSidebarInner from './components/LayoutSidebarInner';
 import LayoutToc from './components/LayoutToc';
 import { useStyles } from './style';
-
-export interface LayoutProps {
-  asideWidth?: number;
-  children?: ReactNode;
-  content?: ReactNode;
-  footer?: ReactNode;
-  header?: ReactNode;
-  headerHeight?: number;
-  helmet?: ReactNode;
-  sidebar?: ReactNode;
-  toc?: ReactNode;
-  tocWidth?: number;
-}
+import type { LayoutProps } from './type';
 
 const Layout = memo<LayoutProps>(
   ({ helmet, headerHeight = 64, header, footer, sidebar, asideWidth, toc, children, tocWidth }) => {

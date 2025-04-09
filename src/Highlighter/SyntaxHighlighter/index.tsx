@@ -1,24 +1,15 @@
 'use client';
 
 import { cva } from 'class-variance-authority';
-import { forwardRef, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 
 import { useHighlight } from '@/hooks/useHighlight';
-import { DivProps } from '@/types';
 
-import { HighlighterProps } from '../type';
+import type { SyntaxHighlighterProps } from '../type';
 import { useStyles } from './style';
 
-export interface SyntaxHighlighterProps extends DivProps {
-  children: string;
-  enableTransformer?: HighlighterProps['enableTransformer'];
-  language: HighlighterProps['language'];
-  theme?: HighlighterProps['theme'];
-  variant?: HighlighterProps['variant'];
-}
-
-const SyntaxHighlighter = forwardRef<HTMLDivElement, SyntaxHighlighterProps>(
-  ({ children, language, className, style, enableTransformer, variant, theme }, ref) => {
+const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
+  ({ ref, children, language, className, style, enableTransformer, variant, theme }) => {
     const { styles, cx } = useStyles();
     const isDefaultTheme = theme === 'lobe-theme' || !theme;
     const showBackground = !isDefaultTheme && variant === 'filled';
@@ -84,5 +75,7 @@ const SyntaxHighlighter = forwardRef<HTMLDivElement, SyntaxHighlighterProps>(
     );
   },
 );
+
+SyntaxHighlighter.displayName = 'SyntaxHighlighter';
 
 export default SyntaxHighlighter;

@@ -6,7 +6,7 @@ import { Flexbox } from 'react-layout-kit';
 
 export default () => {
   const store = useCreateStore();
-  const control: FluentEmojiProps | any = useControls(
+  const control = useControls(
     {
       emoji: '🤯',
       size: {
@@ -17,7 +17,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as FluentEmojiProps;
 
   return (
     <StoryBook levaStore={store}>

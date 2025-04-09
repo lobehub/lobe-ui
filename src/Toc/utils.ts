@@ -1,6 +1,6 @@
-import { AnchorItem } from '@/Toc/TocMobile';
+import { TocItemType } from '@/Toc/type';
 
-export const mapItems = (items: AnchorItem[]) =>
+export const mapItems = (items: TocItemType[]) =>
   items.map((item) => ({
     children: item.children?.map((child) => ({
       href: `#${child.id}`,

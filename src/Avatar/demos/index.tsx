@@ -1,9 +1,9 @@
-import { type ActionIconProps, Avatar } from '@lobehub/ui';
+import { Avatar, type AvatarProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const control: ActionIconProps | any = useControls(
+  const control = useControls(
     {
       animation: false,
       avatar: '😀',
@@ -28,7 +28,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as AvatarProps;
 
   return (
     <StoryBook levaStore={store}>

@@ -1,4 +1,4 @@
-import { Menu, type MenuProps } from '@lobehub/ui';
+import { Menu } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
@@ -8,7 +8,7 @@ import { groupItems, items } from './data';
 export default () => {
   const [activeKey, setActiveKey] = useState<string>();
   const store = useCreateStore();
-  const options: MenuProps | any = useControls(
+  const options = useControls(
     {
       compact: false,
       mode: {
@@ -22,7 +22,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as any;
 
   return (
     <StoryBook levaStore={store}>
@@ -30,19 +30,19 @@ export default () => {
         <Flexbox width={'100%'}>
           <h3>Items</h3>
           <Menu
+            {...options}
             activeKey={activeKey}
             items={items}
             onClick={({ key }) => setActiveKey(key)}
-            {...options}
           />
         </Flexbox>
         <Flexbox width={'100%'}>
           <h3>Group Items</h3>
           <Menu
+            {...options}
             activeKey={activeKey}
             items={groupItems}
             onClick={({ key }) => setActiveKey(key)}
-            {...options}
           />
         </Flexbox>
       </Flexbox>

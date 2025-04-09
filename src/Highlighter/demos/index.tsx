@@ -5,7 +5,7 @@ import { code } from './data';
 
 export default () => {
   const store = useCreateStore();
-  const options: HighlighterProps | any = useControls(
+  const options = useControls(
     {
       children: {
         rows: true,
@@ -26,7 +26,7 @@ export default () => {
       wrap: false,
     },
     { store },
-  );
+  ) as HighlighterProps;
 
   return (
     <StoryBook levaStore={store}>
