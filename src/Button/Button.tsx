@@ -1,3 +1,5 @@
+'use client';
+
 import { Button as AntdButton } from 'antd';
 import { cva } from 'class-variance-authority';
 import { Loader2Icon } from 'lucide-react';
