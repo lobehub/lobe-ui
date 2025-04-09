@@ -3,7 +3,7 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const control: BlockProps | any = useControls(
+  const control = useControls(
     {
       clickable: false,
       glass: false,
@@ -14,7 +14,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as BlockProps;
 
   return (
     <StoryBook levaStore={store}>

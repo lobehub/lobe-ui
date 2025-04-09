@@ -1,14 +1,14 @@
-import { CodeEditor, HighlighterProps } from '@lobehub/ui';
+import { CodeEditor, type CodeEditorProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { useState } from 'react';
 
-import { content } from '../../Markdown/demos/data';
+import { content } from './data';
 
 export default () => {
   const [code, setCode] = useState<string>(content);
 
   const store = useCreateStore();
-  const options: HighlighterProps | any = useControls(
+  const options = useControls(
     {
       language: 'markdown',
       placeholder: 'Please input your code...',
@@ -18,11 +18,11 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as CodeEditorProps;
 
   return (
     <StoryBook levaStore={store}>
-      <CodeEditor language="md" onValueChange={setCode} value={code} width={'100%'} {...options} />
+      <CodeEditor {...options} language="md" onValueChange={setCode} value={code} width={'100%'} />
     </StoryBook>
   );
 };

@@ -16,3 +16,5 @@ export type AProps = AnchorHTMLAttributes<HTMLAnchorElement>;
 export type InputProps = HTMLAttributes<HTMLInputElement>;
 
 export type TextAreaProps = HTMLAttributes<HTMLTextAreaElement>;
+
+export type SpanProps = HTMLAttributes<HTMLSpanElement>;

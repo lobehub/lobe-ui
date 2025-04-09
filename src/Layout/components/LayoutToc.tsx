@@ -2,13 +2,9 @@
 
 import { memo } from 'react';
 
-import { DivProps } from '@/types';
-
 import { useStyles } from '../style';
+import type { LayoutTocProps } from '../type';
 
-export interface LayoutTocProps extends DivProps {
-  tocWidth?: number;
-}
 export const LayoutToc = memo<LayoutTocProps>(
   ({ tocWidth, style, className, children, ...rest }) => {
     const { cx, styles } = useStyles();

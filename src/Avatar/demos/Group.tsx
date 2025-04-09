@@ -1,4 +1,4 @@
-import { type ActionIconProps, Avatar, type AvatarGroupProps } from '@lobehub/ui';
+import { Avatar, type AvatarGroupProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 const url = 'https://avatars.githubusercontent.com/u/17870709?v=4';
@@ -13,7 +13,7 @@ const items: AvatarGroupProps['items'] = Array.from({ length: 10 }, (_, index) =
 
 export default () => {
   const store = useCreateStore();
-  const control: ActionIconProps | any = useControls(
+  const control = useControls(
     {
       bordered: false,
       max: {
@@ -39,10 +39,10 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as AvatarGroupProps;
   return (
     <StoryBook levaStore={store}>
-      <Avatar.Group items={items} onClick={console.log} {...control} />
+      <Avatar.Group {...control} items={items} onClick={console.log} />
     </StoryBook>
   );
 };

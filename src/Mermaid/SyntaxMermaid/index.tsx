@@ -2,23 +2,16 @@
 
 import { useTheme } from 'antd-style';
 import { kebabCase } from 'lodash-es';
-import { forwardRef, useEffect, useId, useMemo, useState } from 'react';
+import { memo, useEffect, useId, useMemo, useState } from 'react';
 
 import Image from '@/Image';
 import { useMermaid } from '@/hooks/useMermaid';
 
 import { mermaidThemes } from '../const';
-import type { MermaidProps } from '../type';
+import type { SyntaxMermaidProps } from '../type';
 
-export interface SyntaxMermaidProps {
-  children: string;
-  enablePanZoom?: MermaidProps['enablePanZoom'];
-  theme?: MermaidProps['theme'];
-  variant?: MermaidProps['variant'];
-}
-
-const SyntaxMermaid = forwardRef<HTMLDivElement, SyntaxMermaidProps>(
-  ({ children, theme: customTheme, variant, enablePanZoom }, ref) => {
+const SyntaxMermaid = memo<SyntaxMermaidProps>(
+  ({ ref, children, theme: customTheme, variant, enablePanZoom }) => {
     const isDefaultTheme = customTheme === 'lobe-theme' || !customTheme;
 
     const background = useMemo(() => {

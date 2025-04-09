@@ -1,29 +1,15 @@
 'use client';
 
-import { Anchor, AnchorProps, Collapse, ConfigProvider } from 'antd';
+import { Anchor, Collapse, ConfigProvider } from 'antd';
 import { PanelTopClose, PanelTopOpen } from 'lucide-react';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
 
 import { useStyles } from './style';
+import type { TocMobileProps } from './type';
 import { mapItems } from './utils';
-
-export interface AnchorItem {
-  children?: AnchorItem[];
-  id: string;
-  title: string;
-}
-
-export interface TocMobileProps {
-  activeKey?: string;
-  getContainer?: AnchorProps['getContainer'];
-  headerHeight?: number;
-  items: AnchorItem[];
-  onChange?: (activeKey: string) => void;
-  tocWidth?: number;
-}
 
 const TocMobile = memo<TocMobileProps>(
   ({ items, activeKey, onChange, getContainer, headerHeight = 64, tocWidth = 176 }) => {
@@ -34,6 +20,8 @@ const TocMobile = memo<TocMobileProps>(
     const { styles } = useStyles({ headerHeight, tocWidth });
 
     const activeAnchor = items.find((item) => item.id === activeLink);
+
+    const tocItems = useMemo(() => mapItems(items), [items]);
 
     return (
       <ConfigProvider theme={{ token: { fontSize: 12, sizeStep: 3 } }}>
@@ -55,7 +43,7 @@ const TocMobile = memo<TocMobileProps>(
               <ConfigProvider theme={{ token: { fontSize: 14, sizeStep: 4 } }}>
                 <Anchor
                   getContainer={getContainer}
-                  items={mapItems(items)}
+                  items={tocItems}
                   onChange={(currentLink) => {
                     setActiveLink(currentLink.replace('#', ''));
                   }}

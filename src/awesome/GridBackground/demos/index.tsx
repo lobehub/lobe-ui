@@ -6,7 +6,7 @@ import { rgba } from 'polished';
 export default () => {
   const theme = useTheme();
   const store = useCreateStore();
-  const control: GridBackgroundProps | any = useControls(
+  const control = useControls(
     {
       animation: true,
       backgroundColor: '#001dff',
@@ -30,7 +30,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as GridBackgroundProps;
 
   return (
     <StoryBook levaStore={store}>

@@ -1,7 +1,6 @@
 import { produce } from 'immer';
 
-import { ChatMessageError } from '@/types/chatMessage';
-import { LLMMessage, LLMRoleType } from '@/types/llm';
+import type { ChatMessageError, LLMMessage, LLMRoleType } from '@/chat/types';
 
 export type MessageDispatch =
   | { message: LLMMessage; type: 'addMessage' }

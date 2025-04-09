@@ -1,19 +1,14 @@
 'use client';
 
 import { Input as AntInput } from 'antd';
-import { TextAreaProps as AntdTextAreaProps, type TextAreaRef } from 'antd/es/input/TextArea';
 import { cva } from 'class-variance-authority';
-import { forwardRef, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 
 import { useStyles } from './style';
+import type { TextAreaProps } from './type';
 
-export interface TextAreaProps extends AntdTextAreaProps {
-  resize?: boolean;
-  shadow?: boolean;
-}
-
-const TextArea = forwardRef<TextAreaRef, TextAreaProps>(
-  ({ variant = 'filled', shadow, className, resize = false, style, ...rest }, ref) => {
+const TextArea = memo<TextAreaProps>(
+  ({ ref, variant = 'filled', shadow, className, resize = false, style, ...rest }) => {
     const { styles, cx } = useStyles();
 
     const variants = useMemo(

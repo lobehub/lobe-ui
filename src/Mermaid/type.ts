@@ -1,8 +1,16 @@
 import type { MermaidConfig } from 'mermaid/dist/config.type';
-import { ReactNode } from 'react';
+import type { ReactNode, Ref } from 'react';
 
 import type { ActionIconProps } from '@/ActionIcon';
-import { DivProps } from '@/types';
+import type { DivProps } from '@/types';
+
+export interface SyntaxMermaidProps {
+  children: string;
+  enablePanZoom?: MermaidProps['enablePanZoom'];
+  ref?: Ref<HTMLDivElement>;
+  theme?: MermaidProps['theme'];
+  variant?: MermaidProps['variant'];
+}
 
 export interface MermaidProps extends DivProps {
   actionIconSize?: ActionIconProps['size'];

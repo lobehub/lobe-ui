@@ -1,20 +1,12 @@
 'use client';
 
-import { forwardRef } from 'react';
-
-import { DivProps } from '@/types';
+import { memo } from 'react';
 
 import { useStyles } from './markdown.style';
+import type { TypographyProps } from './type';
 
-export interface TypographyProps extends DivProps {
-  fontSize?: number;
-  headerMultiple?: number;
-  lineHeight?: number;
-  marginMultiple?: number;
-}
-
-const Typography = forwardRef<HTMLDivElement, TypographyProps>(
-  ({ children, className, fontSize, headerMultiple, marginMultiple, lineHeight, ...rest }, ref) => {
+const Typography = memo<TypographyProps>(
+  ({ ref, children, className, fontSize, headerMultiple, marginMultiple, lineHeight, ...rest }) => {
     const { cx, styles } = useStyles({ fontSize, headerMultiple, lineHeight, marginMultiple });
     return (
       <article className={cx(styles.root, styles.variant, className)} ref={ref} {...rest}>

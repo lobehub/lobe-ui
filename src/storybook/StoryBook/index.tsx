@@ -2,7 +2,7 @@
 
 import { useResponsive } from 'antd-style';
 import { LevaPanel } from 'leva';
-import { forwardRef } from 'react';
+import { Ref, memo } from 'react';
 import { Center, Flexbox, FlexboxProps } from 'react-layout-kit';
 
 import DraggablePanel from '@/DraggablePanel';
@@ -10,19 +10,13 @@ import DraggablePanel from '@/DraggablePanel';
 import { useStyles } from './style';
 
 export interface StoryBookProps extends FlexboxProps {
-  /**
-   * @description The Leva store instance to be used by the component
-   * @type levaStore
-   */
   levaStore: any;
-  /**
-   * @description If use padding around component
-   */
   noPadding?: boolean;
+  ref?: Ref<HTMLDivElement>;
 }
 
-export const StoryBook = forwardRef<HTMLDivElement, StoryBookProps>(
-  ({ levaStore, noPadding, className, children, ...rest }, ref) => {
+export const StoryBook = memo<StoryBookProps>(
+  ({ ref, levaStore, noPadding, className, children, ...rest }) => {
     const { mobile } = useResponsive();
     const { styles, cx } = useStyles(Boolean(noPadding));
 
@@ -50,6 +44,8 @@ export const StoryBook = forwardRef<HTMLDivElement, StoryBookProps>(
     );
   },
 );
+
+StoryBook.displayName = 'StoryBook';
 
 export default StoryBook;
 

@@ -43,7 +43,7 @@ const items: FormProps['items'] = [
 export default () => {
   const store = useCreateStore();
 
-  const { variant }: any = useControls(
+  const controls = useControls(
     {
       variant: {
         options: ['borderless', 'filled', 'outlined'],
@@ -51,7 +51,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as FormProps;
 
   return (
     <StoryBook levaStore={store}>
@@ -61,7 +61,7 @@ export default () => {
         items={items}
         itemsType={'flat'}
         onFinish={console.table}
-        variant={variant}
+        {...controls}
       />
     </StoryBook>
   );

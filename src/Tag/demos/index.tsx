@@ -4,7 +4,7 @@ import { Loader2Icon } from 'lucide-react';
 
 export default () => {
   const store = useCreateStore();
-  const { children, ...control }: TagProps | any = useControls(
+  const { children, ...control } = useControls(
     {
       children: 'processing',
       closable: false,
@@ -18,7 +18,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as TagProps;
 
   return (
     <StoryBook levaStore={store}>

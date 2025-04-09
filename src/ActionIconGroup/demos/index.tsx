@@ -5,7 +5,7 @@ import { dropdownMenu, items } from './data';
 
 export default () => {
   const store = useCreateStore();
-  const control: ActionIconGroupProps | any = useControls(
+  const control = useControls(
     {
       disabled: false,
       horizontal: true,
@@ -20,7 +20,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as ActionIconGroupProps;
 
   return (
     <StoryBook levaStore={store}>

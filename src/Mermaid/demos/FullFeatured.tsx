@@ -5,7 +5,7 @@ import { code } from './data';
 
 export default () => {
   const store = useCreateStore();
-  const options: MermaidProps | any = useControls(
+  const options = useControls(
     {
       children: {
         rows: true,
@@ -25,7 +25,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as MermaidProps;
 
   return (
     <StoryBook levaStore={store}>

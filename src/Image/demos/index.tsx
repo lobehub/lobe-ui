@@ -1,9 +1,9 @@
-import { HighlighterProps, Image } from '@lobehub/ui';
+import { Image, type ImageProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const options: HighlighterProps | any = useControls(
+  const options = useControls(
     {
       alt: 'Image',
       preview: true,
@@ -14,7 +14,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as ImageProps;
   return (
     <StoryBook levaStore={store}>
       <Image {...options} />

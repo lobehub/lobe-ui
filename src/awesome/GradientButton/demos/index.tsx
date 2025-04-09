@@ -3,7 +3,7 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const control: GradientButtonProps | any = useControls(
+  const control = useControls(
     {
       children: 'Get a Demo',
       glow: true,
@@ -13,7 +13,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as GradientButtonProps;
 
   return (
     <StoryBook levaStore={store}>

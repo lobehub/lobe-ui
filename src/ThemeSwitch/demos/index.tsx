@@ -1,4 +1,4 @@
-import { ActionIconProps, ThemeSwitch } from '@lobehub/ui';
+import { ThemeSwitch, type ThemeSwitchProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { type ThemeMode } from 'antd-style';
 import { useState } from 'react';
@@ -6,7 +6,7 @@ import { useState } from 'react';
 export default () => {
   const [themeMode, setThemeMode] = useState<ThemeMode>('auto');
   const store = useCreateStore();
-  const control: ActionIconProps | any = useControls(
+  const control = useControls(
     {
       size: {
         options: ['large', 'middle', 'small'],
@@ -22,11 +22,11 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as ThemeSwitchProps;
 
   return (
     <StoryBook levaStore={store}>
-      <ThemeSwitch onThemeSwitch={setThemeMode} themeMode={themeMode} {...control} />
+      <ThemeSwitch {...control} onThemeSwitch={setThemeMode} themeMode={themeMode} />
     </StoryBook>
   );
 };

@@ -3,7 +3,7 @@
 import { Skeleton } from 'antd';
 import { cva } from 'class-variance-authority';
 import { PlayIcon } from 'lucide-react';
-import { type CSSProperties, forwardRef, useMemo, useState } from 'react';
+import { type CSSProperties, type Ref, memo, useMemo, useState } from 'react';
 import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
@@ -35,6 +35,7 @@ export interface VideoProps extends VProps, Pick<FlexboxProps, 'width' | 'height
   poster?: string;
   preload?: HTMLVideoElement['preload'];
   preview?: boolean;
+  ref?: Ref<HTMLDivElement>;
   size?: number | string;
   src: string;
   styles?: {
@@ -45,35 +46,33 @@ export interface VideoProps extends VProps, Pick<FlexboxProps, 'width' | 'height
   variant?: 'borderless' | 'filled' | 'outlined';
 }
 
-const Video = forwardRef<HTMLDivElement, VideoProps>(
-  (
-    {
-      preload = 'auto',
-      src,
-      style,
-      classNames,
-      className,
-      maxHeight = '100%',
-      maxWidth = '100%',
-      minHeight,
-      minWidth,
-      onEnded,
-      onPause,
-      onPlay,
-      onPlaying,
-      width,
-      height,
-      onMouseEnter,
-      styles: customStyles,
-      onMouseLeave,
-      preview = true,
-      isLoading,
-      variant = 'filled',
-      autoPlay,
-      ...rest
-    },
+const Video = memo<VideoProps>(
+  ({
     ref,
-  ) => {
+    preload = 'auto',
+    src,
+    style,
+    classNames,
+    className,
+    maxHeight = '100%',
+    maxWidth = '100%',
+    minHeight,
+    minWidth,
+    onEnded,
+    onPause,
+    onPlay,
+    onPlaying,
+    width,
+    height,
+    onMouseEnter,
+    styles: customStyles,
+    onMouseLeave,
+    preview = true,
+    isLoading,
+    variant = 'filled',
+    autoPlay,
+    ...rest
+  }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [showControls, setShowControls] = useState(false);
     const { cx, styles, theme } = useStyles({

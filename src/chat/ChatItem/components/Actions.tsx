@@ -1,4 +1,4 @@
-import { Ref, memo } from 'react';
+import { type Ref, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import { ChatItemProps } from '@/chat/ChatItem';

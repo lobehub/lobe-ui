@@ -1,42 +1,15 @@
 'use client';
 
-import { createStyles, useResponsive } from 'antd-style';
+import { useResponsive } from 'antd-style';
 import { cva } from 'class-variance-authority';
-import { forwardRef, useMemo } from 'react';
-import { Flexbox, FlexboxProps } from 'react-layout-kit';
+import { memo, useMemo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
-import { FormVariant } from '../type';
+import { useFlatGroupStyles as useStyles } from '../style';
+import type { FormFlatGroupProps } from '../type';
 
-const useStyles = createStyles(({ cx, css, token, stylish }) => {
-  return {
-    borderless: stylish.variantBorderlessWithoutHover,
-    filled: cx(
-      stylish.variantOutlinedWithoutHover,
-      css`
-        background: ${token.colorFillQuaternary};
-      `,
-    ),
-    mobile: css`
-      padding-block: 0;
-      padding-inline: 16px;
-      background: ${token.colorBgContainer};
-      border-radius: 0;
-    `,
-    outlined: stylish.variantOutlinedWithoutHover,
-    root: css`
-      overflow: hidden;
-      padding-inline: 16px;
-      border-radius: ${token.borderRadiusLG}px;
-    `,
-  };
-});
-
-export interface FormFlatGroupProps extends FlexboxProps {
-  variant?: FormVariant;
-}
-
-const FormFlatGroup = forwardRef<HTMLDivElement, FormFlatGroupProps>(
-  ({ className, children, variant = 'borderless', ...rest }, ref) => {
+const FormFlatGroup = memo<FormFlatGroupProps>(
+  ({ className, children, variant = 'borderless', ...rest }) => {
     const { mobile } = useResponsive();
     const { cx, styles } = useStyles(variant);
 
@@ -60,11 +33,7 @@ const FormFlatGroup = forwardRef<HTMLDivElement, FormFlatGroupProps>(
     );
 
     return (
-      <Flexbox
-        className={cx(mobile ? styles.mobile : vriants({ variant }), className)}
-        ref={ref}
-        {...rest}
-      >
+      <Flexbox className={cx(mobile ? styles.mobile : vriants({ variant }), className)} {...rest}>
         {children}
       </Flexbox>
     );

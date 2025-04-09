@@ -13,15 +13,16 @@ const items: TocProps['items'] = [
 ];
 export default () => {
   const store = useCreateStore();
-  const controls: TocProps | any = useControls(
+  const controls = useControls(
     {
       isMobile: false,
     },
     { store },
-  );
+  ) as TocProps;
+
   return (
     <StoryBook levaStore={store}>
-      <Toc items={items} {...controls} />
+      <Toc {...controls} items={items} />
     </StoryBook>
   );
 };

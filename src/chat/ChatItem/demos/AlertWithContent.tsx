@@ -20,7 +20,7 @@ const demoError = {
 };
 export default () => {
   const store = useCreateStore();
-  const control: ChatItemProps['error'] | any = useControls(
+  const control = useControls(
     {
       content: {
         value: 'some content',
@@ -33,7 +33,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as ChatItemProps['error'] & { content: string };
 
   return (
     <StoryBook levaStore={store}>
