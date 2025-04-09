@@ -1,3 +1,5 @@
+'use client';
+
 import { Segmented as AntdSegmented } from 'antd';
 import { cva } from 'class-variance-authority';
 import { memo, useMemo } from 'react';
