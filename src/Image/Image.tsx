@@ -104,7 +104,11 @@ const Image = memo<ImageProps>(
           style={customStyles?.image}
           width={width}
           wrapperClassName={cx(styles.image, classNames?.wrapper)}
-          wrapperStyle={customStyles?.wrapper}
+          wrapperStyle={{
+            height: 'auto',
+            width: '100%',
+            ...customStyles?.wrapper,
+          }}
           {...rest}
         />
       </Flexbox>
