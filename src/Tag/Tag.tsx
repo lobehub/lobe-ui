@@ -2,15 +2,16 @@
 
 import { Tag as AntTag } from 'antd';
 import { cva } from 'class-variance-authority';
-import { mix, readableColor } from 'polished';
 import { memo, useMemo } from 'react';
+
+import { colorsPreset, colorsPresetSystem, presetColors, presetSystemColors } from '@/Tag/utils';
 
 import { useStyles } from './styles';
 import type { TagProps } from './type';
 
 const Tag = memo<TagProps>(
   ({ ref, size = 'middle', color, variant = 'filled', children, onClick, style, ...rest }) => {
-    const { styles, cx } = useStyles();
+    const { styles, cx, theme } = useStyles();
 
     const variants = useMemo(
       () =>
@@ -37,7 +38,40 @@ const Tag = memo<TagProps>(
       [styles],
     );
 
-    const isHexColor = color && color.startsWith('#');
+    const colors = useMemo(() => {
+      let textColor;
+      let backgroundColor;
+      let borderColor;
+      const isFilled = variant === 'filled';
+      const isPresetColor = color && presetColors.includes(color);
+      const isPresetSystemColors = color && presetSystemColors.has(color);
+      const isHexColor = color && color.startsWith('#');
+
+      if (isPresetColor) {
+        textColor = colorsPreset(theme, color);
+        backgroundColor = colorsPreset(theme, color, 'fillTertiary');
+        borderColor = colorsPreset(theme, color, isFilled ? 'fillQuaternary' : 'fillTertiary');
+      }
+      if (isPresetSystemColors) {
+        textColor = colorsPresetSystem(theme, color);
+        backgroundColor = colorsPresetSystem(theme, color, 'fillTertiary');
+        borderColor = colorsPresetSystem(
+          theme,
+          color,
+          isFilled ? 'fillQuaternary' : 'fillTertiary',
+        );
+      }
+      if (isHexColor) {
+        textColor = theme.colorBgLayout;
+        backgroundColor = color;
+      }
+
+      return {
+        backgroundColor,
+        borderColor,
+        textColor,
+      };
+    }, [color, theme, variant]);
 
     return (
       <AntTag
@@ -47,9 +81,10 @@ const Tag = memo<TagProps>(
         onClick={onClick}
         ref={ref}
         style={{
-          color: isHexColor ? mix(0.75, readableColor(color), color) : undefined,
+          background: colors?.backgroundColor,
+          borderColor: colors?.borderColor,
+          color: colors?.textColor,
           cursor: onClick ? 'pointer' : undefined,
-          fontWeight: isHexColor ? 500 : undefined,
           ...style,
         }}
         {...rest}

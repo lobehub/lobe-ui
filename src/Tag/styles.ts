@@ -7,7 +7,7 @@ export const useStyles = createStyles(({ stylish, prefixCls, css, token }) => ({
     &.${prefixCls}-tag {
       height: 28px;
       padding-inline: 12px;
-      border-radius: ${token.borderRadius}px;
+      border-radius: 6px;
     }
   `,
   outlined: stylish.variantOutlinedWithoutHover,
@@ -23,9 +23,13 @@ export const useStyles = createStyles(({ stylish, prefixCls, css, token }) => ({
       height: 22px;
       margin: 0;
 
-      span {
+      line-height: 1.2;
+
+      border-radius: 3px;
+
+      span:not(.anticon) {
         height: unset;
-        line-height: 1.2;
+        line-height: inherit;
       }
     }
   `,

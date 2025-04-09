@@ -13,5 +13,3 @@ apiHeader:
 <code src="./demos/index.tsx" iframe></code>
 
 ## APIs
-
-<API></API>

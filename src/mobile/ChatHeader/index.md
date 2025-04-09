@@ -13,5 +13,3 @@ apiHeader:
 <code src="./demos/index.tsx" center></code>
 
 ## APIs
-
-<API></API>

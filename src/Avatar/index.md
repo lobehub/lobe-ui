@@ -22,5 +22,3 @@ description: Avatar is a component that displays a user's profile picture or ini
 <code src="./demos/Group.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

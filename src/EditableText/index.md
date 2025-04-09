@@ -10,5 +10,3 @@ description: EditableText is a component that allows users to edit text inline. 
 <code src="./demos/index.tsx" center></code>
 
 ## APIs
-
-<API></API>

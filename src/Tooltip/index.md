@@ -10,5 +10,3 @@ description: The Tooltip component is used to provide additional information to 
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

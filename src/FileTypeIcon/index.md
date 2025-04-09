@@ -13,5 +13,3 @@ group: Data Display
 <code src="./demos/Icon.tsx" center></code>
 
 ## APIs
-
-<API></API>

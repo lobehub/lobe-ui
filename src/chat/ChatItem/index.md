@@ -22,5 +22,3 @@ apiHeader:
 <code src="./demos/AlertWithContent.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

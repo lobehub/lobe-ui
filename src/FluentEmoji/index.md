@@ -12,5 +12,3 @@ Find details in <https://fluent-emoji.lobehub.com>
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

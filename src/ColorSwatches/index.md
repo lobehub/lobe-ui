@@ -10,5 +10,3 @@ description: The Swatches component is a memoized React component that displays 
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

@@ -16,5 +16,3 @@ The remaining tokens are calculated based on the `maxValue` and `value` props. T
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

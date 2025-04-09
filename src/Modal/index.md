@@ -9,5 +9,3 @@ title: Modal
 <code src="./demos/index.tsx" center></code>
 
 ## APIs
-
-<API></API>

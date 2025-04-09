@@ -21,5 +21,3 @@ title: Image
 <code src="./demos/CustomActions.tsx" center></code>
 
 ## APIs
-
-<API></API>

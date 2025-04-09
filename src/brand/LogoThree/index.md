@@ -17,5 +17,3 @@ apiHeader:
 <code src="./demos/LogoSpline.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

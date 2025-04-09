@@ -13,5 +13,3 @@ title: Dropdown
 <code src="./demos/ContextMenu.tsx" center></code>
 
 ## APIs
-
-<API></API>

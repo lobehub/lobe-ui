@@ -17,5 +17,3 @@ apiHeader:
 <code src="./demos/Showcase.tsx" center></code>
 
 ## APIs
-
-<API></API>

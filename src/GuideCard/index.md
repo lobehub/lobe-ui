@@ -10,5 +10,3 @@ description: GuideCard is a component used to display an empty state with an opt
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

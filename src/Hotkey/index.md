@@ -21,5 +21,3 @@ title: Hotkey
 <code src="./demos/InverseTheme.tsx" center></code>
 
 ## APIs
-
-<API></API>

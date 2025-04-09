@@ -22,5 +22,3 @@ Button supports multiple style variants, including default, filled, outlined, an
 <code src="./demos/Variant.tsx"></code>
 
 ## APIs
-
-<API></API>

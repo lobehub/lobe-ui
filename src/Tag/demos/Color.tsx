@@ -7,6 +7,12 @@ export default () => {
   return (
     <Center gap={24}>
       <Center gap={4} horizontal wrap={'wrap'}>
+        <Tag color="success">success</Tag>
+        <Tag color="warning">warning</Tag>
+        <Tag color="error">error</Tag>
+        <Tag color="info">info</Tag>
+      </Center>
+      <Center gap={4} horizontal wrap={'wrap'}>
         <Tag color="magenta">magenta</Tag>
         <Tag color="red">red</Tag>
         <Tag color="volcano">volcano</Tag>

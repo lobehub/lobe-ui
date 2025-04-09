@@ -10,5 +10,3 @@ description: Tabs are used to display multiple sections of content within the sa
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

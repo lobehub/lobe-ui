@@ -14,5 +14,3 @@ description: Alert is a component used to display important messages or notifica
 <code src="./demos/Extra.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

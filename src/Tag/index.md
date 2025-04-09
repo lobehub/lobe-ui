@@ -13,5 +13,3 @@ title: Tag
 <code src="./demos/Color.tsx" center></code>
 
 ## APIs
-
-<API></API>

@@ -14,5 +14,3 @@ ActionIconGroup is a container component for organizing and managing multiple Ac
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>
