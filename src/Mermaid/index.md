@@ -386,5 +386,3 @@ export default () => {
 ```
 
 ## APIs
-
-<API></API>

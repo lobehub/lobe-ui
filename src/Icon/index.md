@@ -16,5 +16,3 @@ Search for available icons in [`Lucide Icon`](https://lucide.dev/)
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

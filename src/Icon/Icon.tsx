@@ -55,8 +55,8 @@ const Icon = memo<IconProps>(
     } = useIconContext();
 
     const { size, strokeWidth } = useMemo(
-      () => calcSize(sizeConfig || iconSize),
-      [sizeConfig, iconSize],
+      () => calcSize(iconSize || sizeConfig),
+      [iconSize, sizeConfig],
     );
 
     const SvgIcon = icon as LucideIcon;
@@ -73,11 +73,11 @@ const Icon = memo<IconProps>(
             icon
           ) : (
             <SvgIcon
-              color={colorConfig || color}
-              fill={fillConfig || fill}
-              fillOpacity={fillOpacityConfig || fillOpacity}
-              fillRule={fillRuleConfig || fillRule}
-              focusable={focusableConfig || focusable}
+              color={color || colorConfig}
+              fill={fill || fillConfig}
+              fillOpacity={fillOpacity || fillOpacityConfig}
+              fillRule={fillRule || fillRuleConfig}
+              focusable={focusable || focusableConfig}
               height={size}
               ref={ref}
               size={size}

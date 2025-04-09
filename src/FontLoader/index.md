@@ -6,5 +6,3 @@ description: The FontLoader component is used to load fonts from a provided URL.
 ---
 
 ## APIs
-
-<API></API>

@@ -38,5 +38,3 @@ ActionIcon supports multiple style variants, including default, filled, outlined
 <code src="./demos/Variant.tsx" center></code>
 
 ## APIs
-
-<API></API>

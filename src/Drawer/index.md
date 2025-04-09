@@ -13,5 +13,3 @@ title: Drawer
 <code src="./demos/Sidebar.tsx" noPadding></code>
 
 ## APIs
-
-<API></API>

@@ -10,5 +10,3 @@ description: The Header component is a customizable header section with a logo, 
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

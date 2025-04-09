@@ -59,7 +59,12 @@ const Menu = memo<MenuProps>(
           },
         }}
       >
-        <IconProvider config={iconProps}>
+        <IconProvider
+          config={{
+            size: 'small',
+            ...iconProps,
+          }}
+        >
           <AntdMenu
             className={cx(variants({ shadow, variant }), className)}
             inlineIndent={12}

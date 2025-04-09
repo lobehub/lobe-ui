@@ -14,14 +14,14 @@ import type { MenuItemType } from '@/Menu';
 import type { ThemeSwitchProps } from './type';
 
 const DEFAULT_ICON_SET = {
-  auto: <Icon icon={Monitor} />,
-  dark: <Icon icon={Moon} />,
-  light: <Icon icon={Sun} />,
+  auto: Monitor,
+  dark: Moon,
+  light: Sun,
 };
 
 const ThemeSwitch = memo<ThemeSwitchProps>(
   ({
-    size,
+    size = 'middle',
     themeMode,
     onThemeSwitch,
     type = 'icon',

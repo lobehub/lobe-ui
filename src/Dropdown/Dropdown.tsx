@@ -14,7 +14,12 @@ const Dropdown = memo<DropdownProps>(({ children, iconProps, menu, ...rest }) =>
   const antdItems = useMemo(() => items.map((item) => mapItems(item)), [items]);
 
   return (
-    <IconProvider config={iconProps}>
+    <IconProvider
+      config={{
+        size: 'small',
+        ...iconProps,
+      }}
+    >
       <AntdDropdown
         menu={{
           ...menuProps,

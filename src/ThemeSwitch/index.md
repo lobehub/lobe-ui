@@ -10,5 +10,3 @@ description: ThemeSwitch component is a dropdown menu that allows users to switc
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

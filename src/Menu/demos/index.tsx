@@ -10,7 +10,6 @@ export default () => {
   const store = useCreateStore();
   const options = useControls(
     {
-      compact: false,
       mode: {
         options: ['horizontal', 'vertical', 'inline'],
         value: 'inline',

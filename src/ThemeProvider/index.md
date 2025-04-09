@@ -14,5 +14,3 @@ description: ThemeProvider is a component that provides a theme to all the child
 <code src="./demos/CustomFonts.tsx" center></code>
 
 ## APIs
-
-<API></API>
