@@ -5,7 +5,7 @@ import type { ActionIconProps } from '@/ActionIcon';
 import type { DropdownProps } from '@/Dropdown';
 import type { MenuInfo, MenuItemType } from '@/Menu';
 
-export type ActionEvent = Pick<MenuInfo, 'key' | 'keyPath' | 'domEvent'>;
+export type ActionIconGroupEvent = Pick<MenuInfo, 'key' | 'keyPath' | 'domEvent'>;
 
 export interface ActionIconGroupProps extends Omit<CenterProps, 'children'> {
   actionIconProps?: Partial<Omit<ActionIconProps, 'icon' | 'size' | 'ref'>>;
@@ -13,7 +13,7 @@ export interface ActionIconGroupProps extends Omit<CenterProps, 'children'> {
   glass?: boolean;
   items?: MenuItemType[];
   menu?: DropdownProps['menu'];
-  onActionClick?: (action: ActionEvent) => void;
+  onActionClick?: (action: ActionIconGroupEvent) => void;
   ref?: Ref<HTMLDivElement>;
   shadow?: boolean;
   size?: ActionIconProps['size'];
