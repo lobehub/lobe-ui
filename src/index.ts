@@ -1,5 +1,10 @@
 export { default as ActionIcon, type ActionIconProps, type ActionIconSize } from './ActionIcon';
-export { default as ActionIconGroup, type ActionIconGroupProps } from './ActionIconGroup';
+export {
+  default as ActionIconGroup,
+  type ActionIconGroupEvent,
+  type ActionIconGroupItemType,
+  type ActionIconGroupProps,
+} from './ActionIconGroup';
 export { default as Alert, type AlertProps } from './Alert';
 export { default as Avatar, AvatarGroup, type AvatarGroupProps, type AvatarProps } from './Avatar';
 export { default as Block, type BlockProps } from './Block';
@@ -42,6 +47,7 @@ export {
   FormSubmitFooter,
   type FormSubmitFooterProps,
   FormTitle,
+  type FormTitleProps,
 } from './Form';
 export { default as FormModal, type FormModalProps } from './FormModal';
 export { default as Grid, type GridProps } from './Grid';

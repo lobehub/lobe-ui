@@ -1,13 +1,13 @@
 import { FC, ReactNode } from 'react';
 
-import type { ActionEvent, ActionIconGroupProps } from '@/ActionIconGroup';
+import type { ActionIconGroupEvent, ActionIconGroupProps } from '@/ActionIconGroup';
 import type { AlertProps } from '@/Alert';
 import type { ChatItemProps } from '@/chat/ChatItem';
 import type { ChatMessage, LLMRoleType } from '@/chat/types';
 import type { DivProps } from '@/types';
 
 export type OnMessageChange = (id: string, content: string) => void;
-export type OnActionsClick = (action: ActionEvent, message: ChatMessage) => void;
+export type OnActionsClick = (action: ActionIconGroupEvent, message: ChatMessage) => void;
 export type OnAvatatsClick = (role: RenderRole) => ChatItemProps['onAvatarClick'];
 export type RenderRole = LLMRoleType | 'default' | string;
 export type RenderItem = FC<{ key: string } & ChatMessage & ListItemProps>;
