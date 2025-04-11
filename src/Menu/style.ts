@@ -8,6 +8,13 @@ export const useStyles = createStyles(({ cx, css, token, stylish, prefixCls }) =
       border-radius: unset;
     `,
   ),
+  compact: css`
+    &.${prefixCls}-menu {
+      .${prefixCls}-menu-item-divider {
+        margin: 0;
+      }
+    }
+  `,
   filled: stylish.variantFilledWithoutHover,
   outlined: stylish.variantOutlinedWithoutHover,
   root: css`

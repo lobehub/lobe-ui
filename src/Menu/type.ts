@@ -42,6 +42,7 @@ export type GenericItemType<T = unknown> = T extends infer U extends MenuItemTyp
   : ItemType;
 
 export interface MenuProps<T = unknown> extends Omit<AntdMenuProps, 'items'> {
+  compact?: boolean;
   iconProps?: IconContentConfig;
   items: GenericItemType<T>[];
   ref?: Ref<MenuRef>;

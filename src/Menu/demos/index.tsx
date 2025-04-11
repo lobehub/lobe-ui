@@ -1,4 +1,4 @@
-import { Menu } from '@lobehub/ui';
+import { Menu, type MenuProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
@@ -10,6 +10,7 @@ export default () => {
   const store = useCreateStore();
   const options = useControls(
     {
+      compact: false,
       mode: {
         options: ['horizontal', 'vertical', 'inline'],
         value: 'inline',
@@ -21,7 +22,7 @@ export default () => {
       },
     },
     { store },
-  ) as any;
+  ) as MenuProps;
 
   return (
     <StoryBook levaStore={store}>

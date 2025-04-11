@@ -11,13 +11,24 @@ import { useStyles } from './style';
 import type { MenuProps } from './type';
 
 const Menu = memo<MenuProps>(
-  ({ shadow, variant = 'borderless', className, selectable, iconProps, items, ref, ...rest }) => {
+  ({
+    compact,
+    shadow,
+    variant = 'borderless',
+    className,
+    selectable,
+    iconProps,
+    items,
+    ref,
+    ...rest
+  }) => {
     const { cx, styles, theme } = useStyles();
 
     const variants = useMemo(
       () =>
         cva(styles.root, {
           defaultVariants: {
+            compact: false,
             shadow: false,
             variant: 'borderless',
           },
@@ -31,6 +42,10 @@ const Menu = memo<MenuProps>(
             shadow: {
               false: null,
               true: styles.shadow,
+            },
+            compact: {
+              false: null,
+              true: styles.compact,
             },
           },
           /* eslint-enable sort-keys-fix/sort-keys-fix */
@@ -66,7 +81,7 @@ const Menu = memo<MenuProps>(
           }}
         >
           <AntdMenu
-            className={cx(variants({ shadow, variant }), className)}
+            className={cx(variants({ compact, shadow, variant }), className)}
             inlineIndent={12}
             items={antdItems}
             mode="vertical"
