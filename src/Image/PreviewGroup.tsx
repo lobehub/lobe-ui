@@ -3,13 +3,13 @@
 import { Image } from 'antd';
 import { memo } from 'react';
 
-import usePreview from './components/usePreview';
+import usePreviewGroup from './components/usePreviewGroup';
 import { PreviewGroupProps } from './type';
 
 const { PreviewGroup: AntdPreviewGroup } = Image;
 
 const PreviewGroup = memo<PreviewGroupProps>(({ items, children, enable = true, preview }) => {
-  const mergePreivew = usePreview(preview);
+  const mergePreivew = usePreviewGroup(preview);
 
   if (!enable) return children;
 

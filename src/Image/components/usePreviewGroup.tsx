@@ -1,18 +1,18 @@
-import type { ImageProps as AntdImageProps } from 'antd';
 import { isObject } from 'lodash-es';
 import { X } from 'lucide-react';
+import type { GroupConsumerProps as AntdPreviewGroupProps } from 'rc-image/lib/PreviewGroup';
 import { useMemo, useState } from 'react';
 
 import Icon from '@/Icon';
 
 import { useStyles } from '../style';
-import type { ImagePreviewOptions } from '../type';
+import type { PreviewGroupPreviewOptions } from '../type';
 import Preview from './Preview';
 import Toolbar from './Toolbar';
 
 export const usePreview = (
-  props: ImagePreviewOptions | boolean | undefined,
-): AntdImageProps['preview'] => {
+  props: PreviewGroupPreviewOptions | boolean | undefined,
+): AntdPreviewGroupProps['preview'] => {
   const [visible, setVisible] = useState(false);
   const { cx, styles } = useStyles();
 
@@ -40,9 +40,9 @@ export const usePreview = (
       },
       maxScale,
       minScale,
-      onVisibleChange: (visible: boolean, prevVisible: boolean) => {
+      onVisibleChange: (visible: boolean, prevVisible: boolean, current: number) => {
         setVisible(visible);
-        onVisibleChange?.(visible, prevVisible);
+        onVisibleChange?.(visible, prevVisible, current);
       },
       rootClassName: cx(styles.preview, rootClassName),
       styles: { mask: { backdropFilter: 'blur(8px)' }, ...previewStyle },
