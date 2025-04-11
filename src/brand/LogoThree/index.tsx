@@ -56,4 +56,6 @@ const LogoThree = memo<LogoThreeProps>(({ className, style, size = 128, onLoad, 
   );
 });
 
+LogoThree.displayName = 'LobeHubLogoThree';
+
 export default LogoThree;

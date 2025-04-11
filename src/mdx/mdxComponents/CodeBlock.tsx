@@ -1,6 +1,6 @@
 'use client';
 
-import { FC } from 'react';
+import type { FC } from 'react';
 
 import type { MermaidProps } from '@/Mermaid';
 
@@ -59,5 +59,7 @@ const CodeBlock: FC<CodeBlockProps> = ({ children, fullFeatured, enableMermaid, 
     </Pre>
   );
 };
+
+CodeBlock.displayName = 'MdxCodeBlock';
 
 export default CodeBlock;

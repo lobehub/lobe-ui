@@ -1,7 +1,7 @@
 'use client';
 
 import { createStyles } from 'antd-style';
-import { FC } from 'react';
+import type { FC } from 'react';
 
 import Highlighter, { type HighlighterProps } from '@/Highlighter';
 import Mermaid, { type MermaidProps } from '@/Mermaid';
@@ -27,6 +27,7 @@ export const Pre: FC<PreProps> = ({
   children,
   className,
   style,
+  variant = 'filled',
   icon,
   ...rest
 }) => {
@@ -36,13 +37,12 @@ export const Pre: FC<PreProps> = ({
     <Highlighter
       allowChangeLanguage={allowChangeLanguage}
       className={cx(styles.container, className)}
-      copyButtonSize={{ blockSize: 28, fontSize: 16 }}
       fileName={fileName}
       fullFeatured={fullFeatured}
       icon={icon}
       language={language}
       style={style}
-      type="block"
+      variant={variant}
       {...rest}
     >
       {children}
@@ -55,6 +55,7 @@ export const PreSingleLine: FC<SnippetProps> = ({
   children,
   className,
   style,
+  variant = 'filled',
   ...rest
 }) => {
   const { cx, styles } = useStyles();
@@ -65,7 +66,7 @@ export const PreSingleLine: FC<SnippetProps> = ({
       data-code-type="highlighter"
       language={language}
       style={style}
-      type={'block'}
+      variant={variant}
       {...rest}
     >
       {children}
@@ -78,7 +79,7 @@ export const PreMermaid: FC<MermaidProps> = ({
   children,
   className,
   style,
-  type,
+  variant = 'filled',
   ...rest
 }) => {
   const { styles, cx } = useStyles();
@@ -86,15 +87,16 @@ export const PreMermaid: FC<MermaidProps> = ({
   return (
     <Mermaid
       className={cx(styles.container, className)}
-      copyButtonSize={{ blockSize: 28, fontSize: 16 }}
       fullFeatured={fullFeatured}
       style={style}
-      type={type || 'pure'}
+      variant={variant}
       {...rest}
     >
       {children}
     </Mermaid>
   );
 };
+
+Pre.displayName = 'MdxPre';
 
 export default Pre;

@@ -28,18 +28,14 @@ const DraggablePanelHeader = memo<DraggablePanelHeaderProps>((props) => {
   });
 
   const panelIcon = (
-    <ActionIcon
-      icon={PanelLeft}
-      onClick={() => setExpand?.(false)}
-      size={{ blockSize: 24, fontSize: 14 }}
-    />
+    <ActionIcon icon={PanelLeft} onClick={() => setExpand?.(false)} size={'small'} />
   );
   const pinIcon = (
     <ActionIcon
       active={pin}
       icon={pin ? Pin : PinOff}
       onClick={() => setIsPinned(!isPinned)}
-      size={{ blockSize: 24, fontSize: 14 }}
+      size={'small'}
     />
   );
   return (
@@ -58,5 +54,7 @@ const DraggablePanelHeader = memo<DraggablePanelHeaderProps>((props) => {
     </Flexbox>
   );
 });
+
+DraggablePanelHeader.displayName = 'DraggablePanelHeader';
 
 export default DraggablePanelHeader;

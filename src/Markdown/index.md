@@ -40,5 +40,3 @@ description: Markdown is a React component used to render markdown text. It supp
 <code iframe src="./demos/customPlugins/index.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

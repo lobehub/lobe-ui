@@ -13,5 +13,3 @@ title: Collapse
 <code src="./demos/Padding.tsx" center></code>
 
 ## APIs
-
-<API></API>

@@ -1,4 +1,4 @@
-import { Form } from '@lobehub/ui';
+import { Form, type FormProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { useState } from 'react';
 
@@ -17,16 +17,16 @@ export default () => {
   const [form] = Form.useForm();
   const [data, setData] = useState(setting);
 
-  const { collapsible, variant }: any = useControls(
+  const controls = useControls(
     {
       collapsible: true,
       variant: {
-        options: ['default', 'block', 'ghost', 'pure'],
-        value: 'default',
+        options: ['borderless', 'filled', 'outlined'],
+        value: 'borderless',
       },
     },
     { store },
-  );
+  ) as FormProps;
 
   const handleSubmit = async (values: any) => {
     setData(values);
@@ -36,7 +36,6 @@ export default () => {
   return (
     <StoryBook levaStore={store}>
       <Form
-        collapsible={collapsible}
         defaultActiveKey={['theme']}
         form={form}
         initialValues={data}
@@ -44,7 +43,7 @@ export default () => {
         items={items}
         onCollapse={console.log}
         onFinish={handleSubmit}
-        variant={variant}
+        {...controls}
       />
     </StoryBook>
   );

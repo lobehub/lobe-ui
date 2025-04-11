@@ -63,7 +63,7 @@ export const useStyles = createStyles(
           .${prefixCls}-collapse-header {
             z-index: 10;
             padding-block: 8px !important;
-            padding-inline: 16px !important;
+            padding-inline: 16px 8px !important;
           }
         `,
       ),

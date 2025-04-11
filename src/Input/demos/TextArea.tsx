@@ -3,16 +3,18 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const controls: TextAreaProps | any = useControls(
+  const controls = useControls(
     {
       placeholder: 'Type keywords...',
-      type: {
-        options: ['ghost', 'block', 'pure'],
-        value: 'ghost',
+      resize: false,
+      shadow: false,
+      variant: {
+        options: ['outlined', 'borderless', 'filled'],
+        value: 'filled',
       },
     },
     { store },
-  );
+  ) as TextAreaProps;
 
   return (
     <StoryBook levaStore={store}>

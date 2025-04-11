@@ -14,4 +14,6 @@ const DraggablePanelContainer = memo<DraggablePanelContainerProps>(({ className,
   return <Flexbox className={cx(styles.container, className)} {...rest} />;
 });
 
+DraggablePanelContainer.displayName = 'DraggablePanelContainer';
+
 export default DraggablePanelContainer;

@@ -1,8 +1,10 @@
-import { FC } from 'react';
+'use client';
+
+import type { FC } from 'react';
 
 import A from '@/A';
-import { AProps } from '@/types';
-import { CitationItem } from '@/types/citation';
+import type { AProps } from '@/types';
+import type { CitationItem } from '@/types/citation';
 import { safeParseJSON } from '@/utils/safeParseJSON';
 
 import Citation from './Citation';
@@ -45,5 +47,7 @@ const Link: FC<LinkProps> = ({ href, target, citations, ...rest }) => {
 
   return <A href={href} target={target || isNewWindow ? '_blank' : undefined} {...rest} />;
 };
+
+Link.displayName = 'MdxLink';
 
 export default Link;

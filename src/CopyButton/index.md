@@ -10,5 +10,3 @@ description: CopyButton is a React component used to copy text content to the cl
 <code src="./demos/index.tsx" center></code>
 
 ## APIs
-
-<API></API>

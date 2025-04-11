@@ -21,5 +21,3 @@ title: EmojiPicker
 <code src="./demos/CustomTabs.tsx" center></code>
 
 ## APIs
-
-<API></API>

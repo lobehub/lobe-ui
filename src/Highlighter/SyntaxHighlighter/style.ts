@@ -1,40 +1,41 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) => {
-  const prefix = `${prefixCls}-highlighter`;
-
+export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
   return {
-    loading: cx(
-      stylish.blur,
-      css`
-        position: absolute;
-        z-index: 10;
-        inset-block-start: 0;
-        inset-inline-end: 0;
+    noBackground: css`
+      pre {
+        background: transparent !important;
+      }
+    `,
 
-        height: 34px;
-        padding-block: 0;
-        padding-inline: 8px;
-        border-radius: ${token.borderRadius};
+    noPadding: css`
+      pre {
+        padding: 0;
+      }
+    `,
 
-        font-family: ${token.fontFamilyCode};
-        color: ${token.colorTextTertiary};
-      `,
-    ),
-    shiki: cx(
-      `${prefix}-shiki`,
-      css`
-        direction: ltr;
+    padding: css`
+      pre {
+        padding: 16px;
+      }
+    `,
+
+    root: css`
+      direction: ltr;
+      margin: 0;
+      padding: 0;
+      text-align: start;
+
+      pre {
+        overflow-x: auto;
         margin: 0;
         padding: 0;
-        text-align: start;
-
-        .shiki {
-          overflow-x: auto;
-          margin: 0;
-          padding: 0;
-          background: none !important;
-
+      }
+    `,
+    shiki: cx(
+      `${prefixCls}-highlighter-shiki`,
+      css`
+        pre {
           code {
             display: block;
 
@@ -70,10 +71,10 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls, stylish }) =
           .highlighted-word {
             padding-block: 0.1em;
             padding-inline: 0.2em;
-            border: 1px solid ${token.colorBorderSecondary};
-            border-radius: ${token.borderRadius}px;
 
             background: ${token.colorFillTertiary};
+            border: 1px solid ${token.colorBorderSecondary};
+            border-radius: ${token.borderRadius}px;
           }
 
           .diff {

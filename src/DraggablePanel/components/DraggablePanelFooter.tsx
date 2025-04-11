@@ -24,4 +24,6 @@ const DraggablePanelFooter = memo<DraggablePanelFooterProps>(({ className, ...re
   );
 });
 
+DraggablePanelFooter.displayName = 'DraggablePanelFooter';
+
 export default DraggablePanelFooter;

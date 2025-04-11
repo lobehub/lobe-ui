@@ -10,5 +10,3 @@ description: The Burger component is a customizable hamburger menu that displays
 <code src="./demos/index.tsx" center></code>
 
 ## APIs
-
-<API></API>

@@ -1,13 +1,14 @@
 'use client';
 
-import { Tag, TagProps } from 'antd';
 import { createStyles } from 'antd-style';
 import { FC } from 'react';
-import { Flexbox, type FlexboxProps } from 'react-layout-kit';
+import { Flexbox } from 'react-layout-kit';
 
 import A from '@/A';
+import Block, { type BlockProps } from '@/Block';
 import Icon, { type IconProps } from '@/Icon';
 import Img from '@/Img';
+import Tag, { type TagProps } from '@/Tag';
 
 const useStyles = createStyles(({ css, cx, token }) => {
   const icon = cx(css`
@@ -22,19 +23,12 @@ const useStyles = createStyles(({ css, cx, token }) => {
       --lobe-markdown-margin-multiple: 1;
 
       overflow: hidden;
-
       height: 100%;
-
       color: ${token.colorText};
-
-      border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
-      box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
-
-      transition: all 0.2s ${token.motionEaseInOut};
 
       h3,
       p {
-        margin-block: 0;
+        margin-block: 0 !important;
       }
 
       p {
@@ -43,9 +37,6 @@ const useStyles = createStyles(({ css, cx, token }) => {
       }
 
       &:hover {
-        background: ${token.colorFillQuaternary};
-        box-shadow: 0 0 0 1px ${token.colorBorder};
-
         p {
           color: ${token.colorTextSecondary};
         }
@@ -63,7 +54,7 @@ const useStyles = createStyles(({ css, cx, token }) => {
   };
 });
 
-export interface CardProps extends Omit<FlexboxProps, 'children'> {
+export interface CardProps extends Omit<BlockProps, 'children'> {
   desc?: string;
   href?: string;
   icon?: IconProps['icon'];
@@ -84,13 +75,20 @@ const Card: FC<CardProps> = ({
   iconProps,
   className,
   image,
+  variant = 'filled',
   ...rest
 }) => {
   const { cx, styles } = useStyles();
 
   return (
     <A href={href}>
-      <Flexbox align={'flex-start'} className={cx(styles.card, className)} {...rest}>
+      <Block
+        align={'flex-start'}
+        className={cx(styles.card, className)}
+        clickable
+        variant={variant}
+        {...rest}
+      >
         {image && (
           <Img
             alt={title}
@@ -107,7 +105,6 @@ const Card: FC<CardProps> = ({
             style={{ paddingBottom: '0.2em', paddingTop: '1.8em' }}
           >
             <Tag
-              bordered={false}
               color={tagColor}
               style={{
                 borderRadius: '1em',
@@ -128,16 +125,18 @@ const Card: FC<CardProps> = ({
           horizontal
         >
           {!image && icon && (
-            <Icon className={styles.icon} icon={icon} size={{ fontSize: '1.5em' }} {...iconProps} />
+            <Icon className={styles.icon} icon={icon} size={{ size: '1.5em' }} {...iconProps} />
           )}
           <Flexbox gap={'0.2em'}>
             <h3>{title}</h3>
             {desc && <p>{desc}</p>}
           </Flexbox>
         </Flexbox>
-      </Flexbox>
+      </Block>
     </A>
   );
 };
+
+Card.displayName = 'MdxCard';
 
 export default Card;

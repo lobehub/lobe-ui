@@ -1,26 +1,29 @@
+'use client';
+
 import { Select, type SelectProps } from 'antd';
+import { cva } from 'class-variance-authority';
 import { ChevronDown, ChevronRight } from 'lucide-react';
-import { memo, useState } from 'react';
+import { ReactNode, memo, useMemo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
-import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
-import { languageMap } from '@/hooks/useHighlight';
 
+import { languages } from './const';
 import { useStyles } from './style';
 import { HighlighterProps } from './type';
 
-const options: SelectProps['options'] = languageMap.map((item) => ({
+const options: SelectProps['options'] = languages.map((item) => ({
   label: item,
   value: item.toLowerCase(),
 }));
 
-interface HighlighterFullFeaturedProps extends Omit<HighlighterProps, 'children'> {
+interface HighlighterFullFeaturedProps
+  extends Omit<HighlighterProps, 'children' | 'bodyRender' | 'enableTransformer'> {
   content: string;
 }
 
-export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps>(
+export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { children: ReactNode }>(
   ({
     content,
     language,
@@ -32,53 +35,109 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps>(
     icon,
     actionsRender,
     copyable,
-    type,
-    defalutExpand = true,
-    bodyRender,
-    enableTransformer,
+    variant,
+    shadow,
+    wrap,
+    defaultExpand = true,
+    children,
     ...rest
   }) => {
-    const [expand, setExpand] = useState(defalutExpand);
+    const [expand, setExpand] = useState(defaultExpand);
     const [lang, setLang] = useState(language);
-    const { styles, cx } = useStyles(type);
+    const { styles, cx } = useStyles();
 
-    const size = { blockSize: 24, fontSize: 14, strokeWidth: 2 };
-
-    const origianlActions = copyable && (
-      <CopyButton content={content} placement="left" size={size} />
+    const variants = useMemo(
+      () =>
+        cva(styles.root, {
+          defaultVariants: {
+            shadow: false,
+            variant: 'filled',
+            wrap: false,
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: styles.filled,
+              outlined: styles.outlined,
+              borderless: styles.borderless,
+            },
+            shadow: {
+              false: null,
+              true: styles.shadow,
+            },
+            wrap: {
+              false: styles.nowrap,
+              true: null,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
     );
+
+    const headerVariants = useMemo(
+      () =>
+        cva(styles.headerRoot, {
+          defaultVariants: {
+            variant: 'filled',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: cx(styles.headerFilled, styles.headerOutlined),
+              outlined: styles.headerOutlined,
+              borderless: styles.headerBorderless,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
+
+    const bodyVariants = useMemo(
+      () =>
+        cva(styles.bodyRoot, {
+          defaultVariants: {
+            expand: true,
+          },
+          variants: {
+            expand: {
+              false: styles.bodyCollapsed,
+              true: styles.bodyExpand,
+            },
+          },
+        }),
+      [styles],
+    );
+
+    const originalActions = copyable && <CopyButton content={content} size={'small'} />;
 
     const actions = actionsRender
       ? actionsRender({
-          actionIconSize: size,
+          actionIconSize: 'small',
           content,
           language,
-          originalNode: origianlActions,
+          originalNode: originalActions,
         })
-      : origianlActions;
-
-    const originalBody = (
-      <SyntaxHighlighter enableTransformer={enableTransformer} language={lang?.toLowerCase()}>
-        {content}
-      </SyntaxHighlighter>
-    );
-
-    const body = bodyRender
-      ? bodyRender({ content, language: lang, originalNode: originalBody })
-      : originalBody;
+      : originalActions;
 
     return (
-      <div
-        className={cx(styles.container, className)}
+      <Flexbox
+        className={cx(variants({ shadow, variant, wrap }), className)}
         data-code-type="highlighter"
         style={style}
         {...rest}
       >
-        <Flexbox align={'center'} className={styles.header} horizontal justify={'space-between'}>
+        <Flexbox
+          align={'center'}
+          className={headerVariants({ variant })}
+          horizontal
+          justify={'space-between'}
+        >
           <ActionIcon
             icon={expand ? ChevronDown : ChevronRight}
             onClick={() => setExpand(!expand)}
-            size={{ blockSize: 24, fontSize: 14, strokeWidth: 3 }}
+            size={'small'}
           />
           {allowChangeLanguage && !fileName ? (
             showLanguage && (
@@ -108,8 +167,8 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps>(
             {actions}
           </Flexbox>
         </Flexbox>
-        <div style={expand ? {} : { height: 0, overflow: 'hidden' }}>{body}</div>
-      </div>
+        <Flexbox className={bodyVariants({ expand })}>{children}</Flexbox>
+      </Flexbox>
     );
   },
 );

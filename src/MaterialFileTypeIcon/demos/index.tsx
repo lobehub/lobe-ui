@@ -1,10 +1,9 @@
 import { MaterialFileTypeIcon, MaterialFileTypeIconProps } from '@lobehub/ui';
-
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const control: MaterialFileTypeIconProps | any = useControls(
+  const control = useControls(
     {
       filename: 'xxx.pdf',
       open: false,
@@ -22,7 +21,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as MaterialFileTypeIconProps;
 
   return (
     <StoryBook levaStore={store}>

@@ -3,7 +3,7 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const control: LogoThreeProps | any = useControls(
+  const control = useControls(
     {
       size: {
         max: 640,
@@ -13,7 +13,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as LogoThreeProps;
 
   return (
     <StoryBook levaStore={store}>

@@ -15,6 +15,10 @@ export const generateColorPalette = ({
   const name = capitalize(type);
   const isDarkMode = appearance === 'dark';
   return {
+    [`color${name}Fill`]: scale[`${appearance}A`][isDarkMode ? 3 : 4],
+    [`color${name}FillSecondary`]: scale[`${appearance}A`][isDarkMode ? 2 : 3],
+    [`color${name}FillTertiary`]: scale[`${appearance}A`][isDarkMode ? 1 : 2],
+    [`color${name}FillQuaternary`]: scale[`${appearance}A`][isDarkMode ? 0 : 1],
     [`color${name}Bg`]: scale[appearance][1],
     [`color${name}BgHover`]: scale[appearance][2],
     [`color${name}Border`]: scale[appearance][4],

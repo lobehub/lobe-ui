@@ -5,7 +5,7 @@ import { content2 } from './data';
 
 export default () => {
   const store = useCreateStore();
-  const options: MarkdownProps | any = useControls(
+  const options = useControls(
     {
       children: {
         rows: true,
@@ -14,7 +14,7 @@ export default () => {
       fullFeaturedCodeBlock: false,
     },
     { store },
-  );
+  ) as MarkdownProps;
 
   return (
     <StoryBook levaStore={store}>
@@ -24,10 +24,6 @@ export default () => {
           a: {
             rel: '',
             target: '_self',
-          },
-          hr: {
-            children: 'Custom HR',
-            dashed: true,
           },
           img: {
             style: {

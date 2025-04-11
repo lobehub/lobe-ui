@@ -1,11 +1,11 @@
-import { ActionsBar, ChatList, ChatListProps } from '@lobehub/ui/chat';
+import { ChatActionsBar, ChatList, ChatListProps } from '@lobehub/ui/chat';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 import { data } from './data';
 
 export default () => {
   const store = useCreateStore();
-  const control: ChatListProps | any = useControls(
+  const control = useControls(
     {
       showTitle: false,
       type: {
@@ -14,18 +14,20 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as ChatListProps;
 
   return (
     <StoryBook levaStore={store}>
       <ChatList
+        {...control}
         data={data}
-        renderActions={ActionsBar}
+        renderActions={{
+          default: ChatActionsBar,
+        }}
         renderMessages={{
           default: ({ id, editableContent }) => <div id={id}>{editableContent}</div>,
         }}
         style={{ width: '100%' }}
-        {...control}
       />
     </StoryBook>
   );

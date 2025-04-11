@@ -5,7 +5,7 @@ import { content } from './data';
 
 export default () => {
   const store = useCreateStore();
-  const options: MdxProps | any = useControls(
+  const options = useControls(
     {
       children: {
         rows: true,
@@ -18,7 +18,7 @@ export default () => {
       // marginMultiple: 1.5,
     },
     { store },
-  );
+  ) as MdxProps;
 
   return (
     <StoryBook levaStore={store}>

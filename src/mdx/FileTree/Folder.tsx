@@ -48,4 +48,6 @@ const Folder: FC<FolderProps> = ({ name, defaultOpen, icon = FolderIcon, childre
   );
 };
 
+Folder.displayName = 'MdxFolder';
+
 export default Folder;

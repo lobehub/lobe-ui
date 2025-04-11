@@ -56,11 +56,7 @@ export default () => {
           as the default css-in-js styling solution.
         </p>
       </Center>
-      <Highlighter
-        language={'tsx'}
-        style={{ background: theme.colorFillTertiary, width: '100%' }}
-        type={'ghost'}
-      >
+      <Highlighter language={'tsx'} style={{ background: theme.colorFillTertiary, width: '100%' }}>
         {example}
       </Highlighter>
       <Features items={items} />
