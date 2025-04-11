@@ -1,19 +1,26 @@
+import type { ImageProps as AntdImageProps } from 'antd';
 import type { ImagePreviewType } from 'rc-image';
-import type { ImageProps as AntImageProps } from 'rc-image/lib/Image';
-import { GroupConsumerProps } from 'rc-image/lib/PreviewGroup';
+import type {
+  GroupConsumerProps as AntdPreviewGroupProps,
+  PreviewGroupPreview,
+} from 'rc-image/lib/PreviewGroup';
 import type { CSSProperties, ReactNode, Ref } from 'react';
 
-export interface PreviewOptions extends ImagePreviewType {
+export interface PreviewGroupPreviewOptions extends PreviewGroupPreview {
   toolbarAddon?: ReactNode;
 }
 
-export interface PreviewGroupProps extends GroupConsumerProps {
+export interface PreviewGroupProps extends AntdPreviewGroupProps {
   enable?: boolean;
   items?: string[];
-  preview?: PreviewOptions;
+  preview?: PreviewGroupPreviewOptions;
 }
 
-export interface ImageProps extends AntImageProps {
+export interface ImagePreviewOptions extends ImagePreviewType {
+  toolbarAddon?: ReactNode;
+}
+
+export interface ImageProps extends Omit<AntdImageProps, 'preview'> {
   actions?: ReactNode;
   alwaysShowActions?: boolean;
   classNames?: {
@@ -26,7 +33,7 @@ export interface ImageProps extends AntImageProps {
   minHeight?: number | string;
   minWidth?: number | string;
   objectFit?: 'cover' | 'contain';
-  preview?: boolean | PreviewOptions;
+  preview?: boolean | ImagePreviewOptions;
   ref?: Ref<HTMLDivElement>;
   size?: number | string;
   styles?: {

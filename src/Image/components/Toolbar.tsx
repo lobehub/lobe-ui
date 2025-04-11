@@ -1,6 +1,6 @@
 import { FlipHorizontal, FlipVertical, RotateCcw, RotateCw, ZoomIn, ZoomOut } from 'lucide-react';
 import type { ToolbarRenderInfoType } from 'rc-image/lib/Preview';
-import { ReactNode, memo } from 'react';
+import { type ReactNode, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
