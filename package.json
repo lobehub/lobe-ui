@@ -128,7 +128,7 @@
     "re-resizable": "^6.11.2",
     "react-avatar-editor": "^13.0.2",
     "react-error-boundary": "^5.0.0",
-    "react-hotkeys-hook": "^4.6.1",
+    "react-hotkeys-hook": "^5.0.0",
     "react-layout-kit": "^1.9.1",
     "react-markdown": "^10.1.0",
     "react-merge-refs": "^2.1.1",
