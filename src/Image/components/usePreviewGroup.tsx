@@ -1,4 +1,3 @@
-import { isObject } from 'lodash-es';
 import { X } from 'lucide-react';
 import type { GroupConsumerProps as AntdPreviewGroupProps } from 'rc-image/lib/PreviewGroup';
 import { useMemo, useState } from 'react';
@@ -17,7 +16,7 @@ export const usePreview = (
   const { cx, styles } = useStyles();
 
   return useMemo(() => {
-    if (!isObject(props)) return props;
+    if (props === false) return props;
 
     const {
       onVisibleChange,
@@ -29,7 +28,7 @@ export const usePreview = (
       imageRender,
       toolbarRender,
       ...rest
-    } = props;
+    } = props === true ? {} : props || {};
 
     return {
       closeIcon: <Icon color={'#fff'} icon={X} />,
