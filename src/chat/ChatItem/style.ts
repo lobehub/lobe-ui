@@ -78,9 +78,11 @@ export const useStyles = createStyles(
         type === 'raw' && rawContainerStylish,
         css`
           position: relative;
+
           width: 100%;
           max-width: 100vw;
-          padding: 16px;
+          padding-block: 24px 12px;
+          padding-inline: 12px;
 
           time {
             display: inline-block;
@@ -107,7 +109,7 @@ export const useStyles = createStyles(
           }
 
           ${responsive.mobile} {
-            padding-block: ${type === 'raw' ? '12px' : '6px'};
+            padding-block-start: ${type === 'raw' ? '16px' : '12px'};
             padding-inline: 8px;
           }
         `,

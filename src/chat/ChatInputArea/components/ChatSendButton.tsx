@@ -19,7 +19,7 @@ const ChatSendButton = memo<ChatSendButtonProps>(
         flex={'none'}
         gap={8}
         horizontal
-        padding={'0 24px'}
+        paddingInline={16}
         ref={ref}
         {...rest}
       >

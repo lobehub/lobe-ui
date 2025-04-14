@@ -31,7 +31,7 @@ const FormGroup = memo<FormGroupProps>(
     const { cx, styles } = useStyles(variant);
     const isBorderless = variant === 'borderless';
 
-    const defaultCollapsible = isUndefined(collapsible) ? isBorderless : collapsible;
+    const defaultCollapsible = isUndefined(collapsible) ? !isBorderless : collapsible;
 
     const titleVariants = useMemo(
       () =>

@@ -259,7 +259,7 @@ export const useStyles = createStyles(
         width: 100%;
         height: calc(100% - ${headerHeight}px);
 
-        background: ${token.colorBgLayout};
+        background: ${token.colorBgContainerSecondary};
       `,
       handlerIcon: css`
         transition: all 0.2s ${token.motionEaseOut};
@@ -278,7 +278,7 @@ export const useStyles = createStyles(
           border: 0 solid ${token.colorBorderSecondary};
 
           &:hover {
-            .${prefix}-toggle {
+            > .${prefix}-toggle {
               opacity: 1;
             }
           }

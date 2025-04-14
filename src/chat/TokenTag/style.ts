@@ -16,11 +16,12 @@ export const useStyles = createStyles(({ prefixCls, css, token }) => {
       min-width: fit-content;
       height: 28px;
       &.${prefixCls}-btn {
+        padding-block: 12px;
         &.${prefixCls}-btn-round {
-          padding-inline: 8px;
+          padding-inline: 6px 12px;
         }
         &.${prefixCls}-btn-square {
-          padding-inline: 8px;
+          padding-inline: 6px 12px;
         }
       }
     `,

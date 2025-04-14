@@ -100,6 +100,7 @@ export {
   Typography,
   type TypographyProps,
 } from './Markdown';
+export { default as MaskShadow, type MaskShadowProps } from './MaskShadow';
 export {
   default as MaterialFileTypeIcon,
   type MaterialFileTypeIconProps,
@@ -119,6 +120,7 @@ export {
   type SyntaxMermaidProps,
 } from './Mermaid';
 export { default as Modal, type ModalProps } from './Modal';
+export { default as ScrollShadow, type ScrollShadowProps } from './ScrollShadow';
 export {
   default as SearchBar,
   type SearchBarProps,

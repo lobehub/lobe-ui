@@ -124,10 +124,10 @@ const DraggablePanel = memo<DraggablePanelProps>(
           /* eslint-disable sort-keys-fix/sort-keys-fix */
           variants: {
             placement: {
-              top: styles.borderBottom,
-              right: styles.borderLeft,
-              bottom: styles.borderTop,
-              left: styles.borderRight,
+              top: isExpand && styles.borderBottom,
+              right: isExpand && styles.borderLeft,
+              bottom: isExpand && styles.borderTop,
+              left: isExpand && styles.borderRight,
             },
             mode: {
               fixed: styles.fixed,
@@ -136,7 +136,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
           },
           /* eslint-enable sort-keys-fix/sort-keys-fix */
         }),
-      [styles],
+      [styles, isExpand],
     );
 
     // Style variants for the handle

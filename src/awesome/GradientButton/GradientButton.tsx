@@ -8,11 +8,17 @@ import { useStyles } from './style';
 import type { GradientButtonProps } from './type';
 
 const GradientButton = memo<GradientButtonProps>(
-  ({ glow = true, children, className, size = 'large', ...rest }) => {
+  ({ glow = true, children, className, size, disabled, ...rest }) => {
     const { styles, cx } = useStyles(size);
 
     return (
-      <Button className={cx(styles.button, className)} size={size} variant={'text'} {...rest}>
+      <Button
+        className={cx(!disabled && styles.button, className)}
+        disabled={disabled}
+        size={size}
+        variant={disabled ? undefined : 'text'}
+        {...rest}
+      >
         {glow && <div className={styles.glow} />}
         {children}
       </Button>

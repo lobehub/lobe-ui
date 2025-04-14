@@ -47,9 +47,9 @@ const Collapse = memo<CollapseProps>(
           /* eslint-disable sort-keys-fix/sort-keys-fix */
           variants: {
             variant: {
-              filled: cx(styles.filled, styles.outlined),
+              filled: styles.filled,
               outlined: styles.outlined,
-              borderless: null,
+              borderless: styles.borderless,
             },
             gap: {
               false: null,

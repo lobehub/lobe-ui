@@ -18,7 +18,7 @@ export default () => {
     {
       enableReset: true,
       enableUnsavedWarning: true,
-      float: true,
+      float: false,
       variant: {
         options: ['borderless', 'filled', 'outlined'],
         value: 'borderless',
