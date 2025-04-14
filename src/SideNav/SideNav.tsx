@@ -17,7 +17,7 @@ const SideNav = memo<SideNavProps>(({ className, avatar, topActions, bottomActio
       justify={'space-between'}
       {...rest}
     >
-      <Flexbox align="center" direction="vertical" gap={16}>
+      <Flexbox align="center" direction="vertical" gap={12}>
         {avatar}
         <Flexbox align="center" direction="vertical" gap={8}>
           {topActions}

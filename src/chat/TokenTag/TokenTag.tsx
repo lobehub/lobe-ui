@@ -79,7 +79,7 @@ const TokenTag = memo<TokenTagProps>(
         shape={shape}
         {...rest}
       >
-        <FluentEmoji emoji={data.emoji} size={16} unoptimized={unoptimized} />
+        <FluentEmoji emoji={data.emoji} size={18} unoptimized={unoptimized} />
         {valueLeft > 0
           ? [
               showText

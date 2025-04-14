@@ -7,6 +7,19 @@ export const getPadding = (padding?: number | string) =>
 
 export const useStyles = createStyles(({ css, token, prefixCls }) => {
   return {
+    borderless: css`
+      &.${prefixCls}-collapse {
+        .${prefixCls}-collapse-header {
+          padding-inline: 0;
+        }
+        .${prefixCls}-collapse-content {
+          padding-inline: 0;
+        }
+        .${prefixCls}-collapse-content-box {
+          padding-inline: 0;
+        }
+      }
+    `,
     filled: css`
       &.${prefixCls}-collapse {
         .${prefixCls}-collapse-header {

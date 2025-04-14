@@ -18,20 +18,23 @@ export const useStyles = createStyles(({ css, token, stylish, cx }) => {
         align-self: stretch;
 
         width: 100%;
-        height: 64px;
+        height: 52px;
+        min-height: 52px;
+        max-height: 52px;
+        border-block-end: 1px solid ${token.colorBorderSecondary};
 
         background: linear-gradient(
           to bottom,
           ${rgba(token.colorBgLayout, 0.8)},
           ${rgba(token.colorBgLayout, 0.4)}
         );
-        border-block-end: 1px solid ${token.colorBorder};
       `,
     ),
     left: css`
       position: relative;
       overflow: hidden;
       flex: 1;
+      padding-inline-start: 8px;
     `,
     right: css`
       position: relative;

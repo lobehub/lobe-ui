@@ -2,22 +2,24 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ css, token, stylish, prefixCls }) => {
   return {
-    filled: stylish.variantFilled,
+    filled: css`
+      &.${prefixCls}-btn.${prefixCls}-btn-variant-filled {
+        ${stylish.variantFilled};
+        border: none;
+      }
+    `,
     glass: stylish.blur,
-    outlined: stylish.variantOutlined,
+    outlined: css`
+      &.${prefixCls}-btn.${prefixCls}-btn-variant-outlined {
+        ${stylish.variantOutlined}
+        border: none;
+      }
+    `,
     root: css`
       &.${prefixCls}-btn {
         transition:
           color 400ms ${token.motionEaseOut},
           background 100ms ${token.motionEaseOut};
-
-        &.${prefixCls}-btn-variant-outlined,&.${prefixCls}-btn-variant-dashed {
-          border-color: ${token.colorBorderSecondary};
-
-          &:hover {
-            border-color: ${token.colorBorder};
-          }
-        }
 
         > .${prefixCls}-btn-icon {
           display: flex;

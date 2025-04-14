@@ -181,11 +181,12 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       box-shadow: inset 0 0 0 1px ${token.colorFillTertiary};
 
       &:hover {
+        background: ${token.colorFillTertiary};
         box-shadow: inset 0 0 0 1px ${token.colorFillSecondary};
       }
 
       &:active {
-        background: ${token.colorFillTertiary};
+        background: ${isDarkMode ? token.colorFillQuaternary : token.colorFillSecondary};
         box-shadow: inset 0 0 0 1px ${isDarkMode ? token.colorFillTertiary : token.colorFill};
       }
     `,
@@ -194,11 +195,12 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       box-shadow: inset 0 0 0 1px ${token.colorErrorFillTertiary};
 
       &:hover {
-        box-shadow: inset 0 0 0 1px ${token.colorErrorFillSecondary};
+        background: ${token.colorErrorFillSecondary};
+        box-shadow: inset 0 0 0 1px ${token.colorErrorFillTertiary};
       }
 
       &:active {
-        background: ${token.colorErrorFillTertiary};
+        background: ${isDarkMode ? token.colorErrorFillQuaternary : token.colorErrorFillSecondary};
         box-shadow: inset 0 0 0 1px
           ${isDarkMode ? token.colorErrorFillTertiary : token.colorErrorFill};
       }

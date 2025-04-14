@@ -76,6 +76,9 @@ export const useStyles = createStyles(({ cx, token, css, stylish, prefixCls }) =
       }
     `,
     root: css`
+      overflow: hidden;
+      border: none;
+
       &:focus-within {
         border-color: ${token.colorBorder};
       }

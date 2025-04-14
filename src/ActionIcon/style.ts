@@ -8,7 +8,13 @@ export const useStyles = createStyles(({ isDarkMode, css, token, stylish }) => {
     dangerFilled: stylish.variantFilledDanger,
     dangerOutlined: stylish.variantOutlinedDanger,
     dangerRoot: css`
-      color: ${token.colorError};
+      &:hover {
+        color: ${token.colorError};
+      }
+
+      &:active {
+        color: ${token.colorErrorActive};
+      }
     `,
     disabled: stylish.disabled,
     filled: stylish.variantFilled,
