@@ -81,5 +81,5 @@ export interface ChatItemProps extends Omit<FlexboxProps, 'children' | 'onChange
    * @description The type of the chat item
    * @default 'block'
    */
-  type?: 'block' | 'pure';
+  type?: 'block' | 'raw';
 }

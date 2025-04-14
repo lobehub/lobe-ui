@@ -18,7 +18,7 @@ const FluentEmoji = memo<FluentEmojiProps>(
 
     const emojiUrl = useMemo(() => genEmojiUrl(emoji, type), [type, emoji]);
 
-    if (type === 'pure' || !emojiUrl || loadingFail)
+    if (type === 'raw' || !emojiUrl || loadingFail)
       return (
         <Center
           className={cx(styles.container, className)}

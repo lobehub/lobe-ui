@@ -16,8 +16,8 @@ export default () => {
         value: 'file',
       },
       variant: {
-        options: ['pure', 'file', 'folder'],
-        value: 'pure',
+        options: ['raw', 'file', 'folder'],
+        value: 'raw',
       },
     },
     { store },

@@ -156,7 +156,7 @@ const ChatListItem = memo<ChatListItemProps>((props) => {
       showTitle={showTitle}
       text={text}
       time={item.updateAt || item.createAt}
-      type={type === 'chat' ? 'block' : 'pure'}
+      type={type === 'chat' ? 'block' : 'raw'}
     />
   );
 });

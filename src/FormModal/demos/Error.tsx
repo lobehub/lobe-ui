@@ -77,8 +77,8 @@ export default () => {
   const { variant }: any = useControls(
     {
       variant: {
-        options: ['default', 'block', 'ghost', 'pure'],
-        value: 'pure',
+        options: ['default', 'block', 'ghost', 'raw'],
+        value: 'raw',
       },
     },
     { store },

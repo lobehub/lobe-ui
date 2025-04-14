@@ -26,7 +26,7 @@ export default () => {
       showTitle: false,
       time: 1_686_538_950_084,
       type: {
-        options: ['block', 'pure'],
+        options: ['block', 'raw'],
         value: 'block',
       },
     },

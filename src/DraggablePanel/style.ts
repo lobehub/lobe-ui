@@ -135,41 +135,44 @@ export const useStyles = createStyles(
     };
 
     // Toggle styles
-    const toggleBaseStyle = css`
-      pointer-events: ${showHandleWideArea ? 'all' : 'none'};
-
-      position: absolute;
-      z-index: 10;
-
-      opacity: 0;
-
-      transition: all 0.2s ${token.motionEaseOut};
-
-      &:hover,
-      &:active {
-        opacity: 1 !important;
-      }
-
-      > div {
-        ${stylish.variantFilled};
-        pointer-events: all;
-        cursor: pointer;
+    const toggleBaseStyle = cx(
+      `${prefix}-toggle`,
+      css`
+        pointer-events: ${showHandleWideArea ? 'all' : 'none'};
 
         position: absolute;
+        z-index: 10;
 
-        color: ${token.colorTextTertiary};
+        opacity: 0;
 
         transition: all 0.2s ${token.motionEaseOut};
 
-        &:hover {
-          color: ${token.colorTextSecondary};
+        &:hover,
+        &:active {
+          opacity: 1 !important;
         }
 
-        &:active {
-          color: ${token.colorText};
+        > div {
+          ${stylish.variantFilled};
+          pointer-events: all;
+          cursor: pointer;
+
+          position: absolute;
+
+          color: ${token.colorTextTertiary};
+
+          transition: all 0.2s ${token.motionEaseOut};
+
+          &:hover {
+            color: ${token.colorTextSecondary};
+          }
+
+          &:active {
+            color: ${token.colorText};
+          }
         }
-      }
-    `;
+      `,
+    );
 
     const toggleStyles = {
       toggleBottom: cx(
@@ -185,7 +188,6 @@ export const useStyles = createStyles(
             width: ${LAYOUT.toggleLength}px;
             height: ${LAYOUT.toggleShort}px;
             margin-inline-start: -20px;
-
             border-radius: 0 0 4px 4px;
           }
         `,
@@ -203,7 +205,6 @@ export const useStyles = createStyles(
             width: ${LAYOUT.toggleShort}px;
             height: ${LAYOUT.toggleLength}px;
             margin-block-start: -20px;
-
             border-radius: 4px 0 0 4px;
           }
         `,
@@ -221,7 +222,6 @@ export const useStyles = createStyles(
             width: ${LAYOUT.toggleShort}px;
             height: ${LAYOUT.toggleLength}px;
             margin-block-start: -20px;
-
             border-radius: 0 4px 4px 0;
           }
         `,
@@ -240,7 +240,6 @@ export const useStyles = createStyles(
             width: ${LAYOUT.toggleLength}px;
             height: ${LAYOUT.toggleShort}px;
             margin-inline-start: -20px;
-
             border-radius: 4px 4px 0 0;
           }
         `,

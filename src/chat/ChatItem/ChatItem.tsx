@@ -67,7 +67,7 @@ const ChatItem = memo<ChatItemProps>(
 
     // 使用 ResizeObserver 监控内容和容器尺寸
     useEffect(() => {
-      if (type === 'pure') {
+      if (type === 'raw') {
         setLayoutMode('vertical');
         return;
       }
