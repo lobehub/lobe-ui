@@ -5,6 +5,8 @@ export const useStyles = createStyles(({ cx, token, css, stylish, prefixCls }) =
     borderless: cx(
       stylish.variantBorderless,
       css`
+        padding: 0;
+
         &:hover {
           ${stylish.variantBorderlessWithoutHover}
         }

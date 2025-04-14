@@ -1,4 +1,4 @@
-export type EmojiType = 'anim' | 'flat' | 'modern' | 'mono' | 'pure' | '3d';
+export type EmojiType = 'anim' | 'flat' | 'modern' | 'mono' | 'raw' | '3d';
 
 export function isFlagEmoji(emoji: string) {
   const flagRegex = /(?:\uD83C[\uDDE6-\uDDFF]){2}/;
@@ -26,7 +26,7 @@ export const genEmojiUrl = (emoji: string, type: EmojiType) => {
   const ext = ['anim', '3d'].includes(type) ? 'webp' : 'svg';
 
   switch (type) {
-    case 'pure': {
+    case 'raw': {
       return null;
     }
     case 'anim': {

@@ -9,7 +9,7 @@ import {
 } from '@shikijs/transformers';
 import { useTheme, useThemeMode } from 'antd-style';
 import { useMemo } from 'react';
-import type { BuiltinTheme } from 'shiki';
+import type { BuiltinTheme, CodeToHastOptions } from 'shiki';
 import useSWR, { SWRResponse } from 'swr';
 import { Md5 } from 'ts-md5';
 
@@ -27,8 +27,13 @@ type ColorReplacements = {
   };
 };
 
+type ICodeToHtml = (code: string, options: CodeToHastOptions) => Promise<string>;
+
 // 懒加载 shiki
-const loadShiki = () => import('shiki').then((mod) => mod.codeToHtml);
+const loadShiki = (): Promise<ICodeToHtml | null> => {
+  if (typeof window === 'undefined') return Promise.resolve(null);
+  return import('shiki').then((mod) => mod.codeToHtml);
+};
 const shikiPromise = loadShiki();
 
 // 辅助函数：安全的HTML转义
@@ -118,6 +123,7 @@ export const useHighlight = (
       try {
         // 尝试完整渲染
         const codeToHtml = await shikiPromise;
+        if (!codeToHtml) return text;
         const html = await codeToHtml(text, {
           colorReplacements: builtinTheme ? undefined : colorReplacements,
           lang: matchedLanguage,
@@ -132,6 +138,7 @@ export const useHighlight = (
         try {
           // 尝试简单渲染 (不使用转换器)
           const codeToHtml = await shikiPromise;
+          if (!codeToHtml) return text;
           const html = await codeToHtml(text, {
             lang: matchedLanguage,
             theme: isDarkMode ? 'dark-plus' : 'light-plus',

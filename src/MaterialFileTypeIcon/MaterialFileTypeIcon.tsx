@@ -15,7 +15,7 @@ const MaterialFileTypeIcon = memo<MaterialFileTypeIconProps>(
     fallbackUnknownType = true,
     filename,
     size = 48,
-    variant = 'pure',
+    variant = 'raw',
     type,
     style,
     open,
@@ -44,7 +44,7 @@ const MaterialFileTypeIcon = memo<MaterialFileTypeIconProps>(
         <FileTypeIcon filetype={filename.split('.')[1]} size={size} type={type} variant={'mono'} />
       );
 
-    if (variant === 'pure')
+    if (variant === 'raw')
       return <Img height={size} src={iconUrl} style={style} width={size} {...rest} />;
 
     return (

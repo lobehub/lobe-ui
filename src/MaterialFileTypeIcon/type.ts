@@ -12,5 +12,5 @@ export interface MaterialFileTypeIconProps extends DivProps {
   open?: boolean;
   size?: number;
   type?: 'file' | 'folder';
-  variant?: 'pure' | 'file' | 'folder';
+  variant?: 'raw' | 'file' | 'folder';
 }

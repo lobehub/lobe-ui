@@ -1,7 +1,8 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { Edit3 } from 'lucide-react';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
@@ -18,9 +19,18 @@ const EditableText = memo<EditableTextProps>(
     onChange,
     editing,
     onEditingChange,
+    onChangeEnd,
+    onFocus,
+    onBlur,
+    className,
     inputProps,
+    onValueChanging,
     gap = 8,
     style,
+    size = 'small',
+    styles,
+    classNames,
+    variant = 'borderless',
     ...rest
   }) => {
     const [edited, setEdited] = useControlledState(false, {
@@ -40,13 +50,40 @@ const EditableText = memo<EditableTextProps>(
       },
     );
 
+    const height = useMemo(() => {
+      if (!size) return 32;
+      switch (size) {
+        case 'large': {
+          return 40;
+        }
+        case 'middle': {
+          return 32;
+        }
+        case 'small': {
+          return 24;
+        }
+      }
+    }, [size]);
+
     const input = (
       <ControlInput
+        className={cx(className, classNames?.input)}
+        onBlur={onBlur}
         onChange={onChange}
-        onChangeEnd={() => {
+        onChangeEnd={(v) => {
+          onChangeEnd?.(v);
           setEdited(false);
         }}
+        onFocus={onFocus}
+        onValueChanging={onValueChanging}
+        size={size}
+        style={{
+          height,
+          ...style,
+          ...styles?.input,
+        }}
         value={value as string}
+        variant={variant}
         {...inputProps}
       />
     );
@@ -70,11 +107,14 @@ const EditableText = memo<EditableTextProps>(
     return (
       <Flexbox
         align={'center'}
+        className={cx(className, classNames?.container)}
         gap={gap}
         horizontal
         style={{
-          minHeight: 38,
+          height,
+          width: '100%',
           ...style,
+          ...styles?.container,
         }}
         {...rest}
       >

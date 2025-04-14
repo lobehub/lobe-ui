@@ -1,6 +1,6 @@
 'use client';
 
-import { type InputRef } from 'antd';
+import type { InputRef } from 'antd';
 import { RotateCcw, Save } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
@@ -65,9 +65,7 @@ const ControlInput = memo<ControlInputProps>(
           isChineseInput.current = true;
           onCompositionStart?.(e);
         }}
-        onFocus={(e) => {
-          onFocus?.(e);
-        }}
+        onFocus={onFocus}
         onPressEnter={(e) => {
           if (!e.shiftKey && !isChineseInput.current) {
             e.preventDefault();
@@ -77,7 +75,7 @@ const ControlInput = memo<ControlInputProps>(
         }}
         ref={ref}
         style={{
-          minHeight: 38,
+          width: '100%',
           ...style,
         }}
         suffix={

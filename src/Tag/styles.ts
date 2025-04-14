@@ -17,15 +17,19 @@ export const useStyles = createStyles(({ stylish, prefixCls, css, token }) => ({
       user-select: none;
 
       display: flex;
+      gap: 0.4em;
       align-items: center;
       justify-content: center;
 
       height: 22px;
       margin: 0;
+      border-radius: 3px;
 
       line-height: 1.2;
 
-      border-radius: 3px;
+      span {
+        margin: 0;
+      }
 
       span:not(.anticon) {
         height: unset;

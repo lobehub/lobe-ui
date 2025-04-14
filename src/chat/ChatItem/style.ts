@@ -19,28 +19,28 @@ export const useStyles = createStyles(
       showTitle?: boolean;
       time?: number;
       title?: string;
-      type?: 'block' | 'pure';
+      type?: 'block' | 'raw';
     },
   ) => {
     const blockStylish = css`
       padding-block: 8px;
       padding-inline: 12px;
-
-      background-color: ${token.colorBgContainer};
       border: 1px solid ${rgba(token.colorBorderSecondary, 0.66)};
       border-radius: ${token.borderRadiusLG}px;
+
+      background-color: ${token.colorBgContainer};
     `;
 
-    const pureStylish = css`
+    const rawStylish = css`
       padding-block-start: ${title ? 0 : '6px'};
     `;
 
-    const pureContainerStylish = css`
+    const rawContainerStylish = css`
       margin-block-end: -16px;
       transition: background-color 100ms ${token.motionEaseOut};
     `;
 
-    const typeStylish = type === 'block' ? blockStylish : pureStylish;
+    const typeStylish = type === 'block' ? blockStylish : rawStylish;
 
     const editingStylish =
       editing &&
@@ -75,7 +75,7 @@ export const useStyles = createStyles(
         width: ${avatarSize}px;
       `,
       container: cx(
-        type === 'pure' && pureContainerStylish,
+        type === 'raw' && rawContainerStylish,
         css`
           position: relative;
           width: 100%;
@@ -107,7 +107,7 @@ export const useStyles = createStyles(
           }
 
           ${responsive.mobile} {
-            padding-block: ${type === 'pure' ? '12px' : '6px'};
+            padding-block: ${type === 'raw' ? '12px' : '6px'};
             padding-inline: 8px;
           }
         `,
@@ -124,10 +124,10 @@ export const useStyles = createStyles(
             border-color: ${token.colorBorder};
           }
         `,
-        type === 'pure' &&
+        type === 'raw' &&
           css`
-            background: ${token.colorFillQuaternary};
             border-radius: ${token.borderRadius}px;
+            background: ${token.colorFillQuaternary};
           `,
       ),
       editingInput: css`
@@ -147,11 +147,11 @@ export const useStyles = createStyles(
 
         width: 16px;
         height: 16px;
+        border-radius: 50%;
 
         color: ${token.colorBgLayout};
 
         background: ${token.colorPrimary};
-        border-radius: 50%;
       `,
       message: cx(
         typeStylish,
