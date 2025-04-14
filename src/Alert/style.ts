@@ -18,8 +18,8 @@ export const useStyles = createStyles(
       `,
       borderless: css`
         padding: 0 !important;
-        background: transparent !important;
         border: none !important;
+        background: transparent !important;
       `,
       borderlessExtraHeader: css`
         margin-block-start: ${baseBlockPadding}px;
@@ -32,6 +32,8 @@ export const useStyles = createStyles(
         }
       `,
       expandText: css`
+        padding-inline-end: 12px;
+
         &:hover {
           cursor: pointer;
         }
@@ -42,7 +44,6 @@ export const useStyles = createStyles(
         overflow: hidden;
 
         max-width: 100%;
-
         border: 1px solid;
         border-block-start: none;
         border-end-start-radius: ${token.borderRadiusLG}px;

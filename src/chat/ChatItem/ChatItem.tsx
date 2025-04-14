@@ -27,7 +27,7 @@ const ChatItem = memo<ChatItemProps>(
     message,
     placeholderMessage = '...',
     placement = 'left',
-    type = 'block',
+    variant = 'bubble',
     avatar,
     error,
     showTitle,
@@ -55,19 +55,19 @@ const ChatItem = memo<ChatItemProps>(
       showTitle,
       time,
       title: avatar.title,
-      type,
+      variant,
     });
 
     // 在 ChatItem 组件中添加
     const contentRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const [layoutMode, setLayoutMode] = useState<'horizontal' | 'vertical'>(
-      type === 'block' ? 'horizontal' : 'vertical',
+      variant === 'bubble' ? 'horizontal' : 'vertical',
     );
 
     // 使用 ResizeObserver 监控内容和容器尺寸
     useEffect(() => {
-      if (type === 'raw') {
+      if (variant === 'docs') {
         setLayoutMode('vertical');
         return;
       }
@@ -90,7 +90,7 @@ const ChatItem = memo<ChatItemProps>(
       observer.observe(containerRef.current);
 
       return () => observer.disconnect();
-    }, [type, actionsWrapWidth]);
+    }, [variant, actionsWrapWidth]);
 
     return (
       <Flexbox
@@ -108,6 +108,10 @@ const ChatItem = memo<ChatItemProps>(
           onClick={onAvatarClick}
           placement={placement}
           size={mobile ? MOBILE_AVATAR_SIZE : undefined}
+          style={{
+            marginTop: 6,
+            ...avatarProps?.style,
+          }}
         />
         <Flexbox
           align={placement === 'left' ? 'flex-start' : 'flex-end'}
@@ -153,15 +157,22 @@ const ChatItem = memo<ChatItemProps>(
                   primary={primary}
                   renderMessage={renderMessage}
                   text={text}
-                  type={type}
+                  variant={variant}
                 />
               )}
             </Flexbox>
-            <Actions actions={actions} editing={editing} placement={placement} type={type} />
+            {actions && (
+              <Actions
+                actions={actions}
+                editing={editing}
+                placement={placement}
+                variant={variant}
+              />
+            )}
           </Flexbox>
           {belowMessage}
         </Flexbox>
-        {mobile && type === 'block' && <BorderSpacing borderSpacing={MOBILE_AVATAR_SIZE} />}
+        {mobile && variant === 'bubble' && <BorderSpacing borderSpacing={MOBILE_AVATAR_SIZE} />}
       </Flexbox>
     );
   },

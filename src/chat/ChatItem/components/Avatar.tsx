@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { type CSSProperties, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import A from '@/Avatar';
@@ -15,14 +15,15 @@ export interface AvatarProps {
   onClick?: ChatItemProps['onAvatarClick'];
   placement?: ChatItemProps['placement'];
   size?: number;
+  style?: CSSProperties;
   unoptimized?: boolean;
 }
 
 const Avatar = memo<AvatarProps>(
-  ({ loading, avatar, placement, unoptimized, addon, onClick, size = 40, alt }) => {
+  ({ loading, avatar, placement, unoptimized, addon, onClick, size = 40, style, alt }) => {
     const { styles } = useStyles({ avatarSize: size });
     const avatarContent = (
-      <div className={styles.avatarContainer}>
+      <div className={styles.avatarContainer} style={style}>
         <A
           alt={alt || avatar.title}
           animation={loading}
