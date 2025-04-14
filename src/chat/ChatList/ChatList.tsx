@@ -14,7 +14,7 @@ const ChatList = memo<ChatListProps>(
     renderMessagesExtra,
     className,
     data,
-    type = 'chat',
+    variant = 'bubble',
     text,
     showTitle,
     onMessageChange,
@@ -44,7 +44,7 @@ const ChatList = memo<ChatListProps>(
             renderMessagesExtra,
             showTitle,
             text,
-            type,
+            variant,
           };
 
           const historyLength = data.length;

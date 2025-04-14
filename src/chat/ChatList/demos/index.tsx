@@ -8,9 +8,9 @@ export default () => {
   const control = useControls(
     {
       showTitle: false,
-      type: {
-        options: ['doc', 'chat'],
-        value: 'chat',
+      variant: {
+        options: ['bubble', 'docs'],
+        value: 'bubble',
       },
     },
     { store },

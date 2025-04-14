@@ -74,7 +74,7 @@ export interface ListItemProps {
    * @description 聊天列表的类型
    * @default 'chat'
    */
-  type?: 'docs' | 'chat';
+  variant?: 'docs' | 'bubble';
 }
 
 export type ChatListItemProps = ChatMessage & ListItemProps;

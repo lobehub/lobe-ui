@@ -16,7 +16,7 @@ const ChatListItem = memo<ChatListItemProps>((props) => {
     onActionsClick,
     onAvatarsClick,
     onMessageChange,
-    type,
+    variant,
     text,
     renderMessages,
     renderErrorMessages,
@@ -148,7 +148,7 @@ const ChatListItem = memo<ChatListItemProps>((props) => {
         }
       }}
       onEditingChange={setEditing}
-      placement={type === 'chat' ? (item.role === 'user' ? 'right' : 'left') : 'left'}
+      placement={variant === 'bubble' ? (item.role === 'user' ? 'right' : 'left') : 'left'}
       primary={item.role === 'user'}
       renderMessage={(editableContent) => (
         <RenderMessage data={item} editableContent={editableContent} />
@@ -156,7 +156,7 @@ const ChatListItem = memo<ChatListItemProps>((props) => {
       showTitle={showTitle}
       text={text}
       time={item.updateAt || item.createAt}
-      type={type === 'chat' ? 'block' : 'raw'}
+      variant={variant}
     />
   );
 });

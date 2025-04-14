@@ -25,9 +25,9 @@ export default () => {
       primary: false,
       showTitle: false,
       time: 1_686_538_950_084,
-      type: {
-        options: ['block', 'raw'],
-        value: 'block',
+      variant: {
+        options: ['bubble', 'docs'],
+        value: 'bubble',
       },
     },
     { store },

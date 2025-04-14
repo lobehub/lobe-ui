@@ -60,6 +60,7 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
         color: ${token.colorTextSecondary};
 
         opacity: 0;
+        background: ${token.colorFillQuaternary};
 
         transition: opacity 0.1s;
       `,
