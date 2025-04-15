@@ -74,13 +74,13 @@ export interface FormItemProps extends AntdFormItemProps {
   variant?: FormVariant;
 }
 
-export interface FormSubmitFooterProps extends FlexboxProps {
+export interface FormSubmitFooterProps extends Omit<FlexboxProps, 'onReset'> {
   buttonProps?: Omit<ButtonProps, 'children'>;
   children?: ReactNode;
   enableReset?: boolean;
   enableUnsavedWarning?: boolean;
   float?: boolean;
-  onReset?: () => void;
+  onReset?: (value: any, preValue: any) => void;
   resetButtonProps?: Omit<ButtonProps, 'children'>;
   saveButtonProps?: Omit<ButtonProps, 'children'>;
   texts?: {
