@@ -3,18 +3,18 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const control: HotkeyProps | any = useControls(
+  const control = useControls(
     {
       compact: false,
       inverseTheme: false,
       keys: 'mod+k',
       variant: {
-        options: ['pure', 'default'],
-        value: 'default',
+        options: ['filled', 'outlined', 'borderless'],
+        value: 'filled',
       },
     },
     { store },
-  );
+  ) as HotkeyProps;
 
   return (
     <StoryBook levaStore={store}>

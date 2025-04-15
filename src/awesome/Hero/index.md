@@ -11,8 +11,6 @@ apiHeader:
 
 ## Default
 
-<code src="./demos/index.tsx" nopadding></code>
+<code src="./demos/index.tsx" center></code>
 
 ## APIs
-
-<API></API>

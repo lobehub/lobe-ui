@@ -18,10 +18,10 @@ export default () => {
     {
       enableReset: true,
       enableUnsavedWarning: true,
-      float: true,
+      float: false,
       variant: {
-        options: ['default', 'block', 'ghost', 'pure'],
-        value: 'default',
+        options: ['borderless', 'filled', 'outlined'],
+        value: 'borderless',
       },
     },
     { store },

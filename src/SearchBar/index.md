@@ -12,5 +12,3 @@ The rest of the props of Input are exactly the same as the original [input](http
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

@@ -1,17 +1,16 @@
-import { Tooltip, TooltipProps } from '@lobehub/ui';
+import { Button, Tooltip, TooltipProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { Button } from 'antd';
 
 export default () => {
   const store = useCreateStore();
-  const control: TooltipProps | any = useControls(
+  const control = useControls(
     {
       arrow: false,
       hotkey: 'mod+k',
       title: 'Example tooltip',
     },
     { store },
-  );
+  ) as TooltipProps;
 
   return (
     <StoryBook levaStore={store}>

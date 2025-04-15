@@ -1,3 +1,91 @@
+import rehypeKatex from 'rehype-katex';
+import rehypeRaw from 'rehype-raw';
+import remarkBreaks from 'remark-breaks';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import type { Pluggable } from 'unified';
+
+import { rehypeFootnoteLinks, remarkCustomFootnotes } from './plugins/footnote';
+import { rehypeKatexDir } from './plugins/katexDir';
+
+// 使用普通 Map 代替 WeakMap，并限制缓存大小
+const CACHE_SIZE = 50;
+export const contentCache = new Map<string, string>();
+
+// 添加内容到缓存时，保持缓存大小不超过限制
+export const addToCache = (key: string, value: string) => {
+  if (contentCache.size >= CACHE_SIZE) {
+    // 移除最早加入的缓存项
+    const firstKey = contentCache.keys().next().value;
+    if (firstKey) contentCache.delete(firstKey);
+  }
+  contentCache.set(key, value);
+};
+
+// 使用工厂函数处理插件，减少组件中的逻辑负担
+export const createPlugins = (props: {
+  allowHtml?: boolean;
+  enableCustomFootnotes?: boolean;
+  enableLatex?: boolean;
+  isChatMode: boolean;
+  rehypePlugins?: Pluggable | Pluggable[];
+  remarkPlugins?: Pluggable | Pluggable[];
+  remarkPluginsAhead?: Pluggable | Pluggable[];
+}) => {
+  const {
+    allowHtml,
+    enableLatex,
+    enableCustomFootnotes,
+    isChatMode,
+    rehypePlugins,
+    remarkPlugins,
+    remarkPluginsAhead,
+  } = props;
+
+  // 预处理插件数组
+  const normalizedRehypePlugins = Array.isArray(rehypePlugins)
+    ? rehypePlugins
+    : rehypePlugins
+      ? [rehypePlugins]
+      : [];
+
+  const normalizedRemarkPlugins = Array.isArray(remarkPlugins)
+    ? remarkPlugins
+    : remarkPlugins
+      ? [remarkPlugins]
+      : [];
+
+  const normalizedRemarkPluginsAhead = Array.isArray(remarkPluginsAhead)
+    ? remarkPluginsAhead
+    : remarkPluginsAhead
+      ? [remarkPluginsAhead]
+      : [];
+
+  // 创建 rehype 插件列表
+  const rehypePluginsList = [
+    allowHtml && rehypeRaw,
+    enableLatex && rehypeKatex,
+    enableLatex && rehypeKatexDir,
+    enableCustomFootnotes && rehypeFootnoteLinks,
+    ...normalizedRehypePlugins,
+  ].filter(Boolean) as Pluggable[];
+
+  // 创建 remark 插件列表
+  const remarkPluginsList = [
+    ...normalizedRemarkPluginsAhead,
+    [remarkGfm, { singleTilde: false }],
+    enableCustomFootnotes && remarkCustomFootnotes,
+    enableLatex && remarkMath,
+    isChatMode && remarkBreaks,
+    ...normalizedRemarkPlugins,
+  ].filter(Boolean) as Pluggable[];
+
+  return {
+    rehypePluginsList,
+    remarkPluginsList,
+  };
+};
+
 export function escapeBrackets(text: string) {
   const pattern = /(```[\S\s]*?```|`.*?`)|\\\[([\S\s]*?[^\\])\\]|\\\((.*?)\\\)/g;
   return text.replaceAll(pattern, (match, codeBlock, squareBracket, roundBracket) => {

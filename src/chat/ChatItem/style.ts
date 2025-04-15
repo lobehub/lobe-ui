@@ -6,7 +6,7 @@ export const useStyles = createStyles(
     { cx, css, token, responsive },
     {
       placement,
-      type,
+      variant,
       title,
       avatarSize,
       editing,
@@ -19,28 +19,28 @@ export const useStyles = createStyles(
       showTitle?: boolean;
       time?: number;
       title?: string;
-      type?: 'block' | 'pure';
+      variant?: 'bubble' | 'docs';
     },
   ) => {
     const blockStylish = css`
       padding-block: 8px;
       padding-inline: 12px;
-
-      background-color: ${token.colorBgContainer};
       border: 1px solid ${rgba(token.colorBorderSecondary, 0.66)};
       border-radius: ${token.borderRadiusLG}px;
+
+      background-color: ${token.colorBgContainer};
     `;
 
-    const pureStylish = css`
+    const rawStylish = css`
       padding-block-start: ${title ? 0 : '6px'};
     `;
 
-    const pureContainerStylish = css`
+    const rawContainerStylish = css`
       margin-block-end: -16px;
       transition: background-color 100ms ${token.motionEaseOut};
     `;
 
-    const typeStylish = type === 'block' ? blockStylish : pureStylish;
+    const typeStylish = variant === 'bubble' ? blockStylish : rawStylish;
 
     const editingStylish =
       editing &&
@@ -52,7 +52,7 @@ export const useStyles = createStyles(
       actions: cx(
         css`
           flex: none;
-          align-self: ${type === 'block'
+          align-self: ${variant === 'bubble'
             ? 'flex-end'
             : placement === 'left'
               ? 'flex-start'
@@ -75,12 +75,14 @@ export const useStyles = createStyles(
         width: ${avatarSize}px;
       `,
       container: cx(
-        type === 'pure' && pureContainerStylish,
+        variant === 'docs' && rawContainerStylish,
         css`
           position: relative;
+
           width: 100%;
           max-width: 100vw;
-          padding: 16px;
+          padding-block: 24px 12px;
+          padding-inline: 12px;
 
           time {
             display: inline-block;
@@ -107,7 +109,7 @@ export const useStyles = createStyles(
           }
 
           ${responsive.mobile} {
-            padding-block: ${type === 'pure' ? '12px' : '6px'};
+            padding-block-start: ${variant === 'docs' ? '16px' : '12px'};
             padding-inline: 8px;
           }
         `,
@@ -124,10 +126,10 @@ export const useStyles = createStyles(
             border-color: ${token.colorBorder};
           }
         `,
-        type === 'pure' &&
+        variant === 'docs' &&
           css`
-            background: ${token.colorFillQuaternary};
             border-radius: ${token.borderRadius}px;
+            background: ${token.colorFillQuaternary};
           `,
       ),
       editingInput: css`
@@ -147,11 +149,11 @@ export const useStyles = createStyles(
 
         width: 16px;
         height: 16px;
+        border-radius: 50%;
 
         color: ${token.colorBgLayout};
 
         background: ${token.colorPrimary};
-        border-radius: 50%;
       `,
       message: cx(
         typeStylish,

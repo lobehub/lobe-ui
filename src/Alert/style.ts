@@ -2,7 +2,7 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(
   (
-    { cx, token, css, prefixCls },
+    { cx, token, css, prefixCls, stylish },
     {
       closable,
       hasTitle,
@@ -13,15 +13,64 @@ export const useStyles = createStyles(
     const baseInlinePadding = hasTitle ? 16 : 12;
     return {
       banner: css`
-        border: none;
-        border-radius: 0;
+        border: none !important;
+        border-radius: 0 !important;
+      `,
+      borderless: css`
+        padding: 0 !important;
+        border: none !important;
+        background: transparent !important;
+      `,
+      borderlessExtraHeader: css`
+        margin-block-start: ${baseBlockPadding}px;
+        margin-inline-start: ${-baseInlinePadding * 0.25}px;
+        padding-inline: 0;
       `,
       colorfulText: css`
         .${prefixCls}-alert-message,.${prefixCls}-alert-description {
           color: inherit;
         }
       `,
-      container: cx(
+      expandText: css`
+        padding-inline-end: 12px;
+
+        &:hover {
+          cursor: pointer;
+        }
+      `,
+      extra: css`
+        position: relative;
+
+        overflow: hidden;
+
+        max-width: 100%;
+        border: 1px solid;
+        border-block-start: none;
+        border-end-start-radius: ${token.borderRadiusLG}px;
+        border-end-end-radius: ${token.borderRadiusLG}px;
+      `,
+      extraBody: css`
+        overflow-x: auto;
+        width: 100%;
+        padding-block-end: ${baseBlockPadding * 0.5}px;
+        padding-inline: ${baseInlinePadding * 0.5}px;
+      `,
+      extraHeader: css`
+        padding-block: ${baseBlockPadding * 0.5}px;
+        padding-inline: ${baseInlinePadding * 0.5}px;
+        border-block-start: 1px dashed;
+      `,
+      filled: css``,
+      glass: stylish.blur,
+      hasExtra: css`
+        border-block-end: none;
+        border-end-start-radius: 0;
+        border-end-end-radius: 0;
+      `,
+      outlined: css`
+        background: transparent !important;
+      `,
+      root: cx(
         css`
           position: relative;
 
@@ -32,8 +81,8 @@ export const useStyles = createStyles(
 
           max-width: 100%;
           padding-block: ${baseBlockPadding}px;
-          padding-inline: ${showIcon ? baseInlinePadding : baseInlinePadding * 1.5}px
-            ${closable ? baseInlinePadding : baseInlinePadding * 1.5}px;
+          padding-inline: ${showIcon ? baseInlinePadding * 0.75 : baseInlinePadding}px
+            ${closable ? baseInlinePadding * 0.75 : baseInlinePadding}px;
 
           .${prefixCls}-alert-message {
             font-weight: ${hasTitle ? 600 : 400};
@@ -62,55 +111,6 @@ export const useStyles = createStyles(
             }
           `,
       ),
-      expandText: css`
-        &:hover {
-          cursor: pointer;
-        }
-      `,
-      extra: css`
-        position: relative;
-
-        overflow: hidden;
-
-        max-width: 100%;
-
-        border: 1px solid;
-        border-block-start: none;
-        border-end-start-radius: ${token.borderRadiusLG}px;
-        border-end-end-radius: ${token.borderRadiusLG}px;
-      `,
-      extraBody: css`
-        overflow-x: auto;
-        width: 100%;
-        padding-block: ${baseBlockPadding}px;
-        padding-inline: ${baseInlinePadding}px;
-      `,
-      extraHeader: css`
-        padding-block: ${baseBlockPadding * 0.75}px;
-        padding-inline: ${baseInlinePadding * 0.75}px;
-        border-block-start: 1px dashed;
-      `,
-      hasExtra: css`
-        border-block-end: none;
-        border-end-start-radius: 0;
-        border-end-end-radius: 0;
-      `,
-      variantBlock: css`
-        border: none;
-      `,
-      variantGhost: css`
-        background: transparent !important;
-      `,
-      variantPure: css`
-        padding: 0 !important;
-        background: transparent !important;
-        border: none;
-      `,
-      variantPureExtraHeader: css`
-        margin-block-start: ${baseBlockPadding}px;
-        margin-inline-start: ${-baseInlinePadding * 0.25}px;
-        padding-inline: 0;
-      `,
     };
   },
 );

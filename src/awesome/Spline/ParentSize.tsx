@@ -1,9 +1,9 @@
 import { debounce } from 'lodash-es';
 import {
   type CSSProperties,
-  type HTMLAttributes,
   type ReactNode,
-  forwardRef,
+  type Ref,
+  memo,
   useEffect,
   useMemo,
   useRef,
@@ -24,7 +24,7 @@ interface PrivateWindow {
   ResizeObserver: ResizeObserverPolyfill;
 }
 
-export type ParentSizeProps = {
+export interface ParentSizeProps {
   /** Child render function `({ width, height, top, left, ref, resize }) => ReactNode`. */
   children: (
     args: {
@@ -42,9 +42,10 @@ export type ParentSizeProps = {
   ignoreDimensions?: keyof ParentSizeState | (keyof ParentSizeState)[];
   /** Optional `style` object to apply to the parent `div` wrapper used for size measurement. */
   parentSizeStyles?: CSSProperties;
+  ref?: Ref<HTMLDivElement>;
   /** Optionally inject a ResizeObserver polyfill, else this *must* be globally available. */
   resizeObserverPolyfill?: ResizeObserverPolyfill;
-};
+}
 
 type ParentSizeState = {
   height: number;
@@ -58,8 +59,9 @@ export type ParentSizeProvidedProps = ParentSizeState;
 const defaultIgnoreDimensions: ParentSizeProps['ignoreDimensions'] = [];
 const defaultParentSizeStyles = { height: '100%', width: '100%' };
 
-export default forwardRef<HTMLDivElement, ParentSizeProps>(function ParentSize(
-  {
+const ParentSize = memo<ParentSizeProps>(
+  ({
+    ref,
     className,
     children,
     debounceTime = 300,
@@ -68,70 +70,71 @@ export default forwardRef<HTMLDivElement, ParentSizeProps>(function ParentSize(
     enableDebounceLeadingCall = true,
     resizeObserverPolyfill,
     ...restProps
-  }: ParentSizeProps & Omit<HTMLAttributes<HTMLDivElement>, keyof ParentSizeProps>,
-  ref,
-) {
-  const target = useRef<HTMLDivElement | null>(null);
-  const animationFrameID = useRef(0);
+  }) => {
+    const target = useRef<HTMLDivElement | null>(null);
+    const animationFrameID = useRef(0);
 
-  const [state, setState] = useState<ParentSizeState>({
-    height: 0,
-    left: 0,
-    top: 0,
-    width: 0,
-  });
-
-  const resize = useMemo(() => {
-    const normalized = Array.isArray(ignoreDimensions) ? ignoreDimensions : [ignoreDimensions];
-
-    return debounce(
-      (incoming: ParentSizeState) => {
-        setState((existing) => {
-          const stateKeys = Object.keys(existing) as (keyof ParentSizeState)[];
-          const keysWithChanges = stateKeys.filter((key) => existing[key] !== incoming[key]);
-          const shouldBail = keysWithChanges.every((key) => normalized.includes(key));
-
-          return shouldBail ? existing : incoming;
-        });
-      },
-      debounceTime,
-      { leading: enableDebounceLeadingCall },
-    );
-  }, [debounceTime, enableDebounceLeadingCall, ignoreDimensions]);
-
-  useEffect(() => {
-    const LocalResizeObserver =
-      resizeObserverPolyfill || (window as unknown as PrivateWindow).ResizeObserver;
-
-    const observer = new LocalResizeObserver((entries) => {
-      for (const entry of entries) {
-        const { left, top, width, height } = entry?.contentRect ?? {};
-        animationFrameID.current = window.requestAnimationFrame(() => {
-          resize({ height, left, top, width });
-        });
-      }
+    const [state, setState] = useState<ParentSizeState>({
+      height: 0,
+      left: 0,
+      top: 0,
+      width: 0,
     });
-    if (target.current) observer.observe(target.current);
 
-    return () => {
-      window.cancelAnimationFrame(animationFrameID.current);
-      observer.disconnect();
-      resize.cancel();
-    };
-  }, [resize, resizeObserverPolyfill]);
+    const resize = useMemo(() => {
+      const normalized = Array.isArray(ignoreDimensions) ? ignoreDimensions : [ignoreDimensions];
 
-  return (
-    <div
-      className={className}
-      ref={mergeRefs<HTMLDivElement>([ref, target])}
-      style={{ ...defaultParentSizeStyles, ...parentSizeStyles }}
-      {...restProps}
-    >
-      {children({
-        ...state,
-        ref: target.current,
-        resize,
-      })}
-    </div>
-  );
-});
+      return debounce(
+        (incoming: ParentSizeState) => {
+          setState((existing) => {
+            const stateKeys = Object.keys(existing) as (keyof ParentSizeState)[];
+            const keysWithChanges = stateKeys.filter((key) => existing[key] !== incoming[key]);
+            const shouldBail = keysWithChanges.every((key) => normalized.includes(key));
+
+            return shouldBail ? existing : incoming;
+          });
+        },
+        debounceTime,
+        { leading: enableDebounceLeadingCall },
+      );
+    }, [debounceTime, enableDebounceLeadingCall, ignoreDimensions]);
+
+    useEffect(() => {
+      const LocalResizeObserver =
+        resizeObserverPolyfill || (window as unknown as PrivateWindow).ResizeObserver;
+
+      const observer = new LocalResizeObserver((entries) => {
+        for (const entry of entries) {
+          const { left, top, width, height } = entry?.contentRect ?? {};
+          animationFrameID.current = window.requestAnimationFrame(() => {
+            resize({ height, left, top, width });
+          });
+        }
+      });
+      if (target.current) observer.observe(target.current);
+
+      return () => {
+        window.cancelAnimationFrame(animationFrameID.current);
+        observer.disconnect();
+        resize.cancel();
+      };
+    }, [resize, resizeObserverPolyfill]);
+
+    return (
+      <div
+        className={className}
+        ref={mergeRefs<HTMLDivElement>([ref, target])}
+        style={{ ...defaultParentSizeStyles, ...parentSizeStyles }}
+        {...restProps}
+      >
+        {children({
+          ...state,
+          ref: target.current,
+          resize,
+        })}
+      </div>
+    );
+  },
+);
+
+export default ParentSize;

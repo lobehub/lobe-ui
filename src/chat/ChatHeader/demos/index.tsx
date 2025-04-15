@@ -3,12 +3,12 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const control: ChatHeaderProps | any = useControls(
+  const control = useControls(
     {
       showBackButton: false,
     },
     { store },
-  );
+  ) as ChatHeaderProps;
 
   return (
     <StoryBook levaStore={store} noPadding>

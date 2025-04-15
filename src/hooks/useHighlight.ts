@@ -1,3 +1,5 @@
+'use client';
+
 import {
   transformerNotationDiff,
   transformerNotationErrorLevel,
@@ -7,10 +9,11 @@ import {
 } from '@shikijs/transformers';
 import { useTheme, useThemeMode } from 'antd-style';
 import { useMemo } from 'react';
+import type { BuiltinTheme, CodeToHastOptions } from 'shiki';
 import useSWR, { SWRResponse } from 'swr';
 import { Md5 } from 'ts-md5';
 
-import languageMap from './languageMap';
+import { languages } from '@/Highlighter/const';
 
 export const FALLBACK_LANG = 'txt';
 
@@ -24,8 +27,13 @@ type ColorReplacements = {
   };
 };
 
+type ICodeToHtml = (code: string, options: CodeToHastOptions) => Promise<string>;
+
 // 懒加载 shiki
-const loadShiki = () => import('shiki').then((mod) => mod.codeToHtml);
+const loadShiki = (): Promise<ICodeToHtml | null> => {
+  if (typeof window === 'undefined') return Promise.resolve(null);
+  return import('shiki').then((mod) => mod.codeToHtml);
+};
 const shikiPromise = loadShiki();
 
 // 辅助函数：安全的HTML转义
@@ -41,17 +49,20 @@ const escapeHtml = (str: string): string => {
 // 主高亮组件
 export const useHighlight = (
   text: string,
-  lang: string,
-  enableTransformer?: boolean,
+  {
+    language,
+    enableTransformer,
+    theme: builtinTheme,
+  }: { enableTransformer?: boolean; language: string; theme?: BuiltinTheme },
 ): SWRResponse<string, Error> => {
   const { isDarkMode } = useThemeMode();
   const theme = useTheme();
-  const language = lang.toLowerCase();
+  const lang = language.toLowerCase();
 
   // 匹配支持的语言
   const matchedLanguage = useMemo(
-    () => (languageMap.includes(language as any) ? language : FALLBACK_LANG),
-    [language],
+    () => (languages.includes(lang as any) ? lang : FALLBACK_LANG),
+    [lang],
   );
 
   // 优化transformer创建
@@ -82,6 +93,7 @@ export const useHighlight = (
       },
       'slack-ochin': {
         '#002339': theme.colorText,
+        '#0444ac': theme.geekblue,
         '#0991b6': theme.colorError,
         '#174781': theme.purple10,
         '#2f86d2': theme.colorText,
@@ -99,8 +111,10 @@ export const useHighlight = (
   const cacheKey = useMemo((): string | null => {
     // 长文本使用 hash
     const hash = text.length < MD5_LENGTH_THRESHOLD ? text : Md5.hashStr(text);
-    return [matchedLanguage, isDarkMode ? 'd' : 'l', hash].join('-');
-  }, [text, matchedLanguage, isDarkMode]);
+    return [matchedLanguage, builtinTheme || (isDarkMode ? 'd' : 'l'), hash]
+      .filter(Boolean)
+      .join('-');
+  }, [text, matchedLanguage, isDarkMode, builtinTheme]);
 
   // 使用SWR获取高亮HTML
   return useSWR(
@@ -109,10 +123,11 @@ export const useHighlight = (
       try {
         // 尝试完整渲染
         const codeToHtml = await shikiPromise;
+        if (!codeToHtml) return text;
         const html = await codeToHtml(text, {
-          colorReplacements,
+          colorReplacements: builtinTheme ? undefined : colorReplacements,
           lang: matchedLanguage,
-          theme: isDarkMode ? 'slack-dark' : 'slack-ochin',
+          theme: builtinTheme || (isDarkMode ? 'slack-dark' : 'slack-ochin'),
           transformers,
         });
 
@@ -123,6 +138,7 @@ export const useHighlight = (
         try {
           // 尝试简单渲染 (不使用转换器)
           const codeToHtml = await shikiPromise;
+          if (!codeToHtml) return text;
           const html = await codeToHtml(text, {
             lang: matchedLanguage,
             theme: isDarkMode ? 'dark-plus' : 'light-plus',
@@ -143,7 +159,5 @@ export const useHighlight = (
     },
   );
 };
-
-export { default as languageMap } from './languageMap';
 
 export { escapeHtml, loadShiki, MD5_LENGTH_THRESHOLD, shikiPromise };

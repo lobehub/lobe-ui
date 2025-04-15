@@ -23,5 +23,3 @@ export default RemoteMDX;
 ```
 
 ## APIs
-
-<API></API>

@@ -10,5 +10,3 @@ description: The Toc component is used to display a table of contents with click
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

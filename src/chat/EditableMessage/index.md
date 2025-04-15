@@ -11,8 +11,6 @@ apiHeader:
 
 ## Default
 
-<code iframe src="./demos/index.tsx" nopadding></code>
+<code  src="./demos/index.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

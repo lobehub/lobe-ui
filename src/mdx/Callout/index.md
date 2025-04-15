@@ -17,5 +17,3 @@ apiHeader:
 <code src="./demos/Story.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

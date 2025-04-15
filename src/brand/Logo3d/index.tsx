@@ -1,3 +1,5 @@
+'use client';
+
 import { ImageProps } from 'antd';
 import { memo } from 'react';
 
@@ -15,5 +17,7 @@ const Logo3d = memo<
     <Img alt={alt} height={size} src={genCdnUrl(LOGO_3D)} style={style} width={size} {...rest} />
   );
 });
+
+Logo3d.displayName = 'LobeHubLogo3d';
 
 export default Logo3d;

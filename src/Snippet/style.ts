@@ -1,61 +1,34 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, cx, token, prefixCls }, type: 'ghost' | 'block') => {
-  const typeStylish = css`
-    background-color: ${type === 'block' ? token.colorFillQuaternary : 'transparent'};
-    border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
-  `;
-
+export const useStyles = createStyles(({ css, token, stylish }) => {
   return {
-    container: cx(
-      typeStylish,
-      css`
-        position: relative;
+    borderless: stylish.variantBorderlessWithoutHover,
+    filled: stylish.variantFilledWithoutHover,
+    hightlight: css`
+      overflow: auto hidden;
+      flex: 1;
+      height: 100%;
+      padding: 0;
 
-        overflow: hidden;
+      pre {
+        display: flex;
+        align-items: center;
+        height: 100%;
+      }
+    `,
+    outlined: stylish.variantOutlinedWithoutHover,
+    root: css`
+      position: relative;
 
-        max-width: 100%;
-        height: 38px;
-        padding-block: 0;
-        padding-inline: 12px 8px;
+      overflow: hidden;
 
-        border-radius: ${token.borderRadius}px;
+      max-width: 100%;
+      height: 38px;
+      padding-block: 0;
+      padding-inline: 12px 8px;
 
-        transition: background-color 100ms ${token.motionEaseOut};
-
-        &:hover {
-          background-color: ${token.colorFillTertiary};
-        }
-
-        .${prefixCls}-highlighter-shiki {
-          position: relative;
-          overflow: hidden;
-          flex: 1;
-        }
-
-        .prism-code {
-          background: none !important;
-        }
-
-        pre {
-          overflow: auto hidden !important;
-          display: flex;
-          align-items: center;
-
-          width: 100%;
-          height: 36px !important;
-          margin: 0 !important;
-
-          line-height: 1;
-          text-wrap: nowrap !important;
-
-          background: none !important;
-        }
-
-        code[class*='language-'] {
-          background: none !important;
-        }
-      `,
-    ),
+      border-radius: ${token.borderRadius}px;
+    `,
+    shadow: stylish.shadow,
   };
 });

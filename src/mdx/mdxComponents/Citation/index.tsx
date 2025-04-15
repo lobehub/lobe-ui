@@ -2,7 +2,7 @@
 
 import { createStyles } from 'antd-style';
 import { isEmpty } from 'lodash-es';
-import { ReactNode, memo } from 'react';
+import type { FC, ReactNode } from 'react';
 
 import PopoverPanel from '@/mdx/mdxComponents/Citation/PopoverPanel';
 import { CitationItem } from '@/types/citation';
@@ -21,7 +21,6 @@ const useStyles = createStyles(({ css, token }) => ({
     width: 16px;
     height: 16px;
     margin-inline: 2px;
-    border-radius: 4px;
 
     font-family: ${token.fontFamilyCode};
     font-size: 10px;
@@ -30,6 +29,7 @@ const useStyles = createStyles(({ css, token }) => ({
     vertical-align: top;
 
     background: ${token.colorFillSecondary};
+    border-radius: 4px;
 
     transition: all 100ms ${token.motionEaseOut};
   `,
@@ -55,7 +55,7 @@ interface CitationProps {
   inSup?: boolean;
 }
 
-const Citation = memo(({ children, href, inSup, id, citationDetail }: CitationProps) => {
+const Citation: FC<CitationProps> = ({ children, href, inSup, id, citationDetail }) => {
   const { styles, cx } = useStyles();
   const usePopover = !isEmpty(citationDetail);
   const url = citationDetail?.url || href;
@@ -99,6 +99,8 @@ const Citation = memo(({ children, href, inSup, id, citationDetail }: CitationPr
       </sup>
     </PopoverPanel>
   );
-});
+};
+
+Citation.displayName = 'MdxCitation';
 
 export default Citation;

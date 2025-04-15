@@ -1,6 +1,5 @@
-import { Form, FormModal } from '@lobehub/ui';
+import { Button, Form, FormModal } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { Button } from 'antd';
 import { useState } from 'react';
 
 import { items } from './data';
@@ -26,8 +25,8 @@ export default () => {
   const { variant }: any = useControls(
     {
       variant: {
-        options: ['default', 'block', 'ghost', 'pure'],
-        value: 'pure',
+        options: ['borderless', 'filled', 'outlined'],
+        value: 'borderless',
       },
     },
     { store },

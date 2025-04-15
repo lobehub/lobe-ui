@@ -10,5 +10,3 @@ description: The Layout component is used to create a basic layout structure wit
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
-
-<API></API>

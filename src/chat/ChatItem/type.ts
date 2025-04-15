@@ -4,8 +4,9 @@ import { FlexboxProps } from 'react-layout-kit';
 import { AlertProps } from '@/Alert';
 import { AvatarProps } from '@/Avatar';
 import type { MarkdownProps } from '@/Markdown';
-import { EditableMessageProps } from '@/chat/EditableMessage';
-import { DivProps, MetaData } from '@/types';
+import type { EditableMessageProps } from '@/chat/EditableMessage';
+import type { MetaData } from '@/chat/types';
+import type { DivProps } from '@/types';
 
 export interface ChatItemProps extends Omit<FlexboxProps, 'children' | 'onChange'> {
   aboveMessage?: ReactNode;
@@ -78,7 +79,7 @@ export interface ChatItemProps extends Omit<FlexboxProps, 'children' | 'onChange
   time?: number;
   /**
    * @description The type of the chat item
-   * @default 'block'
+   * @default 'bubble'
    */
-  type?: 'block' | 'pure';
+  variant?: 'bubble' | 'docs';
 }

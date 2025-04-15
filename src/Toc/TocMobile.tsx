@@ -1,68 +1,15 @@
-import { Anchor, AnchorProps, Collapse, ConfigProvider } from 'antd';
+'use client';
+
+import { Anchor, Collapse, ConfigProvider } from 'antd';
 import { PanelTopClose, PanelTopOpen } from 'lucide-react';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
 
 import { useStyles } from './style';
-
-export interface AnchorItem {
-  /**
-   * @description The children of the anchor item
-   */
-  children?: AnchorItem[];
-  /**
-   * @description The ID of the anchor item
-   */
-  id: string;
-  /**
-   * @description The title of the anchor item
-   */
-  title: string;
-}
-
-export interface TocMobileProps {
-  /**
-   * @description The active key of the TocMobile component
-   * @default undefined
-   */
-  activeKey?: string;
-  /**
-   * @description The function to get the container of the anchor
-   */
-  getContainer?: AnchorProps['getContainer'];
-  /**
-   * @description The height of the header
-   * @default 64
-   */
-  headerHeight?: number;
-  /**
-   * @description The array of anchor items to be displayed
-   */
-  items: AnchorItem[];
-  /**
-   * @description The function to be called when the active key changes
-   */
-  onChange?: (activeKey: string) => void;
-  /**
-   * @description The width of the toc
-   * @default 176
-   */
-  tocWidth?: number;
-}
-
-export const mapItems = (items: AnchorItem[]) =>
-  items.map((item) => ({
-    children: item.children?.map((child) => ({
-      href: `#${child.id}`,
-      key: child.id,
-      title: child?.title,
-    })),
-    href: `#${item.id}`,
-    key: item.id,
-    title: item.title,
-  }));
+import type { TocMobileProps } from './type';
+import { mapItems } from './utils';
 
 const TocMobile = memo<TocMobileProps>(
   ({ items, activeKey, onChange, getContainer, headerHeight = 64, tocWidth = 176 }) => {
@@ -74,25 +21,17 @@ const TocMobile = memo<TocMobileProps>(
 
     const activeAnchor = items.find((item) => item.id === activeLink);
 
+    const tocItems = useMemo(() => mapItems(items), [items]);
+
     return (
       <ConfigProvider theme={{ token: { fontSize: 12, sizeStep: 3 } }}>
         <section className={styles.mobileCtn}>
           <Collapse
             bordered={false}
             className={styles.expand}
-            expandIcon={({ isActive }) =>
-              isActive ? (
-                <ActionIcon
-                  icon={PanelTopClose}
-                  size={{ blockSize: 24, borderRadius: 3, fontSize: 16, strokeWidth: 1 }}
-                />
-              ) : (
-                <ActionIcon
-                  icon={PanelTopOpen}
-                  size={{ blockSize: 24, borderRadius: 3, fontSize: 16, strokeWidth: 1 }}
-                />
-              )
-            }
+            expandIcon={({ isActive }) => (
+              <ActionIcon icon={isActive ? PanelTopClose : PanelTopOpen} size={'small'} />
+            )}
             expandIconPosition={'end'}
             ghost
           >
@@ -104,7 +43,7 @@ const TocMobile = memo<TocMobileProps>(
               <ConfigProvider theme={{ token: { fontSize: 14, sizeStep: 4 } }}>
                 <Anchor
                   getContainer={getContainer}
-                  items={mapItems(items)}
+                  items={tocItems}
                   onChange={(currentLink) => {
                     setActiveLink(currentLink.replace('#', ''));
                   }}
@@ -118,5 +57,7 @@ const TocMobile = memo<TocMobileProps>(
     );
   },
 );
+
+TocMobile.displayName = 'TocMobile';
 
 export default TocMobile;

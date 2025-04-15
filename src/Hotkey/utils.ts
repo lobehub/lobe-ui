@@ -1,4 +1,4 @@
-import { KeyMapEnum } from './type';
+import { KeyMapEnum } from './const';
 
 export const splitKeysByPlus = (keys: string): string[] => {
   return keys.replaceAll('++', `+${KeyMapEnum.Equal}`).split('+');

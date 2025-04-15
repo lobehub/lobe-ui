@@ -18,5 +18,3 @@ apiHeader:
 <code src="./demos/edit.tsx" ></code>
 
 ## APIs
-
-<API></API>

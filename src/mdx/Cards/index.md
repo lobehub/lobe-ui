@@ -17,5 +17,3 @@ apiHeader:
 <code src="./demos/Rows.tsx" ></code>
 
 ## APIs
-
-<API></API>

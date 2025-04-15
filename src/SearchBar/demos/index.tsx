@@ -3,20 +3,21 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const controls: SearchBarProps | any = useControls(
+  const controls = useControls(
     {
       enableShortKey: true,
       loading: false,
       placeholder: 'Type keywords...',
+      shadow: false,
       shortKey: 'f',
       spotlight: false,
-      type: {
-        options: ['ghost', 'block'],
-        value: 'ghost',
+      variant: {
+        options: ['outlined', 'borderless', 'filled'],
+        value: 'filled',
       },
     },
     { store },
-  );
+  ) as SearchBarProps;
 
   return (
     <StoryBook levaStore={store}>

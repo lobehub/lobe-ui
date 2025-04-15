@@ -4,7 +4,7 @@ import { Flexbox } from 'react-layout-kit';
 
 export default () => {
   const store = useCreateStore();
-  const control: DraggablePanelProps | any = useControls(
+  const control = useControls(
     {
       defaultExpand: true,
       destroyOnClose: false,
@@ -15,7 +15,7 @@ export default () => {
       },
       minWidth: {
         step: 1,
-        value: 0,
+        value: 100,
       },
       mode: {
         options: ['fixed', 'float'],
@@ -26,10 +26,10 @@ export default () => {
         options: ['left', 'right', 'top', 'bottom'],
         value: 'left',
       },
-      showHandlerWhenUnexpand: false,
+      showHandleWhenCollapsed: false,
     },
     { store },
-  );
+  ) as DraggablePanelProps;
 
   return (
     <StoryBook levaStore={store} noPadding>

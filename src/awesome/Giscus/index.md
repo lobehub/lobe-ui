@@ -16,5 +16,3 @@ Giscus config: <https://giscus.app/>
 <code src="./demos/index.tsx"></code>
 
 ## APIs
-
-<API></API>

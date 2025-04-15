@@ -1,6 +1,7 @@
 ---
 nav: Components
 title: FileTypeIcon
+group: Data Display
 ---
 
 ## Default
@@ -12,5 +13,3 @@ title: FileTypeIcon
 <code src="./demos/Icon.tsx" center></code>
 
 ## APIs
-
-<API></API>
