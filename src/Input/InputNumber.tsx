@@ -8,7 +8,7 @@ import { useStyles } from './style';
 import type { InputNumberProps } from './type';
 
 const InputNumber = memo<InputNumberProps>(
-  ({ ref, variant = 'filled', shadow, className, ...rest }) => {
+  ({ ref, variant = 'outlined', shadow, className, ...rest }) => {
     const { styles, cx } = useStyles();
 
     const variants = useMemo(

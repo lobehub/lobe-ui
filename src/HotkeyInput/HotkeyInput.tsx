@@ -42,7 +42,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
     style,
     className,
     hotkeyConflicts = [],
-    variant = 'filled',
+    variant = 'outlined',
     texts,
     isApple,
     onBlur,
@@ -68,7 +68,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
             disabled: false,
             error: false,
             shadow: false,
-            variant: 'filled',
+            variant: 'outlined',
           },
           /* eslint-disable sort-keys-fix/sort-keys-fix */
           variants: {

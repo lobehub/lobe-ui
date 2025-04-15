@@ -8,7 +8,7 @@ import { useStyles } from './style';
 import type { InputPasswordProps } from './type';
 
 const InputPassword = memo<InputPasswordProps>(
-  ({ ref, variant = 'filled', shadow, className, ...rest }) => {
+  ({ ref, variant = 'outlined', shadow, className, ...rest }) => {
     const { styles, cx } = useStyles();
 
     const variants = useMemo(

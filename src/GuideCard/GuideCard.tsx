@@ -26,7 +26,7 @@ const GuideCard = memo<GuideCardProps>(
     styles: customStyles,
     height,
     coverProps,
-    variant,
+    variant = 'filled',
     closeIconProps,
     classNames,
     ref,

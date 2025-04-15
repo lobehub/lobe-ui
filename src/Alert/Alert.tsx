@@ -176,7 +176,7 @@ const Alert = memo<AlertProps>(
         showIcon={showIcon}
         style={{
           background: colors(theme, type, 'fillTertiary'),
-          borderColor: colors(theme, type, 'fillTertiary'),
+          borderColor: colors(theme, type, 'fillSecondary'),
           color: colorfulText ? colors(theme, type) : undefined,
           ...style,
         }}
@@ -202,7 +202,7 @@ const Alert = memo<AlertProps>(
           className={extraVariants({ banner, variant })}
           style={{
             background: colors(theme, type, 'fillTertiary'),
-            borderColor: colors(theme, type, 'fillTertiary'),
+            borderColor: colors(theme, type, 'fillSecondary'),
             color: colors(theme, type),
             fontSize: description ? 14 : 12,
           }}

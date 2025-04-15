@@ -63,7 +63,7 @@ const Button = memo<ButtonProps>(
     return (
       <AntdButton
         className={cx(variants({ glass, shadow, variant }), className)}
-        color={danger ? 'danger' : type === 'primary' ? color : color || 'default'}
+        color={color || (variant === 'filled' ? 'default' : undefined)}
         danger={danger}
         icon={
           icon &&
@@ -89,7 +89,7 @@ const Button = memo<ButtonProps>(
         }
         ref={ref}
         type={type}
-        variant={variant || (type === 'primary' ? undefined : 'filled')}
+        variant={variant}
         {...rest}
       >
         {children}

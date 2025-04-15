@@ -77,6 +77,7 @@ const TokenTag = memo<TokenTagProps>(
         className={cx(variants({ type: data.type }), className)}
         ref={ref}
         shape={shape}
+        variant={'filled'}
         {...rest}
       >
         <FluentEmoji emoji={data.emoji} size={18} unoptimized={unoptimized} />

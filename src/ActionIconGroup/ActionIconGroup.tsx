@@ -36,7 +36,7 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
             disabled: false,
             glass: false,
             shadow: false,
-            variant: 'filled',
+            variant: 'outlined',
           },
           /* eslint-disable sort-keys-fix/sort-keys-fix */
           variants: {

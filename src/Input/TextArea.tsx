@@ -8,7 +8,7 @@ import { useStyles } from './style';
 import type { TextAreaProps } from './type';
 
 const TextArea = memo<TextAreaProps>(
-  ({ ref, variant = 'filled', shadow, className, resize = false, style, ...rest }) => {
+  ({ ref, variant = 'outlined', shadow, className, resize = false, style, ...rest }) => {
     const { styles, cx } = useStyles();
 
     const variants = useMemo(

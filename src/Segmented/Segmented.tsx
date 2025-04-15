@@ -8,7 +8,7 @@ import { useStyles } from './style';
 import type { SegmentedProps } from './type';
 
 const Segmented = memo<SegmentedProps>(
-  ({ ref, padding, style, className, variant = 'filled', shadow, glass, ...rest }) => {
+  ({ ref, padding, style, className, variant = 'outlined', shadow, glass, ...rest }) => {
     const { cx, styles } = useStyles();
     const variants = useMemo(
       () =>

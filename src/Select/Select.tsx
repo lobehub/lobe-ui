@@ -11,7 +11,7 @@ import { useStyles } from './style';
 import type { SelectProps } from './type';
 
 const Input = memo<SelectProps>(
-  ({ ref, variant = 'filled', suffixIconProps, suffixIcon, shadow, className, ...rest }) => {
+  ({ ref, variant = 'outlined', suffixIconProps, suffixIcon, shadow, className, ...rest }) => {
     const { styles, cx } = useStyles();
 
     const variants = useMemo(
