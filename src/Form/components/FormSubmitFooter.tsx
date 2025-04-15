@@ -3,7 +3,6 @@
 import { Form } from 'antd';
 import isEqual from 'fast-deep-equal';
 import { motion } from 'framer-motion';
-import { merge } from 'lodash-es';
 import { InfoIcon } from 'lucide-react';
 import { memo, useEffect, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
@@ -14,6 +13,7 @@ import Icon from '@/Icon';
 import { useSubmitFooterStyles as useStyles } from '../style';
 import type { FormSubmitFooterProps } from '../type';
 import { useFormContext } from './FormProvider';
+import { merge } from './merge';
 
 const FormSubmitFooter = memo<FormSubmitFooterProps>(
   ({
@@ -23,7 +23,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
     onReset,
     saveButtonProps,
     resetButtonProps,
-    enableUnsavedWarning = true,
+    enableUnsavedWarning,
     children,
     texts,
     className,
@@ -85,8 +85,8 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
           <Button
             htmlType="button"
             onClick={() => {
+              onReset?.(merge({}, initialValues, values), initialValues);
               form?.resetFields();
-              onReset?.();
             }}
             shape={float ? 'round' : undefined}
             variant={'filled'}
