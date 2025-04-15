@@ -28,7 +28,9 @@ export const usePreview = (
       imageRender,
       toolbarRender,
       ...rest
-    } = props === true ? {} : props || {};
+    }: PreviewGroupPreviewOptions = (
+      props === true ? {} : props || {}
+    ) as PreviewGroupPreviewOptions;
 
     return {
       closeIcon: <Icon color={'#fff'} icon={X} />,

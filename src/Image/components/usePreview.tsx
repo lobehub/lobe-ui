@@ -28,7 +28,7 @@ export const usePreview = (
       imageRender,
       toolbarRender,
       ...rest
-    } = props === true ? {} : props || {};
+    }: ImagePreviewOptions = (props === true ? {} : props || {}) as ImagePreviewOptions;
 
     return {
       closeIcon: <Icon color={'#fff'} icon={X} />,
