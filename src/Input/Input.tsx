@@ -7,7 +7,7 @@ import { memo, useMemo } from 'react';
 import { useStyles } from './style';
 import type { InputProps } from './type';
 
-const Input = memo<InputProps>(({ ref, variant = 'filled', shadow, className, ...rest }) => {
+const Input = memo<InputProps>(({ ref, variant = 'outlined', shadow, className, ...rest }) => {
   const { styles, cx } = useStyles();
 
   const variants = useMemo(

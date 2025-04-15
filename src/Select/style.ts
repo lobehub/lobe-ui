@@ -25,10 +25,6 @@ export const useStyles = createStyles(({ prefixCls, token, css, stylish }) => {
     `,
     root: css`
       &.${prefixCls}-select {
-        > .${prefixCls}-select-selector {
-          border: none !important;
-        }
-
         &.${prefixCls}-select-focused {
           > .${prefixCls}-select-selector {
             background: ${token.colorFillTertiary} !important;

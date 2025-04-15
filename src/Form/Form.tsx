@@ -124,7 +124,6 @@ const Form = memo<FormProps>(
             gap,
             ...style,
           }}
-          variant={'filled'}
           {...rest}
         >
           {items && items?.length > 0 ? (

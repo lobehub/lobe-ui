@@ -19,6 +19,10 @@ export default () => {
       },
       loading: false,
       shadow: false,
+      size: {
+        options: ['large', 'default', 'small'],
+        value: 'default',
+      },
       type: {
         options: ['primary', 'default', 'text', 'link'],
         value: 'primary',

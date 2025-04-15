@@ -55,7 +55,7 @@ export const PreSingleLine: FC<SnippetProps> = ({
   children,
   className,
   style,
-  variant = 'filled',
+  variant = 'outlined',
   ...rest
 }) => {
   const { cx, styles } = useStyles();
@@ -79,7 +79,7 @@ export const PreMermaid: FC<MermaidProps> = ({
   children,
   className,
   style,
-  variant = 'filled',
+  variant = 'outlined',
   ...rest
 }) => {
   const { styles, cx } = useStyles();

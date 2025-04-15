@@ -47,8 +47,8 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         background-color: transparent;
 
         &-thumb {
-          border-radius: 4px;
           background-color: ${token.colorFill};
+          border-radius: 4px;
           transition: background-color 500ms ${token.motionEaseOut};
         }
 
@@ -64,7 +64,6 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       opacity: 0.5;
     `,
     gradientAnimation: css`
-      border-radius: inherit;
       background-image: linear-gradient(
         -45deg,
         ${token.gold},
@@ -73,6 +72,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         ${token.cyan}
       );
       background-size: 400% 400%;
+      border-radius: inherit;
       animation: 5s ${gradient} 5s ease infinite;
     `,
     noScrollbar: css`
@@ -93,24 +93,14 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
     `,
     shadow: css`
       box-shadow:
-        inset 0 0 0 1px ${token.colorFillQuaternary},
-        ${token.boxShadowTertiary};
-
-      &:hover {
-        box-shadow:
-          inset 0 0 0 1px ${token.colorFillTertiary},
-          ${token.boxShadowTertiary};
-      }
-
-      &:active {
-        box-shadow:
-          inset 0 0 0 1px ${isDarkMode ? token.colorFillQuaternary : token.colorFillSecondary},
-          ${token.boxShadowTertiary};
-      }
+        0 1px 0 -1px ${isDarkMode ? token.colorBgLayout : token.colorBorder},
+        0 1px 2px -0.5px ${isDarkMode ? token.colorBgLayout : token.colorBorder},
+        0 2px 2px -1px ${isDarkMode ? token.colorBgLayout : token.colorBorderSecondary},
+        0 3px 6px -4px ${isDarkMode ? token.colorBgLayout : token.colorBorderSecondary};
     `,
     variantBorderless: css`
-      border: none;
       background: none;
+      border: none;
       box-shadow: none;
 
       &:hover {
@@ -122,8 +112,8 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       }
     `,
     variantBorderlessDanger: css`
-      border: none;
       background: none;
+      border: none;
       box-shadow: none;
 
       &:hover {
@@ -138,76 +128,64 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       }
     `,
     variantBorderlessWithoutHover: css`
-      border: none;
       background: none;
+      border: none;
       box-shadow: none;
     `,
     variantFilled: css`
       background: ${token.colorFillTertiary};
-      box-shadow: inset 0 0 0 1px ${token.colorFillQuaternary};
 
       &:hover {
         background: ${token.colorFillSecondary};
-        box-shadow: inset 0 0 0 1px ${token.colorFillTertiary};
       }
 
       &:active {
         background: ${isDarkMode ? token.colorFillTertiary : token.colorFill};
-        box-shadow: inset 0 0 0 1px
-          ${isDarkMode ? token.colorFillQuaternary : token.colorFillSecondary};
       }
     `,
     variantFilledDanger: css`
       background: ${token.colorErrorFillTertiary};
-      box-shadow: inset 0 0 0 1px ${token.colorErrorFillQuaternary};
 
       &:hover {
         background: ${token.colorErrorFillSecondary};
-        box-shadow: inset 0 0 0 1px ${token.colorErrorFillTertiary};
       }
 
       &:active {
         background: ${isDarkMode ? token.colorErrorFillTertiary : token.colorErrorFill};
-        box-shadow: inset 0 0 0 1px
-          ${isDarkMode ? token.colorErrorFillQuaternary : token.colorErrorFillSecondary};
       }
     `,
     variantFilledWithoutHover: css`
       background: ${token.colorFillTertiary};
-      box-shadow: inset 0 0 0 1px ${token.colorFillQuaternary};
     `,
     variantOutlined: css`
-      background: none;
-      box-shadow: inset 0 0 0 1px ${token.colorFillTertiary};
+      background: ${token.colorBgContainer};
+      border: 1px solid ${token.colorBorderSecondary};
 
       &:hover {
-        background: ${token.colorFillTertiary};
-        box-shadow: inset 0 0 0 1px ${token.colorFillSecondary};
+        background: ${token.colorBgContainer};
+        border: 1px solid ${token.colorBorder};
       }
 
       &:active {
-        background: ${isDarkMode ? token.colorFillQuaternary : token.colorFillSecondary};
-        box-shadow: inset 0 0 0 1px ${isDarkMode ? token.colorFillTertiary : token.colorFill};
+        background: ${token.colorBgContainer};
+        border: 1px solid ${token.colorBorder};
       }
     `,
+
     variantOutlinedDanger: css`
-      background: none;
-      box-shadow: inset 0 0 0 1px ${token.colorErrorFillTertiary};
+      border: 1px solid ${token.colorErrorBorder};
 
       &:hover {
-        background: ${token.colorErrorFillSecondary};
-        box-shadow: inset 0 0 0 1px ${token.colorErrorFillTertiary};
+        border: 1px solid ${token.colorErrorBorder};
       }
 
       &:active {
-        background: ${isDarkMode ? token.colorErrorFillQuaternary : token.colorErrorFillSecondary};
-        box-shadow: inset 0 0 0 1px
-          ${isDarkMode ? token.colorErrorFillTertiary : token.colorErrorFill};
+        border: 1px solid ${token.colorErrorBorder};
       }
     `,
     variantOutlinedWithoutHover: css`
-      background: none;
-      box-shadow: inset 0 0 0 1px ${token.colorFillTertiary};
+      background: ${token.colorBgContainer};
+      border: 1px solid ${token.colorBorderSecondary};
     `,
   };
 };

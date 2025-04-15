@@ -26,7 +26,7 @@ const AvatarGroup = memo<AvatarGroupProps>(
     ref,
     ...rest
   }) => {
-    const { cx, styles } = useStyles();
+    const { cx, styles, theme } = useStyles();
     const avatars = max ? items.slice(0, max) : items;
     const restAvatars = items.slice(max, items.length);
     const gapValue = gap ?? Math.floor(-size / 4);
@@ -76,14 +76,15 @@ const AvatarGroup = memo<AvatarGroupProps>(
         })}
         {max && restAvatars.length > 0 && (
           <Avatar
+            {...avatarProps}
             avatar={`+${restAvatars.length}`}
-            className={cx(styles.count, classNames?.count, styles.avatar)}
+            background={theme.colorText}
+            className={cx(styles.avatar, styles.count, classNames?.count)}
             sliceText={false}
             style={{
               marginLeft: gapValue,
               ...customStyles?.count,
             }}
-            {...avatarProps}
           />
         )}
       </Flexbox>
