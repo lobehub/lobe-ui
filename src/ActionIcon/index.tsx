@@ -77,6 +77,10 @@ export interface ActionIconProps extends LucideIconProps, FlexboxProps {
    * @default 0.5
    */
   tooltipDelay?: number;
+  /**
+   * @description Hotkey to display in tooltip
+   */
+  tooltipHotkey?: string;
   variant?: 'default' | 'block' | 'ghost';
 }
 
@@ -100,6 +104,7 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
       children,
       loading,
       tooltipDelay = 0.5,
+      tooltipHotkey,
       fillOpacity,
       fillRule,
       focusable,
@@ -165,6 +170,7 @@ const ActionIcon = forwardRef<HTMLDivElement, ActionIconProps>(
     return (
       <Tooltip
         arrow={arrow}
+        hotkey={tooltipHotkey}
         mouseEnterDelay={tooltipDelay}
         onOpenChange={setTooltipOpen}
         open={tooltipOpen}
