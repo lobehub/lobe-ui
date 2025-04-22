@@ -2,7 +2,7 @@
 
 import type { AnchorProps } from 'antd';
 import { CSSProperties, FC, ReactNode, memo, useCallback, useMemo } from 'react';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown, { Options as ReactMarkdownOptions } from 'react-markdown';
 import { Components } from 'react-markdown/lib';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
@@ -64,6 +64,10 @@ export interface MarkdownProps extends TypographyProps {
   enableMermaid?: boolean;
   fullFeaturedCodeBlock?: boolean;
   onDoubleClick?: () => void;
+  reactMarkdownProps?: Omit<
+    Readonly<ReactMarkdownOptions>,
+    'components' | 'rehypePlugins' | 'remarkPlugins'
+  >;
   rehypePlugins?: Pluggable[];
   remarkPlugins?: Pluggable[];
   remarkPluginsAhead?: Pluggable[];
@@ -155,6 +159,7 @@ const Markdown = memo<MarkdownProps>(
     showFootnotes,
     variant = 'normal',
     lineHeight = 1.6,
+    reactMarkdownProps = {},
     rehypePlugins,
     remarkPlugins,
     remarkPluginsAhead,
@@ -302,6 +307,7 @@ const Markdown = memo<MarkdownProps>(
       () => (
         <ImageGallery enable={enableImageGallery}>
           <ReactMarkdown
+            {...reactMarkdownProps}
             components={memoComponents}
             rehypePlugins={rehypePluginsList}
             remarkPlugins={remarkPluginsList}
