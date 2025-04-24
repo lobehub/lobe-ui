@@ -71,7 +71,6 @@ const SearchBar = memo<SearchBarProps>(
           onChange={(e) => {
             setInputValue(e.target.value);
             onChange?.(e);
-            onSearch?.(e.target.value);
           }}
           onFocus={(e) => {
             onFocus?.(e);
