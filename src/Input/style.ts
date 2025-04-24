@@ -2,7 +2,14 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ token, css, stylish, prefixCls }) => {
   return {
-    borderless: stylish.variantBorderless,
+    borderless: css`
+      &.${prefixCls}-input {
+        ${stylish.variantBorderless}
+        &:hover {
+          ${stylish.variantBorderlessWithoutHover}
+        }
+      }
+    `,
     borderlessOPT: css`
       &.${prefixCls}-otp {
         .${prefixCls}-otp-input {

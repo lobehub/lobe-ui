@@ -33,6 +33,7 @@ export const createLobeAntdTheme = ({
         contentFontSizeSM: 12,
         defaultActiveBorderColor: baseToken.colorBorder,
         defaultActiveColor: baseToken.colorText,
+        groupBorderColor: baseToken.colorBorder,
       },
       DatePicker: {
         activeBorderColor: baseToken.colorBorder,
@@ -43,6 +44,10 @@ export const createLobeAntdTheme = ({
         hoverBorderColor: baseToken.colorBorder,
       },
       InputNumber: {
+        activeBorderColor: baseToken.colorBorder,
+        hoverBorderColor: baseToken.colorBorder,
+      },
+      Mentions: {
         activeBorderColor: baseToken.colorBorder,
         hoverBorderColor: baseToken.colorBorder,
       },
