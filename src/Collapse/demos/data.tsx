@@ -4,6 +4,7 @@ import { SettingsIcon } from 'lucide-react';
 export const items: CollapseProps['items'] = [
   {
     children: 111,
+    desc: 'This is a description',
     extra: (
       <ActionIcon
         icon={SettingsIcon}

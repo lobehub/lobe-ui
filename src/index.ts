@@ -11,7 +11,7 @@ export { default as Block, type BlockProps } from './Block';
 export { default as Burger, type BurgerProps } from './Burger';
 export { default as Button, type ButtonProps } from './Button';
 export { default as CodeEditor, type CodeEditorProps } from './CodeEditor';
-export { default as Collapse, type CollapseProps } from './Collapse';
+export { default as Collapse, type CollapseItemType, type CollapseProps } from './Collapse';
 export { default as ColorSwatches, type ColorSwatchesProps } from './ColorSwatches';
 export { type Config, default as ConfigProvider, useCdnFn } from './ConfigProvider';
 export { default as CopyButton, type CopyButtonProps } from './CopyButton';

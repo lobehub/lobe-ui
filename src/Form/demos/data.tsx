@@ -33,6 +33,7 @@ export const items: FormProps['items'] = [
         valuePropName: 'checked',
       },
     ],
+    desc: '111',
     icon: Palette,
     key: 'theme',
     title: 'Theme Settings',

@@ -3,7 +3,8 @@
 import { Collapse as AntdCollapse, ConfigProvider } from 'antd';
 import { cva } from 'class-variance-authority';
 import { ChevronDown } from 'lucide-react';
-import { memo, useMemo } from 'react';
+import { isValidElement, memo, useMemo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
 import Icon from '@/Icon';
 
@@ -19,6 +20,9 @@ const Collapse = memo<CollapseProps>(
     padding = DEFAULT_PADDING,
     size,
     collapsible = true,
+    items,
+    styles: customStyles,
+    classNames,
     ref,
     ...rest
   }) => {
@@ -32,11 +36,6 @@ const Collapse = memo<CollapseProps>(
               class: styles.gapOutlined,
               gap: true,
               variant: 'outlined',
-            },
-            {
-              class: styles.gapOutlined,
-              gap: true,
-              variant: 'filled',
             },
           ],
           defaultVariants: {
@@ -65,6 +64,54 @@ const Collapse = memo<CollapseProps>(
       [styles],
     );
 
+    const antdItems = useMemo(
+      () =>
+        items.map(({ icon, desc, label, ...itemRest }) => {
+          let content = (
+            <div
+              className={cx(styles.title, !icon && !desc && classNames?.header, classNames?.title)}
+              style={{
+                ...(!icon && !desc ? customStyles?.header : {}),
+                ...customStyles?.title,
+              }}
+            >
+              {label}
+            </div>
+          );
+
+          if (icon) {
+            content = (
+              <Flexbox
+                className={cx(styles.title, !desc && classNames?.header)}
+                gap={8}
+                horizontal
+                style={desc ? undefined : customStyles?.header}
+              >
+                {isValidElement(icon) ? icon : <Icon icon={icon} size={{ size: '1.1em' }} />}
+                {content}
+              </Flexbox>
+            );
+          }
+
+          if (desc) {
+            content = (
+              <Flexbox className={classNames?.header} style={customStyles?.header}>
+                {content}
+                <div className={cx(styles.desc, classNames?.desc)} style={customStyles?.desc}>
+                  {desc}
+                </div>
+              </Flexbox>
+            );
+          }
+
+          return {
+            label: content,
+            ...itemRest,
+          };
+        }),
+      [items, classNames, customStyles, styles],
+    );
+
     return (
       <ConfigProvider
         theme={{
@@ -84,11 +131,12 @@ const Collapse = memo<CollapseProps>(
             <Icon
               className={styles.icon}
               icon={ChevronDown}
-              size={size === 'large' ? 'middle' : 'small'}
-              style={isActive ? {} : { rotate: '-90deg' }}
+              size={16}
+              style={{ rotate: isActive ? undefined : '-90deg' }}
             />
           )}
           ghost
+          items={antdItems}
           ref={ref}
           size={size}
           style={{

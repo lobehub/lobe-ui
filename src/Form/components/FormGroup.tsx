@@ -25,6 +25,7 @@ const FormGroup = memo<FormGroupProps>(
     active,
     keyValue = 'group',
     onCollapse,
+    desc,
     ...rest
   }) => {
     const { mobile } = useResponsive();
@@ -79,9 +80,11 @@ const FormGroup = memo<FormGroupProps>(
         items={[
           {
             children,
+            desc,
             extra,
+            icon,
             key: keyValue,
-            label: titleContent,
+            label: title,
           },
         ]}
         onChange={(v) => onCollapse?.(v.length > 0)}

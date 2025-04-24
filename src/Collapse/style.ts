@@ -5,7 +5,7 @@ export const DEFAULT_PADDING = '12px 16px';
 export const getPadding = (padding?: number | string) =>
   !padding && padding !== 0 ? DEFAULT_PADDING : padding;
 
-export const useStyles = createStyles(({ css, token, prefixCls }) => {
+export const useStyles = createStyles(({ css, token, prefixCls, stylish }) => {
   return {
     borderless: css`
       &.${prefixCls}-collapse {
@@ -14,26 +14,43 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
         }
         .${prefixCls}-collapse-content {
           padding-inline: 0;
-        }
-        .${prefixCls}-collapse-content-box {
-          padding-inline: 0;
+          .${prefixCls}-collapse-content-box {
+            padding-inline: 0;
+          }
         }
       }
     `,
+    desc: css`
+      font-size: 12px;
+      color: ${token.colorTextDescription};
+    `,
     filled: css`
       &.${prefixCls}-collapse {
-        .${prefixCls}-collapse-header {
-          background: ${token.colorFillTertiary};
-        }
         .${prefixCls}-collapse-item {
-          background: ${token.colorFillQuaternary};
+          background: ${token.colorFillTertiary};
+          .${prefixCls}-collapse-content {
+            margin-inline: 3px;
+            margin-block-end: 3px;
+            background: ${token.colorBgContainer};
+            border-radius: ${token.borderRadiusLG}px;
+            ${stylish.variantOutlinedWithoutHover};
+            ${stylish.shadow};
+          }
         }
       }
     `,
     gapOutlined: css`
       &.${prefixCls}-collapse {
+        background: transparent;
         .${prefixCls}-collapse-item {
-          box-shadow: 0 0 0 1px ${token.colorFillSecondary} inset;
+          background: ${token.colorBgContainer};
+          border: 1px solid ${token.colorFillSecondary};
+        }
+
+        .${prefixCls}-collapse-item:not(:first-child) {
+          .${prefixCls}-collapse-header {
+            border-block-start: none;
+          }
         }
       }
     `,
@@ -61,7 +78,8 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
     `,
     outlined: css`
       &.${prefixCls}-collapse {
-        box-shadow: 0 0 0 1px ${token.colorFillTertiary} inset;
+        background: ${token.colorBgContainer};
+        border: 1px solid ${token.colorFillSecondary};
         .${prefixCls}-collapse-item .${prefixCls}-collapse-header {
           transition: none;
         }
@@ -86,12 +104,20 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
           display: flex;
           flex: none;
           gap: 0.75em;
-          align-items: center;
+          align-items: flex-start;
 
           border-radius: 0 !important;
 
           .${prefixCls}-collapse-expand-icon {
+            align-items: center;
+            min-height: 28px;
             padding: 0;
+          }
+
+          .${prefixCls}-collapse-extra {
+            display: flex;
+            align-items: center;
+            min-height: 28px;
           }
         }
 
@@ -99,6 +125,11 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
           background: transparent;
         }
       }
+    `,
+    title: css`
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 28px;
     `,
   };
 });

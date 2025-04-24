@@ -5,7 +5,7 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
   borderless: css`
     gap: 48px;
     .${prefixCls}-collapse .${prefixCls}-collapse-header {
-      padding-block-end: 20px;
+      padding-block-end: 16px;
       border-block-end: 1px solid ${token.colorBorderSecondary};
     }
 
@@ -77,8 +77,8 @@ export const useFlatGroupStyles = createStyles(({ cx, css, token, stylish }) => 
     mobile: css`
       padding-block: 0;
       padding-inline: 16px;
-      border-radius: 0;
       background: ${token.colorBgContainer};
+      border-radius: 0;
     `,
     outlined: stylish.variantOutlinedWithoutHover,
     root: css`
@@ -94,8 +94,8 @@ export const useFooterStyles = createStyles(({ css, token, responsive }) => {
     root: css`
       ${responsive.mobile} {
         padding: 16px;
-        border-block-start: 1px solid ${token.colorBorderSecondary};
         background: ${token.colorBgContainer};
+        border-block-start: 1px solid ${token.colorBorderSecondary};
       }
     `,
   };
@@ -220,18 +220,18 @@ export const useSubmitFooterStyles = createStyles(({ responsive, css, token }) =
 
     width: max-content;
     padding: 8px;
-    border: 1px solid ${token.colorBorderSecondary};
-    border-radius: 48px;
 
     background: ${token.colorBgContainer};
+    border: 1px solid ${token.colorBorderSecondary};
+    border-radius: 48px;
     box-shadow: ${token.boxShadowSecondary};
   `,
   footer: css`
     ${responsive.mobile} {
       margin-block-start: -${token.borderRadius}px;
       padding: 16px;
-      border-block-start: 1px solid ${token.colorBorderSecondary};
       background: ${token.colorBgContainer};
+      border-block-start: 1px solid ${token.colorBorderSecondary};
     }
   `,
 }));

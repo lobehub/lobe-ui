@@ -26,7 +26,7 @@ export default () => {
       },
     },
     { store },
-  ) as CollapseProps;
+  ) as Partial<CollapseProps>;
 
   return (
     <StoryBook levaStore={store}>

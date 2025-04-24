@@ -21,11 +21,13 @@ export const useStyles = createStyles(({ stylish, prefixCls, css, token }) => ({
       align-items: center;
       justify-content: center;
 
+      width: fit-content;
       height: 22px;
       margin: 0;
-      border-radius: 3px;
 
       line-height: 1.2;
+
+      border-radius: 3px;
 
       span {
         margin: 0;

@@ -43,6 +43,7 @@ export interface FormGroupItemType {
   children: FormItemProps[] | ReactNode;
   collapsible?: boolean;
   defaultActive?: boolean;
+  desc?: ReactNode;
   extra?: ReactNode;
   icon?: IconProps['icon'];
   key?: string;
@@ -56,6 +57,7 @@ export interface FormGroupProps
   children: ReactNode;
   collapsible?: boolean;
   defaultActive?: boolean;
+  desc?: ReactNode;
   extra?: ReactNode;
   icon?: IconProps['icon'];
   keyValue?: string | number;

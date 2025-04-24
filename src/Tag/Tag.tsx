@@ -39,7 +39,7 @@ const Tag = memo<TagProps>(
     );
 
     const colors = useMemo(() => {
-      let textColor;
+      let textColor = theme.colorTextSecondary;
       let backgroundColor;
       let borderColor;
       const isFilled = variant === 'filled';
