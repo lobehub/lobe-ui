@@ -31,14 +31,13 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
   }) => {
     const { form, initialValues, submitLoading } = useFormContext();
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-    const values = Form.useWatch([], form);
+    const values = Form.useWatch([], form) || {};
 
     const { cx, styles, theme } = useStyles();
 
-    const mergedValues = useMemo(() => merge({}, values, initialValues), [values, initialValues]);
+    const mergedValues = useMemo(() => merge(initialValues, values), [values, initialValues]);
 
     useEffect(() => {
-      if (!values) return;
       setHasUnsavedChanges(!isEqual(mergedValues, initialValues));
     }, [mergedValues, initialValues, submitLoading]);
 
