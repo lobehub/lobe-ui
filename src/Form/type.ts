@@ -20,6 +20,7 @@ export interface FormProps extends Omit<AntFormProps, 'variant'> {
   footer?: ReactNode;
   gap?: number | string;
   itemMinWidth?: FormItemProps['minWidth'];
+  itemVariant?: AntFormProps['variant'];
   items?: FormGroupItemType[] | FormItemProps[];
   itemsType?: ItemsType;
   onCollapse?: (key: (string | number)[]) => void;

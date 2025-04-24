@@ -55,7 +55,6 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
     }
 
     .${prefixCls}-collapse-item {
-      overflow: hidden !important;
       border-radius: ${token.borderRadius}px !important;
     }
 
@@ -82,7 +81,6 @@ export const useFlatGroupStyles = createStyles(({ cx, css, token, stylish }) => 
     `,
     outlined: stylish.variantOutlinedWithoutHover,
     root: css`
-      overflow: hidden;
       padding-inline: 16px;
       border-radius: ${token.borderRadiusLG}px;
     `,
@@ -115,12 +113,11 @@ export const useGroupStyles = createStyles(({ css, token, responsive }) => {
     title: css`
       align-items: center;
       font-size: 16px;
-      font-weight: 600;
+      font-weight: bold;
     `,
     titleBorderless: css`
       font-size: 18px;
-      font-weight: 700;
-      line-height: 24px;
+      font-weight: bold;
     `,
     titleMobile: css`
       ${responsive.mobile} {

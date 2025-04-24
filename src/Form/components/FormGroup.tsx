@@ -75,6 +75,10 @@ const FormGroup = memo<FormGroupProps>(
       <Collapse
         activeKey={isUndefined(active) ? undefined : active ? [keyValue] : []}
         className={className}
+        classNames={{
+          header: variant === 'borderless' ? styles.titleBorderless : undefined,
+          title: variant === 'borderless' ? styles.titleBorderless : undefined,
+        }}
         collapsible={defaultCollapsible}
         defaultActiveKey={defaultActive ? [keyValue] : undefined}
         items={[

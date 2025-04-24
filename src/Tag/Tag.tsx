@@ -10,7 +10,17 @@ import { useStyles } from './styles';
 import type { TagProps } from './type';
 
 const Tag = memo<TagProps>(
-  ({ ref, size = 'middle', color, variant = 'filled', children, onClick, style, ...rest }) => {
+  ({
+    className,
+    ref,
+    size = 'middle',
+    color,
+    variant = 'filled',
+    children,
+    onClick,
+    style,
+    ...rest
+  }) => {
     const { styles, cx, theme } = useStyles();
 
     const variants = useMemo(
@@ -76,7 +86,7 @@ const Tag = memo<TagProps>(
     return (
       <AntTag
         bordered={false}
-        className={cx(variants({ size, variant }))}
+        className={cx(variants({ size, variant }), className)}
         color={color}
         onClick={onClick}
         ref={ref}

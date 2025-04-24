@@ -61,7 +61,6 @@ export const useStyles = createStyles(({ css, token, prefixCls, stylish }) => {
         border: none;
         box-shadow: none;
         .${prefixCls}-collapse-item {
-          overflow: hidden;
           border: none;
           border-radius: ${token.borderRadiusLG}px;
         }
@@ -95,7 +94,6 @@ export const useStyles = createStyles(({ css, token, prefixCls, stylish }) => {
     `,
     root: css`
       &.${prefixCls}-collapse {
-        overflow: hidden;
         display: flex;
         flex-direction: column;
         background: transparent;

@@ -21,6 +21,7 @@ const Form = memo<FormProps>(
     items = [],
     children,
     itemsType = 'group',
+    itemVariant,
     variant = 'borderless',
     gap,
     style,
@@ -124,6 +125,7 @@ const Form = memo<FormProps>(
             gap,
             ...style,
           }}
+          variant={itemVariant}
           {...rest}
         >
           {items && items?.length > 0 ? (

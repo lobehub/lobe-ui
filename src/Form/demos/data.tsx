@@ -1,5 +1,5 @@
-import type { FormProps } from '@lobehub/ui';
-import { InputNumber, Segmented, Select, Switch } from 'antd';
+import { type FormProps, InputNumber, Segmented, Select } from '@lobehub/ui';
+import { Switch } from 'antd';
 import { Palette, PanelLeftClose } from 'lucide-react';
 
 export const items: FormProps['items'] = [
@@ -30,6 +30,7 @@ export const items: FormProps['items'] = [
         label: 'Reduce Animation',
         minWidth: undefined,
         name: 'liteAnimation',
+        tag: 'liteAnimation',
         valuePropName: 'checked',
       },
     ],
