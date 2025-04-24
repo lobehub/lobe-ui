@@ -5,14 +5,12 @@ export const useStyles = createStyles(({ css, token, stylish, prefixCls }) => {
     filled: css`
       &.${prefixCls}-btn.${prefixCls}-btn-variant-filled {
         ${stylish.variantFilled};
-        border: none;
       }
     `,
     glass: stylish.blur,
     outlined: css`
       &.${prefixCls}-btn.${prefixCls}-btn-variant-outlined {
         ${stylish.variantOutlined}
-        border: none;
       }
     `,
     root: css`

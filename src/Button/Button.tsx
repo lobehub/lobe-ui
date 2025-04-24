@@ -13,7 +13,7 @@ import type { ButtonProps } from './type';
 const Button = memo<ButtonProps>(
   ({
     icon,
-    variant,
+    variant = 'outlined',
     glass,
     shadow,
     loading,
