@@ -4,7 +4,7 @@ import { Form } from 'antd';
 import isEqual from 'fast-deep-equal';
 import { motion } from 'framer-motion';
 import { InfoIcon } from 'lucide-react';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import Button from '@/Button';
@@ -35,11 +35,12 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
 
     const { cx, styles, theme } = useStyles();
 
+    const mergedValues = useMemo(() => merge({}, values, initialValues), [values, initialValues]);
+
     useEffect(() => {
       if (!values) return;
-      const v = merge({}, initialValues, values);
-      setHasUnsavedChanges(!isEqual(v, initialValues));
-    }, [values, initialValues, submitLoading]);
+      setHasUnsavedChanges(!isEqual(mergedValues, initialValues));
+    }, [mergedValues, initialValues, submitLoading]);
 
     const fn = (e: BeforeUnloadEvent) => {
       if (hasUnsavedChanges) {
@@ -85,7 +86,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
           <Button
             htmlType="button"
             onClick={() => {
-              onReset?.(merge({}, initialValues, values), initialValues);
+              onReset?.(mergedValues, initialValues);
               form?.resetFields();
             }}
             shape={float ? 'round' : undefined}
