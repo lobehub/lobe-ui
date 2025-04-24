@@ -1,4 +1,20 @@
-import { merge as _merge, isEmpty, mergeWith } from 'lodash-es';
+import { merge as _merge, isEmpty, isObject, mergeWith, pickBy } from 'lodash-es';
+
+export const removeUndefined = (obj: any): any => {
+  if (!isObject(obj)) return obj;
+
+  if (Array.isArray(obj)) {
+    return obj.map((item) => removeUndefined(item)).filter((item) => item !== undefined);
+  }
+
+  return pickBy(
+    Object.entries(obj).reduce((acc: any, [key, value]) => {
+      acc[key] = removeUndefined(value);
+      return acc;
+    }, {}),
+    (value) => value !== undefined,
+  );
+};
 
 /**
  * 用于合并对象，如果是数组则直接替换

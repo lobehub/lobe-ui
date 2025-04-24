@@ -13,7 +13,7 @@ import Icon from '@/Icon';
 import { useSubmitFooterStyles as useStyles } from '../style';
 import type { FormSubmitFooterProps } from '../type';
 import { useFormContext } from './FormProvider';
-import { merge } from './merge';
+import { merge, removeUndefined } from './merge';
 
 const FormSubmitFooter = memo<FormSubmitFooterProps>(
   ({
@@ -35,11 +35,15 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
 
     const { cx, styles, theme } = useStyles();
 
-    const mergedValues = useMemo(() => merge(initialValues, values), [values, initialValues]);
+    const v = useMemo(() => removeUndefined(values), [values]);
+
+    const initialV = useMemo(() => removeUndefined(initialValues), [initialValues]);
+
+    const mergedV = useMemo(() => merge(initialV, v), [v, initialV]);
 
     useEffect(() => {
-      setHasUnsavedChanges(!isEqual(mergedValues, initialValues));
-    }, [mergedValues, initialValues, submitLoading]);
+      setHasUnsavedChanges(!isEqual(mergedV, initialV));
+    }, [mergedV, initialV, submitLoading]);
 
     const fn = (e: BeforeUnloadEvent) => {
       if (hasUnsavedChanges) {
@@ -85,7 +89,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
           <Button
             htmlType="button"
             onClick={() => {
-              onReset?.(mergedValues, initialValues);
+              onReset?.(v, initialV);
               form?.resetFields();
             }}
             shape={float ? 'round' : undefined}
