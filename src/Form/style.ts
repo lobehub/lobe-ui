@@ -66,13 +66,13 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
 
 export const useFlatGroupStyles = createStyles(({ cx, css, token, stylish }) => {
   return {
-    borderless: stylish.variantBorderlessWithoutHover,
-    filled: cx(
-      stylish.variantOutlinedWithoutHover,
+    borderless: cx(
+      stylish.variantBorderlessWithoutHover,
       css`
-        background: ${token.colorFillQuaternary};
+        padding-inline: 0;
       `,
     ),
+    filled: stylish.variantFilledWithoutHover,
     mobile: css`
       padding-block: 0;
       padding-inline: 16px;
