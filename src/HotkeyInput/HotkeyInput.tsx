@@ -42,7 +42,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
     style,
     className,
     hotkeyConflicts = [],
-    variant = 'outlined',
+    variant,
     texts,
     isApple,
     onBlur,
@@ -53,7 +53,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
     const [hasConflict, setHasConflict] = useState(false);
     const [hasInvalidCombination, setHasInvalidCombination] = useState(false);
     const inputRef = useRef<InputRef>(null);
-    const { cx, styles } = useStyles();
+    const { cx, styles, theme } = useStyles();
     const isAppleDevice = useMemo(() => checkIsAppleDevice(isApple), [isApple]);
     const [hotkeyValue, setHotkeyValue] = useControlledState(defaultValue, {
       defaultValue,
@@ -259,7 +259,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
               error: hasConflict || hasInvalidCombination,
               focused: isFocused,
               shadow,
-              variant,
+              variant: variant || (theme.isDarkMode ? 'filled' : 'outlined'),
             }),
           )}
           horizontal

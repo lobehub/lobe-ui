@@ -8,8 +8,8 @@ import { useStyles } from './style';
 import type { TextAreaProps } from './type';
 
 const TextArea = memo<TextAreaProps>(
-  ({ ref, variant = 'outlined', shadow, className, resize = false, style, ...rest }) => {
-    const { styles, cx } = useStyles();
+  ({ ref, variant, shadow, className, resize = false, style, ...rest }) => {
+    const { styles, cx, theme } = useStyles();
 
     const variants = useMemo(
       () =>
@@ -38,7 +38,10 @@ const TextArea = memo<TextAreaProps>(
 
     return (
       <AntInput.TextArea
-        className={cx(variants({ shadow, variant }), className)}
+        className={cx(
+          variants({ shadow, variant: variant || (theme.isDarkMode ? 'filled' : 'outlined') }),
+          className,
+        )}
         ref={ref}
         style={{ resize: resize ? undefined : 'none', ...style }}
         variant={variant}

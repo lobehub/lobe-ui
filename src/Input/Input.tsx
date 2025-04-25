@@ -8,7 +8,7 @@ import { useStyles } from './style';
 import type { InputProps } from './type';
 
 const Input = memo<InputProps>(({ ref, variant = 'outlined', shadow, className, ...rest }) => {
-  const { styles, cx } = useStyles();
+  const { styles, cx, theme } = useStyles();
 
   const variants = useMemo(
     () =>
@@ -37,7 +37,10 @@ const Input = memo<InputProps>(({ ref, variant = 'outlined', shadow, className, 
 
   return (
     <AntInput
-      className={cx(variants({ shadow, variant }), className)}
+      className={cx(
+        variants({ shadow, variant: variant || (theme.isDarkMode ? 'filled' : 'outlined') }),
+        className,
+      )}
       ref={ref}
       variant={variant}
       {...rest}

@@ -4,7 +4,7 @@ const gray: ColorScaleItem = {
   dark: [
     '#000000',
     '#0d0d0d',
-    '#111111',
+    '#1a1a1a',
     '#202020',
     '#2d2d2d',
     '#444444',

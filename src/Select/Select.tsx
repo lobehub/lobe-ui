@@ -11,8 +11,8 @@ import { useStyles } from './style';
 import type { SelectProps } from './type';
 
 const Input = memo<SelectProps>(
-  ({ ref, variant = 'outlined', suffixIconProps, suffixIcon, shadow, className, ...rest }) => {
-    const { styles, cx } = useStyles();
+  ({ ref, variant, suffixIconProps, suffixIcon, shadow, className, ...rest }) => {
+    const { styles, cx, theme } = useStyles();
 
     const variants = useMemo(
       () =>
@@ -41,7 +41,10 @@ const Input = memo<SelectProps>(
 
     return (
       <AntSelect
-        className={cx(variants({ shadow, variant }), className)}
+        className={cx(
+          variants({ shadow, variant: variant || (theme.isDarkMode ? 'filled' : 'outlined') }),
+          className,
+        )}
         ref={ref}
         suffixIcon={
           <Icon
