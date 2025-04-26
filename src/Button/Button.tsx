@@ -28,6 +28,8 @@ const Button = memo<ButtonProps>(
   }) => {
     const { styles, cx, theme } = useStyles();
 
+    const defaultVariant = variant || (theme.isDarkMode ? 'filled' : 'outlined');
+
     const variants = useMemo(
       () =>
         cva(styles.root, {
@@ -66,11 +68,11 @@ const Button = memo<ButtonProps>(
           variants({
             glass,
             shadow,
-            variant: variant || (theme.isDarkMode ? 'filled' : 'outlined'),
+            variant: defaultVariant,
           }),
           className,
         )}
-        color={color || (variant === 'filled' ? 'default' : undefined)}
+        color={color || (defaultVariant === 'filled' ? 'default' : undefined)}
         danger={danger}
         icon={
           icon &&
@@ -96,7 +98,7 @@ const Button = memo<ButtonProps>(
         }
         ref={ref}
         type={type}
-        variant={variant || (theme.isDarkMode ? 'filled' : 'outlined')}
+        variant={defaultVariant}
         {...rest}
       >
         {children}
