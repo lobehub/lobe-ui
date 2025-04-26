@@ -6,6 +6,7 @@ export {
   type ActionIconGroupProps,
 } from './ActionIconGroup';
 export { default as Alert, type AlertProps } from './Alert';
+export { default as AutoComplete, type AutoCompleteProps } from './AutoComplete';
 export { default as Avatar, AvatarGroup, type AvatarGroupProps, type AvatarProps } from './Avatar';
 export { default as Block, type BlockProps } from './Block';
 export { default as Burger, type BurgerProps } from './Burger';

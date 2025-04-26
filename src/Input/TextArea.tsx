@@ -16,7 +16,6 @@ const TextArea = memo<TextAreaProps>(
         cva(styles.root, {
           defaultVariants: {
             shadow: false,
-            variant: 'filled',
           },
           /* eslint-disable sort-keys-fix/sort-keys-fix */
           variants: {

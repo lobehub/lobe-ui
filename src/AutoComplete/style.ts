@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ prefixCls, token, css, stylish }) => {
+export const useStyles = createStyles(({ prefixCls, css, stylish }) => {
   return {
     borderless: css`
       &.${prefixCls}-select {
@@ -23,15 +23,7 @@ export const useStyles = createStyles(({ prefixCls, token, css, stylish }) => {
         }
       }
     `,
-    root: css`
-      &.${prefixCls}-select {
-        &.${prefixCls}-select-focused {
-          > .${prefixCls}-select-selector {
-            background: ${token.colorFillTertiary} !important;
-          }
-        }
-      }
-    `,
+    root: css``,
     shadow: css`
       &.${prefixCls}-select {
         > .${prefixCls}-select-selector {

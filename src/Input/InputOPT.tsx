@@ -15,7 +15,6 @@ const InputOPT = memo<InputOPTProps>(({ ref, variant, shadow, className, ...rest
       cva(styles.rootOPT, {
         defaultVariants: {
           shadow: false,
-          variant: 'filled',
         },
         /* eslint-disable sort-keys-fix/sort-keys-fix */
         variants: {

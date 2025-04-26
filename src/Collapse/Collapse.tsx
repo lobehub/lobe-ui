@@ -41,7 +41,6 @@ const Collapse = memo<CollapseProps>(
           defaultVariants: {
             collapsible: true,
             gap: false,
-            variant: 'filled',
           },
           /* eslint-disable sort-keys-fix/sort-keys-fix */
           variants: {

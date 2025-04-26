@@ -1,13 +1,13 @@
 'use client';
 
-import { Input as AntInput } from 'antd';
+import { AutoComplete as AntAutoComplete } from 'antd';
 import { cva } from 'class-variance-authority';
 import { memo, useMemo } from 'react';
 
 import { useStyles } from './style';
-import type { InputPasswordProps } from './type';
+import { AutoCompleteProps } from './type';
 
-const InputPassword = memo<InputPasswordProps>(({ ref, variant, shadow, className, ...rest }) => {
+const AutoComplete = memo<AutoCompleteProps>(({ variant, shadow, className, ...rest }) => {
   const { styles, cx, theme } = useStyles();
 
   const variants = useMemo(
@@ -35,18 +35,17 @@ const InputPassword = memo<InputPasswordProps>(({ ref, variant, shadow, classNam
   );
 
   return (
-    <AntInput.Password
+    <AntAutoComplete
       className={cx(
         variants({ shadow, variant: variant || (theme.isDarkMode ? 'filled' : 'outlined') }),
         className,
       )}
-      ref={ref}
       variant={variant || (theme.isDarkMode ? 'filled' : 'outlined')}
       {...rest}
     />
   );
 });
 
-InputPassword.displayName = 'InputPassword';
+AutoComplete.displayName = 'AutoComplete';
 
-export default InputPassword;
+export default AutoComplete;

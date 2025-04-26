@@ -29,7 +29,6 @@ export const createLobeAntdTheme = ({
     algorithm: isDark ? darkAlgorithm : lightAlgorithm,
     components: {
       Button: {
-        borderRadiusSM: 6,
         contentFontSizeSM: 12,
         defaultActiveBorderColor: baseToken.colorBorder,
         defaultActiveColor: baseToken.colorText,

@@ -15,7 +15,6 @@ const Input = memo<InputProps>(({ ref, variant, shadow, className, ...rest }) =>
       cva(styles.root, {
         defaultVariants: {
           shadow: false,
-          variant: 'filled',
         },
         /* eslint-disable sort-keys-fix/sort-keys-fix */
         variants: {
