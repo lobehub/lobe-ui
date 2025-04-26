@@ -13,7 +13,7 @@ import type { ButtonProps } from './type';
 const Button = memo<ButtonProps>(
   ({
     icon,
-    variant = 'outlined',
+    variant,
     glass,
     shadow,
     loading,
@@ -26,7 +26,7 @@ const Button = memo<ButtonProps>(
     ref,
     ...rest
   }) => {
-    const { styles, cx } = useStyles();
+    const { styles, cx, theme } = useStyles();
 
     const variants = useMemo(
       () =>
@@ -62,7 +62,14 @@ const Button = memo<ButtonProps>(
 
     return (
       <AntdButton
-        className={cx(variants({ glass, shadow, variant }), className)}
+        className={cx(
+          variants({
+            glass,
+            shadow,
+            variant: variant || (theme.isDarkMode ? 'filled' : 'outlined'),
+          }),
+          className,
+        )}
         color={color || (variant === 'filled' ? 'default' : undefined)}
         danger={danger}
         icon={
@@ -89,7 +96,7 @@ const Button = memo<ButtonProps>(
         }
         ref={ref}
         type={type}
-        variant={variant}
+        variant={variant || (theme.isDarkMode ? 'filled' : 'outlined')}
         {...rest}
       >
         {children}
