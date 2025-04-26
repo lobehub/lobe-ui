@@ -1,18 +1,18 @@
 'use client';
 
-import { Input as AntInput } from 'antd';
+import { DatePicker as AntDatePicker } from 'antd';
 import { cva } from 'class-variance-authority';
 import { memo, useMemo } from 'react';
 
 import { useStyles } from './style';
-import type { InputOPTProps } from './type';
+import { DatePickerProps } from './type';
 
-const InputOPT = memo<InputOPTProps>(({ ref, variant, shadow, className, ...rest }) => {
+const DatePicker = memo<DatePickerProps>(({ variant, shadow, className, ...rest }) => {
   const { styles, cx, theme } = useStyles();
 
   const variants = useMemo(
     () =>
-      cva(styles.rootOPT, {
+      cva(styles.root, {
         defaultVariants: {
           shadow: false,
           variant: 'filled',
@@ -20,14 +20,14 @@ const InputOPT = memo<InputOPTProps>(({ ref, variant, shadow, className, ...rest
         /* eslint-disable sort-keys-fix/sort-keys-fix */
         variants: {
           variant: {
-            filled: styles.filledOPT,
-            outlined: styles.outlinedOPT,
-            borderless: styles.borderlessOPT,
+            filled: styles.filled,
+            outlined: styles.outlined,
+            borderless: styles.borderless,
             underlined: null,
           },
           shadow: {
             false: null,
-            true: styles.shadowOPT,
+            true: styles.shadow,
           },
         },
         /* eslint-enable sort-keys-fix/sort-keys-fix */
@@ -36,18 +36,17 @@ const InputOPT = memo<InputOPTProps>(({ ref, variant, shadow, className, ...rest
   );
 
   return (
-    <AntInput.OTP
+    <AntDatePicker
       className={cx(
         variants({ shadow, variant: variant || (theme.isDarkMode ? 'filled' : 'outlined') }),
         className,
       )}
-      ref={ref}
       variant={variant || (theme.isDarkMode ? 'filled' : 'outlined')}
       {...rest}
     />
   );
 });
 
-InputOPT.displayName = 'InputOPT';
+DatePicker.displayName = 'DatePicker';
 
-export default InputOPT;
+export default DatePicker;

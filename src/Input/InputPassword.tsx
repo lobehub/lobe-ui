@@ -42,7 +42,7 @@ const InputPassword = memo<InputPasswordProps>(({ ref, variant, shadow, classNam
         className,
       )}
       ref={ref}
-      variant={variant}
+      variant={variant || (theme.isDarkMode ? 'filled' : 'outlined')}
       {...rest}
     />
   );

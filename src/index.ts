@@ -15,6 +15,7 @@ export { default as Collapse, type CollapseItemType, type CollapseProps } from '
 export { default as ColorSwatches, type ColorSwatchesProps } from './ColorSwatches';
 export { type Config, default as ConfigProvider, useCdnFn } from './ConfigProvider';
 export { default as CopyButton, type CopyButtonProps } from './CopyButton';
+export { default as DatePicker, type DatePickerProps } from './DatePicker';
 export {
   default as DraggablePanel,
   DraggablePanelBody,

@@ -44,7 +44,7 @@ const TextArea = memo<TextAreaProps>(
         )}
         ref={ref}
         style={{ resize: resize ? undefined : 'none', ...style }}
-        variant={variant}
+        variant={variant || (theme.isDarkMode ? 'filled' : 'outlined')}
         {...rest}
       />
     );

@@ -57,7 +57,7 @@ const Input = memo<SelectProps>(
             }}
           />
         }
-        variant={variant}
+        variant={variant || (theme.isDarkMode ? 'filled' : 'outlined')}
         {...rest}
       />
     );

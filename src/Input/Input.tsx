@@ -42,7 +42,7 @@ const Input = memo<InputProps>(({ ref, variant, shadow, className, ...rest }) =>
         className,
       )}
       ref={ref}
-      variant={variant}
+      variant={variant || (theme.isDarkMode ? 'filled' : 'outlined')}
       {...rest}
     />
   );

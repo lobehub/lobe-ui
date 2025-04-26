@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ token, css, stylish, prefixCls }) => {
+export const useStyles = createStyles(({ cx, token, css, stylish, prefixCls }) => {
   return {
     borderless: css`
       &.${prefixCls}-input {
@@ -17,7 +17,14 @@ export const useStyles = createStyles(({ token, css, stylish, prefixCls }) => {
         }
       }
     `,
-    filled: stylish.variantFilled,
+    filled: cx(
+      stylish.variantFilled,
+      css`
+        &:focus-within {
+          ${stylish.variantFilledWithoutHover}
+        }
+      `,
+    ),
 
     filledOPT: css`
       &.${prefixCls}-otp {
