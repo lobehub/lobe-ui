@@ -1,5 +1,5 @@
 export { default as DiscordIcon } from './DiscordIcon';
-export { default as GlobOffIcon } from './GlobOffIcon';
+export { default as GlobeOffIcon } from './GlobeOffIcon';
 export { default as LeftClickIcon } from './LeftClickIcon';
 export { default as LeftDoubleClickIcon } from './LeftDoubleClickIcon';
 export { default as RightClickIcon } from './RightClickIcon';

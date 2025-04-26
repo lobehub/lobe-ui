@@ -1,7 +1,7 @@
 import { Icon } from '@lobehub/ui';
 import {
   DiscordIcon,
-  GlobOffIcon,
+  GlobeOffIcon,
   LeftClickIcon,
   LeftDoubleClickIcon,
   RightClickIcon,
@@ -12,7 +12,7 @@ import { Flexbox } from 'react-layout-kit';
 export default () => (
   <Flexbox gap={16} horizontal width="100%" wrap="wrap">
     <Icon icon={DiscordIcon} size={32} />
-    <Icon icon={GlobOffIcon} size={32} />
+    <Icon icon={GlobeOffIcon} size={32} />
     <Icon icon={LeftClickIcon} size={32} />
     <Icon icon={RightClickIcon} size={32} />
     <Icon icon={LeftDoubleClickIcon} size={32} />

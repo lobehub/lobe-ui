@@ -1,6 +1,6 @@
 import { createLucideIcon } from 'lucide-react';
 
-const GlobOffIcon = createLucideIcon('Discord', [
+const GlobeOffIcon = createLucideIcon('Discord', [
   [
     'path',
     {
@@ -52,6 +52,6 @@ const GlobOffIcon = createLucideIcon('Discord', [
   ],
 ]);
 
-GlobOffIcon.displayName = 'GlobOffIcon';
+GlobeOffIcon.displayName = 'GlobeOffIcon';
 
-export default GlobOffIcon;
+export default GlobeOffIcon;
