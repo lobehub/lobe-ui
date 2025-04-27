@@ -8,10 +8,6 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
       padding-block-end: 16px;
       border-block-end: 1px solid ${token.colorBorderSecondary};
     }
-
-    ${responsive.mobile} {
-      border-block-start: unset;
-    }
   `,
   root: css`
     position: relative;
@@ -43,9 +39,6 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
 
     .${prefixCls}-form-item-row {
       align-items: center;
-      ${responsive.mobile} {
-        align-items: stretch;
-      }
     }
 
     .${prefixCls}-form-item-control {
@@ -135,17 +128,6 @@ export const useItemStyles = createStyles(
       .${prefixCls}-form-item-control {
         width: ${isNumber(minWidth) ? `${minWidth}px` : minWidth};
       }
-      ${responsive.mobile} {
-        .${prefixCls}-row {
-          flex-direction: column;
-          gap: 4px;
-        }
-
-        .${prefixCls}-form-item-control {
-          flex: 1;
-          width: 100%;
-        }
-      }
     `,
     itemNoDivider: css`
       &:not(:first-child) {
@@ -175,24 +157,14 @@ export const useItemStyles = createStyles(
           align-self: flex-start;
         }
 
-        ${responsive.md} {
-          .${prefixCls}-row {
-            flex-direction: column;
-            align-items: stretch;
-
-            > div {
-              width: 100%;
-            }
-          }
-        }
-
         ${responsive.mobile} {
-          padding-block: 16px;
-          padding-inline: 0;
-
-          .${prefixCls}-row {
-            flex-wrap: wrap;
-            gap: 4px;
+          &.${prefixCls}-form-item-horizontal {
+            .${prefixCls}-form-item-label {
+              flex: 1 !important;
+            }
+            .${prefixCls}-form-item-control {
+              flex: none !important;
+            }
           }
         }
       }

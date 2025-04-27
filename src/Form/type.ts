@@ -15,6 +15,10 @@ export type ItemsType = 'group' | 'flat';
 export interface FormProps extends Omit<AntFormProps, 'variant'> {
   activeKey?: (string | number)[];
   children?: ReactNode;
+  classNames?: FormGroupProps['classNames'] & {
+    group?: string;
+    item?: string;
+  };
   collapsible?: boolean;
   defaultActiveKey?: (string | number)[];
   footer?: ReactNode;
@@ -25,6 +29,10 @@ export interface FormProps extends Omit<AntFormProps, 'variant'> {
   itemsType?: ItemsType;
   onCollapse?: (key: (string | number)[]) => void;
   ref?: Ref<FormInstance>;
+  styles?: FormGroupProps['styles'] & {
+    group?: CSSProperties;
+    item?: CSSProperties;
+  };
   variant?: FormVariant;
 }
 

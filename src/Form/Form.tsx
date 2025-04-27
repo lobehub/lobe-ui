@@ -1,6 +1,7 @@
 'use client';
 
 import { Form as AntForm } from 'antd';
+import { useResponsive } from 'antd-style';
 import { cva } from 'class-variance-authority';
 import { isUndefined } from 'lodash-es';
 import { memo, useCallback, useMemo, useState } from 'react';
@@ -23,6 +24,8 @@ const Form = memo<FormProps>(
     itemsType = 'group',
     itemVariant,
     variant = 'borderless',
+    classNames,
+    styles: customStyles,
     gap,
     style,
     collapsible,
@@ -32,8 +35,10 @@ const Form = memo<FormProps>(
     onCollapse,
     onFinish,
     ref,
+    layout,
     ...rest
   }) => {
+    const { mobile } = useResponsive();
     const { cx, styles } = useStyles();
     const [submitLoading, setSubmitLoading] = useState(false);
 
@@ -59,14 +64,16 @@ const Form = memo<FormProps>(
     const mapFlat = useCallback(
       (item: FormItemProps, itemIndex: number) => (
         <FormItem
+          className={classNames?.item}
           divider={itemIndex !== 0}
           key={itemIndex}
           minWidth={itemMinWidth}
+          style={customStyles?.item}
           variant={variant}
           {...item}
         />
       ),
-      [itemMinWidth, variant],
+      [itemMinWidth, variant, classNames, customStyles],
     );
 
     const mapTree = useCallback(
@@ -75,6 +82,8 @@ const Form = memo<FormProps>(
         return (
           <FormGroup
             active={activeKey && group?.key ? activeKey.includes(key) : undefined}
+            className={classNames?.group}
+            classNames={classNames}
             collapsible={isUndefined(group.collapsible) ? collapsible : group.collapsible}
             defaultActive={
               defaultActiveKey && group?.key ? defaultActiveKey.includes(key) : group?.defaultActive
@@ -88,6 +97,8 @@ const Form = memo<FormProps>(
               keys = keys.filter((k) => k !== key);
               onCollapse?.(active ? [...keys, key] : keys);
             }}
+            style={customStyles?.group}
+            styles={customStyles}
             title={group.title}
             variant={group?.variant || variant}
           >
@@ -97,7 +108,7 @@ const Form = memo<FormProps>(
           </FormGroup>
         );
       },
-      [activeKey, collapsible, defaultActiveKey, onCollapse, variant],
+      [activeKey, collapsible, defaultActiveKey, onCollapse, variant, classNames, customStyles],
     );
 
     return (
@@ -113,7 +124,7 @@ const Form = memo<FormProps>(
           colon={false}
           form={form}
           initialValues={initialValues}
-          layout={'horizontal'}
+          layout={layout || (mobile ? 'vertical' : 'horizontal')}
           onFinish={async (...finishProps) => {
             if (!onFinish) return;
             setSubmitLoading(true);
@@ -132,7 +143,11 @@ const Form = memo<FormProps>(
             itemsType === 'group' ? (
               (items as FormGroupItemType[])?.map((item, i) => mapTree(item, i))
             ) : (
-              <FormFlatGroup variant={variant}>
+              <FormFlatGroup
+                className={classNames?.group}
+                style={customStyles?.group}
+                variant={variant}
+              >
                 {(items as FormItemProps[])
                   ?.filter((item) => !item.hidden)
                   .map((item, i) => mapFlat(item, i))}

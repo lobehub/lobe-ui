@@ -127,6 +127,9 @@ const FormModal = memo<FormModalProps>(
             paddingBottom: 56,
             ...formStyle,
           }}
+          styles={{
+            title: { fontSize: 14 },
+          }}
           variant={variant}
           {...rest}
         >

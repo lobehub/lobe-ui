@@ -5,7 +5,7 @@ export const DEFAULT_PADDING = '12px 16px';
 export const getPadding = (padding?: number | string) =>
   !padding && padding !== 0 ? DEFAULT_PADDING : padding;
 
-export const useStyles = createStyles(({ css, token, prefixCls, stylish }) => {
+export const useStyles = createStyles(({ css, token, prefixCls, stylish, isDarkMode }) => {
   return {
     borderless: css`
       &.${prefixCls}-collapse {
@@ -27,14 +27,14 @@ export const useStyles = createStyles(({ css, token, prefixCls, stylish }) => {
     filled: css`
       &.${prefixCls}-collapse {
         .${prefixCls}-collapse-item {
-          background: ${token.colorFillTertiary};
+          background: ${isDarkMode ? token.colorFillQuaternary : token.colorFillTertiary};
           .${prefixCls}-collapse-content {
             margin-inline: 3px;
             margin-block-end: 3px;
-            background: ${token.colorBgContainer};
-            border-radius: ${token.borderRadiusLG}px;
+            border-radius: ${token.borderRadius}px;
             ${stylish.variantOutlinedWithoutHover};
-            ${stylish.shadow};
+            background: ${isDarkMode ? token.colorFillQuaternary : token.colorBgContainer};
+            ${isDarkMode ? undefined : stylish.shadow};
           }
         }
       }
