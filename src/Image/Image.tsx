@@ -101,7 +101,11 @@ const Image = memo<ImageProps>(
                   ...(mergePreivew as any),
                 }
           }
-          style={customStyles?.image}
+          style={{
+            height: 'auto',
+            width: '100%',
+            ...customStyles?.image,
+          }}
           width={width}
           wrapperClassName={cx(styles.image, classNames?.wrapper)}
           wrapperStyle={{
