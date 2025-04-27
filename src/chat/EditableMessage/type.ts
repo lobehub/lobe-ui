@@ -5,10 +5,10 @@ import type { MessageInputProps } from '@/chat/MessageInput';
 import type { MessageModalProps } from '@/chat/MessageModal';
 
 export interface EditableMessageProps {
-  classNames?: {
+  className?: string;
+  classNames?: MessageInputProps['classNames'] & {
     input?: string;
     markdown?: string;
-    textarea?: string;
   };
   defaultValue?: string;
   editButtonSize?: MessageInputProps['editButtonSize'];
@@ -27,7 +27,8 @@ export interface EditableMessageProps {
   openModal?: boolean;
   placeholder?: string;
   showEditWhenEmpty?: boolean;
-  styles?: {
+  style?: CSSProperties;
+  styles?: MessageInputProps['styles'] & {
     input?: CSSProperties;
     markdown?: CSSProperties;
   };

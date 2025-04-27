@@ -1,5 +1,6 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { memo } from 'react';
 import useControlledState from 'use-merge-value';
 
@@ -20,7 +21,9 @@ const EditableMessage = memo<EditableMessageProps>(
     onOpenChange,
     placeholder,
     showEditWhenEmpty = false,
-    styles: stylesProps,
+    styles: customStyles,
+    className,
+    style,
     height,
     variant,
     editButtonSize,
@@ -44,8 +47,8 @@ const EditableMessage = memo<EditableMessageProps>(
 
     const input = (
       <MessageInput
-        className={classNames?.input}
-        classNames={{ textarea: classNames?.textarea }}
+        className={cx(className, classNames?.input)}
+        classNames={classNames}
         defaultValue={value}
         editButtonSize={editButtonSize}
         height={height}
@@ -56,9 +59,12 @@ const EditableMessage = memo<EditableMessageProps>(
         }}
         placeholder={placeholder}
         shortcut
-        style={stylesProps?.input}
+        style={{
+          ...style,
+          ...customStyles?.input,
+        }}
+        styles={customStyles}
         text={text}
-        textareaClassname={classNames?.input}
         variant={variant}
       />
     );
@@ -71,12 +77,13 @@ const EditableMessage = memo<EditableMessageProps>(
           input
         ) : (
           <Markdown
-            className={classNames?.markdown}
+            className={cx(className, classNames?.markdown)}
             fontSize={fontSize}
             fullFeaturedCodeBlock={fullFeaturedCodeBlock}
             style={{
               height: isAutoSize ? 'unset' : height,
-              ...stylesProps?.markdown,
+              ...style,
+              ...customStyles?.markdown,
             }}
             variant={'chat'}
             {...markdownProps}

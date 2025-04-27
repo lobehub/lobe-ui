@@ -21,9 +21,8 @@ const MessageInput = memo<MessageInputProps>(
     defaultValue,
     onConfirm,
     renderButtons,
-    textareaStyle,
-    textareaClassname,
     placeholder,
+    styles: customStyles,
     style,
     editButtonSize = 'middle',
     classNames,
@@ -46,12 +45,6 @@ const MessageInput = memo<MessageInputProps>(
       preventDefault: true,
     });
 
-    useHotkeys(cancelHotkey, handleCancel, {
-      enableOnFormTags: true,
-      enabled: shortcut,
-      preventDefault: true,
-    });
-
     const confirmButton = (
       <Button onClick={handleConfirm} size={editButtonSize} type="primary">
         {confirmText}
@@ -67,13 +60,14 @@ const MessageInput = memo<MessageInputProps>(
     return (
       <Flexbox gap={16} style={{ flex: 1, width: '100%', ...style }} {...rest}>
         <CodeEditor
-          className={cx(styles, textareaClassname)}
+          className={cx(styles, classNames?.editor)}
           classNames={classNames}
           language={'markdown'}
           onBlur={(e) => setValue(e.target.value)}
           onValueChange={(e) => setValue(e)}
           placeholder={placeholder}
-          style={textareaStyle}
+          style={customStyles?.editor}
+          styles={customStyles}
           value={temporaryValue}
           variant={variant}
         />
