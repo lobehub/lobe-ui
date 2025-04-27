@@ -28,7 +28,8 @@ const Button = memo<ButtonProps>(
   }) => {
     const { styles, cx, theme } = useStyles();
 
-    const defaultVariant = type ? undefined : variant || (theme.isDarkMode ? 'filled' : 'outlined');
+    const defaultVariant =
+      type === 'primary' ? undefined : variant || (theme.isDarkMode ? 'filled' : 'outlined');
 
     const variants = useMemo(
       () =>
