@@ -11,7 +11,7 @@ const green: ColorScaleItem = {
     '#007944',
     '#1b8d4d',
     '#3ba05a',
-    '#55b467',
+    '#62c473',
     '#96cd92',
     '#cde6c3',
     '#ffffff',

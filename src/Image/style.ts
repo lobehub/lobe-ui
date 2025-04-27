@@ -3,7 +3,7 @@ import { rgba } from 'polished';
 
 export const useStyles = createStyles(
   (
-    { css, token, cx, stylish, prefixCls },
+    { cx, css, token, stylish, prefixCls },
     {
       maxHeight,
       maxWidth,
@@ -39,7 +39,7 @@ export const useStyles = createStyles(
     return {
       actions,
       borderless: stylish.variantBorderlessWithoutHover,
-      filled: stylish.variantFilledWithoutHover,
+      filled: cx(stylish.variantOutlinedWithoutHover, stylish.variantFilledWithoutHover),
       image: css`
         position: relative;
         overflow: hidden;

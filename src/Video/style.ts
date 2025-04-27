@@ -38,7 +38,7 @@ export const useStyles = createStyles(
 
     return {
       borderless: stylish.variantBorderlessWithoutHover,
-      filled: stylish.variantFilledWithoutHover,
+      filled: cx(stylish.variantOutlinedWithoutHover, stylish.variantFilledWithoutHover),
       mask,
       outlined: stylish.variantOutlinedWithoutHover,
       root: css`
