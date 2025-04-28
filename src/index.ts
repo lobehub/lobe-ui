@@ -64,7 +64,7 @@ export {
 } from './Highlighter';
 export { combineKeys, default as Hotkey, type HotkeyProps, KeyMapEnum } from './Hotkey';
 export { default as HotkeyInput, type HotkeyInputProps } from './HotkeyInput';
-export { default as Icon, type IconProps, type IconSize } from './Icon';
+export { default as Icon, type IconProps, IconProvider, type IconSize } from './Icon';
 export { default as Image, type ImageProps, PreviewGroup, type PreviewGroupProps } from './Image';
 export { default as ImageSelect, type ImageSelectItem, type ImageSelectProps } from './ImageSelect';
 export {
