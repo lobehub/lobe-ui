@@ -86,11 +86,11 @@ const MessageModal = memo<MessageModalProps>(
         {isEdit ? (
           <CodeEditor
             className={textStyles}
-            defaultValue={value}
+            defaultValue={temporaryValue}
             language={'markdown'}
             onValueChange={(value) => setMessage(value)}
             placeholder={placeholder}
-            value={value}
+            value={temporaryValue}
             variant={'borderless'}
           />
         ) : (
