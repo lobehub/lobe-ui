@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.0.1](https://github.com/lobehub/lobe-ui/compare/v2.0.0...v2.0.1)
+
+<sup>Released on **2025-04-28**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update deps.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update deps ([cabffc3](https://github.com/lobehub/lobe-ui/commit/cabffc3))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.0.0](https://github.com/lobehub/lobe-ui/compare/v1.171.0...v2.0.0)
 
 <sup>Released on **2025-04-28**</sup>
