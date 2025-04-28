@@ -30,9 +30,6 @@ export const createLobeAntdTheme = ({
     components: {
       Button: {
         contentFontSizeSM: 12,
-        defaultActiveBorderColor: baseToken.colorBorder,
-        defaultActiveColor: baseToken.colorText,
-        groupBorderColor: baseToken.colorBorder,
       },
       DatePicker: {
         activeBorderColor: baseToken.colorBorder,

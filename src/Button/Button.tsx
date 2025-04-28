@@ -28,8 +28,7 @@ const Button = memo<ButtonProps>(
   }) => {
     const { styles, cx, theme } = useStyles();
 
-    const defaultVariant =
-      type === 'primary' ? undefined : variant || (theme.isDarkMode ? 'filled' : 'outlined');
+    const defaultVariant = type ? undefined : variant || (theme.isDarkMode ? 'filled' : 'outlined');
 
     const variants = useMemo(
       () =>
@@ -40,15 +39,6 @@ const Button = memo<ButtonProps>(
           },
           /* eslint-disable sort-keys-fix/sort-keys-fix */
           variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              dashed: null,
-              text: null,
-              link: null,
-              normal: null,
-              solid: null,
-            },
             glass: {
               false: null,
               true: styles.glass,
@@ -69,7 +59,6 @@ const Button = memo<ButtonProps>(
           variants({
             glass,
             shadow,
-            variant: defaultVariant,
           }),
           className,
         )}
