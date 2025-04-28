@@ -1,4 +1,4 @@
-import { LLMMessage } from '@lobehub/ui';
+import type { LLMMessage } from '@lobehub/ui/chat';
 
 export const data: LLMMessage[] = [
   {

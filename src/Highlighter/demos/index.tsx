@@ -1,11 +1,11 @@
-import { Highlighter, HighlighterProps } from '@lobehub/ui';
+import { Highlighter, HighlighterProps, highlighterThemes } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 import { code } from './data';
 
 export default () => {
   const store = useCreateStore();
-  const options: HighlighterProps | any = useControls(
+  const options = useControls(
     {
       children: {
         rows: true,
@@ -13,15 +13,20 @@ export default () => {
       },
       copyable: true,
       language: 'tsx',
+      shadow: false,
       showLanguage: true,
-      type: {
-        options: ['ghost', 'block', 'pure'],
-        value: 'block',
+      theme: {
+        options: highlighterThemes.map((item) => item.id),
+        value: highlighterThemes[0].id,
+      },
+      variant: {
+        options: ['filled', 'outlined', 'borderless'],
+        value: 'filled',
       },
       wrap: false,
     },
     { store },
-  );
+  ) as HighlighterProps;
 
   return (
     <StoryBook levaStore={store}>

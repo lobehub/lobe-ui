@@ -1,42 +1,45 @@
 'use client';
 
 import { useResponsive } from 'antd-style';
-import { memo } from 'react';
-import { Flexbox, FlexboxProps } from 'react-layout-kit';
+import { cva } from 'class-variance-authority';
+import { memo, useMemo } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
-import { FormVariant, useStyles } from './FormGroup';
-
-export interface FormFlatGroupProps extends FlexboxProps {
-  variant?: FormVariant;
-}
+import { useFlatGroupStyles as useStyles } from '../style';
+import type { FormFlatGroupProps } from '../type';
 
 const FormFlatGroup = memo<FormFlatGroupProps>(
-  ({ className, children, variant = 'default', ...rest }) => {
+  ({ className, children, variant = 'borderless', ...rest }) => {
     const { mobile } = useResponsive();
-    const { cx, styles, prefixCls } = useStyles(variant);
+    const { cx, styles } = useStyles(variant);
 
-    const groupClassName = `${prefixCls}-form-group`;
-
-    const variantStyle = cx(
-      variant === 'default' && styles.defaultStyle,
-      variant === 'block' && styles.blockStyle,
-      variant === 'ghost' && styles.ghostStyle,
-      variant === 'pure' && styles.pureStyle,
+    const vriants = useMemo(
+      () =>
+        cva(styles.root, {
+          defaultVariants: {
+            variant: 'borderless',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            variant: {
+              filled: styles.filled,
+              outlined: styles.outlined,
+              borderless: styles.borderless,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
     );
 
-    return mobile ? (
-      <Flexbox
-        className={cx(groupClassName, styles.mobileFlatGroup, styles.mobileGroupBody, className)}
-        {...rest}
-      >
-        {children}
-      </Flexbox>
-    ) : (
-      <Flexbox className={cx(groupClassName, styles.flatGroup, variantStyle, className)} {...rest}>
+    return (
+      <Flexbox className={cx(mobile ? styles.mobile : vriants({ variant }), className)} {...rest}>
         {children}
       </Flexbox>
     );
   },
 );
+
+FormFlatGroup.displayName = 'FormFlatGroup';
 
 export default FormFlatGroup;

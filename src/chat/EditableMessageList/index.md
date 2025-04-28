@@ -15,4 +15,18 @@ apiHeader:
 
 ## APIs
 
-<API></API>
+| Property    | Description                                           | Type                                   | Default |
+| ----------- | ----------------------------------------------------- | -------------------------------------- | ------- |
+| dataSources | Array of chat messages to display and edit (required) | `LLMMessage[]`                         | -       |
+| disabled    | Whether the component is disabled for editing         | `boolean`                              | `false` |
+| onChange    | Callback when messages are modified                   | `(chatMessages: LLMMessage[]) => void` | -       |
+
+### Types
+
+```typescript
+interface LLMMessage {
+  content: string;
+  role: string;
+  // Additional properties for chat messages
+}
+```

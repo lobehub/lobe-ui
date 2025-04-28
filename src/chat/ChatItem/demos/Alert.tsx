@@ -20,7 +20,7 @@ const demoError = {
 };
 export default () => {
   const store = useCreateStore();
-  const control: ChatItemProps['error'] | any = useControls(
+  const control = useControls(
     {
       description: '',
       message: 'Error',
@@ -30,7 +30,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as ChatItemProps['error'];
 
   return (
     <StoryBook levaStore={store}>
@@ -38,7 +38,7 @@ export default () => {
         avatar={avatar}
         error={control}
         errorMessage={
-          <Highlighter copyButtonSize={'small'} language={'json'} type={'pure'}>
+          <Highlighter actionIconSize={'small'} language={'json'} variant={'borderless'}>
             {JSON.stringify(demoError, null, 2)}
           </Highlighter>
         }

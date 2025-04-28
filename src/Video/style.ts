@@ -2,21 +2,25 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(
   (
-    { css, token, cx },
+    { css, token, cx, stylish },
     {
-      minSize,
-      size,
-      borderless,
+      maxHeight,
+      maxWidth,
+      minWidth,
+      minHeight,
     }: {
-      borderless?: boolean;
-      minSize?: number | string;
-      size?: number | string;
+      maxHeight?: number | string;
+      maxWidth?: number | string;
+      minHeight?: number | string;
+      minWidth?: number | string;
     } = {},
   ) => {
-    const SIZE = typeof size === 'number' ? `${size}px` : size;
-    const MIN_SIZE = typeof minSize === 'number' ? `${minSize}px` : minSize;
+    const MAX_HEIGHT = typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight;
+    const MAX_WIDTH = typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth;
+    const MIN_HEIGHT = typeof minHeight === 'number' ? `${minHeight}px` : minHeight;
+    const MIN_WIDTH = typeof minWidth === 'number' ? `${minWidth}px` : minWidth;
 
-    const preview = cx(css`
+    const mask = cx(css`
       pointer-events: none;
 
       position: absolute;
@@ -24,51 +28,45 @@ export const useStyles = createStyles(
       inset: 0;
 
       width: 100%;
-      height: auto;
+      height: 100%;
 
       opacity: 0;
-      background: rgba(0, 0, 0, 50%);
+      background: ${token.colorBgMask};
 
       transition: opacity 0.3s;
     `);
 
     return {
-      preview,
+      borderless: stylish.variantBorderlessWithoutHover,
+      filled: cx(stylish.variantOutlinedWithoutHover, stylish.variantFilledWithoutHover),
+      mask,
+      outlined: stylish.variantOutlinedWithoutHover,
+      root: css`
+        position: relative;
+
+        overflow: hidden;
+
+        width: 100%;
+        min-width: ${MIN_WIDTH};
+        max-width: ${MAX_WIDTH};
+        height: auto;
+        min-height: ${MIN_HEIGHT};
+        max-height: ${MAX_HEIGHT};
+        margin-block: 0 1em;
+
+        background: ${token.colorFillTertiary};
+        border-radius: ${token.borderRadius}px;
+
+        &:hover {
+          .${mask} {
+            opacity: 1;
+          }
+        }
+      `,
       video: css`
         cursor: pointer;
         width: 100%;
       `,
-      videoWrapper: cx(
-        borderless
-          ? css`
-              box-shadow: inset 0 0 0 1px ${token.colorBorderSecondary};
-            `
-          : css`
-              box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
-            `,
-        css`
-          position: relative;
-
-          overflow: hidden;
-
-          width: 100%;
-          min-width: ${MIN_SIZE};
-          max-width: ${SIZE};
-          height: auto;
-          min-height: ${MIN_SIZE};
-          max-height: ${SIZE};
-          margin-block: 0 1em;
-
-          background: ${token.colorFillTertiary};
-          border-radius: ${token.borderRadiusLG}px;
-
-          &:hover {
-            .${preview} {
-              opacity: 1;
-            }
-          }
-        `,
-      ),
     };
   },
 );

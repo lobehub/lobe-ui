@@ -13,4 +13,22 @@ Find details in <https://fluent-emoji.lobehub.com>
 
 ## APIs
 
-<API></API>
+### FluentEmoji
+
+| Property    | Description                            | Type                                                      | Default |
+| ----------- | -------------------------------------- | --------------------------------------------------------- | ------- |
+| emoji       | The emoji character or shortcode       | `string`                                                  | -       |
+| size        | Size of the emoji in pixels            | `number`                                                  | `40`    |
+| type        | Style type of the emoji                | `'anim' \| 'flat' \| 'modern' \| 'mono' \| 'raw' \| '3d'` | `'3d'`  |
+| unoptimized | Disable image optimization for Next.js | `boolean`                                                 | `false` |
+
+Additionally, the component accepts all standard HTML div properties like `className`, `style`, etc.
+
+#### Emoji Types
+
+- `3d`: Three-dimensional style with shadows and depth
+- `anim`: Animated emoji (works with certain emojis)
+- `flat`: Flat design style
+- `modern`: Modern design style with subtle gradients
+- `mono`: Monochrome/outline style
+- `raw`: Displays the native emoji character from the system font

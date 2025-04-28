@@ -1,34 +1,21 @@
 'use client';
 
-import { FC } from 'react';
-
-import { DivProps } from '@/types';
+import { memo } from 'react';
 
 import { useStyles } from './markdown.style';
+import type { TypographyProps } from './type';
 
-export interface TypographyProps extends DivProps {
-  fontSize?: number;
-  headerMultiple?: number;
-  lineHeight?: number;
-  marginMultiple?: number;
-}
+const Typography = memo<TypographyProps>(
+  ({ ref, children, className, fontSize, headerMultiple, marginMultiple, lineHeight, ...rest }) => {
+    const { cx, styles } = useStyles({ fontSize, headerMultiple, lineHeight, marginMultiple });
+    return (
+      <article className={cx(styles.root, styles.variant, className)} ref={ref} {...rest}>
+        {children}
+      </article>
+    );
+  },
+);
 
-const Typography: FC<TypographyProps> = ({
-  children,
-  className,
-  fontSize,
-  headerMultiple,
-  marginMultiple,
-  lineHeight,
-  ...rest
-}) => {
-  const { cx, styles } = useStyles({ fontSize, headerMultiple, lineHeight, marginMultiple });
-
-  return (
-    <article className={cx(styles, className)} {...rest}>
-      {children}
-    </article>
-  );
-};
+Typography.displayName = 'Typography';
 
 export default Typography;

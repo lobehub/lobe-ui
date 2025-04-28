@@ -25,8 +25,8 @@ export default () => {
   const { variant }: any = useControls(
     {
       variant: {
-        options: ['default', 'block', 'ghost', 'pure'],
-        value: 'default',
+        options: ['borderless', 'filled', 'outlined'],
+        value: 'borderless',
       },
     },
     { store },

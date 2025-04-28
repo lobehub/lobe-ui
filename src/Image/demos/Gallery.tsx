@@ -1,13 +1,21 @@
-import { Image, ImageGallery } from '@lobehub/ui';
+import { Image } from '@lobehub/ui';
 import { Flexbox } from 'react-layout-kit';
 
 export default () => {
   return (
-    <Flexbox gap={8}>
-      <ImageGallery>
-        <Image src={'https://gw.alipayobjects.com/zos/kitchen/sLO%24gbrQtp/lobe-chat.webp'} />
-        <Image src={'https://gw.alipayobjects.com/zos/kitchen/8Ab%24hLJ5ur/cover.webp'} />
-      </ImageGallery>
+    <Flexbox gap={8} horizontal>
+      <Image.PreviewGroup>
+        <Image
+          src={
+            'https://registry.npmmirror.com/@lobehub/fluent-emoji-3d/latest/files/assets/1f5bc-fe0f.webp'
+          }
+        />
+        <Image
+          src={
+            'https://registry.npmmirror.com/@lobehub/fluent-emoji-3d/latest/files/assets/1f379.webp'
+          }
+        />
+      </Image.PreviewGroup>
     </Flexbox>
   );
 };

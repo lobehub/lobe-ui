@@ -3,12 +3,13 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const control: AlertProps | any = useControls(
+  const control = useControls(
     {
       banner: false,
       closable: false,
       colorfulText: true,
       description: 'Alert Title',
+      glass: false,
       message: 'Informational Notes',
       showIcon: true,
       type: {
@@ -16,12 +17,12 @@ export default () => {
         value: 'info',
       },
       variant: {
-        options: ['', 'block', 'ghost', 'pure'],
-        value: '',
+        options: ['filled', 'outlined', 'borderless'],
+        value: 'filled',
       },
     },
     { store },
-  );
+  ) as AlertProps;
 
   return (
     <StoryBook levaStore={store}>

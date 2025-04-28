@@ -4,12 +4,12 @@ import { Center } from 'react-layout-kit';
 
 export default () => {
   const store = useCreateStore();
-  const { isApple }: HotkeyProps | any = useControls(
+  const { isApple } = useControls(
     {
       isApple: true,
     },
     { store },
-  );
+  ) as HotkeyProps;
 
   return (
     <StoryBook levaStore={store}>

@@ -3,11 +3,20 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const control: TokenTagProps | any = useControls(
+  const control = useControls(
     {
+      hideText: false,
       maxValue: {
         step: 1,
         value: 5000,
+      },
+      mode: {
+        options: ['remained', 'used'],
+        value: 'remained',
+      },
+      shape: {
+        options: ['round', 'square'],
+        value: 'round',
       },
       value: {
         step: 1,
@@ -15,7 +24,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as TokenTagProps;
 
   return (
     <StoryBook levaStore={store}>

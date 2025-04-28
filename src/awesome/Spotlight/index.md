@@ -2,7 +2,7 @@
 nav: Awesome
 group: Effect
 title: Spotlight
-description: The Spotlight component is a customizable React component that displays a circle following the mouse cursor. The circle can be customized in size with the size prop.
+description: The Spotlight component creates a circular spotlight effect that follows the user's mouse cursor, useful for creating interactive hover effects.
 apiHeader:
   pkg: '@lobehub/ui/awesome'
   docUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/awesome/Spotlight/index.md'
@@ -15,4 +15,8 @@ apiHeader:
 
 ## APIs
 
-<API></API>
+| Property | Description                  | Type     | Default |
+| -------- | ---------------------------- | -------- | ------- |
+| size     | Size of the spotlight circle | `number` | `64`    |
+
+> Spotlight also inherits all div element properties

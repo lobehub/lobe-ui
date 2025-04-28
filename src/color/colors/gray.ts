@@ -3,9 +3,9 @@ import { ColorScaleItem } from '../types';
 const gray: ColorScaleItem = {
   dark: [
     '#000000',
-    '#111111',
+    '#0d0d0d',
     '#1a1a1a',
-    '#222222',
+    '#202020',
     '#2d2d2d',
     '#444444',
     '#555555',

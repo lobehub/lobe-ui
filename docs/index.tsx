@@ -25,11 +25,11 @@ const items: FeaturesProps['items'] = [
   },
 ];
 
-const example = `import { ThemeProvider, GradientButton } from '@lobehub/ui'
+const example = `import { ThemeProvider, Button } from '@lobehub/ui'
 
 export default () => (
   <ThemeProvider>
-    <GradientButton>Hello AIGC</GradientButton>
+    <Button>Hello AIGC</Button>
   </ThemeProvider>
 )`;
 
@@ -56,11 +56,7 @@ export default () => {
           as the default css-in-js styling solution.
         </p>
       </Center>
-      <Highlighter
-        language={'tsx'}
-        style={{ background: theme.colorFillTertiary, width: '100%' }}
-        type={'ghost'}
-      >
+      <Highlighter language={'tsx'} style={{ background: theme.colorFillTertiary, width: '100%' }}>
         {example}
       </Highlighter>
       <Features items={items} />

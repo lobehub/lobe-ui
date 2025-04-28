@@ -11,4 +11,12 @@ description: CopyButton is a React component used to copy text content to the cl
 
 ## APIs
 
-<API></API>
+### CopyButton
+
+| Property | Description                       | Type                | Default |
+| -------- | --------------------------------- | ------------------- | ------- |
+| content  | Text content to copy to clipboard | `string`            | -       |
+| glass    | Apply glass effect to button      | `boolean`           | `true`  |
+| icon     | Custom icon (before copy)         | `IconProps['icon']` | `Copy`  |
+
+Additionally, CopyButton inherits all properties from [ActionIcon](/components/action-icon) component except for those specified above. When clicked, it automatically changes the icon to a checkmark for 2 seconds to indicate successful copying.

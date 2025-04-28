@@ -1,186 +1,133 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(
-  (
-    { css, cx, token, isDarkMode, prefixCls },
-    {
-      isSplit,
-      bodyPadding = '12px 16px',
-      headerPadding = '12px 16px',
-    }: { bodyPadding?: number | string; headerPadding?: number | string; isSplit?: boolean },
-  ) => {
-    const pureStyle = css`
-      background: transparent;
-      border-radius: 0;
+export const DEFAULT_PADDING = '12px 16px';
 
-      .${prefixCls}-collapse-header {
-        padding-inline: 0 !important;
-        background: transparent !important;
+export const getPadding = (padding?: number | string) =>
+  !padding && padding !== 0 ? DEFAULT_PADDING : padding;
+
+export const useStyles = createStyles(({ css, token, prefixCls, stylish, isDarkMode }) => {
+  return {
+    borderless: css`
+      &.${prefixCls}-collapse {
+        .${prefixCls}-collapse-header {
+          padding-inline: 0;
+        }
+        .${prefixCls}-collapse-content {
+          padding-inline: 0;
+          .${prefixCls}-collapse-content-box {
+            padding-inline: 0;
+          }
+        }
       }
-
-      .${prefixCls}-collapse-content {
-        background: transparent;
-        border-color: ${token.colorFillSecondary};
-      }
-
-      .${prefixCls}-collapse-content-box {
-        padding-inline: 2px !important;
-        background: transparent;
-        border-radius: 0;
-      }
-    `;
-
-    const blockStyle = cx(
-      css`
-        background: transparent !important;
+    `,
+    desc: css`
+      font-size: 12px;
+      color: ${token.colorTextDescription};
+    `,
+    filled: css`
+      &.${prefixCls}-collapse {
         .${prefixCls}-collapse-item {
-          background: ${token.colorFillQuaternary} !important;
+          background: ${isDarkMode ? token.colorFillQuaternary : token.colorFillTertiary};
+          .${prefixCls}-collapse-content {
+            margin-inline: 3px;
+            margin-block-end: 3px;
+            border-radius: ${token.borderRadius}px;
+            ${stylish.variantOutlinedWithoutHover};
+            background: ${isDarkMode ? token.colorFillQuaternary : token.colorBgContainer};
+            ${isDarkMode ? undefined : stylish.shadow};
+          }
+        }
+      }
+    `,
+    gapOutlined: css`
+      &.${prefixCls}-collapse {
+        background: transparent;
+        .${prefixCls}-collapse-item {
+          background: ${token.colorBgContainer};
+          border: 1px solid ${token.colorFillSecondary};
         }
 
-        .${prefixCls}-collapse-header {
-          background: ${token.colorFillTertiary} !important;
+        .${prefixCls}-collapse-item:not(:first-child) {
+          .${prefixCls}-collapse-header {
+            border-block-start: none;
+          }
         }
-      `,
-      isSplit
-        ? css`
-            .${prefixCls}-collapse-item {
-              overflow: hidden;
-              border-radius: ${token.borderRadiusLG}px !important;
-            }
-          `
-        : css`
-            border-radius: ${token.borderRadiusLG}px;
-          `,
-    );
-    const ghostStyle = cx(
-      css`
+      }
+    `,
+    gapRoot: css`
+      &.${prefixCls}-collapse {
+        display: flex;
+        flex-direction: column;
+        border: none;
+        box-shadow: none;
+        .${prefixCls}-collapse-item {
+          border: none;
+          border-radius: ${token.borderRadiusLG}px;
+        }
+      }
+    `,
+    hideCollapsibleIcon: css`
+      .${prefixCls}-collapse-expand-icon {
+        display: none !important;
+      }
+    `,
+    icon: css`
+      cursor: pointer;
+      transition: all 100ms ${token.motionEaseOut};
+    `,
+    outlined: css`
+      &.${prefixCls}-collapse {
+        background: ${token.colorBgContainer};
+        border: 1px solid ${token.colorFillSecondary};
+        .${prefixCls}-collapse-item .${prefixCls}-collapse-header {
+          transition: none;
+        }
+        .${prefixCls}-collapse-item-active .${prefixCls}-collapse-header {
+          border-block-end: 1px solid ${token.colorFillTertiary};
+        }
+        .${prefixCls}-collapse-item:not(:first-child) {
+          .${prefixCls}-collapse-header {
+            border-block-start: 1px solid ${token.colorFillTertiary};
+          }
+        }
+      }
+    `,
+    root: css`
+      &.${prefixCls}-collapse {
+        display: flex;
+        flex-direction: column;
         background: transparent;
 
         .${prefixCls}-collapse-header {
-          background: transparent !important;
-        }
-
-        .${prefixCls}-collapse-content-box {
-          background: transparent;
-        }
-      `,
-      isSplit
-        ? css`
-            .${prefixCls}-collapse-item {
-              overflow: hidden;
-              border: 1px solid ${token.colorBorderSecondary} !important;
-              border-radius: ${token.borderRadiusLG}px !important;
-              &.${prefixCls}-collapse-item-active {
-                .${prefixCls}-collapse-content-box {
-                  border-block-start: 1px solid ${token.colorBorderSecondary} !important;
-                }
-              }
-            }
-          `
-        : css`
-            .${prefixCls}-collapse-item:not(:first-child) {
-              .${prefixCls}-collapse-header {
-                border-block-start: 1px solid ${token.colorBorderSecondary};
-              }
-            }
-          `,
-    );
-
-    const defaultStyle = cx(
-      css`
-        background: transparent !important;
-        .${prefixCls}-collapse-item {
-          background: transparent !important;
-        }
-
-        .${prefixCls}-collapse-header {
-          background: ${token.colorFillTertiary} !important;
-        }
-      `,
-      isSplit
-        ? css`
-            background: transparent;
-            .${prefixCls}-collapse-item {
-              overflow: hidden;
-              border: 1px solid ${token.colorBorderSecondary} !important;
-              border-radius: ${token.borderRadiusLG}px !important;
-            }
-          `
-        : css`
-            border-radius: ${token.borderRadiusLG}px;
-            .${prefixCls}-collapse-item:not(:first-child) {
-              .${prefixCls}-collapse-header {
-                border-block-start: 1px solid ${token.colorBorderSecondary};
-              }
-            }
-          `,
-    );
-
-    return {
-      blockStyle,
-      defaultStyle,
-      flatGroup: css`
-        overflow: hidden;
-        padding-inline: 16px;
-      `,
-      ghostStyle,
-      group: cx(
-        isDarkMode &&
-          css`
-            .${prefixCls}-collapse-content {
-              background: transparent;
-              border-color: ${token.colorBorderSecondary};
-            }
-
-            .${prefixCls}-collapse-header {
-              background: ${token.colorFillTertiary};
-            }
-          `,
-        css`
-          overflow: hidden;
           display: flex;
           flex: none;
-          flex-direction: column;
+          gap: 0.75em;
+          align-items: flex-start;
 
-          .${prefixCls}-collapse-item {
-            border: none;
+          border-radius: 0 !important;
+
+          .${prefixCls}-collapse-expand-icon {
+            align-items: center;
+            min-height: 28px;
+            padding: 0;
           }
 
           .${prefixCls}-collapse-extra {
-            margin-inline-start: 16px;
-          }
-
-          .${prefixCls}-collapse-header {
-            align-items: center !important;
-            padding: ${typeof headerPadding === 'string'
-              ? headerPadding
-              : `${headerPadding}px`} !important;
-            border-radius: 0 !important;
-          }
-
-          .${prefixCls}-collapse-content-box {
-            padding: ${typeof bodyPadding === 'string'
-              ? bodyPadding
-              : `${bodyPadding}px`} !important;
-          }
-
-          .${prefixCls}-form-item-label {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            align-items: center;
+            min-height: 28px;
           }
-        `,
-      ),
-      hideCollapsibleIcon: css`
-        .${prefixCls}-collapse-expand-icon {
-          display: none !important;
         }
-      `,
 
-      icon: css`
-        transition: all 100ms ${token.motionEaseOut};
-      `,
-      pureStyle,
-    };
-  },
-);
+        .${prefixCls}-collapse-content {
+          background: transparent;
+        }
+      }
+    `,
+    title: css`
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 28px;
+    `,
+  };
+});

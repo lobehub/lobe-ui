@@ -1,5 +1,30 @@
-import { DiscordIcon, Icon, Tag } from '@lobehub/ui';
+import { Icon, Tag, type TagProps } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
+import { Loader2Icon } from 'lucide-react';
 
 export default () => {
-  return <Tag icon={<Icon icon={DiscordIcon} />}>discord</Tag>;
+  const store = useCreateStore();
+  const { children, ...control } = useControls(
+    {
+      children: 'processing',
+      closable: false,
+      size: {
+        options: ['small', 'middle', 'large'],
+        value: 'middle',
+      },
+      variant: {
+        options: ['filled', 'outlined', 'borderless'],
+        value: 'filled',
+      },
+    },
+    { store },
+  ) as TagProps;
+
+  return (
+    <StoryBook levaStore={store}>
+      <Tag icon={<Icon icon={Loader2Icon} spin />} {...control}>
+        {children}
+      </Tag>
+    </StoryBook>
+  );
 };

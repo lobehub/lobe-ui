@@ -1,19 +1,14 @@
 export {
-  default as MobileChatInputArea,
-  type MobileChatInputAreaProps,
-} from './MobileChatInputArea';
+  default as ChatHeader,
+  type ChatHeaderProps,
+  ChatHeaderTitle,
+  type ChatHeaderTitleProps,
+} from './ChatHeader';
 export {
-  default as MobileChatSendButton,
-  type MobileChatSendButtonProps,
-} from './MobileChatInputArea/SendButton';
-export { default as MobileNavBar, type MobileNavBarProps } from './MobileNavBar';
-export {
-  default as MobileNavBarTitle,
-  type MobileNavBarTitleProps,
-} from './MobileNavBar/MobileNavBarTitle';
-export { default as MobileSafeArea, type MobileSafeAreaProps } from './MobileSafeArea';
-export {
-  default as MobileTabBar,
-  type MobileTabBarItemProps,
-  type MobileTabBarProps,
-} from './MobileTabBar';
+  default as ChatInputArea,
+  type ChatInputAreaProps,
+  ChatSendButton,
+  type ChatSendButtonProps,
+} from './ChatInputArea';
+export { default as SafeArea, type SafeAreaProps } from './SafeArea';
+export { default as TabBar, type TabBarItemType, type TabBarProps } from './TabBar';

@@ -11,4 +11,12 @@ description: The Snippet component is used to display a code snippet with syntax
 
 ## APIs
 
-<API></API>
+| Property  | Description                          | Type                                     | Default    |
+| --------- | ------------------------------------ | ---------------------------------------- | ---------- |
+| children  | Content of the snippet               | `string`                                 | -          |
+| language  | Language for syntax highlighting     | `string`                                 | `'tsx'`    |
+| prefix    | Symbol to display before the content | `string`                                 | -          |
+| copyable  | Whether to show copy button          | `boolean`                                | `true`     |
+| variant   | Style variant of the snippet         | `'filled' \| 'outlined' \| 'borderless'` | `'filled'` |
+| shadow    | Whether to show shadow effect        | `boolean`                                | `false`    |
+| spotlight | Whether to show spotlight effect     | `boolean`                                | -          |

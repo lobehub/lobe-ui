@@ -4,7 +4,7 @@ import { Settings } from 'lucide-react';
 
 export default () => {
   const store = useCreateStore();
-  const size: ActionIconProps['size'] | any = useControls(
+  const size = useControls(
     {
       blockSize: {
         max: 100,
@@ -18,7 +18,7 @@ export default () => {
         step: 2,
         value: 10,
       },
-      fontSize: {
+      size: {
         max: 100,
         min: 8,
         step: 4,
@@ -32,7 +32,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as ActionIconProps['size'];
 
   return (
     <StoryBook levaStore={store}>

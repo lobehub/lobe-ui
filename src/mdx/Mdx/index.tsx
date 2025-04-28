@@ -10,8 +10,8 @@ import remarkMath from 'remark-math';
 import type { Pluggable } from 'unified';
 
 import Alert from '@/Alert';
-import ImageGallery from '@/Image/ImageGallery';
-import Typography, { type TypographyProps } from '@/Markdown/Typography';
+import { PreviewGroup } from '@/Image';
+import { Typography, type TypographyProps } from '@/Markdown';
 import { useStyles } from '@/Markdown/style';
 import { escapeBrackets, escapeMhchem, fixMarkdownBold } from '@/Markdown/utils';
 
@@ -140,12 +140,14 @@ const Mdx = memo<MdxProps>(
         style={style}
         {...rest}
       >
-        <ImageGallery enable={enableImageGallery}>
+        <PreviewGroup enable={enableImageGallery}>
           <MDXContent components={memoComponents} />
-        </ImageGallery>
+        </PreviewGroup>
       </Typography>
     );
   },
 );
+
+Mdx.displayName = 'Mdx';
 
 export default Mdx;

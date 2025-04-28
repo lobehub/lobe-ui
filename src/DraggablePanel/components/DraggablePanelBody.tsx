@@ -14,4 +14,6 @@ const DraggablePanelBody = memo<DraggablePanelBodyProps>(({ className, ...rest }
   return <Flexbox className={cx(styles.body, className)} flex={1} {...rest} />;
 });
 
+DraggablePanelBody.displayName = 'DraggablePanelBody';
+
 export default DraggablePanelBody;

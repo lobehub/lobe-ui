@@ -13,19 +13,8 @@ import Divider from '@/brand/components/Divider';
 import { DivProps } from '@/types';
 
 export interface LobeChatProps extends DivProps {
-  /**
-   * @description Additional React Node to be rendered next to the logo
-   */
   extra?: ReactNode;
-  /**
-   * @description Size of the logo in pixels
-   * @default 32
-   */
   size?: number;
-  /**
-   * @description Type of the logo to be rendered
-   * @default '3d'
-   */
   type?: '3d' | 'flat' | 'mono' | 'text' | 'combine';
 }
 
@@ -95,5 +84,7 @@ const LobeChat = memo<LobeChatProps>(
     );
   },
 );
+
+LobeChat.displayName = 'LobeChatBrand';
 
 export default LobeChat;

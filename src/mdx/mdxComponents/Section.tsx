@@ -1,4 +1,6 @@
-import { ReactNode } from 'react';
+'use client';
+
+import type { FC, ReactNode } from 'react';
 
 import Footnotes from '@/mdx/mdxComponents/Footnotes';
 
@@ -8,13 +10,15 @@ interface SectionProps {
   'showFootnotes'?: boolean;
 }
 
-const Section = (props: SectionProps) => {
+const Section: FC<SectionProps> = ({ children, ...rest }) => {
   // 说明是脚注
-  if (props['data-footnotes']) {
-    return <Footnotes {...props} />;
+  if (rest['data-footnotes']) {
+    return <Footnotes {...rest}>{children}</Footnotes>;
   }
 
-  return <section {...props} />;
+  return <section {...rest}>{children}</section>;
 };
+
+Section.displayName = 'MdxSection';
 
 export default Section;

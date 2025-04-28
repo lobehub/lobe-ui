@@ -1,9 +1,12 @@
-import { Button, type GetProp, Upload, type UploadProps, message } from 'antd';
+'use client';
+
+import { type GetProp, Upload, type UploadProps, message } from 'antd';
 import { ChevronLeftIcon, ImageUpIcon } from 'lucide-react';
 import { memo, useCallback, useRef, useState } from 'react';
 import AvatarEditor from 'react-avatar-editor';
 import { Center, Flexbox } from 'react-layout-kit';
 
+import Button from '@/Button';
 import Icon from '@/Icon';
 
 import { useStyles } from './style';
@@ -71,26 +74,26 @@ const AvatarUploader = memo<AvatarUploaderProps>(
             multiple={false}
           >
             <Center gap={16} height={compressSize} width={compressSize}>
-              <Icon icon={ImageUpIcon} size={{ fontSize: 48, strokeWidth: 1.5 }} />
+              <Icon icon={ImageUpIcon} size={48} />
               <div>{texts?.draggerDesc || 'Click or Drag image to this area to upload'}</div>
             </Center>
           </Dragger>
         )}
         {previewImage && (
           <Center gap={8} style={{ position: 'relative' }} width={'100%'}>
-            <Flexbox className={styles.editor}>
-              <AvatarEditor
-                border={0}
-                borderRadius={compressSize / 2}
-                height={compressSize}
-                image={previewImage}
-                ref={editor}
-                width={compressSize}
-              />
-            </Flexbox>
+            <AvatarEditor
+              border={0}
+              borderRadius={compressSize / 2}
+              className={styles.editor}
+              height={compressSize}
+              image={previewImage}
+              ref={editor}
+              width={compressSize}
+            />
+
             <Flexbox gap={8} horizontal style={{ position: 'relative' }} width={'100%'}>
               <Button
-                icon={<Icon icon={ChevronLeftIcon} />}
+                icon={ChevronLeftIcon}
                 onClick={() => setPreviewImage('')}
                 style={{ flex: 'none' }}
               />
@@ -104,5 +107,7 @@ const AvatarUploader = memo<AvatarUploaderProps>(
     );
   },
 );
+
+AvatarUploader.displayName = 'AvatarUploader';
 
 export default AvatarUploader;

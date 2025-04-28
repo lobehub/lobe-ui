@@ -1,7 +1,9 @@
-import { createStyles } from 'antd-style';
-import { ReactNode, useMemo } from 'react';
+'use client';
 
-import SearchResultCards from '@/SearchResultCards';
+import { createStyles } from 'antd-style';
+import { type FC, type ReactNode, useMemo } from 'react';
+
+import { SearchResultCards } from '@/SearchBar';
 
 const useStyles = createStyles(({ css, token }) => ({
   fallback: css`
@@ -30,11 +32,12 @@ const useStyles = createStyles(({ css, token }) => ({
       margin: 0 !important;
       padding-block: 0 !important;
       padding-inline: 0 0.4em !important;
-      border: 1px solid ${token.colorBorderSecondary};
-      border-radius: 0.25em;
 
       text-overflow: ellipsis;
       white-space: nowrap;
+
+      border: 1px solid ${token.colorBorderSecondary};
+      border-radius: 0.25em;
 
       &::before {
         content: counter(list-item);
@@ -68,7 +71,7 @@ interface FootnotesProps {
   'data-footnotes'?: boolean;
 }
 
-const Footnotes = ({ children, ...res }: FootnotesProps) => {
+const Footnotes: FC<FootnotesProps> = ({ children, ...res }) => {
   const { styles, cx } = useStyles();
 
   const links = useMemo(() => {
@@ -88,5 +91,7 @@ const Footnotes = ({ children, ...res }: FootnotesProps) => {
     </section>
   );
 };
+
+Footnotes.displayName = 'MdxFootnotes';
 
 export default Footnotes;

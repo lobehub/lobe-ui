@@ -1,4 +1,4 @@
-import { Giscus } from '@lobehub/ui';
+import { Giscus } from '@lobehub/ui/awesome';
 
 export default () => {
   return (

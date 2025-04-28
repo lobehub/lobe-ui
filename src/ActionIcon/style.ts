@@ -1,63 +1,46 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(
-  (
-    { css, token, stylish, cx },
-    {
-      active,
-      glass,
-      variant,
-    }: { active: boolean; glass: boolean; variant: 'default' | 'block' | 'ghost' },
-  ) => {
-    const isBlock = variant === 'block';
-    const isGhost = variant === 'ghost';
+export const useStyles = createStyles(({ isDarkMode, css, token, stylish }) => {
+  return {
+    active: stylish.active,
+    borderless: stylish.variantBorderless,
+    dangerBorderless: stylish.variantBorderlessDanger,
+    dangerFilled: stylish.variantFilledDanger,
+    dangerOutlined: stylish.variantOutlinedDanger,
+    dangerRoot: css`
+      &:hover {
+        color: ${token.colorError};
+      }
 
-    return {
-      block: cx(
-        glass && stylish.blur,
-        isGhost &&
-          css`
-            border: 1px solid ${token.colorBorderSecondary};
-          `,
-        css`
-          position: relative;
+      &:active {
+        color: ${token.colorErrorActive};
+      }
+    `,
+    disabled: stylish.disabled,
+    filled: stylish.variantFilled,
+    glass: stylish.blur,
+    outlined: stylish.variantOutlined,
+    root: css`
+      cursor: pointer;
 
-          flex: none;
+      position: relative;
 
-          color: ${active ? token.colorText : token.colorTextTertiary};
+      overflow: hidden;
 
-          background: ${active || isBlock ? token.colorFillTertiary : 'transparent'};
+      color: ${token.colorTextTertiary};
 
-          transition:
-            color 600ms ${token.motionEaseOut},
-            scale 400ms ${token.motionEaseOut},
-            background-color 100ms ${token.motionEaseOut};
-        `,
-      ),
-      disabled: css`
-        cursor: not-allowed;
-        opacity: 0.5;
-      `,
-      icon: css`
-        transition: scale 400ms ${token.motionEaseOut};
+      transition:
+        color 400ms ${token.motionEaseOut},
+        background 100ms ${token.motionEaseOut};
 
-        &:active {
-          scale: 0.8;
-        }
-      `,
-      normal: css`
-        cursor: pointer;
+      &:hover {
+        color: ${token.colorTextSecondary};
+      }
 
-        &:hover {
-          color: ${token.colorText};
-          background-color: ${token.colorFillSecondary};
-        }
-
-        &:active {
-          color: ${token.colorText};
-          background-color: ${token.colorFill};
-        }
-      `,
-    };
-  },
-);
+      &:active {
+        color: ${isDarkMode ? token.colorTextTertiary : token.colorText};
+      }
+    `,
+    shadow: stylish.shadow,
+  };
+});

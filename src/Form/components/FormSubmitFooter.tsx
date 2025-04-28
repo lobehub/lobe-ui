@@ -1,58 +1,19 @@
-import { Button, type ButtonProps, Form } from 'antd';
-import { createStyles } from 'antd-style';
+'use client';
+
+import { Form } from 'antd';
 import isEqual from 'fast-deep-equal';
 import { motion } from 'framer-motion';
-import { merge } from 'lodash-es';
 import { InfoIcon } from 'lucide-react';
-import { ReactNode, memo, useEffect, useState } from 'react';
-import { Flexbox, FlexboxProps } from 'react-layout-kit';
+import { memo, useEffect, useMemo, useState } from 'react';
+import { Flexbox } from 'react-layout-kit';
 
+import Button from '@/Button';
 import Icon from '@/Icon';
 
+import { useSubmitFooterStyles as useStyles } from '../style';
+import type { FormSubmitFooterProps } from '../type';
 import { useFormContext } from './FormProvider';
-
-const useStyles = createStyles(({ responsive, css, token }) => ({
-  floatFooter: css`
-    position: fixed;
-    z-index: 1000;
-    inset-block-end: 24px;
-    inset-inline-start: 50%;
-    transform: translateX(-50%);
-
-    width: max-content;
-    padding: 8px;
-
-    background: ${token.colorBgContainer};
-    border: 1px solid ${token.colorBorderSecondary};
-    border-radius: 48px;
-    box-shadow: ${token.boxShadowSecondary};
-  `,
-  footer: css`
-    ${responsive.mobile} {
-      margin-block-start: -${token.borderRadius}px;
-      padding: 16px;
-      background: ${token.colorBgContainer};
-      border-block-start: 1px solid ${token.colorBorderSecondary};
-    }
-  `,
-}));
-
-export interface FormSubmitFooterProps extends FlexboxProps {
-  buttonProps?: Omit<ButtonProps, 'children'>;
-  children?: ReactNode;
-  enableReset?: boolean;
-  enableUnsavedWarning?: boolean;
-  float?: boolean;
-  onReset?: () => void;
-  resetButtonProps?: Omit<ButtonProps, 'children'>;
-  saveButtonProps?: Omit<ButtonProps, 'children'>;
-  texts?: {
-    reset?: string;
-    submit?: string;
-    unSaved?: string;
-    unSavedWarning?: string;
-  };
-}
+import { merge, removeUndefined } from './merge';
 
 const FormSubmitFooter = memo<FormSubmitFooterProps>(
   ({
@@ -62,7 +23,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
     onReset,
     saveButtonProps,
     resetButtonProps,
-    enableUnsavedWarning = true,
+    enableUnsavedWarning,
     children,
     texts,
     className,
@@ -70,15 +31,19 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
   }) => {
     const { form, initialValues, submitLoading } = useFormContext();
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-    const values = Form.useWatch([], form);
+    const values = Form.useWatch([], form) || {};
 
     const { cx, styles, theme } = useStyles();
 
+    const v = useMemo(() => removeUndefined(values), [values]);
+
+    const initialV = useMemo(() => removeUndefined(initialValues), [initialValues]);
+
+    const mergedV = useMemo(() => merge(initialV, v), [v, initialV]);
+
     useEffect(() => {
-      if (!values) return;
-      const v = merge({}, initialValues, values);
-      setHasUnsavedChanges(!isEqual(v, initialValues));
-    }, [values, initialValues, submitLoading]);
+      setHasUnsavedChanges(!isEqual(mergedV, initialV));
+    }, [mergedV, initialV, submitLoading]);
 
     const fn = (e: BeforeUnloadEvent) => {
       if (hasUnsavedChanges) {
@@ -104,7 +69,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
             <Icon
               color={theme.colorTextDescription}
               icon={InfoIcon}
-              size={{ fontSize: 12 }}
+              size={12}
               style={{ marginLeft: 8 }}
             />
             <span
@@ -122,11 +87,10 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
         {children}
         {enableReset && (float || hasUnsavedChanges) && (
           <Button
-            color="default"
             htmlType="button"
             onClick={() => {
+              onReset?.(v, initialV);
               form?.resetFields();
-              onReset?.();
             }}
             shape={float ? 'round' : undefined}
             variant={'filled'}
@@ -196,5 +160,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
     );
   },
 );
+
+FormSubmitFooter.displayName = 'FormSubmitFooter';
 
 export default FormSubmitFooter;

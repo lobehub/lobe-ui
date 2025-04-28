@@ -1,29 +1,29 @@
 'use client';
 
-import { ImageProps } from 'antd';
-import { ElementType, createElement, forwardRef, useContext, useMemo } from 'react';
+import type { ImageProps } from 'antd';
+import { type ElementType, Ref, createElement, memo, use, useMemo } from 'react';
 
 import { ConfigContext } from '@/ConfigProvider';
-import { ImgProps } from '@/types';
+import type { ImgProps } from '@/types';
 
-const createContainer = (as: ElementType) =>
-  forwardRef((props: any, ref) => createElement(as, { ...props, ref }));
+const createContainer = (as: ElementType) => memo((props: any) => createElement(as, props));
 
-const Img = forwardRef<any, ImgProps & ImageProps & { unoptimized?: boolean }>(
-  ({ unoptimized, ...res }, ref) => {
-    const config = useContext(ConfigContext);
+const Img = memo<ImgProps & ImageProps & { ref?: Ref<HTMLImageElement>; unoptimized?: boolean }>(
+  ({ unoptimized, ...rest }) => {
+    const config = use(ConfigContext);
     const render = config?.imgAs || 'img';
 
     const ImgContainer = useMemo(() => createContainer(render), [render]);
 
     return (
       <ImgContainer
-        ref={ref}
         unoptimized={unoptimized === undefined ? config?.imgUnoptimized : unoptimized}
-        {...res}
+        {...rest}
       />
     );
   },
 );
+
+Img.displayName = 'Img';
 
 export default Img;

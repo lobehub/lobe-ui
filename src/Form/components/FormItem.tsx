@@ -1,104 +1,15 @@
 'use client';
 
-import { FormItemProps as AntdFormItemProps, Form } from 'antd';
-import { createStyles } from 'antd-style';
-import { isNumber } from 'lodash-es';
-import { memo } from 'react';
+import { Form } from 'antd';
+import { cva } from 'class-variance-authority';
+import { memo, useMemo } from 'react';
 
-import { FormVariant } from '@/Form/components/FormGroup';
-
+import { useItemStyles as useStyles } from '../style';
+import type { FormItemProps } from '../type';
 import FormDivider from './FormDivider';
-import FormTitle, { type FormTitleProps } from './FormTitle';
+import FormTitle from './FormTitle';
 
 const { Item } = Form;
-
-export const useStyles = createStyles(
-  ({ css, responsive, prefixCls }, { minWidth }: { minWidth?: string | number }) => ({
-    item: css`
-      &.${prefixCls}-form-item {
-        padding-block: 16px;
-        padding-inline: 0;
-
-        .${prefixCls}-form-item-label {
-          text-align: start;
-        }
-
-        .${prefixCls}-row {
-          gap: 12px;
-          justify-content: space-between;
-
-          > div {
-            flex: unset;
-            flex-grow: unset;
-          }
-        }
-
-        .${prefixCls}-form-item-required::before {
-          align-self: flex-start;
-        }
-
-        ${responsive.md} {
-          .${prefixCls}-row {
-            flex-direction: column;
-            align-items: stretch;
-
-            > div {
-              width: 100%;
-            }
-          }
-        }
-
-        ${responsive.mobile} {
-          padding-block: 16px;
-          padding-inline: 0;
-
-          .${prefixCls}-row {
-            flex-wrap: wrap;
-            gap: 4px;
-          }
-        }
-      }
-    `,
-    itemMinWidth: css`
-      .${prefixCls}-form-item-control {
-        width: ${isNumber(minWidth) ? `${minWidth}px` : minWidth};
-      }
-      ${responsive.mobile} {
-        .${prefixCls}-row {
-          flex-direction: column;
-          gap: 4px;
-        }
-
-        .${prefixCls}-form-item-control {
-          flex: 1;
-          width: 100%;
-        }
-      }
-    `,
-    itemNoDivider: css`
-      &:not(:first-child) {
-        padding-block-start: 0;
-      }
-    `,
-    verticalLayout: css`
-      &.${prefixCls}-form-item {
-        .${prefixCls}-row {
-          align-items: stretch;
-        }
-      }
-    `,
-  }),
-);
-
-export interface FormItemProps extends AntdFormItemProps {
-  avatar?: FormTitleProps['avatar'];
-  desc?: FormTitleProps['desc'];
-  divider?: boolean;
-  hidden?: boolean;
-  minWidth?: string | number;
-  tag?: FormTitleProps['tag'];
-  variant?: FormVariant;
-}
 
 const FormItem = memo<FormItemProps>(
   ({
@@ -115,25 +26,41 @@ const FormItem = memo<FormItemProps>(
     ...rest
   }) => {
     const { cx, styles } = useStyles({ minWidth });
-    const isVertical = layout === 'vertical';
+
+    const variants = useMemo(
+      () =>
+        cva(styles.root, {
+          defaultVariants: {
+            divider: false,
+            itemMinWidth: false,
+            layout: 'vertical',
+          },
+          /* eslint-disable sort-keys-fix/sort-keys-fix */
+          variants: {
+            itemMinWidth: {
+              true: styles.itemMinWidth,
+              false: null,
+            },
+            divider: {
+              true: null,
+              false: styles.itemNoDivider,
+            },
+            layout: {
+              vertical: styles.verticalLayout,
+              horizontal: null,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
+
     return (
       <>
-        {divider && (
-          <FormDivider
-            style={{
-              opacity: variant === 'pure' ? 0 : undefined,
-            }}
-          />
-        )}
+        {divider && <FormDivider visible={variant !== 'borderless'} />}
         <Item
-          className={cx(
-            styles.item,
-            Boolean(minWidth) && styles.itemMinWidth,
-            !divider && styles.itemNoDivider,
-            isVertical && styles.verticalLayout,
-            className,
-          )}
-          label={<FormTitle avatar={avatar} desc={desc} tag={tag} title={label as any} />}
+          className={cx(variants({ divider, itemMinWidth: Boolean(minWidth), layout }), className)}
+          label={<FormTitle avatar={avatar} desc={desc} tag={tag} title={label} />}
           layout={layout}
           {...rest}
         >
@@ -143,5 +70,7 @@ const FormItem = memo<FormItemProps>(
     );
   },
 );
+
+FormItem.displayName = 'FormItem';
 
 export default FormItem;

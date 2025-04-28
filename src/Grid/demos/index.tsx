@@ -3,7 +3,7 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const control: GridProps | any = useControls(
+  const control = useControls(
     {
       gap: {
         step: 1,
@@ -19,7 +19,7 @@ export default () => {
       },
     },
     { store },
-  );
+  ) as GridProps;
 
   return (
     <StoryBook levaStore={store}>

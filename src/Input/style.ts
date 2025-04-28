@@ -1,54 +1,65 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(
-  ({ cx, css, token, prefixCls }, { type }: { type: 'ghost' | 'block' | 'pure' }) => {
-    const typeStylish = css`
-      background-color: ${type === 'block' ? token.colorFillTertiary : 'transparent'};
-      border: 1px solid ${type === 'block' ? 'transparent' : token.colorBorder};
-      transition:
-        background-color 100ms ${token.motionEaseOut},
-        border-color 200ms ${token.motionEaseOut};
-
-      &:hover {
-        background-color: ${token.colorFillTertiary};
+export const useStyles = createStyles(({ cx, token, css, stylish, prefixCls }) => {
+  return {
+    borderless: css`
+      &.${prefixCls}-input {
+        ${stylish.variantBorderless}
+        &:hover {
+          ${stylish.variantBorderlessWithoutHover}
+        }
       }
-
-      &:focus {
-        border-color: ${token.colorTextQuaternary};
+    `,
+    borderlessOPT: css`
+      &.${prefixCls}-otp {
+        .${prefixCls}-otp-input {
+          ${stylish.variantBorderless};
+        }
       }
+    `,
+    filled: cx(
+      stylish.variantFilled,
+      css`
+        &:focus-within {
+          ${stylish.variantFilledWithoutHover}
+        }
+      `,
+    ),
 
-      &.${prefixCls}-input-affix-wrapper-focused {
-        border-color: ${token.colorTextQuaternary};
+    filledOPT: css`
+      &.${prefixCls}-otp {
+        .${prefixCls}-otp-input {
+          ${stylish.variantFilled};
+        }
       }
-    `;
-
-    return {
-      input: cx(
-        type !== 'pure' && typeStylish,
-        css`
-          position: relative;
-          max-width: 100%;
-          height: ${type === 'pure' ? 'unset' : '36px'};
-          padding: ${type === 'pure' ? '0' : '0 12px'};
-
-          input {
-            background: transparent;
+    `,
+    outlined: stylish.variantOutlined,
+    outlinedOPT: css`
+      &.${prefixCls}-otp {
+        .${prefixCls}-otp-input {
+          ${stylish.variantOutlined};
+        }
+      }
+    `,
+    root: css`
+      overflow: hidden;
+    `,
+    rootOPT: css`
+      &.${prefixCls}-otp {
+        .${prefixCls}-otp-input {
+          &:focus-within {
+            border-color: ${token.colorBorder};
           }
-        `,
-      ),
-      textarea: cx(
-        type !== 'pure' && typeStylish,
-        css`
-          position: relative;
-          max-width: 100%;
-          padding: ${type === 'pure' ? '0' : '8px 12px'};
-          border-radius: ${type === 'pure' ? '0' : `${token.borderRadius}px`};
-
-          textarea {
-            background: transparent;
-          }
-        `,
-      ),
-    };
-  },
-);
+        }
+      }
+    `,
+    shadow: stylish.shadow,
+    shadowOPT: css`
+      &.${prefixCls}-otp {
+        .${prefixCls}-otp-input {
+          ${stylish.shadow};
+        }
+      }
+    `,
+  };
+});

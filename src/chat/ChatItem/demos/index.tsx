@@ -8,7 +8,7 @@ import { avatar, dropdownMenu, items } from './data';
 export default () => {
   const [edit, setEdit] = useState(false);
   const store = useCreateStore();
-  const control: ChatItemProps | any = useControls(
+  const control = useControls(
     {
       aboveMessage: '',
       belowMessage: '',
@@ -25,13 +25,13 @@ export default () => {
       primary: false,
       showTitle: false,
       time: 1_686_538_950_084,
-      type: {
-        options: ['block', 'pure'],
-        value: 'block',
+      variant: {
+        options: ['bubble', 'docs'],
+        value: 'bubble',
       },
     },
     { store },
-  );
+  ) as ChatItemProps;
 
   return (
     <StoryBook levaStore={store}>
@@ -39,14 +39,13 @@ export default () => {
         {...control}
         actions={
           <ActionIconGroup
-            dropdownMenu={dropdownMenu}
             items={items}
+            menu={dropdownMenu}
             onActionClick={(action) => {
               if (action.key === 'edit') {
                 setEdit(true);
               }
             }}
-            type="ghost"
           />
         }
         avatar={avatar}

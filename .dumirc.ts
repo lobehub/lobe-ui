@@ -22,7 +22,7 @@ export const packages = [
 const nav: INavItem[] = [
   { link: '/components/action-icon', title: 'Components' },
   { link: '/components/chat/chat-input-area', title: 'Chat' },
-  { link: '/components/mobile/mobile-chat-input-area', title: 'Mobile' },
+  { link: '/components/mobile/chat-input-area', title: 'Mobile' },
   { link: '/components/awesome/features', title: 'Awesome' },
   { link: '/components/brand/lobe-hub', title: 'Brand' },
   { link: '/components/mdx/callout', title: 'Mdx' },
@@ -34,7 +34,7 @@ const nav: INavItem[] = [
 const themeConfig: SiteThemeConfig = {
   actions: [
     {
-      icon: 'Github',
+      github: true,
       link: homepage,
       openExternal: true,
       text: 'GitHub',

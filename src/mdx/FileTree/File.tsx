@@ -20,4 +20,6 @@ const File: FC<FileProps> = ({ name, icon = FileIcon, ...rest }) => {
   );
 };
 
+File.displayName = 'MdxFile';
+
 export default File;

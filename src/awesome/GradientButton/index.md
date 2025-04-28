@@ -2,7 +2,7 @@
 nav: Awesome
 group: General
 title: GradientButton
-description: The GradientButton component is a customized button component built on top of Ant Design's Button component. It allows for customization of the button appearance with a gradient background and a glow effect. It also includes an optional spin animation.
+description: GradientButton is a customized button with an attractive gradient background that can include an optional glow effect.
 apiHeader:
   pkg: '@lobehub/ui/awesome'
   docUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/awesome/GradientButton/index.md'
@@ -15,4 +15,8 @@ apiHeader:
 
 ## APIs
 
-<API></API>
+| Property | Description                     | Type      | Default |
+| -------- | ------------------------------- | --------- | ------- |
+| glow     | Whether to show the glow effect | `boolean` | `true`  |
+
+> GradientButton inherits all properties from Button component

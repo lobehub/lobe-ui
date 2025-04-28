@@ -27,6 +27,34 @@ export const createLobeAntdTheme = ({
 
   return {
     algorithm: isDark ? darkAlgorithm : lightAlgorithm,
+    components: {
+      Button: {
+        contentFontSizeSM: 12,
+        defaultActiveBorderColor: baseToken.colorBorder,
+        defaultActiveColor: baseToken.colorText,
+        groupBorderColor: baseToken.colorBorder,
+      },
+      DatePicker: {
+        activeBorderColor: baseToken.colorBorder,
+        hoverBorderColor: baseToken.colorBorder,
+      },
+      Input: {
+        activeBorderColor: baseToken.colorBorder,
+        hoverBorderColor: baseToken.colorBorder,
+      },
+      InputNumber: {
+        activeBorderColor: baseToken.colorBorder,
+        hoverBorderColor: baseToken.colorBorder,
+      },
+      Mentions: {
+        activeBorderColor: baseToken.colorBorder,
+        hoverBorderColor: baseToken.colorBorder,
+      },
+      Select: {
+        activeBorderColor: baseToken.colorBorder,
+        hoverBorderColor: baseToken.colorBorder,
+      },
+    },
     token: {
       ...baseToken,
       // @ts-ignore

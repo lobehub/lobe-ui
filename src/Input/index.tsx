@@ -1,59 +1,6 @@
-'use client';
-
-import { Input as AntInput, type InputProps as AntdInputProps, type InputRef } from 'antd';
-import { TextAreaProps as AntdTextAreaProps, type TextAreaRef } from 'antd/es/input/TextArea';
-import { forwardRef } from 'react';
-
-import { useStyles } from './style';
-
-export interface InputProps extends AntdInputProps {
-  /**
-   * @description Type of the input
-   * @default 'ghost'
-   */
-  type?: 'ghost' | 'block' | 'pure';
-}
-
-export const Input = forwardRef<InputRef, InputProps>(
-  ({ className, type = 'ghost', ...rest }, ref) => {
-    const { styles, cx } = useStyles({ type });
-
-    return (
-      <AntInput
-        className={cx(styles.input, className)}
-        ref={ref}
-        variant={type === 'pure' ? 'borderless' : undefined}
-        {...rest}
-      />
-    );
-  },
-);
-
-export interface TextAreaProps extends AntdTextAreaProps {
-  /**
-   * @description Whether to enable resizing of the textarea
-   * @default true
-   */
-  resize?: boolean;
-  /**
-   * @description Type of the textarea
-   * @default 'ghost'
-   */
-  type?: 'ghost' | 'block' | 'pure';
-}
-
-export const TextArea = forwardRef<TextAreaRef, TextAreaProps>(
-  ({ className, type = 'ghost', resize = true, style, ...rest }, ref) => {
-    const { styles, cx } = useStyles({ type });
-
-    return (
-      <AntInput.TextArea
-        className={cx(styles.textarea, className)}
-        ref={ref}
-        style={resize ? style : { resize: 'none', ...style }}
-        variant={type === 'pure' ? 'borderless' : undefined}
-        {...rest}
-      />
-    );
-  },
-);
+export { default } from './Input';
+export { default as InputNumber } from './InputNumber';
+export { default as InputOPT } from './InputOPT';
+export { default as InputPassword } from './InputPassword';
+export { default as TextArea } from './TextArea';
+export type * from './type';

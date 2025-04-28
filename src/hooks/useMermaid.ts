@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from 'antd-style';
 import type { MermaidConfig } from 'mermaid/dist/config.type';
 import { useMemo, useState } from 'react';
@@ -17,7 +19,16 @@ const mermaidPromise = loadMermaid();
 /**
  * 验证并处理 Mermaid 图表内容
  */
-export const useMermaid = (id: string, content: string): SWRResponse<string, Error> => {
+export const useMermaid = (
+  content: string,
+  {
+    id,
+    theme: customTheme,
+  }: {
+    id: string;
+    theme?: MermaidConfig['theme'];
+  },
+): SWRResponse<string, Error> => {
   const theme = useTheme();
   // 用于存储最近一次有效的内容
   const [validContent, setValidContent] = useState<string>('');
@@ -31,40 +42,42 @@ export const useMermaid = (id: string, content: string): SWRResponse<string, Err
       },
       securityLevel: 'loose',
       startOnLoad: false,
-      theme: theme.isDarkMode ? 'dark' : 'neutral',
-      themeVariables: {
-        errorBkgColor: theme.colorTextDescription,
-        errorTextColor: theme.colorTextDescription,
-        fontFamily: theme.fontFamily,
-        fontSize: 14,
-        lineColor: theme.colorTextSecondary,
-        mainBkg: theme.colorBgContainer,
-        noteBkgColor: theme.colorInfoBg,
-        noteTextColor: theme.colorInfoText,
-        pie1: theme.geekblue,
-        pie2: theme.colorWarning,
-        pie3: theme.colorSuccess,
-        pie4: theme.colorError,
-        primaryBorderColor: theme.colorBorder,
-        primaryColor: theme.colorBgContainer,
-        primaryTextColor: theme.colorText,
-        secondaryBorderColor: theme.colorInfoBorder,
-        secondaryColor: theme.colorInfoBg,
-        secondaryTextColor: theme.colorInfoText,
-        tertiaryBorderColor: theme.colorSuccessBorder,
-        tertiaryColor: theme.colorSuccessBg,
-        tertiaryTextColor: theme.colorSuccessText,
-        textColor: theme.colorText,
-      },
+      theme: customTheme || (theme.isDarkMode ? 'dark' : 'neutral'),
+      themeVariables: customTheme
+        ? undefined
+        : {
+            errorBkgColor: theme.colorTextDescription,
+            errorTextColor: theme.colorTextDescription,
+            fontFamily: theme.fontFamily,
+            fontSize: 14,
+            lineColor: theme.colorTextSecondary,
+            mainBkg: theme.colorBgContainer,
+            noteBkgColor: theme.colorInfoBg,
+            noteTextColor: theme.colorInfoText,
+            pie1: theme.geekblue,
+            pie2: theme.colorWarning,
+            pie3: theme.colorSuccess,
+            pie4: theme.colorError,
+            primaryBorderColor: theme.colorBorder,
+            primaryColor: theme.colorBgContainer,
+            primaryTextColor: theme.colorText,
+            secondaryBorderColor: theme.colorInfoBorder,
+            secondaryColor: theme.colorInfoBg,
+            secondaryTextColor: theme.colorInfoText,
+            tertiaryBorderColor: theme.colorSuccessBorder,
+            tertiaryColor: theme.colorSuccessBg,
+            tertiaryTextColor: theme.colorSuccessText,
+            textColor: theme.colorText,
+          },
     }),
-    [theme.isDarkMode],
+    [theme.isDarkMode, customTheme],
   );
 
   // 为长内容生成哈希键
   const cacheKey = useMemo((): string => {
     const hash = content.length < MD5_LENGTH_THRESHOLD ? content : Md5.hashStr(content);
-    return `${id}-${theme.isDarkMode ? 'd' : 'l'}-${hash}`;
-  }, [content, id, theme.isDarkMode]);
+    return [id, customTheme || (theme.isDarkMode ? 'd' : 'l'), hash].filter(Boolean).join('-');
+  }, [content, id, theme.isDarkMode, customTheme]);
 
   return useSWR(
     cacheKey,

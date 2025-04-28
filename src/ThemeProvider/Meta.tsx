@@ -4,11 +4,7 @@ import { memo, useCallback } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
 
-export interface MetaProps {
-  description?: string;
-  title?: string;
-  withManifest?: boolean;
-}
+import type { MetaProps } from './type';
 
 const Meta = memo<MetaProps>(
   ({ title = 'LobeHub', description = 'Empowering your AI dreams with LobeHub', withManifest }) => {

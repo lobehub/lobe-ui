@@ -2,7 +2,7 @@
 nav: Awesome
 group: Data Display
 title: Hero
-description: The Hero component is used to display a hero section on a webpage with a title, description, and action buttons. It supports customization of the action buttons, including their text, icon, link, and type. The component also supports responsive design for mobile devices.
+description: Hero is a component for creating attractive landing page hero sections with a title, description, and customizable action buttons.
 apiHeader:
   pkg: '@lobehub/ui/awesome'
   docUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/awesome/Hero/index.md'
@@ -15,4 +15,19 @@ apiHeader:
 
 ## APIs
 
-<API></API>
+| Property    | Description                          | Type           | Default |
+| ----------- | ------------------------------------ | -------------- | ------- |
+| title       | Main title text                      | `string`       | -       |
+| description | Description text                     | `string`       | -       |
+| actions     | Array of action buttons              | `HeroAction[]` | -       |
+| Link        | Custom component for rendering links | `ElementType`  | -       |
+
+### HeroAction
+
+| Property     | Description                     | Type                     | Default |
+| ------------ | ------------------------------- | ------------------------ | ------- |
+| text         | Button text                     | `string`                 | -       |
+| link         | URL to navigate to              | `string`                 | -       |
+| type         | Button type                     | `'primary' \| 'default'` | -       |
+| github       | Whether to show GitHub icon     | `boolean`                | -       |
+| openExternal | Whether to open link in new tab | `boolean`                | -       |

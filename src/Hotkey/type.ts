@@ -1,34 +1,16 @@
-export const KeyMapEnum = {
-  Alt: 'alt',
-  Backquote: 'backquote', // `
-  Backslash: 'backslash', // \
-  Backspace: 'backspace',
-  BracketLeft: 'bracketleft', // [
-  BracketRight: 'bracketright', // ]
-  Comma: 'comma', // ,
-  Ctrl: 'ctrl',
-  Down: 'down',
-  Enter: 'enter',
-  Equal: 'equal', // =
-  Esc: 'esc',
-  Left: 'left',
-  LeftClick: 'left-click',
-  LeftDoubleClick: 'left-double-click',
-  Meta: 'meta', // Command on Mac, Win on Win
-  MiddleClick: 'middle-click',
-  Minus: 'minus', // -
-  Mod: 'mod', // Command on Mac, Ctrl on Win
-  Period: 'period', // .
-  Plus: 'equal', // +
-  QuestionMark: 'slash', // ?
-  Quote: 'quote', // '
-  Right: 'right',
-  RightClick: 'right-click',
-  RightDoubleClick: 'right-double-click',
-  Semicolon: 'semicolon', // ;
-  Shift: 'shift',
-  Slash: 'slash', // /
-  Space: 'space',
-  Tab: 'tab',
-  Up: 'up',
-} as const;
+import type { CSSProperties } from 'react';
+import type { FlexboxProps } from 'react-layout-kit';
+
+export interface HotkeyProps extends Omit<FlexboxProps, 'children'> {
+  classNames?: {
+    kbdClassName?: string;
+  };
+  compact?: boolean;
+  inverseTheme?: boolean;
+  isApple?: boolean;
+  keys: string;
+  styles?: {
+    kbdStyle?: CSSProperties;
+  };
+  variant?: 'filled' | 'outlined' | 'borderless';
+}

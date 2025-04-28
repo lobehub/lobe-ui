@@ -11,4 +11,37 @@ description: The Layout component is used to create a basic layout structure wit
 
 ## APIs
 
-<API></API>
+### Layout
+
+| Property     | Description                              | Type        | Default |
+| ------------ | ---------------------------------------- | ----------- | ------- |
+| headerHeight | Height of the header area                | `number`    | -       |
+| asideWidth   | Width of the sidebar area                | `number`    | -       |
+| tocWidth     | Width of the table of contents area      | `number`    | -       |
+| children     | Primary content                          | `ReactNode` | -       |
+| content      | Alternative way to specify content       | `ReactNode` | -       |
+| header       | Content for the header area              | `ReactNode` | -       |
+| footer       | Content for the footer area              | `ReactNode` | -       |
+| sidebar      | Content for the sidebar area             | `ReactNode` | -       |
+| toc          | Content for the table of contents area   | `ReactNode` | -       |
+| helmet       | Additional content for the document head | `ReactNode` | -       |
+
+### LayoutHeader
+
+| Property     | Description          | Type     | Default |
+| ------------ | -------------------- | -------- | ------- |
+| headerHeight | Height of the header | `number` | -       |
+
+### LayoutSidebar / LayoutSidebarInner
+
+| Property     | Description                         | Type     | Default |
+| ------------ | ----------------------------------- | -------- | ------- |
+| headerHeight | Height of the header to offset from | `number` | -       |
+
+### LayoutToc
+
+| Property | Description                    | Type     | Default |
+| -------- | ------------------------------ | -------- | ------- |
+| tocWidth | Width of the table of contents | `number` | -       |
+
+> All layout components extend the `DivProps` interface, inheriting all standard HTML div element attributes.

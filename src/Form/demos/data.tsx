@@ -1,5 +1,5 @@
-import type { FormProps } from '@lobehub/ui';
-import { InputNumber, Segmented, Select, Switch } from 'antd';
+import { type FormProps, InputNumber, Segmented, Select } from '@lobehub/ui';
+import { Switch } from 'antd';
 import { Palette, PanelLeftClose } from 'lucide-react';
 
 export const items: FormProps['items'] = [
@@ -28,11 +28,14 @@ export const items: FormProps['items'] = [
         children: <Switch />,
         desc: 'Reduce the blur effect and background flow color, which can improve smoothness and save CPU usage',
         label: 'Reduce Animation',
+        layout: 'horizontal',
         minWidth: undefined,
         name: 'liteAnimation',
+        tag: 'liteAnimation',
         valuePropName: 'checked',
       },
     ],
+    desc: '111',
     icon: Palette,
     key: 'theme',
     title: 'Theme Settings',
@@ -43,6 +46,7 @@ export const items: FormProps['items'] = [
         children: <Switch />,
         desc: 'Whether to expand the sidebar by default when starting',
         label: 'Default Expand',
+        layout: 'horizontal',
         minWidth: undefined,
         name: 'sidebarExpand',
         valuePropName: 'checked',
@@ -64,6 +68,7 @@ export const items: FormProps['items'] = [
         ),
         desc: 'Fixed as grid mode for constant display, auto-expand when the mouse moves to the side in floating mode',
         label: 'Display Mode',
+        layout: 'horizontal',
         minWidth: undefined,
         name: 'sidebarFixedMode',
       },
