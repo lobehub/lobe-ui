@@ -10,3 +10,21 @@ description: EditableText is a component that allows users to edit text inline. 
 <code src="./demos/index.tsx" center></code>
 
 ## APIs
+
+| Property        | Description                               | Type                                                    | Default |
+| --------------- | ----------------------------------------- | ------------------------------------------------------- | ------- |
+| value           | The text content                          | `string`                                                | -       |
+| onChange        | Callback when value changes               | `(value: string) => void`                               | -       |
+| onChangeEnd     | Callback when editing is complete         | `(value: string) => void`                               | -       |
+| onValueChanging | Callback while the value is being changed | `(value: string) => void`                               | -       |
+| editing         | Whether the component is in editing mode  | `boolean`                                               | `false` |
+| onEditingChange | Callback when editing state changes       | `(editing: boolean) => void`                            | -       |
+| showEditIcon    | Whether to show the edit icon             | `boolean`                                               | `true`  |
+| texts           | Customizable text labels                  | `{ reset?: string; submit?: string; }`                  | -       |
+| variant         | Input variant style                       | `string`                                                | -       |
+| size            | Size of the input                         | `string`                                                | -       |
+| onBlur          | Callback when input loses focus           | `(e: FocusEvent) => void`                               | -       |
+| onFocus         | Callback when input gains focus           | `(e: FocusEvent) => void`                               | -       |
+| classNames      | Custom class names                        | `{ container?: string; input?: string; }`               | -       |
+| styles          | Custom styles                             | `{ container?: CSSProperties; input?: CSSProperties; }` | -       |
+| inputProps      | Additional props for the input component  | `ControlInputProps`                                     | -       |

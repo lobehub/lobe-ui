@@ -13,6 +13,13 @@ apiHeader:
 
 Giscus config: <https://giscus.app/>
 
-<code src="./demos/index.tsx"></code>
+<code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
+
+| Property  | Description           | Type            | Default |
+| --------- | --------------------- | --------------- | ------- |
+| className | Custom CSS class name | `string`        | -       |
+| style     | Custom CSS styles     | `CSSProperties` | -       |
+
+> This component inherits all properties from [@giscus/react](https://github.com/giscus/giscus-component) including repo, repoId, category, categoryId, etc.

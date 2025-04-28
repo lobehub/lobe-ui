@@ -12,3 +12,16 @@ The rest of the props of Input are exactly the same as the original [input](http
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
+
+| Property       | Description                         | Type                                                  | Default   |
+| -------------- | ----------------------------------- | ----------------------------------------------------- | --------- |
+| value          | The input content value             | `string`                                              | -         |
+| defaultValue   | The initial input content           | `string`                                              | `''`      |
+| loading        | Whether to show a loading indicator | `boolean`                                             | -         |
+| spotlight      | Whether to show a spotlight effect  | `boolean`                                             | -         |
+| enableShortKey | Whether to enable keyboard shortcut | `boolean`                                             | -         |
+| shortKey       | The keyboard shortcut for focus     | `string`                                              | `'mod+k'` |
+| onSearch       | Callback when search is triggered   | `(value: string) => void`                             | -         |
+| onInputChange  | Callback when input content changes | `(value: string) => void`                             | -         |
+| styles         | Custom styles for components        | `{ input?: CSSProperties; shortKey?: CSSProperties }` | -         |
+| classNames     | Custom class names for components   | `{ input?: string; shortKey?: string }`               | -         |

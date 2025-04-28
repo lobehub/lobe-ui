@@ -10,3 +10,9 @@ description: The SideNav component is a customizable side navigation bar. It tak
 <code src="./demos/index.tsx" nopadding></code>
 
 ## APIs
+
+| Property      | Description                             | Type        | Default |
+| ------------- | --------------------------------------- | ----------- | ------- |
+| avatar        | Avatar element displayed at the top     | `ReactNode` | -       |
+| topActions    | Actions displayed at the top section    | `ReactNode` | -       |
+| bottomActions | Actions displayed at the bottom section | `ReactNode` | -       |

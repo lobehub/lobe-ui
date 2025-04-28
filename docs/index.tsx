@@ -25,11 +25,11 @@ const items: FeaturesProps['items'] = [
   },
 ];
 
-const example = `import { ThemeProvider, GradientButton } from '@lobehub/ui'
+const example = `import { ThemeProvider, Button } from '@lobehub/ui'
 
 export default () => (
   <ThemeProvider>
-    <GradientButton>Hello AIGC</GradientButton>
+    <Button>Hello AIGC</Button>
   </ThemeProvider>
 )`;
 

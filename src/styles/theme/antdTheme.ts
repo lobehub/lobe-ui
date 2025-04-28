@@ -54,10 +54,6 @@ export const createLobeAntdTheme = ({
         activeBorderColor: baseToken.colorBorder,
         hoverBorderColor: baseToken.colorBorder,
       },
-      Typography: {
-        titleMarginBottom: 0,
-        titleMarginTop: 0,
-      },
     },
     token: {
       ...baseToken,

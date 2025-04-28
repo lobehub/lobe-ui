@@ -15,7 +15,7 @@ import {
 import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
-import ChatInputAreaInner from '@/chat/ChatInputArea';
+import ChatInputAreaInner from '@/chat/ChatInputArea/components/ChatInputAreaInner';
 import SafeArea from '@/mobile/SafeArea';
 
 import { useStyles } from './style';
