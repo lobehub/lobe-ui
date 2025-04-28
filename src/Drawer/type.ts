@@ -12,7 +12,7 @@ export interface DrawerProps extends Omit<AntdDrawerProps, 'styles' | 'className
     title?: string;
   };
   closeIconProps?: ActionIconProps;
-  containerMaxWidth?: number;
+  containerMaxWidth?: number | string;
   noHeader?: boolean;
   ref?: Ref<HTMLDivElement>;
   sidebar?: ReactNode;

@@ -82,6 +82,42 @@ const Drawer = memo<DrawerProps>(
       </Flexbox>
     );
 
+    const sidebarContent = (
+      <>
+        <Flexbox
+          className={classNames?.sidebar}
+          paddingBlock={12}
+          paddingInline={16}
+          style={{
+            background: theme.colorBgLayout,
+            borderRight: `1px solid ${theme.colorBorderSecondary}`,
+            height: '100%',
+            overflowX: 'hidden',
+            overflowY: 'auto',
+            ...styles?.sidebar,
+          }}
+          width={sidebarWidth}
+        >
+          {sidebar}
+        </Flexbox>
+        <Flexbox
+          className={classNames?.sidebarContent}
+          flex={1}
+          paddingBlock={12}
+          paddingInline={16}
+          style={{
+            background: theme.colorBgContainer,
+            height: '100%',
+            overflowX: 'hidden',
+            overflowY: 'auto',
+            ...styles?.sidebarContent,
+          }}
+        >
+          {children}
+        </Flexbox>
+      </>
+    );
+
     return (
       <AntdDrawer
         classNames={classNames}
@@ -96,7 +132,8 @@ const Drawer = memo<DrawerProps>(
           ...styles,
           body: {
             background: 'transparent',
-            padding: '0 4px',
+            paddingBlock: sidebar ? 0 : 12,
+            paddingInline: sidebar ? 0 : 16,
             ...styles?.body,
           },
           content: {
@@ -140,55 +177,17 @@ const Drawer = memo<DrawerProps>(
       >
         <Flexbox
           className={classNames?.bodyContent}
-          height={'100%'}
           horizontal={!!sidebar}
-          paddingBlock={sidebar ? undefined : 12}
-          paddingInline={sidebar ? undefined : 16}
           style={{
             justifySelf: 'center',
             maxWidth: containerMaxWidth,
+            minHeight: '100%',
             width: '100%',
             ...styles?.bodyContent,
           }}
         >
           {noHeader && extraNode}
-          {sidebar ? (
-            <>
-              <Flexbox
-                className={classNames?.sidebar}
-                paddingBlock={12}
-                paddingInline={16}
-                style={{
-                  background: theme.colorBgLayout,
-                  borderRight: `1px solid ${theme.colorBorderSecondary}`,
-                  height: '100%',
-                  overflowX: 'hidden',
-                  overflowY: 'auto',
-                  ...styles?.sidebar,
-                }}
-                width={sidebarWidth}
-              >
-                {sidebar}
-              </Flexbox>
-              <Flexbox
-                className={classNames?.sidebarContent}
-                flex={1}
-                paddingBlock={12}
-                paddingInline={16}
-                style={{
-                  background: theme.colorBgContainer,
-                  height: '100%',
-                  overflowX: 'hidden',
-                  overflowY: 'auto',
-                  ...styles?.sidebarContent,
-                }}
-              >
-                {children}
-              </Flexbox>
-            </>
-          ) : (
-            children
-          )}
+          {sidebar ? sidebarContent : children}
         </Flexbox>
       </AntdDrawer>
     );
