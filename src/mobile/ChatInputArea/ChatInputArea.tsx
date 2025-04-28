@@ -97,6 +97,7 @@ const ChatInputArea = memo<ChatInputAreaProps>(
               active
               className={styles.expandButton}
               icon={expand ? ChevronDown : ChevronUp}
+              id={'sssssss'}
               onClick={() => setExpand?.(!expand)}
               size={{ blockSize: 24, borderRadius: '50%', size: 14 }}
               style={expand ? { top: 6 } : {}}
@@ -109,8 +110,8 @@ const ChatInputArea = memo<ChatInputAreaProps>(
             topAddons={topAddons}
           >
             <ChatInputAreaInner
-              autoSize={expand ? false : { maxRows: 6, minRows: 0 }}
-              className={cx(expand && styles.expandTextArea)}
+              autoSize={expand ? false : { maxRows: 6, minRows: 1 }}
+              className={styles.expandTextArea}
               loading={loading}
               onBlur={() => setIsFocused(false)}
               onFocus={() => setIsFocused(true)}

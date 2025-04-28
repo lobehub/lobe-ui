@@ -48,6 +48,9 @@ const ChatInputArea = memo<ChatInputAreaProps>(
                 setExpand?.(false);
               }}
               ref={ref}
+              style={{
+                paddingInline: 16,
+              }}
               {...rest}
             />
           </div>

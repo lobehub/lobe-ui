@@ -41,9 +41,7 @@ export const useStyles = createStyles(({ cx, token, css, stylish, prefixCls }) =
         }
       }
     `,
-    root: css`
-      overflow: hidden;
-    `,
+    root: css``,
     rootOPT: css`
       &.${prefixCls}-otp {
         .${prefixCls}-otp-input {
