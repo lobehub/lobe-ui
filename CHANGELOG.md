@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.0.3](https://github.com/lobehub/lobe-ui/compare/v2.0.2...v2.0.3)
+
+<sup>Released on **2025-04-28**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix MessageModal.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix MessageModal ([e72bf86](https://github.com/lobehub/lobe-ui/commit/e72bf86))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.0.2](https://github.com/lobehub/lobe-ui/compare/v2.0.1...v2.0.2)
 
 <sup>Released on **2025-04-28**</sup>
