@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`TextArea > should render correctly with default props 1`] = `
+<textarea
+  class="ant-input css-dev-only-do-not-override-1v5z42l ant-input-outlined acss-0"
+  style="resize: none;"
+/>
+`;
+
+exports[`TextArea > should render with different variants 1`] = `
+<textarea
+  class="ant-input css-dev-only-do-not-override-1v5z42l ant-input-filled acss-waauh5"
+  style="resize: none;"
+/>
+`;
+
+exports[`TextArea > should render with different variants 2`] = `
+<textarea
+  class="ant-input css-dev-only-do-not-override-1v5z42l ant-input-outlined acss-0"
+  style="resize: none;"
+/>
+`;
+
+exports[`TextArea > should render with different variants 3`] = `
+<textarea
+  class="ant-input css-dev-only-do-not-override-1v5z42l ant-input-borderless acss-v7c7v6"
+  style="resize: none;"
+/>
+`;
+
+exports[`TextArea > should render with different variants 4`] = `
+<textarea
+  class="ant-input css-dev-only-do-not-override-1v5z42l ant-input-underlined acss-0"
+  style="resize: none;"
+/>
+`;
+
+exports[`TextArea > should render with shadow 1`] = `
+<textarea
+  class="ant-input css-dev-only-do-not-override-1v5z42l ant-input-outlined acss-0"
+  style="resize: none;"
+/>
+`;

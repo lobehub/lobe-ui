@@ -56,3 +56,6 @@ const TextArea = memo<TextAreaProps>(
 TextArea.displayName = 'TextArea';
 
 export default TextArea;
+
+
+export { TextArea };
