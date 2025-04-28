@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.0.6](https://github.com/lobehub/lobe-ui/compare/v2.0.5...v2.0.6)
+
+<sup>Released on **2025-04-28**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix button style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix button style ([33248f0](https://github.com/lobehub/lobe-ui/commit/33248f0))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.0.5](https://github.com/lobehub/lobe-ui/compare/v2.0.4...v2.0.5)
 
 <sup>Released on **2025-04-28**</sup>
