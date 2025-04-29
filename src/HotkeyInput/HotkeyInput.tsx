@@ -165,7 +165,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
           .some((conflictKey) => {
             const newKeys = splitKeysByPlus(newHotkey);
             const conflictKeys = splitKeysByPlus(conflictKey);
-            return isEqual(newKeys.sort(), conflictKeys.sort());
+            return isEqual(newKeys, conflictKeys);
           });
       },
       [hotkeyConflicts],
