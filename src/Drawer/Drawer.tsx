@@ -91,7 +91,6 @@ const Drawer = memo<DrawerProps>(
           style={{
             background: theme.colorBgLayout,
             borderRight: `1px solid ${theme.colorBorderSecondary}`,
-            height: '100%',
             overflowX: 'hidden',
             overflowY: 'auto',
             ...styles?.sidebar,
@@ -107,7 +106,6 @@ const Drawer = memo<DrawerProps>(
           paddingInline={16}
           style={{
             background: theme.colorBgContainer,
-            height: '100%',
             overflowX: 'hidden',
             overflowY: 'auto',
             ...styles?.sidebarContent,
