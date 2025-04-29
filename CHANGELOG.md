@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.0.7](https://github.com/lobehub/lobe-ui/compare/v2.0.6...v2.0.7)
+
+<sup>Released on **2025-04-29**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix draw style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix draw style ([4daef35](https://github.com/lobehub/lobe-ui/commit/4daef35))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.0.6](https://github.com/lobehub/lobe-ui/compare/v2.0.5...v2.0.6)
 
 <sup>Released on **2025-04-28**</sup>
