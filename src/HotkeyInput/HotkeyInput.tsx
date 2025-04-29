@@ -20,13 +20,10 @@ import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
 import Hotkey from '@/Hotkey';
-import { checkIsAppleDevice, splitKeysByPlus } from '@/Hotkey/utils';
+import { NORMATIVE_MODIFIER, checkIsAppleDevice, splitKeysByPlus } from '@/Hotkey/utils';
 
 import { useStyles } from './style';
 import type { HotkeyInputProps } from './type';
-
-// 修饰键列表
-const MODIFIER_KEYS = new Set(['alt', 'mod', 'shift', 'meta', 'ctrl', 'control']);
 
 const HotkeyInput = memo<HotkeyInputProps>(
   ({
@@ -124,8 +121,8 @@ const HotkeyInput = memo<HotkeyInputProps>(
 
       for (const key of keysSet) {
         // 处理不同表示的修饰键
-        const normalizedKey = key.toLowerCase();
-        if (MODIFIER_KEYS.has(normalizedKey)) {
+        const normalizedKey: any = key.toLowerCase();
+        if (NORMATIVE_MODIFIER.includes(normalizedKey)) {
           // 统一修饰键表示
           if (
             (!isAppleDevice && normalizedKey === 'ctrl') ||
