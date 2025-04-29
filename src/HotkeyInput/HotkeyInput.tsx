@@ -144,12 +144,12 @@ const HotkeyInput = memo<HotkeyInputProps>(
 
       // 只允许一个非修饰键，如果有多个，只保留最后一个
       const finalKey = normalKeys.length > 0 ? [normalKeys.at(-1)] : [];
-      const validKeys = [...modifiers, ...finalKey];
+      const shortcuts = [modifiers, finalKey];
 
-      // 组合必须包含至少一个按键
       return {
-        isValid: validKeys.length > 0,
-        keys: validKeys,
+        // 组合必须包含至少一个按键
+        isValid: shortcuts.every((k) => k.length > 0),
+        keys: shortcuts.flat(),
       };
     }, []);
 
