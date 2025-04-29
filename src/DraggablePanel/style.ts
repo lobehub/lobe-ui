@@ -230,9 +230,9 @@ export const useStyles = createStyles(
       toggleTop: cx(
         `${prefix}-toggle-top`,
         css`
-          inset-block-start: -${LAYOUT.offset}px;
+          inset-block-start: -8px;
           width: 100%;
-          height: ${LAYOUT.toggleShort}px;
+          height: 0px;
 
           > div {
             inset-inline-start: 50%;
@@ -295,3 +295,6 @@ export const useStyles = createStyles(
     };
   },
 );
+
+
+export { LAYOUT };
