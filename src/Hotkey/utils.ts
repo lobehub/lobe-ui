@@ -1,7 +1,34 @@
 import { KeyMapEnum } from './const';
 
+// https://superuser.com/questions/1238058/key-combination-order
+export const NORMATIVE_MODIFIER = [
+  // win: Ctrl ,mac: Control
+  KeyMapEnum.Ctrl,
+  KeyMapEnum.Control,
+
+  // win: Alt ,mac: Option
+  KeyMapEnum.Alt,
+
+  // win: Shift ,mac: Shift
+  KeyMapEnum.Shift,
+
+  //  win: Win ,mac: Command
+  KeyMapEnum.Meta,
+  KeyMapEnum.Mod,
+];
+
+const orderMap = Object.fromEntries(NORMATIVE_MODIFIER.map((key, index) => [key, index]));
+
 export const splitKeysByPlus = (keys: string): string[] => {
-  return keys.replaceAll('++', `+${KeyMapEnum.Equal}`).split('+');
+  return keys
+    .replaceAll('++', `+${KeyMapEnum.Equal}`)
+    .split('+')
+    .sort((x, y) => {
+      const idxX = orderMap[x.toLowerCase()] ?? orderMap.length;
+      const idxY = orderMap[y.toLowerCase()] ?? orderMap.length;
+
+      return idxX - idxY;
+    });
 };
 
 export const startCase = (str: string): string => {

@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 
-import { checkIsAppleDevice, combineKeys, splitKeysByPlus, startCase } from './utils';
+import {
+  NORMATIVE_MODIFIER,
+  checkIsAppleDevice,
+  combineKeys,
+  splitKeysByPlus,
+  startCase,
+} from './utils';
 
 const mockUserAgent = (agent: string) => {
   // @ts-ignore
@@ -12,12 +18,21 @@ const mockUserAgent = (agent: string) => {
 describe('splitKeysByPlus', () => {
   it('should split keys by plus sign', () => {
     expect(splitKeysByPlus('Ctrl+A')).toEqual(['Ctrl', 'A']);
-    expect(splitKeysByPlus('Shift+Ctrl+B')).toEqual(['Shift', 'Ctrl', 'B']);
+    expect(splitKeysByPlus('Shift+Ctrl+B')).toEqual(['Ctrl', 'Shift', 'B']);
   });
 
   it('should handle consecutive plus signs', () => {
     expect(splitKeysByPlus('Ctrl++')).toEqual(['Ctrl', 'equal']);
     expect(splitKeysByPlus('Shift+++')).toEqual(['Shift', 'equal', '']);
+  });
+
+  it('should sort keys correctly', () => {
+    const shortcutsA = 'Ctrl+Shift+Alt+Y';
+    const shortcutsB = 'Ctrl+Alt+Shift+Y';
+
+    expect(splitKeysByPlus(shortcutsA)).toEqual(['Ctrl', 'Alt', 'Shift', 'Y']);
+
+    expect(splitKeysByPlus(shortcutsA)).toEqual(splitKeysByPlus(shortcutsB));
   });
 });
 
@@ -61,6 +76,14 @@ describe('checkIsAppleDevice', () => {
     // @ts-ignore
     global.navigator = undefined;
     expect(checkIsAppleDevice()).toBe(false);
+  });
+});
+
+// 规范化顺序
+describe('NORMATIVE_MODIFIER', () => {
+  it('should be in the correct order', () => {
+    const expectedOrder = ['ctrl', 'control', 'alt', 'shift', 'meta', 'mod'];
+    expect(NORMATIVE_MODIFIER).toEqual(expectedOrder);
   });
 });
 

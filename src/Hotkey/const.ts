@@ -5,7 +5,8 @@ export const KeyMapEnum = {
   Backspace: 'backspace',
   BracketLeft: 'bracketleft', // [
   BracketRight: 'bracketright', // ]
-  Comma: 'comma', // ,
+  Comma: 'comma',
+  Control: 'control',
   Ctrl: 'ctrl',
   Down: 'down',
   Enter: 'enter',
