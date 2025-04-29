@@ -52,3 +52,6 @@ export const checkIsAppleDevice = (isApple?: boolean) => {
 };
 
 export const combineKeys = (keys: string[]): string => keys.join('+');
+
+
+export { orderMap };
