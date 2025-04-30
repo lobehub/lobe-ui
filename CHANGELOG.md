@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.0.10](https://github.com/lobehub/lobe-ui/compare/v2.0.9...v2.0.10)
+
+<sup>Released on **2025-04-30**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix processing tag style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix processing tag style ([9bf54a3](https://github.com/lobehub/lobe-ui/commit/9bf54a3))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.0.9](https://github.com/lobehub/lobe-ui/compare/v2.0.8...v2.0.9)
 
 <sup>Released on **2025-04-30**</sup>
