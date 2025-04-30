@@ -1,4 +1,5 @@
 import { Tag } from '@lobehub/ui';
+import { Badge } from 'antd';
 import { useTheme } from 'antd-style';
 import { Center } from 'react-layout-kit';
 
@@ -32,7 +33,9 @@ export default () => {
         <Tag color={theme.colorInfo}>info</Tag>
       </Center>
       <Center gap={4} horizontal wrap={'wrap'}>
-        <Tag color="processing">processing</Tag>
+        <Tag color="processing" icon={<Badge status={'processing'} />}>
+          processing
+        </Tag>
       </Center>
     </Center>
   );
