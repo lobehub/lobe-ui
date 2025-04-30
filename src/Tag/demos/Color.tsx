@@ -31,6 +31,9 @@ export default () => {
         <Tag color={theme.colorError}>error</Tag>
         <Tag color={theme.colorInfo}>info</Tag>
       </Center>
+      <Center gap={4} horizontal wrap={'wrap'}>
+        <Tag color="processing">processing</Tag>
+      </Center>
     </Center>
   );
 };
