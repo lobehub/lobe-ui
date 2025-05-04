@@ -14,7 +14,7 @@ const SliderWithInput = memo<SliderWithInputProps>(
     step,
     value,
     onChange,
-    max,
+    max = 100,
     min,
     defaultValue,
     size,
