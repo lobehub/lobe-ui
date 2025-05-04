@@ -32,11 +32,6 @@ export const useStyles = createStyles(({ stylish, prefixCls, css, token }) => ({
       span {
         margin: 0;
       }
-
-      span:not(.anticon) {
-        height: unset;
-        line-height: inherit;
-      }
     }
   `,
   small: css`
