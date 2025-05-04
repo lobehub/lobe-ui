@@ -134,7 +134,7 @@
     "react-hotkeys-hook": "^4.6.1",
     "react-layout-kit": "^1.9.1",
     "react-markdown": "^10.1.0",
-    "react-merge-refs": "^2.1.1",
+    "react-merge-refs": "^3.0.0",
     "react-rnd": "^10.5.2",
     "react-zoom-pan-pinch": "^3.7.0",
     "rehype-katex": "^7.0.1",
