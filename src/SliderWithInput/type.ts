@@ -16,5 +16,6 @@ export interface SliderWithInputProps extends Omit<SliderSingleProps, 'className
     input?: CSSProperties;
     slider?: CSSProperties;
   } & SliderSingleProps['styles'];
+  unlimitedInput?: boolean; // 不限制输入框最大值
   variant?: InputNumberProps['variant'];
 }
