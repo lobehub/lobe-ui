@@ -4,25 +4,25 @@ import type { ImageProps } from 'antd';
 import { type ElementType, Ref, createElement, memo, use, useMemo } from 'react';
 
 import { ConfigContext } from '@/ConfigProvider';
-import type { ImgProps } from '@/types';
+import type { ImgProps as HtmlImgeProps } from '@/types';
 
 const createContainer = (as: ElementType) => memo((props: any) => createElement(as, props));
 
-const Img = memo<ImgProps & ImageProps & { ref?: Ref<HTMLImageElement>; unoptimized?: boolean }>(
-  ({ unoptimized, ...rest }) => {
-    const config = use(ConfigContext);
-    const render = config?.imgAs || 'img';
+type ImgProps = HtmlImgeProps & ImageProps & { ref?: Ref<HTMLImageElement>; unoptimized?: boolean };
 
-    const ImgContainer = useMemo(() => createContainer(render), [render]);
+const Img = memo<ImgProps>(({ unoptimized, ...rest }) => {
+  const config = use(ConfigContext);
+  const render = config?.imgAs || 'img';
 
-    return (
-      <ImgContainer
-        unoptimized={unoptimized === undefined ? config?.imgUnoptimized : unoptimized}
-        {...rest}
-      />
-    );
-  },
-);
+  const ImgContainer = useMemo(() => createContainer(render), [render]);
+
+  return (
+    <ImgContainer
+      unoptimized={unoptimized === undefined ? config?.imgUnoptimized : unoptimized}
+      {...rest}
+    />
+  );
+});
 
 Img.displayName = 'Img';
 
