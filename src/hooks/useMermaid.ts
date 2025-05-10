@@ -49,7 +49,6 @@ export const useMermaid = (
             errorBkgColor: theme.colorTextDescription,
             errorTextColor: theme.colorTextDescription,
             fontFamily: theme.fontFamily,
-            fontSize: 14,
             lineColor: theme.colorTextSecondary,
             mainBkg: theme.colorBgContainer,
             noteBkgColor: theme.colorInfoBg,
