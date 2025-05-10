@@ -2,6 +2,40 @@
 
 # Changelog
 
+### [Version 2.0.11](https://github.com/lobehub/lobe-ui/compare/v2.0.10...v2.0.11)
+
+<sup>Released on **2025-05-10**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Do not directly re-export antd's internal type.
+
+#### 💄 Styles
+
+- **misc**: Allow `SliderWithInput` to have no input limit, Fix mermaid font-size.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Do not directly re-export antd's internal type, closes [#343](https://github.com/lobehub/lobe-ui/issues/343) ([b5ae861](https://github.com/lobehub/lobe-ui/commit/b5ae861))
+
+#### Styles
+
+- **misc**: Allow `SliderWithInput` to have no input limit, closes [#341](https://github.com/lobehub/lobe-ui/issues/341) ([948ab67](https://github.com/lobehub/lobe-ui/commit/948ab67))
+- **misc**: Fix mermaid font-size ([8b273b3](https://github.com/lobehub/lobe-ui/commit/8b273b3))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.0.10](https://github.com/lobehub/lobe-ui/compare/v2.0.9...v2.0.10)
 
 <sup>Released on **2025-04-30**</sup>
