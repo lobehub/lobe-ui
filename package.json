@@ -179,7 +179,7 @@
     "father": "^4.5.2",
     "husky": "^9.1.7",
     "jsdom": "^26.0.0",
-    "lint-staged": "^15.5.0",
+    "lint-staged": "^16.0.0",
     "mdast-util-to-markdown": "^2.1.2",
     "prettier": "^3.5.3",
     "react": "^19.0.0",
