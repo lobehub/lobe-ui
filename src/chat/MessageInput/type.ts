@@ -10,6 +10,7 @@ export interface MessageInputProps extends FlexboxProps {
   };
   defaultValue?: string;
   editButtonSize?: ButtonProps['size'];
+  language?: CodeEditorProps['language'];
   onCancel?: () => void;
   onConfirm?: (text: string) => void;
   placeholder?: string;

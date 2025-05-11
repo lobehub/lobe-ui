@@ -7,6 +7,7 @@ export interface MessageModalProps extends Pick<ModalProps, 'open' | 'footer' | 
   editing?: boolean;
   extra?: ReactNode;
   height?: MessageInputProps['height'];
+  language?: MessageInputProps['language'];
   onChange?: (text: string) => void;
   onEditingChange?: (editing: boolean) => void;
   onOpenChange?: (open: boolean) => void;

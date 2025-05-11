@@ -31,6 +31,7 @@ const EditableMessage = memo<EditableMessageProps>(
     fullFeaturedCodeBlock,
     model,
     fontSize,
+    language = 'markdown',
     markdownProps,
   }) => {
     const [isEdit, setTyping] = useControlledState(false, {
@@ -52,6 +53,7 @@ const EditableMessage = memo<EditableMessageProps>(
         defaultValue={value}
         editButtonSize={editButtonSize}
         height={height}
+        language={language}
         onCancel={() => setTyping(false)}
         onConfirm={(text) => {
           onChange?.(text);
@@ -97,6 +99,7 @@ const EditableMessage = memo<EditableMessageProps>(
             extra={model?.extra}
             footer={model?.footer}
             height={height}
+            language={language}
             onChange={onChange}
             onEditingChange={setTyping}
             onOpenChange={(e) => {

@@ -1,11 +1,13 @@
 'use client';
 
+import { useResponsive } from 'antd-style';
 import { memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
 import Button from '@/Button';
 import CodeEditor from '@/CodeEditor';
+import TextArea from '@/Input/TextArea';
 import Markdown from '@/Markdown';
 import Modal from '@/Modal';
 import { useStyles as useTextStyles } from '@/chat/MessageInput/style';
@@ -22,11 +24,13 @@ const MessageModal = memo<MessageModalProps>(
     onEditingChange,
     placeholder,
     value,
+    language = 'markdown',
     onChange,
     text,
     footer,
     extra,
   }) => {
+    const { mobile } = useResponsive();
     const { styles: textStyles } = useTextStyles();
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
@@ -84,15 +88,29 @@ const MessageModal = memo<MessageModalProps>(
         title={text?.title}
       >
         {isEdit ? (
-          <CodeEditor
-            className={textStyles}
-            defaultValue={temporaryValue}
-            language={'markdown'}
-            onValueChange={(value) => setMessage(value)}
-            placeholder={placeholder}
-            value={temporaryValue}
-            variant={'borderless'}
-          />
+          mobile ? (
+            <TextArea
+              autoSize
+              className={textStyles}
+              defaultValue={temporaryValue}
+              onBlur={(e) => setMessage(e.target.value)}
+              onChange={(value) => setMessage(value.target.value)}
+              placeholder={placeholder}
+              value={temporaryValue}
+              variant={'borderless'}
+            />
+          ) : (
+            <CodeEditor
+              className={textStyles}
+              defaultValue={temporaryValue}
+              language={language}
+              onBlur={(e) => setMessage(e.target.value)}
+              onValueChange={(value) => setMessage(value)}
+              placeholder={placeholder}
+              value={temporaryValue}
+              variant={'borderless'}
+            />
+          )
         ) : (
           <>
             {extra}

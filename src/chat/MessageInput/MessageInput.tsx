@@ -1,5 +1,6 @@
 'use client';
 
+import { useResponsive } from 'antd-style';
 import { memo, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { Flexbox } from 'react-layout-kit';
@@ -8,6 +9,7 @@ import Button from '@/Button';
 import CodeEditor from '@/CodeEditor';
 import { KeyMapEnum } from '@/Hotkey/const';
 import { combineKeys } from '@/Hotkey/utils';
+import TextArea from '@/Input/TextArea';
 import Tooltip from '@/Tooltip';
 
 import { useStyles } from './style';
@@ -27,8 +29,10 @@ const MessageInput = memo<MessageInputProps>(
     editButtonSize = 'middle',
     classNames,
     shortcut,
+    language = 'markdown',
     ...rest
   }) => {
+    const { mobile } = useResponsive();
     const [temporaryValue, setValue] = useState<string>(defaultValue || '');
     const { cx, styles } = useStyles();
     const confirmHotkey = combineKeys([KeyMapEnum.Mod, KeyMapEnum.Enter]);
@@ -59,18 +63,31 @@ const MessageInput = memo<MessageInputProps>(
 
     return (
       <Flexbox gap={16} style={{ flex: 1, width: '100%', ...style }} {...rest}>
-        <CodeEditor
-          className={cx(styles, classNames?.editor)}
-          classNames={classNames}
-          language={'markdown'}
-          onBlur={(e) => setValue(e.target.value)}
-          onValueChange={(e) => setValue(e)}
-          placeholder={placeholder}
-          style={customStyles?.editor}
-          styles={customStyles}
-          value={temporaryValue}
-          variant={variant}
-        />
+        {mobile ? (
+          <TextArea
+            autoSize
+            className={cx(styles, classNames?.editor)}
+            onBlur={(e) => setValue(e.target.value)}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder={placeholder}
+            style={customStyles?.editor}
+            value={temporaryValue}
+            variant={variant}
+          />
+        ) : (
+          <CodeEditor
+            className={cx(styles, classNames?.editor)}
+            classNames={classNames}
+            language={language}
+            onBlur={(e) => setValue(e.target.value)}
+            onValueChange={(e) => setValue(e)}
+            placeholder={placeholder}
+            style={customStyles?.editor}
+            styles={customStyles}
+            value={temporaryValue}
+            variant={variant}
+          />
+        )}
         <Flexbox direction={'horizontal-reverse'} gap={8}>
           {renderButtons ? (
             renderButtons(temporaryValue).map((buttonProps, index) => (

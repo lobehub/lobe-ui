@@ -16,6 +16,7 @@ export interface EditableMessageProps {
   fontSize?: number;
   fullFeaturedCodeBlock?: boolean;
   height?: MessageInputProps['height'];
+  language?: MessageInputProps['language'];
   markdownProps?: Omit<MarkdownProps, 'className' | 'style' | 'children'>;
   model?: {
     extra?: MessageModalProps['extra'];
