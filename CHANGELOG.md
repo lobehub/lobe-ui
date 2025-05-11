@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.0.12](https://github.com/lobehub/lobe-ui/compare/v2.0.11...v2.0.12)
+
+<sup>Released on **2025-05-11**</sup>
+
+#### 💄 Styles
+
+- **misc**: Remove CodeEditor from MessageInput on mobile.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Remove CodeEditor from MessageInput on mobile ([3536394](https://github.com/lobehub/lobe-ui/commit/3536394))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.0.11](https://github.com/lobehub/lobe-ui/compare/v2.0.10...v2.0.11)
 
 <sup>Released on **2025-05-10**</sup>
