@@ -53,7 +53,7 @@ const Render = memo<PropsWithChildren>(({ children }) => {
         </Flexbox>
         <Icon icon={showDetail ? ChevronDown : ChevronRight} />
       </Flexbox>
-      {showDetail && children}
+      {showDetail && <p>{children}</p>}
     </Flexbox>
   );
 });
