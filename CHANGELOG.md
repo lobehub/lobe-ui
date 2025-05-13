@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.0.13](https://github.com/lobehub/lobe-ui/compare/v2.0.12...v2.0.13)
+
+<sup>Released on **2025-05-13**</sup>
+
+#### 💄 Styles
+
+- **misc**: Support streaming Markdown animation.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Support streaming Markdown animation ([260afcc](https://github.com/lobehub/lobe-ui/commit/260afcc))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.0.12](https://github.com/lobehub/lobe-ui/compare/v2.0.11...v2.0.12)
 
 <sup>Released on **2025-05-11**</sup>
