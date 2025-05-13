@@ -14,7 +14,8 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
     animated: css`
       .animate-fade-in,
       .katex-html span,
-      span.line,
+      span.line > span,
+      code:not(:has(span.line)),
       > * {
         animation: ${fadeIn} 1s ease-in-out;
       }

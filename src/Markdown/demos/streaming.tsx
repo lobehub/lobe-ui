@@ -3,7 +3,7 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { useEffect, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
-import { content } from './data';
+import { fullContent } from './data';
 
 export default () => {
   const store = useCreateStore();
@@ -52,10 +52,10 @@ export default () => {
     }
 
     const intervalId = setInterval(() => {
-      if (currentPosition < content.length) {
+      if (currentPosition < fullContent.length) {
         // Stream character by character
-        const nextChunkSize = Math.min(3, content.length - currentPosition);
-        const nextContent = content.slice(0, Math.max(0, currentPosition + nextChunkSize));
+        const nextChunkSize = Math.min(3, fullContent.length - currentPosition);
+        const nextContent = fullContent.slice(0, Math.max(0, currentPosition + nextChunkSize));
         setStreamedContent(nextContent);
         currentPosition += nextChunkSize;
       } else {

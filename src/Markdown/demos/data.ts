@@ -201,3 +201,126 @@ export function foo() {
 }
 \`\`\`
 `;
+
+export const fullContent = `# AI Assistant Response
+
+Hello! I'm an AI assistant. I can help you with various tasks like:
+
+1. Answering questions
+2. Providing information
+3. Writing code examples
+4. Explaining concepts
+
+## Code Example
+
+Here's a simple React component:
+
+\`\`\`tsx
+'use client';
+
+import { memo, useMemo } from 'react';
+import ReactMarkdown from 'react-markdown';
+
+import { PreviewGroup } from '@/Image';
+import { useMarkdown } from '@/hooks/useMarkdown';
+
+import { SyntaxMarkdownProps } from '../type';
+
+const SyntaxMarkdown = memo<SyntaxMarkdownProps>(
+  ({
+    children,
+    fullFeaturedCodeBlock,
+    animated,
+    enableLatex = true,
+    enableMermaid = true,
+    enableImageGallery = true,
+    enableCustomFootnotes,
+    componentProps,
+    allowHtml,
+    showFootnotes,
+    variant = 'default',
+    reactMarkdownProps,
+    rehypePlugins,
+    remarkPlugins,
+    remarkPluginsAhead,
+    components = {},
+    customRender,
+    citations,
+  }) => {
+    // Use our new hook to handle Markdown processing
+    const { escapedContent, memoComponents, rehypePluginsList, remarkPluginsList } = useMarkdown({
+      allowHtml,
+      animated,
+      children,
+      citations,
+      componentProps,
+      components,
+      enableCustomFootnotes,
+      enableImageGallery,
+      enableLatex,
+      enableMermaid,
+      fullFeaturedCodeBlock,
+      rehypePlugins,
+      remarkPlugins,
+      remarkPluginsAhead,
+      showFootnotes,
+      variant,
+    });
+
+    // 渲染默认内容
+    const defaultDOM = useMemo(
+      () => (
+        <PreviewGroup enable={enableImageGallery}>
+          <ReactMarkdown
+            {...reactMarkdownProps}
+            components={memoComponents}
+            rehypePlugins={rehypePluginsList}
+            remarkPlugins={remarkPluginsList}
+          >
+            {escapedContent}
+          </ReactMarkdown>
+        </PreviewGroup>
+      ),
+      [
+        escapedContent,
+        memoComponents,
+        rehypePluginsList,
+        remarkPluginsList,
+        enableImageGallery,
+        reactMarkdownProps,
+      ],
+    );
+
+    // 应用自定义渲染
+    const markdownContent = customRender
+      ? customRender(defaultDOM, { text: escapedContent || '' })
+      : defaultDOM;
+
+    return markdownContent;
+  },
+);
+
+SyntaxMarkdown.displayName = 'SyntaxMarkdown';
+
+export default SyntaxMarkdown;
+\`\`\`
+
+## Math Support
+
+I can also render mathematical formulas:
+
+$$
+f(x) = \\int_{-\\infty}^{\\infty} \\hat{f}(\\xi) e^{2\\pi i \\xi x} d\\xi
+$$
+
+## Data Visualization
+
+\`\`\`mermaid
+graph TD
+  A[User Input] --> B[AI Processing]
+  B --> C[Response Generation]
+  C --> D[Content Display]
+\`\`\`
+
+Thank you for your attention!
+`;

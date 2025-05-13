@@ -40,7 +40,7 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
             display: block;
 
             .line {
-              display: inline-block;
+              display: block;
 
               width: calc(100% + 32px);
               margin-block: 0;
