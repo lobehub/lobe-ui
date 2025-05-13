@@ -18,11 +18,11 @@ export interface TypographyProps extends DivProps {
   ref?: Ref<HTMLDivElement>;
 }
 
-export interface MarkdownProps extends TypographyProps {
+export interface SyntaxMarkdownProps {
   allowHtml?: boolean;
+  animated?: boolean;
   children: string;
   citations?: CitationItem[];
-  className?: string;
   componentProps?: {
     a?: Partial<AProps & AnchorProps>;
     highlight?: Partial<HighlighterProps>;
@@ -38,16 +38,20 @@ export interface MarkdownProps extends TypographyProps {
   enableLatex?: boolean;
   enableMermaid?: boolean;
   fullFeaturedCodeBlock?: boolean;
-  onDoubleClick?: () => void;
   reactMarkdownProps?: Omit<
     Readonly<ReactMarkdownOptions>,
     'components' | 'rehypePlugins' | 'remarkPlugins'
   >;
-  ref?: Ref<HTMLDivElement>;
   rehypePlugins?: Pluggable[];
   remarkPlugins?: Pluggable[];
   remarkPluginsAhead?: Pluggable[];
   showFootnotes?: boolean;
-  style?: CSSProperties;
   variant?: 'default' | 'chat';
+}
+
+export interface MarkdownProps extends SyntaxMarkdownProps, Omit<TypographyProps, 'children'> {
+  className?: string;
+  onDoubleClick?: () => void;
+  ref?: Ref<HTMLDivElement>;
+  style?: CSSProperties;
 }

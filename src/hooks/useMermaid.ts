@@ -100,7 +100,7 @@ export const useMermaid = (
           throw new Error('Mermaid 语法无效');
         }
       } catch (error) {
-        console.error('Mermaid 解析错误:', error);
+        if (!validContent) console.error('Mermaid 解析错误:', error);
         // 返回最近一次有效的内容，或空字符串
         return validContent || '';
       }

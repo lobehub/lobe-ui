@@ -22,7 +22,7 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
     const id = useId();
     const theme = useTheme();
     const mermaidId = kebabCase(`mermaid-${id}`);
-    const { data } = useMermaid(children, {
+    const { data, isLoading } = useMermaid(children, {
       id: mermaidId,
       theme: isDefaultTheme ? undefined : customTheme,
     });
@@ -36,17 +36,15 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
     }, [blobUrl]);
 
     useEffect(() => {
-      if (!data) return;
+      if (isLoading || !data) return;
       // 创建Blob对象
       const svgBlob = new Blob([data], { type: 'image/svg+xml' });
-      // 如果已有旧的URL，先释放它
-      if (blobUrl) URL.revokeObjectURL(blobUrl);
       // 创建并保存Blob URL
       const url = URL.createObjectURL(svgBlob);
       setBlobUrl(url);
-    }, [data]);
+    }, [isLoading, data]);
 
-    if (!data || !blobUrl) return null;
+    if (!blobUrl) return null;
 
     return (
       <Image

@@ -13,6 +13,10 @@ description: Markdown is a React component used to render markdown text. It supp
 
 <code src="./demos/chat.tsx" iframe nopadding></code>
 
+## Streaming
+
+<code src="./demos/streaming.tsx" iframe nopadding></code>
+
 ## Shiki Transformers
 
 <code src="./demos/transformer.tsx" iframe nopadding></code>

@@ -1,8 +1,24 @@
-import { createStyles } from 'antd-style';
+import { createStyles, keyframes } from 'antd-style';
 
 export const useStyles = createStyles(({ css, token, isDarkMode }) => {
   const cyanColor = isDarkMode ? token.cyan9A : token.cyan11A;
+  const fadeIn = keyframes`
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  `;
   return {
+    animated: css`
+      .animate-fade-in,
+      .katex-html span,
+      span.line,
+      > * {
+        animation: ${fadeIn} 1s ease-in-out;
+      }
+    `,
     chat: css`
       --lobe-markdown-border-radius: ${token.borderRadius};
 
@@ -33,6 +49,10 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
       }
     `,
     latex: css`
+      .katex-error {
+        color: ${token.colorTextDescription} !important;
+      }
+
       .katex-html {
         overflow: auto hidden;
         padding: 3px;

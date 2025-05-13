@@ -6,9 +6,9 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import type { Pluggable } from 'unified';
 
-import { animatedPlugin } from './plugins/animated';
-import { rehypeFootnoteLinks, remarkCustomFootnotes } from './plugins/footnote';
-import { rehypeKatexDir } from './plugins/katexDir';
+import { animatedPlugin } from '@/Markdown/plugins/animated';
+import { rehypeFootnoteLinks, remarkCustomFootnotes } from '@/Markdown/plugins/footnote';
+import { rehypeKatexDir } from '@/Markdown/plugins/katexDir';
 
 // 使用普通 Map 代替 WeakMap，并限制缓存大小
 const CACHE_SIZE = 50;
