@@ -3,7 +3,15 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { useEffect, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import { markdownElements } from '@/Markdown/demos/customPlugins/MarkdownElements';
+import { removeLineBreaksInAntArtifact } from '@/Markdown/demos/customPlugins/utils';
+
 import { fullContent } from './data';
+
+const rehypePlugins = markdownElements.map((element) => element.rehypePlugin);
+const components = Object.fromEntries(
+  markdownElements.map((element) => [element.tag, element.Component]),
+);
 
 export default () => {
   const store = useCreateStore();
@@ -85,10 +93,12 @@ export default () => {
         </Flexbox>
         <Markdown
           animated={animated}
+          components={components}
           fullFeaturedCodeBlock={rest.fullFeaturedCodeBlock}
+          rehypePlugins={rehypePlugins}
           variant="chat"
         >
-          {streamedContent}
+          {removeLineBreaksInAntArtifact(streamedContent)}
         </Markdown>
       </Flexbox>
     </StoryBook>
