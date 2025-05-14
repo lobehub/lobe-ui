@@ -1,7 +1,7 @@
 'use client';
 
 import { cva } from 'class-variance-authority';
-import { memo, useMemo } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 
 import SyntaxMarkdown from './SyntaxMarkdown';
 import Typography from './Typography';
@@ -39,6 +39,23 @@ const Markdown = memo<MarkdownProps>(
     ...rest
   }) => {
     const { cx, styles } = useStyles();
+    // Add state to track delayed animated value
+    const [delayedAnimated, setDelayedAnimated] = useState(animated);
+
+    // Watch for changes in animated prop
+    useEffect(() => {
+      // If animated changes from true to false, delay the update by 1 second
+      if (animated === false && delayedAnimated === true) {
+        const timer = setTimeout(() => {
+          setDelayedAnimated(false);
+        }, 1000);
+
+        return () => clearTimeout(timer);
+      } else {
+        // For any other changes, update immediately
+        setDelayedAnimated(animated);
+      }
+    }, [animated, delayedAnimated]);
 
     // Style variant handling
     const variants = useMemo(
@@ -71,7 +88,7 @@ const Markdown = memo<MarkdownProps>(
 
     return (
       <Typography
-        className={cx(variants({ animated, enableLatex, variant }), className)}
+        className={cx(variants({ animated: delayedAnimated, enableLatex, variant }), className)}
         data-code-type="markdown"
         fontSize={fontSize}
         headerMultiple={headerMultiple}
@@ -84,7 +101,7 @@ const Markdown = memo<MarkdownProps>(
       >
         <SyntaxMarkdown
           allowHtml={allowHtml}
-          animated={animated}
+          animated={delayedAnimated}
           citations={citations}
           componentProps={componentProps}
           components={components}
