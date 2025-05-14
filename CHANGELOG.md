@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.0.16](https://github.com/lobehub/lobe-ui/compare/v2.0.15...v2.0.16)
+
+<sup>Released on **2025-05-14**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update delayedAnimated in Markdown.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update delayedAnimated in Markdown ([a8e8c9d](https://github.com/lobehub/lobe-ui/commit/a8e8c9d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.0.15](https://github.com/lobehub/lobe-ui/compare/v2.0.14...v2.0.15)
 
 <sup>Released on **2025-05-13**</sup>
