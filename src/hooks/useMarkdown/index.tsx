@@ -59,7 +59,7 @@ const createComponentFactories = (params: {
         {...props}
       />
     ),
-    section: (props: any) => <Section showCitations={showFootnotes} {...props} />,
+    section: (props: any) => <Section showFootnotes={showFootnotes} {...props} />,
     video: (props: any) => <Video {...props} {...componentProps?.video} />,
   };
 };
