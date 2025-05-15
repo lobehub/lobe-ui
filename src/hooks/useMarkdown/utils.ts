@@ -1,4 +1,4 @@
-import katex from 'katex';
+import { renderToString } from 'katex';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import remarkBreaks from 'remark-breaks';
@@ -195,7 +195,7 @@ export const areFormulasRenderable = (text: string) => {
 
   // 仅检查最后一个公式是否可渲染
   try {
-    katex.renderToString(formulas, {
+    renderToString(formulas, {
       displayMode: true,
       throwOnError: true,
     });

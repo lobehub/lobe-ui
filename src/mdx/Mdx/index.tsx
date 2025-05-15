@@ -13,7 +13,7 @@ import Alert from '@/Alert';
 import { PreviewGroup } from '@/Image';
 import { Typography, type TypographyProps } from '@/Markdown';
 import { useStyles } from '@/Markdown/style';
-import { escapeBrackets, escapeMhchem, fixMarkdownBold } from '@/Markdown/utils';
+import { escapeBrackets, escapeMhchem, fixMarkdownBold } from '@/hooks/useMarkdown/utils';
 
 import mdxComponents from '../mdxComponents';
 import CodeBlock from '../mdxComponents/CodeBlock';

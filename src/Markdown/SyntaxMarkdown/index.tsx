@@ -1,5 +1,6 @@
 'use client';
 
+import 'katex/dist/contrib/mhchem';
 import { memo, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 
