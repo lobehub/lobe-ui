@@ -5,7 +5,7 @@ import { memo, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 import { PreviewGroup } from '@/Image';
-import { useMarkdown } from '@/hooks/useMarkdown';
+import { useMarkdown, useMarkdownContent } from '@/hooks/useMarkdown';
 
 import { SyntaxMarkdownProps } from '../type';
 
@@ -21,23 +21,25 @@ const MarkdownRenderer = memo(
     enableImageGallery,
   }: {
     enableImageGallery: boolean;
-    escapedContent: string;
+    escapedContent?: string;
     memoComponents: any;
     reactMarkdownProps?: any;
     rehypePluginsList: any[];
     remarkPluginsList: any[];
-  }) => (
-    <PreviewGroup enable={enableImageGallery}>
-      <ReactMarkdown
-        {...reactMarkdownProps}
-        components={memoComponents}
-        rehypePlugins={rehypePluginsList}
-        remarkPlugins={remarkPluginsList}
-      >
-        {escapedContent}
-      </ReactMarkdown>
-    </PreviewGroup>
-  ),
+  }) => {
+    return (
+      <PreviewGroup enable={enableImageGallery}>
+        <ReactMarkdown
+          {...reactMarkdownProps}
+          components={memoComponents}
+          rehypePlugins={rehypePluginsList}
+          remarkPlugins={remarkPluginsList}
+        >
+          {escapedContent || ''}
+        </ReactMarkdown>
+      </PreviewGroup>
+    );
+  },
 );
 
 MarkdownRenderer.displayName = 'MarkdownRenderer';
@@ -63,11 +65,17 @@ const SyntaxMarkdown = memo<SyntaxMarkdownProps>(
     customRender,
     citations,
   }) => {
-    // Use our hook to handle Markdown processing
-    const { escapedContent, memoComponents, rehypePluginsList, remarkPluginsList } = useMarkdown({
-      allowHtml,
+    const escapedContent = useMarkdownContent({
       animated,
       children,
+      citations,
+      enableCustomFootnotes,
+      enableLatex,
+    });
+
+    const { memoComponents, rehypePluginsList, remarkPluginsList } = useMarkdown({
+      allowHtml,
+      animated,
       citations,
       componentProps,
       components,
@@ -87,14 +95,12 @@ const SyntaxMarkdown = memo<SyntaxMarkdownProps>(
     const rendererProps = useMemo(
       () => ({
         enableImageGallery,
-        escapedContent: escapedContent || '',
         memoComponents,
         reactMarkdownProps,
         rehypePluginsList,
         remarkPluginsList,
       }),
       [
-        escapedContent,
         memoComponents,
         rehypePluginsList,
         remarkPluginsList,
@@ -104,7 +110,10 @@ const SyntaxMarkdown = memo<SyntaxMarkdownProps>(
     );
 
     // Render default content using memoized MarkdownRenderer
-    const defaultDOM = useMemo(() => <MarkdownRenderer {...rendererProps} />, [rendererProps]);
+    const defaultDOM = useMemo(
+      () => <MarkdownRenderer escapedContent={escapedContent} {...rendererProps} />,
+      [rendererProps, escapedContent],
+    );
 
     // Apply custom rendering if needed
     return customRender ? customRender(defaultDOM, { text: escapedContent || '' }) : defaultDOM;

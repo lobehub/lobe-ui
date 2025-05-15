@@ -69,7 +69,6 @@ const createComponentFactories = (params: {
  * Optimized version with better memoization and performance
  */
 export const useMarkdown = ({
-  children,
   fullFeaturedCodeBlock,
   animated,
   enableLatex = true,
@@ -87,7 +86,6 @@ export const useMarkdown = ({
   citations,
 }: Pick<
   MarkdownProps,
-  | 'children'
   | 'fullFeaturedCodeBlock'
   | 'animated'
   | 'enableLatex'
@@ -109,58 +107,7 @@ export const useMarkdown = ({
   rehypePluginsList: Pluggable[];
   remarkPluginsList: Pluggable[];
 } => {
-  const [validContent, setValidContent] = useState<string>('');
-  const prevProcessedContent = useRef<string>('');
-
   const isChatMode = variant === 'chat';
-  const citationsLength = citations?.length || 0;
-
-  // Calculate cache key with fewer string concatenations and better performance
-  const cacheKey = useMemo(
-    () => `${children}|${enableLatex ? 1 : 0}|${enableCustomFootnotes ? 1 : 0}|${citationsLength}`,
-    [children, enableLatex, enableCustomFootnotes, citationsLength],
-  );
-
-  // Process content and use cache to avoid repeated calculations
-  const escapedContent = useMemo(() => {
-    // Try to get from cache first for best performance
-    if (contentCache.has(cacheKey)) {
-      return contentCache.get(cacheKey);
-    }
-
-    // Process new content only if needed
-    let processedContent = preprocessContent(children, {
-      citationsLength,
-      enableCustomFootnotes,
-      enableLatex,
-    });
-
-    // Special handling for LaTeX content when animated
-    if (animated && enableLatex) {
-      const isRenderable = isLastFormulaRenderable(processedContent);
-      if (!isRenderable && validContent) {
-        processedContent = validContent;
-      }
-    }
-
-    // Only update state if content changed (prevents unnecessary re-renders)
-    if (processedContent !== prevProcessedContent.current) {
-      setValidContent(processedContent);
-      prevProcessedContent.current = processedContent;
-    }
-
-    // Cache the processed result
-    addToCache(cacheKey, processedContent);
-    return processedContent;
-  }, [
-    cacheKey,
-    children,
-    enableLatex,
-    enableCustomFootnotes,
-    citationsLength,
-    animated,
-    validContent,
-  ]);
 
   // Create a memoized options object for plugin creation
   const pluginOptions = useMemo(
@@ -227,11 +174,73 @@ export const useMarkdown = ({
   // Return memoized result to prevent unnecessary recalculations
   return useMemo(
     () => ({
-      escapedContent,
       memoComponents,
       rehypePluginsList,
       remarkPluginsList,
     }),
-    [escapedContent, memoComponents, rehypePluginsList, remarkPluginsList],
+    [memoComponents, rehypePluginsList, remarkPluginsList],
   );
+};
+
+export const useMarkdownContent = ({
+  children,
+  animated,
+  enableLatex = true,
+  enableCustomFootnotes,
+  citations,
+}: Pick<
+  MarkdownProps,
+  'children' | 'animated' | 'enableLatex' | 'enableCustomFootnotes' | 'citations'
+>): string | undefined => {
+  const [validContent, setValidContent] = useState<string>('');
+  const prevProcessedContent = useRef<string>('');
+
+  const citationsLength = citations?.length || 0;
+
+  // Calculate cache key with fewer string concatenations and better performance
+  const cacheKey = useMemo(
+    () => `${children}|${enableLatex ? 1 : 0}|${enableCustomFootnotes ? 1 : 0}|${citationsLength}`,
+    [children, enableLatex, enableCustomFootnotes, citationsLength],
+  );
+
+  // Process content and use cache to avoid repeated calculations
+  return useMemo(() => {
+    // Try to get from cache first for best performance
+    if (contentCache.has(cacheKey)) {
+      return contentCache.get(cacheKey);
+    }
+
+    // Process new content only if needed
+    let processedContent = preprocessContent(children, {
+      citationsLength,
+      enableCustomFootnotes,
+      enableLatex,
+    });
+
+    // Special handling for LaTeX content when animated
+    if (animated && enableLatex) {
+      const isRenderable = isLastFormulaRenderable(processedContent);
+      if (!isRenderable && validContent) {
+        processedContent = validContent;
+      }
+    }
+
+    // Only update state if content changed (prevents unnecessary re-renders)
+    if (processedContent !== prevProcessedContent.current) {
+      setValidContent(processedContent);
+      prevProcessedContent.current = processedContent;
+    }
+
+    // Cache the processed result
+    addToCache(cacheKey, processedContent);
+    return processedContent;
+  }, [
+    cacheKey,
+    children,
+    enableLatex,
+    enableCustomFootnotes,
+    citationsLength,
+    animated,
+    validContent,
+  ]);
 };
