@@ -81,14 +81,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Flexbox
-        gap={16}
-        height={'100%'}
-        style={{
-          overflow: 'auto',
-        }}
-        width={'100%'}
-      >
+      <Flexbox gap={16} width={'100%'}>
         <Flexbox direction="horizontal" gap={8}>
           <Button block loading={isStreaming} onClick={restartStreaming} type={'primary'}>
             Restart Streaming
@@ -115,3 +108,6 @@ export default () => {
     </StoryBook>
   );
 };
+
+
+export { rehypePlugins, components };
