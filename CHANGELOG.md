@@ -2,6 +2,32 @@
 
 # Changelog
 
+### [Version 2.0.17](https://github.com/lobehub/lobe-ui/compare/v2.0.16...v2.0.17)
+
+<sup>Released on **2025-05-15**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix type, Update preprocessLaTeX.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix type ([d614abe](https://github.com/lobehub/lobe-ui/commit/d614abe))
+- **misc**: Update preprocessLaTeX, closes [#345](https://github.com/lobehub/lobe-ui/issues/345) ([f2b7d1f](https://github.com/lobehub/lobe-ui/commit/f2b7d1f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.0.16](https://github.com/lobehub/lobe-ui/compare/v2.0.15...v2.0.16)
 
 <sup>Released on **2025-05-14**</sup>
