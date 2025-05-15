@@ -15,10 +15,14 @@ const components = Object.fromEntries(
 
 export default () => {
   const store = useCreateStore();
-  const { streamingSpeed, animated, ...rest } = useControls(
+  const { children, streamingSpeed, animated, ...rest } = useControls(
     {
       animated: {
         value: true,
+      },
+      children: {
+        rows: true,
+        value: fullContent,
       },
       fullFeaturedCodeBlock: {
         value: true,
@@ -60,10 +64,10 @@ export default () => {
     }
 
     const intervalId = setInterval(() => {
-      if (currentPosition < fullContent.length) {
+      if (currentPosition < children.length) {
         // Stream character by character
-        const nextChunkSize = Math.min(3, fullContent.length - currentPosition);
-        const nextContent = fullContent.slice(0, Math.max(0, currentPosition + nextChunkSize));
+        const nextChunkSize = Math.min(3, children.length - currentPosition);
+        const nextContent = children.slice(0, Math.max(0, currentPosition + nextChunkSize));
         setStreamedContent(nextContent);
         currentPosition += nextChunkSize;
       } else {
@@ -73,11 +77,18 @@ export default () => {
     }, streamingSpeed);
 
     return () => clearInterval(intervalId);
-  }, [streamingSpeed, isStreaming, isPaused, streamedContent.length]);
+  }, [children, streamingSpeed, isStreaming, isPaused, streamedContent.length]);
 
   return (
     <StoryBook levaStore={store}>
-      <Flexbox gap={16} width={'100%'}>
+      <Flexbox
+        gap={16}
+        height={'100%'}
+        style={{
+          overflow: 'auto',
+        }}
+        width={'100%'}
+      >
         <Flexbox direction="horizontal" gap={8}>
           <Button block loading={isStreaming} onClick={restartStreaming} type={'primary'}>
             Restart Streaming

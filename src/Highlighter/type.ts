@@ -6,6 +6,7 @@ import type { ActionIconProps } from '@/ActionIcon';
 import { DivProps } from '@/types';
 
 export interface SyntaxHighlighterProps extends DivProps {
+  animated?: boolean;
   children: string;
   enableTransformer?: HighlighterProps['enableTransformer'];
   language: HighlighterProps['language'];
@@ -23,6 +24,7 @@ export interface HighlighterProps extends Omit<FlexboxProps, 'children' | 'wrap'
     originalNode: ReactNode;
   }) => ReactNode;
   allowChangeLanguage?: boolean;
+  animated?: boolean;
   bodyRender?: (props: { content: string; language: string; originalNode: ReactNode }) => ReactNode;
   children: string;
   copyable?: boolean;

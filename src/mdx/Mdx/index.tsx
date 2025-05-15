@@ -13,8 +13,8 @@ import Alert from '@/Alert';
 import { PreviewGroup } from '@/Image';
 import { Typography, type TypographyProps } from '@/Markdown';
 import { useStyles } from '@/Markdown/style';
-import { escapeBrackets, escapeMhchem, fixMarkdownBold } from '@/hooks/useMarkdown/utils';
 
+import { preprocessContent } from '../../hooks/useMarkdown/utils';
 import mdxComponents from '../mdxComponents';
 import CodeBlock from '../mdxComponents/CodeBlock';
 import Image from '../mdxComponents/Image';
@@ -68,8 +68,7 @@ const Mdx = memo<MdxProps>(
     const [MDXContent, setMDXContent] = useState<any>(() => () => null);
 
     const escapedContent = useMemo(() => {
-      if (!enableLatex) return fixMarkdownBold(children);
-      return fixMarkdownBold(escapeMhchem(escapeBrackets(children)));
+      return preprocessContent(children, { enableLatex });
     }, [children, enableLatex]);
 
     const innerRehypePlugins = Array.isArray(rehypePlugins) ? rehypePlugins : [rehypePlugins];

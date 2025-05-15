@@ -1,32 +1,74 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { ReactElement, useMemo, useRef, useState } from 'react';
 import type { Components } from 'react-markdown/lib';
 import type { Pluggable } from 'unified';
 
-import { CodeFullFeatured, CodeLite } from '@/Markdown/components/CodeBlock';
+import { CodeBlock } from '@/Markdown/components/CodeBlock';
 import type { MarkdownProps } from '@/Markdown/type';
 import Image from '@/mdx/mdxComponents/Image';
 import Link from '@/mdx/mdxComponents/Link';
 import Section from '@/mdx/mdxComponents/Section';
 import Video from '@/mdx/mdxComponents/Video';
 
-import {
-  addToCache,
-  areFormulasRenderable,
-  contentCache,
-  createPlugins,
-  escapeBrackets,
-  escapeMhchem,
-  fixMarkdownBold,
-  transformCitations,
-} from './utils';
+import { isLastFormulaRenderable } from './latex';
+import { addToCache, contentCache, createPlugins, preprocessContent } from './utils';
+
+// Define component factory types
+type ComponentFactory<T = any> = (props: T) => ReactElement;
+type ComponentFactories = {
+  a: ComponentFactory;
+  img?: ComponentFactory;
+  pre: ComponentFactory;
+  section: ComponentFactory;
+  video: ComponentFactory;
+};
+
+/**
+ * Creates reusable component factories that can be memoized once
+ * and reused across multiple renders without recreation
+ */
+const createComponentFactories = (params: {
+  animated: boolean;
+  citations?: any[];
+  componentProps?: any;
+  enableMermaid: boolean;
+  fullFeaturedCodeBlock?: boolean;
+  showFootnotes?: boolean;
+}): ComponentFactories => {
+  const {
+    citations,
+    componentProps,
+    animated,
+    enableMermaid,
+    fullFeaturedCodeBlock,
+    showFootnotes,
+  } = params;
+
+  return {
+    a: (props: any) => <Link citations={citations} {...props} {...componentProps?.a} />,
+    img: (props: any) => <Image {...props} {...componentProps?.img} />,
+    pre: (props: any) => (
+      <CodeBlock
+        animated={animated}
+        enableMermaid={enableMermaid}
+        fullFeatured={fullFeaturedCodeBlock}
+        highlight={componentProps?.highlight}
+        mermaid={componentProps?.mermaid}
+        {...componentProps?.pre}
+        {...props}
+      />
+    ),
+    section: (props: any) => <Section showCitations={showFootnotes} {...props} />,
+    video: (props: any) => <Video {...props} {...componentProps?.video} />,
+  };
+};
 
 /**
  * Processes Markdown content and prepares rendering components and configurations
+ * Optimized version with better memoization and performance
  */
 export const useMarkdown = ({
-  children,
   fullFeaturedCodeBlock,
   animated,
   enableLatex = true,
@@ -44,7 +86,6 @@ export const useMarkdown = ({
   citations,
 }: Pick<
   MarkdownProps,
-  | 'children'
   | 'fullFeaturedCodeBlock'
   | 'animated'
   | 'enableLatex'
@@ -66,143 +107,140 @@ export const useMarkdown = ({
   rehypePluginsList: Pluggable[];
   remarkPluginsList: Pluggable[];
 } => {
-  const [vaildContent, setVaildContent] = useState<string>('');
-
   const isChatMode = variant === 'chat';
 
-  // 计算缓存键
-  const cacheKey = useMemo(() => {
-    return `${children}-${enableLatex}-${enableCustomFootnotes}-${citations?.length || 0}`;
-  }, [children, enableLatex, enableCustomFootnotes, citations?.length]);
-
-  // 处理内容并利用缓存避免重复计算
-  const escapedContent = useMemo(() => {
-    // 尝试从缓存获取
-    if (contentCache.has(cacheKey)) {
-      return contentCache.get(cacheKey);
-    }
-
-    // 处理新内容
-    let processedContent;
-    if (enableLatex) {
-      const baseContent = fixMarkdownBold(escapeMhchem(escapeBrackets(children)));
-      const tempContent = enableCustomFootnotes
-        ? transformCitations(baseContent, citations?.length)
-        : baseContent;
-      processedContent = areFormulasRenderable(tempContent) ? tempContent : vaildContent;
-    } else {
-      processedContent = fixMarkdownBold(children);
-    }
-
-    setVaildContent(processedContent);
-
-    // 缓存处理结果
-    addToCache(cacheKey, processedContent);
-    return processedContent;
-  }, [vaildContent, cacheKey, children, enableLatex, enableCustomFootnotes, citations?.length]);
-
-  // 创建插件
-  const { rehypePluginsList, remarkPluginsList } = useMemo(
-    () =>
-      createPlugins({
-        allowHtml,
-        animated,
-        enableCustomFootnotes,
-        enableLatex,
-        isChatMode,
-        rehypePlugins,
-        remarkPlugins,
-        remarkPluginsAhead,
-      }),
-    [
+  // Create a memoized options object for plugin creation
+  const pluginOptions = useMemo(
+    () => ({
       allowHtml,
-      enableLatex,
+      animated,
       enableCustomFootnotes,
+      enableLatex,
       isChatMode,
       rehypePlugins,
       remarkPlugins,
       remarkPluginsAhead,
-      animated,
-    ],
-  );
-
-  // 使用 useCallback 优化渲染子组件
-  const renderLink = useCallback(
-    (props: any) => <Link citations={citations} {...props} {...componentProps?.a} />,
-    [citations, componentProps?.a],
-  );
-
-  const renderImage = useCallback(
-    (props: any) => <Image {...props} {...componentProps?.img} />,
-    [componentProps?.img],
-  );
-
-  const renderCodeBlock = useCallback(
-    (props: any) =>
-      fullFeaturedCodeBlock ? (
-        <CodeFullFeatured
-          enableMermaid={enableMermaid}
-          highlight={componentProps?.highlight}
-          mermaid={componentProps?.mermaid}
-          {...props}
-          {...componentProps?.pre}
-        />
-      ) : (
-        <CodeLite
-          enableMermaid={enableMermaid}
-          highlight={componentProps?.highlight}
-          mermaid={componentProps?.mermaid}
-          {...props}
-          {...componentProps?.pre}
-        />
-      ),
-    [
-      enableMermaid,
-      fullFeaturedCodeBlock,
-      componentProps?.highlight,
-      componentProps?.mermaid,
-      componentProps?.pre,
-    ],
-  );
-
-  const renderSection = useCallback(
-    (props: any) => <Section showCitations={showFootnotes} {...props} />,
-    [showFootnotes],
-  );
-
-  const renderVideo = useCallback(
-    (props: any) => <Video {...props} {...componentProps?.video} />,
-    [componentProps?.video],
-  );
-
-  // 创建组件映射
-  const memoComponents = useMemo(
-    () => ({
-      a: renderLink,
-      img: enableImageGallery ? renderImage : undefined,
-      pre: renderCodeBlock,
-      section: renderSection,
-      video: renderVideo,
-      ...components,
     }),
     [
-      renderLink,
-      renderImage,
-      renderCodeBlock,
-      renderSection,
-      renderVideo,
-      enableImageGallery,
-      components,
+      allowHtml,
+      animated,
+      enableCustomFootnotes,
+      enableLatex,
+      isChatMode,
+      rehypePlugins,
+      remarkPlugins,
+      remarkPluginsAhead,
     ],
+  );
+
+  // Create plugins with better memoization
+  const { rehypePluginsList, remarkPluginsList } = useMemo(
+    () => createPlugins(pluginOptions),
+    [pluginOptions],
+  );
+
+  // Memoize the factory parameters to prevent recreating component factories
+  const factoryParams = useMemo(
+    () => ({
+      animated: animated || false, // Ensure animated is always a boolean
+      citations,
+      componentProps,
+      enableMermaid,
+      fullFeaturedCodeBlock,
+      showFootnotes,
+    }),
+    [animated, citations, componentProps, enableMermaid, fullFeaturedCodeBlock, showFootnotes],
+  );
+
+  // Create component factories once and reuse them
+  const componentFactories = useMemo(
+    () => createComponentFactories(factoryParams),
+    [factoryParams],
+  );
+
+  // Create the final components object with proper memoization
+  const memoComponents = useMemo(
+    () => ({
+      a: componentFactories.a,
+      img: enableImageGallery ? componentFactories.img : undefined,
+      pre: componentFactories.pre,
+      section: componentFactories.section,
+      video: componentFactories.video,
+      ...components,
+    }),
+    [componentFactories, enableImageGallery, components],
   ) as Components;
 
+  // Return memoized result to prevent unnecessary recalculations
   return useMemo(
     () => ({
-      escapedContent,
       memoComponents,
       rehypePluginsList,
       remarkPluginsList,
     }),
-    [escapedContent, memoComponents, rehypePluginsList, remarkPluginsList],
+    [memoComponents, rehypePluginsList, remarkPluginsList],
   );
+};
+
+export const useMarkdownContent = ({
+  children,
+  animated,
+  enableLatex = true,
+  enableCustomFootnotes,
+  citations,
+}: Pick<
+  MarkdownProps,
+  'children' | 'animated' | 'enableLatex' | 'enableCustomFootnotes' | 'citations'
+>): string | undefined => {
+  const [validContent, setValidContent] = useState<string>('');
+  const prevProcessedContent = useRef<string>('');
+
+  const citationsLength = citations?.length || 0;
+
+  // Calculate cache key with fewer string concatenations and better performance
+  const cacheKey = useMemo(
+    () => `${children}|${enableLatex ? 1 : 0}|${enableCustomFootnotes ? 1 : 0}|${citationsLength}`,
+    [children, enableLatex, enableCustomFootnotes, citationsLength],
+  );
+
+  // Process content and use cache to avoid repeated calculations
+  return useMemo(() => {
+    // Try to get from cache first for best performance
+    if (contentCache.has(cacheKey)) {
+      return contentCache.get(cacheKey);
+    }
+
+    // Process new content only if needed
+    let processedContent = preprocessContent(children, {
+      citationsLength,
+      enableCustomFootnotes,
+      enableLatex,
+    });
+
+    // Special handling for LaTeX content when animated
+    if (animated && enableLatex) {
+      const isRenderable = isLastFormulaRenderable(processedContent);
+      if (!isRenderable && validContent) {
+        processedContent = validContent;
+      }
+    }
+
+    // Only update state if content changed (prevents unnecessary re-renders)
+    if (processedContent !== prevProcessedContent.current) {
+      setValidContent(processedContent);
+      prevProcessedContent.current = processedContent;
+    }
+
+    // Cache the processed result
+    addToCache(cacheKey, processedContent);
+    return processedContent;
+  }, [
+    cacheKey,
+    children,
+    enableLatex,
+    enableCustomFootnotes,
+    citationsLength,
+    animated,
+    validContent,
+  ]);
 };
