@@ -1,7 +1,7 @@
 'use client';
 
 import { memo, useMemo } from 'react';
-import { MarkdownHooks } from 'react-markdown';
+import Markdown from 'react-markdown';
 
 import { PreviewGroup } from '@/Image';
 import { useMarkdown, useMarkdownContent } from '@/hooks/useMarkdown';
@@ -28,14 +28,14 @@ const MarkdownRenderer = memo(
   }) => {
     return (
       <PreviewGroup enable={enableImageGallery}>
-        <MarkdownHooks
+        <Markdown
           {...reactMarkdownProps}
           components={memoComponents}
           rehypePlugins={rehypePluginsList}
           remarkPlugins={remarkPluginsList}
         >
           {escapedContent || ''}
-        </MarkdownHooks>
+        </Markdown>
       </PreviewGroup>
     );
   },
