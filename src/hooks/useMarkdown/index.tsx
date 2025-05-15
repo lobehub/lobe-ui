@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState } from 'react';
 import type { Components } from 'react-markdown/lib';
 import type { Pluggable } from 'unified';
 
-import { CodeFullFeatured, CodeLite } from '@/Markdown/components/CodeBlock';
+import { CodeBlock } from '@/Markdown/components/CodeBlock';
 import type { MarkdownProps } from '@/Markdown/type';
 import Image from '@/mdx/mdxComponents/Image';
 import Link from '@/mdx/mdxComponents/Link';
@@ -130,43 +130,27 @@ export const useMarkdown = ({
   // Use useCallback to optimize rendering subcomponents
   const renderLink = useCallback(
     (props: any) => <Link citations={citations} {...props} {...componentProps?.a} />,
-    [citations, componentProps?.a],
+    [citations],
   );
 
   const renderImage = useCallback(
     (props: any) => <Image {...props} {...componentProps?.img} />,
-    [componentProps?.img],
+    [],
   );
 
   const renderCodeBlock = useCallback(
-    (props: any) =>
-      fullFeaturedCodeBlock ? (
-        <CodeFullFeatured
-          animated={animated}
-          enableMermaid={enableMermaid}
-          highlight={componentProps?.highlight}
-          mermaid={componentProps?.mermaid}
-          {...props}
-          {...componentProps?.pre}
-        />
-      ) : (
-        <CodeLite
-          animated={animated}
-          enableMermaid={enableMermaid}
-          highlight={componentProps?.highlight}
-          mermaid={componentProps?.mermaid}
-          {...props}
-          {...componentProps?.pre}
-        />
-      ),
-    [
-      animated,
-      enableMermaid,
-      fullFeaturedCodeBlock,
-      componentProps?.highlight,
-      componentProps?.mermaid,
-      componentProps?.pre,
-    ],
+    (props: any) => (
+      <CodeBlock
+        animated={animated}
+        enableMermaid={enableMermaid}
+        fullFeatured={fullFeaturedCodeBlock}
+        highlight={componentProps?.highlight}
+        mermaid={componentProps?.mermaid}
+        {...componentProps?.pre}
+        {...props}
+      />
+    ),
+    [animated, enableMermaid, fullFeaturedCodeBlock],
   );
 
   const renderSection = useCallback(
@@ -176,7 +160,7 @@ export const useMarkdown = ({
 
   const renderVideo = useCallback(
     (props: any) => <Video {...props} {...componentProps?.video} />,
-    [componentProps?.video],
+    [],
   );
 
   // Create component mapping
@@ -197,6 +181,7 @@ export const useMarkdown = ({
       renderVideo,
       enableImageGallery,
       components,
+      componentProps,
     ],
   ) as Components;
 

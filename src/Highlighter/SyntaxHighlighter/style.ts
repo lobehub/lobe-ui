@@ -2,16 +2,6 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
   return {
-    animated: css`
-      pre {
-        code {
-          .line {
-            display: block;
-          }
-        }
-      }
-    `,
-
     noBackground: css`
       pre {
         background: transparent !important;

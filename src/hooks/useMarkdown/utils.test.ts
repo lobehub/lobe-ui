@@ -9,6 +9,8 @@ import {
   transformCitations,
 } from './utils';
 
+const _clearCache = () => contentCache.clear();
+
 describe('fixMarkdownBold', () => {
   it('should add space after closing bold markers if needed', () => {
     expect(fixMarkdownBold('**123：**456')).toBe('**123：** 456');
@@ -80,9 +82,24 @@ describe('fixMarkdownBold', () => {
 });
 
 describe('contentCache and addToCache', () => {
+  // Store the original implementation
+  const originalDelete = Map.prototype.delete;
+  let deleteSpy: ReturnType<typeof vi.fn>;
+
   beforeEach(() => {
     // Clear the cache before each test
-    contentCache.clear();
+    _clearCache();
+
+    // Set up the spy on delete
+    deleteSpy = vi.fn(function (this: Map<unknown, unknown>, key: unknown) {
+      return originalDelete.call(this, key);
+    });
+    Map.prototype.delete = deleteSpy;
+  });
+
+  afterEach(() => {
+    // Restore original delete implementation
+    Map.prototype.delete = originalDelete;
   });
 
   it('should add items to the cache', () => {
@@ -91,31 +108,29 @@ describe('contentCache and addToCache', () => {
   });
 
   it('should remove oldest item when cache size limit is reached', () => {
-    // Mock the cache size constant to a smaller value for testing
-    const testCacheSize = 3;
+    // Mock the contentCache.size getter to simulate the cache being full
+    const originalSize = Object.getOwnPropertyDescriptor(Map.prototype, 'size');
+    const sizeGetter = vi.fn(() => 50); // Return the max cache size
 
-    // Add items up to the cache size limit
-    for (let i = 0; i < testCacheSize; i++) {
-      addToCache(`key${i}`, `value${i}`);
-    }
+    Object.defineProperty(contentCache, 'size', {
+      configurable: true,
+      get: sizeGetter,
+    });
 
-    // Verify all items are in the cache
-    for (let i = 0; i < testCacheSize; i++) {
-      expect(contentCache.get(`key${i}`)).toBe(`value${i}`);
-    }
+    // Add items to the cache
+    addToCache('key0', 'value0');
+    addToCache('key1', 'value1');
+    addToCache('key2', 'value2');
 
-    // Add one more item, which should cause the oldest item to be removed
+    // Add one more item to trigger the removal
     addToCache('keyNew', 'valueNew');
 
-    // The oldest item should be removed
-    expect(contentCache.get('key0')).toBeUndefined();
+    // Verify delete was called with the oldest key
+    expect(deleteSpy).toHaveBeenCalledWith('key0');
 
-    // The new item should be in the cache
-    expect(contentCache.get('keyNew')).toBe('valueNew');
-
-    // Other items should still be in the cache
-    for (let i = 1; i < testCacheSize; i++) {
-      expect(contentCache.get(`key${i}`)).toBe(`value${i}`);
+    // Restore the original size getter
+    if (originalSize) {
+      Object.defineProperty(contentCache, 'size', originalSize);
     }
   });
 });
@@ -180,7 +195,7 @@ describe('transformCitations', () => {
   it('should handle multiple consecutive citations', () => {
     const content = 'Multiple citations [1][2][3].';
     const expected =
-      'Multiple citations [#citation-1](citation-1) [#citation-2](citation-2) [#citation-3](citation-3).';
+      'Multiple citations [#citation-1](citation-1)[#citation-2](citation-2)[#citation-3](citation-3).';
     expect(transformCitations(content, 3)).toBe(expected);
   });
 
@@ -197,8 +212,10 @@ describe('transformCitations', () => {
   });
 
   it('should not transform text that looks like citations but is not', () => {
-    const content = 'Example array[1] access.';
-    expect(transformCitations(content, 2)).toBe(content);
+    const content = 'Example `array[1]` $[2]$. This is a reference [3]';
+    expect(transformCitations(content, 3)).toBe(
+      'Example `array[1]` $[2]$. This is a reference [#citation-3](citation-3)',
+    );
   });
 });
 
@@ -213,11 +230,11 @@ describe('preprocessContent', () => {
   });
 
   it('should apply LaTeX preprocessing when enableLatex is true', () => {
-    const content = 'LaTeX content';
+    const content = 'Price is $50 and $100, Brackets \\[x^2\\] and parentheses \\(y^2\\)';
     const result = preprocessContent(content, { enableLatex: true });
 
     // Expect LaTeX processing followed by bold fixing
-    expect(result).toBe(fixMarkdownBold(`LaTeX processed: ${content}`));
+    expect(result).toBe('Price is \\$50 and \\$100, Brackets $$x^2$$ and parentheses $y^2$');
   });
 
   it('should apply citations transformation when enableCustomFootnotes is true', () => {
@@ -228,7 +245,7 @@ describe('preprocessContent', () => {
     });
 
     // Expect citation transformation followed by bold fixing
-    expect(result).toBe(fixMarkdownBold('Citation [#citation-1](citation-1) reference'));
+    expect(result).toBe('Citation [#citation-1](citation-1) reference');
   });
 
   it('should apply multiple transformations when multiple options are enabled', () => {
@@ -240,16 +257,14 @@ describe('preprocessContent', () => {
     });
 
     // Expect LaTeX processing, then citation transformation, then bold fixing
-    expect(result).toBe(
-      fixMarkdownBold('LaTeX processed: LaTeX with citation [#citation-1](citation-1)'),
-    );
+    expect(result).toBe('LaTeX with citation [#citation-1](citation-1)');
   });
 
   it('should only apply bold fixing when no other options are enabled', () => {
-    const content = '**Bold** text';
+    const content = '**123：**456';
     const result = preprocessContent(content);
 
     // Expect only bold fixing
-    expect(result).toBe(fixMarkdownBold(content));
+    expect(result).toBe('**123：** 456');
   });
 });

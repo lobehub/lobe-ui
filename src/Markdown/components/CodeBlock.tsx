@@ -40,7 +40,7 @@ interface CodeBlockProps {
   mermaid?: MermaidProps;
 }
 
-const CodeBlock: FC<CodeBlockProps> = ({
+export const CodeBlock: FC<CodeBlockProps> = ({
   fullFeatured,
   enableMermaid,
   highlight,
@@ -74,12 +74,4 @@ const CodeBlock: FC<CodeBlockProps> = ({
       {code.content}
     </Pre>
   );
-};
-
-export const CodeLite: FC<CodeBlockProps> = (props) => {
-  return <CodeBlock {...props} />;
-};
-
-export const CodeFullFeatured: FC<CodeBlockProps> = (props) => {
-  return <CodeBlock fullFeatured {...props} />;
 };

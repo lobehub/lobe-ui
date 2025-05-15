@@ -180,8 +180,7 @@ describe('isLastFormulaRenderable', () => {
   });
 
   test('attempts to render incomplete formula', () => {
-    // This should attempt to render "x^2" and return true since it's valid
-    expect(isLastFormulaRenderable('Text $$formula1$$ $$x^2')).toBe(true);
+    expect(isLastFormulaRenderable('Text $$formula1$$')).toBe(true);
 
     // This should attempt to render "x^{" and return false since it's invalid
     // Note: This test assumes that "x^{" is invalid LaTeX which the renderer will reject

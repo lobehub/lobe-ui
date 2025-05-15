@@ -29,6 +29,7 @@ export const Pre: FC<PreProps> = ({
   style,
   variant = 'filled',
   icon,
+  theme,
   ...rest
 }) => {
   const { styles, cx } = useStyles();
@@ -42,6 +43,7 @@ export const Pre: FC<PreProps> = ({
       icon={icon}
       language={language}
       style={style}
+      theme={theme}
       variant={variant}
       {...rest}
     >
@@ -80,6 +82,7 @@ export const PreMermaid: FC<MermaidProps> = ({
   className,
   style,
   variant = 'filled',
+  theme,
   ...rest
 }) => {
   const { styles, cx } = useStyles();
@@ -89,6 +92,7 @@ export const PreMermaid: FC<MermaidProps> = ({
       className={cx(styles.container, className)}
       fullFeatured={fullFeatured}
       style={style}
+      theme={theme}
       variant={variant}
       {...rest}
     >
