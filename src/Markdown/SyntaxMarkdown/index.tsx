@@ -1,8 +1,7 @@
 'use client';
 
-import 'katex/dist/contrib/mhchem';
 import { memo, useMemo } from 'react';
-import ReactMarkdown from 'react-markdown';
+import { MarkdownHooks } from 'react-markdown';
 
 import { PreviewGroup } from '@/Image';
 import { useMarkdown, useMarkdownContent } from '@/hooks/useMarkdown';
@@ -29,14 +28,14 @@ const MarkdownRenderer = memo(
   }) => {
     return (
       <PreviewGroup enable={enableImageGallery}>
-        <ReactMarkdown
+        <MarkdownHooks
           {...reactMarkdownProps}
           components={memoComponents}
           rehypePlugins={rehypePluginsList}
           remarkPlugins={remarkPluginsList}
         >
           {escapedContent || ''}
-        </ReactMarkdown>
+        </MarkdownHooks>
       </PreviewGroup>
     );
   },
