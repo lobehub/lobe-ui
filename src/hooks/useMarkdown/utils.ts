@@ -5,27 +5,39 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import type { Pluggable } from 'unified';
 
-import { animatedPlugin } from '@/Markdown/plugins/animated';
-import { rehypeFootnoteLinks, remarkCustomFootnotes } from '@/Markdown/plugins/footnote';
-import { rehypeKatexDir } from '@/Markdown/plugins/katexDir';
-import { preprocessLaTeX } from '@/hooks/useMarkdown/latex';
+import { animatedPlugin } from '../../Markdown/plugins/animated';
+import { rehypeFootnoteLinks, remarkCustomFootnotes } from '../../Markdown/plugins/footnote';
+import { rehypeKatexDir } from '../../Markdown/plugins/katexDir';
+import { preprocessLaTeX } from './latex';
 
-// 使用普通 Map 代替 WeakMap，并限制缓存大小
+// Cache configuration
 const CACHE_SIZE = 50;
+
+/**
+ * Cache for storing processed content to avoid redundant processing
+ */
 export const contentCache = new Map<string, string>();
 
-// 添加内容到缓存时，保持缓存大小不超过限制
+/**
+ * Adds content to the cache with size limitation
+ * Removes oldest entry if cache size limit is reached
+ *
+ * @param key The cache key
+ * @param value The processed content to store
+ */
 export const addToCache = (key: string, value: string) => {
   if (contentCache.size >= CACHE_SIZE) {
-    // 移除最早加入的缓存项
+    // Remove the oldest cache entry
     const firstKey = contentCache.keys().next().value;
     if (firstKey) contentCache.delete(firstKey);
   }
   contentCache.set(key, value);
 };
 
-// 使用工厂函数处理插件，减少组件中的逻辑负担
-export const createPlugins = (props: {
+/**
+ * Plugin configuration options for markdown processing
+ */
+interface PluginOptions {
   allowHtml?: boolean;
   animated?: boolean;
   enableCustomFootnotes?: boolean;
@@ -34,7 +46,15 @@ export const createPlugins = (props: {
   rehypePlugins?: Pluggable | Pluggable[];
   remarkPlugins?: Pluggable | Pluggable[];
   remarkPluginsAhead?: Pluggable | Pluggable[];
-}) => {
+}
+
+/**
+ * Creates remark and rehype plugin lists based on configuration options
+ *
+ * @param props Plugin configuration options
+ * @returns Object containing remark and rehype plugin lists
+ */
+export const createPlugins = (props: PluginOptions) => {
   const {
     allowHtml,
     enableLatex,
@@ -46,7 +66,7 @@ export const createPlugins = (props: {
     animated,
   } = props;
 
-  // 预处理插件数组
+  // Normalize plugin arrays
   const normalizedRehypePlugins = Array.isArray(rehypePlugins)
     ? rehypePlugins
     : rehypePlugins
@@ -65,7 +85,7 @@ export const createPlugins = (props: {
       ? [remarkPluginsAhead]
       : [];
 
-  // 创建 rehype 插件列表
+  // Create rehype plugins list
   const rehypePluginsList = [
     allowHtml && rehypeRaw,
     enableLatex && rehypeKatex,
@@ -75,12 +95,12 @@ export const createPlugins = (props: {
     ...normalizedRehypePlugins,
   ].filter(Boolean) as Pluggable[];
 
-  // 创建 remark 插件列表
+  // Create remark plugins list
   const remarkPluginsList = [
     ...normalizedRemarkPluginsAhead,
+    enableLatex && remarkMath,
     [remarkGfm, { singleTilde: false }],
     enableCustomFootnotes && remarkCustomFootnotes,
-    enableLatex && remarkMath,
     isChatMode && remarkBreaks,
     ...normalizedRemarkPlugins,
   ].filter(Boolean) as Pluggable[];
@@ -91,9 +111,16 @@ export const createPlugins = (props: {
   };
 };
 
+/**
+ * Fixes markdown bold syntax by adding space after closing bold markers
+ * when followed by non-space characters after symbols
+ *
+ * @param text The markdown text to process
+ * @returns The text with fixed bold syntax
+ */
 export function fixMarkdownBold(text: string): string {
-  let count = 0;
-  let count2 = 0;
+  let asteriskCount = 0;
+  let boldMarkerCount = 0;
   let result = '';
   let inCodeBlock = false;
   let inInlineCode = false;
@@ -101,28 +128,36 @@ export function fixMarkdownBold(text: string): string {
   for (let i = 0; i < text.length; i++) {
     const char = text[i];
 
+    // Handle code blocks
     if (text.slice(i, i + 3) === '```') {
       inCodeBlock = !inCodeBlock;
       result += '```';
       i += 2;
       continue;
     }
+
+    // Handle inline code
     if (char === '`') {
       inInlineCode = !inInlineCode;
       result += '`';
       continue;
     }
 
+    // Process asterisks only if not in code
     if (char === '*' && !inInlineCode && !inCodeBlock) {
-      count++;
-      if (count === 2) {
-        count2++;
+      asteriskCount++;
+
+      if (asteriskCount === 2) {
+        boldMarkerCount++;
       }
-      if (count > 2) {
+
+      if (asteriskCount > 2) {
         result += char;
         continue;
       }
-      if (count === 2 && count2 % 2 === 0) {
+
+      // Add space after closing bold marker if needed
+      if (asteriskCount === 2 && boldMarkerCount % 2 === 0) {
         const prevChar = i > 0 ? text[i - 2] : '';
         const isPrevCharSymbol = /[\p{P}\p{S}]/u.test(prevChar);
 
@@ -132,46 +167,65 @@ export function fixMarkdownBold(text: string): string {
       }
     } else {
       result += char;
-      count = 0;
+      asteriskCount = 0;
     }
   }
   return result;
 }
 
+/**
+ * Transforms citation references in the format [n] to markdown links
+ *
+ * @param rawContent The markdown content with citation references
+ * @param length The number of citations
+ * @returns The content with citations transformed to markdown links
+ */
 export const transformCitations = (rawContent: string, length: number = 0) => {
   if (length === 0) return rawContent;
 
-  // 生成动态正则表达式模式
-  const idx = Array.from({ length })
+  // Generate dynamic regex pattern for citations
+  const citationIndices = Array.from({ length })
     .fill('')
     .map((_, index) => index + 1);
 
-  const pattern = new RegExp(`\\[(${idx.join('|')})\\]`, 'g');
+  const pattern = new RegExp(`\\[(${citationIndices.join('|')})\\]`, 'g');
 
   return rawContent
     .replaceAll(pattern, (match, id) => `[#citation-${id}](citation-${id})`)
     .replaceAll('][', '] [');
 };
 
+/**
+ * Preprocessing options for markdown content
+ */
+interface PreprocessOptions {
+  citationsLength?: number;
+  enableCustomFootnotes?: boolean;
+  enableLatex?: boolean;
+}
+
+/**
+ * Preprocesses markdown content by applying various transformations:
+ * - LaTeX preprocessing
+ * - Citation transformations
+ * - Bold syntax fixing
+ *
+ * @param str The raw markdown content
+ * @param options Preprocessing options
+ * @returns The processed markdown content
+ */
 export const preprocessContent = (
   str: string,
-  {
-    enableCustomFootnotes,
-    enableLatex,
-    citationsLength,
-  }: {
-    citationsLength?: number;
-    enableCustomFootnotes?: boolean;
-    enableLatex?: boolean;
-  } = {},
+  { enableCustomFootnotes, enableLatex, citationsLength }: PreprocessOptions = {},
 ) => {
   let content = str;
-  // 处理LaTeX公式
+
+  // Process LaTeX expressions
   if (enableLatex) {
     content = preprocessLaTeX(content);
   }
 
-  // 处理自定义脚注
+  // Process custom footnotes/citations
   if (enableCustomFootnotes) {
     content = transformCitations(content, citationsLength);
   }

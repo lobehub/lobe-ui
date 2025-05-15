@@ -13,8 +13,8 @@ import Alert from '@/Alert';
 import { PreviewGroup } from '@/Image';
 import { Typography, type TypographyProps } from '@/Markdown';
 import { useStyles } from '@/Markdown/style';
-import { preprocessContent } from '@/hooks/useMarkdown/utils';
 
+import { preprocessContent } from '../../hooks/useMarkdown/utils';
 import mdxComponents from '../mdxComponents';
 import CodeBlock from '../mdxComponents/CodeBlock';
 import Image from '../mdxComponents/Image';

@@ -2,6 +2,16 @@ import { createStyles } from 'antd-style';
 
 export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
   return {
+    animated: css`
+      pre {
+        code {
+          .line {
+            display: block;
+          }
+        }
+      }
+    `,
+
     noBackground: css`
       pre {
         background: transparent !important;
@@ -19,7 +29,6 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
         padding: 16px;
       }
     `,
-
     root: css`
       direction: ltr;
       margin: 0;
@@ -40,7 +49,7 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
             display: block;
 
             .line {
-              display: block;
+              display: inline-block;
 
               width: calc(100% + 32px);
               margin-block: 0;
@@ -71,10 +80,10 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
           .highlighted-word {
             padding-block: 0.1em;
             padding-inline: 0.2em;
-
-            background: ${token.colorFillTertiary};
             border: 1px solid ${token.colorBorderSecondary};
             border-radius: ${token.borderRadius}px;
+
+            background: ${token.colorFillTertiary};
           }
 
           .diff {

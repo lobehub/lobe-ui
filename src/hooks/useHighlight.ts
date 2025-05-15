@@ -17,10 +17,10 @@ import { languages } from '@/Highlighter/const';
 
 export const FALLBACK_LANG = 'txt';
 
-// 应用级缓存，避免重复计算
-const MD5_LENGTH_THRESHOLD = 10_000; // 超过该长度使用异步MD5
+// Application-level cache to avoid repeated calculations
+const MD5_LENGTH_THRESHOLD = 10_000; // Use async MD5 for text exceeding this length
 
-// 颜色替换映射类型
+// Color replacement mapping type
 type ColorReplacements = {
   [themeName: string]: {
     [color: string]: string;
@@ -29,14 +29,14 @@ type ColorReplacements = {
 
 type ICodeToHtml = (code: string, options: CodeToHastOptions) => Promise<string>;
 
-// 懒加载 shiki
+// Lazy load shiki
 const loadShiki = (): Promise<ICodeToHtml | null> => {
   if (typeof window === 'undefined') return Promise.resolve(null);
   return import('shiki').then((mod) => mod.codeToHtml);
 };
 const shikiPromise = loadShiki();
 
-// 辅助函数：安全的HTML转义
+// Helper function: Safe HTML escaping
 const escapeHtml = (str: string): string => {
   return str
     .replaceAll('&', '&amp;')
@@ -46,7 +46,7 @@ const escapeHtml = (str: string): string => {
     .replaceAll("'", '&#039;');
 };
 
-// 主高亮组件
+// Main highlight component
 export const useHighlight = (
   text: string,
   {
@@ -59,13 +59,13 @@ export const useHighlight = (
   const theme = useTheme();
   const lang = language.toLowerCase();
 
-  // 匹配支持的语言
+  // Match supported languages
   const matchedLanguage = useMemo(
     () => (languages.includes(lang as any) ? lang : FALLBACK_LANG),
     [lang],
   );
 
-  // 优化transformer创建
+  // Optimize transformer creation
   const transformers = useMemo(() => {
     if (!enableTransformer) return;
     return [
@@ -77,7 +77,7 @@ export const useHighlight = (
     ];
   }, [enableTransformer]);
 
-  // 优化颜色替换配置
+  // Optimize color replacement configuration
   const colorReplacements = useMemo(
     (): ColorReplacements => ({
       'slack-dark': {
@@ -107,21 +107,21 @@ export const useHighlight = (
     [theme],
   );
 
-  // 构建缓存键
+  // Build cache key
   const cacheKey = useMemo((): string | null => {
-    // 长文本使用 hash
+    // Use hash for long text
     const hash = text.length < MD5_LENGTH_THRESHOLD ? text : Md5.hashStr(text);
     return [matchedLanguage, builtinTheme || (isDarkMode ? 'd' : 'l'), hash]
       .filter(Boolean)
       .join('-');
   }, [text, matchedLanguage, isDarkMode, builtinTheme]);
 
-  // 使用SWR获取高亮HTML
+  // Use SWR to get highlighted HTML
   return useSWR(
     cacheKey,
     async (): Promise<string> => {
       try {
-        // 尝试完整渲染
+        // Try full rendering
         const codeToHtml = await shikiPromise;
         if (!codeToHtml) return text;
         const html = await codeToHtml(text, {
@@ -133,10 +133,10 @@ export const useHighlight = (
 
         return html;
       } catch (error) {
-        console.error('高级渲染失败:', error);
+        console.error('Advanced rendering failed:', error);
 
         try {
-          // 尝试简单渲染 (不使用转换器)
+          // Try simple rendering (without transformers)
           const codeToHtml = await shikiPromise;
           if (!codeToHtml) return text;
           const html = await codeToHtml(text, {
@@ -145,15 +145,15 @@ export const useHighlight = (
           });
           return html;
         } catch {
-          // 最终降级到纯文本
+          // Fallback to plain text
           const fallbackHtml = `<pre class="fallback"><code>${escapeHtml(text)}</code></pre>`;
           return fallbackHtml;
         }
       }
     },
     {
-      dedupingInterval: 3000, // 3秒内相同请求只执行一次
-      errorRetryCount: 2, // 最多重试2次
+      dedupingInterval: 3000, // Only execute once for the same request within 3 seconds
+      errorRetryCount: 2, // Retry at most 2 times
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
     },

@@ -32,6 +32,7 @@ export const useCode = (raw: any) => {
 };
 
 interface CodeBlockProps {
+  animated?: boolean;
   children: any;
   enableMermaid?: boolean;
   fullFeatured?: boolean;
@@ -45,6 +46,7 @@ const CodeBlock: FC<CodeBlockProps> = ({
   highlight,
   mermaid,
   children,
+  animated,
   ...rest
 }) => {
   const code = useCode(children);
@@ -62,7 +64,13 @@ const CodeBlock: FC<CodeBlockProps> = ({
     return <PreSingleLine language={code.lang}>{code.content}</PreSingleLine>;
 
   return (
-    <Pre fullFeatured={fullFeatured} language={code.lang} {...highlight} {...rest}>
+    <Pre
+      animated={animated}
+      fullFeatured={fullFeatured}
+      language={code.lang}
+      {...highlight}
+      {...rest}
+    >
       {code.content}
     </Pre>
   );

@@ -14,6 +14,7 @@ import type { HighlighterProps } from './type';
 
 export const Highlighter = memo<HighlighterProps>(
   ({
+    animated,
     fullFeatured,
     actionIconSize,
     children,
@@ -78,6 +79,7 @@ export const Highlighter = memo<HighlighterProps>(
 
     const originalBody = (
       <SyntaxHighlighter
+        animated={animated}
         enableTransformer={enableTransformer}
         language={language?.toLowerCase()}
         theme={theme}

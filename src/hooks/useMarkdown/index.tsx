@@ -11,7 +11,7 @@ import Link from '@/mdx/mdxComponents/Link';
 import Section from '@/mdx/mdxComponents/Section';
 import Video from '@/mdx/mdxComponents/Video';
 
-import { areFormulasRenderable } from './latex';
+import { isLastFormulaRenderable } from './latex';
 import { addToCache, contentCache, createPlugins, preprocessContent } from './utils';
 
 /**
@@ -62,37 +62,47 @@ export const useMarkdown = ({
 
   const isChatMode = variant === 'chat';
 
-  // 计算缓存键
+  // Calculate cache key
   const cacheKey = useMemo(() => {
     return `${children}-${enableLatex}-${enableCustomFootnotes}-${citations?.length || 0}`;
   }, [children, enableLatex, enableCustomFootnotes, citations?.length]);
 
-  // 处理内容并利用缓存避免重复计算
+  // Process content and use cache to avoid repeated calculations
   const escapedContent = useMemo(() => {
-    // 尝试从缓存获取
+    // Try to get from cache
     if (contentCache.has(cacheKey)) {
       return contentCache.get(cacheKey);
     }
 
-    // 处理新内容
+    // Process new content
     let processedContent = preprocessContent(children, {
       citationsLength: citations?.length,
       enableCustomFootnotes,
       enableLatex,
     });
 
-    if (enableLatex) {
-      processedContent = areFormulasRenderable(processedContent) ? processedContent : vaildContent;
+    if (animated && enableLatex) {
+      processedContent = isLastFormulaRenderable(processedContent)
+        ? processedContent
+        : vaildContent;
     }
 
     setVaildContent(processedContent);
 
-    // 缓存处理结果
+    // Cache the processed result
     addToCache(cacheKey, processedContent);
     return processedContent;
-  }, [vaildContent, cacheKey, children, enableLatex, enableCustomFootnotes, citations?.length]);
+  }, [
+    vaildContent,
+    cacheKey,
+    children,
+    enableLatex,
+    enableCustomFootnotes,
+    citations?.length,
+    animated,
+  ]);
 
-  // 创建插件
+  // Create plugins
   const { rehypePluginsList, remarkPluginsList } = useMemo(
     () =>
       createPlugins({
@@ -117,7 +127,7 @@ export const useMarkdown = ({
     ],
   );
 
-  // 使用 useCallback 优化渲染子组件
+  // Use useCallback to optimize rendering subcomponents
   const renderLink = useCallback(
     (props: any) => <Link citations={citations} {...props} {...componentProps?.a} />,
     [citations, componentProps?.a],
@@ -132,6 +142,7 @@ export const useMarkdown = ({
     (props: any) =>
       fullFeaturedCodeBlock ? (
         <CodeFullFeatured
+          animated={animated}
           enableMermaid={enableMermaid}
           highlight={componentProps?.highlight}
           mermaid={componentProps?.mermaid}
@@ -140,6 +151,7 @@ export const useMarkdown = ({
         />
       ) : (
         <CodeLite
+          animated={animated}
           enableMermaid={enableMermaid}
           highlight={componentProps?.highlight}
           mermaid={componentProps?.mermaid}
@@ -148,6 +160,7 @@ export const useMarkdown = ({
         />
       ),
     [
+      animated,
       enableMermaid,
       fullFeaturedCodeBlock,
       componentProps?.highlight,
@@ -166,7 +179,7 @@ export const useMarkdown = ({
     [componentProps?.video],
   );
 
-  // 创建组件映射
+  // Create component mapping
   const memoComponents = useMemo(
     () => ({
       a: renderLink,
@@ -194,6 +207,6 @@ export const useMarkdown = ({
       rehypePluginsList,
       remarkPluginsList,
     }),
-    [escapedContent, memoComponents, rehypePluginsList, remarkPluginsList],
+    [animated, escapedContent, memoComponents, rehypePluginsList, remarkPluginsList],
   );
 };

@@ -1,4 +1,10 @@
-import { preprocessLaTeX } from './latex';
+import {
+  convertLatexDelimiters,
+  escapeLatexPipes,
+  escapeMhchemCommands,
+  isLastFormulaRenderable,
+  preprocessLaTeX,
+} from './latex';
 
 describe('preprocessLaTeX', () => {
   test('returns the same string if no LaTeX patterns are found', () => {
@@ -86,5 +92,99 @@ describe('preprocessLaTeX', () => {
   test('preserves LaTeX expressions with special characters', () => {
     const content = 'The set is defined as $\\{x | x > 0\\}$.';
     expect(preprocessLaTeX(content)).toBe(content);
+  });
+});
+
+describe('convertLatexDelimiters', () => {
+  test('converts brackets to dollar sign delimiters', () => {
+    const content = 'Brackets \\[x^2\\] and parentheses \\(y^2\\)';
+    const expected = 'Brackets $$x^2$$ and parentheses $y^2$';
+    expect(convertLatexDelimiters(content)).toBe(expected);
+  });
+
+  test('preserves code blocks', () => {
+    const content = '```\n\\[formula\\]\n```\nOutside \\[formula\\]';
+    const expected = '```\n\\[formula\\]\n```\nOutside $$formula$$';
+    expect(convertLatexDelimiters(content)).toBe(expected);
+  });
+
+  test('handles mixed content', () => {
+    const content = 'Text \\[x^2\\] `code with \\[y^2\\]` and \\(z^2\\)';
+    const expected = 'Text $$x^2$$ `code with \\[y^2\\]` and $z^2$';
+    expect(convertLatexDelimiters(content)).toBe(expected);
+  });
+
+  test('handles empty string', () => {
+    expect(convertLatexDelimiters('')).toBe('');
+  });
+});
+
+describe('escapeMhchemCommands', () => {
+  test('escapes mhchem ce command', () => {
+    const content = '$\\ce{H2O}$';
+    const expected = '$\\\\ce{H2O}$';
+    expect(escapeMhchemCommands(content)).toBe(expected);
+  });
+
+  test('escapes mhchem pu command', () => {
+    const content = '$\\pu{123 J}$';
+    const expected = '$\\\\pu{123 J}$';
+    expect(escapeMhchemCommands(content)).toBe(expected);
+  });
+
+  test('escapes multiple mhchem commands', () => {
+    const content = '$\\ce{H2O}$ and $\\pu{123 J}$';
+    const expected = '$\\\\ce{H2O}$ and $\\\\pu{123 J}$';
+    expect(escapeMhchemCommands(content)).toBe(expected);
+  });
+
+  test('does not affect text without mhchem commands', () => {
+    const content = '$x^2 + y^2 = z^2$';
+    expect(escapeMhchemCommands(content)).toBe(content);
+  });
+});
+
+describe('escapeLatexPipes', () => {
+  test('does not escape pipes in LaTeX expressions', () => {
+    const content = 'Set notation $\\{x | x > 0\\}$';
+    expect(escapeLatexPipes(content)).toBe(content);
+  });
+
+  test('preserves pipes in block LaTeX', () => {
+    const content = 'Set notation $$\\{x | x > 0\\}$$';
+    expect(escapeLatexPipes(content)).toBe(content);
+  });
+
+  test('preserves pipes outside LaTeX', () => {
+    const content = 'a | b';
+    expect(escapeLatexPipes(content)).toBe(content);
+  });
+
+  test('preserves pipes in multiple LaTeX expressions', () => {
+    const content = '$\\{x | x > 0\\}$ and $$\\{y | y < 0\\}$$';
+    expect(escapeLatexPipes(content)).toBe(content);
+  });
+});
+
+describe('isLastFormulaRenderable', () => {
+  test('returns true for empty string', () => {
+    expect(isLastFormulaRenderable('')).toBe(true);
+  });
+
+  test('returns true for complete formulas', () => {
+    expect(isLastFormulaRenderable('$$x^2 + y^2 = z^2$$')).toBe(true);
+  });
+
+  test('returns true when no incomplete formula exists', () => {
+    expect(isLastFormulaRenderable('$$formula1$$ and $$formula2$$')).toBe(true);
+  });
+
+  test('attempts to render incomplete formula', () => {
+    // This should attempt to render "x^2" and return true since it's valid
+    expect(isLastFormulaRenderable('Text $$formula1$$ $$x^2')).toBe(true);
+
+    // This should attempt to render "x^{" and return false since it's invalid
+    // Note: This test assumes that "x^{" is invalid LaTeX which the renderer will reject
+    expect(isLastFormulaRenderable('Text $$formula1$$ $$x^{')).toBe(false);
   });
 });

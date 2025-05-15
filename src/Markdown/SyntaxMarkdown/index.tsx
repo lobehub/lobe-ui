@@ -50,7 +50,7 @@ const SyntaxMarkdown = memo<SyntaxMarkdownProps>(
       variant,
     });
 
-    // 渲染默认内容
+    // Render default content
     const defaultDOM = useMemo(
       () => (
         <PreviewGroup enable={enableImageGallery}>
@@ -74,7 +74,7 @@ const SyntaxMarkdown = memo<SyntaxMarkdownProps>(
       ],
     );
 
-    // 应用自定义渲染
+    // Apply custom rendering
     const markdownContent = customRender
       ? customRender(defaultDOM, { text: escapedContent || '' })
       : defaultDOM;
