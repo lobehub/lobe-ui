@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.1.0](https://github.com/lobehub/lobe-ui/compare/v2.0.17...v2.1.0)
+
+<sup>Released on **2025-05-15**</sup>
+
+#### ✨ Features
+
+- **misc**: Use MarkdownHooks.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Use MarkdownHooks ([296d3a8](https://github.com/lobehub/lobe-ui/commit/296d3a8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.0.17](https://github.com/lobehub/lobe-ui/compare/v2.0.16...v2.0.17)
 
 <sup>Released on **2025-05-15**</sup>
