@@ -11,16 +11,8 @@ import Link from '@/mdx/mdxComponents/Link';
 import Section from '@/mdx/mdxComponents/Section';
 import Video from '@/mdx/mdxComponents/Video';
 
-import {
-  addToCache,
-  areFormulasRenderable,
-  contentCache,
-  createPlugins,
-  escapeBrackets,
-  escapeMhchem,
-  fixMarkdownBold,
-  transformCitations,
-} from './utils';
+import { areFormulasRenderable } from './latex';
+import { addToCache, contentCache, createPlugins, preprocessContent } from './utils';
 
 /**
  * Processes Markdown content and prepares rendering components and configurations
@@ -83,15 +75,14 @@ export const useMarkdown = ({
     }
 
     // 处理新内容
-    let processedContent;
+    let processedContent = preprocessContent(children, {
+      citationsLength: citations?.length,
+      enableCustomFootnotes,
+      enableLatex,
+    });
+
     if (enableLatex) {
-      const baseContent = fixMarkdownBold(escapeMhchem(escapeBrackets(children)));
-      const tempContent = enableCustomFootnotes
-        ? transformCitations(baseContent, citations?.length)
-        : baseContent;
-      processedContent = areFormulasRenderable(tempContent) ? tempContent : vaildContent;
-    } else {
-      processedContent = fixMarkdownBold(children);
+      processedContent = areFormulasRenderable(processedContent) ? processedContent : vaildContent;
     }
 
     setVaildContent(processedContent);

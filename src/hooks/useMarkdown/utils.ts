@@ -1,4 +1,3 @@
-import { renderToString } from 'katex';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import remarkBreaks from 'remark-breaks';
@@ -9,6 +8,7 @@ import type { Pluggable } from 'unified';
 import { animatedPlugin } from '@/Markdown/plugins/animated';
 import { rehypeFootnoteLinks, remarkCustomFootnotes } from '@/Markdown/plugins/footnote';
 import { rehypeKatexDir } from '@/Markdown/plugins/katexDir';
+import { preprocessLaTeX } from '@/hooks/useMarkdown/latex';
 
 // 使用普通 Map 代替 WeakMap，并限制缓存大小
 const CACHE_SIZE = 50;
@@ -91,24 +91,6 @@ export const createPlugins = (props: {
   };
 };
 
-export function escapeBrackets(text: string) {
-  const pattern = /(```[\S\s]*?```|`.*?`)|\\\[([\S\s]*?[^\\])\\]|\\\((.*?)\\\)/g;
-  return text.replaceAll(pattern, (match, codeBlock, squareBracket, roundBracket) => {
-    if (codeBlock) {
-      return codeBlock;
-    } else if (squareBracket) {
-      return `$$${squareBracket}$$`;
-    } else if (roundBracket) {
-      return `$${roundBracket}$`;
-    }
-    return match;
-  });
-}
-
-export function escapeMhchem(text: string) {
-  return text.replaceAll('$\\ce{', '$\\\\ce{').replaceAll('$\\pu{', '$\\\\pu{');
-}
-
 export function fixMarkdownBold(text: string): string {
   let count = 0;
   let count2 = 0;
@@ -171,37 +153,28 @@ export const transformCitations = (rawContent: string, length: number = 0) => {
     .replaceAll('][', '] [');
 };
 
-// 新增: 检测LaTeX公式是否可渲染
-const extractFormulas = (text: string) => {
-  // 计算$$的数量
-  const dollarsCount = (text.match(/\$\$/g) || []).length;
-
-  // 奇数个$$时，获取最后一个$$后的内容
-  if (dollarsCount % 2 === 1) {
-    const match = text.match(/\$\$([^]*)$/);
-    return match ? match[1] : '';
+export const preprocessContent = (
+  str: string,
+  {
+    enableCustomFootnotes,
+    enableLatex,
+    citationsLength,
+  }: {
+    citationsLength?: number;
+    enableCustomFootnotes?: boolean;
+    enableLatex?: boolean;
+  } = {},
+) => {
+  let content = str;
+  // 处理LaTeX公式
+  if (enableLatex) {
+    content = preprocessLaTeX(content);
   }
 
-  // 偶数个$$时，返回空字符串
-  return '';
-};
-
-// 只检查最后一个公式
-export const areFormulasRenderable = (text: string) => {
-  const formulas = extractFormulas(text);
-
-  // 如果没有公式，返回true
-  if (!formulas) return true;
-
-  // 仅检查最后一个公式是否可渲染
-  try {
-    renderToString(formulas, {
-      displayMode: true,
-      throwOnError: true,
-    });
-    return true;
-  } catch (error) {
-    console.log(`LaTeX公式渲染错误: ${error}`);
-    return false;
+  // 处理自定义脚注
+  if (enableCustomFootnotes) {
+    content = transformCitations(content, citationsLength);
   }
+
+  return fixMarkdownBold(content);
 };
