@@ -115,3 +115,6 @@ export default () => {
     </StoryBook>
   );
 };
+
+
+export { rehypePlugins, components };
