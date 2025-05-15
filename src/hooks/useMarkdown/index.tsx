@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useMemo, useState } from 'react';
+import { ReactElement, useMemo, useRef, useState } from 'react';
 import type { Components } from 'react-markdown/lib';
 import type { Pluggable } from 'unified';
 
@@ -14,8 +14,59 @@ import Video from '@/mdx/mdxComponents/Video';
 import { isLastFormulaRenderable } from './latex';
 import { addToCache, contentCache, createPlugins, preprocessContent } from './utils';
 
+// Define component factory types
+type ComponentFactory<T = any> = (props: T) => ReactElement;
+type ComponentFactories = {
+  a: ComponentFactory;
+  img?: ComponentFactory;
+  pre: ComponentFactory;
+  section: ComponentFactory;
+  video: ComponentFactory;
+};
+
+/**
+ * Creates reusable component factories that can be memoized once
+ * and reused across multiple renders without recreation
+ */
+const createComponentFactories = (params: {
+  animated: boolean;
+  citations?: any[];
+  componentProps?: any;
+  enableMermaid: boolean;
+  fullFeaturedCodeBlock?: boolean;
+  showFootnotes?: boolean;
+}): ComponentFactories => {
+  const {
+    citations,
+    componentProps,
+    animated,
+    enableMermaid,
+    fullFeaturedCodeBlock,
+    showFootnotes,
+  } = params;
+
+  return {
+    a: (props: any) => <Link citations={citations} {...props} {...componentProps?.a} />,
+    img: (props: any) => <Image {...props} {...componentProps?.img} />,
+    pre: (props: any) => (
+      <CodeBlock
+        animated={animated}
+        enableMermaid={enableMermaid}
+        fullFeatured={fullFeaturedCodeBlock}
+        highlight={componentProps?.highlight}
+        mermaid={componentProps?.mermaid}
+        {...componentProps?.pre}
+        {...props}
+      />
+    ),
+    section: (props: any) => <Section showCitations={showFootnotes} {...props} />,
+    video: (props: any) => <Video {...props} {...componentProps?.video} />,
+  };
+};
+
 /**
  * Processes Markdown content and prepares rendering components and configurations
+ * Optimized version with better memoization and performance
  */
 export const useMarkdown = ({
   children,
@@ -58,133 +109,122 @@ export const useMarkdown = ({
   rehypePluginsList: Pluggable[];
   remarkPluginsList: Pluggable[];
 } => {
-  const [vaildContent, setVaildContent] = useState<string>('');
+  const [validContent, setValidContent] = useState<string>('');
+  const prevProcessedContent = useRef<string>('');
 
   const isChatMode = variant === 'chat';
+  const citationsLength = citations?.length || 0;
 
-  // Calculate cache key
-  const cacheKey = useMemo(() => {
-    return `${children}-${enableLatex}-${enableCustomFootnotes}-${citations?.length || 0}`;
-  }, [children, enableLatex, enableCustomFootnotes, citations?.length]);
+  // Calculate cache key with fewer string concatenations and better performance
+  const cacheKey = useMemo(
+    () => `${children}|${enableLatex ? 1 : 0}|${enableCustomFootnotes ? 1 : 0}|${citationsLength}`,
+    [children, enableLatex, enableCustomFootnotes, citationsLength],
+  );
 
   // Process content and use cache to avoid repeated calculations
   const escapedContent = useMemo(() => {
-    // Try to get from cache
+    // Try to get from cache first for best performance
     if (contentCache.has(cacheKey)) {
       return contentCache.get(cacheKey);
     }
 
-    // Process new content
+    // Process new content only if needed
     let processedContent = preprocessContent(children, {
-      citationsLength: citations?.length,
+      citationsLength,
       enableCustomFootnotes,
       enableLatex,
     });
 
+    // Special handling for LaTeX content when animated
     if (animated && enableLatex) {
-      processedContent = isLastFormulaRenderable(processedContent)
-        ? processedContent
-        : vaildContent;
+      const isRenderable = isLastFormulaRenderable(processedContent);
+      if (!isRenderable && validContent) {
+        processedContent = validContent;
+      }
     }
 
-    setVaildContent(processedContent);
+    // Only update state if content changed (prevents unnecessary re-renders)
+    if (processedContent !== prevProcessedContent.current) {
+      setValidContent(processedContent);
+      prevProcessedContent.current = processedContent;
+    }
 
     // Cache the processed result
     addToCache(cacheKey, processedContent);
     return processedContent;
   }, [
-    vaildContent,
     cacheKey,
     children,
     enableLatex,
     enableCustomFootnotes,
-    citations?.length,
+    citationsLength,
     animated,
+    validContent,
   ]);
 
-  // Create plugins
-  const { rehypePluginsList, remarkPluginsList } = useMemo(
-    () =>
-      createPlugins({
-        allowHtml,
-        animated,
-        enableCustomFootnotes,
-        enableLatex,
-        isChatMode,
-        rehypePlugins,
-        remarkPlugins,
-        remarkPluginsAhead,
-      }),
-    [
+  // Create a memoized options object for plugin creation
+  const pluginOptions = useMemo(
+    () => ({
       allowHtml,
-      enableLatex,
+      animated,
       enableCustomFootnotes,
+      enableLatex,
       isChatMode,
       rehypePlugins,
       remarkPlugins,
       remarkPluginsAhead,
-      animated,
-    ],
-  );
-
-  // Use useCallback to optimize rendering subcomponents
-  const renderLink = useCallback(
-    (props: any) => <Link citations={citations} {...props} {...componentProps?.a} />,
-    [citations],
-  );
-
-  const renderImage = useCallback(
-    (props: any) => <Image {...props} {...componentProps?.img} />,
-    [],
-  );
-
-  const renderCodeBlock = useCallback(
-    (props: any) => (
-      <CodeBlock
-        animated={animated}
-        enableMermaid={enableMermaid}
-        fullFeatured={fullFeaturedCodeBlock}
-        highlight={componentProps?.highlight}
-        mermaid={componentProps?.mermaid}
-        {...componentProps?.pre}
-        {...props}
-      />
-    ),
-    [animated, enableMermaid, fullFeaturedCodeBlock],
-  );
-
-  const renderSection = useCallback(
-    (props: any) => <Section showCitations={showFootnotes} {...props} />,
-    [showFootnotes],
-  );
-
-  const renderVideo = useCallback(
-    (props: any) => <Video {...props} {...componentProps?.video} />,
-    [],
-  );
-
-  // Create component mapping
-  const memoComponents = useMemo(
-    () => ({
-      a: renderLink,
-      img: enableImageGallery ? renderImage : undefined,
-      pre: renderCodeBlock,
-      section: renderSection,
-      video: renderVideo,
-      ...components,
     }),
     [
-      renderLink,
-      renderImage,
-      renderCodeBlock,
-      renderSection,
-      renderVideo,
-      enableImageGallery,
-      components,
-      componentProps,
+      allowHtml,
+      animated,
+      enableCustomFootnotes,
+      enableLatex,
+      isChatMode,
+      rehypePlugins,
+      remarkPlugins,
+      remarkPluginsAhead,
     ],
+  );
+
+  // Create plugins with better memoization
+  const { rehypePluginsList, remarkPluginsList } = useMemo(
+    () => createPlugins(pluginOptions),
+    [pluginOptions],
+  );
+
+  // Memoize the factory parameters to prevent recreating component factories
+  const factoryParams = useMemo(
+    () => ({
+      animated: animated || false, // Ensure animated is always a boolean
+      citations,
+      componentProps,
+      enableMermaid,
+      fullFeaturedCodeBlock,
+      showFootnotes,
+    }),
+    [animated, citations, componentProps, enableMermaid, fullFeaturedCodeBlock, showFootnotes],
+  );
+
+  // Create component factories once and reuse them
+  const componentFactories = useMemo(
+    () => createComponentFactories(factoryParams),
+    [factoryParams],
+  );
+
+  // Create the final components object with proper memoization
+  const memoComponents = useMemo(
+    () => ({
+      a: componentFactories.a,
+      img: enableImageGallery ? componentFactories.img : undefined,
+      pre: componentFactories.pre,
+      section: componentFactories.section,
+      video: componentFactories.video,
+      ...components,
+    }),
+    [componentFactories, enableImageGallery, components],
   ) as Components;
 
+  // Return memoized result to prevent unnecessary recalculations
   return useMemo(
     () => ({
       escapedContent,
@@ -192,6 +232,6 @@ export const useMarkdown = ({
       rehypePluginsList,
       remarkPluginsList,
     }),
-    [animated, escapedContent, memoComponents, rehypePluginsList, remarkPluginsList],
+    [escapedContent, memoComponents, rehypePluginsList, remarkPluginsList],
   );
 };
