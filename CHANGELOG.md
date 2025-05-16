@@ -2,6 +2,42 @@
 
 # Changelog
 
+### [Version 2.1.2](https://github.com/lobehub/lobe-ui/compare/v2.1.1...v2.1.2)
+
+<sup>Released on **2025-05-16**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix props, Lock father, Lock father.
+
+#### 💄 Styles
+
+- **misc**: Update Markdown style, Update neutral color.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix props ([ec0a329](https://github.com/lobehub/lobe-ui/commit/ec0a329))
+- **misc**: Lock father ([2ea4edc](https://github.com/lobehub/lobe-ui/commit/2ea4edc))
+- **misc**: Lock father ([13752f3](https://github.com/lobehub/lobe-ui/commit/13752f3))
+
+#### Styles
+
+- **misc**: Update Markdown style ([8190197](https://github.com/lobehub/lobe-ui/commit/8190197))
+- **misc**: Update neutral color ([67f7f88](https://github.com/lobehub/lobe-ui/commit/67f7f88))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.1.1](https://github.com/lobehub/lobe-ui/compare/v2.1.0...v2.1.1)
 
 <sup>Released on **2025-05-15**</sup>
