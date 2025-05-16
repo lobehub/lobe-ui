@@ -11,7 +11,7 @@ import { FALLBACK_LANG } from '@/hooks/useHighlight';
 const useStyles = createStyles(({ css }) => ({
   container: css`
     overflow: hidden;
-    margin-block: 1em;
+    margin-block: 0.5em;
     border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
     box-shadow: 0 0 0 1px var(--lobe-markdown-border-color) inset;
   `,
