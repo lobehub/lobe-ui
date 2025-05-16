@@ -42,7 +42,7 @@ const Mdx = memo<MdxProps>(
     className,
     style,
     fullFeaturedCodeBlock = true,
-    enableImageGallery = true,
+    enableImageGallery,
     enableLatex = true,
     enableMermaid = true,
     rehypePlugins,

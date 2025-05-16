@@ -139,17 +139,57 @@ export const useMarkdown = ({
     [pluginOptions],
   );
 
+  // Stable references for theme objects to prevent unnecessary re-renders
+  const highlightTheme = useMemo(
+    () => componentProps?.highlight?.theme,
+    [JSON.stringify(componentProps?.highlight?.theme)],
+  );
+
+  const mermaidTheme = useMemo(
+    () => componentProps?.mermaid?.theme,
+    [JSON.stringify(componentProps?.mermaid?.theme)],
+  );
+
+  // Create stable component props reference
+  const stableComponentProps = useMemo(() => {
+    if (!componentProps) return;
+
+    return {
+      ...componentProps,
+      highlight: componentProps.highlight
+        ? { ...componentProps.highlight, theme: highlightTheme }
+        : undefined,
+      mermaid: componentProps.mermaid
+        ? { ...componentProps.mermaid, theme: mermaidTheme }
+        : undefined,
+    };
+  }, [
+    componentProps?.a,
+    componentProps?.img,
+    componentProps?.pre,
+    componentProps?.video,
+    highlightTheme,
+    mermaidTheme,
+  ]);
+
   // Memoize the factory parameters to prevent recreating component factories
   const factoryParams = useMemo(
     () => ({
       animated: animated || false, // Ensure animated is always a boolean
       citations,
-      componentProps,
+      componentProps: stableComponentProps,
       enableMermaid,
       fullFeaturedCodeBlock,
       showFootnotes,
     }),
-    [animated, citations, componentProps, enableMermaid, fullFeaturedCodeBlock, showFootnotes],
+    [
+      animated,
+      citations,
+      stableComponentProps,
+      enableMermaid,
+      fullFeaturedCodeBlock,
+      showFootnotes,
+    ],
   );
 
   // Create component factories once and reuse them

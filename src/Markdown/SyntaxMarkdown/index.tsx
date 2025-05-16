@@ -19,12 +19,12 @@ const MarkdownRenderer = memo(
     reactMarkdownProps,
     enableImageGallery,
   }: {
-    enableImageGallery: boolean;
+    enableImageGallery?: boolean;
     escapedContent?: string;
-    memoComponents: any;
+    memoComponents?: any;
     reactMarkdownProps?: any;
-    rehypePluginsList: any[];
-    remarkPluginsList: any[];
+    rehypePluginsList?: any[];
+    remarkPluginsList?: any[];
   }) => {
     const content = (
       <Markdown
@@ -52,7 +52,7 @@ const SyntaxMarkdown = memo<SyntaxMarkdownProps>(
     animated,
     enableLatex = true,
     enableMermaid = true,
-    enableImageGallery = true,
+    enableImageGallery,
     enableCustomFootnotes,
     componentProps,
     allowHtml,

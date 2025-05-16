@@ -1,4 +1,4 @@
-import { Button, Markdown } from '@lobehub/ui';
+import { Button, Markdown, highlighterThemes, mermaidThemes } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { useEffect, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
@@ -15,7 +15,7 @@ const components = Object.fromEntries(
 
 export default () => {
   const store = useCreateStore();
-  const { children, streamingSpeed, animated, ...rest } = useControls(
+  const { children, streamingSpeed, animated, highlightTheme, mermaidTheme, ...rest } = useControls(
     {
       animated: {
         value: true,
@@ -26,6 +26,14 @@ export default () => {
       },
       fullFeaturedCodeBlock: {
         value: true,
+      },
+      highlightTheme: {
+        options: highlighterThemes.map((item) => item.id),
+        value: highlighterThemes[0].id,
+      },
+      mermaidTheme: {
+        options: mermaidThemes.map((item) => item.id),
+        value: mermaidThemes[0].id,
       },
       streamingSpeed: {
         max: 100,
@@ -104,6 +112,14 @@ export default () => {
         </Flexbox>
         <Markdown
           animated={animated}
+          componentProps={{
+            highlight: {
+              theme: highlightTheme as any,
+            },
+            mermaid: {
+              theme: mermaidTheme as any,
+            },
+          }}
           components={components}
           fullFeaturedCodeBlock={rest.fullFeaturedCodeBlock}
           rehypePlugins={rehypePlugins}
