@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.1.3](https://github.com/lobehub/lobe-ui/compare/v2.1.2...v2.1.3)
+
+<sup>Released on **2025-05-16**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix FormModal custom footer.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix FormModal custom footer ([92002b7](https://github.com/lobehub/lobe-ui/commit/92002b7))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.1.2](https://github.com/lobehub/lobe-ui/compare/v2.1.1...v2.1.2)
 
 <sup>Released on **2025-05-16**</sup>
