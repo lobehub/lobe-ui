@@ -1,12 +1,14 @@
-import Image from '@lobehub/ui/mdx/mdxComponents/Image';
-import Link from '@lobehub/ui/mdx/mdxComponents/Link';
-import Video from '@lobehub/ui/mdx/mdxComponents/Video';
+'use client';
+
 import { useMemo } from 'react';
-import type { Components } from 'react-markdown/lib';
+import type { Components } from 'react-markdown';
 
 import { CodeBlock } from '@/Markdown/components/CodeBlock';
 import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
+import Image from '@/mdx/mdxComponents/Image';
+import Link from '@/mdx/mdxComponents/Link';
 import Section from '@/mdx/mdxComponents/Section';
+import Video from '@/mdx/mdxComponents/Video';
 
 export const useMarkdownComponents = (): Components => {
   const {
