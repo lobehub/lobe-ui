@@ -108,7 +108,7 @@ const Markdown = memo<MarkdownProps>(
           <MarkdownProvider
             config={{
               allowHtml,
-              animated,
+              animated: delayedAnimated,
               citations,
               componentProps,
               components,
