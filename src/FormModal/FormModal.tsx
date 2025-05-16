@@ -96,13 +96,8 @@ const FormModal = memo<FormModalProps>(
           className={cx(s.form, formClassName)}
           clearOnDestroy={destroyOnClose}
           footer={
-            footer || (
-              <Flexbox
-                align={'center'}
-                className={cx(s.footer, footerClassName)}
-                gap={8}
-                horizontal
-              >
+            <Flexbox align={'center'} className={cx(s.footer, footerClassName)} gap={8} horizontal>
+              {footer || (
                 <Button
                   block
                   htmlType="submit"
@@ -117,8 +112,8 @@ const FormModal = memo<FormModalProps>(
                 >
                   {submitText || 'Submit'}
                 </Button>
-              </Flexbox>
-            )
+              )}
+            </Flexbox>
           }
           gap={gap || (variant === 'borderless' ? 24 : gap)}
           onFinish={onFinish}
