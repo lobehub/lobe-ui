@@ -2,6 +2,40 @@
 
 # Changelog
 
+### [Version 2.1.6](https://github.com/lobehub/lobe-ui/compare/v2.1.5...v2.1.6)
+
+<sup>Released on **2025-05-16**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Refactor Markdown.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix typo, Fix typo.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Refactor Markdown ([0b80f15](https://github.com/lobehub/lobe-ui/commit/0b80f15))
+
+#### What's fixed
+
+- **misc**: Fix typo ([a045617](https://github.com/lobehub/lobe-ui/commit/a045617))
+- **misc**: Fix typo ([8f25f59](https://github.com/lobehub/lobe-ui/commit/8f25f59))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.1.5](https://github.com/lobehub/lobe-ui/compare/v2.1.4...v2.1.5)
 
 <sup>Released on **2025-05-16**</sup>
