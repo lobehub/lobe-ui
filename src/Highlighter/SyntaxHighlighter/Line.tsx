@@ -53,3 +53,6 @@ const Line = memo<{ children?: string }>(({ children }) => {
 Line.displayName = 'HighlighterLine';
 
 export default Line;
+
+
+export { Line };
