@@ -1,13 +1,3 @@
-import rehypeKatex from 'rehype-katex';
-import rehypeRaw from 'rehype-raw';
-import remarkBreaks from 'remark-breaks';
-import remarkGfm from 'remark-gfm';
-import remarkMath from 'remark-math';
-import type { Pluggable } from 'unified';
-
-import { animatedPlugin } from '../../Markdown/plugins/animated';
-import { rehypeFootnoteLinks, remarkCustomFootnotes } from '../../Markdown/plugins/footnote';
-import { rehypeKatexDir } from '../../Markdown/plugins/katexDir';
 import { preprocessLaTeX } from './latex';
 
 // Cache configuration
@@ -32,83 +22,6 @@ export const addToCache = (key: string, value: string) => {
     if (firstKey) contentCache.delete(firstKey);
   }
   contentCache.set(key, value);
-};
-
-/**
- * Plugin configuration options for markdown processing
- */
-interface PluginOptions {
-  allowHtml?: boolean;
-  animated?: boolean;
-  enableCustomFootnotes?: boolean;
-  enableLatex?: boolean;
-  isChatMode: boolean;
-  rehypePlugins?: Pluggable | Pluggable[];
-  remarkPlugins?: Pluggable | Pluggable[];
-  remarkPluginsAhead?: Pluggable | Pluggable[];
-}
-
-/**
- * Creates remark and rehype plugin lists based on configuration options
- *
- * @param props Plugin configuration options
- * @returns Object containing remark and rehype plugin lists
- */
-export const createPlugins = (props: PluginOptions) => {
-  const {
-    allowHtml,
-    enableLatex,
-    enableCustomFootnotes,
-    isChatMode,
-    rehypePlugins,
-    remarkPlugins,
-    remarkPluginsAhead,
-    animated,
-  } = props;
-
-  // Normalize plugin arrays
-  const normalizedRehypePlugins = Array.isArray(rehypePlugins)
-    ? rehypePlugins
-    : rehypePlugins
-      ? [rehypePlugins]
-      : [];
-
-  const normalizedRemarkPlugins = Array.isArray(remarkPlugins)
-    ? remarkPlugins
-    : remarkPlugins
-      ? [remarkPlugins]
-      : [];
-
-  const normalizedRemarkPluginsAhead = Array.isArray(remarkPluginsAhead)
-    ? remarkPluginsAhead
-    : remarkPluginsAhead
-      ? [remarkPluginsAhead]
-      : [];
-
-  // Create rehype plugins list
-  const rehypePluginsList = [
-    allowHtml && rehypeRaw,
-    enableLatex && rehypeKatex,
-    enableLatex && rehypeKatexDir,
-    enableCustomFootnotes && rehypeFootnoteLinks,
-    animated && animatedPlugin,
-    ...normalizedRehypePlugins,
-  ].filter(Boolean) as Pluggable[];
-
-  // Create remark plugins list
-  const remarkPluginsList = [
-    ...normalizedRemarkPluginsAhead,
-    enableLatex && remarkMath,
-    [remarkGfm, { singleTilde: false }],
-    enableCustomFootnotes && remarkCustomFootnotes,
-    isChatMode && remarkBreaks,
-    ...normalizedRemarkPlugins,
-  ].filter(Boolean) as Pluggable[];
-
-  return {
-    rehypePluginsList,
-    remarkPluginsList,
-  };
 };
 
 /**

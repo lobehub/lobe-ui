@@ -32,9 +32,7 @@ export interface SyntaxMarkdownProps {
     video?: Partial<VideoProps>;
   };
   components?: Components & Record<string, FC>;
-  customRender?: (dom: ReactNode, context: { text: string }) => ReactNode;
   enableCustomFootnotes?: boolean;
-  enableImageGallery?: boolean;
   enableLatex?: boolean;
   enableMermaid?: boolean;
   fullFeaturedCodeBlock?: boolean;
@@ -43,6 +41,7 @@ export interface SyntaxMarkdownProps {
     'components' | 'rehypePlugins' | 'remarkPlugins'
   >;
   rehypePlugins?: Pluggable[];
+  rehypePluginsAhead?: Pluggable[];
   remarkPlugins?: Pluggable[];
   remarkPluginsAhead?: Pluggable[];
   showFootnotes?: boolean;
@@ -51,6 +50,8 @@ export interface SyntaxMarkdownProps {
 
 export interface MarkdownProps extends SyntaxMarkdownProps, Omit<TypographyProps, 'children'> {
   className?: string;
+  customRender?: (dom: ReactNode, context: { text: string }) => ReactNode;
+  enableImageGallery?: boolean;
   onDoubleClick?: () => void;
   ref?: Ref<HTMLDivElement>;
   style?: CSSProperties;

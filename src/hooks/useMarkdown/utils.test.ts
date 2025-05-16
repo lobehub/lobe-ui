@@ -3,7 +3,6 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   addToCache,
   contentCache,
-  createPlugins,
   fixMarkdownBold,
   preprocessContent,
   transformCitations,
@@ -132,55 +131,6 @@ describe('contentCache and addToCache', () => {
     if (originalSize) {
       Object.defineProperty(contentCache, 'size', originalSize);
     }
-  });
-});
-
-describe('createPlugins', () => {
-  it('should create rehype and remark plugin lists based on options', () => {
-    const { rehypePluginsList, remarkPluginsList } = createPlugins({
-      allowHtml: true,
-      animated: true,
-      enableCustomFootnotes: true,
-      enableLatex: true,
-      isChatMode: true,
-    });
-
-    // Check that plugin lists are created and contain items
-    expect(Array.isArray(rehypePluginsList)).toBe(true);
-    expect(Array.isArray(remarkPluginsList)).toBe(true);
-    expect(rehypePluginsList.length).toBeGreaterThan(0);
-    expect(remarkPluginsList.length).toBeGreaterThan(0);
-  });
-
-  it('should include only specified plugins', () => {
-    const { rehypePluginsList, remarkPluginsList } = createPlugins({
-      allowHtml: false,
-      animated: false,
-      enableCustomFootnotes: false,
-      enableLatex: false,
-      isChatMode: false,
-    });
-
-    // When all options are false, base plugins should still be included
-    expect(rehypePluginsList.length).toBe(0);
-    expect(remarkPluginsList.length).toBe(1); // remarkGfm is always included
-  });
-
-  it('should handle custom plugins properly', () => {
-    // eslint-disable-next-line unicorn/consistent-function-scoping
-    const customRehypePlugin = () => (tree: any) => tree;
-    // eslint-disable-next-line unicorn/consistent-function-scoping
-    const customRemarkPlugin = () => (tree: any) => tree;
-
-    const { rehypePluginsList, remarkPluginsList } = createPlugins({
-      isChatMode: true,
-      rehypePlugins: customRehypePlugin,
-      remarkPlugins: customRemarkPlugin,
-    });
-
-    // Custom plugins should be included
-    expect(rehypePluginsList).toContain(customRehypePlugin);
-    expect(remarkPluginsList).toContain(customRemarkPlugin);
   });
 });
 

@@ -3,6 +3,9 @@
 import { cva } from 'class-variance-authority';
 import { memo, useEffect, useMemo, useState } from 'react';
 
+import { PreviewGroup } from '@/Image';
+import { MarkdownProvider } from '@/Markdown/components/MarkdownProvider';
+
 import SyntaxMarkdown from './SyntaxMarkdown';
 import Typography from './Typography';
 import { useStyles } from './style';
@@ -86,41 +89,44 @@ const Markdown = memo<MarkdownProps>(
       [styles],
     );
 
+    const defaultDOM = <SyntaxMarkdown {...reactMarkdownProps}>{children}</SyntaxMarkdown>;
+
     return (
-      <Typography
-        className={cx(variants({ animated: delayedAnimated, enableLatex, variant }), className)}
-        data-code-type="markdown"
-        fontSize={fontSize}
-        headerMultiple={headerMultiple}
-        lineHeight={lineHeight}
-        marginMultiple={marginMultiple}
-        onDoubleClick={onDoubleClick}
-        ref={ref}
-        style={style}
-        {...rest}
-      >
-        <SyntaxMarkdown
-          allowHtml={allowHtml}
-          animated={delayedAnimated}
-          citations={citations}
-          componentProps={componentProps}
-          components={components}
-          customRender={customRender}
-          enableCustomFootnotes={enableCustomFootnotes}
-          enableImageGallery={enableImageGallery}
-          enableLatex={enableLatex}
-          enableMermaid={enableMermaid}
-          fullFeaturedCodeBlock={fullFeaturedCodeBlock}
-          reactMarkdownProps={reactMarkdownProps}
-          rehypePlugins={rehypePlugins}
-          remarkPlugins={remarkPlugins}
-          remarkPluginsAhead={remarkPluginsAhead}
-          showFootnotes={showFootnotes}
-          variant={variant}
+      <PreviewGroup enable={enableImageGallery}>
+        <Typography
+          className={cx(variants({ animated: delayedAnimated, enableLatex, variant }), className)}
+          data-code-type="markdown"
+          fontSize={fontSize}
+          headerMultiple={headerMultiple}
+          lineHeight={lineHeight}
+          marginMultiple={marginMultiple}
+          onDoubleClick={onDoubleClick}
+          ref={ref}
+          style={style}
+          {...rest}
         >
-          {children}
-        </SyntaxMarkdown>
-      </Typography>
+          <MarkdownProvider
+            config={{
+              allowHtml,
+              animated,
+              citations,
+              componentProps,
+              components,
+              enableCustomFootnotes,
+              enableLatex,
+              enableMermaid,
+              fullFeaturedCodeBlock,
+              rehypePlugins,
+              remarkPlugins,
+              remarkPluginsAhead,
+              showFootnotes,
+              variant,
+            }}
+          >
+            {customRender ? customRender(defaultDOM, { text: children || '' }) : defaultDOM}
+          </MarkdownProvider>
+        </Typography>
+      </PreviewGroup>
     );
   },
 );
