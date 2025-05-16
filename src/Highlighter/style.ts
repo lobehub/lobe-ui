@@ -19,12 +19,13 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
       `,
     ),
     bodyCollapsed: css`
-      display: none;
       height: 0;
+      opacity: 0;
     `,
     bodyExpand: cx(expandCls),
     bodyRoot: css`
       overflow: hidden;
+      transition: opacity 0.25s ${token.motionEaseOut};
     `,
     borderless: stylish.variantBorderlessWithoutHover,
     filled: stylish.variantFilledWithoutHover,
@@ -76,8 +77,12 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
       prefix,
       css`
         position: relative;
+
         overflow: hidden;
+
+        width: 100%;
         border-radius: ${token.borderRadius}px;
+
         transition: background-color 100ms ${token.motionEaseOut};
 
         &:hover {

@@ -20,7 +20,6 @@ export default () => {
       }}
       fullFeatured
       language={'tsx'}
-      style={{ width: '100%' }}
     >
       {code}
     </Highlighter>
