@@ -26,18 +26,20 @@ const MarkdownRenderer = memo(
     rehypePluginsList: any[];
     remarkPluginsList: any[];
   }) => {
-    return (
-      <PreviewGroup enable={enableImageGallery}>
-        <Markdown
-          {...reactMarkdownProps}
-          components={memoComponents}
-          rehypePlugins={rehypePluginsList}
-          remarkPlugins={remarkPluginsList}
-        >
-          {escapedContent || ''}
-        </Markdown>
-      </PreviewGroup>
+    const content = (
+      <Markdown
+        {...reactMarkdownProps}
+        components={memoComponents}
+        rehypePlugins={rehypePluginsList}
+        remarkPlugins={remarkPluginsList}
+      >
+        {escapedContent || ''}
+      </Markdown>
     );
+
+    if (!enableImageGallery) return content;
+
+    return <PreviewGroup enable={enableImageGallery}>{content}</PreviewGroup>;
   },
 );
 

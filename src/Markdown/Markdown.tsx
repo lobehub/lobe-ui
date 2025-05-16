@@ -19,7 +19,7 @@ const Markdown = memo<MarkdownProps>(
     animated,
     enableLatex = true,
     enableMermaid = true,
-    enableImageGallery = true,
+    enableImageGallery,
     enableCustomFootnotes,
     componentProps,
     allowHtml,
