@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.1.5](https://github.com/lobehub/lobe-ui/compare/v2.1.4...v2.1.5)
+
+<sup>Released on **2025-05-16**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix highlight rerender on streamming.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix highlight rerender on streamming ([467c6a1](https://github.com/lobehub/lobe-ui/commit/467c6a1))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.1.4](https://github.com/lobehub/lobe-ui/compare/v2.1.3...v2.1.4)
 
 <sup>Released on **2025-05-16**</sup>
