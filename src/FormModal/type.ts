@@ -14,7 +14,7 @@ type PickModalProps = Pick<
   | 'onCancel'
   | 'open'
   | 'centered'
-  | 'destroyOnClose'
+  | 'destroyOnHidden'
   | 'paddings'
   | 'height'
   | 'enableResponsive'

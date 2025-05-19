@@ -73,7 +73,7 @@ const MessageModal = memo<MessageModalProps>(
       <Modal
         allowFullscreen
         cancelText={text?.cancel || 'Cancel'}
-        destroyOnClose
+        destroyOnHidden
         footer={modalFooter}
         height={height}
         okText={text?.edit || 'Edit'}
