@@ -22,7 +22,7 @@ const Modal = memo<ModalProps>(
     width = 700,
     onCancel,
     open,
-    destroyOnClose,
+    destroyOnHidden,
     paddings,
     height = '75dvh',
     enableResponsive = true,
@@ -57,7 +57,7 @@ const Modal = memo<ModalProps>(
               wrapper: cx(styles.wrap, classNames?.wrapper),
             }}
             closeIcon={<ActionIcon icon={X} />}
-            destroyOnClose={destroyOnClose}
+            destroyOnHidden={destroyOnHidden}
             extra={
               allowFullscreen && (
                 <ActionIcon
@@ -138,7 +138,7 @@ const Modal = memo<ModalProps>(
           closable
           closeIcon={<Icon icon={X} size={20} />}
           confirmLoading={confirmLoading}
-          destroyOnClose={destroyOnClose}
+          destroyOnHidden={destroyOnHidden}
           footer={hideFooter ? null : footer}
           maskClosable
           okButtonProps={okButtonProps}

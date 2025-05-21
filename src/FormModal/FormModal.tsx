@@ -27,7 +27,7 @@ const FormModal = memo<FormModalProps>(
     centered,
     open,
     afterClose,
-    destroyOnClose,
+    destroyOnHidden,
     closeIcon,
     paddings,
     height,
@@ -67,7 +67,7 @@ const FormModal = memo<FormModalProps>(
         closable={closable}
         closeIcon={closeIcon}
         confirmLoading={submitLoading}
-        destroyOnClose={destroyOnClose}
+        destroyOnHidden={destroyOnHidden}
         enableResponsive={enableResponsive}
         focusTriggerAfterClose={focusTriggerAfterClose}
         footer={null}
@@ -94,7 +94,7 @@ const FormModal = memo<FormModalProps>(
       >
         <Form
           className={cx(s.form, formClassName)}
-          clearOnDestroy={destroyOnClose}
+          clearOnDestroy={destroyOnHidden}
           footer={
             <Flexbox align={'center'} className={cx(s.footer, footerClassName)} gap={8} horizontal>
               {footer || (
