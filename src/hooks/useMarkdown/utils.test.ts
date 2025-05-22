@@ -180,11 +180,11 @@ describe('preprocessContent', () => {
   });
 
   it('should apply LaTeX preprocessing when enableLatex is true', () => {
-    const content = 'Price is $50 and $100, Brackets \\[x^2\\] and parentheses \\(y^2\\)';
+    const content = 'Brackets \\[x^2\\] and parentheses \\(y^2\\)';
     const result = preprocessContent(content, { enableLatex: true });
 
     // Expect LaTeX processing followed by bold fixing
-    expect(result).toBe('Price is \\$50 and \\$100, Brackets $$x^2$$ and parentheses $y^2$');
+    expect(result).toBe('Brackets $$x^2$$ and parentheses $y^2$');
   });
 
   it('should apply citations transformation when enableCustomFootnotes is true', () => {

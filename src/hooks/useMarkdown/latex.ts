@@ -80,7 +80,8 @@ export function preprocessLaTeX(str: string): string {
   });
 
   // Step 3: Escape dollar signs that are likely currency indicators
-  content = content.replaceAll(/\$(?=\d)/g, '\\$');
+  // Deprecated, as it causes parsing errors for formulas starting with a number, such as `$1$`
+  // content = content.replaceAll(/\$(?=\d)/g, '\\$');
 
   // Step 4: Restore LaTeX expressions
   content = content.replaceAll(
