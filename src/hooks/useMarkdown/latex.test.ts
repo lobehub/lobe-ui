@@ -2,6 +2,7 @@ import {
   convertLatexDelimiters,
   escapeLatexPipes,
   escapeMhchemCommands,
+  escapeTextUnderscores,
   isLastFormulaRenderable,
   preprocessLaTeX,
 } from './latex';
@@ -183,5 +184,43 @@ describe('isLastFormulaRenderable', () => {
     // This should attempt to render "x^{" and return false since it's invalid
     // Note: This test assumes that "x^{" is invalid LaTeX which the renderer will reject
     expect(isLastFormulaRenderable('Text $$formula1$$ $$x^{')).toBe(false);
+  });
+});
+
+describe('escapeTextUnderscores', () => {
+  test('escapes underscores within \\text{} commands', () => {
+    const content = '$\\text{node_domain}$';
+    const expected = '$\\text{node\\_domain}$';
+    expect(escapeTextUnderscores(content)).toBe(expected);
+  });
+
+  test('escapes multiple underscores within \\text{} commands', () => {
+    const content = '$\\text{node_domain_name}$';
+    const expected = '$\\text{node\\_domain\\_name}$';
+    expect(escapeTextUnderscores(content)).toBe(expected);
+  });
+
+  test('escapes underscores in multiple \\text{} commands', () => {
+    const content = '$\\text{node_domain}$ and $\\text{user_name}$';
+    const expected = '$\\text{node\\_domain}$ and $\\text{user\\_name}$';
+    expect(escapeTextUnderscores(content)).toBe(expected);
+  });
+
+  test('does not affect text without \\text{} commands', () => {
+    const content = 'This is a regular_text with underscores';
+    expect(escapeTextUnderscores(content)).toBe(content);
+  });
+
+  test('does not modify \\text{} commands without underscores', () => {
+    const content = '$\\text{regular text}$';
+    expect(escapeTextUnderscores(content)).toBe(content);
+  });
+
+  test('handles complex mixed content', () => {
+    const content =
+      'LaTeX $x^2 + \\text{var_name}$ and $\\text{no underscore} + \\text{with_score}$';
+    const expected =
+      'LaTeX $x^2 + \\text{var\\_name}$ and $\\text{no underscore} + \\text{with\\_score}$';
+    expect(escapeTextUnderscores(content)).toBe(expected);
   });
 });

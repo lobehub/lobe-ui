@@ -54,6 +54,27 @@ export function escapeLatexPipes(text: string): string {
 }
 
 /**
+ * Escapes underscores within \text{...} commands in LaTeX expressions.
+ * For example, \text{node_domain} becomes \text{node\_domain}.
+ * This function processes the content of \text{} blocks to replace all
+ * occurrences of '_' with '\_'.
+ *
+ * @param text The input string potentially containing LaTeX expressions
+ * @returns The string with underscores escaped within \text{...} commands
+ */
+export function escapeTextUnderscores(text: string): string {
+  // This regular expression finds all \text{...} blocks.
+  // For each match, it takes the content inside the braces (the first capture group),
+  // replaces all underscores '_' with '\_', and then reconstructs the \text{...} command.
+  return text.replaceAll(/\\text{([^}]*)}/g, (match, textContent) => {
+    // match is the full matched string, e.g., "\text{node_domain}"
+    // textContent is the content within the braces, e.g., "node_domain"
+    const escapedTextContent = textContent.replaceAll('_', '\\_');
+    return `\\text{${escapedTextContent}}`;
+  });
+}
+
+/**
  * Preprocesses LaTeX content by performing multiple operations:
  * 1. Protects code blocks from processing
  * 2. Protects existing LaTeX expressions
@@ -66,40 +87,41 @@ export function escapeLatexPipes(text: string): string {
  */
 export function preprocessLaTeX(str: string): string {
   // Step 1: Protect code blocks
-  const codeBlocks: string[] = [];
-  let content = str.replaceAll(/(```[\S\s]*?```|`[^\n`]+`)/g, (match, code) => {
-    codeBlocks.push(code);
-    return `<<CODE_BLOCK_${codeBlocks.length - 1}>>`;
-  });
+  // const codeBlocks: string[] = [];
+  // let content = str.replaceAll(/(```[\S\s]*?```|`[^\n`]+`)/g, (match, code) => {
+  //   codeBlocks.push(code);
+  //   return `<<CODE_BLOCK_${codeBlocks.length - 1}>>`;
+  // });
 
-  // Step 2: Protect existing LaTeX expressions
-  const latexExpressions: string[] = [];
-  content = content.replaceAll(/(\$\$[\S\s]*?\$\$|\\\[[\S\s]*?\\]|\\\(.*?\\\))/g, (match) => {
-    latexExpressions.push(match);
-    return `<<LATEX_${latexExpressions.length - 1}>>`;
-  });
+  // // Step 2: Protect existing LaTeX expressions
+  // const latexExpressions: string[] = [];
+  // content = content.replaceAll(/(\$\$[\S\s]*?\$\$|\\\[[\S\s]*?\\]|\\\(.*?\\\))/g, (match) => {
+  //   latexExpressions.push(match);
+  //   return `<<LATEX_${latexExpressions.length - 1}>>`;
+  // });
 
   // Step 3: Escape dollar signs that are likely currency indicators
   // Deprecated, as it causes parsing errors for formulas starting with a number, such as `$1$`
   // content = content.replaceAll(/\$(?=\d)/g, '\\$');
 
   // Step 4: Restore LaTeX expressions
-  content = content.replaceAll(
-    /<<LATEX_(\d+)>>/g,
-    (_, index) => latexExpressions[Number.parseInt(index)],
-  );
+  // content = content.replaceAll(
+  //   /<<LATEX_(\d+)>>/g,
+  //   (_, index) => latexExpressions[Number.parseInt(index)],
+  // );
 
-  // Step 5: Restore code blocks
-  content = content.replaceAll(
-    /<<CODE_BLOCK_(\d+)>>/g,
-    (_, index) => codeBlocks[Number.parseInt(index)],
-  );
+  // // Step 5: Restore code blocks
+  // content = content.replaceAll(
+  //   /<<CODE_BLOCK_(\d+)>>/g,
+  //   (_, index) => codeBlocks[Number.parseInt(index)],
+  // );
+  let content = str;
 
   // Step 6: Apply additional escaping functions
   content = convertLatexDelimiters(content);
   content = escapeMhchemCommands(content);
   content = escapeLatexPipes(content);
-
+  content = escapeTextUnderscores(content);
   return content;
 }
 
