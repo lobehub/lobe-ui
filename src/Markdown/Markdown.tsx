@@ -134,3 +134,6 @@ const Markdown = memo<MarkdownProps>(
 Markdown.displayName = 'Markdown';
 
 export default Markdown;
+
+
+export { Markdown };
