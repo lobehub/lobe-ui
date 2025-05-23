@@ -168,3 +168,6 @@ export const isLastFormulaRenderable = (text: string) => {
     return false;
   }
 };
+
+
+export { extractIncompleteFormula };
