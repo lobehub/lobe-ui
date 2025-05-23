@@ -211,6 +211,12 @@ describe('escapeTextUnderscores', () => {
     expect(escapeTextUnderscores(content)).toBe(content);
   });
 
+  test('does not escape underscores in \\text{} commands with \\text{} commands', () => {
+    const content = '$\\text{node\\_domain}$ and $\\text{user\\_name}$';
+    const expected = '$\\text{node\\_domain}$ and $\\text{user\\_name}$';
+    expect(escapeTextUnderscores(content)).toBe(expected);
+  });
+
   test('does not modify \\text{} commands without underscores', () => {
     const content = '$\\text{regular text}$';
     expect(escapeTextUnderscores(content)).toBe(content);
