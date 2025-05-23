@@ -54,22 +54,20 @@ export function escapeLatexPipes(text: string): string {
 }
 
 /**
- * Escapes underscores within \text{...} commands in LaTeX expressions.
- * For example, \text{node_domain} becomes \text{node\_domain}.
- * This function processes the content of \text{} blocks to replace all
- * occurrences of '_' with '\_'.
+ * Escapes underscores within \text{...} commands in LaTeX expressions
+ * that are not already escaped.
+ * For example, \text{node_domain} becomes \text{node\_domain},
+ * but \text{node\_domain} remains \text{node\_domain}.
  *
  * @param text The input string potentially containing LaTeX expressions
- * @returns The string with underscores escaped within \text{...} commands
+ * @returns The string with unescaped underscores escaped within \text{...} commands
  */
 export function escapeTextUnderscores(text: string): string {
-  // This regular expression finds all \text{...} blocks.
-  // For each match, it takes the content inside the braces (the first capture group),
-  // replaces all underscores '_' with '\_', and then reconstructs the \text{...} command.
-  return text.replaceAll(/\\text{([^}]*)}/g, (match, textContent) => {
-    // match is the full matched string, e.g., "\text{node_domain}"
-    // textContent is the content within the braces, e.g., "node_domain"
-    const escapedTextContent = textContent.replaceAll('_', '\\_');
+  return text.replaceAll(/\\text{([^}]*)}/g, (match, textContent: string) => {
+    // textContent is the content within the braces, e.g., "node_domain" or "already\_escaped"
+    // Replace underscores '_' with '\_' only if they are NOT preceded by a backslash '\'.
+    // The (?<!\\) is a negative lookbehind assertion that ensures the character before '_' is not a '\'.
+    const escapedTextContent = textContent.replaceAll(/(?<!\\)_/g, '\\_');
     return `\\text{${escapedTextContent}}`;
   });
 }
@@ -170,3 +168,6 @@ export const isLastFormulaRenderable = (text: string) => {
     return false;
   }
 };
+
+
+export { extractIncompleteFormula };
