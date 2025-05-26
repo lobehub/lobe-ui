@@ -1,6 +1,6 @@
 {
   "name": "@lobehub/ui",
-  "version": "2.1.12",
+  "version": "2.1.11",
   "description": "Lobe UI is an open-source UI component library for building AIGC web apps",
   "keywords": [
     "lobehub",
@@ -206,5 +206,6 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
-  }
+  },
+  "packageManager": "pnpm@9.15.9+sha256.cf86a7ad764406395d4286a6d09d730711720acc6d93e9dce9ac7ac4dc4a28a7"
 }
