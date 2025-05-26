@@ -107,6 +107,10 @@ export const useStyles = createStyles(({ css, token, prefixCls, stylish, isDarkM
 
           border-radius: 0 !important;
 
+          .${prefixCls}-collapse-header-text {
+            flex: 1;
+          }
+
           .${prefixCls}-collapse-expand-icon {
             align-items: center;
             min-height: 28px;
