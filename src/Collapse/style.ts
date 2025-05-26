@@ -43,8 +43,8 @@ export const useStyles = createStyles(({ css, token, prefixCls, stylish, isDarkM
       &.${prefixCls}-collapse {
         background: transparent;
         .${prefixCls}-collapse-item {
-          background: ${token.colorBgContainer};
           border: 1px solid ${token.colorFillSecondary};
+          background: ${token.colorBgContainer};
         }
 
         .${prefixCls}-collapse-item:not(:first-child) {
@@ -77,8 +77,8 @@ export const useStyles = createStyles(({ css, token, prefixCls, stylish, isDarkM
     `,
     outlined: css`
       &.${prefixCls}-collapse {
-        background: ${token.colorBgContainer};
         border: 1px solid ${token.colorFillSecondary};
+        background: ${token.colorBgContainer};
         .${prefixCls}-collapse-item .${prefixCls}-collapse-header {
           transition: none;
         }
@@ -99,6 +99,7 @@ export const useStyles = createStyles(({ css, token, prefixCls, stylish, isDarkM
         background: transparent;
 
         .${prefixCls}-collapse-header {
+          overflow: hidden;
           display: flex;
           flex: none;
           gap: 0.75em;
