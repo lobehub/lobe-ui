@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.1.11](https://github.com/lobehub/lobe-ui/compare/v2.1.10...v2.1.11)
+
+<sup>Released on **2025-05-26**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix collapse-header.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix collapse-header ([5895d66](https://github.com/lobehub/lobe-ui/commit/5895d66))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.1.10](https://github.com/lobehub/lobe-ui/compare/v2.1.9...v2.1.10)
 
 <sup>Released on **2025-05-23**</sup>
