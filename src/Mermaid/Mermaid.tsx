@@ -25,6 +25,7 @@ const Mermaid = memo<MermaidProps>(
     shadow,
     enablePanZoom = true,
     defaultExpand = true,
+    enableNonPreviewWheelZoom = true,
     className,
     bodyRender,
     fileName,
@@ -78,7 +79,12 @@ const Mermaid = memo<MermaidProps>(
       : originalActions;
 
     const defaultBody = (
-      <SyntaxMermaid enablePanZoom={enablePanZoom} theme={theme} variant={variant}>
+      <SyntaxMermaid
+        enableNonPreviewWheelZoom={enableNonPreviewWheelZoom}
+        enablePanZoom={enablePanZoom}
+        theme={theme}
+        variant={variant}
+      >
         {tirmedChildren}
       </SyntaxMermaid>
     );
