@@ -1,0 +1,65 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Typography > should render correctly with default props 1`] = `
+<article
+  class="acss-c80x8p"
+>
+  Test content
+</article>
+`;
+
+exports[`Typography > should render with custom className 1`] = `
+<article
+  class="custom-class acss-c80x8p"
+>
+  Test content
+</article>
+`;
+
+exports[`Typography > should render with custom fontSize 1`] = `
+<article
+  class="acss-c80x8p"
+>
+  Test content
+</article>
+`;
+
+exports[`Typography > should render with custom headerMultiple 1`] = `
+<article
+  class="acss-q0drdl"
+>
+  Test content
+</article>
+`;
+
+exports[`Typography > should render with custom lineHeight 1`] = `
+<article
+  class="acss-mltska"
+>
+  Test content
+</article>
+`;
+
+exports[`Typography > should render with custom marginMultiple 1`] = `
+<article
+  class="acss-1g7fh7s"
+>
+  Test content
+</article>
+`;
+
+exports[`Typography > should render with default marginMultiple when not provided 1`] = `
+<article
+  class="acss-c80x8p"
+>
+  Test content
+</article>
+`;
+
+exports[`Typography > should render with multiple props 1`] = `
+<article
+  class="custom-class acss-1ipxt5j"
+>
+  Test content
+</article>
+`;
