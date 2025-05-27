@@ -28,6 +28,8 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
       theme: isDefaultTheme ? undefined : customTheme,
     });
     const [blobUrl, setBlobUrl] = useState<string>();
+    const [isDragging, setIsDragging] = useState(false);
+    const [shouldPreventPreview, setShouldPreventPreview] = useState(false);
     const containerRef = useRef(null);
 
     // 组件卸载时清理 Blob URL，避免内存泄漏
@@ -45,6 +47,24 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
       const url = URL.createObjectURL(svgBlob);
       setBlobUrl(url);
     }, [isLoading, data]);
+
+    const handlePanningStart = () => {
+      setIsDragging(true);
+      setShouldPreventPreview(false);
+    };
+
+    const handlePanning = () => {
+      if (isDragging) {
+        setShouldPreventPreview(true);
+      }
+    };
+
+    const handlePanningStop = () => {
+      setIsDragging(false);
+      setTimeout(() => {
+        setShouldPreventPreview(false);
+      }, 100);
+    };
 
     if (!blobUrl) return null;
 
@@ -67,6 +87,9 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
           initialScale={1}
           maxScale={8}
           minScale={0.1}
+          onPanning={handlePanning}
+          onPanningStart={handlePanningStart}
+          onPanningStop={handlePanningStop}
           panning={{
             disabled: false,
             velocityDisabled: false,
@@ -86,7 +109,7 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
               maxHeight={480}
               objectFit={'contain'}
               preview={
-                enablePanZoom
+                enablePanZoom && !shouldPreventPreview
                   ? {
                       mask: false,
                       styles: {
