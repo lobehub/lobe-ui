@@ -93,7 +93,6 @@ const Hotkey = memo<HotkeyProps>(
     const { cx, styles } = useStyles();
     const isBorderless = variant === 'borderless';
     const [keysGroup, setKeysGroup] = useState(splitKeysByPlus(keys));
-    const visibility = typeof window === 'undefined' ? 'hidden' : 'visible';
     const isAppleDevice = useMemo(() => checkIsAppleDevice(isApple), [isApple]);
 
     const variants = useMemo(
@@ -133,7 +132,7 @@ const Hotkey = memo<HotkeyProps>(
         className={className}
         gap={isBorderless ? 6 : 2}
         horizontal
-        style={{ visibility, ...style }}
+        style={style}
         {...rest}
       >
         {compact || isBorderless ? (
