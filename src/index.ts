@@ -17,6 +17,7 @@ export { default as ColorSwatches, type ColorSwatchesProps } from './ColorSwatch
 export { type Config, default as ConfigProvider, useCdnFn } from './ConfigProvider';
 export { default as CopyButton, type CopyButtonProps } from './CopyButton';
 export { default as DatePicker, type DatePickerProps } from './DatePicker';
+export { default as DownloadButton, type DownloadButtonProps } from './DownloadButton';
 export {
   default as DraggablePanel,
   DraggablePanelBody,
