@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.1.14](https://github.com/lobehub/lobe-ui/compare/v2.1.13...v2.1.14)
+
+<sup>Released on **2025-05-27**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Markdown style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Markdown style ([4f4cb82](https://github.com/lobehub/lobe-ui/commit/4f4cb82))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.1.13](https://github.com/lobehub/lobe-ui/compare/v2.1.12...v2.1.13)
 
 <sup>Released on **2025-05-27**</sup>
