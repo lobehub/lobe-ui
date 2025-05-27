@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.1.13](https://github.com/lobehub/lobe-ui/compare/v2.1.12...v2.1.13)
+
+<sup>Released on **2025-05-27**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Highligher props.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix Highligher props ([f30b658](https://github.com/lobehub/lobe-ui/commit/f30b658))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.1.12](https://github.com/lobehub/lobe-ui/compare/v2.1.11...v2.1.12)
 
 <sup>Released on **2025-05-26**</sup>
