@@ -8,7 +8,7 @@ export const useStyles = createStyles(
     {
       fontSize = 16,
       headerMultiple = 1,
-      marginMultiple = 1.5,
+      marginMultiple = 2,
       lineHeight = 1.8,
     }: { fontSize?: number; headerMultiple?: number; lineHeight?: number; marginMultiple?: number },
   ) => {

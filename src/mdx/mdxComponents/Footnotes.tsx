@@ -32,12 +32,11 @@ const useStyles = createStyles(({ css, token }) => ({
       margin: 0 !important;
       padding-block: 0 !important;
       padding-inline: 0 0.4em !important;
+      border: 1px solid ${token.colorBorderSecondary};
+      border-radius: 0.25em;
 
       text-overflow: ellipsis;
       white-space: nowrap;
-
-      border: 1px solid ${token.colorBorderSecondary};
-      border-radius: 0.25em;
 
       &::before {
         content: counter(list-item);
@@ -71,18 +70,18 @@ interface FootnotesProps {
   'data-footnotes'?: boolean;
 }
 
-const Footnotes: FC<FootnotesProps> = ({ children, ...res }) => {
+const Footnotes: FC<FootnotesProps> = ({ children, ...rest }) => {
   const { styles, cx } = useStyles();
 
   const links = useMemo(() => {
     try {
-      return JSON.parse(res['data-footnote-links'] || '');
+      return JSON.parse(rest['data-footnote-links'] || '');
     } catch (error) {
       console.error(error);
-      console.log(res);
+      console.log(rest);
       return [];
     }
-  }, [res['data-footnote-links']]);
+  }, [rest['data-footnote-links']]);
 
   const isError = links.length === 0;
   return (

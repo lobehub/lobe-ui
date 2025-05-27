@@ -28,7 +28,7 @@ const Markdown = memo<MarkdownProps>(
     allowHtml,
     fontSize = 14,
     headerMultiple = 0.25,
-    marginMultiple = 1,
+    marginMultiple,
     showFootnotes,
     variant = 'default',
     reactMarkdownProps,
@@ -99,7 +99,7 @@ const Markdown = memo<MarkdownProps>(
           fontSize={fontSize}
           headerMultiple={headerMultiple}
           lineHeight={lineHeight}
-          marginMultiple={marginMultiple}
+          marginMultiple={marginMultiple || (variant === 'chat' ? 1 : 2)}
           onDoubleClick={onDoubleClick}
           ref={ref}
           style={style}

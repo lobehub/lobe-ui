@@ -16,7 +16,7 @@ export default () => {
       fullFeaturedCodeBlock: true,
       headerMultiple: 1,
       lineHeight: 1.8,
-      marginMultiple: 1.5,
+      marginMultiple: 2,
     },
     { store },
   ) as MarkdownProps;
