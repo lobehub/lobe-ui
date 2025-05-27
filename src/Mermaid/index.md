@@ -388,18 +388,19 @@ export default () => {
 
 ## APIs
 
-| Property       | Description                                              | Type                                     | Default     |
-| -------------- | -------------------------------------------------------- | ---------------------------------------- | ----------- |
-| children       | Mermaid diagram content as a string                      | `string`                                 | -           |
-| fullFeatured   | Whether to use the full-featured mode with more controls | `boolean`                                | -           |
-| variant        | Style variant of the container                           | `'filled' \| 'outlined' \| 'borderless'` | `'filled'`  |
-| shadow         | Whether to show shadow effect                            | `boolean`                                | -           |
-| enablePanZoom  | Enable pan and zoom functionality                        | `boolean`                                | `true`      |
-| copyable       | Whether to show copy button                              | `boolean`                                | `true`      |
-| showLanguage   | Whether to show language label                           | `boolean`                                | `true`      |
-| language       | The language label to display                            | `string`                                 | `'mermaid'` |
-| theme          | Theme for the diagram                                    | `'lobe-theme' \| MermaidConfig['theme']` | -           |
-| defaultExpand  | Whether to expand by default (for fullFeatured mode)     | `boolean`                                | `true`      |
-| actionIconSize | Size of action icons                                     | `ActionIconProps['size']`                | -           |
-| actionsRender  | Custom renderer for action buttons                       | `(props) => ReactNode`                   | -           |
-| bodyRender     | Custom renderer for diagram body                         | `(props) => ReactNode`                   | -           |
+| Property                  | Description                                              | Type                                     | Default     |
+| ------------------------- | -------------------------------------------------------- | ---------------------------------------- | ----------- |
+| children                  | Mermaid diagram content as a string                      | `string`                                 | -           |
+| fullFeatured              | Whether to use the full-featured mode with more controls | `boolean`                                | -           |
+| variant                   | Style variant of the container                           | `'filled' \| 'outlined' \| 'borderless'` | `'filled'`  |
+| shadow                    | Whether to show shadow effect                            | `boolean`                                | -           |
+| enablePanZoom             | Enable pan and zoom functionality                        | `boolean`                                | `true`      |
+| copyable                  | Whether to show copy button                              | `boolean`                                | `true`      |
+| showLanguage              | Whether to show language label                           | `boolean`                                | `true`      |
+| language                  | The language label to display                            | `string`                                 | `'mermaid'` |
+| theme                     | Theme for the diagram                                    | `'lobe-theme' \| MermaidConfig['theme']` | -           |
+| defaultExpand             | Whether to expand by default (for fullFeatured mode)     | `boolean`                                | `true`      |
+| actionIconSize            | Size of action icons                                     | `ActionIconProps['size']`                | -           |
+| actionsRender             | Custom renderer for action buttons                       | `(props) => ReactNode`                   | -           |
+| bodyRender                | Custom renderer for diagram body                         | `(props) => ReactNode`                   | -           |
+| enableNonPreviewWheelZoom | Enable zoom outof preview mode                           | `boolean`                                | `true`      |
