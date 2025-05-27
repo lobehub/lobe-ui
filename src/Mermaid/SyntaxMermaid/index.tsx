@@ -78,8 +78,8 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
           }}
         >
           <TransformComponent
-            contentStyle={{ height: '100%', width: '100%' }}
-            wrapperStyle={{ height: '100%', width: '100%' }}
+            contentStyle={{ display: 'block', height: '100%', width: '100%' }}
+            wrapperStyle={{ display: 'block', height: '100%', width: '100%' }}
           >
             <Image
               alt={'mermaid'}
