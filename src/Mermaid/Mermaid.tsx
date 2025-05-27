@@ -27,6 +27,7 @@ const Mermaid = memo<MermaidProps>(
     defaultExpand = true,
     className,
     bodyRender,
+    fileName,
     actionsRender,
     theme,
     ...rest
@@ -94,6 +95,7 @@ const Mermaid = memo<MermaidProps>(
           content={tirmedChildren}
           copyable={copyable}
           defaultExpand={defaultExpand}
+          fileName={fileName}
           language={language}
           shadow={shadow}
           showLanguage={showLanguage}

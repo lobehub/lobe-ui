@@ -29,6 +29,10 @@ export const Highlighter = memo<HighlighterProps>(
     actionsRender,
     enableTransformer,
     theme,
+    icon,
+    fileName,
+    allowChangeLanguage,
+    defaultExpand = true,
     ...rest
   }) => {
     const { styles, cx } = useStyles();
@@ -97,9 +101,13 @@ export const Highlighter = memo<HighlighterProps>(
       return (
         <FullFeatured
           actionsRender={actionsRender}
+          allowChangeLanguage={allowChangeLanguage}
           className={className}
           content={tirmedChildren}
           copyable={copyable}
+          defaultExpand={defaultExpand}
+          fileName={fileName}
+          icon={icon}
           language={language}
           shadow={shadow}
           showLanguage={showLanguage}
