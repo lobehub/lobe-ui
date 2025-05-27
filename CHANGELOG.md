@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.1.15](https://github.com/lobehub/lobe-ui/compare/v2.1.14...v2.1.15)
+
+<sup>Released on **2025-05-27**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix Hotkey Hydration failed.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix Hotkey Hydration failed ([02b005e](https://github.com/lobehub/lobe-ui/commit/02b005e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.1.14](https://github.com/lobehub/lobe-ui/compare/v2.1.13...v2.1.14)
 
 <sup>Released on **2025-05-27**</sup>
