@@ -18,8 +18,8 @@ export default () => {
         value: false,
       },
       fileName: {
-        description: 'Name of the file to download (without extension)',
-        value: 'sample',
+        description: 'Name of the file to download ',
+        value: 'sample.json',
       },
       fileType: {
         description: 'Type of file to download',
