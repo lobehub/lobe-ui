@@ -210,3 +210,6 @@ export const preprocessContent = (
 
   return fixMarkdownBold(content);
 };
+
+
+export { CACHE_SIZE };
