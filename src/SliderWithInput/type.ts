@@ -5,6 +5,7 @@ import type { FlexboxProps } from 'react-layout-kit';
 import type { InputNumberProps } from '@/Input';
 
 export interface SliderWithInputProps extends Omit<SliderSingleProps, 'classNames' | 'styles'> {
+  changeOnWheel?: boolean;
   classNames?: {
     input?: string;
     slider?: string;
