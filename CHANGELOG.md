@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.2.0](https://github.com/lobehub/lobe-ui/compare/v2.1.15...v2.2.0)
+
+<sup>Released on **2025-06-02**</sup>
+
+#### ✨ Features
+
+- **misc**: 添加 changeOnWheel 属性到 SliderWithInput 组件.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: 添加 changeOnWheel 属性到 SliderWithInput 组件，closes [#369](https://github.com/lobehub/lobe-ui/issues/369) ([b37a931](https://github.com/lobehub/lobe-ui/commit/b37a931))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.1.15](https://github.com/lobehub/lobe-ui/compare/v2.1.14...v2.1.15)
 
 <sup>Released on **2025-05-27**</sup>
