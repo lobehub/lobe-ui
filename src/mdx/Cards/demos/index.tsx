@@ -43,25 +43,25 @@ export default () => (
       <Card
         href="/mdx/callout"
         icon={Warehouse}
-        image="https://gw.alipayobjects.com/zos/kitchen/sLO%24gbrQtp/lobe-chat.webp"
+        image="https://github.com/user-attachments/assets/2428a136-38bf-488c-8033-d9f261d67f3d"
         title="Callout"
       />
       <Card
         href="/mdx/callout"
         icon={Warehouse}
-        image="https://gw.alipayobjects.com/zos/kitchen/sLO%24gbrQtp/lobe-chat.webp"
+        image="https://github.com/user-attachments/assets/2428a136-38bf-488c-8033-d9f261d67f3d"
         title="Tabs"
       />
       <Card
         href="/mdx/callouts"
         icon={Warehouse}
-        image="https://gw.alipayobjects.com/zos/kitchen/sLO%24gbrQtp/lobe-chat.webp"
+        image="https://github.com/user-attachments/assets/2428a136-38bf-488c-8033-d9f261d67f3d"
         title="Steps"
       />
       <Card
         href="/mdx/callouts"
         icon={Warehouse}
-        image="https://gw.alipayobjects.com/zos/kitchen/sLO%24gbrQtp/lobe-chat.webp"
+        image="https://github.com/user-attachments/assets/2428a136-38bf-488c-8033-d9f261d67f3d"
         title="FileTree"
       />
     </Cards>

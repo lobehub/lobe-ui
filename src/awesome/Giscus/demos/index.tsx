@@ -5,8 +5,8 @@ export default () => {
     <Giscus
       id="demo"
       mapping="number"
-      repo="canisminor1990/sd-webui-kitchen-theme"
-      repoId="R_kgDOJCPcNg"
+      repo="lobehub/lobe-ui"
+      repoId="R_kgDOJloKoA"
       style={{ width: '100%' }}
       term="53"
     />
