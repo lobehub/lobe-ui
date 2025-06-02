@@ -14,7 +14,7 @@ const SliderWithInput = memo<SliderWithInputProps>(
     step,
     value,
     onChange,
-    max = 100,
+    max,
     min,
     defaultValue,
     size,
@@ -26,6 +26,7 @@ const SliderWithInput = memo<SliderWithInputProps>(
     styles,
     disabled,
     unlimitedInput = false,
+    changeOnWheel,
     ...rest
   }) => {
     const handleOnchange = (value: number | null) => {
@@ -60,6 +61,7 @@ const SliderWithInput = memo<SliderWithInputProps>(
           {...rest}
         />
         <InputNumber
+          changeOnWheel={changeOnWheel}
           className={inputClassName}
           controls={size !== 'small' || controls}
           defaultValue={defaultValue}

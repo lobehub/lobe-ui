@@ -16,12 +16,13 @@ description: SliderWithInput combines a slider with an input number field, allow
 | value          | Current value                                 | `number`                                            | -       |
 | defaultValue   | Default value                                 | `number`                                            | -       |
 | min            | Minimum value                                 | `number`                                            | -       |
-| max            | Maximum value                                 | `number`                                            | `100`   |
+| max            | Maximum value                                 | `number`                                            | -   |
 | step           | Value step for slider and input               | `number`                                            | -       |
 | size           | Size of the input field                       | `'small' \| 'middle' \| 'large'`                    | -       |
 | controls       | Whether to show number controls in input      | `boolean`                                           | -       |
 | gap            | Space between slider and input                | `number`                                            | `16`    |
 | disabled       | Whether component is disabled                 | `boolean`                                           | -       |
 | unlimitedInput | Whether the input number field has max limits | `boolean`                                           | `false` |
+| changeOnWheel  | Whether to change value on mouse wheel        | `boolean`                                           | -  |
 | styles         | Custom styles for components                  | `{ input?: CSSProperties; slider?: CSSProperties }` | -       |
 | classNames     | Custom class names for components             | `{ input?: string; slider?: string }`               | -       |
