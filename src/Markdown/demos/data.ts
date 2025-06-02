@@ -25,13 +25,11 @@ an example | *an example* | **an example**
 
 ---
 
-![](https://gw.alipayobjects.com/zos/kitchen/sLO%24gbrQtp/lobe-chat.webp)
+![](https://github.com/user-attachments/assets/2428a136-38bf-488c-8033-d9f261d67f3d)
 
-![](https://gw.alipayobjects.com/zos/kitchen/8Ab%24hLJ5ur/cover.webp)
+![](https://github.com/user-attachments/assets/625cf558-4c32-4489-970a-2723ebadbc23)
 
-<video
-  poster="https://gw.alipayobjects.com/zos/kitchen/sLO%24gbrQtp/lobe-chat.webp"
-  src="https://github.com/lobehub/lobe-chat/assets/28616219/f29475a3-f346-4196-a435-41a6373ab9e2"/>
+<video src="https://github.com/lobehub/lobe-chat/assets/28616219/f29475a3-f346-4196-a435-41a6373ab9e2"/>
 
 ---
 
@@ -153,7 +151,7 @@ This is [an example](http://example.com/ "Title") inline link.
 
 #### Customize Image Display
 
-![](https://gw.alipayobjects.com/zos/kitchen/sLO%24gbrQtp/lobe-chat.webp)
+![](https://github.com/user-attachments/assets/2428a136-38bf-488c-8033-d9f261d67f3d)
 `;
 
 export const code = `

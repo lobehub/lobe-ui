@@ -1,13 +1,12 @@
 'use client';
 
 import { Image as AntImage, Skeleton } from 'antd';
-import { useThemeMode } from 'antd-style';
 import { cva } from 'class-variance-authority';
 import { memo, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import usePreview from './components/usePreview';
-import { useStyles } from './style';
+import { FALLBACK, useStyles } from './style';
 import type { ImageProps } from './type';
 
 const Image = memo<ImageProps>(
@@ -32,7 +31,6 @@ const Image = memo<ImageProps>(
     height,
     ...rest
   }) => {
-    const { isDarkMode } = useThemeMode();
     const { styles, cx, theme } = useStyles({
       alwaysShowActions,
       maxHeight,
@@ -85,11 +83,7 @@ const Image = memo<ImageProps>(
         {actions && <div className={styles.actions}>{actions}</div>}
         <AntImage
           className={classNames?.image}
-          fallback={
-            isDarkMode
-              ? 'https://gw.alipayobjects.com/zos/kitchen/nhzBb%24r0Cm/image_off_dark.webp'
-              : 'https://gw.alipayobjects.com/zos/kitchen/QAvkgt30Ys/image_off_light.webp'
-          }
+          fallback={FALLBACK}
           height={height}
           loading={'lazy'}
           onClick={onClick}

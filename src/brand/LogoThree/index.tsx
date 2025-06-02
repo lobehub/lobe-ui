@@ -44,7 +44,7 @@ const LogoThree = memo<LogoThreeProps>(({ className, style, size = 128, onLoad, 
           setLoading(false);
           onLoad?.(splineApp);
         }}
-        scene={'https://gw.alipayobjects.com/os/kitchen/8LH7slSv3s/logo.splinecode'}
+        scene={'https://hub-apac-1.lobeobjects.space/logo.splinecode'}
         style={{
           flex: 'none',
           height: size,

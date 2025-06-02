@@ -5,8 +5,8 @@ import Spline, { type SplineProps } from '@/awesome/Spline';
 
 import Loading from './Loading';
 
-const LIGHT = 'https://gw.alipayobjects.com/os/kitchen/J9jiHITGrs/scene.splinecode';
-const DARK = 'https://gw.alipayobjects.com/os/kitchen/CzQKKvSE8a/scene.splinecode';
+const LIGHT = 'https://hub-apac-1.lobeobjects.space/light.splinecode';
+const DARK = 'https://hub-apac-1.lobeobjects.space/dark.splinecode';
 
 export interface LogoSplineProps extends Partial<SplineProps> {
   className?: string;
