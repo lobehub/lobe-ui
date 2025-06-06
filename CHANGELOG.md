@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.3.0](https://github.com/lobehub/lobe-ui/compare/v2.2.0...v2.3.0)
+
+<sup>Released on **2025-06-06**</sup>
+
+#### ✨ Features
+
+- **misc**: 在 fixMarkdownBold 函数中添加在开头粗体标记前添加空格的处理.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: 在 fixMarkdownBold 函数中添加在开头粗体标记前添加空格的处理，closes [#373](https://github.com/lobehub/lobe-ui/issues/373) ([1cc01e9](https://github.com/lobehub/lobe-ui/commit/1cc01e9))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.2.0](https://github.com/lobehub/lobe-ui/compare/v2.1.15...v2.2.0)
 
 <sup>Released on **2025-06-02**</sup>
