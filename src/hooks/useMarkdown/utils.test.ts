@@ -217,4 +217,16 @@ describe('preprocessContent', () => {
     // Expect only bold fixing
     expect(result).toBe('**123：** 456');
   });
+
+  it('should add space before opening bold markers if next char is symbol/punctuation', () => {
+    // 英文标点无需空格
+    expect(fixMarkdownBold('1**:bold**')).toBe('1 **:bold**');
+    // 中文标点
+    expect(fixMarkdownBold('你好**：世界**')).toBe('你好 **：世界**');
+    // 多字符符号
+    expect(fixMarkdownBold('1**(test)**2')).toBe('1 **(test)** 2'); 
+    // 普通文字前不插空格
+    expect(fixMarkdownBold('hello**world**')).toBe('hello**world**');
+    expect(fixMarkdownBold('1**“召回-排序”**2')).toBe('1 **“召回-排序”** 2');
+  });
 });

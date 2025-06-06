@@ -69,6 +69,17 @@ export function fixMarkdownBold(text: string): string {
         continue;
       }
 
+      // Add space before opening bold marker if needed
+      if (asteriskCount === 2 && boldMarkerCount % 2 === 1) {
+        const nextChar = i + 1 < text.length ? text[i + 1] : '';
+        const isNextCharSymbol = /[\p{P}\p{S}]/u.test(nextChar);
+        if (isNextCharSymbol) {
+          // 已经向 result 写入了第一个 '*'，先删掉它，然后输出 ' **'
+          result = result.slice(0, -1) + ' **';
+          continue;
+        }
+      }
+
       // Add space after closing bold marker if needed
       if (asteriskCount === 2 && boldMarkerCount % 2 === 0) {
         const prevChar = i > 0 ? text[i - 2] : '';
