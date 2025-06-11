@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.4.0](https://github.com/lobehub/lobe-ui/compare/v2.3.0...v2.4.0)
+
+<sup>Released on **2025-06-11**</sup>
+
+#### ✨ Features
+
+- **misc**: Add MDX rendering component with enhanced plugin support and memoization.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add MDX rendering component with enhanced plugin support and memoization ([f4fb6cc](https://github.com/lobehub/lobe-ui/commit/f4fb6cc))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.3.0](https://github.com/lobehub/lobe-ui/compare/v2.2.0...v2.3.0)
 
 <sup>Released on **2025-06-06**</sup>
