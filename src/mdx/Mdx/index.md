@@ -7,7 +7,7 @@ description: A component that renders MDX content with enhanced features like La
 apiHeader:
   pkg: '@lobehub/ui/mdx'
   docUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/mdx/Mdx/index.md'
-  sourceUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/mdx/Mdx/index.ts'
+  sourceUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/mdx/Mdx/index.tsx'
 ---
 
 ## Usage

@@ -13,8 +13,8 @@ import Alert from '@/Alert';
 import { PreviewGroup } from '@/Image';
 import { Typography, type TypographyProps } from '@/Markdown';
 import { useStyles } from '@/Markdown/style';
+import { useMarkdownContent } from '@/hooks/useMarkdown';
 
-import { preprocessContent } from '../../hooks/useMarkdown/utils';
 import mdxComponents from '../mdxComponents';
 import CodeBlock from '../mdxComponents/CodeBlock';
 import Image from '../mdxComponents/Image';
@@ -56,20 +56,12 @@ const Mdx = memo<MdxProps>(
     variant,
     ...rest
   }) => {
-    const { cx, styles } = useStyles({
-      fontSize,
-      headerMultiple,
-      lineHeight,
-      marginMultiple,
-    });
+    const { cx, styles } = useStyles();
+    const escapedContent = useMarkdownContent(children);
 
     const isChatMode = variant === 'chat';
 
     const [MDXContent, setMDXContent] = useState<any>(() => () => null);
-
-    const escapedContent = useMemo(() => {
-      return preprocessContent(children, { enableLatex });
-    }, [children, enableLatex]);
 
     const innerRehypePlugins = Array.isArray(rehypePlugins) ? rehypePlugins : [rehypePlugins];
     const memoRehypePlugins = useMemo(
@@ -104,6 +96,7 @@ const Mdx = memo<MdxProps>(
     }, [components, enableMermaid, fullFeaturedCodeBlock]);
 
     useEffect(() => {
+      if (!escapedContent) return;
       (async () => {
         try {
           const { default: Content } = await evaluate(escapedContent, {
@@ -130,12 +123,16 @@ const Mdx = memo<MdxProps>(
       })();
     }, [escapedContent, memoRehypePlugins, memoRemarkPlugins]);
 
-    if (!MDXContent) return fallback;
+    if (!escapedContent || !MDXContent) return fallback;
 
     return (
       <Typography
         className={cx(enableLatex && styles.latex, isChatMode && styles.chat, className)}
         data-code-type="mdx"
+        fontSize={fontSize}
+        headerMultiple={headerMultiple}
+        lineHeight={lineHeight}
+        marginMultiple={marginMultiple}
         style={style}
         {...rest}
       >

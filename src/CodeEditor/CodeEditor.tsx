@@ -80,7 +80,7 @@ const CodeEditor = memo<CodeEditorProps>(
               color: theme.colorTextDescription,
             }}
           >
-            {placeholder}
+            {placeholder || ' '}
           </pre>
         )}
 
