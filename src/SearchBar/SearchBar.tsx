@@ -1,7 +1,7 @@
 'use client';
 
 import { LucideLoader2, Search } from 'lucide-react';
-import { memo, useRef, useState } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import useControlledState from 'use-merge-value';
 
@@ -43,7 +43,10 @@ const SearchBar = memo<SearchBarProps>(
     const [showTag, setShowTag] = useState<boolean>(true);
     const { styles, cx } = useStyles();
     const inputReference: any = useRef<HTMLInputElement>(null);
-    const hotkey = shortKey.includes('+') ? shortKey : `mod+${shortKey}`;
+    const hotkey = useMemo(
+      () => (shortKey.includes('+') ? shortKey : `mod+${shortKey}`),
+      [shortKey],
+    );
 
     useHotkeys(
       hotkey,
@@ -53,6 +56,7 @@ const SearchBar = memo<SearchBarProps>(
       },
       {
         enableOnFormTags: true,
+        enabled: !!enableShortKey && !!shortKey,
         preventDefault: true,
       },
     );
