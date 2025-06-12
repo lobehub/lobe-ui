@@ -92,7 +92,7 @@ const SearchBar = memo<SearchBarProps>(
           }
           ref={inputReference}
           style={inputStyle}
-          value={value}
+          value={inputValue}
           {...rest}
         />
         {enableShortKey && showTag && !inputValue && (
