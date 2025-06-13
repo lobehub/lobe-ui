@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.5.4](https://github.com/lobehub/lobe-ui/compare/v2.5.3...v2.5.4)
+
+<sup>Released on **2025-06-13**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix Text Tooptip.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix Text Tooptip ([208250d](https://github.com/lobehub/lobe-ui/commit/208250d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.5.3](https://github.com/lobehub/lobe-ui/compare/v2.5.2...v2.5.3)
 
 <sup>Released on **2025-06-13**</sup>
