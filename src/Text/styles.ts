@@ -73,7 +73,7 @@ export const useStyles = createStyles(({ css, token }) => ({
   `,
 
   secondary: css`
-    color: ${token.colorTextSecondary};
+    color: ${token.colorTextDescription};
   `,
 
   strong: css`
@@ -82,10 +82,7 @@ export const useStyles = createStyles(({ css, token }) => ({
   success: css`
     color: ${token.colorSuccess};
   `,
-  text: css`
-    font-size: ${token.fontSize}px;
-    line-height: ${token.lineHeight};
-  `,
+  text: css``,
   underline: css`
     text-decoration: underline;
   `,
