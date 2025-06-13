@@ -19,6 +19,7 @@ const Text = memo<TextProps>(
     italic,
     underline,
     delete: deleteStyle,
+    fontSize,
     mark,
     code,
     color,
@@ -33,6 +34,13 @@ const Text = memo<TextProps>(
         cva(styles.text, {
           defaultVariants: {},
           variants: {
+            as: {
+              h1: styles.h1,
+              h2: styles.h2,
+              h3: styles.h3,
+              h4: styles.h4,
+              h5: styles.h5,
+            },
             code: {
               true: styles.code,
             },
@@ -78,12 +86,16 @@ const Text = memo<TextProps>(
         ellipsis.rows && {
           WebkitLineClamp: ellipsis.rows,
         }),
+      fontSize,
     };
 
     const content = (
       <Container
         className={cx(
           variants({
+            as: ['h1', 'h2', 'h3', 'h4', 'h5'].includes(Container as string)
+              ? (Container as any)
+              : undefined,
             code,
             delete: deleteStyle,
             disabled,

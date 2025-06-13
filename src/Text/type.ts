@@ -15,6 +15,7 @@ export interface TextProps extends DivProps {
         rows?: number;
         tooltip?: ReactNode | TooltipProps;
       };
+  fontSize?: number | string;
   italic?: boolean;
   mark?: boolean;
   ref?: Ref<HTMLDivElement>;

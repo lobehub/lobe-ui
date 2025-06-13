@@ -25,19 +25,54 @@ export const useStyles = createStyles(({ css, token }) => ({
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
   `,
+  // Heading styles
+  h1: css`
+    font-size: calc(${token.fontSize}px * 2.5);
+    font-weight: bold;
+    line-height: 1.25;
+  `,
+
+  h2: css`
+    font-size: calc(${token.fontSize}px * 2);
+    font-weight: bold;
+    line-height: 1.25;
+  `,
+
+  h3: css`
+    font-size: calc(${token.fontSize}px * 1.5);
+    font-weight: bold;
+    line-height: 1.25;
+  `,
+
+  h4: css`
+    font-size: calc(${token.fontSize}px * 1.25);
+    font-weight: bold;
+    line-height: 1.25;
+  `,
+
+  h5: css`
+    font-size: ${token.fontSize}px;
+    font-weight: bold;
+    line-height: 1.25;
+  `,
+
   info: css`
     color: ${token.colorInfo};
   `,
+
   italic: css`
     font-style: italic;
   `,
+
   mark: css`
     color: #000;
     background-color: ${token.yellow};
   `,
+
   secondary: css`
     color: ${token.colorTextSecondary};
   `,
+
   strong: css`
     font-weight: bold;
   `,
@@ -47,7 +82,6 @@ export const useStyles = createStyles(({ css, token }) => ({
   text: css`
     font-size: ${token.fontSize}px;
     line-height: ${token.lineHeight};
-    color: ${token.colorText};
   `,
   underline: css`
     text-decoration: underline;

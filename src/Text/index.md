@@ -58,11 +58,29 @@ The ellipsis feature supports two modes:
 1. Single line ellipsis:
 
 ```tsx
-<Text ellipsis>Long text content</Text>
+import { Text } from '@lobehub/ui';
+
+export default () => (
+  <Text ellipsis>
+    This is a very long text that will be truncated with ellipsis when it exceeds the container
+    width. This is a very long text that will be truncated with ellipsis when it exceeds the
+    container width.
+  </Text>
+);
 ```
 
 2. Multi-line ellipsis with tooltip:
 
 ```tsx
-<Text ellipsis={{ rows: 2, tooltip: 'Full text content' }}>Long text content</Text>
+import { Text } from '@lobehub/ui';
+
+export default () => (
+  <Text ellipsis={{ rows: 2, tooltip: 'Full text content' }}>
+    This is a very long text that will be truncated with ellipsis when it exceeds the container
+    width. This is a very long text that will be truncated with ellipsis when it exceeds the
+    container width. This is a very long text that will be truncated with ellipsis when it exceeds
+    the container width. This is a very long text that will be truncated with ellipsis when it
+    exceeds the container width.
+  </Text>
+);
 ```
