@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.5.5](https://github.com/lobehub/lobe-ui/compare/v2.5.4...v2.5.5)
+
+<sup>Released on **2025-06-13**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Text Tooltip.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix Text Tooltip ([995a090](https://github.com/lobehub/lobe-ui/commit/995a090))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.5.4](https://github.com/lobehub/lobe-ui/compare/v2.5.3...v2.5.4)
 
 <sup>Released on **2025-06-13**</sup>
