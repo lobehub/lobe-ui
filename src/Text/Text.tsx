@@ -123,13 +123,14 @@ const Text = memo<TextProps>(
 
     // 处理带有 tooltip 的省略
     if (ellipsis) {
+      const title = typeof ellipsis === 'string' ? ellipsis : children;
       if (typeof ellipsis === 'object')
         return (
-          <Tooltip title={content} {...ellipsis}>
+          <Tooltip title={title} {...ellipsis}>
             {content}
           </Tooltip>
         );
-      return <Tooltip title={content}>{content}</Tooltip>;
+      return <Tooltip title={title}>{content}</Tooltip>;
     }
 
     return content;

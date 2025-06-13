@@ -1,4 +1,4 @@
-import type { ElementType, ReactNode, Ref } from 'react';
+import type { ElementType, Ref } from 'react';
 
 import type { TooltipProps } from '@/Tooltip';
 import { DivProps } from '@/types';
@@ -13,7 +13,7 @@ export interface TextProps extends DivProps {
     | boolean
     | {
         rows?: number;
-        tooltip?: ReactNode | TooltipProps;
+        tooltip?: boolean | string | TooltipProps;
       };
   fontSize?: number | string;
   italic?: boolean;
