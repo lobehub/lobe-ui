@@ -1,8 +1,9 @@
 'use client';
 
-import { Tooltip } from 'antd';
 import { cva } from 'class-variance-authority';
 import { memo, useMemo } from 'react';
+
+import Tooltip from '@/Tooltip';
 
 import { useStyles } from './styles';
 import type { TextProps } from './type';
@@ -40,6 +41,7 @@ const Text = memo<TextProps>(
               h3: styles.h3,
               h4: styles.h4,
               h5: styles.h5,
+              p: styles.p,
             },
             code: {
               true: styles.code,
@@ -93,7 +95,7 @@ const Text = memo<TextProps>(
       <Container
         className={cx(
           variants({
-            as: ['h1', 'h2', 'h3', 'h4', 'h5'].includes(Container as string)
+            as: ['h1', 'h2', 'h3', 'h4', 'h5', 'p'].includes(Container as string)
               ? (Container as any)
               : undefined,
             code,
@@ -120,10 +122,14 @@ const Text = memo<TextProps>(
     );
 
     // 处理带有 tooltip 的省略
-    if (ellipsis && typeof ellipsis === 'object' && ellipsis.tooltip) {
-      const tooltipProps =
-        typeof ellipsis.tooltip === 'object' ? ellipsis.tooltip : { title: ellipsis.tooltip };
-      return <Tooltip {...tooltipProps}>{content}</Tooltip>;
+    if (ellipsis) {
+      if (typeof ellipsis === 'object')
+        return (
+          <Tooltip title={content} {...ellipsis}>
+            {content}
+          </Tooltip>
+        );
+      return <Tooltip title={content}>{content}</Tooltip>;
     }
 
     return content;

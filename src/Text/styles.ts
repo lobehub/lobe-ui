@@ -55,7 +55,6 @@ export const useStyles = createStyles(({ css, token }) => ({
     font-weight: bold;
     line-height: 1.25;
   `,
-
   info: css`
     color: ${token.colorInfo};
   `,
@@ -67,6 +66,10 @@ export const useStyles = createStyles(({ css, token }) => ({
   mark: css`
     color: #000;
     background-color: ${token.yellow};
+  `,
+
+  p: css`
+    margin-block: 0;
   `,
 
   secondary: css`
