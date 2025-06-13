@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.5.0](https://github.com/lobehub/lobe-ui/compare/v2.4.2...v2.5.0)
+
+<sup>Released on **2025-06-13**</sup>
+
+#### ✨ Features
+
+- **misc**: Add Text.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add Text ([f85d76d](https://github.com/lobehub/lobe-ui/commit/f85d76d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.4.2](https://github.com/lobehub/lobe-ui/compare/v2.4.1...v2.4.2)
 
 <sup>Released on **2025-06-12**</sup>
