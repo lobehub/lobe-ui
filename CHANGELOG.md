@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.5.2](https://github.com/lobehub/lobe-ui/compare/v2.5.1...v2.5.2)
+
+<sup>Released on **2025-06-13**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Text style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Text style ([eb75157](https://github.com/lobehub/lobe-ui/commit/eb75157))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.5.1](https://github.com/lobehub/lobe-ui/compare/v2.5.0...v2.5.1)
 
 <sup>Released on **2025-06-13**</sup>
