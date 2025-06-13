@@ -1,12 +1,12 @@
 'use client';
 
-import { Typography } from 'antd';
 import { CSSProperties, memo } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 
 import A from '@/A';
 import Icon from '@/Icon';
 import Img from '@/Img';
+import Text from '@/Text';
 
 import { useStyles } from './style';
 import type { FeatureItemProps } from './type';
@@ -65,14 +65,14 @@ const Item = memo<FeatureItemProps>(
             </Flexbox>
           )}
           {description && (
-            <Typography.Paragraph
+            <Text
               className={styles.desc}
               ellipsis={{
                 rows: 4,
               }}
             >
               {description}
-            </Typography.Paragraph>
+            </Text>
           )}
           {link && (
             <div className={styles.link}>

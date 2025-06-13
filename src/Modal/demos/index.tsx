@@ -1,5 +1,4 @@
-import { Button, Modal } from '@lobehub/ui';
-import { Typography } from 'antd';
+import { Button, Modal, Text } from '@lobehub/ui';
 import { useState } from 'react';
 
 export default () => {
@@ -23,9 +22,7 @@ export default () => {
         Open Modal
       </Button>
       <Modal onCancel={handleCancel} onOk={handleOk} open={isModalOpen} title="Basic Modal">
-        <Typography.Paragraph>
-          {Array.from({ length: 200 }).fill('Some contents').join(' ')}
-        </Typography.Paragraph>
+        <Text as={'p'}>{Array.from({ length: 200 }).fill('Some contents').join(' ')}</Text>
       </Modal>
     </>
   );

@@ -1,8 +1,9 @@
 'use client';
 
-import { Typography } from 'antd';
 import { memo, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
+
+import Text from '@/Text';
 
 import type { SearchResultCardProps } from '../../type';
 import { useStyles } from './style';
@@ -38,9 +39,9 @@ const SearchResultCard = memo<SearchResultCardProps>(({ ref, url, title, alt, ..
             src={`https://icons.duckduckgo.com/ip3/${host}.ico`}
             width={14}
           />
-          <Typography.Text className={styles.url} type={'secondary'}>
+          <Text className={styles.url} ellipsis type={'secondary'}>
             {domain}
-          </Typography.Text>
+          </Text>
         </Flexbox>
       </Flexbox>
     </a>

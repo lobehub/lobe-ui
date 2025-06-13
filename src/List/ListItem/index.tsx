@@ -1,17 +1,15 @@
 'use client';
 
-import { Typography } from 'antd';
 import { Loader2, MessageSquare } from 'lucide-react';
 import { memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import Icon from '@/Icon';
+import Text from '@/Text';
 
 import type { ListItemProps } from '../type';
 import { useStyles } from './style';
 import { getChatItemTime } from './time';
-
-const { Title, Paragraph } = Typography;
 
 const ListItem = memo<ListItemProps>(
   ({
@@ -101,22 +99,22 @@ const ListItem = memo<ListItemProps>(
             gap={4}
             style={customStyles?.content}
           >
-            <Title
+            <Text
+              as={'h3'}
               className={cx(styles.title, classNames?.title)}
-              ellipsis={{ rows: 1 }}
-              level={3}
+              ellipsis
               style={customStyles?.title}
             >
               {title}
-            </Title>
+            </Text>
             {description && (
-              <Paragraph
+              <Text
                 className={cx(styles.desc, classNames?.desc)}
-                ellipsis={{ rows: 1 }}
+                ellipsis
                 style={customStyles?.desc}
               >
                 {description}
-              </Paragraph>
+              </Text>
             )}
             {addon}
           </Flexbox>

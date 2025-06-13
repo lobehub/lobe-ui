@@ -1,6 +1,6 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ cx, css, token, prefixCls, stylish }) => {
+export const useStyles = createStyles(({ cx, css, token, stylish }) => {
   return {
     actions: css`
       position: absolute;
@@ -20,14 +20,12 @@ export const useStyles = createStyles(({ cx, css, token, prefixCls, stylish }) =
       color: ${token.colorTextPlaceholder};
     `,
     desc: css`
-      &.${prefixCls}-typography {
-        width: 100%;
-        margin: 0;
+      width: 100%;
+      margin: 0;
 
-        font-size: 12px;
-        line-height: 1.2;
-        color: ${token.colorTextDescription};
-      }
+      font-size: 12px;
+      line-height: 1.2;
+      color: ${token.colorTextDescription};
     `,
 
     pin: css`
@@ -40,30 +38,28 @@ export const useStyles = createStyles(({ cx, css, token, prefixCls, stylish }) =
       css`
         cursor: pointer;
         position: relative;
-        color: ${token.colorTextTertiary};
         border-radius: ${token.borderRadius}px;
+        color: ${token.colorTextTertiary};
       `,
     ),
 
     title: css`
-      &.${prefixCls}-typography {
-        width: 100%;
-        margin: 0;
+      width: 100%;
+      margin: 0;
 
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 1.2;
-        color: ${token.colorText};
-      }
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1.2;
+      color: ${token.colorText};
     `,
     triangle: css`
       width: 10px;
       height: 10px;
+      border-radius: 2px;
 
       opacity: 0.5;
       background: ${token.colorPrimaryBorder};
       clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
-      border-radius: 2px;
     `,
   };
 });

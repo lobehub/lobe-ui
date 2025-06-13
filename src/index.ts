@@ -139,6 +139,7 @@ export { default as SortableList, type SortableListProps } from './SortableList'
 export * from './styles';
 export { default as Tabs, type TabsProps } from './Tabs';
 export { default as Tag, type TagProps } from './Tag';
+export { default as Text, type TextProps } from './Text';
 export {
   Meta,
   type MetaProps,
