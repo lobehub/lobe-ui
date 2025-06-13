@@ -81,14 +81,14 @@ const Text = memo<TextProps>(
     );
 
     const textStyle = {
-      ...style,
       ...(color && { color }),
       ...(weight && { fontWeight: weight }),
       ...(typeof ellipsis === 'object' &&
         ellipsis.rows && {
           WebkitLineClamp: ellipsis.rows,
         }),
-      fontSize,
+      ...(fontSize && { fontSize }),
+      ...style,
     };
 
     const content = (
