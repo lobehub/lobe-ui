@@ -12,6 +12,7 @@ import type { IconContentConfig, IconProps } from '@/Icon';
 export interface MenuItemType extends RcMenuItemType {
   danger?: boolean;
   icon?: IconProps['icon'];
+  loading?: boolean;
   title?: string;
 }
 export interface SubMenuType<T extends MenuItemType = MenuItemType>

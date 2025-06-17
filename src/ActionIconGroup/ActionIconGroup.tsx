@@ -78,12 +78,13 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
       >
         {items?.length > 0 &&
           items.map((item) => {
-            const { icon, key, label, onClick, danger, ...itemRest } = item;
+            const { icon, key, label, onClick, danger, loading, ...itemRest } = item;
             return (
               <ActionIcon
                 danger={danger}
                 icon={icon}
                 key={key}
+                loading={loading}
                 onClick={(e) => {
                   onActionClick?.({
                     domEvent: e,
@@ -98,7 +99,7 @@ const ActionIconGroup = memo<ActionIconGroupProps>(
                   placement: tooltipPlacement,
                 }}
                 {...actionIconProps}
-                disabled={disabled || itemRest?.disabled}
+                disabled={disabled || loading || itemRest?.disabled}
               />
             );
           })}

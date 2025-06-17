@@ -6,6 +6,7 @@ export const items: ActionIconGroupProps['items'] = [
     icon: Copy,
     key: 'copy',
     label: 'Copy',
+    loading: true,
   },
   {
     disabled: true,
