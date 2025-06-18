@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.6.0](https://github.com/lobehub/lobe-ui/compare/v2.5.6...v2.6.0)
+
+<sup>Released on **2025-06-18**</sup>
+
+#### ✨ Features
+
+- **misc**: ActionIconGorup items support loading.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: ActionIconGorup items support loading, closes [#376](https://github.com/lobehub/lobe-ui/issues/376) ([ef8388d](https://github.com/lobehub/lobe-ui/commit/ef8388d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.5.6](https://github.com/lobehub/lobe-ui/compare/v2.5.5...v2.5.6)
 
 <sup>Released on **2025-06-13**</sup>
