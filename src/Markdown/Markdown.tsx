@@ -67,15 +67,10 @@ const Markdown = memo<MarkdownProps>(
           defaultVariants: {
             animated: false,
             enableLatex: true,
-            gfm: true,
             variant: 'default',
           },
           /* eslint-disable sort-keys-fix/sort-keys-fix */
           variants: {
-            gfm: {
-              true: styles.gfm,
-              false: null,
-            },
             variant: {
               default: null,
               chat: styles.chat,
