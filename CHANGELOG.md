@@ -2,6 +2,32 @@
 
 # Changelog
 
+## [Version 2.7.0](https://github.com/lobehub/lobe-ui/compare/v2.6.0...v2.7.0)
+
+<sup>Released on **2025-06-20**</sup>
+
+#### ✨ Features
+
+- **misc**: Enhance MDX processing with github alerts and improved plugin filtering, Support GitHub Markdown Alert Render.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Enhance MDX processing with github alerts and improved plugin filtering ([341d6fe](https://github.com/lobehub/lobe-ui/commit/341d6fe))
+- **misc**: Support GitHub Markdown Alert Render ([351611b](https://github.com/lobehub/lobe-ui/commit/351611b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.6.0](https://github.com/lobehub/lobe-ui/compare/v2.5.6...v2.6.0)
 
 <sup>Released on **2025-06-18**</sup>
