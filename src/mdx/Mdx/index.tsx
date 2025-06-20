@@ -4,6 +4,7 @@ import { evaluate } from '@mdx-js/mdx';
 import { ReactNode, memo, useEffect, useMemo, useState } from 'react';
 import jsxDevRuntime from 'react/jsx-dev-runtime';
 import jsxRuntime from 'react/jsx-runtime';
+import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
@@ -65,7 +66,10 @@ const Mdx = memo<MdxProps>(
 
     const innerRehypePlugins = Array.isArray(rehypePlugins) ? rehypePlugins : [rehypePlugins];
     const memoRehypePlugins = useMemo(
-      () => [enableLatex && rehypeKatex, ...innerRehypePlugins].filter(Boolean) as any,
+      () =>
+        [rehypeGithubAlerts, enableLatex && rehypeKatex, ...innerRehypePlugins].filter(
+          Boolean,
+        ) as any,
       [enableLatex, ...innerRehypePlugins],
     );
 
