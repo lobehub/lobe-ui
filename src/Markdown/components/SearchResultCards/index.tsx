@@ -1,10 +1,21 @@
 'use client';
 
-import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+import { Ref, memo } from 'react';
+import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
-import type { SearchResultCardsProps } from '../../type';
 import SearchResultCard from '../SearchResultCard';
+
+export interface SearchResultItem {
+  alt?: string;
+  summary?: string;
+  title?: string;
+  url: string;
+}
+
+export interface SearchResultCardsProps extends FlexboxProps {
+  dataSource: string[] | SearchResultItem[];
+  ref?: Ref<HTMLDivElement>;
+}
 
 const SearchResultCards = memo<SearchResultCardsProps>(({ ref, dataSource, style, ...rest }) => {
   return (

@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import type { Pluggable } from 'unified';
@@ -23,6 +24,7 @@ export const useMarkdownRehypePlugins = (): Pluggable[] => {
   const memoPlugins = useMemo(
     () =>
       [
+        rehypeGithubAlerts,
         allowHtml && rehypeRaw,
         enableLatex && rehypeKatex,
         enableLatex && rehypeKatexDir,

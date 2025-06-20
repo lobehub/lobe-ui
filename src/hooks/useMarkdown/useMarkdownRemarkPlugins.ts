@@ -23,8 +23,8 @@ export const useMarkdownRemarkPlugins = (): Pluggable[] => {
   const memoPlugins = useMemo(
     () =>
       [
+        [remarkGfm, { singleTilde: false }],
         enableLatex && remarkMath,
-
         enableCustomFootnotes && remarkCustomFootnotes,
         isChatMode && remarkBreaks,
       ].filter(Boolean) as Pluggable[],
@@ -32,12 +32,7 @@ export const useMarkdownRemarkPlugins = (): Pluggable[] => {
   );
 
   return useMemo(
-    () => [
-      [remarkGfm, { singleTilde: false }],
-      ...remarkPluginsAhead,
-      ...memoPlugins,
-      ...remarkPlugins,
-    ],
+    () => [...remarkPluginsAhead, ...memoPlugins, ...remarkPlugins],
     [remarkPlugins, memoPlugins, remarkPluginsAhead],
   );
 };

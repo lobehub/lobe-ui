@@ -103,6 +103,10 @@ export {
   Typography,
   type TypographyProps,
 } from './Markdown';
+export {
+  default as SearchResultCards,
+  type SearchResultCardsProps,
+} from './Markdown/components/SearchResultCards';
 export { default as MaskShadow, type MaskShadowProps } from './MaskShadow';
 export {
   default as MaterialFileTypeIcon,
@@ -124,12 +128,7 @@ export {
 } from './Mermaid';
 export { default as Modal, type ModalProps } from './Modal';
 export { default as ScrollShadow, type ScrollShadowProps } from './ScrollShadow';
-export {
-  default as SearchBar,
-  type SearchBarProps,
-  SearchResultCards,
-  type SearchResultCardsProps,
-} from './SearchBar';
+export { default as SearchBar, type SearchBarProps } from './SearchBar';
 export { default as Segmented, type SegmentedProps } from './Segmented';
 export { default as Select, type SelectProps } from './Select';
 export { default as SideNav, type SideNavProps } from './SideNav';

@@ -1,12 +1,20 @@
 'use client';
 
-import { memo, useMemo } from 'react';
+import { Ref, memo, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import Block from '@/Block';
 import Text from '@/Text';
+import { AProps } from '@/types';
 
-import type { SearchResultCardProps } from '../../type';
 import { useStyles } from './style';
+
+export interface SearchResultCardProps extends AProps {
+  alt?: string;
+  ref?: Ref<HTMLAnchorElement>;
+  title?: string;
+  url: string;
+}
 
 const SearchResultCard = memo<SearchResultCardProps>(({ ref, url, title, alt, ...rest }) => {
   const { styles } = useStyles();
@@ -30,8 +38,17 @@ const SearchResultCard = memo<SearchResultCardProps>(({ ref, url, title, alt, ..
 
   return (
     <a href={url} ref={ref} rel="noreferrer" target={'_blank'} {...rest}>
-      <Flexbox className={styles.container} gap={2} justify={'space-between'} key={url}>
-        <div className={styles.title}>{displayTitle}</div>
+      <Block
+        className={styles.container}
+        clickable
+        gap={2}
+        justify={'space-between'}
+        key={url}
+        paddingBlock={6}
+        paddingInline={8}
+        variant={'outlined'}
+      >
+        <Text ellipsis={{ rows: 2 }}>{displayTitle}</Text>
         <Flexbox align={'center'} gap={4} horizontal>
           <img
             alt={alt || title || url}
@@ -43,7 +60,7 @@ const SearchResultCard = memo<SearchResultCardProps>(({ ref, url, title, alt, ..
             {domain}
           </Text>
         </Flexbox>
-      </Flexbox>
+      </Block>
     </a>
   );
 });
