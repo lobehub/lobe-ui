@@ -40,7 +40,11 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
       let finalSvgString = data;
 
       // 修复Firefox点击预览mermaid图时宽高为0导致不显示的异常
-      if (navigator.userAgent.includes('Firefox')) {
+      if (
+        typeof window !== 'undefined' &&
+        typeof navigator !== 'undefined' &&
+        navigator.userAgent.includes('Firefox')
+      ) {
         const parser = new DOMParser();
         const svgDoc = parser.parseFromString(data, 'image/svg+xml');
         const svgElement = svgDoc.documentElement;
