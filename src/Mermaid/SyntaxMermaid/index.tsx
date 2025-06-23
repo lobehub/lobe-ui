@@ -47,8 +47,10 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
         if (svgElement && svgElement.hasAttribute('viewBox')) {
           const viewBox = svgElement.getAttribute('viewBox')!;
           const viewBoxParts = viewBox.split(' ');
-          svgElement.setAttribute('width', viewBoxParts[2]);
-          svgElement.setAttribute('height', viewBoxParts[3]);
+          if (Array.isArray(viewBoxParts) && viewBoxParts.length === 4) {
+            svgElement.setAttribute('width', viewBoxParts[2]);
+            svgElement.setAttribute('height', viewBoxParts[3]);
+          }
           finalSvgString = new XMLSerializer().serializeToString(svgDoc);
         }
       }
