@@ -37,9 +37,27 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
 
     useEffect(() => {
       if (isLoading || !data) return;
-      // 创建Blob对象
-      const svgBlob = new Blob([data], { type: 'image/svg+xml' });
-      // 创建并保存Blob URL
+      let finalSvgString = data;
+
+      // 修复Firefox点击预览mermaid图时宽高为0导致不显示的异常
+      if (navigator.userAgent.includes('Firefox')) {
+        const parser = new DOMParser();
+        const svgDoc = parser.parseFromString(data, 'image/svg+xml');
+        const svgElement = svgDoc.documentElement;
+        if (svgElement && svgElement.hasAttribute('viewBox')) {
+          const viewBox = svgElement.getAttribute('viewBox')!;
+          const viewBoxParts = viewBox.split(' ');
+          if (Array.isArray(viewBoxParts) && viewBoxParts.length === 4) {
+            svgElement.setAttribute('width', viewBoxParts[2]);
+            svgElement.setAttribute('height', viewBoxParts[3]);
+          }
+          finalSvgString = new XMLSerializer().serializeToString(svgDoc);
+        }
+      }
+
+      // // 创建Blob对象
+      const svgBlob = new Blob([finalSvgString], { type: 'image/svg+xml' });
+      // // 创建并保存Blob URL
       const url = URL.createObjectURL(svgBlob);
       setBlobUrl(url);
     }, [isLoading, data]);
