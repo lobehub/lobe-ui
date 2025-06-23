@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.7.2](https://github.com/lobehub/lobe-ui/compare/v2.7.1...v2.7.2)
+
+<sup>Released on **2025-06-23**</sup>
+
+#### 🐛 Bug Fixes
+
+- **mermaid**: Handle firefox svg display issue by setting width/height.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **mermaid**: Handle firefox svg display issue by setting width/height, closes [#377](https://github.com/lobehub/lobe-ui/issues/377) ([34d93ea](https://github.com/lobehub/lobe-ui/commit/34d93ea))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.7.1](https://github.com/lobehub/lobe-ui/compare/v2.7.0...v2.7.1)
 
 <sup>Released on **2025-06-20**</sup>
