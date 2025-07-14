@@ -8,17 +8,20 @@ import {
   transformerNotationWordHighlight,
 } from '@shikijs/transformers';
 import { useTheme, useThemeMode } from 'antd-style';
-import { useMemo } from 'react';
+import { useMemo, useCallback, useRef, useState, useEffect } from 'react';
 import type { BuiltinTheme, CodeToHastOptions } from 'shiki';
 import useSWR, { SWRResponse } from 'swr';
 import { Md5 } from 'ts-md5';
 
 import { languages } from '@/Highlighter/const';
+import { getWorkerManager } from './workerManager';
 
 export const FALLBACK_LANG = 'txt';
 
 // Application-level cache to avoid repeated calculations
 const MD5_LENGTH_THRESHOLD = 10_000; // Use async MD5 for text exceeding this length
+const WORKER_THRESHOLD = 5_000; // Use Web Worker for text exceeding this length
+const DEBOUNCE_DELAY = 300; // Debounce delay in milliseconds
 
 // Color replacement mapping type
 type ColorReplacements = {
@@ -107,8 +110,8 @@ export const useHighlight = (
     [theme],
   );
 
-  // Build cache key
-  const cacheKey = useMemo((): string | null => {
+  // Debounced cache key to prevent frequent calculations
+  const debouncedCacheKey = useMemo((): string | null => {
     // Use hash for long text
     const hash = text.length < MD5_LENGTH_THRESHOLD ? text : Md5.hashStr(text);
     return [matchedLanguage, builtinTheme || (isDarkMode ? 'd' : 'l'), hash]
@@ -116,27 +119,72 @@ export const useHighlight = (
       .join('-');
   }, [text, matchedLanguage, isDarkMode, builtinTheme]);
 
+  // Debounce cache key changes
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const [debouncedKey, setDebouncedKey] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Clear previous timer
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    // Set new timer
+    debounceTimerRef.current = setTimeout(() => {
+      setDebouncedKey(debouncedCacheKey);
+     }, DEBOUNCE_DELAY);
+
+    // Cleanup
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, [debouncedCacheKey]);
+
   // Use SWR to get highlighted HTML
   return useSWR(
-    cacheKey,
-    async (): Promise<string> => {
+    debouncedKey,
+    async (): Promise<string> => { 
+      // Check if we should use Web Worker for large text
+      const useWorker = true
+      const workerManager = getWorkerManager();
+      
+      if (useWorker && workerManager.isAvailable) {
+        try { 
+          const options = {
+            colorReplacements: builtinTheme ? undefined : colorReplacements,
+            lang: matchedLanguage,
+            theme: builtinTheme || (isDarkMode ? 'slack-dark' : 'slack-ochin'),
+            transformers,
+          };
+          
+          const html = await workerManager.highlight(text, options);
+          
+          return html;
+        } catch (error) {
+           // Fall through to main thread processing
+        }
+      }
+      
+      // Main thread processing (for small text or when worker fails)
       try {
         // Try full rendering
         const codeToHtml = await shikiPromise;
         if (!codeToHtml) return text;
+        
+        const highlightStart = performance.now();
         const html = await codeToHtml(text, {
           colorReplacements: builtinTheme ? undefined : colorReplacements,
           lang: matchedLanguage,
           theme: builtinTheme || (isDarkMode ? 'slack-dark' : 'slack-ochin'),
           transformers,
         });
-
         return html;
       } catch (error) {
-        console.error('Advanced rendering failed:', error);
-
         try {
           // Try simple rendering (without transformers)
+          const fallbackStart = performance.now();
           const codeToHtml = await shikiPromise;
           if (!codeToHtml) return text;
           const html = await codeToHtml(text, {
@@ -160,4 +208,4 @@ export const useHighlight = (
   );
 };
 
-export { escapeHtml, loadShiki, MD5_LENGTH_THRESHOLD, shikiPromise };
+export { escapeHtml, loadShiki, MD5_LENGTH_THRESHOLD, WORKER_THRESHOLD, DEBOUNCE_DELAY, shikiPromise };
