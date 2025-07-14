@@ -31,6 +31,7 @@ export default () => {
           <h3>Items</h3>
           <Menu
             {...options}
+            // @ts-ignore
             activeKey={activeKey}
             items={items}
             onClick={({ key }) => setActiveKey(key)}
@@ -40,6 +41,7 @@ export default () => {
           <h3>Group Items</h3>
           <Menu
             {...options}
+            // @ts-ignore
             activeKey={activeKey}
             items={groupItems}
             onClick={({ key }) => setActiveKey(key)}
