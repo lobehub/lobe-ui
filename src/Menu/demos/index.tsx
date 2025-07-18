@@ -31,18 +31,18 @@ export default () => {
           <h3>Items</h3>
           <Menu
             {...options}
-            activeKey={activeKey}
             items={items}
             onClick={({ key }) => setActiveKey(key)}
+            selectedKeys={activeKey ? [activeKey] : undefined}
           />
         </Flexbox>
         <Flexbox width={'100%'}>
           <h3>Group Items</h3>
           <Menu
             {...options}
-            activeKey={activeKey}
             items={groupItems}
             onClick={({ key }) => setActiveKey(key)}
+            selectedKeys={activeKey ? [activeKey] : undefined}
           />
         </Flexbox>
       </Flexbox>
