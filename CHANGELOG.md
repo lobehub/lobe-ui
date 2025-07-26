@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.7.5](https://github.com/lobehub/lobe-ui/compare/v2.7.4...v2.7.5)
+
+<sup>Released on **2025-07-26**</sup>
+
+#### 💄 Styles
+
+- **misc**: Upgrade react layout kit.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Upgrade react layout kit, closes [#382](https://github.com/lobehub/lobe-ui/issues/382) ([f58a9dd](https://github.com/lobehub/lobe-ui/commit/f58a9dd))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.7.4](https://github.com/lobehub/lobe-ui/compare/v2.7.3...v2.7.4)
 
 <sup>Released on **2025-07-18**</sup>
