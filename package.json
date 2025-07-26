@@ -133,7 +133,7 @@
     "react-avatar-editor": "^13.0.2",
     "react-error-boundary": "^5.0.0",
     "react-hotkeys-hook": "^5.1.0",
-    "react-layout-kit": "^1.9.2",
+    "react-layout-kit": "^2.0.0",
     "react-markdown": "^10.1.0",
     "react-merge-refs": "^3.0.2",
     "react-rnd": "^10.5.2",
