@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.8.1](https://github.com/lobehub/lobe-ui/compare/v2.8.0...v2.8.1)
+
+<sup>Released on **2025-07-29**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update GroupAvatar Props.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update GroupAvatar Props ([9bdc455](https://github.com/lobehub/lobe-ui/commit/9bdc455))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.8.0](https://github.com/lobehub/lobe-ui/compare/v2.7.5...v2.8.0)
 
 <sup>Released on **2025-07-29**</sup>
