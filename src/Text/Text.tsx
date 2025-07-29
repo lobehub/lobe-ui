@@ -11,6 +11,7 @@ import type { TextProps } from './type';
 const Text = memo<TextProps>(
   ({
     as: Container = 'div',
+    align,
     className,
     children,
     style,
@@ -88,6 +89,7 @@ const Text = memo<TextProps>(
           WebkitLineClamp: ellipsis.rows,
         }),
       ...(fontSize && { fontSize }),
+      ...(align && { textAlign: align }),
       ...style,
     };
 

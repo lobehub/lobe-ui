@@ -13,27 +13,29 @@ const avatars = [
 const cornerTypes = Object.keys(SMOOTH_CORNER_MASKS) as Array<keyof typeof SMOOTH_CORNER_MASKS>;
 
 const descriptions = {
+  circle: 'Perfect circle shape (50% border radius)',
   ios: 'iOS-style corners (n=5) - used in Apple icons since iOS 7',
   sharp: 'Sharp corners (n=6) - subtle rounding, closer to rectangle',
   smooth: 'Extra smooth corners (n=3) - more rounded appearance',
+  square: 'Rounded square (15% border radius)',
   squircle: 'Classic squircle shape (n=4) - balanced between square and circle',
 };
 
 export default () => {
   return (
-    <Grid gap={16} rows={2} width={'100%'}>
+    <Grid gap={16} rows={3} width={'100%'}>
       {cornerTypes.map((type) => (
         <Center key={type}>
           <GroupAvatar
             avatars={avatars}
+            cornerShape={type}
             size={100}
-            smoothCornerType={type}
             style={{ margin: '0 auto 16px' }}
           />
-          <Text fontSize={14} weight={'bold'}>
+          <Text align={'center'} fontSize={14} weight={'bold'}>
             {type}
           </Text>
-          <Text fontSize={12} type={'secondary'}>
+          <Text align={'center'} fontSize={12} type={'secondary'}>
             {descriptions[type]}
           </Text>
         </Center>

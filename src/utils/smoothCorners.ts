@@ -56,18 +56,64 @@ export const createSmoothCornersMask = (
 };
 
 /**
+ * Create a Base64 encoded SVG mask for circle shape
+ * @param options - Configuration options
+ */
+export const createCircleMask = (
+  options: {
+    size?: number;
+  } = {},
+): string => {
+  const { size = 100 } = options;
+  const r = size / 2;
+
+  const svg = `
+    <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="${r}" cy="${r}" r="${r}" fill="white"/>
+    </svg>
+  `
+    .trim()
+    .replaceAll(/\s+/g, ' ');
+
+  return `data:image/svg+xml;base64,${btoa(svg)}`;
+};
+
+/**
+ * Create a Base64 encoded SVG mask for rounded rectangle
+ * @param options - Configuration options
+ */
+export const createRoundedRectMask = (
+  options: {
+    borderRadius?: number;
+    size?: number;
+  } = {},
+): string => {
+  const { size = 100, borderRadius = 15 } = options;
+
+  const svg = `
+    <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0" y="0" width="${size}" height="${size}" rx="${borderRadius}" ry="${borderRadius}" fill="white"/>
+    </svg>
+  `
+    .trim()
+    .replaceAll(/\s+/g, ' ');
+
+  return `data:image/svg+xml;base64,${btoa(svg)}`;
+};
+
+/**
  * Predefined smooth corners masks for common corner values
  */
 export const SMOOTH_CORNER_MASKS = {
-  // n=4, classic squircle
+  // Basic shapes
+  circle: createCircleMask(),
+  // Superellipse shapes
   ios: createSmoothCornersMask({ cornerValue: 5 }),
-  // n=3, more rounded
+
   sharp: createSmoothCornersMask({ cornerValue: 6 }),
-
-  // n=5, iOS style
   smooth: createSmoothCornersMask({ cornerValue: 3 }),
-
-  squircle: createSmoothCornersMask({ cornerValue: 4 }), // n=6, less rounded
+  square: createRoundedRectMask({ borderRadius: 15 }),
+  squircle: createSmoothCornersMask({ cornerValue: 4 }),
 } as const;
 
 /**

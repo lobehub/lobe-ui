@@ -9,21 +9,22 @@ description: GroupAvatar is a component that displays multiple user avatars in a
 
 <code src="./demos/index.tsx" nopadding></code>
 
-## Smooth Corner Types
+## Corner Shape
 
-<code src="./demos/SmoothCornerTypes.tsx" center></code>
+<code src="./demos/CornerShape.tsx" center></code>
 
 ## APIs
 
 ### GroupAvatar
 
-| Property         | Description                             | Type                                         | Default      |
-| ---------------- | --------------------------------------- | -------------------------------------------- | ------------ |
-| avatars          | Array of avatar items (URLs or objects) | `AvatarItem[]`                               | `[]`         |
-| size             | Size of the group avatar container      | `number`                                     | `32`         |
-| smoothCornerType | Type of smooth corners to apply         | `'squircle' \| 'ios' \| 'smooth' \| 'sharp'` | `'squircle'` |
-| className        | Custom CSS class name                   | `string`                                     | -            |
-| style            | Custom inline styles                    | `CSSProperties`                              | -            |
+| Property    | Description                             | Type                                                                 | Default      |
+| ----------- | --------------------------------------- | -------------------------------------------------------------------- | ------------ |
+| avatars     | Array of avatar items (URLs or objects) | `AvatarItem[]`                                                       | `[]`         |
+| avatarShape | Shape of the avatar                     | `'circle' \| 'square'`                                               | `'circle'`   |
+| size        | Size of the group avatar container      | `number`                                                             | `32`         |
+| cornerShape | Type of corners to apply                | `'circle' \| 'square' \| 'squircle' \| 'ios' \| 'smooth' \| 'sharp'` | `'squircle'` |
+| className   | Custom CSS class name                   | `string`                                                             | -            |
+| style       | Custom inline styles                    | `CSSProperties`                                                      | -            |
 
 ### AvatarItem
 
@@ -36,10 +37,11 @@ Avatar items can be either:
 | ---------- | ----------------------------- | --------------------- | ------- |
 | avatar     | Avatar content (URL or emoji) | `string \| ReactNode` | -       |
 | background | Background color              | `string`              | -       |
-| size       | Size override for this avatar | `number`              | -       |
 
-### Smooth Corner Types
+### Corner Shape Types
 
+- **`circle`**: Perfect circle shape (50% border radius)
+- **`square`**: Rounded square (15% border radius)
 - **`squircle`**: Classic squircle shape (n=4) - balanced between square and circle
 - **`ios`**: iOS-style corners (n=5) - used in Apple icons since iOS 7
 - **`smooth`**: Extra smooth corners (n=3) - more rounded appearance

@@ -4,6 +4,7 @@ import type { TooltipProps } from '@/Tooltip';
 import { DivProps } from '@/types';
 
 export interface TextProps extends DivProps {
+  align?: 'left' | 'center' | 'right';
   as?: ElementType;
   code?: boolean;
   color?: string;

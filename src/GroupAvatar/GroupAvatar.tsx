@@ -11,15 +11,21 @@ import { useStyles } from './style';
 import type { GroupAvatarProps } from './type';
 
 const GroupAvatar = memo<GroupAvatarProps>(
-  ({ className, style, avatars = [], size = 32, smoothCornerType = 'squircle', ...rest }) => {
+  ({
+    className,
+    style,
+    avatars = [],
+    size = 32,
+    cornerShape = 'squircle',
+    avatarShape = 'circle',
+    ...rest
+  }) => {
     const { cx, styles } = useStyles();
-    const smoothCornersMask = useMemo(
-      () => getSmoothCornersMaskStyle(smoothCornerType),
-      [smoothCornerType],
-    );
+    const smoothCornersMask = useMemo(() => getSmoothCornersMaskStyle(cornerShape), [cornerShape]);
     const calcSize = useMemo(() => {
-      const avatarSize = Math.floor((size / 2) * 0.75);
-      const gapSize = Math.floor((size - avatarSize * 2) / 4);
+      const isCircle = cornerShape === 'circle';
+      const avatarSize = Math.floor((size / 2) * (isCircle ? 0.65 : 0.75));
+      const gapSize = Math.floor((size - avatarSize * 2) / (isCircle ? 6 : 4));
 
       return {
         avatarSize,
@@ -27,7 +33,7 @@ const GroupAvatar = memo<GroupAvatarProps>(
         gridWidth: avatarSize * 2 + gapSize,
         maxItemWidth: avatarSize - 1,
       };
-    }, [size]);
+    }, [size, cornerShape]);
 
     return (
       <Block
@@ -50,9 +56,11 @@ const GroupAvatar = memo<GroupAvatarProps>(
         >
           {avatars?.slice(0, 4).map((item, index) => {
             if (typeof item === 'string') {
-              return <Avatar avatar={item} key={index} size={calcSize.avatarSize} />;
+              return (
+                <Avatar avatar={item} key={index} shape={avatarShape} size={calcSize.avatarSize} />
+              );
             }
-            return <Avatar key={index} {...item} size={calcSize.avatarSize} />;
+            return <Avatar key={index} {...item} shape={avatarShape} size={calcSize.avatarSize} />;
           })}
         </Grid>
       </Block>

@@ -7,8 +7,9 @@ import type { SMOOTH_CORNER_MASKS } from '@/utils/smoothCorners';
 type AvatarItem = string | Omit<AvatarProps, 'size'>;
 
 export interface GroupAvatarProps extends Omit<BlockProps, 'width' | 'height' | 'variant'> {
+  avatarShape?: AvatarProps['shape'];
   avatars?: AvatarItem[];
+  cornerShape?: keyof typeof SMOOTH_CORNER_MASKS;
   ref?: Ref<HTMLDivElement>;
   size?: number;
-  smoothCornerType?: keyof typeof SMOOTH_CORNER_MASKS;
 }

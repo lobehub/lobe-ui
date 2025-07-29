@@ -6,16 +6,20 @@ export default () => {
   const store = useCreateStore();
   const control = useControls(
     {
+      avatarShape: {
+        options: ['circle', 'square'],
+        value: 'circle',
+      },
       clickable: false,
+      cornerShape: {
+        options: ['circle', 'square', 'squircle', 'ios', 'smooth', 'sharp'],
+        value: 'squircle',
+      },
       size: {
         max: 128,
         min: 24,
         step: 1,
         value: 100,
-      },
-      smoothCornerType: {
-        options: ['squircle', 'ios', 'smooth', 'sharp'],
-        value: 'squircle',
       },
     },
     { store },
