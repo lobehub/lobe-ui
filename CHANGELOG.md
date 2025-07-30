@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.8.3](https://github.com/lobehub/lobe-ui/compare/v2.8.2...v2.8.3)
+
+<sup>Released on **2025-07-30**</sup>
+
+#### 💄 Styles
+
+- **misc**: Add Grid layout configuration to GroupAvatar.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Add Grid layout configuration to GroupAvatar ([79b89e9](https://github.com/lobehub/lobe-ui/commit/79b89e9))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.8.2](https://github.com/lobehub/lobe-ui/compare/v2.8.1...v2.8.2)
 
 <sup>Released on **2025-07-30**</sup>
