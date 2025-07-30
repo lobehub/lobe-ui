@@ -17,15 +17,9 @@ export const useStyles = createStyles(({ css }) => {
   `;
 
   const createCornerVariant = (cornerType: keyof typeof SMOOTH_CORNER_MASKS) => css`
-    /* WebKit prefix for better browser support */
-    mask-image: url('${SMOOTH_CORNER_MASKS[cornerType]}');
-
     mask-image: url('${SMOOTH_CORNER_MASKS[cornerType]}');
     mask-position: center;
-    mask-position: center;
     mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    mask-size: 100% 100%;
     mask-size: 100% 100%;
   `;
 

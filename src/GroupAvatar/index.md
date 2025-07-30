@@ -22,6 +22,7 @@ description: GroupAvatar is a component that displays multiple user avatars in a
 | avatars     | Array of avatar items (URLs or objects) | `AvatarItem[]`                                                       | `[]`         |
 | avatarShape | Shape of the avatar                     | `'circle' \| 'square'`                                               | `'circle'`   |
 | size        | Size of the group avatar container      | `number`                                                             | `32`         |
+| grid        | Grid layout configuration               | `2 \| 3 \| 'auto'`                                                   | `2`          |
 | cornerShape | Type of corners to apply                | `'circle' \| 'square' \| 'squircle' \| 'ios' \| 'smooth' \| 'sharp'` | `'squircle'` |
 | className   | Custom CSS class name                   | `string`                                                             | -            |
 | style       | Custom inline styles                    | `CSSProperties`                                                      | -            |
@@ -46,3 +47,13 @@ Avatar items can be either:
 - **`ios`**: iOS-style corners (n=5) - used in Apple icons since iOS 7
 - **`smooth`**: Extra smooth corners (n=3) - more rounded appearance
 - **`sharp`**: Sharp corners (n=6) - subtle rounding, closer to rectangle
+
+### Grid Layout
+
+The `grid` property controls how avatars are arranged in the group:
+
+- **`2`**: 2x2 grid layout (displays up to 4 avatars)
+- **`3`**: 3x3 grid layout (displays up to 9 avatars)
+- **`'auto'`**: Automatically determines grid size based on avatar count
+  - Uses 2x2 grid for 4 or fewer avatars
+  - Uses 3x3 grid for more than 4 avatars

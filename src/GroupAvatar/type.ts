@@ -10,6 +10,7 @@ export interface GroupAvatarProps extends Omit<BlockProps, 'width' | 'height' | 
   avatarShape?: AvatarProps['shape'];
   avatars?: AvatarItem[];
   cornerShape?: keyof typeof SMOOTH_CORNER_MASKS;
+  grid?: 2 | 3 | 'auto';
   ref?: Ref<HTMLDivElement>;
   size?: number;
 }

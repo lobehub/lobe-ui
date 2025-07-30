@@ -15,6 +15,10 @@ export default () => {
         options: ['circle', 'square', 'squircle', 'ios', 'smooth', 'sharp'],
         value: 'squircle',
       },
+      grid: {
+        options: [2, 3, 'auto'],
+        value: 2,
+      },
       size: {
         max: 128,
         min: 24,
