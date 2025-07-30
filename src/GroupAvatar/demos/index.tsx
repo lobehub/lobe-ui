@@ -55,6 +55,10 @@ export default () => {
               avatar: '🦊',
               background: '#FF57B3',
             },
+            'https://avatar.vercel.sh/jane',
+            'https://avatar.vercel.sh/john',
+            'https://avatar.vercel.sh/alice',
+            'https://avatar.vercel.sh/bob',
           ]}
           {...control}
         />

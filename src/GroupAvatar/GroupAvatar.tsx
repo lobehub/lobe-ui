@@ -1,11 +1,11 @@
 'use client';
 
+import { cva } from 'class-variance-authority';
 import { memo, useMemo } from 'react';
 
 import Avatar from '@/Avatar';
 import Block from '@/Block';
 import Grid from '@/Grid';
-import { getSmoothCornersMaskStyle } from '@/utils/smoothCorners';
 
 import { useStyles } from './style';
 import type { GroupAvatarProps } from './type';
@@ -21,7 +21,7 @@ const GroupAvatar = memo<GroupAvatarProps>(
     ...rest
   }) => {
     const { cx, styles } = useStyles();
-    const smoothCornersMask = useMemo(() => getSmoothCornersMaskStyle(cornerShape), [cornerShape]);
+
     const calcSize = useMemo(() => {
       const isCircle = cornerShape === 'circle';
       const avatarSize = Math.floor((size / 2) * (isCircle ? 0.65 : 0.75));
@@ -35,16 +35,34 @@ const GroupAvatar = memo<GroupAvatarProps>(
       };
     }, [size, cornerShape]);
 
+    const variants = useMemo(
+      () =>
+        cva(styles.root, {
+          defaultVariants: {
+            cornerShape: 'squircle',
+          },
+          variants: {
+            cornerShape: {
+              circle: styles.circle,
+              ios: styles.ios,
+              sharp: styles.sharp,
+              smooth: styles.smooth,
+              square: styles.square,
+              squircle: styles.squircle,
+            },
+          },
+          /* eslint-enable sort-keys-fix/sort-keys-fix */
+        }),
+      [styles],
+    );
+
     return (
       <Block
         align={'center'}
-        className={cx(styles.root, className)}
+        className={cx(variants({ cornerShape }), className)}
         height={size}
         justify={'center'}
-        style={{
-          ...smoothCornersMask,
-          ...style,
-        }}
+        style={style}
         width={size}
         {...rest}
       >
