@@ -3,6 +3,7 @@
 import { cva } from 'class-variance-authority';
 import { memo, useMemo, useRef } from 'react';
 import { Flexbox } from 'react-layout-kit';
+import { mergeRefs } from 'react-merge-refs';
 
 import { useStyles } from './style';
 import type { ScrollShadowProps } from './type';
@@ -20,6 +21,7 @@ const ScrollShadow = memo<ScrollShadowProps>(
     isEnabled = true,
     onVisibilityChange,
     style,
+    ref,
     ...rest
   }) => {
     const { cx, styles } = useStyles(size);
@@ -135,7 +137,7 @@ const ScrollShadow = memo<ScrollShadowProps>(
     return (
       <Flexbox
         className={cx(variants({ hideScrollBar, orientation, scrollPosition }), className)}
-        ref={domRef}
+        ref={mergeRefs<HTMLDivElement>([domRef, ref])}
         style={style}
         {...dataAttributes}
         {...rest}

@@ -1,3 +1,4 @@
+import type { Ref } from 'react';
 import type { FlexboxProps } from 'react-layout-kit';
 
 export interface ScrollShadowProps extends FlexboxProps {
@@ -11,6 +12,7 @@ export interface ScrollShadowProps extends FlexboxProps {
     top?: boolean;
   }) => void;
   orientation?: 'vertical' | 'horizontal';
+  ref?: Ref<HTMLDivElement>;
   size?: number;
   visibility?: 'auto' | 'always' | 'never';
 }
