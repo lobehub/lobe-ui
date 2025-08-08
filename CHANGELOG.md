@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.8.4](https://github.com/lobehub/lobe-ui/compare/v2.8.3...v2.8.4)
+
+<sup>Released on **2025-08-08**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update mergeRefs in ScrollShadow.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update mergeRefs in ScrollShadow ([43f139a](https://github.com/lobehub/lobe-ui/commit/43f139a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.8.3](https://github.com/lobehub/lobe-ui/compare/v2.8.2...v2.8.3)
 
 <sup>Released on **2025-07-30**</sup>
