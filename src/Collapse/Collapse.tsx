@@ -116,8 +116,8 @@ const Collapse = memo<CollapseProps>(
         theme={{
           components: {
             Collapse: {
-              contentPadding: typeof padding === 'object' ? getPadding(padding?.body) : padding,
-              headerPadding: typeof padding === 'object' ? getPadding(padding?.header) : padding,
+              contentPadding: getPadding(typeof padding === 'object' ? padding?.body : padding),
+              headerPadding: getPadding(typeof padding === 'object' ? padding?.header : padding),
             },
           },
         }}

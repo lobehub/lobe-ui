@@ -30,7 +30,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Collapse items={items} {...control} />
+      <Collapse items={items} style={{ width: '100%' }} {...control} />
     </StoryBook>
   );
 };

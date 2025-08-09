@@ -3,7 +3,9 @@ import { createStyles } from 'antd-style';
 export const DEFAULT_PADDING = '12px 16px';
 
 export const getPadding = (padding?: number | string) =>
-  !padding && padding !== 0 ? DEFAULT_PADDING : padding;
+  !padding && padding !== 0
+    ? DEFAULT_PADDING
+    : `${typeof padding === 'string' ? padding : `${padding}px`} !important`;
 
 export const useStyles = createStyles(({ css, token, prefixCls, stylish, isDarkMode }) => {
   return {
