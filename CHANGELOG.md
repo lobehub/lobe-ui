@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.8.5](https://github.com/lobehub/lobe-ui/compare/v2.8.4...v2.8.5)
+
+<sup>Released on **2025-08-09**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix Collapse padding.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix Collapse padding ([03066ec](https://github.com/lobehub/lobe-ui/commit/03066ec))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.8.4](https://github.com/lobehub/lobe-ui/compare/v2.8.3...v2.8.4)
 
 <sup>Released on **2025-08-08**</sup>
