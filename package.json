@@ -181,7 +181,7 @@
     "dumi": "^2.4.21",
     "dumi-theme-lobehub": "^2.0.1",
     "eslint": "^8.57.1",
-    "father": "4.5.2",
+    "father": "4.6.2",
     "husky": "^9.1.7",
     "jsdom": "^26.1.0",
     "lint-staged": "^15.5.2",
