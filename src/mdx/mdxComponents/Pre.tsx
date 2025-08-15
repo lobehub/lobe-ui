@@ -4,9 +4,9 @@ import { createStyles } from 'antd-style';
 import type { FC } from 'react';
 
 import Highlighter, { type HighlighterProps } from '@/Highlighter';
+import { FALLBACK_LANG } from '@/Highlighter/const';
 import Mermaid, { type MermaidProps } from '@/Mermaid';
 import Snippet, { type SnippetProps } from '@/Snippet';
-import { FALLBACK_LANG } from '@/hooks/useHighlight';
 
 const useStyles = createStyles(({ css }) => ({
   container: css`

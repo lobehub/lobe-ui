@@ -8,6 +8,8 @@ import { Flexbox } from 'react-layout-kit';
 import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
 import { useStyles } from '@/Highlighter/style';
+import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
+import Text from '@/Text';
 
 import { MermaidProps } from './type';
 
@@ -118,14 +120,18 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
             size={'small'}
           />
           {showLanguage && (
-            <Flexbox
-              align={'center'}
-              className={styles.select}
-              gap={2}
-              horizontal
-              justify={'center'}
-            >
-              {fileName || language.toLowerCase()}
+            <Flexbox align={'center'} className={'languageTitle'} gap={4} horizontal>
+              <MaterialFileTypeIcon
+                fallbackUnknownType={false}
+                filename={fileName || language}
+                size={18}
+                type={'file'}
+                variant={'raw'}
+              />
+
+              <Text ellipsis fontSize={13}>
+                {fileName || 'Mermaid'}
+              </Text>
             </Flexbox>
           )}
           <Flexbox align={'center'} flex={'none'} gap={4} horizontal>

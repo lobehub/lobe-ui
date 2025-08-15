@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
 import { type HighlighterProps } from '@/Highlighter';
+import { FALLBACK_LANG } from '@/Highlighter/const';
 import { type MermaidProps } from '@/Mermaid';
-import { FALLBACK_LANG } from '@/hooks/useHighlight';
 import Pre, { PreMermaid, PreSingleLine } from '@/mdx/mdxComponents/Pre';
 
 const countLines = (str: string): number => {

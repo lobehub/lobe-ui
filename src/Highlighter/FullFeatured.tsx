@@ -1,6 +1,5 @@
 'use client';
 
-import { Select, type SelectProps } from 'antd';
 import { cva } from 'class-variance-authority';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { ReactNode, memo, useMemo, useState } from 'react';
@@ -8,25 +7,25 @@ import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
+import { getCodeLanguageDisplayName, getCodeLanguageFilename } from '@/Highlighter/const';
+import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
+import Text from '@/Text';
 
-import { languages } from './const';
+import LangSelect from './LangSelect';
 import { useStyles } from './style';
 import { HighlighterProps } from './type';
-
-const options: SelectProps['options'] = languages.map((item) => ({
-  label: item,
-  value: item.toLowerCase(),
-}));
 
 interface HighlighterFullFeaturedProps
   extends Omit<HighlighterProps, 'children' | 'bodyRender' | 'enableTransformer'> {
   content: string;
+  setLanguage?: (language: string) => void;
 }
 
 export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { children: ReactNode }>(
   ({
     content,
     language,
+    setLanguage,
     showLanguage,
     className,
     style,
@@ -43,7 +42,6 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
     ...rest
   }) => {
     const [expand, setExpand] = useState(defaultExpand);
-    const [lang, setLang] = useState(language);
     const { styles, cx } = useStyles();
 
     const variants = useMemo(
@@ -121,6 +119,16 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
         })
       : originalActions;
 
+    const displayName = useMemo(() => {
+      if (fileName) return fileName;
+      return getCodeLanguageDisplayName(language);
+    }, [fileName, language]);
+
+    const filetype = useMemo(() => {
+      if (fileName) return fileName;
+      return getCodeLanguageFilename(language);
+    }, [fileName, language]);
+
     return (
       <Flexbox
         className={cx(variants({ shadow, variant, wrap }), className)}
@@ -140,27 +148,21 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
             size={'small'}
           />
           {allowChangeLanguage && !fileName ? (
-            showLanguage && (
-              <Select
-                className={styles.select}
-                onSelect={setLang}
-                options={options}
-                size={'small'}
-                suffixIcon={false}
-                value={lang.toLowerCase()}
-                variant={'borderless'}
-              />
-            )
+            showLanguage && <LangSelect onSelect={setLanguage} value={language.toLowerCase()} />
           ) : (
-            <Flexbox
-              align={'center'}
-              className={styles.select}
-              gap={2}
-              horizontal
-              justify={'center'}
-            >
-              {icon}
-              <span>{fileName || lang}</span>
+            <Flexbox align={'center'} className={'languageTitle'} gap={4} horizontal>
+              {icon || (
+                <MaterialFileTypeIcon
+                  fallbackUnknownType={false}
+                  filename={filetype}
+                  size={18}
+                  type={'file'}
+                  variant={'raw'}
+                />
+              )}
+              <Text ellipsis fontSize={13}>
+                {displayName}
+              </Text>
             </Flexbox>
           )}
           <Flexbox align={'center'} flex={'none'} gap={4} horizontal>

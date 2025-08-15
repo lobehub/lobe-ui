@@ -46,6 +46,17 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
     headerRoot: css`
       position: relative;
       padding: 4px;
+
+      .languageTitle {
+        opacity: 0.5;
+        transition: opacity 0.2s ${token.motionEaseInOut};
+      }
+
+      &:hover {
+        .languageTitle {
+          opacity: 1;
+        }
+      }
     `,
 
     lang: cx(
@@ -55,7 +66,7 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
         position: absolute;
         z-index: 2;
         inset-block-end: 8px;
-        inset-inline-end: 0;
+        inset-inline-end: 8px;
 
         font-family: ${token.fontFamilyCode};
         color: ${token.colorTextSecondary};

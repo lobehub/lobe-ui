@@ -1,10 +1,11 @@
 'use client';
 
 import { cva } from 'class-variance-authority';
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import CopyButton from '@/CopyButton';
+import { getCodeLanguageDisplayName } from '@/Highlighter/const';
 import Tag from '@/Tag';
 
 import FullFeatured from './FullFeatured';
@@ -36,6 +37,7 @@ export const Highlighter = memo<HighlighterProps>(
     ...rest
   }) => {
     const { styles, cx } = useStyles();
+    const [lang, setLang] = useState(language);
 
     const variants = useMemo(
       () =>
@@ -76,7 +78,7 @@ export const Highlighter = memo<HighlighterProps>(
       ? actionsRender({
           actionIconSize,
           content: tirmedChildren,
-          language,
+          language: lang,
           originalNode: originalActions,
         })
       : originalActions;
@@ -85,7 +87,7 @@ export const Highlighter = memo<HighlighterProps>(
       <SyntaxHighlighter
         animated={animated}
         enableTransformer={enableTransformer}
-        language={language?.toLowerCase()}
+        language={lang?.toLowerCase()}
         theme={theme}
         variant={variant}
       >
@@ -93,8 +95,13 @@ export const Highlighter = memo<HighlighterProps>(
       </SyntaxHighlighter>
     );
 
+    const displayName = useMemo(() => {
+      if (fileName) return fileName;
+      return getCodeLanguageDisplayName(language);
+    }, [fileName, language]);
+
     const body = bodyRender
-      ? bodyRender({ content: tirmedChildren, language, originalNode: originalBody })
+      ? bodyRender({ content: tirmedChildren, language: lang, originalNode: originalBody })
       : originalBody;
 
     if (fullFeatured)
@@ -109,6 +116,7 @@ export const Highlighter = memo<HighlighterProps>(
           fileName={fileName}
           icon={icon}
           language={language}
+          setLanguage={setLang}
           shadow={shadow}
           showLanguage={showLanguage}
           variant={variant}
@@ -128,7 +136,7 @@ export const Highlighter = memo<HighlighterProps>(
         <Flexbox align={'center'} className={styles.actions} flex={'none'} gap={4} horizontal>
           {actions}
         </Flexbox>
-        {showLanguage && language && <Tag className={styles.lang}>{language.toLowerCase()}</Tag>}
+        {showLanguage && language && <Tag className={styles.lang}>{displayName}</Tag>}
         {body}
       </Flexbox>
     );

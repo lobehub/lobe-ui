@@ -13,9 +13,7 @@ import type { BuiltinTheme, CodeToHastOptions } from 'shiki';
 import useSWR, { SWRResponse } from 'swr';
 import { Md5 } from 'ts-md5';
 
-import { languages } from '@/Highlighter/const';
-
-export const FALLBACK_LANG = 'txt';
+import { getCodeLanguageByInput } from '@/Highlighter/const';
 
 // Application-level cache to avoid repeated calculations
 const MD5_LENGTH_THRESHOLD = 10_000; // Use async MD5 for text exceeding this length
@@ -60,10 +58,7 @@ export const useHighlight = (
   const lang = language.toLowerCase();
 
   // Match supported languages
-  const matchedLanguage = useMemo(
-    () => (languages.includes(lang as any) ? lang : FALLBACK_LANG),
-    [lang],
-  );
+  const matchedLanguage = useMemo(() => getCodeLanguageByInput(lang), [lang]);
 
   // Optimize transformer creation
   const transformers = useMemo(() => {
