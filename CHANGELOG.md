@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.8.6](https://github.com/lobehub/lobe-ui/compare/v2.8.5...v2.8.6)
+
+<sup>Released on **2025-08-15**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Highlighter.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Highlighter ([d015841](https://github.com/lobehub/lobe-ui/commit/d015841))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.8.5](https://github.com/lobehub/lobe-ui/compare/v2.8.4...v2.8.5)
 
 <sup>Released on **2025-08-09**</sup>
