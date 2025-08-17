@@ -44,6 +44,7 @@ export const useStyles = createStyles(
         }
       }
     `;
+
     const blockquote = css`
       blockquote:not(${IGNORE_CLASSNAME} blockquote) {
         margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
@@ -55,6 +56,7 @@ export const useStyles = createStyles(
         color: ${token.colorTextSecondary};
       }
     `;
+
     const code = css`
       code:not(${IGNORE_CLASSNAME} code) {
         &:not(:has(span)) {
@@ -76,6 +78,14 @@ export const useStyles = createStyles(
         }
       }
     `;
+
+    const del = css`
+      del:not(${IGNORE_CLASSNAME} del) {
+        color: ${token.colorTextDescription};
+        text-decoration: line-through;
+      }
+    `;
+
     const details = css`
       details:not(${IGNORE_CLASSNAME} details) {
         margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
@@ -496,6 +506,7 @@ export const useStyles = createStyles(
         a,
         blockquote,
         code,
+        del,
         details,
         header,
         hr,
