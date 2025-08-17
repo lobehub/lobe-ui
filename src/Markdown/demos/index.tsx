@@ -7,7 +7,7 @@ export default () => {
   const store = useCreateStore();
   const options = useControls(
     {
-      allowHtml: true,
+      allowHtml: false,
       children: {
         rows: true,
         value: content,

@@ -1,84 +1,8 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import {
-  addToCache,
-  contentCache,
-  fixMarkdownBold,
-  preprocessContent,
-  transformCitations,
-} from './utils';
+import { addToCache, contentCache, preprocessContent, transformCitations } from './utils';
 
 const _clearCache = () => contentCache.clear();
-
-describe('fixMarkdownBold', () => {
-  it('should add space after closing bold markers if needed', () => {
-    expect(fixMarkdownBold('**123：**456')).toBe('**123：** 456');
-    expect(fixMarkdownBold('**bold text**')).toBe('**bold text**');
-    expect(fixMarkdownBold('**bold text** and more')).toBe('**bold text** and more');
-    expect(fixMarkdownBold('**123**456')).toBe('**123**456');
-  });
-
-  it('should handle multiple bold sections', () => {
-    expect(fixMarkdownBold('**bold1** **bold2**')).toBe('**bold1** **bold2**');
-    expect(fixMarkdownBold('**123：**456**789:**123')).toBe('**123：** 456**789:** 123');
-  });
-
-  it('should not affect text without bold markers', () => {
-    expect(fixMarkdownBold('normal text')).toBe('normal text');
-  });
-
-  it('should not affect empty strings', () => {
-    expect(fixMarkdownBold('')).toBe('');
-  });
-
-  it('should handle odd number of asterisks', () => {
-    expect(fixMarkdownBold('*text* *')).toBe('*text* *');
-  });
-
-  it('should handle asterisks within words', () => {
-    expect(fixMarkdownBold('t*e*st')).toBe('t*e*st');
-  });
-
-  it('should ignore bold markers inside inline code', () => {
-    expect(fixMarkdownBold('This is `**not bold**`')).toBe('This is `**not bold**`');
-    expect(fixMarkdownBold('`**code**` and **bold**')).toBe('`**code**` and **bold**');
-    expect(fixMarkdownBold('`**` and **bold**')).toBe('`**` and **bold**');
-  });
-
-  it('should ignore bold markers inside code blocks', () => {
-    const codeBlock = `
-    \`\`\`
-    **123：**456**789:**123
-    \`\`\`
-    `;
-    expect(fixMarkdownBold(codeBlock)).toBe(codeBlock);
-  });
-
-  it('should handle text with mixed content in code blocks', () => {
-    const text = `
-    **bold text**
-    \`\`\`
-    n**0.5
-    \`\`\`
-    More **bold text**
-    `;
-    const expected = `
-    **bold text**
-    \`\`\`
-    n**0.5
-    \`\`\`
-    More **bold text**
-    `;
-    expect(fixMarkdownBold(text)).toBe(expected);
-  });
-
-  it('should not have a space after a bold character other than symbols', () => {
-    expect(fixMarkdownBold('你**我**他')).toBe('你**我**他');
-    expect(fixMarkdownBold('你**我：**他')).toBe('你**我：** 他');
-    expect(fixMarkdownBold('你**我:**他')).toBe('你**我:** 他');
-    // expect(fixMarkdownBold('你**我: **他')).toBe('你**我:** 他'); // TODO: Remove trailing spaces inside bold sections first, then add space after **
-  });
-});
 
 describe('contentCache and addToCache', () => {
   // Store the original implementation
@@ -170,11 +94,6 @@ describe('transformCitations', () => {
 });
 
 describe('preprocessContent', () => {
-  // Mock the imported preprocessLaTeX function
-  vi.mock('@/hooks/useMarkdown/latex', () => ({
-    preprocessLaTeX: vi.fn((text) => `LaTeX processed: ${text}`),
-  }));
-
   beforeEach(() => {
     vi.resetAllMocks();
   });
@@ -218,15 +137,35 @@ describe('preprocessContent', () => {
     expect(result).toBe('**123：** 456');
   });
 
-  it('should add space before opening bold markers if next char is symbol/punctuation', () => {
-    // 英文标点无需空格
-    expect(fixMarkdownBold('1**:bold**')).toBe('1 **:bold**');
-    // 中文标点
-    expect(fixMarkdownBold('你好**：世界**')).toBe('你好 **：世界**');
-    // 多字符符号
-    expect(fixMarkdownBold('1**(test)**2')).toBe('1 **(test)** 2'); 
-    // 普通文字前不插空格
-    expect(fixMarkdownBold('hello**world**')).toBe('hello**world**');
-    expect(fixMarkdownBold('1**“召回-排序”**2')).toBe('1 **“召回-排序”** 2');
+  it('should add space before opening emphasis markers if next char is symbol/punctuation', () => {
+    // Test ** (bold)
+    expect(preprocessContent('1**:bold**')).toBe('1 **:bold**');
+    expect(preprocessContent('你好**：世界**')).toBe('你好 **：世界**');
+    expect(preprocessContent('1**(test)**2')).toBe('1 **(test)** 2');
+    expect(preprocessContent('hello**world**')).toBe('hello**world**');
+
+    // Test * (italic)
+    expect(preprocessContent('1*:italic*')).toBe('1 *:italic*');
+    expect(preprocessContent('你好*：世界*')).toBe('你好 *：世界*');
+    expect(preprocessContent('1*(test)*2')).toBe('1 *(test)* 2');
+    expect(preprocessContent('hello*world*')).toBe('hello*world*');
+
+    // Test __ (bold)
+    expect(preprocessContent('1__:bold__')).toBe('1 __:bold__');
+    expect(preprocessContent('你好__：世界__')).toBe('你好 __：世界__');
+    expect(preprocessContent('1__(test)__2')).toBe('1 __(test)__ 2');
+    expect(preprocessContent('hello__world__')).toBe('hello__world__');
+
+    // Test _ (italic)
+    expect(preprocessContent('1_:italic_')).toBe('1 _:italic_');
+    expect(preprocessContent('你好_：世界_')).toBe('你好 _：世界_');
+    expect(preprocessContent('1_(test)_2')).toBe('1 _(test)_ 2');
+    expect(preprocessContent('hello_world_')).toBe('hello_world_');
+
+    // Test ~~ (strikethrough)
+    expect(preprocessContent('1~~:strike~~')).toBe('1 ~~:strike~~');
+    expect(preprocessContent('你好~~：世界~~')).toBe('你好 ~~：世界~~');
+    expect(preprocessContent('1~~(test)~~2')).toBe('1 ~~(test)~~ 2');
+    expect(preprocessContent('hello~~world~~')).toBe('hello~~world~~');
   });
 });
