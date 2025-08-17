@@ -2,6 +2,40 @@
 
 # Changelog
 
+## [Version 2.9.0](https://github.com/lobehub/lobe-ui/compare/v2.8.6...v2.9.0)
+
+<sup>Released on **2025-08-17**</sup>
+
+#### ✨ Features
+
+- **misc**: Add remarkBr.
+
+#### 💄 Styles
+
+- **misc**: Update del style in markdown, Update fixMarkdownEmphasisSpacing.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add remarkBr ([98c6541](https://github.com/lobehub/lobe-ui/commit/98c6541))
+
+#### Styles
+
+- **misc**: Update del style in markdown ([3123fec](https://github.com/lobehub/lobe-ui/commit/3123fec))
+- **misc**: Update fixMarkdownEmphasisSpacing ([c7579d8](https://github.com/lobehub/lobe-ui/commit/c7579d8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.8.6](https://github.com/lobehub/lobe-ui/compare/v2.8.5...v2.8.6)
 
 <sup>Released on **2025-08-15**</sup>
