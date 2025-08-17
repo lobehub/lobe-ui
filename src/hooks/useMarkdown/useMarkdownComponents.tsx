@@ -75,15 +75,20 @@ export const useMarkdownComponents = (): Components => {
     );
   }, [animated, enableMermaid, fullFeaturedCodeBlock, stableComponentProps, componentProps?.pre]);
 
+  const memoBr = useMemo(() => {
+    return () => <br />;
+  }, []);
+
   const memoComponents = useMemo(
     () => ({
       a: memoA,
+      br: memoBr,
       img: memoImg,
       pre: memoPre,
       section: memoSection,
       video: memoVideo,
     }),
-    [memoA, memoImg, memoVideo, memoPre, memoSection],
+    [memoA, memoBr, memoImg, memoVideo, memoPre, memoSection],
   );
 
   return useMemo(

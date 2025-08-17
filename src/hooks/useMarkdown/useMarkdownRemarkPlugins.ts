@@ -8,6 +8,7 @@ import type { Pluggable } from 'unified';
 
 import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
 import { remarkCustomFootnotes } from '@/Markdown/plugins/footnote';
+import { remarkBr } from '@/Markdown/plugins/remarkBr';
 
 export const useMarkdownRemarkPlugins = (): Pluggable[] => {
   const {
@@ -32,7 +33,7 @@ export const useMarkdownRemarkPlugins = (): Pluggable[] => {
   );
 
   return useMemo(
-    () => [...remarkPluginsAhead, ...memoPlugins, ...remarkPlugins],
+    () => [remarkBr, ...remarkPluginsAhead, ...memoPlugins, ...remarkPlugins],
     [remarkPlugins, memoPlugins, remarkPluginsAhead],
   );
 };
