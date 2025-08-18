@@ -12,7 +12,6 @@ export default () => {
     {
       aboveMessage: '',
       belowMessage: '',
-      hideAvatar: false,
       loading: false,
       message: {
         rows: true,
@@ -24,6 +23,7 @@ export default () => {
         value: 'left',
       },
       primary: false,
+      showAvatar: true,
       showTitle: false,
       time: 1_686_538_950_084,
       variant: {

@@ -24,7 +24,7 @@ const ChatListItem = memo<ChatListItemProps>((props) => {
     loading,
     groupNav,
     renderItems,
-    hideAvatar,
+    showAvatar,
     ...item
   } = props;
 
@@ -137,7 +137,6 @@ const ChatListItem = memo<ChatListItemProps>((props) => {
       editing={editing}
       error={error}
       errorMessage={<ErrorMessage data={item} />}
-      hideAvatar={hideAvatar}
       loading={loading}
       message={item.content}
       messageExtra={<MessageExtra data={item} />}
@@ -155,6 +154,7 @@ const ChatListItem = memo<ChatListItemProps>((props) => {
       renderMessage={(editableContent) => (
         <RenderMessage data={item} editableContent={editableContent} />
       )}
+      showAvatar={showAvatar}
       showTitle={showTitle}
       text={text}
       time={item.updateAt || item.createAt}

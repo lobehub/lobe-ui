@@ -45,7 +45,7 @@ const ChatItem = memo<ChatItemProps>(
     belowMessage,
     markdownProps,
     actionsWrapWidth = 54,
-    hideAvatar = false,
+    showAvatar = true,
     ...rest
   }) => {
     const { mobile } = useResponsive();
@@ -100,7 +100,7 @@ const ChatItem = memo<ChatItemProps>(
         gap={mobile ? 6 : 12}
         {...rest}
       >
-        {!hideAvatar && (
+        {showAvatar && (
           <Avatar
             {...avatarProps}
             addon={avatarAddon}
@@ -175,7 +175,7 @@ const ChatItem = memo<ChatItemProps>(
           </Flexbox>
           {belowMessage}
         </Flexbox>
-        {mobile && variant === 'bubble' && !hideAvatar && (
+        {mobile && variant === 'bubble' && showAvatar && (
           <BorderSpacing borderSpacing={MOBILE_AVATAR_SIZE} />
         )}
       </Flexbox>
