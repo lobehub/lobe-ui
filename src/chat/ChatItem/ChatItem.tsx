@@ -45,6 +45,7 @@ const ChatItem = memo<ChatItemProps>(
     belowMessage,
     markdownProps,
     actionsWrapWidth = 54,
+    hideAvatar = false,
     ...rest
   }) => {
     const { mobile } = useResponsive();
@@ -99,20 +100,22 @@ const ChatItem = memo<ChatItemProps>(
         gap={mobile ? 6 : 12}
         {...rest}
       >
-        <Avatar
-          {...avatarProps}
-          addon={avatarAddon}
-          alt={avatarProps?.alt || avatar.title || 'avatar'}
-          avatar={avatar}
-          loading={loading}
-          onClick={onAvatarClick}
-          placement={placement}
-          size={mobile ? MOBILE_AVATAR_SIZE : undefined}
-          style={{
-            marginTop: 6,
-            ...avatarProps?.style,
-          }}
-        />
+        {!hideAvatar && (
+          <Avatar
+            {...avatarProps}
+            addon={avatarAddon}
+            alt={avatarProps?.alt || avatar.title || 'avatar'}
+            avatar={avatar}
+            loading={loading}
+            onClick={onAvatarClick}
+            placement={placement}
+            size={mobile ? MOBILE_AVATAR_SIZE : undefined}
+            style={{
+              marginTop: 6,
+              ...avatarProps?.style,
+            }}
+          />
+        )}
         <Flexbox
           align={placement === 'left' ? 'flex-start' : 'flex-end'}
           className={styles.messageContainer}
@@ -172,7 +175,9 @@ const ChatItem = memo<ChatItemProps>(
           </Flexbox>
           {belowMessage}
         </Flexbox>
-        {mobile && variant === 'bubble' && <BorderSpacing borderSpacing={MOBILE_AVATAR_SIZE} />}
+        {mobile && variant === 'bubble' && !hideAvatar && (
+          <BorderSpacing borderSpacing={MOBILE_AVATAR_SIZE} />
+        )}
       </Flexbox>
     );
   },

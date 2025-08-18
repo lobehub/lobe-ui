@@ -33,6 +33,11 @@ export interface ChatItemProps extends Omit<FlexboxProps, 'children' | 'onChange
   errorMessage?: ReactNode;
   fontSize?: number;
   /**
+   * @description Whether to hide the avatar
+   * @default false
+   */
+  hideAvatar?: boolean;
+  /**
    * @description Whether the chat item is in loading state
    */
   loading?: boolean;

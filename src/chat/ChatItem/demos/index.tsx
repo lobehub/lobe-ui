@@ -12,6 +12,7 @@ export default () => {
     {
       aboveMessage: '',
       belowMessage: '',
+      hideAvatar: false,
       loading: false,
       message: {
         rows: true,

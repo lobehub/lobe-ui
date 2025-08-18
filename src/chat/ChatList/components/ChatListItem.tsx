@@ -24,6 +24,7 @@ const ChatListItem = memo<ChatListItemProps>((props) => {
     loading,
     groupNav,
     renderItems,
+    hideAvatar,
     ...item
   } = props;
 
@@ -136,6 +137,7 @@ const ChatListItem = memo<ChatListItemProps>((props) => {
       editing={editing}
       error={error}
       errorMessage={<ErrorMessage data={item} />}
+      hideAvatar={hideAvatar}
       loading={loading}
       message={item.content}
       messageExtra={<MessageExtra data={item} />}

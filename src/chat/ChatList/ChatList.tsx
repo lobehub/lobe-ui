@@ -25,6 +25,7 @@ const ChatList = memo<ChatListProps>(
     enableHistoryCount,
     renderActions,
     historyCount = 0,
+    hideAvatar,
     ...rest
   }) => {
     const { cx, styles } = useStyles();
@@ -33,6 +34,7 @@ const ChatList = memo<ChatListProps>(
       <div className={cx(styles.container, className)} {...rest}>
         {data.map((item, index) => {
           const itemProps = {
+            hideAvatar,
             loading: loadingId === item.id,
             onActionsClick,
             onAvatarsClick,

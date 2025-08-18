@@ -7,6 +7,7 @@ export default () => {
   const store = useCreateStore();
   const control = useControls(
     {
+      hideAvatar: false,
       showTitle: false,
       variant: {
         options: ['bubble', 'docs'],

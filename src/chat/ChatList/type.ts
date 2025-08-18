@@ -21,6 +21,7 @@ export type RenderAction = FC<ChatActionsBarProps & ChatMessage>;
 
 export interface ListItemProps {
   groupNav?: ChatItemProps['avatarAddon'];
+  hideAvatar?: boolean;
   loading?: boolean;
   /**
    * @description 点击操作按钮的回调函数
