@@ -8,15 +8,14 @@ import { visit } from 'unist-util-visit';
 export const remarkBr = () => {
   return (tree: any) => {
     // First try to process html nodes that might contain br tags
-    visit(tree, 'html', (node, index, parent) => {
+    visit(tree, 'html', (node) => {
       if (!node.value || typeof node.value !== 'string') return;
 
       const brRegex = /<\s*br\s*\/?>/gi;
       if (brRegex.test(node.value)) {
         console.log('Found br tag in HTML node:', node.value);
-        // Replace the html node with a break node
-        parent.children.splice(index, 1, { type: 'break' });
-        return index;
+        // Instead of replacing the entire HTML node, just replace br tags within it
+        node.value = node.value.replaceAll(brRegex, '\n');
       }
     });
 
