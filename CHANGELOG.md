@@ -2,6 +2,40 @@
 
 # Changelog
 
+### [Version 2.9.1](https://github.com/lobehub/lobe-ui/compare/v2.9.0...v2.9.1)
+
+<sup>Released on **2025-08-18**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix br render in pure html string.
+
+#### 💄 Styles
+
+- **misc**: Clean console, Update markdown hooks.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix br render in pure html string ([0fae517](https://github.com/lobehub/lobe-ui/commit/0fae517))
+
+#### Styles
+
+- **misc**: Clean console ([793855e](https://github.com/lobehub/lobe-ui/commit/793855e))
+- **misc**: Update markdown hooks ([630bcf2](https://github.com/lobehub/lobe-ui/commit/630bcf2))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.9.0](https://github.com/lobehub/lobe-ui/compare/v2.8.6...v2.9.0)
 
 <sup>Released on **2025-08-17**</sup>
