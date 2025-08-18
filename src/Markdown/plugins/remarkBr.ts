@@ -7,8 +7,6 @@ import { visit } from 'unist-util-visit';
  */
 export const remarkBr = () => {
   return (tree: any) => {
-    console.log('remarkBr plugin running...');
-
     // First try to process html nodes that might contain ONLY br tags
     visit(tree, 'html', (node, index, parent) => {
       if (!node.value || typeof node.value !== 'string') return;
@@ -16,7 +14,6 @@ export const remarkBr = () => {
       // Only handle standalone br tags, not complex HTML containing br tags
       const brRegex = /^\s*<\s*br\s*\/?>\s*$/gi;
       if (brRegex.test(node.value)) {
-        console.log('Found standalone br tag in HTML node:', node.value);
         // Replace the html node with a break node
         parent.children.splice(index, 1, { type: 'break' });
         return index;
@@ -31,8 +28,6 @@ export const remarkBr = () => {
       const brRegex = /<\s*br\s*\/?>/gi;
 
       if (!brRegex.test(node.value)) return;
-
-      console.log('Found br tag in text:', node.value);
 
       // Reset regex lastIndex for split operation
       brRegex.lastIndex = 0;
