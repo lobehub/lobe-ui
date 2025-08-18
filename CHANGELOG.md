@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.9.3](https://github.com/lobehub/lobe-ui/compare/v2.9.2...v2.9.3)
+
+<sup>Released on **2025-08-18**</sup>
+
+#### 💄 Styles
+
+- **misc**: Add hideAvatar props to ChatItem.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Add hideAvatar props to ChatItem ([7f10bf4](https://github.com/lobehub/lobe-ui/commit/7f10bf4))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.9.2](https://github.com/lobehub/lobe-ui/compare/v2.9.1...v2.9.2)
 
 <sup>Released on **2025-08-18**</sup>
