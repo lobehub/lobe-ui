@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.9.4](https://github.com/lobehub/lobe-ui/compare/v2.9.3...v2.9.4)
+
+<sup>Released on **2025-08-18**</sup>
+
+#### 💄 Styles
+
+- **misc**: Rename hideAvatar to showAvatar in ChatItem.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Rename hideAvatar to showAvatar in ChatItem ([642b608](https://github.com/lobehub/lobe-ui/commit/642b608))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.9.3](https://github.com/lobehub/lobe-ui/compare/v2.9.2...v2.9.3)
 
 <sup>Released on **2025-08-18**</sup>
