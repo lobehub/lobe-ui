@@ -6,6 +6,7 @@ import type { DivProps } from '@/types';
 
 export interface SyntaxMermaidProps {
   children: string;
+  enableNonPreviewWheelZoom?: MermaidProps['enableNonPreviewWheelZoom'];
   enablePanZoom?: MermaidProps['enablePanZoom'];
   ref?: Ref<HTMLDivElement>;
   theme?: MermaidProps['theme'];
@@ -23,6 +24,7 @@ export interface MermaidProps extends DivProps {
   children: string;
   copyable?: boolean;
   defaultExpand?: boolean;
+  enableNonPreviewWheelZoom?: boolean;
   enablePanZoom?: boolean;
   fileName?: string;
   fullFeatured?: boolean;
