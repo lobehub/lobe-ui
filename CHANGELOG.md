@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.9.5](https://github.com/lobehub/lobe-ui/compare/v2.9.4...v2.9.5)
+
+<sup>Released on **2025-08-19**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Image alt.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix Image alt ([cc1350d](https://github.com/lobehub/lobe-ui/commit/cc1350d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.9.4](https://github.com/lobehub/lobe-ui/compare/v2.9.3...v2.9.4)
 
 <sup>Released on **2025-08-18**</sup>
