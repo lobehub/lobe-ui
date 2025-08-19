@@ -138,5 +138,12 @@ describe('fixMarkdownEmphasisSpacing', () => {
     expect(fixMarkdownEmphasisSpacing('你~~我~~他')).toBe('你~~我~~他');
     expect(fixMarkdownEmphasisSpacing('你~~我：~~他')).toBe('你~~我：~~ 他');
     expect(fixMarkdownEmphasisSpacing('你~~我:~~他')).toBe('你~~我:~~ 他');
+
+    // Other
+    expect(fixMarkdownEmphasisSpacing('**哈哈**：**嘿嘿**！')).toBe('**哈哈**：**嘿嘿**！');
+    expect(fixMarkdownEmphasisSpacing('*哈哈*：*嘿嘿*！')).toBe('*哈哈*：*嘿嘿*！');
+    expect(fixMarkdownEmphasisSpacing('__哈哈__：__嘿嘿__！')).toBe('__哈哈__：__嘿嘿__！');
+    expect(fixMarkdownEmphasisSpacing('_哈哈_：_嘿嘿_！')).toBe('_哈哈_：_嘿嘿_！');
+    expect(fixMarkdownEmphasisSpacing('~~哈哈~~：~~嘿嘿~~！')).toBe('~~哈哈~~：~~嘿嘿~~！');
   });
 });

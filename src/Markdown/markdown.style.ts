@@ -228,7 +228,7 @@ export const useStyles = createStyles(
       li:not(${IGNORE_CLASSNAME} li) {
         margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.33em);
 
-        p {
+        p:first-child {
           display: inline;
         }
       }
@@ -260,8 +260,13 @@ export const useStyles = createStyles(
         > li {
           &::before {
             content: '-';
+
+            position: absolute;
+
             display: inline-block;
+
             margin-inline: -1em 0.5em;
+
             opacity: 0.5;
           }
         }

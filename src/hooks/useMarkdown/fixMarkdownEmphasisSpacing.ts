@@ -87,52 +87,6 @@ function applyEmphasisFixes(text: string) {
     });
   }
 
-  // Step 3: Add space before opening emphasis markers when preceded by non-whitespace and first char is symbol/punctuation
-  const beforeEmphasisPatterns = [
-    // ** (bold)
-    { markerChar: '*', pattern: /(\S)(\*\*)([^\n*]*?)(\*\*)/g },
-    // __ (bold)
-    { markerChar: '_', pattern: /(\S)(__)([^\n_]*?)(__)/g },
-    // * (italic) - need to avoid matching **
-    { markerChar: '*', pattern: /(\S)(\*(?!\*))([^\n*]*?)(\*(?!\*))/g },
-    // _ (italic) - need to avoid matching __
-    { markerChar: '_', pattern: /(\S)(_(?!_))([^\n_]*?)(_(?!_))/g },
-    // ~~ (strikethrough)
-    { markerChar: '~', pattern: /(\S)(~~)([^\n~]*?)(~~)/g },
-  ];
-
-  // Apply space before opening markers for each emphasis type
-  for (const { pattern } of beforeEmphasisPatterns) {
-    result = result.replaceAll(pattern, (match, prevChar, start, content, end) => {
-      // Check if the content starts with a symbol/punctuation (like ：, :, ", (, etc.)
-      const firstChar = content.charAt(0);
-      const isSymbolOrPunctuation =
-        /[!"#$%&'()*+,./:;<=>?@[\\\]^_`{|}~、。《》【】！（），：；？｛｜｝-]/.test(firstChar);
-
-      // If previous character is not whitespace and content starts with symbol/punctuation, add space before
-      if (prevChar && !/\s/.test(prevChar) && isSymbolOrPunctuation) {
-        return prevChar + ' ' + start + content + end;
-      }
-      return match;
-    });
-  }
-
-  // Step 4: Re-run step 2 after step 3 to handle cases where both before and after spaces are needed
-  for (const { pattern } of emphasisPatterns) {
-    result = result.replaceAll(pattern, (match, start, content, end, nextChar) => {
-      // Check if the content ends with a symbol/punctuation (like ：, :, etc.)
-      const lastChar = content.slice(-1);
-      const isSymbolOrPunctuation =
-        /[!"#$%&'()*+,./:;<=>?@[\\\]^_`{|}~、。《》【】！（），：；？｛｜｝-]/.test(lastChar);
-
-      // If content ends with symbol/punctuation and next character is not whitespace, add space
-      if (isSymbolOrPunctuation && nextChar && !/\s/.test(nextChar)) {
-        return start + content + end + ' ' + nextChar;
-      }
-      return match;
-    });
-  }
-
   return result;
 }
 
