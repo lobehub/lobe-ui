@@ -45,7 +45,9 @@ const MaterialFileTypeIcon = memo<MaterialFileTypeIconProps>(
       );
 
     if (variant === 'raw')
-      return <Img height={size} src={iconUrl} style={style} width={size} {...rest} />;
+      return (
+        <Img alt={filename} height={size} src={iconUrl} style={style} width={size} {...rest} />
+      );
 
     return (
       <Center
@@ -57,6 +59,7 @@ const MaterialFileTypeIcon = memo<MaterialFileTypeIconProps>(
       >
         <FileTypeIcon size={size} type={variant} variant={'mono'} />
         <Img
+          alt={filename}
           height={size / 2}
           src={iconUrl}
           style={{ position: 'absolute', top: size / 3 }}
