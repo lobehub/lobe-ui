@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [Version 2.10.0](https://github.com/lobehub/lobe-ui/compare/v2.9.5...v2.10.0)
+
+<sup>Released on **2025-08-20**</sup>
+
+#### ✨ Features
+
+- **misc**: Update Markdown aslike Streamdown.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix markdown emphasis spacing (fixed.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update Markdown aslike Streamdown, closes [#388](https://github.com/lobehub/lobe-ui/issues/388) ([3865fa0](https://github.com/lobehub/lobe-ui/commit/3865fa0))
+
+#### What's fixed
+
+- **misc**: Fix markdown emphasis spacing (fixed, closes [#387](https://github.com/lobehub/lobe-ui/issues/387) ([bbf5940](https://github.com/lobehub/lobe-ui/commit/bbf5940))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.9.5](https://github.com/lobehub/lobe-ui/compare/v2.9.4...v2.9.5)
 
 <sup>Released on **2025-08-19**</sup>
