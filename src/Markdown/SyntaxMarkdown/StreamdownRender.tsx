@@ -11,8 +11,6 @@ import {
   useMarkdownRemarkPlugins,
 } from '@/hooks/useMarkdown';
 
-import { parseIncompleteMarkdown } from './parseIncompleteMarkdown';
-
 const parseMarkdownIntoBlocks = (markdown: string): string[] => {
   const tokens = marked.lexer(markdown);
   return tokens.map((token) => token.raw);
@@ -20,11 +18,7 @@ const parseMarkdownIntoBlocks = (markdown: string): string[] => {
 
 const StreamdownBlock = memo<Options>(
   ({ children, ...rest }) => {
-    const parsedContent = useMemo(
-      () => (typeof children === 'string' ? parseIncompleteMarkdown(children.trim()) : children),
-      [children],
-    );
-    return <MarkdownHooks {...rest}>{parsedContent}</MarkdownHooks>;
+    return <MarkdownHooks {...rest}>{children}</MarkdownHooks>;
   },
   (prevProps, nextProps) => prevProps.children === nextProps.children,
 );
