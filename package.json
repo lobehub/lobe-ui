@@ -121,6 +121,7 @@
     "leva": "^0.10.0",
     "lodash-es": "^4.17.21",
     "lucide-react": "^0.525.0",
+    "marked": "^16.2.0",
     "mermaid": "^11.9.0",
     "numeral": "^2.0.6",
     "polished": "^4.3.1",

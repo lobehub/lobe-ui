@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import type { Components } from 'react-markdown';
 
 import { CodeBlock } from '@/Markdown/components/CodeBlock';
@@ -21,21 +21,32 @@ export const useMarkdownComponents = (): Components => {
     fullFeaturedCodeBlock,
   } = useMarkdownContext();
 
-  const memoA = useMemo(() => {
-    return (props: any) => <Link citations={citations} {...props} {...componentProps?.a} />;
-  }, [citations, componentProps?.a]);
+  const memoA = useCallback(
+    (props: any) => <Link citations={citations} {...props} {...componentProps?.a} />,
+    [citations, componentProps?.a],
+  );
 
-  const memoImg = useMemo(() => {
-    return (props: any) => <Image {...props} {...componentProps?.img} />;
-  }, [componentProps?.img]);
+  const memoImg = useCallback(
+    (props: any) => <Image {...props} {...componentProps?.img} />,
+    [componentProps?.img],
+  );
 
-  const memoVideo = useMemo(() => {
-    return (props: any) => <Video {...props} {...componentProps?.video} />;
-  }, [componentProps?.video]);
+  const memoVideo = useCallback(
+    (props: any) => <Video {...props} {...componentProps?.video} />,
+    [componentProps?.video],
+  );
 
-  const memoSection = useMemo(() => {
-    return (props: any) => <Section showFootnotes={showFootnotes} {...props} />;
-  }, [showFootnotes]);
+  const memoSection = useCallback(
+    (props: any) => <Section showFootnotes={showFootnotes} {...props} />,
+    [showFootnotes],
+  );
+
+  const memoBr = useCallback(() => <br />, []);
+
+  const memeP = useCallback(({ children, ...rest }: any) => {
+    const hasImage = typeof children === 'object' && children?.props?.node?.tagName === 'img';
+    return hasImage ? children : <p {...rest}>{children}</p>;
+  }, []);
 
   // Stable references for theme objects to prevent unnecessary re-renders
   const highlightTheme = useMemo(
@@ -62,8 +73,8 @@ export const useMarkdownComponents = (): Components => {
     };
   }, [highlightTheme, mermaidTheme]);
 
-  const memoPre = useMemo(() => {
-    return (props: any) => (
+  const memoPre = useCallback(
+    (props: any) => (
       <CodeBlock
         animated={animated}
         enableMermaid={enableMermaid}
@@ -72,23 +83,21 @@ export const useMarkdownComponents = (): Components => {
         {...componentProps?.pre}
         {...props}
       />
-    );
-  }, [animated, enableMermaid, fullFeaturedCodeBlock, stableComponentProps, componentProps?.pre]);
-
-  const memoBr = useMemo(() => {
-    return () => <br />;
-  }, []);
+    ),
+    [animated, enableMermaid, fullFeaturedCodeBlock, stableComponentProps, componentProps?.pre],
+  );
 
   const memoComponents = useMemo(
     () => ({
       a: memoA,
       br: memoBr,
       img: memoImg,
+      p: memeP,
       pre: memoPre,
       section: memoSection,
       video: memoVideo,
     }),
-    [memoA, memoBr, memoImg, memoVideo, memoPre, memoSection],
+    [memoA, memoBr, memoImg, memoVideo, memoPre, memoSection, memeP],
   );
 
   return useMemo(

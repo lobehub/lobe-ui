@@ -6,7 +6,7 @@ import { memo, useEffect, useMemo, useState } from 'react';
 import { PreviewGroup } from '@/Image';
 import { MarkdownProvider } from '@/Markdown/components/MarkdownProvider';
 
-import SyntaxMarkdown from './SyntaxMarkdown';
+import { MarkdownRender, StreamdownRender } from './SyntaxMarkdown';
 import Typography from './Typography';
 import { useStyles } from './style';
 import type { MarkdownProps } from './type';
@@ -89,7 +89,8 @@ const Markdown = memo<MarkdownProps>(
       [styles],
     );
 
-    const defaultDOM = <SyntaxMarkdown {...reactMarkdownProps}>{children}</SyntaxMarkdown>;
+    const DefaultRender = animated ? StreamdownRender : MarkdownRender;
+    const defaultDOM = <DefaultRender {...reactMarkdownProps}>{children}</DefaultRender>;
 
     return (
       <PreviewGroup enable={enableImageGallery}>

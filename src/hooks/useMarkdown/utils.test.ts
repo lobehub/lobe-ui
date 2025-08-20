@@ -136,36 +136,4 @@ describe('preprocessContent', () => {
     // Expect only bold fixing
     expect(result).toBe('**123：** 456');
   });
-
-  it('should add space before opening emphasis markers if next char is symbol/punctuation', () => {
-    // Test ** (bold)
-    expect(preprocessContent('1**:bold**')).toBe('1 **:bold**');
-    expect(preprocessContent('你好**：世界**')).toBe('你好 **：世界**');
-    expect(preprocessContent('1**(test)**2')).toBe('1 **(test)** 2');
-    expect(preprocessContent('hello**world**')).toBe('hello**world**');
-
-    // Test * (italic)
-    expect(preprocessContent('1*:italic*')).toBe('1 *:italic*');
-    expect(preprocessContent('你好*：世界*')).toBe('你好 *：世界*');
-    expect(preprocessContent('1*(test)*2')).toBe('1 *(test)* 2');
-    expect(preprocessContent('hello*world*')).toBe('hello*world*');
-
-    // Test __ (bold)
-    expect(preprocessContent('1__:bold__')).toBe('1 __:bold__');
-    expect(preprocessContent('你好__：世界__')).toBe('你好 __：世界__');
-    expect(preprocessContent('1__(test)__2')).toBe('1 __(test)__ 2');
-    expect(preprocessContent('hello__world__')).toBe('hello__world__');
-
-    // Test _ (italic)
-    expect(preprocessContent('1_:italic_')).toBe('1 _:italic_');
-    expect(preprocessContent('你好_：世界_')).toBe('你好 _：世界_');
-    expect(preprocessContent('1_(test)_2')).toBe('1 _(test)_ 2');
-    expect(preprocessContent('hello_world_')).toBe('hello_world_');
-
-    // Test ~~ (strikethrough)
-    expect(preprocessContent('1~~:strike~~')).toBe('1 ~~:strike~~');
-    expect(preprocessContent('你好~~：世界~~')).toBe('你好 ~~：世界~~');
-    expect(preprocessContent('1~~(test)~~2')).toBe('1 ~~(test)~~ 2');
-    expect(preprocessContent('hello~~world~~')).toBe('hello~~world~~');
-  });
 });

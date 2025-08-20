@@ -121,16 +121,6 @@ interface PreprocessOptions {
   enableLatex?: boolean;
 }
 
-/**
- * Preprocesses markdown content by applying various transformations:
- * - LaTeX preprocessing
- * - Citation transformations
- * - Bold syntax fixing
- *
- * @param str The raw markdown content
- * @param options Preprocessing options
- * @returns The processed markdown content
- */
 export const preprocessContent = (
   str: string,
   { enableCustomFootnotes, enableLatex, citationsLength }: PreprocessOptions = {},
