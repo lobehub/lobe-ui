@@ -2,15 +2,18 @@
 
 import { memo } from 'react';
 
-const Span = memo<{ children?: string }>(({ children }) => {
-  return (
-    <span
-      dangerouslySetInnerHTML={{
-        __html: children || '',
-      }}
-    />
-  );
-});
+const Span = memo<{ children?: string }>(
+  ({ children }) => {
+    return (
+      <span
+        dangerouslySetInnerHTML={{
+          __html: children || '',
+        }}
+      />
+    );
+  },
+  (prevProps, nextProps) => prevProps.children === nextProps.children,
+);
 
 Span.displayName = 'HighlighterSpan';
 

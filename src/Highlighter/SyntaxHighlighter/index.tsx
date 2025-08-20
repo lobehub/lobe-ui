@@ -145,6 +145,8 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
       </div>
     );
   },
+  (prevProps, nextProps) =>
+    prevProps.children === nextProps.children && prevProps.language === nextProps.language,
 );
 
 SyntaxHighlighter.displayName = 'SyntaxHighlighter';

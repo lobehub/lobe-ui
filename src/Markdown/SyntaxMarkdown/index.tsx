@@ -1,7 +1,9 @@
 'use client';
 
-import { memo } from 'react';
-import Markdown, { type Options as ReactMarkdownOptions } from 'react-markdown';
+import { Skeleton } from 'antd';
+import { marked } from 'marked';
+import { memo, useId, useMemo } from 'react';
+import { MarkdownHooks, type Options as ReactMarkdownOptions } from 'react-markdown';
 
 import {
   useMarkdownComponents,
@@ -10,28 +12,51 @@ import {
   useMarkdownRemarkPlugins,
 } from '@/hooks/useMarkdown';
 
-const MarkdownRenderer = memo<ReactMarkdownOptions>(({ children, ...rest }) => {
-  const components = useMarkdownComponents();
-  const rehypePluginsList = useMarkdownRehypePlugins();
-  const remarkPluginsList = useMarkdownRemarkPlugins();
-  return (
-    <Markdown
-      {...rest}
-      components={components}
-      rehypePlugins={rehypePluginsList}
-      remarkPlugins={remarkPluginsList}
-    >
-      {children}
-    </Markdown>
-  );
-});
+const MarkdownRenderer = memo<ReactMarkdownOptions>(
+  ({ children, ...rest }) => {
+    const escapedContent = useMarkdownContent(children || '');
+    const components = useMarkdownComponents();
+    const rehypePluginsList = useMarkdownRehypePlugins();
+    const remarkPluginsList = useMarkdownRemarkPlugins();
+
+    return (
+      <MarkdownHooks
+        {...rest}
+        components={components}
+        fallback={<Skeleton paragraph={{ rows: 1 }} title={false} />}
+        rehypePlugins={rehypePluginsList}
+        remarkPlugins={remarkPluginsList}
+      >
+        {escapedContent}
+      </MarkdownHooks>
+    );
+  },
+  (prevProps, nextProps) => prevProps.children === nextProps.children,
+);
 
 MarkdownRenderer.displayName = 'MarkdownRenderer';
 
-const SyntaxMarkdown = memo<ReactMarkdownOptions>(({ children, ...rest }) => {
-  const escapedContent = useMarkdownContent(children || '');
-  return <MarkdownRenderer {...rest}>{escapedContent}</MarkdownRenderer>;
-});
+const parseMarkdownIntoBlocks = (markdown: string): string[] => {
+  const tokens = marked.lexer(markdown);
+  return tokens.map((token) => token.raw);
+};
+
+const SyntaxMarkdown = memo<ReactMarkdownOptions>(
+  ({ children, ...rest }) => {
+    const generatedId = useId();
+    const blocks = useMemo(
+      () => parseMarkdownIntoBlocks(typeof children === 'string' ? children : ''),
+      [children],
+    );
+
+    return blocks.map((block, index) => (
+      <MarkdownRenderer key={`${generatedId}-block_${index}`} {...rest}>
+        {block}
+      </MarkdownRenderer>
+    ));
+  },
+  (prevProps, nextProps) => prevProps.children === nextProps.children,
+);
 
 SyntaxMarkdown.displayName = 'SyntaxMarkdown';
 

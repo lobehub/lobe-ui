@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { memo } from 'react';
 
 import { type HighlighterProps } from '@/Highlighter';
 import { FALLBACK_LANG } from '@/Highlighter/const';
@@ -40,38 +40,33 @@ interface CodeBlockProps {
   mermaid?: MermaidProps;
 }
 
-export const CodeBlock: FC<CodeBlockProps> = ({
-  fullFeatured,
-  enableMermaid,
-  highlight,
-  mermaid,
-  children,
-  animated,
-  ...rest
-}) => {
-  const code = useCode(children);
+export const CodeBlock = memo<CodeBlockProps>(
+  ({ fullFeatured, enableMermaid, highlight, mermaid, children, animated, ...rest }) => {
+    const code = useCode(children);
 
-  if (!code) return;
+    if (!code) return;
 
-  if (enableMermaid && code.lang === 'mermaid')
+    if (enableMermaid && code.lang === 'mermaid')
+      return (
+        <PreMermaid fullFeatured={fullFeatured} {...mermaid} {...rest}>
+          {code.content}
+        </PreMermaid>
+      );
+
+    if (!highlight && code.isSingleLine)
+      return <PreSingleLine language={code.lang}>{code.content}</PreSingleLine>;
+
     return (
-      <PreMermaid fullFeatured={fullFeatured} {...mermaid} {...rest}>
+      <Pre
+        animated={animated}
+        fullFeatured={fullFeatured}
+        language={code.lang}
+        {...highlight}
+        {...rest}
+      >
         {code.content}
-      </PreMermaid>
+      </Pre>
     );
-
-  if (!highlight && code.isSingleLine)
-    return <PreSingleLine language={code.lang}>{code.content}</PreSingleLine>;
-
-  return (
-    <Pre
-      animated={animated}
-      fullFeatured={fullFeatured}
-      language={code.lang}
-      {...highlight}
-      {...rest}
-    >
-      {code.content}
-    </Pre>
-  );
-};
+  },
+  (prevProps, nextProps) => prevProps.children === nextProps.children,
+);

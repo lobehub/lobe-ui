@@ -29,6 +29,7 @@ export const useMarkdownContent = (children: string): string | undefined => {
 
     // Process new content only if needed
     let processedContent = preprocessContent(children, {
+      animated,
       citationsLength,
       enableCustomFootnotes,
       enableLatex,
