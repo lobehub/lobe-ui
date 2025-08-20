@@ -12,7 +12,7 @@ import {
   useMarkdownRemarkPlugins,
 } from '@/hooks/useMarkdown';
 
-const MarkdownRenderer = memo<ReactMarkdownOptions>(
+export const MarkdownRenderer = memo<ReactMarkdownOptions>(
   ({ children, ...rest }) => {
     const escapedContent = useMarkdownContent(children || '');
     const components = useMarkdownComponents();
@@ -41,7 +41,7 @@ const parseMarkdownIntoBlocks = (markdown: string): string[] => {
   return tokens.map((token) => token.raw);
 };
 
-const SyntaxMarkdown = memo<ReactMarkdownOptions>(
+export const StreamdownRender = memo<ReactMarkdownOptions>(
   ({ children, ...rest }) => {
     const generatedId = useId();
     const blocks = useMemo(
@@ -58,6 +58,4 @@ const SyntaxMarkdown = memo<ReactMarkdownOptions>(
   (prevProps, nextProps) => prevProps.children === nextProps.children,
 );
 
-SyntaxMarkdown.displayName = 'SyntaxMarkdown';
-
-export default SyntaxMarkdown;
+StreamdownRender.displayName = 'StreamdownRender';
