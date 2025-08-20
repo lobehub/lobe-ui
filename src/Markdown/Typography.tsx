@@ -10,15 +10,29 @@ const Typography = memo<TypographyProps>(
     ref,
     children,
     className,
-    fontSize,
-    headerMultiple,
+    fontSize = 16,
+    headerMultiple = 1,
     marginMultiple = 2,
-    lineHeight,
+    lineHeight = 1.8,
+    style,
     ...rest
   }) => {
-    const { cx, styles } = useStyles({ fontSize, headerMultiple, lineHeight, marginMultiple });
+    const { cx, styles } = useStyles();
+
     return (
-      <article className={cx(styles.root, styles.variant, className)} ref={ref} {...rest}>
+      <article
+        className={cx(styles.root, styles.variant, className)}
+        ref={ref}
+        style={{
+          // @ts-ignore
+          '--lobe-markdown-font-size': `${fontSize}px`,
+          '--lobe-markdown-header-multiple': headerMultiple,
+          '--lobe-markdown-line-height': lineHeight,
+          '--lobe-markdown-margin-multiple': marginMultiple,
+          ...style,
+        }}
+        {...rest}
+      >
         {children}
       </article>
     );
