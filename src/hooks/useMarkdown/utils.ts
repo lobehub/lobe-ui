@@ -1,6 +1,5 @@
 import { fixMarkdownEmphasisSpacing } from './fixMarkdownEmphasisSpacing';
 import { preprocessLaTeX } from './latex';
-import { parseIncompleteMarkdown } from './parseIncompleteMarkdown';
 
 // Cache configuration
 const CACHE_SIZE = 50;
@@ -117,7 +116,6 @@ export const transformCitations = (rawContent: string, length: number = 0) => {
  * Preprocessing options for markdown content
  */
 interface PreprocessOptions {
-  animated?: boolean;
   citationsLength?: number;
   enableCustomFootnotes?: boolean;
   enableLatex?: boolean;
@@ -125,13 +123,9 @@ interface PreprocessOptions {
 
 export const preprocessContent = (
   str: string,
-  { enableCustomFootnotes, enableLatex, citationsLength, animated }: PreprocessOptions = {},
+  { enableCustomFootnotes, enableLatex, citationsLength }: PreprocessOptions = {},
 ) => {
   let content = str;
-
-  if (animated) {
-    content = parseIncompleteMarkdown(content);
-  }
 
   // Process LaTeX expressions
   if (enableLatex) {
