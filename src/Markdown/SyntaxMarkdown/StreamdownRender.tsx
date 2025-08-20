@@ -1,6 +1,5 @@
 'use client';
 
-import 'katex/dist/katex.min.css';
 import { marked } from 'marked';
 import { memo, useId, useMemo } from 'react';
 import { MarkdownHooks, Options } from 'react-markdown';
@@ -19,19 +18,21 @@ const parseMarkdownIntoBlocks = (markdown: string): string[] => {
   return tokens.map((token) => token.raw);
 };
 
-const Block = memo(
-  ({ children, ...props }: Options) => {
+const StreamdownBlock = memo<Options>(
+  ({ children, ...rest }) => {
     const parsedContent = useMemo(
       () => (typeof children === 'string' ? parseIncompleteMarkdown(children.trim()) : children),
       [children],
     );
-    return <MarkdownHooks {...props}>{parsedContent}</MarkdownHooks>;
+    return <MarkdownHooks {...rest}>{parsedContent}</MarkdownHooks>;
   },
   (prevProps, nextProps) => prevProps.children === nextProps.children,
 );
 
-export const StreamdownRender = memo(
-  ({ children }: Options) => {
+StreamdownBlock.displayName = 'StreamdownBlock';
+
+export const StreamdownRender = memo<Options>(
+  ({ children, ...rest }) => {
     const escapedContent = useMarkdownContent(children || '');
     const components = useMarkdownComponents();
     const rehypePluginsList = useMarkdownRehypePlugins();
@@ -43,18 +44,19 @@ export const StreamdownRender = memo(
     );
 
     return (
-      <>
+      <div>
         {blocks.map((block, index) => (
-          <Block
+          <StreamdownBlock
             components={components}
             key={`${generatedId}-block_${index}`}
             rehypePlugins={rehypePluginsList}
             remarkPlugins={remarkPluginsList}
+            {...rest}
           >
             {block}
-          </Block>
+          </StreamdownBlock>
         ))}
-      </>
+      </div>
     );
   },
   (prevProps, nextProps) => prevProps.children === nextProps.children,

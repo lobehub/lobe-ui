@@ -130,8 +130,6 @@ const Markdown = memo<MarkdownProps>(
       </PreviewGroup>
     );
   },
-  (prevProps, nextProps) =>
-    prevProps.children === nextProps.children && prevProps.animated === nextProps.animated,
 );
 
 Markdown.displayName = 'Markdown';
