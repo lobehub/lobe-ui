@@ -33,8 +33,10 @@ export interface SyntaxMarkdownProps {
   };
   components?: Components & Record<string, FC>;
   enableCustomFootnotes?: boolean;
+  enableGithubAlert?: boolean;
   enableLatex?: boolean;
   enableMermaid?: boolean;
+  enableStream?: boolean;
   fullFeaturedCodeBlock?: boolean;
   reactMarkdownProps?: Omit<
     Readonly<ReactMarkdownOptions>,

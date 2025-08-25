@@ -41,11 +41,11 @@ export const StreamdownRender = memo<Options>(
       <div>
         {blocks.map((block, index) => (
           <StreamdownBlock
+            {...rest}
             components={components}
             key={`${generatedId}-block_${index}`}
             rehypePlugins={rehypePluginsList}
             remarkPlugins={remarkPluginsList}
-            {...rest}
           >
             {block}
           </StreamdownBlock>

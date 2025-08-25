@@ -205,22 +205,6 @@ export const fullContent = `
 
 <antThinking>这个请求适合创建一个新的SVG卡片artifact。它是一个独立的视觉元素,可以重复使用或修改,符合好的artifact标准。我将创建一个新的artifact,标识符为"sleep-interpretation-card"。</antThinking>
 
-<antArtifact identifier="sleep-interpretation-card" type="image/svg+xml" title="睡觉的新解释">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
-  <defs>
-    <style>
-      @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&amp;display=swap');
-    </style>
-  </defs>
-
-  <!-- 背景 -->
-  <rect width="400" height="600" fill="#F0EAD6"/>
-
-  <!-- 总结 -->
-  <text x="200" y="500" font-family="'Noto Serif SC', serif" font-size="20" text-anchor="middle" fill="#8B4513">睡觉：生产力的假死，创造力的重生。</text>
-</svg>
-</antArtifact>
-
 这是我为"睡觉"这个词创作的新解释卡片。
 
 
@@ -288,43 +272,6 @@ const SyntaxMarkdown = memo<SyntaxMarkdownProps>(
       showFootnotes,
       variant,
     });
-
-    // 渲染默认内容
-    const defaultDOM = useMemo(
-      () => (
-        <PreviewGroup enable={enableImageGallery}>
-          <ReactMarkdown
-            {...reactMarkdownProps}
-            components={memoComponents}
-            rehypePlugins={rehypePluginsList}
-            remarkPlugins={remarkPluginsList}
-          >
-            {escapedContent}
-          </ReactMarkdown>
-        </PreviewGroup>
-      ),
-      [
-        escapedContent,
-        memoComponents,
-        rehypePluginsList,
-        remarkPluginsList,
-        enableImageGallery,
-        reactMarkdownProps,
-      ],
-    );
-
-    // 应用自定义渲染
-    const markdownContent = customRender
-      ? customRender(defaultDOM, { text: escapedContent || '' })
-      : defaultDOM;
-
-    return markdownContent;
-  },
-);
-
-SyntaxMarkdown.displayName = 'SyntaxMarkdown';
-
-export default SyntaxMarkdown;
 \`\`\`
 
 ## Math Support

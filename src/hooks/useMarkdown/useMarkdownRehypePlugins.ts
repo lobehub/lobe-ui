@@ -16,6 +16,7 @@ export const useMarkdownRehypePlugins = (): Pluggable[] => {
     animated,
     enableLatex,
     enableCustomFootnotes,
+    enableGithubAlert,
     allowHtml,
     rehypePlugins = [],
     rehypePluginsAhead = [],
@@ -24,14 +25,14 @@ export const useMarkdownRehypePlugins = (): Pluggable[] => {
   const memoPlugins = useMemo(
     () =>
       [
-        rehypeGithubAlerts,
         allowHtml && rehypeRaw,
+        enableGithubAlert && rehypeGithubAlerts,
         enableLatex && rehypeKatex,
         enableLatex && rehypeKatexDir,
         enableCustomFootnotes && rehypeFootnoteLinks,
         animated && animatedPlugin,
       ].filter(Boolean) as Pluggable[],
-    [animated, enableLatex, enableCustomFootnotes, allowHtml],
+    [animated, enableLatex, enableGithubAlert, enableCustomFootnotes, allowHtml],
   );
 
   return useMemo(

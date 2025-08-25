@@ -1,7 +1,7 @@
 'use client';
 
 import { cva } from 'class-variance-authority';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { PropsWithChildren, memo, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { PreviewGroup } from '@/Image';
 import { MarkdownProvider } from '@/Markdown/components/MarkdownProvider';
@@ -20,10 +20,12 @@ const Markdown = memo<MarkdownProps>(
     fullFeaturedCodeBlock,
     onDoubleClick,
     animated,
-    enableLatex = true,
-    enableMermaid = true,
+    enableLatex: eLatex,
+    enableMermaid: eMermaid,
     enableImageGallery,
     enableCustomFootnotes,
+    enableGithubAlert: eGithubAlert,
+    enableStream: eStream,
     componentProps,
     allowHtml,
     fontSize = 14,
@@ -42,8 +44,17 @@ const Markdown = memo<MarkdownProps>(
     ...rest
   }) => {
     const { cx, styles } = useStyles();
-    // Add state to track delayed animated value
+
     const [delayedAnimated, setDelayedAnimated] = useState(animated);
+    const enableLatex = Boolean(typeof eLatex === 'boolean' && eLatex) || children.includes('$');
+    const enableMermaid =
+      Boolean(typeof eMermaid === 'boolean' && eMermaid) || children.includes('```mermaid');
+    const enableGithubAlert =
+      Boolean(typeof eGithubAlert === 'boolean' && eGithubAlert) || children.includes('> [!');
+    const enableStream =
+      Boolean(typeof eStream === 'boolean' && eStream) ||
+      delayedAnimated ||
+      !children.includes('[^');
 
     // Watch for changes in animated prop
     useEffect(() => {
@@ -89,7 +100,15 @@ const Markdown = memo<MarkdownProps>(
       [styles],
     );
 
-    const DefaultRender = animated ? StreamdownRender : MarkdownRender;
+    const DefaultRender = useCallback(
+      ({ children, ...reactMarkdownProps }: PropsWithChildren<any>) =>
+        enableStream ? (
+          <StreamdownRender {...reactMarkdownProps}>{children}</StreamdownRender>
+        ) : (
+          <MarkdownRender {...reactMarkdownProps}>{children}</MarkdownRender>
+        ),
+      [enableStream],
+    );
     const defaultDOM = <DefaultRender {...reactMarkdownProps}>{children}</DefaultRender>;
 
     return (
@@ -114,6 +133,7 @@ const Markdown = memo<MarkdownProps>(
               componentProps,
               components,
               enableCustomFootnotes,
+              enableGithubAlert,
               enableLatex,
               enableMermaid,
               fullFeaturedCodeBlock,
