@@ -14,7 +14,7 @@ import type { MarkdownProps } from './type';
 const Markdown = memo<MarkdownProps>(
   ({
     ref,
-    children,
+    children = '',
     className,
     style,
     fullFeaturedCodeBlock,
@@ -144,7 +144,7 @@ const Markdown = memo<MarkdownProps>(
               variant,
             }}
           >
-            {customRender ? customRender(defaultDOM, { text: children || '' }) : defaultDOM}
+            {customRender ? customRender(defaultDOM, { text: children }) : defaultDOM}
           </MarkdownProvider>
         </Typography>
       </PreviewGroup>
