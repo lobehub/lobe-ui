@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.10.2](https://github.com/lobehub/lobe-ui/compare/v2.10.1...v2.10.2)
+
+<sup>Released on **2025-08-25**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Markdown.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix Markdown ([beae2fc](https://github.com/lobehub/lobe-ui/commit/beae2fc))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.10.1](https://github.com/lobehub/lobe-ui/compare/v2.10.0...v2.10.1)
 
 <sup>Released on **2025-08-20**</sup>
