@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.11.0](https://github.com/lobehub/lobe-ui/compare/v2.10.3...v2.11.0)
+
+<sup>Released on **2025-08-26**</sup>
+
+#### ✨ Features
+
+- **misc**: Add titleAddon to ChatItem.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add titleAddon to ChatItem ([33a9ca9](https://github.com/lobehub/lobe-ui/commit/33a9ca9))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.10.3](https://github.com/lobehub/lobe-ui/compare/v2.10.2...v2.10.3)
 
 <sup>Released on **2025-08-25**</sup>
