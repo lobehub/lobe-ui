@@ -1,14 +1,19 @@
 import { Tag } from '@lobehub/ui';
 import { Badge } from 'antd';
 import { useTheme } from 'antd-style';
+import { LockIcon } from 'lucide-react';
 import { Center } from 'react-layout-kit';
+
+import Icon from '@/Icon';
 
 export default () => {
   const theme = useTheme();
   return (
     <Center gap={24}>
       <Center gap={4} horizontal wrap={'wrap'}>
-        <Tag color="success">success</Tag>
+        <Tag color="success" icon={<Icon icon={LockIcon} />} variant={'borderless'}>
+          success
+        </Tag>
         <Tag color="warning">warning</Tag>
         <Tag color="error">error</Tag>
         <Tag color="info">info</Tag>

@@ -82,6 +82,7 @@ export interface ChatItemProps extends Omit<FlexboxProps, 'children' | 'onChange
    * @description The timestamp of the chat item
    */
   time?: number;
+  titleAddon?: ReactNode;
   /**
    * @description The type of the chat item
    * @default 'bubble'

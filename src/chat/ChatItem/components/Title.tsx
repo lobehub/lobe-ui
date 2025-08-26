@@ -11,9 +11,10 @@ export interface TitleProps {
   placement?: ChatItemProps['placement'];
   showTitle?: ChatItemProps['showTitle'];
   time?: ChatItemProps['time'];
+  titleAddon?: ChatItemProps['titleAddon'];
 }
 
-const Title = memo<TitleProps>(({ showTitle, placement, time, avatar }) => {
+const Title = memo<TitleProps>(({ showTitle, placement, time, avatar, titleAddon }) => {
   const { styles } = useStyles({ placement, showTitle, time });
 
   return (
@@ -23,6 +24,7 @@ const Title = memo<TitleProps>(({ showTitle, placement, time, avatar }) => {
       gap={4}
     >
       {showTitle ? avatar.title || 'untitled' : undefined}
+      {showTitle ? titleAddon : undefined}
       {time && <time>{formatTime(time)}</time>}
     </Flexbox>
   );

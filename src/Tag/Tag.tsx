@@ -52,6 +52,7 @@ const Tag = memo<TagProps>(
       let textColor = theme.colorTextSecondary;
       let backgroundColor;
       let borderColor;
+      const isBorderless = variant === 'borderless';
       const isFilled = variant === 'filled';
       const isPresetColor = color && presetColors.includes(color);
       const isPresetSystemColors = color && presetSystemColors.has(color);
@@ -59,12 +60,14 @@ const Tag = memo<TagProps>(
 
       if (isPresetColor) {
         textColor = colorsPreset(theme, color);
-        backgroundColor = colorsPreset(theme, color, 'fillTertiary');
+        backgroundColor = isBorderless ? 'transparent' : colorsPreset(theme, color, 'fillTertiary');
         borderColor = colorsPreset(theme, color, isFilled ? 'fillQuaternary' : 'fillTertiary');
       }
       if (isPresetSystemColors) {
         textColor = colorsPresetSystem(theme, color);
-        backgroundColor = colorsPresetSystem(theme, color, 'fillTertiary');
+        backgroundColor = isBorderless
+          ? 'transparent'
+          : colorsPresetSystem(theme, color, 'fillTertiary');
         borderColor = colorsPresetSystem(
           theme,
           color,
@@ -73,7 +76,7 @@ const Tag = memo<TagProps>(
       }
       if (isHexColor) {
         textColor = theme.colorBgLayout;
-        backgroundColor = color;
+        backgroundColor = isBorderless ? 'transparent' : color;
       }
 
       return {

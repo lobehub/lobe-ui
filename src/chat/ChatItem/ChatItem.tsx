@@ -46,6 +46,7 @@ const ChatItem = memo<ChatItemProps>(
     markdownProps,
     actionsWrapWidth = 54,
     showAvatar = true,
+    titleAddon,
     ...rest
   }) => {
     const { mobile } = useResponsive();
@@ -121,7 +122,13 @@ const ChatItem = memo<ChatItemProps>(
           className={styles.messageContainer}
           ref={containerRef}
         >
-          <Title avatar={avatar} placement={placement} showTitle={showTitle} time={time} />
+          <Title
+            avatar={avatar}
+            placement={placement}
+            showTitle={showTitle}
+            time={time}
+            titleAddon={titleAddon}
+          />
           {aboveMessage}
           <Flexbox
             align={placement === 'left' ? 'flex-start' : 'flex-end'}
