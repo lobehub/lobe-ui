@@ -112,7 +112,7 @@ const ChatItem = memo<ChatItemProps>(
             placement={placement}
             size={mobile ? MOBILE_AVATAR_SIZE : undefined}
             style={{
-              marginTop: 6,
+              marginTop: showTitle ? -12 : 6,
               ...avatarProps?.style,
             }}
           />
