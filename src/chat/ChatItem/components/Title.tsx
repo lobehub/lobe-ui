@@ -19,6 +19,7 @@ const Title = memo<TitleProps>(({ showTitle, placement, time, avatar, titleAddon
 
   return (
     <Flexbox
+      align={'center'}
       className={styles.name}
       direction={placement === 'left' ? 'horizontal' : 'horizontal-reverse'}
       gap={4}
