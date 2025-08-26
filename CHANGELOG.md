@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.11.1](https://github.com/lobehub/lobe-ui/compare/v2.11.0...v2.11.1)
+
+<sup>Released on **2025-08-26**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update ChatItem title align.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update ChatItem title align ([e111847](https://github.com/lobehub/lobe-ui/commit/e111847))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.11.0](https://github.com/lobehub/lobe-ui/compare/v2.10.3...v2.11.0)
 
 <sup>Released on **2025-08-26**</sup>
