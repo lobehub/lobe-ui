@@ -40,16 +40,16 @@ function applyEmphasisFixes(text: string) {
 
   // Step 1: Remove trailing spaces inside emphasis markers
   const removeInternalSpaces = [
-    // 处理 **bold** 格式（两个星号）- 只处理一个空格
-    { pattern: /(\*\*)([^\n*]+?)( )(\*\*)/g, replacement: '$1$2$4' },
-    // 处理 __bold__ 格式（两个下划线）- 只处理一个空格
-    { pattern: /(__)([^\n_]+?)( )(__)/g, replacement: '$1$2$4' },
-    // 处理 ~~strikethrough~~ 格式（删除线）- 只处理一个空格
-    { pattern: /(~~)([^\n~]+?)( )(~~)/g, replacement: '$1$2$4' },
-    // 处理单个 * 格式 - 只处理一个空格，使用更精确的边界匹配
-    { pattern: /(^|[^\w*])(\*(?!\*))([^\n*]+?)( )(\*(?!\*))/g, replacement: '$1$2$3$5' },
-    // 处理单个 _ 格式 - 只处理一个空格，使用更精确的边界匹配
-    { pattern: /(^|\W)(_(?!_))([^\n_]+?)( )(_(?!_))/g, replacement: '$1$2$3$5' },
+    // 处理 **bold** 格式（两个星号）- 只处理一个空格，确保内容不包含表格分隔符
+    { pattern: /(\*\*)([^\n*|]+?)( )(\*\*)/g, replacement: '$1$2$4' },
+    // 处理 __bold__ 格式（两个下划线）- 只处理一个空格，确保内容不包含表格分隔符
+    { pattern: /(__)([^\n_|]+?)( )(__)/g, replacement: '$1$2$4' },
+    // 处理 ~~strikethrough~~ 格式（删除线）- 只处理一个空格，确保内容不包含表格分隔符
+    { pattern: /(~~)([^\n|~]+?)( )(~~)/g, replacement: '$1$2$4' },
+    // 处理单个 * 格式 - 只处理一个空格，使用更精确的边界匹配，确保内容不包含表格分隔符
+    { pattern: /(^|[^\w*])(\*(?!\*))([^\n*|]+?)( )(\*(?!\*))/g, replacement: '$1$2$3$5' },
+    // 处理单个 _ 格式 - 只处理一个空格，使用更精确的边界匹配，确保内容不包含表格分隔符
+    { pattern: /(^|\W)(_(?!_))([^\n_|]+?)( )(_(?!_))/g, replacement: '$1$2$3$5' },
   ];
 
   result = removeInternalSpaces.reduce((text, { pattern, replacement }) => {
@@ -59,16 +59,16 @@ function applyEmphasisFixes(text: string) {
   // Step 2: Add space after closing emphasis markers when followed by symbols/punctuation/Chinese characters
   // Define emphasis patterns
   const emphasisPatterns = [
-    // ** (bold)
-    { markerChar: '*', pattern: /(\*\*)([^\n*]*?)(\*\*)(\S)/g },
-    // __ (bold)
-    { markerChar: '_', pattern: /(__)([^\n_]*?)(__)(\S)/g },
-    // * (italic) - need to avoid matching **
-    { markerChar: '*', pattern: /(\*(?!\*))([^\n*]*?)(\*(?!\*))(\S)/g },
-    // _ (italic) - need to avoid matching __
-    { markerChar: '_', pattern: /(_(?!_))([^\n_]*?)(_(?!_))(\S)/g },
-    // ~~ (strikethrough)
-    { markerChar: '~', pattern: /(~~)([^\n~]*?)(~~)(\S)/g },
+    // ** (bold) - exclude table separators from content
+    { markerChar: '*', pattern: /(\*\*)([^\n*|]*?)(\*\*)(\S)/g },
+    // __ (bold) - exclude table separators from content
+    { markerChar: '_', pattern: /(__)([^\n_|]*?)(__)(\S)/g },
+    // * (italic) - need to avoid matching **, exclude table separators from content
+    { markerChar: '*', pattern: /(\*(?!\*))([^\n*|]*?)(\*(?!\*))(\S)/g },
+    // _ (italic) - need to avoid matching __, exclude table separators from content
+    { markerChar: '_', pattern: /(_(?!_))([^\n_|]*?)(_(?!_))(\S)/g },
+    // ~~ (strikethrough) - exclude table separators from content
+    { markerChar: '~', pattern: /(~~)([^\n|~]*?)(~~)(\S)/g },
   ];
 
   // Apply space after closing markers for each emphasis type
@@ -79,8 +79,19 @@ function applyEmphasisFixes(text: string) {
       const isSymbolOrPunctuation =
         /[!"#$%&'()*+,./:;<=>?@[\\\]^_`{|}~、。《》【】！（），：；？｛｜｝-]/.test(lastChar);
 
+      // Don't add space if next character is a table separator or other markdown structural characters
+      const isTableSeparator = nextChar === '|';
+      const isMarkdownStructural = /[()[\]{}]/.test(nextChar);
+
       // If content ends with symbol/punctuation and next character is not whitespace, add space
-      if (isSymbolOrPunctuation && nextChar && !/\s/.test(nextChar)) {
+      // But skip if it's a table separator or markdown structural character
+      if (
+        isSymbolOrPunctuation &&
+        nextChar &&
+        !/\s/.test(nextChar) &&
+        !isTableSeparator &&
+        !isMarkdownStructural
+      ) {
         return start + content + end + ' ' + nextChar;
       }
       return match;

@@ -146,4 +146,16 @@ describe('fixMarkdownEmphasisSpacing', () => {
     expect(fixMarkdownEmphasisSpacing('_哈哈_：_嘿嘿_！')).toBe('_哈哈_：_嘿嘿_！');
     expect(fixMarkdownEmphasisSpacing('~~哈哈~~：~~嘿嘿~~！')).toBe('~~哈哈~~：~~嘿嘿~~！');
   });
+
+  it('should not add space after emphasis markers in table context', () => {
+    expect(fixMarkdownEmphasisSpacing('| **A** | **B** |')).toBe('| **A** | **B** |');
+    expect(fixMarkdownEmphasisSpacing('| *italic* | __bold__ |')).toBe('| *italic* | __bold__ |');
+    expect(fixMarkdownEmphasisSpacing('| ~~strike~~ | _emphasis_ |')).toBe(
+      '| ~~strike~~ | _emphasis_ |',
+    );
+
+    // Test full table example
+    const tableInput = '| A | A |\n| --- | --- |\n| **A** | **A** |';
+    expect(fixMarkdownEmphasisSpacing(tableInput)).toBe(tableInput);
+  });
 });
