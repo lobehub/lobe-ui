@@ -20,12 +20,12 @@ const Markdown = memo<MarkdownProps>(
     fullFeaturedCodeBlock,
     onDoubleClick,
     animated,
-    enableLatex: eLatex,
-    enableMermaid: eMermaid,
+    enableLatex = true,
+    enableMermaid = true,
     enableImageGallery,
     enableCustomFootnotes,
-    enableGithubAlert: eGithubAlert,
-    enableStream: eStream,
+    enableGithubAlert,
+    enableStream,
     componentProps,
     allowHtml,
     fontSize = 14,
@@ -46,15 +46,6 @@ const Markdown = memo<MarkdownProps>(
     const { cx, styles } = useStyles();
 
     const [delayedAnimated, setDelayedAnimated] = useState(animated);
-    const enableLatex = Boolean(typeof eLatex === 'boolean' && eLatex) || children.includes('$');
-    const enableMermaid =
-      Boolean(typeof eMermaid === 'boolean' && eMermaid) || children.includes('```mermaid');
-    const enableGithubAlert =
-      Boolean(typeof eGithubAlert === 'boolean' && eGithubAlert) || children.includes('> [!');
-    const enableStream =
-      Boolean(typeof eStream === 'boolean' && eStream) ||
-      delayedAnimated ||
-      !children.includes('[^');
 
     // Watch for changes in animated prop
     useEffect(() => {

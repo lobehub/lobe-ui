@@ -23,7 +23,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Markdown {...options} />
+      <Markdown enableGithubAlert {...options} />
     </StoryBook>
   );
 };
