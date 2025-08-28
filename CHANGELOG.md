@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.11.5](https://github.com/lobehub/lobe-ui/compare/v2.11.4...v2.11.5)
+
+<sup>Released on **2025-08-28**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Remove Streamdown temporary (resolved.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Remove Streamdown temporary (resolved, closes [#391](https://github.com/lobehub/lobe-ui/issues/391) ([e43c603](https://github.com/lobehub/lobe-ui/commit/e43c603))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.11.4](https://github.com/lobehub/lobe-ui/compare/v2.11.3...v2.11.4)
 
 <sup>Released on **2025-08-28**</sup>
