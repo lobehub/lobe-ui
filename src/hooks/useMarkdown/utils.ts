@@ -1,4 +1,3 @@
-import { fixMarkdownEmphasisSpacing } from './fixMarkdownEmphasisSpacing';
 import { preprocessLaTeX } from './latex';
 
 // Cache configuration
@@ -137,5 +136,5 @@ export const preprocessContent = (
     content = transformCitations(content, citationsLength);
   }
 
-  return fixMarkdownEmphasisSpacing(content);
+  return content;
 };
