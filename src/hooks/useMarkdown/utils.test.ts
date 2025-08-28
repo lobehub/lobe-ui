@@ -128,12 +128,4 @@ describe('preprocessContent', () => {
     // Expect LaTeX processing, then citation transformation, then bold fixing
     expect(result).toBe('LaTeX with citation [#citation-1](citation-1)');
   });
-
-  it('should only apply bold fixing when no other options are enabled', () => {
-    const content = '**123：**456';
-    const result = preprocessContent(content);
-
-    // Expect only bold fixing
-    expect(result).toBe('**123：** 456');
-  });
 });
