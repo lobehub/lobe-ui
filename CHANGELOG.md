@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.11.4](https://github.com/lobehub/lobe-ui/compare/v2.11.3...v2.11.4)
+
+<sup>Released on **2025-08-28**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Remove fixMarkdownEmphasisSpacing temporarily.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Remove fixMarkdownEmphasisSpacing temporarily ([3bd7102](https://github.com/lobehub/lobe-ui/commit/3bd7102))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.11.3](https://github.com/lobehub/lobe-ui/compare/v2.11.2...v2.11.3)
 
 <sup>Released on **2025-08-27**</sup>
