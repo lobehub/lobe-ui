@@ -43,9 +43,9 @@ export const useMarkdownComponents = (): Components => {
 
   const memoBr = useCallback(() => <br />, []);
 
-  const memeP = useCallback(({ children }: any) => {
+  const memeP = useCallback(({ children, className }: any) => {
     const hasImage = typeof children === 'object' && children?.props?.node?.tagName === 'img';
-    return hasImage ? children : <p>{children}</p>;
+    return hasImage ? children : <p className={className}>{children}</p>;
   }, []);
 
   // Stable references for theme objects to prevent unnecessary re-renders

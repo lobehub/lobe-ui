@@ -2,7 +2,7 @@ import { createStyles } from 'antd-style';
 
 const IGNORE_CLASSNAME = '.ignore-markdown-style';
 
-export const useStyles = createStyles(({ cx, token, css }) => {
+export const useStyles = createStyles(({ token, css }) => {
   const __root = css`
     position: relative;
 
@@ -29,7 +29,7 @@ export const useStyles = createStyles(({ cx, token, css }) => {
     }
   `;
   const a = css`
-    a:not(${IGNORE_CLASSNAME} a) {
+    a {
       color: ${token.colorInfoText};
 
       &:hover {
@@ -39,7 +39,7 @@ export const useStyles = createStyles(({ cx, token, css }) => {
   `;
 
   const blockquote = css`
-    blockquote:not(${IGNORE_CLASSNAME} blockquote) {
+    blockquote {
       margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
       margin-inline: 0;
       padding-block: 0;
@@ -51,7 +51,7 @@ export const useStyles = createStyles(({ cx, token, css }) => {
   `;
 
   const code = css`
-    code:not(${IGNORE_CLASSNAME} code) {
+    code {
       &:not(:has(span)) {
         display: inline;
 
@@ -73,14 +73,14 @@ export const useStyles = createStyles(({ cx, token, css }) => {
   `;
 
   const del = css`
-    del:not(${IGNORE_CLASSNAME} del) {
+    del {
       color: ${token.colorTextDescription};
       text-decoration: line-through;
     }
   `;
 
   const details = css`
-    details:not(${IGNORE_CLASSNAME} details) {
+    details {
       margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
       padding-block: 0.75em;
       padding-inline: 1em;
@@ -128,12 +128,12 @@ export const useStyles = createStyles(({ cx, token, css }) => {
     }
   `;
   const header = css`
-    h1:not(${IGNORE_CLASSNAME} h1),
-    h2:not(${IGNORE_CLASSNAME} h2),
-    h3:not(${IGNORE_CLASSNAME} h3),
-    h4:not(${IGNORE_CLASSNAME} h4),
-    h5:not(${IGNORE_CLASSNAME} h5),
-    h6:not(${IGNORE_CLASSNAME} h6) {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       margin-block: max(
         calc(var(--lobe-markdown-header-multiple) * var(--lobe-markdown-margin-multiple) * 0.4em),
         var(--lobe-markdown-font-size)
@@ -142,35 +142,35 @@ export const useStyles = createStyles(({ cx, token, css }) => {
       line-height: 1.25;
     }
 
-    h1:not(${IGNORE_CLASSNAME} h1) {
+    h1 {
       font-size: calc(
         var(--lobe-markdown-font-size) * (1 + 1.5 * var(--lobe-markdown-header-multiple))
       );
     }
 
-    h2:not(${IGNORE_CLASSNAME} h2) {
+    h2 {
       font-size: calc(var(--lobe-markdown-font-size) * (1 + var(--lobe-markdown-header-multiple)));
     }
 
-    h3:not(${IGNORE_CLASSNAME} h3) {
+    h3 {
       font-size: calc(
         var(--lobe-markdown-font-size) * (1 + 0.5 * var(--lobe-markdown-header-multiple))
       );
     }
 
-    h4:not(${IGNORE_CLASSNAME} h4) {
+    h4 {
       font-size: calc(
         var(--lobe-markdown-font-size) * (1 + 0.25 * var(--lobe-markdown-header-multiple))
       );
     }
 
-    h5:not(${IGNORE_CLASSNAME} h5),
-    h6:not(${IGNORE_CLASSNAME} h6) {
+    h5,
+    h6 {
       font-size: calc(var(--lobe-markdown-font-size) * 1);
     }
   `;
   const hr = css`
-    hr:not(${IGNORE_CLASSNAME} hr) {
+    hr {
       width: 100%;
       margin-block: calc(var(--lobe-markdown-margin-multiple) * 1.5em);
       border-color: ${token.colorBorder};
@@ -182,7 +182,7 @@ export const useStyles = createStyles(({ cx, token, css }) => {
     }
   `;
   const img = css`
-    img:not(${IGNORE_CLASSNAME} img) {
+    img {
       max-width: 100%;
     }
 
@@ -194,7 +194,7 @@ export const useStyles = createStyles(({ cx, token, css }) => {
     }
   `;
   const kbd = css`
-    kbd:not(${IGNORE_CLASSNAME} kbd) {
+    kbd {
       cursor: default;
 
       display: inline-block;
@@ -216,7 +216,7 @@ export const useStyles = createStyles(({ cx, token, css }) => {
     }
   `;
   const list = css`
-    li:not(${IGNORE_CLASSNAME} li) {
+    li {
       margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.33em);
 
       p:first-child {
@@ -224,8 +224,8 @@ export const useStyles = createStyles(({ cx, token, css }) => {
       }
     }
 
-    ul:not(${IGNORE_CLASSNAME} ul),
-    ol:not(${IGNORE_CLASSNAME} ol) {
+    ul,
+    ol {
       margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
       margin-inline-start: 1em;
       padding-inline-start: 0;
@@ -241,11 +241,11 @@ export const useStyles = createStyles(({ cx, token, css }) => {
       }
     }
 
-    ol:not(${IGNORE_CLASSNAME} ol) {
+    ol {
       list-style: auto;
     }
 
-    ul:not(${IGNORE_CLASSNAME} ul) {
+    ul {
       list-style-type: none;
 
       > li {
@@ -264,7 +264,7 @@ export const useStyles = createStyles(({ cx, token, css }) => {
     }
   `;
   const p = css`
-    p:not(${IGNORE_CLASSNAME} kbd) {
+    p {
       margin-block: 4px;
       line-height: var(--lobe-markdown-line-height);
       letter-spacing: 0.02em;
@@ -284,17 +284,17 @@ export const useStyles = createStyles(({ cx, token, css }) => {
     }
   `;
   const strong = css`
-    strong:not(${IGNORE_CLASSNAME} strong) {
+    strong {
       font-weight: 600;
     }
   `;
   const svg = css`
-    svg:not(${IGNORE_CLASSNAME} svg) {
+    svg {
       line-height: 1;
     }
   `;
   const table = css`
-    table:not(${IGNORE_CLASSNAME} table) {
+    table {
       unicode-bidi: isolate;
       overflow: auto hidden;
       display: block;
@@ -338,14 +338,14 @@ export const useStyles = createStyles(({ cx, token, css }) => {
     }
   `;
   const video = css`
-    > video:not(${IGNORE_CLASSNAME} video),
-    > p:not(${IGNORE_CLASSNAME} p) > video {
+    > video,
+    > p > video {
       margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
       border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
       box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
     }
 
-    video:not(${IGNORE_CLASSNAME} video) {
+    video {
       max-width: 100%;
     }
   `;
@@ -502,24 +502,28 @@ export const useStyles = createStyles(({ cx, token, css }) => {
 
   return {
     root: __root,
-    variant: cx(
-      a,
-      blockquote,
-      code,
-      del,
-      details,
-      header,
-      hr,
-      img,
-      kbd,
-      list,
-      p,
-      pre,
-      strong,
-      svg,
-      table,
-      video,
-      gfm,
-    ),
+    variant: css`
+      &:not(:has(${IGNORE_CLASSNAME})) {
+        ${[
+          a,
+          blockquote,
+          code,
+          del,
+          details,
+          header,
+          hr,
+          img,
+          kbd,
+          list,
+          p,
+          pre,
+          strong,
+          svg,
+          table,
+          video,
+          gfm,
+        ]}
+      }
+    `,
   };
 });
