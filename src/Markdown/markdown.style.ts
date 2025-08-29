@@ -4,6 +4,13 @@ const IGNORE_CLASSNAME = '.ignore-markdown-style';
 
 export const useStyles = createStyles(({ token, css }) => {
   const __root = css`
+    --lobe-markdown-font-size: 16px;
+    --lobe-markdown-header-multiple: 1;
+    --lobe-markdown-margin-multiple: 2;
+    --lobe-markdown-line-height: 1.8;
+    --lobe-markdown-border-radius: ${token.borderRadiusLG};
+    --lobe-markdown-border-color: ${token.colorFillQuaternary};
+
     position: relative;
 
     width: 100%;
@@ -13,20 +20,6 @@ export const useStyles = createStyles(({ token, css }) => {
     font-size: var(--lobe-markdown-font-size);
     line-height: var(--lobe-markdown-line-height);
     word-break: break-word;
-
-    :root {
-      --lobe-markdown-font-size: 16px;
-      --lobe-markdown-header-multiple: 1;
-      --lobe-markdown-margin-multiple: 2;
-      --lobe-markdown-line-height: 1.8;
-      --lobe-markdown-border-radius: ${token.borderRadiusLG};
-      --lobe-markdown-border-color: ${token.colorFillQuaternary};
-    }
-
-    ${IGNORE_CLASSNAME} {
-      font-size: 14px;
-      line-height: 1.5;
-    }
   `;
   const a = css`
     a {
@@ -501,10 +494,11 @@ export const useStyles = createStyles(({ token, css }) => {
   `;
 
   return {
-    root: __root,
-    variant: css`
-      &:not(:has(${IGNORE_CLASSNAME})) {
+    root: css`
+      :not(:has(${IGNORE_CLASSNAME})),
+      .markdown {
         ${[
+          __root,
           a,
           blockquote,
           code,

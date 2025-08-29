@@ -21,7 +21,7 @@ const Typography = memo<TypographyProps>(
 
     return (
       <article
-        className={cx(styles.root, styles.variant, className)}
+        className={cx(styles.root, className)}
         ref={ref}
         style={{
           // @ts-ignore
