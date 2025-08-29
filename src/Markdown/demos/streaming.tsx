@@ -15,11 +15,8 @@ const components = Object.fromEntries(
 
 export default () => {
   const store = useCreateStore();
-  const { children, streamingSpeed, animated, ...rest } = useControls(
+  const { children, streamingSpeed, ...rest } = useControls(
     {
-      animated: {
-        value: true,
-      },
       children: {
         rows: true,
         value: fullContent,
@@ -103,7 +100,7 @@ export default () => {
           </Button>
         </Flexbox>
         <Markdown
-          animated={animated}
+          animated={isStreaming}
           components={components}
           fullFeaturedCodeBlock={rest.fullFeaturedCodeBlock}
           rehypePlugins={rehypePlugins}

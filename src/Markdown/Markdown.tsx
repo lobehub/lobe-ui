@@ -1,7 +1,7 @@
 'use client';
 
 import { cva } from 'class-variance-authority';
-import { PropsWithChildren, memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 
 import { PreviewGroup } from '@/Image';
 import { MarkdownProvider } from '@/Markdown/components/MarkdownProvider';
@@ -25,7 +25,7 @@ const Markdown = memo<MarkdownProps>(
     enableImageGallery,
     enableCustomFootnotes,
     enableGithubAlert,
-    enableStream,
+    enableStream = true,
     componentProps,
     allowHtml,
     fontSize = 14,
@@ -67,7 +67,6 @@ const Markdown = memo<MarkdownProps>(
       () =>
         cva(styles.root, {
           defaultVariants: {
-            animated: false,
             enableLatex: true,
             variant: 'default',
           },
@@ -81,31 +80,19 @@ const Markdown = memo<MarkdownProps>(
               true: styles.latex,
               false: null,
             },
-            animated: {
-              true: styles.animated,
-              false: null,
-            },
           },
           /* eslint-enable sort-keys-fix/sort-keys-fix */
         }),
       [styles],
     );
 
-    const DefaultRender = useCallback(
-      ({ children, ...reactMarkdownProps }: PropsWithChildren<any>) =>
-        enableStream ? (
-          <StreamdownRender {...reactMarkdownProps}>{children}</StreamdownRender>
-        ) : (
-          <MarkdownRender {...reactMarkdownProps}>{children}</MarkdownRender>
-        ),
-      [enableStream],
-    );
+    const DefaultRender = enableStream && delayedAnimated ? StreamdownRender : MarkdownRender;
     const defaultDOM = <DefaultRender {...reactMarkdownProps}>{children}</DefaultRender>;
 
     return (
       <PreviewGroup enable={enableImageGallery}>
         <Typography
-          className={cx(variants({ animated: delayedAnimated, enableLatex, variant }), className)}
+          className={cx(variants({ enableLatex, variant }), className)}
           data-code-type="markdown"
           fontSize={fontSize}
           headerMultiple={headerMultiple}

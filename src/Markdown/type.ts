@@ -1,5 +1,5 @@
 import type { AnchorProps } from 'antd';
-import type { CSSProperties, FC, ReactNode, Ref } from 'react';
+import { CSSProperties, ElementType, FC, ReactNode, Ref } from 'react';
 import type { Options as ReactMarkdownOptions } from 'react-markdown';
 import type { Components } from 'react-markdown/lib';
 import type { Pluggable } from 'unified';
@@ -20,6 +20,7 @@ export interface TypographyProps extends DivProps {
 
 export interface SyntaxMarkdownProps {
   allowHtml?: boolean;
+  allowHtmlList?: ElementType[];
   animated?: boolean;
   children: string;
   citations?: CitationItem[];

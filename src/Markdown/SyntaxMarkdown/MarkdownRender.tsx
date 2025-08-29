@@ -1,7 +1,7 @@
 'use client';
 
 import { memo } from 'react';
-import { MarkdownHooks, type Options } from 'react-markdown';
+import Markdown, { type Options } from 'react-markdown';
 
 import {
   useMarkdownComponents,
@@ -18,14 +18,14 @@ const MarkdownRenderer = memo<Options>(
     const remarkPluginsList = useMarkdownRemarkPlugins();
 
     return (
-      <MarkdownHooks
+      <Markdown
         {...rest}
         components={components}
         rehypePlugins={rehypePluginsList}
         remarkPlugins={remarkPluginsList}
       >
         {escapedContent}
-      </MarkdownHooks>
+      </Markdown>
     );
   },
   (prevProps, nextProps) => prevProps.children === nextProps.children,

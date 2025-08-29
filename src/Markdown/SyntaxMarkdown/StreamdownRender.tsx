@@ -2,7 +2,7 @@
 
 import { marked } from 'marked';
 import { memo, useId, useMemo } from 'react';
-import { MarkdownHooks, Options } from 'react-markdown';
+import Markdown, { Options } from 'react-markdown';
 
 import {
   useMarkdownComponents,
@@ -11,6 +11,8 @@ import {
   useMarkdownRemarkPlugins,
 } from '@/hooks/useMarkdown';
 
+import { useStyles } from './style';
+
 const parseMarkdownIntoBlocks = (markdown: string): string[] => {
   const tokens = marked.lexer(markdown);
   return tokens.map((token) => token.raw);
@@ -18,7 +20,7 @@ const parseMarkdownIntoBlocks = (markdown: string): string[] => {
 
 const StreamdownBlock = memo<Options>(
   ({ children, ...rest }) => {
-    return <MarkdownHooks {...rest}>{children}</MarkdownHooks>;
+    return <Markdown {...rest}>{children}</Markdown>;
   },
   (prevProps, nextProps) => prevProps.children === nextProps.children,
 );
@@ -27,6 +29,7 @@ StreamdownBlock.displayName = 'StreamdownBlock';
 
 export const StreamdownRender = memo<Options>(
   ({ children, ...rest }) => {
+    const { styles } = useStyles();
     const escapedContent = useMarkdownContent(children || '');
     const components = useMarkdownComponents();
     const rehypePluginsList = useMarkdownRehypePlugins();
@@ -38,7 +41,7 @@ export const StreamdownRender = memo<Options>(
     );
 
     return (
-      <div>
+      <div className={styles.animated}>
         {blocks.map((block, index) => (
           <StreamdownBlock
             {...rest}
