@@ -2,6 +2,39 @@
 
 # Changelog
 
+### [Version 2.11.6](https://github.com/lobehub/lobe-ui/compare/v2.11.5...v2.11.6)
+
+<sup>Released on **2025-08-29**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Streamdown.
+
+#### 💄 Styles
+
+- **misc**: Clean style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix Streamdown ([c9a9b9e](https://github.com/lobehub/lobe-ui/commit/c9a9b9e))
+
+#### Styles
+
+- **misc**: Clean style ([8e6e275](https://github.com/lobehub/lobe-ui/commit/8e6e275))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.11.5](https://github.com/lobehub/lobe-ui/compare/v2.11.4...v2.11.5)
 
 <sup>Released on **2025-08-28**</sup>
