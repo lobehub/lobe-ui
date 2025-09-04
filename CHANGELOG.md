@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.11.9](https://github.com/lobehub/lobe-ui/compare/v2.11.8...v2.11.9)
+
+<sup>Released on **2025-09-04**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix ActionIcon inner pointerEvents.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix ActionIcon inner pointerEvents ([7d178e9](https://github.com/lobehub/lobe-ui/commit/7d178e9))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.11.8](https://github.com/lobehub/lobe-ui/compare/v2.11.7...v2.11.8)
 
 <sup>Released on **2025-08-29**</sup>
