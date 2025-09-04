@@ -130,6 +130,9 @@ const ActionIcon = memo<ActionIconProps>(
             icon={loading ? Loader2 : icon}
             size={size}
             spin={loading ? true : iconSpinning}
+            style={{
+              pointerEvents: 'none',
+            }}
           />
         )}
       </Center>
