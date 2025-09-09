@@ -96,15 +96,11 @@ const Image = memo<ImageProps>(
                 }
           }
           style={{
-            height: 'auto',
-            width: '100%',
             ...customStyles?.image,
           }}
           width={width}
           wrapperClassName={cx(styles.image, classNames?.wrapper)}
           wrapperStyle={{
-            height: 'auto',
-            width: '100%',
             ...customStyles?.wrapper,
           }}
           {...rest}

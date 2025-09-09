@@ -1,72 +1,27 @@
 import { Markdown, MarkdownProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
-export const content = `# Markdown Showcase
+const linksContent = `[GitHub](https://github.com)
 
-## Text Formatting
+[Link with title](https://github.com "GitHub Homepage")
 
-**Bold**, *italic*, ***bold italic***, ~~strikethrough~~
+<https://github.com>
 
-This is <sub>subscript</sub> and <sup>superscript</sup>
+<user@example.com>
 
-## Lists
+This is [a reference link][1] and this is [another reference link][github].
 
-- Unordered list
-- Another item
-  - Nested item
-
-1. Ordered list
-2. Another item
-   1. Nested item
-
-## Task Lists
-
-- [x] Completed task
-- [ ] Incomplete task
-
-## Code
-
-Inline \`code\` and code blocks:
-
-\`\`\`javascript
-function greet(name) {
-  console.log(\`Hello, \${name}!\`);
-}
-\`\`\`
-
-## Tables
-
-| Feature | Status |
-| --- | --- |
-| Markdown | ✅ |
-| Syntax Highlighting | ✅ |
-
-## Math
-
-Inline math: $E = mc^2$
-
-Block math:
-$$
-\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}
-$$
-
-## Mermaid
-
-\`\`\`mermaid
-graph LR
-  A --> B
-  B --> C
-\`\`\`
+[1]: https://example.com
+[github]: https://github.com "GitHub"
 `;
 
 export default () => {
   const store = useCreateStore();
   const options = useControls(
     {
-      allowHtml: false,
       children: {
         rows: true,
-        value: content,
+        value: linksContent,
       },
       fontSize: {
         max: 32,
@@ -74,7 +29,6 @@ export default () => {
         step: 1,
         value: 16,
       },
-      fullFeaturedCodeBlock: true,
       headerMultiple: {
         max: 3,
         min: 0,
@@ -96,7 +50,6 @@ export default () => {
     },
     { store },
   ) as MarkdownProps;
-
   return (
     <StoryBook levaStore={store}>
       <Markdown {...options} />

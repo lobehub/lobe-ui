@@ -1,72 +1,20 @@
 import { Markdown, MarkdownProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
-export const content = `# Markdown Showcase
+const footnotesContent = `Here is a simple footnote[^1].
 
-## Text Formatting
+A footnote can also have multiple lines[^2].
 
-**Bold**, *italic*, ***bold italic***, ~~strikethrough~~
-
-This is <sub>subscript</sub> and <sup>superscript</sup>
-
-## Lists
-
-- Unordered list
-- Another item
-  - Nested item
-
-1. Ordered list
-2. Another item
-   1. Nested item
-
-## Task Lists
-
-- [x] Completed task
-- [ ] Incomplete task
-
-## Code
-
-Inline \`code\` and code blocks:
-
-\`\`\`javascript
-function greet(name) {
-  console.log(\`Hello, \${name}!\`);
-}
-\`\`\`
-
-## Tables
-
-| Feature | Status |
-| --- | --- |
-| Markdown | ✅ |
-| Syntax Highlighting | ✅ |
-
-## Math
-
-Inline math: $E = mc^2$
-
-Block math:
-$$
-\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}
-$$
-
-## Mermaid
-
-\`\`\`mermaid
-graph LR
-  A --> B
-  B --> C
-\`\`\`
-`;
+[^1]: My reference.
+[^2]: To add line breaks within a footnote, prefix new lines with 2 spaces.`;
 
 export default () => {
   const store = useCreateStore();
   const options = useControls(
     {
-      allowHtml: false,
       children: {
         rows: true,
-        value: content,
+        value: footnotesContent,
       },
       fontSize: {
         max: 32,
@@ -74,7 +22,6 @@ export default () => {
         step: 1,
         value: 16,
       },
-      fullFeaturedCodeBlock: true,
       headerMultiple: {
         max: 3,
         min: 0,
@@ -96,7 +43,6 @@ export default () => {
     },
     { store },
   ) as MarkdownProps;
-
   return (
     <StoryBook levaStore={store}>
       <Markdown {...options} />

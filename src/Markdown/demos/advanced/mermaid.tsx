@@ -1,32 +1,30 @@
 import { Markdown, MarkdownProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
-import { code } from './data';
+const mermaidContent = `\`\`\`mermaid
+sequenceDiagram
+    Alice->>John: Hello John, how are you?
+    John-->>Alice: Great!
+    Alice-)John: See you later!
+\`\`\`
+`;
 
 export default () => {
   const store = useCreateStore();
   const options = useControls(
     {
-      allowHtml: true,
       children: {
         rows: true,
-        value: code,
+        value: mermaidContent,
       },
+      enableMermaid: true,
       fullFeaturedCodeBlock: true,
     },
     { store },
   ) as MarkdownProps;
-
   return (
     <StoryBook levaStore={store}>
-      <Markdown
-        componentProps={{
-          highlight: {
-            enableTransformer: true,
-          },
-        }}
-        {...options}
-      />
+      <Markdown {...options} />
     </StoryBook>
   );
 };

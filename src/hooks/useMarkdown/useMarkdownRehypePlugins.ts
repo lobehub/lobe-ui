@@ -7,9 +7,9 @@ import rehypeRaw from 'rehype-raw';
 import type { Pluggable } from 'unified';
 
 import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
-import { animatedPlugin } from '@/Markdown/plugins/animated';
-import { rehypeFootnoteLinks } from '@/Markdown/plugins/footnote';
-import { rehypeKatexDir } from '@/Markdown/plugins/katexDir';
+import { rehypeCustomFootnotes } from '@/Markdown/plugins/rehypeCustomFootnotes';
+import { rehypeKatexDir } from '@/Markdown/plugins/rehypeKatexDir';
+import { rehypeStreamAnimated } from '@/Markdown/plugins/rehypeStreamAnimated';
 
 export const useMarkdownRehypePlugins = (): Pluggable[] => {
   const {
@@ -29,8 +29,8 @@ export const useMarkdownRehypePlugins = (): Pluggable[] => {
         enableGithubAlert && rehypeGithubAlerts,
         enableLatex && rehypeKatex,
         enableLatex && rehypeKatexDir,
-        enableCustomFootnotes && rehypeFootnoteLinks,
-        animated && animatedPlugin,
+        enableCustomFootnotes && rehypeCustomFootnotes,
+        animated && rehypeStreamAnimated,
       ].filter(Boolean) as Pluggable[],
     [animated, enableLatex, enableGithubAlert, enableCustomFootnotes, allowHtml],
   );

@@ -43,11 +43,11 @@ export const useStyles = createStyles(
       image: css`
         position: relative;
         overflow: hidden;
-        width: 100%;
+        max-width: 100%;
         height: auto;
 
         .${prefixCls}-image-img {
-          width: 100%;
+          width: auto;
           min-width: ${MIN_WIDTH};
           max-width: ${MAX_WIDTH};
           height: auto;
@@ -77,7 +77,10 @@ export const useStyles = createStyles(
 
         overflow: hidden;
 
+        width: fit-content;
         border-radius: ${token.borderRadius}px;
+
+        line-height: 1;
 
         &:hover {
           .${actions} {
@@ -91,6 +94,7 @@ export const useStyles = createStyles(
         stylish.variantOutlinedWithoutHover,
         css`
           padding: 4px;
+          border-color: ${token.colorFillTertiary};
           border-radius: ${token.borderRadiusLG}px;
           background: ${rgba(token.colorBgMask, 0.5)};
         `,

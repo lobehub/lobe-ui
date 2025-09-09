@@ -170,7 +170,7 @@ const Video = memo<VideoProps>(
           preload={preload}
           style={{
             height: 'auto',
-            width: '100%',
+            maxWidth: '100%',
             ...customStyles?.video,
           }}
           width={width}

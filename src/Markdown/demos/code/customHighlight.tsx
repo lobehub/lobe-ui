@@ -1,6 +1,6 @@
-import { ActionIcon, Markdown } from '@lobehub/ui';
+import { ActionIcon, Markdown, MarkdownProps } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { AlertCircleIcon } from 'lucide-react';
-import { Flexbox } from 'react-layout-kit';
 
 const code = `\`\`\`tsx
 export default ({ children, className }: MarkdownProps) => {
@@ -18,8 +18,19 @@ export default ({ children, className }: MarkdownProps) => {
 `;
 
 export default () => {
+  const store = useCreateStore();
+  const options = useControls(
+    {
+      children: {
+        rows: true,
+        value: code,
+      },
+      fullFeaturedCodeBlock: true,
+    },
+    { store },
+  ) as MarkdownProps;
   return (
-    <Flexbox padding={16}>
+    <StoryBook levaStore={store}>
       <Markdown
         componentProps={{
           highlight: {
@@ -37,10 +48,8 @@ export default () => {
             },
           },
         }}
-        fullFeaturedCodeBlock
-      >
-        {code}
-      </Markdown>
-    </Flexbox>
+        {...options}
+      />
+    </StoryBook>
   );
 };

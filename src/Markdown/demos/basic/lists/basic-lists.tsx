@@ -1,72 +1,45 @@
 import { Markdown, MarkdownProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
-export const content = `# Markdown Showcase
+const basicListsContent = `**Unordered Lists**
 
-## Text Formatting
-
-**Bold**, *italic*, ***bold italic***, ~~strikethrough~~
-
-This is <sub>subscript</sub> and <sup>superscript</sup>
-
-## Lists
-
-- Unordered list
-- Another item
+- First item
+- Second item
   - Nested item
+  - Another nested item
+    - Double nested item
 
-1. Ordered list
-2. Another item
-   1. Nested item
+**Ordered Lists**
 
-## Task Lists
+1. First item
+2. Second item
+   1. Nested ordered item
+   2. Another nested ordered
+      1. Triple nested item
 
-- [x] Completed task
-- [ ] Incomplete task
+**Mixed Lists**
 
-## Code
+1. First ordered item
+2. Second ordered item
+   - Unordered nested item
+   - Another unordered nested
+     1. Back to ordered nesting
 
-Inline \`code\` and code blocks:
+**Lists with Formatting**
 
-\`\`\`javascript
-function greet(name) {
-  console.log(\`Hello, \${name}!\`);
-}
-\`\`\`
-
-## Tables
-
-| Feature | Status |
-| --- | --- |
-| Markdown | ✅ |
-| Syntax Highlighting | ✅ |
-
-## Math
-
-Inline math: $E = mc^2$
-
-Block math:
-$$
-\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}
-$$
-
-## Mermaid
-
-\`\`\`mermaid
-graph LR
-  A --> B
-  B --> C
-\`\`\`
+- **Bold item**
+- *Italic item*
+- Item with \`inline code\`
+- Item with [a link](https://example.com)
 `;
 
 export default () => {
   const store = useCreateStore();
   const options = useControls(
     {
-      allowHtml: false,
       children: {
         rows: true,
-        value: content,
+        value: basicListsContent,
       },
       fontSize: {
         max: 32,
@@ -74,7 +47,6 @@ export default () => {
         step: 1,
         value: 16,
       },
-      fullFeaturedCodeBlock: true,
       headerMultiple: {
         max: 3,
         min: 0,
@@ -96,7 +68,6 @@ export default () => {
     },
     { store },
   ) as MarkdownProps;
-
   return (
     <StoryBook levaStore={store}>
       <Markdown {...options} />

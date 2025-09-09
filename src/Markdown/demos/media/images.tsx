@@ -1,29 +1,26 @@
 import { Markdown, MarkdownProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
-import { github } from './data';
+const imagesContent = `![shields](https://img.shields.io/badge/LobeHub-Readme%20Generator-white?labelColor=black&style=flat-square)
+
+![Gallery Image](https://github.com/user-attachments/assets/2428a136-38bf-488c-8033-d9f261d67f3d)
+
+`;
 
 export default () => {
   const store = useCreateStore();
   const options = useControls(
     {
-      allowHtml: true,
       children: {
         rows: true,
-        value: github,
+        value: imagesContent,
       },
-      fontSize: 16,
-      fullFeaturedCodeBlock: true,
-      headerMultiple: 1,
-      lineHeight: 1.8,
-      marginMultiple: 2,
     },
     { store },
   ) as MarkdownProps;
-
   return (
     <StoryBook levaStore={store}>
-      <Markdown enableGithubAlert {...options} />
+      <Markdown {...options} />
     </StoryBook>
   );
 };

@@ -62,6 +62,28 @@ export const useStyles = createStyles(({ token, css }) => {
 
         background: ${token.colorFillSecondary};
       }
+
+      /* Color preview styles */
+      &.color-preview {
+        position: relative;
+        display: inline-flex;
+        gap: 0.4em;
+        align-items: center;
+
+        &::after {
+          content: '';
+
+          width: 0.66em;
+          height: 0.66em;
+          border: 1px solid ${token.colorFill};
+          border-radius: 50%;
+
+          background-color: attr(data-color);
+
+          /* Fallback for browsers that don't support attr() in background */
+          background-color: var(--color-preview-color, #000);
+        }
+      }
     }
   `;
 

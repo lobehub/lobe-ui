@@ -1,18 +1,19 @@
 'use client';
 
 import { cva } from 'class-variance-authority';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 
 import { PreviewGroup } from '@/Image';
-import { MarkdownProvider } from '@/Markdown/components/MarkdownProvider';
 
 import { MarkdownRender, StreamdownRender } from './SyntaxMarkdown';
 import Typography from './Typography';
+import { MarkdownProvider } from './components/MarkdownProvider';
+import { useDelayedAnimated } from './components/useDelayedAnimated';
 import { useStyles } from './style';
 import type { MarkdownProps } from './type';
 
-const Markdown = memo<MarkdownProps>(
-  ({
+const Markdown = memo<MarkdownProps>((props) => {
+  const {
     ref,
     children = '',
     className,
@@ -28,13 +29,13 @@ const Markdown = memo<MarkdownProps>(
     enableStream = true,
     componentProps,
     allowHtml,
-    fontSize = 14,
-    headerMultiple = 0.25,
-    marginMultiple,
+    fontSize = props.variant === 'chat' ? 14 : undefined,
+    headerMultiple = props.variant === 'chat' ? 0.25 : undefined,
+    marginMultiple = props.variant === 'chat' ? 1 : undefined,
     showFootnotes,
     variant = 'default',
     reactMarkdownProps,
-    lineHeight = 1.6,
+    lineHeight = props.variant === 'chat' ? 1.6 : undefined,
     rehypePlugins,
     remarkPlugins,
     remarkPluginsAhead,
@@ -42,93 +43,90 @@ const Markdown = memo<MarkdownProps>(
     customRender,
     citations,
     ...rest
-  }) => {
-    const { cx, styles } = useStyles();
+  } = props;
 
-    const [delayedAnimated, setDelayedAnimated] = useState(animated);
+  const { cx, styles } = useStyles();
 
-    // Watch for changes in animated prop
-    useEffect(() => {
-      // If animated changes from true to false, delay the update by 1 second
-      if (animated === false && delayedAnimated === true) {
-        const timer = setTimeout(() => {
-          setDelayedAnimated(false);
-        }, 1000);
+  const delayedAnimated = useDelayedAnimated(animated);
 
-        return () => clearTimeout(timer);
-      } else {
-        // For any other changes, update immediately
-        setDelayedAnimated(animated);
-      }
-    }, [animated, delayedAnimated]);
-
-    // Style variant handling
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            enableLatex: true,
-            variant: 'default',
+  // Style variant handling
+  const variants = useMemo(
+    () =>
+      cva(styles.root, {
+        defaultVariants: {
+          enableLatex: true,
+          variant: 'default',
+        },
+        /* eslint-disable sort-keys-fix/sort-keys-fix */
+        variants: {
+          variant: {
+            default: null,
+            chat: styles.chat,
           },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              default: null,
-              chat: styles.chat,
-            },
-            enableLatex: {
-              true: styles.latex,
-              false: null,
-            },
+          enableLatex: {
+            true: styles.latex,
+            false: null,
           },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
+        },
+        /* eslint-enable sort-keys-fix/sort-keys-fix */
+      }),
+    [styles],
+  );
 
-    const DefaultRender = enableStream && delayedAnimated ? StreamdownRender : MarkdownRender;
-    const defaultDOM = <DefaultRender {...reactMarkdownProps}>{children}</DefaultRender>;
+  const Render = useCallback(
+    ({
+      enableStream,
+      children,
+      reactMarkdownProps,
+    }: Pick<MarkdownProps, 'children' | 'enableStream' | 'reactMarkdownProps'>) => {
+      const DefaultRender = enableStream && delayedAnimated ? StreamdownRender : MarkdownRender;
+      const defaultDOM = <DefaultRender {...reactMarkdownProps}>{children}</DefaultRender>;
+      return customRender ? customRender(defaultDOM, { text: children }) : defaultDOM;
+    },
+    [customRender],
+  );
 
-    return (
-      <PreviewGroup enable={enableImageGallery}>
-        <Typography
-          className={cx(variants({ enableLatex, variant }), className)}
-          data-code-type="markdown"
-          fontSize={fontSize}
-          headerMultiple={headerMultiple}
-          lineHeight={lineHeight}
-          marginMultiple={marginMultiple || (variant === 'chat' ? 1 : 2)}
-          onDoubleClick={onDoubleClick}
-          ref={ref}
-          style={style}
-          {...rest}
+  return (
+    <PreviewGroup enable={enableImageGallery}>
+      <Typography
+        className={cx(variants({ enableLatex, variant }), className)}
+        data-code-type="markdown"
+        fontSize={fontSize}
+        headerMultiple={headerMultiple}
+        lineHeight={lineHeight}
+        marginMultiple={marginMultiple}
+        onDoubleClick={onDoubleClick}
+        ref={ref}
+        style={style}
+        {...rest}
+      >
+        <MarkdownProvider
+          config={{
+            allowHtml,
+            animated: delayedAnimated,
+            citations,
+            componentProps,
+            components,
+            enableCustomFootnotes,
+            enableGithubAlert,
+            enableLatex,
+            enableMermaid,
+            fullFeaturedCodeBlock,
+            rehypePlugins,
+            remarkPlugins,
+            remarkPluginsAhead,
+            showFootnotes,
+            variant,
+          }}
         >
-          <MarkdownProvider
-            config={{
-              allowHtml,
-              animated: delayedAnimated,
-              citations,
-              componentProps,
-              components,
-              enableCustomFootnotes,
-              enableGithubAlert,
-              enableLatex,
-              enableMermaid,
-              fullFeaturedCodeBlock,
-              rehypePlugins,
-              remarkPlugins,
-              remarkPluginsAhead,
-              showFootnotes,
-              variant,
-            }}
-          >
-            {customRender ? customRender(defaultDOM, { text: children }) : defaultDOM}
-          </MarkdownProvider>
-        </Typography>
-      </PreviewGroup>
-    );
-  },
-);
+          <Render enableStream={enableStream} reactMarkdownProps={reactMarkdownProps}>
+            {children}
+          </Render>
+        </MarkdownProvider>
+      </Typography>
+    </PreviewGroup>
+  );
+});
 
 Markdown.displayName = 'Markdown';
 

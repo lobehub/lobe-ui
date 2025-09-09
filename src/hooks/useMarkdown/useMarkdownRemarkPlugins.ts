@@ -2,13 +2,17 @@
 
 import { useMemo } from 'react';
 import remarkBreaks from 'remark-breaks';
+import remarkCjkFriendly from 'remark-cjk-friendly';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import type { Pluggable } from 'unified';
 
 import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
-import { remarkCustomFootnotes } from '@/Markdown/plugins/footnote';
 import { remarkBr } from '@/Markdown/plugins/remarkBr';
+import { remarkColor } from '@/Markdown/plugins/remarkColor';
+import { remarkCustomFootnotes } from '@/Markdown/plugins/remarkCustomFootnotes';
+import { remarkGfmPlus } from '@/Markdown/plugins/remarkGfmPlus';
+import { remarkVideo } from '@/Markdown/plugins/remarkVideo';
 
 export const useMarkdownRemarkPlugins = (): Pluggable[] => {
   const {
@@ -25,8 +29,12 @@ export const useMarkdownRemarkPlugins = (): Pluggable[] => {
   const memoPlugins = useMemo(
     () =>
       [
-        !allowHtml && remarkBr,
+        remarkCjkFriendly,
         [remarkGfm, { singleTilde: false }],
+        !allowHtml && remarkBr,
+        !allowHtml && [remarkGfmPlus, { allowHtmlTags: ['sub', 'sup', 'ins'] }],
+        !allowHtml && remarkVideo,
+        remarkColor,
         enableLatex && remarkMath,
         enableCustomFootnotes && remarkCustomFootnotes,
         isChatMode && remarkBreaks,

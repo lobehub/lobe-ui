@@ -1,72 +1,28 @@
 import { Markdown, MarkdownProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
-export const content = `# Markdown Showcase
+const inlineCodeContent = `Use \`backticks\` to create inline code within text.
 
-## Text Formatting
+**Code in Lists**
 
-**Bold**, *italic*, ***bold italic***, ~~strikethrough~~
+- Use \`npm start\` to run the development server
+- Use \`npm test\` to run tests
 
-This is <sub>subscript</sub> and <sup>superscript</sup>
+**Code in Tables**
 
-## Lists
-
-- Unordered list
-- Another item
-  - Nested item
-
-1. Ordered list
-2. Another item
-   1. Nested item
-
-## Task Lists
-
-- [x] Completed task
-- [ ] Incomplete task
-
-## Code
-
-Inline \`code\` and code blocks:
-
-\`\`\`javascript
-function greet(name) {
-  console.log(\`Hello, \${name}!\`);
-}
-\`\`\`
-
-## Tables
-
-| Feature | Status |
+| Command | Description |
 | --- | --- |
-| Markdown | ✅ |
-| Syntax Highlighting | ✅ |
-
-## Math
-
-Inline math: $E = mc^2$
-
-Block math:
-$$
-\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}
-$$
-
-## Mermaid
-
-\`\`\`mermaid
-graph LR
-  A --> B
-  B --> C
-\`\`\`
+| \`git status\` | Check repository status |
+| \`git add .\` | Stage all changes |
 `;
 
 export default () => {
   const store = useCreateStore();
   const options = useControls(
     {
-      allowHtml: false,
       children: {
         rows: true,
-        value: content,
+        value: inlineCodeContent,
       },
       fontSize: {
         max: 32,
@@ -74,7 +30,6 @@ export default () => {
         step: 1,
         value: 16,
       },
-      fullFeaturedCodeBlock: true,
       headerMultiple: {
         max: 3,
         min: 0,
@@ -96,7 +51,6 @@ export default () => {
     },
     { store },
   ) as MarkdownProps;
-
   return (
     <StoryBook levaStore={store}>
       <Markdown {...options} />

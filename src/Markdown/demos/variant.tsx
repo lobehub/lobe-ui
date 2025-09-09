@@ -1,26 +1,27 @@
 import { Markdown, MarkdownProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
-import { content } from './data';
+import { content } from './index';
 
 export default () => {
   const store = useCreateStore();
-  const { children, ...rest } = useControls(
+  const options = useControls(
     {
       children: {
         rows: true,
         value: content,
       },
-      fullFeaturedCodeBlock: true,
+      variant: {
+        options: ['default', 'chat'],
+        value: 'chat',
+      },
     },
     { store },
   ) as MarkdownProps;
 
   return (
     <StoryBook levaStore={store}>
-      <Markdown variant={'chat'} {...rest}>
-        {children}
-      </Markdown>
+      <Markdown {...options} />
     </StoryBook>
   );
 };

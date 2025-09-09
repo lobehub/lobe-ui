@@ -4,7 +4,7 @@ import type { Element, ElementContent, Root } from 'hast';
 import { visit } from 'unist-util-visit';
 import type { BuildVisitor } from 'unist-util-visit';
 
-export const animatedPlugin = () => {
+export const rehypeStreamAnimated = () => {
   return (tree: Root) => {
     visit(tree, 'element', ((node: Element) => {
       if (

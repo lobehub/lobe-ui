@@ -22,30 +22,41 @@ export const useMarkdownComponents = (): Components => {
   } = useMarkdownContext();
 
   const memoA = useCallback(
-    (props: any) => <Link citations={citations} {...props} {...componentProps?.a} />,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ({ node, ...props }: any) => <Link citations={citations} {...props} {...componentProps?.a} />,
     [citations, componentProps?.a],
   );
 
   const memoImg = useCallback(
-    (props: any) => <Image {...props} {...componentProps?.img} />,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ({ node, ...props }: any) => <Image {...props} {...componentProps?.img} />,
     [componentProps?.img],
   );
 
   const memoVideo = useCallback(
-    (props: any) => <Video {...props} {...componentProps?.video} />,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ({ node, ...props }: any) => <Video {...props} {...componentProps?.video} />,
     [componentProps?.video],
   );
 
   const memoSection = useCallback(
-    (props: any) => <Section showFootnotes={showFootnotes} {...props} />,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ({ node, ...props }: any) => <Section showFootnotes={showFootnotes} {...props} />,
     [showFootnotes],
   );
 
   const memoBr = useCallback(() => <br />, []);
 
-  const memeP = useCallback(({ children, className }: any) => {
-    const hasImage = typeof children === 'object' && children?.props?.node?.tagName === 'img';
-    return hasImage ? children : <p className={className}>{children}</p>;
+  const memeP = useCallback(({ style, children, className }: any) => {
+    const skipWrapperTags = ['img', 'video'];
+    if (typeof children === 'object' && skipWrapperTags.includes(children?.props?.node?.tagName)) {
+      return children;
+    }
+    return (
+      <p className={className} style={style}>
+        {children}
+      </p>
+    );
   }, []);
 
   // Stable references for theme objects to prevent unnecessary re-renders
@@ -74,7 +85,8 @@ export const useMarkdownComponents = (): Components => {
   }, [highlightTheme, mermaidTheme]);
 
   const memoPre = useCallback(
-    (props: any) => (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ({ node, ...props }: any) => (
       <CodeBlock
         animated={animated}
         enableMermaid={enableMermaid}
@@ -87,17 +99,24 @@ export const useMarkdownComponents = (): Components => {
     [animated, enableMermaid, fullFeaturedCodeBlock, stableComponentProps, componentProps?.pre],
   );
 
+  const memoColorPreview = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ({ node, ...props }: any) => <code {...props} />,
+    [],
+  );
+
   const memoComponents = useMemo(
     () => ({
       a: memoA,
       br: memoBr,
+      colorPreview: memoColorPreview,
       img: memoImg,
       p: memeP,
       pre: memoPre,
       section: memoSection,
       video: memoVideo,
     }),
-    [memoA, memoBr, memoImg, memoVideo, memoPre, memoSection, memeP],
+    [memoA, memoBr, memoImg, memoVideo, memoPre, memoSection, memeP, memoColorPreview],
   );
 
   return useMemo(

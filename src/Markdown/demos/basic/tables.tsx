@@ -1,72 +1,27 @@
 import { Markdown, MarkdownProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
-export const content = `# Markdown Showcase
+const tablesContent = `| Name | Age | City |
+| --- | --- | --- |
+| Alice | 25 | New York |
+| Bob | 30 | London |
+| Charlie | 35 | Tokyo |
 
-## Text Formatting
+**Aligned Tables**
 
-**Bold**, *italic*, ***bold italic***, ~~strikethrough~~
-
-This is <sub>subscript</sub> and <sup>superscript</sup>
-
-## Lists
-
-- Unordered list
-- Another item
-  - Nested item
-
-1. Ordered list
-2. Another item
-   1. Nested item
-
-## Task Lists
-
-- [x] Completed task
-- [ ] Incomplete task
-
-## Code
-
-Inline \`code\` and code blocks:
-
-\`\`\`javascript
-function greet(name) {
-  console.log(\`Hello, \${name}!\`);
-}
-\`\`\`
-
-## Tables
-
-| Feature | Status |
-| --- | --- |
-| Markdown | ✅ |
-| Syntax Highlighting | ✅ |
-
-## Math
-
-Inline math: $E = mc^2$
-
-Block math:
-$$
-\\sum_{i=1}^{n} i = \\frac{n(n+1)}{2}
-$$
-
-## Mermaid
-
-\`\`\`mermaid
-graph LR
-  A --> B
-  B --> C
-\`\`\`
+| Left-aligned | Center-aligned | Right-aligned |
+| :--- | :---: | ---: |
+| This text is left aligned | This text is center aligned | This text is right aligned |
+| \`left\` | \`center\` | \`right\` |
 `;
 
 export default () => {
   const store = useCreateStore();
   const options = useControls(
     {
-      allowHtml: false,
       children: {
         rows: true,
-        value: content,
+        value: tablesContent,
       },
       fontSize: {
         max: 32,
@@ -74,7 +29,6 @@ export default () => {
         step: 1,
         value: 16,
       },
-      fullFeaturedCodeBlock: true,
       headerMultiple: {
         max: 3,
         min: 0,
@@ -96,7 +50,6 @@ export default () => {
     },
     { store },
   ) as MarkdownProps;
-
   return (
     <StoryBook levaStore={store}>
       <Markdown {...options} />
