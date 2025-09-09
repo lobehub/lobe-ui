@@ -1,9 +1,8 @@
+import { Icon } from '@lobehub/ui';
 import { createStyles } from 'antd-style';
 import { SparkleIcon } from 'lucide-react';
 import { PropsWithChildren, memo } from 'react';
 import { Flexbox } from 'react-layout-kit';
-
-import { Icon } from '@/index';
 
 const useStyles = createStyles(({ css, token, isDarkMode }) => ({
   container: css`
@@ -43,7 +42,7 @@ const Render = memo<PropsWithChildren>(({ children }) => {
           <Icon color={theme.purple} icon={SparkleIcon} /> Artifact
         </Flexbox>
       </Flexbox>
-      {children}
+      <div dangerouslySetInnerHTML={{ __html: String(children) }} />
     </Flexbox>
   );
 });

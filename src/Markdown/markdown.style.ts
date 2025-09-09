@@ -62,28 +62,6 @@ export const useStyles = createStyles(({ token, css }) => {
 
         background: ${token.colorFillSecondary};
       }
-
-      /* Color preview styles */
-      &.color-preview {
-        position: relative;
-        display: inline-flex;
-        gap: 0.4em;
-        align-items: center;
-
-        &::after {
-          content: '';
-
-          width: 0.66em;
-          height: 0.66em;
-          border: 1px solid ${token.colorFill};
-          border-radius: 50%;
-
-          background-color: attr(data-color);
-
-          /* Fallback for browsers that don't support attr() in background */
-          background-color: var(--color-preview-color, #000);
-        }
-      }
     }
   `;
 
@@ -208,28 +186,7 @@ export const useStyles = createStyles(({ token, css }) => {
       box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
     }
   `;
-  const kbd = css`
-    kbd {
-      cursor: default;
 
-      display: inline-block;
-
-      min-width: 1em;
-      margin-inline: 0.25em;
-      padding-block: 0.2em;
-      padding-inline: 0.4em;
-      border: 1px solid ${token.colorBorderSecondary};
-      border-radius: 0.25em;
-
-      font-family: ${token.fontFamily};
-      font-size: 0.875em;
-      font-weight: 500;
-      line-height: 1;
-      text-align: center;
-
-      background: ${token.colorBgLayout};
-    }
-  `;
   const list = css`
     li {
       margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.33em);
@@ -275,6 +232,22 @@ export const useStyles = createStyles(({ token, css }) => {
 
           opacity: 0.5;
         }
+      }
+    }
+
+    .task-list-item {
+      &::before {
+        display: none !important;
+      }
+
+      input[type='checkbox'] {
+        margin-block: 0 0.25em;
+        margin-inline: -1.6em 0.2em;
+        vertical-align: middle;
+      }
+
+      input[type='checkbox']:dir(rtl) {
+        margin: 0 -1.6em 0.25em 0.2em;
       }
     }
   `;
@@ -329,7 +302,7 @@ export const useStyles = createStyles(({ token, css }) => {
       overflow-wrap: break-word;
 
       background: ${token.colorFillQuaternary};
-      box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
+      box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
 
       code {
         word-break: break-word;
@@ -340,7 +313,7 @@ export const useStyles = createStyles(({ token, css }) => {
       }
 
       tr {
-        box-shadow: 0 1px 0 var(--lobe-markdown-border-color);
+        box-shadow: 0 1px 0 ${token.colorBorderSecondary};
       }
 
       th,
@@ -365,102 +338,7 @@ export const useStyles = createStyles(({ token, css }) => {
     }
   `;
 
-  const gfm = css`
-    .markdown-alert {
-      margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
-      padding-inline-start: 1em;
-      border-inline-start: solid 4px ${token.colorBorder};
-
-      > p {
-        margin-block-start: 0 !important;
-      }
-    }
-
-    .markdown-alert > :first-child {
-      margin-block-start: 0;
-    }
-
-    .markdown-alert > :last-child {
-      margin-block-end: 0;
-    }
-
-    .markdown-alert-note {
-      border-inline-start-color: ${token.colorInfo};
-    }
-
-    .markdown-alert-tip {
-      border-inline-start-color: ${token.colorSuccess};
-    }
-
-    .markdown-alert-important {
-      border-inline-start-color: ${token.purple};
-    }
-
-    .markdown-alert-warning {
-      border-inline-start-color: ${token.colorWarning};
-    }
-
-    .markdown-alert-caution {
-      border-inline-start-color: ${token.colorError};
-    }
-
-    .markdown-alert-title {
-      display: flex;
-      align-items: center;
-      margin-block-end: 0.5em !important;
-      font-weight: 500;
-    }
-
-    .markdown-alert-note .markdown-alert-title {
-      color: ${token.colorInfo};
-      fill: ${token.colorInfo};
-    }
-
-    .markdown-alert-tip .markdown-alert-title {
-      color: ${token.colorSuccess};
-      fill: ${token.colorSuccess};
-    }
-
-    .markdown-alert-important .markdown-alert-title {
-      color: ${token.purple};
-      fill: ${token.purple};
-    }
-
-    .markdown-alert-warning .markdown-alert-title {
-      color: ${token.colorWarning};
-      fill: ${token.colorWarning};
-    }
-
-    .markdown-alert-caution .markdown-alert-title {
-      color: ${token.colorError};
-      fill: ${token.colorError};
-    }
-
-    .octicon {
-      overflow: visible !important;
-      display: inline-block;
-      margin-inline-end: 0.5em;
-      vertical-align: text-bottom;
-    }
-
-    .task-list-item {
-      &::before {
-        display: none !important;
-      }
-
-      input[type='checkbox'] {
-        margin-block: 0 0.25em;
-        margin-inline: -1.6em 0.2em;
-        vertical-align: middle;
-      }
-
-      input[type='checkbox']:dir(rtl) {
-        margin: 0 -1.6em 0.25em 0.2em;
-      }
-    }
-
-    /* Style the footnotes section. */
-
+  const footnote = css`
     .footnotes {
       margin-block-start: calc(var(--lobe-markdown-margin-multiple) * 1em);
       font-size: smaller;
@@ -474,44 +352,27 @@ export const useStyles = createStyles(({ token, css }) => {
         margin: 0 !important;
       }
     }
+  `;
 
-    .sr-only {
-      position: absolute;
-
-      overflow: hidden;
-
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      border: 0;
-
-      word-wrap: normal;
-
-      clip: rect(0, 0, 0, 0);
-    }
-
+  const sup = css`
     sup {
+      position: relative;
+      inset-block-start: -0.25em;
+
+      font-size: 0.75em;
       line-height: var(--lobe-markdown-line-height);
+      vertical-align: baseline;
     }
+  `;
 
-    sup:has(a[aria-describedby='footnote-label']) {
-      margin-inline: 2px;
-      vertical-align: super !important;
+  const sub = css`
+    sub {
+      position: relative;
+      inset-block-end: -0.25em;
 
-      [data-footnote-ref] {
-        display: inline-block;
-
-        width: 16px;
-        height: 16px;
-        border-radius: 4px;
-
-        font-family: ${token.fontFamilyCode};
-        font-size: 10px;
-        color: ${token.colorTextSecondary} !important;
-        text-align: center;
-
-        background: ${token.colorFillSecondary};
-      }
+      font-size: 0.75em;
+      line-height: var(--lobe-markdown-line-height);
+      vertical-align: baseline;
     }
   `;
 
@@ -529,7 +390,6 @@ export const useStyles = createStyles(({ token, css }) => {
           header,
           hr,
           img,
-          kbd,
           list,
           p,
           pre,
@@ -537,7 +397,9 @@ export const useStyles = createStyles(({ token, css }) => {
           svg,
           table,
           video,
-          gfm,
+          footnote,
+          sub,
+          sup,
         ]}
       }
     `,

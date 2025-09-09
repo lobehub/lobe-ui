@@ -1,5 +1,5 @@
-import { Markdown, MarkdownProps } from '@/index';
-import { StoryBook, useControls, useCreateStore } from '@/storybook';
+import { Markdown, MarkdownProps } from '@lobehub/ui';
+import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 const colorsContent = `The background color is \`#ffffff\` for light mode and \`#000000\` for dark mode.`;
 
@@ -30,8 +30,8 @@ export default () => {
         value: 1.8,
       },
       marginMultiple: {
-        maxValue: 5,
-        minValue: 0,
+        max: 5,
+        min: 0,
         step: 0.1,
         value: 2,
       },

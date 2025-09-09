@@ -1,5 +1,4 @@
-import { Markdown, SearchResultCards } from '@lobehub/ui';
-import { Divider, Radio } from 'antd';
+import { Block, Markdown, SearchResultCards, Tabs } from '@lobehub/ui';
 import { useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
@@ -13,19 +12,19 @@ export default () => {
   const state = cases[current];
 
   return (
-    <Flexbox padding={16}>
-      <Radio.Group
-        onChange={(e) => {
-          setCurrent(e.target.value);
-        }}
-        options={[
-          { label: '普通case', value: 'general' },
-          { label: '带 thinking', value: 'withThinking' },
-          { label: '代码块', value: 'inCode' },
+    <Flexbox gap={16} padding={16}>
+      <Tabs
+        activeKey={current}
+        compact
+        items={[
+          { key: 'general', label: '普通case' },
+          { key: 'withThinking', label: '带 thinking' },
+          { key: 'inCode', label: '代码块' },
         ]}
-        value={current}
+        onChange={(key) => {
+          setCurrent(key);
+        }}
       />
-      <Divider />
       {state.citations && (
         <div className={'citations'} style={{ marginBottom: 12 }}>
           <SearchResultCards
@@ -37,10 +36,9 @@ export default () => {
         citations={state.citations}
         components={{
           think: (props: any) => (
-            <Flexbox style={{ marginBottom: 20 }}>
-              <Markdown {...props} citations={state.citations} />
-              <Divider />
-            </Flexbox>
+            <Block padding={16} style={{ marginBottom: 20 }}>
+              <Markdown variant={'chat'} {...props} citations={state.citations} />
+            </Block>
           ),
         }}
         enableCustomFootnotes

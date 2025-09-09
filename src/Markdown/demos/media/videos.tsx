@@ -30,8 +30,8 @@ export default () => {
         value: 1.8,
       },
       marginMultiple: {
-        maxValue: 5,
-        minValue: 0,
+        max: 5,
+        min: 0,
         step: 0.1,
         value: 2,
       },

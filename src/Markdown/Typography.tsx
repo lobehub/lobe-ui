@@ -14,6 +14,7 @@ const Typography = memo<TypographyProps>(
     headerMultiple = 1,
     marginMultiple = 2,
     lineHeight = 1.8,
+    borderRadius = 8,
     style,
     ...rest
   }) => {
@@ -25,6 +26,7 @@ const Typography = memo<TypographyProps>(
         ref={ref}
         style={{
           // @ts-ignore
+          '--lobe-markdown-border-radius': borderRadius,
           '--lobe-markdown-font-size': `${fontSize}px`,
           '--lobe-markdown-header-multiple': headerMultiple,
           '--lobe-markdown-line-height': lineHeight,

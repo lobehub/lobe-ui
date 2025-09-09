@@ -11,6 +11,7 @@ import type { AProps, DivProps } from '@/types';
 import type { CitationItem } from '@/types/citation';
 
 export interface TypographyProps extends DivProps {
+  borderRadius?: number;
   fontSize?: number;
   headerMultiple?: number;
   lineHeight?: number;
@@ -47,7 +48,6 @@ export interface SyntaxMarkdownProps {
   rehypePluginsAhead?: Pluggable[];
   remarkPlugins?: Pluggable[];
   remarkPluginsAhead?: Pluggable[];
-  showFootnotes?: boolean;
   variant?: 'default' | 'chat';
 }
 

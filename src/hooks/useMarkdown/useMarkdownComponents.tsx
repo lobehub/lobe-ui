@@ -3,6 +3,7 @@
 import { useCallback, useMemo } from 'react';
 import type { Components } from 'react-markdown';
 
+import Hotkey from '@/Hotkey';
 import { CodeBlock } from '@/Markdown/components/CodeBlock';
 import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
 import Image from '@/mdx/mdxComponents/Image';
@@ -11,15 +12,8 @@ import Section from '@/mdx/mdxComponents/Section';
 import Video from '@/mdx/mdxComponents/Video';
 
 export const useMarkdownComponents = (): Components => {
-  const {
-    components,
-    animated,
-    citations,
-    componentProps,
-    showFootnotes,
-    enableMermaid,
-    fullFeaturedCodeBlock,
-  } = useMarkdownContext();
+  const { components, animated, citations, componentProps, enableMermaid, fullFeaturedCodeBlock } =
+    useMarkdownContext();
 
   const memoA = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -41,8 +35,13 @@ export const useMarkdownComponents = (): Components => {
 
   const memoSection = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ({ node, ...props }: any) => <Section showFootnotes={showFootnotes} {...props} />,
-    [showFootnotes],
+    ({ node, ...props }: any) => <Section {...props} />,
+    [],
+  );
+
+  const memoKbd = useCallback(
+    ({ children }: any) => <Hotkey keys={children} style={{ display: 'inline-flex' }} />,
+    [],
   );
 
   const memoBr = useCallback(() => <br />, []);
@@ -111,12 +110,13 @@ export const useMarkdownComponents = (): Components => {
       br: memoBr,
       colorPreview: memoColorPreview,
       img: memoImg,
+      kbd: memoKbd,
       p: memeP,
       pre: memoPre,
       section: memoSection,
       video: memoVideo,
     }),
-    [memoA, memoBr, memoImg, memoVideo, memoPre, memoSection, memeP, memoColorPreview],
+    [memoA, memoBr, memoImg, memoVideo, memoPre, memoSection, memeP, memoColorPreview, memoKbd],
   );
 
   return useMemo(

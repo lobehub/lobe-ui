@@ -3,7 +3,9 @@
 import { Ref, memo, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import A from '@/A';
 import Block from '@/Block';
+import Img from '@/Img';
 import Text from '@/Text';
 import { AProps } from '@/types';
 
@@ -37,7 +39,7 @@ const SearchResultCard = memo<SearchResultCardProps>(({ ref, url, title, alt, ..
   }, [url, title]);
 
   return (
-    <a href={url} ref={ref} rel="noreferrer" target={'_blank'} {...rest}>
+    <A href={url} ref={ref} rel="noreferrer" target={'_blank'} {...rest}>
       <Block
         className={styles.container}
         clickable
@@ -50,7 +52,7 @@ const SearchResultCard = memo<SearchResultCardProps>(({ ref, url, title, alt, ..
       >
         <Text ellipsis={{ rows: 2 }}>{displayTitle}</Text>
         <Flexbox align={'center'} gap={4} horizontal>
-          <img
+          <Img
             alt={alt || title || url}
             height={14}
             src={`https://icons.duckduckgo.com/ip3/${host}.ico`}
@@ -61,7 +63,7 @@ const SearchResultCard = memo<SearchResultCardProps>(({ ref, url, title, alt, ..
           </Text>
         </Flexbox>
       </Block>
-    </a>
+    </A>
   );
 });
 

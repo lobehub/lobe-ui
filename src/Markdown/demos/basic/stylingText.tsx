@@ -15,7 +15,7 @@ This is <sup>superscript</sup> text
 
 This is <ins>underlined</ins> text
 
-Inline \`code\` with backticks
+Press <kbd>mod+c</kbd>
 `;
 
 export default () => {
@@ -45,8 +45,8 @@ export default () => {
         value: 1.8,
       },
       marginMultiple: {
-        maxValue: 5,
-        minValue: 0,
+        max: 5,
+        min: 0,
         step: 0.1,
         value: 2,
       },

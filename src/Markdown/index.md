@@ -31,6 +31,7 @@ You can indicate emphasis with bold, italic, strikethrough, subscript, or supers
 | Underline              | `<ins> </ins>`     | `This is a <ins>underline</ins> text`    | This is a <ins>underline</ins> text    |
 | Subscript              | `<sub> </sub>`     | `This is a <sub>subscript</sub> text`    | This is a <sub>subscript</sub> text    |
 | Superscript            | `<sup> </sup>`     | `This is a <sup>superscript</sup> text`  | This is a <sup>superscript</sup> text  |
+| Keyboard               | `<kbd> </kbd>`     | `Press <kbd>mod+c</kbd>`                 | Press <kbd>mod+c</kbd>                 |
 
 <code src="./demos/basic/stylingText.tsx" iframe nopadding></code>
 
@@ -241,10 +242,6 @@ Explore different component variants `default` and `chat`.
 
 <code src="./demos/custom/plugins/index.tsx" nopadding iframe nopadding></code>
 
-### Think
-
-<code src="./demos/custom/thinking/index.tsx" iframe nopadding></code>
-
 ## APIs
 
 | Property              | Description                                            | Type                                                                                               | Default     |
@@ -258,7 +255,6 @@ Explore different component variants `default` and `chat`.
 | enableImageGallery    | Enable image gallery for images                        | `boolean`                                                                                          | `true`      |
 | enableCustomFootnotes | Enable custom footnotes rendering                      | `boolean`                                                                                          | -           |
 | fullFeaturedCodeBlock | Use full-featured code blocks with additional controls | `boolean`                                                                                          | -           |
-| showFootnotes         | Show footnotes section                                 | `boolean`                                                                                          | -           |
 | fontSize              | Base font size in pixels                               | `number`                                                                                           | `14`        |
 | lineHeight            | Line height multiplier                                 | `number`                                                                                           | `1.6`       |
 | headerMultiple        | Header size multiplier                                 | `number`                                                                                           | `0.25`      |

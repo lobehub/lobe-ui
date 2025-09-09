@@ -32,7 +32,7 @@ export const useMarkdownRemarkPlugins = (): Pluggable[] => {
         remarkCjkFriendly,
         [remarkGfm, { singleTilde: false }],
         !allowHtml && remarkBr,
-        !allowHtml && [remarkGfmPlus, { allowHtmlTags: ['sub', 'sup', 'ins'] }],
+        !allowHtml && remarkGfmPlus,
         !allowHtml && remarkVideo,
         remarkColor,
         enableLatex && remarkMath,

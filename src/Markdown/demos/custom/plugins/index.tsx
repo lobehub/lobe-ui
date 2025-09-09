@@ -1,6 +1,5 @@
+import { Markdown } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-
-import { Markdown } from '@/index';
 
 import { markdownElements } from './MarkdownElements';
 import { removeLineBreaksInAntArtifact } from './utils';

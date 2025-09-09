@@ -93,8 +93,10 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
           margin: 0,
           padding: variant === 'borderless' ? 0 : 16,
           position: 'relative',
+          width: '100%',
         }}
         variant={'borderless'}
+        width={'100%'}
       />
     );
   },

@@ -1,9 +1,8 @@
+import { Icon } from '@lobehub/ui';
 import { createStyles } from 'antd-style';
 import { ChevronDown, ChevronRight, SparkleIcon } from 'lucide-react';
 import { PropsWithChildren, memo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
-
-import { Icon } from '@/index';
 
 const useStyles = createStyles(({ css, token, isDarkMode }) => ({
   container: css`

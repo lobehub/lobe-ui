@@ -1,9 +1,11 @@
 'use client';
 
 import { Ref, memo } from 'react';
-import { Flexbox, FlexboxProps } from 'react-layout-kit';
+import { FlexboxProps } from 'react-layout-kit';
 
-import SearchResultCard from '../SearchResultCard';
+import ScrollShadow from '@/ScrollShadow';
+
+import SearchResultCard from './SearchResultCard';
 
 export interface SearchResultItem {
   alt?: string;
@@ -19,11 +21,14 @@ export interface SearchResultCardsProps extends FlexboxProps {
 
 const SearchResultCards = memo<SearchResultCardsProps>(({ ref, dataSource, style, ...rest }) => {
   return (
-    <Flexbox
+    <ScrollShadow
       gap={12}
+      hideScrollBar
       horizontal
+      orientation={'horizontal'}
       ref={ref}
-      style={{ minHeight: 80, overflowX: 'scroll', width: '100%', ...style }}
+      size={10}
+      style={{ minHeight: 80, overflowX: 'scroll', paddingInlineEnd: 24, width: '100%', ...style }}
       {...rest}
     >
       {dataSource.map((link) =>
@@ -33,7 +38,7 @@ const SearchResultCards = memo<SearchResultCardsProps>(({ ref, dataSource, style
           <SearchResultCard key={link.url} {...link} />
         ),
       )}
-    </Flexbox>
+    </ScrollShadow>
   );
 });
 

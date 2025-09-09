@@ -2,12 +2,11 @@
 
 import type { FC, ReactNode } from 'react';
 
-import Footnotes from '@/mdx/mdxComponents/Footnotes';
+import Footnotes from '@/Markdown/components/Footnotes';
 
 interface SectionProps {
   'children': ReactNode;
   'data-footnotes'?: boolean;
-  'showFootnotes'?: boolean;
 }
 
 const Section: FC<SectionProps> = ({ children, ...rest }) => {

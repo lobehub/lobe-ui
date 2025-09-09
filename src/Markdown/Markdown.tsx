@@ -29,10 +29,10 @@ const Markdown = memo<MarkdownProps>((props) => {
     enableStream = true,
     componentProps,
     allowHtml,
+    borderRadius = props.variant === 'chat' ? 4 : undefined,
     fontSize = props.variant === 'chat' ? 14 : undefined,
     headerMultiple = props.variant === 'chat' ? 0.25 : undefined,
     marginMultiple = props.variant === 'chat' ? 1 : undefined,
-    showFootnotes,
     variant = 'default',
     reactMarkdownProps,
     lineHeight = props.variant === 'chat' ? 1.6 : undefined,
@@ -54,6 +54,7 @@ const Markdown = memo<MarkdownProps>((props) => {
     () =>
       cva(styles.root, {
         defaultVariants: {
+          enableGfm: true,
           enableLatex: true,
           variant: 'default',
         },
@@ -65,6 +66,10 @@ const Markdown = memo<MarkdownProps>((props) => {
           },
           enableLatex: {
             true: styles.latex,
+            false: null,
+          },
+          enableGfm: {
+            true: styles.gfm,
             false: null,
           },
         },
@@ -89,6 +94,7 @@ const Markdown = memo<MarkdownProps>((props) => {
   return (
     <PreviewGroup enable={enableImageGallery}>
       <Typography
+        borderRadius={borderRadius}
         className={cx(variants({ enableLatex, variant }), className)}
         data-code-type="markdown"
         fontSize={fontSize}
@@ -115,7 +121,6 @@ const Markdown = memo<MarkdownProps>((props) => {
             rehypePlugins,
             remarkPlugins,
             remarkPluginsAhead,
-            showFootnotes,
             variant,
           }}
         >
