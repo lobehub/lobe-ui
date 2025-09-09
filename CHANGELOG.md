@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.12.1](https://github.com/lobehub/lobe-ui/compare/v2.12.0...v2.12.1)
+
+<sup>Released on **2025-09-09**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix showFootnotes.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix showFootnotes ([af863a7](https://github.com/lobehub/lobe-ui/commit/af863a7))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.12.0](https://github.com/lobehub/lobe-ui/compare/v2.11.9...v2.12.0)
 
 <sup>Released on **2025-09-09**</sup>
