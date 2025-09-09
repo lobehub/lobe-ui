@@ -19,6 +19,7 @@ export default () => {
         value: content,
       },
       enableCustomFootnotes: true,
+      showFootnotes: true,
     },
     { store },
   ) as MarkdownProps;

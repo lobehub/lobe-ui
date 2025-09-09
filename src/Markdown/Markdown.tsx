@@ -28,6 +28,7 @@ const Markdown = memo<MarkdownProps>((props) => {
     enableGithubAlert,
     enableStream = true,
     componentProps,
+    rehypePluginsAhead,
     allowHtml,
     borderRadius = props.variant === 'chat' ? 4 : undefined,
     fontSize = props.variant === 'chat' ? 14 : undefined,
@@ -108,23 +109,22 @@ const Markdown = memo<MarkdownProps>((props) => {
         {...rest}
       >
         <MarkdownProvider
-          config={{
-            allowHtml,
-            animated: delayedAnimated,
-            citations,
-            componentProps,
-            components,
-            enableCustomFootnotes,
-            enableGithubAlert,
-            enableLatex,
-            enableMermaid,
-            fullFeaturedCodeBlock,
-            rehypePlugins,
-            remarkPlugins,
-            remarkPluginsAhead,
-            showFootnotes,
-            variant,
-          }}
+          allowHtml={allowHtml}
+          animated={delayedAnimated}
+          citations={citations}
+          componentProps={componentProps}
+          components={components}
+          enableCustomFootnotes={enableCustomFootnotes}
+          enableGithubAlert={enableGithubAlert}
+          enableLatex={enableLatex}
+          enableMermaid={enableMermaid}
+          fullFeaturedCodeBlock={fullFeaturedCodeBlock}
+          rehypePlugins={rehypePlugins}
+          rehypePluginsAhead={rehypePluginsAhead}
+          remarkPlugins={remarkPlugins}
+          remarkPluginsAhead={remarkPluginsAhead}
+          showFootnotes={showFootnotes}
+          variant={variant}
         >
           <Render enableStream={enableStream} reactMarkdownProps={reactMarkdownProps}>
             {children}
