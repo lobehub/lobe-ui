@@ -12,8 +12,15 @@ import Section from '@/mdx/mdxComponents/Section';
 import Video from '@/mdx/mdxComponents/Video';
 
 export const useMarkdownComponents = (): Components => {
-  const { components, animated, citations, componentProps, enableMermaid, fullFeaturedCodeBlock } =
-    useMarkdownContext();
+  const {
+    components,
+    animated,
+    citations,
+    componentProps,
+    enableMermaid,
+    fullFeaturedCodeBlock,
+    showFootnotes,
+  } = useMarkdownContext();
 
   const memoA = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -35,8 +42,8 @@ export const useMarkdownComponents = (): Components => {
 
   const memoSection = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ({ node, ...props }: any) => <Section {...props} />,
-    [],
+    ({ node, ...props }: any) => <Section showFootnotes={showFootnotes} {...props} />,
+    [showFootnotes],
   );
 
   const memoKbd = useCallback(

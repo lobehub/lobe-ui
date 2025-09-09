@@ -41,6 +41,7 @@ const Markdown = memo<MarkdownProps>((props) => {
     remarkPluginsAhead,
     components = {},
     customRender,
+    showFootnotes = true,
     citations,
     ...rest
   } = props;
@@ -121,6 +122,7 @@ const Markdown = memo<MarkdownProps>((props) => {
             rehypePlugins,
             remarkPlugins,
             remarkPluginsAhead,
+            showFootnotes,
             variant,
           }}
         >

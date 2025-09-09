@@ -48,6 +48,7 @@ export interface SyntaxMarkdownProps {
   rehypePluginsAhead?: Pluggable[];
   remarkPlugins?: Pluggable[];
   remarkPluginsAhead?: Pluggable[];
+  showFootnotes?: boolean;
   variant?: 'default' | 'chat';
 }
 
