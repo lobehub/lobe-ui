@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.12.3](https://github.com/lobehub/lobe-ui/compare/v2.12.2...v2.12.3)
+
+<sup>Released on **2025-09-10**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix hotkey sort.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix hotkey sort ([f2a2d27](https://github.com/lobehub/lobe-ui/commit/f2a2d27))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.12.2](https://github.com/lobehub/lobe-ui/compare/v2.12.1...v2.12.2)
 
 <sup>Released on **2025-09-09**</sup>
