@@ -5,16 +5,18 @@ export const NORMATIVE_MODIFIER = [
   // win: Ctrl ,mac: Control
   KeyMapEnum.Ctrl,
   KeyMapEnum.Control,
-  KeyMapEnum.Mod, // Mod should have same priority as Ctrl since it represents Ctrl on Windows
+
+  //  win: Win ,mac: Command
+  KeyMapEnum.Meta,
+
+  // Mod should have same priority as Ctrl since it represents Ctrl on Windows
+  KeyMapEnum.Mod,
 
   // win: Alt ,mac: Option
   KeyMapEnum.Alt,
 
   // win: Shift ,mac: Shift
   KeyMapEnum.Shift,
-
-  //  win: Win ,mac: Command
-  KeyMapEnum.Meta,
 ];
 
 const orderMap = Object.fromEntries(NORMATIVE_MODIFIER.map((key, index) => [key, index]));
