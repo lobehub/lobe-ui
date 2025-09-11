@@ -72,6 +72,7 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
       <Image
         alt={'mermaid'}
         maxHeight={480}
+        minWidth={300}
         objectFit={'contain'}
         preview={
           enablePanZoom
@@ -90,7 +91,9 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
         style={{
           background: variant === 'filled' ? background : undefined,
           borderRadius: 0,
+
           margin: 0,
+          minWidth: 300,
           padding: variant === 'borderless' ? 0 : 16,
           position: 'relative',
           width: '100%',
