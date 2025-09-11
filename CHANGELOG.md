@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.12.4](https://github.com/lobehub/lobe-ui/compare/v2.12.3...v2.12.4)
+
+<sup>Released on **2025-09-11**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix Mermaid width.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix Mermaid width ([ba2c100](https://github.com/lobehub/lobe-ui/commit/ba2c100))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.12.3](https://github.com/lobehub/lobe-ui/compare/v2.12.2...v2.12.3)
 
 <sup>Released on **2025-09-10**</sup>
