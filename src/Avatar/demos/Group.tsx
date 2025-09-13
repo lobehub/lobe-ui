@@ -37,6 +37,7 @@ export default () => {
         options: ['borderless', 'filled', 'outlined'],
         value: 'filled',
       },
+      zIndexReverse: false,
     },
     { store },
   ) as AvatarGroupProps;

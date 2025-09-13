@@ -55,4 +55,5 @@ export interface AvatarGroupProps
     avatar?: CSSProperties;
     count?: CSSProperties;
   };
+  zIndexReverse?: boolean;
 }

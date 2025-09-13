@@ -24,6 +24,7 @@ const AvatarGroup = memo<AvatarGroupProps>(
     styles: customStyles,
     onClick,
     ref,
+    zIndexReverse,
     ...rest
   }) => {
     const { cx, styles, theme } = useStyles();
@@ -66,6 +67,7 @@ const AvatarGroup = memo<AvatarGroupProps>(
               onClick={() => onClick?.({ item: avatar, key })}
               style={{
                 marginLeft: index === 0 ? 0 : gapValue,
+                zIndex: zIndexReverse ? items.length - index : index,
                 ...customStyles?.avatar,
                 ...avatarStyle,
               }}
@@ -83,6 +85,7 @@ const AvatarGroup = memo<AvatarGroupProps>(
             sliceText={false}
             style={{
               marginLeft: gapValue,
+              zIndex: zIndexReverse ? 0 : avatars.length,
               ...customStyles?.count,
             }}
           />
