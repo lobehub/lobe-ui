@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.12.6](https://github.com/lobehub/lobe-ui/compare/v2.12.5...v2.12.6)
+
+<sup>Released on **2025-09-13**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fixed footnotes render when href not have should render div replace A.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fixed footnotes render when href not have should render div replace A, closes [#394](https://github.com/lobehub/lobe-ui/issues/394) ([6e917cb](https://github.com/lobehub/lobe-ui/commit/6e917cb))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.12.5](https://github.com/lobehub/lobe-ui/compare/v2.12.4...v2.12.5)
 
 <sup>Released on **2025-09-13**</sup>
