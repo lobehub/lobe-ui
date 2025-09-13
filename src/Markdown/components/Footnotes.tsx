@@ -49,9 +49,10 @@ const DefaultFootnotes = memo<{ dataSource: any[] }>(({ dataSource }) => {
     >
       {items.map(({ children, props }, index) => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { node, ...rest } = props;
+        const { node, href, ...rest } = props;
+        const Container = href ? A : 'div';
         return (
-          <A {...rest} key={index}>
+          <Container {...(href ? { href, ...rest } : rest)} key={index}>
             <Block
               align={'stretch'}
               horizontal
@@ -67,7 +68,7 @@ const DefaultFootnotes = memo<{ dataSource: any[] }>(({ dataSource }) => {
                 {children}
               </Text>
             </Block>
-          </A>
+          </Container>
         );
       })}
     </Flexbox>
@@ -77,9 +78,9 @@ const DefaultFootnotes = memo<{ dataSource: any[] }>(({ dataSource }) => {
 const Footnotes = memo<FootnotesProps>(({ children, ...rest }) => {
   const links = useMemo(() => {
     try {
-      return JSON.parse(rest['data-footnote-links'] || '');
+      return JSON.parse(rest['data-footnote-links'] || '[]');
     } catch (error) {
-      console.error(error);
+      console.error('Failed to parse footnote links:', error);
       return [];
     }
   }, [rest['data-footnote-links']]);
