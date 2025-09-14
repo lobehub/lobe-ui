@@ -91,8 +91,11 @@ const Drawer = memo<DrawerProps>(
           style={{
             background: theme.colorBgLayout,
             borderRight: `1px solid ${theme.colorBorderSecondary}`,
+            height: '100%',
             overflowX: 'hidden',
             overflowY: 'auto',
+            position: 'sticky',
+            top: 0,
             ...styles?.sidebar,
           }}
           width={sidebarWidth}
