@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.13.0](https://github.com/lobehub/lobe-ui/compare/v2.12.6...v2.13.0)
+
+<sup>Released on **2025-09-14**</sup>
+
+#### ✨ Features
+
+- **misc**: Make drawer sidebar sticky and improve demo content.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Make drawer sidebar sticky and improve demo content ([cc1b3bd](https://github.com/lobehub/lobe-ui/commit/cc1b3bd))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.12.6](https://github.com/lobehub/lobe-ui/compare/v2.12.5...v2.12.6)
 
 <sup>Released on **2025-09-13**</sup>
