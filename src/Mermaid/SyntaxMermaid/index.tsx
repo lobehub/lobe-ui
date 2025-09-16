@@ -91,7 +91,6 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
         style={{
           background: variant === 'filled' ? background : undefined,
           borderRadius: 0,
-
           margin: 0,
           minWidth: 300,
           padding: variant === 'borderless' ? 0 : 16,

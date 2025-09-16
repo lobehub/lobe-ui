@@ -6,7 +6,7 @@ import { memo, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import usePreview from './components/usePreview';
-import { FALLBACK, useStyles } from './style';
+import { FALLBACK_DARK, FALLBACK_LIGHT, useStyles } from './style';
 import type { ImageProps } from './type';
 
 const Image = memo<ImageProps>(
@@ -33,11 +33,6 @@ const Image = memo<ImageProps>(
   }) => {
     const { styles, cx, theme } = useStyles({
       alwaysShowActions,
-      maxHeight,
-      maxWidth,
-      minHeight,
-      minWidth,
-      objectFit,
     });
     const mergePreivew = usePreview(preview);
 
@@ -82,8 +77,8 @@ const Image = memo<ImageProps>(
       <Flexbox className={cx(variants({ variant }), className)} ref={ref} style={style}>
         {actions && <div className={styles.actions}>{actions}</div>}
         <AntImage
-          className={classNames?.image}
-          fallback={FALLBACK}
+          className={cx(styles.image, classNames?.image)}
+          fallback={theme.isDarkMode ? FALLBACK_DARK : FALLBACK_LIGHT}
           height={height}
           loading={'lazy'}
           onClick={onClick}
@@ -96,10 +91,15 @@ const Image = memo<ImageProps>(
                 }
           }
           style={{
+            maxHeight,
+            maxWidth,
+            minHeight,
+            minWidth,
+            objectFit: objectFit || 'cover',
             ...customStyles?.image,
           }}
           width={width}
-          wrapperClassName={cx(styles.image, classNames?.wrapper)}
+          wrapperClassName={cx(styles.wrapper, classNames?.wrapper)}
           wrapperStyle={{
             ...customStyles?.wrapper,
           }}
