@@ -86,7 +86,7 @@ const Markdown = memo<MarkdownProps>((props) => {
       children,
       reactMarkdownProps,
     }: Pick<MarkdownProps, 'children' | 'enableStream' | 'reactMarkdownProps'>) => {
-      const DefaultRender = enableStream && delayedAnimated ? StreamdownRender : MarkdownRender;
+      const DefaultRender = enableStream ? StreamdownRender : MarkdownRender;
       const defaultDOM = <DefaultRender {...reactMarkdownProps}>{children}</DefaultRender>;
       return customRender ? customRender(defaultDOM, { text: children }) : defaultDOM;
     },
@@ -126,7 +126,10 @@ const Markdown = memo<MarkdownProps>((props) => {
           showFootnotes={showFootnotes}
           variant={variant}
         >
-          <Render enableStream={enableStream} reactMarkdownProps={reactMarkdownProps}>
+          <Render
+            enableStream={enableStream && delayedAnimated}
+            reactMarkdownProps={reactMarkdownProps}
+          >
             {children}
           </Render>
         </MarkdownProvider>
