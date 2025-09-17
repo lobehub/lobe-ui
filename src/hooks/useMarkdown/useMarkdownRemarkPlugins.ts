@@ -9,10 +9,8 @@ import type { Pluggable } from 'unified';
 
 import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
 import { remarkBr } from '@/Markdown/plugins/remarkBr';
-import { remarkColor } from '@/Markdown/plugins/remarkColor';
 import { remarkCustomFootnotes } from '@/Markdown/plugins/remarkCustomFootnotes';
 import { remarkGfmPlus } from '@/Markdown/plugins/remarkGfmPlus';
-import { remarkVideo } from '@/Markdown/plugins/remarkVideo';
 
 export const useMarkdownRemarkPlugins = (): Pluggable[] => {
   const {
@@ -30,12 +28,11 @@ export const useMarkdownRemarkPlugins = (): Pluggable[] => {
     () =>
       [
         remarkCjkFriendly,
+        // Parse math before GFM so that '|' inside $...$ isn't treated as a table separator
+        enableLatex && remarkMath,
         [remarkGfm, { singleTilde: false }],
         !allowHtml && remarkBr,
         !allowHtml && remarkGfmPlus,
-        !allowHtml && remarkVideo,
-        remarkColor,
-        enableLatex && remarkMath,
         enableCustomFootnotes && remarkCustomFootnotes,
         isChatMode && remarkBreaks,
       ].filter(Boolean) as Pluggable[],

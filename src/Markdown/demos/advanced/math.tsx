@@ -39,7 +39,13 @@ $$
 This is a formula with a tag:
 $$
 q = a + bi + cj + dk \\tag{1}
-$$`;
+$$
+
+| $1$       | $2$       |
+| --------- | --------- |
+| $|3| = 3$ | $|4| = 4$ |
+
+`;
 
 export default () => {
   const store = useCreateStore();

@@ -1,5 +1,10 @@
 import { renderToString } from 'katex';
 
+// Helper: replace unescaped pipes with \vert within a LaTeX math fragment
+const replaceUnescapedPipes = (formula: string): string =>
+  // Use \vert{} so the control sequence terminates before the next token
+  formula.replaceAll(/(?<!\\)\|/g, '\\vert{}');
+
 /**
  * Converts LaTeX bracket delimiters to dollar sign delimiters.
  * Converts \[...\] to $$...$$ and \(...\) to $...$
@@ -48,9 +53,18 @@ export function escapeMhchemCommands(text: string) {
  * @returns The string with pipe characters escaped in LaTeX expressions
  */
 export function escapeLatexPipes(text: string): string {
-  // According to the failing test, we should not escape pipes in LaTeX expressions
-  // This function is now a no-op but is kept for backward compatibility
-  return text;
+  // Replace unescaped '|' inside LaTeX math spans with '\vert' so that
+  // remark-gfm table parsing won't treat them as column separators.
+  // Leave code blocks/inline code untouched.
+  const pattern =
+    /(```[\S\s]*?```|`[^\n`]*`)|\$\$([\S\s]*?)\$\$|(?<!\$)\$(?!\$)([\S\s]*?)(?<!\$)\$(?!\$)/g;
+
+  return text.replaceAll(pattern, (match, code, display, inline) => {
+    if (code !== undefined) return code; // preserve code fences/inline code
+    if (display !== undefined) return `$$${replaceUnescapedPipes(display)}$$`;
+    if (inline !== undefined) return `$${replaceUnescapedPipes(inline)}$`;
+    return match;
+  });
 }
 
 /**
