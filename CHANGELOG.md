@@ -2,6 +2,41 @@
 
 # Changelog
 
+### [Version 2.13.2](https://github.com/lobehub/lobe-ui/compare/v2.13.1...v2.13.2)
+
+<sup>Released on **2025-09-23**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix math in table, Fix test.
+
+#### 💄 Styles
+
+- **misc**: Export preprocessMarkdownContent, Export remark plugin.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix math in table ([75b60a8](https://github.com/lobehub/lobe-ui/commit/75b60a8))
+- **misc**: Fix test ([d95ab97](https://github.com/lobehub/lobe-ui/commit/d95ab97))
+
+#### Styles
+
+- **misc**: Export preprocessMarkdownContent ([3cd9902](https://github.com/lobehub/lobe-ui/commit/3cd9902))
+- **misc**: Export remark plugin ([0f26e8f](https://github.com/lobehub/lobe-ui/commit/0f26e8f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.13.1](https://github.com/lobehub/lobe-ui/compare/v2.13.0...v2.13.1)
 
 <sup>Released on **2025-09-16**</sup>
