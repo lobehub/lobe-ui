@@ -112,8 +112,10 @@ export { rehypeCustomFootnotes } from './Markdown/plugins/rehypeCustomFootnotes'
 export { rehypeKatexDir } from './Markdown/plugins/rehypeKatexDir';
 export { rehypeStreamAnimated } from './Markdown/plugins/rehypeStreamAnimated';
 export { remarkBr } from './Markdown/plugins/remarkBr';
+export { remarkColor } from './Markdown/plugins/remarkColor';
 export { remarkCustomFootnotes } from './Markdown/plugins/remarkCustomFootnotes';
 export { remarkGfmPlus } from './Markdown/plugins/remarkGfmPlus';
+export { remarkVideo } from './Markdown/plugins/remarkVideo';
 export { default as MaskShadow, type MaskShadowProps } from './MaskShadow';
 export {
   default as MaterialFileTypeIcon,

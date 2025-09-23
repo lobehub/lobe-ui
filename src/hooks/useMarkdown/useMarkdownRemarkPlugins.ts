@@ -11,6 +11,7 @@ import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
 import { remarkBr } from '@/Markdown/plugins/remarkBr';
 import { remarkCustomFootnotes } from '@/Markdown/plugins/remarkCustomFootnotes';
 import { remarkGfmPlus } from '@/Markdown/plugins/remarkGfmPlus';
+import { remarkVideo } from '@/Markdown/plugins/remarkVideo';
 
 export const useMarkdownRemarkPlugins = (): Pluggable[] => {
   const {
@@ -33,6 +34,7 @@ export const useMarkdownRemarkPlugins = (): Pluggable[] => {
         [remarkGfm, { singleTilde: false }],
         !allowHtml && remarkBr,
         !allowHtml && remarkGfmPlus,
+        !allowHtml && remarkVideo,
         enableCustomFootnotes && remarkCustomFootnotes,
         isChatMode && remarkBreaks,
       ].filter(Boolean) as Pluggable[],

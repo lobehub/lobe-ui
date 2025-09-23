@@ -88,9 +88,10 @@ describe('preprocessLaTeX', () => {
   //   expect(preprocessLaTeX(content)).toBe(expected);
   // });
 
-  test('preserves LaTeX expressions with special characters', () => {
+  test('escapes pipes inside LaTeX expressions with special characters', () => {
     const content = 'The set is defined as $\\{x | x > 0\\}$.';
-    expect(preprocessLaTeX(content)).toBe(content);
+    const expected = 'The set is defined as $\\{x \\vert{} x > 0\\}$.';
+    expect(preprocessLaTeX(content)).toBe(expected);
   });
 });
 
@@ -144,14 +145,16 @@ describe('escapeMhchemCommands', () => {
 });
 
 describe('escapeLatexPipes', () => {
-  test('does not escape pipes in LaTeX expressions', () => {
+  test('escapes pipes in inline LaTeX expressions', () => {
     const content = 'Set notation $\\{x | x > 0\\}$';
-    expect(escapeLatexPipes(content)).toBe(content);
+    const expected = 'Set notation $\\{x \\vert{} x > 0\\}$';
+    expect(escapeLatexPipes(content)).toBe(expected);
   });
 
-  test('preserves pipes in block LaTeX', () => {
+  test('escapes pipes in block LaTeX', () => {
     const content = 'Set notation $$\\{x | x > 0\\}$$';
-    expect(escapeLatexPipes(content)).toBe(content);
+    const expected = 'Set notation $$\\{x \\vert{} x > 0\\}$$';
+    expect(escapeLatexPipes(content)).toBe(expected);
   });
 
   test('preserves pipes outside LaTeX', () => {
@@ -159,9 +162,10 @@ describe('escapeLatexPipes', () => {
     expect(escapeLatexPipes(content)).toBe(content);
   });
 
-  test('preserves pipes in multiple LaTeX expressions', () => {
+  test('escapes pipes in multiple LaTeX expressions', () => {
     const content = '$\\{x | x > 0\\}$ and $$\\{y | y < 0\\}$$';
-    expect(escapeLatexPipes(content)).toBe(content);
+    const expected = '$\\{x \\vert{} x > 0\\}$ and $$\\{y \\vert{} y < 0\\}$$';
+    expect(escapeLatexPipes(content)).toBe(expected);
   });
 });
 
