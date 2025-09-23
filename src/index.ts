@@ -108,6 +108,12 @@ export {
   default as SearchResultCards,
   type SearchResultCardsProps,
 } from './Markdown/components/SearchResultCards';
+export { rehypeCustomFootnotes } from './Markdown/plugins/rehypeCustomFootnotes';
+export { rehypeKatexDir } from './Markdown/plugins/rehypeKatexDir';
+export { rehypeStreamAnimated } from './Markdown/plugins/rehypeStreamAnimated';
+export { remarkBr } from './Markdown/plugins/remarkBr';
+export { remarkCustomFootnotes } from './Markdown/plugins/remarkCustomFootnotes';
+export { remarkGfmPlus } from './Markdown/plugins/remarkGfmPlus';
 export { default as MaskShadow, type MaskShadowProps } from './MaskShadow';
 export {
   default as MaterialFileTypeIcon,
