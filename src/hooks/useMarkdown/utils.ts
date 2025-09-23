@@ -120,7 +120,7 @@ interface PreprocessOptions {
   enableLatex?: boolean;
 }
 
-export const preprocessContent = (
+export const preprocessMarkdownContent = (
   str: string,
   { enableCustomFootnotes, enableLatex, citationsLength }: PreprocessOptions = {},
 ) => {

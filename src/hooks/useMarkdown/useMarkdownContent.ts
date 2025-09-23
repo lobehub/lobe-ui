@@ -5,7 +5,7 @@ import { useMemo, useRef, useState } from 'react';
 import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
 
 import { isLastFormulaRenderable } from './latex';
-import { addToCache, contentCache, preprocessContent } from './utils';
+import { addToCache, contentCache, preprocessMarkdownContent } from './utils';
 
 export const useMarkdownContent = (children: string): string | undefined => {
   const { animated, enableLatex = true, enableCustomFootnotes, citations } = useMarkdownContext();
@@ -28,7 +28,7 @@ export const useMarkdownContent = (children: string): string | undefined => {
     }
 
     // Process new content only if needed
-    let processedContent = preprocessContent(children, {
+    let processedContent = preprocessMarkdownContent(children, {
       citationsLength,
       enableCustomFootnotes,
       enableLatex,

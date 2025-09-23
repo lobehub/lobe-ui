@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 
-import { addToCache, contentCache, preprocessContent, transformCitations } from './utils';
+import { addToCache, contentCache, preprocessMarkdownContent, transformCitations } from './utils';
 
 const _clearCache = () => contentCache.clear();
 
@@ -93,14 +93,14 @@ describe('transformCitations', () => {
   });
 });
 
-describe('preprocessContent', () => {
+describe('preprocessMarkdownContent', () => {
   beforeEach(() => {
     vi.resetAllMocks();
   });
 
   it('should apply LaTeX preprocessing when enableLatex is true', () => {
     const content = 'Brackets \\[x^2\\] and parentheses \\(y^2\\)';
-    const result = preprocessContent(content, { enableLatex: true });
+    const result = preprocessMarkdownContent(content, { enableLatex: true });
 
     // Expect LaTeX processing followed by bold fixing
     expect(result).toBe('Brackets $$x^2$$ and parentheses $y^2$');
@@ -108,7 +108,7 @@ describe('preprocessContent', () => {
 
   it('should apply citations transformation when enableCustomFootnotes is true', () => {
     const content = 'Citation [1] reference';
-    const result = preprocessContent(content, {
+    const result = preprocessMarkdownContent(content, {
       citationsLength: 1,
       enableCustomFootnotes: true,
     });
@@ -119,7 +119,7 @@ describe('preprocessContent', () => {
 
   it('should apply multiple transformations when multiple options are enabled', () => {
     const content = 'LaTeX with citation [1]';
-    const result = preprocessContent(content, {
+    const result = preprocessMarkdownContent(content, {
       citationsLength: 1,
       enableCustomFootnotes: true,
       enableLatex: true,

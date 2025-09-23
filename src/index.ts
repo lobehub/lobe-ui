@@ -64,6 +64,7 @@ export {
   SyntaxHighlighter,
   type SyntaxHighlighterProps,
 } from './Highlighter';
+export { preprocessMarkdownContent } from './hooks/useMarkdown/utils';
 export { combineKeys, default as Hotkey, type HotkeyProps, KeyMapEnum } from './Hotkey';
 export { default as HotkeyInput, type HotkeyInputProps } from './HotkeyInput';
 export { default as Icon, type IconProps, IconProvider, type IconSize } from './Icon';
