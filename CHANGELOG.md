@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.13.3](https://github.com/lobehub/lobe-ui/compare/v2.13.2...v2.13.3)
+
+<sup>Released on **2025-10-13**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update markdown gfm plus plugin.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update markdown gfm plus plugin ([454694a](https://github.com/lobehub/lobe-ui/commit/454694a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.13.2](https://github.com/lobehub/lobe-ui/compare/v2.13.1...v2.13.2)
 
 <sup>Released on **2025-09-23**</sup>
