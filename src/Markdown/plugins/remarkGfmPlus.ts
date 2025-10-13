@@ -4,8 +4,22 @@ interface RemarkGfmPlusOptions {
   allowHtmlTags?: string[];
 }
 
+const DEFAULT_ALLOW_HTML_TAGS = [
+  'sub',
+  'sup',
+  'ins',
+  'kbd',
+  'b',
+  'strong',
+  'i',
+  'em',
+  'mark',
+  'del',
+  'u',
+];
+
 export const remarkGfmPlus = (options: RemarkGfmPlusOptions = {}) => {
-  const { allowHtmlTags = ['sub', 'sup', 'ins', 'kbd'] } = options;
+  const { allowHtmlTags = DEFAULT_ALLOW_HTML_TAGS } = options;
 
   return (tree: any) => {
     // 遍历所有父节点，查找分离的HTML标签模式
