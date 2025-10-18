@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.13.4](https://github.com/lobehub/lobe-ui/compare/v2.13.3...v2.13.4)
+
+<sup>Released on **2025-10-18**</sup>
+
+#### 💄 Styles
+
+- **misc**: Add text-autospace.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Add text-autospace ([b20f727](https://github.com/lobehub/lobe-ui/commit/b20f727))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.13.3](https://github.com/lobehub/lobe-ui/compare/v2.13.2...v2.13.3)
 
 <sup>Released on **2025-10-13**</sup>
