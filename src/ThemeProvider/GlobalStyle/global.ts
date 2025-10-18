@@ -4,6 +4,8 @@ export default (token: Theme) => css`
   :root {
     --font-settings: 'cv01', 'tnum', 'kern';
     --font-variations: 'opsz' auto, tabular-nums;
+
+    text-autospace: normal;
   }
 
   html {
