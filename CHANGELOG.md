@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.13.5](https://github.com/lobehub/lobe-ui/compare/v2.13.4...v2.13.5)
+
+<sup>Released on **2025-10-23**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix latex in table case.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix latex in table case ([af6ca9d](https://github.com/lobehub/lobe-ui/commit/af6ca9d))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.13.4](https://github.com/lobehub/lobe-ui/compare/v2.13.3...v2.13.4)
 
 <sup>Released on **2025-10-18**</sup>
