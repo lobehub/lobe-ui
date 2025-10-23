@@ -1,5 +1,6 @@
 import {
   convertLatexDelimiters,
+  escapeCurrencyDollars,
   escapeLatexPipes,
   escapeMhchemCommands,
   escapeTextUnderscores,
@@ -65,9 +66,9 @@ describe('preprocessLaTeX', () => {
     expect(preprocessLaTeX('')).toBe('');
   });
 
-  test('preserves code blocks', () => {
+  test('preserves code blocks and escapes currency outside', () => {
     const content = '```\n$100\n```\nOutside $200';
-    const expected = '```\n$100\n```\nOutside $200';
+    const expected = '```\n$100\n```\nOutside \\$200';
     expect(preprocessLaTeX(content)).toBe(expected);
   });
 
@@ -91,6 +92,24 @@ describe('preprocessLaTeX', () => {
   test('escapes pipes inside LaTeX expressions with special characters', () => {
     const content = 'The set is defined as $\\{x | x > 0\\}$.';
     const expected = 'The set is defined as $\\{x \\vert{} x > 0\\}$.';
+    expect(preprocessLaTeX(content)).toBe(expected);
+  });
+
+  test('handles tables with currency symbols', () => {
+    const content = `| 星级 | 人均价格（美元） | 中国大陆参考 |
+|------|----------------|-------------|
+| 必比登 | $20-50 | ¥150-350 |
+| ⭐ | $50-200 | ¥400-1,500 |`;
+    const expected = `| 星级 | 人均价格（美元） | 中国大陆参考 |
+|------|----------------|-------------|
+| 必比登 | \\$20-50 | ¥150-350 |
+| ⭐ | \\$50-200 | ¥400-1,500 |`;
+    expect(preprocessLaTeX(content)).toBe(expected);
+  });
+
+  test('handles mixed LaTeX and currency in tables', () => {
+    const content = '| Formula | Price |\n|---------|-------|\n| $x^2$ | $100 |';
+    const expected = '| Formula | Price |\n|---------|-------|\n| $x^2$ | \\$100 |';
     expect(preprocessLaTeX(content)).toBe(expected);
   });
 });
@@ -232,5 +251,94 @@ describe('escapeTextUnderscores', () => {
     const expected =
       'LaTeX $x^2 + \\text{var\\_name}$ and $\\text{no underscore} + \\text{with\\_score}$';
     expect(escapeTextUnderscores(content)).toBe(expected);
+  });
+});
+
+describe('escapeCurrencyDollars', () => {
+  test('escapes simple currency values', () => {
+    const content = 'The price is $20';
+    const expected = 'The price is \\$20';
+    expect(escapeCurrencyDollars(content)).toBe(expected);
+  });
+
+  test('escapes currency ranges with dash', () => {
+    const content = '$20-50 and $100-200';
+    const expected = '\\$20-50 and \\$100-200';
+    expect(escapeCurrencyDollars(content)).toBe(expected);
+  });
+
+  test('escapes currency with plus sign', () => {
+    const content = '$300-1,000+';
+    const expected = '\\$300-1,000+';
+    expect(escapeCurrencyDollars(content)).toBe(expected);
+  });
+
+  test('escapes currency in markdown tables', () => {
+    const content = `| 星级 | 人均价格（美元） | 中国大陆参考 |
+|------|----------------|-------------|
+| 必比登 | $20-50 | ¥150-350 |
+| ⭐ | $50-200 | ¥400-1,500 |
+| ⭐⭐ | $200-500 | ¥1,500-3,500 |
+| ⭐⭐⭐ | $300-1,000+ | ¥2,000-7,000+ |`;
+    const expected = `| 星级 | 人均价格（美元） | 中国大陆参考 |
+|------|----------------|-------------|
+| 必比登 | \\$20-50 | ¥150-350 |
+| ⭐ | \\$50-200 | ¥400-1,500 |
+| ⭐⭐ | \\$200-500 | ¥1,500-3,500 |
+| ⭐⭐⭐ | \\$300-1,000+ | ¥2,000-7,000+ |`;
+    expect(escapeCurrencyDollars(content)).toBe(expected);
+  });
+
+  test('preserves LaTeX inline math expressions', () => {
+    const content = 'The equation $x^2 + y^2 = z^2$ is valid';
+    expect(escapeCurrencyDollars(content)).toBe(content);
+  });
+
+  test('preserves LaTeX block math expressions', () => {
+    const content = 'The formula $$E = mc^2$$ is famous';
+    expect(escapeCurrencyDollars(content)).toBe(content);
+  });
+
+  test('preserves code blocks with dollar signs', () => {
+    const content = '```\n$100 + $200\n```';
+    expect(escapeCurrencyDollars(content)).toBe(content);
+  });
+
+  test('preserves inline code with dollar signs', () => {
+    const content = 'Use `$price` variable';
+    expect(escapeCurrencyDollars(content)).toBe(content);
+  });
+
+  test('handles mixed LaTeX and currency', () => {
+    const content = 'LaTeX $x^2$ and price $50';
+    const expected = 'LaTeX $x^2$ and price \\$50';
+    expect(escapeCurrencyDollars(content)).toBe(expected);
+  });
+
+  test('handles currency with commas', () => {
+    const content = 'The price is $1,000,000';
+    const expected = 'The price is \\$1,000,000';
+    expect(escapeCurrencyDollars(content)).toBe(expected);
+  });
+
+  test('handles currency with decimals', () => {
+    const content = '$19.99 and $100.50';
+    const expected = '\\$19.99 and \\$100.50';
+    expect(escapeCurrencyDollars(content)).toBe(expected);
+  });
+
+  test('does not escape dollar signs not followed by numbers', () => {
+    const content = 'This $variable is not currency';
+    expect(escapeCurrencyDollars(content)).toBe(content);
+  });
+
+  test('preserves LaTeX bracket notation', () => {
+    const content = 'Formula \\[x^2 + y^2\\] is preserved';
+    expect(escapeCurrencyDollars(content)).toBe(content);
+  });
+
+  test('preserves LaTeX parenthesis notation', () => {
+    const content = 'Formula \\(x^2\\) is preserved';
+    expect(escapeCurrencyDollars(content)).toBe(content);
   });
 });

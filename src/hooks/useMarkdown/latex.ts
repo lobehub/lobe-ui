@@ -56,8 +56,9 @@ export function escapeLatexPipes(text: string): string {
   // Replace unescaped '|' inside LaTeX math spans with '\vert' so that
   // remark-gfm table parsing won't treat them as column separators.
   // Leave code blocks/inline code untouched.
+  // Also ignore escaped dollars (\$) which are currency symbols
   const pattern =
-    /(```[\S\s]*?```|`[^\n`]*`)|\$\$([\S\s]*?)\$\$|(?<!\$)\$(?!\$)([\S\s]*?)(?<!\$)\$(?!\$)/g;
+    /(```[\S\s]*?```|`[^\n`]*`)|\$\$([\S\s]*?)\$\$|(?<!\\)(?<!\$)\$(?!\$)([\S\s]*?)(?<!\\)(?<!\$)\$(?!\$)/g;
 
   return text.replaceAll(pattern, (match, code, display, inline) => {
     if (code !== undefined) return code; // preserve code fences/inline code
@@ -84,6 +85,49 @@ export function escapeTextUnderscores(text: string): string {
     const escapedTextContent = textContent.replaceAll(/(?<!\\)_/g, '\\_');
     return `\\text{${escapedTextContent}}`;
   });
+}
+
+/**
+ * Escapes dollar signs that appear to be currency symbols to prevent them from being
+ * interpreted as LaTeX math delimiters.
+ *
+ * This function identifies currency patterns such as:
+ * - $20, $100, $1,000
+ * - $20-50, $100+
+ * - Patterns within markdown tables
+ *
+ * @param text The input string containing potential currency symbols
+ * @returns The string with currency dollar signs escaped
+ */
+export function escapeCurrencyDollars(text: string): string {
+  // Protect code blocks and existing LaTeX expressions from processing
+  const protectedStrings: string[] = [];
+  let content = text.replaceAll(
+    /(```[\S\s]*?```|`[^\n`]*`|\$\$[\S\s]*?\$\$|\\\[[\S\s]*?\\]|\\\(.*?\\\))/g,
+    (match) => {
+      protectedStrings.push(match);
+      return `<<PROTECTED_${protectedStrings.length - 1}>>`;
+    },
+  );
+
+  // Escape dollar signs that are clearly currency:
+  // - $ followed by a digit
+  // - Not preceded by another $ (to avoid breaking $$)
+  // - Followed by number patterns with optional commas, decimals, ranges, or plus signs
+  // Match patterns like: $20, $1,000, $19.99, $20-50, $300+, $1,000-2,000+
+  // In the replacement: \\ = backslash, $$ = literal $, $1 = capture group 1
+  content = content.replaceAll(
+    /(?<!\$)\$(\d{1,3}(?:,\d{3})*(?:\.\d+)?(?:-\d{1,3}(?:,\d{3})*(?:\.\d+)?)?\+?)/g,
+    '\\$$$1',
+  );
+
+  // Restore protected content
+  content = content.replaceAll(
+    /<<PROTECTED_(\d+)>>/g,
+    (_, index) => protectedStrings[Number.parseInt(index)],
+  );
+
+  return content;
 }
 
 /**
@@ -130,6 +174,8 @@ export function preprocessLaTeX(str: string): string {
   let content = str;
 
   // Step 6: Apply additional escaping functions
+  // Escape currency dollar signs FIRST before other LaTeX processing
+  content = escapeCurrencyDollars(content);
   content = convertLatexDelimiters(content);
   content = escapeMhchemCommands(content);
   content = escapeLatexPipes(content);
