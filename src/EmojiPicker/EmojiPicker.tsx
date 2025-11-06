@@ -39,7 +39,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
     customTabs = [],
     popupClassName,
     popupStyle,
-
+    customRender,
     ...rest
   }) => {
     const ref = useRef<HTMLDivElement>(null);
@@ -85,7 +85,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
       ...customTabs.map((tab) => ({ key: tab.value, label: tab.label })),
     ].filter(Boolean) as TabsProps['items'];
 
-    const showTabs = items && items.length > 1;
+    const showTabs = allowDelete || (items && items.length > 1);
 
     const content = (
       <Flexbox
@@ -156,7 +156,11 @@ const EmojiPicker = memo<EmojiPickerProps>(
         rootClassName={styles.popover}
         trigger={['click']}
       >
-        <Avatar avatar={ava} className={cx(styles.root, className)} loading={loading} {...rest} />
+        {customRender ? (
+          customRender(ava)
+        ) : (
+          <Avatar avatar={ava} className={cx(styles.root, className)} loading={loading} {...rest} />
+        )}
       </Popover>
     );
   },
