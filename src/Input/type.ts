@@ -6,6 +6,7 @@ import type {
 import type { OTPProps as AntdOPTProps, OTPRef } from 'antd/es/input/OTP';
 import type { PasswordProps as AntdPasswordProps } from 'antd/es/input/Password';
 import type { TextAreaProps as AntdTextAreaProps, TextAreaRef } from 'antd/es/input/TextArea';
+import type { InputNumberRef } from 'rc-input-number';
 import type { Ref } from 'react';
 
 export interface InputProps extends AntdInputProps {
@@ -20,7 +21,7 @@ export interface TextAreaProps extends AntdTextAreaProps {
 }
 
 export interface InputNumberProps extends AntdInputNumberProps {
-  ref?: Ref<HTMLInputElement>;
+  ref?: Ref<InputNumberRef>;
   shadow?: boolean;
 }
 
