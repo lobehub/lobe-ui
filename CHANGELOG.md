@@ -2,6 +2,32 @@
 
 # Changelog
 
+### [Version 2.13.6](https://github.com/lobehub/lobe-ui/compare/v2.13.5...v2.13.6)
+
+<sup>Released on **2025-11-06**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix allowDelete in EmojoPicker and add customRender, Fix type error.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix allowDelete in EmojoPicker and add customRender ([1681525](https://github.com/lobehub/lobe-ui/commit/1681525))
+- **misc**: Fix type error ([cd5bd59](https://github.com/lobehub/lobe-ui/commit/cd5bd59))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.13.5](https://github.com/lobehub/lobe-ui/compare/v2.13.4...v2.13.5)
 
 <sup>Released on **2025-10-23**</sup>
