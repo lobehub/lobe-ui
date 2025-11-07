@@ -120,7 +120,7 @@
     "katex": "^0.16.25",
     "leva": "^0.10.1",
     "lodash-es": "^4.17.21",
-    "lucide-react": "^0.543.0",
+    "lucide-react": "^0.553.0",
     "marked": "^16.4.1",
     "mermaid": "^11.12.1",
     "numeral": "^2.0.6",
