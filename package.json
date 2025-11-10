@@ -177,7 +177,7 @@
     "antd": "^5.28.0",
     "babel-plugin-antd-style": "^1.0.4",
     "clean-package": "^2.2.0",
-    "commitlint": "^19.8.1",
+    "commitlint": "^20.0.0",
     "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
     "dpdm": "^3.14.0",
