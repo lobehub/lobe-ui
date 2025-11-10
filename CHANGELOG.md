@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.13.8](https://github.com/lobehub/lobe-ui/compare/v2.13.7...v2.13.8)
+
+<sup>Released on **2025-11-10**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update token.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update token ([dc5be47](https://github.com/lobehub/lobe-ui/commit/dc5be47))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.13.7](https://github.com/lobehub/lobe-ui/compare/v2.13.6...v2.13.7)
 
 <sup>Released on **2025-11-10**</sup>
