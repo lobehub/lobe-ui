@@ -21,6 +21,10 @@ description: EmojiPicker is a component that allows users to select emoji icons 
 
 <code src="./demos/CustomTabs.tsx" center></code>
 
+## Controlled
+
+<code src="./demos/Control.tsx" center></code>
+
 ## APIs
 
 | Property       | Description                               | Type                                                    | Default |

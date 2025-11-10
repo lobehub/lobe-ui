@@ -40,12 +40,19 @@ const EmojiPicker = memo<EmojiPickerProps>(
     popupClassName,
     popupStyle,
     customRender,
+    open,
+    defaultOpen = false,
+    onOpenChange,
     ...rest
   }) => {
     const ref = useRef<HTMLDivElement>(null);
-
+    const [visible, setVisible] = useMergeState(defaultOpen, {
+      defaultValue: defaultOpen,
+      onChange: onOpenChange,
+      value: open,
+    });
     const [tab, setTab] = useState<'emoji' | 'upload'>('emoji');
-    const [open, setOpen] = useState(false);
+
     const { cx, styles, theme } = useStyles();
 
     const { data: i18n } = useSWR(
@@ -62,7 +69,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
 
     const handleAvatarChange = (emoji: string) => {
       setAva(emoji);
-      setOpen(false);
+      setVisible(false);
     };
 
     const items: TabsProps['items'] = [
@@ -146,12 +153,12 @@ const EmojiPicker = memo<EmojiPickerProps>(
       <Popover
         arrow={false}
         content={content}
-        destroyTooltipOnHide={true}
+        defaultOpen={defaultOpen}
         onOpenChange={(v) => {
           if (loading) return;
-          setOpen(v);
+          setVisible(v);
         }}
-        open={open}
+        open={visible}
         placement={'bottomRight'}
         rootClassName={styles.popover}
         trigger={['click']}
