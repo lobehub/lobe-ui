@@ -6,9 +6,9 @@ const FONT_CN = `"HarmonyOS Sans SC","PingFang SC","Hiragino Sans GB","Microsoft
 const FONT_CODE = `Hack,ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace`;
 
 export const baseToken: Partial<AliasToken> = {
-  borderRadius: 12,
-  borderRadiusLG: 16,
-  borderRadiusSM: 8,
+  borderRadius: 8,
+  borderRadiusLG: 12,
+  borderRadiusSM: 6,
   borderRadiusXS: 4,
   controlHeight: 36,
   fontFamily: [FONT_EN, FONT_CN, FONT_EMOJI].join(','),
