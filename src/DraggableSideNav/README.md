@@ -9,6 +9,7 @@
 - 🔄 **动态内容**: header、children、footer 可以是函数，根据折叠状态渲染不同内容
 - 🎨 **灵活布局**: 独立定制 header、body、footer 三个区域
 - ⚡ **流畅动画**: 点击折叠 / 展开有平滑的宽度过渡动画
+- ✨ **渐变效果**: 支持 fade 动画，在内容切换时实现平滑过渡
 - 🎛️ **完全控制**: 支持受控和非受控模式
 
 ## 文件结构
@@ -69,23 +70,47 @@ DraggableSideNav 是一个**通用的可拖拽容器**，不绑定任何特定�
 - **折叠状态**: 宽度固定为 `minWidth`（默认 64px）
 - **智能切换**: 拖拽到阈值以下自动折叠，从折叠状态拖拽自动展开
 
+### Fade 渐变动画
+
+使用 framer-motion 为内容切换提供平滑的淡入淡出效果：
+
+- 可以单独控制 header、body、footer 三个区域是否启用 fade 动画
+- 当内容在折叠 / 展开状态之间切换时，fade 动画会创建平滑的视觉过渡
+- 特别适合使用函数动态渲染内容的场景
+
+```tsx
+<DraggableSideNav
+  fade={{
+    header: true, // header 启用 fade 动画
+    body: false, // body 不使用 fade
+    footer: true, // footer 启用 fade 动画
+  }}
+  header={(collapsed) => (collapsed ? <CompactHeader /> : <FullHeader />)}
+  footer={(collapsed) => (collapsed ? <CompactFooter /> : <FullFooter />)}
+>
+  {(collapsed) => <Menu inlineCollapsed={collapsed} />}
+</DraggableSideNav>
+```
+
 ## 主要属性
 
 ### DraggableSideNavProps
 
-| 属性                | 说明                   | 类型                                               | 默认值   |
-| ------------------- | ---------------------- | -------------------------------------------------- | -------- |
-| `children`          | 主体内容（必需）       | `ReactNode \| ((collapsed: boolean) => ReactNode)` | -        |
-| `header`            | 头部内容               | `ReactNode \| ((collapsed: boolean) => ReactNode)` | -        |
-| `footer`            | 底部内容               | `ReactNode \| ((collapsed: boolean) => ReactNode)` | -        |
-| `collapsed`         | 折叠状态（受控）       | `boolean`                                          | -        |
-| `defaultCollapsed`  | 默认折叠状态（非受控） | `boolean`                                          | `false`  |
-| `onCollapsedChange` | 折叠状态变化回调       | `(collapsed: boolean) => void`                     | -        |
-| `minWidth`          | 最小宽度，也是折叠宽度 | `number`                                           | `64`     |
-| `maxWidth`          | 最大宽度               | `number`                                           | -        |
-| `placement`         | 放置位置               | `'left' \| 'right'`                                | `'left'` |
-| `resizable`         | 是否可拖拽调整         | `boolean`                                          | `true`   |
-| `showHandle`        | 是否显示切换按钮       | `boolean`                                          | `true`   |
+| 属性                      | 说明                   | 类型                                                     | 默认值   |
+| ------------------------- | ---------------------- | -------------------------------------------------------- | -------- |
+| `children`                | 主体内容（必需）       | `ReactNode \| ((collapsed: boolean) => ReactNode)`       | -        |
+| `header`                  | 头部内容               | `ReactNode \| ((collapsed: boolean) => ReactNode)`       | -        |
+| `footer`                  | 底部内容               | `ReactNode \| ((collapsed: boolean) => ReactNode)`       | -        |
+| `collapsed`               | 折叠状态（受控）       | `boolean`                                                | -        |
+| `defaultCollapsed`        | 默认折叠状态（非受控） | `boolean`                                                | `false`  |
+| `onCollapsedChange`       | 折叠状态变化回调       | `(collapsed: boolean) => void`                           | -        |
+| `minWidth`                | 最小宽度，也是折叠宽度 | `number`                                                 | `64`     |
+| `maxWidth`                | 最大宽度               | `number`                                                 | -        |
+| `placement`               | 放置位置               | `'left' \| 'right'`                                      | `'left'` |
+| `resizable`               | 是否可拖拽调整         | `boolean`                                                | `true`   |
+| `showHandle`              | 是否显示切换按钮       | `boolean`                                                | `true`   |
+| `showHandleWhenCollapsed` | 折叠时是否显示切换按钮 | `boolean`                                                | `false`  |
+| `fade`                    | 渐变动画配置           | `{ header?: boolean, body?: boolean, footer?: boolean }` | -        |
 
 ## 使用示例
 
@@ -145,6 +170,7 @@ const items = (collapsed) => [
 - 使用 `re-resizable` 实现拖拽调整大小
 - 使用 `use-merge-value` 实现受控 / 非受控状态管理
 - 使用 `antd-style` 进行样式管理
+- 使用 `framer-motion` 实现 fade 渐变动画
 - 支持函数式 props，根据折叠状态动态渲染内容
 - 智能阈值计算，自动触发折叠 / 展开
 
@@ -153,6 +179,7 @@ const items = (collapsed) => [
 - `re-resizable`: 拖拽调整大小
 - `use-merge-value`: 状态管理
 - `react-layout-kit`: 布局组件
+- `framer-motion`: 动画库（用于 fade 效果）
 - `lucide-react`: 图标（仅用于切换按钮）
 
 ## 注意事项
@@ -166,5 +193,9 @@ const items = (collapsed) => [
    - 拖拽宽度小于阈值时自动折叠到 `minWidth`
    - 从折叠状态拖拽出来时自动展开
 6. **平滑动画**：点击 handle 切换折叠 / 展开时有 300ms 的宽度过渡动画
-7. Demo 中使用 Menu 只是一个示例，你可以放置任何内容
-8. 使用函数式 props 可以根据折叠状态渲染完全不同的内容
+7. **Fade 动画**：
+   - 启用 `fade` 配置后，内容切换时会有淡入淡出效果
+   - 可以单独控制 header、body、footer 是否使用 fade
+   - 特别适合函数式 props 渲染不同内容的场景
+8. Demo 中使用 Menu 只是一个示例，你可以放置任何内容
+9. 使用函数式 props 可以根据折叠状态渲染完全不同的内容

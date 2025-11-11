@@ -1,10 +1,4 @@
-import {
-  ActionIcon,
-  Avatar,
-  DraggableSideNav,
-  type DraggableSideNavProps,
-  Menu,
-} from '@lobehub/ui';
+import { ActionIcon, Avatar, DraggableSideNav, Menu } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { HelpCircle, Plus, Search, Settings2, User } from 'lucide-react';
 import { useState } from 'react';
@@ -18,39 +12,64 @@ export default () => {
 
   const control = useControls(
     {
-      defaultCollapsed: false,
-      maxWidth: {
+      'defaultCollapsed': false,
+      'fade.body': false,
+      'fade.footer': true,
+      'fade.header': true,
+      'maxWidth': {
         step: 1,
         value: 400,
       },
-      minWidth: {
+      'minWidth': {
         max: 200,
         min: 48,
         step: 1,
         value: 64,
       },
-      placement: {
+      'placement': {
         options: ['left', 'right'],
         value: 'left',
       },
-      resizable: true,
-      showHandle: true,
-      showHandleWhenCollapsed: false,
-      withAvatar: true,
-      withCustomRender: false,
+      'resizable': true,
+      'showHandle': true,
+      'showHandleWhenCollapsed': false,
+      'withAvatar': true,
+      'withCustomRender': false,
     },
     { store },
   );
 
-  const { withAvatar, withCustomRender, ...draggableProps } = control;
+  const {
+    withAvatar,
+    withCustomRender,
+    'fade.body': fadeBody,
+    'fade.footer': fadeFooter,
+    'fade.header': fadeHeader,
+    placement,
+    ...draggableProps
+  } = control;
+
+  // Transform fade controls to fade object
+  const fade = {
+    body: fadeBody,
+    footer: fadeFooter,
+    header: fadeHeader,
+  };
+
+  // Type-safe props
+  const sideNavProps = {
+    ...draggableProps,
+    fade,
+    placement: placement as 'left' | 'right',
+  };
 
   return (
     <StoryBook levaStore={store} noPadding>
       <Flexbox height={'100%'} horizontal width={'100%'}>
-        {control.placement === 'left' ? (
+        {placement === 'left' ? (
           <>
             <DraggableSideNav
-              {...(draggableProps as DraggableSideNavProps)}
+              {...sideNavProps}
               footer={(collapsed) =>
                 collapsed ? (
                   <Flexbox align="center" gap={8}>
@@ -156,7 +175,7 @@ export default () => {
               </div>
             </Flexbox>
             <DraggableSideNav
-              {...(draggableProps as DraggableSideNavProps)}
+              {...sideNavProps}
               footer={(collapsed) =>
                 collapsed ? (
                   <ActionIcon icon={Settings2} title="Settings" />

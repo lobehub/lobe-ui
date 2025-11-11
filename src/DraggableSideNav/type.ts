@@ -34,6 +34,15 @@ export interface DraggableSideNavProps extends Omit<DivProps, 'children' | 'onSe
    */
   defaultSize?: Partial<Size>;
   /**
+   * Fade animation configuration for each section
+   * @default { header: false, body: false, footer: false }
+   */
+  fade?: {
+    body?: boolean;
+    footer?: boolean;
+    header?: boolean;
+  };
+  /**
    * Footer content
    * Can be a static element or a function that receives collapsed state
    */

@@ -1,9 +1,10 @@
 'use client';
 
 import { useHover } from 'ahooks';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Resizable } from 're-resizable';
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { type ReactNode, memo, useEffect, useMemo, useRef, useState } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
@@ -15,6 +16,50 @@ import type { DraggableSideNavProps } from './type';
 const DEFAULT_MIN_WIDTH = 64; // 最小宽度即折叠宽度
 const DEFAULT_COLLAPSED = false;
 const DEFAULT_EXPANDED_WIDTH = 280;
+
+// Fade animation variants
+const fadeVariants = {
+  enter: {
+    opacity: 1,
+    transition: {
+      duration: 0.2,
+      ease: [0.4, 0, 0.2, 1] as const,
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.15,
+      ease: [0.4, 0, 1, 1] as const,
+    },
+  },
+};
+
+// Wrapper component for fade animation
+const FadeWrapper = memo<{
+  children: ReactNode;
+  collapsed: boolean;
+  enabled?: boolean;
+  id: string;
+}>(({ children, collapsed, enabled, id }) => {
+  if (!enabled) return children;
+
+  return (
+    <AnimatePresence initial={false} mode="wait">
+      <motion.div
+        animate="enter"
+        exit="exit"
+        initial="exit"
+        key={`${id}-${collapsed ? 'collapsed' : 'expanded'}`}
+        variants={fadeVariants}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
+  );
+});
+
+FadeWrapper.displayName = 'FadeWrapper';
 
 const DraggableSideNav = memo<DraggableSideNavProps>(
   ({
@@ -37,6 +82,7 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
     showHandle = true,
     showHandleWhenCollapsed = false,
     placement = 'left',
+    fade,
     ...rest
   }) => {
     const { styles, cx } = useStyles();
@@ -278,15 +324,21 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
           >
             {currentHeader && (
               <div className={cx(styles.header, classNames?.header)} style={customStyles?.header}>
-                {currentHeader}
+                <FadeWrapper collapsed={isCollapsed} enabled={fade?.header} id="header">
+                  {currentHeader}
+                </FadeWrapper>
               </div>
             )}
             <div className={cx(styles.body, classNames?.body)} style={customStyles?.body}>
-              {currentChildren}
+              <FadeWrapper collapsed={isCollapsed} enabled={fade?.body} id="body">
+                {currentChildren}
+              </FadeWrapper>
             </div>
             {currentFooter && (
               <div className={cx(styles.footer, classNames?.footer)} style={customStyles?.footer}>
-                {currentFooter}
+                <FadeWrapper collapsed={isCollapsed} enabled={fade?.footer} id="footer">
+                  {currentFooter}
+                </FadeWrapper>
               </div>
             )}
           </Flexbox>
