@@ -30,6 +30,7 @@ export {
   type DraggablePanelHeaderProps,
   type DraggablePanelProps,
 } from './DraggablePanel';
+export { default as DraggableSideNav, type DraggableSideNavProps } from './DraggableSideNav';
 export { default as Drawer, type DrawerProps } from './Drawer';
 export { default as Dropdown, type DropdownMenuItemType, type DropdownProps } from './Dropdown';
 export { default as EditableText, type EditableTextProps } from './EditableText';
