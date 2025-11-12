@@ -1,3 +1,9 @@
+export {
+  Accordion,
+  AccordionItem,
+  type AccordionItemProps,
+  type AccordionProps,
+} from './Accordion';
 export { default as ActionIcon, type ActionIconProps, type ActionIconSize } from './ActionIcon';
 export {
   default as ActionIconGroup,

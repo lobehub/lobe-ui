@@ -28,11 +28,6 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         color: ${token.colorText};
         background: ${token.colorFill};
       }
-
-      &:active {
-        color: ${token.colorText};
-        background: ${isDarkMode ? token.colorFillSecondary : token.colorFill};
-      }
     `,
     blur: css`
       backdrop-filter: saturate(150%) blur(10px);
@@ -47,8 +42,8 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         background-color: transparent;
 
         &-thumb {
-          background-color: ${token.colorFill};
           border-radius: 4px;
+          background-color: ${token.colorFill};
           transition: background-color 500ms ${token.motionEaseOut};
         }
 
@@ -64,6 +59,7 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       opacity: 0.5;
     `,
     gradientAnimation: css`
+      border-radius: inherit;
       background-image: linear-gradient(
         -45deg,
         ${token.gold},
@@ -72,7 +68,6 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         ${token.cyan}
       );
       background-size: 400% 400%;
-      border-radius: inherit;
       animation: 5s ${gradient} 5s ease infinite;
     `,
     noScrollbar: css`
@@ -99,37 +94,27 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
         0 3px 6px -4px ${isDarkMode ? token.colorBgLayout : token.colorBorderSecondary};
     `,
     variantBorderless: css`
-      background: none;
       border: none;
+      background: none;
       box-shadow: none;
 
       &:hover {
         background: ${token.colorFillTertiary};
       }
-
-      &:active {
-        background: ${isDarkMode ? token.colorFillQuaternary : token.colorFillSecondary};
-      }
     `,
     variantBorderlessDanger: css`
-      background: none;
       border: none;
+      background: none;
       box-shadow: none;
 
       &:hover {
         background: ${token.colorErrorFillTertiary};
         box-shadow: inset 0 0 0 1px ${token.colorErrorFillTertiary};
       }
-
-      &:active {
-        background: ${isDarkMode ? token.colorErrorFillQuaternary : token.colorErrorFillSecondary};
-        box-shadow: inset 0 0 0 1px
-          ${isDarkMode ? token.colorErrorFillQuaternary : token.colorErrorFillSecondary};
-      }
     `,
     variantBorderlessWithoutHover: css`
-      background: none;
       border: none;
+      background: none;
       box-shadow: none;
     `,
     variantFilled: css`
@@ -138,10 +123,6 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       &:hover {
         background: ${token.colorFillSecondary};
       }
-
-      &:active {
-        background: ${isDarkMode ? token.colorFillTertiary : token.colorFill};
-      }
     `,
     variantFilledDanger: css`
       background: ${token.colorErrorFillTertiary};
@@ -149,26 +130,17 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       &:hover {
         background: ${token.colorErrorFillSecondary};
       }
-
-      &:active {
-        background: ${isDarkMode ? token.colorErrorFillTertiary : token.colorErrorFill};
-      }
     `,
     variantFilledWithoutHover: css`
       background: ${token.colorFillTertiary};
     `,
     variantOutlined: css`
-      background: ${token.colorBgContainer};
       border: 1px solid ${token.colorBorderSecondary};
+      background: ${token.colorBgContainer};
 
       &:hover {
-        background: ${token.colorBgContainer};
         border: 1px solid ${token.colorBorder};
-      }
-
-      &:active {
         background: ${token.colorBgContainer};
-        border: 1px solid ${token.colorBorder};
       }
     `,
 
@@ -178,14 +150,10 @@ export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
       &:hover {
         border: 1px solid ${token.colorErrorBorder};
       }
-
-      &:active {
-        border: 1px solid ${token.colorErrorBorder};
-      }
     `,
     variantOutlinedWithoutHover: css`
-      background: ${token.colorBgContainer};
       border: 1px solid ${token.colorBorderSecondary};
+      background: ${token.colorBgContainer};
     `,
   };
 };
