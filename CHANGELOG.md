@@ -2,6 +2,32 @@
 
 # Changelog
 
+### [Version 2.15.2](https://github.com/lobehub/lobe-ui/compare/v2.15.1...v2.15.2)
+
+<sup>Released on **2025-11-12**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Draggable panel handler style, Update DraggableSideNav animation.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Draggable panel handler style ([43251c6](https://github.com/lobehub/lobe-ui/commit/43251c6))
+- **misc**: Update DraggableSideNav animation ([2d2e97b](https://github.com/lobehub/lobe-ui/commit/2d2e97b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.15.1](https://github.com/lobehub/lobe-ui/compare/v2.15.0...v2.15.1)
 
 <sup>Released on **2025-11-12**</sup>
