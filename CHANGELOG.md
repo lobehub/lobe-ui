@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.15.3](https://github.com/lobehub/lobe-ui/compare/v2.15.2...v2.15.3)
+
+<sup>Released on **2025-11-12**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix DraggableSideNav width control.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix DraggableSideNav width control ([4574554](https://github.com/lobehub/lobe-ui/commit/4574554))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.15.2](https://github.com/lobehub/lobe-ui/compare/v2.15.1...v2.15.2)
 
 <sup>Released on **2025-11-12**</sup>
