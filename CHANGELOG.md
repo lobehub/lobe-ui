@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.15.0](https://github.com/lobehub/lobe-ui/compare/v2.14.0...v2.15.0)
+
+<sup>Released on **2025-11-12**</sup>
+
+#### ✨ Features
+
+- **misc**: Add Accordion.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add Accordion ([ba97d9b](https://github.com/lobehub/lobe-ui/commit/ba97d9b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.14.0](https://github.com/lobehub/lobe-ui/compare/v2.13.8...v2.14.0)
 
 <sup>Released on **2025-11-12**</sup>
