@@ -7,6 +7,7 @@ import type { DivProps } from '@/types';
 type PlacementType = 'right' | 'left' | 'top' | 'bottom';
 
 export interface DraggablePanelProps extends DivProps {
+  backgroundColor?: string;
   classNames?: {
     content?: string;
     handle?: string;

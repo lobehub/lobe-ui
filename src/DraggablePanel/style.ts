@@ -3,18 +3,24 @@ import { createStyles, css, cx } from 'antd-style';
 // Layout constants
 const LAYOUT = {
   offset: 16,
-  toggleLength: 40,
+  toggleLength: 54,
   toggleShort: 16,
 };
 
 export const useStyles = createStyles(
   (
-    { prefixCls, token, stylish },
+    { prefixCls, token },
     {
+      backgroundColor,
       headerHeight,
       showBorder,
       showHandleWideArea,
-    }: { headerHeight: number; showBorder: boolean; showHandleWideArea: boolean },
+    }: {
+      backgroundColor?: string;
+      headerHeight: number;
+      showBorder: boolean;
+      showHandleWideArea: boolean;
+    },
   ) => {
     const prefix = `${prefixCls}-draggable-panel`;
 
@@ -82,7 +88,6 @@ export const useStyles = createStyles(
       &::before {
         content: '';
         position: absolute;
-        z-index: 50;
         transition: all 0.2s ${token.motionEaseOut};
       }
     `;
@@ -153,7 +158,7 @@ export const useStyles = createStyles(
         pointer-events: ${showHandleWideArea ? 'all' : 'none'};
 
         position: absolute;
-        z-index: 10;
+        z-index: 50;
 
         opacity: 0;
 
@@ -165,13 +170,17 @@ export const useStyles = createStyles(
         }
 
         > div {
-          ${stylish.variantFilled};
           pointer-events: all;
           cursor: pointer;
 
           position: absolute;
 
+          border: 1px solid ${token.colorBorder};
+
           color: ${token.colorTextTertiary};
+
+          background: ${backgroundColor || token.colorBgLayout};
+          backdrop-filter: blur(8px);
 
           transition: all 0.2s ${token.motionEaseOut};
 
@@ -199,8 +208,9 @@ export const useStyles = createStyles(
 
             width: ${LAYOUT.toggleLength}px;
             height: ${LAYOUT.toggleShort}px;
-            margin-inline-start: -20px;
-            border-radius: 0 0 4px 4px;
+            margin-inline-start: -27px;
+            border-block-start-width: 0;
+            border-radius: 0 0 ${token.borderRadiusLG}px ${token.borderRadiusLG}px;
           }
         `,
       ),
@@ -216,8 +226,9 @@ export const useStyles = createStyles(
 
             width: ${LAYOUT.toggleShort}px;
             height: ${LAYOUT.toggleLength}px;
-            margin-block-start: -20px;
-            border-radius: 4px 0 0 4px;
+            margin-block-start: -27px;
+            border-inline-end-width: 0;
+            border-radius: ${token.borderRadiusLG}px 0 0 ${token.borderRadiusLG}px;
           }
         `,
       ),
@@ -233,8 +244,9 @@ export const useStyles = createStyles(
 
             width: ${LAYOUT.toggleShort}px;
             height: ${LAYOUT.toggleLength}px;
-            margin-block-start: -20px;
-            border-radius: 0 4px 4px 0;
+            margin-block-start: -27px;
+            border-inline-start-width: 0;
+            border-radius: 0 ${token.borderRadiusLG}px ${token.borderRadiusLG}px 0;
           }
         `,
       ),
@@ -251,8 +263,9 @@ export const useStyles = createStyles(
 
             width: ${LAYOUT.toggleLength}px;
             height: ${LAYOUT.toggleShort}px;
-            margin-inline-start: -20px;
-            border-radius: 4px 4px 0 0;
+            margin-inline-start: -27px;
+            border-block-end-width: 0;
+            border-radius: ${token.borderRadiusLG}px ${token.borderRadiusLG}px 0 0;
           }
         `,
       ),
@@ -280,6 +293,7 @@ export const useStyles = createStyles(
         `${prefix}-fixed`,
         css`
           overflow: hidden;
+          background: ${backgroundColor || token.colorBgLayout};
           transition: all 0.2s ${token.motionEaseOut};
         `,
       ),

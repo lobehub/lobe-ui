@@ -38,6 +38,7 @@ export interface DraggableSideNavProps extends Omit<DivProps, 'children' | 'onSe
          */
         header?: boolean;
       };
+  backgroundColor?: string;
   /**
    * Body content (main content area)
    * Can be a static element or a function that receives expand state
@@ -144,6 +145,7 @@ export interface DraggableSideNavProps extends Omit<DivProps, 'children' | 'onSe
     handle?: CSSProperties;
     header?: CSSProperties;
   };
+
   /**
    * Current width (controlled)
    */

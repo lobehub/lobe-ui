@@ -40,6 +40,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     showBorder = true,
     showHandleHighlight = false,
     showHandleWideArea = DEFAULT_SHOW_HANDLE_WIDE_AREA,
+    backgroundColor,
     size,
     defaultSize: customizeDefaultSize,
     minWidth,
@@ -75,7 +76,12 @@ const DraggablePanel = memo<DraggablePanelProps>(
         : placement;
     }, [direction, placement]);
 
-    const { styles, cx } = useStyles({ headerHeight, showBorder, showHandleWideArea });
+    const { styles, cx } = useStyles({
+      backgroundColor,
+      headerHeight,
+      showBorder,
+      showHandleWideArea,
+    });
 
     const [isExpand, setIsExpand] = useControlledState(defaultExpand, {
       onChange: onExpandChange,
@@ -260,7 +266,13 @@ const DraggablePanel = memo<DraggablePanelProps>(
             className={styles.handlerIcon}
             icon={Arrow}
             size={16}
-            style={{ transform: `rotate(${isExpand ? 180 : 0}deg)` }}
+            style={{
+              marginBottom: internalPlacement === 'top' ? 4 : 0,
+              marginLeft: internalPlacement === 'right' ? 4 : 0,
+              marginRight: internalPlacement === 'left' ? 4 : 0,
+              marginTop: internalPlacement === 'bottom' ? 4 : 0,
+              transform: `rotate(${isExpand ? 180 : 0}deg)`,
+            }}
           />
         </Center>
       </Center>

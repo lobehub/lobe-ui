@@ -3,12 +3,15 @@ import { createStyles } from 'antd-style';
 // Layout constants (aligned with DraggablePanel)
 const LAYOUT = {
   offset: 16,
-  toggleLength: 40,
+  toggleLength: 54,
   toggleShort: 16,
 };
 
 export const useStyles = createStyles(
-  ({ css, token, stylish, prefixCls }, { showBorder }: { showBorder: boolean }) => ({
+  (
+    { css, token, prefixCls },
+    { showBorder, backgroundColor }: { backgroundColor?: string; showBorder: boolean },
+  ) => ({
     body: css`
       /* Smooth scroll behavior */
       scroll-behavior: smooth;
@@ -54,7 +57,7 @@ export const useStyles = createStyles(
       height: 100%;
       border-inline-end: ${showBorder ? '1px' : '0'} solid ${token.colorBorderSecondary};
 
-      background: ${token.colorBgLayout};
+      background: ${backgroundColor || token.colorBgLayout};
     `,
     footer: css`
       flex-shrink: 0;
@@ -134,7 +137,6 @@ export const useStyles = createStyles(
       cursor: col-resize;
 
       position: absolute;
-      z-index: 50;
       inset-block: 0 0;
 
       width: 8px;
@@ -188,7 +190,8 @@ export const useStyles = createStyles(
         width: ${LAYOUT.toggleShort}px;
         height: ${LAYOUT.toggleLength}px;
         margin-block-start: -${LAYOUT.toggleLength / 2}px;
-        border-radius: 0 4px 4px 0; /* 左侧面板，handle 在右边，右侧圆角 */
+        border-inline-start-width: 0;
+        border-radius: 0 ${token.borderRadiusLG}px ${token.borderRadiusLG}px 0;
       }
     `,
     toggleRight: css`
@@ -202,12 +205,14 @@ export const useStyles = createStyles(
         width: ${LAYOUT.toggleShort}px;
         height: ${LAYOUT.toggleLength}px;
         margin-block-start: -${LAYOUT.toggleLength / 2}px;
-        border-radius: 4px 0 0 4px; /* 右侧面板，handle 在左边，左侧圆角 */
+        border-inline-end-width: 0;
+        border-radius: ${token.borderRadiusLG}px 0 0 ${token.borderRadiusLG}px; /* 右侧面板，handle 在左边，左侧圆角 */
       }
     `,
     toggleRoot: css`
       pointer-events: none;
       position: absolute;
+      z-index: 50;
 
       /* Smooth transitions for all states */
       transition: opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1);
@@ -217,13 +222,17 @@ export const useStyles = createStyles(
       }
 
       > div {
-        ${stylish.variantFilled};
         pointer-events: all;
         cursor: pointer;
 
         position: absolute;
 
+        border: 1px solid ${token.colorBorder};
+
         color: ${token.colorTextTertiary};
+
+        background: ${backgroundColor || token.colorBgLayout};
+        backdrop-filter: blur(8px);
 
         /* Enhanced transitions with backdrop blur */
         transition:
@@ -231,13 +240,8 @@ export const useStyles = createStyles(
           transform 0.2s ${token.motionEaseOut},
           box-shadow 0.2s ${token.motionEaseOut};
 
-        backdrop-filter: blur(8px);
-
         &:hover {
           color: ${token.colorTextSecondary};
-          box-shadow:
-            0 2px 8px rgba(0, 0, 0, 8%),
-            0 0 0 1px ${token.colorBorderSecondary};
         }
 
         &:active {

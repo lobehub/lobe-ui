@@ -98,11 +98,12 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
     showHandle = true,
     showHandleWhenCollapsed = false,
     showHandleHighlight = false,
+    backgroundColor,
     styles: customStyles,
     width,
     ...rest
   }) => {
-    const { styles, cx } = useStyles({ showBorder });
+    const { styles, cx } = useStyles({ backgroundColor, showBorder });
     const ref = useRef<HTMLDivElement>(null);
     const isHovering = useHover(ref);
 
@@ -308,6 +309,10 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
         >
           <motion.div
             animate={{ rotate: isExpand ? 0 : 180 }}
+            style={{
+              marginLeft: placement === 'right' ? 4 : 0,
+              marginRight: placement === 'left' ? 4 : 0,
+            }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
           >
             <Icon className={styles.handlerIcon} icon={ArrowIcon} size={16} />
