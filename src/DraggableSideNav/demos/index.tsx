@@ -18,7 +18,11 @@ export default () => {
       'animation.fade': false,
       'animation.footer': false,
       'animation.header': false,
-      'defaultCollapsed': false,
+      'defaultExpand': true,
+      'defaultWidth': {
+        step: 1,
+        value: 280,
+      },
       'maxWidth': {
         step: 1,
         value: 320,
@@ -66,14 +70,12 @@ export default () => {
       <Flexbox height={'100%'} horizontal width={'100%'}>
         <DraggableSideNav
           {...sideNavProps}
-          footer={(collapsed) => <DemoFooter collapsed={collapsed} />}
-          header={(collapsed) => (
-            <DemoHeader activeKey={activeKey} collapsed={collapsed} onSelect={setActiveKey} />
+          footer={(expand) => <DemoFooter expand={expand} />}
+          header={(expand) => (
+            <DemoHeader activeKey={activeKey} expand={expand} onSelect={setActiveKey} />
           )}
         >
-          {(collapsed) => (
-            <DemoBody activeKey={activeKey} collapsed={collapsed} onSelect={setActiveKey} />
-          )}
+          {(expand) => <DemoBody activeKey={activeKey} expand={expand} onSelect={setActiveKey} />}
         </DraggableSideNav>
 
         <Flexbox flex={1} gap={16} padding={24}>

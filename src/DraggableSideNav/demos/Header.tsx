@@ -5,9 +5,9 @@ import { Flexbox } from 'react-layout-kit';
 
 export const DemoHeader: FC<{
   activeKey: string;
-  collapsed: boolean;
+  expand: boolean;
   onSelect: (key: string) => void;
-}> = ({ activeKey, collapsed, onSelect }) => {
+}> = ({ activeKey, expand, onSelect }) => {
   const mainItems: MenuItemType[] = [
     {
       icon: Home,
@@ -43,7 +43,7 @@ export const DemoHeader: FC<{
           shape="square"
           size={36}
         />
-        {!collapsed && (
+        {expand && (
           <>
             <Flexbox
               flex={1}
@@ -58,7 +58,7 @@ export const DemoHeader: FC<{
         )}
       </Flexbox>
       <Menu
-        inlineCollapsed={collapsed}
+        inlineCollapsed={!expand}
         items={mainItems}
         mode={'inline'}
         onSelect={({ key }) => {

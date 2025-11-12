@@ -7,9 +7,9 @@ import { agents } from './data';
 
 export const DemoBody: FC<{
   activeKey: string;
-  collapsed: boolean;
+  expand: boolean;
   onSelect: (key: string) => void;
-}> = ({ activeKey, collapsed, onSelect }) => {
+}> = ({ activeKey, expand, onSelect }) => {
   // 主导航项
 
   // 项目相关项
@@ -45,11 +45,10 @@ export const DemoBody: FC<{
     ),
   }));
 
-  // 根据折叠状态决定是否显示分组标题和分隔符
+  // 根据展开状态决定是否显示分组标题和分隔符
   // @ts-ignore
-  const items = collapsed
-    ? [...projectItems, ...agentItems]
-    : ([
+  const items = expand
+    ? ([
         {
           children: projectItems,
           key: 'projects-group',
@@ -63,12 +62,13 @@ export const DemoBody: FC<{
           label: 'Agents',
           type: 'group',
         },
-      ] as any);
+      ] as any)
+    : [...projectItems, ...agentItems];
 
   return (
     <Flexbox style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
       <Menu
-        inlineCollapsed={collapsed}
+        inlineCollapsed={!expand}
         items={items}
         mode={'inline'}
         onSelect={({ key }) => {

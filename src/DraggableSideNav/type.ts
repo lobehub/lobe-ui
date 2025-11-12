@@ -1,4 +1,4 @@
-import type { NumberSize, Size } from 're-resizable';
+import type { NumberSize } from 're-resizable';
 import type { CSSProperties, ReactNode } from 'react';
 
 import type { DivProps } from '@/types';
@@ -6,40 +6,43 @@ import type { DivProps } from '@/types';
 export interface DraggableSideNavProps extends Omit<DivProps, 'children' | 'onSelect'> {
   /**
    * Animation configuration for content transitions
-   * @default { fade: true, blur: false, header: false, body: false, footer: false }
+   * Set to false to disable all animations
+   * @default undefined
    */
-  animation?: {
-    /**
-     * Enable blur effect during transitions
-     * @default false
-     */
-    blur?: boolean;
-    /**
-     * Enable animation for body section
-     * @default false
-     */
-    body?: boolean;
-    /**
-     * Enable fade effect during transitions
-     * @default true
-     */
-    fade?: boolean;
-    /**
-     * Enable animation for footer section
-     * @default false
-     */
-    footer?: boolean;
-    /**
-     * Enable animation for header section
-     * @default false
-     */
-    header?: boolean;
-  };
+  animation?:
+    | false
+    | {
+        /**
+         * Enable blur effect during transitions
+         * @default false
+         */
+        blur?: boolean;
+        /**
+         * Enable animation for body section
+         * @default false
+         */
+        body?: boolean;
+        /**
+         * Enable fade effect during transitions
+         * @default true
+         */
+        fade?: boolean;
+        /**
+         * Enable animation for footer section
+         * @default false
+         */
+        footer?: boolean;
+        /**
+         * Enable animation for header section
+         * @default false
+         */
+        header?: boolean;
+      };
   /**
    * Body content (main content area)
-   * Can be a static element or a function that receives collapsed state
+   * Can be a static element or a function that receives expand state
    */
-  children: ReactNode | ((collapsed: boolean) => ReactNode);
+  children: ReactNode | ((expand: boolean) => ReactNode);
   /**
    * Classnames for internal components
    */
@@ -52,28 +55,33 @@ export interface DraggableSideNavProps extends Omit<DivProps, 'children' | 'onSe
     header?: string;
   };
   /**
-   * Whether the panel is collapsed (controlled)
+   * Whether the panel is expanded by default
+   * @default true
    */
-  collapsed?: boolean;
+  defaultExpand?: boolean;
   /**
-   * Whether the panel is collapsed by default
-   * @default false
+   * Default width (number format)
    */
-  defaultCollapsed?: boolean;
+  defaultWidth?: number;
   /**
-   * Default width when expanded
+   * Whether the panel is expanded (controlled)
    */
-  defaultSize?: Partial<Size>;
+  expand?: boolean;
+  /**
+   * Whether the panel can be expanded/collapsed
+   * @default true
+   */
+  expandable?: boolean;
   /**
    * Footer content
-   * Can be a static element or a function that receives collapsed state
+   * Can be a static element or a function that receives expand state
    */
-  footer?: ReactNode | ((collapsed: boolean) => ReactNode);
+  footer?: ReactNode | ((expand: boolean) => ReactNode);
   /**
    * Header content
-   * Can be a static element or a function that receives collapsed state
+   * Can be a static element or a function that receives expand state
    */
-  header?: ReactNode | ((collapsed: boolean) => ReactNode);
+  header?: ReactNode | ((expand: boolean) => ReactNode);
   /**
    * Maximum width
    */
@@ -84,21 +92,21 @@ export interface DraggableSideNavProps extends Omit<DivProps, 'children' | 'onSe
    */
   minWidth?: number;
   /**
-   * Callback when collapse state changes
+   * Callback when expand state changes
    */
-  onCollapsedChange?: (collapsed: boolean) => void;
+  onExpandChange?: (expand: boolean) => void;
   /**
    * Callback when menu item is selected
    */
   onSelect?: (key: string) => void;
   /**
-   * Callback when size changes
+   * Callback when width changes
    */
-  onSizeChange?: (delta: NumberSize, size?: Size) => void;
+  onWidthChange?: (delta: NumberSize, width: number) => void;
   /**
-   * Callback when actively resizing
+   * Callback when actively resizing width
    */
-  onSizeDragging?: (delta: NumberSize, size?: Size) => void;
+  onWidthDragging?: (delta: NumberSize, width: number) => void;
   /**
    * Placement of the side nav
    * @default 'left'
@@ -126,10 +134,6 @@ export interface DraggableSideNavProps extends Omit<DivProps, 'children' | 'onSe
    */
   showHandleWhenCollapsed?: boolean;
   /**
-   * Current size (controlled)
-   */
-  size?: Partial<Size>;
-  /**
    * Custom styles
    */
   styles?: {
@@ -140,4 +144,8 @@ export interface DraggableSideNavProps extends Omit<DivProps, 'children' | 'onSe
     handle?: CSSProperties;
     header?: CSSProperties;
   };
+  /**
+   * Current width (controlled)
+   */
+  width?: number;
 }
