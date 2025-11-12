@@ -11,6 +11,7 @@ export const useStyles = createStyles(({ stylish, css, token, prefixCls }) => {
     `,
     outlined: stylish.variantOutlinedWithoutHover,
     root: css`
+      flex: none;
       background: transparent;
       &.${prefixCls}-avatar {
         user-select: none;

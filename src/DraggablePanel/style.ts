@@ -10,23 +10,27 @@ const LAYOUT = {
 export const useStyles = createStyles(
   (
     { prefixCls, token, stylish },
-    { headerHeight, showHandleWideArea }: { headerHeight: number; showHandleWideArea: boolean },
+    {
+      headerHeight,
+      showBorder,
+      showHandleWideArea,
+    }: { headerHeight: number; showBorder: boolean; showHandleWideArea: boolean },
   ) => {
     const prefix = `${prefixCls}-draggable-panel`;
 
     // Base styles
     const borderStyles = {
       borderBottom: css`
-        border-block-end-width: 1px;
+        border-block-end-width: ${showBorder ? '1px' : '0'};
       `,
       borderLeft: css`
-        border-inline-start-width: 1px;
+        border-inline-start-width: ${showBorder ? '1px' : '0'};
       `,
       borderRight: css`
-        border-inline-end-width: 1px;
+        border-inline-end-width: ${showBorder ? '1px' : '0'};
       `,
       borderTop: css`
-        border-block-start-width: 1px;
+        border-block-start-width: ${showBorder ? '1px' : '0'};
       `,
     };
 
@@ -81,8 +85,16 @@ export const useStyles = createStyles(
         z-index: 50;
         transition: all 0.2s ${token.motionEaseOut};
       }
+    `;
 
-      &:hover,
+    const handleHighlightStyle = css`
+      &:hover {
+        &::before {
+          background: ${token.colorPrimary};
+          box-shadow: 0 0 8px ${token.colorPrimary}40;
+        }
+      }
+
       &:active {
         &::before {
           background: ${token.colorPrimary} !important;
@@ -290,6 +302,7 @@ export const useStyles = createStyles(
       ...borderStyles,
       ...floatPositions,
       ...handleStyles,
+      handleHighlight: handleHighlightStyle,
       ...toggleStyles,
       ...componentStyles,
     };

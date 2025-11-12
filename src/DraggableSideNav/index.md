@@ -26,7 +26,7 @@ description: A generic resizable side panel container with collapse/expand funct
 | defaultSize             | Default width when expanded                 | `Partial<Size>`                                                                                                                                        | -        |
 | showHandle              | Whether to show handle for toggling         | `boolean`                                                                                                                                              | `true`   |
 | showHandleWhenCollapsed | Whether to show handle when collapsed       | `boolean`                                                                                                                                              | `false`  |
-| fade                    | Fade animation configuration                | `{ header?: boolean, body?: boolean, footer?: boolean }`                                                                                               | -        |
+| fade                    | Fade animation configuration                | `{ blur?: boolean, header?: boolean, body?: boolean, footer?: boolean }`                                                                               | -        |
 | onCollapsedChange       | Callback when collapse state changes        | `(collapsed: boolean) => void`                                                                                                                         | -        |
 | onSizeChange            | Callback when size changes                  | `(delta: NumberSize, size?: Size) => void`                                                                                                             | -        |
 | onSizeDragging          | Callback when actively resizing             | `(delta: NumberSize, size?: Size) => void`                                                                                                             | -        |
@@ -36,11 +36,12 @@ description: A generic resizable side panel container with collapse/expand funct
 ## Features
 
 - 🎯 **Generic Container**: Not tied to Menu - use any content you want
-- 📏 **Smart Dragging**: Drag to resize with smart auto-collapse/expand behavior
+- 📏 **Smart Dragging**: Drag to resize with smart auto-collapse/expand behavior and glowing indicator
 - 🔄 **Dynamic Content**: header, children, and footer can be functions receiving collapsed state
 - 🎨 **Flexible Layout**: Customize header, body, and footer independently
-- ⚡ **Smooth Animations**: Animated width transitions when toggling collapse/expand
-- ✨ **Fade Effects**: Optional fade animations for smooth content transitions
+- ⚡ **Smooth Animations**: 400ms width transitions with natural easing curves
+- ✨ **Stunning Effects**: Blur + opacity fade animations for silky content transitions
+- 🎭 **Micro-interactions**: Hover scale, click feedback, backdrop-blur glass effect
 - 🎛️ **Full Control**: Controlled or uncontrolled mode
 
 ## Notes
@@ -50,6 +51,11 @@ description: A generic resizable side panel container with collapse/expand funct
 - `minWidth` serves as both the minimum draggable width and the collapsed width (default 64px)
 - Only horizontal resizing is supported (width adjustment)
 - **Smart Collapse**: Dragging below the collapse threshold triggers auto-collapse with animation
-- **Smooth Animation**: Clicking the handle triggers a 300ms width transition animation
-- **Fade Animations**: Enable fade effects for header, body, or footer individually for smooth content transitions using framer-motion
+- **Enhanced Animations**:
+  - Width transition: 400ms with natural cubic-bezier easing
+  - Fade effects: 300ms enter / 200ms exit with optional blur
+  - Handle: Hover scale (1.05x), click scale (0.95x), rotate animation
+  - Resize indicator: Glowing theme color with smooth transitions
+- **Fade Animations**: Enable fade effects for header, body, or footer individually with optional blur effect for stunning content transitions using framer-motion
+- **Visual Polish**: Backdrop blur, smooth scrollbar, subtle shadows, micro-interactions
 - Use with any content: Menu, custom navigation, sidebars, panels, etc.

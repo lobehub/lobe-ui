@@ -2,6 +2,18 @@ import { Icon } from '@lobehub/ui';
 import { Badge } from 'antd';
 import { Bell, FileText, Folder, Home, MessageCircle, Settings, Star, Users } from 'lucide-react';
 
+// Mock agents data
+export const agents = [
+  { avatar: '👨‍💼', name: 'LiJian' },
+  { avatar: '👩‍💼', name: 'Rene Wang', subtitle: '正在玩 Cursor' },
+  { avatar: '🤖', name: 'Carl-bot', subtitle: '正在玩 /games | carl.gg' },
+  { avatar: '👔', name: 'Arvin Xu' },
+  { avatar: '🎨', name: 'cy948' },
+  { avatar: '💻', name: 'Wuxh', subtitle: 'Coding' },
+  { avatar: '🎬', name: 'Brandon Studio' },
+  { avatar: '🌙', name: 'Tsuki' },
+];
+
 // 所有可用的 items
 const allItems: any[] = [
   {

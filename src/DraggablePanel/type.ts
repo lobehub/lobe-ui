@@ -29,6 +29,12 @@ export interface DraggablePanelProps extends DivProps {
   pin?: boolean;
   placement: PlacementType;
   resize?: RndProps['enableResizing'];
+  /**
+   * Whether to show border
+   * @default true
+   */
+  showBorder?: boolean;
+  showHandleHighlight?: boolean;
   showHandleWhenCollapsed?: boolean;
   showHandleWideArea?: boolean;
   size?: Partial<Size>;

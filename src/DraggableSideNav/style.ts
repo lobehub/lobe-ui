@@ -7,52 +7,142 @@ const LAYOUT = {
   toggleShort: 16,
 };
 
-export const useStyles = createStyles(({ css, token, stylish }) => ({
-  body: css`
-    overflow: hidden auto;
-    flex: 1;
-  `,
-  container: css`
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+export const useStyles = createStyles(
+  ({ css, token, stylish, prefixCls }, { showBorder }: { showBorder: boolean }) => ({
+    body: css`
 
-    /* Width transition controlled by inline style */
-  `,
-  contentContainer: css`
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+      /* Smooth scroll behavior */
+      scroll-behavior: smooth;
+      overflow: hidden auto;
+      flex: 1;
 
-    height: 100%;
-    border-inline-end: 1px solid ${token.colorBorderSecondary};
+      /* Better scrollbar styling */
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
 
-    background: ${token.colorBgContainer};
-  `,
-  footer: css`
-    flex-shrink: 0;
-    margin-block-start: auto;
-    padding: 8px;
-    border-block-start: 1px solid ${token.colorBorderSecondary};
-  `,
-  handlerIcon: css`
-    transition: transform 0.2s ${token.motionEaseOut};
-  `,
-  header: css`
-    flex-shrink: 0;
-    padding: 8px;
-  `,
-  resizeHandle: css`
-    cursor: col-resize;
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
 
-    position: absolute;
-    z-index: 1;
-    inset-block: 0 0;
+      &::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background: ${token.colorBorderSecondary};
 
-    width: 8px;
+        &:hover {
+          background: ${token.colorBorder};
+        }
+      }
+    `,
+    container: css`
 
-    &:hover {
+      /* Width transition controlled by inline style */
+
+      /* Ensure smooth animations */
+      will-change: width;
+
+      position: relative;
+
+      display: flex;
+      flex-direction: column;
+
+      height: 100%;
+    `,
+    contentContainer: css`
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+
+      height: 100%;
+      border-inline-end: ${showBorder ? '1px' : '0'} solid ${token.colorBorderSecondary};
+
+      background: ${token.colorBgLayout};
+    `,
+    footer: css`
+      flex-shrink: 0;
+    `,
+    handlerIcon: css`
+      /* Icon transitions are now handled by framer-motion */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `,
+    header: css`
+      flex-shrink: 0;
+    `,
+    menuOverride: css`
+      .${prefixCls}-menu {
+        .${prefixCls}-menu-item {
+          display: flex;
+          gap: 8px;
+          align-items: center;
+          justify-content: center;
+
+          height: unset;
+          min-height: 36px;
+          padding-block: 4px;
+          padding-inline: 8px !important;
+        }
+
+        .${prefixCls}-menu-item-group-title {
+          overflow: hidden;
+          padding-inline: 8px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .${prefixCls}-menu-item-icon {
+          position: absolute;
+          inset-inline-start: 0;
+
+          display: flex !important;
+          flex: none;
+          align-items: center;
+          justify-content: center;
+
+          width: 36px;
+          height: 36px;
+        }
+
+        .${prefixCls}-menu-title-content {
+          overflow: hidden;
+          flex: 1;
+
+          margin: 0 !important;
+          padding-inline-start: 36px;
+
+          line-height: 1.5;
+        }
+
+        &.${prefixCls}-menu-inline-collapsed {
+          .ant-menu-title-content {
+            display: none;
+            width: 0;
+            opacity: 0;
+          }
+
+          .${prefixCls}-menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 36px !important;
+            height: 36px !important;
+          }
+        }
+      }
+    `,
+    resizeHandle: css`
+      cursor: col-resize;
+
+      position: absolute;
+      z-index: 1;
+      inset-block: 0 0;
+
+      width: 8px;
+
+      transition: background-color 0.2s ease;
+
       &::after {
         content: '';
 
@@ -63,70 +153,100 @@ export const useStyles = createStyles(({ css, token, stylish }) => ({
 
         width: 2px;
 
-        background: ${token.colorPrimary};
+        background: transparent;
+
+        transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
       }
-    }
-  `,
-  resizeHandleLeft: css`
-    inset-inline-end: -4px;
-  `,
-  resizeHandleRight: css`
-    inset-inline-start: -4px;
-  `,
-  toggleLeft: css`
-    inset-inline-end: -${LAYOUT.offset}px;
-    width: ${LAYOUT.toggleShort}px;
-    height: 100%;
-
-    > div {
-      inset-block-start: 50%;
-
-      width: ${LAYOUT.toggleShort}px;
-      height: ${LAYOUT.toggleLength}px;
-      margin-block-start: -${LAYOUT.toggleLength / 2}px;
-      border-radius: 0 4px 4px 0; /* 左侧面板，handle 在右边，右侧圆角 */
-    }
-  `,
-  toggleRight: css`
-    inset-inline-start: -${LAYOUT.offset}px;
-    width: ${LAYOUT.toggleShort}px;
-    height: 100%;
-
-    > div {
-      inset-block-start: 50%;
-
-      width: ${LAYOUT.toggleShort}px;
-      height: ${LAYOUT.toggleLength}px;
-      margin-block-start: -${LAYOUT.toggleLength / 2}px;
-      border-radius: 4px 0 0 4px; /* 右侧面板，handle 在左边，左侧圆角 */
-    }
-  `,
-  toggleRoot: css`
-    pointer-events: none;
-    position: absolute;
-
-    &:has(> div) {
-      pointer-events: all;
-    }
-
-    > div {
-      ${stylish.variantFilled};
-      pointer-events: all;
-      cursor: pointer;
-
-      position: absolute;
-
-      color: ${token.colorTextTertiary};
-
-      transition: all 0.2s ${token.motionEaseOut};
-
+    `,
+    resizeHandleHighlight: css`
       &:hover {
-        color: ${token.colorTextSecondary};
+        &::after {
+          width: 3px;
+          background: ${token.colorPrimary};
+          box-shadow: 0 0 8px ${token.colorPrimary}40;
+        }
       }
 
       &:active {
-        color: ${token.colorText};
+        &::after {
+          background: ${token.colorPrimaryActive};
+        }
       }
-    }
-  `,
-}));
+    `,
+    resizeHandleLeft: css`
+      inset-inline-end: -4px;
+    `,
+    resizeHandleRight: css`
+      inset-inline-start: -4px;
+    `,
+    toggleLeft: css`
+      inset-inline-end: -${LAYOUT.offset}px;
+      width: ${LAYOUT.toggleShort}px;
+      height: 100%;
+
+      > div {
+        inset-block-start: 50%;
+
+        width: ${LAYOUT.toggleShort}px;
+        height: ${LAYOUT.toggleLength}px;
+        margin-block-start: -${LAYOUT.toggleLength / 2}px;
+        border-radius: 0 4px 4px 0; /* 左侧面板，handle 在右边，右侧圆角 */
+      }
+    `,
+    toggleRight: css`
+      inset-inline-start: -${LAYOUT.offset}px;
+      width: ${LAYOUT.toggleShort}px;
+      height: 100%;
+
+      > div {
+        inset-block-start: 50%;
+
+        width: ${LAYOUT.toggleShort}px;
+        height: ${LAYOUT.toggleLength}px;
+        margin-block-start: -${LAYOUT.toggleLength / 2}px;
+        border-radius: 4px 0 0 4px; /* 右侧面板，handle 在左边，左侧圆角 */
+      }
+    `,
+    toggleRoot: css`
+      pointer-events: none;
+      position: absolute;
+
+      /* Smooth transitions for all states */
+      transition: opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+
+      &:has(> div) {
+        pointer-events: all;
+      }
+
+      > div {
+        ${stylish.variantFilled};
+        pointer-events: all;
+        cursor: pointer;
+
+        position: absolute;
+
+        color: ${token.colorTextTertiary};
+
+        /* Enhanced transitions with backdrop blur */
+        transition:
+          color 0.2s ${token.motionEaseOut},
+          transform 0.2s ${token.motionEaseOut},
+          box-shadow 0.2s ${token.motionEaseOut};
+
+        backdrop-filter: blur(8px);
+
+        &:hover {
+          color: ${token.colorTextSecondary};
+          box-shadow:
+            0 2px 8px rgba(0, 0, 0, 8%),
+            0 0 0 1px ${token.colorBorderSecondary};
+        }
+
+        &:active {
+          transform: scale(0.95);
+          color: ${token.colorText};
+        }
+      }
+    `,
+  }),
+);

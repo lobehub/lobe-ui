@@ -5,6 +5,37 @@ import type { DivProps } from '@/types';
 
 export interface DraggableSideNavProps extends Omit<DivProps, 'children' | 'onSelect'> {
   /**
+   * Animation configuration for content transitions
+   * @default { fade: true, blur: false, header: false, body: false, footer: false }
+   */
+  animation?: {
+    /**
+     * Enable blur effect during transitions
+     * @default false
+     */
+    blur?: boolean;
+    /**
+     * Enable animation for body section
+     * @default false
+     */
+    body?: boolean;
+    /**
+     * Enable fade effect during transitions
+     * @default true
+     */
+    fade?: boolean;
+    /**
+     * Enable animation for footer section
+     * @default false
+     */
+    footer?: boolean;
+    /**
+     * Enable animation for header section
+     * @default false
+     */
+    header?: boolean;
+  };
+  /**
    * Body content (main content area)
    * Can be a static element or a function that receives collapsed state
    */
@@ -33,15 +64,6 @@ export interface DraggableSideNavProps extends Omit<DivProps, 'children' | 'onSe
    * Default width when expanded
    */
   defaultSize?: Partial<Size>;
-  /**
-   * Fade animation configuration for each section
-   * @default { header: false, body: false, footer: false }
-   */
-  fade?: {
-    body?: boolean;
-    footer?: boolean;
-    header?: boolean;
-  };
   /**
    * Footer content
    * Can be a static element or a function that receives collapsed state
@@ -88,10 +110,16 @@ export interface DraggableSideNavProps extends Omit<DivProps, 'children' | 'onSe
    */
   resizable?: boolean;
   /**
+   * Whether to show border
+   * @default true
+   */
+  showBorder?: boolean;
+  /**
    * Whether to show handle for toggling
    * @default true
    */
   showHandle?: boolean;
+  showHandleHighlight?: boolean;
   /**
    * Whether to show handle when collapsed
    * @default false

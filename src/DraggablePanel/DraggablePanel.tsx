@@ -37,6 +37,8 @@ const DraggablePanel = memo<DraggablePanelProps>(
     placement = 'right',
     resize,
     style,
+    showBorder = true,
+    showHandleHighlight = false,
     showHandleWideArea = DEFAULT_SHOW_HANDLE_WIDE_AREA,
     size,
     defaultSize: customizeDefaultSize,
@@ -73,7 +75,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
         : placement;
     }, [direction, placement]);
 
-    const { styles, cx } = useStyles({ headerHeight, showHandleWideArea });
+    const { styles, cx } = useStyles({ headerHeight, showBorder, showHandleWideArea });
 
     const [isExpand, setIsExpand] = useControlledState(defaultExpand, {
       onChange: onExpandChange,
@@ -305,9 +307,12 @@ const DraggablePanel = memo<DraggablePanelProps>(
         handleClasses={
           canResizing
             ? {
-                [reversePlacement(internalPlacement)]: handleVariants({
-                  placement: reversePlacement(internalPlacement),
-                }),
+                [reversePlacement(internalPlacement)]: cx(
+                  handleVariants({
+                    placement: reversePlacement(internalPlacement),
+                  }),
+                  showHandleHighlight && styles.handleHighlight,
+                ),
               }
             : {}
         }

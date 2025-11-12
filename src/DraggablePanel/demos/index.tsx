@@ -26,6 +26,8 @@ export default () => {
         options: ['left', 'right', 'top', 'bottom'],
         value: 'left',
       },
+      showBorder: true,
+      showHandleHighlight: false,
       showHandleWhenCollapsed: false,
     },
     { store },
