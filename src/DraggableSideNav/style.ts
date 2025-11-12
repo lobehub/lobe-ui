@@ -10,7 +10,6 @@ const LAYOUT = {
 export const useStyles = createStyles(
   ({ css, token, stylish, prefixCls }, { showBorder }: { showBorder: boolean }) => ({
     body: css`
-
       /* Smooth scroll behavior */
       scroll-behavior: smooth;
       overflow: hidden auto;
@@ -35,7 +34,6 @@ export const useStyles = createStyles(
       }
     `,
     container: css`
-
       /* Width transition controlled by inline style */
 
       /* Ensure smooth animations */
@@ -136,7 +134,7 @@ export const useStyles = createStyles(
       cursor: col-resize;
 
       position: absolute;
-      z-index: 1;
+      z-index: 50;
       inset-block: 0 0;
 
       width: 8px;
