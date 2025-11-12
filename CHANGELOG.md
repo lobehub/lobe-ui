@@ -2,6 +2,40 @@
 
 # Changelog
 
+## [Version 2.14.0](https://github.com/lobehub/lobe-ui/compare/v2.13.8...v2.14.0)
+
+<sup>Released on **2025-11-12**</sup>
+
+#### ✨ Features
+
+- **misc**: Add DraggableSideNav.
+
+#### 💄 Styles
+
+- **misc**: Add DraggableSideNav, Add fade effect.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add DraggableSideNav ([8ab1a91](https://github.com/lobehub/lobe-ui/commit/8ab1a91))
+
+#### Styles
+
+- **misc**: Add DraggableSideNav ([d4ab61a](https://github.com/lobehub/lobe-ui/commit/d4ab61a))
+- **misc**: Add fade effect ([5feee0f](https://github.com/lobehub/lobe-ui/commit/5feee0f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.13.8](https://github.com/lobehub/lobe-ui/compare/v2.13.7...v2.13.8)
 
 <sup>Released on **2025-11-10**</sup>
