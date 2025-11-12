@@ -2,6 +2,32 @@
 
 # Changelog
 
+### [Version 2.15.1](https://github.com/lobehub/lobe-ui/compare/v2.15.0...v2.15.1)
+
+<sup>Released on **2025-11-12**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update DraggableSideNav, Update DraggableSideNav.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update DraggableSideNav ([5ef2b03](https://github.com/lobehub/lobe-ui/commit/5ef2b03))
+- **misc**: Update DraggableSideNav ([b0e3225](https://github.com/lobehub/lobe-ui/commit/b0e3225))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.15.0](https://github.com/lobehub/lobe-ui/compare/v2.14.0...v2.15.0)
 
 <sup>Released on **2025-11-12**</sup>
