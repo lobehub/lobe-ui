@@ -193,12 +193,16 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
     }, [isExpand, isAnimating, isResizing]);
 
     // 处理外部 width prop 变化
+    // width 表示展开时的宽度，实际显示宽度根据 isExpand 状态决定
     useEffect(() => {
       if (width !== undefined && !isResizing && !isAnimating) {
-        setInternalWidth(width);
+        // 更新展开宽度记录
+        setExpandedWidth(width);
+        // 根据当前状态设置实际宽度
         if (isExpand) {
-          setExpandedWidth(width);
+          setInternalWidth(width);
         }
+        // 如果是折叠状态，保持 minWidth，不改变 internalWidth
       }
     }, [width, isResizing, isAnimating, isExpand]);
 

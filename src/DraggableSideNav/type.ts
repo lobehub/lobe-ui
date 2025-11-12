@@ -147,7 +147,9 @@ export interface DraggableSideNavProps extends Omit<DivProps, 'children' | 'onSe
   };
 
   /**
-   * Current width (controlled)
+   * Expanded width (controlled)
+   * This represents the width when expanded, not the current displayed width
+   * The actual displayed width will be `width` when expanded, or `minWidth` when collapsed
    */
   width?: number;
 }

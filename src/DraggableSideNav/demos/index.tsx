@@ -8,6 +8,8 @@ import { DemoFooter } from './Footer';
 import { DemoHeader } from './Header';
 
 export default () => {
+  const [width, setWidth] = useState(300);
+  const [expand, setExpand] = useState(true);
   const [activeKey, setActiveKey] = useState<string>('home');
   const store = useCreateStore();
 
@@ -69,6 +71,10 @@ export default () => {
     <StoryBook levaStore={store} noPadding>
       <Flexbox height={'100%'} horizontal width={'100%'}>
         <DraggableSideNav
+          expand={expand}
+          onExpandChange={setExpand}
+          onWidthChange={(_, width) => setWidth(width)}
+          width={width}
           {...sideNavProps}
           footer={(expand) => <DemoFooter expand={expand} />}
           header={(expand) => (
