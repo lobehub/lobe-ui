@@ -149,6 +149,21 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
       }, 400);
     };
 
+    // 用于跟踪上一次的 expand 状态，以检测外部变化
+    const prevExpandRef = useRef(isExpand);
+
+    // 监听外部 expand prop 变化，触发动画
+    useEffect(() => {
+      // 检测到 expand 状态变化，且不在拖拽和动画中
+      if (prevExpandRef.current !== isExpand && !isResizing && !isAnimating) {
+        setIsAnimating(true);
+        setTimeout(() => {
+          setIsAnimating(false);
+        }, 400);
+      }
+      prevExpandRef.current = isExpand;
+    }, [isExpand, isResizing, isAnimating]);
+
     // 处理展开/折叠状态变化时的宽度动画和内容切换时机
     useEffect(() => {
       if (isAnimating) {
