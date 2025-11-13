@@ -8,8 +8,10 @@ on:
       - rc
 
 permissions:
-  id-token: write  # Required for OIDC
-  contents: read
+  id-token: write # Required for OIDC
+  contents: write # Required for semantic-release to push tags and commits
+  issues: write # Required for semantic-release to create issues
+  pull-requests: write # Required for semantic-release to comment on PRs
 
 jobs:
   release:
