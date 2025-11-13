@@ -2,6 +2,41 @@
 
 # Changelog
 
+### [Version 2.15.4](https://github.com/lobehub/lobe-ui/compare/v2.15.3...v2.15.4)
+
+<sup>Released on **2025-11-13**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix workflow, Fix workflow, Fix workflow.
+
+#### 💄 Styles
+
+- **misc**: Update release workflow.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix workflow ([23db48d](https://github.com/lobehub/lobe-ui/commit/23db48d))
+- **misc**: Fix workflow ([efc92eb](https://github.com/lobehub/lobe-ui/commit/efc92eb))
+- **misc**: Fix workflow ([4c46667](https://github.com/lobehub/lobe-ui/commit/4c46667))
+
+#### Styles
+
+- **misc**: Update release workflow ([2305747](https://github.com/lobehub/lobe-ui/commit/2305747))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.15.3](https://github.com/lobehub/lobe-ui/compare/v2.15.2...v2.15.3)
 
 <sup>Released on **2025-11-12**</sup>
