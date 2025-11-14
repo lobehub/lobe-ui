@@ -1,5 +1,5 @@
 import type { ActionIconProps } from '@/ActionIcon';
 
-export interface CopyButtonProps extends ActionIconProps {
-  content: string;
+export interface CopyButtonProps extends Omit<ActionIconProps, 'content'> {
+  content: string | (() => string);
 }

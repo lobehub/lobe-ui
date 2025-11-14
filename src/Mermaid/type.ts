@@ -17,6 +17,7 @@ export interface MermaidProps extends DivProps {
   actionsRender?: (props: {
     actionIconSize: ActionIconProps['size'];
     content: string;
+    getContent: () => string;
     originalNode: ReactNode;
   }) => ReactNode;
   bodyRender?: (props: { content: string; originalNode: ReactNode }) => ReactNode;

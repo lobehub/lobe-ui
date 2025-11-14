@@ -1,7 +1,7 @@
 'use client';
 
 import { cva } from 'class-variance-authority';
-import { memo, useMemo } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import CopyButton from '@/CopyButton';
@@ -64,28 +64,42 @@ const Mermaid = memo<MermaidProps>(
     );
 
     const tirmedChildren = children.trim();
+    const copyContentRef = useRef(tirmedChildren);
 
-    const originalActions = copyable && (
-      <CopyButton content={tirmedChildren} size={actionIconSize} />
+    useEffect(() => {
+      copyContentRef.current = tirmedChildren;
+    }, [tirmedChildren]);
+
+    const getCopyContent = useCallback(() => copyContentRef.current, []);
+
+    const originalActions = useMemo(() => {
+      if (!copyable) return null;
+      return <CopyButton content={getCopyContent} size={actionIconSize} />;
+    }, [actionIconSize, copyable, getCopyContent]);
+
+    const actions = useMemo(() => {
+      if (!actionsRender) return originalActions;
+      return actionsRender({
+        actionIconSize,
+        content: tirmedChildren,
+        getContent: getCopyContent,
+        originalNode: originalActions,
+      });
+    }, [actionIconSize, actionsRender, getCopyContent, originalActions, tirmedChildren]);
+
+    const defaultBody = useMemo(
+      () => (
+        <SyntaxMermaid enablePanZoom={enablePanZoom} theme={theme} variant={variant}>
+          {tirmedChildren}
+        </SyntaxMermaid>
+      ),
+      [enablePanZoom, theme, tirmedChildren, variant],
     );
 
-    const actions = actionsRender
-      ? actionsRender({
-          actionIconSize,
-          content: children,
-          originalNode: originalActions,
-        })
-      : originalActions;
-
-    const defaultBody = (
-      <SyntaxMermaid enablePanZoom={enablePanZoom} theme={theme} variant={variant}>
-        {tirmedChildren}
-      </SyntaxMermaid>
-    );
-
-    const body = bodyRender
-      ? bodyRender({ content: tirmedChildren, originalNode: defaultBody })
-      : defaultBody;
+    const body = useMemo(() => {
+      if (!bodyRender) return defaultBody;
+      return bodyRender({ content: tirmedChildren, originalNode: defaultBody });
+    }, [bodyRender, defaultBody, tirmedChildren]);
 
     if (fullFeatured)
       return (

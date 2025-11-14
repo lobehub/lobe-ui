@@ -23,7 +23,8 @@ const CopyButton = memo<CopyButtonProps>(
         active={active || copied}
         icon={copied ? Check : Icon}
         onClick={async (e) => {
-          await copyToClipboard(content);
+          const resolvedContent = typeof content === 'function' ? content() : content;
+          await copyToClipboard(resolvedContent);
           setCopied();
           onClick?.(e);
         }}

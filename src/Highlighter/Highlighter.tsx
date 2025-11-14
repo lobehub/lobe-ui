@@ -1,7 +1,7 @@
 'use client';
 
 import { cva } from 'class-variance-authority';
-import { memo, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import CopyButton from '@/CopyButton';
@@ -69,30 +69,43 @@ export const Highlighter = memo<HighlighterProps>(
     );
 
     const tirmedChildren = children.trim();
+    const copyContentRef = useRef(tirmedChildren);
 
-    const originalActions = copyable && (
-      <CopyButton content={tirmedChildren} glass size={actionIconSize} />
-    );
+    useEffect(() => {
+      copyContentRef.current = tirmedChildren;
+    }, [tirmedChildren]);
 
-    const actions = actionsRender
-      ? actionsRender({
-          actionIconSize,
-          content: tirmedChildren,
-          language: lang,
-          originalNode: originalActions,
-        })
-      : originalActions;
+    const getCopyContent = useCallback(() => copyContentRef.current, []);
 
-    const originalBody = (
-      <SyntaxHighlighter
-        animated={animated}
-        enableTransformer={enableTransformer}
-        language={lang?.toLowerCase()}
-        theme={theme}
-        variant={variant}
-      >
-        {tirmedChildren}
-      </SyntaxHighlighter>
+    const originalActions = useMemo(() => {
+      if (!copyable) return null;
+      return <CopyButton content={getCopyContent} glass size={actionIconSize} />;
+    }, [actionIconSize, copyable, getCopyContent]);
+
+    const actions = useMemo(() => {
+      if (!actionsRender) return originalActions;
+      return actionsRender({
+        actionIconSize,
+        content: tirmedChildren,
+        getContent: getCopyContent,
+        language: lang,
+        originalNode: originalActions,
+      });
+    }, [actionIconSize, actionsRender, getCopyContent, lang, originalActions, tirmedChildren]);
+
+    const originalBody = useMemo(
+      () => (
+        <SyntaxHighlighter
+          animated={animated}
+          enableTransformer={enableTransformer}
+          language={lang?.toLowerCase()}
+          theme={theme}
+          variant={variant}
+        >
+          {tirmedChildren}
+        </SyntaxHighlighter>
+      ),
+      [animated, enableTransformer, lang, theme, tirmedChildren, variant],
     );
 
     const displayName = useMemo(() => {
@@ -100,9 +113,10 @@ export const Highlighter = memo<HighlighterProps>(
       return getCodeLanguageDisplayName(language);
     }, [fileName, language]);
 
-    const body = bodyRender
-      ? bodyRender({ content: tirmedChildren, language: lang, originalNode: originalBody })
-      : originalBody;
+    const body = useMemo(() => {
+      if (!bodyRender) return originalBody;
+      return bodyRender({ content: tirmedChildren, language: lang, originalNode: originalBody });
+    }, [bodyRender, lang, originalBody, tirmedChildren]);
 
     if (fullFeatured)
       return (

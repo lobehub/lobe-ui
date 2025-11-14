@@ -20,6 +20,7 @@ export interface HighlighterProps extends Omit<FlexboxProps, 'children' | 'wrap'
   actionsRender?: (props: {
     actionIconSize: ActionIconProps['size'];
     content: string;
+    getContent: () => string;
     language: string;
     originalNode: ReactNode;
   }) => ReactNode;
