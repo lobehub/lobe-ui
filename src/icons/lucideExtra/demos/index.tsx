@@ -1,21 +1,23 @@
-import { Icon } from '@lobehub/ui';
-import {
-  DiscordIcon,
-  GlobeOffIcon,
-  LeftClickIcon,
-  LeftDoubleClickIcon,
-  RightClickIcon,
-  RightDoubleClickIcon,
-} from '@lobehub/ui/icons';
+import { ActionIcon, copyToClipboard } from '@lobehub/ui';
+import { message } from 'antd';
 import { Flexbox } from 'react-layout-kit';
+
+import * as icons from '../index';
 
 export default () => (
   <Flexbox gap={16} horizontal width="100%" wrap="wrap">
-    <Icon icon={DiscordIcon} size={32} />
-    <Icon icon={GlobeOffIcon} size={32} />
-    <Icon icon={LeftClickIcon} size={32} />
-    <Icon icon={RightClickIcon} size={32} />
-    <Icon icon={LeftDoubleClickIcon} size={32} />
-    <Icon icon={RightDoubleClickIcon} size={32} />
+    {Object.entries(icons).map(([name, IconComponent]) => (
+      <ActionIcon
+        icon={IconComponent}
+        key={name}
+        onClick={async () => {
+          await copyToClipboard(name);
+          message.success(`Copied: ${name}`);
+        }}
+        size={24}
+        title={name}
+        variant={'filled'}
+      />
+    ))}
   </Flexbox>
 );
