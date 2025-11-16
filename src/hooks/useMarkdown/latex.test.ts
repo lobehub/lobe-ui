@@ -341,4 +341,15 @@ describe('escapeCurrencyDollars', () => {
     const content = 'Formula \\(x^2\\) is preserved';
     expect(escapeCurrencyDollars(content)).toBe(content);
   });
+
+  test('preserves multiple inline LaTeX expressions with degree symbols', () => {
+    const content = '向量$90^\\circ$，非 $0^\\circ$ 和 $180^\\circ$';
+    expect(escapeCurrencyDollars(content)).toBe(content);
+  });
+
+  test('handles mixed LaTeX degree symbols and currency in same text', () => {
+    const content = 'Angle is $90^\\circ$ and price is $100';
+    const expected = 'Angle is $90^\\circ$ and price is \\$100';
+    expect(escapeCurrencyDollars(content)).toBe(expected);
+  });
 });

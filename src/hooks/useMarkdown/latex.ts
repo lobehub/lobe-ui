@@ -103,7 +103,14 @@ export function escapeCurrencyDollars(text: string): string {
   // Protect code blocks and existing LaTeX expressions from processing
   const protectedStrings: string[] = [];
   let content = text.replaceAll(
-    /(```[\S\s]*?```|`[^\n`]*`|\$\$[\S\s]*?\$\$|\\\[[\S\s]*?\\]|\\\(.*?\\\))/g,
+    // Match patterns to protect (in order):
+    // 1. Code blocks: ```...```
+    // 2. Inline code: `...`
+    // 3. Display math: $$...$$
+    // 4. Inline math with LaTeX commands: $...\...$ (must contain backslash to distinguish from currency)
+    // 5. LaTeX bracket notation: \[...\]
+    // 6. LaTeX parenthesis notation: \(...\)
+    /(```[\S\s]*?```|`[^\n`]*`|\$\$[\S\s]*?\$\$|(?<!\\)\$(?!\$)(?=[\S\s]*?\\)[\S\s]*?(?<!\\)\$(?!\$)|\\\[[\S\s]*?\\]|\\\(.*?\\\))/g,
     (match) => {
       protectedStrings.push(match);
       return `<<PROTECTED_${protectedStrings.length - 1}>>`;
