@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.16.1](https://github.com/lobehub/lobe-ui/compare/v2.16.0...v2.16.1)
+
+<sup>Released on **2025-11-16**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix latex.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix latex ([08b7a7f](https://github.com/lobehub/lobe-ui/commit/08b7a7f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.16.0](https://github.com/lobehub/lobe-ui/compare/v2.15.5...v2.16.0)
 
 <sup>Released on **2025-11-16**</sup>
