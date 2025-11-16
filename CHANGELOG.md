@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.16.0](https://github.com/lobehub/lobe-ui/compare/v2.15.5...v2.16.0)
+
+<sup>Released on **2025-11-16**</sup>
+
+#### ✨ Features
+
+- **misc**: Add Figma icon workflow.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add Figma icon workflow ([9240992](https://github.com/lobehub/lobe-ui/commit/9240992))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.15.5](https://github.com/lobehub/lobe-ui/compare/v2.15.4...v2.15.5)
 
 <sup>Released on **2025-11-14**</sup>
