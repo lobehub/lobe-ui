@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.18.0](https://github.com/lobehub/lobe-ui/compare/v2.17.0...v2.18.0)
+
+<sup>Released on **2025-11-20**</sup>
+
+#### ✨ Features
+
+- **misc**: Add new icons.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add new icons ([5833006](https://github.com/lobehub/lobe-ui/commit/5833006))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.17.0](https://github.com/lobehub/lobe-ui/compare/v2.16.4...v2.17.0)
 
 <sup>Released on **2025-11-20**</sup>
