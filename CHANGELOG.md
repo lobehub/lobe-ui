@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.16.4](https://github.com/lobehub/lobe-ui/compare/v2.16.3...v2.16.4)
+
+<sup>Released on **2025-11-20**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Accordion.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Accordion ([cec4788](https://github.com/lobehub/lobe-ui/commit/cec4788))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.16.3](https://github.com/lobehub/lobe-ui/compare/v2.16.2...v2.16.3)
 
 <sup>Released on **2025-11-20**</sup>
