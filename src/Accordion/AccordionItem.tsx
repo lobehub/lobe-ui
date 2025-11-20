@@ -27,6 +27,9 @@ const AccordionItem = memo<AccordionItemProps>(
     classNames,
     paddingInline = 16,
     paddingBlock = 8,
+    padding,
+    ref,
+    variant: customVariant,
     styles: customStyles,
   }) => {
     const { cx, styles } = useStyles();
@@ -231,8 +234,10 @@ const AccordionItem = memo<AccordionItemProps>(
           justify={'space-between'}
           onClick={handleToggle}
           onKeyDown={handleKeyDown}
+          padding={padding}
           paddingBlock={paddingBlock}
           paddingInline={paddingInline}
+          ref={ref}
           style={{
             alignItems: 'center',
             cursor: disabled ? 'not-allowed' : 'pointer',
@@ -240,7 +245,7 @@ const AccordionItem = memo<AccordionItemProps>(
             overflow: 'hidden',
             width: '100%',
           }}
-          variant={variant}
+          variant={customVariant || variant}
         >
           {indicatorPlacementFinal === 'start' ? (
             <>

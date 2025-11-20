@@ -3,7 +3,7 @@ import type { CSSProperties, HTMLAttributes, Key, ReactNode } from 'react';
 import type { BlockProps } from '@/Block';
 
 export interface AccordionItemProps
-  extends Pick<BlockProps, 'padding' | 'paddingBlock' | 'paddingInline' | 'variant'> {
+  extends Pick<BlockProps, 'padding' | 'paddingBlock' | 'paddingInline' | 'variant' | 'ref'> {
   /**
    * Action component that appears on hover
    */
