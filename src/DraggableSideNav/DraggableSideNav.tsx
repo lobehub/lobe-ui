@@ -3,16 +3,7 @@
 import { useHover } from 'ahooks';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Resizable, ResizeCallback } from 're-resizable';
-import {
-  CSSProperties,
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-  useTransition,
-} from 'react';
+import { CSSProperties, memo, useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import { Center, Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
@@ -24,8 +15,8 @@ import type { DraggableSideNavProps } from './type';
 const DEFAULT_MIN_WIDTH = 64; // 最小宽度即折叠宽度
 const DEFAULT_EXPAND = true;
 const DEFAULT_EXPANDED_WIDTH = 280;
-const ANIMATION_DURATION = 400;
-const COLLAPSE_ANIMATION_DELAY = 300;
+const ANIMATION_DURATION = 300;
+const COLLAPSE_ANIMATION_DELAY = 200;
 
 // Pre-define static objects to avoid recreating
 const RESIZE_DISABLED = {
@@ -124,7 +115,6 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
     const { styles, cx } = useStyles({ backgroundColor, showBorder });
     const ref = useRef<HTMLDivElement>(null);
     const isHovering = useHover(ref);
-    const [isPending, startTransition] = useTransition();
 
     // Expand state management
     const [isExpand, setIsExpand] = useControlledState(defaultExpand, {
@@ -162,22 +152,23 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
     const toggleExpand = useCallback(() => {
       if (!expandable) return;
 
+      // 在动画或拖拽期间阻止新的切换操作，避免状态混乱
+      if (state.isAnimating || state.isResizing) return;
+
       // 清除之前的动画
       if (animationTimeoutRef.current) {
         clearTimeout(animationTimeoutRef.current);
       }
 
-      // 使用 transition 标记非紧急更新
-      startTransition(() => {
-        dispatch({ type: 'START_ANIMATION' });
-        setIsExpand(!isExpand);
+      // 立即设置动画状态，避免其他 useEffect 干扰
+      dispatch({ type: 'START_ANIMATION' });
+      setIsExpand(!isExpand);
 
-        // 动画完成后重置状态 - 与宽度动画时长一致
-        animationTimeoutRef.current = setTimeout(() => {
-          dispatch({ type: 'STOP_ANIMATION' });
-        }, ANIMATION_DURATION);
-      });
-    }, [expandable, isExpand, setIsExpand]);
+      // 动画完成后重置状态 - 与宽度动画时长一致
+      animationTimeoutRef.current = setTimeout(() => {
+        dispatch({ type: 'STOP_ANIMATION' });
+      }, ANIMATION_DURATION);
+    }, [expandable, isExpand, setIsExpand, state.isAnimating, state.isResizing]);
 
     // 用于跟踪上一次的 expand 状态，以检测外部变化
     const prevExpandRef = useRef(isExpand);
@@ -190,17 +181,15 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
           clearTimeout(animationTimeoutRef.current);
         }
 
-        startTransition(() => {
-          dispatch({ type: 'START_ANIMATION' });
+        // 立即设置动画状态，避免其他 useEffect 干扰
+        dispatch({ type: 'START_ANIMATION' });
 
-          animationTimeoutRef.current = setTimeout(() => {
-            dispatch({ type: 'STOP_ANIMATION' });
-          }, ANIMATION_DURATION);
-        });
+        animationTimeoutRef.current = setTimeout(() => {
+          dispatch({ type: 'STOP_ANIMATION' });
+        }, ANIMATION_DURATION);
 
         prevExpandRef.current = isExpand;
       }
-      prevExpandRef.current = isExpand;
     }, [isExpand, state.isResizing, state.isAnimating]);
 
     // 处理展开/折叠状态变化时的宽度动画和内容切换时机
@@ -208,22 +197,20 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
       if (state.isAnimating) {
         // 使用 requestAnimationFrame 确保动画平滑
         const rafId = requestAnimationFrame(() => {
-          startTransition(() => {
-            if (isExpand) {
-              // 展开动画：立即切换内容（先切换内容，再开始宽度动画）
-              dispatch({ payload: state.expandedWidth, type: 'ANIMATE_EXPAND' });
-            } else {
-              // 折叠动画：延迟切换内容，在动画接近结束时才切换（300ms，略早于动画结束）
-              dispatch({ payload: minWidth, type: 'ANIMATE_COLLAPSE' });
+          if (isExpand) {
+            // 展开动画：立即切换内容（先切换内容，再开始宽度动画）
+            dispatch({ payload: state.expandedWidth, type: 'ANIMATE_EXPAND' });
+          } else {
+            // 折叠动画：延迟切换内容，在动画接近结束时才切换（300ms，略早于动画结束）
+            dispatch({ payload: minWidth, type: 'ANIMATE_COLLAPSE' });
 
-              if (collapseTimeoutRef.current) {
-                clearTimeout(collapseTimeoutRef.current);
-              }
-              collapseTimeoutRef.current = setTimeout(() => {
-                dispatch({ payload: false, type: 'SET_RENDER_EXPAND' });
-              }, COLLAPSE_ANIMATION_DELAY);
+            if (collapseTimeoutRef.current) {
+              clearTimeout(collapseTimeoutRef.current);
             }
-          });
+            collapseTimeoutRef.current = setTimeout(() => {
+              dispatch({ payload: false, type: 'SET_RENDER_EXPAND' });
+            }, COLLAPSE_ANIMATION_DELAY);
+          }
         });
 
         return () => {
@@ -233,8 +220,14 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
     }, [isExpand, state.isAnimating, minWidth, state.expandedWidth]);
 
     // 同步非动画期间的 renderExpand 状态（如拖拽）
+    // 使用 ref 追踪上一次的 isResizing 状态，只在拖拽结束时同步
+    const prevIsResizingRef = useRef(state.isResizing);
     useEffect(() => {
-      if (!state.isAnimating && !state.isResizing) {
+      const wasResizing = prevIsResizingRef.current;
+      prevIsResizingRef.current = state.isResizing;
+
+      // 只在拖拽刚结束时同步 renderExpand，避免干扰正常的展开/折叠动画
+      if (wasResizing && !state.isResizing && !state.isAnimating) {
         dispatch({ payload: isExpand, type: 'SET_RENDER_EXPAND' });
       }
     }, [isExpand, state.isAnimating, state.isResizing]);
@@ -301,23 +294,21 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
             !isExpand && currentWidth > minWidth && currentWidth >= collapseThreshold;
 
           if (shouldCollapse || shouldExpand) {
-            // 使用 transition 处理折叠/展开动画
-            startTransition(() => {
-              dispatch({ type: 'START_ANIMATION' });
+            // 立即设置动画状态
+            dispatch({ type: 'START_ANIMATION' });
 
-              if (shouldCollapse) {
-                setIsExpand(false);
-                dispatch({ payload: minWidth, type: 'SET_WIDTH' });
-              } else {
-                setIsExpand(true);
-                dispatch({ payload: currentWidth, type: 'SET_EXPANDED_WIDTH' });
-                dispatch({ payload: currentWidth, type: 'SET_WIDTH' });
-              }
+            if (shouldCollapse) {
+              setIsExpand(false);
+              dispatch({ payload: minWidth, type: 'SET_WIDTH' });
+            } else {
+              setIsExpand(true);
+              dispatch({ payload: currentWidth, type: 'SET_EXPANDED_WIDTH' });
+              dispatch({ payload: currentWidth, type: 'SET_WIDTH' });
+            }
 
-              animationTimeoutRef.current = setTimeout(() => {
-                dispatch({ type: 'STOP_ANIMATION' });
-              }, ANIMATION_DURATION);
-            });
+            animationTimeoutRef.current = setTimeout(() => {
+              dispatch({ type: 'STOP_ANIMATION' });
+            }, ANIMATION_DURATION);
           } else if (isExpand) {
             // 展开状态下正常拖拽，记住宽度
             dispatch({ payload: currentWidth, type: 'SET_EXPANDED_WIDTH' });
@@ -367,7 +358,7 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
         marginLeft: placement === 'right' ? 4 : 0,
         marginRight: placement === 'left' ? 4 : 0,
         transform: isExpand ? 'rotate(0deg)' : 'rotate(180deg)',
-        transition: 'transform 0.3s ease',
+        transition: `transform ${COLLAPSE_ANIMATION_DELAY} ease`,
       }),
       [placement, isExpand],
     );
@@ -452,17 +443,14 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
       () => ({
         ...customStyles?.container,
         ...rest.style,
-        // 在 pending 状态下添加视觉反馈
-        cursor: isPending ? 'wait' : undefined,
-        opacity: isPending ? 0.95 : 1,
         // 拖拽时不要动画，点击 handle 时有流畅的弹性动画
         transition: state.isResizing
           ? 'none'
           : state.isAnimating
-            ? 'width 0.4s cubic-bezier(0.22, 1, 0.36, 1)'
+            ? `width ${ANIMATION_DURATION}ms cubic-bezier(0.22, 1, 0.36, 1)`
             : 'none',
       }),
-      [customStyles?.container, rest.style, state.isResizing, state.isAnimating, isPending],
+      [customStyles?.container, rest.style, state.isResizing, state.isAnimating],
     );
 
     // Memoize class names
