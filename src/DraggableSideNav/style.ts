@@ -190,6 +190,7 @@ export const useStyles = createStyles(
         width: ${LAYOUT.toggleShort}px;
         height: ${LAYOUT.toggleLength}px;
         margin-block-start: -${LAYOUT.toggleLength / 2}px;
+        margin-inline-start: -1px;
         border-inline-start-width: 0;
         border-radius: 0 ${token.borderRadiusLG}px ${token.borderRadiusLG}px 0;
       }
@@ -205,6 +206,7 @@ export const useStyles = createStyles(
         width: ${LAYOUT.toggleShort}px;
         height: ${LAYOUT.toggleLength}px;
         margin-block-start: -${LAYOUT.toggleLength / 2}px;
+        margin-inline-end: -1px;
         border-inline-end-width: 0;
         border-radius: ${token.borderRadiusLG}px 0 0 ${token.borderRadiusLG}px; /* 右侧面板，handle 在左边，左侧圆角 */
       }

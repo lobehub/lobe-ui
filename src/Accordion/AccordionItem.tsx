@@ -117,7 +117,7 @@ const AccordionItem = memo<AccordionItemProps>(
           height: 'auto',
           opacity: 1,
           transition: {
-            duration: 0.3,
+            duration: 0.2,
             ease: [0.4, 0, 0.2, 1],
           },
         },
@@ -125,7 +125,7 @@ const AccordionItem = memo<AccordionItemProps>(
           height: 0,
           opacity: 0,
           transition: {
-            duration: 0.3,
+            duration: 0.2,
             ease: [0.4, 0, 0.2, 1],
           },
         },

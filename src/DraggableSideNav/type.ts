@@ -4,46 +4,12 @@ import type { CSSProperties, ReactNode } from 'react';
 import type { DivProps } from '@/types';
 
 export interface DraggableSideNavProps extends Omit<DivProps, 'children' | 'onSelect'> {
-  /**
-   * Animation configuration for content transitions
-   * Set to false to disable all animations
-   * @default undefined
-   */
-  animation?:
-    | false
-    | {
-        /**
-         * Enable blur effect during transitions
-         * @default false
-         */
-        blur?: boolean;
-        /**
-         * Enable animation for body section
-         * @default false
-         */
-        body?: boolean;
-        /**
-         * Enable fade effect during transitions
-         * @default true
-         */
-        fade?: boolean;
-        /**
-         * Enable animation for footer section
-         * @default false
-         */
-        footer?: boolean;
-        /**
-         * Enable animation for header section
-         * @default false
-         */
-        header?: boolean;
-      };
   backgroundColor?: string;
   /**
    * Body content (main content area)
-   * Can be a static element or a function that receives expand state
+   * Function that receives expand state
    */
-  children: ReactNode | ((expand: boolean) => ReactNode);
+  body: (expand: boolean) => ReactNode;
   /**
    * Classnames for internal components
    */
@@ -88,7 +54,8 @@ export interface DraggableSideNavProps extends Omit<DivProps, 'children' | 'onSe
    */
   maxWidth?: number;
   /**
-   * Minimum width (also the collapsed width)
+   * Minimum width when expanded (does not affect collapsed width which is always 64px)
+   * Only applies when the panel is in expanded state
    * @default 64
    */
   minWidth?: number;

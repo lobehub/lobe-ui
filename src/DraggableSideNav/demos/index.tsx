@@ -15,55 +15,31 @@ export default () => {
 
   const control = useControls(
     {
-      'animation.blur': false,
-      'animation.body': false,
-      'animation.fade': false,
-      'animation.footer': false,
-      'animation.header': false,
-      'defaultExpand': true,
-      'defaultWidth': {
+      defaultExpand: true,
+      defaultWidth: {
         step: 1,
         value: 280,
       },
-      'maxWidth': {
+      maxWidth: {
         step: 1,
         value: 320,
       },
-      'minWidth': {
+      minWidth: {
         max: 200,
         min: 48,
         step: 1,
         value: 54,
       },
-      'resizable': true,
-      'showHandle': true,
-      'showHandleWhenCollapsed': false,
+      resizable: true,
+      showHandle: true,
+      showHandleWhenCollapsed: false,
     },
     { store },
   );
 
-  const {
-    'animation.blur': animationBlur,
-    'animation.body': animationBody,
-    'animation.fade': animationFade,
-    'animation.footer': animationFooter,
-    'animation.header': animationHeader,
-    ...draggableProps
-  } = control;
-
-  // Transform animation controls to animation object
-  const animation = {
-    blur: animationBlur,
-    body: animationBody,
-    fade: animationFade,
-    footer: animationFooter,
-    header: animationHeader,
-  };
-
   // Type-safe props
   const sideNavProps = {
-    ...draggableProps,
-    animation,
+    ...control,
     placement: 'left' as const,
   };
 
@@ -71,24 +47,25 @@ export default () => {
     <StoryBook levaStore={store} noPadding>
       <Flexbox height={'100%'} horizontal width={'100%'}>
         <DraggableSideNav
+          body={(expand) => (
+            <DemoBody activeKey={activeKey} expand={expand} onSelect={setActiveKey} />
+          )}
           expand={expand}
-          onExpandChange={setExpand}
-          onWidthChange={(_, width) => setWidth(width)}
-          width={width}
-          {...sideNavProps}
           footer={(expand) => <DemoFooter expand={expand} />}
           header={(expand) => (
             <DemoHeader activeKey={activeKey} expand={expand} onSelect={setActiveKey} />
           )}
-        >
-          {(expand) => <DemoBody activeKey={activeKey} expand={expand} onSelect={setActiveKey} />}
-        </DraggableSideNav>
+          onExpandChange={setExpand}
+          onWidthChange={(_, width) => setWidth(width)}
+          width={width}
+          {...sideNavProps}
+        />
 
         <Flexbox flex={1} gap={16} padding={24}>
           <div>
             <h2 style={{ marginBottom: '8px' }}>DraggableSideNav Demo</h2>
             <p style={{ fontSize: '14px', margin: 0 }}>
-              A workspace-style side panel with smooth animations
+              A workspace-style side panel with draggable resize
             </p>
           </div>
 
@@ -96,30 +73,44 @@ export default () => {
             <div>
               <strong>Active:</strong> {activeKey}
             </div>
+            <div>
+              <button
+                onClick={() => setExpand(!expand)}
+                style={{
+                  background: expand ? '#1890ff' : '#52c41a',
+                  border: 'none',
+                  borderRadius: '4px',
+                  color: 'white',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  padding: '8px 16px',
+                }}
+                type="button"
+              >
+                {expand ? '折叠侧边栏' : '展开侧边栏'}
+              </button>
+            </div>
             <div style={{ fontSize: '13px' }}>
-              ✨ <strong>Enhanced Features:</strong>
+              ✨ <strong>Features:</strong>
               <ul style={{ margin: '4px 0', paddingLeft: '20px' }}>
                 <li>
-                  <strong>Smooth Animations:</strong> 400ms transitions with natural easing
+                  <strong>Smart Handle:</strong> Hover to reveal toggle button
                 </li>
                 <li>
-                  <strong>Flexible Animation:</strong> Independent control of fade and blur effects
-                </li>
-                <li>
-                  <strong>Smart Handle:</strong> Hover to reveal, scales on interaction
-                </li>
-                <li>
-                  <strong>Enhanced Resize:</strong> Visual feedback with glowing indicator
+                  <strong>Flexible Resize:</strong> Drag to adjust panel width
                 </li>
                 <li>
                   <strong>Auto-collapse:</strong> Drag below threshold for smart collapse
+                </li>
+                <li>
+                  <strong>Performance:</strong> No animation overhead for better performance
                 </li>
               </ul>
             </div>
           </Flexbox>
 
           <div style={{ color: '#999', fontSize: '12px' }}>
-            💡 Try toggling animation.fade and animation.blur independently in the controls panel →
+            💡 Try dragging the panel edge and using the toggle button →
           </div>
         </Flexbox>
       </Flexbox>
