@@ -27,7 +27,7 @@ const Accordion = memo(
         disableAnimation = false,
         hideIndicator = false,
         indicatorPlacement = 'start',
-        keepContentMounted = false,
+        keepContentMounted = true,
         classNames,
         styles: customStyles,
         motionProps,
