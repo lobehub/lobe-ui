@@ -162,9 +162,11 @@ export function escapeCurrencyDollars(text: string): string {
     // 2. Inline code: `...`
     // 3. Display math: $$...$$
     // 4. Inline math with LaTeX commands: $...\...$ (must contain backslash to distinguish from currency)
-    // 5. LaTeX bracket notation: \[...\]
-    // 6. LaTeX parenthesis notation: \(...\)
-    /(```[\S\s]*?```|`[^\n`]*`|\$\$[\S\s]*?\$\$|(?<!\\)\$(?!\$)(?=[\S\s]*?\\)[\S\s]*?(?<!\\)\$(?!\$)|\\\[[\S\s]*?\\]|\\\(.*?\\\))/g,
+    // 5. Simple number formulas: $1$, $10$, $100$ (pure digits in math mode)
+    // 6. Number lists in math mode: $1,-1,0$ or $1,2,3$ (comma-separated numbers, possibly negative)
+    // 7. LaTeX bracket notation: \[...\]
+    // 8. LaTeX parenthesis notation: \(...\)
+    /(```[\S\s]*?```|`[^\n`]*`|\$\$[\S\s]*?\$\$|(?<!\\)\$(?!\$)(?=[\S\s]*?\\)[\S\s]*?(?<!\\)\$(?!\$)|\$\d+\$|\$-?\d+(?:,-?\d+)+\$|\\\[[\S\s]*?\\]|\\\(.*?\\\))/g,
     (match) => manager.add(match),
   );
 

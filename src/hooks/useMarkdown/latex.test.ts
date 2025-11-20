@@ -328,8 +328,9 @@ describe('escapeCurrencyDollars', () => {
     // Our implementation conservatively treats closed $ pairs without
     // LaTeX commands as potential formulas
 
-    // LaTeX with closing $
-    expect(escapeCurrencyDollars('$10$')).toBe('\\$10$'); // Current behavior
+    // LaTeX with closing $ - treated as LaTeX, not currency
+    expect(escapeCurrencyDollars('$10$')).toBe('$10$');
+    expect(escapeCurrencyDollars('$100$')).toBe('$100$');
 
     // Clear currency (no closing $)
     expect(escapeCurrencyDollars('$10 ')).toBe('\\$10 ');
@@ -426,6 +427,145 @@ describe('escapeCurrencyDollars', () => {
     const content = 'Angle is $90^\\circ$ and price is $100';
     const expected = 'Angle is $90^\\circ$ and price is \\$100';
     expect(escapeCurrencyDollars(content)).toBe(expected);
+  });
+
+  test('preserves LaTeX expressions with number lists', () => {
+    // Edge case: $1,-1,0$ should be treated as LaTeX, not currency
+    const content = '$1,-1,0$';
+    expect(escapeCurrencyDollars(content)).toBe(content);
+  });
+
+  test('preserves LaTeX expressions with comma-separated values', () => {
+    const content = 'The values $1,2,3$ and $x,y,z$ are valid';
+    expect(escapeCurrencyDollars(content)).toBe(content);
+  });
+
+  describe('edge cases', () => {
+    test('handles negative numbers in LaTeX', () => {
+      expect(escapeCurrencyDollars('$-1$')).toBe('$-1$');
+      expect(escapeCurrencyDollars('$-10$')).toBe('$-10$');
+      expect(escapeCurrencyDollars('$-100$')).toBe('$-100$');
+    });
+
+    test('handles negative number lists', () => {
+      expect(escapeCurrencyDollars('$-1,-2,-3$')).toBe('$-1,-2,-3$');
+      expect(escapeCurrencyDollars('$1,-1,0$')).toBe('$1,-1,0$'); // Original bug
+      expect(escapeCurrencyDollars('$-5,0,5$')).toBe('$-5,0,5$');
+    });
+
+    test('handles mixed positive and negative numbers', () => {
+      expect(escapeCurrencyDollars('$1,-2,3,-4$')).toBe('$1,-2,3,-4$');
+      expect(escapeCurrencyDollars('$100,-50,0,25$')).toBe('$100,-50,0,25$');
+    });
+
+    test('handles numbers with many commas', () => {
+      expect(escapeCurrencyDollars('$1,2,3,4,5$')).toBe('$1,2,3,4,5$');
+      expect(escapeCurrencyDollars('$10,20,30,40,50$')).toBe('$10,20,30,40,50$');
+    });
+
+    test('distinguishes between LaTeX lists and currency thousands', () => {
+      // LaTeX list: comma separates multiple numbers
+      expect(escapeCurrencyDollars('$1,000$')).toBe('$1,000$');
+
+      // Currency with comma (no closing $)
+      expect(escapeCurrencyDollars('$1,000 price')).toBe('\\$1,000 price');
+      expect(escapeCurrencyDollars('$2,500 each')).toBe('\\$2,500 each');
+    });
+
+    test('handles zero in various contexts', () => {
+      expect(escapeCurrencyDollars('$0$')).toBe('$0$');
+      expect(escapeCurrencyDollars('$0,1,2$')).toBe('$0,1,2$');
+      expect(escapeCurrencyDollars('$-1,0,1$')).toBe('$-1,0,1$');
+    });
+
+    test('handles single-digit formulas in complex text', () => {
+      const content = 'If $n=1$ then $f(1)=0$ and $g(1)=2$';
+      expect(escapeCurrencyDollars(content)).toBe(content);
+    });
+
+    test('handles adjacent dollar signs correctly', () => {
+      // Display math followed by inline math
+      expect(escapeCurrencyDollars('$$x^2$$ and $y^2$')).toBe('$$x^2$$ and $y^2$');
+
+      // Should not confuse with currency
+      expect(escapeCurrencyDollars('$$1,2,3$$ then $4,5,6$')).toBe('$$1,2,3$$ then $4,5,6$');
+    });
+
+    test('handles large numbers in LaTeX', () => {
+      expect(escapeCurrencyDollars('$1000$')).toBe('$1000$');
+      expect(escapeCurrencyDollars('$10000$')).toBe('$10000$');
+      expect(escapeCurrencyDollars('$999999$')).toBe('$999999$');
+    });
+  });
+
+  describe('comprehensive scenarios', () => {
+    test('handles mathematical sequences', () => {
+      const content = 'The sequence $1,-1,1,-1,1$ alternates between values';
+      expect(escapeCurrencyDollars(content)).toBe(content);
+    });
+
+    test('handles coordinate-like expressions', () => {
+      expect(escapeCurrencyDollars('Point $1,0$ and $-1,0$')).toBe('Point $1,0$ and $-1,0$');
+      expect(escapeCurrencyDollars('Origin $0,0,0$')).toBe('Origin $0,0,0$');
+    });
+
+    test('handles mixed LaTeX numbers and text currency', () => {
+      const content = 'The formula $1,2,3$ costs about $50 to compute';
+      const expected = 'The formula $1,2,3$ costs about \\$50 to compute';
+      expect(escapeCurrencyDollars(content)).toBe(expected);
+    });
+
+    test('handles complex mathematical expressions with numbers', () => {
+      const content = 'When $x \\in \\{1,2,3\\}$ the cost is $100';
+      const expected = 'When $x \\in \\{1,2,3\\}$ the cost is \\$100';
+      expect(escapeCurrencyDollars(content)).toBe(expected);
+    });
+
+    test('handles multiple types of formulas in one text', () => {
+      const content = 'Values $1,-1,0$ with $x^2$ and $90^\\circ$ cost $100';
+      const expected = 'Values $1,-1,0$ with $x^2$ and $90^\\circ$ cost \\$100';
+      expect(escapeCurrencyDollars(content)).toBe(expected);
+    });
+
+    test('handles LaTeX in tables with currency', () => {
+      const content = `| Formula | Values | Price |
+|---------|--------|-------|
+| $x^2$ | $1,2,3$ | $100 |
+| $y^2$ | $-1,0,1$ | $200 |`;
+
+      const result = escapeCurrencyDollars(content);
+
+      // LaTeX formulas should be preserved
+      expect(result).toContain('$x^2$');
+      expect(result).toContain('$1,2,3$');
+      expect(result).toContain('$-1,0,1$');
+
+      // Currency should be escaped
+      expect(result).toContain('\\$100');
+      expect(result).toContain('\\$200');
+    });
+
+    test('handles scientific notation-like patterns', () => {
+      expect(escapeCurrencyDollars('$1,000,000$')).toBe('$1,000,000$');
+      expect(escapeCurrencyDollars('$-1,000,000$')).toBe('$-1,000,000$');
+    });
+
+    test('preserves complex number sequences', () => {
+      const content = '$1,-2,3,-4,5,-6,7,-8,9$';
+      expect(escapeCurrencyDollars(content)).toBe(content);
+    });
+
+    test('handles formulas at start and end of text', () => {
+      expect(escapeCurrencyDollars('$1,-1,0$ is a sequence')).toBe('$1,-1,0$ is a sequence');
+      expect(escapeCurrencyDollars('The sequence is $1,-1,0$')).toBe('The sequence is $1,-1,0$');
+      expect(escapeCurrencyDollars('$1,-1,0$')).toBe('$1,-1,0$');
+    });
+
+    test('handles multiple currencies and formulas mixed', () => {
+      const content = 'Buy $1,2,3$ items for $19.99, or $4,5,6$ items for $29.99';
+      const expected = 'Buy $1,2,3$ items for \\$19.99, or $4,5,6$ items for \\$29.99';
+      expect(escapeCurrencyDollars(content)).toBe(expected);
+    });
   });
 });
 
