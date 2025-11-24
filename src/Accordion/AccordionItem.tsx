@@ -1,7 +1,7 @@
 'use client';
 
 import { AnimatePresence, LazyMotion, m } from 'framer-motion';
-import { KeyboardEvent, memo, useCallback } from 'react';
+import { KeyboardEvent, memo, useCallback, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import Block from '@/Block';
@@ -31,6 +31,7 @@ const AccordionItem = memo<AccordionItemProps>(
     ref,
     variant: customVariant,
     styles: customStyles,
+    headerWrapper,
   }) => {
     const { cx, styles } = useStyles();
     const context = useAccordionContext();
@@ -73,7 +74,7 @@ const AccordionItem = memo<AccordionItemProps>(
     );
 
     // Build indicator
-    const renderIndicator = () => {
+    const indicator = useMemo(() => {
       if (hideIndicatorFinal) return null;
 
       if (customIndicator) {
@@ -108,36 +109,48 @@ const AccordionItem = memo<AccordionItemProps>(
           <ArrowIcon className={cx(styles.icon, isOpen && styles.iconRotate)} />
         </span>
       );
-    };
+    }, [
+      hideIndicatorFinal,
+      customIndicator,
+      disabled,
+      isOpen,
+      cx,
+      styles,
+      classNames,
+      customStyles,
+    ]);
 
     // Animation variants
-    const motionProps = {
-      animate: isOpen ? 'enter' : 'exit',
-      exit: 'exit',
-      initial: 'exit',
-      variants: {
-        enter: {
-          height: 'auto',
-          opacity: 1,
-          transition: {
-            duration: 0.2,
-            ease: [0.4, 0, 0.2, 1],
+    const motionProps = useMemo(
+      () => ({
+        animate: isOpen ? 'enter' : 'exit',
+        exit: 'exit',
+        initial: 'exit',
+        variants: {
+          enter: {
+            height: 'auto',
+            opacity: 1,
+            transition: {
+              duration: 0.2,
+              ease: [0.4, 0, 0.2, 1],
+            },
+          },
+          exit: {
+            height: 0,
+            opacity: 0,
+            transition: {
+              duration: 0.2,
+              ease: [0.4, 0, 0.2, 1],
+            },
           },
         },
-        exit: {
-          height: 0,
-          opacity: 0,
-          transition: {
-            duration: 0.2,
-            ease: [0.4, 0, 0.2, 1],
-          },
-        },
-      },
-      ...contextMotionProps,
-    };
+        ...contextMotionProps,
+      }),
+      [isOpen, contextMotionProps],
+    );
 
     // Render content
-    const renderContent = () => {
+    const contentElement = useMemo(() => {
       if (disableAnimation) {
         if (keepContentMounted) {
           return (
@@ -196,36 +209,50 @@ const AccordionItem = memo<AccordionItemProps>(
           )}
         </AnimatePresence>
       );
-    };
+    }, [
+      disableAnimation,
+      keepContentMounted,
+      isOpen,
+      cx,
+      styles,
+      classNames,
+      customStyles,
+      children,
+      motionProps,
+    ]);
 
-    const titleNode =
-      typeof title === 'string' ? (
-        <Text className={classNames?.title} ellipsis style={customStyles?.title}>
-          {title}
-        </Text>
-      ) : (
-        title
-      );
-
-    const actionNode = action && (
-      <Flexbox
-        align={'center'}
-        className={cx('accordion-action', styles.action, classNames?.action)}
-        flex={'none'}
-        gap={4}
-        horizontal
-        onClick={(e) => e.stopPropagation()}
-        style={customStyles?.action}
-      >
-        {action}
-      </Flexbox>
+    const titleNode = useMemo(
+      () =>
+        typeof title === 'string' ? (
+          <Text className={classNames?.title} ellipsis style={customStyles?.title}>
+            {title}
+          </Text>
+        ) : (
+          title
+        ),
+      [title, classNames?.title, customStyles?.title],
     );
 
-    return (
-      <div
-        className={cx('accordion-item', styles.item, classNames?.base)}
-        style={customStyles?.base}
-      >
+    const actionNode = useMemo(
+      () =>
+        action && (
+          <Flexbox
+            align={'center'}
+            className={cx('accordion-action', styles.action, classNames?.action)}
+            flex={'none'}
+            gap={4}
+            horizontal
+            onClick={(e) => e.stopPropagation()}
+            style={customStyles?.action}
+          >
+            {action}
+          </Flexbox>
+        ),
+      [action, cx, styles, classNames?.action, customStyles?.action],
+    );
+
+    const headerElement = useMemo(() => {
+      const header = (
         <Block
           className={cx('accordion-header', styles.header, classNames?.header)}
           clickable={!disabled}
@@ -259,7 +286,7 @@ const AccordionItem = memo<AccordionItemProps>(
                 }}
               >
                 {titleNode}
-                {renderIndicator()}
+                {indicator}
               </Flexbox>
               <Flexbox align={'center'} flex={'none'} gap={4} horizontal>
                 {actionNode}
@@ -280,13 +307,43 @@ const AccordionItem = memo<AccordionItemProps>(
               </Flexbox>
               <Flexbox align={'center'} flex={'none'} gap={4} horizontal>
                 {actionNode}
-                {renderIndicator()}
+                {indicator}
               </Flexbox>
             </>
           )}
         </Block>
+      );
+      if (headerWrapper) {
+        return headerWrapper(header);
+      }
+      return header;
+    }, [
+      cx,
+      styles,
+      classNames,
+      disabled,
+      handleToggle,
+      handleKeyDown,
+      padding,
+      paddingBlock,
+      paddingInline,
+      ref,
+      customVariant,
+      variant,
+      indicatorPlacementFinal,
+      titleNode,
+      indicator,
+      actionNode,
+      headerWrapper,
+    ]);
 
-        {renderContent()}
+    return (
+      <div
+        className={cx('accordion-item', styles.item, classNames?.base)}
+        style={customStyles?.base}
+      >
+        {headerElement}
+        {contentElement}
       </div>
     );
   },

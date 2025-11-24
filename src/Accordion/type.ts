@@ -27,6 +27,7 @@ export interface AccordionItemProps
    * Whether the item is disabled
    */
   disabled?: boolean;
+  headerWrapper?: (header: ReactNode) => ReactNode;
   /**
    * Whether to hide the chevron indicator
    * @default false
