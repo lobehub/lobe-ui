@@ -207,7 +207,7 @@
     "typescript": "^5.9.3",
     "unist-util-is": "^6.0.1",
     "unist-util-visit": "^5.0.0",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.0"
   },
   "peerDependencies": {
     "antd": "^5.25.0",
