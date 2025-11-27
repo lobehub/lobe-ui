@@ -50,7 +50,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Accordion defaultExpandedKeys={['1']} style={{ width: '100%' }} {...control}>
+      <Accordion style={{ width: '100%' }} {...control}>
         <AccordionItem itemKey="1" title="Accordion Panel 1">
           <Flexbox padding={16}>
             <div>This is the content of panel 1.</div>

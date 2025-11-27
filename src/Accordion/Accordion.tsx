@@ -18,7 +18,7 @@ const Accordion = memo(
         className: userClassName,
         style: userStyle,
         accordion = false,
-        defaultExpandedKeys = [],
+        defaultExpandedKeys,
         expandedKeys: expandedKeysProp,
         onExpandedChange,
         variant = 'borderless',
@@ -37,7 +37,18 @@ const Accordion = memo(
     ) => {
       const { cx, styles } = useStyles();
 
-      const [expandedKeys, setExpandedKeys] = useMergeState<Key[]>(defaultExpandedKeys, {
+      // Convert children to array and filter valid elements
+      const validChildren = Children.toArray(children).filter(isValidElement);
+
+      // Collect all item keys
+      const allItemKeys = validChildren.map(
+        (child, index) => (child.props as any).itemKey || index,
+      );
+
+      // If defaultExpandedKeys or expandedKeys is undefined, expand all items by default
+      const initialExpandedKeys = defaultExpandedKeys ?? allItemKeys;
+
+      const [expandedKeys, setExpandedKeys] = useMergeState<Key[]>(initialExpandedKeys, {
         onChange: onExpandedChange,
         value: expandedKeysProp,
       });
@@ -77,9 +88,6 @@ const Accordion = memo(
         showDivider,
         variant,
       };
-
-      // Convert children to array and filter valid elements
-      const validChildren = Children.toArray(children).filter(isValidElement);
 
       const content = (
         <>
