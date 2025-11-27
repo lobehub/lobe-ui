@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.18.3](https://github.com/lobehub/lobe-ui/compare/v2.18.2...v2.18.3)
+
+<sup>Released on **2025-11-27**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update accordion.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update accordion ([d190b1f](https://github.com/lobehub/lobe-ui/commit/d190b1f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.18.2](https://github.com/lobehub/lobe-ui/compare/v2.18.1...v2.18.2)
 
 <sup>Released on **2025-11-24**</sup>
