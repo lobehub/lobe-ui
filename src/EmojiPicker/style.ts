@@ -25,10 +25,23 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => ({
   `,
   root: css`
     position: relative;
-    transition: box-shadow 100ms ${token.motionEaseOut};
+    transition: background 150ms ${token.motionEaseOut};
 
     &:hover {
-      box-shadow: 0 0 0 3px ${token.colorText};
+      background: ${token.colorFillSecondary};
+    }
+  `,
+  tabs: css`
+    border-block-end: 1px solid ${token.colorBorderSecondary};
+
+    .ant-tabs-tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 32px;
+      height: 32px;
+      padding: 0 !important;
     }
   `,
 }));

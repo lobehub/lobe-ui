@@ -102,8 +102,20 @@ const EmojiPicker = memo<EmojiPickerProps>(
         style={{ minWidth: 310, paddingTop: showTabs ? 4 : 0, ...popupStyle }}
       >
         {showTabs && (
-          <Flexbox align={'center'} horizontal justify={'space-between'} paddingInline={10}>
-            <Tabs activeKey={tab} compact items={items} onChange={(key) => setTab(key as any)} />
+          <Flexbox
+            align={'center'}
+            className={styles.tabs}
+            horizontal
+            justify={'space-between'}
+            paddingInline={10}
+          >
+            <Tabs
+              activeKey={tab}
+              compact
+              items={items}
+              onChange={(key) => setTab(key as any)}
+              size={'small'}
+            />
             {allowDelete && (
               <ActionIcon
                 icon={TrashIcon}
@@ -111,7 +123,10 @@ const EmojiPicker = memo<EmojiPickerProps>(
                   handleAvatarChange(defaultAvatar);
                   onDelete?.();
                 }}
-                size={20}
+                size={{
+                  blockSize: 32,
+                  size: 18,
+                }}
                 title={texts?.delete || 'Delete'}
               />
             )}
@@ -160,7 +175,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
           setVisible(v);
         }}
         open={visible}
-        placement={'bottomLeft'}
+        placement={'bottom'}
         rootClassName={styles.popover}
         trigger={['click']}
         {...popupProps}
