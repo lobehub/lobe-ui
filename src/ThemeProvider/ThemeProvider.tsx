@@ -16,6 +16,7 @@ import { lobeCustomStylish, lobeCustomToken } from '@/styles';
 import { createLobeAntdTheme } from '@/styles/theme/antdTheme';
 import { LobeCustomToken } from '@/types/customToken';
 
+import ConfigProvider from './ConfigProvider';
 import GlobalStyle from './GlobalStyle';
 import type { ThemeProviderProps } from './type';
 
@@ -85,10 +86,12 @@ const ThemeProvider = memo<ThemeProviderProps>(
           theme={theme}
           {...rest}
         >
-          {enableGlobalStyle && <GlobalStyle />}
-          <App className={className} style={{ minHeight: 'inherit', width: 'inherit', ...style }}>
-            {children}
-          </App>
+          <ConfigProvider>
+            {enableGlobalStyle && <GlobalStyle />}
+            <App className={className} style={{ minHeight: 'inherit', width: 'inherit', ...style }}>
+              {children}
+            </App>
+          </ConfigProvider>
         </AntdThemeProvider>
       </>
     );

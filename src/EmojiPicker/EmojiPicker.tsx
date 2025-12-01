@@ -43,6 +43,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
     open,
     defaultOpen = false,
     onOpenChange,
+    popupProps,
     ...rest
   }) => {
     const ref = useRef<HTMLDivElement>(null);
@@ -159,9 +160,10 @@ const EmojiPicker = memo<EmojiPickerProps>(
           setVisible(v);
         }}
         open={visible}
-        placement={'bottomRight'}
+        placement={'bottomLeft'}
         rootClassName={styles.popover}
         trigger={['click']}
+        {...popupProps}
       >
         {customRender ? (
           customRender(ava)

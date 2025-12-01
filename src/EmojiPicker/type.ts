@@ -1,3 +1,4 @@
+import { PopoverProps } from 'antd';
 import { CSSProperties, ReactNode } from 'react';
 
 import type { AvatarProps } from '@/Avatar/type';
@@ -41,6 +42,10 @@ export interface EmojiPickerProps extends Omit<AvatarProps, 'onChange' | 'avatar
   onUpload?: AvatarUploaderProps['onUpload'];
   open?: boolean;
   popupClassName?: string;
+  popupProps?: Omit<
+    PopoverProps,
+    'onOpenChange' | 'defaultOpen' | 'content' | 'open' | 'rootClassName' | 'trigger'
+  >;
   popupStyle?: CSSProperties;
   size?: number;
   texts?: AvatarUploaderProps['texts'] & {
