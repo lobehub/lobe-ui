@@ -134,7 +134,7 @@
     "rc-input-number": "^9.5.0",
     "rc-menu": "^9.16.1",
     "re-resizable": "^6.11.2",
-    "react-avatar-editor": "^13.0.2",
+    "react-avatar-editor": "^14.0.0",
     "react-error-boundary": "^6.0.0",
     "react-hotkeys-hook": "^5.2.1",
     "react-layout-kit": "^2.0.0",
