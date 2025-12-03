@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.19.0](https://github.com/lobehub/lobe-ui/compare/v2.18.4...v2.19.0)
+
+<sup>Released on **2025-12-03**</sup>
+
+#### ✨ Features
+
+- **misc**: Add TypewriterEffect.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add TypewriterEffect ([cca0993](https://github.com/lobehub/lobe-ui/commit/cca0993))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.18.4](https://github.com/lobehub/lobe-ui/compare/v2.18.3...v2.18.4)
 
 <sup>Released on **2025-12-01**</sup>
