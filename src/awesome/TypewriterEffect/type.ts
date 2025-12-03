@@ -35,20 +35,34 @@ export interface TypewriterEffectProps {
    */
   cursorColor?: string;
   /**
+   * Cursor fade animation
+   * @default true
+   */
+  cursorFade?: boolean;
+  /**
    * Style of the cursor (ignored if cursorCharacter is provided)
    * @default 'pipe'
    */
   cursorStyle?: CursorStyle;
+  /**
+   * Pause duration after deleting complete before next sentence (milliseconds)
+   * @default 0
+   */
+  deletePauseDuration?: number;
   /**
    * Speed of deleting characters (milliseconds per character)
    * @default 50
    */
   deletingSpeed?: number;
   /**
-   * Hide cursor while typing
+   * Hide cursor behavior
+   * - false: always show cursor
+   * - 'typing': hide cursor while typing
+   * - 'afterTyping': hide cursor after typing complete (during pause)
+   * - true: completely hide cursor
    * @default false
    */
-  hideCursorWhileTyping?: boolean;
+  hideCursorWhileTyping?: boolean | 'typing' | 'afterTyping';
   /**
    * Initial delay before starting animation (milliseconds)
    * @default 0

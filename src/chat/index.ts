@@ -35,6 +35,7 @@ export {
   default as EditableMessageList,
   type EditableMessageListProps,
 } from './EditableMessageList';
+export { default as LoadingDots, type LoadingDotsProps } from './LoadingDots';
 export { default as MessageInput, type MessageInputProps } from './MessageInput';
 export { default as MessageModal, type MessageModalProps } from './MessageModal';
 export { default as TokenTag, type TokenTagProps } from './TokenTag';

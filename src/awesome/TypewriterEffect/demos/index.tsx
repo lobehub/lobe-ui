@@ -3,24 +3,7 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
   const store = useCreateStore();
-  const {
-    sentence1,
-    sentence2,
-    sentence3,
-    typingSpeed,
-    deletingSpeed,
-    pauseDuration,
-    initialDelay,
-    loop,
-    color,
-    showCursor,
-    cursorStyle,
-    cursorCharacter,
-    cursorColor,
-    cursorBlinkDuration,
-    hideCursorWhileTyping,
-    reverseMode,
-  } = useControls(
+  const { sentence1, sentence2, sentence3, ...config } = useControls(
     {
       color: '',
       cursorBlinkDuration: {
@@ -31,9 +14,16 @@ export default () => {
       },
       cursorCharacter: '',
       cursorColor: '',
+      cursorFade: true,
       cursorStyle: {
         options: ['pipe', 'block', 'underscore', 'dot'],
         value: 'pipe',
+      },
+      deletePauseDuration: {
+        max: 3000,
+        min: 0,
+        step: 100,
+        value: 0,
       },
       deletingSpeed: {
         max: 200,
@@ -41,7 +31,10 @@ export default () => {
         step: 10,
         value: 50,
       },
-      hideCursorWhileTyping: false,
+      hideCursorWhileTyping: {
+        options: [false, 'typing', 'afterTyping', true],
+        value: false,
+      },
       initialDelay: {
         max: 3000,
         min: 0,
@@ -75,22 +68,7 @@ export default () => {
   return (
     <StoryBook levaStore={store}>
       <div style={{ fontSize: 24, minHeight: 80 }}>
-        <TypewriterEffect
-          color={color || undefined}
-          cursorBlinkDuration={cursorBlinkDuration}
-          cursorCharacter={cursorCharacter || undefined}
-          cursorColor={cursorColor || undefined}
-          cursorStyle={cursorStyle as any}
-          deletingSpeed={deletingSpeed}
-          hideCursorWhileTyping={hideCursorWhileTyping}
-          initialDelay={initialDelay}
-          loop={loop}
-          pauseDuration={pauseDuration}
-          reverseMode={reverseMode}
-          sentences={sentences}
-          showCursor={showCursor}
-          typingSpeed={typingSpeed}
-        />
+        <TypewriterEffect sentences={sentences} {...(config as any)} />
       </div>
     </StoryBook>
   );

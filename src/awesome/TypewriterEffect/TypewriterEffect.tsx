@@ -14,6 +14,7 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
     initialDelay = 0,
     pauseDuration = 2000,
     deletingSpeed = 50,
+    deletePauseDuration = 0,
     loop = true,
     className = '',
     color,
@@ -23,6 +24,7 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
     cursorClassName = '',
     cursorColor,
     cursorBlinkDuration = 0.8,
+    cursorFade = true,
     cursorStyle = 'pipe',
     textColors = [],
     variableSpeed,
@@ -37,6 +39,7 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
     const [isDeleting, setIsDeleting] = useState(false);
     const [currentTextIndex, setCurrentTextIndex] = useState(0);
     const [isVisible, setIsVisible] = useState(!startOnVisible);
+    const [isDeletePausing, setIsDeletePausing] = useState(false);
     const containerRef = useRef<HTMLElement>(null);
 
     const textArray = useMemo(
@@ -88,6 +91,14 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
       const currentText = textArray[currentTextIndex];
       const processedText = reverseMode ? currentText.split('').reverse().join('') : currentText;
 
+      // Handle delete pause state
+      if (isDeletePausing) {
+        timeout = setTimeout(() => {
+          setIsDeletePausing(false);
+        }, deletePauseDuration);
+        return () => clearTimeout(timeout);
+      }
+
       const executeTypingAnimation = () => {
         if (isDeleting) {
           if (displayedText === '') {
@@ -100,7 +111,11 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
             }
             setCurrentTextIndex((prev) => (prev + 1) % textArray.length);
             setCurrentCharIndex(0);
-            timeout = setTimeout(() => {}, pauseDuration);
+
+            if (deletePauseDuration > 0) {
+              setIsDeletePausing(true);
+              return;
+            }
           } else {
             timeout = setTimeout(() => {
               setDisplayedText((prev) => prev.slice(0, -1));
@@ -136,8 +151,10 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
       currentCharIndex,
       displayedText,
       isDeleting,
+      isDeletePausing,
       typingSpeed,
       deletingSpeed,
+      deletePauseDuration,
       pauseDuration,
       textArray,
       currentTextIndex,
@@ -169,9 +186,15 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
       }
     };
 
-    const shouldHideCursor =
-      hideCursorWhileTyping &&
-      (currentCharIndex < textArray[currentTextIndex].length || isDeleting);
+    const isTyping = currentCharIndex < textArray[currentTextIndex].length && !isDeleting;
+    const isAfterTyping = currentCharIndex === textArray[currentTextIndex].length && !isDeleting;
+
+    const shouldHideCursor = (() => {
+      if (hideCursorWhileTyping === true) return true; // 完全隐藏
+      if (hideCursorWhileTyping === 'typing') return isTyping || isDeleting; // 打字和删除时隐藏
+      if (hideCursorWhileTyping === 'afterTyping') return isAfterTyping; // 打字完成后隐藏
+      return false;
+    })();
 
     const textColor = getCurrentTextColor();
     const finalCursorColor = getCurrentCursorColor();
@@ -203,26 +226,33 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
             </motion.span>
           ))}
         </span>
-        {showCursor && (
-          <motion.span
-            animate={{ opacity: 1 }}
-            className={cx(
-              getCursorStyle(),
-              cursorClassName,
-              shouldHideCursor && styles.cursorHidden,
-            )}
-            initial={{ opacity: 0 }}
-            style={finalCursorColor ? { backgroundColor: finalCursorColor } : undefined}
-            transition={{
-              duration: cursorBlinkDuration,
-              ease: 'easeInOut',
-              repeat: Number.POSITIVE_INFINITY,
-              repeatType: 'reverse',
-            }}
-          >
-            {cursorCharacter}
-          </motion.span>
-        )}
+        {showCursor &&
+          (cursorFade ? (
+            <motion.span
+              animate={{ opacity: shouldHideCursor ? 0 : 1 }}
+              className={cx(getCursorStyle(), cursorClassName)}
+              initial={{ opacity: 0 }}
+              style={finalCursorColor ? { backgroundColor: finalCursorColor } : undefined}
+              transition={{
+                duration: shouldHideCursor ? 0.2 : cursorBlinkDuration,
+                ease: 'easeInOut',
+                repeat: shouldHideCursor ? 0 : Number.POSITIVE_INFINITY,
+                repeatType: 'reverse',
+              }}
+            >
+              {cursorCharacter}
+            </motion.span>
+          ) : (
+            <span
+              className={cx(getCursorStyle(), cursorClassName)}
+              style={{
+                backgroundColor: finalCursorColor,
+                opacity: shouldHideCursor ? 0 : 1,
+              }}
+            >
+              {cursorCharacter}
+            </span>
+          ))}
       </>,
     );
   },
