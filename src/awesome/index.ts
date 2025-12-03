@@ -15,3 +15,8 @@ export {
 export { default as Hero, type HeroAction, type HeroProps } from './Hero';
 export { default as Spotlight, type SpotlightProps } from './Spotlight';
 export { default as SpotlightCard, type SpotlightCardProps } from './SpotlightCard';
+export {
+  type CursorStyle,
+  default as TypewriterEffect,
+  type TypewriterEffectProps,
+} from './TypewriterEffect';
