@@ -1,2 +1,2 @@
-export type { CursorStyle, TypewriterEffectProps } from './type';
+export type { CursorStyle, SegmentMode, TypewriterEffectProps } from './type';
 export { default } from './TypewriterEffect';

@@ -2,6 +2,8 @@ import type { ElementType, ReactNode } from 'react';
 
 export type CursorStyle = 'pipe' | 'underscore' | 'dot' | 'block';
 
+export type SegmentMode = 'grapheme' | 'word';
+
 export interface TypewriterEffectProps {
   /**
    * Custom element type for the container
@@ -87,6 +89,13 @@ export interface TypewriterEffectProps {
    * @default false
    */
   reverseMode?: boolean;
+  /**
+   * Segment mode for text splitting
+   * - 'grapheme': split by character (emoji-safe)
+   * - 'word': split by word
+   * @default 'grapheme'
+   */
+  segmentMode?: SegmentMode;
   /**
    * Array of sentences to display
    */

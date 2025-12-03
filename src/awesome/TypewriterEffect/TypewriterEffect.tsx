@@ -31,6 +31,7 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
     onSentenceComplete,
     startOnVisible = false,
     reverseMode = false,
+    segmentMode = 'grapheme',
     ...props
   }: TypewriterEffectProps) => {
     const { styles, cx } = useStyles();
@@ -45,6 +46,27 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
     const textArray = useMemo(
       () => (Array.isArray(sentences) ? sentences : [sentences]),
       [sentences],
+    );
+
+    // Helper function to split text based on segment mode
+    const splitText = useCallback(
+      (text: string): string[] => {
+        // Use Intl.Segmenter if available
+        if (typeof Intl !== 'undefined' && 'Segmenter' in Intl) {
+          const segmenter = new Intl.Segmenter(undefined, { granularity: segmentMode });
+          return Array.from(segmenter.segment(text), (segment) => segment.segment);
+        }
+
+        // Fallback when Intl.Segmenter is not available
+        if (segmentMode === 'word') {
+          // Simple word splitting fallback
+          return text.split(/(\s+)/).filter(Boolean);
+        }
+
+        // Grapheme fallback
+        return Array.from(text);
+      },
+      [segmentMode],
     );
 
     const getRandomSpeed = useCallback(() => {
@@ -89,7 +111,9 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
       let timeout: ReturnType<typeof setTimeout>;
 
       const currentText = textArray[currentTextIndex];
-      const processedText = reverseMode ? currentText.split('').reverse().join('') : currentText;
+      // Split text based on segment mode
+      const textSegments = splitText(currentText);
+      const processedText = reverseMode ? textSegments.reverse().join('') : currentText;
 
       // Handle delete pause state
       if (isDeletePausing) {
@@ -118,14 +142,18 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
             }
           } else {
             timeout = setTimeout(() => {
-              setDisplayedText((prev) => prev.slice(0, -1));
+              setDisplayedText((prev) => {
+                const segments = splitText(prev);
+                return segments.slice(0, -1).join('');
+              });
             }, deletingSpeed);
           }
         } else {
-          if (currentCharIndex < processedText.length) {
+          const processedSegments = splitText(processedText);
+          if (currentCharIndex < processedSegments.length) {
             timeout = setTimeout(
               () => {
-                setDisplayedText((prev) => prev + processedText[currentCharIndex]);
+                setDisplayedText((prev) => prev + processedSegments[currentCharIndex]);
                 setCurrentCharIndex((prev) => prev + 1);
               },
               variableSpeed ? getRandomSpeed() : typingSpeed,
@@ -165,6 +193,7 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
       variableSpeed,
       onSentenceComplete,
       getRandomSpeed,
+      splitText,
     ]);
 
     const getCursorStyle = () => {
@@ -186,8 +215,9 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
       }
     };
 
-    const isTyping = currentCharIndex < textArray[currentTextIndex].length && !isDeleting;
-    const isAfterTyping = currentCharIndex === textArray[currentTextIndex].length && !isDeleting;
+    const currentTextLength = splitText(textArray[currentTextIndex]).length;
+    const isTyping = currentCharIndex < currentTextLength && !isDeleting;
+    const isAfterTyping = currentCharIndex === currentTextLength && !isDeleting;
 
     const shouldHideCursor = (() => {
       if (hideCursorWhileTyping === true) return true; // 完全隐藏
@@ -199,8 +229,8 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
     const textColor = getCurrentTextColor();
     const finalCursorColor = getCurrentCursorColor();
 
-    // Split displayed text into characters for animation
-    const characters = displayedText.split('');
+    // Split displayed text for animation
+    const characters = splitText(displayedText);
 
     return createElement(
       Component,

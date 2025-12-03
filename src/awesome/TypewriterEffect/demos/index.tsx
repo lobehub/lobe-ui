@@ -49,6 +49,10 @@ export default () => {
         value: 2000,
       },
       reverseMode: false,
+      segmentMode: {
+        options: ['grapheme', 'word'],
+        value: 'grapheme',
+      },
       sentence1: 'Build awesome apps with LobeHub.',
       sentence2: 'Create beautiful UI components.',
       sentence3: 'Enhance your user experience.',

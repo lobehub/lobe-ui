@@ -17,6 +17,7 @@ export { default as Spotlight, type SpotlightProps } from './Spotlight';
 export { default as SpotlightCard, type SpotlightCardProps } from './SpotlightCard';
 export {
   type CursorStyle,
+  type SegmentMode,
   default as TypewriterEffect,
   type TypewriterEffectProps,
 } from './TypewriterEffect';
