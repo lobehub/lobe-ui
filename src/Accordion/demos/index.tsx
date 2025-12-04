@@ -33,7 +33,7 @@ export default () => {
       },
       keepContentMounted: {
         label: 'Keep Content Mounted',
-        value: false,
+        value: true,
       },
       showDivider: {
         label: 'Show Divider',

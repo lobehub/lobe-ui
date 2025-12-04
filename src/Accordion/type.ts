@@ -110,7 +110,7 @@ export interface AccordionProps
   indicatorPlacement?: 'end' | 'start';
   /**
    * Keep content mounted when collapsed
-   * @default false
+   * @default true
    */
   keepContentMounted?: boolean;
   /**

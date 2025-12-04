@@ -1,6 +1,6 @@
 'use client';
 
-import { AnimatePresence, LazyMotion, m } from 'framer-motion';
+import { LazyMotion, m } from 'framer-motion';
 import { KeyboardEvent, memo, useCallback, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
@@ -125,7 +125,7 @@ const AccordionItem = memo<AccordionItemProps>(
       () => ({
         animate: isOpen ? 'enter' : 'exit',
         exit: 'exit',
-        initial: 'exit',
+        initial: false,
         variants: {
           enter: {
             height: 'auto',
@@ -151,7 +151,7 @@ const AccordionItem = memo<AccordionItemProps>(
 
     // Render content
     const contentElement = useMemo(() => {
-      if (disableAnimation) {
+      if (disableAnimation || !keepContentMounted) {
         if (keepContentMounted) {
           return (
             <div
@@ -180,7 +180,7 @@ const AccordionItem = memo<AccordionItemProps>(
         );
       }
 
-      return keepContentMounted ? (
+      return (
         <LazyMotion features={loadFeatures}>
           <m.div {...motionProps} style={{ overflow: 'hidden' }}>
             <div
@@ -192,22 +192,6 @@ const AccordionItem = memo<AccordionItemProps>(
             </div>
           </m.div>
         </LazyMotion>
-      ) : (
-        <AnimatePresence initial={false}>
-          {isOpen && (
-            <LazyMotion features={loadFeatures}>
-              <m.div {...motionProps} style={{ overflow: 'hidden' }}>
-                <div
-                  className={cx('accordion-content', styles.content, classNames?.content)}
-                  role="region"
-                  style={customStyles?.content}
-                >
-                  <div className={styles.contentInner}>{children}</div>
-                </div>
-              </m.div>
-            </LazyMotion>
-          )}
-        </AnimatePresence>
       );
     }, [
       disableAnimation,
