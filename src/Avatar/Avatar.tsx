@@ -34,6 +34,7 @@ const Avatar = memo<AvatarProps>(
     shadow,
     loading,
     sliceText = true,
+    emojiScaleWithBackground,
     ref,
     ...rest
   }) => {
@@ -101,7 +102,7 @@ const Avatar = memo<AvatarProps>(
     const customAvatar = emoji ? (
       <FluentEmoji
         emoji={emoji}
-        size={size * 0.8}
+        size={emojiScaleWithBackground ? (background ? size * 0.8 : size) : size * 0.8}
         type={animation ? 'anim' : '3d'}
         unoptimized={unoptimized}
       />
@@ -121,7 +122,7 @@ const Avatar = memo<AvatarProps>(
         size={size}
         src={isDefaultAntAvatar ? defualtAvatar : undefined}
         style={{
-          background: customAvatar && !emoji ? background || theme.colorFill : background,
+          background: background,
           boxShadow: bordered
             ? `${theme.colorBgLayout} 0 0 0 2px, ${borderedColor || theme.colorTextTertiary} 0 0 0 4px`
             : undefined,

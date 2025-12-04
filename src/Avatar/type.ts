@@ -10,6 +10,7 @@ export interface AvatarProps extends AntAvatarProps {
   background?: string;
   bordered?: boolean;
   borderedColor?: string;
+  emojiScaleWithBackground?: boolean;
   loading?: boolean;
   ref?: Ref<HTMLDivElement>;
   shadow?: boolean;
