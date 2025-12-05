@@ -30,7 +30,7 @@ const Markdown = memo<MarkdownProps>((props) => {
     componentProps,
     rehypePluginsAhead,
     allowHtml,
-    borderRadius = props.variant === 'chat' ? 4 : undefined,
+    borderRadius,
     fontSize = props.variant === 'chat' ? 14 : undefined,
     headerMultiple = props.variant === 'chat' ? 0.25 : undefined,
     marginMultiple = props.variant === 'chat' ? 1 : undefined,
