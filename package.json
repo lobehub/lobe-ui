@@ -181,7 +181,7 @@
     "babel-plugin-antd-style": "^1.0.4",
     "cheerio": "^1.1.2",
     "clean-package": "^2.2.0",
-    "commitlint": "^19.8.1",
+    "commitlint": "^20.0.0",
     "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
     "dotenv": "^17.2.3",
