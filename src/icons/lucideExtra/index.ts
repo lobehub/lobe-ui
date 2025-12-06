@@ -8,5 +8,6 @@ export { default as LeftClickIcon } from './LeftClickIcon';
 export { default as LeftDoubleClickIcon } from './LeftDoubleClickIcon';
 export { default as RightClickIcon } from './RightClickIcon';
 export { default as RightDoubleClickIcon } from './RightDoubleClickIcon';
+export { default as ShapesUploadIcon } from './ShapesUploadIcon';
 export { default as TreeDownRightIcon } from './TreeDownRightIcon';
 export { default as TreeUpDownRightIcon } from './TreeUpDownRightIcon';
