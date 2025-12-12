@@ -36,7 +36,6 @@ export const useStyles = createStyles(({ css, token }) => {
       }
     `,
     icon: css`
-      color: ${token.colorTextDescription};
       transition: transform 200ms ${token.motionEaseOut};
     `,
     iconRotate: css`
@@ -48,6 +47,7 @@ export const useStyles = createStyles(({ css, token }) => {
       align-items: center;
 
       font-size: 18px;
+      color: ${token.colorTextDescription};
 
       transition: transform 200ms ${token.motionEaseOut};
     `,

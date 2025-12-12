@@ -255,6 +255,7 @@ const AccordionItem = memo<AccordionItemProps>(
             opacity: disabled ? 0.5 : undefined,
             overflow: 'hidden',
             width: '100%',
+            ...customStyles?.header,
           }}
           variant={customVariant || variant}
         >

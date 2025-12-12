@@ -1,20 +1,13 @@
 'use client';
 
-import { Alert as AntdAlert, message } from 'antd';
+import { Alert as AntdAlert } from 'antd';
 import { cva } from 'class-variance-authority';
 import { camelCase } from 'lodash-es';
-import {
-  AlertTriangle,
-  CheckCircle,
-  ChevronDown,
-  ChevronRight,
-  Info,
-  X,
-  XCircle,
-} from 'lucide-react';
-import { memo, useMemo, useState } from 'react';
+import { AlertTriangle, CheckCircle, Info, X, XCircle } from 'lucide-react';
+import { memo, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
+import { Accordion, AccordionItem } from '@/Accordion';
 import ActionIcon from '@/ActionIcon';
 import Icon from '@/Icon';
 
@@ -48,6 +41,7 @@ const Alert = memo<AlertProps>(
     style,
     extra,
     classNames,
+    styles: customStyles,
     text,
     extraDefaultExpand = false,
     extraIsolate,
@@ -56,7 +50,6 @@ const Alert = memo<AlertProps>(
     ref,
     ...rest
   }) => {
-    const [expand, setExpand] = useState(extraDefaultExpand);
     const { theme, styles, cx } = useStyles({
       closable: !!closable,
       hasTitle: !!description,
@@ -138,25 +131,6 @@ const Alert = memo<AlertProps>(
       [styles],
     );
 
-    const extraBodyVariants = useMemo(
-      () =>
-        cva(styles.extraBody, {
-          defaultVariants: {
-            variant: 'filled',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: null,
-              outlined: null,
-              borderless: styles.borderless,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
-
     const isInsideExtra = Boolean(!extraIsolate && !!extra);
 
     const alert = (
@@ -189,6 +163,7 @@ const Alert = memo<AlertProps>(
           borderColor: colors(theme, type, 'fillSecondary'),
           color: colorfulText ? colors(theme, type) : undefined,
           ...style,
+          ...customStyles?.alert,
         }}
         type={type === 'secondary' ? 'info' : type}
         {...rest}
@@ -206,7 +181,7 @@ const Alert = memo<AlertProps>(
       );
 
     return (
-      <Flexbox className={classNames?.container}>
+      <Flexbox className={classNames?.container} style={customStyles?.container}>
         {alert}
         <Flexbox
           className={extraVariants({ banner, variant })}
@@ -217,26 +192,35 @@ const Alert = memo<AlertProps>(
             fontSize: description ? 14 : 12,
           }}
         >
-          <Flexbox
-            align={'center'}
-            className={extraHeaderVariants({ variant })}
-            gap={message ? 6 : 10}
-            horizontal
-            style={{
-              borderColor: colors(theme, type, 'fillSecondary'),
-            }}
-          >
-            <ActionIcon
-              color={colors(theme, type)}
-              icon={expand ? ChevronDown : ChevronRight}
-              onClick={() => setExpand(!expand)}
-              size={18}
-            />
-            <div className={cx(styles.expandText)} onClick={() => setExpand(!expand)}>
-              {text?.detail || 'Show Details'}
-            </div>
-          </Flexbox>
-          {expand && <div className={extraBodyVariants({ variant })}>{extra}</div>}
+          <Accordion defaultExpandedKeys={extraDefaultExpand ? ['extra'] : []}>
+            <AccordionItem
+              classNames={{
+                content: classNames?.extraContent,
+                header: extraHeaderVariants({ variant }),
+              }}
+              itemKey={'extra'}
+              styles={{
+                content: {
+                  fontSize: 12,
+                  padding: 8,
+                  ...customStyles?.extraContent,
+                },
+                header: {
+                  borderColor: colors(theme, type, 'fillSecondary'),
+                },
+                indicator: {
+                  color: colors(theme, type),
+                },
+                title: {
+                  color: colors(theme, type),
+                  fontSize: 12,
+                },
+              }}
+              title={text?.detail || 'Show Details'}
+            >
+              {extra}
+            </AccordionItem>
+          </Accordion>
         </Flexbox>
       </Flexbox>
     );

@@ -23,7 +23,6 @@ export const useStyles = createStyles(
       `,
       borderlessExtraHeader: css`
         margin-block-start: ${baseBlockPadding}px;
-        margin-inline-start: ${-baseInlinePadding * 0.25}px;
         padding-inline: 0;
       `,
       colorfulText: css`
@@ -49,16 +48,10 @@ export const useStyles = createStyles(
         border-end-start-radius: ${token.borderRadiusLG}px;
         border-end-end-radius: ${token.borderRadiusLG}px;
       `,
-      extraBody: css`
-        overflow-x: auto;
-        width: 100%;
-        padding-block-end: ${baseBlockPadding * 0.5}px;
-        padding-inline: ${baseInlinePadding * 0.5}px;
-      `,
       extraHeader: css`
-        padding-block: ${baseBlockPadding * 0.5}px;
-        padding-inline: ${baseInlinePadding * 0.5}px;
         border-block-start: 1px dashed;
+        border-radius: 0;
+        background: transparent !important;
       `,
       filled: css``,
       glass: stylish.blur,
