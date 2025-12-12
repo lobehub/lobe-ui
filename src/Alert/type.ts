@@ -4,7 +4,7 @@ import type { ReactNode, Ref } from 'react';
 
 import type { IconProps } from '@/Icon';
 
-export interface AlertProps extends Omit<AntAlertProps, 'icon'> {
+export interface AlertProps extends Omit<AntAlertProps, 'icon' | 'type'> {
   classNames?: {
     alert?: string;
     container?: string;
@@ -20,5 +20,6 @@ export interface AlertProps extends Omit<AntAlertProps, 'icon'> {
   text?: {
     detail?: string;
   };
+  type?: 'success' | 'info' | 'warning' | 'error' | 'secondary';
   variant?: 'filled' | 'outlined' | 'borderless';
 }

@@ -13,7 +13,7 @@ export default () => {
       message: 'Informational Notes',
       showIcon: true,
       type: {
-        options: ['info', 'success', 'warning', 'error'],
+        options: ['info', 'success', 'warning', 'error', 'secondary'],
         value: 'info',
       },
       variant: {

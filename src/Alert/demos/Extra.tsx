@@ -26,8 +26,8 @@ export default () => {
       message: 'Informational Notes',
       showIcon: true,
       type: {
-        options: ['info', 'success', 'warning', 'error'],
-        value: 'info',
+        options: ['info', 'success', 'warning', 'error', 'secondary'],
+        value: 'secondary',
       },
       variant: {
         options: ['filled', 'outlined', 'borderless'],

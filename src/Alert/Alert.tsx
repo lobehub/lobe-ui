@@ -24,12 +24,15 @@ import type { AlertProps } from './type';
 const typeIcons = {
   error: XCircle,
   info: Info,
+  secondary: AlertTriangle,
   success: CheckCircle,
   warning: AlertTriangle,
 };
 
-const colors = (theme: any, type: string = 'info', ...keys: string[]) =>
-  theme[camelCase(['color', type, ...keys].join('-'))] as string;
+const colors = (theme: any, type: string = 'info', ...keys: string[]) => {
+  if (type === 'secondary') return theme[camelCase(['color', ...keys].join('-'))] as string;
+  return theme[camelCase(['color', type, ...keys].join('-'))] as string;
+};
 
 const Alert = memo<AlertProps>(
   ({
@@ -171,7 +174,14 @@ const Alert = memo<AlertProps>(
         closable={closable}
         closeIcon={closeIcon || <ActionIcon color={colors(theme, type)} icon={X} size={'small'} />}
         description={description}
-        icon={<Icon icon={typeIcons[type] || icon} size={description ? 24 : 18} {...iconProps} />}
+        icon={
+          <Icon
+            color={type === 'secondary' ? theme.colorTextSecondary : undefined}
+            icon={typeIcons[type] || icon}
+            size={description ? 24 : 18}
+            {...iconProps}
+          />
+        }
         ref={ref}
         showIcon={showIcon}
         style={{
@@ -180,7 +190,7 @@ const Alert = memo<AlertProps>(
           color: colorfulText ? colors(theme, type) : undefined,
           ...style,
         }}
-        type={type}
+        type={type === 'secondary' ? 'info' : type}
         {...rest}
       />
     );
