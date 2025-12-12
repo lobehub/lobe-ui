@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.23.1](https://github.com/lobehub/lobe-ui/compare/v2.23.0...v2.23.1)
+
+<sup>Released on **2025-12-12**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Alert type.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Alert type ([4e59431](https://github.com/lobehub/lobe-ui/commit/4e59431))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.23.0](https://github.com/lobehub/lobe-ui/compare/v2.22.0...v2.23.0)
 
 <sup>Released on **2025-12-11**</sup>
