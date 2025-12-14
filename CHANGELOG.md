@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.24.0](https://github.com/lobehub/lobe-ui/compare/v2.23.2...v2.24.0)
+
+<sup>Released on **2025-12-14**</sup>
+
+#### ✨ Features
+
+- **misc**: Add Skeleton and Empty.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add Skeleton and Empty ([5867ea6](https://github.com/lobehub/lobe-ui/commit/5867ea6))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.23.2](https://github.com/lobehub/lobe-ui/compare/v2.23.1...v2.23.2)
 
 <sup>Released on **2025-12-12**</sup>
