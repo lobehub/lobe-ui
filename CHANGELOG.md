@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.24.1](https://github.com/lobehub/lobe-ui/compare/v2.24.0...v2.24.1)
+
+<sup>Released on **2025-12-15**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix Highlight trim error.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix Highlight trim error ([dd089b7](https://github.com/lobehub/lobe-ui/commit/dd089b7))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 2.24.0](https://github.com/lobehub/lobe-ui/compare/v2.23.2...v2.24.0)
 
 <sup>Released on **2025-12-14**</sup>
