@@ -129,14 +129,15 @@ const useStreamingHighlighter = (
   const [result, setResult] = useState<StreamingHighlightResult>();
   const tokenizerRef = useRef<ShikiStreamTokenizer | null>(null);
   const previousTextRef = useRef('');
-  const latestTextRef = useRef(text);
+  const safeText = text ?? '';
+  const latestTextRef = useRef(safeText);
   const preStyleRef = useRef<CSSProperties | undefined>(undefined);
   const colorReplacementsRef = useRef(colorReplacements);
   const linesRef = useRef<ThemedToken[][]>([[]]);
 
   useEffect(() => {
-    latestTextRef.current = text;
-  }, [text]);
+    latestTextRef.current = safeText;
+  }, [safeText]);
 
   useEffect(() => {
     colorReplacementsRef.current = colorReplacements;
@@ -265,8 +266,8 @@ const useStreamingHighlighter = (
   useEffect(() => {
     if (!enabled) return;
     if (!tokenizerRef.current) return;
-    updateTokens(text);
-  }, [enabled, text, updateTokens]);
+    updateTokens(safeText);
+  }, [enabled, safeText, updateTokens]);
 
   return result;
 };
@@ -283,7 +284,10 @@ export const useHighlight = (
 ): UseHighlightResponse => {
   const { isDarkMode } = useThemeMode();
   const theme = useTheme();
-  const lang = language.toLowerCase();
+
+  // Safely handle language and text with boundary checks
+  const safeText = text ?? '';
+  const lang = (language ?? 'plaintext').toLowerCase();
 
   // Match supported languages
   const matchedLanguage = useMemo(() => getCodeLanguageByInput(lang), [lang]);
@@ -333,11 +337,11 @@ export const useHighlight = (
   // Build cache key
   const cacheKey = useMemo((): string | null => {
     // Use hash for long text
-    const hash = text.length < MD5_LENGTH_THRESHOLD ? text : Md5.hashStr(text);
+    const hash = safeText.length < MD5_LENGTH_THRESHOLD ? safeText : Md5.hashStr(safeText);
     return [matchedLanguage, builtinTheme || (isDarkMode ? 'd' : 'l'), hash]
       .filter(Boolean)
       .join('-');
-  }, [text, matchedLanguage, isDarkMode, builtinTheme]);
+  }, [safeText, matchedLanguage, isDarkMode, builtinTheme]);
 
   // Use SWR to get highlighted HTML
   const response = useSWR(
@@ -346,8 +350,8 @@ export const useHighlight = (
       try {
         // Try full rendering
         const codeToHtml = await shikiPromise;
-        if (!codeToHtml) return text;
-        const html = await codeToHtml(text, {
+        if (!codeToHtml) return safeText;
+        const html = await codeToHtml(safeText, {
           colorReplacements: builtinTheme ? undefined : colorReplacements,
           lang: matchedLanguage,
           theme: builtinTheme || (isDarkMode ? 'slack-dark' : 'slack-ochin'),
@@ -361,15 +365,15 @@ export const useHighlight = (
         try {
           // Try simple rendering (without transformers)
           const codeToHtml = await shikiPromise;
-          if (!codeToHtml) return text;
-          const html = await codeToHtml(text, {
+          if (!codeToHtml) return safeText;
+          const html = await codeToHtml(safeText, {
             lang: matchedLanguage,
             theme: isDarkMode ? 'dark-plus' : 'light-plus',
           });
           return html;
         } catch {
           // Fallback to plain text
-          const fallbackHtml = `<pre class="fallback"><code>${escapeHtml(text)}</code></pre>`;
+          const fallbackHtml = `<pre class="fallback"><code>${escapeHtml(safeText)}</code></pre>`;
           return fallbackHtml;
         }
       }
@@ -383,7 +387,7 @@ export const useHighlight = (
   );
 
   const effectiveTheme = builtinTheme || (isDarkMode ? 'slack-dark' : 'slack-ochin');
-  const streamingResult = useStreamingHighlighter(text, {
+  const streamingResult = useStreamingHighlighter(safeText, {
     colorReplacements: builtinTheme ? undefined : colorReplacements[effectiveTheme],
     enabled: streaming,
     language: matchedLanguage,

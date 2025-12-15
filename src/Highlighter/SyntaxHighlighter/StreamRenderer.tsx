@@ -91,7 +91,11 @@ const TokenLine = memo(
 const StreamRenderer = memo<StreamRendererProps>(
   ({ children, className, enableTransformer, fallbackClassName, language, style, theme }) => {
     const { cx } = useStyles();
-    const { streaming } = useHighlight(children, {
+
+    // Safely handle empty or invalid children
+    const safeChildren = children ?? '';
+
+    const { streaming } = useHighlight(safeChildren, {
       enableTransformer,
       language,
       streaming: true,
@@ -106,7 +110,7 @@ const StreamRenderer = memo<StreamRendererProps>(
       return (
         <div className={fallbackClassName} dir="ltr" style={style}>
           <pre>
-            <code>{children}</code>
+            <code>{safeChildren}</code>
           </pre>
         </div>
       );

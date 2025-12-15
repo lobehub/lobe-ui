@@ -68,7 +68,16 @@ export const Highlighter = memo<HighlighterProps>(
       [styles],
     );
 
-    const tirmedChildren = children.trim();
+    // Safely handle children with boundary check
+    const tirmedChildren = useMemo(() => {
+      if (children === null || children === undefined) return '';
+      if (typeof children !== 'string') {
+        console.warn('Highlighter: children should be a string, received:', typeof children);
+        return String(children);
+      }
+      return children.trim();
+    }, [children]);
+
     const copyContentRef = useRef(tirmedChildren);
 
     useEffect(() => {
