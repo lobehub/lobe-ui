@@ -99,10 +99,16 @@ const Avatar = memo<AvatarProps>(
         avatar
       );
 
+    const hasBackground =
+      background &&
+      background !== 'transparent' &&
+      background !== 'rgba(0,0,0,0)' &&
+      background !== null;
+
     const customAvatar = emoji ? (
       <FluentEmoji
         emoji={emoji}
-        size={emojiScaleWithBackground ? (background ? size * 0.8 : size) : size * 0.8}
+        size={emojiScaleWithBackground ? (hasBackground ? size * 0.8 : size) : size * 0.8}
         type={animation ? 'anim' : '3d'}
         unoptimized={unoptimized}
       />
