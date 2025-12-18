@@ -8,8 +8,11 @@ import { Center, Flexbox } from 'react-layout-kit';
 
 import Button from '@/Button';
 import Icon from '@/Icon';
+import Tag from '@/Tag';
+import Text from '@/Text';
 
 import { useStyles } from './style';
+import { AvatarUploaderProps } from './type';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
@@ -23,27 +26,20 @@ const createUploadImageHandler = (onUploadImage: (base64: string) => void) => (f
   });
 };
 
-export interface AvatarUploaderProps {
-  compressSize?: number;
-  onChange: (avatar: string) => void;
-  onUpload?: (file: File) => void;
-  texts?: {
-    draggerDesc?: string;
-    fileTypeError?: string;
-    uploadBtn?: string;
-  };
-}
-
 const AvatarUploader = memo<AvatarUploaderProps>(
-  ({ onChange, texts, compressSize = 256, onUpload }) => {
+  ({ shape, onChange, texts, compressSize = 256, onUpload }) => {
     const editor = useRef<any>(null);
     const [previewImage, setPreviewImage] = useState('');
-    const { styles } = useStyles();
+    const { styles, theme } = useStyles();
 
     const beforeUpload = useCallback((file: FileType) => {
-      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+      const isJpgOrPng =
+        file.type === 'image/jpeg' ||
+        file.type === 'image/png' ||
+        file.type === 'image/gif' ||
+        file.type === 'image/webp';
       if (!isJpgOrPng) {
-        message.error(texts?.fileTypeError || 'You can only upload JPG/PNG file!');
+        message.error(texts?.fileTypeError || 'You can only upload image file!');
         return;
       }
       return createUploadImageHandler((avatar) => {
@@ -56,11 +52,20 @@ const AvatarUploader = memo<AvatarUploaderProps>(
       const canvasScaled = editor.current.getImageScaledToCanvas() as HTMLCanvasElement;
       const dataUrl = canvasScaled.toDataURL();
       onChange(dataUrl);
+
       if (!onUpload) return;
-      const file: File = new File([dataUrl], 'avatar.webp', {
-        type: 'image/webp',
-      });
-      onUpload?.(file);
+
+      // 使用 toBlob 直接获取 Blob，然后创建 File 对象
+      canvasScaled.toBlob(
+        (blob) => {
+          if (blob) {
+            const file = new File([blob], 'avatar.webp', { type: 'image/webp' });
+            onUpload(file);
+          }
+        },
+        'image/webp',
+        0.95,
+      ); // 0.95 是图片质量
     };
 
     return (
@@ -74,8 +79,16 @@ const AvatarUploader = memo<AvatarUploaderProps>(
             multiple={false}
           >
             <Center gap={16} height={compressSize} width={compressSize}>
-              <Icon icon={ImageUpIcon} size={48} />
-              <div>{texts?.draggerDesc || 'Click or Drag image to this area to upload'}</div>
+              <Icon color={theme.colorTextDescription} icon={ImageUpIcon} size={48} />
+              <Text color={theme.colorTextSecondary}>
+                {texts?.draggerDesc || 'Click or Drag image to this area to upload'}
+              </Text>
+              <Center gap={4} horizontal>
+                <Tag>JPG</Tag>
+                <Tag>PNG</Tag>
+                <Tag>GIF</Tag>
+                <Tag>WEBP</Tag>
+              </Center>
             </Center>
           </Dragger>
         )}
@@ -83,7 +96,7 @@ const AvatarUploader = memo<AvatarUploaderProps>(
           <Center gap={8} style={{ position: 'relative' }} width={'100%'}>
             <AvatarEditor
               border={0}
-              borderRadius={compressSize / 2}
+              borderRadius={shape === 'square' ? undefined : compressSize / 2}
               className={styles.editor}
               height={compressSize}
               image={previewImage}

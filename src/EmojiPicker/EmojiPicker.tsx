@@ -44,6 +44,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
     defaultOpen = false,
     onOpenChange,
     popupProps,
+    shape,
     ...rest
   }) => {
     const ref = useRef<HTMLDivElement>(null);
@@ -151,6 +152,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
             compressSize={compressSize}
             onChange={handleAvatarChange}
             onUpload={onUpload}
+            shape={shape}
             texts={texts}
           />
         )}
@@ -183,7 +185,13 @@ const EmojiPicker = memo<EmojiPickerProps>(
         {customRender ? (
           customRender(ava)
         ) : (
-          <Avatar avatar={ava} className={cx(styles.root, className)} loading={loading} {...rest} />
+          <Avatar
+            avatar={ava}
+            className={cx(styles.root, className)}
+            loading={loading}
+            shape={shape}
+            {...rest}
+          />
         )}
       </Popover>
     );

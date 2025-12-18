@@ -2,7 +2,18 @@ import { PopoverProps } from 'antd';
 import { CSSProperties, ReactNode } from 'react';
 
 import type { AvatarProps } from '@/Avatar/type';
-import type { AvatarUploaderProps } from '@/EmojiPicker/AvatarUploader';
+
+export interface AvatarUploaderProps {
+  compressSize?: number;
+  onChange: (avatar: string) => void;
+  onUpload?: (file: File) => void;
+  shape?: 'circle' | 'square';
+  texts?: {
+    draggerDesc?: string;
+    fileTypeError?: string;
+    uploadBtn?: string;
+  };
+}
 
 export interface EmojiPickerCustomEmoji {
   emojis: [
