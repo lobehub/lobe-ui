@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 2.24.3](https://github.com/lobehub/lobe-ui/compare/v2.24.2...v2.24.3)
+
+<sup>Released on **2025-12-18**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix EmojiPicker upload.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix EmojiPicker upload ([7c75f06](https://github.com/lobehub/lobe-ui/commit/7c75f06))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.24.2](https://github.com/lobehub/lobe-ui/compare/v2.24.1...v2.24.2)
 
 <sup>Released on **2025-12-17**</sup>
