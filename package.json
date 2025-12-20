@@ -192,7 +192,7 @@
     "father": "4.5.2",
     "figma-js": "1.16.1-0",
     "husky": "^9.1.7",
-    "jsdom": "^26.1.0",
+    "jsdom": "^27.0.0",
     "lint-staged": "^16.2.7",
     "mdast-util-to-markdown": "^2.1.2",
     "prettier": "^3.7.4",
