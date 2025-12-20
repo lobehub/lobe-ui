@@ -1,11 +1,11 @@
 'use client';
 
-import { KeyboardEvent, memo, useCallback, useMemo } from 'react';
+import { KeyboardEvent, memo, use, useCallback, useMemo } from 'react';
 
 import Block from '@/Block';
 import { Flexbox } from '@/Flex';
+import { MotionComponent } from '@/MotionProvider';
 import Text from '@/Text';
-import { LazyMotion, m } from '@/motion';
 
 import ArrowIcon from './ArrowIcon';
 import { useAccordionContext } from './context';
@@ -147,6 +147,8 @@ const AccordionItem = memo<AccordionItemProps>(
       [isOpen, contextMotionProps],
     );
 
+    const m = use(MotionComponent);
+
     // Render content
     const contentElement = useMemo(() => {
       if (disableAnimation || !keepContentMounted) {
@@ -179,17 +181,15 @@ const AccordionItem = memo<AccordionItemProps>(
       }
 
       return (
-        <LazyMotion>
-          <m.div {...motionProps} style={{ overflow: 'hidden' }}>
-            <div
-              className={cx('accordion-content', styles.content, classNames?.content)}
-              role="region"
-              style={customStyles?.content}
-            >
-              <div className={styles.contentInner}>{children}</div>
-            </div>
-          </m.div>
-        </LazyMotion>
+        <m.div {...motionProps} style={{ overflow: 'hidden' }}>
+          <div
+            className={cx('accordion-content', styles.content, classNames?.content)}
+            role="region"
+            style={customStyles?.content}
+          >
+            <div className={styles.contentInner}>{children}</div>
+          </div>
+        </m.div>
       );
     }, [
       disableAnimation,
