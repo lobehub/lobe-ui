@@ -161,7 +161,7 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^6.1.0",
-    "@commitlint/cli": "^19.8.1",
+    "@commitlint/cli": "^20.0.0",
     "@lobehub/lint": "^1.26.3",
     "@testing-library/react": "^16.3.1",
     "@types/chroma-js": "^3.1.2",
