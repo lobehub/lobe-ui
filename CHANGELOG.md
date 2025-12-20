@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 3.1.2](https://github.com/lobehub/lobe-ui/compare/v3.1.1...v3.1.2)
+
+<sup>Released on **2025-12-20**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update deps.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update deps ([f652bb7](https://github.com/lobehub/lobe-ui/commit/f652bb7))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 3.1.1](https://github.com/lobehub/lobe-ui/compare/v3.1.0...v3.1.1)
 
 <sup>Released on **2025-12-20**</sup>
