@@ -189,7 +189,7 @@
     "dumi": "^2.4.21",
     "dumi-theme-lobehub": "^2.0.9",
     "eslint": "^8.57.1",
-    "father": "4.5.2",
+    "father": "^4.6.11",
     "figma-js": "1.16.1-0",
     "husky": "^9.1.7",
     "jsdom": "^26.1.0",
