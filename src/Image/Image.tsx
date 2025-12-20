@@ -78,6 +78,9 @@ const Image = memo<ImageProps>(
         {actions && <div className={styles.actions}>{actions}</div>}
         <AntImage
           className={cx(styles.image, classNames?.image)}
+          classNames={{
+            root: cx(styles.wrapper, classNames?.wrapper),
+          }}
           fallback={theme.isDarkMode ? FALLBACK_DARK : FALLBACK_LIGHT}
           height={height}
           loading={'lazy'}
@@ -98,11 +101,10 @@ const Image = memo<ImageProps>(
             objectFit: objectFit || 'cover',
             ...customStyles?.image,
           }}
-          width={width}
-          wrapperClassName={cx(styles.wrapper, classNames?.wrapper)}
-          wrapperStyle={{
-            ...customStyles?.wrapper,
+          styles={{
+            root: customStyles?.wrapper,
           }}
+          width={width}
           {...rest}
         />
       </Flexbox>

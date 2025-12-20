@@ -88,8 +88,7 @@ const Tag = memo<TagProps>(
 
     return (
       <AntTag
-        bordered={false}
-        className={cx(variants({ size, variant }), className)}
+        className={cx(variants({ size, variant: variant as any }), className)}
         color={color}
         onClick={onClick}
         ref={ref}
@@ -100,6 +99,7 @@ const Tag = memo<TagProps>(
           cursor: onClick ? 'pointer' : undefined,
           ...style,
         }}
+        variant={variant === 'borderless' ? 'outlined' : variant}
         {...rest}
       >
         {children}

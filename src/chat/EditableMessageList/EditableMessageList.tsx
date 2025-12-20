@@ -35,7 +35,6 @@ const EditableMessageList = memo<EditableMessageListProps>(
           >
             <Select
               disabled={disabled}
-              dropdownStyle={{ zIndex: 100 }}
               onChange={(value) => {
                 dispatch({ index, role: value, type: 'updateMessageRole' });
               }}
@@ -45,6 +44,7 @@ const EditableMessageList = memo<EditableMessageListProps>(
                 { label: 'Output', value: 'assistant' },
               ]}
               style={{ width: 120 }}
+              styles={{ popup: { root: { zIndex: 100 } } }}
               value={item.role}
             />
             <ControlInput

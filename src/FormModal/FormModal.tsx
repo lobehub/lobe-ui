@@ -53,8 +53,9 @@ const FormModal = memo<FormModalProps>(
   }) => {
     const { mobile } = useResponsive();
     const { cx, styles: s } = useStyles();
-    const { form: formClassName, footer: footerClassName, ...modalClassNames } = classNames;
-    const { form: formStyle, ...modalStyles } = styles;
+    const { form: formClassName, ...modalClassNames } = classNames;
+    const { form: formStyle, ...modalStyles } =
+      typeof styles === 'function' ? { form: undefined } : styles;
 
     return (
       <Modal
@@ -81,13 +82,17 @@ const FormModal = memo<FormModalProps>(
         open={open}
         paddings={paddings}
         style={style}
-        styles={{
-          ...modalStyles,
-          body: {
-            paddingTop: mobile ? 0 : undefined,
-            ...modalStyles?.body,
-          },
-        }}
+        styles={
+          typeof styles === 'function'
+            ? styles
+            : {
+                ...modalStyles,
+                body: {
+                  paddingTop: mobile ? 0 : undefined,
+                  ...modalStyles?.body,
+                },
+              }
+        }
         title={title}
         width={width}
         zIndex={zIndex}
@@ -96,7 +101,7 @@ const FormModal = memo<FormModalProps>(
           className={cx(s.form, formClassName)}
           clearOnDestroy={destroyOnHidden}
           footer={
-            <Flexbox align={'center'} className={cx(s.footer, footerClassName)} gap={8} horizontal>
+            <Flexbox align={'center'} className={cx(s.footer)} gap={8} horizontal>
               {footer || (
                 <Button
                   block

@@ -94,7 +94,6 @@ export default defineConfig({
   define: {
     'process.env': process.env,
   },
-  exportStatic: {},
   extraBabelPlugins: ['babel-plugin-antd-style'],
   favicons: ['https://lobehub.com/favicon.ico'],
   jsMinifier: 'swc',
@@ -113,7 +112,6 @@ export default defineConfig({
   sitemap: {
     hostname: 'https://ui.lobehub.com',
   },
-  ssr: isProduction ? {} : false,
   styles: [
     `html, body { background: transparent;  }
 

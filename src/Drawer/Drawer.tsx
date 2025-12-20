@@ -129,32 +129,36 @@ const Drawer = memo<DrawerProps>(
         onClose={onClose}
         panelRef={ref}
         placement={placement}
-        styles={{
-          ...styles,
-          body: {
-            background: 'transparent',
-            paddingBlock: sidebar ? 0 : 12,
-            paddingInline: sidebar ? 0 : 16,
-            ...styles?.body,
-          },
-          content: {
-            background: sidebar
-              ? `linear-gradient(to right, ${theme.colorBgLayout} 49.9%, ${theme.colorBgContainer} 50%)`
-              : theme.colorBgContainer,
-            ...styles?.content,
-          },
-          header: {
-            background: 'transparent',
-            display: noHeader ? 'none' : undefined,
-            padding: 4,
-            ...styles?.header,
-          },
-          wrapper: {
-            background: theme.colorBgContainer,
-            ...headerBorder,
-            ...styles?.wrapper,
-          },
-        }}
+        styles={
+          typeof styles === 'function'
+            ? styles
+            : {
+                ...styles,
+                body: {
+                  background: 'transparent',
+                  paddingBlock: sidebar ? 0 : 12,
+                  paddingInline: sidebar ? 0 : 16,
+                  ...styles?.body,
+                },
+                header: {
+                  background: 'transparent',
+                  display: noHeader ? 'none' : undefined,
+                  padding: 4,
+                  ...styles?.header,
+                },
+                section: {
+                  background: sidebar
+                    ? `linear-gradient(to right, ${theme.colorBgLayout} 49.9%, ${theme.colorBgContainer} 50%)`
+                    : theme.colorBgContainer,
+                  ...styles?.section,
+                },
+                wrapper: {
+                  background: theme.colorBgContainer,
+                  ...headerBorder,
+                  ...styles?.wrapper,
+                },
+              }
+        }
         title={
           <Flexbox
             align={'center'}

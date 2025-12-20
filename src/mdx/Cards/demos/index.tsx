@@ -11,21 +11,21 @@ export default () => (
       <Card href="/mdx/callouts" title="Steps" />
       <Card href="/mdx/callouts" title="FileTree" />
     </Cards>
-    <Divider orientation={'left'}>Icon & Title</Divider>
+    <Divider titlePlacement={'left'}>Icon & Title</Divider>
     <Cards>
       <Card href="/mdx/callout" icon={Warehouse} title="Callout" />
       <Card href="/mdx/callout" icon={Warehouse} title="Tabs" />
       <Card href="/mdx/callouts" icon={Warehouse} title="Steps" />
       <Card href="/mdx/callouts" icon={Warehouse} title="FileTree" />
     </Cards>
-    <Divider orientation={'left'}>Icon & Desc & Title</Divider>
+    <Divider titlePlacement={'left'}>Icon & Desc & Title</Divider>
     <Cards>
       <Card desc="Demo desction text" href="/mdx/callout" icon={Warehouse} title="Callout" />
       <Card desc="Demo desction text" href="/mdx/callout" icon={Warehouse} title="Tabs" />
       <Card desc="Demo desction text" href="/mdx/callouts" icon={Warehouse} title="Steps" />
       <Card desc="Demo desction text" href="/mdx/callouts" icon={Warehouse} title="FileTree" />
     </Cards>
-    <Divider orientation={'left'}>Tags</Divider>
+    <Divider titlePlacement={'left'}>Tags</Divider>
     <Cards>
       <Card
         desc="Demo desction text"
@@ -38,7 +38,7 @@ export default () => (
       <Card desc="Demo desction text" href="/mdx/callouts" tag={'Components'} title="Steps" />
       <Card desc="Demo desction text" href="/mdx/callouts" tag={'Components'} title="FileTree" />
     </Cards>
-    <Divider orientation={'left'}>Image Cover</Divider>
+    <Divider titlePlacement={'left'}>Image Cover</Divider>
     <Cards>
       <Card
         href="/mdx/callout"

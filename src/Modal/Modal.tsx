@@ -39,7 +39,6 @@ const Modal = memo<ModalProps>(
     const [fullscreen, setFullscreen] = useState(false);
     const { mobile } = useResponsive();
     const { styles, cx, theme } = useStyles();
-    const { body, ...restStyles } = customStyles || {};
     const hideFooter = footer === false || footer === null;
     if (enableResponsive && mobile)
       return (
@@ -52,10 +51,14 @@ const Modal = memo<ModalProps>(
         >
           <Drawer
             className={cx(styles.drawerContent, className)}
-            classNames={{
-              ...classNames,
-              wrapper: cx(styles.wrap, classNames?.wrapper),
-            }}
+            classNames={
+              typeof classNames === 'function'
+                ? classNames
+                : {
+                    ...classNames,
+                    wrapper: cx(styles.wrap, classNames?.wrapper),
+                  }
+            }
             closeIcon={<ActionIcon icon={X} />}
             destroyOnHidden={destroyOnHidden}
             extra={
@@ -99,14 +102,18 @@ const Modal = memo<ModalProps>(
             open={open}
             panelRef={panelRef}
             placement={'bottom'}
-            styles={{
-              body: {
-                paddingBlock: `16px ${footer ? 0 : '16px'}`,
-                paddingInline: paddings?.desktop ?? 16,
-                ...body,
-              },
-              ...restStyles,
-            }}
+            styles={
+              typeof customStyles === 'function'
+                ? customStyles
+                : {
+                    ...customStyles,
+                    body: {
+                      paddingBlock: `16px ${footer ? 0 : '16px'}`,
+                      paddingInline: paddings?.desktop ?? 16,
+                      ...customStyles?.body,
+                    },
+                  }
+            }
             title={title}
             {...rest}
           >
@@ -131,10 +138,14 @@ const Modal = memo<ModalProps>(
           }}
           cancelText={cancelText}
           className={cx(styles.content, className)}
-          classNames={{
-            ...classNames,
-            wrapper: cx(styles.wrap, classNames?.wrapper),
-          }}
+          classNames={
+            typeof classNames === 'function'
+              ? classNames
+              : {
+                  ...classNames,
+                  wrapper: cx(styles.wrap, classNames?.wrapper),
+                }
+          }
           closable
           closeIcon={<Icon icon={X} size={20} />}
           confirmLoading={confirmLoading}
@@ -147,16 +158,20 @@ const Modal = memo<ModalProps>(
           onOk={onOk}
           open={open}
           panelRef={panelRef}
-          styles={{
-            body: {
-              maxHeight: height,
-              overflow: 'hidden auto',
-              paddingBlock: `0 ${footer === null ? '16px' : 0}`,
-              paddingInline: paddings?.desktop ?? 16,
-              ...body,
-            },
-            ...restStyles,
-          }}
+          styles={
+            typeof customStyles === 'function'
+              ? customStyles
+              : {
+                  ...customStyles,
+                  body: {
+                    maxHeight: height,
+                    overflow: 'hidden auto',
+                    paddingBlock: `0 ${footer === null ? '16px' : 0}`,
+                    paddingInline: paddings?.desktop ?? 16,
+                    ...customStyles?.body,
+                  },
+                }
+          }
           title={title}
           width={width}
           {...rest}

@@ -1,5 +1,5 @@
+import type { GroupPreviewConfig } from 'antd/es/image/PreviewGroup';
 import { X } from 'lucide-react';
-import type { GroupConsumerProps as AntdPreviewGroupProps } from 'rc-image/lib/PreviewGroup';
 import { useMemo, useState } from 'react';
 
 import Icon from '@/Icon';
@@ -11,16 +11,15 @@ import Toolbar from './Toolbar';
 
 export const usePreview = (
   props: PreviewGroupPreviewOptions | boolean | undefined,
-): AntdPreviewGroupProps['preview'] => {
+): GroupPreviewConfig | boolean => {
   const [visible, setVisible] = useState(false);
-  const { cx, styles } = useStyles();
+  const { cx, styles: componentStyles } = useStyles();
 
   return useMemo(() => {
     if (props === false) return props;
 
     const {
       onVisibleChange,
-      styles: previewStyle = {},
       minScale = 0.32,
       maxScale = 32,
       toolbarAddon,
@@ -33,6 +32,15 @@ export const usePreview = (
     ) as PreviewGroupPreviewOptions;
 
     return {
+      actionsRender: (_, info) => {
+        const originalNode = (
+          <Toolbar info={info} maxScale={maxScale} minScale={minScale}>
+            {toolbarAddon}
+          </Toolbar>
+        );
+        if (toolbarRender) return toolbarRender(originalNode, info);
+        return originalNode;
+      },
       closeIcon: <Icon color={'#fff'} icon={X} />,
       imageRender: (originalNode, info) => {
         const node = <Preview visible={visible}>{originalNode}</Preview>;
@@ -45,20 +53,10 @@ export const usePreview = (
         setVisible(visible);
         onVisibleChange?.(visible, prevVisible, current);
       },
-      rootClassName: cx(styles.preview, rootClassName),
-      styles: { mask: { backdropFilter: 'blur(8px)' }, ...previewStyle },
-      toolbarRender: (_, info) => {
-        const originalNode = (
-          <Toolbar info={info} maxScale={maxScale} minScale={minScale}>
-            {toolbarAddon}
-          </Toolbar>
-        );
-        if (toolbarRender) return toolbarRender(originalNode, info);
-        return originalNode;
-      },
+      rootClassName: cx(componentStyles.preview, rootClassName),
       ...rest,
     };
-  }, [props, visible, styles]);
+  }, [props, visible, componentStyles]);
 };
 
 export default usePreview;

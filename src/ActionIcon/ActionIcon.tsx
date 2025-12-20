@@ -144,10 +144,14 @@ const ActionIcon = memo<ActionIconProps>(
       <Tooltip
         title={title}
         {...tooltipProps}
-        styles={{
-          ...tooltipProps?.styles,
-          root: { pointerEvents: 'none', ...tooltipProps?.styles?.root },
-        }}
+        styles={
+          typeof tooltipProps?.styles === 'function'
+            ? tooltipProps.styles
+            : {
+                ...tooltipProps?.styles,
+                container: { pointerEvents: 'none', ...tooltipProps?.styles?.container },
+              }
+        }
       >
         {node}
       </Tooltip>
