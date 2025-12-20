@@ -18,21 +18,21 @@ export interface AvatarProps extends AntAvatarProps {
   size?: number;
   sliceText?: boolean;
   title?: string;
-  tooltipProps?: Omit<TooltipProps, 'title'>;
+  tooltipProps?: Omit<TooltipProps, 'children' | 'title'>;
   unoptimized?: boolean;
   variant?: 'borderless' | 'filled' | 'outlined';
 }
 
-export interface AvatarGroupItemType
-  extends Pick<
-    AvatarProps,
-    'avatar' | 'title' | 'alt' | 'onClick' | 'style' | 'className' | 'loading'
-  > {
+export interface AvatarGroupItemType extends Pick<
+  AvatarProps,
+  'avatar' | 'title' | 'alt' | 'onClick' | 'style' | 'className' | 'loading'
+> {
   key: string;
 }
 
 export interface AvatarGroupProps
-  extends Pick<
+  extends
+    Pick<
       AvatarProps,
       | 'variant'
       | 'bordered'

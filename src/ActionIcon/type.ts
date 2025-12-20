@@ -12,8 +12,7 @@ interface ActionIconSizeConfig extends IconSizeConfig {
 export type ActionIconSize = number | IconSizeType | ActionIconSizeConfig;
 
 export interface ActionIconProps
-  extends Partial<LucideIconProps>,
-    Omit<CenterProps, 'title' | 'children'> {
+  extends Partial<LucideIconProps>, Omit<CenterProps, 'title' | 'children'> {
   active?: boolean;
   danger?: boolean;
   disabled?: boolean;
@@ -25,6 +24,6 @@ export interface ActionIconProps
   size?: ActionIconSize;
   spin?: boolean;
   title?: TooltipProps['title'];
-  tooltipProps?: Omit<TooltipProps, 'title'>;
+  tooltipProps?: Omit<TooltipProps, 'children' | 'title'>;
   variant?: 'borderless' | 'filled' | 'outlined';
 }
