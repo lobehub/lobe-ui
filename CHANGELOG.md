@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 3.1.0](https://github.com/lobehub/lobe-ui/compare/v3.0.0...v3.1.0)
+
+<sup>Released on **2025-12-20**</sup>
+
+#### ✨ Features
+
+- **misc**: Refactor Tooltip components for improved modularity and performance.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Refactor Tooltip components for improved modularity and performance ([63a6724](https://github.com/lobehub/lobe-ui/commit/63a6724))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 3.0.0](https://github.com/lobehub/lobe-ui/compare/v2.24.3...v3.0.0)
 
 <sup>Released on **2025-12-20**</sup>
