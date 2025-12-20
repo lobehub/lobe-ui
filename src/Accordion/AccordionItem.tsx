@@ -1,18 +1,16 @@
 'use client';
 
-import { LazyMotion, m } from 'motion/react';
 import { KeyboardEvent, memo, useCallback, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import Block from '@/Block';
 import Text from '@/Text';
+import { LazyMotion, m } from '@/motion';
 
 import ArrowIcon from './ArrowIcon';
 import { useAccordionContext } from './context';
 import { useStyles } from './style';
 import type { AccordionItemProps } from './type';
-
-const loadFeatures = () => import('motion/react').then((res) => res.domAnimation);
 
 const AccordionItem = memo<AccordionItemProps>(
   ({
@@ -181,7 +179,7 @@ const AccordionItem = memo<AccordionItemProps>(
       }
 
       return (
-        <LazyMotion features={loadFeatures}>
+        <LazyMotion>
           <m.div {...motionProps} style={{ overflow: 'hidden' }}>
             <div
               className={cx('accordion-content', styles.content, classNames?.content)}

@@ -1,30 +1,31 @@
 import { createStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token, prefixCls }) => {
+export const useStyles = createStyles(({ css, token }) => {
   return {
+    arrow: css`
+      fill: ${token.colorText};
+    `,
+    content: css`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: unset;
+      padding: 8px;
+      border-radius: ${token.borderRadiusSM}px;
+
+      color: ${token.colorBgLayout};
+      word-break: normal;
+
+      background-color: ${token.colorText};
+    `,
     tooltip: css`
-      .${prefixCls}-tooltip-inner {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      pointer-events: none;
 
-        min-height: unset;
-        padding-block: 4px;
-        padding-inline: 8px;
-
-        color: ${token.colorBgLayout};
-        word-break: normal;
-
-        background-color: ${token.colorText};
-        border-radius: ${token.borderRadiusSM}px;
-      }
-
-      .${prefixCls}-tooltip-arrow {
-        &::before,
-        &::after {
-          background: ${token.colorText};
-        }
-      }
+      /* Keep the class name for backwards compatibility and user overrides */
+      position: relative;
+      z-index: 114514;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 12%));
     `,
   };
 });

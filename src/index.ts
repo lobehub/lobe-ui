@@ -181,7 +181,7 @@ export {
 } from './ThemeProvider';
 export { default as ThemeSwitch, type ThemeSwitchProps } from './ThemeSwitch';
 export { default as Toc, type TocProps } from './Toc';
-export { default as Tooltip, type TooltipProps } from './Tooltip';
+export { default as Tooltip, TooltipGroup, type TooltipProps } from './Tooltip';
 export type * from './types';
 export { copyToClipboard } from './utils/copyToClipboard';
 export { type CDN, genCdnUrl } from './utils/genCdnUrl';

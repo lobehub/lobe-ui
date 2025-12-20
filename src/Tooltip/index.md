@@ -9,19 +9,35 @@ description: The Tooltip component is used to provide additional information to 
 
 <code src="./demos/index.tsx" nopadding></code>
 
+## Tooltip Group (Singleton)
+
+Wrap multiple tooltips in `TooltipGroup` to share a single floating instance. When you hover/focus different triggers, the tooltip only updates the anchor + content, reducing per-tooltip overhead.
+
+<code src="./demos/group.tsx" nopadding></code>
+
 ## APIs
 
 ### Tooltip
 
-| Property    | Description                                 | Type                                                         | Default |
-| ----------- | ------------------------------------------- | ------------------------------------------------------------ | ------- |
-| title       | Content of the tooltip                      | `ReactNode`                                                  | -       |
-| hotkey      | Keyboard shortcut to display in the tooltip | `string`                                                     | -       |
-| hotkeyProps | Props for the Hotkey component              | `Omit<HotkeyProps, 'keys'>`                                  | -       |
-| arrow       | Whether the tooltip has an arrow pointer    | `boolean`                                                    | `false` |
-| placement   | Position of the tooltip                     | `'top' \| 'left' \| 'right' \| 'bottom' \| 'topLeft' \| ...` | `'top'` |
+| Property        | Description                                                        | Type                                                      | Default |
+| --------------- | ------------------------------------------------------------------ | --------------------------------------------------------- | ------- |
+| title           | Content of the tooltip                                             | `ReactNode`                                               | -       |
+| hotkey          | Keyboard shortcut to display in the tooltip                        | `string`                                                  | -       |
+| hotkeyProps     | Props for the Hotkey component                                     | `Omit<HotkeyProps, 'keys'>`                               | -       |
+| arrow           | Whether the tooltip has an arrow pointer                           | `boolean`                                                 | `false` |
+| placement       | Position of the tooltip                                            | `Floating UI Placement \| 'topLeft' \| ... (AntD legacy)` | `'top'` |
+| openDelay       | Delay before opening (ms). Takes precedence over `mouseEnterDelay` | `number`                                                  | -       |
+| closeDelay      | Delay before closing (ms). Takes precedence over `mouseLeaveDelay` | `number`                                                  | -       |
+| mouseEnterDelay | Delay before opening (seconds, AntD compatible)                    | `number`                                                  | `0`     |
+| mouseLeaveDelay | Delay before closing (seconds, AntD compatible)                    | `number`                                                  | `0`     |
 
-In addition to the above properties, Tooltip inherits all properties from Ant Design's Tooltip component (except for 'title', which has been enhanced to support hotkeys).
+Tooltip is built on top of `@floating-ui/react` (Base Tooltip). For compatibility, it keeps a subset of Ant Design Tooltip-like props (e.g. `mouseEnterDelay`, `mouseLeaveDelay`, legacy `placement` values, and `styles/classNames`).
+
+### TooltipGroup
+
+| Property | Description                                           | Type        | Default |
+| -------- | ----------------------------------------------------- | ----------- | ------- |
+| children | Tooltip subtree that shares a single tooltip instance | `ReactNode` | -       |
 
 #### Hotkey Support
 
