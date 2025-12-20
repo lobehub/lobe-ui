@@ -8,16 +8,7 @@ import {
   shift,
   useFloating,
 } from '@floating-ui/react';
-import {
-  type ReactNode,
-  memo,
-  useCallback,
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { type FC, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { antdPlacementToFloating } from '@/Tooltip/antdPlacementToFloating';
 
@@ -29,15 +20,10 @@ type TooltipGroupProps = {
   children: ReactNode;
 };
 
-const TooltipGroup = memo<TooltipGroupProps>(({ children }) => {
+const TooltipGroup: FC<TooltipGroupProps> = ({ children }) => {
   const arrowRef = useRef<SVGSVGElement | null>(null);
   const openTimerRef = useRef<number | null>(null);
   const closeTimerRef = useRef<number | null>(null);
-  const internalGroupId = useId();
-  const motionLayoutId = useMemo(
-    () => `lobe-ui-tooltip-group:${internalGroupId}`,
-    [internalGroupId],
-  );
 
   const [active, setActive] = useState<{
     item: TooltipGroupItem;
@@ -118,6 +104,7 @@ const TooltipGroup = memo<TooltipGroupProps>(({ children }) => {
       if (item.disabled) return;
 
       clearTimers();
+
       setActive({ item, triggerEl });
 
       const delayMs = item.openDelay ?? (item.mouseEnterDelay ?? 0) * 1000;
@@ -161,7 +148,6 @@ const TooltipGroup = memo<TooltipGroupProps>(({ children }) => {
       floatingStyles={floatingStyles}
       hotkey={active?.item.hotkey}
       hotkeyProps={active?.item.hotkeyProps}
-      layoutId={motionLayoutId}
       open={open}
       placement={floatingPlacement}
       setFloating={refs.setFloating}
@@ -183,8 +169,6 @@ const TooltipGroup = memo<TooltipGroupProps>(({ children }) => {
         ))}
     </TooltipGroupContext.Provider>
   );
-});
-
-TooltipGroup.displayName = 'TooltipGroup';
+};
 
 export default TooltipGroup;

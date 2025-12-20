@@ -27,5 +27,8 @@ export const useStyles = createStyles(({ css, token }) => {
       z-index: 114514;
       filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 12%));
     `,
+    tooltipLayout: css`
+      transition: all 0.2s ease-in-out;
+    `,
   };
 });

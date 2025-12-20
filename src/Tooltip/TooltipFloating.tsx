@@ -3,7 +3,7 @@
 import type { FloatingContext, Placement } from '@floating-ui/react';
 import { FloatingArrow } from '@floating-ui/react';
 import type { CSSProperties, ReactNode, RefObject } from 'react';
-import { useMemo } from 'react';
+import React, { useLayoutEffect, useMemo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
 import Hotkey from '@/Hotkey';
@@ -26,12 +26,6 @@ type TooltipFloatingProps = {
   hotkey?: TooltipProps['hotkey'];
   hotkeyProps?: TooltipProps['hotkeyProps'];
 
-  /**
-   * Enable Framer Motion layout/position tweening when provided.
-   * Useful for TooltipGroup where the floating position changes frequently.
-   */
-  layoutId?: string;
-
   open: boolean;
   placement?: Placement;
 
@@ -53,7 +47,7 @@ const TooltipFloating = ({
   context,
   hotkey,
   hotkeyProps,
-  layoutId,
+
   className,
   classNames,
   styles: styleProps,
@@ -82,15 +76,34 @@ const TooltipFloating = ({
     }
   }, [placement]);
 
+  const [openNextTick, setOpenNextTick] = useState(false);
+  useLayoutEffect(() => {
+    if (!open) {
+      setOpenNextTick(false);
+      return;
+    }
+
+    const rafId = requestAnimationFrame(() => {
+      setOpenNextTick(true);
+    });
+
+    return () => {
+      cancelAnimationFrame(rafId);
+    };
+  }, [open]);
+
   return (
     <LazyMotion>
       <AnimatePresence>
         {open && title && (
-          <m.div
-            animate={{ opacity: 1 }}
-            className={cx(styles.tooltip, classNames?.container, classNames?.root, className)}
-            exit={{ opacity: 0 }}
-            initial={{ opacity: 0 }}
+          <div
+            className={cx(
+              styles.tooltip,
+              openNextTick && styles.tooltipLayout,
+              classNames?.container,
+              classNames?.root,
+              className,
+            )}
             key="tooltip"
             ref={setFloating as any}
             role="tooltip"
@@ -102,17 +115,18 @@ const TooltipFloating = ({
                     ...styleProps.container,
                     ...styleProps.root,
                   }
-                : { ...floatingStyles, zIndex, ...styleProps?.container }
+                : {
+                    ...floatingStyles,
+                    zIndex,
+                    ...styleProps?.container,
+                  }
             }
-            transition={{ duration: 0.12, ease: [0.4, 0, 0.2, 1] }}
             {...floatingProps}
           >
             <m.div
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.98 }}
-              initial={{ scale: 0.96 }}
-              layout={layoutId ? 'position' : undefined}
-              layoutId={layoutId}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              initial={{ opacity: 0, scale: 0.96 }}
               style={{ transformOrigin }}
               transition={{ duration: 0.12, ease: [0.4, 0, 0.2, 1] }}
             >
@@ -137,13 +151,11 @@ const TooltipFloating = ({
                 />
               )}
             </m.div>
-          </m.div>
+          </div>
         )}
       </AnimatePresence>
     </LazyMotion>
   );
 };
-
-TooltipFloating.displayName = 'TooltipFloating';
 
 export default TooltipFloating;
