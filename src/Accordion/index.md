@@ -4,7 +4,7 @@ group: Data Display
 title: Accordion
 ---
 
-Accordion is a vertically stacked set of interactive headings that each contain a title and content. Inspired by HeroUI's Accordion component with smooth framer-motion animations and component composition API.
+Accordion is a vertically stacked set of interactive headings that each contain a title and content. Inspired by HeroUI's Accordion component with smooth motion animations and component composition API.
 
 ## Default
 
@@ -32,7 +32,7 @@ Accordion is a vertically stacked set of interactive headings that each contain 
 | keepContentMounted  | Keep content mounted when collapsed                           | `boolean`                                | `false`    |
 | disableAnimation    | Disable animation                                             | `boolean`                                | `false`    |
 | showDivider         | Show dividers between items                                   | `boolean`                                | `false`    |
-| motionProps         | Motion props for framer-motion animation                      | `object`                                 | -          |
+| motionProps         | Motion props for motion animation                             | `object`                                 | -          |
 | classNames          | Custom classNames for child elements                          | `{ base?: string }`                      | -          |
 | styles              | Custom styles for child elements                              | `{ base?: CSSProperties }`               | -          |
 
@@ -75,8 +75,8 @@ Accordion is a vertically stacked set of interactive headings that each contain 
 
 ## Animation
 
-The Accordion component uses framer-motion for smooth animations. You can customize the animation behavior with the following props:
+The Accordion component uses motion for smooth animations. You can customize the animation behavior with the following props:
 
 - `disableAnimation`: Set to `true` to disable all animations
 - `keepContentMounted`: Keep content DOM mounted when collapsed (useful for forms)
-- `motionProps`: Pass custom framer-motion props to override default animations
+- `motionProps`: Pass custom motion props to override default animations

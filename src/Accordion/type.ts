@@ -2,8 +2,10 @@ import type { CSSProperties, HTMLAttributes, Key, ReactNode } from 'react';
 
 import type { BlockProps } from '@/Block';
 
-export interface AccordionItemProps
-  extends Pick<BlockProps, 'padding' | 'paddingBlock' | 'paddingInline' | 'variant' | 'ref'> {
+export interface AccordionItemProps extends Pick<
+  BlockProps,
+  'padding' | 'paddingBlock' | 'paddingInline' | 'variant' | 'ref'
+> {
   /**
    * Action component that appears on hover
    */
@@ -64,8 +66,7 @@ export interface AccordionItemProps
 }
 
 export interface AccordionProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>,
-    Pick<BlockProps, 'variant'> {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>, Pick<BlockProps, 'variant'> {
   /**
    * Whether only one item can be expanded at a time
    * @default false
@@ -114,7 +115,7 @@ export interface AccordionProps
    */
   keepContentMounted?: boolean;
   /**
-   * Motion props for framer-motion animation
+   * Motion props for motion animation
    */
   motionProps?: any;
   /**

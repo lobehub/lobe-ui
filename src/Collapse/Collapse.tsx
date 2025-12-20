@@ -123,7 +123,6 @@ const Collapse = memo<CollapseProps>(
         }}
       >
         <AntdCollapse
-          bordered={false}
           className={cx(variants({ collapsible, gap: !!gap, variant }), className)}
           collapsible={collapsible ? 'header' : 'icon'}
           expandIcon={({ isActive }) => (

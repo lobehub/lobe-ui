@@ -2,8 +2,8 @@
 
 import { Form } from 'antd';
 import isEqual from 'fast-deep-equal';
-import { motion } from 'framer-motion';
 import { InfoIcon } from 'lucide-react';
+import { motion } from 'motion/react';
 import { memo, useEffect, useMemo, useState } from 'react';
 import { Flexbox } from 'react-layout-kit';
 

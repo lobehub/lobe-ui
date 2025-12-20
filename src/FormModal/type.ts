@@ -31,17 +31,17 @@ type PickModalProps = Pick<
   | 'closeIcon'
 >;
 
-type PickFormProps = Omit<FormProps, 'className' | 'style' | 'title'>;
+type PickFormProps = Omit<FormProps, 'className' | 'style' | 'title' | 'styles' | 'classNames'>;
 
 export interface FormModalProps extends PickModalProps, PickFormProps {
-  classNames?: {
+  classNames?: ModalProps['classNames'] & {
     form?: FormProps['className'];
-  } & ModalProps['classNames'];
+  };
   onSubmit?: ModalProps['onOk'];
   ref?: Ref<FormInstance>;
-  styles?: {
+  styles?: ModalProps['styles'] & {
     form?: FormProps['style'];
-  } & ModalProps['styles'];
+  };
   submitButtonProps?: ButtonProps;
   submitLoading?: ModalProps['confirmLoading'];
   submitText?: ModalProps['okText'];

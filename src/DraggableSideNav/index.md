@@ -58,6 +58,6 @@ description: A generic resizable side panel container with collapse/expand funct
   - Fade effects: 300ms enter / 200ms exit with optional blur
   - Handle: Hover scale (1.05x), rotate animation
   - Resize indicator: Glowing theme color with smooth transitions
-- **Fade Animations**: Enable fade effects for header, body, or footer individually with optional blur effect for stunning content transitions using framer-motion
+- **Fade Animations**: Enable fade effects for header, body, or footer individually with optional blur effect for stunning content transitions using motion
 - **Visual Polish**: Backdrop blur, smooth scrollbar, subtle shadows, micro-interactions
 - Use with any content: Menu, custom navigation, sidebars, panels, etc.

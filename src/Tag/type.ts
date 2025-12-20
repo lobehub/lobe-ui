@@ -1,7 +1,7 @@
 import type { TagProps as AntTagProps } from 'antd';
 import type { Ref } from 'react';
 
-export interface TagProps extends Omit<AntTagProps, 'color'> {
+export interface TagProps extends Omit<AntTagProps, 'color' | 'variant'> {
   color?: AntTagProps['color'] | 'info';
   ref?: Ref<HTMLDivElement>;
   size?: 'small' | 'middle' | 'large';

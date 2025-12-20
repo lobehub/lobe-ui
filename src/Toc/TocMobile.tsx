@@ -27,7 +27,6 @@ const TocMobile = memo<TocMobileProps>(
       <ConfigProvider theme={{ token: { fontSize: 12, sizeStep: 3 } }}>
         <section className={styles.mobileCtn}>
           <Collapse
-            bordered={false}
             className={styles.expand}
             expandIcon={({ isActive }) => (
               <ActionIcon icon={isActive ? PanelTopClose : PanelTopOpen} size={'small'} />
