@@ -1,8 +1,6 @@
 'use client';
 
 import {
-  FloatingArrow,
-  FloatingPortal,
   arrow as arrowMiddleware,
   autoUpdate,
   flip,
@@ -10,25 +8,36 @@ import {
   shift,
   useFloating,
 } from '@floating-ui/react';
-import { type ReactNode, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
+import {
+  type ReactNode,
+  memo,
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
-import Hotkey from '@/Hotkey';
 import { antdPlacementToFloating } from '@/Tooltip/antdPlacementToFloating';
-import { AnimatePresence, LazyMotion, m } from '@/motion';
 
+import TooltipFloating from './TooltipFloating';
+import TooltipPortal from './TooltipPortal';
 import { TooltipGroupContext, type TooltipGroupItem } from './groupContext';
-import { useStyles } from './style';
 
 type TooltipGroupProps = {
   children: ReactNode;
 };
 
 const TooltipGroup = memo<TooltipGroupProps>(({ children }) => {
-  const { styles, cx } = useStyles();
   const arrowRef = useRef<SVGSVGElement | null>(null);
   const openTimerRef = useRef<number | null>(null);
   const closeTimerRef = useRef<number | null>(null);
+  const internalGroupId = useId();
+  const motionLayoutId = useMemo(
+    () => `lobe-ui-tooltip-group:${internalGroupId}`,
+    [internalGroupId],
+  );
 
   const [active, setActive] = useState<{
     item: TooltipGroupItem;
@@ -45,27 +54,6 @@ const TooltipGroup = memo<TooltipGroupProps>(({ children }) => {
     () => antdPlacementToFloating(active?.item.placement),
     [active?.item.placement],
   );
-
-  const transformOrigin = useMemo(() => {
-    const basePlacement = String(floatingPlacement).split('-')[0];
-    switch (basePlacement) {
-      case 'top': {
-        return 'bottom center';
-      }
-      case 'bottom': {
-        return 'top center';
-      }
-      case 'left': {
-        return 'center right';
-      }
-      case 'right': {
-        return 'center left';
-      }
-      default: {
-        return 'center';
-      }
-    }
-  }, [floatingPlacement]);
 
   const middleware = useMemo(() => {
     const base = [offset(8), flip(), shift({ padding: 8 })];
@@ -164,73 +152,23 @@ const TooltipGroup = memo<TooltipGroupProps>(({ children }) => {
       : undefined;
 
   const floatingNode = (
-    <LazyMotion>
-      <AnimatePresence>
-        {open && active?.item.title && (
-          <m.div
-            animate={{ opacity: 1 }}
-            className={cx(
-              styles.tooltip,
-              active.item.classNames?.container,
-              active.item.classNames?.root,
-              active.item.className,
-            )}
-            exit={{ opacity: 0 }}
-            initial={{ opacity: 0 }}
-            key="tooltip"
-            ref={refs.setFloating}
-            role="tooltip"
-            style={
-              active.item.styles?.root
-                ? {
-                    ...floatingStyles,
-                    zIndex: active.item.zIndex,
-                    ...active.item.styles.container,
-                    ...active.item.styles.root,
-                  }
-                : {
-                    ...floatingStyles,
-                    zIndex: active.item.zIndex,
-                    ...active.item.styles?.container,
-                  }
-            }
-            transition={{ duration: 0.12, ease: [0.4, 0, 0.2, 1] }}
-          >
-            <m.div
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.98 }}
-              initial={{ scale: 0.96 }}
-              style={{ transformOrigin }}
-              transition={{ duration: 0.12, ease: [0.4, 0, 0.2, 1] }}
-            >
-              <div
-                className={cx(styles.content, active.item.classNames?.content)}
-                style={active.item.styles?.content}
-              >
-                {active.item.hotkey ? (
-                  <Flexbox align={'center'} gap={8} horizontal justify={'space-between'}>
-                    <span>{active.item.title}</span>
-                    <Hotkey inverseTheme keys={active.item.hotkey} {...active.item.hotkeyProps} />
-                  </Flexbox>
-                ) : (
-                  active.item.title
-                )}
-              </div>
-              {active.item.arrow && (
-                <FloatingArrow
-                  className={cx(styles.arrow, active.item.classNames?.arrow)}
-                  context={context}
-                  height={6}
-                  ref={arrowRef}
-                  style={active.item.styles?.arrow}
-                  width={12}
-                />
-              )}
-            </m.div>
-          </m.div>
-        )}
-      </AnimatePresence>
-    </LazyMotion>
+    <TooltipFloating
+      arrow={active?.item.arrow}
+      arrowRef={arrowRef}
+      className={active?.item.className}
+      classNames={active?.item.classNames}
+      context={context}
+      floatingStyles={floatingStyles}
+      hotkey={active?.item.hotkey}
+      hotkeyProps={active?.item.hotkeyProps}
+      layoutId={motionLayoutId}
+      open={open}
+      placement={floatingPlacement}
+      setFloating={refs.setFloating}
+      styles={active?.item.styles}
+      title={active?.item.title}
+      zIndex={active?.item.zIndex}
+    />
   );
 
   return (
@@ -239,7 +177,7 @@ const TooltipGroup = memo<TooltipGroupProps>(({ children }) => {
       {active?.item.title &&
         !active.item.disabled &&
         ((active.item.portalled ?? true) ? (
-          <FloatingPortal root={portalRoot}>{floatingNode}</FloatingPortal>
+          <TooltipPortal root={portalRoot}>{floatingNode}</TooltipPortal>
         ) : (
           floatingNode
         ))}

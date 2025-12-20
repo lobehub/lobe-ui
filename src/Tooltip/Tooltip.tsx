@@ -1,8 +1,6 @@
 'use client';
 
 import {
-  FloatingArrow,
-  FloatingPortal,
   arrow as arrowMiddleware,
   autoUpdate,
   flip,
@@ -25,16 +23,14 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Flexbox } from 'react-layout-kit';
 import { mergeRefs } from 'react-merge-refs';
 
-import Hotkey from '@/Hotkey';
 import { antdPlacementToFloating } from '@/Tooltip/antdPlacementToFloating';
-import { AnimatePresence, LazyMotion, m } from '@/motion';
 import { composeEventHandlers } from '@/utils/composeEventHandlers';
 
+import TooltipFloating from './TooltipFloating';
+import TooltipPortal from './TooltipPortal';
 import { TooltipGroupContext, type TooltipGroupItem } from './groupContext';
-import { useStyles } from './style';
 import type { TooltipProps } from './type';
 
 const TooltipInGroup: FC<TooltipProps> = ({
@@ -180,7 +176,6 @@ const TooltipStandalone: FC<TooltipProps> = ({
   portalled = true,
   getPopupContainer,
 }) => {
-  const { styles, cx } = useStyles();
   const arrowRef = useRef<SVGSVGElement | null>(null);
   const [uncontrolledOpen, setUncontrolledOpen] = useState(Boolean(defaultOpen));
 
@@ -191,27 +186,6 @@ const TooltipStandalone: FC<TooltipProps> = ({
   };
 
   const floatingPlacement = useMemo(() => antdPlacementToFloating(placement), [placement]);
-
-  const transformOrigin = useMemo(() => {
-    const basePlacement = String(floatingPlacement).split('-')[0];
-    switch (basePlacement) {
-      case 'top': {
-        return 'bottom center';
-      }
-      case 'bottom': {
-        return 'top center';
-      }
-      case 'left': {
-        return 'center right';
-      }
-      case 'right': {
-        return 'center left';
-      }
-      default: {
-        return 'center';
-      }
-    }
-  }, [floatingPlacement]);
 
   const middleware = useMemo(() => {
     const base = [offset(8), flip(), shift({ padding: 8 })];
@@ -277,61 +251,23 @@ const TooltipStandalone: FC<TooltipProps> = ({
       : undefined;
 
   const floatingNode = (
-    <LazyMotion>
-      <AnimatePresence>
-        {mergedOpen && title && (
-          <m.div
-            animate={{ opacity: 1 }}
-            className={cx(styles.tooltip, classNames?.container, classNames?.root, className)}
-            exit={{ opacity: 0 }}
-            initial={{ opacity: 0 }}
-            key="tooltip"
-            ref={refs.setFloating}
-            style={
-              styleProps?.root
-                ? {
-                    ...floatingStyles,
-                    zIndex,
-                    ...styleProps.container,
-                    ...styleProps.root,
-                  }
-                : { ...floatingStyles, zIndex, ...styleProps?.container }
-            }
-            transition={{ duration: 0.12, ease: [0.4, 0, 0.2, 1] }}
-            {...getFloatingProps()}
-          >
-            <m.div
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.98 }}
-              initial={{ scale: 0.96 }}
-              style={{ transformOrigin }}
-              transition={{ duration: 0.12, ease: [0.4, 0, 0.2, 1] }}
-            >
-              <div className={cx(styles.content, classNames?.content)} style={styleProps?.content}>
-                {hotkey ? (
-                  <Flexbox align={'center'} gap={8} horizontal justify={'space-between'}>
-                    <span>{title}</span>
-                    <Hotkey inverseTheme keys={hotkey} {...hotkeyProps} />
-                  </Flexbox>
-                ) : (
-                  title
-                )}
-              </div>
-              {arrow && (
-                <FloatingArrow
-                  className={cx(styles.arrow, classNames?.arrow)}
-                  context={context}
-                  height={6}
-                  ref={arrowRef}
-                  style={styleProps?.arrow}
-                  width={12}
-                />
-              )}
-            </m.div>
-          </m.div>
-        )}
-      </AnimatePresence>
-    </LazyMotion>
+    <TooltipFloating
+      arrow={arrow}
+      arrowRef={arrowRef}
+      className={className}
+      classNames={classNames}
+      context={context}
+      floatingProps={getFloatingProps()}
+      floatingStyles={floatingStyles}
+      hotkey={hotkey}
+      hotkeyProps={hotkeyProps}
+      open={mergedOpen}
+      placement={floatingPlacement}
+      setFloating={refs.setFloating}
+      styles={styleProps}
+      title={title}
+      zIndex={zIndex}
+    />
   );
 
   return (
@@ -340,7 +276,7 @@ const TooltipStandalone: FC<TooltipProps> = ({
       {!disabled &&
         title &&
         (portalled ? (
-          <FloatingPortal root={portalRoot}>{floatingNode}</FloatingPortal>
+          <TooltipPortal root={portalRoot}>{floatingNode}</TooltipPortal>
         ) : (
           floatingNode
         ))}
