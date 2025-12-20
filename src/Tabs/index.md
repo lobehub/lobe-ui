@@ -26,7 +26,7 @@ Additionally, Tabs inherits all properties from Ant Design's Tabs component, inc
 | activeKey        | Currently active TabPane's key      | `string`                                 | -          |
 | defaultActiveKey | Initial active TabPane's key        | `string`                                 | First tab  |
 | onChange         | Callback when active tab is changed | `(activeKey) => void`                    | -          |
-| tabPosition      | Position of tabs                    | `'top' \| 'right' \| 'bottom' \| 'left'` | `'top'`    |
+| tabPlacement     | Position of tabs                    | `'top' \| 'right' \| 'bottom' \| 'left'` | `'top'`    |
 | size             | Size of tabs                        | `'large' \| 'middle' \| 'small'`         | `'middle'` |
 
 ### Tab Variants

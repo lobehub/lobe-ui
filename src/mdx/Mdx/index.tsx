@@ -115,10 +115,10 @@ const Mdx = memo<MdxProps>(
           setMDXContent(() => () => (
             <Alert
               description={String(error?.message as string)}
-              message={'Error compiling MDX'}
               style={{
                 width: '100%',
               }}
+              title={'Error compiling MDX'}
               type="error"
             />
           ));

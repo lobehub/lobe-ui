@@ -11,7 +11,7 @@ export default () => {
         options: ['small', 'middle', 'large'],
         value: 'middle',
       },
-      tabPosition: {
+      tabPlacement: {
         options: ['top', 'bottom', 'left', 'right'],
         value: 'top',
       },

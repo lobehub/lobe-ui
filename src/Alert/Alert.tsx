@@ -29,7 +29,6 @@ const colors = (theme: any, type: string = 'info', ...keys: string[]) => {
 
 const Alert = memo<AlertProps>(
   ({
-    closeIcon,
     closable = false,
     description,
     showIcon = true,
@@ -145,8 +144,14 @@ const Alert = memo<AlertProps>(
           }),
           classNames?.alert,
         )}
-        closable={closable}
-        closeIcon={closeIcon || <ActionIcon color={colors(theme, type)} icon={X} size={'small'} />}
+        closable={
+          typeof closable === 'boolean'
+            ? closable
+            : {
+                closeIcon: <ActionIcon color={colors(theme, type)} icon={X} size={'small'} />,
+                ...closable,
+              }
+        }
         description={description}
         icon={
           <Icon
@@ -202,7 +207,6 @@ const Alert = memo<AlertProps>(
               styles={{
                 content: {
                   fontSize: 12,
-                  padding: 8,
                   ...customStyles?.extraContent,
                 },
                 header: {

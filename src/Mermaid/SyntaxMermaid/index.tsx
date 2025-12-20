@@ -1,6 +1,5 @@
 'use client';
 
-import { useTheme } from 'antd-style';
 import { kebabCase } from 'lodash-es';
 import { memo, useEffect, useId, useMemo, useState } from 'react';
 
@@ -20,7 +19,6 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
     }, [isDefaultTheme, customTheme]);
 
     const id = useId();
-    const theme = useTheme();
     const mermaidId = kebabCase(`mermaid-${id}`);
     const { data, isLoading } = useMermaid(children, {
       id: mermaidId,
@@ -78,11 +76,6 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
           enablePanZoom
             ? {
                 mask: false,
-                styles: {
-                  mask: {
-                    background: background || theme.colorBgContainerSecondary,
-                  },
-                },
               }
             : false
         }

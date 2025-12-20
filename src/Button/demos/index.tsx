@@ -13,7 +13,7 @@ export default () => {
         options: LucideIcon,
         value: LucideIcon.CameraIcon,
       },
-      iconPosition: {
+      iconPlacement: {
         options: ['start', 'end'],
         value: 'start',
       },

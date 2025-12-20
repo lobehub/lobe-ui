@@ -10,8 +10,8 @@ export default () => {
       colorfulText: true,
       description: 'Alert Title',
       glass: false,
-      message: 'Informational Notes',
       showIcon: true,
+      title: 'Informational Notes',
       type: {
         options: ['info', 'success', 'warning', 'error', 'secondary'],
         value: 'info',

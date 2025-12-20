@@ -20,17 +20,33 @@ export const usePreview = (
 
     const {
       onVisibleChange,
-      styles: previewStyle = {},
+      onOpenChange,
       minScale = 0.32,
       maxScale = 32,
       toolbarAddon,
       rootClassName,
       imageRender,
       toolbarRender,
+      actionsRender,
       ...rest
     }: ImagePreviewOptions = (props === true ? {} : props || {}) as ImagePreviewOptions;
 
     return {
+      actionsRender:
+        actionsRender ||
+        ((_, info) => {
+          const originalNode = (
+            <Toolbar info={info} maxScale={maxScale} minScale={minScale}>
+              {toolbarAddon}
+            </Toolbar>
+          );
+          // 向后兼容 toolbarRender
+          if (toolbarRender) return toolbarRender(originalNode, info);
+          return originalNode;
+        }),
+      classNames: {
+        root: cx(styles.preview, rootClassName),
+      },
       closeIcon: <Icon color={'#fff'} icon={X} />,
       imageRender: (originalNode, info) => {
         const node = <Preview visible={visible}>{originalNode}</Preview>;
@@ -39,21 +55,14 @@ export const usePreview = (
       },
       maxScale,
       minScale,
-      onVisibleChange: (visible: boolean, prevVisible: boolean) => {
-        setVisible(visible);
-        onVisibleChange?.(visible, prevVisible);
+      onOpenChange: (open: boolean) => {
+        setVisible(open);
+        // 支持新的 onOpenChange
+        onOpenChange?.(open);
+        // 向后兼容旧的 onVisibleChange
+        onVisibleChange?.(open, !open);
       },
-      rootClassName: cx(styles.preview, rootClassName),
-      styles: { mask: { backdropFilter: 'blur(8px)' }, ...previewStyle },
-      toolbarRender: (_, info) => {
-        const originalNode = (
-          <Toolbar info={info} maxScale={maxScale} minScale={minScale}>
-            {toolbarAddon}
-          </Toolbar>
-        );
-        if (toolbarRender) return toolbarRender(originalNode, info);
-        return originalNode;
-      },
+      styles: { mask: { backdropFilter: 'blur(8px)' } },
       ...rest,
     };
   }, [props, visible, styles]);

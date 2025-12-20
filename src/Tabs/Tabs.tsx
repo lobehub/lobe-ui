@@ -47,11 +47,18 @@ const Tabs = memo<TabsProps>(({ className, compact, variant = 'rounded', items, 
     <AntdTabs
       className={cx(variants({ compact, underlined: hasContent, variant }), className)}
       items={items}
+      {...rest}
+      classNames={{
+        ...rest?.classNames,
+        popup: {
+          root: styles.dropdown,
+          ...rest?.classNames?.popup,
+        },
+      }}
       more={{
         icon: <ActionIcon icon={MoreHorizontalIcon} />,
+        ...rest?.more,
       }}
-      popupClassName={cx(styles.dropdown)}
-      {...rest}
     />
   );
 });

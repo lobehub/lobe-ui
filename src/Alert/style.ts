@@ -77,9 +77,10 @@ export const useStyles = createStyles(
           padding-inline: ${showIcon ? baseInlinePadding * 0.75 : baseInlinePadding}px
             ${closable ? baseInlinePadding * 0.75 : baseInlinePadding}px;
 
-          .${prefixCls}-alert-message {
-            font-weight: ${hasTitle ? 600 : 400};
+          .${prefixCls}-alert-title {
+            font-weight: ${hasTitle ? 500 : 400};
             line-height: 24px;
+            color: inherit;
             word-break: normal;
           }
           .${prefixCls}-alert-icon {

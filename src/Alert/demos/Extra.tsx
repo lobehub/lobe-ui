@@ -9,7 +9,7 @@ const demoError = {
   reasons: [
     {
       language: 'en',
-      message: 'Validation filter failed',
+      title: 'Validation filter failed',
     },
   ],
 };
@@ -23,8 +23,8 @@ export default () => {
       description: 'Alert Title',
       extraIsolate: false,
       glass: false,
-      message: 'Informational Notes',
       showIcon: true,
+      title: 'Informational Notes',
       type: {
         options: ['info', 'success', 'warning', 'error', 'secondary'],
         value: 'secondary',

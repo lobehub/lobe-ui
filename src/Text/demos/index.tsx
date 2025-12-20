@@ -4,7 +4,7 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 export default () => {
   const store = useCreateStore();
 
-  const controls = useControls(
+  const { ellipsisRows, ...controls } = useControls(
     {
       as: {
         options: ['div', 'h1', 'h2', 'h3', 'h4', 'h5', 'p', 'span'],
@@ -47,7 +47,7 @@ export default () => {
           ellipsis={
             controls.ellipsis
               ? {
-                  rows: controls?.ellipsisRows,
+                  rows: ellipsisRows,
                 }
               : undefined
           }

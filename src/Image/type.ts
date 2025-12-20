@@ -1,6 +1,6 @@
 import type { ImageProps as AntdImageProps } from 'antd';
+import type { PreviewConfig } from 'antd/es/image';
 import type { GroupPreviewConfig } from 'antd/es/image/PreviewGroup';
-import type { ImagePreviewType } from 'rc-image';
 import type { CSSProperties, ReactNode, Ref } from 'react';
 
 export interface PreviewGroupPreviewOptions extends GroupPreviewConfig {
@@ -14,7 +14,7 @@ export interface PreviewGroupProps {
   preview?: boolean | PreviewGroupPreviewOptions;
 }
 
-export interface ImagePreviewOptions extends ImagePreviewType {
+export interface ImagePreviewOptions extends PreviewConfig {
   toolbarAddon?: ReactNode;
 }
 

@@ -31,7 +31,7 @@ const TocMobile = memo<TocMobileProps>(
             expandIcon={({ isActive }) => (
               <ActionIcon icon={isActive ? PanelTopClose : PanelTopOpen} size={'small'} />
             )}
-            expandIconPosition={'end'}
+            expandIconPlacement={'end'}
             ghost
           >
             <Collapse.Panel

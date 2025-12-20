@@ -20,6 +20,7 @@ export const usePreview = (
 
     const {
       onVisibleChange,
+      onOpenChange,
       minScale = 0.32,
       maxScale = 32,
       toolbarAddon,
@@ -41,6 +42,9 @@ export const usePreview = (
         if (toolbarRender) return toolbarRender(originalNode, info);
         return originalNode;
       },
+      classNames: {
+        root: cx(componentStyles.preview, rootClassName),
+      },
       closeIcon: <Icon color={'#fff'} icon={X} />,
       imageRender: (originalNode, info) => {
         const node = <Preview visible={visible}>{originalNode}</Preview>;
@@ -49,11 +53,13 @@ export const usePreview = (
       },
       maxScale,
       minScale,
-      onVisibleChange: (visible: boolean, prevVisible: boolean, current: number) => {
-        setVisible(visible);
-        onVisibleChange?.(visible, prevVisible, current);
+      onOpenChange: (open: boolean, info: { current: number }) => {
+        setVisible(open);
+        // 支持新的 onOpenChange
+        onOpenChange?.(open, info);
+        // 向后兼容旧的 onVisibleChange (注意参数差异)
+        onVisibleChange?.(open, !open, info.current);
       },
-      rootClassName: cx(componentStyles.preview, rootClassName),
       ...rest,
     };
   }, [props, visible, componentStyles]);
