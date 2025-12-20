@@ -39,6 +39,7 @@ Lobe UI is an open-source UI component library for building _AIGC_ web apps
 - [📦 Installation](#-installation)
   - [Compile with NextJS](#compile-with-nextjs)
 - [🤯 Usage](#-usage)
+  - [MotionProvider (optional)](#motionprovider-optional)
 - [⌨️ Local Development](#️-local-development)
 - [🤝 Contributing](#-contributing)
 - [🩷 Sponsor](#-sponsor)
@@ -99,6 +100,24 @@ export default () => (
     <Button>Hello AIGC</Button>
   </ThemeProvider>
 )
+```
+
+### MotionProvider (optional)
+
+Lobe UI uses `motion` under the hood. If your app uses `LazyMotion`, wrap the tree with
+`MotionProvider` to tell Lobe UI to render with `m` instead of `motion`.
+
+```tsx
+import { MotionProvider } from '@lobehub/ui';
+import { LazyMotion, domAnimation, m } from 'motion/react';
+
+export default () => (
+  <LazyMotion features={domAnimation}>
+    <MotionProvider motion={m}>
+      <App />
+    </MotionProvider>
+  </LazyMotion>
+);
 ```
 
 <div align="right">
