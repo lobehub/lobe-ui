@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 2.25.0](https://github.com/lobehub/lobe-ui/compare/v2.24.3...v2.25.0)
+
+<sup>Released on **2025-12-20**</sup>
+
+#### ✨ Features
+
+- **misc**: Bum v3, Update antd v6.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Bum v3, Update antd v6, closes [#421](https://github.com/lobehub/lobe-ui/issues/421) ([d1856f0](https://github.com/lobehub/lobe-ui/commit/d1856f0))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.24.3](https://github.com/lobehub/lobe-ui/compare/v2.24.2...v2.24.3)
 
 <sup>Released on **2025-12-18**</sup>
