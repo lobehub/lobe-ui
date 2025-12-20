@@ -2,6 +2,34 @@
 
 # Changelog
 
+## [Version 3.0.0](https://github.com/lobehub/lobe-ui/compare/v2.24.3...v3.0.0)
+
+<sup>Released on **2025-12-20**</sup>
+
+#### ✨ Features
+
+- **misc**: Bum v3, Update antd v6, Bump v3, Bump v3 \[force major], Bump v3 \[force major].
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Bum v3, Update antd v6, closes [#421](https://github.com/lobehub/lobe-ui/issues/421) ([d1856f0](https://github.com/lobehub/lobe-ui/commit/d1856f0))
+- **misc**: Bump v3 ([6f33842](https://github.com/lobehub/lobe-ui/commit/6f33842))
+- **misc**: Bump v3 \[force major] ([8033302](https://github.com/lobehub/lobe-ui/commit/8033302))
+- **misc**: Bump v3 \[force major] ([76bc951](https://github.com/lobehub/lobe-ui/commit/76bc951))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 2.24.3](https://github.com/lobehub/lobe-ui/compare/v2.24.2...v2.24.3)
 
 <sup>Released on **2025-12-18**</sup>
