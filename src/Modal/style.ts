@@ -20,7 +20,7 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
         margin-block-end: 0;
         padding: 16px;
       }
-      .${prefixCls}-modal-content {
+      .${prefixCls}-modal-container {
         overflow: hidden;
         padding: 0;
         border: 1px solid ${token.colorSplit};
@@ -45,7 +45,6 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
         justify-content: flex-end;
 
         padding: 16px;
-
         border: none;
       }
     `,

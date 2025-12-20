@@ -1,6 +1,6 @@
 'use client';
 
-import { LazyMotion, m } from 'framer-motion';
+import { LazyMotion, m } from 'motion/react';
 import { KeyboardEvent, memo, useCallback, useMemo } from 'react';
 import { Flexbox } from 'react-layout-kit';
 
@@ -12,7 +12,7 @@ import { useAccordionContext } from './context';
 import { useStyles } from './style';
 import type { AccordionItemProps } from './type';
 
-const loadFeatures = () => import('framer-motion').then((res) => res.domAnimation);
+const loadFeatures = () => import('motion/react').then((res) => res.domAnimation);
 
 const AccordionItem = memo<AccordionItemProps>(
   ({

@@ -1,6 +1,7 @@
 'use client';
 
 import { type GetProp, Upload, type UploadProps, message } from 'antd';
+import { useTheme } from 'antd-style';
 import { ChevronLeftIcon, ImageUpIcon } from 'lucide-react';
 import { memo, useCallback, useRef, useState } from 'react';
 import AvatarEditor from 'react-avatar-editor';
@@ -11,7 +12,6 @@ import Icon from '@/Icon';
 import Tag from '@/Tag';
 import Text from '@/Text';
 
-import { useStyles } from './style';
 import { AvatarUploaderProps } from './type';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
@@ -30,7 +30,7 @@ const AvatarUploader = memo<AvatarUploaderProps>(
   ({ shape, onChange, texts, compressSize = 256, onUpload }) => {
     const editor = useRef<any>(null);
     const [previewImage, setPreviewImage] = useState('');
-    const { styles, theme } = useStyles();
+    const theme = useTheme();
 
     const beforeUpload = useCallback((file: FileType) => {
       const isJpgOrPng =
@@ -97,7 +97,6 @@ const AvatarUploader = memo<AvatarUploaderProps>(
             <AvatarEditor
               border={0}
               borderRadius={shape === 'square' ? undefined : compressSize / 2}
-              className={styles.editor}
               height={compressSize}
               image={previewImage}
               ref={editor}

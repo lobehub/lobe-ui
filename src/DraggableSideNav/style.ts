@@ -63,7 +63,7 @@ export const useStyles = createStyles(
       flex-shrink: 0;
     `,
     handlerIcon: css`
-      /* Icon transitions are now handled by framer-motion */
+      /* Icon transitions are now handled by motion */
       display: flex;
       align-items: center;
       justify-content: center;

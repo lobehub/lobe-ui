@@ -85,14 +85,7 @@ const Image = memo<ImageProps>(
           height={height}
           loading={'lazy'}
           onClick={onClick}
-          preview={
-            preview === false
-              ? false
-              : {
-                  mask: false,
-                  ...(mergePreivew as any),
-                }
-          }
+          preview={preview === false ? false : (mergePreivew as any)}
           style={{
             maxHeight,
             maxWidth,

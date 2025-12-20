@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { createElement, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useStyles } from './style';

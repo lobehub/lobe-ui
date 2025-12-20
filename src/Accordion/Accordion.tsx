@@ -1,7 +1,7 @@
 'use client';
 
 import { Divider } from 'antd';
-import { LayoutGroup } from 'framer-motion';
+import { LayoutGroup } from 'motion/react';
 import { Children, Fragment, forwardRef, isValidElement, memo, useCallback } from 'react';
 import type { Key } from 'react';
 import useMergeState from 'use-merge-value';

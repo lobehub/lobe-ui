@@ -2,11 +2,6 @@ import { createStyles } from 'antd-style';
 import chroma from 'chroma-js';
 
 export const useStyles = createStyles(({ css, token, prefixCls }) => ({
-  editor: css`
-    overflow: hidden;
-    border: 1px solid ${token.colorBorder};
-    border-radius: ${token.borderRadiusLG}px;
-  `,
   picker: css`
     position: relative;
 
@@ -18,7 +13,7 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => ({
     }
   `,
   popover: css`
-    .${prefixCls}-popover-inner {
+    .${prefixCls}-popover-container {
       overflow: hidden;
       padding: 0;
     }
