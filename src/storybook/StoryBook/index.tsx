@@ -1,12 +1,11 @@
 'use client';
 
-import { FlexboxProps } from '@lobehub/ui/Flex';
 import { useResponsive } from 'antd-style';
 import { LevaPanel } from 'leva';
 import { Ref, memo } from 'react';
 
 import DraggablePanel from '@/DraggablePanel';
-import { Center, Flexbox } from '@/Flex';
+import { Center, Flexbox, FlexboxProps } from '@/Flex';
 
 import { useStyles } from './style';
 

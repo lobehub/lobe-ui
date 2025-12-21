@@ -11,8 +11,9 @@ apiHeader:
 ## Icons
 
 ```tsx
-import { Flexbox } from '@lobehub/ui/Flex';
 import { Logto } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
 
 export default () => <Logto size={64} />;
 ```
@@ -20,8 +21,9 @@ export default () => <Logto size={64} />;
 ## Color
 
 ```tsx
-import { Flexbox } from '@lobehub/ui/Flex';
 import { Logto } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
 
 export default () => <Logto.Color size={64} />;
 ```
@@ -29,8 +31,9 @@ export default () => <Logto.Color size={64} />;
 ## Avatars
 
 ```tsx
-import { Flexbox } from '@lobehub/ui/Flex';
 import { Logto } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
 
 export default () => (
   <Flexbox gap={16} horizontal>

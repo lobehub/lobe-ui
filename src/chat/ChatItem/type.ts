@@ -1,8 +1,8 @@
-import { FlexboxProps } from '@lobehub/ui/Flex';
 import { ReactNode } from 'react';
 
 import { AlertProps } from '@/Alert';
 import { AvatarProps } from '@/Avatar';
+import { FlexboxProps } from '@/Flex';
 import type { MarkdownProps } from '@/Markdown';
 import type { EditableMessageProps } from '@/chat/EditableMessage';
 import type { MetaData } from '@/chat/types';

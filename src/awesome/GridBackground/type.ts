@@ -1,5 +1,4 @@
-import { FlexboxProps } from '@lobehub/ui/Flex';
-
+import { FlexboxProps } from '@/Flex';
 import type { DivProps } from '@/types';
 
 export interface GridBackgroundProps extends DivProps {

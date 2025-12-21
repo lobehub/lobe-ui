@@ -1,10 +1,9 @@
 'use client';
 
-import { FlexboxProps } from '@lobehub/ui/Flex';
 import { AlertOctagon, AlertTriangle, Info, Lightbulb, MessageSquareWarning } from 'lucide-react';
 import { FC, useMemo } from 'react';
 
-import { Flexbox } from '@/Flex';
+import { Flexbox, FlexboxProps } from '@/Flex';
 import Icon from '@/Icon';
 
 import { useStyles } from './style';

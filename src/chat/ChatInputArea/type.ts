@@ -1,8 +1,8 @@
-import { FlexboxProps } from '@lobehub/ui/Flex';
 import type { TextAreaRef } from 'antd/es/input/TextArea';
 import { CSSProperties, ReactNode, Ref } from 'react';
 
 import type { DraggablePanelProps } from '@/DraggablePanel';
+import { FlexboxProps } from '@/Flex';
 import type { TextAreaProps } from '@/Input';
 
 export interface ChatInputAreaProps extends Omit<ChatInputAreaInnerProps, 'classNames'> {

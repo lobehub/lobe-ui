@@ -1,5 +1,6 @@
-import type { FlexboxProps } from '@lobehub/ui/Flex';
 import type { ReactNode } from 'react';
+
+import type { FlexboxProps } from '@/Flex';
 
 export interface SideNavProps extends FlexboxProps {
   avatar?: ReactNode;

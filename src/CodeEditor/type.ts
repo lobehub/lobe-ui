@@ -1,6 +1,6 @@
-import type { FlexboxProps } from '@lobehub/ui/Flex';
 import type { CSSProperties, Ref } from 'react';
 
+import type { FlexboxProps } from '@/Flex';
 import type { TextAreaProps } from '@/types';
 
 export interface CodeEditorProps

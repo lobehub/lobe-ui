@@ -1,7 +1,7 @@
-import type { FlexboxProps } from '@lobehub/ui/Flex';
 import { CSSProperties } from 'react';
 
 import type { ControlInputProps } from '@/EditableText/ControlInput';
+import type { FlexboxProps } from '@/Flex';
 
 export interface EditableTextProps
   extends

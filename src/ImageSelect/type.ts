@@ -1,7 +1,7 @@
-import type { FlexboxProps } from '@lobehub/ui/Flex';
 import type { SelectProps } from 'antd';
 import type { CSSProperties, ReactNode, Ref } from 'react';
 
+import type { FlexboxProps } from '@/Flex';
 import type { IconProps } from '@/Icon';
 
 export interface ImageSelectItem {

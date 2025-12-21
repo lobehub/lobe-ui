@@ -11,8 +11,9 @@ apiHeader:
 ## Icons
 
 ```tsx
-import { Flexbox } from '@lobehub/ui/Flex';
 import { Clerk } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
 
 export default () => <Clerk size={64} />;
 ```
@@ -20,8 +21,9 @@ export default () => <Clerk size={64} />;
 ## Color
 
 ```tsx
-import { Flexbox } from '@lobehub/ui/Flex';
 import { Clerk } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
 
 export default () => <Clerk.Color size={64} />;
 ```
@@ -29,8 +31,9 @@ export default () => <Clerk.Color size={64} />;
 ## Avatars
 
 ```tsx
-import { Flexbox } from '@lobehub/ui/Flex';
 import { Clerk } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
 
 export default () => (
   <Flexbox gap={16} horizontal>

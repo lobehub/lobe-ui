@@ -1,5 +1,6 @@
-import { FlexboxProps } from '@lobehub/ui/Flex';
 import { CSSProperties, ReactNode, Ref } from 'react';
+
+import { FlexboxProps } from '@/Flex';
 
 export interface ChatHeaderProps extends FlexboxProps {
   center?: ReactNode;

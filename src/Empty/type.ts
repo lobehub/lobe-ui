@@ -1,7 +1,7 @@
-import { FlexboxProps } from '@lobehub/ui/Flex';
 import { ReactNode } from 'react';
 
 import { BlockProps } from '@/Block';
+import { FlexboxProps } from '@/Flex';
 import { IconProps } from '@/Icon';
 import { TextProps } from '@/Text';
 

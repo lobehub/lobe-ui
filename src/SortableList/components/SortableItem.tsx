@@ -3,10 +3,10 @@
 import type { DraggableSyntheticListeners } from '@dnd-kit/core';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { type FlexboxProps } from '@lobehub/ui/Flex';
 import { cva } from 'class-variance-authority';
 import { createContext, memo, useMemo } from 'react';
 
+import { type FlexboxProps } from '@/Flex';
 import { Flexbox } from '@/Flex';
 
 import { useStyles } from '../style';

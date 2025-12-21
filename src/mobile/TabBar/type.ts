@@ -1,5 +1,6 @@
-import { FlexboxProps } from '@lobehub/ui/Flex';
 import { ReactNode, Ref } from 'react';
+
+import { FlexboxProps } from '@/Flex';
 
 export interface TabBarItemType {
   icon: ReactNode | ((active: boolean) => ReactNode);

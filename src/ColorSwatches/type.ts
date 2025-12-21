@@ -1,5 +1,6 @@
-import type { FlexboxProps } from '@lobehub/ui/Flex';
 import type { Key, ReactNode, Ref } from 'react';
+
+import type { FlexboxProps } from '@/Flex';
 
 interface ColorSwatchesItemType {
   color: string;

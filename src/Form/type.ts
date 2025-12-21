@@ -1,10 +1,10 @@
-import { FlexboxProps } from '@lobehub/ui/Flex';
 import type { FormProps as AntFormProps, DividerProps, FormInstance } from 'antd';
 import { FormItemProps as AntdFormItemProps } from 'antd/es/form/FormItem';
 import { CSSProperties, ReactNode, Ref } from 'react';
 
 import type { ButtonProps } from '@/Button';
 import type { CollapseProps } from '@/Collapse';
+import { FlexboxProps } from '@/Flex';
 import type { IconProps } from '@/Icon';
 import type { TagProps } from '@/Tag';
 import type { DivProps } from '@/types';

@@ -11,8 +11,9 @@ apiHeader:
 ## Icons
 
 ```tsx
-import { Flexbox } from '@lobehub/ui/Flex';
 import { Github } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
 
 export default () => <Github size={64} />;
 ```
@@ -20,8 +21,9 @@ export default () => <Github size={64} />;
 ## Avatars
 
 ```tsx
-import { Flexbox } from '@lobehub/ui/Flex';
 import { Github } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
 
 export default () => (
   <Flexbox gap={16} horizontal>

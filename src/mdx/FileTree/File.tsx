@@ -1,10 +1,9 @@
 'use client';
 
-import { FlexboxProps } from '@lobehub/ui/Flex';
 import { FileIcon } from 'lucide-react';
 import { FC } from 'react';
 
-import { Flexbox } from '@/Flex';
+import { Flexbox, FlexboxProps } from '@/Flex';
 import Icon, { type IconProps } from '@/Icon';
 
 export interface FileProps extends Omit<FlexboxProps, 'children'> {

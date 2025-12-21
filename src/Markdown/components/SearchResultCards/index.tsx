@@ -1,8 +1,8 @@
 'use client';
 
-import { FlexboxProps } from '@lobehub/ui/Flex';
 import { Ref, memo } from 'react';
 
+import { FlexboxProps } from '@/Flex';
 import ScrollShadow from '@/ScrollShadow';
 
 import SearchResultCard from './SearchResultCard';
