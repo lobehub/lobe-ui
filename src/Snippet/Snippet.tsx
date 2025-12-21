@@ -2,9 +2,9 @@
 
 import { cva } from 'class-variance-authority';
 import { memo, useMemo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import CopyButton from '@/CopyButton';
+import { Flexbox } from '@/Flex';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
 import Spotlight from '@/awesome/Spotlight';
 

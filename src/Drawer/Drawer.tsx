@@ -4,9 +4,9 @@ import { Drawer as AntdDrawer } from 'antd';
 import { useTheme } from 'antd-style';
 import { XIcon } from 'lucide-react';
 import { CSSProperties, memo, useMemo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
+import { Flexbox } from '@/Flex';
 
 import type { DrawerProps } from './type';
 

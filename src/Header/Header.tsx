@@ -2,7 +2,8 @@
 
 import { useResponsive } from 'antd-style';
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import { useStyles } from './style';
 import type { HeaderProps } from './type';

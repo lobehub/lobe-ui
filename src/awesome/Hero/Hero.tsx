@@ -4,10 +4,10 @@ import { ConfigProvider } from 'antd';
 import { useResponsive } from 'antd-style';
 import { Github } from 'lucide-react';
 import { memo, useCallback } from 'react';
-import { Center, Flexbox } from 'react-layout-kit';
 
 import A from '@/A';
 import Button from '@/Button';
+import { Center, Flexbox } from '@/Flex';
 import AuroraBackground from '@/awesome/AuroraBackground';
 import GradientButton from '@/awesome/GradientButton';
 

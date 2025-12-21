@@ -4,10 +4,10 @@ import { cx } from 'antd-style';
 import { Edit3 } from 'lucide-react';
 import { memo, useMemo } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
+import { Flexbox } from '@/Flex';
 
 import ControlInput from './ControlInput';
 import type { EditableTextProps } from './type';

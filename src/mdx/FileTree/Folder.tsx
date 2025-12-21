@@ -3,8 +3,8 @@
 import { createStyles } from 'antd-style';
 import { FolderIcon, FolderOpen } from 'lucide-react';
 import { FC, useState } from 'react';
-import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
+import { Flexbox, FlexboxProps } from '@/Flex';
 import Icon, { type IconProps } from '@/Icon';
 
 const useStyles = createStyles(({ css, token }) => {

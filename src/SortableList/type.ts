@@ -1,5 +1,6 @@
 import { type ReactNode, Ref } from 'react';
-import type { FlexboxProps } from 'react-layout-kit';
+
+import type { FlexboxProps } from '@/Flex';
 
 export interface SortableListItem {
   [key: string]: any;

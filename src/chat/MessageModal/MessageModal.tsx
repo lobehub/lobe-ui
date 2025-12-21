@@ -2,11 +2,11 @@
 
 import { useResponsive } from 'antd-style';
 import { memo, useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
 import Button from '@/Button';
 import CodeEditor from '@/CodeEditor';
+import { Flexbox } from '@/Flex';
 import TextArea from '@/Input/TextArea';
 import Markdown from '@/Markdown';
 import Modal from '@/Modal';

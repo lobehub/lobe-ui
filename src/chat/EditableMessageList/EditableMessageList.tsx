@@ -3,11 +3,11 @@
 import isEqual from 'fast-deep-equal';
 import { Plus, Trash } from 'lucide-react';
 import { memo, useEffect, useReducer } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
 import Button from '@/Button';
 import ControlInput from '@/EditableText/ControlInput';
+import { Flexbox } from '@/Flex';
 import Select from '@/Select';
 
 import { messagesReducer } from './messageReducer';

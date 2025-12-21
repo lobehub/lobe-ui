@@ -2,8 +2,9 @@
 
 import { cva } from 'class-variance-authority';
 import { memo, useMemo, useRef } from 'react';
-import { Flexbox } from 'react-layout-kit';
 import { mergeRefs } from 'react-merge-refs';
+
+import { Flexbox } from '@/Flex';
 
 import { useStyles } from './style';
 import type { ScrollShadowProps } from './type';

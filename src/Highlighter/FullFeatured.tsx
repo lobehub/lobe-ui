@@ -3,10 +3,10 @@
 import { cva } from 'class-variance-authority';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { ReactNode, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
+import { Flexbox } from '@/Flex';
 import { getCodeLanguageDisplayName, getCodeLanguageFilename } from '@/Highlighter/const';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
 import Text from '@/Text';
@@ -39,6 +39,9 @@ const HeaderLanguage = memo<HeaderLanguageProps>(
   }) => {
     if (!showLanguage) return null;
 
+    if (allowChangeLanguage && !fileName)
+      return <LangSelect onSelect={setLanguage} value={language.toLowerCase()} />;
+
     return (
       <Flexbox
         align={'center'}
@@ -46,26 +49,21 @@ const HeaderLanguage = memo<HeaderLanguageProps>(
         flex={1}
         gap={4}
         horizontal
-        justify={'center'}
+        justify={'flex-start'}
+        paddingInline={8}
       >
-        {allowChangeLanguage && !fileName ? (
-          <LangSelect onSelect={setLanguage} value={language.toLowerCase()} />
-        ) : (
-          <>
-            {icon || (
-              <MaterialFileTypeIcon
-                fallbackUnknownType={false}
-                filename={filetype}
-                size={18}
-                type={'file'}
-                variant={'raw'}
-              />
-            )}
-            <Text ellipsis fontSize={13}>
-              {displayName}
-            </Text>
-          </>
+        {icon || (
+          <MaterialFileTypeIcon
+            fallbackUnknownType={false}
+            filename={filetype}
+            size={18}
+            type={'file'}
+            variant={'raw'}
+          />
         )}
+        <Text ellipsis fontSize={13}>
+          {displayName}
+        </Text>
       </Flexbox>
     );
   },
@@ -226,13 +224,9 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
           className={cx(headerVariants({ variant }), classNames?.header)}
           horizontal
           justify={'space-between'}
+          onClick={handleToggleExpand}
           style={customStyles?.header}
         >
-          <ActionIcon
-            icon={expand ? ChevronDown : ChevronRight}
-            onClick={handleToggleExpand}
-            size={'small'}
-          />
           <HeaderLanguage
             allowChangeLanguage={allowChangeLanguage}
             displayName={displayName}
@@ -243,8 +237,21 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
             setLanguage={setLanguage}
             showLanguage={showLanguage}
           />
-          <Flexbox align={'center'} flex={'none'} gap={4} horizontal>
-            {actions}
+          <Flexbox
+            align={'center'}
+            flex={'none'}
+            gap={4}
+            horizontal
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Flexbox align={'center'} className={'panel-actions'} flex={'none'} gap={4} horizontal>
+              {actions}
+            </Flexbox>
+            <ActionIcon
+              icon={expand ? ChevronDown : ChevronRight}
+              onClick={handleToggleExpand}
+              size={'small'}
+            />
           </Flexbox>
         </Flexbox>
         <Flexbox

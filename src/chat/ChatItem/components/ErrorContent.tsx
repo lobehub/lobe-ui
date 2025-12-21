@@ -1,7 +1,7 @@
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import Alert from '@/Alert';
+import { Flexbox } from '@/Flex';
 import { ChatItemProps } from '@/chat/ChatItem';
 
 import { useStyles } from '../style';

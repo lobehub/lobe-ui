@@ -2,7 +2,8 @@ import { Icon } from '@lobehub/ui';
 import { createStyles } from 'antd-style';
 import { SparkleIcon } from 'lucide-react';
 import { PropsWithChildren, memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 const useStyles = createStyles(({ css, token, isDarkMode }) => ({
   container: css`

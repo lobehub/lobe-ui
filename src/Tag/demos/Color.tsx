@@ -1,7 +1,8 @@
 import { Tag } from '@lobehub/ui';
 import { Badge } from 'antd';
 import { useTheme } from 'antd-style';
-import { Center } from 'react-layout-kit';
+
+import { Center } from '@/Flex';
 
 export default () => {
   const theme = useTheme();

@@ -1,6 +1,7 @@
 import { TypewriterEffect } from '@lobehub/ui/awesome';
 import { useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => {
   const [count, setCount] = useState(0);

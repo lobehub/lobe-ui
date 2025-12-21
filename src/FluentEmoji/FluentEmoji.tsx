@@ -1,9 +1,9 @@
 'use client';
 
 import { memo, useMemo, useState } from 'react';
-import { Center } from 'react-layout-kit';
 
 import { useCdnFn } from '@/ConfigProvider';
+import { Center } from '@/Flex';
 import Img from '@/Img';
 
 import { useStyles } from './style';

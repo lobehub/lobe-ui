@@ -2,9 +2,9 @@
 
 import { cva } from 'class-variance-authority';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import CopyButton from '@/CopyButton';
+import { Flexbox } from '@/Flex';
 import { getCodeLanguageDisplayName } from '@/Highlighter/const';
 import Tag from '@/Tag';
 
@@ -90,7 +90,13 @@ export const Highlighter = memo<HighlighterProps>(
 
     const originalActions = useMemo(() => {
       if (!copyable) return null;
-      return <CopyButton content={getCopyContent} glass size={actionIconSize} />;
+      return (
+        <CopyButton
+          content={getCopyContent}
+          glass
+          size={actionIconSize || { blockSize: 28, size: 16 }}
+        />
+      );
     }, [actionIconSize, copyable, getCopyContent]);
 
     const actions = useMemo(() => {

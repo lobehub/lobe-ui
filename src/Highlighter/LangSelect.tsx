@@ -2,17 +2,13 @@
 
 import { Select, type SelectProps } from 'antd';
 import { memo, useMemo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 import { bundledLanguagesInfo } from 'shiki';
 
+import { Flexbox } from '@/Flex';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
 import Text from '@/Text';
 
-import { useStyles } from './style';
-
 export const LangSelect = memo<Omit<SelectProps, 'options'>>(({ ...rest }) => {
-  const { styles } = useStyles();
-
   const options = useMemo(
     () => [
       {
@@ -61,10 +57,15 @@ export const LangSelect = memo<Omit<SelectProps, 'options'>>(({ ...rest }) => {
 
   return (
     <Select
-      className={styles.select}
+      className={'languageTitle'}
+      onClick={(e) => e.stopPropagation()}
       options={options}
       showSearch
       size={'small'}
+      style={{
+        maxWidth: 240,
+        width: '100%',
+      }}
       suffixIcon={false}
       variant={'borderless'}
       {...rest}

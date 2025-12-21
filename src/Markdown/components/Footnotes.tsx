@@ -1,10 +1,10 @@
 'use client';
 
 import { type ReactNode, memo, useMemo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import A from '@/A';
 import Block from '@/Block';
+import { Flexbox } from '@/Flex';
 import Text from '@/Text';
 
 import SearchResultCards from './SearchResultCards';

@@ -1,5 +1,6 @@
 import { Dropdown } from '@lobehub/ui';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import { menu } from './data';
 

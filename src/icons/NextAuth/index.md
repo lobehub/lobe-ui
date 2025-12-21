@@ -12,7 +12,8 @@ apiHeader:
 
 ```tsx
 import { NextAuth } from '@lobehub/ui/icons';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => <NextAuth size={64} />;
 ```
@@ -21,7 +22,8 @@ export default () => <NextAuth size={64} />;
 
 ```tsx
 import { NextAuth } from '@lobehub/ui/icons';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => <NextAuth.Color size={64} />;
 ```
@@ -30,7 +32,8 @@ export default () => <NextAuth.Color size={64} />;
 
 ```tsx
 import { NextAuth } from '@lobehub/ui/icons';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => (
   <Flexbox gap={16} horizontal>

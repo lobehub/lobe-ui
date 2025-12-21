@@ -1,5 +1,6 @@
 import type { CSSProperties, Ref } from 'react';
-import type { FlexboxProps } from 'react-layout-kit';
+
+import type { FlexboxProps } from '@/Flex';
 
 export interface AuroraBackgroundProps extends FlexboxProps {
   classNames?: {

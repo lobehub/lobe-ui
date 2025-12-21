@@ -1,8 +1,8 @@
 import { CSSProperties } from 'react';
-import { FlexboxProps } from 'react-layout-kit';
 
 import type { ButtonProps } from '@/Button';
 import type { CodeEditorProps } from '@/CodeEditor';
+import { FlexboxProps } from '@/Flex';
 
 export interface MessageInputProps extends FlexboxProps {
   classNames?: CodeEditorProps['classNames'] & {

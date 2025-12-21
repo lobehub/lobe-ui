@@ -1,4 +1,4 @@
-import type { FlexboxProps } from 'react-layout-kit';
+import type { FlexboxProps } from '@/Flex';
 
 export interface MaskShadowProps extends FlexboxProps {
   position?: 'top' | 'bottom' | 'left' | 'right';

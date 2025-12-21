@@ -3,9 +3,9 @@
 import { Empty as AntEmpty } from 'antd';
 import { useTheme } from 'antd-style';
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import Block from '@/Block';
+import { Flexbox } from '@/Flex';
 import FluentEmoji from '@/FluentEmoji';
 import Icon from '@/Icon';
 import Text from '@/Text';

@@ -44,9 +44,6 @@ export const usePreview = (
           if (toolbarRender) return toolbarRender(originalNode, info);
           return originalNode;
         }),
-      classNames: {
-        root: cx(styles.preview, rootClassName),
-      },
       closeIcon: <Icon color={'#fff'} icon={X} />,
       imageRender: (originalNode, info) => {
         const node = <Preview visible={visible}>{originalNode}</Preview>;
@@ -62,6 +59,7 @@ export const usePreview = (
         // 向后兼容旧的 onVisibleChange
         onVisibleChange?.(open, !open);
       },
+      rootClassName: cx(styles.preview, rootClassName),
       styles: { mask: { backdropFilter: 'blur(8px)' } },
       ...rest,
     };

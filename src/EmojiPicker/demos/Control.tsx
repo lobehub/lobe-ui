@@ -1,6 +1,7 @@
 import { Button, EmojiPicker } from '@lobehub/ui';
 import { useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => {
   const [open, setOpen] = useState(false);

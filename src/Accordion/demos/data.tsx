@@ -1,6 +1,7 @@
 import { Accordion, AccordionItem, ActionIcon } from '@lobehub/ui';
 import { MoreHorizontal, Settings } from 'lucide-react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => {
   return (

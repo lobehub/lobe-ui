@@ -6,8 +6,8 @@ import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
 import { readableColor } from 'polished';
 import { isValidElement, memo, useMemo } from 'react';
-import { Center } from 'react-layout-kit';
 
+import { Center } from '@/Flex';
 import FluentEmoji from '@/FluentEmoji';
 import Icon from '@/Icon';
 import Img from '@/Img';
@@ -25,7 +25,7 @@ const Avatar = memo<AvatarProps>(
     animation,
     borderedColor,
     size = 48,
-    shape = 'circle',
+    shape,
     background,
     style,
     unoptimized,
@@ -44,8 +44,8 @@ const Avatar = memo<AvatarProps>(
       () =>
         Boolean(
           avatar &&
-            (['/', 'http', 'data:'].some((index) => isStringAvatar && avatar.startsWith(index)) ||
-              isValidElement(avatar)),
+          (['/', 'http', 'data:'].some((index) => isStringAvatar && avatar.startsWith(index)) ||
+            isValidElement(avatar)),
         ),
       [avatar, isStringAvatar],
     );
@@ -128,7 +128,7 @@ const Avatar = memo<AvatarProps>(
         size={size}
         src={isDefaultAntAvatar ? defualtAvatar : undefined}
         style={{
-          background: background,
+          background: isDefaultAntAvatar ? background : background || theme.colorBorder,
           boxShadow: bordered
             ? `${theme.colorBgLayout} 0 0 0 2px, ${borderedColor || theme.colorTextTertiary} 0 0 0 4px`
             : undefined,

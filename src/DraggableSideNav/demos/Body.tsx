@@ -1,7 +1,8 @@
 import { Avatar, Menu, Text } from '@lobehub/ui';
 import { FolderIcon } from 'lucide-react';
 import type { FC } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import { agents } from './data';
 

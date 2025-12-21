@@ -1,9 +1,9 @@
 'use client';
 
 import { CSSProperties, memo, useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import { useCdnFn } from '@/ConfigProvider';
+import { Flexbox } from '@/Flex';
 import Img from '@/Img';
 import Spline, { type SplineProps } from '@/awesome/Spline';
 

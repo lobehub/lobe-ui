@@ -1,5 +1,6 @@
 import { CSSProperties, ReactNode, Ref } from 'react';
-import { FlexboxProps } from 'react-layout-kit';
+
+import { FlexboxProps } from '@/Flex';
 
 export interface ChatHeaderProps extends FlexboxProps {
   center?: ReactNode;

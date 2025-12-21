@@ -4,9 +4,9 @@ import { useHover } from 'ahooks';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Resizable, ResizeCallback } from 're-resizable';
 import { CSSProperties, memo, useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
-import { Center, Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
+import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
 import { useStyles } from './style';

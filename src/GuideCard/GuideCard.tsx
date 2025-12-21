@@ -3,9 +3,9 @@
 import { cva } from 'class-variance-authority';
 import { X } from 'lucide-react';
 import { memo, useMemo, useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
+import { Flexbox } from '@/Flex';
 import Img from '@/Img';
 
 import { useStyles } from './style';

@@ -2,9 +2,9 @@
 
 import { cva } from 'class-variance-authority';
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import CopyButton from '@/CopyButton';
+import { Flexbox } from '@/Flex';
 import { useStyles } from '@/Highlighter/style';
 import Tag from '@/Tag';
 
@@ -76,7 +76,9 @@ const Mermaid = memo<MermaidProps>(
 
     const originalActions = useMemo(() => {
       if (!copyable) return null;
-      return <CopyButton content={getCopyContent} size={actionIconSize} />;
+      return (
+        <CopyButton content={getCopyContent} size={actionIconSize || { blockSize: 28, size: 16 }} />
+      );
     }, [actionIconSize, copyable, getCopyContent]);
 
     const actions = useMemo(() => {

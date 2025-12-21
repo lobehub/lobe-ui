@@ -1,9 +1,9 @@
 'use client';
 
 import { CSSProperties, memo } from 'react';
-import { Center, Flexbox } from 'react-layout-kit';
 
 import A from '@/A';
+import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Img from '@/Img';
 import Text from '@/Text';

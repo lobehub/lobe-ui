@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode, Ref } from 'react';
-import type { FlexboxProps } from 'react-layout-kit';
+
+import type { FlexboxProps } from '@/Flex';
 
 export interface ListItemProps extends Omit<FlexboxProps, 'title'> {
   actions?: ReactNode;

@@ -2,7 +2,8 @@
 
 import { cx } from 'antd-style';
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import ListItem from './ListItem';
 import type { ListProps } from './type';

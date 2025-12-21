@@ -1,8 +1,8 @@
 'use client';
 
 import { Ref, memo } from 'react';
-import { FlexboxProps } from 'react-layout-kit';
 
+import { FlexboxProps } from '@/Flex';
 import ScrollShadow from '@/ScrollShadow';
 
 import SearchResultCard from './SearchResultCard';

@@ -1,9 +1,9 @@
 'use client';
 
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 import useMergeState from 'use-merge-value';
 
+import { Flexbox } from '@/Flex';
 import SafeArea from '@/mobile/SafeArea';
 
 import { useStyles } from './style';

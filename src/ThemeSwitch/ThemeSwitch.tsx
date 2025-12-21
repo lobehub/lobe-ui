@@ -4,10 +4,10 @@ import { Select } from 'antd';
 import { ThemeMode } from 'antd-style';
 import { Monitor, Moon, Sun } from 'lucide-react';
 import { memo, useMemo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
 import Dropdown from '@/Dropdown';
+import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import type { MenuItemType } from '@/Menu';
 

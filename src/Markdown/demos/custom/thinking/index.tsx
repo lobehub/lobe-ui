@@ -1,7 +1,8 @@
 import { Button, Markdown } from '@lobehub/ui';
 import { useTheme } from 'antd-style';
 import { PropsWithChildren, useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import { fullThinking, inlineMode, ollama, partialThinking } from './content';
 import { normalizeThinkTags, remarkCaptureThink } from './remarkPlugin';

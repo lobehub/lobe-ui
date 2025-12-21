@@ -1,5 +1,6 @@
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import { useTitleStyles as useStyles } from './style';
 import type { ChatHeaderTitleProps } from './type';

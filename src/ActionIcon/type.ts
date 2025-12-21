@@ -1,6 +1,6 @@
 import type { ReactNode, Ref } from 'react';
-import type { CenterProps } from 'react-layout-kit';
 
+import type { CenterProps } from '@/Flex';
 import type { IconProps, IconSizeConfig, IconSizeType, LucideIconProps } from '@/Icon';
 import type { TooltipProps } from '@/Tooltip';
 

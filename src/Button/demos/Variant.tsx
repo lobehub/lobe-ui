@@ -1,6 +1,7 @@
 import { Button } from '@lobehub/ui';
 import { Divider } from 'antd';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => {
   return (

@@ -17,8 +17,8 @@ const GroupAvatar = memo<GroupAvatarProps>(
     avatars = [],
     size = 32,
     grid = 2,
-    cornerShape = 'squircle',
-    avatarShape = 'circle',
+    cornerShape = 'square',
+    avatarShape = 'square',
     ...rest
   }) => {
     const { cx, styles } = useStyles();

@@ -16,9 +16,9 @@ import {
   useRef,
   useTransition,
 } from 'react';
-import { Center } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
+import { Center } from '@/Flex';
 import Icon from '@/Icon';
 
 import { useStyles } from './style';

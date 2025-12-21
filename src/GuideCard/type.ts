@@ -1,8 +1,8 @@
 import type { ImageProps } from 'antd';
 import type { CSSProperties, ReactNode, Ref } from 'react';
-import type { FlexboxProps } from 'react-layout-kit';
 
 import type { ActionIconProps } from '@/ActionIcon';
+import type { FlexboxProps } from '@/Flex';
 import type { ImgProps } from '@/types';
 
 export interface GuideCardProps extends Omit<FlexboxProps, 'title'> {

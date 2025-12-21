@@ -12,7 +12,8 @@ apiHeader:
 
 ```tsx
 import { Auth0 } from '@lobehub/ui/icons';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => <Auth0 size={64} />;
 ```
@@ -21,7 +22,8 @@ export default () => <Auth0 size={64} />;
 
 ```tsx
 import { Auth0 } from '@lobehub/ui/icons';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => (
   <Flexbox gap={16} horizontal>

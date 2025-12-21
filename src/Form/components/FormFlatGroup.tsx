@@ -3,7 +3,8 @@
 import { useResponsive } from 'antd-style';
 import { cva } from 'class-variance-authority';
 import { memo, useMemo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import { useFlatGroupStyles as useStyles } from '../style';
 import type { FormFlatGroupProps } from '../type';

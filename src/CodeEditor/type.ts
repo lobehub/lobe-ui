@@ -1,11 +1,10 @@
 import type { CSSProperties, Ref } from 'react';
-import type { FlexboxProps } from 'react-layout-kit';
 
+import type { FlexboxProps } from '@/Flex';
 import type { TextAreaProps } from '@/types';
 
 export interface CodeEditorProps
-  extends TextAreaProps,
-    Pick<FlexboxProps, 'width' | 'height' | 'flex'> {
+  extends TextAreaProps, Pick<FlexboxProps, 'width' | 'height' | 'flex'> {
   classNames?: {
     highlight?: string;
     textarea?: string;

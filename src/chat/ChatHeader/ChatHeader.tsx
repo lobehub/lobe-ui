@@ -2,9 +2,9 @@
 
 import { ChevronLeft } from 'lucide-react';
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
+import { Flexbox } from '@/Flex';
 
 import { useStyles } from './style';
 import type { ChatHeaderProps } from './type';

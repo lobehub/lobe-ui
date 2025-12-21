@@ -2,8 +2,8 @@
 
 import { AlertOctagon, AlertTriangle, Info, Lightbulb, MessageSquareWarning } from 'lucide-react';
 import { FC, useMemo } from 'react';
-import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
+import { Flexbox, FlexboxProps } from '@/Flex';
 import Icon from '@/Icon';
 
 import { useStyles } from './style';

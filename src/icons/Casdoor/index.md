@@ -12,7 +12,8 @@ apiHeader:
 
 ```tsx
 import { Casdoor } from '@lobehub/ui/icons';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => <Casdoor size={64} />;
 ```
@@ -21,7 +22,8 @@ export default () => <Casdoor size={64} />;
 
 ```tsx
 import { Casdoor } from '@lobehub/ui/icons';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => <Casdoor.Color size={64} />;
 ```
@@ -30,7 +32,8 @@ export default () => <Casdoor.Color size={64} />;
 
 ```tsx
 import { Casdoor } from '@lobehub/ui/icons';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => (
   <Flexbox gap={16} horizontal>

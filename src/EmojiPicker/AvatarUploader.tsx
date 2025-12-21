@@ -5,9 +5,9 @@ import { useTheme } from 'antd-style';
 import { ChevronLeftIcon, ImageUpIcon } from 'lucide-react';
 import { memo, useCallback, useRef, useState } from 'react';
 import AvatarEditor from 'react-avatar-editor';
-import { Center, Flexbox } from 'react-layout-kit';
 
 import Button from '@/Button';
+import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Tag from '@/Tag';
 import Text from '@/Text';

@@ -2,8 +2,8 @@
 
 import { Loader2, MessageSquare } from 'lucide-react';
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
+import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Text from '@/Text';
 

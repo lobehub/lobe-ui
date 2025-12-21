@@ -1,6 +1,7 @@
 import { GroupAvatar, type GroupAvatarProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => {
   const store = useCreateStore();

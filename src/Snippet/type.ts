@@ -1,5 +1,6 @@
 import type { Ref } from 'react';
-import type { FlexboxProps } from 'react-layout-kit';
+
+import type { FlexboxProps } from '@/Flex';
 
 export interface SnippetProps extends FlexboxProps {
   children: string;

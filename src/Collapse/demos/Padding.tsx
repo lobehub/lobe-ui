@@ -1,5 +1,6 @@
 import { Collapse } from '@lobehub/ui';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import { items } from './data';
 

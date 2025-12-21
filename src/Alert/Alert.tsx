@@ -5,10 +5,10 @@ import { cva } from 'class-variance-authority';
 import { camelCase } from 'lodash-es';
 import { AlertTriangle, CheckCircle, Info, X, XCircle } from 'lucide-react';
 import { memo, useMemo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import { Accordion, AccordionItem } from '@/Accordion';
 import ActionIcon from '@/ActionIcon';
+import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
 import { useStyles } from './style';

@@ -1,7 +1,8 @@
 'use client';
 
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import Avatar from '../Avatar';
 import type { AvatarGroupProps } from '../type';

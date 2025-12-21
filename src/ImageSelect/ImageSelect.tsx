@@ -1,9 +1,9 @@
 'use client';
 
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
+import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Img from '@/Img';
 

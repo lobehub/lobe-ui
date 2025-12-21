@@ -1,7 +1,8 @@
 import { Button, Markdown } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { useEffect, useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import { markdownElements } from './custom/plugins/MarkdownElements';
 import { removeLineBreaksInAntArtifact } from './custom/plugins/utils';

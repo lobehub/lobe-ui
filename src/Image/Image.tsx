@@ -3,7 +3,8 @@
 import { Image as AntImage, Skeleton } from 'antd';
 import { cva } from 'class-variance-authority';
 import { memo, useMemo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import usePreview from './components/usePreview';
 import { FALLBACK_DARK, FALLBACK_LIGHT, useStyles } from './style';

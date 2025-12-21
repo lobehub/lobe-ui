@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode, Ref } from 'react';
-import type { FlexboxProps } from 'react-layout-kit';
+
+import type { FlexboxProps } from '@/Flex';
 
 export interface HeaderProps extends FlexboxProps {
   actions?: ReactNode;

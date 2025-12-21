@@ -1,6 +1,7 @@
 import { ActionIcon } from '@lobehub/ui';
 import { Settings } from 'lucide-react';
-import { Center } from 'react-layout-kit';
+
+import { Center } from '@/Flex';
 
 export default () => {
   return (

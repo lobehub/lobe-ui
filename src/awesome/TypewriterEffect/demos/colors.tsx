@@ -1,5 +1,6 @@
 import { TypewriterEffect } from '@lobehub/ui/awesome';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => {
   return (

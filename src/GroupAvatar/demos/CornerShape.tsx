@@ -1,6 +1,6 @@
 import { Grid, GroupAvatar, Text } from '@lobehub/ui';
-import { Center } from 'react-layout-kit';
 
+import { Center } from '@/Flex';
 import { SMOOTH_CORNER_MASKS } from '@/utils/smoothCorners';
 
 const avatars = [

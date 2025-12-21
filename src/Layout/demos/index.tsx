@@ -1,6 +1,7 @@
 import { Layout } from '@lobehub/ui';
 import { createStyles } from 'antd-style';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 const useStyles = createStyles(({ css, token }) => ({
   footer: css`
@@ -9,8 +10,8 @@ const useStyles = createStyles(({ css, token }) => ({
   `,
   header: css`
     height: 100%;
-    background: ${token.cyan5A};
     border-block-end: 1px solid ${token.colorBorder};
+    background: ${token.cyan5A};
   `,
 }));
 

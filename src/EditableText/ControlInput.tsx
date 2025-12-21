@@ -3,9 +3,9 @@
 import type { InputRef } from 'antd';
 import { RotateCcw, Save } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon, { type ActionIconProps } from '@/ActionIcon';
+import { Flexbox } from '@/Flex';
 import Input, { type InputProps } from '@/Input';
 
 export interface ControlInputProps extends Omit<InputProps, 'onChange' | 'value' | 'onAbort'> {

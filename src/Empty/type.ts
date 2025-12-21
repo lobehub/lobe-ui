@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
-import { FlexboxProps } from 'react-layout-kit';
 
 import { BlockProps } from '@/Block';
+import { FlexboxProps } from '@/Flex';
 import { IconProps } from '@/Icon';
 import { TextProps } from '@/Text';
 

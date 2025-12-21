@@ -1,7 +1,8 @@
 import { ActionIcon, Avatar, Menu, type MenuItemType, Text } from '@lobehub/ui';
 import { ChevronDown, Home, SquareDashedBottom, Users } from 'lucide-react';
 import type { FC } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export const DemoHeader: FC<{
   activeKey: string;

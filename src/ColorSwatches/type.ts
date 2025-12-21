@@ -1,5 +1,6 @@
 import type { Key, ReactNode, Ref } from 'react';
-import type { FlexboxProps } from 'react-layout-kit';
+
+import type { FlexboxProps } from '@/Flex';
 
 interface ColorSwatchesItemType {
   color: string;

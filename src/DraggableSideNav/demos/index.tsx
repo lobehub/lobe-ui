@@ -1,7 +1,8 @@
 import { DraggableSideNav } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import { DemoBody } from './Body';
 import { DemoFooter } from './Footer';
