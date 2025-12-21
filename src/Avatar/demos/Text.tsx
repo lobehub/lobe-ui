@@ -1,5 +1,6 @@
 import { Avatar } from '@lobehub/ui';
-import { Center } from 'react-layout-kit';
+
+import { Center } from '@/Flex';
 
 export default () => {
   return (

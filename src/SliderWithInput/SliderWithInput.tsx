@@ -3,8 +3,8 @@
 import { Slider } from 'antd';
 import { isNull } from 'lodash-es';
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
+import { Flexbox } from '@/Flex';
 import InputNumber from '@/Input/InputNumber';
 
 import type { SliderWithInputProps } from './type';

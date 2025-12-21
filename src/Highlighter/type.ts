@@ -1,5 +1,5 @@
+import { FlexboxProps } from '@lobehub/ui/Flex';
 import { CSSProperties, ReactNode, type Ref } from 'react';
-import { FlexboxProps } from 'react-layout-kit';
 import type { BuiltinTheme } from 'shiki';
 
 import type { ActionIconProps } from '@/ActionIcon';

@@ -1,6 +1,7 @@
 import { Block, Markdown, SearchResultCards, Tabs } from '@lobehub/ui';
 import { useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import { normalizeThinkTags, remarkCaptureThink } from '../thinking/remarkPlugin';
 import { cases } from './cases';

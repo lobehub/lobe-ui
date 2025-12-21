@@ -1,10 +1,10 @@
 'use client';
 
 import { memo, useMemo } from 'react';
-import { Center } from 'react-layout-kit';
 
 import { useCdnFn } from '@/ConfigProvider';
 import FileTypeIcon from '@/FileTypeIcon';
+import { Center } from '@/Flex';
 import Img from '@/Img';
 
 import type { MaterialFileTypeIconProps } from './type';

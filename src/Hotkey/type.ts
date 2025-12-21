@@ -1,5 +1,5 @@
+import type { FlexboxProps } from '@lobehub/ui/Flex';
 import type { CSSProperties } from 'react';
-import type { FlexboxProps } from 'react-layout-kit';
 
 export interface HotkeyProps extends Omit<FlexboxProps, 'children'> {
   classNames?: {

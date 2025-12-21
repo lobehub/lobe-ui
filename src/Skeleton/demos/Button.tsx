@@ -1,5 +1,6 @@
 import { Button, Skeleton } from '@lobehub/ui';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => (
   <Flexbox align="flex-start" gap={16}>

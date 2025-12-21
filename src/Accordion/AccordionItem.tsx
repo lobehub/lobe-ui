@@ -1,9 +1,9 @@
 'use client';
 
 import { KeyboardEvent, memo, useCallback, useMemo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import Block from '@/Block';
+import { Flexbox } from '@/Flex';
 import Text from '@/Text';
 import { LazyMotion, m } from '@/motion';
 

@@ -5,9 +5,9 @@ import chroma from 'chroma-js';
 import { CheckIcon } from 'lucide-react';
 import { readableColor, rgba } from 'polished';
 import { memo, useMemo } from 'react';
-import { Center, Flexbox } from 'react-layout-kit';
 import useMergeState from 'use-merge-value';
 
+import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Tooltip from '@/Tooltip';
 

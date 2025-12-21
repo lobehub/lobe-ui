@@ -1,7 +1,8 @@
 'use client';
 
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import { useStyles } from './style';
 import type { AuroraBackgroundProps } from './type';

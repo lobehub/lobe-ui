@@ -15,10 +15,10 @@ import {
   useState,
 } from 'react';
 import { useHotkeys, useRecordHotkeys } from 'react-hotkeys-hook';
-import { Flexbox } from 'react-layout-kit';
 import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
+import { Flexbox } from '@/Flex';
 import Hotkey from '@/Hotkey';
 import { NORMATIVE_MODIFIER, checkIsAppleDevice, splitKeysByPlus } from '@/Hotkey/utils';
 

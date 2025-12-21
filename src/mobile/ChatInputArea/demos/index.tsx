@@ -3,7 +3,8 @@ import { ChatInputActionBar, TokenTag } from '@lobehub/ui/chat';
 import { ChatInputArea } from '@lobehub/ui/mobile';
 import { Eraser, Languages } from 'lucide-react';
 import { useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => {
   const [expand, setExpand] = useState(false);

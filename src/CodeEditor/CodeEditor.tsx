@@ -2,10 +2,10 @@
 
 import { cva } from 'class-variance-authority';
 import { memo, useMemo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 import useMergeState from 'use-merge-value';
 
 import { useStyles } from '@/CodeEditor/style';
+import { Flexbox } from '@/Flex';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
 
 import { CodeEditorProps } from './type';

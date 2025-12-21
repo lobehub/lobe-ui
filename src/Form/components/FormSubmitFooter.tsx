@@ -5,9 +5,9 @@ import isEqual from 'fast-deep-equal';
 import { InfoIcon } from 'lucide-react';
 import { motion } from 'motion/react';
 import { memo, useEffect, useMemo, useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import Button from '@/Button';
+import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
 import { useSubmitFooterStyles as useStyles } from '../style';

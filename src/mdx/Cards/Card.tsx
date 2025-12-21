@@ -2,10 +2,10 @@
 
 import { createStyles } from 'antd-style';
 import { FC } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import A from '@/A';
 import Block, { type BlockProps } from '@/Block';
+import { Flexbox } from '@/Flex';
 import Icon, { type IconProps } from '@/Icon';
 import Img from '@/Img';
 import Tag, { type TagProps } from '@/Tag';

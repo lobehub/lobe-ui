@@ -2,7 +2,8 @@
 
 import { Space } from 'antd';
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import { ColorScaleItem } from '../types';
 import ScaleRow from './ScaleRow';

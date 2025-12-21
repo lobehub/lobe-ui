@@ -4,8 +4,8 @@ import { Popover } from 'antd';
 import { createStyles } from 'antd-style';
 import { ArrowRightIcon } from 'lucide-react';
 import { type FC, type ReactNode, useMemo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
+import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
 const useStyles = createStyles(({ css, token }) => ({

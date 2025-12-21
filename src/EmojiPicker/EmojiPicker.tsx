@@ -5,12 +5,12 @@ import Picker from '@emoji-mart/react';
 import { Popover } from 'antd';
 import { SmileIcon, TrashIcon, UploadIcon } from 'lucide-react';
 import { memo, useRef, useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
 import useSWR from 'swr';
 import useMergeState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
 import Avatar from '@/Avatar';
+import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Tabs, { TabsProps } from '@/Tabs';
 import Tooltip from '@/Tooltip';

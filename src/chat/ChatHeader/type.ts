@@ -1,5 +1,5 @@
+import { FlexboxProps } from '@lobehub/ui/Flex';
 import { CSSProperties, ReactNode } from 'react';
-import { FlexboxProps } from 'react-layout-kit';
 
 export interface ChatHeaderProps extends FlexboxProps {
   classNames?: {

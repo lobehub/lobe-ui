@@ -2,8 +2,8 @@
 
 import { useTheme } from 'antd-style';
 import { type ReactNode, memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
+import { Flexbox } from '@/Flex';
 import LogoText from '@/brand/LobeChatText';
 import { useStyles } from '@/brand/LobeHub/style';
 import Logo3d from '@/brand/Logo3d';

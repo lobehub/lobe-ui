@@ -1,7 +1,8 @@
 'use client';
 
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import SkeletonAvatar from './SkeletonAvatar';
 import SkeletonParagraph from './SkeletonParagraph';

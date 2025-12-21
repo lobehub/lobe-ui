@@ -3,10 +3,10 @@
 import { cva } from 'class-variance-authority';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { ReactNode, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
+import { Flexbox } from '@/Flex';
 import { useStyles } from '@/Highlighter/style';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
 import Text from '@/Text';

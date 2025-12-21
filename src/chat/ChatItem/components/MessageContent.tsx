@@ -1,7 +1,7 @@
 import { useResponsive } from 'antd-style';
 import { type ReactNode, memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
+import { Flexbox } from '@/Flex';
 import type { MarkdownProps } from '@/Markdown';
 import { ChatItemProps } from '@/chat/ChatItem';
 import EditableMessage from '@/chat/EditableMessage';

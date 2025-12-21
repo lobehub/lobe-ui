@@ -1,6 +1,7 @@
 import { ThemeProvider } from '@lobehub/ui';
 import { useTheme } from 'antd-style';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => {
   const theme = useTheme();

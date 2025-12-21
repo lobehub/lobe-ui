@@ -1,6 +1,7 @@
 import { Hotkey, type HotkeyProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { Center } from 'react-layout-kit';
+
+import { Center } from '@/Flex';
 
 export default () => {
   const store = useCreateStore();

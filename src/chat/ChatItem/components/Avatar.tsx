@@ -1,7 +1,7 @@
 import { type CSSProperties, memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import A from '@/Avatar';
+import { Flexbox } from '@/Flex';
 
 import { useStyles } from '../style';
 import type { ChatItemProps } from '../type';

@@ -1,12 +1,13 @@
 'use client';
 
+import { FlexboxProps } from '@lobehub/ui/Flex';
 import { Skeleton } from 'antd';
 import { cva } from 'class-variance-authority';
 import { PlayIcon } from 'lucide-react';
 import { type CSSProperties, type Ref, memo, useMemo, useState } from 'react';
-import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
+import { Flexbox } from '@/Flex';
 import type { VideoProps as VProps } from '@/types';
 
 import { useStyles } from './style';

@@ -1,7 +1,7 @@
+import { FlexboxProps } from '@lobehub/ui/Flex';
 import type { FormProps as AntFormProps, DividerProps, FormInstance } from 'antd';
 import { FormItemProps as AntdFormItemProps } from 'antd/es/form/FormItem';
 import { CSSProperties, ReactNode, Ref } from 'react';
-import { FlexboxProps } from 'react-layout-kit';
 
 import type { ButtonProps } from '@/Button';
 import type { CollapseProps } from '@/Collapse';
@@ -60,8 +60,10 @@ export interface FormGroupItemType {
   variant?: FormVariant;
 }
 
-export interface FormGroupProps
-  extends Omit<CollapseProps, 'collapsible' | 'items' | 'defaultActiveKey' | 'activeKey'> {
+export interface FormGroupProps extends Omit<
+  CollapseProps,
+  'collapsible' | 'items' | 'defaultActiveKey' | 'activeKey'
+> {
   active?: boolean;
   children: ReactNode;
   collapsible?: boolean;

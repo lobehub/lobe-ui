@@ -1,10 +1,10 @@
 'use client';
 
 import { Ref, memo, useMemo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import A from '@/A';
 import Block from '@/Block';
+import { Flexbox } from '@/Flex';
 import Img from '@/Img';
 import Text from '@/Text';
 import { AProps } from '@/types';

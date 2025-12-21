@@ -1,10 +1,11 @@
 'use client';
 
+import { FlexboxProps } from '@lobehub/ui/Flex';
 import { createStyles } from 'antd-style';
 import { FolderIcon, FolderOpen } from 'lucide-react';
 import { FC, useState } from 'react';
-import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
+import { Flexbox } from '@/Flex';
 import Icon, { type IconProps } from '@/Icon';
 
 const useStyles = createStyles(({ css, token }) => {

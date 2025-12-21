@@ -18,8 +18,8 @@ import {
   SpaceIcon,
 } from 'lucide-react';
 import { memo, useEffect, useMemo, useState } from 'react';
-import { Center, Flexbox } from 'react-layout-kit';
 
+import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import LeftClickIcon from '@/icons/lucideExtra/LeftClickIcon';
 import LeftDoubleClickIcon from '@/icons/lucideExtra/LeftDoubleClickIcon';

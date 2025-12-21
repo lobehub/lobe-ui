@@ -1,6 +1,6 @@
 import { type Ref, memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
+import { Flexbox } from '@/Flex';
 import { ChatItemProps } from '@/chat/ChatItem';
 
 import { useStyles } from '../style';

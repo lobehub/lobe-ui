@@ -1,4 +1,4 @@
-import { FlexboxProps } from 'react-layout-kit';
+import { FlexboxProps } from '@lobehub/ui/Flex';
 
 import type { DivProps } from '@/types';
 

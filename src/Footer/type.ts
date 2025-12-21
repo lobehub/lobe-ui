@@ -1,6 +1,6 @@
+import type { FlexboxProps } from '@lobehub/ui/Flex';
 import type { FooterProps as RcProps } from 'rc-footer';
 import type { ReactNode } from 'react';
-import type { FlexboxProps } from 'react-layout-kit';
 
 export interface FooterProps extends FlexboxProps {
   bottom?: ReactNode;

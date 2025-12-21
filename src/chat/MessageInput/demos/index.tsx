@@ -1,7 +1,8 @@
 import { MessageInput } from '@lobehub/ui/chat';
 import { Divider } from 'antd';
 import { useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => {
   const [value, setValue] = useState('');

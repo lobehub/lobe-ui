@@ -12,8 +12,8 @@ apiHeader:
 ## Example
 
 ```tsx
+import { Flexbox } from '@lobehub/ui/Flex';
 import { LobeChat } from '@lobehub/ui/brand';
-import { Flexbox } from 'react-layout-kit';
 
 export default () => (
   <Flexbox gap={16} align={'flex-start'}>

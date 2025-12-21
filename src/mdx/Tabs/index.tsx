@@ -1,8 +1,9 @@
 'use client';
 
+import { FlexboxProps } from '@lobehub/ui/Flex';
 import { FC, ReactNode, useState } from 'react';
-import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
+import { Flexbox } from '@/Flex';
 import { default as LobeTabs, type TabsProps as LobeTabsProps } from '@/Tabs';
 
 import { useStyles } from './style';

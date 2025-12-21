@@ -11,8 +11,8 @@ apiHeader:
 ## Icons
 
 ```tsx
+import { Flexbox } from '@lobehub/ui/Flex';
 import { Authentik } from '@lobehub/ui/icons';
-import { Flexbox } from 'react-layout-kit';
 
 export default () => <Authentik size={64} />;
 ```
@@ -20,8 +20,8 @@ export default () => <Authentik size={64} />;
 ## Color
 
 ```tsx
+import { Flexbox } from '@lobehub/ui/Flex';
 import { Authentik } from '@lobehub/ui/icons';
-import { Flexbox } from 'react-layout-kit';
 
 export default () => <Authentik.Color size={64} />;
 ```
@@ -29,8 +29,8 @@ export default () => <Authentik.Color size={64} />;
 ## Avatars
 
 ```tsx
+import { Flexbox } from '@lobehub/ui/Flex';
 import { Authentik } from '@lobehub/ui/icons';
-import { Flexbox } from 'react-layout-kit';
 
 export default () => (
   <Flexbox gap={16} horizontal>

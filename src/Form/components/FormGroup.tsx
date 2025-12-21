@@ -4,9 +4,9 @@ import { useResponsive } from 'antd-style';
 import { cva } from 'class-variance-authority';
 import { isUndefined } from 'lodash-es';
 import { memo, useMemo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import Collapse from '@/Collapse';
+import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
 import { useGroupStyles as useStyles } from '../style';

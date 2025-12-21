@@ -1,6 +1,7 @@
 import { SpotlightCard } from '@lobehub/ui/awesome';
 import { Avatar } from 'antd';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import data from './data';
 

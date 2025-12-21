@@ -3,8 +3,8 @@
 import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
 import { type MouseEventHandler, memo, useCallback, useMemo } from 'react';
-import { Center } from 'react-layout-kit';
 
+import { Center } from '@/Flex';
 import Icon from '@/Icon';
 import Tooltip from '@/Tooltip';
 

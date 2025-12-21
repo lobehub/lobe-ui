@@ -4,8 +4,8 @@ import type { FloatingContext, Placement } from '@floating-ui/react';
 import { FloatingArrow } from '@floating-ui/react';
 import type { CSSProperties, ReactNode, RefObject } from 'react';
 import React, { useLayoutEffect, useMemo, useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
+import { Flexbox } from '@/Flex';
 import Hotkey from '@/Hotkey';
 import { AnimatePresence, LazyMotion, m } from '@/motion';
 

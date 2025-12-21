@@ -11,8 +11,8 @@ apiHeader:
 ## Icons
 
 ```tsx
+import { Flexbox } from '@lobehub/ui/Flex';
 import { Authelia } from '@lobehub/ui/icons';
-import { Flexbox } from 'react-layout-kit';
 
 export default () => <Authelia size={64} />;
 ```
@@ -20,8 +20,8 @@ export default () => <Authelia size={64} />;
 ## Color
 
 ```tsx
+import { Flexbox } from '@lobehub/ui/Flex';
 import { Authelia } from '@lobehub/ui/icons';
-import { Flexbox } from 'react-layout-kit';
 
 export default () => <Authelia.Color size={64} />;
 ```
@@ -29,8 +29,8 @@ export default () => <Authelia.Color size={64} />;
 ## Avatars
 
 ```tsx
+import { Flexbox } from '@lobehub/ui/Flex';
 import { Authelia } from '@lobehub/ui/icons';
-import { Flexbox } from 'react-layout-kit';
 
 export default () => (
   <Flexbox gap={16} horizontal>

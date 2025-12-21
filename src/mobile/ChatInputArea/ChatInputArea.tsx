@@ -12,9 +12,9 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
+import { Flexbox } from '@/Flex';
 import ChatInputAreaInner from '@/chat/ChatInputArea/components/ChatInputAreaInner';
 import SafeArea from '@/mobile/SafeArea';
 

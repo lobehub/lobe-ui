@@ -2,9 +2,9 @@
 
 import { Select, type SelectProps } from 'antd';
 import { memo, useMemo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 import { bundledLanguagesInfo } from 'shiki';
 
+import { Flexbox } from '@/Flex';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
 import Text from '@/Text';
 

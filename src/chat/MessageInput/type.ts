@@ -1,5 +1,5 @@
+import { FlexboxProps } from '@lobehub/ui/Flex';
 import { CSSProperties } from 'react';
-import { FlexboxProps } from 'react-layout-kit';
 
 import type { ButtonProps } from '@/Button';
 import type { CodeEditorProps } from '@/CodeEditor';

@@ -1,5 +1,5 @@
+import type { CenterProps } from '@lobehub/ui/Flex';
 import type { Ref } from 'react';
-import type { CenterProps } from 'react-layout-kit';
 
 import type { ActionIconProps } from '@/ActionIcon';
 import type { DropdownProps } from '@/Dropdown';

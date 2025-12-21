@@ -1,7 +1,7 @@
 import { Space, message } from 'antd';
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
+import { Flexbox } from '@/Flex';
 import { copyToClipboard } from '@/utils/copyToClipboard';
 
 import { alphaBg, useStyles } from './style';

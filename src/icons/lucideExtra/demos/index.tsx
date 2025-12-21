@@ -1,6 +1,7 @@
 import { ActionIcon, copyToClipboard } from '@lobehub/ui';
 import { message } from 'antd';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import * as icons from '../index';
 

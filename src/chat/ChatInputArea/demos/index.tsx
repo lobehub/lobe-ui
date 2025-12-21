@@ -1,7 +1,8 @@
 import { ActionIcon } from '@lobehub/ui';
 import { ChatInputActionBar, ChatInputArea, ChatSendButton, TokenTag } from '@lobehub/ui/chat';
 import { Eraser, Languages } from 'lucide-react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => {
   return (

@@ -3,10 +3,10 @@
 import { useResponsive } from 'antd-style';
 import { memo, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import { Flexbox } from 'react-layout-kit';
 
 import Button from '@/Button';
 import CodeEditor from '@/CodeEditor';
+import { Flexbox } from '@/Flex';
 import { KeyMapEnum } from '@/Hotkey/const';
 import { combineKeys } from '@/Hotkey/utils';
 import TextArea from '@/Input/TextArea';

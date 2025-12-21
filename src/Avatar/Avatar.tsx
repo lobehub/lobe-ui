@@ -6,8 +6,8 @@ import { cva } from 'class-variance-authority';
 import { Loader2 } from 'lucide-react';
 import { readableColor } from 'polished';
 import { isValidElement, memo, useMemo } from 'react';
-import { Center } from 'react-layout-kit';
 
+import { Center } from '@/Flex';
 import FluentEmoji from '@/FluentEmoji';
 import Icon from '@/Icon';
 import Img from '@/Img';
@@ -44,8 +44,8 @@ const Avatar = memo<AvatarProps>(
       () =>
         Boolean(
           avatar &&
-            (['/', 'http', 'data:'].some((index) => isStringAvatar && avatar.startsWith(index)) ||
-              isValidElement(avatar)),
+          (['/', 'http', 'data:'].some((index) => isStringAvatar && avatar.startsWith(index)) ||
+            isValidElement(avatar)),
         ),
       [avatar, isStringAvatar],
     );

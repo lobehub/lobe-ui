@@ -1,7 +1,7 @@
 'use client';
 
+import { FlexboxProps } from '@lobehub/ui/Flex';
 import { Ref, memo } from 'react';
-import { FlexboxProps } from 'react-layout-kit';
 
 import ScrollShadow from '@/ScrollShadow';
 

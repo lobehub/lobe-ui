@@ -3,9 +3,9 @@
 import { Drawer, Menu } from 'antd';
 import { MenuIcon, X } from 'lucide-react';
 import { memo } from 'react';
-import { Center } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
+import { Center } from '@/Flex';
 
 import { useStyles } from './style';
 import type { BurgerProps } from './type';

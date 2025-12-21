@@ -1,9 +1,9 @@
 import { useTheme } from 'antd-style';
 import { ArrowBigUp, CornerDownLeft, Loader2 } from 'lucide-react';
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
 import Button from '@/Button';
+import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
 import { ChatSendButtonProps } from '../type';

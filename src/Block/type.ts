@@ -1,5 +1,5 @@
+import type { FlexboxProps } from '@lobehub/ui/Flex';
 import type { Ref } from 'react';
-import type { FlexboxProps } from 'react-layout-kit';
 
 export interface BlockProps extends FlexboxProps {
   clickable?: boolean;

@@ -1,6 +1,6 @@
+import { FlexboxProps } from '@lobehub/ui/Flex';
 import type { TextAreaRef } from 'antd/es/input/TextArea';
 import { CSSProperties, ReactNode, Ref } from 'react';
-import { FlexboxProps } from 'react-layout-kit';
 
 import type { DraggablePanelProps } from '@/DraggablePanel';
 import type { TextAreaProps } from '@/Input';

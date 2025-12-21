@@ -3,10 +3,10 @@
 import { cva } from 'class-variance-authority';
 import { MoreHorizontal } from 'lucide-react';
 import { memo, useMemo } from 'react';
-import { Center } from 'react-layout-kit';
 
 import ActionIcon from '@/ActionIcon';
 import Dropdown from '@/Dropdown';
+import { Center } from '@/Flex';
 
 import { useStyles } from './style';
 import type { ActionIconGroupProps } from './type';

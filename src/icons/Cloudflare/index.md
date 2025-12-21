@@ -11,8 +11,8 @@ apiHeader:
 ## Icons
 
 ```tsx
+import { Flexbox } from '@lobehub/ui/Flex';
 import { Cloudflare } from '@lobehub/ui/icons';
-import { Flexbox } from 'react-layout-kit';
 
 export default () => <Cloudflare size={64} />;
 ```
@@ -20,8 +20,8 @@ export default () => <Cloudflare size={64} />;
 ## Avatars
 
 ```tsx
+import { Flexbox } from '@lobehub/ui/Flex';
 import { Cloudflare } from '@lobehub/ui/icons';
-import { Flexbox } from 'react-layout-kit';
 
 export default () => (
   <Flexbox gap={16} horizontal>

@@ -1,5 +1,6 @@
 import { Avatar, Skeleton } from '@lobehub/ui';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 export default () => (
   <Flexbox gap={16}>

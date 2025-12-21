@@ -2,7 +2,8 @@
 
 import { useResponsive } from 'antd-style';
 import { memo, useEffect, useRef, useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import Actions from './components/Actions';
 import Avatar from './components/Avatar';

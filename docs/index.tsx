@@ -1,8 +1,8 @@
 import { Highlighter, Snippet } from '@lobehub/ui';
+import { Center } from '@lobehub/ui/Flex';
 import { Features, FeaturesProps } from '@lobehub/ui/awesome';
 import { useTheme } from 'antd-style';
 import { MoonStar, Palette, Zap } from 'lucide-react';
-import { Center } from 'react-layout-kit';
 
 const items: FeaturesProps['items'] = [
   {

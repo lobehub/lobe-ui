@@ -4,8 +4,8 @@ import { Collapse as AntdCollapse, ConfigProvider } from 'antd';
 import { cva } from 'class-variance-authority';
 import { ChevronDown } from 'lucide-react';
 import { isValidElement, memo, useMemo } from 'react';
-import { Flexbox } from 'react-layout-kit';
 
+import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
 import { DEFAULT_PADDING, getPadding, useStyles } from './style';

@@ -2,7 +2,8 @@
 
 import RcFooter from 'rc-footer';
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import { useStyles } from './style';
 import type { FooterProps } from './type';

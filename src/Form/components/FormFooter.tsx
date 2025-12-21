@@ -1,7 +1,8 @@
 'use client';
 
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import { useFooterStyles as useStyles } from '../style';
 import type { FormFooterProps } from '../type';

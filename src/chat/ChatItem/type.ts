@@ -1,5 +1,5 @@
+import { FlexboxProps } from '@lobehub/ui/Flex';
 import { ReactNode } from 'react';
-import { FlexboxProps } from 'react-layout-kit';
 
 import { AlertProps } from '@/Alert';
 import { AvatarProps } from '@/Avatar';

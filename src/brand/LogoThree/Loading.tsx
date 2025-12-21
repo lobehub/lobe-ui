@@ -1,7 +1,7 @@
 import { Loader2 } from 'lucide-react';
 import { memo } from 'react';
-import { Center } from 'react-layout-kit';
 
+import { Center } from '@/Flex';
 import Icon from '@/Icon';
 
 const Loading = memo<{ size?: number }>(({ size = 32 }) => {

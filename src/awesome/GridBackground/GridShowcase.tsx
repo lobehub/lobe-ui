@@ -3,7 +3,8 @@
 import { useTheme } from 'antd-style';
 import { rgba } from 'polished';
 import { memo } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import GridBackground from './GridBackground';
 import type { GridShowcaseProps } from './type';

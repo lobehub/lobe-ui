@@ -1,6 +1,7 @@
 import { Avatar } from '@lobehub/ui';
 import { useTheme } from 'antd-style';
-import { Center } from 'react-layout-kit';
+
+import { Center } from '@/Flex';
 
 const url = 'https://avatars.githubusercontent.com/u/17870709?v=4';
 

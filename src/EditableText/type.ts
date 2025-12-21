@@ -1,10 +1,11 @@
+import type { FlexboxProps } from '@lobehub/ui/Flex';
 import { CSSProperties } from 'react';
-import type { FlexboxProps } from 'react-layout-kit';
 
 import type { ControlInputProps } from '@/EditableText/ControlInput';
 
 export interface EditableTextProps
-  extends Omit<FlexboxProps, 'onChange' | 'onBlur' | 'onFocus'>,
+  extends
+    Omit<FlexboxProps, 'onChange' | 'onBlur' | 'onFocus'>,
     Pick<
       ControlInputProps,
       | 'onChange'

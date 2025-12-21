@@ -16,7 +16,8 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { Fragment, type ReactNode, memo, useMemo, useState } from 'react';
-import { Flexbox } from 'react-layout-kit';
+
+import { Flexbox } from '@/Flex';
 
 import DragHandle from './components/DragHandle';
 import SortableItem from './components/SortableItem';

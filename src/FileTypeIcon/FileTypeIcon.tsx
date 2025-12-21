@@ -1,7 +1,8 @@
 'use client';
 
 import { memo, useMemo } from 'react';
-import { Center } from 'react-layout-kit';
+
+import { Center } from '@/Flex';
 
 import FileIcon from './components/FileIcon';
 import FolderIcon from './components/FolderIcon';
