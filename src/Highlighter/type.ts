@@ -1,4 +1,4 @@
-import { ReactNode, type Ref } from 'react';
+import { CSSProperties, ReactNode, type Ref } from 'react';
 import { FlexboxProps } from 'react-layout-kit';
 import type { BuiltinTheme } from 'shiki';
 
@@ -28,6 +28,11 @@ export interface HighlighterProps extends Omit<FlexboxProps, 'children' | 'wrap'
   animated?: boolean;
   bodyRender?: (props: { content: string; language: string; originalNode: ReactNode }) => ReactNode;
   children: string;
+  classNames?: {
+    body?: string;
+    content?: string;
+    header?: string;
+  };
   copyable?: boolean;
   defaultExpand?: boolean;
   enableTransformer?: boolean;
@@ -37,6 +42,11 @@ export interface HighlighterProps extends Omit<FlexboxProps, 'children' | 'wrap'
   language: string;
   shadow?: boolean;
   showLanguage?: boolean;
+  styles?: {
+    body?: CSSProperties;
+    content?: CSSProperties;
+    header?: CSSProperties;
+  };
   theme?: 'lobe-theme' | BuiltinTheme;
   variant?: 'filled' | 'outlined' | 'borderless';
   wrap?: boolean;

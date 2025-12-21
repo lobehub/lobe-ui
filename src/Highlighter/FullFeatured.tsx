@@ -80,8 +80,10 @@ const HeaderLanguage = memo<HeaderLanguageProps>(
     prev.showLanguage === next.showLanguage,
 );
 
-interface HighlighterFullFeaturedProps
-  extends Omit<HighlighterProps, 'children' | 'bodyRender' | 'enableTransformer'> {
+interface HighlighterFullFeaturedProps extends Omit<
+  HighlighterProps,
+  'children' | 'bodyRender' | 'enableTransformer'
+> {
   content: string;
   setLanguage?: (language: string) => void;
 }
@@ -93,6 +95,8 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
     setLanguage,
     showLanguage,
     className,
+    classNames,
+    styles: customStyles,
     style,
     allowChangeLanguage = false,
     fileName,
@@ -219,9 +223,10 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
       >
         <Flexbox
           align={'center'}
-          className={headerVariants({ variant })}
+          className={cx(headerVariants({ variant }), classNames?.header)}
           horizontal
           justify={'space-between'}
+          style={customStyles?.header}
         >
           <ActionIcon
             icon={expand ? ChevronDown : ChevronRight}
@@ -242,7 +247,12 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
             {actions}
           </Flexbox>
         </Flexbox>
-        <Flexbox className={bodyVariants({ expand })}>{children}</Flexbox>
+        <Flexbox
+          className={cx(bodyVariants({ expand }), classNames?.body)}
+          style={customStyles?.body}
+        >
+          {children}
+        </Flexbox>
       </Flexbox>
     );
   },

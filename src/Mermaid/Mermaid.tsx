@@ -21,6 +21,8 @@ const Mermaid = memo<MermaidProps>(
     showLanguage = true,
     language = 'mermaid',
     style,
+    styles: customStyles,
+    classNames,
     variant = 'filled',
     shadow,
     enablePanZoom = true,
@@ -89,11 +91,17 @@ const Mermaid = memo<MermaidProps>(
 
     const defaultBody = useMemo(
       () => (
-        <SyntaxMermaid enablePanZoom={enablePanZoom} theme={theme} variant={variant}>
+        <SyntaxMermaid
+          className={classNames?.content}
+          enablePanZoom={enablePanZoom}
+          style={customStyles?.content}
+          theme={theme}
+          variant={variant}
+        >
           {tirmedChildren}
         </SyntaxMermaid>
       ),
-      [enablePanZoom, theme, tirmedChildren, variant],
+      [enablePanZoom, theme, tirmedChildren, variant, classNames?.content, customStyles?.content],
     );
 
     const body = useMemo(() => {
@@ -106,6 +114,7 @@ const Mermaid = memo<MermaidProps>(
         <FullFeatured
           actionsRender={actionsRender}
           className={className}
+          classNames={classNames}
           content={tirmedChildren}
           copyable={copyable}
           defaultExpand={defaultExpand}
@@ -114,6 +123,7 @@ const Mermaid = memo<MermaidProps>(
           shadow={shadow}
           showLanguage={showLanguage}
           style={style}
+          styles={customStyles}
           variant={variant}
           {...rest}
         >

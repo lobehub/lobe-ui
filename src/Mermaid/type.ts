@@ -1,13 +1,15 @@
 import type { MermaidConfig } from 'mermaid/dist/config.type';
-import type { ReactNode, Ref } from 'react';
+import { CSSProperties, ReactNode, Ref } from 'react';
 
 import type { ActionIconProps } from '@/ActionIcon';
 import type { DivProps } from '@/types';
 
 export interface SyntaxMermaidProps {
   children: string;
+  className?: string;
   enablePanZoom?: MermaidProps['enablePanZoom'];
   ref?: Ref<HTMLDivElement>;
+  style?: CSSProperties;
   theme?: MermaidProps['theme'];
   variant?: MermaidProps['variant'];
 }
@@ -22,6 +24,11 @@ export interface MermaidProps extends DivProps {
   }) => ReactNode;
   bodyRender?: (props: { content: string; originalNode: ReactNode }) => ReactNode;
   children: string;
+  classNames?: {
+    body?: string;
+    content?: string;
+    header?: string;
+  };
   copyable?: boolean;
   defaultExpand?: boolean;
   enablePanZoom?: boolean;
@@ -30,6 +37,11 @@ export interface MermaidProps extends DivProps {
   language?: string;
   shadow?: boolean;
   showLanguage?: boolean;
+  styles?: {
+    body?: CSSProperties;
+    content?: CSSProperties;
+    header?: CSSProperties;
+  };
   theme?: 'lobe-theme' | MermaidConfig['theme'];
   variant?: 'filled' | 'outlined' | 'borderless';
 }

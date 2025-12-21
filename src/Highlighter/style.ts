@@ -106,6 +106,11 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
           }
         }
 
+        pre {
+          height: 100%;
+          font-size: 12px;
+        }
+
         code {
           background: transparent !important;
         }

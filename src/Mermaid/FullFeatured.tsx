@@ -62,6 +62,8 @@ export interface MermaidFullFeaturedProps extends Omit<MermaidProps, 'children'>
 export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
   ({
     showLanguage,
+    styles: customStyles,
+    classNames,
     content,
     children,
     className,
@@ -171,9 +173,10 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
       >
         <Flexbox
           align={'center'}
-          className={headerVariants({ variant })}
+          className={cx(headerVariants({ variant }), classNames?.header)}
           horizontal
           justify={'space-between'}
+          style={customStyles?.header}
         >
           <ActionIcon
             icon={expand ? ChevronDown : ChevronRight}
@@ -189,7 +192,12 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
             {actions}
           </Flexbox>
         </Flexbox>
-        <Flexbox className={bodyVariants({ expand })}>{children}</Flexbox>
+        <Flexbox
+          className={cx(bodyVariants({ expand }), classNames?.body)}
+          style={customStyles?.body}
+        >
+          {children}
+        </Flexbox>
       </Flexbox>
     );
   },

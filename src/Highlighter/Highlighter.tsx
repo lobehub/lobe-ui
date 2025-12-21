@@ -21,6 +21,8 @@ export const Highlighter = memo<HighlighterProps>(
     children,
     language = 'markdown',
     className,
+    classNames,
+    styles: customStyles,
     copyable = true,
     showLanguage = true,
     variant = 'filled',
@@ -106,15 +108,29 @@ export const Highlighter = memo<HighlighterProps>(
       () => (
         <SyntaxHighlighter
           animated={animated}
+          className={classNames?.content}
           enableTransformer={enableTransformer}
           language={lang?.toLowerCase()}
+          style={{
+            height: '100%',
+            ...customStyles?.content,
+          }}
           theme={theme}
           variant={variant}
         >
           {tirmedChildren}
         </SyntaxHighlighter>
       ),
-      [animated, enableTransformer, lang, theme, tirmedChildren, variant],
+      [
+        animated,
+        enableTransformer,
+        lang,
+        theme,
+        tirmedChildren,
+        variant,
+        customStyles?.content,
+        customStyles?.content,
+      ],
     );
 
     const displayName = useMemo(() => {
@@ -133,6 +149,7 @@ export const Highlighter = memo<HighlighterProps>(
           actionsRender={actionsRender}
           allowChangeLanguage={allowChangeLanguage}
           className={className}
+          classNames={classNames}
           content={tirmedChildren}
           copyable={copyable}
           defaultExpand={defaultExpand}
@@ -142,6 +159,7 @@ export const Highlighter = memo<HighlighterProps>(
           setLanguage={setLang}
           shadow={shadow}
           showLanguage={showLanguage}
+          styles={customStyles}
           variant={variant}
           wrap={wrap}
           {...rest}
