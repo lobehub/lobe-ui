@@ -3,14 +3,14 @@
 import { Tabs as AntdTabs } from 'antd';
 import { cva } from 'class-variance-authority';
 import { MoreHorizontalIcon } from 'lucide-react';
-import { memo, useMemo } from 'react';
+import { type FC, useMemo } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 
 import { useStyles } from './style';
 import type { TabsProps } from './type';
 
-const Tabs = memo<TabsProps>(({ className, compact, variant = 'rounded', items, ...rest }) => {
+const Tabs: FC<TabsProps> = ({ className, compact, variant = 'rounded', items, ...rest }) => {
   const { styles, cx } = useStyles();
   const hasContent = items?.some((item) => !!item.children);
 
@@ -61,7 +61,7 @@ const Tabs = memo<TabsProps>(({ className, compact, variant = 'rounded', items, 
       }}
     />
   );
-});
+};
 
 Tabs.displayName = 'Tabs';
 

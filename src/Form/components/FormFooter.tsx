@@ -1,13 +1,13 @@
 'use client';
 
-import { memo } from 'react';
+import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
 
 import { useFooterStyles as useStyles } from '../style';
 import type { FormFooterProps } from '../type';
 
-const FormFooter = memo<FormFooterProps>(({ className, children, ...rest }) => {
+const FormFooter: FC<FormFooterProps> = ({ className, children, ...rest }) => {
   const { cx, styles } = useStyles();
   return (
     <Flexbox
@@ -21,7 +21,7 @@ const FormFooter = memo<FormFooterProps>(({ className, children, ...rest }) => {
       {children}
     </Flexbox>
   );
-});
+};
 
 FormFooter.displayName = 'FormFooter';
 

@@ -1,14 +1,14 @@
 'use client';
 
 import { IconAvatar, type IconAvatarProps } from '@lobehub/icons';
-import { memo } from 'react';
+import { type FC } from 'react';
 
 import { COLOR_PRIMARY, TITLE } from '../style';
 import Color from './Color';
 
 export type AvatarProps = Omit<IconAvatarProps, 'Icon'>;
 
-const Avatar = memo<AvatarProps>(({ background, ...rest }) => {
+const Avatar: FC<AvatarProps> = ({ background, ...rest }) => {
   return (
     <IconAvatar
       Icon={Color}
@@ -18,6 +18,6 @@ const Avatar = memo<AvatarProps>(({ background, ...rest }) => {
       {...rest}
     />
   );
-});
+};
 
 export default Avatar;

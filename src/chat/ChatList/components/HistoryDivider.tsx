@@ -1,6 +1,6 @@
 import { Divider } from 'antd';
 import { Timer } from 'lucide-react';
-import { memo } from 'react';
+import { type FC } from 'react';
 
 import Icon from '@/Icon';
 import Tag from '@/Tag';
@@ -10,7 +10,7 @@ interface HistoryDividerProps {
   text?: string;
 }
 
-const HistoryDivider = memo<HistoryDividerProps>(({ enable, text }) => {
+const HistoryDivider: FC<HistoryDividerProps> = ({ enable, text }) => {
   if (!enable) return null;
 
   return (
@@ -20,6 +20,6 @@ const HistoryDivider = memo<HistoryDividerProps>(({ enable, text }) => {
       </Divider>
     </div>
   );
-});
+};
 
 export default HistoryDivider;

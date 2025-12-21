@@ -2,7 +2,7 @@
 
 import { Divider as AntDivider } from 'antd';
 import { createStyles } from 'antd-style';
-import { memo } from 'react';
+import { type FC } from 'react';
 
 import type { FormDividerProps } from '../type';
 
@@ -15,7 +15,7 @@ const useStyles = createStyles(({ css }) => {
   };
 });
 
-const FormDivider = memo<FormDividerProps>(({ visible = true, style, className, ...rest }) => {
+const FormDivider: FC<FormDividerProps> = ({ visible = true, style, className, ...rest }) => {
   const { cx, styles } = useStyles();
   return (
     <AntDivider
@@ -27,7 +27,7 @@ const FormDivider = memo<FormDividerProps>(({ visible = true, style, className, 
       {...rest}
     />
   );
-});
+};
 
 FormDivider.displayName = 'FormDivider';
 

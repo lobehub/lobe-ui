@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { type FC } from 'react';
 
 import Alert from '@/Alert';
 import { Flexbox } from '@/Flex';
@@ -12,7 +12,7 @@ export interface ErrorContentProps {
   placement?: ChatItemProps['placement'];
 }
 
-const ErrorContent = memo<ErrorContentProps>(({ message, error, placement }) => {
+const ErrorContent: FC<ErrorContentProps> = ({ message, error, placement }) => {
   const { styles } = useStyles({ placement });
 
   return (
@@ -20,6 +20,6 @@ const ErrorContent = memo<ErrorContentProps>(({ message, error, placement }) => 
       <Alert closable={false} extra={message} showIcon type={'error'} {...error} />
     </Flexbox>
   );
-});
+};
 
 export default ErrorContent;

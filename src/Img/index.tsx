@@ -1,7 +1,7 @@
 'use client';
 
 import type { ImageProps } from 'antd';
-import { type ElementType, Ref, createElement, memo, use, useMemo } from 'react';
+import { type ElementType, type FC, type Ref, createElement, memo, use, useMemo } from 'react';
 
 import { ConfigContext } from '@/ConfigProvider';
 import type { ImgProps as HtmlImgeProps } from '@/types';
@@ -10,7 +10,7 @@ const createContainer = (as: ElementType) => memo((props: any) => createElement(
 
 type ImgProps = HtmlImgeProps & ImageProps & { ref?: Ref<HTMLImageElement>; unoptimized?: boolean };
 
-const Img = memo<ImgProps>(({ unoptimized, ...rest }) => {
+const Img: FC<ImgProps> = ({ unoptimized, ...rest }) => {
   const config = use(ConfigContext);
   const render = config?.imgAs || 'img';
 
@@ -22,7 +22,7 @@ const Img = memo<ImgProps>(({ unoptimized, ...rest }) => {
       {...rest}
     />
   );
-});
+};
 
 Img.displayName = 'Img';
 

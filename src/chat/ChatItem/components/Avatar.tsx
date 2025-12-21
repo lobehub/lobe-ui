@@ -1,4 +1,4 @@
-import { type CSSProperties, memo } from 'react';
+import { type CSSProperties, type FC } from 'react';
 
 import A from '@/Avatar';
 import { Flexbox } from '@/Flex';
@@ -19,33 +19,41 @@ export interface AvatarProps {
   unoptimized?: boolean;
 }
 
-const Avatar = memo<AvatarProps>(
-  ({ loading, avatar, placement, unoptimized, addon, onClick, size = 40, style, alt }) => {
-    const { styles } = useStyles({ avatarSize: size });
-    const avatarContent = (
-      <div className={styles.avatarContainer} style={style}>
-        <A
-          alt={alt || avatar.title}
-          animation={loading}
-          avatar={avatar.avatar}
-          background={avatar.backgroundColor}
-          onClick={onClick}
-          size={size}
-          title={avatar.title}
-          unoptimized={unoptimized}
-        />
-        <Loading loading={loading} placement={placement} />
-      </div>
-    );
+const Avatar: FC<AvatarProps> = ({
+  loading,
+  avatar,
+  placement,
+  unoptimized,
+  addon,
+  onClick,
+  size = 40,
+  style,
+  alt,
+}) => {
+  const { styles } = useStyles({ avatarSize: size });
+  const avatarContent = (
+    <div className={styles.avatarContainer} style={style}>
+      <A
+        alt={alt || avatar.title}
+        animation={loading}
+        avatar={avatar.avatar}
+        background={avatar.backgroundColor}
+        onClick={onClick}
+        size={size}
+        title={avatar.title}
+        unoptimized={unoptimized}
+      />
+      <Loading loading={loading} placement={placement} />
+    </div>
+  );
 
-    if (!addon) return avatarContent;
-    return (
-      <Flexbox align={'center'} className={styles.avatarGroupContainer} gap={8}>
-        {avatarContent}
-        {addon}
-      </Flexbox>
-    );
-  },
-);
+  if (!addon) return avatarContent;
+  return (
+    <Flexbox align={'center'} className={styles.avatarGroupContainer} gap={8}>
+      {avatarContent}
+      {addon}
+    </Flexbox>
+  );
+};
 
 export default Avatar;

@@ -1,5 +1,5 @@
 import { Loader2 } from 'lucide-react';
-import { memo } from 'react';
+import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
@@ -12,7 +12,7 @@ export interface LoadingProps {
   placement?: ChatItemProps['placement'];
 }
 
-const Loading = memo<LoadingProps>(({ loading, placement }) => {
+const Loading: FC<LoadingProps> = ({ loading, placement }) => {
   const { styles } = useStyles({ placement });
 
   if (!loading) return null;
@@ -22,6 +22,6 @@ const Loading = memo<LoadingProps>(({ loading, placement }) => {
       <Icon icon={Loader2} size={{ size: 12, strokeWidth: 3 }} spin />
     </Flexbox>
   );
-});
+};
 
 export default Loading;

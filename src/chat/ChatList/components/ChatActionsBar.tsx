@@ -1,11 +1,11 @@
-import { memo } from 'react';
+import { type FC } from 'react';
 
 import ActionIconGroup from '@/ActionIconGroup';
 
 import type { ChatActionsBarProps } from '../type';
 import { useChatListActionsBar } from './useChatListActionsBar';
 
-const ChatActionsBar = memo<ChatActionsBarProps>(({ text, ref, ...rest }) => {
+const ChatActionsBar: FC<ChatActionsBarProps> = ({ text, ref, ...rest }) => {
   const { regenerate, edit, copy, divider, del } = useChatListActionsBar(text);
   return (
     <ActionIconGroup
@@ -17,6 +17,6 @@ const ChatActionsBar = memo<ChatActionsBarProps>(({ text, ref, ...rest }) => {
       {...rest}
     />
   );
-});
+};
 
 export default ChatActionsBar;

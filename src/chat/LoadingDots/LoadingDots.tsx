@@ -1,11 +1,11 @@
 'use client';
 
-import { memo } from 'react';
+import { type FC } from 'react';
 
 import { useStyles } from './style';
 import type { LoadingDotsProps } from './type';
 
-const LoadingDots = memo<LoadingDotsProps>(({ size = 8, color, variant = 'dots', className }) => {
+const LoadingDots: FC<LoadingDotsProps> = ({ size = 8, color, variant = 'dots', className }) => {
   const { styles, cx } = useStyles({ color, size });
 
   const renderDots = () => {
@@ -61,7 +61,7 @@ const LoadingDots = memo<LoadingDotsProps>(({ size = 8, color, variant = 'dots',
       {renderDots()}
     </div>
   );
-});
+};
 
 LoadingDots.displayName = 'LoadingDots';
 

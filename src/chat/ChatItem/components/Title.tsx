@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
 import { ChatItemProps } from '@/chat/ChatItem';
@@ -14,7 +14,7 @@ export interface TitleProps {
   titleAddon?: ChatItemProps['titleAddon'];
 }
 
-const Title = memo<TitleProps>(({ showTitle, placement, time, avatar, titleAddon }) => {
+const Title: FC<TitleProps> = ({ showTitle, placement, time, avatar, titleAddon }) => {
   const { styles } = useStyles({ placement, showTitle, time });
 
   return (
@@ -29,6 +29,6 @@ const Title = memo<TitleProps>(({ showTitle, placement, time, avatar, titleAddon
       {time && <time>{formatTime(time)}</time>}
     </Flexbox>
   );
-});
+};
 
 export default Title;

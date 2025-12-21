@@ -1,11 +1,11 @@
-import { memo } from 'react';
+import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
 
 import { useTitleStyles as useStyles } from './style';
 import type { ChatHeaderTitleProps } from './type';
 
-const ChatHeaderTitle = memo<ChatHeaderTitleProps>(({ title, desc, tag }) => {
+const ChatHeaderTitle: FC<ChatHeaderTitleProps> = ({ title, desc, tag }) => {
   const { styles } = useStyles();
 
   const tagContent = tag && (
@@ -32,6 +32,6 @@ const ChatHeaderTitle = memo<ChatHeaderTitleProps>(({ title, desc, tag }) => {
       {tagContent}
     </Flexbox>
   );
-});
+};
 
 export default ChatHeaderTitle;

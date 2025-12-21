@@ -1,4 +1,4 @@
-import { type Ref, memo } from 'react';
+import { type FC, type Ref } from 'react';
 
 import { Flexbox } from '@/Flex';
 import { ChatItemProps } from '@/chat/ChatItem';
@@ -13,7 +13,7 @@ export interface ActionsProps {
   variant?: ChatItemProps['variant'];
 }
 
-const Actions = memo<ActionsProps>(({ actions, placement, variant, editing, ref }) => {
+const Actions: FC<ActionsProps> = ({ actions, placement, variant, editing, ref }) => {
   const { styles } = useStyles({ editing, placement, variant });
 
   return (
@@ -21,6 +21,6 @@ const Actions = memo<ActionsProps>(({ actions, placement, variant, editing, ref 
       {actions}
     </Flexbox>
   );
-});
+};
 
 export default Actions;
