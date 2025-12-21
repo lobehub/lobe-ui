@@ -28,13 +28,18 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
       transition: opacity 0.25s ${token.motionEaseOut};
     `,
     borderless: stylish.variantBorderlessWithoutHover,
-    filled: stylish.variantFilledWithoutHover,
+    filled: cx(
+      stylish.variantFilledWithoutHover,
+      css`
+        background: ${token.colorFillQuaternary};
+      `,
+    ),
     headerBorderless: css`
       padding-inline: 0;
     `,
 
     headerFilled: css`
-      background: ${token.colorFillQuaternary};
+      background: transparent;
     `,
 
     headerOutlined: css`
@@ -44,19 +49,9 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
     `,
 
     headerRoot: css`
+      cursor: pointer;
       position: relative;
       padding: 4px;
-
-      .languageTitle {
-        opacity: 0.5;
-        transition: opacity 0.2s ${token.motionEaseInOut};
-      }
-
-      &:hover {
-        .languageTitle {
-          opacity: 1;
-        }
-      }
     `,
 
     lang: cx(
@@ -96,7 +91,29 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
 
         transition: background-color 100ms ${token.motionEaseOut};
 
+        .languageTitle {
+          opacity: 0.5;
+          filter: grayscale(100%);
+          transition:
+            opacity,
+            grayscale 0.2s ${token.motionEaseInOut};
+        }
+
+        .panel-actions {
+          opacity: 0;
+          transition: opacity 0.2s ${token.motionEaseInOut};
+        }
+
         &:hover {
+          .languageTitle {
+            opacity: 1;
+            filter: grayscale(0%);
+          }
+
+          .panel-actions {
+            opacity: 1;
+          }
+
           .${actionsHoverCls} {
             opacity: 1;
           }
@@ -116,19 +133,6 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
         }
       `,
     ),
-    select: css`
-      user-select: none;
-
-      position: absolute;
-      inset-inline-start: 50%;
-      transform: translateX(-50%);
-
-      min-width: 100px;
-
-      font-size: 14px;
-      color: ${token.colorTextDescription};
-      text-align: center;
-    `,
     shadow: stylish.shadow,
     wrap: css`
       pre,

@@ -10,7 +10,7 @@ import { mermaidThemes } from '../const';
 import type { SyntaxMermaidProps } from '../type';
 
 const SyntaxMermaid = memo<SyntaxMermaidProps>(
-  ({ ref, children, theme: customTheme, variant, enablePanZoom, className, style }) => {
+  ({ ref, children, theme: customTheme, variant, className, style }) => {
     const isDefaultTheme = customTheme === 'lobe-theme' || !customTheme;
 
     const background = useMemo(() => {
@@ -73,13 +73,6 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
         maxHeight={480}
         minWidth={300}
         objectFit={'contain'}
-        preview={
-          enablePanZoom
-            ? {
-                mask: false,
-              }
-            : false
-        }
         ref={ref}
         src={blobUrl}
         style={{

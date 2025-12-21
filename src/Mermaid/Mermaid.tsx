@@ -76,7 +76,9 @@ const Mermaid = memo<MermaidProps>(
 
     const originalActions = useMemo(() => {
       if (!copyable) return null;
-      return <CopyButton content={getCopyContent} size={actionIconSize} />;
+      return (
+        <CopyButton content={getCopyContent} size={actionIconSize || { blockSize: 28, size: 16 }} />
+      );
     }, [actionIconSize, copyable, getCopyContent]);
 
     const actions = useMemo(() => {

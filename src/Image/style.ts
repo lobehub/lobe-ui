@@ -3,7 +3,7 @@ import { rgba } from 'polished';
 
 export const useStyles = createStyles(
   (
-    { cx, css, token, stylish },
+    { cx, css, token, stylish, prefixCls },
     {
       alwaysShowActions,
     }: {
@@ -41,6 +41,10 @@ export const useStyles = createStyles(
       ),
       outlined: stylish.variantOutlinedWithoutHover,
       preview: css`
+        .${prefixCls}-image-preview-mask {
+          background: ${rgba(token.colorBgLayout, 0.9)};
+        }
+
         img {
           width: 100%;
         }
@@ -58,6 +62,10 @@ export const useStyles = createStyles(
 
         line-height: 1;
 
+        .${prefixCls}-image-cover {
+          display: none !important;
+        }
+
         &:hover {
           .${actions} {
             opacity: 1;
@@ -71,7 +79,7 @@ export const useStyles = createStyles(
           padding: 4px;
           border-color: ${token.colorFillTertiary};
           border-radius: ${token.borderRadiusLG}px;
-          background: ${rgba(token.colorBgMask, 0.5)};
+          background: ${rgba(token.colorBgContainer, 0.5)};
         `,
       ),
 

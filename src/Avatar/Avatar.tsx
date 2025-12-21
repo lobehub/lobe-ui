@@ -25,7 +25,7 @@ const Avatar = memo<AvatarProps>(
     animation,
     borderedColor,
     size = 48,
-    shape = 'circle',
+    shape,
     background,
     style,
     unoptimized,
@@ -128,7 +128,7 @@ const Avatar = memo<AvatarProps>(
         size={size}
         src={isDefaultAntAvatar ? defualtAvatar : undefined}
         style={{
-          background: background,
+          background: isDefaultAntAvatar ? background : background || theme.colorBorder,
           boxShadow: bordered
             ? `${theme.colorBgLayout} 0 0 0 2px, ${borderedColor || theme.colorTextTertiary} 0 0 0 4px`
             : undefined,

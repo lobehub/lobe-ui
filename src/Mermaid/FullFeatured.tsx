@@ -32,7 +32,8 @@ const MermaidHeaderLanguage = memo(
         flex={1}
         gap={4}
         horizontal
-        justify={'center'}
+        justify={'flex-start'}
+        paddingInline={8}
       >
         <MaterialFileTypeIcon
           fallbackUnknownType={false}
@@ -176,20 +177,29 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
           className={cx(headerVariants({ variant }), classNames?.header)}
           horizontal
           justify={'space-between'}
+          onClick={handleToggleExpand}
           style={customStyles?.header}
         >
-          <ActionIcon
-            icon={expand ? ChevronDown : ChevronRight}
-            onClick={handleToggleExpand}
-            size={'small'}
-          />
           <MermaidHeaderLanguage
             fileName={fileName}
             language={language}
             showLanguage={showLanguage}
           />
-          <Flexbox align={'center'} flex={'none'} gap={4} horizontal>
-            {actions}
+          <Flexbox
+            align={'center'}
+            flex={'none'}
+            gap={4}
+            horizontal
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Flexbox align={'center'} className={'panel-actions'} flex={'none'} gap={4} horizontal>
+              {actions}
+            </Flexbox>
+            <ActionIcon
+              icon={expand ? ChevronDown : ChevronRight}
+              onClick={handleToggleExpand}
+              size={'small'}
+            />
           </Flexbox>
         </Flexbox>
         <Flexbox
