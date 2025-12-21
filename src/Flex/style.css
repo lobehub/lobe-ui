@@ -1,0 +1,20 @@
+.lobe-flex {
+  display: flex;
+  flex: var(--lobe-flex, 0 1 auto);
+  flex-direction: var(--lobe-flex-direction, column);
+  flex-wrap: var(--lobe-flex-wrap, nowrap);
+  justify-content: var(--lobe-flex-justify, flex-start);
+  align-items: var(--lobe-flex-align, stretch);
+  width: var(--lobe-flex-width, auto);
+  height: var(--lobe-flex-height, auto);
+  padding: var(--lobe-flex-padding, 0);
+  padding-inline: var(--lobe-flex-padding-inline, initial);
+  padding-block: var(--lobe-flex-padding-block, initial);
+  gap: var(--lobe-flex-gap, 0);
+}
+
+.lobe-flex--hidden {
+  display: none;
+}
+
+

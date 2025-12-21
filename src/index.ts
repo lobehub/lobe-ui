@@ -43,6 +43,14 @@ export { default as EditableText, type EditableTextProps } from './EditableText'
 export { default as EmojiPicker, type EmojiPickerProps } from './EmojiPicker';
 export { default as Empty, type EmptyProps } from './Empty';
 export { default as FileTypeIcon, type FileTypeIconProps } from './FileTypeIcon';
+export {
+  Center,
+  type CenterProps,
+  FlexBasic,
+  type FlexBasicProps,
+  Flexbox,
+  type FlexboxProps,
+} from './Flex';
 export { default as FluentEmoji, type FluentEmojiProps } from './FluentEmoji';
 export { default as FontLoader, type FontLoaderProps } from './FontLoader';
 export { default as Footer, type FooterProps } from './Footer';
