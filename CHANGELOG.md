@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 3.3.1](https://github.com/lobehub/lobe-ui/compare/v3.3.0...v3.3.1)
+
+<sup>Released on **2025-12-21**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Highlighter style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Highlighter style ([ec6501e](https://github.com/lobehub/lobe-ui/commit/ec6501e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 3.3.0](https://github.com/lobehub/lobe-ui/compare/v3.2.0...v3.3.0)
 
 <sup>Released on **2025-12-21**</sup>
