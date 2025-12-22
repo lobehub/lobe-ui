@@ -2,6 +2,7 @@
 
 import { ElementType, ReactNode, createContext, memo, use } from 'react';
 
+import { MotionComponent, type MotionComponentType } from '@/MotionProvider';
 import { CDN, CdnApi, genCdnUrl } from '@/utils/genCdnUrl';
 
 export interface Config {
@@ -14,8 +15,16 @@ export interface Config {
 
 export const ConfigContext = createContext<Config | null>(null);
 
-const ConfigProvider = memo<{ children: ReactNode; config: Config }>(({ children, config }) => {
-  return <ConfigContext value={config}>{children}</ConfigContext>;
+const ConfigProvider = memo<{
+  children: ReactNode;
+  config?: Config;
+  motion: MotionComponentType;
+}>(({ children, config, motion }) => {
+  return (
+    <ConfigContext value={config ?? null}>
+      <MotionComponent value={motion}>{children}</MotionComponent>
+    </ConfigContext>
+  );
 });
 
 // useCdnFn

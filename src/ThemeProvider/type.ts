@@ -5,10 +5,13 @@ import type {
 } from 'antd-style';
 import type { CSSProperties } from 'react';
 
+import type { Config } from '@/ConfigProvider';
 import type { NeutralColors, PrimaryColors } from '@/styles';
+import type { MotionComponentType } from '@/MotionProvider';
 
 export interface ThemeProviderProps extends AntdThemeProviderProps<any> {
   className?: string;
+  config?: Config;
   customFonts?: string[];
   customStylish?: (theme: CustomStylishParams) => { [key: string]: any };
   customTheme?: {
@@ -18,6 +21,7 @@ export interface ThemeProviderProps extends AntdThemeProviderProps<any> {
   customToken?: (theme: CustomTokenParams) => { [key: string]: any };
   enableCustomFonts?: boolean;
   enableGlobalStyle?: boolean;
+  motion: MotionComponentType;
   style?: CSSProperties;
 }
 

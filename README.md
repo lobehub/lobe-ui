@@ -39,7 +39,7 @@ Lobe UI is an open-source UI component library for building _AIGC_ web apps
 - [📦 Installation](#-installation)
   - [Compile with NextJS](#compile-with-nextjs)
 - [🤯 Usage](#-usage)
-  - [MotionProvider (optional)](#motionprovider-optional)
+  - [ConfigProvider (Motion)](#configprovider-motion)
 - [⌨️ Local Development](#️-local-development)
 - [🤝 Contributing](#-contributing)
 - [🩷 Sponsor](#-sponsor)
@@ -102,20 +102,34 @@ export default () => (
 )
 ```
 
-### MotionProvider (optional)
+### ConfigProvider (Motion)
 
-Lobe UI uses `motion` under the hood. If your app uses `LazyMotion`, wrap the tree with
-`MotionProvider` to tell Lobe UI to render with `m` instead of `motion`.
+You must pass a motion component via `ConfigProvider` (or `ThemeProvider`).
+If your app uses `LazyMotion`, pass `m`:
 
 ```tsx
-import { MotionProvider } from '@lobehub/ui';
-import { LazyMotion, domAnimation, m } from 'motion/react';
+import { ConfigProvider } from '@lobehub/ui';
+import { motion } from 'motion/react';
+
+export default () => (
+  <ConfigProvider motion={motion}>
+    <App />
+  </ConfigProvider>
+);
+```
+
+If your app uses `LazyMotion`:
+
+```tsx
+import { ConfigProvider } from '@lobehub/ui';
+import { LazyMotion, domAnimation } from 'motion/react';
+import * as m from "motion/react-m";
 
 export default () => (
   <LazyMotion features={domAnimation}>
-    <MotionProvider motion={m}>
+    <ConfigProvider motion={m}>
       <App />
-    </MotionProvider>
+    </ConfigProvider>
   </LazyMotion>
 );
 ```

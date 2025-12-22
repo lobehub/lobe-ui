@@ -5,32 +5,35 @@ title: MotionProvider
 description: MotionProvider lets you choose which motion component (motion or m) Lobe UI uses.
 ---
 
-MotionProvider is optional. By default, Lobe UI uses `motion` from `motion/react`.
-If your app uses `LazyMotion`, wrap your tree with MotionProvider and pass `m`.
+`MotionProvider` has been **merged into** `ConfigProvider`. In most cases you don't need to use `MotionProvider` directly anymore.
+
+- You must pass a motion component via `ConfigProvider` (or `ThemeProvider`).
+- If your app uses `LazyMotion`, pass `m` to `ConfigProvider`.
 
 ## Default (motion)
 
 ```tsx
-import { MotionProvider } from '@lobehub/ui';
+import { ConfigProvider } from '@lobehub/ui';
+import { motion } from 'motion/react';
 
 export default () => (
-  <MotionProvider>
+  <ConfigProvider motion={motion}>
     <App />
-  </MotionProvider>
+  </ConfigProvider>
 );
 ```
 
 ## LazyMotion (m)
 
 ```tsx
-import { MotionProvider } from '@lobehub/ui';
+import { ConfigProvider } from '@lobehub/ui';
 import { LazyMotion, domAnimation, m } from 'motion/react';
 
 export default () => (
   <LazyMotion features={domAnimation}>
-    <MotionProvider motion={m}>
+    <ConfigProvider motion={m}>
       <App />
-    </MotionProvider>
+    </ConfigProvider>
   </LazyMotion>
 );
 ```
@@ -42,7 +45,7 @@ export default () => (
 | Property | Description                               | Type                  | Default  |
 | -------- | ----------------------------------------- | --------------------- | -------- |
 | children | Child components                          | `ReactNode`           | -        |
-| motion   | Motion component to use (`motion` or `m`) | `MotionComponentType` | `motion` |
+| motion   | Motion component to use (`motion` or `m`) | `MotionComponentType` | -        |
 
 ### useMotionComponent
 

@@ -4,7 +4,7 @@ group: Theme
 title: ConfigProvider
 ---
 
-ConfigProvider is a context provider component that allows you to configure global settings for other components in the library, such as CDN settings for external resources.
+ConfigProvider is a context provider component that allows you to configure global settings for other components in the library, such as CDN settings for external resources and the motion runtime.
 
 ## Default
 
@@ -31,14 +31,47 @@ export default () => {
 };
 ```
 
+## Motion
+
+Lobe UI uses Motion components via context. You must pass a motion component to `ConfigProvider`.
+If your app uses `LazyMotion`, pass `m`:
+
+```tsx
+import { ConfigProvider } from '@lobehub/ui';
+import { motion } from 'motion/react';
+
+export default () => (
+  <ConfigProvider motion={motion}>
+    <App />
+  </ConfigProvider>
+);
+```
+
+If your app uses [`LazyMotion`](https://motion.dev/docs/react-lazy-motion):
+
+```tsx
+import { ConfigProvider } from '@lobehub/ui';
+import { LazyMotion, domAnimation } from 'motion/react';
+import * as m from "motion/react-m";
+
+export default () => (
+  <LazyMotion features={domAnimation}>
+    <ConfigProvider motion={m}>
+      <App />
+    </ConfigProvider>
+  </LazyMotion>
+);
+```
+
 ## APIs
 
 ### ConfigProvider
 
-| Property | Description          | Type        | Default |
-| -------- | -------------------- | ----------- | ------- |
-| config   | Configuration object | `Config`    | -       |
-| children | Child components     | `ReactNode` | -       |
+| Property | Description                               | Type                  | Default |
+| -------- | ----------------------------------------- | --------------------- | ------- |
+| config   | Configuration object                      | `Config`              | -       |
+| motion   | Motion component to use (`motion` or `m`) | `MotionComponentType` | -       |
+| children | Child components                          | `ReactNode`           | -       |
 
 ### Config
 
