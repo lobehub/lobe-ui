@@ -36,14 +36,6 @@
       "@lobehub/ui/icons/*": ["src/icons/*"]
     }
   },
-  "exclude": [
-    "mdx.d.ts",
-    "brand.d.ts",
-    "mobile.d.ts",
-    "chat.d.ts",
-    "storybook.d.ts",
-    "awesome.d.ts",
-    "icons.d.ts"
-  ],
-  "include": ["src", "docs", "tests", ".dumirc.ts", ".fatherrc.ts"]
+  "exclude": [],
+  "include": ["src", "docs", "tests", ".dumirc.ts", "tsdown.config.ts"]
 }
