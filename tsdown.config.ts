@@ -1,5 +1,5 @@
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'tsdown';
 
@@ -14,18 +14,22 @@ const external = [
   ...Object.keys(pkg.peerDependencies ?? {}),
 ];
 
+// 动态查找所有 src/*/index.ts 文件
+const srcDir = resolve(root, 'src');
+const packageEntries = readdirSync(srcDir)
+  .filter((dir) => {
+    const dirPath = join(srcDir, dir);
+    return statSync(dirPath).isDirectory() && existsSync(join(dirPath, 'index.ts'));
+  })
+  .map((dir) => `src/${dir}/index.ts`)
+  .sort();
+
 export default defineConfig({
   dts: true,
   entry: [
     'src/index.ts',
-    'src/awesome/index.ts',
-    'src/brand/index.ts',
-    'src/chat/index.ts',
-    'src/color/index.ts',
-    'src/icons/index.ts',
-    'src/mdx/index.ts',
-    'src/mobile/index.ts',
-    'src/storybook/index.ts',
+    // packages
+    ...packageEntries,
   ],
   external,
   format: ['esm'],

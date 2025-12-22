@@ -1,5 +1,5 @@
 {
-  "name": "@lobehub/ui",
+  "name": "@innei/lobe-ui",
   "version": "3.3.5",
   "description": "Lobe UI is an open-source UI component library for building AIGC web apps",
   "keywords": [
@@ -27,6 +27,10 @@
     ".": {
       "types": "./es/index.d.mts",
       "import": "./es/index.mjs"
+    },
+    "./es/*": {
+      "types": "./es/*.d.mts",
+      "import": "./es/*.mjs"
     },
     "./awesome": {
       "types": "./es/awesome/index.d.mts",
