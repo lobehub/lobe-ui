@@ -33,7 +33,7 @@ const Avatar = memo<AvatarProps>(
     shadow,
     loading,
     sliceText = true,
-    emojiScaleWithBackground,
+    emojiScaleWithBackground = true,
     ref,
     ...rest
   }) => {
