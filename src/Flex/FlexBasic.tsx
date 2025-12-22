@@ -2,7 +2,6 @@
 
 import { type CSSProperties, type ElementType, type FC, memo } from 'react';
 
-import './style.css';
 import type { FlexBasicProps } from './type';
 import { getCssValue, getFlexDirection, isHorizontal, isSpaceDistribution } from './utils';
 
