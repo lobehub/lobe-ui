@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 3.3.5](https://github.com/lobehub/lobe-ui/compare/v3.3.4...v3.3.5)
+
+<sup>Released on **2025-12-22**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Avatar style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Avatar style ([bea9e5a](https://github.com/lobehub/lobe-ui/commit/bea9e5a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 3.3.4](https://github.com/lobehub/lobe-ui/compare/v3.3.3...v3.3.4)
 
 <sup>Released on **2025-12-22**</sup>
