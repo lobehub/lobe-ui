@@ -104,17 +104,31 @@ const Avatar = memo<AvatarProps>(
       background !== 'rgba(0,0,0,0)' &&
       background !== null;
 
-    const customAvatar = emoji ? (
-      <FluentEmoji
-        emoji={emoji}
-        size={emojiScaleWithBackground ? (hasBackground ? size * 0.8 : size) : size * 0.8}
-        type={animation ? 'anim' : '3d'}
-        unoptimized={unoptimized}
-      />
-    ) : sliceText ? (
-      (text || title)?.toUpperCase().slice(0, 2)
-    ) : (
-      (text || title)?.toUpperCase()
+    const customAvatar = useMemo(
+      () =>
+        emoji ? (
+          <FluentEmoji
+            emoji={emoji}
+            size={emojiScaleWithBackground ? (hasBackground ? size * 0.85 : size) : size * 0.85}
+            type={animation ? 'anim' : '3d'}
+            unoptimized={unoptimized}
+          />
+        ) : sliceText ? (
+          (text || title)?.toUpperCase().slice(0, 2)
+        ) : (
+          (text || title)?.toUpperCase()
+        ),
+      [
+        animation,
+        emoji,
+        hasBackground,
+        size,
+        sliceText,
+        text,
+        title,
+        unoptimized,
+        emojiScaleWithBackground,
+      ],
     );
 
     return (
@@ -127,7 +141,7 @@ const Avatar = memo<AvatarProps>(
         size={size}
         src={isDefaultAntAvatar ? defualtAvatar : undefined}
         style={{
-          background: isDefaultAntAvatar && !emoji ? background : background || theme.colorBorder,
+          background: isDefaultAntAvatar || !!emoji ? background : background || theme.colorBorder,
           boxShadow: bordered
             ? `${theme.colorBgLayout} 0 0 0 2px, ${borderedColor || theme.colorTextTertiary} 0 0 0 4px`
             : undefined,

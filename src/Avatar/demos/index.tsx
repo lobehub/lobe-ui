@@ -13,7 +13,7 @@ export default () => {
       shadow: false,
       shape: {
         options: ['circle', 'square'],
-        value: 'circle',
+        value: 'square',
       },
       size: {
         max: 128,
