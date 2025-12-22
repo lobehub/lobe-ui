@@ -11,7 +11,6 @@ import { Center } from '@/Flex';
 import FluentEmoji from '@/FluentEmoji';
 import Icon from '@/Icon';
 import Img from '@/Img';
-import Tooltip from '@/Tooltip';
 
 import { useStyles } from './style';
 import type { AvatarProps } from './type';
@@ -25,7 +24,7 @@ const Avatar = memo<AvatarProps>(
     animation,
     borderedColor,
     size = 48,
-    shape,
+    shape = 'square',
     background,
     style,
     unoptimized,
@@ -113,12 +112,12 @@ const Avatar = memo<AvatarProps>(
         unoptimized={unoptimized}
       />
     ) : sliceText ? (
-      text?.toUpperCase().slice(0, 2)
+      (text || title)?.toUpperCase().slice(0, 2)
     ) : (
-      text?.toUpperCase()
+      (text || title)?.toUpperCase()
     );
 
-    const content = (
+    return (
       <AntAvatar
         alt={imgAlt}
         className={cx(variants({ shadow, variant }), className)}
@@ -128,7 +127,7 @@ const Avatar = memo<AvatarProps>(
         size={size}
         src={isDefaultAntAvatar ? defualtAvatar : undefined}
         style={{
-          background: isDefaultAntAvatar ? background : background || theme.colorBorder,
+          background: isDefaultAntAvatar && !emoji ? background : background || theme.colorBorder,
           boxShadow: bordered
             ? `${theme.colorBgLayout} 0 0 0 2px, ${borderedColor || theme.colorTextTertiary} 0 0 0 4px`
             : undefined,
@@ -146,14 +145,6 @@ const Avatar = memo<AvatarProps>(
         )}
         {!isDefaultAntAvatar && customAvatar}
       </AntAvatar>
-    );
-
-    if (!title) return content;
-
-    return (
-      <Tooltip title={title} {...rest.tooltipProps}>
-        {content}
-      </Tooltip>
     );
   },
 );

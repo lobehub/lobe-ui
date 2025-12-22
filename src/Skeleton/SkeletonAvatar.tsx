@@ -10,7 +10,7 @@ const DEFAULT_SIZE = 40;
 
 const SkeletonAvatar: FC<SkeletonAvatarProps> = ({
   active,
-  shape = 'circle',
+  shape = 'square',
   size,
   width,
   height,
