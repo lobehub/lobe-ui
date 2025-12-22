@@ -1,6 +1,6 @@
 'use client';
 
-import { type CSSProperties, type ElementType, type FC, memo } from 'react';
+import type { CSSProperties, ElementType, FC } from 'react';
 
 import './style.css';
 import type { FlexBasicProps } from './type';
@@ -20,7 +20,7 @@ const FlexBasic: FC<FlexBasicProps> = ({
   padding,
   paddingInline,
   paddingBlock,
-  prefixCls,
+  prefixCls: _prefixCls,
   as: Container = 'div' as ElementType,
   className,
   style,
@@ -65,7 +65,7 @@ const FlexBasic: FC<FlexBasicProps> = ({
   const mergedClassName = [
     baseClassName,
     visible === false ? `${baseClassName}--hidden` : undefined,
-    prefixCls ? `${prefixCls}-flex` : undefined,
+    _prefixCls ? `${_prefixCls}-flex` : undefined,
     className,
   ]
     .filter(Boolean)
@@ -78,4 +78,4 @@ const FlexBasic: FC<FlexBasicProps> = ({
   );
 };
 
-export default memo(FlexBasic);
+export default FlexBasic;

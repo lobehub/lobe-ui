@@ -1,6 +1,7 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import postcss from 'rollup-plugin-postcss';
 import { defineConfig } from 'tsdown';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
@@ -33,7 +34,13 @@ export default defineConfig({
   ],
   external,
   format: ['esm'],
+  inputOptions: {
+    moduleTypes: {
+      '.css': 'js',
+    },
+  },
   outDir: 'es',
+  plugins: [postcss({ autoModules: true })],
   sourcemap: true,
   unbundle: true,
 });
