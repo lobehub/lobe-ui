@@ -30,69 +30,113 @@ import { composeEventHandlers } from '@/utils/composeEventHandlers';
 
 import TooltipFloating from './TooltipFloating';
 import TooltipPortal from './TooltipPortal';
-import { TooltipGroupContext, type TooltipGroupItem } from './groupContext';
+import {
+  TooltipGroupApiContext,
+  type TooltipGroupItem,
+  TooltipGroupPropsContext,
+} from './groupContext';
 import type { TooltipProps } from './type';
 
 const TooltipInGroup: FC<TooltipProps> = ({
   ref,
   hotkey,
   className,
-  arrow = false,
+  arrow,
   title,
   hotkeyProps,
   children,
-  placement = 'top',
+  placement,
   openDelay,
   closeDelay,
-  mouseEnterDelay = 0,
-  mouseLeaveDelay = 0,
+  mouseEnterDelay,
+  mouseLeaveDelay,
   onOpenChange,
   disabled,
   classNames,
   styles: styleProps,
   zIndex,
-  portalled = true,
+  portalled,
   getPopupContainer,
 }) => {
-  const group = useContext(TooltipGroupContext);
+  const group = useContext(TooltipGroupApiContext);
+  const sharedProps = useContext(TooltipGroupPropsContext);
   const triggerElRef = useRef<HTMLElement | null>(null);
+
+  const mergedClassName = useMemo(() => {
+    if (!sharedProps?.className && !className) return undefined;
+    return [sharedProps?.className, className].filter(Boolean).join(' ');
+  }, [className, sharedProps?.className]);
+
+  const mergedClassNames = useMemo(() => {
+    if (!sharedProps?.classNames && !classNames) return undefined;
+    return { ...sharedProps?.classNames, ...classNames };
+  }, [classNames, sharedProps?.classNames]);
+
+  const mergedStyles = useMemo(() => {
+    if (!sharedProps?.styles && !styleProps) return undefined;
+    return { ...sharedProps?.styles, ...styleProps };
+  }, [sharedProps?.styles, styleProps]);
+
+  const mergedHotkeyProps = useMemo(() => {
+    if (!sharedProps?.hotkeyProps && !hotkeyProps) return undefined;
+    return { ...sharedProps?.hotkeyProps, ...hotkeyProps };
+  }, [hotkeyProps, sharedProps?.hotkeyProps]);
+
+  const mergedOnOpenChange = useMemo(() => {
+    if (!sharedProps?.onOpenChange && !onOpenChange) return undefined;
+    return (open: boolean) => {
+      sharedProps?.onOpenChange?.(open);
+      onOpenChange?.(open);
+    };
+  }, [onOpenChange, sharedProps?.onOpenChange]);
 
   const item: TooltipGroupItem = useMemo(
     () => ({
-      arrow,
-      className,
-      classNames,
-      closeDelay,
-      disabled,
-      getPopupContainer,
-      hotkey,
-      hotkeyProps,
-      mouseEnterDelay,
-      mouseLeaveDelay,
-      onOpenChange,
-      openDelay,
-      placement,
-      portalled,
-      styles: styleProps,
+      arrow: arrow ?? sharedProps?.arrow ?? false,
+      className: mergedClassName,
+      classNames: mergedClassNames,
+      closeDelay: closeDelay ?? sharedProps?.closeDelay,
+      disabled: disabled ?? sharedProps?.disabled,
+      getPopupContainer: getPopupContainer ?? sharedProps?.getPopupContainer,
+      hotkey: hotkey ?? sharedProps?.hotkey,
+      hotkeyProps: mergedHotkeyProps,
+      mouseEnterDelay: mouseEnterDelay ?? sharedProps?.mouseEnterDelay,
+      mouseLeaveDelay: mouseLeaveDelay ?? sharedProps?.mouseLeaveDelay,
+      onOpenChange: mergedOnOpenChange,
+      openDelay: openDelay ?? sharedProps?.openDelay,
+      placement: placement ?? sharedProps?.placement ?? 'top',
+      portalled: portalled ?? sharedProps?.portalled,
+      styles: mergedStyles,
       title,
-      zIndex,
+      zIndex: zIndex ?? sharedProps?.zIndex,
     }),
     [
       arrow,
-      className,
-      classNames,
       closeDelay,
       disabled,
       getPopupContainer,
       hotkey,
-      hotkeyProps,
+      mergedClassName,
+      mergedClassNames,
+      mergedHotkeyProps,
+      mergedOnOpenChange,
+      mergedStyles,
       mouseEnterDelay,
       mouseLeaveDelay,
-      onOpenChange,
       openDelay,
       placement,
       portalled,
-      styleProps,
+      sharedProps?.arrow,
+      sharedProps?.closeDelay,
+      sharedProps?.disabled,
+      sharedProps?.getPopupContainer,
+      sharedProps?.hotkey,
+      sharedProps?.mouseEnterDelay,
+      sharedProps?.mouseLeaveDelay,
+      sharedProps?.openDelay,
+      sharedProps?.placement,
+      sharedProps?.portalled,
+      sharedProps?.zIndex,
       title,
       zIndex,
     ],
@@ -164,8 +208,8 @@ const TooltipStandalone: FC<TooltipProps> = ({
   placement = 'top',
   openDelay,
   closeDelay,
-  mouseEnterDelay = 0,
-  mouseLeaveDelay = 0,
+  mouseEnterDelay,
+  mouseLeaveDelay,
   open,
   defaultOpen,
   onOpenChange,
@@ -203,8 +247,8 @@ const TooltipStandalone: FC<TooltipProps> = ({
 
   const resolvedDelay = useMemo(
     () => ({
-      close: closeDelay ?? mouseLeaveDelay * 1000,
-      open: openDelay ?? mouseEnterDelay * 1000,
+      close: closeDelay ?? (mouseLeaveDelay !== undefined ? mouseLeaveDelay * 1000 : 100),
+      open: openDelay ?? (mouseEnterDelay !== undefined ? mouseEnterDelay * 1000 : 100),
     }),
     [closeDelay, mouseEnterDelay, mouseLeaveDelay, openDelay],
   );
@@ -285,7 +329,7 @@ const TooltipStandalone: FC<TooltipProps> = ({
 };
 
 export const Tooltip: FC<TooltipProps> = (props) => {
-  const group = useContext(TooltipGroupContext);
+  const group = useContext(TooltipGroupApiContext);
 
   // Group mode is intentionally hover/focus driven; keep standalone behavior for controlled cases.
   const canUseGroup = Boolean(group) && props.open === undefined && props.defaultOpen === undefined;

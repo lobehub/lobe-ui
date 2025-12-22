@@ -14,13 +14,18 @@ import { antdPlacementToFloating } from '@/Tooltip/antdPlacementToFloating';
 
 import TooltipFloating from './TooltipFloating';
 import TooltipPortal from './TooltipPortal';
-import { TooltipGroupContext, type TooltipGroupItem } from './groupContext';
+import {
+  TooltipGroupApiContext,
+  type TooltipGroupItem,
+  TooltipGroupPropsContext,
+  type TooltipGroupSharedProps,
+} from './groupContext';
 
-type TooltipGroupProps = {
+type TooltipGroupProps = TooltipGroupSharedProps & {
   children: ReactNode;
 };
 
-const TooltipGroup: FC<TooltipGroupProps> = ({ children }) => {
+const TooltipGroup: FC<TooltipGroupProps> = ({ children, ...sharedProps }) => {
   const arrowRef = useRef<SVGSVGElement | null>(null);
   const openTimerRef = useRef<number | null>(null);
   const closeTimerRef = useRef<number | null>(null);
@@ -82,7 +87,8 @@ const TooltipGroup: FC<TooltipGroupProps> = ({ children }) => {
 
       clearTimers();
 
-      const delayMs = item.closeDelay ?? (item.mouseLeaveDelay ?? 0) * 1000;
+      const delayMs =
+        item.closeDelay ?? (item.mouseLeaveDelay !== undefined ? item.mouseLeaveDelay * 1000 : 100);
       if (delayMs <= 0) {
         setOpen(false);
         item.onOpenChange?.(false);
@@ -107,7 +113,8 @@ const TooltipGroup: FC<TooltipGroupProps> = ({ children }) => {
 
       setActive({ item, triggerEl });
 
-      const delayMs = item.openDelay ?? (item.mouseEnterDelay ?? 0) * 1000;
+      const delayMs =
+        item.openDelay ?? (item.mouseEnterDelay !== undefined ? item.mouseEnterDelay * 1000 : 100);
       if (delayMs <= 0) {
         setOpen(true);
         item.onOpenChange?.(true);
@@ -122,7 +129,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({ children }) => {
     [clearTimers],
   );
 
-  const api = useMemo(
+  const groupApi = useMemo(
     () => ({ closeFromTrigger, closeImmediately, isActiveTrigger, openFromTrigger }),
     [closeFromTrigger, closeImmediately, isActiveTrigger, openFromTrigger],
   );
@@ -158,16 +165,18 @@ const TooltipGroup: FC<TooltipGroupProps> = ({ children }) => {
   );
 
   return (
-    <TooltipGroupContext.Provider value={api}>
-      {children}
-      {active?.item.title &&
-        !active.item.disabled &&
-        ((active.item.portalled ?? true) ? (
-          <TooltipPortal root={portalRoot}>{floatingNode}</TooltipPortal>
-        ) : (
-          floatingNode
-        ))}
-    </TooltipGroupContext.Provider>
+    <TooltipGroupApiContext.Provider value={groupApi}>
+      <TooltipGroupPropsContext.Provider value={sharedProps}>
+        {children}
+        {active?.item.title &&
+          !active.item.disabled &&
+          ((active.item.portalled ?? true) ? (
+            <TooltipPortal root={portalRoot}>{floatingNode}</TooltipPortal>
+          ) : (
+            floatingNode
+          ))}
+      </TooltipGroupPropsContext.Provider>
+    </TooltipGroupApiContext.Provider>
   );
 };
 

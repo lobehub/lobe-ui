@@ -15,6 +15,10 @@ Wrap multiple tooltips in `TooltipGroup` to share a single floating instance. Wh
 
 <code src="./demos/group.tsx" nopadding></code>
 
+## Tooltip Group Shared Props
+
+<code src="./demos/group-shared.tsx" nopadding></code>
+
 ## APIs
 
 ### Tooltip
@@ -26,8 +30,8 @@ Wrap multiple tooltips in `TooltipGroup` to share a single floating instance. Wh
 | hotkeyProps     | Props for the Hotkey component                                     | `Omit<HotkeyProps, 'keys'>`                               | -       |
 | arrow           | Whether the tooltip has an arrow pointer                           | `boolean`                                                 | `false` |
 | placement       | Position of the tooltip                                            | `Floating UI Placement \| 'topLeft' \| ... (AntD legacy)` | `'top'` |
-| openDelay       | Delay before opening (ms). Takes precedence over `mouseEnterDelay` | `number`                                                  | -       |
-| closeDelay      | Delay before closing (ms). Takes precedence over `mouseLeaveDelay` | `number`                                                  | -       |
+| openDelay       | Delay before opening (ms). Takes precedence over `mouseEnterDelay` | `number`                                                  | `100`   |
+| closeDelay      | Delay before closing (ms). Takes precedence over `mouseLeaveDelay` | `number`                                                  | `100`   |
 | mouseEnterDelay | Delay before opening (seconds, AntD compatible)                    | `number`                                                  | `0`     |
 | mouseLeaveDelay | Delay before closing (seconds, AntD compatible)                    | `number`                                                  | `0`     |
 
@@ -35,9 +39,10 @@ Tooltip is built on top of `@floating-ui/react` (Base Tooltip). For compatibilit
 
 ### TooltipGroup
 
-| Property | Description                                           | Type        | Default |
-| -------- | ----------------------------------------------------- | ----------- | ------- |
-| children | Tooltip subtree that shares a single tooltip instance | `ReactNode` | -       |
+| Property | Description                                           | Type                                                                            | Default |
+| -------- | ----------------------------------------------------- | ------------------------------------------------------------------------------- | ------- |
+| children | Tooltip subtree that shares a single tooltip instance | `ReactNode`                                                                     | -       |
+| ...props | Shared tooltip props applied to each group member     | `Omit<TooltipProps, 'children' \| 'defaultOpen' \| 'open' \| 'ref' \| 'title'>` | -       |
 
 #### Hotkey Support
 

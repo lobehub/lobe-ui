@@ -2,8 +2,9 @@
 
 import type { FloatingContext, Placement } from '@floating-ui/react';
 import { FloatingArrow } from '@floating-ui/react';
+import { useDebounce } from 'ahooks';
 import type { CSSProperties, ReactNode, RefObject } from 'react';
-import React, { useLayoutEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import Hotkey from '@/Hotkey';
@@ -76,22 +77,10 @@ const TooltipFloating = ({
     }
   }, [placement]);
 
-  const [openNextTick, setOpenNextTick] = useState(false);
-  useLayoutEffect(() => {
-    if (!open) {
-      setOpenNextTick(false);
-      return;
-    }
-
-    const rafId = requestAnimationFrame(() => {
-      setOpenNextTick(true);
-    });
-
-    return () => {
-      cancelAnimationFrame(rafId);
-    };
-  }, [open]);
-
+  const hasTransform = useDebounce(Boolean(floatingStyles?.transform), {
+    leading: false,
+    wait: 16,
+  });
   return (
     <LazyMotion>
       <AnimatePresence>
@@ -99,7 +88,7 @@ const TooltipFloating = ({
           <div
             className={cx(
               styles.tooltip,
-              openNextTick && styles.tooltipLayout,
+              hasTransform && styles.tooltipLayout,
               classNames?.container,
               classNames?.root,
               className,
