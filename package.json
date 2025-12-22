@@ -200,6 +200,7 @@
     "semantic-release": "^21.1.2",
     "stylelint": "^15.11.0",
     "svgo": "^4.0.0",
+    "tsdown": "^0.18.2",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "unist-util-is": "^6.0.1",
