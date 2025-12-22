@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 3.4.2](https://github.com/lobehub/lobe-ui/compare/v3.4.1...v3.4.2)
+
+<sup>Released on **2025-12-22**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Remove FlexBasic CSS file and integrate styles into GlobalStyle.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Remove FlexBasic CSS file and integrate styles into GlobalStyle ([d3db23f](https://github.com/lobehub/lobe-ui/commit/d3db23f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 3.4.1](https://github.com/lobehub/lobe-ui/compare/v3.4.0...v3.4.1)
 
 <sup>Released on **2025-12-22**</sup>
