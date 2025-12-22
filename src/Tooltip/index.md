@@ -19,6 +19,10 @@ Wrap multiple tooltips in `TooltipGroup` to share a single floating instance. Wh
 
 <code src="./demos/group-shared.tsx" nopadding></code>
 
+## Tooltip Group Trigger Removal
+
+<code src="./demos/group-remove-trigger.tsx" nopadding></code>
+
 ## APIs
 
 ### Tooltip

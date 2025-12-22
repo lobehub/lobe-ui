@@ -77,6 +77,13 @@ const TooltipGroup: FC<TooltipGroupProps> = ({ children, ...sharedProps }) => {
     activeRef.current?.item.onOpenChange?.(false);
   }, [clearTimers]);
 
+  const destroyActive = useCallback(() => {
+    clearTimers();
+    setOpen(false);
+    activeRef.current?.item.onOpenChange?.(false);
+    setActive(null);
+  }, [clearTimers]);
+
   const isActiveTrigger = useCallback((triggerEl: HTMLElement) => {
     return Boolean(activeRef.current && activeRef.current.triggerEl === triggerEl);
   }, []);
@@ -116,23 +123,56 @@ const TooltipGroup: FC<TooltipGroupProps> = ({ children, ...sharedProps }) => {
       const delayMs =
         item.openDelay ?? (item.mouseEnterDelay !== undefined ? item.mouseEnterDelay * 1000 : 100);
       if (delayMs <= 0) {
+        if (!triggerEl.isConnected) {
+          destroyActive();
+          return;
+        }
         setOpen(true);
         item.onOpenChange?.(true);
         return;
       }
 
       openTimerRef.current = window.setTimeout(() => {
+        if (!triggerEl.isConnected) {
+          destroyActive();
+          return;
+        }
         setOpen(true);
         item.onOpenChange?.(true);
       }, delayMs);
     },
-    [clearTimers],
+    [clearTimers, destroyActive],
   );
 
   const groupApi = useMemo(
     () => ({ closeFromTrigger, closeImmediately, isActiveTrigger, openFromTrigger }),
     [closeFromTrigger, closeImmediately, isActiveTrigger, openFromTrigger],
   );
+
+  useEffect(() => {
+    if (!open) return;
+    const triggerEl = active?.triggerEl;
+    if (!triggerEl) return;
+
+    if (!triggerEl.isConnected) {
+      destroyActive();
+      return;
+    }
+
+    const root = triggerEl.getRootNode?.();
+    const observeTarget =
+      typeof ShadowRoot !== 'undefined' && root instanceof ShadowRoot
+        ? root
+        : (triggerEl.ownerDocument ?? document);
+
+    const observer = new MutationObserver(() => {
+      if (!triggerEl.isConnected) destroyActive();
+    });
+
+    observer.observe(observeTarget, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
+  }, [active?.triggerEl, destroyActive, open]);
 
   useEffect(() => {
     return () => {
