@@ -22,8 +22,8 @@ type TooltipFloatingProps = {
   context?: FloatingContext;
 
   floatingProps?: Record<string, any>;
-
   floatingStyles: CSSProperties;
+
   hotkey?: TooltipProps['hotkey'];
   hotkeyProps?: TooltipProps['hotkeyProps'];
 

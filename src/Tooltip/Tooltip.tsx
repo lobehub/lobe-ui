@@ -248,7 +248,7 @@ const TooltipStandalone: FC<TooltipProps> = ({
   const resolvedDelay = useMemo(
     () => ({
       close: closeDelay ?? (mouseLeaveDelay !== undefined ? mouseLeaveDelay * 1000 : 100),
-      open: openDelay ?? (mouseEnterDelay !== undefined ? mouseEnterDelay * 1000 : 100),
+      open: openDelay ?? (mouseEnterDelay !== undefined ? mouseEnterDelay * 1000 : 400),
     }),
     [closeDelay, mouseEnterDelay, mouseLeaveDelay, openDelay],
   );

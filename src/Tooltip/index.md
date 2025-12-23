@@ -34,7 +34,7 @@ Wrap multiple tooltips in `TooltipGroup` to share a single floating instance. Wh
 | hotkeyProps     | Props for the Hotkey component                                     | `Omit<HotkeyProps, 'keys'>`                               | -       |
 | arrow           | Whether the tooltip has an arrow pointer                           | `boolean`                                                 | `false` |
 | placement       | Position of the tooltip                                            | `Floating UI Placement \| 'topLeft' \| ... (AntD legacy)` | `'top'` |
-| openDelay       | Delay before opening (ms). Takes precedence over `mouseEnterDelay` | `number`                                                  | `100`   |
+| openDelay       | Delay before opening (ms). Takes precedence over `mouseEnterDelay` | `number`                                                  | `400`   |
 | closeDelay      | Delay before closing (ms). Takes precedence over `mouseLeaveDelay` | `number`                                                  | `100`   |
 | mouseEnterDelay | Delay before opening (seconds, AntD compatible)                    | `number`                                                  | `0`     |
 | mouseLeaveDelay | Delay before closing (seconds, AntD compatible)                    | `number`                                                  | `0`     |
