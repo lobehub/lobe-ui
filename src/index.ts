@@ -1,3 +1,4 @@
+export { default as A } from './A';
 export {
   Accordion,
   AccordionItem,

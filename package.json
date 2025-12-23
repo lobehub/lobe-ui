@@ -22,9 +22,9 @@
   "sideEffects": [
     "**/*.css"
   ],
-  "main": "es/index.js",
-  "module": "es/index.js",
-  "types": "es/index.d.ts",
+  "main": "es/index.mjs",
+  "module": "es/index.mjs",
+  "types": "es/index.d.mts",
   "files": [
     "es",
     "awesome.d.ts",
