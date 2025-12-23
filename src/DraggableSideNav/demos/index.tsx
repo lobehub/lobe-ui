@@ -3,7 +3,7 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { useState } from 'react';
 
 import { Flexbox } from '@/Flex';
-import sideNavMessages from '@/i18n/resources/sideNav';
+import sideNavMessages from '@/i18n/resources/en/sideNav';
 import { useTranslation } from '@/i18n/useTranslation';
 
 import { DemoBody } from './Body';

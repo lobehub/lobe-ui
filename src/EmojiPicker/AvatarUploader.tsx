@@ -11,7 +11,7 @@ import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Tag from '@/Tag';
 import Text from '@/Text';
-import emojiPickerMessages from '@/i18n/resources/emojiPicker';
+import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
 import { useTranslation } from '@/i18n/useTranslation';
 
 import { AvatarUploaderProps } from './type';

@@ -4,7 +4,7 @@ import { useResponsive } from 'antd-style';
 import { memo, useEffect, useRef, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
-import chatMessages from '@/i18n/resources/chat';
+import chatMessages from '@/i18n/resources/en/chat';
 import { useTranslation } from '@/i18n/useTranslation';
 
 import Actions from './components/Actions';

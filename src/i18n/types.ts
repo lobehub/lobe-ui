@@ -1,13 +1,13 @@
 export type Locale = string;
 
-type BuiltinTranslationResources = typeof import('./resources/chat').default &
-  typeof import('./resources/common').default &
-  typeof import('./resources/editableMessage').default &
-  typeof import('./resources/emojiPicker').default &
-  typeof import('./resources/form').default &
-  typeof import('./resources/hotkey').default &
-  typeof import('./resources/messageModal').default &
-  typeof import('./resources/sideNav').default;
+type BuiltinTranslationResources = typeof import('./resources/en/chat').default &
+  typeof import('./resources/en/common').default &
+  typeof import('./resources/en/editableMessage').default &
+  typeof import('./resources/en/emojiPicker').default &
+  typeof import('./resources/en/form').default &
+  typeof import('./resources/en/hotkey').default &
+  typeof import('./resources/en/messageModal').default &
+  typeof import('./resources/en/sideNav').default;
 
 export type TranslationKey = keyof BuiltinTranslationResources;
 

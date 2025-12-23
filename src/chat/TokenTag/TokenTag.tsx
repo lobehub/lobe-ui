@@ -7,7 +7,7 @@ import { type FC, useMemo } from 'react';
 
 import Button from '@/Button';
 import FluentEmoji from '@/FluentEmoji';
-import chatMessages from '@/i18n/resources/chat';
+import chatMessages from '@/i18n/resources/en/chat';
 import { useTranslation } from '@/i18n/useTranslation';
 
 import { useStyles } from './style';

@@ -14,7 +14,7 @@ import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Tabs, { TabsProps } from '@/Tabs';
 import Tooltip from '@/Tooltip';
-import emojiPickerMessages from '@/i18n/resources/emojiPicker';
+import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
 import { useTranslation } from '@/i18n/useTranslation';
 
 import AvatarUploader from './AvatarUploader';

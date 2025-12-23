@@ -1,0 +1,17 @@
+export default {
+  'sideNav.collapse': '折叠侧边栏',
+  'sideNav.demoActiveLabel': '激活',
+  'sideNav.demoFeatureAutoCollapseDesc': '拖动到阈值以下智能折叠',
+  'sideNav.demoFeatureAutoCollapseTitle': '自动折叠',
+  'sideNav.demoFeaturePerformanceDesc': '无动画开销，性能更佳',
+  'sideNav.demoFeaturePerformanceTitle': '性能优化',
+  'sideNav.demoFeatureResizeDesc': '拖动调整面板宽度',
+  'sideNav.demoFeatureResizeTitle': '灵活调整',
+  'sideNav.demoFeatureSmartHandleDesc': '悬停显示切换按钮',
+  'sideNav.demoFeatureSmartHandleTitle': '智能手柄',
+  'sideNav.demoFeaturesTitle': '功能特性',
+  'sideNav.demoHint': '尝试拖动面板边缘并使用切换按钮 ->',
+  'sideNav.demoSubtitle': '可拖动调整的工作区风格侧边面板',
+  'sideNav.demoTitle': 'DraggableSideNav 演示',
+  'sideNav.expand': '展开侧边栏',
+} as const;

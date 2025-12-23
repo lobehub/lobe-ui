@@ -6,7 +6,7 @@ import type { I18nContextValue, TranslationKey, TranslationResources } from './t
 export interface I18nProviderProps {
   children: ReactNode;
   locale?: string;
-  resources?: TranslationResources[];
+  resources?: TranslationResources[] | Record<string, TranslationResources>;
 }
 
 const defaultValue: I18nContextValue = {
@@ -17,7 +17,10 @@ const defaultValue: I18nContextValue = {
 const I18nContext = createContext<I18nContextValue>(defaultValue);
 
 export const I18nProvider = ({ children, resources = [], locale = 'en' }: I18nProviderProps) => {
-  const mergedResources = useMemo(() => Object.assign({}, ...resources), [resources]);
+  const mergedResources = useMemo(() => {
+    const resourceList = Array.isArray(resources) ? resources : Object.values(resources);
+    return Object.assign({}, ...resourceList);
+  }, [resources]);
 
   const t = useCallback(
     (key: TranslationKey): string => mergedResources[key] || key,

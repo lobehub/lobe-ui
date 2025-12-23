@@ -21,7 +21,7 @@ import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 import Hotkey from '@/Hotkey';
 import { NORMATIVE_MODIFIER, checkIsAppleDevice, splitKeysByPlus } from '@/Hotkey/utils';
-import hotkeyMessages from '@/i18n/resources/hotkey';
+import hotkeyMessages from '@/i18n/resources/en/hotkey';
 import { useTranslation } from '@/i18n/useTranslation';
 
 import { useStyles } from './style';

@@ -11,7 +11,7 @@ import TextArea from '@/Input/TextArea';
 import Markdown from '@/Markdown';
 import Modal from '@/Modal';
 import { useStyles as useTextStyles } from '@/chat/MessageInput/style';
-import messageModalMessages from '@/i18n/resources/messageModal';
+import messageModalMessages from '@/i18n/resources/en/messageModal';
 import { useTranslation } from '@/i18n/useTranslation';
 
 import type { MessageModalProps } from './type';

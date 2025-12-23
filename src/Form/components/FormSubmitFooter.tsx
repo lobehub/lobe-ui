@@ -9,7 +9,7 @@ import { memo, useEffect, useMemo, useState } from 'react';
 import Button from '@/Button';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
-import formMessages from '@/i18n/resources/form';
+import formMessages from '@/i18n/resources/en/form';
 import { useTranslation } from '@/i18n/useTranslation';
 
 import { useSubmitFooterStyles as useStyles } from '../style';

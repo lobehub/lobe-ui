@@ -9,7 +9,7 @@ import Button from '@/Button';
 import ControlInput from '@/EditableText/ControlInput';
 import { Flexbox } from '@/Flex';
 import Select from '@/Select';
-import editableMessageMessages from '@/i18n/resources/editableMessage';
+import editableMessageMessages from '@/i18n/resources/en/editableMessage';
 import { useTranslation } from '@/i18n/useTranslation';
 
 import { messagesReducer } from './messageReducer';
