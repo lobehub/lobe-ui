@@ -30,6 +30,8 @@ export default defineConfig({
     'src/index.ts',
     // packages
     ...packageEntries,
+    // subpath entries
+    'src/i18n/resources/all.ts',
   ],
   external,
   format: ['esm'],

@@ -21,6 +21,8 @@ import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 import Hotkey from '@/Hotkey';
 import { NORMATIVE_MODIFIER, checkIsAppleDevice, splitKeysByPlus } from '@/Hotkey/utils';
+import hotkeyMessages from '@/i18n/resources/hotkey';
+import { useTranslation } from '@/i18n/useTranslation';
 
 import { useStyles } from './style';
 import type { HotkeyInputProps } from './type';
@@ -32,7 +34,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
     resetValue = '',
     onChange,
     onConflict,
-    placeholder = 'Press keys to record shortcut',
+    placeholder,
     disabled,
     shadow,
     allowReset = true,
@@ -51,6 +53,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
     const [hasInvalidCombination, setHasInvalidCombination] = useState(false);
     const inputRef = useRef<InputRef>(null);
     const { cx, styles, theme } = useStyles();
+    const { t } = useTranslation(hotkeyMessages);
     const isAppleDevice = useMemo(() => checkIsAppleDevice(isApple), [isApple]);
     const [hotkeyValue, setHotkeyValue] = useControlledState(defaultValue, {
       defaultValue,
@@ -239,6 +242,11 @@ const HotkeyInput = memo<HotkeyInputProps>(
       inputRef.current?.focus();
     };
 
+    const placeholderText = placeholder ?? t('hotkey.placeholder');
+    const resetTitle = texts?.reset ?? t('hotkey.reset');
+    const conflictText = texts?.conflicts ?? t('hotkey.conflict');
+    const invalidText = texts?.invalidCombination ?? t('hotkey.invalidCombination');
+
     return (
       <Flexbox
         className={className}
@@ -266,12 +274,12 @@ const HotkeyInput = memo<HotkeyInputProps>(
           <div style={{ pointerEvents: 'none' }}>
             {isRecording ? (
               <span className={styles.placeholder}>
-                {keys.length > 0 ? <Hotkey keys={keysString} /> : placeholder}
+                {keys.length > 0 ? <Hotkey keys={keysString} /> : placeholderText}
               </span>
             ) : hotkeyValue ? (
               <Hotkey keys={hotkeyValue} />
             ) : (
-              <span className={styles.placeholder}>{placeholder}</span>
+              <span className={styles.placeholder}>{placeholderText}</span>
             )}
           </div>
 
@@ -291,22 +299,13 @@ const HotkeyInput = memo<HotkeyInputProps>(
               icon={Undo2Icon}
               onClick={handleReset}
               size={'small'}
-              title={texts?.reset || 'Reset to default'}
+              title={resetTitle}
               variant={'filled'}
             />
           )}
         </Flexbox>
-        {hasConflict && (
-          <div className={styles.errorText}>
-            {texts?.conflicts || 'This shortcut conflicts with an existing one.'}
-          </div>
-        )}
-        {hasInvalidCombination && (
-          <div className={styles.errorText}>
-            {texts?.invalidCombination ||
-              'Shortcut must include a modifier key (Ctrl, Alt, Shift) and only one regular key.'}
-          </div>
-        )}
+        {hasConflict && <div className={styles.errorText}>{conflictText}</div>}
+        {hasInvalidCombination && <div className={styles.errorText}>{invalidText}</div>}
       </Flexbox>
     );
   },

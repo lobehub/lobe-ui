@@ -24,12 +24,15 @@ const items: FeaturesProps['items'] = [
   },
 ];
 
-const example = `import { ThemeProvider, Button } from '@lobehub/ui'
+const example = `import { ThemeProvider, Button, I18nProvider } from '@lobehub/ui'
+import allResources from '@lobehub/ui/i18n/resources/all'
 
 export default () => (
-  <ThemeProvider>
-    <Button>Hello AIGC</Button>
-  </ThemeProvider>
+  <I18nProvider resources={allResources}>
+    <ThemeProvider>
+      <Button>Hello AIGC</Button>
+    </ThemeProvider>
+  </I18nProvider>
 )`;
 
 export default () => {

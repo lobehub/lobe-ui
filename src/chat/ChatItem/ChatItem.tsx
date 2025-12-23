@@ -4,6 +4,8 @@ import { useResponsive } from 'antd-style';
 import { memo, useEffect, useRef, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
+import chatMessages from '@/i18n/resources/chat';
+import { useTranslation } from '@/i18n/useTranslation';
 
 import Actions from './components/Actions';
 import Avatar from './components/Avatar';
@@ -26,7 +28,7 @@ const ChatItem = memo<ChatItemProps>(
     primary,
     loading,
     message,
-    placeholderMessage = '...',
+    placeholderMessage,
     placement = 'left',
     variant = 'bubble',
     avatar,
@@ -51,6 +53,7 @@ const ChatItem = memo<ChatItemProps>(
     ...rest
   }) => {
     const { mobile } = useResponsive();
+    const { t } = useTranslation(chatMessages);
     const { cx, styles } = useStyles({
       editing,
       placement,
@@ -60,6 +63,8 @@ const ChatItem = memo<ChatItemProps>(
       title: avatar.title,
       variant,
     });
+    const placeholderText = placeholderMessage ?? t('chat.placeholder');
+    const avatarAlt = avatarProps?.alt || avatar.title || t('chat.avatar');
 
     // 在 ChatItem 组件中添加
     const contentRef = useRef<HTMLDivElement>(null);
@@ -106,7 +111,7 @@ const ChatItem = memo<ChatItemProps>(
           <Avatar
             {...avatarProps}
             addon={avatarAddon}
-            alt={avatarProps?.alt || avatar.title || 'avatar'}
+            alt={avatarAlt}
             avatar={avatar}
             loading={loading}
             onClick={onAvatarClick}
@@ -145,7 +150,7 @@ const ChatItem = memo<ChatItemProps>(
             gap={8}
           >
             <Flexbox ref={contentRef} width={'100%'}>
-              {error && (message === placeholderMessage || !message) ? (
+              {error && (message === placeholderText || !message) ? (
                 <ErrorContent error={error} message={errorMessage} placement={placement} />
               ) : (
                 <MessageContent

@@ -1,0 +1,17 @@
+export default {
+  'sideNav.collapse': 'Collapse sidebar',
+  'sideNav.demoActiveLabel': 'Active',
+  'sideNav.demoFeatureAutoCollapseDesc': 'Drag below threshold for smart collapse',
+  'sideNav.demoFeatureAutoCollapseTitle': 'Auto-collapse',
+  'sideNav.demoFeaturePerformanceDesc': 'No animation overhead for better performance',
+  'sideNav.demoFeaturePerformanceTitle': 'Performance',
+  'sideNav.demoFeatureResizeDesc': 'Drag to adjust panel width',
+  'sideNav.demoFeatureResizeTitle': 'Flexible Resize',
+  'sideNav.demoFeatureSmartHandleDesc': 'Hover to reveal toggle button',
+  'sideNav.demoFeatureSmartHandleTitle': 'Smart Handle',
+  'sideNav.demoFeaturesTitle': 'Features',
+  'sideNav.demoHint': 'Try dragging the panel edge and using the toggle button ->',
+  'sideNav.demoSubtitle': 'A workspace-style side panel with draggable resize',
+  'sideNav.demoTitle': 'DraggableSideNav Demo',
+  'sideNav.expand': 'Expand sidebar',
+} as const;

@@ -3,6 +3,8 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { useState } from 'react';
 
 import { Flexbox } from '@/Flex';
+import sideNavMessages from '@/i18n/resources/sideNav';
+import { useTranslation } from '@/i18n/useTranslation';
 
 import { DemoBody } from './Body';
 import { DemoFooter } from './Footer';
@@ -13,6 +15,7 @@ export default () => {
   const [expand, setExpand] = useState(true);
   const [activeKey, setActiveKey] = useState<string>('home');
   const store = useCreateStore();
+  const { t } = useTranslation(sideNavMessages);
 
   const control = useControls(
     {
@@ -64,15 +67,13 @@ export default () => {
 
         <Flexbox flex={1} gap={16} padding={24}>
           <div>
-            <h2 style={{ marginBottom: '8px' }}>DraggableSideNav Demo</h2>
-            <p style={{ fontSize: '14px', margin: 0 }}>
-              A workspace-style side panel with draggable resize
-            </p>
+            <h2 style={{ marginBottom: '8px' }}>{t('sideNav.demoTitle')}</h2>
+            <p style={{ fontSize: '14px', margin: 0 }}>{t('sideNav.demoSubtitle')}</p>
           </div>
 
           <Flexbox gap={8}>
             <div>
-              <strong>Active:</strong> {activeKey}
+              <strong>{t('sideNav.demoActiveLabel')}:</strong> {activeKey}
             </div>
             <div>
               <button
@@ -88,31 +89,33 @@ export default () => {
                 }}
                 type="button"
               >
-                {expand ? '折叠侧边栏' : '展开侧边栏'}
+                {expand ? t('sideNav.collapse') : t('sideNav.expand')}
               </button>
             </div>
             <div style={{ fontSize: '13px' }}>
-              ✨ <strong>Features:</strong>
+              <strong>{t('sideNav.demoFeaturesTitle')}:</strong>
               <ul style={{ margin: '4px 0', paddingLeft: '20px' }}>
                 <li>
-                  <strong>Smart Handle:</strong> Hover to reveal toggle button
+                  <strong>{t('sideNav.demoFeatureSmartHandleTitle')}:</strong>{' '}
+                  {t('sideNav.demoFeatureSmartHandleDesc')}
                 </li>
                 <li>
-                  <strong>Flexible Resize:</strong> Drag to adjust panel width
+                  <strong>{t('sideNav.demoFeatureResizeTitle')}:</strong>{' '}
+                  {t('sideNav.demoFeatureResizeDesc')}
                 </li>
                 <li>
-                  <strong>Auto-collapse:</strong> Drag below threshold for smart collapse
+                  <strong>{t('sideNav.demoFeatureAutoCollapseTitle')}:</strong>{' '}
+                  {t('sideNav.demoFeatureAutoCollapseDesc')}
                 </li>
                 <li>
-                  <strong>Performance:</strong> No animation overhead for better performance
+                  <strong>{t('sideNav.demoFeaturePerformanceTitle')}:</strong>{' '}
+                  {t('sideNav.demoFeaturePerformanceDesc')}
                 </li>
               </ul>
             </div>
           </Flexbox>
 
-          <div style={{ color: '#999', fontSize: '12px' }}>
-            💡 Try dragging the panel edge and using the toggle button →
-          </div>
+          <div style={{ color: '#999', fontSize: '12px' }}>{t('sideNav.demoHint')}</div>
         </Flexbox>
       </Flexbox>
     </StoryBook>
