@@ -3,12 +3,13 @@
 import type { FloatingContext, Placement } from '@floating-ui/react';
 import { FloatingArrow } from '@floating-ui/react';
 import { useDebounce } from 'ahooks';
+import { AnimatePresence } from 'motion/react';
 import type { CSSProperties, ReactNode, RefObject } from 'react';
 import React, { useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import Hotkey from '@/Hotkey';
-import { AnimatePresence, LazyMotion, m } from '@/motion';
+import { useMotionComponent } from '@/MotionProvider';
 
 import { useStyles } from './style';
 import type { TooltipProps } from './type';
@@ -81,69 +82,69 @@ const TooltipFloating = ({
     leading: false,
     wait: 16,
   });
+
+  const Motion = useMotionComponent();
   return (
-    <LazyMotion>
-      <AnimatePresence>
-        {open && title && (
-          <div
-            className={cx(
-              styles.tooltip,
-              hasTransform && styles.tooltipLayout,
-              classNames?.container,
-              classNames?.root,
-              className,
-            )}
-            key="tooltip"
-            ref={setFloating as any}
-            role="tooltip"
-            style={
-              styleProps?.root
-                ? {
-                    ...floatingStyles,
-                    zIndex,
-                    ...styleProps.container,
-                    ...styleProps.root,
-                  }
-                : {
-                    ...floatingStyles,
-                    zIndex,
-                    ...styleProps?.container,
-                  }
-            }
-            {...floatingProps}
+    <AnimatePresence>
+      {open && title && (
+        <div
+          className={cx(
+            styles.tooltip,
+            hasTransform && styles.tooltipLayout,
+            classNames?.container,
+            classNames?.root,
+            className,
+          )}
+          key="tooltip"
+          ref={setFloating as any}
+          role="tooltip"
+          style={
+            styleProps?.root
+              ? {
+                  ...floatingStyles,
+                  zIndex,
+                  ...styleProps.container,
+                  ...styleProps.root,
+                }
+              : {
+                  ...floatingStyles,
+                  zIndex,
+                  ...styleProps?.container,
+                }
+          }
+          {...floatingProps}
+        >
+          <Motion.div
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.98 }}
+            initial={{ opacity: 0, scale: 0.96 }}
+            style={{ transformOrigin }}
+            transition={{ duration: 0.12, ease: [0.4, 0, 0.2, 1] }}
           >
-            <m.div
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              initial={{ opacity: 0, scale: 0.96 }}
-              style={{ transformOrigin }}
-              transition={{ duration: 0.12, ease: [0.4, 0, 0.2, 1] }}
-            >
-              <div className={cx(styles.content, classNames?.content)} style={styleProps?.content}>
-                {hotkey ? (
-                  <Flexbox align={'center'} gap={8} horizontal justify={'space-between'}>
-                    <span>{title}</span>
-                    <Hotkey inverseTheme keys={hotkey} {...hotkeyProps} />
-                  </Flexbox>
-                ) : (
-                  title
-                )}
-              </div>
-              {arrow && context && (
-                <FloatingArrow
-                  className={cx(styles.arrow, classNames?.arrow)}
-                  context={context}
-                  height={6}
-                  ref={arrowRef as any}
-                  style={styleProps?.arrow}
-                  width={12}
-                />
+            <div className={cx(styles.content, classNames?.content)} style={styleProps?.content}>
+              {hotkey ? (
+                <Flexbox align={'center'} gap={8} horizontal justify={'space-between'}>
+                  <span>{title}</span>
+                  <Hotkey inverseTheme keys={hotkey} {...hotkeyProps} />
+                </Flexbox>
+              ) : (
+                title
               )}
-            </m.div>
-          </div>
-        )}
-      </AnimatePresence>
-    </LazyMotion>
+            </div>
+            {arrow && context && (
+              <FloatingArrow
+                className={cx(styles.arrow, classNames?.arrow)}
+                context={context}
+                height={6}
+                ref={arrowRef as any}
+                style={styleProps?.arrow}
+                width={12}
+              />
+            )}
+          </Motion.div>
+        </div>
+      )}
+    </AnimatePresence>
   );
 };
 

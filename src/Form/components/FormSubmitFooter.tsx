@@ -3,12 +3,12 @@
 import { Form } from 'antd';
 import isEqual from 'fast-deep-equal';
 import { InfoIcon } from 'lucide-react';
-import { memo, use, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 
 import Button from '@/Button';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
-import { MotionComponent } from '@/MotionProvider';
+import { useMotionComponent } from '@/MotionProvider';
 import formMessages from '@/i18n/resources/en/form';
 import { useTranslation } from '@/i18n/useTranslation';
 
@@ -31,7 +31,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
     className,
     ...rest
   }) => {
-    const Motion = use(MotionComponent);
+    const Motion = useMotionComponent();
     const { form, initialValues, submitLoading } = useFormContext();
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
     const values = Form.useWatch([], form) || {};

@@ -10,7 +10,7 @@ import {
 import { merge } from 'lodash-es';
 import { memo, useCallback, useMemo } from 'react';
 
-import LobeConfigProvider, { useCdnFn } from '@/ConfigProvider';
+import { useCdnFn } from '@/ConfigProvider';
 import FontLoader from '@/FontLoader';
 import { lobeCustomStylish, lobeCustomToken } from '@/styles';
 import { createLobeAntdTheme } from '@/styles/theme/antdTheme';
@@ -20,7 +20,7 @@ import AntdConfigProvider from './ConfigProvider';
 import GlobalStyle from './GlobalStyle';
 import type { ThemeProviderProps } from './type';
 
-const ThemeProviderInner = memo<Omit<ThemeProviderProps, 'config' | 'motion'>>(
+const ThemeProvider = memo<ThemeProviderProps>(
   ({
     children,
     customStylish,
@@ -97,14 +97,6 @@ const ThemeProviderInner = memo<Omit<ThemeProviderProps, 'config' | 'motion'>>(
     );
   },
 );
-
-const ThemeProvider = memo<ThemeProviderProps>(({ config, motion, ...rest }) => {
-  return (
-    <LobeConfigProvider config={config} motion={motion}>
-      <ThemeProviderInner {...rest} />
-    </LobeConfigProvider>
-  );
-});
 
 ThemeProvider.displayName = 'LobeThemeProvider';
 

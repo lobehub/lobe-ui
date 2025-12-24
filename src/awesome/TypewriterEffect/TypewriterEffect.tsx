@@ -1,8 +1,8 @@
 'use client';
 
-import { createElement, memo, use, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { createElement, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { MotionComponent } from '@/MotionProvider';
+import { useMotionComponent } from '@/MotionProvider';
 
 import { useStyles } from './style';
 import type { TypewriterEffectProps } from './type';
@@ -35,7 +35,7 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
     segmentMode = 'grapheme',
     ...props
   }: TypewriterEffectProps) => {
-    const Motion = use(MotionComponent);
+    const Motion = useMotionComponent();
     const { styles, cx } = useStyles();
     const [displayedText, setDisplayedText] = useState('');
     const [currentCharIndex, setCurrentCharIndex] = useState(0);

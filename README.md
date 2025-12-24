@@ -119,7 +119,7 @@ import hotkeyMessages from '@lobehub/ui/i18n/resources/hotkey';
 
 ### ConfigProvider (Motion)
 
-You must pass a motion component via `ConfigProvider` (or `ThemeProvider`).
+You must pass a motion component via `ConfigProvider`.
 If your app uses `LazyMotion`, pass `m`:
 
 ```tsx
