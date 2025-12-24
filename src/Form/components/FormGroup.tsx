@@ -2,7 +2,7 @@
 
 import { useResponsive } from 'antd-style';
 import { cva } from 'class-variance-authority';
-import { isUndefined } from 'lodash-es';
+import { isUndefined } from 'es-toolkit/compat';
 import { memo, useMemo } from 'react';
 
 import Collapse from '@/Collapse';

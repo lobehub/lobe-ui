@@ -3,7 +3,7 @@
 import { Form as AntForm } from 'antd';
 import { useResponsive } from 'antd-style';
 import { cva } from 'class-variance-authority';
-import { isUndefined } from 'lodash-es';
+import { isUndefined } from 'es-toolkit/compat';
 import { memo, useCallback, useMemo, useState } from 'react';
 
 import FormFlatGroup from './components/FormFlatGroup';

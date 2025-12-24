@@ -2,7 +2,7 @@
 
 import type { InputRef } from 'antd';
 import { cva } from 'class-variance-authority';
-import { isEqual } from 'lodash-es';
+import { isEqual } from 'es-toolkit/compat';
 import { Undo2Icon } from 'lucide-react';
 import {
   type FocusEvent,

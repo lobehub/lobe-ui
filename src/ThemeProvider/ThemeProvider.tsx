@@ -7,7 +7,7 @@ import {
   CustomTokenParams,
   GetAntdTheme,
 } from 'antd-style';
-import { merge } from 'lodash-es';
+import { merge } from 'es-toolkit/compat';
 import { memo, useCallback, useMemo } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
