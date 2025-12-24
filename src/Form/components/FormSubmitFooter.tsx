@@ -9,6 +9,8 @@ import { memo, useEffect, useMemo, useState } from 'react';
 import Button from '@/Button';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
+import formMessages from '@/i18n/resources/en/form';
+import { useTranslation } from '@/i18n/useTranslation';
 
 import { useSubmitFooterStyles as useStyles } from '../style';
 import type { FormSubmitFooterProps } from '../type';
@@ -32,6 +34,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
     const { form, initialValues, submitLoading } = useFormContext();
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
     const values = Form.useWatch([], form) || {};
+    const { t } = useTranslation(formMessages);
 
     const { cx, styles, theme } = useStyles();
 
@@ -45,10 +48,14 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
       setHasUnsavedChanges(!isEqual(mergedV, initialV));
     }, [mergedV, initialV, submitLoading]);
 
+    const unsavedWarningText = texts?.unSavedWarning ?? t('form.unsavedWarning');
+    const unsavedText = texts?.unSaved ?? t('form.unsavedChanges');
+    const resetText = texts?.reset ?? t('form.reset');
+    const submitText = texts?.submit ?? t('form.submit');
+
     const fn = (e: BeforeUnloadEvent) => {
       if (hasUnsavedChanges) {
-        e.returnValue =
-          texts?.unSavedWarning || 'You have unsaved changes. Are you sure you want to leave?';
+        e.returnValue = unsavedWarningText;
       } else {
         delete e.returnValue;
       }
@@ -60,7 +67,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
       // 添加离开页面的提示
       window.addEventListener('beforeunload', fn);
       return () => window.removeEventListener('beforeunload', fn);
-    }, [enableUnsavedWarning, hasUnsavedChanges]);
+    }, [enableUnsavedWarning, hasUnsavedChanges, unsavedWarningText]);
 
     const content = (
       <>
@@ -80,7 +87,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
                 marginRight: float ? 16 : 4,
               }}
             >
-              {texts?.unSaved || 'Unsaved changes'}
+              {unsavedText}
             </span>
           </>
         )}
@@ -97,7 +104,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
             {...buttonProps}
             {...resetButtonProps}
           >
-            {texts?.reset || 'Reset'}
+            {resetText}
           </Button>
         )}
         <Button
@@ -108,7 +115,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
           {...buttonProps}
           {...saveButtonProps}
         >
-          {texts?.submit || 'Submit'}
+          {submitText}
         </Button>
       </>
     );

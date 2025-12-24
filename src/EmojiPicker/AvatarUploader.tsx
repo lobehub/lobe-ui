@@ -11,6 +11,8 @@ import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Tag from '@/Tag';
 import Text from '@/Text';
+import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
+import { useTranslation } from '@/i18n/useTranslation';
 
 import { AvatarUploaderProps } from './type';
 
@@ -31,21 +33,29 @@ const AvatarUploader = memo<AvatarUploaderProps>(
     const editor = useRef<any>(null);
     const [previewImage, setPreviewImage] = useState('');
     const theme = useTheme();
+    const { t } = useTranslation(emojiPickerMessages);
 
-    const beforeUpload = useCallback((file: FileType) => {
-      const isJpgOrPng =
-        file.type === 'image/jpeg' ||
-        file.type === 'image/png' ||
-        file.type === 'image/gif' ||
-        file.type === 'image/webp';
-      if (!isJpgOrPng) {
-        message.error(texts?.fileTypeError || 'You can only upload image file!');
-        return;
-      }
-      return createUploadImageHandler((avatar) => {
-        setPreviewImage(avatar);
-      })(file);
-    }, []);
+    const fileTypeErrorText = texts?.fileTypeError ?? t('emojiPicker.fileTypeError');
+    const draggerDescText = texts?.draggerDesc ?? t('emojiPicker.draggerDesc');
+    const uploadBtnText = texts?.uploadBtn ?? t('emojiPicker.uploadBtn');
+
+    const beforeUpload = useCallback(
+      (file: FileType) => {
+        const isJpgOrPng =
+          file.type === 'image/jpeg' ||
+          file.type === 'image/png' ||
+          file.type === 'image/gif' ||
+          file.type === 'image/webp';
+        if (!isJpgOrPng) {
+          message.error(fileTypeErrorText);
+          return;
+        }
+        return createUploadImageHandler((avatar) => {
+          setPreviewImage(avatar);
+        })(file);
+      },
+      [fileTypeErrorText],
+    );
 
     const handleUpload = () => {
       if (!editor.current) return;
@@ -80,9 +90,7 @@ const AvatarUploader = memo<AvatarUploaderProps>(
           >
             <Center gap={16} height={compressSize} width={compressSize}>
               <Icon color={theme.colorTextDescription} icon={ImageUpIcon} size={48} />
-              <Text color={theme.colorTextSecondary}>
-                {texts?.draggerDesc || 'Click or Drag image to this area to upload'}
-              </Text>
+              <Text color={theme.colorTextSecondary}>{draggerDescText}</Text>
               <Center gap={4} horizontal>
                 <Tag>JPG</Tag>
                 <Tag>PNG</Tag>
@@ -110,7 +118,7 @@ const AvatarUploader = memo<AvatarUploaderProps>(
                 style={{ flex: 'none' }}
               />
               <Button onClick={handleUpload} style={{ flex: 1, fontWeight: 500 }} type={'primary'}>
-                {texts?.uploadBtn || 'Crop and Upload'}
+                {uploadBtnText}
               </Button>
             </Flexbox>
           </Center>
