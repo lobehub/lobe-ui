@@ -1,6 +1,6 @@
 import * as cheerio from 'cheerio';
 import { config } from 'dotenv';
-import * as _ from 'es-toolkit/compat';
+import { camelCase, upperFirst } from 'es-toolkit/compat';
 import { Client } from 'figma-js';
 import type { Canvas, ClientInterface, Document } from 'figma-js';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -44,9 +44,9 @@ function getIcons(extraCanvas: Canvas): Icon[] {
   extraCanvas.children?.forEach((node) => {
     if (node.type === 'COMPONENT' || node.type === 'FRAME') {
       // Convert name like "Globe Off" to "GlobeOffIcon"
-      const displayName = _.upperFirst(
+      const displayName = upperFirst(
         // @ts-ignore
-        _.camelCase(node.name.replaceAll(/([\da-z])([\dA-Z])/g, '$1 $2')),
+        camelCase(node.name.replaceAll(/([\da-z])([\dA-Z])/g, '$1 $2')),
       );
       const fileName = `${displayName}Icon`;
 
@@ -181,7 +181,7 @@ function extractPathsFromSvg(svgContent: string): Array<[string, Record<string, 
 
     Object.keys(el.attribs).forEach((attrKey) => {
       const value = $(el).attr(attrKey);
-      const camelKey = _.camelCase(attrKey);
+      const camelKey = camelCase(attrKey);
 
       if (value && !excludedAttrs.has(attrKey) && !excludedAttrs.has(camelKey)) {
         attrs[camelKey] = value;
