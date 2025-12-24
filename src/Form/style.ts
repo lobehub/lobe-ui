@@ -1,5 +1,5 @@
 import { createStyles } from 'antd-style';
-import { isNumber } from 'lodash-es';
+import { isNumber } from 'es-toolkit/compat';
 
 export const useStyles = createStyles(({ css, token, prefixCls, responsive }) => ({
   borderless: css`
@@ -69,8 +69,8 @@ export const useFlatGroupStyles = createStyles(({ cx, css, token, stylish }) => 
     mobile: css`
       padding-block: 0;
       padding-inline: 16px;
-      background: ${token.colorBgContainer};
       border-radius: 0;
+      background: ${token.colorBgContainer};
     `,
     outlined: stylish.variantOutlinedWithoutHover,
     root: css`
@@ -85,8 +85,8 @@ export const useFooterStyles = createStyles(({ css, token, responsive }) => {
     root: css`
       ${responsive.mobile} {
         padding: 16px;
-        background: ${token.colorBgContainer};
         border-block-start: 1px solid ${token.colorBorderSecondary};
+        background: ${token.colorBgContainer};
       }
     `,
   };
@@ -189,18 +189,18 @@ export const useSubmitFooterStyles = createStyles(({ responsive, css, token }) =
 
     width: max-content;
     padding: 8px;
-
-    background: ${token.colorBgContainer};
     border: 1px solid ${token.colorBorderSecondary};
     border-radius: 48px;
+
+    background: ${token.colorBgContainer};
     box-shadow: ${token.boxShadowSecondary};
   `,
   footer: css`
     ${responsive.mobile} {
       margin-block-start: -${token.borderRadius}px;
       padding: 16px;
-      background: ${token.colorBgContainer};
       border-block-start: 1px solid ${token.colorBorderSecondary};
+      background: ${token.colorBgContainer};
     }
   `,
 }));

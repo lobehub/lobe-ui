@@ -1,4 +1,4 @@
-import { isNumber } from 'lodash-es';
+import { isNumber } from 'es-toolkit/compat';
 
 import type { IconSize } from '../type';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { Slider } from 'antd';
-import { isNull } from 'lodash-es';
+import { isNull } from 'es-toolkit/compat';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';

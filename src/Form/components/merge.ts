@@ -1,4 +1,4 @@
-import { merge as _merge, isEmpty, isObject, mergeWith, pickBy } from 'lodash-es';
+import { merge as _merge, isEmpty, isObject, mergeWith, pickBy } from 'es-toolkit/compat';
 
 export const removeUndefined = (obj: any): any => {
   if (!isObject(obj)) return obj;

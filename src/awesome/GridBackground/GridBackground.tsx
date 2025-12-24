@@ -1,7 +1,7 @@
 'use client';
 
 import { useSize } from 'ahooks';
-import { shuffle } from 'lodash-es';
+import { shuffle } from 'es-toolkit/compat';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import Grid, { type GridProps } from './components/Grid';

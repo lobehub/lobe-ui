@@ -1,8 +1,8 @@
 import * as cheerio from 'cheerio';
 import { config } from 'dotenv';
+import * as _ from 'es-toolkit/compat';
 import { Client } from 'figma-js';
 import type { Canvas, ClientInterface, Document } from 'figma-js';
-import * as _ from 'lodash-es';
 import { mkdir, writeFile } from 'node:fs/promises';
 import * as path from 'node:path';
 import * as prettier from 'prettier';

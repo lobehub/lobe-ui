@@ -2,7 +2,7 @@
 
 import { Alert as AntdAlert } from 'antd';
 import { cva } from 'class-variance-authority';
-import { camelCase } from 'lodash-es';
+import { camelCase } from 'es-toolkit/compat';
 import { AlertTriangle, CheckCircle, Info, X, XCircle } from 'lucide-react';
 import { memo, useMemo } from 'react';
 

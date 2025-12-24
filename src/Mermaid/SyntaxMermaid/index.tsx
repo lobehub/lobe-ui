@@ -1,6 +1,6 @@
 'use client';
 
-import { kebabCase } from 'lodash-es';
+import { kebabCase } from 'es-toolkit/compat';
 import { memo, useEffect, useId, useMemo, useState } from 'react';
 
 import Image from '@/Image';

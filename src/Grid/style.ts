@@ -1,5 +1,5 @@
 import { createStyles } from 'antd-style';
-import { isString } from 'lodash-es';
+import { isString } from 'es-toolkit/compat';
 
 export const useStyles = createStyles(
   (

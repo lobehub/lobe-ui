@@ -1,5 +1,5 @@
 import { AliasToken } from 'antd/es/theme/interface';
-import { capitalize } from 'lodash-es';
+import { capitalize } from 'es-toolkit/compat';
 
 import type { ColorScaleItem } from '@/color/types';
 

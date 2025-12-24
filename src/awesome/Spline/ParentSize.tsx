@@ -1,4 +1,4 @@
-import { debounce } from 'lodash-es';
+import { debounce } from 'es-toolkit/compat';
 import {
   type CSSProperties,
   type ReactNode,

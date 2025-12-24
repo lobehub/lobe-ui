@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash-es';
+import { isUndefined } from 'es-toolkit/compat';
 import { memo, useCallback } from 'react';
 
 import { SvgProps } from '@/types';

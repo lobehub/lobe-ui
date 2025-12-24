@@ -1,7 +1,7 @@
 'use client';
 
 import { createStyles } from 'antd-style';
-import { isEmpty } from 'lodash-es';
+import { isEmpty } from 'es-toolkit/compat';
 import type { FC, ReactNode } from 'react';
 
 import PopoverPanel from '@/mdx/mdxComponents/Citation/PopoverPanel';
