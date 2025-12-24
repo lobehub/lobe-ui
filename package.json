@@ -211,7 +211,7 @@
     "dotenv": "^17.2.3",
     "dpdm": "^3.14.0",
     "dumi": "^2.4.21",
-    "dumi-theme-lobehub": "^3.0.1",
+    "dumi-theme-lobehub": "^4.0.0",
     "eslint": "^8.57.1",
     "figma-js": "1.16.1-0",
     "husky": "^9.1.7",
