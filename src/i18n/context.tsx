@@ -1,12 +1,14 @@
 import { type ReactNode, memo } from 'react';
 
 import ConfigProvider from '@/ConfigProvider';
+import { type MotionComponentType } from '@/MotionProvider';
 
 import type { TranslationResources } from './types';
 
 export interface I18nProviderProps {
   children: ReactNode;
   locale?: string;
+  motion: MotionComponentType;
   resources?: TranslationResources[] | Record<string, TranslationResources>;
 }
 
@@ -14,9 +16,9 @@ export interface I18nProviderProps {
 export { I18nContext } from '@/ConfigProvider';
 
 // I18nProvider delegates to ConfigProvider with flattened i18n props
-export const I18nProvider = memo<I18nProviderProps>(({ children, locale, resources }) => {
+export const I18nProvider = memo<I18nProviderProps>(({ children, locale, resources, motion }) => {
   return (
-    <ConfigProvider config={{}} locale={locale} resources={resources}>
+    <ConfigProvider config={{}} locale={locale} motion={motion} resources={resources}>
       {children}
     </ConfigProvider>
   );

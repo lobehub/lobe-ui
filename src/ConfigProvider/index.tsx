@@ -27,7 +27,7 @@ export interface ConfigProviderProps {
   config?: Config;
   // i18n props - flattened at top level
   locale?: string;
-  motion?: MotionComponentType;
+  motion: MotionComponentType;
   resources?: TranslationResources[] | Record<string, TranslationResources>;
 }
 
@@ -44,15 +44,11 @@ const ConfigProvider = memo<ConfigProviderProps>(
       return { locale: currentLocale, t };
     }, [locale, resources]);
 
-    const content = motion ? (
-      <MotionComponent value={motion}>{children}</MotionComponent>
-    ) : (
-      children
-    );
-
     return (
       <I18nContextInternal value={i18nValue}>
-        <ConfigContext value={config ?? null}>{content}</ConfigContext>
+        <ConfigContext value={config ?? null}>
+          <MotionComponent value={motion}>{children}</MotionComponent>
+        </ConfigContext>
       </I18nContextInternal>
     );
   },
