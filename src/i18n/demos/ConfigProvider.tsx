@@ -3,7 +3,7 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { Card, Col, Row, Space, Tag, Typography } from 'antd';
 import { motion } from 'motion/react';
 
-import { I18nProvider } from '@/i18n';
+import ConfigProvider from '@/ConfigProvider';
 import * as enResources from '@/i18n/resources/en';
 import * as zhCnResources from '@/i18n/resources/zhCn';
 import type { TranslationKey } from '@/i18n/types';
@@ -19,32 +19,14 @@ type Section = {
 
 const sections: Section[] = [
   {
-    actions: ['common.confirm', 'common.cancel', 'common.delete', 'common.edit'],
-    description: 'Buttons and confirmations used across the app.',
+    actions: ['common.confirm', 'common.cancel', 'common.delete'],
+    description: 'Common actions using ConfigProvider i18n.',
     title: 'Common actions',
   },
   {
-    actions: ['form.submit', 'form.reset'],
-    description: 'Form submit actions and warnings.',
-    details: ['form.unsavedChanges', 'form.unsavedWarning'],
-    title: 'Forms',
-  },
-  {
-    actions: ['emojiPicker.upload', 'emojiPicker.uploadBtn', 'emojiPicker.delete'],
-    description: 'Upload and editing prompts.',
-    details: ['emojiPicker.draggerDesc'],
-    title: 'Emoji picker',
-  },
-  {
-    description: 'Shortcuts and token status labels.',
-    details: [
-      'hotkey.placeholder',
-      'hotkey.reset',
-      'tokenTag.used',
-      'tokenTag.remained',
-      'tokenTag.overload',
-    ],
-    title: 'Hotkeys and tokens',
+    description: 'Chat and modal labels.',
+    details: ['chat.placeholder', 'messageModal.confirm', 'messageModal.cancel'],
+    title: 'Chat and modal',
   },
 ];
 
@@ -117,15 +99,22 @@ export default () => {
       <Space direction="vertical" size={16} style={{ width: '100%' }}>
         <Card size="small">
           <Space align="center" wrap>
-            <Text type="secondary">Active locale</Text>
+            <Text type="secondary">Provider</Text>
+            <Tag color="geekblue">ConfigProvider</Tag>
+            <Text type="secondary">Locale</Text>
             <Tag color="blue">{control.locale}</Tag>
-            <Text type="secondary">Resources</Text>
-            <Tag color="geekblue">Static</Tag>
+            <Text type="secondary">Proxy</Text>
+            <Tag>aliyun</Tag>
           </Space>
         </Card>
-        <I18nProvider locale={control.locale} motion={motion} resources={resources}>
+        <ConfigProvider
+          config={{ proxy: 'aliyun' }}
+          locale={control.locale}
+          motion={motion}
+          resources={resources}
+        >
           <LocalePreview />
-        </I18nProvider>
+        </ConfigProvider>
       </Space>
     </StoryBook>
   );

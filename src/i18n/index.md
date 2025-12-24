@@ -5,9 +5,19 @@ title: I18n
 description: Internationalization (i18n) provider and hooks for managing translations across multiple languages in your application.
 ---
 
-## Locale Switcher
+## Demos
+
+### Basic usage
 
 <code src="./demos/index.tsx" nopadding></code>
+
+### With ConfigProvider
+
+<code src="./demos/ConfigProvider.tsx" nopadding></code>
+
+### Dynamic import resources
+
+<code src="./demos/DynamicImport.tsx" nopadding></code>
 
 ## APIs
 
@@ -15,11 +25,13 @@ description: Internationalization (i18n) provider and hooks for managing transla
 
 Provider component that enables internationalization for your application.
 
-| Property  | Description                           | Type                     | Default |
-| --------- | ------------------------------------- | ------------------------ | ------- |
-| locale    | Current locale                        | `string`                 | `'en'`  |
-| resources | Array of translation resource objects | `TranslationResources[]` | `[]`    |
-| children  | Child components                      | `ReactNode`              | -       |
+| Property  | Description                                                                  | Type                        | Default |
+| --------- | ---------------------------------------------------------------------------- | --------------------------- | ------- |
+| locale    | Current locale                                                               | `string`                    | `'en'`  |
+| resources | Translation resource objects (array/record) or a Promise from dynamic import | `TranslationResourcesInput` | `[]`    |
+| children  | Child components                                                             | `ReactNode`                 | -       |
+
+> When `resources` is a Promise (e.g. `import()`), the provider keeps the last resolved resources and locale until it resolves (no Suspense boundary is triggered).
 
 ### useI18n
 
@@ -38,6 +50,15 @@ A partial record of translation key-value pairs.
 
 ```ts
 type TranslationResources = Partial<Record<TranslationKey, TranslationValue>>;
+```
+
+### TranslationResourcesInput
+
+Resource bundles accepted by the provider, including lazy imports.
+
+```ts
+type TranslationResourcesMap = TranslationResources[] | Record<string, TranslationResources>;
+type TranslationResourcesInput = TranslationResourcesMap | Promise<TranslationResourcesMap>;
 ```
 
 ### Available Translation Keys

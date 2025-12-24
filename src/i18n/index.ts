@@ -6,6 +6,8 @@ export type {
   Locale,
   TranslationKey,
   TranslationResources,
+  TranslationResourcesInput,
+  TranslationResourcesMap,
   TranslationValue,
 } from './types';
 export { useTranslation } from './useTranslation';

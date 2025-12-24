@@ -21,6 +21,10 @@ export type TranslationValue = string;
  */
 export type TranslationResources = Partial<Record<TranslationKey, TranslationValue>>;
 
+export type TranslationResourcesMap = TranslationResources[] | Record<string, TranslationResources>;
+
+export type TranslationResourcesInput = TranslationResourcesMap | Promise<TranslationResourcesMap>;
+
 export type I18nContextValue = {
   locale: Locale;
   t: (key: TranslationKey) => string;

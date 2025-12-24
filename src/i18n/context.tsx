@@ -3,13 +3,13 @@ import { type ReactNode, memo } from 'react';
 import ConfigProvider from '@/ConfigProvider';
 import { type MotionComponentType } from '@/MotionProvider';
 
-import type { TranslationResources } from './types';
+import type { TranslationResourcesInput } from './types';
 
 export interface I18nProviderProps {
   children: ReactNode;
   locale?: string;
   motion: MotionComponentType;
-  resources?: TranslationResources[] | Record<string, TranslationResources>;
+  resources?: TranslationResourcesInput;
 }
 
 // Re-export for backward compatibility

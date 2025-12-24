@@ -1,9 +1,24 @@
 'use client';
 
-import { ElementType, ReactNode, createContext, memo, use, useMemo } from 'react';
+import {
+  ElementType,
+  ReactNode,
+  createContext,
+  memo,
+  use,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 
 import { MotionComponent, type MotionComponentType } from '@/MotionProvider';
-import type { I18nContextValue, TranslationKey, TranslationResources } from '@/i18n/types';
+import type {
+  I18nContextValue,
+  TranslationKey,
+  TranslationResourcesInput,
+  TranslationResourcesMap,
+} from '@/i18n/types';
 import { CDN, CdnApi, genCdnUrl } from '@/utils/genCdnUrl';
 
 export interface Config {
@@ -28,21 +43,61 @@ export interface ConfigProviderProps {
   // i18n props - flattened at top level
   locale?: string;
   motion: MotionComponentType;
-  resources?: TranslationResources[] | Record<string, TranslationResources>;
+  resources?: TranslationResourcesInput;
 }
+
+const isThenable = (value: unknown): value is Promise<TranslationResourcesMap> =>
+  typeof (value as { then?: unknown })?.then === 'function';
 
 const ConfigProvider = memo<ConfigProviderProps>(
   ({ children, config, locale, resources, motion }) => {
+    const fallbackLocale = locale ?? 'en';
+    const [resolvedResources, setResolvedResources] = useState<TranslationResourcesMap | undefined>(
+      () => (resources && !isThenable(resources) ? resources : undefined),
+    );
+    const [resolvedLocale, setResolvedLocale] = useState(fallbackLocale);
+    const latestRequestId = useRef(0);
+
+    useEffect(() => {
+      const requestId = ++latestRequestId.current;
+
+      if (!resources) {
+        setResolvedResources(undefined);
+        setResolvedLocale(fallbackLocale);
+        return;
+      }
+
+      if (isThenable(resources)) {
+        const targetLocale = fallbackLocale;
+        resources
+          .then((nextResources) => {
+            if (latestRequestId.current !== requestId) return;
+            setResolvedResources(nextResources);
+            setResolvedLocale(targetLocale);
+          })
+          .catch(() => {
+            if (latestRequestId.current !== requestId) return;
+          });
+        return;
+      }
+
+      setResolvedResources(resources);
+      setResolvedLocale(fallbackLocale);
+    }, [fallbackLocale, resources]);
+
+    const currentResources = isThenable(resources) ? resolvedResources : resources;
+    const currentLocale = isThenable(resources) ? resolvedLocale : fallbackLocale;
+
     const i18nValue = useMemo((): I18nContextValue => {
-      const currentLocale = locale || 'en';
-      const currentResources = resources || [];
       const resourceList = Array.isArray(currentResources)
         ? currentResources
-        : Object.values(currentResources);
+        : currentResources
+          ? Object.values(currentResources)
+          : [];
       const mergedResources = Object.assign({}, ...resourceList);
       const t = (key: TranslationKey): string => mergedResources[key] || key;
       return { locale: currentLocale, t };
-    }, [locale, resources]);
+    }, [currentLocale, currentResources]);
 
     return (
       <I18nContextInternal value={i18nValue}>
