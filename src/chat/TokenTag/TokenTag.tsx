@@ -7,6 +7,8 @@ import { type FC, useMemo } from 'react';
 
 import Button from '@/Button';
 import FluentEmoji from '@/FluentEmoji';
+import chatMessages from '@/i18n/resources/en/chat';
+import { useTranslation } from '@/i18n/useTranslation';
 
 import { useStyles } from './style';
 import type { TokenTagProps } from './type';
@@ -26,9 +28,13 @@ const TokenTag: FC<TokenTagProps> = ({
   ...rest
 }) => {
   const { mobile } = useResponsive();
+  const { t } = useTranslation(chatMessages);
   const valueLeft = maxValue - value;
   const percent = valueLeft / maxValue;
   const showText = !hideText && !mobile;
+  const remainedText = text?.remained ?? t('tokenTag.remained');
+  const usedText = text?.used ?? t('tokenTag.used');
+  const overloadText = text?.overload ?? t('tokenTag.overload');
 
   const data = useMemo(() => {
     let type: 'normal' | 'low' | 'overload';
@@ -82,14 +88,10 @@ const TokenTag: FC<TokenTagProps> = ({
       <FluentEmoji emoji={data.emoji} size={18} unoptimized={unoptimized} />
       {valueLeft > 0
         ? [
-            showText
-              ? mode === 'remained'
-                ? text?.remained || 'Remained'
-                : text?.used || 'Used'
-              : '',
+            showText ? (mode === 'remained' ? remainedText : usedText) : '',
             mode === 'remained' ? format(valueLeft) : format(value),
           ].join(' ')
-        : text?.overload || 'Overload'}
+        : overloadText}
     </Button>
   );
 };

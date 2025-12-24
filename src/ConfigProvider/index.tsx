@@ -1,7 +1,8 @@
 'use client';
 
-import { ElementType, ReactNode, createContext, memo, use } from 'react';
+import { ElementType, ReactNode, createContext, memo, use, useMemo } from 'react';
 
+import type { I18nContextValue, TranslationKey, TranslationResources } from '@/i18n/types';
 import { CDN, CdnApi, genCdnUrl } from '@/utils/genCdnUrl';
 
 export interface Config {
@@ -14,8 +15,37 @@ export interface Config {
 
 export const ConfigContext = createContext<Config | null>(null);
 
-const ConfigProvider = memo<{ children: ReactNode; config: Config }>(({ children, config }) => {
-  return <ConfigContext value={config}>{children}</ConfigContext>;
+// Internal i18n context
+const I18nContextInternal = createContext<I18nContextValue>({
+  locale: 'en',
+  t: (key: TranslationKey) => key,
+});
+
+export interface ConfigProviderProps {
+  children: ReactNode;
+  config: Config;
+  // i18n props - flattened at top level
+  locale?: string;
+  resources?: TranslationResources[] | Record<string, TranslationResources>;
+}
+
+const ConfigProvider = memo<ConfigProviderProps>(({ children, config, locale, resources }) => {
+  const i18nValue = useMemo((): I18nContextValue => {
+    const currentLocale = locale || 'en';
+    const currentResources = resources || [];
+    const resourceList = Array.isArray(currentResources)
+      ? currentResources
+      : Object.values(currentResources);
+    const mergedResources = Object.assign({}, ...resourceList);
+    const t = (key: TranslationKey): string => mergedResources[key] || key;
+    return { locale: currentLocale, t };
+  }, [locale, resources]);
+
+  return (
+    <I18nContextInternal value={i18nValue}>
+      <ConfigContext value={config}>{children}</ConfigContext>
+    </I18nContextInternal>
+  );
 });
 
 // useCdnFn
@@ -32,5 +62,11 @@ export const useCdnFn = (): CdnFn => {
       genCdnUrl({ path, pkg, proxy: config.proxy as any, version });
   return config?.customCdnFn || cdnFallback;
 };
+
+// useI18n hook
+export const useI18n = () => use(I18nContextInternal);
+
+// Export I18nContext for external reference
+export { I18nContextInternal as I18nContext };
 
 export default ConfigProvider;

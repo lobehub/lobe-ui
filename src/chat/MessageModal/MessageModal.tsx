@@ -11,6 +11,8 @@ import TextArea from '@/Input/TextArea';
 import Markdown from '@/Markdown';
 import Modal from '@/Modal';
 import { useStyles as useTextStyles } from '@/chat/MessageInput/style';
+import messageModalMessages from '@/i18n/resources/en/messageModal';
+import { useTranslation } from '@/i18n/useTranslation';
 
 import type { MessageModalProps } from './type';
 
@@ -32,6 +34,7 @@ const MessageModal = memo<MessageModalProps>(
   }) => {
     const { mobile } = useResponsive();
     const { styles: textStyles } = useTextStyles();
+    const { t } = useTranslation(messageModalMessages);
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,
       value: editing,
@@ -44,6 +47,10 @@ const MessageModal = memo<MessageModalProps>(
 
     const [temporaryValue, setMessage] = useState(value);
 
+    const confirmText = text?.confirm ?? t('messageModal.confirm');
+    const cancelText = text?.cancel ?? t('messageModal.cancel');
+    const editText = text?.edit ?? t('messageModal.edit');
+
     const modalFooter = isEdit ? (
       <Flexbox direction={'horizontal-reverse'} gap={8}>
         <Button
@@ -54,7 +61,7 @@ const MessageModal = memo<MessageModalProps>(
           }}
           type="primary"
         >
-          {text?.confirm || 'Confirm'}
+          {confirmText}
         </Button>
         <Button
           onClick={() => {
@@ -62,7 +69,7 @@ const MessageModal = memo<MessageModalProps>(
             setMessage(value);
           }}
         >
-          {text?.cancel || 'Cancel'}
+          {cancelText}
         </Button>
       </Flexbox>
     ) : (
@@ -72,11 +79,11 @@ const MessageModal = memo<MessageModalProps>(
     return (
       <Modal
         allowFullscreen
-        cancelText={text?.cancel || 'Cancel'}
+        cancelText={cancelText}
         destroyOnHidden
         footer={modalFooter}
         height={height}
-        okText={text?.edit || 'Edit'}
+        okText={editText}
         onCancel={() => {
           setShowModal(false);
           setTyping(false);

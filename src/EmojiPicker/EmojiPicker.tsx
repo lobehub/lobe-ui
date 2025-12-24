@@ -14,6 +14,8 @@ import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Tabs, { TabsProps } from '@/Tabs';
 import Tooltip from '@/Tooltip';
+import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
+import { useTranslation } from '@/i18n/useTranslation';
 
 import AvatarUploader from './AvatarUploader';
 import { useStyles } from './style';
@@ -48,6 +50,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
     ...rest
   }) => {
     const ref = useRef<HTMLDivElement>(null);
+    const { t } = useTranslation(emojiPickerMessages);
     const [visible, setVisible] = useMergeState(defaultOpen, {
       defaultValue: defaultOpen,
       onChange: onOpenChange,
@@ -74,11 +77,15 @@ const EmojiPicker = memo<EmojiPickerProps>(
       setVisible(false);
     };
 
+    const emojiText = texts?.emoji ?? t('emojiPicker.emoji');
+    const uploadText = texts?.upload ?? t('emojiPicker.upload');
+    const deleteText = texts?.delete ?? t('emojiPicker.delete');
+
     const items: TabsProps['items'] = [
       {
         key: 'emoji',
         label: (
-          <Tooltip title={texts?.emoji || 'Emoji'}>
+          <Tooltip title={emojiText}>
             <Icon icon={SmileIcon} size={{ size: 20, strokeWidth: 2.5 }} />
           </Tooltip>
         ),
@@ -86,7 +93,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
       allowUpload && {
         key: 'upload',
         label: (
-          <Tooltip title={texts?.upload || 'Upload'}>
+          <Tooltip title={uploadText}>
             <Icon icon={UploadIcon} size={{ size: 20, strokeWidth: 2.5 }} />
           </Tooltip>
         ),
@@ -128,7 +135,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
                   blockSize: 32,
                   size: 18,
                 }}
-                title={texts?.delete || 'Delete'}
+                title={deleteText}
               />
             )}
           </Flexbox>

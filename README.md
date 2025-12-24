@@ -39,6 +39,7 @@ Lobe UI is an open-source UI component library for building _AIGC_ web apps
 - [📦 Installation](#-installation)
   - [Compile with NextJS](#compile-with-nextjs)
 - [🤯 Usage](#-usage)
+  - [I18n](#i18n)
 - [⌨️ Local Development](#️-local-development)
 - [🤝 Contributing](#-contributing)
 - [🩷 Sponsor](#-sponsor)
@@ -99,6 +100,20 @@ export default () => (
     <Button>Hello AIGC</Button>
   </ThemeProvider>
 )
+```
+
+### I18n
+
+Use the i18n provider with resource bundles. Component `texts` props always take priority.
+
+```tsx
+import { I18nProvider } from '@lobehub/ui';
+import formMessages from '@lobehub/ui/i18n/resources/form';
+import hotkeyMessages from '@lobehub/ui/i18n/resources/hotkey';
+
+<I18nProvider resources={[formMessages, hotkeyMessages]}>
+  <App />
+</I18nProvider>;
 ```
 
 <div align="right">
