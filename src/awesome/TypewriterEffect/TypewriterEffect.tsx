@@ -1,7 +1,8 @@
 'use client';
 
-import { motion } from 'motion/react';
-import { createElement, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { createElement, memo, use, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+import { MotionComponent } from '@/MotionProvider';
 
 import { useStyles } from './style';
 import type { TypewriterEffectProps } from './type';
@@ -34,6 +35,7 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
     segmentMode = 'grapheme',
     ...props
   }: TypewriterEffectProps) => {
+    const Motion = use(MotionComponent);
     const { styles, cx } = useStyles();
     const [displayedText, setDisplayedText] = useState('');
     const [currentCharIndex, setCurrentCharIndex] = useState(0);
@@ -242,7 +244,7 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
       <>
         <span className={styles.text} style={textColor ? { color: textColor } : undefined}>
           {characters.map((char, index) => (
-            <motion.span
+            <Motion.span
               animate={{ opacity: 1 }}
               initial={{ opacity: 0 }}
               key={`${currentTextIndex}-${index}`}
@@ -253,12 +255,12 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
               }}
             >
               {char === ' ' ? '\u00A0' : char}
-            </motion.span>
+            </Motion.span>
           ))}
         </span>
         {showCursor &&
           (cursorFade ? (
-            <motion.span
+            <Motion.span
               animate={{ opacity: shouldHideCursor ? 0 : 1 }}
               className={cx(getCursorStyle(), cursorClassName)}
               initial={{ opacity: 0 }}
@@ -271,7 +273,7 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
               }}
             >
               {cursorCharacter}
-            </motion.span>
+            </Motion.span>
           ) : (
             <span
               className={cx(getCursorStyle(), cursorClassName)}

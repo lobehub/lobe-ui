@@ -2,6 +2,7 @@
 
 import { ElementType, ReactNode, createContext, memo, use, useMemo } from 'react';
 
+import { MotionComponent, type MotionComponentType } from '@/MotionProvider';
 import type { I18nContextValue, TranslationKey, TranslationResources } from '@/i18n/types';
 import { CDN, CdnApi, genCdnUrl } from '@/utils/genCdnUrl';
 
@@ -23,30 +24,39 @@ const I18nContextInternal = createContext<I18nContextValue>({
 
 export interface ConfigProviderProps {
   children: ReactNode;
-  config: Config;
+  config?: Config;
   // i18n props - flattened at top level
   locale?: string;
+  motion?: MotionComponentType;
   resources?: TranslationResources[] | Record<string, TranslationResources>;
 }
 
-const ConfigProvider = memo<ConfigProviderProps>(({ children, config, locale, resources }) => {
-  const i18nValue = useMemo((): I18nContextValue => {
-    const currentLocale = locale || 'en';
-    const currentResources = resources || [];
-    const resourceList = Array.isArray(currentResources)
-      ? currentResources
-      : Object.values(currentResources);
-    const mergedResources = Object.assign({}, ...resourceList);
-    const t = (key: TranslationKey): string => mergedResources[key] || key;
-    return { locale: currentLocale, t };
-  }, [locale, resources]);
+const ConfigProvider = memo<ConfigProviderProps>(
+  ({ children, config, locale, resources, motion }) => {
+    const i18nValue = useMemo((): I18nContextValue => {
+      const currentLocale = locale || 'en';
+      const currentResources = resources || [];
+      const resourceList = Array.isArray(currentResources)
+        ? currentResources
+        : Object.values(currentResources);
+      const mergedResources = Object.assign({}, ...resourceList);
+      const t = (key: TranslationKey): string => mergedResources[key] || key;
+      return { locale: currentLocale, t };
+    }, [locale, resources]);
 
-  return (
-    <I18nContextInternal value={i18nValue}>
-      <ConfigContext value={config}>{children}</ConfigContext>
-    </I18nContextInternal>
-  );
-});
+    const content = motion ? (
+      <MotionComponent value={motion}>{children}</MotionComponent>
+    ) : (
+      children
+    );
+
+    return (
+      <I18nContextInternal value={i18nValue}>
+        <ConfigContext value={config ?? null}>{content}</ConfigContext>
+      </I18nContextInternal>
+    );
+  },
+);
 
 // useCdnFn
 export type CdnFn = ({ pkg, version, path }: CdnApi) => string;
