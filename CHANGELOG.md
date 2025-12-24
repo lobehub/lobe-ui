@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.1.1](https://github.com/lobehub/lobe-ui/compare/v4.1.0...v4.1.1)
+
+<sup>Released on **2025-12-24**</sup>
+
+#### 🐛 Bug Fixes
+
+- **motion**: Refactor MotionProvider to use hook pattern and improve type support.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **motion**: Refactor MotionProvider to use hook pattern and improve type support, closes [#428](https://github.com/lobehub/lobe-ui/issues/428) ([84e1ff8](https://github.com/lobehub/lobe-ui/commit/84e1ff8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.1.0](https://github.com/lobehub/lobe-ui/compare/v4.0.0...v4.1.0)
 
 <sup>Released on **2025-12-24**</sup>
