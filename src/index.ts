@@ -154,7 +154,9 @@ export {
   type SyntaxMermaidProps,
 } from './Mermaid';
 export { default as Modal, type ModalProps } from './Modal';
-export { I18nProvider, type I18nProviderProps,LobeUIProvider, useTranslation } from './Provider';
+export type { MotionComponentType } from './MotionProvider';
+export { MotionComponent, MotionProvider, useMotionComponent } from './MotionProvider';
+export { I18nProvider, type I18nProviderProps, LobeUIProvider, useTranslation } from './Provider';
 export { default as ScrollShadow, type ScrollShadowProps } from './ScrollShadow';
 export { default as SearchBar, type SearchBarProps } from './SearchBar';
 export { default as Segmented, type SegmentedProps } from './Segmented';

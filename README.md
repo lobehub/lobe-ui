@@ -40,6 +40,7 @@ Lobe UI is an open-source UI component library for building _AIGC_ web apps
   - [Compile with NextJS](#compile-with-nextjs)
 - [🤯 Usage](#-usage)
   - [I18n](#i18n)
+  - [ConfigProvider (Motion)](#configprovider-motion)
 - [⌨️ Local Development](#️-local-development)
 - [🤝 Contributing](#-contributing)
 - [🩷 Sponsor](#-sponsor)
@@ -114,6 +115,38 @@ import hotkeyMessages from '@lobehub/ui/i18n/resources/hotkey';
 <I18nProvider resources={[formMessages, hotkeyMessages]}>
   <App />
 </I18nProvider>;
+```
+
+### ConfigProvider (Motion)
+
+You must pass a motion component via `ConfigProvider` (or `ThemeProvider`).
+If your app uses `LazyMotion`, pass `m`:
+
+```tsx
+import { ConfigProvider } from '@lobehub/ui';
+import { motion } from 'motion/react';
+
+export default () => (
+  <ConfigProvider motion={motion}>
+    <App />
+  </ConfigProvider>
+);
+```
+
+If your app uses `LazyMotion`:
+
+```tsx
+import { ConfigProvider } from '@lobehub/ui';
+import { LazyMotion, domAnimation } from 'motion/react';
+import * as m from 'motion/react-m';
+
+export default () => (
+  <LazyMotion features={domAnimation}>
+    <ConfigProvider motion={m}>
+      <App />
+    </ConfigProvider>
+  </LazyMotion>
+);
 ```
 
 <div align="right">

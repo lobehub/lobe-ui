@@ -1,6 +1,7 @@
 import { Button, useTranslation } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { Card, Space } from 'antd';
+import { motion } from 'motion/react';
 import { useState } from 'react';
 
 import ConfigProvider from '@/ConfigProvider';
@@ -113,12 +114,17 @@ export default () => {
         <ConfigProvider
           config={{ proxy: 'aliyun' }}
           locale={locale}
+          motion={motion}
           resources={locale === 'en' ? enResources : zhCnResources}
         >
           <LocaleContent />
         </ConfigProvider>
       ) : (
-        <I18nProvider locale={locale} resources={locale === 'en' ? enResources : zhCnResources}>
+        <I18nProvider
+          locale={locale}
+          motion={motion}
+          resources={locale === 'en' ? enResources : zhCnResources}
+        >
           <LocaleContent />
         </I18nProvider>
       )}

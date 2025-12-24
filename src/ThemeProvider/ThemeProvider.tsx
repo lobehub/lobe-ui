@@ -10,17 +10,17 @@ import {
 import { merge } from 'lodash-es';
 import { memo, useCallback, useMemo } from 'react';
 
-import { useCdnFn } from '@/ConfigProvider';
+import LobeConfigProvider, { useCdnFn } from '@/ConfigProvider';
 import FontLoader from '@/FontLoader';
 import { lobeCustomStylish, lobeCustomToken } from '@/styles';
 import { createLobeAntdTheme } from '@/styles/theme/antdTheme';
 import { LobeCustomToken } from '@/types/customToken';
 
-import ConfigProvider from './ConfigProvider';
+import AntdConfigProvider from './ConfigProvider';
 import GlobalStyle from './GlobalStyle';
 import type { ThemeProviderProps } from './type';
 
-const ThemeProvider = memo<ThemeProviderProps>(
+const ThemeProviderInner = memo<Omit<ThemeProviderProps, 'config' | 'motion'>>(
   ({
     children,
     customStylish,
@@ -86,17 +86,25 @@ const ThemeProvider = memo<ThemeProviderProps>(
           theme={theme}
           {...rest}
         >
-          <ConfigProvider>
+          <AntdConfigProvider>
             {enableGlobalStyle && <GlobalStyle />}
             <App className={className} style={{ minHeight: 'inherit', width: 'inherit', ...style }}>
               {children}
             </App>
-          </ConfigProvider>
+          </AntdConfigProvider>
         </AntdThemeProvider>
       </>
     );
   },
 );
+
+const ThemeProvider = memo<ThemeProviderProps>(({ config, motion, ...rest }) => {
+  return (
+    <LobeConfigProvider config={config} motion={motion}>
+      <ThemeProviderInner {...rest} />
+    </LobeConfigProvider>
+  );
+});
 
 ThemeProvider.displayName = 'LobeThemeProvider';
 
