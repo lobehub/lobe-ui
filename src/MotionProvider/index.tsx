@@ -1,8 +1,9 @@
 'use client';
 
-import { type Context, type ReactNode, createContext, memo, useContext } from 'react';
+import type * as m from 'motion/react-m';
+import { type Context, type ReactNode, createContext, memo, use } from 'react';
 
-export type MotionComponentType = typeof import('motion/react').motion;
+export type MotionComponentType = typeof import('motion/react').motion | typeof m;
 
 export const MotionComponent: Context<MotionComponentType> = createContext<MotionComponentType>(
   null!,
@@ -15,7 +16,7 @@ export const MotionProvider = memo<{ children: ReactNode; motion: MotionComponen
 );
 
 export const useMotionComponent = (): MotionComponentType => {
-  const context = useContext(MotionComponent);
+  const context = use(MotionComponent);
   if (!context) {
     throw new Error(
       'Please wrap your app with <ConfigProvider> (or <MotionProvider>) and pass the motion component',

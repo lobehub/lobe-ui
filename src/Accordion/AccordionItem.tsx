@@ -1,10 +1,10 @@
 'use client';
 
-import { KeyboardEvent, memo, use, useCallback, useMemo } from 'react';
+import { KeyboardEvent, memo, useCallback, useMemo } from 'react';
 
 import Block from '@/Block';
 import { Flexbox } from '@/Flex';
-import { MotionComponent } from '@/MotionProvider';
+import { useMotionComponent } from '@/MotionProvider';
 import Text from '@/Text';
 
 import ArrowIcon from './ArrowIcon';
@@ -147,7 +147,7 @@ const AccordionItem = memo<AccordionItemProps>(
       [isOpen, contextMotionProps],
     );
 
-    const m = use(MotionComponent);
+    const Motion = useMotionComponent();
 
     // Render content
     const contentElement = useMemo(() => {
@@ -181,7 +181,7 @@ const AccordionItem = memo<AccordionItemProps>(
       }
 
       return (
-        <m.div {...motionProps} style={{ overflow: 'hidden' }}>
+        <Motion.div {...motionProps} style={{ overflow: 'hidden' }}>
           <div
             className={cx('accordion-content', styles.content, classNames?.content)}
             role="region"
@@ -189,7 +189,7 @@ const AccordionItem = memo<AccordionItemProps>(
           >
             <div className={styles.contentInner}>{children}</div>
           </div>
-        </m.div>
+        </Motion.div>
       );
     }, [
       disableAnimation,

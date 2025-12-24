@@ -7,7 +7,7 @@ description: MotionProvider lets you choose which motion component (motion or m)
 
 `MotionProvider` has been **merged into** `ConfigProvider`. In most cases you don't need to use `MotionProvider` directly anymore.
 
-- You must pass a motion component via `ConfigProvider` (or `ThemeProvider`).
+- You must pass a motion component via `ConfigProvider`.
 - If your app uses `LazyMotion`, pass `m` to `ConfigProvider`.
 
 ## Default (motion)
