@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [Version 4.0.0](https://github.com/lobehub/lobe-ui/compare/v3.4.6...v4.0.0)
+
+<sup>Released on **2025-12-24**</sup>
+
+#### ✨ Features
+
+- **misc**: Add MotionProvider and update components to use Motion for animations.
+
+#### 🐛 Bug Fixes
+
+- **config**: Update i18n resource import path in tsdown.config.ts.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add MotionProvider and update components to use Motion for animations, closes [#423](https://github.com/lobehub/lobe-ui/issues/423) ([ff10723](https://github.com/lobehub/lobe-ui/commit/ff10723))
+
+#### What's fixed
+
+- **config**: Update i18n resource import path in tsdown.config.ts ([a31f781](https://github.com/lobehub/lobe-ui/commit/a31f781))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 3.4.6](https://github.com/lobehub/lobe-ui/compare/v3.4.5...v3.4.6)
 
 <sup>Released on **2025-12-23**</sup>
