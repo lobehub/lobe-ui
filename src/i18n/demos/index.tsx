@@ -3,10 +3,11 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { Card, Space } from 'antd';
 import { useState } from 'react';
 
-import { I18nProvider } from '../context';
-import * as enResources from '../resources/en';
-import commonMessages from '../resources/en/common';
-import * as zhCnResources from '../resources/zhCn';
+import ConfigProvider from '@/ConfigProvider';
+import { I18nProvider } from '@/i18n';
+import * as enResources from '@/i18n/resources/en';
+import commonMessages from '@/i18n/resources/en/common';
+import * as zhCnResources from '@/i18n/resources/zhCn';
 
 const LocaleContent = () => {
   const { t } = useTranslation(commonMessages);
@@ -78,11 +79,16 @@ export default () => {
         options: ['en', 'zhCn'],
         value: 'en',
       },
+      useConfigProvider: {
+        label: 'Use ConfigProvider',
+        value: false,
+      },
     },
     { store },
   );
 
   const [locale, setLocale] = useState(control.locale);
+  const { useConfigProvider } = control;
 
   return (
     <StoryBook levaStore={store}>
@@ -103,9 +109,19 @@ export default () => {
         </Space>
       </Card>
 
-      <I18nProvider locale={locale} resources={locale === 'en' ? enResources : zhCnResources}>
-        <LocaleContent />
-      </I18nProvider>
+      {useConfigProvider ? (
+        <ConfigProvider
+          config={{ proxy: 'aliyun' }}
+          locale={locale}
+          resources={locale === 'en' ? enResources : zhCnResources}
+        >
+          <LocaleContent />
+        </ConfigProvider>
+      ) : (
+        <I18nProvider locale={locale} resources={locale === 'en' ? enResources : zhCnResources}>
+          <LocaleContent />
+        </I18nProvider>
+      )}
     </StoryBook>
   );
 };

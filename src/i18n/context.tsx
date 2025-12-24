@@ -1,7 +1,8 @@
-import { createContext, useCallback, useContext, useMemo } from 'react';
-import type { ReactNode } from 'react';
+import { type ReactNode, memo } from 'react';
 
-import type { I18nContextValue, TranslationKey, TranslationResources } from './types';
+import ConfigProvider from '@/ConfigProvider';
+
+import type { TranslationResources } from './types';
 
 export interface I18nProviderProps {
   children: ReactNode;
@@ -9,27 +10,20 @@ export interface I18nProviderProps {
   resources?: TranslationResources[] | Record<string, TranslationResources>;
 }
 
-const defaultValue: I18nContextValue = {
-  locale: 'en',
-  t: (key: TranslationKey) => key,
-};
+// Re-export for backward compatibility
+export { I18nContext } from '@/ConfigProvider';
 
-const I18nContext = createContext<I18nContextValue>(defaultValue);
-
-export const I18nProvider = ({ children, resources = [], locale = 'en' }: I18nProviderProps) => {
-  const mergedResources = useMemo(() => {
-    const resourceList = Array.isArray(resources) ? resources : Object.values(resources);
-    return Object.assign({}, ...resourceList);
-  }, [resources]);
-
-  const t = useCallback(
-    (key: TranslationKey): string => mergedResources[key] || key,
-    [mergedResources],
+// I18nProvider delegates to ConfigProvider with flattened i18n props
+export const I18nProvider = memo<I18nProviderProps>(({ children, locale, resources }) => {
+  return (
+    <ConfigProvider config={{}} locale={locale} resources={resources}>
+      {children}
+    </ConfigProvider>
   );
+});
 
-  const value = useMemo(() => ({ locale, t }), [locale, t]);
+// Internal useI18n - for useTranslation only, not exported publicly
+export { useI18n } from '@/ConfigProvider';
 
-  return <I18nContext value={value}>{children}</I18nContext>;
-};
-
-export const useI18n = () => useContext(I18nContext);
+// Re-export types
+export type { I18nContextValue, TranslationKey, TranslationResources } from './types';
