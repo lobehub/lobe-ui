@@ -40,6 +40,16 @@ If your app uses `LazyMotion`, pass `m`:
 import { ConfigProvider } from '@lobehub/ui';
 import { motion } from 'motion/react';
 
+const App = () => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+  >
+    Your App Content
+  </motion.div>
+);
+
 export default () => (
   <ConfigProvider motion={motion}>
     <App />
@@ -53,6 +63,16 @@ If your app uses [`LazyMotion`](https://motion.dev/docs/react-lazy-motion):
 import { ConfigProvider } from '@lobehub/ui';
 import { LazyMotion, domAnimation } from 'motion/react';
 import * as m from 'motion/react-m';
+
+const App = () => (
+  <m.div
+    initial={{ opacity: 0, scale: 0.8 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.3 }}
+  >
+    Your App Content
+  </m.div>
+);
 
 export default () => (
   <LazyMotion features={domAnimation}>
