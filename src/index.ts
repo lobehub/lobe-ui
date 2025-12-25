@@ -18,6 +18,7 @@ export { default as Avatar, AvatarGroup, type AvatarGroupProps, type AvatarProps
 export { default as Block, type BlockProps } from './Block';
 export { default as Burger, type BurgerProps } from './Burger';
 export { default as Button, type ButtonProps } from './Button';
+export { default as Checkbox, type CheckboxProps } from './Checkbox';
 export { default as CodeEditor, type CodeEditorProps } from './CodeEditor';
 export { default as Collapse, type CollapseItemType, type CollapseProps } from './Collapse';
 export { default as ColorSwatches, type ColorSwatchesProps } from './ColorSwatches';
