@@ -66,7 +66,7 @@ export interface AccordionItemProps extends Pick<
 }
 
 export interface AccordionProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>, Pick<BlockProps, 'variant'> {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>, Pick<BlockProps, 'variant' | 'ref'> {
   /**
    * Whether only one item can be expanded at a time
    * @default false
