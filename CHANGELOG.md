@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.1.6](https://github.com/lobehub/lobe-ui/compare/v4.1.5...v4.1.6)
+
+<sup>Released on **2025-12-25**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix export.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix export ([aad40d5](https://github.com/lobehub/lobe-ui/commit/aad40d5))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.1.5](https://github.com/lobehub/lobe-ui/compare/v4.1.4...v4.1.5)
 
 <sup>Released on **2025-12-25**</sup>
