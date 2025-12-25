@@ -17,9 +17,5 @@ interface AccordionContextValue {
 export const AccordionContext = createContext<AccordionContextValue | null>(null);
 
 export const useAccordionContext = () => {
-  const context = useContext(AccordionContext);
-  if (!context) {
-    throw new Error('AccordionItem must be used within Accordion');
-  }
-  return context;
+  return useContext(AccordionContext);
 };
