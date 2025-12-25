@@ -13,6 +13,7 @@ export {
   type GridShowcaseProps,
 } from './GridBackground';
 export { default as Hero, type HeroAction, type HeroProps } from './Hero';
+export { default as Spline, type SplineProps } from './Spline';
 export { default as Spotlight, type SpotlightProps } from './Spotlight';
 export { default as SpotlightCard, type SpotlightCardProps } from './SpotlightCard';
 export {
