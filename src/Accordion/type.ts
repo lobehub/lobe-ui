@@ -11,6 +11,11 @@ export interface AccordionItemProps extends Pick<
    */
   action?: ReactNode;
   /**
+   * Whether to allow expanding (hide indicator when false)
+   * @default true
+   */
+  allowExpand?: boolean;
+  /**
    * Content of the accordion item
    */
   children?: ReactNode;
@@ -26,9 +31,17 @@ export interface AccordionItemProps extends Pick<
     title?: string;
   };
   /**
+   * Default expanded state (uncontrolled)
+   */
+  defaultExpand?: boolean;
+  /**
    * Whether the item is disabled
    */
   disabled?: boolean;
+  /**
+   * Controlled expanded state
+   */
+  expand?: boolean;
   headerWrapper?: (header: ReactNode) => ReactNode;
   /**
    * Whether to hide the chevron indicator
@@ -48,6 +61,10 @@ export interface AccordionItemProps extends Pick<
    * Unique identifier for the item (use as React key)
    */
   itemKey: Key;
+  /**
+   * Callback when expanded state changes
+   */
+  onExpandChange?: (expanded: boolean) => void;
   /**
    * Custom styles for child elements
    */

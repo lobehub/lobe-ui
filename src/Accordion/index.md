@@ -14,6 +14,12 @@ Accordion is a vertically stacked set of interactive headings that each contain 
 
 <code src="./demos/data.tsx" ></code>
 
+## Standalone Item
+
+AccordionItem can be used independently without wrapping in an Accordion component. It supports both controlled and uncontrolled modes.
+
+<code src="./demos/Standalone.tsx" ></code>
+
 ## APIs
 
 ### Accordion Props
@@ -48,6 +54,9 @@ Accordion is a vertically stacked set of interactive headings that each contain 
 | hideIndicator      | Whether to hide the indicator             | `boolean`                                                                        | `false`   |
 | indicator          | Custom indicator component or function    | `ReactNode \| ((props: { isOpen: boolean; isDisabled?: boolean }) => ReactNode)` | -         |
 | indicatorPlacement | Indicator placement                       | `'start' \| 'end'`                                                               | `'start'` |
+| defaultExpand      | Default expanded state (uncontrolled)     | `boolean`                                                                        | -         |
+| expand             | Controlled expanded state                 | `boolean`                                                                        | -         |
+| onExpandChange     | Callback when expanded state changes      | `(expanded: boolean) => void`                                                    | -         |
 | classNames         | Custom classNames for child elements      | See below                                                                        | -         |
 | styles             | Custom styles for child elements          | See below                                                                        | -         |
 
@@ -72,6 +81,16 @@ Accordion is a vertically stacked set of interactive headings that each contain 
 | action    | Action container styles    | `CSSProperties` |
 | indicator | Indicator container styles | `CSSProperties` |
 | content   | Content container styles   | `CSSProperties` |
+
+## Standalone Usage
+
+`AccordionItem` can be used independently without wrapping in an `Accordion` component. When used standalone, you can control its expanded state using:
+
+- `defaultExpand`: Set the initial expanded state (uncontrolled mode)
+- `expand`: Control the expanded state externally (controlled mode)
+- `onExpandChange`: Callback fired when the expanded state changes
+
+When `expand` or `defaultExpand` props are provided, the item will manage its own state independently. Otherwise, it will use the context from the parent `Accordion` component.
 
 ## Animation
 
