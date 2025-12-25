@@ -1,6 +1,6 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
+import clsx from 'clsx';
 import { MoreHorizontal } from 'lucide-react';
 import { type FC, useMemo } from 'react';
 
@@ -8,7 +8,6 @@ import ActionIcon from '@/ActionIcon';
 import Dropdown from '@/Dropdown';
 import { Center } from '@/Flex';
 
-import { useStyles } from './style';
 import type { ActionIconGroupProps } from './type';
 
 const ActionIconGroup: FC<ActionIconGroupProps> = ({
@@ -26,40 +25,15 @@ const ActionIconGroup: FC<ActionIconGroupProps> = ({
   ref,
   ...rest
 }) => {
-  const { cx, styles } = useStyles();
-
-  const variants = useMemo(
-    () =>
-      cva(styles.root, {
-        defaultVariants: {
-          disabled: false,
-          glass: false,
-          shadow: false,
-          variant: 'outlined',
-        },
-        /* eslint-disable sort-keys-fix/sort-keys-fix */
-        variants: {
-          variant: {
-            filled: styles.filled,
-            outlined: styles.outlined,
-            borderless: styles.borderless,
-          },
-          glass: {
-            false: null,
-            true: styles.glass,
-          },
-          shadow: {
-            false: null,
-            true: styles.shadow,
-          },
-          disabled: {
-            false: null,
-            true: styles.disabled,
-          },
-        },
-        /* eslint-enable sort-keys-fix/sort-keys-fix */
-      }),
-    [styles],
+  const rootClassName = clsx(
+    'lobe-action-icon-group',
+    variant === 'filled' && 'lobe-action-icon-group--filled',
+    variant === 'outlined' && 'lobe-action-icon-group--outlined',
+    variant === 'borderless' && 'lobe-action-icon-group--borderless',
+    disabled && 'lobe-action-icon-group--disabled',
+    glass && 'lobe-action-icon-group--glass',
+    shadow && 'lobe-action-icon-group--shadow',
+    className,
   );
 
   const tooltipPlacement = useMemo(
@@ -68,13 +42,7 @@ const ActionIconGroup: FC<ActionIconGroupProps> = ({
   );
 
   return (
-    <Center
-      className={cx(variants({ disabled, glass, shadow, variant }), className)}
-      horizontal={horizontal}
-      padding={2}
-      ref={ref}
-      {...rest}
-    >
+    <Center className={rootClassName} horizontal={horizontal} padding={2} ref={ref} {...rest}>
       {items?.length > 0 &&
         items.map((item) => {
           const { icon, key, label, onClick, danger, loading, ...itemRest } = item;

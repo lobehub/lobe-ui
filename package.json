@@ -1,5 +1,5 @@
 {
-  "name": "@lobehub/ui",
+  "name": "@innei/lobe-ui",
   "version": "4.1.9",
   "description": "Lobe UI is an open-source UI component library for building AIGC web apps",
   "keywords": [
@@ -143,6 +143,7 @@
     "antd-style": "^4.0.0",
     "chroma-js": "^3.2.0",
     "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "dayjs": "^1.11.19",
     "emoji-mart": "^5.6.0",
     "es-toolkit": "^1.32.0",
@@ -248,7 +249,6 @@
   },
   "publishConfig": {
     "access": "public",
-    "provenance": true,
     "registry": "https://registry.npmjs.org"
   }
 }
