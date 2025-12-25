@@ -1,16 +1,176 @@
 'use client';
 
-import { KeyboardEvent, memo, useCallback, useMemo } from 'react';
+import { AnimatePresence } from 'motion/react';
+import type { CSSProperties, ComponentPropsWithoutRef, ReactNode } from 'react';
+import { KeyboardEvent, memo, useCallback, useEffect, useMemo, useRef } from 'react';
 
 import Block from '@/Block';
 import { Flexbox } from '@/Flex';
-import { useMotionComponent } from '@/MotionProvider';
+import { type MotionComponentType, useMotionComponent } from '@/MotionProvider';
 import Text from '@/Text';
 
 import ArrowIcon from './ArrowIcon';
 import { useAccordionContext } from './context';
 import { useStyles } from './style';
 import type { AccordionItemProps } from './type';
+
+type AccordionContentBaseProps = {
+  children?: ReactNode;
+  className?: string;
+  contentInnerClassName: string;
+  style?: CSSProperties;
+};
+
+type AccordionStaticContentProps = AccordionContentBaseProps & {
+  isOpen: boolean;
+  keepContentMounted: boolean;
+};
+
+type MotionDivProps = ComponentPropsWithoutRef<MotionComponentType['div']>;
+
+type AccordionMotionContentProps = AccordionContentBaseProps & {
+  contextMotionProps?: MotionDivProps;
+  isOpen: boolean;
+  skipInitialAnimation: boolean;
+};
+
+type AccordionItemContentProps = AccordionContentBaseProps & {
+  contextMotionProps?: MotionDivProps;
+  disableAnimation: boolean;
+  isOpen: boolean;
+  keepContentMounted: boolean;
+  skipInitialAnimation: boolean;
+};
+
+const motionContainerStyle: CSSProperties = { overflow: 'hidden' };
+
+const AccordionStaticContent = memo<AccordionStaticContentProps>(
+  ({ className, style, children, contentInnerClassName, isOpen, keepContentMounted }) => {
+    if (keepContentMounted) {
+      return (
+        <div
+          className={className}
+          role="region"
+          style={{
+            display: isOpen ? 'block' : 'none',
+            ...style,
+          }}
+        >
+          <div className={contentInnerClassName}>{children}</div>
+        </div>
+      );
+    }
+
+    if (!isOpen) return null;
+
+    return (
+      <div className={className} role="region" style={style}>
+        <div className={contentInnerClassName}>{children}</div>
+      </div>
+    );
+  },
+);
+
+AccordionStaticContent.displayName = 'AccordionStaticContent';
+
+const AccordionMotionContent = memo<AccordionMotionContentProps>(
+  ({
+    contextMotionProps,
+    className,
+    style,
+    children,
+    contentInnerClassName,
+    isOpen,
+    skipInitialAnimation,
+  }) => {
+    const Motion = useMotionComponent();
+
+    const motionProps = useMemo(
+      () => ({
+        animate: 'enter',
+        exit: 'exit',
+        initial: skipInitialAnimation ? false : 'exit',
+        variants: {
+          enter: {
+            height: 'auto',
+            opacity: 1,
+            transition: {
+              duration: 0.2,
+              ease: [0.4, 0, 0.2, 1],
+            },
+          },
+          exit: {
+            height: 0,
+            opacity: 0,
+            transition: {
+              duration: 0.2,
+              ease: [0.4, 0, 0.2, 1],
+            },
+          },
+        },
+        ...contextMotionProps,
+      }),
+      [contextMotionProps, skipInitialAnimation],
+    );
+
+    return (
+      <AnimatePresence initial={false}>
+        {isOpen ? (
+          <Motion.div {...(motionProps as any)} style={motionContainerStyle}>
+            <div className={className} role="region" style={style}>
+              <div className={contentInnerClassName}>{children}</div>
+            </div>
+          </Motion.div>
+        ) : null}
+      </AnimatePresence>
+    );
+  },
+);
+
+AccordionMotionContent.displayName = 'AccordionMotionContent';
+
+const AccordionItemContent = memo<AccordionItemContentProps>(
+  ({
+    disableAnimation,
+    isOpen,
+    keepContentMounted,
+    className,
+    style,
+    children,
+    contentInnerClassName,
+    contextMotionProps,
+    skipInitialAnimation,
+  }) => {
+    if (disableAnimation || !keepContentMounted) {
+      return (
+        <AccordionStaticContent
+          className={className}
+          contentInnerClassName={contentInnerClassName}
+          isOpen={isOpen}
+          keepContentMounted={keepContentMounted}
+          style={style}
+        >
+          {children}
+        </AccordionStaticContent>
+      );
+    }
+
+    return (
+      <AccordionMotionContent
+        className={className}
+        contentInnerClassName={contentInnerClassName}
+        contextMotionProps={contextMotionProps}
+        isOpen={isOpen}
+        skipInitialAnimation={skipInitialAnimation}
+        style={style}
+      >
+        {children}
+      </AccordionMotionContent>
+    );
+  },
+);
+
+AccordionItemContent.displayName = 'AccordionItemContent';
 
 const AccordionItem = memo<AccordionItemProps>(
   ({
@@ -44,6 +204,12 @@ const AccordionItem = memo<AccordionItemProps>(
       motionProps: contextMotionProps,
       variant = 'filled',
     } = context;
+
+    const isInitialRenderRef = useRef(true);
+
+    useEffect(() => {
+      isInitialRenderRef.current = false;
+    }, []);
 
     const isOpen = isExpanded(itemKey);
     const hideIndicatorFinal = itemHideIndicator ?? contextHideIndicator ?? false;
@@ -118,90 +284,12 @@ const AccordionItem = memo<AccordionItemProps>(
       customStyles,
     ]);
 
-    // Animation variants
-    const motionProps = useMemo(
-      () => ({
-        animate: isOpen ? 'enter' : 'exit',
-        exit: 'exit',
-        initial: false,
-        variants: {
-          enter: {
-            height: 'auto',
-            opacity: 1,
-            transition: {
-              duration: 0.2,
-              ease: [0.4, 0, 0.2, 1],
-            },
-          },
-          exit: {
-            height: 0,
-            opacity: 0,
-            transition: {
-              duration: 0.2,
-              ease: [0.4, 0, 0.2, 1],
-            },
-          },
-        },
-        ...contextMotionProps,
-      }),
-      [isOpen, contextMotionProps],
+    const skipInitialAnimation = isInitialRenderRef.current && isOpen;
+
+    const contentClassName = useMemo(
+      () => cx('accordion-content', styles.content, classNames?.content),
+      [cx, styles, classNames?.content],
     );
-
-    const Motion = useMotionComponent();
-
-    // Render content
-    const contentElement = useMemo(() => {
-      if (disableAnimation || !keepContentMounted) {
-        if (keepContentMounted) {
-          return (
-            <div
-              className={cx('accordion-content', styles.content, classNames?.content)}
-              role="region"
-              style={{
-                display: isOpen ? 'block' : 'none',
-                ...customStyles?.content,
-              }}
-            >
-              <div className={styles.contentInner}>{children}</div>
-            </div>
-          );
-        }
-
-        return (
-          isOpen && (
-            <div
-              className={cx('accordion-content', styles.content, classNames?.content)}
-              role="region"
-              style={customStyles?.content}
-            >
-              <div className={styles.contentInner}>{children}</div>
-            </div>
-          )
-        );
-      }
-
-      return (
-        <Motion.div {...motionProps} style={{ overflow: 'hidden' }}>
-          <div
-            className={cx('accordion-content', styles.content, classNames?.content)}
-            role="region"
-            style={customStyles?.content}
-          >
-            <div className={styles.contentInner}>{children}</div>
-          </div>
-        </Motion.div>
-      );
-    }, [
-      disableAnimation,
-      keepContentMounted,
-      isOpen,
-      cx,
-      styles,
-      classNames,
-      customStyles,
-      children,
-      motionProps,
-    ]);
 
     const titleNode = useMemo(
       () =>
@@ -326,7 +414,18 @@ const AccordionItem = memo<AccordionItemProps>(
         style={customStyles?.base}
       >
         {headerElement}
-        {contentElement}
+        <AccordionItemContent
+          className={contentClassName}
+          contentInnerClassName={styles.contentInner}
+          contextMotionProps={contextMotionProps}
+          disableAnimation={!!disableAnimation}
+          isOpen={isOpen}
+          keepContentMounted={!!keepContentMounted}
+          skipInitialAnimation={skipInitialAnimation}
+          style={customStyles?.content}
+        >
+          {children}
+        </AccordionItemContent>
       </div>
     );
   },
