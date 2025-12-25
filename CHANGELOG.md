@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.1.9](https://github.com/lobehub/lobe-ui/compare/v4.1.8...v4.1.9)
+
+<sup>Released on **2025-12-25**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update TokenTag.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update TokenTag ([8b02097](https://github.com/lobehub/lobe-ui/commit/8b02097))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.1.8](https://github.com/lobehub/lobe-ui/compare/v4.1.7...v4.1.8)
 
 <sup>Released on **2025-12-25**</sup>
