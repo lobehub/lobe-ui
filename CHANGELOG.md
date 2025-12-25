@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.1.7](https://github.com/lobehub/lobe-ui/compare/v4.1.6...v4.1.7)
+
+<sup>Released on **2025-12-25**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix mdx Image.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix mdx Image ([9f0842e](https://github.com/lobehub/lobe-ui/commit/9f0842e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.1.6](https://github.com/lobehub/lobe-ui/compare/v4.1.5...v4.1.6)
 
 <sup>Released on **2025-12-25**</sup>
