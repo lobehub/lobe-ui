@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.2.1](https://github.com/lobehub/lobe-ui/compare/v4.2.0...v4.2.1)
+
+<sup>Released on **2025-12-25**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update Highlighter animated.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update Highlighter animated ([ee65ae6](https://github.com/lobehub/lobe-ui/commit/ee65ae6))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.2.0](https://github.com/lobehub/lobe-ui/compare/v4.1.9...v4.2.0)
 
 <sup>Released on **2025-12-25**</sup>
