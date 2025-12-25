@@ -25,27 +25,33 @@
   "exports": {
     ".": {
       "types": "./es/index.d.mts",
-      "import": "./es/index.mjs"
+      "import": "./es/index.mjs",
+      "default": "./es/index.mjs"
     },
     "./i18n": {
       "types": "./es/i18n/index.d.mts",
-      "import": "./es/i18n/index.mjs"
+      "import": "./es/i18n/index.mjs",
+      "default": "./es/i18n/index.mjs"
     },
     "./i18n/resources/*": {
       "types": "./es/i18n/resources/*.d.mts",
-      "import": "./es/i18n/resources/*.mjs"
+      "import": "./es/i18n/resources/*.mjs",
+      "default": "./es/i18n/resources/*.mjs"
     },
     "./i18n/*": {
       "types": "./es/i18n/*.d.mts",
-      "import": "./es/i18n/*.mjs"
+      "import": "./es/i18n/*.mjs",
+      "default": "./es/i18n/*.mjs"
     },
     "./es/*": {
       "types": "./es/*.d.mts",
-      "import": "./es/*.mjs"
+      "import": "./es/*.mjs",
+      "default": "./es/*.mjs"
     },
     "./*": {
       "types": "./*.d.ts",
-      "import": "./*.js"
+      "import": "./*.js",
+      "default": "./*.js"
     }
   },
   "main": "es/index.mjs",
