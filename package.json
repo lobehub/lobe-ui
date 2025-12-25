@@ -127,8 +127,6 @@
     "@emoji-mart/react": "^1.1.1",
     "@floating-ui/react": "^0.27.16",
     "@giscus/react": "^3.1.0",
-    "@lobehub/fluent-emoji": "^3.0.0",
-    "@lobehub/icons": "^3.0.0",
     "@mdx-js/mdx": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@radix-ui/react-slot": "^1.2.4",
@@ -136,7 +134,7 @@
     "@shikijs/transformers": "^3.20.0",
     "@splinetool/runtime": "0.9.526",
     "ahooks": "^3.9.6",
-    "antd-style": "^3.7.1",
+    "antd-style": "^4.0.0",
     "chroma-js": "^3.2.0",
     "class-variance-authority": "^0.7.1",
     "dayjs": "^1.11.19",
@@ -186,6 +184,8 @@
   "devDependencies": {
     "@ant-design/icons": "^6.1.0",
     "@commitlint/cli": "^19.8.1",
+    "@lobehub/fluent-emoji": "^4.0.0",
+    "@lobehub/icons": "^4.0.0",
     "@lobehub/lint": "^1.26.3",
     "@testing-library/react": "^16.3.1",
     "@types/chroma-js": "^3.1.2",
@@ -233,6 +233,8 @@
     "vitest": "^3.2.4"
   },
   "peerDependencies": {
+    "@lobehub/fluent-emoji": "^4.0.0",
+    "@lobehub/icons": "^4.0.0",
     "antd": "^6.1.1",
     "motion": "^12.0.0",
     "react": "^19.0.0",

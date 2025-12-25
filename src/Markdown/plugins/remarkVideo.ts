@@ -41,8 +41,6 @@ export const remarkVideo = (options: RemarkVideoOptions = {}) => {
             properties[attrMatch[1]] = attrMatch[2];
           }
 
-          console.log('remarkVideo: Found video tag:', tagName, properties);
-
           // 创建video节点
           const newNode = {
             children: [],
@@ -74,8 +72,6 @@ export const remarkVideo = (options: RemarkVideoOptions = {}) => {
           while ((attrMatch = attrRegex.exec(attributesStr)) !== null) {
             properties[attrMatch[1]] = attrMatch[2];
           }
-
-          console.log('remarkVideo: Found paired video tag:', tagName, properties);
 
           // 创建video节点
           const newNode = {
@@ -140,8 +136,6 @@ export const remarkVideo = (options: RemarkVideoOptions = {}) => {
           while ((attrMatch = attrRegex.exec(decodedAttrs)) !== null) {
             properties[attrMatch[1]] = attrMatch[2];
           }
-
-          console.log('remarkVideo: Found encoded video tag:', tagName, properties);
 
           // 添加video节点
           newNodes.push({

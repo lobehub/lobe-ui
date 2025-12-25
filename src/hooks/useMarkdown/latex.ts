@@ -233,7 +233,7 @@ export const isLastFormulaRenderable = (text: string) => {
     });
     return true;
   } catch (error) {
-    console.log(`LaTeX formula rendering error: ${error}`);
+    console.error(`LaTeX formula rendering error: ${error}`);
     return false;
   }
 };
