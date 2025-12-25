@@ -1,98 +1,78 @@
 'use client';
 
-import { useResponsive } from 'antd-style';
-import { cva } from 'class-variance-authority';
+import { Progress } from 'antd';
+import { useTheme } from 'antd-style';
 import numeral from 'numeral';
 import { type FC, useMemo } from 'react';
 
-import Button from '@/Button';
-import FluentEmoji from '@/FluentEmoji';
+import ActionIcon from '@/ActionIcon';
 import chatMessages from '@/i18n/resources/en/chat';
 import { useTranslation } from '@/i18n/useTranslation';
 
-import { useStyles } from './style';
 import type { TokenTagProps } from './type';
 
 const format = (number: number) => numeral(number).format('0,0');
 
 const TokenTag: FC<TokenTagProps> = ({
-  className,
-  shape = 'round',
   mode = 'remained',
   maxValue,
   value,
   text,
-  unoptimized,
-  hideText,
-  ref,
+  showInfo,
+  size = 20,
   ...rest
 }) => {
-  const { mobile } = useResponsive();
+  const theme = useTheme();
   const { t } = useTranslation(chatMessages);
   const valueLeft = maxValue - value;
-  const percent = valueLeft / maxValue;
-  const showText = !hideText && !mobile;
+  const percent = value / maxValue;
   const remainedText = text?.remained ?? t('tokenTag.remained');
   const usedText = text?.used ?? t('tokenTag.used');
   const overloadText = text?.overload ?? t('tokenTag.overload');
 
   const data = useMemo(() => {
     let type: 'normal' | 'low' | 'overload';
-    let emoji;
+    let color;
 
-    if (percent > 0.3) {
+    if (percent < 0.7) {
       type = 'normal';
-      emoji = '😀';
-    } else if (percent > 0) {
+      color = theme.colorText;
+    } else if (percent < 0.9) {
       type = 'low';
-      emoji = '😅';
+      color = theme.colorWarning;
     } else {
       type = 'overload';
-      emoji = '🤯';
+      color = theme.colorError;
     }
     return {
-      emoji,
+      color,
       type,
     };
-  }, [percent]);
+  }, [percent, theme]);
 
-  const { styles, cx } = useStyles();
-
-  const variants = useMemo(
-    () =>
-      cva(styles.root, {
-        defaultVariants: {
-          type: 'normal',
-        },
-        /* eslint-disable sort-keys-fix/sort-keys-fix */
-        variants: {
-          type: {
-            normal: styles.normal,
-            low: styles.low,
-            overload: styles.overload,
-          },
-        },
-        /* eslint-enable sort-keys-fix/sort-keys-fix */
-      }),
-    [styles],
-  );
+  const title =
+    valueLeft > 0
+      ? [
+          mode === 'remained' ? remainedText : usedText,
+          mode === 'remained' ? format(valueLeft) : format(value),
+        ].join(' ')
+      : overloadText;
 
   return (
-    <Button
-      className={cx(variants({ type: data.type }), className)}
-      ref={ref}
-      shape={shape}
-      variant={'filled'}
+    <ActionIcon
+      icon={
+        <Progress
+          percent={percent * 100}
+          showInfo={false}
+          size={Number(typeof size === 'object' ? size?.size || 20 : size) || 20}
+          strokeColor={data.color}
+          type="circle"
+        />
+      }
+      size={size}
+      title={showInfo ? title : undefined}
       {...rest}
-    >
-      <FluentEmoji emoji={data.emoji} size={18} unoptimized={unoptimized} />
-      {valueLeft > 0
-        ? [
-            showText ? (mode === 'remained' ? remainedText : usedText) : '',
-            mode === 'remained' ? format(valueLeft) : format(value),
-          ].join(' ')
-        : overloadText}
-    </Button>
+    />
   );
 };
 

@@ -5,7 +5,6 @@ export default () => {
   const store = useCreateStore();
   const control = useControls(
     {
-      hideText: false,
       maxValue: {
         step: 1,
         value: 5000,
@@ -18,6 +17,7 @@ export default () => {
         options: ['round', 'square'],
         value: 'round',
       },
+      showInfo: true,
       value: {
         step: 1,
         value: 1000,
