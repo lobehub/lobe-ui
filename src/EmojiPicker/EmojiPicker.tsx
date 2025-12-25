@@ -81,8 +81,10 @@ const EmojiPicker = memo<EmojiPickerProps>(
     const uploadText = texts?.upload ?? t('emojiPicker.upload');
     const deleteText = texts?.delete ?? t('emojiPicker.delete');
 
+    const hideEmojiTab = typeof allowUpload === 'object' && allowUpload?.enableEmoji === false;
+
     const items: TabsProps['items'] = [
-      {
+      !hideEmojiTab && {
         key: 'emoji',
         label: (
           <Tooltip title={emojiText}>

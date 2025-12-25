@@ -38,7 +38,11 @@ export interface EmojiPickerCustomTab {
 
 export interface EmojiPickerProps extends Omit<AvatarProps, 'onChange' | 'avatar'> {
   allowDelete?: boolean;
-  allowUpload?: boolean;
+  allowUpload?:
+    | boolean
+    | {
+        enableEmoji?: boolean;
+      };
   compressSize?: number;
   customEmojis?: EmojiPickerCustomEmoji[];
   customRender?: (avatar: string) => ReactNode;
