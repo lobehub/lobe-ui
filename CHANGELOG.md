@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.3.1](https://github.com/lobehub/lobe-ui/compare/v4.3.0...v4.3.1)
+
+<sup>Released on **2025-12-26**</sup>
+
+#### 💄 Styles
+
+- **misc**: Add Indeterminate Checkbox.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Add Indeterminate Checkbox ([860e4aa](https://github.com/lobehub/lobe-ui/commit/860e4aa))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.3.0](https://github.com/lobehub/lobe-ui/compare/v4.2.2...v4.3.0)
 
 <sup>Released on **2025-12-26**</sup>
