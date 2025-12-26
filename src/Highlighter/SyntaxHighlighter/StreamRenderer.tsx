@@ -6,7 +6,7 @@ import type { CSSProperties } from 'react';
 import { memo } from 'react';
 import type { BuiltinTheme, ThemedToken } from 'shiki';
 
-import { useHighlight } from '@/hooks/useHighlight';
+import { useStreamHighlight } from '@/hooks/useStreamHighlight';
 
 interface StreamRendererProps {
   children: string;
@@ -92,7 +92,7 @@ const StreamRenderer = memo<StreamRendererProps>(
     // Safely handle empty or invalid children
     const safeChildren = children ?? '';
 
-    const { streaming } = useHighlight(safeChildren, {
+    const streaming = useStreamHighlight(safeChildren, {
       enableTransformer,
       language,
       streaming: true,
