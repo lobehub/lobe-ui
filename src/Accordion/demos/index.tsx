@@ -76,6 +76,16 @@ export default () => {
             <div>You can put any React component here.</div>
           </Flexbox>
         </AccordionItem>
+        <AccordionItem
+          allowExpand={false}
+          itemKey="5"
+          title="Non-expandable Panel (allowExpand=false)"
+        >
+          <Flexbox padding={16}>
+            <div>This panel has allowExpand set to false.</div>
+            <div>The indicator arrow is hidden.</div>
+          </Flexbox>
+        </AccordionItem>
       </Accordion>
     </StoryBook>
   );

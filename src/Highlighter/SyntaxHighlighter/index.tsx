@@ -28,6 +28,7 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
       () =>
         cva(styles.root, {
           defaultVariants: {
+            animated: false,
             shiki: true,
             showBackground: false,
             variant: 'borderless',
@@ -47,14 +48,24 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
               false: styles.noBackground,
               true: null,
             },
+            animated: {
+              true: styles.animated,
+              false: null,
+            },
           },
           /* eslint-enable sort-keys-fix/sort-keys-fix */
         }),
       [styles],
     );
 
-    const shikiClassName = cx(variants({ shiki: true, showBackground, variant }), className);
-    const fallbackClassName = cx(variants({ shiki: false, showBackground, variant }), className);
+    const shikiClassName = cx(
+      variants({ animated, shiki: true, showBackground, variant }),
+      className,
+    );
+    const fallbackClassName = cx(
+      variants({ animated, shiki: false, showBackground, variant }),
+      className,
+    );
 
     if (animated) {
       return (

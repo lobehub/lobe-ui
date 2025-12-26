@@ -1,7 +1,6 @@
 import { createStyles, keyframes } from 'antd-style';
 
-export const useStyles = createStyles(({ css }) => {
-  const fadeIn = keyframes`
+const fadeIn = keyframes`
     0% {
       opacity: 0;
     }
@@ -9,6 +8,8 @@ export const useStyles = createStyles(({ css }) => {
       opacity: 1;
     }
   `;
+
+export const useStyles = createStyles(({ css }) => {
   return {
     animated: css`
       .animate-fade-in,
