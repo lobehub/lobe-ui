@@ -16,48 +16,48 @@ type StreamingOptions = {
   theme: string;
 };
 
+// Optimized version: reduce array allocations and object spreading
 const tokensToLineTokens = (tokens: ThemedToken[]): ThemedToken[][] => {
   if (!tokens.length) return [[]];
 
-  const lines: ThemedToken[][] = [[]];
-  let currentLine = lines[0];
+  const lines: ThemedToken[][] = [];
+  let currentLine: ThemedToken[] = [];
 
-  const startNewLine = () => {
-    currentLine = [];
-    lines.push(currentLine);
-  };
-
-  tokens.forEach((token) => {
+  for (const token of tokens) {
     const content = token.content ?? '';
 
     if (content === '\n') {
-      startNewLine();
-      return;
+      lines.push(currentLine);
+      currentLine = [];
+      continue;
     }
 
-    if (!content.includes('\n')) {
+    const newlineIndex = content.indexOf('\n');
+    if (newlineIndex === -1) {
+      // No newline, add token directly
       currentLine.push(token);
-      return;
+    } else {
+      // Split on newlines
+      const segments = content.split('\n');
+      for (const [j, segment] of segments.entries()) {
+        if (segment) {
+          // Only create new object if we need to modify content
+          currentLine.push(j === 0 && segment === content ? token : { ...token, content: segment });
+        }
+        if (j < segments.length - 1) {
+          lines.push(currentLine);
+          currentLine = [];
+        }
+      }
     }
+  }
 
-    const segments = content.split('\n');
-    segments.forEach((segment, index) => {
-      if (segment) {
-        currentLine.push({
-          ...token,
-          content: segment,
-        });
-      }
+  // Don't forget the last line
+  if (currentLine.length > 0 || lines.length === 0) {
+    lines.push(currentLine);
+  }
 
-      if (index < segments.length - 1) {
-        startNewLine();
-      }
-    });
-  });
-
-  if (lines.length === 0) return [[]];
-
-  return lines;
+  return lines.length > 0 ? lines : [[]];
 };
 
 const createPreStyle = (bg?: string, fg?: string): CSSProperties | undefined => {
@@ -90,68 +90,132 @@ const useStreamingHighlighter = (
     colorReplacementsRef.current = colorReplacements;
   }, [colorReplacements]);
 
-  const setStreamingResult = useCallback((rawLines: ThemedToken[][]) => {
+  // Use ref to store callback to avoid recreating it
+  const setStreamingResultRef = useRef((rawLines: ThemedToken[][]) => {
     const previousLines = linesRef.current;
+    const newLinesLength = rawLines.length;
+    const prevLinesLength = previousLines.length;
 
-    const mergedLines = rawLines.map((line, index) => {
-      const previousLine = previousLines[index];
-      if (
-        previousLine &&
-        previousLine.length === line.length &&
-        previousLine.every((token, tokenIndex) => token === line[tokenIndex])
-      ) {
-        return previousLine;
-      }
-      return line;
-    });
+    // Fast path: if lengths differ or it's a complete reset, use new lines directly
+    if (newLinesLength !== prevLinesLength || newLinesLength === 0) {
+      linesRef.current = rawLines;
+      setResult({
+        colorReplacements: colorReplacementsRef.current,
+        lines: rawLines,
+        preStyle: preStyleRef.current,
+      });
+      return;
+    }
 
-    linesRef.current = mergedLines;
+    // Optimized comparison: only check changed lines
+    let hasChanges = false;
+    const mergedLines: ThemedToken[][] = [];
 
-    setResult({
-      colorReplacements: colorReplacementsRef.current,
-      lines: mergedLines,
-      preStyle: preStyleRef.current,
-    });
-  }, []);
+    for (let i = 0; i < newLinesLength; i++) {
+      const newLine = rawLines[i];
+      const prevLine = previousLines[i];
 
-  const updateTokens = useCallback(
-    async (nextText: string, forceReset = false) => {
-      const tokenizer = tokenizerRef.current;
-      if (!tokenizer) return;
-
-      if (forceReset) {
-        tokenizer.clear();
-        previousTextRef.current = '';
+      // Quick reference equality check first
+      if (prevLine === newLine) {
+        mergedLines[i] = prevLine;
+        continue;
       }
 
-      const previousText = previousTextRef.current;
-      let chunk = nextText;
-      const canAppend = !forceReset && nextText.startsWith(previousText);
-
-      if (canAppend) {
-        chunk = nextText.slice(previousText.length);
-      } else if (!forceReset) {
-        tokenizer.clear();
+      // Length check
+      if (!prevLine || prevLine.length !== newLine.length) {
+        mergedLines[i] = newLine;
+        hasChanges = true;
+        continue;
       }
 
-      previousTextRef.current = nextText;
+      // Deep comparison only for lines that might have changed
+      let lineChanged = false;
+      for (const [j, newToken] of newLine.entries()) {
+        if (prevLine[j] !== newToken) {
+          lineChanged = true;
+          break;
+        }
+      }
 
-      if (!chunk) {
-        const mergedTokens = [...tokenizer.tokensStable, ...tokenizer.tokensUnstable];
-        setStreamingResult(mergedTokens.length ? tokensToLineTokens(mergedTokens) : [[]]);
+      if (lineChanged) {
+        mergedLines[i] = newLine;
+        hasChanges = true;
+      } else {
+        mergedLines[i] = prevLine;
+      }
+    }
+
+    // Only update state if there are actual changes
+    if (hasChanges) {
+      linesRef.current = mergedLines;
+      setResult({
+        colorReplacements: colorReplacementsRef.current,
+        lines: mergedLines,
+        preStyle: preStyleRef.current,
+      });
+    }
+  });
+
+  const updateTokens = useCallback(async (nextText: string, forceReset = false) => {
+    const tokenizer = tokenizerRef.current;
+    if (!tokenizer) return;
+
+    if (forceReset) {
+      tokenizer.clear();
+      previousTextRef.current = '';
+    }
+
+    const previousText = previousTextRef.current;
+    let chunk = nextText;
+    const canAppend = !forceReset && nextText.startsWith(previousText);
+
+    if (canAppend) {
+      chunk = nextText.slice(previousText.length);
+    } else if (!forceReset) {
+      tokenizer.clear();
+    }
+
+    previousTextRef.current = nextText;
+
+    if (!chunk) {
+      // Optimize: avoid array spread if possible
+      const stableTokens = tokenizer.tokensStable;
+      const unstableTokens = tokenizer.tokensUnstable;
+      const totalLength = stableTokens.length + unstableTokens.length;
+
+      if (totalLength === 0) {
+        setStreamingResultRef.current([[]]);
         return;
       }
 
-      try {
-        await tokenizer.enqueue(chunk);
-        const mergedTokens = [...tokenizer.tokensStable, ...tokenizer.tokensUnstable];
-        setStreamingResult(tokensToLineTokens(mergedTokens));
-      } catch (error) {
-        console.error('Streaming highlighting failed:', error);
-      }
-    },
-    [setStreamingResult],
-  );
+      // Only create merged array if we have both stable and unstable tokens
+      const mergedTokens =
+        stableTokens.length === 0
+          ? unstableTokens
+          : unstableTokens.length === 0
+            ? stableTokens
+            : [...stableTokens, ...unstableTokens];
+
+      setStreamingResultRef.current(tokensToLineTokens(mergedTokens));
+      return;
+    }
+
+    try {
+      await tokenizer.enqueue(chunk);
+      // Optimize: avoid array spread if possible
+      const stableTokens = tokenizer.tokensStable;
+      const unstableTokens = tokenizer.tokensUnstable;
+      const mergedTokens =
+        stableTokens.length === 0
+          ? unstableTokens
+          : unstableTokens.length === 0
+            ? stableTokens
+            : [...stableTokens, ...unstableTokens];
+      setStreamingResultRef.current(tokensToLineTokens(mergedTokens));
+    } catch (error) {
+      console.error('Streaming highlighting failed:', error);
+    }
+  }, []);
 
   useEffect(() => {
     if (!enabled) {
@@ -195,7 +259,7 @@ const useStreamingHighlighter = (
         if (currentText) {
           await updateTokens(currentText, true);
         } else {
-          setStreamingResult([[]]);
+          setStreamingResultRef.current([[]]);
         }
       } catch (error) {
         console.error('Streaming highlighter initialization failed:', error);
@@ -208,7 +272,7 @@ const useStreamingHighlighter = (
       tokenizerRef.current = null;
       previousTextRef.current = '';
     };
-  }, [enabled, language, setStreamingResult, theme, updateTokens]);
+  }, [enabled, language, theme, updateTokens]);
 
   useEffect(() => {
     if (!enabled) return;
@@ -238,7 +302,7 @@ export const useStreamHighlight = (
   // Match supported languages
   const matchedLanguage = useMemo(() => getCodeLanguageByInput(lang), [lang]);
 
-  // Optimize color replacement configuration
+  // Optimize color replacement configuration - only depend on specific theme properties
   const colorReplacements = useMemo(
     (): ColorReplacements => ({
       'slack-dark': {
@@ -265,7 +329,19 @@ export const useStreamHighlight = (
         '#dc3eb7': theme.yellow11,
       },
     }),
-    [theme],
+    [
+      theme.yellow,
+      theme.colorError,
+      theme.gray,
+      theme.colorText,
+      theme.purple10,
+      theme.colorInfo,
+      theme.colorSuccess,
+      theme.colorWarning,
+      theme.geekblue,
+      theme.colorWarningTextActive,
+      theme.yellow11,
+    ],
   );
 
   const effectiveTheme = builtinTheme || (isDarkMode ? 'slack-dark' : 'slack-ochin');

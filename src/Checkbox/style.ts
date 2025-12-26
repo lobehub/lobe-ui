@@ -4,7 +4,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     checked: css`
       border-color: ${cssVar.colorPrimary};
-      color: ${cssVar.colorTextLightSolid};
+      color: ${cssVar.colorBgLayout};
       background-color: ${cssVar.colorPrimary};
     `,
     disabled: css`
@@ -19,7 +19,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     `,
     indeterminate: css`
       border-color: ${cssVar.colorPrimary};
-      color: ${cssVar.colorTextLightSolid};
+      color: ${cssVar.colorBgLayout};
       background-color: ${cssVar.colorPrimary};
     `,
     root: css`

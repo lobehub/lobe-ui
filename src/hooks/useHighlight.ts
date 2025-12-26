@@ -93,7 +93,7 @@ export const useHighlight = (
     ];
   }, [enableTransformer]);
 
-  // Optimize color replacement configuration
+  // Optimize color replacement configuration - only depend on specific theme properties
   const colorReplacements = useMemo(
     (): ColorReplacements => ({
       'slack-dark': {
@@ -120,7 +120,19 @@ export const useHighlight = (
         '#dc3eb7': theme.yellow11,
       },
     }),
-    [theme],
+    [
+      theme.yellow,
+      theme.colorError,
+      theme.gray,
+      theme.colorText,
+      theme.purple10,
+      theme.colorInfo,
+      theme.colorSuccess,
+      theme.colorWarning,
+      theme.geekblue,
+      theme.colorWarningTextActive,
+      theme.yellow11,
+    ],
   );
 
   // Build cache key
