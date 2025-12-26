@@ -217,6 +217,9 @@ const useStreamingHighlighter = (
     }
   }, []);
 
+  // Cache highlighter key to avoid unnecessary recreations
+  const highlighterKeyRef = useRef<string>('');
+
   useEffect(() => {
     if (!enabled) {
       tokenizerRef.current?.clear();
@@ -225,6 +228,13 @@ const useStreamingHighlighter = (
       preStyleRef.current = undefined;
       linesRef.current = [[]];
       setResult(undefined);
+      highlighterKeyRef.current = '';
+      return;
+    }
+
+    // Skip if language/theme combination hasn't changed
+    const currentKey = `${language}-${theme}`;
+    if (highlighterKeyRef.current === currentKey && tokenizerRef.current) {
       return;
     }
 
@@ -235,25 +245,34 @@ const useStreamingHighlighter = (
       if (!mod || cancelled) return;
 
       try {
+        // Only load the specific language and theme needed
+        // getSingletonHighlighter will cache the instance internally
         const highlighter = await mod.getSingletonHighlighter({
-          langs: language ? [language] : [],
+          langs: language ? [language] : ['plaintext'],
           themes: [theme],
         });
 
         if (!highlighter || cancelled) return;
 
-        const tokenizer = new ShikiStreamTokenizer({
-          highlighter,
-          lang: language,
-          theme,
-        });
+        // Only create new tokenizer if key changed
+        if (highlighterKeyRef.current !== currentKey) {
+          // Clear old tokenizer
+          tokenizerRef.current?.clear();
 
-        tokenizerRef.current = tokenizer;
-        previousTextRef.current = '';
-        linesRef.current = [[]];
+          const tokenizer = new ShikiStreamTokenizer({
+            highlighter,
+            lang: language,
+            theme,
+          });
 
-        const themeInfo = highlighter.getTheme(theme);
-        preStyleRef.current = createPreStyle(themeInfo?.bg, themeInfo?.fg);
+          tokenizerRef.current = tokenizer;
+          highlighterKeyRef.current = currentKey;
+          previousTextRef.current = '';
+          linesRef.current = [[]];
+
+          const themeInfo = highlighter.getTheme(theme);
+          preStyleRef.current = createPreStyle(themeInfo?.bg, themeInfo?.fg);
+        }
 
         const currentText = latestTextRef.current;
         if (currentText) {
@@ -263,21 +282,25 @@ const useStreamingHighlighter = (
         }
       } catch (error) {
         console.error('Streaming highlighter initialization failed:', error);
+        // Reset on error
+        highlighterKeyRef.current = '';
       }
     })();
 
     return () => {
       cancelled = true;
-      tokenizerRef.current?.clear();
-      tokenizerRef.current = null;
-      previousTextRef.current = '';
+      // Cleanup only if this effect was cancelled before completion
+      // The next effect will handle cleanup if key changed
     };
   }, [enabled, language, theme, updateTokens]);
 
+  // Separate effect for text updates to avoid unnecessary tokenizer recreation
   useEffect(() => {
     if (!enabled) return;
     if (!tokenizerRef.current) return;
-    updateTokens(safeText);
+    // Use ref to get latest text to avoid stale closures
+    const currentText = latestTextRef.current;
+    updateTokens(currentText);
   }, [enabled, safeText, updateTokens]);
 
   return result;

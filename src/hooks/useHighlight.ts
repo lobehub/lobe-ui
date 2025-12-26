@@ -52,17 +52,26 @@ const cleanupCache = () => {
 export type ICodeToHtml = (code: string, options: CodeToHastOptions) => Promise<string>;
 export type ShikiModule = typeof import('shiki');
 
-// Lazy load shiki
-export const loadShikiModule = (): Promise<ShikiModule | null> => {
+// Use codeToHtml shorthand for better performance
+// It automatically manages highlighter instances and loads themes/languages on-demand
+let codeToHtmlPromise: Promise<ICodeToHtml | null> | null = null;
+
+const loadCodeToHtml = (): Promise<ICodeToHtml | null> => {
+  if (typeof window === 'undefined') return Promise.resolve(null);
+
+  if (!codeToHtmlPromise) {
+    codeToHtmlPromise = import('shiki').then((mod) => mod.codeToHtml ?? null);
+  }
+
+  return codeToHtmlPromise;
+};
+
+// Export shikiModulePromise for useStreamHighlight compatibility
+const loadShikiModule = (): Promise<ShikiModule | null> => {
   if (typeof window === 'undefined') return Promise.resolve(null);
   return import('shiki');
 };
 export const shikiModulePromise = loadShikiModule();
-
-export const loadShiki = (): Promise<ICodeToHtml | null> => {
-  return shikiModulePromise.then((mod) => mod?.codeToHtml ?? null);
-};
-export const shikiPromise = loadShiki();
 
 // Helper function: Safe HTML escaping
 export const escapeHtml = (str: string): string => {
@@ -180,11 +189,14 @@ export const useHighlight = (
     }
 
     // Create new promise for highlighting
+    // Using codeToHtml shorthand: automatically loads themes/languages on-demand
     const highlightPromise = (async (): Promise<string> => {
       try {
-        // Try full rendering
-        const codeToHtml = await shikiPromise;
+        // Try full rendering with transformers
+        const codeToHtml = await loadCodeToHtml();
         if (!codeToHtml) return safeText;
+
+        // codeToHtml shorthand automatically loads only needed theme and language
         const html = await codeToHtml(safeText, {
           colorReplacements: builtinTheme ? undefined : colorReplacements,
           lang: matchedLanguage,
@@ -197,8 +209,8 @@ export const useHighlight = (
         console.error('Advanced rendering failed:', error_);
 
         try {
-          // Try simple rendering (without transformers)
-          const codeToHtml = await shikiPromise;
+          // Try simple rendering (without transformers and colorReplacements)
+          const codeToHtml = await loadCodeToHtml();
           if (!codeToHtml) return safeText;
           const html = await codeToHtml(safeText, {
             lang: matchedLanguage,
