@@ -1,4 +1,4 @@
-import { CheckIcon } from 'lucide-react';
+import { CheckIcon, Minus } from 'lucide-react';
 import type { CSSProperties, FC } from 'react';
 import useMergeState from 'use-merge-value';
 
@@ -23,6 +23,7 @@ const Checkbox: FC<CheckboxProps> = ({
   styles: customStyles,
   shape = 'square',
   disabled,
+  indeterminate,
   ...rest
 }) => {
   const { styles, cx } = useStyles();
@@ -44,12 +45,16 @@ const Checkbox: FC<CheckboxProps> = ({
     }
   };
 
+  const isIndeterminate = indeterminate;
+  const isChecked = !isIndeterminate && value;
+
   const checkIcon = (
     <Block
       align={'center'}
       className={cx(
         styles.root,
-        value && styles.checked,
+        isChecked && styles.checked,
+        isIndeterminate && styles.indeterminate,
         disabled && styles.disabled,
         className,
         classNames?.checkbox,
@@ -59,7 +64,7 @@ const Checkbox: FC<CheckboxProps> = ({
       justify={'center'}
       onClick={handleClick}
       style={
-        backgroundColor && value
+        backgroundColor && (isChecked || isIndeterminate)
           ? { backgroundColor, borderColor: backgroundColor, ...checkboxStyles }
           : { ...checkboxStyles }
       }
@@ -67,7 +72,15 @@ const Checkbox: FC<CheckboxProps> = ({
       width={size}
       {...rest}
     >
-      {value ? (
+      {isIndeterminate ? (
+        <Minus
+          size={size}
+          strokeWidth={3}
+          style={{
+            transform: `scale(${shape === 'square' ? 0.75 : 0.66})`,
+          }}
+        />
+      ) : isChecked ? (
         <CheckIcon
           size={size}
           strokeWidth={3}

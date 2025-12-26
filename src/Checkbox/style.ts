@@ -18,6 +18,11 @@ export const useStyles = createStyles(({ css, token }) => {
       opacity: 0.25;
       background-color: ${token.colorFill};
     `,
+    indeterminate: css`
+      border-color: ${token.colorPrimary};
+      color: ${readableColor(token.colorPrimary)};
+      background-color: ${token.colorPrimary};
+    `,
     root: css`
       cursor: pointer;
       display: inline-flex;

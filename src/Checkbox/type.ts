@@ -14,6 +14,7 @@ export interface CheckboxProps extends Omit<DivProps, 'onChange'> {
   };
   defaultChecked?: boolean;
   disabled?: boolean;
+  indeterminate?: boolean;
   onChange?: (checked: boolean) => void;
   shape?: 'square' | 'circle';
   size?: number;

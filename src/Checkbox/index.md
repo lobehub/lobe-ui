@@ -27,6 +27,12 @@ Checkbox can display text labels alongside the checkbox. Simply pass the text as
 
 <code src="./demos/WithText.tsx" center></code>
 
+## Indeterminate
+
+Checkbox supports indeterminate state, which is useful for "check all" scenarios. When some but not all items are selected, the checkbox shows an indeterminate state.
+
+<code src="./demos/Indeterminate.tsx" center></code>
+
 ## CheckboxGroup
 
 CheckboxGroup allows you to manage multiple checkboxes together. It supports both string arrays and object arrays for options. You can use it via `Checkbox.Group` or import `CheckboxGroup` directly.
@@ -66,6 +72,7 @@ CheckboxGroup supports both global disabled state and individual option disabled
 | classNames      | Custom class names for sub-elements  | `{ checkbox?: string; text?: string; wrapper?: string }`                      | -       |
 | defaultChecked  | Default checked state                | `boolean`                                                                     | `false` |
 | disabled        | Disable the checkbox                 | `boolean`                                                                     | `false` |
+| indeterminate   | Indeterminate state                  | `boolean`                                                                     | `false` |
 | onChange        | Change event handler                 | `(checked: boolean) => void`                                                  | -       |
 | shape           | Checkbox shape                       | `'square' \| 'circle'`                                                        | -       |
 | size            | Checkbox size                        | `number`                                                                      | `16`    |
