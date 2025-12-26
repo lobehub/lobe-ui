@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.3.2](https://github.com/lobehub/lobe-ui/compare/v4.3.1...v4.3.2)
+
+<sup>Released on **2025-12-26**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix select text when checkbox click.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix select text when checkbox click ([7edff16](https://github.com/lobehub/lobe-ui/commit/7edff16))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.3.1](https://github.com/lobehub/lobe-ui/compare/v4.3.0...v4.3.1)
 
 <sup>Released on **2025-12-26**</sup>
