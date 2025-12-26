@@ -17,7 +17,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       color: ${cssVar.colorBgLayout};
       word-break: normal;
 
-      background-color: ${cssVar.colorText};
+      background-color: ${cssVar.colorTextBase};
     `,
     tooltip: css`
       pointer-events: none;
