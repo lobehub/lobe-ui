@@ -279,6 +279,12 @@ const AccordionItem = memo<AccordionItemProps>(
       [allowExpand, disabled, handleToggle],
     );
 
+    const preventTitleTextSelection = useCallback((e: any) => {
+      // Prevent browser from creating a selection range on double/multi click,
+      // which can accidentally select the content region.
+      if (e?.detail > 1) e.preventDefault();
+    }, []);
+
     // Build indicator
     const indicator = useMemo(() => {
       if (!allowExpand || hideIndicatorFinal) return null;
@@ -392,9 +398,12 @@ const AccordionItem = memo<AccordionItemProps>(
             <>
               <Flexbox
                 align={'center'}
+                className={styles.titleWrapper}
                 flex={1}
                 gap={2}
                 horizontal
+                onDoubleClick={preventTitleTextSelection}
+                onMouseDown={preventTitleTextSelection}
                 style={{
                   overflow: 'hidden',
                 }}
@@ -410,9 +419,12 @@ const AccordionItem = memo<AccordionItemProps>(
             <>
               <Flexbox
                 align={'center'}
+                className={styles.titleWrapper}
                 flex={1}
                 gap={2}
                 horizontal
+                onDoubleClick={preventTitleTextSelection}
+                onMouseDown={preventTitleTextSelection}
                 style={{
                   overflow: 'hidden',
                 }}
