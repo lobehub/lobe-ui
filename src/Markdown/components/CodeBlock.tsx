@@ -48,7 +48,7 @@ export const CodeBlock = memo<CodeBlockProps>(
 
     if (enableMermaid && code.lang === 'mermaid')
       return (
-        <PreMermaid fullFeatured={fullFeatured} {...mermaid} {...rest}>
+        <PreMermaid animated={animated} fullFeatured={fullFeatured} {...mermaid} {...rest}>
           {code.content}
         </PreMermaid>
       );

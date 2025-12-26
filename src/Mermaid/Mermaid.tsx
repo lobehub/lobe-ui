@@ -14,24 +14,24 @@ import { MermaidProps } from './type';
 
 const Mermaid = memo<MermaidProps>(
   ({
-    children,
     actionIconSize,
-    fullFeatured,
+    animated,
+    bodyRender,
+    children,
+    classNames,
+    className,
     copyable = true,
-    showLanguage = true,
+    defaultExpand = true,
+    fileName,
+    fullFeatured,
     language = 'mermaid',
+    actionsRender,
+    shadow,
+    showLanguage = true,
     style,
     styles: customStyles,
-    classNames,
-    variant = 'filled',
-    shadow,
-    enablePanZoom = true,
-    defaultExpand = true,
-    className,
-    bodyRender,
-    fileName,
-    actionsRender,
     theme,
+    variant = 'filled',
     ...rest
   }) => {
     const tirmedChildren = children.trim();
@@ -63,8 +63,8 @@ const Mermaid = memo<MermaidProps>(
     const defaultBody = useMemo(
       () => (
         <SyntaxMermaid
+          animated={animated}
           className={classNames?.content}
-          enablePanZoom={enablePanZoom}
           style={customStyles?.content}
           theme={theme}
           variant={variant}
@@ -72,7 +72,7 @@ const Mermaid = memo<MermaidProps>(
           {tirmedChildren}
         </SyntaxMermaid>
       ),
-      [enablePanZoom, theme, tirmedChildren, variant, classNames?.content, customStyles?.content],
+      [animated, theme, tirmedChildren, variant, classNames?.content, customStyles?.content],
     );
 
     const body = useMemo(() => {

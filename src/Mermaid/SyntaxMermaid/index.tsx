@@ -1,96 +1,67 @@
 'use client';
 
-import { kebabCase } from 'es-toolkit/compat';
-import { memo, useEffect, useId, useMemo, useState } from 'react';
+import { cx } from 'antd-style';
+import { memo } from 'react';
 
-import Image from '@/Image';
-import { useMermaid } from '@/hooks/useMermaid';
-
-import { mermaidThemes } from '../const';
 import type { SyntaxMermaidProps } from '../type';
+import StaticMermaid from './StaticMermaid';
+import StreamMermaid from './StreamMermaid';
+import { variants } from './style';
 
 const SyntaxMermaid = memo<SyntaxMermaidProps>(
-  ({ ref, children, theme: customTheme, variant, className, style }) => {
+  ({
+    animated,
+    children,
+    className,
+    fallbackClassName,
+    ref,
+    style,
+    theme: customTheme,
+    variant = 'borderless',
+  }) => {
     const isDefaultTheme = customTheme === 'lobe-theme' || !customTheme;
+    const showBackground = !isDefaultTheme && variant === 'filled';
+    const resolvedTheme = isDefaultTheme ? undefined : customTheme;
 
-    const background = useMemo(() => {
-      if (isDefaultTheme) return;
-      return mermaidThemes.find((item) => item.id === customTheme)?.background;
-    }, [isDefaultTheme, customTheme]);
+    const mermaidClassName = cx(
+      variants({ animated, mermaid: true, showBackground, variant }),
+      className,
+    );
+    const fallback = cx(
+      variants({ animated, mermaid: false, showBackground, variant }),
+      fallbackClassName,
+    );
 
-    const id = useId();
-    const mermaidId = kebabCase(`mermaid-${id}`);
-    const { data, isLoading } = useMermaid(children, {
-      id: mermaidId,
-      theme: isDefaultTheme ? undefined : customTheme,
-    });
-    const [blobUrl, setBlobUrl] = useState<string>();
-
-    // 组件卸载时清理 Blob URL，避免内存泄漏
-    useEffect(() => {
-      return () => {
-        if (blobUrl) URL.revokeObjectURL(blobUrl);
-      };
-    }, [blobUrl]);
-
-    useEffect(() => {
-      if (isLoading || !data) return;
-      let finalSvgString = data;
-
-      // 修复Firefox点击预览mermaid图时宽高为0导致不显示的异常
-      if (
-        typeof window !== 'undefined' &&
-        typeof navigator !== 'undefined' &&
-        navigator.userAgent.includes('Firefox')
-      ) {
-        const parser = new DOMParser();
-        const svgDoc = parser.parseFromString(data, 'image/svg+xml');
-        const svgElement = svgDoc.documentElement;
-        if (svgElement && svgElement.hasAttribute('viewBox')) {
-          const viewBox = svgElement.getAttribute('viewBox')!;
-          const viewBoxParts = viewBox.split(' ');
-          if (Array.isArray(viewBoxParts) && viewBoxParts.length === 4) {
-            svgElement.setAttribute('width', viewBoxParts[2]);
-            svgElement.setAttribute('height', viewBoxParts[3]);
-          }
-          finalSvgString = new XMLSerializer().serializeToString(svgDoc);
-        }
-      }
-
-      // // 创建Blob对象
-      const svgBlob = new Blob([finalSvgString], { type: 'image/svg+xml' });
-      // // 创建并保存Blob URL
-      const url = URL.createObjectURL(svgBlob);
-      setBlobUrl(url);
-    }, [isLoading, data]);
-
-    if (!blobUrl) return null;
+    if (animated) {
+      return (
+        <StreamMermaid
+          className={mermaidClassName}
+          fallbackClassName={fallback}
+          ref={ref}
+          style={style}
+          theme={resolvedTheme}
+          variant={variant}
+        >
+          {children}
+        </StreamMermaid>
+      );
+    }
 
     return (
-      <Image
-        alt={'mermaid'}
-        className={className}
-        maxHeight={480}
-        minWidth={300}
-        objectFit={'contain'}
+      <StaticMermaid
+        className={mermaidClassName}
+        fallbackClassName={fallback}
         ref={ref}
-        src={blobUrl}
-        style={{
-          background: variant === 'filled' ? background : undefined,
-          borderRadius: 0,
-          margin: 0,
-          minWidth: 300,
-          padding: variant === 'borderless' ? 0 : 16,
-          position: 'relative',
-          width: '100%',
-          ...style,
-        }}
-        variant={'borderless'}
-        width={'100%'}
-      />
+        style={style}
+        theme={resolvedTheme}
+        variant={variant}
+      >
+        {children}
+      </StaticMermaid>
     );
   },
-  (prevProps, nextProps) => prevProps.children === nextProps.children,
+  (prevProps, nextProps) =>
+    prevProps.children === nextProps.children && prevProps.animated === nextProps.animated,
 );
 
 SyntaxMermaid.displayName = 'SyntaxMermaid';

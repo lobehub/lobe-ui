@@ -394,7 +394,6 @@ export default () => {
 | fullFeatured   | Whether to use the full-featured mode with more controls | `boolean`                                | -           |
 | variant        | Style variant of the container                           | `'filled' \| 'outlined' \| 'borderless'` | `'filled'`  |
 | shadow         | Whether to show shadow effect                            | `boolean`                                | -           |
-| enablePanZoom  | Enable pan and zoom functionality                        | `boolean`                                | `true`      |
 | copyable       | Whether to show copy button                              | `boolean`                                | `true`      |
 | showLanguage   | Whether to show language label                           | `boolean`                                | `true`      |
 | language       | The language label to display                            | `string`                                 | `'mermaid'` |

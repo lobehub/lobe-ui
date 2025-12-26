@@ -73,6 +73,7 @@ export const PreSingleLine: FC<SnippetProps> = ({
 };
 
 export const PreMermaid: FC<MermaidProps> = ({
+  animated,
   fullFeatured,
   children,
   className,
@@ -83,6 +84,7 @@ export const PreMermaid: FC<MermaidProps> = ({
 }) => {
   return (
     <Mermaid
+      animated={animated}
       className={cx(styles.container, className)}
       fullFeatured={fullFeatured}
       style={style}

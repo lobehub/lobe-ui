@@ -12,7 +12,6 @@ export default () => {
         value: code,
       },
       copyable: true,
-      enablePanZoom: true,
       shadow: false,
       showLanguage: true,
       theme: {
