@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 4.3.0](https://github.com/lobehub/lobe-ui/compare/v4.2.2...v4.3.0)
+
+<sup>Released on **2025-12-26**</sup>
+
+#### ✨ Features
+
+- **misc**: Add Checkbox Group.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add Checkbox Group ([10115f1](https://github.com/lobehub/lobe-ui/commit/10115f1))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.2.2](https://github.com/lobehub/lobe-ui/compare/v4.2.1...v4.2.2)
 
 <sup>Released on **2025-12-26**</sup>
