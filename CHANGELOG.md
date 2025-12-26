@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.2.2](https://github.com/lobehub/lobe-ui/compare/v4.2.1...v4.2.2)
+
+<sup>Released on **2025-12-26**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update GroupAvatar.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update GroupAvatar ([e193c5c](https://github.com/lobehub/lobe-ui/commit/e193c5c))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.2.1](https://github.com/lobehub/lobe-ui/compare/v4.2.0...v4.2.1)
 
 <sup>Released on **2025-12-25**</sup>
