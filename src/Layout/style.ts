@@ -1,6 +1,8 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
 
-export const useStyles = createStyles(({ cx, css, stylish }, headerHeight: number) => {
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css }) => {
   return {
     app: css`
       overflow: hidden auto;
@@ -14,7 +16,7 @@ export const useStyles = createStyles(({ cx, css, stylish }, headerHeight: numbe
     asideInner: css`
       overflow: hidden auto;
       width: 100%;
-      height: calc(100dvh - ${headerHeight}px);
+      height: calc(100dvh - var(--layout-header-height, 64px));
     `,
     content: css`
       position: relative;
@@ -27,7 +29,7 @@ export const useStyles = createStyles(({ cx, css, stylish }, headerHeight: numbe
       max-width: 100%;
     `,
     header: cx(
-      stylish.blur,
+      lobeStaticStylish.blur,
       css`
         position: sticky;
         z-index: 999;

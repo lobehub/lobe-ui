@@ -1,13 +1,13 @@
 'use client';
 
 import { Button as AntdButton } from 'antd';
-import { cva } from 'class-variance-authority';
+import { cx, useTheme } from 'antd-style';
 import { Loader2Icon } from 'lucide-react';
-import { type FC, isValidElement, useMemo } from 'react';
+import { type FC, isValidElement } from 'react';
 
 import Icon from '@/Icon';
 
-import { useStyles } from './style';
+import { variants } from './style';
 import type { ButtonProps } from './type';
 
 const Button: FC<ButtonProps> = ({
@@ -25,32 +25,9 @@ const Button: FC<ButtonProps> = ({
   ref,
   ...rest
 }) => {
-  const { styles, cx, theme } = useStyles();
+  const theme = useTheme();
 
   const defaultVariant = type ? undefined : variant || (theme.isDarkMode ? 'filled' : 'outlined');
-
-  const variants = useMemo(
-    () =>
-      cva(styles.root, {
-        defaultVariants: {
-          glass: false,
-          shadow: false,
-        },
-        /* eslint-disable sort-keys-fix/sort-keys-fix */
-        variants: {
-          glass: {
-            false: null,
-            true: styles.glass,
-          },
-          shadow: {
-            false: null,
-            true: styles.shadow,
-          },
-        },
-        /* eslint-enable sort-keys-fix/sort-keys-fix */
-      }),
-    [styles],
-  );
 
   return (
     <AntdButton

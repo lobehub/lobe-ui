@@ -1,6 +1,7 @@
 'use client';
 
-import { CSSProperties, memo } from 'react';
+import { cx } from 'antd-style';
+import { CSSProperties, memo, useMemo } from 'react';
 
 import A from '@/A';
 import { Center, Flexbox } from '@/Flex';
@@ -8,7 +9,7 @@ import Icon from '@/Icon';
 import Img from '@/Img';
 import Text from '@/Text';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { FeatureItemProps } from './type';
 
 const Image = memo<{ className?: string; image: string; style?: CSSProperties; title: string }>(
@@ -39,12 +40,21 @@ const Item = memo<FeatureItemProps>(
     ...rest
   }) => {
     const rowNumber = row || 7;
-    const { styles, cx } = useStyles({ hasLink: Boolean(link), rowNum: rowNumber });
+    const hasLink = Boolean(link);
+
+    const cssVariables = useMemo<Record<string, string>>(
+      () => ({
+        '--features-row-num': String(rowNumber),
+        '--features-title-hover-size': hasLink ? '14px' : '20px',
+      }),
+      [rowNumber, hasLink],
+    );
 
     return (
       <div
-        className={cx(styles.container, className)}
+        className={cx(hasLink ? styles.containerHasLink : styles.container, className)}
         style={{
+          ...cssVariables,
           gridColumn: `span ${column || 1}`,
           gridRow: `span ${rowNumber}`,
           ...style,

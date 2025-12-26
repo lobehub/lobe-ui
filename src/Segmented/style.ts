@@ -1,18 +1,46 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ css, stylish, token }) => {
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
-    borderless: stylish.variantBorderlessWithoutHover,
+    borderless: lobeStaticStylish.variantBorderlessWithoutHover,
     filled: css`
-      background: ${token.colorBgLayout};
-      border: 1px solid ${token.colorFillQuaternary};
+      border: 1px solid ${cssVar.colorFillQuaternary};
+      background: ${cssVar.colorBgLayout};
     `,
-    glass: stylish.blur,
+    glass: lobeStaticStylish.blur,
     outlined: css`
+      border: 1px solid ${cssVar.colorBorderSecondary};
       background: transparent;
-      border: 1px solid ${token.colorBorderSecondary};
     `,
     root: css``,
-    shadow: stylish.shadow,
+    shadow: lobeStaticStylish.shadow,
   };
+});
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    glass: false,
+    shadow: false,
+    variant: 'filled',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: styles.filled,
+      outlined: styles.outlined,
+      borderless: styles.borderless,
+    },
+    glass: {
+      false: null,
+      true: styles.glass,
+    },
+    shadow: {
+      false: null,
+      true: styles.shadow,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

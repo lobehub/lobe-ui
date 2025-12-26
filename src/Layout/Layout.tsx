@@ -1,7 +1,7 @@
 'use client';
 
 import { useResponsive } from 'antd-style';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 
 import DraggablePanel from '@/DraggablePanel';
 
@@ -11,12 +11,18 @@ import LayoutMain from './components/LayoutMain';
 import LayoutSidebar from './components/LayoutSidebar';
 import LayoutSidebarInner from './components/LayoutSidebarInner';
 import LayoutToc from './components/LayoutToc';
-import { useStyles } from './style';
+import { styles } from './style';
 import type { LayoutProps } from './type';
 
 const Layout = memo<LayoutProps>(
   ({ helmet, headerHeight = 64, header, footer, sidebar, asideWidth, toc, children, tocWidth }) => {
-    const { styles } = useStyles(headerHeight);
+    // Convert headerHeight prop to CSS variable
+    const cssVariables = useMemo<Record<string, string>>(
+      () => ({
+        '--layout-header-height': `${headerHeight}px`,
+      }),
+      [headerHeight],
+    );
     const { mobile, laptop } = useResponsive();
     const [expand, setExpand] = useState(true);
     useEffect(() => {
@@ -24,7 +30,7 @@ const Layout = memo<LayoutProps>(
     }, [laptop]);
 
     return (
-      <>
+      <div style={cssVariables}>
         {helmet}
         {header && (
           <LayoutHeader headerHeight={headerHeight}>
@@ -50,7 +56,7 @@ const Layout = memo<LayoutProps>(
           {!mobile && toc && <LayoutToc tocWidth={tocWidth}>{toc}</LayoutToc>}
         </LayoutMain>
         {footer && <LayoutFooter>{footer}</LayoutFooter>}
-      </>
+      </div>
     );
   },
 );

@@ -1,9 +1,10 @@
 'use client';
 
+import { cx, useTheme } from 'antd-style';
 import { type FC } from 'react';
 
 import SkeletonBlock from './SkeletonBlock';
-import { useStyles } from './style';
+import { styles } from './style';
 import type { SkeletonAvatarProps } from './type';
 
 const DEFAULT_SIZE = 40;
@@ -18,7 +19,7 @@ const SkeletonAvatar: FC<SkeletonAvatarProps> = ({
   className,
   ...rest
 }) => {
-  const { cx, styles, theme } = useStyles();
+  const theme = useTheme();
   const defaultSize = size ?? DEFAULT_SIZE;
   const finalWidth = width ?? defaultSize;
   const finalHeight = height ?? defaultSize;

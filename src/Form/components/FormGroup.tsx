@@ -1,15 +1,14 @@
 'use client';
 
-import { useResponsive } from 'antd-style';
-import { cva } from 'class-variance-authority';
+import { cx, useResponsive } from 'antd-style';
 import { isUndefined } from 'es-toolkit/compat';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 
 import Collapse from '@/Collapse';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
-import { useGroupStyles as useStyles } from '../style';
+import { groupStyles, titleVariants } from '../style';
 import type { FormGroupProps } from '../type';
 
 const FormGroup = memo<FormGroupProps>(
@@ -29,29 +28,10 @@ const FormGroup = memo<FormGroupProps>(
     ...rest
   }) => {
     const { mobile } = useResponsive();
-    const { cx, styles } = useStyles(variant);
+    const styles = groupStyles;
     const isBorderless = variant === 'borderless';
 
     const defaultCollapsible = isUndefined(collapsible) ? !isBorderless : collapsible;
-
-    const titleVariants = useMemo(
-      () =>
-        cva(styles.title, {
-          defaultVariants: {
-            variant: 'borderless',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: null,
-              outlined: null,
-              borderless: styles.titleBorderless,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
 
     const titleContent = (
       <Flexbox className={cx(titleVariants({ variant }), styles.titleMobile)} gap={8} horizontal>

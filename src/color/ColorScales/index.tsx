@@ -7,7 +7,7 @@ import { Flexbox } from '@/Flex';
 
 import { ColorScaleItem } from '../types';
 import ScaleRow from './ScaleRow';
-import { useStyles } from './style';
+import { styles } from './style';
 
 export interface ColorScalesProps {
   /**
@@ -25,8 +25,6 @@ export interface ColorScalesProps {
 }
 
 const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
-  const { styles } = useStyles();
-
   return (
     <Flexbox align={'center'} flex={1} horizontal justify={'center'}>
       <div style={{ padding: '8px 16px 32px 0' }}>

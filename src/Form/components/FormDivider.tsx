@@ -1,12 +1,12 @@
 'use client';
 
 import { Divider as AntDivider } from 'antd';
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
 import { type FC } from 'react';
 
 import type { FormDividerProps } from '../type';
 
-const useStyles = createStyles(({ css }) => {
+const styles = createStaticStyles(({ css }) => {
   return {
     root: css`
       margin: 0;
@@ -16,7 +16,6 @@ const useStyles = createStyles(({ css }) => {
 });
 
 const FormDivider: FC<FormDividerProps> = ({ visible = true, style, className, ...rest }) => {
-  const { cx, styles } = useStyles();
   return (
     <AntDivider
       className={cx(styles.root, className)}

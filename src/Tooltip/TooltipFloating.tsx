@@ -3,6 +3,7 @@
 import type { FloatingContext, Placement } from '@floating-ui/react';
 import { FloatingArrow } from '@floating-ui/react';
 import { useDebounce } from 'ahooks';
+import { cx } from 'antd-style';
 import { AnimatePresence } from 'motion/react';
 import type { CSSProperties, ReactNode, RefObject } from 'react';
 import React, { useMemo } from 'react';
@@ -11,7 +12,7 @@ import { Flexbox } from '@/Flex';
 import Hotkey from '@/Hotkey';
 import { useMotionComponent } from '@/MotionProvider';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { TooltipProps } from './type';
 
 type TooltipFloatingProps = {
@@ -55,8 +56,6 @@ const TooltipFloating = ({
   styles: styleProps,
   zIndex,
 }: TooltipFloatingProps) => {
-  const { styles, cx } = useStyles();
-
   const transformOrigin = useMemo(() => {
     const basePlacement = String(placement || 'top').split('-')[0];
     switch (basePlacement) {

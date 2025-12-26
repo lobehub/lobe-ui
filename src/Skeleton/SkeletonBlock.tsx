@@ -1,11 +1,12 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { type FC } from 'react';
 
 import Block from '@/Block';
 import { SkeletonBlockProps } from '@/Skeleton/type';
 
-import { useStyles } from './style';
+import { styles } from './style';
 
 const SkeletonBlock: FC<SkeletonBlockProps> = ({
   width = '100%',
@@ -14,7 +15,6 @@ const SkeletonBlock: FC<SkeletonBlockProps> = ({
   style,
   className,
 }) => {
-  const { cx, styles } = useStyles();
   return (
     <Block
       className={cx(styles.base, active && styles.active, className)}

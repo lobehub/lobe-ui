@@ -1,9 +1,9 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }) => {
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     active: css`
-      color: ${token.colorPrimary};
+      color: ${cssVar.colorPrimary};
     `,
     container: css`
       user-select: none;
@@ -12,9 +12,9 @@ export const useStyles = createStyles(({ css, token }) => {
       flex: none;
 
       width: 100vw;
+      border-block-start: 1px solid ${cssVar.colorFillTertiary};
 
-      background: ${token.colorBgLayout};
-      border-block-start: 1px solid ${token.colorFillTertiary};
+      background: ${cssVar.colorBgLayout};
     `,
 
     icon: css`
@@ -31,7 +31,7 @@ export const useStyles = createStyles(({ css, token }) => {
       cursor: pointer;
       width: 48px;
       height: 48px;
-      color: ${token.colorTextDescription};
+      color: ${cssVar.colorTextDescription};
     `,
     title: css`
       overflow: hidden;

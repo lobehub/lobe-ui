@@ -1,6 +1,7 @@
 'use client';
 
 import { Form } from 'antd';
+import { cx, useTheme } from 'antd-style';
 import isEqual from 'fast-deep-equal';
 import { InfoIcon } from 'lucide-react';
 import { memo, useEffect, useMemo, useState } from 'react';
@@ -12,7 +13,7 @@ import { useMotionComponent } from '@/MotionProvider';
 import formMessages from '@/i18n/resources/en/form';
 import { useTranslation } from '@/i18n/useTranslation';
 
-import { useSubmitFooterStyles as useStyles } from '../style';
+import { submitFooterStyles } from '../style';
 import type { FormSubmitFooterProps } from '../type';
 import { useFormContext } from './FormProvider';
 import { merge, removeUndefined } from './merge';
@@ -37,7 +38,8 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
     const values = Form.useWatch([], form) || {};
     const { t } = useTranslation(formMessages);
 
-    const { cx, styles, theme } = useStyles();
+    const theme = useTheme();
+    const styles = submitFooterStyles;
 
     const v = useMemo(() => removeUndefined(values), [values]);
 

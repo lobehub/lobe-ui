@@ -1,5 +1,6 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { PanelLeft, Pin, PinOff } from 'lucide-react';
 import { memo } from 'react';
 import useControlledState from 'use-merge-value';
@@ -8,7 +9,7 @@ import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 import { type DivProps } from '@/types';
 
-import { useStyles } from './style';
+import { styles } from './style';
 
 export interface DraggablePanelHeaderProps extends Omit<DivProps, 'children'> {
   pin?: boolean;
@@ -20,7 +21,6 @@ export interface DraggablePanelHeaderProps extends Omit<DivProps, 'children'> {
 
 const DraggablePanelHeader = memo<DraggablePanelHeaderProps>((props) => {
   const { pin, setPin, className, setExpand, title, position = 'left', ...rest } = props;
-  const { cx, styles } = useStyles();
 
   const [isPinned, setIsPinned] = useControlledState(false, {
     onChange: setPin,

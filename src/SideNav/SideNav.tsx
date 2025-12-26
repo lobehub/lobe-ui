@@ -1,15 +1,14 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { SideNavProps } from './type';
 
 const SideNav = memo<SideNavProps>(({ className, avatar, topActions, bottomActions, ...rest }) => {
-  const { styles, cx } = useStyles();
-
   return (
     <Flexbox
       align={'center'}

@@ -1,6 +1,6 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
+import { cx, useTheme } from 'antd-style';
 import { X } from 'lucide-react';
 import { memo, useMemo, useState } from 'react';
 
@@ -8,7 +8,7 @@ import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 import Img from '@/Img';
 
-import { useStyles } from './style';
+import { createVariants, styles } from './style';
 import type { GuideCardProps } from './type';
 
 const GuideCard = memo<GuideCardProps>(
@@ -33,31 +33,9 @@ const GuideCard = memo<GuideCardProps>(
     ...rest
   }) => {
     const [show, setShow] = useState(true);
-    const { cx, styles } = useStyles();
+    const theme = useTheme();
 
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            shadow: false,
-            variant: 'filled',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-            shadow: {
-              false: null,
-              true: styles.shadow,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
+    const variants = useMemo(() => createVariants(theme.isDarkMode), [theme.isDarkMode]);
 
     if (!show) return null;
 

@@ -1,8 +1,9 @@
+import { cx, useTheme } from 'antd-style';
 import { type FC } from 'react';
 
 import { SvgProps } from '@/types';
 
-import { useStyles } from '../style';
+import { styles } from '../style';
 
 interface FileIconProps extends SvgProps {
   filetypeShort?: string;
@@ -24,7 +25,7 @@ const FileIcon: FC<FileIconProps> = ({
   style,
   ...rest
 }) => {
-  const { cx, styles, theme } = useStyles();
+  const theme = useTheme();
   return (
     <svg
       className={cx(styles.icon, !hasIcon && className)}

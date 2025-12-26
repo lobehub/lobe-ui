@@ -1,39 +1,15 @@
 'use client';
 
 import { Input as AntInput } from 'antd';
-import { cva } from 'class-variance-authority';
-import { memo, useMemo } from 'react';
+import { cx, useTheme } from 'antd-style';
+import { memo } from 'react';
 
-import { useStyles } from './style';
+import { variants } from './style';
 import type { TextAreaProps } from './type';
 
 const TextArea = memo<TextAreaProps>(
   ({ ref, variant, shadow, className, resize = false, style, ...rest }) => {
-    const { styles, cx, theme } = useStyles();
-
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            shadow: false,
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-              underlined: null,
-            },
-            shadow: {
-              false: null,
-              true: styles.shadow,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
+    const theme = useTheme();
 
     return (
       <AntInput.TextArea

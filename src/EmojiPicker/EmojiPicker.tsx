@@ -3,8 +3,10 @@
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { Popover } from 'antd';
+import { cx, useTheme } from 'antd-style';
+import chroma from 'chroma-js';
 import { SmileIcon, TrashIcon, UploadIcon } from 'lucide-react';
-import { memo, useRef, useState } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 import useSWR from 'swr';
 import useMergeState from 'use-merge-value';
 
@@ -18,7 +20,7 @@ import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
 import { useTranslation } from '@/i18n/useTranslation';
 
 import AvatarUploader from './AvatarUploader';
-import { useStyles } from './style';
+import { styles } from './style';
 import type { EmojiPickerProps } from './type';
 
 const DEFAULT_AVATAR = '🤖';
@@ -58,7 +60,14 @@ const EmojiPicker = memo<EmojiPickerProps>(
     });
     const [tab, setTab] = useState<'emoji' | 'upload'>('emoji');
 
-    const { cx, styles, theme } = useStyles();
+    const theme = useTheme();
+    const pickerCssVariables = useMemo<Record<string, string>>(
+      () => ({
+        '--emoji-picker-rgb-accent': chroma(theme.colorPrimary).rgb().join(', '),
+        '--emoji-picker-rgb-background': chroma(theme.colorBgElevated).rgb().join(', '),
+      }),
+      [theme.colorPrimary, theme.colorBgElevated],
+    );
 
     const { data: i18n } = useSWR(
       locale,
@@ -109,7 +118,12 @@ const EmojiPicker = memo<EmojiPickerProps>(
       <Flexbox
         className={cx(styles.picker, popupClassName)}
         ref={ref}
-        style={{ minWidth: 310, paddingTop: showTabs ? 4 : 0, ...popupStyle }}
+        style={{
+          minWidth: 310,
+          paddingTop: showTabs ? 4 : 0,
+          ...pickerCssVariables,
+          ...popupStyle,
+        }}
       >
         {showTabs && (
           <Flexbox

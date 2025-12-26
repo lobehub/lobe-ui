@@ -1,8 +1,9 @@
+import { cx, useTheme } from 'antd-style';
 import { type FC } from 'react';
 
 import { SvgProps } from '@/types';
 
-import { useStyles } from '../style';
+import { styles } from '../style';
 
 interface FolderIconProps extends SvgProps {
   filetype?: string;
@@ -24,7 +25,7 @@ const FolderIcon: FC<FolderIconProps> = ({
   style,
   ...rest
 }) => {
-  const { cx, styles, theme } = useStyles();
+  const theme = useTheme();
   return (
     <svg
       className={cx(styles.icon, !hasIcon && className)}

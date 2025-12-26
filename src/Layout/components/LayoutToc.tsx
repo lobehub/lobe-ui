@@ -1,13 +1,13 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { memo } from 'react';
 
-import { useStyles } from '../style';
+import { styles } from '../style';
 import type { LayoutTocProps } from '../type';
 
 export const LayoutToc = memo<LayoutTocProps>(
   ({ tocWidth, style, className, children, ...rest }) => {
-    const { cx, styles } = useStyles();
     return (
       <nav
         className={cx(styles.toc, className)}

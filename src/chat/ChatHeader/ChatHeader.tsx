@@ -1,12 +1,13 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { ChevronLeft } from 'lucide-react';
 import { memo } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { ChatHeaderProps } from './type';
 
 const ChatHeader = memo<ChatHeaderProps>(
@@ -23,8 +24,6 @@ const ChatHeader = memo<ChatHeaderProps>(
     gap = 16,
     ...rest
   }) => {
-    const { cx, styles } = useStyles();
-
     return (
       <Flexbox
         align={'center'}

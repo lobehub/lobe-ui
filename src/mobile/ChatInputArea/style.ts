@@ -1,12 +1,12 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }) => {
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     container: css`
       flex: none;
       padding-block: 12px;
-      background: ${token.colorFillQuaternary};
-      border-block-start: 1px solid ${token.colorFillTertiary};
+      border-block-start: 1px solid ${cssVar.colorFillTertiary};
+      background: ${cssVar.colorFillQuaternary};
     `,
     expand: css`
       position: absolute;

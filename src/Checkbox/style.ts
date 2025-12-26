@@ -1,27 +1,26 @@
-import { createStyles } from 'antd-style';
-import { readableColor } from 'polished';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }) => {
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     checked: css`
-      border-color: ${token.colorPrimary};
-      color: ${readableColor(token.colorPrimary)};
-      background-color: ${token.colorPrimary};
+      border-color: ${cssVar.colorPrimary};
+      color: ${cssVar.colorTextLightSolid};
+      background-color: ${cssVar.colorPrimary};
     `,
     disabled: css`
       cursor: not-allowed;
 
-      border-color: ${token.colorFill};
+      border-color: ${cssVar.colorFill};
 
-      color: ${readableColor(token.colorTextQuaternary)};
+      color: ${cssVar.colorText};
 
       opacity: 0.25;
-      background-color: ${token.colorFill};
+      background-color: ${cssVar.colorFill};
     `,
     indeterminate: css`
-      border-color: ${token.colorPrimary};
-      color: ${readableColor(token.colorPrimary)};
-      background-color: ${token.colorPrimary};
+      border-color: ${cssVar.colorPrimary};
+      color: ${cssVar.colorTextLightSolid};
+      background-color: ${cssVar.colorPrimary};
     `,
     root: css`
       cursor: pointer;

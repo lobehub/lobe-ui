@@ -1,6 +1,8 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
 
-export const useStyles = createStyles(({ css }) => {
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css }) => {
   return {
     container: css`
       position: relative;
@@ -26,9 +28,9 @@ export const useStyles = createStyles(({ css }) => {
   };
 });
 
-export const useActionBarStyles = createStyles(({ css, cx, stylish }) => ({
+export const actionBarStyles = createStaticStyles(({ css }) => ({
   left: cx(
-    stylish.noScrollbar,
+    lobeStaticStylish.noScrollbar,
     css`
       overflow: auto hidden;
     `,

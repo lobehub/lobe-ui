@@ -1,13 +1,13 @@
 'use client';
 
-import { useResponsive } from 'antd-style';
+import { cx, useResponsive } from 'antd-style';
 import { LevaPanel } from 'leva';
 import { Ref, memo } from 'react';
 
 import DraggablePanel from '@/DraggablePanel';
 import { Center, Flexbox, FlexboxProps } from '@/Flex';
 
-import { useStyles } from './style';
+import { styles } from './style';
 
 export interface StoryBookProps extends FlexboxProps {
   levaStore: any;
@@ -18,7 +18,6 @@ export interface StoryBookProps extends FlexboxProps {
 export const StoryBook = memo<StoryBookProps>(
   ({ ref, levaStore, noPadding, className, children, ...rest }) => {
     const { mobile } = useResponsive();
-    const { styles, cx } = useStyles(Boolean(noPadding));
 
     return (
       <Flexbox
@@ -28,7 +27,7 @@ export const StoryBook = memo<StoryBookProps>(
         justify={'stretch'}
         ref={ref}
       >
-        <Center className={styles.left} flex={1} {...rest}>
+        <Center className={cx(noPadding ? styles.left : styles.leftWithPadding)} flex={1} {...rest}>
           {children}
         </Center>
         <DraggablePanel

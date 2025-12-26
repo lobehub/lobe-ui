@@ -1,17 +1,17 @@
 import { Layout } from '@lobehub/ui';
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
 import { Flexbox } from '@/Flex';
 
-const useStyles = createStyles(({ css, token }) => ({
+const styles = createStaticStyles(({ css, cssVar }) => ({
   footer: css`
     height: 36px;
-    border-block-start: 1px solid ${token.colorBorder};
+    border-block-start: 1px solid ${cssVar.colorBorder};
   `,
   header: css`
     height: 100%;
-    border-block-end: 1px solid ${token.colorBorder};
-    background: ${token.cyan5A};
+    border-block-end: 1px solid ${cssVar.colorBorder};
+    background: ${cssVar.cyan};
   `,
 }));
 
@@ -21,7 +21,6 @@ const MockData = ({ text }: { text: string }) =>
     .map((_, index) => <div key={index}>{text}</div>);
 
 export default () => {
-  const { styles } = useStyles();
   return (
     <div style={{ height: 400, overflow: 'auto' }}>
       <Layout

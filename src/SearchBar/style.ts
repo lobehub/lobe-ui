@@ -1,22 +1,24 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token, stylish, cx }) => ({
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) => ({
   icon: css`
-    color: ${token.colorTextPlaceholder};
+    color: ${cssVar.colorTextPlaceholder};
   `,
   search: css`
     position: relative;
     max-width: 100%;
   `,
   tag: cx(
-    stylish.blur,
+    lobeStaticStylish.blur,
     css`
       position: absolute;
       inset-block-start: 50%;
       inset-inline-end: 6px;
       transform: translateY(-50%);
 
-      color: ${token.colorTextDescription};
+      color: ${cssVar.colorTextDescription};
 
       kbd {
         color: inherit;

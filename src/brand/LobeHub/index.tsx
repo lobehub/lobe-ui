@@ -11,7 +11,7 @@ import LogoMono from '@/brand/LogoMono';
 import Divider from '@/brand/components/Divider';
 import { DivProps } from '@/types';
 
-import { useStyles } from './style';
+import { styles } from './style';
 
 export interface LobeHubProps extends DivProps {
   extra?: ReactNode;
@@ -22,7 +22,6 @@ export interface LobeHubProps extends DivProps {
 const LobeHub = memo<LobeHubProps>(
   ({ type = '3d', size = 32, style, extra, className, ...rest }) => {
     const theme = useTheme();
-    const { styles } = useStyles();
     let logoComponent: ReactNode;
 
     switch (type) {

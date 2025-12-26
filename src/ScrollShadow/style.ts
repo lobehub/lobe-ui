@@ -1,10 +1,14 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ css }, size: number) => {
-  const shadowSize = size + '%';
+export const styles = createStaticStyles(({ css }) => {
   return {
     bottomShadow: css`
-      mask-image: linear-gradient(180deg, #000 calc(100% - ${shadowSize}), transparent);
+      mask-image: linear-gradient(
+        180deg,
+        #000 calc(100% - var(--scroll-shadow-size, 40%)),
+        transparent
+      );
     `,
     hideScrollBar: css`
       scrollbar-width: none;
@@ -25,19 +29,27 @@ export const useStyles = createStyles(({ css }, size: number) => {
         #000,
         #000,
         transparent 0,
-        #000 ${shadowSize},
-        #000 calc(100% - ${shadowSize}),
+        #000 var(--scroll-shadow-size, 40%),
+        #000 calc(100% - var(--scroll-shadow-size, 40%)),
         transparent
       );
     `,
 
     // 水平滚动阴影
     leftShadow: css`
-      mask-image: linear-gradient(270deg, #000 calc(100% - ${shadowSize}), transparent);
+      mask-image: linear-gradient(
+        270deg,
+        #000 calc(100% - var(--scroll-shadow-size, 40%)),
+        transparent
+      );
     `,
 
     rightShadow: css`
-      mask-image: linear-gradient(90deg, #000 calc(100% - ${shadowSize}), transparent);
+      mask-image: linear-gradient(
+        90deg,
+        #000 calc(100% - var(--scroll-shadow-size, 40%)),
+        transparent
+      );
     `,
 
     root: css`
@@ -50,19 +62,52 @@ export const useStyles = createStyles(({ css }, size: number) => {
         #000,
         #000,
         transparent 0,
-        #000 ${shadowSize},
-        #000 calc(100% - ${shadowSize}),
+        #000 var(--scroll-shadow-size, 40%),
+        #000 calc(100% - var(--scroll-shadow-size, 40%)),
         transparent
       );
     `,
 
     // 垂直滚动阴影
     topShadow: css`
-      mask-image: linear-gradient(0deg, #000 calc(100% - ${shadowSize}), transparent);
+      mask-image: linear-gradient(
+        0deg,
+        #000 calc(100% - var(--scroll-shadow-size, 40%)),
+        transparent
+      );
     `,
 
     vertical: css`
       overflow-y: auto;
     `,
   };
+});
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    hideScrollBar: false,
+    orientation: 'vertical',
+    scrollPosition: 'none',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    orientation: {
+      horizontal: styles.horizontal,
+      vertical: styles.vertical,
+    },
+    hideScrollBar: {
+      true: styles.hideScrollBar,
+      false: null,
+    },
+    scrollPosition: {
+      'none': null,
+      'top': styles.topShadow,
+      'bottom': styles.bottomShadow,
+      'top-bottom': styles.topBottomShadow,
+      'left': styles.leftShadow,
+      'right': styles.rightShadow,
+      'left-right': styles.leftRightShadow,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

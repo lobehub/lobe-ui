@@ -1,11 +1,11 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
+import { cx } from 'antd-style';
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
-import { useStyles } from '@/Highlighter/style';
+import { styles, variants } from '@/Highlighter/style';
 import Tag from '@/Tag';
 
 import FullFeatured from './FullFeatured';
@@ -34,37 +34,6 @@ const Mermaid = memo<MermaidProps>(
     theme,
     ...rest
   }) => {
-    const { cx, styles } = useStyles();
-
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            shadow: false,
-            variant: 'filled',
-            wrap: false,
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-            shadow: {
-              false: null,
-              true: styles.shadow,
-            },
-            wrap: {
-              false: styles.nowrap,
-              true: null,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
-
     const tirmedChildren = children.trim();
     const copyContentRef = useRef(tirmedChildren);
 

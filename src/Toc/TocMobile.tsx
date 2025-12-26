@@ -7,17 +7,18 @@ import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { TocMobileProps } from './type';
 import { mapItems } from './utils';
 
 const TocMobile = memo<TocMobileProps>(
   ({ items, activeKey, onChange, getContainer, headerHeight = 64, tocWidth = 176 }) => {
+    // tocWidth is part of the interface but not used in this component
+    void tocWidth;
     const [activeLink, setActiveLink] = useControlledState<string>('', {
       onChange,
       value: activeKey,
     });
-    const { styles } = useStyles({ headerHeight, tocWidth });
 
     const activeAnchor = items.find((item) => item.id === activeLink);
 

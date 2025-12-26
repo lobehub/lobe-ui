@@ -1,10 +1,11 @@
+import { cx } from 'antd-style';
 import type { GroupPreviewConfig } from 'antd/es/image/PreviewGroup';
 import { X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 import Icon from '@/Icon';
 
-import { useStyles } from '../style';
+import { styles as componentStyles } from '../style';
 import type { PreviewGroupPreviewOptions } from '../type';
 import Preview from './Preview';
 import Toolbar from './Toolbar';
@@ -13,7 +14,6 @@ export const usePreview = (
   props: PreviewGroupPreviewOptions | boolean | undefined,
 ): GroupPreviewConfig | boolean => {
   const [visible, setVisible] = useState(false);
-  const { cx, styles: componentStyles } = useStyles();
 
   return useMemo(() => {
     if (props === false) return props;

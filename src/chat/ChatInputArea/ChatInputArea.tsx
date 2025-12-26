@@ -5,7 +5,7 @@ import { memo } from 'react';
 import DraggablePanel from '@/DraggablePanel';
 
 import ChatInputAreaInner from './components/ChatInputAreaInner';
-import { useStyles } from './style';
+import { styles } from './style';
 import type { ChatInputAreaProps } from './type';
 
 const ChatInputArea = memo<ChatInputAreaProps>(
@@ -23,8 +23,6 @@ const ChatInputArea = memo<ChatInputAreaProps>(
     onSend,
     ...rest
   }) => {
-    const { styles } = useStyles();
-
     return (
       <DraggablePanel
         className={className}

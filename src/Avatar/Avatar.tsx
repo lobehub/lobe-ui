@@ -2,7 +2,7 @@
 
 import { getEmoji } from '@lobehub/fluent-emoji';
 import { Avatar as AntAvatar } from 'antd';
-import { cva } from 'class-variance-authority';
+import { cx, useTheme } from 'antd-style';
 import { Loader2 } from 'lucide-react';
 import { readableColor } from 'polished';
 import { isValidElement, memo, useMemo } from 'react';
@@ -12,7 +12,7 @@ import FluentEmoji from '@/FluentEmoji';
 import Icon from '@/Icon';
 import Img from '@/Img';
 
-import { useStyles } from './style';
+import { styles, variants } from './style';
 import type { AvatarProps } from './type';
 
 const Avatar = memo<AvatarProps>(
@@ -54,31 +54,7 @@ const Avatar = memo<AvatarProps>(
       [avatar, isStringAvatar, isDefaultAntAvatar],
     );
 
-    const { styles, cx, theme } = useStyles();
-
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            shadow: false,
-            variant: 'borderless',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-            shadow: {
-              false: null,
-              true: styles.shadow,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
+    const theme = useTheme();
 
     const text = String(isDefaultAntAvatar ? title : avatar);
 

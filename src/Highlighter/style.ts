@@ -1,11 +1,15 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) => {
-  const prefix = `${prefixCls}-highlighter`;
-  const actionsHoverCls = `${prefix}-highlighter-hover-actions`;
-  const langHoverCls = `${prefix}-highlighter-hover-lang`;
-  const expandCls = `${prefix}-highlighter-body-expand`;
+import { lobeStaticStylish } from '@/styles';
 
+// 动态类名常量（用于 className）
+export const actionsHoverCls = 'ant-highlighter-highlighter-hover-actions';
+export const langHoverCls = 'ant-highlighter-highlighter-hover-lang';
+export const expandCls = 'ant-highlighter-highlighter-body-expand';
+export const prefix = 'ant-highlighter';
+
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     actions: cx(
       actionsHoverCls,
@@ -25,13 +29,13 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
     bodyExpand: cx(expandCls),
     bodyRoot: css`
       overflow: hidden;
-      transition: opacity 0.25s ${token.motionEaseOut};
+      transition: opacity 0.25s ${cssVar.motionEaseOut};
     `,
-    borderless: stylish.variantBorderlessWithoutHover,
+    borderless: lobeStaticStylish.variantBorderlessWithoutHover,
     filled: cx(
-      stylish.variantFilledWithoutHover,
+      lobeStaticStylish.variantFilledWithoutHover,
       css`
-        background: ${token.colorFillQuaternary};
+        background: ${cssVar.colorFillQuaternary};
       `,
     ),
     headerBorderless: css`
@@ -44,7 +48,7 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
 
     headerOutlined: css`
       & + .${expandCls} {
-        border-block-start: 1px solid ${token.colorFillQuaternary};
+        border-block-start: 1px solid ${cssVar.colorFillQuaternary};
       }
     `,
 
@@ -56,18 +60,18 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
 
     lang: cx(
       langHoverCls,
-      stylish.blur,
+      lobeStaticStylish.blur,
       css`
         position: absolute;
         z-index: 2;
         inset-block-end: 8px;
         inset-inline-end: 8px;
 
-        font-family: ${token.fontFamilyCode};
-        color: ${token.colorTextSecondary};
+        font-family: ${cssVar.fontFamilyCode};
+        color: ${cssVar.colorTextSecondary};
 
         opacity: 0;
-        background: ${token.colorFillQuaternary};
+        background: ${cssVar.colorFillQuaternary};
 
         transition: opacity 0.1s;
       `,
@@ -78,7 +82,7 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
         text-wrap: nowrap;
       }
     `,
-    outlined: stylish.variantOutlinedWithoutHover,
+    outlined: lobeStaticStylish.variantOutlinedWithoutHover,
     root: cx(
       prefix,
       css`
@@ -87,21 +91,21 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
         overflow: hidden;
 
         width: 100%;
-        border-radius: ${token.borderRadius}px;
+        border-radius: ${cssVar.borderRadius};
 
-        transition: background-color 100ms ${token.motionEaseOut};
+        transition: background-color 100ms ${cssVar.motionEaseOut};
 
         .languageTitle {
           opacity: 0.5;
           filter: grayscale(100%);
           transition:
             opacity,
-            grayscale 0.2s ${token.motionEaseInOut};
+            grayscale 0.2s ${cssVar.motionEaseInOut};
         }
 
         .panel-actions {
           opacity: 0;
-          transition: opacity 0.2s ${token.motionEaseInOut};
+          transition: opacity 0.2s ${cssVar.motionEaseInOut};
         }
 
         &:hover {
@@ -133,7 +137,7 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
         }
       `,
     ),
-    shadow: stylish.shadow,
+    shadow: lobeStaticStylish.shadow,
     wrap: css`
       pre,
       code {
@@ -141,4 +145,56 @@ export const useStyles = createStyles(({ token, css, cx, prefixCls, stylish }) =
       }
     `,
   };
+});
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    shadow: false,
+    variant: 'filled',
+    wrap: false,
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: styles.filled,
+      outlined: styles.outlined,
+      borderless: styles.borderless,
+    },
+    shadow: {
+      false: null,
+      true: styles.shadow,
+    },
+    wrap: {
+      false: styles.nowrap,
+      true: styles.wrap,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
+});
+
+export const headerVariants = cva(styles.headerRoot, {
+  defaultVariants: {
+    variant: 'filled',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: cx(styles.headerFilled, styles.headerOutlined),
+      outlined: styles.headerOutlined,
+      borderless: styles.headerBorderless,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
+});
+
+export const bodyVariants = cva(styles.bodyRoot, {
+  defaultVariants: {
+    expand: true,
+  },
+  variants: {
+    expand: {
+      false: styles.bodyCollapsed,
+      true: styles.bodyExpand,
+    },
+  },
 });

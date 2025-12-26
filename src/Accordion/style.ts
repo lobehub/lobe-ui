@@ -1,13 +1,13 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }) => {
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     action: css`
       width: 0;
       opacity: 0;
       transition:
         opacity,
-        width 0.2s ${token.motionEaseOut};
+        width 0.2s ${cssVar.motionEaseOut};
     `,
     base: css`
       display: flex;
@@ -30,13 +30,13 @@ export const useStyles = createStyles(({ css, token }) => {
       }
 
       &:focus-visible {
-        border-radius: ${token.borderRadiusLG}px;
-        outline: 2px solid ${token.colorPrimary};
+        border-radius: ${cssVar.borderRadiusLG};
+        outline: 2px solid ${cssVar.colorPrimary};
         outline-offset: 2px;
       }
     `,
     icon: css`
-      transition: transform 200ms ${token.motionEaseOut};
+      transition: transform 200ms ${cssVar.motionEaseOut};
     `,
     iconRotate: css`
       transform: rotate(90deg);
@@ -47,9 +47,9 @@ export const useStyles = createStyles(({ css, token }) => {
       align-items: center;
 
       font-size: 18px;
-      color: ${token.colorTextDescription};
+      color: ${cssVar.colorTextDescription};
 
-      transition: transform 200ms ${token.motionEaseOut};
+      transition: transform 200ms ${cssVar.motionEaseOut};
     `,
     item: css`
       position: relative;

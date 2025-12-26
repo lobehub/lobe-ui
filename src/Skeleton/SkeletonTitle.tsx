@@ -1,9 +1,9 @@
 'use client';
 
+import { useTheme } from 'antd-style';
 import { type FC } from 'react';
 
 import SkeletonBlock from './SkeletonBlock';
-import { useStyles } from './style';
 import type { SkeletonTitleProps } from './type';
 
 const DEFAULT_FONT_SIZE = 18;
@@ -18,7 +18,7 @@ const SkeletonTitle: FC<SkeletonTitleProps> = ({
   className,
   ...rest
 }) => {
-  const { theme } = useStyles();
+  const theme = useTheme();
   const baseFontSize = fontSize ?? theme.fontSize ?? DEFAULT_FONT_SIZE;
   const resolvedLineHeight = lineHeight ?? 1.6;
   const computedHeight = height ? height : Math.round(baseFontSize * resolvedLineHeight);

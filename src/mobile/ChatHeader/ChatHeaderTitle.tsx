@@ -4,11 +4,10 @@ import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
 
-import { useTitleStyles as useStyles } from './style';
+import { titleStyles as styles } from './style';
 import { ChatHeaderTitleProps } from './type';
 
 const ChatHeaderTitle = memo<ChatHeaderTitleProps>(({ title, desc, tag }) => {
-  const { styles } = useStyles();
   if (desc)
     return (
       <Flexbox align={'center'} flex={1} gap={4} justify={'center'}>

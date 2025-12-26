@@ -1,26 +1,12 @@
 'use client';
 
-import { createStyles } from 'antd-style';
 import { FolderIcon, FolderOpen } from 'lucide-react';
 import { FC, useState } from 'react';
 
 import { Flexbox, FlexboxProps } from '@/Flex';
 import Icon, { type IconProps } from '@/Icon';
 
-const useStyles = createStyles(({ css, token }) => {
-  return {
-    folder: css`
-      cursor: pointer;
-
-      &:hover {
-        color: ${token.colorText};
-      }
-    `,
-    folderChildren: css`
-      padding-inline-start: 1em;
-    `,
-  };
-});
+import { styles } from './style';
 
 export interface FolderProps extends FlexboxProps {
   defaultOpen?: boolean;
@@ -30,7 +16,6 @@ export interface FolderProps extends FlexboxProps {
 
 const Folder: FC<FolderProps> = ({ name, defaultOpen, icon = FolderIcon, children, ...rest }) => {
   const [open, setOpen] = useState(defaultOpen);
-  const { styles } = useStyles();
   return (
     <Flexbox {...rest}>
       <Flexbox

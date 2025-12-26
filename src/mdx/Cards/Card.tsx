@@ -1,6 +1,6 @@
 'use client';
 
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
 import { FC } from 'react';
 
 import A from '@/A';
@@ -10,13 +10,7 @@ import Icon, { type IconProps } from '@/Icon';
 import Img from '@/Img';
 import Tag, { type TagProps } from '@/Tag';
 
-const useStyles = createStyles(({ css, cx, token }) => {
-  const icon = cx(css`
-    margin-block: 0.1em;
-    opacity: 0.5;
-    transition: opacity 0.2s ${token.motionEaseInOut};
-  `);
-
+const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     card: css`
       --lobe-markdown-header-multiple: 0.2;
@@ -24,7 +18,7 @@ const useStyles = createStyles(({ css, cx, token }) => {
 
       overflow: hidden;
       height: 100%;
-      color: ${token.colorText};
+      color: ${cssVar.colorText};
 
       h3,
       p {
@@ -32,16 +26,16 @@ const useStyles = createStyles(({ css, cx, token }) => {
       }
 
       p {
-        color: ${token.colorTextDescription};
-        transition: color 0.2s ${token.motionEaseInOut};
+        color: ${cssVar.colorTextDescription};
+        transition: color 0.2s ${cssVar.motionEaseInOut};
       }
 
       &:hover {
         p {
-          color: ${token.colorTextSecondary};
+          color: ${cssVar.colorTextSecondary};
         }
 
-        .${icon} {
+        .mdx-card-icon {
           opacity: 1;
         }
       }
@@ -50,7 +44,11 @@ const useStyles = createStyles(({ css, cx, token }) => {
       width: 100%;
       padding: 1.4em;
     `,
-    icon,
+    icon: css`
+      margin-block: 0.1em;
+      opacity: 0.5;
+      transition: opacity 0.2s ${cssVar.motionEaseInOut};
+    `,
   };
 });
 
@@ -78,8 +76,6 @@ const Card: FC<CardProps> = ({
   variant = 'filled',
   ...rest
 }) => {
-  const { cx, styles } = useStyles();
-
   return (
     <A href={href}>
       <Block
@@ -125,7 +121,12 @@ const Card: FC<CardProps> = ({
           horizontal
         >
           {!image && icon && (
-            <Icon className={styles.icon} icon={icon} size={{ size: '1.5em' }} {...iconProps} />
+            <Icon
+              className={cx(styles.icon, 'mdx-card-icon')}
+              icon={icon}
+              size={{ size: '1.5em' }}
+              {...iconProps}
+            />
           )}
           <Flexbox gap={'0.2em'}>
             <h3>{title}</h3>

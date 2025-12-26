@@ -1,6 +1,6 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }) => {
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     container: css`
       --lobe-markdown-header-multiple: 0.5;
@@ -22,7 +22,7 @@ export const useStyles = createStyles(({ css, token }) => {
         width: 1px;
         height: calc(100% - 0.5em);
 
-        background: ${token.colorBorderSecondary};
+        background: ${cssVar.colorBorderSecondary};
       }
 
       h3 {
@@ -40,16 +40,16 @@ export const useStyles = createStyles(({ css, token }) => {
           width: 1.8em;
           height: 1.8em;
           margin-block-start: -0.05em;
+          border-radius: 9999px;
 
           font-size: 0.8em;
           font-weight: 500;
           line-height: 1.8em;
-          color: ${token.colorTextSecondary};
+          color: ${cssVar.colorTextSecondary};
           text-align: center;
 
-          background: ${token.colorBgElevated};
-          border-radius: 9999px;
-          box-shadow: 0 0 0 2px ${token.colorBgLayout};
+          background: ${cssVar.colorBgElevated};
+          box-shadow: 0 0 0 2px ${cssVar.colorBgLayout};
         }
 
         &:not(:first-child) {

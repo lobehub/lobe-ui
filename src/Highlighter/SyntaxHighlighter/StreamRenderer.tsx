@@ -1,13 +1,12 @@
 'use client';
 
 import { getTokenStyleObject } from '@shikijs/core';
+import { cx } from 'antd-style';
 import type { CSSProperties } from 'react';
 import { memo } from 'react';
 import type { BuiltinTheme, ThemedToken } from 'shiki';
 
 import { useHighlight } from '@/hooks/useHighlight';
-
-import { useStyles } from './style';
 
 interface StreamRendererProps {
   children: string;
@@ -90,8 +89,6 @@ const TokenLine = memo(
 
 const StreamRenderer = memo<StreamRendererProps>(
   ({ children, className, enableTransformer, fallbackClassName, language, style, theme }) => {
-    const { cx } = useStyles();
-
     // Safely handle empty or invalid children
     const safeChildren = children ?? '';
 

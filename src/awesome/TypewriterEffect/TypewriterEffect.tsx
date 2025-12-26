@@ -1,10 +1,11 @@
 'use client';
 
+import { cx, useTheme } from 'antd-style';
 import { createElement, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMotionComponent } from '@/MotionProvider';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { TypewriterEffectProps } from './type';
 
 const TypewriterEffect = memo<TypewriterEffectProps>(
@@ -36,7 +37,8 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
     ...props
   }: TypewriterEffectProps) => {
     const Motion = useMotionComponent();
-    const { styles, cx } = useStyles();
+    const theme = useTheme();
+    const cxStyles = cx;
     const [displayedText, setDisplayedText] = useState('');
     const [currentCharIndex, setCurrentCharIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -237,12 +239,15 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
     return createElement(
       Component,
       {
-        className: cx(styles.container, className),
+        className: cxStyles(styles.container, className),
         ref: containerRef,
         ...props,
       },
       <>
-        <span className={styles.text} style={textColor ? { color: textColor } : undefined}>
+        <span
+          className={cxStyles(theme.isDarkMode ? styles.textDark : styles.textLight)}
+          style={textColor ? { color: textColor } : undefined}
+        >
           {characters.map((char, index) => (
             <Motion.span
               animate={{ opacity: 1 }}
@@ -262,7 +267,7 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
           (cursorFade ? (
             <Motion.span
               animate={{ opacity: shouldHideCursor ? 0 : 1 }}
-              className={cx(getCursorStyle(), cursorClassName)}
+              className={cxStyles(getCursorStyle(), cursorClassName)}
               initial={{ opacity: 0 }}
               style={finalCursorColor ? { backgroundColor: finalCursorColor } : undefined}
               transition={{
@@ -276,7 +281,7 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
             </Motion.span>
           ) : (
             <span
-              className={cx(getCursorStyle(), cursorClassName)}
+              className={cxStyles(getCursorStyle(), cursorClassName)}
               style={{
                 backgroundColor: finalCursorColor,
                 opacity: shouldHideCursor ? 0 : 1,

@@ -1,7 +1,7 @@
 'use client';
 
 import { Skeleton } from 'antd';
-import { cva } from 'class-variance-authority';
+import { cssVar, cx } from 'antd-style';
 import { PlayIcon } from 'lucide-react';
 import { type CSSProperties, type Ref, memo, useMemo, useState } from 'react';
 
@@ -9,7 +9,7 @@ import ActionIcon from '@/ActionIcon';
 import { Flexbox, FlexboxProps } from '@/Flex';
 import type { VideoProps as VProps } from '@/types';
 
-import { useStyles } from './style';
+import { styles, variants } from './style';
 
 export interface VideoProps extends VProps, Pick<FlexboxProps, 'width' | 'height'> {
   autoPlay?: boolean;
@@ -75,38 +75,31 @@ const Video = memo<VideoProps>(
   }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [showControls, setShowControls] = useState(false);
-    const { cx, styles, theme } = useStyles({
-      maxHeight,
-      maxWidth,
-      minHeight,
-      minWidth,
-    });
 
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            variant: 'filled',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
+    // Convert props to CSS variables
+    const cssVariables = useMemo<Record<string, string>>(() => {
+      const vars: Record<string, string> = {};
+      if (maxHeight !== undefined) {
+        vars['--video-max-height'] = typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight;
+      }
+      if (maxWidth !== undefined) {
+        vars['--video-max-width'] = typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth;
+      }
+      if (minHeight !== undefined) {
+        vars['--video-min-height'] = typeof minHeight === 'number' ? `${minHeight}px` : minHeight;
+      }
+      if (minWidth !== undefined) {
+        vars['--video-min-width'] = typeof minWidth === 'number' ? `${minWidth}px` : minWidth;
+      }
+      return vars;
+    }, [maxHeight, maxWidth, minHeight, minWidth]);
 
     if (isLoading)
       return (
         <Skeleton.Avatar
           active
           style={{
-            borderRadius: theme.borderRadius,
+            borderRadius: cssVar.borderRadiusLG,
             height,
             maxHeight,
             maxWidth,
@@ -123,6 +116,7 @@ const Video = memo<VideoProps>(
         height={height}
         ref={ref}
         style={{
+          ...cssVariables,
           ...style,
           ...customStyles?.wrapper,
         }}

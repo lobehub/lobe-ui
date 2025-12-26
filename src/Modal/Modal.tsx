@@ -1,14 +1,14 @@
 'use client';
 
 import { Modal as AntModal, Button, ConfigProvider, Drawer } from 'antd';
-import { useResponsive } from 'antd-style';
+import { cx, useResponsive, useTheme } from 'antd-style';
 import { Maximize2, Minimize2, X } from 'lucide-react';
 import { ReactNode, memo, useState } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 import Icon from '@/Icon';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { ModalProps } from './type';
 
 const Modal = memo<ModalProps>(
@@ -38,7 +38,7 @@ const Modal = memo<ModalProps>(
   }) => {
     const [fullscreen, setFullscreen] = useState(false);
     const { mobile } = useResponsive();
-    const { styles, cx, theme } = useStyles();
+    const theme = useTheme();
     const hideFooter = footer === false || footer === null;
     if (enableResponsive && mobile)
       return (

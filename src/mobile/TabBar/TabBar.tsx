@@ -1,12 +1,13 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { memo } from 'react';
 import useMergeState from 'use-merge-value';
 
 import { Flexbox } from '@/Flex';
 import SafeArea from '@/mobile/SafeArea';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { TabBarProps } from './type';
 
 const TabBar = memo<TabBarProps>(
@@ -19,7 +20,6 @@ const TabBar = memo<TabBarProps>(
         value: activeKey,
       },
     );
-    const { styles, cx } = useStyles();
 
     return (
       <Flexbox as={'footer'} className={cx(styles.container, className)} ref={ref} {...rest}>

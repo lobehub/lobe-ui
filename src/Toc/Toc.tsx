@@ -1,16 +1,24 @@
 'use client';
 
 import { Anchor } from 'antd';
-import { memo } from 'react';
+import { cx } from 'antd-style';
+import { memo, useMemo } from 'react';
 
 import { default as TocMobile } from './TocMobile';
-import { useStyles } from './style';
+import { styles } from './style';
 import type { TocProps } from './type';
 import { mapItems } from './utils';
 
 const Toc = memo<TocProps>(
   ({ activeKey, items, getContainer, isMobile, headerHeight = 64, tocWidth = 176 }) => {
-    const { styles, cx } = useStyles({ headerHeight, tocWidth });
+    // Convert props to CSS variables
+    const cssVariables = useMemo<Record<string, string>>(
+      () => ({
+        '--toc-header-height': `${headerHeight}px`,
+        '--toc-width': `${tocWidth}px`,
+      }),
+      [headerHeight, tocWidth],
+    );
 
     if (isMobile)
       return (
@@ -23,7 +31,7 @@ const Toc = memo<TocProps>(
       );
 
     return (
-      <section className={cx(styles.container, styles.anchor)}>
+      <section className={cx(styles.container, styles.anchor)} style={cssVariables}>
         <h4>Table of Contents</h4>
         <Anchor
           getContainer={getContainer}

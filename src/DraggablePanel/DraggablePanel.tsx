@@ -2,6 +2,7 @@
 
 import { useHover } from 'ahooks';
 import { ConfigProvider } from 'antd';
+import { cx } from 'antd-style';
 import { cva } from 'class-variance-authority';
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
 import type { Enable, NumberSize, Size } from 're-resizable';
@@ -21,7 +22,7 @@ import useControlledState from 'use-merge-value';
 import { Center } from '@/Flex';
 import Icon from '@/Icon';
 
-import { useStyles } from './style';
+import { createToggleVariants, handleVariants, styles } from './style';
 import type { DraggablePanelProps } from './type';
 import { reversePlacement } from './utils';
 
@@ -120,12 +121,13 @@ const DraggablePanel = memo<DraggablePanelProps>(
         : placement;
     }, [direction, placement]);
 
-    const { styles, cx } = useStyles({
-      backgroundColor,
-      headerHeight,
-      showBorder,
-      showHandleWideArea,
-    });
+    const cssVariables = useMemo<Record<string, string>>(
+      () => ({
+        '--draggable-panel-bg': backgroundColor || '',
+        '--draggable-panel-header-height': `${headerHeight}px`,
+      }),
+      [backgroundColor, headerHeight],
+    );
 
     const [isExpand, setIsExpand] = useControlledState(defaultExpand, {
       onChange: onExpandChange,
@@ -175,79 +177,92 @@ const DraggablePanel = memo<DraggablePanelProps>(
     const canResizing = resize !== false && isExpand;
 
     // Style variants for the panel
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          compoundVariants: [
-            {
-              class: styles.bottomFloat,
-              mode: 'float',
-              placement: 'bottom',
-            },
-            {
-              class: styles.topFloat,
-              mode: 'float',
-              placement: 'top',
-            },
-            {
-              class: styles.leftFloat,
-              mode: 'float',
-              placement: 'left',
-            },
-            {
-              class: styles.rightFloat,
-              mode: 'float',
-              placement: 'right',
-            },
-          ],
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            placement: {
-              top: isExpand && styles.borderBottom,
-              right: isExpand && styles.borderLeft,
-              bottom: isExpand && styles.borderTop,
-              left: isExpand && styles.borderRight,
-            },
-            mode: {
-              fixed: styles.fixed,
-              float: null,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles, isExpand],
-    );
+    const variants = useMemo(() => {
+      const getBorderStyle = (placement: string) => {
+        if (!isExpand) return null;
+        if (!showBorder) {
+          switch (placement) {
+            case 'top': {
+              return styles.borderBottomNone;
+            }
+            case 'right': {
+              return styles.borderLeftNone;
+            }
+            case 'bottom': {
+              return styles.borderTopNone;
+            }
+            case 'left': {
+              return styles.borderRightNone;
+            }
+            default: {
+              return null;
+            }
+          }
+        } else {
+          switch (placement) {
+            case 'top': {
+              return styles.borderBottom;
+            }
+            case 'right': {
+              return styles.borderLeft;
+            }
+            case 'bottom': {
+              return styles.borderTop;
+            }
+            case 'left': {
+              return styles.borderRight;
+            }
+            default: {
+              return null;
+            }
+          }
+        }
+      };
 
-    // Style variants for the handle
-    const handleVariants = useMemo(
-      () =>
-        cva(styles.handleRoot, {
-          variants: {
-            placement: {
-              bottom: styles.handleBottom,
-              left: styles.handleLeft,
-              right: styles.handleRight,
-              top: styles.handleTop,
-            },
+      return cva(styles.root, {
+        compoundVariants: [
+          {
+            class: styles.bottomFloat,
+            mode: 'float',
+            placement: 'bottom',
           },
-        }),
-      [styles],
-    );
+          {
+            class: styles.topFloat,
+            mode: 'float',
+            placement: 'top',
+          },
+          {
+            class: styles.leftFloat,
+            mode: 'float',
+            placement: 'left',
+          },
+          {
+            class: styles.rightFloat,
+            mode: 'float',
+            placement: 'right',
+          },
+        ],
+        /* eslint-disable sort-keys-fix/sort-keys-fix */
+        variants: {
+          placement: {
+            top: getBorderStyle('top'),
+            right: getBorderStyle('right'),
+            bottom: getBorderStyle('bottom'),
+            left: getBorderStyle('left'),
+          },
+          mode: {
+            fixed: styles.fixed,
+            float: null,
+          },
+        },
+        /* eslint-enable sort-keys-fix/sort-keys-fix */
+      });
+    }, [styles, isExpand, showBorder]);
 
     // Style variants for the toggle button
     const toggleVariants = useMemo(
-      () =>
-        cva(styles.toggleRoot, {
-          variants: {
-            placement: {
-              bottom: styles.toggleTop,
-              left: styles.toggleRight,
-              right: styles.toggleLeft,
-              top: styles.toggleBottom,
-            },
-          },
-        }),
-      [styles],
+      () => createToggleVariants(showHandleWideArea),
+      [showHandleWideArea],
     );
 
     // Configure resizing handles
@@ -422,6 +437,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
           onResizeStart={handleResizeStart}
           onResizeStop={handleResizeStop}
           style={{
+            ...cssVariables,
             opacity: isPending ? 0.95 : 1,
             transition: state.isResizing ? 'unset' : undefined,
             ...style,
@@ -453,7 +469,11 @@ const DraggablePanel = memo<DraggablePanelProps>(
 
     // For fullscreen mode, return a simpler layout
     if (fullscreen) {
-      return <div className={cx(styles.fullscreen, className)}>{children}</div>;
+      return (
+        <div className={cx(styles.fullscreen, className)} style={cssVariables}>
+          {children}
+        </div>
+      );
     }
 
     return (
@@ -461,6 +481,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
         className={cx(variants({ mode, placement: internalPlacement }), className)}
         dir={dir}
         ref={ref}
+        style={cssVariables}
       >
         {expandable && state.showExpand && handle}
         {destroyOnClose ? isExpand && inner : inner}

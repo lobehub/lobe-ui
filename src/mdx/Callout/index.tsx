@@ -1,19 +1,20 @@
 'use client';
 
+import { cx, useTheme } from 'antd-style';
 import { AlertOctagon, AlertTriangle, Info, Lightbulb, MessageSquareWarning } from 'lucide-react';
 import { FC, useMemo } from 'react';
 
 import { Flexbox, FlexboxProps } from '@/Flex';
 import Icon from '@/Icon';
 
-import { useStyles } from './style';
+import { styles } from './style';
 
 export interface CalloutProps extends FlexboxProps {
   type?: 'tip' | 'error' | 'important' | 'info' | 'warning';
 }
 
 const Callout: FC<CalloutProps> = ({ children, type = 'info', className, style, ...rest }) => {
-  const { cx, styles, theme } = useStyles();
+  const theme = useTheme();
 
   const typeConfig = useMemo(
     () => ({

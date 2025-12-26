@@ -1,11 +1,34 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ css, stylish }) => {
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css }) => {
   return {
-    borderless: stylish.variantBorderless,
-    filled: stylish.variantFilled,
-    outlined: stylish.variantOutlined,
+    borderless: lobeStaticStylish.variantBorderless,
+    filled: lobeStaticStylish.variantFilled,
+    outlined: lobeStaticStylish.variantOutlined,
     root: css``,
-    shadow: stylish.shadow,
+    shadow: lobeStaticStylish.shadow,
   };
+});
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    shadow: false,
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: styles.filled,
+      outlined: styles.outlined,
+      borderless: styles.borderless,
+      underlined: null,
+    },
+    shadow: {
+      false: null,
+      true: styles.shadow,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

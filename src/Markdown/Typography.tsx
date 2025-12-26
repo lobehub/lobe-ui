@@ -1,8 +1,9 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { memo } from 'react';
 
-import { useStyles } from './markdown.style';
+import { styles } from './markdown.style';
 import type { TypographyProps } from './type';
 
 const Typography = memo<TypographyProps>(
@@ -18,8 +19,6 @@ const Typography = memo<TypographyProps>(
     style,
     ...rest
   }) => {
-    const { cx, styles } = useStyles();
-
     return (
       <article
         className={cx(styles.root, className)}

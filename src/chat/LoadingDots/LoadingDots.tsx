@@ -1,12 +1,28 @@
 'use client';
 
-import { type FC } from 'react';
+import { cx } from 'antd-style';
+import { type FC, useMemo } from 'react';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { LoadingDotsProps } from './type';
 
-const LoadingDots: FC<LoadingDotsProps> = ({ size = 8, color, variant = 'dots', className }) => {
-  const { styles, cx } = useStyles({ color, size });
+const LoadingDots: FC<LoadingDotsProps> = ({
+  size = 8,
+  color,
+  variant = 'dots',
+  className,
+  style,
+}) => {
+  // Convert props to CSS variables
+  const cssVariables = useMemo<Record<string, string>>(() => {
+    const vars: Record<string, string> = {
+      '--loading-dots-size': `${size}px`,
+    };
+    if (color) {
+      vars['--loading-dots-color'] = color;
+    }
+    return vars;
+  }, [color, size]);
 
   const renderDots = () => {
     switch (variant) {
@@ -57,7 +73,13 @@ const LoadingDots: FC<LoadingDotsProps> = ({ size = 8, color, variant = 'dots', 
   };
 
   return (
-    <div className={cx(variant === 'orbit' ? styles.orbitWrapper : styles.container, className)}>
+    <div
+      className={cx(variant === 'orbit' ? styles.orbitWrapper : styles.container, className)}
+      style={{
+        ...cssVariables,
+        ...style,
+      }}
+    >
       {renderDots()}
     </div>
   );

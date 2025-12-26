@@ -1,6 +1,7 @@
 'use client';
 
 import { useHover } from 'ahooks';
+import { cx } from 'antd-style';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Resizable, ResizeCallback } from 're-resizable';
 import { CSSProperties, memo, useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
@@ -9,7 +10,7 @@ import useControlledState from 'use-merge-value';
 import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { DraggableSideNavProps } from './type';
 
 const DEFAULT_MIN_WIDTH = 64; // 最小宽度即折叠宽度
@@ -112,7 +113,12 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
     width,
     ...rest
   }) => {
-    const { styles, cx } = useStyles({ backgroundColor, showBorder });
+    const cssVariables = useMemo<Record<string, string>>(
+      () => ({
+        '--draggable-side-nav-bg': backgroundColor || '',
+      }),
+      [backgroundColor],
+    );
     const ref = useRef<HTMLDivElement>(null);
     const isHovering = useHover(ref);
 
@@ -460,8 +466,20 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
     );
 
     const contentClassName = useMemo(
-      () => cx(styles.contentContainer, styles.menuOverride, classNames?.content),
-      [cx, styles.contentContainer, styles.menuOverride, classNames?.content],
+      () =>
+        cx(
+          showBorder ? styles.contentContainer : styles.contentContainerNoBorder,
+          styles.menuOverride,
+          classNames?.content,
+        ),
+      [
+        cx,
+        styles.contentContainer,
+        styles.contentContainerNoBorder,
+        styles.menuOverride,
+        classNames?.content,
+        showBorder,
+      ],
     );
 
     const headerClassName = useMemo(
@@ -504,7 +522,13 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
           style={containerStyle}
         >
           {handle}
-          <Flexbox className={contentClassName} style={customStyles?.content}>
+          <Flexbox
+            className={contentClassName}
+            style={{
+              ...cssVariables,
+              ...customStyles?.content,
+            }}
+          >
             {currentHeader && (
               <div className={headerClassName} style={customStyles?.header}>
                 {currentHeader}

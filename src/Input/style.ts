@@ -1,63 +1,106 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ cx, token, css, stylish, prefixCls }) => {
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     borderless: css`
-      &.${prefixCls}-input {
-        ${stylish.variantBorderless}
+      &[class*='ant-input'] {
+        ${lobeStaticStylish.variantBorderless}
         &:hover {
-          ${stylish.variantBorderlessWithoutHover}
+          ${lobeStaticStylish.variantBorderlessWithoutHover}
         }
       }
     `,
     borderlessOPT: css`
-      &.${prefixCls}-otp {
-        .${prefixCls}-otp-input {
-          ${stylish.variantBorderless};
+      &[class*='ant-otp'] {
+        [class*='ant-otp-input'] {
+          ${lobeStaticStylish.variantBorderless};
         }
       }
     `,
     filled: cx(
-      stylish.variantFilled,
+      lobeStaticStylish.variantFilled,
       css`
         &:focus-within {
-          ${stylish.variantFilledWithoutHover}
+          ${lobeStaticStylish.variantFilledWithoutHover}
         }
       `,
     ),
 
     filledOPT: css`
-      &.${prefixCls}-otp {
-        .${prefixCls}-otp-input {
-          ${stylish.variantFilled};
+      &[class*='ant-otp'] {
+        [class*='ant-otp-input'] {
+          ${lobeStaticStylish.variantFilled};
         }
       }
     `,
-    outlined: stylish.variantOutlined,
+    outlined: lobeStaticStylish.variantOutlined,
     outlinedOPT: css`
-      &.${prefixCls}-otp {
-        .${prefixCls}-otp-input {
-          ${stylish.variantOutlined};
+      &[class*='ant-otp'] {
+        [class*='ant-otp-input'] {
+          ${lobeStaticStylish.variantOutlined};
         }
       }
     `,
     root: css``,
     rootOPT: css`
-      &.${prefixCls}-otp {
-        .${prefixCls}-otp-input {
+      &[class*='ant-otp'] {
+        [class*='ant-otp-input'] {
           &:focus-within {
-            border-color: ${token.colorBorder};
+            border-color: ${cssVar.colorBorder};
           }
         }
       }
     `,
-    shadow: stylish.shadow,
+    shadow: lobeStaticStylish.shadow,
     shadowOPT: css`
-      &.${prefixCls}-otp {
-        .${prefixCls}-otp-input {
-          ${stylish.shadow};
+      &[class*='ant-otp'] {
+        [class*='ant-otp-input'] {
+          ${lobeStaticStylish.shadow};
         }
       }
     `,
   };
+});
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    shadow: false,
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: styles.filled,
+      outlined: styles.outlined,
+      borderless: styles.borderless,
+      underlined: null,
+    },
+    shadow: {
+      false: null,
+      true: styles.shadow,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
+});
+
+export const variantsOPT = cva(styles.rootOPT, {
+  defaultVariants: {
+    shadow: false,
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: styles.filledOPT,
+      outlined: styles.outlinedOPT,
+      borderless: styles.borderlessOPT,
+      underlined: null,
+    },
+    shadow: {
+      false: null,
+      true: styles.shadowOPT,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

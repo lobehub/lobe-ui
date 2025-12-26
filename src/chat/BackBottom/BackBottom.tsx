@@ -1,18 +1,18 @@
 'use client';
 
 import { useScroll } from 'ahooks';
+import { cx } from 'antd-style';
 import { ListEnd } from 'lucide-react';
 import { type MouseEventHandler, memo, useEffect, useRef, useState } from 'react';
 
 import Button from '@/Button';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { BackBottomProps } from './type';
 
 const BackBottom = memo<BackBottomProps>(
   ({ visibilityHeight = 240, target, onClick, style, className, text }) => {
     const [visible, setVisible] = useState<boolean>(false);
-    const { styles, cx } = useStyles(visible);
     const ref = useRef<HTMLButtonElement>(null);
     const current = (target as any)?.current;
     const scrollHeight = current?.scrollHeight || 0;
@@ -32,7 +32,7 @@ const BackBottom = memo<BackBottomProps>(
 
     return (
       <Button
-        className={cx(styles, className)}
+        className={cx(visible ? styles.visible : styles.hidden, className)}
         glass
         icon={ListEnd}
         onClick={scrollToBottom}

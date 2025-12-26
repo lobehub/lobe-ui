@@ -1,14 +1,15 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
 
-import { useFooterStyles as useStyles } from '../style';
+import { footerStyles } from '../style';
 import type { FormFooterProps } from '../type';
 
 const FormFooter: FC<FormFooterProps> = ({ className, children, ...rest }) => {
-  const { cx, styles } = useStyles();
+  const styles = footerStyles;
   return (
     <Flexbox
       align={'center'}

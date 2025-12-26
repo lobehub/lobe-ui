@@ -1,6 +1,6 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }) => {
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     center: css`
       position: relative;
@@ -18,9 +18,9 @@ export const useStyles = createStyles(({ css, token }) => {
       height: 52px;
       min-height: 52px;
       max-height: 52px;
+      border-block-end: 1px solid ${cssVar.colorBorderSecondary};
 
-      background: ${token.colorBgContainerSecondary};
-      border-block-end: 1px solid ${token.colorBorderSecondary};
+      background: ${cssVar.colorBgContainer};
     `,
     left: css`
       position: relative;
@@ -36,7 +36,7 @@ export const useStyles = createStyles(({ css, token }) => {
   };
 });
 
-export const useTitleStyles = createStyles(({ css, token }) => ({
+export const titleStyles = createStaticStyles(({ css, cssVar }) => ({
   container: css`
     position: relative;
     overflow: hidden;
@@ -50,7 +50,7 @@ export const useTitleStyles = createStyles(({ css, token }) => ({
 
     font-size: 12px;
     line-height: 1;
-    color: ${token.colorTextTertiary};
+    color: ${cssVar.colorTextTertiary};
     text-overflow: ellipsis;
     white-space: nowrap;
   `,

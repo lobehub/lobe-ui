@@ -1,16 +1,42 @@
 'use client';
 
-import { memo } from 'react';
+import { cx, useTheme } from 'antd-style';
+import { memo, useMemo } from 'react';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { SpotlightProps } from './type';
 import { useMouseOffset } from './useMouseOffset';
 
 const Spotlight = memo<SpotlightProps>(({ className, size = 64, ...properties }) => {
   const [offset, outside, reference] = useMouseOffset();
-  const { styles, cx } = useStyles({ offset, outside, size });
+  const theme = useTheme();
 
-  return <div className={cx(styles, className)} ref={reference} {...properties} />;
+  const cssVariables = useMemo<Record<string, string>>(
+    () => ({
+      '--spotlight-opacity': outside ? '0' : '0.1',
+      '--spotlight-size': `${size}px`,
+      '--spotlight-x': `${offset?.x ?? 0}px`,
+      '--spotlight-y': `${offset?.y ?? 0}px`,
+    }),
+    [offset, size, outside],
+  );
+
+  const spotlightStyle = theme.isDarkMode
+    ? outside
+      ? styles.spotlightDarkOutside
+      : styles.spotlightDark
+    : outside
+      ? styles.spotlightLightOutside
+      : styles.spotlightLight;
+
+  return (
+    <div
+      className={cx(spotlightStyle, className)}
+      ref={reference}
+      style={cssVariables}
+      {...properties}
+    />
+  );
 });
 
 Spotlight.displayName = 'Spotlight';

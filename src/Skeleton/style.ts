@@ -1,4 +1,4 @@
-import { createStyles, keyframes } from 'antd-style';
+import { createStaticStyles, keyframes } from 'antd-style';
 
 const shimmer = keyframes`
   0% {
@@ -12,11 +12,10 @@ const shimmer = keyframes`
   }
 `;
 
-export const useStyles = createStyles(({ css, token }) => {
-  const spacing = token.paddingXS ?? 8;
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     active: css`
-      background: ${token.colorFillSecondary};
+      background: ${cssVar.colorFillSecondary};
       animation: ${shimmer} 2s linear infinite;
     `,
 
@@ -31,16 +30,16 @@ export const useStyles = createStyles(({ css, token }) => {
 
       overflow: hidden;
 
-      border-radius: ${token.borderRadius}px;
+      border-radius: ${cssVar.borderRadius};
 
-      background: ${token.colorFillTertiary};
+      background: ${cssVar.colorFillTertiary};
     `,
 
     text: css`
       display: flex;
       flex: 1;
       flex-direction: column;
-      gap: ${spacing}px;
+      gap: ${cssVar.paddingXS};
 
       width: 100%;
     `,

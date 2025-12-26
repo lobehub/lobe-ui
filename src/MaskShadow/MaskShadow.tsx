@@ -1,39 +1,32 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
+import { cx } from 'antd-style';
 import { memo, useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
 
-import { useStyles } from './style';
+import { variants } from './style';
 import type { MaskShadowProps } from './type';
 
 const MaskShadow = memo<MaskShadowProps>(
   ({ className, children, position = 'bottom', size = 40, ...rest }) => {
-    const { cx, styles } = useStyles(size);
-
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            position: 'bottom',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            position: {
-              top: styles.topShadow,
-              bottom: styles.bottomShadow,
-              left: styles.leftShadow,
-              right: styles.rightShadow,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
+    // Convert size prop to CSS variable
+    const cssVariables = useMemo<Record<string, string>>(
+      () => ({
+        '--mask-shadow-size': `${size}%`,
+      }),
+      [size],
     );
 
     return (
-      <Flexbox className={cx(variants({ position }), className)} {...rest}>
+      <Flexbox
+        className={cx(variants({ position }), className)}
+        style={{
+          ...cssVariables,
+          ...rest.style,
+        }}
+        {...rest}
+      >
         {children}
       </Flexbox>
     );

@@ -4,7 +4,7 @@ import { Flexbox } from '@/Flex';
 import { ChatItemProps } from '@/chat/ChatItem';
 import { formatTime } from '@/utils/formatTime';
 
-import { useStyles } from '../style';
+import { styles } from '../style';
 
 export interface TitleProps {
   avatar: ChatItemProps['avatar'];
@@ -14,13 +14,11 @@ export interface TitleProps {
   titleAddon?: ChatItemProps['titleAddon'];
 }
 
-const Title: FC<TitleProps> = ({ showTitle, placement, time, avatar, titleAddon }) => {
-  const { styles } = useStyles({ placement, showTitle, time });
-
+const Title: FC<TitleProps> = ({ showTitle, placement = 'left', time, avatar, titleAddon }) => {
   return (
     <Flexbox
       align={'center'}
-      className={styles.name}
+      className={placement === 'left' ? styles.nameLeft : styles.nameRight}
       direction={placement === 'left' ? 'horizontal' : 'horizontal-reverse'}
       gap={4}
     >

@@ -1,10 +1,10 @@
 'use client';
 
 import { Form } from 'antd';
-import { cva } from 'class-variance-authority';
+import { cx } from 'antd-style';
 import { memo, useMemo } from 'react';
 
-import { useItemStyles as useStyles } from '../style';
+import { itemVariants } from '../style';
 import type { FormItemProps } from '../type';
 import FormDivider from './FormDivider';
 import FormTitle from './FormTitle';
@@ -25,44 +25,33 @@ const FormItem = memo<FormItemProps>(
     variant,
     ...rest
   }) => {
-    const { cx, styles } = useStyles({ minWidth });
-
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            divider: false,
-            itemMinWidth: false,
-            layout: 'vertical',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            itemMinWidth: {
-              true: styles.itemMinWidth,
-              false: null,
-            },
-            divider: {
-              true: null,
-              false: styles.itemNoDivider,
-            },
-            layout: {
-              vertical: styles.verticalLayout,
-              horizontal: null,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
+    const cssVariables = useMemo<Record<string, string>>(
+      () => ({
+        '--form-item-min-width':
+          minWidth !== undefined && minWidth !== null && minWidth !== ''
+            ? typeof minWidth === 'number'
+              ? `${minWidth}px`
+              : minWidth
+            : '',
+      }),
+      [minWidth],
     );
+
+    const hasMinWidth = minWidth !== undefined && minWidth !== null && minWidth !== '';
+    const { style: restStyle, ...restProps } = rest;
 
     return (
       <>
         {divider && <FormDivider visible={variant !== 'borderless'} />}
         <Item
-          className={cx(variants({ divider, itemMinWidth: Boolean(minWidth), layout }), className)}
+          className={cx(itemVariants({ divider, itemMinWidth: hasMinWidth, layout }), className)}
           label={<FormTitle avatar={avatar} desc={desc} tag={tag} title={label} />}
           layout={layout}
-          {...rest}
+          style={{
+            ...cssVariables,
+            ...restStyle,
+          }}
+          {...restProps}
         >
           {children}
         </Item>

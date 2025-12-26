@@ -1,10 +1,11 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { Fragment, memo } from 'react';
 
 import ChatListItem from './components/ChatListItem';
 import HistoryDivider from './components/HistoryDivider';
-import { useStyles } from './style';
+import { styles } from './style';
 import type { ChatListProps } from './type';
 
 const ChatList = memo<ChatListProps>(
@@ -28,8 +29,6 @@ const ChatList = memo<ChatListProps>(
     showAvatar,
     ...rest
   }) => {
-    const { cx, styles } = useStyles();
-
     return (
       <div className={cx(styles.container, className)} {...rest}>
         {data.map((item, index) => {

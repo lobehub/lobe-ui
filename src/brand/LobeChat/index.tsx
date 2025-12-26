@@ -5,7 +5,7 @@ import { type ReactNode, memo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import LogoText from '@/brand/LobeChatText';
-import { useStyles } from '@/brand/LobeHub/style';
+import { styles } from '@/brand/LobeHub/style';
 import Logo3d from '@/brand/Logo3d';
 import LogoFlat from '@/brand/LogoFlat';
 import LogoMono from '@/brand/LogoMono';
@@ -21,7 +21,6 @@ export interface LobeChatProps extends DivProps {
 const LobeChat = memo<LobeChatProps>(
   ({ type = '3d', size = 32, style, extra, className, ...rest }) => {
     const theme = useTheme();
-    const { styles } = useStyles();
     let logoComponent: ReactNode;
 
     switch (type) {

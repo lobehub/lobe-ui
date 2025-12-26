@@ -1,11 +1,12 @@
 'use client';
 
-import { memo, useEffect, useRef } from 'react';
+import { cx } from 'antd-style';
+import { memo, useEffect, useMemo, useRef } from 'react';
 
 import Grid from '@/Grid';
 
 import SpotlightCardItem from './SpotlightCardItem';
-import { CHILDREN_CLASSNAME, useStyles } from './style';
+import { CHILDREN_CLASSNAME, styles } from './style';
 import type { SpotlightCardProps } from './type';
 
 const SpotlightCard = memo<SpotlightCardProps>(
@@ -22,7 +23,13 @@ const SpotlightCard = memo<SpotlightCardProps>(
     spotlight = true,
     ...rest
   }) => {
-    const { styles, cx } = useStyles({ borderRadius, size });
+    const cssVariables = useMemo<Record<string, string>>(
+      () => ({
+        '--spotlight-card-border-radius': `${borderRadius}px`,
+        '--spotlight-card-size': `${size}px`,
+      }),
+      [borderRadius, size],
+    );
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -52,7 +59,10 @@ const SpotlightCard = memo<SpotlightCardProps>(
         maxItemWidth={maxItemWidth}
         ref={ref}
         rows={columns}
-        style={style}
+        style={{
+          ...cssVariables,
+          ...style,
+        }}
         {...rest}
       >
         {items.map((item, index) => {

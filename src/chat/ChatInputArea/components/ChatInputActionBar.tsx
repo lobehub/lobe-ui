@@ -5,7 +5,7 @@ import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
 
-import { useActionBarStyles as useStyles } from '../style';
+import { actionBarStyles as styles } from '../style';
 import { ChatInputActionBarProps } from '../type';
 
 const ChatInputActionBar: FC<ChatInputActionBarProps> = ({
@@ -16,7 +16,6 @@ const ChatInputActionBar: FC<ChatInputActionBarProps> = ({
   ...rest
 }) => {
   const { mobile } = useResponsive();
-  const { styles } = useStyles();
   return (
     <Flexbox
       align={'center'}

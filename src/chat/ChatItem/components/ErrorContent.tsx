@@ -4,7 +4,7 @@ import Alert from '@/Alert';
 import { Flexbox } from '@/Flex';
 import { ChatItemProps } from '@/chat/ChatItem';
 
-import { useStyles } from '../style';
+import { styles } from '../style';
 
 export interface ErrorContentProps {
   error?: ChatItemProps['error'];
@@ -12,9 +12,7 @@ export interface ErrorContentProps {
   placement?: ChatItemProps['placement'];
 }
 
-const ErrorContent: FC<ErrorContentProps> = ({ message, error, placement }) => {
-  const { styles } = useStyles({ placement });
-
+const ErrorContent: FC<ErrorContentProps> = ({ message, error }) => {
   return (
     <Flexbox className={styles.errorContainer}>
       <Alert closable={false} extra={message} showIcon type={'error'} {...error} />

@@ -1,14 +1,14 @@
 'use client';
 
 import { Collapse as AntdCollapse, ConfigProvider } from 'antd';
-import { cva } from 'class-variance-authority';
+import { cx, useTheme } from 'antd-style';
 import { ChevronDown } from 'lucide-react';
 import { isValidElement, memo, useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
-import { DEFAULT_PADDING, getPadding, useStyles } from './style';
+import { DEFAULT_PADDING, createVariants, getPadding, styles } from './style';
 import type { CollapseProps } from './type';
 
 const Collapse = memo<CollapseProps>(
@@ -26,42 +26,9 @@ const Collapse = memo<CollapseProps>(
     ref,
     ...rest
   }) => {
-    const { cx, styles } = useStyles();
+    const theme = useTheme();
 
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          compoundVariants: [
-            {
-              class: styles.gapOutlined,
-              gap: true,
-              variant: 'outlined',
-            },
-          ],
-          defaultVariants: {
-            collapsible: true,
-            gap: false,
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-            gap: {
-              false: null,
-              true: styles.gapRoot,
-            },
-            collapsible: {
-              false: styles.hideCollapsibleIcon,
-              true: null,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
+    const variants = useMemo(() => createVariants(theme.isDarkMode), [theme.isDarkMode]);
 
     const antdItems = useMemo(
       () =>

@@ -1,11 +1,11 @@
 'use client';
 
-import { useResponsive } from 'antd-style';
+import { cx, useResponsive } from 'antd-style';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { HeaderProps } from './type';
 
 const Header = memo<HeaderProps>(
@@ -25,7 +25,6 @@ const Header = memo<HeaderProps>(
     ...rest
   }) => {
     const { mobile } = useResponsive();
-    const { cx, styles } = useStyles();
 
     return (
       <Flexbox

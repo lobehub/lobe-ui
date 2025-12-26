@@ -1,10 +1,10 @@
 import { FileTypeIcon, Icon } from '@lobehub/ui';
-import { createStyles, useTheme } from 'antd-style';
+import { createStaticStyles, useTheme } from 'antd-style';
 import { ArrowUpIcon, PlusIcon } from 'lucide-react';
 
 import { Center, Flexbox } from '@/Flex';
 
-const useStyles = createStyles(({ css, token }) => {
+const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     card: css`
       position: relative;
@@ -13,13 +13,13 @@ const useStyles = createStyles(({ css, token }) => {
 
       width: 150px;
       height: 100px;
-      border-radius: ${token.borderRadiusLG}px;
+      border-radius: ${cssVar.borderRadiusLG};
 
       font-weight: 500;
       text-align: center;
 
-      background: ${token.colorFillTertiary};
-      box-shadow: 0 0 0 1px ${token.colorFillTertiary} inset;
+      background: ${cssVar.colorFillTertiary};
+      box-shadow: 0 0 0 1px ${cssVar.colorFillTertiary} inset;
     `,
     glow: css`
       position: absolute;
@@ -45,7 +45,6 @@ const useStyles = createStyles(({ css, token }) => {
 
 export default () => {
   const theme = useTheme();
-  const { styles } = useStyles();
   return (
     <Center gap={8} horizontal>
       <Flexbox className={styles.card} padding={16}>

@@ -2,12 +2,10 @@ import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
 
-import { useTitleStyles as useStyles } from './style';
+import { titleStyles as styles } from './style';
 import type { ChatHeaderTitleProps } from './type';
 
 const ChatHeaderTitle: FC<ChatHeaderTitleProps> = ({ title, desc, tag }) => {
-  const { styles } = useStyles();
-
   const tagContent = tag && (
     <Flexbox align={'center'} className={styles.tag} horizontal>
       {tag}

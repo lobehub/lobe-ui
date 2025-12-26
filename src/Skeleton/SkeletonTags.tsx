@@ -1,11 +1,11 @@
 'use client';
 
+import { useTheme } from 'antd-style';
 import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
 
 import SkeletonBlock from './SkeletonBlock';
-import { useStyles } from './style';
 import type { SkeletonTagsProps } from './type';
 
 const DEFAULT_COUNT = 1;
@@ -33,7 +33,7 @@ const SkeletonTags: FC<SkeletonTagsProps> = ({
   width,
   ...rest
 }) => {
-  const { theme } = useStyles();
+  const theme = useTheme();
   const resolvedGap = gap ?? theme.paddingXS ?? 4;
   const resolvedCount = Math.max(count, 1);
   const resolvedHeight = height ?? HEIGHT_MAP[size];

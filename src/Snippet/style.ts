@@ -1,9 +1,12 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ css, token, stylish }) => {
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
-    borderless: stylish.variantBorderlessWithoutHover,
-    filled: stylish.variantFilledWithoutHover,
+    borderless: lobeStaticStylish.variantBorderlessWithoutHover,
+    filled: lobeStaticStylish.variantFilledWithoutHover,
     hightlight: css`
       overflow: auto hidden;
       flex: 1;
@@ -16,7 +19,7 @@ export const useStyles = createStyles(({ css, token, stylish }) => {
         height: 100%;
       }
     `,
-    outlined: stylish.variantOutlinedWithoutHover,
+    outlined: lobeStaticStylish.variantOutlinedWithoutHover,
     root: css`
       position: relative;
 
@@ -26,9 +29,28 @@ export const useStyles = createStyles(({ css, token, stylish }) => {
       height: 38px;
       padding-block: 0;
       padding-inline: 12px 8px;
-
-      border-radius: ${token.borderRadius}px;
+      border-radius: ${cssVar.borderRadius};
     `,
-    shadow: stylish.shadow,
+    shadow: lobeStaticStylish.shadow,
   };
+});
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    shadow: false,
+    variant: 'filled',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: styles.filled,
+      outlined: styles.outlined,
+      borderless: styles.borderless,
+    },
+    shadow: {
+      false: null,
+      true: styles.shadow,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

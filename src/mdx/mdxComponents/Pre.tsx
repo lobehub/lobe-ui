@@ -1,6 +1,6 @@
 'use client';
 
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
 import type { FC } from 'react';
 
 import Highlighter, { type HighlighterProps } from '@/Highlighter';
@@ -8,7 +8,7 @@ import { FALLBACK_LANG } from '@/Highlighter/const';
 import Mermaid, { type MermaidProps } from '@/Mermaid';
 import Snippet, { type SnippetProps } from '@/Snippet';
 
-const useStyles = createStyles(({ css }) => ({
+const styles = createStaticStyles(({ css }) => ({
   container: css`
     overflow: hidden;
     margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
@@ -32,8 +32,6 @@ export const Pre: FC<PreProps> = ({
   theme,
   ...rest
 }) => {
-  const { styles, cx } = useStyles();
-
   return (
     <Highlighter
       allowChangeLanguage={allowChangeLanguage}
@@ -60,8 +58,6 @@ export const PreSingleLine: FC<SnippetProps> = ({
   variant = 'filled',
   ...rest
 }) => {
-  const { cx, styles } = useStyles();
-
   return (
     <Snippet
       className={cx(styles.container, className)}
@@ -85,8 +81,6 @@ export const PreMermaid: FC<MermaidProps> = ({
   theme,
   ...rest
 }) => {
-  const { styles, cx } = useStyles();
-
   return (
     <Mermaid
       className={cx(styles.container, className)}

@@ -1,12 +1,12 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { memo } from 'react';
 
-import { useStyles } from '../style';
+import { styles } from '../style';
 import type { LayoutFooterProps } from '../type';
 
 export const LayoutFooter = memo<LayoutFooterProps>(({ children, className, ...rest }) => {
-  const { cx, styles } = useStyles();
   return (
     <footer className={cx(styles.footer, className)} {...rest}>
       {children}

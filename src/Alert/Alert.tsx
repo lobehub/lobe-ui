@@ -1,6 +1,7 @@
 'use client';
 
 import { Alert as AntdAlert } from 'antd';
+import { cx, useTheme } from 'antd-style';
 import { cva } from 'class-variance-authority';
 import { camelCase } from 'es-toolkit/compat';
 import { AlertTriangle, CheckCircle, Info, X, XCircle } from 'lucide-react';
@@ -11,7 +12,7 @@ import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
-import { useStyles } from './style';
+import { extraVariants, styles } from './style';
 import type { AlertProps } from './type';
 
 const typeIcons = {
@@ -49,15 +50,39 @@ const Alert = memo<AlertProps>(
     ref,
     ...rest
   }) => {
-    const { theme, styles, cx } = useStyles({
-      closable: !!closable,
-      hasTitle: !!description,
-      showIcon: !!showIcon,
-    });
+    const theme = useTheme();
+    const hasTitle = !!description;
+    const isClosable = !!closable;
+    const isShowIcon = !!showIcon;
+
+    // Select root variant based on closable, hasTitle, showIcon
+    const rootVariant = useMemo(() => {
+      if (hasTitle) {
+        if (isShowIcon) {
+          return isClosable
+            ? styles.rootWithTitleWithIconWithClosable
+            : styles.rootWithTitleWithIconNoClosable;
+        } else {
+          return isClosable
+            ? styles.rootWithTitleNoIconWithClosable
+            : styles.rootWithTitleNoIconNoClosable;
+        }
+      } else {
+        if (isShowIcon) {
+          return isClosable
+            ? styles.rootNoTitleWithIconWithClosable
+            : styles.rootNoTitleWithIconNoClosable;
+        } else {
+          return isClosable
+            ? styles.rootNoTitleNoIconWithClosable
+            : styles.rootNoTitleNoIconNoClosable;
+        }
+      }
+    }, [hasTitle, isClosable, isShowIcon]);
 
     const variants = useMemo(
       () =>
-        cva(styles.root, {
+        cva(cx(styles.rootBase, rootVariant), {
           defaultVariants: {
             colorfulText: true,
             glass: false,
@@ -85,30 +110,7 @@ const Alert = memo<AlertProps>(
           },
           /* eslint-enable sort-keys-fix/sort-keys-fix */
         }),
-      [styles],
-    );
-
-    const extraVariants = useMemo(
-      () =>
-        cva(styles.extra, {
-          defaultVariants: {
-            variant: 'filled',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-            banner: {
-              false: null,
-              true: styles.banner,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
+      [rootVariant],
     );
 
     const extraHeaderVariants = useMemo(
@@ -122,12 +124,14 @@ const Alert = memo<AlertProps>(
             variant: {
               filled: null,
               outlined: null,
-              borderless: styles.borderlessExtraHeader,
+              borderless: hasTitle
+                ? styles.borderlessExtraHeaderWithTitle
+                : styles.borderlessExtraHeaderNoTitle,
             },
           },
           /* eslint-enable sort-keys-fix/sort-keys-fix */
         }),
-      [styles],
+      [styles, hasTitle],
     );
 
     const isInsideExtra = Boolean(!extraIsolate && !!extra);

@@ -1,12 +1,12 @@
-import { useResponsive } from 'antd-style';
-import { type ReactNode, memo } from 'react';
+import { cx, useResponsive } from 'antd-style';
+import { type ReactNode, memo, useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import type { MarkdownProps } from '@/Markdown';
 import { ChatItemProps } from '@/chat/ChatItem';
 import EditableMessage from '@/chat/EditableMessage';
 
-import { useStyles } from '../style';
+import { styles } from '../style';
 
 export interface MessageContentProps {
   editing?: ChatItemProps['editing'];
@@ -40,8 +40,21 @@ const MessageContent = memo<MessageContentProps>(
     fontSize,
     markdownProps,
   }) => {
-    const { cx, styles } = useStyles({ editing, placement, primary, variant });
+    // placement and primary are part of the interface but not used in this component
+    void placement;
+    void primary;
     const { mobile } = useResponsive();
+
+    const messageClassName = useMemo(() => {
+      if (variant === 'bubble') return styles.messageBubble;
+      // For docs variant, we need title info, but we don't have it here
+      // Use withoutTitle as default
+      return styles.messageDocsWithoutTitle;
+    }, [variant]);
+
+    const editingContainerClassName = useMemo(() => {
+      return variant === 'docs' ? styles.editingContainerDocs : styles.editingContainer;
+    }, [variant]);
 
     const content = (
       <EditableMessage
@@ -62,7 +75,7 @@ const MessageContent = memo<MessageContentProps>(
 
     return (
       <Flexbox
-        className={cx(styles.message, editing && styles.editingContainer)}
+        className={cx(messageClassName, editing && editingContainerClassName)}
         onDoubleClick={onDoubleClick}
       >
         {messageContent}

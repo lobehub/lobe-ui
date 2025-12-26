@@ -1,12 +1,12 @@
 'use client';
 
 import { Tag as AntTag } from 'antd';
-import { cva } from 'class-variance-authority';
+import { cx, useTheme } from 'antd-style';
 import { type FC, useMemo } from 'react';
 
 import { colorsPreset, colorsPresetSystem, presetColors, presetSystemColors } from '@/Tag/utils';
 
-import { useStyles } from './styles';
+import { variants } from './styles';
 import type { TagProps } from './type';
 
 const Tag: FC<TagProps> = ({
@@ -20,32 +20,7 @@ const Tag: FC<TagProps> = ({
   style,
   ...rest
 }) => {
-  const { styles, cx, theme } = useStyles();
-
-  const variants = useMemo(
-    () =>
-      cva(styles.root, {
-        defaultVariants: {
-          size: 'middle',
-          variant: 'filled',
-        },
-        /* eslint-disable sort-keys-fix/sort-keys-fix */
-        variants: {
-          variant: {
-            filled: styles.filled,
-            outlined: styles.outlined,
-            borderless: styles.borderless,
-          },
-          size: {
-            small: styles.small,
-            middle: null,
-            large: styles.large,
-          },
-        },
-        /* eslint-enable sort-keys-fix/sort-keys-fix */
-      }),
-    [styles],
-  );
+  const theme = useTheme();
 
   const colors = useMemo(() => {
     let textColor = theme.colorTextSecondary;

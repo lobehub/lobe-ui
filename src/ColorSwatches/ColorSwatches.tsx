@@ -1,6 +1,7 @@
 'use client';
 
 import { ColorPicker } from 'antd';
+import { cssVar, cx } from 'antd-style';
 import chroma from 'chroma-js';
 import { CheckIcon } from 'lucide-react';
 import { readableColor, rgba } from 'polished';
@@ -11,7 +12,7 @@ import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Tooltip from '@/Tooltip';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { ColorSwatchesProps } from './type';
 
 const ColorSwatches: FC<ColorSwatchesProps> = ({
@@ -33,18 +34,35 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
     onChange,
     value,
   });
-  const { cx, styles, theme } = useStyles(size);
+
+  // Convert size prop to CSS variable
+  const cssVariables = useMemo<Record<string, string>>(
+    () => ({
+      '--color-swatches-size': `${size}px`,
+    }),
+    [size],
+  );
 
   const isCustomActive = useMemo(
-    () => active && active !== theme.colorPrimary && !colors.some((c) => c.color === active),
-    [active, colors, theme.colorPrimary],
+    () => active && active !== cssVar.colorPrimary && !colors.some((c) => c.color === active),
+    [active, colors],
   );
 
   return (
-    <Flexbox gap={6} horizontal ref={ref} style={{ flexWrap: 'wrap', ...style }} {...rest}>
+    <Flexbox
+      gap={6}
+      horizontal
+      ref={ref}
+      style={{
+        ...cssVariables,
+        flexWrap: 'wrap',
+        ...style,
+      }}
+      {...rest}
+    >
       {enableColorSwatches &&
         colors.map((c, i) => {
-          const color = c.color || theme.colorPrimary;
+          const color = c.color || cssVar.colorPrimary;
           const isActive = (!active && !c.color) || color === active;
           const isTransparent = c.color === 'transparent' || chroma(c.color).alpha() === 0;
           return (
@@ -58,7 +76,7 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
                 onClick={() => setActive(c.color || undefined)}
                 style={{
                   background: isTransparent ? undefined : color,
-                  borderRadius: shape === 'circle' ? '50%' : theme.borderRadius,
+                  borderRadius: shape === 'circle' ? '50%' : cssVar.borderRadius,
                 }}
               >
                 {isActive && (
@@ -84,11 +102,11 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
               enableColorSwatches && styles.conic,
               isCustomActive && styles.active,
             )}
-            defaultValue={theme.colorPrimary}
+            defaultValue={cssVar.colorPrimary}
             disabledAlpha
             format={'hex'}
             onChangeComplete={(c) => {
-              if (c.toHexString() === theme.colorPrimary) {
+              if (c.toHexString() === cssVar.colorPrimary) {
                 setActive('');
               } else {
                 setActive(c.toHexString());
@@ -105,7 +123,7 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
                   ]
             }
             style={{
-              borderRadius: shape === 'circle' ? '50%' : theme.borderRadius,
+              borderRadius: shape === 'circle' ? '50%' : cssVar.borderRadius,
             }}
             value={enableColorSwatches ? undefined : active}
           />

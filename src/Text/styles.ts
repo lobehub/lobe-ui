@@ -1,18 +1,19 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ css, token }) => ({
+export const styles = createStaticStyles(({ css, cssVar }) => ({
   code: css`
-    font-family: ${token.fontFamilyCode};
+    font-family: ${cssVar.fontFamilyCode};
   `,
   danger: css`
-    color: ${token.colorError};
+    color: ${cssVar.colorError};
   `,
   delete: css`
     text-decoration: line-through;
   `,
   disabled: css`
     cursor: not-allowed;
-    color: ${token.colorTextDisabled};
+    color: ${cssVar.colorTextDisabled};
   `,
   ellipsis: css`
     overflow: hidden;
@@ -27,36 +28,36 @@ export const useStyles = createStyles(({ css, token }) => ({
   `,
   // Heading styles
   h1: css`
-    font-size: calc(${token.fontSize}px * 2.5);
+    font-size: calc(${cssVar.fontSize} * 2.5);
     font-weight: bold;
     line-height: 1.25;
   `,
 
   h2: css`
-    font-size: calc(${token.fontSize}px * 2);
+    font-size: calc(${cssVar.fontSize} * 2);
     font-weight: bold;
     line-height: 1.25;
   `,
 
   h3: css`
-    font-size: calc(${token.fontSize}px * 1.5);
+    font-size: calc(${cssVar.fontSize} * 1.5);
     font-weight: bold;
     line-height: 1.25;
   `,
 
   h4: css`
-    font-size: calc(${token.fontSize}px * 1.25);
+    font-size: calc(${cssVar.fontSize} * 1.25);
     font-weight: bold;
     line-height: 1.25;
   `,
 
   h5: css`
-    font-size: ${token.fontSize}px;
+    font-size: ${cssVar.fontSize};
     font-weight: bold;
     line-height: 1.25;
   `,
   info: css`
-    color: ${token.colorInfo};
+    color: ${cssVar.colorInfo};
   `,
 
   italic: css`
@@ -65,7 +66,7 @@ export const useStyles = createStyles(({ css, token }) => ({
 
   mark: css`
     color: #000;
-    background-color: ${token.yellow};
+    background-color: ${cssVar.yellow};
   `,
 
   p: css`
@@ -73,22 +74,68 @@ export const useStyles = createStyles(({ css, token }) => ({
   `,
 
   secondary: css`
-    color: ${token.colorTextDescription};
+    color: ${cssVar.colorTextDescription};
   `,
 
   strong: css`
     font-weight: bold;
   `,
   success: css`
-    color: ${token.colorSuccess};
+    color: ${cssVar.colorSuccess};
   `,
   text: css`
-    color: ${token.colorText};
+    color: ${cssVar.colorText};
   `,
   underline: css`
     text-decoration: underline;
   `,
   warning: css`
-    color: ${token.colorWarning};
+    color: ${cssVar.colorWarning};
   `,
 }));
+
+export const variants = cva(styles.text, {
+  defaultVariants: {},
+  variants: {
+    as: {
+      h1: styles.h1,
+      h2: styles.h2,
+      h3: styles.h3,
+      h4: styles.h4,
+      h5: styles.h5,
+      p: styles.p,
+    },
+    code: {
+      true: styles.code,
+    },
+    delete: {
+      true: styles.delete,
+    },
+    disabled: {
+      true: styles.disabled,
+    },
+    ellipsis: {
+      multi: styles.ellipsisMulti,
+      true: styles.ellipsis,
+    },
+    italic: {
+      true: styles.italic,
+    },
+    mark: {
+      true: styles.mark,
+    },
+    strong: {
+      true: styles.strong,
+    },
+    type: {
+      danger: styles.danger,
+      info: styles.info,
+      secondary: styles.secondary,
+      success: styles.success,
+      warning: styles.warning,
+    },
+    underline: {
+      true: styles.underline,
+    },
+  },
+});

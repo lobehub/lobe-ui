@@ -1,13 +1,14 @@
 'use client';
 
 import { Divider } from 'antd';
+import { cx } from 'antd-style';
 import { LayoutGroup } from 'motion/react';
 import { Children, Fragment, isValidElement, memo, useCallback } from 'react';
 import type { Key } from 'react';
 import useMergeState from 'use-merge-value';
 
 import { AccordionContext } from './context';
-import { useStyles } from './style';
+import { styles } from './style';
 import type { AccordionProps } from './type';
 
 const Accordion = memo<AccordionProps>(
@@ -32,8 +33,6 @@ const Accordion = memo<AccordionProps>(
     ref,
     ...rest
   }) => {
-    const { cx, styles } = useStyles();
-
     // Convert children to array and filter valid elements
     const validChildren = Children.toArray(children).filter(isValidElement);
 

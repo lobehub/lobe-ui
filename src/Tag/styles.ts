@@ -1,18 +1,24 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ stylish, prefixCls, css, token }) => ({
-  borderless: stylish.variantBorderlessWithoutHover,
-  filled: stylish.variantFilledWithoutHover,
+import { lobeStaticStylish } from '@/styles';
+
+const prefixCls = 'ant';
+
+export const styles = createStaticStyles(({ css, cssVar }) => ({
+  borderless: lobeStaticStylish.variantBorderlessWithoutHover,
+  filled: lobeStaticStylish.variantFilledWithoutHover,
   large: css`
     &.${prefixCls}-tag {
       height: 28px;
       padding-inline: 12px;
-      border-radius: 6px;
+      border-radius: 6px !important;
     }
   `,
-  outlined: stylish.variantOutlinedWithoutHover,
+  outlined: lobeStaticStylish.variantOutlinedWithoutHover,
   root: css`
-    color: ${token.colorTextSecondary};
+    color: ${cssVar.colorTextSecondary};
+
     &.${prefixCls}-tag {
       user-select: none;
 
@@ -24,13 +30,17 @@ export const useStyles = createStyles(({ stylish, prefixCls, css, token }) => ({
       width: fit-content;
       height: 22px;
       margin: 0;
+      border-radius: 3px;
 
       line-height: 1.2;
 
-      border-radius: 3px;
-
       span {
         margin: 0;
+      }
+
+      span:not(.anticon) {
+        height: unset;
+        line-height: inherit;
       }
     }
   `,
@@ -38,6 +48,28 @@ export const useStyles = createStyles(({ stylish, prefixCls, css, token }) => ({
     &.${prefixCls}-tag {
       height: 20px;
       padding-inline: 4px;
+      border-radius: 3px;
     }
   `,
 }));
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    size: 'middle',
+    variant: 'filled',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: styles.filled,
+      outlined: styles.outlined,
+      borderless: styles.borderless,
+    },
+    size: {
+      small: styles.small,
+      middle: null,
+      large: styles.large,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
+});

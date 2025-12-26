@@ -1,12 +1,12 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
+import { cx } from 'antd-style';
 import { type FC, useMemo, useRef } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 import { Flexbox } from '@/Flex';
 
-import { useStyles } from './style';
+import { variants } from './style';
 import type { ScrollShadowProps } from './type';
 import { useScrollOverflow } from './useScrollOverflow';
 
@@ -24,7 +24,13 @@ const ScrollShadow: FC<ScrollShadowProps> = ({
   ref,
   ...rest
 }) => {
-  const { cx, styles } = useStyles(size);
+  // Convert size prop to CSS variable
+  const cssVariables = useMemo<Record<string, string>>(
+    () => ({
+      '--scroll-shadow-size': `${size}%`,
+    }),
+    [size],
+  );
   const domRef = useRef<HTMLDivElement>(null);
 
   // 使用滚动检测钩子
@@ -101,44 +107,14 @@ const ScrollShadow: FC<ScrollShadowProps> = ({
     return 'none';
   }, [orientation, finalScrollState]);
 
-  const variants = useMemo(
-    () =>
-      cva(styles.root, {
-        defaultVariants: {
-          hideScrollBar: false,
-          orientation: 'vertical',
-          scrollPosition: 'none',
-        },
-        /* eslint-disable sort-keys-fix/sort-keys-fix */
-        variants: {
-          orientation: {
-            horizontal: styles.horizontal,
-            vertical: styles.vertical,
-          },
-          hideScrollBar: {
-            true: styles.hideScrollBar,
-            false: null,
-          },
-          scrollPosition: {
-            'none': null,
-            'top': styles.topShadow,
-            'bottom': styles.bottomShadow,
-            'top-bottom': styles.topBottomShadow,
-            'left': styles.leftShadow,
-            'right': styles.rightShadow,
-            'left-right': styles.leftRightShadow,
-          },
-        },
-        /* eslint-enable sort-keys-fix/sort-keys-fix */
-      }),
-    [styles],
-  );
-
   return (
     <Flexbox
       className={cx(variants({ hideScrollBar, orientation, scrollPosition }), className)}
       ref={mergeRefs<HTMLDivElement>([domRef, ref])}
-      style={style}
+      style={{
+        ...cssVariables,
+        ...style,
+      }}
       {...dataAttributes}
       {...rest}
     >

@@ -1,6 +1,6 @@
 import { Center, Highlighter, Snippet } from '@lobehub/ui';
 import { Features, FeaturesProps } from '@lobehub/ui/awesome';
-import { useTheme } from 'antd-style';
+import { cssVar, responsive, useTheme } from 'antd-style';
 import { MoonStar, Palette, Zap } from 'lucide-react';
 
 const items: FeaturesProps['items'] = [
@@ -37,6 +37,10 @@ export default () => (
 
 export default () => {
   const theme = useTheme();
+
+  console.log('responsive', responsive);
+  console.log('cssVar', cssVar);
+
   return (
     <Center
       gap={48}

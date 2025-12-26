@@ -1,13 +1,13 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
+import { cx } from 'antd-style';
 import { type FC, useMemo } from 'react';
 
 import Avatar from '@/Avatar';
 import Block from '@/Block';
 import Grid from '@/Grid';
 
-import { useStyles } from './style';
+import { variants } from './style';
 import type { GroupAvatarProps } from './type';
 
 const GroupAvatar: FC<GroupAvatarProps> = ({
@@ -20,8 +20,6 @@ const GroupAvatar: FC<GroupAvatarProps> = ({
   avatarShape = 'square',
   ...rest
 }) => {
-  const { cx, styles } = useStyles();
-
   const calcSize = useMemo(() => {
     const length = avatars.length;
     const isAutoGrid = grid === 'auto';
@@ -42,28 +40,6 @@ const GroupAvatar: FC<GroupAvatarProps> = ({
   const calcAvatars = useMemo(
     () => avatars?.slice(0, calcSize.gridSize * calcSize.gridSize),
     [avatars, calcSize.gridSize],
-  );
-
-  const variants = useMemo(
-    () =>
-      cva(styles.root, {
-        defaultVariants: {
-          cornerShape: 'squircle',
-        },
-        /* eslint-disable sort-keys-fix/sort-keys-fix */
-        variants: {
-          cornerShape: {
-            circle: styles.circle,
-            ios: styles.ios,
-            sharp: styles.sharp,
-            smooth: styles.smooth,
-            square: styles.square,
-            squircle: styles.squircle,
-          },
-        },
-        /* eslint-enable sort-keys-fix/sort-keys-fix */
-      }),
-    [styles],
   );
 
   const isSingle = calcAvatars?.length === 1;

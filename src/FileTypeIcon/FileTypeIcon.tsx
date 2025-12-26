@@ -1,12 +1,13 @@
 'use client';
 
+import { cx, useTheme } from 'antd-style';
 import { type FC, useMemo } from 'react';
 
 import { Center } from '@/Flex';
 
 import FileIcon from './components/FileIcon';
 import FolderIcon from './components/FolderIcon';
-import { useStyles } from './style';
+import { styles } from './style';
 import type { FileTypeIconProps } from './type';
 
 const FileTypeIcon: FC<FileTypeIconProps> = ({
@@ -21,7 +22,7 @@ const FileTypeIcon: FC<FileTypeIconProps> = ({
   ref,
   ...rest
 }) => {
-  const { cx, styles, theme } = useStyles();
+  const theme = useTheme();
   const isMono = variant === 'mono';
 
   const filetypeShort = useMemo(

@@ -1,9 +1,9 @@
 'use client';
 
+import { useTheme } from 'antd-style';
 import { type FC } from 'react';
 
 import SkeletonBlock from './SkeletonBlock';
-import { useStyles } from './style';
 import type { SkeletonButtonProps } from './type';
 
 const HEIGHT_MAP: Record<'large' | 'small' | 'default', number> = {
@@ -23,7 +23,7 @@ const SkeletonButton: FC<SkeletonButtonProps> = ({
   className,
   ...rest
 }) => {
-  const { theme } = useStyles();
+  const theme = useTheme();
   const resolvedSize = size ?? 'default';
   const baseHeight = height ?? HEIGHT_MAP[resolvedSize];
   const defaultWidth = block ? '100%' : shape === 'circle' ? baseHeight : 80;

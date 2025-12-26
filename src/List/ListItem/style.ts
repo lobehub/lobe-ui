@@ -1,6 +1,8 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
 
-export const useStyles = createStyles(({ cx, css, token, stylish }) => {
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     actions: css`
       position: absolute;
@@ -8,7 +10,7 @@ export const useStyles = createStyles(({ cx, css, token, stylish }) => {
       inset-inline-end: 16px;
       transform: translateY(-50%);
     `,
-    active: stylish.active,
+    active: lobeStaticStylish.active,
     content: css`
       position: relative;
       overflow: hidden;
@@ -17,7 +19,7 @@ export const useStyles = createStyles(({ cx, css, token, stylish }) => {
     `,
     date: css`
       font-size: 12px;
-      color: ${token.colorTextPlaceholder};
+      color: ${cssVar.colorTextPlaceholder};
     `,
     desc: css`
       width: 100%;
@@ -25,7 +27,7 @@ export const useStyles = createStyles(({ cx, css, token, stylish }) => {
 
       font-size: 12px;
       line-height: 1.2;
-      color: ${token.colorTextDescription};
+      color: ${cssVar.colorTextDescription};
     `,
 
     pin: css`
@@ -34,12 +36,12 @@ export const useStyles = createStyles(({ cx, css, token, stylish }) => {
       inset-inline-end: 6px;
     `,
     root: cx(
-      stylish.variantBorderless,
+      lobeStaticStylish.variantBorderless,
       css`
         cursor: pointer;
         position: relative;
-        border-radius: ${token.borderRadius}px;
-        color: ${token.colorTextTertiary};
+        border-radius: ${cssVar.borderRadius};
+        color: ${cssVar.colorTextTertiary};
       `,
     ),
 
@@ -50,7 +52,7 @@ export const useStyles = createStyles(({ cx, css, token, stylish }) => {
       font-size: 14px;
       font-weight: 500;
       line-height: 1.2;
-      color: ${token.colorText};
+      color: ${cssVar.colorText};
     `,
     triangle: css`
       width: 10px;
@@ -58,7 +60,7 @@ export const useStyles = createStyles(({ cx, css, token, stylish }) => {
       border-radius: 2px;
 
       opacity: 0.5;
-      background: ${token.colorPrimaryBorder};
+      background: ${cssVar.colorPrimaryBorder};
       clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
     `,
   };

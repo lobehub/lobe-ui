@@ -1,20 +1,24 @@
-import { createStyles } from 'antd-style';
-import { rgba } from 'polished';
+import { createStaticStyles } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ cx, css, token, isDarkMode, stylish }) => {
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
-    borderless: cx(
-      stylish.variantBorderlessWithoutHover,
-      css`
-        padding-inline: 4px;
-      `,
-    ),
-    filled: stylish.variantFilledWithoutHover,
-    inverseTheme: css`
-      color: ${rgba(token.colorBgContainer, 0.75)};
-      background: ${rgba(token.colorBgContainer, isDarkMode ? 0.08 : 0.16)};
+    borderless: css`
+      ${lobeStaticStylish.variantBorderlessWithoutHover};
+      padding-inline: 4px;
     `,
-    outlined: stylish.variantOutlinedWithoutHover,
+    filled: lobeStaticStylish.variantFilledWithoutHover,
+    inverseThemeDark: css`
+      color: ${cssVar.colorTextTertiary};
+      background: color-mix(in srgb, ${cssVar.colorBgContainer} 8%, transparent);
+    `,
+    inverseThemeLight: css`
+      color: ${cssVar.colorTextTertiary};
+      background: color-mix(in srgb, ${cssVar.colorBgContainer} 16%, transparent);
+    `,
+    outlined: lobeStaticStylish.variantOutlinedWithoutHover,
     root: css`
       overflow: hidden;
 
@@ -22,16 +26,37 @@ export const useStyles = createStyles(({ cx, css, token, isDarkMode, stylish }) 
       height: 1.8em;
       padding-block: 0;
       padding-inline: 8px;
+      border: none;
+      border-radius: ${cssVar.borderRadiusSM};
 
-      font-family: ${token.fontFamily};
+      font-family: ${cssVar.fontFamily};
       font-size: 12px;
       line-height: 1.1;
-      color: ${token.colorTextSecondary};
+      color: ${cssVar.colorTextSecondary};
       text-align: center;
       white-space: nowrap;
-
-      border: none;
-      border-radius: ${token.borderRadiusSM}px;
     `,
   };
 });
+
+// variants 依赖 theme.isDarkMode，需要在组件中动态创建
+export const createVariants = (isDarkMode: boolean) =>
+  cva(styles.root, {
+    defaultVariants: {
+      inverseTheme: false,
+      variant: 'filled',
+    },
+    /* eslint-disable sort-keys-fix/sort-keys-fix */
+    variants: {
+      variant: {
+        filled: styles.filled,
+        outlined: styles.outlined,
+        borderless: styles.borderless,
+      },
+      inverseTheme: {
+        false: null,
+        true: isDarkMode ? styles.inverseThemeDark : styles.inverseThemeLight,
+      },
+    },
+    /* eslint-enable sort-keys-fix/sort-keys-fix */
+  });
