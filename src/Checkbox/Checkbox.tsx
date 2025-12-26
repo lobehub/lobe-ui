@@ -22,6 +22,8 @@ const Checkbox: FC<CheckboxProps> = ({
   classNames,
   styles: customStyles,
   shape = 'square',
+  disabled,
+  ...rest
 }) => {
   const { styles, cx } = useStyles();
   const [value, setValue] = useMergeState(defaultChecked || false, {
@@ -36,14 +38,26 @@ const Checkbox: FC<CheckboxProps> = ({
     ...customStyles?.checkbox,
   };
 
+  const handleClick = () => {
+    if (!disabled) {
+      setValue(!value);
+    }
+  };
+
   const checkIcon = (
     <Block
       align={'center'}
-      className={cx(styles.root, value && styles.checked, className, classNames?.checkbox)}
+      className={cx(
+        styles.root,
+        value && styles.checked,
+        disabled && styles.disabled,
+        className,
+        classNames?.checkbox,
+      )}
       flex={'none'}
       height={size}
       justify={'center'}
-      onClick={() => setValue(!value)}
+      onClick={handleClick}
       style={
         backgroundColor && value
           ? { backgroundColor, borderColor: backgroundColor, ...checkboxStyles }
@@ -51,6 +65,7 @@ const Checkbox: FC<CheckboxProps> = ({
       }
       variant={'outlined'}
       width={size}
+      {...rest}
     >
       {value ? (
         <CheckIcon
@@ -75,7 +90,13 @@ const Checkbox: FC<CheckboxProps> = ({
       style={customStyles?.wrapper}
     >
       {checkIcon}
-      <Text as={'span'} className={cx(classNames?.text)} style={customStyles?.text} {...textProps}>
+      <Text
+        as={'span'}
+        className={cx(classNames?.text)}
+        style={customStyles?.text}
+        {...textProps}
+        type={disabled ? 'secondary' : textProps?.type}
+      >
         {children}
       </Text>
     </Flexbox>

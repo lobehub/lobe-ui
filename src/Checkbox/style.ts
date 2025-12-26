@@ -8,6 +8,16 @@ export const useStyles = createStyles(({ css, token }) => {
       color: ${readableColor(token.colorPrimary)};
       background-color: ${token.colorPrimary};
     `,
+    disabled: css`
+      cursor: not-allowed;
+
+      border-color: ${token.colorFill};
+
+      color: ${readableColor(token.colorTextQuaternary)};
+
+      opacity: 0.25;
+      background-color: ${token.colorFill};
+    `,
     root: css`
       cursor: pointer;
       display: inline-flex;

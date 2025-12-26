@@ -6,6 +6,7 @@ export default () => {
   const control = useControls(
     {
       children: 'Checkbox',
+      disabled: false,
       shape: {
         options: ['square', 'circle'],
         value: 'square',
