@@ -1,5 +1,5 @@
 import { Icon } from '@lobehub/ui';
-import { createStaticStyles, useTheme } from 'antd-style';
+import { createStaticStyles, cssVar, useThemeMode } from 'antd-style';
 import { SparkleIcon } from 'lucide-react';
 import { PropsWithChildren, memo } from 'react';
 
@@ -50,17 +50,17 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
 }));
 
 const Render = memo<PropsWithChildren>(({ children }) => {
-  const theme = useTheme();
+  const { isDarkMode } = useThemeMode();
 
   return (
     <Flexbox
-      className={theme.isDarkMode ? styles.containerDark : styles.containerLight}
+      className={isDarkMode ? styles.containerDark : styles.containerLight}
       gap={16}
       width={'100%'}
     >
       <Flexbox distribution={'space-between'} flex={1} horizontal>
         <Flexbox gap={8} horizontal>
-          <Icon color={theme.purple} icon={SparkleIcon} /> Artifact
+          <Icon color={cssVar.purple} icon={SparkleIcon} /> Artifact
         </Flexbox>
       </Flexbox>
       <div dangerouslySetInnerHTML={{ __html: String(children) }} />

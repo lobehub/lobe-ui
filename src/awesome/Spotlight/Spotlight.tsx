@@ -1,6 +1,6 @@
 'use client';
 
-import { cx, useTheme } from 'antd-style';
+import { cx, useThemeMode } from 'antd-style';
 import { memo, useMemo } from 'react';
 
 import { styles } from './style';
@@ -9,7 +9,7 @@ import { useMouseOffset } from './useMouseOffset';
 
 const Spotlight = memo<SpotlightProps>(({ className, size = 64, ...properties }) => {
   const [offset, outside, reference] = useMouseOffset();
-  const theme = useTheme();
+  const { isDarkMode } = useThemeMode();
 
   const cssVariables = useMemo<Record<string, string>>(
     () => ({
@@ -21,7 +21,7 @@ const Spotlight = memo<SpotlightProps>(({ className, size = 64, ...properties })
     [offset, size, outside],
   );
 
-  const spotlightStyle = theme.isDarkMode
+  const spotlightStyle = isDarkMode
     ? outside
       ? styles.spotlightDarkOutside
       : styles.spotlightDark

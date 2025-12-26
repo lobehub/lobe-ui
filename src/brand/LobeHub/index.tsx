@@ -1,6 +1,6 @@
 'use client';
 
-import { useTheme } from 'antd-style';
+import { cssVar } from 'antd-style';
 import { type ReactNode, memo } from 'react';
 
 import { Flexbox } from '@/Flex';
@@ -21,7 +21,6 @@ export interface LobeHubProps extends DivProps {
 
 const LobeHub = memo<LobeHubProps>(
   ({ type = '3d', size = 32, style, extra, className, ...rest }) => {
-    const theme = useTheme();
     let logoComponent: ReactNode;
 
     switch (type) {
@@ -76,7 +75,7 @@ const LobeHub = memo<LobeHubProps>(
         {...rest}
       >
         {logoComponent}
-        <Divider size={extraSize} style={{ color: theme.colorFill }} />
+        <Divider size={extraSize} style={{ color: cssVar.colorFill }} />
         <div className={styles.extraTitle} style={{ fontSize: extraSize }}>
           {extra}
         </div>

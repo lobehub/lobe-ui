@@ -1,6 +1,6 @@
 'use client';
 
-import { cx, useTheme } from 'antd-style';
+import { cx } from 'antd-style';
 import { createElement, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMotionComponent } from '@/MotionProvider';
@@ -37,7 +37,6 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
     ...props
   }: TypewriterEffectProps) => {
     const Motion = useMotionComponent();
-    const theme = useTheme();
     const cxStyles = cx;
     const [displayedText, setDisplayedText] = useState('');
     const [currentCharIndex, setCurrentCharIndex] = useState(0);
@@ -244,10 +243,7 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
         ...props,
       },
       <>
-        <span
-          className={cxStyles(theme.isDarkMode ? styles.textDark : styles.textLight)}
-          style={textColor ? { color: textColor } : undefined}
-        >
+        <span className={styles.text} style={textColor ? { color: textColor } : undefined}>
           {characters.map((char, index) => (
             <Motion.span
               animate={{ opacity: 1 }}

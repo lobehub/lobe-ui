@@ -1,6 +1,6 @@
 'use client';
 
-import { cx, useTheme } from 'antd-style';
+import { cx, useThemeMode } from 'antd-style';
 import {
   ArrowBigUpIcon,
   ArrowDownIcon,
@@ -27,7 +27,7 @@ import RightClickIcon from '@/icons/lucideExtra/RightClickIcon';
 import RightDoubleClickIcon from '@/icons/lucideExtra/RightDoubleClickIcon';
 
 import { KeyMapEnum } from './const';
-import { createVariants } from './style';
+import { variants } from './style';
 import type { HotkeyProps } from './type';
 import { checkIsAppleDevice, splitKeysByPlus, startCase } from './utils';
 
@@ -90,12 +90,10 @@ const Hotkey = memo<HotkeyProps>(
     style,
     ...rest
   }) => {
-    const theme = useTheme();
+    const { isDarkMode } = useThemeMode();
     const isBorderless = variant === 'borderless';
     const [keysGroup, setKeysGroup] = useState(splitKeysByPlus(keys));
     const isAppleDevice = useMemo(() => checkIsAppleDevice(isApple), [isApple]);
-
-    const variants = useMemo(() => createVariants(theme.isDarkMode), [theme.isDarkMode]);
 
     useEffect(() => {
       const newValue = splitKeysByPlus(keys);
@@ -116,7 +114,10 @@ const Hotkey = memo<HotkeyProps>(
         {compact || isBorderless ? (
           <Center
             as={'kbd'}
-            className={cx(variants({ inverseTheme, variant }), classNames?.kbdClassName)}
+            className={cx(
+              variants({ inverseTheme, isDarkMode, variant }),
+              classNames?.kbdClassName,
+            )}
             gap={6}
             horizontal
             style={customStyles?.kbdStyle}
@@ -129,7 +130,10 @@ const Hotkey = memo<HotkeyProps>(
           keysGroup.map((key, index) => (
             <Center
               as={'kbd'}
-              className={cx(variants({ inverseTheme, variant }), classNames?.kbdClassName)}
+              className={cx(
+                variants({ inverseTheme, isDarkMode, variant }),
+                classNames?.kbdClassName,
+              )}
               key={index}
               style={customStyles?.kbdStyle}
             >

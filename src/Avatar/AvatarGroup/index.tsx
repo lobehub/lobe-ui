@@ -1,6 +1,6 @@
 'use client';
 
-import { cx, useTheme } from 'antd-style';
+import { cssVar, cx } from 'antd-style';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
@@ -29,7 +29,6 @@ const AvatarGroup = memo<AvatarGroupProps>(
     zIndexReverse,
     ...rest
   }) => {
-    const theme = useTheme();
     const avatars = max ? items.slice(0, max) : items;
     const restAvatars = items.slice(max, items.length);
     const gapValue = gap ?? Math.floor(-size / 4);
@@ -82,7 +81,7 @@ const AvatarGroup = memo<AvatarGroupProps>(
           <Avatar
             {...avatarProps}
             avatar={`+${restAvatars.length}`}
-            background={theme.colorText}
+            background={cssVar.colorText}
             className={cx(styles.avatar, styles.count, classNames?.count)}
             sliceText={false}
             style={{

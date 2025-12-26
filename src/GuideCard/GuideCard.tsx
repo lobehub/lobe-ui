@@ -1,14 +1,14 @@
 'use client';
 
-import { cx, useTheme } from 'antd-style';
+import { cx, useThemeMode } from 'antd-style';
 import { X } from 'lucide-react';
-import { memo, useMemo, useState } from 'react';
+import { memo, useState } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 import Img from '@/Img';
 
-import { createVariants, styles } from './style';
+import { styles, variants } from './style';
 import type { GuideCardProps } from './type';
 
 const GuideCard = memo<GuideCardProps>(
@@ -33,14 +33,16 @@ const GuideCard = memo<GuideCardProps>(
     ...rest
   }) => {
     const [show, setShow] = useState(true);
-    const theme = useTheme();
-
-    const variants = useMemo(() => createVariants(theme.isDarkMode), [theme.isDarkMode]);
+    const { isDarkMode } = useThemeMode();
 
     if (!show) return null;
 
     return (
-      <Flexbox className={cx(variants({ shadow, variant }), className)} ref={ref} {...rest}>
+      <Flexbox
+        className={cx(variants({ isDarkMode, shadow, variant }), className)}
+        ref={ref}
+        {...rest}
+      >
         {closable && (
           <ActionIcon
             size={'small'}

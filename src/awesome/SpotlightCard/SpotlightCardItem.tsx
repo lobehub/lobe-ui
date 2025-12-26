@@ -1,6 +1,6 @@
 'use client';
 
-import { cx, useTheme } from 'antd-style';
+import { cx, useThemeMode } from 'antd-style';
 import { memo, useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
@@ -10,7 +10,7 @@ import type { SpotlightCardItemProps } from './type';
 
 const SpotlightCardItem = memo<SpotlightCardItemProps>(
   ({ children, className, style, borderRadius, size, ...rest }) => {
-    const theme = useTheme();
+    const { isDarkMode } = useThemeMode();
 
     const cssVariables = useMemo<Record<string, string>>(
       () => ({
@@ -22,10 +22,7 @@ const SpotlightCardItem = memo<SpotlightCardItemProps>(
 
     return (
       <Flexbox
-        className={cx(
-          theme.isDarkMode ? styles.itemContainerDark : styles.itemContainerLight,
-          className,
-        )}
+        className={cx(isDarkMode ? styles.itemContainerDark : styles.itemContainerLight, className)}
         style={{
           ...cssVariables,
           borderRadius,

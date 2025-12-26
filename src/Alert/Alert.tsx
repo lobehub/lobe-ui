@@ -1,18 +1,17 @@
 'use client';
 
 import { Alert as AntdAlert } from 'antd';
-import { cx, useTheme } from 'antd-style';
-import { cva } from 'class-variance-authority';
+import { cssVar, cx, useTheme } from 'antd-style';
 import { camelCase } from 'es-toolkit/compat';
 import { AlertTriangle, CheckCircle, Info, X, XCircle } from 'lucide-react';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 
 import { Accordion, AccordionItem } from '@/Accordion';
 import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
-import { extraVariants, styles } from './style';
+import { extraHeaderVariants, extraVariants, rootVariants } from './style';
 import type { AlertProps } from './type';
 
 const typeIcons = {
@@ -55,95 +54,19 @@ const Alert = memo<AlertProps>(
     const isClosable = !!closable;
     const isShowIcon = !!showIcon;
 
-    // Select root variant based on closable, hasTitle, showIcon
-    const rootVariant = useMemo(() => {
-      if (hasTitle) {
-        if (isShowIcon) {
-          return isClosable
-            ? styles.rootWithTitleWithIconWithClosable
-            : styles.rootWithTitleWithIconNoClosable;
-        } else {
-          return isClosable
-            ? styles.rootWithTitleNoIconWithClosable
-            : styles.rootWithTitleNoIconNoClosable;
-        }
-      } else {
-        if (isShowIcon) {
-          return isClosable
-            ? styles.rootNoTitleWithIconWithClosable
-            : styles.rootNoTitleWithIconNoClosable;
-        } else {
-          return isClosable
-            ? styles.rootNoTitleNoIconWithClosable
-            : styles.rootNoTitleNoIconNoClosable;
-        }
-      }
-    }, [hasTitle, isClosable, isShowIcon]);
-
-    const variants = useMemo(
-      () =>
-        cva(cx(styles.rootBase, rootVariant), {
-          defaultVariants: {
-            colorfulText: true,
-            glass: false,
-            variant: 'filled',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-            glass: {
-              false: null,
-              true: styles.glass,
-            },
-            colorfulText: {
-              false: null,
-              true: styles.colorfulText,
-            },
-            hasExtra: {
-              false: null,
-              true: styles.hasExtra,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [rootVariant],
-    );
-
-    const extraHeaderVariants = useMemo(
-      () =>
-        cva(styles.extraHeader, {
-          defaultVariants: {
-            variant: 'filled',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: null,
-              outlined: null,
-              borderless: hasTitle
-                ? styles.borderlessExtraHeaderWithTitle
-                : styles.borderlessExtraHeaderNoTitle,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles, hasTitle],
-    );
-
     const isInsideExtra = Boolean(!extraIsolate && !!extra);
 
     const alert = (
       <AntdAlert
         banner={banner}
         className={cx(
-          variants({
+          rootVariants({
+            closable: isClosable,
             colorfulText,
             glass,
             hasExtra: isInsideExtra,
+            hasTitle,
+            showIcon: isShowIcon,
             variant,
           }),
           classNames?.alert,
@@ -159,7 +82,7 @@ const Alert = memo<AlertProps>(
         description={description}
         icon={
           <Icon
-            color={type === 'secondary' ? theme.colorTextSecondary : undefined}
+            color={type === 'secondary' ? cssVar.colorTextSecondary : undefined}
             icon={typeIcons[type] || icon}
             size={description ? 24 : 18}
             {...iconProps}
@@ -205,7 +128,7 @@ const Alert = memo<AlertProps>(
             <AccordionItem
               classNames={{
                 content: classNames?.extraContent,
-                header: extraHeaderVariants({ variant }),
+                header: extraHeaderVariants({ hasTitle, variant }),
               }}
               itemKey={'extra'}
               styles={{

@@ -1,9 +1,8 @@
 import { ColorSwatches, type ColorSwatchesProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { useTheme } from 'antd-style';
+import { cssVar } from 'antd-style';
 
 export default () => {
-  const theme = useTheme();
   const store = useCreateStore();
 
   const controls = useControls(
@@ -38,51 +37,51 @@ export default () => {
             title: 'Default',
           },
           {
-            color: theme.red,
+            color: cssVar.red,
             title: 'Red',
           },
           {
-            color: theme.orange,
+            color: cssVar.orange,
             title: 'Orange',
           },
           {
-            color: theme.gold,
+            color: cssVar.gold,
             title: 'Gold',
           },
           {
-            color: theme.yellow,
+            color: cssVar.yellow,
             title: 'Yellow',
           },
           {
-            color: theme.lime,
+            color: cssVar.lime,
             title: 'Lime',
           },
           {
-            color: theme.green,
+            color: cssVar.green,
             title: 'Green',
           },
           {
-            color: theme.cyan,
+            color: cssVar.cyan,
             title: 'Cyan',
           },
           {
-            color: theme.blue,
+            color: cssVar.blue,
             title: 'Blue',
           },
           {
-            color: theme.geekblue,
+            color: cssVar.geekblue,
             title: 'Geekblue',
           },
           {
-            color: theme.purple,
+            color: cssVar.purple,
             title: 'Purple',
           },
           {
-            color: theme.magenta,
+            color: cssVar.magenta,
             title: 'Magenta',
           },
           {
-            color: theme.volcano,
+            color: cssVar.volcano,
             title: 'Volcano',
           },
         ]}

@@ -1,6 +1,6 @@
 'use client';
 
-import { useTheme } from 'antd-style';
+import { cssVar, useTheme } from 'antd-style';
 import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
@@ -40,10 +40,10 @@ const SkeletonTags: FC<SkeletonTagsProps> = ({
   const widthList = Array.isArray(width) ? width : null;
   const defaultWidth = DEFAULT_WIDTH_MAP[size];
 
-  const RADIUS_MAP: Record<'large' | 'small' | 'middle', number> = {
-    large: theme.borderRadius,
-    middle: theme.borderRadiusSM,
-    small: theme.borderRadiusXS,
+  const RADIUS_MAP: Record<'large' | 'small' | 'middle', string> = {
+    large: cssVar.borderRadius,
+    middle: cssVar.borderRadiusSM,
+    small: cssVar.borderRadiusXS,
   };
 
   const getWidth = (index: number) => {

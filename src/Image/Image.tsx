@@ -1,7 +1,7 @@
 'use client';
 
 import { Image as AntImage, Skeleton } from 'antd';
-import { cx, useTheme } from 'antd-style';
+import { cssVar, cx, useThemeMode } from 'antd-style';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
@@ -32,7 +32,7 @@ const Image = memo<ImageProps>(
     height,
     ...rest
   }) => {
-    const theme = useTheme();
+    const { isDarkMode } = useThemeMode();
     const actionsClassName = alwaysShowActions ? styles.actionsVisible : styles.actionsHidden;
     const mergePreivew = usePreview(preview);
 
@@ -42,7 +42,7 @@ const Image = memo<ImageProps>(
           <Skeleton.Avatar
             active
             style={{
-              borderRadius: theme.borderRadius,
+              borderRadius: cssVar.borderRadius,
               height,
               maxHeight,
               maxWidth,
@@ -66,7 +66,7 @@ const Image = memo<ImageProps>(
           classNames={{
             root: cx(styles.wrapper, classNames?.wrapper),
           }}
-          fallback={theme.isDarkMode ? FALLBACK_DARK : FALLBACK_LIGHT}
+          fallback={isDarkMode ? FALLBACK_DARK : FALLBACK_LIGHT}
           height={height}
           loading={'lazy'}
           onClick={onClick}

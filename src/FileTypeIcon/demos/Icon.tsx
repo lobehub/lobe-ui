@@ -1,5 +1,5 @@
 import { FileTypeIcon, Icon } from '@lobehub/ui';
-import { createStaticStyles, useTheme } from 'antd-style';
+import { createStaticStyles, cssVar } from 'antd-style';
 import { ArrowUpIcon, PlusIcon } from 'lucide-react';
 
 import { Center, Flexbox } from '@/Flex';
@@ -44,15 +44,14 @@ const styles = createStaticStyles(({ css, cssVar }) => {
 });
 
 export default () => {
-  const theme = useTheme();
   return (
     <Center gap={8} horizontal>
       <Flexbox className={styles.card} padding={16}>
         <span>New Folder</span>
-        <div className={styles.glow} style={{ background: theme.geekblue }} />
+        <div className={styles.glow} style={{ background: cssVar.geekblue }} />
         <FileTypeIcon
           className={styles.icon}
-          color={theme.geekblue}
+          color={cssVar.geekblue}
           icon={<Icon color={'#fff'} icon={PlusIcon} />}
           size={56}
           type={'folder'}
@@ -60,20 +59,20 @@ export default () => {
       </Flexbox>
       <Flexbox className={styles.card} padding={16}>
         <span>Upload File</span>
-        <div className={styles.glow} style={{ background: theme.gold }} />
+        <div className={styles.glow} style={{ background: cssVar.gold }} />
         <FileTypeIcon
           className={styles.icon}
-          color={theme.gold}
+          color={cssVar.gold}
           icon={<Icon color={'#fff'} icon={ArrowUpIcon} />}
           size={56}
         />
       </Flexbox>
       <Flexbox className={styles.card} padding={16}>
         <span>Upload Folder</span>
-        <div className={styles.glow} style={{ background: theme.purple }} />
+        <div className={styles.glow} style={{ background: cssVar.purple }} />
         <FileTypeIcon
           className={styles.icon}
-          color={theme.purple}
+          color={cssVar.purple}
           icon={<Icon color={'#fff'} icon={ArrowUpIcon} />}
           size={56}
           type={'folder'}

@@ -1,5 +1,5 @@
 import { Icon } from '@lobehub/ui';
-import { createStaticStyles, useTheme } from 'antd-style';
+import { createStaticStyles, cssVar, useThemeMode } from 'antd-style';
 import { ChevronDown, ChevronRight, SparkleIcon } from 'lucide-react';
 import { PropsWithChildren, memo, useState } from 'react';
 
@@ -50,13 +50,13 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
 }));
 
 const Render = memo<PropsWithChildren>(({ children }) => {
-  const theme = useTheme();
+  const { isDarkMode } = useThemeMode();
 
   const [showDetail, setShowDetail] = useState(false);
 
   return (
     <Flexbox
-      className={theme.isDarkMode ? styles.containerDark : styles.containerLight}
+      className={isDarkMode ? styles.containerDark : styles.containerLight}
       gap={16}
       onClick={() => {
         setShowDetail(!showDetail);
@@ -65,7 +65,7 @@ const Render = memo<PropsWithChildren>(({ children }) => {
     >
       <Flexbox distribution={'space-between'} flex={1} horizontal>
         <Flexbox gap={8} horizontal>
-          <Icon color={theme.purple} icon={SparkleIcon} /> Thinking...
+          <Icon color={cssVar.purple} icon={SparkleIcon} /> Thinking...
         </Flexbox>
         <Icon icon={showDetail ? ChevronDown : ChevronRight} />
       </Flexbox>

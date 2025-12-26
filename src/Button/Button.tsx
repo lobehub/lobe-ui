@@ -1,7 +1,7 @@
 'use client';
 
 import { Button as AntdButton } from 'antd';
-import { cx, useTheme } from 'antd-style';
+import { cx, useThemeMode } from 'antd-style';
 import { Loader2Icon } from 'lucide-react';
 import { type FC, isValidElement } from 'react';
 
@@ -25,9 +25,9 @@ const Button: FC<ButtonProps> = ({
   ref,
   ...rest
 }) => {
-  const theme = useTheme();
+  const { isDarkMode } = useThemeMode();
 
-  const defaultVariant = type ? undefined : variant || (theme.isDarkMode ? 'filled' : 'outlined');
+  const defaultVariant = type ? undefined : variant || (isDarkMode ? 'filled' : 'outlined');
 
   return (
     <AntdButton

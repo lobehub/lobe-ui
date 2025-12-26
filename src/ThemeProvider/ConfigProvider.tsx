@@ -1,11 +1,10 @@
 'use client';
 
 import { ConfigProvider as AntdConfigProvider } from 'antd';
-import { useTheme } from 'antd-style';
+import { cssVar } from 'antd-style';
 import { PropsWithChildren, memo } from 'react';
 
 const ConfigProvider = memo<PropsWithChildren>(({ children }) => {
-  const theme = useTheme();
   return (
     <AntdConfigProvider
       theme={{
@@ -14,24 +13,24 @@ const ConfigProvider = memo<PropsWithChildren>(({ children }) => {
             contentFontSizeSM: 12,
           },
           DatePicker: {
-            activeBorderColor: theme.colorBorder,
-            hoverBorderColor: theme.colorBorder,
+            activeBorderColor: cssVar.colorBorder,
+            hoverBorderColor: cssVar.colorBorder,
           },
           Input: {
-            activeBorderColor: theme.colorBorder,
-            hoverBorderColor: theme.colorBorder,
+            activeBorderColor: cssVar.colorBorder,
+            hoverBorderColor: cssVar.colorBorder,
           },
           InputNumber: {
-            activeBorderColor: theme.colorBorder,
-            hoverBorderColor: theme.colorBorder,
+            activeBorderColor: cssVar.colorBorder,
+            hoverBorderColor: cssVar.colorBorder,
           },
           Mentions: {
-            activeBorderColor: theme.colorBorder,
-            hoverBorderColor: theme.colorBorder,
+            activeBorderColor: cssVar.colorBorder,
+            hoverBorderColor: cssVar.colorBorder,
           },
           Select: {
-            activeBorderColor: theme.colorBorder,
-            hoverBorderColor: theme.colorBorder,
+            activeBorderColor: cssVar.colorBorder,
+            hoverBorderColor: cssVar.colorBorder,
           },
         },
       }}

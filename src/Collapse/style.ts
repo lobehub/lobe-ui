@@ -158,36 +158,48 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
   };
 });
 
-// variants 依赖 theme.isDarkMode，需要在组件中动态创建
-// 这里提供一个基础版本，组件中会根据 theme.isDarkMode 选择 filledDark 或 filledLight
-export const createVariants = (isDarkMode: boolean) =>
-  cva(styles.root, {
-    compoundVariants: [
-      {
-        class: styles.gapOutlined,
-        gap: true,
-        variant: 'outlined',
-      },
-    ],
-    defaultVariants: {
-      collapsible: true,
-      gap: false,
+export const variants = cva(styles.root, {
+  compoundVariants: [
+    {
+      class: styles.gapOutlined,
+      gap: true,
+      variant: 'outlined',
     },
-    /* eslint-disable sort-keys-fix/sort-keys-fix */
-    variants: {
-      variant: {
-        filled: isDarkMode ? styles.filledDark : styles.filledLight,
-        outlined: styles.outlined,
-        borderless: styles.borderless,
-      },
-      gap: {
-        false: null,
-        true: styles.gapRoot,
-      },
-      collapsible: {
-        false: styles.hideCollapsibleIcon,
-        true: null,
-      },
+    {
+      class: styles.filledDark,
+      isDarkMode: true,
+      variant: 'filled',
     },
-    /* eslint-enable sort-keys-fix/sort-keys-fix */
-  });
+    {
+      class: styles.filledLight,
+      isDarkMode: false,
+      variant: 'filled',
+    },
+  ],
+  defaultVariants: {
+    collapsible: true,
+    gap: false,
+    isDarkMode: false,
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    collapsible: {
+      false: styles.hideCollapsibleIcon,
+      true: null,
+    },
+    gap: {
+      false: null,
+      true: styles.gapRoot,
+    },
+    isDarkMode: {
+      false: null,
+      true: null,
+    },
+    variant: {
+      borderless: styles.borderless,
+      filled: null,
+      outlined: styles.outlined,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
+});

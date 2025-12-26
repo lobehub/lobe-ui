@@ -223,4 +223,128 @@ export const extraVariants = cva(styles.extra, {
   /* eslint-enable sort-keys-fix/sort-keys-fix */
 });
 
-// extraHeaderVariants 依赖 hasTitle，需要在组件中动态创建
+export const rootVariants = cva(styles.rootBase, {
+  compoundVariants: [
+    {
+      class: styles.rootNoTitleNoIconNoClosable,
+      closable: false,
+      hasTitle: false,
+      showIcon: false,
+    },
+    {
+      class: styles.rootNoTitleNoIconWithClosable,
+      closable: true,
+      hasTitle: false,
+      showIcon: false,
+    },
+    {
+      class: styles.rootNoTitleWithIconNoClosable,
+      closable: false,
+      hasTitle: false,
+      showIcon: true,
+    },
+    {
+      class: styles.rootNoTitleWithIconWithClosable,
+      closable: true,
+      hasTitle: false,
+      showIcon: true,
+    },
+    {
+      class: styles.rootWithTitleNoIconNoClosable,
+      closable: false,
+      hasTitle: true,
+      showIcon: false,
+    },
+    {
+      class: styles.rootWithTitleNoIconWithClosable,
+      closable: true,
+      hasTitle: true,
+      showIcon: false,
+    },
+    {
+      class: styles.rootWithTitleWithIconNoClosable,
+      closable: false,
+      hasTitle: true,
+      showIcon: true,
+    },
+    {
+      class: styles.rootWithTitleWithIconWithClosable,
+      closable: true,
+      hasTitle: true,
+      showIcon: true,
+    },
+  ],
+  defaultVariants: {
+    closable: false,
+    colorfulText: true,
+    glass: false,
+    hasTitle: false,
+    showIcon: false,
+    variant: 'filled',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    closable: {
+      false: null,
+      true: null,
+    },
+    colorfulText: {
+      false: null,
+      true: styles.colorfulText,
+    },
+    glass: {
+      false: null,
+      true: styles.glass,
+    },
+    hasTitle: {
+      false: null,
+      true: null,
+    },
+    showIcon: {
+      false: null,
+      true: null,
+    },
+    variant: {
+      borderless: styles.borderless,
+      filled: styles.filled,
+      outlined: styles.outlined,
+    },
+    hasExtra: {
+      false: null,
+      true: styles.hasExtra,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
+});
+
+export const extraHeaderVariants = cva(styles.extraHeader, {
+  compoundVariants: [
+    {
+      class: styles.borderlessExtraHeaderNoTitle,
+      hasTitle: false,
+      variant: 'borderless',
+    },
+    {
+      class: styles.borderlessExtraHeaderWithTitle,
+      hasTitle: true,
+      variant: 'borderless',
+    },
+  ],
+  defaultVariants: {
+    hasTitle: false,
+    variant: 'filled',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    hasTitle: {
+      false: null,
+      true: null,
+    },
+    variant: {
+      borderless: null,
+      filled: null,
+      outlined: null,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
+});

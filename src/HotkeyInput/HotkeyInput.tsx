@@ -1,7 +1,7 @@
 'use client';
 
 import type { InputRef } from 'antd';
-import { cx, useTheme } from 'antd-style';
+import { cx, useThemeMode } from 'antd-style';
 import { isEqual } from 'es-toolkit/compat';
 import { Undo2Icon } from 'lucide-react';
 import {
@@ -52,7 +52,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
     const [hasConflict, setHasConflict] = useState(false);
     const [hasInvalidCombination, setHasInvalidCombination] = useState(false);
     const inputRef = useRef<InputRef>(null);
-    const theme = useTheme();
+    const { isDarkMode } = useThemeMode();
     const { t } = useTranslation(hotkeyMessages);
     const isAppleDevice = useMemo(() => checkIsAppleDevice(isApple), [isApple]);
     const [hotkeyValue, setHotkeyValue] = useControlledState(defaultValue, {
@@ -226,7 +226,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
               error: hasConflict || hasInvalidCombination,
               focused: isFocused,
               shadow,
-              variant: variant || (theme.isDarkMode ? 'filled' : 'outlined'),
+              variant: variant || (isDarkMode ? 'filled' : 'outlined'),
             }),
           )}
           horizontal

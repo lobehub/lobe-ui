@@ -152,17 +152,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     ),
   };
 
-  // Toggle styles - split by showHandleWideArea
-  const toggleRootWithWideArea = cx(
+  // Toggle styles - base class with variant for showHandleWideArea
+  const toggleRoot = cx(
     `${prefix}-toggle`,
     css`
-      pointer-events: all;
-
       position: absolute;
       z-index: 50;
-
       opacity: 0;
-
       transition: all 0.2s ${cssVar.motionEaseOut};
 
       &:hover,
@@ -196,48 +192,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     `,
   );
 
-  const toggleRootWithoutWideArea = cx(
-    `${prefix}-toggle`,
-    css`
-      pointer-events: none;
+  const toggleRootWithWideArea = css`
+    pointer-events: all;
+  `;
 
-      position: absolute;
-      z-index: 50;
-
-      opacity: 0;
-
-      transition: all 0.2s ${cssVar.motionEaseOut};
-
-      &:hover,
-      &:active {
-        opacity: 1 !important;
-      }
-
-      > div {
-        pointer-events: all;
-        cursor: pointer;
-
-        position: absolute;
-
-        border: 1px solid ${cssVar.colorBorder};
-
-        color: ${cssVar.colorTextTertiary};
-
-        background: var(--draggable-panel-bg, ${cssVar.colorBgLayout});
-        backdrop-filter: blur(8px);
-
-        transition: all 0.2s ${cssVar.motionEaseOut};
-
-        &:hover {
-          color: ${cssVar.colorTextSecondary};
-        }
-
-        &:active {
-          color: ${cssVar.colorText};
-        }
-      }
-    `,
-  );
+  const toggleRootWithoutWideArea = css`
+    pointer-events: none;
+  `;
 
   const toggleStyles = {
     toggleBottom: cx(
@@ -294,6 +255,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         }
       `,
     ),
+    toggleRoot,
     toggleRootWithWideArea,
     toggleRootWithoutWideArea,
     toggleTop: cx(
@@ -377,15 +339,134 @@ export const handleVariants = cva(styles.handleRoot, {
   },
 });
 
-// toggleVariants 依赖 showHandleWideArea，需要在组件中动态创建
-export const createToggleVariants = (showHandleWideArea: boolean) =>
-  cva(showHandleWideArea ? styles.toggleRootWithWideArea : styles.toggleRootWithoutWideArea, {
-    variants: {
-      placement: {
-        bottom: styles.toggleTop,
-        left: styles.toggleRight,
-        right: styles.toggleLeft,
-        top: styles.toggleBottom,
-      },
+export const panelVariants = cva(styles.root, {
+  compoundVariants: [
+    {
+      class: styles.bottomFloat,
+      mode: 'float',
+      placement: 'bottom',
     },
-  });
+    {
+      class: styles.topFloat,
+      mode: 'float',
+      placement: 'top',
+    },
+    {
+      class: styles.leftFloat,
+      mode: 'float',
+      placement: 'left',
+    },
+    {
+      class: styles.rightFloat,
+      mode: 'float',
+      placement: 'right',
+    },
+    // Border styles based on placement, isExpand, and showBorder
+    // Note: border is on the opposite side of placement
+    // placement 'top' -> borderBottom, placement 'right' -> borderLeft, etc.
+    {
+      class: styles.borderBottom,
+      isExpand: true,
+      placement: 'top',
+      showBorder: true,
+    },
+    {
+      class: styles.borderBottomNone,
+      isExpand: true,
+      placement: 'top',
+      showBorder: false,
+    },
+    {
+      class: styles.borderLeft,
+      isExpand: true,
+      placement: 'right',
+      showBorder: true,
+    },
+    {
+      class: styles.borderLeftNone,
+      isExpand: true,
+      placement: 'right',
+      showBorder: false,
+    },
+    {
+      class: styles.borderTop,
+      isExpand: true,
+      placement: 'bottom',
+      showBorder: true,
+    },
+    {
+      class: styles.borderTopNone,
+      isExpand: true,
+      placement: 'bottom',
+      showBorder: false,
+    },
+    {
+      class: styles.borderRight,
+      isExpand: true,
+      placement: 'left',
+      showBorder: true,
+    },
+    {
+      class: styles.borderRightNone,
+      isExpand: true,
+      placement: 'left',
+      showBorder: false,
+    },
+  ],
+  defaultVariants: {
+    isExpand: false,
+    mode: 'fixed',
+    placement: 'right',
+    showBorder: true,
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    isExpand: {
+      false: null,
+      true: null,
+    },
+    mode: {
+      fixed: styles.fixed,
+      float: null,
+    },
+    placement: {
+      bottom: null,
+      left: null,
+      right: null,
+      top: null,
+    },
+    showBorder: {
+      false: null,
+      true: null,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
+});
+
+export const toggleVariants = cva(styles.toggleRoot, {
+  compoundVariants: [
+    {
+      class: styles.toggleRootWithWideArea,
+      showHandleWideArea: true,
+    },
+    {
+      class: styles.toggleRootWithoutWideArea,
+      showHandleWideArea: false,
+    },
+  ],
+  defaultVariants: {
+    showHandleWideArea: false,
+  },
+  variants: {
+    placement: {
+      bottom: styles.toggleTop,
+      left: styles.toggleRight,
+      right: styles.toggleLeft,
+      top: styles.toggleBottom,
+    },
+    showHandleWideArea: {
+      false: null,
+      true: null,
+    },
+  },
+});

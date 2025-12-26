@@ -1,7 +1,7 @@
 'use client';
 
 import { Select as AntSelect } from 'antd';
-import { cx, useTheme } from 'antd-style';
+import { cx, useThemeMode } from 'antd-style';
 import { ChevronDownIcon } from 'lucide-react';
 import { memo } from 'react';
 
@@ -12,12 +12,12 @@ import type { SelectProps } from './type';
 
 const Input = memo<SelectProps>(
   ({ ref, variant, suffixIconProps, suffixIcon, shadow, className, ...rest }) => {
-    const theme = useTheme();
+    const { isDarkMode } = useThemeMode();
 
     return (
       <AntSelect
         className={cx(
-          variants({ shadow, variant: variant || (theme.isDarkMode ? 'filled' : 'outlined') }),
+          variants({ shadow, variant: variant || (isDarkMode ? 'filled' : 'outlined') }),
           className,
         )}
         ref={ref}
@@ -32,7 +32,7 @@ const Input = memo<SelectProps>(
             }}
           />
         }
-        variant={variant || (theme.isDarkMode ? 'filled' : 'outlined')}
+        variant={variant || (isDarkMode ? 'filled' : 'outlined')}
         {...rest}
       />
     );

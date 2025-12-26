@@ -48,24 +48,39 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 }));
 
-// variants 依赖 theme.isDarkMode，需要在组件中动态创建
-export const createVariants = (isDarkMode: boolean) =>
-  cva(styles.root, {
-    defaultVariants: {
-      shadow: false,
+export const variants = cva(styles.root, {
+  compoundVariants: [
+    {
+      class: styles.filledDark,
+      isDarkMode: true,
       variant: 'filled',
     },
-    /* eslint-disable sort-keys-fix/sort-keys-fix */
-    variants: {
-      variant: {
-        filled: isDarkMode ? styles.filledDark : styles.filledLight,
-        outlined: styles.outlined,
-        borderless: styles.borderless,
-      },
-      shadow: {
-        false: null,
-        true: styles.shadow,
-      },
+    {
+      class: styles.filledLight,
+      isDarkMode: false,
+      variant: 'filled',
     },
-    /* eslint-enable sort-keys-fix/sort-keys-fix */
-  });
+  ],
+  defaultVariants: {
+    isDarkMode: false,
+    shadow: false,
+    variant: 'filled',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    isDarkMode: {
+      false: null,
+      true: null,
+    },
+    shadow: {
+      false: null,
+      true: styles.shadow,
+    },
+    variant: {
+      borderless: styles.borderless,
+      filled: null,
+      outlined: styles.outlined,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
+});

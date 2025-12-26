@@ -1,23 +1,23 @@
 'use client';
 
 import { Input as AntInput } from 'antd';
-import { cx, useTheme } from 'antd-style';
+import { cx, useThemeMode } from 'antd-style';
 import { memo } from 'react';
 
 import { variantsOPT } from './style';
 import type { InputOPTProps } from './type';
 
 const InputOPT = memo<InputOPTProps>(({ ref, variant, shadow, className, ...rest }) => {
-  const theme = useTheme();
+  const { isDarkMode } = useThemeMode();
 
   return (
     <AntInput.OTP
       className={cx(
-        variantsOPT({ shadow, variant: variant || (theme.isDarkMode ? 'filled' : 'outlined') }),
+        variantsOPT({ shadow, variant: variant || (isDarkMode ? 'filled' : 'outlined') }),
         className,
       )}
       ref={ref}
-      variant={variant || (theme.isDarkMode ? 'filled' : 'outlined')}
+      variant={variant || (isDarkMode ? 'filled' : 'outlined')}
       {...rest}
     />
   );

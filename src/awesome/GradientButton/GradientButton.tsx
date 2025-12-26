@@ -1,6 +1,6 @@
 'use client';
 
-import { cx, useTheme } from 'antd-style';
+import { cssVar, cx, useThemeMode } from 'antd-style';
 import { memo, useMemo } from 'react';
 
 import Button from '@/Button';
@@ -10,7 +10,7 @@ import type { GradientButtonProps } from './type';
 
 const GradientButton = memo<GradientButtonProps>(
   ({ glow = true, children, className, size, disabled, style, ...rest }) => {
-    const theme = useTheme();
+    const { isDarkMode } = useThemeMode();
 
     // Convert size prop to CSS variable for borderRadius
     const cssVariables = useMemo<Record<string, string>>(() => {
@@ -18,27 +18,27 @@ const GradientButton = memo<GradientButtonProps>(
       let borderRadius: string;
       switch (size) {
         case 'large': {
-          borderRadius = `${theme.borderRadiusLG}px`;
+          borderRadius = cssVar.borderRadiusLG;
           break;
         }
         case 'small': {
-          borderRadius = `${theme.borderRadiusSM}px`;
+          borderRadius = cssVar.borderRadiusSM;
           break;
         }
         default: {
-          borderRadius = `${theme.borderRadius}px`;
+          borderRadius = cssVar.borderRadius;
           break;
         }
       }
       return {
         '--gradient-button-border-radius': borderRadius,
       };
-    }, [size, disabled, theme]);
+    }, [size, disabled]);
 
     return (
       <Button
         className={cx(
-          !disabled && (theme.isDarkMode ? styles.buttonDark : styles.buttonLight),
+          !disabled && (isDarkMode ? styles.buttonDark : styles.buttonLight),
           className,
         )}
         disabled={disabled}

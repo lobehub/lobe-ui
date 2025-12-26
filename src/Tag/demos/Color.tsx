@@ -1,11 +1,10 @@
 import { Tag } from '@lobehub/ui';
 import { Badge } from 'antd';
-import { useTheme } from 'antd-style';
+import { cssVar } from 'antd-style';
 
 import { Center } from '@/Flex';
 
 export default () => {
-  const theme = useTheme();
   return (
     <Center gap={24}>
       <Center gap={4} horizontal wrap={'wrap'}>
@@ -28,10 +27,10 @@ export default () => {
         <Tag color="purple">purple</Tag>
       </Center>
       <Center gap={4} horizontal wrap={'wrap'}>
-        <Tag color={theme.colorSuccess}>success</Tag>
-        <Tag color={theme.colorWarning}>warning</Tag>
-        <Tag color={theme.colorError}>error</Tag>
-        <Tag color={theme.colorInfo}>info</Tag>
+        <Tag color={cssVar.colorSuccess}>success</Tag>
+        <Tag color={cssVar.colorWarning}>warning</Tag>
+        <Tag color={cssVar.colorError}>error</Tag>
+        <Tag color={cssVar.colorInfo}>info</Tag>
       </Center>
       <Center gap={4} horizontal wrap={'wrap'}>
         <Tag color="processing" icon={<Badge status={'processing'} />}>

@@ -1,14 +1,14 @@
 'use client';
 
 import { Collapse as AntdCollapse, ConfigProvider } from 'antd';
-import { cx, useTheme } from 'antd-style';
+import { cx, useThemeMode } from 'antd-style';
 import { ChevronDown } from 'lucide-react';
 import { isValidElement, memo, useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
-import { DEFAULT_PADDING, createVariants, getPadding, styles } from './style';
+import { DEFAULT_PADDING, getPadding, styles, variants } from './style';
 import type { CollapseProps } from './type';
 
 const Collapse = memo<CollapseProps>(
@@ -26,9 +26,7 @@ const Collapse = memo<CollapseProps>(
     ref,
     ...rest
   }) => {
-    const theme = useTheme();
-
-    const variants = useMemo(() => createVariants(theme.isDarkMode), [theme.isDarkMode]);
+    const { isDarkMode } = useThemeMode();
 
     const antdItems = useMemo(
       () =>
@@ -90,7 +88,7 @@ const Collapse = memo<CollapseProps>(
         }}
       >
         <AntdCollapse
-          className={cx(variants({ collapsible, gap: !!gap, variant }), className)}
+          className={cx(variants({ collapsible, gap: !!gap, isDarkMode, variant }), className)}
           collapsible={collapsible ? 'header' : 'icon'}
           expandIcon={({ isActive }) => (
             <Icon

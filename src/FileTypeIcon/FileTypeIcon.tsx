@@ -1,6 +1,6 @@
 'use client';
 
-import { cx, useTheme } from 'antd-style';
+import { cssVar, cx, useThemeMode } from 'antd-style';
 import { type FC, useMemo } from 'react';
 
 import { Center } from '@/Flex';
@@ -22,7 +22,7 @@ const FileTypeIcon: FC<FileTypeIconProps> = ({
   ref,
   ...rest
 }) => {
-  const theme = useTheme();
+  const { isDarkMode } = useThemeMode();
   const isMono = variant === 'mono';
 
   const filetypeShort = useMemo(
@@ -39,12 +39,8 @@ const FileTypeIcon: FC<FileTypeIconProps> = ({
 
   const iconColor = useMemo(
     () =>
-      isMono
-        ? theme.isDarkMode
-          ? theme.colorFill
-          : theme.colorBgContainer
-        : color || theme.geekblue,
-    [isMono, theme.isDarkMode, theme.colorFill, theme.colorBgContainer, color],
+      isMono ? (isDarkMode ? cssVar.colorFill : cssVar.colorBgContainer) : color || cssVar.geekblue,
+    [isMono, isDarkMode, color],
   );
 
   const content =

@@ -2,7 +2,7 @@
 
 import { getEmoji } from '@lobehub/fluent-emoji';
 import { Avatar as AntAvatar } from 'antd';
-import { cx, useTheme } from 'antd-style';
+import { cssVar, cx, useTheme } from 'antd-style';
 import { Loader2 } from 'lucide-react';
 import { readableColor } from 'polished';
 import { isValidElement, memo, useMemo } from 'react';
@@ -37,6 +37,7 @@ const Avatar = memo<AvatarProps>(
     ref,
     ...rest
   }) => {
+    const theme = useTheme();
     const isStringAvatar = typeof avatar === 'string';
 
     const isDefaultAntAvatar = useMemo(
@@ -53,8 +54,6 @@ const Avatar = memo<AvatarProps>(
       () => avatar && !isDefaultAntAvatar && isStringAvatar && getEmoji(avatar),
       [avatar, isStringAvatar, isDefaultAntAvatar],
     );
-
-    const theme = useTheme();
 
     const text = String(isDefaultAntAvatar ? title : avatar);
 
@@ -107,6 +106,16 @@ const Avatar = memo<AvatarProps>(
       ],
     );
 
+    // Get actual color value for readableColor (CSS variables can't be parsed)
+    const actualColorForReadable = useMemo(() => {
+      const bgColor = background || theme.colorBorder;
+      // If background is a CSS variable, use theme.colorBorder as fallback
+      if (typeof bgColor === 'string' && bgColor.startsWith('var(')) {
+        return theme.colorBorder;
+      }
+      return bgColor;
+    }, [background, theme.colorBorder]);
+
     return (
       <AntAvatar
         alt={imgAlt}
@@ -117,12 +126,12 @@ const Avatar = memo<AvatarProps>(
         size={size}
         src={isDefaultAntAvatar ? defualtAvatar : undefined}
         style={{
-          background: isDefaultAntAvatar || !!emoji ? background : background || theme.colorBorder,
+          background: isDefaultAntAvatar || !!emoji ? background : background || cssVar.colorBorder,
           borderRadius: shape === 'square' && size && size < 24 ? '33%' : undefined,
           boxShadow: bordered
-            ? `${theme.colorBgLayout} 0 0 0 2px, ${borderedColor || theme.colorTextTertiary} 0 0 0 4px`
+            ? `${cssVar.colorBgLayout} 0 0 0 2px, ${borderedColor || cssVar.colorTextTertiary} 0 0 0 4px`
             : undefined,
-          color: readableColor(background || theme.colorBorder),
+          color: readableColor(actualColorForReadable),
           cursor: rest?.onClick ? 'pointer' : undefined,
           fontSize: size * (emoji ? 0.7 : 0.5),
           ...style,

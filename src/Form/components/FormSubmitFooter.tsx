@@ -1,7 +1,7 @@
 'use client';
 
 import { Form } from 'antd';
-import { cx, useTheme } from 'antd-style';
+import { cssVar, cx } from 'antd-style';
 import isEqual from 'fast-deep-equal';
 import { InfoIcon } from 'lucide-react';
 import { memo, useEffect, useMemo, useState } from 'react';
@@ -38,7 +38,6 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
     const values = Form.useWatch([], form) || {};
     const { t } = useTranslation(formMessages);
 
-    const theme = useTheme();
     const styles = submitFooterStyles;
 
     const v = useMemo(() => removeUndefined(values), [values]);
@@ -77,14 +76,14 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
         {(float || hasUnsavedChanges) && (
           <>
             <Icon
-              color={theme.colorTextDescription}
+              color={cssVar.colorTextDescription}
               icon={InfoIcon}
               size={12}
               style={{ marginLeft: 8 }}
             />
             <span
               style={{
-                color: theme.colorTextDescription,
+                color: cssVar.colorTextDescription,
                 flex: 'none',
                 fontSize: 12,
                 marginRight: float ? 16 : 4,

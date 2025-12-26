@@ -1,6 +1,6 @@
 'use client';
 
-import { cx, useTheme } from 'antd-style';
+import { cssVar, cx } from 'antd-style';
 import { type FC } from 'react';
 
 import SkeletonBlock from './SkeletonBlock';
@@ -19,11 +19,10 @@ const SkeletonAvatar: FC<SkeletonAvatarProps> = ({
   className,
   ...rest
 }) => {
-  const theme = useTheme();
   const defaultSize = size ?? DEFAULT_SIZE;
   const finalWidth = width ?? defaultSize;
   const finalHeight = height ?? defaultSize;
-  const borderRadius = shape === 'circle' ? '50%' : `${theme.borderRadius}px`;
+  const borderRadius = shape === 'circle' ? '50%' : cssVar.borderRadius;
 
   return (
     <SkeletonBlock

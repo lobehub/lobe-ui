@@ -1,6 +1,6 @@
 'use client';
 
-import { useTheme } from 'antd-style';
+import { cssVar } from 'antd-style';
 import { type ReactNode, memo } from 'react';
 
 import { Flexbox } from '@/Flex';
@@ -20,7 +20,6 @@ export interface LobeChatProps extends DivProps {
 
 const LobeChat = memo<LobeChatProps>(
   ({ type = '3d', size = 32, style, extra, className, ...rest }) => {
-    const theme = useTheme();
     let logoComponent: ReactNode;
 
     switch (type) {
@@ -75,7 +74,7 @@ const LobeChat = memo<LobeChatProps>(
         {...rest}
       >
         {logoComponent}
-        <Divider size={extraSize} style={{ color: theme.colorFill }} />
+        <Divider size={extraSize} style={{ color: cssVar.colorFill }} />
         <div className={styles.extraTitle} style={{ fontSize: extraSize }}>
           {extra}
         </div>

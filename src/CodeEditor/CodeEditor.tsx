@@ -1,6 +1,6 @@
 'use client';
 
-import { cx, useTheme } from 'antd-style';
+import { cssVar, cx } from 'antd-style';
 import { memo } from 'react';
 import useMergeState from 'use-merge-value';
 
@@ -30,7 +30,6 @@ const CodeEditor = memo<CodeEditorProps>(
     ref,
     ...rest
   }) => {
-    const theme = useTheme();
     const [code, setCode] = useMergeState(defaultValue, {
       defaultValue,
       onChange: onValueChange,
@@ -58,7 +57,7 @@ const CodeEditor = memo<CodeEditorProps>(
           <pre
             className={cx(styles.highlight, classNames?.highlight)}
             style={{
-              color: theme.colorTextDescription,
+              color: cssVar.colorTextDescription,
             }}
           >
             {placeholder || ' '}

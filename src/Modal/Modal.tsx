@@ -1,7 +1,7 @@
 'use client';
 
 import { Modal as AntModal, Button, ConfigProvider, Drawer } from 'antd';
-import { cx, useResponsive, useTheme } from 'antd-style';
+import { cssVar, cx, useResponsive } from 'antd-style';
 import { Maximize2, Minimize2, X } from 'lucide-react';
 import { ReactNode, memo, useState } from 'react';
 
@@ -38,14 +38,13 @@ const Modal = memo<ModalProps>(
   }) => {
     const [fullscreen, setFullscreen] = useState(false);
     const { mobile } = useResponsive();
-    const theme = useTheme();
     const hideFooter = footer === false || footer === null;
     if (enableResponsive && mobile)
       return (
         <ConfigProvider
           theme={{
             token: {
-              colorBgElevated: theme.colorBgContainer,
+              colorBgElevated: cssVar.colorBgContainer,
             },
           }}
         >
@@ -126,7 +125,7 @@ const Modal = memo<ModalProps>(
       <ConfigProvider
         theme={{
           token: {
-            colorBgElevated: theme.colorBgContainer,
+            colorBgElevated: cssVar.colorBgContainer,
           },
         }}
       >

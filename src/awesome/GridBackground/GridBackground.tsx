@@ -1,7 +1,7 @@
 'use client';
 
 import { useSize } from 'ahooks';
-import { cx, useTheme } from 'antd-style';
+import { cssVar, cx, useTheme } from 'antd-style';
 import chroma from 'chroma-js';
 import { shuffle } from 'es-toolkit/compat';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -53,7 +53,7 @@ const GridBackground = memo<GridBackgroundProps>(
     const gridProps: GridProps = useMemo(
       () => ({
         className: reverse ? styles.highlightReverse : styles.highlight,
-        color: colorFront || theme.colorText,
+        color: colorFront || cssVar.colorText,
         strokeWidth,
       }),
       [reverse, colorFront, strokeWidth],
@@ -97,7 +97,7 @@ const GridBackground = memo<GridBackgroundProps>(
         {...rest}
       >
         <Grid
-          color={colorBack || theme.colorBorder}
+          color={colorBack || cssVar.colorBorder}
           strokeWidth={strokeWidth}
           style={{ zIndex: 2 }}
         />

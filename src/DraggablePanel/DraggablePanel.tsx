@@ -3,7 +3,7 @@
 import { useHover } from 'ahooks';
 import { ConfigProvider } from 'antd';
 import { cx } from 'antd-style';
-import { cva } from 'class-variance-authority';
+import isEqual from 'fast-deep-equal';
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
 import type { Enable, NumberSize, Size } from 're-resizable';
 import { Resizable } from 're-resizable';
@@ -22,7 +22,7 @@ import useControlledState from 'use-merge-value';
 import { Center } from '@/Flex';
 import Icon from '@/Icon';
 
-import { createToggleVariants, handleVariants, styles } from './style';
+import { handleVariants, panelVariants, styles, toggleVariants } from './style';
 import type { DraggablePanelProps } from './type';
 import { reversePlacement } from './utils';
 
@@ -176,95 +176,6 @@ const DraggablePanel = memo<DraggablePanelProps>(
 
     const canResizing = resize !== false && isExpand;
 
-    // Style variants for the panel
-    const variants = useMemo(() => {
-      const getBorderStyle = (placement: string) => {
-        if (!isExpand) return null;
-        if (!showBorder) {
-          switch (placement) {
-            case 'top': {
-              return styles.borderBottomNone;
-            }
-            case 'right': {
-              return styles.borderLeftNone;
-            }
-            case 'bottom': {
-              return styles.borderTopNone;
-            }
-            case 'left': {
-              return styles.borderRightNone;
-            }
-            default: {
-              return null;
-            }
-          }
-        } else {
-          switch (placement) {
-            case 'top': {
-              return styles.borderBottom;
-            }
-            case 'right': {
-              return styles.borderLeft;
-            }
-            case 'bottom': {
-              return styles.borderTop;
-            }
-            case 'left': {
-              return styles.borderRight;
-            }
-            default: {
-              return null;
-            }
-          }
-        }
-      };
-
-      return cva(styles.root, {
-        compoundVariants: [
-          {
-            class: styles.bottomFloat,
-            mode: 'float',
-            placement: 'bottom',
-          },
-          {
-            class: styles.topFloat,
-            mode: 'float',
-            placement: 'top',
-          },
-          {
-            class: styles.leftFloat,
-            mode: 'float',
-            placement: 'left',
-          },
-          {
-            class: styles.rightFloat,
-            mode: 'float',
-            placement: 'right',
-          },
-        ],
-        /* eslint-disable sort-keys-fix/sort-keys-fix */
-        variants: {
-          placement: {
-            top: getBorderStyle('top'),
-            right: getBorderStyle('right'),
-            bottom: getBorderStyle('bottom'),
-            left: getBorderStyle('left'),
-          },
-          mode: {
-            fixed: styles.fixed,
-            float: null,
-          },
-        },
-        /* eslint-enable sort-keys-fix/sort-keys-fix */
-      });
-    }, [styles, isExpand, showBorder]);
-
-    // Style variants for the toggle button
-    const toggleVariants = useMemo(
-      () => createToggleVariants(showHandleWideArea),
-      [showHandleWideArea],
-    );
-
     // Configure resizing handles
     const resizing = useMemo(
       () => ({
@@ -350,7 +261,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     const handle = useMemo(
       () => (
         <Center
-          className={toggleVariants({ placement: internalPlacement })}
+          className={toggleVariants({ placement: internalPlacement, showHandleWideArea })}
           style={{ opacity: isExpand ? (pin ? undefined : 0) : showHandleWhenCollapsed ? 1 : 0 }}
         >
           <Center
@@ -478,7 +389,15 @@ const DraggablePanel = memo<DraggablePanelProps>(
 
     return (
       <aside
-        className={cx(variants({ mode, placement: internalPlacement }), className)}
+        className={cx(
+          panelVariants({
+            isExpand,
+            mode,
+            placement: internalPlacement,
+            showBorder,
+          }),
+          className,
+        )}
         dir={dir}
         ref={ref}
         style={cssVariables}
@@ -488,38 +407,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
       </aside>
     );
   },
-  // Custom comparison function to avoid unnecessary re-renders
-  (prevProps, nextProps) => {
-    // Only re-render if critical props change
-    return (
-      prevProps.placement === nextProps.placement &&
-      prevProps.mode === nextProps.mode &&
-      prevProps.expand === nextProps.expand &&
-      prevProps.pin === nextProps.pin &&
-      prevProps.fullscreen === nextProps.fullscreen &&
-      prevProps.size === nextProps.size &&
-      prevProps.defaultSize === nextProps.defaultSize &&
-      prevProps.minWidth === nextProps.minWidth &&
-      prevProps.minHeight === nextProps.minHeight &&
-      prevProps.maxWidth === nextProps.maxWidth &&
-      prevProps.maxHeight === nextProps.maxHeight &&
-      prevProps.expandable === nextProps.expandable &&
-      prevProps.resize === nextProps.resize &&
-      prevProps.showHandleWhenCollapsed === nextProps.showHandleWhenCollapsed &&
-      prevProps.destroyOnClose === nextProps.destroyOnClose &&
-      prevProps.showBorder === nextProps.showBorder &&
-      prevProps.showHandleHighlight === nextProps.showHandleHighlight &&
-      prevProps.showHandleWideArea === nextProps.showHandleWideArea &&
-      prevProps.backgroundColor === nextProps.backgroundColor &&
-      prevProps.className === nextProps.className &&
-      prevProps.dir === nextProps.dir &&
-      prevProps.headerHeight === nextProps.headerHeight &&
-      prevProps.onSizeChange === nextProps.onSizeChange &&
-      prevProps.onSizeDragging === nextProps.onSizeDragging &&
-      prevProps.onExpandChange === nextProps.onExpandChange &&
-      prevProps.children === nextProps.children
-    );
-  },
+  isEqual,
 );
 
 DraggablePanel.displayName = 'DraggablePanel';

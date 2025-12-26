@@ -223,6 +223,10 @@ const Component = ({ closable, hasTitle }) => {
 
 **适用：** 依赖 `isDarkMode` 的条件样式
 
+**有两种处理方式：**
+
+#### 方式 A: 直接条件选择（简单场景）
+
 **步骤：**
 
 1. 创建 `Dark` 和 `Light` 两个静态样式
@@ -250,27 +254,115 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 **组件文件：**
 
 ```typescript
-import { useTheme } from 'antd-style';
+import { useThemeMode } from 'antd-style';
 
 const Component = () => {
-  const { theme, cx } = useTheme();
+  const { isDarkMode } = useThemeMode();
   return (
     <div
       className={cx(
-        theme.isDarkMode ? styles.rootDark : styles.rootLight
+        isDarkMode ? styles.rootDark : styles.rootLight
       )}
     />
   );
 };
 ```
 
+#### 方式 B: 使用 cva 将 isDarkMode 作为 variant（推荐，适用于复杂场景）
+
+**步骤：**
+
+1. 创建 `Dark` 和 `Light` 两个静态样式
+2. 在 `cva` 中将 `isDarkMode` 作为 variant prop
+3. 运行时直接传入 `isDarkMode` 值
+
+**示例：**
+
+**样式文件：**
+
+```typescript
+import { createStaticStyles } from 'antd-style';
+import { cva } from 'class-variance-authority';
+
+export const styles = createStaticStyles(({ css, cssVar }) => {
+  return {
+    filledDark: css`
+      background: ${cssVar.colorFillTertiary};
+      color: ${cssVar.colorTextLightSolid};
+    `,
+    filledLight: css`
+      background: ${cssVar.colorFillQuaternary};
+      color: ${cssVar.colorText};
+    `,
+    outlined: css`
+      border: 1px solid ${cssVar.colorBorder};
+    `,
+    root: css`
+      /* base styles */
+    `,
+  };
+});
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    isDarkMode: false,
+    variant: 'filled',
+  },
+  variants: {
+    isDarkMode: {
+      false: null,
+      true: null, // isDarkMode 本身不添加样式，通过 compoundVariants 组合
+    },
+    variant: {
+      filled: null, // variant 本身不添加样式，通过 compoundVariants 组合
+      outlined: styles.outlined,
+    },
+  },
+  compoundVariants: [
+    {
+      class: styles.filledDark,
+      isDarkMode: true,
+      variant: 'filled',
+    },
+    {
+      class: styles.filledLight,
+      isDarkMode: false,
+      variant: 'filled',
+    },
+  ],
+});
+```
+
+**组件文件：**
+
+```typescript
+import { useThemeMode } from 'antd-style';
+import { variants } from './style';
+
+const Component = ({ variant = 'filled' }) => {
+  const { isDarkMode } = useThemeMode();
+  return (
+    <div
+      className={variants({ isDarkMode, variant })}
+    />
+  );
+};
+```
+
+**优势：**
+
+- ✅ 不需要 `useMemo` 动态创建 variants
+- ✅ 更符合 `cva` 的设计理念
+- ✅ 代码更简洁，性能更好
+- ✅ 类型安全，IDE 自动补全
+
 **已优化示例：**
 
-- `TypewriterEffect`: `textDark` / `textLight`
-- `Collapse`: `filledDark` / `filledLight`
-- `Hotkey`: `inverseThemeDark` / `inverseThemeLight`
-- `GuideCard`: `filledDark` / `filledLight`
-- `GradientButton`: `buttonDark` / `buttonLight`
+- `TypewriterEffect`: `textDark` / `textLight`（方式 A）
+- `Collapse`: `filledDark` / `filledLight`（可优化为方式 B）
+- `Hotkey`: `inverseThemeDark` / `inverseThemeLight`（可优化为方式 B）
+- `GuideCard`: `filledDark` / `filledLight`（可优化为方式 B）
+- `GradientButton`: `buttonDark` / `buttonLight`（方式 A）
 
 ### 场景 5: responsive → 静态 responsive
 
@@ -535,6 +627,65 @@ export const styles = createStaticStyles(({ css }) => ({
 - `Icon`: `keyframes` 动画
 - `Skeleton`: `keyframes` shimmer 动画
 
+## ⚠️ 反模式：避免使用 createVariants (isDarkMode)
+
+**不推荐的做法：**
+
+```typescript
+// ❌ 不推荐：在组件中动态创建 variants
+export const createVariants = (isDarkMode: boolean) =>
+  cva(styles.root, {
+    variants: {
+      variant: {
+        filled: isDarkMode ? styles.filledDark : styles.filledLight,
+      },
+    },
+  });
+
+// 组件中
+const variants = useMemo(() => createVariants(isDarkMode), [isDarkMode]);
+```
+
+**推荐的做法：**
+
+将 `isDarkMode` 作为 `cva` 的 variant prop（见场景 4 方式 B），这样：
+
+- ✅ 不需要 `useMemo` 动态创建
+- ✅ 更符合 `cva` 的设计理念
+- ✅ 代码更简洁，性能更好
+- ✅ 类型安全，IDE 自动补全
+
+```typescript
+// ✅ 推荐：将 isDarkMode 作为 variant prop
+export const variants = cva(styles.root, {
+  variants: {
+    isDarkMode: {
+      false: null,
+      true: null,
+    },
+    variant: {
+      filled: null,
+    },
+  },
+  compoundVariants: [
+    {
+      class: styles.filledDark,
+      isDarkMode: true,
+      variant: 'filled',
+    },
+    {
+      class: styles.filledLight,
+      isDarkMode: false,
+      variant: 'filled',
+    },
+  ],
+});
+
+// 组件中
+const { isDarkMode } = useThemeMode();
+const className = variants({ isDarkMode, variant: 'filled' });
+```
+
 ## ⚠️ 无法优化的场景
 
 ### 1. JS 计算函数
@@ -735,6 +886,74 @@ const Component = ({ className }) => {
 - ✅ **更好的性能**：减少每次渲染的计算开销
 - ✅ **代码更简洁**：直接导入样式对象
 
+## 🔧 场景 11: useTheme () → useThemeMode () /cssVar
+
+**适用：** 组件中只使用 `theme.isDarkMode` 或其他 token 值
+
+**规则：**
+
+- 如果只使用 `theme.isDarkMode`，使用 `const { isDarkMode } = useThemeMode()` 替代
+- 如果使用其他 token（如 `theme.colorText`, `theme.borderRadius` 等），使用 `cssVar` 替代
+- `useThemeMode()` 比 `useTheme()` 更轻量，只返回 `isDarkMode` 值
+
+**示例：**
+
+**之前：**
+
+```typescript
+import { useTheme } from 'antd-style';
+
+const Component = () => {
+  const theme = useTheme();
+  return (
+    <div className={theme.isDarkMode ? styles.dark : styles.light}>
+      {theme.colorText}
+    </div>
+  );
+};
+```
+
+**之后：**
+
+```typescript
+import { cssVar, useThemeMode } from 'antd-style';
+
+const Component = () => {
+  const { isDarkMode } = useThemeMode();
+  return (
+    <div className={isDarkMode ? styles.dark : styles.light}>
+      {cssVar.colorText}
+    </div>
+  );
+};
+```
+
+**已优化示例：**
+
+- `AuroraBackground`, `Select`, `Input`, `Button`, `DatePicker`, `AutoComplete`, `InputNumber`, `InputPassword`, `InputOPT`, `TextArea`, `SpotlightCardItem`, `Spotlight`, `HotkeyInput` - 只使用 `isDarkMode` → `useThemeMode()`
+- `Image`, `GradientButton`, `Empty`, `FileTypeIcon`, `FormSubmitFooter`, `CodeEditor`, `LobeChat`, `Drawer`, `Modal`, `Avatar`, `AvatarGroup`, `SkeletonAvatar`, `SkeletonButton`, `SkeletonTags`, `Callout`, `LobeHub`, `GridBackground`, `FolderIcon`, `FileIcon`, `TokenTag`, `ChatSendButton`, `AvatarUploader` - 使用 token → `cssVar`
+
+**无法优化的文件（需要保留 `useTheme()`）：**
+
+- `useMermaid`, `useStreamMermaid`, `useHighlight`, `useStreamHighlight` - 需要完整的 theme 对象传给第三方库
+- `Alert`, `Tag`, `Menu`, `EmojiPicker` - 需要实际颜色值传给颜色计算函数
+- `SkeletonTitle`, `SkeletonTags` - 需要数值进行数学运算
+- `GridShowcase`, `GridBackground/demos` - 需要实际颜色值传给 `rgba()` 函数
+- `CustomFonts` - 需要实际字符串值进行字符串拼接
+- `Giscus/style.ts` - 需要实际颜色值传给 `readableColor()` 和 `rgba()` 函数（其他 token 已优化为 `cssVar`）
+
+**注意事项：**
+
+- `useThemeMode()` 只返回 `{ isDarkMode }`，不返回完整的 theme 对象
+- `cssVar` 的值是字符串（如 `"14px"`, `"#ffffff"`），可以直接在 JSX 中使用
+- 如果 token 需要用于数值计算（如 `Math.round(theme.fontSize * 1.5)`），需要保留 `useTheme()`
+
 ## 🎉 总结
 
 `createStaticStyles` 迁移是一个渐进式的优化过程。对于简单的静态样式，可以直接转换；对于复杂的动态场景，需要根据具体情况选择合适的优化策略。关键是要理解每种场景的处理方式，并灵活运用 CSS 变量、静态样式拆分等技术。
+
+### useTheme () 优化总结
+
+- ✅ **使用 `useThemeMode()`**：当组件只使用 `theme.isDarkMode` 时
+- ✅ **使用 `cssVar`**：当组件使用其他 token 值（颜色、尺寸等）时
+- ⚠️ **保留 `useTheme()`**：当 token 需要用于数值计算或传给第三方库时

@@ -75,11 +75,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     background-color: ${cssVar.colorPrimary};
   `,
 
-  textDark: css`
-    color: ${cssVar.colorTextLightSolid};
-  `,
-
-  textLight: css`
+  text: css`
     color: ${cssVar.colorText};
   `,
 }));
