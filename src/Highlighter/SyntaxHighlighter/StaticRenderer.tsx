@@ -33,7 +33,7 @@ const StaticRenderer = memo<StaticRendererProps>(
     // Safely handle empty or invalid children
     const safeChildren = children ?? '';
 
-    const { data } = useHighlight(safeChildren, {
+    const data = useHighlight(safeChildren, {
       enableTransformer,
       language,
       theme,

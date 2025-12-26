@@ -8,9 +8,8 @@ import {
   transformerNotationWordHighlight,
 } from '@shikijs/transformers';
 import { useTheme, useThemeMode } from 'antd-style';
-import { CSSProperties, useMemo } from 'react';
+import { CSSProperties, useEffect, useMemo, useState } from 'react';
 import type { BuiltinTheme, CodeToHastOptions, ThemedToken } from 'shiki';
-import useSWR, { SWRResponse } from 'swr';
 import { Md5 } from 'ts-md5';
 
 import { getCodeLanguageByInput } from '@/Highlighter/const';
@@ -31,9 +30,23 @@ export type StreamingHighlightResult = {
   preStyle?: CSSProperties;
 };
 
-type UseHighlightResponse = SWRResponse<string, Error> & {
-  colorReplacements?: ColorReplacements;
-  streaming?: StreamingHighlightResult;
+// Application-level cache for highlighted HTML
+// Key: cacheKey string, Value: Promise<string>
+const highlightCache = new Map<string, Promise<string>>();
+
+// Maximum cache size to prevent memory leaks
+const MAX_CACHE_SIZE = 1000;
+
+// Clean up old cache entries when limit is reached
+const cleanupCache = () => {
+  if (highlightCache.size > MAX_CACHE_SIZE) {
+    // Remove oldest 20% of entries
+    const entriesToRemove = Math.floor(MAX_CACHE_SIZE * 0.2);
+    const keysToRemove = Array.from(highlightCache.keys()).slice(0, entriesToRemove);
+    for (const key of keysToRemove) {
+      highlightCache.delete(key);
+    }
+  }
 };
 
 export type ICodeToHtml = (code: string, options: CodeToHastOptions) => Promise<string>;
@@ -61,7 +74,7 @@ export const escapeHtml = (str: string): string => {
     .replaceAll("'", '&#039;');
 };
 
-// Main highlight component
+// Main highlight component - optimized version without SWR
 export const useHighlight = (
   text: string,
   {
@@ -70,7 +83,7 @@ export const useHighlight = (
     theme: builtinTheme,
     streaming,
   }: { enableTransformer?: boolean; language: string; streaming?: boolean; theme?: BuiltinTheme },
-): UseHighlightResponse => {
+): string => {
   const { isDarkMode } = useThemeMode();
   const theme = useTheme();
 
@@ -137,17 +150,37 @@ export const useHighlight = (
 
   // Build cache key
   const cacheKey = useMemo((): string | null => {
+    if (streaming) return null;
     // Use hash for long text
     const hash = safeText.length < MD5_LENGTH_THRESHOLD ? safeText : Md5.hashStr(safeText);
     return [matchedLanguage, builtinTheme || (isDarkMode ? 'd' : 'l'), hash]
       .filter(Boolean)
       .join('-');
-  }, [safeText, matchedLanguage, isDarkMode, builtinTheme]);
+  }, [safeText, matchedLanguage, isDarkMode, builtinTheme, streaming]);
 
-  // Use SWR to get highlighted HTML
-  return useSWR(
-    streaming ? null : cacheKey,
-    async (): Promise<string> => {
+  const [data, setData] = useState<string | undefined>();
+
+  useEffect(() => {
+    if (!cacheKey) {
+      setData(undefined);
+      return;
+    }
+
+    // Check cache first
+    const cachedPromise = highlightCache.get(cacheKey);
+    if (cachedPromise) {
+      cachedPromise
+        .then((html) => {
+          setData(html);
+        })
+        .catch(() => {
+          // Silently handle errors, fallback will be handled in the promise
+        });
+      return;
+    }
+
+    // Create new promise for highlighting
+    const highlightPromise = (async (): Promise<string> => {
       try {
         // Try full rendering
         const codeToHtml = await shikiPromise;
@@ -160,8 +193,8 @@ export const useHighlight = (
         });
 
         return html;
-      } catch (error) {
-        console.error('Advanced rendering failed:', error);
+      } catch (error_) {
+        console.error('Advanced rendering failed:', error_);
 
         try {
           // Try simple rendering (without transformers)
@@ -178,12 +211,35 @@ export const useHighlight = (
           return fallbackHtml;
         }
       }
-    },
-    {
-      dedupingInterval: 3000, // Only execute once for the same request within 3 seconds
-      errorRetryCount: 2, // Retry at most 2 times
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
-  );
+    })();
+
+    // Cache the promise
+    highlightCache.set(cacheKey, highlightPromise);
+    cleanupCache();
+
+    // Handle promise result
+    highlightPromise
+      .then((html) => {
+        // Only update if this is still the current cache key
+        if (highlightCache.get(cacheKey) === highlightPromise) {
+          setData(html);
+        }
+      })
+      .catch(() => {
+        // Remove failed promise from cache
+        if (highlightCache.get(cacheKey) === highlightPromise) {
+          highlightCache.delete(cacheKey);
+        }
+      });
+  }, [
+    cacheKey,
+    safeText,
+    matchedLanguage,
+    builtinTheme,
+    isDarkMode,
+    colorReplacements,
+    transformers,
+  ]);
+
+  return data || '';
 };
