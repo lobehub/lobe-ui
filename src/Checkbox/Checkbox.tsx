@@ -1,5 +1,5 @@
 import { CheckIcon, Minus } from 'lucide-react';
-import type { CSSProperties, FC } from 'react';
+import type { CSSProperties, FC, MouseEvent } from 'react';
 import useMergeState from 'use-merge-value';
 
 import Block from '@/Block';
@@ -39,8 +39,9 @@ const Checkbox: FC<CheckboxProps> = ({
     ...customStyles?.checkbox,
   };
 
-  const handleClick = () => {
+  const handleClick = (e?: MouseEvent) => {
     if (!disabled) {
+      e?.preventDefault();
       setValue(!value);
     }
   };
@@ -100,7 +101,12 @@ const Checkbox: FC<CheckboxProps> = ({
       className={classNames?.wrapper}
       gap={Math.floor(size / 2)}
       horizontal
-      style={customStyles?.wrapper}
+      onClick={handleClick}
+      style={{
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        userSelect: 'none',
+        ...customStyles?.wrapper,
+      }}
     >
       {checkIcon}
       <Text
