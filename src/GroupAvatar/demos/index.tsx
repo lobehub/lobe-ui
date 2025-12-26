@@ -9,12 +9,12 @@ export default () => {
     {
       avatarShape: {
         options: ['circle', 'square'],
-        value: 'circle',
+        value: 'square',
       },
       clickable: false,
       cornerShape: {
         options: ['circle', 'square', 'squircle', 'ios', 'smooth', 'sharp'],
-        value: 'squircle',
+        value: 'square',
       },
       grid: {
         options: [2, 3, 'auto'],
@@ -33,6 +33,10 @@ export default () => {
   return (
     <StoryBook gap={16} levaStore={store}>
       <Flexbox gap={16} horizontal wrap={'wrap'}>
+        <GroupAvatar
+          avatars={['https://avatars.githubusercontent.com/u/17870709?v=4']}
+          {...control}
+        />
         <GroupAvatar
           avatars={[
             'https://avatars.githubusercontent.com/u/17870709?v=4',

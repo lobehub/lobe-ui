@@ -142,6 +142,7 @@ const Avatar = memo<AvatarProps>(
         src={isDefaultAntAvatar ? defualtAvatar : undefined}
         style={{
           background: isDefaultAntAvatar || !!emoji ? background : background || theme.colorBorder,
+          borderRadius: shape === 'square' && size && size < 24 ? '33%' : undefined,
           boxShadow: bordered
             ? `${theme.colorBgLayout} 0 0 0 2px, ${borderedColor || theme.colorTextTertiary} 0 0 0 4px`
             : undefined,

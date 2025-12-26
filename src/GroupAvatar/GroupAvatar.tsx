@@ -66,6 +66,8 @@ const GroupAvatar: FC<GroupAvatarProps> = ({
     [styles],
   );
 
+  const isSingle = calcAvatars?.length === 1;
+
   return (
     <Block
       align={'center'}
@@ -85,9 +87,21 @@ const GroupAvatar: FC<GroupAvatarProps> = ({
         {calcAvatars.map((item, index) => {
           if (typeof item === 'string')
             return (
-              <Avatar avatar={item} key={index} shape={avatarShape} size={calcSize.avatarSize} />
+              <Avatar
+                avatar={item}
+                key={index}
+                shape={avatarShape}
+                size={isSingle ? size * 0.8 : calcSize.avatarSize}
+              />
             );
-          return <Avatar key={index} {...item} shape={avatarShape} size={calcSize.avatarSize} />;
+          return (
+            <Avatar
+              key={index}
+              {...item}
+              shape={avatarShape}
+              size={isSingle ? size * 0.8 : calcSize.avatarSize}
+            />
+          );
         })}
       </Grid>
     </Block>
