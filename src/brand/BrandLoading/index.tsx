@@ -2,8 +2,6 @@ import { FC } from 'react';
 
 import { DivProps, SvgProps } from '@/types';
 
-import './style.css';
-
 export interface BrandLoadingProps {
   size?: number;
   text: FC<SvgProps & DivProps & { size?: number }>;
