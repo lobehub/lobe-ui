@@ -1,7 +1,7 @@
 'use client';
 
 import { Empty as AntEmpty } from 'antd';
-import { useTheme } from 'antd-style';
+import { cssVar, useThemeMode } from 'antd-style';
 import { type FC } from 'react';
 
 import Block from '@/Block';
@@ -30,7 +30,7 @@ const Empty: FC<EmptyProps> = ({
   descriptionProps,
   ...rest
 }) => {
-  const theme = useTheme();
+  const { isDarkMode } = useThemeMode();
   const isPage = type === 'page';
   const alignValue = align || (isPage ? 'flex-start' : 'center');
   const isCenter = alignValue === 'center';
@@ -57,7 +57,7 @@ const Empty: FC<EmptyProps> = ({
         {icon && (
           <Icon
             color={
-              iconColor || (theme.isDarkMode ? theme.colorTextQuaternary : theme.colorTextSecondary)
+              iconColor || (isDarkMode ? cssVar.colorTextQuaternary : cssVar.colorTextSecondary)
             }
             icon={icon}
             size={imageSize * 0.66}
@@ -87,7 +87,7 @@ const Empty: FC<EmptyProps> = ({
         {description && (
           <Text
             align={isCenter ? 'center' : undefined}
-            color={isPage ? theme.colorTextSecondary : theme.colorTextDescription}
+            color={isPage ? cssVar.colorTextSecondary : cssVar.colorTextDescription}
             fontSize={isPage ? 16 : 14}
             {...descriptionProps}
           >

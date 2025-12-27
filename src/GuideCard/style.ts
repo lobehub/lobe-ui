@@ -1,7 +1,10 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ cx, css, stylish, token, isDarkMode }) => ({
-  borderless: stylish.variantBorderlessWithoutHover,
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) => ({
+  borderless: lobeStaticStylish.variantBorderlessWithoutHover,
   close: css`
     position: absolute;
     inset-block-start: 8px;
@@ -14,27 +17,70 @@ export const useStyles = createStyles(({ cx, css, stylish, token, isDarkMode }) 
     align-self: center;
   `,
   desc: css`
-    color: ${token.colorTextDescription};
+    color: ${cssVar.colorTextDescription};
   `,
-  filled: cx(
-    stylish.variantFilledWithoutHover,
-    css`
-      background: linear-gradient(
-        to bottom,
-        ${isDarkMode ? token.colorFillTertiary : token.colorFillQuaternary},
-        ${isDarkMode ? token.colorFillQuaternary : token.colorFillTertiary}
-      );
-    `,
-  ),
-  outlined: stylish.variantOutlinedWithoutHover,
+  filledDark: css`
+    ${lobeStaticStylish.variantFilledWithoutHover};
+    background: linear-gradient(
+      to bottom,
+      ${cssVar.colorFillTertiary},
+      ${cssVar.colorFillQuaternary}
+    );
+  `,
+  filledLight: css`
+    ${lobeStaticStylish.variantFilledWithoutHover};
+    background: linear-gradient(
+      to bottom,
+      ${cssVar.colorFillQuaternary},
+      ${cssVar.colorFillTertiary}
+    );
+  `,
+  outlined: lobeStaticStylish.variantOutlinedWithoutHover,
   root: css`
     position: relative;
     overflow: hidden;
-    border-radius: ${token.borderRadiusLG}px;
+    border-radius: ${cssVar.borderRadiusLG};
   `,
-  shadow: stylish.shadow,
+  shadow: lobeStaticStylish.shadow,
   title: css`
     font-size: 16px;
     font-weight: bold;
   `,
 }));
+
+export const variants = cva(styles.root, {
+  compoundVariants: [
+    {
+      class: styles.filledDark,
+      isDarkMode: true,
+      variant: 'filled',
+    },
+    {
+      class: styles.filledLight,
+      isDarkMode: false,
+      variant: 'filled',
+    },
+  ],
+  defaultVariants: {
+    isDarkMode: false,
+    shadow: false,
+    variant: 'filled',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    isDarkMode: {
+      false: null,
+      true: null,
+    },
+    shadow: {
+      false: null,
+      true: styles.shadow,
+    },
+    variant: {
+      borderless: styles.borderless,
+      filled: null,
+      outlined: styles.outlined,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
+});

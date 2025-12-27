@@ -1,16 +1,15 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { memo } from 'react';
 
 import Button from '@/Button';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { BottomGradientButtonProps } from './type';
 
 const BottomGradientButton = memo<BottomGradientButtonProps>(
   ({ className, children, style, ref, ...rest }) => {
-    const { cx, styles } = useStyles();
-
     return (
       <Button
         className={cx(styles, className)}

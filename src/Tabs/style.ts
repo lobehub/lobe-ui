@@ -1,13 +1,16 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ css, token, prefixCls }) => {
+const prefixCls = 'ant';
+
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     compact: css`
       &.${prefixCls}-tabs {
         .${prefixCls}-tabs-tab {
           margin: 4px;
 
-          + .${prefixCls}-tabs-tab {
+          + [class*='ant-tabs-tab'] {
             margin: 4px;
           }
         }
@@ -16,10 +19,10 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
     dropdown: css`
       .${prefixCls}-tabs-dropdown-menu {
         padding: 4px;
-        border: 1px solid ${token.colorBorderSecondary};
+        border: 1px solid ${cssVar.colorBorderSecondary};
 
         .${prefixCls}-tabs-dropdown-menu-item {
-          border-radius: ${token.borderRadius}px;
+          border-radius: ${cssVar.borderRadius};
         }
       }
     `,
@@ -94,13 +97,13 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
         .${prefixCls}-tabs-tab {
           padding-block: 8px;
           padding-inline: 12px;
-          color: ${token.colorTextSecondary};
+          color: ${cssVar.colorTextSecondary};
           transition: background-color 100ms ease-out;
 
           &:hover {
-            color: ${token.colorText};
-            background: ${token.colorFillTertiary};
-            border-radius: ${token.borderRadius}px;
+            border-radius: ${cssVar.borderRadius};
+            color: ${cssVar.colorText};
+            background: ${cssVar.colorFillTertiary};
           }
         }
       }
@@ -141,4 +144,29 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
       }
     `,
   };
+});
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    compact: false,
+    underlined: false,
+    variant: 'rounded',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      square: null,
+      rounded: styles.rounded,
+      point: styles.point,
+    },
+    compact: {
+      false: styles.margin,
+      true: styles.compact,
+    },
+    underlined: {
+      false: styles.hideHolder,
+      true: null,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

@@ -1,132 +1,164 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(
-  ({ token, prefixCls, css, cx }, { rowNum, hasLink }: { hasLink?: boolean; rowNum: number }) => {
-    const prefix = `${prefixCls}-features`;
-    const coverCls = `${prefix}-cover`;
-    const descCls = `${prefix}-description`;
-    const titleCls = `${prefix}-title`;
-    const imgCls = `${prefix}-img`;
+const prefixCls = 'ant';
 
-    const scaleUnit = 20;
+export const styles = createStaticStyles(({ css, cssVar }) => {
+  const prefix = `${prefixCls}-features`;
+  const coverCls = `${prefix}-cover`;
+  const descCls = `${prefix}-description`;
+  const titleCls = `${prefix}-title`;
+  const imgCls = `${prefix}-img`;
 
-    const genSize = (size: number) => css`
-      width: ${size}px;
-      height: ${size}px;
-      font-size: ${size * (22 / 24)}px;
-    `;
+  const scaleUnit = 20;
 
-    const withTransition = css`
-      transition: all ${token.motionDurationSlow} ${token.motionEaseInOutCirc};
-    `;
+  const genSize = (size: number) => css`
+    width: ${size}px;
+    height: ${size}px;
+    font-size: ${size * (22 / 24)}px;
+  `;
 
-    return {
-      cell: css`
-        overflow: hidden;
-      `,
+  const withTransition = css`
+    transition: all ${cssVar.motionDurationSlow} ${cssVar.motionEaseInOutCirc};
+  `;
 
-      container: cx(
-        withTransition,
-        css`
-          position: relative;
-          z-index: 1;
+  return {
+    cell: css`
+      overflow: hidden;
+    `,
 
-          overflow: hidden;
+    container: css`
+      ${withTransition}
+      position: relative;
+      z-index: 1;
 
-          height: 228px;
-          max-height: 228px;
-          padding: 24px;
+      overflow: hidden;
 
-          p {
-            font-size: 16px;
-            line-height: 1.2;
-            text-align: start;
-            word-break: break-word;
-          }
+      height: 228px;
+      max-height: 228px;
+      padding: 24px;
 
-          &:hover {
-            .${coverCls} {
-              width: 100%;
-              height: ${scaleUnit * rowNum}px;
-              padding: 0;
-              background: ${token.colorFillContent};
-            }
+      p {
+        font-size: 16px;
+        line-height: 1.2;
+        text-align: start;
+        word-break: break-word;
+      }
 
-            .${imgCls} {
-              ${genSize(100)};
-            }
+      &:hover {
+        .${coverCls} {
+          width: 100%;
+          height: calc(var(--features-row-num, 7) * ${scaleUnit}px);
+          padding: 0;
+          background: ${cssVar.colorFillContent};
+        }
 
-            .${descCls} {
-              position: absolute;
-              visibility: hidden;
-              opacity: 0;
-            }
+        .${imgCls} {
+          ${genSize(100)};
+        }
 
-            .${titleCls} {
-              font-size: ${hasLink ? 14 : 20}px;
-            }
-          }
-        `,
-      ),
-      desc: cx(
-        descCls,
-        withTransition,
-        css`
-          pointer-events: none;
-          color: ${token.colorTextSecondary};
+        .${descCls} {
+          position: absolute;
+          visibility: hidden;
+          opacity: 0;
+        }
 
-          quotient {
-            position: relative;
+        .${titleCls} {
+          font-size: var(--features-title-hover-size, 20px);
+        }
+      }
+    `,
 
-            display: block;
+    containerHasLink: css`
+      ${withTransition}
+      position: relative;
+      z-index: 1;
 
-            margin-block: 12px;
-            margin-inline: 0;
-            padding-inline-start: 12px;
+      overflow: hidden;
 
-            color: ${token.colorTextDescription};
-          }
-        `,
-      ),
-      img: cx(
-        imgCls,
-        withTransition,
-        css`
-          ${genSize(20)};
-          color: ${token.colorText};
-        `,
-      ),
+      height: 228px;
+      max-height: 228px;
+      padding: 24px;
 
-      imgContainer: cx(
-        coverCls,
-        withTransition,
-        css`
-          ${genSize(24)};
-          padding: 4px;
-          opacity: 0.8;
-          border-radius: ${token.borderRadius}px;
-        `,
-      ),
+      p {
+        font-size: 16px;
+        line-height: 1.2;
+        text-align: start;
+        word-break: break-word;
+      }
 
-      link: css`
-        ${withTransition};
-        margin-block-start: 24px;
-      `,
+      &:hover {
+        .${coverCls} {
+          width: 100%;
+          height: calc(var(--features-row-num, 7) * ${scaleUnit}px);
+          padding: 0;
+          background: ${cssVar.colorFillContent};
+        }
 
-      title: cx(
-        titleCls,
-        withTransition,
-        css`
-          pointer-events: none;
+        .${imgCls} {
+          ${genSize(100)};
+        }
 
-          margin-block: 16px;
-          margin-inline: 0;
+        .${descCls} {
+          position: absolute;
+          visibility: hidden;
+          opacity: 0;
+        }
 
-          font-size: 20px;
-          line-height: ${token.lineHeightHeading3};
-          color: ${token.colorText};
-        `,
-      ),
-    };
-  },
-);
+        .${titleCls} {
+          font-size: 14px;
+        }
+      }
+    `,
+    desc: css`
+      ${descCls}
+      ${withTransition}
+      pointer-events: none;
+      color: ${cssVar.colorTextSecondary};
+
+      quotient {
+        position: relative;
+
+        display: block;
+
+        margin-block: 12px;
+        margin-inline: 0;
+        padding-inline-start: 12px;
+
+        color: ${cssVar.colorTextDescription};
+      }
+    `,
+    img: css`
+      ${imgCls}
+      ${withTransition}
+      ${genSize(20)};
+      color: ${cssVar.colorText};
+    `,
+
+    imgContainer: css`
+      ${coverCls}
+      ${withTransition}
+      ${genSize(24)};
+      padding: 4px;
+      opacity: 0.8;
+      border-radius: ${cssVar.borderRadius};
+    `,
+
+    link: css`
+      ${withTransition};
+      margin-block-start: 24px;
+    `,
+
+    title: css`
+      ${titleCls}
+      ${withTransition}
+      pointer-events: none;
+
+      margin-block: 16px;
+      margin-inline: 0;
+
+      font-size: 20px;
+      line-height: ${cssVar.lineHeightHeading3};
+      color: ${cssVar.colorText};
+    `,
+  };
+});

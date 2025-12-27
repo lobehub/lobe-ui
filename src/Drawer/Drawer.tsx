@@ -1,7 +1,7 @@
 'use client';
 
 import { Drawer as AntdDrawer } from 'antd';
-import { useTheme } from 'antd-style';
+import { cssVar } from 'antd-style';
 import { XIcon } from 'lucide-react';
 import { CSSProperties, memo, useMemo } from 'react';
 
@@ -30,8 +30,6 @@ const Drawer = memo<DrawerProps>(
     ref,
     ...rest
   }) => {
-    const theme = useTheme();
-
     const headerBorder: CSSProperties = useMemo(() => {
       if (height === '100%' || width === '100%' || height === '100vh' || width === '100vw')
         return {};
@@ -39,29 +37,29 @@ const Drawer = memo<DrawerProps>(
       switch (placement) {
         case 'top': {
           return {
-            borderBottom: `1px solid ${theme.colorBorder}`,
+            borderBottom: `1px solid ${cssVar.colorBorder}`,
           };
         }
         case 'bottom': {
           return {
-            borderTop: `1px solid ${theme.colorBorder}`,
+            borderTop: `1px solid ${cssVar.colorBorder}`,
           };
         }
         case 'left': {
           return {
-            borderRight: `1px solid ${theme.colorBorder}`,
+            borderRight: `1px solid ${cssVar.colorBorder}`,
           };
         }
         case 'right': {
           return {
-            borderLeft: `1px solid ${theme.colorBorder}`,
+            borderLeft: `1px solid ${cssVar.colorBorder}`,
           };
         }
         default: {
           return {};
         }
       }
-    }, [placement, height, width, theme.colorBorder]);
+    }, [placement, height, width]);
 
     const extraNode = (
       <Flexbox
@@ -89,8 +87,8 @@ const Drawer = memo<DrawerProps>(
           paddingBlock={12}
           paddingInline={16}
           style={{
-            background: theme.colorBgLayout,
-            borderRight: `1px solid ${theme.colorBorderSecondary}`,
+            background: cssVar.colorBgLayout,
+            borderRight: `1px solid ${cssVar.colorBorderSecondary}`,
             height: '100vh',
             overflowX: 'hidden',
             overflowY: 'auto',
@@ -108,7 +106,7 @@ const Drawer = memo<DrawerProps>(
           paddingBlock={12}
           paddingInline={16}
           style={{
-            background: theme.colorBgContainer,
+            background: cssVar.colorBgContainer,
             overflowX: 'hidden',
             overflowY: 'auto',
             ...styles?.sidebarContent,
@@ -148,12 +146,12 @@ const Drawer = memo<DrawerProps>(
                 },
                 section: {
                   background: sidebar
-                    ? `linear-gradient(to right, ${theme.colorBgLayout} 49.9%, ${theme.colorBgContainer} 50%)`
-                    : theme.colorBgContainer,
+                    ? `linear-gradient(to right, ${cssVar.colorBgLayout} 49.9%, ${cssVar.colorBgContainer} 50%)`
+                    : cssVar.colorBgContainer,
                   ...styles?.section,
                 },
                 wrapper: {
-                  background: theme.colorBgContainer,
+                  background: cssVar.colorBgContainer,
                   ...headerBorder,
                   ...styles?.wrapper,
                 },

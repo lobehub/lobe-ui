@@ -1,10 +1,10 @@
 import { FileTypeIcon, Icon } from '@lobehub/ui';
-import { createStyles, useTheme } from 'antd-style';
+import { createStaticStyles, cssVar } from 'antd-style';
 import { ArrowUpIcon, PlusIcon } from 'lucide-react';
 
 import { Center, Flexbox } from '@/Flex';
 
-const useStyles = createStyles(({ css, token }) => {
+const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     card: css`
       position: relative;
@@ -13,13 +13,13 @@ const useStyles = createStyles(({ css, token }) => {
 
       width: 150px;
       height: 100px;
-      border-radius: ${token.borderRadiusLG}px;
+      border-radius: ${cssVar.borderRadiusLG};
 
       font-weight: 500;
       text-align: center;
 
-      background: ${token.colorFillTertiary};
-      box-shadow: 0 0 0 1px ${token.colorFillTertiary} inset;
+      background: ${cssVar.colorFillTertiary};
+      box-shadow: 0 0 0 1px ${cssVar.colorFillTertiary} inset;
     `,
     glow: css`
       position: absolute;
@@ -44,16 +44,14 @@ const useStyles = createStyles(({ css, token }) => {
 });
 
 export default () => {
-  const theme = useTheme();
-  const { styles } = useStyles();
   return (
     <Center gap={8} horizontal>
       <Flexbox className={styles.card} padding={16}>
         <span>New Folder</span>
-        <div className={styles.glow} style={{ background: theme.geekblue }} />
+        <div className={styles.glow} style={{ background: cssVar.geekblue }} />
         <FileTypeIcon
           className={styles.icon}
-          color={theme.geekblue}
+          color={cssVar.geekblue}
           icon={<Icon color={'#fff'} icon={PlusIcon} />}
           size={56}
           type={'folder'}
@@ -61,20 +59,20 @@ export default () => {
       </Flexbox>
       <Flexbox className={styles.card} padding={16}>
         <span>Upload File</span>
-        <div className={styles.glow} style={{ background: theme.gold }} />
+        <div className={styles.glow} style={{ background: cssVar.gold }} />
         <FileTypeIcon
           className={styles.icon}
-          color={theme.gold}
+          color={cssVar.gold}
           icon={<Icon color={'#fff'} icon={ArrowUpIcon} />}
           size={56}
         />
       </Flexbox>
       <Flexbox className={styles.card} padding={16}>
         <span>Upload Folder</span>
-        <div className={styles.glow} style={{ background: theme.purple }} />
+        <div className={styles.glow} style={{ background: cssVar.purple }} />
         <FileTypeIcon
           className={styles.icon}
-          color={theme.purple}
+          color={cssVar.purple}
           icon={<Icon color={'#fff'} icon={ArrowUpIcon} />}
           size={56}
           type={'folder'}

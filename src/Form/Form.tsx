@@ -1,16 +1,15 @@
 'use client';
 
 import { Form as AntForm } from 'antd';
-import { useResponsive } from 'antd-style';
-import { cva } from 'class-variance-authority';
+import { cx, useResponsive } from 'antd-style';
 import { isUndefined } from 'es-toolkit/compat';
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 
 import FormFlatGroup from './components/FormFlatGroup';
 import FormGroup from './components/FormGroup';
 import FormItem from './components/FormItem';
 import { FormProvider } from './components/FormProvider';
-import { useStyles } from './style';
+import { variants } from './style';
 import type { FormGroupItemType, FormItemProps, FormProps } from './type';
 
 const Form = memo<FormProps>(
@@ -39,27 +38,7 @@ const Form = memo<FormProps>(
     ...rest
   }) => {
     const { mobile } = useResponsive();
-    const { cx, styles } = useStyles();
     const [submitLoading, setSubmitLoading] = useState(false);
-
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            variant: 'borderless',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: null,
-              outlined: null,
-              borderless: styles.borderless,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
 
     const mapFlat = useCallback(
       (item: FormItemProps, itemIndex: number) => (

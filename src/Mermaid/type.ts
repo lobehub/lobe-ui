@@ -5,9 +5,10 @@ import type { ActionIconProps } from '@/ActionIcon';
 import type { DivProps } from '@/types';
 
 export interface SyntaxMermaidProps {
+  animated?: boolean;
   children: string;
   className?: string;
-  enablePanZoom?: MermaidProps['enablePanZoom'];
+  fallbackClassName?: string;
   ref?: Ref<HTMLDivElement>;
   style?: CSSProperties;
   theme?: MermaidProps['theme'];
@@ -22,6 +23,7 @@ export interface MermaidProps extends DivProps {
     getContent: () => string;
     originalNode: ReactNode;
   }) => ReactNode;
+  animated?: boolean;
   bodyRender?: (props: { content: string; originalNode: ReactNode }) => ReactNode;
   children: string;
   classNames?: {
@@ -31,7 +33,6 @@ export interface MermaidProps extends DivProps {
   };
   copyable?: boolean;
   defaultExpand?: boolean;
-  enablePanZoom?: boolean;
   fileName?: string;
   fullFeatured?: boolean;
   language?: string;

@@ -1,13 +1,13 @@
 'use client';
 
 import { Image as AntImage, Skeleton } from 'antd';
-import { cva } from 'class-variance-authority';
-import { memo, useMemo } from 'react';
+import { cssVar, cx, useThemeMode } from 'antd-style';
+import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
 
 import usePreview from './components/usePreview';
-import { FALLBACK_DARK, FALLBACK_LIGHT, useStyles } from './style';
+import { FALLBACK_DARK, FALLBACK_LIGHT, styles, variants } from './style';
 import type { ImageProps } from './type';
 
 const Image = memo<ImageProps>(
@@ -32,29 +32,9 @@ const Image = memo<ImageProps>(
     height,
     ...rest
   }) => {
-    const { styles, cx, theme } = useStyles({
-      alwaysShowActions,
-    });
+    const { isDarkMode } = useThemeMode();
+    const actionsClassName = alwaysShowActions ? styles.actionsVisible : styles.actionsHidden;
     const mergePreivew = usePreview(preview);
-
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            variant: 'filled',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
 
     if (isLoading)
       return (
@@ -62,7 +42,7 @@ const Image = memo<ImageProps>(
           <Skeleton.Avatar
             active
             style={{
-              borderRadius: theme.borderRadius,
+              borderRadius: cssVar.borderRadius,
               height,
               maxHeight,
               maxWidth,
@@ -76,13 +56,17 @@ const Image = memo<ImageProps>(
 
     return (
       <Flexbox className={cx(variants({ variant }), className)} ref={ref} style={style}>
-        {actions && <div className={styles.actions}>{actions}</div>}
+        {actions && (
+          <div className={cx(actionsClassName, alwaysShowActions ? '' : 'actions-hidden')}>
+            {actions}
+          </div>
+        )}
         <AntImage
           className={cx(styles.image, classNames?.image)}
           classNames={{
             root: cx(styles.wrapper, classNames?.wrapper),
           }}
-          fallback={theme.isDarkMode ? FALLBACK_DARK : FALLBACK_LIGHT}
+          fallback={isDarkMode ? FALLBACK_DARK : FALLBACK_LIGHT}
           height={height}
           loading={'lazy'}
           onClick={onClick}

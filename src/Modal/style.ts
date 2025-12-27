@@ -1,16 +1,17 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
 export const HEADER_HEIGHT = 56;
 export const FOOTER_HEIGHT = 68;
 
-export const useStyles = createStyles(({ css, token, prefixCls }) => {
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     content: css`
-      .${prefixCls}-modal-footer {
+      [class*='ant-modal-footer'] {
         margin: 0;
         padding: 16px;
       }
-      .${prefixCls}-modal-header {
+
+      [class*='ant-modal-header'] {
         display: flex;
         gap: 4px;
         align-items: center;
@@ -20,26 +21,27 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => {
         margin-block-end: 0;
         padding: 16px;
       }
-      .${prefixCls}-modal-container {
+
+      [class*='ant-modal-container'] {
         overflow: hidden;
         padding: 0;
-        border: 1px solid ${token.colorSplit};
-        border-radius: ${token.borderRadiusLG}px;
+        border: 1px solid ${cssVar.colorSplit};
+        border-radius: ${cssVar.borderRadiusLG};
       }
     `,
     drawerContent: css`
-      .${prefixCls}-drawer-close {
+      [class*='ant-drawer-close'] {
         padding: 0;
       }
 
-      .${prefixCls}-drawer-header {
+      [class*='ant-drawer-header'] {
         flex: none;
         height: ${HEADER_HEIGHT}px !important;
         padding-block: 0;
         padding-inline: 16px;
       }
 
-      .${prefixCls}-drawer-footer {
+      [class*='ant-drawer-footer'] {
         display: flex;
         align-items: center;
         justify-content: flex-end;

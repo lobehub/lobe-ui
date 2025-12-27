@@ -1,11 +1,11 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
-import { type FC, useMemo } from 'react';
+import { cx } from 'antd-style';
+import { type FC } from 'react';
 
 import Tooltip from '@/Tooltip';
 
-import { useStyles } from './styles';
+import { variants } from './styles';
 import type { TextProps } from './type';
 
 const Text: FC<TextProps> = ({
@@ -28,58 +28,6 @@ const Text: FC<TextProps> = ({
   ellipsis,
   ...rest
 }) => {
-  const { styles, cx } = useStyles();
-
-  const variants = useMemo(
-    () =>
-      cva(styles.text, {
-        defaultVariants: {},
-        variants: {
-          as: {
-            h1: styles.h1,
-            h2: styles.h2,
-            h3: styles.h3,
-            h4: styles.h4,
-            h5: styles.h5,
-            p: styles.p,
-          },
-          code: {
-            true: styles.code,
-          },
-          delete: {
-            true: styles.delete,
-          },
-          disabled: {
-            true: styles.disabled,
-          },
-          ellipsis: {
-            multi: styles.ellipsisMulti,
-            true: styles.ellipsis,
-          },
-          italic: {
-            true: styles.italic,
-          },
-          mark: {
-            true: styles.mark,
-          },
-          strong: {
-            true: styles.strong,
-          },
-          type: {
-            danger: styles.danger,
-            info: styles.info,
-            secondary: styles.secondary,
-            success: styles.success,
-            warning: styles.warning,
-          },
-          underline: {
-            true: styles.underline,
-          },
-        },
-      }),
-    [styles],
-  );
-
   const textStyle = {
     ...(color && { color }),
     ...(weight && { fontWeight: weight }),

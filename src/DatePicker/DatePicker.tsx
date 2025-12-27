@@ -1,46 +1,22 @@
 'use client';
 
 import { DatePicker as AntDatePicker } from 'antd';
-import { cva } from 'class-variance-authority';
-import { memo, useMemo } from 'react';
+import { cx, useThemeMode } from 'antd-style';
+import { memo } from 'react';
 
-import { useStyles } from './style';
+import { variants } from './style';
 import { DatePickerProps } from './type';
 
 const DatePicker = memo<DatePickerProps>(({ variant, shadow, className, ...rest }) => {
-  const { styles, cx, theme } = useStyles();
-
-  const variants = useMemo(
-    () =>
-      cva(styles.root, {
-        defaultVariants: {
-          shadow: false,
-        },
-        /* eslint-disable sort-keys-fix/sort-keys-fix */
-        variants: {
-          variant: {
-            filled: styles.filled,
-            outlined: styles.outlined,
-            borderless: styles.borderless,
-            underlined: null,
-          },
-          shadow: {
-            false: null,
-            true: styles.shadow,
-          },
-        },
-        /* eslint-enable sort-keys-fix/sort-keys-fix */
-      }),
-    [styles],
-  );
+  const { isDarkMode } = useThemeMode();
 
   return (
     <AntDatePicker
       className={cx(
-        variants({ shadow, variant: variant || (theme.isDarkMode ? 'filled' : 'outlined') }),
+        variants({ shadow, variant: variant || (isDarkMode ? 'filled' : 'outlined') }),
         className,
       )}
-      variant={variant || (theme.isDarkMode ? 'filled' : 'outlined')}
+      variant={variant || (isDarkMode ? 'filled' : 'outlined')}
       {...rest}
     />
   );

@@ -1,9 +1,12 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ stylish, cx, css, token }) => {
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     borderless: cx(
-      stylish.variantBorderlessWithoutHover,
+      lobeStaticStylish.variantBorderlessWithoutHover,
       css`
         border-radius: 0;
 
@@ -13,11 +16,11 @@ export const useStyles = createStyles(({ stylish, cx, css, token }) => {
         }
       `,
     ),
-    filled: stylish.variantFilledWithoutHover,
+    filled: lobeStaticStylish.variantFilledWithoutHover,
     highlight: css`
       pointer-events: none;
     `,
-    outlined: stylish.variantOutlinedWithoutHover,
+    outlined: lobeStaticStylish.variantOutlinedWithoutHover,
     root: css`
       position: relative;
 
@@ -25,10 +28,9 @@ export const useStyles = createStyles(({ stylish, cx, css, token }) => {
 
       width: 100%;
       height: fit-content;
+      border-radius: ${cssVar.borderRadius};
 
       font-size: 12px;
-
-      border-radius: ${token.borderRadius}px;
 
       pre,
       textarea {
@@ -41,7 +43,7 @@ export const useStyles = createStyles(({ stylish, cx, css, token }) => {
       code {
         overflow: hidden;
 
-        font-family: ${token.fontFamilyCode};
+        font-family: ${cssVar.fontFamilyCode};
         font-size: inherit;
         line-height: inherit;
         word-break: inherit;
@@ -62,17 +64,17 @@ export const useStyles = createStyles(({ stylish, cx, css, token }) => {
       width: 100%;
       height: 100%;
       padding: 0;
+      border: none;
 
       color: transparent;
       text-align: start;
 
       background: transparent;
-      border: none;
       outline: none;
-      caret-color: ${token.colorText};
+      caret-color: ${cssVar.colorText};
 
       &::placeholder {
-        color: ${token.colorTextQuaternary};
+        color: ${cssVar.colorTextQuaternary};
       }
 
       &:focus {
@@ -82,4 +84,19 @@ export const useStyles = createStyles(({ stylish, cx, css, token }) => {
       }
     `,
   };
+});
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    variant: 'borderless',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: styles.filled,
+      outlined: styles.outlined,
+      borderless: styles.borderless,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

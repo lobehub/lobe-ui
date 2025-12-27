@@ -1,6 +1,7 @@
 'use client';
 
 import { useSize } from 'ahooks';
+import { cx } from 'antd-style';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import {
   FC,
@@ -18,7 +19,7 @@ import { Flexbox } from '@/Flex';
 import ChatInputAreaInner from '@/chat/ChatInputArea/components/ChatInputAreaInner';
 import SafeArea from '@/mobile/SafeArea';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { ChatInputAreaProps } from './type';
 
 const ChatInputArea = memo<ChatInputAreaProps>(
@@ -39,7 +40,6 @@ const ChatInputArea = memo<ChatInputAreaProps>(
     safeArea,
   }) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const { cx, styles } = useStyles();
     const size = useSize(containerRef);
     const [showFullscreen, setShowFullscreen] = useState<boolean>(false);
     const [isFocused, setIsFocused] = useState<boolean>(false);

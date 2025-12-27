@@ -1,9 +1,9 @@
-import { type CSSProperties, type FC } from 'react';
+import { type CSSProperties, type FC, useMemo } from 'react';
 
 import A from '@/Avatar';
 import { Flexbox } from '@/Flex';
 
-import { useStyles } from '../style';
+import { styles } from '../style';
 import type { ChatItemProps } from '../type';
 import Loading from './Loading';
 
@@ -30,9 +30,15 @@ const Avatar: FC<AvatarProps> = ({
   style,
   alt,
 }) => {
-  const { styles } = useStyles({ avatarSize: size });
+  const cssVariables = useMemo<Record<string, string>>(
+    () => ({
+      '--chat-item-avatar-size': `${size}px`,
+    }),
+    [size],
+  );
+
   const avatarContent = (
-    <div className={styles.avatarContainer} style={style}>
+    <div className={styles.avatarContainer} style={{ ...cssVariables, ...style }}>
       <A
         alt={alt || avatar.title}
         animation={loading}

@@ -1,15 +1,15 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
 const IGNORE_CLASSNAME = '.ignore-markdown-style';
 
-export const useStyles = createStyles(({ token, css }) => {
+export const styles = createStaticStyles(({ cssVar, css }) => {
   const __root = css`
     --lobe-markdown-font-size: 16px;
     --lobe-markdown-header-multiple: 1;
     --lobe-markdown-margin-multiple: 2;
     --lobe-markdown-line-height: 1.8;
-    --lobe-markdown-border-radius: ${token.borderRadiusLG};
-    --lobe-markdown-border-color: ${token.colorFillQuaternary};
+    --lobe-markdown-border-radius: ${cssVar.borderRadiusLG};
+    --lobe-markdown-border-color: ${cssVar.colorFillQuaternary};
 
     position: relative;
 
@@ -23,10 +23,10 @@ export const useStyles = createStyles(({ token, css }) => {
   `;
   const a = css`
     a {
-      color: ${token.colorInfoText};
+      color: ${cssVar.colorInfoText};
 
       &:hover {
-        color: ${token.colorInfoHover};
+        color: ${cssVar.colorInfoHover};
       }
     }
   `;
@@ -37,9 +37,9 @@ export const useStyles = createStyles(({ token, css }) => {
       margin-inline: 0;
       padding-block: 0;
       padding-inline: 1em;
-      border-inline-start: solid 4px ${token.colorBorder};
+      border-inline-start: solid 4px ${cssVar.colorBorder};
 
-      color: ${token.colorTextSecondary};
+      color: ${cssVar.colorTextSecondary};
     }
   `;
 
@@ -54,20 +54,20 @@ export const useStyles = createStyles(({ token, css }) => {
         border: 1px solid var(--lobe-markdown-border-color);
         border-radius: 0.25em;
 
-        font-family: ${token.fontFamilyCode};
+        font-family: ${cssVar.fontFamilyCode};
         font-size: 0.875em;
         line-height: 1;
         word-break: break-word;
         white-space: break-spaces;
 
-        background: ${token.colorFillSecondary};
+        background: ${cssVar.colorFillSecondary};
       }
     }
   `;
 
   const del = css`
     del {
-      color: ${token.colorTextDescription};
+      color: ${cssVar.colorTextDescription};
       text-decoration: line-through;
     }
   `;
@@ -79,7 +79,7 @@ export const useStyles = createStyles(({ token, css }) => {
       padding-inline: 1em;
       border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
 
-      background: ${token.colorFillTertiary};
+      background: ${cssVar.colorFillTertiary};
       box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
 
       summary {
@@ -99,19 +99,19 @@ export const useStyles = createStyles(({ token, css }) => {
 
           width: 0.4em;
           height: 0.4em;
-          border-block-end: 1.5px solid ${token.colorTextSecondary};
-          border-inline-end: 1.5px solid ${token.colorTextSecondary};
+          border-block-end: 1.5px solid ${cssVar.colorTextSecondary};
+          border-inline-end: 1.5px solid ${cssVar.colorTextSecondary};
 
-          font-family: ${token.fontFamily};
+          font-family: ${cssVar.fontFamily};
 
-          transition: transform 200ms ${token.motionEaseOut};
+          transition: transform 200ms ${cssVar.motionEaseOut};
         }
       }
 
       &[open] {
         summary {
           padding-block-end: 0.75em;
-          border-block-end: 1px dashed ${token.colorBorder};
+          border-block-end: 1px dashed ${cssVar.colorBorder};
 
           &::before {
             transform: rotateZ(45deg);
@@ -166,7 +166,7 @@ export const useStyles = createStyles(({ token, css }) => {
     hr {
       width: 100%;
       margin-block: calc(var(--lobe-markdown-margin-multiple) * 1.5em);
-      border-color: ${token.colorBorder};
+      border-color: ${cssVar.colorBorder};
       border-style: dashed;
       border-width: 1px;
       border-block-start: none;
@@ -301,19 +301,19 @@ export const useStyles = createStyles(({ token, css }) => {
       word-break: auto-phrase;
       overflow-wrap: break-word;
 
-      background: ${token.colorFillQuaternary};
-      box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
+      background: ${cssVar.colorFillQuaternary};
+      box-shadow: 0 0 0 1px ${cssVar.colorBorderSecondary};
 
       code {
         word-break: break-word;
       }
 
       thead {
-        background: ${token.colorFillQuaternary};
+        background: ${cssVar.colorFillQuaternary};
       }
 
       tr {
-        box-shadow: 0 1px 0 ${token.colorBorderSecondary};
+        box-shadow: 0 1px 0 ${cssVar.colorBorderSecondary};
       }
 
       th,

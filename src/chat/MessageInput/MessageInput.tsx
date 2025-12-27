@@ -1,6 +1,6 @@
 'use client';
 
-import { useResponsive } from 'antd-style';
+import { cx, useResponsive } from 'antd-style';
 import { memo, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
@@ -12,7 +12,7 @@ import { combineKeys } from '@/Hotkey/utils';
 import TextArea from '@/Input/TextArea';
 import Tooltip from '@/Tooltip';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { MessageInputProps } from './type';
 
 const MessageInput = memo<MessageInputProps>(
@@ -34,7 +34,6 @@ const MessageInput = memo<MessageInputProps>(
   }) => {
     const { mobile } = useResponsive();
     const [temporaryValue, setValue] = useState<string>(defaultValue || '');
-    const { cx, styles } = useStyles();
     const confirmHotkey = combineKeys([KeyMapEnum.Mod, KeyMapEnum.Enter]);
     const confirmText = text?.confirm || 'Confirm';
     const cancelHotkey = combineKeys([KeyMapEnum.Esc]);

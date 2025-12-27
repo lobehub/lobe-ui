@@ -1,5 +1,6 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { AnimatePresence } from 'motion/react';
 import type { CSSProperties, ComponentPropsWithoutRef, ReactNode } from 'react';
 import { KeyboardEvent, memo, useCallback, useEffect, useMemo, useRef } from 'react';
@@ -12,7 +13,7 @@ import Text from '@/Text';
 
 import ArrowIcon from './ArrowIcon';
 import { useAccordionContext } from './context';
-import { useStyles } from './style';
+import { styles } from './style';
 import type { AccordionItemProps } from './type';
 
 type AccordionContentBaseProps = {
@@ -196,7 +197,6 @@ const AccordionItem = memo<AccordionItemProps>(
     expand,
     onExpandChange,
   }) => {
-    const { cx, styles } = useStyles();
     const context = useAccordionContext();
 
     // Determine if using standalone mode (has expand or defaultExpand props)

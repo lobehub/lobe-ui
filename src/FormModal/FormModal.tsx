@@ -1,6 +1,6 @@
 'use client';
 
-import { useResponsive } from 'antd-style';
+import { cx, useResponsive } from 'antd-style';
 import { memo } from 'react';
 
 import Button from '@/Button';
@@ -8,7 +8,7 @@ import { Flexbox } from '@/Flex';
 import Form from '@/Form';
 import Modal from '@/Modal';
 
-import { useStyles } from './style';
+import { styles as staticStyles } from './style';
 import type { FormModalProps } from './type';
 
 const FormModal = memo<FormModalProps>(
@@ -52,7 +52,6 @@ const FormModal = memo<FormModalProps>(
     ...rest
   }) => {
     const { mobile } = useResponsive();
-    const { cx, styles: s } = useStyles();
     const { form: formClassName, ...modalClassNames } = classNames;
     const { form: formStyle, ...modalStyles } =
       typeof styles === 'function' ? { form: undefined } : styles;
@@ -98,10 +97,10 @@ const FormModal = memo<FormModalProps>(
         zIndex={zIndex}
       >
         <Form
-          className={cx(s.form, formClassName)}
+          className={cx(staticStyles.form, formClassName || '')}
           clearOnDestroy={destroyOnHidden}
           footer={
-            <Flexbox align={'center'} className={cx(s.footer)} gap={8} horizontal>
+            <Flexbox align={'center'} className={staticStyles.footer} gap={8} horizontal>
               {footer || (
                 <Button
                   block

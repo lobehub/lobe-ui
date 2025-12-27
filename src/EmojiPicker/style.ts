@@ -1,14 +1,15 @@
-import { createStyles } from 'antd-style';
-import chroma from 'chroma-js';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token, prefixCls }) => ({
+const prefixCls = 'ant';
+
+export const styles = createStaticStyles(({ css, cssVar }) => ({
   picker: css`
     position: relative;
 
     em-emoji-picker {
-      --rgb-accent: ${chroma(token.colorPrimary) .rgb() .join(',')};
+      --rgb-accent: var(--emoji-picker-rgb-accent, 0, 0, 0);
       --shadow: none;
-      --rgb-background: ${chroma(token.colorBgElevated) .rgb() .join(',')};
+      --rgb-background: var(--emoji-picker-rgb-background, 255, 255, 255);
       --border-radius: 0;
     }
   `,
@@ -20,14 +21,14 @@ export const useStyles = createStyles(({ css, token, prefixCls }) => ({
   `,
   root: css`
     position: relative;
-    transition: background 150ms ${token.motionEaseOut};
+    transition: background 150ms ${cssVar.motionEaseOut};
 
     &:hover {
-      background: ${token.colorFillSecondary};
+      background: ${cssVar.colorFillSecondary};
     }
   `,
   tabs: css`
-    border-block-end: 1px solid ${token.colorBorderSecondary};
+    border-block-end: 1px solid ${cssVar.colorBorderSecondary};
 
     .ant-tabs-tab {
       display: flex;

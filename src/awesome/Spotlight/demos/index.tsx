@@ -1,23 +1,22 @@
 import { Spotlight, SpotlightProps } from '@lobehub/ui/awesome';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-const useStyles = createStyles(({ css, token }) => ({
+const styles = createStaticStyles(({ css, cssVar }) => ({
   card: css`
     position: relative;
 
     width: 100%;
     height: 36px;
+    border: 1px solid ${cssVar.colorBorder};
+    border-radius: ${cssVar.borderRadius};
 
-    background: ${token.colorBgLayout};
-    border: 1px solid ${token.colorBorder};
-    border-radius: ${token.borderRadius}px;
+    background: ${cssVar.colorBgLayout};
   `,
 }));
 
 export default () => {
   const store = useCreateStore();
-  const { styles } = useStyles();
   const control = useControls(
     {
       size: 64,

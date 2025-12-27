@@ -1,17 +1,17 @@
 'use client';
 
 import { Alert as AntdAlert } from 'antd';
-import { cva } from 'class-variance-authority';
+import { cssVar, cx, useTheme } from 'antd-style';
 import { camelCase } from 'es-toolkit/compat';
 import { AlertTriangle, CheckCircle, Info, X, XCircle } from 'lucide-react';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 
 import { Accordion, AccordionItem } from '@/Accordion';
 import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
-import { useStyles } from './style';
+import { extraHeaderVariants, extraVariants, rootVariants } from './style';
 import type { AlertProps } from './type';
 
 const typeIcons = {
@@ -49,86 +49,10 @@ const Alert = memo<AlertProps>(
     ref,
     ...rest
   }) => {
-    const { theme, styles, cx } = useStyles({
-      closable: !!closable,
-      hasTitle: !!description,
-      showIcon: !!showIcon,
-    });
-
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            colorfulText: true,
-            glass: false,
-            variant: 'filled',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-            glass: {
-              false: null,
-              true: styles.glass,
-            },
-            colorfulText: {
-              false: null,
-              true: styles.colorfulText,
-            },
-            hasExtra: {
-              false: null,
-              true: styles.hasExtra,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
-
-    const extraVariants = useMemo(
-      () =>
-        cva(styles.extra, {
-          defaultVariants: {
-            variant: 'filled',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-            banner: {
-              false: null,
-              true: styles.banner,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
-
-    const extraHeaderVariants = useMemo(
-      () =>
-        cva(styles.extraHeader, {
-          defaultVariants: {
-            variant: 'filled',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: null,
-              outlined: null,
-              borderless: styles.borderlessExtraHeader,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
+    const theme = useTheme();
+    const hasTitle = !!description;
+    const isClosable = !!closable;
+    const isShowIcon = !!showIcon;
 
     const isInsideExtra = Boolean(!extraIsolate && !!extra);
 
@@ -136,10 +60,13 @@ const Alert = memo<AlertProps>(
       <AntdAlert
         banner={banner}
         className={cx(
-          variants({
+          rootVariants({
+            closable: isClosable,
             colorfulText,
             glass,
             hasExtra: isInsideExtra,
+            hasTitle,
+            showIcon: isShowIcon,
             variant,
           }),
           classNames?.alert,
@@ -155,7 +82,7 @@ const Alert = memo<AlertProps>(
         description={description}
         icon={
           <Icon
-            color={type === 'secondary' ? theme.colorTextSecondary : undefined}
+            color={type === 'secondary' ? cssVar.colorTextSecondary : undefined}
             icon={typeIcons[type] || icon}
             size={description ? 24 : 18}
             {...iconProps}
@@ -201,7 +128,7 @@ const Alert = memo<AlertProps>(
             <AccordionItem
               classNames={{
                 content: classNames?.extraContent,
-                header: extraHeaderVariants({ variant }),
+                header: extraHeaderVariants({ hasTitle, variant }),
               }}
               itemKey={'extra'}
               styles={{

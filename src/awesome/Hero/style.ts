@@ -1,6 +1,8 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles, responsive } from 'antd-style';
 
-export const useStyles = createStyles(({ css, responsive, token, stylish }) => ({
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) => ({
   actions: css`
     margin-block-start: 24px;
 
@@ -9,7 +11,7 @@ export const useStyles = createStyles(({ css, responsive, token, stylish }) => (
       font-weight: 500;
     }
 
-    ${responsive.mobile} {
+    ${responsive.sm} {
       flex-direction: column;
       gap: 16px;
       width: 100%;
@@ -29,14 +31,14 @@ export const useStyles = createStyles(({ css, responsive, token, stylish }) => (
 
   desc: css`
     margin-block-start: 0;
-    font-size: ${token.fontSizeHeading3}px;
-    color: ${token.colorTextSecondary};
+    font-size: ${cssVar.fontSizeHeading3};
+    color: ${cssVar.colorTextSecondary};
     text-align: center;
 
-    ${responsive.mobile} {
+    ${responsive.sm} {
       margin-block: 24px;
       margin-inline: 16px;
-      font-size: ${token.fontSizeHeading5}px;
+      font-size: ${cssVar.fontSizeHeading5};
     }
   `,
   title: css`
@@ -49,7 +51,7 @@ export const useStyles = createStyles(({ css, responsive, token, stylish }) => (
     text-align: center;
 
     b {
-      ${stylish.gradientAnimation}
+      ${lobeStaticStylish.gradientAnimation}
       position: relative;
       z-index: 5;
       background-clip: text;
@@ -61,7 +63,7 @@ export const useStyles = createStyles(({ css, responsive, token, stylish }) => (
       }
     }
 
-    ${responsive.mobile} {
+    ${responsive.sm} {
       font-size: 64px;
     }
   `,

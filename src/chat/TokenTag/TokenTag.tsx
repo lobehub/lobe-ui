@@ -1,7 +1,7 @@
 'use client';
 
 import { Progress } from 'antd';
-import { useTheme } from 'antd-style';
+import { cssVar } from 'antd-style';
 import numeral from 'numeral';
 import { type FC, useMemo } from 'react';
 
@@ -22,7 +22,6 @@ const TokenTag: FC<TokenTagProps> = ({
   size = 20,
   ...rest
 }) => {
-  const theme = useTheme();
   const { t } = useTranslation(chatMessages);
   const valueLeft = maxValue - value;
   const percent = value / maxValue;
@@ -36,19 +35,19 @@ const TokenTag: FC<TokenTagProps> = ({
 
     if (percent < 0.7) {
       type = 'normal';
-      color = theme.colorText;
+      color = cssVar.colorText;
     } else if (percent < 0.9) {
       type = 'low';
-      color = theme.colorWarning;
+      color = cssVar.colorWarning;
     } else {
       type = 'overload';
-      color = theme.colorError;
+      color = cssVar.colorError;
     }
     return {
       color,
       type,
     };
-  }, [percent, theme]);
+  }, [percent]);
 
   const title =
     valueLeft > 0

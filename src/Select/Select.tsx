@@ -1,47 +1,23 @@
 'use client';
 
 import { Select as AntSelect } from 'antd';
-import { cva } from 'class-variance-authority';
+import { cx, useThemeMode } from 'antd-style';
 import { ChevronDownIcon } from 'lucide-react';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 
 import Icon from '@/Icon';
 
-import { useStyles } from './style';
+import { variants } from './style';
 import type { SelectProps } from './type';
 
 const Input = memo<SelectProps>(
   ({ ref, variant, suffixIconProps, suffixIcon, shadow, className, ...rest }) => {
-    const { styles, cx, theme } = useStyles();
-
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            shadow: false,
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-              underlined: null,
-            },
-            shadow: {
-              false: null,
-              true: styles.shadow,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
+    const { isDarkMode } = useThemeMode();
 
     return (
       <AntSelect
         className={cx(
-          variants({ shadow, variant: variant || (theme.isDarkMode ? 'filled' : 'outlined') }),
+          variants({ shadow, variant: variant || (isDarkMode ? 'filled' : 'outlined') }),
           className,
         )}
         ref={ref}
@@ -56,7 +32,7 @@ const Input = memo<SelectProps>(
             }}
           />
         }
-        variant={variant || (theme.isDarkMode ? 'filled' : 'outlined')}
+        variant={variant || (isDarkMode ? 'filled' : 'outlined')}
         {...rest}
       />
     );

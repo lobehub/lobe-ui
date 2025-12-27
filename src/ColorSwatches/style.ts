@@ -1,25 +1,27 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token, prefixCls }, size: number) => {
+const prefixCls = 'ant';
+
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     active: css`
-      box-shadow: inset 0 0 0 1px ${token.colorFill};
+      box-shadow: inset 0 0 0 1px ${cssVar.colorFill};
     `,
     conic: css`
       background: conic-gradient(
-        ${token.red},
-        ${token.volcano},
-        ${token.orange},
-        ${token.gold},
-        ${token.yellow},
-        ${token.lime},
-        ${token.green},
-        ${token.cyan},
-        ${token.blue},
-        ${token.geekblue},
-        ${token.purple},
-        ${token.magenta},
-        ${token.red}
+        ${cssVar.red},
+        ${cssVar.volcano},
+        ${cssVar.orange},
+        ${cssVar.gold},
+        ${cssVar.yellow},
+        ${cssVar.lime},
+        ${cssVar.green},
+        ${cssVar.cyan},
+        ${cssVar.blue},
+        ${cssVar.geekblue},
+        ${cssVar.purple},
+        ${cssVar.magenta},
+        ${cssVar.red}
       );
       .${prefixCls}-color-picker-color-block {
         opacity: 0;
@@ -31,18 +33,18 @@ export const useStyles = createStyles(({ css, token, prefixCls }, size: number) 
 
       flex: none;
 
-      width: ${size}px;
-      min-width: ${size}px;
-      height: ${size}px;
-      min-height: ${size}px;
+      width: var(--color-swatches-size, 24px);
+      min-width: var(--color-swatches-size, 24px);
+      height: var(--color-swatches-size, 24px);
+      min-height: var(--color-swatches-size, 24px);
 
-      background: ${token.colorBgContainer};
-      box-shadow: inset 0 0 0 1px ${token.colorFillSecondary};
+      background: ${cssVar.colorBgContainer};
+      box-shadow: inset 0 0 0 1px ${cssVar.colorFillSecondary};
 
       &:hover {
         box-shadow:
           inset 0 0 0 1px rgba(0, 0, 0, 5%),
-          0 0 0 2px ${token.colorText};
+          0 0 0 2px ${cssVar.colorText};
       }
     `,
 
@@ -50,19 +52,19 @@ export const useStyles = createStyles(({ css, token, prefixCls }, size: number) 
       overflow: hidden;
       flex: none;
 
-      width: ${size}px;
-      min-width: ${size}px;
-      height: ${size}px;
-      min-height: ${size}px;
+      width: var(--color-swatches-size, 24px);
+      min-width: var(--color-swatches-size, 24px);
+      height: var(--color-swatches-size, 24px);
+      min-height: var(--color-swatches-size, 24px);
       padding: 0;
-
       border: none;
-      box-shadow: inset 0 0 0 1px ${token.colorFillSecondary};
+
+      box-shadow: inset 0 0 0 1px ${cssVar.colorFillSecondary};
 
       &:hover {
         box-shadow:
-          inset 0 0 0 1px ${token.colorFillSecondary},
-          0 0 0 2px ${token.colorText};
+          inset 0 0 0 1px ${cssVar.colorFillSecondary},
+          0 0 0 2px ${cssVar.colorText};
       }
 
       .${prefixCls}-color-picker-color-block {
@@ -75,9 +77,9 @@ export const useStyles = createStyles(({ css, token, prefixCls }, size: number) 
 
     transparent: css`
       background-image: conic-gradient(
-        ${token.colorFillSecondary} 25%,
+        ${cssVar.colorFillSecondary} 25%,
         transparent 25% 50%,
-        ${token.colorFillSecondary} 50% 75%,
+        ${cssVar.colorFillSecondary} 50% 75%,
         transparent 75% 100%
       );
       background-size: 50% 50%;

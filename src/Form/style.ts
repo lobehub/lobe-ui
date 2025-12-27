@@ -1,12 +1,16 @@
-import { createStyles } from 'antd-style';
-import { isNumber } from 'es-toolkit/compat';
+import { createStaticStyles, responsive } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ css, token, prefixCls, responsive }) => ({
+import { lobeStaticStylish } from '@/styles';
+
+const prefixCls = 'ant';
+
+export const styles = createStaticStyles(({ css, cssVar }) => ({
   borderless: css`
     gap: 48px;
     .${prefixCls}-collapse .${prefixCls}-collapse-header {
       padding-block-end: 16px;
-      border-block-end: 1px solid ${token.colorBorderSecondary};
+      border-block-end: 1px solid ${cssVar.colorBorderSecondary};
     }
   `,
   root: css`
@@ -48,60 +52,89 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
     }
 
     .${prefixCls}-collapse-item {
-      border-radius: ${token.borderRadius}px !important;
+      border-radius: ${cssVar.borderRadius} !important;
     }
 
-    ${responsive.mobile} {
+    ${responsive.sm} {
       gap: 0 !important;
     }
   `,
 }));
 
-export const useFlatGroupStyles = createStyles(({ cx, css, token, stylish }) => {
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    variant: 'borderless',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: null,
+      outlined: null,
+      borderless: styles.borderless,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
+});
+
+export const flatGroupStyles = createStaticStyles(({ css, cssVar }) => {
+  const borderlessBase = lobeStaticStylish.variantBorderlessWithoutHover;
   return {
-    borderless: cx(
-      stylish.variantBorderlessWithoutHover,
-      css`
-        padding-inline: 0;
-      `,
-    ),
-    filled: stylish.variantFilledWithoutHover,
+    borderless: css`
+      ${borderlessBase}
+      padding-inline: 0;
+    `,
+    filled: lobeStaticStylish.variantFilledWithoutHover,
     mobile: css`
       padding-block: 0;
       padding-inline: 16px;
       border-radius: 0;
-      background: ${token.colorBgContainer};
+      background: ${cssVar.colorBgContainer};
     `,
-    outlined: stylish.variantOutlinedWithoutHover,
+    outlined: lobeStaticStylish.variantOutlinedWithoutHover,
     root: css`
       padding-inline: 16px;
-      border-radius: ${token.borderRadiusLG}px;
+      border-radius: ${cssVar.borderRadiusLG};
     `,
   };
 });
 
-export const useFooterStyles = createStyles(({ css, token, responsive }) => {
+export const flatGroupVariants = cva(flatGroupStyles.root, {
+  defaultVariants: {
+    variant: 'borderless',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: flatGroupStyles.filled,
+      outlined: flatGroupStyles.outlined,
+      borderless: flatGroupStyles.borderless,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
+});
+
+export const footerStyles = createStaticStyles(({ css, cssVar }) => {
   return {
     root: css`
-      ${responsive.mobile} {
+      ${responsive.sm} {
         padding: 16px;
-        border-block-start: 1px solid ${token.colorBorderSecondary};
-        background: ${token.colorBgContainer};
+        border-block-start: 1px solid ${cssVar.colorBorderSecondary};
+        background: ${cssVar.colorBgContainer};
       }
     `,
   };
 });
 
-export const useGroupStyles = createStyles(({ css, token, responsive }) => {
+export const groupStyles = createStaticStyles(({ css, cssVar }) => {
   return {
     mobileGroupBody: css`
       padding-block: 0;
       padding-inline: 16px;
-      background: ${token.colorBgContainer};
+      background: ${cssVar.colorBgContainer};
     `,
     mobileGroupHeader: css`
       padding: 16px;
-      background: ${token.colorBgLayout};
+      background: ${cssVar.colorBgLayout};
     `,
     title: css`
       align-items: center;
@@ -113,7 +146,7 @@ export const useGroupStyles = createStyles(({ css, token, responsive }) => {
       font-weight: bold;
     `,
     titleMobile: css`
-      ${responsive.mobile} {
+      ${responsive.sm} {
         font-size: 14px;
         font-weight: 400;
         opacity: 0.5;
@@ -122,64 +155,101 @@ export const useGroupStyles = createStyles(({ css, token, responsive }) => {
   };
 });
 
-export const useItemStyles = createStyles(
-  ({ css, responsive, prefixCls }, { minWidth }: { minWidth?: string | number }) => ({
-    itemMinWidth: css`
-      .${prefixCls}-form-item-control {
-        width: ${isNumber(minWidth) ? `${minWidth}px` : minWidth};
-      }
-    `,
-    itemNoDivider: css`
-      &:not(:first-child) {
-        padding-block-start: 0;
-      }
-    `,
-    root: css`
-      &.${prefixCls}-form-item {
-        padding-block: 16px;
-        padding-inline: 0;
+export const titleVariants = cva(groupStyles.title, {
+  defaultVariants: {
+    variant: 'borderless',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: null,
+      outlined: null,
+      borderless: groupStyles.titleBorderless,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
+});
 
-        .${prefixCls}-form-item-label {
-          text-align: start;
+export const itemStyles = createStaticStyles(({ css }) => ({
+  itemMinWidth: css`
+    &.${prefixCls}-form-item .${prefixCls}-form-item-control {
+      width: var(--form-item-min-width) !important;
+    }
+  `,
+  itemNoDivider: css`
+    &:not(:first-child) {
+      padding-block-start: 0;
+    }
+  `,
+  root: css`
+    &.${prefixCls}-form-item {
+      padding-block: 16px;
+      padding-inline: 0;
+
+      .${prefixCls}-form-item-label {
+        text-align: start;
+      }
+
+      .${prefixCls}-row {
+        gap: 12px;
+        justify-content: space-between;
+
+        > div {
+          flex: unset;
+          flex-grow: unset;
         }
+      }
 
-        .${prefixCls}-row {
-          gap: 12px;
-          justify-content: space-between;
+      .${prefixCls}-form-item-required::before {
+        align-self: flex-start;
+      }
 
-          > div {
-            flex: unset;
-            flex-grow: unset;
+      ${responsive.sm} {
+        &.${prefixCls}-form-item-horizontal {
+          .${prefixCls}-form-item-label {
+            flex: 1 !important;
+          }
+          .${prefixCls}-form-item-control {
+            flex: none !important;
           }
         }
-
-        .${prefixCls}-form-item-required::before {
-          align-self: flex-start;
-        }
-
-        ${responsive.mobile} {
-          &.${prefixCls}-form-item-horizontal {
-            .${prefixCls}-form-item-label {
-              flex: 1 !important;
-            }
-            .${prefixCls}-form-item-control {
-              flex: none !important;
-            }
-          }
-        }
       }
-    `,
-    verticalLayout: css`
-      &.${prefixCls}-form-item {
-        .${prefixCls}-row {
-          align-items: stretch;
-        }
+    }
+  `,
+  verticalLayout: css`
+    &.${prefixCls}-form-item {
+      .${prefixCls}-row {
+        align-items: stretch;
       }
-    `,
-  }),
-);
+    }
+  `,
+}));
 
-export const useSubmitFooterStyles = createStyles(({ responsive, css, token }) => ({
+export const itemVariants = cva(itemStyles.root, {
+  defaultVariants: {
+    divider: false,
+    itemMinWidth: false,
+    layout: 'vertical',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    itemMinWidth: {
+      true: itemStyles.itemMinWidth,
+      false: null,
+    },
+    divider: {
+      true: null,
+      false: itemStyles.itemNoDivider,
+    },
+    layout: {
+      vertical: itemStyles.verticalLayout,
+      horizontal: null,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
+});
+
+export const submitFooterStyles = createStaticStyles(({ css, cssVar }) => ({
   floatFooter: css`
     position: fixed;
     z-index: 1000;
@@ -189,23 +259,23 @@ export const useSubmitFooterStyles = createStyles(({ responsive, css, token }) =
 
     width: max-content;
     padding: 8px;
-    border: 1px solid ${token.colorBorderSecondary};
+    border: 1px solid ${cssVar.colorBorderSecondary};
     border-radius: 48px;
 
-    background: ${token.colorBgContainer};
-    box-shadow: ${token.boxShadowSecondary};
+    background: ${cssVar.colorBgContainer};
+    box-shadow: ${cssVar.boxShadowSecondary};
   `,
   footer: css`
-    ${responsive.mobile} {
-      margin-block-start: -${token.borderRadius}px;
+    ${responsive.sm} {
+      margin-block-start: calc(-1 * ${cssVar.borderRadius});
       padding: 16px;
-      border-block-start: 1px solid ${token.colorBorderSecondary};
-      background: ${token.colorBgContainer};
+      border-block-start: 1px solid ${cssVar.colorBorderSecondary};
+      background: ${cssVar.colorBgContainer};
     }
   `,
 }));
 
-export const useTitleStyles = createStyles(({ css, token }) => ({
+export const titleStyles = createStaticStyles(({ css, cssVar }) => ({
   content: css`
     position: relative;
     text-align: start;
@@ -215,7 +285,7 @@ export const useTitleStyles = createStyles(({ css, token }) => ({
     display: block;
 
     line-height: 1.44;
-    color: ${token.colorTextDescription};
+    color: ${cssVar.colorTextDescription};
     word-wrap: break-word;
     white-space: pre-wrap;
   `,

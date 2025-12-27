@@ -1,7 +1,7 @@
 'use client';
 
-import { useResponsive } from 'antd-style';
-import { memo, useEffect, useRef, useState } from 'react';
+import { cx, useResponsive } from 'antd-style';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
 import chatMessages from '@/i18n/resources/en/chat';
@@ -13,7 +13,7 @@ import BorderSpacing from './components/BorderSpacing';
 import ErrorContent from './components/ErrorContent';
 import MessageContent from './components/MessageContent';
 import Title from './components/Title';
-import { useStyles } from './style';
+import { styles } from './style';
 import type { ChatItemProps } from './type';
 
 const MOBILE_AVATAR_SIZE = 32;
@@ -54,15 +54,16 @@ const ChatItem = memo<ChatItemProps>(
   }) => {
     const { mobile } = useResponsive();
     const { t } = useTranslation(chatMessages);
-    const { cx, styles } = useStyles({
-      editing,
-      placement,
-      primary,
-      showTitle,
-      time,
-      title: avatar.title,
-      variant,
-    });
+
+    const avatarSize = mobile ? MOBILE_AVATAR_SIZE : avatarProps?.size || 40;
+    const cssVariables = useMemo<Record<string, string>>(
+      () => ({
+        '--chat-item-avatar-size': `${avatarSize}px`,
+      }),
+      [avatarSize],
+    );
+
+    const hasTime = Boolean(time);
     const placeholderText = placeholderMessage ?? t('chat.placeholder');
     const avatarAlt = avatarProps?.alt || avatar.title || t('chat.avatar');
 
@@ -100,11 +101,28 @@ const ChatItem = memo<ChatItemProps>(
       return () => observer.disconnect();
     }, [variant, actionsWrapWidth]);
 
+    const containerClassName = cx(
+      variant === 'docs' ? styles.containerDocs : styles.container,
+      className,
+    );
+
+    const messageContainerClassName = useMemo(() => {
+      if (editing) {
+        return hasTime ? styles.messageContainerEditingWithTime : styles.messageContainerEditing;
+      }
+      return hasTime ? styles.messageContainerWithTime : styles.messageContainer;
+    }, [editing, hasTime]);
+
+    const messageContentClassName = useMemo(() => {
+      return editing ? styles.messageContentEditing : styles.messageContent;
+    }, [editing]);
+
     return (
       <Flexbox
-        className={cx(styles.container, className)}
+        className={containerClassName}
         direction={placement === 'left' ? 'horizontal' : 'horizontal-reverse'}
         gap={mobile ? 6 : 12}
+        style={cssVariables}
         {...rest}
       >
         {showAvatar && (
@@ -116,7 +134,7 @@ const ChatItem = memo<ChatItemProps>(
             loading={loading}
             onClick={onAvatarClick}
             placement={placement}
-            size={mobile ? MOBILE_AVATAR_SIZE : undefined}
+            size={avatarSize}
             style={{
               marginTop: showTitle ? -12 : 6,
               ...avatarProps?.style,
@@ -125,7 +143,7 @@ const ChatItem = memo<ChatItemProps>(
         )}
         <Flexbox
           align={placement === 'left' ? 'flex-start' : 'flex-end'}
-          className={styles.messageContainer}
+          className={messageContainerClassName}
           ref={containerRef}
         >
           <Title
@@ -138,7 +156,7 @@ const ChatItem = memo<ChatItemProps>(
           {aboveMessage}
           <Flexbox
             align={placement === 'left' ? 'flex-start' : 'flex-end'}
-            className={styles.messageContent}
+            className={messageContentClassName}
             data-layout={layoutMode} // 添加数据属性以方便样式选择
             direction={
               layoutMode === 'horizontal'

@@ -1,7 +1,7 @@
 'use client';
 
 import { type GetProp, Upload, type UploadProps, message } from 'antd';
-import { useTheme } from 'antd-style';
+import { cssVar } from 'antd-style';
 import { ChevronLeftIcon, ImageUpIcon } from 'lucide-react';
 import { memo, useCallback, useRef, useState } from 'react';
 import AvatarEditor from 'react-avatar-editor';
@@ -32,7 +32,6 @@ const AvatarUploader = memo<AvatarUploaderProps>(
   ({ shape, onChange, texts, compressSize = 256, onUpload }) => {
     const editor = useRef<any>(null);
     const [previewImage, setPreviewImage] = useState('');
-    const theme = useTheme();
     const { t } = useTranslation(emojiPickerMessages);
 
     const fileTypeErrorText = texts?.fileTypeError ?? t('emojiPicker.fileTypeError');
@@ -89,8 +88,8 @@ const AvatarUploader = memo<AvatarUploaderProps>(
             multiple={false}
           >
             <Center gap={16} height={compressSize} width={compressSize}>
-              <Icon color={theme.colorTextDescription} icon={ImageUpIcon} size={48} />
-              <Text color={theme.colorTextSecondary}>{draggerDescText}</Text>
+              <Icon color={cssVar.colorTextDescription} icon={ImageUpIcon} size={48} />
+              <Text color={cssVar.colorTextSecondary}>{draggerDescText}</Text>
               <Center gap={4} horizontal>
                 <Tag>JPG</Tag>
                 <Tag>PNG</Tag>

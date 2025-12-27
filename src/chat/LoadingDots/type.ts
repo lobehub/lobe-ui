@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react';
+
 export type LoadingDotsVariant = 'dots' | 'pulse' | 'wave' | 'orbit' | 'typing';
 
 export interface LoadingDotsProps {
@@ -15,6 +17,10 @@ export interface LoadingDotsProps {
    * @default 8
    */
   size?: number;
+  /**
+   * 自定义样式
+   */
+  style?: CSSProperties;
   /**
    * 动画变体
    * @default 'dots'

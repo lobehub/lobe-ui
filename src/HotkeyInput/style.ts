@@ -1,19 +1,22 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ css, token, stylish }) => {
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
-    borderless: stylish.variantBorderless,
-    disabled: stylish.disabled,
+    borderless: lobeStaticStylish.variantBorderless,
+    disabled: lobeStaticStylish.disabled,
     error: css`
-      border: 1px solid ${token.colorError};
+      border: 1px solid ${cssVar.colorError};
     `,
     errorText: css`
       font-size: 12px;
-      color: ${token.colorError};
+      color: ${cssVar.colorError};
     `,
-    filled: stylish.variantFilled,
+    filled: lobeStaticStylish.variantFilled,
     focused: css`
-      background: ${token.colorFillSecondary} !important;
+      background: ${cssVar.colorFillSecondary} !important;
     `,
     hiddenInput: css`
       cursor: text;
@@ -28,9 +31,9 @@ export const useStyles = createStyles(({ css, token, stylish }) => {
 
       opacity: 0;
     `,
-    outlined: stylish.variantOutlined,
+    outlined: lobeStaticStylish.variantOutlined,
     placeholder: css`
-      color: ${token.colorTextDescription};
+      color: ${cssVar.colorTextDescription};
     `,
     root: css`
       cursor: pointer;
@@ -41,9 +44,42 @@ export const useStyles = createStyles(({ css, token, stylish }) => {
       height: 36px;
       padding-block: 0;
       padding-inline: 12px;
-
-      border-radius: ${token.borderRadius}px;
+      border-radius: ${cssVar.borderRadius};
     `,
-    shadow: stylish.shadow,
+    shadow: lobeStaticStylish.shadow,
   };
+});
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    disabled: false,
+    error: false,
+    shadow: false,
+    variant: 'outlined',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: styles.filled,
+      outlined: styles.outlined,
+      borderless: styles.borderless,
+    },
+    shadow: {
+      false: null,
+      true: styles.shadow,
+    },
+    focused: {
+      false: null,
+      true: styles.focused,
+    },
+    error: {
+      fales: null,
+      true: styles.error,
+    },
+    disabled: {
+      false: null,
+      true: styles.disabled,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

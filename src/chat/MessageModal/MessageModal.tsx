@@ -10,7 +10,7 @@ import { Flexbox } from '@/Flex';
 import TextArea from '@/Input/TextArea';
 import Markdown from '@/Markdown';
 import Modal from '@/Modal';
-import { useStyles as useTextStyles } from '@/chat/MessageInput/style';
+import { styles as textStyles } from '@/chat/MessageInput/style';
 import messageModalMessages from '@/i18n/resources/en/messageModal';
 import { useTranslation } from '@/i18n/useTranslation';
 
@@ -33,7 +33,6 @@ const MessageModal = memo<MessageModalProps>(
     extra,
   }) => {
     const { mobile } = useResponsive();
-    const { styles: textStyles } = useTextStyles();
     const { t } = useTranslation(messageModalMessages);
     const [isEdit, setTyping] = useControlledState(false, {
       onChange: onEditingChange,

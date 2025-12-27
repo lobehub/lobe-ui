@@ -1,6 +1,6 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
+import { cx } from 'antd-style';
 import { Loader2 } from 'lucide-react';
 import { type MouseEventHandler, memo, useCallback, useMemo } from 'react';
 
@@ -9,7 +9,7 @@ import Icon from '@/Icon';
 import Tooltip from '@/Tooltip';
 
 import { calcSize } from './components/utils';
-import { useStyles } from './style';
+import { variants } from './style';
 import type { ActionIconProps } from './type';
 
 const ActionIcon = memo<ActionIconProps>(
@@ -37,68 +37,7 @@ const ActionIcon = memo<ActionIconProps>(
     ref,
     ...rest
   }) => {
-    const { styles, cx } = useStyles();
     const { blockSize, borderRadius } = useMemo(() => calcSize(size), [size]);
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          compoundVariants: [
-            {
-              className: styles.dangerFilled,
-              danger: true,
-              variant: 'filled',
-            },
-            {
-              className: styles.dangerBorderless,
-              danger: true,
-              variant: 'borderless',
-            },
-            {
-              className: styles.dangerOutlined,
-              danger: true,
-              variant: 'outlined',
-            },
-          ],
-          defaultVariants: {
-            active: false,
-            danger: false,
-            disabled: false,
-            glass: false,
-            shadow: false,
-            variant: 'borderless',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-            glass: {
-              false: null,
-              true: styles.glass,
-            },
-            shadow: {
-              false: null,
-              true: styles.shadow,
-            },
-            active: {
-              false: null,
-              true: styles.active,
-            },
-            danger: {
-              false: null,
-              true: styles.dangerRoot,
-            },
-            disabled: {
-              false: null,
-              true: styles.disabled,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
 
     const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(
       (event) => {

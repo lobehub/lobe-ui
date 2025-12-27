@@ -11,11 +11,10 @@ import { Center, Flexbox } from '@/Flex';
 import AuroraBackground from '@/awesome/AuroraBackground';
 import GradientButton from '@/awesome/GradientButton';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { HeroProps } from './type';
 
 const Hero = memo<HeroProps>(({ title, description, actions, Link }) => {
-  const { styles } = useStyles();
   const { mobile } = useResponsive();
 
   const LinkRender = Link || A;

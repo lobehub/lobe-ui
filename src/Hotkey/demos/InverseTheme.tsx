@@ -1,12 +1,11 @@
 import { Hotkey } from '@lobehub/ui';
-import { useTheme } from 'antd-style';
+import { cssVar } from 'antd-style';
 
 import { Center } from '@/Flex';
 
 export default () => {
-  const theme = useTheme();
   return (
-    <Center height={240} style={{ background: theme.colorText }} width={'100%'}>
+    <Center height={240} style={{ background: cssVar.colorText }} width={'100%'}>
       <Hotkey inverseTheme keys={'mod+comma'} />
     </Center>
   );

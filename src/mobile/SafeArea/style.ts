@@ -1,6 +1,6 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css }) => {
+export const styles = createStaticStyles(({ css }) => {
   return {
     bottom: css`
       padding-block-end: env(safe-area-inset-bottom);

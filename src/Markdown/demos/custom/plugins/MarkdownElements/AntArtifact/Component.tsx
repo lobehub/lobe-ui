@@ -1,12 +1,12 @@
 import { Icon } from '@lobehub/ui';
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cssVar, useThemeMode } from 'antd-style';
 import { SparkleIcon } from 'lucide-react';
 import { PropsWithChildren, memo } from 'react';
 
 import { Flexbox } from '@/Flex';
 
-const useStyles = createStyles(({ css, token, isDarkMode }) => ({
-  container: css`
+const styles = createStaticStyles(({ css, cssVar }) => ({
+  containerDark: css`
     cursor: pointer;
 
     margin-block-start: 12px;
@@ -14,12 +14,28 @@ const useStyles = createStyles(({ css, token, isDarkMode }) => ({
     padding-inline: 16px;
     border-radius: 8px;
 
-    color: ${token.colorText};
+    color: ${cssVar.colorText};
 
-    background: ${token.colorFillTertiary};
+    background: ${cssVar.colorFillTertiary};
 
     &:hover {
-      background: ${isDarkMode ? '' : token.colorFillSecondary};
+      background: '';
+    }
+  `,
+  containerLight: css`
+    cursor: pointer;
+
+    margin-block-start: 12px;
+    padding-block: 16px;
+    padding-inline: 16px;
+    border-radius: 8px;
+
+    color: ${cssVar.colorText};
+
+    background: ${cssVar.colorFillTertiary};
+
+    &:hover {
+      background: ${cssVar.colorFillSecondary};
     }
   `,
   title: css`
@@ -34,13 +50,17 @@ const useStyles = createStyles(({ css, token, isDarkMode }) => ({
 }));
 
 const Render = memo<PropsWithChildren>(({ children }) => {
-  const { styles, theme } = useStyles();
+  const { isDarkMode } = useThemeMode();
 
   return (
-    <Flexbox className={styles.container} gap={16} width={'100%'}>
+    <Flexbox
+      className={isDarkMode ? styles.containerDark : styles.containerLight}
+      gap={16}
+      width={'100%'}
+    >
       <Flexbox distribution={'space-between'} flex={1} horizontal>
         <Flexbox gap={8} horizontal>
-          <Icon color={theme.purple} icon={SparkleIcon} /> Artifact
+          <Icon color={cssVar.purple} icon={SparkleIcon} /> Artifact
         </Flexbox>
       </Flexbox>
       <div dangerouslySetInnerHTML={{ __html: String(children) }} />

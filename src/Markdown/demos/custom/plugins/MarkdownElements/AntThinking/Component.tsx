@@ -1,12 +1,12 @@
 import { Icon } from '@lobehub/ui';
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cssVar, useThemeMode } from 'antd-style';
 import { ChevronDown, ChevronRight, SparkleIcon } from 'lucide-react';
 import { PropsWithChildren, memo, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
 
-const useStyles = createStyles(({ css, token, isDarkMode }) => ({
-  container: css`
+const styles = createStaticStyles(({ css, cssVar }) => ({
+  containerDark: css`
     cursor: pointer;
 
     padding-block: 8px;
@@ -14,12 +14,28 @@ const useStyles = createStyles(({ css, token, isDarkMode }) => ({
     padding-inline-end: 12px;
     border-radius: 8px;
 
-    color: ${token.colorText};
+    color: ${cssVar.colorText};
 
-    background: ${token.colorFillTertiary};
+    background: ${cssVar.colorFillTertiary};
 
     &:hover {
-      background: ${isDarkMode ? '' : token.colorFillSecondary};
+      background: ${cssVar.colorFillSecondary};
+    }
+  `,
+  containerLight: css`
+    cursor: pointer;
+
+    padding-block: 8px;
+    padding-inline: 12px;
+    padding-inline-end: 12px;
+    border-radius: 8px;
+
+    color: ${cssVar.colorText};
+
+    background: ${cssVar.colorFillTertiary};
+
+    &:hover {
+      background: ${cssVar.colorFillSecondary};
     }
   `,
   title: css`
@@ -34,13 +50,13 @@ const useStyles = createStyles(({ css, token, isDarkMode }) => ({
 }));
 
 const Render = memo<PropsWithChildren>(({ children }) => {
-  const { styles, theme } = useStyles();
+  const { isDarkMode } = useThemeMode();
 
   const [showDetail, setShowDetail] = useState(false);
 
   return (
     <Flexbox
-      className={styles.container}
+      className={isDarkMode ? styles.containerDark : styles.containerLight}
       gap={16}
       onClick={() => {
         setShowDetail(!showDetail);
@@ -49,7 +65,7 @@ const Render = memo<PropsWithChildren>(({ children }) => {
     >
       <Flexbox distribution={'space-between'} flex={1} horizontal>
         <Flexbox gap={8} horizontal>
-          <Icon color={theme.purple} icon={SparkleIcon} /> Thinking...
+          <Icon color={cssVar.purple} icon={SparkleIcon} /> Thinking...
         </Flexbox>
         <Icon icon={showDetail ? ChevronDown : ChevronRight} />
       </Flexbox>

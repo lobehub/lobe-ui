@@ -1,5 +1,6 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { Loader2, MessageSquare } from 'lucide-react';
 import { memo } from 'react';
 
@@ -8,7 +9,7 @@ import Icon from '@/Icon';
 import Text from '@/Text';
 
 import type { ListItemProps } from '../type';
-import { useStyles } from './style';
+import { styles } from './style';
 import { getChatItemTime } from './time';
 
 const ListItem = memo<ListItemProps>(
@@ -32,8 +33,6 @@ const ListItem = memo<ListItemProps>(
     styles: customStyles,
     ...rest
   }) => {
-    const { styles, cx } = useStyles();
-
     const loadingNode = <Icon icon={Loader2} spin />;
 
     const pinNode = pin && (

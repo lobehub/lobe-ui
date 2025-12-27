@@ -1,6 +1,6 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css }) => {
+export const styles = createStaticStyles(({ css }) => {
   return {
     container: css`
       margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);

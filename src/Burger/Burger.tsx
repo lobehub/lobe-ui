@@ -1,13 +1,14 @@
 'use client';
 
 import { Drawer, Menu } from 'antd';
+import { cx } from 'antd-style';
 import { MenuIcon, X } from 'lucide-react';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 import { Center } from '@/Flex';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { BurgerProps } from './type';
 
 const Burger = memo<BurgerProps>(
@@ -28,7 +29,20 @@ const Burger = memo<BurgerProps>(
     drawerProps,
     ...rest
   }) => {
-    const { cx, styles } = useStyles({ fullscreen, headerHeight });
+    // Convert props to CSS variables
+    const cssVariables = useMemo<Record<string, string>>(() => {
+      const vars: Record<string, string> = {
+        '--burger-header-height': `${headerHeight}px`,
+      };
+      if (fullscreen) {
+        vars['--burger-drawer-top'] = '0';
+        vars['--burger-menu-padding-top'] = '0px';
+      } else {
+        vars['--burger-drawer-top'] = `calc(var(--burger-header-height, ${headerHeight}px) + 1px)`;
+        vars['--burger-menu-padding-top'] = `${headerHeight}px`;
+      }
+      return vars;
+    }, [fullscreen, headerHeight]);
 
     return (
       <Center
@@ -46,7 +60,14 @@ const Burger = memo<BurgerProps>(
           width={'100vw'}
           {...drawerProps}
           className={styles.drawer}
-          rootClassName={cx(styles.drawerRoot, rootClassName)}
+          rootClassName={cx(
+            fullscreen ? styles.drawerRootFullscreen : styles.drawerRoot,
+            rootClassName,
+          )}
+          rootStyle={{
+            ...cssVariables,
+            ...drawerProps?.rootStyle,
+          }}
           styles={{
             body: { padding: 0 },
             header: { display: 'none' },
@@ -59,6 +80,7 @@ const Burger = memo<BurgerProps>(
             onClick={onClick}
             openKeys={openKeys}
             selectedKeys={selectedKeys}
+            style={cssVariables}
           />
           <div className={styles.fillRect} />
         </Drawer>

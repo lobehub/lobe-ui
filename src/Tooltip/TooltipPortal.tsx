@@ -4,6 +4,8 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
+import ThemeProvider from '@/ThemeProvider';
+
 type TooltipPortalProps = {
   children: ReactNode;
   root?: HTMLElement | ShadowRoot | null;
@@ -43,7 +45,7 @@ const TooltipPortal = ({ children, root }: TooltipPortalProps) => {
   }
 
   if (!container) return null;
-  return createPortal(children, container);
+  return createPortal(<ThemeProvider>{children}</ThemeProvider>, container);
 };
 
 export default TooltipPortal;

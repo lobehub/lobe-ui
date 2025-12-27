@@ -1,11 +1,12 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { FC, ReactNode, useState } from 'react';
 
 import { Flexbox, FlexboxProps } from '@/Flex';
 import { default as LobeTabs, type TabsProps as LobeTabsProps } from '@/Tabs';
 
-import { useStyles } from './style';
+import { styles } from './style';
 
 export interface TabsProps extends Omit<FlexboxProps, 'children'> {
   children: ReactNode[];
@@ -24,7 +25,6 @@ const Tabs: FC<TabsProps> = ({
 }) => {
   const { className: tabNavClassName, onChange, ...tabNavRest } = tabNavProps;
   const [activeIndex, setActiveIndex] = useState<string>(String(defaultIndex));
-  const { cx, styles } = useStyles();
 
   const index = Number(activeIndex);
 

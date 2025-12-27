@@ -1,6 +1,6 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
+import { cx } from 'antd-style';
 import { MoreHorizontal } from 'lucide-react';
 import { type FC, useMemo } from 'react';
 
@@ -8,7 +8,7 @@ import ActionIcon from '@/ActionIcon';
 import Dropdown from '@/Dropdown';
 import { Center } from '@/Flex';
 
-import { useStyles } from './style';
+import { variants } from './style';
 import type { ActionIconGroupProps } from './type';
 
 const ActionIconGroup: FC<ActionIconGroupProps> = ({
@@ -26,42 +26,6 @@ const ActionIconGroup: FC<ActionIconGroupProps> = ({
   ref,
   ...rest
 }) => {
-  const { cx, styles } = useStyles();
-
-  const variants = useMemo(
-    () =>
-      cva(styles.root, {
-        defaultVariants: {
-          disabled: false,
-          glass: false,
-          shadow: false,
-          variant: 'outlined',
-        },
-        /* eslint-disable sort-keys-fix/sort-keys-fix */
-        variants: {
-          variant: {
-            filled: styles.filled,
-            outlined: styles.outlined,
-            borderless: styles.borderless,
-          },
-          glass: {
-            false: null,
-            true: styles.glass,
-          },
-          shadow: {
-            false: null,
-            true: styles.shadow,
-          },
-          disabled: {
-            false: null,
-            true: styles.disabled,
-          },
-        },
-        /* eslint-enable sort-keys-fix/sort-keys-fix */
-      }),
-    [styles],
-  );
-
   const tooltipPlacement = useMemo(
     () => (actionIconProps?.tooltipProps?.placement || horizontal ? 'top' : 'right'),
     [actionIconProps, horizontal],

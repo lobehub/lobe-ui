@@ -1,5 +1,6 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { LucideLoader2, Search } from 'lucide-react';
 import { memo, useMemo, useRef, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
@@ -10,7 +11,7 @@ import Icon from '@/Icon';
 import Input from '@/Input';
 import Spotlight from '@/awesome/Spotlight';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { SearchBarProps } from './type';
 
 const SearchBar = memo<SearchBarProps>(
@@ -41,7 +42,6 @@ const SearchBar = memo<SearchBarProps>(
     });
 
     const [showTag, setShowTag] = useState<boolean>(true);
-    const { styles, cx } = useStyles();
     const inputReference: any = useRef<HTMLInputElement>(null);
     const hotkey = useMemo(
       () => (shortKey.includes('+') ? shortKey : `mod+${shortKey}`),

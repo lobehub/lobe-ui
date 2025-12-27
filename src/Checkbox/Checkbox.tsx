@@ -1,3 +1,4 @@
+import { cx } from 'antd-style';
 import { CheckIcon, Minus } from 'lucide-react';
 import type { CSSProperties, FC, MouseEvent } from 'react';
 import useMergeState from 'use-merge-value';
@@ -6,7 +7,7 @@ import Block from '@/Block';
 import { Flexbox } from '@/Flex';
 import Text from '@/Text';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { CheckboxProps } from './type';
 
 const Checkbox: FC<CheckboxProps> = ({
@@ -26,7 +27,6 @@ const Checkbox: FC<CheckboxProps> = ({
   indeterminate,
   ...rest
 }) => {
-  const { styles, cx } = useStyles();
   const [value, setValue] = useMergeState(defaultChecked || false, {
     defaultValue: defaultChecked,
     onChange,

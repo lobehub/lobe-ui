@@ -1,96 +1,114 @@
-import type { ButtonProps } from 'antd';
-import { createStyles } from 'antd-style';
-import { rgba } from 'polished';
+import { createStaticStyles, cx } from 'antd-style';
 
-export const useStyles = createStyles(
-  ({ isDarkMode, cx, css, token, stylish }, size: ButtonProps['size']) => {
-    let radius: number;
-    switch (size) {
-      case 'large': {
-        radius = token.borderRadiusLG;
-        break;
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) => {
+  const borderRadius = 'var(--gradient-button-border-radius, var(--ant-border-radius))';
+
+  return {
+    buttonDark: css`
+      position: relative;
+      z-index: 1;
+      border: none;
+      border-radius: ${borderRadius} !important;
+
+      &::before {
+        ${lobeStaticStylish.gradientAnimation}
+        content: '';
+
+        position: absolute;
+        z-index: -2;
+        inset: 0;
+
+        border-radius: ${borderRadius};
       }
-      case 'middle': {
-        radius = token.borderRadius;
-        break;
+
+      &::after {
+        content: '';
+
+        position: absolute;
+        z-index: -1;
+        inset-block-start: 1px;
+        inset-inline-start: 1px;
+
+        width: calc(100% - 2px);
+        height: calc(100% - 2px);
+        border-radius: calc(${borderRadius} - 1px);
+
+        background: ${cssVar.colorBgLayout};
       }
-      case 'small': {
-        radius = token.borderRadiusSM;
-        break;
-      }
-      default: {
-        radius = token.borderRadius;
-        break;
-      }
-    }
 
-    return {
-      button: css`
-        position: relative;
-        z-index: 1;
-        border: none;
-        border-radius: ${radius}px !important;
-
-        &::before {
-          ${stylish.gradientAnimation}
-          content: '';
-
-          position: absolute;
-          z-index: -2;
-          inset: 0;
-
-          border-radius: ${radius}px;
-        }
-
+      &:hover {
         &::after {
-          content: '';
-
-          position: absolute;
-          z-index: -1;
-          inset-block-start: 1px;
-          inset-inline-start: 1px;
-
-          width: calc(100% - 2px);
-          height: calc(100% - 2px);
-
-          background: ${isDarkMode ? token.colorBgLayout : token.colorBgContainer};
-          border-radius: ${radius - 1}px;
+          background: color-mix(in srgb, ${cssVar.colorBgLayout} 90%, transparent);
         }
+      }
 
-        &:hover {
-          &::after {
-            background: ${rgba(
-              isDarkMode ? token.colorBgLayout : token.colorBgContainer,
-              isDarkMode ? 0.9 : 0.95,
-            )};
-          }
+      &:active {
+        &::after {
+          background: color-mix(in srgb, ${cssVar.colorBgLayout} 85%, transparent);
         }
+      }
+    `,
+    buttonLight: css`
+      position: relative;
+      z-index: 1;
+      border: none;
+      border-radius: ${borderRadius} !important;
 
-        &:active {
-          &::after {
-            background: ${rgba(
-              isDarkMode ? token.colorBgLayout : token.colorBgContainer,
-              isDarkMode ? 0.85 : 0.9,
-            )};
-          }
+      &::before {
+        ${lobeStaticStylish.gradientAnimation}
+        content: '';
+
+        position: absolute;
+        z-index: -2;
+        inset: 0;
+
+        border-radius: ${borderRadius};
+      }
+
+      &::after {
+        content: '';
+
+        position: absolute;
+        z-index: -1;
+        inset-block-start: 1px;
+        inset-inline-start: 1px;
+
+        width: calc(100% - 2px);
+        height: calc(100% - 2px);
+        border-radius: calc(${borderRadius} - 1px);
+
+        background: ${cssVar.colorBgContainer};
+      }
+
+      &:hover {
+        &::after {
+          background: color-mix(in srgb, ${cssVar.colorBgContainer} 95%, transparent);
         }
+      }
+
+      &:active {
+        &::after {
+          background: color-mix(in srgb, ${cssVar.colorBgContainer} 90%, transparent);
+        }
+      }
+    `,
+    glow: cx(
+      lobeStaticStylish.gradientAnimation,
+      css`
+        position: absolute;
+        z-index: -2;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+
+        opacity: 0.5;
+        filter: blur(0.5em);
       `,
-      glow: cx(
-        stylish.gradientAnimation,
-        css`
-          position: absolute;
-          z-index: -2;
-          inset-block-start: 0;
-          inset-inline-start: 0;
-
-          width: 100%;
-          height: 100%;
-
-          opacity: 0.5;
-          filter: blur(0.5em);
-          border-radius: inherit;
-        `,
-      ),
-    };
-  },
-);
+    ),
+  };
+});

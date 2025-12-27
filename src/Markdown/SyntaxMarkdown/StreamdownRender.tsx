@@ -11,7 +11,7 @@ import {
   useMarkdownRemarkPlugins,
 } from '@/hooks/useMarkdown';
 
-import { useStyles } from './style';
+import { styles } from './style';
 
 const parseMarkdownIntoBlocks = (markdown: string): string[] => {
   const tokens = marked.lexer(markdown);
@@ -29,7 +29,6 @@ StreamdownBlock.displayName = 'StreamdownBlock';
 
 export const StreamdownRender = memo<Options>(
   ({ children, ...rest }) => {
-    const { styles } = useStyles();
     const escapedContent = useMarkdownContent(children || '');
     const components = useMarkdownComponents();
     const rehypePluginsList = useMarkdownRehypePlugins();

@@ -1,12 +1,12 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { memo } from 'react';
 
-import { useStyles } from '../style';
+import { styles } from '../style';
 import type { LayoutMainProps } from '../type';
 
 export const LayoutMain = memo<LayoutMainProps>(({ children, className, ...rest }) => {
-  const { cx, styles } = useStyles();
   return (
     <main className={cx(styles.main, className)} {...rest}>
       {children}

@@ -1,5 +1,6 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
@@ -7,7 +8,7 @@ import { Flexbox } from '@/Flex';
 import SkeletonAvatar from './SkeletonAvatar';
 import SkeletonParagraph from './SkeletonParagraph';
 import SkeletonTitle from './SkeletonTitle';
-import { useStyles } from './style';
+import { styles } from './style';
 import type { SkeletonProps } from './type';
 
 const Skeleton: FC<SkeletonProps> = ({
@@ -24,7 +25,6 @@ const Skeleton: FC<SkeletonProps> = ({
   gap = 16,
   ...rest
 }) => {
-  const { cx, styles } = useStyles();
   const showAvatar = Boolean(avatar);
   const showTitle = Boolean(title);
   const showParagraph = Boolean(paragraph);

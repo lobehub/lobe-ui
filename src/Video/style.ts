@@ -1,72 +1,76 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(
-  (
-    { css, token, cx, stylish },
-    {
-      maxHeight,
-      maxWidth,
-      minWidth,
-      minHeight,
-    }: {
-      maxHeight?: number | string;
-      maxWidth?: number | string;
-      minHeight?: number | string;
-      minWidth?: number | string;
-    } = {},
-  ) => {
-    const MAX_HEIGHT = typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight;
-    const MAX_WIDTH = typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth;
-    const MIN_HEIGHT = typeof minHeight === 'number' ? `${minHeight}px` : minHeight;
-    const MIN_WIDTH = typeof minWidth === 'number' ? `${minWidth}px` : minWidth;
+import { lobeStaticStylish } from '@/styles';
 
-    const mask = cx(css`
-      pointer-events: none;
+// 用于 hover 选择器的类名标识
+export const maskHoverCls = 'lobe-video-mask';
 
-      position: absolute;
-      z-index: 1;
-      inset: 0;
+export const styles = createStaticStyles(({ css, cssVar }) => {
+  const mask = css`
+    pointer-events: none;
+
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0;
+    background: ${cssVar.colorBgMask};
+
+    transition: opacity 0.2s ease;
+  `;
+
+  return {
+    borderless: lobeStaticStylish.variantBorderlessWithoutHover,
+    filled: cx(
+      lobeStaticStylish.variantOutlinedWithoutHover,
+      lobeStaticStylish.variantFilledWithoutHover,
+    ),
+    mask: cx(maskHoverCls, mask),
+    outlined: lobeStaticStylish.variantOutlinedWithoutHover,
+    root: css`
+      position: relative;
+
+      overflow: hidden;
 
       width: 100%;
-      height: 100%;
+      min-width: var(--video-min-width, unset);
+      max-width: var(--video-max-width, 100%);
+      height: auto;
+      min-height: var(--video-min-height, unset);
+      max-height: var(--video-max-height, 100%);
+      margin-block: 0 1em;
+      border-radius: ${cssVar.borderRadius};
 
-      opacity: 0;
-      background: ${token.colorBgMask};
+      background: ${cssVar.colorFillTertiary};
 
-      transition: opacity 0.3s;
-    `);
-
-    return {
-      borderless: stylish.variantBorderlessWithoutHover,
-      filled: cx(stylish.variantOutlinedWithoutHover, stylish.variantFilledWithoutHover),
-      mask,
-      outlined: stylish.variantOutlinedWithoutHover,
-      root: css`
-        position: relative;
-
-        overflow: hidden;
-
-        width: 100%;
-        min-width: ${MIN_WIDTH};
-        max-width: ${MAX_WIDTH};
-        height: auto;
-        min-height: ${MIN_HEIGHT};
-        max-height: ${MAX_HEIGHT};
-        margin-block: 0 1em;
-
-        background: ${token.colorFillTertiary};
-        border-radius: ${token.borderRadius}px;
-
-        &:hover {
-          .${mask} {
-            opacity: 1;
-          }
+      &:hover {
+        [class*='${maskHoverCls}'] {
+          opacity: 1;
         }
-      `,
-      video: css`
-        cursor: pointer;
-        width: 100%;
-      `,
-    };
+      }
+    `,
+    video: css`
+      cursor: pointer;
+      width: 100%;
+    `,
+  };
+});
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    variant: 'filled',
   },
-);
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: styles.filled,
+      outlined: styles.outlined,
+      borderless: styles.borderless,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
+});

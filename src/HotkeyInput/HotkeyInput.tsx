@@ -1,7 +1,7 @@
 'use client';
 
 import type { InputRef } from 'antd';
-import { cva } from 'class-variance-authority';
+import { cx, useThemeMode } from 'antd-style';
 import { isEqual } from 'es-toolkit/compat';
 import { Undo2Icon } from 'lucide-react';
 import {
@@ -24,7 +24,7 @@ import { NORMATIVE_MODIFIER, checkIsAppleDevice, splitKeysByPlus } from '@/Hotke
 import hotkeyMessages from '@/i18n/resources/en/hotkey';
 import { useTranslation } from '@/i18n/useTranslation';
 
-import { useStyles } from './style';
+import { styles, variants } from './style';
 import type { HotkeyInputProps } from './type';
 
 const HotkeyInput = memo<HotkeyInputProps>(
@@ -52,7 +52,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
     const [hasConflict, setHasConflict] = useState(false);
     const [hasInvalidCombination, setHasInvalidCombination] = useState(false);
     const inputRef = useRef<InputRef>(null);
-    const { cx, styles, theme } = useStyles();
+    const { isDarkMode } = useThemeMode();
     const { t } = useTranslation(hotkeyMessages);
     const isAppleDevice = useMemo(() => checkIsAppleDevice(isApple), [isApple]);
     const [hotkeyValue, setHotkeyValue] = useControlledState(defaultValue, {
@@ -60,44 +60,6 @@ const HotkeyInput = memo<HotkeyInputProps>(
       onChange,
       value,
     });
-
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            disabled: false,
-            error: false,
-            shadow: false,
-            variant: 'outlined',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-            shadow: {
-              false: null,
-              true: styles.shadow,
-            },
-            focused: {
-              false: null,
-              true: styles.focused,
-            },
-            error: {
-              fales: null,
-              true: styles.error,
-            },
-            disabled: {
-              false: null,
-              true: styles.disabled,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
 
     // 使用 useRecordHotkeys 处理快捷键录入
     const [recordedKeys, { start, stop, isRecording, resetKeys }] = useRecordHotkeys();
@@ -264,7 +226,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
               error: hasConflict || hasInvalidCombination,
               focused: isFocused,
               shadow,
-              variant: variant || (theme.isDarkMode ? 'filled' : 'outlined'),
+              variant: variant || (isDarkMode ? 'filled' : 'outlined'),
             }),
           )}
           horizontal

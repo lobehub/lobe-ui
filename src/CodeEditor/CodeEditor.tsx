@@ -1,10 +1,10 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
-import { memo, useMemo } from 'react';
+import { cssVar, cx } from 'antd-style';
+import { memo } from 'react';
 import useMergeState from 'use-merge-value';
 
-import { useStyles } from '@/CodeEditor/style';
+import { styles, variants } from '@/CodeEditor/style';
 import { Flexbox } from '@/Flex';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
 
@@ -30,31 +30,11 @@ const CodeEditor = memo<CodeEditorProps>(
     ref,
     ...rest
   }) => {
-    const { styles, cx, theme } = useStyles();
     const [code, setCode] = useMergeState(defaultValue, {
       defaultValue,
       onChange: onValueChange,
       value,
     });
-
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            variant: 'borderless',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
 
     return (
       <Flexbox
@@ -77,7 +57,7 @@ const CodeEditor = memo<CodeEditorProps>(
           <pre
             className={cx(styles.highlight, classNames?.highlight)}
             style={{
-              color: theme.colorTextDescription,
+              color: cssVar.colorTextDescription,
             }}
           >
             {placeholder || ' '}

@@ -1,14 +1,14 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
-import { type FC, useMemo } from 'react';
+import { cx } from 'antd-style';
+import { type FC } from 'react';
 
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
 import Spotlight from '@/awesome/Spotlight';
 
-import { useStyles } from './style';
+import { styles, variants } from './style';
 import type { SnippetProps } from './type';
 
 const Snippet: FC<SnippetProps> = ({
@@ -23,32 +23,6 @@ const Snippet: FC<SnippetProps> = ({
   className,
   ...rest
 }) => {
-  const { styles, cx } = useStyles();
-
-  const variants = useMemo(
-    () =>
-      cva(styles.root, {
-        defaultVariants: {
-          shadow: false,
-          variant: 'filled',
-        },
-        /* eslint-disable sort-keys-fix/sort-keys-fix */
-        variants: {
-          variant: {
-            filled: styles.filled,
-            outlined: styles.outlined,
-            borderless: styles.borderless,
-          },
-          shadow: {
-            false: null,
-            true: styles.shadow,
-          },
-        },
-        /* eslint-enable sort-keys-fix/sort-keys-fix */
-      }),
-    [styles],
-  );
-
   const tirmedChildren = children.trim();
 
   return (

@@ -1,5 +1,5 @@
 import { Button, Markdown } from '@lobehub/ui';
-import { useTheme } from 'antd-style';
+import { cssVar } from 'antd-style';
 import { PropsWithChildren, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
@@ -8,9 +8,8 @@ import { fullThinking, inlineMode, ollama, partialThinking } from './content';
 import { normalizeThinkTags, remarkCaptureThink } from './remarkPlugin';
 
 const Think = ({ children }: PropsWithChildren) => {
-  const theme = useTheme();
   return (
-    <div style={{ background: theme.colorBgElevated, padding: 12 }}>
+    <div style={{ background: cssVar.colorBgElevated, padding: 12 }}>
       here is a custom think comp:
       <Markdown variant={'chat'}>{children as string}</Markdown>
     </div>

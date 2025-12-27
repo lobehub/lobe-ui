@@ -1,11 +1,11 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
+import { cx } from 'antd-style';
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
-import { useStyles } from '@/Highlighter/style';
+import { styles, variants } from '@/Highlighter/style';
 import Tag from '@/Tag';
 
 import FullFeatured from './FullFeatured';
@@ -14,57 +14,26 @@ import { MermaidProps } from './type';
 
 const Mermaid = memo<MermaidProps>(
   ({
-    children,
     actionIconSize,
-    fullFeatured,
+    animated,
+    bodyRender,
+    children,
+    classNames,
+    className,
     copyable = true,
-    showLanguage = true,
+    defaultExpand = true,
+    fileName,
+    fullFeatured,
     language = 'mermaid',
+    actionsRender,
+    shadow,
+    showLanguage = true,
     style,
     styles: customStyles,
-    classNames,
-    variant = 'filled',
-    shadow,
-    enablePanZoom = true,
-    defaultExpand = true,
-    className,
-    bodyRender,
-    fileName,
-    actionsRender,
     theme,
+    variant = 'filled',
     ...rest
   }) => {
-    const { cx, styles } = useStyles();
-
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            shadow: false,
-            variant: 'filled',
-            wrap: false,
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-            shadow: {
-              false: null,
-              true: styles.shadow,
-            },
-            wrap: {
-              false: styles.nowrap,
-              true: null,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
-
     const tirmedChildren = children.trim();
     const copyContentRef = useRef(tirmedChildren);
 
@@ -94,8 +63,8 @@ const Mermaid = memo<MermaidProps>(
     const defaultBody = useMemo(
       () => (
         <SyntaxMermaid
+          animated={animated}
           className={classNames?.content}
-          enablePanZoom={enablePanZoom}
           style={customStyles?.content}
           theme={theme}
           variant={variant}
@@ -103,7 +72,7 @@ const Mermaid = memo<MermaidProps>(
           {tirmedChildren}
         </SyntaxMermaid>
       ),
-      [enablePanZoom, theme, tirmedChildren, variant, classNames?.content, customStyles?.content],
+      [animated, theme, tirmedChildren, variant, classNames?.content, customStyles?.content],
     );
 
     const body = useMemo(() => {

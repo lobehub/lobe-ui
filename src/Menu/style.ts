@@ -1,43 +1,72 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ cx, css, token, stylish, prefixCls }) => ({
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) => ({
   borderless: cx(
-    stylish.variantBorderlessWithoutHover,
+    lobeStaticStylish.variantBorderlessWithoutHover,
     css`
       padding: 0;
       border-radius: unset;
     `,
   ),
   compact: css`
-    &.${prefixCls}-menu {
-      .${prefixCls}-menu-item-divider {
+    &[class*='ant-menu'] {
+      [class*='ant-menu-item-divider'] {
         margin: 0;
       }
     }
   `,
-  filled: stylish.variantFilledWithoutHover,
-  outlined: stylish.variantOutlinedWithoutHover,
+  filled: lobeStaticStylish.variantFilledWithoutHover,
+  outlined: lobeStaticStylish.variantOutlinedWithoutHover,
   root: css`
-    &.${prefixCls}-menu {
+    &[class*='ant-menu'] {
       flex: 1;
 
       padding: 4px;
+      border: none !important;
+      border-radius: ${cssVar.borderRadiusLG};
 
       background: transparent;
-      border: none !important;
-      border-radius: ${token.borderRadiusLG}px;
 
-      .${prefixCls}-menu-sub.${prefixCls}-menu-inline {
+      [class*='ant-menu-sub'][class*='ant-menu-inline'] {
         background: transparent;
-        > .${prefixCls}-menu-item {
+
+        > [class*='ant-menu-item'] {
           padding-inline-start: 36px !important;
         }
       }
 
-      .${prefixCls}-menu-item-divider {
+      [class*='ant-menu-item-divider'] {
         margin-block: 1em;
       }
     }
   `,
-  shadow: stylish.shadow,
+  shadow: lobeStaticStylish.shadow,
 }));
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    compact: false,
+    shadow: false,
+    variant: 'borderless',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: styles.filled,
+      outlined: styles.outlined,
+      borderless: styles.borderless,
+    },
+    shadow: {
+      false: null,
+      true: styles.shadow,
+    },
+    compact: {
+      false: null,
+      true: styles.compact,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
+});

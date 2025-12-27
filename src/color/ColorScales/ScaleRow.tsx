@@ -4,7 +4,7 @@ import { memo } from 'react';
 import { Flexbox } from '@/Flex';
 import { copyToClipboard } from '@/utils/copyToClipboard';
 
-import { alphaBg, useStyles } from './style';
+import { alphaBg, styles } from './style';
 
 export interface IScaleRow {
   name: string;
@@ -13,8 +13,6 @@ export interface IScaleRow {
 }
 
 const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
-  const { styles } = useStyles();
-
   let style = {};
   let isAlpha = false;
 

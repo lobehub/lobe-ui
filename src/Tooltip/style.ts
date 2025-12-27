@@ -1,9 +1,9 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }) => {
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     arrow: css`
-      fill: ${token.colorText};
+      fill: ${cssVar.colorText};
     `,
     content: css`
       display: flex;
@@ -12,12 +12,12 @@ export const useStyles = createStyles(({ css, token }) => {
 
       min-height: unset;
       padding: 8px;
-      border-radius: ${token.borderRadiusSM}px;
+      border-radius: ${cssVar.borderRadiusSM};
 
-      color: ${token.colorBgLayout};
+      color: ${cssVar.colorBgLayout};
       word-break: normal;
 
-      background-color: ${token.colorText};
+      background-color: ${cssVar.colorTextBase};
     `,
     tooltip: css`
       pointer-events: none;

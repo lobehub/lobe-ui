@@ -1,13 +1,13 @@
 'use client';
 
 import { Menu as AntdMenu, ConfigProvider } from 'antd';
-import { cva } from 'class-variance-authority';
+import { cx, useTheme } from 'antd-style';
 import { memo, useMemo } from 'react';
 
 import { IconProvider } from '@/Icon';
 import { mapItems } from '@/Menu/utils';
 
-import { useStyles } from './style';
+import { variants } from './style';
 import type { MenuProps } from './type';
 
 const Menu = memo<MenuProps>(
@@ -22,36 +22,7 @@ const Menu = memo<MenuProps>(
     ref,
     ...rest
   }) => {
-    const { cx, styles, theme } = useStyles();
-
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            compact: false,
-            shadow: false,
-            variant: 'borderless',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-            shadow: {
-              false: null,
-              true: styles.shadow,
-            },
-            compact: {
-              false: null,
-              true: styles.compact,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
+    const theme = useTheme();
 
     const antdItems = useMemo(() => items.map((item) => mapItems(item)), [items]);
 

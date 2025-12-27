@@ -1,7 +1,8 @@
-import { createStyles } from 'antd-style';
-import { rgba } from 'polished';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token, prefixCls, responsive }) => ({
+const prefixCls = 'ant';
+
+export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
   footer: css`
     position: absolute;
     z-index: 10;
@@ -14,8 +15,8 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
 
     background: linear-gradient(
       to bottom,
-      ${rgba(token.colorBgContainer, 0)} 0%,
-      ${token.colorBgContainer} 10%
+      color-mix(in srgb, ${cssVar.colorBgContainer} 0%, transparent) 0%,
+      ${cssVar.colorBgContainer} 10%
     );
   `,
   form: css`
@@ -25,7 +26,7 @@ export const useStyles = createStyles(({ css, token, prefixCls, responsive }) =>
       font-weight: 500;
     }
 
-    ${responsive.mobile} {
+    ${responsive.sm} {
       .${prefixCls}-form-group-title {
         font-size: 14px;
         font-weight: normal;

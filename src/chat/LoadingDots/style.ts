@@ -1,167 +1,166 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(
-  ({ token, css }, { size, color }: { color?: string; size: number }) => {
-    const dotColor = color || token.colorPrimary;
+export const styles = createStaticStyles(({ css, cssVar }) => {
+  const size = 'var(--loading-dots-size, 8px)';
+  const dotColor = 'var(--loading-dots-color, var(--ant-color-primary))';
 
-    return {
-      container: css`
-        display: flex;
-        flex-direction: row;
-        gap: 6px;
-        align-items: center;
-        justify-content: center;
+  return {
+    container: css`
+      display: flex;
+      flex-direction: row;
+      gap: 6px;
+      align-items: center;
+      justify-content: center;
 
-        padding: ${token.paddingXS}px;
-      `,
+      padding: ${cssVar.paddingXS};
+    `,
 
-      // Default variant (fade)
-      defaultDot: css`
-        width: ${size}px;
-        height: ${size}px;
-        border-radius: 50%;
+    // Default variant (fade)
+    defaultDot: css`
+      width: ${size};
+      height: ${size};
+      border-radius: 50%;
 
-        background-color: ${dotColor};
+      background-color: ${dotColor};
 
-        animation: fade-animation 1.2s ease-in-out infinite;
+      animation: fade-animation 1.2s ease-in-out infinite;
 
-        @keyframes fade-animation {
-          0%,
-          100% {
-            opacity: 0.3;
-          }
-
-          50% {
-            opacity: 1;
-          }
+      @keyframes fade-animation {
+        0%,
+        100% {
+          opacity: 0.3;
         }
-      `,
 
-      orbitContainer: css`
-        position: relative;
-        width: ${size * 4}px;
-        height: ${size * 4}px;
-      `,
-
-      orbitDot: css`
-        position: absolute;
-        inset-block-start: 50%;
-        inset-inline-start: 50%;
-        transform-origin: ${size * 2}px 0;
-
-        width: ${size}px;
-        height: ${size}px;
-        margin-block-start: -${size / 2}px;
-        margin-inline-start: -${size / 2}px;
-        border-radius: 50%;
-
-        background-color: ${dotColor};
-
-        animation: orbit-animation 1.2s linear infinite;
-
-        @keyframes orbit-animation {
-          0% {
-            transform: rotate(0deg) translateX(${size * 2}px);
-          }
-
-          100% {
-            transform: rotate(360deg) translateX(${size * 2}px);
-          }
+        50% {
+          opacity: 1;
         }
-      `,
+      }
+    `,
 
-      // Orbit variant
-      orbitWrapper: css`
-        position: relative;
+    orbitContainer: css`
+      position: relative;
+      width: calc(${size} * 4);
+      height: calc(${size} * 4);
+    `,
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    orbitDot: css`
+      position: absolute;
+      inset-block-start: 50%;
+      inset-inline-start: 50%;
+      transform-origin: calc(${size} * 2) 0;
 
-        width: ${size * 5}px;
-        height: ${size * 5}px;
-        padding: ${token.paddingXS}px;
-      `,
+      width: ${size};
+      height: ${size};
+      margin-block-start: calc(${size} / -2);
+      margin-inline-start: calc(${size} / -2);
+      border-radius: 50%;
 
-      // Pulse variant
-      pulseDot: css`
-        width: ${size}px;
-        height: ${size}px;
-        border-radius: 50%;
+      background-color: ${dotColor};
 
-        background-color: ${dotColor};
+      animation: orbit-animation 1.2s linear infinite;
 
-        animation: pulse-animation 1.2s ease-in-out infinite;
-
-        @keyframes pulse-animation {
-          0%,
-          100% {
-            transform: scale(0.8);
-            opacity: 0.3;
-          }
-
-          50% {
-            transform: scale(1.3);
-            opacity: 1;
-          }
+      @keyframes orbit-animation {
+        0% {
+          transform: rotate(0deg) translateX(calc(${size} * 2));
         }
-      `,
 
-      // Typing variant
-      typingDot: css`
-        width: ${size}px;
-        height: ${size}px;
-        border-radius: 50%;
-
-        background-color: ${dotColor};
-
-        animation: typing-animation 1.2s ease-in-out infinite;
-
-        @keyframes typing-animation {
-          0%,
-          100% {
-            transform: scale(0.6);
-            opacity: 0.2;
-          }
-
-          25% {
-            transform: scale(1);
-            opacity: 1;
-          }
-
-          50%,
-          75% {
-            transform: scale(0.6);
-            opacity: 0.2;
-          }
+        100% {
+          transform: rotate(360deg) translateX(calc(${size} * 2));
         }
-      `,
+      }
+    `,
 
-      // Wave variant
-      waveDot: css`
-        width: ${size}px;
-        height: ${size}px;
-        border-radius: 50%;
+    // Orbit variant
+    orbitWrapper: css`
+      position: relative;
 
-        background-color: ${dotColor};
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-        animation: wave-animation 1.24s ease-in-out infinite;
+      width: calc(${size} * 5);
+      height: calc(${size} * 5);
+      padding: ${cssVar.paddingXS};
+    `,
 
-        @keyframes wave-animation {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
+    // Pulse variant
+    pulseDot: css`
+      width: ${size};
+      height: ${size};
+      border-radius: 50%;
 
-          25% {
-            transform: translateY(-${size * 1.5}px);
-          }
+      background-color: ${dotColor};
 
-          50% {
-            transform: translateY(0);
-          }
+      animation: pulse-animation 1.2s ease-in-out infinite;
+
+      @keyframes pulse-animation {
+        0%,
+        100% {
+          transform: scale(0.8);
+          opacity: 0.3;
         }
-      `,
-    };
-  },
-);
+
+        50% {
+          transform: scale(1.3);
+          opacity: 1;
+        }
+      }
+    `,
+
+    // Typing variant
+    typingDot: css`
+      width: ${size};
+      height: ${size};
+      border-radius: 50%;
+
+      background-color: ${dotColor};
+
+      animation: typing-animation 1.2s ease-in-out infinite;
+
+      @keyframes typing-animation {
+        0%,
+        100% {
+          transform: scale(0.6);
+          opacity: 0.2;
+        }
+
+        25% {
+          transform: scale(1);
+          opacity: 1;
+        }
+
+        50%,
+        75% {
+          transform: scale(0.6);
+          opacity: 0.2;
+        }
+      }
+    `,
+
+    // Wave variant
+    waveDot: css`
+      width: ${size};
+      height: ${size};
+      border-radius: 50%;
+
+      background-color: ${dotColor};
+
+      animation: wave-animation 1.24s ease-in-out infinite;
+
+      @keyframes wave-animation {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+
+        25% {
+          transform: translateY(calc(${size} * -1.5));
+        }
+
+        50% {
+          transform: translateY(0);
+        }
+      }
+    `,
+  };
+});

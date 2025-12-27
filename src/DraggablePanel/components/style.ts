@@ -1,6 +1,6 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }) => {
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     body: css`
       overflow: hidden auto;
@@ -13,19 +13,19 @@ export const useStyles = createStyles(({ css, token }) => {
     footer: css`
       padding-block: 8px;
       padding-inline: 16px;
-      border-block-start: 1px solid ${token.colorBorderSecondary};
+      border-block-start: 1px solid ${cssVar.colorBorderSecondary};
     `,
     handlerIcon: css`
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s ${token.motionEaseOut};
+      transition: all 0.2s ${cssVar.motionEaseOut};
     `,
     header: css`
       padding-block: 8px;
       padding-inline: 16px;
+      border-block-end: 1px solid ${cssVar.colorBorderSecondary};
       font-weight: 500;
-      border-block-end: 1px solid ${token.colorBorderSecondary};
     `,
   };
 });

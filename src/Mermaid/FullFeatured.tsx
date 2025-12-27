@@ -1,13 +1,13 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
+import { cx } from 'antd-style';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { ReactNode, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
-import { useStyles } from '@/Highlighter/style';
+import { bodyVariants, headerVariants, variants } from '@/Highlighter/style';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
 import Text from '@/Text';
 
@@ -79,7 +79,6 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
     ...rest
   }) => {
     const [expand, setExpand] = useState(defaultExpand);
-    const { styles, cx } = useStyles('block');
     const contentRef = useRef(content);
 
     useEffect(() => {
@@ -87,64 +86,6 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
     }, [content]);
 
     const getContent = useCallback(() => contentRef.current, []);
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            shadow: false,
-            variant: 'filled',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-            shadow: {
-              false: null,
-              true: styles.shadow,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
-
-    const headerVariants = useMemo(
-      () =>
-        cva(styles.headerRoot, {
-          defaultVariants: {
-            variant: 'filled',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: cx(styles.headerFilled, styles.headerOutlined),
-              outlined: styles.headerOutlined,
-              borderless: styles.headerBorderless,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
-
-    const bodyVariants = useMemo(
-      () =>
-        cva(styles.bodyRoot, {
-          defaultVariants: {
-            expand: true,
-          },
-          variants: {
-            expand: {
-              false: styles.bodyCollapsed,
-              true: styles.bodyExpand,
-            },
-          },
-        }),
-      [styles],
-    );
 
     const originalActions = useMemo(() => {
       if (!copyable) return null;

@@ -1,26 +1,13 @@
 'use client';
 
-import { createStyles } from 'antd-style';
+import { cx } from 'antd-style';
 import { isEmpty } from 'es-toolkit/compat';
 import type { FC, ReactNode } from 'react';
 
 import PopoverPanel from '@/mdx/mdxComponents/Citation/PopoverPanel';
 import { CitationItem } from '@/types/citation';
 
-const useStyles = createStyles(({ css }) => ({
-  container: css`
-    display: inline-flex;
-    line-height: var(--lobe-markdown-line-height);
-    vertical-align: baseline;
-
-    a {
-      color: inherit;
-    }
-  `,
-  supContainer: css`
-    vertical-align: super;
-  `,
-}));
+import { styles } from './style';
 
 interface CitationProps {
   children?: ReactNode;
@@ -32,7 +19,6 @@ interface CitationProps {
 }
 
 const Citation: FC<CitationProps> = ({ children, href, inSup, id, citationDetail }) => {
-  const { styles, cx } = useStyles();
   const usePopover = !isEmpty(citationDetail);
   const url = citationDetail?.url || href;
 

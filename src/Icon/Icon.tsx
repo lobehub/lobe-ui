@@ -1,12 +1,12 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
+import { cx } from 'antd-style';
 import { LucideIcon } from 'lucide-react';
 import { isValidElement, memo, useMemo } from 'react';
 
 import { useIconContext } from './components/IconProvider';
 import { calcSize } from './components/utils';
-import { useStyles } from './style';
+import { variants } from './style';
 import type { IconProps } from './type';
 
 const Icon = memo<IconProps>(
@@ -23,26 +23,6 @@ const Icon = memo<IconProps>(
     ref,
     ...rest
   }) => {
-    const { styles, cx } = useStyles();
-
-    const variants = useMemo(
-      () =>
-        cva('anticon', {
-          defaultVariants: {
-            spin: false,
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            spin: {
-              false: null,
-              true: styles.spin,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
-
     const {
       color: colorConfig,
       fill: fillConfig,

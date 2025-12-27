@@ -5,7 +5,7 @@ import { type ReactNode, memo } from 'react';
 import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 
-import { useStyles } from '../style';
+import { styles } from '../style';
 
 export interface ToolbarProps {
   children?: ReactNode;
@@ -15,7 +15,6 @@ export interface ToolbarProps {
 }
 
 const Toolbar = memo<ToolbarProps>(({ children, info, minScale, maxScale }) => {
-  const { styles } = useStyles();
   const {
     transform: { scale },
     actions: { onFlipY, onFlipX, onRotateLeft, onRotateRight, onZoomOut, onZoomIn },

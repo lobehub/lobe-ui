@@ -1,6 +1,6 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token, isDarkMode }) => ({
+export const styles = createStaticStyles(({ css, cssVar }) => ({
   container: css`
     display: inline-block;
     white-space: pre-wrap;
@@ -18,7 +18,7 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => ({
     border-radius: 2px;
 
     opacity: 1;
-    background-color: ${token.colorPrimary};
+    background-color: ${cssVar.colorPrimary};
   `,
 
   cursorBlock: css`
@@ -33,7 +33,7 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => ({
     border-radius: 2px;
 
     opacity: 1;
-    background-color: ${token.colorPrimary};
+    background-color: ${cssVar.colorPrimary};
   `,
 
   cursorCustom: css`
@@ -53,7 +53,7 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => ({
     border-radius: 50%;
 
     opacity: 1;
-    background-color: ${token.colorPrimary};
+    background-color: ${cssVar.colorPrimary};
   `,
 
   cursorHidden: css`
@@ -72,10 +72,10 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => ({
     border-radius: 2px;
 
     opacity: 1;
-    background-color: ${token.colorPrimary};
+    background-color: ${cssVar.colorPrimary};
   `,
 
   text: css`
-    color: ${isDarkMode ? token.colorTextLightSolid : token.colorText};
+    color: ${cssVar.colorText};
   `,
 }));

@@ -1,7 +1,7 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
-import { memo, useCallback, useMemo } from 'react';
+import { cx } from 'antd-style';
+import { memo, useCallback } from 'react';
 
 import { PreviewGroup } from '@/Image';
 
@@ -9,7 +9,7 @@ import { MarkdownRender, StreamdownRender } from './SyntaxMarkdown';
 import Typography from './Typography';
 import { MarkdownProvider } from './components/MarkdownProvider';
 import { useDelayedAnimated } from './components/useDelayedAnimated';
-import { useStyles } from './style';
+import { variants } from './style';
 import type { MarkdownProps } from './type';
 
 const Markdown = memo<MarkdownProps>((props) => {
@@ -47,38 +47,7 @@ const Markdown = memo<MarkdownProps>((props) => {
     ...rest
   } = props;
 
-  const { cx, styles } = useStyles();
-
   const delayedAnimated = useDelayedAnimated(animated);
-
-  // Style variant handling
-  const variants = useMemo(
-    () =>
-      cva(styles.root, {
-        defaultVariants: {
-          enableGfm: true,
-          enableLatex: true,
-          variant: 'default',
-        },
-        /* eslint-disable sort-keys-fix/sort-keys-fix */
-        variants: {
-          variant: {
-            default: null,
-            chat: styles.chat,
-          },
-          enableLatex: {
-            true: styles.latex,
-            false: null,
-          },
-          enableGfm: {
-            true: styles.gfm,
-            false: null,
-          },
-        },
-        /* eslint-enable sort-keys-fix/sort-keys-fix */
-      }),
-    [styles],
-  );
 
   const Render = useCallback(
     ({

@@ -1,8 +1,9 @@
+import { cssVar, cx } from 'antd-style';
 import { type FC } from 'react';
 
 import { SvgProps } from '@/types';
 
-import { useStyles } from '../style';
+import { styles } from '../style';
 
 interface FileIconProps extends SvgProps {
   filetypeShort?: string;
@@ -24,7 +25,6 @@ const FileIcon: FC<FileIconProps> = ({
   style,
   ...rest
 }) => {
-  const { cx, styles, theme } = useStyles();
   return (
     <svg
       className={cx(styles.icon, !hasIcon && className)}
@@ -38,12 +38,12 @@ const FileIcon: FC<FileIconProps> = ({
       <path d="M6 2a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6H6z" fill={iconColor} />
       <path
         d="M14 2l6 6h-4a2 2 0 01-2-2V2z"
-        fill={isMono ? theme.colorFill : '#fff'}
+        fill={isMono ? cssVar.colorFill : '#fff'}
         fillOpacity=".5"
       />
       {filetypeShort && (
         <text
-          fill={isMono ? theme.colorTextSecondary : '#fff'}
+          fill={isMono ? cssVar.colorTextSecondary : '#fff'}
           fontSize={fontSize}
           fontWeight="bold"
           textAnchor="middle"
@@ -56,7 +56,7 @@ const FileIcon: FC<FileIconProps> = ({
       <path
         d="M6 2a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6H6z"
         fill={'transparent'}
-        stroke={theme.colorFillSecondary}
+        stroke={cssVar.colorFillSecondary}
         strokeWidth={0.5}
       />
     </svg>

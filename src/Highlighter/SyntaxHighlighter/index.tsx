@@ -1,12 +1,12 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
-import { memo, useMemo } from 'react';
+import { cx } from 'antd-style';
+import { memo } from 'react';
 
 import type { SyntaxHighlighterProps } from '../type';
 import StaticRenderer from './StaticRenderer';
 import StreamRenderer from './StreamRenderer';
-import { useStyles } from './style';
+import { variants } from './style';
 
 const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
   ({
@@ -19,44 +19,9 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
     theme,
     variant = 'borderless',
   }) => {
-    const { styles, cx } = useStyles();
     const isDefaultTheme = theme === 'lobe-theme' || !theme;
     const showBackground = !isDefaultTheme && variant === 'filled';
     const resolvedTheme = isDefaultTheme ? undefined : theme;
-
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            animated: false,
-            shiki: true,
-            showBackground: false,
-            variant: 'borderless',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            shiki: {
-              false: styles.unshiki,
-              true: styles.shiki,
-            },
-            variant: {
-              filled: styles.padding,
-              outlined: styles.padding,
-              borderless: styles.noPadding,
-            },
-            showBackground: {
-              false: styles.noBackground,
-              true: null,
-            },
-            animated: {
-              true: styles.animated,
-              false: null,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
 
     const shikiClassName = cx(
       variants({ animated, shiki: true, showBackground, variant }),

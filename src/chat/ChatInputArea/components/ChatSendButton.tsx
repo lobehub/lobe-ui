@@ -1,4 +1,4 @@
-import { useTheme } from 'antd-style';
+import { cssVar } from 'antd-style';
 import { ArrowBigUp, CornerDownLeft, Loader2 } from 'lucide-react';
 import { type FC } from 'react';
 
@@ -18,8 +18,6 @@ const ChatSendButton: FC<ChatSendButtonProps> = ({
   onStop,
   ...rest
 }) => {
-  const theme = useTheme();
-
   return (
     <Flexbox
       align={'end'}
@@ -38,7 +36,7 @@ const ChatSendButton: FC<ChatSendButtonProps> = ({
         <Flexbox
           gap={4}
           horizontal
-          style={{ color: theme.colorTextDescription, fontSize: 12, marginRight: 12 }}
+          style={{ color: cssVar.colorTextDescription, fontSize: 12, marginRight: 12 }}
         >
           <Icon icon={CornerDownLeft} />
           <span>{texts?.send || 'Send'}</span>

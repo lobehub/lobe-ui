@@ -1,6 +1,7 @@
 'use client';
 
 import { evaluate } from '@mdx-js/mdx';
+import { cx } from 'antd-style';
 import { ReactNode, memo, useEffect, useMemo, useState } from 'react';
 import jsxDevRuntime from 'react/jsx-dev-runtime';
 import jsxRuntime from 'react/jsx-runtime';
@@ -13,7 +14,7 @@ import type { Pluggable } from 'unified';
 import Alert from '@/Alert';
 import { PreviewGroup } from '@/Image';
 import { Typography, type TypographyProps } from '@/Markdown';
-import { useStyles } from '@/Markdown/style';
+import { styles } from '@/Markdown/style';
 import { useMarkdownContent } from '@/hooks/useMarkdown';
 
 import mdxComponents from '../mdxComponents';
@@ -57,7 +58,6 @@ const Mdx = memo<MdxProps>(
     variant,
     ...rest
   }) => {
-    const { cx, styles } = useStyles();
     const escapedContent = useMarkdownContent(children);
 
     const isChatMode = variant === 'chat';

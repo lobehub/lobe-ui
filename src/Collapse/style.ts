@@ -1,4 +1,7 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
+import { cva } from 'class-variance-authority';
+
+import { lobeStaticStylish } from '@/styles';
 
 export const DEFAULT_PADDING = '12px 16px';
 
@@ -7,7 +10,9 @@ export const getPadding = (padding?: number | string) =>
     ? DEFAULT_PADDING
     : `${typeof padding === 'string' ? padding : `${padding}px`} !important`;
 
-export const useStyles = createStyles(({ css, token, prefixCls, stylish, isDarkMode }) => {
+const prefixCls = 'ant';
+
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     borderless: css`
       &.${prefixCls}-collapse {
@@ -24,19 +29,33 @@ export const useStyles = createStyles(({ css, token, prefixCls, stylish, isDarkM
     `,
     desc: css`
       font-size: 12px;
-      color: ${token.colorTextDescription};
+      color: ${cssVar.colorTextDescription};
     `,
-    filled: css`
+    filledDark: css`
       &.${prefixCls}-collapse {
         .${prefixCls}-collapse-item {
-          background: ${isDarkMode ? token.colorFillQuaternary : token.colorFillTertiary};
+          background: ${cssVar.colorFillQuaternary};
           .${prefixCls}-collapse-content {
             margin-inline: 3px;
             margin-block-end: 3px;
-            border-radius: ${token.borderRadius}px;
-            ${stylish.variantOutlinedWithoutHover};
-            background: ${isDarkMode ? token.colorFillQuaternary : token.colorBgContainer};
-            ${isDarkMode ? undefined : stylish.shadow};
+            border-radius: ${cssVar.borderRadius};
+            ${lobeStaticStylish.variantOutlinedWithoutHover};
+            background: ${cssVar.colorFillQuaternary};
+          }
+        }
+      }
+    `,
+    filledLight: css`
+      &.${prefixCls}-collapse {
+        .${prefixCls}-collapse-item {
+          background: ${cssVar.colorFillTertiary};
+          .${prefixCls}-collapse-content {
+            margin-inline: 3px;
+            margin-block-end: 3px;
+            border-radius: ${cssVar.borderRadius};
+            ${lobeStaticStylish.variantOutlinedWithoutHover};
+            background: ${cssVar.colorBgContainer};
+            ${lobeStaticStylish.shadow};
           }
         }
       }
@@ -45,8 +64,8 @@ export const useStyles = createStyles(({ css, token, prefixCls, stylish, isDarkM
       &.${prefixCls}-collapse {
         background: transparent;
         .${prefixCls}-collapse-item {
-          border: 1px solid ${token.colorFillSecondary};
-          background: ${token.colorBgContainer};
+          border: 1px solid ${cssVar.colorFillSecondary};
+          background: ${cssVar.colorBgContainer};
         }
 
         .${prefixCls}-collapse-item:not(:first-child) {
@@ -64,7 +83,7 @@ export const useStyles = createStyles(({ css, token, prefixCls, stylish, isDarkM
         box-shadow: none;
         .${prefixCls}-collapse-item {
           border: none;
-          border-radius: ${token.borderRadiusLG}px;
+          border-radius: ${cssVar.borderRadiusLG};
         }
       }
     `,
@@ -75,21 +94,21 @@ export const useStyles = createStyles(({ css, token, prefixCls, stylish, isDarkM
     `,
     icon: css`
       cursor: pointer;
-      transition: all 100ms ${token.motionEaseOut};
+      transition: all 100ms ${cssVar.motionEaseOut};
     `,
     outlined: css`
       &.${prefixCls}-collapse {
-        border: 1px solid ${token.colorFillSecondary};
-        background: ${token.colorBgContainer};
+        border: 1px solid ${cssVar.colorFillSecondary};
+        background: ${cssVar.colorBgContainer};
         .${prefixCls}-collapse-item .${prefixCls}-collapse-header {
           transition: none;
         }
         .${prefixCls}-collapse-item-active .${prefixCls}-collapse-header {
-          border-block-end: 1px solid ${token.colorFillTertiary};
+          border-block-end: 1px solid ${cssVar.colorFillTertiary};
         }
         .${prefixCls}-collapse-item:not(:first-child) {
           .${prefixCls}-collapse-header {
-            border-block-start: 1px solid ${token.colorFillTertiary};
+            border-block-start: 1px solid ${cssVar.colorFillTertiary};
           }
         }
       }
@@ -137,4 +156,50 @@ export const useStyles = createStyles(({ css, token, prefixCls, stylish, isDarkM
       line-height: 28px;
     `,
   };
+});
+
+export const variants = cva(styles.root, {
+  compoundVariants: [
+    {
+      class: styles.gapOutlined,
+      gap: true,
+      variant: 'outlined',
+    },
+    {
+      class: styles.filledDark,
+      isDarkMode: true,
+      variant: 'filled',
+    },
+    {
+      class: styles.filledLight,
+      isDarkMode: false,
+      variant: 'filled',
+    },
+  ],
+  defaultVariants: {
+    collapsible: true,
+    gap: false,
+    isDarkMode: false,
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    collapsible: {
+      false: styles.hideCollapsibleIcon,
+      true: null,
+    },
+    gap: {
+      false: null,
+      true: styles.gapRoot,
+    },
+    isDarkMode: {
+      false: null,
+      true: null,
+    },
+    variant: {
+      borderless: styles.borderless,
+      filled: null,
+      outlined: styles.outlined,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

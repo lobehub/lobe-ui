@@ -1,12 +1,13 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { type FC, useMemo, useState } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
 import { Center } from '@/Flex';
 import Img from '@/Img';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { FluentEmojiProps } from './type';
 import { genEmojiUrl } from './utils';
 
@@ -22,7 +23,6 @@ const FluentEmoji: FC<FluentEmojiProps> = ({
 }) => {
   const [loadingFail, setLoadingFail] = useState(false);
   const genCdnUrl = useCdnFn();
-  const { cx, styles } = useStyles();
 
   const emojiUrl = useMemo(() => genEmojiUrl(emoji, type), [type, emoji]);
 

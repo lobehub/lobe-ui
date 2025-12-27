@@ -1,20 +1,19 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ css, token, isDarkMode }) => {
-  const cyanColor = isDarkMode ? token.cyan9A : token.cyan11A;
-
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     chat: css`
       ol,
       ul {
         > li {
           &::marker {
-            color: ${cyanColor} !important;
+            color: ${cssVar.cyan9} !important;
           }
 
           > li {
             &::marker {
-              color: ${token.colorTextSecondary} !important;
+              color: ${cssVar.colorTextSecondary} !important;
             }
           }
         }
@@ -36,7 +35,7 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
       .markdown-alert {
         margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
         padding-inline-start: 1em;
-        border-inline-start: solid 4px ${token.colorBorder};
+        border-inline-start: solid 4px ${cssVar.colorBorder};
 
         > p {
           margin-block-start: 0 !important;
@@ -52,23 +51,23 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
       }
 
       .markdown-alert-note {
-        border-inline-start-color: ${token.colorInfo};
+        border-inline-start-color: ${cssVar.colorInfo};
       }
 
       .markdown-alert-tip {
-        border-inline-start-color: ${token.colorSuccess};
+        border-inline-start-color: ${cssVar.colorSuccess};
       }
 
       .markdown-alert-important {
-        border-inline-start-color: ${token.purple};
+        border-inline-start-color: ${cssVar.purple};
       }
 
       .markdown-alert-warning {
-        border-inline-start-color: ${token.colorWarning};
+        border-inline-start-color: ${cssVar.colorWarning};
       }
 
       .markdown-alert-caution {
-        border-inline-start-color: ${token.colorError};
+        border-inline-start-color: ${cssVar.colorError};
       }
 
       .markdown-alert-title {
@@ -79,28 +78,28 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
       }
 
       .markdown-alert-note .markdown-alert-title {
-        color: ${token.colorInfo};
-        fill: ${token.colorInfo};
+        color: ${cssVar.colorInfo};
+        fill: ${cssVar.colorInfo};
       }
 
       .markdown-alert-tip .markdown-alert-title {
-        color: ${token.colorSuccess};
-        fill: ${token.colorSuccess};
+        color: ${cssVar.colorSuccess};
+        fill: ${cssVar.colorSuccess};
       }
 
       .markdown-alert-important .markdown-alert-title {
-        color: ${token.purple};
-        fill: ${token.purple};
+        color: ${cssVar.purple};
+        fill: ${cssVar.purple};
       }
 
       .markdown-alert-warning .markdown-alert-title {
-        color: ${token.colorWarning};
-        fill: ${token.colorWarning};
+        color: ${cssVar.colorWarning};
+        fill: ${cssVar.colorWarning};
       }
 
       .markdown-alert-caution .markdown-alert-title {
-        color: ${token.colorError};
-        fill: ${token.colorError};
+        color: ${cssVar.colorError};
+        fill: ${cssVar.colorError};
       }
 
       /* Style the footnotes section. */
@@ -138,12 +137,12 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
           height: 16px;
           border-radius: 4px;
 
-          font-family: ${token.fontFamilyCode};
+          font-family: ${cssVar.fontFamilyCode};
           font-size: 10px;
-          color: ${token.colorTextSecondary} !important;
+          color: ${cssVar.colorTextSecondary} !important;
           text-align: center;
 
-          background: ${token.colorFillSecondary};
+          background: ${cssVar.colorFillSecondary};
         }
       }
 
@@ -157,7 +156,7 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
 
           width: 0.66em;
           height: 0.66em;
-          border: 1px solid ${token.colorFill};
+          border: 1px solid ${cssVar.colorFill};
           border-radius: 50%;
 
           background-color: attr(data-color);
@@ -170,7 +169,7 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
 
     latex: css`
       .katex-error {
-        color: ${token.colorTextDescription} !important;
+        color: ${cssVar.colorTextDescription} !important;
       }
 
       .katex-html {
@@ -195,4 +194,28 @@ export const useStyles = createStyles(({ css, token, isDarkMode }) => {
       max-width: 100%;
     `,
   };
+});
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    enableGfm: true,
+    enableLatex: true,
+    variant: 'default',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      default: null,
+      chat: styles.chat,
+    },
+    enableLatex: {
+      true: styles.latex,
+      false: null,
+    },
+    enableGfm: {
+      true: styles.gfm,
+      false: null,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

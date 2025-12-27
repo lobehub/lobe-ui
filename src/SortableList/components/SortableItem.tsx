@@ -3,13 +3,13 @@
 import type { DraggableSyntheticListeners } from '@dnd-kit/core';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { cva } from 'class-variance-authority';
+import { cx } from 'antd-style';
 import { createContext, memo, useMemo } from 'react';
 
 import { type FlexboxProps } from '@/Flex';
 import { Flexbox } from '@/Flex';
 
-import { useStyles } from '../style';
+import { variants } from '../style';
 
 interface Context {
   attributes: Record<string, any>;
@@ -30,37 +30,6 @@ export interface SortableItemProps extends Omit<FlexboxProps, 'id'> {
 
 const SortableItem = memo<SortableItemProps>(
   ({ variant = 'borderless', className, children, id, style, ...rest }) => {
-    const { cx, styles } = useStyles();
-
-    const variants = useMemo(
-      () =>
-        cva(styles.item, {
-          compoundVariants: [
-            {
-              className: styles.itemVariant,
-              variant: 'outlined',
-            },
-            {
-              className: styles.itemVariant,
-              variant: 'filled',
-            },
-          ],
-          defaultVariants: {
-            variant: 'borderless',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
-
     const {
       attributes,
       isDragging,
@@ -84,7 +53,7 @@ const SortableItem = memo<SortableItemProps>(
         <Flexbox
           align={'center'}
           as={'li'}
-          className={cx(variants({ className, variant }))}
+          className={cx(variants({ variant }), className)}
           gap={4}
           horizontal
           ref={setNodeRef}

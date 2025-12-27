@@ -9,7 +9,7 @@ import Img from '@/Img';
 import Text from '@/Text';
 import { AProps } from '@/types';
 
-import { useStyles } from './style';
+import { styles } from './style';
 
 export interface SearchResultCardProps extends AProps {
   alt?: string;
@@ -19,8 +19,6 @@ export interface SearchResultCardProps extends AProps {
 }
 
 const SearchResultCard = memo<SearchResultCardProps>(({ ref, url, title, alt, ...rest }) => {
-  const { styles } = useStyles();
-
   const [displayTitle, domain, host] = useMemo(() => {
     try {
       const urlObj = new URL(url);

@@ -1,6 +1,6 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-export const useStyles = createStyles(({ css, token }) => {
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     center: css`
       height: 100%;
@@ -9,7 +9,7 @@ export const useStyles = createStyles(({ css, token }) => {
       overflow: hidden;
       flex: none;
       width: 100vw;
-      background: ${token.colorBgLayout};
+      background: ${cssVar.colorBgLayout};
     `,
 
     inner: css`
@@ -33,7 +33,7 @@ export const useStyles = createStyles(({ css, token }) => {
   };
 });
 
-export const useTitleStyles = createStyles(({ css, token }) => ({
+export const titleStyles = createStaticStyles(({ css, cssVar }) => ({
   desc: css`
     overflow: hidden;
 
@@ -41,7 +41,7 @@ export const useTitleStyles = createStyles(({ css, token }) => ({
 
     font-size: 12px;
     line-height: 1;
-    color: ${token.colorTextTertiary};
+    color: ${cssVar.colorTextTertiary};
     text-overflow: ellipsis;
     white-space: nowrap;
   `,

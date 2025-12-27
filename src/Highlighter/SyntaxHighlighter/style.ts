@@ -1,4 +1,5 @@
-import { createStyles, keyframes } from 'antd-style';
+import { createStaticStyles, cx, keyframes } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
 const fadeIn = keyframes`
     0% {
@@ -9,7 +10,7 @@ const fadeIn = keyframes`
     }
   `;
 
-export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     animated: css`
       .animate-fade-in,
@@ -46,11 +47,10 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
       pre {
         overflow-x: auto;
         margin: 0;
-        padding: 0;
       }
     `,
     shiki: cx(
-      `${prefixCls}-highlighter-shiki`,
+      'ant-highlighter-highlighter-shiki',
       css`
         pre {
           code {
@@ -74,29 +74,29 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
           }
 
           .highlighted {
-            background: ${token.colorFillTertiary};
+            background: ${cssVar.colorFillTertiary};
 
             &.warning {
-              background: ${token.colorWarningBg};
+              background: ${cssVar.colorWarningBg};
             }
 
             &.error {
-              background: ${token.colorErrorBg};
+              background: ${cssVar.colorErrorBg};
             }
           }
 
           .highlighted-word {
             padding-block: 0.1em;
             padding-inline: 0.2em;
-            border: 1px solid ${token.colorBorderSecondary};
-            border-radius: ${token.borderRadius}px;
+            border: 1px solid ${cssVar.colorBorderSecondary};
+            border-radius: ${cssVar.borderRadius};
 
-            background: ${token.colorFillTertiary};
+            background: ${cssVar.colorFillTertiary};
           }
 
           .diff {
             &.remove {
-              background: ${token.colorErrorBg};
+              background: ${cssVar.colorErrorBg};
 
               &::before {
                 content: '-';
@@ -106,12 +106,12 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
 
                 display: inline-block;
 
-                color: ${token.colorErrorText};
+                color: ${cssVar.colorErrorText};
               }
             }
 
             &.add {
-              background: ${token.colorSuccessBg};
+              background: ${cssVar.colorSuccessBg};
 
               &::before {
                 content: '+';
@@ -121,7 +121,7 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
 
                 display: inline-block;
 
-                color: ${token.colorSuccessText};
+                color: ${cssVar.colorSuccessText};
               }
             }
           }
@@ -129,7 +129,37 @@ export const useStyles = createStyles(({ css, token, cx, prefixCls }) => {
       `,
     ),
     unshiki: css`
-      color: ${token.colorTextDescription};
+      color: ${cssVar.colorTextDescription};
     `,
   };
+});
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    animated: false,
+    shiki: true,
+    showBackground: false,
+    variant: 'borderless',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    shiki: {
+      false: styles.unshiki,
+      true: styles.shiki,
+    },
+    showBackground: {
+      false: styles.noBackground,
+      true: null,
+    },
+    animated: {
+      true: styles.animated,
+      false: null,
+    },
+    variant: {
+      filled: styles.padding,
+      outlined: styles.padding,
+      borderless: styles.noPadding,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

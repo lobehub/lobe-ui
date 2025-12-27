@@ -1,6 +1,6 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
+import { cx } from 'antd-style';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import CopyButton from '@/CopyButton';
@@ -10,7 +10,7 @@ import Tag from '@/Tag';
 
 import FullFeatured from './FullFeatured';
 import SyntaxHighlighter from './SyntaxHighlighter';
-import { useStyles } from './style';
+import { styles, variants } from './style';
 import type { HighlighterProps } from './type';
 
 export const Highlighter = memo<HighlighterProps>(
@@ -38,37 +38,7 @@ export const Highlighter = memo<HighlighterProps>(
     defaultExpand = true,
     ...rest
   }) => {
-    const { styles, cx } = useStyles();
     const [lang, setLang] = useState(language);
-
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            shadow: false,
-            variant: 'filled',
-            wrap: false,
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-            shadow: {
-              false: null,
-              true: styles.shadow,
-            },
-            wrap: {
-              false: styles.nowrap,
-              true: styles.wrap,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
 
     // Safely handle children with boundary check
     const tirmedChildren = useMemo(() => {

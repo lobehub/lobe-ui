@@ -1,5 +1,6 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { memo } from 'react';
 import useControlledState from 'use-merge-value';
 
@@ -7,7 +8,7 @@ import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Img from '@/Img';
 
-import { useStyles } from './styles';
+import { styles } from './styles';
 import type { ImageSelectProps } from './type';
 
 const ImageSelect = memo<ImageSelectProps>(
@@ -31,8 +32,6 @@ const ImageSelect = memo<ImageSelectProps>(
       onChange,
       value,
     });
-
-    const { styles, cx } = useStyles();
 
     return (
       <Flexbox className={className} gap={16} horizontal ref={ref} style={style} {...rest}>

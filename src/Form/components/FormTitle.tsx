@@ -1,11 +1,12 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
 import Tag from '@/Tag';
 
-import { useTitleStyles as useStyles } from '../style';
+import { titleStyles as styles } from '../style';
 import type { FormTitleProps } from '../type';
 
 const FormTitle: FC<FormTitleProps> = ({
@@ -17,8 +18,6 @@ const FormTitle: FC<FormTitleProps> = ({
   styles: customStyles,
   ...rest
 }) => {
-  const { cx, styles } = useStyles();
-
   return (
     <Flexbox align={`center`} gap={8} horizontal {...rest}>
       {avatar}

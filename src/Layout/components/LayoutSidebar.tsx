@@ -1,17 +1,20 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { memo } from 'react';
 
-import { useStyles } from '../style';
+import { styles } from '../style';
 import type { LayoutSidebarProps } from '../type';
 
 export const LayoutSidebar = memo<LayoutSidebarProps>(
   ({ headerHeight, children, className, style, ...rest }) => {
-    const { cx, styles } = useStyles(headerHeight);
     return (
       <aside
         className={cx(styles.aside, className)}
-        style={{ top: headerHeight, ...style }}
+        style={{
+          top: `var(--layout-header-height, ${headerHeight}px)`,
+          ...style,
+        }}
         {...rest}
       >
         {children}

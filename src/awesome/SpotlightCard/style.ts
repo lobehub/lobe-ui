@@ -1,90 +1,138 @@
-import { createStyles } from 'antd-style';
-import { rgba } from 'polished';
+import { createStaticStyles, responsive } from 'antd-style';
 
 export const CHILDREN_CLASSNAME = 'hover-card';
 
-export const useStyles = createStyles(
-  (
-    { css, responsive, token, isDarkMode },
-    { size, borderRadius }: { borderRadius: number; size: number },
-  ) => ({
-    container: css`
-      &:hover > .${CHILDREN_CLASSNAME}::after {
-        opacity: 1;
-      }
-    `,
+export const styles = createStaticStyles(({ css, cssVar }) => ({
+  container: css`
+    &:hover > .${CHILDREN_CLASSNAME}::after {
+      opacity: 1;
+    }
+  `,
 
-    content: css`
-      z-index: 2;
+  content: css`
+    z-index: 2;
 
-      flex-grow: 1;
+    flex-grow: 1;
 
-      height: 100%;
-      margin: 1px;
+    height: 100%;
+    margin: 1px;
+    border-radius: calc(var(--spotlight-card-border-radius, 12px) - 1px);
 
-      background: ${token.colorBgContainer};
-      border-radius: ${borderRadius - 1}px;
-    `,
-    grid: css`
-      display: grid;
+    background: ${cssVar.colorBgContainer};
+  `,
+  grid: css`
+    display: grid;
 
-      ${responsive.mobile} {
-        display: flex;
-        flex-direction: column;
-      }
-    `,
-    itemContainer: css`
-      cursor: pointer;
+    ${responsive.sm} {
+      display: flex;
+      flex-direction: column;
+    }
+  `,
+  itemContainerDark: css`
+    cursor: pointer;
 
-      position: relative;
+    position: relative;
 
-      overflow: hidden;
+    overflow: hidden;
+
+    width: 100%;
+    border-radius: var(--spotlight-card-border-radius, 12px);
+
+    background: color-mix(in srgb, ${cssVar.colorBorderSecondary} 75%, transparent);
+
+    &::before,
+    &::after {
+      content: '';
+
+      position: absolute;
+      inset-block-start: 0;
+      inset-inline-start: 0;
 
       width: 100%;
+      height: 100%;
+      border-radius: inherit;
 
-      background: ${rgba(token.colorBorderSecondary, 0.75)};
-      border-radius: ${borderRadius}px;
+      opacity: 0;
 
-      &::before,
-      &::after {
-        content: '';
+      transition: opacity 500ms;
+    }
 
-        position: absolute;
-        inset-block-start: 0;
-        inset-inline-start: 0;
+    &::before {
+      pointer-events: none;
+      user-select: none;
+      z-index: 3;
+      background: radial-gradient(
+        var(--spotlight-card-size, 800px) circle at var(--mouse-x) var(--mouse-y),
+        color-mix(in srgb, ${cssVar.colorTextBase} 6%, transparent),
+        transparent 40%
+      );
+    }
 
-        width: 100%;
-        height: 100%;
+    &::after {
+      z-index: 1;
+      background: radial-gradient(
+        calc(var(--spotlight-card-size, 800px) * 0.75) circle at var(--mouse-x) var(--mouse-y),
+        color-mix(in srgb, ${cssVar.colorTextBase} 40%, transparent),
+        transparent 40%
+      );
+    }
 
-        opacity: 0;
-        border-radius: inherit;
+    :hover::before {
+      opacity: 1;
+    }
+  `,
 
-        transition: opacity 500ms;
-      }
+  itemContainerLight: css`
+    cursor: pointer;
 
-      &::before {
-        pointer-events: none;
-        user-select: none;
-        z-index: 3;
-        background: radial-gradient(
-          ${size}px circle at var(--mouse-x) var(--mouse-y),
-          ${rgba(token.colorTextBase, isDarkMode ? 0.06 : 0.02)},
-          transparent 40%
-        );
-      }
+    position: relative;
 
-      &::after {
-        z-index: 1;
-        background: radial-gradient(
-          ${size * 0.75}px circle at var(--mouse-x) var(--mouse-y),
-          ${rgba(token.colorTextBase, isDarkMode ? 0.4 : 0.2)},
-          transparent 40%
-        );
-      }
+    overflow: hidden;
 
-      :hover::before {
-        opacity: 1;
-      }
-    `,
-  }),
-);
+    width: 100%;
+    border-radius: var(--spotlight-card-border-radius, 12px);
+
+    background: color-mix(in srgb, ${cssVar.colorBorderSecondary} 75%, transparent);
+
+    &::before,
+    &::after {
+      content: '';
+
+      position: absolute;
+      inset-block-start: 0;
+      inset-inline-start: 0;
+
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+
+      opacity: 0;
+
+      transition: opacity 500ms;
+    }
+
+    &::before {
+      pointer-events: none;
+      user-select: none;
+      z-index: 3;
+      background: radial-gradient(
+        var(--spotlight-card-size, 800px) circle at var(--mouse-x) var(--mouse-y),
+        color-mix(in srgb, ${cssVar.colorTextBase} 2%, transparent),
+        transparent 40%
+      );
+    }
+
+    &::after {
+      z-index: 1;
+      background: radial-gradient(
+        calc(var(--spotlight-card-size, 800px) * 0.75) circle at var(--mouse-x) var(--mouse-y),
+        color-mix(in srgb, ${cssVar.colorTextBase} 20%, transparent),
+        transparent 40%
+      );
+    }
+
+    :hover::before {
+      opacity: 1;
+    }
+  `,
+}));

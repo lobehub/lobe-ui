@@ -22,13 +22,12 @@ import { Flexbox } from '@/Flex';
 import DragHandle from './components/DragHandle';
 import SortableItem from './components/SortableItem';
 import SortableOverlay from './components/SortableOverlay';
-import { useStyles } from './style';
+import { styles } from './style';
 import type { SortableListProps } from './type';
 
 const SortableListParent = memo<SortableListProps>(
   ({ ref, items, onChange, renderItem, gap = 8, ...rest }) => {
     const [active, setActive] = useState<Active | null>(null);
-    const { styles } = useStyles();
     const activeItem = useMemo(() => items.find((item) => item.id === active?.id), [active, items]);
     const sensors = useSensors(
       useSensor(PointerSensor),

@@ -1,19 +1,20 @@
 'use client';
 
+import { cx, useThemeMode } from 'antd-style';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import type { AuroraBackgroundProps } from './type';
 
 const AuroraBackground = memo<AuroraBackgroundProps>(
   ({ ref, classNames, styles: customStyles, children, ...rest }) => {
-    const { cx, styles } = useStyles();
+    const { isDarkMode } = useThemeMode();
     return (
       <Flexbox ref={ref} {...rest}>
         <Flexbox className={cx(styles.wrapper, classNames?.wrapper)} style={customStyles?.wrapper}>
-          <div className={styles.bg} />
+          <div className={isDarkMode ? styles.bgDark : styles.bgLight} />
         </Flexbox>
         <Flexbox
           className={classNames?.content}

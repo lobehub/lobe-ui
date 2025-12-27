@@ -1,6 +1,6 @@
 'use client';
 
-import { cva } from 'class-variance-authority';
+import { cx } from 'antd-style';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { ReactNode, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -12,7 +12,7 @@ import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
 import Text from '@/Text';
 
 import LangSelect from './LangSelect';
-import { useStyles } from './style';
+import { bodyVariants, headerVariants, variants } from './style';
 import { HighlighterProps } from './type';
 
 interface HeaderLanguageProps {
@@ -109,7 +109,6 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
     ...rest
   }) => {
     const [expand, setExpand] = useState(defaultExpand);
-    const { styles, cx } = useStyles();
     const contentRef = useRef(content);
 
     useEffect(() => {
@@ -117,70 +116,6 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
     }, [content]);
 
     const getContent = useCallback(() => contentRef.current, []);
-
-    const variants = useMemo(
-      () =>
-        cva(styles.root, {
-          defaultVariants: {
-            shadow: false,
-            variant: 'filled',
-            wrap: false,
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: styles.filled,
-              outlined: styles.outlined,
-              borderless: styles.borderless,
-            },
-            shadow: {
-              false: null,
-              true: styles.shadow,
-            },
-            wrap: {
-              false: styles.nowrap,
-              true: null,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
-
-    const headerVariants = useMemo(
-      () =>
-        cva(styles.headerRoot, {
-          defaultVariants: {
-            variant: 'filled',
-          },
-          /* eslint-disable sort-keys-fix/sort-keys-fix */
-          variants: {
-            variant: {
-              filled: cx(styles.headerFilled, styles.headerOutlined),
-              outlined: styles.headerOutlined,
-              borderless: styles.headerBorderless,
-            },
-          },
-          /* eslint-enable sort-keys-fix/sort-keys-fix */
-        }),
-      [styles],
-    );
-
-    const bodyVariants = useMemo(
-      () =>
-        cva(styles.bodyRoot, {
-          defaultVariants: {
-            expand: true,
-          },
-          variants: {
-            expand: {
-              false: styles.bodyCollapsed,
-              true: styles.bodyExpand,
-            },
-          },
-        }),
-      [styles],
-    );
 
     const originalActions = useMemo(() => {
       if (!copyable) return null;

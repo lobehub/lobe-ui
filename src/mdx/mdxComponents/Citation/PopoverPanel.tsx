@@ -1,33 +1,13 @@
 'use client';
 
 import { Popover } from 'antd';
-import { createStyles } from 'antd-style';
 import { ArrowRightIcon } from 'lucide-react';
 import { type FC, type ReactNode, useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
-const useStyles = createStyles(({ css, token }) => ({
-  link: css`
-    cursor: pointer;
-    color: ${token.colorTextSecondary};
-
-    :hover {
-      color: ${token.colorText};
-    }
-  `,
-  url: css`
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-
-    max-width: 400px;
-
-    text-overflow: ellipsis;
-  `,
-}));
+import { styles } from './style';
 
 interface PopoverPanelProps {
   alt?: string;
@@ -38,8 +18,6 @@ interface PopoverPanelProps {
 }
 
 const PopoverPanel: FC<PopoverPanelProps> = ({ children, usePopover, title, alt, url }) => {
-  const { styles } = useStyles();
-
   const [displayTitle, domain, host] = useMemo(() => {
     try {
       const urlObj = new URL(url!);

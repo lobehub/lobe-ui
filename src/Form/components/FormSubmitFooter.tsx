@@ -1,6 +1,7 @@
 'use client';
 
 import { Form } from 'antd';
+import { cssVar, cx } from 'antd-style';
 import isEqual from 'fast-deep-equal';
 import { InfoIcon } from 'lucide-react';
 import { memo, useEffect, useMemo, useState } from 'react';
@@ -12,7 +13,7 @@ import { useMotionComponent } from '@/MotionProvider';
 import formMessages from '@/i18n/resources/en/form';
 import { useTranslation } from '@/i18n/useTranslation';
 
-import { useSubmitFooterStyles as useStyles } from '../style';
+import { submitFooterStyles } from '../style';
 import type { FormSubmitFooterProps } from '../type';
 import { useFormContext } from './FormProvider';
 import { merge, removeUndefined } from './merge';
@@ -37,7 +38,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
     const values = Form.useWatch([], form) || {};
     const { t } = useTranslation(formMessages);
 
-    const { cx, styles, theme } = useStyles();
+    const styles = submitFooterStyles;
 
     const v = useMemo(() => removeUndefined(values), [values]);
 
@@ -75,14 +76,14 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
         {(float || hasUnsavedChanges) && (
           <>
             <Icon
-              color={theme.colorTextDescription}
+              color={cssVar.colorTextDescription}
               icon={InfoIcon}
               size={12}
               style={{ marginLeft: 8 }}
             />
             <span
               style={{
-                color: theme.colorTextDescription,
+                color: cssVar.colorTextDescription,
                 flex: 'none',
                 fontSize: 12,
                 marginRight: float ? 16 : 4,

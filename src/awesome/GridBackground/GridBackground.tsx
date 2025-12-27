@@ -1,11 +1,13 @@
 'use client';
 
 import { useSize } from 'ahooks';
+import { cssVar, cx, useTheme } from 'antd-style';
+import chroma from 'chroma-js';
 import { shuffle } from 'es-toolkit/compat';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import Grid, { type GridProps } from './components/Grid';
-import { useStyles } from './style';
+import { styles } from './style';
 import type { GridBackgroundProps } from './type';
 
 const initialGroup = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
@@ -28,12 +30,30 @@ const GridBackground = memo<GridBackgroundProps>(
   }) => {
     const ref = useRef(null);
     const size = useSize(ref);
-    const { styles, cx, theme } = useStyles({ backgroundColor, reverse });
+    const theme = useTheme();
+
+    const backgroundCssVariables = useMemo<Record<string, string>>(() => {
+      if (!showBackground) return {} as Record<string, string>;
+
+      const scale = chroma
+        .bezier([theme.colorText, backgroundColor || 'blue', theme.colorBgLayout])
+        .scale()
+        .mode('lch')
+        .correctLightness()
+        .colors(6);
+
+      return {
+        '--grid-background-color-1': scale[1],
+        '--grid-background-color-2': scale[2],
+        '--grid-background-color-3': scale[3],
+        '--grid-background-color-4': scale[4],
+      };
+    }, [showBackground, backgroundColor, theme.colorText, theme.colorBgLayout]);
 
     const gridProps: GridProps = useMemo(
       () => ({
-        className: styles.highlight,
-        color: colorFront || theme.colorText,
+        className: reverse ? styles.highlightReverse : styles.highlight,
+        color: colorFront || cssVar.colorText,
         strokeWidth,
       }),
       [reverse, colorFront, strokeWidth],
@@ -77,7 +97,7 @@ const GridBackground = memo<GridBackgroundProps>(
         {...rest}
       >
         <Grid
-          color={colorBack || theme.colorBorder}
+          color={colorBack || cssVar.colorBorder}
           strokeWidth={strokeWidth}
           style={{ zIndex: 2 }}
         />
@@ -85,7 +105,10 @@ const GridBackground = memo<GridBackgroundProps>(
         {showBackground && (
           <div
             className={styles.backgroundContainer}
-            style={size ? { fontSize: size.width / 80 } : {}}
+            style={{
+              ...(size ? { fontSize: size.width / 80 } : {}),
+              ...backgroundCssVariables,
+            }}
           >
             <div className={styles.background} />
           </div>

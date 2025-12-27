@@ -1,29 +1,31 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
 
-export const useStyles = createStyles(({ cx, stylish, css, token }) => {
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     active: css`
-      color: ${token.colorText};
+      color: ${cssVar.colorText};
     `,
     container: css`
       cursor: pointer;
-      color: ${token.colorTextDescription};
+      color: ${cssVar.colorTextDescription};
     `,
 
     img: cx(
-      stylish.variantFilled,
+      lobeStaticStylish.variantFilled,
       css`
-        border-radius: ${token.borderRadius}px;
+        border-radius: ${cssVar.borderRadius};
 
         &:hover {
-          box-shadow: 0 0 0 2px ${token.colorText};
+          box-shadow: 0 0 0 2px ${cssVar.colorText};
         }
       `,
     ),
     imgActive: cx(
-      stylish.active,
+      lobeStaticStylish.active,
       css`
-        box-shadow: 0 0 0 2px ${token.colorTextTertiary};
+        box-shadow: 0 0 0 2px ${cssVar.colorTextTertiary};
       `,
     ),
   };

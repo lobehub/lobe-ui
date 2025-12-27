@@ -1,10 +1,11 @@
 import type { ImageProps as AntdImageProps } from 'antd';
+import { cx } from 'antd-style';
 import { X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 import Icon from '@/Icon';
 
-import { useStyles } from '../style';
+import { styles } from '../style';
 import type { ImagePreviewOptions } from '../type';
 import Preview from './Preview';
 import Toolbar from './Toolbar';
@@ -13,7 +14,6 @@ export const usePreview = (
   props: ImagePreviewOptions | boolean | undefined,
 ): AntdImageProps['preview'] => {
   const [visible, setVisible] = useState(false);
-  const { cx, styles } = useStyles();
 
   return useMemo(() => {
     if (props === false) return props;

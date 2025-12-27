@@ -1,43 +1,66 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ prefixCls, token, css, stylish }) => {
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     borderless: css`
-      &.${prefixCls}-select {
-        > .${prefixCls}-select-selector {
-          ${stylish.variantBorderless}
+      &[class*='ant-select'] {
+        > [class*='ant-select-selector'] {
+          ${lobeStaticStylish.variantBorderless}
         }
       }
     `,
     filled: css`
-      &.${prefixCls}-select {
-        > .${prefixCls}-select-selector {
-          ${stylish.variantFilled}
+      &[class*='ant-select'] {
+        > [class*='ant-select-selector'] {
+          ${lobeStaticStylish.variantFilled}
         }
       }
     `,
     outlined: css`
-      &.${prefixCls}-select {
-        > .${prefixCls}-select-selector {
-          ${stylish.variantOutlined}
+      &[class*='ant-select'] {
+        > [class*='ant-select-selector'] {
+          ${lobeStaticStylish.variantOutlined}
         }
       }
     `,
     root: css`
-      &.${prefixCls}-select {
-        &.${prefixCls}-select-focused {
-          > .${prefixCls}-select-selector {
-            background: ${token.colorFillTertiary} !important;
+      &[class*='ant-select'] {
+        &[class*='ant-select-focused'] {
+          > [class*='ant-select-selector'] {
+            background: ${cssVar.colorFillTertiary} !important;
           }
         }
       }
     `,
     shadow: css`
-      &.${prefixCls}-select {
-        > .${prefixCls}-select-selector {
-          ${stylish.shadow}
+      &[class*='ant-select'] {
+        > [class*='ant-select-selector'] {
+          ${lobeStaticStylish.shadow}
         }
       }
     `,
   };
+});
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    shadow: false,
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: styles.filled,
+      outlined: styles.outlined,
+      borderless: styles.borderless,
+      underlined: null,
+    },
+    shadow: {
+      false: null,
+      true: styles.shadow,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

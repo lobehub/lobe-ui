@@ -1,12 +1,14 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
 
-export const useStyles = createStyles(({ cx, stylish, css, token }) =>
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) =>
   cx(
-    stylish.resetLinkColor,
+    lobeStaticStylish.resetLinkColor,
     css`
       overflow: hidden;
       font-weight: bold;
-      color: ${token.colorTextSecondary};
+      color: ${cssVar.colorTextSecondary};
       transition: all 0.2s ease-in-out;
 
       &::before {
@@ -21,7 +23,7 @@ export const useStyles = createStyles(({ cx, stylish, css, token }) =>
         height: 1px;
 
         opacity: 0;
-        background-image: linear-gradient(to right, transparent, ${token.gold}, transparent);
+        background-image: linear-gradient(to right, transparent, ${cssVar.gold}, transparent);
 
         transition: all 0.2s ease-in-out;
       }

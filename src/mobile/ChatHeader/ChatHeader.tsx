@@ -1,5 +1,6 @@
 'use client';
 
+import { cx } from 'antd-style';
 import { ChevronLeft } from 'lucide-react';
 import { memo } from 'react';
 
@@ -7,7 +8,7 @@ import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 import MobileSafeArea from '@/mobile/SafeArea';
 
-import { useStyles } from './style';
+import { styles } from './style';
 import { ChatHeaderProps } from './type';
 
 const ChatHeader = memo<ChatHeaderProps>(
@@ -27,8 +28,6 @@ const ChatHeader = memo<ChatHeaderProps>(
     children,
     ...rest
   }) => {
-    const { styles, cx } = useStyles();
-
     return (
       <Flexbox
         as={'header'}

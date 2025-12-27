@@ -1,19 +1,23 @@
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
+import { cva } from 'class-variance-authority';
 
-export const useStyles = createStyles(({ stylish, css, token, prefixCls }) => {
+import { lobeStaticStylish } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
-    borderless: stylish.variantBorderlessWithoutHover,
-    filled: stylish.variantFilledWithoutHover,
+    borderless: lobeStaticStylish.variantBorderlessWithoutHover,
+    filled: lobeStaticStylish.variantFilledWithoutHover,
     loading: css`
       position: absolute;
       color: #fff;
-      background: ${token.colorBgMask};
+      background: ${cssVar.colorBgMask};
     `,
-    outlined: stylish.variantOutlinedWithoutHover,
+    outlined: lobeStaticStylish.variantOutlinedWithoutHover,
     root: css`
       flex: none;
       background: transparent;
-      &.${prefixCls}-avatar {
+
+      &[class*='ant-avatar'] {
         user-select: none;
 
         overflow: hidden;
@@ -23,7 +27,7 @@ export const useStyles = createStyles(({ stylish, css, token, prefixCls }) => {
 
         border: none;
 
-        .${prefixCls}-avatar-string {
+        [class*='ant-avatar-string'] {
           transform: none !important;
 
           overflow: hidden;
@@ -42,6 +46,26 @@ export const useStyles = createStyles(({ stylish, css, token, prefixCls }) => {
         }
       }
     `,
-    shadow: stylish.shadow,
+    shadow: lobeStaticStylish.shadow,
   };
+});
+
+export const variants = cva(styles.root, {
+  defaultVariants: {
+    shadow: false,
+    variant: 'borderless',
+  },
+  /* eslint-disable sort-keys-fix/sort-keys-fix */
+  variants: {
+    variant: {
+      filled: styles.filled,
+      outlined: styles.outlined,
+      borderless: styles.borderless,
+    },
+    shadow: {
+      false: null,
+      true: styles.shadow,
+    },
+  },
+  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });
