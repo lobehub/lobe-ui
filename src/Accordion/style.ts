@@ -56,5 +56,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       display: flex;
       flex-direction: column;
     `,
+    titleWrapper: css`
+      user-select: none;
+    `,
   };
 });
