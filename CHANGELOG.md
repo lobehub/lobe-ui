@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.3.10](https://github.com/lobehub/lobe-ui/compare/v4.3.9...v4.3.10)
+
+<sup>Released on **2025-12-27**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix color cssvar.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix color cssvar ([6c77688](https://github.com/lobehub/lobe-ui/commit/6c77688))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.3.9](https://github.com/lobehub/lobe-ui/compare/v4.3.8...v4.3.9)
 
 <sup>Released on **2025-12-27**</sup>
