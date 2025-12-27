@@ -18,11 +18,6 @@ interface StreamRendererProps {
   theme?: BuiltinTheme;
 }
 
-const applyColorReplacement = (color?: string, replacements?: Record<string, string>) => {
-  if (!color || !replacements) return color;
-  return replacements[color.toLowerCase()] || color;
-};
-
 const normalizeStyleKeys = (style: Record<string, string | number>): CSSProperties => {
   const normalized: CSSProperties = {};
   Object.entries(style).forEach(([key, value]) => {
@@ -32,33 +27,16 @@ const normalizeStyleKeys = (style: Record<string, string | number>): CSSProperti
   return normalized;
 };
 
-const getTokenInlineStyle = (
-  token: ThemedToken,
-  replacements?: Record<string, string>,
-): CSSProperties => {
+const getTokenInlineStyle = (token: ThemedToken): CSSProperties => {
   const rawStyle = token.htmlStyle || getTokenStyleObject(token);
   const baseStyle = normalizeStyleKeys(rawStyle);
-  if (!replacements) return { ...baseStyle, whiteSpace: 'pre' };
-
-  const style: CSSProperties = {
-    ...baseStyle,
-    whiteSpace: 'pre',
-  };
-
-  if (style.color && typeof style.color === 'string') {
-    style.color = applyColorReplacement(style.color, replacements);
-  }
-  if (style.backgroundColor && typeof style.backgroundColor === 'string') {
-    style.backgroundColor = applyColorReplacement(style.backgroundColor, replacements);
-  }
-
-  return style;
+  return { ...baseStyle, whiteSpace: 'pre' };
 };
 
 const TokenSpan = memo(
-  ({ token, replacements }: { replacements?: Record<string, string>; token: ThemedToken }) => {
+  ({ token }: { token: ThemedToken }) => {
     return (
-      <span key={token.content} style={getTokenInlineStyle(token, replacements)}>
+      <span key={token.content} style={getTokenInlineStyle(token)}>
         {token.content}
       </span>
     );
@@ -67,7 +45,7 @@ const TokenSpan = memo(
 );
 
 const TokenLine = memo(
-  ({ line, replacements }: { line: ThemedToken[]; replacements?: Record<string, string> }) => {
+  ({ line }: { line: ThemedToken[] }) => {
     if (!line.length) {
       return (
         <span className="line">
@@ -79,7 +57,7 @@ const TokenLine = memo(
     return (
       <span className="line">
         {line.map((token, tokenIndex) => (
-          <TokenSpan key={`token-${tokenIndex}`} replacements={replacements} token={token} />
+          <TokenSpan key={`token-${tokenIndex}`} token={token} />
         ))}
       </span>
     );
@@ -101,7 +79,6 @@ const StreamRenderer = memo<StreamRendererProps>(
 
     const lines = streaming?.lines;
     const preStyle = streaming?.preStyle;
-    const replacements = streaming?.colorReplacements;
 
     if (!lines || lines.length === 0) {
       return (
@@ -118,7 +95,7 @@ const StreamRenderer = memo<StreamRendererProps>(
         <pre className={cx('shiki', theme)} style={preStyle} tabIndex={0}>
           <code style={{ display: 'flex', flexDirection: 'column', whiteSpace: 'pre' }}>
             {lines.map((line, index) => (
-              <TokenLine key={`line-${index}`} line={line} replacements={replacements} />
+              <TokenLine key={`line-${index}`} line={line} />
             ))}
           </code>
         </pre>

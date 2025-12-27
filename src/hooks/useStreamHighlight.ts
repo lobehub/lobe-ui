@@ -1,16 +1,16 @@
 'use client';
 
-import { useTheme, useThemeMode } from 'antd-style';
 import { CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { BuiltinTheme, ThemedToken } from 'shiki';
 import { ShikiStreamTokenizer } from 'shiki-stream';
 
 import { getCodeLanguageByInput } from '@/Highlighter/const';
+import lobeTheme from '@/Highlighter/theme/lobe-theme';
 
-import { ColorReplacements, StreamingHighlightResult, shikiModulePromise } from './useHighlight';
+import { StreamingHighlightResult, shikiModulePromise } from './useHighlight';
 
 type StreamingOptions = {
-  colorReplacements?: Record<string, string>;
+  customThemes?: Record<string, any>;
   enabled?: boolean;
   language: string;
   theme: string;
@@ -72,23 +72,18 @@ const useStreamingHighlighter = (
   text: string,
   options: StreamingOptions,
 ): StreamingHighlightResult | undefined => {
-  const { colorReplacements, enabled, language, theme } = options;
+  const { customThemes, enabled, language, theme } = options;
   const [result, setResult] = useState<StreamingHighlightResult>();
   const tokenizerRef = useRef<ShikiStreamTokenizer | null>(null);
   const previousTextRef = useRef('');
   const safeText = text ?? '';
   const latestTextRef = useRef(safeText);
   const preStyleRef = useRef<CSSProperties | undefined>(undefined);
-  const colorReplacementsRef = useRef(colorReplacements);
   const linesRef = useRef<ThemedToken[][]>([[]]);
 
   useEffect(() => {
     latestTextRef.current = safeText;
   }, [safeText]);
-
-  useEffect(() => {
-    colorReplacementsRef.current = colorReplacements;
-  }, [colorReplacements]);
 
   // Use ref to store callback to avoid recreating it
   const setStreamingResultRef = useRef((rawLines: ThemedToken[][]) => {
@@ -100,7 +95,6 @@ const useStreamingHighlighter = (
     if (newLinesLength !== prevLinesLength || newLinesLength === 0) {
       linesRef.current = rawLines;
       setResult({
-        colorReplacements: colorReplacementsRef.current,
         lines: rawLines,
         preStyle: preStyleRef.current,
       });
@@ -149,7 +143,6 @@ const useStreamingHighlighter = (
     if (hasChanges) {
       linesRef.current = mergedLines;
       setResult({
-        colorReplacements: colorReplacementsRef.current,
         lines: mergedLines,
         preStyle: preStyleRef.current,
       });
@@ -245,11 +238,20 @@ const useStreamingHighlighter = (
       if (!mod || cancelled) return;
 
       try {
+        // Load custom theme if using slack-dark or slack-ochin
+        let themesToLoad: any[] = [theme];
+        if (customThemes && theme === 'lobe-theme') {
+          const customTheme = customThemes[theme];
+          if (customTheme) {
+            themesToLoad = [customTheme as any];
+          }
+        }
+
         // Only load the specific language and theme needed
         // getSingletonHighlighter will cache the instance internally
         const highlighter = await mod.getSingletonHighlighter({
           langs: language ? [language] : ['plaintext'],
-          themes: [theme],
+          themes: themesToLoad,
         });
 
         if (!highlighter || cancelled) return;
@@ -292,7 +294,7 @@ const useStreamingHighlighter = (
       // Cleanup only if this effect was cancelled before completion
       // The next effect will handle cleanup if key changed
     };
-  }, [enabled, language, theme, updateTokens]);
+  }, [enabled, language, theme, updateTokens, customThemes]);
 
   // Separate effect for text updates to avoid unnecessary tokenizer recreation
   useEffect(() => {
@@ -306,7 +308,6 @@ const useStreamingHighlighter = (
   return result;
 };
 
-// Main highlight component
 export const useStreamHighlight = (
   text: string,
   {
@@ -315,9 +316,6 @@ export const useStreamHighlight = (
     streaming,
   }: { enableTransformer?: boolean; language: string; streaming?: boolean; theme?: BuiltinTheme },
 ) => {
-  const { isDarkMode } = useThemeMode();
-  const theme = useTheme();
-
   // Safely handle language and text with boundary checks
   const safeText = text ?? '';
   const lang = (language ?? 'plaintext').toLowerCase();
@@ -325,52 +323,12 @@ export const useStreamHighlight = (
   // Match supported languages
   const matchedLanguage = useMemo(() => getCodeLanguageByInput(lang), [lang]);
 
-  // Optimize color replacement configuration - only depend on specific theme properties
-  const colorReplacements = useMemo(
-    (): ColorReplacements => ({
-      'slack-dark': {
-        '#4ec9b0': theme.yellow,
-        '#569cd6': theme.colorError,
-        '#6a9955': theme.gray,
-        '#9cdcfe': theme.colorText,
-        '#b5cea8': theme.purple10,
-        '#c586c0': theme.colorInfo,
-        '#ce9178': theme.colorSuccess,
-        '#dcdcaa': theme.colorWarning,
-        '#e6e6e6': theme.colorText,
-      },
-      'slack-ochin': {
-        '#002339': theme.colorText,
-        '#0444ac': theme.geekblue,
-        '#0991b6': theme.colorError,
-        '#174781': theme.purple10,
-        '#2f86d2': theme.colorText,
-        '#357b42': theme.gray,
-        '#7b30d0': theme.colorInfo,
-        '#7eb233': theme.colorWarningTextActive,
-        '#a44185': theme.colorSuccess,
-        '#dc3eb7': theme.yellow11,
-      },
-    }),
-    [
-      theme.yellow,
-      theme.colorError,
-      theme.gray,
-      theme.colorText,
-      theme.purple10,
-      theme.colorInfo,
-      theme.colorSuccess,
-      theme.colorWarning,
-      theme.geekblue,
-      theme.colorWarningTextActive,
-      theme.yellow11,
-    ],
-  );
-
-  const effectiveTheme = builtinTheme || (isDarkMode ? 'slack-dark' : 'slack-ochin');
+  const effectiveTheme = builtinTheme || 'lobe-theme';
 
   return useStreamingHighlighter(safeText, {
-    colorReplacements: builtinTheme ? undefined : colorReplacements[effectiveTheme],
+    customThemes: {
+      'lobe-theme': lobeTheme,
+    },
     enabled: streaming,
     language: matchedLanguage,
     theme: effectiveTheme,

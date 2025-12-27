@@ -7,25 +7,17 @@ import {
   transformerNotationHighlight,
   transformerNotationWordHighlight,
 } from '@shikijs/transformers';
-import { useTheme, useThemeMode } from 'antd-style';
 import { CSSProperties, useEffect, useMemo, useState } from 'react';
 import type { BuiltinTheme, CodeToHastOptions, ThemedToken } from 'shiki';
 import { Md5 } from 'ts-md5';
 
 import { getCodeLanguageByInput } from '@/Highlighter/const';
+import lobeTheme from '@/Highlighter/theme/lobe-theme';
 
 // Application-level cache to avoid repeated calculations
 export const MD5_LENGTH_THRESHOLD = 10_000; // Use async MD5 for text exceeding this length
 
-// Color replacement mapping type
-export type ColorReplacements = {
-  [themeName: string]: {
-    [color: string]: string;
-  };
-};
-
 export type StreamingHighlightResult = {
-  colorReplacements?: Record<string, string>;
   lines: ThemedToken[][];
   preStyle?: CSSProperties;
 };
@@ -84,6 +76,10 @@ export const escapeHtml = (str: string): string => {
 };
 
 // Main highlight component - optimized version without SWR
+const customThemes = {
+  'lobe-theme': lobeTheme,
+};
+
 export const useHighlight = (
   text: string,
   {
@@ -93,9 +89,6 @@ export const useHighlight = (
     streaming,
   }: { enableTransformer?: boolean; language: string; streaming?: boolean; theme?: BuiltinTheme },
 ): string => {
-  const { isDarkMode } = useThemeMode();
-  const theme = useTheme();
-
   // Safely handle language and text with boundary checks
   const safeText = text ?? '';
   const lang = (language ?? 'plaintext').toLowerCase();
@@ -115,57 +108,13 @@ export const useHighlight = (
     ];
   }, [enableTransformer]);
 
-  // Optimize color replacement configuration - only depend on specific theme properties
-  const colorReplacements = useMemo(
-    (): ColorReplacements => ({
-      'slack-dark': {
-        '#4ec9b0': theme.yellow,
-        '#569cd6': theme.colorError,
-        '#6a9955': theme.gray,
-        '#9cdcfe': theme.colorText,
-        '#b5cea8': theme.purple10,
-        '#c586c0': theme.colorInfo,
-        '#ce9178': theme.colorSuccess,
-        '#dcdcaa': theme.colorWarning,
-        '#e6e6e6': theme.colorText,
-      },
-      'slack-ochin': {
-        '#002339': theme.colorText,
-        '#0444ac': theme.geekblue,
-        '#0991b6': theme.colorError,
-        '#174781': theme.purple10,
-        '#2f86d2': theme.colorText,
-        '#357b42': theme.gray,
-        '#7b30d0': theme.colorInfo,
-        '#7eb233': theme.colorWarningTextActive,
-        '#a44185': theme.colorSuccess,
-        '#dc3eb7': theme.yellow11,
-      },
-    }),
-    [
-      theme.yellow,
-      theme.colorError,
-      theme.gray,
-      theme.colorText,
-      theme.purple10,
-      theme.colorInfo,
-      theme.colorSuccess,
-      theme.colorWarning,
-      theme.geekblue,
-      theme.colorWarningTextActive,
-      theme.yellow11,
-    ],
-  );
-
   // Build cache key
   const cacheKey = useMemo((): string | null => {
     if (streaming) return null;
     // Use hash for long text
     const hash = safeText.length < MD5_LENGTH_THRESHOLD ? safeText : Md5.hashStr(safeText);
-    return [matchedLanguage, builtinTheme || (isDarkMode ? 'd' : 'l'), hash]
-      .filter(Boolean)
-      .join('-');
-  }, [safeText, matchedLanguage, isDarkMode, builtinTheme, streaming]);
+    return [matchedLanguage, builtinTheme, hash].filter(Boolean).join('-');
+  }, [safeText, matchedLanguage, builtinTheme, streaming]);
 
   const [data, setData] = useState<string | undefined>();
 
@@ -193,14 +142,38 @@ export const useHighlight = (
     const highlightPromise = (async (): Promise<string> => {
       try {
         // Try full rendering with transformers
+        const shikiModule = await shikiModulePromise;
+        if (!shikiModule) return safeText;
+
+        const effectiveTheme = builtinTheme || 'lobe-theme';
+
+        // Load custom theme if using slack-dark or slack-ochin
+        if (!builtinTheme && effectiveTheme === 'lobe-theme') {
+          const customTheme = customThemes[effectiveTheme];
+          if (customTheme) {
+            // Use getSingletonHighlighter to load custom theme
+            const highlighter = await shikiModule.getSingletonHighlighter({
+              langs: [matchedLanguage],
+              themes: [customTheme as any],
+            });
+
+            const html = await highlighter.codeToHtml(safeText, {
+              lang: matchedLanguage,
+              theme: effectiveTheme,
+              transformers,
+            });
+
+            return html;
+          }
+        }
+
+        // Fallback to codeToHtml for builtin themes
         const codeToHtml = await loadCodeToHtml();
         if (!codeToHtml) return safeText;
 
-        // codeToHtml shorthand automatically loads only needed theme and language
         const html = await codeToHtml(safeText, {
-          colorReplacements: builtinTheme ? undefined : colorReplacements,
           lang: matchedLanguage,
-          theme: builtinTheme || (isDarkMode ? 'slack-dark' : 'slack-ochin'),
+          theme: effectiveTheme,
           transformers,
         });
 
@@ -209,12 +182,12 @@ export const useHighlight = (
         console.error('Advanced rendering failed:', error_);
 
         try {
-          // Try simple rendering (without transformers and colorReplacements)
+          // Try simple rendering (without transformers)
           const codeToHtml = await loadCodeToHtml();
           if (!codeToHtml) return safeText;
           const html = await codeToHtml(safeText, {
             lang: matchedLanguage,
-            theme: isDarkMode ? 'dark-plus' : 'light-plus',
+            theme: 'lobe-theme',
           });
           return html;
         } catch {
@@ -243,15 +216,7 @@ export const useHighlight = (
           highlightCache.delete(cacheKey);
         }
       });
-  }, [
-    cacheKey,
-    safeText,
-    matchedLanguage,
-    builtinTheme,
-    isDarkMode,
-    colorReplacements,
-    transformers,
-  ]);
+  }, [cacheKey, safeText, matchedLanguage, builtinTheme, transformers, customThemes]);
 
   return data || '';
 };

@@ -141,7 +141,7 @@
     "@shikijs/transformers": "^3.20.0",
     "@splinetool/runtime": "0.9.526",
     "ahooks": "^3.9.6",
-    "antd-style": "^4.0.1-alpha.11",
+    "antd-style": "^4.1.0",
     "chroma-js": "^3.2.0",
     "class-variance-authority": "^0.7.1",
     "dayjs": "^1.11.19",
