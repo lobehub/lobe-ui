@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { DivProps, SvgProps } from '@/types';
 
-import './style.css';
+import { brandLoadingStyle } from './style';
 
 export interface BrandLoadingProps {
   size?: number;
@@ -12,7 +12,7 @@ export interface BrandLoadingProps {
 const BrandLoading: FC<BrandLoadingProps & SvgProps & DivProps> = ({ size, text, ...rest }) => {
   const RenderText = text;
 
-  return <RenderText className={'lobe-brand-loading'} size={size} {...rest} />;
+  return <RenderText className={brandLoadingStyle} size={size} {...rest} />;
 };
 
 BrandLoading.displayName = 'BrandLoading';
