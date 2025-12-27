@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.3.12](https://github.com/lobehub/lobe-ui/compare/v4.3.11...v4.3.12)
+
+<sup>Released on **2025-12-27**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix image style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix image style ([5c23d19](https://github.com/lobehub/lobe-ui/commit/5c23d19))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.3.11](https://github.com/lobehub/lobe-ui/compare/v4.3.10...v4.3.11)
 
 <sup>Released on **2025-12-27**</sup>
