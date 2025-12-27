@@ -2,6 +2,39 @@
 
 # Changelog
 
+### [Version 4.3.3](https://github.com/lobehub/lobe-ui/compare/v4.3.2...v4.3.3)
+
+<sup>Released on **2025-12-27**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Static style.
+
+#### 🐛 Bug Fixes
+
+- **accordion**: Prevent text selection on title double-click.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Static style, closes [#437](https://github.com/lobehub/lobe-ui/issues/437) ([fd22aa0](https://github.com/lobehub/lobe-ui/commit/fd22aa0))
+
+#### What's fixed
+
+- **accordion**: Prevent text selection on title double-click, closes [#436](https://github.com/lobehub/lobe-ui/issues/436) ([fed01c5](https://github.com/lobehub/lobe-ui/commit/fed01c5))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.3.2](https://github.com/lobehub/lobe-ui/compare/v4.3.1...v4.3.2)
 
 <sup>Released on **2025-12-26**</sup>
