@@ -490,7 +490,7 @@ export default {
         'meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json',
       ],
       settings: {
-        foreground: cssVar.colorWarningBg,
+        foreground: cssVar.colorWarning,
       },
     },
     {
