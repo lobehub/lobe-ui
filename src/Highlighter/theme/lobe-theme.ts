@@ -31,13 +31,13 @@ export default {
     {
       scope: 'constant.language.boolean',
       settings: {
-        foreground: cssVar.purple9,
+        foreground: cssVar.purple10,
       },
     },
     {
       scope: 'constant.numeric',
       settings: {
-        foreground: cssVar.volcano9,
+        foreground: cssVar.volcano10,
       },
     },
     {
@@ -50,7 +50,7 @@ export default {
     {
       scope: 'keyword.other',
       settings: {
-        foreground: cssVar.volcano9,
+        foreground: cssVar.volcano10,
       },
     },
     {
@@ -62,20 +62,20 @@ export default {
     {
       scope: 'entity.name.function, support.function',
       settings: {
-        foreground: cssVar.geekblue9,
+        foreground: cssVar.geekblue10,
       },
     },
     {
       scope: 'storage.type, storage.modifier, storage.control',
       settings: {
-        foreground: cssVar.purple9,
+        foreground: cssVar.purple10,
       },
     },
     {
       scope: 'support.module, support.node',
       settings: {
         fontStyle: 'italic',
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
@@ -119,19 +119,19 @@ export default {
     {
       scope: 'variable.object.property, meta.field.declaration entity.name.function',
       settings: {
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
       scope: 'meta.definition.method entity.name.function',
       settings: {
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
       scope: 'meta.function entity.name.function',
       settings: {
-        foreground: cssVar.geekblue9,
+        foreground: cssVar.geekblue10,
       },
     },
     {
@@ -150,14 +150,14 @@ export default {
     {
       scope: 'entity.name.tag.yaml',
       settings: {
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
       scope:
         'meta.object-literal.key, meta.object-literal.key string, support.type.property-name.json',
       settings: {
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
@@ -175,7 +175,7 @@ export default {
     {
       scope: 'entity.other.attribute-name.id',
       settings: {
-        foreground: cssVar.volcano9,
+        foreground: cssVar.volcano10,
       },
     },
     {
@@ -199,13 +199,13 @@ export default {
     {
       scope: 'entity.name.tag',
       settings: {
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
       scope: 'entity.other.attribute-name',
       settings: {
-        foreground: cssVar.purple9,
+        foreground: cssVar.purple10,
       },
     },
     {
@@ -223,7 +223,7 @@ export default {
     {
       scope: 'text.html.markdown meta.link.inline, meta.link.reference',
       settings: {
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
@@ -236,21 +236,21 @@ export default {
       scope: 'markup.italic',
       settings: {
         fontStyle: 'italic',
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
       scope: 'markup.bold',
       settings: {
         fontStyle: 'bold',
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
       scope: 'markup.bold markup.italic, markup.italic markup.bold',
       settings: {
         fontStyle: 'italic bold',
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
@@ -268,7 +268,7 @@ export default {
     {
       scope: 'keyword.other.definition.ini',
       settings: {
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
@@ -286,13 +286,13 @@ export default {
     {
       scope: 'source.cs meta.method.identifier entity.name.function',
       settings: {
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
       scope: 'source.cs meta.method-call meta.method, source.cs entity.name.function',
       settings: {
-        foreground: cssVar.geekblue9,
+        foreground: cssVar.geekblue10,
       },
     },
     {
@@ -340,25 +340,25 @@ export default {
     {
       scope: 'source.python meta.member.access.python',
       settings: {
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
       scope: 'source.python meta.function-call.python, meta.function-call.arguments',
       settings: {
-        foreground: cssVar.geekblue9,
+        foreground: cssVar.geekblue10,
       },
     },
     {
       scope: 'meta.block',
       settings: {
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
       scope: 'entity.name.function.call',
       settings: {
-        foreground: cssVar.geekblue9,
+        foreground: cssVar.geekblue10,
       },
     },
     {
@@ -377,7 +377,7 @@ export default {
     {
       scope: 'entity.name.function',
       settings: {
-        foreground: cssVar.geekblue9,
+        foreground: cssVar.geekblue10,
       },
     },
     {
@@ -389,13 +389,13 @@ export default {
     {
       scope: ['constant.other.placeholder'],
       settings: {
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
       scope: ['markup.deleted'],
       settings: {
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
@@ -427,13 +427,13 @@ export default {
       scope: ['variable.parameter.function.language.special.self.python'],
       settings: {
         fontStyle: 'italic',
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
       scope: ['constant.character.format.placeholder.other.python'],
       settings: {
-        foreground: cssVar.volcano9,
+        foreground: cssVar.volcano10,
       },
     },
     {
@@ -452,13 +452,13 @@ export default {
     {
       scope: ['punctuation.definition.quote'],
       settings: {
-        foreground: cssVar.purple9,
+        foreground: cssVar.purple10,
       },
     },
     {
       scope: ['meta.structure.dictionary.json support.type.property-name.json'],
       settings: {
-        foreground: cssVar.purple9,
+        foreground: cssVar.purple10,
       },
     },
     {
@@ -474,7 +474,7 @@ export default {
         'meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json',
       ],
       settings: {
-        foreground: cssVar.volcano9,
+        foreground: cssVar.volcano10,
       },
     },
     {
@@ -482,7 +482,7 @@ export default {
         'meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json',
       ],
       settings: {
-        foreground: cssVar.colorError,
+        foreground: cssVar.volcano10,
       },
     },
     {
@@ -498,7 +498,7 @@ export default {
         'meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json',
       ],
       settings: {
-        foreground: cssVar.geekblue9,
+        foreground: cssVar.geekblue10,
       },
     },
     {
@@ -506,7 +506,7 @@ export default {
         'meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json',
       ],
       settings: {
-        foreground: cssVar.purple9,
+        foreground: cssVar.purple10,
       },
     },
     {
@@ -514,7 +514,7 @@ export default {
         'meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json',
       ],
       settings: {
-        foreground: cssVar.purple9,
+        foreground: cssVar.purple10,
       },
     },
     {
