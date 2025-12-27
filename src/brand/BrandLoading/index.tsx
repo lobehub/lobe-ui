@@ -1,3 +1,5 @@
+'use client';
+
 import { FC } from 'react';
 
 import { DivProps, SvgProps } from '@/types';
