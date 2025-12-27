@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.3.6](https://github.com/lobehub/lobe-ui/compare/v4.3.5...v4.3.6)
+
+<sup>Released on **2025-12-27**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix BrandLoading.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix BrandLoading ([31afdc4](https://github.com/lobehub/lobe-ui/commit/31afdc4))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.3.5](https://github.com/lobehub/lobe-ui/compare/v4.3.4...v4.3.5)
 
 <sup>Released on **2025-12-27**</sup>
