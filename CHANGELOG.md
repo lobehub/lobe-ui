@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.3.9](https://github.com/lobehub/lobe-ui/compare/v4.3.8...v4.3.9)
+
+<sup>Released on **2025-12-27**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Move brand loading styles to global styles and remove redundant CSS file.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Move brand loading styles to global styles and remove redundant CSS file ([cb382a2](https://github.com/lobehub/lobe-ui/commit/cb382a2))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.3.8](https://github.com/lobehub/lobe-ui/compare/v4.3.7...v4.3.8)
 
 <sup>Released on **2025-12-27**</sup>
