@@ -205,4 +205,5 @@ export type * from './types';
 export { copyToClipboard } from './utils/copyToClipboard';
 export { type CDN, genCdnUrl } from './utils/genCdnUrl';
 export { default as Video, type VideoProps } from './Video';
+export { default as ShikiLobeTheme } from '@/Highlighter/theme/lobe-theme';
 export { ErrorBoundary, type ErrorBoundaryProps } from 'react-error-boundary';
