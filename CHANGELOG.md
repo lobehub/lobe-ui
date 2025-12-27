@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.3.4](https://github.com/lobehub/lobe-ui/compare/v4.3.3...v4.3.4)
+
+<sup>Released on **2025-12-27**</sup>
+
+#### 💄 Styles
+
+- **misc**: Export shiki lobe theme.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Export shiki lobe theme ([ebdd135](https://github.com/lobehub/lobe-ui/commit/ebdd135))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.3.3](https://github.com/lobehub/lobe-ui/compare/v4.3.2...v4.3.3)
 
 <sup>Released on **2025-12-27**</sup>
