@@ -64,7 +64,7 @@ const generateCustomColorPalette = ({
   };
 };
 
-export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMode, token }) => {
+export const generateCustomColorToken = (isDarkMode: boolean) => {
   let colorCustomToken: any = {};
 
   for (const [type, scale] of Object.entries(colorScales)) {
@@ -78,8 +78,12 @@ export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMod
     };
   }
 
+  return colorCustomToken;
+};
+
+export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMode, token }) => {
   return {
-    ...colorCustomToken,
+    ...generateCustomColorToken(isDarkMode),
     colorBgContainerSecondary: mix(0.5, token.colorBgLayout, token.colorBgContainer),
   };
 };

@@ -62,7 +62,7 @@ export default {
     {
       scope: 'entity.name.function, support.function',
       settings: {
-        foreground: cssVar.geekblue8,
+        foreground: cssVar.geekblue9,
       },
     },
     {
@@ -131,7 +131,7 @@ export default {
     {
       scope: 'meta.function entity.name.function',
       settings: {
-        foreground: cssVar.geekblue8,
+        foreground: cssVar.geekblue9,
       },
     },
     {
@@ -292,7 +292,7 @@ export default {
     {
       scope: 'source.cs meta.method-call meta.method, source.cs entity.name.function',
       settings: {
-        foreground: cssVar.geekblue8,
+        foreground: cssVar.geekblue9,
       },
     },
     {
@@ -346,7 +346,7 @@ export default {
     {
       scope: 'source.python meta.function-call.python, meta.function-call.arguments',
       settings: {
-        foreground: cssVar.geekblue8,
+        foreground: cssVar.geekblue9,
       },
     },
     {
@@ -358,7 +358,7 @@ export default {
     {
       scope: 'entity.name.function.call',
       settings: {
-        foreground: cssVar.geekblue8,
+        foreground: cssVar.geekblue9,
       },
     },
     {
@@ -377,7 +377,7 @@ export default {
     {
       scope: 'entity.name.function',
       settings: {
-        foreground: cssVar.geekblue8,
+        foreground: cssVar.geekblue9,
       },
     },
     {
@@ -498,7 +498,7 @@ export default {
         'meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json meta.structure.dictionary.value.json meta.structure.dictionary.json support.type.property-name.json',
       ],
       settings: {
-        foreground: cssVar.geekblue8,
+        foreground: cssVar.geekblue9,
       },
     },
     {

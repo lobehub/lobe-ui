@@ -5,6 +5,7 @@ import { neutralColorScales } from '@/color/neutrals';
 import type { ColorScaleItem } from '@/color/types';
 
 import { NeutralColors, PrimaryColors } from '../../customTheme';
+import { generateCustomColorToken } from '../customToken';
 import { generateColorNeutralPalette, generateColorPalette } from '../generateColorPalette';
 import lightBaseToken from '../token/light';
 
@@ -34,5 +35,6 @@ export const lightAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
     ...lightBaseToken,
     ...primaryTokens,
     ...neutralTokens,
+    ...generateCustomColorToken(false),
   };
 };

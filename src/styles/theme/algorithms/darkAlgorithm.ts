@@ -3,10 +3,11 @@ import { MappingAlgorithm } from 'antd/es/theme/interface';
 import { colorScales } from '@/color/colors';
 import { neutralColorScales } from '@/color/neutrals';
 import type { ColorScaleItem } from '@/color/types';
+import { generateCustomColorToken } from '@/styles/theme/customToken';
+import lightBaseToken from '@/styles/theme/token/light';
 
 import { NeutralColors, PrimaryColors } from '../../customTheme';
 import { generateColorNeutralPalette, generateColorPalette } from '../generateColorPalette';
-import darkBaseToken from '../token/dark';
 
 export const darkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
   const primaryColor = (seedToken as any).primaryColor as PrimaryColors;
@@ -34,8 +35,9 @@ export const darkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {
 
   return {
     ...mapToken!,
-    ...darkBaseToken,
+    ...lightBaseToken,
     ...primaryTokens,
     ...neutralTokens,
+    ...generateCustomColorToken(true),
   };
 };
