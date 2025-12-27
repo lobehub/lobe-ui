@@ -2,6 +2,32 @@
 
 # Changelog
 
+### [Version 4.3.11](https://github.com/lobehub/lobe-ui/compare/v4.3.10...v4.3.11)
+
+<sup>Released on **2025-12-27**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix token, Fix token.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix token ([2f865cd](https://github.com/lobehub/lobe-ui/commit/2f865cd))
+- **misc**: Fix token ([789a34e](https://github.com/lobehub/lobe-ui/commit/789a34e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.3.10](https://github.com/lobehub/lobe-ui/compare/v4.3.9...v4.3.10)
 
 <sup>Released on **2025-12-27**</sup>
