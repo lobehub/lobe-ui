@@ -39,7 +39,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       }
 
       span:not(.anticon) {
-        height: unset;
         line-height: inherit;
       }
     }
