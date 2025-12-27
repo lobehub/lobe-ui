@@ -5,7 +5,7 @@ import { useMemo, useState } from 'react';
 
 import Icon from '@/Icon';
 
-import { styles as componentStyles } from '../style';
+import { styles as componentStyles, styles } from '../style';
 import type { PreviewGroupPreviewOptions } from '../type';
 import Preview from './Preview';
 import Toolbar from './Toolbar';
@@ -42,9 +42,6 @@ export const usePreview = (
         if (toolbarRender) return toolbarRender(originalNode, info);
         return originalNode;
       },
-      classNames: {
-        root: cx(componentStyles.preview, rootClassName),
-      },
       closeIcon: <Icon color={'#fff'} icon={X} />,
       imageRender: (originalNode, info) => {
         const node = <Preview visible={visible}>{originalNode}</Preview>;
@@ -60,6 +57,7 @@ export const usePreview = (
         // 向后兼容旧的 onVisibleChange (注意参数差异)
         onVisibleChange?.(open, !open, info.current);
       },
+      rootClassName: cx(styles.preview, rootClassName),
       ...rest,
     };
   }, [props, visible, componentStyles]);

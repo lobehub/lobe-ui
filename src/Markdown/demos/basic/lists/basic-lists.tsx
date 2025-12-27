@@ -65,6 +65,10 @@ export default () => {
         step: 0.1,
         value: 2,
       },
+      variant: {
+        options: ['default', 'chat'],
+        value: 'chat',
+      },
     },
     { store },
   ) as MarkdownProps;

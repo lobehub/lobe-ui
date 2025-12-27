@@ -50,8 +50,59 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         background: color-mix(in srgb, ${cssVar.colorBgLayout} 90%, transparent);
       }
 
+      .${prefixCls}-image-preview-close {
+        color: ${cssVar.colorTextDescription};
+        background: ${cssVar.colorBgContainer};
+        box-shadow: ${cssVar.boxShadowTertiary};
+
+        svg {
+          stroke: ${cssVar.colorTextDescription};
+        }
+
+        &:hover {
+          color: ${cssVar.colorText};
+          background: ${cssVar.colorBgContainer};
+
+          svg {
+            stroke: ${cssVar.colorText};
+          }
+        }
+      }
+
+      .${prefixCls}-image-preview-switch {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 32px;
+        height: 32px;
+        padding: 0;
+
+        color: ${cssVar.colorTextDescription};
+
+        background: ${cssVar.colorBgContainer};
+        box-shadow: ${cssVar.boxShadowTertiary};
+
+        svg {
+          transform: scale(0.75);
+        }
+
+        &:hover {
+          color: ${cssVar.colorText};
+          background: ${cssVar.colorBgContainer};
+        }
+      }
+
+      .${prefixCls}-image-preview-switch-disabled {
+        display: none;
+      }
+
+      .ant-image-preview-progress {
+        color: ${cssVar.colorTextDescription};
+      }
+
       img {
-        width: 100%;
+        min-width: 100%;
       }
     `,
     root: css`
@@ -78,12 +129,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       }
     `,
     toolbar: css`
-      ${lobeStaticStylish.blur};
       ${lobeStaticStylish.variantOutlinedWithoutHover};
       padding: 4px;
       border-color: ${cssVar.colorFillTertiary};
       border-radius: ${cssVar.borderRadiusLG};
-      background: color-mix(in srgb, ${cssVar.colorBgContainer} 50%, transparent);
     `,
 
     wrapper: css`

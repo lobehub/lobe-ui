@@ -8,7 +8,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       ul {
         > li {
           &::marker {
-            color: ${cssVar.cyan9} !important;
+            color: ${cssVar.colorTextSecondary} !important;
           }
 
           > li {
