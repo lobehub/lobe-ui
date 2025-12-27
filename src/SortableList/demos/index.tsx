@@ -24,7 +24,7 @@ export default () => {
   const [items, setItems] = useState(data);
 
   const store = useCreateStore();
-  const { gap, ...control }: any = useControls(
+  const { gap, useCustomOverlay, ...control }: any = useControls(
     {
       gap: {
         max: 20,
@@ -32,6 +32,7 @@ export default () => {
         step: 1,
         value: 4,
       },
+      useCustomOverlay: false,
       variant: {
         options: ['borderless', 'filled', 'outlined'],
         value: 'borderless',
@@ -52,6 +53,24 @@ export default () => {
             {item.name}
           </SortableList.Item>
         )}
+        renderOverlay={
+          useCustomOverlay
+            ? (item) => (
+                <div
+                  style={{
+                    background: 'rgba(0, 100, 255, 0.1)',
+                    border: '2px dashed #0064ff',
+                    borderRadius: 8,
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    padding: '8px 12px',
+                    transform: 'rotate(2deg)',
+                  }}
+                >
+                  📦 {item.name}
+                </div>
+              )
+            : undefined
+        }
       />
     </StoryBook>
   );
