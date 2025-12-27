@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.3.7](https://github.com/lobehub/lobe-ui/compare/v4.3.6...v4.3.7)
+
+<sup>Released on **2025-12-27**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix use client.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix use client ([37a737e](https://github.com/lobehub/lobe-ui/commit/37a737e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.3.6](https://github.com/lobehub/lobe-ui/compare/v4.3.5...v4.3.6)
 
 <sup>Released on **2025-12-27**</sup>
