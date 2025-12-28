@@ -121,7 +121,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({ children, ...sharedProps }) => {
       setActive({ item, triggerEl });
 
       const delayMs =
-        item.openDelay ?? (item.mouseEnterDelay !== undefined ? item.mouseEnterDelay * 1000 : 100);
+        item.openDelay ?? (item.mouseEnterDelay !== undefined ? item.mouseEnterDelay * 1000 : 400);
       if (delayMs <= 0) {
         if (!triggerEl.isConnected) {
           destroyActive();
