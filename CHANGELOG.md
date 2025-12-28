@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.3.13](https://github.com/lobehub/lobe-ui/compare/v4.3.12...v4.3.13)
+
+<sup>Released on **2025-12-28**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix some default props.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix some default props ([8bed430](https://github.com/lobehub/lobe-ui/commit/8bed430))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.3.12](https://github.com/lobehub/lobe-ui/compare/v4.3.11...v4.3.12)
 
 <sup>Released on **2025-12-27**</sup>
