@@ -1,10 +1,10 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import ThemeProvider from '@/ThemeProvider';
+import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
 
 type TooltipPortalProps = {
   children: ReactNode;
@@ -12,18 +12,36 @@ type TooltipPortalProps = {
 };
 
 const PORTAL_ATTR = 'data-lobe-ui-tooltip-portal';
+export const TOOLTIP_CONTAINER_ATTR = 'data-lobe-ui-tooltip-container';
 
 // Reuse one portal container per root (document.body by default).
 const containerMap = new WeakMap<object, HTMLElement>();
 
 const getOrCreateContainer = (root: HTMLElement | ShadowRoot): HTMLElement => {
-  const cached = containerMap.get(root);
+  // try ThemeProvider's App root
+  const resolvedRoot = (() => {
+    if (typeof document === 'undefined') return root;
+    if (typeof ShadowRoot !== 'undefined' && root instanceof ShadowRoot) return root;
+
+    const isBody = root === document.body;
+    if (!isBody) return root;
+    const themeApp = document.querySelector<HTMLElement>(`#${LOBE_THEME_APP_ID}`);
+    if (themeApp) return themeApp;
+    const tooltipContainer = document.querySelector<HTMLElement>(
+      `[${TOOLTIP_CONTAINER_ATTR}="true"]`,
+    );
+    if (tooltipContainer) return tooltipContainer;
+
+    return root;
+  })();
+
+  const cached = containerMap.get(resolvedRoot);
   if (cached && cached.isConnected) return cached;
 
   const el = document.createElement('div');
   el.setAttribute(PORTAL_ATTR, 'true');
-  root.append(el);
-  containerMap.set(root, el);
+  resolvedRoot.append(el);
+  containerMap.set(resolvedRoot, el);
   return el;
 };
 
@@ -34,18 +52,18 @@ const resolveRoot = (root?: HTMLElement | ShadowRoot | null): HTMLElement | Shad
 };
 
 const TooltipPortal = ({ children, root }: TooltipPortalProps) => {
-  const [container, setContainer] = useState<HTMLElement | null>(() => {
-    const resolved = resolveRoot(root);
-    if (!resolved) return null;
-    return getOrCreateContainer(resolved);
-  });
+  const [container, setContainer] = useState<HTMLElement | null>(null);
 
-  if (!container && typeof document !== 'undefined') {
-    setContainer(getOrCreateContainer(document.body));
-  }
+  // Never mutate DOM / create portal container during render.
+  // Create it after mount to avoid SSR/hydration side effects.
+  useEffect(() => {
+    const resolved = resolveRoot(root);
+    if (!resolved) return;
+    setContainer(getOrCreateContainer(resolved));
+  }, [root]);
 
   if (!container) return null;
-  return createPortal(<ThemeProvider>{children}</ThemeProvider>, container);
+  return createPortal(children, container);
 };
 
 export default TooltipPortal;
