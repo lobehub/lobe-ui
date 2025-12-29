@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 4.4.0](https://github.com/lobehub/lobe-ui/compare/v4.3.13...v4.4.0)
+
+<sup>Released on **2025-12-29**</sup>
+
+#### ✨ Features
+
+- **misc**: Update ThemeProvider and Tooltip components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Update ThemeProvider and Tooltip components, closes [#438](https://github.com/lobehub/lobe-ui/issues/438) ([5f4e42c](https://github.com/lobehub/lobe-ui/commit/5f4e42c))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.3.13](https://github.com/lobehub/lobe-ui/compare/v4.3.12...v4.3.13)
 
 <sup>Released on **2025-12-28**</sup>
