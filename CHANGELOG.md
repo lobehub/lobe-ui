@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.4.2](https://github.com/lobehub/lobe-ui/compare/v4.4.1...v4.4.2)
+
+<sup>Released on **2025-12-30**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix AccordionItem default variant.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix AccordionItem default variant ([b6f2603](https://github.com/lobehub/lobe-ui/commit/b6f2603))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.4.1](https://github.com/lobehub/lobe-ui/compare/v4.4.0...v4.4.1)
 
 <sup>Released on **2025-12-30**</sup>
