@@ -84,152 +84,152 @@ const readStringAttr = (value: string | null) => {
   return trimmed ? trimmed : undefined;
 };
 
-export class FlexBasicElement extends HTMLElement {
-  static observedAttributes: AttrName[] = [
-    'visible',
-    'flex',
-    'gap',
-    'direction',
-    'horizontal',
-    'align',
-    'justify',
-    'distribution',
-    'height',
-    'width',
-    'padding',
-    'padding-inline',
-    'padding-block',
-    'prefix-cls',
-    'wrap',
-  ];
-
-  #shadow?: ShadowRoot;
-  #container?: HTMLDivElement;
-
-  connectedCallback() {
-    if (!this.#shadow) {
-      this.#shadow = this.attachShadow({ mode: 'open' });
-
-      const styleEl = document.createElement('style');
-      styleEl.textContent = flexCss;
-
-      const hostStyleEl = document.createElement('style');
-      hostStyleEl.textContent = `:host{display:block}:host([hidden]){display:none}`;
-
-      this.#container = document.createElement('div');
-      this.#container.className = 'lobe-flex';
-      this.#container.setAttribute('part', 'container');
-
-      const slotEl = document.createElement('slot');
-      this.#container.append(slotEl);
-
-      this.#shadow.append(hostStyleEl);
-      this.#shadow.append(styleEl);
-      this.#shadow.append(this.#container);
-    }
-
-    this.#sync();
-  }
-
-  attributeChangedCallback() {
-    this.#sync();
-  }
-
-  #sync() {
-    if (!this.#container) return;
-
-    // visible -> hidden
-    const visible = parseBooleanAttr(this.getAttribute('visible'));
-    const isVisible = visible !== false;
-    this.#container.classList.toggle('lobe-flex--hidden', !isVisible);
-
-    // prefix class
-    const prefixCls = readStringAttr(this.getAttribute('prefix-cls'));
-    // Reset prefix-related class each time to avoid accumulation
-    for (const cls of Array.from(this.#container.classList)) {
-      if (cls.endsWith('-flex') && cls !== 'lobe-flex') this.#container.classList.remove(cls);
-    }
-    if (prefixCls) this.#container.classList.add(`${prefixCls}-flex`);
-
-    const direction = readStringAttr(this.getAttribute('direction')) as any;
-    const horizontal = parseBooleanAttr(this.getAttribute('horizontal'));
-
-    const justify = readStringAttr(this.getAttribute('justify'));
-    const distribution = readStringAttr(this.getAttribute('distribution'));
-    const justifyContent = justify ?? distribution;
-
-    const widthAttr = parseMaybeNumber(this.getAttribute('width'));
-    const finalWidth = (() => {
-      if (
-        isHorizontal(direction, horizontal) &&
-        widthAttr === undefined &&
-        isSpaceDistribution(justifyContent)
-      ) {
-        return '100%';
-      }
-      return getCssValue(widthAttr as any);
-    })();
-
-    const flex = readStringAttr(this.getAttribute('flex'));
-    const wrap = readStringAttr(this.getAttribute('wrap'));
-    const align = readStringAttr(this.getAttribute('align'));
-
-    const height = parseMaybeNumber(this.getAttribute('height'));
-    const padding = parseMaybeNumber(this.getAttribute('padding'));
-    const paddingInline = parseMaybeNumber(this.getAttribute('padding-inline'));
-    const paddingBlock = parseMaybeNumber(this.getAttribute('padding-block'));
-    const gap = parseMaybeNumber(this.getAttribute('gap'));
-
-    const setVar = (name: string, value: string | number | undefined) => {
-      if (value === undefined) {
-        this.#container!.style.removeProperty(name);
-        return;
-      }
-      this.#container!.style.setProperty(name, String(value));
-    };
-
-    if (flex !== undefined) setVar('--lobe-flex', flex);
-    else this.#container.style.removeProperty('--lobe-flex');
-
-    if (direction !== undefined || horizontal !== undefined) {
-      setVar('--lobe-flex-direction', getFlexDirection(direction, horizontal));
-    } else {
-      this.#container.style.removeProperty('--lobe-flex-direction');
-    }
-
-    if (wrap !== undefined) setVar('--lobe-flex-wrap', wrap);
-    else this.#container.style.removeProperty('--lobe-flex-wrap');
-
-    if (justifyContent !== undefined) setVar('--lobe-flex-justify', justifyContent);
-    else this.#container.style.removeProperty('--lobe-flex-justify');
-
-    if (align !== undefined) setVar('--lobe-flex-align', align);
-    else this.#container.style.removeProperty('--lobe-flex-align');
-
-    if (finalWidth !== undefined) setVar('--lobe-flex-width', finalWidth);
-    else this.#container.style.removeProperty('--lobe-flex-width');
-
-    if (height !== undefined) setVar('--lobe-flex-height', getCssValue(height as any)!);
-    else this.#container.style.removeProperty('--lobe-flex-height');
-
-    if (padding !== undefined) setVar('--lobe-flex-padding', getCssValue(padding as any)!);
-    else this.#container.style.removeProperty('--lobe-flex-padding');
-
-    if (paddingInline !== undefined)
-      setVar('--lobe-flex-padding-inline', getCssValue(paddingInline as any)!);
-    else this.#container.style.removeProperty('--lobe-flex-padding-inline');
-
-    if (paddingBlock !== undefined)
-      setVar('--lobe-flex-padding-block', getCssValue(paddingBlock as any)!);
-    else this.#container.style.removeProperty('--lobe-flex-padding-block');
-
-    if (gap !== undefined) setVar('--lobe-flex-gap', getCssValue(gap as any)!);
-    else this.#container.style.removeProperty('--lobe-flex-gap');
-  }
-}
-
-export const defineFlexBasicElement = (tagName = 'lobe-flex') => {
+const defineFlexBasicElement = (tagName = 'lobe-flex') => {
+  if (typeof customElements === 'undefined' || typeof document === 'undefined') return;
   if (customElements.get(tagName)) return;
+  class FlexBasicElement extends HTMLElement {
+    static observedAttributes: AttrName[] = [
+      'visible',
+      'flex',
+      'gap',
+      'direction',
+      'horizontal',
+      'align',
+      'justify',
+      'distribution',
+      'height',
+      'width',
+      'padding',
+      'padding-inline',
+      'padding-block',
+      'prefix-cls',
+      'wrap',
+    ];
+
+    #shadow?: ShadowRoot;
+    #container?: HTMLDivElement;
+
+    connectedCallback() {
+      if (!this.#shadow) {
+        this.#shadow = this.attachShadow({ mode: 'open' });
+
+        const styleEl = document.createElement('style');
+        styleEl.textContent = flexCss;
+
+        const hostStyleEl = document.createElement('style');
+        hostStyleEl.textContent = `:host{display:block}:host([hidden]){display:none}`;
+
+        this.#container = document.createElement('div');
+        this.#container.className = 'lobe-flex';
+        this.#container.setAttribute('part', 'container');
+
+        const slotEl = document.createElement('slot');
+        this.#container.append(slotEl);
+
+        this.#shadow.append(hostStyleEl);
+        this.#shadow.append(styleEl);
+        this.#shadow.append(this.#container);
+      }
+
+      this.#sync();
+    }
+
+    attributeChangedCallback() {
+      this.#sync();
+    }
+
+    #sync() {
+      if (!this.#container) return;
+
+      // visible -> hidden
+      const visible = parseBooleanAttr(this.getAttribute('visible'));
+      const isVisible = visible !== false;
+      this.#container.classList.toggle('lobe-flex--hidden', !isVisible);
+
+      // prefix class
+      const prefixCls = readStringAttr(this.getAttribute('prefix-cls'));
+      // Reset prefix-related class each time to avoid accumulation
+      for (const cls of Array.from(this.#container.classList)) {
+        if (cls.endsWith('-flex') && cls !== 'lobe-flex') this.#container.classList.remove(cls);
+      }
+      if (prefixCls) this.#container.classList.add(`${prefixCls}-flex`);
+
+      const direction = readStringAttr(this.getAttribute('direction')) as any;
+      const horizontal = parseBooleanAttr(this.getAttribute('horizontal'));
+
+      const justify = readStringAttr(this.getAttribute('justify'));
+      const distribution = readStringAttr(this.getAttribute('distribution'));
+      const justifyContent = justify ?? distribution;
+
+      const widthAttr = parseMaybeNumber(this.getAttribute('width'));
+      const finalWidth = (() => {
+        if (
+          isHorizontal(direction, horizontal) &&
+          widthAttr === undefined &&
+          isSpaceDistribution(justifyContent)
+        ) {
+          return '100%';
+        }
+        return getCssValue(widthAttr as any);
+      })();
+
+      const flex = readStringAttr(this.getAttribute('flex'));
+      const wrap = readStringAttr(this.getAttribute('wrap'));
+      const align = readStringAttr(this.getAttribute('align'));
+
+      const height = parseMaybeNumber(this.getAttribute('height'));
+      const padding = parseMaybeNumber(this.getAttribute('padding'));
+      const paddingInline = parseMaybeNumber(this.getAttribute('padding-inline'));
+      const paddingBlock = parseMaybeNumber(this.getAttribute('padding-block'));
+      const gap = parseMaybeNumber(this.getAttribute('gap'));
+
+      const setVar = (name: string, value: string | number | undefined) => {
+        if (value === undefined) {
+          this.#container!.style.removeProperty(name);
+          return;
+        }
+        this.#container!.style.setProperty(name, String(value));
+      };
+
+      if (flex !== undefined) setVar('--lobe-flex', flex);
+      else this.#container.style.removeProperty('--lobe-flex');
+
+      if (direction !== undefined || horizontal !== undefined) {
+        setVar('--lobe-flex-direction', getFlexDirection(direction, horizontal));
+      } else {
+        this.#container.style.removeProperty('--lobe-flex-direction');
+      }
+
+      if (wrap !== undefined) setVar('--lobe-flex-wrap', wrap);
+      else this.#container.style.removeProperty('--lobe-flex-wrap');
+
+      if (justifyContent !== undefined) setVar('--lobe-flex-justify', justifyContent);
+      else this.#container.style.removeProperty('--lobe-flex-justify');
+
+      if (align !== undefined) setVar('--lobe-flex-align', align);
+      else this.#container.style.removeProperty('--lobe-flex-align');
+
+      if (finalWidth !== undefined) setVar('--lobe-flex-width', finalWidth);
+      else this.#container.style.removeProperty('--lobe-flex-width');
+
+      if (height !== undefined) setVar('--lobe-flex-height', getCssValue(height as any)!);
+      else this.#container.style.removeProperty('--lobe-flex-height');
+
+      if (padding !== undefined) setVar('--lobe-flex-padding', getCssValue(padding as any)!);
+      else this.#container.style.removeProperty('--lobe-flex-padding');
+
+      if (paddingInline !== undefined)
+        setVar('--lobe-flex-padding-inline', getCssValue(paddingInline as any)!);
+      else this.#container.style.removeProperty('--lobe-flex-padding-inline');
+
+      if (paddingBlock !== undefined)
+        setVar('--lobe-flex-padding-block', getCssValue(paddingBlock as any)!);
+      else this.#container.style.removeProperty('--lobe-flex-padding-block');
+
+      if (gap !== undefined) setVar('--lobe-flex-gap', getCssValue(gap as any)!);
+      else this.#container.style.removeProperty('--lobe-flex-gap');
+    }
+  }
   customElements.define(tagName, FlexBasicElement);
 };
 
