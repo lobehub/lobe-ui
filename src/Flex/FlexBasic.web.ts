@@ -5,44 +5,6 @@ import { getCssValue, getFlexDirection, isHorizontal, isSpaceDistribution } from
 
 type MaybeNumber = string | number | undefined;
 
-const flexCss = `
-  .lobe-flex {
-  --lobe-flex: 0 1 auto;
-  --lobe-flex-direction: column;
-  --lobe-flex-wrap: nowrap;
-  --lobe-flex-justify: flex-start;
-  --lobe-flex-align: stretch;
-  --lobe-flex-width: auto;
-  --lobe-flex-height: auto;
-  --lobe-flex-padding: 0;
-
-  --lobe-flex-padding-inline: var(--lobe-flex-padding);
-  --lobe-flex-padding-block: var(--lobe-flex-padding);
-  --lobe-flex-gap: 0;
-
-  display: flex;
-
-  flex: var(--lobe-flex);
-  flex-direction: var(--lobe-flex-direction);
-  flex-wrap: var(--lobe-flex-wrap);
-  justify-content: var(--lobe-flex-justify);
-  align-items: var(--lobe-flex-align);
-
-  width: var(--lobe-flex-width);
-  height: var(--lobe-flex-height);
-
-  padding: var(--lobe-flex-padding);
-  padding-inline: var(--lobe-flex-padding-inline);
-  padding-block: var(--lobe-flex-padding-block);
-
-  gap: var(--lobe-flex-gap);
-}
-
-.lobe-flex--hidden {
-  display: none;
-}
-
-`;
 type AttrName =
   | 'visible'
   | 'flex'
@@ -87,15 +49,6 @@ const readStringAttr = (value: string | null) => {
 const defineFlexBasicElement = (tagName = 'lobe-flex') => {
   if (typeof customElements === 'undefined' || typeof document === 'undefined') return;
   if (customElements.get(tagName)) return;
-
-  // Inject global styles for lobe-flex elements
-  const styleId = 'lobe-flex-global-styles';
-  if (!document.getElementById(styleId)) {
-    const styleEl = document.createElement('style');
-    styleEl.id = styleId;
-    styleEl.textContent = flexCss;
-    document.head.append(styleEl);
-  }
 
   class FlexBasicElement extends HTMLElement {
     static observedAttributes: AttrName[] = [
