@@ -1,2 +1,1 @@
-export { default } from './ReactFlexBasic';
-export { default as Flexbox } from './ReactFlexBasic';
+export { AutoFlex as default } from './AutoFlex';
