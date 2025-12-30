@@ -119,6 +119,7 @@ const defineFlexBasicElement = (tagName = 'lobe-flex') => {
       const visible = parseBooleanAttr(this.getAttribute('visible'));
       const isVisible = visible !== false;
       this.classList.toggle('lobe-flex--hidden', !isVisible);
+      this.toggleAttribute('hidden', !isVisible);
 
       // prefix class
       const prefixCls = readStringAttr(getAttr(this, 'prefix-cls', 'prefixCls'));
