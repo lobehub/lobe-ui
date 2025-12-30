@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.4.4](https://github.com/lobehub/lobe-ui/compare/v4.4.3...v4.4.4)
+
+<sup>Released on **2025-12-30**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Extract Tooltip into modular components.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Extract Tooltip into modular components, closes [#439](https://github.com/lobehub/lobe-ui/issues/439) ([d65b93b](https://github.com/lobehub/lobe-ui/commit/d65b93b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.4.3](https://github.com/lobehub/lobe-ui/compare/v4.4.2...v4.4.3)
 
 <sup>Released on **2025-12-30**</sup>
