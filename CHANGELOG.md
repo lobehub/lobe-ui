@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.4.1](https://github.com/lobehub/lobe-ui/compare/v4.4.0...v4.4.1)
+
+<sup>Released on **2025-12-30**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix ref.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix ref ([0110431](https://github.com/lobehub/lobe-ui/commit/0110431))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.4.0](https://github.com/lobehub/lobe-ui/compare/v4.3.13...v4.4.0)
 
 <sup>Released on **2025-12-29**</sup>
