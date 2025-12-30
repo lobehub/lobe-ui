@@ -32,11 +32,11 @@ export default (token: Theme) => {
       min-height: unset;
       padding-block: 4px;
       padding-inline: 8px;
+      border-radius: ${token.borderRadiusSM}px !important;
 
       color: ${token.colorBgLayout} !important;
 
       background-color: ${token.colorText} !important;
-      border-radius: ${token.borderRadiusSM}px !important;
     }
 
     .${token.prefixCls}-tooltip-arrow {
@@ -62,6 +62,7 @@ export default (token: Theme) => {
       padding: 0;
 
       background: ${rgba(token.colorBgMask, 0.1)};
+
       border-radius: ${token.borderRadiusLG}px;
 
       ${token.stylish.blur};
@@ -72,8 +73,9 @@ export default (token: Theme) => {
       .${token.prefixCls}-select-dropdown {
       border-radius: ${token.borderRadius}px !important;
       box-shadow:
-        0 0 0 1px ${token.colorFillTertiary},
-        ${token.boxShadowSecondary} !important;
+        0 0 15px 0 #00000008,
+        0 2px 30px 0 #00000014,
+        0 0 0 1px ${token.isDarkMode ? token.colorFillTertiary : token.colorBorder} inset !important;
     }
 
     .${token.prefixCls}-modal-content {
