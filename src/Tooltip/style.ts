@@ -11,7 +11,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       justify-content: center;
 
       min-height: unset;
-      padding: 8px;
+      padding-block: 6px;
+      padding-inline: 10px;
       border-radius: ${cssVar.borderRadiusSM};
 
       color: ${cssVar.colorBgLayout};
@@ -20,7 +21,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       background-color: ${cssVar.colorTextBase};
     `,
     tooltip: css`
-      pointer-events: none;
+      user-select: none;
 
       /* Keep the class name for backwards compatibility and user overrides */
       position: relative;

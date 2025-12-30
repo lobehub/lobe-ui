@@ -6,56 +6,122 @@ import { Flexbox } from '@/Flex';
 
 export default () => {
   const store = useCreateStore();
-  const [mounted, setMounted] = useState(true);
-  const [pending, setPending] = useState(false);
-  const timerRef = useRef<number | null>(null);
+  const [standaloneMounted, setStandaloneMounted] = useState(true);
+  const [standalonePending, setStandalonePending] = useState(false);
+  const standaloneTimerRef = useRef<number | null>(null);
+  const [groupMounted, setGroupMounted] = useState(true);
+  const [groupPending, setGroupPending] = useState(false);
+  const groupTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     return () => {
-      if (timerRef.current) window.clearTimeout(timerRef.current);
+      if (standaloneTimerRef.current) window.clearTimeout(standaloneTimerRef.current);
+      if (groupTimerRef.current) window.clearTimeout(groupTimerRef.current);
     };
   }, []);
 
-  const clearPending = () => {
-    if (timerRef.current) window.clearTimeout(timerRef.current);
-    timerRef.current = null;
-    setPending(false);
+  const clearStandalonePending = () => {
+    if (standaloneTimerRef.current) window.clearTimeout(standaloneTimerRef.current);
+    standaloneTimerRef.current = null;
+    setStandalonePending(false);
   };
 
-  const toggleMounted = () => {
-    clearPending();
-    setMounted((prev) => !prev);
+  const clearGroupPending = () => {
+    if (groupTimerRef.current) window.clearTimeout(groupTimerRef.current);
+    groupTimerRef.current = null;
+    setGroupPending(false);
   };
 
-  const removeLater = () => {
-    if (!mounted) return;
-    clearPending();
-    setPending(true);
-    timerRef.current = window.setTimeout(() => {
-      setMounted(false);
-      setPending(false);
-      timerRef.current = null;
+  const toggleStandaloneMounted = () => {
+    clearStandalonePending();
+    setStandaloneMounted((prev) => !prev);
+  };
+
+  const toggleGroupMounted = () => {
+    clearGroupPending();
+    setGroupMounted((prev) => !prev);
+  };
+
+  const removeStandaloneLater = () => {
+    if (!standaloneMounted) return;
+    clearStandalonePending();
+    setStandalonePending(true);
+    standaloneTimerRef.current = window.setTimeout(() => {
+      setStandaloneMounted(false);
+      setStandalonePending(false);
+      standaloneTimerRef.current = null;
     }, 1000);
+  };
+
+  const removeGroupLater = () => {
+    if (!groupMounted) return;
+    clearGroupPending();
+    setGroupPending(true);
+    groupTimerRef.current = window.setTimeout(() => {
+      setGroupMounted(false);
+      setGroupPending(false);
+      groupTimerRef.current = null;
+    }, 1000);
+  };
+
+  const hintStyle = { fontSize: 12, opacity: 0.6 };
+  const titleStyle = {
+    fontSize: 12,
+    fontWeight: 600,
+    letterSpacing: 0.4,
+    opacity: 0.7,
+    textTransform: 'uppercase' as const,
   };
 
   return (
     <StoryBook levaStore={store}>
-      <Flexbox gap={12}>
-        <div style={{ fontSize: 12, opacity: 0.6 }}>
-          Hover the primary button, then remove the trigger while the tooltip is open.
+      <Flexbox gap={16}>
+        <div style={hintStyle}>
+          Hover the trigger, then remove it while the tooltip is open. Both variants should close
+          immediately.
         </div>
-        <Flexbox align="center" gap={12} horizontal wrap="wrap">
-          <Button onClick={toggleMounted}>{mounted ? 'Unmount trigger' : 'Mount trigger'}</Button>
-          <Button disabled={!mounted || pending} onClick={removeLater}>
-            {pending ? 'Removing...' : 'Remove in 1s'}
-          </Button>
-          <TooltipGroup closeDelay={10_000} openDelay={0}>
-            {mounted && (
-              <Tooltip title="Tooltip should be destroyed on unmount">
-                <Button type="primary">Hover me</Button>
-              </Tooltip>
-            )}
-          </TooltipGroup>
+        <Flexbox gap={20}>
+          <Flexbox gap={12}>
+            <div style={titleStyle}>Standalone Tooltip</div>
+            <Flexbox align="center" gap={12} horizontal wrap="wrap">
+              <Button onClick={toggleStandaloneMounted}>
+                {standaloneMounted ? 'Unmount trigger' : 'Mount trigger'}
+              </Button>
+              <Button
+                disabled={!standaloneMounted || standalonePending}
+                onClick={removeStandaloneLater}
+              >
+                {standalonePending ? 'Removing...' : 'Remove in 1s'}
+              </Button>
+              {standaloneMounted && (
+                <Tooltip
+                  closeDelay={10_000}
+                  openDelay={0}
+                  title="Tooltip should be destroyed on unmount"
+                >
+                  <Button type="primary">Hover me</Button>
+                </Tooltip>
+              )}
+            </Flexbox>
+          </Flexbox>
+          <Flexbox gap={12}>
+            <div style={titleStyle}>Tooltip Group (Singleton)</div>
+            <Flexbox align="center" gap={12} horizontal wrap="wrap">
+              <Button onClick={toggleGroupMounted}>
+                {groupMounted ? 'Unmount trigger' : 'Mount trigger'}
+              </Button>
+              <Button disabled={!groupMounted || groupPending} onClick={removeGroupLater}>
+                {groupPending ? 'Removing...' : 'Remove in 1s'}
+              </Button>
+              <TooltipGroup closeDelay={10_000} openDelay={0}>
+                {groupMounted && (
+                  <Tooltip title="Tooltip should be destroyed on unmount">
+                    <Button type="primary">Hover me</Button>
+                  </Tooltip>
+                )}
+              </TooltipGroup>
+            </Flexbox>
+          </Flexbox>
         </Flexbox>
       </Flexbox>
     </StoryBook>

@@ -19,7 +19,9 @@ Wrap multiple tooltips in `TooltipGroup` to share a single floating instance. Wh
 
 <code src="./demos/group-shared.tsx" nopadding></code>
 
-## Tooltip Group Trigger Removal
+## Trigger Removal
+
+Verify tooltips close when the trigger node is removed, for both standalone and group usage.
 
 <code src="./demos/group-remove-trigger.tsx" nopadding></code>
 
