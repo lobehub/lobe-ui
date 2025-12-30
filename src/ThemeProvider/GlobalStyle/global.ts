@@ -100,6 +100,10 @@ export default (token: Theme) => css`
     lobe-flex[hidden] {
       display: none;
     }
+
+    lobe-flex {
+      text-align: left;
+    }
   }
 
   /* Brand Loading */

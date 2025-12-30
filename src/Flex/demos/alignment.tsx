@@ -5,6 +5,7 @@ export default () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <div>
         <h4>Justify: flex-start (default)</h4>
+
         <Flexbox
           gap={8}
           horizontal
