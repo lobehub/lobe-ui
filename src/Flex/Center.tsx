@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 
-import FlexBasic from './FlexBasic';
+import FlexBasic from './ReactFlexBasic';
 import type { CenterProps } from './type';
 
 const Center: FC<CenterProps> = ({ children, ref, ...props }) => (
