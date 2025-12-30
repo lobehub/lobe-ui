@@ -18,8 +18,14 @@ type AttrName =
   | 'width'
   | 'padding'
   | 'padding-inline'
+  | 'paddingInline'
+  | 'paddinginline'
   | 'padding-block'
+  | 'paddingBlock'
+  | 'paddingblock'
   | 'prefix-cls'
+  | 'prefixCls'
+  | 'prefixcls'
   | 'wrap';
 
 const parseBooleanAttr = (value: string | null) => {
@@ -46,6 +52,20 @@ const readStringAttr = (value: string | null) => {
   return trimmed ? trimmed : undefined;
 };
 
+const getAttr = (el: HTMLElement, ...names: string[]) => {
+  for (const name of names) {
+    const direct = el.getAttribute(name);
+    if (direct !== null) return direct;
+
+    const lowered = name.toLowerCase();
+    if (lowered !== name) {
+      const lowerValue = el.getAttribute(lowered);
+      if (lowerValue !== null) return lowerValue;
+    }
+  }
+  return null;
+};
+
 const defineFlexBasicElement = (tagName = 'lobe-flex') => {
   if (typeof customElements === 'undefined' || typeof document === 'undefined') return;
   if (customElements.get(tagName)) return;
@@ -64,8 +84,14 @@ const defineFlexBasicElement = (tagName = 'lobe-flex') => {
       'width',
       'padding',
       'padding-inline',
+      'paddingInline',
+      'paddinginline',
       'padding-block',
+      'paddingBlock',
+      'paddingblock',
       'prefix-cls',
+      'prefixCls',
+      'prefixcls',
       'wrap',
     ];
 
@@ -93,7 +119,7 @@ const defineFlexBasicElement = (tagName = 'lobe-flex') => {
       this.classList.toggle('lobe-flex--hidden', !isVisible);
 
       // prefix class
-      const prefixCls = readStringAttr(this.getAttribute('prefix-cls'));
+      const prefixCls = readStringAttr(getAttr(this, 'prefix-cls', 'prefixCls'));
       // Reset prefix-related class each time to avoid accumulation
       for (const cls of Array.from(this.classList)) {
         if (cls.endsWith('-flex') && cls !== 'lobe-flex') this.classList.remove(cls);
@@ -125,8 +151,8 @@ const defineFlexBasicElement = (tagName = 'lobe-flex') => {
 
       const height = parseMaybeNumber(this.getAttribute('height'));
       const padding = parseMaybeNumber(this.getAttribute('padding'));
-      const paddingInline = parseMaybeNumber(this.getAttribute('padding-inline'));
-      const paddingBlock = parseMaybeNumber(this.getAttribute('padding-block'));
+      const paddingInline = parseMaybeNumber(getAttr(this, 'padding-inline', 'paddingInline'));
+      const paddingBlock = parseMaybeNumber(getAttr(this, 'padding-block', 'paddingBlock'));
       const gap = parseMaybeNumber(this.getAttribute('gap'));
 
       const setVar = (name: string, value: string | number | undefined) => {
