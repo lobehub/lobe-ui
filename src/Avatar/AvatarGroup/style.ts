@@ -3,11 +3,7 @@ import { createStaticStyles } from 'antd-style';
 export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     avatar: css`
-      box-shadow: 0 0 0 2px ${cssVar.colorBgLayout};
-
-      &:hover {
-        transform: translateY(-10%);
-      }
+      border: 2px solid ${cssVar.colorBgContainer} !important;
     `,
     count: css`
       &[class*='ant-avatar'] {
