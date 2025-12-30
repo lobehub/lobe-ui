@@ -156,7 +156,7 @@ const TooltipInGroup: FC<TooltipProps> = ({
   const referenceNode = useMemo(() => {
     if (!isValidElement(trigger)) return trigger;
 
-    const originalRef = (trigger as any).ref;
+    const originalRef = (trigger.props as any)?.ref;
     const triggerProps: any = trigger.props || {};
 
     const setTriggerEl = (node: any) => {
@@ -278,7 +278,7 @@ const TooltipStandalone: FC<TooltipProps> = ({
   const referenceNode = useMemo(() => {
     if (!isValidElement(trigger)) return trigger;
 
-    const originalRef = (trigger as any).ref;
+    const originalRef = (trigger.props as any)?.ref;
 
     return cloneElement(
       trigger as any,
