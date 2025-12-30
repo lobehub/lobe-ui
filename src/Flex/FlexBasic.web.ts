@@ -96,10 +96,12 @@ const defineFlexBasicElement = (tagName = 'lobe-flex') => {
     ];
 
     #initialized = false;
+    #prefixFlexClass: string | undefined;
 
     connectedCallback() {
       if (!this.#initialized) {
-        this.className = 'lobe-flex';
+        // Don't clobber existing classes set by frameworks (e.g. React `className`)
+        this.classList.add('lobe-flex');
         this.#initialized = true;
       }
 
@@ -120,11 +122,12 @@ const defineFlexBasicElement = (tagName = 'lobe-flex') => {
 
       // prefix class
       const prefixCls = readStringAttr(getAttr(this, 'prefix-cls', 'prefixCls'));
-      // Reset prefix-related class each time to avoid accumulation
-      for (const cls of Array.from(this.classList)) {
-        if (cls.endsWith('-flex') && cls !== 'lobe-flex') this.classList.remove(cls);
+      const nextPrefixFlexClass = prefixCls ? `${prefixCls}-flex` : undefined;
+      if (this.#prefixFlexClass && this.#prefixFlexClass !== nextPrefixFlexClass) {
+        this.classList.remove(this.#prefixFlexClass);
       }
-      if (prefixCls) this.classList.add(`${prefixCls}-flex`);
+      if (nextPrefixFlexClass) this.classList.add(nextPrefixFlexClass);
+      this.#prefixFlexClass = nextPrefixFlexClass;
 
       const direction = readStringAttr(this.getAttribute('direction')) as any;
       const horizontal = parseBooleanAttr(this.getAttribute('horizontal'));

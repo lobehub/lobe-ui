@@ -33,4 +33,19 @@ describe('FlexBasic.web custom element attrs', () => {
 
     el.remove();
   });
+
+  it('should not clobber existing className (e.g. React className) on connect', () => {
+    if (typeof customElements === 'undefined') return;
+
+    const el = document.createElement('lobe-flex') as HTMLElement;
+    el.className = 'foo';
+    el.setAttribute('prefixCls', 'acme');
+    document.body.append(el);
+
+    expect(el.classList.contains('lobe-flex')).toBe(true);
+    expect(el.classList.contains('foo')).toBe(true);
+    expect(el.classList.contains('acme-flex')).toBe(true);
+
+    el.remove();
+  });
 });
