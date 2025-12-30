@@ -47,7 +47,6 @@ const getOrCreateContainer = (root: HTMLElement | ShadowRoot): HTMLElement => {
 
 const resolveRoot = (root?: HTMLElement | ShadowRoot | null): HTMLElement | ShadowRoot | null => {
   if (root) return root;
-  if (typeof document === 'undefined') return null;
   return document.body;
 };
 

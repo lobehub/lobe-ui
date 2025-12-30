@@ -160,7 +160,23 @@ export {
   SyntaxMermaid,
   type SyntaxMermaidProps,
 } from './Mermaid';
-export { default as Modal, type ModalProps } from './Modal';
+export {
+  createModal,
+  createRawModal,
+  type ImperativeModalProps,
+  default as Modal,
+  ModalHost,
+  type ModalHostProps,
+  type ModalInstance,
+  type ModalProps,
+  ModalProvider,
+  type RawModalComponent,
+  type RawModalComponentProps,
+  type RawModalInstance,
+  type RawModalKeyOptions,
+  type RawModalOptions,
+  useModalContext,
+} from './Modal';
 export type { MotionComponentType } from './MotionProvider';
 export { MotionComponent, MotionProvider, useMotionComponent } from './MotionProvider';
 export { I18nProvider, type I18nProviderProps, LobeUIProvider, useTranslation } from './Provider';
