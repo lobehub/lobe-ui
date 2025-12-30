@@ -162,6 +162,7 @@ export {
 } from './Mermaid';
 export {
   createModal,
+  createRawModal,
   type ImperativeModalProps,
   default as Modal,
   ModalHost,
@@ -169,6 +170,11 @@ export {
   type ModalInstance,
   type ModalProps,
   ModalProvider,
+  type RawModalComponent,
+  type RawModalComponentProps,
+  type RawModalInstance,
+  type RawModalKeyOptions,
+  type RawModalOptions,
   useModalContext,
 } from './Modal';
 export type { MotionComponentType } from './MotionProvider';

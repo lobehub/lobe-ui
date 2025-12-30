@@ -13,6 +13,10 @@ description: Modal component displays content in a layer that appears above the 
 
 <code src="./demos/imperative.tsx" center></code>
 
+## Raw Modal
+
+<code src="./demos/raw.tsx" center></code>
+
 ## APIs
 
 ### Modal
@@ -59,6 +63,30 @@ On desktop screens, the component renders as a traditional modal dialog. On mobi
 | root     | Custom portal root element | `HTMLElement \| ShadowRoot` | `body`  |
 
 `ImperativeModalProps` extends `ModalProps`.
+
+### createRawModal
+
+`createRawModal` is for existing modal components that already manage their own `<Modal />`. It injects `open` and `onClose` automatically (or the remapped keys), so you only pass the remaining props.
+
+`createRawModal(ModalComponent, props, options?)`
+
+It still requires rendering `ModalHost` once in your app.
+
+If your modal uses different prop names (e.g. `visible`/`onCancel`), pass both `openKey` and `onCloseKey`.
+
+| Option         | Description                                | Type      | Default     |
+| -------------- | ------------------------------------------ | --------- | ----------- |
+| destroyOnClose | Destroy modal after calling `onClose`      | `boolean` | `true`      |
+| destroyDelay   | Delay before destroy (for close animation) | `number`  | `200`       |
+| openKey        | Prop name for open state                   | `string`  | `'open'`    |
+| onCloseKey     | Prop name for close handler                | `string`  | `'onClose'` |
+
+`RawModalComponentProps` defines the default required props for the component (when not remapping):
+
+| Property | Description   | Type         |
+| -------- | ------------- | ------------ |
+| open     | Open state    | `boolean`    |
+| onClose  | Close handler | `() => void` |
 
 ### useModalContext
 
