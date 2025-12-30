@@ -19,15 +19,15 @@ import { antdPlacementToFloating } from '@/Tooltip/antdPlacementToFloating';
 
 import type { TooltipPlacement } from './type';
 
-interface UseTooltipFloatingReturn {
+type UseTooltipFloatingReturn = {
   arrowRef: RefObject<SVGSVGElement | null>;
   context: FloatingContext;
   floatingPlacement: Placement;
   floatingStyles: CSSProperties;
-  getFloatingProps: (userProps?: any) => Record<string, unknown>;
-  getReferenceProps: (userProps?: any) => Record<string, unknown>;
+  getFloatingProps: ReturnType<typeof useInteractions>['getFloatingProps'];
+  getReferenceProps: ReturnType<typeof useInteractions>['getReferenceProps'];
   refs: ReturnType<typeof useFloating>['refs'];
-}
+};
 
 export const useTooltipFloating = ({
   arrow,
