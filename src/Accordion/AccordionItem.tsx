@@ -219,7 +219,7 @@ const AccordionItem = memo<AccordionItemProps>(
     const contextKeepContentMounted = context?.keepContentMounted;
     const contextDisableAnimation = context?.disableAnimation;
     const contextMotionProps = context?.motionProps;
-    const contextVariant = context?.variant ?? 'filled';
+    const contextVariant = context?.variant ?? 'borderless';
 
     const isInitialRenderRef = useRef(true);
 
