@@ -8,3 +8,15 @@ export type ModalProps = Omit<AntModalProps, 'okType' | 'wrapClassName'> & {
     mobile?: number;
   };
 };
+
+export type ModalContextValue = {
+  close: () => void;
+  setCanDismissByClickOutside: (value: boolean) => void;
+};
+
+export type ModalInstance = ModalContextValue & {
+  destroy: () => void;
+  update: (nextProps: Partial<ImperativeModalProps>) => void;
+};
+
+export type ImperativeModalProps = ModalProps;

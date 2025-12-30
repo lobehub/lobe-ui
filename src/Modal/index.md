@@ -9,6 +9,10 @@ description: Modal component displays content in a layer that appears above the 
 
 <code src="./demos/index.tsx" center></code>
 
+## Imperative
+
+<code src="./demos/imperative.tsx" center></code>
+
 ## APIs
 
 ### Modal
@@ -36,3 +40,39 @@ Modal inherits most properties from Ant Design's Modal component, except for 'ok
 #### Responsive Behavior
 
 On desktop screens, the component renders as a traditional modal dialog. On mobile screens, it transforms into a bottom drawer for better mobile user experience. The responsiveness is handled automatically, but can be disabled by setting `enableResponsive` to `false`.
+
+### createModal
+
+`createModal` provides an imperative way to open a modal. It accepts `ImperativeModalProps` and returns a controller instance. Make sure to render `ModalHost` once in your app (usually near the root) so the modal can portal into the document.
+
+| Name                        | Description                   | Type                       |
+| --------------------------- | ----------------------------- | -------------------------- |
+| close                       | Close the modal               | `() => void`               |
+| update                      | Update modal props            | `(next) => void`           |
+| destroy                     | Destroy the modal immediately | `() => void`               |
+| setCanDismissByClickOutside | Toggle mask click dismiss     | `(value: boolean) => void` |
+
+`ModalHost` is a lightweight portal target for imperative modals.
+
+| Property | Description                | Type                        | Default |
+| -------- | -------------------------- | --------------------------- | ------- |
+| root     | Custom portal root element | `HTMLElement \| ShadowRoot` | `body`  |
+
+`ImperativeModalProps` extends `ModalProps`.
+
+### useModalContext
+
+Inside the imperative modal content, you can access modal actions via `useModalContext`.
+
+| Name                        | Description               | Type                       |
+| --------------------------- | ------------------------- | -------------------------- |
+| close                       | Close the modal           | `() => void`               |
+| setCanDismissByClickOutside | Toggle mask click dismiss | `(value: boolean) => void` |
+
+### ModalProvider
+
+`ModalProvider` lets you pass modal actions to descendants declaratively (it is used internally by imperative modals).
+
+| Property | Description                 | Type                                                                           | Default |
+| -------- | --------------------------- | ------------------------------------------------------------------------------ | ------- |
+| value    | Modal actions context value | `{ close: () => void; setCanDismissByClickOutside: (value: boolean) => void }` | -       |
