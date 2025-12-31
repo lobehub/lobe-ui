@@ -62,7 +62,7 @@ export interface FormGroupItemType {
 
 export interface FormGroupProps extends Omit<
   CollapseProps,
-  'collapsible' | 'items' | 'defaultActiveKey' | 'activeKey'
+  'collapsible' | 'items' | 'defaultActiveKey' | 'activeKey' | 'variant'
 > {
   active?: boolean;
   children: ReactNode;

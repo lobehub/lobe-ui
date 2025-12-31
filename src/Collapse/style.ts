@@ -19,9 +19,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         .${prefixCls}-collapse-header {
           padding-inline: 0;
         }
-        .${prefixCls}-collapse-content {
+        .${prefixCls}-collapse-panel {
           padding-inline: 0;
-          .${prefixCls}-collapse-content-box {
+          .${prefixCls}-collapse-body {
             padding-inline: 0;
           }
         }
@@ -35,7 +35,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       &.${prefixCls}-collapse {
         .${prefixCls}-collapse-item {
           background: ${cssVar.colorFillQuaternary};
-          .${prefixCls}-collapse-content {
+          .${prefixCls}-collapse-panel {
             margin-inline: 3px;
             margin-block-end: 3px;
             border-radius: ${cssVar.borderRadius};
@@ -48,8 +48,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     filledLight: css`
       &.${prefixCls}-collapse {
         .${prefixCls}-collapse-item {
-          background: ${cssVar.colorFillTertiary};
-          .${prefixCls}-collapse-content {
+          background: ${cssVar.colorFillQuaternary};
+          .${prefixCls}-collapse-panel {
             margin-inline: 3px;
             margin-block-end: 3px;
             border-radius: ${cssVar.borderRadius};
@@ -62,6 +62,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     `,
     gapOutlined: css`
       &.${prefixCls}-collapse {
+        border: none;
         background: transparent;
         .${prefixCls}-collapse-item {
           border: 1px solid ${cssVar.colorFillSecondary};
@@ -145,7 +146,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           }
         }
 
-        .${prefixCls}-collapse-content {
+        .${prefixCls}-collapse-panel {
           background: transparent;
         }
       }

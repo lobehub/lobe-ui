@@ -12,6 +12,20 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       padding-block-end: 16px;
       border-block-end: 1px solid ${cssVar.colorBorderSecondary};
     }
+
+    .${prefixCls}-collapse-body {
+      padding-inline: 0 !important;
+    }
+  `,
+  filled: css`
+    .${prefixCls}-collapse-body {
+      padding-block: 0 !important;
+    }
+  `,
+  outlined: css`
+    .${prefixCls}-collapse-body {
+      padding-block: 0 !important;
+    }
   `,
   root: css`
     position: relative;
@@ -68,22 +82,28 @@ export const variants = cva(styles.root, {
   /* eslint-disable sort-keys-fix/sort-keys-fix */
   variants: {
     variant: {
-      filled: null,
-      outlined: null,
+      filled: styles.filled,
+      outlined: styles.outlined,
       borderless: styles.borderless,
     },
   },
   /* eslint-enable sort-keys-fix/sort-keys-fix */
 });
 
-export const flatGroupStyles = createStaticStyles(({ css, cssVar }) => {
-  const borderlessBase = lobeStaticStylish.variantBorderlessWithoutHover;
+export const flatGroupStyles = createStaticStyles(({ cx, css, cssVar }) => {
   return {
-    borderless: css`
-      ${borderlessBase}
-      padding-inline: 0;
-    `,
-    filled: lobeStaticStylish.variantFilledWithoutHover,
+    borderless: cx(
+      lobeStaticStylish.variantBorderlessWithoutHover,
+      css`
+        padding-inline: 0;
+      `,
+    ),
+    filled: cx(
+      lobeStaticStylish.variantFilledWithoutHover,
+      css`
+        background: ${cssVar.colorFillQuaternary};
+      `,
+    ),
     mobile: css`
       padding-block: 0;
       padding-inline: 16px;
