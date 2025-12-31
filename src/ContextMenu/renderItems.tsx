@@ -19,6 +19,7 @@ import type {
   MenuItemType,
   SubMenuType,
 } from '@/Menu';
+import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
 import { styles } from './style';
 
@@ -173,7 +174,12 @@ export const renderContextMenuItems = (
             })}
           </ContextMenu.SubmenuTrigger>
           <ContextMenu.Portal>
-            <ContextMenu.Positioner alignOffset={-4} sideOffset={6}>
+            <ContextMenu.Positioner
+              alignOffset={-4}
+              className={styles.positioner}
+              onContextMenu={preventDefaultAndStopPropagation}
+              sideOffset={-1}
+            >
               <ContextMenu.Popup className={styles.popup}>
                 {submenu.children ? renderContextMenuItems(submenu.children, nextKeyPath) : null}
               </ContextMenu.Popup>

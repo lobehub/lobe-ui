@@ -20,6 +20,7 @@ export const stopPropagation = <
 
 export const preventDefaultAndStopPropagation = <
   T extends {
+    preventBaseUIHandler?: () => void;
     preventDefault: () => void;
     stopPropagation: () => void;
   },
@@ -28,4 +29,5 @@ export const preventDefaultAndStopPropagation = <
 ) => {
   event.preventDefault();
   event.stopPropagation();
+  event.preventBaseUIHandler?.();
 };

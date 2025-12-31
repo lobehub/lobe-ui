@@ -33,6 +33,27 @@ export const ContextMenuHost = memo(() => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!state.open) return;
+
+    const suppressRightClick = (event: MouseEvent | PointerEvent) => {
+      if (event.button !== 2) return;
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation?.();
+    };
+
+    window.addEventListener('pointerdown', suppressRightClick, true);
+    window.addEventListener('mousedown', suppressRightClick, true);
+    window.addEventListener('contextmenu', suppressRightClick, true);
+
+    return () => {
+      window.removeEventListener('pointerdown', suppressRightClick, true);
+      window.removeEventListener('mousedown', suppressRightClick, true);
+      window.removeEventListener('contextmenu', suppressRightClick, true);
+    };
+  }, [state.open]);
+
   const menuItems = useMemo(() => renderContextMenuItems(state.items), [state.items]);
   const portalContainer = useMemo(() => {
     if (!isClient) return null;
@@ -64,7 +85,11 @@ export const ContextMenuHost = memo(() => {
       open={state.open}
     >
       <ContextMenu.Portal container={portalContainer}>
-        <ContextMenu.Positioner anchor={state.anchor ?? undefined} sideOffset={6}>
+        <ContextMenu.Positioner
+          anchor={state.anchor ?? undefined}
+          className={styles.positioner}
+          sideOffset={6}
+        >
           <ContextMenu.Popup
             className={styles.popup}
             onContextMenu={preventDefaultAndStopPropagation}
