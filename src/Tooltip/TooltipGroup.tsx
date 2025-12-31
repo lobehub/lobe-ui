@@ -25,7 +25,11 @@ type TooltipGroupProps = TooltipGroupSharedProps & {
   children: ReactNode;
 };
 
-const TooltipGroup: FC<TooltipGroupProps> = ({ children, ...sharedProps }) => {
+const TooltipGroup: FC<TooltipGroupProps> = ({
+  children,
+  layoutAnimation = true,
+  ...sharedProps
+}) => {
   const arrowRef = useRef<SVGSVGElement | null>(null);
   const openTimerRef = useRef<number | null>(null);
   const closeTimerRef = useRef<number | null>(null);
@@ -195,6 +199,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({ children, ...sharedProps }) => {
       floatingStyles={floatingStyles}
       hotkey={active?.item.hotkey}
       hotkeyProps={active?.item.hotkeyProps}
+      layoutAnimation={layoutAnimation}
       open={open}
       placement={floatingPlacement}
       setFloating={refs.setFloating}
