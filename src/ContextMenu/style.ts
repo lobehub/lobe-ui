@@ -46,6 +46,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     position: relative;
 
+    overflow: hidden;
     display: flex;
     align-items: center;
 
@@ -93,7 +94,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   itemContent: css`
-    overflow: hidden;
     display: flex;
     flex: 1;
     gap: 0;
