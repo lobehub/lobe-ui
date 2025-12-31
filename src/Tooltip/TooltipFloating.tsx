@@ -29,6 +29,12 @@ type TooltipFloatingProps = {
   hotkey?: TooltipProps['hotkey'];
   hotkeyProps?: TooltipProps['hotkeyProps'];
 
+  /**
+   * @description Whether to enable layout animation when switching between tooltips
+   * @default true
+   */
+  layoutAnimation?: boolean;
+
   open: boolean;
   placement?: Placement;
 
@@ -50,6 +56,7 @@ const TooltipFloating = ({
   context,
   hotkey,
   hotkeyProps,
+  layoutAnimation = true,
 
   className,
   classNames,
@@ -89,7 +96,7 @@ const TooltipFloating = ({
         <div
           className={cx(
             styles.tooltip,
-            hasTransform && styles.tooltipLayout,
+            layoutAnimation && hasTransform && styles.tooltipLayout,
             classNames?.container,
             classNames?.root,
             className,
