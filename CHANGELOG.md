@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 4.6.0](https://github.com/lobehub/lobe-ui/compare/v4.5.1...v4.6.0)
+
+<sup>Released on **2025-12-31**</sup>
+
+#### ✨ Features
+
+- **tooltip**: Add layoutAnimation option and z-index to ContextMenu.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **tooltip**: Add layoutAnimation option and z-index to ContextMenu, closes [#443](https://github.com/lobehub/lobe-ui/issues/443) ([caeafd4](https://github.com/lobehub/lobe-ui/commit/caeafd4))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.5.1](https://github.com/lobehub/lobe-ui/compare/v4.5.0...v4.5.1)
 
 <sup>Released on **2025-12-31**</sup>
