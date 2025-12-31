@@ -7,7 +7,7 @@ import type {
 } from '@base-ui/react/menu';
 import type { Key, ReactNode } from 'react';
 
-import type { IconContentConfig, IconProps } from '@/Icon';
+import type { IconProps } from '@/Icon';
 import type { GenericItemType } from '@/Menu';
 
 export type DropdownMenuV2Placement =
@@ -40,7 +40,6 @@ export interface DropdownMenuV2Props<Payload = unknown> extends Omit<
   'children'
 > {
   children: ReactNode;
-  iconProps?: IconContentConfig;
   items: DropdownMenuV2ItemType[] | (() => DropdownMenuV2ItemType[]);
   placement?: DropdownMenuV2Placement;
   popupProps?: MenuPopupProps;

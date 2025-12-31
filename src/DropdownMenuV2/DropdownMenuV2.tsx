@@ -13,7 +13,6 @@ import {
   useState,
 } from 'react';
 
-import { IconProvider } from '@/Icon';
 import { styles } from '@/Menu/sharedStyle';
 import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
 import { TOOLTIP_CONTAINER_ATTR } from '@/Tooltip/TooltipPortal';
@@ -38,7 +37,7 @@ const DropdownMenuV2 = memo<DropdownMenuV2Props>(
   ({
     children,
     defaultOpen,
-    iconProps,
+
     items,
     onOpenChange,
     open,
@@ -97,46 +96,39 @@ const DropdownMenuV2 = memo<DropdownMenuV2Props>(
     );
 
     return (
-      <IconProvider
-        config={{
-          size: 'small',
-          ...iconProps,
-        }}
-      >
-        <Menu.Root {...rest} defaultOpen={defaultOpen} onOpenChange={handleOpenChange} open={open}>
-          {trigger}
-          <Menu.Portal container={portalProps?.container ?? portalContainer} {...portalProps}>
-            <Menu.Positioner
-              {...positionerProps}
-              align={positionerProps?.align ?? placementConfig.align}
+      <Menu.Root {...rest} defaultOpen={defaultOpen} onOpenChange={handleOpenChange} open={open}>
+        {trigger}
+        <Menu.Portal container={portalProps?.container ?? portalContainer} {...portalProps}>
+          <Menu.Positioner
+            {...positionerProps}
+            align={positionerProps?.align ?? placementConfig.align}
+            className={(state) =>
+              cx(
+                styles.positioner,
+                typeof positionerProps?.className === 'function'
+                  ? positionerProps.className(state)
+                  : positionerProps?.className,
+              )
+            }
+            side={positionerProps?.side ?? placementConfig.side}
+            sideOffset={positionerProps?.sideOffset ?? 6}
+          >
+            <Menu.Popup
+              {...popupProps}
               className={(state) =>
                 cx(
-                  styles.positioner,
-                  typeof positionerProps?.className === 'function'
-                    ? positionerProps.className(state)
-                    : positionerProps?.className,
+                  styles.popup,
+                  typeof popupProps?.className === 'function'
+                    ? popupProps.className(state)
+                    : popupProps?.className,
                 )
               }
-              side={positionerProps?.side ?? placementConfig.side}
-              sideOffset={positionerProps?.sideOffset ?? 6}
             >
-              <Menu.Popup
-                {...popupProps}
-                className={(state) =>
-                  cx(
-                    styles.popup,
-                    typeof popupProps?.className === 'function'
-                      ? popupProps.className(state)
-                      : popupProps?.className,
-                  )
-                }
-              >
-                {menuItems}
-              </Menu.Popup>
-            </Menu.Positioner>
-          </Menu.Portal>
-        </Menu.Root>
-      </IconProvider>
+              {menuItems}
+            </Menu.Popup>
+          </Menu.Positioner>
+        </Menu.Portal>
+      </Menu.Root>
     );
   },
 );

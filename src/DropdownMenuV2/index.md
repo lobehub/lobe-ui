@@ -41,7 +41,6 @@ description: DropdownMenuV2 renders a dropdown menu based on Base UI Menu primit
 | --------------- | --------------------------------- | ------------------------------------------------------------------------------------------- | -------------- |
 | items           | Menu items (lazy supported)       | `DropdownMenuV2ItemType[] \| (() => DropdownMenuV2ItemType[])`                              | -              |
 | children        | Trigger element                   | `ReactNode`                                                                                 | -              |
-| iconProps       | Global configuration for icons    | `IconContentConfig`                                                                         | -              |
 | placement       | Position of dropdown menu         | `'bottomLeft' \| 'bottomCenter' \| 'bottomRight' \| 'topLeft' \| 'topCenter' \| 'topRight'` | `'bottomLeft'` |
 | triggerProps    | Props passed to `Menu.Trigger`    | `MenuTriggerProps`                                                                          | -              |
 | positionerProps | Props passed to `Menu.Positioner` | `MenuPositionerProps`                                                                       | -              |
