@@ -26,6 +26,15 @@ import type {
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-redeclare */
 
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable no-redeclare */
+
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable no-redeclare */
+
+/* eslint-disable @typescript-eslint/no-use-before-define */
+/* eslint-disable no-redeclare */
+
 type ModalStackItemBase = {
   id: string;
 };
@@ -72,8 +81,9 @@ const subscribe = (listener: () => void) => {
   return () => listeners.delete(listener);
 };
 
+const EMPTY_STACK: TModalStackItem[] = [];
 const getSnapshot = () => modalStack;
-const getServerSnapshot = () => [];
+const getServerSnapshot = () => EMPTY_STACK;
 
 const getOrCreateContainer = (root: HTMLElement | ShadowRoot): HTMLElement => {
   const cached = containerMap.get(root);

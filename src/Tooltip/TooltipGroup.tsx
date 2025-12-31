@@ -20,6 +20,7 @@ import {
   TooltipGroupPropsContext,
   type TooltipGroupSharedProps,
 } from './groupContext';
+import { isElementHidden, observeElementVisibility } from './utils';
 
 type TooltipGroupProps = TooltipGroupSharedProps & {
   children: ReactNode;
@@ -118,12 +119,17 @@ const TooltipGroup: FC<TooltipGroupProps> = ({ children, ...sharedProps }) => {
 
       clearTimers();
 
+      if (isElementHidden(triggerEl)) {
+        if (isActiveTrigger(triggerEl)) destroyActive();
+        return;
+      }
+
       setActive({ item, triggerEl });
 
       const delayMs =
         item.openDelay ?? (item.mouseEnterDelay !== undefined ? item.mouseEnterDelay * 1000 : 400);
       if (delayMs <= 0) {
-        if (!triggerEl.isConnected) {
+        if (isElementHidden(triggerEl)) {
           destroyActive();
           return;
         }
@@ -133,7 +139,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({ children, ...sharedProps }) => {
       }
 
       openTimerRef.current = window.setTimeout(() => {
-        if (!triggerEl.isConnected) {
+        if (isElementHidden(triggerEl)) {
           destroyActive();
           return;
         }
@@ -141,7 +147,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({ children, ...sharedProps }) => {
         item.onOpenChange?.(true);
       }, delayMs);
     },
-    [clearTimers, destroyActive],
+    [clearTimers, destroyActive, isActiveTrigger],
   );
 
   const groupApi = useMemo(
@@ -154,10 +160,14 @@ const TooltipGroup: FC<TooltipGroupProps> = ({ children, ...sharedProps }) => {
     const triggerEl = active?.triggerEl;
     if (!triggerEl) return;
 
-    if (!triggerEl.isConnected) {
+    if (isElementHidden(triggerEl)) {
       destroyActive();
       return;
     }
+
+    const stopVisibilityObserver = observeElementVisibility(triggerEl, (visible) => {
+      if (!visible) destroyActive();
+    });
 
     const root = triggerEl.getRootNode?.();
     const observeTarget =
@@ -166,12 +176,15 @@ const TooltipGroup: FC<TooltipGroupProps> = ({ children, ...sharedProps }) => {
         : (triggerEl.ownerDocument ?? document);
 
     const observer = new MutationObserver(() => {
-      if (!triggerEl.isConnected) destroyActive();
+      if (isElementHidden(triggerEl)) destroyActive();
     });
 
     observer.observe(observeTarget, { childList: true, subtree: true });
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      stopVisibilityObserver?.();
+    };
   }, [active?.triggerEl, destroyActive, open]);
 
   useEffect(() => {

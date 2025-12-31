@@ -2,6 +2,8 @@ import React, { type Ref, useEffect, useMemo, useRef, useState } from 'react';
 import { cloneElement, isValidElement } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
+import { isElementHidden } from './utils';
+
 export const useTooltipReference = ({
   trigger,
   ref,
@@ -21,7 +23,7 @@ export const useTooltipReference = ({
   const previousReferenceRef = useRef<HTMLElement | null>(null);
   const previousConnectedRef = useRef(false);
 
-  const referenceConnected = Boolean(referenceEl?.isConnected);
+  const referenceConnected = Boolean(referenceEl && !isElementHidden(referenceEl));
 
   const referenceNode = useMemo(() => {
     if (!isValidElement(trigger)) return trigger;
@@ -46,7 +48,7 @@ export const useTooltipReference = ({
     const previousReference = previousReferenceRef.current;
     const previousConnected = previousConnectedRef.current;
     const referenceChanged = previousReference && previousReference !== referenceEl;
-    const previousDisconnected = previousReference ? !previousReference.isConnected : false;
+    const previousDisconnected = previousReference ? isElementHidden(previousReference) : false;
 
     if (
       mergedOpen &&

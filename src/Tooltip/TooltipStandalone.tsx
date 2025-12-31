@@ -8,6 +8,7 @@ import type { TooltipProps } from './type';
 import { useTooltipFloating } from './useTooltipFloating';
 import { useTooltipReference } from './useTooltipReference';
 import { useTooltipTrigger } from './useTooltipTrigger';
+import { isElementHidden, observeElementVisibility } from './utils';
 
 export const TooltipStandalone: FC<TooltipProps> = ({
   ref,
@@ -33,6 +34,7 @@ export const TooltipStandalone: FC<TooltipProps> = ({
   getPopupContainer,
 }) => {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(Boolean(defaultOpen));
+  const [referenceVisible, setReferenceVisible] = useState(true);
 
   const mergedOpen = open ?? uncontrolledOpen;
   const setOpen = useCallback(
@@ -68,20 +70,30 @@ export const TooltipStandalone: FC<TooltipProps> = ({
     trigger,
   });
 
-  const connectedOpen = !disabled && mergedOpen && referenceConnected;
+  const connectedOpen = !disabled && mergedOpen && referenceConnected && referenceVisible;
 
   // Use the first hook result
   // Note: useFloating inside uses mergedOpen, but TooltipFloating component uses connectedOpen for display
   const { arrowRef, context, floatingPlacement, floatingStyles, getFloatingProps, refs } =
     floatingHookResult;
 
-  // Watch for trigger removal via MutationObserver
+  // Watch for trigger removal or display:none via MutationObserver
   useEffect(() => {
     if (!mergedOpen) return;
-    if (!referenceEl || !referenceEl.isConnected) {
+    if (!referenceEl) {
+      setReferenceVisible(false);
       setOpen(false);
       return;
     }
+
+    let lastVisible = true;
+    const handleVisibilityChange = (visible: boolean) => {
+      setReferenceVisible(visible);
+      if (!visible && lastVisible) setOpen(false);
+      lastVisible = visible;
+    };
+
+    const stopVisibilityObserver = observeElementVisibility(referenceEl, handleVisibilityChange);
 
     const root = referenceEl.getRootNode?.();
     const observeTarget =
@@ -90,16 +102,19 @@ export const TooltipStandalone: FC<TooltipProps> = ({
         : (referenceEl.ownerDocument ?? document);
 
     const observer = new MutationObserver(() => {
-      if (!referenceEl.isConnected) setOpen(false);
+      if (isElementHidden(referenceEl)) handleVisibilityChange(false);
     });
 
     observer.observe(observeTarget, { childList: true, subtree: true });
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      stopVisibilityObserver?.();
+    };
   }, [mergedOpen, referenceEl, setOpen]);
 
   const portalRoot =
-    getPopupContainer && referenceEl && referenceConnected
+    getPopupContainer && referenceEl && referenceConnected && referenceVisible
       ? getPopupContainer(referenceEl as any)
       : undefined;
 

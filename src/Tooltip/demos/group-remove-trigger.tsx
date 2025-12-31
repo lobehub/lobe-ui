@@ -12,11 +12,15 @@ export default () => {
   const [groupMounted, setGroupMounted] = useState(true);
   const [groupPending, setGroupPending] = useState(false);
   const groupTimerRef = useRef<number | null>(null);
+  const [groupHidden, setGroupHidden] = useState(false);
+  const [groupHiddenPending, setGroupHiddenPending] = useState(false);
+  const groupHiddenTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     return () => {
       if (standaloneTimerRef.current) window.clearTimeout(standaloneTimerRef.current);
       if (groupTimerRef.current) window.clearTimeout(groupTimerRef.current);
+      if (groupHiddenTimerRef.current) window.clearTimeout(groupHiddenTimerRef.current);
     };
   }, []);
 
@@ -61,6 +65,28 @@ export default () => {
       setGroupMounted(false);
       setGroupPending(false);
       groupTimerRef.current = null;
+    }, 1000);
+  };
+
+  const clearGroupHiddenPending = () => {
+    if (groupHiddenTimerRef.current) window.clearTimeout(groupHiddenTimerRef.current);
+    groupHiddenTimerRef.current = null;
+    setGroupHiddenPending(false);
+  };
+
+  const toggleGroupHidden = () => {
+    clearGroupHiddenPending();
+    setGroupHidden((prev) => !prev);
+  };
+
+  const hideGroupLater = () => {
+    if (groupHidden) return;
+    clearGroupHiddenPending();
+    setGroupHiddenPending(true);
+    groupHiddenTimerRef.current = window.setTimeout(() => {
+      setGroupHidden(true);
+      setGroupHiddenPending(false);
+      groupHiddenTimerRef.current = null;
     }, 1000);
   };
 
@@ -119,6 +145,24 @@ export default () => {
                     <Button type="primary">Hover me</Button>
                   </Tooltip>
                 )}
+              </TooltipGroup>
+            </Flexbox>
+          </Flexbox>
+          <Flexbox gap={12}>
+            <div style={titleStyle}>Tooltip Group (Display None)</div>
+            <Flexbox align="center" gap={12} horizontal wrap="wrap">
+              <Button onClick={toggleGroupHidden}>
+                {groupHidden ? 'Show trigger' : 'Hide trigger'}
+              </Button>
+              <Button disabled={groupHidden || groupHiddenPending} onClick={hideGroupLater}>
+                {groupHiddenPending ? 'Hiding...' : 'Hide in 1s'}
+              </Button>
+              <TooltipGroup closeDelay={10_000} openDelay={0}>
+                <div style={{ display: groupHidden ? 'none' : 'block' }}>
+                  <Tooltip title="Tooltip should be hidden on display:none">
+                    <Button type="primary">Hover me</Button>
+                  </Tooltip>
+                </div>
               </TooltipGroup>
             </Flexbox>
           </Flexbox>
