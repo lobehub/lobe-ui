@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 4.5.0](https://github.com/lobehub/lobe-ui/compare/v4.4.5...v4.5.0)
+
+<sup>Released on **2025-12-31**</sup>
+
+#### ✨ Features
+
+- **contextmenu**: Add imperative API for programmatic control.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **contextmenu**: Add imperative API for programmatic control, closes [#442](https://github.com/lobehub/lobe-ui/issues/442) ([5868a7f](https://github.com/lobehub/lobe-ui/commit/5868a7f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.4.5](https://github.com/lobehub/lobe-ui/compare/v4.4.4...v4.4.5)
 
 <sup>Released on **2025-12-30**</sup>
