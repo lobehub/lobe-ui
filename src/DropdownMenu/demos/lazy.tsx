@@ -1,8 +1,8 @@
-import { Button, DropdownMenuV2 } from '@lobehub/ui';
+import { Button, DropdownMenu } from '@lobehub/ui';
 
 export default () => {
   return (
-    <DropdownMenuV2
+    <DropdownMenu
       items={() => [
         { key: 'new', label: 'New File' },
         { key: 'open', label: 'Open...' },
@@ -11,6 +11,6 @@ export default () => {
       ]}
     >
       <Button>Lazy Items</Button>
-    </DropdownMenuV2>
+    </DropdownMenu>
   );
 };

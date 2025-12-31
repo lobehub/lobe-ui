@@ -1,4 +1,4 @@
-import { type DropdownMenuV2Props, Icon } from '@lobehub/ui';
+import { type DropdownMenuProps, Icon } from '@lobehub/ui';
 import {
   ArchiveIcon,
   CopyIcon,
@@ -12,7 +12,7 @@ import {
   Trash2Icon,
 } from 'lucide-react';
 
-export const items: Exclude<DropdownMenuV2Props['items'], () => unknown> = [
+export const items: Exclude<DropdownMenuProps['items'], () => unknown> = [
   {
     extra: 'Ctrl+C',
     icon: <Icon icon={CopyIcon} />,
@@ -45,7 +45,7 @@ export const items: Exclude<DropdownMenuV2Props['items'], () => unknown> = [
   },
 ];
 
-export const submenuItems: Exclude<DropdownMenuV2Props['items'], () => unknown> = [
+export const submenuItems: Exclude<DropdownMenuProps['items'], () => unknown> = [
   {
     icon: <Icon icon={SettingsIcon} />,
     key: 'preferences',
@@ -86,7 +86,7 @@ export const submenuItems: Exclude<DropdownMenuV2Props['items'], () => unknown> 
   },
 ];
 
-export const groupItems: Exclude<DropdownMenuV2Props['items'], () => unknown> = [
+export const groupItems: Exclude<DropdownMenuProps['items'], () => unknown> = [
   {
     children: [
       {
@@ -121,7 +121,7 @@ export const groupItems: Exclude<DropdownMenuV2Props['items'], () => unknown> = 
   },
 ];
 
-export const dangerItems: Exclude<DropdownMenuV2Props['items'], () => unknown> = [
+export const dangerItems: Exclude<DropdownMenuProps['items'], () => unknown> = [
   {
     icon: <Icon icon={ArchiveIcon} />,
     key: 'archive',

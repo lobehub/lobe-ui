@@ -20,9 +20,9 @@ import type {
 } from '@/Menu';
 import { styles } from '@/Menu/sharedStyle';
 
-import type { DropdownMenuV2CheckboxItem, DropdownMenuV2ItemType } from './type';
+import type { DropdownItem, DropdownMenuCheckboxItem } from './type';
 
-const getItemKey = (item: ItemType | DropdownMenuV2CheckboxItem, fallback: string): Key => {
+const getItemKey = (item: ItemType | DropdownItem, fallback: string): Key => {
   if (item && 'key' in item && item.key !== undefined) return item.key;
   return fallback;
 };
@@ -45,7 +45,7 @@ const renderIcon = (icon: MenuItemType['icon']) => {
   return <Icon icon={icon} />;
 };
 
-const getReserveIconSpaceMap = (items: DropdownMenuV2ItemType[]) => {
+const getReserveIconSpaceMap = (items: DropdownItem[]) => {
   const flags = Array.from({ length: items.length }).fill(false);
   let segmentIndices: number[] = [];
   let segmentHasIcon = false;
@@ -69,7 +69,7 @@ const getReserveIconSpaceMap = (items: DropdownMenuV2ItemType[]) => {
     }
 
     segmentIndices.push(index);
-    if ((item as DropdownMenuV2CheckboxItem).type === 'checkbox') {
+    if ((item as DropdownMenuCheckboxItem).type === 'checkbox') {
       segmentHasIcon = true;
       return;
     }
@@ -81,7 +81,7 @@ const getReserveIconSpaceMap = (items: DropdownMenuV2ItemType[]) => {
 };
 
 const renderItemContent = (
-  item: MenuItemType | SubMenuType | DropdownMenuV2CheckboxItem,
+  item: MenuItemType | SubMenuType | DropdownMenuCheckboxItem,
   options?: { reserveIconSpace?: boolean; submenu?: boolean },
   iconNode?: ReactNode,
 ) => {
@@ -128,7 +128,7 @@ const invokeItemClick = (
 };
 
 export const renderDropdownMenuItems = (
-  items: DropdownMenuV2ItemType[],
+  items: DropdownItem[],
   keyPath: string[] = [],
   options?: { reserveIconSpace?: boolean },
 ): ReactNode[] => {
@@ -143,8 +143,8 @@ export const renderDropdownMenuItems = (
     const nextKeyPath = [...keyPath, String(itemKey)];
     const reserveIconSpace = options?.reserveIconSpace ?? Boolean(reserveIconSpaceMap?.[index]);
 
-    if ((item as DropdownMenuV2CheckboxItem).type === 'checkbox') {
-      const checkboxItem = item as DropdownMenuV2CheckboxItem;
+    if ((item as DropdownMenuCheckboxItem).type === 'checkbox') {
+      const checkboxItem = item as DropdownMenuCheckboxItem;
       const label = getItemLabel(checkboxItem);
       const labelText = typeof label === 'string' ? label : undefined;
       const isDanger = Boolean(checkboxItem.danger);

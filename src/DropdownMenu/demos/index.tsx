@@ -1,4 +1,4 @@
-import { DropdownMenuV2 } from '@lobehub/ui';
+import { DropdownMenu } from '@lobehub/ui';
 import { createStaticStyles } from 'antd-style';
 import { MoreHorizontal } from 'lucide-react';
 
@@ -46,10 +46,10 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
 
 export default () => {
   return (
-    <DropdownMenuV2 items={items}>
+    <DropdownMenu items={items}>
       <button aria-label="Open menu" className={styles.trigger} type="button">
         <MoreHorizontal />
       </button>
-    </DropdownMenuV2>
+    </DropdownMenu>
   );
 };

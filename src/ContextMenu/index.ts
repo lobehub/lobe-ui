@@ -1,1 +1,2 @@
-export { ContextMenuHost, showContextMenu } from './imperative';
+export type { ContextMenuTriggerProps } from './ContextMenuTrigger';
+export { ContextMenuHost, ContextMenuTrigger, showContextMenu } from './imperative';

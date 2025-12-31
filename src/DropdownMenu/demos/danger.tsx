@@ -1,11 +1,11 @@
-import { Button, DropdownMenuV2 } from '@lobehub/ui';
+import { Button, DropdownMenu } from '@lobehub/ui';
 
 import { dangerItems } from './data';
 
 export default () => {
   return (
-    <DropdownMenuV2 items={dangerItems}>
+    <DropdownMenu items={dangerItems}>
       <Button danger>Danger Items</Button>
-    </DropdownMenuV2>
+    </DropdownMenu>
   );
 };

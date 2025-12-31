@@ -10,7 +10,7 @@ import type { Key, ReactNode } from 'react';
 import type { IconProps } from '@/Icon';
 import type { GenericItemType } from '@/Menu';
 
-export type DropdownMenuV2Placement =
+export type DropdownMenuPlacement =
   | 'bottomLeft'
   | 'bottomCenter'
   | 'bottomRight'
@@ -18,7 +18,7 @@ export type DropdownMenuV2Placement =
   | 'topCenter'
   | 'topRight';
 
-export interface DropdownMenuV2CheckboxItem {
+export interface DropdownMenuCheckboxItem {
   checked?: boolean;
   closeOnClick?: boolean;
   danger?: boolean;
@@ -33,15 +33,15 @@ export interface DropdownMenuV2CheckboxItem {
   type: 'checkbox';
 }
 
-export type DropdownMenuV2ItemType = GenericItemType | DropdownMenuV2CheckboxItem;
+export type DropdownItem = GenericItemType | DropdownMenuCheckboxItem;
 
-export interface DropdownMenuV2Props<Payload = unknown> extends Omit<
+export interface DropdownMenuProps<Payload = unknown> extends Omit<
   MenuRootProps<Payload>,
   'children'
 > {
   children: ReactNode;
-  items: DropdownMenuV2ItemType[] | (() => DropdownMenuV2ItemType[]);
-  placement?: DropdownMenuV2Placement;
+  items: DropdownItem[] | (() => DropdownItem[]);
+  placement?: DropdownMenuPlacement;
   popupProps?: MenuPopupProps;
   portalProps?: MenuPortalProps;
   positionerProps?: MenuPositionerProps;

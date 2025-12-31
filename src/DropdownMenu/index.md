@@ -1,8 +1,8 @@
 ---
 nav: Components
 group: Navigation
-title: DropdownMenuV2
-description: DropdownMenuV2 renders a dropdown menu based on Base UI Menu primitives, aligned with ContextMenu item layout and styling.
+title: DropdownMenu
+description: DropdownMenu renders a dropdown menu based on Base UI Menu primitives, aligned with ContextMenu item layout and styling.
 ---
 
 ## Default

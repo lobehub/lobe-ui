@@ -1,10 +1,12 @@
-import { Button, DropdownMenuV2, type DropdownMenuV2ItemType } from '@lobehub/ui';
+import { Button, DropdownMenu } from '@lobehub/ui';
 import { useMemo, useState } from 'react';
+
+import type { DropdownItem } from '../type';
 
 export default () => {
   const [state, setState] = useState({ autoSave: true, notifications: false });
 
-  const items = useMemo<DropdownMenuV2ItemType[]>(
+  const items = useMemo<DropdownItem[]>(
     () => [
       {
         checked: state.autoSave,
@@ -33,8 +35,8 @@ export default () => {
   );
 
   return (
-    <DropdownMenuV2 items={items}>
+    <DropdownMenu items={items}>
       <Button>Checkbox Items</Button>
-    </DropdownMenuV2>
+    </DropdownMenu>
   );
 };

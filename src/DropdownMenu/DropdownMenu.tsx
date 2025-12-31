@@ -19,10 +19,10 @@ import { TOOLTIP_CONTAINER_ATTR } from '@/Tooltip/TooltipPortal';
 import { useIsClient } from '@/hooks/useIsClient';
 
 import { renderDropdownMenuItems } from './renderItems';
-import type { DropdownMenuV2Placement, DropdownMenuV2Props } from './type';
+import type { DropdownMenuPlacement, DropdownMenuProps } from './type';
 
 const placementMap: Record<
-  DropdownMenuV2Placement,
+  DropdownMenuPlacement,
   { align: 'start' | 'center' | 'end'; side: 'top' | 'bottom' }
 > = {
   bottomCenter: { align: 'center', side: 'bottom' },
@@ -33,7 +33,7 @@ const placementMap: Record<
   topRight: { align: 'end', side: 'top' },
 };
 
-const DropdownMenuV2 = memo<DropdownMenuV2Props>(
+const DropdownMenu = memo<DropdownMenuProps>(
   ({
     children,
     defaultOpen,
@@ -133,6 +133,6 @@ const DropdownMenuV2 = memo<DropdownMenuV2Props>(
   },
 );
 
-DropdownMenuV2.displayName = 'DropdownMenuV2';
+DropdownMenu.displayName = 'DropdownMenuV2';
 
-export default DropdownMenuV2;
+export default DropdownMenu;

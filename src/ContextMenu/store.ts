@@ -6,17 +6,19 @@ export type ContextMenuState = {
   anchor: VirtualElement | null;
   items: GenericItemType[];
   open: boolean;
+  triggerId: string | null;
 };
 
 const emptyState: ContextMenuState = {
   anchor: null,
   items: [],
   open: false,
+  triggerId: null,
 };
 
 let contextMenuState: ContextMenuState = emptyState;
 const listeners = new Set<() => void>();
-const lastPointer = { ready: false, x: 0, y: 0 };
+const lastPointer = { ready: false, triggerId: null as string | null, x: 0, y: 0 };
 
 const notify = () => {
   listeners.forEach((listener) => listener());
@@ -34,6 +36,12 @@ export const updateLastPointer = (event: MouseEvent | PointerEvent) => {
   lastPointer.x = event.clientX;
   lastPointer.y = event.clientY;
   lastPointer.ready = true;
+  if (event.target instanceof Element) {
+    const trigger = event.target.closest<HTMLElement>('[data-contextmenu-trigger]');
+    lastPointer.triggerId = trigger?.dataset.contextmenuTrigger ?? null;
+  } else {
+    lastPointer.triggerId = null;
+  }
 };
 
 const createVirtualElement = (point: { x: number; y: number }): VirtualElement => ({
@@ -67,9 +75,10 @@ export const showContextMenu = (items: GenericItemType[]) => {
     anchor: createVirtualElement(point),
     items,
     open: true,
+    triggerId: lastPointer.triggerId ?? null,
   });
 };
 
 export const closeContextMenu = () => {
-  setContextMenuState({ anchor: null, items: [], open: false });
+  setContextMenuState({ anchor: null, items: [], open: false, triggerId: null });
 };
