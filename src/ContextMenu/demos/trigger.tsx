@@ -4,11 +4,9 @@ import {
   ContextMenuTrigger,
   type GenericItemType,
   Text,
-  showContextMenu,
 } from '@lobehub/ui';
 import { createStaticStyles } from 'antd-style';
-import type { MouseEvent } from 'react';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 
 const styles = createStaticStyles(({ css, cssVar }) => ({
   trigger: css`
@@ -31,6 +29,7 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
 }));
 
 export default () => {
+  // items can be an array or a lazy function () => items[]
   const items = useMemo<GenericItemType[]>(
     () => [
       { key: 'open', label: 'Open' },
@@ -41,17 +40,9 @@ export default () => {
     [],
   );
 
-  const handleContextMenu = useCallback(
-    (event: MouseEvent<HTMLElement>) => {
-      event.preventDefault();
-      showContextMenu(items);
-    },
-    [items],
-  );
-
   return (
     <>
-      <ContextMenuTrigger className={styles.trigger} onContextMenu={handleContextMenu}>
+      <ContextMenuTrigger className={styles.trigger} items={items}>
         <Block direction="vertical" gap={8} padding={16}>
           <Text as={'p'} strong>
             Right click this panel

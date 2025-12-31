@@ -13,10 +13,20 @@ import React, {
   useSyncExternalStore,
 } from 'react';
 
-import { getServerSnapshot, getSnapshot, subscribe } from './store';
+import type { GenericItemType } from '@/Menu';
+
+import { getServerSnapshot, getSnapshot, showContextMenu, subscribe } from './store';
 
 export type ContextMenuTriggerProps = {
   children: ReactNode;
+  /**
+   * Menu items to display. Supports lazy rendering via function.
+   * When provided, context menu will be automatically shown on right-click.
+   */
+  items?: GenericItemType[] | (() => GenericItemType[]);
+  /**
+   * Custom context menu handler. If `items` is provided, this is optional.
+   */
   onContextMenu?: (event: MouseEvent<HTMLElement>) => void;
 } & Omit<HTMLAttributes<HTMLElement>, 'onContextMenu' | 'children'>;
 
@@ -27,16 +37,21 @@ const styles = {
 };
 
 export const ContextMenuTrigger = memo<ContextMenuTriggerProps>(
-  ({ children, onContextMenu, ...rest }) => {
+  ({ children, items, onContextMenu, ...rest }) => {
     const triggerId = useId();
     const state = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
     const open = state.open && state.triggerId === triggerId;
 
     const handleContextMenu = useCallback(
       (event: MouseEvent<HTMLElement>) => {
+        if (items) {
+          event.preventDefault();
+          const resolvedItems = typeof items === 'function' ? items() : items;
+          showContextMenu(resolvedItems);
+        }
         onContextMenu?.(event);
       },
-      [onContextMenu],
+      [items, onContextMenu],
     );
 
     const triggerProps = {
