@@ -48,6 +48,13 @@ export {
 export { default as DraggableSideNav, type DraggableSideNavProps } from './DraggableSideNav';
 export { default as Drawer, type DrawerProps } from './Drawer';
 export { default as Dropdown, type DropdownMenuItemType, type DropdownProps } from './Dropdown';
+export {
+  default as DropdownMenuV2,
+  type DropdownMenuV2CheckboxItem,
+  type DropdownMenuV2ItemType,
+  type DropdownMenuV2Placement,
+  type DropdownMenuV2Props,
+} from './DropdownMenuV2';
 export { default as EditableText, type EditableTextProps } from './EditableText';
 export { default as EmojiPicker, type EmojiPickerProps } from './EmojiPicker';
 export { default as Empty, type EmptyProps } from './Empty';
