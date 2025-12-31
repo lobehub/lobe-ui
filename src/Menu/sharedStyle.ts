@@ -141,7 +141,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     height: 1px;
     margin-block: 4px;
     margin-inline: 0;
-    background: ${cssVar.colorBorderSecondary};
+    background: ${cssVar.colorBorder};
   `,
 
   submenuArrow: css`
