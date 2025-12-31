@@ -136,6 +136,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           .${prefixCls}-collapse-expand-icon {
             align-items: center;
             min-height: 28px;
+            margin: 0;
             padding: 0;
           }
 
