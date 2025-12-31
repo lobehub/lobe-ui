@@ -29,7 +29,7 @@ export { default as CodeEditor, type CodeEditorProps } from './CodeEditor';
 export { default as Collapse, type CollapseItemType, type CollapseProps } from './Collapse';
 export { default as ColorSwatches, type ColorSwatchesProps } from './ColorSwatches';
 export { type Config, default as ConfigProvider, useCdnFn } from './ConfigProvider';
-export { ContextMenuHost, showContextMenu } from './ContextMenu';
+export { ContextMenuHost, ContextMenuTrigger, showContextMenu } from './ContextMenu';
 export { default as CopyButton, type CopyButtonProps } from './CopyButton';
 export { default as DatePicker, type DatePickerProps } from './DatePicker';
 export { default as DownloadButton, type DownloadButtonProps } from './DownloadButton';
@@ -48,6 +48,13 @@ export {
 export { default as DraggableSideNav, type DraggableSideNavProps } from './DraggableSideNav';
 export { default as Drawer, type DrawerProps } from './Drawer';
 export { default as Dropdown, type DropdownMenuItemType, type DropdownProps } from './Dropdown';
+export {
+  type DropdownItem,
+  default as DropdownMenu,
+  type DropdownMenuCheckboxItem,
+  type DropdownMenuPlacement,
+  type DropdownMenuProps,
+} from './DropdownMenu';
 export { default as EditableText, type EditableTextProps } from './EditableText';
 export { default as EmojiPicker, type EmojiPickerProps } from './EmojiPicker';
 export { default as Empty, type EmptyProps } from './Empty';

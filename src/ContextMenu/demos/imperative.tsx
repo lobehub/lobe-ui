@@ -1,6 +1,7 @@
 import {
   Block,
   ContextMenuHost,
+  ContextMenuTrigger,
   type GenericItemType,
   Icon,
   Text,
@@ -93,7 +94,7 @@ export default () => {
   );
 
   const handleContextMenu = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
+    (event: MouseEvent<HTMLElement>) => {
       event.preventDefault();
       showContextMenu(items);
     },
@@ -102,14 +103,16 @@ export default () => {
 
   return (
     <>
-      <Block direction="vertical" gap={8} onContextMenu={handleContextMenu} padding={16}>
-        <Text as={'p'} strong>
-          Right click this panel
-        </Text>
-        <Text as={'p'} type="secondary">
-          Last action: {lastAction}
-        </Text>
-      </Block>
+      <ContextMenuTrigger onContextMenu={handleContextMenu}>
+        <Block direction="vertical" gap={8} padding={16}>
+          <Text as={'p'} strong>
+            Right click this panel
+          </Text>
+          <Text as={'p'} type="secondary">
+            Last action: {lastAction}
+          </Text>
+        </Block>
+      </ContextMenuTrigger>
       <ContextMenuHost />
     </>
   );

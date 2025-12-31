@@ -64,7 +64,11 @@ export const ContextMenuHost = memo(() => {
       open={state.open}
     >
       <ContextMenu.Portal container={portalContainer}>
-        <ContextMenu.Positioner anchor={state.anchor ?? undefined} sideOffset={6}>
+        <ContextMenu.Positioner
+          anchor={state.anchor ?? undefined}
+          className={styles.positioner}
+          sideOffset={6}
+        >
           <ContextMenu.Popup
             className={styles.popup}
             onContextMenu={preventDefaultAndStopPropagation}

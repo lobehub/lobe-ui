@@ -9,6 +9,10 @@ description: ContextMenu provides an imperative API to open a menu at the last p
 
 <code src="./demos/imperative.tsx" center></code>
 
+## Trigger State
+
+<code src="./demos/trigger.tsx" center></code>
+
 ## APIs
 
 ### showContextMenu
@@ -22,3 +26,7 @@ description: ContextMenu provides an imperative API to open a menu at the last p
 ### ContextMenuHost
 
 Render once near the root to host imperative context menus.
+
+### ContextMenuTrigger
+
+Declarative trigger wrapper that attaches open state attributes (`data-popup-open`, `data-state`, `aria-expanded`) for styling alignment with DropdownMenu. Use `onContextMenu` to call `showContextMenu`.

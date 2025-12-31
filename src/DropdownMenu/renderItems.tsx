@@ -1,6 +1,6 @@
-import { ContextMenu } from '@base-ui/react/context-menu';
+import { Menu } from '@base-ui/react/menu';
 import { cx } from 'antd-style';
-import { ChevronRight } from 'lucide-react';
+import { Check, ChevronRight } from 'lucide-react';
 import type { MenuInfo } from 'rc-menu/es/interface';
 import type {
   Key,
@@ -12,23 +12,28 @@ import { isValidElement } from 'react';
 
 import Icon from '@/Icon';
 import type {
-  GenericItemType,
   ItemType,
   MenuDividerType,
   MenuItemGroupType,
   MenuItemType,
   SubMenuType,
 } from '@/Menu';
-import { preventDefaultAndStopPropagation } from '@/utils/dom';
+import { styles } from '@/Menu/sharedStyle';
 
-import { styles } from './style';
+import type { DropdownItem, DropdownMenuCheckboxItem } from './type';
 
-const getItemKey = (item: ItemType, fallback: string): Key => {
+const getItemKey = (item: ItemType | DropdownItem, fallback: string): Key => {
   if (item && 'key' in item && item.key !== undefined) return item.key;
   return fallback;
 };
 
-const getItemLabel = (item: MenuItemType | SubMenuType): ReactNode => {
+type LabelableItem = {
+  key?: Key;
+  label?: ReactNode;
+  title?: ReactNode;
+};
+
+const getItemLabel = (item: MenuItemType | SubMenuType | LabelableItem): ReactNode => {
   if (item.label !== undefined) return item.label;
   if ('title' in item && item.title !== undefined) return item.title;
   return item.key;
@@ -37,10 +42,10 @@ const getItemLabel = (item: MenuItemType | SubMenuType): ReactNode => {
 const renderIcon = (icon: MenuItemType['icon']) => {
   if (!icon) return null;
   if (isValidElement(icon)) return icon;
-  return <Icon icon={icon} size={'small'} />;
+  return <Icon icon={icon} />;
 };
 
-const getReserveIconSpaceMap = (items: GenericItemType[]) => {
+const getReserveIconSpaceMap = (items: DropdownItem[]) => {
   const flags = Array.from({ length: items.length }).fill(false);
   let segmentIndices: number[] = [];
   let segmentHasIcon = false;
@@ -64,6 +69,10 @@ const getReserveIconSpaceMap = (items: GenericItemType[]) => {
     }
 
     segmentIndices.push(index);
+    if ((item as DropdownMenuCheckboxItem).type === 'checkbox') {
+      segmentHasIcon = true;
+      return;
+    }
     if ('icon' in item && item.icon) segmentHasIcon = true;
   });
 
@@ -72,19 +81,23 @@ const getReserveIconSpaceMap = (items: GenericItemType[]) => {
 };
 
 const renderItemContent = (
-  item: MenuItemType | SubMenuType,
+  item: MenuItemType | SubMenuType | DropdownMenuCheckboxItem,
   options?: { reserveIconSpace?: boolean; submenu?: boolean },
+  iconNode?: ReactNode,
 ) => {
   const label = getItemLabel(item);
   const extra = 'extra' in item ? item.extra : undefined;
-  const hasIcon = Boolean(item.icon);
-  const shouldRenderIcon = hasIcon || options?.reserveIconSpace;
+  const hasCustomIcon = iconNode !== undefined;
+  const hasIcon = hasCustomIcon ? Boolean(iconNode) : Boolean(item.icon);
+  const shouldRenderIcon = hasCustomIcon
+    ? Boolean(options?.reserveIconSpace || iconNode)
+    : Boolean(hasIcon || options?.reserveIconSpace);
 
   return (
     <div className={styles.itemContent}>
       {shouldRenderIcon ? (
         <span aria-hidden={!hasIcon} className={styles.icon}>
-          {hasIcon ? renderIcon(item.icon) : null}
+          {hasCustomIcon ? iconNode : hasIcon ? renderIcon(item.icon) : null}
         </span>
       ) : null}
       <span className={styles.label}>{label}</span>
@@ -114,8 +127,8 @@ const invokeItemClick = (
   item.onClick(info);
 };
 
-export const renderContextMenuItems = (
-  items: GenericItemType[],
+export const renderDropdownMenuItems = (
+  items: DropdownItem[],
   keyPath: string[] = [],
   options?: { reserveIconSpace?: boolean },
 ): ReactNode[] => {
@@ -130,8 +143,35 @@ export const renderContextMenuItems = (
     const nextKeyPath = [...keyPath, String(itemKey)];
     const reserveIconSpace = options?.reserveIconSpace ?? Boolean(reserveIconSpaceMap?.[index]);
 
+    if ((item as DropdownMenuCheckboxItem).type === 'checkbox') {
+      const checkboxItem = item as DropdownMenuCheckboxItem;
+      const label = getItemLabel(checkboxItem);
+      const labelText = typeof label === 'string' ? label : undefined;
+      const isDanger = Boolean(checkboxItem.danger);
+      const indicator = (
+        <Menu.CheckboxItemIndicator>
+          <Icon icon={Check} />
+        </Menu.CheckboxItemIndicator>
+      );
+
+      return (
+        <Menu.CheckboxItem
+          checked={checkboxItem.checked}
+          className={cx(styles.item, isDanger && styles.danger)}
+          closeOnClick={checkboxItem.closeOnClick}
+          defaultChecked={checkboxItem.defaultChecked}
+          disabled={checkboxItem.disabled}
+          key={itemKey}
+          label={labelText}
+          onCheckedChange={(checked) => checkboxItem.onCheckedChange?.(checked)}
+        >
+          {renderItemContent(checkboxItem, { reserveIconSpace }, indicator)}
+        </Menu.CheckboxItem>
+      );
+    }
+
     if ((item as MenuDividerType).type === 'divider') {
-      return <ContextMenu.Separator className={styles.separator} key={itemKey} />;
+      return <Menu.Separator className={styles.separator} key={itemKey} />;
     }
 
     if ((item as MenuItemGroupType).type === 'group') {
@@ -140,18 +180,16 @@ export const renderContextMenuItems = (
         group.children?.some((child) => Boolean(child && 'icon' in child && child.icon)),
       );
       return (
-        <ContextMenu.Group key={itemKey}>
+        <Menu.Group key={itemKey}>
           {group.label ? (
-            <ContextMenu.GroupLabel className={styles.groupLabel}>
-              {group.label}
-            </ContextMenu.GroupLabel>
+            <Menu.GroupLabel className={styles.groupLabel}>{group.label}</Menu.GroupLabel>
           ) : null}
           {group.children
-            ? renderContextMenuItems(group.children, nextKeyPath, {
+            ? renderDropdownMenuItems(group.children, nextKeyPath, {
                 reserveIconSpace: groupReserveIconSpace,
               })
             : null}
-        </ContextMenu.Group>
+        </Menu.Group>
       );
     }
 
@@ -162,8 +200,8 @@ export const renderContextMenuItems = (
       const isDanger = 'danger' in submenu && Boolean(submenu.danger);
 
       return (
-        <ContextMenu.SubmenuRoot key={itemKey}>
-          <ContextMenu.SubmenuTrigger
+        <Menu.SubmenuRoot key={itemKey}>
+          <Menu.SubmenuTrigger
             className={cx(styles.item, isDanger && styles.danger)}
             disabled={submenu.disabled}
             label={labelText}
@@ -172,20 +210,15 @@ export const renderContextMenuItems = (
               reserveIconSpace,
               submenu: true,
             })}
-          </ContextMenu.SubmenuTrigger>
-          <ContextMenu.Portal>
-            <ContextMenu.Positioner
-              alignOffset={-4}
-              className={styles.positioner}
-              onContextMenu={preventDefaultAndStopPropagation}
-              sideOffset={-1}
-            >
-              <ContextMenu.Popup className={styles.popup}>
-                {submenu.children ? renderContextMenuItems(submenu.children, nextKeyPath) : null}
-              </ContextMenu.Popup>
-            </ContextMenu.Positioner>
-          </ContextMenu.Portal>
-        </ContextMenu.SubmenuRoot>
+          </Menu.SubmenuTrigger>
+          <Menu.Portal>
+            <Menu.Positioner alignOffset={-4} className={styles.positioner} sideOffset={-1}>
+              <Menu.Popup className={styles.popup}>
+                {submenu.children ? renderDropdownMenuItems(submenu.children, nextKeyPath) : null}
+              </Menu.Popup>
+            </Menu.Positioner>
+          </Menu.Portal>
+        </Menu.SubmenuRoot>
       );
     }
 
@@ -195,7 +228,7 @@ export const renderContextMenuItems = (
     const isDanger = 'danger' in menuItem && Boolean(menuItem.danger);
 
     return (
-      <ContextMenu.Item
+      <Menu.Item
         className={cx(styles.item, isDanger && styles.danger)}
         disabled={menuItem.disabled}
         key={itemKey}
@@ -203,7 +236,7 @@ export const renderContextMenuItems = (
         onClick={(event) => invokeItemClick(menuItem, nextKeyPath, event)}
       >
         {renderItemContent(menuItem, { reserveIconSpace })}
-      </ContextMenu.Item>
+      </Menu.Item>
     );
   });
 };
