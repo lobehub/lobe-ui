@@ -34,13 +34,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     filledDark: css`
       &.${prefixCls}-collapse {
         .${prefixCls}-collapse-item {
-          background: ${cssVar.colorFillQuaternary};
+          background: ${cssVar.colorBgLayout};
           .${prefixCls}-collapse-panel {
             margin-inline: 3px;
             margin-block-end: 3px;
             border-radius: ${cssVar.borderRadius};
             ${lobeStaticStylish.variantOutlinedWithoutHover};
-            background: ${cssVar.colorFillQuaternary};
           }
         }
       }
