@@ -29,6 +29,7 @@ export { default as CodeEditor, type CodeEditorProps } from './CodeEditor';
 export { default as Collapse, type CollapseItemType, type CollapseProps } from './Collapse';
 export { default as ColorSwatches, type ColorSwatchesProps } from './ColorSwatches';
 export { type Config, default as ConfigProvider, useCdnFn } from './ConfigProvider';
+export { ContextMenuHost, showContextMenu } from './ContextMenu';
 export { default as CopyButton, type CopyButtonProps } from './CopyButton';
 export { default as DatePicker, type DatePickerProps } from './DatePicker';
 export { default as DownloadButton, type DownloadButtonProps } from './DownloadButton';
@@ -147,6 +148,7 @@ export {
   type MaterialFileTypeIconProps,
 } from './MaterialFileTypeIcon';
 export {
+  type GenericItemType,
   type ItemType,
   default as Menu,
   type MenuInfo,
@@ -214,6 +216,7 @@ export {
   default as ThemeProvider,
   type ThemeProviderProps,
 } from './ThemeProvider';
+export { LOBE_THEME_APP_ID } from './ThemeProvider/constants';
 export { default as ThemeSwitch, type ThemeSwitchProps } from './ThemeSwitch';
 export { default as Toc, type TocProps } from './Toc';
 export { default as Tooltip, TooltipGroup, type TooltipProps } from './Tooltip';

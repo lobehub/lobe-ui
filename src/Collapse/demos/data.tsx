@@ -1,6 +1,8 @@
 import { ActionIcon, type CollapseProps } from '@lobehub/ui';
 import { SettingsIcon } from 'lucide-react';
 
+import { stopPropagation } from '@/utils/dom';
+
 export const items: CollapseProps['items'] = [
   {
     children: 111,
@@ -10,7 +12,7 @@ export const items: CollapseProps['items'] = [
         icon={SettingsIcon}
         // If you want to prevent the event from bubbling up,
         // you can use the stopPropagation method.
-        onClick={(e) => e.stopPropagation()}
+        onClick={stopPropagation}
         size={'small'}
       />
     ),

@@ -10,6 +10,7 @@ import { Flexbox } from '@/Flex';
 import { bodyVariants, headerVariants, variants } from '@/Highlighter/style';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
 import Text from '@/Text';
+import { stopPropagation } from '@/utils/dom';
 
 import { MermaidProps } from './type';
 
@@ -126,13 +127,7 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
             language={language}
             showLanguage={showLanguage}
           />
-          <Flexbox
-            align={'center'}
-            flex={'none'}
-            gap={4}
-            horizontal
-            onClick={(e) => e.stopPropagation()}
-          >
+          <Flexbox align={'center'} flex={'none'} gap={4} horizontal onClick={stopPropagation}>
             <Flexbox align={'center'} className={'panel-actions'} flex={'none'} gap={4} horizontal>
               {actions}
             </Flexbox>

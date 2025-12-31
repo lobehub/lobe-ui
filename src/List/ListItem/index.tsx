@@ -7,6 +7,7 @@ import { memo } from 'react';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Text from '@/Text';
+import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
 import type { ListItemProps } from '../type';
 import { styles } from './style';
@@ -46,10 +47,7 @@ const ListItem = memo<ListItemProps>(
         className={cx(styles.actions, classNames?.actions)}
         gap={4}
         horizontal
-        onClick={(e: any) => {
-          e.preventDefault();
-          e.stopPropagation();
-        }}
+        onClick={preventDefaultAndStopPropagation}
         style={{ display: showAction ? undefined : 'none', ...customStyles?.actions }}
       >
         {actions}
