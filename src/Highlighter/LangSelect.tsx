@@ -7,6 +7,7 @@ import { bundledLanguagesInfo } from 'shiki';
 import { Flexbox } from '@/Flex';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
 import Text from '@/Text';
+import { stopPropagation } from '@/utils/dom';
 
 export const LangSelect = memo<Omit<SelectProps, 'options'>>(({ ...rest }) => {
   const options = useMemo(
@@ -58,7 +59,7 @@ export const LangSelect = memo<Omit<SelectProps, 'options'>>(({ ...rest }) => {
   return (
     <Select
       className={'languageTitle'}
-      onClick={(e) => e.stopPropagation()}
+      onClick={stopPropagation}
       options={options}
       showSearch
       size={'small'}

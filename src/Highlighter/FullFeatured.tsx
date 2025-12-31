@@ -10,6 +10,7 @@ import { Flexbox } from '@/Flex';
 import { getCodeLanguageDisplayName, getCodeLanguageFilename } from '@/Highlighter/const';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
 import Text from '@/Text';
+import { stopPropagation } from '@/utils/dom';
 
 import LangSelect from './LangSelect';
 import { bodyVariants, headerVariants, variants } from './style';
@@ -172,13 +173,7 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
             setLanguage={setLanguage}
             showLanguage={showLanguage}
           />
-          <Flexbox
-            align={'center'}
-            flex={'none'}
-            gap={4}
-            horizontal
-            onClick={(e) => e.stopPropagation()}
-          >
+          <Flexbox align={'center'} flex={'none'} gap={4} horizontal onClick={stopPropagation}>
             <Flexbox align={'center'} className={'panel-actions'} flex={'none'} gap={4} horizontal>
               {actions}
             </Flexbox>

@@ -10,6 +10,7 @@ import Block from '@/Block';
 import { Flexbox } from '@/Flex';
 import { type MotionComponentType, useMotionComponent } from '@/MotionProvider';
 import Text from '@/Text';
+import { stopPropagation } from '@/utils/dom';
 
 import ArrowIcon from './ArrowIcon';
 import { useAccordionContext } from './context';
@@ -361,7 +362,7 @@ const AccordionItem = memo<AccordionItemProps>(
             flex={'none'}
             gap={4}
             horizontal
-            onClick={(e) => e.stopPropagation()}
+            onClick={stopPropagation}
             style={customStyles?.action}
           >
             {action}
