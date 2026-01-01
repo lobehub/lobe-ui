@@ -1,7 +1,8 @@
 'use client';
 
-import { Menu } from '@base-ui/react/menu';
+import { Menu, type MenuTriggerState } from '@base-ui/react/menu';
 import { mergeProps } from '@base-ui/react/merge-props';
+import type { ComponentRenderFn, HTMLProps } from '@base-ui/react/utils/types';
 import { cx } from 'antd-style';
 import {
   cloneElement,
@@ -86,11 +87,18 @@ const DropdownMenu = memo<DropdownMenuProps>(
       return document.body;
     }, [isClient]);
     const placementConfig = placementMap[placement];
+    console.log('children', children);
+    const renderer: ComponentRenderFn<HTMLProps<any>, MenuTriggerState> = useCallback(
+      (props) => {
+        // FIXEE: Omit type: 'button' pass to and button
+        // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+        const { type, ...restProps } = props as any;
+        return cloneElement(children as any, mergeProps((children as any).props, restProps));
+      },
+      [children],
+    );
     const trigger = isValidElement(children) ? (
-      <Menu.Trigger
-        {...triggerProps}
-        render={(props) => cloneElement(children, mergeProps(children.props as any, props))}
-      />
+      <Menu.Trigger {...triggerProps} render={renderer} />
     ) : (
       <Menu.Trigger {...triggerProps}>{children}</Menu.Trigger>
     );

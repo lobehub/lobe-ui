@@ -21,9 +21,6 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
     color: ${cssVar.colorTextSecondary};
 
     background: ${cssVar.colorBgElevated};
-    box-shadow:
-      0 0 0 1px ${cssVar.colorBorderSecondary} inset,
-      0 8px 20px #0003;
 
     transition: all 150ms ${cssVar.motionEaseOut};
 
