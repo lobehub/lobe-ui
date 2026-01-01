@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable no-redeclare */
 'use client';
 
 import type { ReactNode } from 'react';
@@ -19,21 +17,6 @@ import type {
   RawModalKeyOptions,
   RawModalOptions,
 } from './type';
-
-/* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable no-redeclare */
-
-/* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable no-redeclare */
-
-/* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable no-redeclare */
-
-/* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable no-redeclare */
-
-/* eslint-disable @typescript-eslint/no-use-before-define */
-/* eslint-disable no-redeclare */
 
 type ModalStackItemBase = {
   id: string;
@@ -192,6 +175,7 @@ const closeModal = (id: string) => {
   if (existing) clearTimeout(existing);
   const timer = window.setTimeout(() => {
     rawDestroyTimers.delete(id);
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     destroyModal(id);
   }, delay);
   rawDestroyTimers.set(id, timer);
@@ -277,20 +261,14 @@ export function createRawModal<P extends RawModalComponentProps>(
   props: Omit<P, 'open' | 'onClose'>,
   options?: RawModalOptions,
 ): RawModalInstance<P>;
-export function createRawModal<
-  P extends Record<string, unknown>,
-  OpenKey extends keyof P,
-  CloseKey extends keyof P,
->(
+// eslint-disable-next-line no-redeclare
+export function createRawModal<P, OpenKey extends keyof P, CloseKey extends keyof P>(
   component: RawModalComponent<P>,
   props: Omit<P, OpenKey | CloseKey>,
   options: RawModalKeyOptions<OpenKey, CloseKey>,
 ): RawModalInstance<P, OpenKey, CloseKey>;
-export function createRawModal<
-  P extends Record<string, unknown>,
-  OpenKey extends keyof P,
-  CloseKey extends keyof P,
->(
+// eslint-disable-next-line no-redeclare
+export function createRawModal<P, OpenKey extends keyof P, CloseKey extends keyof P>(
   component: RawModalComponent<P>,
   props: Omit<P, OpenKey | CloseKey>,
   options?: RawModalOptions<OpenKey, CloseKey>,

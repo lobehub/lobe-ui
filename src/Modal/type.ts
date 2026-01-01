@@ -48,7 +48,7 @@ export type RawModalKeyOptions<
 };
 
 export type RawModalInstance<
-  P extends Record<string, unknown> = Record<string, unknown>,
+  P = any,
   OpenKey extends PropertyKey = 'open',
   CloseKey extends PropertyKey = 'onClose',
 > = ModalContextValue & {
