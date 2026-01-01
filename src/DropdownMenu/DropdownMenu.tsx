@@ -89,7 +89,7 @@ const DropdownMenu = memo<DropdownMenuProps>(
       return document.body;
     }, [isClient]);
     const placementConfig = placementMap[placement];
-    console.log('children', children);
+
     const renderer: ComponentRenderFn<HTMLProps<any>, MenuTriggerState> = useCallback(
       (props) => {
         // FIXEE: Omit type: 'button' pass to and button
