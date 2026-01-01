@@ -1,15 +1,14 @@
 'use client';
 
 import { Select } from 'antd';
-import { ThemeMode } from 'antd-style';
 import { Monitor, Moon, Sun } from 'lucide-react';
 import { type FC, useMemo } from 'react';
 
 import ActionIcon from '@/ActionIcon';
-import Dropdown from '@/Dropdown';
+import DropdownMenu from '@/DropdownMenu';
+import type { DropdownItem } from '@/DropdownMenu';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
-import type { MenuItemType } from '@/Menu';
 
 import type { ThemeSwitchProps } from './type';
 
@@ -33,13 +32,28 @@ const ThemeSwitch: FC<ThemeSwitchProps> = ({
   variant,
   style,
 }) => {
-  const items: MenuItemType[] = useMemo(
+  const items: DropdownItem[] = useMemo(
     () => [
-      { icon: DEFAULT_ICON_SET.auto, key: 'auto', label: labels.auto },
-      { icon: DEFAULT_ICON_SET.light, key: 'light', label: labels.light },
-      { icon: DEFAULT_ICON_SET.dark, key: 'dark', label: labels.dark },
+      {
+        icon: DEFAULT_ICON_SET.auto,
+        key: 'auto',
+        label: labels.auto,
+        onClick: () => onThemeSwitch('auto'),
+      },
+      {
+        icon: DEFAULT_ICON_SET.light,
+        key: 'light',
+        label: labels.light,
+        onClick: () => onThemeSwitch('light'),
+      },
+      {
+        icon: DEFAULT_ICON_SET.dark,
+        key: 'dark',
+        label: labels.dark,
+        onClick: () => onThemeSwitch('dark'),
+      },
     ],
-    [labels],
+    [labels, onThemeSwitch],
   );
 
   return type === 'select' ? (
@@ -60,13 +74,7 @@ const ThemeSwitch: FC<ThemeSwitchProps> = ({
       variant={variant}
     />
   ) : (
-    <Dropdown
-      menu={{
-        items,
-        onClick: (e) => onThemeSwitch(e.key as ThemeMode),
-      }}
-      trigger={['click']}
-    >
+    <DropdownMenu items={items}>
       <ActionIcon
         className={className}
         icon={DEFAULT_ICON_SET[themeMode]}
@@ -74,7 +82,7 @@ const ThemeSwitch: FC<ThemeSwitchProps> = ({
         style={style}
         variant={variant}
       />
-    </Dropdown>
+    </DropdownMenu>
   );
 };
 

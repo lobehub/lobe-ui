@@ -108,7 +108,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   popup: css`
-    min-width: 200px;
+    min-width: 120px;
     padding: 4px;
     border-radius: ${cssVar.borderRadius};
 
