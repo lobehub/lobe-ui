@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.6.4](https://github.com/lobehub/lobe-ui/compare/v4.6.3...v4.6.4)
+
+<sup>Released on **2026-01-01**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Clean up Modal imperative eslint comments and generic types.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Clean up Modal imperative eslint comments and generic types ([01bf5ac](https://github.com/lobehub/lobe-ui/commit/01bf5ac))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.6.3](https://github.com/lobehub/lobe-ui/compare/v4.6.2...v4.6.3)
 
 <sup>Released on **2025-12-31**</sup>
