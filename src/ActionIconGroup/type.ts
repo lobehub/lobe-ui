@@ -1,7 +1,7 @@
 import type { Ref } from 'react';
 
 import type { ActionIconProps } from '@/ActionIcon';
-import type { DropdownProps } from '@/Dropdown';
+import type { DropdownMenuProps } from '@/DropdownMenu';
 import type { CenterProps } from '@/Flex';
 import type { MenuInfo, MenuItemType } from '@/Menu';
 
@@ -12,7 +12,7 @@ export interface ActionIconGroupProps extends Omit<CenterProps, 'children'> {
   disabled?: boolean;
   glass?: boolean;
   items?: MenuItemType[];
-  menu?: DropdownProps['menu'];
+  menu?: DropdownMenuProps['items'];
   onActionClick?: (action: ActionIconGroupEvent) => void;
   ref?: Ref<HTMLDivElement>;
   shadow?: boolean;

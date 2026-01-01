@@ -95,6 +95,16 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         }
       }
 
+      div[role='menubar']:has([data-popup-open]),
+      div[role='menubar'][data-popup-open] {
+        pointer-events: unset !important;
+        opacity: 1 !important;
+
+        [data-popup-open] {
+          background: ${cssVar.colorFillTertiary};
+        }
+      }
+
       ${responsive.sm} {
         padding-block-start: 12px;
         padding-inline: 8px;
@@ -132,6 +142,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           pointer-events: unset;
           opacity: 1;
         }
+      }
+
+      div[role='menubar']:has(.lobe-dropdown-menu-trigger[data-popup-open]) {
+        pointer-events: unset;
+        opacity: 1;
       }
 
       ${responsive.sm} {

@@ -10,9 +10,7 @@ const ChatActionsBar: FC<ChatActionsBarProps> = ({ text, ref, ...rest }) => {
   return (
     <ActionIconGroup
       items={[regenerate, edit]}
-      menu={{
-        items: [edit, copy, regenerate, divider, del],
-      }}
+      menu={[edit, copy, regenerate, divider, del]}
       ref={ref}
       {...rest}
     />

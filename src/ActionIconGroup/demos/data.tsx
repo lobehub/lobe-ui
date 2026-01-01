@@ -16,27 +16,25 @@ export const items: ActionIconGroupProps['items'] = [
   },
 ];
 
-export const dropdownMenu: ActionIconGroupProps['menu'] = {
-  items: [
-    {
-      icon: Copy,
-      key: 'copy',
-      label: 'Copy',
-    },
-    {
-      disabled: true,
-      icon: RotateCw,
-      key: 'regenerate',
-      label: 'Regenerate',
-    },
-    {
-      type: 'divider',
-    },
-    {
-      danger: true,
-      icon: Trash,
-      key: 'delete',
-      label: 'Delete',
-    },
-  ],
-};
+export const dropdownMenu: ActionIconGroupProps['menu'] = [
+  {
+    icon: Copy,
+    key: 'copy',
+    label: 'Copy',
+  },
+  {
+    disabled: true,
+    icon: RotateCw,
+    key: 'regenerate',
+    label: 'Regenerate',
+  },
+  {
+    type: 'divider',
+  },
+  {
+    danger: true,
+    icon: Trash,
+    key: 'delete',
+    label: 'Delete',
+  },
+];

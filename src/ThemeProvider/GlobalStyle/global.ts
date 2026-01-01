@@ -1,5 +1,7 @@
 import { Theme, css } from 'antd-style';
 
+import { CLASSNAMES } from '@/styles/classNames';
+
 export default (token: Theme) => css`
   :root {
     --font-settings: 'cv01', 'tnum', 'kern';
@@ -59,6 +61,12 @@ export default (token: Theme) => css`
     scrollbar-width: thin;
     box-sizing: border-box;
     vertical-align: baseline;
+  }
+  @layer lobe-popup {
+    .${CLASSNAMES.ContextTrigger}[data-popup-open],
+      .${CLASSNAMES.DropdownMenuTrigger}[data-popup-open] {
+      background: ${token.colorFillTertiary};
+    }
   }
 
   @layer lobe-base {
