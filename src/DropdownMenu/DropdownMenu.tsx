@@ -4,6 +4,7 @@ import { Menu, type MenuTriggerState } from '@base-ui/react/menu';
 import { mergeProps } from '@base-ui/react/merge-props';
 import type { ComponentRenderFn, HTMLProps } from '@base-ui/react/utils/types';
 import { cx } from 'antd-style';
+import clsx from 'clsx';
 import {
   cloneElement,
   isValidElement,
@@ -18,6 +19,7 @@ import { styles } from '@/Menu/sharedStyle';
 import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
 import { TOOLTIP_CONTAINER_ATTR } from '@/Tooltip/TooltipPortal';
 import { useIsClient } from '@/hooks/useIsClient';
+import { CLASSNAMES } from '@/styles/classNames';
 
 import { renderDropdownMenuItems } from './renderItems';
 import type { DropdownMenuPlacement, DropdownMenuProps } from './type';
@@ -98,9 +100,18 @@ const DropdownMenu = memo<DropdownMenuProps>(
       [children],
     );
     const trigger = isValidElement(children) ? (
-      <Menu.Trigger {...triggerProps} render={renderer} />
+      <Menu.Trigger
+        {...triggerProps}
+        className={clsx(CLASSNAMES.DropdownMenuTrigger, triggerProps?.className)}
+        render={renderer}
+      />
     ) : (
-      <Menu.Trigger {...triggerProps}>{children}</Menu.Trigger>
+      <Menu.Trigger
+        {...triggerProps}
+        className={clsx(CLASSNAMES.DropdownMenuTrigger, triggerProps?.className)}
+      >
+        {children}
+      </Menu.Trigger>
     );
 
     return (

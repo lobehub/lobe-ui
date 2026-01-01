@@ -1,6 +1,7 @@
 'use client';
 
 import { mergeProps } from '@base-ui/react/merge-props';
+import clsx from 'clsx';
 import React, {
   type HTMLAttributes,
   type MouseEvent,
@@ -14,6 +15,7 @@ import React, {
 } from 'react';
 
 import type { GenericItemType } from '@/Menu';
+import { CLASSNAMES } from '@/styles/classNames';
 
 import { getServerSnapshot, getSnapshot, showContextMenu, subscribe } from './store';
 
@@ -57,6 +59,7 @@ export const ContextMenuTrigger = memo<ContextMenuTriggerProps>(
     const triggerProps = {
       ...rest,
       'aria-expanded': open || undefined,
+      'className': clsx(CLASSNAMES.ContextTrigger, rest.className),
       'data-contextmenu-trigger': triggerId,
       'data-popup-open': open ? '' : undefined,
       'data-state': open ? 'open' : undefined,
