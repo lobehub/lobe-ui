@@ -8,7 +8,7 @@ import type {
   MouseEvent as ReactMouseEvent,
   ReactNode,
 } from 'react';
-import { isValidElement } from 'react';
+import { isValidElement, memo } from 'react';
 
 import Icon from '@/Icon';
 import type {
@@ -19,9 +19,24 @@ import type {
   MenuItemType,
   SubMenuType,
 } from '@/Menu';
+import common from '@/i18n/resources/en/common';
+import { useTranslation } from '@/i18n/useTranslation';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
 import { styles } from './style';
+
+const EmptyMenuItem = memo(() => {
+  const { t } = useTranslation(common);
+  return (
+    <ContextMenu.Item className={cx(styles.item, styles.empty)} disabled>
+      <div className={styles.itemContent}>
+        <span className={styles.label}>{t('common.empty')}</span>
+      </div>
+    </ContextMenu.Item>
+  );
+});
+
+EmptyMenuItem.displayName = 'EmptyMenuItem';
 
 const getItemKey = (item: ItemType, fallback: string): Key => {
   if (item && 'key' in item && item.key !== undefined) return item.key;
@@ -155,7 +170,10 @@ export const renderContextMenuItems = (
       );
     }
 
-    if ((item as SubMenuType).type === 'submenu' || 'children' in item) {
+    if (
+      (item as SubMenuType).type === 'submenu' ||
+      ('children' in item && (item as SubMenuType).children)
+    ) {
       const submenu = item as SubMenuType;
       const label = getItemLabel(submenu);
       const labelText = typeof label === 'string' ? label : undefined;
@@ -181,7 +199,11 @@ export const renderContextMenuItems = (
               sideOffset={-1}
             >
               <ContextMenu.Popup className={styles.popup}>
-                {submenu.children ? renderContextMenuItems(submenu.children, nextKeyPath) : null}
+                {submenu.children && submenu.children.length > 0 ? (
+                  renderContextMenuItems(submenu.children, nextKeyPath)
+                ) : (
+                  <EmptyMenuItem />
+                )}
               </ContextMenu.Popup>
             </ContextMenu.Positioner>
           </ContextMenu.Portal>

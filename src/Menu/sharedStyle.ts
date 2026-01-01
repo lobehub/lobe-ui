@@ -9,6 +9,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
 
+  empty: css`
+    cursor: default;
+    font-style: italic;
+    color: ${cssVar.colorTextTertiary};
+  `,
+
   extra: css`
     margin-inline-start: auto;
     padding-inline-start: 16px;
