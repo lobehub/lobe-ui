@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.7.1](https://github.com/lobehub/lobe-ui/compare/v4.7.0...v4.7.1)
+
+<sup>Released on **2026-01-01**</sup>
+
+#### ♻ Code Refactoring
+
+- **ui**: Migrate ThemeSwitch to use DropdownMenu and reduce dropdown popup minimum width.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **ui**: Migrate ThemeSwitch to use DropdownMenu and reduce dropdown popup minimum width ([09111aa](https://github.com/lobehub/lobe-ui/commit/09111aa))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.7.0](https://github.com/lobehub/lobe-ui/compare/v4.6.7...v4.7.0)
 
 <sup>Released on **2026-01-01**</sup>
