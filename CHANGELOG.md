@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.6.6](https://github.com/lobehub/lobe-ui/compare/v4.6.5...v4.6.6)
+
+<sup>Released on **2026-01-01**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Add centralized class name management with clsx integration.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Add centralized class name management with clsx integration ([318235b](https://github.com/lobehub/lobe-ui/commit/318235b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.6.5](https://github.com/lobehub/lobe-ui/compare/v4.6.4...v4.6.5)
 
 <sup>Released on **2026-01-01**</sup>
