@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.6.5](https://github.com/lobehub/lobe-ui/compare/v4.6.4...v4.6.5)
+
+<sup>Released on **2026-01-01**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Resolve type issues in DropdownMenu render function.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Resolve type issues in DropdownMenu render function ([ad66aff](https://github.com/lobehub/lobe-ui/commit/ad66aff))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.6.4](https://github.com/lobehub/lobe-ui/compare/v4.6.3...v4.6.4)
 
 <sup>Released on **2026-01-01**</sup>
