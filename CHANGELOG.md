@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.6.7](https://github.com/lobehub/lobe-ui/compare/v4.6.6...v4.6.7)
+
+<sup>Released on **2026-01-01**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Remove debug console.log from DropdownMenu.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Remove debug console.log from DropdownMenu ([0105a06](https://github.com/lobehub/lobe-ui/commit/0105a06))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.6.6](https://github.com/lobehub/lobe-ui/compare/v4.6.5...v4.6.6)
 
 <sup>Released on **2026-01-01**</sup>
