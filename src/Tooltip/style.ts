@@ -6,6 +6,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       fill: ${cssVar.colorText};
     `,
     content: css`
+      position: relative;
+
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -20,6 +23,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 
       background-color: ${cssVar.colorTextBase};
     `,
+
     tooltip: css`
       user-select: none;
 
@@ -29,7 +33,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 12%));
     `,
     tooltipLayout: css`
-      transition: all 0.2s ease-in-out;
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
     `,
   };
 });

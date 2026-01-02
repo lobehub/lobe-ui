@@ -17,6 +17,7 @@ import { createLobeAntdTheme } from '@/styles/theme/antdTheme';
 import { LobeCustomToken } from '@/types/customToken';
 
 import AntdConfigProvider from './ConfigProvider';
+import { GlobalMouseDirectionProvider } from './GlobalMouseDirectionContext';
 import GlobalStyle from './GlobalStyle';
 import { LOBE_THEME_APP_ID } from './constants';
 import type { ThemeProviderProps } from './type';
@@ -89,11 +90,16 @@ const ThemeProvider = memo<ThemeProviderProps>(
         >
           <AntdConfigProvider>
             {enableGlobalStyle && <GlobalStyle />}
-            <App className={className} style={{ minHeight: 'inherit', width: 'inherit', ...style }}>
-              <div id={LOBE_THEME_APP_ID} style={{ display: 'contents' }}>
-                {children}
-              </div>
-            </App>
+            <GlobalMouseDirectionProvider>
+              <App
+                className={className}
+                style={{ minHeight: 'inherit', width: 'inherit', ...style }}
+              >
+                <div id={LOBE_THEME_APP_ID} style={{ display: 'contents' }}>
+                  {children}
+                </div>
+              </App>
+            </GlobalMouseDirectionProvider>
           </AntdConfigProvider>
         </AntdThemeProvider>
       </>

@@ -4,9 +4,9 @@ import type { FloatingContext, Placement } from '@floating-ui/react';
 import { FloatingArrow } from '@floating-ui/react';
 import { useDebounce } from 'ahooks';
 import { cx } from 'antd-style';
-import { AnimatePresence } from 'motion/react';
+import { AnimatePresence, type Target, type Transition } from 'motion/react';
 import type { CSSProperties, ReactNode, RefObject } from 'react';
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import Hotkey from '@/Hotkey';
@@ -14,6 +14,18 @@ import { useMotionComponent } from '@/MotionProvider';
 
 import { styles } from './style';
 import type { TooltipProps } from './type';
+
+// Tooltip container animation
+const tooltipAnimateState: Target = { opacity: 1, scale: 1, y: 0 };
+const tooltipExitState: Target = { opacity: 0, scale: 0.98, y: 4 };
+const tooltipInitialState: Target = { opacity: 0, scale: 0.96, y: 6 };
+const tooltipTransition: Transition = { duration: 0.14, ease: [0.4, 0, 0.2, 1] };
+
+// Tooltip content animation (for switching between tooltips)
+const contentAnimateState: Target = { opacity: 1 };
+const contentExitState: Target = { opacity: 0 };
+const contentInitialState: Target = { opacity: 0 };
+const contentTransition: Transition = { duration: 0.3 };
 
 type TooltipFloatingProps = {
   arrow?: boolean;
@@ -27,14 +39,18 @@ type TooltipFloatingProps = {
   floatingStyles: CSSProperties;
 
   hotkey?: TooltipProps['hotkey'];
+
   hotkeyProps?: TooltipProps['hotkeyProps'];
+  /**
+   * @description Whether this is the initial show (first appearance, not switching between tooltips)
+   */
+  isInitialShow?: boolean;
 
   /**
    * @description Whether to enable layout animation when switching between tooltips
    * @default true
    */
   layoutAnimation?: boolean;
-
   open: boolean;
   placement?: Placement;
 
@@ -48,6 +64,7 @@ const TooltipFloating = ({
   open,
   title,
   placement,
+
   floatingStyles,
   setFloating,
   floatingProps,
@@ -56,6 +73,7 @@ const TooltipFloating = ({
   context,
   hotkey,
   hotkeyProps,
+  isInitialShow,
   layoutAnimation = true,
 
   className,
@@ -63,8 +81,9 @@ const TooltipFloating = ({
   styles: styleProps,
   zIndex,
 }: TooltipFloatingProps) => {
+  const basePlacement = String(placement || 'top').split('-')[0];
+
   const transformOrigin = useMemo(() => {
-    const basePlacement = String(placement || 'top').split('-')[0];
     switch (basePlacement) {
       case 'top': {
         return 'bottom center';
@@ -82,7 +101,7 @@ const TooltipFloating = ({
         return 'center';
       }
     }
-  }, [placement]);
+  }, [basePlacement]);
 
   const hasTransform = useDebounce(Boolean(floatingStyles?.transform), {
     leading: false,
@@ -90,6 +109,15 @@ const TooltipFloating = ({
   });
 
   const Motion = useMotionComponent();
+
+  const TooltipContent = hotkey ? (
+    <Flexbox align={'center'} gap={8} horizontal justify={'space-between'}>
+      <span>{title}</span>
+      <Hotkey inverseTheme keys={hotkey} {...hotkeyProps} />
+    </Flexbox>
+  ) : (
+    title
+  );
   return (
     <AnimatePresence>
       {open && title && (
@@ -121,20 +149,27 @@ const TooltipFloating = ({
           {...floatingProps}
         >
           <Motion.div
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            initial={{ opacity: 0, scale: 0.96 }}
+            animate={tooltipAnimateState}
+            exit={tooltipExitState}
+            initial={tooltipInitialState}
             style={{ transformOrigin }}
-            transition={{ duration: 0.12, ease: [0.4, 0, 0.2, 1] }}
+            transition={tooltipTransition}
           >
             <div className={cx(styles.content, classNames?.content)} style={styleProps?.content}>
-              {hotkey ? (
-                <Flexbox align={'center'} gap={8} horizontal justify={'space-between'}>
-                  <span>{title}</span>
-                  <Hotkey inverseTheme keys={hotkey} {...hotkeyProps} />
-                </Flexbox>
+              {layoutAnimation ? (
+                <AnimatePresence mode="popLayout">
+                  <Motion.div
+                    animate={contentAnimateState}
+                    exit={contentExitState}
+                    initial={isInitialShow ? false : contentInitialState}
+                    key={String(title)}
+                    transition={contentTransition}
+                  >
+                    {TooltipContent}
+                  </Motion.div>
+                </AnimatePresence>
               ) : (
-                title
+                TooltipContent
               )}
             </div>
             {arrow && context && (

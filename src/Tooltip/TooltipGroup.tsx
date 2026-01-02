@@ -202,6 +202,13 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
       ? active.item.getPopupContainer(active.triggerEl)
       : undefined;
 
+  const openRef = useRef(open);
+  useEffect(() => {
+    openRef.current = open;
+  }, [open]);
+
+  const isInitialShow = !openRef.current && open;
+
   const floatingNode = (
     <TooltipFloating
       arrow={active?.item.arrow}
@@ -212,6 +219,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
       floatingStyles={floatingStyles}
       hotkey={active?.item.hotkey}
       hotkeyProps={active?.item.hotkeyProps}
+      isInitialShow={isInitialShow}
       layoutAnimation={layoutAnimation}
       open={open}
       placement={floatingPlacement}

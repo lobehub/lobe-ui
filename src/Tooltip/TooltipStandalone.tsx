@@ -129,6 +129,7 @@ export const TooltipStandalone: FC<TooltipProps> = ({
       floatingStyles={floatingStyles}
       hotkey={hotkey}
       hotkeyProps={hotkeyProps}
+      isInitialShow
       open={connectedOpen}
       placement={floatingPlacement}
       setFloating={refs.setFloating}
