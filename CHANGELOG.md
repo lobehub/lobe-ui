@@ -2,6 +2,39 @@
 
 # Changelog
 
+### [Version 4.8.1](https://github.com/lobehub/lobe-ui/compare/v4.8.0...v4.8.1)
+
+<sup>Released on **2026-01-02**</sup>
+
+#### ♻ Code Refactoring
+
+- **tag**: Migrate from theme to cssVar for color resolution.
+
+#### 💄 Styles
+
+- **misc**: Enhance Tooltip animations with new content transitions and introduce a global mouse direction context.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **tag**: Migrate from theme to cssVar for color resolution ([d776735](https://github.com/lobehub/lobe-ui/commit/d776735))
+
+#### Styles
+
+- **misc**: Enhance Tooltip animations with new content transitions and introduce a global mouse direction context ([fbe8ca6](https://github.com/lobehub/lobe-ui/commit/fbe8ca6))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.8.0](https://github.com/lobehub/lobe-ui/compare/v4.7.1...v4.8.0)
 
 <sup>Released on **2026-01-01**</sup>
