@@ -1,7 +1,7 @@
 'use client';
 
 import { Tag as AntTag } from 'antd';
-import { cx, useTheme } from 'antd-style';
+import { cssVar, cx } from 'antd-style';
 import { type FC, useMemo } from 'react';
 
 import { colorsPreset, colorsPresetSystem, presetColors, presetSystemColors } from '@/Tag/utils';
@@ -20,10 +20,8 @@ const Tag: FC<TagProps> = ({
   style,
   ...rest
 }) => {
-  const theme = useTheme();
-
   const colors = useMemo(() => {
-    let textColor = theme.colorTextSecondary;
+    let textColor = cssVar.colorTextSecondary;
     let backgroundColor;
     let borderColor;
     const isBorderless = variant === 'borderless';
@@ -33,19 +31,17 @@ const Tag: FC<TagProps> = ({
     const isHexColor = color && color.startsWith('#');
 
     if (isPresetColor) {
-      textColor = colorsPreset(theme, color);
-      backgroundColor = isBorderless ? 'transparent' : colorsPreset(theme, color, 'fillTertiary');
-      borderColor = colorsPreset(theme, color, isFilled ? 'fillQuaternary' : 'fillTertiary');
+      textColor = colorsPreset(color);
+      backgroundColor = isBorderless ? 'transparent' : colorsPreset(color, 'fillTertiary');
+      borderColor = colorsPreset(color, isFilled ? 'fillQuaternary' : 'fillTertiary');
     }
     if (isPresetSystemColors) {
-      textColor = colorsPresetSystem(theme, color);
-      backgroundColor = isBorderless
-        ? 'transparent'
-        : colorsPresetSystem(theme, color, 'fillTertiary');
-      borderColor = colorsPresetSystem(theme, color, isFilled ? 'fillQuaternary' : 'fillTertiary');
+      textColor = colorsPresetSystem(color);
+      backgroundColor = isBorderless ? 'transparent' : colorsPresetSystem(color, 'fillTertiary');
+      borderColor = colorsPresetSystem(color, isFilled ? 'fillQuaternary' : 'fillTertiary');
     }
     if (isHexColor) {
-      textColor = theme.colorBgLayout;
+      textColor = cssVar.colorBgLayout;
       backgroundColor = isBorderless ? 'transparent' : color;
     }
 
@@ -54,7 +50,7 @@ const Tag: FC<TagProps> = ({
       borderColor,
       textColor,
     };
-  }, [color, theme, variant]);
+  }, [color, variant]);
 
   return (
     <AntTag
