@@ -6,6 +6,7 @@ import { memo, useEffect, useMemo, useSyncExternalStore } from 'react';
 import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
 import { TOOLTIP_CONTAINER_ATTR } from '@/Tooltip/TooltipPortal';
 import { useIsClient } from '@/hooks/useIsClient';
+import { registerDevSingleton } from '@/utils/devSingleton';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
 import { renderContextMenuItems } from './renderItems';
@@ -22,6 +23,17 @@ import { styles } from './style';
 export const ContextMenuHost = memo(() => {
   const isClient = useIsClient();
   const state = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+
+  useEffect(() => {
+    if (!isClient) return;
+    // Enforce singleton per portal container (dev-only).
+    const themeApp = document.querySelector<HTMLElement>(`#${LOBE_THEME_APP_ID}`);
+    const tooltipContainer = document.querySelector<HTMLElement>(
+      `[${TOOLTIP_CONTAINER_ATTR}="true"]`,
+    );
+    const scope = themeApp ?? tooltipContainer ?? document.body;
+    return registerDevSingleton('ContextMenuHost', scope);
+  }, [isClient]);
 
   useEffect(() => {
     const handler = (event: MouseEvent | PointerEvent) => updateLastPointer(event);

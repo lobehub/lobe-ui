@@ -1,10 +1,11 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { memo, useState, useSyncExternalStore } from 'react';
+import { memo, useEffect, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useIsClient } from '@/hooks/useIsClient';
+import { registerDevSingleton } from '@/utils/devSingleton';
 
 import { ModalStackItem } from './ModalStackItem';
 import { RawModalStackItem } from './RawModalStackItem';
@@ -230,6 +231,14 @@ ModalStack.displayName = 'ModalStack';
 export const ModalHost = ({ root }: ModalHostProps) => {
   const stack = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const isClient = useIsClient();
+
+  useEffect(() => {
+    if (!isClient) return;
+    // Enforce singleton per portal root (dev-only).
+    const scope = root ?? document.body;
+    return registerDevSingleton('ModalHost', scope);
+  }, [isClient, root]);
+
   if (!isClient) return null;
   if (stack.length === 0) return null;
 

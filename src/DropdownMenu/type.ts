@@ -5,10 +5,9 @@ import type {
   MenuRootProps,
   MenuTriggerProps,
 } from '@base-ui/react/menu';
-import type { Key, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
-import type { IconProps } from '@/Icon';
-import type { GenericItemType } from '@/Menu';
+import type { BaseMenuItemType, MenuCheckboxItemType } from '@/Menu';
 
 export type DropdownMenuPlacement =
   | 'bottomLeft'
@@ -18,22 +17,9 @@ export type DropdownMenuPlacement =
   | 'topCenter'
   | 'topRight';
 
-export interface DropdownMenuCheckboxItem {
-  checked?: boolean;
-  closeOnClick?: boolean;
-  danger?: boolean;
-  defaultChecked?: boolean;
-  disabled?: boolean;
-  extra?: ReactNode;
-  icon?: IconProps['icon'];
-  key: Key;
-  label?: ReactNode;
-  onCheckedChange?: (checked: boolean) => void;
-  title?: ReactNode;
-  type: 'checkbox';
-}
+export type DropdownMenuCheckboxItem = MenuCheckboxItemType;
 
-export type DropdownItem = GenericItemType | DropdownMenuCheckboxItem;
+export type DropdownItem = BaseMenuItemType;
 
 export interface DropdownMenuProps<Payload = unknown> extends Omit<
   MenuRootProps<Payload>,

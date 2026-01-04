@@ -1,10 +1,4 @@
-import {
-  Block,
-  ContextMenuHost,
-  ContextMenuTrigger,
-  type GenericItemType,
-  Text,
-} from '@lobehub/ui';
+import { Block, ContextMenuTrigger, type GenericItemType, Text } from '@lobehub/ui';
 import { createStaticStyles } from 'antd-style';
 import { useMemo } from 'react';
 
@@ -52,18 +46,15 @@ export default () => {
   );
 
   return (
-    <>
-      <ContextMenuTrigger className={styles.trigger} items={items}>
-        <Block direction="vertical" gap={8} padding={16}>
-          <Text as={'p'} strong>
-            Right click to see empty submenu
-          </Text>
-          <Text as={'p'} type="secondary">
-            The &quot;Empty Submenu&quot; shows an (empty) placeholder.
-          </Text>
-        </Block>
-      </ContextMenuTrigger>
-      <ContextMenuHost />
-    </>
+    <ContextMenuTrigger className={styles.trigger} items={items}>
+      <Block direction="vertical" gap={8} padding={16}>
+        <Text as={'p'} strong>
+          Right click to see empty submenu
+        </Text>
+        <Text as={'p'} type="secondary">
+          The &quot;Empty Submenu&quot; shows an (empty) placeholder.
+        </Text>
+      </Block>
+    </ContextMenuTrigger>
   );
 };

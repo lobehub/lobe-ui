@@ -1,6 +1,5 @@
 import {
   Block,
-  ContextMenuHost,
   ContextMenuTrigger,
   type GenericItemType,
   Icon,
@@ -102,18 +101,15 @@ export default () => {
   );
 
   return (
-    <>
-      <ContextMenuTrigger onContextMenu={handleContextMenu}>
-        <Block direction="vertical" gap={8} padding={16}>
-          <Text as={'p'} strong>
-            Right click this panel
-          </Text>
-          <Text as={'p'} type="secondary">
-            Last action: {lastAction}
-          </Text>
-        </Block>
-      </ContextMenuTrigger>
-      <ContextMenuHost />
-    </>
+    <ContextMenuTrigger onContextMenu={handleContextMenu}>
+      <Block direction="vertical" gap={8} padding={16}>
+        <Text as={'p'} strong>
+          Right click this panel
+        </Text>
+        <Text as={'p'} type="secondary">
+          Last action: {lastAction}
+        </Text>
+      </Block>
+    </ContextMenuTrigger>
   );
 };

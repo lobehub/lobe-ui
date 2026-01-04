@@ -1,10 +1,10 @@
 import type { VirtualElement } from '@floating-ui/react';
 
-import type { GenericItemType } from '@/Menu';
+import type { ContextMenuItem } from './type';
 
 export type ContextMenuState = {
   anchor: VirtualElement | null;
-  items: GenericItemType[];
+  items: ContextMenuItem[];
   open: boolean;
   triggerId: string | null;
 };
@@ -65,7 +65,7 @@ export const setContextMenuState = (next: Partial<ContextMenuState>) => {
   notify();
 };
 
-export const showContextMenu = (items: GenericItemType[]) => {
+export const showContextMenu = (items: ContextMenuItem[]) => {
   if (typeof window === 'undefined') return;
 
   const fallbackPoint = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
@@ -77,6 +77,15 @@ export const showContextMenu = (items: GenericItemType[]) => {
     open: true,
     triggerId: lastPointer.triggerId ?? null,
   });
+};
+
+/**
+ * Update menu items while keeping current anchor/position.
+ * Useful for interactive menu items (e.g. checkbox) to avoid re-positioning.
+ */
+export const updateContextMenuItems = (items: ContextMenuItem[]) => {
+  if (typeof window === 'undefined') return;
+  setContextMenuState({ items });
 };
 
 export const closeContextMenu = () => {

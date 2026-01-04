@@ -1,6 +1,6 @@
 import { ContextMenu } from '@base-ui/react/context-menu';
 import { cx } from 'antd-style';
-import { ChevronRight } from 'lucide-react';
+import { Check, ChevronRight } from 'lucide-react';
 import type { MenuInfo } from 'rc-menu/es/interface';
 import type {
   Key,
@@ -11,19 +11,13 @@ import type {
 import { isValidElement, memo } from 'react';
 
 import Icon from '@/Icon';
-import type {
-  GenericItemType,
-  ItemType,
-  MenuDividerType,
-  MenuItemGroupType,
-  MenuItemType,
-  SubMenuType,
-} from '@/Menu';
+import type { MenuDividerType, MenuItemGroupType, MenuItemType, SubMenuType } from '@/Menu';
 import common from '@/i18n/resources/en/common';
 import { useTranslation } from '@/i18n/useTranslation';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
 import { styles } from './style';
+import type { ContextMenuCheckboxItem, ContextMenuItem } from './type';
 
 const EmptyMenuItem = memo(() => {
   const { t } = useTranslation(common);
@@ -38,12 +32,22 @@ const EmptyMenuItem = memo(() => {
 
 EmptyMenuItem.displayName = 'EmptyMenuItem';
 
-const getItemKey = (item: ItemType, fallback: string): Key => {
+type KeyableItem = { key?: Key };
+
+const getItemKey = (item: KeyableItem, fallback: string): Key => {
   if (item && 'key' in item && item.key !== undefined) return item.key;
   return fallback;
 };
 
-const getItemLabel = (item: MenuItemType | SubMenuType): ReactNode => {
+type LabelableItem = {
+  key?: Key;
+  label?: ReactNode;
+  title?: ReactNode;
+};
+
+const getItemLabel = (
+  item: MenuItemType | SubMenuType | ContextMenuCheckboxItem | LabelableItem,
+): ReactNode => {
   if (item.label !== undefined) return item.label;
   if ('title' in item && item.title !== undefined) return item.title;
   return item.key;
@@ -55,7 +59,7 @@ const renderIcon = (icon: MenuItemType['icon']) => {
   return <Icon icon={icon} size={'small'} />;
 };
 
-const getReserveIconSpaceMap = (items: GenericItemType[]) => {
+const getReserveIconSpaceMap = (items: ContextMenuItem[]) => {
   const flags = Array.from({ length: items.length }).fill(false);
   let segmentIndices: number[] = [];
   let segmentHasIcon = false;
@@ -79,6 +83,10 @@ const getReserveIconSpaceMap = (items: GenericItemType[]) => {
     }
 
     segmentIndices.push(index);
+    if ((item as ContextMenuCheckboxItem).type === 'checkbox') {
+      segmentHasIcon = true;
+      return;
+    }
     if ('icon' in item && item.icon) segmentHasIcon = true;
   });
 
@@ -87,19 +95,23 @@ const getReserveIconSpaceMap = (items: GenericItemType[]) => {
 };
 
 const renderItemContent = (
-  item: MenuItemType | SubMenuType,
+  item: MenuItemType | SubMenuType | ContextMenuCheckboxItem,
   options?: { reserveIconSpace?: boolean; submenu?: boolean },
+  iconNode?: ReactNode,
 ) => {
   const label = getItemLabel(item);
   const extra = 'extra' in item ? item.extra : undefined;
-  const hasIcon = Boolean(item.icon);
-  const shouldRenderIcon = hasIcon || options?.reserveIconSpace;
+  const hasCustomIcon = iconNode !== undefined;
+  const hasIcon = hasCustomIcon ? Boolean(iconNode) : Boolean(item.icon);
+  const shouldRenderIcon = hasCustomIcon
+    ? Boolean(options?.reserveIconSpace || iconNode)
+    : Boolean(hasIcon || options?.reserveIconSpace);
 
   return (
     <div className={styles.itemContent}>
       {shouldRenderIcon ? (
         <span aria-hidden={!hasIcon} className={styles.icon}>
-          {hasIcon ? renderIcon(item.icon) : null}
+          {hasCustomIcon ? iconNode : hasIcon ? renderIcon(item.icon) : null}
         </span>
       ) : null}
       <span className={styles.label}>{label}</span>
@@ -130,7 +142,7 @@ const invokeItemClick = (
 };
 
 export const renderContextMenuItems = (
-  items: GenericItemType[],
+  items: ContextMenuItem[],
   keyPath: string[] = [],
   options?: { reserveIconSpace?: boolean },
 ): ReactNode[] => {
@@ -144,6 +156,33 @@ export const renderContextMenuItems = (
     const itemKey = getItemKey(item, fallbackKey);
     const nextKeyPath = [...keyPath, String(itemKey)];
     const reserveIconSpace = options?.reserveIconSpace ?? Boolean(reserveIconSpaceMap?.[index]);
+
+    if ((item as ContextMenuCheckboxItem).type === 'checkbox') {
+      const checkboxItem = item as ContextMenuCheckboxItem;
+      const label = getItemLabel(checkboxItem);
+      const labelText = typeof label === 'string' ? label : undefined;
+      const isDanger = Boolean(checkboxItem.danger);
+      const indicator = (
+        <ContextMenu.CheckboxItemIndicator>
+          <Icon icon={Check} size={'small'} />
+        </ContextMenu.CheckboxItemIndicator>
+      );
+
+      return (
+        <ContextMenu.CheckboxItem
+          checked={checkboxItem.checked}
+          className={cx(styles.item, isDanger && styles.danger)}
+          closeOnClick={checkboxItem.closeOnClick}
+          defaultChecked={checkboxItem.defaultChecked}
+          disabled={checkboxItem.disabled}
+          key={itemKey}
+          label={labelText}
+          onCheckedChange={(checked) => checkboxItem.onCheckedChange?.(checked)}
+        >
+          {renderItemContent(checkboxItem, { reserveIconSpace }, indicator)}
+        </ContextMenu.CheckboxItem>
+      );
+    }
 
     if ((item as MenuDividerType).type === 'divider') {
       return <ContextMenu.Separator className={styles.separator} key={itemKey} />;

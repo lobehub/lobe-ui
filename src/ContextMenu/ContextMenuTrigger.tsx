@@ -14,10 +14,10 @@ import React, {
   useSyncExternalStore,
 } from 'react';
 
-import type { GenericItemType } from '@/Menu';
 import { CLASSNAMES } from '@/styles/classNames';
 
 import { getServerSnapshot, getSnapshot, showContextMenu, subscribe } from './store';
+import type { ContextMenuItem } from './type';
 
 export type ContextMenuTriggerProps = {
   children: ReactNode;
@@ -25,7 +25,7 @@ export type ContextMenuTriggerProps = {
    * Menu items to display. Supports lazy rendering via function.
    * When provided, context menu will be automatically shown on right-click.
    */
-  items?: GenericItemType[] | (() => GenericItemType[]);
+  items?: ContextMenuItem[] | (() => ContextMenuItem[]);
   /**
    * Custom context menu handler. If `items` is provided, this is optional.
    */

@@ -13,6 +13,10 @@ description: ContextMenu provides an imperative API to open a menu at the last p
 
 <code src="./demos/trigger.tsx" center></code>
 
+## Checkbox Items
+
+<code src="./demos/checkbox.tsx" center></code>
+
 ## Empty Submenu
 
 <code src="./demos/emptySubmenu.tsx" center></code>
@@ -25,7 +29,7 @@ description: ContextMenu provides an imperative API to open a menu at the last p
 
 | Name            | Description       | Type                                 |
 | --------------- | ----------------- | ------------------------------------ |
-| showContextMenu | Show context menu | `(items: GenericItemType[]) => void` |
+| showContextMenu | Show context menu | `(items: ContextMenuItem[]) => void` |
 
 ### ContextMenuHost
 

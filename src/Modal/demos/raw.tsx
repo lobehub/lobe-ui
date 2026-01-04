@@ -1,4 +1,4 @@
-import { Button, Modal, ModalHost, Text, createRawModal } from '@lobehub/ui';
+import { Button, Modal, Text, createRawModal } from '@lobehub/ui';
 import { memo, useCallback } from 'react';
 
 type RawDemoModalProps = {
@@ -32,11 +32,8 @@ export default () => {
   }, []);
 
   return (
-    <>
-      <Button onClick={openModal} type="primary">
-        Open Raw Modal
-      </Button>
-      <ModalHost />
-    </>
+    <Button onClick={openModal} type="primary">
+      Open Raw Modal
+    </Button>
   );
 };

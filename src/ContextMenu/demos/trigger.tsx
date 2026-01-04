@@ -1,8 +1,8 @@
 import {
   Block,
   ContextMenuHost,
+  type ContextMenuItem,
   ContextMenuTrigger,
-  type GenericItemType,
   Text,
 } from '@lobehub/ui';
 import { createStaticStyles } from 'antd-style';
@@ -30,7 +30,7 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
 
 export default () => {
   // items can be an array or a lazy function () => items[]
-  const items = useMemo<GenericItemType[]>(
+  const items = useMemo<ContextMenuItem[]>(
     () => [
       { key: 'open', label: 'Open' },
       { key: 'duplicate', label: 'Duplicate' },
