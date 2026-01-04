@@ -24,7 +24,14 @@ export default (token: Theme) => {
       }
     }
 
-    .${token.prefixCls}-tooltip-inner {
+    .${token.prefixCls}-tooltip-arrow::before,
+      .${token.prefixCls}-tooltip-arrow::after,
+      .${token.prefixCls}-tooltip-container {
+      color: ${token.colorBgLayout} !important;
+      background: ${token.colorText} !important;
+    }
+
+    .${token.prefixCls}-tooltip-container {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -33,17 +40,6 @@ export default (token: Theme) => {
       padding-block: 4px;
       padding-inline: 8px;
       border-radius: ${token.borderRadiusSM}px !important;
-
-      color: ${token.colorBgLayout} !important;
-
-      background-color: ${token.colorText} !important;
-    }
-
-    .${token.prefixCls}-tooltip-arrow {
-      &::before,
-      &::after {
-        background: ${token.colorText} !important;
-      }
     }
 
     .${token.prefixCls}-switch-handle::before {
@@ -68,9 +64,7 @@ export default (token: Theme) => {
       ${token.stylish.blur};
     }
 
-    .${token.prefixCls}-popover-inner,
-      .${token.prefixCls}-dropdown-menu,
-      .${token.prefixCls}-select-dropdown {
+    .${token.prefixCls}-dropdown-menu, .${token.prefixCls}-select-dropdown {
       border-radius: ${token.borderRadius}px !important;
       box-shadow:
         0 0 15px 0 #00000008,
