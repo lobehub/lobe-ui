@@ -1,14 +1,14 @@
 'use client';
 
-import { type FC, useCallback, useEffect, useState } from 'react';
+import { type FC, isValidElement, useCallback, useMemo, useState } from 'react';
+import { mergeRefs } from 'react-merge-refs';
 
+import { BaseTooltip } from './baseTooltip';
 import TooltipFloating from './TooltipFloating';
 import TooltipPortal from './TooltipPortal';
 import type { TooltipProps } from './type';
-import { useTooltipFloating } from './useTooltipFloating';
-import { useTooltipReference } from './useTooltipReference';
 import { useTooltipTrigger } from './useTooltipTrigger';
-import { isElementHidden, observeElementVisibility } from './utils';
+import { resolveTooltipDelays } from './utils';
 
 export const TooltipStandalone: FC<TooltipProps> = ({
   ref,
@@ -33,123 +33,69 @@ export const TooltipStandalone: FC<TooltipProps> = ({
   portalled = true,
   getPopupContainer,
 }) => {
-  const [uncontrolledOpen, setUncontrolledOpen] = useState(Boolean(defaultOpen));
-  const [referenceVisible, setReferenceVisible] = useState(true);
+  const trigger = useTooltipTrigger(children);
+  const [triggerEl, setTriggerEl] = useState<HTMLElement | null>(null);
 
-  const mergedOpen = open ?? uncontrolledOpen;
-  const setOpen = useCallback(
-    (next: boolean) => {
-      if (open === undefined) setUncontrolledOpen(next);
-      onOpenChange?.(next);
+  const handleOpenChange = useCallback(
+    (nextOpen: boolean) => {
+      onOpenChange?.(nextOpen);
     },
-    [onOpenChange, open],
+    [onOpenChange],
   );
 
-  const trigger = useTooltipTrigger(children);
+  const resolvedDelays = useMemo(
+    () => resolveTooltipDelays({ closeDelay, mouseEnterDelay, mouseLeaveDelay, openDelay }),
+    [closeDelay, mouseEnterDelay, mouseLeaveDelay, openDelay],
+  );
 
-  // We need to initialize floating first to get getReferenceProps
-  // But we'll use a temporary mergedOpen, then update to connectedOpen
-  const floatingHookResult = useTooltipFloating({
-    arrow,
-    closeDelay,
-    disabled,
-    mouseEnterDelay,
-    mouseLeaveDelay,
-    onOpenChange: setOpen,
-    open: mergedOpen,
-    openDelay,
-    placement,
-  });
+  const portalRoot = useMemo(() => {
+    if (!triggerEl) return undefined;
+    if (portalled === false) return triggerEl.parentElement ?? undefined;
+    if (getPopupContainer) return getPopupContainer(triggerEl);
+    return undefined;
+  }, [getPopupContainer, portalled, triggerEl]);
 
-  const { referenceConnected, referenceEl, referenceNode } = useTooltipReference({
-    getReferenceProps: floatingHookResult.getReferenceProps,
-    mergedOpen,
-    ref,
-    setOpen,
-    setReference: floatingHookResult.refs.setReference,
-    trigger,
-  });
-
-  const connectedOpen = !disabled && mergedOpen && referenceConnected && referenceVisible;
-
-  // Use the first hook result
-  // Note: useFloating inside uses mergedOpen, but TooltipFloating component uses connectedOpen for display
-  const { arrowRef, context, floatingPlacement, floatingStyles, getFloatingProps, refs } =
-    floatingHookResult;
-
-  // Watch for trigger removal or display:none via MutationObserver
-  useEffect(() => {
-    if (!mergedOpen) return;
-    if (!referenceEl) {
-      setReferenceVisible(false);
-      setOpen(false);
-      return;
-    }
-
-    let lastVisible = true;
-    const handleVisibilityChange = (visible: boolean) => {
-      setReferenceVisible(visible);
-      if (!visible && lastVisible) setOpen(false);
-      lastVisible = visible;
-    };
-
-    const stopVisibilityObserver = observeElementVisibility(referenceEl, handleVisibilityChange);
-
-    const root = referenceEl.getRootNode?.();
-    const observeTarget =
-      typeof ShadowRoot !== 'undefined' && root instanceof ShadowRoot
-        ? root
-        : (referenceEl.ownerDocument ?? document);
-
-    const observer = new MutationObserver(() => {
-      if (isElementHidden(referenceEl)) handleVisibilityChange(false);
-    });
-
-    observer.observe(observeTarget, { childList: true, subtree: true });
-
-    return () => {
-      observer.disconnect();
-      stopVisibilityObserver?.();
-    };
-  }, [mergedOpen, referenceEl, setOpen]);
-
-  const portalRoot =
-    getPopupContainer && referenceEl && referenceConnected && referenceVisible
-      ? getPopupContainer(referenceEl as any)
-      : undefined;
-
-  const floatingNode = (
-    <TooltipFloating
-      arrow={arrow}
-      arrowRef={arrowRef}
-      className={className}
-      classNames={classNames}
-      context={context}
-      floatingProps={getFloatingProps()}
-      floatingStyles={floatingStyles}
-      hotkey={hotkey}
-      hotkeyProps={hotkeyProps}
-      isInitialShow
-      open={connectedOpen}
-      placement={floatingPlacement}
-      setFloating={refs.setFloating}
-      styles={styleProps}
-      title={title}
-      zIndex={zIndex}
-    />
+  const triggerRef = useMemo(
+    () =>
+      mergeRefs([
+        ref,
+        (node) => setTriggerEl(node instanceof HTMLElement ? node : null),
+      ]),
+    [ref],
   );
 
   return (
-    <>
-      {referenceNode}
-      {!disabled &&
-        title &&
-        (portalled ? (
-          <TooltipPortal root={portalRoot}>{floatingNode}</TooltipPortal>
-        ) : (
-          floatingNode
-        ))}
-    </>
+    <BaseTooltip.Root
+      defaultOpen={defaultOpen}
+      disabled={disabled}
+      onOpenChange={(nextOpen) => handleOpenChange(nextOpen)}
+      open={open}
+    >
+      <BaseTooltip.Trigger
+        closeDelay={resolvedDelays.close}
+        delay={resolvedDelays.open}
+        ref={triggerRef}
+        render={isValidElement(trigger) ? trigger : undefined}
+      >
+        {isValidElement(trigger) ? undefined : trigger}
+      </BaseTooltip.Trigger>
+      {!disabled && title && (
+        <TooltipPortal root={portalRoot}>
+          <TooltipFloating
+            arrow={arrow}
+            className={className}
+            classNames={classNames}
+            hotkey={hotkey}
+            hotkeyProps={hotkeyProps}
+            layoutAnimation={false}
+            placement={placement}
+            styles={styleProps}
+            title={title}
+            zIndex={zIndex}
+          />
+        </TooltipPortal>
+      )}
+    </BaseTooltip.Root>
   );
 };
 

@@ -14,13 +14,4 @@ export type TooltipGroupSharedProps = Omit<
    */
   layoutAnimation?: boolean;
 };
-
-export type TooltipGroupApi = {
-  closeFromTrigger: (triggerEl: HTMLElement, item: TooltipGroupItem) => void;
-  closeImmediately: () => void;
-  isActiveTrigger: (triggerEl: HTMLElement) => boolean;
-  openFromTrigger: (triggerEl: HTMLElement, item: TooltipGroupItem) => void;
-};
-
-export const TooltipGroupApiContext = createContext<TooltipGroupApi | null>(null);
 export const TooltipGroupPropsContext = createContext<TooltipGroupSharedProps | null>(null);

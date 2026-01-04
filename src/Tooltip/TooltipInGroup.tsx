@@ -1,71 +1,101 @@
 'use client';
 
-import {
-  type FC,
-  type ReactNode,
-  cloneElement,
-  isValidElement,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import { type FC, isValidElement, useCallback, useContext, useMemo, useState } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
-import { composeEventHandlers } from '@/utils/composeEventHandlers';
-
-import { TooltipGroupApiContext } from './groupContext';
+import { BaseTooltip } from './baseTooltip';
+import TooltipFloating from './TooltipFloating';
+import TooltipPortal from './TooltipPortal';
+import { TooltipGroupPropsContext } from './groupContext';
 import type { TooltipProps } from './type';
 import { useMergedTooltipProps } from './useMergedTooltipProps';
 import { useTooltipTrigger } from './useTooltipTrigger';
+import { resolveTooltipDelays } from './utils';
 
 export const TooltipInGroup: FC<TooltipProps> = ({ ref, children, ...props }) => {
-  const group = useContext(TooltipGroupApiContext);
-  const triggerElRef = useRef<HTMLElement | null>(null);
-  const item = useMergedTooltipProps(props);
   const trigger = useTooltipTrigger(children);
+  const mergedProps = useMergedTooltipProps(props);
+  const sharedProps = useContext(TooltipGroupPropsContext);
+  const [triggerEl, setTriggerEl] = useState<HTMLElement | null>(null);
 
-  const referenceNode = useMemo(() => {
-    if (!isValidElement(trigger)) return trigger;
+  const {
+    closeDelay,
+    mouseEnterDelay,
+    mouseLeaveDelay,
+    openDelay,
+    className,
+    classNames,
+    hotkey,
+    hotkeyProps,
+    placement,
+    styles: styleProps,
+    title,
+    zIndex,
+    arrow,
+    portalled,
+    getPopupContainer,
+    disabled,
+  } = mergedProps;
+  const layoutAnimation = sharedProps?.layoutAnimation ?? true;
 
-    const originalRef = (trigger as any).ref;
-    const triggerProps: any = trigger.props || {};
+  const shouldOverrideOpenDelay = openDelay !== undefined || mouseEnterDelay !== undefined;
+  const shouldOverrideCloseDelay = closeDelay !== undefined || mouseLeaveDelay !== undefined;
+  const resolvedDelays = useMemo(
+    () => resolveTooltipDelays({ closeDelay, mouseEnterDelay, mouseLeaveDelay, openDelay }),
+    [closeDelay, mouseEnterDelay, mouseLeaveDelay, openDelay],
+  );
 
-    const setTriggerEl = (node: any) => {
-      triggerElRef.current = node instanceof HTMLElement ? node : null;
-    };
+  const portalRoot = useMemo(() => {
+    if (!triggerEl) return undefined;
+    if (portalled === false) return triggerEl.parentElement ?? undefined;
+    if (getPopupContainer) return getPopupContainer(triggerEl);
+    return undefined;
+  }, [getPopupContainer, portalled, triggerEl]);
 
-    return cloneElement(trigger as any, {
-      ...triggerProps,
-      onBlur: composeEventHandlers(triggerProps.onBlur, (e: any) => {
-        group?.closeFromTrigger(e.currentTarget as HTMLElement, item);
-      }),
-      onFocus: composeEventHandlers(triggerProps.onFocus, (e: any) => {
-        group?.openFromTrigger(e.currentTarget as HTMLElement, item);
-      }),
-      onKeyDown: composeEventHandlers(triggerProps.onKeyDown, (e: any) => {
-        if (e?.key === 'Escape') group?.closeImmediately();
-      }),
-      onPointerEnter: composeEventHandlers(triggerProps.onPointerEnter, (e: any) => {
-        group?.openFromTrigger(e.currentTarget as HTMLElement, item);
-      }),
-      onPointerLeave: composeEventHandlers(triggerProps.onPointerLeave, (e: any) => {
-        group?.closeFromTrigger(e.currentTarget as HTMLElement, item);
-      }),
-      ref: mergeRefs([originalRef, setTriggerEl, ref]),
-    });
-  }, [group, item, ref, trigger]);
+  const triggerRef = useMemo(
+    () =>
+      mergeRefs([
+        ref,
+        (node) => setTriggerEl(node instanceof HTMLElement ? node : null),
+      ]),
+    [ref],
+  );
 
-  // Close when the trigger is swapped out or disconnected.
-  useEffect(() => {
-    return () => {
-      if (!group) return;
-      const el = triggerElRef.current;
-      if (el && group.isActiveTrigger(el)) group.closeImmediately();
-    };
-  }, [group]);
+  const handleOpenChange = useCallback(
+    (nextOpen: boolean) => {
+      mergedProps.onOpenChange?.(nextOpen);
+    },
+    [mergedProps],
+  );
 
-  return referenceNode as ReactNode;
+  return (
+    <BaseTooltip.Root disabled={disabled} onOpenChange={(nextOpen) => handleOpenChange(nextOpen)}>
+      <BaseTooltip.Trigger
+        closeDelay={shouldOverrideCloseDelay ? resolvedDelays.close : undefined}
+        delay={shouldOverrideOpenDelay ? resolvedDelays.open : undefined}
+        ref={triggerRef}
+        render={isValidElement(trigger) ? trigger : undefined}
+      >
+        {isValidElement(trigger) ? undefined : trigger}
+      </BaseTooltip.Trigger>
+      {!disabled && title && (
+        <TooltipPortal root={portalRoot}>
+          <TooltipFloating
+            arrow={arrow}
+            className={className}
+            classNames={classNames}
+            hotkey={hotkey}
+            hotkeyProps={hotkeyProps}
+            layoutAnimation={layoutAnimation}
+            placement={placement}
+            styles={styleProps}
+            title={title}
+            zIndex={zIndex}
+          />
+        </TooltipPortal>
+      )}
+    </BaseTooltip.Root>
+  );
 };
 
 TooltipInGroup.displayName = 'TooltipInGroup';

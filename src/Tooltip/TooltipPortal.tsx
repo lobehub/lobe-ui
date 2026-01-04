@@ -2,12 +2,14 @@
 
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
 
 import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
 
+import { BaseTooltip } from './baseTooltip';
+
 type TooltipPortalProps = {
   children: ReactNode;
+  keepMounted?: boolean;
   root?: HTMLElement | ShadowRoot | null;
 };
 
@@ -50,19 +52,26 @@ const resolveRoot = (root?: HTMLElement | ShadowRoot | null): HTMLElement | Shad
   return document.body;
 };
 
-const TooltipPortal = ({ children, root }: TooltipPortalProps) => {
+const TooltipPortal = ({ children, keepMounted, root }: TooltipPortalProps) => {
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
   // Never mutate DOM / create portal container during render.
   // Create it after mount to avoid SSR/hydration side effects.
   useEffect(() => {
     const resolved = resolveRoot(root);
-    if (!resolved) return;
+    if (!resolved) {
+      setContainer(null);
+      return;
+    }
     setContainer(getOrCreateContainer(resolved));
   }, [root]);
 
   if (!container) return null;
-  return createPortal(children, container);
+  return (
+    <BaseTooltip.Portal container={container} keepMounted={keepMounted}>
+      {children}
+    </BaseTooltip.Portal>
+  );
 };
 
 export default TooltipPortal;

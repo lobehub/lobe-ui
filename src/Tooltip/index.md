@@ -9,9 +9,9 @@ description: The Tooltip component is used to provide additional information to 
 
 <code src="./demos/index.tsx" nopadding></code>
 
-## Tooltip Group (Singleton)
+## Tooltip Group
 
-Wrap multiple tooltips in `TooltipGroup` to share a single floating instance. When you hover/focus different triggers, the tooltip only updates the anchor + content, reducing per-tooltip overhead.
+Wrap multiple tooltips in `TooltipGroup` to share delay/interaction settings via Base UI's Tooltip provider. Adjacent tooltips will open instantly while moving between triggers.
 
 <code src="./demos/group.tsx" nopadding></code>
 
@@ -41,13 +41,14 @@ Verify tooltips close when the trigger node is removed, for both standalone and 
 | mouseEnterDelay | Delay before opening (seconds, AntD compatible)                    | `number`                                                  | `0`     |
 | mouseLeaveDelay | Delay before closing (seconds, AntD compatible)                    | `number`                                                  | `0`     |
 
-Tooltip is built on top of `@floating-ui/react` (Base Tooltip). For compatibility, it keeps a subset of Ant Design Tooltip-like props (e.g. `mouseEnterDelay`, `mouseLeaveDelay`, legacy `placement` values, and `styles/classNames`).
+Tooltip is built on top of `@base-ui/react` Tooltip. For compatibility, it keeps a subset of Ant Design Tooltip-like props (e.g. `mouseEnterDelay`, `mouseLeaveDelay`, legacy `placement` values, and `styles/classNames`).
 
 ### TooltipGroup
 
 | Property | Description                                           | Type                                                                            | Default |
 | -------- | ----------------------------------------------------- | ------------------------------------------------------------------------------- | ------- |
 | children | Tooltip subtree that shares a single tooltip instance | `ReactNode`                                                                     | -       |
+| layoutAnimation | Enable layout/content animations when switching tooltips | `boolean`                                                                   | `true`  |
 | ...props | Shared tooltip props applied to each group member     | `Omit<TooltipProps, 'children' \| 'defaultOpen' \| 'open' \| 'ref' \| 'title'>` | -       |
 
 #### Hotkey Support
