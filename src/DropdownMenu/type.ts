@@ -15,7 +15,9 @@ export type DropdownMenuPlacement =
   | 'bottomRight'
   | 'topLeft'
   | 'topCenter'
-  | 'topRight';
+  | 'topRight'
+  | 'top'
+  | 'bottom';
 
 export type DropdownMenuCheckboxItem = MenuCheckboxItemType;
 

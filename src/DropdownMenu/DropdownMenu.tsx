@@ -3,6 +3,7 @@
 import { Menu, type MenuTriggerState } from '@base-ui/react/menu';
 import { mergeProps } from '@base-ui/react/merge-props';
 import type { ComponentRenderFn, HTMLProps } from '@base-ui/react/utils/types';
+import type { Align, Side } from '@base-ui/react/utils/useAnchorPositioning';
 import { cx } from 'antd-style';
 import clsx from 'clsx';
 import {
@@ -24,16 +25,25 @@ import { CLASSNAMES } from '@/styles/classNames';
 import { renderDropdownMenuItems } from './renderItems';
 import type { DropdownMenuPlacement, DropdownMenuProps } from './type';
 
-const placementMap: Record<
-  DropdownMenuPlacement,
-  { align: 'start' | 'center' | 'end'; side: 'top' | 'bottom' }
-> = {
-  bottomCenter: { align: 'center', side: 'bottom' },
-  bottomLeft: { align: 'start', side: 'bottom' },
-  bottomRight: { align: 'end', side: 'bottom' },
-  topCenter: { align: 'center', side: 'top' },
-  topLeft: { align: 'start', side: 'top' },
-  topRight: { align: 'end', side: 'top' },
+type PlacementConfig = {
+  align: Align;
+  side: Side;
+};
+const topCenter: PlacementConfig = { align: 'center', side: 'top' };
+const bottomCenter: PlacementConfig = { align: 'center', side: 'bottom' };
+const topLeft: PlacementConfig = { align: 'start', side: 'top' };
+const bottomLeft: PlacementConfig = { align: 'start', side: 'bottom' };
+const topRight: PlacementConfig = { align: 'end', side: 'top' };
+const bottomRight: PlacementConfig = { align: 'end', side: 'bottom' };
+const placementMap: Record<DropdownMenuPlacement, PlacementConfig> = {
+  bottom: bottomCenter,
+  bottomCenter,
+  bottomLeft,
+  bottomRight,
+  top: topCenter,
+  topCenter,
+  topLeft,
+  topRight,
 };
 
 const DropdownMenu = memo<DropdownMenuProps>(
@@ -114,13 +124,18 @@ const DropdownMenu = memo<DropdownMenuProps>(
       </Menu.Trigger>
     );
 
+    const resolvedPositionerProps = {
+      ...positionerProps,
+      align: positionerProps?.align ?? placementConfig?.align ?? 'center',
+      side: positionerProps?.side ?? placementConfig?.side ?? 'bottom',
+      sideOffset: positionerProps?.sideOffset ?? 6,
+    };
     return (
       <Menu.Root {...rest} defaultOpen={defaultOpen} onOpenChange={handleOpenChange} open={open}>
         {trigger}
         <Menu.Portal container={portalProps?.container ?? portalContainer} {...portalProps}>
           <Menu.Positioner
-            {...positionerProps}
-            align={positionerProps?.align ?? placementConfig.align}
+            {...resolvedPositionerProps}
             className={(state) =>
               cx(
                 styles.positioner,
@@ -129,8 +144,6 @@ const DropdownMenu = memo<DropdownMenuProps>(
                   : positionerProps?.className,
               )
             }
-            side={positionerProps?.side ?? placementConfig.side}
-            sideOffset={positionerProps?.sideOffset ?? 6}
           >
             <Menu.Popup
               {...popupProps}
