@@ -10,6 +10,48 @@
 
 - **tag**: Migrate from theme to cssVar for color resolution.
 
+#### 🐛 Bug Fixes
+
+- **menu**: Menu item type baseline.
+
+#### 💄 Styles
+
+- **misc**: Enhance Tooltip animations with new content transitions and introduce a global mouse direction context, Fix antd override style.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **tag**: Migrate from theme to cssVar for color resolution ([d776735](https://github.com/lobehub/lobe-ui/commit/d776735))
+
+#### What's fixed
+
+- **menu**: Menu item type baseline ([d2cea7f](https://github.com/lobehub/lobe-ui/commit/d2cea7f))
+
+#### Styles
+
+- **misc**: Enhance Tooltip animations with new content transitions and introduce a global mouse direction context ([fbe8ca6](https://github.com/lobehub/lobe-ui/commit/fbe8ca6))
+- **misc**: Fix antd override style ([846afed](https://github.com/lobehub/lobe-ui/commit/846afed))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version 4.8.1](https://github.com/lobehub/lobe-ui/compare/v4.8.0...v4.8.1)
+
+<sup>Released on **2026-01-04**</sup>
+
+#### ♻ Code Refactoring
+
+- **tag**: Migrate from theme to cssVar for color resolution.
+
 #### 💄 Styles
 
 - **misc**: Enhance Tooltip animations with new content transitions and introduce a global mouse direction context, Fix antd override style.
