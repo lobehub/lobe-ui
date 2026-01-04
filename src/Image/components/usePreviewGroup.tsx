@@ -43,6 +43,7 @@ export const usePreview = (
         return originalNode;
       },
       closeIcon: <Icon color={'#fff'} icon={X} />,
+
       imageRender: (originalNode, info) => {
         const node = <Preview visible={visible}>{originalNode}</Preview>;
         if (imageRender) return imageRender(node, info);
@@ -59,7 +60,7 @@ export const usePreview = (
       },
       rootClassName: cx(styles.preview, rootClassName),
       ...rest,
-    };
+    } satisfies GroupPreviewConfig;
   }, [props, visible, componentStyles]);
 };
 

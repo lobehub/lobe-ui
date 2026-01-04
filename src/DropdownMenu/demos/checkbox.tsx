@@ -35,7 +35,7 @@ export default () => {
   );
 
   return (
-    <DropdownMenu items={items}>
+    <DropdownMenu items={items} nativeButton>
       <Button>Checkbox Items</Button>
     </DropdownMenu>
   );

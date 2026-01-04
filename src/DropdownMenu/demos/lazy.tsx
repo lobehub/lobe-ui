@@ -9,6 +9,7 @@ export default () => {
         { type: 'divider' },
         { key: 'exit', label: 'Exit' },
       ]}
+      nativeButton
     >
       <Button>Lazy Items</Button>
     </DropdownMenu>

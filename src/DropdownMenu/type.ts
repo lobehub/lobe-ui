@@ -29,6 +29,7 @@ export interface DropdownMenuProps<Payload = unknown> extends Omit<
 > {
   children: ReactNode;
   items: DropdownItem[] | (() => DropdownItem[]);
+  nativeButton?: boolean;
   placement?: DropdownMenuPlacement;
   popupProps?: MenuPopupProps;
   portalProps?: MenuPortalProps;

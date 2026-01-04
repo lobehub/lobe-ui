@@ -9,12 +9,12 @@ import { PreviewGroupProps } from './type';
 const { PreviewGroup: AntdPreviewGroup } = Image;
 
 const PreviewGroup = memo<PreviewGroupProps>(({ items, children, enable = true, preview }) => {
-  const mergePreivew = usePreviewGroup(preview);
+  const mergePreview = usePreviewGroup(preview);
 
   if (!enable) return children;
 
   return (
-    <AntdPreviewGroup items={items} preview={mergePreivew}>
+    <AntdPreviewGroup items={items} preview={mergePreview}>
       {children}
     </AntdPreviewGroup>
   );

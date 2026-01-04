@@ -1,24 +1,25 @@
-import { DropdownMenu } from '@lobehub/ui';
+import { Button, DropdownMenu } from '@lobehub/ui';
 import { createStaticStyles } from 'antd-style';
 import { MoreHorizontal } from 'lucide-react';
 
 import { items } from './data';
 
 const styles = createStaticStyles(({ css, cssVar }) => ({
-  trigger: css`
+  link: css`
     cursor: pointer;
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
-    width: 44px;
-    height: 44px;
-    padding: 0;
+    height: 32px;
+    padding-block: 0;
+    padding-inline: 12px;
     border: 1px solid ${cssVar.colorBorderSecondary};
-    border-radius: 12px;
+    border-radius: 10px;
 
     color: ${cssVar.colorTextSecondary};
+    text-decoration: none;
 
     background: ${cssVar.colorBgElevated};
 
@@ -39,14 +40,29 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
       background: ${cssVar.colorFillTertiary};
     }
   `,
+  row: css`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  `,
 }));
 
 export default () => {
   return (
-    <DropdownMenu items={items} nativeButton>
-      <button aria-label="Open menu" className={styles.trigger} type="button">
-        <MoreHorizontal />
-      </button>
-    </DropdownMenu>
+    <div className={styles.row}>
+      {/* Custom component trigger (not a literal <button>) */}
+      <DropdownMenu items={items} nativeButton>
+        <Button>Open (Button)</Button>
+      </DropdownMenu>
+
+      {/* Non-button trigger (anchor) */}
+      <DropdownMenu items={items} nativeButton={false}>
+        <a className={styles.link} href="#" onClick={(e) => e.preventDefault()}>
+          <MoreHorizontal style={{ marginRight: 8 }} />
+          Open (Anchor)
+        </a>
+      </DropdownMenu>
+    </div>
   );
 };

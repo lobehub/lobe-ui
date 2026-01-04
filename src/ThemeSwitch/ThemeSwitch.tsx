@@ -74,7 +74,7 @@ const ThemeSwitch: FC<ThemeSwitchProps> = ({
       variant={variant}
     />
   ) : (
-    <DropdownMenu items={items}>
+    <DropdownMenu items={items} nativeButton={false}>
       <ActionIcon
         className={className}
         icon={DEFAULT_ICON_SET[themeMode]}

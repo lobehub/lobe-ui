@@ -4,7 +4,7 @@ import { items } from './data';
 
 export default () => {
   return (
-    <DropdownMenu items={items} triggerProps={{ openOnHover: true } as any}>
+    <DropdownMenu items={items} nativeButton triggerProps={{ openOnHover: true } as any}>
       <Button>Hover to Open</Button>
     </DropdownMenu>
   );

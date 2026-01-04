@@ -33,19 +33,24 @@ description: DropdownMenu renders a dropdown menu based on Base UI Menu primitiv
 
 <code src="./demos/lazy.tsx" center></code>
 
+## Custom Trigger (Non-button)
+
+<code src="./demos/custom-trigger.tsx" center></code>
+
 ## APIs
 
 ### DropdownMenuV2
 
-| Property        | Description                       | Type                                                                                        | Default        |
-| --------------- | --------------------------------- | ------------------------------------------------------------------------------------------- | -------------- |
-| items           | Menu items (lazy supported)       | `DropdownMenuV2ItemType[] \| (() => DropdownMenuV2ItemType[])`                              | -              |
-| children        | Trigger element                   | `ReactNode`                                                                                 | -              |
-| placement       | Position of dropdown menu         | `'bottomLeft' \| 'bottomCenter' \| 'bottomRight' \| 'topLeft' \| 'topCenter' \| 'topRight'` | `'bottomLeft'` |
-| triggerProps    | Props passed to `Menu.Trigger`    | `MenuTriggerProps`                                                                          | -              |
-| positionerProps | Props passed to `Menu.Positioner` | `MenuPositionerProps`                                                                       | -              |
-| popupProps      | Props passed to `Menu.Popup`      | `MenuPopupProps`                                                                            | -              |
-| portalProps     | Props passed to `Menu.Portal`     | `MenuPortalProps`                                                                           | -              |
+| Property        | Description                       | Type                                                                                                             | Default        |
+| --------------- | --------------------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------- |
+| items           | Menu items (lazy supported)       | `DropdownMenuV2ItemType[] \| (() => DropdownMenuV2ItemType[])`                                                   | -              |
+| children        | Trigger element                   | `ReactNode`                                                                                                      | -              |
+| nativeButton    | Shortcut for trigger nativeButton | `boolean`                                                                                                        | -              |
+| placement       | Position of dropdown menu         | `'bottom' \| 'bottomLeft' \| 'bottomCenter' \| 'bottomRight' \| 'top' \| 'topLeft' \| 'topCenter' \| 'topRight'` | `'bottomLeft'` |
+| triggerProps    | Props passed to `Menu.Trigger`    | `MenuTriggerProps`                                                                                               | -              |
+| positionerProps | Props passed to `Menu.Positioner` | `MenuPositionerProps`                                                                                            | -              |
+| popupProps      | Props passed to `Menu.Popup`      | `MenuPopupProps`                                                                                                 | -              |
+| portalProps     | Props passed to `Menu.Portal`     | `MenuPortalProps`                                                                                                | -              |
 
 Additionally, DropdownMenuV2 inherits all properties from Base UI `Menu.Root` except `children`.
 

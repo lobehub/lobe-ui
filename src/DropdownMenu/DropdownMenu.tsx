@@ -52,6 +52,7 @@ const DropdownMenu = memo<DropdownMenuProps>(
     defaultOpen,
 
     items,
+    nativeButton,
     onOpenChange,
     open,
     placement = 'bottomLeft',
@@ -100,19 +101,43 @@ const DropdownMenu = memo<DropdownMenuProps>(
     }, [isClient]);
     const placementConfig = placementMap[placement];
 
+    const isNativeButtonTriggerElement = useMemo(() => {
+      if (!isValidElement(children)) return false;
+      return typeof children.type === 'string' && children.type === 'button';
+    }, [children]);
+
     const renderer: ComponentRenderFn<HTMLProps<any>, MenuTriggerState> = useCallback(
       (props) => {
-        // FIXEE: Omit type: 'button' pass to and button
-        // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
-        const { type, ...restProps } = props as any;
-        return cloneElement(children as any, mergeProps((children as any).props, restProps));
+        // Base UI's trigger props include `type="button"` by default.
+        // If we render into a non-<button> element, that prop is invalid and can warn.
+        const resolvedProps = (() => {
+          if (isNativeButtonTriggerElement) return props as any;
+          // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+          const { type, ...restProps } = props as any;
+          return restProps;
+        })();
+
+        return cloneElement(children as any, mergeProps((children as any).props, resolvedProps));
       },
-      [children],
+      [children, isNativeButtonTriggerElement],
     );
+
+    // When we use `render`, Base UI expects the rendered element to be a native <button> by default.
+    // If we can infer it's not, opt out to avoid warnings (users can still override via `nativeButton`).
+    const resolvedNativeButton = useMemo(() => {
+      if (nativeButton !== undefined) return nativeButton;
+      if (triggerProps?.nativeButton !== undefined) return triggerProps.nativeButton;
+      if (isNativeButtonTriggerElement) return true;
+      if (!isValidElement(children)) return undefined;
+      if (typeof children.type === 'string') return false;
+      return undefined;
+    }, [children, isNativeButtonTriggerElement, nativeButton, triggerProps?.nativeButton]);
+
     const trigger = isValidElement(children) ? (
       <Menu.Trigger
         {...triggerProps}
         className={clsx(CLASSNAMES.DropdownMenuTrigger, triggerProps?.className)}
+        nativeButton={resolvedNativeButton}
         render={renderer}
       />
     ) : (

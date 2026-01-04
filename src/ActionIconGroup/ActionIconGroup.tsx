@@ -81,7 +81,7 @@ const ActionIconGroup: FC<ActionIconGroupProps> = ({
             );
           })}
         {menu && (
-          <DropdownMenu items={menuItems}>
+          <DropdownMenu items={menuItems} nativeButton={false}>
             <ActionIcon
               disabled={disabled}
               icon={MoreHorizontal}
