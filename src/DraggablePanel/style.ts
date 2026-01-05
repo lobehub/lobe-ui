@@ -96,7 +96,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
   const handleHighlightStyle = css`
     &:hover {
       &::before {
-        background: ${cssVar.colorPrimary};
+        background: ${cssVar.colorPrimaryBorder};
         box-shadow: 0 0 8px color-mix(in srgb, ${cssVar.colorPrimary} 25%, transparent);
       }
     }

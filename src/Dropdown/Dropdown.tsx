@@ -8,6 +8,12 @@ import { mapItems } from '@/Menu';
 
 import type { DropdownProps } from './type';
 
+/**
+ * @deprecated
+ * Use `DropdownMenu` or `ContextMenu` instead
+ * @see https://ui.lobehub.com/components/context-menu
+ * @see https://ui.lobehub.com/components/dropdown-menu
+ */
 const Dropdown = memo<DropdownProps>(({ children, iconProps, menu, ...rest }) => {
   const { items, ...menuProps } = menu;
 

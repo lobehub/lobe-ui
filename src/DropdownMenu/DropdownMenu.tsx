@@ -13,6 +13,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
 
@@ -54,6 +55,7 @@ const DropdownMenu = memo<DropdownMenuProps>(
     items,
     nativeButton,
     onOpenChange,
+    onOpenChangeComplete,
     open,
     placement = 'bottomLeft',
     popupProps,
@@ -80,12 +82,26 @@ const DropdownMenu = memo<DropdownMenuProps>(
       [onOpenChange, open],
     );
 
-    const shouldRenderItems = open ?? uncontrolledOpen;
+    const menuItemsRef = useRef<ReturnType<typeof renderDropdownMenuItems> | null>(null);
+    const isOpen = open ?? uncontrolledOpen;
     const menuItems = useMemo(() => {
-      if (!shouldRenderItems) return null;
-      const resolvedItems = typeof items === 'function' ? items() : items;
-      return renderDropdownMenuItems(resolvedItems);
-    }, [items, shouldRenderItems]);
+      if (isOpen) {
+        const resolvedItems = typeof items === 'function' ? items() : items;
+        const renderedItems = renderDropdownMenuItems(resolvedItems);
+        menuItemsRef.current = renderedItems;
+        return renderedItems;
+      }
+      return menuItemsRef.current;
+    }, [isOpen, items]);
+    const handleOpenChangeComplete = useCallback(
+      (nextOpen: boolean) => {
+        onOpenChangeComplete?.(nextOpen);
+        if (!nextOpen) {
+          menuItemsRef.current = null;
+        }
+      },
+      [onOpenChangeComplete],
+    );
     const portalContainer = useMemo(() => {
       if (!isClient) return null;
 
@@ -100,6 +116,7 @@ const DropdownMenu = memo<DropdownMenuProps>(
       return document.body;
     }, [isClient]);
     const placementConfig = placementMap[placement];
+    const hoverTrigger = Boolean((triggerProps as any)?.openOnHover);
 
     const isNativeButtonTriggerElement = useMemo(() => {
       if (!isValidElement(children)) return false;
@@ -156,7 +173,13 @@ const DropdownMenu = memo<DropdownMenuProps>(
       sideOffset: positionerProps?.sideOffset ?? 6,
     };
     return (
-      <Menu.Root {...rest} defaultOpen={defaultOpen} onOpenChange={handleOpenChange} open={open}>
+      <Menu.Root
+        {...rest}
+        defaultOpen={defaultOpen}
+        onOpenChange={handleOpenChange}
+        onOpenChangeComplete={handleOpenChangeComplete}
+        open={open}
+      >
         {trigger}
         <Menu.Portal container={portalProps?.container ?? portalContainer} {...portalProps}>
           <Menu.Positioner
@@ -169,6 +192,8 @@ const DropdownMenu = memo<DropdownMenuProps>(
                   : positionerProps?.className,
               )
             }
+            data-hover-trigger={hoverTrigger || undefined}
+            data-placement={placement}
           >
             <Menu.Popup
               {...popupProps}
