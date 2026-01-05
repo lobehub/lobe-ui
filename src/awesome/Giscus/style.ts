@@ -1,6 +1,8 @@
 import { css, useTheme } from 'antd-style';
-import { readableColor, rgba } from 'polished';
+import { rgba } from 'polished';
 import { useMemo } from 'react';
+
+import { safeReadableColor } from '@/utils/safeReadableColor';
 
 export const useStyles = () => {
   const theme = useTheme();
@@ -59,7 +61,7 @@ export const useStyles = () => {
       --color-btn-active-bg: ${theme.colorFillSecondary};
       --color-btn-active-border: ${theme.colorBorder};
       --color-btn-selected-bg: ${theme.colorFillSecondary};
-      --color-btn-primary-text: ${readableColor(theme.colorPrimary)};
+      --color-btn-primary-text: ${safeReadableColor(theme.colorPrimary)};
       --color-btn-primary-bg: ${theme.colorPrimary};
       --color-btn-primary-border: ${theme.colorPrimaryBorder};
       --color-btn-primary-shadow: 0 0 transparent;
@@ -68,7 +70,7 @@ export const useStyles = () => {
       --color-btn-primary-hover-border: ${theme.colorPrimaryBorderHover};
       --color-btn-primary-selected-bg: ${theme.colorPrimaryActive};
       --color-btn-primary-selected-shadow: 0 0 transparent;
-      --color-btn-primary-disabled-text: ${rgba(readableColor(theme.colorPrimary), 0.5)};
+      --color-btn-primary-disabled-text: ${rgba(safeReadableColor(theme.colorPrimary), 0.5)};
       --color-btn-primary-disabled-bg: ${rgba(theme.colorPrimary, 0.5)};
       --color-btn-primary-disabled-border: ${rgba(theme.colorPrimaryBorder, 0.5)};
       --color-action-list-item-default-hover-bg: ${theme.colorFillQuaternary};

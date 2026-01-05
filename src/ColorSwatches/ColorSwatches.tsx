@@ -4,13 +4,14 @@ import { ColorPicker } from 'antd';
 import { cssVar, cx, useTheme } from 'antd-style';
 import chroma from 'chroma-js';
 import { CheckIcon } from 'lucide-react';
-import { readableColor, rgba } from 'polished';
+import { rgba } from 'polished';
 import { type FC, useMemo } from 'react';
 import useMergeState from 'use-merge-value';
 
 import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Tooltip from '@/Tooltip';
+import { safeReadableColor } from '@/utils/safeReadableColor';
 
 import { styles } from './style';
 import type { ColorSwatchesProps } from './type';
@@ -95,7 +96,7 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
               >
                 {isActive && (
                   <Icon
-                    color={rgba(readableColor(actualColorForReadable), 0.33)}
+                    color={rgba(safeReadableColor(actualColorForReadable), 0.33)}
                     icon={CheckIcon}
                     size={{ size: 14, strokeWidth: 4 }}
                     style={{

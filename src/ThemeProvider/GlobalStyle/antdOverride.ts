@@ -1,11 +1,13 @@
 import { Theme, css } from 'antd-style';
-import { readableColor, rgba } from 'polished';
+import { rgba } from 'polished';
+
+import { safeReadableColor } from '@/utils/safeReadableColor';
 
 export default (token: Theme) => {
-  const readColor = readableColor(token.colorPrimary);
+  const readColor = safeReadableColor(token.colorPrimary);
   return css`
     .${token.prefixCls}-checkbox-inner:after {
-      border-color: ${readableColor(token.colorPrimary)} !important;
+      border-color: ${safeReadableColor(token.colorPrimary)} !important;
     }
 
     .${token.prefixCls}-btn {
