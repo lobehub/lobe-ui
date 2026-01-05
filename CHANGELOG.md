@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.9.3](https://github.com/lobehub/lobe-ui/compare/v4.9.2...v4.9.3)
+
+<sup>Released on **2026-01-05**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Add safeReadableColor.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Add safeReadableColor ([a2c449a](https://github.com/lobehub/lobe-ui/commit/a2c449a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.9.2](https://github.com/lobehub/lobe-ui/compare/v4.9.1...v4.9.2)
 
 <sup>Released on **2026-01-04**</sup>
