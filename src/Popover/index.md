@@ -43,6 +43,12 @@ Use `open` and `onOpenChange` for confirmation dialogs, inline editing, and exte
 
 <code src="./demos/controlled.tsx" nopadding></code>
 
+## Context (Imperative)
+
+Popover provides an internal context so that content can close the current popover without switching to controlled mode.
+
+<code src="./demos/context.tsx" nopadding></code>
+
 ## APIs
 
 ### Popover
@@ -70,6 +76,16 @@ Use `open` and `onOpenChange` for confirmation dialogs, inline editing, and exte
 | zIndex            | z-index of the popover                                             | `number`                                                                                                                                                         | `1100`    |
 
 Popover is built on top of `@base-ui/react/popover`. It provides an Ant Design compatible API for easy migration.
+
+### usePopoverContext
+
+Returns the imperative popover instance for the current content tree.
+
+```ts
+type PopoverContextValue = {
+  close: () => void;
+};
+```
 
 ### PopoverGroup
 

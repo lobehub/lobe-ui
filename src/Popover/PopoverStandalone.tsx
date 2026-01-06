@@ -4,22 +4,16 @@ import { mergeProps } from '@base-ui/react/merge-props';
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import type { Side } from '@base-ui/react/utils/useAnchorPositioning';
 import { cx } from 'antd-style';
-import {
-  cloneElement,
-  isValidElement,
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { cloneElement, isValidElement, memo, useCallback, useMemo, useState } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 import { useIsClient } from '@/hooks/useIsClient';
+import { useNativeButton } from '@/hooks/useNativeButton';
 import { placementMap } from '@/utils/placement';
 
 import { PopoverArrowIcon } from './ArrowIcon';
 import { usePopoverPortalContainer } from './PopoverPortal';
+import { PopoverProvider } from './context';
 import { parseTrigger } from './parseTrigger';
 import { styles } from './style';
 import type { PopoverProps } from './type';
@@ -50,18 +44,17 @@ export const PopoverStandalone = memo<PopoverProps>(
     getPopupContainer,
     disabled = false,
     zIndex,
+    nativeButton,
     ref: refProp,
   }) => {
     const arrow = inset ? false : originArrow;
     const isClient = useIsClient();
     const popoverHandle = useMemo(() => BasePopover.createHandle(), []);
     const [uncontrolledOpen, setUncontrolledOpen] = useState(Boolean(defaultOpen));
-
-    // Sync controlled state
-    useEffect(() => {
-      if (open === undefined) return;
-      setUncontrolledOpen(open);
-    }, [open]);
+    const close = useCallback(() => {
+      popoverHandle.close();
+    }, [popoverHandle]);
+    const contextValue = useMemo(() => ({ close }), [close]);
 
     const mergedOpen = open ?? uncontrolledOpen;
     const resolvedOpen = disabled ? false : mergedOpen;
@@ -113,6 +106,11 @@ export const PopoverStandalone = memo<PopoverProps>(
     // Determine portal container
     const portalContainer = usePopoverPortalContainer();
 
+    const { isNativeButtonTriggerElement, resolvedNativeButton } = useNativeButton({
+      children,
+      nativeButton,
+    });
+
     const resolvedClassNames = useMemo(
       () => ({
         arrow: cx(styles.arrow, classNames?.arrow),
@@ -138,19 +136,22 @@ export const PopoverStandalone = memo<PopoverProps>(
           <BasePopover.Trigger
             handle={popoverHandle}
             {...triggerProps}
+            nativeButton={resolvedNativeButton}
             render={(props) => {
-              // Remove type="button" for non-button elements
-              // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
-              const { type, ref: triggerRef, ...restProps } = props as any;
-              const resolvedProps =
-                typeof (children as any).type === 'string' && (children as any).type === 'button'
-                  ? props
-                  : restProps;
+              // Base UI's trigger props include `type="button"` by default.
+              // If we render into a non-<button> element, that prop is invalid and can warn.
+              const resolvedProps = (() => {
+                if (isNativeButtonTriggerElement) return props as any;
+                // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+                const { type, ref: triggerRef, ...restProps } = props as any;
+                return restProps;
+              })();
+
               const mergedProps = mergeProps((children as any).props, resolvedProps);
               return cloneElement(children as any, {
                 ...mergedProps,
                 className: cx(mergedProps.className, resolvedClassNames.trigger),
-                ref: mergeRefs([(children as any).ref, triggerRef, refProp]),
+                ref: mergeRefs([(children as any).ref, (props as any).ref, refProp]),
               });
             }}
           />
@@ -161,6 +162,7 @@ export const PopoverStandalone = memo<PopoverProps>(
           handle={popoverHandle}
           {...triggerProps}
           className={resolvedClassNames.trigger}
+          nativeButton={resolvedNativeButton}
           ref={refProp}
         >
           {children}
@@ -169,10 +171,12 @@ export const PopoverStandalone = memo<PopoverProps>(
     }, [
       children,
       disabled,
+      isNativeButtonTriggerElement,
       openOnHover,
       popoverHandle,
       refProp,
       resolvedClassNames.trigger,
+      resolvedNativeButton,
       resolvedOpenDelay,
       resolvedCloseDelay,
     ]);
@@ -218,7 +222,7 @@ export const PopoverStandalone = memo<PopoverProps>(
               className={resolvedClassNames.viewport}
               style={resolvedStyles.viewport}
             >
-              {content}
+              <PopoverProvider value={contextValue}>{content}</PopoverProvider>
             </BasePopover.Viewport>
           </BasePopover.Popup>
         </BasePopover.Positioner>
@@ -226,6 +230,7 @@ export const PopoverStandalone = memo<PopoverProps>(
       [
         arrow,
         content,
+        contextValue,
         openOnHover,
         placement,
         placementConfig.align,

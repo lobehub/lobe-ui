@@ -6,6 +6,8 @@ import { cx } from 'antd-style';
 import { type FC, cloneElement, isValidElement, useContext, useMemo } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
+import { useNativeButton } from '@/hooks/useNativeButton';
+
 import { PopoverGroupHandleContext } from './groupContext';
 import { parseTrigger } from './parseTrigger';
 import type { PopoverProps } from './type';
@@ -20,6 +22,11 @@ export const PopoverInGroup: FC<PopoverProps> = ({ children, ref: refProp, ...pr
   const resolvedOpenDelay = item.openDelay ?? (item.mouseEnterDelay ?? 0.1) * 1000;
   const resolvedCloseDelay = item.closeDelay ?? (item.mouseLeaveDelay ?? 0.1) * 1000;
   const disabled = Boolean(item.disabled);
+
+  const { isNativeButtonTriggerElement, resolvedNativeButton } = useNativeButton({
+    children,
+    nativeButton: item.nativeButton,
+  });
 
   // Don't render trigger behavior if no content
   if (!item.content) {
@@ -41,19 +48,22 @@ export const PopoverInGroup: FC<PopoverProps> = ({ children, ref: refProp, ...pr
       <BasePopover.Trigger
         handle={group ?? undefined}
         {...triggerProps}
+        nativeButton={resolvedNativeButton}
         render={(renderProps) => {
-          // Remove type="button" for non-button elements
-          // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
-          const { type, ref: triggerRef, ...restProps } = renderProps as any;
-          const resolvedProps =
-            typeof (children as any).type === 'string' && (children as any).type === 'button'
-              ? renderProps
-              : restProps;
+          // Base UI's trigger props include `type="button"` by default.
+          // If we render into a non-<button> element, that prop is invalid and can warn.
+          const resolvedProps = (() => {
+            if (isNativeButtonTriggerElement) return renderProps as any;
+            // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+            const { type, ref: triggerRef, ...restProps } = renderProps as any;
+            return restProps;
+          })();
+
           const mergedProps = mergeProps((children as any).props, resolvedProps);
           return cloneElement(children as any, {
             ...mergedProps,
             className: cx(mergedProps.className, triggerClassName),
-            ref: mergeRefs([(children as any).ref, triggerRef, refProp]),
+            ref: mergeRefs([(children as any).ref, (renderProps as any).ref, refProp]),
           });
         }}
       />
@@ -65,6 +75,7 @@ export const PopoverInGroup: FC<PopoverProps> = ({ children, ref: refProp, ...pr
       handle={group ?? undefined}
       {...triggerProps}
       className={triggerClassName}
+      nativeButton={resolvedNativeButton}
       ref={refProp}
     >
       {children}

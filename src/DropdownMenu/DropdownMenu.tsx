@@ -20,6 +20,7 @@ import { styles } from '@/Menu/sharedStyle';
 import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
 import { TOOLTIP_CONTAINER_ATTR } from '@/Tooltip/TooltipPortal';
 import { useIsClient } from '@/hooks/useIsClient';
+import { useNativeButton } from '@/hooks/useNativeButton';
 import { CLASSNAMES } from '@/styles/classNames';
 import { placementMap } from '@/utils/placement';
 
@@ -97,10 +98,11 @@ const DropdownMenu = memo<DropdownMenuProps>(
     const placementConfig = placementMap[placement];
     const hoverTrigger = Boolean((triggerProps as any)?.openOnHover);
 
-    const isNativeButtonTriggerElement = useMemo(() => {
-      if (!isValidElement(children)) return false;
-      return typeof children.type === 'string' && children.type === 'button';
-    }, [children]);
+    const { isNativeButtonTriggerElement, resolvedNativeButton } = useNativeButton({
+      children,
+      nativeButton,
+      triggerNativeButton: triggerProps?.nativeButton,
+    });
 
     const renderer: ComponentRenderFn<HTMLProps<any>, MenuTriggerState> = useCallback(
       (props) => {
@@ -117,17 +119,6 @@ const DropdownMenu = memo<DropdownMenuProps>(
       },
       [children, isNativeButtonTriggerElement],
     );
-
-    // When we use `render`, Base UI expects the rendered element to be a native <button> by default.
-    // If we can infer it's not, opt out to avoid warnings (users can still override via `nativeButton`).
-    const resolvedNativeButton = useMemo(() => {
-      if (nativeButton !== undefined) return nativeButton;
-      if (triggerProps?.nativeButton !== undefined) return triggerProps.nativeButton;
-      if (isNativeButtonTriggerElement) return true;
-      if (!isValidElement(children)) return undefined;
-      if (typeof children.type === 'string') return false;
-      return undefined;
-    }, [children, isNativeButtonTriggerElement, nativeButton, triggerProps?.nativeButton]);
 
     const trigger = isValidElement(children) ? (
       <Menu.Trigger

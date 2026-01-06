@@ -9,6 +9,7 @@ import { placementMap } from '@/utils/placement';
 
 import { PopoverArrowIcon } from './ArrowIcon';
 import { usePopoverPortalContainer } from './PopoverPortal';
+import { PopoverProvider } from './context';
 import {
   PopoverGroupHandleContext,
   type PopoverGroupItem,
@@ -29,6 +30,10 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
 }) => {
   const handle = useMemo(() => BasePopover.createHandle<PopoverGroupItem>(), []);
   const activeItemRef = useRef<PopoverGroupItem | null>(null);
+  const close = useCallback(() => {
+    handle.close();
+  }, [handle]);
+  const contextValue = useMemo(() => ({ close }), [close]);
 
   const handleOpenChange = useCallback((open: boolean) => {
     activeItemRef.current?.onOpenChange?.(open);
@@ -89,6 +94,10 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
               viewport: item.styles?.content,
             };
 
+            const contentNode = (
+              <PopoverProvider value={contextValue}>{item.content}</PopoverProvider>
+            );
+
             const popup = (
               <BasePopover.Positioner
                 align={placementConfig.align}
@@ -113,11 +122,11 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
                       className={resolvedClassNames.viewport}
                       style={resolvedStyles.viewport}
                     >
-                      {item.content}
+                      {contentNode}
                     </BasePopover.Viewport>
                   ) : (
                     <div className={resolvedClassNames.viewport} style={resolvedStyles.viewport}>
-                      {item.content}
+                      {contentNode}
                     </div>
                   )}
                 </BasePopover.Popup>

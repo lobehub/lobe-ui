@@ -198,10 +198,13 @@ export type { MotionComponentType } from './MotionProvider';
 export { MotionComponent, MotionProvider, useMotionComponent } from './MotionProvider';
 export {
   default as Popover,
+  type PopoverContextValue,
   PopoverGroup,
   type PopoverPlacement,
   type PopoverProps,
+  PopoverProvider,
   type PopoverTrigger,
+  usePopoverContext,
 } from './Popover';
 export { I18nProvider, type I18nProviderProps, LobeUIProvider, useTranslation } from './Provider';
 export { default as ScrollShadow, type ScrollShadowProps } from './ScrollShadow';

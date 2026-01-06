@@ -79,6 +79,11 @@ export interface PopoverProps {
   mouseLeaveDelay?: number;
 
   /**
+   * 是否使用原生 button 元素作为触发器
+   */
+  nativeButton?: boolean;
+
+  /**
    * 打开状态变化回调
    */
   onOpenChange?: (open: boolean) => void;
