@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.10.1](https://github.com/lobehub/lobe-ui/compare/v4.10.0...v4.10.1)
+
+<sup>Released on **2026-01-06**</sup>
+
+#### 🐛 Bug Fixes
+
+- **popover**: Enhance Popover component with trigger class support.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **popover**: Enhance Popover component with trigger class support ([496de92](https://github.com/lobehub/lobe-ui/commit/496de92))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.10.0](https://github.com/lobehub/lobe-ui/compare/v4.9.3...v4.10.0)
 
 <sup>Released on **2026-01-06**</sup>
