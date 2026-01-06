@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.11.1](https://github.com/lobehub/lobe-ui/compare/v4.11.0...v4.11.1)
+
+<sup>Released on **2026-01-06**</sup>
+
+#### 🐛 Bug Fixes
+
+- **popover**: Update default values for arrow and content layout animation.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **popover**: Update default values for arrow and content layout animation ([53b418a](https://github.com/lobehub/lobe-ui/commit/53b418a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.11.0](https://github.com/lobehub/lobe-ui/compare/v4.10.1...v4.11.0)
 
 <sup>Released on **2026-01-06**</sup>
