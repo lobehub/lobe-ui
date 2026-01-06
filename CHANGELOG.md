@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.11.4](https://github.com/lobehub/lobe-ui/compare/v4.11.3...v4.11.4)
+
+<sup>Released on **2026-01-06**</sup>
+
+#### ♻ Code Refactoring
+
+- **emoji-picker**: Replace Ant Design Popover with custom Popover component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **emoji-picker**: Replace Ant Design Popover with custom Popover component ([d836bd1](https://github.com/lobehub/lobe-ui/commit/d836bd1))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.11.3](https://github.com/lobehub/lobe-ui/compare/v4.11.2...v4.11.3)
 
 <sup>Released on **2026-01-06**</sup>
