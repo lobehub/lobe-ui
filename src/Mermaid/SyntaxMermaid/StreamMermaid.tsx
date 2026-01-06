@@ -50,10 +50,7 @@ const StreamMermaid = memo<StreamMermaidProps>(
     useEffect(() => {
       if (isLoading || !data) {
         // Clear blob URL when loading or no data
-        if (blobUrl) {
-          URL.revokeObjectURL(blobUrl);
-          setBlobUrl(undefined);
-        }
+        setBlobUrl(undefined);
         return;
       }
 
@@ -79,17 +76,12 @@ const StreamMermaid = memo<StreamMermaidProps>(
         }
       }
 
-      // Revoke old blob URL before creating new one
-      if (blobUrl) {
-        URL.revokeObjectURL(blobUrl);
-      }
-
       // 创建Blob对象
       const svgBlob = new Blob([finalSvgString], { type: 'image/svg+xml' });
       // 创建并保存Blob URL
       const url = URL.createObjectURL(svgBlob);
       setBlobUrl(url);
-    }, [isLoading, data, blobUrl]);
+    }, [isLoading, data]);
 
     if (!blobUrl) {
       return (
