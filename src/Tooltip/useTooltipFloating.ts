@@ -15,7 +15,7 @@ import type { FloatingContext, Placement } from '@floating-ui/react';
 import { useMemo, useRef } from 'react';
 import type { CSSProperties, RefObject } from 'react';
 
-import { antdPlacementToFloating } from '@/Tooltip/antdPlacementToFloating';
+import { toFloatingUIPlacement } from '@/utils/placement';
 
 import type { TooltipPlacement } from './type';
 
@@ -52,7 +52,7 @@ export const useTooltipFloating = ({
 }): UseTooltipFloatingReturn => {
   const arrowRef = useRef<SVGSVGElement | null>(null);
 
-  const floatingPlacement = useMemo(() => antdPlacementToFloating(placement), [placement]);
+  const floatingPlacement = useMemo(() => toFloatingUIPlacement(placement), [placement]);
 
   const middleware = useMemo(() => {
     const base = [offset(8), flip(), shift({ padding: 8 })];

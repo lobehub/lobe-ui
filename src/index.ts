@@ -196,6 +196,13 @@ export {
 } from './Modal';
 export type { MotionComponentType } from './MotionProvider';
 export { MotionComponent, MotionProvider, useMotionComponent } from './MotionProvider';
+export {
+  default as Popover,
+  PopoverGroup,
+  type PopoverPlacement,
+  type PopoverProps,
+  type PopoverTrigger,
+} from './Popover';
 export { I18nProvider, type I18nProviderProps, LobeUIProvider, useTranslation } from './Provider';
 export { default as ScrollShadow, type ScrollShadowProps } from './ScrollShadow';
 export { default as SearchBar, type SearchBarProps } from './SearchBar';
@@ -239,6 +246,12 @@ export { default as Tooltip, TooltipGroup, type TooltipProps } from './Tooltip';
 export type * from './types';
 export { copyToClipboard } from './utils/copyToClipboard';
 export { type CDN, genCdnUrl } from './utils/genCdnUrl';
+export {
+  type Placement,
+  type PlacementConfig,
+  placementMap,
+  toFloatingUIPlacement,
+} from './utils/placement';
 export { default as Video, type VideoProps } from './Video';
 export { default as ShikiLobeTheme } from '@/Highlighter/theme/lobe-theme';
 export { ErrorBoundary, type ErrorBoundaryProps } from 'react-error-boundary';

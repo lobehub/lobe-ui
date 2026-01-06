@@ -10,7 +10,7 @@ import {
 } from '@floating-ui/react';
 import { type FC, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { antdPlacementToFloating } from '@/Tooltip/antdPlacementToFloating';
+import { toFloatingUIPlacement } from '@/utils/placement';
 
 import TooltipFloating from './TooltipFloating';
 import TooltipPortal from './TooltipPortal';
@@ -47,7 +47,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
   }, [active]);
 
   const floatingPlacement = useMemo(
-    () => antdPlacementToFloating(active?.item.placement),
+    () => toFloatingUIPlacement(active?.item.placement),
     [active?.item.placement],
   );
 

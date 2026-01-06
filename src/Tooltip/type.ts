@@ -1,22 +1,9 @@
-import type { Placement } from '@floating-ui/react';
 import type { CSSProperties, ReactElement, ReactNode, Ref } from 'react';
 
 import type { HotkeyProps } from '@/Hotkey';
+import type { Placement } from '@/utils/placement';
 
-export type TooltipPlacement =
-  | Placement
-  | 'topLeft'
-  | 'top'
-  | 'topRight'
-  | 'leftTop'
-  | 'left'
-  | 'leftBottom'
-  | 'rightTop'
-  | 'right'
-  | 'rightBottom'
-  | 'bottomLeft'
-  | 'bottom'
-  | 'bottomRight';
+export type TooltipPlacement = Placement;
 
 export type TooltipProps = {
   /**

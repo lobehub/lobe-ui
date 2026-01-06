@@ -8,16 +8,9 @@ import type {
 import type { ReactNode } from 'react';
 
 import type { BaseMenuItemType, MenuCheckboxItemType } from '@/Menu';
+import type { Placement } from '@/utils/placement';
 
-export type DropdownMenuPlacement =
-  | 'bottomLeft'
-  | 'bottomCenter'
-  | 'bottomRight'
-  | 'topLeft'
-  | 'topCenter'
-  | 'topRight'
-  | 'top'
-  | 'bottom';
+export type DropdownMenuPlacement = Placement;
 
 export type DropdownMenuCheckboxItem = MenuCheckboxItemType;
 

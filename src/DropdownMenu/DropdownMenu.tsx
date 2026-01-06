@@ -3,7 +3,6 @@
 import { Menu, type MenuTriggerState } from '@base-ui/react/menu';
 import { mergeProps } from '@base-ui/react/merge-props';
 import type { ComponentRenderFn, HTMLProps } from '@base-ui/react/utils/types';
-import type { Align, Side } from '@base-ui/react/utils/useAnchorPositioning';
 import { cx } from 'antd-style';
 import clsx from 'clsx';
 import {
@@ -22,30 +21,10 @@ import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
 import { TOOLTIP_CONTAINER_ATTR } from '@/Tooltip/TooltipPortal';
 import { useIsClient } from '@/hooks/useIsClient';
 import { CLASSNAMES } from '@/styles/classNames';
+import { placementMap } from '@/utils/placement';
 
 import { renderDropdownMenuItems } from './renderItems';
-import type { DropdownMenuPlacement, DropdownMenuProps } from './type';
-
-type PlacementConfig = {
-  align: Align;
-  side: Side;
-};
-const topCenter: PlacementConfig = { align: 'center', side: 'top' };
-const bottomCenter: PlacementConfig = { align: 'center', side: 'bottom' };
-const topLeft: PlacementConfig = { align: 'start', side: 'top' };
-const bottomLeft: PlacementConfig = { align: 'start', side: 'bottom' };
-const topRight: PlacementConfig = { align: 'end', side: 'top' };
-const bottomRight: PlacementConfig = { align: 'end', side: 'bottom' };
-const placementMap: Record<DropdownMenuPlacement, PlacementConfig> = {
-  bottom: bottomCenter,
-  bottomCenter,
-  bottomLeft,
-  bottomRight,
-  top: topCenter,
-  topCenter,
-  topLeft,
-  topRight,
-};
+import type { DropdownMenuProps } from './type';
 
 const DropdownMenu = memo<DropdownMenuProps>(
   ({
