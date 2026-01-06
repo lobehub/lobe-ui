@@ -59,7 +59,10 @@ export interface EmojiPickerProps extends Omit<AvatarProps, 'onChange' | 'avatar
   onUpload?: AvatarUploaderProps['onUpload'];
   open?: boolean;
   popupClassName?: string;
-  popupProps?: Omit<PopoverProps, 'onOpenChange' | 'defaultOpen' | 'content' | 'open' | 'trigger'>;
+  popupProps?: Omit<
+    PopoverProps,
+    'onOpenChange' | 'defaultOpen' | 'content' | 'open' | 'trigger' | 'children'
+  >;
   popupStyle?: CSSProperties;
   size?: number;
   texts?: AvatarUploaderProps['texts'] & {
