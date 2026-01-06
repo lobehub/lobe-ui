@@ -2,6 +2,33 @@
 
 # Changelog
 
+## [Version 4.10.0](https://github.com/lobehub/lobe-ui/compare/v4.9.3...v4.10.0)
+
+<sup>Released on **2026-01-06**</sup>
+
+#### ✨ Features
+
+- **dropdown-menu**: Enhance animation and add open state callback.
+- **popover**: Introduce Popover component with group support and enhanced placement utilities.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **dropdown-menu**: Enhance animation and add open state callback ([2e2cfd5](https://github.com/lobehub/lobe-ui/commit/2e2cfd5))
+- **popover**: Introduce Popover component with group support and enhanced placement utilities ([9facc77](https://github.com/lobehub/lobe-ui/commit/9facc77))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.9.3](https://github.com/lobehub/lobe-ui/compare/v4.9.2...v4.9.3)
 
 <sup>Released on **2026-01-05**</sup>
