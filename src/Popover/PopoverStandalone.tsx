@@ -26,7 +26,7 @@ export const PopoverStandalone = memo<PopoverProps>(
   ({
     children,
     content,
-    arrow: originArrow = true,
+    arrow: originArrow = false,
     inset = false,
     trigger = 'hover',
     placement = 'top',

@@ -13,7 +13,7 @@ export type PopoverGroupSharedProps = Omit<
 > & {
   /**
    * @description Whether to enable content layout animation when switching triggers
-   * @default true
+   * @default false
    */
   contentLayoutAnimation?: boolean;
 };

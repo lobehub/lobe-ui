@@ -25,7 +25,7 @@ type PopoverGroupProps = PopoverGroupSharedProps & {
 
 const PopoverGroup: FC<PopoverGroupProps> = ({
   children,
-  contentLayoutAnimation = true,
+  contentLayoutAnimation = false,
   ...sharedProps
 }) => {
   const handle = useMemo(() => BasePopover.createHandle<PopoverGroupItem>(), []);
@@ -52,7 +52,7 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
 
             if (!item?.content) return null;
 
-            const arrow = item.inset ? false : (item.arrow ?? true);
+            const arrow = item.inset ? false : (item.arrow ?? false);
             const placement = item.placement ?? 'top';
             const { openOnHover } = parseTrigger(item.trigger ?? 'hover');
 

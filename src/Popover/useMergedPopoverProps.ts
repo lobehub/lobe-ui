@@ -54,7 +54,7 @@ export const useMergedPopoverProps = (props: Partial<PopoverProps>): PopoverGrou
 
   const item: PopoverGroupItem = useMemo(
     () => ({
-      arrow: arrow ?? sharedProps?.arrow ?? true,
+      arrow: arrow ?? sharedProps?.arrow ?? false,
       className: mergedClassName,
       classNames: mergedClassNames,
       closeDelay: closeDelay ?? sharedProps?.closeDelay,
