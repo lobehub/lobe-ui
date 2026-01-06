@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.11.5](https://github.com/lobehub/lobe-ui/compare/v4.11.4...v4.11.5)
+
+<sup>Released on **2026-01-06**</sup>
+
+#### 🐛 Bug Fixes
+
+- **emoji-picker**: Update popupProps to include children omission.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **emoji-picker**: Update popupProps to include children omission ([547938e](https://github.com/lobehub/lobe-ui/commit/547938e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.11.4](https://github.com/lobehub/lobe-ui/compare/v4.11.3...v4.11.4)
 
 <sup>Released on **2026-01-06**</sup>
