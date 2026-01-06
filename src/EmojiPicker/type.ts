@@ -1,7 +1,8 @@
-import { PopoverProps } from 'antd';
 import { CSSProperties, ReactNode } from 'react';
 
 import type { AvatarProps } from '@/Avatar/type';
+import type { FlexboxProps } from '@/Flex/type';
+import type { PopoverProps } from '@/Popover';
 
 export interface AvatarUploaderProps {
   compressSize?: number;
@@ -44,6 +45,7 @@ export interface EmojiPickerProps extends Omit<AvatarProps, 'onChange' | 'avatar
         enableEmoji?: boolean;
       };
   compressSize?: number;
+  contentProps?: Omit<FlexboxProps, 'className' | 'ref' | 'style'>;
   customEmojis?: EmojiPickerCustomEmoji[];
   customRender?: (avatar: string) => ReactNode;
   customTabs?: EmojiPickerCustomTab[];
@@ -57,10 +59,7 @@ export interface EmojiPickerProps extends Omit<AvatarProps, 'onChange' | 'avatar
   onUpload?: AvatarUploaderProps['onUpload'];
   open?: boolean;
   popupClassName?: string;
-  popupProps?: Omit<
-    PopoverProps,
-    'onOpenChange' | 'defaultOpen' | 'content' | 'open' | 'rootClassName' | 'trigger'
-  >;
+  popupProps?: Omit<PopoverProps, 'onOpenChange' | 'defaultOpen' | 'content' | 'open' | 'trigger'>;
   popupStyle?: CSSProperties;
   size?: number;
   texts?: AvatarUploaderProps['texts'] & {

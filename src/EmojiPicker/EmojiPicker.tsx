@@ -2,7 +2,6 @@
 
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
-import { Popover } from 'antd';
 import { cx, useTheme } from 'antd-style';
 import chroma from 'chroma-js';
 import { SmileIcon, TrashIcon, UploadIcon } from 'lucide-react';
@@ -14,6 +13,7 @@ import ActionIcon from '@/ActionIcon';
 import Avatar from '@/Avatar';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
+import Popover from '@/Popover';
 import Tabs, { TabsProps } from '@/Tabs';
 import Tooltip from '@/Tooltip';
 import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
@@ -49,6 +49,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
     onOpenChange,
     popupProps,
     shape,
+    contentProps,
     ...rest
   }) => {
     const ref = useRef<HTMLDivElement>(null);
@@ -124,6 +125,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
           ...pickerCssVariables,
           ...popupStyle,
         }}
+        {...contentProps}
       >
         {showTabs && (
           <Flexbox
@@ -192,7 +194,9 @@ const EmojiPicker = memo<EmojiPickerProps>(
 
     return (
       <Popover
-        arrow={false}
+        classNames={{
+          content: styles.popover,
+        }}
         content={content}
         defaultOpen={defaultOpen}
         onOpenChange={(v) => {
@@ -201,8 +205,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
         }}
         open={visible}
         placement={'bottom'}
-        rootClassName={styles.popover}
-        trigger={['click']}
+        trigger={'click'}
         {...popupProps}
       >
         {customRender ? (

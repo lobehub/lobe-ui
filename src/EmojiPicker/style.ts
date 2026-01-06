@@ -1,7 +1,5 @@
 import { createStaticStyles } from 'antd-style';
 
-const prefixCls = 'ant';
-
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   picker: css`
     position: relative;
@@ -14,10 +12,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   popover: css`
-    .${prefixCls}-popover-container {
-      overflow: hidden;
-      padding: 0;
-    }
+    padding: 0;
   `,
   root: css`
     position: relative;
