@@ -40,7 +40,7 @@ export default () => {
   return (
     <Header
       actions={
-        <PopoverGroup>
+        <PopoverGroup contentLayoutAnimation>
           <Flexbox align="center" gap={8} horizontal>
             <Popover
               arrow={false}
@@ -135,7 +135,7 @@ export default () => {
       }
       logo={<LobeHub type="combine" />}
       nav={
-        <PopoverGroup>
+        <PopoverGroup contentLayoutAnimation>
           <Flexbox horizontal>
             <NavItem items={[{ label: 'Chat' }, { label: 'Agents' }, { label: 'Plugins' }]}>
               Products

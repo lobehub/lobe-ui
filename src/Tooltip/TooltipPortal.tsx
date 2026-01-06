@@ -12,7 +12,7 @@ type TooltipPortalProps = {
 };
 
 const PORTAL_ATTR = 'data-lobe-ui-tooltip-portal';
-export const TOOLTIP_CONTAINER_ATTR = 'data-lobe-ui-tooltip-container';
+const TOOLTIP_CONTAINER_ATTR = 'data-lobe-ui-tooltip-container';
 
 // Reuse one portal container per root (document.body by default).
 const containerMap = new WeakMap<object, HTMLElement>();

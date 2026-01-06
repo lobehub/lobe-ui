@@ -4,8 +4,8 @@ import { ContextMenu } from '@base-ui/react/context-menu';
 import { memo, useEffect, useMemo, useSyncExternalStore } from 'react';
 
 import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
-import { TOOLTIP_CONTAINER_ATTR } from '@/Tooltip/TooltipPortal';
 import { useIsClient } from '@/hooks/useIsClient';
+import { usePortalContainer } from '@/hooks/usePortalContainer';
 import { registerDevSingleton } from '@/utils/devSingleton';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
@@ -20,18 +20,21 @@ import {
 } from './store';
 import { styles } from './style';
 
+const CONTEXT_MENU_CONTAINER_ATTR = 'data-lobe-ui-context-menu-container';
+
 export const ContextMenuHost = memo(() => {
   const isClient = useIsClient();
   const state = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   useEffect(() => {
-    if (!isClient) return;
+    const DEV = process.env.NODE_ENV === 'development';
+    if (!isClient || !DEV) return;
     // Enforce singleton per portal container (dev-only).
     const themeApp = document.querySelector<HTMLElement>(`#${LOBE_THEME_APP_ID}`);
-    const tooltipContainer = document.querySelector<HTMLElement>(
-      `[${TOOLTIP_CONTAINER_ATTR}="true"]`,
+    const contextMenuContainer = document.querySelector<HTMLElement>(
+      `[${CONTEXT_MENU_CONTAINER_ATTR}="true"]`,
     );
-    const scope = themeApp ?? tooltipContainer ?? document.body;
+    const scope = themeApp ?? contextMenuContainer ?? document.body;
     return registerDevSingleton('ContextMenuHost', scope);
   }, [isClient]);
 
@@ -46,19 +49,7 @@ export const ContextMenuHost = memo(() => {
   }, []);
 
   const menuItems = useMemo(() => renderContextMenuItems(state.items), [state.items]);
-  const portalContainer = useMemo(() => {
-    if (!isClient) return null;
-
-    const themeApp = document.querySelector<HTMLElement>(`#${LOBE_THEME_APP_ID}`);
-    if (themeApp) return themeApp;
-
-    const tooltipContainer = document.querySelector<HTMLElement>(
-      `[${TOOLTIP_CONTAINER_ATTR}="true"]`,
-    );
-    if (tooltipContainer) return tooltipContainer;
-
-    return document.body;
-  }, [isClient]);
+  const portalContainer = usePortalContainer(CONTEXT_MENU_CONTAINER_ATTR);
 
   if (!isClient) return null;
   if (!state.open && state.items.length === 0) return null;

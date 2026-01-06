@@ -49,6 +49,10 @@ Popover provides an internal context so that content can close the current popov
 
 <code src="./demos/context.tsx" nopadding></code>
 
+## Inset Panel
+
+<code src="./demos/inset-panel.tsx" nopadding></code>
+
 ## APIs
 
 ### Popover

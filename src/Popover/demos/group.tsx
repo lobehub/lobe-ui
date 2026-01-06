@@ -28,7 +28,7 @@ const content = {
 };
 
 export default () => (
-  <PopoverGroup>
+  <PopoverGroup contentLayoutAnimation>
     <Flexbox align="center" gap={8} horizontal>
       <Popover content={content.dashboard} placement="bottom" trigger="hover">
         <Button type="text">Dashboard</Button>

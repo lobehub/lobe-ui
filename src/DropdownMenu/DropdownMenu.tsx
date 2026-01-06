@@ -17,15 +17,15 @@ import {
 } from 'react';
 
 import { styles } from '@/Menu/sharedStyle';
-import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
-import { TOOLTIP_CONTAINER_ATTR } from '@/Tooltip/TooltipPortal';
-import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
+import { usePortalContainer } from '@/hooks/usePortalContainer';
 import { CLASSNAMES } from '@/styles/classNames';
 import { placementMap } from '@/utils/placement';
 
 import { renderDropdownMenuItems } from './renderItems';
 import type { DropdownMenuProps } from './type';
+
+const DROPDOWN_MENU_CONTAINER_ATTR = 'data-lobe-ui-dropdown-menu-container';
 
 const DropdownMenu = memo<DropdownMenuProps>(
   ({
@@ -44,7 +44,6 @@ const DropdownMenu = memo<DropdownMenuProps>(
     triggerProps,
     ...rest
   }) => {
-    const isClient = useIsClient();
     const [uncontrolledOpen, setUncontrolledOpen] = useState(Boolean(defaultOpen));
 
     useEffect(() => {
@@ -82,19 +81,7 @@ const DropdownMenu = memo<DropdownMenuProps>(
       },
       [onOpenChangeComplete],
     );
-    const portalContainer = useMemo(() => {
-      if (!isClient) return null;
-
-      const themeApp = document.querySelector<HTMLElement>(`#${LOBE_THEME_APP_ID}`);
-      if (themeApp) return themeApp;
-
-      const tooltipContainer = document.querySelector<HTMLElement>(
-        `[${TOOLTIP_CONTAINER_ATTR}="true"]`,
-      );
-      if (tooltipContainer) return tooltipContainer;
-
-      return document.body;
-    }, [isClient]);
+    const portalContainer = usePortalContainer(DROPDOWN_MENU_CONTAINER_ATTR);
     const placementConfig = placementMap[placement];
     const hoverTrigger = Boolean((triggerProps as any)?.openOnHover);
 
