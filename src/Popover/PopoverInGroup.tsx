@@ -2,6 +2,7 @@
 
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Popover as BasePopover } from '@base-ui/react/popover';
+import { cx } from 'antd-style';
 import { type FC, cloneElement, isValidElement, useContext, useMemo } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
@@ -33,6 +34,8 @@ export const PopoverInGroup: FC<PopoverProps> = ({ children, ref: refProp, ...pr
     payload: item,
   };
 
+  const triggerClassName = item.classNames?.trigger;
+
   if (isValidElement(children)) {
     return (
       <BasePopover.Trigger
@@ -49,6 +52,7 @@ export const PopoverInGroup: FC<PopoverProps> = ({ children, ref: refProp, ...pr
           const mergedProps = mergeProps((children as any).props, resolvedProps);
           return cloneElement(children as any, {
             ...mergedProps,
+            className: cx(mergedProps.className, triggerClassName),
             ref: mergeRefs([(children as any).ref, triggerRef, refProp]),
           });
         }}
@@ -57,7 +61,12 @@ export const PopoverInGroup: FC<PopoverProps> = ({ children, ref: refProp, ...pr
   }
 
   return (
-    <BasePopover.Trigger handle={group ?? undefined} {...triggerProps} ref={refProp}>
+    <BasePopover.Trigger
+      handle={group ?? undefined}
+      {...triggerProps}
+      className={triggerClassName}
+      ref={refProp}
+    >
       {children}
     </BasePopover.Trigger>
   );

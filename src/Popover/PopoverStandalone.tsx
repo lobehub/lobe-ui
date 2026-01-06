@@ -113,6 +113,17 @@ export const PopoverStandalone = memo<PopoverProps>(
     // Determine portal container
     const portalContainer = usePopoverPortalContainer();
 
+    const resolvedClassNames = useMemo(
+      () => ({
+        arrow: cx(styles.arrow, classNames?.arrow),
+        popup: cx(styles.popup, className),
+        positioner: cx(styles.positioner, classNames?.root),
+        trigger: classNames?.trigger,
+        viewport: cx(styles.viewport, classNames?.content),
+      }),
+      [className, classNames?.arrow, classNames?.content, classNames?.root, classNames?.trigger],
+    );
+
     // Render trigger element
     const triggerElement = useMemo(() => {
       const triggerProps = {
@@ -138,6 +149,7 @@ export const PopoverStandalone = memo<PopoverProps>(
               const mergedProps = mergeProps((children as any).props, resolvedProps);
               return cloneElement(children as any, {
                 ...mergedProps,
+                className: cx(mergedProps.className, resolvedClassNames.trigger),
                 ref: mergeRefs([(children as any).ref, triggerRef, refProp]),
               });
             }}
@@ -145,7 +157,12 @@ export const PopoverStandalone = memo<PopoverProps>(
         );
       }
       return (
-        <BasePopover.Trigger handle={popoverHandle} {...triggerProps} ref={refProp}>
+        <BasePopover.Trigger
+          handle={popoverHandle}
+          {...triggerProps}
+          className={resolvedClassNames.trigger}
+          ref={refProp}
+        >
           {children}
         </BasePopover.Trigger>
       );
@@ -155,6 +172,7 @@ export const PopoverStandalone = memo<PopoverProps>(
       openOnHover,
       popoverHandle,
       refProp,
+      resolvedClassNames.trigger,
       resolvedOpenDelay,
       resolvedCloseDelay,
     ]);
@@ -166,16 +184,6 @@ export const PopoverStandalone = memo<PopoverProps>(
       // This will be handled by the portal container logic
       return undefined;
     }, [getPopupContainer, isClient]);
-
-    const resolvedClassNames = useMemo(
-      () => ({
-        arrow: cx(styles.arrow, classNames?.arrow),
-        popup: cx(styles.popup, className),
-        positioner: cx(styles.positioner, classNames?.root),
-        viewport: cx(styles.viewport, classNames?.content),
-      }),
-      [className, classNames?.arrow, classNames?.content, classNames?.root],
-    );
 
     const resolvedStyles = useMemo(
       () => ({
@@ -203,7 +211,7 @@ export const PopoverStandalone = memo<PopoverProps>(
           <BasePopover.Popup className={resolvedClassNames.popup}>
             {arrow && (
               <BasePopover.Arrow className={resolvedClassNames.arrow} style={resolvedStyles.arrow}>
-                <PopoverArrowIcon />
+                {PopoverArrowIcon}
               </BasePopover.Arrow>
             )}
             <BasePopover.Viewport

@@ -105,7 +105,7 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
                       className={resolvedClassNames.arrow}
                       style={resolvedStyles.arrow}
                     >
-                      <PopoverArrowIcon />
+                      {PopoverArrowIcon}
                     </BasePopover.Arrow>
                   )}
                   {contentLayoutAnimation ? (

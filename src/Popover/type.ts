@@ -30,6 +30,7 @@ export interface PopoverProps {
     arrow?: string;
     content?: string;
     root?: string;
+    trigger?: string;
   };
 
   /**
