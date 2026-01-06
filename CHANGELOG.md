@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.11.3](https://github.com/lobehub/lobe-ui/compare/v4.11.2...v4.11.3)
+
+<sup>Released on **2026-01-06**</sup>
+
+#### ♻ Code Refactoring
+
+- **context-menu, dropdown-menu**: Implement usePortalContainer hook for improved portal management.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **context-menu, dropdown-menu**: Implement usePortalContainer hook for improved portal management ([803da58](https://github.com/lobehub/lobe-ui/commit/803da58))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.11.2](https://github.com/lobehub/lobe-ui/compare/v4.11.1...v4.11.2)
 
 <sup>Released on **2026-01-06**</sup>
