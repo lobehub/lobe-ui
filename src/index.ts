@@ -248,6 +248,7 @@ export { default as Toc, type TocProps } from './Toc';
 export { default as Tooltip, TooltipGroup, type TooltipProps } from './Tooltip';
 export type * from './types';
 export { copyToClipboard } from './utils/copyToClipboard';
+export { preventDefault, preventDefaultAndStopPropagation, stopPropagation } from './utils/dom';
 export { type CDN, genCdnUrl } from './utils/genCdnUrl';
 export {
   type Placement,
