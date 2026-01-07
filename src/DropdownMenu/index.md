@@ -37,6 +37,10 @@ description: DropdownMenu renders a dropdown menu based on Base UI Menu primitiv
 
 <code src="./demos/custom-trigger.tsx" center></code>
 
+## Link Label
+
+<code src="./demos/link-label.tsx" center></code>
+
 ## APIs
 
 ### DropdownMenuV2

@@ -111,6 +111,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     flex: 1;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    & a,
+    & a:visited,
+    & a:hover,
+    & a:active {
+      color: inherit;
+    }
   `,
 
   popup: css`
