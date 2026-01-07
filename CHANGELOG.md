@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 4.12.0](https://github.com/lobehub/lobe-ui/compare/v4.11.7...v4.12.0)
+
+<sup>Released on **2026-01-07**</sup>
+
+#### ✨ Features
+
+- **misc**: Export new DOM utility functions.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Export new DOM utility functions ([a50239f](https://github.com/lobehub/lobe-ui/commit/a50239f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.11.7](https://github.com/lobehub/lobe-ui/compare/v4.11.6...v4.11.7)
 
 <sup>Released on **2026-01-07**</sup>
