@@ -444,12 +444,6 @@ export default {
       },
     },
     {
-      scope: ['markup.fenced_code.block'],
-      settings: {
-        foreground: cssVar.colorFill,
-      },
-    },
-    {
       scope: ['punctuation.definition.quote'],
       settings: {
         foreground: cssVar.purple10,
