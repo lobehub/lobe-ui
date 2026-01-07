@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.11.6](https://github.com/lobehub/lobe-ui/compare/v4.11.5...v4.11.6)
+
+<sup>Released on **2026-01-07**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix highlight markdown codeblock.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix highlight markdown codeblock ([2bab384](https://github.com/lobehub/lobe-ui/commit/2bab384))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.11.5](https://github.com/lobehub/lobe-ui/compare/v4.11.4...v4.11.5)
 
 <sup>Released on **2026-01-06**</sup>
