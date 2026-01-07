@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.11.7](https://github.com/lobehub/lobe-ui/compare/v4.11.6...v4.11.7)
+
+<sup>Released on **2026-01-07**</sup>
+
+#### 💄 Styles
+
+- **misc**: Update link colors in shared styles to inherit from parent.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Update link colors in shared styles to inherit from parent ([ce31c1f](https://github.com/lobehub/lobe-ui/commit/ce31c1f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.11.6](https://github.com/lobehub/lobe-ui/compare/v4.11.5...v4.11.6)
 
 <sup>Released on **2026-01-07**</sup>
