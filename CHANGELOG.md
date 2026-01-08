@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.12.2](https://github.com/lobehub/lobe-ui/compare/v4.12.1...v4.12.2)
+
+<sup>Released on **2026-01-08**</sup>
+
+#### 💄 Styles
+
+- **misc**: Fix mdx highlight edge case.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Fix mdx highlight edge case ([830baad](https://github.com/lobehub/lobe-ui/commit/830baad))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.12.1](https://github.com/lobehub/lobe-ui/compare/v4.12.0...v4.12.1)
 
 <sup>Released on **2026-01-08**</sup>
