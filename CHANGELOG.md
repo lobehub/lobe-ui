@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.12.1](https://github.com/lobehub/lobe-ui/compare/v4.12.0...v4.12.1)
+
+<sup>Released on **2026-01-08**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Fix mermaid preview.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Fix mermaid preview ([dd603fc](https://github.com/lobehub/lobe-ui/commit/dd603fc))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.12.0](https://github.com/lobehub/lobe-ui/compare/v4.11.7...v4.12.0)
 
 <sup>Released on **2026-01-07**</sup>
