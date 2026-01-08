@@ -1,249 +1,145 @@
 'use client';
 
-import {
-  arrow as arrowMiddleware,
-  autoUpdate,
-  flip,
-  offset,
-  shift,
-  useFloating,
-} from '@floating-ui/react';
-import { type FC, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
+import { cx } from 'antd-style';
+import { type FC, useCallback, useMemo, useRef } from 'react';
 
-import { toFloatingUIPlacement } from '@/utils/placement';
+import { placementMap } from '@/utils/placement';
 
-import TooltipFloating from './TooltipFloating';
-import TooltipPortal from './TooltipPortal';
+import { TooltipArrowIcon } from './ArrowIcon';
+import TooltipContent from './TooltipContent';
+import { useTooltipPortalContainer } from './TooltipPortal';
 import {
-  TooltipGroupApiContext,
+  TooltipGroupHandleContext,
   type TooltipGroupItem,
   TooltipGroupPropsContext,
-  type TooltipGroupSharedProps,
 } from './groupContext';
-import { isElementHidden, observeElementVisibility } from './utils';
-
-type TooltipGroupProps = TooltipGroupSharedProps & {
-  children: ReactNode;
-};
+import { styles } from './style';
+import type { TooltipGroupProps } from './type';
 
 const TooltipGroup: FC<TooltipGroupProps> = ({
   children,
-  layoutAnimation = true,
+  layoutAnimation = false,
   ...sharedProps
 }) => {
-  const arrowRef = useRef<SVGSVGElement | null>(null);
-  const openTimerRef = useRef<number | null>(null);
-  const closeTimerRef = useRef<number | null>(null);
+  const handle = useMemo(() => BaseTooltip.createHandle<TooltipGroupItem>(), []);
+  const activeItemRef = useRef<TooltipGroupItem | null>(null);
 
-  const [active, setActive] = useState<{
-    item: TooltipGroupItem;
-    triggerEl: HTMLElement;
-  } | null>(null);
-  const [open, setOpen] = useState(false);
-  const activeRef = useRef<typeof active>(null);
-
-  useEffect(() => {
-    activeRef.current = active;
-  }, [active]);
-
-  const floatingPlacement = useMemo(
-    () => toFloatingUIPlacement(active?.item.placement),
-    [active?.item.placement],
-  );
-
-  const middleware = useMemo(() => {
-    const base = [offset(8), flip(), shift({ padding: 8 })];
-    if (active?.item.arrow) base.push(arrowMiddleware({ element: arrowRef }));
-    return base;
-  }, [active?.item.arrow]);
-
-  const { context, floatingStyles, refs } = useFloating({
-    middleware,
-    open,
-    placement: floatingPlacement,
-    whileElementsMounted: autoUpdate,
-  });
-
-  useEffect(() => {
-    if (!active?.triggerEl) return;
-    refs.setReference(active.triggerEl);
-  }, [active?.triggerEl, refs]);
-
-  const clearTimers = useCallback(() => {
-    if (openTimerRef.current) window.clearTimeout(openTimerRef.current);
-    if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
-    openTimerRef.current = null;
-    closeTimerRef.current = null;
+  const handleOpenChange = useCallback((open: boolean) => {
+    activeItemRef.current?.onOpenChange?.(open);
   }, []);
 
-  const closeImmediately = useCallback(() => {
-    clearTimers();
-    setOpen(false);
-    activeRef.current?.item.onOpenChange?.(false);
-  }, [clearTimers]);
-
-  const destroyActive = useCallback(() => {
-    clearTimers();
-    setOpen(false);
-    activeRef.current?.item.onOpenChange?.(false);
-    setActive(null);
-  }, [clearTimers]);
-
-  const isActiveTrigger = useCallback((triggerEl: HTMLElement) => {
-    return Boolean(activeRef.current && activeRef.current.triggerEl === triggerEl);
-  }, []);
-
-  const closeFromTrigger = useCallback(
-    (triggerEl: HTMLElement, item: TooltipGroupItem) => {
-      if (!activeRef.current || activeRef.current.triggerEl !== triggerEl) return;
-
-      clearTimers();
-
-      const delayMs =
-        item.closeDelay ?? (item.mouseLeaveDelay !== undefined ? item.mouseLeaveDelay * 1000 : 100);
-      if (delayMs <= 0) {
-        setOpen(false);
-        item.onOpenChange?.(false);
-        return;
-      }
-
-      closeTimerRef.current = window.setTimeout(() => {
-        setOpen(false);
-        item.onOpenChange?.(false);
-      }, delayMs);
-    },
-    [clearTimers],
-  );
-
-  const openFromTrigger = useCallback(
-    (triggerEl: HTMLElement, item: TooltipGroupItem) => {
-      if (!triggerEl) return;
-      if (!item.title) return;
-      if (item.disabled) return;
-
-      clearTimers();
-
-      if (isElementHidden(triggerEl)) {
-        if (isActiveTrigger(triggerEl)) destroyActive();
-        return;
-      }
-
-      setActive({ item, triggerEl });
-
-      const delayMs =
-        item.openDelay ?? (item.mouseEnterDelay !== undefined ? item.mouseEnterDelay * 1000 : 400);
-      if (delayMs <= 0) {
-        if (isElementHidden(triggerEl)) {
-          destroyActive();
-          return;
-        }
-        setOpen(true);
-        item.onOpenChange?.(true);
-        return;
-      }
-
-      openTimerRef.current = window.setTimeout(() => {
-        if (isElementHidden(triggerEl)) {
-          destroyActive();
-          return;
-        }
-        setOpen(true);
-        item.onOpenChange?.(true);
-      }, delayMs);
-    },
-    [clearTimers, destroyActive, isActiveTrigger],
-  );
-
-  const groupApi = useMemo(
-    () => ({ closeFromTrigger, closeImmediately, isActiveTrigger, openFromTrigger }),
-    [closeFromTrigger, closeImmediately, isActiveTrigger, openFromTrigger],
-  );
-
-  useEffect(() => {
-    if (!open) return;
-    const triggerEl = active?.triggerEl;
-    if (!triggerEl) return;
-
-    if (isElementHidden(triggerEl)) {
-      destroyActive();
-      return;
-    }
-
-    const stopVisibilityObserver = observeElementVisibility(triggerEl, (visible) => {
-      if (!visible) destroyActive();
-    });
-
-    const root = triggerEl.getRootNode?.();
-    const observeTarget =
-      typeof ShadowRoot !== 'undefined' && root instanceof ShadowRoot
-        ? root
-        : (triggerEl.ownerDocument ?? document);
-
-    const observer = new MutationObserver(() => {
-      if (isElementHidden(triggerEl)) destroyActive();
-    });
-
-    observer.observe(observeTarget, { childList: true, subtree: true });
-
-    return () => {
-      observer.disconnect();
-      stopVisibilityObserver?.();
-    };
-  }, [active?.triggerEl, destroyActive, open]);
-
-  useEffect(() => {
-    return () => {
-      clearTimers();
-    };
-  }, [clearTimers]);
-
-  const portalRoot =
-    active?.item.getPopupContainer && active?.triggerEl
-      ? active.item.getPopupContainer(active.triggerEl)
-      : undefined;
-
-  const openRef = useRef(open);
-  useEffect(() => {
-    openRef.current = open;
-  }, [open]);
-
-  const isInitialShow = !openRef.current && open;
-
-  const floatingNode = (
-    <TooltipFloating
-      arrow={active?.item.arrow}
-      arrowRef={arrowRef}
-      className={active?.item.className}
-      classNames={active?.item.classNames}
-      context={context}
-      floatingStyles={floatingStyles}
-      hotkey={active?.item.hotkey}
-      hotkeyProps={active?.item.hotkeyProps}
-      isInitialShow={isInitialShow}
-      layoutAnimation={layoutAnimation}
-      open={open}
-      placement={floatingPlacement}
-      setFloating={refs.setFloating}
-      styles={active?.item.styles}
-      title={active?.item.title}
-      zIndex={active?.item.zIndex}
-    />
-  );
+  const portalContainer = useTooltipPortalContainer();
 
   return (
-    <TooltipGroupApiContext.Provider value={groupApi}>
+    <TooltipGroupHandleContext.Provider value={handle}>
       <TooltipGroupPropsContext.Provider value={sharedProps}>
         {children}
-        {active?.item.title &&
-          !active.item.disabled &&
-          ((active.item.portalled ?? true) ? (
-            <TooltipPortal root={portalRoot}>{floatingNode}</TooltipPortal>
-          ) : (
-            floatingNode
-          ))}
+        <BaseTooltip.Root handle={handle} onOpenChange={handleOpenChange}>
+          {({ payload }) => {
+            const item = (payload as TooltipGroupItem | null) ?? null;
+            activeItemRef.current = item;
+
+            // eslint-disable-next-line eqeqeq
+            if (!item || (item.title == null && !item.hotkey)) return null;
+
+            const arrow = item.arrow ?? true;
+            const placement = item.placement ?? 'top';
+            const placementConfig = placementMap[placement] ?? placementMap.top;
+            const baseSideOffset = arrow ? 8 : 6;
+
+            const resolvedClassNames = {
+              arrow: cx(styles.arrow, item.classNames?.arrow),
+              popup: cx(
+                styles.popup,
+                item.className,
+                item.classNames?.root,
+                item.classNames?.container,
+              ),
+              positioner: styles.positioner,
+              viewport: cx(styles.viewport, item.classNames?.content),
+            };
+
+            const resolvedStyleProps = (() => {
+              if (typeof item.styles === 'function') return undefined;
+              return item.styles;
+            })();
+
+            const resolvedStyles = {
+              arrow: resolvedStyleProps?.arrow,
+              popup: {
+                ...resolvedStyleProps?.root,
+                ...resolvedStyleProps?.container,
+              },
+              positioner: {
+                zIndex: item.zIndex ?? 1100,
+              },
+              viewport: resolvedStyleProps?.content,
+            };
+
+            const body = layoutAnimation ? (
+              <BaseTooltip.Viewport
+                className={resolvedClassNames.viewport}
+                style={resolvedStyles.viewport}
+              >
+                <TooltipContent
+                  hotkey={item.hotkey}
+                  hotkeyProps={item.hotkeyProps}
+                  title={item.title}
+                />
+              </BaseTooltip.Viewport>
+            ) : (
+              <div className={resolvedClassNames.viewport} style={resolvedStyles.viewport}>
+                <TooltipContent
+                  hotkey={item.hotkey}
+                  hotkeyProps={item.hotkeyProps}
+                  title={item.title}
+                />
+              </div>
+            );
+
+            const popup = (
+              <BaseTooltip.Positioner
+                align={placementConfig.align}
+                className={resolvedClassNames.positioner}
+                data-placement={placement}
+                side={placementConfig.side}
+                sideOffset={baseSideOffset}
+                style={resolvedStyles.positioner}
+              >
+                <BaseTooltip.Popup
+                  className={resolvedClassNames.popup}
+                  style={resolvedStyles.popup}
+                >
+                  {arrow && (
+                    <BaseTooltip.Arrow
+                      className={resolvedClassNames.arrow}
+                      style={resolvedStyles.arrow}
+                    >
+                      {TooltipArrowIcon}
+                    </BaseTooltip.Arrow>
+                  )}
+                  {body}
+                </BaseTooltip.Popup>
+              </BaseTooltip.Positioner>
+            );
+
+            const portalled = item.portalled ?? true;
+
+            return portalled ? (
+              portalContainer ? (
+                <BaseTooltip.Portal container={portalContainer}>{popup}</BaseTooltip.Portal>
+              ) : null
+            ) : (
+              popup
+            );
+          }}
+        </BaseTooltip.Root>
       </TooltipGroupPropsContext.Provider>
-    </TooltipGroupApiContext.Provider>
+    </TooltipGroupHandleContext.Provider>
   );
 };
+
+TooltipGroup.displayName = 'TooltipGroup';
 
 export default TooltipGroup;

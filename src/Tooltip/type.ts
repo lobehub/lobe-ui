@@ -5,7 +5,7 @@ import type { Placement } from '@/utils/placement';
 
 export type TooltipPlacement = Placement;
 
-export type TooltipProps = {
+export interface TooltipProps {
   /**
    * Whether the tooltip has an arrow pointer.
    */
@@ -109,4 +109,27 @@ export type TooltipProps = {
    * z-index for tooltip floating root.
    */
   zIndex?: number;
-};
+}
+
+/**
+ * Props for `TooltipGroup`.
+ */
+export interface TooltipGroupProps {
+  arrow?: boolean;
+  children: ReactNode;
+  className?: string;
+  classNames?: TooltipProps['classNames'];
+  closeDelay?: number;
+  disabled?: boolean;
+  getPopupContainer?: TooltipProps['getPopupContainer'];
+  hotkey?: string;
+  hotkeyProps?: Omit<HotkeyProps, 'keys'>;
+  layoutAnimation?: boolean;
+  mouseEnterDelay?: number;
+  mouseLeaveDelay?: number;
+  openDelay?: number;
+  placement?: TooltipPlacement;
+  portalled?: boolean;
+  styles?: TooltipProps['styles'];
+  zIndex?: number;
+}
