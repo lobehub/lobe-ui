@@ -14,7 +14,7 @@ const countLines = (str: string): number => {
 export const useCode = (raw: any) => {
   if (!raw) return;
 
-  const { children, className } = raw.props;
+  const { children = '', className } = raw?.props || { children: '' };
 
   if (!children) return;
 
