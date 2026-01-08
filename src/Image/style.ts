@@ -69,6 +69,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         }
       }
 
+      .${prefixCls}-image-preview-img {
+        width: 100%;
+      }
+
       .${prefixCls}-image-preview-switch {
         display: flex;
         align-items: center;
