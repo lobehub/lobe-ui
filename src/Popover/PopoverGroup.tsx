@@ -3,7 +3,7 @@
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import type { Side } from '@base-ui/react/utils/useAnchorPositioning';
 import { cx } from 'antd-style';
-import { type FC, type ReactNode, useCallback, useMemo, useRef } from 'react';
+import { type FC, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { placementMap } from '@/utils/placement';
 
@@ -39,13 +39,18 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
     activeItemRef.current?.onOpenChange?.(open);
   }, []);
 
+  const [updateKey, setUpdateKey] = useState(0);
+  useEffect(() => {
+    setUpdateKey((prev) => prev + 1);
+  }, [handle]);
+
   const portalContainer = usePopoverPortalContainer();
 
   return (
     <PopoverGroupHandleContext.Provider value={handle}>
       <PopoverGroupPropsContext.Provider value={sharedProps}>
         {children}
-        <BasePopover.Root handle={handle} onOpenChange={handleOpenChange}>
+        <BasePopover.Root handle={handle} key={updateKey} onOpenChange={handleOpenChange}>
           {({ payload }) => {
             const item = (payload as PopoverGroupItem | null) ?? null;
             activeItemRef.current = item;

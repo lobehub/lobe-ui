@@ -55,7 +55,7 @@ export const useTooltipPortalContainer = (
     const resolved = resolveRoot(root);
     if (!resolved) return;
     setContainer(getOrCreateContainer(resolved));
-  }, [root]);
+  }, [root, container?.isConnected]);
 
   return container;
 };
