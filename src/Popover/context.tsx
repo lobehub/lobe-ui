@@ -6,7 +6,12 @@ export type PopoverContextValue = {
   close: () => void;
 };
 
-const noop = () => undefined;
+const noop =
+  process.env.NODE_ENV === 'production'
+    ? () => void 0
+    : () => {
+        throw new Error('usePopoverContext must be used within a PopoverProvider');
+      };
 
 export const PopoverContext = createContext<PopoverContextValue>({
   close: noop,

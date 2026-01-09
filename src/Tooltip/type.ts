@@ -5,7 +5,7 @@ import type { Placement } from '@/utils/placement';
 
 export type TooltipPlacement = Placement;
 
-export type TooltipProps = {
+export interface TooltipProps {
   /**
    * Whether the tooltip has an arrow pointer.
    */
@@ -14,11 +14,11 @@ export type TooltipProps = {
    * Trigger element. Prefer a single React element.
    */
   children: ReactElement | ReactNode;
-
   /**
    * Custom className for the tooltip floating root.
    */
   className?: string;
+
   /**
    * Compatible with Ant Design `classNames` shape (subset).
    */
@@ -28,12 +28,12 @@ export type TooltipProps = {
     content?: string;
     root?: string;
   };
-
   /**
    * Delay (in milliseconds) before closing the tooltip.
    * Takes precedence over `mouseLeaveDelay`.
    */
   closeDelay?: number;
+
   /**
    * Uncontrolled initial open state.
    */
@@ -46,15 +46,14 @@ export type TooltipProps = {
    * An Ant Design compatible escape hatch for portal container.
    */
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
-
   hotkey?: string;
+
   hotkeyProps?: Omit<HotkeyProps, 'keys'>;
   /**
    * Delay (in seconds) before showing the tooltip on hover.
    * Kept compatible with Ant Design `Tooltip`.
    */
   mouseEnterDelay?: number;
-
   /**
    * Delay (in seconds) before hiding the tooltip on hover out.
    * Kept compatible with Ant Design `Tooltip`.
@@ -90,6 +89,12 @@ export type TooltipProps = {
   ref?: Ref<HTMLElement>;
 
   /**
+   * When true, this tooltip will render independently even inside a TooltipGroup,
+   * ignoring the group singleton behavior.
+   */
+  standalone?: boolean;
+
+  /**
    * Compatible with Ant Design `styles` shape (subset).
    */
   styles?: {
@@ -109,4 +114,27 @@ export type TooltipProps = {
    * z-index for tooltip floating root.
    */
   zIndex?: number;
-};
+}
+
+/**
+ * Props for `TooltipGroup`.
+ */
+export interface TooltipGroupProps {
+  arrow?: boolean;
+  children: ReactNode;
+  className?: string;
+  classNames?: TooltipProps['classNames'];
+  closeDelay?: number;
+  disabled?: boolean;
+  getPopupContainer?: TooltipProps['getPopupContainer'];
+  hotkey?: string;
+  hotkeyProps?: Omit<HotkeyProps, 'keys'>;
+  layoutAnimation?: boolean;
+  mouseEnterDelay?: number;
+  mouseLeaveDelay?: number;
+  openDelay?: number;
+  placement?: TooltipPlacement;
+  portalled?: boolean;
+  styles?: TooltipProps['styles'];
+  zIndex?: number;
+}

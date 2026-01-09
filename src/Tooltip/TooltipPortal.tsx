@@ -1,32 +1,26 @@
 'use client';
 
-import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
-import { createPortal } from 'react-dom';
 
 import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
 
-type TooltipPortalProps = {
-  children: ReactNode;
-  root?: HTMLElement | ShadowRoot | null;
-};
-
 const PORTAL_ATTR = 'data-lobe-ui-tooltip-portal';
-const TOOLTIP_CONTAINER_ATTR = 'data-lobe-ui-tooltip-container';
+export const TOOLTIP_CONTAINER_ATTR = 'data-lobe-ui-tooltip-container';
 
 // Reuse one portal container per root (document.body by default).
 const containerMap = new WeakMap<object, HTMLElement>();
 
 const getOrCreateContainer = (root: HTMLElement | ShadowRoot): HTMLElement => {
-  // try ThemeProvider's App root
   const resolvedRoot = (() => {
     if (typeof document === 'undefined') return root;
     if (typeof ShadowRoot !== 'undefined' && root instanceof ShadowRoot) return root;
 
     const isBody = root === document.body;
     if (!isBody) return root;
+
     const themeApp = document.querySelector<HTMLElement>(`#${LOBE_THEME_APP_ID}`);
     if (themeApp) return themeApp;
+
     const tooltipContainer = document.querySelector<HTMLElement>(
       `[${TOOLTIP_CONTAINER_ATTR}="true"]`,
     );
@@ -50,7 +44,9 @@ const resolveRoot = (root?: HTMLElement | ShadowRoot | null): HTMLElement | Shad
   return document.body;
 };
 
-const TooltipPortal = ({ children, root }: TooltipPortalProps) => {
+export const useTooltipPortalContainer = (
+  root?: HTMLElement | ShadowRoot | null,
+): HTMLElement | null => {
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
   // Never mutate DOM / create portal container during render.
@@ -59,10 +55,7 @@ const TooltipPortal = ({ children, root }: TooltipPortalProps) => {
     const resolved = resolveRoot(root);
     if (!resolved) return;
     setContainer(getOrCreateContainer(resolved));
-  }, [root]);
+  }, [root, container?.isConnected]);
 
-  if (!container) return null;
-  return createPortal(children, container);
+  return container;
 };
-
-export default TooltipPortal;

@@ -1,3 +1,5 @@
+'use client';
+
 import { useContext, useMemo } from 'react';
 
 import { type TooltipGroupItem, TooltipGroupPropsContext } from './groupContext';
@@ -7,21 +9,21 @@ export const useMergedTooltipProps = (props: Partial<TooltipProps>): TooltipGrou
   const sharedProps = useContext(TooltipGroupPropsContext);
 
   const {
+    arrow,
     className,
     classNames,
-    styles: styleProps,
-    hotkeyProps,
-    onOpenChange,
-    arrow,
     closeDelay,
     disabled,
     getPopupContainer,
     hotkey,
+    hotkeyProps,
     mouseEnterDelay,
     mouseLeaveDelay,
+    onOpenChange,
     openDelay,
     placement,
     portalled,
+    styles: styleProps,
     title,
     zIndex,
   } = props;
@@ -36,10 +38,20 @@ export const useMergedTooltipProps = (props: Partial<TooltipProps>): TooltipGrou
     return { ...sharedProps?.classNames, ...classNames };
   }, [classNames, sharedProps?.classNames]);
 
+  const resolvedSharedStyles = useMemo(() => {
+    if (typeof sharedProps?.styles === 'function') return undefined;
+    return sharedProps?.styles;
+  }, [sharedProps?.styles]);
+
+  const resolvedLocalStyles = useMemo(() => {
+    if (typeof styleProps === 'function') return undefined;
+    return styleProps;
+  }, [styleProps]);
+
   const mergedStyles = useMemo(() => {
-    if (!sharedProps?.styles && !styleProps) return undefined;
-    return { ...sharedProps?.styles, ...styleProps };
-  }, [sharedProps?.styles, styleProps]);
+    if (!resolvedSharedStyles && !resolvedLocalStyles) return undefined;
+    return { ...resolvedSharedStyles, ...resolvedLocalStyles };
+  }, [resolvedSharedStyles, resolvedLocalStyles]);
 
   const mergedHotkeyProps = useMemo(() => {
     if (!sharedProps?.hotkeyProps && !hotkeyProps) return undefined;
@@ -56,7 +68,7 @@ export const useMergedTooltipProps = (props: Partial<TooltipProps>): TooltipGrou
 
   const item: TooltipGroupItem = useMemo(
     () => ({
-      arrow: arrow ?? sharedProps?.arrow ?? false,
+      arrow: arrow ?? sharedProps?.arrow ?? true,
       className: mergedClassName,
       classNames: mergedClassNames,
       closeDelay: closeDelay ?? sharedProps?.closeDelay,
@@ -97,6 +109,7 @@ export const useMergedTooltipProps = (props: Partial<TooltipProps>): TooltipGrou
       sharedProps?.hotkey,
       sharedProps?.mouseEnterDelay,
       sharedProps?.mouseLeaveDelay,
+      sharedProps?.onOpenChange,
       sharedProps?.openDelay,
       sharedProps?.placement,
       sharedProps?.portalled,

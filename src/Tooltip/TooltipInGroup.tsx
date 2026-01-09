@@ -1,71 +1,84 @@
 'use client';
 
-import {
-  type FC,
-  type ReactNode,
-  cloneElement,
-  isValidElement,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
+import { mergeProps } from '@base-ui/react/merge-props';
+import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
+import { type FC, cloneElement, isValidElement, useContext, useMemo } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
-import { composeEventHandlers } from '@/utils/composeEventHandlers';
+import { useNativeButton } from '@/hooks/useNativeButton';
 
-import { TooltipGroupApiContext } from './groupContext';
+import { TooltipGroupHandleContext } from './groupContext';
 import type { TooltipProps } from './type';
 import { useMergedTooltipProps } from './useMergedTooltipProps';
-import { useTooltipTrigger } from './useTooltipTrigger';
 
-export const TooltipInGroup: FC<TooltipProps> = ({ ref, children, ...props }) => {
-  const group = useContext(TooltipGroupApiContext);
-  const triggerElRef = useRef<HTMLElement | null>(null);
+const DEFAULT_OPEN_DELAY = 400;
+const DEFAULT_CLOSE_DELAY = 100;
+
+export const TooltipInGroup: FC<TooltipProps> = ({ children, ref: refProp, ...props }) => {
+  const group = useContext(TooltipGroupHandleContext);
   const item = useMergedTooltipProps(props);
-  const trigger = useTooltipTrigger(children);
 
-  const referenceNode = useMemo(() => {
-    if (!isValidElement(trigger)) return trigger;
+  const resolvedOpenDelay = useMemo(() => {
+    if (item.openDelay !== undefined) return item.openDelay;
+    if (item.mouseEnterDelay !== undefined) return item.mouseEnterDelay * 1000;
+    return DEFAULT_OPEN_DELAY;
+  }, [item.mouseEnterDelay, item.openDelay]);
 
-    const originalRef = (trigger as any).ref;
-    const triggerProps: any = trigger.props || {};
+  const resolvedCloseDelay = useMemo(() => {
+    if (item.closeDelay !== undefined) return item.closeDelay;
+    if (item.mouseLeaveDelay !== undefined) return item.mouseLeaveDelay * 1000;
+    return DEFAULT_CLOSE_DELAY;
+  }, [item.closeDelay, item.mouseLeaveDelay]);
 
-    const setTriggerEl = (node: any) => {
-      triggerElRef.current = node instanceof HTMLElement ? node : null;
-    };
+  const disabled = Boolean(item.disabled);
 
-    return cloneElement(trigger as any, {
-      ...triggerProps,
-      onBlur: composeEventHandlers(triggerProps.onBlur, (e: any) => {
-        group?.closeFromTrigger(e.currentTarget as HTMLElement, item);
-      }),
-      onFocus: composeEventHandlers(triggerProps.onFocus, (e: any) => {
-        group?.openFromTrigger(e.currentTarget as HTMLElement, item);
-      }),
-      onKeyDown: composeEventHandlers(triggerProps.onKeyDown, (e: any) => {
-        if (e?.key === 'Escape') group?.closeImmediately();
-      }),
-      onPointerEnter: composeEventHandlers(triggerProps.onPointerEnter, (e: any) => {
-        group?.openFromTrigger(e.currentTarget as HTMLElement, item);
-      }),
-      onPointerLeave: composeEventHandlers(triggerProps.onPointerLeave, (e: any) => {
-        group?.closeFromTrigger(e.currentTarget as HTMLElement, item);
-      }),
-      ref: mergeRefs([originalRef, setTriggerEl, ref]),
-    });
-  }, [group, item, ref, trigger]);
+  const { isNativeButtonTriggerElement } = useNativeButton({
+    children,
+  });
 
-  // Close when the trigger is swapped out or disconnected.
-  useEffect(() => {
-    return () => {
-      if (!group) return;
-      const el = triggerElRef.current;
-      if (el && group.isActiveTrigger(el)) group.closeImmediately();
-    };
-  }, [group]);
+  // Don't render trigger behavior if no content
+  // eslint-disable-next-line eqeqeq
+  if (item.title == null && !item.hotkey) {
+    return children as any;
+  }
 
-  return referenceNode as ReactNode;
+  const triggerProps = {
+    closeDelay: resolvedCloseDelay,
+    delay: resolvedOpenDelay,
+    disabled,
+    payload: item,
+  };
+
+  if (isValidElement(children)) {
+    return (
+      <BaseTooltip.Trigger
+        handle={group ?? undefined}
+        {...triggerProps}
+        render={(renderProps) => {
+          // Base UI's trigger props include `type="button"` by default.
+          // If we render into a non-<button> element, that prop is invalid and can warn.
+          const resolvedProps = (() => {
+            if (isNativeButtonTriggerElement) return renderProps as any;
+            // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+            const { type, ref: triggerRef, ...restProps } = renderProps as any;
+            return restProps;
+          })();
+
+          const mergedProps = mergeProps((children as any).props, resolvedProps);
+          return cloneElement(children as any, {
+            ...mergedProps,
+            ref: mergeRefs([(children as any).ref, (renderProps as any).ref, refProp]),
+          });
+        }}
+      />
+    );
+  }
+
+  return (
+    <BaseTooltip.Trigger handle={group ?? undefined} {...triggerProps} ref={refProp}>
+      {children}
+    </BaseTooltip.Trigger>
+  );
 };
 
 TooltipInGroup.displayName = 'TooltipInGroup';

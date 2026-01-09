@@ -40,6 +40,7 @@ Verify tooltips close when the trigger node is removed, for both standalone and 
 | closeDelay      | Delay before closing (ms). Takes precedence over `mouseLeaveDelay` | `number`                                                  | `100`   |
 | mouseEnterDelay | Delay before opening (seconds, AntD compatible)                    | `number`                                                  | `0`     |
 | mouseLeaveDelay | Delay before closing (seconds, AntD compatible)                    | `number`                                                  | `0`     |
+| standalone      | Render independently even inside a TooltipGroup                    | `boolean`                                                 | `false` |
 
 Tooltip is built on top of `@floating-ui/react` (Base Tooltip). For compatibility, it keeps a subset of Ant Design Tooltip-like props (e.g. `mouseEnterDelay`, `mouseLeaveDelay`, legacy `placement` values, and `styles/classNames`).
 
