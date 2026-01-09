@@ -12,7 +12,6 @@ export interface PopoverProps {
    * @default true
    */
   arrow?: boolean;
-
   /**
    * 触发元素
    */
@@ -114,6 +113,11 @@ export interface PopoverProps {
    * ref
    */
   ref?: Ref<HTMLElement>;
+
+  /**
+   * 当设置为 true 时，即使在 PopoverGroup 内部也会独立渲染，忽略 group 单例行为
+   */
+  standalone?: boolean;
 
   /**
    * 自定义样式

@@ -13,7 +13,11 @@ const Popover: FC<PopoverProps> = (props) => {
   const group = useContext(PopoverGroupHandleContext);
 
   // Group mode is driven by trigger interactions; keep standalone behavior for controlled cases.
-  const canUseGroup = Boolean(group) && props.open === undefined && props.defaultOpen === undefined;
+  const canUseGroup =
+    Boolean(group) &&
+    props.open === undefined &&
+    props.defaultOpen === undefined &&
+    !props.standalone;
 
   return canUseGroup ? <PopoverInGroup {...props} /> : <PopoverStandalone {...props} />;
 };

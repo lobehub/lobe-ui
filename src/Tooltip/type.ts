@@ -14,11 +14,11 @@ export interface TooltipProps {
    * Trigger element. Prefer a single React element.
    */
   children: ReactElement | ReactNode;
-
   /**
    * Custom className for the tooltip floating root.
    */
   className?: string;
+
   /**
    * Compatible with Ant Design `classNames` shape (subset).
    */
@@ -28,12 +28,12 @@ export interface TooltipProps {
     content?: string;
     root?: string;
   };
-
   /**
    * Delay (in milliseconds) before closing the tooltip.
    * Takes precedence over `mouseLeaveDelay`.
    */
   closeDelay?: number;
+
   /**
    * Uncontrolled initial open state.
    */
@@ -46,15 +46,14 @@ export interface TooltipProps {
    * An Ant Design compatible escape hatch for portal container.
    */
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
-
   hotkey?: string;
+
   hotkeyProps?: Omit<HotkeyProps, 'keys'>;
   /**
    * Delay (in seconds) before showing the tooltip on hover.
    * Kept compatible with Ant Design `Tooltip`.
    */
   mouseEnterDelay?: number;
-
   /**
    * Delay (in seconds) before hiding the tooltip on hover out.
    * Kept compatible with Ant Design `Tooltip`.
@@ -88,6 +87,12 @@ export interface TooltipProps {
   portalled?: boolean;
 
   ref?: Ref<HTMLElement>;
+
+  /**
+   * When true, this tooltip will render independently even inside a TooltipGroup,
+   * ignoring the group singleton behavior.
+   */
+  standalone?: boolean;
 
   /**
    * Compatible with Ant Design `styles` shape (subset).

@@ -10,7 +10,11 @@ import type { TooltipProps } from './type';
 export const Tooltip: FC<TooltipProps> = (props) => {
   const group = useContext(TooltipGroupHandleContext);
 
-  const canUseGroup = Boolean(group) && props.open === undefined && props.defaultOpen === undefined;
+  const canUseGroup =
+    Boolean(group) &&
+    props.open === undefined &&
+    props.defaultOpen === undefined &&
+    !props.standalone;
 
   return canUseGroup ? <TooltipInGroup {...props} /> : <TooltipStandalone {...props} />;
 };
