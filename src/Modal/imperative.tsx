@@ -10,6 +10,7 @@ import { registerDevSingleton } from '@/utils/devSingleton';
 import { ModalStackItem } from './ModalStackItem';
 import { RawModalStackItem } from './RawModalStackItem';
 import type {
+  ContextBridgeComponent,
   ImperativeModalProps,
   ModalInstance,
   RawModalComponent,
@@ -20,6 +21,7 @@ import type {
 } from './type';
 
 type ModalStackItemBase = {
+  bridge?: ContextBridgeComponent;
   id: string;
 };
 
@@ -201,6 +203,7 @@ const ModalStack = memo(({ stack }: ModalStackProps) => {
     if (item.kind === 'modal') {
       return (
         <ModalStackItem
+          bridge={item.bridge}
           id={item.id}
           key={item.id}
           onClose={closeModal}
@@ -213,6 +216,7 @@ const ModalStack = memo(({ stack }: ModalStackProps) => {
 
     return (
       <RawModalStackItem
+        bridge={item.bridge}
         component={item.component}
         id={item.id}
         key={item.id}
@@ -265,6 +269,25 @@ export const createModal = (props: ImperativeModalProps): ModalInstance => {
   };
 };
 
+export const createModalWithBridge = (
+  props: ImperativeModalProps,
+  bridge?: ContextBridgeComponent,
+): ModalInstance => {
+  const id = `modal-${Date.now()}-${modalSeed++}`;
+  modalStack = [
+    ...modalStack,
+    { bridge, id, kind: 'modal', props: { ...props, open: props.open ?? true } },
+  ];
+  notify();
+
+  return {
+    close: () => closeModal(id),
+    destroy: () => destroyModal(id),
+    setCanDismissByClickOutside: (value) => updateModal(id, { maskClosable: value }),
+    update: (nextProps) => updateModal(id, nextProps),
+  };
+};
+
 export function createRawModal<P extends RawModalComponentProps>(
   component: RawModalComponent<P>,
   props: Omit<P, 'open' | 'onClose'>,
@@ -286,6 +309,49 @@ export function createRawModal<P, OpenKey extends keyof P, CloseKey extends keyo
   modalStack = [
     ...modalStack,
     {
+      component,
+      id,
+      kind: 'raw',
+      open: true,
+      options,
+      props: props as Record<string, unknown>,
+    },
+  ];
+  notify();
+
+  return {
+    close: () => closeModal(id),
+    destroy: () => destroyModal(id),
+    setCanDismissByClickOutside: (value) => updateRawProps(id, { maskClosable: value }),
+    update: (nextProps) => updateRawProps(id, nextProps as Record<string, unknown>),
+  };
+}
+
+export function createRawModalWithBridge<P extends RawModalComponentProps>(
+  component: RawModalComponent<P>,
+  props: Omit<P, 'open' | 'onClose'>,
+  options: RawModalOptions | undefined,
+  bridge?: ContextBridgeComponent,
+): RawModalInstance<P>;
+// eslint-disable-next-line no-redeclare
+export function createRawModalWithBridge<P, OpenKey extends keyof P, CloseKey extends keyof P>(
+  component: RawModalComponent<P>,
+  props: Omit<P, OpenKey | CloseKey>,
+  options: RawModalKeyOptions<OpenKey, CloseKey> | undefined,
+  bridge?: ContextBridgeComponent,
+): RawModalInstance<P, OpenKey, CloseKey>;
+// eslint-disable-next-line no-redeclare
+export function createRawModalWithBridge<P, OpenKey extends keyof P, CloseKey extends keyof P>(
+  component: RawModalComponent<P>,
+  props: Omit<P, OpenKey | CloseKey>,
+  options?: RawModalOptions<OpenKey, CloseKey>,
+  bridge?: ContextBridgeComponent,
+): RawModalInstance<P, OpenKey, CloseKey> {
+  const id = `modal-${Date.now()}-${modalSeed++}`;
+  modalStack = [
+    ...modalStack,
+    {
+      bridge,
       component,
       id,
       kind: 'raw',

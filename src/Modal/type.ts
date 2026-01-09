@@ -1,5 +1,5 @@
 import type { ModalProps as AntModalProps } from 'antd';
-import type { ComponentType } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 
 export type ModalProps = Omit<AntModalProps, 'okType' | 'wrapClassName'> & {
   allowFullscreen?: boolean;
@@ -56,4 +56,22 @@ export type RawModalInstance<
   update: (
     nextProps: Partial<Omit<P, Extract<OpenKey, keyof P> | Extract<CloseKey, keyof P>>>,
   ) => void;
+};
+
+export type ContextBridgeComponent = ComponentType<{ children: ReactNode }>;
+
+export type ModalStackContextValue = {
+  createModal: (props: ImperativeModalProps) => ModalInstance;
+  createRawModal: {
+    <P extends RawModalComponentProps>(
+      component: RawModalComponent<P>,
+      props: Omit<P, 'open' | 'onClose'>,
+      options?: RawModalOptions,
+    ): RawModalInstance<P>;
+    <P, OpenKey extends keyof P, CloseKey extends keyof P>(
+      component: RawModalComponent<P>,
+      props: Omit<P, OpenKey | CloseKey>,
+      options: RawModalKeyOptions<OpenKey, CloseKey>,
+    ): RawModalInstance<P, OpenKey, CloseKey>;
+  };
 };
