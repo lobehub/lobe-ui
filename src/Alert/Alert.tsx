@@ -83,7 +83,7 @@ const Alert = memo<AlertProps>(
         icon={
           <Icon
             color={type === 'secondary' ? cssVar.colorTextSecondary : undefined}
-            icon={typeIcons[type] || icon}
+            icon={icon || typeIcons[type]}
             size={description ? 24 : 18}
             {...iconProps}
           />
