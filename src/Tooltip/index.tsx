@@ -4,6 +4,7 @@ export type {
   TooltipGroupProps,
   TooltipPlacement,
   TooltipPopupComponentProps,
+  TooltipPortalProps,
   TooltipPositionerProps,
   TooltipProps,
   TooltipTriggerComponentProps,

@@ -2,8 +2,9 @@
 
 import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import { cx } from 'antd-style';
-import { type FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { type FC, useCallback, useRef, useState } from 'react';
 
+import { useDestroyOnInvalidActiveTriggerElement } from '@/utils/destroyOnInvalidActiveTriggerElement';
 import { placementMap } from '@/utils/placement';
 
 import { TooltipArrowIcon } from './ArrowIcon';
@@ -22,13 +23,19 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
   layoutAnimation = false,
   ...sharedProps
 }) => {
-  const handle = useMemo(() => BaseTooltip.createHandle<TooltipGroupItem>(), []);
+  const [{ handle, key }, setHandleState] = useState(() => ({
+    handle: BaseTooltip.createHandle<TooltipGroupItem>(),
+    key: 0,
+  }));
   const activeItemRef = useRef<TooltipGroupItem | null>(null);
 
-  const [updateKey, setUpdateKey] = useState(0);
-  useEffect(() => {
-    setUpdateKey((prev) => prev + 1);
-  }, [handle]);
+  const destroy = useCallback(() => {
+    activeItemRef.current = null;
+    setHandleState(({ key }) => ({
+      handle: BaseTooltip.createHandle<TooltipGroupItem>(),
+      key: key + 1,
+    }));
+  }, []);
 
   const handleOpenChange = useCallback((open: boolean) => {
     activeItemRef.current?.onOpenChange?.(open);
@@ -36,11 +43,13 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
 
   const portalContainer = useTooltipPortalContainer();
 
+  useDestroyOnInvalidActiveTriggerElement(handle.store, destroy);
+
   return (
     <TooltipGroupHandleContext.Provider value={handle}>
       <TooltipGroupPropsContext.Provider value={sharedProps}>
         {children}
-        <BaseTooltip.Root handle={handle} key={updateKey} onOpenChange={handleOpenChange}>
+        <BaseTooltip.Root handle={handle} key={key} onOpenChange={handleOpenChange}>
           {({ payload }) => {
             const item = (payload as TooltipGroupItem | null) ?? null;
             activeItemRef.current = item;

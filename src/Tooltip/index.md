@@ -44,6 +44,7 @@ Verify tooltips close when the trigger node is removed, for both standalone and 
 | positionerProps | Props passed to Base UI Positioner component                       | `TooltipPositionerProps`                                  | -       |
 | triggerProps    | Props passed to Base UI Trigger component                          | `TooltipTriggerComponentProps`                            | -       |
 | popupProps      | Props passed to Base UI Popup component                            | `TooltipPopupComponentProps`                              | -       |
+| portalProps     | Props passed to Base UI Portal component                           | `TooltipPortalProps`                                      | -       |
 
 Tooltip is built on top of `@floating-ui/react` (Base Tooltip). For compatibility, it keeps a subset of Ant Design Tooltip-like props (e.g. `mouseEnterDelay`, `mouseLeaveDelay`, legacy `placement` values, and `styles/classNames`).
 

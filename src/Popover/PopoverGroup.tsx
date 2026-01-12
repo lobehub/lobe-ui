@@ -3,8 +3,9 @@
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import type { Side } from '@base-ui/react/utils/useAnchorPositioning';
 import { cx } from 'antd-style';
-import { type FC, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { type FC, type ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 
+import { useDestroyOnInvalidActiveTriggerElement } from '@/utils/destroyOnInvalidActiveTriggerElement';
 import { placementMap } from '@/utils/placement';
 
 import { PopoverArrowIcon } from './ArrowIcon';
@@ -28,8 +29,18 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
   contentLayoutAnimation = false,
   ...sharedProps
 }) => {
-  const handle = useMemo(() => BasePopover.createHandle<PopoverGroupItem>(), []);
+  const [{ handle, key }, setHandleState] = useState(() => ({
+    handle: BasePopover.createHandle<PopoverGroupItem>(),
+    key: 0,
+  }));
   const activeItemRef = useRef<PopoverGroupItem | null>(null);
+  const destroy = useCallback(() => {
+    activeItemRef.current = null;
+    setHandleState(({ key }) => ({
+      handle: BasePopover.createHandle<PopoverGroupItem>(),
+      key: key + 1,
+    }));
+  }, []);
   const close = useCallback(() => {
     handle.close();
   }, [handle]);
@@ -39,10 +50,7 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
     activeItemRef.current?.onOpenChange?.(open);
   }, []);
 
-  const [updateKey, setUpdateKey] = useState(0);
-  useEffect(() => {
-    setUpdateKey((prev) => prev + 1);
-  }, [handle]);
+  useDestroyOnInvalidActiveTriggerElement(handle.store, destroy);
 
   const portalContainer = usePopoverPortalContainer();
 
@@ -50,7 +58,7 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
     <PopoverGroupHandleContext.Provider value={handle}>
       <PopoverGroupPropsContext.Provider value={sharedProps}>
         {children}
-        <BasePopover.Root handle={handle} key={updateKey} onOpenChange={handleOpenChange}>
+        <BasePopover.Root handle={handle} key={key} onOpenChange={handleOpenChange}>
           {({ payload }) => {
             const item = (payload as PopoverGroupItem | null) ?? null;
             activeItemRef.current = item;

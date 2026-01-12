@@ -48,6 +48,7 @@ export const TooltipStandalone = memo<TooltipProps>(
     positionerProps,
     triggerProps,
     popupProps,
+    portalProps,
   }) => {
     const isClient = useIsClient();
     const [uncontrolledOpen, setUncontrolledOpen] = useState(Boolean(defaultOpen));
@@ -228,8 +229,12 @@ export const TooltipStandalone = memo<TooltipProps>(
       >
         {triggerElement}
         {resolvedPortalContainer ? (
-          <BaseTooltip.Portal container={resolvedPortalContainer}>{popup}</BaseTooltip.Portal>
-        ) : null}
+          <BaseTooltip.Portal container={resolvedPortalContainer} {...portalProps}>
+            {popup}
+          </BaseTooltip.Portal>
+        ) : (
+          popup
+        )}
       </BaseTooltip.Root>
     );
   },
