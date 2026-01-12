@@ -4,7 +4,7 @@ import { getEmoji } from '@lobehub/fluent-emoji';
 import { Avatar as AntAvatar } from 'antd';
 import { cssVar, cx, useTheme } from 'antd-style';
 import { Loader2 } from 'lucide-react';
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useState } from 'react';
 
 import { Center } from '@/Flex';
 import FluentEmoji from '@/FluentEmoji';
@@ -48,6 +48,7 @@ const Avatar = memo<AvatarProps>(
     const isStringAvatar = typeof avatar === 'string';
 
     const isDefaultAntAvatar = useMemo(() => checkIsDefaultAntAvatar(avatar), [avatar]);
+    const [isImgError, setIsImgError] = useState(false);
 
     const emoji = useMemo(
       () => avatar && !isDefaultAntAvatar && isStringAvatar && getEmoji(avatar),
@@ -65,6 +66,7 @@ const Avatar = memo<AvatarProps>(
             alt={imgAlt}
             height={size}
             loading={'lazy'}
+            onError={() => setIsImgError(true)}
             src={avatar}
             unoptimized={unoptimized}
             width={size}
@@ -111,7 +113,9 @@ const Avatar = memo<AvatarProps>(
     const avatarStyle = useMemo(
       () => ({
         backgroundColor:
-          isDefaultAntAvatar || !!emoji ? background : background || cssVar.colorBorder,
+          (isDefaultAntAvatar && !isImgError) || emoji
+            ? background
+            : background || cssVar.colorBorder,
         borderRadius: shape === 'square' && size && size < 24 ? '33%' : undefined,
         boxShadow: bordered
           ? `${cssVar.colorBgLayout} 0 0 0 2px, ${borderedColor || cssVar.colorTextTertiary} 0 0 0 4px`
@@ -123,9 +127,10 @@ const Avatar = memo<AvatarProps>(
       }),
       [
         isDefaultAntAvatar,
-        emoji,
+        isImgError,
         background,
         shape,
+        emoji,
         size,
         bordered,
         borderedColor,
@@ -135,6 +140,8 @@ const Avatar = memo<AvatarProps>(
       ],
     );
 
+    const showFallback = !isDefaultAntAvatar || isImgError;
+
     return (
       <AntAvatar
         alt={imgAlt}
@@ -143,7 +150,7 @@ const Avatar = memo<AvatarProps>(
         ref={ref}
         shape={shape}
         size={size}
-        src={isDefaultAntAvatar ? defualtAvatar : undefined}
+        src={isDefaultAntAvatar && !isImgError ? defualtAvatar : undefined}
         style={avatarStyle}
         {...rest}
       >
@@ -152,7 +159,7 @@ const Avatar = memo<AvatarProps>(
             <Icon icon={Loader2} spin />
           </Center>
         )}
-        {!isDefaultAntAvatar && customAvatar}
+        {showFallback && customAvatar}
       </AntAvatar>
     );
   },
