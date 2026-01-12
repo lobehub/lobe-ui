@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 4.14.0](https://github.com/lobehub/lobe-ui/compare/v4.13.1...v4.14.0)
+
+<sup>Released on **2026-01-12**</sup>
+
+#### ✨ Features
+
+- **misc**: Enhance Popover and Tooltip components with new props.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Enhance Popover and Tooltip components with new props ([dae544f](https://github.com/lobehub/lobe-ui/commit/dae544f))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.13.1](https://github.com/lobehub/lobe-ui/compare/v4.13.0...v4.13.1)
 
 <sup>Released on **2026-01-12**</sup>
