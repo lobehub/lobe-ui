@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 4.17.0](https://github.com/lobehub/lobe-ui/compare/v4.16.0...v4.17.0)
+
+<sup>Released on **2026-01-12**</sup>
+
+#### ✨ Features
+
+- **misc**: Enhance markdown styles with text-box properties.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Enhance markdown styles with text-box properties ([7e618a0](https://github.com/lobehub/lobe-ui/commit/7e618a0))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.16.0](https://github.com/lobehub/lobe-ui/compare/v4.15.0...v4.16.0)
 
 <sup>Released on **2026-01-12**</sup>
