@@ -1,6 +1,7 @@
 import type {
   PopoverBackdropProps as BasePopoverBackdropProps,
   PopoverPopupProps as BasePopoverPopupProps,
+  PopoverPortalProps as BasePopoverPortalProps,
   PopoverPositionerProps as BasePopoverPositionerProps,
   PopoverTriggerProps as BasePopoverTriggerProps,
 } from '@base-ui/react/popover';
@@ -37,6 +38,11 @@ export type PopoverPopupProps = Omit<BasePopoverPopupProps, 'className' | 'style
  * Base UI Backdrop props that can be passed through
  */
 export type PopoverBackdropProps = Omit<BasePopoverBackdropProps, 'className' | 'style'>;
+
+/**
+ * Base UI Portal props that can be passed through
+ */
+export type PopoverPortalProps = Omit<BasePopoverPortalProps, 'children' | 'container'>;
 
 export interface PopoverProps {
   /**
@@ -144,6 +150,11 @@ export interface PopoverProps {
    * Base UI Popup 组件的 props
    */
   popupProps?: PopoverPopupProps;
+
+  /**
+   * Base UI Portal 组件的 props
+   */
+  portalProps?: PopoverPortalProps;
 
   /**
    * Base UI Positioner 组件的 props

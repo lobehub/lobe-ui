@@ -6,6 +6,7 @@ export type {
   PopoverBackdropProps,
   PopoverPlacement,
   PopoverPopupProps,
+  PopoverPortalProps,
   PopoverPositionerProps,
   PopoverProps,
   PopoverTrigger,

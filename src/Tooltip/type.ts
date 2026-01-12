@@ -1,5 +1,6 @@
 import type {
   TooltipPopupProps as BaseTooltipPopupProps,
+  TooltipPortalProps as BaseTooltipPortalProps,
   TooltipPositionerProps as BaseTooltipPositionerProps,
   TooltipTriggerProps as BaseTooltipTriggerProps,
 } from '@base-ui/react/tooltip';
@@ -33,6 +34,11 @@ export type TooltipPopupComponentProps = Omit<
   BaseTooltipPopupProps,
   'className' | 'style' | 'children'
 >;
+
+/**
+ * Base UI Portal props that can be passed through
+ */
+export type TooltipPortalProps = Omit<BaseTooltipPortalProps, 'children' | 'container'>;
 
 export interface TooltipProps {
   /**
@@ -117,6 +123,11 @@ export interface TooltipProps {
   popupProps?: TooltipPopupComponentProps;
 
   /**
+   * Base UI Portal 组件的 props
+   */
+  portalProps?: TooltipPortalProps;
+
+  /**
    * Base UI Positioner 组件的 props
    */
   positionerProps?: TooltipPositionerProps;
@@ -166,6 +177,16 @@ export interface TooltipGroupProps {
   className?: string;
   classNames?: TooltipProps['classNames'];
   closeDelay?: number;
+  /**
+   * Disable the "destroy on invalid trigger (display:none / disconnected)" guard for performance.
+   * @default false
+   */
+  disableDestroyOnInvalidTrigger?: boolean;
+  /**
+   * Disable the "hide when positioner falls back to (0,0)" visual guard for performance.
+   * @default false
+   */
+  disableZeroOriginGuard?: boolean;
   disabled?: boolean;
   getPopupContainer?: TooltipProps['getPopupContainer'];
   hotkey?: string;
@@ -176,6 +197,7 @@ export interface TooltipGroupProps {
   openDelay?: number;
   placement?: TooltipPlacement;
   popupProps?: TooltipPopupComponentProps;
+  portalProps?: TooltipPortalProps;
   positionerProps?: TooltipPositionerProps;
   styles?: TooltipProps['styles'];
   triggerProps?: TooltipTriggerComponentProps;

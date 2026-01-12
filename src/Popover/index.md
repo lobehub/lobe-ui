@@ -77,6 +77,7 @@ Popover provides an internal context so that content can close the current popov
 | positionerProps   | Props passed to Base UI Positioner component                       | `PopoverPositionerProps`                                                                                                                                         | -         |
 | triggerProps      | Props passed to Base UI Trigger component                          | `PopoverTriggerComponentProps`                                                                                                                                   | -         |
 | popupProps        | Props passed to Base UI Popup component                            | `PopoverPopupProps`                                                                                                                                              | -         |
+| portalProps       | Props passed to Base UI Portal component                           | `PopoverPortalProps`                                                                                                                                             | -         |
 | backdropProps     | Props passed to Base UI Backdrop component                         | `PopoverBackdropProps`                                                                                                                                           | -         |
 | styles            | Custom styles for root/content/arrow                               | `{ root?: CSSProperties; content?: CSSProperties; arrow?: CSSProperties }`                                                                                       | -         |
 | classNames        | Custom class names for root/content/arrow/trigger                  | `{ root?: string; content?: string; arrow?: string; trigger?: string }`                                                                                          | -         |
@@ -97,8 +98,10 @@ type PopoverContextValue = {
 
 ### PopoverGroup
 
-| Property               | Description                                           | Type                                                                              | Default |
-| ---------------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------- | ------- |
-| children               | Popover subtree that shares a single popover instance | `ReactNode`                                                                       | -       |
-| contentLayoutAnimation | Animate content layout when switching triggers        | `boolean`                                                                         | `false` |
-| ...props               | Shared popover props applied to each group member     | `Omit<PopoverProps, 'children' \| 'defaultOpen' \| 'open' \| 'ref' \| 'content'>` | -       |
+| Property                       | Description                                                                                        | Type                                                                              | Default |
+| ------------------------------ | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------- |
+| children                       | Popover subtree that shares a single popover instance                                              | `ReactNode`                                                                       | -       |
+| contentLayoutAnimation         | Animate content layout when switching triggers                                                     | `boolean`                                                                         | `false` |
+| disableDestroyOnInvalidTrigger | Disable auto-destroy when the active trigger becomes invalid (e.g. disconnected / `display: none`) | `boolean`                                                                         | `false` |
+| disableZeroOriginGuard         | Disable the visual guard that hides the popup when it falls back to viewport (0,0)                 | `boolean`                                                                         | `false` |
+| ...props                       | Shared popover props applied to each group member                                                  | `Omit<PopoverProps, 'children' \| 'defaultOpen' \| 'open' \| 'ref' \| 'content'>` | -       |

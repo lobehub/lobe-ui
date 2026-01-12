@@ -49,6 +49,7 @@ export const PopoverStandalone = memo<PopoverProps>(
     triggerProps,
     popupProps,
     backdropProps,
+    portalProps,
   }) => {
     const arrow = inset ? false : originArrow;
     const isClient = useIsClient();
@@ -266,7 +267,9 @@ export const PopoverStandalone = memo<PopoverProps>(
         {triggerElement}
         {backdropProps && <BasePopover.Backdrop {...backdropProps} />}
         {resolvedPortalContainer ? (
-          <BasePopover.Portal container={resolvedPortalContainer}>{popup}</BasePopover.Portal>
+          <BasePopover.Portal container={resolvedPortalContainer} {...portalProps}>
+            {popup}
+          </BasePopover.Portal>
         ) : null}
       </BasePopover.Root>
     );

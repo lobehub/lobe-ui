@@ -15,7 +15,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     width: 12px;
     height: 6px;
 
-    transition: inset-inline-start var(--lobe-popover-animation-duration) var(--lobe-popover-animation-ease-out);
+    transition: inset-inline-start var(--lobe-popover-animation-duration)
+      var(--lobe-popover-animation-ease-out);
 
     & > svg {
       display: block;
@@ -110,10 +111,18 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     transition-timing-function: var(--lobe-popover-animation-ease-out);
     transition-duration: var(--lobe-popover-animation-duration);
-    transition-property: inset-block-start, inset-inline-start, inset-inline-end, inset-block-end, transform;
+    transition-property:
+      inset-block-start, inset-inline-start, inset-inline-end, inset-block-end, transform;
 
     &[data-instant] {
       transition: none;
+    }
+
+    /* Fallback: never show a popover when the anchor is hidden or the positioner falls back to (0,0). */
+    &[data-anchor-hidden],
+    &[data-zero-origin='true'] {
+      pointer-events: none;
+      visibility: hidden;
     }
 
     &[data-placement='top'],
