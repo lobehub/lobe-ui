@@ -270,9 +270,7 @@ export const PopoverStandalone = memo<PopoverProps>(
           <BasePopover.Portal container={resolvedPortalContainer} {...portalProps}>
             {popup}
           </BasePopover.Portal>
-        ) : (
-          popup
-        )}
+        ) : null}
       </BasePopover.Root>
     );
   },
