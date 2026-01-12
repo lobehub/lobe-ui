@@ -232,9 +232,7 @@ export const TooltipStandalone = memo<TooltipProps>(
           <BaseTooltip.Portal container={resolvedPortalContainer} {...portalProps}>
             {popup}
           </BaseTooltip.Portal>
-        ) : (
-          popup
-        )}
+        ) : null}
       </BaseTooltip.Root>
     );
   },
