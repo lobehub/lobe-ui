@@ -2,18 +2,31 @@ import { useLayoutEffect } from 'react';
 
 type PopupStoreLike = {
   // Base UI store's `useState` has a strongly-typed key union; we keep it loose here on purpose.
-  useState: (...args: any[]) => unknown;
+
+  state: {
+    activeTriggerElement: Element | null;
+    open: boolean;
+  };
 };
 
 const isInvalidTriggerElement = (el: Element | null): boolean => {
   if (!el) return true;
+
   if (!el.isConnected) return true;
 
   // "display: none" on self or an ancestor effectively hides the trigger.
   // `getComputedStyle` can throw in some edge cases (e.g. non-Element in old envs),
   // so we guard it defensively.
   try {
-    return getComputedStyle(el).display === 'none';
+    // Check self and all ancestors for display: none
+    let current: Element | null = el;
+    while (current) {
+      if (getComputedStyle(current).display === 'none') {
+        return true;
+      }
+      current = current.parentElement;
+    }
+    return false;
   } catch {
     return false;
   }
@@ -39,8 +52,8 @@ export const useDestroyOnInvalidActiveTriggerElement = (
   const enabled = options?.enabled ?? true;
 
   // These are Base UI store selectors; both TooltipStore and PopoverStore support them.
-  const open = store.useState('open') as boolean;
-  const activeTriggerElement = store.useState('activeTriggerElement') as Element | null;
+  const open = store.state.open;
+  const activeTriggerElement = store.state.activeTriggerElement;
 
   const shouldWatch = enabled && open;
 

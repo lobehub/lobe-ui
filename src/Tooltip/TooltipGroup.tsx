@@ -49,6 +49,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
     <TooltipGroupHandleContext.Provider value={handle}>
       <TooltipGroupPropsContext.Provider value={sharedProps}>
         {children}
+
         <BaseTooltip.Root handle={handle} key={key} onOpenChange={handleOpenChange}>
           {({ payload }) => {
             const item = (payload as TooltipGroupItem | null) ?? null;
