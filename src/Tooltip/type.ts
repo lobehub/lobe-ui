@@ -1,3 +1,8 @@
+import type {
+  TooltipPopupProps as BaseTooltipPopupProps,
+  TooltipPositionerProps as BaseTooltipPositionerProps,
+  TooltipTriggerProps as BaseTooltipTriggerProps,
+} from '@base-ui/react/tooltip';
 import type { CSSProperties, ReactElement, ReactNode, Ref } from 'react';
 
 import type { HotkeyProps } from '@/Hotkey';
@@ -5,9 +10,34 @@ import type { Placement } from '@/utils/placement';
 
 export type TooltipPlacement = Placement;
 
+/**
+ * Base UI Positioner props that can be passed through
+ */
+export type TooltipPositionerProps = Omit<
+  BaseTooltipPositionerProps,
+  'className' | 'style' | 'children'
+>;
+
+/**
+ * Base UI Trigger props that can be passed through
+ */
+export type TooltipTriggerComponentProps = Omit<
+  BaseTooltipTriggerProps,
+  'className' | 'style' | 'children' | 'render' | 'handle' | 'payload'
+>;
+
+/**
+ * Base UI Popup props that can be passed through
+ */
+export type TooltipPopupComponentProps = Omit<
+  BaseTooltipPopupProps,
+  'className' | 'style' | 'children'
+>;
+
 export interface TooltipProps {
   /**
    * Whether the tooltip has an arrow pointer.
+   * @default false
    */
   arrow?: boolean;
   /**
@@ -82,9 +112,14 @@ export interface TooltipProps {
   placement?: TooltipPlacement;
 
   /**
-   * Render tooltip in a portal attached to body.
+   * Base UI Popup 组件的 props
    */
-  portalled?: boolean;
+  popupProps?: TooltipPopupComponentProps;
+
+  /**
+   * Base UI Positioner 组件的 props
+   */
+  positionerProps?: TooltipPositionerProps;
 
   ref?: Ref<HTMLElement>;
 
@@ -110,6 +145,12 @@ export interface TooltipProps {
    * Tooltip content.
    */
   title: ReactNode;
+
+  /**
+   * Base UI Trigger 组件的 props
+   */
+  triggerProps?: TooltipTriggerComponentProps;
+
   /**
    * z-index for tooltip floating root.
    */
@@ -134,7 +175,9 @@ export interface TooltipGroupProps {
   mouseLeaveDelay?: number;
   openDelay?: number;
   placement?: TooltipPlacement;
-  portalled?: boolean;
+  popupProps?: TooltipPopupComponentProps;
+  positionerProps?: TooltipPositionerProps;
   styles?: TooltipProps['styles'];
+  triggerProps?: TooltipTriggerComponentProps;
   zIndex?: number;
 }

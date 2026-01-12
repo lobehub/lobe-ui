@@ -27,7 +27,7 @@ export const TooltipStandalone = memo<TooltipProps>(
   ({
     children,
     title,
-    arrow = true,
+    arrow = false,
     className,
     classNames,
     closeDelay,
@@ -42,10 +42,12 @@ export const TooltipStandalone = memo<TooltipProps>(
     open,
     openDelay,
     placement = 'top',
-    portalled = true,
     styles: styleProps,
     zIndex,
     ref: refProp,
+    positionerProps,
+    triggerProps,
+    popupProps,
   }) => {
     const isClient = useIsClient();
     const [uncontrolledOpen, setUncontrolledOpen] = useState(Boolean(defaultOpen));
@@ -116,16 +118,17 @@ export const TooltipStandalone = memo<TooltipProps>(
     );
 
     const triggerElement = useMemo(() => {
-      const triggerProps = {
+      const baseTriggerProps = {
         closeDelay: resolvedCloseDelay,
         delay: resolvedOpenDelay,
         disabled,
+        ...triggerProps,
       };
 
       if (isValidElement(children)) {
         return (
           <BaseTooltip.Trigger
-            {...triggerProps}
+            {...baseTriggerProps}
             render={(props) => {
               // Base UI's trigger props include `type="button"` by default.
               // If we render into a non-<button> element, that prop is invalid and can warn.
@@ -147,7 +150,7 @@ export const TooltipStandalone = memo<TooltipProps>(
       }
 
       return (
-        <BaseTooltip.Trigger {...triggerProps} ref={refProp}>
+        <BaseTooltip.Trigger {...baseTriggerProps} ref={refProp}>
           {children}
         </BaseTooltip.Trigger>
       );
@@ -158,6 +161,7 @@ export const TooltipStandalone = memo<TooltipProps>(
       refProp,
       resolvedCloseDelay,
       resolvedOpenDelay,
+      triggerProps,
     ]);
 
     const customContainer = useMemo(() => {
@@ -174,8 +178,13 @@ export const TooltipStandalone = memo<TooltipProps>(
           side={placementConfig.side}
           sideOffset={baseSideOffset}
           style={resolvedStyles.positioner}
+          {...positionerProps}
         >
-          <BaseTooltip.Popup className={resolvedClassNames.popup} style={resolvedStyles.popup}>
+          <BaseTooltip.Popup
+            className={resolvedClassNames.popup}
+            style={resolvedStyles.popup}
+            {...popupProps}
+          >
             {arrow && (
               <BaseTooltip.Arrow className={resolvedClassNames.arrow} style={resolvedStyles.arrow}>
                 {TooltipArrowIcon}
@@ -195,6 +204,8 @@ export const TooltipStandalone = memo<TooltipProps>(
         placement,
         placementConfig.align,
         placementConfig.side,
+        popupProps,
+        positionerProps,
         resolvedClassNames,
         resolvedStyles,
         title,
@@ -216,10 +227,8 @@ export const TooltipStandalone = memo<TooltipProps>(
         open={resolvedOpen}
       >
         {triggerElement}
-        {portalled ? (
-          resolvedPortalContainer ? (
-            <BaseTooltip.Portal container={resolvedPortalContainer}>{popup}</BaseTooltip.Portal>
-          ) : null
+        {resolvedPortalContainer ? (
+          <BaseTooltip.Portal container={resolvedPortalContainer}>{popup}</BaseTooltip.Portal>
         ) : (
           popup
         )}

@@ -40,12 +40,15 @@ export const PopoverStandalone = memo<PopoverProps>(
     mouseLeaveDelay = 0.1,
     openDelay,
     closeDelay,
-    portalled = true,
     getPopupContainer,
     disabled = false,
     zIndex,
     nativeButton,
     ref: refProp,
+    positionerProps,
+    triggerProps,
+    popupProps,
+    backdropProps,
   }) => {
     const arrow = inset ? false : originArrow;
     const isClient = useIsClient();
@@ -124,18 +127,19 @@ export const PopoverStandalone = memo<PopoverProps>(
 
     // Render trigger element
     const triggerElement = useMemo(() => {
-      const triggerProps = {
+      const baseTriggerProps = {
         closeDelay: resolvedCloseDelay,
         delay: resolvedOpenDelay,
         disabled,
         openOnHover: openOnHover && !disabled,
+        ...triggerProps,
       };
 
       if (isValidElement(children)) {
         return (
           <BasePopover.Trigger
             handle={popoverHandle}
-            {...triggerProps}
+            {...baseTriggerProps}
             nativeButton={resolvedNativeButton}
             render={(props) => {
               // Base UI's trigger props include `type="button"` by default.
@@ -160,7 +164,7 @@ export const PopoverStandalone = memo<PopoverProps>(
       return (
         <BasePopover.Trigger
           handle={popoverHandle}
-          {...triggerProps}
+          {...baseTriggerProps}
           className={resolvedClassNames.trigger}
           nativeButton={resolvedNativeButton}
           ref={refProp}
@@ -179,6 +183,7 @@ export const PopoverStandalone = memo<PopoverProps>(
       resolvedNativeButton,
       resolvedOpenDelay,
       resolvedCloseDelay,
+      triggerProps,
     ]);
 
     // Custom container from getPopupContainer
@@ -211,8 +216,9 @@ export const PopoverStandalone = memo<PopoverProps>(
           side={placementConfig.side}
           sideOffset={resolvedSideOffset}
           style={resolvedStyles.positioner}
+          {...positionerProps}
         >
-          <BasePopover.Popup className={resolvedClassNames.popup}>
+          <BasePopover.Popup className={resolvedClassNames.popup} {...popupProps}>
             {arrow && (
               <BasePopover.Arrow className={resolvedClassNames.arrow} style={resolvedStyles.arrow}>
                 {PopoverArrowIcon}
@@ -235,6 +241,8 @@ export const PopoverStandalone = memo<PopoverProps>(
         placement,
         placementConfig.align,
         placementConfig.side,
+        popupProps,
+        positionerProps,
         resolvedClassNames,
         resolvedSideOffset,
         resolvedStyles,
@@ -256,10 +264,9 @@ export const PopoverStandalone = memo<PopoverProps>(
         open={resolvedOpen}
       >
         {triggerElement}
-        {portalled ? (
-          resolvedPortalContainer ? (
-            <BasePopover.Portal container={resolvedPortalContainer}>{popup}</BasePopover.Portal>
-          ) : null
+        {backdropProps && <BasePopover.Backdrop {...backdropProps} />}
+        {resolvedPortalContainer ? (
+          <BasePopover.Portal container={resolvedPortalContainer}>{popup}</BasePopover.Portal>
         ) : (
           popup
         )}

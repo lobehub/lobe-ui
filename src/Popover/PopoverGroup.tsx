@@ -112,8 +112,9 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
                 side={placementConfig.side}
                 sideOffset={resolvedSideOffset}
                 style={resolvedStyles.positioner}
+                {...item.positionerProps}
               >
-                <BasePopover.Popup className={resolvedClassNames.popup}>
+                <BasePopover.Popup className={resolvedClassNames.popup} {...item.popupProps}>
                   {arrow && (
                     <BasePopover.Arrow
                       className={resolvedClassNames.arrow}
@@ -138,13 +139,8 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
               </BasePopover.Positioner>
             );
 
-            const resolvedPortalContainer = portalContainer;
-            const portalled = item.portalled ?? true;
-
-            return portalled ? (
-              resolvedPortalContainer ? (
-                <BasePopover.Portal container={resolvedPortalContainer}>{popup}</BasePopover.Portal>
-              ) : null
+            return portalContainer ? (
+              <BasePopover.Portal container={portalContainer}>{popup}</BasePopover.Portal>
             ) : (
               popup
             );

@@ -1,3 +1,9 @@
+import type {
+  PopoverBackdropProps as BasePopoverBackdropProps,
+  PopoverPopupProps as BasePopoverPopupProps,
+  PopoverPositionerProps as BasePopoverPositionerProps,
+  PopoverTriggerProps as BasePopoverTriggerProps,
+} from '@base-ui/react/popover';
 import type { CSSProperties, ReactElement, ReactNode, Ref } from 'react';
 
 import type { Placement } from '@/utils/placement';
@@ -6,12 +12,43 @@ export type PopoverPlacement = Placement;
 
 export type PopoverTrigger = 'hover' | 'click' | 'both' | ('hover' | 'click')[];
 
+/**
+ * Base UI Positioner props that can be passed through
+ */
+export type PopoverPositionerProps = Omit<
+  BasePopoverPositionerProps,
+  'className' | 'style' | 'children'
+>;
+
+/**
+ * Base UI Trigger props that can be passed through
+ */
+export type PopoverTriggerComponentProps = Omit<
+  BasePopoverTriggerProps,
+  'className' | 'style' | 'children' | 'render' | 'nativeButton' | 'handle' | 'payload'
+>;
+
+/**
+ * Base UI Popup props that can be passed through
+ */
+export type PopoverPopupProps = Omit<BasePopoverPopupProps, 'className' | 'style' | 'children'>;
+
+/**
+ * Base UI Backdrop props that can be passed through
+ */
+export type PopoverBackdropProps = Omit<BasePopoverBackdropProps, 'className' | 'style'>;
+
 export interface PopoverProps {
   /**
    * 是否显示箭头, 在 `inset` 下无法使用
-   * @default true
+   * @default false
    */
   arrow?: boolean;
+
+  /**
+   * Base UI Backdrop 组件的 props
+   */
+  backdropProps?: PopoverBackdropProps;
   /**
    * 触发元素
    */
@@ -104,10 +141,14 @@ export interface PopoverProps {
   placement?: PopoverPlacement;
 
   /**
-   * 是否使用 Portal 渲染
-   * @default true
+   * Base UI Popup 组件的 props
    */
-  portalled?: boolean;
+  popupProps?: PopoverPopupProps;
+
+  /**
+   * Base UI Positioner 组件的 props
+   */
+  positionerProps?: PopoverPositionerProps;
 
   /**
    * ref
@@ -133,6 +174,11 @@ export interface PopoverProps {
    * @default 'hover'
    */
   trigger?: PopoverTrigger;
+
+  /**
+   * Base UI Trigger 组件的 props
+   */
+  triggerProps?: PopoverTriggerComponentProps;
 
   /**
    * z-index

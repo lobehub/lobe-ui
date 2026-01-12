@@ -22,10 +22,12 @@ export const useMergedTooltipProps = (props: Partial<TooltipProps>): TooltipGrou
     onOpenChange,
     openDelay,
     placement,
-    portalled,
     styles: styleProps,
     title,
     zIndex,
+    positionerProps,
+    triggerProps,
+    popupProps,
   } = props;
 
   const mergedClassName = useMemo(() => {
@@ -68,7 +70,7 @@ export const useMergedTooltipProps = (props: Partial<TooltipProps>): TooltipGrou
 
   const item: TooltipGroupItem = useMemo(
     () => ({
-      arrow: arrow ?? sharedProps?.arrow ?? true,
+      arrow: arrow ?? sharedProps?.arrow ?? false,
       className: mergedClassName,
       classNames: mergedClassNames,
       closeDelay: closeDelay ?? sharedProps?.closeDelay,
@@ -81,9 +83,11 @@ export const useMergedTooltipProps = (props: Partial<TooltipProps>): TooltipGrou
       onOpenChange: mergedOnOpenChange,
       openDelay: openDelay ?? sharedProps?.openDelay,
       placement: placement ?? sharedProps?.placement ?? 'top',
-      portalled: portalled ?? sharedProps?.portalled,
+      popupProps: popupProps ?? sharedProps?.popupProps,
+      positionerProps: positionerProps ?? sharedProps?.positionerProps,
       styles: mergedStyles,
       title,
+      triggerProps: triggerProps ?? sharedProps?.triggerProps,
       zIndex: zIndex ?? sharedProps?.zIndex,
     }),
     [
@@ -101,7 +105,8 @@ export const useMergedTooltipProps = (props: Partial<TooltipProps>): TooltipGrou
       mouseLeaveDelay,
       openDelay,
       placement,
-      portalled,
+      popupProps,
+      positionerProps,
       sharedProps?.arrow,
       sharedProps?.closeDelay,
       sharedProps?.disabled,
@@ -112,9 +117,12 @@ export const useMergedTooltipProps = (props: Partial<TooltipProps>): TooltipGrou
       sharedProps?.onOpenChange,
       sharedProps?.openDelay,
       sharedProps?.placement,
-      sharedProps?.portalled,
+      sharedProps?.popupProps,
+      sharedProps?.positionerProps,
+      sharedProps?.triggerProps,
       sharedProps?.zIndex,
       title,
+      triggerProps,
       zIndex,
     ],
   );

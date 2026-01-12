@@ -48,7 +48,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
             // eslint-disable-next-line eqeqeq
             if (!item || (item.title == null && !item.hotkey)) return null;
 
-            const arrow = item.arrow ?? true;
+            const arrow = item.arrow ?? false;
             const placement = item.placement ?? 'top';
             const placementConfig = placementMap[placement] ?? placementMap.top;
             const baseSideOffset = arrow ? 8 : 6;
@@ -111,10 +111,12 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
                 side={placementConfig.side}
                 sideOffset={baseSideOffset}
                 style={resolvedStyles.positioner}
+                {...item.positionerProps}
               >
                 <BaseTooltip.Popup
                   className={resolvedClassNames.popup}
                   style={resolvedStyles.popup}
+                  {...item.popupProps}
                 >
                   {arrow && (
                     <BaseTooltip.Arrow
@@ -129,12 +131,8 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
               </BaseTooltip.Positioner>
             );
 
-            const portalled = item.portalled ?? true;
-
-            return portalled ? (
-              portalContainer ? (
-                <BaseTooltip.Portal container={portalContainer}>{popup}</BaseTooltip.Portal>
-              ) : null
+            return portalContainer ? (
+              <BaseTooltip.Portal container={portalContainer}>{popup}</BaseTooltip.Portal>
             ) : (
               popup
             );
