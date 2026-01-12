@@ -177,6 +177,16 @@ export interface TooltipGroupProps {
   className?: string;
   classNames?: TooltipProps['classNames'];
   closeDelay?: number;
+  /**
+   * Disable the "destroy on invalid trigger (display:none / disconnected)" guard for performance.
+   * @default false
+   */
+  disableDestroyOnInvalidTrigger?: boolean;
+  /**
+   * Disable the "hide when positioner falls back to (0,0)" visual guard for performance.
+   * @default false
+   */
+  disableZeroOriginGuard?: boolean;
   disabled?: boolean;
   getPopupContainer?: TooltipProps['getPopupContainer'];
   hotkey?: string;

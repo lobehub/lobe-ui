@@ -98,8 +98,10 @@ type PopoverContextValue = {
 
 ### PopoverGroup
 
-| Property               | Description                                           | Type                                                                              | Default |
-| ---------------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------- | ------- |
-| children               | Popover subtree that shares a single popover instance | `ReactNode`                                                                       | -       |
-| contentLayoutAnimation | Animate content layout when switching triggers        | `boolean`                                                                         | `false` |
-| ...props               | Shared popover props applied to each group member     | `Omit<PopoverProps, 'children' \| 'defaultOpen' \| 'open' \| 'ref' \| 'content'>` | -       |
+| Property                       | Description                                                                                        | Type                                                                              | Default |
+| ------------------------------ | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | ------- |
+| children                       | Popover subtree that shares a single popover instance                                              | `ReactNode`                                                                       | -       |
+| contentLayoutAnimation         | Animate content layout when switching triggers                                                     | `boolean`                                                                         | `false` |
+| disableDestroyOnInvalidTrigger | Disable auto-destroy when the active trigger becomes invalid (e.g. disconnected / `display: none`) | `boolean`                                                                         | `false` |
+| disableZeroOriginGuard         | Disable the visual guard that hides the popup when it falls back to viewport (0,0)                 | `boolean`                                                                         | `false` |
+| ...props                       | Shared popover props applied to each group member                                                  | `Omit<PopoverProps, 'children' \| 'defaultOpen' \| 'open' \| 'ref' \| 'content'>` | -       |

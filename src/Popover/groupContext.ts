@@ -16,6 +16,16 @@ export type PopoverGroupSharedProps = Omit<
    * @default false
    */
   contentLayoutAnimation?: boolean;
+  /**
+   * Disable the "destroy on invalid trigger (display:none / disconnected)" guard for performance.
+   * @default false
+   */
+  disableDestroyOnInvalidTrigger?: boolean;
+  /**
+   * Disable the "hide when positioner falls back to (0,0)" visual guard for performance.
+   * @default false
+   */
+  disableZeroOriginGuard?: boolean;
 };
 
 export const PopoverGroupHandleContext = createContext<PopoverHandle<PopoverGroupItem> | null>(

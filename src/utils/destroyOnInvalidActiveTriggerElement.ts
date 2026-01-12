@@ -2,11 +2,12 @@ import { useLayoutEffect } from 'react';
 
 type PopupStoreLike = {
   // Base UI store's `useState` has a strongly-typed key union; we keep it loose here on purpose.
-
   state: {
-    activeTriggerElement: Element | null;
-    open: boolean;
+    activeTriggerElement?: Element | null;
+    open?: boolean;
+    positionerElement?: HTMLElement | null;
   };
+  useState?: (...args: any[]) => unknown;
 };
 
 const isInvalidTriggerElement = (el: Element | null): boolean => {
@@ -51,11 +52,11 @@ export const useDestroyOnInvalidActiveTriggerElement = (
 ) => {
   const enabled = options?.enabled ?? true;
 
-  // These are Base UI store selectors; both TooltipStore and PopoverStore support them.
-  const open = store.state.open;
-  const activeTriggerElement = store.state.activeTriggerElement;
-
-  const shouldWatch = enabled && open;
+  // Subscribe with `useState` (reactive), but read from `state` (immediate) inside the loop.
+  // Base UI note: `state` updates immediately, while `useState` reflects updates before the next render.
+  const openReactive =
+    (store.useState?.('open') as boolean | undefined) ?? Boolean(store.state.open);
+  const shouldWatch = enabled && openReactive;
 
   // Use layout effect so the first check runs right after React commits DOM updates.
   // Then keep watching via rAF while open to also capture CSS-driven visibility changes.
@@ -65,7 +66,7 @@ export const useDestroyOnInvalidActiveTriggerElement = (
     let raf = 0;
 
     const loop = () => {
-      if (isInvalidTriggerElement(activeTriggerElement)) {
+      if (isInvalidTriggerElement(store.state.activeTriggerElement ?? null)) {
         destroy();
         return;
       }
@@ -74,5 +75,63 @@ export const useDestroyOnInvalidActiveTriggerElement = (
 
     loop();
     return () => window.cancelAnimationFrame(raf);
-  }, [activeTriggerElement, destroy, shouldWatch]);
+  }, [destroy, shouldWatch, store]);
+};
+
+/**
+ * UI-only fallback: If the positioner ends up at viewport (0,0), hide it to avoid a visible flash
+ * in the corner. This doesn't replace "destroy on invalid trigger"; it's purely a visual guard.
+ */
+export const useHidePopupWhenPositionerAtOrigin = (
+  store: PopupStoreLike,
+  options?: {
+    /**
+     * @default true
+     */
+    enabled?: boolean;
+    /**
+     * Pixel threshold to consider the element "at origin".
+     * @default 0.5
+     */
+    threshold?: number;
+  },
+) => {
+  const enabled = options?.enabled ?? true;
+  const threshold = options?.threshold ?? 0.5;
+
+  const openReactive =
+    (store.useState?.('open') as boolean | undefined) ?? Boolean(store.state.open);
+  const positionerElementReactive =
+    (store.useState?.('positionerElement') as HTMLElement | null | undefined) ??
+    store.state.positionerElement ??
+    null;
+
+  useLayoutEffect(() => {
+    const positionerEl = store.state.positionerElement ?? positionerElementReactive;
+
+    if (!enabled || !openReactive || !positionerEl) {
+      if (positionerEl) delete positionerEl.dataset.zeroOrigin;
+      return;
+    }
+
+    let raf = 0;
+    const loop = () => {
+      const current = store.state.positionerElement ?? positionerEl;
+      if (!current) return;
+
+      const rect = current.getBoundingClientRect();
+      const atOrigin = Math.abs(rect.left) <= threshold && Math.abs(rect.top) <= threshold;
+      if (atOrigin) current.dataset.zeroOrigin = 'true';
+      else delete current.dataset.zeroOrigin;
+
+      raf = window.requestAnimationFrame(loop);
+    };
+
+    loop();
+    return () => {
+      window.cancelAnimationFrame(raf);
+      const current = store.state.positionerElement ?? positionerEl;
+      if (current) delete current.dataset.zeroOrigin;
+    };
+  }, [enabled, openReactive, positionerElementReactive, store, threshold]);
 };

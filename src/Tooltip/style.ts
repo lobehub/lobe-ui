@@ -107,6 +107,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       transition: none;
     }
 
+    /* Fallback: never show a tooltip when the anchor is hidden or the positioner falls back to (0,0). */
+    &[data-anchor-hidden],
+    &[data-zero-origin='true'] {
+      pointer-events: none;
+      visibility: hidden;
+    }
+
     &[data-placement='top'],
     &[data-placement='topLeft'],
     &[data-placement='topRight'] {

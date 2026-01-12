@@ -5,7 +5,10 @@ import type { Side } from '@base-ui/react/utils/useAnchorPositioning';
 import { cx } from 'antd-style';
 import { type FC, type ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 
-import { useDestroyOnInvalidActiveTriggerElement } from '@/utils/destroyOnInvalidActiveTriggerElement';
+import {
+  useDestroyOnInvalidActiveTriggerElement,
+  useHidePopupWhenPositionerAtOrigin,
+} from '@/utils/destroyOnInvalidActiveTriggerElement';
 import { placementMap } from '@/utils/placement';
 
 import { PopoverArrowIcon } from './ArrowIcon';
@@ -27,6 +30,8 @@ type PopoverGroupProps = PopoverGroupSharedProps & {
 const PopoverGroup: FC<PopoverGroupProps> = ({
   children,
   contentLayoutAnimation = false,
+  disableDestroyOnInvalidTrigger = false,
+  disableZeroOriginGuard = false,
   ...sharedProps
 }) => {
   const [{ handle, key }, setHandleState] = useState(() => ({
@@ -50,7 +55,10 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
     activeItemRef.current?.onOpenChange?.(open);
   }, []);
 
-  useDestroyOnInvalidActiveTriggerElement(handle.store, destroy);
+  useDestroyOnInvalidActiveTriggerElement(handle.store, destroy, {
+    enabled: !disableDestroyOnInvalidTrigger,
+  });
+  useHidePopupWhenPositionerAtOrigin(handle.store, { enabled: !disableZeroOriginGuard });
 
   const portalContainer = usePopoverPortalContainer();
 

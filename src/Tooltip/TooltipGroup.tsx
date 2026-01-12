@@ -4,7 +4,10 @@ import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import { cx } from 'antd-style';
 import { type FC, useCallback, useRef, useState } from 'react';
 
-import { useDestroyOnInvalidActiveTriggerElement } from '@/utils/destroyOnInvalidActiveTriggerElement';
+import {
+  useDestroyOnInvalidActiveTriggerElement,
+  useHidePopupWhenPositionerAtOrigin,
+} from '@/utils/destroyOnInvalidActiveTriggerElement';
 import { placementMap } from '@/utils/placement';
 
 import { TooltipArrowIcon } from './ArrowIcon';
@@ -20,6 +23,8 @@ import type { TooltipGroupProps } from './type';
 
 const TooltipGroup: FC<TooltipGroupProps> = ({
   children,
+  disableDestroyOnInvalidTrigger = false,
+  disableZeroOriginGuard = false,
   layoutAnimation = false,
   ...sharedProps
 }) => {
@@ -43,7 +48,10 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
 
   const portalContainer = useTooltipPortalContainer();
 
-  useDestroyOnInvalidActiveTriggerElement(handle.store, destroy);
+  useDestroyOnInvalidActiveTriggerElement(handle.store, destroy, {
+    enabled: !disableDestroyOnInvalidTrigger,
+  });
+  useHidePopupWhenPositionerAtOrigin(handle.store, { enabled: !disableZeroOriginGuard });
 
   return (
     <TooltipGroupHandleContext.Provider value={handle}>

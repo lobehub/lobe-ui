@@ -50,10 +50,12 @@ Tooltip is built on top of `@floating-ui/react` (Base Tooltip). For compatibilit
 
 ### TooltipGroup
 
-| Property | Description                                           | Type                                                                            | Default |
-| -------- | ----------------------------------------------------- | ------------------------------------------------------------------------------- | ------- |
-| children | Tooltip subtree that shares a single tooltip instance | `ReactNode`                                                                     | -       |
-| ...props | Shared tooltip props applied to each group member     | `Omit<TooltipProps, 'children' \| 'defaultOpen' \| 'open' \| 'ref' \| 'title'>` | -       |
+| Property                       | Description                                                                                        | Type                                                                            | Default |
+| ------------------------------ | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------- |
+| children                       | Tooltip subtree that shares a single tooltip instance                                              | `ReactNode`                                                                     | -       |
+| disableDestroyOnInvalidTrigger | Disable auto-destroy when the active trigger becomes invalid (e.g. disconnected / `display: none`) | `boolean`                                                                       | `false` |
+| disableZeroOriginGuard         | Disable the visual guard that hides the popup when it falls back to viewport (0,0)                 | `boolean`                                                                       | `false` |
+| ...props                       | Shared tooltip props applied to each group member                                                  | `Omit<TooltipProps, 'children' \| 'defaultOpen' \| 'open' \| 'ref' \| 'title'>` | -       |
 
 #### Hotkey Support
 
