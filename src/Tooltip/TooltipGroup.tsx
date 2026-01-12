@@ -133,9 +133,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
 
             return portalContainer ? (
               <BaseTooltip.Portal container={portalContainer}>{popup}</BaseTooltip.Portal>
-            ) : (
-              popup
-            );
+            ) : null;
           }}
         </BaseTooltip.Root>
       </TooltipGroupPropsContext.Provider>

@@ -229,9 +229,7 @@ export const TooltipStandalone = memo<TooltipProps>(
         {triggerElement}
         {resolvedPortalContainer ? (
           <BaseTooltip.Portal container={resolvedPortalContainer}>{popup}</BaseTooltip.Portal>
-        ) : (
-          popup
-        )}
+        ) : null}
       </BaseTooltip.Root>
     );
   },

@@ -141,9 +141,7 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
 
             return portalContainer ? (
               <BasePopover.Portal container={portalContainer}>{popup}</BasePopover.Portal>
-            ) : (
-              popup
-            );
+            ) : null;
           }}
         </BasePopover.Root>
       </PopoverGroupPropsContext.Provider>

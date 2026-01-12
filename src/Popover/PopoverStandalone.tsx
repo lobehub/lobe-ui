@@ -267,9 +267,7 @@ export const PopoverStandalone = memo<PopoverProps>(
         {backdropProps && <BasePopover.Backdrop {...backdropProps} />}
         {resolvedPortalContainer ? (
           <BasePopover.Portal container={resolvedPortalContainer}>{popup}</BasePopover.Portal>
-        ) : (
-          popup
-        )}
+        ) : null}
       </BasePopover.Root>
     );
   },
