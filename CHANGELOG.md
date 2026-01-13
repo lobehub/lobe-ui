@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.17.1](https://github.com/lobehub/lobe-ui/compare/v4.17.0...v4.17.1)
+
+<sup>Released on **2026-01-13**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Only `p` use trim-both.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Only `p` use trim-both ([9f5ba9a](https://github.com/lobehub/lobe-ui/commit/9f5ba9a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.17.0](https://github.com/lobehub/lobe-ui/compare/v4.16.0...v4.17.0)
 
 <sup>Released on **2026-01-12**</sup>
