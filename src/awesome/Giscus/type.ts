@@ -1,7 +1,7 @@
-import type { GiscusProps as GiscusComponentProps } from '@giscus/react/dist/types';
-import type { CSSProperties } from 'react';
+import type { default as GiscusComponent } from '@giscus/react';
+import type { CSSProperties, ComponentProps } from 'react';
 
-export interface GiscusProps extends GiscusComponentProps {
+export interface GiscusProps extends ComponentProps<typeof GiscusComponent> {
   className?: string;
   style?: CSSProperties;
 }

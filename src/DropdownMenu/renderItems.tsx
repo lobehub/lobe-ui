@@ -1,5 +1,3 @@
-import { Menu } from '@base-ui/react/menu';
-import { cx } from 'antd-style';
 import { Check, ChevronRight } from 'lucide-react';
 import type { MenuInfo } from 'rc-menu/es/interface';
 import type {
@@ -18,9 +16,29 @@ import type {
   MenuItemType,
   SubMenuType,
 } from '@/Menu';
-import { styles } from '@/Menu/sharedStyle';
 
-import type { DropdownItem, DropdownMenuCheckboxItem } from './type';
+import {
+  DropdownMenuCheckboxItemIndicator,
+  DropdownMenuCheckboxItemPrimitive,
+  DropdownMenuGroup,
+  DropdownMenuGroupLabel,
+  DropdownMenuItem,
+  DropdownMenuItemContent,
+  DropdownMenuItemExtra,
+  DropdownMenuItemIcon,
+  DropdownMenuItemLabel,
+  DropdownMenuPopup,
+  DropdownMenuPortal,
+  DropdownMenuPositioner,
+  DropdownMenuSeparator,
+  DropdownMenuSubmenuArrow,
+  DropdownMenuSubmenuRoot,
+  DropdownMenuSubmenuTrigger,
+} from './atoms';
+import type {
+  DropdownItem,
+  DropdownMenuCheckboxItem as DropdownMenuCheckboxItemType,
+} from './type';
 
 const getItemKey = (item: ItemType | DropdownItem, fallback: string): Key => {
   if (item && 'key' in item && item.key !== undefined) return item.key;
@@ -69,7 +87,7 @@ const getReserveIconSpaceMap = (items: DropdownItem[]) => {
     }
 
     segmentIndices.push(index);
-    if ((item as DropdownMenuCheckboxItem).type === 'checkbox') {
+    if ((item as DropdownMenuCheckboxItemType).type === 'checkbox') {
       segmentHasIcon = true;
       return;
     }
@@ -81,7 +99,7 @@ const getReserveIconSpaceMap = (items: DropdownItem[]) => {
 };
 
 const renderItemContent = (
-  item: MenuItemType | SubMenuType | DropdownMenuCheckboxItem,
+  item: MenuItemType | SubMenuType | DropdownMenuCheckboxItemType,
   options?: { reserveIconSpace?: boolean; submenu?: boolean },
   iconNode?: ReactNode,
 ) => {
@@ -94,20 +112,20 @@ const renderItemContent = (
     : Boolean(hasIcon || options?.reserveIconSpace);
 
   return (
-    <div className={styles.itemContent}>
+    <DropdownMenuItemContent>
       {shouldRenderIcon ? (
-        <span aria-hidden={!hasIcon} className={styles.icon}>
+        <DropdownMenuItemIcon aria-hidden={!hasIcon}>
           {hasCustomIcon ? iconNode : hasIcon ? renderIcon(item.icon) : null}
-        </span>
+        </DropdownMenuItemIcon>
       ) : null}
-      <span className={styles.label}>{label}</span>
-      {extra ? <span className={styles.extra}>{extra}</span> : null}
+      <DropdownMenuItemLabel>{label}</DropdownMenuItemLabel>
+      {extra ? <DropdownMenuItemExtra>{extra}</DropdownMenuItemExtra> : null}
       {options?.submenu ? (
-        <span className={styles.submenuArrow}>
+        <DropdownMenuSubmenuArrow>
           <ChevronRight size={16} />
-        </span>
+        </DropdownMenuSubmenuArrow>
       ) : null}
-    </div>
+    </DropdownMenuItemContent>
   );
 };
 
@@ -143,22 +161,22 @@ export const renderDropdownMenuItems = (
     const nextKeyPath = [...keyPath, String(itemKey)];
     const reserveIconSpace = options?.reserveIconSpace ?? Boolean(reserveIconSpaceMap?.[index]);
 
-    if ((item as DropdownMenuCheckboxItem).type === 'checkbox') {
-      const checkboxItem = item as DropdownMenuCheckboxItem;
+    if ((item as DropdownMenuCheckboxItemType).type === 'checkbox') {
+      const checkboxItem = item as DropdownMenuCheckboxItemType;
       const label = getItemLabel(checkboxItem);
       const labelText = typeof label === 'string' ? label : undefined;
       const isDanger = Boolean(checkboxItem.danger);
       const indicator = (
-        <Menu.CheckboxItemIndicator>
+        <DropdownMenuCheckboxItemIndicator>
           <Icon icon={Check} />
-        </Menu.CheckboxItemIndicator>
+        </DropdownMenuCheckboxItemIndicator>
       );
 
       return (
-        <Menu.CheckboxItem
+        <DropdownMenuCheckboxItemPrimitive
           checked={checkboxItem.checked}
-          className={cx(styles.item, isDanger && styles.danger)}
           closeOnClick={checkboxItem.closeOnClick}
+          danger={isDanger}
           defaultChecked={checkboxItem.defaultChecked}
           disabled={checkboxItem.disabled}
           key={itemKey}
@@ -166,12 +184,12 @@ export const renderDropdownMenuItems = (
           onCheckedChange={(checked) => checkboxItem.onCheckedChange?.(checked)}
         >
           {renderItemContent(checkboxItem, { reserveIconSpace }, indicator)}
-        </Menu.CheckboxItem>
+        </DropdownMenuCheckboxItemPrimitive>
       );
     }
 
     if ((item as MenuDividerType).type === 'divider') {
-      return <Menu.Separator className={styles.separator} key={itemKey} />;
+      return <DropdownMenuSeparator key={itemKey} />;
     }
 
     if ((item as MenuItemGroupType).type === 'group') {
@@ -180,16 +198,14 @@ export const renderDropdownMenuItems = (
         group.children?.some((child) => Boolean(child && 'icon' in child && child.icon)),
       );
       return (
-        <Menu.Group key={itemKey}>
-          {group.label ? (
-            <Menu.GroupLabel className={styles.groupLabel}>{group.label}</Menu.GroupLabel>
-          ) : null}
+        <DropdownMenuGroup key={itemKey}>
+          {group.label ? <DropdownMenuGroupLabel>{group.label}</DropdownMenuGroupLabel> : null}
           {group.children
             ? renderDropdownMenuItems(group.children, nextKeyPath, {
                 reserveIconSpace: groupReserveIconSpace,
               })
             : null}
-        </Menu.Group>
+        </DropdownMenuGroup>
       );
     }
 
@@ -200,9 +216,9 @@ export const renderDropdownMenuItems = (
       const isDanger = 'danger' in submenu && Boolean(submenu.danger);
 
       return (
-        <Menu.SubmenuRoot key={itemKey}>
-          <Menu.SubmenuTrigger
-            className={cx(styles.item, isDanger && styles.danger)}
+        <DropdownMenuSubmenuRoot key={itemKey}>
+          <DropdownMenuSubmenuTrigger
+            danger={isDanger}
             disabled={submenu.disabled}
             label={labelText}
           >
@@ -210,15 +226,15 @@ export const renderDropdownMenuItems = (
               reserveIconSpace,
               submenu: true,
             })}
-          </Menu.SubmenuTrigger>
-          <Menu.Portal>
-            <Menu.Positioner alignOffset={-4} className={styles.positioner} sideOffset={-1}>
-              <Menu.Popup className={styles.popup}>
+          </DropdownMenuSubmenuTrigger>
+          <DropdownMenuPortal>
+            <DropdownMenuPositioner alignOffset={-4} sideOffset={-1}>
+              <DropdownMenuPopup>
                 {submenu.children ? renderDropdownMenuItems(submenu.children, nextKeyPath) : null}
-              </Menu.Popup>
-            </Menu.Positioner>
-          </Menu.Portal>
-        </Menu.SubmenuRoot>
+              </DropdownMenuPopup>
+            </DropdownMenuPositioner>
+          </DropdownMenuPortal>
+        </DropdownMenuSubmenuRoot>
       );
     }
 
@@ -228,15 +244,15 @@ export const renderDropdownMenuItems = (
     const isDanger = 'danger' in menuItem && Boolean(menuItem.danger);
 
     return (
-      <Menu.Item
-        className={cx(styles.item, isDanger && styles.danger)}
+      <DropdownMenuItem
+        danger={isDanger}
         disabled={menuItem.disabled}
         key={itemKey}
         label={labelText}
         onClick={(event) => invokeItemClick(menuItem, nextKeyPath, event)}
       >
         {renderItemContent(menuItem, { reserveIconSpace })}
-      </Menu.Item>
+      </DropdownMenuItem>
     );
   });
 };

@@ -60,7 +60,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     min-height: 36px;
     padding-block: 8px;
     padding-inline: 12px;
-    border-radius: ${cssVar.borderRadius};
+    border-radius: ${cssVar.borderRadiusSM};
 
     font-size: 14px;
     line-height: 20px;

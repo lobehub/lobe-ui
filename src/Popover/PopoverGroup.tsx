@@ -1,18 +1,23 @@
 'use client';
 
 import { Popover as BasePopover } from '@base-ui/react/popover';
-import type { Side } from '@base-ui/react/utils/useAnchorPositioning';
-import { cx } from 'antd-style';
 import { type FC, type ReactNode, useCallback, useMemo, useRef, useState } from 'react';
 
 import {
   useDestroyOnInvalidActiveTriggerElement,
   useHidePopupWhenPositionerAtOrigin,
 } from '@/utils/destroyOnInvalidActiveTriggerElement';
-import { placementMap } from '@/utils/placement';
+import { type Side, placementMap } from '@/utils/placement';
 
 import { PopoverArrowIcon } from './ArrowIcon';
 import { usePopoverPortalContainer } from './PopoverPortal';
+import {
+  PopoverArrow,
+  PopoverPopup,
+  PopoverPortal,
+  PopoverPositioner,
+  PopoverViewport,
+} from './atoms';
 import { PopoverProvider } from './context';
 import {
   PopoverGroupHandleContext,
@@ -21,7 +26,6 @@ import {
   type PopoverGroupSharedProps,
 } from './groupContext';
 import { parseTrigger } from './parseTrigger';
-import { styles } from './style';
 
 type PopoverGroupProps = PopoverGroupSharedProps & {
   children: ReactNode;
@@ -100,10 +104,10 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
               : baseSideOffset;
 
             const resolvedClassNames = {
-              arrow: cx(styles.arrow, item.classNames?.arrow),
-              popup: cx(styles.popup, item.className),
-              positioner: cx(styles.positioner, item.classNames?.root),
-              viewport: cx(styles.viewport, item.classNames?.content),
+              arrow: item.classNames?.arrow,
+              popup: item.className,
+              positioner: item.classNames?.root,
+              viewport: item.classNames?.content,
             };
 
             const resolvedStyles = {
@@ -120,43 +124,40 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
             );
 
             const popup = (
-              <BasePopover.Positioner
+              <PopoverPositioner
                 align={placementConfig.align}
                 className={resolvedClassNames.positioner}
-                data-hover-trigger={openOnHover || undefined}
-                data-placement={placement}
+                hoverTrigger={openOnHover}
+                placement={placement}
                 side={placementConfig.side}
-                sideOffset={resolvedSideOffset}
+                sideOffset={resolvedSideOffset as any}
                 style={resolvedStyles.positioner}
                 {...item.positionerProps}
               >
-                <BasePopover.Popup className={resolvedClassNames.popup} {...item.popupProps}>
+                <PopoverPopup className={resolvedClassNames.popup} {...item.popupProps}>
                   {arrow && (
-                    <BasePopover.Arrow
-                      className={resolvedClassNames.arrow}
-                      style={resolvedStyles.arrow}
-                    >
+                    <PopoverArrow className={resolvedClassNames.arrow} style={resolvedStyles.arrow}>
                       {PopoverArrowIcon}
-                    </BasePopover.Arrow>
+                    </PopoverArrow>
                   )}
                   {contentLayoutAnimation ? (
-                    <BasePopover.Viewport
+                    <PopoverViewport
                       className={resolvedClassNames.viewport}
                       style={resolvedStyles.viewport}
                     >
                       {contentNode}
-                    </BasePopover.Viewport>
+                    </PopoverViewport>
                   ) : (
                     <div className={resolvedClassNames.viewport} style={resolvedStyles.viewport}>
                       {contentNode}
                     </div>
                   )}
-                </BasePopover.Popup>
-              </BasePopover.Positioner>
+                </PopoverPopup>
+              </PopoverPositioner>
             );
 
             return portalContainer ? (
-              <BasePopover.Portal container={portalContainer}>{popup}</BasePopover.Portal>
+              <PopoverPortal container={portalContainer}>{popup}</PopoverPortal>
             ) : null;
           }}
         </BasePopover.Root>

@@ -1,21 +1,25 @@
 'use client';
 
-import { mergeProps } from '@base-ui/react/merge-props';
 import { Popover as BasePopover } from '@base-ui/react/popover';
-import type { Side } from '@base-ui/react/utils/useAnchorPositioning';
-import { cx } from 'antd-style';
-import { cloneElement, isValidElement, memo, useCallback, useMemo, useState } from 'react';
-import { mergeRefs } from 'react-merge-refs';
+import { memo, useCallback, useMemo, useState } from 'react';
 
 import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
-import { placementMap } from '@/utils/placement';
+import { type Side, placementMap } from '@/utils/placement';
 
 import { PopoverArrowIcon } from './ArrowIcon';
 import { usePopoverPortalContainer } from './PopoverPortal';
+import {
+  PopoverArrow,
+  PopoverPopup,
+  PopoverPortal,
+  PopoverPositioner,
+  PopoverRoot,
+  PopoverTriggerElement,
+  PopoverViewport,
+} from './atoms';
 import { PopoverProvider } from './context';
 import { parseTrigger } from './parseTrigger';
-import { styles } from './style';
 import type { PopoverProps } from './type';
 
 /**
@@ -110,18 +114,18 @@ export const PopoverStandalone = memo<PopoverProps>(
     // Determine portal container
     const portalContainer = usePopoverPortalContainer();
 
-    const { isNativeButtonTriggerElement, resolvedNativeButton } = useNativeButton({
+    const { resolvedNativeButton } = useNativeButton({
       children,
       nativeButton,
     });
 
     const resolvedClassNames = useMemo(
       () => ({
-        arrow: cx(styles.arrow, classNames?.arrow),
-        popup: cx(styles.popup, className),
-        positioner: cx(styles.positioner, classNames?.root),
+        arrow: classNames?.arrow,
+        popup: className,
+        positioner: classNames?.root,
         trigger: classNames?.trigger,
-        viewport: cx(styles.viewport, classNames?.content),
+        viewport: classNames?.content,
       }),
       [className, classNames?.arrow, classNames?.content, classNames?.root, classNames?.trigger],
     );
@@ -136,47 +140,20 @@ export const PopoverStandalone = memo<PopoverProps>(
         ...triggerProps,
       };
 
-      if (isValidElement(children)) {
-        return (
-          <BasePopover.Trigger
-            handle={popoverHandle}
-            {...baseTriggerProps}
-            nativeButton={resolvedNativeButton}
-            render={(props) => {
-              // Base UI's trigger props include `type="button"` by default.
-              // If we render into a non-<button> element, that prop is invalid and can warn.
-              const resolvedProps = (() => {
-                if (isNativeButtonTriggerElement) return props as any;
-                // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
-                const { type, ref: triggerRef, ...restProps } = props as any;
-                return restProps;
-              })();
-
-              const mergedProps = mergeProps((children as any).props, resolvedProps);
-              return cloneElement(children as any, {
-                ...mergedProps,
-                className: cx(mergedProps.className, resolvedClassNames.trigger),
-                ref: mergeRefs([(children as any).ref, (props as any).ref, refProp]),
-              });
-            }}
-          />
-        );
-      }
       return (
-        <BasePopover.Trigger
+        <PopoverTriggerElement
           handle={popoverHandle}
           {...baseTriggerProps}
           className={resolvedClassNames.trigger}
           nativeButton={resolvedNativeButton}
-          ref={refProp}
+          ref={refProp as any}
         >
           {children}
-        </BasePopover.Trigger>
+        </PopoverTriggerElement>
       );
     }, [
       children,
       disabled,
-      isNativeButtonTriggerElement,
       openOnHover,
       popoverHandle,
       refProp,
@@ -209,30 +186,30 @@ export const PopoverStandalone = memo<PopoverProps>(
 
     const popup = useMemo(
       () => (
-        <BasePopover.Positioner
+        <PopoverPositioner
           align={placementConfig.align}
           className={resolvedClassNames.positioner}
-          data-hover-trigger={openOnHover || undefined}
-          data-placement={placement}
+          hoverTrigger={openOnHover}
+          placement={placement}
           side={placementConfig.side}
-          sideOffset={resolvedSideOffset}
+          sideOffset={resolvedSideOffset as any}
           style={resolvedStyles.positioner}
           {...positionerProps}
         >
-          <BasePopover.Popup className={resolvedClassNames.popup} {...popupProps}>
+          <PopoverPopup className={resolvedClassNames.popup} {...popupProps}>
             {arrow && (
-              <BasePopover.Arrow className={resolvedClassNames.arrow} style={resolvedStyles.arrow}>
+              <PopoverArrow className={resolvedClassNames.arrow} style={resolvedStyles.arrow}>
                 {PopoverArrowIcon}
-              </BasePopover.Arrow>
+              </PopoverArrow>
             )}
-            <BasePopover.Viewport
+            <PopoverViewport
               className={resolvedClassNames.viewport}
               style={resolvedStyles.viewport}
             >
               <PopoverProvider value={contextValue}>{content}</PopoverProvider>
-            </BasePopover.Viewport>
-          </BasePopover.Popup>
-        </BasePopover.Positioner>
+            </PopoverViewport>
+          </PopoverPopup>
+        </PopoverPositioner>
       ),
       [
         arrow,
@@ -258,7 +235,7 @@ export const PopoverStandalone = memo<PopoverProps>(
     const resolvedPortalContainer = customContainer ?? portalContainer;
 
     return (
-      <BasePopover.Root
+      <PopoverRoot
         defaultOpen={defaultOpen}
         handle={popoverHandle}
         onOpenChange={handleOpenChange}
@@ -267,11 +244,11 @@ export const PopoverStandalone = memo<PopoverProps>(
         {triggerElement}
         {backdropProps && <BasePopover.Backdrop {...backdropProps} />}
         {resolvedPortalContainer ? (
-          <BasePopover.Portal container={resolvedPortalContainer} {...portalProps}>
+          <PopoverPortal container={resolvedPortalContainer} {...portalProps}>
             {popup}
-          </BasePopover.Portal>
+          </PopoverPortal>
         ) : null}
-      </BasePopover.Root>
+      </PopoverRoot>
     );
   },
 );

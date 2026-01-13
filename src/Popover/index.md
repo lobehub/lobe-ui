@@ -9,6 +9,12 @@ description: A floating card that displays additional content when triggered by 
 
 <code src="./demos/index.tsx" nopadding></code>
 
+## Atom Components
+
+Exported primitives can be composed to build custom popovers.
+
+<code src="./demos/atoms.tsx" nopadding></code>
+
 ## Popover Group (Singleton)
 
 Wrap multiple popovers in `PopoverGroup` to share a single floating instance. When you hover different triggers, the popover only updates the anchor + content, enabling smooth transitions.

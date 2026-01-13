@@ -1,5 +1,11 @@
-import type { Align, Side } from '@base-ui/react/utils/useAnchorPositioning';
 import type { Placement as FloatingUIPlacement } from '@floating-ui/react';
+
+/**
+ * Base UI uses a small set of string literal unions for alignment and side.
+ * We re-declare them here to avoid importing internal/non-exported Base UI paths.
+ */
+export type Side = 'top' | 'bottom' | 'left' | 'right' | 'inline-end' | 'inline-start';
+export type Align = 'start' | 'center' | 'end';
 
 export type PlacementConfig = {
   align: Align;
