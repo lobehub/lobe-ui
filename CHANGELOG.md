@@ -2,6 +2,32 @@
 
 # Changelog
 
+## [Version 4.18.0](https://github.com/lobehub/lobe-ui/compare/v4.17.1...v4.18.0)
+
+<sup>Released on **2026-01-13**</sup>
+
+#### ✨ Features
+
+- **misc**: Add atomic components for DropdownMenu and Popover, Add CodeDiff and PatchDiff components for displaying code differences.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add atomic components for DropdownMenu and Popover, closes [#453](https://github.com/lobehub/lobe-ui/issues/453) ([6861e37](https://github.com/lobehub/lobe-ui/commit/6861e37))
+- **misc**: Add CodeDiff and PatchDiff components for displaying code differences ([4ad96a6](https://github.com/lobehub/lobe-ui/commit/4ad96a6))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.17.1](https://github.com/lobehub/lobe-ui/compare/v4.17.0...v4.17.1)
 
 <sup>Released on **2026-01-13**</sup>
