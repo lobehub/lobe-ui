@@ -40,9 +40,6 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
       border-inline-start: solid 4px ${cssVar.colorBorder};
 
       color: ${cssVar.colorTextSecondary};
-
-      text-box-edge: cap alphabetic;
-      text-box-trim: trim-both;
     }
   `;
 
@@ -134,12 +131,8 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
         calc(var(--lobe-markdown-header-multiple) * var(--lobe-markdown-margin-multiple) * 0.4em),
         var(--lobe-markdown-font-size)
       );
-
       font-weight: bold;
       line-height: 1.25;
-
-      text-box-edge: cap alphabetic;
-      text-box-trim: trim-both;
     }
 
     h1 {
@@ -198,9 +191,6 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
     li {
       margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.33em);
 
-      text-box-edge: cap alphabetic;
-      text-box-trim: trim-both;
-
       p:first-child {
         display: inline;
       }
@@ -211,11 +201,7 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
       margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
       margin-inline-start: 1em;
       padding-inline-start: 0;
-
       list-style-position: outside;
-
-      text-box-edge: cap alphabetic;
-      text-box-trim: trim-both;
 
       > ul,
       > ol {
@@ -268,11 +254,9 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
   const p = css`
     p {
       margin-block: 4px;
-
       line-height: var(--lobe-markdown-line-height);
       letter-spacing: 0.02em;
 
-      text-box-edge: cap alphabetic;
       text-box-trim: trim-both;
 
       &:not(:first-child) {
