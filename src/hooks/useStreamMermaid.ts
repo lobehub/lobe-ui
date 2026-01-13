@@ -1,7 +1,7 @@
 'use client';
 
 import { useTheme } from 'antd-style';
-import type { MermaidConfig } from 'mermaid/dist/config.type';
+import type { MermaidConfig } from 'mermaid';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { createMermaidConfig, loadMermaid } from './useMermaid';

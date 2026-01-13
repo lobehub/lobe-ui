@@ -1,31 +1,18 @@
 'use client';
 
-import { Menu, type MenuTriggerState } from '@base-ui/react/menu';
-import { mergeProps } from '@base-ui/react/merge-props';
-import type { ComponentRenderFn, HTMLProps } from '@base-ui/react/utils/types';
-import { cx } from 'antd-style';
-import clsx from 'clsx';
-import {
-  cloneElement,
-  isValidElement,
-  memo,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { Menu } from '@base-ui/react/menu';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { styles } from '@/Menu/sharedStyle';
 import { useNativeButton } from '@/hooks/useNativeButton';
-import { usePortalContainer } from '@/hooks/usePortalContainer';
-import { CLASSNAMES } from '@/styles/classNames';
-import { placementMap } from '@/utils/placement';
 
+import {
+  DropdownMenuPopup,
+  DropdownMenuPortal,
+  DropdownMenuPositioner,
+  DropdownMenuTrigger,
+} from './atoms';
 import { renderDropdownMenuItems } from './renderItems';
 import type { DropdownMenuProps } from './type';
-
-const DROPDOWN_MENU_CONTAINER_ATTR = 'data-lobe-ui-dropdown-menu-container';
 
 const DropdownMenu = memo<DropdownMenuProps>(
   ({
@@ -81,54 +68,21 @@ const DropdownMenu = memo<DropdownMenuProps>(
       },
       [onOpenChangeComplete],
     );
-    const portalContainer = usePortalContainer(DROPDOWN_MENU_CONTAINER_ATTR);
-    const placementConfig = placementMap[placement];
     const hoverTrigger = Boolean((triggerProps as any)?.openOnHover);
+    const { container: portalContainer, ...restPortalProps } = (portalProps ?? {}) as any;
 
-    const { isNativeButtonTriggerElement, resolvedNativeButton } = useNativeButton({
+    const { resolvedNativeButton } = useNativeButton({
       children,
       nativeButton,
       triggerNativeButton: triggerProps?.nativeButton,
     });
 
-    const renderer: ComponentRenderFn<HTMLProps<any>, MenuTriggerState> = useCallback(
-      (props) => {
-        // Base UI's trigger props include `type="button"` by default.
-        // If we render into a non-<button> element, that prop is invalid and can warn.
-        const resolvedProps = (() => {
-          if (isNativeButtonTriggerElement) return props as any;
-          // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
-          const { type, ...restProps } = props as any;
-          return restProps;
-        })();
-
-        return cloneElement(children as any, mergeProps((children as any).props, resolvedProps));
-      },
-      [children, isNativeButtonTriggerElement],
-    );
-
-    const trigger = isValidElement(children) ? (
-      <Menu.Trigger
-        {...triggerProps}
-        className={clsx(CLASSNAMES.DropdownMenuTrigger, triggerProps?.className)}
-        nativeButton={resolvedNativeButton}
-        render={renderer}
-      />
-    ) : (
-      <Menu.Trigger
-        {...triggerProps}
-        className={clsx(CLASSNAMES.DropdownMenuTrigger, triggerProps?.className)}
-      >
+    const trigger = (
+      <DropdownMenuTrigger {...triggerProps} nativeButton={resolvedNativeButton}>
         {children}
-      </Menu.Trigger>
+      </DropdownMenuTrigger>
     );
 
-    const resolvedPositionerProps = {
-      ...positionerProps,
-      align: positionerProps?.align ?? placementConfig?.align ?? 'center',
-      side: positionerProps?.side ?? placementConfig?.side ?? 'bottom',
-      sideOffset: positionerProps?.sideOffset ?? 6,
-    };
     return (
       <Menu.Root
         {...rest}
@@ -138,35 +92,15 @@ const DropdownMenu = memo<DropdownMenuProps>(
         open={open}
       >
         {trigger}
-        <Menu.Portal container={portalProps?.container ?? portalContainer} {...portalProps}>
-          <Menu.Positioner
-            {...resolvedPositionerProps}
-            className={(state) =>
-              cx(
-                styles.positioner,
-                typeof positionerProps?.className === 'function'
-                  ? positionerProps.className(state)
-                  : positionerProps?.className,
-              )
-            }
-            data-hover-trigger={hoverTrigger || undefined}
-            data-placement={placement}
+        <DropdownMenuPortal container={portalContainer} {...restPortalProps}>
+          <DropdownMenuPositioner
+            {...positionerProps}
+            hoverTrigger={hoverTrigger}
+            placement={placement}
           >
-            <Menu.Popup
-              {...popupProps}
-              className={(state) =>
-                cx(
-                  styles.popup,
-                  typeof popupProps?.className === 'function'
-                    ? popupProps.className(state)
-                    : popupProps?.className,
-                )
-              }
-            >
-              {menuItems}
-            </Menu.Popup>
-          </Menu.Positioner>
-        </Menu.Portal>
+            <DropdownMenuPopup {...popupProps}>{menuItems}</DropdownMenuPopup>
+          </DropdownMenuPositioner>
+        </DropdownMenuPortal>
       </Menu.Root>
     );
   },

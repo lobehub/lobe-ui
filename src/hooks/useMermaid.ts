@@ -1,7 +1,7 @@
 'use client';
 
 import { useTheme } from 'antd-style';
-import type { MermaidConfig } from 'mermaid/dist/config.type';
+import type { MermaidConfig } from 'mermaid';
 import { useEffect, useMemo, useState } from 'react';
 import { Md5 } from 'ts-md5';
 

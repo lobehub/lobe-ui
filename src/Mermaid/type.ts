@@ -1,4 +1,4 @@
-import type { MermaidConfig } from 'mermaid/dist/config.type';
+import type { MermaidConfig } from 'mermaid';
 import { CSSProperties, ReactNode, Ref } from 'react';
 
 import type { ActionIconProps } from '@/ActionIcon';

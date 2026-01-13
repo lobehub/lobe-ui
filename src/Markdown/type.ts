@@ -1,7 +1,6 @@
 import type { AnchorProps } from 'antd';
 import { CSSProperties, ElementType, FC, ReactNode, Ref } from 'react';
-import type { Options as ReactMarkdownOptions } from 'react-markdown';
-import type { Components } from 'react-markdown/lib';
+import type { Options as ReactMarkdownOptions , Components } from 'react-markdown';
 import type { Pluggable } from 'unified';
 
 import type { HighlighterProps } from '@/Highlighter';

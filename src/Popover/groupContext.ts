@@ -1,6 +1,6 @@
 'use client';
 
-import type { PopoverHandle } from '@base-ui/react/popover/store/PopoverHandle';
+import { Popover as BasePopover } from '@base-ui/react/popover';
 import { createContext } from 'react';
 
 import type { PopoverProps } from './type';
@@ -28,7 +28,7 @@ export type PopoverGroupSharedProps = Omit<
   disableZeroOriginGuard?: boolean;
 };
 
-export const PopoverGroupHandleContext = createContext<PopoverHandle<PopoverGroupItem> | null>(
-  null,
-);
+export type PopoverGroupHandle = ReturnType<typeof BasePopover.createHandle<PopoverGroupItem>>;
+
+export const PopoverGroupHandleContext = createContext<PopoverGroupHandle | null>(null);
 export const PopoverGroupPropsContext = createContext<PopoverGroupSharedProps | null>(null);

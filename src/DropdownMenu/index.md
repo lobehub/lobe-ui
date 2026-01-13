@@ -9,6 +9,12 @@ description: DropdownMenu renders a dropdown menu based on Base UI Menu primitiv
 
 <code src="./demos/index.tsx" center></code>
 
+## Atom Components
+
+Exported primitives can be composed to build custom dropdown menus.
+
+<code src="./demos/atoms.tsx" center></code>
+
 ## Submenu
 
 <code src="./demos/submenu.tsx" center></code>

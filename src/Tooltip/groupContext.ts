@@ -1,6 +1,6 @@
 'use client';
 
-import type { TooltipHandle } from '@base-ui/react/tooltip/store/TooltipHandle';
+import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import { createContext } from 'react';
 
 import type { TooltipProps } from './type';
@@ -18,7 +18,7 @@ export type TooltipGroupSharedProps = Omit<
   layoutAnimation?: boolean;
 };
 
-export const TooltipGroupHandleContext = createContext<TooltipHandle<TooltipGroupItem> | null>(
-  null,
-);
+export type TooltipGroupHandle = ReturnType<typeof BaseTooltip.createHandle<TooltipGroupItem>>;
+
+export const TooltipGroupHandleContext = createContext<TooltipGroupHandle | null>(null);
 export const TooltipGroupPropsContext = createContext<TooltipGroupSharedProps | null>(null);
