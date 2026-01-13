@@ -61,14 +61,6 @@ export const CodeDiff = memo<CodeDiffProps>(
       return 'diff';
     }, [fileName, language]);
 
-    const filetype = useMemo(() => {
-      if (fileName) {
-        const ext = fileName.split('.').pop();
-        if (ext && ext !== fileName) return ext;
-      }
-      return language;
-    }, [fileName, language]);
-
     const { additions, deletions } = useMemo(
       () => countContentChanges(oldContent, newContent),
       [oldContent, newContent],
