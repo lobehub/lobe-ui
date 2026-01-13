@@ -1,4 +1,6 @@
-import { CodeDiff, Flexbox } from '@lobehub/ui';
+import { Flexbox } from '@/Flex';
+
+import { CodeDiff } from '../CodeDiff';
 
 const oldCode = `const x = 1;`;
 const newCode = `const x = 2;`;

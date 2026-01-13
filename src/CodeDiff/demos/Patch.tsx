@@ -1,4 +1,4 @@
-import { PatchDiff } from '@lobehub/ui';
+import { PatchDiff } from '../PatchDiff';
 
 const patch = `--- a/src/utils.ts
 +++ b/src/utils.ts

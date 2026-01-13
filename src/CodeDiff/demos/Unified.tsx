@@ -1,4 +1,4 @@
-import { CodeDiff } from '@lobehub/ui';
+import { CodeDiff } from '../CodeDiff';
 
 const oldCode = `import React from 'react';
 

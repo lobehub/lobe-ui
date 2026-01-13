@@ -25,13 +25,13 @@ export {
   type CheckboxGroupProps,
   type CheckboxProps,
 } from './Checkbox';
-export {
-  default as CodeDiff,
-  type CodeDiffProps,
-  type DiffViewMode,
-  PatchDiff,
-  type PatchDiffProps,
-} from './CodeDiff';
+// export {
+//   default as CodeDiff,
+//   type CodeDiffProps,
+//   type DiffViewMode,
+//   PatchDiff,
+//   type PatchDiffProps,
+// } from './CodeDiff';
 export { default as CodeEditor, type CodeEditorProps } from './CodeEditor';
 export { default as Collapse, type CollapseItemType, type CollapseProps } from './Collapse';
 export { default as ColorSwatches, type ColorSwatchesProps } from './ColorSwatches';
