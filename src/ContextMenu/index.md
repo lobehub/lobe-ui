@@ -17,6 +17,10 @@ description: ContextMenu provides an imperative API to open a menu at the last p
 
 <code src="./demos/checkbox.tsx" center></code>
 
+## Switch Items
+
+<code src="./demos/switch.tsx" center></code>
+
 ## Empty Submenu
 
 <code src="./demos/emptySubmenu.tsx" center></code>

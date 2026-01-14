@@ -2,10 +2,11 @@
 
 import { Menu } from '@base-ui/react/menu';
 import { mergeProps } from '@base-ui/react/merge-props';
+import { Switch } from 'antd';
 import { cx } from 'antd-style';
 import clsx from 'clsx';
 import type React from 'react';
-import { cloneElement, forwardRef, isValidElement } from 'react';
+import { cloneElement, forwardRef, isValidElement, useCallback, useState } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 import { styles } from '@/Menu/sharedStyle';
@@ -278,3 +279,73 @@ export const DropdownMenuSubmenuArrow = ({ className, ...rest }: DropdownMenuSub
 };
 
 DropdownMenuSubmenuArrow.displayName = 'DropdownMenuSubmenuArrow';
+
+export type DropdownMenuSwitchItemProps = Omit<
+  React.ComponentProps<typeof Menu.Item>,
+  'onClick'
+> & {
+  checked?: boolean;
+  closeOnClick?: boolean;
+  danger?: boolean;
+  defaultChecked?: boolean;
+  onCheckedChange?: (checked: boolean) => void;
+};
+
+export const DropdownMenuSwitchItem = ({
+  checked: checkedProp,
+  className,
+  closeOnClick = false,
+  danger,
+  defaultChecked,
+  disabled,
+  onCheckedChange,
+  children,
+  ...rest
+}: DropdownMenuSwitchItemProps) => {
+  const [internalChecked, setInternalChecked] = useState(defaultChecked ?? false);
+  const isControlled = checkedProp !== undefined;
+  const checked = isControlled ? checkedProp : internalChecked;
+
+  const handleCheckedChange = useCallback(
+    (newChecked: boolean) => {
+      if (!isControlled) {
+        setInternalChecked(newChecked);
+      }
+      onCheckedChange?.(newChecked);
+    },
+    [isControlled, onCheckedChange],
+  );
+
+  return (
+    <Menu.Item
+      {...rest}
+      className={(state) =>
+        cx(
+          styles.item,
+          danger && styles.danger,
+          typeof className === 'function' ? className(state) : className,
+        )
+      }
+      closeOnClick={closeOnClick}
+      disabled={disabled}
+      onClick={(e) => {
+        e.preventDefault();
+        if (!disabled) {
+          handleCheckedChange(!checked);
+        }
+      }}
+    >
+      {children}
+      <Switch
+        checked={checked}
+        disabled={disabled}
+        onChange={handleCheckedChange}
+        onClick={(_, e) => e.stopPropagation()}
+        size="small"
+        style={{ marginInlineStart: 16 }}
+      />
+    </Menu.Item>
+  );
+};
+
+DropdownMenuSwitchItem.displayName = 'DropdownMenuSwitchItem';

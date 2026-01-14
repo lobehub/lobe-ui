@@ -34,10 +34,12 @@ import {
   DropdownMenuSubmenuArrow,
   DropdownMenuSubmenuRoot,
   DropdownMenuSubmenuTrigger,
+  DropdownMenuSwitchItem,
 } from './atoms';
 import type {
   DropdownItem,
   DropdownMenuCheckboxItem as DropdownMenuCheckboxItemType,
+  DropdownMenuSwitchItem as DropdownMenuSwitchItemType,
 } from './type';
 
 const getItemKey = (item: ItemType | DropdownItem, fallback: string): Key => {
@@ -63,43 +65,17 @@ const renderIcon = (icon: MenuItemType['icon']) => {
   return <Icon icon={icon} />;
 };
 
-const getReserveIconSpaceMap = (items: DropdownItem[]) => {
-  const flags = Array.from({ length: items.length }).fill(false);
-  let segmentIndices: number[] = [];
-  let segmentHasIcon = false;
-
-  const flush = () => {
-    if (segmentHasIcon) {
-      for (const index of segmentIndices) flags[index] = true;
-    }
-    segmentIndices = [];
-    segmentHasIcon = false;
-  };
-
-  items.forEach((item, index) => {
-    if (!item) return;
-    if (
-      (item as MenuDividerType).type === 'divider' ||
-      (item as MenuItemGroupType).type === 'group'
-    ) {
-      flush();
-      return;
-    }
-
-    segmentIndices.push(index);
-    if ((item as DropdownMenuCheckboxItemType).type === 'checkbox') {
-      segmentHasIcon = true;
-      return;
-    }
-    if ('icon' in item && item.icon) segmentHasIcon = true;
+const hasAnyIcon = (items: DropdownItem[]): boolean => {
+  return items.some((item) => {
+    if (!item) return false;
+    if ((item as DropdownMenuCheckboxItemType).type === 'checkbox') return true;
+    if ('icon' in item && item.icon) return true;
+    return false;
   });
-
-  flush();
-  return flags;
 };
 
 const renderItemContent = (
-  item: MenuItemType | SubMenuType | DropdownMenuCheckboxItemType,
+  item: MenuItemType | SubMenuType | DropdownMenuCheckboxItemType | DropdownMenuSwitchItemType,
   options?: { reserveIconSpace?: boolean; submenu?: boolean },
   iconNode?: ReactNode,
 ) => {
@@ -150,8 +126,7 @@ export const renderDropdownMenuItems = (
   keyPath: string[] = [],
   options?: { reserveIconSpace?: boolean },
 ): ReactNode[] => {
-  const reserveIconSpaceMap =
-    options?.reserveIconSpace === undefined ? getReserveIconSpaceMap(items) : null;
+  const reserveIconSpace = options?.reserveIconSpace ?? hasAnyIcon(items);
 
   return items.map((item, index) => {
     if (!item) return null;
@@ -159,7 +134,6 @@ export const renderDropdownMenuItems = (
     const fallbackKey = `${keyPath.join('-') || 'root'}-${index}`;
     const itemKey = getItemKey(item, fallbackKey);
     const nextKeyPath = [...keyPath, String(itemKey)];
-    const reserveIconSpace = options?.reserveIconSpace ?? Boolean(reserveIconSpaceMap?.[index]);
 
     if ((item as DropdownMenuCheckboxItemType).type === 'checkbox') {
       const checkboxItem = item as DropdownMenuCheckboxItemType;
@@ -188,22 +162,39 @@ export const renderDropdownMenuItems = (
       );
     }
 
+    if ((item as DropdownMenuSwitchItemType).type === 'switch') {
+      const switchItem = item as DropdownMenuSwitchItemType;
+      const label = getItemLabel(switchItem);
+      const labelText = typeof label === 'string' ? label : undefined;
+      const isDanger = Boolean(switchItem.danger);
+
+      return (
+        <DropdownMenuSwitchItem
+          checked={switchItem.checked}
+          closeOnClick={switchItem.closeOnClick}
+          danger={isDanger}
+          defaultChecked={switchItem.defaultChecked}
+          disabled={switchItem.disabled}
+          key={itemKey}
+          label={labelText}
+          onCheckedChange={(checked) => switchItem.onCheckedChange?.(checked)}
+        >
+          {renderItemContent(switchItem, { reserveIconSpace })}
+        </DropdownMenuSwitchItem>
+      );
+    }
+
     if ((item as MenuDividerType).type === 'divider') {
       return <DropdownMenuSeparator key={itemKey} />;
     }
 
     if ((item as MenuItemGroupType).type === 'group') {
       const group = item as MenuItemGroupType;
-      const groupReserveIconSpace = Boolean(
-        group.children?.some((child) => Boolean(child && 'icon' in child && child.icon)),
-      );
       return (
         <DropdownMenuGroup key={itemKey}>
           {group.label ? <DropdownMenuGroupLabel>{group.label}</DropdownMenuGroupLabel> : null}
           {group.children
-            ? renderDropdownMenuItems(group.children, nextKeyPath, {
-                reserveIconSpace: groupReserveIconSpace,
-              })
+            ? renderDropdownMenuItems(group.children, nextKeyPath, { reserveIconSpace })
             : null}
         </DropdownMenuGroup>
       );

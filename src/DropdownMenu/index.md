@@ -35,6 +35,10 @@ Exported primitives can be composed to build custom dropdown menus.
 
 <code src="./demos/checkbox.tsx" center></code>
 
+## Switch Items
+
+<code src="./demos/switch.tsx" center></code>
+
 ## Lazy Items
 
 <code src="./demos/lazy.tsx" center></code>
@@ -66,13 +70,23 @@ Additionally, DropdownMenuV2 inherits all properties from Base UI `Menu.Root` ex
 
 ### Menu Items
 
-Menu items are the same as those used for Menu/Dropdown, with support for `type: 'checkbox'` items. See [Menu](/components/menu) for details on base item types.
+Menu items are the same as those used for Menu/Dropdown, with support for `type: 'checkbox'` and `type: 'switch'` items. See [Menu](/components/menu) for details on base item types.
 
 #### Checkbox Item
 
 | Property        | Description                | Type                         | Default |
 | --------------- | -------------------------- | ---------------------------- | ------- |
 | type            | Item type                  | `'checkbox'`                 | -       |
+| checked         | Controlled checked state   | `boolean`                    | -       |
+| defaultChecked  | Uncontrolled initial state | `boolean`                    | `false` |
+| onCheckedChange | Checked change handler     | `(checked: boolean) => void` | -       |
+| closeOnClick    | Close menu on toggle       | `boolean`                    | `false` |
+
+#### Switch Item
+
+| Property        | Description                | Type                         | Default |
+| --------------- | -------------------------- | ---------------------------- | ------- |
+| type            | Item type                  | `'switch'`                   | -       |
 | checked         | Controlled checked state   | `boolean`                    | -       |
 | defaultChecked  | Uncontrolled initial state | `boolean`                    | `false` |
 | onCheckedChange | Checked change handler     | `(checked: boolean) => void` | -       |

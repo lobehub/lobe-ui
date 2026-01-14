@@ -5,4 +5,4 @@ export {
   showContextMenu,
   updateContextMenuItems,
 } from './imperative';
-export type { ContextMenuCheckboxItem, ContextMenuItem } from './type';
+export type { ContextMenuCheckboxItem, ContextMenuItem, ContextMenuSwitchItem } from './type';

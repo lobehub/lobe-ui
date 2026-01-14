@@ -1,4 +1,5 @@
 import { ContextMenu } from '@base-ui/react/context-menu';
+import { Switch } from 'antd';
 import { cx } from 'antd-style';
 import { Check, ChevronRight } from 'lucide-react';
 import type { MenuInfo } from 'rc-menu/es/interface';
@@ -8,7 +9,7 @@ import type {
   MouseEvent as ReactMouseEvent,
   ReactNode,
 } from 'react';
-import { isValidElement, memo } from 'react';
+import { isValidElement, memo, useCallback, useState } from 'react';
 
 import Icon from '@/Icon';
 import type { MenuDividerType, MenuItemGroupType, MenuItemType, SubMenuType } from '@/Menu';
@@ -17,7 +18,7 @@ import { useTranslation } from '@/i18n/useTranslation';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
 import { styles } from './style';
-import type { ContextMenuCheckboxItem, ContextMenuItem } from './type';
+import type { ContextMenuCheckboxItem, ContextMenuItem, ContextMenuSwitchItem } from './type';
 
 const EmptyMenuItem = memo(() => {
   const { t } = useTranslation(common);
@@ -31,6 +32,67 @@ const EmptyMenuItem = memo(() => {
 });
 
 EmptyMenuItem.displayName = 'EmptyMenuItem';
+
+interface ContextMenuSwitchItemInternalProps {
+  checked?: boolean;
+  children: ReactNode;
+  closeOnClick?: boolean;
+  danger?: boolean;
+  defaultChecked?: boolean;
+  disabled?: boolean;
+  label?: string;
+  onCheckedChange?: (checked: boolean) => void;
+}
+
+const ContextMenuSwitchItemInternal = ({
+  checked: checkedProp,
+  children,
+  closeOnClick = false,
+  danger,
+  defaultChecked,
+  disabled,
+  label,
+  onCheckedChange,
+}: ContextMenuSwitchItemInternalProps) => {
+  const [internalChecked, setInternalChecked] = useState(defaultChecked ?? false);
+  const isControlled = checkedProp !== undefined;
+  const checked = isControlled ? checkedProp : internalChecked;
+
+  const handleCheckedChange = useCallback(
+    (newChecked: boolean) => {
+      if (!isControlled) {
+        setInternalChecked(newChecked);
+      }
+      onCheckedChange?.(newChecked);
+    },
+    [isControlled, onCheckedChange],
+  );
+
+  return (
+    <ContextMenu.Item
+      className={cx(styles.item, danger && styles.danger)}
+      closeOnClick={closeOnClick}
+      disabled={disabled}
+      label={label}
+      onClick={(e) => {
+        e.preventDefault();
+        if (!disabled) {
+          handleCheckedChange(!checked);
+        }
+      }}
+    >
+      {children}
+      <Switch
+        checked={checked}
+        disabled={disabled}
+        onChange={handleCheckedChange}
+        onClick={(_, e) => e.stopPropagation()}
+        size="small"
+        style={{ marginInlineStart: 16 }}
+      />
+    </ContextMenu.Item>
+  );
+};
 
 type KeyableItem = { key?: Key };
 
@@ -59,43 +121,17 @@ const renderIcon = (icon: MenuItemType['icon']) => {
   return <Icon icon={icon} size={'small'} />;
 };
 
-const getReserveIconSpaceMap = (items: ContextMenuItem[]) => {
-  const flags = Array.from({ length: items.length }).fill(false);
-  let segmentIndices: number[] = [];
-  let segmentHasIcon = false;
-
-  const flush = () => {
-    if (segmentHasIcon) {
-      for (const index of segmentIndices) flags[index] = true;
-    }
-    segmentIndices = [];
-    segmentHasIcon = false;
-  };
-
-  items.forEach((item, index) => {
-    if (!item) return;
-    if (
-      (item as MenuDividerType).type === 'divider' ||
-      (item as MenuItemGroupType).type === 'group'
-    ) {
-      flush();
-      return;
-    }
-
-    segmentIndices.push(index);
-    if ((item as ContextMenuCheckboxItem).type === 'checkbox') {
-      segmentHasIcon = true;
-      return;
-    }
-    if ('icon' in item && item.icon) segmentHasIcon = true;
+const hasAnyIcon = (items: ContextMenuItem[]): boolean => {
+  return items.some((item) => {
+    if (!item) return false;
+    if ((item as ContextMenuCheckboxItem).type === 'checkbox') return true;
+    if ('icon' in item && item.icon) return true;
+    return false;
   });
-
-  flush();
-  return flags;
 };
 
 const renderItemContent = (
-  item: MenuItemType | SubMenuType | ContextMenuCheckboxItem,
+  item: MenuItemType | SubMenuType | ContextMenuCheckboxItem | ContextMenuSwitchItem,
   options?: { reserveIconSpace?: boolean; submenu?: boolean },
   iconNode?: ReactNode,
 ) => {
@@ -146,8 +182,7 @@ export const renderContextMenuItems = (
   keyPath: string[] = [],
   options?: { reserveIconSpace?: boolean },
 ): ReactNode[] => {
-  const reserveIconSpaceMap =
-    options?.reserveIconSpace === undefined ? getReserveIconSpaceMap(items) : null;
+  const reserveIconSpace = options?.reserveIconSpace ?? hasAnyIcon(items);
 
   return items.map((item, index) => {
     if (!item) return null;
@@ -155,7 +190,6 @@ export const renderContextMenuItems = (
     const fallbackKey = `${keyPath.join('-') || 'root'}-${index}`;
     const itemKey = getItemKey(item, fallbackKey);
     const nextKeyPath = [...keyPath, String(itemKey)];
-    const reserveIconSpace = options?.reserveIconSpace ?? Boolean(reserveIconSpaceMap?.[index]);
 
     if ((item as ContextMenuCheckboxItem).type === 'checkbox') {
       const checkboxItem = item as ContextMenuCheckboxItem;
@@ -184,15 +218,34 @@ export const renderContextMenuItems = (
       );
     }
 
+    if ((item as ContextMenuSwitchItem).type === 'switch') {
+      const switchItem = item as ContextMenuSwitchItem;
+      const label = getItemLabel(switchItem);
+      const labelText = typeof label === 'string' ? label : undefined;
+      const isDanger = Boolean(switchItem.danger);
+
+      return (
+        <ContextMenuSwitchItemInternal
+          checked={switchItem.checked}
+          closeOnClick={switchItem.closeOnClick}
+          danger={isDanger}
+          defaultChecked={switchItem.defaultChecked}
+          disabled={switchItem.disabled}
+          key={itemKey}
+          label={labelText}
+          onCheckedChange={switchItem.onCheckedChange}
+        >
+          {renderItemContent(switchItem, { reserveIconSpace })}
+        </ContextMenuSwitchItemInternal>
+      );
+    }
+
     if ((item as MenuDividerType).type === 'divider') {
       return <ContextMenu.Separator className={styles.separator} key={itemKey} />;
     }
 
     if ((item as MenuItemGroupType).type === 'group') {
       const group = item as MenuItemGroupType;
-      const groupReserveIconSpace = Boolean(
-        group.children?.some((child) => Boolean(child && 'icon' in child && child.icon)),
-      );
       return (
         <ContextMenu.Group key={itemKey}>
           {group.label ? (
@@ -201,9 +254,7 @@ export const renderContextMenuItems = (
             </ContextMenu.GroupLabel>
           ) : null}
           {group.children
-            ? renderContextMenuItems(group.children, nextKeyPath, {
-                reserveIconSpace: groupReserveIconSpace,
-              })
+            ? renderContextMenuItems(group.children, nextKeyPath, { reserveIconSpace })
             : null}
         </ContextMenu.Group>
       );

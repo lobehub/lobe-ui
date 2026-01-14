@@ -30,6 +30,8 @@ export {
   DropdownMenuSubmenuRoot,
   DropdownMenuSubmenuTrigger,
   type DropdownMenuSubmenuTriggerProps,
+  DropdownMenuSwitchItem,
+  type DropdownMenuSwitchItemProps,
   DropdownMenuTrigger,
   type DropdownMenuTriggerProps,
 } from './atoms';
@@ -40,4 +42,5 @@ export type {
   DropdownMenuCheckboxItem,
   DropdownMenuPlacement,
   DropdownMenuProps,
+  DropdownMenuSwitchItem as DropdownMenuSwitchItemType,
 } from './type';

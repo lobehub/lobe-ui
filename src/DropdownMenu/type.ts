@@ -7,12 +7,14 @@ import type {
 } from '@base-ui/react/menu';
 import type { ReactNode } from 'react';
 
-import type { BaseMenuItemType, MenuCheckboxItemType } from '@/Menu';
+import type { BaseMenuItemType, MenuCheckboxItemType, MenuSwitchItemType } from '@/Menu';
 import type { Placement } from '@/utils/placement';
 
 export type DropdownMenuPlacement = Placement;
 
 export type DropdownMenuCheckboxItem = MenuCheckboxItemType;
+
+export type DropdownMenuSwitchItem = MenuSwitchItemType;
 
 export type DropdownItem = BaseMenuItemType;
 
