@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.19.1](https://github.com/lobehub/lobe-ui/compare/v4.19.0...v4.19.1)
+
+<sup>Released on **2026-01-14**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Refine Tooltip styles for enhanced usability and aesthetics.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Refine Tooltip styles for enhanced usability and aesthetics ([94a295a](https://github.com/lobehub/lobe-ui/commit/94a295a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.19.0](https://github.com/lobehub/lobe-ui/compare/v4.18.1...v4.19.0)
 
 <sup>Released on **2026-01-14**</sup>
