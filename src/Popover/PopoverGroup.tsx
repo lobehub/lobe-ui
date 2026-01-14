@@ -127,6 +127,7 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
               <PopoverPositioner
                 align={placementConfig.align}
                 className={resolvedClassNames.positioner}
+                data-layout-animation={contentLayoutAnimation || undefined}
                 hoverTrigger={openOnHover}
                 placement={placement}
                 side={placementConfig.side}
@@ -134,7 +135,11 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
                 style={resolvedStyles.positioner}
                 {...item.positionerProps}
               >
-                <PopoverPopup className={resolvedClassNames.popup} {...item.popupProps}>
+                <PopoverPopup
+                  className={resolvedClassNames.popup}
+                  data-layout-animation={contentLayoutAnimation || undefined}
+                  {...item.popupProps}
+                >
                   {arrow && (
                     <PopoverArrow className={resolvedClassNames.arrow} style={resolvedStyles.arrow}>
                       {PopoverArrowIcon}

@@ -4,6 +4,7 @@ import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import { cx } from 'antd-style';
 import { type FC, useCallback, useRef, useState } from 'react';
 
+import { useFloatingLayer } from '@/hooks/useFloatingLayer';
 import {
   useDestroyOnInvalidActiveTriggerElement,
   useHidePopupWhenPositionerAtOrigin,
@@ -46,7 +47,9 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
     activeItemRef.current?.onOpenChange?.(open);
   }, []);
 
-  const portalContainer = useTooltipPortalContainer();
+  const defaultPortalContainer = useTooltipPortalContainer();
+  const floatingLayerContainer = useFloatingLayer();
+  const portalContainer = floatingLayerContainer ?? defaultPortalContainer;
 
   useDestroyOnInvalidActiveTriggerElement(handle.store, destroy, {
     enabled: !disableDestroyOnInvalidTrigger,
@@ -95,7 +98,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
                 ...resolvedStyleProps?.container,
               },
               positioner: {
-                zIndex: item.zIndex ?? 1100,
+                zIndex: item.zIndex ?? 114_514,
               },
               viewport: resolvedStyleProps?.content,
             };

@@ -1,5 +1,6 @@
-import { Button, Popover, type PopoverProps } from '@lobehub/ui';
+import { Button, Flexbox, Popover, type PopoverProps, Tag } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
+import { Sliders } from 'lucide-react';
 
 export default () => {
   const store = useCreateStore();
@@ -36,9 +37,21 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Popover {...control}>
-        <Button type="primary">Hover me</Button>
-      </Popover>
+      <Flexbox align="center" gap={16}>
+        <Flexbox align="center" gap={12} horizontal>
+          <Sliders size={20} style={{ color: 'var(--lobe-color-primary)' }} />
+          <div style={{ fontSize: 15, fontWeight: 600 }}>Interactive Playground</div>
+          <Tag color="blue">Customizable</Tag>
+        </Flexbox>
+        <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 13 }}>
+          Use the controls panel on the right to customize the popover properties
+        </div>
+        <Popover {...control}>
+          <Button icon={<Sliders size={16} />} size="large" type="primary">
+            {control.trigger === 'hover' ? 'Hover me' : 'Click me'}
+          </Button>
+        </Popover>
+      </Flexbox>
     </StoryBook>
   );
 };

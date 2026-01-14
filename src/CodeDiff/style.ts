@@ -81,11 +81,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       background: ${cssVar.colorFillQuaternary};
     `,
     outlined: lobeStaticStylish.variantOutlinedWithoutHover,
-    stats: css`
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    `,
     root: cx(
       prefix,
       css`
@@ -105,6 +100,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         }
       `,
     ),
+    stats: css`
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    `,
   };
 });
 

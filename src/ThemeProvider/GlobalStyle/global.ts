@@ -2,6 +2,8 @@ import { Theme, css } from 'antd-style';
 
 import { CLASSNAMES } from '@/styles/classNames';
 
+import { LOBE_THEME_APP_ID } from '../constants';
+
 export default (token: Theme) => css`
   :root {
     --font-settings: 'cv01', 'tnum', 'kern';
@@ -61,6 +63,10 @@ export default (token: Theme) => css`
     scrollbar-width: thin;
     box-sizing: border-box;
     vertical-align: baseline;
+  }
+  #${LOBE_THEME_APP_ID} {
+    /* https://base-ui.com/react/overview/quick-start#set-up-portals */
+    isolation: isolate;
   }
   @layer lobe-popup {
     .${CLASSNAMES.ContextTrigger}[data-popup-open],

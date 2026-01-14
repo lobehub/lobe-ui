@@ -59,6 +59,12 @@ Popover provides an internal context so that content can close the current popov
 
 <code src="./demos/inset-panel.tsx" nopadding></code>
 
+## Tooltip Inside Popover
+
+When using Tooltip inside Popover, the Tooltip will automatically render into the Popover's container to avoid z-index stacking issues.
+
+<code src="./demos/tooltip-inside.tsx" nopadding></code>
+
 ## APIs
 
 ### Popover
@@ -88,7 +94,7 @@ Popover provides an internal context so that content can close the current popov
 | styles            | Custom styles for root/content/arrow                               | `{ root?: CSSProperties; content?: CSSProperties; arrow?: CSSProperties }`                                                                                       | -         |
 | classNames        | Custom class names for root/content/arrow/trigger                  | `{ root?: string; content?: string; arrow?: string; trigger?: string }`                                                                                          | -         |
 | className         | Class name for the popup container                                 | `string`                                                                                                                                                         | -         |
-| zIndex            | z-index of the popover                                             | `number`                                                                                                                                                         | `1100`    |
+| zIndex            | z-index of the popover                                             | `number`                                                                                                                                                         | `114514`  |
 
 Popover is built on top of `@base-ui/react/popover`. It provides an Ant Design compatible API for easy migration.
 

@@ -58,9 +58,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     position: relative;
     transform-origin: var(--transform-origin);
 
-    width: var(--popup-width, auto);
     min-width: 120px;
-    height: var(--popup-height, auto);
+    max-width: var(--available-width);
     border-radius: ${cssVar.borderRadius};
 
     color: ${cssVar.colorText};
@@ -74,7 +73,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     transition-timing-function: var(--lobe-popover-animation-ease-out);
     transition-duration: var(--lobe-popover-animation-duration);
-    transition-property: width, height, opacity, transform;
+    transition-property: opacity, transform;
+
+    &[data-layout-animation] {
+      transition-property: opacity, transform, width, height;
+    }
 
     &[data-starting-style],
     &[data-ending-style] {
@@ -105,14 +108,17 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     z-index: 1100;
 
-    width: var(--positioner-width);
-    max-width: var(--available-width);
+    width: min(var(--positioner-width), var(--available-width));
     height: var(--positioner-height);
 
     transition-timing-function: var(--lobe-popover-animation-ease-out);
     transition-duration: var(--lobe-popover-animation-duration);
-    transition-property:
-      inset-block-start, inset-inline-start, inset-inline-end, inset-block-end, transform;
+    transition-property: none;
+
+    &[data-layout-animation] {
+      transition-property:
+        inset-block-start, inset-inline-start, inset-inline-end, inset-block-end, transform;
+    }
 
     &[data-instant] {
       transition: none;
@@ -167,20 +173,24 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     overflow: clip;
 
-    width: 100%;
-    height: 100%;
+    max-width: var(--available-width);
     padding-block: 12px;
     padding-inline: var(--lobe-popover-viewport-inline-padding);
 
     [data-previous],
     [data-current] {
       transform: translateX(0);
-      width: calc(var(--popup-width) - 2 * var(--lobe-popover-viewport-inline-padding));
       opacity: 1;
       transition:
         transform var(--lobe-popover-animation-duration) var(--lobe-popover-animation-ease-out),
         opacity calc(var(--lobe-popover-animation-duration) / 2)
           var(--lobe-popover-animation-ease-out);
+    }
+
+    [data-previous] {
+      position: absolute;
+      inset-block-start: 12px;
+      inset-inline-start: var(--lobe-popover-viewport-inline-padding);
     }
 
     &[data-activation-direction~='right'] [data-previous][data-ending-style] {

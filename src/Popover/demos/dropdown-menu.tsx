@@ -1,29 +1,50 @@
-import { ActionIcon, Button, DropdownMenu, Flexbox, Popover } from '@lobehub/ui';
-import { MoreHorizontal } from 'lucide-react';
+import { ActionIcon, Button, DropdownMenu, Flexbox, Popover, Tag } from '@lobehub/ui';
+import { Folder, MoreHorizontal } from 'lucide-react';
 
 import { items } from '@/DropdownMenu/demos/data';
 
 export default () => {
   return (
-    <Popover
-      arrow={false}
-      content={
-        <Flexbox gap={12} style={{ width: 260 }}>
-          <Flexbox align="center" horizontal justify="space-between">
-            <div style={{ fontWeight: 600 }}>Project actions</div>
-            <DropdownMenu items={items} placement="bottomRight">
-              <ActionIcon icon={MoreHorizontal} />
-            </DropdownMenu>
+    <Flexbox align="center" justify="center" style={{ padding: 48 }}>
+      <Popover
+        arrow={false}
+        content={
+          <Flexbox gap={16} style={{ padding: '12px 16px', width: 300 }}>
+            <Flexbox align="center" horizontal justify="space-between">
+              <Flexbox align="center" gap={8} horizontal>
+                <Folder size={18} style={{ color: 'var(--lobe-color-primary)' }} />
+                <div style={{ fontSize: 15, fontWeight: 600 }}>Project Actions</div>
+              </Flexbox>
+              <DropdownMenu items={items} placement="bottomRight">
+                <ActionIcon icon={MoreHorizontal} size="small" />
+              </DropdownMenu>
+            </Flexbox>
+            <Flexbox
+              gap={8}
+              style={{
+                background: 'var(--lobe-color-fill-tertiary)',
+                borderRadius: 8,
+                padding: 12,
+              }}
+            >
+              <Flexbox align="center" gap={6} horizontal>
+                <Tag color="purple">Tip</Tag>
+                <div style={{ fontSize: 13, fontWeight: 500 }}>Nested Components</div>
+              </Flexbox>
+              <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12, lineHeight: 1.6 }}>
+                Click the action button to open a dropdown menu from within a popover. Components
+                compose seamlessly.
+              </div>
+            </Flexbox>
           </Flexbox>
-          <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12 }}>
-            Use the action button to manage the project from inside a popover.
-          </div>
-        </Flexbox>
-      }
-      placement="bottomLeft"
-      trigger="click"
-    >
-      <Button>Open Popover</Button>
-    </Popover>
+        }
+        placement="bottomLeft"
+        trigger="click"
+      >
+        <Button icon={<Folder size={16} />} size="large" type="primary">
+          Open Project Panel
+        </Button>
+      </Popover>
+    </Flexbox>
   );
 };

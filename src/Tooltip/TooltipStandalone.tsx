@@ -6,6 +6,7 @@ import { cx } from 'antd-style';
 import { cloneElement, isValidElement, memo, useCallback, useMemo, useState } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
+import { useFloatingLayer } from '@/hooks/useFloatingLayer';
 import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { placementMap } from '@/utils/placement';
@@ -82,7 +83,9 @@ export const TooltipStandalone = memo<TooltipProps>(
     const placementConfig = placementMap[placement] ?? placementMap.top;
     const baseSideOffset = arrow ? 8 : 6;
 
-    const portalContainer = useTooltipPortalContainer();
+    const defaultPortalContainer = useTooltipPortalContainer();
+    const floatingLayerContainer = useFloatingLayer();
+    const portalContainer = floatingLayerContainer ?? defaultPortalContainer;
 
     const { isNativeButtonTriggerElement } = useNativeButton({
       children,
@@ -111,7 +114,7 @@ export const TooltipStandalone = memo<TooltipProps>(
           ...resolvedStyleProps?.container,
         },
         positioner: {
-          zIndex: zIndex ?? 1100,
+          zIndex: zIndex ?? 114_514,
         },
         viewport: resolvedStyleProps?.content,
       }),

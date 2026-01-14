@@ -1,17 +1,72 @@
-import { Button, Flexbox, Popover } from '@lobehub/ui';
+import { Button, Flexbox, Popover, Tag } from '@lobehub/ui';
+import { ArrowUpRight, Frame, X } from 'lucide-react';
 
 export default () => {
   return (
-    <Flexbox align="center" gap={24} horizontal justify="center" style={{ padding: 24 }}>
-      <Popover content="Normal popover with arrow" placement="bottom">
-        <Button>Normal</Button>
-      </Popover>
-      <Popover arrow={false} content="Popover without arrow" placement="bottom">
-        <Button>No Arrow</Button>
-      </Popover>
-      <Popover content="Inset popover renders inside trigger" inset placement="bottom">
-        <Button type="primary">Inset</Button>
-      </Popover>
+    <Flexbox align="center" gap={32} horizontal justify="center" style={{ padding: 48 }}>
+      <Flexbox align="center" gap={12}>
+        <Popover
+          content={
+            <Flexbox gap={8} style={{ padding: '8px 12px' }}>
+              <Flexbox align="center" gap={6} horizontal>
+                <ArrowUpRight size={16} style={{ color: 'var(--lobe-color-primary)' }} />
+                <div style={{ fontSize: 14, fontWeight: 600 }}>Normal Popover</div>
+              </Flexbox>
+              <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 13, lineHeight: 1.6 }}>
+                Standard popover with arrow indicator
+              </div>
+            </Flexbox>
+          }
+          placement="bottom"
+        >
+          <Button size="large">With Arrow</Button>
+        </Popover>
+        <Tag color="blue">Default</Tag>
+      </Flexbox>
+
+      <Flexbox align="center" gap={12}>
+        <Popover
+          arrow={false}
+          content={
+            <Flexbox gap={8} style={{ padding: '8px 12px' }}>
+              <Flexbox align="center" gap={6} horizontal>
+                <X size={16} style={{ color: 'var(--lobe-color-text-2)' }} />
+                <div style={{ fontSize: 14, fontWeight: 600 }}>No Arrow</div>
+              </Flexbox>
+              <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 13, lineHeight: 1.6 }}>
+                Clean popover without arrow
+              </div>
+            </Flexbox>
+          }
+          placement="bottom"
+        >
+          <Button size="large">No Arrow</Button>
+        </Popover>
+        <Tag color="gray">Minimal</Tag>
+      </Flexbox>
+
+      <Flexbox align="center" gap={12}>
+        <Popover
+          content={
+            <Flexbox gap={8} style={{ padding: '8px 12px' }}>
+              <Flexbox align="center" gap={6} horizontal>
+                <Frame size={16} style={{ color: 'var(--lobe-color-success)' }} />
+                <div style={{ fontSize: 14, fontWeight: 600 }}>Inset Mode</div>
+              </Flexbox>
+              <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 13, lineHeight: 1.6 }}>
+                Popover renders inside trigger bounds
+              </div>
+            </Flexbox>
+          }
+          inset
+          placement="bottom"
+        >
+          <Button size="large" type="primary">
+            Inset
+          </Button>
+        </Popover>
+        <Tag color="purple">Special</Tag>
+      </Flexbox>
     </Flexbox>
   );
 };

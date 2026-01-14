@@ -3,9 +3,10 @@
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { cx } from 'antd-style';
-import { type ComponentProps, cloneElement, forwardRef, isValidElement } from 'react';
+import { type ComponentProps, cloneElement, forwardRef, isValidElement, useState } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
+import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { placementMap } from '@/utils/placement';
 
@@ -114,6 +115,7 @@ export type PopoverPositionerAtomProps = ComponentProps<typeof BasePopover.Posit
 };
 
 export const PopoverPositioner = ({
+  children,
   className,
   hoverTrigger,
   placement,
@@ -123,6 +125,7 @@ export const PopoverPositioner = ({
   ...rest
 }: PopoverPositionerAtomProps) => {
   const placementConfig = placement ? placementMap[placement] : undefined;
+  const [positionerNode, setPositionerNode] = useState<HTMLDivElement | null>(null);
 
   return (
     <BasePopover.Positioner
@@ -132,10 +135,13 @@ export const PopoverPositioner = ({
       }
       data-hover-trigger={hoverTrigger || undefined}
       data-placement={placement}
+      ref={setPositionerNode}
       side={side ?? placementConfig?.side ?? 'bottom'}
       sideOffset={sideOffset ?? 6}
       {...rest}
-    />
+    >
+      <FloatingLayerProvider value={positionerNode}>{children}</FloatingLayerProvider>
+    </BasePopover.Positioner>
   );
 };
 
