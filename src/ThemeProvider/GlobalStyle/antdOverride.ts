@@ -26,22 +26,45 @@ export default (token: Theme) => {
       }
     }
 
-    .${token.prefixCls}-tooltip-arrow::before,
-      .${token.prefixCls}-tooltip-arrow::after,
-      .${token.prefixCls}-tooltip-container {
-      color: ${token.colorBgLayout} !important;
-      background: ${token.colorText} !important;
+    .${token.prefixCls}-tooltip {
+      --antd-arrow-background-color: ${token.colorBgElevated};
+
+      max-width: 320px;
+    }
+
+    .${token.prefixCls}-tooltip-arrow::before {
+      background: ${token.colorBgElevated} !important;
+    }
+
+    .${token.prefixCls}-tooltip-arrow::after {
+      box-shadow: 0 0 0 1px ${token.colorBorderSecondary} !important;
     }
 
     .${token.prefixCls}-tooltip-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      user-select: none;
 
+      display: flex;
+      gap: 6px;
+      align-items: center;
+
+      min-width: unset;
       min-height: unset;
       padding-block: 4px;
       padding-inline: 8px;
+      border: 1px solid ${token.colorBorderSecondary} !important;
       border-radius: ${token.borderRadiusSM}px !important;
+
+      font-size: ${token.fontSizeSM}px;
+      line-height: 1.2;
+      color: ${token.colorTextSecondary} !important;
+      word-break: break-word;
+      white-space: normal;
+
+      background: ${token.colorBgElevated} !important;
+      box-shadow:
+        0 1px 2px 0 rgba(0, 0, 0, 3%),
+        0 1px 6px -1px rgba(0, 0, 0, 2%),
+        0 2px 4px 0 rgba(0, 0, 0, 2%) !important;
     }
 
     .${token.prefixCls}-switch-handle::before {
