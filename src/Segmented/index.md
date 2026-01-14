@@ -8,4 +8,8 @@ title: Segmented
 
 <code src="./demos/index.tsx" nopadding></code>
 
+## Tooltip
+
+<code src="./demos/tooltip.tsx" nopadding></code>
+
 ## APIs

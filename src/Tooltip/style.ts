@@ -92,14 +92,16 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   positioner: css`
-    --lobe-tooltip-animation-duration: 120ms;
-    --lobe-tooltip-animation-duration-exit: 80ms;
-    --lobe-tooltip-animation-translate: 4px;
-    --lobe-tooltip-animation-scale: 0.96;
+    --lobe-tooltip-animation-duration: 100ms;
+    --lobe-tooltip-animation-duration-exit: 60ms;
+    --lobe-tooltip-animation-translate: 2px;
+    --lobe-tooltip-animation-scale: 0.98;
     --lobe-tooltip-animation-ease-in: ease-in;
     --lobe-tooltip-animation-ease-out: ${cssVar.motionEaseOut};
     --lobe-tooltip-translate-x: 0;
     --lobe-tooltip-translate-y: calc(var(--lobe-tooltip-animation-translate) * -1);
+
+    will-change: transform, opacity;
 
     z-index: 114514;
 

@@ -2,7 +2,7 @@ import { Button, Flexbox, Popover, PopoverGroup, Tag } from '@lobehub/ui';
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from 'lucide-react';
 
 const content = (placement: string, icon: React.ReactNode) => (
-  <Flexbox gap={8} style={{ padding: '8px 12px', minWidth: 180 }}>
+  <Flexbox gap={8} style={{ minWidth: 180, padding: '8px 12px' }}>
     <Flexbox align="center" gap={6} horizontal>
       {icon}
       <div style={{ fontSize: 13, fontWeight: 600 }}>Placement</div>
@@ -11,8 +11,8 @@ const content = (placement: string, icon: React.ReactNode) => (
       style={{
         background: 'var(--lobe-color-fill-tertiary)',
         borderRadius: 6,
-        fontSize: 12,
         fontFamily: 'monospace',
+        fontSize: 12,
         padding: '6px 10px',
       }}
     >

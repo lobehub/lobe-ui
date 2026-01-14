@@ -1,5 +1,5 @@
 import { Button, Flexbox, Popover, Tag, usePopoverContext } from '@lobehub/ui';
-import { Check, Code2, X } from 'lucide-react';
+import { Check, Code2 } from 'lucide-react';
 
 const Content = () => {
   const { close } = usePopoverContext();
@@ -37,12 +37,14 @@ const Content = () => {
         style={{
           background: 'var(--lobe-color-fill-tertiary)',
           borderRadius: 8,
-          fontSize: 12,
           fontFamily: 'monospace',
+          fontSize: 12,
           padding: 12,
         }}
       >
-        <div style={{ color: 'var(--lobe-color-text-3)' }}>const {'{ close }'} = usePopoverContext();</div>
+        <div style={{ color: 'var(--lobe-color-text-3)' }}>
+          const {'{ close }'} = usePopoverContext();
+        </div>
       </Flexbox>
 
       <Flexbox gap={8} horizontal justify="flex-end">

@@ -43,8 +43,8 @@ export default () => {
                     style={{
                       background: 'var(--lobe-color-fill-tertiary)',
                       borderRadius: 6,
-                      fontSize: 12,
                       fontFamily: 'monospace',
+                      fontSize: 12,
                       padding: 8,
                     }}
                   >
