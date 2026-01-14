@@ -2,6 +2,34 @@
 
 # Changelog
 
+## [Version 4.19.0](https://github.com/lobehub/lobe-ui/compare/v4.18.1...v4.19.0)
+
+<sup>Released on **2026-01-14**</sup>
+
+#### ✨ Features
+
+- **misc**: Add switch item support to ContextMenu and DropdownMenu, Enhance Popover and Tooltip components with new features and improved styles, Update Popover and Tooltip styles for improved consistency and functionality, Update Tooltip and Popover styles for improved consistency and functionality.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add switch item support to ContextMenu and DropdownMenu ([112ed6a](https://github.com/lobehub/lobe-ui/commit/112ed6a))
+- **misc**: Enhance Popover and Tooltip components with new features and improved styles ([fd7e885](https://github.com/lobehub/lobe-ui/commit/fd7e885))
+- **misc**: Update Popover and Tooltip styles for improved consistency and functionality ([cfdc9de](https://github.com/lobehub/lobe-ui/commit/cfdc9de))
+- **misc**: Update Tooltip and Popover styles for improved consistency and functionality ([c853222](https://github.com/lobehub/lobe-ui/commit/c853222))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.18.1](https://github.com/lobehub/lobe-ui/compare/v4.18.0...v4.18.1)
 
 <sup>Released on **2026-01-13**</sup>
