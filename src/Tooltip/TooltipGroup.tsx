@@ -125,6 +125,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
               <BaseTooltip.Positioner
                 align={placementConfig.align}
                 className={resolvedClassNames.positioner}
+                data-layout-animation={layoutAnimation || undefined}
                 data-placement={placement}
                 side={placementConfig.side}
                 sideOffset={baseSideOffset}
@@ -133,6 +134,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
               >
                 <BaseTooltip.Popup
                   className={resolvedClassNames.popup}
+                  data-layout-animation={layoutAnimation || undefined}
                   style={resolvedStyles.popup}
                   {...item.popupProps}
                 >

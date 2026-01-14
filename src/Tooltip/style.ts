@@ -19,11 +19,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       display: block;
       width: 100%;
       height: 100%;
-      fill: ${cssVar.colorText};
+      fill: ${cssVar.colorBgElevated};
     }
 
     & [data-role='stroke'] {
-      stroke: none;
+      stroke: ${cssVar.colorBorderSecondary};
     }
 
     &[data-side='top'] {
@@ -53,17 +53,26 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     transform-origin: var(--transform-origin);
 
     max-width: min(320px, var(--available-width));
+    border: 1px solid ${cssVar.colorBorderSecondary};
     border-radius: ${cssVar.borderRadiusSM};
 
-    font-size: 12px;
+    font-size: ${cssVar.fontSizeSM};
     line-height: 1.2;
-    color: ${cssVar.colorBgLayout};
+    color: ${cssVar.colorTextSecondary};
 
-    background: ${cssVar.colorText};
+    background: ${cssVar.colorBgElevated};
+    box-shadow:
+      0 1px 2px 0 rgba(0, 0, 0, 3%),
+      0 1px 6px -1px rgba(0, 0, 0, 2%),
+      0 2px 4px 0 rgba(0, 0, 0, 2%);
 
     transition-timing-function: var(--lobe-tooltip-animation-ease-out);
     transition-duration: var(--lobe-tooltip-animation-duration);
-    transition-property: opacity, transform;
+    transition-property: opacity;
+
+    &[data-layout-animation] {
+      transition-property: opacity, transform, width, height;
+    }
 
     &[data-starting-style],
     &[data-ending-style] {
@@ -92,16 +101,19 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     --lobe-tooltip-translate-x: 0;
     --lobe-tooltip-translate-y: calc(var(--lobe-tooltip-animation-translate) * -1);
 
-    z-index: 1100;
+    z-index: 114514;
 
-    width: var(--positioner-width);
-    max-width: var(--available-width);
+    width: min(var(--positioner-width), 320px, var(--available-width));
     height: var(--positioner-height);
 
     transition-timing-function: var(--lobe-tooltip-animation-ease-out);
     transition-duration: var(--lobe-tooltip-animation-duration);
-    transition-property:
-      inset-block-start, inset-inline-start, inset-inline-end, inset-block-end, transform;
+    transition-property: none;
+
+    &[data-layout-animation] {
+      transition-property:
+        inset-block-start, inset-inline-start, inset-inline-end, inset-block-end, transform;
+    }
 
     &[data-instant] {
       transition: none;
@@ -153,7 +165,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     gap: 6px;
     align-items: center;
 
-    max-width: min(320px, var(--available-width));
+    max-width: var(--available-width);
     padding-block: 4px;
     padding-inline: var(--lobe-tooltip-viewport-inline-padding);
 
@@ -174,6 +186,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
         transform var(--lobe-tooltip-animation-duration) var(--lobe-tooltip-animation-ease-out),
         opacity calc(var(--lobe-tooltip-animation-duration) / 2)
           var(--lobe-tooltip-animation-ease-out);
+    }
+
+    [data-previous] {
+      position: absolute;
+      inset-block-start: 4px;
+      inset-inline-start: var(--lobe-tooltip-viewport-inline-padding);
     }
 
     &[data-activation-direction~='right'] [data-previous][data-ending-style] {

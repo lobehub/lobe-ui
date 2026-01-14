@@ -14,7 +14,6 @@ const TooltipContent = memo<TooltipContentProps>(({ title, hotkey, hotkeyProps }
   const resolvedHotkeyProps = useMemo(
     () => ({
       compact: true,
-      inverseTheme: true,
       ...hotkeyProps,
     }),
     [hotkeyProps],
