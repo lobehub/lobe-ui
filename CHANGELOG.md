@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.20.1](https://github.com/lobehub/lobe-ui/compare/v4.20.0...v4.20.1)
+
+<sup>Released on **2026-01-15**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Update Tooltip styles for improved visual consistency.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Update Tooltip styles for improved visual consistency ([e3df88c](https://github.com/lobehub/lobe-ui/commit/e3df88c))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.20.0](https://github.com/lobehub/lobe-ui/compare/v4.19.1...v4.20.0)
 
 <sup>Released on **2026-01-15**</sup>
