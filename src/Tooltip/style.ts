@@ -53,12 +53,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     transform-origin: var(--transform-origin);
 
     max-width: min(320px, var(--available-width));
-    border: 1px solid ${cssVar.colorBorderSecondary};
+    border: 1px solid ${cssVar.colorFill};
     border-radius: ${cssVar.borderRadiusSM};
 
     font-size: ${cssVar.fontSizeSM};
     line-height: 1.2;
-    color: ${cssVar.colorTextSecondary};
+    color: ${cssVar.colorTextLabel};
 
     background: ${cssVar.colorBgElevated};
     box-shadow:
