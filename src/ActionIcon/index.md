@@ -37,6 +37,12 @@ ActionIcon supports multiple style variants, including default, filled, outlined
 
 <code src="./demos/Variant.tsx" center></code>
 
+## With DropdownMenu
+
+Use ActionIcon as a dropdown trigger for compact action menus.
+
+<code src="./demos/DropdownMenu.tsx" center></code>
+
 ## APIs
 
 ### ActionIcon

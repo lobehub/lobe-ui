@@ -301,6 +301,19 @@ export {
 } from './ThemeProvider';
 export { LOBE_THEME_APP_ID } from './ThemeProvider/constants';
 export { default as ThemeSwitch, type ThemeSwitchProps } from './ThemeSwitch';
+export {
+  toast,
+  type ToastAPI,
+  ToastHost,
+  type ToastHostProps,
+  type ToastInstance,
+  type ToastOptions,
+  type ToastPosition,
+  type ToastPromiseOptions,
+  type ToastProps,
+  type ToastType,
+  useToast,
+} from './Toast';
 export { default as Toc, type TocProps } from './Toc';
 export { default as Tooltip, TooltipGroup, type TooltipProps } from './Tooltip';
 export type * from './types';
