@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 4.20.0](https://github.com/lobehub/lobe-ui/compare/v4.19.1...v4.20.0)
+
+<sup>Released on **2026-01-15**</sup>
+
+#### ✨ Features
+
+- **misc**: Introduce Toast component for notifications.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Introduce Toast component for notifications ([9f52045](https://github.com/lobehub/lobe-ui/commit/9f52045))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.19.1](https://github.com/lobehub/lobe-ui/compare/v4.19.0...v4.19.1)
 
 <sup>Released on **2026-01-14**</sup>
