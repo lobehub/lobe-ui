@@ -128,8 +128,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     background: ${cssVar.colorBgElevated};
     outline: none;
     box-shadow:
-      0 0 15px 0 #00000008,
-      0 2px 30px 0 #00000014,
+      0 0 15px 0 color-mix(in srgb, ${cssVar.colorBgSolid} 8%, transparent),
+      0 2px 30px 0 color-mix(in srgb, ${cssVar.colorBgSolid} 6%, transparent),
       0 0 0 1px ${cssVar.colorBorder} inset;
   `,
   positioner: css`
