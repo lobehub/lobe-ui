@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.21.1](https://github.com/lobehub/lobe-ui/compare/v4.21.0...v4.21.1)
+
+<sup>Released on **2026-01-16**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Refine box-shadow properties in Menu and Popover components for enhanced visual effects.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Refine box-shadow properties in Menu and Popover components for enhanced visual effects ([0d885eb](https://github.com/lobehub/lobe-ui/commit/0d885eb))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.21.0](https://github.com/lobehub/lobe-ui/compare/v4.20.1...v4.21.0)
 
 <sup>Released on **2026-01-16**</sup>
