@@ -15,6 +15,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     overflow: hidden;
     padding: 0;
   `,
+  positioner: css`
+    width: fit-content !important;
+  `,
   root: css`
     position: relative;
     transition: background 150ms ${cssVar.motionEaseOut};

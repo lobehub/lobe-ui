@@ -197,6 +197,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
         className={cx(styles.popover)}
         classNames={{
           content: styles.popover,
+          root: styles.positioner,
         }}
         content={content}
         defaultOpen={defaultOpen}
