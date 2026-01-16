@@ -123,9 +123,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     background: ${cssVar.colorBgElevated};
     background-clip: padding-box;
     box-shadow:
-      0 0 15px 0 #00000008,
-      0 2px 30px 0 #00000014,
-      0 0 0 1px ${cssVar.colorBorder} inset;
+      0 0 0 1px color-mix(in srgb, ${cssVar.colorBgSolid} 3%, transparent),
+      0 1px 1px -0.5px color-mix(in srgb, ${cssVar.colorBgSolid} 3%, transparent),
+      0 3px 3px -1.5px color-mix(in srgb, ${cssVar.colorBgSolid} 3%, transparent),
+      0 6px 6px -3px color-mix(in srgb, ${cssVar.colorBgSolid} 3%, transparent),
+      0 12px 12px -6px color-mix(in srgb, ${cssVar.colorBgSolid} 3%, transparent),
+      0 24px 24px -12px color-mix(in srgb, ${cssVar.colorBgSolid} 3%, transparent);
 
     transition:
       transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
