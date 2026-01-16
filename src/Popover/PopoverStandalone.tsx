@@ -5,6 +5,7 @@ import { memo, useCallback, useMemo, useState } from 'react';
 
 import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
+import { parseTrigger } from '@/utils/parseTrigger';
 import { type Side, placementMap } from '@/utils/placement';
 
 import { PopoverArrowIcon } from './ArrowIcon';
@@ -19,7 +20,6 @@ import {
   PopoverViewport,
 } from './atoms';
 import { PopoverProvider } from './context';
-import { parseTrigger } from './parseTrigger';
 import type { PopoverProps } from './type';
 
 /**

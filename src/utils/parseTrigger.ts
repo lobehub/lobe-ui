@@ -1,11 +1,11 @@
 'use client';
 
-import type { PopoverTrigger } from './type';
+import type { Trigger } from '@/types';
 
 /**
  * Parses trigger prop to determine hover and click behavior
  */
-export function parseTrigger(trigger: PopoverTrigger): {
+export function parseTrigger(trigger: Trigger): {
   openOnClick: boolean;
   openOnHover: boolean;
 } {

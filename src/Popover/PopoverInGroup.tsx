@@ -7,9 +7,9 @@ import { type FC, cloneElement, isValidElement, useContext, useMemo } from 'reac
 import { mergeRefs } from 'react-merge-refs';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
+import { parseTrigger } from '@/utils/parseTrigger';
 
 import { PopoverGroupHandleContext } from './groupContext';
-import { parseTrigger } from './parseTrigger';
 import type { PopoverProps } from './type';
 import { useMergedPopoverProps } from './useMergedPopoverProps';
 

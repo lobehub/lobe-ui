@@ -7,6 +7,7 @@ import {
   useDestroyOnInvalidActiveTriggerElement,
   useHidePopupWhenPositionerAtOrigin,
 } from '@/utils/destroyOnInvalidActiveTriggerElement';
+import { parseTrigger } from '@/utils/parseTrigger';
 import { type Side, placementMap } from '@/utils/placement';
 
 import { PopoverArrowIcon } from './ArrowIcon';
@@ -25,7 +26,6 @@ import {
   PopoverGroupPropsContext,
   type PopoverGroupSharedProps,
 } from './groupContext';
-import { parseTrigger } from './parseTrigger';
 
 type PopoverGroupProps = PopoverGroupSharedProps & {
   children: ReactNode;

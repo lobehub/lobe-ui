@@ -7,11 +7,12 @@ import type {
 } from '@base-ui/react/popover';
 import type { CSSProperties, ReactElement, ReactNode, Ref } from 'react';
 
+import type { Trigger } from '@/types';
 import type { Placement } from '@/utils/placement';
 
 export type PopoverPlacement = Placement;
 
-export type PopoverTrigger = 'hover' | 'click' | 'both' | ('hover' | 'click')[];
+export type PopoverTrigger = Trigger;
 
 /**
  * Base UI Positioner props that can be passed through
@@ -184,7 +185,7 @@ export interface PopoverProps {
    * 触发方式
    * @default 'hover'
    */
-  trigger?: PopoverTrigger;
+  trigger?: Trigger;
 
   /**
    * Base UI Trigger 组件的 props

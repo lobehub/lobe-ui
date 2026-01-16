@@ -2,6 +2,7 @@ import { AnchorHTMLAttributes, type HTMLAttributes } from 'react';
 
 export * from './customStylish';
 export * from './customToken';
+export * from './trigger';
 
 export type DivProps = HTMLAttributes<HTMLDivElement>;
 

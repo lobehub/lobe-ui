@@ -8,6 +8,7 @@ import type {
 import type { ReactNode } from 'react';
 
 import type { BaseMenuItemType, MenuCheckboxItemType, MenuSwitchItemType } from '@/Menu';
+import type { Trigger } from '@/types';
 import type { Placement } from '@/utils/placement';
 
 export type DropdownMenuPlacement = Placement;
@@ -29,5 +30,10 @@ export interface DropdownMenuProps<Payload = unknown> extends Omit<
   popupProps?: MenuPopupProps;
   portalProps?: MenuPortalProps;
   positionerProps?: MenuPositionerProps;
+  /**
+   * 触发方式
+   * @default 'click'
+   */
+  trigger?: Trigger;
   triggerProps?: Omit<MenuTriggerProps<Payload>, 'children'>;
 }

@@ -4,6 +4,7 @@ import { Menu } from '@base-ui/react/menu';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
+import { parseTrigger } from '@/utils/parseTrigger';
 
 import {
   DropdownMenuPopup,
@@ -28,10 +29,13 @@ const DropdownMenu = memo<DropdownMenuProps>(
     popupProps,
     portalProps,
     positionerProps,
+    trigger = 'click',
     triggerProps,
     ...rest
   }) => {
     const [uncontrolledOpen, setUncontrolledOpen] = useState(Boolean(defaultOpen));
+
+    const { openOnHover } = useMemo(() => parseTrigger(trigger), [trigger]);
 
     useEffect(() => {
       if (open === undefined) return;
@@ -68,7 +72,6 @@ const DropdownMenu = memo<DropdownMenuProps>(
       },
       [onOpenChangeComplete],
     );
-    const hoverTrigger = Boolean((triggerProps as any)?.openOnHover);
     const { container: portalContainer, ...restPortalProps } = (portalProps ?? {}) as any;
 
     const { resolvedNativeButton } = useNativeButton({
@@ -77,8 +80,12 @@ const DropdownMenu = memo<DropdownMenuProps>(
       triggerNativeButton: triggerProps?.nativeButton,
     });
 
-    const trigger = (
-      <DropdownMenuTrigger {...triggerProps} nativeButton={resolvedNativeButton}>
+    const triggerElement = (
+      <DropdownMenuTrigger
+        {...triggerProps}
+        nativeButton={resolvedNativeButton}
+        openOnHover={openOnHover}
+      >
         {children}
       </DropdownMenuTrigger>
     );
@@ -91,11 +98,11 @@ const DropdownMenu = memo<DropdownMenuProps>(
         onOpenChangeComplete={handleOpenChangeComplete}
         open={open}
       >
-        {trigger}
+        {triggerElement}
         <DropdownMenuPortal container={portalContainer} {...restPortalProps}>
           <DropdownMenuPositioner
             {...positionerProps}
-            hoverTrigger={hoverTrigger}
+            hoverTrigger={openOnHover}
             placement={placement}
           >
             <DropdownMenuPopup {...popupProps}>{menuItems}</DropdownMenuPopup>

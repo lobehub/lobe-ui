@@ -7,7 +7,7 @@ import { PopoverStandalone } from './PopoverStandalone';
 import { PopoverGroupHandleContext } from './groupContext';
 import type { PopoverProps } from './type';
 
-export { parseTrigger } from './parseTrigger';
+export { parseTrigger } from '@/utils/parseTrigger';
 
 const Popover: FC<PopoverProps> = (props) => {
   const group = useContext(PopoverGroupHandleContext);
