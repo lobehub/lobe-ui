@@ -13,6 +13,40 @@ const mockApiCall = (shouldSucceed: boolean, delay: number = 2000) =>
     }, delay);
   });
 
+const handleMultiplePromises = async () => {
+  const promises = [mockApiCall(true, 1500), mockApiCall(true, 2000), mockApiCall(true, 2500)];
+
+  promises.forEach((promise, index) => {
+    toast.promise(promise, {
+      error: 'Request failed',
+      loading: `Loading task ${index + 1}...`,
+      success: `Task ${index + 1} completed!`,
+    });
+  });
+};
+
+const handleLongRunningTask = () => {
+  toast.promise(mockApiCall(true, 4000), {
+    error: {
+      description: 'The operation took too long and failed',
+      title: 'Timeout Error',
+    },
+    loading: {
+      description: 'This might take a while...',
+      title: 'Processing Large File',
+    },
+    success: {
+      description: 'All data has been successfully processed',
+      title: 'Process Complete',
+    },
+  });
+};
+
+const fetchData = async () => {
+  await mockApiCall(true, 2000);
+  return { count: 42, items: ['Item 1', 'Item 2', 'Item 3'] };
+};
+
 export default () => {
   const store = useCreateStore();
   const options = useControls(
@@ -60,35 +94,6 @@ export default () => {
       });
   };
 
-  const handleMultiplePromises = async () => {
-    const promises = [mockApiCall(true, 1500), mockApiCall(true, 2000), mockApiCall(true, 2500)];
-
-    promises.forEach((promise, index) => {
-      toast.promise(promise, {
-        error: 'Request failed',
-        loading: `Loading task ${index + 1}...`,
-        success: `Task ${index + 1} completed!`,
-      });
-    });
-  };
-
-  const handleLongRunningTask = () => {
-    toast.promise(mockApiCall(true, 4000), {
-      error: {
-        description: 'The operation took too long and failed',
-        title: 'Timeout Error',
-      },
-      loading: {
-        description: 'This might take a while...',
-        title: 'Processing Large File',
-      },
-      success: {
-        description: 'All data has been successfully processed',
-        title: 'Process Complete',
-      },
-    });
-  };
-
   return (
     <StoryBook levaStore={store}>
       <Flexbox gap={8} horizontal style={{ flexWrap: 'wrap' }}>
@@ -107,11 +112,6 @@ export default () => {
         <Button
           icon={Database}
           onClick={() => {
-            const fetchData = async () => {
-              await mockApiCall(true, options.delay);
-              return { count: 42, items: ['Item 1', 'Item 2', 'Item 3'] };
-            };
-
             toast.promise(fetchData(), {
               error: 'Failed to fetch',
               loading: 'Fetching database records...',
