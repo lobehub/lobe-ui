@@ -2,6 +2,58 @@
 
 # Changelog
 
+## [Version 4.21.0](https://github.com/lobehub/lobe-ui/compare/v4.20.1...v4.21.0)
+
+<sup>Released on **2026-01-16**</sup>
+
+#### ♻ Code Refactoring
+
+- **misc**: Update DropdownMenu, LobeSelect, and Popover components for improved prop handling.
+
+#### ✨ Features
+
+- **misc**: Add multiple promise handling and long-running task support in Toast demo, Enhance Markdown documentation and styles for improved readability, Introduce LobeSelect component with enhanced features.
+
+#### 🐛 Bug Fixes
+
+- **misc**: Update Toast component styles for enhanced visual depth.
+
+#### 💄 Styles
+
+- **misc**: Add positioner class to EmojiPicker for improved layout, Enhance EmojiPicker and Popover styles for improved layout and aesthetics.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Code refactoring
+
+- **misc**: Update DropdownMenu, LobeSelect, and Popover components for improved prop handling ([eb74169](https://github.com/lobehub/lobe-ui/commit/eb74169))
+
+#### What's improved
+
+- **misc**: Add multiple promise handling and long-running task support in Toast demo ([02d8749](https://github.com/lobehub/lobe-ui/commit/02d8749))
+- **misc**: Enhance Markdown documentation and styles for improved readability ([6c13e73](https://github.com/lobehub/lobe-ui/commit/6c13e73))
+- **misc**: Introduce LobeSelect component with enhanced features ([45bfdb8](https://github.com/lobehub/lobe-ui/commit/45bfdb8))
+
+#### What's fixed
+
+- **misc**: Update Toast component styles for enhanced visual depth ([168a882](https://github.com/lobehub/lobe-ui/commit/168a882))
+
+#### Styles
+
+- **misc**: Add positioner class to EmojiPicker for improved layout ([30e0bee](https://github.com/lobehub/lobe-ui/commit/30e0bee))
+- **misc**: Enhance EmojiPicker and Popover styles for improved layout and aesthetics ([fc8c9e9](https://github.com/lobehub/lobe-ui/commit/fc8c9e9))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.20.1](https://github.com/lobehub/lobe-ui/compare/v4.20.0...v4.20.1)
 
 <sup>Released on **2026-01-15**</sup>
