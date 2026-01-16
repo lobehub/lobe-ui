@@ -7,9 +7,14 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
     --lobe-markdown-font-size: 16px;
     --lobe-markdown-header-multiple: 1;
     --lobe-markdown-margin-multiple: 2;
+    --lobe-markdown-margin-multiple-cal: var(--lobe-markdown-margin-multiple);
     --lobe-markdown-line-height: 1.8;
     --lobe-markdown-border-radius: ${cssVar.borderRadiusLG};
     --lobe-markdown-border-color: ${cssVar.colorFillQuaternary};
+
+    @supports (text-box-trim: trim-both) {
+      --lobe-markdown-margin-multiple-cal: calc(var(--lobe-markdown-margin-multiple) * 1.2);
+    }
 
     position: relative;
 
@@ -33,7 +38,7 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
 
   const blockquote = css`
     blockquote {
-      margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
+      margin-block: calc(var(--lobe-markdown-margin-multiple-cal) * 0.5em);
       margin-inline: 0;
       padding-block: 0;
       padding-inline: 1em;
@@ -74,7 +79,7 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
 
   const details = css`
     details {
-      margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
+      margin-block: calc(var(--lobe-markdown-margin-multiple-cal) * 0.5em);
       padding-block: 0.75em;
       padding-inline: 1em;
       border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
@@ -128,7 +133,9 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
     h5,
     h6 {
       margin-block: max(
-        calc(var(--lobe-markdown-header-multiple) * var(--lobe-markdown-margin-multiple) * 0.4em),
+        calc(
+          var(--lobe-markdown-header-multiple) * var(--lobe-markdown-margin-multiple-cal) * 0.4em
+        ),
         var(--lobe-markdown-font-size)
       );
       font-weight: bold;
@@ -165,7 +172,7 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
   const hr = css`
     hr {
       width: 100%;
-      margin-block: calc(var(--lobe-markdown-margin-multiple) * 1.5em);
+      margin-block: calc(var(--lobe-markdown-margin-multiple-cal) * 1.5em);
       border-color: ${cssVar.colorBorder};
       border-style: dashed;
       border-width: 1px;
@@ -181,15 +188,19 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
 
     > img,
     > p > img {
-      margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
+      margin-block: calc(var(--lobe-markdown-margin-multiple-cal) * 0.5em);
       border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
       box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
+
+      @supports (text-box-trim: trim-both) {
+        margin-block: calc(var(--lobe-markdown-margin-multiple-cal) * 1.5em);
+      }
     }
   `;
 
   const list = css`
     li {
-      margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.33em);
+      margin-block: calc(var(--lobe-markdown-margin-multiple-cal) * 0.33em);
 
       p:first-child {
         display: inline;
@@ -198,18 +209,26 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
 
     ul,
     ol {
-      margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
+      margin-block: calc(var(--lobe-markdown-margin-multiple-cal) * 0.5em);
       margin-inline-start: 1em;
       padding-inline-start: 0;
       list-style-position: outside;
 
-      > ul,
-      > ol {
+      @supports (text-box-trim: trim-both) {
+        line-height: 2;
+      }
+
+      ul,
+      ol {
         margin-block: 0;
       }
 
       > li {
         margin-inline-start: 1em;
+
+        @supports (text-box-trim: trim-both) {
+          margin-block: 0;
+        }
       }
     }
 
@@ -257,14 +276,20 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
       line-height: var(--lobe-markdown-line-height);
       letter-spacing: 0.02em;
 
-      text-box-trim: trim-both;
+      @supports (text-box-trim: trim-both) {
+        text-box-trim: trim-both;
+        text-edge: cap alphabetic;
+        margin-block-start: calc(var(--lobe-markdown-margin-multiple-cal) * 0.5em);
+        margin-block-end: calc(var(--lobe-markdown-margin-multiple-cal) * 0.5em);
+        line-height: 2;
+      }
 
       &:not(:first-child) {
-        margin-block-start: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
+        margin-block-start: calc(var(--lobe-markdown-margin-multiple-cal) * 0.5em);
       }
 
       &:not(:last-child) {
-        margin-block-end: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
+        margin-block-end: calc(var(--lobe-markdown-margin-multiple-cal) * 0.5em);
       }
     }
   `;
@@ -294,7 +319,7 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
       box-sizing: border-box;
       width: max-content;
       max-width: 100%;
-      margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
+      margin-block: calc(var(--lobe-markdown-margin-multiple-cal) * 0.5em);
       border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
 
       text-align: start;
@@ -330,7 +355,7 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
   const video = css`
     > video,
     > p > video {
-      margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
+      margin-block: calc(var(--lobe-markdown-margin-multiple-cal) * 0.5em);
       border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
       box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
     }
@@ -342,7 +367,7 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
 
   const footnote = css`
     .footnotes {
-      margin-block-start: calc(var(--lobe-markdown-margin-multiple) * 1em);
+      margin-block-start: calc(var(--lobe-markdown-margin-multiple-cal) * 1em);
       font-size: smaller;
       color: #8b949e;
 
