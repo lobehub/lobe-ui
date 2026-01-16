@@ -108,7 +108,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     z-index: 1100;
 
-    width: min(var(--positioner-width), var(--available-width));
+    width: var(--positioner-width);
+    max-width: var(--available-width);
     height: var(--positioner-height);
 
     transition-timing-function: var(--lobe-popover-animation-ease-out);
