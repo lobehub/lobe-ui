@@ -3,7 +3,13 @@
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { cx } from 'antd-style';
-import { type ComponentProps, cloneElement, forwardRef, isValidElement, useState } from 'react';
+import {
+  type ComponentProps,
+  type ComponentPropsWithRef,
+  cloneElement,
+  isValidElement,
+  useState,
+} from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
@@ -19,64 +25,68 @@ export const PopoverRoot = BasePopover.Root;
 export const PopoverBackdrop = BasePopover.Backdrop;
 
 export type PopoverTriggerElementProps = Omit<
-  ComponentProps<typeof BasePopover.Trigger>,
+  ComponentPropsWithRef<typeof BasePopover.Trigger>,
   'children' | 'render'
 > & {
   children: ComponentProps<typeof BasePopover.Trigger>['children'];
 };
 
-export const PopoverTriggerElement = forwardRef<HTMLElement, PopoverTriggerElementProps>(
-  ({ children, className, nativeButton, ...rest }, ref) => {
-    const { isNativeButtonTriggerElement, resolvedNativeButton } = useNativeButton({
-      children,
-      nativeButton,
-    });
+export const PopoverTriggerElement = ({
+  children,
+  className,
+  nativeButton,
+  ref: refProp,
+  ...rest
+}: PopoverTriggerElementProps) => {
+  const { isNativeButtonTriggerElement, resolvedNativeButton } = useNativeButton({
+    children,
+    nativeButton,
+  });
 
-    if (isValidElement(children)) {
-      return (
-        <BasePopover.Trigger
-          {...rest}
-          nativeButton={resolvedNativeButton}
-          render={(props, state) => {
-            // Base UI's trigger props include `type="button"` by default.
-            // If we render into a non-<button> element, that prop is invalid and can warn.
-            const resolvedProps = (() => {
-              if (isNativeButtonTriggerElement) return props as any;
-              // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
-              const { type, ref: triggerRef, ...restProps } = props as any;
-              return restProps;
-            })();
-
-            const mergedProps = mergeProps((children as any).props, resolvedProps);
-            const baseClassName =
-              typeof (mergedProps as any).className === 'function'
-                ? (mergedProps as any).className(state)
-                : (mergedProps as any).className;
-            const extraClassName =
-              typeof (className as any) === 'function' ? (className as any)(state) : className;
-
-            return cloneElement(children as any, {
-              ...mergedProps,
-              className: cx(baseClassName, extraClassName),
-              ref: mergeRefs([(children as any).ref, (props as any).ref, ref]),
-            });
-          }}
-        />
-      );
-    }
-
+  if (isValidElement(children)) {
     return (
       <BasePopover.Trigger
         {...rest}
-        className={className}
         nativeButton={resolvedNativeButton}
-        ref={ref}
-      >
-        {children}
-      </BasePopover.Trigger>
+        render={(props, state) => {
+          // Base UI's trigger props include `type="button"` by default.
+          // If we render into a non-<button> element, that prop is invalid and can warn.
+          const resolvedProps = (() => {
+            if (isNativeButtonTriggerElement) return props as any;
+            // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+            const { type, ref: triggerRef, ...restProps } = props as any;
+            return restProps;
+          })();
+
+          const mergedProps = mergeProps((children as any).props, resolvedProps);
+          const baseClassName =
+            typeof (mergedProps as any).className === 'function'
+              ? (mergedProps as any).className(state)
+              : (mergedProps as any).className;
+          const extraClassName =
+            typeof (className as any) === 'function' ? (className as any)(state) : className;
+
+          return cloneElement(children as any, {
+            ...mergedProps,
+            className: cx(baseClassName, extraClassName),
+            ref: mergeRefs([(children as any).ref, (props as any).ref, refProp]),
+          });
+        }}
+      />
     );
-  },
-);
+  }
+
+  return (
+    <BasePopover.Trigger
+      {...rest}
+      className={className}
+      nativeButton={resolvedNativeButton}
+      ref={refProp}
+    >
+      {children}
+    </BasePopover.Trigger>
+  );
+};
 
 PopoverTriggerElement.displayName = 'PopoverTriggerElement';
 

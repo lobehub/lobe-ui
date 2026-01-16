@@ -3,7 +3,12 @@
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Select } from '@base-ui/react/select';
 import { cx, useThemeMode } from 'antd-style';
-import { type ComponentProps, cloneElement, forwardRef, isValidElement } from 'react';
+import {
+  type ComponentProps,
+  type ComponentPropsWithRef,
+  cloneElement,
+  isValidElement,
+} from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 import { styles as menuStyles } from '@/Menu/sharedStyle';
@@ -27,7 +32,7 @@ export const LobeSelectBackdrop = Select.Backdrop;
 export const LobeSelectSeparator = Select.Separator;
 
 export type LobeSelectTriggerProps = Omit<
-  ComponentProps<typeof Select.Trigger>,
+  ComponentPropsWithRef<typeof Select.Trigger>,
   'children' | 'render'
 > & {
   children: ComponentProps<typeof Select.Trigger>['children'];
@@ -36,61 +41,68 @@ export type LobeSelectTriggerProps = Omit<
   variant?: LobeSelectVariant;
 };
 
-export const LobeSelectTrigger = forwardRef<HTMLElement, LobeSelectTriggerProps>(
-  ({ children, className, nativeButton, shadow, size = 'middle', variant, ...rest }, ref) => {
-    const { isDarkMode } = useThemeMode();
-    const resolvedVariant = variant ?? (isDarkMode ? 'filled' : 'outlined');
-    const baseClassName = triggerVariants({ shadow, size, variant: resolvedVariant });
+export const LobeSelectTrigger = ({
+  children,
+  className,
+  nativeButton,
+  shadow,
+  size = 'middle',
+  variant,
+  ref: refProp,
+  ...rest
+}: LobeSelectTriggerProps) => {
+  const { isDarkMode } = useThemeMode();
+  const resolvedVariant = variant ?? (isDarkMode ? 'filled' : 'outlined');
+  const baseClassName = triggerVariants({ shadow, size, variant: resolvedVariant });
 
-    const { isNativeButtonTriggerElement, resolvedNativeButton } = useNativeButton({
-      children,
-      nativeButton,
-    });
+  const { isNativeButtonTriggerElement, resolvedNativeButton } = useNativeButton({
+    children,
+    nativeButton,
+  });
 
-    if (isValidElement(children)) {
-      return (
-        <Select.Trigger
-          {...rest}
-          nativeButton={resolvedNativeButton}
-          render={(props, state) => {
-            // Base UI's trigger props include `type="button"` by default.
-            // If we render into a non-<button> element, that prop is invalid and can warn.
-            const resolvedProps = (() => {
-              if (isNativeButtonTriggerElement) return props as any;
-              // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
-              const { type, ref: triggerRef, ...restProps } = props as any;
-              return restProps;
-            })();
-
-            const mergedProps = mergeProps((children as any).props, resolvedProps);
-            const childClassName =
-              typeof (mergedProps as any).className === 'function'
-                ? (mergedProps as any).className(state)
-                : (mergedProps as any).className;
-            const extraClassName = typeof className === 'function' ? className(state) : className;
-
-            return cloneElement(children as any, {
-              ...mergedProps,
-              className: cx(baseClassName, childClassName, extraClassName),
-              ref: mergeRefs([(children as any).ref, (props as any).ref, ref]),
-            });
-          }}
-        />
-      );
-    }
-
+  if (isValidElement(children)) {
     return (
       <Select.Trigger
         {...rest}
-        className={mergeStateClassName(baseClassName, className) as any}
         nativeButton={resolvedNativeButton}
-        ref={ref as any}
-      >
-        {children}
-      </Select.Trigger>
+        render={(props, state) => {
+          // Base UI's trigger props include `type="button"` by default.
+          // If we render into a non-<button> element, that prop is invalid and can warn.
+          const resolvedProps = (() => {
+            if (isNativeButtonTriggerElement) return props as any;
+            // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+            const { type, ref: triggerRef, ...restProps } = props as any;
+            return restProps;
+          })();
+
+          const mergedProps = mergeProps((children as any).props, resolvedProps);
+          const childClassName =
+            typeof (mergedProps as any).className === 'function'
+              ? (mergedProps as any).className(state)
+              : (mergedProps as any).className;
+          const extraClassName = typeof className === 'function' ? className(state) : className;
+
+          return cloneElement(children as any, {
+            ...mergedProps,
+            className: cx(baseClassName, childClassName, extraClassName),
+            ref: mergeRefs([(children as any).ref, (props as any).ref, refProp]),
+          });
+        }}
+      />
     );
-  },
-);
+  }
+
+  return (
+    <Select.Trigger
+      {...rest}
+      className={mergeStateClassName(baseClassName, className) as any}
+      nativeButton={resolvedNativeButton}
+      ref={refProp as any}
+    >
+      {children}
+    </Select.Trigger>
+  );
+};
 
 LobeSelectTrigger.displayName = 'LobeSelectTrigger';
 

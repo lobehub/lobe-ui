@@ -1,11 +1,12 @@
 import type {
+  Popover as BasePopover,
   PopoverBackdropProps as BasePopoverBackdropProps,
   PopoverPopupProps as BasePopoverPopupProps,
   PopoverPortalProps as BasePopoverPortalProps,
   PopoverPositionerProps as BasePopoverPositionerProps,
   PopoverTriggerProps as BasePopoverTriggerProps,
 } from '@base-ui/react/popover';
-import type { CSSProperties, ReactElement, ReactNode, Ref } from 'react';
+import type { CSSProperties, ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
 
 import type { Trigger } from '@/types';
 import type { Placement } from '@/utils/placement';
@@ -165,7 +166,7 @@ export interface PopoverProps {
   /**
    * ref
    */
-  ref?: Ref<HTMLElement>;
+  ref?: ComponentPropsWithRef<typeof BasePopover.Trigger>['ref'];
 
   /**
    * 当设置为 true 时，即使在 PopoverGroup 内部也会独立渲染，忽略 group 单例行为

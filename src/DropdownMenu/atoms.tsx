@@ -6,7 +6,7 @@ import { Switch } from 'antd';
 import { cx } from 'antd-style';
 import clsx from 'clsx';
 import type React from 'react';
-import { cloneElement, forwardRef, isValidElement, useCallback, useState } from 'react';
+import { cloneElement, isValidElement, useCallback, useState } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 import { styles } from '@/Menu/sharedStyle';
@@ -32,55 +32,57 @@ const mergeStateClassName = <TState,>(
 };
 
 export type DropdownMenuTriggerProps = Omit<
-  React.ComponentProps<typeof Menu.Trigger>,
+  React.ComponentPropsWithRef<typeof Menu.Trigger>,
   'children' | 'render'
 > & {
   children: React.ReactNode;
 };
 
-export const DropdownMenuTrigger = forwardRef<HTMLElement, DropdownMenuTriggerProps>(
-  ({ children, className, nativeButton, ...rest }, ref) => {
-    const { isNativeButtonTriggerElement, resolvedNativeButton } = useNativeButton({
-      children,
-      nativeButton,
+export const DropdownMenuTrigger = ({
+  children,
+  className,
+  nativeButton,
+  ref: refProp,
+  ...rest
+}: DropdownMenuTriggerProps) => {
+  const { isNativeButtonTriggerElement, resolvedNativeButton } = useNativeButton({
+    children,
+    nativeButton,
+  });
+
+  const renderer = (props: any) => {
+    // Base UI's trigger props include `type="button"` by default.
+    // If we render into a non-<button> element, that prop is invalid and can warn.
+    const resolvedProps = (() => {
+      if (isNativeButtonTriggerElement) return props as any;
+      // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+      const { type, ...restProps } = props as any;
+      return restProps;
+    })();
+
+    const mergedProps = mergeProps((children as any).props, resolvedProps);
+    return cloneElement(children as any, {
+      ...mergedProps,
+      className: clsx(CLASSNAMES.DropdownMenuTrigger, className, mergedProps.className),
+      ref: mergeRefs([(children as any).ref, (props as any).ref, refProp]),
     });
+  };
 
-    const renderer = (props: any) => {
-      // Base UI's trigger props include `type="button"` by default.
-      // If we render into a non-<button> element, that prop is invalid and can warn.
-      const resolvedProps = (() => {
-        if (isNativeButtonTriggerElement) return props as any;
-        // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
-        const { type, ...restProps } = props as any;
-        return restProps;
-      })();
+  if (isValidElement(children)) {
+    return <Menu.Trigger {...rest} nativeButton={resolvedNativeButton} render={renderer as any} />;
+  }
 
-      const mergedProps = mergeProps((children as any).props, resolvedProps);
-      return cloneElement(children as any, {
-        ...mergedProps,
-        className: clsx(CLASSNAMES.DropdownMenuTrigger, className, mergedProps.className),
-        ref: mergeRefs([(children as any).ref, (props as any).ref, ref]),
-      });
-    };
-
-    if (isValidElement(children)) {
-      return (
-        <Menu.Trigger {...rest} nativeButton={resolvedNativeButton} render={renderer as any} />
-      );
-    }
-
-    return (
-      <Menu.Trigger
-        {...rest}
-        className={clsx(CLASSNAMES.DropdownMenuTrigger, className)}
-        nativeButton={resolvedNativeButton}
-        ref={ref as any}
-      >
-        {children}
-      </Menu.Trigger>
-    );
-  },
-);
+  return (
+    <Menu.Trigger
+      {...rest}
+      className={clsx(CLASSNAMES.DropdownMenuTrigger, className)}
+      nativeButton={resolvedNativeButton}
+      ref={refProp as any}
+    >
+      {children}
+    </Menu.Trigger>
+  );
+};
 
 DropdownMenuTrigger.displayName = 'DropdownMenuTrigger';
 

@@ -1,10 +1,11 @@
 import type {
+  Tooltip as BaseTooltip,
   TooltipPopupProps as BaseTooltipPopupProps,
   TooltipPortalProps as BaseTooltipPortalProps,
   TooltipPositionerProps as BaseTooltipPositionerProps,
   TooltipTriggerProps as BaseTooltipTriggerProps,
 } from '@base-ui/react/tooltip';
-import type { CSSProperties, ReactElement, ReactNode, Ref } from 'react';
+import type { CSSProperties, ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
 
 import type { HotkeyProps } from '@/Hotkey';
 import type { Placement } from '@/utils/placement';
@@ -132,7 +133,7 @@ export interface TooltipProps {
    */
   positionerProps?: TooltipPositionerProps;
 
-  ref?: Ref<HTMLElement>;
+  ref?: ComponentPropsWithRef<typeof BaseTooltip.Trigger>['ref'];
 
   /**
    * When true, this tooltip will render independently even inside a TooltipGroup,
