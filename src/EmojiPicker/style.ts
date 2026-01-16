@@ -12,6 +12,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   popover: css`
+    overflow: hidden;
     padding: 0;
   `,
   root: css`

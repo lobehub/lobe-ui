@@ -194,6 +194,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
 
     return (
       <Popover
+        className={cx(styles.popover)}
         classNames={{
           content: styles.popover,
         }}
