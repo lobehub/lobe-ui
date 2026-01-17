@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.21.3](https://github.com/lobehub/lobe-ui/compare/v4.21.2...v4.21.3)
+
+<sup>Released on **2026-01-17**</sup>
+
+#### 💄 Styles
+
+- **misc**: Refactor markdown styles to simplify margin calculations.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Refactor markdown styles to simplify margin calculations ([159dbff](https://github.com/lobehub/lobe-ui/commit/159dbff))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.21.2](https://github.com/lobehub/lobe-ui/compare/v4.21.1...v4.21.2)
 
 <sup>Released on **2026-01-16**</sup>
