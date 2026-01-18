@@ -10,18 +10,28 @@ import type { Key, Ref } from 'react';
 import type { IconContentConfig, IconProps } from '@/Icon';
 
 export interface MenuItemType extends RcMenuItemType {
+  /**
+   * Whether to close the menu when this item is clicked.
+   * Set to `false` to keep the menu open (useful for items with Upload, file picker, etc.)
+   * @default true
+   */
+  closeOnClick?: boolean;
   danger?: boolean;
   icon?: IconProps['icon'];
   loading?: boolean;
   title?: string;
 }
-export interface SubMenuType<T extends MenuItemType = MenuItemType>
-  extends Omit<RcSubMenuType, 'children'> {
+export interface SubMenuType<T extends MenuItemType = MenuItemType> extends Omit<
+  RcSubMenuType,
+  'children'
+> {
   children: ItemType<T>[];
   icon?: IconProps['icon'];
 }
-export interface MenuItemGroupType<T extends MenuItemType = MenuItemType>
-  extends Omit<RcMenuItemGroupType, 'children'> {
+export interface MenuItemGroupType<T extends MenuItemType = MenuItemType> extends Omit<
+  RcMenuItemGroupType,
+  'children'
+> {
   children?: ItemType<T>[];
   key?: Key;
 }

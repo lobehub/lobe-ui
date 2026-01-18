@@ -309,6 +309,7 @@ export const renderContextMenuItems = (
     return (
       <ContextMenu.Item
         className={cx(styles.item, isDanger && styles.danger)}
+        closeOnClick={menuItem.closeOnClick}
         disabled={menuItem.disabled}
         key={itemKey}
         label={labelText}

@@ -1,5 +1,6 @@
 export type { ContextMenuTriggerProps } from './ContextMenuTrigger';
 export {
+  closeContextMenu,
   ContextMenuHost,
   ContextMenuTrigger,
   showContextMenu,

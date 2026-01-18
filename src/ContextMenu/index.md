@@ -25,6 +25,10 @@ description: ContextMenu provides an imperative API to open a menu at the last p
 
 <code src="./demos/emptySubmenu.tsx" center></code>
 
+## Uploader
+
+<code src="./demos/uploader.tsx" center></code>
+
 ## APIs
 
 ### showContextMenu

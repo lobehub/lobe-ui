@@ -51,6 +51,10 @@ Exported primitives can be composed to build custom dropdown menus.
 
 <code src="./demos/link-label.tsx" center></code>
 
+## Uploader
+
+<code src="./demos/uploader.tsx" center></code>
+
 ## APIs
 
 ### DropdownMenuV2
@@ -71,6 +75,12 @@ Additionally, DropdownMenuV2 inherits all properties from Base UI `Menu.Root` ex
 ### Menu Items
 
 Menu items are the same as those used for Menu/Dropdown, with support for `type: 'checkbox'` and `type: 'switch'` items. See [Menu](/components/menu) for details on base item types.
+
+#### Standard Item
+
+| Property     | Description                                                                        | Type      | Default |
+| ------------ | ---------------------------------------------------------------------------------- | --------- | ------- |
+| closeOnClick | Close menu on click. Set to `false` for items with Upload or file picker elements. | `boolean` | `true`  |
 
 #### Checkbox Item
 

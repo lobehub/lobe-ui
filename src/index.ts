@@ -38,6 +38,7 @@ export { default as ColorSwatches, type ColorSwatchesProps } from './ColorSwatch
 export { type Config, default as ConfigProvider, useCdnFn } from './ConfigProvider';
 export type { ContextMenuCheckboxItem, ContextMenuItem } from './ContextMenu';
 export {
+  closeContextMenu,
   ContextMenuHost,
   ContextMenuTrigger,
   showContextMenu,

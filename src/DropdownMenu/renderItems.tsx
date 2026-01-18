@@ -236,6 +236,7 @@ export const renderDropdownMenuItems = (
 
     return (
       <DropdownMenuItem
+        closeOnClick={menuItem.closeOnClick}
         danger={isDanger}
         disabled={menuItem.disabled}
         key={itemKey}
