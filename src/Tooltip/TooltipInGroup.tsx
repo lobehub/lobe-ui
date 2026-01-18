@@ -2,7 +2,7 @@
 
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
-import { type FC, cloneElement, isValidElement, useContext, useMemo } from 'react';
+import { type FC, cloneElement, isValidElement, useCallback, useContext, useMemo } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
@@ -36,6 +36,28 @@ export const TooltipInGroup: FC<TooltipProps> = ({ children, ref: refProp, ...pr
     children,
   });
 
+  const childElement = isValidElement(children) ? children : null;
+
+  const renderTrigger = useCallback(
+    (renderProps: unknown) => {
+      // Base UI's trigger props include `type="button"` by default.
+      // If we render into a non-<button> element, that prop is invalid and can warn.
+      const resolvedProps = (() => {
+        if (isNativeButtonTriggerElement) return renderProps as any;
+        // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+        const { type, ref: triggerRef, ...restProps } = renderProps as any;
+        return restProps;
+      })();
+
+      const mergedProps = mergeProps((childElement as any).props, resolvedProps);
+      return cloneElement(childElement as any, {
+        ...mergedProps,
+        ref: mergeRefs([(childElement as any).ref, (renderProps as any).ref, refProp]),
+      });
+    },
+    [childElement, isNativeButtonTriggerElement, refProp],
+  );
+
   // Don't render trigger behavior if no content
   // eslint-disable-next-line eqeqeq
   if (item.title == null && !item.hotkey) {
@@ -49,28 +71,9 @@ export const TooltipInGroup: FC<TooltipProps> = ({ children, ref: refProp, ...pr
     payload: item,
   };
 
-  if (isValidElement(children)) {
+  if (childElement) {
     return (
-      <BaseTooltip.Trigger
-        handle={group ?? undefined}
-        {...triggerProps}
-        render={(renderProps) => {
-          // Base UI's trigger props include `type="button"` by default.
-          // If we render into a non-<button> element, that prop is invalid and can warn.
-          const resolvedProps = (() => {
-            if (isNativeButtonTriggerElement) return renderProps as any;
-            // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
-            const { type, ref: triggerRef, ...restProps } = renderProps as any;
-            return restProps;
-          })();
-
-          const mergedProps = mergeProps((children as any).props, resolvedProps);
-          return cloneElement(children as any, {
-            ...mergedProps,
-            ref: mergeRefs([(children as any).ref, (renderProps as any).ref, refProp]),
-          });
-        }}
-      />
+      <BaseTooltip.Trigger handle={group ?? undefined} {...triggerProps} render={renderTrigger} />
     );
   }
 
