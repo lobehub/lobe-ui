@@ -2,22 +2,21 @@
 nav: Components
 group: Data Entry
 title: Select
-description: Select component lets users choose from a list of options in a dropdown menu. It supports various styling options and custom suffix icons.
+description: Base UI-powered Select component with Lobe UI styling.
 ---
 
 ## Default
 
 <code src="./demos/index.tsx" nopadding></code>
 
-## APIs
+## Atom Components
 
-### Select
+<code src="./demos/atoms.tsx" nopadding></code>
 
-| Property        | Description                         | Type                                     | Default                                            |
-| --------------- | ----------------------------------- | ---------------------------------------- | -------------------------------------------------- |
-| shadow          | Enable shadow effect for the select | `boolean`                                | `false`                                            |
-| suffixIcon      | Custom suffix icon                  | `IconProps['icon']`                      | `ChevronDownIcon`                                  |
-| suffixIconProps | Props for the suffix icon           | `Omit<IconProps, 'icon'>`                | -                                                  |
-| variant         | Style variant of the select         | `'filled' \| 'outlined' \| 'borderless'` | Dark mode: `'filled'`<br/>Light mode: `'outlined'` |
+## Custom Render
 
-Select inherits all properties from Ant Design's Select component except for 'suffixIcon', which has been enhanced to support Lucide icons directly. The component automatically adjusts its appearance based on the current theme (light/dark mode) unless a specific variant is provided.
+<code src="./demos/render.tsx" nopadding></code>
+
+## Virtual List
+
+<code src="./demos/virtual.tsx" nopadding></code>

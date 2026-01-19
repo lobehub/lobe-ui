@@ -56,7 +56,6 @@ const EditableMessageList = memo<EditableMessageListProps>(
                 { label: outputText, value: 'assistant' },
               ]}
               style={{ width: 120 }}
-              styles={{ popup: { root: { zIndex: 100 } } }}
               value={item.role}
             />
             <ControlInput
