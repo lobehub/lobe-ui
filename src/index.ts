@@ -25,13 +25,13 @@ export {
   type CheckboxGroupProps,
   type CheckboxProps,
 } from './Checkbox';
-// export {
-//   default as CodeDiff,
-//   type CodeDiffProps,
-//   type DiffViewMode,
-//   PatchDiff,
-//   type PatchDiffProps,
-// } from './CodeDiff';
+export {
+  CodeDiff,
+  type CodeDiffProps,
+  type DiffViewMode,
+  PatchDiff,
+  type PatchDiffProps,
+} from './CodeDiff';
 export { default as CodeEditor, type CodeEditorProps } from './CodeEditor';
 export { default as Collapse, type CollapseItemType, type CollapseProps } from './Collapse';
 export { default as ColorSwatches, type ColorSwatchesProps } from './ColorSwatches';
@@ -61,7 +61,6 @@ export {
 } from './DraggablePanel';
 export { default as DraggableSideNav, type DraggableSideNavProps } from './DraggableSideNav';
 export { default as Drawer, type DrawerProps } from './Drawer';
-export { default as Dropdown, type DropdownMenuItemType, type DropdownProps } from './Dropdown';
 export {
   DROPDOWN_MENU_CONTAINER_ATTR,
   type DropdownItem,
@@ -179,44 +178,6 @@ export {
 } from './Layout';
 export { default as List, ListItem, type ListItemProps, type ListProps } from './List';
 export {
-  LOBE_SELECT_CONTAINER_ATTR,
-  default as LobeSelect,
-  LobeSelectArrow,
-  type LobeSelectArrowProps,
-  LobeSelectBackdrop,
-  LobeSelectGroup,
-  LobeSelectGroupLabel,
-  type LobeSelectGroupLabelProps,
-  type LobeSelectGroupProps,
-  LobeSelectIcon,
-  type LobeSelectIconProps,
-  LobeSelectItem,
-  LobeSelectItemIndicator,
-  type LobeSelectItemIndicatorProps,
-  type LobeSelectItemProps,
-  LobeSelectItemText,
-  type LobeSelectItemTextProps,
-  LobeSelectList,
-  type LobeSelectListProps,
-  LobeSelectPopup,
-  type LobeSelectPopupProps,
-  LobeSelectPortal,
-  type LobeSelectPortalProps,
-  LobeSelectPositioner,
-  type LobeSelectPositionerProps,
-  type LobeSelectProps,
-  LobeSelectRoot,
-  LobeSelectScrollDownArrow,
-  type LobeSelectScrollDownArrowProps,
-  LobeSelectScrollUpArrow,
-  type LobeSelectScrollUpArrowProps,
-  LobeSelectSeparator,
-  LobeSelectTrigger,
-  type LobeSelectTriggerProps,
-  LobeSelectValue,
-  type LobeSelectValueProps,
-} from './LobeSelect';
-export {
   default as Markdown,
   type MarkdownProps,
   Typography,
@@ -306,7 +267,44 @@ export { I18nProvider, type I18nProviderProps, LobeUIProvider, useTranslation } 
 export { default as ScrollShadow, type ScrollShadowProps } from './ScrollShadow';
 export { default as SearchBar, type SearchBarProps } from './SearchBar';
 export { default as Segmented, type SegmentedProps } from './Segmented';
-export { default as Select, type SelectProps } from './Select';
+export {
+  default as Select,
+  SELECT_CONTAINER_ATTR,
+  SelectArrow,
+  type SelectArrowProps,
+  SelectBackdrop,
+  SelectGroup,
+  SelectGroupLabel,
+  type SelectGroupLabelProps,
+  type SelectGroupProps,
+  SelectIcon,
+  type SelectIconProps,
+  SelectItem,
+  SelectItemIndicator,
+  type SelectItemIndicatorProps,
+  type SelectItemProps,
+  SelectItemText,
+  type SelectItemTextProps,
+  SelectList,
+  type SelectListProps,
+  SelectPopup,
+  type SelectPopupProps,
+  SelectPortal,
+  type SelectPortalProps,
+  SelectPositioner,
+  type SelectPositionerProps,
+  type SelectProps,
+  SelectRoot,
+  SelectScrollDownArrow,
+  type SelectScrollDownArrowProps,
+  SelectScrollUpArrow,
+  type SelectScrollUpArrowProps,
+  SelectSeparator,
+  SelectTrigger,
+  type SelectTriggerProps,
+  SelectValue,
+  type SelectValueProps,
+} from './Select';
 export { default as SideNav, type SideNavProps } from './SideNav';
 export {
   default as Skeleton,

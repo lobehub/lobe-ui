@@ -1,4 +1,4 @@
-import { Flexbox, LobeSelect, Tag } from '@lobehub/ui';
+import { Flexbox, Select, Tag } from '@lobehub/ui';
 import { useMemo, useState } from 'react';
 
 export default () => {
@@ -27,7 +27,7 @@ export default () => {
         <div style={{ fontSize: 15, fontWeight: 600 }}>Virtual List</div>
         <Tag color="cyan">Performance</Tag>
       </Flexbox>
-      <LobeSelect
+      <Select
         allowClear
         listItemHeight={32}
         onChange={(next) => setValue(next as string | null)}

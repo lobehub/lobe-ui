@@ -1,4 +1,4 @@
-import { Flexbox, Icon, LobeSelect, Tag } from '@lobehub/ui';
+import { Flexbox, Icon, Select, Tag } from '@lobehub/ui';
 import { Palette, Sparkles, Zap } from 'lucide-react';
 import { useMemo } from 'react';
 
@@ -55,7 +55,7 @@ export default () => {
         <Tag color="gold">optionRender</Tag>
         <Tag color="cyan">labelRender</Tag>
       </Flexbox>
-      <LobeSelect
+      <Select
         allowClear
         labelRender={(option) => {
           const meta = toneMeta[option.value as keyof typeof toneMeta];

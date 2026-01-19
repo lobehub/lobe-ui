@@ -1,16 +1,38 @@
-import { Select, SelectProps } from '@lobehub/ui';
+import { Select, type SelectProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
+import { Sparkles } from 'lucide-react';
 
-const handleChange = (value: string) => {
-  console.log(`selected ${value}`);
-};
+const options: NonNullable<SelectProps['options']> = [
+  {
+    label: 'Citrus',
+    options: [
+      { label: 'Orange', value: 'orange' },
+      { label: 'Lemon', value: 'lemon' },
+    ],
+  },
+  {
+    label: 'Berry',
+    options: [
+      { label: 'Strawberry', value: 'strawberry' },
+      { label: 'Blueberry', value: 'blueberry' },
+    ],
+  },
+  { disabled: true, label: 'Disabled', value: 'disabled' },
+];
 
 export default () => {
   const store = useCreateStore();
   const controls = useControls(
     {
-      placeholder: 'Type keywords...',
+      allowClear: true,
+      loading: false,
+      popupMatchSelectWidth: true,
       shadow: false,
+      showSearch: false,
+      size: {
+        options: ['small', 'middle', 'large'],
+        value: 'middle',
+      },
       variant: {
         options: ['outlined', 'borderless', 'filled'],
         value: 'filled',
@@ -22,44 +44,36 @@ export default () => {
   return (
     <StoryBook gap={16} levaStore={store}>
       <Select
-        defaultValue="lucy"
-        onChange={handleChange}
-        options={[
-          { label: 'Jack', value: 'jack' },
-          { label: 'Lucy', value: 'lucy' },
-          { label: 'yiminghe', value: 'Yiminghe' },
-          { disabled: true, label: 'Disabled', value: 'disabled' },
-        ]}
-        style={{
-          width: '100%',
-        }}
+        defaultValue="orange"
+        options={options}
+        placeholder="Select a fruit"
+        prefix={Sparkles}
+        style={{ width: '100%' }}
         {...controls}
       />
       <Select
-        defaultValue="lucy"
+        defaultValue="lemon"
         disabled
-        options={[{ label: 'Lucy', value: 'lucy' }]}
-        style={{
-          width: '100%',
-        }}
-        {...controls}
-      />
-      <Select
-        defaultValue="lucy"
-        loading
-        options={[{ label: 'Lucy', value: 'lucy' }]}
-        style={{
-          width: '100%',
-        }}
+        options={options}
+        placeholder="Disabled"
+        style={{ width: '100%' }}
         {...controls}
       />
       <Select
         allowClear
-        defaultValue="lucy"
-        options={[{ label: 'Lucy', value: 'lucy' }]}
-        style={{
-          width: '100%',
-        }}
+        defaultValue="strawberry"
+        options={options}
+        placeholder="Searchable"
+        showSearch
+        style={{ width: '100%' }}
+        {...controls}
+      />
+      <Select
+        mode="tags"
+        options={options}
+        placeholder="Type tags..."
+        style={{ width: '100%' }}
+        tokenSeparators={[',', ';']}
         {...controls}
       />
     </StoryBook>
