@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [Version 4.23.0](https://github.com/lobehub/lobe-ui/compare/v4.22.1...v4.23.0)
+
+<sup>Released on **2026-01-19**</sup>
+
+#### ✨ Features
+
+- **misc**: Introduce EditorSlashMenu component with autocomplete functionality.
+
+#### 🐛 Bug Fixes
+
+- **misc**: AccordionItem action transition.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Introduce EditorSlashMenu component with autocomplete functionality ([0aa5f66](https://github.com/lobehub/lobe-ui/commit/0aa5f66))
+
+#### What's fixed
+
+- **misc**: AccordionItem action transition ([b541210](https://github.com/lobehub/lobe-ui/commit/b541210))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.22.1](https://github.com/lobehub/lobe-ui/compare/v4.22.0...v4.22.1)
 
 <sup>Released on **2026-01-18**</sup>
