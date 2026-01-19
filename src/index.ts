@@ -103,6 +103,12 @@ export {
   renderDropdownMenuItems,
 } from './DropdownMenu';
 export { default as EditableText, type EditableTextProps } from './EditableText';
+export {
+  default as EditorSlashMenu,
+  type EditorSlashMenuGroup,
+  type EditorSlashMenuItems,
+  type EditorSlashMenuOption,
+} from './EditorSlashMenu';
 export { default as EmojiPicker, type EmojiPickerProps } from './EmojiPicker';
 export { default as Empty, type EmptyProps } from './Empty';
 export { default as FileTypeIcon, type FileTypeIconProps } from './FileTypeIcon';
