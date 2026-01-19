@@ -3,11 +3,7 @@ import { createStaticStyles } from 'antd-style';
 export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     action: css`
-      width: 0;
       opacity: 0;
-      transition:
-        opacity,
-        width 0.2s ${cssVar.motionEaseOut};
     `,
     base: css`
       display: flex;
@@ -25,7 +21,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     `,
     header: css`
       &:hover .accordion-action {
-        width: auto;
         opacity: 1;
       }
 

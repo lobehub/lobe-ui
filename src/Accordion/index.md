@@ -20,6 +20,12 @@ AccordionItem can be used independently without wrapping in an Accordion compone
 
 <code src="./demos/Standalone.tsx" ></code>
 
+## With Action
+
+AccordionItem supports an `action` prop that allows you to add custom action buttons or icons to the header. The action appears on the right side of the header and can be any ReactNode.
+
+<code src="./demos/Action.tsx" ></code>
+
 ## APIs
 
 ### Accordion Props
