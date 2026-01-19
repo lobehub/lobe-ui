@@ -61,6 +61,7 @@ export {
 } from './DraggablePanel';
 export { default as DraggableSideNav, type DraggableSideNavProps } from './DraggableSideNav';
 export { default as Drawer, type DrawerProps } from './Drawer';
+export * from './Dropdown';
 export {
   DROPDOWN_MENU_CONTAINER_ATTR,
   type DropdownItem,
