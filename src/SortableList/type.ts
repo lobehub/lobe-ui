@@ -11,4 +11,9 @@ export interface SortableListProps extends Omit<FlexboxProps, 'onChange'> {
   onChange(items: SortableListItem[]): void;
   ref?: Ref<HTMLUListElement>;
   renderItem(item: SortableListItem): ReactNode;
+  /**
+   * Custom render function for the drag overlay
+   * If not provided, renderItem will be used
+   */
+  renderOverlay?: (item: SortableListItem) => ReactNode;
 }
