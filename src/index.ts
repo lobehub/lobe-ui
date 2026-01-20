@@ -32,6 +32,7 @@ export {
 //   PatchDiff,
 //   type PatchDiffProps,
 // } from './CodeDiff';
+
 export { default as CodeEditor, type CodeEditorProps } from './CodeEditor';
 export { default as Collapse, type CollapseItemType, type CollapseProps } from './Collapse';
 export { default as ColorSwatches, type ColorSwatchesProps } from './ColorSwatches';
@@ -255,6 +256,7 @@ export {
   type MenuItemType,
   type MenuProps,
 } from './Menu';
+export { styles as menuSharedStyles } from './Menu/sharedStyle';
 export {
   default as Mermaid,
   type MermaidProps,
