@@ -224,6 +224,25 @@ export {
   type LobeSelectValueProps,
 } from './LobeSelect';
 export {
+  default as LobeSwitch,
+  type LobeSwitchChangeEventHandler,
+  type LobeSwitchClassNames,
+  type LobeSwitchClickEventHandler,
+  type LobeSwitchContextType,
+  LobeSwitchIcon,
+  type LobeSwitchIconPosition,
+  type LobeSwitchIconProps,
+  type LobeSwitchProps,
+  LobeSwitchRoot,
+  type LobeSwitchRootProps,
+  type LobeSwitchSize,
+  type LobeSwitchStyles,
+  lobeSwitchStyles,
+  LobeSwitchThumb,
+  type LobeSwitchThumbProps,
+  useLobeSwitchContext,
+} from './LobeSwitch';
+export {
   default as Markdown,
   type MarkdownProps,
   Typography,
