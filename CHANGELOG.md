@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 4.24.0](https://github.com/lobehub/lobe-ui/compare/v4.23.0...v4.24.0)
+
+<sup>Released on **2026-01-20**</sup>
+
+#### ✨ Features
+
+- **misc**: Export shared styles from Menu component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Export shared styles from Menu component ([034296c](https://github.com/lobehub/lobe-ui/commit/034296c))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.23.0](https://github.com/lobehub/lobe-ui/compare/v4.22.1...v4.23.0)
 
 <sup>Released on **2026-01-19**</sup>
