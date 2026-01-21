@@ -42,13 +42,23 @@ export default () => {
   );
 
   return (
-    <Flexbox align="center" gap={12} height={260} justify="center">
+    <Flexbox
+      align="center"
+      gap={12}
+      justify="center"
+      style={{
+        background: 'var(--lobe-color-fill-secondary)',
+        borderRadius: 16,
+        minHeight: 260,
+        padding: 28,
+      }}
+    >
       <Flexbox align="center" gap={8} horizontal>
         <div style={{ fontSize: 15, fontWeight: 600 }}>Atomic Select</div>
         <Tag color="blue">Atoms</Tag>
       </Flexbox>
       <LobeSelectRoot onValueChange={setValue} value={value}>
-        <LobeSelectTrigger size="large" style={{ minWidth: 240 }} variant="filled">
+        <LobeSelectTrigger size="large" style={{ width: 320 }} variant="filled">
           <LobeSelectValue>
             {(current) => (current ? labelMap[current] : 'Pick a tone')}
           </LobeSelectValue>
@@ -58,7 +68,13 @@ export default () => {
         </LobeSelectTrigger>
         <LobeSelectPortal>
           <LobeSelectPositioner>
-            <LobeSelectPopup>
+            <LobeSelectPopup
+              style={{
+                maxWidth: 'var(--available-width)',
+                minWidth: 'var(--anchor-width)',
+                width: 'var(--anchor-width)',
+              }}
+            >
               <LobeSelectList>
                 <LobeSelectGroup>
                   <LobeSelectGroupLabel>Warm</LobeSelectGroupLabel>
@@ -87,7 +103,7 @@ export default () => {
           </LobeSelectPositioner>
         </LobeSelectPortal>
       </LobeSelectRoot>
-      <div style={{ color: 'var(--lobe-color-text-2)', fontSize: 12, textAlign: 'center' }}>
+      <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12, textAlign: 'center' }}>
         Compose trigger, popup, and items for full control.
       </div>
     </Flexbox>

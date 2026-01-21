@@ -4,6 +4,7 @@ import type { IconProps } from '@/Icon';
 
 export type LobeSelectSize = 'large' | 'middle' | 'small';
 export type LobeSelectVariant = 'borderless' | 'filled' | 'outlined';
+export type LobeSelectBehaviorVariant = 'default' | 'item-aligned';
 
 export interface LobeSelectOption<Value = string> {
   className?: string;
@@ -48,6 +49,14 @@ export interface LobeSelectClassNames {
 export interface LobeSelectProps<Value = string> {
   allowClear?: boolean;
   autoFocus?: boolean;
+  /**
+   * Behavior variant for Base UI Select.
+   *
+   * - `default`: regular dropdown positioning (alignItemWithTrigger=false, modal=false)
+   * - `item-aligned`: aligns the selected item with trigger and uses modal=true
+   * @default 'default'
+   */
+  behaviorVariant?: LobeSelectBehaviorVariant;
   className?: string;
   classNames?: LobeSelectClassNames;
   defaultOpen?: boolean;

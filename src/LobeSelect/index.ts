@@ -36,6 +36,7 @@ export {
 } from './atoms';
 export { default } from './LobeSelect';
 export type {
+  LobeSelectBehaviorVariant,
   LobeSelectClassNames,
   LobeSelectOption,
   LobeSelectOptionGroup,

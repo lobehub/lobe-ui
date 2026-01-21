@@ -18,6 +18,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     lobeStaticStylish.variantBorderless,
     css`
       --lobe-select-open-bg: ${cssVar.colorFillTertiary};
+      --lobe-select-readonly-bg: color-mix(in srgb, ${cssVar.colorFillTertiary} 70%, transparent);
+      --lobe-select-disabled-bg: color-mix(in srgb, ${cssVar.colorFillTertiary} 55%, transparent);
     `,
   ),
   clear: css`
@@ -39,6 +41,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     lobeStaticStylish.variantFilled,
     css`
       --lobe-select-open-bg: ${cssVar.colorFillSecondary};
+      --lobe-select-readonly-bg: color-mix(in srgb, ${cssVar.colorFillTertiary} 70%, transparent);
+      --lobe-select-disabled-bg: color-mix(in srgb, ${cssVar.colorFillTertiary} 55%, transparent);
     `,
   ),
   group: css``,
@@ -66,16 +70,23 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   itemText: css``,
   list: css`
     overflow-y: auto;
-    max-height: var(--available-height);
+    max-height: var(--lobe-select-available-height, var(--available-height));
     padding-block: 0;
   `,
   outlined: cx(
     lobeStaticStylish.variantOutlined,
     css`
       --lobe-select-open-bg: ${cssVar.colorFillTertiary};
+      --lobe-select-readonly-bg: color-mix(in srgb, ${cssVar.colorBgContainer} 75%, transparent);
+      --lobe-select-disabled-bg: color-mix(in srgb, ${cssVar.colorBgContainer} 60%, transparent);
     `,
   ),
   popup: css`
+    --lobe-select-available-height: min(
+      var(--available-height),
+      var(--lobe-select-popup-max-height, var(--available-height))
+    );
+
     transform-origin: var(--transform-origin);
     box-sizing: border-box;
     transition:
@@ -190,10 +201,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     transition: all 150ms ${cssVar.motionEaseOut};
 
-    &:not([data-disabled])[data-popup-open],
-    &:not([data-disabled])[data-open],
-    &:not([data-disabled])[data-state='open'],
-    &:not([data-disabled])[aria-expanded='true'] {
+    &:not([data-disabled]):not([data-readonly])[data-popup-open],
+    &:not([data-disabled]):not([data-readonly])[data-open],
+    &:not([data-disabled]):not([data-readonly])[data-state='open'],
+    &:not([data-disabled]):not([data-readonly])[aria-expanded='true'] {
       background: var(--lobe-select-open-bg, ${cssVar.colorFillTertiary});
     }
 
@@ -214,7 +225,21 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     &[data-disabled] {
       cursor: not-allowed;
       color: ${cssVar.colorTextDisabled};
-      opacity: 0.6;
+      background: var(--lobe-select-disabled-bg, transparent);
+
+      &:hover {
+        background: var(--lobe-select-disabled-bg, transparent);
+      }
+    }
+
+    &[data-readonly] {
+      cursor: default;
+      color: ${cssVar.colorTextSecondary};
+      background: var(--lobe-select-readonly-bg, transparent);
+
+      &:hover {
+        background: var(--lobe-select-readonly-bg, transparent);
+      }
     }
 
     &[data-disabled] [data-role='lobe-select-clear'] {

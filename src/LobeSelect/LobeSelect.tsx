@@ -81,6 +81,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
     prefix,
     readOnly,
     required,
+    behaviorVariant = 'default',
     shadow,
     showSearch,
     size = 'middle',
@@ -95,6 +96,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
     const { isDarkMode } = useThemeMode();
     const resolvedVariant = variant ?? (isDarkMode ? 'filled' : 'outlined');
     const isMultiple = mode === 'multiple' || mode === 'tags';
+    const isItemAligned = behaviorVariant === 'item-aligned';
 
     const [uncontrolledValue, setUncontrolledValue] = useState<any>(() => {
       if (defaultValue !== undefined) return defaultValue;
@@ -459,9 +461,12 @@ const LobeSelect = memo<LobeSelectProps<any>>(
     }, [loading, suffixIcon, suffixIconProps]);
 
     const popupStyle = useMemo(() => {
+      const maxHeight = isItemAligned ? '80vh' : '450px';
       const baseStyle: React.CSSProperties = {
+        maxHeight,
         maxWidth: 'var(--available-width)',
         minWidth: 'var(--anchor-width)',
+        ['--lobe-select-popup-max-height' as any]: maxHeight,
       };
 
       if (popupMatchSelectWidth === undefined || popupMatchSelectWidth === true) {
@@ -478,7 +483,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
         ...baseStyle,
         minWidth: 'max-content',
       };
-    }, [popupMatchSelectWidth]);
+    }, [isItemAligned, popupMatchSelectWidth]);
 
     const triggerClassName = cx(
       triggerVariants({ shadow, size, variant: resolvedVariant }),
@@ -498,7 +503,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
       const estimatedHeight = visibleRows * estimatedRowHeight + 8;
 
       return {
-        height: `min(${estimatedHeight}px, var(--available-height))`,
+        height: `min(${estimatedHeight}px, var(--lobe-select-available-height, var(--available-height)))`,
       };
     }, [filteredOptions, listItemHeight, size, virtual]);
 
@@ -586,7 +591,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
       <Select.Root
         disabled={disabled}
         id={id}
-        modal={false}
+        modal={isItemAligned}
         multiple={isMultiple}
         name={name}
         onOpenChange={handleOpenChange}
@@ -627,7 +632,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
         <Select.Portal container={portalContainer}>
           <Select.Positioner
             align="start"
-            alignItemWithTrigger={false}
+            alignItemWithTrigger={isItemAligned}
             className={styles.positioner}
             side="bottom"
             sideOffset={6}
