@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 4.26.0](https://github.com/lobehub/lobe-ui/compare/v4.25.0...v4.26.0)
+
+<sup>Released on **2026-01-21**</sup>
+
+#### ✨ Features
+
+- **misc**: Enhance LobeSelect component with behavior variants and improved styles.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Enhance LobeSelect component with behavior variants and improved styles ([8f72f6b](https://github.com/lobehub/lobe-ui/commit/8f72f6b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.25.0](https://github.com/lobehub/lobe-ui/compare/v4.24.0...v4.25.0)
 
 <sup>Released on **2026-01-21**</sup>
