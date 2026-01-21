@@ -133,66 +133,42 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       0 0 0 1px ${cssVar.colorBorder} inset;
   `,
   positioner: css`
+    --lobe-dropdown-animation-duration: 140ms;
+    --lobe-dropdown-animation-scale-y: 0.92;
+    --lobe-dropdown-animation-ease-in: ease-in;
+    --lobe-dropdown-animation-ease-out: ${cssVar.motionEaseOut};
+
     z-index: 1100;
+
+    & > * {
+      will-change: opacity, transform;
+      transform-origin: var(--transform-origin);
+      animation: none;
+    }
+
+    &[data-open] > * {
+      transform: scaleY(1);
+      opacity: 1;
+      transition:
+        opacity var(--lobe-dropdown-animation-duration) var(--lobe-dropdown-animation-ease-out),
+        transform var(--lobe-dropdown-animation-duration) var(--lobe-dropdown-animation-ease-out);
+    }
+
+    &[data-open] > *[data-starting-style] {
+      transform: scaleY(var(--lobe-dropdown-animation-scale-y));
+      opacity: 0;
+    }
+
+    &[data-closed] > * {
+      transform: scaleY(var(--lobe-dropdown-animation-scale-y));
+      opacity: 0;
+      transition:
+        opacity var(--lobe-dropdown-animation-duration) var(--lobe-dropdown-animation-ease-in),
+        transform var(--lobe-dropdown-animation-duration) var(--lobe-dropdown-animation-ease-in);
+    }
 
     &[data-hover-trigger] {
       --lobe-dropdown-animation-duration: 140ms;
-      --lobe-dropdown-animation-translate: 6px;
-      --lobe-dropdown-animation-scale: 0.98;
-      --lobe-dropdown-animation-ease-in: ease-in;
-      --lobe-dropdown-animation-ease-out: ${cssVar.motionEaseOut};
-      --lobe-dropdown-translate-x: 0;
-      --lobe-dropdown-translate-y: calc(var(--lobe-dropdown-animation-translate) * -1);
-
-      & > * {
-        will-change: opacity, transform;
-        animation: none;
-      }
-
-      &[data-open] > * {
-        transform: translate3d(0, 0, 0) scale(1);
-        opacity: 1;
-        transition:
-          opacity var(--lobe-dropdown-animation-duration) var(--lobe-dropdown-animation-ease-out),
-          transform var(--lobe-dropdown-animation-duration) var(--lobe-dropdown-animation-ease-out);
-      }
-
-      &[data-open] > *[data-starting-style] {
-        transform: translate3d(
-            var(--lobe-dropdown-translate-x),
-            var(--lobe-dropdown-translate-y),
-            0
-          )
-          scale(var(--lobe-dropdown-animation-scale));
-        opacity: 0;
-      }
-
-      &[data-closed] > * {
-        transform: translate3d(
-            var(--lobe-dropdown-translate-x),
-            var(--lobe-dropdown-translate-y),
-            0
-          )
-          scale(var(--lobe-dropdown-animation-scale));
-        opacity: 0;
-        transition:
-          opacity var(--lobe-dropdown-animation-duration) var(--lobe-dropdown-animation-ease-in),
-          transform var(--lobe-dropdown-animation-duration) var(--lobe-dropdown-animation-ease-in);
-      }
-
-      &[data-placement='top'],
-      &[data-placement='topCenter'],
-      &[data-placement='topLeft'],
-      &[data-placement='topRight'] {
-        --lobe-dropdown-translate-y: var(--lobe-dropdown-animation-translate);
-      }
-
-      &[data-placement='bottom'],
-      &[data-placement='bottomCenter'],
-      &[data-placement='bottomLeft'],
-      &[data-placement='bottomRight'] {
-        --lobe-dropdown-translate-y: calc(var(--lobe-dropdown-animation-translate) * -1);
-      }
     }
   `,
 

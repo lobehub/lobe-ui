@@ -1,4 +1,4 @@
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
 import { lobeStaticStylish } from '@/styles';
@@ -14,7 +14,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       height: 100%;
     }
   `,
-  borderless: lobeStaticStylish.variantBorderless,
+  borderless: cx(
+    lobeStaticStylish.variantBorderless,
+    css`
+      --lobe-select-open-bg: ${cssVar.colorFillTertiary};
+    `,
+  ),
   clear: css`
     display: inline-flex;
     align-items: center;
@@ -30,7 +35,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   empty: css``,
-  filled: lobeStaticStylish.variantFilled,
+  filled: cx(
+    lobeStaticStylish.variantFilled,
+    css`
+      --lobe-select-open-bg: ${cssVar.colorFillSecondary};
+    `,
+  ),
   group: css``,
   groupLabel: css``,
   icon: css`
@@ -59,7 +69,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     max-height: var(--available-height);
     padding-block: 0;
   `,
-  outlined: lobeStaticStylish.variantOutlined,
+  outlined: cx(
+    lobeStaticStylish.variantOutlined,
+    css`
+      --lobe-select-open-bg: ${cssVar.colorFillTertiary};
+    `,
+  ),
   popup: css`
     transform-origin: var(--transform-origin);
     box-sizing: border-box;
@@ -69,7 +84,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     &[data-starting-style],
     &[data-ending-style] {
-      transform: scale(0.98);
+      transform: scaleY(0.92);
       opacity: 0;
     }
   `,
@@ -174,6 +189,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     outline: none;
 
     transition: all 150ms ${cssVar.motionEaseOut};
+
+    &:not([data-disabled])[data-popup-open],
+    &:not([data-disabled])[data-open],
+    &:not([data-disabled])[data-state='open'],
+    &:not([data-disabled])[aria-expanded='true'] {
+      background: var(--lobe-select-open-bg, ${cssVar.colorFillTertiary});
+    }
 
     &:focus-visible {
       outline: 2px solid ${cssVar.colorPrimaryBorder};
