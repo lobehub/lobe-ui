@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.27.1](https://github.com/lobehub/lobe-ui/compare/v4.27.0...v4.27.1)
+
+<sup>Released on **2026-01-21**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Update Tooltip styles to disable pointer events.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Update Tooltip styles to disable pointer events ([08a8828](https://github.com/lobehub/lobe-ui/commit/08a8828))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.27.0](https://github.com/lobehub/lobe-ui/compare/v4.26.0...v4.27.0)
 
 <sup>Released on **2026-01-21**</sup>
