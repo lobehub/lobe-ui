@@ -17,6 +17,10 @@ description: Modal component displays content in a layer that appears above the 
 
 <code src="./demos/raw.tsx" center></code>
 
+## Context Bridge
+
+<code src="./demos/contextBridge.tsx" center></code>
+
 ## APIs
 
 ### Modal
@@ -96,6 +100,43 @@ Inside the imperative modal content, you can access modal actions via `useModalC
 | --------------------------- | ------------------------- | -------------------------- |
 | close                       | Close the modal           | `() => void`               |
 | setCanDismissByClickOutside | Toggle mask click dismiss | `(value: boolean) => void` |
+
+### ModalStackProvider
+
+`ModalStackProvider` allows modals created via `useModalStack()` to access React contexts from the provider's location, even though modals are portaled to `ModalHost`.
+
+| Property | Description                                          | Type             | Default |
+| -------- | ---------------------------------------------------- | ---------------- | ------- |
+| contexts | Array of React contexts to bridge into modals        | `Context<any>[]` | `[]`    |
+| children | Child components that can use `useModalStack()` hook | `ReactNode`      | -       |
+
+```tsx | pure
+import { ModalStackProvider, useModalStack } from '@lobehub/ui';
+
+// Pass contexts you want to be available inside modals
+<ModalStackProvider contexts={[ThemeContext, I18nContext]}>
+  <App />
+</ModalStackProvider>;
+```
+
+### useModalStack
+
+`useModalStack` returns modal creation functions that automatically bridge the contexts specified in `ModalStackProvider`.
+
+| Name           | Description                              | Type                                        |
+| -------------- | ---------------------------------------- | ------------------------------------------- |
+| createModal    | Create a modal with context bridging     | `(props: ImperativeModalProps) => Instance` |
+| createRawModal | Create a raw modal with context bridging | Same as global `createRawModal`             |
+
+```tsx | pure
+const { createModal } = useModalStack();
+
+// Modal content can access ThemeContext and I18nContext
+createModal({
+  title: 'My Modal',
+  children: <ModalContent />,
+});
+```
 
 ### ModalProvider
 

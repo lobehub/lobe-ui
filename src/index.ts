@@ -284,6 +284,7 @@ export {
   type SyntaxMermaidProps,
 } from './Mermaid';
 export {
+  type ContextBridgeComponent,
   createModal,
   createRawModal,
   type ImperativeModalProps,
@@ -293,12 +294,15 @@ export {
   type ModalInstance,
   type ModalProps,
   ModalProvider,
+  type ModalStackContextValue,
+  ModalStackProvider,
   type RawModalComponent,
   type RawModalComponentProps,
   type RawModalInstance,
   type RawModalKeyOptions,
   type RawModalOptions,
   useModalContext,
+  useModalStack,
 } from './Modal';
 export type { MotionComponentType } from './MotionProvider';
 export { MotionComponent, MotionProvider, useMotionComponent } from './MotionProvider';
