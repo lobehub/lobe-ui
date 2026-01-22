@@ -2,7 +2,7 @@
 
 import { getEmoji } from '@lobehub/fluent-emoji';
 import { Avatar as AntAvatar } from 'antd';
-import { cssVar, cx, useTheme } from 'antd-style';
+import { cssVar, cx } from 'antd-style';
 import { Loader2 } from 'lucide-react';
 import { memo, useMemo, useState } from 'react';
 
@@ -44,7 +44,6 @@ const Avatar = memo<AvatarProps>(
     ref,
     ...rest
   }) => {
-    const theme = useTheme();
     const isStringAvatar = typeof avatar === 'string';
 
     const isDefaultAntAvatar = useMemo(() => checkIsDefaultAntAvatar(avatar), [avatar]);
@@ -59,7 +58,7 @@ const Avatar = memo<AvatarProps>(
 
     const imgAlt = alt || title || 'avatar';
 
-    const defualtAvatar = useMemo(
+    const defaultAvatar = useMemo(
       () =>
         typeof avatar === 'string' ? (
           <Img
@@ -106,8 +105,8 @@ const Avatar = memo<AvatarProps>(
 
     // Get actual color value for readableColor (CSS variables can't be parsed)
     const actualColorForReadable = useMemo(
-      () => getActualColorForReadable(background, theme.colorBorder),
-      [background, theme.colorBorder],
+      () => getActualColorForReadable(background, cssVar.colorBorder),
+      [background],
     );
 
     const avatarStyle = useMemo(
@@ -150,7 +149,7 @@ const Avatar = memo<AvatarProps>(
         ref={ref}
         shape={shape}
         size={size}
-        src={isDefaultAntAvatar && !isImgError ? defualtAvatar : undefined}
+        src={isDefaultAntAvatar && !isImgError ? defaultAvatar : undefined}
         style={avatarStyle}
         {...rest}
       >

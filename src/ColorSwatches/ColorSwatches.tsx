@@ -1,7 +1,7 @@
 'use client';
 
 import { ColorPicker } from 'antd';
-import { cssVar, cx, useTheme } from 'antd-style';
+import { cssVar, cx } from 'antd-style';
 import chroma from 'chroma-js';
 import { CheckIcon } from 'lucide-react';
 import { rgba } from 'polished';
@@ -30,7 +30,6 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
   ref,
   ...rest
 }) => {
-  const theme = useTheme();
   const [active, setActive] = useMergeState(defaultValue, {
     defaultValue,
     onChange,
@@ -64,7 +63,7 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
     >
       {enableColorSwatches &&
         colors.map((c, i) => {
-          const color = c.color || theme.colorPrimary;
+          const color = c.color || cssVar.colorPrimary;
           const isActive = (!active && !c.color) || color === active;
           // Check if color is transparent or CSS variable (which chroma can't parse)
           const isTransparent =
@@ -79,7 +78,7 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
                 }
               })());
           // Get actual color value for readableColor (CSS variables can't be parsed)
-          const actualColorForReadable = c.color?.startsWith('var(') ? theme.colorPrimary : color;
+          const actualColorForReadable = c.color?.startsWith('var(') ? cssVar.colorPrimary : color;
           return (
             <Tooltip key={c?.key || i} title={c.title}>
               <Center

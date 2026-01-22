@@ -1,6 +1,6 @@
 'use client';
 
-import { cssVar, useTheme } from 'antd-style';
+import { cssVar } from 'antd-style';
 import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
@@ -33,8 +33,7 @@ const SkeletonTags: FC<SkeletonTagsProps> = ({
   width,
   ...rest
 }) => {
-  const theme = useTheme();
-  const resolvedGap = gap ?? theme.paddingXS ?? 4;
+  const resolvedGap = gap !== undefined ? `${gap}px` : cssVar.paddingXS;
   const resolvedCount = Math.max(count, 1);
   const resolvedHeight = height ?? HEIGHT_MAP[size];
   const widthList = Array.isArray(width) ? width : null;

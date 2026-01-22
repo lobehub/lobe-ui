@@ -1,12 +1,10 @@
 'use client';
 
-import { useTheme } from 'antd-style';
+import { cssVar } from 'antd-style';
 import { type FC } from 'react';
 
 import SkeletonBlock from './SkeletonBlock';
 import type { SkeletonTitleProps } from './type';
-
-const DEFAULT_FONT_SIZE = 18;
 
 const SkeletonTitle: FC<SkeletonTitleProps> = ({
   active,
@@ -18,19 +16,21 @@ const SkeletonTitle: FC<SkeletonTitleProps> = ({
   className,
   ...rest
 }) => {
-  const theme = useTheme();
-  const baseFontSize = fontSize ?? theme.fontSize ?? DEFAULT_FONT_SIZE;
   const resolvedLineHeight = lineHeight ?? 1.6;
-  const computedHeight = height ? height : Math.round(baseFontSize * resolvedLineHeight);
-  const marginBlock = computedHeight - baseFontSize;
+  const baseFontSize = fontSize !== undefined ? `${fontSize}px` : cssVar.fontSize;
+
+  // height = baseFontSize * (1 + (lineHeight - 1) * 0.5)
+  const heightMultiplier = 1 + (resolvedLineHeight - 1) * 0.5;
+  // marginBlock = baseFontSize * (lineHeight - 1) * 0.25
+  const marginMultiplier = (resolvedLineHeight - 1) * 0.25;
 
   return (
     <SkeletonBlock
       active={active}
       className={className}
-      height={Math.round(baseFontSize + marginBlock * 0.5)}
+      height={height ?? `round(calc(${baseFontSize} * ${heightMultiplier}), 1px)`}
       style={{
-        marginBlock: Math.round((marginBlock * 0.5) / 2),
+        marginBlock: `round(calc(${baseFontSize} * ${marginMultiplier}), 1px)`,
         ...style,
       }}
       width={width}
