@@ -53,10 +53,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       'ant-highlighter-highlighter-shiki',
       css`
         pre {
+          user-select: none;
+
           code {
             display: block;
 
             .line {
+              user-select: text;
+
               display: inline-block;
 
               width: calc(100% + 32px);
