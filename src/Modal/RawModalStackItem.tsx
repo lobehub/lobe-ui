@@ -1,7 +1,9 @@
 'use client';
 
 import type { ComponentType } from 'react';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
+
+import { useEventCallback } from '@/hooks/useEventCallback';
 
 import { ModalProvider } from './ModalProvider';
 import type { ModalContextValue, RawModalOptions } from './type';
@@ -26,11 +28,16 @@ export const RawModalStackItem = memo(
     options,
     props,
   }: RawModalStackItemProps) => {
-    const close = () => onClose(id);
-    const setCanDismissByClickOutside = (value: boolean) => {
+    const stableOnClose = useEventCallback(onClose);
+    const close = useEventCallback(() => stableOnClose(id));
+
+    const setCanDismissByClickOutside = useEventCallback((value: boolean) => {
       onUpdate(id, { maskClosable: value });
-    };
-    const contextValue: ModalContextValue = { close, setCanDismissByClickOutside };
+    });
+    const contextValue: ModalContextValue = useMemo(
+      () => ({ close, setCanDismissByClickOutside }),
+      [close, setCanDismissByClickOutside],
+    );
     const openKey = options?.openKey ?? 'open';
     const onCloseKey = options?.onCloseKey ?? 'onClose';
     const injectedProps = {

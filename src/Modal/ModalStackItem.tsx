@@ -1,10 +1,12 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
+
+import { useEventCallback } from '@/hooks/useEventCallback';
 
 import Modal from './Modal';
 import { ModalProvider } from './ModalProvider';
-import type { ImperativeModalProps, ModalContextValue } from './type';
+import type { ImperativeModalProps } from './type';
 
 export type ModalStackItemProps = {
   id: string;
@@ -14,33 +16,46 @@ export type ModalStackItemProps = {
   props: ImperativeModalProps;
 };
 
+const noop = () => {};
 export const ModalStackItem = memo(
   ({ id, props, onClose, onUpdate, onDestroy }: ModalStackItemProps) => {
     const { afterClose, afterOpenChange, children, onCancel, open, ...rest } = props;
-    const close = () => onClose(id);
-    const setCanDismissByClickOutside = (value: boolean) => {
-      onUpdate(id, { maskClosable: value });
-    };
-    const contextValue: ModalContextValue = { close, setCanDismissByClickOutside };
+    const stableAfterClose = useEventCallback(afterClose ?? noop);
+    const stableAfterOpenChange = useEventCallback(afterOpenChange ?? noop);
+    const stableOnCancel = useEventCallback(onCancel ?? noop);
+    const close = useEventCallback(() => onClose(id));
+    const setCanDismissByClickOutside = useEventCallback((value: boolean) =>
+      onUpdate(id, { maskClosable: value }),
+    );
+    const stableContextValue = useMemo(
+      () => ({ close, setCanDismissByClickOutside }),
+      [close, setCanDismissByClickOutside],
+    );
 
     return (
       <Modal
         {...rest}
-        afterClose={() => {
-          afterClose?.();
+        afterClose={useCallback(() => {
+          stableAfterClose?.();
           onDestroy(id);
-        }}
-        afterOpenChange={(nextOpen) => {
-          afterOpenChange?.(nextOpen);
-          if (!nextOpen) onDestroy(id);
-        }}
-        onCancel={(event) => {
-          onCancel?.(event as any);
-          close();
-        }}
+        }, [stableAfterClose, onDestroy, id])}
+        afterOpenChange={useCallback(
+          (nextOpen: boolean) => {
+            stableAfterOpenChange?.(nextOpen);
+            if (!nextOpen) onDestroy(id);
+          },
+          [stableAfterOpenChange, onDestroy, id],
+        )}
+        onCancel={useCallback(
+          (event: React.MouseEvent<HTMLButtonElement>) => {
+            stableOnCancel?.(event);
+            close();
+          },
+          [stableOnCancel, close],
+        )}
         open={open ?? true}
       >
-        <ModalProvider value={contextValue}>{children}</ModalProvider>
+        <ModalProvider value={stableContextValue}>{children}</ModalProvider>
       </Modal>
     );
   },
