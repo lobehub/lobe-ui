@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.27.2](https://github.com/lobehub/lobe-ui/compare/v4.27.1...v4.27.2)
+
+<sup>Released on **2026-01-22**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Select code has right selection.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Select code has right selection ([32f5c1a](https://github.com/lobehub/lobe-ui/commit/32f5c1a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.27.1](https://github.com/lobehub/lobe-ui/compare/v4.27.0...v4.27.1)
 
 <sup>Released on **2026-01-21**</sup>
