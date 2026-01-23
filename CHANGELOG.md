@@ -2,6 +2,39 @@
 
 # Changelog
 
+### [Version 4.27.5](https://github.com/lobehub/lobe-ui/compare/v4.27.4...v4.27.5)
+
+<sup>Released on **2026-01-23**</sup>
+
+#### 🐛 Bug Fixes
+
+- **misc**: Dropdown and tooltip hover interaction bug.
+
+#### 💄 Styles
+
+- **misc**: Change menu group title from uppercase to capitalize.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **misc**: Dropdown and tooltip hover interaction bug ([0277f9f](https://github.com/lobehub/lobe-ui/commit/0277f9f))
+
+#### Styles
+
+- **misc**: Change menu group title from uppercase to capitalize ([85799bc](https://github.com/lobehub/lobe-ui/commit/85799bc))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.27.4](https://github.com/lobehub/lobe-ui/compare/v4.27.3...v4.27.4)
 
 <sup>Released on **2026-01-22**</sup>
