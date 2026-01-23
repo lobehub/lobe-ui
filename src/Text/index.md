@@ -9,6 +9,10 @@ description: Text component is used to display text content with various styles 
 
 <code src="./demos/index.tsx" nopadding></code>
 
+## Tooltip When Overflow
+
+<code src="./demos/TooltipWhenOverflow.tsx" nopadding></code>
+
 ## APIs
 
 ### Text

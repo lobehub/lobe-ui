@@ -15,6 +15,7 @@ export interface TextProps extends DivProps {
     | {
         rows?: number;
         tooltip?: boolean | string | TooltipProps;
+        tooltipWhenOverflow?: boolean;
       };
   fontSize?: number | string;
   italic?: boolean;

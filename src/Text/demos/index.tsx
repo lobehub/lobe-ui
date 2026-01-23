@@ -4,7 +4,7 @@ import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 export default () => {
   const store = useCreateStore();
 
-  const { ellipsisRows, ...controls } = useControls(
+  const { ellipsisRows, tooltip, tooltipWhenOverflow, ...controls } = useControls(
     {
       as: {
         options: ['div', 'h1', 'h2', 'h3', 'h4', 'h5', 'p', 'span'],
@@ -26,6 +26,14 @@ export default () => {
       italic: false,
       mark: false,
       strong: false,
+      tooltip: {
+        render: (get) => get('ellipsis'),
+        value: false,
+      },
+      tooltipWhenOverflow: {
+        render: (get) => get('ellipsis') && get('tooltip'),
+        value: false,
+      },
       type: {
         options: ['default', 'secondary', 'success', 'warning', 'danger', 'info'],
         value: 'default',
@@ -48,6 +56,8 @@ export default () => {
             controls.ellipsis
               ? {
                   rows: ellipsisRows,
+                  tooltip,
+                  tooltipWhenOverflow,
                 }
               : undefined
           }

@@ -1,9 +1,10 @@
 'use client';
 
 import { cx } from 'antd-style';
-import { type FC } from 'react';
+import { type FC, useRef } from 'react';
 
 import Tooltip from '@/Tooltip';
+import { useTextOverflow } from '@/hooks/useTextOverflow';
 
 import { variants } from './styles';
 import type { TextProps } from './type';
@@ -28,6 +29,11 @@ const Text: FC<TextProps> = ({
   ellipsis,
   ...rest
 }) => {
+  const textRef = useRef<HTMLElement>(null);
+  const isOverflow = useTextOverflow(textRef, ellipsis, children);
+
+  const tooltipWhenOverflow = typeof ellipsis === 'object' && ellipsis.tooltipWhenOverflow;
+
   const textStyle = {
     ...(color && { color }),
     ...(weight && { fontWeight: weight }),
@@ -63,6 +69,7 @@ const Text: FC<TextProps> = ({
         }),
         className,
       )}
+      ref={textRef}
       style={textStyle}
       {...rest}
     >
@@ -72,6 +79,11 @@ const Text: FC<TextProps> = ({
 
   // 处理带有 tooltip 的省略
   if (ellipsis && typeof ellipsis === 'object' && ellipsis.tooltip) {
+    // 如果设置了 tooltipWhenOverflow，只在溢出时显示 tooltip
+    if (tooltipWhenOverflow && !isOverflow) {
+      return content;
+    }
+
     const title = typeof ellipsis.tooltip === 'string' ? ellipsis.tooltip : children;
     if (typeof ellipsis.tooltip === 'object')
       return (
