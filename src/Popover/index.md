@@ -65,6 +65,12 @@ When using Tooltip inside Popover, the Tooltip will automatically render into th
 
 <code src="./demos/tooltip-inside.tsx" nopadding></code>
 
+## Tooltip Hover Stay
+
+When using Tooltip inside Popover, the Tooltip will automatically render into the Popover's container to avoid z-index stacking issues.
+
+<code src="./demos/tooltip-hover-stay.tsx" nopadding></code>
+
 ## APIs
 
 ### Popover

@@ -47,7 +47,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   popup: css`
-    pointer-events: none;
     user-select: none;
 
     position: relative;

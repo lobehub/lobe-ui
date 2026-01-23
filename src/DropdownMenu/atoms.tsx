@@ -10,6 +10,7 @@ import { cloneElement, isValidElement, useCallback, useState } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 import { styles } from '@/Menu/sharedStyle';
+import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { usePortalContainer } from '@/hooks/usePortalContainer';
 import { CLASSNAMES } from '@/styles/classNames';
@@ -112,9 +113,11 @@ export const DropdownMenuPositioner = ({
   align,
   side,
   sideOffset,
+  children,
   ...rest
 }: DropdownMenuPositionerProps) => {
   const placementConfig = placement ? placementMap[placement] : undefined;
+  const [positionerNode, setPositionerNode] = useState<HTMLDivElement | null>(null);
 
   return (
     <Menu.Positioner
@@ -123,9 +126,12 @@ export const DropdownMenuPositioner = ({
       className={mergeStateClassName(styles.positioner, className as any) as any}
       data-hover-trigger={hoverTrigger || undefined}
       data-placement={placement}
+      ref={setPositionerNode}
       side={side ?? placementConfig?.side}
       sideOffset={sideOffset ?? (placementConfig ? 6 : undefined)}
-    />
+    >
+      <FloatingLayerProvider value={positionerNode}>{children}</FloatingLayerProvider>
+    </Menu.Positioner>
   );
 };
 

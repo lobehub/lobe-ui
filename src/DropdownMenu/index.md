@@ -55,6 +55,12 @@ Exported primitives can be composed to build custom dropdown menus.
 
 <code src="./demos/uploader.tsx" center></code>
 
+## Tooltip Hover Stay
+
+When using Tooltip inside DropdownMenu, wrap both in `TooltipGroup` to ensure the DropdownMenu stays open when hovering over the Tooltip content.
+
+<code src="./demos/tooltip-hover-stay.tsx" center></code>
+
 ## APIs
 
 ### DropdownMenuV2
