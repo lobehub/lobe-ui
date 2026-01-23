@@ -94,6 +94,7 @@ const DropdownMenu = memo<DropdownMenuProps>(
       <Menu.Root
         {...rest}
         defaultOpen={defaultOpen}
+        modal={false}
         onOpenChange={handleOpenChange}
         onOpenChangeComplete={handleOpenChangeComplete}
         open={open}
