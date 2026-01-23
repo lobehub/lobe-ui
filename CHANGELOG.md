@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 4.28.0](https://github.com/lobehub/lobe-ui/compare/v4.27.5...v4.28.0)
+
+<sup>Released on **2026-01-23**</sup>
+
+#### ✨ Features
+
+- **text**: Add tooltipWhenOverflow prop for conditional tooltip display.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **text**: Add tooltipWhenOverflow prop for conditional tooltip display ([8f37fa1](https://github.com/lobehub/lobe-ui/commit/8f37fa1))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.27.5](https://github.com/lobehub/lobe-ui/compare/v4.27.4...v4.27.5)
 
 <sup>Released on **2026-01-23**</sup>
