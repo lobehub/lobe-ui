@@ -32,7 +32,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     font-weight: 500;
     line-height: 16px;
     color: ${cssVar.colorTextTertiary};
-    text-transform: uppercase;
+    text-transform: capitalize;
   `,
 
   icon: css`
