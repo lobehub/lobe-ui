@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.28.2](https://github.com/lobehub/lobe-ui/compare/v4.28.1...v4.28.2)
+
+<sup>Released on **2026-01-24**</sup>
+
+#### 🐛 Bug Fixes
+
+- **dropdown**: Explicitly set modal prop to false in DropdownMenuRoot component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **dropdown**: Explicitly set modal prop to false in DropdownMenuRoot component ([841bb00](https://github.com/lobehub/lobe-ui/commit/841bb00))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.28.1](https://github.com/lobehub/lobe-ui/compare/v4.28.0...v4.28.1)
 
 <sup>Released on **2026-01-23**</sup>
