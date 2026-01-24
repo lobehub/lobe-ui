@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 4.29.0](https://github.com/lobehub/lobe-ui/compare/v4.28.2...v4.29.0)
+
+<sup>Released on **2026-01-24**</sup>
+
+#### ✨ Features
+
+- **ui**: Add selectedIndicatorVariant for customizable item selection display.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **ui**: Add selectedIndicatorVariant for customizable item selection display ([52cded2](https://github.com/lobehub/lobe-ui/commit/52cded2))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.28.2](https://github.com/lobehub/lobe-ui/compare/v4.28.1...v4.28.2)
 
 <sup>Released on **2026-01-24**</sup>
