@@ -17,6 +17,10 @@ description: Base UI-powered Select component with Lobe UI styling.
 
 <code src="./demos/render.tsx" nopadding></code>
 
+## Selected Indicator Variant
+
+<code src="./demos/indicator.tsx" nopadding></code>
+
 ## Virtual List
 
 <code src="./demos/virtual.tsx" nopadding></code>

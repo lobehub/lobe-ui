@@ -94,6 +94,7 @@ export default () => {
         placeholder="Pick a visual tone"
         popupMatchSelectWidth={false}
         prefix={Palette}
+        selectedIndicatorVariant="bold"
         style={{ width: 320 }}
         suffixIcon={Sparkles}
       />

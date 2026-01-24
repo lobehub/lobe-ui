@@ -6,6 +6,13 @@ export type LobeSelectSize = 'large' | 'middle' | 'small';
 export type LobeSelectVariant = 'borderless' | 'filled' | 'outlined';
 export type LobeSelectBehaviorVariant = 'default' | 'item-aligned';
 
+/**
+ * Variant for how selected items are indicated in the popup.
+ * - `check`: Display a checkmark icon next to selected items (default)
+ * - `bold`: Display selected items with bold text, no checkmark
+ */
+export type LobeSelectIndicatorVariant = 'check' | 'bold';
+
 export interface LobeSelectOption<Value = string> {
   className?: string;
   disabled?: boolean;
@@ -83,6 +90,13 @@ export interface LobeSelectProps<Value = string> {
   prefix?: ReactNode | IconProps['icon'];
   readOnly?: boolean;
   required?: boolean;
+  /**
+   * Variant for how selected items are indicated in the popup.
+   * - `check`: Display a checkmark icon next to selected items (default)
+   * - `bold`: Display selected items with bold text, no checkmark
+   * @default 'check'
+   */
+  selectedIndicatorVariant?: LobeSelectIndicatorVariant;
   shadow?: boolean;
   showSearch?: boolean;
   size?: LobeSelectSize;

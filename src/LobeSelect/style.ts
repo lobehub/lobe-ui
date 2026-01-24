@@ -57,6 +57,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   item: css``,
+  itemBoldSelected: css`
+    &[data-selected] {
+      font-weight: 600;
+    }
+  `,
   itemIndicator: css`
     display: inline-flex;
     align-items: center;

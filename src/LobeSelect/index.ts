@@ -38,6 +38,7 @@ export { default } from './LobeSelect';
 export type {
   LobeSelectBehaviorVariant,
   LobeSelectClassNames,
+  LobeSelectIndicatorVariant,
   LobeSelectOption,
   LobeSelectOptionGroup,
   LobeSelectOptions,

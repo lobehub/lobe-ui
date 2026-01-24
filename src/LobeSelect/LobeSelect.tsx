@@ -82,6 +82,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
     readOnly,
     required,
     behaviorVariant = 'default',
+    selectedIndicatorVariant = 'check',
     shadow,
     showSearch,
     size = 'middle',
@@ -512,6 +513,8 @@ const LobeSelect = memo<LobeSelectProps<any>>(
       styles.itemText,
       classNames?.itemText,
     );
+
+    const isBoldIndicator = selectedIndicatorVariant === 'bold';
     let optionIndex = 0;
     const renderOptions = (items: LobeSelectOptions) =>
       items.map((item, index) => {
@@ -530,6 +533,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
                     className={cx(
                       menuStyles.item,
                       styles.item,
+                      isBoldIndicator && styles.itemBoldSelected,
                       classNames?.item,
                       classNames?.option,
                       option.className,
@@ -546,11 +550,13 @@ const LobeSelect = memo<LobeSelectProps<any>>(
                     <Select.ItemText className={itemTextClassName}>
                       {optionRender ? optionRender(option, { index: currentIndex }) : option.label}
                     </Select.ItemText>
-                    <Select.ItemIndicator
-                      className={cx(styles.itemIndicator, classNames?.itemIndicator)}
-                    >
-                      <Icon icon={Check} size={'small'} />
-                    </Select.ItemIndicator>
+                    {!isBoldIndicator && (
+                      <Select.ItemIndicator
+                        className={cx(styles.itemIndicator, classNames?.itemIndicator)}
+                      >
+                        <Icon icon={Check} size={'small'} />
+                      </Select.ItemIndicator>
+                    )}
                   </Select.Item>
                 );
               })}
@@ -564,6 +570,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
             className={cx(
               menuStyles.item,
               styles.item,
+              isBoldIndicator && styles.itemBoldSelected,
               classNames?.item,
               classNames?.option,
               item.className,
@@ -580,9 +587,11 @@ const LobeSelect = memo<LobeSelectProps<any>>(
             <Select.ItemText className={itemTextClassName}>
               {optionRender ? optionRender(item, { index: currentIndex }) : item.label}
             </Select.ItemText>
-            <Select.ItemIndicator className={cx(styles.itemIndicator, classNames?.itemIndicator)}>
-              <Icon icon={Check} size={'small'} />
-            </Select.ItemIndicator>
+            {!isBoldIndicator && (
+              <Select.ItemIndicator className={cx(styles.itemIndicator, classNames?.itemIndicator)}>
+                <Icon icon={Check} size={'small'} />
+              </Select.ItemIndicator>
+            )}
           </Select.Item>
         );
       });
