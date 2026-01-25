@@ -71,6 +71,10 @@ When using Tooltip inside Popover, the Tooltip will automatically render into th
 
 <code src="./demos/tooltip-hover-stay.tsx" nopadding></code>
 
+## Native Button Auto Detection
+
+<code src="./demos/native-button.tsx" nopadding></code>
+
 ## APIs
 
 ### Popover
