@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 4.30.0](https://github.com/lobehub/lobe-ui/compare/v4.29.0...v4.30.0)
+
+<sup>Released on **2026-01-25**</sup>
+
+#### ✨ Features
+
+- **popover**: Add native button auto detection feature.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **popover**: Add native button auto detection feature ([7a6ba85](https://github.com/lobehub/lobe-ui/commit/7a6ba85))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.29.0](https://github.com/lobehub/lobe-ui/compare/v4.28.2...v4.29.0)
 
 <sup>Released on **2026-01-24**</sup>
