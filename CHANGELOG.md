@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.30.2](https://github.com/lobehub/lobe-ui/compare/v4.30.1...v4.30.2)
+
+<sup>Released on **2026-01-25**</sup>
+
+#### 🐛 Bug Fixes
+
+- **select**: Increase default listHeight to 512 for improved dropdown visibility.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **select**: Increase default listHeight to 512 for improved dropdown visibility ([2eeb7b1](https://github.com/lobehub/lobe-ui/commit/2eeb7b1))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.30.1](https://github.com/lobehub/lobe-ui/compare/v4.30.0...v4.30.1)
 
 <sup>Released on **2026-01-25**</sup>
