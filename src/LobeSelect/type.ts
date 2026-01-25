@@ -71,6 +71,11 @@ export interface LobeSelectProps<Value = string> {
   disabled?: boolean;
   id?: string;
   labelRender?: (option: LobeSelectOption<Value>) => ReactNode;
+  /**
+   * 设置弹窗滚动高度
+   * @default 256
+   */
+  listHeight?: number;
   listItemHeight?: number;
   loading?: boolean;
   mode?: 'multiple' | 'tags';

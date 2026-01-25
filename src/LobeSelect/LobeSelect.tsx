@@ -64,8 +64,9 @@ const LobeSelect = memo<LobeSelectProps<any>>(
     defaultValue,
     disabled,
     id,
-    listItemHeight,
     labelRender,
+    listHeight = 256,
+    listItemHeight,
     loading,
     mode,
     name,
@@ -462,7 +463,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
     }, [loading, suffixIcon, suffixIconProps]);
 
     const popupStyle = useMemo(() => {
-      const maxHeight = isItemAligned ? '80vh' : '450px';
+      const maxHeight = isItemAligned ? '80vh' : `${listHeight}px`;
       const baseStyle: React.CSSProperties = {
         maxHeight,
         maxWidth: 'var(--available-width)',
@@ -484,7 +485,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
         ...baseStyle,
         minWidth: 'max-content',
       };
-    }, [isItemAligned, popupMatchSelectWidth]);
+    }, [isItemAligned, listHeight, popupMatchSelectWidth]);
 
     const triggerClassName = cx(
       triggerVariants({ shadow, size, variant: resolvedVariant }),
