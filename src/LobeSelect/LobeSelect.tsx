@@ -65,7 +65,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
     disabled,
     id,
     labelRender,
-    listHeight = 256,
+    listHeight = 512,
     listItemHeight,
     loading,
     mode,
