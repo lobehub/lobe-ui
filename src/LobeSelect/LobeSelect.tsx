@@ -3,7 +3,14 @@
 import { Select } from '@base-ui/react/select';
 import { cx, useThemeMode } from 'antd-style';
 import { Check, ChevronDown, Loader2, X } from 'lucide-react';
-import type { ChangeEvent, KeyboardEvent, MouseEvent } from 'react';
+import type {
+  ChangeEvent,
+  HTMLAttributes,
+  KeyboardEvent,
+  MouseEvent,
+  MutableRefObject,
+  Ref,
+} from 'react';
 import { isValidElement, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Virtualizer } from 'virtua';
 
@@ -495,6 +502,63 @@ const LobeSelect = memo<LobeSelectProps<any>>(
     );
 
     const portalContainer = usePortalContainer(LOBE_SELECT_CONTAINER_ATTR);
+    const listRef = useRef<HTMLDivElement | null>(null);
+    const pointerScrollRef = useRef(false);
+    const pointerScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    const renderVirtualItem = useCallback((props: HTMLAttributes<HTMLDivElement>) => {
+      const { ref, ...rest } = props as HTMLAttributes<HTMLDivElement> & {
+        ref?: Ref<HTMLDivElement>;
+      };
+
+      return (
+        <div
+          {...rest}
+          ref={(node) => {
+            if (node) {
+              node.scrollIntoView = (...args) => {
+                if (!pointerScrollRef.current) {
+                  HTMLElement.prototype.scrollIntoView.call(node, ...args);
+                }
+              };
+            }
+
+            if (typeof ref === 'function') {
+              ref(node);
+            } else if (ref && 'current' in ref) {
+              (ref as MutableRefObject<HTMLDivElement | null>).current = node;
+            }
+          }}
+        />
+      );
+    }, []);
+
+    const markPointerScroll = useCallback(() => {
+      pointerScrollRef.current = true;
+      if (pointerScrollTimeoutRef.current) {
+        clearTimeout(pointerScrollTimeoutRef.current);
+      }
+      pointerScrollTimeoutRef.current = setTimeout(() => {
+        pointerScrollRef.current = false;
+      }, 120);
+    }, []);
+
+    const handleListScroll = useCallback(() => {
+      if (!virtual || !pointerScrollRef.current) return;
+      const listElement = listRef.current;
+      const activeElement = document.activeElement;
+      if (listElement && activeElement && listElement.contains(activeElement)) {
+        listElement.focus({ preventScroll: true });
+      }
+    }, [virtual]);
+
+    useEffect(() => {
+      return () => {
+        if (pointerScrollTimeoutRef.current) {
+          clearTimeout(pointerScrollTimeoutRef.current);
+        }
+      };
+    }, []);
     const virtualListStyle = useMemo(() => {
       if (!virtual) return undefined;
       const rowCount = countVirtualItems(filteredOptions);
@@ -508,6 +572,30 @@ const LobeSelect = memo<LobeSelectProps<any>>(
         height: `min(${estimatedHeight}px, var(--lobe-select-available-height, var(--available-height)))`,
       };
     }, [filteredOptions, listItemHeight, size, virtual]);
+
+    const keepMountedIndices = useMemo(() => {
+      if (!virtual || valueArray.length === 0) return undefined;
+      const selectedSet = new Set(valueArray);
+      const indices: number[] = [];
+      let index = 0;
+
+      filteredOptions.forEach((item) => {
+        if (isGroupOption(item)) {
+          if (item.options.some((option) => selectedSet.has(option.value))) {
+            indices.push(index);
+          }
+          index += 1;
+          return;
+        }
+
+        if (selectedSet.has(item.value)) {
+          indices.push(index);
+        }
+        index += 1;
+      });
+
+      return indices.length ? indices : undefined;
+    }, [filteredOptions, valueArray, virtual]);
 
     const itemTextClassName = cx(
       optionRender ? menuStyles.itemContent : menuStyles.label,
@@ -542,6 +630,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
                     disabled={option.disabled}
                     key={`${String(option.value)}-${currentIndex}`}
                     label={getOptionSearchText(option)}
+                    render={virtual ? renderVirtualItem : undefined}
                     style={{
                       minHeight: listItemHeight,
                       ...option.style,
@@ -579,6 +668,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
             disabled={item.disabled}
             key={`${String(item.value)}-${currentIndex}`}
             label={getOptionSearchText(item)}
+            render={virtual ? renderVirtualItem : undefined}
             style={{
               minHeight: listItemHeight,
               ...item.style,
@@ -700,9 +790,17 @@ const LobeSelect = memo<LobeSelectProps<any>>(
                   <Select.List
                     className={cx(styles.list, classNames?.list)}
                     data-virtual={virtual || undefined}
+                    onPointerDown={virtual ? markPointerScroll : undefined}
+                    onScroll={virtual ? handleListScroll : undefined}
+                    onTouchMove={virtual ? markPointerScroll : undefined}
+                    onWheel={virtual ? markPointerScroll : undefined}
+                    ref={listRef}
                     style={virtualListStyle}
+                    tabIndex={virtual ? -1 : undefined}
                   >
-                    <Virtualizer itemSize={listItemHeight}>{content}</Virtualizer>
+                    <Virtualizer itemSize={listItemHeight} keepMounted={keepMountedIndices}>
+                      {content}
+                    </Virtualizer>
                   </Select.List>
                 );
               })()}
