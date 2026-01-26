@@ -4,21 +4,34 @@ import { cx } from 'antd-style';
 import { Check, ChevronRight } from 'lucide-react';
 import type { MenuInfo } from 'rc-menu/es/interface';
 import type {
-  Key,
   KeyboardEvent as ReactKeyboardEvent,
   MouseEvent as ReactMouseEvent,
   ReactNode,
 } from 'react';
-import { isValidElement, memo, useCallback, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 
 import Icon from '@/Icon';
-import type { MenuDividerType, MenuItemGroupType, MenuItemType, SubMenuType } from '@/Menu';
+import {
+  type MenuDividerType,
+  type MenuItemGroupType,
+  type MenuItemType,
+  type RenderItemContentOptions,
+  type RenderOptions,
+  type SubMenuType,
+  getItemKey,
+  getItemLabel,
+  hasAnyIcon,
+  hasCheckboxAndIcon,
+  renderIcon,
+} from '@/Menu';
 import common from '@/i18n/resources/en/common';
 import { useTranslation } from '@/i18n/useTranslation';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
 import { styles } from './style';
 import type { ContextMenuCheckboxItem, ContextMenuItem, ContextMenuSwitchItem } from './type';
+
+export type { IconSpaceMode } from '@/Menu';
 
 const EmptyMenuItem = memo(() => {
   const { t } = useTranslation(common);
@@ -94,50 +107,15 @@ const ContextMenuSwitchItemInternal = ({
   );
 };
 
-type KeyableItem = { key?: Key };
-
-const getItemKey = (item: KeyableItem, fallback: string): Key => {
-  if (item && 'key' in item && item.key !== undefined) return item.key;
-  return fallback;
-};
-
-type LabelableItem = {
-  key?: Key;
-  label?: ReactNode;
-  title?: ReactNode;
-};
-
-const getItemLabel = (
-  item: MenuItemType | SubMenuType | ContextMenuCheckboxItem | LabelableItem,
-): ReactNode => {
-  if (item.label !== undefined) return item.label;
-  if ('title' in item && item.title !== undefined) return item.title;
-  return item.key;
-};
-
-const renderIcon = (icon: MenuItemType['icon']) => {
-  if (!icon) return null;
-  if (isValidElement(icon)) return icon;
-  return <Icon icon={icon} size={'small'} />;
-};
-
-const hasAnyIcon = (items: ContextMenuItem[]): boolean => {
-  return items.some((item) => {
-    if (!item) return false;
-    if ((item as ContextMenuCheckboxItem).type === 'checkbox') return true;
-    if ('icon' in item && item.icon) return true;
-    return false;
-  });
-};
-
 const renderItemContent = (
   item: MenuItemType | SubMenuType | ContextMenuCheckboxItem | ContextMenuSwitchItem,
-  options?: { reserveIconSpace?: boolean; submenu?: boolean },
+  options?: RenderItemContentOptions,
   iconNode?: ReactNode,
 ) => {
   const label = getItemLabel(item);
   const extra = 'extra' in item ? item.extra : undefined;
-  const hasCustomIcon = iconNode !== undefined;
+  const indicatorOnRight = options?.indicatorOnRight;
+  const hasCustomIcon = iconNode !== undefined && !indicatorOnRight;
   const hasIcon = hasCustomIcon ? Boolean(iconNode) : Boolean(item.icon);
   const shouldRenderIcon = hasCustomIcon
     ? Boolean(options?.reserveIconSpace || iconNode)
@@ -147,11 +125,12 @@ const renderItemContent = (
     <div className={styles.itemContent}>
       {shouldRenderIcon ? (
         <span aria-hidden={!hasIcon} className={styles.icon}>
-          {hasCustomIcon ? iconNode : hasIcon ? renderIcon(item.icon) : null}
+          {hasCustomIcon ? iconNode : hasIcon ? renderIcon(item.icon, 'small') : null}
         </span>
       ) : null}
       <span className={styles.label}>{label}</span>
       {extra ? <span className={styles.extra}>{extra}</span> : null}
+      {indicatorOnRight && iconNode ? iconNode : null}
       {options?.submenu ? (
         <span className={styles.submenuArrow}>
           <ChevronRight size={16} />
@@ -180,9 +159,12 @@ const invokeItemClick = (
 export const renderContextMenuItems = (
   items: ContextMenuItem[],
   keyPath: string[] = [],
-  options?: { reserveIconSpace?: boolean },
+  options?: RenderOptions,
 ): ReactNode[] => {
-  const reserveIconSpace = options?.reserveIconSpace ?? hasAnyIcon(items);
+  const iconSpaceMode = options?.iconSpaceMode ?? 'global';
+  const reserveIconSpace =
+    options?.reserveIconSpace ?? hasAnyIcon(items, iconSpaceMode === 'global');
+  const indicatorOnRight = options?.indicatorOnRight ?? hasCheckboxAndIcon(items);
 
   return items.map((item, index) => {
     if (!item) return null;
@@ -213,7 +195,7 @@ export const renderContextMenuItems = (
           label={labelText}
           onCheckedChange={(checked) => checkboxItem.onCheckedChange?.(checked)}
         >
-          {renderItemContent(checkboxItem, { reserveIconSpace }, indicator)}
+          {renderItemContent(checkboxItem, { indicatorOnRight, reserveIconSpace }, indicator)}
         </ContextMenu.CheckboxItem>
       );
     }
@@ -246,6 +228,13 @@ export const renderContextMenuItems = (
 
     if ((item as MenuItemGroupType).type === 'group') {
       const group = item as MenuItemGroupType;
+      const groupReserveIconSpace =
+        iconSpaceMode === 'group'
+          ? group.children
+            ? hasAnyIcon(group.children)
+            : false
+          : reserveIconSpace;
+      const groupIndicatorOnRight = group.children ? hasCheckboxAndIcon(group.children) : false;
       return (
         <ContextMenu.Group key={itemKey}>
           {group.label ? (
@@ -254,7 +243,11 @@ export const renderContextMenuItems = (
             </ContextMenu.GroupLabel>
           ) : null}
           {group.children
-            ? renderContextMenuItems(group.children, nextKeyPath, { reserveIconSpace })
+            ? renderContextMenuItems(group.children, nextKeyPath, {
+                iconSpaceMode,
+                indicatorOnRight: groupIndicatorOnRight,
+                reserveIconSpace: groupReserveIconSpace,
+              })
             : null}
         </ContextMenu.Group>
       );
@@ -290,7 +283,7 @@ export const renderContextMenuItems = (
             >
               <ContextMenu.Popup className={styles.popup}>
                 {submenu.children && submenu.children.length > 0 ? (
-                  renderContextMenuItems(submenu.children, nextKeyPath)
+                  renderContextMenuItems(submenu.children, nextKeyPath, { iconSpaceMode })
                 ) : (
                   <EmptyMenuItem />
                 )}

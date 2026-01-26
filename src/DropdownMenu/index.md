@@ -23,6 +23,12 @@ Exported primitives can be composed to build custom dropdown menus.
 
 <code src="./demos/group.tsx" center></code>
 
+## Icon Space Mode
+
+Control how icon spacing is reserved across menu items. In `global` mode (default), if any item has an icon, all items reserve icon space. In `group` mode, only groups containing icons reserve icon space.
+
+<code src="./demos/iconSpaceMode.tsx" center></code>
+
 ## Danger
 
 <code src="./demos/danger.tsx" center></code>
@@ -65,16 +71,17 @@ When using Tooltip inside DropdownMenu, wrap both in `TooltipGroup` to ensure th
 
 ### DropdownMenuV2
 
-| Property        | Description                       | Type                                                                                                             | Default        |
-| --------------- | --------------------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------- |
-| items           | Menu items (lazy supported)       | `DropdownMenuV2ItemType[] \| (() => DropdownMenuV2ItemType[])`                                                   | -              |
-| children        | Trigger element                   | `ReactNode`                                                                                                      | -              |
-| nativeButton    | Shortcut for trigger nativeButton | `boolean`                                                                                                        | -              |
-| placement       | Position of dropdown menu         | `'bottom' \| 'bottomLeft' \| 'bottomCenter' \| 'bottomRight' \| 'top' \| 'topLeft' \| 'topCenter' \| 'topRight'` | `'bottomLeft'` |
-| triggerProps    | Props passed to `Menu.Trigger`    | `MenuTriggerProps`                                                                                               | -              |
-| positionerProps | Props passed to `Menu.Positioner` | `MenuPositionerProps`                                                                                            | -              |
-| popupProps      | Props passed to `Menu.Popup`      | `MenuPopupProps`                                                                                                 | -              |
-| portalProps     | Props passed to `Menu.Portal`     | `MenuPortalProps`                                                                                                | -              |
+| Property        | Description                                                                                    | Type                                                                                                             | Default        |
+| --------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------- |
+| items           | Menu items (lazy supported)                                                                    | `DropdownMenuV2ItemType[] \| (() => DropdownMenuV2ItemType[])`                                                   | -              |
+| children        | Trigger element                                                                                | `ReactNode`                                                                                                      | -              |
+| iconSpaceMode   | Icon space reservation: `global` reserves for all items, `group` reserves per group with icons | `'global' \| 'group'`                                                                                            | `'global'`     |
+| nativeButton    | Shortcut for trigger nativeButton                                                              | `boolean`                                                                                                        | -              |
+| placement       | Position of dropdown menu                                                                      | `'bottom' \| 'bottomLeft' \| 'bottomCenter' \| 'bottomRight' \| 'top' \| 'topLeft' \| 'topCenter' \| 'topRight'` | `'bottomLeft'` |
+| triggerProps    | Props passed to `Menu.Trigger`                                                                 | `MenuTriggerProps`                                                                                               | -              |
+| positionerProps | Props passed to `Menu.Positioner`                                                              | `MenuPositionerProps`                                                                                            | -              |
+| popupProps      | Props passed to `Menu.Popup`                                                                   | `MenuPopupProps`                                                                                                 | -              |
+| portalProps     | Props passed to `Menu.Portal`                                                                  | `MenuPortalProps`                                                                                                | -              |
 
 Additionally, DropdownMenuV2 inherits all properties from Base UI `Menu.Root` except `children`.
 

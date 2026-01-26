@@ -29,15 +29,27 @@ description: ContextMenu provides an imperative API to open a menu at the last p
 
 <code src="./demos/uploader.tsx" center></code>
 
+## Icon Space Mode
+
+Control how icon spacing is reserved across menu items. In `global` mode (default), if any item has an icon, all items reserve icon space. In `group` mode, only groups containing icons reserve icon space.
+
+<code src="./demos/iconSpaceMode.tsx" center></code>
+
 ## APIs
 
 ### showContextMenu
 
-`showContextMenu(items)` opens the menu at the latest pointer position. Menu items are the same as `Menu`/`Dropdown` items. See [Menu](/components/menu) for details on item types.
+`showContextMenu(items, options?)` opens the menu at the latest pointer position. Menu items are the same as `Menu`/`Dropdown` items. See [Menu](/components/menu) for details on item types.
 
-| Name            | Description       | Type                                 |
-| --------------- | ----------------- | ------------------------------------ |
-| showContextMenu | Show context menu | `(items: ContextMenuItem[]) => void` |
+| Name            | Description       | Type                                                                   |
+| --------------- | ----------------- | ---------------------------------------------------------------------- |
+| showContextMenu | Show context menu | `(items: ContextMenuItem[], options?: ShowContextMenuOptions) => void` |
+
+#### ShowContextMenuOptions
+
+| Property      | Description                                                                                    | Type                  | Default    |
+| ------------- | ---------------------------------------------------------------------------------------------- | --------------------- | ---------- |
+| iconSpaceMode | Icon space reservation: `global` reserves for all items, `group` reserves per group with icons | `'global' \| 'group'` | `'global'` |
 
 ### ContextMenuHost
 

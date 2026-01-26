@@ -36,7 +36,7 @@ export {
   type DropdownMenuTriggerProps,
 } from './atoms';
 export { default } from './DropdownMenu';
-export { renderDropdownMenuItems } from './renderItems';
+export { type IconSpaceMode,renderDropdownMenuItems } from './renderItems';
 export type {
   DropdownItem,
   DropdownMenuCheckboxItem,

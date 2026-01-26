@@ -48,7 +48,10 @@ export const ContextMenuHost = memo(() => {
     };
   }, []);
 
-  const menuItems = useMemo(() => renderContextMenuItems(state.items), [state.items]);
+  const menuItems = useMemo(
+    () => renderContextMenuItems(state.items, [], { iconSpaceMode: state.iconSpaceMode }),
+    [state.items, state.iconSpaceMode],
+  );
   const portalContainer = usePortalContainer(CONTEXT_MENU_CONTAINER_ATTR);
 
   if (!isClient) return null;

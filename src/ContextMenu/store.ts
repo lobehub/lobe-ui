@@ -1,9 +1,11 @@
 import type { VirtualElement } from '@floating-ui/react';
 
+import type { IconSpaceMode } from './renderItems';
 import type { ContextMenuItem } from './type';
 
 export type ContextMenuState = {
   anchor: VirtualElement | null;
+  iconSpaceMode: IconSpaceMode;
   items: ContextMenuItem[];
   open: boolean;
   triggerId: string | null;
@@ -11,6 +13,7 @@ export type ContextMenuState = {
 
 const emptyState: ContextMenuState = {
   anchor: null,
+  iconSpaceMode: 'global',
   items: [],
   open: false,
   triggerId: null,
@@ -65,7 +68,11 @@ export const setContextMenuState = (next: Partial<ContextMenuState>) => {
   notify();
 };
 
-export const showContextMenu = (items: ContextMenuItem[]) => {
+export interface ShowContextMenuOptions {
+  iconSpaceMode?: IconSpaceMode;
+}
+
+export const showContextMenu = (items: ContextMenuItem[], options?: ShowContextMenuOptions) => {
   if (typeof window === 'undefined') return;
 
   const fallbackPoint = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
@@ -73,6 +80,7 @@ export const showContextMenu = (items: ContextMenuItem[]) => {
 
   setContextMenuState({
     anchor: createVirtualElement(point),
+    iconSpaceMode: options?.iconSpaceMode ?? 'global',
     items,
     open: true,
     triggerId: lastPointer.triggerId ?? null,
@@ -89,5 +97,11 @@ export const updateContextMenuItems = (items: ContextMenuItem[]) => {
 };
 
 export const closeContextMenu = () => {
-  setContextMenuState({ anchor: null, items: [], open: false, triggerId: null });
+  setContextMenuState({
+    anchor: null,
+    iconSpaceMode: 'global',
+    items: [],
+    open: false,
+    triggerId: null,
+  });
 };

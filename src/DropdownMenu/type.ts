@@ -11,6 +11,8 @@ import type { BaseMenuItemType, MenuCheckboxItemType, MenuSwitchItemType } from 
 import type { Trigger } from '@/types';
 import type { Placement } from '@/utils/placement';
 
+import type { IconSpaceMode } from './renderItems';
+
 export type DropdownMenuPlacement = Placement;
 
 export type DropdownMenuCheckboxItem = MenuCheckboxItemType;
@@ -24,6 +26,13 @@ export interface DropdownMenuProps<Payload = unknown> extends Omit<
   'children'
 > {
   children: ReactNode;
+  /**
+   * 图标空间保留模式
+   * - 'global': 当任何一个选项有图标时，所有 item 都保留图标位
+   * - 'group': 只有当一个分组中存在图标时，该分组才保留图标位
+   * @default 'global'
+   */
+  iconSpaceMode?: IconSpaceMode;
   items: DropdownItem[] | (() => DropdownItem[]);
   nativeButton?: boolean;
   placement?: DropdownMenuPlacement;

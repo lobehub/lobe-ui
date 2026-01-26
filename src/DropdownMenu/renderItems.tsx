@@ -1,20 +1,23 @@
 import { Check, ChevronRight } from 'lucide-react';
 import type { MenuInfo } from 'rc-menu/es/interface';
 import type {
-  Key,
   KeyboardEvent as ReactKeyboardEvent,
   MouseEvent as ReactMouseEvent,
   ReactNode,
 } from 'react';
-import { isValidElement } from 'react';
 
-import Icon from '@/Icon';
-import type {
-  ItemType,
-  MenuDividerType,
-  MenuItemGroupType,
-  MenuItemType,
-  SubMenuType,
+import {
+  type MenuDividerType,
+  type MenuItemGroupType,
+  type MenuItemType,
+  type RenderItemContentOptions,
+  type RenderOptions,
+  type SubMenuType,
+  getItemKey,
+  getItemLabel,
+  hasAnyIcon,
+  hasCheckboxAndIcon,
+  renderIcon,
 } from '@/Menu';
 
 import {
@@ -42,46 +45,17 @@ import type {
   DropdownMenuSwitchItem as DropdownMenuSwitchItemType,
 } from './type';
 
-const getItemKey = (item: ItemType | DropdownItem, fallback: string): Key => {
-  if (item && 'key' in item && item.key !== undefined) return item.key;
-  return fallback;
-};
-
-type LabelableItem = {
-  key?: Key;
-  label?: ReactNode;
-  title?: ReactNode;
-};
-
-const getItemLabel = (item: MenuItemType | SubMenuType | LabelableItem): ReactNode => {
-  if (item.label !== undefined) return item.label;
-  if ('title' in item && item.title !== undefined) return item.title;
-  return item.key;
-};
-
-const renderIcon = (icon: MenuItemType['icon']) => {
-  if (!icon) return null;
-  if (isValidElement(icon)) return icon;
-  return <Icon icon={icon} />;
-};
-
-const hasAnyIcon = (items: DropdownItem[]): boolean => {
-  return items.some((item) => {
-    if (!item) return false;
-    if ((item as DropdownMenuCheckboxItemType).type === 'checkbox') return true;
-    if ('icon' in item && item.icon) return true;
-    return false;
-  });
-};
+export type { IconSpaceMode } from '@/Menu';
 
 const renderItemContent = (
   item: MenuItemType | SubMenuType | DropdownMenuCheckboxItemType | DropdownMenuSwitchItemType,
-  options?: { reserveIconSpace?: boolean; submenu?: boolean },
+  options?: RenderItemContentOptions,
   iconNode?: ReactNode,
 ) => {
   const label = getItemLabel(item);
   const extra = 'extra' in item ? item.extra : undefined;
-  const hasCustomIcon = iconNode !== undefined;
+  const indicatorOnRight = options?.indicatorOnRight;
+  const hasCustomIcon = iconNode !== undefined && !indicatorOnRight;
   const hasIcon = hasCustomIcon ? Boolean(iconNode) : Boolean(item.icon);
   const shouldRenderIcon = hasCustomIcon
     ? Boolean(options?.reserveIconSpace || iconNode)
@@ -96,6 +70,7 @@ const renderItemContent = (
       ) : null}
       <DropdownMenuItemLabel>{label}</DropdownMenuItemLabel>
       {extra ? <DropdownMenuItemExtra>{extra}</DropdownMenuItemExtra> : null}
+      {indicatorOnRight && iconNode ? iconNode : null}
       {options?.submenu ? (
         <DropdownMenuSubmenuArrow>
           <ChevronRight size={16} />
@@ -124,9 +99,12 @@ const invokeItemClick = (
 export const renderDropdownMenuItems = (
   items: DropdownItem[],
   keyPath: string[] = [],
-  options?: { reserveIconSpace?: boolean },
+  options?: RenderOptions,
 ): ReactNode[] => {
-  const reserveIconSpace = options?.reserveIconSpace ?? hasAnyIcon(items);
+  const iconSpaceMode = options?.iconSpaceMode ?? 'global';
+  const reserveIconSpace =
+    options?.reserveIconSpace ?? hasAnyIcon(items, iconSpaceMode === 'global');
+  const indicatorOnRight = options?.indicatorOnRight ?? hasCheckboxAndIcon(items);
 
   return items.map((item, index) => {
     if (!item) return null;
@@ -141,9 +119,7 @@ export const renderDropdownMenuItems = (
       const labelText = typeof label === 'string' ? label : undefined;
       const isDanger = Boolean(checkboxItem.danger);
       const indicator = (
-        <DropdownMenuCheckboxItemIndicator>
-          <Icon icon={Check} />
-        </DropdownMenuCheckboxItemIndicator>
+        <DropdownMenuCheckboxItemIndicator>{renderIcon(Check)}</DropdownMenuCheckboxItemIndicator>
       );
 
       return (
@@ -157,7 +133,7 @@ export const renderDropdownMenuItems = (
           label={labelText}
           onCheckedChange={(checked) => checkboxItem.onCheckedChange?.(checked)}
         >
-          {renderItemContent(checkboxItem, { reserveIconSpace }, indicator)}
+          {renderItemContent(checkboxItem, { indicatorOnRight, reserveIconSpace }, indicator)}
         </DropdownMenuCheckboxItemPrimitive>
       );
     }
@@ -190,11 +166,22 @@ export const renderDropdownMenuItems = (
 
     if ((item as MenuItemGroupType).type === 'group') {
       const group = item as MenuItemGroupType;
+      const groupReserveIconSpace =
+        iconSpaceMode === 'group'
+          ? group.children
+            ? hasAnyIcon(group.children)
+            : false
+          : reserveIconSpace;
+      const groupIndicatorOnRight = group.children ? hasCheckboxAndIcon(group.children) : false;
       return (
         <DropdownMenuGroup key={itemKey}>
           {group.label ? <DropdownMenuGroupLabel>{group.label}</DropdownMenuGroupLabel> : null}
           {group.children
-            ? renderDropdownMenuItems(group.children, nextKeyPath, { reserveIconSpace })
+            ? renderDropdownMenuItems(group.children, nextKeyPath, {
+                iconSpaceMode,
+                indicatorOnRight: groupIndicatorOnRight,
+                reserveIconSpace: groupReserveIconSpace,
+              })
             : null}
         </DropdownMenuGroup>
       );
@@ -221,7 +208,9 @@ export const renderDropdownMenuItems = (
           <DropdownMenuPortal>
             <DropdownMenuPositioner alignOffset={-4} sideOffset={-1}>
               <DropdownMenuPopup>
-                {submenu.children ? renderDropdownMenuItems(submenu.children, nextKeyPath) : null}
+                {submenu.children
+                  ? renderDropdownMenuItems(submenu.children, nextKeyPath, { iconSpaceMode })
+                  : null}
               </DropdownMenuPopup>
             </DropdownMenuPositioner>
           </DropdownMenuPortal>
