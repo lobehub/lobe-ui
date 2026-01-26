@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version 4.31.0](https://github.com/lobehub/lobe-ui/compare/v4.30.2...v4.31.0)
+
+<sup>Released on **2026-01-26**</sup>
+
+#### ✨ Features
+
+- **menu**: Add iconSpaceMode option for ContextMenu and DropdownMenu.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **menu**: Add iconSpaceMode option for ContextMenu and DropdownMenu ([249b02c](https://github.com/lobehub/lobe-ui/commit/249b02c))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.30.2](https://github.com/lobehub/lobe-ui/compare/v4.30.1...v4.30.2)
 
 <sup>Released on **2026-01-25**</sup>
