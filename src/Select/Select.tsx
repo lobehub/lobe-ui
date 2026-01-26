@@ -10,7 +10,10 @@ import Icon from '@/Icon';
 import { variants } from './style';
 import type { SelectProps } from './type';
 
-const Input = memo<SelectProps>(
+/**
+ * @deprecated Use `LobeSelect` instead.
+ */
+const Select = memo<SelectProps>(
   ({ ref, variant, suffixIconProps, suffixIcon, shadow, className, ...rest }) => {
     const { isDarkMode } = useThemeMode();
 
@@ -39,6 +42,6 @@ const Input = memo<SelectProps>(
   },
 );
 
-Input.displayName = 'Input';
+Select.displayName = 'Select';
 
-export default Input;
+export default Select;
