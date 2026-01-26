@@ -1,11 +1,11 @@
 'use client';
 
-import { type CSSProperties, type ElementType, type FC, memo } from 'react';
+import { type CSSProperties, type ElementType, type FC } from 'react';
 
 import type { FlexBasicProps } from './type';
 import { getCssValue, getFlexDirection, isHorizontal, isSpaceDistribution } from './utils';
 
-const FlexBasic: FC<FlexBasicProps> = ({
+export const ReactFlexBasic: FC<FlexBasicProps> = ({
   visible,
   flex,
   gap,
@@ -76,5 +76,3 @@ const FlexBasic: FC<FlexBasicProps> = ({
     </Container>
   );
 };
-
-export default memo(FlexBasic);

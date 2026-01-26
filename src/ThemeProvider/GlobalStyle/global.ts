@@ -76,7 +76,8 @@ export default (token: Theme) => css`
   }
 
   @layer lobe-base {
-    :where(.lobe-flex) {
+    :where(.lobe-flex),
+    lobe-flex {
       /* Define defaults on the element itself to avoid CSS variable inheritance leaking to nested Flex */
       --lobe-flex: 0 1 auto;
       --lobe-flex-direction: column;
@@ -109,8 +110,13 @@ export default (token: Theme) => css`
       gap: var(--lobe-flex-gap);
     }
 
-    .lobe-flex--hidden {
+    .lobe-flex--hidden,
+    lobe-flex[hidden] {
       display: none;
+    }
+
+    lobe-flex {
+      text-align: left;
     }
   }
 

@@ -1,12 +1,12 @@
 import { type FC } from 'react';
 
-import FlexBasic from './FlexBasic';
+import { AutoFlex } from './AutoFlex';
 import type { CenterProps } from './type';
 
 const Center: FC<CenterProps> = ({ children, ref, ...props }) => (
-  <FlexBasic {...props} align="center" justify="center" ref={ref}>
+  <AutoFlex {...props} align="center" justify="center" ref={ref}>
     {children}
-  </FlexBasic>
+  </AutoFlex>
 );
 
 export default Center;
