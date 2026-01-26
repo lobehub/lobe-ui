@@ -77,6 +77,25 @@ const items: DropdownItem[] = [
     label: 'Settings (checkbox + icons)',
     type: 'group',
   },
+
+  {
+    type: 'divider' as const,
+  },
+  {
+    checked: false,
+    key: 'full-width',
+    label: 'Full Width',
+    onCheckedChange: (checked: boolean) => console.log('checked', checked),
+    type: 'switch' as const,
+  },
+  {
+    type: 'divider' as const,
+  },
+
+  {
+    key: 'settings',
+    label: 'Settings...',
+  },
 ];
 
 export default () => {

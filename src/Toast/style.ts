@@ -6,11 +6,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     cursor: pointer;
 
     display: inline-flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
 
     height: 28px;
-    margin-block-start: 8px;
     padding-inline: 12px;
     border: none;
     border-radius: ${cssVar.borderRadiusSM};
@@ -18,11 +18,53 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     font-size: 12px;
     font-weight: 500;
     line-height: 1;
+
+    transition:
+      background 0.2s,
+      color 0.2s;
+
+    &:focus-visible {
+      outline: 2px solid ${cssVar.colorPrimaryBorder};
+      outline-offset: 1px;
+    }
+  `,
+
+  actionDanger: css`
     color: ${cssVar.colorTextLightSolid};
+    background: ${cssVar.colorError};
 
+    &:hover {
+      background: ${cssVar.colorErrorHover};
+    }
+
+    &:active {
+      background: ${cssVar.colorErrorActive};
+    }
+
+    &:focus-visible {
+      outline-color: ${cssVar.colorErrorBorder};
+    }
+  `,
+
+  actionGhost: css`
+    border: 1px solid ${cssVar.colorBorder};
+    color: ${cssVar.colorText};
+    background: transparent;
+
+    &:hover {
+      border-color: ${cssVar.colorPrimary};
+      color: ${cssVar.colorPrimary};
+    }
+
+    &:active {
+      border-color: ${cssVar.colorPrimaryActive};
+      color: ${cssVar.colorPrimaryActive};
+    }
+  `,
+
+  actionPrimary: css`
+    color: ${cssVar.colorTextLightSolid};
     background: ${cssVar.colorPrimary};
-
-    transition: background 0.2s;
 
     &:hover {
       background: ${cssVar.colorPrimaryHover};
@@ -31,26 +73,57 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     &:active {
       background: ${cssVar.colorPrimaryActive};
     }
+  `,
 
-    &:focus-visible {
-      outline: 2px solid ${cssVar.colorPrimaryBorder};
-      outline-offset: 1px;
+  actionSecondary: css`
+    color: ${cssVar.colorText};
+    background: ${cssVar.colorFillSecondary};
+
+    &:hover {
+      background: ${cssVar.colorFillTertiary};
     }
+
+    &:active {
+      background: ${cssVar.colorFill};
+    }
+  `,
+
+  actionText: css`
+    color: ${cssVar.colorPrimary};
+    background: transparent;
+
+    &:hover {
+      background: ${cssVar.colorFillTertiary};
+    }
+
+    &:active {
+      background: ${cssVar.colorFillSecondary};
+    }
+  `,
+
+  actions: css`
+    display: flex;
+    flex-grow: 1;
+    flex-shrink: 0;
+    gap: 8px;
+    align-items: center;
+    align-self: flex-end;
+    justify-content: flex-end;
+
+    margin-block-start: 8px;
   `,
 
   close: css`
     cursor: pointer;
 
-    position: absolute;
-    inset-block-start: 8px;
-    inset-inline-end: 8px;
-
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     justify-content: center;
 
     width: 20px;
     height: 20px;
+    margin-inline-start: auto;
     padding: 0;
     border: none;
     border-radius: ${cssVar.borderRadiusSM};
@@ -80,6 +153,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       pointer-events: auto;
       opacity: 1;
     }
+  `,
+
+  contentArea: css`
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
   `,
 
   description: css`
@@ -115,7 +195,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     height: var(--toast-collapsed-height);
     padding-block: 12px;
     padding-inline: 16px;
-    padding-inline-end: 32px;
     border-radius: ${cssVar.borderRadiusLG};
 
     color: ${cssVar.colorText};
@@ -233,6 +312,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     color: ${cssVar.colorText};
   `,
 
+  titleRow: css`
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  `,
+
   toastBody: css`
     display: flex;
     gap: 12px;
@@ -314,6 +399,21 @@ export const rootVariants = cva(styles.root, {
       'top': styles.rootTop,
       'top-left': styles.rootTop,
       'top-right': styles.rootTop,
+    },
+  },
+});
+
+export const actionVariants = cva(styles.action, {
+  defaultVariants: {
+    variant: 'primary',
+  },
+  variants: {
+    variant: {
+      danger: styles.actionDanger,
+      ghost: styles.actionGhost,
+      primary: styles.actionPrimary,
+      secondary: styles.actionSecondary,
+      text: styles.actionText,
     },
   },
 });

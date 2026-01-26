@@ -13,11 +13,38 @@ export type ToastPosition =
   | 'bottom-left'
   | 'bottom-right';
 
+export type ToastActionVariant = 'primary' | 'secondary' | 'text' | 'danger' | 'ghost';
+
+export interface ToastAction {
+  /**
+   * Action button label
+   */
+  label: ReactNode;
+  /**
+   * Click handler
+   */
+  onClick?: () => void;
+  /**
+   * Additional props for the button
+   */
+  props?: Omit<React.ComponentPropsWithRef<'button'>, 'onClick'>;
+  /**
+   * Button variant
+   * @default 'primary'
+   */
+  variant?: ToastActionVariant;
+}
+
 export interface ToastOptions {
   /**
    * Action button props
+   * @deprecated Use `actions` instead
    */
   actionProps?: React.ComponentPropsWithRef<'button'>;
+  /**
+   * Multiple action buttons
+   */
+  actions?: ToastAction[];
   /**
    * Additional class name
    */
@@ -40,6 +67,11 @@ export interface ToastOptions {
    * @default 5000
    */
   duration?: number;
+  /**
+   * Hide the close button
+   * @default false
+   */
+  hideCloseButton?: boolean;
   /**
    * Custom icon
    */
@@ -89,6 +121,7 @@ export interface ToastInstance {
 export interface ToastProps {
   classNames?: {
     action?: string;
+    actions?: string;
     close?: string;
     content?: string;
     description?: string;
@@ -98,6 +131,7 @@ export interface ToastProps {
   };
   styles?: {
     action?: CSSProperties;
+    actions?: CSSProperties;
     close?: CSSProperties;
     content?: CSSProperties;
     description?: CSSProperties;

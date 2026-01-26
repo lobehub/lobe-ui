@@ -8,7 +8,7 @@ import { type ReactNode, memo } from 'react';
 import Icon from '@/Icon';
 
 import { useToastContext } from './context';
-import { rootVariants, styles } from './style';
+import { actionVariants, rootVariants, styles } from './style';
 import type { ToastOptions, ToastProps, ToastType } from './type';
 
 const typeIcons: Record<ToastType, typeof Info> = {
@@ -34,10 +34,13 @@ const ToastItem = memo<ToastProps>(({ toast, classNames, styles: customStyles })
   const toastData = toast.data as ToastOptions | undefined;
   const type = toastData?.type ?? 'default';
   const closable = toastData?.closable ?? true;
+  const hideCloseButton = toastData?.hideCloseButton ?? false;
+  const showCloseButton = closable && !hideCloseButton;
   const icon = toastData?.icon;
   const title = toast.title ?? toastData?.title;
   const description = toast.description ?? toastData?.description;
   const actionProps = toast.actionProps ?? toastData?.actionProps;
+  const actions = toastData?.actions;
 
   const iconColor = typeColors[type];
   const IconComponent = icon ?? typeIcons[type];
@@ -50,6 +53,39 @@ const ToastItem = memo<ToastProps>(({ toast, classNames, styles: customStyles })
         <Icon color={iconColor} icon={IconComponent} size={18} spin={isLoading} />
       </div>
     );
+  };
+
+  const renderActions = (): ReactNode => {
+    if (actions && actions.length > 0) {
+      return (
+        <div className={cx(styles.actions, classNames?.actions)} style={customStyles?.actions}>
+          {actions.map((action, index) => (
+            <BaseToast.Action
+              className={cx(
+                actionVariants({ variant: action.variant ?? 'primary' }),
+                classNames?.action,
+              )}
+              key={index}
+              onClick={action.onClick}
+              style={customStyles?.action}
+              {...action.props}
+            >
+              {action.label}
+            </BaseToast.Action>
+          ))}
+        </div>
+      );
+    }
+    if (actionProps) {
+      return (
+        <BaseToast.Action
+          className={cx(actionVariants({ variant: 'primary' }), classNames?.action)}
+          style={customStyles?.action}
+          {...actionProps}
+        />
+      );
+    }
+    return null;
   };
 
   return (
@@ -68,15 +104,26 @@ const ToastItem = memo<ToastProps>(({ toast, classNames, styles: customStyles })
       >
         <div className={styles.toastBody}>
           {renderIcon()}
-          <div style={{ flex: 1, minWidth: 0 }}>
-            {title && (
-              <BaseToast.Title
-                className={cx(styles.title, classNames?.title)}
-                style={customStyles?.title}
-              >
-                {title}
-              </BaseToast.Title>
-            )}
+          <div className={styles.contentArea}>
+            <div className={styles.titleRow}>
+              {title && (
+                <BaseToast.Title
+                  className={cx(styles.title, classNames?.title)}
+                  style={customStyles?.title}
+                >
+                  {title}
+                </BaseToast.Title>
+              )}
+              {showCloseButton && (
+                <BaseToast.Close
+                  aria-label="Close"
+                  className={cx(styles.close, classNames?.close)}
+                  style={customStyles?.close}
+                >
+                  <X size={14} />
+                </BaseToast.Close>
+              )}
+            </div>
             {description && (
               <BaseToast.Description
                 className={cx(styles.description, classNames?.description)}
@@ -88,24 +135,9 @@ const ToastItem = memo<ToastProps>(({ toast, classNames, styles: customStyles })
                 {description}
               </BaseToast.Description>
             )}
-            {actionProps && (
-              <BaseToast.Action
-                className={cx(styles.action, classNames?.action)}
-                style={customStyles?.action}
-                {...actionProps}
-              />
-            )}
+            {renderActions()}
           </div>
         </div>
-        {closable && (
-          <BaseToast.Close
-            aria-label="Close"
-            className={cx(styles.close, classNames?.close)}
-            style={customStyles?.close}
-          >
-            <X size={14} />
-          </BaseToast.Close>
-        )}
       </BaseToast.Content>
     </BaseToast.Root>
   );

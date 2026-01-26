@@ -9,6 +9,10 @@ description: A toast notification component for displaying brief messages.
 
 <code src="./demos/index.tsx" nopadding></code>
 
+## Actions & Custom Icon
+
+<code src="./demos/actions.tsx" nopadding></code>
+
 ## Promise
 
 <code src="./demos/promise.tsx" nopadding></code>
@@ -104,18 +108,35 @@ toast.dismiss();
 
 ### ToastOptions
 
-| Property    | Description                                | Type                | Default     |
-| ----------- | ------------------------------------------ | ------------------- | ----------- |
-| title       | Toast title                                | `ReactNode`         | -           |
-| description | Toast description                          | `ReactNode`         | -           |
-| type        | Toast type                                 | `ToastType`         | `'default'` |
-| duration    | Duration in ms                             | `number`            | `5000`      |
-| closable    | Whether closable                           | `boolean`           | `true`      |
-| icon        | Custom icon                                | `IconProps['icon']` | -           |
-| placement   | Toast placement, overrides global position | `ToastPosition`     | -           |
-| onClose     | Callback when closed                       | `() => void`        | -           |
-| onRemove    | Callback when removed                      | `() => void`        | -           |
-| actionProps | Action button props                        | `ButtonProps`       | -           |
+| Property        | Description                                | Type                | Default     |
+| --------------- | ------------------------------------------ | ------------------- | ----------- |
+| title           | Toast title                                | `ReactNode`         | -           |
+| description     | Toast description                          | `ReactNode`         | -           |
+| type            | Toast type                                 | `ToastType`         | `'default'` |
+| duration        | Duration in ms                             | `number`            | `5000`      |
+| closable        | Whether closable                           | `boolean`           | `true`      |
+| hideCloseButton | Hide the close button                      | `boolean`           | `false`     |
+| icon            | Custom icon                                | `IconProps['icon']` | -           |
+| placement       | Toast placement, overrides global position | `ToastPosition`     | -           |
+| onClose         | Callback when closed                       | `() => void`        | -           |
+| onRemove        | Callback when removed                      | `() => void`        | -           |
+| actions         | Multiple action buttons                    | `ToastAction[]`     | -           |
+| actionProps     | Action button props (deprecated)           | `ButtonProps`       | -           |
+
+### ToastAction
+
+| Property | Description                 | Type                                                     | Default     |
+| -------- | --------------------------- | -------------------------------------------------------- | ----------- |
+| label    | Action button label         | `ReactNode`                                              | -           |
+| onClick  | Click handler               | `() => void`                                             | -           |
+| variant  | Button variant              | `ToastActionVariant`                                     | `'primary'` |
+| props    | Additional props for button | `Omit<React.ComponentPropsWithRef<'button'>, 'onClick'>` | -           |
+
+### ToastActionVariant
+
+```ts | pure
+type ToastActionVariant = 'primary' | 'secondary' | 'text' | 'danger' | 'ghost';
+```
 
 ### ToastPosition
 
