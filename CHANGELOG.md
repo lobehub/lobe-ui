@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.32.1](https://github.com/lobehub/lobe-ui/compare/v4.32.0...v4.32.1)
+
+<sup>Released on **2026-01-26**</sup>
+
+#### 🐛 Bug Fixes
+
+- **select**: Virtual scrolling and item rendering.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **select**: Virtual scrolling and item rendering ([038e060](https://github.com/lobehub/lobe-ui/commit/038e060))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.32.0](https://github.com/lobehub/lobe-ui/compare/v4.31.0...v4.32.0)
 
 <sup>Released on **2026-01-26**</sup>
