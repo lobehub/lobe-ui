@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.32.2](https://github.com/lobehub/lobe-ui/compare/v4.32.1...v4.32.2)
+
+<sup>Released on **2026-01-27**</sup>
+
+#### 🐛 Bug Fixes
+
+- **toast**: Remove debug console.log in ToastHost.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **toast**: Remove debug console.log in ToastHost ([1a33161](https://github.com/lobehub/lobe-ui/commit/1a33161))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.32.1](https://github.com/lobehub/lobe-ui/compare/v4.32.0...v4.32.1)
 
 <sup>Released on **2026-01-26**</sup>
