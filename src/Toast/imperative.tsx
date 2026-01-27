@@ -328,7 +328,6 @@ export const ToastHost = memo(
       const resolved = resolveRoot(root);
       if (resolved) {
         setContainer(getOrCreateContainer(resolved));
-        console.log('resolved', resolved, container);
       }
 
       const scope = root ?? document.body;
