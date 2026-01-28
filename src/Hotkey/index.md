@@ -80,6 +80,7 @@ Some notable keys in KeyMapEnum:
 | ----------------------------- | -------------------------------------- |
 | `Alt`                         | Alt key                                |
 | `Ctrl`                        | Control key                            |
+| `CommandOrControl`            | Command on Mac, Control on Windows     |
 | `Shift`                       | Shift key                              |
 | `Mod`                         | Command on Mac, Control on Windows     |
 | `Meta`                        | Command on Mac, Windows key on Windows |

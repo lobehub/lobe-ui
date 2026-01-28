@@ -5,6 +5,7 @@ export const NORMATIVE_MODIFIER = [
   // win: Ctrl ,mac: Control
   KeyMapEnum.Ctrl,
   KeyMapEnum.Control,
+  KeyMapEnum.CommandOrControl,
 
   //  win: Win ,mac: Command
   KeyMapEnum.Meta,

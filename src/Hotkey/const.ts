@@ -6,6 +6,7 @@ export const KeyMapEnum = {
   BracketLeft: 'bracketleft', // [
   BracketRight: 'bracketright', // ]
   Comma: 'comma',
+  CommandOrControl: 'commandorcontrol',
   Control: 'control',
   Ctrl: 'ctrl',
   Down: 'down',

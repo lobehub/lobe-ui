@@ -34,7 +34,13 @@ import { checkIsAppleDevice, splitKeysByPlus, startCase } from './utils';
 const mappingKey = (isAppleDevice: boolean) => ({
   [KeyMapEnum.Alt]: isAppleDevice ? <Icon icon={Option} size={{ size: '0.95em' }} /> : 'Alt',
   [KeyMapEnum.Backspace]: isAppleDevice ? <Icon icon={Delete} /> : 'Backspace',
+  [KeyMapEnum.CommandOrControl]: isAppleDevice ? (
+    <Icon icon={Command} size={{ size: '0.95em' }} />
+  ) : (
+    'Ctrl'
+  ),
   [KeyMapEnum.Ctrl]: isAppleDevice ? <Icon icon={ChevronUpIcon} /> : 'Ctrl',
+  [KeyMapEnum.Control]: isAppleDevice ? <Icon icon={ChevronUpIcon} /> : 'Ctrl',
   [KeyMapEnum.Down]: <Icon icon={ArrowDownIcon} />,
   [KeyMapEnum.Enter]: isAppleDevice ? <Icon icon={CornerDownLeftIcon} /> : 'Enter',
   [KeyMapEnum.LeftClick]: <Icon icon={LeftClickIcon} size={{ size: '1.2em', strokeWidth: 1.75 }} />,
@@ -92,7 +98,7 @@ const Hotkey = memo<HotkeyProps>(
   }) => {
     const { isDarkMode } = useThemeMode();
     const isBorderless = variant === 'borderless';
-    const [keysGroup, setKeysGroup] = useState(splitKeysByPlus(keys));
+    const [keysGroup, setKeysGroup] = useState(() => splitKeysByPlus(keys));
     const isAppleDevice = useMemo(() => checkIsAppleDevice(isApple), [isApple]);
 
     useEffect(() => {
