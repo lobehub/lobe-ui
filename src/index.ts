@@ -330,6 +330,22 @@ export {
   usePopoverPortalContainer,
 } from './Popover';
 export { I18nProvider, type I18nProviderProps, LobeUIProvider, useTranslation } from './Provider';
+export {
+  default as ScrollArea,
+  ScrollAreaContent,
+  type ScrollAreaContentProps,
+  ScrollAreaCorner,
+  type ScrollAreaCornerProps,
+  type ScrollAreaProps,
+  ScrollAreaRoot,
+  type ScrollAreaRootProps,
+  ScrollAreaScrollbar,
+  type ScrollAreaScrollbarProps,
+  ScrollAreaThumb,
+  type ScrollAreaThumbProps,
+  ScrollAreaViewport,
+  type ScrollAreaViewportProps,
+} from './ScrollArea';
 export { default as ScrollShadow, type ScrollShadowProps } from './ScrollShadow';
 export { default as SearchBar, type SearchBarProps } from './SearchBar';
 export { default as Segmented, type SegmentedProps } from './Segmented';
