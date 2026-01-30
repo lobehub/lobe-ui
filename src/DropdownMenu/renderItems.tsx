@@ -206,7 +206,7 @@ export const renderDropdownMenuItems = (
             })}
           </DropdownMenuSubmenuTrigger>
           <DropdownMenuPortal>
-            <DropdownMenuPositioner alignOffset={-4} sideOffset={-1}>
+            <DropdownMenuPositioner alignOffset={-4} data-submenu="" sideOffset={-1}>
               <DropdownMenuPopup>
                 {submenu.children
                   ? renderDropdownMenuItems(submenu.children, nextKeyPath, { iconSpaceMode })

@@ -278,6 +278,7 @@ export const renderContextMenuItems = (
             <ContextMenu.Positioner
               alignOffset={-4}
               className={styles.positioner}
+              data-submenu=""
               onContextMenu={preventDefaultAndStopPropagation}
               sideOffset={-1}
             >
