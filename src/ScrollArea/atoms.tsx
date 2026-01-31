@@ -4,6 +4,7 @@ import { ScrollArea as BaseScrollArea } from '@base-ui/react/scroll-area';
 import { cx } from 'antd-style';
 import type React from 'react';
 
+import ScrollAreaGlobalStyle from './globalStyle';
 import { styles } from './style';
 
 const mergeStateClassName = <TState,>(
@@ -41,15 +42,18 @@ export const ScrollAreaViewport = ({
   ...rest
 }: ScrollAreaViewportProps) => {
   return (
-    <BaseScrollArea.Viewport
-      {...rest}
-      className={
-        mergeStateClassName(
-          cx(styles.viewport, scrollFade && styles.viewportFade),
-          className,
-        ) as any
-      }
-    />
+    <>
+      <ScrollAreaGlobalStyle />
+      <BaseScrollArea.Viewport
+        {...rest}
+        className={
+          mergeStateClassName(
+            cx(styles.viewport, scrollFade && styles.viewportFade),
+            className,
+          ) as any
+        }
+      />
+    </>
   );
 };
 

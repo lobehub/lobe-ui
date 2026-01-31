@@ -101,37 +101,73 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   viewportFade: css`
-    &::before,
-    &::after {
-      pointer-events: none;
-      content: '';
+    --scroll-area-overflow-y-start: inherit;
+    --scroll-area-overflow-y-end: inherit;
+    --lobe-scroll-area-fade-size: 40px;
+    --lobe-scroll-area-fade-top: min(
+      var(--lobe-scroll-area-fade-size),
+      var(--scroll-area-overflow-y-start, 0px)
+    );
+    --lobe-scroll-area-fade-bottom: min(
+      var(--lobe-scroll-area-fade-size),
+      var(--scroll-area-overflow-y-end, 0px)
+    );
 
-      position: sticky;
-      z-index: 1;
-      inset-inline-start: 0;
+    /* Fade the CONTENT via mask, so it works on background images too. */
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 var(--lobe-scroll-area-fade-top),
+      #000 calc(100% - var(--lobe-scroll-area-fade-bottom)),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 var(--lobe-scroll-area-fade-top),
+      #000 calc(100% - var(--lobe-scroll-area-fade-bottom)),
+      transparent 100%
+    );
+    mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    mask-size: 100% 100%;
+    mask-size: 100% 100%;
 
-      display: block;
+    /* Scroll-driven animation: use scroll position to drive the mask. */
+    @supports (animation-timeline: scroll()) {
+      /*
+       * Important: drive fade by *distance to edges* (first/last 40px),
+       * so reaching top/bottom doesn't cause a sudden snap.
+       */
+      @keyframes lobe-scroll-area-fade-top-in {
+        from {
+          --lobe-scroll-area-fade-top: 0;
+        }
 
-      width: 100%;
-      border-radius: ${cssVar.borderRadius};
+        to {
+          --lobe-scroll-area-fade-top: var(--lobe-scroll-area-fade-size);
+        }
+      }
 
-      transition: height 0.1s ease-out;
-    }
+      @keyframes lobe-scroll-area-fade-bottom-out {
+        from {
+          --lobe-scroll-area-fade-bottom: var(--lobe-scroll-area-fade-size);
+        }
 
-    &::before {
-      --scroll-area-overflow-y-start: inherit;
+        to {
+          --lobe-scroll-area-fade-bottom: 0;
+        }
+      }
 
-      inset-block-start: 0;
-      height: min(40px, var(--scroll-area-overflow-y-start));
-      background: linear-gradient(to bottom, ${cssVar.colorBgLayout}, transparent);
-    }
+      animation-name: lobe-scroll-area-fade-top-in, lobe-scroll-area-fade-bottom-out;
+      animation-duration: 1ms, 1ms;
+      animation-timing-function: linear, linear;
+      animation-fill-mode: both, both;
+      animation-timeline: scroll(self y), scroll(self y);
 
-    &::after {
-      --scroll-area-overflow-y-end: inherit;
-
-      inset-block-end: 0;
-      height: min(40px, var(--scroll-area-overflow-y-end, 40px));
-      background: linear-gradient(to top, ${cssVar.colorBgLayout}, transparent);
+      animation-range:
+        0 var(--lobe-scroll-area-fade-size),
+        calc(100% - var(--lobe-scroll-area-fade-size)) 100%;
     }
   `,
 }));

@@ -9,6 +9,10 @@ description: A native scroll container with custom scrollbars and gradient scrol
 
 <code src="./demos/index.tsx" nopadding></code>
 
+## Mask on gradient background
+
+<code src="./demos/background.tsx" nopadding></code>
+
 ## Both scrollbars
 
 <code src="./demos/both.tsx" nopadding></code>
@@ -46,33 +50,62 @@ import {
 </ScrollAreaRoot>;
 ```
 
-## Gradient scroll fade
+## Scroll fade (mask, scroll-driven)
 
 Enable the fade by setting `scrollFade` on `ScrollArea` or `ScrollAreaViewport`.
 
-The fade effect is driven by the viewport overflow CSS variables. These variables do not inherit by default for performance reasons, so the styles on `ScrollArea.Viewport` opt in by setting them to `inherit` on the pseudo-elements.
+The fade effect is implemented as a `mask-image` (so it works on background images too).
+
+When supported, it uses **scroll-driven animations** via `animation-timeline: scroll()` to drive the mask based on scroll position (see MDN: `https://developer.mozilla.org/ja/docs/Web/CSS/Reference/Properties/animation-timeline`). When not supported, it falls back to Base UI overflow CSS variables.
 
 ```css
-.Viewport::before {
+.Viewport {
   --scroll-area-overflow-y-start: inherit;
-  top: 0;
-  height: min(40px, var(--scroll-area-overflow-y-start));
-  background: linear-gradient(to bottom, var(--lobe-color-bg-layout), transparent);
-}
-
-.Viewport::after {
   --scroll-area-overflow-y-end: inherit;
-  bottom: 0;
-  height: min(40px, var(--scroll-area-overflow-y-end, 40px));
-  background: linear-gradient(to top, var(--lobe-color-bg-layout), transparent);
-}
-```
 
-For SSR, use the fallback value in `var()` when reading `--scroll-area-overflow-y-end`.
+  --fade-size: 40px;
+  --fade-top: min(var(--fade-size), var(--scroll-area-overflow-y-start, 0px));
+  --fade-bottom: min(var(--fade-size), var(--scroll-area-overflow-y-end, 0px));
 
-```css
-.Viewport::after {
-  height: min(40px, var(--scroll-area-overflow-y-end, 40px));
+  @supports (animation-timeline: scroll()) {
+    @keyframes fadeY {
+      0% {
+        --fade-top: 0px;
+        --fade-bottom: var(--fade-size);
+      }
+      10%,
+      90% {
+        --fade-top: var(--fade-size);
+        --fade-bottom: var(--fade-size);
+      }
+      100% {
+        --fade-top: var(--fade-size);
+        --fade-bottom: 0px;
+      }
+    }
+
+    animation: fadeY 1ms linear both;
+    animation-timeline: scroll(self y);
+  }
+
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 var(--fade-top),
+    #000 calc(100% - var(--fade-bottom)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0,
+    #000 var(--fade-top),
+    #000 calc(100% - var(--fade-bottom)),
+    transparent 100%
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
 }
 ```
 
