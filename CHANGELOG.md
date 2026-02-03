@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.33.1](https://github.com/lobehub/lobe-ui/compare/v4.33.0...v4.33.1)
+
+<sup>Released on **2026-02-03**</sup>
+
+#### 🐛 Bug Fixes
+
+- **style**: Update code block display and layout.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **style**: Update code block display and layout ([44b8921](https://github.com/lobehub/lobe-ui/commit/44b8921))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version 4.33.0](https://github.com/lobehub/lobe-ui/compare/v4.32.2...v4.33.0)
 
 <sup>Released on **2026-02-03**</sup>
