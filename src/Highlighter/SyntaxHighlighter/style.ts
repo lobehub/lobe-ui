@@ -56,12 +56,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           user-select: none;
 
           code {
-            display: block;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
 
             .line {
               user-select: text;
 
-              display: inline-block;
+              display: block;
 
               width: calc(100% + 32px);
               margin-block: 0;
