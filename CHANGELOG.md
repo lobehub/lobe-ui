@@ -2,6 +2,46 @@
 
 # Changelog
 
+## [Version 4.33.0](https://github.com/lobehub/lobe-ui/compare/v4.32.2...v4.33.0)
+
+<sup>Released on **2026-02-03**</sup>
+
+#### ✨ Features
+
+- **hotkey**: Add CommandOrControl key mapping for cross-platform compatibility.
+- **scroll-area**: Add global styles and scroll-driven fade effect, introduce ScrollArea component with customizable scrollbars and gradient fade.
+
+#### 🐛 Bug Fixes
+
+- **hotkey**: Update expected order for NORMATIVE_MODIFIER.
+- **index**: Re-enable CodeDiff exports.
+- **menu**: Remove submenu animation.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **hotkey**: Add CommandOrControl key mapping for cross-platform compatibility ([2731b9a](https://github.com/lobehub/lobe-ui/commit/2731b9a))
+- **scroll-area**: Add global styles and scroll-driven fade effect ([aea6034](https://github.com/lobehub/lobe-ui/commit/aea6034))
+- **scroll-area**: Introduce ScrollArea component with customizable scrollbars and gradient fade ([b7c32aa](https://github.com/lobehub/lobe-ui/commit/b7c32aa))
+
+#### What's fixed
+
+- **hotkey**: Update expected order for NORMATIVE_MODIFIER ([094b4b5](https://github.com/lobehub/lobe-ui/commit/094b4b5))
+- **index**: Re-enable CodeDiff exports ([3a71864](https://github.com/lobehub/lobe-ui/commit/3a71864))
+- **menu**: Remove submenu animation ([68ea5bb](https://github.com/lobehub/lobe-ui/commit/68ea5bb))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.32.2](https://github.com/lobehub/lobe-ui/compare/v4.32.1...v4.32.2)
 
 <sup>Released on **2026-01-27**</sup>
