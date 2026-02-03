@@ -82,7 +82,7 @@ describe('checkIsAppleDevice', () => {
 // 规范化顺序
 describe('NORMATIVE_MODIFIER', () => {
   it('should be in the correct order', () => {
-    const expectedOrder = ['ctrl', 'control', 'meta', 'mod', 'alt', 'shift'];
+    const expectedOrder = ['ctrl', 'control', 'commandorcontrol', 'meta', 'mod', 'alt', 'shift'];
     expect(NORMATIVE_MODIFIER).toEqual(expectedOrder);
   });
 });
