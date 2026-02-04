@@ -22,27 +22,49 @@ const Text: FC<TextProps> = ({
   underline,
   delete: deleteStyle,
   fontSize,
+  lineClamp,
+  lineHeight,
   mark,
   code,
   color,
   weight,
   ellipsis,
+  noWrap,
+  textDecoration,
+  textTransform,
+  whiteSpace,
+  wordBreak,
   ...rest
 }) => {
   const textRef = useRef<HTMLElement>(null);
   const isOverflow = useTextOverflow(textRef, ellipsis, children);
 
+  const isMultiEllipsis = typeof ellipsis === 'object' && !!ellipsis.rows && ellipsis.rows > 1;
   const tooltipWhenOverflow = typeof ellipsis === 'object' && ellipsis.tooltipWhenOverflow;
 
   const textStyle = {
     ...(color && { color }),
     ...(weight && { fontWeight: weight }),
+    ...(lineHeight && { lineHeight }),
+    ...(textTransform && { textTransform }),
+    ...(textDecoration && { textDecoration }),
+    ...(wordBreak && { wordBreak }),
     ...(typeof ellipsis === 'object' &&
       ellipsis.rows && {
         WebkitLineClamp: ellipsis.rows,
       }),
+    ...(!ellipsis &&
+      !!lineClamp && {
+        WebkitBoxOrient: 'vertical',
+        WebkitLineClamp: lineClamp,
+        display: '-webkit-box',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+      }),
     ...(fontSize && { fontSize }),
     ...(align && { textAlign: align }),
+    ...(!isMultiEllipsis && noWrap && { whiteSpace: 'nowrap' as const }),
+    ...(whiteSpace && { whiteSpace }),
     ...style,
   };
 
@@ -78,14 +100,18 @@ const Text: FC<TextProps> = ({
   );
 
   // 处理带有 tooltip 的省略
-  if (ellipsis && typeof ellipsis === 'object' && ellipsis.tooltip) {
+  if (
+    ellipsis &&
+    typeof ellipsis === 'object' &&
+    (ellipsis.tooltip || ellipsis.tooltipWhenOverflow)
+  ) {
     // 如果设置了 tooltipWhenOverflow，只在溢出时显示 tooltip
     if (tooltipWhenOverflow && !isOverflow) {
       return content;
     }
 
     const title = typeof ellipsis.tooltip === 'string' ? ellipsis.tooltip : children;
-    if (typeof ellipsis.tooltip === 'object')
+    if (ellipsis.tooltip && typeof ellipsis.tooltip === 'object')
       return (
         <Tooltip {...ellipsis.tooltip} title={ellipsis.tooltip?.title || title}>
           {content}

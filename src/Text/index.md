@@ -17,20 +17,27 @@ description: Text component is used to display text content with various styles 
 
 ### Text
 
-| Property  | Description                    | Type                                                                | Default |
-| --------- | ------------------------------ | ------------------------------------------------------------------- | ------- |
-| as        | Custom element type            | `ElementType`                                                       | `'div'` |
-| type      | Text type                      | `'secondary' \| 'success' \| 'warning' \| 'danger' \| 'info'`       | -       |
-| color     | Custom text color              | `string`                                                            | -       |
-| weight    | Font weight                    | `'bold' \| 'bolder' \| number`                                      | -       |
-| disabled  | Whether the text is disabled   | `boolean`                                                           | `false` |
-| strong    | Whether the text is bold       | `boolean`                                                           | `false` |
-| italic    | Whether the text is italic     | `boolean`                                                           | `false` |
-| underline | Whether the text is underlined | `boolean`                                                           | `false` |
-| delete    | Whether the text is deleted    | `boolean`                                                           | `false` |
-| mark      | Whether the text is marked     | `boolean`                                                           | `false` |
-| code      | Whether the text is code       | `boolean`                                                           | `false` |
-| ellipsis  | Ellipsis configuration         | `boolean \| { rows?: number; tooltip?: ReactNode \| TooltipProps }` | -       |
+| Property       | Description                     | Type                                                                | Default |
+| -------------- | ------------------------------- | ------------------------------------------------------------------- | ------- |
+| as             | Custom element type             | `ElementType`                                                       | `'div'` |
+| type           | Text type                       | `'secondary' \| 'success' \| 'warning' \| 'danger' \| 'info'`       | -       |
+| color          | Custom text color               | `string`                                                            | -       |
+| weight         | Font weight                     | `'bold' \| 'bolder' \| number`                                      | -       |
+| disabled       | Whether the text is disabled    | `boolean`                                                           | `false` |
+| strong         | Whether the text is bold        | `boolean`                                                           | `false` |
+| italic         | Whether the text is italic      | `boolean`                                                           | `false` |
+| lineClamp      | Clamp lines with CSS line-clamp | `number`                                                            | -       |
+| lineHeight     | Custom line height              | `CSSProperties['lineHeight']`                                       | -       |
+| underline      | Whether the text is underlined  | `boolean`                                                           | `false` |
+| delete         | Whether the text is deleted     | `boolean`                                                           | `false` |
+| mark           | Whether the text is marked      | `boolean`                                                           | `false` |
+| code           | Whether the text is code        | `boolean`                                                           | `false` |
+| noWrap         | Whether to disable wrapping     | `boolean`                                                           | `false` |
+| textDecoration | Custom text decoration          | `CSSProperties['textDecoration']`                                   | -       |
+| textTransform  | Custom text transform           | `CSSProperties['textTransform']`                                    | -       |
+| whiteSpace     | Custom white-space              | `CSSProperties['whiteSpace']`                                       | -       |
+| wordBreak      | Custom word-break               | `CSSProperties['wordBreak']`                                        | -       |
+| ellipsis       | Ellipsis configuration          | `boolean \| { rows?: number; tooltip?: ReactNode \| TooltipProps }` | -       |
 
 Additionally, Text inherits all properties from Ant Design's Typography.Text component.
 

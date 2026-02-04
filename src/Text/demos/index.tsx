@@ -24,14 +24,31 @@ export default () => {
         value: 1,
       },
       italic: false,
+      lineClamp: {
+        max: 10,
+        min: 1,
+        step: 1,
+        value: 0,
+      },
+      lineHeight: {
+        value: '',
+      },
       mark: false,
+      noWrap: false,
       strong: false,
+      textDecoration: {
+        value: '',
+      },
+      textTransform: {
+        options: ['', 'none', 'capitalize', 'uppercase', 'lowercase'],
+        value: '',
+      },
       tooltip: {
         render: (get) => get('ellipsis'),
         value: false,
       },
       tooltipWhenOverflow: {
-        render: (get) => get('ellipsis') && get('tooltip'),
+        render: (get) => get('ellipsis'),
         value: false,
       },
       type: {
@@ -41,6 +58,13 @@ export default () => {
       underline: false,
       weight: {
         options: ['bold', 'bolder'],
+        value: '',
+      },
+      whiteSpace: {
+        value: '',
+      },
+      wordBreak: {
+        options: ['', 'normal', 'break-all', 'keep-all', 'break-word'],
         value: '',
       },
     },
@@ -61,6 +85,12 @@ export default () => {
                 }
               : undefined
           }
+          lineClamp={controls.lineClamp ? controls.lineClamp : undefined}
+          lineHeight={controls.lineHeight || undefined}
+          textDecoration={controls.textDecoration || undefined}
+          textTransform={controls.textTransform || undefined}
+          whiteSpace={controls.whiteSpace || undefined}
+          wordBreak={controls.wordBreak || undefined}
         >
           This is a very long text that will be truncated with ellipsis when it exceeds the
           container width. This is a very long text that will be truncated with ellipsis when it
