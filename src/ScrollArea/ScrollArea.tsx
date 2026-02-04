@@ -12,7 +12,7 @@ import {
 } from './atoms';
 import type { ScrollAreaProps } from './type';
 
-const ScrollArea: FC<ScrollAreaProps> = ({
+export const ScrollArea: FC<ScrollAreaProps> = ({
   children,
   contentProps,
   corner = false,
@@ -35,7 +35,3 @@ const ScrollArea: FC<ScrollAreaProps> = ({
     </ScrollAreaRoot>
   );
 };
-
-ScrollArea.displayName = 'ScrollArea';
-
-export default ScrollArea;

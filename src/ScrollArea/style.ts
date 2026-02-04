@@ -6,9 +6,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     flex-direction: column;
     gap: 16px;
 
-    padding-block: 12px;
-    padding-inline: 16px 24px;
-
     font-size: ${cssVar.fontSizeSM};
     line-height: 1.375rem;
     color: ${cssVar.colorText};
@@ -87,11 +84,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   viewport: css`
     position: relative;
-
     height: 100%;
-    border-radius: ${cssVar.borderRadius};
-
-    background: ${cssVar.colorBgLayout};
     outline: none;
 
     &:focus-visible {
@@ -121,16 +114,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       #000 calc(100% - var(--lobe-scroll-area-fade-bottom)),
       transparent 100%
     );
-    mask-image: linear-gradient(
-      to bottom,
-      transparent 0,
-      #000 var(--lobe-scroll-area-fade-top),
-      #000 calc(100% - var(--lobe-scroll-area-fade-bottom)),
-      transparent 100%
-    );
     mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    mask-size: 100% 100%;
     mask-size: 100% 100%;
 
     /* Scroll-driven animation: use scroll position to drive the mask. */

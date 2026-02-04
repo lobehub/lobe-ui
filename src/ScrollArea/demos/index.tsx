@@ -8,6 +8,11 @@ const paragraphs = [
 export default () => {
   return (
     <ScrollArea
+      contentProps={{
+        style: {
+          padding: 16,
+        },
+      }}
       scrollFade
       style={{
         height: 192,

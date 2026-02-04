@@ -14,5 +14,5 @@ export {
   ScrollAreaThumb,
   ScrollAreaViewport,
 } from './atoms';
-export { default } from './ScrollArea';
+export { ScrollArea } from './ScrollArea';
 export type { ScrollAreaProps } from './type';
