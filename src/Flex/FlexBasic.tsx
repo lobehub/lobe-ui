@@ -16,6 +16,7 @@ const FlexBasic: FC<FlexBasicProps> = ({
   distribution,
   height,
   width,
+  allowShrink,
   padding,
   paddingInline,
   paddingBlock,
@@ -58,7 +59,11 @@ const FlexBasic: FC<FlexBasicProps> = ({
     ...(gap !== undefined ? { '--lobe-flex-gap': getCssValue(gap) } : {}),
   };
 
-  const mergedStyle: CSSProperties = { ...(cssVars as CSSProperties), ...style };
+  const mergedStyle: CSSProperties = {
+    ...(cssVars as CSSProperties),
+    ...(allowShrink ? { minWidth: 0 } : {}),
+    ...style,
+  };
 
   const baseClassName = 'lobe-flex';
   const mergedClassName = [

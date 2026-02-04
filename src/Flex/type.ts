@@ -27,6 +27,15 @@ export interface IFlexbox {
   align?: ContentPosition;
 
   /**
+   * 允许在 flex 布局中正常收缩（通过将根节点的 min-width 设为 0 实现）
+   *
+   * 在 Flex 容器（或作为 flex item）中，启用该选项可避免内容导致的溢出，
+   * 让元素可以正常 shrink（常见于文本省略、滚动容器等场景）。
+   * @default false
+   */
+  allowShrink?: boolean;
+
+  /**
    * 渲染的 HTML 元素类型
    * @default "div"
    */

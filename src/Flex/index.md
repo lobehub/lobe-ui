@@ -61,6 +61,7 @@ A convenience component for centering content both horizontally and vertically.
 | padding       | `number` \| `string`              | `0`          | Padding                                                                                          |
 | paddingInline | `number` \| `string`              | -            | Inline padding                                                                                   |
 | paddingBlock  | `number` \| `string`              | -            | Block padding                                                                                    |
+| allowShrink   | `boolean`                         | `false`      | Allow flex shrinking by setting root `min-width: 0` (useful for ellipsis/overflow cases)         |
 | flex          | `number` \| `string`              | `'0 1 auto'` | Flex value                                                                                       |
 | visible       | `boolean`                         | `true`       | Whether to display the component                                                                 |
 | as            | `ElementType`                     | `'div'`      | HTML tag to render                                                                               |
