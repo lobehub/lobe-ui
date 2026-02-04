@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.33.2](https://github.com/lobehub/lobe-ui/compare/v4.33.1...v4.33.2)
+
+<sup>Released on **2026-02-04**</sup>
+
+#### 🐛 Bug Fixes
+
+- **scroll**: Simplify exports and enhance component definition.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **scroll**: Simplify exports and enhance component definition ([0a097a9](https://github.com/lobehub/lobe-ui/commit/0a097a9))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.33.1](https://github.com/lobehub/lobe-ui/compare/v4.33.0...v4.33.1)
 
 <sup>Released on **2026-02-03**</sup>
