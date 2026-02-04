@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.33.3](https://github.com/lobehub/lobe-ui/compare/v4.33.2...v4.33.3)
+
+<sup>Released on **2026-02-04**</sup>
+
+#### 🐛 Bug Fixes
+
+- **flex**: Add allowShrink prop for flexible layout control.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **flex**: Add allowShrink prop for flexible layout control ([3578049](https://github.com/lobehub/lobe-ui/commit/3578049))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.33.2](https://github.com/lobehub/lobe-ui/compare/v4.33.1...v4.33.2)
 
 <sup>Released on **2026-02-04**</sup>
