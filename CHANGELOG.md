@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version 4.33.4](https://github.com/lobehub/lobe-ui/compare/v4.33.3...v4.33.4)
+
+<sup>Released on **2026-02-04**</sup>
+
+#### 🐛 Bug Fixes
+
+- **text**: Enhance Text component with additional styling properties.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **text**: Enhance Text component with additional styling properties ([e8ba5c2](https://github.com/lobehub/lobe-ui/commit/e8ba5c2))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version 4.33.3](https://github.com/lobehub/lobe-ui/compare/v4.33.2...v4.33.3)
 
 <sup>Released on **2026-02-04**</sup>
