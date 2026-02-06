@@ -6,6 +6,8 @@ export default () => {
     <Flexbox align="center" height={280} justify="center" style={{ padding: 24 }}>
       <Popover
         arrow
+        placement="bottom"
+        trigger="click"
         content={
           <Flexbox gap={16} style={{ padding: '12px 16px' }}>
             <Flexbox gap={8}>
@@ -14,7 +16,7 @@ export default () => {
                 Tooltips can work seamlessly inside popovers, providing additional context on hover.
               </div>
             </Flexbox>
-            <Flexbox gap={8} horizontal>
+            <Flexbox horizontal gap={8}>
               <Tooltip title="Get detailed information about this feature">
                 <Button icon={<Info size={16} />} size="small">
                   Info
@@ -28,8 +30,6 @@ export default () => {
             </Flexbox>
           </Flexbox>
         }
-        placement="bottom"
-        trigger="click"
       >
         <Button size="large" type="primary">
           Click to Open

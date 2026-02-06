@@ -1,13 +1,13 @@
-import type { AnchorProps } from 'antd';
-import { CSSProperties, ElementType, FC, ReactNode, Ref } from 'react';
-import type { Options as ReactMarkdownOptions , Components } from 'react-markdown';
-import type { Pluggable } from 'unified';
+import { type AnchorProps } from 'antd';
+import { type CSSProperties, type ElementType, type FC, type ReactNode, type Ref } from 'react';
+import { type Components, type Options as ReactMarkdownOptions } from 'react-markdown';
+import { type Pluggable } from 'unified';
 
-import type { HighlighterProps } from '@/Highlighter';
-import type { MermaidProps } from '@/Mermaid';
-import type { ImageProps, PreProps, VideoProps } from '@/mdx';
-import type { AProps, DivProps } from '@/types';
-import type { CitationItem } from '@/types/citation';
+import { type HighlighterProps } from '@/Highlighter';
+import { type ImageProps, type PreProps, type VideoProps } from '@/mdx';
+import { type MermaidProps } from '@/Mermaid';
+import { type AProps, type DivProps } from '@/types';
+import { type CitationItem } from '@/types/citation';
 
 export interface TypographyProps extends DivProps {
   borderRadius?: number;

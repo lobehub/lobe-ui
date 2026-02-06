@@ -4,7 +4,7 @@ import { cx } from 'antd-style';
 import { type FC } from 'react';
 
 import Block from '@/Block';
-import { SkeletonBlockProps } from '@/Skeleton/type';
+import type { SkeletonBlockProps } from '@/Skeleton/type';
 
 import { styles } from './style';
 

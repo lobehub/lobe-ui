@@ -31,7 +31,7 @@ export const remarkColor = (options: RemarkColorOptions = {}) => {
     }
 
     // HEX 颜色: #RRGGBB 或 #RGB
-    const hexPattern = /^#([\dA-Fa-f]{6}|[\dA-Fa-f]{3})$/;
+    const hexPattern = /^#([\da-f]{6}|[\da-f]{3})$/i;
     if (hexPattern.test(trimmed)) {
       // 标准化为 6 位 HEX
       if (trimmed.length === 4) {

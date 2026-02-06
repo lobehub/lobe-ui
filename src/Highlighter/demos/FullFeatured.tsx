@@ -1,4 +1,4 @@
-import { Highlighter, HighlighterProps, highlighterThemes } from '@lobehub/ui';
+import { Highlighter, type HighlighterProps, highlighterThemes } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 import { code } from './data';

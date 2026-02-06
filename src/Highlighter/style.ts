@@ -153,7 +153,7 @@ export const variants = cva(styles.root, {
     variant: 'filled',
     wrap: false,
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     variant: {
       filled: styles.filled,
@@ -169,14 +169,13 @@ export const variants = cva(styles.root, {
       true: styles.wrap,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });
 
 export const headerVariants = cva(styles.headerRoot, {
   defaultVariants: {
     variant: 'filled',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     variant: {
       filled: cx(styles.headerFilled, styles.headerOutlined),
@@ -184,7 +183,6 @@ export const headerVariants = cva(styles.headerRoot, {
       borderless: styles.headerBorderless,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });
 
 export const bodyVariants = cva(styles.bodyRoot, {

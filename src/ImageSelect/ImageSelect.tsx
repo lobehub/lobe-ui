@@ -34,7 +34,7 @@ const ImageSelect = memo<ImageSelectProps>(
     });
 
     return (
-      <Flexbox className={className} gap={16} horizontal ref={ref} style={style} {...rest}>
+      <Flexbox horizontal className={className} gap={16} ref={ref} style={style} {...rest}>
         {options?.map((item) => {
           const isActive = item.value === currentValue;
           return (
@@ -50,16 +50,16 @@ const ImageSelect = memo<ImageSelectProps>(
                 className={cx(styles.img, isActive && styles.imgActive, classNames?.img)}
                 height={height}
                 src={item.img}
+                unoptimized={unoptimized}
+                width={width}
                 style={{
                   ...customStyles?.img,
                   height,
                   width,
                 }}
-                unoptimized={unoptimized}
-                width={width}
               />
 
-              <Flexbox align={'center'} gap={4} horizontal>
+              <Flexbox horizontal align={'center'} gap={4}>
                 {item.icon && <Icon icon={item.icon} />}
                 {item.label}
               </Flexbox>

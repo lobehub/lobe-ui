@@ -6,13 +6,13 @@ import { memo, useMemo, useRef, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import useControlledState from 'use-merge-value';
 
+import Spotlight from '@/awesome/Spotlight';
 import Hotkey from '@/Hotkey';
 import Icon from '@/Icon';
 import Input from '@/Input';
-import Spotlight from '@/awesome/Spotlight';
 
 import { styles } from './style';
-import type { SearchBarProps } from './type';
+import { type SearchBarProps } from './type';
 
 const SearchBar = memo<SearchBarProps>(
   ({
@@ -67,6 +67,19 @@ const SearchBar = memo<SearchBarProps>(
         <Input
           allowClear
           className={inputClassName}
+          placeholder={placeholder ?? 'Type keywords...'}
+          ref={inputReference}
+          style={inputStyle}
+          value={inputValue}
+          prefix={
+            <Icon
+              className={styles.icon}
+              icon={loading ? LucideLoader2 : Search}
+              size="small"
+              spin={loading}
+              style={{ marginRight: 4 }}
+            />
+          }
           onBlur={(e) => {
             onBlur?.(e);
             setInputValue(e.target.value);
@@ -84,25 +97,12 @@ const SearchBar = memo<SearchBarProps>(
             onPressEnter?.(e);
             onSearch?.(inputValue);
           }}
-          placeholder={placeholder ?? 'Type keywords...'}
-          prefix={
-            <Icon
-              className={styles.icon}
-              icon={loading ? LucideLoader2 : Search}
-              size="small"
-              spin={loading}
-              style={{ marginRight: 4 }}
-            />
-          }
-          ref={inputReference}
-          style={inputStyle}
-          value={inputValue}
           {...rest}
         />
         {enableShortKey && showTag && !inputValue && (
           <Hotkey
-            className={cx(styles.tag, shortKeyClassName)}
             compact
+            className={cx(styles.tag, shortKeyClassName)}
             keys={hotkey}
             style={shortKeyStyle}
           />

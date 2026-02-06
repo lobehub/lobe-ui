@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 
-import { DivProps, SvgProps } from '@/types';
+import type { DivProps, SvgProps } from '@/types';
 
 export interface BrandLoadingProps {
   size?: number;

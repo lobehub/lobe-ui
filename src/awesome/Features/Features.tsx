@@ -15,10 +15,10 @@ const Features = memo<FeaturesProps>(
       <SpotlightCard
         className={className}
         items={items}
+        style={{ maxWidth, ...style }}
         renderItem={(item: any) => (
           <FeatureItem className={itemClassName} key={item.title} style={itemStyle} {...item} />
         )}
-        style={{ maxWidth, ...style }}
         {...rest}
       />
     );

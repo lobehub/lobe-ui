@@ -1,9 +1,9 @@
 'use client';
 
-import { type ElementType, type FC, type Ref, createElement, memo, use, useMemo } from 'react';
+import { createElement, type ElementType, type FC, memo, type Ref, use, useMemo } from 'react';
 
 import { ConfigContext } from '@/ConfigProvider';
-import type { AProps } from '@/types';
+import { type AProps } from '@/types';
 
 const createContainer = (as: ElementType) => memo((props: any) => createElement(as, props));
 

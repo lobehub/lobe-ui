@@ -15,8 +15,8 @@ export default () => {
   return (
     <Flexbox gap={16} padding={16}>
       <Tabs
-        activeKey={current}
         compact
+        activeKey={current}
         items={[
           { key: 'general', label: '普通case' },
           { key: 'withThinking', label: '带 thinking' },
@@ -34,7 +34,10 @@ export default () => {
         </div>
       )}
       <Markdown
+        enableCustomFootnotes
         citations={state.citations}
+        remarkPlugins={[remarkCaptureThink]}
+        variant={'chat'}
         components={{
           think: (props: any) => (
             <Block padding={16} style={{ marginBottom: 20 }}>
@@ -42,9 +45,6 @@ export default () => {
             </Block>
           ),
         }}
-        enableCustomFootnotes
-        remarkPlugins={[remarkCaptureThink]}
-        variant={'chat'}
       >
         {normalizeThinkTags(state.markdown)}
       </Markdown>

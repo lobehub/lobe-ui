@@ -39,7 +39,7 @@ export const variants = cva(styles.item, {
   defaultVariants: {
     variant: 'borderless',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     variant: {
       filled: styles.filled,
@@ -47,5 +47,4 @@ export const variants = cva(styles.item, {
       borderless: styles.borderless,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

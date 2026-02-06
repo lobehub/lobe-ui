@@ -44,7 +44,7 @@ export default () => {
     <>
       <ContextMenuTrigger className={styles.trigger} items={items}>
         <Block direction="vertical" gap={8} padding={16}>
-          <Text as={'p'} strong>
+          <Text strong as={'p'}>
             Right click this panel
           </Text>
           <Text as={'p'} type="secondary">

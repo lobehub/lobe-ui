@@ -1,4 +1,4 @@
-import { Select, SelectProps } from '@lobehub/ui';
+import { Select, type SelectProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 const handleChange = (value: string) => {
@@ -23,7 +23,6 @@ export default () => {
     <StoryBook gap={16} levaStore={store}>
       <Select
         defaultValue="lucy"
-        onChange={handleChange}
         options={[
           { label: 'Jack', value: 'jack' },
           { label: 'Lucy', value: 'lucy' },
@@ -33,11 +32,12 @@ export default () => {
         style={{
           width: '100%',
         }}
+        onChange={handleChange}
         {...controls}
       />
       <Select
-        defaultValue="lucy"
         disabled
+        defaultValue="lucy"
         options={[{ label: 'Lucy', value: 'lucy' }]}
         style={{
           width: '100%',
@@ -45,8 +45,8 @@ export default () => {
         {...controls}
       />
       <Select
-        defaultValue="lucy"
         loading
+        defaultValue="lucy"
         options={[{ label: 'Lucy', value: 'lucy' }]}
         style={{
           width: '100%',

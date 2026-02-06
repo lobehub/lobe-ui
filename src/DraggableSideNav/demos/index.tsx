@@ -48,20 +48,20 @@ export default () => {
   };
 
   return (
-    <StoryBook levaStore={store} noPadding>
-      <Flexbox height={'100%'} horizontal width={'100%'}>
+    <StoryBook noPadding levaStore={store}>
+      <Flexbox horizontal height={'100%'} width={'100%'}>
         <DraggableSideNav
+          expand={expand}
+          footer={(expand) => <DemoFooter expand={expand} />}
+          width={width}
           body={(expand) => (
             <DemoBody activeKey={activeKey} expand={expand} onSelect={setActiveKey} />
           )}
-          expand={expand}
-          footer={(expand) => <DemoFooter expand={expand} />}
           header={(expand) => (
             <DemoHeader activeKey={activeKey} expand={expand} onSelect={setActiveKey} />
           )}
           onExpandChange={setExpand}
           onWidthChange={(_, width) => setWidth(width)}
-          width={width}
           {...sideNavProps}
         />
 
@@ -77,7 +77,7 @@ export default () => {
             </div>
             <div>
               <button
-                onClick={() => setExpand(!expand)}
+                type="button"
                 style={{
                   background: expand ? '#1890ff' : '#52c41a',
                   border: 'none',
@@ -87,7 +87,7 @@ export default () => {
                   fontSize: '14px',
                   padding: '8px 16px',
                 }}
-                type="button"
+                onClick={() => setExpand(!expand)}
               >
                 {expand ? t('sideNav.collapse') : t('sideNav.expand')}
               </button>

@@ -12,10 +12,10 @@ import { useNativeButton } from '@/hooks/useNativeButton';
 import { placementMap } from '@/utils/placement';
 
 import { TooltipArrowIcon } from './ArrowIcon';
+import { styles } from './style';
 import TooltipContent from './TooltipContent';
 import { useTooltipPortalContainer } from './TooltipPortal';
-import { styles } from './style';
-import type { TooltipProps } from './type';
+import { type TooltipProps } from './type';
 
 const DEFAULT_OPEN_DELAY = 400;
 const DEFAULT_CLOSE_DELAY = 100;
@@ -138,7 +138,7 @@ export const TooltipStandalone = memo<TooltipProps>(
               // If we render into a non-<button> element, that prop is invalid and can warn.
               const resolvedProps = (() => {
                 if (isNativeButtonTriggerElement) return props as any;
-                // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+                // eslint-disable-next-line unused-imports/no-unused-vars
                 const { type, ref: triggerRef, ...restProps } = props as any;
                 return restProps;
               })();
@@ -216,7 +216,6 @@ export const TooltipStandalone = memo<TooltipProps>(
       ],
     );
 
-    // eslint-disable-next-line eqeqeq
     if (title == null && !hotkey) {
       return children;
     }
@@ -227,8 +226,8 @@ export const TooltipStandalone = memo<TooltipProps>(
       <BaseTooltip.Root
         defaultOpen={defaultOpen}
         disabled={disabled}
-        onOpenChange={handleOpenChange}
         open={resolvedOpen}
+        onOpenChange={handleOpenChange}
       >
         {triggerElement}
         {resolvedPortalContainer ? (

@@ -1,6 +1,6 @@
-import { ErrorType } from './error';
-import { LLMRoleType } from './llm';
-import { BaseDataModel } from './meta';
+import type { ErrorType } from './error';
+import type { LLMRoleType } from './llm';
+import type { BaseDataModel } from './meta';
 
 /**
  * 聊天消息错误对象

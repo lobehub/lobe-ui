@@ -1,4 +1,4 @@
-import { Space, message } from 'antd';
+import { message, Space } from 'antd';
 import { cssVar } from 'antd-style';
 import { memo } from 'react';
 
@@ -22,18 +22,18 @@ const ScaleRow = memo<IScaleRow>(({ name }) => {
           <div
             className={styles.scaleBox}
             key={color}
+            title={(cssVar as any)[`${name}${color}`] as any}
             onClick={async () => {
               const content = (cssVar as any)[`${name}${color}`] as any;
 
               await copyToClipboard(content);
               message.success(content);
             }}
-            title={(cssVar as any)[`${name}${color}`] as any}
           >
             <Flexbox
+              horizontal
               align={'center'}
               className={styles.scaleItem}
-              horizontal
               justify={'center'}
               style={{ backgroundColor: (cssVar as any)[`${name}${color}`] as any }}
             />

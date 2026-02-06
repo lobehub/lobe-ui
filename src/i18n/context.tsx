@@ -1,9 +1,9 @@
-import { type ReactNode, memo } from 'react';
+import { memo, type ReactNode } from 'react';
 
 import ConfigProvider from '@/ConfigProvider';
-import { type MotionComponentType } from '@/MotionProvider';
+import type { MotionComponentType } from '@/MotionProvider';
 
-import type { TranslationResourcesInput } from './types';
+import { type TranslationResourcesInput } from './types';
 
 export interface I18nProviderProps {
   children: ReactNode;

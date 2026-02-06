@@ -9,17 +9,17 @@ export default () => {
   return (
     <Center gap={16}>
       <CheckboxGroup
-        onChange={(values) => {
-          setValue(values);
-          console.log('Selected:', values);
-        }}
+        value={value}
         options={[
           { label: 'Apple', value: 'apple' },
           { label: 'Banana', value: 'banana' },
           { label: 'Orange', value: 'orange' },
           { label: 'Grape', value: 'grape' },
         ]}
-        value={value}
+        onChange={(values) => {
+          setValue(values);
+          console.log('Selected:', values);
+        }}
       />
     </Center>
   );

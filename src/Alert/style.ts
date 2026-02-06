@@ -208,7 +208,7 @@ export const extraVariants = cva(styles.extra, {
   defaultVariants: {
     variant: 'filled',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     variant: {
       filled: styles.filled,
@@ -220,7 +220,6 @@ export const extraVariants = cva(styles.extra, {
       true: styles.banner,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });
 
 export const rootVariants = cva(styles.rootBase, {
@@ -282,7 +281,7 @@ export const rootVariants = cva(styles.rootBase, {
     showIcon: false,
     variant: 'filled',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     closable: {
       false: null,
@@ -314,7 +313,6 @@ export const rootVariants = cva(styles.rootBase, {
       true: styles.hasExtra,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });
 
 export const extraHeaderVariants = cva(styles.extraHeader, {
@@ -334,7 +332,7 @@ export const extraHeaderVariants = cva(styles.extraHeader, {
     hasTitle: false,
     variant: 'filled',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     hasTitle: {
       false: null,
@@ -346,5 +344,4 @@ export const extraHeaderVariants = cva(styles.extraHeader, {
       outlined: null,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

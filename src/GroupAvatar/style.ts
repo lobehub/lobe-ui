@@ -37,7 +37,7 @@ export const variants = cva(styles.root, {
   defaultVariants: {
     cornerShape: 'squircle',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     cornerShape: {
       circle: styles.circle,
@@ -48,5 +48,4 @@ export const variants = cva(styles.root, {
       squircle: styles.squircle,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

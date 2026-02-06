@@ -10,7 +10,7 @@ import Tag from '@/Tag';
 
 import FullFeatured from './FullFeatured';
 import SyntaxMermaid from './SyntaxMermaid';
-import { MermaidProps } from './type';
+import type { MermaidProps } from './type';
 
 const Mermaid = memo<MermaidProps>(
   ({
@@ -109,7 +109,7 @@ const Mermaid = memo<MermaidProps>(
         style={style}
         {...rest}
       >
-        <Flexbox align={'center'} className={styles.actions} flex={'none'} gap={4} horizontal>
+        <Flexbox horizontal align={'center'} className={styles.actions} flex={'none'} gap={4}>
           {actions}
         </Flexbox>
         {showLanguage && <Tag className={styles.lang}>{language.toLowerCase()}</Tag>}

@@ -1,8 +1,8 @@
 import type { CSSProperties, ReactNode } from 'react';
 
-import { FlexboxProps } from '@/Flex';
+import type { FlexboxProps } from '@/Flex';
 import type { TextProps } from '@/Text';
-import { DivProps } from '@/types';
+import type { DivProps } from '@/types';
 
 export interface CheckboxProps extends Omit<DivProps, 'onChange'> {
   backgroundColor?: string;

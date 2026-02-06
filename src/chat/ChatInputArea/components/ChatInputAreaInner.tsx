@@ -4,7 +4,7 @@ import { memo, useRef } from 'react';
 
 import { TextArea } from '@/Input';
 
-import { ChatInputAreaInnerProps } from '../type';
+import type { ChatInputAreaInnerProps } from '../type';
 
 const ChatInputAreaInner = memo<ChatInputAreaInnerProps>(
   ({
@@ -26,6 +26,9 @@ const ChatInputAreaInner = memo<ChatInputAreaInnerProps>(
     return (
       <TextArea
         className={className}
+        ref={ref}
+        resize={resize}
+        variant={'borderless'}
         onBlur={(e) => {
           onInput?.(e.target.value);
           onBlur?.(e);
@@ -54,9 +57,6 @@ const ChatInputAreaInner = memo<ChatInputAreaInnerProps>(
             onSend?.();
           }
         }}
-        ref={ref}
-        resize={resize}
-        variant={'borderless'}
         {...rest}
       />
     );

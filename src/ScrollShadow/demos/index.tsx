@@ -25,9 +25,9 @@ export default () => {
     <StoryBook levaStore={store}>
       <ScrollShadow
         height={300}
-        onVisibilityChange={console.log}
         padding={16}
         width={'100%'}
+        onVisibilityChange={console.log}
         {...control}
       >
         {/* 长内容 */}

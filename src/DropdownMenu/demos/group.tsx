@@ -4,7 +4,7 @@ import { groupItems } from './data';
 
 export default () => {
   return (
-    <DropdownMenu items={groupItems} nativeButton>
+    <DropdownMenu nativeButton items={groupItems}>
       <Button>Group Items</Button>
     </DropdownMenu>
   );

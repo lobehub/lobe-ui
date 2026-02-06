@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 import type { AvatarProps } from '@/Avatar/type';
 import type { FlexboxProps } from '@/Flex/type';

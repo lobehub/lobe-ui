@@ -176,7 +176,7 @@ const closeModal = (id: string) => {
   if (existing) clearTimeout(existing);
   const timer = window.setTimeout(() => {
     rawDestroyTimers.delete(id);
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+
     destroyModal(id);
   }, delay);
   rawDestroyTimers.set(id, timer);
@@ -203,10 +203,10 @@ const ModalStack = memo(({ stack }: ModalStackProps) => {
         <ModalStackItem
           id={item.id}
           key={item.id}
+          props={item.props}
           onClose={closeModal}
           onDestroy={destroyModal}
           onUpdate={updateModal}
-          props={item.props}
         />
       );
     }
@@ -216,11 +216,11 @@ const ModalStack = memo(({ stack }: ModalStackProps) => {
         component={item.component}
         id={item.id}
         key={item.id}
-        onClose={closeModal}
-        onUpdate={updateRawProps}
         open={item.open}
         options={item.options}
         props={item.props}
+        onClose={closeModal}
+        onUpdate={updateRawProps}
       />
     );
   });
@@ -270,13 +270,13 @@ export function createRawModal<P extends RawModalComponentProps>(
   props: Omit<P, 'open' | 'onClose'>,
   options?: RawModalOptions,
 ): RawModalInstance<P>;
-// eslint-disable-next-line no-redeclare
+
 export function createRawModal<P, OpenKey extends keyof P, CloseKey extends keyof P>(
   component: RawModalComponent<P>,
   props: Omit<P, OpenKey | CloseKey>,
   options: RawModalKeyOptions<OpenKey, CloseKey>,
 ): RawModalInstance<P, OpenKey, CloseKey>;
-// eslint-disable-next-line no-redeclare
+
 export function createRawModal<P, OpenKey extends keyof P, CloseKey extends keyof P>(
   component: RawModalComponent<P>,
   props: Omit<P, OpenKey | CloseKey>,

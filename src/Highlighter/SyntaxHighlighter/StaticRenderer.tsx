@@ -1,6 +1,6 @@
 'use client';
 
-import { CSSProperties, memo } from 'react';
+import { type CSSProperties, memo } from 'react';
 import type { BuiltinTheme } from 'shiki';
 
 import { useHighlight } from '@/hooks/useHighlight';
@@ -45,11 +45,11 @@ const StaticRenderer = memo<StaticRendererProps>(
     return (
       <div
         className={containerClassName}
+        dir="ltr"
+        style={style}
         dangerouslySetInnerHTML={{
           __html: data || `<pre><code>${escapeHtml(safeChildren)}</code></pre>`,
         }}
-        dir="ltr"
-        style={style}
       />
     );
   },

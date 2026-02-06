@@ -1,13 +1,12 @@
 'use client';
 
-import type {
-  AutocompleteRootChangeEventDetails,
-  AutocompleteRootProps,
+import {
+  type AutocompleteRootChangeEventDetails,
+  type AutocompleteRootProps,
 } from '@base-ui/react/autocomplete';
 import type React from 'react';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
-import { MenuItemRenderer } from './MenuItemRenderer';
 import {
   EditorSlashMenuEmpty,
   EditorSlashMenuGroup,
@@ -19,7 +18,8 @@ import {
   EditorSlashMenuPositioner,
   EditorSlashMenuRoot,
 } from './atoms';
-import type { EditorSlashMenuItems, EditorSlashMenuOption as ItemType } from './type';
+import { MenuItemRenderer } from './MenuItemRenderer';
+import { type EditorSlashMenuItems, type EditorSlashMenuOption as ItemType } from './type';
 import { useKeyboardNavigation } from './useKeyboardNavigation';
 import { useNormalizedItems } from './useNormalizedItems';
 import { isGroup } from './utils';
@@ -187,11 +187,11 @@ const EditorSlashMenu = memo<Props>(
         defaultValue={defaultValue}
         itemToStringValue={itemToStringValue as any}
         items={resolvedItems as any}
+        open={open}
+        value={value}
         onOpenChange={handleOpenChange}
         onOpenChangeComplete={onOpenChangeComplete}
         onValueChange={handleValueChange}
-        open={open}
-        value={value}
       >
         {withHiddenInput ? <EditorSlashMenuHiddenInput {...(hiddenInputProps as any)} /> : null}
 

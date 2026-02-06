@@ -1,7 +1,7 @@
 import { isUndefined } from 'es-toolkit/compat';
 import { memo, useCallback } from 'react';
 
-import { SvgProps } from '@/types';
+import type { SvgProps } from '@/types';
 
 enum Line {
   l7,

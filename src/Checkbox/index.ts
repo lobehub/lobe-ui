@@ -1,4 +1,4 @@
-import { type ReactNode, RefAttributes } from 'react';
+import type { ReactNode, RefAttributes } from 'react';
 
 import CheckboxParent from './Checkbox';
 import CheckboxGroup from './CheckboxGroup';

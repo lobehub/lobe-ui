@@ -53,7 +53,7 @@ export const variants = cva(styles.root, {
   defaultVariants: {
     position: 'bottom',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     position: {
       top: styles.topShadow,
@@ -62,5 +62,4 @@ export const variants = cva(styles.root, {
       right: styles.rightShadow,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

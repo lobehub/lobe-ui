@@ -2,41 +2,45 @@ import { ContextMenu } from '@base-ui/react/context-menu';
 import { Switch } from 'antd';
 import { cx } from 'antd-style';
 import { Check, ChevronRight } from 'lucide-react';
-import type { MenuInfo } from 'rc-menu/es/interface';
-import type {
-  KeyboardEvent as ReactKeyboardEvent,
-  MouseEvent as ReactMouseEvent,
-  ReactNode,
+import { type MenuInfo } from 'rc-menu/es/interface';
+import {
+  type KeyboardEvent as ReactKeyboardEvent,
+  type MouseEvent as ReactMouseEvent,
+  type ReactNode,
 } from 'react';
 import { memo, useCallback, useState } from 'react';
 
+import common from '@/i18n/resources/en/common';
+import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 import {
-  type MenuDividerType,
-  type MenuItemGroupType,
-  type MenuItemType,
-  type RenderItemContentOptions,
-  type RenderOptions,
-  type SubMenuType,
   getItemKey,
   getItemLabel,
   hasAnyIcon,
   hasCheckboxAndIcon,
+  type MenuDividerType,
+  type MenuItemGroupType,
+  type MenuItemType,
   renderIcon,
+  type RenderItemContentOptions,
+  type RenderOptions,
+  type SubMenuType,
 } from '@/Menu';
-import common from '@/i18n/resources/en/common';
-import { useTranslation } from '@/i18n/useTranslation';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
 import { styles } from './style';
-import type { ContextMenuCheckboxItem, ContextMenuItem, ContextMenuSwitchItem } from './type';
+import {
+  type ContextMenuCheckboxItem,
+  type ContextMenuItem,
+  type ContextMenuSwitchItem,
+} from './type';
 
 export type { IconSpaceMode } from '@/Menu';
 
 const EmptyMenuItem = memo(() => {
   const { t } = useTranslation(common);
   return (
-    <ContextMenu.Item className={cx(styles.item, styles.empty)} disabled>
+    <ContextMenu.Item disabled className={cx(styles.item, styles.empty)}>
       <div className={styles.itemContent}>
         <span className={styles.label}>{t('common.empty')}</span>
       </div>
@@ -98,10 +102,10 @@ const ContextMenuSwitchItemInternal = ({
       <Switch
         checked={checked}
         disabled={disabled}
-        onChange={handleCheckedChange}
-        onClick={(_, e) => e.stopPropagation()}
         size="small"
         style={{ marginInlineStart: 16 }}
+        onChange={handleCheckedChange}
+        onClick={(_, e) => e.stopPropagation()}
       />
     </ContextMenu.Item>
   );
@@ -279,8 +283,8 @@ export const renderContextMenuItems = (
               alignOffset={-4}
               className={styles.positioner}
               data-submenu=""
-              onContextMenu={preventDefaultAndStopPropagation}
               sideOffset={-1}
+              onContextMenu={preventDefaultAndStopPropagation}
             >
               <ContextMenu.Popup className={styles.popup}>
                 {submenu.children && submenu.children.length > 0 ? (

@@ -105,20 +105,20 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Button onClick={showModal} type="primary">
+      <Button type="primary" onClick={showModal}>
         Open Modal
       </Button>
       <FormModal
         itemMinWidth={'max(30%,240px)'}
         items={items}
         itemsType={'flat'}
-        onCancel={handleCancel}
-        onFinish={handleFinish}
         open={isModalOpen}
         scrollToFirstError={{ behavior: 'instant', block: 'end', focus: true }}
         submitLoading={loading}
         title="Form Modal"
         variant={variant}
+        onCancel={handleCancel}
+        onFinish={handleFinish}
       />
     </StoryBook>
   );

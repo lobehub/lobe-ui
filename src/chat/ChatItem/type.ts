@@ -1,12 +1,12 @@
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
-import { AlertProps } from '@/Alert';
-import { AvatarProps } from '@/Avatar';
-import { FlexboxProps } from '@/Flex';
-import type { MarkdownProps } from '@/Markdown';
-import type { EditableMessageProps } from '@/chat/EditableMessage';
-import type { MetaData } from '@/chat/types';
-import type { DivProps } from '@/types';
+import { type AlertProps } from '@/Alert';
+import { type AvatarProps } from '@/Avatar';
+import { type EditableMessageProps } from '@/chat/EditableMessage';
+import { type MetaData } from '@/chat/types';
+import { type FlexboxProps } from '@/Flex';
+import { type MarkdownProps } from '@/Markdown';
+import { type DivProps } from '@/types';
 
 export interface ChatItemProps extends Omit<FlexboxProps, 'children' | 'onChange'> {
   aboveMessage?: ReactNode;

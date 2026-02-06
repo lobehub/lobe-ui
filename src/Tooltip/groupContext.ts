@@ -1,6 +1,6 @@
 'use client';
 
-import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
+import type { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import { createContext } from 'react';
 
 import type { TooltipProps } from './type';

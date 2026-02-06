@@ -79,7 +79,7 @@ export const variants = cva(styles.root, {
   defaultVariants: {
     variant: 'borderless',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     variant: {
       filled: styles.filled,
@@ -87,7 +87,6 @@ export const variants = cva(styles.root, {
       borderless: styles.borderless,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });
 
 export const flatGroupStyles = createStaticStyles(({ cx, css, cssVar }) => {
@@ -122,7 +121,7 @@ export const flatGroupVariants = cva(flatGroupStyles.root, {
   defaultVariants: {
     variant: 'borderless',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     variant: {
       filled: flatGroupStyles.filled,
@@ -130,7 +129,6 @@ export const flatGroupVariants = cva(flatGroupStyles.root, {
       borderless: flatGroupStyles.borderless,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });
 
 export const footerStyles = createStaticStyles(({ css, cssVar }) => {
@@ -179,7 +177,7 @@ export const titleVariants = cva(groupStyles.title, {
   defaultVariants: {
     variant: 'borderless',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     variant: {
       filled: null,
@@ -187,7 +185,6 @@ export const titleVariants = cva(groupStyles.title, {
       borderless: groupStyles.titleBorderless,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });
 
 export const itemStyles = createStaticStyles(({ css }) => ({
@@ -251,7 +248,7 @@ export const itemVariants = cva(itemStyles.root, {
     itemMinWidth: false,
     layout: 'vertical',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     itemMinWidth: {
       true: itemStyles.itemMinWidth,
@@ -266,7 +263,6 @@ export const itemVariants = cva(itemStyles.root, {
       horizontal: null,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });
 
 export const submitFooterStyles = createStaticStyles(({ css, cssVar }) => ({

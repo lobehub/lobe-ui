@@ -14,21 +14,21 @@ export default () => {
   const [pin, setPin] = useState(true);
   return (
     <Flexbox
-      height={'100%'}
       horizontal
+      height={'100%'}
       style={{ minHeight: 500, position: 'relative' }}
       width={'100%'}
     >
       <DraggablePanel
         expand={expand}
         mode={pin ? 'fixed' : 'float'}
-        onExpandChange={setExpand}
         pin={pin}
         placement="left"
         style={{
           display: 'flex',
           flexDirection: 'column',
         }}
+        onExpandChange={setExpand}
       >
         <DraggablePanelContainer style={{ flex: 1 }}>
           <DraggablePanelHeader

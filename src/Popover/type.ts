@@ -1,15 +1,20 @@
-import type {
-  Popover as BasePopover,
-  PopoverBackdropProps as BasePopoverBackdropProps,
-  PopoverPopupProps as BasePopoverPopupProps,
-  PopoverPortalProps as BasePopoverPortalProps,
-  PopoverPositionerProps as BasePopoverPositionerProps,
-  PopoverTriggerProps as BasePopoverTriggerProps,
+import {
+  type Popover as BasePopover,
+  type PopoverBackdropProps as BasePopoverBackdropProps,
+  type PopoverPopupProps as BasePopoverPopupProps,
+  type PopoverPortalProps as BasePopoverPortalProps,
+  type PopoverPositionerProps as BasePopoverPositionerProps,
+  type PopoverTriggerProps as BasePopoverTriggerProps,
 } from '@base-ui/react/popover';
-import type { CSSProperties, ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
+import {
+  type ComponentPropsWithRef,
+  type CSSProperties,
+  type ReactElement,
+  type ReactNode,
+} from 'react';
 
-import type { Trigger } from '@/types';
-import type { Placement } from '@/utils/placement';
+import { type Trigger } from '@/types';
+import { type Placement } from '@/utils/placement';
 
 export type PopoverPlacement = Placement;
 

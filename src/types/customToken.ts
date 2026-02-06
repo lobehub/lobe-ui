@@ -62,9 +62,6 @@ export type ColorPalettesAlpha = {
 };
 
 export interface LobeCustomToken
-  extends ColorPalettes,
-    ColorPalettesAlpha,
-    ColorToken,
-    SystemColorToken {
+  extends ColorPalettes, ColorPalettesAlpha, ColorToken, SystemColorToken {
   colorBgContainerSecondary: string;
 }

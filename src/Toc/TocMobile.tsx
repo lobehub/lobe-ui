@@ -28,12 +28,12 @@ const TocMobile = memo<TocMobileProps>(
       <ConfigProvider theme={{ token: { fontSize: 12, sizeStep: 3 } }}>
         <section className={styles.mobileCtn}>
           <Collapse
+            ghost
             className={styles.expand}
+            expandIconPlacement={'end'}
             expandIcon={({ isActive }) => (
               <ActionIcon icon={isActive ? PanelTopClose : PanelTopOpen} size={'small'} />
             )}
-            expandIconPlacement={'end'}
-            ghost
           >
             <Collapse.Panel
               forceRender
@@ -44,10 +44,10 @@ const TocMobile = memo<TocMobileProps>(
                 <Anchor
                   getContainer={getContainer}
                   items={tocItems}
+                  targetOffset={headerHeight + 48}
                   onChange={(currentLink) => {
                     setActiveLink(currentLink.replace('#', ''));
                   }}
-                  targetOffset={headerHeight + 48}
                 />
               </ConfigProvider>
             </Collapse.Panel>

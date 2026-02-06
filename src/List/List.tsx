@@ -27,6 +27,9 @@ const List = memo<ListProps>(({ ref, activeKey, classNames, styles, onClick, ite
             className={cx(customItemClassName, itemClassName)}
             classNames={restClassName}
             key={key}
+            ref={ref}
+            style={{ ...customItemStyle, ...itemStyle }}
+            styles={restStyles}
             onClick={(e) => {
               onClick?.({
                 item,
@@ -34,9 +37,6 @@ const List = memo<ListProps>(({ ref, activeKey, classNames, styles, onClick, ite
               });
               itemOnClick?.(e);
             }}
-            ref={ref}
-            style={{ ...customItemStyle, ...itemStyle }}
-            styles={restStyles}
             {...itemRest}
           />
         );

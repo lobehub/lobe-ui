@@ -62,6 +62,11 @@ const ActionIconGroup: FC<ActionIconGroupProps> = ({
                 icon={icon}
                 key={key}
                 loading={loading}
+                size={size}
+                title={label}
+                tooltipProps={{
+                  placement: tooltipPlacement,
+                }}
                 onClick={(e) => {
                   onActionClick?.({
                     domEvent: e,
@@ -69,11 +74,6 @@ const ActionIconGroup: FC<ActionIconGroupProps> = ({
                     keyPath: [String(key)],
                   });
                   onClick?.(e as any);
-                }}
-                size={size}
-                title={label}
-                tooltipProps={{
-                  placement: tooltipPlacement,
                 }}
                 {...actionIconProps}
                 disabled={disabled || loading || itemRest?.disabled}

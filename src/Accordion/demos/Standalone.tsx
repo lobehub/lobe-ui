@@ -27,13 +27,13 @@ export default () => {
         <AccordionItem
           expand={controlledExpanded}
           itemKey="controlled"
-          onExpandChange={setControlledExpanded}
           title="Controlled Accordion Item"
+          onExpandChange={setControlledExpanded}
         >
           <Flexbox padding={16}>
             <div>This is a controlled accordion item.</div>
             <div>Current state: {controlledExpanded ? 'Expanded' : 'Collapsed'}</div>
-            <button onClick={() => setControlledExpanded(!controlledExpanded)} type="button">
+            <button type="button" onClick={() => setControlledExpanded(!controlledExpanded)}>
               Toggle from outside
             </button>
           </Flexbox>
@@ -56,15 +56,15 @@ export default () => {
           allowExpand={false}
           expand={controlledExpanded}
           itemKey="no-expand"
-          onExpandChange={setControlledExpanded}
           title="Controlled Only Item (allowExpand=false)"
+          onExpandChange={setControlledExpanded}
         >
           <Flexbox padding={16}>
             <div>This item has allowExpand set to false.</div>
             <div>The indicator arrow is hidden and cannot be clicked.</div>
             <div>Current state: {controlledExpanded ? 'Expanded' : 'Collapsed'}</div>
             <div>You can only control it via the expand prop.</div>
-            <button onClick={() => setControlledExpanded(!controlledExpanded)} type="button">
+            <button type="button" onClick={() => setControlledExpanded(!controlledExpanded)}>
               Toggle via external control
             </button>
           </Flexbox>

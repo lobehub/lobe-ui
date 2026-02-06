@@ -1,13 +1,13 @@
 'use client';
 
-import { CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { BuiltinTheme, ThemedToken } from 'shiki';
+import { type CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { type BuiltinTheme, type ThemedToken } from 'shiki';
 import { ShikiStreamTokenizer } from 'shiki-stream';
 
 import { getCodeLanguageByInput } from '@/Highlighter/const';
 import lobeTheme from '@/Highlighter/theme/lobe-theme';
 
-import { StreamingHighlightResult, shikiModulePromise } from './useHighlight';
+import { shikiModulePromise, type StreamingHighlightResult } from './useHighlight';
 
 type StreamingOptions = {
   customThemes?: Record<string, any>;

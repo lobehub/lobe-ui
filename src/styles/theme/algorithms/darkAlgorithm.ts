@@ -1,4 +1,4 @@
-import { MappingAlgorithm } from 'antd/es/theme/interface';
+import type { MappingAlgorithm } from 'antd/es/theme/interface';
 
 import { colorScales } from '@/color/colors';
 import { neutralColorScales } from '@/color/neutrals';
@@ -6,7 +6,7 @@ import type { ColorScaleItem } from '@/color/types';
 import { generateCustomColorToken } from '@/styles/theme/customToken';
 import darkBaseToken from '@/styles/theme/token/dark';
 
-import { NeutralColors, PrimaryColors } from '../../customTheme';
+import type { NeutralColors, PrimaryColors } from '../../customTheme';
 import { generateColorNeutralPalette, generateColorPalette } from '../generateColorPalette';
 
 export const darkAlgorithm: MappingAlgorithm = (seedToken, mapToken) => {

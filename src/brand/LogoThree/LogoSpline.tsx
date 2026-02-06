@@ -1,5 +1,5 @@
 import { useThemeMode } from 'antd-style';
-import { CSSProperties, memo, useState } from 'react';
+import { type CSSProperties, memo, useState } from 'react';
 
 import Spline, { type SplineProps } from '@/awesome/Spline';
 
@@ -25,11 +25,11 @@ const LogoSpline = memo<LogoSplineProps>(({ className, style, width, height, onL
     >
       {loading && <Loading />}
       <Spline
+        scene={isDarkMode ? DARK : LIGHT}
         onLoad={(splineApp) => {
           setLoading(false);
           onLoad?.(splineApp);
         }}
-        scene={isDarkMode ? DARK : LIGHT}
         {...rest}
       />
     </div>

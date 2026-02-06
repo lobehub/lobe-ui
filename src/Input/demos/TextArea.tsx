@@ -1,4 +1,4 @@
-import { TextArea, TextAreaProps } from '@lobehub/ui';
+import { TextArea, type TextAreaProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {

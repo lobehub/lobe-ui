@@ -1,7 +1,8 @@
-import { defineConfig } from 'dumi';
-import type { SiteThemeConfig } from 'dumi-theme-lobehub';
-import type { INavItem } from 'dumi/dist/client/theme-api/types';
 import { resolve } from 'node:path';
+
+import { defineConfig } from 'dumi';
+import type { INavItem } from 'dumi/dist/client/theme-api/types';
+import type { SiteThemeConfig } from 'dumi-theme-lobehub';
 
 import { description, homepage, name } from './package.json';
 

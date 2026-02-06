@@ -1,4 +1,4 @@
-import { type ReactNode, Ref } from 'react';
+import type { ReactNode, Ref } from 'react';
 
 import type { FlexboxProps } from '@/Flex';
 
@@ -8,7 +8,7 @@ export interface SortableListItem {
 }
 export interface SortableListProps extends Omit<FlexboxProps, 'onChange'> {
   items: SortableListItem[];
-  onChange(items: SortableListItem[]): void;
+  onChange: (items: SortableListItem[]) => void;
   ref?: Ref<HTMLUListElement>;
-  renderItem(item: SortableListItem): ReactNode;
+  renderItem: (item: SortableListItem) => ReactNode;
 }

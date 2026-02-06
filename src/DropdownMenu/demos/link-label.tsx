@@ -55,7 +55,7 @@ export default () => {
   );
 
   return (
-    <DropdownMenu items={helpMenuItems} nativeButton>
+    <DropdownMenu nativeButton items={helpMenuItems}>
       <Button aria-label="Open help menu" type="primary">
         Open help menu
       </Button>

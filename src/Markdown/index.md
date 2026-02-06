@@ -17,7 +17,6 @@ To create a heading, add one to six `#` symbols before your heading text. The nu
 
 <code src="./demos/basic/headings.tsx" iframe nopadding></code>
 
-
 ### Paragraph
 
 To create multiple paragraphs, add multiple lines of text.

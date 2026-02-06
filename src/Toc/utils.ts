@@ -1,4 +1,4 @@
-import { TocItemType } from '@/Toc/type';
+import type { TocItemType } from '@/Toc/type';
 
 export const mapItems = (items: TocItemType[]) =>
   items.map((item) => ({

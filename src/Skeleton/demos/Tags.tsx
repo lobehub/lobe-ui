@@ -8,13 +8,13 @@ export default () => (
   <Flexbox gap={16}>
     <Tag>Tag</Tag>
     <Skeleton.Tags />
-    <Flexbox gap={2} horizontal>
+    <Flexbox horizontal gap={2}>
       <Tag size={'small'}>Tag</Tag>
       <Tag size={'small'}>Tag</Tag>
       <Tag size={'small'}>Tag</Tag>
     </Flexbox>
     <Skeleton.Tags count={3} gap={2} size="small" />
-    <Flexbox gap={16} horizontal>
+    <Flexbox horizontal gap={16}>
       <Tag size="large">Tag</Tag>
       <Tag size="large">Tag</Tag>
     </Flexbox>

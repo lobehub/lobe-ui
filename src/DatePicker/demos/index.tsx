@@ -1,4 +1,4 @@
-import { DatePicker, DatePickerProps } from '@lobehub/ui';
+import { DatePicker, type DatePickerProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 const onChange: DatePickerProps['onChange'] = (date, dateString) => {

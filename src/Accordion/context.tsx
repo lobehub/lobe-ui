@@ -1,5 +1,5 @@
 import type { Key } from 'react';
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 
 interface AccordionContextValue {
   disableAnimation?: boolean;
@@ -17,5 +17,5 @@ interface AccordionContextValue {
 export const AccordionContext = createContext<AccordionContextValue | null>(null);
 
 export const useAccordionContext = () => {
-  return useContext(AccordionContext);
+  return use(AccordionContext);
 };

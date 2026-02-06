@@ -1,7 +1,7 @@
 'use client';
 
 import { cx } from 'antd-style';
-import { CSSProperties, memo, useMemo } from 'react';
+import { type CSSProperties, memo, useMemo } from 'react';
 
 import A from '@/A';
 import { Center, Flexbox } from '@/Flex';
@@ -70,7 +70,7 @@ const Item = memo<FeatureItemProps>(
               </Center>
             ))}
           {title && (
-            <Flexbox align={'center'} as={'h3'} className={styles.title} gap={8} horizontal>
+            <Flexbox horizontal align={'center'} as={'h3'} className={styles.title} gap={8}>
               {title}
             </Flexbox>
           )}

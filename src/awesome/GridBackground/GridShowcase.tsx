@@ -17,21 +17,21 @@ const GridShowcase = memo<GridShowcaseProps>(
       <Flexbox style={{ position: 'relative', ...style }} {...rest}>
         <GridBackground
           animation
+          flip
           colorBack={rgba(theme.colorText, 0.12)}
           colorFront={rgba(theme.colorText, 0.6)}
-          flip
         />
         <Flexbox align={'center'} {...innerProps} style={{ zIndex: 4, ...innerProps?.style }}>
           {children}
         </Flexbox>
         <GridBackground
           animation
-          backgroundColor={backgroundColor}
-          colorBack={rgba(theme.colorText, 0.24)}
-          colorFront={theme.colorText}
           random
           reverse
           showBackground
+          backgroundColor={backgroundColor}
+          colorBack={rgba(theme.colorText, 0.24)}
+          colorFront={theme.colorText}
           style={{ zIndex: 0 }}
         />
       </Flexbox>

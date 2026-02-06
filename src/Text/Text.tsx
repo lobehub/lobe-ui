@@ -3,11 +3,11 @@
 import { cx } from 'antd-style';
 import { type FC, useRef } from 'react';
 
-import Tooltip from '@/Tooltip';
 import { useTextOverflow } from '@/hooks/useTextOverflow';
+import Tooltip from '@/Tooltip';
 
 import { variants } from './styles';
-import type { TextProps } from './type';
+import { type TextProps } from './type';
 
 const Text: FC<TextProps> = ({
   as: Container = 'div',
@@ -70,6 +70,8 @@ const Text: FC<TextProps> = ({
 
   const content = (
     <Container
+      ref={textRef}
+      style={textStyle}
       className={cx(
         variants({
           as: ['h1', 'h2', 'h3', 'h4', 'h5', 'p'].includes(Container as string)
@@ -91,8 +93,6 @@ const Text: FC<TextProps> = ({
         }),
         className,
       )}
-      ref={textRef}
-      style={textStyle}
       {...rest}
     >
       {children}

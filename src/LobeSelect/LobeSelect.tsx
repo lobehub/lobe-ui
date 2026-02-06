@@ -3,28 +3,28 @@
 import { Select } from '@base-ui/react/select';
 import { cx, useThemeMode } from 'antd-style';
 import { Check, ChevronDown, Loader2, X } from 'lucide-react';
-import type {
-  ChangeEvent,
-  HTMLAttributes,
-  KeyboardEvent,
-  MouseEvent,
-  MutableRefObject,
-  Ref,
+import {
+  type ChangeEvent,
+  type HTMLAttributes,
+  type KeyboardEvent,
+  type MouseEvent,
+  type MutableRefObject,
+  type Ref,
 } from 'react';
 import { isValidElement, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Virtualizer } from 'virtua';
 
+import { usePortalContainer } from '@/hooks/usePortalContainer';
 import Icon from '@/Icon';
 import { styles as menuStyles } from '@/Menu/sharedStyle';
-import { usePortalContainer } from '@/hooks/usePortalContainer';
 
 import { LOBE_SELECT_CONTAINER_ATTR } from './constants';
 import { styles, triggerVariants } from './style';
-import type {
-  LobeSelectOption,
-  LobeSelectOptionGroup,
-  LobeSelectOptions,
-  LobeSelectProps,
+import {
+  type LobeSelectOption,
+  type LobeSelectOptionGroup,
+  type LobeSelectOptions,
+  type LobeSelectProps,
 } from './type';
 
 const isGroupOption = <Value,>(
@@ -446,7 +446,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
 
     const suffixIconNode = useMemo(() => {
       if (loading) {
-        return <Icon icon={Loader2} size={'small'} spin />;
+        return <Icon spin icon={Loader2} size={'small'} />;
       }
       if (suffixIcon === null) return null;
       if (
@@ -619,6 +619,11 @@ const LobeSelect = memo<LobeSelectProps<any>>(
                 const currentIndex = optionIndex++;
                 return (
                   <Select.Item
+                    disabled={option.disabled}
+                    key={`${String(option.value)}-${currentIndex}`}
+                    label={getOptionSearchText(option)}
+                    render={virtual ? renderVirtualItem : undefined}
+                    value={option.value}
                     className={cx(
                       menuStyles.item,
                       styles.item,
@@ -627,15 +632,10 @@ const LobeSelect = memo<LobeSelectProps<any>>(
                       classNames?.option,
                       option.className,
                     )}
-                    disabled={option.disabled}
-                    key={`${String(option.value)}-${currentIndex}`}
-                    label={getOptionSearchText(option)}
-                    render={virtual ? renderVirtualItem : undefined}
                     style={{
                       minHeight: listItemHeight,
                       ...option.style,
                     }}
-                    value={option.value}
                   >
                     <Select.ItemText className={itemTextClassName}>
                       {optionRender ? optionRender(option, { index: currentIndex }) : option.label}
@@ -657,6 +657,11 @@ const LobeSelect = memo<LobeSelectProps<any>>(
         const currentIndex = optionIndex++;
         return (
           <Select.Item
+            disabled={item.disabled}
+            key={`${String(item.value)}-${currentIndex}`}
+            label={getOptionSearchText(item)}
+            render={virtual ? renderVirtualItem : undefined}
+            value={item.value}
             className={cx(
               menuStyles.item,
               styles.item,
@@ -665,15 +670,10 @@ const LobeSelect = memo<LobeSelectProps<any>>(
               classNames?.option,
               item.className,
             )}
-            disabled={item.disabled}
-            key={`${String(item.value)}-${currentIndex}`}
-            label={getOptionSearchText(item)}
-            render={virtual ? renderVirtualItem : undefined}
             style={{
               minHeight: listItemHeight,
               ...item.style,
             }}
-            value={item.value}
           >
             <Select.ItemText className={itemTextClassName}>
               {optionRender ? optionRender(item, { index: currentIndex }) : item.label}
@@ -694,12 +694,12 @@ const LobeSelect = memo<LobeSelectProps<any>>(
         modal={isItemAligned}
         multiple={isMultiple}
         name={name}
-        onOpenChange={handleOpenChange}
-        onValueChange={handleValueChange}
         open={mergedOpen}
         readOnly={readOnly}
         required={required}
         value={normalizedValue}
+        onOpenChange={handleOpenChange}
+        onValueChange={handleValueChange}
       >
         <Select.Trigger
           autoFocus={autoFocus}
@@ -738,6 +738,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
             sideOffset={6}
           >
             <Select.Popup
+              style={popupStyle}
               className={cx(
                 menuStyles.popup,
                 styles.popup,
@@ -745,16 +746,15 @@ const LobeSelect = memo<LobeSelectProps<any>>(
                 classNames?.popup,
                 classNames?.dropdown,
               )}
-              style={popupStyle}
             >
               {shouldShowSearch && (
                 <div className={cx(styles.search, classNames?.search)}>
                   <input
                     className={styles.searchInput}
-                    onChange={handleSearchChange}
-                    onKeyDown={handleSearchKeyDown}
                     placeholder={typeof placeholder === 'string' ? placeholder : undefined}
                     value={searchValue}
+                    onChange={handleSearchChange}
+                    onKeyDown={handleSearchKeyDown}
                   />
                 </div>
               )}
@@ -790,13 +790,13 @@ const LobeSelect = memo<LobeSelectProps<any>>(
                   <Select.List
                     className={cx(styles.list, classNames?.list)}
                     data-virtual={virtual || undefined}
+                    ref={listRef}
+                    style={virtualListStyle}
+                    tabIndex={virtual ? -1 : undefined}
                     onPointerDown={virtual ? markPointerScroll : undefined}
                     onScroll={virtual ? handleListScroll : undefined}
                     onTouchMove={virtual ? markPointerScroll : undefined}
                     onWheel={virtual ? markPointerScroll : undefined}
-                    ref={listRef}
-                    style={virtualListStyle}
-                    tabIndex={virtual ? -1 : undefined}
                   >
                     <Virtualizer itemSize={listItemHeight} keepMounted={keepMountedIndices}>
                       {content}

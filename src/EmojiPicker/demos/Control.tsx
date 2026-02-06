@@ -7,7 +7,7 @@ export default () => {
   const [open, setOpen] = useState(false);
   return (
     <Flexbox gap={16}>
-      <EmojiPicker onOpenChange={setOpen} open={open} />
+      <EmojiPicker open={open} onOpenChange={setOpen} />
       <Button onClick={() => setOpen(true)}>Open Emoji Picker</Button>
     </Flexbox>
   );

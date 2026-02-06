@@ -3,13 +3,13 @@ import { Button, DropdownMenu } from '@lobehub/ui';
 export default () => {
   return (
     <DropdownMenu
+      nativeButton
       items={() => [
         { key: 'new', label: 'New File' },
         { key: 'open', label: 'Open...' },
         { type: 'divider' },
         { key: 'exit', label: 'Exit' },
       ]}
-      nativeButton
     >
       <Button>Lazy Items</Button>
     </DropdownMenu>

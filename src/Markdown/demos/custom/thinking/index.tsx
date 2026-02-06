@@ -1,6 +1,6 @@
 import { Button, Markdown } from '@lobehub/ui';
 import { cssVar } from 'antd-style';
-import { PropsWithChildren, useState } from 'react';
+import { type PropsWithChildren, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
 
@@ -20,7 +20,7 @@ export default () => {
   const [displayContent, setContent] = useState(fullThinking);
   return (
     <div>
-      <Flexbox gap={4} horizontal>
+      <Flexbox horizontal gap={4}>
         <Button onClick={() => setContent(fullThinking)}>完整</Button>
         <Button onClick={() => setContent(partialThinking)}>部分</Button>
         <Button onClick={() => setContent(ollama)}>未换行</Button>

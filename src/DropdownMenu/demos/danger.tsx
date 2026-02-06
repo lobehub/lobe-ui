@@ -4,7 +4,7 @@ import { dangerItems } from './data';
 
 export default () => {
   return (
-    <DropdownMenu items={dangerItems} nativeButton>
+    <DropdownMenu nativeButton items={dangerItems}>
       <Button danger>Danger Items</Button>
     </DropdownMenu>
   );

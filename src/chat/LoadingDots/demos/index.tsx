@@ -1,4 +1,4 @@
-import { LoadingDots, LoadingDotsProps } from '@lobehub/ui/chat';
+import { LoadingDots, type LoadingDotsProps } from '@lobehub/ui/chat';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {

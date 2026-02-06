@@ -4,7 +4,7 @@ import { Image } from 'antd';
 import { memo } from 'react';
 
 import usePreviewGroup from './components/usePreviewGroup';
-import { PreviewGroupProps } from './type';
+import type { PreviewGroupProps } from './type';
 
 const { PreviewGroup: AntdPreviewGroup } = Image;
 

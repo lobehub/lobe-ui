@@ -12,10 +12,10 @@ const FormFooter: FC<FormFooterProps> = ({ className, children, ...rest }) => {
   const styles = footerStyles;
   return (
     <Flexbox
+      horizontal
       align={'center'}
       className={cx(styles.root, className)}
       gap={8}
-      horizontal
       justify={'flex-end'}
       {...rest}
     >

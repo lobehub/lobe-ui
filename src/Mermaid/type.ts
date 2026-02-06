@@ -1,5 +1,5 @@
 import type { MermaidConfig } from 'mermaid';
-import { CSSProperties, ReactNode, Ref } from 'react';
+import type { CSSProperties, ReactNode, Ref } from 'react';
 
 import type { ActionIconProps } from '@/ActionIcon';
 import type { DivProps } from '@/types';

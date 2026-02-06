@@ -3,12 +3,12 @@
 import { mergeProps } from '@base-ui/react/merge-props';
 import clsx from 'clsx';
 import React, {
-  type HTMLAttributes,
-  type MouseEvent,
-  type ReactNode,
   cloneElement,
+  type HTMLAttributes,
   isValidElement,
   memo,
+  type MouseEvent,
+  type ReactNode,
   useCallback,
   useId,
   useSyncExternalStore,
@@ -17,7 +17,7 @@ import React, {
 import { CLASSNAMES } from '@/styles/classNames';
 
 import { getServerSnapshot, getSnapshot, showContextMenu, subscribe } from './store';
-import type { ContextMenuItem } from './type';
+import { type ContextMenuItem } from './type';
 
 export type ContextMenuTriggerProps = {
   children: ReactNode;

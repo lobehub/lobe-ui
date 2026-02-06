@@ -3,12 +3,13 @@ import { ArrowUpRight, Frame, X } from 'lucide-react';
 
 export default () => {
   return (
-    <Flexbox align="center" gap={32} horizontal justify="center" style={{ padding: 48 }}>
+    <Flexbox horizontal align="center" gap={32} justify="center" style={{ padding: 48 }}>
       <Flexbox align="center" gap={12}>
         <Popover
+          placement="bottom"
           content={
             <Flexbox gap={8} style={{ padding: '8px 12px' }}>
-              <Flexbox align="center" gap={6} horizontal>
+              <Flexbox horizontal align="center" gap={6}>
                 <ArrowUpRight size={16} style={{ color: 'var(--lobe-color-primary)' }} />
                 <div style={{ fontSize: 14, fontWeight: 600 }}>Normal Popover</div>
               </Flexbox>
@@ -17,7 +18,6 @@ export default () => {
               </div>
             </Flexbox>
           }
-          placement="bottom"
         >
           <Button size="large">With Arrow</Button>
         </Popover>
@@ -27,9 +27,10 @@ export default () => {
       <Flexbox align="center" gap={12}>
         <Popover
           arrow={false}
+          placement="bottom"
           content={
             <Flexbox gap={8} style={{ padding: '8px 12px' }}>
-              <Flexbox align="center" gap={6} horizontal>
+              <Flexbox horizontal align="center" gap={6}>
                 <X size={16} style={{ color: 'var(--lobe-color-text-2)' }} />
                 <div style={{ fontSize: 14, fontWeight: 600 }}>No Arrow</div>
               </Flexbox>
@@ -38,7 +39,6 @@ export default () => {
               </div>
             </Flexbox>
           }
-          placement="bottom"
         >
           <Button size="large">No Arrow</Button>
         </Popover>
@@ -47,9 +47,11 @@ export default () => {
 
       <Flexbox align="center" gap={12}>
         <Popover
+          inset
+          placement="bottom"
           content={
             <Flexbox gap={8} style={{ padding: '8px 12px' }}>
-              <Flexbox align="center" gap={6} horizontal>
+              <Flexbox horizontal align="center" gap={6}>
                 <Frame size={16} style={{ color: 'var(--lobe-color-success)' }} />
                 <div style={{ fontSize: 14, fontWeight: 600 }}>Inset Mode</div>
               </Flexbox>
@@ -58,8 +60,6 @@ export default () => {
               </div>
             </Flexbox>
           }
-          inset
-          placement="bottom"
         >
           <Button size="large" type="primary">
             Inset

@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 
 import type { ControlInputProps } from '@/EditableText/ControlInput';
 import type { FlexboxProps } from '@/Flex';

@@ -64,7 +64,7 @@ export const variants = cva(styles.root, {
     showBackground: false,
     variant: 'borderless',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     mermaid: {
       false: styles.unmermaid,
@@ -84,5 +84,4 @@ export const variants = cva(styles.root, {
       borderless: styles.noPadding,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

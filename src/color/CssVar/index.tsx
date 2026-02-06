@@ -6,10 +6,10 @@ import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
 
-import { ColorScaleItem } from '../types';
+import { type ColorScaleItem } from '../types';
 import ScaleRow from './ScaleRow';
-import VarRow from './VarRow';
 import { styles } from './style';
+import VarRow from './VarRow';
 
 export interface ColorScalesProps {
   /**
@@ -29,11 +29,11 @@ export interface ColorScalesProps {
 const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
   const { isDarkMode } = useThemeMode();
   return (
-    <Flexbox align={'center'} flex={1} horizontal justify={'center'}>
+    <Flexbox horizontal align={'center'} flex={1} justify={'center'}>
       <div style={{ padding: '8px 16px 32px 0' }}>
         <Space direction={'vertical'} size={2}>
           <Space key="scale-title" size={2}>
-            <Flexbox align={'center'} className={styles.scaleRowTitle} horizontal key="scale-num" />
+            <Flexbox horizontal align={'center'} className={styles.scaleRowTitle} key="scale-num" />
             {Array.from({ length: scale.light.length })
               .fill('')
               .map((_, index) => {
@@ -45,9 +45,9 @@ const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
                   <div className={styles.scaleBox} key={`num${index}`}>
                     <div className={styles.scaleBox}>
                       <Flexbox
+                        horizontal
                         align={'center'}
                         className={styles.scaleItem}
-                        horizontal
                         justify={'center'}
                         style={{
                           fontWeight: isMidHighlight ? 700 : 400,

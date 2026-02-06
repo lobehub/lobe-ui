@@ -46,8 +46,8 @@ const AvatarGroup = memo<AvatarGroupProps>(
 
     return (
       <Flexbox
-        gap={gap}
         horizontal
+        gap={gap}
         ref={ref}
         style={{
           position: 'relative',
@@ -65,13 +65,13 @@ const AvatarGroup = memo<AvatarGroupProps>(
             <Avatar
               className={cx(classNames?.avatar, avatarClassName, styles.avatar)}
               key={key}
-              onClick={() => onClick?.({ item: avatar, key })}
               style={{
                 marginLeft: index === 0 ? 0 : gapValue,
                 zIndex: zIndexReverse ? items.length - index : index,
                 ...customStyles?.avatar,
                 ...avatarStyle,
               }}
+              onClick={() => onClick?.({ item: avatar, key })}
               {...avatarProps}
               {...restAvatarProps}
             />

@@ -34,7 +34,7 @@ export const remarkVideo = (options: RemarkVideoOptions = {}) => {
 
           // 解析属性
           const properties: Record<string, string> = {};
-          const attrRegex = /(\w+)=["']([^"']*?)["']/g;
+          const attrRegex = /(\w+)=["']([^"']*)["']/g;
           let attrMatch;
 
           while ((attrMatch = attrRegex.exec(attributesStr)) !== null) {
@@ -66,7 +66,7 @@ export const remarkVideo = (options: RemarkVideoOptions = {}) => {
 
           // 解析属性
           const properties: Record<string, string> = {};
-          const attrRegex = /(\w+)=["']([^"']*?)["']/g;
+          const attrRegex = /(\w+)=["']([^"']*)["']/g;
           let attrMatch;
 
           while ((attrMatch = attrRegex.exec(attributesStr)) !== null) {
@@ -130,7 +130,7 @@ export const remarkVideo = (options: RemarkVideoOptions = {}) => {
             .replaceAll('&gt;', '>');
 
           const properties: Record<string, string> = {};
-          const attrRegex = /(\w+)=["']([^"']*?)["']/g;
+          const attrRegex = /(\w+)=["']([^"']*)["']/g;
           let attrMatch;
 
           while ((attrMatch = attrRegex.exec(decodedAttrs)) !== null) {

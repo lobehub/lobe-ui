@@ -1,7 +1,7 @@
 import { cssVar, cx } from 'antd-style';
 import { type FC } from 'react';
 
-import { SvgProps } from '@/types';
+import type { SvgProps } from '@/types';
 
 import { styles } from '../style';
 

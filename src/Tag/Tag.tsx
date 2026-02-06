@@ -56,8 +56,8 @@ const Tag: FC<TagProps> = ({
     <AntTag
       className={cx(variants({ size, variant: variant as any }), className)}
       color={color}
-      onClick={onClick}
       ref={ref}
+      variant={variant === 'borderless' ? 'outlined' : variant}
       style={{
         background: colors?.backgroundColor,
         borderColor: colors?.borderColor,
@@ -65,7 +65,7 @@ const Tag: FC<TagProps> = ({
         cursor: onClick ? 'pointer' : undefined,
         ...style,
       }}
-      variant={variant === 'borderless' ? 'outlined' : variant}
+      onClick={onClick}
       {...rest}
     >
       {children}

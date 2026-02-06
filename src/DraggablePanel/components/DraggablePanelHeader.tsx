@@ -28,23 +28,23 @@ const DraggablePanelHeader = memo<DraggablePanelHeaderProps>((props) => {
   });
 
   const panelIcon = (
-    <ActionIcon icon={PanelLeft} onClick={() => setExpand?.(false)} size={'small'} />
+    <ActionIcon icon={PanelLeft} size={'small'} onClick={() => setExpand?.(false)} />
   );
   const pinIcon = (
     <ActionIcon
       active={pin}
       icon={pin ? Pin : PinOff}
-      onClick={() => setIsPinned(!isPinned)}
       size={'small'}
+      onClick={() => setIsPinned(!isPinned)}
     />
   );
   return (
     <Flexbox
+      horizontal
       align={'center'}
       className={cx(styles.header, className)}
       flex={'none'}
       gap={8}
-      horizontal
       justify={'space-between'}
       {...rest}
     >

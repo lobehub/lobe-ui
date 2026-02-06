@@ -3,11 +3,11 @@ import {
   type ContextMenuItem,
   ContextMenuTrigger,
   Icon,
-  Text,
   showContextMenu,
+  Text,
 } from '@lobehub/ui';
 import { FileIcon, FolderIcon, ImageIcon, SettingsIcon, VideoIcon } from 'lucide-react';
-import type { MouseEvent } from 'react';
+import { type MouseEvent } from 'react';
 import { useCallback, useMemo } from 'react';
 
 export default () => {
@@ -112,7 +112,7 @@ export default () => {
     <div style={{ display: 'flex', gap: 16 }}>
       <ContextMenuTrigger onContextMenu={handleGlobalMode}>
         <Block direction="vertical" gap={8} padding={16}>
-          <Text as={'p'} strong>
+          <Text strong as={'p'}>
             Global Mode (Default)
           </Text>
           <Text as={'p'} type="secondary">
@@ -122,7 +122,7 @@ export default () => {
       </ContextMenuTrigger>
       <ContextMenuTrigger onContextMenu={handleGroupMode}>
         <Block direction="vertical" gap={8} padding={16}>
-          <Text as={'p'} strong>
+          <Text strong as={'p'}>
             Group Mode
           </Text>
           <Text as={'p'} type="secondary">

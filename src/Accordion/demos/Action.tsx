@@ -35,13 +35,13 @@ export default () => {
         <h3>Accordion with Action Icons</h3>
         <Accordion defaultExpandedKeys={['1']} style={{ width: '100%' }}>
           <AccordionItem
+            itemKey="1"
+            title="Panel with Single Action"
             action={
               <DropdownMenu items={menuItems} placement="bottomRight">
                 <ActionIcon icon={MoreHorizontal} size="small" title="More actions" />
               </DropdownMenu>
             }
-            itemKey="1"
-            title="Panel with Single Action"
           >
             <Flexbox padding={16}>
               <div>This panel has a single action icon with dropdown menu.</div>
@@ -49,31 +49,31 @@ export default () => {
             </Flexbox>
           </AccordionItem>
           <AccordionItem
+            itemKey="2"
+            title="Panel with Multiple Actions"
             action={
-              <Flexbox gap={4} horizontal>
+              <Flexbox horizontal gap={4}>
                 <ActionIcon
                   icon={Edit}
-                  onClick={() => console.log('Edit clicked')}
                   size="small"
                   title="Edit"
+                  onClick={() => console.log('Edit clicked')}
                 />
                 <ActionIcon
                   icon={Settings}
-                  onClick={() => console.log('Settings clicked')}
                   size="small"
                   title="Settings"
+                  onClick={() => console.log('Settings clicked')}
                 />
                 <ActionIcon
                   danger
                   icon={Trash2}
-                  onClick={() => console.log('Delete clicked')}
                   size="small"
                   title="Delete"
+                  onClick={() => console.log('Delete clicked')}
                 />
               </Flexbox>
             }
-            itemKey="2"
-            title="Panel with Multiple Actions"
           >
             <Flexbox padding={16}>
               <div>This panel has multiple action icons.</div>
@@ -86,17 +86,17 @@ export default () => {
       <div style={{ width: '100%' }}>
         <h3>Standalone AccordionItem with Action</h3>
         <AccordionItem
-          action={
-            <ActionIcon
-              icon={Settings}
-              onClick={() => console.log('Standalone action clicked')}
-              size="small"
-              title="Settings"
-            />
-          }
           defaultExpand={false}
           itemKey="standalone"
           title="Standalone Item with Action"
+          action={
+            <ActionIcon
+              icon={Settings}
+              size="small"
+              title="Settings"
+              onClick={() => console.log('Standalone action clicked')}
+            />
+          }
         >
           <Flexbox padding={16}>
             <div>This is a standalone AccordionItem with an action.</div>
@@ -109,6 +109,8 @@ export default () => {
         <h3>Action with Different Variants</h3>
         <Accordion style={{ width: '100%' }}>
           <AccordionItem
+            itemKey="variant-borderless"
+            title="Borderless Action"
             action={
               <ActionIcon
                 icon={Settings}
@@ -117,25 +119,25 @@ export default () => {
                 variant="borderless"
               />
             }
-            itemKey="variant-borderless"
-            title="Borderless Action"
           >
             <Flexbox padding={16}>
               <div>Action icon with borderless variant.</div>
             </Flexbox>
           </AccordionItem>
           <AccordionItem
+            itemKey="variant-filled"
+            title="Filled Action"
             action={
               <ActionIcon icon={Settings} size="small" title="Filled variant" variant="filled" />
             }
-            itemKey="variant-filled"
-            title="Filled Action"
           >
             <Flexbox padding={16}>
               <div>Action icon with filled variant.</div>
             </Flexbox>
           </AccordionItem>
           <AccordionItem
+            itemKey="variant-outlined"
+            title="Outlined Action"
             action={
               <ActionIcon
                 icon={Settings}
@@ -144,8 +146,6 @@ export default () => {
                 variant="outlined"
               />
             }
-            itemKey="variant-outlined"
-            title="Outlined Action"
           >
             <Flexbox padding={16}>
               <div>Action icon with outlined variant.</div>

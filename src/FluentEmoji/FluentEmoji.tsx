@@ -48,12 +48,12 @@ const FluentEmoji: FC<FluentEmojiProps> = ({
       className={className}
       height={size}
       loading={'lazy'}
-      onError={() => setLoadingFail(true)}
       ref={ref}
       src={genCdnUrl(emojiUrl)}
       style={{ flex: 'none', ...style }}
       unoptimized={unoptimized}
       width={size}
+      onError={() => setLoadingFail(true)}
       {...rest}
     />
   );

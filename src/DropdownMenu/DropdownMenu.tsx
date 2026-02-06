@@ -95,9 +95,9 @@ const DropdownMenu = memo<DropdownMenuProps>(
         {...rest}
         defaultOpen={defaultOpen}
         modal={false}
+        open={open}
         onOpenChange={handleOpenChange}
         onOpenChangeComplete={handleOpenChangeComplete}
-        open={open}
       >
         {triggerElement}
         <DropdownMenuPortal container={portalContainer} {...restPortalProps}>

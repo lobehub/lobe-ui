@@ -24,9 +24,6 @@ export default () => {
     <StoryBook levaStore={store}>
       <Segmented
         {...control}
-        onChange={(value) => {
-          console.log(value);
-        }}
         options={[
           {
             icon: <Icon icon={Moon} />,
@@ -39,6 +36,9 @@ export default () => {
             value: 'option2',
           },
         ]}
+        onChange={(value) => {
+          console.log(value);
+        }}
       />
     </StoryBook>
   );

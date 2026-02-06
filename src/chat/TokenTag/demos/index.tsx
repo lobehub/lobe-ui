@@ -1,4 +1,4 @@
-import { TokenTag, TokenTagProps } from '@lobehub/ui/chat';
+import { TokenTag, type TokenTagProps } from '@lobehub/ui/chat';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {

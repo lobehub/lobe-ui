@@ -69,15 +69,15 @@ export const DemoBody: FC<{
   return (
     <Flexbox style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
       <Menu
+        selectable
         inlineCollapsed={!expand}
         items={items}
         mode={'inline'}
+        selectedKeys={[activeKey]}
+        variant={'borderless'}
         onSelect={({ key }) => {
           onSelect(key);
         }}
-        selectable
-        selectedKeys={[activeKey]}
-        variant={'borderless'}
       />
     </Flexbox>
   );

@@ -12,12 +12,12 @@ const InputPassword = memo<InputPasswordProps>(({ ref, variant, shadow, classNam
 
   return (
     <AntInput.Password
+      ref={ref}
+      variant={variant || (isDarkMode ? 'filled' : 'outlined')}
       className={cx(
         variants({ shadow, variant: variant || (isDarkMode ? 'filled' : 'outlined') }),
         className,
       )}
-      ref={ref}
-      variant={variant || (isDarkMode ? 'filled' : 'outlined')}
       {...rest}
     />
   );

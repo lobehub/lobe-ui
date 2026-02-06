@@ -1,4 +1,4 @@
-import { Button, Flexbox, type ToastOptions, toast } from '@lobehub/ui';
+import { Button, Flexbox, toast, type ToastOptions } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { MapPin } from 'lucide-react';
 
@@ -83,8 +83,8 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Flexbox gap={8} horizontal style={{ flexWrap: 'wrap' }}>
-        <Button icon={MapPin} onClick={showToastAtPosition} type="primary">
+      <Flexbox horizontal gap={8} style={{ flexWrap: 'wrap' }}>
+        <Button icon={MapPin} type="primary" onClick={showToastAtPosition}>
           Show Toast at Position
         </Button>
         <Button onClick={showAllPositions}>Show All Positions</Button>

@@ -5,11 +5,11 @@ import { Center } from '@/Flex';
 
 export default () => {
   return (
-    <Center gap={16} horizontal wrap={'wrap'}>
+    <Center horizontal gap={16} wrap={'wrap'}>
       <ActionIcon icon={Settings} />
       <ActionIcon icon={Settings} variant={'filled'} />
       <ActionIcon icon={Settings} variant={'outlined'} />
-      <ActionIcon icon={Settings} shadow variant={'outlined'} />
+      <ActionIcon shadow icon={Settings} variant={'outlined'} />
     </Center>
   );
 };

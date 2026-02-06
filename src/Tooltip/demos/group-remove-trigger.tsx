@@ -109,7 +109,7 @@ export default () => {
         <Flexbox gap={20}>
           <Flexbox gap={12}>
             <div style={titleStyle}>Standalone Tooltip</div>
-            <Flexbox align="center" gap={12} horizontal wrap="wrap">
+            <Flexbox horizontal align="center" gap={12} wrap="wrap">
               <Button onClick={toggleStandaloneMounted}>
                 {standaloneMounted ? 'Unmount trigger' : 'Mount trigger'}
               </Button>
@@ -132,7 +132,7 @@ export default () => {
           </Flexbox>
           <Flexbox gap={12}>
             <div style={titleStyle}>Tooltip Group (Singleton)</div>
-            <Flexbox align="center" gap={12} horizontal wrap="wrap">
+            <Flexbox horizontal align="center" gap={12} wrap="wrap">
               <Button onClick={toggleGroupMounted}>
                 {groupMounted ? 'Unmount trigger' : 'Mount trigger'}
               </Button>
@@ -150,7 +150,7 @@ export default () => {
           </Flexbox>
           <Flexbox gap={12}>
             <div style={titleStyle}>Tooltip Group (Display None)</div>
-            <Flexbox align="center" gap={12} horizontal wrap="wrap">
+            <Flexbox horizontal align="center" gap={12} wrap="wrap">
               <Button onClick={toggleGroupHidden}>
                 {groupHidden ? 'Show trigger' : 'Hide trigger'}
               </Button>

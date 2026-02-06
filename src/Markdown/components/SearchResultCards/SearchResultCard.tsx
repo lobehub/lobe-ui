@@ -1,13 +1,13 @@
 'use client';
 
-import { Ref, memo, useMemo } from 'react';
+import { memo, type Ref, useMemo } from 'react';
 
 import A from '@/A';
 import Block from '@/Block';
 import { Flexbox } from '@/Flex';
 import Img from '@/Img';
 import Text from '@/Text';
-import { AProps } from '@/types';
+import { type AProps } from '@/types';
 
 import { styles } from './style';
 
@@ -39,8 +39,8 @@ const SearchResultCard = memo<SearchResultCardProps>(({ ref, url, title, alt, ..
   return (
     <A href={url} ref={ref} rel="noreferrer" target={'_blank'} {...rest}>
       <Block
-        className={styles.container}
         clickable
+        className={styles.container}
         gap={2}
         justify={'space-between'}
         key={url}
@@ -49,14 +49,14 @@ const SearchResultCard = memo<SearchResultCardProps>(({ ref, url, title, alt, ..
         variant={'outlined'}
       >
         <Text ellipsis={{ rows: 2 }}>{displayTitle}</Text>
-        <Flexbox align={'center'} gap={4} horizontal>
+        <Flexbox horizontal align={'center'} gap={4}>
           <Img
             alt={alt || title || url}
             height={14}
             src={`https://icons.duckduckgo.com/ip3/${host}.ico`}
             width={14}
           />
-          <Text className={styles.url} ellipsis type={'secondary'}>
+          <Text ellipsis className={styles.url} type={'secondary'}>
             {domain}
           </Text>
         </Flexbox>

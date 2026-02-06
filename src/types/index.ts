@@ -1,4 +1,4 @@
-import { AnchorHTMLAttributes, type HTMLAttributes } from 'react';
+import type { AnchorHTMLAttributes, HTMLAttributes } from 'react';
 
 export * from './customStylish';
 export * from './customToken';

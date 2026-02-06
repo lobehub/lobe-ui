@@ -8,12 +8,12 @@ import ActionIcon from '@/ActionIcon';
 import Button from '@/Button';
 import ControlInput from '@/EditableText/ControlInput';
 import { Flexbox } from '@/Flex';
-import Select from '@/Select';
 import editableMessageMessages from '@/i18n/resources/en/editableMessage';
 import { useTranslation } from '@/i18n/useTranslation';
+import Select from '@/Select';
 
 import { messagesReducer } from './messageReducer';
-import type { EditableMessageListProps } from './type';
+import { type EditableMessageListProps } from './type';
 
 const EditableMessageList = memo<EditableMessageListProps>(
   ({ disabled, dataSources, onChange, texts }) => {
@@ -39,41 +39,41 @@ const EditableMessageList = memo<EditableMessageListProps>(
       <Flexbox gap={12}>
         {chatMessages.map((item, index) => (
           <Flexbox
+            horizontal
             align={'center'}
             gap={8}
-            horizontal
             key={`${index}-${item.content}`}
             width={'100%'}
           >
             <Select
               disabled={disabled}
-              onChange={(value) => {
-                dispatch({ index, role: value, type: 'updateMessageRole' });
-              }}
+              style={{ width: 120 }}
+              styles={{ popup: { root: { zIndex: 100 } } }}
+              value={item.role}
               options={[
                 { label: systemText, value: 'system' },
                 { label: inputText, value: 'user' },
                 { label: outputText, value: 'assistant' },
               ]}
-              style={{ width: 120 }}
-              styles={{ popup: { root: { zIndex: 100 } } }}
-              value={item.role}
+              onChange={(value) => {
+                dispatch({ index, role: value, type: 'updateMessageRole' });
+              }}
             />
             <ControlInput
               disabled={disabled}
+              placeholder={item.role === 'user' ? inputPlaceholderText : outputPlaceholderText}
+              value={item.content}
               onChange={(e) => {
                 dispatch({ index, message: e, type: 'updateMessage' });
               }}
-              placeholder={item.role === 'user' ? inputPlaceholderText : outputPlaceholderText}
-              value={item.content}
             />
             <ActionIcon
               icon={Trash}
+              title={deleteText}
+              variant={'filled'}
               onClick={() => {
                 dispatch({ index, type: 'deleteMessage' });
               }}
-              title={deleteText}
-              variant={'filled'}
             />
           </Flexbox>
         ))}

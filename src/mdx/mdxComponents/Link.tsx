@@ -22,7 +22,7 @@ const Link: FC<LinkProps> = ({ href, target, citations, ...rest }) => {
   // [^1] 格式类型
   if (rest['data-footnote-ref']) {
     return (
-      <Citation citationDetail={safeParseJSON(rest['data-link'])} href={href} id={rest.id!} inSup>
+      <Citation inSup citationDetail={safeParseJSON(rest['data-link'])} href={href} id={rest.id!}>
         {rest.children}
       </Citation>
     );

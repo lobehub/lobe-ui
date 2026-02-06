@@ -1,4 +1,4 @@
-import { SearchBar, SearchBarProps } from '@lobehub/ui';
+import { SearchBar, type SearchBarProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {

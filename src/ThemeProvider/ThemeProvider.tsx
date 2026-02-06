@@ -2,10 +2,10 @@
 
 import { App } from 'antd';
 import {
+  type CustomStylishParams,
+  type CustomTokenParams,
+  type GetAntdTheme,
   ThemeProvider as AntdThemeProvider,
-  CustomStylishParams,
-  CustomTokenParams,
-  GetAntdTheme,
 } from 'antd-style';
 import { merge } from 'es-toolkit/compat';
 import { memo, useCallback, useMemo } from 'react';
@@ -14,12 +14,12 @@ import { useCdnFn } from '@/ConfigProvider';
 import FontLoader from '@/FontLoader';
 import { lobeCustomStylish, lobeCustomToken } from '@/styles';
 import { createLobeAntdTheme } from '@/styles/theme/antdTheme';
-import { LobeCustomToken } from '@/types/customToken';
+import { type LobeCustomToken } from '@/types/customToken';
 
 import AntdConfigProvider from './ConfigProvider';
-import GlobalStyle from './GlobalStyle';
 import { LOBE_THEME_APP_ID } from './constants';
-import type { ThemeProviderProps } from './type';
+import GlobalStyle from './GlobalStyle';
+import { type ThemeProviderProps } from './type';
 
 const ThemeProvider = memo<ThemeProviderProps>(
   ({

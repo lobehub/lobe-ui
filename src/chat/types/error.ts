@@ -1,4 +1,3 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix */
 export const ChatErrorType = {
   // ******* 业务错误语义 ******* //
 
@@ -20,7 +19,6 @@ export const ChatErrorType = {
   ServiceUnavailable: 503,
   GatewayTimeout: 504,
 } as const;
-/* eslint-enable */
 
 export type ErrorType = (typeof ChatErrorType)[keyof typeof ChatErrorType];
 

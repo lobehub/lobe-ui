@@ -1,4 +1,4 @@
-import { ActionIconGroup, ActionIconGroupProps } from '@lobehub/ui';
+import { ActionIconGroup, type ActionIconGroupProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 import { dropdownMenu, items } from './data';

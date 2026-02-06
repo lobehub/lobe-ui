@@ -52,16 +52,16 @@ const SkeletonTags: FC<SkeletonTagsProps> = ({
   };
 
   return (
-    <Flexbox className={className} horizontal style={{ gap: resolvedGap, ...style }} {...rest}>
+    <Flexbox horizontal className={className} style={{ gap: resolvedGap, ...style }} {...rest}>
       {Array.from({ length: resolvedCount }).map((_, index) => (
         <SkeletonBlock
           active={active}
           height={resolvedHeight}
           key={index}
+          width={getWidth(index)}
           style={{
             borderRadius: RADIUS_MAP[size],
           }}
-          width={getWidth(index)}
         />
       ))}
     </Flexbox>

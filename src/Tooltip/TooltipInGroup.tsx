@@ -2,20 +2,20 @@
 
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
-import { type FC, cloneElement, isValidElement, useCallback, useContext, useMemo } from 'react';
+import { cloneElement, type FC, isValidElement, use, useCallback, useMemo } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
 
 import { TooltipGroupHandleContext } from './groupContext';
-import type { TooltipProps } from './type';
+import { type TooltipProps } from './type';
 import { useMergedTooltipProps } from './useMergedTooltipProps';
 
 const DEFAULT_OPEN_DELAY = 400;
 const DEFAULT_CLOSE_DELAY = 100;
 
 export const TooltipInGroup: FC<TooltipProps> = ({ children, ref: refProp, ...props }) => {
-  const group = useContext(TooltipGroupHandleContext);
+  const group = use(TooltipGroupHandleContext);
   const item = useMergedTooltipProps(props);
 
   const resolvedOpenDelay = useMemo(() => {
@@ -44,7 +44,7 @@ export const TooltipInGroup: FC<TooltipProps> = ({ children, ref: refProp, ...pr
       // If we render into a non-<button> element, that prop is invalid and can warn.
       const resolvedProps = (() => {
         if (isNativeButtonTriggerElement) return renderProps as any;
-        // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+        // eslint-disable-next-line unused-imports/no-unused-vars
         const { type, ref: triggerRef, ...restProps } = renderProps as any;
         return restProps;
       })();
@@ -59,7 +59,7 @@ export const TooltipInGroup: FC<TooltipProps> = ({ children, ref: refProp, ...pr
   );
 
   // Don't render trigger behavior if no content
-  // eslint-disable-next-line eqeqeq
+
   if (item.title == null && !item.hotkey) {
     return children as any;
   }

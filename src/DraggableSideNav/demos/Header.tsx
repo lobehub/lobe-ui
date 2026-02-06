@@ -30,9 +30,9 @@ export const DemoHeader: FC<{
   return (
     <Flexbox>
       <Flexbox
+        horizontal
         align={'center'}
         gap={8}
-        horizontal
         justify={'flex-start'}
         padding={4}
         style={{
@@ -59,15 +59,15 @@ export const DemoHeader: FC<{
         )}
       </Flexbox>
       <Menu
+        selectable
         inlineCollapsed={!expand}
         items={mainItems}
         mode={'inline'}
+        selectedKeys={[activeKey]}
+        variant={'borderless'}
         onSelect={({ key }) => {
           onSelect(key);
         }}
-        selectable
-        selectedKeys={[activeKey]}
-        variant={'borderless'}
       />
     </Flexbox>
   );

@@ -1,8 +1,8 @@
 'use client';
 
-import { PropsWithChildren, createContext, memo, use } from 'react';
+import { createContext, memo, type PropsWithChildren, use } from 'react';
 
-import type { SyntaxMarkdownProps } from '../type';
+import { type SyntaxMarkdownProps } from '../type';
 
 export type MarkdownContentConfig = Omit<SyntaxMarkdownProps, 'children' | 'reactMarkdownProps'>;
 

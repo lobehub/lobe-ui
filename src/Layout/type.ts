@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { DivProps } from '@/types';
+import type { DivProps } from '@/types';
 
 export interface LayoutProps {
   asideWidth?: number;

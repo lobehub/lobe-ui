@@ -1,4 +1,4 @@
-import { ChatHeader, ChatHeaderProps } from '@lobehub/ui/chat';
+import { ChatHeader, type ChatHeaderProps } from '@lobehub/ui/chat';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
@@ -11,7 +11,7 @@ export default () => {
   ) as ChatHeaderProps;
 
   return (
-    <StoryBook levaStore={store} noPadding>
+    <StoryBook noPadding levaStore={store}>
       <ChatHeader {...control} left={<div>Left</div>} right={<div>Right</div>} />
     </StoryBook>
   );

@@ -12,13 +12,13 @@ const DragHandle = memo<ActionIconProps>(({ style, ...rest }) => {
   const { attributes, listeners, ref } = use(SortableItemContext);
   return (
     <ActionIcon
-      data-cypress="draggable-handle"
       glass
+      data-cypress="draggable-handle"
       icon={GripVertical}
-      onMouseDown={() => setGrab(true)}
-      onMouseUp={() => setGrab(false)}
       size={'small'}
       style={{ cursor: grab ? 'grab' : 'grabbing', ...style }}
+      onMouseDown={() => setGrab(true)}
+      onMouseUp={() => setGrab(false)}
       {...rest}
       {...attributes}
       {...listeners}

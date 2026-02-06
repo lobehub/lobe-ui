@@ -12,12 +12,12 @@ const Input = memo<InputProps>(({ ref, variant, shadow, className, ...rest }) =>
 
   return (
     <AntInput
+      ref={ref}
+      variant={variant || (isDarkMode ? 'filled' : 'outlined')}
       className={cx(
         variants({ shadow, variant: variant || (isDarkMode ? 'filled' : 'outlined') }),
         className,
       )}
-      ref={ref}
-      variant={variant || (isDarkMode ? 'filled' : 'outlined')}
       {...rest}
     />
   );

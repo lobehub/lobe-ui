@@ -1,4 +1,4 @@
-import { AutoComplete, AutoCompleteProps } from '@lobehub/ui';
+import { AutoComplete, type AutoCompleteProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { useState } from 'react';
 
@@ -31,10 +31,10 @@ export default () => {
   return (
     <StoryBook gap={16} levaStore={store}>
       <AutoComplete
-        onSearch={handleSearch}
         options={options}
         placeholder="input here"
         style={{ width: 200 }}
+        onSearch={handleSearch}
         {...controls}
       />
     </StoryBook>

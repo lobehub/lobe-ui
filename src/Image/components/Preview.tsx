@@ -1,6 +1,6 @@
 'use client';
 
-import { type PropsWithChildren, memo, useEffect, useRef } from 'react';
+import { memo, type PropsWithChildren, useEffect, useRef } from 'react';
 
 interface PreviewProps extends PropsWithChildren {
   visible?: boolean;

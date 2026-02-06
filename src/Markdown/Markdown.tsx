@@ -5,12 +5,12 @@ import { memo, useCallback } from 'react';
 
 import { PreviewGroup } from '@/Image';
 
-import { MarkdownRender, StreamdownRender } from './SyntaxMarkdown';
-import Typography from './Typography';
 import { MarkdownProvider } from './components/MarkdownProvider';
 import { useDelayedAnimated } from './components/useDelayedAnimated';
 import { variants } from './style';
-import type { MarkdownProps } from './type';
+import { MarkdownRender, StreamdownRender } from './SyntaxMarkdown';
+import { type MarkdownProps } from './type';
+import Typography from './Typography';
 
 const Markdown = memo<MarkdownProps>((props) => {
   const {
@@ -72,9 +72,9 @@ const Markdown = memo<MarkdownProps>((props) => {
         headerMultiple={headerMultiple}
         lineHeight={lineHeight}
         marginMultiple={marginMultiple}
-        onDoubleClick={onDoubleClick}
         ref={ref}
         style={style}
+        onDoubleClick={onDoubleClick}
         {...rest}
       >
         <MarkdownProvider

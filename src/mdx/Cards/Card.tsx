@@ -1,7 +1,7 @@
 'use client';
 
 import { createStaticStyles, cx } from 'antd-style';
-import { FC } from 'react';
+import type { FC } from 'react';
 
 import A from '@/A';
 import Block, { type BlockProps } from '@/Block';
@@ -79,9 +79,9 @@ const Card: FC<CardProps> = ({
   return (
     <A href={href}>
       <Block
+        clickable
         align={'flex-start'}
         className={cx(styles.card, className)}
-        clickable
         variant={variant}
         {...rest}
       >
@@ -115,10 +115,10 @@ const Card: FC<CardProps> = ({
           </Flexbox>
         )}
         <Flexbox
+          horizontal
           align={desc ? 'flex-start' : 'center'}
           className={styles.content}
           gap={'0.75em'}
-          horizontal
         >
           {!image && icon && (
             <Icon

@@ -81,13 +81,13 @@ export const PatchDiff = memo<PatchDiffProps>(
             className={cx(headerVariants({ variant }), classNames?.header)}
             style={customStyles?.header}
           >
-            <Flexbox align="center" gap={8} horizontal>
+            <Flexbox horizontal align="center" gap={8}>
               <MaterialFileTypeIcon filename={fileName || displayName} size={18} type="file" />
               <span>{displayName}</span>
             </Flexbox>
-            <Flexbox align="center" gap={8} horizontal>
+            <Flexbox horizontal align="center" gap={8}>
               {(deletions > 0 || additions > 0) && (
-                <Flexbox className={styles.stats} gap={8} horizontal>
+                <Flexbox horizontal className={styles.stats} gap={8}>
                   {deletions > 0 && <span className={styles.deletions}>-{deletions}</span>}
                   {additions > 0 && <span className={styles.additions}>+{additions}</span>}
                 </Flexbox>

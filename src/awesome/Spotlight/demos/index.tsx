@@ -1,4 +1,4 @@
-import { Spotlight, SpotlightProps } from '@lobehub/ui/awesome';
+import { Spotlight, type SpotlightProps } from '@lobehub/ui/awesome';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { createStaticStyles } from 'antd-style';
 

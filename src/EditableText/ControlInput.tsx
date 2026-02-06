@@ -53,6 +53,47 @@ const ControlInput = memo<ControlInputProps>(
     return (
       <Input
         autoFocus
+        ref={ref}
+        value={input}
+        style={{
+          width: '100%',
+          ...style,
+        }}
+        suffix={
+          value === input ? (
+            <span />
+          ) : (
+            <Flexbox
+              horizontal
+              gap={2}
+              style={{
+                marginRight: -4,
+                zIndex: 1,
+              }}
+            >
+              <ActionIcon
+                icon={RotateCcw}
+                size="small"
+                title={texts?.reset || 'Reset'}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setInput(value || '');
+                }}
+              />
+              <ActionIcon
+                icon={submitIcon || Save}
+                size="small"
+                title={texts?.submit || 'Submit'}
+                variant={'filled'}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleUpload();
+                }}
+              />
+            </Flexbox>
+          )
+        }
+        onFocus={onFocus}
         onChange={(e) => {
           setInput(e.target.value);
           onValueChanging?.(e.target.value);
@@ -65,7 +106,6 @@ const ControlInput = memo<ControlInputProps>(
           isChineseInput.current = true;
           onCompositionStart?.(e);
         }}
-        onFocus={onFocus}
         onPressEnter={(e) => {
           if (!e.shiftKey && !isChineseInput.current) {
             e.preventDefault();
@@ -73,46 +113,6 @@ const ControlInput = memo<ControlInputProps>(
             onPressEnter?.(e);
           }
         }}
-        ref={ref}
-        style={{
-          width: '100%',
-          ...style,
-        }}
-        suffix={
-          value === input ? (
-            <span />
-          ) : (
-            <Flexbox
-              gap={2}
-              horizontal
-              style={{
-                marginRight: -4,
-                zIndex: 1,
-              }}
-            >
-              <ActionIcon
-                icon={RotateCcw}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setInput(value || '');
-                }}
-                size="small"
-                title={texts?.reset || 'Reset'}
-              />
-              <ActionIcon
-                icon={submitIcon || Save}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleUpload();
-                }}
-                size="small"
-                title={texts?.submit || 'Submit'}
-                variant={'filled'}
-              />
-            </Flexbox>
-          )
-        }
-        value={input}
         {...rest}
       />
     );

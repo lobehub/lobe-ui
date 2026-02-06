@@ -1,4 +1,4 @@
-import { Markdown, MarkdownProps } from '@lobehub/ui';
+import { Markdown, type MarkdownProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 const colorsContent = `The background color is \`#ffffff\` for light mode and \`#000000\` for dark mode.`;

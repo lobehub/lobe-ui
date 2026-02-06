@@ -34,7 +34,7 @@ const ListItem = memo<ListItemProps>(
     styles: customStyles,
     ...rest
   }) => {
-    const loadingNode = <Icon icon={Loader2} spin />;
+    const loadingNode = <Icon spin icon={Loader2} />;
 
     const pinNode = pin && (
       <div className={cx(styles.pin, classNames?.pin)} style={customStyles?.pin}>
@@ -44,11 +44,11 @@ const ListItem = memo<ListItemProps>(
 
     const actionsNode = actions && (
       <Flexbox
+        horizontal
         className={cx(styles.actions, classNames?.actions)}
         gap={4}
-        horizontal
-        onClick={preventDefaultAndStopPropagation}
         style={{ display: showAction ? undefined : 'none', ...customStyles?.actions }}
+        onClick={preventDefaultAndStopPropagation}
       >
         {actions}
       </Flexbox>
@@ -65,29 +65,29 @@ const ListItem = memo<ListItemProps>(
 
     return (
       <Flexbox
+        horizontal
         align={'flex-start'}
         className={cx(styles.root, active && styles.active, className)}
         distribution={'space-between'}
         gap={8}
-        horizontal
+        padding={12}
+        ref={ref}
+        style={style}
         onMouseEnter={() => {
           onHoverChange?.(true);
         }}
         onMouseLeave={() => {
           onHoverChange?.(false);
         }}
-        padding={12}
-        ref={ref}
-        style={style}
         {...rest}
       >
         {pinNode}
         <Flexbox
+          horizontal
           align={'flex-start'}
           className={classNames?.container}
           flex={1}
           gap={8}
-          horizontal
           style={{ overflow: 'hidden', ...customStyles?.container }}
         >
           {avatar ?? <Icon icon={MessageSquare} style={{ marginTop: 4 }} />}
@@ -97,17 +97,17 @@ const ListItem = memo<ListItemProps>(
             style={customStyles?.content}
           >
             <Text
+              ellipsis
               as={'h3'}
               className={cx(styles.title, classNames?.title)}
-              ellipsis
               style={customStyles?.title}
             >
               {title}
             </Text>
             {description && (
               <Text
-                className={cx(styles.desc, classNames?.desc)}
                 ellipsis
+                className={cx(styles.desc, classNames?.desc)}
                 style={customStyles?.desc}
               >
                 {description}

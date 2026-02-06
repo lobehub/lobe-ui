@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { ALIYUN_API, UNPKG_API, genCdnUrl } from './genCdnUrl';
+import { ALIYUN_API, genCdnUrl, UNPKG_API } from './genCdnUrl';
 
 describe('genCdnUrl', () => {
   it('should generate unpkg url correctly', () => {

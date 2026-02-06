@@ -8,13 +8,13 @@ import { memo, useEffect, useMemo, useState } from 'react';
 
 import Button from '@/Button';
 import { Flexbox } from '@/Flex';
-import Icon from '@/Icon';
-import { useMotionComponent } from '@/MotionProvider';
 import formMessages from '@/i18n/resources/en/form';
 import { useTranslation } from '@/i18n/useTranslation';
+import Icon from '@/Icon';
+import { useMotionComponent } from '@/MotionProvider';
 
 import { submitFooterStyles } from '../style';
-import type { FormSubmitFooterProps } from '../type';
+import { type FormSubmitFooterProps } from '../type';
 import { useFormContext } from './FormProvider';
 import { merge, removeUndefined } from './merge';
 
@@ -97,12 +97,12 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
         {enableReset && (float || hasUnsavedChanges) && (
           <Button
             htmlType="button"
+            shape={float ? 'round' : undefined}
+            variant={'filled'}
             onClick={() => {
               onReset?.(v, initialV);
               form?.resetFields();
             }}
-            shape={float ? 'round' : undefined}
-            variant={'filled'}
             {...buttonProps}
             {...resetButtonProps}
           >
@@ -125,10 +125,10 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
     if (!float)
       return (
         <Flexbox
+          horizontal
           align={'center'}
           className={cx(styles.footer, className)}
           gap={8}
-          horizontal
           justify={'flex-end'}
           {...rest}
         >
@@ -156,10 +156,10 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
         }}
       >
         <Flexbox
+          horizontal
           align={'center'}
           className={className}
           gap={8}
-          horizontal
           justify={'center'}
           {...rest}
         >

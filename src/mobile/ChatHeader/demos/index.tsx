@@ -25,7 +25,7 @@ export default () => {
       <ChatHeader
         center={<ChatHeader.Title tag={<Tag size={'small'}>gpt</Tag>} title={'Title'} />}
       />
-      <ChatHeader center={<ChatHeader.Title title={'Title'} />} showBackButton />
+      <ChatHeader showBackButton center={<ChatHeader.Title title={'Title'} />} />
     </Flexbox>
   );
 };

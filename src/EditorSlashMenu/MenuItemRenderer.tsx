@@ -45,6 +45,7 @@ export const MenuItemRenderer = memo<MenuItemRendererProps>(
         danger={item.danger}
         disabled={item.disabled}
         key={item.value}
+        value={item as any}
         onClick={(e) => {
           if (item.disabled) {
             e.preventDefault();
@@ -52,7 +53,6 @@ export const MenuItemRenderer = memo<MenuItemRendererProps>(
           }
           onSelect(item, { event: e as any, reason: 'item-press' } as any);
         }}
-        value={item as any}
       >
         {content}
       </EditorSlashMenuItem>

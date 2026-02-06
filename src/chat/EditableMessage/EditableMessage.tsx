@@ -4,11 +4,11 @@ import { cx } from 'antd-style';
 import { memo } from 'react';
 import useControlledState from 'use-merge-value';
 
-import Markdown from '@/Markdown';
 import MessageInput from '@/chat/MessageInput';
 import MessageModal from '@/chat/MessageModal';
+import Markdown from '@/Markdown';
 
-import type { EditableMessageProps } from './type';
+import { type EditableMessageProps } from './type';
 
 const EditableMessage = memo<EditableMessageProps>(
   ({
@@ -48,26 +48,26 @@ const EditableMessage = memo<EditableMessageProps>(
 
     const input = (
       <MessageInput
+        shortcut
         className={cx(className, classNames?.input)}
         classNames={classNames}
         defaultValue={value}
         editButtonSize={editButtonSize}
         height={height}
         language={language}
+        placeholder={placeholder}
+        styles={customStyles}
+        text={text}
+        variant={variant}
+        style={{
+          ...style,
+          ...customStyles?.input,
+        }}
         onCancel={() => setTyping(false)}
         onConfirm={(text) => {
           onChange?.(text);
           setTyping(false);
         }}
-        placeholder={placeholder}
-        shortcut
-        style={{
-          ...style,
-          ...customStyles?.input,
-        }}
-        styles={customStyles}
-        text={text}
-        variant={variant}
       />
     );
 
@@ -82,12 +82,12 @@ const EditableMessage = memo<EditableMessageProps>(
             className={cx(className, classNames?.markdown)}
             fontSize={fontSize}
             fullFeaturedCodeBlock={fullFeaturedCodeBlock}
+            variant={'chat'}
             style={{
               height: isAutoSize ? 'unset' : height,
               ...style,
               ...customStyles?.markdown,
             }}
-            variant={'chat'}
             {...markdownProps}
           >
             {value || placeholder || ''}
@@ -100,16 +100,16 @@ const EditableMessage = memo<EditableMessageProps>(
             footer={model?.footer}
             height={height}
             language={language}
+            open={expand}
+            placeholder={placeholder}
+            text={text}
+            value={value}
             onChange={onChange}
             onEditingChange={setTyping}
             onOpenChange={(e) => {
               setExpand(e);
               setTyping(false);
             }}
-            open={expand}
-            placeholder={placeholder}
-            text={text}
-            value={value}
           />
         )}
       </>

@@ -11,8 +11,8 @@ export interface BurgerProps {
   iconProps?: Partial<ActionIconProps>;
   items: MenuProps['items'];
   onClick?: MenuProps['onClick'];
-  openKeys?: MenuProps['openKeys'];
   opened: boolean;
+  openKeys?: MenuProps['openKeys'];
   ref?: Ref<HTMLDivElement>;
   rootClassName?: string;
   selectedKeys?: MenuProps['selectedKeys'];

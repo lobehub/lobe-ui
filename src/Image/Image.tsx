@@ -63,14 +63,14 @@ const Image = memo<ImageProps>(
         )}
         <AntImage
           className={cx(styles.image, classNames?.image)}
-          classNames={{
-            root: cx(styles.wrapper, classNames?.wrapper),
-          }}
           fallback={isDarkMode ? FALLBACK_DARK : FALLBACK_LIGHT}
           height={height}
           loading={'lazy'}
-          onClick={onClick}
           preview={preview === false ? false : (mergePreivew as any)}
+          width={width}
+          classNames={{
+            root: cx(styles.wrapper, classNames?.wrapper),
+          }}
           style={{
             maxHeight,
             maxWidth,
@@ -82,7 +82,7 @@ const Image = memo<ImageProps>(
           styles={{
             root: customStyles?.wrapper,
           }}
-          width={width}
+          onClick={onClick}
           {...rest}
         />
       </Flexbox>

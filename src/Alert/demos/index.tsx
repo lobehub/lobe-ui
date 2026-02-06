@@ -1,4 +1,4 @@
-import { Alert, AlertProps } from '@lobehub/ui';
+import { Alert, type AlertProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {

@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
-import type { ModalProps } from '@/Modal';
-import type { MessageInputProps } from '@/chat/MessageInput';
+import { type MessageInputProps } from '@/chat/MessageInput';
+import { type ModalProps } from '@/Modal';
 
 export interface MessageModalProps extends Pick<ModalProps, 'open' | 'footer' | 'panelRef'> {
   editing?: boolean;

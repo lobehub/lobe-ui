@@ -26,7 +26,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <ThemeSwitch {...control} onThemeSwitch={setThemeMode} themeMode={themeMode} />
+      <ThemeSwitch {...control} themeMode={themeMode} onThemeSwitch={setThemeMode} />
     </StoryBook>
   );
 };

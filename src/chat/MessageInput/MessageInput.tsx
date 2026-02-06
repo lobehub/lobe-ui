@@ -49,13 +49,13 @@ const MessageInput = memo<MessageInputProps>(
     });
 
     const confirmButton = (
-      <Button onClick={handleConfirm} size={editButtonSize} type="primary">
+      <Button size={editButtonSize} type="primary" onClick={handleConfirm}>
         {confirmText}
       </Button>
     );
 
     const cancllButton = (
-      <Button onClick={handleCancel} size={editButtonSize} variant={'filled'}>
+      <Button size={editButtonSize} variant={'filled'} onClick={handleCancel}>
         {text?.cancel || 'Cancel'}
       </Button>
     );
@@ -66,25 +66,25 @@ const MessageInput = memo<MessageInputProps>(
           <TextArea
             autoSize
             className={cx(styles, classNames?.editor)}
-            onBlur={(e) => setValue(e.target.value)}
-            onChange={(e) => setValue(e.target.value)}
             placeholder={placeholder}
             style={customStyles?.editor}
             value={temporaryValue}
             variant={variant}
+            onBlur={(e) => setValue(e.target.value)}
+            onChange={(e) => setValue(e.target.value)}
           />
         ) : (
           <CodeEditor
             className={cx(styles, classNames?.editor)}
             classNames={classNames}
             language={language}
-            onBlur={(e) => setValue(e.target.value)}
-            onValueChange={(e) => setValue(e)}
             placeholder={placeholder}
             style={customStyles?.editor}
             styles={customStyles}
             value={temporaryValue}
             variant={variant}
+            onBlur={(e) => setValue(e.target.value)}
+            onValueChange={(e) => setValue(e)}
           />
         )}
         <Flexbox direction={'horizontal-reverse'} gap={8}>

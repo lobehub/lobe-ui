@@ -1,4 +1,4 @@
-import { type ReactNode, RefAttributes } from 'react';
+import type { ReactNode, RefAttributes } from 'react';
 
 import AvatarParent from './Avatar';
 import AvatarGroup from './AvatarGroup';

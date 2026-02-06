@@ -34,7 +34,7 @@ const FormGroup = memo<FormGroupProps>(
     const defaultCollapsible = isUndefined(collapsible) ? !isBorderless : collapsible;
 
     const titleContent = (
-      <Flexbox className={cx(titleVariants({ variant }), styles.titleMobile)} gap={8} horizontal>
+      <Flexbox horizontal className={cx(titleVariants({ variant }), styles.titleMobile)} gap={8}>
         {icon && <Icon icon={icon} />}
         {title}
       </Flexbox>
@@ -43,7 +43,7 @@ const FormGroup = memo<FormGroupProps>(
     if (mobile)
       return (
         <Flexbox className={className}>
-          <Flexbox className={styles.mobileGroupHeader} horizontal justify={'space-between'}>
+          <Flexbox horizontal className={styles.mobileGroupHeader} justify={'space-between'}>
             {titleContent}
             {extra}
           </Flexbox>
@@ -55,12 +55,13 @@ const FormGroup = memo<FormGroupProps>(
       <Collapse
         activeKey={isUndefined(active) ? undefined : active ? [keyValue] : []}
         className={className}
+        collapsible={defaultCollapsible}
+        defaultActiveKey={defaultActive ? [keyValue] : undefined}
+        variant={variant}
         classNames={{
           header: isBorderless ? styles.titleBorderless : undefined,
           title: isBorderless ? styles.titleBorderless : undefined,
         }}
-        collapsible={defaultCollapsible}
-        defaultActiveKey={defaultActive ? [keyValue] : undefined}
         items={[
           {
             children,
@@ -72,7 +73,6 @@ const FormGroup = memo<FormGroupProps>(
           },
         ]}
         onChange={(v) => onCollapse?.(v.length > 0)}
-        variant={variant}
         {...rest}
       />
     );

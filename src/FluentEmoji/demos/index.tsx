@@ -23,7 +23,7 @@ export default () => {
   return (
     <StoryBook levaStore={store}>
       <Flexbox align={'center'} gap={8}>
-        <Flexbox gap={8} horizontal>
+        <Flexbox horizontal gap={8}>
           <FluentEmoji type={'anim'} {...control} />
           <FluentEmoji type={'3d'} {...control} />
           <FluentEmoji type={'modern'} {...control} />

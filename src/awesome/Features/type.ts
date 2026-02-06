@@ -1,8 +1,8 @@
-import type { CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
 
-import type { IconProps } from '@/Icon';
-import type { SpotlightCardProps } from '@/awesome/SpotlightCard';
-import type { DivProps } from '@/types';
+import { type SpotlightCardProps } from '@/awesome/SpotlightCard';
+import { type IconProps } from '@/Icon';
+import { type DivProps } from '@/types';
 
 export interface FeatureItemType {
   column?: number;
@@ -24,7 +24,7 @@ export interface FeaturesProps extends DivProps {
   columns?: SpotlightCardProps['columns'];
   gap?: SpotlightCardProps['gap'];
   itemClassName?: string;
-  itemStyle?: CSSProperties;
   items: FeatureItemType[];
+  itemStyle?: CSSProperties;
   maxWidth?: number;
 }

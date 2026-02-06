@@ -1,6 +1,6 @@
-import { ReactNode, Ref } from 'react';
+import type { ReactNode, Ref } from 'react';
 
-import { FlexboxProps } from '@/Flex';
+import type { FlexboxProps } from '@/Flex';
 
 export interface TabBarItemType {
   icon: ReactNode | ((active: boolean) => ReactNode);

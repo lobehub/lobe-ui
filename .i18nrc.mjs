@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   markdown: {
     entry: ['./README.md'],
     entryLocale: 'en-US',

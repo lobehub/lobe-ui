@@ -27,7 +27,7 @@ export default () => {
         Check all
       </Checkbox>
       <Divider />
-      <CheckboxGroup onChange={onChange} options={plainOptions} value={checkedList} />
+      <CheckboxGroup options={plainOptions} value={checkedList} onChange={onChange} />
     </Center>
   );
 };

@@ -1,6 +1,6 @@
 import { FlipHorizontal, FlipVertical, RotateCcw, RotateCw, ZoomIn, ZoomOut } from 'lucide-react';
-import type { ToolbarRenderInfoType } from 'rc-image/lib/Preview';
-import { type ReactNode, memo } from 'react';
+import { type ToolbarRenderInfoType } from 'rc-image/lib/Preview';
+import { memo, type ReactNode } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
@@ -21,7 +21,7 @@ const Toolbar = memo<ToolbarProps>(({ children, info, minScale, maxScale }) => {
   } = info;
 
   return (
-    <Flexbox className={styles.toolbar} gap={4} horizontal>
+    <Flexbox horizontal className={styles.toolbar} gap={4}>
       <ActionIcon icon={FlipHorizontal} onClick={onFlipX} />
       <ActionIcon icon={FlipVertical} onClick={onFlipY} />
       <ActionIcon icon={RotateCcw} onClick={onRotateLeft} />

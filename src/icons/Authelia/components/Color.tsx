@@ -1,6 +1,6 @@
 'use client';
 
-import { IconType, useFillIds } from '@lobehub/icons';
+import { type IconType, useFillIds } from '@lobehub/icons';
 import { memo } from 'react';
 
 import { TITLE } from '../style';

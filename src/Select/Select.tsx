@@ -19,11 +19,12 @@ const Select = memo<SelectProps>(
 
     return (
       <AntSelect
+        ref={ref}
+        variant={variant || (isDarkMode ? 'filled' : 'outlined')}
         className={cx(
           variants({ shadow, variant: variant || (isDarkMode ? 'filled' : 'outlined') }),
           className,
         )}
-        ref={ref}
         suffixIcon={
           <Icon
             icon={suffixIcon || ChevronDownIcon}
@@ -35,7 +36,6 @@ const Select = memo<SelectProps>(
             }}
           />
         }
-        variant={variant || (isDarkMode ? 'filled' : 'outlined')}
         {...rest}
       />
     );

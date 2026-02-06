@@ -14,7 +14,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Center gap={2} horizontal wrap={'wrap'}>
+      <Center horizontal gap={2} wrap={'wrap'}>
         <Hotkey isApple={isApple} keys={'mod'} />
         <Hotkey isApple={isApple} keys={'meta'} />
         <Hotkey isApple={isApple} keys={'ctrl'} />

@@ -1,6 +1,6 @@
 'use client';
 
-import { type ReactNode, createContext, memo, use } from 'react';
+import { createContext, memo, type ReactNode, use } from 'react';
 
 export type PopoverContextValue = {
   close: () => void;

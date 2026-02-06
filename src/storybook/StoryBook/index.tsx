@@ -2,10 +2,10 @@
 
 import { cx, useResponsive } from 'antd-style';
 import { LevaPanel } from 'leva';
-import { Ref, memo } from 'react';
+import { memo, type Ref } from 'react';
 
 import DraggablePanel from '@/DraggablePanel';
-import { Center, Flexbox, FlexboxProps } from '@/Flex';
+import { Center, Flexbox, type FlexboxProps } from '@/Flex';
 
 import { styles } from './style';
 

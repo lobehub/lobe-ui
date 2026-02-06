@@ -152,7 +152,7 @@ export const variants = cva(styles.root, {
     underlined: false,
     variant: 'rounded',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     variant: {
       square: null,
@@ -168,5 +168,4 @@ export const variants = cva(styles.root, {
       true: null,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

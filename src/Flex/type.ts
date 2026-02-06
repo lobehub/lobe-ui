@@ -1,5 +1,11 @@
-import type { CSSProperties, ElementType, HTMLAttributes, ReactNode, Ref } from 'react';
-import { DOMAttributes } from 'react';
+import {
+  type CSSProperties,
+  type DOMAttributes,
+  type ElementType,
+  type HTMLAttributes,
+  type ReactNode,
+  type Ref,
+} from 'react';
 
 export type ContentPosition =
   | 'center'

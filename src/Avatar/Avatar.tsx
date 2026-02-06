@@ -13,13 +13,13 @@ import Img from '@/Img';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
 import { styles, variants } from './style';
-import type { AvatarProps } from './type';
+import { type AvatarProps } from './type';
 import {
   calculateEmojiSize,
-  isDefaultAntAvatar as checkIsDefaultAntAvatar,
   formatAvatarText,
   getActualColorForReadable,
   hasValidBackground,
+  isDefaultAntAvatar as checkIsDefaultAntAvatar,
 } from './utils';
 
 const Avatar = memo<AvatarProps>(
@@ -65,10 +65,10 @@ const Avatar = memo<AvatarProps>(
             alt={imgAlt}
             height={size}
             loading={'lazy'}
-            onError={() => setIsImgError(true)}
             src={avatar}
             unoptimized={unoptimized}
             width={size}
+            onError={() => setIsImgError(true)}
           />
         ) : (
           avatar
@@ -155,7 +155,7 @@ const Avatar = memo<AvatarProps>(
       >
         {loading && (
           <Center className={styles.loading} height={'100%'} width={'100%'}>
-            <Icon icon={Loader2} spin />
+            <Icon spin icon={Loader2} />
           </Center>
         )}
         {showFallback && customAvatar}

@@ -1,8 +1,8 @@
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 
 import type { ButtonProps } from '@/Button';
 import type { CodeEditorProps } from '@/CodeEditor';
-import { FlexboxProps } from '@/Flex';
+import type { FlexboxProps } from '@/Flex';
 
 export interface MessageInputProps extends FlexboxProps {
   classNames?: CodeEditorProps['classNames'] & {

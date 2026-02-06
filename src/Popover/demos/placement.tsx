@@ -3,7 +3,7 @@ import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from 'lucide-react';
 
 const content = (placement: string, icon: React.ReactNode) => (
   <Flexbox gap={8} style={{ minWidth: 180, padding: '8px 12px' }}>
-    <Flexbox align="center" gap={6} horizontal>
+    <Flexbox horizontal align="center" gap={6}>
       {icon}
       <div style={{ fontSize: 13, fontWeight: 600 }}>Placement</div>
     </Flexbox>
@@ -35,13 +35,13 @@ export default () => {
         }}
       >
         {/* Header */}
-        <Flexbox align="center" gap={8} horizontal justify="center" style={{ marginBottom: 16 }}>
+        <Flexbox horizontal align="center" gap={8} justify="center" style={{ marginBottom: 16 }}>
           <div style={{ fontSize: 16, fontWeight: 600 }}>12 Placement Options</div>
           <Tag color="blue">Interactive</Tag>
         </Flexbox>
 
         {/* Top row */}
-        <Flexbox gap={6} horizontal justify="center" style={{ marginLeft: 103 }}>
+        <Flexbox horizontal gap={6} justify="center" style={{ marginLeft: 103 }}>
           <Popover content={content('topLeft', <ArrowUp size={14} />)} placement="topLeft">
             <Button size="small" style={buttonStyle}>
               topLeft
@@ -60,7 +60,7 @@ export default () => {
         </Flexbox>
 
         {/* Middle rows */}
-        <Flexbox gap={6} horizontal justify="space-between">
+        <Flexbox horizontal gap={6} justify="space-between">
           <Flexbox gap={6}>
             <Popover content={content('leftTop', <ArrowLeft size={14} />)} placement="leftTop">
               <Button size="small" style={buttonStyle}>
@@ -122,7 +122,7 @@ export default () => {
         </Flexbox>
 
         {/* Bottom row */}
-        <Flexbox gap={6} horizontal justify="center" style={{ marginLeft: 103 }}>
+        <Flexbox horizontal gap={6} justify="center" style={{ marginLeft: 103 }}>
           <Popover content={content('bottomLeft', <ArrowDown size={14} />)} placement="bottomLeft">
             <Button size="small" style={buttonStyle}>
               bottomLeft

@@ -1,13 +1,13 @@
 'use client';
 
-import type { InputRef } from 'antd';
+import { type InputRef } from 'antd';
 import { cx, useThemeMode } from 'antd-style';
 import { isEqual } from 'es-toolkit/compat';
 import { Undo2Icon } from 'lucide-react';
 import {
   type FocusEvent,
-  type MouseEvent,
   memo,
+  type MouseEvent,
   useCallback,
   useEffect,
   useMemo,
@@ -20,12 +20,12 @@ import useControlledState from 'use-merge-value';
 import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 import Hotkey from '@/Hotkey';
-import { NORMATIVE_MODIFIER, checkIsAppleDevice, splitKeysByPlus } from '@/Hotkey/utils';
+import { checkIsAppleDevice, NORMATIVE_MODIFIER, splitKeysByPlus } from '@/Hotkey/utils';
 import hotkeyMessages from '@/i18n/resources/en/hotkey';
 import { useTranslation } from '@/i18n/useTranslation';
 
 import { styles, variants } from './style';
-import type { HotkeyInputProps } from './type';
+import { type HotkeyInputProps } from './type';
 
 const HotkeyInput = memo<HotkeyInputProps>(
   ({
@@ -219,7 +219,9 @@ const HotkeyInput = memo<HotkeyInputProps>(
         }}
       >
         <Flexbox
+          horizontal
           align={'center'}
+          justify={'space-between'}
           className={cx(
             variants({
               disabled,
@@ -229,8 +231,6 @@ const HotkeyInput = memo<HotkeyInputProps>(
               variant: variant || (isDarkMode ? 'filled' : 'outlined'),
             }),
           )}
-          horizontal
-          justify={'space-between'}
           onClick={handleClick}
         >
           <div style={{ pointerEvents: 'none' }}>
@@ -247,22 +247,22 @@ const HotkeyInput = memo<HotkeyInputProps>(
 
           {/* 隐藏的输入框，用于接收焦点 */}
           <input
+            readOnly
             className={styles.hiddenInput}
             disabled={disabled}
-            onBlur={handleBlur}
-            onFocus={handleFocus}
-            readOnly
             ref={inputRef as any}
             style={{ pointerEvents: 'none' }}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
           />
 
           {!isFocused && allowReset && hotkeyValue && hotkeyValue !== resetValue && !disabled && (
             <ActionIcon
               icon={Undo2Icon}
-              onClick={handleReset}
               size={'small'}
               title={resetTitle}
               variant={'filled'}
+              onClick={handleReset}
             />
           )}
         </Flexbox>

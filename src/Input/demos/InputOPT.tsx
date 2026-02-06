@@ -1,4 +1,4 @@
-import { InputOPT, InputOPTProps } from '@lobehub/ui';
+import { InputOPT, type InputOPTProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {

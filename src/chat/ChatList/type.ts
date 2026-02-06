@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 
 import type { ActionIconGroupEvent, ActionIconGroupProps } from '@/ActionIconGroup';
 import type { AlertProps } from '@/Alert';
@@ -14,8 +14,8 @@ export type RenderItem = FC<{ key: string } & ChatMessage & ListItemProps>;
 export type RenderMessage = FC<ChatMessage & { editableContent: ReactNode }>;
 export type RenderMessageExtra = FC<ChatMessage>;
 export interface RenderErrorMessage {
-  Render?: FC<ChatMessage>;
   config?: AlertProps;
+  Render?: FC<ChatMessage>;
 }
 export type RenderAction = FC<ChatActionsBarProps & ChatMessage>;
 

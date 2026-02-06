@@ -1,9 +1,9 @@
 'use client';
 
 import { FolderIcon, FolderOpen } from 'lucide-react';
-import { FC, useState } from 'react';
+import { type FC, useState } from 'react';
 
-import { Flexbox, FlexboxProps } from '@/Flex';
+import { Flexbox, type FlexboxProps } from '@/Flex';
 import Icon, { type IconProps } from '@/Icon';
 
 import { styles } from './style';
@@ -19,10 +19,10 @@ const Folder: FC<FolderProps> = ({ name, defaultOpen, icon = FolderIcon, childre
   return (
     <Flexbox {...rest}>
       <Flexbox
+        horizontal
         align={'center'}
         className={styles.folder}
         gap={4}
-        horizontal
         onClick={() => setOpen(!open)}
       >
         <Icon icon={open ? FolderOpen : icon} />

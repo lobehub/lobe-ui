@@ -1,4 +1,4 @@
-import { Grid, GridProps } from '@lobehub/ui';
+import { Grid, type GridProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {

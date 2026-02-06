@@ -4,19 +4,19 @@ import { CheckIcon, XIcon } from 'lucide-react';
 export default () => {
   return (
     <Flexbox gap={16}>
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <span>Basic:</span>
         <LobeSwitchRoot defaultChecked>
           <LobeSwitchThumb />
         </LobeSwitchRoot>
       </Flexbox>
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <span>Small:</span>
         <LobeSwitchRoot defaultChecked size="small">
           <LobeSwitchThumb size="small" />
         </LobeSwitchRoot>
       </Flexbox>
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <span>With Icons:</span>
         <LobeSwitchRoot defaultChecked>
           <LobeSwitchIcon position="left" size="default">
@@ -28,7 +28,7 @@ export default () => {
           <LobeSwitchThumb />
         </LobeSwitchRoot>
       </Flexbox>
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <span>Custom Thumb:</span>
         <LobeSwitchRoot defaultChecked>
           <LobeSwitchThumb

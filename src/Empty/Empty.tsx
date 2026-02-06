@@ -56,11 +56,11 @@ const Empty: FC<EmptyProps> = ({
       >
         {icon && (
           <Icon
+            icon={icon}
+            size={imageSize * 0.66}
             color={
               iconColor || (isDarkMode ? cssVar.colorTextQuaternary : cssVar.colorTextSecondary)
             }
-            icon={icon}
-            size={imageSize * 0.66}
           />
         )}
         {emoji && <FluentEmoji emoji={emoji} size={imageSize * 0.75} type={'anim'} />}

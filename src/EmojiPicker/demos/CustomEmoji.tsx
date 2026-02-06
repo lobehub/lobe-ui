@@ -4,6 +4,7 @@ const LOGO = 'https://registry.npmmirror.com/@lobehub/assets-logo/1.2.0/files/as
 
 export default () => (
   <EmojiPicker
+    defaultAvatar={LOGO}
     customEmojis={[
       {
         emojis: [
@@ -22,6 +23,5 @@ export default () => (
         name: 'LobeHub',
       },
     ]}
-    defaultAvatar={LOGO}
   />
 );

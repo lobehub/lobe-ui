@@ -11,27 +11,27 @@ export default () => {
       <div>
         <h3>Using Checkbox.Group</h3>
         <Checkbox.Group
+          options={['option1', 'option2', 'option3']}
+          value={value}
           onChange={(values) => {
             setValue(values);
             console.log('Selected:', values);
           }}
-          options={['option1', 'option2', 'option3']}
-          value={value}
         />
       </div>
       <div>
         <h3>Using CheckboxGroup directly</h3>
         <Checkbox.Group
-          onChange={(values) => {
-            setValue(values);
-            console.log('Selected:', values);
-          }}
+          value={value}
           options={[
             { label: 'Apple', value: 'apple' },
             { label: 'Banana', value: 'banana' },
             { label: 'Orange', value: 'orange' },
           ]}
-          value={value}
+          onChange={(values) => {
+            setValue(values);
+            console.log('Selected:', values);
+          }}
         />
       </div>
     </Center>

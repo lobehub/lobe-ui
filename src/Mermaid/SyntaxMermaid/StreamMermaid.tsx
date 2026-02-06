@@ -1,14 +1,14 @@
 'use client';
 
 import { kebabCase } from 'es-toolkit/compat';
+import { type Ref } from 'react';
 import { memo, useEffect, useId, useMemo, useState } from 'react';
-import type { Ref } from 'react';
 
-import Image from '@/Image';
 import { useStreamMermaid } from '@/hooks/useStreamMermaid';
+import Image from '@/Image';
 
 import { mermaidThemes } from '../const';
-import type { SyntaxMermaidProps } from '../type';
+import { type SyntaxMermaidProps } from '../type';
 
 interface StreamMermaidProps {
   children: string;
@@ -100,6 +100,8 @@ const StreamMermaid = memo<StreamMermaidProps>(
         objectFit={'contain'}
         ref={ref}
         src={blobUrl}
+        variant={'borderless'}
+        width={'100%'}
         style={{
           background: variant === 'filled' ? background : undefined,
           borderRadius: 0,
@@ -110,8 +112,6 @@ const StreamMermaid = memo<StreamMermaidProps>(
           width: '100%',
           ...style,
         }}
-        variant={'borderless'}
-        width={'100%'}
       />
     );
   },

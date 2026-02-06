@@ -1,12 +1,12 @@
 import { App } from 'antd';
-import { ReactNode, memo, useCallback, useMemo, useState } from 'react';
+import { memo, type ReactNode, useCallback, useMemo, useState } from 'react';
 
-import type { AlertProps } from '@/Alert';
+import { type AlertProps } from '@/Alert';
 import ChatItem from '@/chat/ChatItem';
-import type { ChatMessage } from '@/chat/types';
+import { type ChatMessage } from '@/chat/types';
 import { copyToClipboard } from '@/utils/copyToClipboard';
 
-import type { ChatListItemProps, ListItemProps } from '../type';
+import { type ChatListItemProps, type ListItemProps } from '../type';
 import ChatActionsBar from './ChatActionsBar';
 
 const ChatListItem = memo<ChatListItemProps>((props) => {
@@ -106,8 +106,8 @@ const ChatListItem = memo<ChatListItemProps>((props) => {
       return (
         <RenderFunction
           {...data}
-          onActionClick={(actionKey) => handleActionClick?.(actionKey, data)}
           text={text}
+          onActionClick={(actionKey) => handleActionClick?.(actionKey, data)}
         />
       );
     },
@@ -140,25 +140,25 @@ const ChatListItem = memo<ChatListItemProps>((props) => {
       loading={loading}
       message={item.content}
       messageExtra={<MessageExtra data={item} />}
+      placement={variant === 'bubble' ? (item.role === 'user' ? 'right' : 'left') : 'left'}
+      primary={item.role === 'user'}
+      showAvatar={showAvatar}
+      showTitle={showTitle}
+      text={text}
+      time={item.updateAt || item.createAt}
+      variant={variant}
+      renderMessage={(editableContent) => (
+        <RenderMessage data={item} editableContent={editableContent} />
+      )}
       onAvatarClick={onAvatarsClick?.(item.role)}
       onChange={(value) => onMessageChange?.(item.id, value)}
+      onEditingChange={setEditing}
       onDoubleClick={(e) => {
         if (item.id === 'default' || item.error) return;
         if (item.role && ['assistant', 'user'].includes(item.role) && e.altKey) {
           setEditing(true);
         }
       }}
-      onEditingChange={setEditing}
-      placement={variant === 'bubble' ? (item.role === 'user' ? 'right' : 'left') : 'left'}
-      primary={item.role === 'user'}
-      renderMessage={(editableContent) => (
-        <RenderMessage data={item} editableContent={editableContent} />
-      )}
-      showAvatar={showAvatar}
-      showTitle={showTitle}
-      text={text}
-      time={item.updateAt || item.createAt}
-      variant={variant}
     />
   );
 });

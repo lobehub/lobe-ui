@@ -37,7 +37,7 @@ const Section = ({
       <Text style={{ fontSize: 15, fontWeight: 600 }}>{title}</Text>
       <Text style={{ color: 'var(--lobe-color-text-3)', fontSize: 13 }}>{description}</Text>
     </Flexbox>
-    <Flexbox gap={12} horizontal wrap="wrap">
+    <Flexbox horizontal gap={12} wrap="wrap">
       {children}
     </Flexbox>
   </Flexbox>
@@ -107,9 +107,9 @@ export default () => {
 
         <Popover content={<PopoverContent title="Flexbox Trigger" />} trigger="click">
           <Flexbox
+            horizontal
             align="center"
             gap={8}
-            horizontal
             style={{
               background: 'var(--lobe-color-fill-tertiary)',
               borderRadius: 8,

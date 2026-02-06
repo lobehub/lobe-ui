@@ -1,6 +1,6 @@
 'use client';
 
-import { type GetProp, Upload, type UploadProps, message } from 'antd';
+import { type GetProp, message, Upload, type UploadProps } from 'antd';
 import { cssVar } from 'antd-style';
 import { ChevronLeftIcon, ImageUpIcon } from 'lucide-react';
 import { memo, useCallback, useRef, useState } from 'react';
@@ -8,13 +8,13 @@ import AvatarEditor from 'react-avatar-editor';
 
 import Button from '@/Button';
 import { Center, Flexbox } from '@/Flex';
+import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
+import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 import Tag from '@/Tag';
 import Text from '@/Text';
-import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
-import { useTranslation } from '@/i18n/useTranslation';
 
-import { AvatarUploaderProps } from './type';
+import { type AvatarUploaderProps } from './type';
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
 
@@ -90,7 +90,7 @@ const AvatarUploader = memo<AvatarUploaderProps>(
             <Center gap={16} height={compressSize} width={compressSize}>
               <Icon color={cssVar.colorTextDescription} icon={ImageUpIcon} size={48} />
               <Text color={cssVar.colorTextSecondary}>{draggerDescText}</Text>
-              <Center gap={4} horizontal>
+              <Center horizontal gap={4}>
                 <Tag>JPG</Tag>
                 <Tag>PNG</Tag>
                 <Tag>GIF</Tag>
@@ -110,13 +110,13 @@ const AvatarUploader = memo<AvatarUploaderProps>(
               width={compressSize}
             />
 
-            <Flexbox gap={8} horizontal style={{ position: 'relative' }} width={'100%'}>
+            <Flexbox horizontal gap={8} style={{ position: 'relative' }} width={'100%'}>
               <Button
                 icon={ChevronLeftIcon}
-                onClick={() => setPreviewImage('')}
                 style={{ flex: 'none' }}
+                onClick={() => setPreviewImage('')}
               />
-              <Button onClick={handleUpload} style={{ flex: 1, fontWeight: 500 }} type={'primary'}>
+              <Button style={{ flex: 1, fontWeight: 500 }} type={'primary'} onClick={handleUpload}>
                 {uploadBtnText}
               </Button>
             </Flexbox>

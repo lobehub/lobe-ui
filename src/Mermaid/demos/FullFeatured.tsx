@@ -1,4 +1,4 @@
-import { Mermaid, MermaidProps, mermaidThemes } from '@lobehub/ui';
+import { Mermaid, type MermaidProps, mermaidThemes } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 import { code } from './data';

@@ -1,4 +1,4 @@
-import { Markdown, MarkdownProps } from '@lobehub/ui';
+import { Markdown, type MarkdownProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 const imagesContent = `![shields](https://img.shields.io/badge/LobeHub-Readme%20Generator-white?labelColor=black&style=flat-square)

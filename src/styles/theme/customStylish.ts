@@ -1,6 +1,6 @@
-import { GetCustomStylish, keyframes } from 'antd-style';
+import { type GetCustomStylish, keyframes } from 'antd-style';
 
-import { LobeCustomStylish } from '@/types/customStylish';
+import type { LobeCustomStylish } from '@/types/customStylish';
 
 export const generateCustomStylish: GetCustomStylish<LobeCustomStylish> = ({
   css,

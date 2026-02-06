@@ -1,15 +1,15 @@
 'use client';
 
-import { Modal as AntModal, Button, ConfigProvider, Drawer } from 'antd';
+import { Button, ConfigProvider, Drawer, Modal as AntModal } from 'antd';
 import { cssVar, cx, useResponsive } from 'antd-style';
 import { Maximize2, Minimize2, X } from 'lucide-react';
-import { ReactNode, memo, useState } from 'react';
+import { memo, type ReactNode, useState } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 import Icon from '@/Icon';
 
 import { styles } from './style';
-import type { ModalProps } from './type';
+import { type ModalProps } from './type';
 
 const Modal = memo<ModalProps>(
   ({
@@ -50,6 +50,13 @@ const Modal = memo<ModalProps>(
         >
           <Drawer
             className={cx(styles.drawerContent, className)}
+            closeIcon={<ActionIcon icon={X} />}
+            destroyOnHidden={destroyOnHidden}
+            height={fullscreen ? 'calc(100% - env(safe-area-inset-top))' : height}
+            open={open}
+            panelRef={panelRef}
+            placement={'bottom'}
+            title={title}
             classNames={
               typeof classNames === 'function'
                 ? classNames
@@ -58,8 +65,6 @@ const Modal = memo<ModalProps>(
                     wrapper: cx(styles.wrap, classNames?.wrapper),
                   }
             }
-            closeIcon={<ActionIcon icon={X} />}
-            destroyOnHidden={destroyOnHidden}
             extra={
               allowFullscreen && (
                 <ActionIcon
@@ -75,16 +80,16 @@ const Modal = memo<ModalProps>(
                     <>
                       <Button
                         color={'default'}
-                        onClick={onCancel as any}
                         variant={'filled'}
+                        onClick={onCancel as any}
                         {...cancelButtonProps}
                       >
                         {cancelText || 'Cancel'}
                       </Button>
                       <Button
                         loading={confirmLoading}
-                        onClick={onOk as any}
                         type="primary"
+                        onClick={onOk as any}
                         {...okButtonProps}
                         style={{
                           marginInlineStart: 8,
@@ -96,11 +101,6 @@ const Modal = memo<ModalProps>(
                     </>
                   )
             }
-            height={fullscreen ? 'calc(100% - env(safe-area-inset-top))' : height}
-            onClose={onCancel as any}
-            open={open}
-            panelRef={panelRef}
-            placement={'bottom'}
             styles={
               typeof customStyles === 'function'
                 ? customStyles
@@ -113,7 +113,7 @@ const Modal = memo<ModalProps>(
                     },
                   }
             }
-            title={title}
+            onClose={onCancel as any}
             {...rest}
           >
             {children}
@@ -130,13 +130,25 @@ const Modal = memo<ModalProps>(
         }}
       >
         <AntModal
+          closable
+          maskClosable
+          cancelText={cancelText}
+          className={cx(styles.content, className)}
+          closeIcon={<Icon icon={X} size={20} />}
+          confirmLoading={confirmLoading}
+          destroyOnHidden={destroyOnHidden}
+          footer={hideFooter ? null : footer}
+          okButtonProps={okButtonProps}
+          okText={okText}
+          open={open}
+          panelRef={panelRef}
+          title={title}
+          width={width}
           cancelButtonProps={{
             color: 'default',
             variant: 'filled',
             ...cancelButtonProps,
           }}
-          cancelText={cancelText}
-          className={cx(styles.content, className)}
           classNames={
             typeof classNames === 'function'
               ? classNames
@@ -145,18 +157,6 @@ const Modal = memo<ModalProps>(
                   wrapper: cx(styles.wrap, classNames?.wrapper),
                 }
           }
-          closable
-          closeIcon={<Icon icon={X} size={20} />}
-          confirmLoading={confirmLoading}
-          destroyOnHidden={destroyOnHidden}
-          footer={hideFooter ? null : footer}
-          maskClosable
-          okButtonProps={okButtonProps}
-          okText={okText}
-          onCancel={onCancel}
-          onOk={onOk}
-          open={open}
-          panelRef={panelRef}
           styles={
             typeof customStyles === 'function'
               ? customStyles
@@ -171,8 +171,8 @@ const Modal = memo<ModalProps>(
                   },
                 }
           }
-          title={title}
-          width={width}
+          onCancel={onCancel}
+          onOk={onOk}
           {...rest}
         >
           {children}

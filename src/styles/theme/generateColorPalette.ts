@@ -1,4 +1,4 @@
-import { AliasToken } from 'antd/es/theme/interface';
+import type { AliasToken } from 'antd/es/theme/interface';
 import { capitalize } from 'es-toolkit/compat';
 
 import type { ColorScaleItem } from '@/color/types';

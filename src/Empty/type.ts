@@ -1,9 +1,9 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
-import { BlockProps } from '@/Block';
-import { FlexboxProps } from '@/Flex';
-import { IconProps } from '@/Icon';
-import { TextProps } from '@/Text';
+import type { BlockProps } from '@/Block';
+import type { FlexboxProps } from '@/Flex';
+import type { IconProps } from '@/Icon';
+import type { TextProps } from '@/Text';
 
 export interface EmptyProps extends Omit<FlexboxProps, 'title'> {
   action?: ReactNode;

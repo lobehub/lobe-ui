@@ -96,8 +96,8 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Flexbox gap={8} horizontal style={{ flexWrap: 'wrap' }}>
-        <Button icon={CheckCircle} onClick={handlePromiseSuccess} type="primary">
+      <Flexbox horizontal gap={8} style={{ flexWrap: 'wrap' }}>
+        <Button icon={CheckCircle} type="primary" onClick={handlePromiseSuccess}>
           Promise Success
         </Button>
         <Button danger icon={XCircle} onClick={handlePromiseError}>

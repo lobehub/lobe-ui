@@ -14,14 +14,14 @@ const Preview = ({ loading, requestedLocale }: { loading: boolean; requestedLoca
 
   return (
     <Card title="Dynamic import resources">
-      <Space align="center" wrap>
+      <Space wrap align="center">
         <Text type="secondary">Requested</Text>
         <Tag color="blue">{requestedLocale}</Tag>
         <Text type="secondary">Active</Text>
         <Tag color={locale === requestedLocale ? 'green' : 'gold'}>{locale}</Tag>
         <Tag color={isReady ? 'green' : 'gold'}>{isReady ? 'Ready' : 'Loading'}</Tag>
       </Space>
-      <Space size={[8, 8]} style={{ marginTop: 16 }} wrap>
+      <Space wrap size={[8, 8]} style={{ marginTop: 16 }}>
         <Button size="small" type="primary">
           {t('common.confirm')}
         </Button>
@@ -34,13 +34,13 @@ const Preview = ({ loading, requestedLocale }: { loading: boolean; requestedLoca
         {(['form.unsavedChanges', 'emojiPicker.draggerDesc'] as const).map((key) => (
           <Space direction="vertical" key={key} size={2}>
             <Text
+              type="secondary"
               style={{
                 fontFamily:
                   'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
                 fontSize: 12,
                 wordBreak: 'break-word',
               }}
-              type="secondary"
             >
               {key}
             </Text>
@@ -90,7 +90,7 @@ export default () => {
     <StoryBook levaStore={store}>
       <Space direction="vertical" size={16} style={{ width: '100%' }}>
         <Card size="small">
-          <Space align="center" wrap>
+          <Space wrap align="center">
             <Text type="secondary">Resources</Text>
             <Tag color="geekblue">Promise</Tag>
             <Text type="secondary">Requested locale</Text>

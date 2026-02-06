@@ -6,20 +6,20 @@ import { code } from './data';
 export default () => {
   return (
     <Mermaid
+      fullFeatured
+      style={{ width: '100%' }}
       actionsRender={({ originalNode, content, actionIconSize }) => {
         return (
           <>
             {originalNode}
             <ActionIcon
               icon={AlertCircleIcon}
-              onClick={() => alert(content)}
               size={actionIconSize}
+              onClick={() => alert(content)}
             />
           </>
         );
       }}
-      fullFeatured
-      style={{ width: '100%' }}
     >
       {code}
     </Mermaid>

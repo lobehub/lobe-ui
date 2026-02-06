@@ -38,7 +38,7 @@ export default () => {
   return (
     <StoryBook levaStore={store}>
       <Flexbox align="center" gap={16}>
-        <Flexbox align="center" gap={12} horizontal>
+        <Flexbox horizontal align="center" gap={12}>
           <Sliders size={20} style={{ color: 'var(--lobe-color-primary)' }} />
           <div style={{ fontSize: 15, fontWeight: 600 }}>Interactive Playground</div>
           <Tag color="blue">Customizable</Tag>

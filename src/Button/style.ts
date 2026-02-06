@@ -24,7 +24,7 @@ export const variants = cva(styles.root, {
     glass: false,
     shadow: false,
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     glass: {
       false: null,
@@ -35,5 +35,4 @@ export const variants = cva(styles.root, {
       true: styles.shadow,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

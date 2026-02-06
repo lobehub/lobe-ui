@@ -4,7 +4,7 @@ import { Flexbox } from '@/Flex';
 
 export default () => {
   return (
-    <Flexbox gap={8} horizontal>
+    <Flexbox horizontal gap={8}>
       <Image.PreviewGroup>
         <Image
           src={

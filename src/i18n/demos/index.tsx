@@ -58,7 +58,7 @@ const LocalePreview = () => {
           <Card title={section.title}>
             <Text type="secondary">{section.description}</Text>
             {section.actions ? (
-              <Space size={[8, 8]} style={{ marginTop: 16 }} wrap>
+              <Space wrap size={[8, 8]} style={{ marginTop: 16 }}>
                 {section.actions.map((key, index) => (
                   <Button
                     danger={key.includes('delete')}
@@ -76,13 +76,13 @@ const LocalePreview = () => {
                 {section.details.map((key) => (
                   <Space direction="vertical" key={key} size={2}>
                     <Text
+                      type="secondary"
                       style={{
                         fontFamily:
                           'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
                         fontSize: 12,
                         wordBreak: 'break-word',
                       }}
-                      type="secondary"
                     >
                       {key}
                     </Text>
@@ -116,7 +116,7 @@ export default () => {
     <StoryBook levaStore={store}>
       <Space direction="vertical" size={16} style={{ width: '100%' }}>
         <Card size="small">
-          <Space align="center" wrap>
+          <Space wrap align="center">
             <Text type="secondary">Active locale</Text>
             <Tag color="blue">{control.locale}</Tag>
             <Text type="secondary">Resources</Text>

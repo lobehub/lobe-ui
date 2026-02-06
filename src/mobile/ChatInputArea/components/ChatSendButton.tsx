@@ -12,6 +12,8 @@ const ChatSendButton = memo<ChatSendButtonProps>(({ ref, loading, onStop, onSend
     <Button
       icon={SendHorizontal}
       loading={loading}
+      ref={ref}
+      type={'primary'}
       onClick={(e) => {
         e.preventDefault();
         if (loading) {
@@ -20,8 +22,6 @@ const ChatSendButton = memo<ChatSendButtonProps>(({ ref, loading, onStop, onSend
           onSend?.(e);
         }
       }}
-      ref={ref}
-      type={'primary'}
       {...rest}
     />
   );

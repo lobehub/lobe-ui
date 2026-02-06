@@ -1,5 +1,5 @@
-import { ActionIcon, Avatar, List, ListItemProps } from '@lobehub/ui';
-import { Dropdown, MenuProps } from 'antd';
+import { ActionIcon, Avatar, List, type ListItemProps } from '@lobehub/ui';
+import { Dropdown, type MenuProps } from 'antd';
 import { MoreHorizontalIcon } from 'lucide-react';
 import { useState } from 'react';
 

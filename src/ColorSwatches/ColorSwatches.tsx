@@ -51,8 +51,8 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
 
   return (
     <Flexbox
-      gap={6}
       horizontal
+      gap={6}
       ref={ref}
       style={{
         ...cssVariables,
@@ -87,11 +87,11 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
                   isTransparent && styles.transparent,
                   isActive && styles.active,
                 )}
-                onClick={() => setActive(c.color || undefined)}
                 style={{
                   background: isTransparent ? undefined : color,
                   borderRadius: shape === 'circle' ? '50%' : cssVar.borderRadius,
                 }}
+                onClick={() => setActive(c.color || undefined)}
               >
                 {isActive && (
                   <Icon
@@ -110,22 +110,16 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
       {enableColorPicker && (
         <Tooltip title={texts?.custom || 'Custom'}>
           <ColorPicker
+            disabledAlpha
             arrow={false}
+            defaultValue={cssVar.colorPrimary}
+            format={'hex'}
+            value={enableColorSwatches ? undefined : active}
             className={cx(
               styles.picker,
               enableColorSwatches && styles.conic,
               isCustomActive && styles.active,
             )}
-            defaultValue={cssVar.colorPrimary}
-            disabledAlpha
-            format={'hex'}
-            onChangeComplete={(c) => {
-              if (c.toHexString() === cssVar.colorPrimary) {
-                setActive('');
-              } else {
-                setActive(c.toHexString());
-              }
-            }}
             presets={
               enableColorSwatches
                 ? undefined
@@ -139,7 +133,13 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
             style={{
               borderRadius: shape === 'circle' ? '50%' : cssVar.borderRadius,
             }}
-            value={enableColorSwatches ? undefined : active}
+            onChangeComplete={(c) => {
+              if (c.toHexString() === cssVar.colorPrimary) {
+                setActive('');
+              } else {
+                setActive(c.toHexString());
+              }
+            }}
           />
         </Tooltip>
       )}

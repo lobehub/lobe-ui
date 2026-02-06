@@ -6,13 +6,13 @@ import { Github } from 'lucide-react';
 import { memo, useCallback } from 'react';
 
 import A from '@/A';
-import Button from '@/Button';
-import { Center, Flexbox } from '@/Flex';
 import AuroraBackground from '@/awesome/AuroraBackground';
 import GradientButton from '@/awesome/GradientButton';
+import Button from '@/Button';
+import { Center, Flexbox } from '@/Flex';
 
 import { styles } from './style';
-import type { HeroProps } from './type';
+import { type HeroProps } from './type';
 
 const Hero = memo<HeroProps>(({ title, description, actions, Link }) => {
   const { mobile } = useResponsive();
@@ -22,7 +22,7 @@ const Hero = memo<HeroProps>(({ title, description, actions, Link }) => {
   const ButtonGroups = useCallback(
     () =>
       Boolean(actions?.length) && (
-        <Flexbox className={styles.actions} gap={16} horizontal justify={'center'}>
+        <Flexbox horizontal className={styles.actions} gap={16} justify={'center'}>
           {actions!.map(({ text, link, openExternal, github, type }, index) => {
             const content =
               type === 'primary' ? (
@@ -66,15 +66,15 @@ const Hero = memo<HeroProps>(({ title, description, actions, Link }) => {
       <AuroraBackground />
       <ConfigProvider theme={{ token: { fontSize: 16 } }}>
         <Flexbox align={'center'} style={{ zIndex: 1 }}>
-          <Flexbox className={styles.container} distribution={'center'} horizontal>
+          <Flexbox horizontal className={styles.container} distribution={'center'}>
             <Center>
               {title && (
                 <Center
+                  horizontal
                   as={'h1'}
                   className={styles.title}
                   dangerouslySetInnerHTML={{ __html: title }}
                   gap={'0.25em'}
-                  horizontal
                   wrap={'wrap'}
                 />
               )}

@@ -2,7 +2,7 @@
 
 import { cx } from 'antd-style';
 import { ChevronDown, ChevronRight } from 'lucide-react';
-import { ReactNode, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
@@ -12,7 +12,7 @@ import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
 import Text from '@/Text';
 import { stopPropagation } from '@/utils/dom';
 
-import { MermaidProps } from './type';
+import { type MermaidProps } from './type';
 
 const MermaidHeaderLanguage = memo(
   ({
@@ -28,11 +28,11 @@ const MermaidHeaderLanguage = memo(
 
     return (
       <Flexbox
+        horizontal
         align={'center'}
         className={'languageTitle'}
         flex={1}
         gap={4}
-        horizontal
         justify={'flex-start'}
         paddingInline={8}
       >
@@ -115,26 +115,26 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
         {...rest}
       >
         <Flexbox
+          horizontal
           align={'center'}
           className={cx(headerVariants({ variant }), classNames?.header)}
-          horizontal
           justify={'space-between'}
-          onClick={handleToggleExpand}
           style={customStyles?.header}
+          onClick={handleToggleExpand}
         >
           <MermaidHeaderLanguage
             fileName={fileName}
             language={language}
             showLanguage={showLanguage}
           />
-          <Flexbox align={'center'} flex={'none'} gap={4} horizontal onClick={stopPropagation}>
-            <Flexbox align={'center'} className={'panel-actions'} flex={'none'} gap={4} horizontal>
+          <Flexbox horizontal align={'center'} flex={'none'} gap={4} onClick={stopPropagation}>
+            <Flexbox horizontal align={'center'} className={'panel-actions'} flex={'none'} gap={4}>
               {actions}
             </Flexbox>
             <ActionIcon
               icon={expand ? ChevronDown : ChevronRight}
-              onClick={handleToggleExpand}
               size={'small'}
+              onClick={handleToggleExpand}
             />
           </Flexbox>
         </Flexbox>

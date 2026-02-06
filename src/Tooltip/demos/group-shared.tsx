@@ -7,7 +7,7 @@ export default () => {
   const store = useCreateStore();
   return (
     <StoryBook levaStore={store}>
-      <Flexbox gap={12} horizontal>
+      <Flexbox horizontal gap={12}>
         <TooltipGroup arrow closeDelay={300} openDelay={300} placement="bottom">
           <Tooltip title="Shared arrow + placement">
             <Button type="primary">Shared</Button>

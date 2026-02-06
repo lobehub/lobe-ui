@@ -44,10 +44,10 @@ const Avatar: FC<AvatarProps> = ({
         animation={loading}
         avatar={avatar.avatar}
         background={avatar.backgroundColor}
-        onClick={onClick}
         size={size}
         title={avatar.title}
         unoptimized={unoptimized}
+        onClick={onClick}
       />
       <Loading loading={loading} placement={placement} />
     </div>

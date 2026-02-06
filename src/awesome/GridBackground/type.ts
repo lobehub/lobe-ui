@@ -1,4 +1,4 @@
-import { FlexboxProps } from '@/Flex';
+import type { FlexboxProps } from '@/Flex';
 import type { DivProps } from '@/types';
 
 export interface GridBackgroundProps extends DivProps {

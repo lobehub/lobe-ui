@@ -82,7 +82,7 @@ export default () => {
   ));
 
   return (
-    <StoryBook height={800} levaStore={store} noPadding ref={ref}>
+    <StoryBook noPadding height={800} levaStore={store} ref={ref}>
       <Drawer getContainer={false} sidebar={sidebarContent} {...control}>
         {mainContent}
       </Drawer>

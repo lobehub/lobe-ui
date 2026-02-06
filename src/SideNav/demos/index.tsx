@@ -15,14 +15,14 @@ export default () => {
           <ActionIcon
             active={tab === 'chat'}
             icon={MessageSquare}
-            onClick={() => setTab('chat')}
             size="large"
+            onClick={() => setTab('chat')}
           />
           <ActionIcon
             active={tab === 'market'}
             icon={Album}
-            onClick={() => setTab('market')}
             size="large"
+            onClick={() => setTab('market')}
           />
         </>
       }

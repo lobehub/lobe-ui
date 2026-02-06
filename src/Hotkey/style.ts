@@ -57,7 +57,7 @@ export const variants = cva(styles.root, {
     isDarkMode: false,
     variant: 'filled',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     inverseTheme: {
       false: null,
@@ -73,5 +73,4 @@ export const variants = cva(styles.root, {
       outlined: styles.outlined,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

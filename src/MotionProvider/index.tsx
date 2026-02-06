@@ -1,7 +1,7 @@
 'use client';
 
 import type * as m from 'motion/react-m';
-import { type Context, type ReactNode, createContext, memo, use } from 'react';
+import { type Context, createContext, memo, type ReactNode, use } from 'react';
 
 export type MotionComponentType = typeof import('motion/react').motion | typeof m;
 

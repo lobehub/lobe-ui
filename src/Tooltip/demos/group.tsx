@@ -7,7 +7,7 @@ export default () => {
   const store = useCreateStore();
   return (
     <StoryBook levaStore={store}>
-      <Flexbox gap={12} horizontal>
+      <Flexbox horizontal gap={12}>
         <TooltipGroup layoutAnimation>
           <Tooltip
             closeDelay={10_000_000_000}

@@ -5,12 +5,12 @@ import { Monitor, Moon, Sun } from 'lucide-react';
 import { type FC, useMemo } from 'react';
 
 import ActionIcon from '@/ActionIcon';
+import { type DropdownItem } from '@/DropdownMenu';
 import DropdownMenu from '@/DropdownMenu';
-import type { DropdownItem } from '@/DropdownMenu';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
-import type { ThemeSwitchProps } from './type';
+import { type ThemeSwitchProps } from './type';
 
 const DEFAULT_ICON_SET = {
   auto: Monitor,
@@ -60,18 +60,18 @@ const ThemeSwitch: FC<ThemeSwitchProps> = ({
     <Select
       className={className}
       defaultValue={themeMode}
-      onChange={onThemeSwitch}
+      style={style}
+      variant={variant}
       options={items.map((item: any) => ({
         label: (
-          <Flexbox align={'center'} gap={8} horizontal>
+          <Flexbox horizontal align={'center'} gap={8}>
             <Icon icon={item.icon} />
             {item.label}
           </Flexbox>
         ),
         value: item.key,
       }))}
-      style={style}
-      variant={variant}
+      onChange={onThemeSwitch}
     />
   ) : (
     <DropdownMenu items={items} nativeButton={false}>

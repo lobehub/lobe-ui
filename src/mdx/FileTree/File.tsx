@@ -1,9 +1,9 @@
 'use client';
 
 import { FileIcon } from 'lucide-react';
-import { FC } from 'react';
+import type { FC } from 'react';
 
-import { Flexbox, FlexboxProps } from '@/Flex';
+import { Flexbox, type FlexboxProps } from '@/Flex';
 import Icon, { type IconProps } from '@/Icon';
 
 export interface FileProps extends Omit<FlexboxProps, 'children'> {
@@ -13,7 +13,7 @@ export interface FileProps extends Omit<FlexboxProps, 'children'> {
 
 const File: FC<FileProps> = ({ name, icon = FileIcon, ...rest }) => {
   return (
-    <Flexbox align={'center'} gap={4} horizontal {...rest}>
+    <Flexbox horizontal align={'center'} gap={4} {...rest}>
       <Icon icon={icon} />
       <span>{name}</span>
     </Flexbox>

@@ -6,8 +6,8 @@ export default () => {
       <div>
         <h4>No Wrap (default)</h4>
         <Flexbox
-          gap={8}
           horizontal
+          gap={8}
           style={{ background: '#f0f0f0', padding: '8px', width: '400px' }}
         >
           <div style={{ background: '#333', color: 'white', minWidth: '120px', padding: '20px' }}>
@@ -28,8 +28,8 @@ export default () => {
       <div>
         <h4>Wrap</h4>
         <Flexbox
-          gap={8}
           horizontal
+          gap={8}
           style={{ background: '#f0f0f0', padding: '8px', width: '400px' }}
           wrap="wrap"
         >

@@ -6,7 +6,8 @@ export default () => {
   return (
     <ImageSelect
       height={86}
-      onChange={setActive}
+      value={active}
+      width={86}
       options={[
         {
           img: `https://registry.npmmirror.com/@lobehub/assets-emoji/1.3.0/files/assets/robot.webp`,
@@ -19,8 +20,7 @@ export default () => {
           value: 'b',
         },
       ]}
-      value={active}
-      width={86}
+      onChange={setActive}
     />
   );
 };

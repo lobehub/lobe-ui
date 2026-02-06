@@ -22,7 +22,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Tag icon={<Icon icon={Loader2Icon} spin />} {...control}>
+      <Tag icon={<Icon spin icon={Loader2Icon} />} {...control}>
         {children}
       </Tag>
     </StoryBook>

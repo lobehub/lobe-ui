@@ -1,4 +1,4 @@
-import { Node } from 'unist';
+import type { Node } from 'unist';
 import { SKIP, visit } from 'unist-util-visit';
 
 export interface FootnoteLink {
@@ -7,7 +7,6 @@ export interface FootnoteLink {
   url: string;
 }
 
-// eslint-disable-next-line unicorn/consistent-function-scoping
 export const remarkCustomFootnotes = () => (tree: any, file: any) => {
   const footnoteLinks = new Map();
 

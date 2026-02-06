@@ -1,6 +1,6 @@
 'use client';
 
-import { type ReactNode, memo, useMemo } from 'react';
+import { memo, type ReactNode, useMemo } from 'react';
 
 import Hotkey, { type HotkeyProps } from '@/Hotkey';
 

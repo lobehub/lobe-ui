@@ -3,18 +3,19 @@
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { cx } from 'antd-style';
-import { type FC, cloneElement, isValidElement, useContext, useMemo } from 'react';
+import { cloneElement, type FC, isValidElement, useMemo } from 'react';
+import { use } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { parseTrigger } from '@/utils/parseTrigger';
 
 import { PopoverGroupHandleContext } from './groupContext';
-import type { PopoverProps } from './type';
+import { type PopoverProps } from './type';
 import { useMergedPopoverProps } from './useMergedPopoverProps';
 
 export const PopoverInGroup: FC<PopoverProps> = ({ children, ref: refProp, ...props }) => {
-  const group = useContext(PopoverGroupHandleContext);
+  const group = use(PopoverGroupHandleContext);
   const item = useMergedPopoverProps(props);
 
   const { openOnHover } = useMemo(() => parseTrigger(item.trigger ?? 'hover'), [item.trigger]);
@@ -54,7 +55,7 @@ export const PopoverInGroup: FC<PopoverProps> = ({ children, ref: refProp, ...pr
           // If we render into a non-<button> element, that prop is invalid and can warn.
           const resolvedProps = (() => {
             if (isNativeButtonTriggerElement) return renderProps as any;
-            // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+            // eslint-disable-next-line unused-imports/no-unused-vars
             const { type, ref: triggerRef, ...restProps } = renderProps as any;
             return restProps;
           })();

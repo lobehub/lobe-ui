@@ -20,11 +20,11 @@ export default () => {
       </Button>
       <MessageModal
         editing={edit}
+        open={open}
+        value={value || 'editable text'}
         onChange={setValue}
         onEditingChange={setEdit}
         onOpenChange={setOpen}
-        open={open}
-        value={value || 'editable text'}
       />
       <Divider>Only change when click confirm</Divider>
       {value}

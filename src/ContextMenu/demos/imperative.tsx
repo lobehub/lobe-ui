@@ -3,8 +3,8 @@ import {
   ContextMenuTrigger,
   type GenericItemType,
   Icon,
-  Text,
   showContextMenu,
+  Text,
 } from '@lobehub/ui';
 import {
   CopyIcon,
@@ -15,7 +15,7 @@ import {
   TableIcon,
   Trash2Icon,
 } from 'lucide-react';
-import type { MouseEvent } from 'react';
+import { type MouseEvent } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 
 export default () => {
@@ -103,7 +103,7 @@ export default () => {
   return (
     <ContextMenuTrigger onContextMenu={handleContextMenu}>
       <Block direction="vertical" gap={8} padding={16}>
-        <Text as={'p'} strong>
+        <Text strong as={'p'}>
           Right click this panel
         </Text>
         <Text as={'p'} type="secondary">

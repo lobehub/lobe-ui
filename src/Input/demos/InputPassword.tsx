@@ -1,4 +1,4 @@
-import { InputPassword, InputPasswordProps } from '@lobehub/ui';
+import { InputPassword, type InputPasswordProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {

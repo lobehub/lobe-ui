@@ -3,13 +3,13 @@
 import { Toast as BaseToast } from '@base-ui/react/toast';
 import { cssVar, cx } from 'antd-style';
 import { AlertTriangle, CheckCircle, Info, Loader2, X, XCircle } from 'lucide-react';
-import { type ReactNode, memo } from 'react';
+import { memo, type ReactNode } from 'react';
 
 import Icon from '@/Icon';
 
 import { useToastContext } from './context';
 import { actionVariants, rootVariants, styles } from './style';
-import type { ToastOptions, ToastProps, ToastType } from './type';
+import { type ToastOptions, type ToastProps, type ToastType } from './type';
 
 const typeIcons: Record<ToastType, typeof Info> = {
   default: Info,
@@ -61,13 +61,13 @@ const ToastItem = memo<ToastProps>(({ toast, classNames, styles: customStyles })
         <div className={cx(styles.actions, classNames?.actions)} style={customStyles?.actions}>
           {actions.map((action, index) => (
             <BaseToast.Action
+              key={index}
+              style={customStyles?.action}
               className={cx(
                 actionVariants({ variant: action.variant ?? 'primary' }),
                 classNames?.action,
               )}
-              key={index}
               onClick={action.onClick}
-              style={customStyles?.action}
               {...action.props}
             >
               {action.label}
@@ -91,12 +91,12 @@ const ToastItem = memo<ToastProps>(({ toast, classNames, styles: customStyles })
   return (
     <BaseToast.Root
       className={cx(rootVariants({ position }), classNames?.root)}
+      swipeDirection={swipeDirection}
+      toast={toast}
       style={{
         ...customStyles?.root,
         ...toastData?.style,
       }}
-      swipeDirection={swipeDirection}
-      toast={toast}
     >
       <BaseToast.Content
         className={cx(styles.content, classNames?.content)}

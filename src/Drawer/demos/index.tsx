@@ -27,7 +27,7 @@ export default () => {
   ) as DrawerProps;
 
   return (
-    <StoryBook height={800} levaStore={store} noPadding ref={ref}>
+    <StoryBook noPadding height={800} levaStore={store} ref={ref}>
       <Drawer getContainer={false} {...control}>
         {Array.from({ length: 50 })
           .fill('')

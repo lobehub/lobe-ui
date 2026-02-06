@@ -1,6 +1,6 @@
 'use client';
 
-import { type ReactNode, memo, useMemo } from 'react';
+import { memo, type ReactNode, useMemo } from 'react';
 
 import A from '@/A';
 import Block from '@/Block';
@@ -38,29 +38,28 @@ const DefaultFootnotes = memo<{ dataSource: any[] }>(({ dataSource }) => {
 
   return (
     <Flexbox
+      horizontal
       align={'flex-start'}
       as={'section'}
       className={'footnotes'}
       data-footnotes="true"
       gap={'0.5em'}
-      horizontal
       justify={'flex-start'}
       wrap={'wrap'}
     >
       {items.map(({ children, props }, index) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { node, href, ...rest } = props;
         const Container = href ? A : 'div';
         return (
           <Container {...(href ? { href, ...rest } : rest)} key={index}>
             <Block
-              align={'stretch'}
               horizontal
+              align={'stretch'}
               style={{ overflow: 'hidden', position: 'relative' }}
               variant={'outlined'}
             >
               <Block paddingInline={'0.66em'} style={{ borderRadius: 0 }} variant={'filled'}>
-                <Text as="span" code type={'secondary'}>
+                <Text code as="span" type={'secondary'}>
                   {index + 1}
                 </Text>
               </Block>

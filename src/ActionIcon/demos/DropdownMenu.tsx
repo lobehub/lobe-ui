@@ -6,7 +6,7 @@ import { Center } from '@/Flex';
 
 export default () => {
   return (
-    <Center gap={16} horizontal wrap={'wrap'}>
+    <Center horizontal gap={16} wrap={'wrap'}>
       <DropdownMenu items={items} placement="bottomRight">
         <ActionIcon aria-label="Open actions" icon={MoreHorizontal} />
       </DropdownMenu>

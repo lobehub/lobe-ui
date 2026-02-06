@@ -48,13 +48,13 @@ const LobeSwitch = memo<LobeSwitchProps>(
         disabled={isDisabled}
         id={id}
         name={name}
-        onCheckedChange={onChange}
-        onClick={onClick}
         ref={ref}
         size={size}
         style={{ ...style, ...customStyles?.root }}
         tabIndex={tabIndex}
         title={title}
+        onCheckedChange={onChange}
+        onClick={onClick}
       >
         {checkedChildren && (
           <LobeSwitchIcon

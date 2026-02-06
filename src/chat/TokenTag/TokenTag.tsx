@@ -59,6 +59,8 @@ const TokenTag: FC<TokenTagProps> = ({
 
   return (
     <ActionIcon
+      size={size}
+      title={showInfo ? title : undefined}
       icon={
         <Progress
           percent={percent * 100}
@@ -68,8 +70,6 @@ const TokenTag: FC<TokenTagProps> = ({
           type="circle"
         />
       }
-      size={size}
-      title={showInfo ? title : undefined}
       {...rest}
     />
   );

@@ -1,6 +1,6 @@
 import type { DivProps } from '@/types';
 
-import iconMap from './icon-map.json';
+import type iconMap from './icon-map.json';
 
 export type FileNamesKey = keyof (typeof iconMap)['fileNames'];
 export type FolderNamesKey = keyof (typeof iconMap)['folderNames'];

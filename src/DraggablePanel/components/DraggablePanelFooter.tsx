@@ -13,11 +13,11 @@ export type DraggablePanelFooterProps = DivProps;
 const DraggablePanelFooter = memo<DraggablePanelFooterProps>(({ className, ...rest }) => {
   return (
     <Flexbox
+      horizontal
       align={'center'}
       className={cx(styles.footer, className)}
       flex={'none'}
       gap={8}
-      horizontal
       justify={'flex-start'}
       {...rest}
     />

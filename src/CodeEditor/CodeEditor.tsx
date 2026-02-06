@@ -8,7 +8,7 @@ import { styles, variants } from '@/CodeEditor/style';
 import { Flexbox } from '@/Flex';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
 
-import { CodeEditorProps } from './type';
+import type { CodeEditorProps } from './type';
 
 const CodeEditor = memo<CodeEditorProps>(
   ({
@@ -71,13 +71,13 @@ const CodeEditor = memo<CodeEditorProps>(
           autoFocus={autoFocus}
           className={cx(styles.textarea, classNames?.textarea)}
           data-gramm={false}
+          ref={ref}
+          style={customStyles?.textarea}
+          value={code}
           onChange={(e) => {
             onChange?.(e);
             setCode(e.target.value);
           }}
-          ref={ref}
-          style={customStyles?.textarea}
-          value={code}
           {...rest}
         />
       </Flexbox>

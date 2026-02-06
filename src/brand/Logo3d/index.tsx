@@ -1,11 +1,11 @@
 'use client';
 
-import { ImageProps } from 'antd';
+import type { ImageProps } from 'antd';
 import { type FC } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
 import Img from '@/Img';
-import { ImgProps } from '@/types';
+import type { ImgProps } from '@/types';
 
 import { LOGO_3D } from '../LobeHub/style';
 

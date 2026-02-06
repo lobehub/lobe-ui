@@ -110,23 +110,23 @@ const Hotkey = memo<HotkeyProps>(
 
     return (
       <Flexbox
+        horizontal
         align={'center'}
         className={className}
         gap={isBorderless ? 6 : 2}
-        horizontal
         style={style}
         {...rest}
       >
         {compact || isBorderless ? (
           <Center
+            horizontal
             as={'kbd'}
+            gap={6}
+            style={customStyles?.kbdStyle}
             className={cx(
               variants({ inverseTheme, isDarkMode, variant }),
               classNames?.kbdClassName,
             )}
-            gap={6}
-            horizontal
-            style={customStyles?.kbdStyle}
           >
             {keysGroup.map((key, index) => (
               <div key={index}>{mapping[key] ?? startCase(key)}</div>
@@ -136,12 +136,12 @@ const Hotkey = memo<HotkeyProps>(
           keysGroup.map((key, index) => (
             <Center
               as={'kbd'}
+              key={index}
+              style={customStyles?.kbdStyle}
               className={cx(
                 variants({ inverseTheme, isDarkMode, variant }),
                 classNames?.kbdClassName,
               )}
-              key={index}
-              style={customStyles?.kbdStyle}
             >
               {mapping[key] ?? startCase(key)}
             </Center>

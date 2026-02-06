@@ -2,9 +2,9 @@
 
 import { cssVar, cx, useTheme } from 'antd-style';
 import { AlertOctagon, AlertTriangle, Info, Lightbulb, MessageSquareWarning } from 'lucide-react';
-import { FC, useMemo } from 'react';
+import { type FC, useMemo } from 'react';
 
-import { Flexbox, FlexboxProps } from '@/Flex';
+import { Flexbox, type FlexboxProps } from '@/Flex';
 import Icon from '@/Icon';
 
 import { styles } from './style';
@@ -52,9 +52,9 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info', className, style, 
 
   return (
     <Flexbox
+      horizontal
       align={'flex-start'}
       className={cx(styles.container, className)}
-      horizontal
       style={{
         background: background,
         boxShadow: `0 0 0 1px ${background} inset`,

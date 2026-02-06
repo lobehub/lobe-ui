@@ -9,8 +9,8 @@ export interface HeroAction {
 }
 
 export interface HeroProps {
-  Link?: ElementType;
   actions?: HeroAction[];
   description?: string;
+  Link?: ElementType;
   title?: string;
 }

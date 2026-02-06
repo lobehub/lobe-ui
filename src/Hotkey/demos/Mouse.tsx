@@ -4,7 +4,7 @@ import { Center } from '@/Flex';
 
 export default () => {
   return (
-    <Center gap={2} horizontal wrap={'wrap'}>
+    <Center horizontal gap={2} wrap={'wrap'}>
       <Hotkey keys={KeyMapEnum.LeftClick} />
       <Hotkey keys={KeyMapEnum.RightClick} />
       <Hotkey keys={KeyMapEnum.MiddleClick} />

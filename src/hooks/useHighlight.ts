@@ -7,7 +7,7 @@ import {
   transformerNotationHighlight,
   transformerNotationWordHighlight,
 } from '@shikijs/transformers';
-import { CSSProperties, useEffect, useMemo, useState } from 'react';
+import { type CSSProperties, useEffect, useMemo, useState } from 'react';
 import type { BuiltinTheme, CodeToHastOptions, ThemedToken } from 'shiki';
 import { Md5 } from 'ts-md5';
 

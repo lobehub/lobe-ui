@@ -12,12 +12,12 @@ const InputOPT = memo<InputOPTProps>(({ ref, variant, shadow, className, ...rest
 
   return (
     <AntInput.OTP
+      ref={ref}
+      variant={variant || (isDarkMode ? 'filled' : 'outlined')}
       className={cx(
         variantsOPT({ shadow, variant: variant || (isDarkMode ? 'filled' : 'outlined') }),
         className,
       )}
-      ref={ref}
-      variant={variant || (isDarkMode ? 'filled' : 'outlined')}
       {...rest}
     />
   );

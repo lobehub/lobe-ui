@@ -3,9 +3,9 @@
 import { ContextMenu } from '@base-ui/react/context-menu';
 import { memo, useEffect, useMemo, useSyncExternalStore } from 'react';
 
-import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
 import { useIsClient } from '@/hooks/useIsClient';
 import { usePortalContainer } from '@/hooks/usePortalContainer';
+import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
 import { registerDevSingleton } from '@/utils/devSingleton';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
@@ -60,6 +60,7 @@ export const ContextMenuHost = memo(() => {
 
   return (
     <ContextMenu.Root
+      open={state.open}
       onOpenChange={(open) => {
         if (open) {
           setContextMenuState({ open });
@@ -67,7 +68,6 @@ export const ContextMenuHost = memo(() => {
         }
         closeContextMenu();
       }}
-      open={state.open}
     >
       <ContextMenu.Portal container={portalContainer}>
         <ContextMenu.Positioner

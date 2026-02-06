@@ -7,36 +7,36 @@ export default () => {
 
   return (
     <Flexbox gap={16}>
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <span>Default:</span>
         <LobeSwitch checked={checked} onChange={setChecked} />
       </Flexbox>
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <span>Small:</span>
-        <LobeSwitch checked={checked} onChange={setChecked} size="small" />
+        <LobeSwitch checked={checked} size="small" onChange={setChecked} />
       </Flexbox>
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <span>With Icons:</span>
         <LobeSwitch
           checked={checked}
           checkedChildren={<CheckIcon size={12} />}
-          onChange={setChecked}
           unCheckedChildren={<XIcon size={12} />}
+          onChange={setChecked}
         />
       </Flexbox>
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <span>Disabled:</span>
         <LobeSwitch disabled />
       </Flexbox>
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <span>Disabled Checked:</span>
         <LobeSwitch defaultChecked disabled />
       </Flexbox>
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <span>Loading:</span>
         <LobeSwitch loading />
       </Flexbox>
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <span>Loading Small:</span>
         <LobeSwitch loading size="small" />
       </Flexbox>

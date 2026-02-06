@@ -28,11 +28,11 @@ const Header = memo<HeaderProps>(
 
     return (
       <Flexbox
+        horizontal
         align={'center'}
         as={'section'}
         className={cx(styles.root, className)}
         distribution={'space-between'}
-        horizontal
         ref={ref}
         width={'auto'}
         {...rest}
@@ -44,8 +44,8 @@ const Header = memo<HeaderProps>(
               {children}
             </Flexbox>
             <Flexbox
-              className={cx(styles.left, logoClassName)}
               horizontal
+              className={cx(styles.left, logoClassName)}
               style={{ flex: 1, overflow: 'hidden', ...logoStyle }}
             >
               {logo}
@@ -57,8 +57,8 @@ const Header = memo<HeaderProps>(
         ) : (
           <>
             <Flexbox
-              className={cx(styles.left, logoClassName)}
               horizontal
+              className={cx(styles.left, logoClassName)}
               style={{ flex: 0, ...logoStyle }}
             >
               {logo}
@@ -71,14 +71,14 @@ const Header = memo<HeaderProps>(
               {children}
             </Flexbox>
             <Flexbox
+              horizontal
               className={cx(styles.right, actionsClassName)}
               flex={1}
-              horizontal
               justify={'space-between'}
               style={actionsStyle}
             >
               <div />
-              <Flexbox align={'center'} gap={8} horizontal>
+              <Flexbox horizontal align={'center'} gap={8}>
                 {actions}
               </Flexbox>
             </Flexbox>

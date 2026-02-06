@@ -29,11 +29,11 @@ const SkeletonTitle: FC<SkeletonTitleProps> = ({
       active={active}
       className={className}
       height={height ?? `round(calc(${baseFontSize} * ${heightMultiplier}), 1px)`}
+      width={width}
       style={{
         marginBlock: `round(calc(${baseFontSize} * ${marginMultiplier}), 1px)`,
         ...style,
       }}
-      width={width}
       {...rest}
     />
   );

@@ -1,14 +1,19 @@
-import type {
-  Tooltip as BaseTooltip,
-  TooltipPopupProps as BaseTooltipPopupProps,
-  TooltipPortalProps as BaseTooltipPortalProps,
-  TooltipPositionerProps as BaseTooltipPositionerProps,
-  TooltipTriggerProps as BaseTooltipTriggerProps,
+import {
+  type Tooltip as BaseTooltip,
+  type TooltipPopupProps as BaseTooltipPopupProps,
+  type TooltipPortalProps as BaseTooltipPortalProps,
+  type TooltipPositionerProps as BaseTooltipPositionerProps,
+  type TooltipTriggerProps as BaseTooltipTriggerProps,
 } from '@base-ui/react/tooltip';
-import type { CSSProperties, ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
+import {
+  type ComponentPropsWithRef,
+  type CSSProperties,
+  type ReactElement,
+  type ReactNode,
+} from 'react';
 
-import type { HotkeyProps } from '@/Hotkey';
-import type { Placement } from '@/utils/placement';
+import { type HotkeyProps } from '@/Hotkey';
+import { type Placement } from '@/utils/placement';
 
 export type TooltipPlacement = Placement;
 
@@ -178,6 +183,7 @@ export interface TooltipGroupProps {
   className?: string;
   classNames?: TooltipProps['classNames'];
   closeDelay?: number;
+  disabled?: boolean;
   /**
    * Disable the "destroy on invalid trigger (display:none / disconnected)" guard for performance.
    * @default false
@@ -188,7 +194,6 @@ export interface TooltipGroupProps {
    * @default false
    */
   disableZeroOriginGuard?: boolean;
-  disabled?: boolean;
   getPopupContainer?: TooltipProps['getPopupContainer'];
   hotkey?: string;
   hotkeyProps?: Omit<HotkeyProps, 'keys'>;

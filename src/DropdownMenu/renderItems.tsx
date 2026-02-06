@@ -1,23 +1,23 @@
 import { Check, ChevronRight } from 'lucide-react';
-import type { MenuInfo } from 'rc-menu/es/interface';
-import type {
-  KeyboardEvent as ReactKeyboardEvent,
-  MouseEvent as ReactMouseEvent,
-  ReactNode,
+import { type MenuInfo } from 'rc-menu/es/interface';
+import {
+  type KeyboardEvent as ReactKeyboardEvent,
+  type MouseEvent as ReactMouseEvent,
+  type ReactNode,
 } from 'react';
 
 import {
-  type MenuDividerType,
-  type MenuItemGroupType,
-  type MenuItemType,
-  type RenderItemContentOptions,
-  type RenderOptions,
-  type SubMenuType,
   getItemKey,
   getItemLabel,
   hasAnyIcon,
   hasCheckboxAndIcon,
+  type MenuDividerType,
+  type MenuItemGroupType,
+  type MenuItemType,
   renderIcon,
+  type RenderItemContentOptions,
+  type RenderOptions,
+  type SubMenuType,
 } from '@/Menu';
 
 import {
@@ -39,10 +39,10 @@ import {
   DropdownMenuSubmenuTrigger,
   DropdownMenuSwitchItem,
 } from './atoms';
-import type {
-  DropdownItem,
-  DropdownMenuCheckboxItem as DropdownMenuCheckboxItemType,
-  DropdownMenuSwitchItem as DropdownMenuSwitchItemType,
+import {
+  type DropdownItem,
+  type DropdownMenuCheckboxItem as DropdownMenuCheckboxItemType,
+  type DropdownMenuSwitchItem as DropdownMenuSwitchItemType,
 } from './type';
 
 export type { IconSpaceMode } from '@/Menu';

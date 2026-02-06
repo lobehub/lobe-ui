@@ -7,7 +7,7 @@ import type { ChatHeaderTitleProps } from './type';
 
 const ChatHeaderTitle: FC<ChatHeaderTitleProps> = ({ title, desc, tag }) => {
   const tagContent = tag && (
-    <Flexbox align={'center'} className={styles.tag} horizontal>
+    <Flexbox horizontal align={'center'} className={styles.tag}>
       {tag}
     </Flexbox>
   );
@@ -15,17 +15,17 @@ const ChatHeaderTitle: FC<ChatHeaderTitleProps> = ({ title, desc, tag }) => {
   if (desc)
     return (
       <Flexbox className={styles.container} gap={4}>
-        <Flexbox align={'center'} className={styles.titleContainer} gap={8} horizontal>
+        <Flexbox horizontal align={'center'} className={styles.titleContainer} gap={8}>
           <div className={styles.titleWithDesc}>{title}</div>
           {tagContent}
         </Flexbox>
-        <Flexbox align={'center'} className={styles.desc} horizontal>
+        <Flexbox horizontal align={'center'} className={styles.desc}>
           {desc}
         </Flexbox>
       </Flexbox>
     );
   return (
-    <Flexbox align={'center'} className={styles.container} gap={8} horizontal>
+    <Flexbox horizontal align={'center'} className={styles.container} gap={8}>
       <div className={styles.title}>{title}</div>
       {tagContent}
     </Flexbox>

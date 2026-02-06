@@ -45,8 +45,8 @@ const Layout = memo<LayoutProps>(
               <DraggablePanel
                 expand={expand}
                 maxWidth={asideWidth}
-                onExpandChange={setExpand}
                 placement="left"
+                onExpandChange={setExpand}
               >
                 <LayoutSidebarInner headerHeight={headerHeight}>{sidebar}</LayoutSidebarInner>
               </DraggablePanel>

@@ -1,16 +1,16 @@
 'use client';
 
 import { cssVar } from 'antd-style';
-import { type ReactNode, memo } from 'react';
+import { memo, type ReactNode } from 'react';
 
-import { Flexbox } from '@/Flex';
+import Divider from '@/brand/components/Divider';
 import LogoText from '@/brand/LobeChatText';
 import { styles } from '@/brand/LobeHub/style';
 import Logo3d from '@/brand/Logo3d';
 import LogoFlat from '@/brand/LogoFlat';
 import LogoMono from '@/brand/LogoMono';
-import Divider from '@/brand/components/Divider';
-import { DivProps } from '@/types';
+import { Flexbox } from '@/Flex';
+import { type DivProps } from '@/types';
 
 export interface LobeChatProps extends DivProps {
   extra?: ReactNode;
@@ -51,7 +51,7 @@ const LobeChat = memo<LobeChatProps>(
 
         if (!extra)
           logoComponent = (
-            <Flexbox align={'center'} className={className} flex={'none'} horizontal style={style}>
+            <Flexbox horizontal align={'center'} className={className} flex={'none'} style={style}>
               {logoComponent}
             </Flexbox>
           );
@@ -66,10 +66,10 @@ const LobeChat = memo<LobeChatProps>(
 
     return (
       <Flexbox
+        horizontal
         align={'center'}
         className={className}
         flex={'none'}
-        horizontal
         style={style}
         {...rest}
       >

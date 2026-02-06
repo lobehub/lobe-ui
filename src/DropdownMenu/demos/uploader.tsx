@@ -158,7 +158,7 @@ export default () => {
 
   return (
     <div className={styles.container}>
-      <DropdownMenu actionsRef={actionsRef as any} items={items} nativeButton>
+      <DropdownMenu nativeButton actionsRef={actionsRef as any} items={items}>
         <button aria-label="Open menu" className={styles.trigger} type="button">
           <MoreHorizontal />
         </button>

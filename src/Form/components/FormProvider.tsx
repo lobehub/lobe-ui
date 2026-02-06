@@ -1,7 +1,7 @@
 'use client';
 
-import type { FormProps } from 'antd';
-import { ReactNode, createContext, memo, use } from 'react';
+import { type FormProps } from 'antd';
+import { createContext, memo, type ReactNode, use } from 'react';
 
 interface FormContentConfig {
   form?: FormProps['form'];

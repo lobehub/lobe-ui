@@ -50,17 +50,24 @@ export default () => {
         padding: 28,
       }}
     >
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <div style={{ fontSize: 15, fontWeight: 600 }}>Custom Render</div>
         <Tag color="gold">optionRender</Tag>
         <Tag color="cyan">labelRender</Tag>
       </Flexbox>
       <LobeSelect
         allowClear
+        options={toneOptions}
+        placeholder="Pick a visual tone"
+        popupMatchSelectWidth={false}
+        prefix={Palette}
+        selectedIndicatorVariant="bold"
+        style={{ width: 320 }}
+        suffixIcon={Sparkles}
         labelRender={(option) => {
           const meta = toneMeta[option.value as keyof typeof toneMeta];
           return (
-            <Flexbox align="center" gap={6} horizontal>
+            <Flexbox horizontal align="center" gap={6}>
               <span
                 style={{
                   background: meta.color,
@@ -76,7 +83,7 @@ export default () => {
         optionRender={(option) => {
           const meta = toneMeta[option.value as keyof typeof toneMeta];
           return (
-            <Flexbox align="center" gap={10} horizontal style={{ width: '100%' }}>
+            <Flexbox horizontal align="center" gap={10} style={{ width: '100%' }}>
               <Icon icon={meta.icon} size={16} />
               <Flexbox gap={2}>
                 <div style={{ fontSize: 13, fontWeight: 600 }}>{option.label}</div>
@@ -90,13 +97,6 @@ export default () => {
             </Flexbox>
           );
         }}
-        options={toneOptions}
-        placeholder="Pick a visual tone"
-        popupMatchSelectWidth={false}
-        prefix={Palette}
-        selectedIndicatorVariant="bold"
-        style={{ width: 320 }}
-        suffixIcon={Sparkles}
       />
       <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12, textAlign: 'center' }}>
         Render rich labels in the list and compact chips in the trigger.

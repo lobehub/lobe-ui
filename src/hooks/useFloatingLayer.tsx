@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext } from 'react';
+import { createContext, use } from 'react';
 
 /**
  * Context for managing floating layer stacking.
@@ -15,7 +15,7 @@ export const FloatingLayerContext = createContext<HTMLElement | null>(null);
  * Returns the nearest floating layer container from context, or null if none exists.
  */
 export const useFloatingLayer = (): HTMLElement | null => {
-  return useContext(FloatingLayerContext);
+  return use(FloatingLayerContext);
 };
 
 /**

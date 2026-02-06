@@ -1,5 +1,5 @@
 import { Highlighter } from '@lobehub/ui';
-import { ChatItem, ChatItemProps } from '@lobehub/ui/chat';
+import { ChatItem, type ChatItemProps } from '@lobehub/ui/chat';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 import { avatar } from './data';
@@ -40,12 +40,12 @@ export default () => {
       <ChatItem
         avatar={avatar}
         error={control}
+        message={control.content}
         errorMessage={
           <Highlighter actionIconSize={'small'} language={'json'} variant={'borderless'}>
             {JSON.stringify(demoError, null, 2)}
           </Highlighter>
         }
-        message={control.content}
       />
     </StoryBook>
   );

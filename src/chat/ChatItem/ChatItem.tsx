@@ -132,13 +132,13 @@ const ChatItem = memo<ChatItemProps>(
             alt={avatarAlt}
             avatar={avatar}
             loading={loading}
-            onClick={onAvatarClick}
             placement={placement}
             size={avatarSize}
             style={{
               marginTop: showTitle ? -12 : 6,
               ...avatarProps?.style,
             }}
+            onClick={onAvatarClick}
           />
         )}
         <Flexbox
@@ -158,6 +158,7 @@ const ChatItem = memo<ChatItemProps>(
             align={placement === 'left' ? 'flex-start' : 'flex-end'}
             className={messageContentClassName}
             data-layout={layoutMode} // 添加数据属性以方便样式选择
+            gap={8}
             direction={
               layoutMode === 'horizontal'
                 ? placement === 'left'
@@ -165,7 +166,6 @@ const ChatItem = memo<ChatItemProps>(
                   : 'horizontal-reverse'
                 : 'vertical'
             }
-            gap={8}
           >
             <Flexbox ref={contentRef} width={'100%'}>
               {error && (message === placeholderText || !message) ? (
@@ -176,6 +176,11 @@ const ChatItem = memo<ChatItemProps>(
                   fontSize={fontSize}
                   markdownProps={markdownProps}
                   message={message}
+                  placement={placement}
+                  primary={primary}
+                  renderMessage={renderMessage}
+                  text={text}
+                  variant={variant}
                   messageExtra={
                     <>
                       {error && (
@@ -187,11 +192,6 @@ const ChatItem = memo<ChatItemProps>(
                   onChange={onChange}
                   onDoubleClick={onDoubleClick}
                   onEditingChange={onEditingChange}
-                  placement={placement}
-                  primary={primary}
-                  renderMessage={renderMessage}
-                  text={text}
-                  variant={variant}
                 />
               )}
             </Flexbox>

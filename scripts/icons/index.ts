@@ -1,10 +1,11 @@
+import { mkdir, writeFile } from 'node:fs/promises';
+import * as path from 'node:path';
+
 import * as cheerio from 'cheerio';
 import { config } from 'dotenv';
 import { camelCase, upperFirst } from 'es-toolkit/compat';
-import { Client } from 'figma-js';
 import type { Canvas, ClientInterface, Document } from 'figma-js';
-import { mkdir, writeFile } from 'node:fs/promises';
-import * as path from 'node:path';
+import { Client } from 'figma-js';
 import * as prettier from 'prettier';
 import * as svgo from 'svgo';
 

@@ -45,13 +45,13 @@ export default () => {
       <SortableList
         gap={gap}
         items={items}
-        onChange={setItems}
         renderItem={(item) => (
           <SortableList.Item id={item.id} {...control}>
             <SortableList.DragHandle />
             {item.name}
           </SortableList.Item>
         )}
+        onChange={setItems}
       />
     </StoryBook>
   );

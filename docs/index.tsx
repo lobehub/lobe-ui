@@ -1,5 +1,5 @@
 import { Center, Highlighter, Snippet } from '@lobehub/ui';
-import { Features, FeaturesProps } from '@lobehub/ui/awesome';
+import { Features, type FeaturesProps } from '@lobehub/ui/awesome';
 import { cssVar, responsive, useTheme } from 'antd-style';
 import { MoonStar, Palette, Zap } from 'lucide-react';
 

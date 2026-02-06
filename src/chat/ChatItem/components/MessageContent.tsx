@@ -1,10 +1,10 @@
 import { cx, useResponsive } from 'antd-style';
-import { type ReactNode, memo, useMemo } from 'react';
+import { memo, type ReactNode, useMemo } from 'react';
 
-import { Flexbox } from '@/Flex';
-import type { MarkdownProps } from '@/Markdown';
-import { ChatItemProps } from '@/chat/ChatItem';
+import { type ChatItemProps } from '@/chat/ChatItem';
 import EditableMessage from '@/chat/EditableMessage';
+import { Flexbox } from '@/Flex';
+import { type MarkdownProps } from '@/Markdown';
 
 import { styles } from '../style';
 
@@ -58,17 +58,17 @@ const MessageContent = memo<MessageContentProps>(
 
     const content = (
       <EditableMessage
+        fullFeaturedCodeBlock
         classNames={{ input: styles.editingInput }}
         editButtonSize={'small'}
         editing={editing}
         fontSize={fontSize}
-        fullFeaturedCodeBlock
         markdownProps={markdownProps}
-        onChange={onChange}
-        onEditingChange={onEditingChange}
         openModal={mobile ? editing : undefined}
         text={text}
         value={message ? String(message) : ''}
+        onChange={onChange}
+        onEditingChange={onEditingChange}
       />
     );
     const messageContent = renderMessage ? renderMessage(content) : content;

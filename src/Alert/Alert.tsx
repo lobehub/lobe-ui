@@ -59,6 +59,10 @@ const Alert = memo<AlertProps>(
     const alert = (
       <AntdAlert
         banner={banner}
+        description={description}
+        ref={ref}
+        showIcon={showIcon}
+        type={type === 'secondary' ? 'info' : type}
         className={cx(
           rootVariants({
             closable: isClosable,
@@ -79,7 +83,6 @@ const Alert = memo<AlertProps>(
                 ...closable,
               }
         }
-        description={description}
         icon={
           <Icon
             color={type === 'secondary' ? cssVar.colorTextSecondary : undefined}
@@ -88,8 +91,6 @@ const Alert = memo<AlertProps>(
             {...iconProps}
           />
         }
-        ref={ref}
-        showIcon={showIcon}
         style={{
           background: colors(theme, type, 'fillTertiary'),
           borderColor: colors(theme, type, 'fillSecondary'),
@@ -97,7 +98,6 @@ const Alert = memo<AlertProps>(
           ...style,
           ...customStyles?.alert,
         }}
-        type={type === 'secondary' ? 'info' : type}
         {...rest}
       />
     );
@@ -126,11 +126,12 @@ const Alert = memo<AlertProps>(
         >
           <Accordion defaultExpandedKeys={extraDefaultExpand ? ['extra'] : []}>
             <AccordionItem
+              itemKey={'extra'}
+              title={text?.detail || 'Show Details'}
               classNames={{
                 content: classNames?.extraContent,
                 header: extraHeaderVariants({ hasTitle, variant }),
               }}
-              itemKey={'extra'}
               styles={{
                 content: {
                   fontSize: 12,
@@ -147,7 +148,6 @@ const Alert = memo<AlertProps>(
                   fontSize: 12,
                 },
               }}
-              title={text?.detail || 'Show Details'}
             >
               {extra}
             </AccordionItem>

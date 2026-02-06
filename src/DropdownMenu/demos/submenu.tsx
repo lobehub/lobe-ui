@@ -4,7 +4,7 @@ import { submenuItems } from './data';
 
 export default () => {
   return (
-    <DropdownMenu items={submenuItems} nativeButton>
+    <DropdownMenu nativeButton items={submenuItems}>
       <Button>Open Menu</Button>
     </DropdownMenu>
   );

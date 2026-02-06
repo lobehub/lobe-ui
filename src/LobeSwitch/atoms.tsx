@@ -3,7 +3,7 @@
 import { Switch } from '@base-ui/react/switch';
 import { cx } from 'antd-style';
 import type { KeyboardEvent, MouseEvent } from 'react';
-import { createContext, useContext, useMemo, useRef, useState } from 'react';
+import { createContext, use, useMemo, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
 import { useMotionComponent } from '@/MotionProvider';
@@ -21,7 +21,7 @@ import type {
 const LobeSwitchContext = createContext<LobeSwitchContextType | null>(null);
 
 export const useLobeSwitchContext = () => {
-  const context = useContext(LobeSwitchContext);
+  const context = use(LobeSwitchContext);
   if (!context) {
     throw new Error('useLobeSwitchContext must be used within a LobeSwitchRoot');
   }
@@ -90,7 +90,7 @@ export const LobeSwitchRoot = ({
   };
 
   return (
-    <LobeSwitchContext.Provider value={contextValue}>
+    <LobeSwitchContext value={contextValue}>
       <Switch.Root
         checked={isChecked}
         defaultChecked={defaultChecked}
@@ -98,26 +98,26 @@ export const LobeSwitchRoot = ({
         id={id}
         inputRef={inputRef}
         name={name}
-        onCheckedChange={setIsChecked}
         readOnly={readOnly}
+        required={required}
         render={
           <Motion.button
             {...rest}
             className={cx(baseClassName, className)}
             initial={false}
+            whileTap="tap"
             onClick={handleClick}
             onKeyDown={handleKeyDown}
             onTap={() => setIsPressed(false)}
             onTapCancel={() => setIsPressed(false)}
             onTapStart={() => setIsPressed(true)}
-            whileTap="tap"
           />
         }
-        required={required}
+        onCheckedChange={setIsChecked}
       >
         {children}
       </Switch.Root>
-    </LobeSwitchContext.Provider>
+    </LobeSwitchContext>
   );
 };
 
@@ -143,9 +143,9 @@ export const LobeSwitchThumb = ({
     <Switch.Thumb
       render={
         <Motion.span
+          layout
           animate={isPressed ? pressedAnimation || defaultPressedAnimation : undefined}
           className={cx(baseClassName, className)}
-          layout
           transition={transition}
           {...rest}
         >

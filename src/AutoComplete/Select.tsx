@@ -5,18 +5,18 @@ import { cx, useThemeMode } from 'antd-style';
 import { memo } from 'react';
 
 import { variants } from './style';
-import { AutoCompleteProps } from './type';
+import type { AutoCompleteProps } from './type';
 
 const AutoComplete = memo<AutoCompleteProps>(({ variant, shadow, className, ...rest }) => {
   const { isDarkMode } = useThemeMode();
 
   return (
     <AntAutoComplete
+      variant={variant || (isDarkMode ? 'filled' : 'outlined')}
       className={cx(
         variants({ shadow, variant: variant || (isDarkMode ? 'filled' : 'outlined') }),
         className,
       )}
-      variant={variant || (isDarkMode ? 'filled' : 'outlined')}
       {...rest}
     />
   );

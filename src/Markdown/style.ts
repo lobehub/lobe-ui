@@ -202,7 +202,7 @@ export const variants = cva(styles.root, {
     enableLatex: true,
     variant: 'default',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     variant: {
       default: null,
@@ -217,5 +217,4 @@ export const variants = cva(styles.root, {
       false: null,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

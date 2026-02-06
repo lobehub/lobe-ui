@@ -1,16 +1,16 @@
 'use client';
 
-import { type FC, useContext } from 'react';
+import { type FC, use } from 'react';
 
+import { PopoverGroupHandleContext } from './groupContext';
 import { PopoverInGroup } from './PopoverInGroup';
 import { PopoverStandalone } from './PopoverStandalone';
-import { PopoverGroupHandleContext } from './groupContext';
-import type { PopoverProps } from './type';
+import { type PopoverProps } from './type';
 
 export { parseTrigger } from '@/utils/parseTrigger';
 
 const Popover: FC<PopoverProps> = (props) => {
-  const group = useContext(PopoverGroupHandleContext);
+  const group = use(PopoverGroupHandleContext);
 
   // Group mode is driven by trigger interactions; keep standalone behavior for controlled cases.
   const canUseGroup =

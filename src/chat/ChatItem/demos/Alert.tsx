@@ -1,5 +1,5 @@
 import { Highlighter } from '@lobehub/ui';
-import { ChatItem, ChatItemProps } from '@lobehub/ui/chat';
+import { ChatItem, type ChatItemProps } from '@lobehub/ui/chat';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 import { avatar } from './data';

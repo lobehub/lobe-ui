@@ -1,4 +1,4 @@
-import { Mdx, MdxProps } from '@lobehub/ui/mdx';
+import { Mdx, type MdxProps } from '@lobehub/ui/mdx';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 import { content } from './data';

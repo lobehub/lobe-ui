@@ -1,6 +1,6 @@
 'use client';
 
-import { Popover as BasePopover } from '@base-ui/react/popover';
+import type { Popover as BasePopover } from '@base-ui/react/popover';
 import { createContext } from 'react';
 
 import type { PopoverProps } from './type';

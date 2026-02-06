@@ -44,10 +44,10 @@ const Skeleton: FC<SkeletonProps> = ({
 
   return (
     <Flexbox
+      horizontal
       align={showParagraph ? 'flex-start' : 'center'}
       className={cx(className, classNames?.root)}
       gap={gap}
-      horizontal
       style={rootStyle}
       width={'100%'}
       {...rest}

@@ -1,11 +1,10 @@
 import type { Application, SplineEvent } from '@splinetool/runtime';
 import type { HTMLAttributes, Ref } from 'react';
 
-export interface SplineProps
-  extends Omit<
-    HTMLAttributes<HTMLDivElement>,
-    'onLoad' | 'onMouseDown' | 'onMouseUp' | 'onMouseHover' | 'onKeyDown' | 'onKeyUp' | 'onWheel'
-  > {
+export interface SplineProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'onLoad' | 'onMouseDown' | 'onMouseUp' | 'onMouseHover' | 'onKeyDown' | 'onKeyUp' | 'onWheel'
+> {
   onFollow?: (e: SplineEvent) => void;
   onKeyDown?: (e: SplineEvent) => void;
   onKeyUp?: (e: SplineEvent) => void;

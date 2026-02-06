@@ -6,20 +6,20 @@ import { code } from './data';
 export default () => {
   return (
     <Highlighter
+      fullFeatured
+      language={'tsx'}
       actionsRender={({ content, actionIconSize, language, originalNode }) => {
         return (
           <>
             {originalNode}
             <ActionIcon
               icon={AlertCircleIcon}
-              onClick={() => alert(language + content)}
               size={actionIconSize}
+              onClick={() => alert(language + content)}
             />
           </>
         );
       }}
-      fullFeatured
-      language={'tsx'}
     >
       {code}
     </Highlighter>

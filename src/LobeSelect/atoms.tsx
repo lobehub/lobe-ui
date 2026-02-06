@@ -4,20 +4,20 @@ import { mergeProps } from '@base-ui/react/merge-props';
 import { Select } from '@base-ui/react/select';
 import { cx, useThemeMode } from 'antd-style';
 import {
+  cloneElement,
   type ComponentProps,
   type ComponentPropsWithRef,
-  cloneElement,
   isValidElement,
 } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
-import { styles as menuStyles } from '@/Menu/sharedStyle';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { usePortalContainer } from '@/hooks/usePortalContainer';
+import { styles as menuStyles } from '@/Menu/sharedStyle';
 
 import { LOBE_SELECT_CONTAINER_ATTR } from './constants';
 import { styles, triggerVariants } from './style';
-import type { LobeSelectSize, LobeSelectVariant } from './type';
+import { type LobeSelectSize, type LobeSelectVariant } from './type';
 
 const mergeStateClassName = <TState,>(
   base: string,
@@ -70,7 +70,7 @@ export const LobeSelectTrigger = ({
           // If we render into a non-<button> element, that prop is invalid and can warn.
           const resolvedProps = (() => {
             if (isNativeButtonTriggerElement) return props as any;
-            // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+            // eslint-disable-next-line unused-imports/no-unused-vars
             const { type, ref: triggerRef, ...restProps } = props as any;
             return restProps;
           })();

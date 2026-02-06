@@ -1,11 +1,11 @@
 'use client';
 
+import { type SplineEvent, type SplineEventName } from '@splinetool/runtime';
 import { Application } from '@splinetool/runtime';
-import type { SplineEvent, SplineEventName } from '@splinetool/runtime';
 import { memo, useEffect, useRef, useState } from 'react';
 
 import ParentSize from './ParentSize';
-import type { SplineProps } from './type';
+import { type SplineProps } from './type';
 
 const Spline = memo<SplineProps>(
   ({
@@ -37,7 +37,7 @@ const Spline = memo<SplineProps>(
     ) => {
       await speApp.load(scene);
 
-      for (let event of events) {
+      for (const event of events) {
         if (event.cb) {
           speApp.addEventListener(event.name, event.cb);
         }
@@ -100,7 +100,7 @@ const Spline = memo<SplineProps>(
       }
 
       return () => {
-        for (let event of events) {
+        for (const event of events) {
           if (event.cb) {
             speApp.removeEventListener(event.name, event.cb);
           }

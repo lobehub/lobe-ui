@@ -53,11 +53,11 @@ export default () => {
         padding: 28,
       }}
     >
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <div style={{ fontSize: 15, fontWeight: 600 }}>Atomic Select</div>
         <Tag color="blue">Atoms</Tag>
       </Flexbox>
-      <LobeSelectRoot onValueChange={setValue} value={value}>
+      <LobeSelectRoot value={value} onValueChange={setValue}>
         <LobeSelectTrigger size="large" style={{ width: 320 }} variant="filled">
           <LobeSelectValue>
             {(current) => (current ? labelMap[current] : 'Pick a tone')}

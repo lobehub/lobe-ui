@@ -12,16 +12,16 @@ import useMergeState from 'use-merge-value';
 import ActionIcon from '@/ActionIcon';
 import Avatar from '@/Avatar';
 import { Flexbox } from '@/Flex';
-import Icon from '@/Icon';
-import Popover from '@/Popover';
-import Tabs, { TabsProps } from '@/Tabs';
-import Tooltip from '@/Tooltip';
 import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
 import { useTranslation } from '@/i18n/useTranslation';
+import Icon from '@/Icon';
+import Popover from '@/Popover';
+import Tabs, { type TabsProps } from '@/Tabs';
+import Tooltip from '@/Tooltip';
 
 import AvatarUploader from './AvatarUploader';
 import { styles } from './style';
-import type { EmojiPickerProps } from './type';
+import { type EmojiPickerProps } from './type';
 
 const DEFAULT_AVATAR = '🤖';
 
@@ -129,31 +129,31 @@ const EmojiPicker = memo<EmojiPickerProps>(
       >
         {showTabs && (
           <Flexbox
+            horizontal
             align={'center'}
             className={styles.tabs}
-            horizontal
             justify={'space-between'}
             paddingInline={10}
           >
             <Tabs
-              activeKey={tab}
               compact
+              activeKey={tab}
               items={items}
-              onChange={(key) => setTab(key as any)}
               size={'small'}
+              onChange={(key) => setTab(key as any)}
             />
             {allowDelete && (
               <ActionIcon
                 icon={TrashIcon}
-                onClick={() => {
-                  handleAvatarChange(defaultAvatar);
-                  onDelete?.();
-                }}
+                title={deleteText}
                 size={{
                   blockSize: 32,
                   size: 18,
                 }}
-                title={deleteText}
+                onClick={() => {
+                  handleAvatarChange(defaultAvatar);
+                  onDelete?.();
+                }}
               />
             )}
           </Flexbox>
@@ -166,19 +166,19 @@ const EmojiPicker = memo<EmojiPickerProps>(
             icons={'outline'}
             locale={locale.split('-')[0]}
             navPosition={showTabs ? 'bottom' : 'top'}
-            onEmojiSelect={(e: any) => handleAvatarChange(e.src || e.native)}
             previewPosition={'none'}
             skinTonePosition={'none'}
             theme={theme.isDarkMode ? 'dark' : 'light'}
+            onEmojiSelect={(e: any) => handleAvatarChange(e.src || e.native)}
           />
         )}
         {tab === 'upload' && (
           <AvatarUploader
             compressSize={compressSize}
-            onChange={handleAvatarChange}
-            onUpload={onUpload}
             shape={shape}
             texts={texts}
+            onChange={handleAvatarChange}
+            onUpload={onUpload}
           />
         )}
         {customTabs.map(
@@ -195,19 +195,19 @@ const EmojiPicker = memo<EmojiPickerProps>(
     return (
       <Popover
         className={cx(styles.popover)}
+        content={content}
+        defaultOpen={defaultOpen}
+        open={visible}
+        placement={'bottom'}
+        trigger={'click'}
         classNames={{
           content: styles.popover,
           root: styles.positioner,
         }}
-        content={content}
-        defaultOpen={defaultOpen}
         onOpenChange={(v) => {
           if (loading) return;
           setVisible(v);
         }}
-        open={visible}
-        placement={'bottom'}
-        trigger={'click'}
         {...popupProps}
       >
         {customRender ? (

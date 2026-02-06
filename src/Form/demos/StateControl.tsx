@@ -65,12 +65,12 @@ export default () => {
       ],
       extra: (
         <Switch
+          value={active.includes(ActiveKey.Theme)}
           onChange={(v) => {
             setActive((prev) =>
               v ? [...prev, ActiveKey.Theme] : prev.filter((key) => key !== ActiveKey.Theme),
             );
           }}
-          value={active.includes(ActiveKey.Theme)}
         />
       ),
       icon: Palette,
@@ -117,12 +117,12 @@ export default () => {
       ],
       extra: (
         <Switch
+          value={active.includes(ActiveKey.Sidebar)}
           onChange={(v) => {
             setActive((prev) =>
               v ? [...prev, ActiveKey.Sidebar] : prev.filter((key) => key !== ActiveKey.Sidebar),
             );
           }}
-          value={active.includes(ActiveKey.Sidebar)}
         />
       ),
       icon: PanelLeftClose,
@@ -138,9 +138,9 @@ export default () => {
         initialValues={setting}
         itemMinWidth={'max(30%,240px)'}
         items={items}
+        variant={variant}
         onCollapse={console.log}
         onFinish={console.table}
-        variant={variant}
       />
     </StoryBook>
   );

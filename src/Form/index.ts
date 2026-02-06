@@ -1,14 +1,14 @@
 'use client';
 
 import { Form as AntForm, type FormInstance } from 'antd';
-import { type ReactNode, RefAttributes } from 'react';
+import { type ReactNode, type RefAttributes } from 'react';
 
-import FormParent from './Form';
 import FormGroup from './components/FormGroup';
 import FormItem from './components/FormItem';
 import FormSubmitFooter from './components/FormSubmitFooter';
 import FormTitle from './components/FormTitle';
-import type { FormProps } from './type';
+import FormParent from './Form';
+import { type FormProps } from './type';
 
 interface IForm {
   (props: FormProps & RefAttributes<FormInstance>): ReactNode;

@@ -1,13 +1,13 @@
 'use client';
 
-import type { ReactNode, RefAttributes } from 'react';
+import { type ReactNode, type RefAttributes } from 'react';
 
-import DraggablePanelParent from './DraggablePanel';
 import DraggablePanelBody from './components/DraggablePanelBody';
 import DraggablePanelContainer from './components/DraggablePanelContainer';
 import DraggablePanelFooter from './components/DraggablePanelFooter';
 import DraggablePanelHeader from './components/DraggablePanelHeader';
-import type { DraggablePanelProps } from './type';
+import DraggablePanelParent from './DraggablePanel';
+import { type DraggablePanelProps } from './type';
 
 interface IDraggablePanel {
   (props: DraggablePanelProps & RefAttributes<HTMLDivElement>): ReactNode;

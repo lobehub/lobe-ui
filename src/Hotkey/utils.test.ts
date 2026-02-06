@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
 
 import {
-  NORMATIVE_MODIFIER,
   checkIsAppleDevice,
   combineKeys,
+  NORMATIVE_MODIFIER,
   splitKeysByPlus,
   startCase,
 } from './utils';

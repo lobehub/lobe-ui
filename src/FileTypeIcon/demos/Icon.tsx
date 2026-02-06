@@ -45,7 +45,7 @@ const styles = createStaticStyles(({ css, cssVar }) => {
 
 export default () => {
   return (
-    <Center gap={8} horizontal>
+    <Center horizontal gap={8}>
       <Flexbox className={styles.card} padding={16}>
         <span>New Folder</span>
         <div className={styles.glow} style={{ background: cssVar.geekblue }} />

@@ -5,7 +5,7 @@ import { Center } from '@/Flex';
 
 export default () => {
   return (
-    <Center gap={16} horizontal wrap={'wrap'}>
+    <Center horizontal gap={16} wrap={'wrap'}>
       <ActionIcon icon={Settings} size={'small'} />
       <ActionIcon icon={Settings} size={'middle'} />
       <ActionIcon icon={Settings} size={'large'} />

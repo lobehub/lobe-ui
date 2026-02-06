@@ -1,9 +1,9 @@
 import { Loader2 } from 'lucide-react';
-import { type FC } from 'react';
+import type { FC } from 'react';
 
+import { type ChatItemProps } from '@/chat/ChatItem';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
-import { ChatItemProps } from '@/chat/ChatItem';
 
 import { styles } from '../style';
 
@@ -21,7 +21,7 @@ const Loading: FC<LoadingProps> = ({ loading, placement = 'left' }) => {
       className={placement === 'left' ? styles.loadingLeft : styles.loadingRight}
       justify={'center'}
     >
-      <Icon icon={Loader2} size={{ size: 12, strokeWidth: 3 }} spin />
+      <Icon spin icon={Loader2} size={{ size: 12, strokeWidth: 3 }} />
     </Flexbox>
   );
 };

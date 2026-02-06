@@ -18,10 +18,10 @@ export default () => {
 
   return (
     <>
-      <Button onClick={showModal} type="primary">
+      <Button type="primary" onClick={showModal}>
         Open Modal
       </Button>
-      <Modal onCancel={handleCancel} onOk={handleOk} open={isModalOpen} title="Basic Modal">
+      <Modal open={isModalOpen} title="Basic Modal" onCancel={handleCancel} onOk={handleOk}>
         <Text as={'p'}>{Array.from({ length: 200 }).fill('Some contents').join(' ')}</Text>
       </Modal>
     </>

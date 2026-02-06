@@ -1,10 +1,10 @@
 'use client';
 
 import {
-  ElementType,
-  ReactNode,
   createContext,
+  type ElementType,
   memo,
+  type ReactNode,
   use,
   useEffect,
   useMemo,
@@ -12,14 +12,14 @@ import {
   useState,
 } from 'react';
 
-import { MotionComponent, type MotionComponentType } from '@/MotionProvider';
-import type {
-  I18nContextValue,
-  TranslationKey,
-  TranslationResourcesInput,
-  TranslationResourcesMap,
+import {
+  type I18nContextValue,
+  type TranslationKey,
+  type TranslationResourcesInput,
+  type TranslationResourcesMap,
 } from '@/i18n/types';
-import { CDN, CdnApi, genCdnUrl } from '@/utils/genCdnUrl';
+import { MotionComponent, type MotionComponentType } from '@/MotionProvider';
+import { type CDN, type CdnApi, genCdnUrl } from '@/utils/genCdnUrl';
 
 export interface Config {
   aAs?: ElementType;

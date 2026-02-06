@@ -1,9 +1,9 @@
 import { memo } from 'react';
 
-import { type HighlighterProps } from '@/Highlighter';
+import type { HighlighterProps } from '@/Highlighter';
 import { FALLBACK_LANG } from '@/Highlighter/const';
-import { type MermaidProps } from '@/Mermaid';
 import Pre, { PreMermaid, PreSingleLine } from '@/mdx/mdxComponents/Pre';
+import type { MermaidProps } from '@/Mermaid';
 
 const countLines = (str: string): number => {
   const regex = /\n/g;

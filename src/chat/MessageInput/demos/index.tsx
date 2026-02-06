@@ -11,8 +11,8 @@ export default () => {
       <MessageInput
         defaultValue={'hello world'}
         height={200}
-        onConfirm={setValue}
         style={{ width: '100%' }}
+        onConfirm={setValue}
       />
       <Divider>Only change when click confirm</Divider>
       {value}

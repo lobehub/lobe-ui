@@ -36,8 +36,8 @@ const blocks = [
 export default () => {
   return (
     <ScrollArea
-      contentProps={{ style: { padding: 16 } }}
       scrollFade
+      contentProps={{ style: { padding: 16 } }}
       style={{
         background:
           'radial-gradient(1200px 240px at 20% 0%, rgba(59, 130, 246, 0.28), transparent 55%), radial-gradient(900px 240px at 85% 10%, rgba(236, 72, 153, 0.22), transparent 50%), linear-gradient(135deg, rgba(16, 24, 40, 0.05), rgba(16, 24, 40, 0.02))',

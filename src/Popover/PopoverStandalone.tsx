@@ -6,10 +6,9 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { parseTrigger } from '@/utils/parseTrigger';
-import { type Side, placementMap } from '@/utils/placement';
+import { placementMap, type Side } from '@/utils/placement';
 
 import { PopoverArrowIcon } from './ArrowIcon';
-import { usePopoverPortalContainer } from './PopoverPortal';
 import {
   PopoverArrow,
   PopoverPopup,
@@ -20,7 +19,8 @@ import {
   PopoverViewport,
 } from './atoms';
 import { PopoverProvider } from './context';
-import type { PopoverProps } from './type';
+import { usePopoverPortalContainer } from './PopoverPortal';
+import { type PopoverProps } from './type';
 
 /**
  * Popover component - displays floating content relative to a trigger element
@@ -238,8 +238,8 @@ export const PopoverStandalone = memo<PopoverProps>(
       <PopoverRoot
         defaultOpen={defaultOpen}
         handle={popoverHandle}
-        onOpenChange={handleOpenChange}
         open={resolvedOpen}
+        onOpenChange={handleOpenChange}
       >
         {triggerElement}
         {backdropProps && <BasePopover.Backdrop {...backdropProps} />}

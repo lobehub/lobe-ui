@@ -6,8 +6,8 @@ export default () => {
       <div>
         <h4>Justify: flex-start (default)</h4>
         <Flexbox
-          gap={8}
           horizontal
+          gap={8}
           justify="flex-start"
           style={{ background: '#f0f0f0', padding: '8px' }}
           width="100%"
@@ -24,8 +24,8 @@ export default () => {
       <div>
         <h4>Justify: center</h4>
         <Flexbox
-          gap={8}
           horizontal
+          gap={8}
           justify="center"
           style={{ background: '#f0f0f0', padding: '8px' }}
           width="100%"
@@ -42,8 +42,8 @@ export default () => {
       <div>
         <h4>Justify: space-between</h4>
         <Flexbox
-          gap={8}
           horizontal
+          gap={8}
           justify="space-between"
           style={{ background: '#f0f0f0', padding: '8px' }}
           width="100%"
@@ -63,9 +63,9 @@ export default () => {
       <div>
         <h4>Align: center</h4>
         <Flexbox
+          horizontal
           align="center"
           gap={8}
-          horizontal
           style={{ background: '#f0f0f0', height: '120px', padding: '8px' }}
         >
           <div style={{ background: '#333', color: 'white', padding: '20px' }}>Short</div>

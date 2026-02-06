@@ -1,6 +1,6 @@
-import { CSSProperties, ReactNode, Ref } from 'react';
+import type { CSSProperties, ReactNode, Ref } from 'react';
 
-import { FlexboxProps } from '@/Flex';
+import type { FlexboxProps } from '@/Flex';
 
 export interface ChatHeaderProps extends FlexboxProps {
   center?: ReactNode;

@@ -1,8 +1,8 @@
-import type { CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
 
-import type { MarkdownProps } from '@/Markdown';
-import type { MessageInputProps } from '@/chat/MessageInput';
-import type { MessageModalProps } from '@/chat/MessageModal';
+import { type MessageInputProps } from '@/chat/MessageInput';
+import { type MessageModalProps } from '@/chat/MessageModal';
+import { type MarkdownProps } from '@/Markdown';
 
 export interface EditableMessageProps {
   className?: string;

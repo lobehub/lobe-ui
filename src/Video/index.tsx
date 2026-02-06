@@ -3,11 +3,11 @@
 import { Skeleton } from 'antd';
 import { cssVar, cx } from 'antd-style';
 import { PlayIcon } from 'lucide-react';
-import { type CSSProperties, type Ref, memo, useMemo, useState } from 'react';
+import { type CSSProperties, memo, type Ref, useMemo, useState } from 'react';
 
 import ActionIcon from '@/ActionIcon';
-import { Flexbox, FlexboxProps } from '@/Flex';
-import type { VideoProps as VProps } from '@/types';
+import { Flexbox, type FlexboxProps } from '@/Flex';
+import { type VideoProps as VProps } from '@/types';
 
 import { styles, variants } from './style';
 
@@ -115,12 +115,12 @@ const Video = memo<VideoProps>(
         className={cx(variants({ variant }), className, classNames?.wrapper)}
         height={height}
         ref={ref}
+        width={width}
         style={{
           ...cssVariables,
           ...style,
           ...customStyles?.wrapper,
         }}
-        width={width}
       >
         {preview && !isPlaying && (
           <Flexbox
@@ -137,6 +137,13 @@ const Video = memo<VideoProps>(
           className={cx(styles.video, classNames?.video)}
           controls={showControls}
           height={height}
+          preload={preload}
+          width={width}
+          style={{
+            height: 'auto',
+            maxWidth: '100%',
+            ...customStyles?.video,
+          }}
           onEnded={(e) => {
             setIsPlaying(false);
             onEnded?.(e);
@@ -161,13 +168,6 @@ const Video = memo<VideoProps>(
             setIsPlaying(true);
             onPlaying?.(e);
           }}
-          preload={preload}
-          style={{
-            height: 'auto',
-            maxWidth: '100%',
-            ...customStyles?.video,
-          }}
-          width={width}
           {...rest}
         >
           <source src={src} />

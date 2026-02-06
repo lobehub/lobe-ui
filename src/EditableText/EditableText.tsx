@@ -68,22 +68,22 @@ const EditableText = memo<EditableTextProps>(
     const input = (
       <ControlInput
         className={cx(className, classNames?.input)}
-        onBlur={onBlur}
-        onChange={onChange}
-        onChangeEnd={(v) => {
-          onChangeEnd?.(v);
-          setEdited(false);
-        }}
-        onFocus={onFocus}
-        onValueChanging={onValueChanging}
         size={size}
+        value={value as string}
+        variant={variant}
         style={{
           height,
           ...style,
           ...styles?.input,
         }}
-        value={value as string}
-        variant={variant}
+        onBlur={onBlur}
+        onChange={onChange}
+        onFocus={onFocus}
+        onValueChanging={onValueChanging}
+        onChangeEnd={(v) => {
+          onChangeEnd?.(v);
+          setEdited(false);
+        }}
         {...inputProps}
       />
     );
@@ -94,11 +94,11 @@ const EditableText = memo<EditableTextProps>(
         {showEditIcon && (
           <ActionIcon
             icon={Edit3}
+            size="small"
+            title={'Edit'}
             onClick={() => {
               setEdited(!edited);
             }}
-            size="small"
-            title={'Edit'}
           />
         )}
       </>
@@ -106,10 +106,10 @@ const EditableText = memo<EditableTextProps>(
 
     return (
       <Flexbox
+        horizontal
         align={'center'}
         className={cx(className, classNames?.container)}
         gap={gap}
-        horizontal
         style={{
           height,
           width: '100%',

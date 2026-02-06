@@ -7,15 +7,15 @@ export default () => {
   return (
     <Accordion defaultExpandedKeys={['1']} style={{ width: '100%' }}>
       <AccordionItem
+        itemKey="1"
+        title="Accordion Panel 1"
         action={
           <ActionIcon
             icon={MoreHorizontal}
-            onClick={() => console.log('action clicked')}
             size="small"
+            onClick={() => console.log('action clicked')}
           />
         }
-        itemKey="1"
-        title="Accordion Panel 1"
       >
         <Flexbox padding={16}>
           <div>This is the content of panel 1.</div>

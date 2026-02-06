@@ -10,11 +10,14 @@ export default () => {
     <Flexbox align="center" height={280} justify="center" style={{ padding: 24 }}>
       <TooltipGroup>
         <DropdownMenu
+          open={dropdownOpen}
+          placement="bottomLeft"
+          trigger="hover"
           items={[
             {
               key: 'info',
               label: (
-                <Flexbox gap={12} horizontal style={{ padding: '4px 0' }}>
+                <Flexbox horizontal gap={12} style={{ padding: '4px 0' }}>
                   <div style={{ fontSize: 14, fontWeight: 600 }}>
                     Hover Tooltip shouldn&apos;t close DropdownMenu
                   </div>
@@ -36,15 +39,15 @@ export default () => {
               closeOnClick: false,
               key: 'action',
               label: (
-                <Flexbox align="center" gap={8} horizontal>
+                <Flexbox horizontal align="center" gap={8}>
                   <Tooltip
-                    onOpenChange={setTooltipOpen}
                     open={tooltipOpen}
                     title={
                       <div style={{ maxWidth: 220, padding: 4 }}>
                         Tooltip content area. Keep hovering here.
                       </div>
                     }
+                    onOpenChange={setTooltipOpen}
                   >
                     <Button icon={<Icon icon={Info} size={16} />} size="small">
                       Hover me
@@ -59,9 +62,6 @@ export default () => {
             },
           ]}
           onOpenChange={(open) => setDropdownOpen(open)}
-          open={dropdownOpen}
-          placement="bottomLeft"
-          trigger="hover"
         >
           <Button size="large" type="primary">
             Hover to Open

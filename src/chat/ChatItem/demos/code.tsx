@@ -10,6 +10,9 @@ export default () => {
 
   return (
     <ChatItem
+      avatar={avatar}
+      editing={edit}
+      message={longCode}
       actions={
         <ActionIconGroup
           items={items}
@@ -21,9 +24,6 @@ export default () => {
           }}
         />
       }
-      avatar={avatar}
-      editing={edit}
-      message={longCode}
       onEditingChange={(editing) => {
         console.log('editing:', editing);
         setEdit(editing);

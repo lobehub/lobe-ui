@@ -77,10 +77,12 @@ const FormModal = memo<FormModalProps>(
         keyboard={keyboard}
         loading={loading}
         mask={mask}
-        onCancel={onCancel}
         open={open}
         paddings={paddings}
         style={style}
+        title={title}
+        width={width}
+        zIndex={zIndex}
         styles={
           typeof styles === 'function'
             ? styles
@@ -92,22 +94,23 @@ const FormModal = memo<FormModalProps>(
                 },
               }
         }
-        title={title}
-        width={width}
-        zIndex={zIndex}
+        onCancel={onCancel}
       >
         <Form
           className={cx(staticStyles.form, formClassName || '')}
           clearOnDestroy={destroyOnHidden}
+          gap={gap || (variant === 'borderless' ? 24 : gap)}
+          ref={ref}
+          variant={variant}
           footer={
-            <Flexbox align={'center'} className={staticStyles.footer} gap={8} horizontal>
+            <Flexbox horizontal align={'center'} className={staticStyles.footer} gap={8}>
               {footer || (
                 <Button
                   block
                   htmlType="submit"
                   loading={submitLoading}
-                  onClick={onSubmit}
                   type={'primary'}
+                  onClick={onSubmit}
                   {...submitButtonProps}
                   style={{
                     flex: 1,
@@ -119,9 +122,6 @@ const FormModal = memo<FormModalProps>(
               )}
             </Flexbox>
           }
-          gap={gap || (variant === 'borderless' ? 24 : gap)}
-          onFinish={onFinish}
-          ref={ref}
           style={{
             paddingBottom: 56,
             ...formStyle,
@@ -129,7 +129,7 @@ const FormModal = memo<FormModalProps>(
           styles={{
             title: { fontSize: 14 },
           }}
-          variant={variant}
+          onFinish={onFinish}
           {...rest}
         >
           {children}

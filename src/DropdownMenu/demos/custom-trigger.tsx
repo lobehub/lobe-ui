@@ -52,7 +52,7 @@ export default () => {
   return (
     <div className={styles.row}>
       {/* Custom component trigger (not a literal <button>) */}
-      <DropdownMenu items={items} nativeButton>
+      <DropdownMenu nativeButton items={items}>
         <Button>Open (Button)</Button>
       </DropdownMenu>
 

@@ -419,7 +419,7 @@ export const panelVariants = cva(styles.root, {
     placement: 'right',
     showBorder: true,
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     isExpand: {
       false: null,
@@ -440,7 +440,6 @@ export const panelVariants = cva(styles.root, {
       true: null,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });
 
 export const toggleVariants = cva(styles.toggleRoot, {

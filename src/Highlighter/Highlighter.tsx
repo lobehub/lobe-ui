@@ -9,9 +9,9 @@ import { getCodeLanguageDisplayName } from '@/Highlighter/const';
 import Tag from '@/Tag';
 
 import FullFeatured from './FullFeatured';
-import SyntaxHighlighter from './SyntaxHighlighter';
 import { styles, variants } from './style';
-import type { HighlighterProps } from './type';
+import SyntaxHighlighter from './SyntaxHighlighter';
+import { type HighlighterProps } from './type';
 
 export const Highlighter = memo<HighlighterProps>(
   ({
@@ -62,8 +62,8 @@ export const Highlighter = memo<HighlighterProps>(
       if (!copyable) return null;
       return (
         <CopyButton
-          content={getCopyContent}
           glass
+          content={getCopyContent}
           size={actionIconSize || { blockSize: 28, size: 16 }}
         />
       );
@@ -87,12 +87,12 @@ export const Highlighter = memo<HighlighterProps>(
           className={classNames?.content}
           enableTransformer={enableTransformer}
           language={lang?.toLowerCase()}
+          theme={theme}
+          variant={variant}
           style={{
             height: '100%',
             ...customStyles?.content,
           }}
-          theme={theme}
-          variant={variant}
         >
           {tirmedChildren}
         </SyntaxHighlighter>
@@ -150,7 +150,7 @@ export const Highlighter = memo<HighlighterProps>(
         data-code-type="highlighter"
         {...rest}
       >
-        <Flexbox align={'center'} className={styles.actions} flex={'none'} gap={4} horizontal>
+        <Flexbox horizontal align={'center'} className={styles.actions} flex={'none'} gap={4}>
           {actions}
         </Flexbox>
         {showLanguage && language && <Tag className={styles.lang}>{displayName}</Tag>}

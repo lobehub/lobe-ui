@@ -51,7 +51,7 @@ const replaceUnescapedPipes = (formula: string): string =>
  * @returns The string with LaTeX bracket delimiters converted to dollar sign delimiters
  */
 export function convertLatexDelimiters(text: string): string {
-  const pattern = /(```[\S\s]*?```|`.*?`)|\\\[([\S\s]*?[^\\])\\]|\\\((.*?)\\\)/g;
+  const pattern = /(```[\s\S]*?```|`.*?`)|\\\[([\s\S]*?[^\\])\\\]|\\\((.*?)\\\)/g;
   return text.replaceAll(
     pattern,
     (
@@ -97,19 +97,19 @@ export function escapeLatexPipes(text: string): string {
 
   // Process code blocks first to protect them
   const codeBlocks: string[] = [];
-  let content = text.replaceAll(/(```[\S\s]*?```|`[^\n`]*`)/g, (match) => {
+  let content = text.replaceAll(/(```[\s\S]*?```|`[^\n`]*`)/g, (match) => {
     codeBlocks.push(match);
     return `<<CODE_${codeBlocks.length - 1}>>`;
   });
 
   // For display math, allow multiline
-  content = content.replaceAll(/\$\$([\S\s]*?)\$\$/g, (match, display) => {
+  content = content.replaceAll(/\$\$([\s\S]*?)\$\$/g, (match, display) => {
     return `$$${replaceUnescapedPipes(display)}$$`;
   });
 
   // For inline math, use non-greedy match that DOES NOT cross newlines
   // This prevents issues in tables where $ might appear in different cells
-  content = content.replaceAll(/(?<!\\)\$(?!\$)([^\n$]*?)(?<!\\)\$(?!\$)/g, (match, inline) => {
+  content = content.replaceAll(/(?<!\\)\$(?!\$)([^\n$]*)(?<!\\)\$(?!\$)/g, (match, inline) => {
     return `$${replaceUnescapedPipes(inline)}$`;
   });
 
@@ -131,7 +131,7 @@ export function escapeLatexPipes(text: string): string {
  * @returns The string with unescaped underscores escaped within \text{...} commands
  */
 export function escapeTextUnderscores(text: string): string {
-  return text.replaceAll(/\\text{([^}]*)}/g, (match, textContent: string) => {
+  return text.replaceAll(/\\text\{([^}]*)\}/g, (match, textContent: string) => {
     // textContent is the content within the braces, e.g., "node_domain" or "already\_escaped"
     // Replace underscores '_' with '\_' only if they are NOT preceded by a backslash '\'.
     // The (?<!\\) is a negative lookbehind assertion that ensures the character before '_' is not a '\'.
@@ -166,7 +166,7 @@ export function escapeCurrencyDollars(text: string): string {
     // 6. Number lists in math mode: $1,-1,0$ or $1,2,3$ (comma-separated numbers, possibly negative)
     // 7. LaTeX bracket notation: \[...\]
     // 8. LaTeX parenthesis notation: \(...\)
-    /(```[\S\s]*?```|`[^\n`]*`|\$\$[\S\s]*?\$\$|(?<!\\)\$(?!\$)(?=[\S\s]*?\\)[\S\s]*?(?<!\\)\$(?!\$)|\$\d+\$|\$-?\d+(?:,-?\d+)+\$|\\\[[\S\s]*?\\]|\\\(.*?\\\))/g,
+    /(```[\s\S]*?```|`[^\n`]*`|\$\$[\s\S]*?\$\$|(?<!\\)\$(?!\$)(?=[\s\S]*?\\)[\s\S]*?(?<!\\)\$(?!\$)|\$\d+\$|\$-?\d+(?:,-?\d+)+\$|\\\[[\s\S]*?\\\]|\\\(.*?\\\))/g,
     (match) => manager.add(match),
   );
 
@@ -204,7 +204,7 @@ const extractIncompleteFormula = (text: string) => {
 
   // If odd number of $$ delimiters, extract content after the last $$
   if (dollarsCount % 2 === 1) {
-    const match = text.match(/\$\$([^]*)$/);
+    const match = text.match(/\$\$([\s\S]*)$/);
     return match ? match[1] : '';
   }
 
@@ -251,12 +251,12 @@ export const isLastFormulaRenderable = (text: string) => {
  * @returns The string with fixed LaTeX expressions
  */
 export function fixCommonLaTeXErrors(text: string): string {
-  return text.replaceAll(/(\$\$[\S\s]*?\$\$|\$[\S\s]*?\$)/g, (match) => {
+  return text.replaceAll(/(\$\$[\s\S]*?\$\$|\$[\s\S]*?\$)/g, (match) => {
     let fixed = match;
 
     // Fix unbalanced braces
-    const openBraces = (fixed.match(/(?<!\\){/g) || []).length;
-    const closeBraces = (fixed.match(/(?<!\\)}/g) || []).length;
+    const openBraces = (fixed.match(/(?<!\\)\{/g) || []).length;
+    const closeBraces = (fixed.match(/(?<!\\)\}/g) || []).length;
     if (openBraces > closeBraces) {
       const diff = openBraces - closeBraces;
       const closingBraces = '}'.repeat(diff);
@@ -295,7 +295,7 @@ export function normalizeLatexSpacing(text: string): string {
   result = result.replaceAll(/\s+\$\$/g, '$$');
 
   // Normalize multiple spaces inside formulas to single space
-  result = result.replaceAll(/(\$\$[\S\s]*?\$\$|\$[\S\s]*?\$)/g, (match) => {
+  result = result.replaceAll(/(\$\$[\s\S]*?\$\$|\$[\s\S]*?\$)/g, (match) => {
     return match.replaceAll(/\s{2,}/g, ' ');
   });
 
@@ -327,7 +327,7 @@ export function validateLatexExpressions(text: string): {
   }> = [];
 
   let totalExpressions = 0;
-  const pattern = /\$\$([\S\s]*?)\$\$|(?<!\\)\$(?!\$)([\S\s]*?)(?<!\\)\$(?!\$)/g;
+  const pattern = /\$\$([\s\S]*?)\$\$|(?<!\\)\$(?!\$)([\s\S]*?)(?<!\\)\$(?!\$)/g;
   let match;
 
   while ((match = pattern.exec(text)) !== null) {

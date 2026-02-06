@@ -4,9 +4,9 @@ import { Anchor } from 'antd';
 import { cx } from 'antd-style';
 import { memo, useMemo } from 'react';
 
-import { default as TocMobile } from './TocMobile';
 import { styles } from './style';
-import type { TocProps } from './type';
+import { default as TocMobile } from './TocMobile';
+import { type TocProps } from './type';
 import { mapItems } from './utils';
 
 const Toc = memo<TocProps>(

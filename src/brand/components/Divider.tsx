@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 
-import { DivProps, SvgProps } from '@/types';
+import type { DivProps, SvgProps } from '@/types';
 
 const Divider: FC<SvgProps & DivProps & { size?: number }> = ({ size = '1em', style, ...rest }) => (
   <svg

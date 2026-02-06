@@ -6,11 +6,11 @@ export default () => {
 
   return (
     <EditableText
+      value={value}
       onChange={(v) => {
         console.log('changed', v);
         setValue(v);
       }}
-      value={value}
     />
   );
 };

@@ -13,9 +13,10 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Flexbox gap={8} horizontal style={{ flexWrap: 'wrap' }}>
+      <Flexbox horizontal gap={8} style={{ flexWrap: 'wrap' }}>
         <Button
           icon={Rocket}
+          type="primary"
           onClick={() =>
             toast({
               actions: [
@@ -44,7 +45,6 @@ export default () => {
               title: 'Multiple Actions',
             })
           }
-          type="primary"
         >
           Multiple Actions
         </Button>

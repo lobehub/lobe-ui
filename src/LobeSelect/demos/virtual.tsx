@@ -23,20 +23,20 @@ export default () => {
         padding: 28,
       }}
     >
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <div style={{ fontSize: 15, fontWeight: 600 }}>Virtual List</div>
         <Tag color="cyan">Performance</Tag>
       </Flexbox>
       <LobeSelect
         allowClear
+        showSearch
+        virtual
         listItemHeight={32}
-        onChange={(next) => setValue(next as string | null)}
         options={options}
         placeholder="Search 500 options"
-        showSearch
         style={{ width: 320 }}
         value={value}
-        virtual
+        onChange={(next) => setValue(next as string | null)}
       />
       <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12, textAlign: 'center' }}>
         Virtualized list keeps scrolling smooth with large datasets.

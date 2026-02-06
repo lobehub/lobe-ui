@@ -39,6 +39,8 @@ const NavItem = ({
 }) => (
   <Popover
     arrow={false}
+    placement="bottomLeft"
+    trigger="hover"
     content={
       <Flexbox gap={6} style={{ minWidth: 200, padding: '8px' }}>
         <div
@@ -55,8 +57,8 @@ const NavItem = ({
         </div>
         {items.map((item) => (
           <Flexbox
-            align="center"
             horizontal
+            align="center"
             key={item.label}
             style={{
               borderRadius: 8,
@@ -76,8 +78,6 @@ const NavItem = ({
         ))}
       </Flexbox>
     }
-    placement="bottomLeft"
-    trigger="hover"
   >
     <Button icon={Icon ? <Icon size={16} /> : undefined} style={{ gap: 6 }} type="text">
       {children}
@@ -89,15 +89,18 @@ const NavItem = ({
 export default () => {
   return (
     <Header
+      logo={<LobeHub type="combine" />}
       actions={
         <PopoverGroup contentLayoutAnimation>
-          <Flexbox align="center" gap={12} horizontal>
+          <Flexbox horizontal align="center" gap={12}>
             <Popover
               arrow={false}
+              placement="bottomRight"
+              trigger="click"
               content={
                 <Flexbox gap={12} style={{ padding: '12px', width: 340 }}>
-                  <Flexbox align="center" horizontal justify="space-between">
-                    <Flexbox align="center" gap={8} horizontal>
+                  <Flexbox horizontal align="center" justify="space-between">
+                    <Flexbox horizontal align="center" gap={8}>
                       <Bell size={18} style={{ color: 'var(--lobe-color-primary)' }} />
                       <span style={{ fontSize: 15, fontWeight: 600 }}>Notifications</span>
                     </Flexbox>
@@ -129,7 +132,7 @@ export default () => {
                           transition: 'all 0.2s',
                         }}
                       >
-                        <Flexbox align="center" gap={8} horizontal justify="space-between">
+                        <Flexbox horizontal align="center" gap={8} justify="space-between">
                           <div style={{ fontSize: 13, fontWeight: 500, lineHeight: 1.5 }}>
                             {item.text}
                           </div>
@@ -147,8 +150,6 @@ export default () => {
                   </Flexbox>
                 </Flexbox>
               }
-              placement="bottomRight"
-              trigger="click"
             >
               <div style={{ position: 'relative' }}>
                 <ActionIcon icon={Bell} size="large" />
@@ -168,14 +169,17 @@ export default () => {
 
             <Popover
               arrow={false}
+              placement="bottomRight"
+              trigger="click"
               content={
                 <Flexbox gap={8} style={{ padding: '8px', width: 240 }}>
                   <Flexbox
+                    horizontal
                     align="center"
                     gap={12}
-                    horizontal
                     style={{
-                      background: 'linear-gradient(135deg, var(--lobe-color-fill-secondary) 0%, var(--lobe-color-fill-tertiary) 100%)',
+                      background:
+                        'linear-gradient(135deg, var(--lobe-color-fill-secondary) 0%, var(--lobe-color-fill-tertiary) 100%)',
                       borderRadius: 10,
                       padding: '12px 14px',
                     }}
@@ -187,7 +191,7 @@ export default () => {
                     />
                     <Flexbox flex={1} gap={4}>
                       <div style={{ fontSize: 15, fontWeight: 600 }}>John Doe</div>
-                      <Flexbox align="center" gap={6} horizontal>
+                      <Flexbox horizontal align="center" gap={6}>
                         <Tag color="purple">Pro</Tag>
                         <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 11 }}>
                           Premium Member
@@ -228,19 +232,17 @@ export default () => {
                   <Button
                     block
                     icon={<LogOut size={16} />}
+                    type="text"
                     style={{
                       color: 'var(--lobe-color-error)',
                       justifyContent: 'flex-start',
                       padding: '10px 12px',
                     }}
-                    type="text"
                   >
                     Sign out
                   </Button>
                 </Flexbox>
               }
-              placement="bottomRight"
-              trigger="click"
             >
               <Avatar
                 avatar="https://api.dicebear.com/7.x/avataaars/svg?seed=user"
@@ -255,10 +257,9 @@ export default () => {
           </Flexbox>
         </PopoverGroup>
       }
-      logo={<LobeHub type="combine" />}
       nav={
         <PopoverGroup contentLayoutAnimation>
-          <Flexbox gap={4} horizontal>
+          <Flexbox horizontal gap={4}>
             <NavItem
               icon={Bot}
               items={[

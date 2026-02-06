@@ -1,4 +1,4 @@
-import { InputNumber, InputNumberProps } from '@lobehub/ui';
+import { InputNumber, type InputNumberProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {

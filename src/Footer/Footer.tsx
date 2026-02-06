@@ -24,11 +24,11 @@ const Footer = memo<FooterProps>(
       <Flexbox
         as={'section'}
         className={styles.root}
+        width={'100%'}
         style={{
           ...cssVariables,
           ...style,
         }}
-        width={'100%'}
         {...rest}
       >
         <RcFooter

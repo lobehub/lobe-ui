@@ -1,4 +1,4 @@
-import { ColorScaleItem } from '../types';
+import type { ColorScaleItem } from '../types';
 
 const cyan: ColorScaleItem = {
   dark: [

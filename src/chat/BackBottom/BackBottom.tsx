@@ -3,12 +3,12 @@
 import { useScroll } from 'ahooks';
 import { cx } from 'antd-style';
 import { ListEnd } from 'lucide-react';
-import { type MouseEventHandler, memo, useEffect, useRef, useState } from 'react';
+import { memo, type MouseEventHandler, useEffect, useRef, useState } from 'react';
 
 import Button from '@/Button';
 
 import { styles } from './style';
-import type { BackBottomProps } from './type';
+import { type BackBottomProps } from './type';
 
 const BackBottom = memo<BackBottomProps>(
   ({ visibilityHeight = 240, target, onClick, style, className, text }) => {
@@ -32,15 +32,15 @@ const BackBottom = memo<BackBottomProps>(
 
     return (
       <Button
-        className={cx(visible ? styles.visible : styles.hidden, className)}
         glass
+        className={cx(visible ? styles.visible : styles.hidden, className)}
         icon={ListEnd}
-        onClick={scrollToBottom}
         ref={ref}
         shape={'round'}
         size={'small'}
         style={style}
         variant={'filled'}
+        onClick={scrollToBottom}
       >
         {text || 'Back to bottom'}
       </Button>

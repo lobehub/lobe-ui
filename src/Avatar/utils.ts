@@ -1,4 +1,4 @@
-import { type ReactNode, isValidElement } from 'react';
+import { isValidElement, type ReactNode } from 'react';
 
 /**
  * 判断 avatar 是否是默认的 Ant Design Avatar 类型

@@ -23,12 +23,12 @@ export default () => {
     <StoryBook levaStore={store}>
       <CheckboxGroup
         {...control}
+        options={['option1', 'option2', 'option3']}
+        value={value}
         onChange={(values) => {
           setValue(values);
           console.log('Selected values:', values);
         }}
-        options={['option1', 'option2', 'option3']}
-        value={value}
       />
     </StoryBook>
   );

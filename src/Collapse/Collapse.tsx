@@ -46,9 +46,9 @@ const Collapse = memo<CollapseProps>(
           if (icon) {
             content = (
               <Flexbox
+                horizontal
                 className={cx(styles.title, !desc && classNames?.header)}
                 gap={8}
-                horizontal
                 style={desc ? undefined : customStyles?.header}
               >
                 {isValidElement(icon) ? icon : <Icon icon={icon} size={{ size: '1.1em' }} />}
@@ -88,8 +88,12 @@ const Collapse = memo<CollapseProps>(
         }}
       >
         <AntdCollapse
+          ghost
           className={cx(variants({ collapsible, gap: !!gap, isDarkMode, variant }), className)}
           collapsible={collapsible ? 'header' : 'icon'}
+          items={antdItems}
+          ref={ref}
+          size={size}
           expandIcon={({ isActive }) => (
             <Icon
               className={styles.icon}
@@ -98,10 +102,6 @@ const Collapse = memo<CollapseProps>(
               style={{ rotate: isActive ? undefined : '-90deg' }}
             />
           )}
-          ghost
-          items={antdItems}
-          ref={ref}
-          size={size}
           style={{
             gap,
             ...style,

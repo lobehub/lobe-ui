@@ -24,9 +24,9 @@ const TabBar = memo<TabBarProps>(
     return (
       <Flexbox as={'footer'} className={cx(styles.container, className)} ref={ref} {...rest}>
         <Flexbox
+          horizontal
           align={'center'}
           className={cx(styles.inner, className)}
-          horizontal
           justify={'space-around'}
         >
           {items.map((item) => {

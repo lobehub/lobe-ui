@@ -13,16 +13,16 @@ const TextArea = memo<TextAreaProps>(
 
     return (
       <AntInput.TextArea
+        ref={ref}
+        variant={variant || (isDarkMode ? 'filled' : 'outlined')}
         className={cx(
           variants({ shadow, variant: variant || (isDarkMode ? 'filled' : 'outlined') }),
           className,
         )}
-        ref={ref}
         style={{
           resize: resize ? undefined : 'none',
           ...style,
         }}
-        variant={variant || (isDarkMode ? 'filled' : 'outlined')}
         {...rest}
       />
     );

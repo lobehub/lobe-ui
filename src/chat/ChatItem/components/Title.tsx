@@ -1,7 +1,7 @@
-import { type FC } from 'react';
+import type { FC } from 'react';
 
+import { type ChatItemProps } from '@/chat/ChatItem';
 import { Flexbox } from '@/Flex';
-import { ChatItemProps } from '@/chat/ChatItem';
 import { formatTime } from '@/utils/formatTime';
 
 import { styles } from '../style';

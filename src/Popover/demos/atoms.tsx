@@ -18,7 +18,7 @@ export default () => {
 
   return (
     <Flexbox align="center" height={260} justify="center">
-      <PopoverRoot onOpenChange={setOpen} open={open}>
+      <PopoverRoot open={open} onOpenChange={setOpen}>
         <PopoverTriggerElement>
           <Button icon={<Blocks size={18} />} size="large" type="primary">
             {open ? 'Close' : 'Open'} Primitives
@@ -30,7 +30,7 @@ export default () => {
               <PopoverArrow />
               <PopoverViewport>
                 <Flexbox gap={12} style={{ padding: '4px 8px' }}>
-                  <Flexbox align="center" gap={8} horizontal>
+                  <Flexbox horizontal align="center" gap={8}>
                     <div style={{ fontSize: 15, fontWeight: 600 }}>Atomic Components</div>
                     <Tag color="blue">Advanced</Tag>
                   </Flexbox>

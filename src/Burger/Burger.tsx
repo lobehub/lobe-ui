@@ -77,10 +77,10 @@ const Burger = memo<BurgerProps>(
             className={styles.menu}
             items={items}
             mode={'inline'}
-            onClick={onClick}
             openKeys={openKeys}
             selectedKeys={selectedKeys}
             style={cssVariables}
+            onClick={onClick}
           />
           <div className={styles.fillRect} />
         </Drawer>

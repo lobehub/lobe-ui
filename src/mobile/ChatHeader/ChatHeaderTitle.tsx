@@ -5,29 +5,29 @@ import { memo } from 'react';
 import { Flexbox } from '@/Flex';
 
 import { titleStyles as styles } from './style';
-import { ChatHeaderTitleProps } from './type';
+import type { ChatHeaderTitleProps } from './type';
 
 const ChatHeaderTitle = memo<ChatHeaderTitleProps>(({ title, desc, tag }) => {
   if (desc)
     return (
       <Flexbox align={'center'} flex={1} gap={4} justify={'center'}>
-        <Flexbox align={'center'} className={styles.titleContainer} gap={4} horizontal>
+        <Flexbox horizontal align={'center'} className={styles.titleContainer} gap={4}>
           <div className={styles.titleWithDesc}>{title}</div>
           {tag && (
-            <Flexbox className={styles.tag} horizontal>
+            <Flexbox horizontal className={styles.tag}>
               {tag}
             </Flexbox>
           )}
         </Flexbox>
-        <Flexbox align={'center'} horizontal>
+        <Flexbox horizontal align={'center'}>
           <div className={styles.desc}>{desc}</div>
         </Flexbox>
       </Flexbox>
     );
   return (
-    <Flexbox align={'center'} flex={1} gap={4} horizontal justify={'center'}>
+    <Flexbox horizontal align={'center'} flex={1} gap={4} justify={'center'}>
       <div className={styles.title}>{title}</div>
-      <Flexbox className={styles.tag} horizontal>
+      <Flexbox horizontal className={styles.tag}>
         {tag}
       </Flexbox>
     </Flexbox>

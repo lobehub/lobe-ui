@@ -3,13 +3,13 @@
 import { Divider } from 'antd';
 import { cx } from 'antd-style';
 import { LayoutGroup } from 'motion/react';
+import { type Key } from 'react';
 import { Children, Fragment, isValidElement, memo, useCallback } from 'react';
-import type { Key } from 'react';
 import useMergeState from 'use-merge-value';
 
 import { AccordionContext } from './context';
 import { styles } from './style';
-import type { AccordionProps } from './type';
+import { type AccordionProps } from './type';
 
 const Accordion = memo<AccordionProps>(
   ({
@@ -101,7 +101,7 @@ const Accordion = memo<AccordionProps>(
     );
 
     return (
-      <AccordionContext.Provider value={contextValue}>
+      <AccordionContext value={contextValue}>
         <div
           className={cx(styles.base, classNames?.base, userClassName)}
           ref={ref}
@@ -114,7 +114,7 @@ const Accordion = memo<AccordionProps>(
         >
           {disableAnimation ? content : <LayoutGroup>{content}</LayoutGroup>}
         </div>
-      </AccordionContext.Provider>
+      </AccordionContext>
     );
   },
 );

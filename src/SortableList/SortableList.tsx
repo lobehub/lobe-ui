@@ -10,12 +10,12 @@ import {
 } from '@dnd-kit/core';
 import { restrictToVerticalAxis, restrictToWindowEdges } from '@dnd-kit/modifiers';
 import {
-  SortableContext,
   arrayMove,
+  SortableContext,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { Fragment, type ReactNode, memo, useMemo, useState } from 'react';
+import { Fragment, memo, type ReactNode, useMemo, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
 
@@ -23,7 +23,7 @@ import DragHandle from './components/DragHandle';
 import SortableItem from './components/SortableItem';
 import SortableOverlay from './components/SortableOverlay';
 import { styles } from './style';
-import type { SortableListProps } from './type';
+import { type SortableListProps } from './type';
 
 const SortableListParent = memo<SortableListProps>(
   ({ ref, items, onChange, renderItem, gap = 8, ...rest }) => {
@@ -39,6 +39,7 @@ const SortableListParent = memo<SortableListProps>(
     return (
       <DndContext
         modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
+        sensors={sensors}
         onDragCancel={() => {
           setActive(null);
         }}
@@ -54,7 +55,6 @@ const SortableListParent = memo<SortableListProps>(
         onDragStart={({ active }) => {
           setActive(active);
         }}
-        sensors={sensors}
       >
         <SortableContext items={items} strategy={verticalListSortingStrategy}>
           <Flexbox as={'ul'} className={styles.container} gap={gap} ref={ref} {...rest}>

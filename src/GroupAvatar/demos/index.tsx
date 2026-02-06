@@ -32,7 +32,7 @@ export default () => {
 
   return (
     <StoryBook gap={16} levaStore={store}>
-      <Flexbox gap={16} horizontal wrap={'wrap'}>
+      <Flexbox horizontal gap={16} wrap={'wrap'}>
         <GroupAvatar
           avatars={['https://avatars.githubusercontent.com/u/17870709?v=4']}
           {...control}

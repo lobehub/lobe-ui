@@ -8,10 +8,9 @@ import {
   useHidePopupWhenPositionerAtOrigin,
 } from '@/utils/destroyOnInvalidActiveTriggerElement';
 import { parseTrigger } from '@/utils/parseTrigger';
-import { type Side, placementMap } from '@/utils/placement';
+import { placementMap, type Side } from '@/utils/placement';
 
 import { PopoverArrowIcon } from './ArrowIcon';
-import { usePopoverPortalContainer } from './PopoverPortal';
 import {
   PopoverArrow,
   PopoverPopup,
@@ -26,6 +25,7 @@ import {
   PopoverGroupPropsContext,
   type PopoverGroupSharedProps,
 } from './groupContext';
+import { usePopoverPortalContainer } from './PopoverPortal';
 
 type PopoverGroupProps = PopoverGroupSharedProps & {
   children: ReactNode;
@@ -67,8 +67,8 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
   const portalContainer = usePopoverPortalContainer();
 
   return (
-    <PopoverGroupHandleContext.Provider value={handle}>
-      <PopoverGroupPropsContext.Provider value={sharedProps}>
+    <PopoverGroupHandleContext value={handle}>
+      <PopoverGroupPropsContext value={sharedProps}>
         {children}
         <BasePopover.Root handle={handle} key={key} onOpenChange={handleOpenChange}>
           {({ payload }) => {
@@ -166,8 +166,8 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
             ) : null;
           }}
         </BasePopover.Root>
-      </PopoverGroupPropsContext.Provider>
-    </PopoverGroupHandleContext.Provider>
+      </PopoverGroupPropsContext>
+    </PopoverGroupHandleContext>
   );
 };
 

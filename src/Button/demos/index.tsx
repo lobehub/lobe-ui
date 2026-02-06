@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from '@lobehub/ui';
+import { Button, type ButtonProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import * as LucideIcon from 'lucide-react';
 

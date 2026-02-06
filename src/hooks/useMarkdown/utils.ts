@@ -56,7 +56,7 @@ export const transformCitations = (rawContent: string, length: number = 0) => {
   const excludedRanges: { end: number; start: number }[] = [];
 
   // 查找LaTeX块 $$...$$
-  let latexBlockRegex = /\$\$([\S\s]*?)\$\$/g;
+  const latexBlockRegex = /\$\$([\s\S]*?)\$\$/g;
   while ((match = latexBlockRegex.exec(rawContent)) !== null) {
     excludedRanges.push({
       end: match.index + match[0].length - 1,
@@ -65,7 +65,7 @@ export const transformCitations = (rawContent: string, length: number = 0) => {
   }
 
   // 查找行内LaTeX $...$
-  let inlineLatexRegex = /\$([^$]*?)\$/g;
+  const inlineLatexRegex = /\$([^$]*)\$/g;
   while ((match = inlineLatexRegex.exec(rawContent)) !== null) {
     excludedRanges.push({
       end: match.index + match[0].length - 1,
@@ -74,7 +74,7 @@ export const transformCitations = (rawContent: string, length: number = 0) => {
   }
 
   // 查找代码块 ```...```
-  let codeBlockRegex = /```([\S\s]*?)```/g;
+  const codeBlockRegex = /```([\s\S]*?)```/g;
   while ((match = codeBlockRegex.exec(rawContent)) !== null) {
     excludedRanges.push({
       end: match.index + match[0].length - 1,
@@ -83,7 +83,7 @@ export const transformCitations = (rawContent: string, length: number = 0) => {
   }
 
   // 查找行内代码 `...`
-  let inlineCodeRegex = /`([^`]*?)`/g;
+  const inlineCodeRegex = /`([^`]*)`/g;
   while ((match = inlineCodeRegex.exec(rawContent)) !== null) {
     excludedRanges.push({
       end: match.index + match[0].length - 1,

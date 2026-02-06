@@ -22,7 +22,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <CodeEditor {...options} language="md" onValueChange={setCode} value={code} width={'100%'} />
+      <CodeEditor {...options} language="md" value={code} width={'100%'} onValueChange={setCode} />
     </StoryBook>
   );
 };

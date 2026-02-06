@@ -43,7 +43,7 @@ const CheckboxGroup: FC<CheckboxGroupProps> = ({
   });
 
   return (
-    <Flexbox align={'center'} gap={16} horizontal wrap={'wrap'} {...rest}>
+    <Flexbox horizontal align={'center'} gap={16} wrap={'wrap'} {...rest}>
       {normalizedOptions.map((option) => {
         const isChecked = selectedValues.includes(option.value);
         const isDisabled = disabled || option.disabled;
@@ -53,10 +53,10 @@ const CheckboxGroup: FC<CheckboxGroupProps> = ({
             checked={isChecked}
             disabled={isDisabled}
             key={String(option.value)}
-            onChange={(checked) => handleChange(option.value, checked)}
             shape={shape}
             size={size}
             textProps={textProps}
+            onChange={(checked) => handleChange(option.value, checked)}
           >
             {option.label}
           </Checkbox>

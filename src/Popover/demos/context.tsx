@@ -6,7 +6,7 @@ const Content = () => {
   return (
     <Flexbox gap={16} style={{ padding: '12px 16px', width: 320 }}>
       <Flexbox gap={10}>
-        <Flexbox align="center" gap={8} horizontal>
+        <Flexbox horizontal align="center" gap={8}>
           <Flexbox
             align="center"
             justify="center"
@@ -20,7 +20,7 @@ const Content = () => {
             <Code2 size={18} style={{ color: 'var(--lobe-color-success)' }} />
           </Flexbox>
           <Flexbox flex={1} gap={4}>
-            <Flexbox align="center" gap={6} horizontal>
+            <Flexbox horizontal align="center" gap={6}>
               <div style={{ fontSize: 15, fontWeight: 600 }}>Context API</div>
               <Tag color="green">Recommended</Tag>
             </Flexbox>
@@ -47,11 +47,11 @@ const Content = () => {
         </div>
       </Flexbox>
 
-      <Flexbox gap={8} horizontal justify="flex-end">
-        <Button onClick={close} size="small" type="text">
+      <Flexbox horizontal gap={8} justify="flex-end">
+        <Button size="small" type="text" onClick={close}>
           Cancel
         </Button>
-        <Button icon={<Check size={16} />} onClick={close} size="small" type="primary">
+        <Button icon={<Check size={16} />} size="small" type="primary" onClick={close}>
           Got it
         </Button>
       </Flexbox>

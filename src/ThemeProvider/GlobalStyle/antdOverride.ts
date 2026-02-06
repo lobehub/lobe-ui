@@ -1,4 +1,4 @@
-import { Theme, css } from 'antd-style';
+import { css, type Theme } from 'antd-style';
 import { rgba } from 'polished';
 
 import { safeReadableColor } from '@/utils/safeReadableColor';

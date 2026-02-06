@@ -1,12 +1,12 @@
+import { type GroupPreviewConfig } from 'antd/es/image/PreviewGroup';
 import { cx } from 'antd-style';
-import type { GroupPreviewConfig } from 'antd/es/image/PreviewGroup';
 import { X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 import Icon from '@/Icon';
 
 import { styles as componentStyles, styles } from '../style';
-import type { PreviewGroupPreviewOptions } from '../type';
+import { type PreviewGroupPreviewOptions } from '../type';
 import Preview from './Preview';
 import Toolbar from './Toolbar';
 

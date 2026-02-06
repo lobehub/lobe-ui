@@ -1,8 +1,8 @@
 'use client';
 
-import { type ReactNode, createContext, memo, use } from 'react';
+import { createContext, memo, type ReactNode, use } from 'react';
 
-import type { IconProps } from '../type';
+import { type IconProps } from '../type';
 
 export type IconContentConfig = Omit<IconProps, 'icon' | 'ref'>;
 

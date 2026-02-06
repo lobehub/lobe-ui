@@ -2,7 +2,7 @@
 
 import { marked } from 'marked';
 import { memo, useId, useMemo } from 'react';
-import Markdown, { Options } from 'react-markdown';
+import Markdown, { type Options } from 'react-markdown';
 
 import {
   useMarkdownComponents,

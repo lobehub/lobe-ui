@@ -84,16 +84,16 @@ export default () => {
         {...controls}
       />
       <LobeSelect
+        readOnly
         defaultValue="blueberry"
         options={options}
         placeholder="Readonly"
-        readOnly
         style={{ width: '100%' }}
         {...controls}
       />
       <LobeSelect
-        defaultValue="disabled"
         disabled
+        defaultValue="disabled"
         options={options}
         placeholder="Disabled"
         style={{ width: '100%' }}
@@ -101,10 +101,10 @@ export default () => {
       />
       <LobeSelect
         allowClear
+        showSearch
         defaultValue="strawberry"
         options={options}
         placeholder="Searchable"
-        showSearch
         style={{ width: '100%' }}
         {...controls}
       />

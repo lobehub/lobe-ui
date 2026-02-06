@@ -3,10 +3,9 @@
 import { Autocomplete } from '@base-ui/react/autocomplete';
 import { cx } from 'antd-style';
 import type React from 'react';
-import { forwardRef } from 'react';
 
-import { styles as menuStyles } from '@/Menu/sharedStyle';
 import { usePortalContainer } from '@/hooks/usePortalContainer';
+import { styles as menuStyles } from '@/Menu/sharedStyle';
 
 import { styles } from './style';
 
@@ -21,10 +20,13 @@ const mergeStateClassName = <TState,>(
 };
 
 export const EditorSlashMenuRoot = Autocomplete.Root;
-export const EditorSlashMenuList = forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<typeof Autocomplete.List>
->(({ className, ...rest }, ref) => {
+export const EditorSlashMenuList = ({
+  ref,
+  className,
+  ...rest
+}: React.ComponentProps<typeof Autocomplete.List> & {
+  ref?: React.RefObject<HTMLDivElement | null>;
+}) => {
   return (
     <Autocomplete.List
       {...rest}
@@ -32,7 +34,7 @@ export const EditorSlashMenuList = forwardRef<
       ref={ref}
     />
   );
-});
+};
 EditorSlashMenuList.displayName = 'EditorSlashMenuList';
 
 export type EditorSlashMenuPortalProps = React.ComponentProps<typeof Autocomplete.Portal> & {

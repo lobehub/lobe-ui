@@ -1,8 +1,8 @@
 'use client';
 
-import { Ref, memo } from 'react';
+import { memo, type Ref } from 'react';
 
-import { FlexboxProps } from '@/Flex';
+import { type FlexboxProps } from '@/Flex';
 import ScrollShadow from '@/ScrollShadow';
 
 import SearchResultCard from './SearchResultCard';
@@ -22,9 +22,9 @@ export interface SearchResultCardsProps extends FlexboxProps {
 const SearchResultCards = memo<SearchResultCardsProps>(({ ref, dataSource, style, ...rest }) => {
   return (
     <ScrollShadow
-      gap={12}
       hideScrollBar
       horizontal
+      gap={12}
       orientation={'horizontal'}
       ref={ref}
       size={10}

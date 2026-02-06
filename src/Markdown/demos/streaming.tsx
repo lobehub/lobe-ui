@@ -185,25 +185,25 @@ export default () => {
       <Flexbox
         gap={16}
         height={'100%'}
+        width={'100%'}
         style={{
           overflow: 'auto',
         }}
-        width={'100%'}
       >
         <Flexbox direction="horizontal" gap={8}>
           <Button
             block
             loading={!isPaused && isStreaming}
-            onClick={restartStreaming}
             type={'primary'}
+            onClick={restartStreaming}
           >
             Restart Streaming
           </Button>
           <Button
             block
             disabled={!isStreaming}
-            onClick={togglePause}
             type={isPaused ? 'default' : 'primary'}
+            onClick={togglePause}
           >
             {isPaused ? 'Resume' : 'Pause'}
           </Button>

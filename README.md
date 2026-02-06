@@ -93,14 +93,14 @@ const nextConfig = {
 > and it is recommended to use [antd-style](https://ant-design.github.io/antd-style/) as the default css-in-js styling solution.
 
 ```tsx
-import { ThemeProvider, Button } from '@lobehub/ui'
-import { Button } from 'antd'
+import { ThemeProvider, Button } from '@lobehub/ui';
+import { Button } from 'antd';
 
 export default () => (
   <ThemeProvider>
     <Button>Hello AIGC</Button>
   </ThemeProvider>
-)
+);
 ```
 
 ### I18n

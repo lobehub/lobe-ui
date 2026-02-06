@@ -6,7 +6,7 @@ import Button from '@/Button';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 
-import { ChatSendButtonProps } from '../type';
+import type { ChatSendButtonProps } from '../type';
 
 const ChatSendButton: FC<ChatSendButtonProps> = ({
   ref,
@@ -20,22 +20,22 @@ const ChatSendButton: FC<ChatSendButtonProps> = ({
 }) => {
   return (
     <Flexbox
+      horizontal
       align={'end'}
       distribution={'space-between'}
       flex={'none'}
       gap={8}
-      horizontal
       paddingInline={16}
       ref={ref}
       {...rest}
     >
-      <Flexbox align={'center'} gap={8} horizontal>
+      <Flexbox horizontal align={'center'} gap={8}>
         {leftAddons}
       </Flexbox>
-      <Flexbox align={'center'} gap={8} horizontal>
+      <Flexbox horizontal align={'center'} gap={8}>
         <Flexbox
-          gap={4}
           horizontal
+          gap={4}
           style={{ color: cssVar.colorTextDescription, fontSize: 12, marginRight: 12 }}
         >
           <Icon icon={CornerDownLeft} />
@@ -53,7 +53,7 @@ const ChatSendButton: FC<ChatSendButtonProps> = ({
             {texts?.stop || 'Stop'}
           </Button>
         ) : (
-          <Button onClick={onSend} type={'primary'}>
+          <Button type={'primary'} onClick={onSend}>
             {texts?.send || 'Send'}
           </Button>
         )}

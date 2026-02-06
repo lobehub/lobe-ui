@@ -37,17 +37,17 @@ const GradientButton = memo<GradientButtonProps>(
 
     return (
       <Button
+        disabled={disabled}
+        size={size}
+        variant={disabled ? undefined : 'text'}
         className={cx(
           !disabled && (isDarkMode ? styles.buttonDark : styles.buttonLight),
           className,
         )}
-        disabled={disabled}
-        size={size}
         style={{
           ...cssVariables,
           ...style,
         }}
-        variant={disabled ? undefined : 'text'}
         {...rest}
       >
         {glow && <div className={styles.glow} />}

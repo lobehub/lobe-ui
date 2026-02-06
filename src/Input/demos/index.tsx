@@ -1,4 +1,4 @@
-import { Input, InputProps } from '@lobehub/ui';
+import { Input, type InputProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {

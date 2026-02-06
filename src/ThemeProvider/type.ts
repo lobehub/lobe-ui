@@ -1,11 +1,11 @@
-import type {
-  ThemeProviderProps as AntdThemeProviderProps,
-  CustomStylishParams,
-  CustomTokenParams,
+import {
+  type CustomStylishParams,
+  type CustomTokenParams,
+  type ThemeProviderProps as AntdThemeProviderProps,
 } from 'antd-style';
-import type { CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
 
-import type { NeutralColors, PrimaryColors } from '@/styles';
+import { type NeutralColors, type PrimaryColors } from '@/styles';
 
 export interface ThemeProviderProps extends AntdThemeProviderProps<any> {
   className?: string;

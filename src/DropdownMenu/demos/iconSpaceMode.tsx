@@ -101,10 +101,10 @@ const items: DropdownItem[] = [
 export default () => {
   return (
     <div style={{ display: 'flex', gap: 16 }}>
-      <DropdownMenu iconSpaceMode="global" items={items} nativeButton>
+      <DropdownMenu nativeButton iconSpaceMode="global" items={items}>
         <Button>Global Mode (Default)</Button>
       </DropdownMenu>
-      <DropdownMenu iconSpaceMode="group" items={items} nativeButton>
+      <DropdownMenu nativeButton iconSpaceMode="group" items={items}>
         <Button>Group Mode</Button>
       </DropdownMenu>
     </div>

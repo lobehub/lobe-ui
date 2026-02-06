@@ -4,9 +4,9 @@ import { mergeProps } from '@base-ui/react/merge-props';
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import { cx } from 'antd-style';
 import {
+  cloneElement,
   type ComponentProps,
   type ComponentPropsWithRef,
-  cloneElement,
   isValidElement,
   useState,
 } from 'react';
@@ -19,7 +19,7 @@ import { placementMap } from '@/utils/placement';
 import { PopoverArrowIcon } from './ArrowIcon';
 import { usePopoverPortalContainer } from './PopoverPortal';
 import { styles } from './style';
-import type { PopoverPlacement } from './type';
+import { type PopoverPlacement } from './type';
 
 export const PopoverRoot = BasePopover.Root;
 export const PopoverBackdrop = BasePopover.Backdrop;
@@ -53,7 +53,7 @@ export const PopoverTriggerElement = ({
           // If we render into a non-<button> element, that prop is invalid and can warn.
           const resolvedProps = (() => {
             if (isNativeButtonTriggerElement) return props as any;
-            // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+            // eslint-disable-next-line unused-imports/no-unused-vars
             const { type, ref: triggerRef, ...restProps } = props as any;
             return restProps;
           })();
@@ -140,14 +140,14 @@ export const PopoverPositioner = ({
   return (
     <BasePopover.Positioner
       align={align ?? placementConfig?.align ?? 'center'}
-      className={(state) =>
-        cx(styles.positioner, typeof className === 'function' ? className(state) : className)
-      }
       data-hover-trigger={hoverTrigger || undefined}
       data-placement={placement}
       ref={setPositionerNode}
       side={side ?? placementConfig?.side ?? 'bottom'}
       sideOffset={sideOffset ?? 6}
+      className={(state) =>
+        cx(styles.positioner, typeof className === 'function' ? className(state) : className)
+      }
       {...rest}
     >
       <FloatingLayerProvider value={positionerNode}>{children}</FloatingLayerProvider>

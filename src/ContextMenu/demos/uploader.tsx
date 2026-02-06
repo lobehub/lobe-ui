@@ -2,12 +2,12 @@
 
 import {
   Block,
+  closeContextMenu,
   ContextMenuHost,
   type ContextMenuItem,
   ContextMenuTrigger,
   Icon,
   Text,
-  closeContextMenu,
 } from '@lobehub/ui';
 import { Upload, type UploadFile, type UploadProps } from 'antd';
 import { createStaticStyles } from 'antd-style';
@@ -152,7 +152,7 @@ export default () => {
     <div className={styles.container}>
       <ContextMenuTrigger className={styles.trigger} items={items}>
         <Block direction="vertical" gap={8} padding={16}>
-          <Text as={'p'} strong>
+          <Text strong as={'p'}>
             Right click this panel
           </Text>
           <Text as={'p'} type="secondary">

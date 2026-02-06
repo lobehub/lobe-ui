@@ -1,7 +1,7 @@
 import type { CSSProperties, ElementType, Ref } from 'react';
 
 import type { TooltipProps } from '@/Tooltip';
-import { DivProps } from '@/types';
+import type { DivProps } from '@/types';
 
 export interface TextProps extends DivProps {
   align?: 'left' | 'center' | 'right';

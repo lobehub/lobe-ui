@@ -44,8 +44,8 @@ export default () => {
         itemMinWidth={'max(30%,240px)'}
         items={(items as any)[0].children}
         itemsType={'flat'}
-        onFinish={handleSubmit}
         variant={variant}
+        onFinish={handleSubmit}
       />
     </StoryBook>
   );

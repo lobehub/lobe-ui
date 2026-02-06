@@ -152,7 +152,7 @@ export const variants = cva(styles.root, {
   defaultVariants: {
     variant: 'filled',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     variant: {
       filled: styles.filled,
@@ -160,7 +160,6 @@ export const variants = cva(styles.root, {
       borderless: styles.borderless,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });
 
 export const FALLBACK_DARK =

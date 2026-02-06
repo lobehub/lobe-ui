@@ -2,7 +2,6 @@ import { visit } from 'unist-util-visit';
 
 import type { FootnoteLink } from './remarkCustomFootnotes';
 
-// eslint-disable-next-line unicorn/consistent-function-scoping
 export const rehypeCustomFootnotes = () => (tree: any, file: any) => {
   const linksData: Record<string, FootnoteLink> = file.data.footnoteLinks || {};
 

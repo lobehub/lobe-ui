@@ -57,7 +57,7 @@ export const variants = cva(styles.root, {
     size: 'middle',
     variant: 'filled',
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     variant: {
       filled: styles.filled,
@@ -70,5 +70,4 @@ export const variants = cva(styles.root, {
       large: styles.large,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

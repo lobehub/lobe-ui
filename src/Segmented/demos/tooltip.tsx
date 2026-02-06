@@ -17,9 +17,6 @@ export default () => {
       <Segmented
         {...control}
         defaultValue="list"
-        onChange={(value) => {
-          console.log(value);
-        }}
         options={[
           {
             label: (
@@ -46,6 +43,9 @@ export default () => {
             value: 'compact',
           },
         ]}
+        onChange={(value) => {
+          console.log(value);
+        }}
       />
     </StoryBook>
   );

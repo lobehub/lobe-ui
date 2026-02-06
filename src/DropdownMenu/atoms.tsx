@@ -9,14 +9,14 @@ import type React from 'react';
 import { cloneElement, isValidElement, useCallback, useState } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
-import { styles } from '@/Menu/sharedStyle';
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { usePortalContainer } from '@/hooks/usePortalContainer';
+import { styles } from '@/Menu/sharedStyle';
 import { CLASSNAMES } from '@/styles/classNames';
 import { placementMap } from '@/utils/placement';
 
-import type { DropdownMenuPlacement } from './type';
+import { type DropdownMenuPlacement } from './type';
 
 export const DROPDOWN_MENU_CONTAINER_ATTR = 'data-lobe-ui-dropdown-menu-container';
 
@@ -56,7 +56,7 @@ export const DropdownMenuTrigger = ({
     // If we render into a non-<button> element, that prop is invalid and can warn.
     const resolvedProps = (() => {
       if (isNativeButtonTriggerElement) return props as any;
-      // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line unused-imports/no-unused-vars
       const { type, ...restProps } = props as any;
       return restProps;
     })();
@@ -327,6 +327,8 @@ export const DropdownMenuSwitchItem = ({
   return (
     <Menu.Item
       {...rest}
+      closeOnClick={closeOnClick}
+      disabled={disabled}
       className={(state) =>
         cx(
           styles.item,
@@ -334,8 +336,6 @@ export const DropdownMenuSwitchItem = ({
           typeof className === 'function' ? className(state) : className,
         )
       }
-      closeOnClick={closeOnClick}
-      disabled={disabled}
       onClick={(e) => {
         e.preventDefault();
         if (!disabled) {
@@ -347,10 +347,10 @@ export const DropdownMenuSwitchItem = ({
       <Switch
         checked={checked}
         disabled={disabled}
-        onChange={handleCheckedChange}
-        onClick={(_, e) => e.stopPropagation()}
         size="small"
         style={{ marginInlineStart: 16 }}
+        onChange={handleCheckedChange}
+        onClick={(_, e) => e.stopPropagation()}
       />
     </Menu.Item>
   );

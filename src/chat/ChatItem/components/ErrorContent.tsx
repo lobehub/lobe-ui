@@ -1,8 +1,8 @@
-import { type FC } from 'react';
+import type { FC } from 'react';
 
 import Alert from '@/Alert';
+import { type ChatItemProps } from '@/chat/ChatItem';
 import { Flexbox } from '@/Flex';
-import { ChatItemProps } from '@/chat/ChatItem';
 
 import { styles } from '../style';
 
@@ -15,7 +15,7 @@ export interface ErrorContentProps {
 const ErrorContent: FC<ErrorContentProps> = ({ message, error }) => {
   return (
     <Flexbox className={styles.errorContainer}>
-      <Alert closable={false} extra={message} showIcon type={'error'} {...error} />
+      <Alert showIcon closable={false} extra={message} type={'error'} {...error} />
     </Flexbox>
   );
 };

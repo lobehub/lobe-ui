@@ -8,10 +8,12 @@ export default () => {
     <Flexbox align="center" justify="center" style={{ padding: 48 }}>
       <Popover
         arrow={false}
+        placement="bottomLeft"
+        trigger="click"
         content={
           <Flexbox gap={16} style={{ padding: '12px 16px', width: 300 }}>
-            <Flexbox align="center" horizontal justify="space-between">
-              <Flexbox align="center" gap={8} horizontal>
+            <Flexbox horizontal align="center" justify="space-between">
+              <Flexbox horizontal align="center" gap={8}>
                 <Folder size={18} style={{ color: 'var(--lobe-color-primary)' }} />
                 <div style={{ fontSize: 15, fontWeight: 600 }}>Project Actions</div>
               </Flexbox>
@@ -27,7 +29,7 @@ export default () => {
                 padding: 12,
               }}
             >
-              <Flexbox align="center" gap={6} horizontal>
+              <Flexbox horizontal align="center" gap={6}>
                 <Tag color="purple">Tip</Tag>
                 <div style={{ fontSize: 13, fontWeight: 500 }}>Nested Components</div>
               </Flexbox>
@@ -38,8 +40,6 @@ export default () => {
             </Flexbox>
           </Flexbox>
         }
-        placement="bottomLeft"
-        trigger="click"
       >
         <Button icon={<Folder size={16} />} size="large" type="primary">
           Open Project Panel

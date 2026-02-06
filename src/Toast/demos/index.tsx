@@ -1,4 +1,4 @@
-import { Button, Flexbox, ToastHost, type ToastOptions, toast } from '@lobehub/ui';
+import { Button, Flexbox, toast, ToastHost, type ToastOptions } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { Bell, CheckCircle, Info, Loader2, type LucideIcon, XCircle } from 'lucide-react';
 
@@ -65,9 +65,10 @@ export default () => {
   return (
     <StoryBook levaStore={store}>
       <ToastHost />
-      <Flexbox gap={8} horizontal style={{ flexWrap: 'wrap' }}>
+      <Flexbox horizontal gap={8} style={{ flexWrap: 'wrap' }}>
         <Button
           icon={CheckCircle}
+          type="primary"
           onClick={() =>
             showToast(
               'success',
@@ -76,7 +77,6 @@ export default () => {
               CheckCircle,
             )
           }
-          type="primary"
         >
           Success
         </Button>
@@ -99,10 +99,10 @@ export default () => {
         </Button>
         <Button
           icon={Bell}
+          type="default"
           onClick={() =>
             showToast('warning', 'Warning', 'Please review your settings before continuing.', Bell)
           }
-          type="default"
         >
           Warning
         </Button>
@@ -133,7 +133,7 @@ export default () => {
         >
           Custom
         </Button>
-        <Button onClick={() => toast.dismiss()} type="text">
+        <Button type="text" onClick={() => toast.dismiss()}>
           Dismiss All
         </Button>
       </Flexbox>

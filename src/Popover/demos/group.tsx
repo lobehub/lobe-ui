@@ -4,7 +4,7 @@ import { BarChart3, LayoutDashboard, Sparkles } from 'lucide-react';
 const content = {
   analytics: (
     <Flexbox gap={10} style={{ padding: '8px 12px', width: 280 }}>
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <BarChart3 size={18} style={{ color: 'var(--lobe-color-primary)' }} />
         <div style={{ fontSize: 15, fontWeight: 600 }}>Analytics</div>
         <Tag color="green">Popular</Tag>
@@ -17,7 +17,7 @@ const content = {
   ),
   automation: (
     <Flexbox gap={10} style={{ padding: '8px 12px', width: 260 }}>
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <Sparkles size={18} style={{ color: 'var(--lobe-color-warning)' }} />
         <div style={{ fontSize: 15, fontWeight: 600 }}>Automation</div>
         <Tag color="purple">New</Tag>
@@ -29,7 +29,7 @@ const content = {
   ),
   dashboard: (
     <Flexbox gap={10} style={{ padding: '8px 12px', width: 280 }}>
-      <Flexbox align="center" gap={8} horizontal>
+      <Flexbox horizontal align="center" gap={8}>
         <LayoutDashboard size={18} style={{ color: 'var(--lobe-color-success)' }} />
         <div style={{ fontSize: 15, fontWeight: 600 }}>Dashboard</div>
       </Flexbox>
@@ -43,9 +43,9 @@ const content = {
 export default () => (
   <PopoverGroup contentLayoutAnimation>
     <Flexbox
+      horizontal
       align="center"
       gap={4}
-      horizontal
       style={{
         background: 'var(--lobe-color-fill-secondary)',
         borderRadius: 12,

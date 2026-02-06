@@ -1,7 +1,7 @@
-import { ThemeConfig } from 'antd';
-import { ThemeAppearance } from 'antd-style';
+import type { ThemeConfig } from 'antd';
+import type { ThemeAppearance } from 'antd-style';
 
-import { NeutralColors, PrimaryColors } from '../customTheme';
+import type { NeutralColors, PrimaryColors } from '../customTheme';
 import { darkAlgorithm } from './algorithms/darkAlgorithm';
 import { lightAlgorithm } from './algorithms/lightAlgorithm';
 import { baseToken } from './token/base';

@@ -1,7 +1,7 @@
 import { Icon } from '@lobehub/ui';
 import { createStaticStyles, cssVar, useThemeMode } from 'antd-style';
 import { SparkleIcon } from 'lucide-react';
-import { PropsWithChildren, memo } from 'react';
+import { memo, type PropsWithChildren } from 'react';
 
 import { Flexbox } from '@/Flex';
 
@@ -58,8 +58,8 @@ const Render = memo<PropsWithChildren>(({ children }) => {
       gap={16}
       width={'100%'}
     >
-      <Flexbox distribution={'space-between'} flex={1} horizontal>
-        <Flexbox gap={8} horizontal>
+      <Flexbox horizontal distribution={'space-between'} flex={1}>
+        <Flexbox horizontal gap={8}>
           <Icon color={cssVar.purple} icon={SparkleIcon} /> Artifact
         </Flexbox>
       </Flexbox>

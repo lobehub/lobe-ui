@@ -1,4 +1,4 @@
-import { Button, Modal, Text, createRawModal } from '@lobehub/ui';
+import { Button, createRawModal, Modal, Text } from '@lobehub/ui';
 import { memo, useCallback } from 'react';
 
 type RawDemoModalProps = {
@@ -10,14 +10,14 @@ type RawDemoModalProps = {
 const RawDemoModal = memo<RawDemoModalProps>(({ fileId, onClose, open }) => {
   return (
     <Modal
+      open={open}
+      title="Move To Folder"
       footer={
-        <Button onClick={onClose} type="primary">
+        <Button type="primary" onClick={onClose}>
           Close
         </Button>
       }
       onCancel={onClose}
-      open={open}
-      title="Move To Folder"
     >
       <Text as={'p'}>File ID: {fileId}</Text>
     </Modal>
@@ -32,7 +32,7 @@ export default () => {
   }, []);
 
   return (
-    <Button onClick={openModal} type="primary">
+    <Button type="primary" onClick={openModal}>
       Open Raw Modal
     </Button>
   );

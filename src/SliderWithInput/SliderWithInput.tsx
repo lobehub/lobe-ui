@@ -52,12 +52,12 @@ const SliderWithInput = memo<SliderWithInputProps>(
           disabled={disabled}
           max={max}
           min={min}
-          onChange={handleOnchange}
           step={step}
           style={{ flex: 1, margin: size === 'small' ? 0 : undefined, ...sliderStyle }}
           styles={restStyles}
           tooltip={{ open: false }}
           value={typeof value === 'number' ? value : 0}
+          onChange={handleOnchange}
           {...rest}
         />
         <InputNumber
@@ -68,11 +68,11 @@ const SliderWithInput = memo<SliderWithInputProps>(
           disabled={disabled}
           max={unlimitedInput ? undefined : max}
           min={min}
-          onChange={(v) => handleOnchange(Number(v))}
           size={size}
           step={Number.isNaN(step) || isNull(step) ? undefined : step}
           style={{ flex: 1, maxWidth: size === 'small' ? 40 : 64, ...inputStyle }}
           value={typeof value === 'number' ? value : 0}
+          onChange={(v) => handleOnchange(Number(v))}
         />
       </Flexbox>
     );

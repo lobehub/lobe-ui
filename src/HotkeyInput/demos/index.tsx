@@ -28,12 +28,12 @@ export default () => {
     <StoryBook levaStore={store}>
       <HotkeyInput
         hotkeyConflicts={['mod+m']}
+        style={{ width: '100%' }}
+        value={shortcut}
         onChange={(value) => {
           setShortcut(value);
           console.log(value);
         }}
-        style={{ width: '100%' }}
-        value={shortcut}
         {...controls}
       />
     </StoryBook>

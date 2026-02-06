@@ -1,9 +1,9 @@
-import { CSSProperties, ReactNode, type Ref } from 'react';
+import type { CSSProperties, ReactNode, Ref } from 'react';
 import type { BuiltinTheme } from 'shiki';
 
 import type { ActionIconProps } from '@/ActionIcon';
-import { FlexboxProps } from '@/Flex';
-import { DivProps } from '@/types';
+import type { FlexboxProps } from '@/Flex';
+import type { DivProps } from '@/types';
 
 export interface SyntaxHighlighterProps extends DivProps {
   animated?: boolean;

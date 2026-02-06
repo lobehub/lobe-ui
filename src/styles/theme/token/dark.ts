@@ -1,4 +1,4 @@
-import { AliasToken } from 'antd/es/theme/interface';
+import type { AliasToken } from 'antd/es/theme/interface';
 
 import { blue, gold, gray, lime, primary, red } from '@/color/colors';
 

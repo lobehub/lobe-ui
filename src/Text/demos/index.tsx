@@ -76,6 +76,12 @@ export default () => {
       <div style={{ width: 300 }}>
         <Text
           {...controls}
+          lineClamp={controls.lineClamp ? controls.lineClamp : undefined}
+          lineHeight={controls.lineHeight || undefined}
+          textDecoration={controls.textDecoration || undefined}
+          textTransform={controls.textTransform || undefined}
+          whiteSpace={controls.whiteSpace || undefined}
+          wordBreak={controls.wordBreak || undefined}
           ellipsis={
             controls.ellipsis
               ? {
@@ -85,12 +91,6 @@ export default () => {
                 }
               : undefined
           }
-          lineClamp={controls.lineClamp ? controls.lineClamp : undefined}
-          lineHeight={controls.lineHeight || undefined}
-          textDecoration={controls.textDecoration || undefined}
-          textTransform={controls.textTransform || undefined}
-          whiteSpace={controls.whiteSpace || undefined}
-          wordBreak={controls.wordBreak || undefined}
         >
           This is a very long text that will be truncated with ellipsis when it exceeds the
           container width. This is a very long text that will be truncated with ellipsis when it

@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
-import { DivProps } from '@/types';
+import type { DivProps } from '@/types';
 
 export interface SpotlightCardProps<T = any> extends DivProps {
   borderRadius?: number;

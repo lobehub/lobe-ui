@@ -2,20 +2,20 @@
 
 import { evaluate } from '@mdx-js/mdx';
 import { cx } from 'antd-style';
-import { ReactNode, memo, useEffect, useMemo, useState } from 'react';
+import { memo, type ReactNode, useEffect, useMemo, useState } from 'react';
 import jsxDevRuntime from 'react/jsx-dev-runtime';
 import jsxRuntime from 'react/jsx-runtime';
 import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
-import type { Pluggable } from 'unified';
+import { type Pluggable } from 'unified';
 
 import Alert from '@/Alert';
+import { useMarkdownContent } from '@/hooks/useMarkdown';
 import { PreviewGroup } from '@/Image';
 import { Typography, type TypographyProps } from '@/Markdown';
 import { styles } from '@/Markdown/style';
-import { useMarkdownContent } from '@/hooks/useMarkdown';
 
 import mdxComponents from '../mdxComponents';
 import CodeBlock from '../mdxComponents/CodeBlock';
@@ -115,11 +115,11 @@ const Mdx = memo<MdxProps>(
           setMDXContent(() => () => (
             <Alert
               description={String(error?.message as string)}
+              title={'Error compiling MDX'}
+              type="error"
               style={{
                 width: '100%',
               }}
-              title={'Error compiling MDX'}
-              type="error"
             />
           ));
           console.error('Error compiling MDX:', error);

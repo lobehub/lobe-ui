@@ -24,6 +24,8 @@ export default () => {
   return (
     <div style={{ height: 400, overflow: 'auto' }}>
       <Layout
+        sidebar={<MockData text="SIDEBAR" />}
+        toc={'TOC'}
         footer={
           <Flexbox align={'center'} className={styles.footer} justify={'center'}>
             FOOTER
@@ -34,8 +36,6 @@ export default () => {
             HEADER
           </Flexbox>
         }
-        sidebar={<MockData text="SIDEBAR" />}
-        toc={'TOC'}
       >
         <MockData text="CONTENT" />
       </Layout>

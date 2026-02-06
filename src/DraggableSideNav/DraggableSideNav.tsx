@@ -3,8 +3,16 @@
 import { useHover } from 'ahooks';
 import { cx } from 'antd-style';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Resizable, ResizeCallback } from 're-resizable';
-import { CSSProperties, memo, useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
+import { Resizable, type ResizeCallback } from 're-resizable';
+import {
+  type CSSProperties,
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+} from 'react';
 import useControlledState from 'use-merge-value';
 
 import { Center, Flexbox } from '@/Flex';
@@ -375,13 +383,13 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
         showHandle &&
         expandable && (
           <div
+            style={handleRootStyle}
             className={cx(
               styles.toggleRoot,
               placement === 'left' ? styles.toggleLeft : styles.toggleRight,
             )}
-            style={handleRootStyle}
           >
-            <Center className={classNames?.handle} onClick={toggleExpand} style={handleCenterStyle}>
+            <Center className={classNames?.handle} style={handleCenterStyle} onClick={toggleExpand}>
               <div style={handleIconWrapperStyle}>
                 <Icon className={styles.handlerIcon} icon={ArrowIcon} size={16} />
               </div>
@@ -516,10 +524,10 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
           className={containerClassName}
           enable={resizeEnable}
           handleClasses={handleClasses}
+          style={containerStyle}
           onResize={handleResize}
           onResizeStart={handleResizeStart}
           onResizeStop={handleResizeStop}
-          style={containerStyle}
         >
           {handle}
           <Flexbox

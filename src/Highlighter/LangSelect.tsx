@@ -15,7 +15,7 @@ export const LangSelect = memo<Omit<SelectProps, 'options'>>(({ ...rest }) => {
       {
         aliases: ['text', 'txt'],
         label: (
-          <Flexbox align={'center'} gap={4} horizontal>
+          <Flexbox horizontal align={'center'} gap={4}>
             <MaterialFileTypeIcon
               fallbackUnknownType={false}
               filename={`*.txt`}
@@ -33,7 +33,7 @@ export const LangSelect = memo<Omit<SelectProps, 'options'>>(({ ...rest }) => {
       ...bundledLanguagesInfo.map((item) => ({
         aliases: item.aliases,
         label: (
-          <Flexbox align={'center'} gap={4} horizontal>
+          <Flexbox horizontal align={'center'} gap={4}>
             <MaterialFileTypeIcon
               fallbackUnknownType={false}
               filename={`*.${item?.aliases?.[0] || item.id}`}
@@ -58,17 +58,17 @@ export const LangSelect = memo<Omit<SelectProps, 'options'>>(({ ...rest }) => {
 
   return (
     <Select
-      className={'languageTitle'}
-      onClick={stopPropagation}
-      options={options}
       showSearch
+      className={'languageTitle'}
+      options={options}
       size={'small'}
+      suffixIcon={false}
+      variant={'borderless'}
       style={{
         maxWidth: 240,
         width: '100%',
       }}
-      suffixIcon={false}
-      variant={'borderless'}
+      onClick={stopPropagation}
       {...rest}
     />
   );

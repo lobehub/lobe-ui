@@ -26,37 +26,37 @@ const ChatHeader = memo<ChatHeaderProps>(
   }) => {
     return (
       <Flexbox
+        horizontal
         align={'center'}
         className={cx(styles.container, className)}
         distribution={'space-between'}
         gap={gap}
-        horizontal
         paddingInline={16}
         {...rest}
       >
         <Flexbox
+          horizontal
           align={'center'}
           className={cx(styles.left, classNames?.left)}
           gap={gaps?.left || 12}
-          horizontal
           justify={'flex-start'}
           style={contentStyles?.left}
         >
           {showBackButton && (
             <ActionIcon
               icon={ChevronLeft}
-              onClick={() => onBackClick?.()}
               style={{ marginRight: gaps?.left ? -gaps.left / 2 : -6 }}
+              onClick={() => onBackClick?.()}
             />
           )}
           {left}
         </Flexbox>
         {children && (
           <Flexbox
+            horizontal
             align={'center'}
             className={cx(styles.center, classNames?.center)}
             gap={gaps?.center || 8}
-            horizontal
             justify={'center'}
             style={contentStyles?.center}
           >
@@ -64,10 +64,10 @@ const ChatHeader = memo<ChatHeaderProps>(
           </Flexbox>
         )}
         <Flexbox
+          horizontal
           align={'center'}
           className={cx(styles.right, classNames?.right)}
           gap={gaps?.right || 8}
-          horizontal
           justify={'flex-end'}
           style={contentStyles?.right}
         >

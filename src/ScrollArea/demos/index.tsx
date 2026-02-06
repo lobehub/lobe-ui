@@ -8,12 +8,12 @@ const paragraphs = [
 export default () => {
   return (
     <ScrollArea
+      scrollFade
       contentProps={{
         style: {
           padding: 16,
         },
       }}
-      scrollFade
       style={{
         height: 192,
         maxWidth: 'calc(100vw - 8rem)',

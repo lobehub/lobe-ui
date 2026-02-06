@@ -64,22 +64,22 @@ const Form = memo<FormProps>(
             className={classNames?.group}
             classNames={classNames}
             collapsible={isUndefined(group.collapsible) ? collapsible : group.collapsible}
-            defaultActive={
-              defaultActiveKey && group?.key ? defaultActiveKey.includes(key) : group?.defaultActive
-            }
             extra={group?.extra}
             icon={group?.icon}
             key={key}
             keyValue={key}
+            style={customStyles?.group}
+            styles={customStyles}
+            title={group.title}
+            variant={group?.variant || variant}
+            defaultActive={
+              defaultActiveKey && group?.key ? defaultActiveKey.includes(key) : group?.defaultActive
+            }
             onCollapse={(active) => {
               let keys: (string | number)[] = activeKey || defaultActiveKey || [];
               keys = keys.filter((k) => k !== key);
               onCollapse?.(active ? [...keys, key] : keys);
             }}
-            style={customStyles?.group}
-            styles={customStyles}
-            title={group.title}
-            variant={group?.variant || variant}
           >
             {Array.isArray(group.children)
               ? group.children.filter((item) => !item.hidden).map((item, i) => mapFlat(item, i))
@@ -104,18 +104,18 @@ const Form = memo<FormProps>(
           form={form}
           initialValues={initialValues}
           layout={layout || (mobile ? 'vertical' : 'horizontal')}
+          ref={ref}
+          variant={itemVariant}
+          style={{
+            gap,
+            ...style,
+          }}
           onFinish={async (...finishProps) => {
             if (!onFinish) return;
             setSubmitLoading(true);
             await onFinish(...finishProps);
             setSubmitLoading(false);
           }}
-          ref={ref}
-          style={{
-            gap,
-            ...style,
-          }}
-          variant={itemVariant}
           {...rest}
         >
           {items && items?.length > 0 ? (

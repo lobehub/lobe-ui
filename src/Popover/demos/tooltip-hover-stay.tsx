@@ -11,6 +11,9 @@ export default () => {
       <TooltipGroup>
         <Popover
           arrow
+          open={popoverOpen}
+          placement="bottom"
+          trigger="hover"
           content={
             <Flexbox gap={12} style={{ padding: '12px 16px', width: 260 }}>
               <div style={{ fontSize: 14, fontWeight: 600 }}>
@@ -19,15 +22,15 @@ export default () => {
               <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12, lineHeight: 1.6 }}>
                 Move mouse onto tooltip content and keep it open.
               </div>
-              <Flexbox align="center" gap={8} horizontal>
+              <Flexbox horizontal align="center" gap={8}>
                 <Tooltip
-                  onOpenChange={setTooltipOpen}
                   open={tooltipOpen}
                   title={
                     <div style={{ maxWidth: 220, padding: 4 }}>
                       Tooltip content area. Keep hovering here.
                     </div>
                   }
+                  onOpenChange={setTooltipOpen}
                 >
                   <Button icon={<Info size={16} />} size="small">
                     Hover me
@@ -41,9 +44,6 @@ export default () => {
             </Flexbox>
           }
           onOpenChange={setPopoverOpen}
-          open={popoverOpen}
-          placement="bottom"
-          trigger="hover"
         >
           <Button size="large" type="primary">
             Hover to Open

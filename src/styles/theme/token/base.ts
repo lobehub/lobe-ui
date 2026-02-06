@@ -1,4 +1,4 @@
-import { AliasToken } from 'antd/es/theme/interface';
+import type { AliasToken } from 'antd/es/theme/interface';
 
 const FONT_EMOJI = `"Segoe UI Emoji","Segoe UI Symbol","Apple Color Emoji","Twemoji Mozilla","Noto Color Emoji","Android Emoji"`;
 const FONT_EN = `"HarmonyOS Sans","Segoe UI","SF Pro Display",-apple-system,BlinkMacSystemFont,Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",sans-serif`;

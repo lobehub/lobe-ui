@@ -52,6 +52,11 @@ const Checkbox: FC<CheckboxProps> = ({
   const checkIcon = (
     <Block
       align={'center'}
+      flex={'none'}
+      height={size}
+      justify={'center'}
+      variant={'outlined'}
+      width={size}
       className={cx(
         styles.root,
         isChecked && styles.checked,
@@ -60,17 +65,12 @@ const Checkbox: FC<CheckboxProps> = ({
         className,
         classNames?.checkbox,
       )}
-      flex={'none'}
-      height={size}
-      justify={'center'}
-      onClick={handleClick}
       style={
         backgroundColor && (isChecked || isIndeterminate)
           ? { backgroundColor, borderColor: backgroundColor, ...checkboxStyles }
           : { ...checkboxStyles }
       }
-      variant={'outlined'}
-      width={size}
+      onClick={handleClick}
       {...rest}
     >
       {isIndeterminate ? (
@@ -97,16 +97,16 @@ const Checkbox: FC<CheckboxProps> = ({
 
   return (
     <Flexbox
+      horizontal
       align={'center'}
       className={classNames?.wrapper}
       gap={Math.floor(size / 2)}
-      horizontal
-      onClick={handleClick}
       style={{
         cursor: disabled ? 'not-allowed' : 'pointer',
         userSelect: 'none',
         ...customStyles?.wrapper,
       }}
+      onClick={handleClick}
     >
       {checkIcon}
       <Text

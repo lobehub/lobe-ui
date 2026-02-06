@@ -266,8 +266,8 @@ const DraggablePanel = memo<DraggablePanelProps>(
         >
           <Center
             className={classNames?.handle}
-            onClick={toggleExpand}
             style={customStyles?.handle}
+            onClick={toggleExpand}
           >
             <Icon
               className={styles.handlerIcon}
@@ -344,15 +344,15 @@ const DraggablePanel = memo<DraggablePanelProps>(
                 }
               : {}
           }
-          onResize={handleResize}
-          onResizeStart={handleResizeStart}
-          onResizeStop={handleResizeStop}
           style={{
             ...cssVariables,
             opacity: isPending ? 0.95 : 1,
             transition: state.isResizing ? 'unset' : undefined,
             ...style,
           }}
+          onResize={handleResize}
+          onResizeStart={handleResizeStart}
+          onResizeStop={handleResizeStop}
         >
           {children}
         </Resizable>
@@ -389,6 +389,9 @@ const DraggablePanel = memo<DraggablePanelProps>(
 
     return (
       <aside
+        dir={dir}
+        ref={ref}
+        style={cssVariables}
         className={cx(
           panelVariants({
             isExpand,
@@ -398,9 +401,6 @@ const DraggablePanel = memo<DraggablePanelProps>(
           }),
           className,
         )}
-        dir={dir}
-        ref={ref}
-        style={cssVariables}
       >
         {expandable && state.showExpand && handle}
         {destroyOnClose ? isExpand && inner : inner}

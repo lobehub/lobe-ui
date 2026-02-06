@@ -1,8 +1,8 @@
 import { cx } from 'antd-style';
 import { type FC, type Ref, useMemo } from 'react';
 
+import { type ChatItemProps } from '@/chat/ChatItem';
 import { Flexbox } from '@/Flex';
-import { ChatItemProps } from '@/chat/ChatItem';
 
 import { styles } from '../style';
 

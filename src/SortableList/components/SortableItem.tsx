@@ -14,7 +14,7 @@ import { variants } from '../style';
 interface Context {
   attributes: Record<string, any>;
   listeners: DraggableSyntheticListeners;
-  ref(node: HTMLElement | null): void;
+  ref: (node: HTMLElement | null) => void;
 }
 
 export const SortableItemContext = createContext<Context>({
@@ -51,11 +51,11 @@ const SortableItem = memo<SortableItemProps>(
     return (
       <SortableItemContext value={context}>
         <Flexbox
+          horizontal
           align={'center'}
           as={'li'}
           className={cx(variants({ variant }), className)}
           gap={4}
-          horizontal
           ref={setNodeRef}
           style={{
             opacity: isDragging ? 0.4 : undefined,

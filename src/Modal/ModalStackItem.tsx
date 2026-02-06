@@ -35,6 +35,7 @@ export const ModalStackItem = memo(
     return (
       <Modal
         {...rest}
+        open={open ?? true}
         afterClose={useCallback(() => {
           stableAfterClose?.();
           onDestroy(id);
@@ -53,7 +54,6 @@ export const ModalStackItem = memo(
           },
           [stableOnCancel, close],
         )}
-        open={open ?? true}
       >
         <ModalProvider value={stableContextValue}>{children}</ModalProvider>
       </Modal>

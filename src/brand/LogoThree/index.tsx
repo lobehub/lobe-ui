@@ -1,11 +1,11 @@
 'use client';
 
-import { CSSProperties, memo, useState } from 'react';
+import { type CSSProperties, memo, useState } from 'react';
 
+import Spline, { type SplineProps } from '@/awesome/Spline';
 import { useCdnFn } from '@/ConfigProvider';
 import { Flexbox } from '@/Flex';
 import Img from '@/Img';
-import Spline, { type SplineProps } from '@/awesome/Spline';
 
 const LOGO_3D = {
   path: 'assets/logo-3d.webp',
@@ -40,15 +40,15 @@ const LogoThree = memo<LogoThreeProps>(({ className, style, size = 128, onLoad, 
         />
       )}
       <Spline
-        onLoad={(splineApp) => {
-          setLoading(false);
-          onLoad?.(splineApp);
-        }}
         scene={'https://hub-apac-1.lobeobjects.space/logo.splinecode'}
         style={{
           flex: 'none',
           height: size,
           width: size,
+        }}
+        onLoad={(splineApp) => {
+          setLoading(false);
+          onLoad?.(splineApp);
         }}
         {...rest}
       />

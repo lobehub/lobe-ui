@@ -5,20 +5,20 @@ import { cx } from 'antd-style';
 import { memo, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
 import { useIsClient } from '@/hooks/useIsClient';
+import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
 import { registerDevSingleton } from '@/utils/devSingleton';
 
-import ToastItem from './Toast';
 import { ToastContext } from './context';
 import { viewportVariants } from './style';
-import type {
-  ToastAPI,
-  ToastInstance,
-  ToastOptions,
-  ToastPosition,
-  ToastPromiseOptions,
-  ToastType,
+import ToastItem from './Toast';
+import {
+  type ToastAPI,
+  type ToastInstance,
+  type ToastOptions,
+  type ToastPosition,
+  type ToastPromiseOptions,
+  type ToastType,
 } from './type';
 
 // All possible positions
@@ -339,7 +339,7 @@ export const ToastHost = memo(
     return createPortal(
       <>
         {ALL_POSITIONS.map((pos) => (
-          <ToastContext.Provider key={pos} value={{ position: pos, swipeDirection }}>
+          <ToastContext key={pos} value={{ position: pos, swipeDirection }}>
             <BaseToast.Provider limit={limit} timeout={duration} toastManager={getManager(pos)}>
               <BaseToast.Portal container={container}>
                 <BaseToast.Viewport className={cx(viewportVariants({ position: pos }), className)}>
@@ -347,7 +347,7 @@ export const ToastHost = memo(
                 </BaseToast.Viewport>
               </BaseToast.Portal>
             </BaseToast.Provider>
-          </ToastContext.Provider>
+          </ToastContext>
         ))}
       </>,
       container,

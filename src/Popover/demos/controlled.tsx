@@ -8,13 +8,16 @@ export default () => {
   const [name, setName] = useState('My Awesome Project');
 
   return (
-    <Flexbox align="center" gap={32} horizontal justify="center" style={{ padding: 48 }}>
+    <Flexbox horizontal align="center" gap={32} justify="center" style={{ padding: 48 }}>
       {/* 删除确认 */}
       <Flexbox align="center" gap={12}>
         <Popover
+          open={deleteOpen}
+          placement="bottom"
+          trigger="click"
           content={
             <Flexbox gap={16} style={{ padding: '12px 16px', width: 280 }}>
-              <Flexbox align="center" gap={12} horizontal>
+              <Flexbox horizontal align="center" gap={12}>
                 <Flexbox
                   align="center"
                   justify="center"
@@ -38,17 +41,17 @@ export default () => {
                 Are you sure you want to permanently delete this item? All associated data will be
                 lost.
               </div>
-              <Flexbox gap={8} horizontal justify="flex-end">
-                <Button icon={<X size={16} />} onClick={() => setDeleteOpen(false)} size="small">
+              <Flexbox horizontal gap={8} justify="flex-end">
+                <Button icon={<X size={16} />} size="small" onClick={() => setDeleteOpen(false)}>
                   Cancel
                 </Button>
                 <Button
                   icon={<Trash2 size={16} />}
+                  size="small"
+                  type="primary"
                   onClick={() => {
                     setDeleteOpen(false);
                   }}
-                  size="small"
-                  type="primary"
                 >
                   Delete
                 </Button>
@@ -56,9 +59,6 @@ export default () => {
             </Flexbox>
           }
           onOpenChange={setDeleteOpen}
-          open={deleteOpen}
-          placement="bottom"
-          trigger="click"
         >
           <ActionIcon icon={Trash2} size="large" />
         </Popover>
@@ -68,9 +68,12 @@ export default () => {
       {/* 快速编辑 */}
       <Flexbox align="center" gap={12}>
         <Popover
+          open={editOpen}
+          placement="bottom"
+          trigger="click"
           content={
             <Flexbox gap={16} style={{ padding: '12px 16px', width: 300 }}>
-              <Flexbox align="center" gap={8} horizontal>
+              <Flexbox horizontal align="center" gap={8}>
                 <Edit3 size={18} style={{ color: 'var(--lobe-color-primary)' }} />
                 <div style={{ fontSize: 15, fontWeight: 600 }}>Rename Project</div>
               </Flexbox>
@@ -79,22 +82,22 @@ export default () => {
                   Enter a new name for your project
                 </div>
                 <Input
-                  onChange={(e) => setName(e.target.value)}
-                  onPressEnter={() => setEditOpen(false)}
                   placeholder="Enter project name"
                   size="large"
                   value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  onPressEnter={() => setEditOpen(false)}
                 />
               </Flexbox>
-              <Flexbox gap={8} horizontal justify="flex-end">
-                <Button onClick={() => setEditOpen(false)} size="small">
+              <Flexbox horizontal gap={8} justify="flex-end">
+                <Button size="small" onClick={() => setEditOpen(false)}>
                   Cancel
                 </Button>
                 <Button
                   icon={<Check size={16} />}
-                  onClick={() => setEditOpen(false)}
                   size="small"
                   type="primary"
+                  onClick={() => setEditOpen(false)}
                 >
                   Save
                 </Button>
@@ -102,13 +105,9 @@ export default () => {
             </Flexbox>
           }
           onOpenChange={setEditOpen}
-          open={editOpen}
-          placement="bottom"
-          trigger="click"
         >
           <Button
             icon={<Edit3 size={16} />}
-            onClick={() => setEditOpen(true)}
             size="large"
             style={{
               fontWeight: 500,
@@ -117,6 +116,7 @@ export default () => {
               textOverflow: 'ellipsis',
               whiteSpace: 'nowrap',
             }}
+            onClick={() => setEditOpen(true)}
           >
             {name}
           </Button>
@@ -125,12 +125,7 @@ export default () => {
       </Flexbox>
 
       {/* 外部控制 */}
-      <Button
-        icon={<Edit3 size={16} />}
-        onClick={() => setEditOpen(true)}
-        size="large"
-        type="text"
-      >
+      <Button icon={<Edit3 size={16} />} size="large" type="text" onClick={() => setEditOpen(true)}>
         Edit Externally
       </Button>
     </Flexbox>

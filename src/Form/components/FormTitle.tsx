@@ -19,7 +19,7 @@ const FormTitle: FC<FormTitleProps> = ({
   ...rest
 }) => {
   return (
-    <Flexbox align={`center`} gap={8} horizontal {...rest}>
+    <Flexbox horizontal align={`center`} gap={8} {...rest}>
       {avatar}
       <Flexbox
         className={cx(styles.content, classNames?.content)}

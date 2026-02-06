@@ -4,10 +4,10 @@ import { useSize } from 'ahooks';
 import { cx } from 'antd-style';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import {
-  FC,
-  PropsWithChildren,
-  ReactNode,
+  type FC,
   memo,
+  type PropsWithChildren,
+  type ReactNode,
   useCallback,
   useEffect,
   useRef,
@@ -15,12 +15,12 @@ import {
 } from 'react';
 
 import ActionIcon from '@/ActionIcon';
-import { Flexbox } from '@/Flex';
 import ChatInputAreaInner from '@/chat/ChatInputArea/components/ChatInputAreaInner';
+import { Flexbox } from '@/Flex';
 import SafeArea from '@/mobile/SafeArea';
 
 import { styles } from './style';
-import type { ChatInputAreaProps } from './type';
+import { type ChatInputAreaProps } from './type';
 
 const ChatInputArea = memo<ChatInputAreaProps>(
   ({
@@ -60,7 +60,7 @@ const ChatInputArea = memo<ChatInputAreaProps>(
       ({ children, ...r }) =>
         expand ? (
           <Flexbox className={styles.inner} gap={8}>
-            <Flexbox gap={8} horizontal justify={'flex-end'}>
+            <Flexbox horizontal gap={8} justify={'flex-end'}>
               {r.textAreaLeftAddons}
               {r.textAreaRightAddons}
             </Flexbox>
@@ -69,7 +69,7 @@ const ChatInputArea = memo<ChatInputAreaProps>(
             {r.bottomAddons}
           </Flexbox>
         ) : (
-          <Flexbox align={'flex-end'} className={styles.inner} gap={8} horizontal>
+          <Flexbox horizontal align={'flex-end'} className={styles.inner} gap={8}>
             {r.textAreaLeftAddons}
             {children}
             {r.textAreaRightAddons}
@@ -98,9 +98,9 @@ const ChatInputArea = memo<ChatInputAreaProps>(
               className={styles.expandButton}
               icon={expand ? ChevronDown : ChevronUp}
               id={'sssssss'}
-              onClick={() => setExpand?.(!expand)}
               size={{ blockSize: 24, borderRadius: '50%', size: 14 }}
               style={expand ? { top: 6 } : {}}
+              onClick={() => setExpand?.(!expand)}
             />
           )}
           <InnerContainer
@@ -113,14 +113,14 @@ const ChatInputArea = memo<ChatInputAreaProps>(
               autoSize={expand ? false : { maxRows: 6, minRows: 1 }}
               className={styles.expandTextArea}
               loading={loading}
-              onBlur={() => setIsFocused(false)}
-              onFocus={() => setIsFocused(true)}
-              onInput={onInput}
-              onSend={onSend}
               ref={ref}
               style={{ height: 36, paddingBlock: 6 }}
               value={value}
               variant={expand ? 'borderless' : 'filled'}
+              onBlur={() => setIsFocused(false)}
+              onFocus={() => setIsFocused(true)}
+              onInput={onInput}
+              onSend={onSend}
             />
           </InnerContainer>
         </Flexbox>

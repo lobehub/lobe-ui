@@ -1,5 +1,5 @@
 import { ActionIconGroup } from '@lobehub/ui';
-import { ChatItem, ChatItemProps } from '@lobehub/ui/chat';
+import { ChatItem, type ChatItemProps } from '@lobehub/ui/chat';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { useState } from 'react';
 
@@ -38,6 +38,8 @@ export default () => {
     <StoryBook levaStore={store}>
       <ChatItem
         {...control}
+        avatar={avatar}
+        editing={edit}
         actions={
           <ActionIconGroup
             items={items}
@@ -49,8 +51,6 @@ export default () => {
             }}
           />
         }
-        avatar={avatar}
-        editing={edit}
         onEditingChange={setEdit}
       />
     </StoryBook>

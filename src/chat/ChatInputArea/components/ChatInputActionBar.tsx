@@ -6,7 +6,7 @@ import { type FC } from 'react';
 import { Flexbox } from '@/Flex';
 
 import { actionBarStyles as styles } from '../style';
-import { ChatInputActionBarProps } from '../type';
+import type { ChatInputActionBarProps } from '../type';
 
 const ChatInputActionBar: FC<ChatInputActionBarProps> = ({
   ref,
@@ -18,24 +18,24 @@ const ChatInputActionBar: FC<ChatInputActionBarProps> = ({
   const { mobile } = useResponsive();
   return (
     <Flexbox
+      horizontal
       align={'center'}
       className={styles.root}
       flex={'none'}
-      horizontal
       justify={'space-between'}
       padding={padding}
       ref={ref}
       {...rest}
     >
-      <Flexbox align={'center'} className={styles.left} flex={1} gap={mobile ? 0 : 4} horizontal>
+      <Flexbox horizontal align={'center'} className={styles.left} flex={1} gap={mobile ? 0 : 4}>
         {leftAddons}
       </Flexbox>
       <Flexbox
+        horizontal
         align={'center'}
         className={styles.right}
         flex={0}
         gap={mobile ? 0 : 4}
-        horizontal
         justify={'flex-end'}
       >
         {rightAddons}

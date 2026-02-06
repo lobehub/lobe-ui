@@ -1,4 +1,4 @@
-import { type ReactElement, type ReactNode, isValidElement, useMemo } from 'react';
+import { isValidElement, type ReactElement, type ReactNode, useMemo } from 'react';
 
 export interface UseNativeButtonOptions {
   /**

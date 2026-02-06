@@ -1,12 +1,12 @@
-import type { Switch } from '@base-ui/react/switch';
-import type { HTMLMotionProps, TargetAndTransition, Transition } from 'motion/react';
-import type {
-  CSSProperties,
-  ComponentProps,
-  KeyboardEvent,
-  MouseEvent,
-  ReactNode,
-  Ref,
+import { type Switch } from '@base-ui/react/switch';
+import { type HTMLMotionProps, type TargetAndTransition, type Transition } from 'motion/react';
+import {
+  type ComponentProps,
+  type CSSProperties,
+  type KeyboardEvent,
+  type MouseEvent,
+  type ReactNode,
+  type Ref,
 } from 'react';
 
 export type LobeSwitchSize = 'default' | 'small';

@@ -14,8 +14,8 @@ export interface ScrollAreaProps extends Omit<ScrollAreaRootProps, 'children'> {
   contentProps?: Omit<ScrollAreaContentProps, 'children'>;
   corner?: boolean;
   cornerProps?: ScrollAreaCornerProps;
-  scrollFade?: boolean;
   scrollbarProps?: Omit<ScrollAreaScrollbarProps, 'children'>;
+  scrollFade?: boolean;
   thumbProps?: ScrollAreaThumbProps;
   viewportProps?: Omit<ScrollAreaViewportProps, 'children' | 'scrollFade'>;
 }

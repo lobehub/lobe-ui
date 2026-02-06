@@ -2,7 +2,7 @@
 
 import { ConfigProvider as AntdConfigProvider } from 'antd';
 import { cssVar } from 'antd-style';
-import { PropsWithChildren, memo } from 'react';
+import { memo, type PropsWithChildren } from 'react';
 
 const ConfigProvider = memo<PropsWithChildren>(({ children }) => {
   return (

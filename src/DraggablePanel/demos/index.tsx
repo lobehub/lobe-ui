@@ -1,4 +1,4 @@
-import { DraggablePanel, DraggablePanelProps } from '@lobehub/ui';
+import { DraggablePanel, type DraggablePanelProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 import { Flexbox } from '@/Flex';
@@ -35,7 +35,7 @@ export default () => {
   ) as DraggablePanelProps;
 
   return (
-    <StoryBook levaStore={store} noPadding>
+    <StoryBook noPadding levaStore={store}>
       <Flexbox
         height={'100%'}
         horizontal={['left', 'right'].includes(control.placement)}

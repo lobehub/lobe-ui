@@ -1,6 +1,6 @@
 'use client';
 
-import { Menu as AntdMenu, ConfigProvider } from 'antd';
+import { ConfigProvider, Menu as AntdMenu } from 'antd';
 import { cx, useTheme } from 'antd-style';
 import { memo, useMemo } from 'react';
 
@@ -8,7 +8,7 @@ import { IconProvider } from '@/Icon';
 import { mapItems } from '@/Menu/utils';
 
 import { variants } from './style';
-import type { MenuProps } from './type';
+import { type MenuProps } from './type';
 
 const Menu = memo<MenuProps>(
   ({

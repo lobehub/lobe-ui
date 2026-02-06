@@ -1,10 +1,10 @@
 'use client';
 
-import type { ImageProps } from 'antd';
-import { type ElementType, type FC, type Ref, createElement, memo, use, useMemo } from 'react';
+import { type ImageProps } from 'antd';
+import { createElement, type ElementType, type FC, memo, type Ref, use, useMemo } from 'react';
 
 import { ConfigContext } from '@/ConfigProvider';
-import type { ImgProps as HtmlImgeProps } from '@/types';
+import { type ImgProps as HtmlImgeProps } from '@/types';
 
 const createContainer = (as: ElementType) => memo((props: any) => createElement(as, props));
 

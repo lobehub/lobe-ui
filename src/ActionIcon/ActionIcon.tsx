@@ -2,7 +2,7 @@
 
 import { cx } from 'antd-style';
 import { Loader2 } from 'lucide-react';
-import { type MouseEventHandler, memo, useCallback, useMemo } from 'react';
+import { memo, type MouseEventHandler, useCallback, useMemo } from 'react';
 
 import { Center } from '@/Flex';
 import Icon from '@/Icon';
@@ -10,7 +10,7 @@ import Tooltip from '@/Tooltip';
 
 import { calcSize } from './components/utils';
 import { variants } from './style';
-import type { ActionIconProps } from './type';
+import { type ActionIconProps } from './type';
 
 const ActionIcon = memo<ActionIconProps>(
   ({
@@ -49,14 +49,14 @@ const ActionIcon = memo<ActionIconProps>(
 
     const node = (
       <Center
+        horizontal
         className={cx(variants({ active, danger, disabled, glass, shadow, variant }), className)}
         flex={'none'}
-        horizontal
-        onClick={handleClick}
         ref={ref}
         role="button"
         style={{ borderRadius, height: blockSize, width: blockSize, ...style }}
         tabIndex={disabled ? -1 : 0}
+        onClick={handleClick}
         {...rest}
       >
         {icon && (

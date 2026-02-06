@@ -41,18 +41,19 @@ const PopoverPanel: FC<PopoverPanelProps> = ({ children, usePopover, title, alt,
   return usePopover && url ? (
     <Popover
       arrow={false}
+      trigger={'hover'}
       content={
         <Flexbox gap={8}>
           <Flexbox
+            horizontal
             className={styles.link}
             gap={12}
-            horizontal
             justify={'space-between'}
             onClick={() => {
               window.open(url, '_blank');
             }}
           >
-            <Flexbox align={'center'} gap={4} horizontal>
+            <Flexbox horizontal align={'center'} gap={4}>
               <img
                 alt={alt || title || url}
                 height={14}
@@ -67,7 +68,6 @@ const PopoverPanel: FC<PopoverPanelProps> = ({ children, usePopover, title, alt,
           {displayTitle}
         </Flexbox>
       }
-      trigger={'hover'}
     >
       {children}
     </Popover>

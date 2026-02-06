@@ -1,4 +1,4 @@
-import { Button, ModalHost, Text, createModal, useModalContext } from '@lobehub/ui';
+import { Button, createModal, ModalHost, Text, useModalContext } from '@lobehub/ui';
 
 const ModalContent = () => {
   const { close, setCanDismissByClickOutside } = useModalContext();
@@ -6,13 +6,13 @@ const ModalContent = () => {
   return (
     <>
       <Text as={'p'}>{Array.from({ length: 120 }).fill('Some contents').join(' ')}</Text>
-      <Button onClick={close} type="primary">
+      <Button type="primary" onClick={close}>
         Close Modal
       </Button>
-      <Button onClick={() => setCanDismissByClickOutside(false)} style={{ marginInlineStart: 8 }}>
+      <Button style={{ marginInlineStart: 8 }} onClick={() => setCanDismissByClickOutside(false)}>
         Disable Outside Click
       </Button>
-      <Button onClick={() => setCanDismissByClickOutside(true)} style={{ marginInlineStart: 8 }}>
+      <Button style={{ marginInlineStart: 8 }} onClick={() => setCanDismissByClickOutside(true)}>
         Enable Outside Click
       </Button>
     </>
@@ -30,7 +30,7 @@ export default () => {
 
   return (
     <>
-      <Button onClick={openModal} type="primary">
+      <Button type="primary" onClick={openModal}>
         Open Imperative Modal
       </Button>
       <ModalHost />

@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 
-import { DivProps, SvgProps } from '@/types';
+import type { DivProps, SvgProps } from '@/types';
 
 const LobeChatText: FC<SvgProps & DivProps & { size?: number }> = ({
   size = '1em',

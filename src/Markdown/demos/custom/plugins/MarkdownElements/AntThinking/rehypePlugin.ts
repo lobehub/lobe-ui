@@ -1,7 +1,6 @@
 import type { Node } from 'unist';
 import { visit } from 'unist-util-visit';
 
-// eslint-disable-next-line unicorn/consistent-function-scoping
 const rehypePlugin = () => (tree: Node) => {
   visit(tree, 'element', (node: any, index, parent) => {
     if (node.type === 'element' && node.tagName === 'p') {

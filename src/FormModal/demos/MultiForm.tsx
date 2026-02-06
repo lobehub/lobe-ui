@@ -44,7 +44,7 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Button onClick={showModal} type="primary">
+      <Button type="primary" onClick={showModal}>
         Open Modal
       </Button>
       <Form.Provider
@@ -60,10 +60,10 @@ export default () => {
         <FormModal
           form={form}
           initialValues={setting}
-          onCancel={handleCancel}
           open={isModalOpen}
           submitLoading={loading}
           title="Form Modal"
+          onCancel={handleCancel}
         >
           <Form
             form={form}

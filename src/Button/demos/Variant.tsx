@@ -6,7 +6,7 @@ import { Flexbox } from '@/Flex';
 export default () => {
   return (
     <Flexbox gap={16}>
-      <Flexbox gap={16} horizontal wrap="wrap">
+      <Flexbox horizontal gap={16} wrap="wrap">
         <Button type="primary">Primary Button</Button>
         <Button>Default Button</Button>
         <Button type="dashed">Dashed Button</Button>
@@ -14,7 +14,7 @@ export default () => {
         <Button type="link">Link Button</Button>
       </Flexbox>
       <Divider />
-      <Flexbox gap={16} horizontal wrap="wrap">
+      <Flexbox horizontal gap={16} wrap="wrap">
         <Button color="default" variant="solid">
           Solid
         </Button>
@@ -34,7 +34,7 @@ export default () => {
           Link
         </Button>
       </Flexbox>
-      <Flexbox gap={16} horizontal wrap="wrap">
+      <Flexbox horizontal gap={16} wrap="wrap">
         <Button color="danger" variant="solid">
           Solid
         </Button>
@@ -54,7 +54,7 @@ export default () => {
           Link
         </Button>
       </Flexbox>
-      <Flexbox gap={16} horizontal wrap="wrap">
+      <Flexbox horizontal gap={16} wrap="wrap">
         <Button color="pink" variant="solid">
           Solid
         </Button>
@@ -74,7 +74,7 @@ export default () => {
           Link
         </Button>
       </Flexbox>
-      <Flexbox gap={16} horizontal wrap="wrap">
+      <Flexbox horizontal gap={16} wrap="wrap">
         <Button color="purple" variant="solid">
           Solid
         </Button>
@@ -94,7 +94,7 @@ export default () => {
           Link
         </Button>
       </Flexbox>
-      <Flexbox gap={16} horizontal wrap="wrap">
+      <Flexbox horizontal gap={16} wrap="wrap">
         <Button color="cyan" variant="solid">
           Solid
         </Button>

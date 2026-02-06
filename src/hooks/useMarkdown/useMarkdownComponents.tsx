@@ -23,25 +23,21 @@ export const useMarkdownComponents = (): Components => {
   } = useMarkdownContext();
 
   const memoA = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ node, ...props }: any) => <Link citations={citations} {...props} {...componentProps?.a} />,
     [citations, componentProps?.a],
   );
 
   const memoImg = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ node, ...props }: any) => <Image {...props} {...componentProps?.img} />,
     [componentProps?.img],
   );
 
   const memoVideo = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ node, ...props }: any) => <Video {...props} {...componentProps?.video} />,
     [componentProps?.video],
   );
 
   const memoSection = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ node, ...props }: any) => <Section showFootnotes={showFootnotes} {...props} />,
     [showFootnotes],
   );
@@ -91,7 +87,6 @@ export const useMarkdownComponents = (): Components => {
   }, [highlightTheme, mermaidTheme]);
 
   const memoPre = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     ({ node, ...props }: any) => (
       <CodeBlock
         animated={animated}
@@ -105,11 +100,7 @@ export const useMarkdownComponents = (): Components => {
     [animated, enableMermaid, fullFeaturedCodeBlock, stableComponentProps, componentProps?.pre],
   );
 
-  const memoColorPreview = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    ({ node, ...props }: any) => <code {...props} />,
-    [],
-  );
+  const memoColorPreview = useCallback(({ node, ...props }: any) => <code {...props} />, []);
 
   const memoComponents = useMemo(
     () => ({

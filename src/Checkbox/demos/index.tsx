@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxProps } from '@lobehub/ui';
+import { Checkbox, type CheckboxProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {

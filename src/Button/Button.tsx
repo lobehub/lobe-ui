@@ -31,6 +31,11 @@ const Button: FC<ButtonProps> = ({
 
   return (
     <AntdButton
+      color={color || (defaultVariant === 'filled' ? 'default' : undefined)}
+      danger={danger}
+      ref={ref}
+      type={type}
+      variant={defaultVariant}
       className={cx(
         variants({
           glass,
@@ -38,8 +43,6 @@ const Button: FC<ButtonProps> = ({
         }),
         className,
       )}
-      color={color || (defaultVariant === 'filled' ? 'default' : undefined)}
-      danger={danger}
       icon={
         icon &&
         (isValidElement(icon) ? (
@@ -55,16 +58,13 @@ const Button: FC<ButtonProps> = ({
                 <Icon
                   icon={Loader2Icon}
                   {...iconProps}
-                  size={iconProps?.size || { size: '1.2em' }}
                   spin
+                  size={iconProps?.size || { size: '1.2em' }}
                 />
               ),
             }
           : false
       }
-      ref={ref}
-      type={type}
-      variant={defaultVariant}
       {...rest}
     >
       {children}

@@ -182,7 +182,7 @@ export const variants = cva(styles.root, {
     gap: false,
     isDarkMode: false,
   },
-  /* eslint-disable sort-keys-fix/sort-keys-fix */
+
   variants: {
     collapsible: {
       false: styles.hideCollapsibleIcon,
@@ -202,5 +202,4 @@ export const variants = cva(styles.root, {
       outlined: styles.outlined,
     },
   },
-  /* eslint-enable sort-keys-fix/sort-keys-fix */
 });

@@ -1,15 +1,15 @@
 'use client';
 
 import { cx } from 'antd-style';
-import { type FC } from 'react';
+import type { FC } from 'react';
 
+import Spotlight from '@/awesome/Spotlight';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
-import Spotlight from '@/awesome/Spotlight';
 
 import { styles, variants } from './style';
-import type { SnippetProps } from './type';
+import { type SnippetProps } from './type';
 
 const Snippet: FC<SnippetProps> = ({
   ref,
@@ -27,11 +27,11 @@ const Snippet: FC<SnippetProps> = ({
 
   return (
     <Flexbox
+      horizontal
       align={'center'}
       className={cx(variants({ shadow, variant }), className)}
       data-code-type="highlighter"
       gap={8}
-      horizontal
       ref={ref}
       {...rest}
     >

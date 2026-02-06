@@ -1,10 +1,10 @@
-import { MappingAlgorithm } from 'antd/es/theme/interface';
+import type { MappingAlgorithm } from 'antd/es/theme/interface';
 
 import { colorScales } from '@/color/colors';
 import { neutralColorScales } from '@/color/neutrals';
 import type { ColorScaleItem } from '@/color/types';
 
-import { NeutralColors, PrimaryColors } from '../../customTheme';
+import type { NeutralColors, PrimaryColors } from '../../customTheme';
 import { generateCustomColorToken } from '../customToken';
 import { generateColorNeutralPalette, generateColorPalette } from '../generateColorPalette';
 import lightBaseToken from '../token/light';

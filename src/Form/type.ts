@@ -1,13 +1,13 @@
-import type { FormProps as AntFormProps, DividerProps, FormInstance } from 'antd';
-import { FormItemProps as AntdFormItemProps } from 'antd/es/form/FormItem';
-import { CSSProperties, ReactNode, Ref } from 'react';
+import { type DividerProps, type FormInstance, type FormProps as AntFormProps } from 'antd';
+import { type FormItemProps as AntdFormItemProps } from 'antd/es/form/FormItem';
+import { type CSSProperties, type ReactNode, type Ref } from 'react';
 
-import type { ButtonProps } from '@/Button';
-import type { CollapseProps } from '@/Collapse';
-import { FlexboxProps } from '@/Flex';
-import type { IconProps } from '@/Icon';
-import type { TagProps } from '@/Tag';
-import type { DivProps } from '@/types';
+import { type ButtonProps } from '@/Button';
+import { type CollapseProps } from '@/Collapse';
+import { type FlexboxProps } from '@/Flex';
+import { type IconProps } from '@/Icon';
+import { type TagProps } from '@/Tag';
+import { type DivProps } from '@/types';
 
 export type FormVariant = 'filled' | 'outlined' | 'borderless';
 export type ItemsType = 'group' | 'flat';
@@ -24,9 +24,9 @@ export interface FormProps extends Omit<AntFormProps, 'variant'> {
   footer?: ReactNode;
   gap?: number | string;
   itemMinWidth?: FormItemProps['minWidth'];
-  itemVariant?: AntFormProps['variant'];
   items?: FormGroupItemType[] | FormItemProps[];
   itemsType?: ItemsType;
+  itemVariant?: AntFormProps['variant'];
   onCollapse?: (key: (string | number)[]) => void;
   ref?: Ref<FormInstance>;
   styles?: FormGroupProps['styles'] & {

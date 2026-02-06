@@ -23,6 +23,9 @@ export default () => {
 
   return (
     <ChatItem
+      avatar={avatar}
+      editing={edit}
+      message={message}
       actions={
         <ActionIconGroup
           items={items}
@@ -34,9 +37,6 @@ export default () => {
           }}
         />
       }
-      avatar={avatar}
-      editing={edit}
-      message={message}
     />
   );
 };

@@ -12,15 +12,15 @@ import {
 import { placementMap } from '@/utils/placement';
 
 import { TooltipArrowIcon } from './ArrowIcon';
-import TooltipContent from './TooltipContent';
-import { useTooltipPortalContainer } from './TooltipPortal';
 import {
   TooltipGroupHandleContext,
   type TooltipGroupItem,
   TooltipGroupPropsContext,
 } from './groupContext';
 import { styles } from './style';
-import type { TooltipGroupProps } from './type';
+import TooltipContent from './TooltipContent';
+import { useTooltipPortalContainer } from './TooltipPortal';
+import { type TooltipGroupProps } from './type';
 
 const TooltipGroup: FC<TooltipGroupProps> = ({
   children,
@@ -57,8 +57,8 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
   useHidePopupWhenPositionerAtOrigin(handle.store, { enabled: !disableZeroOriginGuard });
 
   return (
-    <TooltipGroupHandleContext.Provider value={handle}>
-      <TooltipGroupPropsContext.Provider value={sharedProps}>
+    <TooltipGroupHandleContext value={handle}>
+      <TooltipGroupPropsContext value={sharedProps}>
         {children}
 
         <BaseTooltip.Root handle={handle} key={key} onOpenChange={handleOpenChange}>
@@ -66,7 +66,6 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
             const item = (payload as TooltipGroupItem | null) ?? null;
             activeItemRef.current = item;
 
-            // eslint-disable-next-line eqeqeq
             if (!item || (item.title == null && !item.hotkey)) return null;
 
             const arrow = item.arrow ?? false;
@@ -159,8 +158,8 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
             ) : null;
           }}
         </BaseTooltip.Root>
-      </TooltipGroupPropsContext.Provider>
-    </TooltipGroupHandleContext.Provider>
+      </TooltipGroupPropsContext>
+    </TooltipGroupHandleContext>
   );
 };
 

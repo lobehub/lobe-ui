@@ -12,8 +12,8 @@ export const items: CollapseProps['items'] = [
         icon={SettingsIcon}
         // If you want to prevent the event from bubbling up,
         // you can use the stopPropagation method.
-        onClick={stopPropagation}
         size={'small'}
+        onClick={stopPropagation}
       />
     ),
     key: '1',

@@ -3,7 +3,7 @@
 import { Drawer as AntdDrawer } from 'antd';
 import { cssVar } from 'antd-style';
 import { XIcon } from 'lucide-react';
-import { CSSProperties, memo, useMemo } from 'react';
+import { type CSSProperties, memo, useMemo } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
@@ -63,10 +63,10 @@ const Drawer = memo<DrawerProps>(
 
     const extraNode = (
       <Flexbox
+        horizontal
         align={'center'}
         className={classNames?.extra}
         gap={4}
-        horizontal
         justify={'flex-end'}
         style={{
           position: 'absolute',
@@ -86,6 +86,7 @@ const Drawer = memo<DrawerProps>(
           className={classNames?.sidebar}
           paddingBlock={12}
           paddingInline={16}
+          width={sidebarWidth}
           style={{
             background: cssVar.colorBgLayout,
             borderRight: `1px solid ${cssVar.colorBorderSecondary}`,
@@ -96,7 +97,6 @@ const Drawer = memo<DrawerProps>(
             top: 0,
             ...styles?.sidebar,
           }}
-          width={sidebarWidth}
         >
           {sidebar}
         </Flexbox>
@@ -124,9 +124,9 @@ const Drawer = memo<DrawerProps>(
         extra={noHeader ? undefined : extraNode}
         height={height}
         keyboard={true}
-        onClose={onClose}
         panelRef={ref}
         placement={placement}
+        width={width}
         styles={
           typeof styles === 'function'
             ? styles
@@ -159,9 +159,9 @@ const Drawer = memo<DrawerProps>(
         }
         title={
           <Flexbox
+            horizontal
             align={'center'}
             className={classNames?.title}
-            horizontal
             justify={'flex-start'}
             paddingBlock={8}
             paddingInline={16}
@@ -175,7 +175,7 @@ const Drawer = memo<DrawerProps>(
             {title}
           </Flexbox>
         }
-        width={width}
+        onClose={onClose}
         {...rest}
       >
         <Flexbox

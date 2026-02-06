@@ -2,8 +2,17 @@
 
 import { cx } from 'antd-style';
 import { AnimatePresence } from 'motion/react';
-import type { CSSProperties, ComponentPropsWithoutRef, ReactNode } from 'react';
-import { KeyboardEvent, memo, useCallback, useEffect, useMemo, useRef } from 'react';
+import {
+  type ComponentPropsWithoutRef,
+  type CSSProperties,
+  type KeyboardEvent,
+  memo,
+  type ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import useMergeState from 'use-merge-value';
 
 import Block from '@/Block';
@@ -15,7 +24,7 @@ import { stopPropagation } from '@/utils/dom';
 import ArrowIcon from './ArrowIcon';
 import { useAccordionContext } from './context';
 import { styles } from './style';
-import type { AccordionItemProps } from './type';
+import { type AccordionItemProps } from './type';
 
 type AccordionContentBaseProps = {
   children?: ReactNode;
@@ -344,7 +353,7 @@ const AccordionItem = memo<AccordionItemProps>(
     const titleNode = useMemo(
       () =>
         typeof title === 'string' ? (
-          <Text className={classNames?.title} ellipsis style={customStyles?.title}>
+          <Text ellipsis className={classNames?.title} style={customStyles?.title}>
             {title}
           </Text>
         ) : (
@@ -357,13 +366,13 @@ const AccordionItem = memo<AccordionItemProps>(
       () =>
         action && (
           <Flexbox
+            horizontal
             align={'center'}
             className={cx('accordion-action', styles.action, classNames?.action)}
             flex={'none'}
             gap={4}
-            horizontal
-            onClick={stopPropagation}
             style={customStyles?.action}
+            onClick={stopPropagation}
           >
             {action}
           </Flexbox>
@@ -374,17 +383,16 @@ const AccordionItem = memo<AccordionItemProps>(
     const headerElement = useMemo(() => {
       const header = (
         <Block
+          horizontal
           className={cx('accordion-header', styles.header, classNames?.header)}
           clickable={!disabled && allowExpand}
           gap={4}
-          horizontal
           justify={'space-between'}
-          onClick={handleToggle}
-          onKeyDown={handleKeyDown}
           padding={padding}
           paddingBlock={paddingBlock}
           paddingInline={paddingInline}
           ref={ref}
+          variant={customVariant || variant}
           style={{
             alignItems: 'center',
             cursor: disabled ? 'not-allowed' : allowExpand ? 'pointer' : 'default',
@@ -393,46 +401,47 @@ const AccordionItem = memo<AccordionItemProps>(
             width: '100%',
             ...customStyles?.header,
           }}
-          variant={customVariant || variant}
+          onClick={handleToggle}
+          onKeyDown={handleKeyDown}
         >
           {indicatorPlacementFinal === 'start' ? (
             <>
               <Flexbox
+                horizontal
                 align={'center'}
                 className={styles.titleWrapper}
                 flex={1}
                 gap={2}
-                horizontal
-                onDoubleClick={preventTitleTextSelection}
-                onMouseDown={preventTitleTextSelection}
                 style={{
                   overflow: 'hidden',
                 }}
+                onDoubleClick={preventTitleTextSelection}
+                onMouseDown={preventTitleTextSelection}
               >
                 {titleNode}
                 {indicator}
               </Flexbox>
-              <Flexbox align={'center'} flex={'none'} gap={4} horizontal>
+              <Flexbox horizontal align={'center'} flex={'none'} gap={4}>
                 {actionNode}
               </Flexbox>
             </>
           ) : (
             <>
               <Flexbox
+                horizontal
                 align={'center'}
                 className={styles.titleWrapper}
                 flex={1}
                 gap={2}
-                horizontal
-                onDoubleClick={preventTitleTextSelection}
-                onMouseDown={preventTitleTextSelection}
                 style={{
                   overflow: 'hidden',
                 }}
+                onDoubleClick={preventTitleTextSelection}
+                onMouseDown={preventTitleTextSelection}
               >
                 {titleNode}
               </Flexbox>
-              <Flexbox align={'center'} flex={'none'} gap={4} horizontal>
+              <Flexbox horizontal align={'center'} flex={'none'} gap={4}>
                 {actionNode}
                 {indicator}
               </Flexbox>

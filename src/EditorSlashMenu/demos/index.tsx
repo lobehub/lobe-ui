@@ -181,7 +181,7 @@ export default () => {
 
     const caret = el.selectionStart ?? 0;
     const slashIndex = slashIndexRef.current;
-    // eslint-disable-next-line eqeqeq
+
     if (slashIndex == null) return;
 
     const before = el.value.slice(0, slashIndex);
@@ -213,20 +213,23 @@ export default () => {
 
       <textarea
         className={styles.textarea}
+        ref={textareaRef}
+        value={text}
+        onClick={() => requestAnimationFrame(syncFromTextarea)}
+        onKeyUp={() => requestAnimationFrame(syncFromTextarea)}
         onChange={(e) => {
           setText(e.target.value);
           // caret rect depends on DOM value, so defer until state flush.
           requestAnimationFrame(syncFromTextarea);
         }}
-        onClick={() => requestAnimationFrame(syncFromTextarea)}
-        onKeyUp={() => requestAnimationFrame(syncFromTextarea)}
-        ref={textareaRef}
-        value={text}
       />
 
       <EditorSlashMenu
         anchor={anchor}
         items={items}
+        open={open}
+        value={query}
+        onSelect={(item) => applySelection(item)}
         onOpenChange={(nextOpen) => {
           setOpen(nextOpen);
           if (!nextOpen) {
@@ -234,9 +237,6 @@ export default () => {
             slashIndexRef.current = null;
           }
         }}
-        onSelect={(item) => applySelection(item)}
-        open={open}
-        value={query}
       />
     </div>
   );

@@ -33,8 +33,8 @@ export default () => {
           <Menu
             {...options}
             items={items}
-            onClick={({ key }) => setActiveKey(key)}
             selectedKeys={activeKey ? [activeKey] : undefined}
+            onClick={({ key }) => setActiveKey(key)}
           />
         </Flexbox>
         <Flexbox width={'100%'}>
@@ -42,8 +42,8 @@ export default () => {
           <Menu
             {...options}
             items={groupItems}
-            onClick={({ key }) => setActiveKey(key)}
             selectedKeys={activeKey ? [activeKey] : undefined}
+            onClick={({ key }) => setActiveKey(key)}
           />
         </Flexbox>
       </Flexbox>

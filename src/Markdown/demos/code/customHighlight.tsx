@@ -1,4 +1,4 @@
-import { ActionIcon, Markdown, MarkdownProps } from '@lobehub/ui';
+import { ActionIcon, Markdown, type MarkdownProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { AlertCircleIcon } from 'lucide-react';
 
@@ -40,8 +40,8 @@ export default () => {
                   {originalNode}
                   <ActionIcon
                     icon={AlertCircleIcon}
-                    onClick={() => alert(language + content)}
                     size={actionIconSize}
+                    onClick={() => alert(language + content)}
                   />
                 </>
               );

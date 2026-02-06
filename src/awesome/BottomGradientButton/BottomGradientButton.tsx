@@ -15,12 +15,12 @@ const BottomGradientButton = memo<BottomGradientButtonProps>(
         className={cx(styles, className)}
         ref={ref}
         shape={'round'}
+        variant={'filled'}
         style={{
           paddingInline: 16,
           width: 'unset',
           ...style,
         }}
-        variant={'filled'}
         {...rest}
       >
         {children}

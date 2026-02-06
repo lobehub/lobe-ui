@@ -104,10 +104,10 @@ export default () => {
     <StoryBook levaStore={store}>
       <EditableMessage
         editing={editing}
-        onEditingChange={setEdit}
-        onOpenChange={setOpenModal}
         openModal={openModal}
         value={content}
+        onEditingChange={setEdit}
+        onOpenChange={setOpenModal}
       />
     </StoryBook>
   );

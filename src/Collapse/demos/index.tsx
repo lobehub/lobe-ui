@@ -1,4 +1,4 @@
-import { Collapse, CollapseProps } from '@lobehub/ui';
+import { Collapse, type CollapseProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 import { items } from './data';

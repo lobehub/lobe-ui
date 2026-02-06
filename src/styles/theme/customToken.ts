@@ -1,11 +1,11 @@
-import { GetCustomToken } from 'antd-style';
-import { AliasToken } from 'antd/es/theme/interface';
+import { type AliasToken } from 'antd/es/theme/interface';
+import { type GetCustomToken } from 'antd-style';
 import { camelCase } from 'es-toolkit/compat';
 import { mix } from 'polished';
 
 import { colorScales } from '@/color/colors';
-import type { ColorScaleItem } from '@/color/types';
-import type { LobeCustomToken } from '@/types/customToken';
+import { type ColorScaleItem } from '@/color/types';
+import { type LobeCustomToken } from '@/types/customToken';
 
 const generateColorPalette = ({
   name,

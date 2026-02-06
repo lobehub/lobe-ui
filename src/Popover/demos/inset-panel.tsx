@@ -17,12 +17,12 @@ const MenuItem = ({ icon: Icon, children }: { children: string; icon: React.Elem
   <Button
     block
     icon={<Icon size={16} />}
+    type="text"
     style={{
       justifyContent: 'flex-start',
       padding: '10px 16px',
       transition: 'all 0.2s',
     }}
-    type="text"
   >
     {children}
   </Button>
@@ -49,13 +49,11 @@ const StatItem = ({
       transition: 'all 0.2s',
     }}
   >
-    <Flexbox align="center" gap={8} horizontal>
+    <Flexbox horizontal align="center" gap={8}>
       <Icon size={16} style={{ color }} />
       <div style={{ fontSize: 20, fontWeight: 700 }}>{value}</div>
     </Flexbox>
-    <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12, fontWeight: 500 }}>
-      {label}
-    </div>
+    <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12, fontWeight: 500 }}>{label}</div>
   </Flexbox>
 );
 
@@ -71,7 +69,10 @@ export default () => {
   return (
     <Flexbox align="center" justify="center" style={{ padding: 48 }}>
       <Popover
+        inset
         arrow={false}
+        placement="topLeft"
+        trigger="click"
         classNames={{
           content: styles.content,
         }}
@@ -79,11 +80,12 @@ export default () => {
           <Flexbox gap={12} style={{ width: 360 }}>
             {/* User Info Section with gradient background */}
             <Flexbox
+              horizontal
               align="center"
               gap={14}
-              horizontal
               style={{
-                background: 'linear-gradient(135deg, var(--lobe-color-fill-secondary) 0%, var(--lobe-color-fill-tertiary) 100%)',
+                background:
+                  'linear-gradient(135deg, var(--lobe-color-fill-secondary) 0%, var(--lobe-color-fill-tertiary) 100%)',
                 borderRadius: 12,
                 padding: '16px',
               }}
@@ -114,7 +116,7 @@ export default () => {
             </Flexbox>
 
             {/* Stats Row with icons */}
-            <Flexbox gap={10} horizontal>
+            <Flexbox horizontal gap={10}>
               <StatItem
                 color="var(--lobe-color-primary)"
                 icon={MessageSquare}
@@ -165,25 +167,22 @@ export default () => {
             <Button
               block
               icon={<LogOut size={16} />}
+              type="text"
               style={{
                 color: 'var(--lobe-color-error)',
                 justifyContent: 'flex-start',
                 padding: '10px 16px',
               }}
-              type="text"
             >
               退出登录
             </Button>
           </Flexbox>
         }
-        inset
-        placement="topLeft"
-        trigger="click"
       >
         <Flexbox
+          horizontal
           align="center"
           gap={12}
-          horizontal
           style={{
             background: 'var(--lobe-color-fill-secondary)',
             border: '1px solid var(--lobe-color-border)',
@@ -199,7 +198,7 @@ export default () => {
             size={42}
             style={{ borderRadius: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}
           />
-          <Flexbox align="center" gap={6} horizontal>
+          <Flexbox horizontal align="center" gap={6}>
             <span style={{ fontSize: 15, fontWeight: 600 }}>拾一</span>
             <ChevronDown
               size={16}

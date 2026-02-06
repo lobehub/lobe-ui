@@ -43,7 +43,7 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
 
 export default () => {
   return (
-    <DropdownMenu items={items} nativeButton>
+    <DropdownMenu nativeButton items={items}>
       <button aria-label="Open menu" className={styles.trigger} type="button">
         <MoreHorizontal />
       </button>
