@@ -1,10 +1,8 @@
 'use client';
 
-import { mergeProps } from '@base-ui/react/merge-props';
 import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import { cx } from 'antd-style';
-import { cloneElement, isValidElement, memo, useCallback, useMemo, useState } from 'react';
-import { mergeRefs } from 'react-merge-refs';
+import { isValidElement, memo, useCallback, useMemo, useState } from 'react';
 
 import { useFloatingLayer } from '@/hooks/useFloatingLayer';
 import { useIsClient } from '@/hooks/useIsClient';
@@ -15,6 +13,7 @@ import { TooltipArrowIcon } from './ArrowIcon';
 import TooltipContent from './TooltipContent';
 import { useTooltipPortalContainer } from './TooltipPortal';
 import { styles } from './style';
+import { renderTooltipTriggerElement } from './triggerUtils';
 import type { TooltipProps } from './type';
 
 const DEFAULT_OPEN_DELAY = 400;
@@ -130,49 +129,16 @@ export const TooltipStandalone = memo<TooltipProps>(
       };
 
       if (isValidElement(children)) {
-        const isNativeElement = typeof children.type === 'string';
-        const isClassComponent =
-          typeof children.type === 'function' &&
-          Boolean((children.type as any).prototype?.isReactComponent);
-        const isForwardRefComponent =
-          typeof children.type === 'object' &&
-          children.type !== null &&
-          ((children.type as any).$$typeof === Symbol.for('react.forward_ref') ||
-            ((children.type as any).$$typeof === Symbol.for('react.memo') &&
-              (children.type as any).type?.$$typeof === Symbol.for('react.forward_ref')));
-        const shouldWrapTrigger = !isNativeElement && !isClassComponent && !isForwardRefComponent;
-
         return (
           <BaseTooltip.Trigger
             {...baseTriggerProps}
             render={(props) => {
-              // Base UI's trigger props include `type="button"` by default.
-              // If we render into a non-<button> element, that prop is invalid and can warn.
-              const resolvedProps = (() => {
-                if (isNativeButtonTriggerElement) return props as any;
-                // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
-                const { type, ref: triggerRef, ...restProps } = props as any;
-                return restProps;
-              })();
-
-              if (!shouldWrapTrigger) {
-                const mergedProps = mergeProps((children as any).props, resolvedProps);
-                return cloneElement(children as any, {
-                  ...mergedProps,
-                  ref: mergeRefs([(children as any).ref, (props as any).ref, refProp]),
-                });
-              }
-
-              const { style: triggerStyle, ...restProps } = resolvedProps as any;
-              return (
-                <span
-                  {...restProps}
-                  ref={mergeRefs([(props as any).ref, refProp])}
-                  style={{ display: 'inline-flex', ...triggerStyle }}
-                >
-                  {children}
-                </span>
-              );
+              return renderTooltipTriggerElement({
+                child: children,
+                isNativeButtonTriggerElement,
+                ref: refProp,
+                renderProps: props,
+              });
             }}
           />
         );
