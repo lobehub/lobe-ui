@@ -69,11 +69,52 @@ export const TooltipInGroup: FC<TooltipProps> = ({ children, ref: refProp, ...pr
     delay: resolvedOpenDelay,
     disabled,
     payload: item,
+    ...item.triggerProps,
   };
 
   if (childElement) {
+    const isNativeElement = typeof childElement.type === 'string';
+    const isClassComponent =
+      typeof childElement.type === 'function' &&
+      Boolean((childElement.type as any).prototype?.isReactComponent);
+    const isForwardRefComponent =
+      typeof childElement.type === 'object' &&
+      childElement.type !== null &&
+      ((childElement.type as any).$$typeof === Symbol.for('react.forward_ref') ||
+        ((childElement.type as any).$$typeof === Symbol.for('react.memo') &&
+          (childElement.type as any).type?.$$typeof === Symbol.for('react.forward_ref')));
+    const shouldWrapTrigger = !isNativeElement && !isClassComponent && !isForwardRefComponent;
+
+    const wrappedRenderTrigger = (renderProps: unknown) => {
+      // Base UI's trigger props include `type="button"` by default.
+      // If we render into a non-<button> element, that prop is invalid and can warn.
+      const resolvedProps = (() => {
+        if (isNativeButtonTriggerElement) return renderProps as any;
+        // eslint-disable-next-line unused-imports/no-unused-vars, @typescript-eslint/no-unused-vars
+        const { type, ref: triggerRef, ...restProps } = renderProps as any;
+        return restProps;
+      })();
+
+      if (!shouldWrapTrigger) return renderTrigger(renderProps);
+
+      const { style: triggerStyle, ...restProps } = resolvedProps as any;
+      return (
+        <span
+          {...restProps}
+          ref={mergeRefs([(renderProps as any).ref, refProp])}
+          style={{ display: 'inline-flex', ...triggerStyle }}
+        >
+          {children}
+        </span>
+      );
+    };
+
     return (
-      <BaseTooltip.Trigger handle={group ?? undefined} {...triggerProps} render={renderTrigger} />
+      <BaseTooltip.Trigger
+        handle={group ?? undefined}
+        {...triggerProps}
+        render={wrappedRenderTrigger}
+      />
     );
   }
 

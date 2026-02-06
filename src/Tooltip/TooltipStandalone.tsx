@@ -130,6 +130,18 @@ export const TooltipStandalone = memo<TooltipProps>(
       };
 
       if (isValidElement(children)) {
+        const isNativeElement = typeof children.type === 'string';
+        const isClassComponent =
+          typeof children.type === 'function' &&
+          Boolean((children.type as any).prototype?.isReactComponent);
+        const isForwardRefComponent =
+          typeof children.type === 'object' &&
+          children.type !== null &&
+          ((children.type as any).$$typeof === Symbol.for('react.forward_ref') ||
+            ((children.type as any).$$typeof === Symbol.for('react.memo') &&
+              (children.type as any).type?.$$typeof === Symbol.for('react.forward_ref')));
+        const shouldWrapTrigger = !isNativeElement && !isClassComponent && !isForwardRefComponent;
+
         return (
           <BaseTooltip.Trigger
             {...baseTriggerProps}
@@ -143,11 +155,24 @@ export const TooltipStandalone = memo<TooltipProps>(
                 return restProps;
               })();
 
-              const mergedProps = mergeProps((children as any).props, resolvedProps);
-              return cloneElement(children as any, {
-                ...mergedProps,
-                ref: mergeRefs([(children as any).ref, (props as any).ref, refProp]),
-              });
+              if (!shouldWrapTrigger) {
+                const mergedProps = mergeProps((children as any).props, resolvedProps);
+                return cloneElement(children as any, {
+                  ...mergedProps,
+                  ref: mergeRefs([(children as any).ref, (props as any).ref, refProp]),
+                });
+              }
+
+              const { style: triggerStyle, ...restProps } = resolvedProps as any;
+              return (
+                <span
+                  {...restProps}
+                  ref={mergeRefs([(props as any).ref, refProp])}
+                  style={{ display: 'inline-flex', ...triggerStyle }}
+                >
+                  {children}
+                </span>
+              );
             }}
           />
         );

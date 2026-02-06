@@ -1,4 +1,4 @@
-import { Tag } from '@lobehub/ui';
+import { Tag, Tooltip } from '@lobehub/ui';
 import { Badge } from 'antd';
 import { cssVar } from 'antd-style';
 
@@ -8,7 +8,9 @@ export default () => {
   return (
     <Center gap={24}>
       <Center gap={4} horizontal wrap={'wrap'}>
-        <Tag color="success">success</Tag>
+        <Tooltip title="success">
+          <Tag color="success">success</Tag>
+        </Tooltip>
         <Tag color="warning">warning</Tag>
         <Tag color="error">error</Tag>
         <Tag color="info">info</Tag>

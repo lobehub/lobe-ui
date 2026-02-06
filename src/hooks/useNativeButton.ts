@@ -82,6 +82,7 @@ const NATIVE_BUTTON_MAP: Record<string, boolean> = {
   Text: false,
   TextArea: false,
   ThemeSwitch: false,
+  Tooltip: false,
   Video: false,
 };
 
