@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [4.34.1](https://github.com/lobehub/lobe-ui/compare/v4.34.0...v4.34.1) (2026-02-07)
+
+### 🐛 Bug Fixes
+
+- **sortable-list**: Improve generic type support for SortableList ([2d3509e](https://github.com/lobehub/lobe-ui/commit/2d3509e))
+
 # [4.34.0](https://github.com/lobehub/lobe-ui/compare/v4.33.4...v4.34.0) (2026-02-07)
 
 ### ✨ Features
