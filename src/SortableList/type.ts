@@ -6,9 +6,12 @@ export interface SortableListItem {
   [key: string]: any;
   id: string | number;
 }
-export interface SortableListProps extends Omit<FlexboxProps, 'onChange'> {
-  items: SortableListItem[];
-  onChange: (items: SortableListItem[]) => void;
+export interface SortableListProps<T extends SortableListItem = SortableListItem> extends Omit<
+  FlexboxProps,
+  'onChange'
+> {
+  items: T[];
+  onChange: (items: T[]) => void;
   ref?: Ref<HTMLUListElement>;
-  renderItem: (item: SortableListItem) => ReactNode;
+  renderItem: (item: T) => ReactNode;
 }

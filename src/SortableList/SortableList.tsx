@@ -23,7 +23,7 @@ import DragHandle from './components/DragHandle';
 import SortableItem from './components/SortableItem';
 import SortableOverlay from './components/SortableOverlay';
 import { styles } from './style';
-import { type SortableListProps } from './type';
+import { type SortableListItem, type SortableListProps } from './type';
 
 const SortableListParent = memo<SortableListProps>(
   ({ ref, items, onChange, renderItem, gap = 8, ...rest }) => {
@@ -72,7 +72,7 @@ const SortableListParent = memo<SortableListProps>(
 SortableListParent.displayName = 'SortableList';
 
 export interface ISortableList {
-  (props: SortableListProps): ReactNode;
+  <T extends SortableListItem = SortableListItem>(props: SortableListProps<T>): ReactNode;
   DragHandle: typeof DragHandle;
   Item: typeof SortableItem;
 }
