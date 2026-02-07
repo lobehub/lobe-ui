@@ -2,6 +2,16 @@
 
 # Changelog
 
+# [4.34.0](https://github.com/lobehub/lobe-ui/compare/v4.33.4...v4.34.0) (2026-02-07)
+
+### ✨ Features
+
+- **context-menu**: Add support for item descriptions and icon alignment ([23b1329](https://github.com/lobehub/lobe-ui/commit/23b1329))
+
+### 🎫 Chores
+
+- **lint**: Update lint ([5c0fab4](https://github.com/lobehub/lobe-ui/commit/5c0fab4))
+
 ### [Version 4.33.4](https://github.com/lobehub/lobe-ui/compare/v4.33.3...v4.33.4)
 
 <sup>Released on **2026-02-04**</sup>
