@@ -6,6 +6,7 @@ export {
   getItemLabel,
   hasAnyIcon,
   hasCheckboxAndIcon,
+  type IconAlign,
   type IconSpaceMode,
   renderIcon,
   type RenderItemContentOptions,

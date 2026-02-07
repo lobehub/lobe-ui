@@ -9,13 +9,17 @@ import type { MenuItemType, SubMenuType } from './type';
 
 export type IconSpaceMode = 'global' | 'group';
 
+export type IconAlign = 'center' | 'start';
+
 export interface RenderOptions {
+  iconAlign?: IconAlign;
   iconSpaceMode?: IconSpaceMode;
   indicatorOnRight?: boolean;
   reserveIconSpace?: boolean;
 }
 
 export interface RenderItemContentOptions {
+  iconAlign?: IconAlign;
   indicatorOnRight?: boolean;
   reserveIconSpace?: boolean;
   submenu?: boolean;

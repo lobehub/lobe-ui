@@ -21,6 +21,12 @@ description: ContextMenu provides an imperative API to open a menu at the last p
 
 <code src="./demos/switch.tsx" center></code>
 
+## Description
+
+Items can display a secondary description below the label using the `desc` property.
+
+<code src="./demos/desc.tsx" center></code>
+
 ## Empty Submenu
 
 <code src="./demos/emptySubmenu.tsx" center></code>
@@ -49,6 +55,7 @@ Control how icon spacing is reserved across menu items. In `global` mode (defaul
 
 | Property      | Description                                                                                    | Type                  | Default    |
 | ------------- | ---------------------------------------------------------------------------------------------- | --------------------- | ---------- |
+| iconAlign     | Icon vertical alignment when items have `desc`. Only effective with descriptions.              | `'center' \| 'start'` | `'center'` |
 | iconSpaceMode | Icon space reservation: `global` reserves for all items, `group` reserves per group with icons | `'global' \| 'group'` | `'global'` |
 
 ### ContextMenuHost

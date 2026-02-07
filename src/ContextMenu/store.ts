@@ -1,10 +1,13 @@
 import type { VirtualElement } from '@floating-ui/react';
 
+import type { IconAlign } from '@/Menu';
+
 import type { IconSpaceMode } from './renderItems';
 import type { ContextMenuItem } from './type';
 
 export type ContextMenuState = {
   anchor: VirtualElement | null;
+  iconAlign?: IconAlign;
   iconSpaceMode: IconSpaceMode;
   items: ContextMenuItem[];
   open: boolean;
@@ -69,6 +72,7 @@ export const setContextMenuState = (next: Partial<ContextMenuState>) => {
 };
 
 export interface ShowContextMenuOptions {
+  iconAlign?: IconAlign;
   iconSpaceMode?: IconSpaceMode;
 }
 
@@ -80,6 +84,7 @@ export const showContextMenu = (items: ContextMenuItem[], options?: ShowContextM
 
   setContextMenuState({
     anchor: createVirtualElement(point),
+    iconAlign: options?.iconAlign,
     iconSpaceMode: options?.iconSpaceMode ?? 'global',
     items,
     open: true,

@@ -7,7 +7,7 @@ import type {
 } from '@base-ui/react/menu';
 import type { ReactNode } from 'react';
 
-import type { BaseMenuItemType, MenuCheckboxItemType, MenuSwitchItemType } from '@/Menu';
+import type { BaseMenuItemType, IconAlign, MenuCheckboxItemType, MenuSwitchItemType } from '@/Menu';
 import type { Trigger } from '@/types';
 import type { Placement } from '@/utils/placement';
 
@@ -26,6 +26,13 @@ export interface DropdownMenuProps<Payload = unknown> extends Omit<
   'children'
 > {
   children: ReactNode;
+  /**
+   * 图标与 label+desc 的垂直对齐方式
+   * - 'center': 图标垂直居中（默认）
+   * - 'start': 图标与第一行文本顶部对齐，仅在 item 有 desc 时生效
+   * @default 'center'
+   */
+  iconAlign?: IconAlign;
   /**
    * 图标空间保留模式
    * - 'global': 当任何一个选项有图标时，所有 item 都保留图标位

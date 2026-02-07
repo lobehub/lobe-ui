@@ -19,6 +19,7 @@ const DropdownMenu = memo<DropdownMenuProps>(
   ({
     children,
     defaultOpen,
+    iconAlign,
     iconSpaceMode,
     items,
     nativeButton,
@@ -57,12 +58,15 @@ const DropdownMenu = memo<DropdownMenuProps>(
     const menuItems = useMemo(() => {
       if (isOpen) {
         const resolvedItems = typeof items === 'function' ? items() : items;
-        const renderedItems = renderDropdownMenuItems(resolvedItems, [], { iconSpaceMode });
+        const renderedItems = renderDropdownMenuItems(resolvedItems, [], {
+          iconAlign,
+          iconSpaceMode,
+        });
         menuItemsRef.current = renderedItems;
         return renderedItems;
       }
       return menuItemsRef.current;
-    }, [isOpen, items, iconSpaceMode]);
+    }, [isOpen, items, iconAlign, iconSpaceMode]);
     const handleOpenChangeComplete = useCallback(
       (nextOpen: boolean) => {
         onOpenChangeComplete?.(nextOpen);

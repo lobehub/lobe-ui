@@ -11,6 +11,7 @@ export interface MenuSwitchItemType {
   closeOnClick?: boolean;
   danger?: boolean;
   defaultChecked?: boolean;
+  desc?: ReactNode;
   disabled?: boolean;
   extra?: ReactNode;
   icon?: IconProps['icon'];

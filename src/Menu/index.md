@@ -28,6 +28,7 @@ description: Menu is a navigation component that provides a list of options for 
 | label    | Content of the menu item              | `ReactNode`                   |
 | title    | Title attribute of the item           | `string`                      |
 | icon     | Icon of the menu item                 | `ReactNode \| IconDefinition` |
+| desc     | Secondary description below the label | `ReactNode`                   |
 | danger   | Whether the item has danger style     | `boolean`                     |
 | disabled | Whether the item is disabled          | `boolean`                     |
 | children | Sub-items for sub-menu or group       | `ItemType[]`                  |

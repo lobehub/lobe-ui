@@ -106,7 +106,6 @@
   },
   "lint-staged": {
     "*.md": [
-      "remark --quiet --output --",
       "prettier --write --no-error-on-unmatched-pattern"
     ],
     "*.json": [

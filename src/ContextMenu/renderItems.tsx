@@ -35,7 +35,7 @@ import {
   type ContextMenuSwitchItem,
 } from './type';
 
-export type { IconSpaceMode } from '@/Menu';
+export type { IconAlign, IconSpaceMode } from '@/Menu';
 
 const EmptyMenuItem = memo(() => {
   const { t } = useTranslation(common);
@@ -117,22 +117,36 @@ const renderItemContent = (
   iconNode?: ReactNode,
 ) => {
   const label = getItemLabel(item);
+  const desc = 'desc' in item ? item.desc : undefined;
   const extra = 'extra' in item ? item.extra : undefined;
   const indicatorOnRight = options?.indicatorOnRight;
+  const alignStart = Boolean(desc) && options?.iconAlign === 'start';
   const hasCustomIcon = iconNode !== undefined && !indicatorOnRight;
   const hasIcon = hasCustomIcon ? Boolean(iconNode) : Boolean(item.icon);
   const shouldRenderIcon = hasCustomIcon
     ? Boolean(options?.reserveIconSpace || iconNode)
     : Boolean(hasIcon || options?.reserveIconSpace);
 
+  const labelNode = desc ? (
+    <div className={styles.labelGroup}>
+      <span className={styles.label}>{label}</span>
+      <span className={styles.desc}>{desc}</span>
+    </div>
+  ) : (
+    <span className={styles.label}>{label}</span>
+  );
+
   return (
-    <div className={styles.itemContent}>
+    <div className={cx(styles.itemContent, alignStart && styles.itemContentAlignStart)}>
       {shouldRenderIcon ? (
-        <span aria-hidden={!hasIcon} className={styles.icon}>
+        <span
+          aria-hidden={!hasIcon}
+          className={cx(styles.icon, alignStart && styles.iconAlignStart)}
+        >
           {hasCustomIcon ? iconNode : hasIcon ? renderIcon(item.icon, 'small') : null}
         </span>
       ) : null}
-      <span className={styles.label}>{label}</span>
+      {labelNode}
       {extra ? <span className={styles.extra}>{extra}</span> : null}
       {indicatorOnRight && iconNode ? iconNode : null}
       {options?.submenu ? (
@@ -165,6 +179,7 @@ export const renderContextMenuItems = (
   keyPath: string[] = [],
   options?: RenderOptions,
 ): ReactNode[] => {
+  const iconAlign = options?.iconAlign;
   const iconSpaceMode = options?.iconSpaceMode ?? 'global';
   const reserveIconSpace =
     options?.reserveIconSpace ?? hasAnyIcon(items, iconSpaceMode === 'global');
@@ -199,7 +214,11 @@ export const renderContextMenuItems = (
           label={labelText}
           onCheckedChange={(checked) => checkboxItem.onCheckedChange?.(checked)}
         >
-          {renderItemContent(checkboxItem, { indicatorOnRight, reserveIconSpace }, indicator)}
+          {renderItemContent(
+            checkboxItem,
+            { iconAlign, indicatorOnRight, reserveIconSpace },
+            indicator,
+          )}
         </ContextMenu.CheckboxItem>
       );
     }
@@ -221,7 +240,7 @@ export const renderContextMenuItems = (
           label={labelText}
           onCheckedChange={switchItem.onCheckedChange}
         >
-          {renderItemContent(switchItem, { reserveIconSpace })}
+          {renderItemContent(switchItem, { iconAlign, reserveIconSpace })}
         </ContextMenuSwitchItemInternal>
       );
     }
@@ -248,6 +267,7 @@ export const renderContextMenuItems = (
           ) : null}
           {group.children
             ? renderContextMenuItems(group.children, nextKeyPath, {
+                iconAlign,
                 iconSpaceMode,
                 indicatorOnRight: groupIndicatorOnRight,
                 reserveIconSpace: groupReserveIconSpace,
@@ -274,6 +294,7 @@ export const renderContextMenuItems = (
             label={labelText}
           >
             {renderItemContent(submenu, {
+              iconAlign,
               reserveIconSpace,
               submenu: true,
             })}
@@ -288,7 +309,10 @@ export const renderContextMenuItems = (
             >
               <ContextMenu.Popup className={styles.popup}>
                 {submenu.children && submenu.children.length > 0 ? (
-                  renderContextMenuItems(submenu.children, nextKeyPath, { iconSpaceMode })
+                  renderContextMenuItems(submenu.children, nextKeyPath, {
+                    iconAlign,
+                    iconSpaceMode,
+                  })
                 ) : (
                   <EmptyMenuItem />
                 )}
@@ -313,7 +337,7 @@ export const renderContextMenuItems = (
         label={labelText}
         onClick={(event) => invokeItemClick(menuItem, nextKeyPath, event)}
       >
-        {renderItemContent(menuItem, { reserveIconSpace })}
+        {renderItemContent(menuItem, { iconAlign, reserveIconSpace })}
       </ContextMenu.Item>
     );
   });

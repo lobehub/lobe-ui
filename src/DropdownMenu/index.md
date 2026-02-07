@@ -29,6 +29,18 @@ Control how icon spacing is reserved across menu items. In `global` mode (defaul
 
 <code src="./demos/iconSpaceMode.tsx" center></code>
 
+## Description
+
+Items can display a secondary description below the label using the `desc` property.
+
+<code src="./demos/desc.tsx" center></code>
+
+## Icon Align
+
+When items have descriptions, use `iconAlign` to control icon vertical alignment. `center` (default) vertically centers the icon, `start` aligns it with the first line of text.
+
+<code src="./demos/iconAlign.tsx" center></code>
+
 ## Danger
 
 <code src="./demos/danger.tsx" center></code>
@@ -75,6 +87,7 @@ When using Tooltip inside DropdownMenu, wrap both in `TooltipGroup` to ensure th
 | --------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------- |
 | items           | Menu items (lazy supported)                                                                    | `DropdownMenuV2ItemType[] \| (() => DropdownMenuV2ItemType[])`                                                   | -              |
 | children        | Trigger element                                                                                | `ReactNode`                                                                                                      | -              |
+| iconAlign       | Icon vertical alignment when items have `desc`. Only effective with descriptions.              | `'center' \| 'start'`                                                                                            | `'center'`     |
 | iconSpaceMode   | Icon space reservation: `global` reserves for all items, `group` reserves per group with icons | `'global' \| 'group'`                                                                                            | `'global'`     |
 | nativeButton    | Shortcut for trigger nativeButton                                                              | `boolean`                                                                                                        | -              |
 | placement       | Position of dropdown menu                                                                      | `'bottom' \| 'bottomLeft' \| 'bottomCenter' \| 'bottomRight' \| 'top' \| 'topLeft' \| 'topCenter' \| 'topRight'` | `'bottomLeft'` |
@@ -91,9 +104,10 @@ Menu items are the same as those used for Menu/Dropdown, with support for `type:
 
 #### Standard Item
 
-| Property     | Description                                                                        | Type      | Default |
-| ------------ | ---------------------------------------------------------------------------------- | --------- | ------- |
-| closeOnClick | Close menu on click. Set to `false` for items with Upload or file picker elements. | `boolean` | `true`  |
+| Property     | Description                                                                        | Type        | Default |
+| ------------ | ---------------------------------------------------------------------------------- | ----------- | ------- |
+| desc         | Secondary description text displayed below the label                               | `ReactNode` | -       |
+| closeOnClick | Close menu on click. Set to `false` for items with Upload or file picker elements. | `boolean`   | `true`  |
 
 #### Checkbox Item
 

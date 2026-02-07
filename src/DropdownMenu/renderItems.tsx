@@ -19,6 +19,7 @@ import {
   type RenderOptions,
   type SubMenuType,
 } from '@/Menu';
+import { styles } from '@/Menu/sharedStyle';
 
 import {
   DropdownMenuCheckboxItemIndicator,
@@ -27,9 +28,11 @@ import {
   DropdownMenuGroupLabel,
   DropdownMenuItem,
   DropdownMenuItemContent,
+  DropdownMenuItemDesc,
   DropdownMenuItemExtra,
   DropdownMenuItemIcon,
   DropdownMenuItemLabel,
+  DropdownMenuItemLabelGroup,
   DropdownMenuPopup,
   DropdownMenuPortal,
   DropdownMenuPositioner,
@@ -45,7 +48,7 @@ import {
   type DropdownMenuSwitchItem as DropdownMenuSwitchItemType,
 } from './type';
 
-export type { IconSpaceMode } from '@/Menu';
+export type { IconAlign, IconSpaceMode } from '@/Menu';
 
 const renderItemContent = (
   item: MenuItemType | SubMenuType | DropdownMenuCheckboxItemType | DropdownMenuSwitchItemType,
@@ -53,22 +56,37 @@ const renderItemContent = (
   iconNode?: ReactNode,
 ) => {
   const label = getItemLabel(item);
+  const desc = 'desc' in item ? item.desc : undefined;
   const extra = 'extra' in item ? item.extra : undefined;
   const indicatorOnRight = options?.indicatorOnRight;
+  const alignStart = Boolean(desc) && options?.iconAlign === 'start';
+
   const hasCustomIcon = iconNode !== undefined && !indicatorOnRight;
   const hasIcon = hasCustomIcon ? Boolean(iconNode) : Boolean(item.icon);
   const shouldRenderIcon = hasCustomIcon
     ? Boolean(options?.reserveIconSpace || iconNode)
     : Boolean(hasIcon || options?.reserveIconSpace);
 
+  const labelNode = desc ? (
+    <DropdownMenuItemLabelGroup>
+      <DropdownMenuItemLabel>{label}</DropdownMenuItemLabel>
+      <DropdownMenuItemDesc>{desc}</DropdownMenuItemDesc>
+    </DropdownMenuItemLabelGroup>
+  ) : (
+    <DropdownMenuItemLabel>{label}</DropdownMenuItemLabel>
+  );
+
   return (
-    <DropdownMenuItemContent>
+    <DropdownMenuItemContent className={alignStart ? styles.itemContentAlignStart : undefined}>
       {shouldRenderIcon ? (
-        <DropdownMenuItemIcon aria-hidden={!hasIcon}>
+        <DropdownMenuItemIcon
+          aria-hidden={!hasIcon}
+          className={alignStart ? styles.iconAlignStart : undefined}
+        >
           {hasCustomIcon ? iconNode : hasIcon ? renderIcon(item.icon) : null}
         </DropdownMenuItemIcon>
       ) : null}
-      <DropdownMenuItemLabel>{label}</DropdownMenuItemLabel>
+      {labelNode}
       {extra ? <DropdownMenuItemExtra>{extra}</DropdownMenuItemExtra> : null}
       {indicatorOnRight && iconNode ? iconNode : null}
       {options?.submenu ? (
@@ -101,6 +119,7 @@ export const renderDropdownMenuItems = (
   keyPath: string[] = [],
   options?: RenderOptions,
 ): ReactNode[] => {
+  const iconAlign = options?.iconAlign;
   const iconSpaceMode = options?.iconSpaceMode ?? 'global';
   const reserveIconSpace =
     options?.reserveIconSpace ?? hasAnyIcon(items, iconSpaceMode === 'global');
@@ -133,7 +152,11 @@ export const renderDropdownMenuItems = (
           label={labelText}
           onCheckedChange={(checked) => checkboxItem.onCheckedChange?.(checked)}
         >
-          {renderItemContent(checkboxItem, { indicatorOnRight, reserveIconSpace }, indicator)}
+          {renderItemContent(
+            checkboxItem,
+            { iconAlign, indicatorOnRight, reserveIconSpace },
+            indicator,
+          )}
         </DropdownMenuCheckboxItemPrimitive>
       );
     }
@@ -155,7 +178,7 @@ export const renderDropdownMenuItems = (
           label={labelText}
           onCheckedChange={(checked) => switchItem.onCheckedChange?.(checked)}
         >
-          {renderItemContent(switchItem, { reserveIconSpace })}
+          {renderItemContent(switchItem, { iconAlign, reserveIconSpace })}
         </DropdownMenuSwitchItem>
       );
     }
@@ -178,6 +201,7 @@ export const renderDropdownMenuItems = (
           {group.label ? <DropdownMenuGroupLabel>{group.label}</DropdownMenuGroupLabel> : null}
           {group.children
             ? renderDropdownMenuItems(group.children, nextKeyPath, {
+                iconAlign,
                 iconSpaceMode,
                 indicatorOnRight: groupIndicatorOnRight,
                 reserveIconSpace: groupReserveIconSpace,
@@ -201,6 +225,7 @@ export const renderDropdownMenuItems = (
             label={labelText}
           >
             {renderItemContent(submenu, {
+              iconAlign,
               reserveIconSpace,
               submenu: true,
             })}
@@ -209,7 +234,10 @@ export const renderDropdownMenuItems = (
             <DropdownMenuPositioner alignOffset={-4} data-submenu="" sideOffset={-1}>
               <DropdownMenuPopup>
                 {submenu.children
-                  ? renderDropdownMenuItems(submenu.children, nextKeyPath, { iconSpaceMode })
+                  ? renderDropdownMenuItems(submenu.children, nextKeyPath, {
+                      iconAlign,
+                      iconSpaceMode,
+                    })
                   : null}
               </DropdownMenuPopup>
             </DropdownMenuPositioner>
@@ -232,7 +260,7 @@ export const renderDropdownMenuItems = (
         label={labelText}
         onClick={(event) => invokeItemClick(menuItem, nextKeyPath, event)}
       >
-        {renderItemContent(menuItem, { reserveIconSpace })}
+        {renderItemContent(menuItem, { iconAlign, reserveIconSpace })}
       </DropdownMenuItem>
     );
   });

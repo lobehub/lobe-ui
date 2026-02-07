@@ -106,6 +106,15 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     align-items: center;
   `,
 
+  itemContentAlignStart: css`
+    align-items: flex-start;
+  `,
+
+  iconAlignStart: css`
+    align-self: flex-start;
+    margin-block-start: 2px;
+  `,
+
   label: css`
     overflow: hidden;
     flex: 1;
@@ -118,6 +127,25 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     & a:active {
       color: inherit;
     }
+  `,
+
+  labelGroup: css`
+    overflow: hidden;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+
+    min-width: 0;
+  `,
+
+  desc: css`
+    overflow: hidden;
+
+    font-size: 12px;
+    line-height: 16px;
+    color: ${cssVar.colorTextTertiary};
+    text-overflow: ellipsis;
+    white-space: nowrap;
   `,
 
   popup: css`

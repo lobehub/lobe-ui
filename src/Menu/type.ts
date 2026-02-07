@@ -5,7 +5,7 @@ import type {
   MenuItemType as RcMenuItemType,
   SubMenuType as RcSubMenuType,
 } from 'rc-menu/es/interface';
-import type { Key, Ref } from 'react';
+import type { Key, ReactNode, Ref } from 'react';
 
 import type { IconContentConfig, IconProps } from '@/Icon';
 
@@ -17,6 +17,7 @@ export interface MenuItemType extends RcMenuItemType {
    */
   closeOnClick?: boolean;
   danger?: boolean;
+  desc?: ReactNode;
   icon?: IconProps['icon'];
   loading?: boolean;
   title?: string;
@@ -26,6 +27,7 @@ export interface SubMenuType<T extends MenuItemType = MenuItemType> extends Omit
   'children'
 > {
   children: ItemType<T>[];
+  desc?: ReactNode;
   icon?: IconProps['icon'];
 }
 export interface MenuItemGroupType<T extends MenuItemType = MenuItemType> extends Omit<

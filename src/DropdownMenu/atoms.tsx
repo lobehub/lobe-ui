@@ -264,6 +264,17 @@ export const DropdownMenuItemIcon = ({ className, ...rest }: DropdownMenuItemIco
 
 DropdownMenuItemIcon.displayName = 'DropdownMenuItemIcon';
 
+export type DropdownMenuItemLabelGroupProps = React.HTMLAttributes<HTMLDivElement>;
+
+export const DropdownMenuItemLabelGroup = ({
+  className,
+  ...rest
+}: DropdownMenuItemLabelGroupProps) => {
+  return <div {...rest} className={cx(styles.labelGroup, className)} />;
+};
+
+DropdownMenuItemLabelGroup.displayName = 'DropdownMenuItemLabelGroup';
+
 export type DropdownMenuItemLabelProps = React.HTMLAttributes<HTMLSpanElement>;
 
 export const DropdownMenuItemLabel = ({ className, ...rest }: DropdownMenuItemLabelProps) => {
@@ -271,6 +282,14 @@ export const DropdownMenuItemLabel = ({ className, ...rest }: DropdownMenuItemLa
 };
 
 DropdownMenuItemLabel.displayName = 'DropdownMenuItemLabel';
+
+export type DropdownMenuItemDescProps = React.HTMLAttributes<HTMLSpanElement>;
+
+export const DropdownMenuItemDesc = ({ className, ...rest }: DropdownMenuItemDescProps) => {
+  return <span {...rest} className={cx(styles.desc, className)} />;
+};
+
+DropdownMenuItemDesc.displayName = 'DropdownMenuItemDesc';
 
 export type DropdownMenuItemExtraProps = React.HTMLAttributes<HTMLSpanElement>;
 
