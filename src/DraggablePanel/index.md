@@ -13,6 +13,14 @@ description: DraggablePanel is a panel that can be dragged and resized. It suppo
 
 <code src="./demos/Layout.tsx" noPadding></code>
 
+## Stable Layout
+
+<code src="./demos/StableLayout.tsx" noPadding></code>
+
+## Drag to Collapse
+
+<code src="./demos/DragToCollapse.tsx" noPadding></code>
+
 ## APIs
 
 | Property                | Description                                                | Type                                                   | Default   |
@@ -35,6 +43,7 @@ description: DraggablePanel is a panel that can be dragged and resized. It suppo
 | destroyOnClose          | Whether to destroy panel content when collapsed            | `boolean`                                              | `false`   |
 | showHandleWhenCollapsed | Whether to show the drag handle when panel is collapsed    | `boolean`                                              | `true`    |
 | showHandleWideArea      | Whether to display a wider handle area for easier dragging | `boolean`                                              | `false`   |
+| stableLayout            | Keep inner layout stable during collapse/expand animations | `boolean`                                              | `false`   |
 | onExpandChange          | Callback when expand state changes                         | `(expand: boolean) => void`                            | -         |
 | onSizeChange            | Callback when size changes                                 | `(delta: NumberSize, size?: Size) => void`             | -         |
 | onSizeDragging          | Callback when size is being dragged                        | `(delta: NumberSize, size?: Size) => void`             | -         |

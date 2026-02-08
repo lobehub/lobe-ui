@@ -30,6 +30,7 @@ export default () => {
       showBorder: true,
       showHandleHighlight: false,
       showHandleWhenCollapsed: false,
+      stableLayout: false,
     },
     { store },
   ) as DraggablePanelProps;
