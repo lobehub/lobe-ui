@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [4.35.0](https://github.com/lobehub/lobe-ui/compare/v4.34.1...v4.35.0) (2026-02-08)
+
+### ✨ Features
+
+- **freeze**: Introduce Freeze component to prevent DOM updates during animations ([ff6dbdf](https://github.com/lobehub/lobe-ui/commit/ff6dbdf))
+
 ## [4.34.1](https://github.com/lobehub/lobe-ui/compare/v4.34.0...v4.34.1) (2026-02-07)
 
 ### 🐛 Bug Fixes
