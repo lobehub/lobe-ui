@@ -23,6 +23,7 @@ AccordionItem can be used independently without wrapping in an Accordion compone
 ## With Action
 
 AccordionItem supports an `action` prop that allows you to add custom action buttons or icons to the header. The action appears on the right side of the header and can be any ReactNode.
+You can also set `alwaysShowAction` to make the action visible even when the header is not hovered.
 
 <code src="./demos/Action.tsx" ></code>
 
@@ -56,6 +57,7 @@ AccordionItem supports an `action` prop that allows you to add custom action but
 | title              | Title of the panel                        | `ReactNode`                                                                      | -         |
 | children           | Content of the panel                      | `ReactNode`                                                                      | -         |
 | action             | Action component (appears on hover)       | `ReactNode`                                                                      | -         |
+| alwaysShowAction   | Always show action (not only on hover)    | `boolean`                                                                        | `false`   |
 | disabled           | Whether the item is disabled              | `boolean`                                                                        | `false`   |
 | hideIndicator      | Whether to hide the indicator             | `boolean`                                                                        | `false`   |
 | indicator          | Custom indicator component or function    | `ReactNode \| ((props: { isOpen: boolean; isDisabled?: boolean }) => ReactNode)` | -         |

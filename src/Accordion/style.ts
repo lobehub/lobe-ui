@@ -4,6 +4,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     action: css`
       opacity: 0;
+      transition: opacity 150ms ${cssVar.motionEaseOut};
+    `,
+    actionVisible: css`
+      opacity: 1;
     `,
     base: css`
       display: flex;

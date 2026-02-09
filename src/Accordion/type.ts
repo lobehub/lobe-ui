@@ -16,6 +16,11 @@ export interface AccordionItemProps extends Pick<
    */
   allowExpand?: boolean;
   /**
+   * Whether to always show the action (not only on hover)
+   * @default false
+   */
+  alwaysShowAction?: boolean;
+  /**
    * Content of the accordion item
    */
   children?: ReactNode;

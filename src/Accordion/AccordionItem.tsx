@@ -190,6 +190,7 @@ const AccordionItem = memo<AccordionItemProps>(
     title,
     children,
     action,
+    alwaysShowAction = false,
     disabled = false,
     allowExpand = true,
     hideIndicator: itemHideIndicator,
@@ -337,8 +338,6 @@ const AccordionItem = memo<AccordionItemProps>(
       customIndicator,
       disabled,
       isOpen,
-      cx,
-      styles,
       classNames,
       customStyles,
     ]);
@@ -347,7 +346,7 @@ const AccordionItem = memo<AccordionItemProps>(
 
     const contentClassName = useMemo(
       () => cx('accordion-content', styles.content, classNames?.content),
-      [cx, styles, classNames?.content],
+      [classNames?.content],
     );
 
     const titleNode = useMemo(
@@ -368,16 +367,21 @@ const AccordionItem = memo<AccordionItemProps>(
           <Flexbox
             horizontal
             align={'center'}
-            className={cx('accordion-action', styles.action, classNames?.action)}
             flex={'none'}
             gap={4}
             style={customStyles?.action}
+            className={cx(
+              'accordion-action',
+              styles.action,
+              alwaysShowAction && styles.actionVisible,
+              classNames?.action,
+            )}
             onClick={stopPropagation}
           >
             {action}
           </Flexbox>
         ),
-      [action, cx, styles, classNames?.action, customStyles?.action],
+      [action, alwaysShowAction, cx, styles, classNames?.action, customStyles?.action],
     );
 
     const headerElement = useMemo(() => {
@@ -454,19 +458,20 @@ const AccordionItem = memo<AccordionItemProps>(
       }
       return header;
     }, [
-      cx,
-      styles,
-      classNames,
+      classNames?.header,
       disabled,
-      handleToggle,
-      handleKeyDown,
+      allowExpand,
       padding,
       paddingBlock,
       paddingInline,
       ref,
       customVariant,
       variant,
+      customStyles?.header,
+      handleToggle,
+      handleKeyDown,
       indicatorPlacementFinal,
+      preventTitleTextSelection,
       titleNode,
       indicator,
       actionNode,
