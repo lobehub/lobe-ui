@@ -199,7 +199,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       --lobe-dropdown-animation-duration: 140ms;
     }
 
-    &[data-submenu] {
+    &[data-submenu],
+    &[data-nested] {
       --lobe-dropdown-animation-duration: 0ms;
       --lobe-dropdown-animation-scale-y: 1;
     }
