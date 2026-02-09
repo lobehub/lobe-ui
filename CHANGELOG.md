@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [4.35.2](https://github.com/lobehub/lobe-ui/compare/v4.35.1...v4.35.2) (2026-02-09)
+
+### 🐛 Bug Fixes
+
+- **menu**: Extend dropdown styles to support nested menus ([70de4eb](https://github.com/lobehub/lobe-ui/commit/70de4eb))
+
 ## [4.35.1](https://github.com/lobehub/lobe-ui/compare/v4.35.0...v4.35.1) (2026-02-09)
 
 ### 🐛 Bug Fixes
