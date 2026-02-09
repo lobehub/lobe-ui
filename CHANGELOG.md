@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [4.35.1](https://github.com/lobehub/lobe-ui/compare/v4.35.0...v4.35.1) (2026-02-09)
+
+### 🐛 Bug Fixes
+
+- **accordion**: Add alwaysShowAction prop to AccordionItem ([c55898f](https://github.com/lobehub/lobe-ui/commit/c55898f))
+
 # [4.35.0](https://github.com/lobehub/lobe-ui/compare/v4.34.1...v4.35.0) (2026-02-08)
 
 ### ✨ Features
