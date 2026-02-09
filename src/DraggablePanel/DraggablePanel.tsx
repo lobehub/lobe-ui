@@ -95,7 +95,9 @@ const DraggablePanel = memo<DraggablePanelProps>(
     const isHovering = useHover(ref);
     const isVertical = placement === 'top' || placement === 'bottom';
     const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+    const resetTransitionTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
     const resizableRef = useRef<Resizable>(null);
+    const initialExpandedSizeRef = useRef<Size | undefined>(undefined);
 
     const { direction: antdDirection } = use(ConfigProvider.ConfigContext);
     const direction = dir ?? antdDirection;
@@ -117,7 +119,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
       value: expand,
     });
 
-    const [isResizing, setIsResizing] = useState(false);
+    const [shouldTransition, setShouldTransition] = useState(true);
     const [showExpand, setShowExpand] = useState(true);
 
     useEffect(() => {
@@ -141,9 +143,17 @@ const DraggablePanel = memo<DraggablePanelProps>(
         if (hoverTimeoutRef.current) {
           clearTimeout(hoverTimeoutRef.current);
         }
+        if (resetTransitionTimeoutRef.current) {
+          clearTimeout(resetTransitionTimeoutRef.current);
+        }
       };
     }, []);
 
+    useEffect(() => {
+      initialExpandedSizeRef.current = undefined;
+    }, [internalPlacement]);
+
+    const reversed = reversePlacement(internalPlacement);
     const canResizing = resize !== false && isExpand;
 
     const resizing = useMemo(
@@ -156,10 +166,10 @@ const DraggablePanel = memo<DraggablePanelProps>(
         top: false,
         topLeft: false,
         topRight: false,
-        [reversePlacement(internalPlacement)]: true,
+        [reversed]: true,
         ...(resize as Enable),
       }),
-      [internalPlacement, resize],
+      [reversed, resize],
     );
 
     const defaultSize: Size = useMemo(() => {
@@ -217,6 +227,42 @@ const DraggablePanel = memo<DraggablePanelProps>(
       (isVertical ? resizedExpandedSize.vertical : resizedExpandedSize.horizontal) ??
       defaultExpandedSize;
 
+    const setExpandedMainSize = useCallback(
+      (nextSize: Size) => {
+        if (!stableLayout) return;
+
+        const currentSize = isVertical ? nextSize.height : nextSize.width;
+        if (!currentSize) return;
+
+        const normalizedSize = toCssSize(currentSize, fallbackExpandedSize);
+        setResizedExpandedSize((state) =>
+          isVertical
+            ? { ...state, vertical: normalizedSize }
+            : { ...state, horizontal: normalizedSize },
+        );
+      },
+      [fallbackExpandedSize, isVertical, stableLayout],
+    );
+
+    const captureInitialExpandedSize = useCallback(() => {
+      if (initialExpandedSizeRef.current) return initialExpandedSizeRef.current;
+
+      const rect = resizableRef.current?.resizable?.getBoundingClientRect();
+      if (!rect) return undefined;
+
+      const nextInitialSize = isVertical
+        ? ({ height: rect.height, width: '100%' } as Size)
+        : ({ height: '100%', width: rect.width } as Size);
+
+      initialExpandedSizeRef.current = nextInitialSize;
+      return nextInitialSize;
+    }, [isVertical]);
+
+    useEffect(() => {
+      if (!isExpand) return;
+      captureInitialExpandedSize();
+    }, [captureInitialExpandedSize, isExpand]);
+
     const toggleExpand = useCallback(() => {
       if (expandable) setIsExpand(!isExpand);
     }, [expandable, isExpand, setIsExpand]);
@@ -259,44 +305,87 @@ const DraggablePanel = memo<DraggablePanelProps>(
     const handleResize = useCallback(
       (_event: unknown, _direction: unknown, el: HTMLElement, delta: NumberSize) => {
         const nextSize = clampResizeSize(el);
-        if (stableLayout) {
-          const currentSize = isVertical ? nextSize.height : nextSize.width;
-          if (currentSize) {
-            setResizedExpandedSize((state) =>
-              isVertical
-                ? { ...state, vertical: currentSize }
-                : { ...state, horizontal: currentSize },
-            );
-          }
-        }
+        setExpandedMainSize(nextSize);
         onSizeDragging?.(delta, nextSize);
       },
-      [clampResizeSize, stableLayout, isVertical, onSizeDragging],
+      [clampResizeSize, onSizeDragging, setExpandedMainSize],
     );
 
-    const handleResizeStart = useCallback(() => {
-      setIsResizing(true);
-      setShowExpand(false);
+    const triggerResetWithoutTransition = useCallback(() => {
+      if (resetTransitionTimeoutRef.current) {
+        clearTimeout(resetTransitionTimeoutRef.current);
+      }
+
+      setShouldTransition(false);
+      resetTransitionTimeoutRef.current = setTimeout(() => {
+        setShouldTransition(true);
+      }, 0);
     }, []);
+
+    const handleResetSize = useCallback(() => {
+      if (!canResizing) return;
+
+      const resetSize = captureInitialExpandedSize();
+      if (!resetSize) return;
+
+      triggerResetWithoutTransition();
+
+      const rect = resizableRef.current?.resizable?.getBoundingClientRect();
+      const prevMainSize = rect ? (isVertical ? rect.height : rect.width) : 0;
+      const resetMainSize = isVertical ? resetSize.height : resetSize.width;
+      const nextMainSize = typeof resetMainSize === 'number' ? resetMainSize : prevMainSize;
+
+      resizableRef.current?.updateSize(resetSize);
+      setExpandedMainSize(resetSize);
+
+      onSizeChange?.(
+        isVertical
+          ? { height: nextMainSize - prevMainSize, width: 0 }
+          : { height: 0, width: nextMainSize - prevMainSize },
+        resetSize,
+      );
+    }, [
+      canResizing,
+      captureInitialExpandedSize,
+      isVertical,
+      onSizeChange,
+      setExpandedMainSize,
+      triggerResetWithoutTransition,
+    ]);
+
+    const handleResizeStart = useCallback(
+      (event: { detail?: number }) => {
+        if (event.detail === 2) {
+          handleResetSize();
+          return false;
+        }
+
+        if (resetTransitionTimeoutRef.current) {
+          clearTimeout(resetTransitionTimeoutRef.current);
+          resetTransitionTimeoutRef.current = undefined;
+        }
+
+        setShouldTransition(false);
+        setShowExpand(false);
+      },
+      [handleResetSize],
+    );
 
     const handleResizeStop = useCallback(
       (_event: unknown, _direction: unknown, el: HTMLElement, delta: NumberSize) => {
         const nextSize = clampResizeSize(el);
-        if (stableLayout) {
-          const currentSize = isVertical ? nextSize.height : nextSize.width;
-          if (currentSize) {
-            setResizedExpandedSize((state) =>
-              isVertical
-                ? { ...state, vertical: currentSize }
-                : { ...state, horizontal: currentSize },
-            );
-          }
-        }
-        setIsResizing(false);
+        setExpandedMainSize(nextSize);
+        setShouldTransition(true);
         setShowExpand(true);
         onSizeChange?.(delta, nextSize);
       },
-      [clampResizeSize, stableLayout, isVertical, onSizeChange],
+      [clampResizeSize, onSizeChange, setExpandedMainSize],
+    );
+
+    const resizeHandleClassName = useMemo(
+      () =>
+        cx(handleVariants({ placement: reversed }), showHandleHighlight && styles.handleHighlight),
+      [reversed, showHandleHighlight],
     );
 
     if (fullscreen) {
@@ -308,17 +397,16 @@ const DraggablePanel = memo<DraggablePanelProps>(
     }
 
     const Arrow = ARROW_MAP[internalPlacement] ?? ChevronLeft;
-    const reversed = reversePlacement(internalPlacement);
     const sidebarOuterStyle = isVertical
       ? {
           height: isExpand ? expandedOuterSize : 0,
           overflow: 'hidden',
-          transition: isResizing ? 'unset' : 'height 0.2s var(--ant-motion-ease-out, ease)',
+          transition: shouldTransition ? 'height 0.2s var(--ant-motion-ease-out, ease)' : 'none',
           width: '100%',
         }
       : {
           overflow: 'hidden',
-          transition: isResizing ? 'unset' : 'width 0.2s var(--ant-motion-ease-out, ease)',
+          transition: shouldTransition ? 'width 0.2s var(--ant-motion-ease-out, ease)' : 'none',
           width: isExpand ? expandedOuterSize : 0,
         };
     const sidebarInnerStyle = isVertical ? { height: '100%', width: '100%' } : { width: '100%' };
@@ -332,16 +420,13 @@ const DraggablePanel = memo<DraggablePanelProps>(
         handleClasses={
           canResizing
             ? {
-                [reversed]: cx(
-                  handleVariants({ placement: reversed }),
-                  showHandleHighlight && styles.handleHighlight,
-                ),
+                [reversed]: resizeHandleClassName,
               }
             : {}
         }
         style={{
           ...cssVariables,
-          transition: isResizing ? 'unset' : undefined,
+          transition: shouldTransition ? undefined : 'none',
           ...style,
         }}
         onResize={handleResize}
