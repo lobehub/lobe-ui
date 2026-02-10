@@ -2,12 +2,10 @@
 
 import { Toast as BaseToast } from '@base-ui/react/toast';
 import { cx } from 'antd-style';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useIsClient } from '@/hooks/useIsClient';
-import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
-import { registerDevSingleton } from '@/utils/devSingleton';
 
 import { ToastContext } from './context';
 import { viewportVariants } from './style';
@@ -235,38 +233,7 @@ const ToastList = memo(() => {
 
 ToastList.displayName = 'ToastList';
 
-// Toast Host Component
-const TOAST_PORTAL_ATTR = 'data-lobe-ui-toast-portal';
 export const TOAST_CONTAINER_ATTR = 'data-lobe-ui-toast-container';
-
-const containerMap = new WeakMap<object, HTMLElement>();
-
-const getOrCreateContainer = (root: HTMLElement | ShadowRoot): HTMLElement => {
-  const resolvedRoot = (() => {
-    if (typeof document === 'undefined') return root;
-    if (typeof ShadowRoot !== 'undefined' && root instanceof ShadowRoot) return root;
-
-    const isBody = root === document.body;
-    if (!isBody) return root;
-
-    const themeApp = document.querySelector<HTMLElement>(`#${LOBE_THEME_APP_ID}`);
-    if (themeApp) return themeApp;
-
-    const toastContainer = document.querySelector<HTMLElement>(`[${TOAST_CONTAINER_ATTR}="true"]`);
-    if (toastContainer) return toastContainer;
-
-    return root;
-  })();
-
-  const cached = containerMap.get(resolvedRoot);
-  if (cached && cached.isConnected) return cached;
-
-  const el = document.createElement('div');
-  el.setAttribute(TOAST_PORTAL_ATTR, 'true');
-  resolvedRoot.append(el);
-  containerMap.set(resolvedRoot, el);
-  return el;
-};
 
 const resolveRoot = (root?: HTMLElement | ShadowRoot | null): HTMLElement | ShadowRoot | null => {
   if (root) return root;
@@ -311,7 +278,6 @@ export const ToastHost = memo(
     swipeDirection = ['down', 'right'],
   }: ToastHostProps) => {
     const isClient = useIsClient();
-    const [container, setContainer] = useState<HTMLElement | null>(null);
 
     useEffect(() => {
       globalState = {
@@ -322,26 +288,14 @@ export const ToastHost = memo(
       };
     }, [duration, limit, position, swipeDirection]);
 
-    useEffect(() => {
-      if (!isClient) return;
-
-      const resolved = resolveRoot(root);
-      if (resolved) {
-        setContainer(getOrCreateContainer(resolved));
-      }
-
-      const scope = root ?? document.body;
-      return registerDevSingleton('ToastHost', scope);
-    }, [isClient, root]);
-
-    if (!isClient || !container) return null;
+    if (!isClient) return null;
 
     return createPortal(
       <>
         {ALL_POSITIONS.map((pos) => (
           <ToastContext key={pos} value={{ position: pos, swipeDirection }}>
             <BaseToast.Provider limit={limit} timeout={duration} toastManager={getManager(pos)}>
-              <BaseToast.Portal container={container}>
+              <BaseToast.Portal>
                 <BaseToast.Viewport className={cx(viewportVariants({ position: pos }), className)}>
                   <ToastList />
                 </BaseToast.Viewport>
@@ -350,7 +304,7 @@ export const ToastHost = memo(
           </ToastContext>
         ))}
       </>,
-      container,
+      document.body,
     );
   },
 );

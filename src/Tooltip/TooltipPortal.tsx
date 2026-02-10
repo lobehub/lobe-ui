@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react';
 
-import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
-
 const PORTAL_ATTR = 'data-lobe-ui-tooltip-portal';
 export const TOOLTIP_CONTAINER_ATTR = 'data-lobe-ui-tooltip-container';
 
@@ -14,17 +12,6 @@ const getOrCreateContainer = (root: HTMLElement | ShadowRoot): HTMLElement => {
   const resolvedRoot = (() => {
     if (typeof document === 'undefined') return root;
     if (typeof ShadowRoot !== 'undefined' && root instanceof ShadowRoot) return root;
-
-    const isBody = root === document.body;
-    if (!isBody) return root;
-
-    const themeApp = document.querySelector<HTMLElement>(`#${LOBE_THEME_APP_ID}`);
-    if (themeApp) return themeApp;
-
-    const tooltipContainer = document.querySelector<HTMLElement>(
-      `[${TOOLTIP_CONTAINER_ATTR}="true"]`,
-    );
-    if (tooltipContainer) return tooltipContainer;
 
     return root;
   })();

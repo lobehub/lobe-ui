@@ -12,10 +12,8 @@ import {
 import { mergeRefs } from 'react-merge-refs';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
-import { usePortalContainer } from '@/hooks/usePortalContainer';
 import { styles as menuStyles } from '@/Menu/sharedStyle';
 
-import { LOBE_SELECT_CONTAINER_ATTR } from './constants';
 import { styles, triggerVariants } from './style';
 import { type LobeSelectSize, type LobeSelectVariant } from './type';
 
@@ -130,8 +128,7 @@ export type LobeSelectPortalProps = ComponentProps<typeof Select.Portal> & {
 };
 
 export const LobeSelectPortal = ({ container, ...rest }: LobeSelectPortalProps) => {
-  const defaultContainer = usePortalContainer(LOBE_SELECT_CONTAINER_ATTR);
-  return <Select.Portal container={container ?? defaultContainer} {...rest} />;
+  return <Select.Portal container={container ?? undefined} {...rest} />;
 };
 
 LobeSelectPortal.displayName = 'LobeSelectPortal';
