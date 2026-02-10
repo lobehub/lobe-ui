@@ -14,11 +14,9 @@ import {
 import { isValidElement, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Virtualizer } from 'virtua';
 
-import { usePortalContainer } from '@/hooks/usePortalContainer';
 import Icon from '@/Icon';
 import { styles as menuStyles } from '@/Menu/sharedStyle';
 
-import { LOBE_SELECT_CONTAINER_ATTR } from './constants';
 import { styles, triggerVariants } from './style';
 import {
   type LobeSelectOption,
@@ -501,7 +499,6 @@ const LobeSelect = memo<LobeSelectProps<any>>(
       classNames?.trigger,
     );
 
-    const portalContainer = usePortalContainer(LOBE_SELECT_CONTAINER_ATTR);
     const listRef = useRef<HTMLDivElement | null>(null);
     const pointerScrollRef = useRef(false);
     const pointerScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -729,7 +726,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
           </span>
         </Select.Trigger>
 
-        <Select.Portal container={portalContainer}>
+        <Select.Portal>
           <Select.Positioner
             align="start"
             alignItemWithTrigger={isItemAligned}

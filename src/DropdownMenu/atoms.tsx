@@ -11,7 +11,6 @@ import { mergeRefs } from 'react-merge-refs';
 
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
-import { usePortalContainer } from '@/hooks/usePortalContainer';
 import { styles } from '@/Menu/sharedStyle';
 import { CLASSNAMES } from '@/styles/classNames';
 import { placementMap } from '@/utils/placement';
@@ -95,8 +94,7 @@ export type DropdownMenuPortalProps = React.ComponentProps<typeof Menu.Portal> &
 };
 
 export const DropdownMenuPortal = ({ container, ...rest }: DropdownMenuPortalProps) => {
-  const defaultContainer = usePortalContainer(DROPDOWN_MENU_CONTAINER_ATTR);
-  return <Menu.Portal container={container ?? defaultContainer} {...rest} />;
+  return <Menu.Portal container={container ?? undefined} {...rest} />;
 };
 
 DropdownMenuPortal.displayName = 'DropdownMenuPortal';

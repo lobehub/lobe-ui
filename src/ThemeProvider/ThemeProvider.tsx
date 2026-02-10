@@ -8,7 +8,7 @@ import {
   ThemeProvider as AntdThemeProvider,
 } from 'antd-style';
 import { merge } from 'es-toolkit/compat';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
 import FontLoader from '@/FontLoader';
@@ -20,6 +20,8 @@ import AntdConfigProvider from './ConfigProvider';
 import { LOBE_THEME_APP_ID } from './constants';
 import GlobalStyle from './GlobalStyle';
 import { type ThemeProviderProps } from './type';
+
+const CSS_VAR_PREFIX = 'css-var-';
 
 const ThemeProvider = memo<ThemeProviderProps>(
   ({
@@ -36,6 +38,53 @@ const ThemeProvider = memo<ThemeProviderProps>(
     ...rest
   }) => {
     const genCdnUrl = useCdnFn();
+    const appRef = useRef<HTMLDivElement>(null);
+
+    useLayoutEffect(() => {
+      const node = appRef.current;
+      if (!node) return;
+
+      const htmlEl = document.documentElement;
+      let currentClasses: string[] = [];
+
+      const syncCssVarClasses = () => {
+        for (const cls of currentClasses) {
+          htmlEl.classList.remove(cls);
+        }
+
+        const newClasses: string[] = [];
+        let el: HTMLElement | null = node;
+        while (el && el !== htmlEl) {
+          for (const cls of el.classList) {
+            if (cls.startsWith(CSS_VAR_PREFIX)) {
+              newClasses.push(cls);
+            }
+          }
+          el = el.parentElement;
+        }
+
+        for (const cls of newClasses) {
+          htmlEl.classList.add(cls);
+        }
+        currentClasses = newClasses;
+      };
+
+      syncCssVarClasses();
+
+      const observer = new MutationObserver(syncCssVarClasses);
+      let el: HTMLElement | null = node;
+      while (el && el !== htmlEl) {
+        observer.observe(el, { attributeFilter: ['class'] });
+        el = el.parentElement;
+      }
+
+      return () => {
+        observer.disconnect();
+        for (const cls of currentClasses) {
+          htmlEl.classList.remove(cls);
+        }
+      };
+    }, []);
 
     const webfontUrls = useMemo(
       () =>
@@ -90,8 +139,11 @@ const ThemeProvider = memo<ThemeProviderProps>(
           <AntdConfigProvider>
             {enableGlobalStyle && <GlobalStyle />}
 
-            <App className={className} style={{ minHeight: 'inherit', width: 'inherit', ...style }}>
-              <div id={LOBE_THEME_APP_ID} style={{ display: 'contents' }}>
+            <App
+              className={className}
+              style={{ isolation: 'isolate', minHeight: 'inherit', width: 'inherit', ...style }}
+            >
+              <div id={LOBE_THEME_APP_ID} ref={appRef} style={{ display: 'contents' }}>
                 {children}
               </div>
             </App>

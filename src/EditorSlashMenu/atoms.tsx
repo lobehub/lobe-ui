@@ -3,8 +3,8 @@
 import { Autocomplete } from '@base-ui/react/autocomplete';
 import { cx } from 'antd-style';
 import type React from 'react';
+import type { FC } from 'react';
 
-import { usePortalContainer } from '@/hooks/usePortalContainer';
 import { styles as menuStyles } from '@/Menu/sharedStyle';
 
 import { styles } from './style';
@@ -44,10 +44,7 @@ export type EditorSlashMenuPortalProps = React.ComponentProps<typeof Autocomplet
   container?: HTMLElement | null;
 };
 
-export const EditorSlashMenuPortal = ({ container, ...rest }: EditorSlashMenuPortalProps) => {
-  const defaultContainer = usePortalContainer(EDITOR_SLASH_MENU_CONTAINER_ATTR);
-  return <Autocomplete.Portal container={container ?? defaultContainer} {...rest} />;
-};
+export const EditorSlashMenuPortal: FC<EditorSlashMenuPortalProps> = Autocomplete.Portal;
 EditorSlashMenuPortal.displayName = 'EditorSlashMenuPortal';
 
 export type EditorSlashMenuPositionerProps = React.ComponentProps<typeof Autocomplete.Positioner>;
