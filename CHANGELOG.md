@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [4.35.3](https://github.com/lobehub/lobe-ui/compare/v4.35.2...v4.35.3) (2026-02-10)
+
+### ♻ Code Refactoring
+
+- **portal**: Migrate portal container implementation, closes [#466](https://github.com/lobehub/lobe-ui/issues/466) ([f6897f5](https://github.com/lobehub/lobe-ui/commit/f6897f5))
+
 ## [4.35.2](https://github.com/lobehub/lobe-ui/compare/v4.35.1...v4.35.2) (2026-02-09)
 
 ### 🐛 Bug Fixes
