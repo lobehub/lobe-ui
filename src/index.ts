@@ -365,6 +365,7 @@ export {
   type MetaProps,
   default as ThemeProvider,
   type ThemeProviderProps,
+  useAppElement,
 } from './ThemeProvider';
 export { LOBE_THEME_APP_ID } from './ThemeProvider/constants';
 export { default as ThemeSwitch, type ThemeSwitchProps } from './ThemeSwitch';

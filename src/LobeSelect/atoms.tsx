@@ -13,6 +13,7 @@ import { mergeRefs } from 'react-merge-refs';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { styles as menuStyles } from '@/Menu/sharedStyle';
+import { useAppElement } from '@/ThemeProvider';
 
 import { styles, triggerVariants } from './style';
 import { type LobeSelectSize, type LobeSelectVariant } from './type';
@@ -128,7 +129,8 @@ export type LobeSelectPortalProps = ComponentProps<typeof Select.Portal> & {
 };
 
 export const LobeSelectPortal = ({ container, ...rest }: LobeSelectPortalProps) => {
-  return <Select.Portal container={container ?? undefined} {...rest} />;
+  const appElement = useAppElement();
+  return <Select.Portal container={container ?? appElement ?? undefined} {...rest} />;
 };
 
 LobeSelectPortal.displayName = 'LobeSelectPortal';

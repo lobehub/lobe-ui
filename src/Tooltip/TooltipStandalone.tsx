@@ -9,12 +9,12 @@ import { mergeRefs } from 'react-merge-refs';
 import { useFloatingLayer } from '@/hooks/useFloatingLayer';
 import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
+import { useAppElement } from '@/ThemeProvider';
 import { placementMap } from '@/utils/placement';
 
 import { TooltipArrowIcon } from './ArrowIcon';
 import { styles } from './style';
 import TooltipContent from './TooltipContent';
-import { useTooltipPortalContainer } from './TooltipPortal';
 import { type TooltipProps } from './type';
 
 const DEFAULT_OPEN_DELAY = 400;
@@ -83,9 +83,9 @@ export const TooltipStandalone = memo<TooltipProps>(
     const placementConfig = placementMap[placement] ?? placementMap.top;
     const baseSideOffset = arrow ? 8 : 6;
 
-    const defaultPortalContainer = useTooltipPortalContainer();
+    const appElement = useAppElement();
     const floatingLayerContainer = useFloatingLayer();
-    const portalContainer = floatingLayerContainer ?? defaultPortalContainer;
+    const portalContainer = floatingLayerContainer ?? appElement;
 
     const { isNativeButtonTriggerElement } = useNativeButton({
       children,

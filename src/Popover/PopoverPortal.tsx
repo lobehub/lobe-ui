@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+import { useAppElement } from '@/ThemeProvider';
+
 const PORTAL_ATTR = 'data-lobe-ui-popover-portal';
 export const POPOVER_CONTAINER_ATTR = 'data-lobe-ui-popover-container';
 
@@ -26,23 +28,19 @@ const getOrCreateContainer = (root: HTMLElement | ShadowRoot): HTMLElement => {
   return el;
 };
 
-const resolveRoot = (root?: HTMLElement | ShadowRoot | null): HTMLElement | ShadowRoot | null => {
-  if (root) return root;
-  return document.body;
-};
-
 export const usePopoverPortalContainer = (
   root?: HTMLElement | ShadowRoot | null,
 ): HTMLElement | null => {
+  const appElement = useAppElement();
   const [container, setContainer] = useState<HTMLElement | null>(null);
 
   // Never mutate DOM / create portal container during render.
   // Create it after mount to avoid SSR/hydration side effects.
   useEffect(() => {
-    const resolved = resolveRoot(root);
+    const resolved = root ?? appElement ?? document.body;
     if (!resolved) return;
     setContainer(getOrCreateContainer(resolved));
-  }, [root, container?.isConnected]);
+  }, [root, appElement, container?.isConnected]);
 
   return container;
 };

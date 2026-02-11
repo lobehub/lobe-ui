@@ -13,6 +13,7 @@ import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { styles } from '@/Menu/sharedStyle';
 import { CLASSNAMES } from '@/styles/classNames';
+import { useAppElement } from '@/ThemeProvider';
 import { placementMap } from '@/utils/placement';
 
 import { type DropdownMenuPlacement } from './type';
@@ -94,7 +95,8 @@ export type DropdownMenuPortalProps = React.ComponentProps<typeof Menu.Portal> &
 };
 
 export const DropdownMenuPortal = ({ container, ...rest }: DropdownMenuPortalProps) => {
-  return <Menu.Portal container={container ?? undefined} {...rest} />;
+  const appElement = useAppElement();
+  return <Menu.Portal container={container ?? appElement ?? undefined} {...rest} />;
 };
 
 DropdownMenuPortal.displayName = 'DropdownMenuPortal';

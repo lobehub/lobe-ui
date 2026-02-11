@@ -4,6 +4,7 @@ import { ContextMenu } from '@base-ui/react/context-menu';
 import { memo, useEffect, useMemo, useSyncExternalStore } from 'react';
 
 import { useIsClient } from '@/hooks/useIsClient';
+import { useAppElement } from '@/ThemeProvider';
 import { registerDevSingleton } from '@/utils/devSingleton';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
@@ -20,6 +21,7 @@ import { styles } from './style';
 
 export const ContextMenuHost = memo(() => {
   const isClient = useIsClient();
+  const appElement = useAppElement();
   const state = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   useEffect(() => {
@@ -60,7 +62,7 @@ export const ContextMenuHost = memo(() => {
         closeContextMenu();
       }}
     >
-      <ContextMenu.Portal>
+      <ContextMenu.Portal container={appElement ?? undefined}>
         <ContextMenu.Positioner
           anchor={state.anchor ?? undefined}
           className={styles.positioner}
