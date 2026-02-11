@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [4.36.1](https://github.com/lobehub/lobe-ui/compare/v4.36.0...v4.36.1) (2026-02-11)
+
+### ♻ Code Refactoring
+
+- **portal**: Streamline modal and popover container management ([a99ec2e](https://github.com/lobehub/lobe-ui/commit/a99ec2e))
+
 # [4.36.0](https://github.com/lobehub/lobe-ui/compare/v4.35.3...v4.36.0) (2026-02-11)
 
 ### ✨ Features
