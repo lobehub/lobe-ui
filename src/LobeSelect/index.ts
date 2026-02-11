@@ -1,5 +1,4 @@
 export {
-  LOBE_SELECT_CONTAINER_ATTR,
   LobeSelectArrow,
   type LobeSelectArrowProps,
   LobeSelectBackdrop,

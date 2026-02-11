@@ -278,5 +278,3 @@ export const LobeSelectArrow = ({ className, ...rest }: LobeSelectArrowProps) =>
 };
 
 LobeSelectArrow.displayName = 'LobeSelectArrow';
-
-export { LOBE_SELECT_CONTAINER_ATTR } from './constants';

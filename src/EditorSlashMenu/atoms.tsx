@@ -9,8 +9,6 @@ import { useAppElement } from '@/ThemeProvider';
 
 import { styles } from './style';
 
-export const EDITOR_SLASH_MENU_CONTAINER_ATTR = 'data-lobe-ui-editor-slash-menu-container';
-
 const mergeStateClassName = <TState,>(
   base: string,
   className: string | ((state: TState) => string | undefined) | undefined,

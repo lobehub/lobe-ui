@@ -18,8 +18,6 @@ import { placementMap } from '@/utils/placement';
 
 import { type DropdownMenuPlacement } from './type';
 
-export const DROPDOWN_MENU_CONTAINER_ATTR = 'data-lobe-ui-dropdown-menu-container';
-
 export const DropdownMenuRoot: typeof Menu.Root = (props) => <Menu.Root modal={false} {...props} />;
 export const DropdownMenuSubmenuRoot = Menu.SubmenuRoot;
 export const DropdownMenuCheckboxItemIndicator = Menu.CheckboxItemIndicator;

@@ -6,6 +6,7 @@ import { memo, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useIsClient } from '@/hooks/useIsClient';
+import { useAppElement } from '@/ThemeProvider';
 
 import { ToastContext } from './context';
 import { viewportVariants } from './style';
@@ -233,13 +234,6 @@ const ToastList = memo(() => {
 
 ToastList.displayName = 'ToastList';
 
-export const TOAST_CONTAINER_ATTR = 'data-lobe-ui-toast-container';
-
-const resolveRoot = (root?: HTMLElement | ShadowRoot | null): HTMLElement | ShadowRoot | null => {
-  if (root) return root;
-  return document.body;
-};
-
 export interface ToastHostProps {
   className?: string;
   /**
@@ -278,6 +272,7 @@ export const ToastHost = memo(
     swipeDirection = ['down', 'right'],
   }: ToastHostProps) => {
     const isClient = useIsClient();
+    const appElement = useAppElement();
 
     useEffect(() => {
       globalState = {
@@ -289,6 +284,8 @@ export const ToastHost = memo(
     }, [duration, limit, position, swipeDirection]);
 
     if (!isClient) return null;
+
+    const container = root ?? appElement ?? document.body;
 
     return createPortal(
       <>
@@ -304,7 +301,7 @@ export const ToastHost = memo(
           </ToastContext>
         ))}
       </>,
-      document.body,
+      container,
     );
   },
 );

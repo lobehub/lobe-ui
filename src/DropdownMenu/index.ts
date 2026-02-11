@@ -1,5 +1,4 @@
 export {
-  DROPDOWN_MENU_CONTAINER_ATTR,
   DropdownMenuCheckboxItemIndicator,
   DropdownMenuCheckboxItemPrimitive,
   type DropdownMenuCheckboxItemProps,

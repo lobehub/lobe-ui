@@ -63,7 +63,6 @@ export { default as DraggableSideNav, type DraggableSideNavProps } from './Dragg
 export { default as Drawer, type DrawerProps } from './Drawer';
 export { default as Dropdown, type DropdownMenuItemType, type DropdownProps } from './Dropdown';
 export {
-  DROPDOWN_MENU_CONTAINER_ATTR,
   type DropdownItem,
   default as DropdownMenu,
   type DropdownMenuCheckboxItem,
@@ -186,7 +185,6 @@ export {
 } from './Layout';
 export { default as List, ListItem, type ListItemProps, type ListProps } from './List';
 export {
-  LOBE_SELECT_CONTAINER_ATTR,
   default as LobeSelect,
   LobeSelectArrow,
   type LobeSelectArrowProps,
@@ -304,7 +302,6 @@ export type { MotionComponentType } from './MotionProvider';
 export { MotionComponent, MotionProvider, useMotionComponent } from './MotionProvider';
 export {
   default as Popover,
-  POPOVER_CONTAINER_ATTR,
   PopoverArrow,
   type PopoverArrowAtomProps,
   PopoverArrowIcon,

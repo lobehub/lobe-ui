@@ -1,7 +1,6 @@
 'use client';
 
 export {
-  EDITOR_SLASH_MENU_CONTAINER_ATTR,
   EditorSlashMenuEmpty,
   EditorSlashMenuGroup,
   EditorSlashMenuGroupLabel,
