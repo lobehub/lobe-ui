@@ -1,10 +1,11 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { memo, useEffect, useState, useSyncExternalStore } from 'react';
+import { memo, useEffect, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useIsClient } from '@/hooks/useIsClient';
+import { useAppElement } from '@/ThemeProvider';
 import { registerDevSingleton } from '@/utils/devSingleton';
 
 import { ModalStackItem } from './ModalStackItem';
@@ -46,11 +47,6 @@ export type ModalHostProps = {
   root?: HTMLElement | ShadowRoot | null;
 };
 
-const MODAL_PORTAL_ATTR = 'data-lobe-ui-modal-portal';
-
-// Reuse one portal container per root (document.body by default).
-const containerMap = new WeakMap<object, HTMLElement>();
-
 let modalStack: TModalStackItem[] = [];
 let modalSeed = 0;
 const listeners = new Set<() => void>();
@@ -69,22 +65,6 @@ const EMPTY_STACK: TModalStackItem[] = [];
 const getSnapshot = () => modalStack;
 const getServerSnapshot = () => EMPTY_STACK;
 
-const getOrCreateContainer = (root: HTMLElement | ShadowRoot): HTMLElement => {
-  const cached = containerMap.get(root);
-  if (cached && cached.isConnected) return cached;
-
-  const el = document.createElement('div');
-  el.setAttribute(MODAL_PORTAL_ATTR, 'true');
-  root.append(el);
-  containerMap.set(root, el);
-  return el;
-};
-
-const resolveRoot = (root?: HTMLElement | ShadowRoot | null): HTMLElement | ShadowRoot | null => {
-  if (root) return root;
-  return document.body;
-};
-
 const ModalPortal = ({
   children,
   root,
@@ -92,17 +72,9 @@ const ModalPortal = ({
   children: ReactNode;
   root?: HTMLElement | ShadowRoot | null;
 }) => {
-  const [container, setContainer] = useState<HTMLElement | null>(() => {
-    const resolved = resolveRoot(root);
-    if (!resolved) return null;
-    return getOrCreateContainer(resolved);
-  });
+  const appElement = useAppElement();
+  const container = root ?? appElement ?? document.body;
 
-  if (!container) {
-    setContainer(getOrCreateContainer(document.body));
-  }
-
-  if (!container) return null;
   return createPortal(children, container);
 };
 
