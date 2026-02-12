@@ -1,4 +1,5 @@
-import { Flexbox, Icon, LobeSelect, Tag } from '@lobehub/ui';
+import { Flexbox, Icon, Tag } from '@lobehub/ui';
+import { Select } from '@lobehub/ui/base-ui';
 import { Palette, Sparkles, Zap } from 'lucide-react';
 import { useMemo } from 'react';
 
@@ -55,7 +56,7 @@ export default () => {
         <Tag color="gold">optionRender</Tag>
         <Tag color="cyan">labelRender</Tag>
       </Flexbox>
-      <LobeSelect
+      <Select
         allowClear
         options={toneOptions}
         placeholder="Pick a visual tone"

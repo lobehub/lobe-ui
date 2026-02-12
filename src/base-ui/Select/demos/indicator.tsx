@@ -1,7 +1,7 @@
-import { LobeSelect, type LobeSelectProps } from '@lobehub/ui';
+import { Select, type SelectProps } from '@lobehub/ui/base-ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
-const options: NonNullable<LobeSelectProps['options']> = [
+const options: NonNullable<SelectProps['options']> = [
   { label: 'Apple', value: 'apple' },
   { label: 'Banana', value: 'banana' },
   { label: 'Cherry', value: 'cherry' },
@@ -19,25 +19,25 @@ export default () => {
       },
     },
     { store },
-  ) as Pick<LobeSelectProps, 'selectedIndicatorVariant'>;
+  ) as Pick<SelectProps, 'selectedIndicatorVariant'>;
 
   return (
     <StoryBook gap={16} levaStore={store}>
-      <LobeSelect
+      <Select
         defaultValue="banana"
         options={options}
         placeholder="Check indicator (default)"
         selectedIndicatorVariant="check"
         style={{ width: '100%' }}
       />
-      <LobeSelect
+      <Select
         defaultValue="banana"
         options={options}
         placeholder="Bold indicator"
         selectedIndicatorVariant="bold"
         style={{ width: '100%' }}
       />
-      <LobeSelect
+      <Select
         defaultValue="cherry"
         options={options}
         placeholder="With controls"

@@ -9,54 +9,54 @@ import {
   type Ref,
 } from 'react';
 
-export type LobeSwitchSize = 'default' | 'small';
+export type SwitchSize = 'default' | 'small';
 
-export type LobeSwitchChangeEventHandler = (
+export type SwitchChangeEventHandler = (
   checked: boolean,
   event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>,
 ) => void;
 
-export type LobeSwitchClickEventHandler = LobeSwitchChangeEventHandler;
+export type SwitchClickEventHandler = SwitchChangeEventHandler;
 
-export interface LobeSwitchClassNames {
+export interface SwitchClassNames {
   content?: string;
   root?: string;
   thumb?: string;
 }
 
-export interface LobeSwitchStyles {
+export interface SwitchStyles {
   content?: CSSProperties;
   root?: CSSProperties;
   thumb?: CSSProperties;
 }
 
-export interface LobeSwitchContextType {
+export interface SwitchContextType {
   isChecked: boolean;
   isPressed: boolean;
   setIsChecked: (checked: boolean) => void;
   setIsPressed: (pressed: boolean) => void;
 }
 
-export type LobeSwitchRootProps = Omit<ComponentProps<typeof Switch.Root>, 'render'> &
+export type SwitchRootProps = Omit<ComponentProps<typeof Switch.Root>, 'render'> &
   HTMLMotionProps<'button'> & {
-    size?: LobeSwitchSize;
+    size?: SwitchSize;
   };
 
-export type LobeSwitchThumbProps = Omit<ComponentProps<typeof Switch.Thumb>, 'render'> &
+export type SwitchThumbProps = Omit<ComponentProps<typeof Switch.Thumb>, 'render'> &
   HTMLMotionProps<'span'> & {
     pressedAnimation?: TargetAndTransition | boolean;
-    size?: LobeSwitchSize;
+    size?: SwitchSize;
     transition?: Transition;
   };
 
-export type LobeSwitchIconPosition = 'left' | 'right' | 'thumb';
+export type SwitchIconPosition = 'left' | 'right' | 'thumb';
 
-export type LobeSwitchIconProps = HTMLMotionProps<'span'> & {
-  position: LobeSwitchIconPosition;
+export type SwitchIconProps = HTMLMotionProps<'span'> & {
+  position: SwitchIconPosition;
   transition?: Transition;
 };
 
-export interface LobeSwitchProps {
+export interface SwitchProps {
   /**
    * Whether to set focus automatically when mounted
    */
@@ -76,7 +76,7 @@ export interface LobeSwitchProps {
   /**
    * Custom class names for each part
    */
-  classNames?: LobeSwitchClassNames;
+  classNames?: SwitchClassNames;
   /**
    * Initial checked state (uncontrolled)
    */
@@ -104,11 +104,11 @@ export interface LobeSwitchProps {
   /**
    * Callback when the switch state changes
    */
-  onChange?: LobeSwitchChangeEventHandler;
+  onChange?: SwitchChangeEventHandler;
   /**
    * Callback when clicking the switch
    */
-  onClick?: LobeSwitchClickEventHandler;
+  onClick?: SwitchClickEventHandler;
   /**
    * Reference to the root element
    */
@@ -121,7 +121,7 @@ export interface LobeSwitchProps {
    * Size of the switch
    * @default 'default'
    */
-  size?: LobeSwitchSize;
+  size?: SwitchSize;
   /**
    * Custom inline style
    */
@@ -129,7 +129,7 @@ export interface LobeSwitchProps {
   /**
    * Custom styles for each part
    */
-  styles?: LobeSwitchStyles;
+  styles?: SwitchStyles;
   /**
    * Tab index for keyboard navigation
    */

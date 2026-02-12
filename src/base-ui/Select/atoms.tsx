@@ -16,7 +16,7 @@ import { styles as menuStyles } from '@/Menu/sharedStyle';
 import { useAppElement } from '@/ThemeProvider';
 
 import { styles, triggerVariants } from './style';
-import { type LobeSelectSize, type LobeSelectVariant } from './type';
+import { type SelectSize, type SelectVariant } from './type';
 
 const mergeStateClassName = <TState,>(
   base: string,
@@ -26,21 +26,21 @@ const mergeStateClassName = <TState,>(
   return cx(base, className);
 };
 
-export const LobeSelectRoot = Select.Root;
-export const LobeSelectBackdrop = Select.Backdrop;
-export const LobeSelectSeparator = Select.Separator;
+export const SelectRoot = Select.Root;
+export const SelectBackdrop = Select.Backdrop;
+export const SelectSeparator = Select.Separator;
 
-export type LobeSelectTriggerProps = Omit<
+export type SelectTriggerProps = Omit<
   ComponentPropsWithRef<typeof Select.Trigger>,
   'children' | 'render'
 > & {
   children: ComponentProps<typeof Select.Trigger>['children'];
   shadow?: boolean;
-  size?: LobeSelectSize;
-  variant?: LobeSelectVariant;
+  size?: SelectSize;
+  variant?: SelectVariant;
 };
 
-export const LobeSelectTrigger = ({
+export const SelectTrigger = ({
   children,
   className,
   nativeButton,
@@ -49,7 +49,7 @@ export const LobeSelectTrigger = ({
   variant,
   ref: refProp,
   ...rest
-}: LobeSelectTriggerProps) => {
+}: SelectTriggerProps) => {
   const { isDarkMode } = useThemeMode();
   const resolvedVariant = variant ?? (isDarkMode ? 'filled' : 'outlined');
   const baseClassName = triggerVariants({ shadow, size, variant: resolvedVariant });
@@ -103,48 +103,48 @@ export const LobeSelectTrigger = ({
   );
 };
 
-LobeSelectTrigger.displayName = 'LobeSelectTrigger';
+SelectTrigger.displayName = 'SelectTrigger';
 
-export type LobeSelectIconProps = ComponentProps<typeof Select.Icon>;
+export type SelectIconProps = ComponentProps<typeof Select.Icon>;
 
-export const LobeSelectIcon = ({ className, ...rest }: LobeSelectIconProps) => {
+export const SelectIcon = ({ className, ...rest }: SelectIconProps) => {
   return <Select.Icon className={mergeStateClassName(styles.icon, className) as any} {...rest} />;
 };
 
-LobeSelectIcon.displayName = 'LobeSelectIcon';
+SelectIcon.displayName = 'SelectIcon';
 
-export type LobeSelectValueProps = ComponentProps<typeof Select.Value>;
+export type SelectValueProps = ComponentProps<typeof Select.Value>;
 
-export const LobeSelectValue = ({ className, ...rest }: LobeSelectValueProps) => {
+export const SelectValue = ({ className, ...rest }: SelectValueProps) => {
   return <Select.Value className={mergeStateClassName(styles.value, className) as any} {...rest} />;
 };
 
-LobeSelectValue.displayName = 'LobeSelectValue';
+SelectValue.displayName = 'SelectValue';
 
-export type LobeSelectPortalProps = ComponentProps<typeof Select.Portal> & {
+export type SelectPortalProps = ComponentProps<typeof Select.Portal> & {
   /**
    * When `container` is not provided, it uses a shared container created by `usePortalContainer`.
    */
   container?: HTMLElement | null;
 };
 
-export const LobeSelectPortal = ({ container, ...rest }: LobeSelectPortalProps) => {
+export const SelectPortal = ({ container, ...rest }: SelectPortalProps) => {
   const appElement = useAppElement();
   return <Select.Portal container={container ?? appElement ?? undefined} {...rest} />;
 };
 
-LobeSelectPortal.displayName = 'LobeSelectPortal';
+SelectPortal.displayName = 'SelectPortal';
 
-export type LobeSelectPositionerProps = ComponentProps<typeof Select.Positioner>;
+export type SelectPositionerProps = ComponentProps<typeof Select.Positioner>;
 
-export const LobeSelectPositioner = ({
+export const SelectPositioner = ({
   align,
   alignItemWithTrigger,
   className,
   side,
   sideOffset,
   ...rest
-}: LobeSelectPositionerProps) => {
+}: SelectPositionerProps) => {
   return (
     <Select.Positioner
       align={align ?? 'start'}
@@ -157,11 +157,11 @@ export const LobeSelectPositioner = ({
   );
 };
 
-LobeSelectPositioner.displayName = 'LobeSelectPositioner';
+SelectPositioner.displayName = 'SelectPositioner';
 
-export type LobeSelectPopupProps = ComponentProps<typeof Select.Popup>;
+export type SelectPopupProps = ComponentProps<typeof Select.Popup>;
 
-export const LobeSelectPopup = ({ className, ...rest }: LobeSelectPopupProps) => {
+export const SelectPopup = ({ className, ...rest }: SelectPopupProps) => {
   return (
     <Select.Popup
       className={mergeStateClassName(cx(menuStyles.popup, styles.popup), className) as any}
@@ -170,19 +170,19 @@ export const LobeSelectPopup = ({ className, ...rest }: LobeSelectPopupProps) =>
   );
 };
 
-LobeSelectPopup.displayName = 'LobeSelectPopup';
+SelectPopup.displayName = 'SelectPopup';
 
-export type LobeSelectListProps = ComponentProps<typeof Select.List>;
+export type SelectListProps = ComponentProps<typeof Select.List>;
 
-export const LobeSelectList = ({ className, ...rest }: LobeSelectListProps) => {
+export const SelectList = ({ className, ...rest }: SelectListProps) => {
   return <Select.List className={mergeStateClassName(styles.list, className) as any} {...rest} />;
 };
 
-LobeSelectList.displayName = 'LobeSelectList';
+SelectList.displayName = 'SelectList';
 
-export type LobeSelectItemProps = ComponentProps<typeof Select.Item>;
+export type SelectItemProps = ComponentProps<typeof Select.Item>;
 
-export const LobeSelectItem = ({ className, ...rest }: LobeSelectItemProps) => {
+export const SelectItem = ({ className, ...rest }: SelectItemProps) => {
   return (
     <Select.Item
       className={mergeStateClassName(cx(menuStyles.item, styles.item), className) as any}
@@ -191,11 +191,11 @@ export const LobeSelectItem = ({ className, ...rest }: LobeSelectItemProps) => {
   );
 };
 
-LobeSelectItem.displayName = 'LobeSelectItem';
+SelectItem.displayName = 'SelectItem';
 
-export type LobeSelectItemTextProps = ComponentProps<typeof Select.ItemText>;
+export type SelectItemTextProps = ComponentProps<typeof Select.ItemText>;
 
-export const LobeSelectItemText = ({ className, ...rest }: LobeSelectItemTextProps) => {
+export const SelectItemText = ({ className, ...rest }: SelectItemTextProps) => {
   return (
     <Select.ItemText
       className={mergeStateClassName(cx(menuStyles.label, styles.itemText), className) as any}
@@ -204,11 +204,11 @@ export const LobeSelectItemText = ({ className, ...rest }: LobeSelectItemTextPro
   );
 };
 
-LobeSelectItemText.displayName = 'LobeSelectItemText';
+SelectItemText.displayName = 'SelectItemText';
 
-export type LobeSelectItemIndicatorProps = ComponentProps<typeof Select.ItemIndicator>;
+export type SelectItemIndicatorProps = ComponentProps<typeof Select.ItemIndicator>;
 
-export const LobeSelectItemIndicator = ({ className, ...rest }: LobeSelectItemIndicatorProps) => {
+export const SelectItemIndicator = ({ className, ...rest }: SelectItemIndicatorProps) => {
   return (
     <Select.ItemIndicator
       className={mergeStateClassName(styles.itemIndicator, className) as any}
@@ -217,19 +217,19 @@ export const LobeSelectItemIndicator = ({ className, ...rest }: LobeSelectItemIn
   );
 };
 
-LobeSelectItemIndicator.displayName = 'LobeSelectItemIndicator';
+SelectItemIndicator.displayName = 'SelectItemIndicator';
 
-export type LobeSelectGroupProps = ComponentProps<typeof Select.Group>;
+export type SelectGroupProps = ComponentProps<typeof Select.Group>;
 
-export const LobeSelectGroup = ({ className, ...rest }: LobeSelectGroupProps) => {
+export const SelectGroup = ({ className, ...rest }: SelectGroupProps) => {
   return <Select.Group className={mergeStateClassName(styles.group, className) as any} {...rest} />;
 };
 
-LobeSelectGroup.displayName = 'LobeSelectGroup';
+SelectGroup.displayName = 'SelectGroup';
 
-export type LobeSelectGroupLabelProps = ComponentProps<typeof Select.GroupLabel>;
+export type SelectGroupLabelProps = ComponentProps<typeof Select.GroupLabel>;
 
-export const LobeSelectGroupLabel = ({ className, ...rest }: LobeSelectGroupLabelProps) => {
+export const SelectGroupLabel = ({ className, ...rest }: SelectGroupLabelProps) => {
   return (
     <Select.GroupLabel
       className={
@@ -240,11 +240,11 @@ export const LobeSelectGroupLabel = ({ className, ...rest }: LobeSelectGroupLabe
   );
 };
 
-LobeSelectGroupLabel.displayName = 'LobeSelectGroupLabel';
+SelectGroupLabel.displayName = 'SelectGroupLabel';
 
-export type LobeSelectScrollUpArrowProps = ComponentProps<typeof Select.ScrollUpArrow>;
+export type SelectScrollUpArrowProps = ComponentProps<typeof Select.ScrollUpArrow>;
 
-export const LobeSelectScrollUpArrow = ({ className, ...rest }: LobeSelectScrollUpArrowProps) => {
+export const SelectScrollUpArrow = ({ className, ...rest }: SelectScrollUpArrowProps) => {
   return (
     <Select.ScrollUpArrow
       className={mergeStateClassName(styles.scrollArrow, className) as any}
@@ -253,14 +253,11 @@ export const LobeSelectScrollUpArrow = ({ className, ...rest }: LobeSelectScroll
   );
 };
 
-LobeSelectScrollUpArrow.displayName = 'LobeSelectScrollUpArrow';
+SelectScrollUpArrow.displayName = 'SelectScrollUpArrow';
 
-export type LobeSelectScrollDownArrowProps = ComponentProps<typeof Select.ScrollDownArrow>;
+export type SelectScrollDownArrowProps = ComponentProps<typeof Select.ScrollDownArrow>;
 
-export const LobeSelectScrollDownArrow = ({
-  className,
-  ...rest
-}: LobeSelectScrollDownArrowProps) => {
+export const SelectScrollDownArrow = ({ className, ...rest }: SelectScrollDownArrowProps) => {
   return (
     <Select.ScrollDownArrow
       className={mergeStateClassName(styles.scrollArrow, className) as any}
@@ -269,12 +266,12 @@ export const LobeSelectScrollDownArrow = ({
   );
 };
 
-LobeSelectScrollDownArrow.displayName = 'LobeSelectScrollDownArrow';
+SelectScrollDownArrow.displayName = 'SelectScrollDownArrow';
 
-export type LobeSelectArrowProps = ComponentProps<typeof Select.Arrow>;
+export type SelectArrowProps = ComponentProps<typeof Select.Arrow>;
 
-export const LobeSelectArrow = ({ className, ...rest }: LobeSelectArrowProps) => {
+export const SelectArrow = ({ className, ...rest }: SelectArrowProps) => {
   return <Select.Arrow className={mergeStateClassName(styles.arrow, className) as any} {...rest} />;
 };
 
-LobeSelectArrow.displayName = 'LobeSelectArrow';
+SelectArrow.displayName = 'SelectArrow';

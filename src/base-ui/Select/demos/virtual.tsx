@@ -1,4 +1,5 @@
-import { Flexbox, LobeSelect, Tag } from '@lobehub/ui';
+import { Flexbox, Tag } from '@lobehub/ui';
+import { Select } from '@lobehub/ui/base-ui';
 import { useMemo, useState } from 'react';
 
 export default () => {
@@ -27,7 +28,7 @@ export default () => {
         <div style={{ fontSize: 15, fontWeight: 600 }}>Virtual List</div>
         <Tag color="cyan">Performance</Tag>
       </Flexbox>
-      <LobeSelect
+      <Select
         allowClear
         showSearch
         virtual

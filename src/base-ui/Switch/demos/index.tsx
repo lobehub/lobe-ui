@@ -1,4 +1,5 @@
-import { Flexbox, LobeSwitch } from '@lobehub/ui';
+import { Flexbox } from '@lobehub/ui';
+import { Switch } from '@lobehub/ui/base-ui';
 import { CheckIcon, XIcon } from 'lucide-react';
 import { useState } from 'react';
 
@@ -9,15 +10,15 @@ export default () => {
     <Flexbox gap={16}>
       <Flexbox horizontal align="center" gap={8}>
         <span>Default:</span>
-        <LobeSwitch checked={checked} onChange={setChecked} />
+        <Switch checked={checked} onChange={setChecked} />
       </Flexbox>
       <Flexbox horizontal align="center" gap={8}>
         <span>Small:</span>
-        <LobeSwitch checked={checked} size="small" onChange={setChecked} />
+        <Switch checked={checked} size="small" onChange={setChecked} />
       </Flexbox>
       <Flexbox horizontal align="center" gap={8}>
         <span>With Icons:</span>
-        <LobeSwitch
+        <Switch
           checked={checked}
           checkedChildren={<CheckIcon size={12} />}
           unCheckedChildren={<XIcon size={12} />}
@@ -26,19 +27,19 @@ export default () => {
       </Flexbox>
       <Flexbox horizontal align="center" gap={8}>
         <span>Disabled:</span>
-        <LobeSwitch disabled />
+        <Switch disabled />
       </Flexbox>
       <Flexbox horizontal align="center" gap={8}>
         <span>Disabled Checked:</span>
-        <LobeSwitch defaultChecked disabled />
+        <Switch defaultChecked disabled />
       </Flexbox>
       <Flexbox horizontal align="center" gap={8}>
         <span>Loading:</span>
-        <LobeSwitch loading />
+        <Switch loading />
       </Flexbox>
       <Flexbox horizontal align="center" gap={8}>
         <span>Loading Small:</span>
-        <LobeSwitch loading size="small" />
+        <Switch loading size="small" />
       </Flexbox>
     </Flexbox>
   );

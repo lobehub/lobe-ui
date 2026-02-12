@@ -18,10 +18,12 @@ export const packages = [
   'mdx',
   'mobile',
   'storybook',
+  'base-ui',
 ];
 
 const nav: INavItem[] = [
   { link: '/components/action-icon', title: 'Components' },
+  { link: '/components/base-ui/select', title: 'Base UI' },
   { link: '/components/chat/chat-input-area', title: 'Chat' },
   { link: '/components/mobile/chat-input-area', title: 'Mobile' },
   { link: '/components/awesome/features', title: 'Awesome' },

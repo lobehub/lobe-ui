@@ -1,8 +1,8 @@
-import { LobeSelect, type LobeSelectProps } from '@lobehub/ui';
+import { Select, type SelectProps } from '@lobehub/ui/base-ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { Sparkles } from 'lucide-react';
 
-const options: NonNullable<LobeSelectProps['options']> = [
+const options: NonNullable<SelectProps['options']> = [
   {
     label: 'Citrus',
     options: [
@@ -20,7 +20,7 @@ const options: NonNullable<LobeSelectProps['options']> = [
   { disabled: true, label: 'Disabled', value: 'disabled' },
 ];
 
-const longOptions: NonNullable<LobeSelectProps['options']> = Array.from({ length: 120 }).map(
+const longOptions: NonNullable<SelectProps['options']> = Array.from({ length: 120 }).map(
   (_, index) => ({
     label: `Option ${index + 1}`,
     value: `option-${index + 1}`,
@@ -46,11 +46,11 @@ export default () => {
       },
     },
     { store },
-  ) as LobeSelectProps;
+  ) as SelectProps;
 
   return (
     <StoryBook gap={16} levaStore={store}>
-      <LobeSelect
+      <Select
         behaviorVariant="default"
         defaultValue="orange"
         options={options}
@@ -59,7 +59,7 @@ export default () => {
         style={{ width: '100%' }}
         {...controls}
       />
-      <LobeSelect
+      <Select
         behaviorVariant="item-aligned"
         defaultValue="lemon"
         options={options}
@@ -67,7 +67,7 @@ export default () => {
         style={{ width: '100%' }}
         {...controls}
       />
-      <LobeSelect
+      <Select
         behaviorVariant="default"
         defaultValue="option-60"
         options={longOptions}
@@ -75,7 +75,7 @@ export default () => {
         style={{ width: '100%' }}
         {...controls}
       />
-      <LobeSelect
+      <Select
         behaviorVariant="item-aligned"
         defaultValue="option-60"
         options={longOptions}
@@ -83,7 +83,7 @@ export default () => {
         style={{ width: '100%' }}
         {...controls}
       />
-      <LobeSelect
+      <Select
         readOnly
         defaultValue="blueberry"
         options={options}
@@ -91,7 +91,7 @@ export default () => {
         style={{ width: '100%' }}
         {...controls}
       />
-      <LobeSelect
+      <Select
         disabled
         defaultValue="disabled"
         options={options}
@@ -99,7 +99,7 @@ export default () => {
         style={{ width: '100%' }}
         {...controls}
       />
-      <LobeSelect
+      <Select
         allowClear
         showSearch
         defaultValue="strawberry"
@@ -108,7 +108,7 @@ export default () => {
         style={{ width: '100%' }}
         {...controls}
       />
-      <LobeSelect
+      <Select
         mode="tags"
         options={options}
         placeholder="Type tags..."

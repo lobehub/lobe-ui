@@ -206,10 +206,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     transition: all 150ms ${cssVar.motionEaseOut};
 
-    &:not([data-disabled]):not([data-readonly])[data-popup-open],
-    &:not([data-disabled]):not([data-readonly])[data-open],
-    &:not([data-disabled]):not([data-readonly])[data-state='open'],
-    &:not([data-disabled]):not([data-readonly])[aria-expanded='true'] {
+    &:not([data-disabled], [data-readonly])[data-popup-open],
+    &:not([data-disabled], [data-readonly])[data-open],
+    &:not([data-disabled], [data-readonly])[data-state='open'],
+    &:not([data-disabled], [data-readonly])[aria-expanded='true'] {
       background: var(--lobe-select-open-bg, ${cssVar.colorFillTertiary});
     }
 

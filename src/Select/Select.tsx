@@ -11,7 +11,7 @@ import { variants } from './style';
 import type { SelectProps } from './type';
 
 /**
- * @deprecated Use `LobeSelect` instead.
+ * @deprecated Use `Select` from `@lobehub/ui/base-ui` instead.
  */
 const Select = memo<SelectProps>(
   ({ ref, variant, suffixIconProps, suffixIcon, shadow, className, ...rest }) => {
