@@ -9,13 +9,13 @@ import type { Enable, NumberSize, Size } from 're-resizable';
 import { Resizable } from 're-resizable';
 import {
   memo,
+  startTransition,
   use,
   useCallback,
   useEffect,
   useMemo,
-  useReducer,
   useRef,
-  useTransition,
+  useState,
 } from 'react';
 import useControlledState from 'use-merge-value';
 
@@ -26,72 +26,63 @@ import { handleVariants, panelVariants, styles, toggleVariants } from './style';
 import type { DraggablePanelProps } from './type';
 import { reversePlacement } from './utils';
 
-// Constants
-const DEFAULT_HEIGHT = 180;
-const DEFAULT_WIDTH = 280;
-const DEFAULT_HEADER_HEIGHT = 0;
-const DEFAULT_PIN = true;
-const DEFAULT_MODE = 'fixed';
-const DEFAULT_EXPANDABLE = true;
-const DEFAULT_EXPAND = true;
-const DEFAULT_SHOW_HANDLE_WIDE_AREA = true;
+const ARROW_MAP = {
+  bottom: ChevronUp,
+  left: ChevronRight,
+  right: ChevronLeft,
+  top: ChevronDown,
+} as const;
 
-// State reducer for better state management
-interface DraggablePanelState {
-  isResizing: boolean;
-  showExpand: boolean;
-}
+const MARGIN_MAP = {
+  bottom: { marginTop: 4 },
+  left: { marginRight: 4 },
+  right: { marginLeft: 4 },
+  top: { marginBottom: 4 },
+} as const;
 
-type DraggablePanelAction =
-  | { type: 'START_RESIZE' }
-  | { type: 'STOP_RESIZE' }
-  | { payload: boolean; type: 'SET_SHOW_EXPAND' };
+const DISABLED_RESIZING: Enable = {
+  bottom: false,
+  bottomLeft: false,
+  bottomRight: false,
+  left: false,
+  right: false,
+  top: false,
+  topLeft: false,
+  topRight: false,
+};
 
-function draggablePanelReducer(
-  state: DraggablePanelState,
-  action: DraggablePanelAction,
-): DraggablePanelState {
-  switch (action.type) {
-    case 'START_RESIZE': {
-      return { ...state, isResizing: true, showExpand: false };
-    }
-    case 'STOP_RESIZE': {
-      return { ...state, isResizing: false, showExpand: true };
-    }
-    case 'SET_SHOW_EXPAND': {
-      return { ...state, showExpand: action.payload };
-    }
-    default: {
-      return state;
-    }
-  }
-}
+const toCssSize = (value: string | number | undefined, fallback: string) => {
+  if (typeof value === 'number') return `${Math.max(value, 0)}px`;
+  if (typeof value === 'string' && value.length > 0) return value;
+  return fallback;
+};
 
 const DraggablePanel = memo<DraggablePanelProps>(
   ({
-    headerHeight = DEFAULT_HEADER_HEIGHT,
+    headerHeight = 0,
     fullscreen,
     maxHeight,
-    pin = DEFAULT_PIN,
-    mode = DEFAULT_MODE,
+    pin = true,
+    mode = 'fixed',
     children,
     placement = 'right',
     resize,
     style,
     showBorder = true,
     showHandleHighlight = false,
-    showHandleWideArea = DEFAULT_SHOW_HANDLE_WIDE_AREA,
+    showHandleWideArea = true,
     backgroundColor,
     size,
+    stableLayout = false,
     defaultSize: customizeDefaultSize,
     minWidth,
     minHeight,
     maxWidth,
     onSizeChange,
     onSizeDragging,
-    expandable = DEFAULT_EXPANDABLE,
+    expandable = true,
     expand,
-    defaultExpand = DEFAULT_EXPAND,
+    defaultExpand = true,
     onExpandChange,
     className,
     showHandleWhenCollapsed,
@@ -103,80 +94,68 @@ const DraggablePanel = memo<DraggablePanelProps>(
     const ref = useRef<HTMLDivElement>(null);
     const isHovering = useHover(ref);
     const isVertical = placement === 'top' || placement === 'bottom';
-    const [isPending, startTransition] = useTransition();
+    const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+    const resetTransitionTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
+    const resizableRef = useRef<Resizable>(null);
+    const initialExpandedSizeRef = useRef<Size | undefined>(undefined);
 
-    // Use ref for hover timeout to avoid memory leaks
-    const hoverTimeoutRef = useRef<any>(undefined);
-
-    // inherit direction from Ant Design ConfigProvider
     const { direction: antdDirection } = use(ConfigProvider.ConfigContext);
     const direction = dir ?? antdDirection;
 
-    // Handle RTL direction
     const internalPlacement = useMemo(() => {
-      return direction === 'rtl' && ['left', 'right'].includes(placement)
-        ? placement === 'left'
-          ? 'right'
-          : 'left'
-        : placement;
+      if (direction !== 'rtl') return placement;
+      if (placement === 'left') return 'right';
+      if (placement === 'right') return 'left';
+      return placement;
     }, [direction, placement]);
 
-    const cssVariables = useMemo<Record<string, string>>(
-      () => ({
-        '--draggable-panel-bg': backgroundColor || '',
-        '--draggable-panel-header-height': `${headerHeight}px`,
-      }),
-      [backgroundColor, headerHeight],
-    );
+    const cssVariables = {
+      '--draggable-panel-bg': backgroundColor || '',
+      '--draggable-panel-header-height': `${headerHeight}px`,
+    } as Record<string, string>;
 
     const [isExpand, setIsExpand] = useControlledState(defaultExpand, {
       onChange: onExpandChange,
       value: expand,
     });
 
-    // Initialize state with useReducer for better performance
-    const initialState: DraggablePanelState = {
-      isResizing: false,
-      showExpand: true,
-    };
+    const [shouldTransition, setShouldTransition] = useState(true);
+    const [showExpand, setShowExpand] = useState(true);
 
-    const [state, dispatch] = useReducer(draggablePanelReducer, initialState);
-
-    // Auto-expand on hover if not pinned with optimized transition
     useEffect(() => {
       if (pin) return;
 
-      // Clear previous timeout
       if (hoverTimeoutRef.current) {
         clearTimeout(hoverTimeoutRef.current);
       }
 
       if (isHovering && !isExpand) {
-        startTransition(() => {
-          setIsExpand(true);
-        });
+        startTransition(() => setIsExpand(true));
       } else if (!isHovering && isExpand) {
-        // Add a small delay before collapsing to prevent flickering
         hoverTimeoutRef.current = setTimeout(() => {
-          startTransition(() => {
-            setIsExpand(false);
-          });
+          startTransition(() => setIsExpand(false));
         }, 150);
       }
     }, [pin, isHovering, isExpand, setIsExpand]);
 
-    // Cleanup timeout on unmount
     useEffect(() => {
       return () => {
         if (hoverTimeoutRef.current) {
           clearTimeout(hoverTimeoutRef.current);
         }
+        if (resetTransitionTimeoutRef.current) {
+          clearTimeout(resetTransitionTimeoutRef.current);
+        }
       };
     }, []);
 
+    useEffect(() => {
+      initialExpandedSizeRef.current = undefined;
+    }, [internalPlacement]);
+
+    const reversed = reversePlacement(internalPlacement);
     const canResizing = resize !== false && isExpand;
 
-    // Configure resizing handles
     const resizing = useMemo(
       () => ({
         bottom: false,
@@ -187,31 +166,23 @@ const DraggablePanel = memo<DraggablePanelProps>(
         top: false,
         topLeft: false,
         topRight: false,
-        [reversePlacement(internalPlacement)]: true,
+        [reversed]: true,
         ...(resize as Enable),
       }),
-      [internalPlacement, resize],
+      [reversed, resize],
     );
 
-    // Calculate default size based on orientation
     const defaultSize: Size = useMemo(() => {
-      if (isVertical)
-        return {
-          height: DEFAULT_HEIGHT,
-          width: '100%',
-          ...customizeDefaultSize,
-        };
-
-      return {
-        height: '100%',
-        width: DEFAULT_WIDTH,
-        ...customizeDefaultSize,
-      };
+      if (isVertical) return { height: 180, width: '100%', ...customizeDefaultSize };
+      return { height: '100%', width: 280, ...customizeDefaultSize };
     }, [isVertical, customizeDefaultSize]);
+    const normalizedMaxHeight = typeof maxHeight === 'number' ? Math.max(maxHeight, 0) : undefined;
+    const normalizedMaxWidth = typeof maxWidth === 'number' ? Math.max(maxWidth, 0) : undefined;
+    const normalizedMinHeight = typeof minHeight === 'number' ? Math.max(minHeight, 0) : undefined;
+    const normalizedMinWidth = typeof minWidth === 'number' ? Math.max(minWidth, 0) : undefined;
 
-    // Determine appropriate size props based on expand state
     const sizeProps = useMemo(() => {
-      if (!isExpand) {
+      if (!stableLayout && !isExpand) {
         return isVertical
           ? { minHeight: 0, size: { height: 0 } }
           : { minWidth: 0, size: { width: 0 } };
@@ -219,166 +190,204 @@ const DraggablePanel = memo<DraggablePanelProps>(
 
       return {
         defaultSize,
-        maxHeight: typeof maxHeight === 'number' ? Math.max(maxHeight, 0) : maxHeight,
-        maxWidth: typeof maxWidth === 'number' ? Math.max(maxWidth, 0) : maxWidth,
-        minHeight: typeof minHeight === 'number' ? Math.max(minHeight, 0) : minHeight,
-        minWidth: typeof minWidth === 'number' ? Math.max(minWidth, 0) : minWidth,
+        maxHeight: normalizedMaxHeight,
+        maxWidth: normalizedMaxWidth,
+        minHeight: normalizedMinHeight,
+        minWidth: normalizedMinWidth,
         size: size as Size,
       };
-    }, [isExpand, isVertical, defaultSize, maxHeight, maxWidth, minHeight, minWidth, size]);
+    }, [
+      stableLayout,
+      isExpand,
+      isVertical,
+      defaultSize,
+      normalizedMaxHeight,
+      normalizedMaxWidth,
+      normalizedMinHeight,
+      normalizedMinWidth,
+      size,
+    ]);
 
-    // Determine the appropriate arrow icon based on placement
-    const Arrow = useMemo(() => {
-      switch (internalPlacement) {
-        case 'top': {
-          return ChevronDown;
-        }
-        case 'bottom': {
-          return ChevronUp;
-        }
-        case 'right': {
-          return ChevronLeft;
-        }
-        case 'left': {
-          return ChevronRight;
-        }
-        default: {
-          return ChevronLeft;
-        }
-      }
-    }, [internalPlacement]);
+    const fallbackExpandedSize = isVertical ? '180px' : '280px';
+    const controlledExpandedSize = useMemo(() => {
+      const controlledSize = isVertical ? size?.height : size?.width;
+      if (controlledSize === undefined) return undefined;
+      return toCssSize(controlledSize, fallbackExpandedSize);
+    }, [isVertical, size?.height, size?.width, fallbackExpandedSize]);
+    const defaultExpandedSize = useMemo(() => {
+      const initialSize = isVertical ? defaultSize.height : defaultSize.width;
+      return toCssSize(initialSize, fallbackExpandedSize);
+    }, [isVertical, defaultSize.height, defaultSize.width, fallbackExpandedSize]);
+    const [resizedExpandedSize, setResizedExpandedSize] = useState<{
+      horizontal?: string;
+      vertical?: string;
+    }>({});
+    const expandedOuterSize =
+      controlledExpandedSize ??
+      (isVertical ? resizedExpandedSize.vertical : resizedExpandedSize.horizontal) ??
+      defaultExpandedSize;
 
-    // Toggle expand state with transition for better performance
+    const setExpandedMainSize = useCallback(
+      (nextSize: Size) => {
+        if (!stableLayout) return;
+
+        const currentSize = isVertical ? nextSize.height : nextSize.width;
+        if (!currentSize) return;
+
+        const normalizedSize = toCssSize(currentSize, fallbackExpandedSize);
+        setResizedExpandedSize((state) =>
+          isVertical
+            ? { ...state, vertical: normalizedSize }
+            : { ...state, horizontal: normalizedSize },
+        );
+      },
+      [fallbackExpandedSize, isVertical, stableLayout],
+    );
+
+    const captureInitialExpandedSize = useCallback(() => {
+      if (initialExpandedSizeRef.current) return initialExpandedSizeRef.current;
+
+      const rect = resizableRef.current?.resizable?.getBoundingClientRect();
+      if (!rect) return undefined;
+
+      const nextInitialSize = isVertical
+        ? ({ height: rect.height, width: '100%' } as Size)
+        : ({ height: '100%', width: rect.width } as Size);
+
+      initialExpandedSizeRef.current = nextInitialSize;
+      return nextInitialSize;
+    }, [isVertical]);
+
+    useEffect(() => {
+      if (!isExpand) return;
+      captureInitialExpandedSize();
+    }, [captureInitialExpandedSize, isExpand]);
+
     const toggleExpand = useCallback(() => {
-      if (!expandable) return;
-
-      startTransition(() => {
-        setIsExpand(!isExpand);
-      });
+      if (expandable) setIsExpand(!isExpand);
     }, [expandable, isExpand, setIsExpand]);
 
-    // Toggle handle component
-    const handle = useMemo(
-      () => (
-        <Center
-          className={toggleVariants({ placement: internalPlacement, showHandleWideArea })}
-          style={{ opacity: isExpand ? (pin ? undefined : 0) : showHandleWhenCollapsed ? 1 : 0 }}
-        >
-          <Center
-            className={classNames?.handle}
-            style={customStyles?.handle}
-            onClick={toggleExpand}
-          >
-            <Icon
-              className={styles.handlerIcon}
-              icon={Arrow}
-              size={16}
-              style={{
-                marginBottom: internalPlacement === 'top' ? 4 : 0,
-                marginLeft: internalPlacement === 'right' ? 4 : 0,
-                marginRight: internalPlacement === 'left' ? 4 : 0,
-                marginTop: internalPlacement === 'bottom' ? 4 : 0,
-                transform: `rotate(${isExpand ? 180 : 0}deg)`,
-                transition: 'transform 0.3s ease',
-              }}
-            />
-          </Center>
-        </Center>
-      ),
+    const clampResizeSize = useCallback(
+      (el: HTMLElement) => {
+        const rect = el.getBoundingClientRect();
+        const currentMainSize = isVertical ? rect.height : rect.width;
+        const minMainSize = isVertical ? normalizedMinHeight : normalizedMinWidth;
+        const maxMainSize = isVertical ? normalizedMaxHeight : normalizedMaxWidth;
+
+        let clampedMainSize = currentMainSize;
+        if (typeof minMainSize === 'number')
+          clampedMainSize = Math.max(clampedMainSize, minMainSize);
+        if (typeof maxMainSize === 'number')
+          clampedMainSize = Math.min(clampedMainSize, maxMainSize);
+
+        if (
+          !Number.isFinite(clampedMainSize) ||
+          Math.abs(clampedMainSize - currentMainSize) < 0.5
+        ) {
+          return { height: el.style.height, width: el.style.width };
+        }
+
+        const width = isVertical ? el.style.width || '100%' : `${clampedMainSize}px`;
+        const height = isVertical ? `${clampedMainSize}px` : el.style.height || '100%';
+        resizableRef.current?.updateSize({ height, width });
+
+        return { height, width };
+      },
       [
-        toggleVariants,
-        internalPlacement,
-        isExpand,
-        pin,
-        showHandleWhenCollapsed,
-        classNames?.handle,
-        toggleExpand,
-        customStyles?.handle,
-        styles.handlerIcon,
-        Arrow,
+        isVertical,
+        normalizedMaxHeight,
+        normalizedMaxWidth,
+        normalizedMinHeight,
+        normalizedMinWidth,
       ],
     );
 
-    // Handle resize events with memoization
     const handleResize = useCallback(
-      (_: unknown, _direction: unknown, reference_: HTMLElement, delta: NumberSize) => {
-        onSizeDragging?.(delta, {
-          height: reference_.style.height,
-          width: reference_.style.width,
-        });
+      (_event: unknown, _direction: unknown, el: HTMLElement, delta: NumberSize) => {
+        const nextSize = clampResizeSize(el);
+        setExpandedMainSize(nextSize);
+        onSizeDragging?.(delta, nextSize);
       },
-      [onSizeDragging],
+      [clampResizeSize, onSizeDragging, setExpandedMainSize],
     );
 
-    const handleResizeStart = useCallback(() => {
-      dispatch({ type: 'START_RESIZE' });
+    const triggerResetWithoutTransition = useCallback(() => {
+      if (resetTransitionTimeoutRef.current) {
+        clearTimeout(resetTransitionTimeoutRef.current);
+      }
+
+      setShouldTransition(false);
+      resetTransitionTimeoutRef.current = setTimeout(() => {
+        setShouldTransition(true);
+      }, 0);
     }, []);
 
-    const handleResizeStop = useCallback(
-      (e: unknown, direction: unknown, reference_: HTMLElement, delta: NumberSize) => {
-        dispatch({ type: 'STOP_RESIZE' });
-        onSizeChange?.(delta, {
-          height: reference_.style.height,
-          width: reference_.style.width,
-        });
+    const handleResetSize = useCallback(() => {
+      if (!canResizing) return;
+
+      const resetSize = captureInitialExpandedSize();
+      if (!resetSize) return;
+
+      triggerResetWithoutTransition();
+
+      const rect = resizableRef.current?.resizable?.getBoundingClientRect();
+      const prevMainSize = rect ? (isVertical ? rect.height : rect.width) : 0;
+      const resetMainSize = isVertical ? resetSize.height : resetSize.width;
+      const nextMainSize = typeof resetMainSize === 'number' ? resetMainSize : prevMainSize;
+
+      resizableRef.current?.updateSize(resetSize);
+      setExpandedMainSize(resetSize);
+
+      onSizeChange?.(
+        isVertical
+          ? { height: nextMainSize - prevMainSize, width: 0 }
+          : { height: 0, width: nextMainSize - prevMainSize },
+        resetSize,
+      );
+    }, [
+      canResizing,
+      captureInitialExpandedSize,
+      isVertical,
+      onSizeChange,
+      setExpandedMainSize,
+      triggerResetWithoutTransition,
+    ]);
+
+    const handleResizeStart = useCallback(
+      (event: { detail?: number }) => {
+        if (event.detail === 2) {
+          handleResetSize();
+          return false;
+        }
+
+        if (resetTransitionTimeoutRef.current) {
+          clearTimeout(resetTransitionTimeoutRef.current);
+          resetTransitionTimeoutRef.current = undefined;
+        }
+
+        setShouldTransition(false);
+        setShowExpand(false);
       },
-      [onSizeChange],
+      [handleResetSize],
     );
 
-    // Main panel content
-    const inner = useMemo(
-      () => (
-        <Resizable
-          {...sizeProps}
-          className={cx(styles.panel, classNames?.content)}
-          enable={canResizing ? (resizing as Enable) : undefined}
-          handleClasses={
-            canResizing
-              ? {
-                  [reversePlacement(internalPlacement)]: cx(
-                    handleVariants({
-                      placement: reversePlacement(internalPlacement),
-                    }),
-                    showHandleHighlight && styles.handleHighlight,
-                  ),
-                }
-              : {}
-          }
-          style={{
-            ...cssVariables,
-            opacity: isPending ? 0.95 : 1,
-            transition: state.isResizing ? 'unset' : undefined,
-            ...style,
-          }}
-          onResize={handleResize}
-          onResizeStart={handleResizeStart}
-          onResizeStop={handleResizeStop}
-        >
-          {children}
-        </Resizable>
-      ),
-      [
-        sizeProps,
-        styles.panel,
-        classNames?.content,
-        canResizing,
-        resizing,
-        internalPlacement,
-        handleVariants,
-        showHandleHighlight,
-        styles.handleHighlight,
-        handleResize,
-        handleResizeStart,
-        handleResizeStop,
-        state.isResizing,
-        isPending,
-        style,
-        children,
-        cx,
-      ],
+    const handleResizeStop = useCallback(
+      (_event: unknown, _direction: unknown, el: HTMLElement, delta: NumberSize) => {
+        const nextSize = clampResizeSize(el);
+        setExpandedMainSize(nextSize);
+        setShouldTransition(true);
+        setShowExpand(true);
+        onSizeChange?.(delta, nextSize);
+      },
+      [clampResizeSize, onSizeChange, setExpandedMainSize],
     );
 
-    // For fullscreen mode, return a simpler layout
+    const resizeHandleClassName = useMemo(
+      () =>
+        cx(handleVariants({ placement: reversed }), showHandleHighlight && styles.handleHighlight),
+      [reversed, showHandleHighlight],
+    );
+
     if (fullscreen) {
       return (
         <div className={cx(styles.fullscreen, className)} style={cssVariables}>
@@ -387,23 +396,83 @@ const DraggablePanel = memo<DraggablePanelProps>(
       );
     }
 
+    const Arrow = ARROW_MAP[internalPlacement] ?? ChevronLeft;
+    const sidebarOuterStyle = isVertical
+      ? {
+          height: isExpand ? expandedOuterSize : 0,
+          overflow: 'hidden',
+          transition: shouldTransition ? 'height 0.2s var(--ant-motion-ease-out, ease)' : 'none',
+          width: '100%',
+        }
+      : {
+          overflow: 'hidden',
+          transition: shouldTransition ? 'width 0.2s var(--ant-motion-ease-out, ease)' : 'none',
+          width: isExpand ? expandedOuterSize : 0,
+        };
+    const sidebarInnerStyle = isVertical ? { height: '100%', width: '100%' } : { width: '100%' };
+
+    const panelNode = (!destroyOnClose || isExpand) && (
+      <Resizable
+        ref={resizableRef}
+        {...sizeProps}
+        className={cx(styles.panel, classNames?.content)}
+        enable={canResizing ? (resizing as Enable) : DISABLED_RESIZING}
+        handleClasses={
+          canResizing
+            ? {
+                [reversed]: resizeHandleClassName,
+              }
+            : {}
+        }
+        style={{
+          ...cssVariables,
+          transition: shouldTransition ? undefined : 'none',
+          ...style,
+        }}
+        onResize={handleResize}
+        onResizeStart={handleResizeStart}
+        onResizeStop={handleResizeStop}
+      >
+        {stableLayout ? <div style={sidebarInnerStyle}>{children}</div> : children}
+      </Resizable>
+    );
+
     return (
       <aside
         dir={dir}
         ref={ref}
         style={cssVariables}
         className={cx(
-          panelVariants({
-            isExpand,
-            mode,
-            placement: internalPlacement,
-            showBorder,
-          }),
+          panelVariants({ isExpand, mode, placement: internalPlacement, showBorder }),
           className,
         )}
       >
-        {expandable && state.showExpand && handle}
-        {destroyOnClose ? isExpand && inner : inner}
+        {expandable && showExpand && (
+          <Center
+            className={toggleVariants({ placement: internalPlacement, showHandleWideArea })}
+            style={{
+              opacity: isExpand ? (pin ? undefined : 0) : showHandleWhenCollapsed ? 1 : 0,
+            }}
+          >
+            <Center
+              className={classNames?.handle}
+              style={customStyles?.handle}
+              onClick={toggleExpand}
+            >
+              <Icon
+                className={styles.handlerIcon}
+                icon={Arrow}
+                size={16}
+                style={{
+                  ...MARGIN_MAP[internalPlacement],
+                  transform: `rotate(${isExpand ? 180 : 0}deg)`,
+                  transition: 'transform 0.3s ease',
+                }}
+              />
+            </Center>
+          </Center>
+        )}
+        {stableLayout ? <div style={sidebarOuterStyle}>{panelNode}</div> : panelNode}
       </aside>
     );
   },
