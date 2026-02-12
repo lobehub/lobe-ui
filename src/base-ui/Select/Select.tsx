@@ -1,6 +1,6 @@
 'use client';
 
-import { Select } from '@base-ui/react/select';
+import { Select as BaseSelect } from '@base-ui/react/select';
 import { cx, useThemeMode } from 'antd-style';
 import { Check, ChevronDown, Loader2, X } from 'lucide-react';
 import {
@@ -19,18 +19,17 @@ import { styles as menuStyles } from '@/Menu/sharedStyle';
 
 import { styles, triggerVariants } from './style';
 import {
-  type LobeSelectOption,
-  type LobeSelectOptionGroup,
-  type LobeSelectOptions,
-  type LobeSelectProps,
+  type SelectOption,
+  type SelectOptionGroup,
+  type SelectOptions,
+  type SelectProps,
 } from './type';
 
 const isGroupOption = <Value,>(
-  option: LobeSelectOption<Value> | LobeSelectOptionGroup<Value>,
-): option is LobeSelectOptionGroup<Value> =>
-  Boolean((option as LobeSelectOptionGroup<Value>).options);
+  option: SelectOption<Value> | SelectOptionGroup<Value>,
+): option is SelectOptionGroup<Value> => Boolean((option as SelectOptionGroup<Value>).options);
 
-const getOptionSearchText = <Value,>(option: LobeSelectOption<Value>) => {
+const getOptionSearchText = <Value,>(option: SelectOption<Value>) => {
   if (typeof option.label === 'string' || typeof option.label === 'number') {
     return String(option.label);
   }
@@ -49,7 +48,7 @@ const splitBySeparators = (value: string, separators?: string[]) => {
   return value.split(new RegExp(pattern, 'g'));
 };
 
-const countVirtualItems = (items: LobeSelectOptions) =>
+const countVirtualItems = (items: SelectOptions) =>
   items.reduce((count, item) => {
     if (isGroupOption(item)) {
       return count + item.options.length + 1;
@@ -59,7 +58,7 @@ const countVirtualItems = (items: LobeSelectOptions) =>
 
 const isValueEmpty = (value: unknown) => value === null || value === undefined || value === '';
 
-const LobeSelect = memo<LobeSelectProps<any>>(
+const Select = memo<SelectProps<any>>(
   ({
     allowClear,
     autoFocus,
@@ -138,7 +137,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
       [isMultiple, normalizedValue],
     );
 
-    const [extraOptions, setExtraOptions] = useState<LobeSelectOption<any>[]>([]);
+    const [extraOptions, setExtraOptions] = useState<SelectOption<any>[]>([]);
 
     useEffect(() => {
       if (mode !== 'tags' && extraOptions.length > 0) {
@@ -148,15 +147,15 @@ const LobeSelect = memo<LobeSelectProps<any>>(
 
     const { resolvedOptions, optionMap } = useMemo(() => {
       const baseOptions = options ?? [];
-      const optionValueMap = new Map<any, LobeSelectOption<any>>();
+      const optionValueMap = new Map<any, SelectOption<any>>();
 
-      const addOption = (item: LobeSelectOption<any>) => {
+      const addOption = (item: SelectOption<any>) => {
         if (!optionValueMap.has(item.value)) {
           optionValueMap.set(item.value, item);
         }
       };
 
-      const walkOptions = (items: LobeSelectOptions) => {
+      const walkOptions = (items: SelectOptions) => {
         items.forEach((item) => {
           if (isGroupOption(item)) {
             item.options.forEach(addOption);
@@ -171,9 +170,9 @@ const LobeSelect = memo<LobeSelectProps<any>>(
       const filteredExtraOptions = extraOptions.filter((item) => !optionValueMap.has(item.value));
       filteredExtraOptions.forEach(addOption);
 
-      const mergedOptions: LobeSelectOptions = [...baseOptions, ...filteredExtraOptions];
+      const mergedOptions: SelectOptions = [...baseOptions, ...filteredExtraOptions];
 
-      const missingValueOptions: LobeSelectOption<any>[] = valueArray
+      const missingValueOptions: SelectOption<any>[] = valueArray
         .filter((val) => !optionValueMap.has(val))
         .map((val) => ({
           label: String(val),
@@ -217,7 +216,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
     }, [mergedOpen]);
 
     const getOption = useCallback(
-      (optionValue: any): LobeSelectOption<any> => {
+      (optionValue: any): SelectOption<any> => {
         const matched = optionMap.get(optionValue);
         if (matched) return matched;
         if (optionValue && typeof optionValue === 'object' && 'label' in optionValue) {
@@ -368,7 +367,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
       if (!shouldShowSearch || !searchValue.trim()) return resolvedOptions;
       const query = searchValue.trim().toLowerCase();
 
-      const filterItems = (items: LobeSelectOptions): LobeSelectOptions => {
+      const filterItems = (items: SelectOptions): SelectOptions => {
         const filtered = items
           .map((item) => {
             if (isGroupOption(item)) {
@@ -380,7 +379,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
             }
             return getOptionSearchText(item).toLowerCase().includes(query) ? item : null;
           })
-          .filter(Boolean) as LobeSelectOptions;
+          .filter(Boolean) as SelectOptions;
 
         return filtered;
       };
@@ -602,20 +601,23 @@ const LobeSelect = memo<LobeSelectProps<any>>(
 
     const isBoldIndicator = selectedIndicatorVariant === 'bold';
     let optionIndex = 0;
-    const renderOptions = (items: LobeSelectOptions) =>
+    const renderOptions = (items: SelectOptions) =>
       items.map((item, index) => {
         if (isGroupOption(item)) {
           return (
-            <Select.Group className={cx(styles.group, classNames?.group)} key={`group-${index}`}>
-              <Select.GroupLabel
+            <BaseSelect.Group
+              className={cx(styles.group, classNames?.group)}
+              key={`group-${index}`}
+            >
+              <BaseSelect.GroupLabel
                 className={cx(menuStyles.groupLabel, styles.groupLabel, classNames?.groupLabel)}
               >
                 {item.label}
-              </Select.GroupLabel>
+              </BaseSelect.GroupLabel>
               {item.options.map((option) => {
                 const currentIndex = optionIndex++;
                 return (
-                  <Select.Item
+                  <BaseSelect.Item
                     disabled={option.disabled}
                     key={`${String(option.value)}-${currentIndex}`}
                     label={getOptionSearchText(option)}
@@ -634,26 +636,26 @@ const LobeSelect = memo<LobeSelectProps<any>>(
                       ...option.style,
                     }}
                   >
-                    <Select.ItemText className={itemTextClassName}>
+                    <BaseSelect.ItemText className={itemTextClassName}>
                       {optionRender ? optionRender(option, { index: currentIndex }) : option.label}
-                    </Select.ItemText>
+                    </BaseSelect.ItemText>
                     {!isBoldIndicator && (
-                      <Select.ItemIndicator
+                      <BaseSelect.ItemIndicator
                         className={cx(styles.itemIndicator, classNames?.itemIndicator)}
                       >
                         <Icon icon={Check} size={'small'} />
-                      </Select.ItemIndicator>
+                      </BaseSelect.ItemIndicator>
                     )}
-                  </Select.Item>
+                  </BaseSelect.Item>
                 );
               })}
-            </Select.Group>
+            </BaseSelect.Group>
           );
         }
 
         const currentIndex = optionIndex++;
         return (
-          <Select.Item
+          <BaseSelect.Item
             disabled={item.disabled}
             key={`${String(item.value)}-${currentIndex}`}
             label={getOptionSearchText(item)}
@@ -672,20 +674,22 @@ const LobeSelect = memo<LobeSelectProps<any>>(
               ...item.style,
             }}
           >
-            <Select.ItemText className={itemTextClassName}>
+            <BaseSelect.ItemText className={itemTextClassName}>
               {optionRender ? optionRender(item, { index: currentIndex }) : item.label}
-            </Select.ItemText>
+            </BaseSelect.ItemText>
             {!isBoldIndicator && (
-              <Select.ItemIndicator className={cx(styles.itemIndicator, classNames?.itemIndicator)}>
+              <BaseSelect.ItemIndicator
+                className={cx(styles.itemIndicator, classNames?.itemIndicator)}
+              >
                 <Icon icon={Check} size={'small'} />
-              </Select.ItemIndicator>
+              </BaseSelect.ItemIndicator>
             )}
-          </Select.Item>
+          </BaseSelect.Item>
         );
       });
 
     return (
-      <Select.Root
+      <BaseSelect.Root
         disabled={disabled}
         id={id}
         modal={isItemAligned}
@@ -698,7 +702,7 @@ const LobeSelect = memo<LobeSelectProps<any>>(
         onOpenChange={handleOpenChange}
         onValueChange={handleValueChange}
       >
-        <Select.Trigger
+        <BaseSelect.Trigger
           autoFocus={autoFocus}
           className={triggerClassName}
           disabled={disabled}
@@ -707,7 +711,9 @@ const LobeSelect = memo<LobeSelectProps<any>>(
           {prefixNode !== null && prefixNode !== undefined && (
             <span className={cx(styles.prefix, classNames?.prefix)}>{prefixNode}</span>
           )}
-          <Select.Value className={cx(styles.value, classNames?.value)}>{renderValue}</Select.Value>
+          <BaseSelect.Value className={cx(styles.value, classNames?.value)}>
+            {renderValue}
+          </BaseSelect.Value>
           <span className={cx(styles.suffix, classNames?.suffix)}>
             {showClear && (
               <span
@@ -719,22 +725,22 @@ const LobeSelect = memo<LobeSelectProps<any>>(
               </span>
             )}
             {suffixIconNode !== null && suffixIconNode !== undefined && (
-              <Select.Icon className={cx(styles.icon, classNames?.icon)}>
+              <BaseSelect.Icon className={cx(styles.icon, classNames?.icon)}>
                 {suffixIconNode}
-              </Select.Icon>
+              </BaseSelect.Icon>
             )}
           </span>
-        </Select.Trigger>
+        </BaseSelect.Trigger>
 
-        <Select.Portal>
-          <Select.Positioner
+        <BaseSelect.Portal>
+          <BaseSelect.Positioner
             align="start"
             alignItemWithTrigger={isItemAligned}
             className={styles.positioner}
             side="bottom"
             sideOffset={6}
           >
-            <Select.Popup
+            <BaseSelect.Popup
               style={popupStyle}
               className={cx(
                 menuStyles.popup,
@@ -774,17 +780,17 @@ const LobeSelect = memo<LobeSelectProps<any>>(
 
                 if (!virtual || filteredOptions.length === 0) {
                   return (
-                    <Select.List
+                    <BaseSelect.List
                       className={cx(styles.list, classNames?.list)}
                       data-virtual={virtual || undefined}
                     >
                       {content}
-                    </Select.List>
+                    </BaseSelect.List>
                   );
                 }
 
                 return (
-                  <Select.List
+                  <BaseSelect.List
                     className={cx(styles.list, classNames?.list)}
                     data-virtual={virtual || undefined}
                     ref={listRef}
@@ -798,17 +804,17 @@ const LobeSelect = memo<LobeSelectProps<any>>(
                     <Virtualizer itemSize={listItemHeight} keepMounted={keepMountedIndices}>
                       {content}
                     </Virtualizer>
-                  </Select.List>
+                  </BaseSelect.List>
                 );
               })()}
-            </Select.Popup>
-          </Select.Positioner>
-        </Select.Portal>
-      </Select.Root>
+            </BaseSelect.Popup>
+          </BaseSelect.Positioner>
+        </BaseSelect.Portal>
+      </BaseSelect.Root>
     );
   },
 );
 
-LobeSelect.displayName = 'LobeSelect';
+Select.displayName = 'Select';
 
-export default LobeSelect;
+export default Select;

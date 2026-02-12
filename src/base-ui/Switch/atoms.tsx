@@ -10,30 +10,30 @@ import { useMotionComponent } from '@/MotionProvider';
 
 import { rootVariants, styles, thumbVariants } from './style';
 import type {
-  LobeSwitchChangeEventHandler,
-  LobeSwitchContextType,
-  LobeSwitchIconPosition,
-  LobeSwitchIconProps,
-  LobeSwitchRootProps,
-  LobeSwitchThumbProps,
+  SwitchChangeEventHandler,
+  SwitchContextType,
+  SwitchIconPosition,
+  SwitchIconProps,
+  SwitchRootProps,
+  SwitchThumbProps,
 } from './type';
 
-const LobeSwitchContext = createContext<LobeSwitchContextType | null>(null);
+const SwitchContext = createContext<SwitchContextType | null>(null);
 
-export const useLobeSwitchContext = () => {
-  const context = use(LobeSwitchContext);
+export const useSwitchContext = () => {
+  const context = use(SwitchContext);
   if (!context) {
-    throw new Error('useLobeSwitchContext must be used within a LobeSwitchRoot');
+    throw new Error('useSwitchContext must be used within a SwitchRoot');
   }
   return context;
 };
 
-type LobeSwitchRootInternalProps = Omit<LobeSwitchRootProps, 'onCheckedChange' | 'onClick'> & {
-  onCheckedChange?: LobeSwitchChangeEventHandler;
-  onClick?: LobeSwitchChangeEventHandler;
+type SwitchRootInternalProps = Omit<SwitchRootProps, 'onCheckedChange' | 'onClick'> & {
+  onCheckedChange?: SwitchChangeEventHandler;
+  onClick?: SwitchChangeEventHandler;
 };
 
-export const LobeSwitchRoot = ({
+export const SwitchRoot = ({
   checked,
   className,
   defaultChecked,
@@ -48,7 +48,7 @@ export const LobeSwitchRoot = ({
   id,
   name,
   ...rest
-}: LobeSwitchRootInternalProps) => {
+}: SwitchRootInternalProps) => {
   const Motion = useMotionComponent();
   const [isPressed, setIsPressed] = useState(false);
   const lastEventRef = useRef<MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>>(
@@ -90,7 +90,7 @@ export const LobeSwitchRoot = ({
   };
 
   return (
-    <LobeSwitchContext value={contextValue}>
+    <SwitchContext value={contextValue}>
       <Switch.Root
         checked={isChecked}
         defaultChecked={defaultChecked}
@@ -117,22 +117,22 @@ export const LobeSwitchRoot = ({
       >
         {children}
       </Switch.Root>
-    </LobeSwitchContext>
+    </SwitchContext>
   );
 };
 
-LobeSwitchRoot.displayName = 'LobeSwitchRoot';
+SwitchRoot.displayName = 'SwitchRoot';
 
-export const LobeSwitchThumb = ({
+export const SwitchThumb = ({
   className,
   pressedAnimation,
   size = 'default',
   transition = { damping: 25, stiffness: 300, type: 'spring' },
   children,
   ...rest
-}: LobeSwitchThumbProps) => {
+}: SwitchThumbProps) => {
   const Motion = useMotionComponent();
-  const { isPressed } = useLobeSwitchContext();
+  const { isPressed } = useSwitchContext();
   const baseClassName = thumbVariants({ size });
 
   const defaultPressedAnimation = {
@@ -156,23 +156,23 @@ export const LobeSwitchThumb = ({
   );
 };
 
-LobeSwitchThumb.displayName = 'LobeSwitchThumb';
+SwitchThumb.displayName = 'SwitchThumb';
 
-const getIconPositionClass = (position: LobeSwitchIconPosition, size: 'default' | 'small') => {
+const getIconPositionClass = (position: SwitchIconPosition, size: 'default' | 'small') => {
   if (position === 'thumb') return styles.iconThumb;
   if (position === 'left') return size === 'small' ? styles.iconLeftSmall : styles.iconLeft;
   return size === 'small' ? styles.iconRightSmall : styles.iconRight;
 };
 
-export const LobeSwitchIcon = ({
+export const SwitchIcon = ({
   children,
   className,
   position,
   transition = { bounce: 0, type: 'spring' },
   ...rest
-}: LobeSwitchIconProps & { children?: React.ReactNode; size?: 'default' | 'small' }) => {
+}: SwitchIconProps & { children?: React.ReactNode; size?: 'default' | 'small' }) => {
   const Motion = useMotionComponent();
-  const { isChecked } = useLobeSwitchContext();
+  const { isChecked } = useSwitchContext();
   const size = (rest as any).size || 'default';
 
   const isAnimated = useMemo(() => {
@@ -196,6 +196,6 @@ export const LobeSwitchIcon = ({
   );
 };
 
-LobeSwitchIcon.displayName = 'LobeSwitchIcon';
+SwitchIcon.displayName = 'SwitchIcon';
 
-export { styles as lobeSwitchStyles } from './style';
+export { styles as switchStyles } from './style';

@@ -33,17 +33,11 @@
       "@lobehub/ui/color": ["src/color"],
       "@lobehub/ui/color/*": ["src/color/*"],
       "@lobehub/ui/icons": ["src/icons"],
-      "@lobehub/ui/icons/*": ["src/icons/*"]
+      "@lobehub/ui/icons/*": ["src/icons/*"],
+      "@lobehub/ui/base-ui": ["src/base-ui"],
+      "@lobehub/ui/base-ui/*": ["src/base-ui/*"]
     }
   },
-  "exclude": [
-    "mdx.d.ts",
-    "brand.d.ts",
-    "mobile.d.ts",
-    "chat.d.ts",
-    "storybook.d.ts",
-    "awesome.d.ts",
-    "icons.d.ts"
-  ],
+  "exclude": [],
   "include": ["src", "docs", "tests", ".dumirc.ts", ".fatherrc.ts"]
 }

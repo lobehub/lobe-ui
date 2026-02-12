@@ -6,11 +6,11 @@ import { memo } from 'react';
 
 import Icon from '@/Icon';
 
-import { LobeSwitchIcon, LobeSwitchRoot, LobeSwitchThumb } from './atoms';
+import { SwitchIcon, SwitchRoot, SwitchThumb } from './atoms';
 import { styles } from './style';
-import type { LobeSwitchProps } from './type';
+import type { SwitchProps } from './type';
 
-const LobeSwitch = memo<LobeSwitchProps>(
+const Switch = memo<SwitchProps>(
   ({
     autoFocus,
     checked,
@@ -40,7 +40,7 @@ const LobeSwitch = memo<LobeSwitchProps>(
     const resolvedDefaultChecked = defaultValue ?? defaultChecked;
 
     return (
-      <LobeSwitchRoot
+      <SwitchRoot
         autoFocus={autoFocus}
         checked={resolvedChecked}
         className={cx(className, rootClassName, classNames?.root)}
@@ -57,26 +57,26 @@ const LobeSwitch = memo<LobeSwitchProps>(
         onClick={onClick}
       >
         {checkedChildren && (
-          <LobeSwitchIcon
+          <SwitchIcon
             className={classNames?.content}
             position="left"
             size={size}
             style={customStyles?.content}
           >
             {checkedChildren}
-          </LobeSwitchIcon>
+          </SwitchIcon>
         )}
         {unCheckedChildren && (
-          <LobeSwitchIcon
+          <SwitchIcon
             className={classNames?.content}
             position="right"
             size={size}
             style={customStyles?.content}
           >
             {unCheckedChildren}
-          </LobeSwitchIcon>
+          </SwitchIcon>
         )}
-        <LobeSwitchThumb className={classNames?.thumb} size={size} style={customStyles?.thumb}>
+        <SwitchThumb className={classNames?.thumb} size={size} style={customStyles?.thumb}>
           {loading && (
             <Icon
               className={styles.loading}
@@ -85,12 +85,12 @@ const LobeSwitch = memo<LobeSwitchProps>(
               style={{ color: 'var(--lobe-color-primary)' }}
             />
           )}
-        </LobeSwitchThumb>
-      </LobeSwitchRoot>
+        </SwitchThumb>
+      </SwitchRoot>
     );
   },
 );
 
-LobeSwitch.displayName = 'LobeSwitch';
+Switch.displayName = 'Switch';
 
-export default LobeSwitch;
+export default Switch;

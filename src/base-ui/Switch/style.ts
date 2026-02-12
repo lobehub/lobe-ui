@@ -6,7 +6,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     pointer-events: none;
 
     position: absolute;
-    inset-block: 0 0;
+    inset-block: 0;
 
     display: flex;
     align-items: center;
@@ -109,8 +109,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     background: ${cssVar.colorBgContainer};
     box-shadow:
-      0 2px 4px 0 rgba(0, 35, 11, 20%),
-      0 1px 2px 0 rgba(0, 0, 0, 8%);
+      0 2px 4px 0 rgb(0 35 11 / 20%),
+      0 1px 2px 0 rgb(0 0 0 / 8%);
 
     [data-disabled] > & {
       box-shadow: none;
