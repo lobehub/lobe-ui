@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [4.36.3](https://github.com/lobehub/lobe-ui/compare/v4.36.2...v4.36.3) (2026-02-13)
+
+### 🐛 Bug Fixes
+
+- **select**: UseAppElement for portal container management ([03dfec0](https://github.com/lobehub/lobe-ui/commit/03dfec0))
+
 ## [4.36.2](https://github.com/lobehub/lobe-ui/compare/v4.36.1...v4.36.2) (2026-02-11)
 
 ### 🐛 Bug Fixes
