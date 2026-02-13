@@ -1,23 +1,17 @@
-import { createStaticStyles, keyframes } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-const fadeIn = keyframes`
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  `;
+import { maskLeftToRight } from '@/styles/animations';
 
 export const styles = createStaticStyles(({ css }) => {
   return {
     animated: css`
-      .animate-fade-in,
+      --lobe-markdown-stream-animation: ${maskLeftToRight} 0.5s ease-in-out forwards;
+
+      .animate-mask-left-to-right,
       .katex-html span,
       span.line > span,
       code:not(:has(span.line)) {
-        opacity: 1;
-        animation: ${fadeIn} 1s ease-in-out;
+        animation: var(--lobe-markdown-stream-animation);
       }
     `,
   };

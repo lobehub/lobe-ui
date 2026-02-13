@@ -3,6 +3,7 @@
 import { marked } from 'marked';
 import { memo, useId, useMemo } from 'react';
 import Markdown, { type Options } from 'react-markdown';
+import remend from 'remend';
 
 import {
   useMarkdownComponents,
@@ -34,10 +35,12 @@ export const StreamdownRender = memo<Options>(
     const rehypePluginsList = useMarkdownRehypePlugins();
     const remarkPluginsList = useMarkdownRemarkPlugins();
     const generatedId = useId();
-    const blocks = useMemo(
-      () => parseMarkdownIntoBlocks(typeof escapedContent === 'string' ? escapedContent : ''),
-      [escapedContent],
-    );
+    const processedContent = useMemo(() => {
+      const content = typeof escapedContent === 'string' ? escapedContent : '';
+      return remend(content);
+    }, [escapedContent]);
+
+    const blocks = useMemo(() => parseMarkdownIntoBlocks(processedContent), [processedContent]);
 
     return (
       <div className={styles.animated}>

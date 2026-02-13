@@ -21,7 +21,7 @@ export const rehypeStreamAnimated = () => {
               newChildren.push({
                 children: [{ type: 'text', value: word }],
                 properties: {
-                  className: 'animate-fade-in',
+                  className: 'animate-mask-left-to-right',
                 },
                 tagName: 'span',
                 type: 'element',
