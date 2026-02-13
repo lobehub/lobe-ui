@@ -62,7 +62,7 @@ export const ContextMenuHost = memo(() => {
         closeContextMenu();
       }}
     >
-      <ContextMenu.Portal container={appElement ?? undefined}>
+      <ContextMenu.Portal container={appElement}>
         <ContextMenu.Positioner
           anchor={state.anchor ?? undefined}
           className={styles.positioner}
