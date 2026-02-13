@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [4.37.0](https://github.com/lobehub/lobe-ui/compare/v4.36.3...v4.37.0) (2026-02-13)
+
+### ✨ Features
+
+- **markdown**: Integrate remend for content processing and update animations ([fc27f9c](https://github.com/lobehub/lobe-ui/commit/fc27f9c))
+
 ## [4.36.3](https://github.com/lobehub/lobe-ui/compare/v4.36.2...v4.36.3) (2026-02-13)
 
 ### 🐛 Bug Fixes
