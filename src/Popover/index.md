@@ -37,12 +37,6 @@ Popover supports 12 placement positions arranged in a visual grid layout.
 
 <code src="./demos/dropdown-menu.tsx" nopadding></code>
 
-## Arrow & Inset
-
-Use `arrow` for visual connection, or `inset` for dropdown-style menus.
-
-<code src="./demos/inset.tsx" nopadding></code>
-
 ## Controlled Mode
 
 Use `open` and `onOpenChange` for confirmation dialogs, inline editing, and external control.
@@ -54,10 +48,6 @@ Use `open` and `onOpenChange` for confirmation dialogs, inline editing, and exte
 Popover provides an internal context so that content can close the current popover without switching to controlled mode.
 
 <code src="./demos/context.tsx" nopadding></code>
-
-## Inset Panel
-
-<code src="./demos/inset-panel.tsx" nopadding></code>
 
 ## Tooltip Inside Popover
 
@@ -83,7 +73,6 @@ When using Tooltip inside Popover, the Tooltip will automatically render into th
 | ----------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
 | content           | Content of the popover                                             | `ReactNode`                                                                                                                                                      | -         |
 | arrow             | Whether to show the arrow                                          | `boolean`                                                                                                                                                        | `false`   |
-| inset             | Render the popover inside the trigger                              | `boolean`                                                                                                                                                        | `false`   |
 | trigger           | Trigger mode                                                       | `'hover' \| 'click' \| ('hover' \| 'click')[]`                                                                                                                   | `'hover'` |
 | placement         | Position of the popover                                            | `'top' \| 'topLeft' \| 'topRight' \| 'bottom' \| 'bottomLeft' \| 'bottomRight' \| 'left' \| 'leftTop' \| 'leftBottom' \| 'right' \| 'rightTop' \| 'rightBottom'` | `'top'`   |
 | open              | Controlled open state                                              | `boolean`                                                                                                                                                        | -         |

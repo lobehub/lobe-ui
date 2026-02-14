@@ -9,7 +9,6 @@ export default () => {
       arrow: true,
       content: 'This is the popover content',
       disabled: false,
-      inset: false,
       placement: {
         options: [
           'top',

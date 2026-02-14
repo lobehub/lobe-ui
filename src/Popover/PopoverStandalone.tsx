@@ -6,7 +6,7 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { parseTrigger } from '@/utils/parseTrigger';
-import { placementMap, type Side } from '@/utils/placement';
+import { placementMap } from '@/utils/placement';
 
 import { PopoverArrowIcon } from './ArrowIcon';
 import {
@@ -30,8 +30,7 @@ export const PopoverStandalone = memo<PopoverProps>(
   ({
     children,
     content,
-    arrow: originArrow = false,
-    inset = false,
+    arrow = false,
     trigger = 'hover',
     placement = 'top',
     styles: styleProps,
@@ -55,7 +54,6 @@ export const PopoverStandalone = memo<PopoverProps>(
     backdropProps,
     portalProps,
   }) => {
-    const arrow = inset ? false : originArrow;
     const isClient = useIsClient();
     const popoverHandle = useMemo(() => BasePopover.createHandle(), []);
     const [uncontrolledOpen, setUncontrolledOpen] = useState(Boolean(defaultOpen));
@@ -89,27 +87,7 @@ export const PopoverStandalone = memo<PopoverProps>(
 
     // Get placement configuration
     const placementConfig = placementMap[placement] ?? placementMap.top;
-    const baseSideOffset = arrow ? 10 : 6;
-    const resolvedSideOffset = useMemo(() => {
-      if (!inset) return baseSideOffset;
-      return ({
-        side,
-        positioner,
-      }: {
-        positioner: { height: number; width: number };
-        side: Side;
-      }) => {
-        if (
-          side === 'left' ||
-          side === 'right' ||
-          side === 'inline-start' ||
-          side === 'inline-end'
-        ) {
-          return -positioner.width;
-        }
-        return -positioner.height;
-      };
-    }, [baseSideOffset, inset]);
+    const resolvedSideOffset = arrow ? 10 : 6;
 
     // Determine portal container
     const portalContainer = usePopoverPortalContainer();
@@ -192,7 +170,7 @@ export const PopoverStandalone = memo<PopoverProps>(
           hoverTrigger={openOnHover}
           placement={placement}
           side={placementConfig.side}
-          sideOffset={resolvedSideOffset as any}
+          sideOffset={resolvedSideOffset}
           style={resolvedStyles.positioner}
           {...positionerProps}
         >
