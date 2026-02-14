@@ -11,5 +11,6 @@ export { default as ProviderIcon } from './ProviderIcon';
 export { default as RightClickIcon } from './RightClickIcon';
 export { default as RightDoubleClickIcon } from './RightDoubleClickIcon';
 export { default as ShapesUploadIcon } from './ShapesUploadIcon';
+export { default as SkillsIcon } from './SkillsIcon';
 export { default as TreeDownRightIcon } from './TreeDownRightIcon';
 export { default as TreeUpDownRightIcon } from './TreeUpDownRightIcon';
