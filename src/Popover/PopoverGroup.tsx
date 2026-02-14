@@ -25,7 +25,6 @@ import {
   PopoverGroupPropsContext,
   type PopoverGroupSharedProps,
 } from './groupContext';
-import { getInsetSideOffset } from './insetOffset';
 import { usePopoverPortalContainer } from './PopoverPortal';
 
 type PopoverGroupProps = PopoverGroupSharedProps & {
@@ -78,13 +77,12 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
 
             if (!item?.content) return null;
 
-            const arrow = item.inset ? false : (item.arrow ?? false);
+            const arrow = item.arrow ?? false;
             const placement = item.placement ?? 'top';
             const { openOnHover } = parseTrigger(item.trigger ?? 'hover');
 
             const placementConfig = placementMap[placement] ?? placementMap.top;
-            const baseSideOffset = arrow ? 10 : 6;
-            const resolvedSideOffset = item.inset ? getInsetSideOffset : baseSideOffset;
+            const resolvedSideOffset = arrow ? 10 : 6;
 
             const resolvedClassNames = {
               arrow: item.classNames?.arrow,
@@ -114,7 +112,7 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
                 hoverTrigger={openOnHover}
                 placement={placement}
                 side={placementConfig.side}
-                sideOffset={resolvedSideOffset as any}
+                sideOffset={resolvedSideOffset}
                 style={resolvedStyles.positioner}
                 {...item.positionerProps}
               >

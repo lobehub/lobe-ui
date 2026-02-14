@@ -19,7 +19,6 @@ import {
   PopoverViewport,
 } from './atoms';
 import { PopoverProvider } from './context';
-import { getInsetSideOffset } from './insetOffset';
 import { usePopoverPortalContainer } from './PopoverPortal';
 import { type PopoverProps } from './type';
 
@@ -31,8 +30,7 @@ export const PopoverStandalone = memo<PopoverProps>(
   ({
     children,
     content,
-    arrow: originArrow = false,
-    inset = false,
+    arrow = false,
     trigger = 'hover',
     placement = 'top',
     styles: styleProps,
@@ -56,7 +54,6 @@ export const PopoverStandalone = memo<PopoverProps>(
     backdropProps,
     portalProps,
   }) => {
-    const arrow = inset ? false : originArrow;
     const isClient = useIsClient();
     const popoverHandle = useMemo(() => BasePopover.createHandle(), []);
     const [uncontrolledOpen, setUncontrolledOpen] = useState(Boolean(defaultOpen));
@@ -90,11 +87,7 @@ export const PopoverStandalone = memo<PopoverProps>(
 
     // Get placement configuration
     const placementConfig = placementMap[placement] ?? placementMap.top;
-    const baseSideOffset = arrow ? 10 : 6;
-    const resolvedSideOffset = useMemo(() => {
-      if (!inset) return baseSideOffset;
-      return getInsetSideOffset;
-    }, [baseSideOffset, inset]);
+    const resolvedSideOffset = arrow ? 10 : 6;
 
     // Determine portal container
     const portalContainer = usePopoverPortalContainer();
@@ -177,7 +170,7 @@ export const PopoverStandalone = memo<PopoverProps>(
           hoverTrigger={openOnHover}
           placement={placement}
           side={placementConfig.side}
-          sideOffset={resolvedSideOffset as any}
+          sideOffset={resolvedSideOffset}
           style={resolvedStyles.positioner}
           {...positionerProps}
         >
