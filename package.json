@@ -195,7 +195,7 @@
   "devDependencies": {
     "@ant-design/icons": "^6.1.0",
     "@commitlint/cli": "^19.8.1",
-    "@lobehub/eslint-config": "2.0.0",
+    "@lobehub/eslint-config": "2.1.5",
     "@lobehub/fluent-emoji": "^4.1.0",
     "@lobehub/icons": "^4.2.0",
     "@lobehub/lint": "^2.0.0",
