@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [4.38.2](https://github.com/lobehub/lobe-ui/compare/v4.38.1...v4.38.2) (2026-02-14)
+
+### ♻ Code Refactoring
+
+- **popover**: Extract inset side offset into shared utility, closes [#470](https://github.com/lobehub/lobe-ui/issues/470) ([9e820f0](https://github.com/lobehub/lobe-ui/commit/9e820f0))
+
 ## [4.38.1](https://github.com/lobehub/lobe-ui/compare/v4.38.0...v4.38.1) (2026-02-14)
 
 ### 🐛 Bug Fixes
