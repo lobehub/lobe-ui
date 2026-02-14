@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [4.38.0](https://github.com/lobehub/lobe-ui/compare/v4.37.0...v4.38.0) (2026-02-14)
+
+### ✨ Features
+
+- Add skills icon ([49d0dde](https://github.com/lobehub/lobe-ui/commit/49d0dde))
+
 # [4.37.0](https://github.com/lobehub/lobe-ui/compare/v4.36.3...v4.37.0) (2026-02-13)
 
 ### ✨ Features
