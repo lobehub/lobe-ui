@@ -84,22 +84,16 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
             const placementConfig = placementMap[placement] ?? placementMap.top;
             const baseSideOffset = arrow ? 10 : 6;
             const resolvedSideOffset = item.inset
-              ? ({
-                  side,
-                  positioner,
-                }: {
-                  positioner: { height: number; width: number };
-                  side: Side;
-                }) => {
+              ? ({ side, anchor }: { anchor: { height: number; width: number }; side: Side }) => {
                   if (
                     side === 'left' ||
                     side === 'right' ||
                     side === 'inline-start' ||
                     side === 'inline-end'
                   ) {
-                    return -positioner.width;
+                    return -anchor.width;
                   }
-                  return -positioner.height;
+                  return -anchor.height;
                 }
               : baseSideOffset;
 

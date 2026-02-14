@@ -92,22 +92,16 @@ export const PopoverStandalone = memo<PopoverProps>(
     const baseSideOffset = arrow ? 10 : 6;
     const resolvedSideOffset = useMemo(() => {
       if (!inset) return baseSideOffset;
-      return ({
-        side,
-        positioner,
-      }: {
-        positioner: { height: number; width: number };
-        side: Side;
-      }) => {
+      return ({ side, anchor }: { anchor: { height: number; width: number }; side: Side }) => {
         if (
           side === 'left' ||
           side === 'right' ||
           side === 'inline-start' ||
           side === 'inline-end'
         ) {
-          return -positioner.width;
+          return -anchor.width;
         }
-        return -positioner.height;
+        return -anchor.height;
       };
     }, [baseSideOffset, inset]);
 
