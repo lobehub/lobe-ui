@@ -6,7 +6,7 @@ import { memo, useCallback, useMemo, useState } from 'react';
 import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { parseTrigger } from '@/utils/parseTrigger';
-import { placementMap, type Side } from '@/utils/placement';
+import { placementMap } from '@/utils/placement';
 
 import { PopoverArrowIcon } from './ArrowIcon';
 import {
@@ -19,6 +19,7 @@ import {
   PopoverViewport,
 } from './atoms';
 import { PopoverProvider } from './context';
+import { getInsetSideOffset } from './insetOffset';
 import { usePopoverPortalContainer } from './PopoverPortal';
 import { type PopoverProps } from './type';
 
@@ -92,23 +93,7 @@ export const PopoverStandalone = memo<PopoverProps>(
     const baseSideOffset = arrow ? 10 : 6;
     const resolvedSideOffset = useMemo(() => {
       if (!inset) return baseSideOffset;
-      return ({
-        side,
-        positioner,
-      }: {
-        positioner: { height: number; width: number };
-        side: Side;
-      }) => {
-        if (
-          side === 'left' ||
-          side === 'right' ||
-          side === 'inline-start' ||
-          side === 'inline-end'
-        ) {
-          return -positioner.width;
-        }
-        return -positioner.height;
-      };
+      return getInsetSideOffset;
     }, [baseSideOffset, inset]);
 
     // Determine portal container

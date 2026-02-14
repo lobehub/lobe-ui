@@ -8,7 +8,7 @@ import {
   useHidePopupWhenPositionerAtOrigin,
 } from '@/utils/destroyOnInvalidActiveTriggerElement';
 import { parseTrigger } from '@/utils/parseTrigger';
-import { placementMap, type Side } from '@/utils/placement';
+import { placementMap } from '@/utils/placement';
 
 import { PopoverArrowIcon } from './ArrowIcon';
 import {
@@ -25,6 +25,7 @@ import {
   PopoverGroupPropsContext,
   type PopoverGroupSharedProps,
 } from './groupContext';
+import { getInsetSideOffset } from './insetOffset';
 import { usePopoverPortalContainer } from './PopoverPortal';
 
 type PopoverGroupProps = PopoverGroupSharedProps & {
@@ -83,25 +84,7 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
 
             const placementConfig = placementMap[placement] ?? placementMap.top;
             const baseSideOffset = arrow ? 10 : 6;
-            const resolvedSideOffset = item.inset
-              ? ({
-                  side,
-                  positioner,
-                }: {
-                  positioner: { height: number; width: number };
-                  side: Side;
-                }) => {
-                  if (
-                    side === 'left' ||
-                    side === 'right' ||
-                    side === 'inline-start' ||
-                    side === 'inline-end'
-                  ) {
-                    return -positioner.width;
-                  }
-                  return -positioner.height;
-                }
-              : baseSideOffset;
+            const resolvedSideOffset = item.inset ? getInsetSideOffset : baseSideOffset;
 
             const resolvedClassNames = {
               arrow: item.classNames?.arrow,
