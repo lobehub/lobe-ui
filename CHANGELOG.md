@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [4.38.1](https://github.com/lobehub/lobe-ui/compare/v4.38.0...v4.38.1) (2026-02-14)
+
+### 🐛 Bug Fixes
+
+- **select**: Correct list height overflow when search bar is present, closes [#468](https://github.com/lobehub/lobe-ui/issues/468) ([444b3ab](https://github.com/lobehub/lobe-ui/commit/444b3ab))
+
 # [4.38.0](https://github.com/lobehub/lobe-ui/compare/v4.37.0...v4.38.0) (2026-02-14)
 
 ### ✨ Features
