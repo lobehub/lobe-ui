@@ -40,7 +40,13 @@ const MaterialFileTypeIcon: FC<MaterialFileTypeIconProps> = ({
 
   if (!iconUrl)
     return (
-      <FileTypeIcon filetype={filename.split('.')[1]} size={size} type={type} variant={'mono'} />
+      <FileTypeIcon
+        className={rest.className}
+        filetype={filename.split('.')[1]}
+        size={size}
+        type={type}
+        variant={'mono'}
+      />
     );
 
   if (variant === 'raw')
