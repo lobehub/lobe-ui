@@ -172,4 +172,95 @@ describe('rehypeStreamAnimated', () => {
     expect(spans.length).toBeGreaterThan(1);
     expect(collectText(paragraph)).toBe(source);
   });
+
+  it('should animate only the incoming segment as one chunk when source offset is provided', () => {
+    const tree: Root = {
+      children: [
+        {
+          children: [
+            {
+              position: {
+                end: { offset: 17 },
+                start: { offset: 0 },
+              },
+              type: 'text',
+              value: 'Hello world again',
+            } as any,
+          ],
+          properties: {},
+          tagName: 'p',
+          type: 'element',
+        },
+      ],
+      type: 'root',
+    };
+
+    rehypeStreamAnimated({ animateFromSourceOffset: 12 })(tree);
+
+    const paragraph = tree.children[0] as any;
+    expect(paragraph.children).toEqual([
+      { type: 'text', value: 'Hello world ' },
+      {
+        children: [{ type: 'text', value: 'again' }],
+        properties: { className: 'animate-stream', key: 'stream-12-0' },
+        tagName: 'span',
+        type: 'element',
+      },
+    ]);
+  });
+
+  it('should keep old segment static when source offset exceeds node end', () => {
+    const tree: Root = {
+      children: [
+        {
+          children: [
+            {
+              position: {
+                end: { offset: 5 },
+                start: { offset: 0 },
+              },
+              type: 'text',
+              value: 'Hello',
+            } as any,
+          ],
+          properties: {},
+          tagName: 'p',
+          type: 'element',
+        },
+      ],
+      type: 'root',
+    };
+
+    rehypeStreamAnimated({ animateFromSourceOffset: 6 })(tree);
+
+    const paragraph = tree.children[0] as any;
+    expect(paragraph.children[0]).toMatchObject({ type: 'text', value: 'Hello' });
+    expect(paragraph.children).toHaveLength(1);
+  });
+
+  it('should animate whole text as one chunk when source offset exists but node has no position', () => {
+    const tree: Root = {
+      children: [
+        {
+          children: [{ type: 'text', value: 'No position node' }],
+          properties: {},
+          tagName: 'p',
+          type: 'element',
+        },
+      ],
+      type: 'root',
+    };
+
+    rehypeStreamAnimated({ animateFromSourceOffset: 3 })(tree);
+
+    const paragraph = tree.children[0] as any;
+    expect(paragraph.children).toEqual([
+      {
+        children: [{ type: 'text', value: 'No position node' }],
+        properties: { className: 'animate-stream', key: 'stream-3-0' },
+        tagName: 'span',
+        type: 'element',
+      },
+    ]);
+  });
 });

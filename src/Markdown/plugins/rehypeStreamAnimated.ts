@@ -6,10 +6,10 @@ const CJK_RE = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=H
 const SKIP_TAGS = new Set(['code', 'pre', 'svg', 'math', 'annotation']);
 const ANIMATION_CLASS_NAME = 'animate-stream';
 const INCOMPLETE_LINK_PROTOCOL = 'streamdown:incomplete-link';
-const segmenter =
-  typeof Intl !== 'undefined' && 'Segmenter' in Intl
-    ? new Intl.Segmenter(undefined, { granularity: 'word' })
-    : null;
+
+export interface RehypeStreamAnimatedOptions {
+  animateFromSourceOffset?: number;
+}
 
 const isElement = (node: unknown): node is Element => {
   return (
@@ -86,42 +86,114 @@ const splitByWord = (text: string): string[] => {
       continue;
     }
 
-    if (!segmenter) {
-      parts.push(...Array.from(part));
-      continue;
-    }
-
-    const segments = Array.from(segmenter.segment(part), (item) => item.segment).filter(Boolean);
-    parts.push(...(segments.length ? segments : [part]));
+    parts.push(...Array.from(part));
   }
 
   return parts;
 };
 
-const makeSpan = (word: string): Element => ({
-  children: [{ type: 'text', value: word }],
-  properties: {
+const makeSpan = (word: string, spanKey?: string): Element => {
+  const properties: Record<string, string> = {
     className: ANIMATION_CLASS_NAME,
-  },
-  tagName: 'span',
-  type: 'element',
+  };
+  if (spanKey) {
+    properties.key = spanKey;
+  }
+
+  return {
+    children: [{ type: 'text', value: word }],
+    properties,
+    tagName: 'span',
+    type: 'element',
+  };
+};
+
+const makeText = (value: string): Text => ({
+  type: 'text',
+  value,
 });
 
-const processTextNode = (parent: Parent, node: Text, index: number): number | undefined => {
+const splitAnimatedSegment = (text: string, spanKey?: string): Array<Element | Text> => {
+  if (!text) return [];
+  if (WHITESPACE_ONLY_RE.test(text)) return [makeText(text)];
+
+  const leadingMatch = text.match(/^\s+/)?.[0] ?? '';
+  const trailingMatch = text.match(/\s+$/)?.[0] ?? '';
+  const leadingLength = leadingMatch.length;
+  const trailingLength = trailingMatch.length;
+  const core = text.slice(leadingLength, text.length - trailingLength);
+  const nodes: Array<Element | Text> = [];
+
+  if (leadingMatch) nodes.push(makeText(leadingMatch));
+  if (core) nodes.push(makeSpan(core, spanKey));
+  if (trailingMatch) nodes.push(makeText(trailingMatch));
+
+  return nodes;
+};
+
+const getSourceOffsets = (node: Text): { end?: number; start?: number } => {
+  const start = node.position?.start?.offset;
+  const end = node.position?.end?.offset;
+
+  return {
+    end: typeof end === 'number' ? end : undefined,
+    start: typeof start === 'number' ? start : undefined,
+  };
+};
+
+const processTextNode = (
+  parent: Parent,
+  node: Text,
+  index: number,
+  animateFromSourceOffset?: number,
+): number | undefined => {
   const text = node.value;
   if (!text.trim()) {
     return;
   }
 
+  if (animateFromSourceOffset !== undefined) {
+    const { end, start } = getSourceOffsets(node);
+    const spanKeySuffix = start !== undefined ? start : index;
+    const spanKey = `stream-${animateFromSourceOffset}-${spanKeySuffix}`;
+
+    if (start !== undefined && end !== undefined) {
+      if (animateFromSourceOffset <= start) {
+        const animatedNodes = splitAnimatedSegment(text, spanKey);
+        parent.children.splice(index, 1, ...animatedNodes);
+        return index + animatedNodes.length;
+      }
+
+      if (animateFromSourceOffset >= end) {
+        return;
+      }
+
+      const splitPoint = animateFromSourceOffset - start;
+      const stablePart = text.slice(0, splitPoint);
+      const incomingPart = text.slice(splitPoint);
+      const replacedNodes: Array<Element | Text> = [];
+
+      if (stablePart) replacedNodes.push(makeText(stablePart));
+      replacedNodes.push(...splitAnimatedSegment(incomingPart, spanKey));
+
+      parent.children.splice(index, 1, ...replacedNodes);
+      return index + replacedNodes.length;
+    }
+
+    const animatedNodes = splitAnimatedSegment(text, spanKey);
+    parent.children.splice(index, 1, ...animatedNodes);
+    return index + animatedNodes.length;
+  }
+
   const nodes = splitByWord(text).map((part) =>
-    WHITESPACE_ONLY_RE.test(part) ? ({ type: 'text', value: part } as Text) : makeSpan(part),
+    WHITESPACE_ONLY_RE.test(part) ? makeText(part) : makeSpan(part),
   );
 
   parent.children.splice(index, 1, ...nodes);
   return index + nodes.length;
 };
 
-const walk = (node: Parent): void => {
+const walk = (node: Parent, animateFromSourceOffset?: number): void => {
   if (isElement(node) && SKIP_TAGS.has(node.tagName)) {
     return;
   }
@@ -138,7 +210,7 @@ const walk = (node: Parent): void => {
     }
 
     if (child.type === 'text') {
-      const nextIndex = processTextNode(node, child, index);
+      const nextIndex = processTextNode(node, child, index, animateFromSourceOffset);
       if (nextIndex !== undefined) {
         index = nextIndex - 1;
       }
@@ -146,13 +218,13 @@ const walk = (node: Parent): void => {
     }
 
     if (isParentNode(child)) {
-      walk(child);
+      walk(child, animateFromSourceOffset);
     }
   }
 };
 
-export const rehypeStreamAnimated = () => {
+export const rehypeStreamAnimated = (options: RehypeStreamAnimatedOptions = {}) => {
   return (tree: Root) => {
-    walk(tree);
+    walk(tree, options.animateFromSourceOffset);
   };
 };

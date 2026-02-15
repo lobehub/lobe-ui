@@ -4,6 +4,7 @@ import { folder } from 'leva';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
+import type { AnimationType } from '@/Markdown/type';
 
 import { markdownElements } from '../custom/plugins/MarkdownElements';
 import { removeLineBreaksInAntArtifact } from '../custom/plugins/utils';
@@ -27,6 +28,8 @@ export default () => {
     chunkDelayMin,
     chunkDelayMax,
     language,
+    streamAnimationWindowMs,
+    animationType,
     ...rest
   } = useControls(
     {
@@ -37,6 +40,16 @@ export default () => {
       children: {
         rows: true,
         value: fullContent,
+      },
+      animationType: {
+        options: ['fadeIn', 'mask'],
+        value: 'fadeIn',
+      },
+      streamAnimationWindowMs: {
+        max: 500,
+        min: 0,
+        step: 50,
+        value: 200,
       },
       fullFeaturedCodeBlock: {
         value: true,
@@ -249,10 +262,11 @@ export default () => {
           )}
         </Flexbox>
         <Markdown
-          animated={isStreaming}
+          animated={isStreaming ? { type: animationType as AnimationType } : false}
           components={components}
           fullFeaturedCodeBlock={rest.fullFeaturedCodeBlock}
           rehypePlugins={rehypePlugins}
+          streamAnimationWindowMs={streamAnimationWindowMs}
           variant="chat"
         >
           {removeLineBreaksInAntArtifact(streamedContent)}

@@ -28,6 +28,7 @@ const Markdown = memo<MarkdownProps>((props) => {
     enableCustomFootnotes,
     enableGithubAlert,
     enableStream = true,
+    streamAnimationWindowMs = 200,
     componentProps,
     rehypePluginsAhead,
     allowHtml,
@@ -66,9 +67,18 @@ const Markdown = memo<MarkdownProps>((props) => {
       enableStream,
       children,
       reactMarkdownProps,
-    }: Pick<MarkdownProps, 'children' | 'enableStream' | 'reactMarkdownProps'>) => {
-      const DefaultRender = enableStream ? StreamdownRender : MarkdownRender;
-      const defaultDOM = <DefaultRender {...reactMarkdownProps}>{children}</DefaultRender>;
+      streamAnimationWindowMs,
+    }: Pick<
+      MarkdownProps,
+      'children' | 'enableStream' | 'reactMarkdownProps' | 'streamAnimationWindowMs'
+    >) => {
+      const defaultDOM = enableStream ? (
+        <StreamdownRender {...reactMarkdownProps} streamAnimationWindowMs={streamAnimationWindowMs}>
+          {children}
+        </StreamdownRender>
+      ) : (
+        <MarkdownRender {...reactMarkdownProps}>{children}</MarkdownRender>
+      );
       return customRender ? customRender(defaultDOM, { text: children }) : defaultDOM;
     },
     [customRender],
@@ -110,6 +120,7 @@ const Markdown = memo<MarkdownProps>((props) => {
           <Render
             enableStream={enableStream && !!delayedAnimated}
             reactMarkdownProps={reactMarkdownProps}
+            streamAnimationWindowMs={streamAnimationWindowMs}
           >
             {children}
           </Render>

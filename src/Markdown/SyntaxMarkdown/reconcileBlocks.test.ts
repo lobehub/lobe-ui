@@ -3,13 +3,25 @@ import { describe, expect, it } from 'vitest';
 import { type ParsedBlock, type RenderBlock } from './blockRenderKind';
 import { computeExactLcsPairs, reconcileBlocks } from './reconcileBlocks';
 
-const makeCurrent = (raw: string, renderKind: string): ParsedBlock => ({ raw, renderKind });
+const makeCurrent = (raw: string, renderKind: string): ParsedBlock => ({
+  endOffset: raw.length,
+  raw,
+  renderKind,
+  startOffset: 0,
+});
 const makePrevious = (
   id: string,
   raw: string,
   renderKind: string,
   disableAnimation: boolean = false,
-): RenderBlock => ({ disableAnimation, id, raw, renderKind });
+): RenderBlock => ({
+  disableAnimation,
+  endOffset: raw.length,
+  id,
+  raw,
+  renderKind,
+  startOffset: 0,
+});
 
 describe('reconcileBlocks', () => {
   it('should preserve ids for exact matches via lcs', () => {

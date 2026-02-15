@@ -1,8 +1,10 @@
 import { marked } from 'marked';
 
 export interface ParsedBlock {
+  endOffset: number;
   raw: string;
   renderKind: string;
+  startOffset: number;
 }
 
 export interface RenderBlock extends ParsedBlock {
@@ -24,7 +26,20 @@ export const getBlockRenderKind = (token: any): string => {
 
 export const parseMarkdownIntoBlocks = (markdown: string): ParsedBlock[] => {
   const tokens = marked.lexer(markdown);
-  return tokens.map((token) => ({ raw: token.raw, renderKind: getBlockRenderKind(token) }));
+  let offset = 0;
+
+  return tokens.map((token) => {
+    const raw = token.raw || '';
+    const startOffset = offset;
+    offset += raw.length;
+
+    return {
+      endOffset: offset,
+      raw,
+      renderKind: getBlockRenderKind(token),
+      startOffset,
+    };
+  });
 };
 
 export const getTagChangedMask = (previousKinds: string[], currentKinds: string[]): boolean[] => {

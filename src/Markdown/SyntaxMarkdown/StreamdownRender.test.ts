@@ -22,5 +22,19 @@ describe('StreamdownRender helpers', () => {
 
     expect(blocks).toHaveLength(1);
     expect(blocks[0].renderKind).toBe('heading-2');
+    expect(blocks[0].startOffset).toBe(0);
+    expect(blocks[0].endOffset).toBe('Title line\n---\n'.length);
+  });
+
+  it('should keep block offsets continuous', () => {
+    const markdown = 'A\n\nB\n';
+    const blocks = parseMarkdownIntoBlocks(markdown);
+
+    expect(blocks).toHaveLength(3);
+    expect(blocks[0].startOffset).toBe(0);
+    expect(blocks[0].endOffset).toBe(1);
+    expect(blocks[1].startOffset).toBe(1);
+    expect(blocks[2].startOffset).toBe(blocks[1].endOffset);
+    expect(blocks[2].endOffset).toBe(markdown.length);
   });
 });
