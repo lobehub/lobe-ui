@@ -1,13 +1,6 @@
-import { createStaticStyles, keyframes } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-const fadeIn = keyframes`
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  `;
+import { fadeIn } from '@/styles/animations';
 
 export const styles = createStaticStyles(({ css }) => {
   return {
