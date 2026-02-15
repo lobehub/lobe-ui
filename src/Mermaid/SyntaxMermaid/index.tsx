@@ -23,16 +23,17 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
     const showBackground = !isDefaultTheme && variant === 'filled';
     const resolvedTheme = isDefaultTheme ? undefined : customTheme;
 
+    const isAnimated = !!animated;
     const mermaidClassName = cx(
-      variants({ animated, mermaid: true, showBackground, variant }),
+      variants({ animated: isAnimated, mermaid: true, showBackground, variant }),
       className,
     );
     const fallback = cx(
-      variants({ animated, mermaid: false, showBackground, variant }),
+      variants({ animated: isAnimated, mermaid: false, showBackground, variant }),
       fallbackClassName,
     );
 
-    if (animated) {
+    if (isAnimated) {
       return (
         <StreamMermaid
           className={mermaidClassName}

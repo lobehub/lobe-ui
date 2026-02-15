@@ -1,9 +1,10 @@
 'use client';
 
 import { cx } from 'antd-style';
-import { memo, useCallback } from 'react';
+import { type CSSProperties, memo, useCallback, useMemo } from 'react';
 
 import { PreviewGroup } from '@/Image';
+import { resolveAnimationConfig } from '@/styles/animations';
 
 import { MarkdownProvider } from './components/MarkdownProvider';
 import { useDelayedAnimated } from './components/useDelayedAnimated';
@@ -48,6 +49,17 @@ const Markdown = memo<MarkdownProps>((props) => {
   } = props;
 
   const delayedAnimated = useDelayedAnimated(animated);
+  const animationResolved = useMemo(
+    () => resolveAnimationConfig(delayedAnimated),
+    [delayedAnimated],
+  );
+  const animationStyle = useMemo(
+    () =>
+      animationResolved
+        ? ({ '--lobe-markdown-stream-animation': animationResolved.cssValue } as CSSProperties)
+        : undefined,
+    [animationResolved],
+  );
 
   const Render = useCallback(
     ({
@@ -73,7 +85,7 @@ const Markdown = memo<MarkdownProps>((props) => {
         lineHeight={lineHeight}
         marginMultiple={marginMultiple}
         ref={ref}
-        style={style}
+        style={{ ...style, ...animationStyle }}
         onDoubleClick={onDoubleClick}
         {...rest}
       >
@@ -96,7 +108,7 @@ const Markdown = memo<MarkdownProps>((props) => {
           variant={variant}
         >
           <Render
-            enableStream={enableStream && delayedAnimated}
+            enableStream={enableStream && !!delayedAnimated}
             reactMarkdownProps={reactMarkdownProps}
           >
             {children}

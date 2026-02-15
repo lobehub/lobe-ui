@@ -1,23 +1,22 @@
 import { useEffect, useState } from 'react';
 
-export const useDelayedAnimated = (animated?: boolean) => {
-  const [delayedAnimated, setDelayedAnimated] = useState(animated);
+import type { AnimationConfig } from '../type';
 
-  // Watch for changes in animated prop
+export const useDelayedAnimated = (animated?: boolean | AnimationConfig) => {
+  const isAnimated = !!animated;
+  const [delayedEnabled, setDelayedEnabled] = useState(isAnimated);
+
   useEffect(() => {
     if (animated === undefined) return;
-    // If animated changes from true to false, delay the update by 1 second
-    if (animated === false && delayedAnimated === true) {
+    if (!isAnimated && delayedEnabled) {
       const timer = setTimeout(() => {
-        setDelayedAnimated(false);
+        setDelayedEnabled(false);
       }, 1000);
-
       return () => clearTimeout(timer);
     } else {
-      // For any other changes, update immediately
-      setDelayedAnimated(animated);
+      setDelayedEnabled(isAnimated);
     }
-  }, [animated, delayedAnimated]);
+  }, [animated, isAnimated, delayedEnabled]);
 
-  return delayedAnimated;
+  return delayedEnabled ? animated : false;
 };

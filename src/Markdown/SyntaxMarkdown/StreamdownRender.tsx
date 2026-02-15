@@ -12,7 +12,8 @@ import {
 } from '@/hooks/useMarkdown';
 
 import { rehypeStreamAnimated } from '../plugins/rehypeStreamAnimated';
-import { getTagChangedMask, parseMarkdownIntoBlocks } from './blockRenderKind';
+import { parseMarkdownIntoBlocks, type RenderBlock } from './blockRenderKind';
+import { reconcileBlocks } from './reconcileBlocks';
 import { styles } from './style';
 
 const StreamdownBlock = memo<Options>(
@@ -30,7 +31,8 @@ export const StreamdownRender = memo<Options>(
     const components = useMarkdownComponents();
     const rehypePluginsList = useMarkdownRehypePlugins();
     const remarkPluginsList = useMarkdownRemarkPlugins();
-    const previousBlockKindsRef = useRef<string[]>([]);
+    const previousBlocksRef = useRef<RenderBlock[]>([]);
+    const blockIdCounterRef = useRef(0);
     const generatedId = useId();
 
     const processedContent = useMemo(() => {
@@ -38,11 +40,18 @@ export const StreamdownRender = memo<Options>(
       return remend(content);
     }, [escapedContent]);
 
-    const blocks = useMemo(() => parseMarkdownIntoBlocks(processedContent), [processedContent]);
-    const currentBlockKinds = useMemo(() => blocks.map((block) => block.renderKind), [blocks]);
-    const disableAnimationMask = useMemo(
-      () => getTagChangedMask(previousBlockKindsRef.current, currentBlockKinds),
-      [currentBlockKinds],
+    const parsedBlocks = useMemo(
+      () => parseMarkdownIntoBlocks(processedContent),
+      [processedContent],
+    );
+    const blocks = useMemo(
+      () =>
+        reconcileBlocks(previousBlocksRef.current, parsedBlocks, () => {
+          const blockId = `${generatedId}-block_${blockIdCounterRef.current}`;
+          blockIdCounterRef.current += 1;
+          return blockId;
+        }),
+      [generatedId, parsedBlocks],
     );
     const rehypePluginsWithoutAnimation = useMemo(
       () =>
@@ -54,24 +63,19 @@ export const StreamdownRender = memo<Options>(
     );
 
     useEffect(() => {
-      previousBlockKindsRef.current = currentBlockKinds;
-    }, [currentBlockKinds]);
-
-    const blockKeys = useMemo(
-      () => blocks.map((_block, index) => `${generatedId}-block_${index}`),
-      [blocks, generatedId],
-    );
+      previousBlocksRef.current = blocks;
+    }, [blocks]);
 
     return (
       <div className={styles.animated}>
-        {blocks.map((block, index) => (
+        {blocks.map((block) => (
           <StreamdownBlock
             {...rest}
             components={components}
-            key={blockKeys[index]}
+            key={block.id}
             remarkPlugins={remarkPluginsList}
             rehypePlugins={
-              disableAnimationMask[index] ? rehypePluginsWithoutAnimation : rehypePluginsList
+              block.disableAnimation ? rehypePluginsWithoutAnimation : rehypePluginsList
             }
           >
             {block.raw}

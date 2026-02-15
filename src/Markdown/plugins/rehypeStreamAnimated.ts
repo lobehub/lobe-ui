@@ -3,7 +3,7 @@ import { type Element, type Parent, type Root, type Text } from 'hast';
 const WHITESPACE_RE = /\s/;
 const WHITESPACE_ONLY_RE = /^\s+$/;
 const SKIP_TAGS = new Set(['code', 'pre', 'svg', 'math', 'annotation']);
-const ANIMATION_CLASS_NAME = 'animate-mask-left-to-right';
+const ANIMATION_CLASS_NAME = 'animate-stream';
 const INCOMPLETE_LINK_PROTOCOL = 'streamdown:incomplete-link';
 
 const isElement = (node: unknown): node is Element => {

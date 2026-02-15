@@ -5,6 +5,11 @@ export interface ParsedBlock {
   renderKind: string;
 }
 
+export interface RenderBlock extends ParsedBlock {
+  disableAnimation: boolean;
+  id: string;
+}
+
 export const getBlockRenderKind = (token: any): string => {
   if (token.type === 'heading') {
     return `heading-${token.depth || 0}`;

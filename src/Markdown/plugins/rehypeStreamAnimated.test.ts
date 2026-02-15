@@ -30,14 +30,14 @@ describe('rehypeStreamAnimated', () => {
       children: [
         {
           children: [{ type: 'text', value: 'Hello' }],
-          properties: { className: 'animate-mask-left-to-right' },
+          properties: { className: 'animate-stream' },
           tagName: 'span',
           type: 'element',
         },
         { type: 'text', value: ' ' },
         {
           children: [{ type: 'text', value: 'world' }],
-          properties: { className: 'animate-mask-left-to-right' },
+          properties: { className: 'animate-stream' },
           tagName: 'span',
           type: 'element',
         },
@@ -109,7 +109,7 @@ describe('rehypeStreamAnimated', () => {
         (node: any) =>
           node.type === 'element' &&
           node.tagName === 'span' &&
-          node.properties?.className === 'animate-mask-left-to-right',
+          node.properties?.className === 'animate-stream',
       ).length,
     ).toBe(2);
   });

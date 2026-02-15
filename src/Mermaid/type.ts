@@ -2,10 +2,11 @@ import type { MermaidConfig } from 'mermaid';
 import type { CSSProperties, ReactNode, Ref } from 'react';
 
 import type { ActionIconProps } from '@/ActionIcon';
+import type { AnimationConfig } from '@/Markdown/type';
 import type { DivProps } from '@/types';
 
 export interface SyntaxMermaidProps {
-  animated?: boolean;
+  animated?: boolean | AnimationConfig;
   children: string;
   className?: string;
   fallbackClassName?: string;
@@ -23,7 +24,7 @@ export interface MermaidProps extends DivProps {
     getContent: () => string;
     originalNode: ReactNode;
   }) => ReactNode;
-  animated?: boolean;
+  animated?: boolean | AnimationConfig;
   bodyRender?: (props: { content: string; originalNode: ReactNode }) => ReactNode;
   children: string;
   classNames?: {
