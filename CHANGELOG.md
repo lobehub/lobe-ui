@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [4.38.4](https://github.com/lobehub/lobe-ui/compare/v4.38.3...v4.38.4) (2026-02-15)
+
+### ♻ Code Refactoring
+
+- **styles**: Extract fadeIn animation to animations.ts ([f6308aa](https://github.com/lobehub/lobe-ui/commit/f6308aa))
+
+### 💄 Styles
+
+- Revert stream animation to fade-in ([0a0ea88](https://github.com/lobehub/lobe-ui/commit/0a0ea88))
+
 ## [4.38.3](https://github.com/lobehub/lobe-ui/compare/v4.38.2...v4.38.3) (2026-02-15)
 
 ### 🐛 Bug Fixes
