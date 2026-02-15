@@ -232,7 +232,7 @@ Explore different component variants `default` and `chat`.
 
 ## Streamdown
 
-<code src="./demos/streaming.tsx" iframe nopadding></code>
+<code src="./demos/streaming/index.tsx" iframe nopadding></code>
 
 ## Custom
 
