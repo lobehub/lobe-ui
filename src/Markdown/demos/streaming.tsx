@@ -117,7 +117,7 @@ const components = Object.fromEntries(
 
 export default () => {
   const store = useCreateStore();
-  const { children, streamingSpeed, ...rest } = useControls(
+  const { children, streamingSpeed, randomStreaming, ...rest } = useControls(
     {
       children: {
         rows: true,
@@ -125,6 +125,9 @@ export default () => {
       },
       fullFeaturedCodeBlock: {
         value: true,
+      },
+      randomStreaming: {
+        value: false,
       },
       streamingSpeed: {
         max: 100,
@@ -159,26 +162,46 @@ export default () => {
   useEffect(() => {
     if (!isStreaming || isPaused) return;
 
-    let currentPosition = 0;
-    if (streamedContent.length > 0) {
-      currentPosition = streamedContent.length;
-    }
+    let currentPosition = streamedContent.length;
+    let timerId: ReturnType<typeof setTimeout>;
 
-    const intervalId = setInterval(() => {
-      if (currentPosition < safeChildren.length) {
-        // Stream character by character
-        const nextChunkSize = Math.min(3, safeChildren.length - currentPosition);
-        const nextContent = safeChildren.slice(0, Math.max(0, currentPosition + nextChunkSize));
-        setStreamedContent(nextContent);
-        currentPosition += nextChunkSize;
-      } else {
-        clearInterval(intervalId);
+    const tick = () => {
+      if (currentPosition >= safeChildren.length) {
         setIsStreaming(false);
+        return;
       }
-    }, streamingSpeed);
 
-    return () => clearInterval(intervalId);
-  }, [safeChildren, streamingSpeed, isStreaming, isPaused, streamedContent.length]);
+      const chunkSize = randomStreaming
+        ? Math.min(Math.floor(Math.random() * 8) + 1, safeChildren.length - currentPosition)
+        : Math.min(3, safeChildren.length - currentPosition);
+
+      currentPosition += chunkSize;
+      setStreamedContent(safeChildren.slice(0, currentPosition));
+
+      const delay = randomStreaming
+        ? Math.floor(Math.random() * streamingSpeed * 2) + 5
+        : streamingSpeed;
+
+      const newChunk = safeChildren.slice(currentPosition - chunkSize, currentPosition);
+      console.log('delay', delay, newChunk);
+
+      timerId = setTimeout(tick, delay);
+    };
+
+    timerId = setTimeout(
+      tick,
+      randomStreaming ? Math.floor(Math.random() * streamingSpeed) + 5 : streamingSpeed,
+    );
+
+    return () => clearTimeout(timerId);
+  }, [
+    safeChildren,
+    streamingSpeed,
+    randomStreaming,
+    isStreaming,
+    isPaused,
+    streamedContent.length,
+  ]);
 
   return (
     <StoryBook levaStore={store}>
