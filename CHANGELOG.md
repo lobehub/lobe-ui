@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [4.38.3](https://github.com/lobehub/lobe-ui/compare/v4.38.2...v4.38.3) (2026-02-15)
+
+### 🐛 Bug Fixes
+
+- Prevent stream animation from breaking KaTeX rendering ([6c8b1ac](https://github.com/lobehub/lobe-ui/commit/6c8b1ac))
+
 ## [4.38.2](https://github.com/lobehub/lobe-ui/compare/v4.38.1...v4.38.2) (2026-02-14)
 
 ### ♻ Code Refactoring
