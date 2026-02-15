@@ -1,6 +1,6 @@
 import { Button, Markdown } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
 
@@ -110,6 +110,16 @@ graph TD
 
 `;
 
+const MOCK_API_BASE = 'https://aistream-speed-mocker.vercel.app/v1';
+const API_MODELS = {
+  'deepseek-r1-1.5B-400tps': 'deepseek-r1 1.5B (400 tps)',
+  'qwen-2.5-1.5B-200tps': 'qwen-2.5 1.5B (200 tps)',
+  'qwen-qwq-32B-120tps': 'qwen-qwq 32B (120 tps)',
+  'llama-3-8b-80tps': 'llama-3 8b (80 tps)',
+  'gpt-4o-40tps': 'gpt-4o (40 tps)',
+  'deepseek-v3-10tps': 'deepseek-v3 (10 tps)',
+};
+
 const rehypePlugins = markdownElements.map((element) => element.rehypePlugin);
 const components = Object.fromEntries(
   markdownElements.map((element) => [element.tag, element.Component]),
@@ -117,8 +127,12 @@ const components = Object.fromEntries(
 
 export default () => {
   const store = useCreateStore();
-  const { children, streamingSpeed, randomStreaming, ...rest } = useControls(
+  const { children, streamingSpeed, randomStreaming, useAPI, apiModel, ...rest } = useControls(
     {
+      apiModel: {
+        options: API_MODELS,
+        value: 'gpt-4o-40tps',
+      },
       children: {
         rows: true,
         value: fullContent,
@@ -135,32 +149,93 @@ export default () => {
         step: 5,
         value: 25,
       },
+      useAPI: {
+        value: false,
+      },
     },
     { store },
   );
 
   const safeChildren = typeof children === 'string' ? children : '';
 
-  // State to store the currently displayed content
   const [streamedContent, setStreamedContent] = useState(safeChildren);
   const [isStreaming, setIsStreaming] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const abortRef = useRef<AbortController | null>(null);
 
-  // Restart streaming
+  const startAPIStreaming = useCallback(async () => {
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
+    setStreamedContent('');
+    setIsStreaming(true);
+
+    try {
+      const response = await fetch(`${MOCK_API_BASE}/chat/completions`, {
+        body: JSON.stringify({
+          messages: [{ content: safeChildren || 'hello', role: 'user' }],
+          model: apiModel,
+          stream: true,
+        }),
+        headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        signal: controller.signal,
+      });
+
+      const reader = response.body!.getReader();
+      const decoder = new TextDecoder();
+      let accumulated = '';
+      let buffer = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed.startsWith('data: ') || trimmed === 'data: [DONE]') continue;
+          try {
+            const data = JSON.parse(trimmed.slice(6));
+            const content = data.choices?.[0]?.delta?.content;
+            if (content) {
+              accumulated += content;
+              setStreamedContent(accumulated);
+            }
+          } catch {
+            // skip malformed chunks
+          }
+        }
+      }
+    } catch (error: any) {
+      if (error?.name !== 'AbortError') console.error('Streaming error:', error);
+    } finally {
+      setIsStreaming(false);
+    }
+  }, [apiModel, safeChildren]);
+
   const restartStreaming = () => {
+    if (useAPI) {
+      startAPIStreaming();
+      return;
+    }
+    abortRef.current?.abort();
     setStreamedContent('');
     setIsStreaming(true);
     setIsPaused(false);
   };
 
-  // Toggle pause state
   const togglePause = () => {
     setIsPaused(!isPaused);
   };
 
-  // Simulate streaming effect
+  // Local simulation streaming
   useEffect(() => {
-    if (!isStreaming || isPaused) return;
+    if (useAPI || !isStreaming || isPaused) return;
 
     let currentPosition = streamedContent.length;
     let timerId: ReturnType<typeof setTimeout>;
@@ -198,6 +273,7 @@ export default () => {
     safeChildren,
     streamingSpeed,
     randomStreaming,
+    useAPI,
     isStreaming,
     isPaused,
     streamedContent.length,
@@ -220,16 +296,28 @@ export default () => {
             type={'primary'}
             onClick={restartStreaming}
           >
-            Restart Streaming
+            {useAPI ? 'Start API Streaming' : 'Restart Streaming'}
           </Button>
           <Button
             block
-            disabled={!isStreaming}
+            disabled={!isStreaming || useAPI}
             type={isPaused ? 'default' : 'primary'}
             onClick={togglePause}
           >
             {isPaused ? 'Resume' : 'Pause'}
           </Button>
+          {useAPI && isStreaming && (
+            <Button
+              block
+              danger
+              onClick={() => {
+                abortRef.current?.abort();
+                setIsStreaming(false);
+              }}
+            >
+              Stop
+            </Button>
+          )}
         </Flexbox>
         <Markdown
           animated={isStreaming}
