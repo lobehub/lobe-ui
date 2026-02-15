@@ -144,4 +144,32 @@ describe('rehypeStreamAnimated', () => {
     expect(hasAnchor).toBe(false);
     expect(collectText(paragraph)).toContain('[ihbar rac{partial}{p]');
   });
+
+  it('should split cjk text without whitespace into multiple animated segments', () => {
+    const source = '过去两年，我的生活发生了微妙而深刻的变化。';
+    const tree: Root = {
+      children: [
+        {
+          children: [{ type: 'text', value: source }],
+          properties: {},
+          tagName: 'p',
+          type: 'element',
+        },
+      ],
+      type: 'root',
+    };
+
+    rehypeStreamAnimated()(tree);
+
+    const paragraph = tree.children[0] as any;
+    const spans = paragraph.children.filter(
+      (node: any) =>
+        node.type === 'element' &&
+        node.tagName === 'span' &&
+        node.properties?.className === 'animate-stream',
+    );
+
+    expect(spans.length).toBeGreaterThan(1);
+    expect(collectText(paragraph)).toBe(source);
+  });
 });

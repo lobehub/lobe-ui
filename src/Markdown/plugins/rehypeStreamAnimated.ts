@@ -2,9 +2,14 @@ import { type Element, type Parent, type Root, type Text } from 'hast';
 
 const WHITESPACE_RE = /\s/;
 const WHITESPACE_ONLY_RE = /^\s+$/;
+const CJK_RE = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u;
 const SKIP_TAGS = new Set(['code', 'pre', 'svg', 'math', 'annotation']);
 const ANIMATION_CLASS_NAME = 'animate-stream';
 const INCOMPLETE_LINK_PROTOCOL = 'streamdown:incomplete-link';
+const segmenter =
+  typeof Intl !== 'undefined' && 'Segmenter' in Intl
+    ? new Intl.Segmenter(undefined, { granularity: 'word' })
+    : null;
 
 const isElement = (node: unknown): node is Element => {
   return (
@@ -55,14 +60,14 @@ const isIncompleteRemendLink = (node: Element): boolean => {
 };
 
 const splitByWord = (text: string): string[] => {
-  const parts: string[] = [];
+  const coarseParts: string[] = [];
   let current = '';
   let inWhitespace = false;
 
   for (const char of text) {
     const isWhitespace = WHITESPACE_RE.test(char);
     if (isWhitespace !== inWhitespace && current) {
-      parts.push(current);
+      coarseParts.push(current);
       current = '';
     }
 
@@ -71,7 +76,23 @@ const splitByWord = (text: string): string[] => {
   }
 
   if (current) {
-    parts.push(current);
+    coarseParts.push(current);
+  }
+
+  const parts: string[] = [];
+  for (const part of coarseParts) {
+    if (WHITESPACE_ONLY_RE.test(part) || !CJK_RE.test(part)) {
+      parts.push(part);
+      continue;
+    }
+
+    if (!segmenter) {
+      parts.push(...Array.from(part));
+      continue;
+    }
+
+    const segments = Array.from(segmenter.segment(part), (item) => item.segment).filter(Boolean);
+    parts.push(...(segments.length ? segments : [part]));
   }
 
   return parts;
