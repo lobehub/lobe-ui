@@ -1,17 +1,18 @@
 import { createStaticStyles, cx } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
-import { fadeIn } from '@/styles/animations';
+import { maskLeftToRight } from '@/styles/animations';
 
 export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     animated: css`
-      .animate-fade-in,
+      --lobe-markdown-stream-animation: ${maskLeftToRight} 0.5s ease-in-out forwards;
+
+      .animate-mask-left-to-right,
       .katex-html > .base,
       span.line > span,
       code:not(:has(span.line)) {
-        opacity: 1;
-        animation: ${fadeIn} 1s ease-in-out;
+        animation: var(--lobe-markdown-stream-animation);
       }
 
       /* 只对 .base 级别的 span 应用流式动画，不要穿透到内部 */
