@@ -50,10 +50,13 @@ const Markdown = memo<MarkdownProps>((props) => {
   } = props;
 
   const delayedAnimated = useDelayedAnimated(animated);
-  const animationResolved = useMemo(
-    () => resolveAnimationConfig(delayedAnimated),
-    [delayedAnimated],
-  );
+  const animationResolved = useMemo(() => {
+    if (enableStream && delayedAnimated) {
+      const config = typeof delayedAnimated === 'boolean' ? {} : delayedAnimated;
+      return resolveAnimationConfig({ ...config, duration: streamAnimationWindowMs / 1000 });
+    }
+    return resolveAnimationConfig(delayedAnimated);
+  }, [delayedAnimated, enableStream, streamAnimationWindowMs]);
   const animationStyle = useMemo(
     () =>
       animationResolved
