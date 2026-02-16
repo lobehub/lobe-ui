@@ -49,7 +49,6 @@ export interface SyntaxMarkdownProps {
   remarkPlugins?: Pluggable[];
   remarkPluginsAhead?: Pluggable[];
   showFootnotes?: boolean;
-  streamAnimationDurationMs?: number;
   streamAnimationType?: AnimationType;
   streamAnimationWindowMs?: number;
   variant?: 'default' | 'chat';

@@ -12,26 +12,21 @@ import {
   useMarkdownRemarkPlugins,
 } from '@/hooks/useMarkdown';
 
-import { rehypeStreamAnimated } from '../plugins/rehypeStreamAnimated';
-import { resolveStreamAnimationDurationMs } from '../streamAnimation';
+import { rehypeStreamAnimated, type StreamAnimateRange } from '../plugins/rehypeStreamAnimated';
+import { countStreamAnimationTokens } from '../streamTokens';
 import { parseMarkdownIntoBlocks, type RenderBlock } from './blockRenderKind';
 import { reconcileBlocks } from './reconcileBlocks';
 import { styles } from './style';
 import { useWindowedStreamContent } from './useWindowedStreamContent';
 
 interface StreamdownRenderProps extends Options {
-  streamAnimationDurationMs?: number;
   streamAnimationWindowMs?: number;
 }
 
-interface BlockAnimationRange {
-  end: number;
-  key: string;
-  start: number;
-}
+interface BlockAnimationRange extends StreamAnimateRange {}
 
 interface BlockAnimationState extends BlockAnimationRange {
-  createdAt: number;
+  phase: number;
 }
 
 interface BlockRenderPlan {
@@ -41,6 +36,9 @@ interface BlockRenderPlan {
 }
 
 const STREAM_DEBUG_FLAG = '__LOBE_MARKDOWN_STREAM_DEBUG__';
+const SECOND_STAGE_DELAY_RATIO = 0.25;
+const MIN_TOKEN_DELAY_STEP_MS = 4;
+const MAX_TOKEN_DELAY_STEP_MS = 36;
 
 const sharedPrefixLength = (previous: string, current: string): number => {
   const minLength = Math.min(previous.length, current.length);
@@ -77,12 +75,7 @@ const StreamdownBlock = memo<Options>(
 StreamdownBlock.displayName = 'StreamdownBlock';
 
 export const StreamdownRender = memo<StreamdownRenderProps>(
-  ({
-    children,
-    streamAnimationDurationMs,
-    streamAnimationWindowMs = 200,
-    ...rest
-  }: StreamdownRenderProps) => {
+  ({ children, streamAnimationWindowMs = 200, ...rest }: StreamdownRenderProps) => {
     const escapedContent = useMarkdownContent(children || '');
     const components = useMarkdownComponents();
     const rehypePluginsList = useMarkdownRehypePlugins();
@@ -101,10 +94,7 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
     const debugEnabled =
       typeof window !== 'undefined' &&
       (window as typeof window & Record<string, unknown>)[STREAM_DEBUG_FLAG] === true;
-    const resolvedStreamAnimationDurationMs = useMemo(
-      () => resolveStreamAnimationDurationMs(streamAnimationWindowMs, streamAnimationDurationMs),
-      [streamAnimationDurationMs, streamAnimationWindowMs],
-    );
+    const renderPhaseRef = useRef(0);
     const processedContent = useMemo(() => {
       return remend(windowedContent);
     }, [windowedContent]);
@@ -142,7 +132,7 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
       [rehypePluginsList],
     );
     const { nextActiveAnimationByBlock, plans } = useMemo(() => {
-      const now = Date.now();
+      const phase = renderPhaseRef.current + 1;
       const nextRanges = new Map<string, BlockAnimationState>();
       const previousRanges = activeAnimationByBlockRef.current;
       const nextPlans: BlockRenderPlan[] = [];
@@ -154,19 +144,12 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
         );
         const ranges: BlockAnimationRange[] = [];
         const previousRange = previousRanges.get(block.id);
-
-        const isPreviousRangeActive =
-          !!previousRange && now - previousRange.createdAt < resolvedStreamAnimationDurationMs;
-        if (isPreviousRangeActive) {
-          const previousStart = Math.min(previousRange.start, block.raw.length);
-          const previousEnd = Math.min(previousRange.end, block.raw.length);
-          if (previousStart < previousEnd) {
-            ranges.push({
-              end: previousEnd,
-              key: previousRange.key,
-              start: previousStart,
-            });
-          }
+        if (
+          previousRange &&
+          previousRange.phase === phase - 1 &&
+          previousRange.start < previousRange.end
+        ) {
+          ranges.push(previousRange);
         }
 
         let latestRange = previousRange;
@@ -178,9 +161,9 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
 
           if (!shouldReusePreviousRange) {
             latestRange = {
-              createdAt: now,
               end: nextEnd,
               key: `${block.id}-range-${nextStart}-${nextEnd}`,
+              phase,
               start: nextStart,
             };
           }
@@ -202,19 +185,41 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
         }
 
         if (latestRange && !block.disableAnimation) {
-          nextRanges.set(block.id, latestRange);
+          nextRanges.set(block.id, {
+            ...latestRange,
+            phase,
+          });
         }
 
         ranges.sort((left, right) => left.start - right.start);
+        const stageDelayStartMs = Math.max(
+          0,
+          Math.round(streamAnimationWindowMs * SECOND_STAGE_DELAY_RATIO),
+        );
+        const rangesWithDelay = ranges.map((range, rangeIndex) => {
+          const rangeText = block.raw.slice(range.start, range.end);
+          const tokenCount = countStreamAnimationTokens(rangeText);
+          const baseStep = tokenCount > 0 ? streamAnimationWindowMs / tokenCount : 0;
+          const tokenDelayStepMs =
+            tokenCount <= 1
+              ? 0
+              : Math.min(MAX_TOKEN_DELAY_STEP_MS, Math.max(MIN_TOKEN_DELAY_STEP_MS, baseStep));
+
+          return {
+            ...range,
+            tokenDelayStartMs: rangeIndex * stageDelayStartMs,
+            tokenDelayStepMs,
+          };
+        });
         nextPlans.push({
           block,
           localOffset,
-          ranges,
+          ranges: rangesWithDelay,
         });
       }
 
       return { nextActiveAnimationByBlock: nextRanges, plans: nextPlans };
-    }, [animateFromGlobalOffset, blocks, resolvedStreamAnimationDurationMs]);
+    }, [animateFromGlobalOffset, blocks, streamAnimationWindowMs]);
 
     const getRehypePluginsForPlan = (plan: BlockRenderPlan): Pluggable[] => {
       if (plan.ranges.length === 0) {
@@ -229,7 +234,6 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
           rehypeStreamAnimated,
           {
             animateRanges: plan.ranges,
-            animationDurationMs: resolvedStreamAnimationDurationMs,
           },
         ] as unknown as Pluggable;
       });
@@ -241,7 +245,7 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
         debugRenderCountRef.current += 1;
 
         console.groupCollapsed(
-          `[StreamdownRender] #${debugIndex} prev=${previousProcessedContentRef.current?.length ?? 0} curr=${processedContent.length} global=${animateFromGlobalOffset} raw=${rawContent.length} windowed=${windowedContent.length} duration=${resolvedStreamAnimationDurationMs}`,
+          `[StreamdownRender] #${debugIndex} prev=${previousProcessedContentRef.current?.length ?? 0} curr=${processedContent.length} global=${animateFromGlobalOffset} raw=${rawContent.length} windowed=${windowedContent.length}`,
         );
         console.table(
           plans.map((plan) => {
@@ -252,7 +256,12 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
               id: block.id,
               localOffset: plan.localOffset,
               rawLength: block.raw.length,
-              ranges: plan.ranges.map((range) => `${range.start}-${range.end}`).join(','),
+              ranges: plan.ranges
+                .map(
+                  (range) =>
+                    `${range.start}-${range.end}|d0=${range.tokenDelayStartMs ?? 0}|ds=${range.tokenDelayStepMs ?? 0}`,
+                )
+                .join(','),
               renderKind: block.renderKind,
               sample: block.raw.slice(0, 64).replaceAll('\n', '\\n'),
               start: block.startOffset,
@@ -263,6 +272,7 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
       }
 
       activeAnimationByBlockRef.current = nextActiveAnimationByBlock;
+      renderPhaseRef.current += 1;
       previousBlocksRef.current = blocks;
       previousProcessedContentRef.current = processedContent;
     }, [
@@ -273,7 +283,6 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
       plans,
       processedContent,
       rawContent.length,
-      resolvedStreamAnimationDurationMs,
       windowedContent.length,
     ]);
 
@@ -299,7 +308,6 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
   },
   (prevProps, nextProps) =>
     prevProps.children === nextProps.children &&
-    prevProps.streamAnimationDurationMs === nextProps.streamAnimationDurationMs &&
     prevProps.streamAnimationWindowMs === nextProps.streamAnimationWindowMs,
 );
 StreamdownRender.displayName = 'StreamdownRender';

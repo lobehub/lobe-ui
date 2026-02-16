@@ -264,7 +264,7 @@ describe('rehypeStreamAnimated', () => {
     ]);
   });
 
-  it('should support overlapping animate ranges with custom duration', () => {
+  it('should split overlapping animate ranges into tokenized spans with stagger delay', () => {
     const tree: Root = {
       children: [
         {
@@ -288,21 +288,21 @@ describe('rehypeStreamAnimated', () => {
 
     rehypeStreamAnimated({
       animateRanges: [
-        { end: 11, key: 'r1', start: 6 },
-        { end: 17, key: 'r2', start: 12 },
+        { end: 11, key: 'r1', start: 6, tokenDelayStartMs: 20, tokenDelayStepMs: 15 },
+        { end: 17, key: 'r2', start: 12, tokenDelayStartMs: 60, tokenDelayStepMs: 15 },
       ],
-      animationDurationMs: 180,
     })(tree);
 
     const paragraph = tree.children[0] as any;
+    expect(collectText(paragraph)).toBe('Hello world again text');
     expect(paragraph.children).toEqual([
       { type: 'text', value: 'Hello ' },
       {
         children: [{ type: 'text', value: 'world' }],
         properties: {
           className: 'animate-stream',
-          key: 'r1-6',
-          style: 'animation-duration:180ms',
+          key: 'r1-6-token-0',
+          style: 'animation-delay:20ms;animation-fill-mode:both',
         },
         tagName: 'span',
         type: 'element',
@@ -312,13 +312,61 @@ describe('rehypeStreamAnimated', () => {
         children: [{ type: 'text', value: 'again' }],
         properties: {
           className: 'animate-stream',
-          key: 'r2-12',
-          style: 'animation-duration:180ms',
+          key: 'r2-12-token-0',
+          style: 'animation-delay:60ms;animation-fill-mode:both',
         },
         tagName: 'span',
         type: 'element',
       },
       { type: 'text', value: ' text' },
     ]);
+  });
+
+  it('should keep token delay cursor continuous across multiple text nodes in one range', () => {
+    const tree: Root = {
+      children: [
+        {
+          children: [
+            {
+              position: {
+                end: { offset: 6 },
+                start: { offset: 0 },
+              },
+              type: 'text',
+              value: 'Hello ',
+            } as any,
+            {
+              position: {
+                end: { offset: 17 },
+                start: { offset: 6 },
+              },
+              type: 'text',
+              value: 'world again',
+            } as any,
+          ],
+          properties: {},
+          tagName: 'p',
+          type: 'element',
+        },
+      ],
+      type: 'root',
+    };
+
+    rehypeStreamAnimated({
+      animateRanges: [{ end: 17, key: 'r1', start: 0, tokenDelayStartMs: 0, tokenDelayStepMs: 12 }],
+    })(tree);
+
+    const paragraph = tree.children[0] as any;
+    const spans = paragraph.children.filter(
+      (node: any) =>
+        node.type === 'element' &&
+        node.tagName === 'span' &&
+        node.properties?.className === 'animate-stream',
+    );
+
+    expect(spans).toHaveLength(3);
+    expect(spans[0].properties.style).toBe('animation-delay:0ms;animation-fill-mode:both');
+    expect(spans[1].properties.style).toBe('animation-delay:12ms;animation-fill-mode:both');
+    expect(spans[2].properties.style).toBe('animation-delay:24ms;animation-fill-mode:both');
   });
 });
