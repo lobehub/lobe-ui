@@ -9,6 +9,8 @@ const INCOMPLETE_LINK_PROTOCOL = 'streamdown:incomplete-link';
 
 export interface RehypeStreamAnimatedOptions {
   animateFromSourceOffset?: number;
+  animateRanges?: Array<{ end: number; key: string; start: number }>;
+  animationDurationMs?: number;
 }
 
 const isElement = (node: unknown): node is Element => {
@@ -92,12 +94,15 @@ const splitByWord = (text: string): string[] => {
   return parts;
 };
 
-const makeSpan = (word: string, spanKey?: string): Element => {
+const makeSpan = (word: string, spanKey?: string, animationDurationMs?: number): Element => {
   const properties: Record<string, string> = {
     className: ANIMATION_CLASS_NAME,
   };
   if (spanKey) {
     properties.key = spanKey;
+  }
+  if (animationDurationMs !== undefined) {
+    properties.style = `animation-duration:${animationDurationMs}ms`;
   }
 
   return {
@@ -113,7 +118,11 @@ const makeText = (value: string): Text => ({
   value,
 });
 
-const splitAnimatedSegment = (text: string, spanKey?: string): Array<Element | Text> => {
+const splitAnimatedSegment = (
+  text: string,
+  spanKey?: string,
+  animationDurationMs?: number,
+): Array<Element | Text> => {
   if (!text) return [];
   if (WHITESPACE_ONLY_RE.test(text)) return [makeText(text)];
 
@@ -125,7 +134,7 @@ const splitAnimatedSegment = (text: string, spanKey?: string): Array<Element | T
   const nodes: Array<Element | Text> = [];
 
   if (leadingMatch) nodes.push(makeText(leadingMatch));
-  if (core) nodes.push(makeSpan(core, spanKey));
+  if (core) nodes.push(makeSpan(core, spanKey, animationDurationMs));
   if (trailingMatch) nodes.push(makeText(trailingMatch));
 
   return nodes;
@@ -145,11 +154,54 @@ const processTextNode = (
   parent: Parent,
   node: Text,
   index: number,
+  animateRanges?: Array<{ end: number; key: string; start: number }>,
+  animationDurationMs?: number,
   animateFromSourceOffset?: number,
 ): number | undefined => {
   const text = node.value;
   if (!text.trim()) {
     return;
+  }
+
+  if (animateRanges && animateRanges.length > 0) {
+    const { end, start } = getSourceOffsets(node);
+    const orderedRanges = [...animateRanges].sort((left, right) => left.start - right.start);
+
+    if (start !== undefined && end !== undefined) {
+      const replacedNodes: Array<Element | Text> = [];
+      let cursor = start;
+
+      for (const range of orderedRanges) {
+        const rangeStart = Math.max(range.start, start);
+        const rangeEnd = Math.min(range.end, end);
+        if (rangeEnd <= rangeStart) continue;
+
+        if (cursor < rangeStart) {
+          replacedNodes.push(makeText(text.slice(cursor - start, rangeStart - start)));
+        }
+
+        const animatedText = text.slice(rangeStart - start, rangeEnd - start);
+        replacedNodes.push(
+          ...splitAnimatedSegment(animatedText, `${range.key}-${rangeStart}`, animationDurationMs),
+        );
+
+        cursor = rangeEnd;
+      }
+
+      if (cursor < end) {
+        replacedNodes.push(makeText(text.slice(cursor - start)));
+      }
+
+      if (replacedNodes.length === 0) return;
+
+      parent.children.splice(index, 1, ...replacedNodes);
+      return index + replacedNodes.length;
+    }
+
+    const fallbackSpanKey = `stream-ranges-${index}`;
+    const animatedNodes = splitAnimatedSegment(text, fallbackSpanKey, animationDurationMs);
+    parent.children.splice(index, 1, ...animatedNodes);
+    return index + animatedNodes.length;
   }
 
   if (animateFromSourceOffset !== undefined) {
@@ -159,7 +211,7 @@ const processTextNode = (
 
     if (start !== undefined && end !== undefined) {
       if (animateFromSourceOffset <= start) {
-        const animatedNodes = splitAnimatedSegment(text, spanKey);
+        const animatedNodes = splitAnimatedSegment(text, spanKey, animationDurationMs);
         parent.children.splice(index, 1, ...animatedNodes);
         return index + animatedNodes.length;
       }
@@ -174,13 +226,13 @@ const processTextNode = (
       const replacedNodes: Array<Element | Text> = [];
 
       if (stablePart) replacedNodes.push(makeText(stablePart));
-      replacedNodes.push(...splitAnimatedSegment(incomingPart, spanKey));
+      replacedNodes.push(...splitAnimatedSegment(incomingPart, spanKey, animationDurationMs));
 
       parent.children.splice(index, 1, ...replacedNodes);
       return index + replacedNodes.length;
     }
 
-    const animatedNodes = splitAnimatedSegment(text, spanKey);
+    const animatedNodes = splitAnimatedSegment(text, spanKey, animationDurationMs);
     parent.children.splice(index, 1, ...animatedNodes);
     return index + animatedNodes.length;
   }
@@ -193,7 +245,12 @@ const processTextNode = (
   return index + nodes.length;
 };
 
-const walk = (node: Parent, animateFromSourceOffset?: number): void => {
+const walk = (
+  node: Parent,
+  animateRanges?: Array<{ end: number; key: string; start: number }>,
+  animationDurationMs?: number,
+  animateFromSourceOffset?: number,
+): void => {
   if (isElement(node) && SKIP_TAGS.has(node.tagName)) {
     return;
   }
@@ -210,7 +267,14 @@ const walk = (node: Parent, animateFromSourceOffset?: number): void => {
     }
 
     if (child.type === 'text') {
-      const nextIndex = processTextNode(node, child, index, animateFromSourceOffset);
+      const nextIndex = processTextNode(
+        node,
+        child,
+        index,
+        animateRanges,
+        animationDurationMs,
+        animateFromSourceOffset,
+      );
       if (nextIndex !== undefined) {
         index = nextIndex - 1;
       }
@@ -218,13 +282,13 @@ const walk = (node: Parent, animateFromSourceOffset?: number): void => {
     }
 
     if (isParentNode(child)) {
-      walk(child, animateFromSourceOffset);
+      walk(child, animateRanges, animationDurationMs, animateFromSourceOffset);
     }
   }
 };
 
 export const rehypeStreamAnimated = (options: RehypeStreamAnimatedOptions = {}) => {
   return (tree: Root) => {
-    walk(tree, options.animateFromSourceOffset);
+    walk(tree, options.animateRanges, options.animationDurationMs, options.animateFromSourceOffset);
   };
 };

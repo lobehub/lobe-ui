@@ -13,6 +13,18 @@ import { MarkdownRender, StreamdownRender } from './SyntaxMarkdown';
 import { type MarkdownProps } from './type';
 import Typography from './Typography';
 
+const resolveStreamAnimationDurationMs = (
+  streamAnimationWindowMs: number,
+  streamAnimationDurationMs?: number,
+) => {
+  if (typeof streamAnimationDurationMs === 'number') {
+    return Math.max(streamAnimationDurationMs, 0);
+  }
+
+  const base = streamAnimationWindowMs > 0 ? streamAnimationWindowMs * 1.8 : 180;
+  return Math.min(200, Math.max(150, Math.round(base)));
+};
+
 const Markdown = memo<MarkdownProps>((props) => {
   const {
     ref,
@@ -28,6 +40,7 @@ const Markdown = memo<MarkdownProps>((props) => {
     enableCustomFootnotes,
     enableGithubAlert,
     enableStream = true,
+    streamAnimationDurationMs,
     streamAnimationWindowMs = 200,
     componentProps,
     rehypePluginsAhead,
@@ -49,14 +62,18 @@ const Markdown = memo<MarkdownProps>((props) => {
     ...rest
   } = props;
 
+  const resolvedStreamAnimationDurationMs = useMemo(
+    () => resolveStreamAnimationDurationMs(streamAnimationWindowMs, streamAnimationDurationMs),
+    [streamAnimationDurationMs, streamAnimationWindowMs],
+  );
+
   const delayedAnimated = useDelayedAnimated(animated);
   const animationResolved = useMemo(() => {
     if (enableStream && delayedAnimated) {
-      const config = typeof delayedAnimated === 'boolean' ? {} : delayedAnimated;
-      return resolveAnimationConfig({ ...config, duration: streamAnimationWindowMs / 1000 });
+      return resolveAnimationConfig(true, { duration: resolvedStreamAnimationDurationMs / 1000 });
     }
     return resolveAnimationConfig(delayedAnimated);
-  }, [delayedAnimated, enableStream, streamAnimationWindowMs]);
+  }, [delayedAnimated, enableStream, resolvedStreamAnimationDurationMs]);
   const animationStyle = useMemo(
     () =>
       animationResolved
@@ -70,13 +87,22 @@ const Markdown = memo<MarkdownProps>((props) => {
       enableStream,
       children,
       reactMarkdownProps,
+      streamAnimationDurationMs,
       streamAnimationWindowMs,
     }: Pick<
       MarkdownProps,
-      'children' | 'enableStream' | 'reactMarkdownProps' | 'streamAnimationWindowMs'
+      | 'children'
+      | 'enableStream'
+      | 'reactMarkdownProps'
+      | 'streamAnimationDurationMs'
+      | 'streamAnimationWindowMs'
     >) => {
       const defaultDOM = enableStream ? (
-        <StreamdownRender {...reactMarkdownProps} streamAnimationWindowMs={streamAnimationWindowMs}>
+        <StreamdownRender
+          {...reactMarkdownProps}
+          streamAnimationDurationMs={streamAnimationDurationMs}
+          streamAnimationWindowMs={streamAnimationWindowMs}
+        >
           {children}
         </StreamdownRender>
       ) : (
@@ -123,6 +149,7 @@ const Markdown = memo<MarkdownProps>((props) => {
           <Render
             enableStream={enableStream && !!delayedAnimated}
             reactMarkdownProps={reactMarkdownProps}
+            streamAnimationDurationMs={streamAnimationDurationMs}
             streamAnimationWindowMs={streamAnimationWindowMs}
           >
             {children}

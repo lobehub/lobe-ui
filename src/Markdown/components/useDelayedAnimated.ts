@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import type { AnimationConfig } from '../type';
-
-export const useDelayedAnimated = (animated?: boolean | AnimationConfig) => {
+export const useDelayedAnimated = (animated?: boolean) => {
   const isAnimated = !!animated;
   const [delayedEnabled, setDelayedEnabled] = useState(isAnimated);
 

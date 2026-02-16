@@ -18,16 +18,10 @@ export interface TypographyProps extends DivProps {
   ref?: Ref<HTMLDivElement>;
 }
 
-export type AnimationType = 'fadeIn' | 'mask';
-export interface AnimationConfig {
-  duration?: number;
-  type?: AnimationType;
-}
-
 export interface SyntaxMarkdownProps {
   allowHtml?: boolean;
   allowHtmlList?: ElementType[];
-  animated?: boolean | AnimationConfig;
+  animated?: boolean;
   children: string;
   citations?: CitationItem[];
   componentProps?: {
@@ -54,6 +48,7 @@ export interface SyntaxMarkdownProps {
   remarkPlugins?: Pluggable[];
   remarkPluginsAhead?: Pluggable[];
   showFootnotes?: boolean;
+  streamAnimationDurationMs?: number;
   streamAnimationWindowMs?: number;
   variant?: 'default' | 'chat';
 }

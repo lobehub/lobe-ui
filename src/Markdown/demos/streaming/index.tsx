@@ -4,7 +4,6 @@ import { folder } from 'leva';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
-import type { AnimationType } from '@/Markdown/type';
 
 import { markdownElements } from '../custom/plugins/MarkdownElements';
 import { removeLineBreaksInAntArtifact } from '../custom/plugins/utils';
@@ -29,7 +28,6 @@ export default () => {
     chunkDelayMax,
     language,
     streamAnimationWindowMs,
-    animationType,
     ...rest
   } = useControls(
     {
@@ -40,10 +38,6 @@ export default () => {
       children: {
         rows: true,
         value: fullContent,
-      },
-      animationType: {
-        options: ['fadeIn', 'mask'],
-        value: 'fadeIn',
       },
       streamAnimationWindowMs: {
         max: 500,
@@ -112,11 +106,7 @@ export default () => {
   const chunksEndRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
 
-  useEffect(() => {
-    if (!isStreaming) {
-      setStreamedContent(safeChildren);
-    }
-  }, [safeChildren, isStreaming]);
+  const renderedContent = isStreaming ? streamedContent : safeChildren;
 
   useEffect(() => {
     chunksEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -262,14 +252,14 @@ export default () => {
           )}
         </Flexbox>
         <Markdown
-          animated={isStreaming ? { type: animationType as AnimationType } : false}
+          animated={isStreaming}
           components={components}
           fullFeaturedCodeBlock={rest.fullFeaturedCodeBlock}
           rehypePlugins={rehypePlugins}
           streamAnimationWindowMs={streamAnimationWindowMs}
           variant="chat"
         >
-          {removeLineBreaksInAntArtifact(streamedContent)}
+          {removeLineBreaksInAntArtifact(renderedContent)}
         </Markdown>
       </Flexbox>
       {useReadableStream && chunks.length > 0 && (

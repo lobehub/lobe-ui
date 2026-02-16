@@ -3,11 +3,10 @@ import type { BuiltinTheme } from 'shiki';
 
 import type { ActionIconProps } from '@/ActionIcon';
 import type { FlexboxProps } from '@/Flex';
-import type { AnimationConfig } from '@/Markdown/type';
 import type { DivProps } from '@/types';
 
 export interface SyntaxHighlighterProps extends DivProps {
-  animated?: boolean | AnimationConfig;
+  animated?: boolean;
   children: string;
   enableTransformer?: HighlighterProps['enableTransformer'];
   language: HighlighterProps['language'];
@@ -26,7 +25,7 @@ export interface HighlighterProps extends Omit<FlexboxProps, 'children' | 'wrap'
     originalNode: ReactNode;
   }) => ReactNode;
   allowChangeLanguage?: boolean;
-  animated?: boolean | AnimationConfig;
+  animated?: boolean;
   bodyRender?: (props: { content: string; language: string; originalNode: ReactNode }) => ReactNode;
   children: string;
   classNames?: {

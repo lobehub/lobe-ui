@@ -263,4 +263,62 @@ describe('rehypeStreamAnimated', () => {
       },
     ]);
   });
+
+  it('should support overlapping animate ranges with custom duration', () => {
+    const tree: Root = {
+      children: [
+        {
+          children: [
+            {
+              position: {
+                end: { offset: 20 },
+                start: { offset: 0 },
+              },
+              type: 'text',
+              value: 'Hello world again text',
+            } as any,
+          ],
+          properties: {},
+          tagName: 'p',
+          type: 'element',
+        },
+      ],
+      type: 'root',
+    };
+
+    rehypeStreamAnimated({
+      animateRanges: [
+        { end: 11, key: 'r1', start: 6 },
+        { end: 17, key: 'r2', start: 12 },
+      ],
+      animationDurationMs: 180,
+    })(tree);
+
+    const paragraph = tree.children[0] as any;
+    expect(paragraph.children).toEqual([
+      { type: 'text', value: 'Hello ' },
+      {
+        children: [{ type: 'text', value: 'world' }],
+        properties: {
+          className: 'animate-stream',
+          key: 'r1-6',
+          style: 'animation-duration:180ms',
+        },
+        tagName: 'span',
+        type: 'element',
+      },
+      { type: 'text', value: ' ' },
+      {
+        children: [{ type: 'text', value: 'again' }],
+        properties: {
+          className: 'animate-stream',
+          key: 'r2-12',
+          style: 'animation-duration:180ms',
+        },
+        tagName: 'span',
+        type: 'element',
+      },
+      { type: 'text', value: ' text' },
+    ]);
+  });
 });

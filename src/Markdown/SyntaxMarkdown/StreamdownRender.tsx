@@ -19,7 +19,24 @@ import { styles } from './style';
 import { useWindowedStreamContent } from './useWindowedStreamContent';
 
 interface StreamdownRenderProps extends Options {
+  streamAnimationDurationMs?: number;
   streamAnimationWindowMs?: number;
+}
+
+interface BlockAnimationRange {
+  end: number;
+  key: string;
+  start: number;
+}
+
+interface BlockAnimationState extends BlockAnimationRange {
+  createdAt: number;
+}
+
+interface BlockRenderPlan {
+  block: RenderBlock;
+  localOffset: number;
+  ranges: BlockAnimationRange[];
 }
 
 const STREAM_DEBUG_FLAG = '__LOBE_MARKDOWN_STREAM_DEBUG__';
@@ -49,6 +66,18 @@ const getAnimateFromOffset = (
   return prefix === 0 ? currentContent.length : prefix;
 };
 
+const resolveStreamAnimationDurationMs = (
+  streamAnimationWindowMs: number,
+  streamAnimationDurationMs?: number,
+) => {
+  if (typeof streamAnimationDurationMs === 'number') {
+    return Math.max(streamAnimationDurationMs, 0);
+  }
+
+  const base = streamAnimationWindowMs > 0 ? streamAnimationWindowMs * 1.8 : 180;
+  return Math.min(200, Math.max(150, Math.round(base)));
+};
+
 const StreamdownBlock = memo<Options>(
   ({ children, ...rest }) => {
     return <Markdown {...rest}>{children}</Markdown>;
@@ -59,12 +88,18 @@ const StreamdownBlock = memo<Options>(
 StreamdownBlock.displayName = 'StreamdownBlock';
 
 export const StreamdownRender = memo<StreamdownRenderProps>(
-  ({ children, streamAnimationWindowMs = 200, ...rest }: StreamdownRenderProps) => {
+  ({
+    children,
+    streamAnimationDurationMs,
+    streamAnimationWindowMs = 200,
+    ...rest
+  }: StreamdownRenderProps) => {
     const escapedContent = useMarkdownContent(children || '');
     const components = useMarkdownComponents();
     const rehypePluginsList = useMarkdownRehypePlugins();
     const remarkPluginsList = useMarkdownRemarkPlugins();
     const previousBlocksRef = useRef<RenderBlock[]>([]);
+    const activeAnimationByBlockRef = useRef<Map<string, BlockAnimationState>>(new Map());
     const previousProcessedContentRef = useRef<string | undefined>(undefined);
     const animateFromGlobalOffsetCacheRef = useRef<{ content: string; offset: number } | undefined>(
       undefined,
@@ -77,6 +112,10 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
     const debugEnabled =
       typeof window !== 'undefined' &&
       (window as typeof window & Record<string, unknown>)[STREAM_DEBUG_FLAG] === true;
+    const resolvedStreamAnimationDurationMs = useMemo(
+      () => resolveStreamAnimationDurationMs(streamAnimationWindowMs, streamAnimationDurationMs),
+      [streamAnimationDurationMs, streamAnimationWindowMs],
+    );
     const processedContent = useMemo(() => {
       return remend(windowedContent);
     }, [windowedContent]);
@@ -113,18 +152,97 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
         }),
       [rehypePluginsList],
     );
+    const { nextActiveAnimationByBlock, plans } = useMemo(() => {
+      const now = Date.now();
+      const nextRanges = new Map<string, BlockAnimationState>();
+      const previousRanges = activeAnimationByBlockRef.current;
+      const nextPlans: BlockRenderPlan[] = [];
 
-    const getRehypePluginsForBlock = (block: RenderBlock): Pluggable[] => {
-      const animateFromSourceOffset = Math.min(
-        Math.max(animateFromGlobalOffset - block.startOffset, 0),
-        block.raw.length,
-      );
+      for (const block of blocks) {
+        const localOffset = Math.min(
+          Math.max(animateFromGlobalOffset - block.startOffset, 0),
+          block.raw.length,
+        );
+        const ranges: BlockAnimationRange[] = [];
+        const previousRange = previousRanges.get(block.id);
+
+        const isPreviousRangeActive =
+          !!previousRange && now - previousRange.createdAt < resolvedStreamAnimationDurationMs;
+        if (isPreviousRangeActive) {
+          const previousStart = Math.min(previousRange.start, block.raw.length);
+          const previousEnd = Math.min(previousRange.end, block.raw.length);
+          if (previousStart < previousEnd) {
+            ranges.push({
+              end: previousEnd,
+              key: previousRange.key,
+              start: previousStart,
+            });
+          }
+        }
+
+        let latestRange = previousRange;
+        if (!block.disableAnimation && localOffset < block.raw.length) {
+          const nextStart = localOffset;
+          const nextEnd = block.raw.length;
+          const shouldReusePreviousRange =
+            !!previousRange && previousRange.start === nextStart && previousRange.end === nextEnd;
+
+          if (!shouldReusePreviousRange) {
+            latestRange = {
+              createdAt: now,
+              end: nextEnd,
+              key: `${block.id}-range-${nextStart}-${nextEnd}`,
+              start: nextStart,
+            };
+          }
+
+          const rangeCandidate = latestRange;
+          if (
+            rangeCandidate &&
+            !ranges.some(
+              (range) => range.start === rangeCandidate.start && range.end === rangeCandidate.end,
+            )
+          ) {
+            const nextRange = rangeCandidate;
+            ranges.push({
+              end: nextRange.end,
+              key: nextRange.key,
+              start: nextRange.start,
+            });
+          }
+        }
+
+        if (latestRange && !block.disableAnimation) {
+          nextRanges.set(block.id, latestRange);
+        }
+
+        ranges.sort((left, right) => left.start - right.start);
+        nextPlans.push({
+          block,
+          localOffset,
+          ranges,
+        });
+      }
+
+      return { nextActiveAnimationByBlock: nextRanges, plans: nextPlans };
+    }, [animateFromGlobalOffset, blocks, resolvedStreamAnimationDurationMs]);
+
+    const getRehypePluginsForPlan = (plan: BlockRenderPlan): Pluggable[] => {
+      if (plan.ranges.length === 0) {
+        return rehypePluginsWithoutAnimation;
+      }
 
       return rehypePluginsList.map((plugin): Pluggable => {
         const pluginEntry = Array.isArray(plugin) ? plugin[0] : plugin;
         if (pluginEntry !== rehypeStreamAnimated) return plugin;
 
-        return [rehypeStreamAnimated, { animateFromSourceOffset }] as unknown as Pluggable;
+        return [
+          rehypeStreamAnimated,
+          {
+            animateRanges: plan.ranges,
+            animationDurationMs: resolvedStreamAnimationDurationMs,
+          },
+        ] as unknown as Pluggable;
       });
     };
 
@@ -134,21 +252,18 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
         debugRenderCountRef.current += 1;
 
         console.groupCollapsed(
-          `[StreamdownRender] #${debugIndex} prev=${previousProcessedContentRef.current?.length ?? 0} curr=${processedContent.length} global=${animateFromGlobalOffset} raw=${rawContent.length} windowed=${windowedContent.length}`,
+          `[StreamdownRender] #${debugIndex} prev=${previousProcessedContentRef.current?.length ?? 0} curr=${processedContent.length} global=${animateFromGlobalOffset} raw=${rawContent.length} windowed=${windowedContent.length} duration=${resolvedStreamAnimationDurationMs}`,
         );
         console.table(
-          blocks.map((block) => {
-            const localOffset = Math.min(
-              Math.max(animateFromGlobalOffset - block.startOffset, 0),
-              block.raw.length,
-            );
-
+          plans.map((plan) => {
+            const block = plan.block;
             return {
               disableAnimation: block.disableAnimation,
               end: block.endOffset,
               id: block.id,
-              localOffset,
+              localOffset: plan.localOffset,
               rawLength: block.raw.length,
+              ranges: plan.ranges.map((range) => `${range.start}-${range.end}`).join(','),
               renderKind: block.renderKind,
               sample: block.raw.slice(0, 64).replaceAll('\n', '\\n'),
               start: block.startOffset,
@@ -158,32 +273,36 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
         console.groupEnd();
       }
 
+      activeAnimationByBlockRef.current = nextActiveAnimationByBlock;
       previousBlocksRef.current = blocks;
       previousProcessedContentRef.current = processedContent;
     }, [
       animateFromGlobalOffset,
       blocks,
       debugEnabled,
+      nextActiveAnimationByBlock,
+      plans,
       processedContent,
       rawContent.length,
+      resolvedStreamAnimationDurationMs,
       windowedContent.length,
     ]);
 
     return (
       <div className={styles.animated}>
-        {blocks.map((block) => (
+        {plans.map((plan) => (
           <StreamdownBlock
             {...rest}
             components={components}
-            key={block.id}
+            key={plan.block.id}
             remarkPlugins={remarkPluginsList}
             rehypePlugins={
-              block.disableAnimation
+              plan.block.disableAnimation
                 ? rehypePluginsWithoutAnimation
-                : getRehypePluginsForBlock(block)
+                : getRehypePluginsForPlan(plan)
             }
           >
-            {block.raw}
+            {plan.block.raw}
           </StreamdownBlock>
         ))}
       </div>
@@ -191,6 +310,7 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
   },
   (prevProps, nextProps) =>
     prevProps.children === nextProps.children &&
+    prevProps.streamAnimationDurationMs === nextProps.streamAnimationDurationMs &&
     prevProps.streamAnimationWindowMs === nextProps.streamAnimationWindowMs,
 );
 StreamdownRender.displayName = 'StreamdownRender';

@@ -2,7 +2,6 @@ import { memo } from 'react';
 
 import type { HighlighterProps } from '@/Highlighter';
 import { FALLBACK_LANG } from '@/Highlighter/const';
-import type { AnimationConfig } from '@/Markdown/type';
 import Pre, { PreMermaid, PreSingleLine } from '@/mdx/mdxComponents/Pre';
 import type { MermaidProps } from '@/Mermaid';
 
@@ -33,7 +32,7 @@ export const useCode = (raw: any) => {
 };
 
 interface CodeBlockProps {
-  animated?: boolean | AnimationConfig;
+  animated?: boolean;
   children: any;
   enableMermaid?: boolean;
   fullFeatured?: boolean;
