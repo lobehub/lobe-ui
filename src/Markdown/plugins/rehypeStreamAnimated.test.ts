@@ -375,7 +375,7 @@ describe('rehypeStreamAnimated', () => {
     expect(spans[14].properties.style).toBe('animation-delay:168ms;animation-fill-mode:both');
   });
 
-  it('should add extra stagger gap after line breaks', () => {
+  it('should animate only the last source line when range contains line breaks', () => {
     const tree: Root = {
       children: [
         {
@@ -402,7 +402,6 @@ describe('rehypeStreamAnimated', () => {
         {
           end: 4,
           key: 'r1',
-          lineDelayMs: 60,
           start: 0,
           tokenDelayStartMs: 0,
           tokenDelayStepMs: 10,
@@ -418,12 +417,9 @@ describe('rehypeStreamAnimated', () => {
         node.properties?.className === 'animate-stream',
     );
 
-    expect(spans).toHaveLength(3);
-    expect(spans[0].children[0].value).toBe('a');
-    expect(spans[1].children[0].value).toBe('b');
-    expect(spans[2].children[0].value).toBe('c');
+    expect(spans).toHaveLength(1);
+    expect(spans[0].children[0].value).toBe('c');
     expect(spans[0].properties.style).toBe('animation-delay:0ms;animation-fill-mode:both');
-    expect(spans[1].properties.style).toBe('animation-delay:10ms;animation-fill-mode:both');
-    expect(spans[2].properties.style).toBe('animation-delay:80ms;animation-fill-mode:both');
+    expect(collectText(paragraph)).toBe('ab\nc');
   });
 });

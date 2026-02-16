@@ -14,7 +14,6 @@ const INCOMPLETE_LINK_PROTOCOL = 'streamdown:incomplete-link';
 export interface StreamAnimateRange {
   end: number;
   key: string;
-  lineDelayMs?: number;
   start: number;
   tokenDelayStartMs?: number;
   tokenDelayStepMs?: number;
@@ -28,7 +27,6 @@ export interface RehypeStreamAnimatedOptions {
 interface SplitTokenSegmentOptions {
   delayStartMs?: number;
   delayStepMs?: number;
-  lineDelayMs?: number;
   spanKey?: string;
   tokenCursor?: number;
 }
@@ -91,8 +89,13 @@ const makeSpan = (
   if (spanKey) {
     properties.key = spanKey;
   }
+  const styleSegments: string[] = [];
   if (delayMs !== undefined) {
-    properties.style = `animation-delay:${Math.max(delayMs, 0)}ms;animation-fill-mode:both`;
+    styleSegments.push(`animation-delay:${Math.max(delayMs, 0)}ms`);
+  }
+  if (styleSegments.length > 0) {
+    styleSegments.push('animation-fill-mode:both');
+    properties.style = styleSegments.join(';');
   }
 
   return {
@@ -146,21 +149,16 @@ const splitAnimatedSegmentByTokens = (
   if (leadingMatch) nodes.push(makeText(leadingMatch));
 
   if (core) {
-    const tokens = splitStreamAnimationChars(core);
+    const lastLineBreakIndex = core.lastIndexOf('\n');
+    if (lastLineBreakIndex !== -1) {
+      nodes.push(makeText(core.slice(0, lastLineBreakIndex + 1)));
+    }
+
+    const animatedCore = lastLineBreakIndex === -1 ? core : core.slice(lastLineBreakIndex + 1);
+    const tokens = splitStreamAnimationChars(animatedCore);
     for (const token of tokens) {
       if (isWhitespaceToken(token)) {
         nodes.push(makeText(token));
-        const lineBreakCount = token.split('\n').length - 1;
-        if (
-          lineBreakCount > 0 &&
-          (options.lineDelayMs ?? 0) > 0 &&
-          (options.delayStepMs ?? 0) > 0
-        ) {
-          const lineDelayMs = options.lineDelayMs ?? 0;
-          const tokenDelayStepMs = options.delayStepMs ?? 0;
-          const extraDelaySteps = Math.ceil(lineDelayMs / tokenDelayStepMs);
-          animatedTokenCount += lineBreakCount * extraDelaySteps;
-        }
         continue;
       }
 
@@ -227,7 +225,6 @@ const processTextNode = (
         const tokenized = splitAnimatedSegmentByTokens(animatedText, {
           delayStartMs: range.tokenDelayStartMs,
           delayStepMs: range.tokenDelayStepMs,
-          lineDelayMs: range.lineDelayMs,
           spanKey: `${range.key}-${rangeStart}`,
           tokenCursor,
         });
@@ -252,7 +249,6 @@ const processTextNode = (
     const fallbackNodes = splitAnimatedSegmentByTokens(text, {
       delayStartMs: fallbackRange?.tokenDelayStartMs,
       delayStepMs: fallbackRange?.tokenDelayStepMs,
-      lineDelayMs: fallbackRange?.lineDelayMs,
       spanKey: `stream-ranges-${index}`,
       tokenCursor: fallbackCursor,
     });

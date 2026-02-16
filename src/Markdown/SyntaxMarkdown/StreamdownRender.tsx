@@ -35,7 +35,6 @@ interface BlockRenderPlan {
 
 const STREAM_DEBUG_FLAG = '__LOBE_MARKDOWN_STREAM_DEBUG__';
 const MAX_STAGGER_SPAN_RATIO = 0.9;
-const LINE_BREAK_DELAY_RATIO = 0.9;
 const MAX_TOKEN_DELAY_STEP_MS = 72;
 
 const sharedPrefixLength = (previous: string, current: string): number => {
@@ -99,10 +98,6 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
       30,
       Math.round(streamAnimationWindowMs * MAX_STAGGER_SPAN_RATIO),
     );
-    const lineBreakDelayMs = Math.max(
-      80,
-      Math.round(streamAnimationWindowMs * LINE_BREAK_DELAY_RATIO),
-    );
 
     const parsedBlocks = useMemo(
       () => parseMarkdownIntoBlocks(processedContent),
@@ -140,15 +135,32 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
       const nextRanges = new Map<string, BlockAnimationState>();
       const previousRanges = activeAnimationByBlockRef.current;
       const nextPlans: BlockRenderPlan[] = [];
+      const localOffsets = blocks.map((block) =>
+        Math.min(Math.max(animateFromGlobalOffset - block.startOffset, 0), block.raw.length),
+      );
+      let latestAnimatedBlockIndex = -1;
 
-      for (const block of blocks) {
-        const localOffset = Math.min(
-          Math.max(animateFromGlobalOffset - block.startOffset, 0),
-          block.raw.length,
-        );
+      for (let index = blocks.length - 1; index >= 0; index -= 1) {
+        const block = blocks[index];
+        if (block.disableAnimation) continue;
+
+        const localOffset = localOffsets[index];
+        if (localOffset >= block.raw.length) continue;
+
+        const incomingText = block.raw.slice(localOffset);
+        if (!incomingText.trim()) continue;
+
+        latestAnimatedBlockIndex = index;
+        break;
+      }
+
+      for (const [index, block] of blocks.entries()) {
+        const localOffset = localOffsets[index];
         const previousRange = previousRanges.get(block.id);
         let latestRange: BlockAnimationRange | undefined;
-        if (!block.disableAnimation && localOffset < block.raw.length) {
+        const shouldAnimateBlock = !block.disableAnimation && latestAnimatedBlockIndex === index;
+
+        if (shouldAnimateBlock && localOffset < block.raw.length) {
           const nextStart = localOffset;
           const nextEnd = block.raw.length;
           const shouldReusePreviousRange =
@@ -163,12 +175,12 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
               };
         }
 
-        if (latestRange && !block.disableAnimation) {
+        if (latestRange) {
           nextRanges.set(block.id, latestRange);
         }
 
         const ranges: BlockAnimationRange[] = [];
-        if (latestRange && !block.disableAnimation) {
+        if (latestRange) {
           const rangeText = block.raw.slice(latestRange.start, latestRange.end);
           const tokenCount = countStreamAnimationChars(rangeText);
           const baseStep = tokenCount > 1 ? streamAnimationWindowMs / tokenCount : 0;
@@ -177,7 +189,6 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
             tokenCount <= 1 ? 0 : Math.min(MAX_TOKEN_DELAY_STEP_MS, baseStep, maxStepBySpan);
           ranges.push({
             ...latestRange,
-            lineDelayMs: lineBreakDelayMs,
             tokenDelayStartMs: 0,
             tokenDelayStepMs,
           });
@@ -190,13 +201,7 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
       }
 
       return { nextActiveAnimationByBlock: nextRanges, plans: nextPlans };
-    }, [
-      animateFromGlobalOffset,
-      blocks,
-      lineBreakDelayMs,
-      maxTokenStaggerSpanMs,
-      streamAnimationWindowMs,
-    ]);
+    }, [animateFromGlobalOffset, blocks, maxTokenStaggerSpanMs, streamAnimationWindowMs]);
 
     const getRehypePluginsForPlan = (plan: BlockRenderPlan): Pluggable[] => {
       if (plan.ranges.length === 0) {
@@ -236,7 +241,7 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
               ranges: plan.ranges
                 .map(
                   (range) =>
-                    `${range.start}-${range.end}|d0=${range.tokenDelayStartMs ?? 0}|ds=${range.tokenDelayStepMs ?? 0}|dl=${range.lineDelayMs ?? 0}`,
+                    `${range.start}-${range.end}|d0=${range.tokenDelayStartMs ?? 0}|ds=${range.tokenDelayStepMs ?? 0}`,
                 )
                 .join(','),
               renderKind: block.renderKind,
