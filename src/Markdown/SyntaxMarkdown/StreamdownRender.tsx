@@ -13,7 +13,7 @@ import {
 } from '@/hooks/useMarkdown';
 
 import { rehypeStreamAnimated, type StreamAnimateRange } from '../plugins/rehypeStreamAnimated';
-import { countStreamAnimationTokens } from '../streamTokens';
+import { countStreamAnimationChars } from '../streamTokens';
 import { parseMarkdownIntoBlocks, type RenderBlock } from './blockRenderKind';
 import { reconcileBlocks } from './reconcileBlocks';
 import { styles } from './style';
@@ -25,9 +25,7 @@ interface StreamdownRenderProps extends Options {
 
 interface BlockAnimationRange extends StreamAnimateRange {}
 
-interface BlockAnimationState extends BlockAnimationRange {
-  phase: number;
-}
+interface BlockAnimationState extends BlockAnimationRange {}
 
 interface BlockRenderPlan {
   block: RenderBlock;
@@ -36,7 +34,6 @@ interface BlockRenderPlan {
 }
 
 const STREAM_DEBUG_FLAG = '__LOBE_MARKDOWN_STREAM_DEBUG__';
-const SECOND_STAGE_DELAY_RATIO = 0.25;
 const MAX_STAGGER_SPAN_RATIO = 0.9;
 const LINE_BREAK_DELAY_RATIO = 0.9;
 const MAX_TOKEN_DELAY_STEP_MS = 72;
@@ -95,25 +92,9 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
     const debugEnabled =
       typeof window !== 'undefined' &&
       (window as typeof window & Record<string, unknown>)[STREAM_DEBUG_FLAG] === true;
-    const renderPhaseRef = useRef(0);
-    const lastProcessedCommitAtRef = useRef<number | undefined>(undefined);
     const processedContent = useMemo(() => {
       return remend(windowedContent);
     }, [windowedContent]);
-    const previousProcessedContent = previousProcessedContentRef.current;
-    const contentChanged = previousProcessedContent !== processedContent;
-    const isAppendUpdate =
-      !!previousProcessedContent &&
-      processedContent.length > previousProcessedContent.length &&
-      processedContent.startsWith(previousProcessedContent);
-    const updateGapMs =
-      lastProcessedCommitAtRef.current === undefined
-        ? Number.POSITIVE_INFINITY
-        : Date.now() - lastProcessedCommitAtRef.current;
-    const stageDelayStartMs = Math.max(
-      0,
-      Math.round(streamAnimationWindowMs * SECOND_STAGE_DELAY_RATIO),
-    );
     const maxTokenStaggerSpanMs = Math.max(
       30,
       Math.round(streamAnimationWindowMs * MAX_STAGGER_SPAN_RATIO),
@@ -122,13 +103,6 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
       80,
       Math.round(streamAnimationWindowMs * LINE_BREAK_DELAY_RATIO),
     );
-    const secondStageGapThresholdMs = Math.max(
-      16,
-      stageDelayStartMs + maxTokenStaggerSpanMs + lineBreakDelayMs * 2,
-    );
-    const shouldBridgePreviousRange =
-      contentChanged && isAppendUpdate && updateGapMs <= secondStageGapThresholdMs;
-    const nextPhase = renderPhaseRef.current + (contentChanged ? 1 : 0);
 
     const parsedBlocks = useMemo(
       () => parseMarkdownIntoBlocks(processedContent),
@@ -163,7 +137,6 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
       [rehypePluginsList],
     );
     const { nextActiveAnimationByBlock, plans } = useMemo(() => {
-      const phase = nextPhase;
       const nextRanges = new Map<string, BlockAnimationState>();
       const previousRanges = activeAnimationByBlockRef.current;
       const nextPlans: BlockRenderPlan[] = [];
@@ -173,85 +146,46 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
           Math.max(animateFromGlobalOffset - block.startOffset, 0),
           block.raw.length,
         );
-        const ranges: BlockAnimationRange[] = [];
-        const carriedRangeKeys = new Set<string>();
         const previousRange = previousRanges.get(block.id);
-        if (
-          shouldBridgePreviousRange &&
-          previousRange &&
-          previousRange.phase === phase - 1 &&
-          previousRange.start < previousRange.end &&
-          !block.disableAnimation
-        ) {
-          ranges.push(previousRange);
-          carriedRangeKeys.add(previousRange.key);
-        }
-
-        let latestRange = previousRange;
+        let latestRange: BlockAnimationRange | undefined;
         if (!block.disableAnimation && localOffset < block.raw.length) {
           const nextStart = localOffset;
           const nextEnd = block.raw.length;
           const shouldReusePreviousRange =
             !!previousRange && previousRange.start === nextStart && previousRange.end === nextEnd;
 
-          if (!shouldReusePreviousRange) {
-            latestRange = {
-              end: nextEnd,
-              key: `${block.id}-range-${nextStart}-${nextEnd}`,
-              phase,
-              start: nextStart,
-            };
-          }
-
-          const rangeCandidate = latestRange;
-          if (
-            rangeCandidate &&
-            !ranges.some(
-              (range) => range.start === rangeCandidate.start && range.end === rangeCandidate.end,
-            )
-          ) {
-            const nextRange = rangeCandidate;
-            ranges.push({
-              end: nextRange.end,
-              key: nextRange.key,
-              start: nextRange.start,
-            });
-          }
+          latestRange = shouldReusePreviousRange
+            ? previousRange
+            : {
+                end: nextEnd,
+                key: `${block.id}-range-${nextStart}-${nextEnd}`,
+                start: nextStart,
+              };
         }
 
         if (latestRange && !block.disableAnimation) {
-          nextRanges.set(block.id, {
-            ...latestRange,
-            phase,
-          });
+          nextRanges.set(block.id, latestRange);
         }
 
-        ranges.sort((left, right) => left.start - right.start);
-        const carriedDelayCompensationMs = Number.isFinite(updateGapMs)
-          ? -Math.max(updateGapMs, 0)
-          : 0;
-        const rangesWithDelay = ranges.map((range, rangeIndex) => {
-          const rangeText = block.raw.slice(range.start, range.end);
-          const tokenCount = countStreamAnimationTokens(rangeText);
+        const ranges: BlockAnimationRange[] = [];
+        if (latestRange && !block.disableAnimation) {
+          const rangeText = block.raw.slice(latestRange.start, latestRange.end);
+          const tokenCount = countStreamAnimationChars(rangeText);
           const baseStep = tokenCount > 1 ? streamAnimationWindowMs / tokenCount : 0;
           const maxStepBySpan = tokenCount > 1 ? maxTokenStaggerSpanMs / (tokenCount - 1) : 0;
           const tokenDelayStepMs =
             tokenCount <= 1 ? 0 : Math.min(MAX_TOKEN_DELAY_STEP_MS, baseStep, maxStepBySpan);
-          const rangeDelayStartMs = carriedRangeKeys.has(range.key)
-            ? carriedDelayCompensationMs
-            : rangeIndex * stageDelayStartMs;
-
-          return {
-            ...range,
+          ranges.push({
+            ...latestRange,
             lineDelayMs: lineBreakDelayMs,
-            tokenDelayStartMs: rangeDelayStartMs,
+            tokenDelayStartMs: 0,
             tokenDelayStepMs,
-          };
-        });
+          });
+        }
         nextPlans.push({
           block,
           localOffset,
-          ranges: rangesWithDelay,
+          ranges,
         });
       }
 
@@ -259,13 +193,9 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
     }, [
       animateFromGlobalOffset,
       blocks,
-      maxTokenStaggerSpanMs,
-      nextPhase,
-      shouldBridgePreviousRange,
-      stageDelayStartMs,
-      streamAnimationWindowMs,
-      updateGapMs,
       lineBreakDelayMs,
+      maxTokenStaggerSpanMs,
+      streamAnimationWindowMs,
     ]);
 
     const getRehypePluginsForPlan = (plan: BlockRenderPlan): Pluggable[] => {
@@ -292,7 +222,7 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
         debugRenderCountRef.current += 1;
 
         console.groupCollapsed(
-          `[StreamdownRender] #${debugIndex} prev=${previousProcessedContentRef.current?.length ?? 0} curr=${processedContent.length} global=${animateFromGlobalOffset} raw=${rawContent.length} windowed=${windowedContent.length} changed=${contentChanged} append=${isAppendUpdate} gap=${Number.isFinite(updateGapMs) ? updateGapMs : 'init'} bridge=${shouldBridgePreviousRange} threshold=${secondStageGapThresholdMs}`,
+          `[StreamdownRender] #${debugIndex} prev=${previousProcessedContentRef.current?.length ?? 0} curr=${processedContent.length} global=${animateFromGlobalOffset} raw=${rawContent.length} windowed=${windowedContent.length}`,
         );
         console.table(
           plans.map((plan) => {
@@ -319,26 +249,16 @@ export const StreamdownRender = memo<StreamdownRenderProps>(
       }
 
       activeAnimationByBlockRef.current = nextActiveAnimationByBlock;
-      if (contentChanged) {
-        renderPhaseRef.current = nextPhase;
-        lastProcessedCommitAtRef.current = Date.now();
-        previousBlocksRef.current = blocks;
-        previousProcessedContentRef.current = processedContent;
-      }
+      previousBlocksRef.current = blocks;
+      previousProcessedContentRef.current = processedContent;
     }, [
       animateFromGlobalOffset,
       blocks,
-      contentChanged,
       debugEnabled,
-      isAppendUpdate,
       nextActiveAnimationByBlock,
-      nextPhase,
       plans,
       processedContent,
       rawContent.length,
-      secondStageGapThresholdMs,
-      shouldBridgePreviousRange,
-      updateGapMs,
       windowedContent.length,
     ]);
 

@@ -295,31 +295,34 @@ describe('rehypeStreamAnimated', () => {
 
     const paragraph = tree.children[0] as any;
     expect(collectText(paragraph)).toBe('Hello world again text');
-    expect(paragraph.children).toEqual([
-      { type: 'text', value: 'Hello ' },
-      {
-        children: [{ type: 'text', value: 'world' }],
-        properties: {
-          className: 'animate-stream',
-          key: 'r1-6-token-0',
-          style: 'animation-delay:20ms;animation-fill-mode:both',
-        },
-        tagName: 'span',
-        type: 'element',
-      },
-      { type: 'text', value: ' ' },
-      {
-        children: [{ type: 'text', value: 'again' }],
-        properties: {
-          className: 'animate-stream',
-          key: 'r2-12-token-0',
-          style: 'animation-delay:60ms;animation-fill-mode:both',
-        },
-        tagName: 'span',
-        type: 'element',
-      },
-      { type: 'text', value: ' text' },
-    ]);
+    const spans = paragraph.children.filter(
+      (node: any) =>
+        node.type === 'element' &&
+        node.tagName === 'span' &&
+        node.properties?.className === 'animate-stream',
+    );
+
+    expect(spans).toHaveLength(10);
+    expect(spans[0].children[0].value).toBe('w');
+    expect(spans[0].properties).toMatchObject({
+      key: 'r1-6-token-0',
+      style: 'animation-delay:20ms;animation-fill-mode:both',
+    });
+    expect(spans[4].children[0].value).toBe('d');
+    expect(spans[4].properties).toMatchObject({
+      key: 'r1-6-token-4',
+      style: 'animation-delay:80ms;animation-fill-mode:both',
+    });
+    expect(spans[5].children[0].value).toBe('a');
+    expect(spans[5].properties).toMatchObject({
+      key: 'r2-12-token-0',
+      style: 'animation-delay:60ms;animation-fill-mode:both',
+    });
+    expect(spans[9].children[0].value).toBe('n');
+    expect(spans[9].properties).toMatchObject({
+      key: 'r2-12-token-4',
+      style: 'animation-delay:120ms;animation-fill-mode:both',
+    });
   });
 
   it('should keep token delay cursor continuous across multiple text nodes in one range', () => {
@@ -364,10 +367,12 @@ describe('rehypeStreamAnimated', () => {
         node.properties?.className === 'animate-stream',
     );
 
-    expect(spans).toHaveLength(3);
+    expect(spans).toHaveLength(15);
+    expect(spans.map((span: any) => span.children[0].value).join('')).toBe('Helloworldagain');
     expect(spans[0].properties.style).toBe('animation-delay:0ms;animation-fill-mode:both');
-    expect(spans[1].properties.style).toBe('animation-delay:12ms;animation-fill-mode:both');
-    expect(spans[2].properties.style).toBe('animation-delay:24ms;animation-fill-mode:both');
+    expect(spans[4].properties.style).toBe('animation-delay:48ms;animation-fill-mode:both');
+    expect(spans[5].properties.style).toBe('animation-delay:60ms;animation-fill-mode:both');
+    expect(spans[14].properties.style).toBe('animation-delay:168ms;animation-fill-mode:both');
   });
 
   it('should add extra stagger gap after line breaks', () => {
@@ -377,11 +382,11 @@ describe('rehypeStreamAnimated', () => {
           children: [
             {
               position: {
-                end: { offset: 17 },
+                end: { offset: 4 },
                 start: { offset: 0 },
               },
               type: 'text',
-              value: 'alpha beta\ngamma',
+              value: 'ab\nc',
             } as any,
           ],
           properties: {},
@@ -395,7 +400,7 @@ describe('rehypeStreamAnimated', () => {
     rehypeStreamAnimated({
       animateRanges: [
         {
-          end: 17,
+          end: 4,
           key: 'r1',
           lineDelayMs: 60,
           start: 0,
@@ -414,9 +419,9 @@ describe('rehypeStreamAnimated', () => {
     );
 
     expect(spans).toHaveLength(3);
-    expect(spans[0].children[0].value).toBe('alpha');
-    expect(spans[1].children[0].value).toBe('beta');
-    expect(spans[2].children[0].value).toBe('gamma');
+    expect(spans[0].children[0].value).toBe('a');
+    expect(spans[1].children[0].value).toBe('b');
+    expect(spans[2].children[0].value).toBe('c');
     expect(spans[0].properties.style).toBe('animation-delay:0ms;animation-fill-mode:both');
     expect(spans[1].properties.style).toBe('animation-delay:10ms;animation-fill-mode:both');
     expect(spans[2].properties.style).toBe('animation-delay:80ms;animation-fill-mode:both');

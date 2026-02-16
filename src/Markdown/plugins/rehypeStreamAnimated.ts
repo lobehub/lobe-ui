@@ -1,6 +1,10 @@
 import { type Element, type Parent, type Root, type Text } from 'hast';
 
-import { isWhitespaceToken, splitStreamAnimationTokens } from '../streamTokens';
+import {
+  isWhitespaceToken,
+  splitStreamAnimationChars,
+  splitStreamAnimationTokens,
+} from '../streamTokens';
 
 const WHITESPACE_ONLY_RE = /^\s+$/;
 const SKIP_TAGS = new Set(['code', 'pre', 'svg', 'math', 'annotation']);
@@ -142,7 +146,7 @@ const splitAnimatedSegmentByTokens = (
   if (leadingMatch) nodes.push(makeText(leadingMatch));
 
   if (core) {
-    const tokens = splitStreamAnimationTokens(core);
+    const tokens = splitStreamAnimationChars(core);
     for (const token of tokens) {
       if (isWhitespaceToken(token)) {
         nodes.push(makeText(token));
