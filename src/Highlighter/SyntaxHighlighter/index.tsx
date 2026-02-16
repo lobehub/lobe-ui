@@ -1,7 +1,9 @@
 'use client';
 
 import { cx } from 'antd-style';
-import { memo } from 'react';
+import { type CSSProperties, memo, useMemo } from 'react';
+
+import { resolveAnimationConfig } from '@/styles/animations';
 
 import type { SyntaxHighlighterProps } from '../type';
 import StaticRenderer from './StaticRenderer';
@@ -19,27 +21,40 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
     theme,
     variant = 'borderless',
   }) => {
+    const isAnimated = !!animated;
     const isDefaultTheme = theme === 'lobe-theme' || !theme;
     const showBackground = !isDefaultTheme && variant === 'filled';
     const resolvedTheme = isDefaultTheme ? undefined : theme;
 
+    const animationResolved = useMemo(() => resolveAnimationConfig(animated), [animated]);
+    const mergedStyle = useMemo(
+      () =>
+        animationResolved
+          ? ({
+              ...style,
+              '--lobe-markdown-stream-animation': animationResolved.cssValue,
+            } as CSSProperties)
+          : style,
+      [animationResolved, style],
+    );
+
     const shikiClassName = cx(
-      variants({ animated, shiki: true, showBackground, variant }),
+      variants({ animated: isAnimated, shiki: true, showBackground, variant }),
       className,
     );
     const fallbackClassName = cx(
-      variants({ animated, shiki: false, showBackground, variant }),
+      variants({ animated: isAnimated, shiki: false, showBackground, variant }),
       className,
     );
 
-    if (animated) {
+    if (isAnimated) {
       return (
         <StreamRenderer
           className={shikiClassName}
           enableTransformer={enableTransformer}
           fallbackClassName={fallbackClassName}
           language={language}
-          style={style}
+          style={mergedStyle}
           theme={resolvedTheme}
         >
           {children}

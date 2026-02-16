@@ -1,9 +1,10 @@
 'use client';
 
 import { cx } from 'antd-style';
-import { memo, useCallback } from 'react';
+import { type CSSProperties, memo, useCallback, useMemo } from 'react';
 
 import { PreviewGroup } from '@/Image';
+import { resolveAnimationConfig } from '@/styles/animations';
 
 import { MarkdownProvider } from './components/MarkdownProvider';
 import { useDelayedAnimated } from './components/useDelayedAnimated';
@@ -27,6 +28,7 @@ const Markdown = memo<MarkdownProps>((props) => {
     enableCustomFootnotes,
     enableGithubAlert,
     enableStream = true,
+    streamAnimationWindowMs = 200,
     componentProps,
     rehypePluginsAhead,
     allowHtml,
@@ -48,15 +50,37 @@ const Markdown = memo<MarkdownProps>((props) => {
   } = props;
 
   const delayedAnimated = useDelayedAnimated(animated);
+  const animationResolved = useMemo(() => {
+    if (enableStream && delayedAnimated) {
+      return resolveAnimationConfig(true);
+    }
+    return resolveAnimationConfig(delayedAnimated);
+  }, [delayedAnimated, enableStream]);
+  const animationStyle = useMemo(
+    () =>
+      animationResolved
+        ? ({ '--lobe-markdown-stream-animation': animationResolved.cssValue } as CSSProperties)
+        : undefined,
+    [animationResolved],
+  );
 
   const Render = useCallback(
     ({
       enableStream,
       children,
       reactMarkdownProps,
-    }: Pick<MarkdownProps, 'children' | 'enableStream' | 'reactMarkdownProps'>) => {
-      const DefaultRender = enableStream ? StreamdownRender : MarkdownRender;
-      const defaultDOM = <DefaultRender {...reactMarkdownProps}>{children}</DefaultRender>;
+      streamAnimationWindowMs,
+    }: Pick<
+      MarkdownProps,
+      'children' | 'enableStream' | 'reactMarkdownProps' | 'streamAnimationWindowMs'
+    >) => {
+      const defaultDOM = enableStream ? (
+        <StreamdownRender {...reactMarkdownProps} streamAnimationWindowMs={streamAnimationWindowMs}>
+          {children}
+        </StreamdownRender>
+      ) : (
+        <MarkdownRender {...reactMarkdownProps}>{children}</MarkdownRender>
+      );
       return customRender ? customRender(defaultDOM, { text: children }) : defaultDOM;
     },
     [customRender],
@@ -73,7 +97,7 @@ const Markdown = memo<MarkdownProps>((props) => {
         lineHeight={lineHeight}
         marginMultiple={marginMultiple}
         ref={ref}
-        style={style}
+        style={{ ...style, ...animationStyle }}
         onDoubleClick={onDoubleClick}
         {...rest}
       >
@@ -96,8 +120,9 @@ const Markdown = memo<MarkdownProps>((props) => {
           variant={variant}
         >
           <Render
-            enableStream={enableStream && delayedAnimated}
+            enableStream={enableStream && !!delayedAnimated}
             reactMarkdownProps={reactMarkdownProps}
+            streamAnimationWindowMs={streamAnimationWindowMs}
           >
             {children}
           </Render>
