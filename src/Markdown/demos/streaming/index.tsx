@@ -4,6 +4,8 @@ import { folder } from 'leva';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
+import { MAX_AUTO_STREAM_ANIMATION_DURATION_MS } from '@/Markdown/streamAnimation';
+import { type AnimationType } from '@/styles/animations';
 
 import { markdownElements } from '../custom/plugins/MarkdownElements';
 import { removeLineBreaksInAntArtifact } from '../custom/plugins/utils';
@@ -27,6 +29,9 @@ export default () => {
     chunkDelayMin,
     chunkDelayMax,
     language,
+    streamAnimationAutoDuration,
+    streamAnimationDurationMs,
+    streamAnimationType,
     streamAnimationWindowMs,
     ...rest
   } = useControls(
@@ -44,6 +49,21 @@ export default () => {
         min: 0,
         step: 50,
         value: 200,
+      },
+
+      streamAnimationAutoDuration: {
+        value: true,
+      },
+      streamAnimationDurationMs: {
+        max: MAX_AUTO_STREAM_ANIMATION_DURATION_MS,
+        min: 50,
+        render: (get) => !get('streamAnimationAutoDuration'),
+        step: 10,
+        value: 180,
+      },
+      streamAnimationType: {
+        options: ['fadeIn', 'mask'] as const,
+        value: 'fadeIn',
       },
       fullFeaturedCodeBlock: {
         value: true,
@@ -107,6 +127,9 @@ export default () => {
   const abortRef = useRef<AbortController | null>(null);
 
   const renderedContent = isStreaming ? streamedContent : safeChildren;
+  const resolvedStreamAnimationDurationMs = streamAnimationAutoDuration
+    ? undefined
+    : streamAnimationDurationMs;
 
   useEffect(() => {
     chunksEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -256,6 +279,8 @@ export default () => {
           components={components}
           fullFeaturedCodeBlock={rest.fullFeaturedCodeBlock}
           rehypePlugins={rehypePlugins}
+          streamAnimationDurationMs={resolvedStreamAnimationDurationMs}
+          streamAnimationType={streamAnimationType as AnimationType}
           streamAnimationWindowMs={streamAnimationWindowMs}
           variant="chat"
         >

@@ -13,6 +13,7 @@ import {
 } from '@/hooks/useMarkdown';
 
 import { rehypeStreamAnimated } from '../plugins/rehypeStreamAnimated';
+import { resolveStreamAnimationDurationMs } from '../streamAnimation';
 import { parseMarkdownIntoBlocks, type RenderBlock } from './blockRenderKind';
 import { reconcileBlocks } from './reconcileBlocks';
 import { styles } from './style';
@@ -64,18 +65,6 @@ const getAnimateFromOffset = (
 
   const prefix = sharedPrefixLength(previousContent, currentContent);
   return prefix === 0 ? currentContent.length : prefix;
-};
-
-const resolveStreamAnimationDurationMs = (
-  streamAnimationWindowMs: number,
-  streamAnimationDurationMs?: number,
-) => {
-  if (typeof streamAnimationDurationMs === 'number') {
-    return Math.max(streamAnimationDurationMs, 0);
-  }
-
-  const base = streamAnimationWindowMs > 0 ? streamAnimationWindowMs * 1.8 : 180;
-  return Math.min(200, Math.max(150, Math.round(base)));
 };
 
 const StreamdownBlock = memo<Options>(

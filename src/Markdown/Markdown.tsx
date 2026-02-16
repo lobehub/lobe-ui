@@ -8,22 +8,11 @@ import { resolveAnimationConfig } from '@/styles/animations';
 
 import { MarkdownProvider } from './components/MarkdownProvider';
 import { useDelayedAnimated } from './components/useDelayedAnimated';
+import { resolveStreamAnimationDurationMs } from './streamAnimation';
 import { variants } from './style';
 import { MarkdownRender, StreamdownRender } from './SyntaxMarkdown';
 import { type MarkdownProps } from './type';
 import Typography from './Typography';
-
-const resolveStreamAnimationDurationMs = (
-  streamAnimationWindowMs: number,
-  streamAnimationDurationMs?: number,
-) => {
-  if (typeof streamAnimationDurationMs === 'number') {
-    return Math.max(streamAnimationDurationMs, 0);
-  }
-
-  const base = streamAnimationWindowMs > 0 ? streamAnimationWindowMs * 1.8 : 180;
-  return Math.min(200, Math.max(150, Math.round(base)));
-};
 
 const Markdown = memo<MarkdownProps>((props) => {
   const {
@@ -41,6 +30,7 @@ const Markdown = memo<MarkdownProps>((props) => {
     enableGithubAlert,
     enableStream = true,
     streamAnimationDurationMs,
+    streamAnimationType,
     streamAnimationWindowMs = 200,
     componentProps,
     rehypePluginsAhead,
@@ -70,10 +60,13 @@ const Markdown = memo<MarkdownProps>((props) => {
   const delayedAnimated = useDelayedAnimated(animated);
   const animationResolved = useMemo(() => {
     if (enableStream && delayedAnimated) {
-      return resolveAnimationConfig(true, { duration: resolvedStreamAnimationDurationMs / 1000 });
+      return resolveAnimationConfig(true, {
+        duration: resolvedStreamAnimationDurationMs / 1000,
+        type: streamAnimationType,
+      });
     }
     return resolveAnimationConfig(delayedAnimated);
-  }, [delayedAnimated, enableStream, resolvedStreamAnimationDurationMs]);
+  }, [delayedAnimated, enableStream, resolvedStreamAnimationDurationMs, streamAnimationType]);
   const animationStyle = useMemo(
     () =>
       animationResolved

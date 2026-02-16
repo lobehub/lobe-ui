@@ -6,6 +6,7 @@ import { type Pluggable } from 'unified';
 import { type HighlighterProps } from '@/Highlighter';
 import { type ImageProps, type PreProps, type VideoProps } from '@/mdx';
 import { type MermaidProps } from '@/Mermaid';
+import { type AnimationType } from '@/styles/animations';
 import { type AProps, type DivProps } from '@/types';
 import { type CitationItem } from '@/types/citation';
 
@@ -49,6 +50,7 @@ export interface SyntaxMarkdownProps {
   remarkPluginsAhead?: Pluggable[];
   showFootnotes?: boolean;
   streamAnimationDurationMs?: number;
+  streamAnimationType?: AnimationType;
   streamAnimationWindowMs?: number;
   variant?: 'default' | 'chat';
 }
