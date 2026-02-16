@@ -10,6 +10,7 @@ const INCOMPLETE_LINK_PROTOCOL = 'streamdown:incomplete-link';
 export interface StreamAnimateRange {
   end: number;
   key: string;
+  lineDelayMs?: number;
   start: number;
   tokenDelayStartMs?: number;
   tokenDelayStepMs?: number;
@@ -23,6 +24,7 @@ export interface RehypeStreamAnimatedOptions {
 interface SplitTokenSegmentOptions {
   delayStartMs?: number;
   delayStepMs?: number;
+  lineDelayMs?: number;
   spanKey?: string;
   tokenCursor?: number;
 }
@@ -144,6 +146,17 @@ const splitAnimatedSegmentByTokens = (
     for (const token of tokens) {
       if (isWhitespaceToken(token)) {
         nodes.push(makeText(token));
+        const lineBreakCount = token.split('\n').length - 1;
+        if (
+          lineBreakCount > 0 &&
+          (options.lineDelayMs ?? 0) > 0 &&
+          (options.delayStepMs ?? 0) > 0
+        ) {
+          const lineDelayMs = options.lineDelayMs ?? 0;
+          const tokenDelayStepMs = options.delayStepMs ?? 0;
+          const extraDelaySteps = Math.ceil(lineDelayMs / tokenDelayStepMs);
+          animatedTokenCount += lineBreakCount * extraDelaySteps;
+        }
         continue;
       }
 
@@ -210,6 +223,7 @@ const processTextNode = (
         const tokenized = splitAnimatedSegmentByTokens(animatedText, {
           delayStartMs: range.tokenDelayStartMs,
           delayStepMs: range.tokenDelayStepMs,
+          lineDelayMs: range.lineDelayMs,
           spanKey: `${range.key}-${rangeStart}`,
           tokenCursor,
         });
@@ -234,6 +248,7 @@ const processTextNode = (
     const fallbackNodes = splitAnimatedSegmentByTokens(text, {
       delayStartMs: fallbackRange?.tokenDelayStartMs,
       delayStepMs: fallbackRange?.tokenDelayStepMs,
+      lineDelayMs: fallbackRange?.lineDelayMs,
       spanKey: `stream-ranges-${index}`,
       tokenCursor: fallbackCursor,
     });

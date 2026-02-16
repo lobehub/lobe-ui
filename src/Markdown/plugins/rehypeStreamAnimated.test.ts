@@ -369,4 +369,56 @@ describe('rehypeStreamAnimated', () => {
     expect(spans[1].properties.style).toBe('animation-delay:12ms;animation-fill-mode:both');
     expect(spans[2].properties.style).toBe('animation-delay:24ms;animation-fill-mode:both');
   });
+
+  it('should add extra stagger gap after line breaks', () => {
+    const tree: Root = {
+      children: [
+        {
+          children: [
+            {
+              position: {
+                end: { offset: 17 },
+                start: { offset: 0 },
+              },
+              type: 'text',
+              value: 'alpha beta\ngamma',
+            } as any,
+          ],
+          properties: {},
+          tagName: 'p',
+          type: 'element',
+        },
+      ],
+      type: 'root',
+    };
+
+    rehypeStreamAnimated({
+      animateRanges: [
+        {
+          end: 17,
+          key: 'r1',
+          lineDelayMs: 60,
+          start: 0,
+          tokenDelayStartMs: 0,
+          tokenDelayStepMs: 10,
+        },
+      ],
+    })(tree);
+
+    const paragraph = tree.children[0] as any;
+    const spans = paragraph.children.filter(
+      (node: any) =>
+        node.type === 'element' &&
+        node.tagName === 'span' &&
+        node.properties?.className === 'animate-stream',
+    );
+
+    expect(spans).toHaveLength(3);
+    expect(spans[0].children[0].value).toBe('alpha');
+    expect(spans[1].children[0].value).toBe('beta');
+    expect(spans[2].children[0].value).toBe('gamma');
+    expect(spans[0].properties.style).toBe('animation-delay:0ms;animation-fill-mode:both');
+    expect(spans[1].properties.style).toBe('animation-delay:10ms;animation-fill-mode:both');
+    expect(spans[2].properties.style).toBe('animation-delay:80ms;animation-fill-mode:both');
+  });
 });
