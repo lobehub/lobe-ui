@@ -28,7 +28,6 @@ const Markdown = memo<MarkdownProps>((props) => {
     enableCustomFootnotes,
     enableGithubAlert,
     enableStream = true,
-    streamAnimationType,
     streamAnimationWindowMs = 200,
     componentProps,
     rehypePluginsAhead,
@@ -53,12 +52,10 @@ const Markdown = memo<MarkdownProps>((props) => {
   const delayedAnimated = useDelayedAnimated(animated);
   const animationResolved = useMemo(() => {
     if (enableStream && delayedAnimated) {
-      return resolveAnimationConfig(true, {
-        type: streamAnimationType,
-      });
+      return resolveAnimationConfig(true);
     }
     return resolveAnimationConfig(delayedAnimated);
-  }, [delayedAnimated, enableStream, streamAnimationType]);
+  }, [delayedAnimated, enableStream]);
   const animationStyle = useMemo(
     () =>
       animationResolved

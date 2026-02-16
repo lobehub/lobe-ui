@@ -4,7 +4,6 @@ import { folder } from 'leva';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
-import { type AnimationType } from '@/styles/animations';
 
 import { markdownElements } from '../custom/plugins/MarkdownElements';
 import { removeLineBreaksInAntArtifact } from '../custom/plugins/utils';
@@ -28,7 +27,6 @@ export default () => {
     chunkDelayMin,
     chunkDelayMax,
     language,
-    streamAnimationType,
     streamAnimationWindowMs,
     ...rest
   } = useControls(
@@ -46,10 +44,6 @@ export default () => {
         min: 0,
         step: 50,
         value: 200,
-      },
-      streamAnimationType: {
-        options: ['fadeIn', 'mask'] as const,
-        value: 'fadeIn',
       },
       fullFeaturedCodeBlock: {
         value: true,
@@ -262,7 +256,6 @@ export default () => {
           components={components}
           fullFeaturedCodeBlock={rest.fullFeaturedCodeBlock}
           rehypePlugins={rehypePlugins}
-          streamAnimationType={streamAnimationType as AnimationType}
           streamAnimationWindowMs={streamAnimationWindowMs}
           variant="chat"
         >
