@@ -27,6 +27,9 @@ const Markdown = memo<MarkdownProps>((props) => {
     enableCustomFootnotes,
     enableGithubAlert,
     enableStream = true,
+    streamAnimationBacklogRate,
+    streamAnimationOverlapMs,
+    streamAnimationWindowMs,
     componentProps,
     rehypePluginsAhead,
     allowHtml,
@@ -93,6 +96,9 @@ const Markdown = memo<MarkdownProps>((props) => {
           remarkPlugins={remarkPlugins}
           remarkPluginsAhead={remarkPluginsAhead}
           showFootnotes={showFootnotes}
+          streamAnimationBacklogRate={streamAnimationBacklogRate}
+          streamAnimationOverlapMs={streamAnimationOverlapMs}
+          streamAnimationWindowMs={streamAnimationWindowMs}
           variant={variant}
         >
           <Render
