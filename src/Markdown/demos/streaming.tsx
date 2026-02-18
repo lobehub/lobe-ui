@@ -1,114 +1,14 @@
 import { Button, Markdown } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { useEffect, useState } from 'react';
+import { folder } from 'leva';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
 
+import { fullContent, fullContentCN } from './content';
+import { type ChunkInfo, createLocalStream } from './createLocalStream';
 import { markdownElements } from './custom/plugins/MarkdownElements';
 import { removeLineBreaksInAntArtifact } from './custom/plugins/utils';
-
-const fullContent = `# Complete Markdown Integration Example
-
-This demonstrates a comprehensive real-world example of how different markdown features work together in a cohesive document.
-
-## AI Assistant Capabilities
-
-Hello! I'm an AI assistant powered by advanced language models. I can help you with various tasks:
-
-1. **Question Answering** - Provide detailed responses to complex queries
-2. **Information Research** - Gather and synthesize information from multiple sources
-3. **Code Development** - Write, review, and debug code in multiple languages
-4. **Concept Explanation** - Break down complex topics into understandable parts
-
-## Long Paragraph Example
-
-This is the first paragraph demonstrating the text-box-trim and text-edge properties. In modern web design, typography plays a crucial role in creating readable and visually appealing content. When browsers support the text-box-trim property, we can achieve more precise control over vertical spacing, eliminating unnecessary whitespace that can affect the overall layout.
-
-This is the second paragraph showing how margin-inline-start and margin-inline-end create horizontal spacing for paragraphs. By setting appropriate inline margins, we can create visual separation between paragraphs while maintaining a clean, structured appearance. This approach is particularly effective for long-form content like articles, documentation, and blog posts.
-
-This is the third paragraph illustrating the line-height property set to 2. A generous line height significantly improves readability by providing more breathing room between lines of text. This spacing reduces visual fatigue and makes it easier for readers to follow along, especially when reading extended passages of text.
-
-This is the fourth paragraph explaining the text-box-trim: trim-both property. When supported by the browser, this CSS feature automatically trims the leading and trailing whitespace of text boxes, allowing for more precise control over paragraph spacing. Combined with text-edge: cap alphabetic, we can achieve professional typographic alignment.
-
-This is the fifth paragraph discussing practical applications of these typography techniques. These styling approaches are particularly well-suited for displaying long articles, blog content, technical documentation, and any scenario where excellent readability is essential. Proper spacing and line height can transform dense text into an enjoyable reading experience.
-
-This is the sixth paragraph covering the separation of concerns in typography. Paragraph spacing is controlled through margin-block-start and margin-block-end, while horizontal spacing uses margin-inline-start and margin-inline-end. This separation provides flexibility in controlling layout effects independently, allowing designers to fine-tune the visual presentation.
-
-This is the seventh paragraph exploring modern CSS capabilities. New CSS features like text-box-trim and text-edge give us unprecedented control over text rendering. These properties enable more precise typographic control, helping us achieve professional-grade layouts that were previously difficult to implement with traditional CSS approaches.
-
-This is the eighth paragraph demonstrating the visual effect of multiple paragraphs. Each paragraph benefits from appropriate horizontal margins and a line-height of 2, creating a comfortable reading rhythm. This design approach proves highly effective in long-form reading scenarios, where user comfort and comprehension are paramount.
-
-This is the ninth paragraph emphasizing the importance of typography in user experience. Text formatting is not merely a technical concern but a fundamental component of user experience design. Well-crafted typography helps users understand content more easily, reduces reading burden, and enhances overall usability. This is why attention to these details matters.
-
-This is the tenth and final paragraph concluding our exploration of paragraph styling. Through thoughtful spacing and line-height settings, we can create text layouts that are both aesthetically pleasing and highly functional. This design approach deserves consideration and application in real-world projects where readability and user experience are priorities.
-
-Thank you for exploring these markdown capabilities!
-
-## React Component Implementation
-
-Here's a complete React component that demonstrates markdown integration:
-
-\`\`\`tsx
-import { memo, useMemo } from 'react';
-import ReactMarkdown from 'react-markdown';
-
-import { PreviewGroup } from '@/Image';
-import { useMarkdown } from '@/hooks/useMarkdown';
-
-import { SyntaxMarkdownProps } from '../type';
-\`\`\`
-
-## Mathematical Formula Support
-
-Advanced mathematical expressions are fully supported through LaTeX integration:
-
-### Fourier Transform
-The Fourier transform converts signals between time and frequency domains:
-
-$$
-f(x) = \\int_{-\\infty}^{\\infty} \\hat{f}(\\xi) e^{2\\pi i \\xi x} d\\xi
-$$
-
-### Complex Analysis
-For complex functions, we can express relationships like:
-
-$$
-\\frac{d}{dz}f(z) = \\lim_{h \\to 0} \\frac{f(z+h) - f(z)}{h}
-$$
-
-## Data Flow Visualization
-
-\`\`\`mermaid
-graph TD
-  A[User Input] --> B[Markdown Parser]
-  B --> C[Plugin Processing]
-  C --> D[Component Rendering]
-  D --> E[Final Output]
-
-  B --> F[LaTeX Processing]
-  F --> D
-
-  B --> G[Mermaid Processing]
-  G --> D
-
-  B --> H[Code Highlighting]
-  H --> D
-\`\`\`
-
-## Feature Integration Summary
-
-| Feature | Status | Implementation |
-|---------|--------|----------------|
-| Headers | ✅ | Native markdown |
-| Text Formatting | ✅ | Bold, italic, strikethrough |
-| Code Blocks | ✅ | Syntax highlighting + annotations |
-| Math Formulas | ✅ | LaTeX via KaTeX |
-| Diagrams | ✅ | Mermaid integration |
-| Tables | ✅ | GitHub-flavored markdown |
-| Task Lists | ✅ | Interactive checkboxes |
-| Footnotes | ✅ | Reference system |
-
-`;
 
 const rehypePlugins = markdownElements.map((element) => element.rehypePlugin);
 const components = Object.fromEntries(
@@ -117,14 +17,38 @@ const components = Object.fromEntries(
 
 export default () => {
   const store = useCreateStore();
-  const { children, streamingSpeed, ...rest } = useControls(
+  const {
+    children,
+    streamingSpeed,
+    randomStreaming,
+    useReadableStream,
+    chunkSizeMin,
+    chunkSizeMax,
+    chunkDelayMin,
+    chunkDelayMax,
+    language,
+
+    streamDebug,
+    ...rest
+  } = useControls(
     {
+      language: {
+        options: ['en-US', 'zh-CN'],
+        value: 'en-US',
+      },
       children: {
         rows: true,
         value: fullContent,
       },
+
+      streamDebug: {
+        value: false,
+      },
       fullFeaturedCodeBlock: {
         value: true,
+      },
+      randomStreaming: {
+        value: false,
       },
       streamingSpeed: {
         max: 100,
@@ -132,53 +56,180 @@ export default () => {
         step: 5,
         value: 25,
       },
+      useReadableStream: {
+        value: false,
+      },
+      ReadableStream: folder(
+        {
+          chunkDelayMax: {
+            max: 5000,
+            min: 10,
+            step: 10,
+            value: 1000,
+          },
+          chunkDelayMin: {
+            max: 1000,
+            min: 5,
+            step: 5,
+            value: 20,
+          },
+          chunkSizeMax: {
+            max: 200,
+            min: 1,
+            step: 1,
+            value: 50,
+          },
+          chunkSizeMin: {
+            max: 100,
+            min: 1,
+            step: 1,
+            value: 3,
+          },
+        },
+        { render: (get) => get('useReadableStream') },
+      ),
     },
     { store },
   );
 
+  useEffect(() => {
+    store.set({ children: language === 'zh-CN' ? fullContentCN : fullContent }, true);
+  }, [language, store]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    (
+      window as Window & { __LOBE_MARKDOWN_STREAM_DEBUG__?: boolean }
+    ).__LOBE_MARKDOWN_STREAM_DEBUG__ = streamDebug;
+  }, [streamDebug]);
+
   const safeChildren = typeof children === 'string' ? children : '';
 
-  // State to store the currently displayed content
   const [streamedContent, setStreamedContent] = useState(safeChildren);
   const [isStreaming, setIsStreaming] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [chunks, setChunks] = useState<ChunkInfo[]>([]);
+  const chunksEndRef = useRef<HTMLDivElement>(null);
+  const abortRef = useRef<AbortController | null>(null);
+  const isPausedRef = useRef(false);
 
-  // Restart streaming
+  const renderedContent = isStreaming ? streamedContent : safeChildren;
+
+  useEffect(() => {
+    chunksEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [chunks.length]);
+
+  useEffect(() => {
+    isPausedRef.current = isPaused;
+  }, [isPaused]);
+
+  const startReadableStreamStreaming = useCallback(async () => {
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+
+    setStreamedContent('');
+    setChunks([]);
+    setIsStreaming(true);
+    setIsPaused(false);
+    isPausedRef.current = false;
+
+    try {
+      const stream = createLocalStream(
+        safeChildren,
+        chunkSizeMin,
+        chunkSizeMax,
+        chunkDelayMin,
+        chunkDelayMax,
+        (chunk) => setChunks((prev) => [...prev, chunk]),
+        {
+          shouldPause: () => isPausedRef.current,
+          signal: controller.signal,
+        },
+      );
+      const reader = stream.getReader();
+      const decoder = new TextDecoder();
+      let accumulated = '';
+
+      while (!controller.signal.aborted) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        accumulated += decoder.decode(value, { stream: true });
+        setStreamedContent(accumulated);
+      }
+
+      if (controller.signal.aborted) {
+        await reader.cancel();
+      }
+    } finally {
+      setIsStreaming(false);
+      setIsPaused(false);
+    }
+  }, [safeChildren, chunkSizeMin, chunkSizeMax, chunkDelayMin, chunkDelayMax]);
+
   const restartStreaming = () => {
+    if (useReadableStream) {
+      startReadableStreamStreaming();
+      return;
+    }
+    abortRef.current?.abort();
     setStreamedContent('');
     setIsStreaming(true);
     setIsPaused(false);
+    isPausedRef.current = false;
   };
 
-  // Toggle pause state
   const togglePause = () => {
-    setIsPaused(!isPaused);
+    setIsPaused((prev) => {
+      const next = !prev;
+      isPausedRef.current = next;
+      return next;
+    });
   };
 
-  // Simulate streaming effect
+  // Local simulation streaming
   useEffect(() => {
-    if (!isStreaming || isPaused) return;
+    if (useReadableStream || !isStreaming || isPaused) return;
 
-    let currentPosition = 0;
-    if (streamedContent.length > 0) {
-      currentPosition = streamedContent.length;
-    }
+    let currentPosition = streamedContent.length;
+    let timerId: ReturnType<typeof setTimeout>;
 
-    const intervalId = setInterval(() => {
-      if (currentPosition < safeChildren.length) {
-        // Stream character by character
-        const nextChunkSize = Math.min(3, safeChildren.length - currentPosition);
-        const nextContent = safeChildren.slice(0, Math.max(0, currentPosition + nextChunkSize));
-        setStreamedContent(nextContent);
-        currentPosition += nextChunkSize;
-      } else {
-        clearInterval(intervalId);
+    const tick = () => {
+      if (currentPosition >= safeChildren.length) {
         setIsStreaming(false);
+        return;
       }
-    }, streamingSpeed);
 
-    return () => clearInterval(intervalId);
-  }, [safeChildren, streamingSpeed, isStreaming, isPaused, streamedContent.length]);
+      const chunkSize = randomStreaming
+        ? Math.min(Math.floor(Math.random() * 8) + 1, safeChildren.length - currentPosition)
+        : Math.min(3, safeChildren.length - currentPosition);
+
+      currentPosition += chunkSize;
+      setStreamedContent(safeChildren.slice(0, currentPosition));
+
+      const delay = randomStreaming
+        ? Math.floor(Math.random() * streamingSpeed * 2) + 5
+        : streamingSpeed;
+
+      timerId = setTimeout(tick, delay);
+    };
+
+    timerId = setTimeout(
+      tick,
+      randomStreaming ? Math.floor(Math.random() * streamingSpeed) + 5 : streamingSpeed,
+    );
+
+    return () => clearTimeout(timerId);
+  }, [
+    safeChildren,
+    streamingSpeed,
+    randomStreaming,
+    useReadableStream,
+    isStreaming,
+    isPaused,
+    streamedContent.length,
+  ]);
 
   return (
     <StoryBook levaStore={store}>
@@ -197,7 +248,7 @@ export default () => {
             type={'primary'}
             onClick={restartStreaming}
           >
-            Restart Streaming
+            {useReadableStream ? 'Start ReadableStream' : 'Restart Streaming'}
           </Button>
           <Button
             block
@@ -207,6 +258,19 @@ export default () => {
           >
             {isPaused ? 'Resume' : 'Pause'}
           </Button>
+          {useReadableStream && isStreaming && (
+            <Button
+              block
+              danger
+              onClick={() => {
+                abortRef.current?.abort();
+                setIsStreaming(false);
+                setIsPaused(false);
+              }}
+            >
+              Stop
+            </Button>
+          )}
         </Flexbox>
         <Markdown
           animated={isStreaming}
@@ -215,9 +279,47 @@ export default () => {
           rehypePlugins={rehypePlugins}
           variant="chat"
         >
-          {removeLineBreaksInAntArtifact(streamedContent)}
+          {removeLineBreaksInAntArtifact(renderedContent)}
         </Markdown>
       </Flexbox>
+      {useReadableStream && chunks.length > 0 && (
+        <Flexbox
+          gap={0}
+          style={{
+            background: 'rgba(30, 30, 30, 0.95)',
+            borderRadius: 8,
+            bottom: 16,
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+            color: '#d4d4d4',
+            fontFamily: 'monospace',
+            fontSize: 12,
+            maxHeight: 240,
+            overflow: 'auto',
+            padding: 12,
+            position: 'fixed',
+            right: 16,
+            width: 420,
+            zIndex: 1000,
+          }}
+        >
+          <div style={{ color: '#888', marginBottom: 8 }}>
+            Chunks: {chunks.length} | Total: {chunks.reduce((s, c) => s + c.content.length, 0)}{' '}
+            chars
+          </div>
+          <Flexbox gap={2}>
+            {chunks.map((chunk) => (
+              <div key={chunk.index} style={{ display: 'flex', gap: 8, lineHeight: 1.6 }}>
+                <span style={{ color: '#6a9955', minWidth: 40 }}>#{chunk.index}</span>
+                <span style={{ color: '#569cd6', minWidth: 56 }}>{chunk.delay}ms</span>
+                <span style={{ color: '#ce9178', flex: 1, wordBreak: 'break-all' }}>
+                  {JSON.stringify(chunk.content)}
+                </span>
+              </div>
+            ))}
+            <div ref={chunksEndRef} />
+          </Flexbox>
+        </Flexbox>
+      )}
     </StoryBook>
   );
 };
