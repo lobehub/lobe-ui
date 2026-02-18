@@ -9,11 +9,9 @@ import type { Pluggable } from 'unified';
 import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
 import { rehypeCustomFootnotes } from '@/Markdown/plugins/rehypeCustomFootnotes';
 import { rehypeKatexDir } from '@/Markdown/plugins/rehypeKatexDir';
-import { rehypeStreamAnimated } from '@/Markdown/plugins/rehypeStreamAnimated';
 
 export const useMarkdownRehypePlugins = (): Pluggable[] => {
   const {
-    animated,
     enableLatex,
     enableCustomFootnotes,
     enableGithubAlert,
@@ -30,9 +28,8 @@ export const useMarkdownRehypePlugins = (): Pluggable[] => {
         enableLatex && rehypeKatex,
         enableLatex && rehypeKatexDir,
         enableCustomFootnotes && rehypeCustomFootnotes,
-        animated && rehypeStreamAnimated,
       ].filter(Boolean) as Pluggable[],
-    [animated, enableLatex, enableGithubAlert, enableCustomFootnotes, allowHtml],
+    [enableLatex, enableGithubAlert, enableCustomFootnotes, allowHtml],
   );
 
   return useMemo(
