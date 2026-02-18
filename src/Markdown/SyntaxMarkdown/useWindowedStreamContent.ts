@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { STREAM_ANIMATION_LIMITS } from './streamAnimation.constants';
+import { streamAnimationDebugLog } from './streamAnimation.debug';
 
 interface UseWindowedStreamContentOptions {
   enabled: boolean;
@@ -25,12 +26,24 @@ export const useWindowedStreamContent = (
 
   const flushLatestContent = useCallback(() => {
     const nextContent = latestContentRef.current;
+    const previousLength = flushedLengthRef.current;
     flushedLengthRef.current = nextContent.length;
     setWindowedContent(nextContent.slice(0, nextContent.length));
+    streamAnimationDebugLog('window:flush', {
+      delta: nextContent.length - previousLength,
+      nextLength: nextContent.length,
+      previousLength,
+    });
   }, []);
 
   const scheduleFlush = useCallback(() => {
     if (!enabled || timerRef.current) return;
+
+    streamAnimationDebugLog('window:schedule', {
+      latestLength: latestContentRef.current.length,
+      flushedLength: flushedLengthRef.current,
+      windowMs: normalizedWindowMs,
+    });
 
     timerRef.current = setTimeout(() => {
       timerRef.current = null;
@@ -52,6 +65,11 @@ export const useWindowedStreamContent = (
     }
 
     if (content.length < flushedLengthRef.current || !content.startsWith(windowedContent)) {
+      streamAnimationDebugLog('window:reset', {
+        contentLength: content.length,
+        flushedLength: flushedLengthRef.current,
+        windowedLength: windowedContent.length,
+      });
       stopTimer();
       flushLatestContent();
       return;

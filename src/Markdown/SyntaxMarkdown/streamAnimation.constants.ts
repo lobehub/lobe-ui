@@ -43,8 +43,11 @@ export const STREAM_ANIMATION_REHYPE_FALLBACK = {
 } as const;
 
 export const STREAM_ANIMATION_TUNING = {
+  activeExtensionCarryRatio: 0.7,
   charDurationMultiplier: 4,
+  elapsedTailGraceRatio: 0.6,
   overlapLeadRatio: 0.45,
+  softResetMaxRewindChars: 8,
 } as const;
 
 export const STREAM_ANIMATION_DEMO_CONTROLS = {

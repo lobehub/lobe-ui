@@ -35,6 +35,7 @@ interface TransformContext {
   charDurationMs: number;
   cursor: number;
   delayStepMs: number;
+  elapsedMs: number;
 }
 
 const createAnimatedCharNode = (
@@ -94,7 +95,7 @@ const transformNode = (
       }
 
       const localIndex = absoluteIndex - context.animateStartIndex;
-      const delayMs = Number((localIndex * context.delayStepMs).toFixed(2));
+      const delayMs = Number((localIndex * context.delayStepMs - context.elapsedMs).toFixed(2));
 
       rewritten.push(createAnimatedCharNode(char, delayMs, context.charDurationMs));
     }
@@ -130,6 +131,7 @@ const transformNode = (
 export interface RehypeStreamAnimatedOptions {
   charDurationMs?: number;
   delayStepMs?: number;
+  elapsedMs?: number;
   tailChars?: number;
 }
 
@@ -139,6 +141,7 @@ export const rehypeStreamAnimated = (options: RehypeStreamAnimatedOptions = {}) 
     Math.floor(options.tailChars ?? STREAM_ANIMATION_PLUGIN_DEFAULTS.tailChars),
   );
   const delayStepMs = Math.max(0, options.delayStepMs ?? 0);
+  const elapsedMs = Math.max(0, options.elapsedMs ?? 0);
   const charDurationMs = Math.max(
     STREAM_ANIMATION_PLUGIN_DEFAULTS.minCharDurationMs,
     options.charDurationMs ?? STREAM_ANIMATION_PLUGIN_DEFAULTS.charDurationMs,
@@ -156,6 +159,7 @@ export const rehypeStreamAnimated = (options: RehypeStreamAnimatedOptions = {}) 
       charDurationMs,
       cursor: 0,
       delayStepMs,
+      elapsedMs,
     };
 
     tree.children = transformChildren(tree.children as ElementContent[], false, context);

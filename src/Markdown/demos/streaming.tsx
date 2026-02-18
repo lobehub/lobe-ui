@@ -31,6 +31,7 @@ export default () => {
     streamAnimationBacklogRate,
     streamAnimationOverlapMs,
     streamAnimationWindowMs,
+    streamDebug,
     ...rest
   } = useControls(
     {
@@ -59,6 +60,9 @@ export default () => {
         min: STREAM_ANIMATION_DEMO_CONTROLS.backlogRate.min,
         step: STREAM_ANIMATION_DEMO_CONTROLS.backlogRate.step,
         value: STREAM_ANIMATION_DEMO_CONTROLS.backlogRate.defaultValue,
+      },
+      streamDebug: {
+        value: false,
       },
       fullFeaturedCodeBlock: {
         value: true,
@@ -111,6 +115,13 @@ export default () => {
   useEffect(() => {
     store.set({ children: language === 'zh-CN' ? fullContentCN : fullContent }, true);
   }, [language, store]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    (
+      window as Window & { __LOBE_MARKDOWN_STREAM_DEBUG__?: boolean }
+    ).__LOBE_MARKDOWN_STREAM_DEBUG__ = streamDebug;
+  }, [streamDebug]);
 
   const safeChildren = typeof children === 'string' ? children : '';
 
@@ -203,9 +214,6 @@ export default () => {
       const delay = randomStreaming
         ? Math.floor(Math.random() * streamingSpeed * 2) + 5
         : streamingSpeed;
-
-      const newChunk = safeChildren.slice(currentPosition - chunkSize, currentPosition);
-      console.log('delay', delay, newChunk);
 
       timerId = setTimeout(tick, delay);
     };

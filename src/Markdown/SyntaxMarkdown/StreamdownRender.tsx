@@ -24,6 +24,7 @@ import {
   STREAM_ANIMATION_LIMITS,
   STREAM_ANIMATION_TUNING,
 } from './streamAnimation.constants';
+import { streamAnimationDebugLog } from './streamAnimation.debug';
 import { styles } from './style';
 import { useWindowedStreamContent } from './useWindowedStreamContent';
 
@@ -53,9 +54,11 @@ interface StreamSegment {
 }
 
 interface ActiveStreamSegment extends StreamSegment {
+  animationFrom: number;
   charDurationMs: number;
+  deadlineAt: number;
   delayStepMs: number;
-  playMs: number;
+  startedAt: number;
 }
 
 interface StreamMachineState {
@@ -66,6 +69,20 @@ interface StreamMachineState {
   queue: StreamSegment[];
   renderBlocks: RenderBlock[];
 }
+
+const summarizeSegment = (segment: StreamSegment | ActiveStreamSegment | null) => {
+  if (!segment) return null;
+
+  return {
+    blockId: segment.blockId,
+    charCount: segment.charCount,
+    disableAnimation: segment.disableAnimation,
+    from: segment.from,
+    id: segment.id,
+    kind: segment.blockRenderKind,
+    to: segment.to,
+  };
+};
 
 const isStreamAnimationPlugin = (plugin: Pluggable): boolean => {
   if (plugin === rehypeStreamAnimated) return true;
@@ -109,7 +126,10 @@ const buildStreamSegments = (
   return segments;
 };
 
-const mergeQueuedSegments = (queue: StreamSegment[], incoming: StreamSegment[]): StreamSegment[] => {
+const mergeQueuedSegments = (
+  queue: StreamSegment[],
+  incoming: StreamSegment[],
+): StreamSegment[] => {
   if (incoming.length === 0) return queue;
   if (queue.length === 0) return [...incoming];
 
@@ -138,6 +158,64 @@ const mergeQueuedSegments = (queue: StreamSegment[], incoming: StreamSegment[]):
   }
 
   return merged;
+};
+
+const canAppendToActiveSegment = (
+  active: ActiveStreamSegment,
+  segment: StreamSegment,
+  cursor: number,
+): boolean => {
+  return (
+    active.blockId === segment.blockId &&
+    active.blockRenderKind === segment.blockRenderKind &&
+    active.disableAnimation === segment.disableAnimation &&
+    segment.from === cursor
+  );
+};
+
+const pullActiveExtensionSegment = (
+  active: ActiveStreamSegment,
+  incoming: StreamSegment[],
+): { extension: StreamSegment | null; remainingIncoming: StreamSegment[] } => {
+  if (incoming.length === 0) {
+    return { extension: null, remainingIncoming: incoming };
+  }
+
+  let cursor = active.to;
+  let charCount = 0;
+  let consumed = 0;
+  let end = cursor;
+  let lastId = active.id;
+
+  for (let index = 0; index < incoming.length; index += 1) {
+    const segment = incoming[index];
+    if (!canAppendToActiveSegment(active, segment, cursor)) break;
+
+    consumed += 1;
+    cursor = segment.to;
+    end = segment.to;
+    charCount += segment.charCount;
+    lastId = segment.id;
+  }
+
+  if (consumed === 0 || charCount === 0 || end <= active.to) {
+    return { extension: null, remainingIncoming: incoming };
+  }
+
+  const extension: StreamSegment = {
+    blockId: active.blockId,
+    blockRenderKind: active.blockRenderKind,
+    charCount,
+    disableAnimation: active.disableAnimation,
+    from: active.to,
+    id: lastId,
+    to: end,
+  };
+
+  return {
+    extension,
+    remainingIncoming: incoming.slice(consumed),
+  };
 };
 
 const resolveSegmentTiming = (
@@ -172,7 +250,10 @@ const resolveSegmentTiming = (
   const acceleratedTotalMs = naturalTotalMs / backlogSpeed;
   const overlapLeadMs =
     backlogSize > 0
-      ? Math.min(streamAnimationOverlapMs, acceleratedTotalMs * STREAM_ANIMATION_TUNING.overlapLeadRatio)
+      ? Math.min(
+          streamAnimationOverlapMs,
+          acceleratedTotalMs * STREAM_ANIMATION_TUNING.overlapLeadRatio,
+        )
       : 0;
   const playMs = clamp(
     acceleratedTotalMs - overlapLeadMs,
@@ -233,6 +314,7 @@ export const StreamdownRender = memo<Options>(
     const segmentSeqRef = useRef(0);
     const blockSeqRef = useRef(0);
     const completionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const noAnimationLoggedSegmentRef = useRef<string | null>(null);
     const processedContent = useMemo(() => {
       const content = typeof escapedContent === 'string' ? escapedContent : '';
       return remend(content);
@@ -260,10 +342,8 @@ export const StreamdownRender = memo<Options>(
     }, [generatedId]);
 
     const [machine, dispatchMachine] = useReducer(
-      (
-        state: StreamMachineState,
-        updater: (current: StreamMachineState) => StreamMachineState,
-      ) => updater(state),
+      (state: StreamMachineState, updater: (current: StreamMachineState) => StreamMachineState) =>
+        updater(state),
       {
         active: null,
         committedOffset: 0,
@@ -276,9 +356,12 @@ export const StreamdownRender = memo<Options>(
 
     const machineRef = useRef(machine);
 
-    const applyMachine = useCallback((updater: (state: StreamMachineState) => StreamMachineState) => {
-      dispatchMachine(updater);
-    }, []);
+    const applyMachine = useCallback(
+      (updater: (state: StreamMachineState) => StreamMachineState) => {
+        dispatchMachine(updater);
+      },
+      [],
+    );
 
     useEffect(() => {
       machineRef.current = machine;
@@ -293,30 +376,134 @@ export const StreamdownRender = memo<Options>(
     useEffect(() => {
       const previousWindowContent = machineRef.current.previousWindowContent;
       const isAppendOnly = windowedContent.startsWith(previousWindowContent);
+      const sharedPrefixLength = isAppendOnly
+        ? previousWindowContent.length
+        : getSharedPrefixLength(previousWindowContent, windowedContent);
 
-      if (!isAppendOnly) {
-        clearCompletionTimer();
-      }
+      streamAnimationDebugLog('machine:window:incoming', {
+        appendOnly: isAppendOnly,
+        nextWindowLength: windowedContent.length,
+        previousWindowLength: previousWindowContent.length,
+        sharedPrefixLength,
+      });
 
       applyMachine((previousState) => {
         const appendOnly = windowedContent.startsWith(previousState.previousWindowContent);
         const sharedPrefixLength = appendOnly
           ? previousState.previousWindowLength
           : getSharedPrefixLength(previousState.previousWindowContent, windowedContent);
+        const rewindChars = appendOnly
+          ? 0
+          : Math.max(0, previousState.previousWindowLength - sharedPrefixLength);
 
-        const baseState: StreamMachineState = appendOnly
-          ? previousState
-          : {
+        let baseState: StreamMachineState = previousState;
+
+        if (!appendOnly) {
+          const canSoftRewindActive = Boolean(
+            previousState.active &&
+              rewindChars > 0 &&
+              rewindChars <= STREAM_ANIMATION_TUNING.softResetMaxRewindChars &&
+              sharedPrefixLength >= previousState.active.from,
+          );
+
+          if (canSoftRewindActive && previousState.active) {
+            const now = Date.now();
+            const trimmedTo = Math.max(
+              previousState.active.from,
+              Math.min(previousState.active.to, sharedPrefixLength),
+            );
+            const trimmedRaw = windowedContent.slice(previousState.active.from, trimmedTo);
+            const trimmedCharCount = Array.from(trimmedRaw).length;
+
+            if (trimmedCharCount > 0) {
+              const trimmedTiming = resolveSegmentTiming(
+                {
+                  ...previousState.active,
+                  charCount: trimmedCharCount,
+                  from: previousState.active.from,
+                  to: trimmedTo,
+                },
+                previousState.queue.length,
+                normalizedWindowMs,
+                normalizedOverlapMs,
+                streamAnimationBacklogRate,
+              );
+              const pacingTotalMs = Math.round(
+                trimmedTiming.delayStepMs * Math.max(0, trimmedCharCount - 1) +
+                  trimmedTiming.charDurationMs,
+              );
+              const active: ActiveStreamSegment = {
+                ...previousState.active,
+                charCount: trimmedCharCount,
+                charDurationMs: trimmedTiming.charDurationMs,
+                deadlineAt: Math.max(
+                  now + STREAM_ANIMATION_LIMITS.minSegmentPlayMs,
+                  previousState.active.startedAt + pacingTotalMs,
+                ),
+                delayStepMs: trimmedTiming.delayStepMs,
+                to: trimmedTo,
+              };
+
+              streamAnimationDebugLog('machine:window:soft-rewind', {
+                active: {
+                  ...summarizeSegment(active),
+                  animationFrom: active.animationFrom,
+                  deadlineAt: active.deadlineAt,
+                  startedAt: active.startedAt,
+                },
+                rewindChars,
+                sharedPrefixLength,
+              });
+
+              baseState = {
+                ...previousState,
+                active,
+                committedOffset: Math.min(previousState.committedOffset, sharedPrefixLength),
+                previousWindowContent: previousState.previousWindowContent.slice(0, sharedPrefixLength),
+                previousWindowLength: sharedPrefixLength,
+                queue: [],
+              };
+            } else {
+              streamAnimationDebugLog('machine:window:hard-reset', {
+                reason: 'soft-rewind-empty-active',
+                rewindChars,
+                sharedPrefixLength,
+              });
+              baseState = {
+                ...previousState,
+                active: null,
+                committedOffset: Math.min(previousState.committedOffset, sharedPrefixLength),
+                previousWindowContent: previousState.previousWindowContent.slice(0, sharedPrefixLength),
+                previousWindowLength: sharedPrefixLength,
+                queue: [],
+              };
+            }
+          } else {
+            streamAnimationDebugLog('machine:window:hard-reset', {
+              reason: 'non-append-window',
+              rewindChars,
+              sharedPrefixLength,
+            });
+            baseState = {
               ...previousState,
               active: null,
               committedOffset: Math.min(previousState.committedOffset, sharedPrefixLength),
-              previousWindowContent: previousState.previousWindowContent.slice(0, sharedPrefixLength),
+              previousWindowContent: previousState.previousWindowContent.slice(
+                0,
+                sharedPrefixLength,
+              ),
               previousWindowLength: sharedPrefixLength,
               queue: [],
             };
+          }
+        }
 
         const parsedBlocks = parseMarkdownIntoBlocks(windowedContent);
-        const reconciledBlocks = reconcileBlocks(baseState.renderBlocks, parsedBlocks, createBlockId);
+        const reconciledBlocks = reconcileBlocks(
+          baseState.renderBlocks,
+          parsedBlocks,
+          createBlockId,
+        );
         const fromOffset = Math.min(baseState.previousWindowLength, windowedContent.length);
         const toOffset = windowedContent.length;
         const incomingSegments = buildStreamSegments(
@@ -326,10 +513,108 @@ export const StreamdownRender = memo<Options>(
           toOffset,
           createSegmentId,
         );
-        const queue = mergeQueuedSegments(baseState.queue, incomingSegments);
+        const incomingCharCount = incomingSegments.reduce(
+          (sum, segment) => sum + segment.charCount,
+          0,
+        );
+        let active = baseState.active;
+        let pendingSegments = incomingSegments;
+
+        if (active) {
+          const { extension, remainingIncoming } = pullActiveExtensionSegment(
+            active,
+            pendingSegments,
+          );
+          pendingSegments = remainingIncoming;
+
+          if (extension) {
+            const backlogSize = baseState.queue.length + pendingSegments.length;
+            const extensionTiming = resolveSegmentTiming(
+              extension,
+              backlogSize,
+              normalizedWindowMs,
+              normalizedOverlapMs,
+              streamAnimationBacklogRate,
+            );
+            const nextCharCount = active.charCount + extension.charCount;
+            const totalTiming = resolveSegmentTiming(
+              {
+                ...extension,
+                charCount: nextCharCount,
+                from: active.from,
+              },
+              backlogSize,
+              normalizedWindowMs,
+              normalizedOverlapMs,
+              streamAnimationBacklogRate,
+            );
+
+            const now = Date.now();
+            const remainingMs = Math.max(0, active.deadlineAt - now);
+            const extensionCarryMs = Math.max(
+              STREAM_ANIMATION_LIMITS.minSegmentPlayMs,
+              Math.round(
+                extensionTiming.playMs * STREAM_ANIMATION_TUNING.activeExtensionCarryRatio,
+              ),
+            );
+            const pacingTotalMs = Math.round(
+              totalTiming.delayStepMs * Math.max(0, nextCharCount - 1) + totalTiming.charDurationMs,
+            );
+            const minimumDeadlineByPacing = active.startedAt + pacingTotalMs;
+
+            active = {
+              ...active,
+              charCount: nextCharCount,
+              charDurationMs: totalTiming.charDurationMs,
+              deadlineAt: Math.max(active.deadlineAt + extensionCarryMs, minimumDeadlineByPacing),
+              delayStepMs: totalTiming.delayStepMs,
+              to: extension.to,
+            };
+
+            streamAnimationDebugLog('machine:active:extend', {
+              backlogSize,
+              extension: summarizeSegment(extension),
+              extensionCarryMs,
+              extensionTiming,
+              minimumDeadlineByPacing,
+              nextActive: {
+                ...summarizeSegment(active),
+                animationFrom: active.animationFrom,
+                deadlineAt: active.deadlineAt,
+                startedAt: active.startedAt,
+              },
+              pacingTotalMs,
+              remainingMs,
+              totalTiming,
+            });
+          }
+        }
+
+        const queue = mergeQueuedSegments(baseState.queue, pendingSegments);
+        const queueCharCount = queue.reduce((sum, segment) => sum + segment.charCount, 0);
+
+        streamAnimationDebugLog('machine:window:applied', {
+          active: active
+            ? {
+                ...summarizeSegment(active),
+                animationFrom: active.animationFrom,
+                deadlineAt: active.deadlineAt,
+              }
+            : null,
+          appendOnly,
+          fromOffset,
+          incomingCharCount,
+          incomingSegmentCount: incomingSegments.length,
+          pendingSegmentCount: pendingSegments.length,
+          queueCharCount,
+          queueLength: queue.length,
+          sharedPrefixLength,
+          toOffset,
+        });
 
         return {
           ...baseState,
+          active,
           committedOffset: Math.min(baseState.committedOffset, toOffset),
           previousWindowContent: windowedContent,
           previousWindowLength: toOffset,
@@ -337,7 +622,15 @@ export const StreamdownRender = memo<Options>(
           renderBlocks: reconciledBlocks,
         };
       });
-    }, [windowedContent, applyMachine, clearCompletionTimer, createBlockId, createSegmentId]);
+    }, [
+      windowedContent,
+      applyMachine,
+      createBlockId,
+      createSegmentId,
+      normalizedOverlapMs,
+      normalizedWindowMs,
+      streamAnimationBacklogRate,
+    ]);
 
     useEffect(() => {
       if (machine.active || machine.queue.length === 0) return;
@@ -353,11 +646,26 @@ export const StreamdownRender = memo<Options>(
           normalizedOverlapMs,
           streamAnimationBacklogRate,
         );
+        const now = Date.now();
 
         const activeSegment: ActiveStreamSegment = {
           ...nextSegment,
+          animationFrom: nextSegment.from,
           ...timing,
+          deadlineAt: now + timing.playMs,
+          startedAt: now,
         };
+
+        streamAnimationDebugLog('machine:active:start', {
+          active: {
+            ...summarizeSegment(activeSegment),
+            animationFrom: activeSegment.animationFrom,
+            deadlineAt: activeSegment.deadlineAt,
+            startedAt: activeSegment.startedAt,
+          },
+          backlogAfterStart: remainingQueue.length,
+          timing,
+        });
 
         return {
           ...previousState,
@@ -375,7 +683,28 @@ export const StreamdownRender = memo<Options>(
     ]);
 
     const activeSegmentId = machine.active?.id;
-    const activeSegmentPlayMs = machine.active?.playMs;
+    const activeSegmentDeadlineAt = machine.active?.deadlineAt;
+
+    useEffect(() => {
+      if (!machine.active) {
+        noAnimationLoggedSegmentRef.current = null;
+        return;
+      }
+
+      if (!machine.active.disableAnimation) return;
+      if (noAnimationLoggedSegmentRef.current === machine.active.id) return;
+
+      noAnimationLoggedSegmentRef.current = machine.active.id;
+      streamAnimationDebugLog('machine:active:disable-animation', {
+        active: {
+          ...summarizeSegment(machine.active),
+          animationFrom: machine.active.animationFrom,
+          deadlineAt: machine.active.deadlineAt,
+          startedAt: machine.active.startedAt,
+        },
+        reason: 'segment-marked-disableAnimation',
+      });
+    }, [machine.active]);
 
     useEffect(() => {
       clearCompletionTimer();
@@ -385,9 +714,29 @@ export const StreamdownRender = memo<Options>(
       }
 
       const segmentId = machine.active.id;
+      const timeoutMs = Math.max(0, machine.active.deadlineAt - Date.now());
+      streamAnimationDebugLog('machine:active:schedule-complete', {
+        active: {
+          ...summarizeSegment(machine.active),
+          animationFrom: machine.active.animationFrom,
+          deadlineAt: machine.active.deadlineAt,
+          startedAt: machine.active.startedAt,
+        },
+        timeoutMs,
+      });
       completionTimerRef.current = setTimeout(() => {
         applyMachine((previousState) => {
           if (!previousState.active || previousState.active.id !== segmentId) return previousState;
+
+          streamAnimationDebugLog('machine:active:complete', {
+            active: {
+              ...summarizeSegment(previousState.active),
+              animationFrom: previousState.active.animationFrom,
+              deadlineAt: previousState.active.deadlineAt,
+              startedAt: previousState.active.startedAt,
+            },
+            queueLength: previousState.queue.length,
+          });
 
           return {
             ...previousState,
@@ -395,14 +744,20 @@ export const StreamdownRender = memo<Options>(
             committedOffset: Math.max(previousState.committedOffset, previousState.active.to),
           };
         });
-      }, machine.active.playMs);
+      }, timeoutMs);
 
       return () => {
         if (!completionTimerRef.current) return;
         clearTimeout(completionTimerRef.current);
         completionTimerRef.current = null;
       };
-    }, [activeSegmentId, activeSegmentPlayMs, applyMachine, clearCompletionTimer, machine.active]);
+    }, [
+      activeSegmentDeadlineAt,
+      activeSegmentId,
+      applyMachine,
+      clearCompletionTimer,
+      machine.active,
+    ]);
 
     useEffect(
       () => () => {
@@ -422,7 +777,9 @@ export const StreamdownRender = memo<Options>(
       0,
       Math.min(
         machine.previousWindowLength,
-        machine.active ? Math.max(machine.committedOffset, machine.active.to) : machine.committedOffset,
+        machine.active
+          ? Math.max(machine.committedOffset, machine.active.to)
+          : machine.committedOffset,
       ),
     );
 
@@ -442,17 +799,24 @@ export const StreamdownRender = memo<Options>(
             !activeSegment.disableAnimation &&
             block.renderKind === activeSegment.blockRenderKind &&
             block.startOffset < activeSegment.to &&
-            block.endOffset > activeSegment.from
+            block.endOffset > activeSegment.animationFrom
           ) {
-            const relativeStart = Math.max(0, activeSegment.from - block.startOffset);
+            const relativeStart = Math.max(0, activeSegment.animationFrom - block.startOffset);
             const relativeEnd = Math.min(block.raw.length, activeSegment.to - block.startOffset);
             const animatedRawChunk = block.raw.slice(relativeStart, relativeEnd);
             const tailChars = Array.from(animatedRawChunk).length;
 
             if (tailChars > 0) {
+              const elapsedMsRaw = Math.max(0, Date.now() - activeSegment.startedAt);
+              const tailMaxDelayMs = activeSegment.delayStepMs * Math.max(0, tailChars - 1);
+              const maxElapsedMs =
+                tailMaxDelayMs +
+                activeSegment.charDurationMs * STREAM_ANIMATION_TUNING.elapsedTailGraceRatio;
+              const elapsedMs = Math.min(elapsedMsRaw, maxElapsedMs);
               animationOptions = {
                 charDurationMs: activeSegment.charDurationMs,
                 delayStepMs: activeSegment.delayStepMs,
+                elapsedMs,
                 tailChars,
               };
             }
