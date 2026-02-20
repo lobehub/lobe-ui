@@ -225,7 +225,7 @@
     "dpdm": "^3.14.0",
     "dumi": "^2.4.23",
     "dumi-theme-lobehub": "^4.0.2",
-    "eslint": "^9.39.2",
+    "eslint": "^10.0.0",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
     "figma-js": "1.16.1-0",
     "husky": "^9.1.7",
