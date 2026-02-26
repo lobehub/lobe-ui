@@ -1,4 +1,5 @@
-export const fullContent = `# Complete Markdown Integration Example
+export const fullContent = `Complete Markdown Integration Example
+--
 
 This demonstrates a comprehensive real-world example of how different markdown features work together in a cohesive document.
 

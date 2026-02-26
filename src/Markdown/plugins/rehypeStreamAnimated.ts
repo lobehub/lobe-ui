@@ -5,6 +5,7 @@ import { visit } from 'unist-util-visit';
 export interface StreamAnimatedOptions {
   baseCharCount?: number;
   charDelay?: number;
+  revealed?: boolean;
 }
 
 const BLOCK_TAGS = new Set(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li']);
@@ -18,7 +19,7 @@ function hasClass(node: Element, cls: string): boolean {
 }
 
 export const rehypeStreamAnimated = (options: StreamAnimatedOptions = {}) => {
-  const { charDelay = 20, baseCharCount = 0 } = options;
+  const { charDelay = 20, baseCharCount = 0, revealed = false } = options;
 
   return (tree: Root) => {
     let globalCharIndex = 0;
@@ -32,13 +33,15 @@ export const rehypeStreamAnimated = (options: StreamAnimatedOptions = {}) => {
       for (const child of node.children) {
         if (child.type === 'text') {
           for (const char of child.value) {
-            const relativeIndex = Math.max(0, globalCharIndex - baseCharCount);
-            const delay = relativeIndex * charDelay;
             const properties: Record<string, any> = {
-              className: 'stream-char',
+              className: revealed ? 'stream-char stream-char-revealed' : 'stream-char',
             };
-            if (delay > 0) {
-              properties.style = `animation-delay:${delay}ms`;
+            if (!revealed) {
+              const relativeIndex = Math.max(0, globalCharIndex - baseCharCount);
+              const delay = relativeIndex * charDelay;
+              if (delay > 0) {
+                properties.style = `animation-delay:${delay}ms`;
+              }
             }
             newChildren.push({
               children: [{ type: 'text', value: char }],
