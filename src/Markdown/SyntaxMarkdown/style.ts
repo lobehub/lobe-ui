@@ -14,6 +14,11 @@ export const styles = createStaticStyles(({ css }) => {
         animation-fill-mode: forwards;
       }
 
+      .stream-char-revealed {
+        opacity: 1;
+        animation: none;
+      }
+
       .katex-display .katex-html span {
         mask: none !important;
         animation: none !important;

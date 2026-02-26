@@ -4,7 +4,7 @@ import { marked } from 'marked';
 import { memo, useEffect, useId, useMemo, useRef } from 'react';
 import Markdown, { type Options } from 'react-markdown';
 import remend from 'remend';
-import type { Pluggable } from 'unified';
+import type { Pluggable, PluggableList } from 'unified';
 
 import {
   useMarkdownComponents,
@@ -23,17 +23,87 @@ function countChars(text: string): number {
   return [...text].length;
 }
 
-const StreamdownBlock = memo<Options>(({ children, ...rest }) => {
-  return <Markdown {...rest}>{children}</Markdown>;
-});
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null;
+
+const isDeepEqualValue = (a: unknown, b: unknown): boolean => {
+  if (a === b) return true;
+
+  if (Array.isArray(a) || Array.isArray(b)) {
+    if (!Array.isArray(a) || !Array.isArray(b)) return false;
+    if (a.length !== b.length) return false;
+    for (let i = 0; i < a.length; i++) {
+      if (!isDeepEqualValue(a[i], b[i])) return false;
+    }
+    return true;
+  }
+
+  if (!isRecord(a) || !isRecord(b)) return false;
+
+  const keysA = Object.keys(a);
+  const keysB = Object.keys(b);
+  if (keysA.length !== keysB.length) return false;
+
+  for (const key of keysA) {
+    if (!isDeepEqualValue(a[key], b[key])) return false;
+  }
+
+  return true;
+};
+
+const isSamePlugin = (prevPlugin: Pluggable, nextPlugin: Pluggable): boolean => {
+  const prevTuple = Array.isArray(prevPlugin) ? prevPlugin : [prevPlugin];
+  const nextTuple = Array.isArray(nextPlugin) ? nextPlugin : [nextPlugin];
+
+  if (prevTuple.length !== nextTuple.length) return false;
+  if (prevTuple[0] !== nextTuple[0]) return false;
+
+  return isDeepEqualValue(prevTuple.slice(1), nextTuple.slice(1));
+};
+
+const isSamePlugins = (
+  prevPlugins?: PluggableList | null,
+  nextPlugins?: PluggableList | null,
+): boolean => {
+  if (prevPlugins === nextPlugins) return true;
+  if (!prevPlugins || !nextPlugins) return !prevPlugins && !nextPlugins;
+  if (prevPlugins.length !== nextPlugins.length) return false;
+
+  for (let i = 0; i < prevPlugins.length; i++) {
+    if (!isSamePlugin(prevPlugins[i], nextPlugins[i])) return false;
+  }
+
+  return true;
+};
+
+const useStablePlugins = (plugins: PluggableList): PluggableList => {
+  const stableRef = useRef<PluggableList>(plugins);
+
+  if (!isSamePlugins(stableRef.current, plugins)) {
+    stableRef.current = plugins;
+  }
+
+  return stableRef.current;
+};
+
+const StreamdownBlock = memo<Options>(
+  ({ children, ...rest }) => {
+    return <Markdown {...rest}>{children}</Markdown>;
+  },
+  (prevProps, nextProps) =>
+    prevProps.children === nextProps.children &&
+    prevProps.components === nextProps.components &&
+    isSamePlugins(prevProps.rehypePlugins, nextProps.rehypePlugins) &&
+    isSamePlugins(prevProps.remarkPlugins, nextProps.remarkPlugins),
+);
 
 StreamdownBlock.displayName = 'StreamdownBlock';
 
 export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
   const escapedContent = useMarkdownContent(children || '');
   const components = useMarkdownComponents();
-  const baseRehypePlugins = useMarkdownRehypePlugins();
-  const remarkPlugins = useMarkdownRemarkPlugins();
+  const baseRehypePlugins = useStablePlugins(useMarkdownRehypePlugins());
+  const remarkPlugins = useStablePlugins(useMarkdownRemarkPlugins());
   const generatedId = useId();
 
   const processedContent = useMemo(() => {
@@ -56,6 +126,11 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
   const staggerPlugins: Pluggable[] = useMemo(
     () => [...baseRehypePlugins, [rehypeStreamAnimated, { baseCharCount: 0, charDelay }]],
     [baseRehypePlugins, charDelay],
+  );
+
+  const revealedPlugins: Pluggable[] = useMemo(
+    () => [...baseRehypePlugins, [rehypeStreamAnimated, { revealed: true }]],
+    [baseRehypePlugins],
   );
 
   // prevCharCount tracks the PREVIOUS render's streaming char count.
@@ -96,7 +171,7 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
         } else if (state === 'animating') {
           plugins = staggerPlugins;
         } else {
-          plugins = baseRehypePlugins;
+          plugins = revealedPlugins;
         }
 
         return (
