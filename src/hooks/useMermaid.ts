@@ -49,7 +49,7 @@ export const createMermaidConfig = (
   gantt: {
     useWidth: 1920,
   },
-  securityLevel: 'loose',
+  securityLevel: 'strict',
   startOnLoad: false,
   theme: customTheme || (theme.isDarkMode ? 'dark' : 'neutral'),
   themeVariables: customTheme
