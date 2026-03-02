@@ -8,7 +8,7 @@ import {
   useHidePopupWhenPositionerAtOrigin,
 } from '@/utils/destroyOnInvalidActiveTriggerElement';
 import { parseTrigger } from '@/utils/parseTrigger';
-import { placementMap, type Side } from '@/utils/placement';
+import { placementMap } from '@/utils/placement';
 
 import { PopoverArrowIcon } from './ArrowIcon';
 import {
@@ -77,31 +77,12 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
 
             if (!item?.content) return null;
 
-            const arrow = item.inset ? false : (item.arrow ?? false);
+            const arrow = item.arrow ?? false;
             const placement = item.placement ?? 'top';
             const { openOnHover } = parseTrigger(item.trigger ?? 'hover');
 
             const placementConfig = placementMap[placement] ?? placementMap.top;
-            const baseSideOffset = arrow ? 10 : 6;
-            const resolvedSideOffset = item.inset
-              ? ({
-                  side,
-                  positioner,
-                }: {
-                  positioner: { height: number; width: number };
-                  side: Side;
-                }) => {
-                  if (
-                    side === 'left' ||
-                    side === 'right' ||
-                    side === 'inline-start' ||
-                    side === 'inline-end'
-                  ) {
-                    return -positioner.width;
-                  }
-                  return -positioner.height;
-                }
-              : baseSideOffset;
+            const resolvedSideOffset = arrow ? 10 : 6;
 
             const resolvedClassNames = {
               arrow: item.classNames?.arrow,
@@ -131,7 +112,7 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
                 hoverTrigger={openOnHover}
                 placement={placement}
                 side={placementConfig.side}
-                sideOffset={resolvedSideOffset as any}
+                sideOffset={resolvedSideOffset}
                 style={resolvedStyles.positioner}
                 {...item.positionerProps}
               >

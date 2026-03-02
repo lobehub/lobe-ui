@@ -10,7 +10,6 @@ export const useMergedPopoverProps = (props: Partial<PopoverProps>): PopoverGrou
 
   const {
     arrow,
-    inset,
     trigger,
     placement,
     className,
@@ -65,7 +64,6 @@ export const useMergedPopoverProps = (props: Partial<PopoverProps>): PopoverGrou
       content,
       disabled: disabled ?? sharedProps?.disabled,
       getPopupContainer: getPopupContainer ?? sharedProps?.getPopupContainer,
-      inset: inset ?? sharedProps?.inset ?? false,
       mouseEnterDelay: mouseEnterDelay ?? sharedProps?.mouseEnterDelay,
       mouseLeaveDelay: mouseLeaveDelay ?? sharedProps?.mouseLeaveDelay,
       nativeButton: nativeButton ?? sharedProps?.nativeButton,
@@ -86,7 +84,6 @@ export const useMergedPopoverProps = (props: Partial<PopoverProps>): PopoverGrou
       content,
       disabled,
       getPopupContainer,
-      inset,
       mergedClassName,
       mergedClassNames,
       mergedOnOpenChange,
@@ -103,7 +100,6 @@ export const useMergedPopoverProps = (props: Partial<PopoverProps>): PopoverGrou
       sharedProps?.closeDelay,
       sharedProps?.disabled,
       sharedProps?.getPopupContainer,
-      sharedProps?.inset,
       sharedProps?.mouseEnterDelay,
       sharedProps?.mouseLeaveDelay,
       sharedProps?.nativeButton,

@@ -16,6 +16,7 @@ import { Virtualizer } from 'virtua';
 
 import Icon from '@/Icon';
 import { styles as menuStyles } from '@/Menu/sharedStyle';
+import { useAppElement } from '@/ThemeProvider';
 
 import { styles, triggerVariants } from './style';
 import {
@@ -688,6 +689,7 @@ const Select = memo<SelectProps<any>>(
         );
       });
 
+    const appElement = useAppElement();
     return (
       <BaseSelect.Root
         disabled={disabled}
@@ -732,7 +734,7 @@ const Select = memo<SelectProps<any>>(
           </span>
         </BaseSelect.Trigger>
 
-        <BaseSelect.Portal>
+        <BaseSelect.Portal container={appElement}>
           <BaseSelect.Positioner
             align="start"
             alignItemWithTrigger={isItemAligned}

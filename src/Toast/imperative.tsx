@@ -3,7 +3,6 @@
 import { Toast as BaseToast } from '@base-ui/react/toast';
 import { cx } from 'antd-style';
 import { memo, useEffect } from 'react';
-import { createPortal } from 'react-dom';
 
 import { useIsClient } from '@/hooks/useIsClient';
 import { useAppElement } from '@/ThemeProvider';
@@ -287,22 +286,17 @@ export const ToastHost = memo(
 
     const container = root ?? appElement ?? document.body;
 
-    return createPortal(
-      <>
-        {ALL_POSITIONS.map((pos) => (
-          <ToastContext key={pos} value={{ position: pos, swipeDirection }}>
-            <BaseToast.Provider limit={limit} timeout={duration} toastManager={getManager(pos)}>
-              <BaseToast.Portal>
-                <BaseToast.Viewport className={cx(viewportVariants({ position: pos }), className)}>
-                  <ToastList />
-                </BaseToast.Viewport>
-              </BaseToast.Portal>
-            </BaseToast.Provider>
-          </ToastContext>
-        ))}
-      </>,
-      container,
-    );
+    ALL_POSITIONS.map((pos) => (
+      <ToastContext key={pos} value={{ position: pos, swipeDirection }}>
+        <BaseToast.Provider limit={limit} timeout={duration} toastManager={getManager(pos)}>
+          <BaseToast.Portal container={container}>
+            <BaseToast.Viewport className={cx(viewportVariants({ position: pos }), className)}>
+              <ToastList />
+            </BaseToast.Viewport>
+          </BaseToast.Portal>
+        </BaseToast.Provider>
+      </ToastContext>
+    ));
   },
 );
 

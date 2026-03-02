@@ -2,6 +2,52 @@
 
 # Changelog
 
+## [4.38.4](https://github.com/lobehub/lobe-ui/compare/v4.38.3...v4.38.4) (2026-02-15)
+
+### ♻ Code Refactoring
+
+- **styles**: Extract fadeIn animation to animations.ts ([f6308aa](https://github.com/lobehub/lobe-ui/commit/f6308aa))
+
+### 💄 Styles
+
+- Revert stream animation to fade-in ([0a0ea88](https://github.com/lobehub/lobe-ui/commit/0a0ea88))
+
+## [4.38.3](https://github.com/lobehub/lobe-ui/compare/v4.38.2...v4.38.3) (2026-02-15)
+
+### 🐛 Bug Fixes
+
+- Prevent stream animation from breaking KaTeX rendering ([6c8b1ac](https://github.com/lobehub/lobe-ui/commit/6c8b1ac))
+
+## [4.38.2](https://github.com/lobehub/lobe-ui/compare/v4.38.1...v4.38.2) (2026-02-14)
+
+### ♻ Code Refactoring
+
+- **popover**: Extract inset side offset into shared utility, closes [#470](https://github.com/lobehub/lobe-ui/issues/470) ([9e820f0](https://github.com/lobehub/lobe-ui/commit/9e820f0))
+
+## [4.38.1](https://github.com/lobehub/lobe-ui/compare/v4.38.0...v4.38.1) (2026-02-14)
+
+### 🐛 Bug Fixes
+
+- **select**: Correct list height overflow when search bar is present, closes [#468](https://github.com/lobehub/lobe-ui/issues/468) ([444b3ab](https://github.com/lobehub/lobe-ui/commit/444b3ab))
+
+# [4.38.0](https://github.com/lobehub/lobe-ui/compare/v4.37.0...v4.38.0) (2026-02-14)
+
+### ✨ Features
+
+- Add skills icon ([49d0dde](https://github.com/lobehub/lobe-ui/commit/49d0dde))
+
+# [4.37.0](https://github.com/lobehub/lobe-ui/compare/v4.36.3...v4.37.0) (2026-02-13)
+
+### ✨ Features
+
+- **markdown**: Integrate remend for content processing and update animations ([fc27f9c](https://github.com/lobehub/lobe-ui/commit/fc27f9c))
+
+## [4.36.3](https://github.com/lobehub/lobe-ui/compare/v4.36.2...v4.36.3) (2026-02-13)
+
+### 🐛 Bug Fixes
+
+- **select**: UseAppElement for portal container management ([03dfec0](https://github.com/lobehub/lobe-ui/commit/03dfec0))
+
 ## [4.36.2](https://github.com/lobehub/lobe-ui/compare/v4.36.1...v4.36.2) (2026-02-11)
 
 ### 🐛 Bug Fixes

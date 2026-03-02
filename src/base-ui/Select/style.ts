@@ -75,6 +75,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   itemText: css``,
   list: css`
     overflow-y: auto;
+    flex: 1;
+
+    min-height: 0;
     max-height: var(--lobe-select-available-height, var(--available-height));
     padding-block: 0;
   `,
@@ -93,7 +96,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     );
 
     transform-origin: var(--transform-origin);
+
+    display: flex;
+    flex-direction: column;
+
     box-sizing: border-box;
+
     transition:
       opacity 150ms ${cssVar.motionEaseOut},
       transform 150ms ${cssVar.motionEaseOut};

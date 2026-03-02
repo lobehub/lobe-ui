@@ -53,7 +53,7 @@ export type PopoverPortalProps = Omit<BasePopoverPortalProps, 'children' | 'cont
 
 export interface PopoverProps {
   /**
-   * 是否显示箭头, 在 `inset` 下无法使用
+   * 是否显示箭头
    * @default false
    */
   arrow?: boolean;
@@ -108,12 +108,6 @@ export interface PopoverProps {
    * 获取弹出容器
    */
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
-
-  /**
-   * 是否嵌入 trigger 内部显示
-   * @default false
-   */
-  inset?: boolean;
 
   /**
    * 鼠标移入延迟（秒）
