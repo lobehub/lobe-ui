@@ -2,6 +2,20 @@
 
 # Changelog
 
+# [5.0.0](https://github.com/lobehub/lobe-ui/compare/v4.38.4...v5.0.0) (2026-03-02)
+
+### 🎫 Chores
+
+- **release**: Force major release ([db4c10d](https://github.com/lobehub/lobe-ui/commit/db4c10d))
+- Patch conventional-changelog-gitmoji-config to fix item.title undefined ([2916793](https://github.com/lobehub/lobe-ui/commit/2916793))
+- Trigger 5.0 release ([b2b5ee2](https://github.com/lobehub/lobe-ui/commit/b2b5ee2))
+
+### 💥 BREAKING CHANGES
+
+- LobeSelect/LobeSwitch removed from main entry. Use `@lobehub/ui/base-ui` instead.
+
+- refactor(base-ui): move ContextMenu/DropdownMenu/ScrollArea/Toast impl into base-ui, re-export from original paths
+
 ## [4.38.4](https://github.com/lobehub/lobe-ui/compare/v4.38.3...v4.38.4) (2026-02-15)
 
 ### ♻ Code Refactoring
