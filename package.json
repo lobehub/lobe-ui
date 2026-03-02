@@ -271,5 +271,8 @@
     "access": "public",
     "provenance": true,
     "registry": "https://registry.npmjs.org"
+  },
+  "patchedDependencies": {
+    "conventional-changelog-gitmoji-config@1.5.2": "patches/conventional-changelog-gitmoji-config@1.5.2.patch"
   }
 }
