@@ -26,9 +26,9 @@ import {
   type RenderOptions,
   type SubMenuType,
 } from '@/Menu';
+import { styles } from '@/Menu/sharedStyle';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
-import { styles } from './style';
 import {
   type ContextMenuCheckboxItem,
   type ContextMenuItem,

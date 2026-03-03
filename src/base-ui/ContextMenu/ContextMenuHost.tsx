@@ -19,6 +19,8 @@ import {
 } from './store';
 import { styles } from './style';
 
+const noAnimationStyles = { '--lobe-dropdown-animation-duration': '0ms' } as React.CSSProperties;
+
 export const ContextMenuHost = memo(() => {
   const isClient = useIsClient();
   const appElement = useAppElement();
@@ -67,6 +69,7 @@ export const ContextMenuHost = memo(() => {
           anchor={state.anchor ?? undefined}
           className={styles.positioner}
           sideOffset={6}
+          style={noAnimationStyles}
         >
           <ContextMenu.Popup
             className={styles.popup}
