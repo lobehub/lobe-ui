@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.1.0](https://github.com/lobehub/lobe-ui/compare/v5.0.1...v5.1.0) (2026-03-03)
+
+### ✨ Features
+
+- Add base-ui Modal component with imperative and declarative usage ([5186720](https://github.com/lobehub/lobe-ui/commit/5186720))
+
 ## [5.0.1](https://github.com/lobehub/lobe-ui/compare/v5.0.0...v5.0.1) (2026-03-03)
 
 ### 🐛 Bug Fixes
