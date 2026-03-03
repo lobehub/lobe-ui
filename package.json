@@ -236,7 +236,7 @@
     "dotenv": "^17.2.3",
     "dpdm": "^3.14.0",
     "dumi": "^2.4.23",
-    "dumi-theme-lobehub": "^4.0.2",
+    "dumi-theme-lobehub": "^5",
     "eslint": "^9.39.2",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
     "figma-js": "1.16.1-0",
@@ -261,7 +261,7 @@
   },
   "peerDependencies": {
     "@lobehub/fluent-emoji": "^4.0.0",
-    "@lobehub/icons": "^4.0.0",
+    "@lobehub/icons": "^5.0.0",
     "antd": "^6.1.1",
     "motion": "^12.0.0",
     "react": "^19.0.0",
