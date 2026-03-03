@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.2.1](https://github.com/lobehub/lobe-ui/compare/v5.2.0...v5.2.1) (2026-03-03)
+
+### 🐛 Bug Fixes
+
+- Refine Modal demos and styles ([d7f6058](https://github.com/lobehub/lobe-ui/commit/d7f6058))
+
 # [5.2.0](https://github.com/lobehub/lobe-ui/compare/v5.1.1...v5.2.0) (2026-03-03)
 
 ### ✨ Features
