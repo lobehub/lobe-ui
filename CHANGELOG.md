@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.2.2](https://github.com/lobehub/lobe-ui/compare/v5.2.1...v5.2.2) (2026-03-03)
+
+### 🐛 Bug Fixes
+
+- **context-menu**: Remove entrance animation for instant appearance ([3354002](https://github.com/lobehub/lobe-ui/commit/3354002))
+
 ## [5.2.1](https://github.com/lobehub/lobe-ui/compare/v5.2.0...v5.2.1) (2026-03-03)
 
 ### 🐛 Bug Fixes
