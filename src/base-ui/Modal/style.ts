@@ -6,7 +6,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     z-index: 1000;
     inset: 0;
 
-    background: rgb(0 0 0 / 30%);
+    background: color-mix(in srgb, ${cssVar.colorBgContainer} 60%, transparent);
 
     transition: opacity 150ms ease-out;
 
