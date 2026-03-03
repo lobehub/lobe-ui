@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.0.1](https://github.com/lobehub/lobe-ui/compare/v5.0.0...v5.0.1) (2026-03-03)
+
+### 🐛 Bug Fixes
+
+- Update dumi-theme-lobehub and @lobehub/icons to major versions ([b5e20ac](https://github.com/lobehub/lobe-ui/commit/b5e20ac))
+
 # [5.0.0](https://github.com/lobehub/lobe-ui/compare/v4.38.4...v5.0.0) (2026-03-02)
 
 ### 🎫 Chores
