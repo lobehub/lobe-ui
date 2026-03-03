@@ -299,6 +299,23 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
 
+  denyAnimation: css`
+    @keyframes modal-deny {
+      0% {
+        outline-color: ${cssVar.colorPrimary};
+        outline-offset: 0;
+      }
+
+      100% {
+        outline-color: transparent;
+        outline-offset: 4px;
+      }
+    }
+
+    outline: 2px solid transparent;
+    animation: modal-deny 400ms ease-out;
+  `,
+
   viewport: css`
     position: fixed;
     z-index: 1000;

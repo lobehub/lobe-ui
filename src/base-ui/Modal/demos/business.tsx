@@ -1,25 +1,43 @@
 import { Button, Flexbox, Popover as LobePopover, Text, Tooltip as LobeTooltip } from '@lobehub/ui';
 import { createModalSystem, Modal, Select as LobeSelect } from '@lobehub/ui/base-ui';
-import { Popover, Select, Space, Tooltip } from 'antd';
+import { Avatar, Popover, Select, Space, Tag, Tooltip } from 'antd';
 import { cssVar } from 'antd-style';
+import { AlertTriangle, FileText, Share2 } from 'lucide-react';
 import { useState } from 'react';
 
 const { ModalHost, confirmModal } = createModalSystem();
 
-// --- 1. Share Modal (large, fullscreen toggle, no footer) ---
+// ─── 1. Share Modal：顶部工具栏 ─────────────────────────────────
 const ShareModalDemo = () => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Share Modal</Button>
+      <Flexbox
+        horizontal
+        align="center"
+        gap={8}
+        style={{
+          background: cssVar.colorFillTertiary,
+          borderRadius: 8,
+          padding: '6px 10px',
+        }}
+      >
+        <Text style={{ flex: 1, fontSize: 13, fontWeight: 500 }}>Design System · v2.4</Text>
+        <Tooltip title="Copy link">
+          <Button icon={<Share2 size={13} />} size="small" onClick={() => setOpen(true)}>
+            Share
+          </Button>
+        </Tooltip>
+      </Flexbox>
+
       <Modal
         allowFullscreen
         footer={null}
         height="70vh"
         open={open}
         styles={{ body: { padding: 0 } }}
-        title="Share"
+        title="Share Preview"
         width="min(90vw, 1024px)"
         onCancel={() => setOpen(false)}
       >
@@ -28,42 +46,65 @@ const ShareModalDemo = () => {
           justify="center"
           style={{ background: cssVar.colorFillTertiary, height: '100%' }}
         >
-          <Text style={{ opacity: 0.45 }}>Preview Area</Text>
+          <Text style={{ opacity: 0.4 }}>Live preview renders here</Text>
         </Flexbox>
       </Modal>
     </>
   );
 };
 
-// --- 2. Config/Settings Modal (destroyOnHidden, standard) ---
+// ─── 2. Settings Modal：设置列表行 ──────────────────────────────
 const ConfigModalDemo = () => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Settings Modal</Button>
+      {/* 一条朴素的设置项，没有额外卡片容器 */}
+      <Flexbox
+        horizontal
+        align="center"
+        style={{ cursor: 'pointer', padding: '4px 0' }}
+        onClick={() => setOpen(true)}
+      >
+        <Flexbox flex={1} gap={2}>
+          <Text style={{ fontSize: 14, fontWeight: 500 }}>MCP Server</Text>
+          <Text style={{ fontSize: 12, opacity: 0.5 }}>local-mcp · http://localhost:3100</Text>
+        </Flexbox>
+        <Tag color="green" style={{ margin: 0 }}>
+          Connected
+        </Tag>
+      </Flexbox>
+
       <Modal
         destroyOnHidden
         maskClosable
         cancelText="Cancel"
         okText="Save"
         open={open}
-        title="MCP Settings"
+        title="MCP Server Settings"
         width={600}
         onCancel={() => setOpen(false)}
         onOk={() => setOpen(false)}
       >
-        <Flexbox gap={12}>
-          <Text as="p">Server Name: local-mcp</Text>
-          <Text as="p">Endpoint: http://localhost:3100</Text>
-          <Text as="p">Status: Connected</Text>
+        <Flexbox gap={16}>
+          {[
+            { label: 'Server Name', value: 'local-mcp' },
+            { label: 'Endpoint', value: 'http://localhost:3100' },
+            { label: 'Status', value: 'Connected' },
+            { label: 'Protocol', value: 'MCP v1.2' },
+          ].map(({ label, value }) => (
+            <Flexbox horizontal align="center" justify="space-between" key={label}>
+              <Text style={{ fontSize: 13, opacity: 0.6 }}>{label}</Text>
+              <Text style={{ fontSize: 13, fontWeight: 500 }}>{value}</Text>
+            </Flexbox>
+          ))}
         </Flexbox>
       </Modal>
     </>
   );
 };
 
-// --- 3. Profile Setup (title hidden, closable control, cancelButton hidden) ---
+// ─── 3. Profile Setup：欢迎横幅 ─────────────────────────────────
 const ProfileSetupDemo = () => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -78,7 +119,30 @@ const ProfileSetupDemo = () => {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Profile Setup</Button>
+      <Flexbox
+        horizontal
+        align="center"
+        gap={12}
+        style={{
+          background: `color-mix(in srgb, ${cssVar.colorPrimary} 8%, transparent)`,
+          borderRadius: 10,
+          padding: '12px 16px',
+        }}
+      >
+        <Avatar size={36} style={{ background: cssVar.colorPrimary, flexShrink: 0 }}>
+          ?
+        </Avatar>
+        <Flexbox flex={1} gap={1}>
+          <Text style={{ fontWeight: 600 }}>Complete your profile</Text>
+          <Text style={{ fontSize: 12, opacity: 0.6 }}>
+            Set a display name and avatar to personalize your workspace
+          </Text>
+        </Flexbox>
+        <Button size="small" type="primary" onClick={() => setOpen(true)}>
+          Set up
+        </Button>
+      </Flexbox>
+
       <Modal
         cancelButtonProps={{ style: { display: 'none' } }}
         closable={false}
@@ -96,7 +160,7 @@ const ProfileSetupDemo = () => {
             Welcome! Set up your profile
           </Text>
           <Text as="p" style={{ margin: 0, opacity: 0.65 }}>
-            Choose a display name and avatar to get started.
+            Choose a display name to get started.
           </Text>
           <input
             placeholder="Display Name"
@@ -104,8 +168,10 @@ const ProfileSetupDemo = () => {
               background: cssVar.colorBgContainer,
               border: `1px solid ${cssVar.colorBorder}`,
               borderRadius: 8,
+              color: cssVar.colorText,
               fontSize: 14,
               height: 40,
+              outline: 'none',
               padding: '0 12px',
               width: '100%',
             }}
@@ -116,81 +182,99 @@ const ProfileSetupDemo = () => {
   );
 };
 
-// --- 4. Interactivity Modal (popover & select/tooltip test) ---
+// ─── 4. Popover & Select：过滤 chips ────────────────────────────
 const PopoverModalDemo = () => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Popover & Select Modal</Button>
+      <Flexbox horizontal align="center" gap={6} wrap="wrap">
+        <Text style={{ fontSize: 12, opacity: 0.5 }}>Filters:</Text>
+        {['Status: All', 'Assignee: Any', 'Priority: High'].map((chip) => (
+          <Tag key={chip} style={{ cursor: 'default', margin: 0 }}>
+            {chip}
+          </Tag>
+        ))}
+        <a
+          style={{ color: cssVar.colorPrimary, cursor: 'pointer', fontSize: 12 }}
+          onClick={() => setOpen(true)}
+        >
+          + Advanced
+        </a>
+      </Flexbox>
+
       <Modal
         destroyOnHidden
         open={open}
-        title="Interactivity Test"
+        title="Advanced Filters"
         onCancel={() => setOpen(false)}
         onOk={() => setOpen(false)}
       >
-        <Flexbox gap={16} style={{ minHeight: 120, padding: '12px 0' }}>
-          <Text style={{ fontWeight: 600 }}>Antd Components:</Text>
-          <Space>
-            <Tooltip title="This is a tooltip inside modal">
-              <Button>Antd Tooltip</Button>
-            </Tooltip>
-
-            <Popover
-              content="This is an antd popover content"
-              title="Popover Title"
-              trigger="click"
+        <Flexbox gap={20} style={{ minHeight: 120 }}>
+          <Flexbox gap={8}>
+            <Text
+              style={{ fontSize: 12, fontWeight: 600, opacity: 0.5, textTransform: 'uppercase' }}
             >
-              <Button>Antd Popover</Button>
-            </Popover>
-
-            <Select
-              defaultValue="lucy"
-              style={{ width: 120 }}
-              options={[
-                { value: 'jack', label: 'Jack' },
-                { value: 'lucy', label: 'Lucy' },
-                { value: 'disabled', label: 'Disabled', disabled: true },
-              ]}
-            />
-          </Space>
-
-          <Text style={{ fontWeight: 600, marginTop: 12 }}>Lobe UI Components:</Text>
-          <Space>
-            <LobeTooltip title="This is a lobe-ui tooltip inside modal">
-              <Button>Lobe Tooltip</Button>
-            </LobeTooltip>
-
-            <LobePopover
-              content={<div style={{ padding: 12 }}>This is a lobe-ui popover content</div>}
+              Antd Components
+            </Text>
+            <Space>
+              <Tooltip title="Filter by date range">
+                <Button size="small">Date Range</Button>
+              </Tooltip>
+              <Popover content="Select a category" title="Category Filter" trigger="click">
+                <Button size="small">Category</Button>
+              </Popover>
+              <Select
+                defaultValue="lucy"
+                size="small"
+                style={{ width: 120 }}
+                options={[
+                  { value: 'jack', label: 'Jack' },
+                  { value: 'lucy', label: 'Lucy' },
+                  { value: 'disabled', label: 'Disabled', disabled: true },
+                ]}
+              />
+            </Space>
+          </Flexbox>
+          <Flexbox gap={8}>
+            <Text
+              style={{ fontSize: 12, fontWeight: 600, opacity: 0.5, textTransform: 'uppercase' }}
             >
-              <Button>Lobe Popover</Button>
-            </LobePopover>
-
-            <LobeSelect
-              defaultValue="lucy"
-              style={{ width: 120 }}
-              options={[
-                { value: 'jack', label: 'Jack' },
-                { value: 'lucy', label: 'Lucy' },
-                { value: 'disabled', label: 'Disabled', disabled: true },
-              ]}
-            />
-          </Space>
+              Lobe UI Components
+            </Text>
+            <Space>
+              <LobeTooltip title="Filter by assignee">
+                <Button size="small">Assignee</Button>
+              </LobeTooltip>
+              <LobePopover content={<div style={{ padding: 12 }}>Pick a status</div>}>
+                <Button size="small">Status</Button>
+              </LobePopover>
+              <LobeSelect
+                defaultValue="lucy"
+                size="small"
+                style={{ width: 120 }}
+                options={[
+                  { value: 'jack', label: 'Jack' },
+                  { value: 'lucy', label: 'Lucy' },
+                  { value: 'disabled', label: 'Disabled', disabled: true },
+                ]}
+              />
+            </Space>
+          </Flexbox>
         </Flexbox>
       </Modal>
     </>
   );
 };
 
-// --- 5. Confirm Dialog (Modal.confirm with danger) ---
+// ─── 5. Confirm：危险区域 + 普通确认 ────────────────────────────
 const ConfirmDemo = () => {
-  const handleConfirm = () => {
+  const handleDeleteConfirm = () => {
     confirmModal({
-      content: 'This action cannot be undone. Your data will be permanently deleted.',
+      content:
+        'This action cannot be undone. Your account and all data will be permanently deleted.',
       okButtonProps: { danger: true },
-      okText: 'Delete',
+      okText: 'Delete Account',
       onOk: async () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
       },
@@ -198,31 +282,146 @@ const ConfirmDemo = () => {
     });
   };
 
-  const handleSimpleConfirm = () => {
+  const handleFilterConfirm = () => {
     confirmModal({
-      content: 'Are you sure you want to apply the .gitignore filter? 12 files will be excluded.',
-      okText: 'Apply',
+      content: 'Are you sure? 12 tracked files will be excluded from future commits.',
+      okText: 'Apply Filter',
       onOk: () => {},
-      title: 'Apply Filter',
+      title: 'Apply .gitignore Filter',
     });
   };
 
   return (
-    <Flexbox horizontal gap={12}>
-      <Button onClick={handleConfirm}>Danger Confirm</Button>
-      <Button onClick={handleSimpleConfirm}>Simple Confirm</Button>
+    <Flexbox
+      gap={0}
+      style={{
+        border: `1px solid ${cssVar.colorErrorBorder}`,
+        borderRadius: 10,
+        overflow: 'hidden',
+      }}
+    >
+      <Flexbox
+        horizontal
+        align="center"
+        gap={8}
+        style={{ padding: '8px 14px', borderBottom: `1px solid ${cssVar.colorErrorBorder}` }}
+      >
+        <AlertTriangle size={13} style={{ color: cssVar.colorError }} />
+        <Text style={{ color: cssVar.colorError, fontSize: 12, fontWeight: 600 }}>Danger Zone</Text>
+      </Flexbox>
+
+      <Flexbox
+        horizontal
+        align="center"
+        style={{ padding: '10px 14px', borderBottom: `1px solid ${cssVar.colorBorderSecondary}` }}
+      >
+        <Flexbox flex={1} gap={1}>
+          <Text style={{ fontSize: 13, fontWeight: 500 }}>Delete this account</Text>
+          <Text style={{ fontSize: 12, opacity: 0.5 }}>Once deleted, there is no going back.</Text>
+        </Flexbox>
+        <Button danger size="small" onClick={handleDeleteConfirm}>
+          Delete
+        </Button>
+      </Flexbox>
+
+      <Flexbox horizontal align="center" style={{ padding: '10px 14px' }}>
+        <Flexbox flex={1} gap={1}>
+          <Text style={{ fontSize: 13, fontWeight: 500 }}>Apply .gitignore filter</Text>
+          <Text style={{ fontSize: 12, opacity: 0.5 }}>12 tracked files will be excluded.</Text>
+        </Flexbox>
+        <Button size="small" onClick={handleFilterConfirm}>
+          Apply
+        </Button>
+      </Flexbox>
     </Flexbox>
   );
 };
 
-// --- Main ---
+// ─── 6. Unsaved Changes：动态 maskClosable ──────────────────────
+const UnsavedChangesDemo = () => {
+  const [open, setOpen] = useState(false);
+  const [hasChanges, setHasChanges] = useState(false);
+
+  const handleClose = () => {
+    setHasChanges(false);
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <Flexbox
+        horizontal
+        align="center"
+        gap={10}
+        style={{
+          background: cssVar.colorFillTertiary,
+          borderRadius: 10,
+          padding: '10px 14px',
+        }}
+      >
+        <FileText size={16} style={{ color: cssVar.colorTextSecondary, flexShrink: 0 }} />
+        <Flexbox flex={1} gap={1}>
+          <Text style={{ fontSize: 14, fontWeight: 500 }}>System Prompt</Text>
+          <Text style={{ fontSize: 12, opacity: 0.5 }}>Last edited 2 hours ago</Text>
+        </Flexbox>
+        <Button size="small" onClick={() => setOpen(true)}>
+          Edit
+        </Button>
+      </Flexbox>
+
+      <Modal
+        cancelButtonProps={hasChanges ? {} : { style: { display: 'none' } }}
+        cancelText="Discard"
+        closable={!hasChanges}
+        keyboard={!hasChanges}
+        maskClosable={!hasChanges}
+        okText={hasChanges ? 'Save' : 'Done'}
+        open={open}
+        title="Edit System Prompt"
+        width={560}
+        onCancel={handleClose}
+        onOk={handleClose}
+      >
+        <Flexbox gap={12}>
+          <textarea
+            placeholder="Type your system prompt here..."
+            rows={5}
+            style={{
+              background: cssVar.colorFillQuaternary,
+              border: `1px solid ${cssVar.colorBorder}`,
+              borderRadius: 8,
+              color: cssVar.colorText,
+              fontFamily: 'inherit',
+              fontSize: 14,
+              lineHeight: 1.6,
+              outline: 'none',
+              padding: 12,
+              resize: 'vertical',
+              width: '100%',
+            }}
+            onChange={() => {
+              if (!hasChanges) setHasChanges(true);
+            }}
+          />
+          {hasChanges && (
+            <Text style={{ color: cssVar.colorWarning, fontSize: 12 }}>
+              Unsaved changes — click backdrop to see deny animation
+            </Text>
+          )}
+        </Flexbox>
+      </Modal>
+    </>
+  );
+};
+
 export default () => (
-  <Flexbox horizontal gap={16} wrap="wrap">
+  <Flexbox gap={14} padding={16} style={{ margin: '0 auto', maxWidth: 600 }}>
     <ShareModalDemo />
     <ConfigModalDemo />
     <ProfileSetupDemo />
     <PopoverModalDemo />
     <ConfirmDemo />
+    <UnsavedChangesDemo />
     <ModalHost />
   </Flexbox>
 );

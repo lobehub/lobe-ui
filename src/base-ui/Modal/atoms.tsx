@@ -117,12 +117,17 @@ export const ModalBackdrop = ({ className, style, ...rest }: ModalBackdropProps)
 
   if (open !== null) {
     return (
-      <Motion.div
-        animate={{ opacity: open ? 1 : 0 }}
+      <Dialog.Backdrop
+        {...rest}
         className={cx(styles.backdrop, className as string)}
-        initial={{ opacity: 0 }}
         style={{ ...style, transition: 'none' }}
-        transition={backdropTransition}
+        render={
+          <Motion.div
+            animate={{ opacity: open ? 1 : 0 }}
+            initial={{ opacity: 0 }}
+            transition={backdropTransition}
+          />
+        }
       />
     );
   }

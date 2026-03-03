@@ -5,7 +5,7 @@ import { Maximize2, Minimize2, X } from 'lucide-react';
 import { useDragControls } from 'motion/react';
 import type { MouseEvent, PointerEvent } from 'react';
 import type React from 'react';
-import { memo, useCallback, useMemo, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { stopPropagation } from '@/utils/dom';
 
@@ -112,17 +112,30 @@ const Modal = memo<ModalComponentProps>(
     const constraintsRef = useRef<HTMLDivElement>(null);
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
+    const [isDenying, setIsDenying] = useState(false);
+    const denyTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+
+    useEffect(() => () => clearTimeout(denyTimerRef.current), []);
+
+    const triggerDeny = useCallback(() => {
+      clearTimeout(denyTimerRef.current);
+      setIsDenying(true);
+      denyTimerRef.current = setTimeout(() => setIsDenying(false), 400);
+    }, []);
 
     const handleOpenChange = useCallback(
       (nextOpen: boolean, eventDetails: { reason: string }) => {
         if (!open) return;
         if (!nextOpen && keyboard === false && eventDetails.reason === 'escape-key') return;
-        if (!nextOpen && !maskClosable && eventDetails.reason === 'outside-press') return;
+        if (!nextOpen && !maskClosable && eventDetails.reason === 'outside-press') {
+          triggerDeny();
+          return;
+        }
         if (!nextOpen) {
           onCancel?.(new MouseEvent('click') as unknown as MouseEvent<HTMLButtonElement>);
         }
       },
-      [onCancel, keyboard, maskClosable, open],
+      [onCancel, keyboard, maskClosable, open, triggerDeny],
     );
 
     const handleExitComplete = useCallback(() => {
@@ -246,7 +259,6 @@ const Modal = memo<ModalComponentProps>(
           )}
           <ModalPopup
             className={classNames?.wrapper}
-            panelClassName={cx(className, isFullscreen && styles.fullscreenPopupInner)}
             popupStyle={{ ...popupZIndex, ...semanticStyles?.wrapper }}
             ref={constraintsRef}
             style={panelStyle}
@@ -255,6 +267,11 @@ const Modal = memo<ModalComponentProps>(
               ...dragProps,
               onAnimationComplete: handleAnimationComplete,
             }}
+            panelClassName={cx(
+              className,
+              isFullscreen && styles.fullscreenPopupInner,
+              isDenying && styles.denyAnimation,
+            )}
           >
             {showHeader && (
               <ModalHeader
