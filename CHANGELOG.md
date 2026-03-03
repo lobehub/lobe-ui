@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.2.0](https://github.com/lobehub/lobe-ui/compare/v5.1.1...v5.2.0) (2026-03-03)
+
+### ✨ Features
+
+- **markdown**: Implement streaming animation for markdown blocks, closes [#475](https://github.com/lobehub/lobe-ui/issues/475) ([2b3d230](https://github.com/lobehub/lobe-ui/commit/2b3d230))
+
 ## [5.1.1](https://github.com/lobehub/lobe-ui/compare/v5.1.0...v5.1.1) (2026-03-03)
 
 ### 🐛 Bug Fixes
