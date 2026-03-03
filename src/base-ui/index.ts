@@ -7,6 +7,7 @@ export {
   updateContextMenuItems,
 } from './ContextMenu';
 export * from './DropdownMenu';
+export * from './Modal';
 export * from './ScrollArea';
 export { default as Select } from './Select';
 export * from './Select';
