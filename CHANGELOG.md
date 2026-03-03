@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.1.1](https://github.com/lobehub/lobe-ui/compare/v5.1.0...v5.1.1) (2026-03-03)
+
+### 🐛 Bug Fixes
+
+- Use color-scheme-aware backdrop color for Modal ([01e46c0](https://github.com/lobehub/lobe-ui/commit/01e46c0))
+
 # [5.1.0](https://github.com/lobehub/lobe-ui/compare/v5.0.1...v5.1.0) (2026-03-03)
 
 ### ✨ Features
