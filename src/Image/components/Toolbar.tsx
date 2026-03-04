@@ -10,7 +10,7 @@ import {
   ZoomOut,
 } from 'lucide-react';
 import { type ToolbarRenderInfoType } from 'rc-image/lib/Preview';
-import { memo, type ReactNode, useCallback, useRef, useState } from 'react';
+import { memo, type ReactNode, useCallback, useState } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
@@ -53,7 +53,7 @@ export interface ToolbarProps {
 
 const Toolbar = memo<ToolbarProps>(({ children, info, minScale, maxScale }) => {
   const { t } = useTranslation(imageMessages);
-  const ref = useRef<HTMLElement>(null);
+  const [containerEl, setContainerEl] = useState<HTMLElement | null>(null);
   const [copyLoading, setCopyLoading] = useState(false);
   const [downloadLoading, setDownloadLoading] = useState(false);
   const {
@@ -101,10 +101,8 @@ const Toolbar = memo<ToolbarProps>(({ children, info, minScale, maxScale }) => {
   }, [url, t]);
 
   return (
-    <TooltipGroup
-      getPopupContainer={() => document.querySelector(`.ant-image-preview-mask`) as HTMLElement}
-    >
-      <Flexbox horizontal className={styles.toolbar} gap={4} ref={ref}>
+    <TooltipGroup popupContainer={containerEl ?? undefined}>
+      <Flexbox horizontal className={styles.toolbar} gap={4} ref={setContainerEl}>
         <ActionIcon icon={FlipHorizontal} title={t('image.flipHorizontal')} onClick={onFlipX} />
         <ActionIcon icon={FlipVertical} title={t('image.flipVertical')} onClick={onFlipY} />
         <ActionIcon icon={RotateCcw} title={t('image.rotateLeft')} onClick={onRotateLeft} />

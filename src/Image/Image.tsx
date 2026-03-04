@@ -34,7 +34,7 @@ const Image = memo<ImageProps>(
   }) => {
     const { isDarkMode } = useThemeMode();
     const actionsClassName = alwaysShowActions ? styles.actionsVisible : styles.actionsHidden;
-    const mergePreivew = usePreview(preview);
+    const mergePreview = usePreview(preview);
 
     if (isLoading)
       return (
@@ -66,7 +66,7 @@ const Image = memo<ImageProps>(
           fallback={isDarkMode ? FALLBACK_DARK : FALLBACK_LIGHT}
           height={height}
           loading={'lazy'}
-          preview={preview === false ? false : (mergePreivew as any)}
+          preview={preview === false ? false : (mergePreview as any)}
           width={width}
           classNames={{
             root: cx(styles.wrapper, classNames?.wrapper),

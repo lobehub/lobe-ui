@@ -43,6 +43,7 @@ export const TooltipStandalone = memo<TooltipProps>(
     open,
     openDelay,
     placement = 'top',
+    popupContainer,
     styles: styleProps,
     zIndex,
     ref: refProp,
@@ -53,6 +54,10 @@ export const TooltipStandalone = memo<TooltipProps>(
   }) => {
     const isClient = useIsClient();
     const [uncontrolledOpen, setUncontrolledOpen] = useState(Boolean(defaultOpen));
+    const [triggerNode, setTriggerNode] = useState<HTMLElement | null>(null);
+    const triggerCallbackRef = useCallback((node: HTMLElement | null) => {
+      if (node) setTriggerNode(node);
+    }, []);
 
     const mergedOpen = open ?? uncontrolledOpen;
     const resolvedOpen = disabled ? false : mergedOpen;
@@ -146,7 +151,12 @@ export const TooltipStandalone = memo<TooltipProps>(
               const mergedProps = mergeProps((children as any).props, resolvedProps);
               return cloneElement(children as any, {
                 ...mergedProps,
-                ref: mergeRefs([(children as any).ref, (props as any).ref, refProp]),
+                ref: mergeRefs([
+                  (children as any).ref,
+                  (props as any).ref,
+                  refProp,
+                  triggerCallbackRef,
+                ]),
               });
             }}
           />
@@ -154,7 +164,7 @@ export const TooltipStandalone = memo<TooltipProps>(
       }
 
       return (
-        <BaseTooltip.Trigger {...baseTriggerProps} ref={refProp}>
+        <BaseTooltip.Trigger {...baseTriggerProps} ref={mergeRefs([refProp, triggerCallbackRef])}>
           {children}
         </BaseTooltip.Trigger>
       );
@@ -165,13 +175,15 @@ export const TooltipStandalone = memo<TooltipProps>(
       refProp,
       resolvedCloseDelay,
       resolvedOpenDelay,
+      triggerCallbackRef,
       triggerProps,
     ]);
 
     const customContainer = useMemo(() => {
-      if (!getPopupContainer || !isClient) return undefined;
-      return undefined;
-    }, [getPopupContainer, isClient]);
+      if (popupContainer) return popupContainer;
+      if (!getPopupContainer || !isClient || !triggerNode) return undefined;
+      return getPopupContainer(triggerNode);
+    }, [popupContainer, getPopupContainer, isClient, triggerNode]);
 
     const popup = useMemo(
       () => (
