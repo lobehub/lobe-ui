@@ -27,6 +27,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
   disableDestroyOnInvalidTrigger = false,
   disableZeroOriginGuard = false,
   layoutAnimation = false,
+  popupContainer,
   ...sharedProps
 }) => {
   const [{ handle, key }, setHandleState] = useState(() => ({
@@ -153,8 +154,11 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
               </BaseTooltip.Positioner>
             );
 
-            return portalContainer ? (
-              <BaseTooltip.Portal container={portalContainer}>{popup}</BaseTooltip.Portal>
+            const resolvedPortalContainer =
+              item.popupContainer ?? popupContainer ?? portalContainer;
+
+            return resolvedPortalContainer ? (
+              <BaseTooltip.Portal container={resolvedPortalContainer}>{popup}</BaseTooltip.Portal>
             ) : null;
           }}
         </BaseTooltip.Root>
