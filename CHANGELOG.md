@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.3.0](https://github.com/lobehub/lobe-ui/compare/v5.2.2...v5.3.0) (2026-03-04)
+
+### ✨ Features
+
+- Add Image copy and download, closes [#482](https://github.com/lobehub/lobe-ui/issues/482) ([58351ff](https://github.com/lobehub/lobe-ui/commit/58351ff))
+
 ## [5.2.2](https://github.com/lobehub/lobe-ui/compare/v5.2.1...v5.2.2) (2026-03-03)
 
 ### 🐛 Bug Fixes
