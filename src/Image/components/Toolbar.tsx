@@ -32,6 +32,18 @@ const getFileNameFromUrl = (url: string): string => {
   }
 };
 
+const getExtensionFromMimeType = (mimeType: string): string => {
+  const map: Record<string, string> = {
+    'image/svg+xml': 'svg',
+    'image/png': 'png',
+    'image/jpeg': 'jpg',
+    'image/jpg': 'jpg',
+    'image/webp': 'webp',
+    'image/gif': 'gif',
+  };
+  return map[mimeType?.toLowerCase()] || mimeType?.split('/')[1]?.split('+')[0] || 'png';
+};
+
 export interface ToolbarProps {
   children?: ReactNode;
   info: Omit<ToolbarRenderInfoType, 'current' | 'total'>;
@@ -57,9 +69,11 @@ const Toolbar = memo<ToolbarProps>(({ children, info, minScale, maxScale }) => {
       const blob = await response.blob();
       const blobUrl = URL.createObjectURL(blob);
       let fileName = getFileNameFromUrl(url);
+      const ext = getExtensionFromMimeType(blob.type);
       if (!fileName.includes('.')) {
-        const ext = blob.type.split('/')[1] || 'png';
         fileName = `${fileName}.${ext}`;
+      } else if (fileName.endsWith('.svg+xml')) {
+        fileName = fileName.replace(/\.svg\+xml$/i, '.svg');
       }
       await downloadBlob(blobUrl, fileName);
       URL.revokeObjectURL(blobUrl);
