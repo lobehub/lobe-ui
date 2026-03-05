@@ -18,6 +18,8 @@ export interface TypographyProps extends DivProps {
   ref?: Ref<HTMLDivElement>;
 }
 
+export type StreamSmoothingPreset = 'realtime' | 'balanced' | 'silky';
+
 export interface SyntaxMarkdownProps {
   allowHtml?: boolean;
   allowHtmlList?: ElementType[];
@@ -48,6 +50,7 @@ export interface SyntaxMarkdownProps {
   remarkPlugins?: Pluggable[];
   remarkPluginsAhead?: Pluggable[];
   showFootnotes?: boolean;
+  streamSmoothingPreset?: StreamSmoothingPreset;
   variant?: 'default' | 'chat';
 }
 

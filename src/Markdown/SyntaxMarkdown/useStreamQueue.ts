@@ -7,10 +7,10 @@ export interface BlockInfo {
 
 export type BlockState = 'revealed' | 'animating' | 'streaming' | 'queued';
 
-const BASE_DELAY = 20;
+const BASE_DELAY = 18;
 const ACCELERATION_FACTOR = 0.3;
 const MAX_BLOCK_DURATION = 3000;
-const FADE_DURATION = 150;
+const FADE_DURATION = 280;
 
 function countChars(text: string): number {
   return [...text].length;
@@ -81,15 +81,19 @@ export function useStreamQueue(blocks: BlockInfo[]): UseStreamQueueReturn {
   const animatingCharCount =
     animatingIndex >= 0 ? countChars(blocks[animatingIndex]?.content ?? '') : 0;
 
-  // Freeze charDelay when a new block starts animating
+  const streamingIndex = animatingIndex < 0 && tailIndex >= effectiveRevealedCount ? tailIndex : -1;
+  const activeIndex = animatingIndex >= 0 ? animatingIndex : streamingIndex;
+  const activeCharCount = activeIndex >= 0 ? countChars(blocks[activeIndex]?.content ?? '') : 0;
+
+  // Freeze charDelay when entering a new active block (animating or streaming)
   const frozenRef = useRef({ delay: BASE_DELAY, index: -1 });
-  if (animatingIndex >= 0 && animatingIndex !== frozenRef.current.index) {
+  if (activeIndex >= 0 && activeIndex !== frozenRef.current.index) {
     frozenRef.current = {
-      delay: computeCharDelay(queueLength, animatingCharCount),
-      index: animatingIndex,
+      delay: computeCharDelay(queueLength, activeCharCount),
+      index: activeIndex,
     };
   }
-  const charDelay = animatingIndex >= 0 ? frozenRef.current.delay : BASE_DELAY;
+  const charDelay = activeIndex >= 0 ? frozenRef.current.delay : BASE_DELAY;
 
   const onAnimationDone = useCallback(() => {
     setRevealedCount(effectiveRevealedCount + 1);

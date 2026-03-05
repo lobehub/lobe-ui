@@ -9,8 +9,8 @@ export const styles = createStaticStyles(({ css }) => {
         opacity: 0;
 
         animation-name: ${fadeIn};
-        animation-duration: 150ms;
-        animation-timing-function: ease-out;
+        animation-duration: 280ms;
+        animation-timing-function: cubic-bezier(0.33, 0, 0.67, 1);
         animation-fill-mode: forwards;
       }
 

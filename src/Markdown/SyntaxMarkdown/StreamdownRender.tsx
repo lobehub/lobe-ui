@@ -12,12 +12,14 @@ import {
   useMarkdownRehypePlugins,
   useMarkdownRemarkPlugins,
 } from '@/hooks/useMarkdown';
+import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
 import { rehypeStreamAnimated } from '@/Markdown/plugins/rehypeStreamAnimated';
 
 import { styles } from './style';
+import { useSmoothStreamContent } from './useSmoothStreamContent';
 import { type BlockInfo, useStreamQueue } from './useStreamQueue';
 
-const STREAM_CHAR_DELAY = 15;
+const STREAM_FADE_DURATION = 280;
 
 function countChars(text: string): number {
   return [...text].length;
@@ -100,16 +102,20 @@ const StreamdownBlock = memo<Options>(
 StreamdownBlock.displayName = 'StreamdownBlock';
 
 export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
+  const { streamSmoothingPreset = 'balanced' } = useMarkdownContext();
   const escapedContent = useMarkdownContent(children || '');
   const components = useMarkdownComponents();
   const baseRehypePlugins = useStablePlugins(useMarkdownRehypePlugins());
   const remarkPlugins = useStablePlugins(useMarkdownRemarkPlugins());
   const generatedId = useId();
+  const smoothedContent = useSmoothStreamContent(
+    typeof escapedContent === 'string' ? escapedContent : '',
+    { preset: streamSmoothingPreset },
+  );
 
   const processedContent = useMemo(() => {
-    const content = typeof escapedContent === 'string' ? escapedContent : '';
-    return remend(content);
-  }, [escapedContent]);
+    return remend(smoothedContent);
+  }, [smoothedContent]);
 
   const blocks: BlockInfo[] = useMemo(() => {
     const tokens = marked.lexer(processedContent);
@@ -122,56 +128,87 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
   }, [processedContent]);
 
   const { getBlockState, charDelay } = useStreamQueue(blocks);
+  const prevBlockCharCountRef = useRef<Map<number, number>>(new Map());
+  const blockTimelineRef = useRef<Map<number, number>>(new Map());
+  const lastRenderTsRef = useRef<number | null>(null);
 
-  const staggerPlugins: Pluggable[] = useMemo(
-    () => [...baseRehypePlugins, [rehypeStreamAnimated, { baseCharCount: 0, charDelay }]],
-    [baseRehypePlugins, charDelay],
-  );
+  const renderTs = typeof performance === 'undefined' ? Date.now() : performance.now();
+  const frameDt =
+    lastRenderTsRef.current === null
+      ? 0
+      : Math.max(0, Math.min(renderTs - lastRenderTsRef.current, 120));
 
-  const revealedPlugins: Pluggable[] = useMemo(
-    () => [...baseRehypePlugins, [rehypeStreamAnimated, { revealed: true }]],
-    [baseRehypePlugins],
-  );
+  const timelineForRender = useMemo(() => {
+    const next = new Map<number, number>();
+    const prevTimeline = blockTimelineRef.current;
+    const prevCharCounts = prevBlockCharCountRef.current;
 
-  // prevCharCount tracks the PREVIOUS render's streaming char count.
-  // Updated in useEffect (after render) to avoid stale reads during
-  // synchronous re-renders (e.g. useLayoutEffect auto-reveal).
-  const prevCharCountRef = useRef(0);
-  const prevStreamOffsetRef = useRef(-1);
+    for (const block of blocks) {
+      const blockCharCount = countChars(block.content);
+      const prevCharCount = prevCharCounts.get(block.startOffset) ?? 0;
+      const prevElapsed = prevTimeline.get(block.startOffset);
+      const latestCharStart = Math.max(0, (blockCharCount - 1) * charDelay);
+
+      if (prevElapsed === undefined || blockCharCount < prevCharCount) {
+        next.set(block.startOffset, latestCharStart);
+        continue;
+      }
+
+      const elapsedByTime = prevElapsed + frameDt;
+      // Avoid huge hidden backlog when stream updates in bursts.
+      const minElapsed = Math.max(0, latestCharStart - charDelay * 2);
+      next.set(block.startOffset, Math.max(elapsedByTime, minElapsed));
+    }
+
+    return next;
+  }, [blocks, charDelay, frameDt]);
 
   useEffect(() => {
-    const tailIdx = blocks.length - 1;
-    if (tailIdx >= 0) {
-      const tail = blocks[tailIdx];
-      if (tail.startOffset !== prevStreamOffsetRef.current) {
-        prevStreamOffsetRef.current = tail.startOffset;
-        prevCharCountRef.current = 0;
-      }
-      prevCharCountRef.current = countChars(tail.content);
-    } else {
-      prevCharCountRef.current = 0;
-      prevStreamOffsetRef.current = -1;
+    const nextCharCount = new Map<number, number>();
+    for (const block of blocks) {
+      nextCharCount.set(block.startOffset, countChars(block.content));
     }
-  }, [blocks]);
+    prevBlockCharCountRef.current = nextCharCount;
+    blockTimelineRef.current = timelineForRender;
+    lastRenderTsRef.current = typeof performance === 'undefined' ? Date.now() : performance.now();
+  }, [blocks, timelineForRender]);
 
   return (
     <div className={styles.animated}>
       {blocks.map((block, index) => {
         const state = getBlockState(index);
         if (state === 'queued') return null;
+        const timelineElapsedMs = timelineForRender.get(block.startOffset) ?? 0;
 
         let plugins: Pluggable[];
         if (state === 'streaming') {
-          const baseCharCount =
-            block.startOffset === prevStreamOffsetRef.current ? prevCharCountRef.current : 0;
           plugins = [
             ...baseRehypePlugins,
-            [rehypeStreamAnimated, { baseCharCount, charDelay: STREAM_CHAR_DELAY }],
+            [
+              rehypeStreamAnimated,
+              { charDelay, fadeDuration: STREAM_FADE_DURATION, timelineElapsedMs },
+            ],
           ];
         } else if (state === 'animating') {
-          plugins = staggerPlugins;
+          // Continue from previously rendered progress instead of restarting
+          // or force-switching to fully revealed.
+          plugins = [
+            ...baseRehypePlugins,
+            [
+              rehypeStreamAnimated,
+              { charDelay, fadeDuration: STREAM_FADE_DURATION, timelineElapsedMs },
+            ],
+          ];
         } else {
-          plugins = revealedPlugins;
+          // Keep fade continuity for just-finished chars; avoid instant class
+          // switch to stream-char-revealed that would cancel in-flight fades.
+          plugins = [
+            ...baseRehypePlugins,
+            [
+              rehypeStreamAnimated,
+              { charDelay, fadeDuration: STREAM_FADE_DURATION, timelineElapsedMs },
+            ],
+          ];
         }
 
         return (

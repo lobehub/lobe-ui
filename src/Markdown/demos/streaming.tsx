@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
 
+import { type StreamSmoothingPreset } from '../type';
 import { fullContent, fullContentCN } from './content';
 import { type ChunkInfo, createLocalStream } from './createLocalStream';
 import { markdownElements } from './custom/plugins/MarkdownElements';
@@ -27,6 +28,7 @@ export default () => {
     chunkDelayMin,
     chunkDelayMax,
     language,
+    streamSmoothingPreset,
 
     streamDebug,
     ...rest
@@ -57,7 +59,11 @@ export default () => {
         value: 25,
       },
       useReadableStream: {
-        value: false,
+        value: true,
+      },
+      streamSmoothingPreset: {
+        options: ['realtime', 'balanced', 'silky'],
+        value: 'balanced',
       },
       ReadableStream: folder(
         {
@@ -65,25 +71,25 @@ export default () => {
             max: 5000,
             min: 10,
             step: 10,
-            value: 1000,
+            value: 120,
           },
           chunkDelayMin: {
             max: 1000,
             min: 5,
             step: 5,
-            value: 20,
+            value: 35,
           },
           chunkSizeMax: {
             max: 200,
             min: 1,
             step: 1,
-            value: 50,
+            value: 8,
           },
           chunkSizeMin: {
             max: 100,
             min: 1,
             step: 1,
-            value: 3,
+            value: 2,
           },
         },
         { render: (get) => get('useReadableStream') },
@@ -104,6 +110,12 @@ export default () => {
   }, [streamDebug]);
 
   const safeChildren = typeof children === 'string' ? children : '';
+  const safeSmoothingPreset: StreamSmoothingPreset =
+    streamSmoothingPreset === 'realtime' ||
+    streamSmoothingPreset === 'balanced' ||
+    streamSmoothingPreset === 'silky'
+      ? streamSmoothingPreset
+      : 'balanced';
 
   const [streamedContent, setStreamedContent] = useState(safeChildren);
   const [isStreaming, setIsStreaming] = useState(false);
@@ -277,6 +289,7 @@ export default () => {
           components={components}
           fullFeaturedCodeBlock={rest.fullFeaturedCodeBlock}
           rehypePlugins={rehypePlugins}
+          streamSmoothingPreset={safeSmoothingPreset}
           variant="chat"
         >
           {removeLineBreaksInAntArtifact(renderedContent)}
