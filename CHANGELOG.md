@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.4.0](https://github.com/lobehub/lobe-ui/compare/v5.3.0...v5.4.0) (2026-03-05)
+
+### ✨ Features
+
+- **hotkey-input**: Add clear button support & improve markdown streaming, closes [#483](https://github.com/lobehub/lobe-ui/issues/483) ([8570acc](https://github.com/lobehub/lobe-ui/commit/8570acc))
+
 # [5.3.0](https://github.com/lobehub/lobe-ui/compare/v5.2.2...v5.3.0) (2026-03-04)
 
 ### ✨ Features
