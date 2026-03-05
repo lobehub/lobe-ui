@@ -271,23 +271,27 @@ const HotkeyInput = memo<HotkeyInputProps>(
             onFocus={handleFocus}
           />
 
-          {!isFocused && allowReset && hotkeyValue && hotkeyValue !== resetValue && !disabled && (
-            <ActionIcon
-              icon={Undo2Icon}
-              size={'small'}
-              title={resetTitle}
-              variant={'filled'}
-              onClick={handleReset}
-            />
-          )}
-          {!isFocused && allowClear && hotkeyValue && !disabled && (
-            <ActionIcon
-              icon={XIcon}
-              size={'small'}
-              title={clearTitle}
-              variant={'filled'}
-              onClick={handleClear}
-            />
+          {!isFocused && hotkeyValue && !disabled && (allowReset || allowClear) && (
+            <Flexbox horizontal gap={4}>
+              {allowReset && hotkeyValue !== resetValue && (
+                <ActionIcon
+                  icon={Undo2Icon}
+                  size={'small'}
+                  title={resetTitle}
+                  variant={'filled'}
+                  onClick={handleReset}
+                />
+              )}
+              {allowClear && (
+                <ActionIcon
+                  icon={XIcon}
+                  size={'small'}
+                  title={clearTitle}
+                  variant={'filled'}
+                  onClick={handleClear}
+                />
+              )}
+            </Flexbox>
           )}
         </Flexbox>
         {hasConflict && <div className={styles.errorText}>{conflictText}</div>}
