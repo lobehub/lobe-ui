@@ -163,7 +163,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   root: css`
     user-select: none;
     position: relative;
-    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 12%));
+    filter: drop-shadow(0 2px 8px rgb(0 0 0 / 12%));
   `,
 
   viewport: css`
