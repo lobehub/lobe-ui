@@ -2,6 +2,17 @@
 
 # Changelog
 
+# [5.5.0](https://github.com/lobehub/lobe-ui/compare/v5.4.0...v5.5.0) (2026-03-10)
+
+### ♻ Code Refactoring
+
+- Move Popover to base-ui and re-export from Lobe UI, closes [#486](https://github.com/lobehub/lobe-ui/issues/486) ([1c128cc](https://github.com/lobehub/lobe-ui/commit/1c128cc))
+
+### ✨ Features
+
+- Add BrainOff and Think Icon ([3ff80a2](https://github.com/lobehub/lobe-ui/commit/3ff80a2))
+- Add Channel icons ([992293e](https://github.com/lobehub/lobe-ui/commit/992293e))
+
 # [5.4.0](https://github.com/lobehub/lobe-ui/compare/v5.3.0...v5.4.0) (2026-03-05)
 
 ### ✨ Features
