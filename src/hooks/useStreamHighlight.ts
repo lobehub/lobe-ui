@@ -2,12 +2,16 @@
 
 import { type CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { type BuiltinTheme, type ThemedToken } from 'shiki';
-import { ShikiStreamTokenizer } from 'shiki-stream';
 
 import { getCodeLanguageByInput } from '@/Highlighter/const';
 import lobeTheme from '@/Highlighter/theme/lobe-theme';
 
-import { shikiModulePromise, type StreamingHighlightResult } from './useHighlight';
+import {
+  ensureLanguage,
+  ensureTheme,
+  getOrCreateHighlighter,
+  type StreamingHighlightResult,
+} from './useHighlight';
 
 type StreamingOptions = {
   customThemes?: Record<string, any>;
@@ -74,7 +78,7 @@ const useStreamingHighlighter = (
 ): StreamingHighlightResult | undefined => {
   const { customThemes, enabled, language, theme } = options;
   const [result, setResult] = useState<StreamingHighlightResult>();
-  const tokenizerRef = useRef<ShikiStreamTokenizer | null>(null);
+  const tokenizerRef = useRef<any>(null);
   const previousTextRef = useRef('');
   const safeText = text ?? '';
   const latestTextRef = useRef(safeText);
@@ -234,33 +238,32 @@ const useStreamingHighlighter = (
     let cancelled = false;
 
     (async () => {
-      const mod = await shikiModulePromise;
-      if (!mod || cancelled) return;
+      const highlighter = await getOrCreateHighlighter();
+      if (!highlighter || cancelled) return;
 
       try {
-        // Load custom theme if using slack-dark or slack-ochin
-        let themesToLoad: any[] = [theme];
+        // Load language and theme on demand
+        const effectiveLang = language || 'plaintext';
+        await ensureLanguage(highlighter, effectiveLang);
+
+        // Load custom theme if lobe-theme
         if (customThemes && theme === 'lobe-theme') {
           const customTheme = customThemes[theme];
-          if (customTheme) {
-            themesToLoad = [customTheme as any];
+          if (customTheme && !highlighter.getLoadedThemes().includes(theme)) {
+            await highlighter.loadTheme(customTheme as any);
           }
+        } else {
+          await ensureTheme(highlighter, theme);
         }
 
-        // Only load the specific language and theme needed
-        // getSingletonHighlighter will cache the instance internally
-        const highlighter = await mod.getSingletonHighlighter({
-          langs: language ? [language] : ['plaintext'],
-          themes: themesToLoad,
-        });
-
-        if (!highlighter || cancelled) return;
+        if (cancelled) return;
 
         // Only create new tokenizer if key changed
         if (highlighterKeyRef.current !== currentKey) {
           // Clear old tokenizer
           tokenizerRef.current?.clear();
 
+          const { ShikiStreamTokenizer } = await import('shiki-stream');
           const tokenizer = new ShikiStreamTokenizer({
             highlighter,
             lang: language,
