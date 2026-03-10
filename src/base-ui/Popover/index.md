@@ -61,6 +61,18 @@ When using Tooltip inside Popover, the Tooltip will automatically render into th
 
 <code src="./demos/tooltip-hover-stay.tsx" nopadding></code>
 
+## Popover wrapping Tooltip (Edge Case)
+
+Edge case where the Popover trigger is a Tooltip-wrapped element: `<Popover><Tooltip>...</Tooltip></Popover>`. Hover shows the tooltip; click (or hover, depending on trigger) opens the popover.
+
+<code src="./demos/popover-wrapping-tooltip.tsx" nopadding></code>
+
+## Popover wrapping Tooltip in Group (Edge Case)
+
+Same as above, but with `TooltipGroup` (singleton mode). Hovering between buttons smoothly transitions the shared tooltip; clicking opens each button's own popover.
+
+<code src="./demos/popover-wrapping-tooltip-group.tsx" nopadding></code>
+
 ## Native Button Auto Detection
 
 <code src="./demos/native-button.tsx" nopadding></code>

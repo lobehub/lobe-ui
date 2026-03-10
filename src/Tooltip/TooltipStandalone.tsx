@@ -51,6 +51,8 @@ export const TooltipStandalone = memo<TooltipProps>(
     triggerProps,
     popupProps,
     portalProps,
+    standalone: _standalone,
+    ...restProps
   }) => {
     const isClient = useIsClient();
     const [uncontrolledOpen, setUncontrolledOpen] = useState(Boolean(defaultOpen));
@@ -144,11 +146,11 @@ export const TooltipStandalone = memo<TooltipProps>(
               const resolvedProps = (() => {
                 if (isNativeButtonTriggerElement) return props as any;
                 // eslint-disable-next-line unused-imports/no-unused-vars
-                const { type, ref: triggerRef, ...restProps } = props as any;
-                return restProps;
+                const { type, ref: triggerRef, ...triggerRest } = props as any;
+                return triggerRest;
               })();
 
-              const mergedProps = mergeProps((children as any).props, resolvedProps);
+              const mergedProps = mergeProps(restProps, (children as any).props, resolvedProps);
               return cloneElement(children as any, {
                 ...mergedProps,
                 ref: mergeRefs([
@@ -175,6 +177,7 @@ export const TooltipStandalone = memo<TooltipProps>(
       refProp,
       resolvedCloseDelay,
       resolvedOpenDelay,
+      restProps,
       triggerCallbackRef,
       triggerProps,
     ]);
