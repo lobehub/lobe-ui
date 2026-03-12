@@ -79,10 +79,17 @@ interface UseSmoothStreamContentOptions {
   preset?: StreamSmoothingPreset;
 }
 
+export interface SmoothStreamMetrics {
+  arrivalCps: number;
+  backlogChars: number;
+  displayCps: number;
+  inputActive: boolean;
+}
+
 export const useSmoothStreamContent = (
   content: string,
   { enabled = true, preset = 'balanced' }: UseSmoothStreamContentOptions = {},
-): string => {
+): { content: string; metrics: SmoothStreamMetrics } => {
   const config = PRESET_CONFIG[preset];
   const [displayedContent, setDisplayedContent] = useState(content);
 
@@ -98,6 +105,8 @@ export const useSmoothStreamContent = (
   const lastInputCountRef = useRef(targetCountRef.current);
   const chunkSizeEmaRef = useRef(1);
   const arrivalCpsEmaRef = useRef(config.defaultCps);
+  const displayCpsRef = useRef(config.defaultCps);
+  const inputActiveRef = useRef(false);
 
   const rafRef = useRef<number | null>(null);
   const lastFrameTsRef = useRef<number | null>(null);
@@ -128,6 +137,8 @@ export const useSmoothStreamContent = (
       emaCpsRef.current = config.defaultCps;
       chunkSizeEmaRef.current = 1;
       arrivalCpsEmaRef.current = config.defaultCps;
+      displayCpsRef.current = config.defaultCps;
+      inputActiveRef.current = false;
       lastInputTsRef.current = now;
       lastInputCountRef.current = chars.length;
     },
@@ -160,6 +171,7 @@ export const useSmoothStreamContent = (
       const idleMs = now - lastInputTsRef.current;
       const inputActive = idleMs <= config.activeInputWindowMs;
       const settling = !inputActive && idleMs >= config.settleAfterMs;
+      inputActiveRef.current = inputActive;
 
       const baseCps = clamp(emaCpsRef.current, config.minCps, config.maxCps);
       const baseLagChars = Math.max(1, Math.round((baseCps * config.targetBufferMs) / 1000));
@@ -201,6 +213,7 @@ export const useSmoothStreamContent = (
         );
         currentCps = clamp(idleFlushCps, config.flushCps, config.maxFlushCps);
       }
+      displayCpsRef.current = currentCps;
 
       const urgentBacklog = inputActive && targetLagChars > 0 && backlog > targetLagChars * 2.2;
       const burstyInput = inputActive && chunkSizeEmaRef.current >= targetLagChars * 0.9;
@@ -279,6 +292,7 @@ export const useSmoothStreamContent = (
     targetContentRef.current = content;
     targetCharsRef.current = [...targetCharsRef.current, ...appendedChars];
     targetCountRef.current += appendedCount;
+    inputActiveRef.current = true;
 
     const deltaChars = targetCountRef.current - lastInputCountRef.current;
     const deltaMs = Math.max(1, now - lastInputTsRef.current);
@@ -319,5 +333,13 @@ export const useSmoothStreamContent = (
     };
   }, [stopFrameLoop]);
 
-  return displayedContent;
+  return {
+    content: displayedContent,
+    metrics: {
+      arrivalCps: arrivalCpsEmaRef.current,
+      backlogChars: Math.max(0, targetCountRef.current - displayedCountRef.current),
+      displayCps: displayCpsRef.current,
+      inputActive: inputActiveRef.current,
+    },
+  };
 };

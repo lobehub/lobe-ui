@@ -1,7 +1,7 @@
 'use client';
 
 import { cx } from 'antd-style';
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useState } from 'react';
 
 import { PreviewGroup } from '@/Image';
 
@@ -48,7 +48,8 @@ const Markdown = memo<MarkdownProps>((props) => {
     ...rest
   } = props;
 
-  const delayedAnimated = useDelayedAnimated(animated);
+  const [streamAnimationDelayMs, setStreamAnimationDelayMs] = useState(1000);
+  const delayedAnimated = useDelayedAnimated(animated, streamAnimationDelayMs);
 
   const Render = useCallback(
     ({
@@ -89,6 +90,7 @@ const Markdown = memo<MarkdownProps>((props) => {
           enableLatex={enableLatex}
           enableMermaid={enableMermaid}
           fullFeaturedCodeBlock={fullFeaturedCodeBlock}
+          onStreamAnimationDelayChange={setStreamAnimationDelayMs}
           rehypePlugins={rehypePlugins}
           rehypePluginsAhead={rehypePluginsAhead}
           remarkPlugins={remarkPlugins}

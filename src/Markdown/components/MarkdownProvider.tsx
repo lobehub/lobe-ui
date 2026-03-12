@@ -4,7 +4,12 @@ import { createContext, memo, type PropsWithChildren, use } from 'react';
 
 import { type SyntaxMarkdownProps } from '../type';
 
-export type MarkdownContentConfig = Omit<SyntaxMarkdownProps, 'children' | 'reactMarkdownProps'>;
+export interface MarkdownContentConfig extends Omit<
+  SyntaxMarkdownProps,
+  'children' | 'reactMarkdownProps'
+> {
+  onStreamAnimationDelayChange?: (delayMs: number) => void;
+}
 
 export const MarkdownContext = createContext<MarkdownContentConfig>({});
 
