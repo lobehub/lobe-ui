@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.5.1](https://github.com/lobehub/lobe-ui/compare/v5.5.0...v5.5.1) (2026-03-13)
+
+### 🐛 Bug Fixes
+
+- Resolve Tooltip Popover hover conflict, closes [#488](https://github.com/lobehub/lobe-ui/issues/488) ([28eea9f](https://github.com/lobehub/lobe-ui/commit/28eea9f))
+
 # [5.5.0](https://github.com/lobehub/lobe-ui/compare/v5.4.0...v5.5.0) (2026-03-10)
 
 ### ♻ Code Refactoring
