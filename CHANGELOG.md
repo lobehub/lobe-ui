@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.5.2](https://github.com/lobehub/lobe-ui/compare/v5.5.1...v5.5.2) (2026-03-18)
+
+### 🐛 Bug Fixes
+
+- **style**: Disable animation styles for left and right dropdowns ([e3579f1](https://github.com/lobehub/lobe-ui/commit/e3579f1))
+
 ## [5.5.1](https://github.com/lobehub/lobe-ui/compare/v5.5.0...v5.5.1) (2026-03-13)
 
 ### 🐛 Bug Fixes
