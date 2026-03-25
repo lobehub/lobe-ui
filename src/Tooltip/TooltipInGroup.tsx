@@ -14,9 +14,90 @@ import { useMergedTooltipProps } from './useMergedTooltipProps';
 const DEFAULT_OPEN_DELAY = 400;
 const DEFAULT_CLOSE_DELAY = 100;
 
-export const TooltipInGroup: FC<TooltipProps> = ({ children, ref: refProp, ...props }) => {
+export const TooltipInGroup: FC<TooltipProps> = ({
+  children,
+  ref: refProp,
+  arrow,
+  className,
+  classNames,
+  closeDelay,
+  defaultOpen,
+  disabled: disabledProp,
+  getPopupContainer,
+  hotkey,
+  hotkeyProps,
+  mouseEnterDelay,
+  mouseLeaveDelay,
+  onOpenChange,
+  open,
+  openDelay,
+  placement,
+  popupContainer,
+  popupProps,
+  portalProps,
+  positionerProps,
+  standalone: _standalone,
+  styles,
+  title,
+  triggerProps: triggerPropsProp,
+  zIndex,
+  ...restProps
+}) => {
+  const tooltipProps = useMemo(
+    () => ({
+      arrow,
+      className,
+      classNames,
+      closeDelay,
+      defaultOpen,
+      disabled: disabledProp,
+      getPopupContainer,
+      hotkey,
+      hotkeyProps,
+      mouseEnterDelay,
+      mouseLeaveDelay,
+      onOpenChange,
+      open,
+      openDelay,
+      placement,
+      popupContainer,
+      popupProps,
+      portalProps,
+      positionerProps,
+      styles,
+      title,
+      triggerProps: triggerPropsProp,
+      zIndex,
+    }),
+    [
+      arrow,
+      className,
+      classNames,
+      closeDelay,
+      defaultOpen,
+      disabledProp,
+      getPopupContainer,
+      hotkey,
+      hotkeyProps,
+      mouseEnterDelay,
+      mouseLeaveDelay,
+      onOpenChange,
+      open,
+      openDelay,
+      placement,
+      popupContainer,
+      popupProps,
+      portalProps,
+      positionerProps,
+      styles,
+      title,
+      triggerPropsProp,
+      zIndex,
+    ],
+  );
+
   const group = use(TooltipGroupHandleContext);
-  const item = useMergedTooltipProps(props);
+  const item = useMergedTooltipProps(tooltipProps);
 
   const resolvedOpenDelay = useMemo(() => {
     if (item.openDelay !== undefined) return item.openDelay;
@@ -45,17 +126,17 @@ export const TooltipInGroup: FC<TooltipProps> = ({ children, ref: refProp, ...pr
       const resolvedProps = (() => {
         if (isNativeButtonTriggerElement) return renderProps as any;
         // eslint-disable-next-line unused-imports/no-unused-vars
-        const { type, ref: triggerRef, ...restProps } = renderProps as any;
-        return restProps;
+        const { type, ref: triggerRef, ...triggerRest } = renderProps as any;
+        return triggerRest;
       })();
 
-      const mergedProps = mergeProps((childElement as any).props, resolvedProps);
+      const mergedProps = mergeProps(restProps, (childElement as any).props, resolvedProps);
       return cloneElement(childElement as any, {
         ...mergedProps,
         ref: mergeRefs([(childElement as any).ref, (renderProps as any).ref, refProp]),
       });
     },
-    [childElement, isNativeButtonTriggerElement, refProp],
+    [childElement, isNativeButtonTriggerElement, refProp, restProps],
   );
 
   // Don't render trigger behavior if no content

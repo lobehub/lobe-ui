@@ -5,15 +5,20 @@ import { fadeIn } from '@/styles/animations';
 export const styles = createStaticStyles(({ css }) => {
   return {
     animated: css`
-      .animate-fade-in,
-      .katex-html > .base,
-      span.line > span,
-      code:not(:has(span.line)) {
-        opacity: 1;
-        animation: ${fadeIn} 1s ease-in-out;
+      .stream-char {
+        opacity: 0;
+
+        animation-name: ${fadeIn};
+        animation-duration: 280ms;
+        animation-timing-function: cubic-bezier(0.33, 0, 0.67, 1);
+        animation-fill-mode: forwards;
       }
 
-      /* 只对 .base 级别的 span 应用流式动画，不要穿透到内部 */
+      .stream-char-revealed {
+        opacity: 1;
+        animation: none;
+      }
+
       .katex-display .katex-html span {
         mask: none !important;
         animation: none !important;

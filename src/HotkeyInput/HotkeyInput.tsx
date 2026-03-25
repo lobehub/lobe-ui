@@ -3,7 +3,7 @@
 import { type InputRef } from 'antd';
 import { cx, useThemeMode } from 'antd-style';
 import { isEqual } from 'es-toolkit/compat';
-import { Undo2Icon } from 'lucide-react';
+import { Undo2Icon, XIcon } from 'lucide-react';
 import {
   type FocusEvent,
   memo,
@@ -33,10 +33,12 @@ const HotkeyInput = memo<HotkeyInputProps>(
     defaultValue = '',
     resetValue = '',
     onChange,
+    onClear,
     onConflict,
     placeholder,
     disabled,
     shadow,
+    allowClear,
     allowReset = true,
     style,
     className,
@@ -184,6 +186,18 @@ const HotkeyInput = memo<HotkeyInputProps>(
       onBlur?.(e);
     };
 
+    const handleClear = (e: MouseEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      setHotkeyValue?.('');
+      resetKeys();
+      setHasConflict(false);
+      setHasInvalidCombination(false);
+      setIsFocused(false);
+      stop();
+      onClear?.(hotkeyValue);
+    };
+
     // 重置功能
     const handleReset = (e: MouseEvent) => {
       e.preventDefault();
@@ -206,6 +220,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
 
     const placeholderText = placeholder ?? t('hotkey.placeholder');
     const resetTitle = texts?.reset ?? t('hotkey.reset');
+    const clearTitle = texts?.clear ?? t('hotkey.clear');
     const conflictText = texts?.conflicts ?? t('hotkey.conflict');
     const invalidText = texts?.invalidCombination ?? t('hotkey.invalidCombination');
 
@@ -256,14 +271,27 @@ const HotkeyInput = memo<HotkeyInputProps>(
             onFocus={handleFocus}
           />
 
-          {!isFocused && allowReset && hotkeyValue && hotkeyValue !== resetValue && !disabled && (
-            <ActionIcon
-              icon={Undo2Icon}
-              size={'small'}
-              title={resetTitle}
-              variant={'filled'}
-              onClick={handleReset}
-            />
+          {!isFocused && hotkeyValue && !disabled && (allowReset || allowClear) && (
+            <Flexbox horizontal gap={4}>
+              {allowReset && hotkeyValue !== resetValue && (
+                <ActionIcon
+                  icon={Undo2Icon}
+                  size={'small'}
+                  title={resetTitle}
+                  variant={'filled'}
+                  onClick={handleReset}
+                />
+              )}
+              {allowClear && (
+                <ActionIcon
+                  icon={XIcon}
+                  size={'small'}
+                  title={clearTitle}
+                  variant={'filled'}
+                  onClick={handleClear}
+                />
+              )}
+            </Flexbox>
           )}
         </Flexbox>
         {hasConflict && <div className={styles.errorText}>{conflictText}</div>}

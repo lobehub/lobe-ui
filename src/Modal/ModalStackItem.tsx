@@ -48,8 +48,8 @@ export const ModalStackItem = memo(
           [stableAfterOpenChange, onDestroy, id],
         )}
         onCancel={useCallback(
-          (event: React.MouseEvent<HTMLButtonElement>) => {
-            stableOnCancel?.(event);
+          (e: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLElement>) => {
+            stableOnCancel?.(e);
             close();
           },
           [stableOnCancel, close],

@@ -29,22 +29,24 @@ Verify tooltips close when the trigger node is removed, for both standalone and 
 
 ### Tooltip
 
-| Property        | Description                                                        | Type                                                      | Default |
-| --------------- | ------------------------------------------------------------------ | --------------------------------------------------------- | ------- |
-| title           | Content of the tooltip                                             | `ReactNode`                                               | -       |
-| hotkey          | Keyboard shortcut to display in the tooltip                        | `string`                                                  | -       |
-| hotkeyProps     | Props for the Hotkey component                                     | `Omit<HotkeyProps, 'keys'>`                               | -       |
-| arrow           | Whether the tooltip has an arrow pointer                           | `boolean`                                                 | `false` |
-| placement       | Position of the tooltip                                            | `Floating UI Placement \| 'topLeft' \| ... (AntD legacy)` | `'top'` |
-| openDelay       | Delay before opening (ms). Takes precedence over `mouseEnterDelay` | `number`                                                  | `400`   |
-| closeDelay      | Delay before closing (ms). Takes precedence over `mouseLeaveDelay` | `number`                                                  | `100`   |
-| mouseEnterDelay | Delay before opening (seconds, AntD compatible)                    | `number`                                                  | `0`     |
-| mouseLeaveDelay | Delay before closing (seconds, AntD compatible)                    | `number`                                                  | `0`     |
-| standalone      | Render independently even inside a TooltipGroup                    | `boolean`                                                 | `false` |
-| positionerProps | Props passed to Base UI Positioner component                       | `TooltipPositionerProps`                                  | -       |
-| triggerProps    | Props passed to Base UI Trigger component                          | `TooltipTriggerComponentProps`                            | -       |
-| popupProps      | Props passed to Base UI Popup component                            | `TooltipPopupComponentProps`                              | -       |
-| portalProps     | Props passed to Base UI Portal component                           | `TooltipPortalProps`                                      | -       |
+| Property          | Description                                                          | Type                                                      | Default |
+| ----------------- | -------------------------------------------------------------------- | --------------------------------------------------------- | ------- |
+| title             | Content of the tooltip                                               | `ReactNode`                                               | -       |
+| hotkey            | Keyboard shortcut to display in the tooltip                          | `string`                                                  | -       |
+| hotkeyProps       | Props for the Hotkey component                                       | `Omit<HotkeyProps, 'keys'>`                               | -       |
+| arrow             | Whether the tooltip has an arrow pointer                             | `boolean`                                                 | `false` |
+| placement         | Position of the tooltip                                              | `Floating UI Placement \| 'topLeft' \| ... (AntD legacy)` | `'top'` |
+| openDelay         | Delay before opening (ms). Takes precedence over `mouseEnterDelay`   | `number`                                                  | `400`   |
+| closeDelay        | Delay before closing (ms). Takes precedence over `mouseLeaveDelay`   | `number`                                                  | `100`   |
+| mouseEnterDelay   | Delay before opening (seconds, AntD compatible)                      | `number`                                                  | `0`     |
+| mouseLeaveDelay   | Delay before closing (seconds, AntD compatible)                      | `number`                                                  | `0`     |
+| standalone        | Render independently even inside a TooltipGroup                      | `boolean`                                                 | `false` |
+| positionerProps   | Props passed to Base UI Positioner component                         | `TooltipPositionerProps`                                  | -       |
+| triggerProps      | Props passed to Base UI Trigger component                            | `TooltipTriggerComponentProps`                            | -       |
+| popupProps        | Props passed to Base UI Popup component                              | `TooltipPopupComponentProps`                              | -       |
+| portalProps       | Props passed to Base UI Portal component                             | `TooltipPortalProps`                                      | -       |
+| popupContainer    | Direct HTMLElement to use as the portal container                    | `HTMLElement`                                             | -       |
+| getPopupContainer | Function returning HTMLElement as portal container (AntD compatible) | `(triggerNode: HTMLElement) => HTMLElement`               | -       |
 
 Tooltip is built on top of `@floating-ui/react` (Base Tooltip). For compatibility, it keeps a subset of Ant Design Tooltip-like props (e.g. `mouseEnterDelay`, `mouseLeaveDelay`, legacy `placement` values, and `styles/classNames`).
 
@@ -55,6 +57,7 @@ Tooltip is built on top of `@floating-ui/react` (Base Tooltip). For compatibilit
 | children                       | Tooltip subtree that shares a single tooltip instance                                              | `ReactNode`                                                                     | -       |
 | disableDestroyOnInvalidTrigger | Disable auto-destroy when the active trigger becomes invalid (e.g. disconnected / `display: none`) | `boolean`                                                                       | `false` |
 | disableZeroOriginGuard         | Disable the visual guard that hides the popup when it falls back to viewport (0,0)                 | `boolean`                                                                       | `false` |
+| popupContainer                 | Direct HTMLElement to use as the portal container for the group                                    | `HTMLElement`                                                                   | -       |
 | ...props                       | Shared tooltip props applied to each group member                                                  | `Omit<TooltipProps, 'children' \| 'defaultOpen' \| 'open' \| 'ref' \| 'title'>` | -       |
 
 #### Hotkey Support

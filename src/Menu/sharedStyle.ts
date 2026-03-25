@@ -204,6 +204,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       --lobe-dropdown-animation-duration: 0ms;
       --lobe-dropdown-animation-scale-y: 1;
     }
+
+    &[data-side='left'],
+    &[data-side='right'] {
+      --lobe-dropdown-animation-duration: 0ms;
+      --lobe-dropdown-animation-scale-y: 1;
+    }
   `,
 
   separator: css`

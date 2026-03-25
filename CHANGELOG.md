@@ -2,6 +2,91 @@
 
 # Changelog
 
+## [5.5.2](https://github.com/lobehub/lobe-ui/compare/v5.5.1...v5.5.2) (2026-03-18)
+
+### 🐛 Bug Fixes
+
+- **style**: Disable animation styles for left and right dropdowns ([e3579f1](https://github.com/lobehub/lobe-ui/commit/e3579f1))
+
+## [5.5.1](https://github.com/lobehub/lobe-ui/compare/v5.5.0...v5.5.1) (2026-03-13)
+
+### 🐛 Bug Fixes
+
+- Resolve Tooltip Popover hover conflict, closes [#488](https://github.com/lobehub/lobe-ui/issues/488) ([28eea9f](https://github.com/lobehub/lobe-ui/commit/28eea9f))
+
+# [5.5.0](https://github.com/lobehub/lobe-ui/compare/v5.4.0...v5.5.0) (2026-03-10)
+
+### ♻ Code Refactoring
+
+- Move Popover to base-ui and re-export from Lobe UI, closes [#486](https://github.com/lobehub/lobe-ui/issues/486) ([1c128cc](https://github.com/lobehub/lobe-ui/commit/1c128cc))
+
+### ✨ Features
+
+- Add BrainOff and Think Icon ([3ff80a2](https://github.com/lobehub/lobe-ui/commit/3ff80a2))
+- Add Channel icons ([992293e](https://github.com/lobehub/lobe-ui/commit/992293e))
+
+# [5.4.0](https://github.com/lobehub/lobe-ui/compare/v5.3.0...v5.4.0) (2026-03-05)
+
+### ✨ Features
+
+- **hotkey-input**: Add clear button support & improve markdown streaming, closes [#483](https://github.com/lobehub/lobe-ui/issues/483) ([8570acc](https://github.com/lobehub/lobe-ui/commit/8570acc))
+
+# [5.3.0](https://github.com/lobehub/lobe-ui/compare/v5.2.2...v5.3.0) (2026-03-04)
+
+### ✨ Features
+
+- Add Image copy and download, closes [#482](https://github.com/lobehub/lobe-ui/issues/482) ([58351ff](https://github.com/lobehub/lobe-ui/commit/58351ff))
+
+## [5.2.2](https://github.com/lobehub/lobe-ui/compare/v5.2.1...v5.2.2) (2026-03-03)
+
+### 🐛 Bug Fixes
+
+- **context-menu**: Remove entrance animation for instant appearance ([3354002](https://github.com/lobehub/lobe-ui/commit/3354002))
+
+## [5.2.1](https://github.com/lobehub/lobe-ui/compare/v5.2.0...v5.2.1) (2026-03-03)
+
+### 🐛 Bug Fixes
+
+- Refine Modal demos and styles ([d7f6058](https://github.com/lobehub/lobe-ui/commit/d7f6058))
+
+# [5.2.0](https://github.com/lobehub/lobe-ui/compare/v5.1.1...v5.2.0) (2026-03-03)
+
+### ✨ Features
+
+- **markdown**: Implement streaming animation for markdown blocks, closes [#475](https://github.com/lobehub/lobe-ui/issues/475) ([2b3d230](https://github.com/lobehub/lobe-ui/commit/2b3d230))
+
+## [5.1.1](https://github.com/lobehub/lobe-ui/compare/v5.1.0...v5.1.1) (2026-03-03)
+
+### 🐛 Bug Fixes
+
+- Use color-scheme-aware backdrop color for Modal ([01e46c0](https://github.com/lobehub/lobe-ui/commit/01e46c0))
+
+# [5.1.0](https://github.com/lobehub/lobe-ui/compare/v5.0.1...v5.1.0) (2026-03-03)
+
+### ✨ Features
+
+- Add base-ui Modal component with imperative and declarative usage ([5186720](https://github.com/lobehub/lobe-ui/commit/5186720))
+
+## [5.0.1](https://github.com/lobehub/lobe-ui/compare/v5.0.0...v5.0.1) (2026-03-03)
+
+### 🐛 Bug Fixes
+
+- Update dumi-theme-lobehub and @lobehub/icons to major versions ([b5e20ac](https://github.com/lobehub/lobe-ui/commit/b5e20ac))
+
+# [5.0.0](https://github.com/lobehub/lobe-ui/compare/v4.38.4...v5.0.0) (2026-03-02)
+
+### 🎫 Chores
+
+- **release**: Force major release ([db4c10d](https://github.com/lobehub/lobe-ui/commit/db4c10d))
+- Patch conventional-changelog-gitmoji-config to fix item.title undefined ([2916793](https://github.com/lobehub/lobe-ui/commit/2916793))
+- Trigger 5.0 release ([b2b5ee2](https://github.com/lobehub/lobe-ui/commit/b2b5ee2))
+
+### 💥 BREAKING CHANGES
+
+- LobeSelect/LobeSwitch removed from main entry. Use `@lobehub/ui/base-ui` instead.
+
+- refactor(base-ui): move ContextMenu/DropdownMenu/ScrollArea/Toast impl into base-ui, re-export from original paths
+
 ## [4.38.4](https://github.com/lobehub/lobe-ui/compare/v4.38.3...v4.38.4) (2026-02-15)
 
 ### ♻ Code Refactoring

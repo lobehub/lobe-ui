@@ -10,6 +10,7 @@ export default () => {
 
   const controls = useControls(
     {
+      allowClear: false,
       allowReset: true,
       defaultValue: DEFAULT_VALUE,
       disabled: false,
@@ -33,6 +34,9 @@ export default () => {
         onChange={(value) => {
           setShortcut(value);
           console.log(value);
+        }}
+        onClear={(currentValue) => {
+          console.log('Cleared:', currentValue);
         }}
         {...controls}
       />

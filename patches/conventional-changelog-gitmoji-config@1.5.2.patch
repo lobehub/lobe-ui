@@ -1,0 +1,21 @@
+diff --git a/lib/finalizeContext/index.js b/lib/finalizeContext/index.js
+index 1111111..2222222 100644
+--- a/lib/finalizeContext/index.js
++++ b/lib/finalizeContext/index.js
+@@ -11,10 +11,13 @@ var _default = function _default(customConfig) {
+     var subCommitScope = (customConfig === null || customConfig === void 0 ? void 0 : (_customConfig$scopeDi = customConfig.scopeDisplayName) === null || _customConfig$scopeDi === void 0 ? void 0 : _customConfig$scopeDi['*']) || null;
+     var authors = {};
+     var typeMap = (0, _typeDisplayName.defineTypeMap)(customConfig.customTypeMap);
+-    context.commitGroups = context.commitGroups.map(function (item) {
+-      var subtitle = Object.values(typeMap).find(function (i) {
++    context.commitGroups = context.commitGroups.filter(function (item) {
++      return typeof item.title === 'string';
++    }).map(function (item) {
++      var matched = Object.values(typeMap).find(function (i) {
+         return item.title.includes(i['emoji']) || item.title.includes(i['en-US']) || item.title.includes(i['zh-CN']);
+-      }).subtitle;
++      });
++      var subtitle = matched ? matched.subtitle : item.title;
+       var group;
+       var commits = item.commits.sort(function (a, b) {
+         if (a.scope === subCommitScope && b.scope === subCommitScope) {
