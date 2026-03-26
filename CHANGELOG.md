@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [5.5.3](https://github.com/lobehub/lobe-ui/compare/v5.5.2...v5.5.3) (2026-03-26)
+
+### 🎫 Chores
+
+- Fix type ([dc90517](https://github.com/lobehub/lobe-ui/commit/dc90517))
+
+### 💄 Styles
+
+- Add lucide v1 removed icons ([10bd3b1](https://github.com/lobehub/lobe-ui/commit/10bd3b1))
+
 ## [5.5.2](https://github.com/lobehub/lobe-ui/compare/v5.5.1...v5.5.2) (2026-03-18)
 
 ### 🐛 Bug Fixes
