@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.6.0](https://github.com/lobehub/lobe-ui/compare/v5.5.3...v5.6.0) (2026-03-26)
+
+### ✨ Features
+
+- Add post-processing for Mermaid SVGs with tests ([33e9392](https://github.com/lobehub/lobe-ui/commit/33e9392))
+
 ## [5.5.3](https://github.com/lobehub/lobe-ui/compare/v5.5.2...v5.5.3) (2026-03-26)
 
 ### 🎫 Chores
