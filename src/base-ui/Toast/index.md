@@ -7,24 +7,24 @@ subType: base-ui
 apiHeader:
   pkg: '@lobehub/ui/base-ui'
   docUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/base-ui/Toast/index.md'
-  sourceUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/Toast/index.tsx'
+  sourceUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/base-ui/Toast/imperative.tsx'
 ---
 
 ## Default
 
-<code src="../../Toast/demos/index.tsx" nopadding></code>
+<code src="./demos/index.tsx" nopadding></code>
 
 ## Actions & Custom Icon
 
-<code src="../../Toast/demos/actions.tsx" nopadding></code>
+<code src="./demos/actions.tsx" nopadding></code>
 
 ## Promise
 
-<code src="../../Toast/demos/promise.tsx" nopadding></code>
+<code src="./demos/promise.tsx" nopadding></code>
 
 ## Position
 
-<code src="../../Toast/demos/position.tsx" nopadding></code>
+<code src="./demos/position.tsx" nopadding></code>
 
 ## Usage
 
