@@ -151,7 +151,7 @@
     "@pierre/diffs": "^1.0.10",
     "@radix-ui/react-slot": "^1.2.4",
     "@shikijs/core": "^3.22.0",
-    "@shikijs/transformers": "^3.22.0",
+    "@shikijs/transformers": "^4.0.0",
     "@splinetool/runtime": "0.9.526",
     "ahooks": "^3.9.6",
     "antd-style": "^4.1.0",
