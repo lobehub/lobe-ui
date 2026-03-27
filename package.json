@@ -150,7 +150,7 @@
     "@mdx-js/react": "^3.1.1",
     "@pierre/diffs": "^1.0.10",
     "@radix-ui/react-slot": "^1.2.4",
-    "@shikijs/core": "^3.22.0",
+    "@shikijs/core": "^4.0.0",
     "@shikijs/transformers": "^3.22.0",
     "@splinetool/runtime": "0.9.526",
     "ahooks": "^3.9.6",
