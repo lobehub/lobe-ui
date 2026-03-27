@@ -11,16 +11,26 @@ const BASE_DELAY = 18;
 const ACCELERATION_FACTOR = 0.3;
 const MAX_BLOCK_DURATION = 3000;
 const FADE_DURATION = 280;
+const MAX_DELAY = 36;
+const MIN_DELAY = 6;
 
 function countChars(text: string): number {
   return [...text].length;
 }
 
-function computeCharDelay(queueLength: number, charCount: number): number {
+function clamp(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
+}
+
+function computeCharDelay(
+  queueLength: number,
+  charCount: number,
+  preferredDelay = BASE_DELAY,
+): number {
   const acceleration = 1 + queueLength * ACCELERATION_FACTOR;
-  let delay = BASE_DELAY / acceleration;
+  let delay = preferredDelay / acceleration;
   delay = Math.min(delay, MAX_BLOCK_DURATION / Math.max(charCount, 1));
-  return delay;
+  return clamp(delay, MIN_DELAY, MAX_DELAY);
 }
 
 export interface UseStreamQueueReturn {
@@ -29,7 +39,14 @@ export interface UseStreamQueueReturn {
   queueLength: number;
 }
 
-export function useStreamQueue(blocks: BlockInfo[]): UseStreamQueueReturn {
+interface UseStreamQueueOptions {
+  preferredCharDelay?: number;
+}
+
+export function useStreamQueue(
+  blocks: BlockInfo[],
+  { preferredCharDelay = BASE_DELAY }: UseStreamQueueOptions = {},
+): UseStreamQueueReturn {
   const [revealedCount, setRevealedCount] = useState(0);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prevBlocksLenRef = useRef(0);
@@ -87,13 +104,21 @@ export function useStreamQueue(blocks: BlockInfo[]): UseStreamQueueReturn {
 
   // Freeze charDelay when entering a new active block (animating or streaming)
   const frozenRef = useRef({ delay: BASE_DELAY, index: -1 });
+  const nextDelay = computeCharDelay(queueLength, activeCharCount, preferredCharDelay);
   if (activeIndex >= 0 && activeIndex !== frozenRef.current.index) {
     frozenRef.current = {
-      delay: computeCharDelay(queueLength, activeCharCount),
+      delay: nextDelay,
+      index: activeIndex,
+    };
+  } else if (activeIndex >= 0) {
+    // Allow in-flight blocks to accelerate with the upstream stream rate
+    // without regressing already-started character progress.
+    frozenRef.current = {
+      delay: Math.min(frozenRef.current.delay, nextDelay),
       index: activeIndex,
     };
   }
-  const charDelay = activeIndex >= 0 ? frozenRef.current.delay : BASE_DELAY;
+  const charDelay = activeIndex >= 0 ? frozenRef.current.delay : nextDelay;
 
   const onAnimationDone = useCallback(() => {
     setRevealedCount(effectiveRevealedCount + 1);
