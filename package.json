@@ -209,7 +209,7 @@
     "@commitlint/cli": "^19.8.1",
     "@lobehub/eslint-config": "2.0.0",
     "@lobehub/fluent-emoji": "^4.1.0",
-    "@lobehub/icons": "^4.2.0",
+    "@lobehub/icons": "^5.0.0",
     "@lobehub/lint": "^2.0.0",
     "@testing-library/react": "^16.3.2",
     "@types/chroma-js": "^3.1.2",
