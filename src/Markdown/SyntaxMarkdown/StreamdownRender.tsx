@@ -1,7 +1,16 @@
 'use client';
 
 import { marked } from 'marked';
-import { memo, useEffect, useId, useMemo, useRef } from 'react';
+import {
+  memo,
+  Profiler,
+  type ProfilerOnRenderCallback,
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+} from 'react';
 import Markdown, { type Options } from 'react-markdown';
 import remend from 'remend';
 import type { Pluggable, PluggableList } from 'unified';
@@ -14,15 +23,22 @@ import {
 } from '@/hooks/useMarkdown';
 import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
 import { rehypeStreamAnimated } from '@/Markdown/plugins/rehypeStreamAnimated';
+import { useStreamdownProfiler } from '@/Markdown/streamProfiler';
 
+import { resolveBlockAnimationMeta } from './streamAnimationMeta';
 import { styles } from './style';
 import { useSmoothStreamContent } from './useSmoothStreamContent';
 import { type BlockInfo, useStreamQueue } from './useStreamQueue';
 
 const STREAM_FADE_DURATION = 280;
+const REVEALED_STREAM_PLUGIN: Pluggable = [rehypeStreamAnimated, { revealed: true }];
 
 function countChars(text: string): number {
   return [...text].length;
+}
+
+function getNow(): number {
+  return typeof performance === 'undefined' ? Date.now() : performance.now();
 }
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
@@ -103,6 +119,7 @@ StreamdownBlock.displayName = 'StreamdownBlock';
 
 export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
   const { streamSmoothingPreset = 'balanced' } = useMarkdownContext();
+  const profiler = useStreamdownProfiler();
   const escapedContent = useMarkdownContent(children || '');
   const components = useMarkdownComponents();
   const baseRehypePlugins = useStablePlugins(useMarkdownRehypePlugins());
@@ -113,32 +130,49 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
     { preset: streamSmoothingPreset },
   );
 
-  const processedContent = useMemo(() => {
-    return remend(smoothedContent);
-  }, [smoothedContent]);
+  const processedContentResult = useMemo(() => {
+    const start = profiler ? getNow() : 0;
+    const value = remend(smoothedContent);
 
-  const blocks: BlockInfo[] = useMemo(() => {
+    return {
+      durationMs: profiler ? getNow() - start : 0,
+      value,
+    };
+  }, [profiler, smoothedContent]);
+  const processedContent = processedContentResult.value;
+
+  const blocksResult = useMemo(() => {
+    const start = profiler ? getNow() : 0;
     const tokens = marked.lexer(processedContent);
     let offset = 0;
-    return tokens.map((token) => {
+
+    const value = tokens.map((token) => {
       const block = { content: token.raw, startOffset: offset };
       offset += token.raw.length;
       return block;
     });
-  }, [processedContent]);
+
+    return {
+      durationMs: profiler ? getNow() - start : 0,
+      value,
+    };
+  }, [processedContent, profiler]);
+  const blocks: BlockInfo[] = blocksResult.value;
 
   const { getBlockState, charDelay } = useStreamQueue(blocks);
   const prevBlockCharCountRef = useRef<Map<number, number>>(new Map());
+  const blockCharDelayRef = useRef<Map<number, number>>(new Map());
   const blockTimelineRef = useRef<Map<number, number>>(new Map());
   const lastRenderTsRef = useRef<number | null>(null);
 
-  const renderTs = typeof performance === 'undefined' ? Date.now() : performance.now();
+  const renderTs = getNow();
   const frameDt =
     lastRenderTsRef.current === null
       ? 0
       : Math.max(0, Math.min(renderTs - lastRenderTsRef.current, 120));
 
-  const timelineForRender = useMemo(() => {
+  const timelineResult = useMemo(() => {
+    const start = profiler ? getNow() : 0;
     const next = new Map<number, number>();
     const prevTimeline = blockTimelineRef.current;
     const prevCharCounts = prevBlockCharCountRef.current;
@@ -160,70 +194,187 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
       next.set(block.startOffset, Math.max(elapsedByTime, minElapsed));
     }
 
-    return next;
-  }, [blocks, charDelay, frameDt]);
+    return {
+      durationMs: profiler ? getNow() - start : 0,
+      value: next,
+    };
+  }, [blocks, charDelay, frameDt, profiler]);
+  const timelineForRender = timelineResult.value;
+
+  useEffect(() => {
+    if (!profiler) return;
+
+    profiler.recordCalculation({
+      durationMs: processedContentResult.durationMs,
+      name: 'content-normalize',
+      textLength: processedContent.length,
+    });
+  }, [processedContent.length, processedContentResult.durationMs, profiler]);
+
+  useEffect(() => {
+    if (!profiler) return;
+
+    profiler.recordCalculation({
+      durationMs: blocksResult.durationMs,
+      itemCount: blocks.length,
+      name: 'block-lex',
+      textLength: processedContent.length,
+    });
+  }, [blocks.length, blocksResult.durationMs, processedContent.length, profiler]);
+
+  useEffect(() => {
+    if (!profiler) return;
+
+    profiler.recordCalculation({
+      durationMs: timelineResult.durationMs,
+      itemCount: blocks.length,
+      name: 'block-timeline',
+      textLength: processedContent.length,
+    });
+  }, [blocks.length, processedContent.length, profiler, timelineResult.durationMs]);
+
+  const blockAnimationMetaResult = useMemo(() => {
+    const nextBlockCharDelay = new Map<number, number>();
+    const blockAnimationMeta = new Map<number, ReturnType<typeof resolveBlockAnimationMeta>>();
+
+    for (const [index, block] of blocks.entries()) {
+      const state = getBlockState(index);
+      const timelineElapsedMs = timelineForRender.get(block.startOffset) ?? 0;
+      const animationMeta = resolveBlockAnimationMeta({
+        blockCharCount: countChars(block.content),
+        currentCharDelay: charDelay,
+        fadeDuration: STREAM_FADE_DURATION,
+        previousCharDelay: blockCharDelayRef.current.get(block.startOffset),
+        state,
+        timelineElapsedMs,
+      });
+
+      nextBlockCharDelay.set(block.startOffset, animationMeta.charDelay);
+      blockAnimationMeta.set(block.startOffset, animationMeta);
+    }
+
+    return {
+      blockAnimationMeta,
+      blockCharDelay: nextBlockCharDelay,
+    };
+  }, [blocks, charDelay, getBlockState, timelineForRender]);
 
   useEffect(() => {
     const nextCharCount = new Map<number, number>();
     for (const block of blocks) {
       nextCharCount.set(block.startOffset, countChars(block.content));
     }
+    blockCharDelayRef.current = blockAnimationMetaResult.blockCharDelay;
     prevBlockCharCountRef.current = nextCharCount;
     blockTimelineRef.current = timelineForRender;
-    lastRenderTsRef.current = typeof performance === 'undefined' ? Date.now() : performance.now();
-  }, [blocks, timelineForRender]);
+    lastRenderTsRef.current = getNow();
+  }, [blockAnimationMetaResult.blockCharDelay, blocks, timelineForRender]);
 
-  return (
+  const handleRootRender = useCallback<ProfilerOnRenderCallback>(
+    (_, phase, actualDuration, baseDuration) => {
+      profiler?.recordRootCommit({
+        actualDuration,
+        baseDuration,
+        blockCount: blocks.length,
+        phase,
+        textLength: processedContent.length,
+      });
+    },
+    [blocks.length, processedContent.length, profiler],
+  );
+
+  const handleBlockRender = useCallback<ProfilerOnRenderCallback>(
+    (id, phase, actualDuration, baseDuration) => {
+      if (!profiler) return;
+
+      const [, indexText, offsetText] = id.split(':');
+      const blockIndex = Number(indexText);
+
+      if (!Number.isFinite(blockIndex)) return;
+
+      const block = blocks[blockIndex];
+      if (!block) return;
+
+      profiler.recordBlockCommit({
+        actualDuration,
+        baseDuration,
+        blockChars: countChars(block.content),
+        blockIndex,
+        blockKey: offsetText ?? String(block.startOffset),
+        phase,
+        state: getBlockState(blockIndex),
+      });
+    },
+    [blocks, getBlockState, profiler],
+  );
+
+  const content = (
     <div className={styles.animated}>
       {blocks.map((block, index) => {
         const state = getBlockState(index);
         if (state === 'queued') return null;
-        const timelineElapsedMs = timelineForRender.get(block.startOffset) ?? 0;
+        const animationMeta = blockAnimationMetaResult.blockAnimationMeta.get(block.startOffset);
+        if (!animationMeta) return null;
 
-        let plugins: Pluggable[];
-        if (state === 'streaming') {
-          plugins = [
-            ...baseRehypePlugins,
-            [
-              rehypeStreamAnimated,
-              { charDelay, fadeDuration: STREAM_FADE_DURATION, timelineElapsedMs },
-            ],
-          ];
-        } else if (state === 'animating') {
-          // Continue from previously rendered progress instead of restarting
-          // or force-switching to fully revealed.
-          plugins = [
-            ...baseRehypePlugins,
-            [
-              rehypeStreamAnimated,
-              { charDelay, fadeDuration: STREAM_FADE_DURATION, timelineElapsedMs },
-            ],
-          ];
-        } else {
-          // Keep fade continuity for just-finished chars; avoid instant class
-          // switch to stream-char-revealed that would cancel in-flight fades.
-          plugins = [
-            ...baseRehypePlugins,
-            [
-              rehypeStreamAnimated,
-              { charDelay, fadeDuration: STREAM_FADE_DURATION, timelineElapsedMs },
-            ],
-          ];
-        }
+        const plugins: Pluggable[] = animationMeta.settled
+          ? [...baseRehypePlugins, REVEALED_STREAM_PLUGIN]
+          : [
+              ...baseRehypePlugins,
+              [
+                rehypeStreamAnimated,
+                {
+                  charDelay: animationMeta.charDelay,
+                  fadeDuration: STREAM_FADE_DURATION,
+                  timelineElapsedMs: animationMeta.timelineElapsedMs,
+                },
+              ],
+            ];
 
-        return (
+        const key = `${generatedId}-${block.startOffset}`;
+        const blockNode = (
           <StreamdownBlock
             {...rest}
             components={components}
-            key={`${generatedId}-${block.startOffset}`}
             rehypePlugins={plugins}
             remarkPlugins={remarkPlugins}
           >
             {block.content}
           </StreamdownBlock>
         );
+
+        if (!profiler) {
+          return (
+            <StreamdownBlock
+              {...rest}
+              components={components}
+              key={key}
+              rehypePlugins={plugins}
+              remarkPlugins={remarkPlugins}
+            >
+              {block.content}
+            </StreamdownBlock>
+          );
+        }
+
+        return (
+          <Profiler
+            id={`streamdown-block:${index}:${block.startOffset}`}
+            key={key}
+            onRender={handleBlockRender}
+          >
+            {blockNode}
+          </Profiler>
+        );
       })}
     </div>
+  );
+
+  if (!profiler) return content;
+
+  return (
+    <Profiler id={'streamdown-root'} onRender={handleRootRender}>
+      {content}
+    </Profiler>
   );
 });
 
