@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.6.2](https://github.com/lobehub/lobe-ui/compare/v5.6.1...v5.6.2) (2026-03-27)
+
+### ⚡ Performance Improvements
+
+- **markdown**: Add streamdown profiler and reduce idle stream work ([5f9bb2c](https://github.com/lobehub/lobe-ui/commit/5f9bb2c))
+
 ## [5.6.1](https://github.com/lobehub/lobe-ui/compare/v5.6.0...v5.6.1) (2026-03-27)
 
 ### 🐛 Bug Fixes
