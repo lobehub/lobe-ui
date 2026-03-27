@@ -178,7 +178,7 @@
     "rc-input-number": "^9.5.0",
     "rc-menu": "^9.16.1",
     "re-resizable": "^6.11.2",
-    "react-avatar-editor": "^14.0.0",
+    "react-avatar-editor": "^15.0.0",
     "react-error-boundary": "^6.1.0",
     "react-hotkeys-hook": "^5.2.4",
     "react-markdown": "^10.1.0",
