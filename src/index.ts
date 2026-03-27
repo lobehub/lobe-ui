@@ -149,6 +149,11 @@ export {
   SyntaxHighlighter,
   type SyntaxHighlighterProps,
 } from './Highlighter';
+export {
+  SyntaxHighlighterMinimal,
+  type SyntaxHighlighterMinimalProps,
+  useMinimalHighlight,
+} from './HighlighterMinimal';
 export { preprocessMarkdownContent } from './hooks/useMarkdown/utils';
 export { combineKeys, default as Hotkey, type HotkeyProps, KeyMapEnum } from './Hotkey';
 export { default as HotkeyInput, type HotkeyInputProps } from './HotkeyInput';
