@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.6.1](https://github.com/lobehub/lobe-ui/compare/v5.6.0...v5.6.1) (2026-03-27)
+
+### 🐛 Bug Fixes
+
+- **toast**: Restore ToastHost and consolidate under base-ui ([b82d8c2](https://github.com/lobehub/lobe-ui/commit/b82d8c2))
+
 # [5.6.0](https://github.com/lobehub/lobe-ui/compare/v5.5.3...v5.6.0) (2026-03-26)
 
 ### ✨ Features
