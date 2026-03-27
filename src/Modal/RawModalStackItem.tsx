@@ -32,7 +32,7 @@ export const RawModalStackItem = memo(
     const close = useEventCallback(() => stableOnClose(id));
 
     const setCanDismissByClickOutside = useEventCallback((value: boolean) => {
-      onUpdate(id, { maskClosable: value });
+      onUpdate(id, { mask: { closable: value } });
     });
     const contextValue: ModalContextValue = useMemo(
       () => ({ close, setCanDismissByClickOutside }),
