@@ -234,7 +234,7 @@
     "concurrently": "^9.2.1",
     "cross-env": "^10.1.0",
     "dotenv": "^17.2.3",
-    "dpdm": "^3.14.0",
+    "dpdm": "^4.0.0",
     "dumi": "^2.4.23",
     "dumi-theme-lobehub": "^5",
     "eslint": "^9.39.2",
