@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { useStreamdownProfiler } from '@/Markdown/streamProfiler';
 import { type StreamSmoothingPreset } from '@/Markdown/type';
 
 interface StreamSmoothingPresetConfig {
@@ -70,6 +71,10 @@ const clamp = (value: number, min: number, max: number): number => {
   return Math.min(max, Math.max(min, value));
 };
 
+const getNow = () => {
+  return typeof performance === 'undefined' ? Date.now() : performance.now();
+};
+
 export const countChars = (text: string): number => {
   return [...text].length;
 };
@@ -84,6 +89,7 @@ export const useSmoothStreamContent = (
   { enabled = true, preset = 'balanced' }: UseSmoothStreamContentOptions = {},
 ): string => {
   const config = PRESET_CONFIG[preset];
+  const profiler = useStreamdownProfiler();
   const [displayedContent, setDisplayedContent] = useState(content);
 
   const displayedContentRef = useRef(content);
@@ -101,6 +107,14 @@ export const useSmoothStreamContent = (
 
   const rafRef = useRef<number | null>(null);
   const lastFrameTsRef = useRef<number | null>(null);
+  const wakeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearWakeTimer = useCallback(() => {
+    if (wakeTimerRef.current !== null) {
+      clearTimeout(wakeTimerRef.current);
+      wakeTimerRef.current = null;
+    }
+  }, []);
 
   const stopFrameLoop = useCallback(() => {
     if (rafRef.current !== null) {
@@ -110,12 +124,34 @@ export const useSmoothStreamContent = (
     lastFrameTsRef.current = null;
   }, []);
 
+  const stopScheduling = useCallback(() => {
+    stopFrameLoop();
+    clearWakeTimer();
+  }, [clearWakeTimer, stopFrameLoop]);
+
+  const startFrameLoopRef = useRef<() => void>(() => {});
+
+  const scheduleFrameWake = useCallback(
+    (delayMs: number) => {
+      clearWakeTimer();
+
+      wakeTimerRef.current = setTimeout(
+        () => {
+          wakeTimerRef.current = null;
+          startFrameLoopRef.current();
+        },
+        Math.max(1, Math.ceil(delayMs)),
+      );
+    },
+    [clearWakeTimer],
+  );
+
   const syncImmediate = useCallback(
     (nextContent: string) => {
-      stopFrameLoop();
+      stopScheduling();
 
       const chars = [...nextContent];
-      const now = performance.now();
+      const now = getNow();
 
       targetContentRef.current = nextContent;
       targetCharsRef.current = chars;
@@ -131,20 +167,24 @@ export const useSmoothStreamContent = (
       lastInputTsRef.current = now;
       lastInputCountRef.current = chars.length;
     },
-    [config.defaultCps, stopFrameLoop],
+    [config.defaultCps, stopScheduling],
   );
 
   const startFrameLoop = useCallback(() => {
+    clearWakeTimer();
     if (rafRef.current !== null) return;
 
     const tick = (ts: number) => {
+      const frameStart = getNow();
+
       if (lastFrameTsRef.current === null) {
         lastFrameTsRef.current = ts;
         rafRef.current = requestAnimationFrame(tick);
         return;
       }
 
-      const dtSeconds = Math.max(0.001, Math.min((ts - lastFrameTsRef.current) / 1000, 0.05));
+      const frameIntervalMs = Math.max(0, ts - lastFrameTsRef.current);
+      const dtSeconds = Math.max(0.001, Math.min(frameIntervalMs / 1000, 0.05));
       lastFrameTsRef.current = ts;
 
       const targetCount = targetCountRef.current;
@@ -156,7 +196,7 @@ export const useSmoothStreamContent = (
         return;
       }
 
-      const now = performance.now();
+      const now = getNow();
       const idleMs = now - lastInputTsRef.current;
       const inputActive = idleMs <= config.activeInputWindowMs;
       const settling = !inputActive && idleMs >= config.settleAfterMs;
@@ -210,7 +250,17 @@ export const useSmoothStreamContent = (
       if (inputActive) {
         const shortfall = desiredDisplayed - displayedCount;
         if (shortfall <= 0) {
-          rafRef.current = requestAnimationFrame(tick);
+          stopFrameLoop();
+          scheduleFrameWake(config.activeInputWindowMs - idleMs);
+
+          profiler?.recordAnimationFrame({
+            backlog,
+            durationMs: getNow() - frameStart,
+            frameIntervalMs,
+            inputActive,
+            revealChars: 0,
+            settling,
+          });
           return;
         }
         revealChars = Math.min(revealChars, shortfall, backlog);
@@ -232,11 +282,21 @@ export const useSmoothStreamContent = (
         setDisplayedContent(targetContentRef.current);
       }
 
+      profiler?.recordAnimationFrame({
+        backlog,
+        durationMs: getNow() - frameStart,
+        frameIntervalMs,
+        inputActive,
+        revealChars: segment ? revealChars : backlog,
+        settling,
+      });
+
       rafRef.current = requestAnimationFrame(tick);
     };
 
     rafRef.current = requestAnimationFrame(tick);
   }, [
+    clearWakeTimer,
     config.activeInputWindowMs,
     config.flushCps,
     config.maxActiveCps,
@@ -247,8 +307,10 @@ export const useSmoothStreamContent = (
     config.settleDrainMaxMs,
     config.settleDrainMinMs,
     config.targetBufferMs,
+    scheduleFrameWake,
     stopFrameLoop,
   ]);
+  startFrameLoopRef.current = startFrameLoop;
 
   useEffect(() => {
     if (!enabled) {
@@ -259,7 +321,7 @@ export const useSmoothStreamContent = (
     const prevTargetContent = targetContentRef.current;
     if (content === prevTargetContent) return;
 
-    const now = performance.now();
+    const now = getNow();
     const appendOnly = content.startsWith(prevTargetContent);
 
     if (!appendOnly) {
@@ -270,6 +332,11 @@ export const useSmoothStreamContent = (
     const appended = content.slice(prevTargetContent.length);
     const appendedChars = [...appended];
     const appendedCount = appendedChars.length;
+
+    profiler?.recordInputAppend({
+      appendedChars: appendedCount,
+      contentLength: countChars(content),
+    });
 
     if (appendedCount > config.largeAppendChars) {
       syncImmediate(content);
@@ -311,13 +378,14 @@ export const useSmoothStreamContent = (
     enabled,
     startFrameLoop,
     syncImmediate,
+    profiler,
   ]);
 
   useEffect(() => {
     return () => {
-      stopFrameLoop();
+      stopScheduling();
     };
-  }, [stopFrameLoop]);
+  }, [stopScheduling]);
 
   return displayedContent;
 };

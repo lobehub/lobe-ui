@@ -286,7 +286,7 @@ export const ToastHost = memo(
 
     const container = root ?? appElement ?? document.body;
 
-    ALL_POSITIONS.map((pos) => (
+    return ALL_POSITIONS.map((pos) => (
       <ToastContext key={pos} value={{ position: pos, swipeDirection }}>
         <BaseToast.Provider limit={limit} timeout={duration} toastManager={getManager(pos)}>
           <BaseToast.Portal container={container}>

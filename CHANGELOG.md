@@ -2,6 +2,34 @@
 
 # Changelog
 
+## [5.6.2](https://github.com/lobehub/lobe-ui/compare/v5.6.1...v5.6.2) (2026-03-27)
+
+### ⚡ Performance Improvements
+
+- **markdown**: Add streamdown profiler and reduce idle stream work ([5f9bb2c](https://github.com/lobehub/lobe-ui/commit/5f9bb2c))
+
+## [5.6.1](https://github.com/lobehub/lobe-ui/compare/v5.6.0...v5.6.1) (2026-03-27)
+
+### 🐛 Bug Fixes
+
+- **toast**: Restore ToastHost and consolidate under base-ui ([b82d8c2](https://github.com/lobehub/lobe-ui/commit/b82d8c2))
+
+# [5.6.0](https://github.com/lobehub/lobe-ui/compare/v5.5.3...v5.6.0) (2026-03-26)
+
+### ✨ Features
+
+- Add post-processing for Mermaid SVGs with tests ([33e9392](https://github.com/lobehub/lobe-ui/commit/33e9392))
+
+## [5.5.3](https://github.com/lobehub/lobe-ui/compare/v5.5.2...v5.5.3) (2026-03-26)
+
+### 🎫 Chores
+
+- Fix type ([dc90517](https://github.com/lobehub/lobe-ui/commit/dc90517))
+
+### 💄 Styles
+
+- Add lucide v1 removed icons ([10bd3b1](https://github.com/lobehub/lobe-ui/commit/10bd3b1))
+
 ## [5.5.2](https://github.com/lobehub/lobe-ui/compare/v5.5.1...v5.5.2) (2026-03-18)
 
 ### 🐛 Bug Fixes
