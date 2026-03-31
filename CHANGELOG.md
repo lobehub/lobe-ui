@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.6.3](https://github.com/lobehub/lobe-ui/compare/v5.6.2...v5.6.3) (2026-03-31)
+
+### 🐛 Bug Fixes
+
+- **toast**: Improve description-only toast layout ([4832ef6](https://github.com/lobehub/lobe-ui/commit/4832ef6))
+
 ## [5.6.2](https://github.com/lobehub/lobe-ui/compare/v5.6.1...v5.6.2) (2026-03-27)
 
 ### ⚡ Performance Improvements
