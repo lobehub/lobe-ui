@@ -102,38 +102,60 @@ const ToastItem = memo<ToastProps>(({ toast, classNames, styles: customStyles })
         className={cx(styles.content, classNames?.content)}
         style={customStyles?.content}
       >
-        <div className={styles.toastBody}>
+        <div className={title ? styles.toastBody : styles.toastBodyCenter}>
           {renderIcon()}
           <div className={styles.contentArea}>
-            <div className={styles.titleRow}>
-              {title && (
-                <BaseToast.Title
-                  className={cx(styles.title, classNames?.title)}
-                  style={customStyles?.title}
-                >
-                  {title}
-                </BaseToast.Title>
-              )}
-              {showCloseButton && (
-                <BaseToast.Close
-                  aria-label="Close"
-                  className={cx(styles.close, classNames?.close)}
-                  style={customStyles?.close}
-                >
-                  <X size={14} />
-                </BaseToast.Close>
-              )}
-            </div>
-            {description && (
-              <BaseToast.Description
-                className={cx(styles.description, classNames?.description)}
-                style={{
-                  marginBlockStart: title ? 4 : 0,
-                  ...customStyles?.description,
-                }}
-              >
-                {description}
-              </BaseToast.Description>
+            {title ? (
+              <>
+                <div className={styles.titleRow}>
+                  <BaseToast.Title
+                    className={cx(styles.title, classNames?.title)}
+                    style={customStyles?.title}
+                  >
+                    {title}
+                  </BaseToast.Title>
+                  {showCloseButton && (
+                    <BaseToast.Close
+                      aria-label="Close"
+                      className={cx(styles.close, classNames?.close)}
+                      style={customStyles?.close}
+                    >
+                      <X size={14} />
+                    </BaseToast.Close>
+                  )}
+                </div>
+                {description && (
+                  <BaseToast.Description
+                    className={cx(styles.description, classNames?.description)}
+                    style={{
+                      marginBlockStart: 4,
+                      ...customStyles?.description,
+                    }}
+                  >
+                    {description}
+                  </BaseToast.Description>
+                )}
+              </>
+            ) : (
+              description && (
+                <div className={styles.titleRow}>
+                  <BaseToast.Description
+                    className={cx(styles.description, classNames?.description)}
+                    style={customStyles?.description}
+                  >
+                    {description}
+                  </BaseToast.Description>
+                  {showCloseButton && (
+                    <BaseToast.Close
+                      aria-label="Close"
+                      className={cx(styles.close, classNames?.close)}
+                      style={customStyles?.close}
+                    >
+                      <X size={14} />
+                    </BaseToast.Close>
+                  )}
+                </div>
+              )
             )}
             {renderActions()}
           </div>

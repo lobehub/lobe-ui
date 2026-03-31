@@ -324,6 +324,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     align-items: flex-start;
   `,
 
+  toastBodyCenter: css`
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  `,
+
   viewport: css`
     position: fixed;
     z-index: 1100;

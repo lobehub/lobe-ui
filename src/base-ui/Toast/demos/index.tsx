@@ -133,6 +133,18 @@ export default () => {
         >
           Custom
         </Button>
+        <Button
+          onClick={() =>
+            toast.info({
+              closable: options.closable,
+              description: 'Web app has been updated so it needs to be reloaded.',
+              duration: options.duration,
+              placement: options.placement,
+            })
+          }
+        >
+          Description Only
+        </Button>
         <Button type="text" onClick={() => toast.dismiss()}>
           Dismiss All
         </Button>
