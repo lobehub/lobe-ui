@@ -254,7 +254,7 @@
     "svgo": "^4.0.0",
     "tsdown": "^0.18.2",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.0",
     "unist-util-is": "^6.0.1",
     "unist-util-visit": "^5.1.0",
     "vitest": "^3.2.4"
