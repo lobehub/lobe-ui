@@ -1,8 +1,8 @@
 'use client';
 
+import { GithubIcon } from '@lobehub/ui/icons';
 import { ConfigProvider } from 'antd';
 import { useResponsive } from 'antd-style';
-import { Github } from 'lucide-react';
 import { memo, useCallback } from 'react';
 
 import A from '@/A';
@@ -28,7 +28,7 @@ const Hero = memo<HeroProps>(({ title, description, actions, Link }) => {
               type === 'primary' ? (
                 <GradientButton
                   block={mobile}
-                  icon={github ? Github : undefined}
+                  icon={github ? GithubIcon : undefined}
                   key={index}
                   size="large"
                 >
@@ -37,7 +37,7 @@ const Hero = memo<HeroProps>(({ title, description, actions, Link }) => {
               ) : (
                 <Button
                   block={mobile}
-                  icon={github ? Github : undefined}
+                  icon={github ? GithubIcon : undefined}
                   key={index}
                   size="large"
                   type="primary"
