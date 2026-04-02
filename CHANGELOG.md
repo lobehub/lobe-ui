@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.6.4](https://github.com/lobehub/lobe-ui/compare/v5.6.3...v5.6.4) (2026-04-02)
+
+### 🐛 Bug Fixes
+
+- Update deps, closes [#497](https://github.com/lobehub/lobe-ui/issues/497) ([5e4ce39](https://github.com/lobehub/lobe-ui/commit/5e4ce39))
+
 ## [5.6.3](https://github.com/lobehub/lobe-ui/compare/v5.6.2...v5.6.3) (2026-03-31)
 
 ### 🐛 Bug Fixes
