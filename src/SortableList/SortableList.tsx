@@ -2,8 +2,10 @@
 
 import {
   type Active,
+  closestCenter,
   DndContext,
   KeyboardSensor,
+  MeasuringStrategy,
   PointerSensor,
   useSensor,
   useSensors,
@@ -25,8 +27,14 @@ import SortableOverlay from './components/SortableOverlay';
 import { styles } from './style';
 import { type SortableListItem, type SortableListProps } from './type';
 
+const measuringConfig = {
+  droppable: {
+    strategy: MeasuringStrategy.Always,
+  },
+};
+
 const SortableListParent = memo<SortableListProps>(
-  ({ ref, items, onChange, renderItem, gap = 8, ...rest }) => {
+  ({ ref, items, onChange, renderItem, renderOverlay, gap = 8, ...rest }) => {
     const [active, setActive] = useState<Active | null>(null);
     const activeItem = useMemo(() => items.find((item) => item.id === active?.id), [active, items]);
     const sensors = useSensors(
@@ -36,8 +44,12 @@ const SortableListParent = memo<SortableListProps>(
       }),
     );
 
+    const overlayRenderer = renderOverlay ?? renderItem;
+
     return (
       <DndContext
+        collisionDetection={closestCenter}
+        measuring={measuringConfig}
         modifiers={[restrictToVerticalAxis, restrictToWindowEdges]}
         sensors={sensors}
         onDragCancel={() => {
@@ -63,7 +75,7 @@ const SortableListParent = memo<SortableListProps>(
             ))}
           </Flexbox>
         </SortableContext>
-        <SortableOverlay>{activeItem ? renderItem(activeItem) : null}</SortableOverlay>
+        <SortableOverlay>{activeItem ? overlayRenderer(activeItem) : null}</SortableOverlay>
       </DndContext>
     );
   },
