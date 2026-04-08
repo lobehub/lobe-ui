@@ -44,12 +44,17 @@ export const loadMermaid = (): Promise<typeof import('mermaid').default | null> 
 export const createMermaidConfig = (
   theme: ReturnType<typeof useTheme>,
   customTheme?: MermaidConfig['theme'],
+  // SECURITY: Keep 'strict' as the default. Using 'loose' causes Mermaid to render
+  // node labels via innerHTML, enabling XSS when diagram content is user-controlled.
+  // Only pass 'loose' if your use case explicitly requires HTML labels and you control
+  // the diagram source entirely.
+  securityLevel: MermaidConfig['securityLevel'] = 'strict',
 ): MermaidConfig => ({
   fontFamily: theme.fontFamilyCode,
   gantt: {
     useWidth: 1920,
   },
-  securityLevel: 'loose',
+  securityLevel,
   startOnLoad: false,
   theme: customTheme || (theme.isDarkMode ? 'dark' : 'neutral'),
   themeVariables: customTheme
@@ -87,8 +92,12 @@ export const useMermaid = (
   {
     id,
     theme: customTheme,
+    securityLevel,
   }: {
     id: string;
+    // SECURITY: Defaults to 'strict'. Set to 'loose' only when you fully control
+    // the diagram source and intentionally need HTML rendering in node labels.
+    securityLevel?: MermaidConfig['securityLevel'];
     theme?: MermaidConfig['theme'];
   },
 ): string => {
@@ -97,7 +106,7 @@ export const useMermaid = (
 
   // 提取主题相关配置到 useMemo 中 - 只依赖实际使用的 theme 属性
   const mermaidConfig = useMemo(
-    () => createMermaidConfig(theme, customTheme),
+    () => createMermaidConfig(theme, customTheme, securityLevel),
     [
       theme.fontFamilyCode,
       theme.isDarkMode,
@@ -118,6 +127,7 @@ export const useMermaid = (
       theme.colorSuccessText,
       theme.colorText,
       customTheme,
+      securityLevel,
     ],
   );
 
