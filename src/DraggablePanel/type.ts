@@ -39,6 +39,11 @@ export interface DraggablePanelProps extends DivProps {
   showHandleWhenCollapsed?: boolean;
   showHandleWideArea?: boolean;
   size?: Partial<Size>;
+  /**
+   * Use two-layer container layout to keep content layout stable when collapsed/expanded.
+   * @default false
+   */
+  stableLayout?: boolean;
   styles?: {
     content?: CSSProperties;
     handle?: CSSProperties;
