@@ -7,6 +7,7 @@ export {
   updateContextMenuItems,
 } from './ContextMenu';
 export * from './DropdownMenu';
+export * from './FloatingSheet';
 export * from './Modal';
 export * from './Popover';
 export * from './ScrollArea';
