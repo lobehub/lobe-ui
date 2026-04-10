@@ -232,7 +232,7 @@ export const createModal = (props: ImperativeModalProps): ModalInstance => {
   return {
     close: () => closeModal(id),
     destroy: () => destroyModal(id),
-    setCanDismissByClickOutside: (value) => updateModal(id, { maskClosable: value }),
+    setCanDismissByClickOutside: (value) => updateModal(id, { mask: { closable: value } }),
     update: (nextProps) => updateModal(id, nextProps),
   };
 };
@@ -271,7 +271,7 @@ export function createRawModal<P, OpenKey extends keyof P, CloseKey extends keyo
   return {
     close: () => closeModal(id),
     destroy: () => destroyModal(id),
-    setCanDismissByClickOutside: (value) => updateRawProps(id, { maskClosable: value }),
+    setCanDismissByClickOutside: (value) => updateRawProps(id, { mask: { closable: value } }),
     update: (nextProps) => updateRawProps(id, nextProps as Record<string, unknown>),
   };
 }

@@ -2,6 +2,18 @@
 
 # Changelog
 
+# [5.7.0](https://github.com/lobehub/lobe-ui/compare/v5.6.5...v5.7.0) (2026-04-10)
+
+### ✨ Features
+
+- **draggable-panel**: Add drag to collapse demos and improve type definitions, closes [#465](https://github.com/lobehub/lobe-ui/issues/465) ([e02b7b8](https://github.com/lobehub/lobe-ui/commit/e02b7b8))
+
+## [5.6.5](https://github.com/lobehub/lobe-ui/compare/v5.6.4...v5.6.5) (2026-04-07)
+
+### 🐛 Bug Fixes
+
+- **styles**: Remove inset box-shadow from Popover and Menu styles ([57756c8](https://github.com/lobehub/lobe-ui/commit/57756c8))
+
 ## [5.6.4](https://github.com/lobehub/lobe-ui/compare/v5.6.3...v5.6.4) (2026-04-02)
 
 ### 🐛 Bug Fixes
