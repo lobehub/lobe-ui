@@ -131,7 +131,7 @@ const Modal = memo<ModalProps>(
       >
         <AntModal
           closable
-          maskClosable
+          mask={{ closable: true }}
           cancelText={cancelText}
           className={cx(styles.content, className)}
           closeIcon={<Icon icon={X} size={20} />}
