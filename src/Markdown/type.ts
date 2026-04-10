@@ -24,6 +24,7 @@ export interface SyntaxMarkdownProps {
   allowHtml?: boolean;
   allowHtmlList?: ElementType[];
   animated?: boolean;
+  autoDisableStreamAnimation?: boolean;
   children: string;
   citations?: CitationItem[];
   componentProps?: {

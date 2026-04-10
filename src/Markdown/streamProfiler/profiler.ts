@@ -1,3 +1,4 @@
+import { type StreamAnimationDisableReason } from '@/Markdown/SyntaxMarkdown/streamAnimationAutoDisable';
 import { type BlockState } from '@/Markdown/SyntaxMarkdown/useStreamQueue';
 
 export type StreamdownProfilerPhase = 'mount' | 'nested-update' | 'update';
@@ -40,15 +41,24 @@ export interface StreamdownCalculationSummary extends StreamdownMetricSummary {
 }
 
 export interface StreamdownAnimationSummary extends StreamdownMetricSummary {
+  animationAutoDisabled: boolean;
+  disableCount: number;
+  lastArrivalCps: number;
   lastBacklog: number;
+  lastDisableReason: StreamAnimationDisableReason;
   lastInputActive: boolean;
   lastRevealChars: number;
   lastSettling: boolean;
+  maxArrivalCps: number;
   maxBacklog: number;
   maxRevealChars: number;
+  recoverThresholdBacklog: number;
+  recoverThresholdCps: number;
   revealFrameCount: number;
   skippedFrameCount: number;
   slowFrameCount: number;
+  thresholdBacklog: number;
+  thresholdCps: number;
 }
 
 export interface StreamdownFpsSummary {
@@ -120,6 +130,17 @@ export interface StreamdownAnimationFrameSample {
   settling: boolean;
 }
 
+export interface StreamdownAnimationModeSample {
+  animationAutoDisabled: boolean;
+  arrivalCps: number;
+  backlog: number;
+  reason: StreamAnimationDisableReason;
+  recoverThresholdBacklog: number;
+  recoverThresholdCps: number;
+  thresholdBacklog: number;
+  thresholdCps: number;
+}
+
 export interface StreamdownInputAppendSample {
   appendedChars: number;
   contentLength: number;
@@ -128,6 +149,7 @@ export interface StreamdownInputAppendSample {
 export interface StreamdownProfiler {
   getSnapshot: () => StreamdownProfilerSnapshot;
   recordAnimationFrame: (sample: StreamdownAnimationFrameSample) => void;
+  recordAnimationMode: (sample: StreamdownAnimationModeSample) => void;
   recordBlockCommit: (sample: StreamdownBlockCommitSample) => void;
   recordCalculation: (sample: StreamdownCalculationSample) => void;
   recordInputAppend: (sample: StreamdownInputAppendSample) => void;
@@ -179,15 +201,24 @@ interface MutableCalculationSummary extends MutableMetric {
 }
 
 interface MutableAnimationSummary extends MutableMetric {
+  animationAutoDisabled: boolean;
+  disableCount: number;
+  lastArrivalCps: number;
   lastBacklog: number;
+  lastDisableReason: StreamAnimationDisableReason;
   lastInputActive: boolean;
   lastRevealChars: number;
   lastSettling: boolean;
+  maxArrivalCps: number;
   maxBacklog: number;
   maxRevealChars: number;
+  recoverThresholdBacklog: number;
+  recoverThresholdCps: number;
   revealFrameCount: number;
   skippedFrameCount: number;
   slowFrameCount: number;
+  thresholdBacklog: number;
+  thresholdCps: number;
 }
 
 interface MutableFpsSummary {
@@ -278,15 +309,24 @@ const createRootSummary = (): MutableRootSummary => ({
 
 const createAnimationSummary = (): MutableAnimationSummary => ({
   ...createMetric(),
+  animationAutoDisabled: false,
+  disableCount: 0,
+  lastArrivalCps: 0,
   lastBacklog: 0,
+  lastDisableReason: 'none',
   lastInputActive: false,
   lastRevealChars: 0,
   lastSettling: false,
+  maxArrivalCps: 0,
   maxBacklog: 0,
   maxRevealChars: 0,
   revealFrameCount: 0,
+  recoverThresholdBacklog: 0,
+  recoverThresholdCps: 0,
   skippedFrameCount: 0,
   slowFrameCount: 0,
+  thresholdBacklog: 0,
+  thresholdCps: 0,
 });
 
 const createFpsSummary = (): MutableFpsSummary => ({
@@ -368,15 +408,24 @@ const buildSnapshot = (
   return {
     animation: {
       ...toMetricSummary(state.animation),
+      animationAutoDisabled: state.animation.animationAutoDisabled,
+      disableCount: state.animation.disableCount,
+      lastArrivalCps: state.animation.lastArrivalCps,
       lastBacklog: state.animation.lastBacklog,
+      lastDisableReason: state.animation.lastDisableReason,
       lastInputActive: state.animation.lastInputActive,
       lastRevealChars: state.animation.lastRevealChars,
       lastSettling: state.animation.lastSettling,
+      maxArrivalCps: state.animation.maxArrivalCps,
       maxBacklog: state.animation.maxBacklog,
       maxRevealChars: state.animation.maxRevealChars,
       revealFrameCount: state.animation.revealFrameCount,
+      recoverThresholdBacklog: state.animation.recoverThresholdBacklog,
+      recoverThresholdCps: state.animation.recoverThresholdCps,
       skippedFrameCount: state.animation.skippedFrameCount,
       slowFrameCount: state.animation.slowFrameCount,
+      thresholdBacklog: state.animation.thresholdBacklog,
+      thresholdCps: state.animation.thresholdCps,
     },
     blocks,
     blocksAggregate: {
@@ -506,6 +555,24 @@ export const createStreamdownProfiler = ({
             state.fps.samples.shift();
           }
         }
+      });
+    },
+    recordAnimationMode: (sample) => {
+      commitMutation(() => {
+        if (sample.animationAutoDisabled && !state.animation.animationAutoDisabled) {
+          state.animation.disableCount += 1;
+        }
+
+        state.animation.animationAutoDisabled = sample.animationAutoDisabled;
+        state.animation.lastArrivalCps = Math.max(0, sample.arrivalCps);
+        state.animation.lastBacklog = Math.max(0, sample.backlog);
+        state.animation.lastDisableReason = sample.reason;
+        state.animation.maxArrivalCps = Math.max(state.animation.maxArrivalCps, sample.arrivalCps);
+        state.animation.maxBacklog = Math.max(state.animation.maxBacklog, sample.backlog);
+        state.animation.recoverThresholdBacklog = Math.max(0, sample.recoverThresholdBacklog);
+        state.animation.recoverThresholdCps = Math.max(0, sample.recoverThresholdCps);
+        state.animation.thresholdBacklog = Math.max(0, sample.thresholdBacklog);
+        state.animation.thresholdCps = Math.max(0, sample.thresholdCps);
       });
     },
     recordBlockCommit: (sample) => {

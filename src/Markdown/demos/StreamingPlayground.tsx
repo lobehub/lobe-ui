@@ -99,6 +99,7 @@ export const StreamingPlayground = ({ defaultShowProfiler = false }: StreamingPl
     streamingSpeed,
     randomStreaming,
     useReadableStream,
+    autoDisableStreamAnimation,
     chunkSizeMin,
     chunkSizeMax,
     chunkDelayMin,
@@ -129,6 +130,9 @@ export const StreamingPlayground = ({ defaultShowProfiler = false }: StreamingPl
         value: true,
       },
       fullFeaturedCodeBlock: {
+        value: true,
+      },
+      autoDisableStreamAnimation: {
         value: true,
       },
       randomStreaming: {
@@ -368,6 +372,7 @@ export const StreamingPlayground = ({ defaultShowProfiler = false }: StreamingPl
   const markdownNode = (
     <Markdown
       animated={isStreaming}
+      autoDisableStreamAnimation={autoDisableStreamAnimation}
       components={components}
       fullFeaturedCodeBlock={rest.fullFeaturedCodeBlock}
       rehypePlugins={rehypePlugins}
@@ -430,6 +435,16 @@ export const StreamingPlayground = ({ defaultShowProfiler = false }: StreamingPl
               </Button>
             )}
           </Flexbox>
+
+          {useReadableStream && autoDisableStreamAnimation && (
+            <div
+              style={{ color: 'var(--lobe-color-text-secondary)', fontSize: 12, lineHeight: 1.6 }}
+            >
+              For overload verification, use `ReadableStream`, reduce delay to `5-15 ms`, and raise
+              chunk size to `16-32` characters. Inspect `Animation Mode`, `Arrival Rate`, and
+              `Backlog` in the profiler panel.
+            </div>
+          )}
 
           {activeProfiler ? (
             <StreamdownProfilerProvider profiler={activeProfiler}>

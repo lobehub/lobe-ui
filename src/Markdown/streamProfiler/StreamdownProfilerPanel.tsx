@@ -9,18 +9,27 @@ import { type StreamdownProfiler, type StreamdownProfilerSnapshot } from './prof
 const EMPTY_SNAPSHOT: StreamdownProfilerSnapshot = {
   animation: {
     avgMs: 0,
+    animationAutoDisabled: false,
     count: 0,
+    disableCount: 0,
+    lastArrivalCps: 0,
     lastBacklog: 0,
+    lastDisableReason: 'none',
     lastInputActive: false,
     lastMs: 0,
     lastRevealChars: 0,
     lastSettling: false,
+    maxArrivalCps: 0,
     maxBacklog: 0,
     maxMs: 0,
     maxRevealChars: 0,
     revealFrameCount: 0,
+    recoverThresholdBacklog: 0,
+    recoverThresholdCps: 0,
     skippedFrameCount: 0,
     slowFrameCount: 0,
+    thresholdBacklog: 0,
+    thresholdCps: 0,
     totalMs: 0,
   },
   blocks: [],
@@ -221,6 +230,12 @@ const formatFps = (value: number) => {
   return `${value.toFixed(2)} fps`;
 };
 
+const formatCps = (value: number) => {
+  if (value >= 100) return `${value.toFixed(0)} cps`;
+  if (value >= 10) return `${value.toFixed(1)} cps`;
+  return `${value.toFixed(2)} cps`;
+};
+
 const getFpsIndexLabel = (index: number) => {
   if (index >= 95) return 'Excellent';
   if (index >= 80) return 'Stable';
@@ -320,6 +335,13 @@ export const StreamdownProfilerPanel = ({
   const elapsedMs = Math.max(0, deferredSnapshot.updatedAt - deferredSnapshot.createdAt);
   const visibleBlocks = deferredSnapshot.blocks.slice(0, maxBlocks);
   const fpsIndexLabel = getFpsIndexLabel(deferredSnapshot.fps.index);
+  const animationModeLabel = deferredSnapshot.animation.animationAutoDisabled
+    ? 'Degraded'
+    : 'Animated';
+  const animationReasonLabel =
+    deferredSnapshot.animation.lastDisableReason === 'none'
+      ? 'none'
+      : deferredSnapshot.animation.lastDisableReason;
 
   return (
     <aside style={panelStyle}>
@@ -376,6 +398,20 @@ export const StreamdownProfilerPanel = ({
           )} / skip ${formatCount(deferredSnapshot.animation.skippedFrameCount)}`}
         />
         <MetricCard
+          label={'Animation Mode'}
+          value={animationModeLabel}
+          hint={`trigger ${animationReasonLabel} / count ${formatCount(
+            deferredSnapshot.animation.disableCount,
+          )}`}
+        />
+        <MetricCard
+          label={'Arrival Rate'}
+          value={formatCps(deferredSnapshot.animation.lastArrivalCps)}
+          hint={`peak ${formatCps(deferredSnapshot.animation.maxArrivalCps)} / disable ${formatCps(
+            deferredSnapshot.animation.thresholdCps,
+          )} / recover ${formatCps(deferredSnapshot.animation.recoverThresholdCps)}`}
+        />
+        <MetricCard
           label={'Input Append Size'}
           value={formatCount(Math.round(deferredSnapshot.input.avgChars))}
           hint={`max ${formatCount(deferredSnapshot.input.maxChars)} / total ${formatCount(
@@ -393,6 +429,13 @@ export const StreamdownProfilerPanel = ({
           hint={`min ${formatFps(deferredSnapshot.fps.minFps)} / max ${formatFps(
             deferredSnapshot.fps.maxFps,
           )}`}
+        />
+        <MetricCard
+          label={'Backlog'}
+          value={formatCount(deferredSnapshot.animation.lastBacklog)}
+          hint={`max ${formatCount(deferredSnapshot.animation.maxBacklog)} / disable ${formatCount(
+            deferredSnapshot.animation.thresholdBacklog,
+          )} / recover ${formatCount(deferredSnapshot.animation.recoverThresholdBacklog)}`}
         />
       </div>
 

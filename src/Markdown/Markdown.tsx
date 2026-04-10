@@ -16,6 +16,7 @@ const Markdown = memo<MarkdownProps>((props) => {
   const {
     ref,
     children = '',
+    autoDisableStreamAnimation = true,
     className,
     style,
     fullFeaturedCodeBlock,
@@ -81,6 +82,7 @@ const Markdown = memo<MarkdownProps>((props) => {
         <MarkdownProvider
           allowHtml={allowHtml}
           animated={delayedAnimated}
+          autoDisableStreamAnimation={autoDisableStreamAnimation}
           citations={citations}
           componentProps={componentProps}
           components={components}

@@ -3,69 +3,13 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useStreamdownProfiler } from '@/Markdown/streamProfiler';
 import { type StreamSmoothingPreset } from '@/Markdown/type';
 
-interface StreamSmoothingPresetConfig {
-  activeInputWindowMs: number;
-  defaultCps: number;
-  emaAlpha: number;
-  flushCps: number;
-  largeAppendChars: number;
-  maxActiveCps: number;
-  maxCps: number;
-  maxFlushCps: number;
-  minCps: number;
-  settleAfterMs: number;
-  settleDrainMaxMs: number;
-  settleDrainMinMs: number;
-  targetBufferMs: number;
-}
-
-const PRESET_CONFIG: Record<StreamSmoothingPreset, StreamSmoothingPresetConfig> = {
-  balanced: {
-    activeInputWindowMs: 220,
-    defaultCps: 38,
-    emaAlpha: 0.2,
-    flushCps: 120,
-    largeAppendChars: 120,
-    maxActiveCps: 132,
-    maxCps: 72,
-    maxFlushCps: 280,
-    minCps: 18,
-    settleAfterMs: 360,
-    settleDrainMaxMs: 520,
-    settleDrainMinMs: 180,
-    targetBufferMs: 120,
-  },
-  realtime: {
-    activeInputWindowMs: 140,
-    defaultCps: 50,
-    emaAlpha: 0.3,
-    flushCps: 170,
-    largeAppendChars: 180,
-    maxActiveCps: 180,
-    maxCps: 96,
-    maxFlushCps: 360,
-    minCps: 24,
-    settleAfterMs: 260,
-    settleDrainMaxMs: 360,
-    settleDrainMinMs: 140,
-    targetBufferMs: 40,
-  },
-  silky: {
-    activeInputWindowMs: 320,
-    defaultCps: 28,
-    emaAlpha: 0.14,
-    flushCps: 96,
-    largeAppendChars: 100,
-    maxActiveCps: 102,
-    maxCps: 56,
-    maxFlushCps: 220,
-    minCps: 14,
-    settleAfterMs: 460,
-    settleDrainMaxMs: 680,
-    settleDrainMinMs: 240,
-    targetBufferMs: 170,
-  },
-};
+import {
+  getStreamAnimationDisableReason,
+  getStreamAnimationOverloadConfig,
+  shouldRecoverStreamAnimation,
+  STREAM_SMOOTHING_PRESET_CONFIG,
+  type StreamAnimationDisableReason,
+} from './streamAnimationAutoDisable';
 
 const clamp = (value: number, min: number, max: number): number => {
   return Math.min(max, Math.max(min, value));
@@ -80,17 +24,48 @@ export const countChars = (text: string): number => {
 };
 
 interface UseSmoothStreamContentOptions {
+  autoDisableAnimation?: boolean;
   enabled?: boolean;
   preset?: StreamSmoothingPreset;
 }
 
+export interface StreamAnimationAutoDisableStatus {
+  animationAutoDisabled: boolean;
+  animationDisableReason: StreamAnimationDisableReason;
+  arrivalCps: number;
+  backlog: number;
+  disableThresholdBacklog: number;
+  disableThresholdCps: number;
+  recoverThresholdBacklog: number;
+  recoverThresholdCps: number;
+}
+
+export interface UseSmoothStreamContentResult extends StreamAnimationAutoDisableStatus {
+  content: string;
+}
+
 export const useSmoothStreamContent = (
   content: string,
-  { enabled = true, preset = 'balanced' }: UseSmoothStreamContentOptions = {},
-): string => {
-  const config = PRESET_CONFIG[preset];
+  {
+    autoDisableAnimation = true,
+    enabled = true,
+    preset = 'balanced',
+  }: UseSmoothStreamContentOptions = {},
+): UseSmoothStreamContentResult => {
+  const config = STREAM_SMOOTHING_PRESET_CONFIG[preset];
+  const overloadConfig = getStreamAnimationOverloadConfig(config);
   const profiler = useStreamdownProfiler();
   const [displayedContent, setDisplayedContent] = useState(content);
+  const [animationStatus, setAnimationStatus] = useState<StreamAnimationAutoDisableStatus>({
+    animationAutoDisabled: false,
+    animationDisableReason: 'none',
+    arrivalCps: config.defaultCps,
+    backlog: 0,
+    disableThresholdBacklog: overloadConfig.disableBacklogChars,
+    disableThresholdCps: overloadConfig.disableArrivalCps,
+    recoverThresholdBacklog: overloadConfig.recoverBacklogChars,
+    recoverThresholdCps: overloadConfig.recoverArrivalCps,
+  });
 
   const displayedContentRef = useRef(content);
   const displayedCountRef = useRef(countChars(content));
@@ -104,10 +79,74 @@ export const useSmoothStreamContent = (
   const lastInputCountRef = useRef(targetCountRef.current);
   const chunkSizeEmaRef = useRef(1);
   const arrivalCpsEmaRef = useRef(config.defaultCps);
+  const healthyRecoverySamplesRef = useRef(0);
+  const animationAutoDisabledRef = useRef(false);
+  const animationDisableReasonRef = useRef<StreamAnimationDisableReason>('none');
 
   const rafRef = useRef<number | null>(null);
   const lastFrameTsRef = useRef<number | null>(null);
   const wakeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const updateAnimationStatus = useCallback(
+    ({
+      animationAutoDisabled,
+      animationDisableReason,
+      arrivalCps,
+      backlog,
+    }: {
+      animationAutoDisabled: boolean;
+      animationDisableReason: StreamAnimationDisableReason;
+      arrivalCps: number;
+      backlog: number;
+    }) => {
+      animationAutoDisabledRef.current = animationAutoDisabled;
+      animationDisableReasonRef.current = animationDisableReason;
+
+      setAnimationStatus((prev) => {
+        const nextBacklog = Math.max(0, backlog);
+        const nextArrivalCps = Math.max(0, arrivalCps);
+
+        if (
+          prev.animationAutoDisabled === animationAutoDisabled &&
+          prev.animationDisableReason === animationDisableReason &&
+          prev.arrivalCps === nextArrivalCps &&
+          prev.backlog === nextBacklog &&
+          prev.disableThresholdBacklog === overloadConfig.disableBacklogChars &&
+          prev.disableThresholdCps === overloadConfig.disableArrivalCps &&
+          prev.recoverThresholdBacklog === overloadConfig.recoverBacklogChars &&
+          prev.recoverThresholdCps === overloadConfig.recoverArrivalCps
+        ) {
+          return prev;
+        }
+
+        return {
+          animationAutoDisabled,
+          animationDisableReason,
+          arrivalCps: nextArrivalCps,
+          backlog: nextBacklog,
+          disableThresholdBacklog: overloadConfig.disableBacklogChars,
+          disableThresholdCps: overloadConfig.disableArrivalCps,
+          recoverThresholdBacklog: overloadConfig.recoverBacklogChars,
+          recoverThresholdCps: overloadConfig.recoverArrivalCps,
+        };
+      });
+    },
+    [
+      overloadConfig.disableArrivalCps,
+      overloadConfig.disableBacklogChars,
+      overloadConfig.recoverArrivalCps,
+      overloadConfig.recoverBacklogChars,
+    ],
+  );
+
+  const resetAnimationAutoDisable = useCallback(() => {
+    updateAnimationStatus({
+      animationAutoDisabled: false,
+      animationDisableReason: 'none',
+      arrivalCps: arrivalCpsEmaRef.current,
+      backlog: 0,
+    });
+  }, [updateAnimationStatus]);
 
   const clearWakeTimer = useCallback(() => {
     if (wakeTimerRef.current !== null) {
@@ -147,7 +186,7 @@ export const useSmoothStreamContent = (
   );
 
   const syncImmediate = useCallback(
-    (nextContent: string) => {
+    (nextContent: string, { resetAutoDisabled = false }: { resetAutoDisabled?: boolean } = {}) => {
       stopScheduling();
 
       const chars = [...nextContent];
@@ -161,13 +200,26 @@ export const useSmoothStreamContent = (
       displayedCountRef.current = chars.length;
       setDisplayedContent(nextContent);
 
-      emaCpsRef.current = config.defaultCps;
-      chunkSizeEmaRef.current = 1;
-      arrivalCpsEmaRef.current = config.defaultCps;
       lastInputTsRef.current = now;
       lastInputCountRef.current = chars.length;
+
+      if (resetAutoDisabled) {
+        emaCpsRef.current = config.defaultCps;
+        chunkSizeEmaRef.current = 1;
+        arrivalCpsEmaRef.current = config.defaultCps;
+        healthyRecoverySamplesRef.current = 0;
+        animationAutoDisabledRef.current = false;
+        animationDisableReasonRef.current = 'none';
+      }
+
+      updateAnimationStatus({
+        animationAutoDisabled: animationAutoDisabledRef.current,
+        animationDisableReason: animationDisableReasonRef.current,
+        arrivalCps: arrivalCpsEmaRef.current,
+        backlog: 0,
+      });
     },
-    [config.defaultCps, stopScheduling],
+    [config.defaultCps, stopScheduling, updateAnimationStatus],
   );
 
   const startFrameLoop = useCallback(() => {
@@ -200,6 +252,28 @@ export const useSmoothStreamContent = (
       const idleMs = now - lastInputTsRef.current;
       const inputActive = idleMs <= config.activeInputWindowMs;
       const settling = !inputActive && idleMs >= config.settleAfterMs;
+
+      const canRecoverAnimation = shouldRecoverStreamAnimation({
+        activeInputWindowMs: config.activeInputWindowMs,
+        animationAutoDisabled: autoDisableAnimation && animationAutoDisabledRef.current,
+        arrivalCps: arrivalCpsEmaRef.current,
+        backlog,
+        consecutiveHealthySamples: healthyRecoverySamplesRef.current,
+        idleMs,
+        instantCps: 0,
+        overloadConfig,
+      });
+
+      if (canRecoverAnimation) {
+        resetAnimationAutoDisable();
+      }
+
+      updateAnimationStatus({
+        animationAutoDisabled: animationAutoDisabledRef.current,
+        animationDisableReason: animationDisableReasonRef.current,
+        arrivalCps: arrivalCpsEmaRef.current,
+        backlog,
+      });
 
       const baseCps = clamp(emaCpsRef.current, config.minCps, config.maxCps);
       const baseLagChars = Math.max(1, Math.round((baseCps * config.targetBufferMs) / 1000));
@@ -307,14 +381,19 @@ export const useSmoothStreamContent = (
     config.settleDrainMaxMs,
     config.settleDrainMinMs,
     config.targetBufferMs,
+    autoDisableAnimation,
+    overloadConfig.recoverArrivalCps,
+    overloadConfig.recoverBacklogChars,
+    resetAnimationAutoDisable,
     scheduleFrameWake,
     stopFrameLoop,
+    updateAnimationStatus,
   ]);
   startFrameLoopRef.current = startFrameLoop;
 
   useEffect(() => {
     if (!enabled) {
-      syncImmediate(content);
+      syncImmediate(content, { resetAutoDisabled: true });
       return;
     }
 
@@ -325,7 +404,7 @@ export const useSmoothStreamContent = (
     const appendOnly = content.startsWith(prevTargetContent);
 
     if (!appendOnly) {
-      syncImmediate(content);
+      syncImmediate(content, { resetAutoDisabled: true });
       return;
     }
 
@@ -338,20 +417,16 @@ export const useSmoothStreamContent = (
       contentLength: countChars(content),
     });
 
-    if (appendedCount > config.largeAppendChars) {
-      syncImmediate(content);
-      return;
-    }
-
     targetContentRef.current = content;
     targetCharsRef.current = [...targetCharsRef.current, ...appendedChars];
     targetCountRef.current += appendedCount;
 
+    const idleMs = Math.max(0, now - lastInputTsRef.current);
     const deltaChars = targetCountRef.current - lastInputCountRef.current;
-    const deltaMs = Math.max(1, now - lastInputTsRef.current);
+    const deltaMs = Math.max(1, idleMs);
+    const instantCps = deltaChars > 0 ? (deltaChars * 1000) / deltaMs : 0;
 
     if (deltaChars > 0) {
-      const instantCps = (deltaChars * 1000) / deltaMs;
       const normalizedInstantCps = clamp(instantCps, config.minCps, config.maxFlushCps * 2);
       const chunkEmaAlpha = 0.35;
       chunkSizeEmaRef.current =
@@ -363,12 +438,67 @@ export const useSmoothStreamContent = (
       emaCpsRef.current = emaCpsRef.current * (1 - config.emaAlpha) + clampedCps * config.emaAlpha;
     }
 
+    const nextBacklog = Math.max(0, targetCountRef.current - displayedCountRef.current);
+    const healthyRecoverySample =
+      nextBacklog <= overloadConfig.recoverBacklogChars &&
+      instantCps <= overloadConfig.recoverArrivalCps;
+
+    healthyRecoverySamplesRef.current =
+      autoDisableAnimation && animationAutoDisabledRef.current && healthyRecoverySample
+        ? healthyRecoverySamplesRef.current + 1
+        : 0;
+
+    const canRecoverAnimation = shouldRecoverStreamAnimation({
+      activeInputWindowMs: config.activeInputWindowMs,
+      animationAutoDisabled: autoDisableAnimation && animationAutoDisabledRef.current,
+      arrivalCps: arrivalCpsEmaRef.current,
+      backlog: nextBacklog,
+      consecutiveHealthySamples: healthyRecoverySamplesRef.current,
+      idleMs,
+      instantCps,
+      overloadConfig,
+    });
+
+    if (canRecoverAnimation) {
+      healthyRecoverySamplesRef.current = 0;
+      resetAnimationAutoDisable();
+    }
+
+    const disableReason =
+      autoDisableAnimation && !animationAutoDisabledRef.current
+        ? getStreamAnimationDisableReason({
+            arrivalCps: arrivalCpsEmaRef.current,
+            backlog: nextBacklog,
+            overloadConfig,
+          })
+        : animationDisableReasonRef.current;
+
+    if (disableReason !== 'none') {
+      healthyRecoverySamplesRef.current = 0;
+      animationAutoDisabledRef.current = true;
+      animationDisableReasonRef.current = disableReason;
+    }
+
     lastInputTsRef.current = now;
     lastInputCountRef.current = targetCountRef.current;
 
+    if (animationAutoDisabledRef.current || appendedCount > config.largeAppendChars) {
+      syncImmediate(content, { resetAutoDisabled: false });
+      return;
+    }
+
+    updateAnimationStatus({
+      animationAutoDisabled: false,
+      animationDisableReason: 'none',
+      arrivalCps: arrivalCpsEmaRef.current,
+      backlog: nextBacklog,
+    });
+
     startFrameLoop();
   }, [
+    autoDisableAnimation,
     config.emaAlpha,
+    config.activeInputWindowMs,
     config.largeAppendChars,
     config.maxActiveCps,
     config.maxCps,
@@ -376,9 +506,15 @@ export const useSmoothStreamContent = (
     config.minCps,
     content,
     enabled,
+    overloadConfig.disableArrivalCps,
+    overloadConfig.disableBacklogChars,
+    overloadConfig.recoverArrivalCps,
+    overloadConfig.recoverBacklogChars,
+    resetAnimationAutoDisable,
     startFrameLoop,
     syncImmediate,
     profiler,
+    updateAnimationStatus,
   ]);
 
   useEffect(() => {
@@ -387,5 +523,8 @@ export const useSmoothStreamContent = (
     };
   }, [stopScheduling]);
 
-  return displayedContent;
+  return {
+    ...animationStatus,
+    content: displayedContent,
+  };
 };

@@ -118,17 +118,21 @@ const StreamdownBlock = memo<Options>(
 StreamdownBlock.displayName = 'StreamdownBlock';
 
 export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
-  const { streamSmoothingPreset = 'balanced' } = useMarkdownContext();
+  const { autoDisableStreamAnimation = true, streamSmoothingPreset = 'balanced' } =
+    useMarkdownContext();
   const profiler = useStreamdownProfiler();
-  const escapedContent = useMarkdownContent(children || '');
+  const rawContent = children || '';
+  const escapedContent = useMarkdownContent(rawContent);
   const components = useMarkdownComponents();
   const baseRehypePlugins = useStablePlugins(useMarkdownRehypePlugins());
   const remarkPlugins = useStablePlugins(useMarkdownRemarkPlugins());
   const generatedId = useId();
-  const smoothedContent = useSmoothStreamContent(
+  const smoothResult = useSmoothStreamContent(
     typeof escapedContent === 'string' ? escapedContent : '',
-    { preset: streamSmoothingPreset },
+    { autoDisableAnimation: autoDisableStreamAnimation, preset: streamSmoothingPreset },
   );
+  const smoothedContent = smoothResult.content;
+  const animationAutoDisabled = smoothResult.animationAutoDisabled;
 
   const processedContentResult = useMemo(() => {
     const start = profiler ? getNow() : 0;
@@ -159,7 +163,8 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
   }, [processedContent, profiler]);
   const blocks: BlockInfo[] = blocksResult.value;
 
-  const { getBlockState, charDelay } = useStreamQueue(blocks);
+  const queueBlocks = animationAutoDisabled ? [] : blocks;
+  const { getBlockState, charDelay } = useStreamQueue(queueBlocks);
   const prevBlockCharCountRef = useRef<Map<number, number>>(new Map());
   const blockCharDelayRef = useRef<Map<number, number>>(new Map());
   const blockTimelineRef = useRef<Map<number, number>>(new Map());
@@ -177,7 +182,7 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
     const prevTimeline = blockTimelineRef.current;
     const prevCharCounts = prevBlockCharCountRef.current;
 
-    for (const block of blocks) {
+    for (const block of queueBlocks) {
       const blockCharCount = countChars(block.content);
       const prevCharCount = prevCharCounts.get(block.startOffset) ?? 0;
       const prevElapsed = prevTimeline.get(block.startOffset);
@@ -198,7 +203,7 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
       durationMs: profiler ? getNow() - start : 0,
       value: next,
     };
-  }, [blocks, charDelay, frameDt, profiler]);
+  }, [charDelay, frameDt, profiler, queueBlocks]);
   const timelineForRender = timelineResult.value;
 
   useEffect(() => {
@@ -233,11 +238,36 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
     });
   }, [blocks.length, processedContent.length, profiler, timelineResult.durationMs]);
 
+  useEffect(() => {
+    if (!profiler) return;
+
+    profiler.recordAnimationMode({
+      animationAutoDisabled,
+      arrivalCps: smoothResult.arrivalCps,
+      backlog: smoothResult.backlog,
+      recoverThresholdBacklog: smoothResult.recoverThresholdBacklog,
+      recoverThresholdCps: smoothResult.recoverThresholdCps,
+      reason: smoothResult.animationDisableReason,
+      thresholdBacklog: smoothResult.disableThresholdBacklog,
+      thresholdCps: smoothResult.disableThresholdCps,
+    });
+  }, [
+    animationAutoDisabled,
+    profiler,
+    smoothResult.animationDisableReason,
+    smoothResult.arrivalCps,
+    smoothResult.backlog,
+    smoothResult.recoverThresholdBacklog,
+    smoothResult.recoverThresholdCps,
+    smoothResult.disableThresholdBacklog,
+    smoothResult.disableThresholdCps,
+  ]);
+
   const blockAnimationMetaResult = useMemo(() => {
     const nextBlockCharDelay = new Map<number, number>();
     const blockAnimationMeta = new Map<number, ReturnType<typeof resolveBlockAnimationMeta>>();
 
-    for (const [index, block] of blocks.entries()) {
+    for (const [index, block] of queueBlocks.entries()) {
       const state = getBlockState(index);
       const timelineElapsedMs = timelineForRender.get(block.startOffset) ?? 0;
       const animationMeta = resolveBlockAnimationMeta({
@@ -257,18 +287,18 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
       blockAnimationMeta,
       blockCharDelay: nextBlockCharDelay,
     };
-  }, [blocks, charDelay, getBlockState, timelineForRender]);
+  }, [charDelay, getBlockState, queueBlocks, timelineForRender]);
 
   useEffect(() => {
     const nextCharCount = new Map<number, number>();
-    for (const block of blocks) {
+    for (const block of queueBlocks) {
       nextCharCount.set(block.startOffset, countChars(block.content));
     }
     blockCharDelayRef.current = blockAnimationMetaResult.blockCharDelay;
     prevBlockCharCountRef.current = nextCharCount;
     blockTimelineRef.current = timelineForRender;
     lastRenderTsRef.current = getNow();
-  }, [blockAnimationMetaResult.blockCharDelay, blocks, timelineForRender]);
+  }, [blockAnimationMetaResult.blockCharDelay, queueBlocks, timelineForRender]);
 
   const handleRootRender = useCallback<ProfilerOnRenderCallback>(
     (_, phase, actualDuration, baseDuration) => {
@@ -302,33 +332,36 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
         blockIndex,
         blockKey: offsetText ?? String(block.startOffset),
         phase,
-        state: getBlockState(blockIndex),
+        state: animationAutoDisabled ? 'revealed' : getBlockState(blockIndex),
       });
     },
-    [blocks, getBlockState, profiler],
+    [animationAutoDisabled, blocks, getBlockState, profiler],
   );
 
   const content = (
-    <div className={styles.animated}>
+    <div className={animationAutoDisabled ? undefined : styles.animated}>
       {blocks.map((block, index) => {
-        const state = getBlockState(index);
+        const state = animationAutoDisabled ? 'revealed' : getBlockState(index);
         if (state === 'queued') return null;
-        const animationMeta = blockAnimationMetaResult.blockAnimationMeta.get(block.startOffset);
-        if (!animationMeta) return null;
 
-        const plugins: Pluggable[] = animationMeta.settled
-          ? [...baseRehypePlugins, REVEALED_STREAM_PLUGIN]
-          : [
-              ...baseRehypePlugins,
-              [
-                rehypeStreamAnimated,
-                {
-                  charDelay: animationMeta.charDelay,
-                  fadeDuration: STREAM_FADE_DURATION,
-                  timelineElapsedMs: animationMeta.timelineElapsedMs,
-                },
-              ],
-            ];
+        const animationMeta = blockAnimationMetaResult.blockAnimationMeta.get(block.startOffset);
+        const plugins: Pluggable[] = animationAutoDisabled
+          ? [...baseRehypePlugins]
+          : animationMeta?.settled
+            ? [...baseRehypePlugins, REVEALED_STREAM_PLUGIN]
+            : animationMeta
+              ? [
+                  ...baseRehypePlugins,
+                  [
+                    rehypeStreamAnimated,
+                    {
+                      charDelay: animationMeta.charDelay,
+                      fadeDuration: STREAM_FADE_DURATION,
+                      timelineElapsedMs: animationMeta.timelineElapsedMs,
+                    },
+                  ],
+                ]
+              : [...baseRehypePlugins];
 
         const key = `${generatedId}-${block.startOffset}`;
         const blockNode = (
