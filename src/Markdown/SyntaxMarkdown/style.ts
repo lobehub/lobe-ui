@@ -1,23 +1,27 @@
-import { createStaticStyles, keyframes } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 
-const fadeIn = keyframes`
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  `;
+import { fadeIn } from '@/styles/animations';
 
 export const styles = createStaticStyles(({ css }) => {
   return {
     animated: css`
-      .animate-fade-in,
-      .katex-html span,
-      span.line > span,
-      code:not(:has(span.line)) {
+      .stream-char {
+        opacity: 0;
+
+        animation-name: ${fadeIn};
+        animation-duration: 280ms;
+        animation-timing-function: cubic-bezier(0.33, 0, 0.67, 1);
+        animation-fill-mode: forwards;
+      }
+
+      .stream-char-revealed {
         opacity: 1;
-        animation: ${fadeIn} 1s ease-in-out;
+        animation: none;
+      }
+
+      .katex-display .katex-html span {
+        mask: none !important;
+        animation: none !important;
       }
     `,
   };

@@ -25,7 +25,7 @@ export const ModalStackItem = memo(
     const stableOnCancel = useEventCallback(onCancel ?? noop);
     const close = useEventCallback(() => onClose(id));
     const setCanDismissByClickOutside = useEventCallback((value: boolean) =>
-      onUpdate(id, { maskClosable: value }),
+      onUpdate(id, { mask: { closable: value } }),
     );
     const stableContextValue = useMemo(
       () => ({ close, setCanDismissByClickOutside }),
@@ -48,8 +48,8 @@ export const ModalStackItem = memo(
           [stableAfterOpenChange, onDestroy, id],
         )}
         onCancel={useCallback(
-          (event: React.MouseEvent<HTMLButtonElement>) => {
-            stableOnCancel?.(event);
+          (e: React.MouseEvent<HTMLButtonElement> | React.KeyboardEvent<HTMLElement>) => {
+            stableOnCancel?.(e);
             close();
           },
           [stableOnCancel, close],

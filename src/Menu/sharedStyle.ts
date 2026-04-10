@@ -157,8 +157,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     outline: none;
     box-shadow:
       0 0 15px 0 #00000008,
-      0 2px 30px 0 #00000014,
-      0 0 0 1px ${cssVar.colorBorder} inset;
+      0 2px 30px 0 #00000014;
   `,
   positioner: css`
     --lobe-dropdown-animation-duration: 140ms;
@@ -199,7 +198,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       --lobe-dropdown-animation-duration: 140ms;
     }
 
-    &[data-submenu] {
+    &[data-submenu],
+    &[data-nested] {
+      --lobe-dropdown-animation-duration: 0ms;
+      --lobe-dropdown-animation-scale-y: 1;
+    }
+
+    &[data-side='left'],
+    &[data-side='right'] {
       --lobe-dropdown-animation-duration: 0ms;
       --lobe-dropdown-animation-scale-y: 1;
     }

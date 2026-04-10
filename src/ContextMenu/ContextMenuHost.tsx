@@ -4,8 +4,7 @@ import { ContextMenu } from '@base-ui/react/context-menu';
 import { memo, useEffect, useMemo, useSyncExternalStore } from 'react';
 
 import { useIsClient } from '@/hooks/useIsClient';
-import { usePortalContainer } from '@/hooks/usePortalContainer';
-import { LOBE_THEME_APP_ID } from '@/ThemeProvider';
+import { useAppElement } from '@/ThemeProvider';
 import { registerDevSingleton } from '@/utils/devSingleton';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
@@ -20,22 +19,15 @@ import {
 } from './store';
 import { styles } from './style';
 
-const CONTEXT_MENU_CONTAINER_ATTR = 'data-lobe-ui-context-menu-container';
-
 export const ContextMenuHost = memo(() => {
   const isClient = useIsClient();
+  const appElement = useAppElement();
   const state = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   useEffect(() => {
     const DEV = process.env.NODE_ENV === 'development';
     if (!isClient || !DEV) return;
-    // Enforce singleton per portal container (dev-only).
-    const themeApp = document.querySelector<HTMLElement>(`#${LOBE_THEME_APP_ID}`);
-    const contextMenuContainer = document.querySelector<HTMLElement>(
-      `[${CONTEXT_MENU_CONTAINER_ATTR}="true"]`,
-    );
-    const scope = themeApp ?? contextMenuContainer ?? document.body;
-    return registerDevSingleton('ContextMenuHost', scope);
+    return registerDevSingleton('ContextMenuHost', document.body);
   }, [isClient]);
 
   useEffect(() => {
@@ -56,11 +48,8 @@ export const ContextMenuHost = memo(() => {
       }),
     [state.items, state.iconAlign, state.iconSpaceMode],
   );
-  const portalContainer = usePortalContainer(CONTEXT_MENU_CONTAINER_ATTR);
-
   if (!isClient) return null;
   if (!state.open && state.items.length === 0) return null;
-  if (!portalContainer) return null;
 
   return (
     <ContextMenu.Root
@@ -73,7 +62,7 @@ export const ContextMenuHost = memo(() => {
         closeContextMenu();
       }}
     >
-      <ContextMenu.Portal container={portalContainer}>
+      <ContextMenu.Portal container={appElement}>
         <ContextMenu.Positioner
           anchor={state.anchor ?? undefined}
           className={styles.positioner}

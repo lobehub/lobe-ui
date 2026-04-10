@@ -1,17 +1,8 @@
 import { readdirSync, statSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
-import { packages } from '../.dumirc';
-
-const root = resolve(__dirname, '..');
+const root = resolve(import.meta.dirname, '..');
 const esDir = resolve(root, 'es');
-
-// 为 packages 创建根目录的 re-export 文件
-const buildPackage = async (filename: string) => {
-  const content = `export * from './es/${filename}/index.mjs';`;
-  writeFileSync(resolve(root, filename + '.js'), content, 'utf8');
-  writeFileSync(resolve(root, filename + '.d.ts'), content, 'utf8');
-};
 
 // 为 es 目录下的所有组件/目录创建 index.js re-export index.mjs
 const buildEsComponents = async () => {
@@ -22,7 +13,6 @@ const buildEsComponents = async () => {
       const dirPath = join(esDir, entry.name);
       const indexMjsPath = join(dirPath, 'index.mjs');
 
-      // 检查是否存在 index.mjs 文件
       try {
         statSync(indexMjsPath);
         const indexJsContent = `export * from './index.mjs';`;
@@ -37,8 +27,4 @@ const buildEsComponents = async () => {
   }
 };
 
-// 构建 packages 的根目录 re-export
-for (const pkg of packages) buildPackage(pkg);
-
-// 构建 es 目录下所有组件的 index.js
 buildEsComponents();

@@ -108,6 +108,7 @@ type TranslationResourcesInput = TranslationResourcesMap | Promise<TranslationRe
 
 | Key                         | English                                                                           | 简体中文                                                     |
 | --------------------------- | --------------------------------------------------------------------------------- | ------------------------------------------------------------ |
+| `hotkey.clear`              | Clear binding                                                                     | 清除绑定                                                     |
 | `hotkey.placeholder`        | Press keys to record shortcut                                                     | 按键录制快捷键                                               |
 | `hotkey.reset`              | Reset to default                                                                  | 重置为默认                                                   |
 | `hotkey.conflict`           | This shortcut conflicts with an existing one.                                     | 此快捷键与现有快捷键冲突。                                   |

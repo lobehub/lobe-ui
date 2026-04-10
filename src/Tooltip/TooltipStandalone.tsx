@@ -9,12 +9,12 @@ import { mergeRefs } from 'react-merge-refs';
 import { useFloatingLayer } from '@/hooks/useFloatingLayer';
 import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
+import { useAppElement } from '@/ThemeProvider';
 import { placementMap } from '@/utils/placement';
 
 import { TooltipArrowIcon } from './ArrowIcon';
 import { styles } from './style';
 import TooltipContent from './TooltipContent';
-import { useTooltipPortalContainer } from './TooltipPortal';
 import { type TooltipProps } from './type';
 
 const DEFAULT_OPEN_DELAY = 400;
@@ -43,6 +43,7 @@ export const TooltipStandalone = memo<TooltipProps>(
     open,
     openDelay,
     placement = 'top',
+    popupContainer,
     styles: styleProps,
     zIndex,
     ref: refProp,
@@ -50,9 +51,15 @@ export const TooltipStandalone = memo<TooltipProps>(
     triggerProps,
     popupProps,
     portalProps,
+    standalone: _standalone,
+    ...restProps
   }) => {
     const isClient = useIsClient();
     const [uncontrolledOpen, setUncontrolledOpen] = useState(Boolean(defaultOpen));
+    const [triggerNode, setTriggerNode] = useState<HTMLElement | null>(null);
+    const triggerCallbackRef = useCallback((node: HTMLElement | null) => {
+      if (node) setTriggerNode(node);
+    }, []);
 
     const mergedOpen = open ?? uncontrolledOpen;
     const resolvedOpen = disabled ? false : mergedOpen;
@@ -83,9 +90,9 @@ export const TooltipStandalone = memo<TooltipProps>(
     const placementConfig = placementMap[placement] ?? placementMap.top;
     const baseSideOffset = arrow ? 8 : 6;
 
-    const defaultPortalContainer = useTooltipPortalContainer();
+    const appElement = useAppElement();
     const floatingLayerContainer = useFloatingLayer();
-    const portalContainer = floatingLayerContainer ?? defaultPortalContainer;
+    const portalContainer = floatingLayerContainer ?? appElement;
 
     const { isNativeButtonTriggerElement } = useNativeButton({
       children,
@@ -139,14 +146,19 @@ export const TooltipStandalone = memo<TooltipProps>(
               const resolvedProps = (() => {
                 if (isNativeButtonTriggerElement) return props as any;
                 // eslint-disable-next-line unused-imports/no-unused-vars
-                const { type, ref: triggerRef, ...restProps } = props as any;
-                return restProps;
+                const { type, ref: triggerRef, ...triggerRest } = props as any;
+                return triggerRest;
               })();
 
-              const mergedProps = mergeProps((children as any).props, resolvedProps);
+              const mergedProps = mergeProps(restProps, (children as any).props, resolvedProps);
               return cloneElement(children as any, {
                 ...mergedProps,
-                ref: mergeRefs([(children as any).ref, (props as any).ref, refProp]),
+                ref: mergeRefs([
+                  (children as any).ref,
+                  (props as any).ref,
+                  refProp,
+                  triggerCallbackRef,
+                ]),
               });
             }}
           />
@@ -154,7 +166,7 @@ export const TooltipStandalone = memo<TooltipProps>(
       }
 
       return (
-        <BaseTooltip.Trigger {...baseTriggerProps} ref={refProp}>
+        <BaseTooltip.Trigger {...baseTriggerProps} ref={mergeRefs([refProp, triggerCallbackRef])}>
           {children}
         </BaseTooltip.Trigger>
       );
@@ -165,13 +177,16 @@ export const TooltipStandalone = memo<TooltipProps>(
       refProp,
       resolvedCloseDelay,
       resolvedOpenDelay,
+      restProps,
+      triggerCallbackRef,
       triggerProps,
     ]);
 
     const customContainer = useMemo(() => {
-      if (!getPopupContainer || !isClient) return undefined;
-      return undefined;
-    }, [getPopupContainer, isClient]);
+      if (popupContainer) return popupContainer;
+      if (!getPopupContainer || !isClient || !triggerNode) return undefined;
+      return getPopupContainer(triggerNode);
+    }, [popupContainer, getPopupContainer, isClient, triggerNode]);
 
     const popup = useMemo(
       () => (

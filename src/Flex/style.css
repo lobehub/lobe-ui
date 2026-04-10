@@ -31,6 +31,6 @@
   gap: var(--lobe-flex-gap);
 }
 
-.lobe-flex--hidden {
+.lobe-flex-hidden {
   display: none;
 }

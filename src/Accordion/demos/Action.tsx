@@ -35,6 +35,7 @@ export default () => {
         <h3>Accordion with Action Icons</h3>
         <Accordion defaultExpandedKeys={['1']} style={{ width: '100%' }}>
           <AccordionItem
+            alwaysShowAction
             itemKey="1"
             title="Panel with Single Action"
             action={
@@ -45,6 +46,9 @@ export default () => {
           >
             <Flexbox padding={16}>
               <div>This panel has a single action icon with dropdown menu.</div>
+              <div>
+                The action is always visible (set <code>alwaysShowAction</code>).
+              </div>
               <div>Click the action icon to open the dropdown menu.</div>
             </Flexbox>
           </AccordionItem>

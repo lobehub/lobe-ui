@@ -63,7 +63,6 @@ export { default as DraggableSideNav, type DraggableSideNavProps } from './Dragg
 export { default as Drawer, type DrawerProps } from './Drawer';
 export { default as Dropdown, type DropdownMenuItemType, type DropdownProps } from './Dropdown';
 export {
-  DROPDOWN_MENU_CONTAINER_ATTR,
   type DropdownItem,
   default as DropdownMenu,
   type DropdownMenuCheckboxItem,
@@ -186,63 +185,6 @@ export {
 } from './Layout';
 export { default as List, ListItem, type ListItemProps, type ListProps } from './List';
 export {
-  LOBE_SELECT_CONTAINER_ATTR,
-  default as LobeSelect,
-  LobeSelectArrow,
-  type LobeSelectArrowProps,
-  LobeSelectBackdrop,
-  LobeSelectGroup,
-  LobeSelectGroupLabel,
-  type LobeSelectGroupLabelProps,
-  type LobeSelectGroupProps,
-  LobeSelectIcon,
-  type LobeSelectIconProps,
-  LobeSelectItem,
-  LobeSelectItemIndicator,
-  type LobeSelectItemIndicatorProps,
-  type LobeSelectItemProps,
-  LobeSelectItemText,
-  type LobeSelectItemTextProps,
-  LobeSelectList,
-  type LobeSelectListProps,
-  LobeSelectPopup,
-  type LobeSelectPopupProps,
-  LobeSelectPortal,
-  type LobeSelectPortalProps,
-  LobeSelectPositioner,
-  type LobeSelectPositionerProps,
-  type LobeSelectProps,
-  LobeSelectRoot,
-  LobeSelectScrollDownArrow,
-  type LobeSelectScrollDownArrowProps,
-  LobeSelectScrollUpArrow,
-  type LobeSelectScrollUpArrowProps,
-  LobeSelectSeparator,
-  LobeSelectTrigger,
-  type LobeSelectTriggerProps,
-  LobeSelectValue,
-  type LobeSelectValueProps,
-} from './LobeSelect';
-export {
-  default as LobeSwitch,
-  type LobeSwitchChangeEventHandler,
-  type LobeSwitchClassNames,
-  type LobeSwitchClickEventHandler,
-  type LobeSwitchContextType,
-  LobeSwitchIcon,
-  type LobeSwitchIconPosition,
-  type LobeSwitchIconProps,
-  type LobeSwitchProps,
-  LobeSwitchRoot,
-  type LobeSwitchRootProps,
-  type LobeSwitchSize,
-  type LobeSwitchStyles,
-  lobeSwitchStyles,
-  LobeSwitchThumb,
-  type LobeSwitchThumbProps,
-  useLobeSwitchContext,
-} from './LobeSwitch';
-export {
   default as Markdown,
   type MarkdownProps,
   Typography,
@@ -304,7 +246,6 @@ export type { MotionComponentType } from './MotionProvider';
 export { MotionComponent, MotionProvider, useMotionComponent } from './MotionProvider';
 export {
   default as Popover,
-  POPOVER_CONTAINER_ATTR,
   PopoverArrow,
   type PopoverArrowAtomProps,
   PopoverArrowIcon,
@@ -365,6 +306,7 @@ export {
   type MetaProps,
   default as ThemeProvider,
   type ThemeProviderProps,
+  useAppElement,
 } from './ThemeProvider';
 export { LOBE_THEME_APP_ID } from './ThemeProvider/constants';
 export { default as ThemeSwitch, type ThemeSwitchProps } from './ThemeSwitch';

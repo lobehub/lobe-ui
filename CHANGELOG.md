@@ -2,6 +2,225 @@
 
 # Changelog
 
+## [5.6.5](https://github.com/lobehub/lobe-ui/compare/v5.6.4...v5.6.5) (2026-04-07)
+
+### 🐛 Bug Fixes
+
+- **styles**: Remove inset box-shadow from Popover and Menu styles ([57756c8](https://github.com/lobehub/lobe-ui/commit/57756c8))
+
+## [5.6.4](https://github.com/lobehub/lobe-ui/compare/v5.6.3...v5.6.4) (2026-04-02)
+
+### 🐛 Bug Fixes
+
+- Update deps, closes [#497](https://github.com/lobehub/lobe-ui/issues/497) ([5e4ce39](https://github.com/lobehub/lobe-ui/commit/5e4ce39))
+
+## [5.6.3](https://github.com/lobehub/lobe-ui/compare/v5.6.2...v5.6.3) (2026-03-31)
+
+### 🐛 Bug Fixes
+
+- **toast**: Improve description-only toast layout ([4832ef6](https://github.com/lobehub/lobe-ui/commit/4832ef6))
+
+## [5.6.2](https://github.com/lobehub/lobe-ui/compare/v5.6.1...v5.6.2) (2026-03-27)
+
+### ⚡ Performance Improvements
+
+- **markdown**: Add streamdown profiler and reduce idle stream work ([5f9bb2c](https://github.com/lobehub/lobe-ui/commit/5f9bb2c))
+
+## [5.6.1](https://github.com/lobehub/lobe-ui/compare/v5.6.0...v5.6.1) (2026-03-27)
+
+### 🐛 Bug Fixes
+
+- **toast**: Restore ToastHost and consolidate under base-ui ([b82d8c2](https://github.com/lobehub/lobe-ui/commit/b82d8c2))
+
+# [5.6.0](https://github.com/lobehub/lobe-ui/compare/v5.5.3...v5.6.0) (2026-03-26)
+
+### ✨ Features
+
+- Add post-processing for Mermaid SVGs with tests ([33e9392](https://github.com/lobehub/lobe-ui/commit/33e9392))
+
+## [5.5.3](https://github.com/lobehub/lobe-ui/compare/v5.5.2...v5.5.3) (2026-03-26)
+
+### 🎫 Chores
+
+- Fix type ([dc90517](https://github.com/lobehub/lobe-ui/commit/dc90517))
+
+### 💄 Styles
+
+- Add lucide v1 removed icons ([10bd3b1](https://github.com/lobehub/lobe-ui/commit/10bd3b1))
+
+## [5.5.2](https://github.com/lobehub/lobe-ui/compare/v5.5.1...v5.5.2) (2026-03-18)
+
+### 🐛 Bug Fixes
+
+- **style**: Disable animation styles for left and right dropdowns ([e3579f1](https://github.com/lobehub/lobe-ui/commit/e3579f1))
+
+## [5.5.1](https://github.com/lobehub/lobe-ui/compare/v5.5.0...v5.5.1) (2026-03-13)
+
+### 🐛 Bug Fixes
+
+- Resolve Tooltip Popover hover conflict, closes [#488](https://github.com/lobehub/lobe-ui/issues/488) ([28eea9f](https://github.com/lobehub/lobe-ui/commit/28eea9f))
+
+# [5.5.0](https://github.com/lobehub/lobe-ui/compare/v5.4.0...v5.5.0) (2026-03-10)
+
+### ♻ Code Refactoring
+
+- Move Popover to base-ui and re-export from Lobe UI, closes [#486](https://github.com/lobehub/lobe-ui/issues/486) ([1c128cc](https://github.com/lobehub/lobe-ui/commit/1c128cc))
+
+### ✨ Features
+
+- Add BrainOff and Think Icon ([3ff80a2](https://github.com/lobehub/lobe-ui/commit/3ff80a2))
+- Add Channel icons ([992293e](https://github.com/lobehub/lobe-ui/commit/992293e))
+
+# [5.4.0](https://github.com/lobehub/lobe-ui/compare/v5.3.0...v5.4.0) (2026-03-05)
+
+### ✨ Features
+
+- **hotkey-input**: Add clear button support & improve markdown streaming, closes [#483](https://github.com/lobehub/lobe-ui/issues/483) ([8570acc](https://github.com/lobehub/lobe-ui/commit/8570acc))
+
+# [5.3.0](https://github.com/lobehub/lobe-ui/compare/v5.2.2...v5.3.0) (2026-03-04)
+
+### ✨ Features
+
+- Add Image copy and download, closes [#482](https://github.com/lobehub/lobe-ui/issues/482) ([58351ff](https://github.com/lobehub/lobe-ui/commit/58351ff))
+
+## [5.2.2](https://github.com/lobehub/lobe-ui/compare/v5.2.1...v5.2.2) (2026-03-03)
+
+### 🐛 Bug Fixes
+
+- **context-menu**: Remove entrance animation for instant appearance ([3354002](https://github.com/lobehub/lobe-ui/commit/3354002))
+
+## [5.2.1](https://github.com/lobehub/lobe-ui/compare/v5.2.0...v5.2.1) (2026-03-03)
+
+### 🐛 Bug Fixes
+
+- Refine Modal demos and styles ([d7f6058](https://github.com/lobehub/lobe-ui/commit/d7f6058))
+
+# [5.2.0](https://github.com/lobehub/lobe-ui/compare/v5.1.1...v5.2.0) (2026-03-03)
+
+### ✨ Features
+
+- **markdown**: Implement streaming animation for markdown blocks, closes [#475](https://github.com/lobehub/lobe-ui/issues/475) ([2b3d230](https://github.com/lobehub/lobe-ui/commit/2b3d230))
+
+## [5.1.1](https://github.com/lobehub/lobe-ui/compare/v5.1.0...v5.1.1) (2026-03-03)
+
+### 🐛 Bug Fixes
+
+- Use color-scheme-aware backdrop color for Modal ([01e46c0](https://github.com/lobehub/lobe-ui/commit/01e46c0))
+
+# [5.1.0](https://github.com/lobehub/lobe-ui/compare/v5.0.1...v5.1.0) (2026-03-03)
+
+### ✨ Features
+
+- Add base-ui Modal component with imperative and declarative usage ([5186720](https://github.com/lobehub/lobe-ui/commit/5186720))
+
+## [5.0.1](https://github.com/lobehub/lobe-ui/compare/v5.0.0...v5.0.1) (2026-03-03)
+
+### 🐛 Bug Fixes
+
+- Update dumi-theme-lobehub and @lobehub/icons to major versions ([b5e20ac](https://github.com/lobehub/lobe-ui/commit/b5e20ac))
+
+# [5.0.0](https://github.com/lobehub/lobe-ui/compare/v4.38.4...v5.0.0) (2026-03-02)
+
+### 🎫 Chores
+
+- **release**: Force major release ([db4c10d](https://github.com/lobehub/lobe-ui/commit/db4c10d))
+- Patch conventional-changelog-gitmoji-config to fix item.title undefined ([2916793](https://github.com/lobehub/lobe-ui/commit/2916793))
+- Trigger 5.0 release ([b2b5ee2](https://github.com/lobehub/lobe-ui/commit/b2b5ee2))
+
+### 💥 BREAKING CHANGES
+
+- LobeSelect/LobeSwitch removed from main entry. Use `@lobehub/ui/base-ui` instead.
+
+- refactor(base-ui): move ContextMenu/DropdownMenu/ScrollArea/Toast impl into base-ui, re-export from original paths
+
+## [4.38.4](https://github.com/lobehub/lobe-ui/compare/v4.38.3...v4.38.4) (2026-02-15)
+
+### ♻ Code Refactoring
+
+- **styles**: Extract fadeIn animation to animations.ts ([f6308aa](https://github.com/lobehub/lobe-ui/commit/f6308aa))
+
+### 💄 Styles
+
+- Revert stream animation to fade-in ([0a0ea88](https://github.com/lobehub/lobe-ui/commit/0a0ea88))
+
+## [4.38.3](https://github.com/lobehub/lobe-ui/compare/v4.38.2...v4.38.3) (2026-02-15)
+
+### 🐛 Bug Fixes
+
+- Prevent stream animation from breaking KaTeX rendering ([6c8b1ac](https://github.com/lobehub/lobe-ui/commit/6c8b1ac))
+
+## [4.38.2](https://github.com/lobehub/lobe-ui/compare/v4.38.1...v4.38.2) (2026-02-14)
+
+### ♻ Code Refactoring
+
+- **popover**: Extract inset side offset into shared utility, closes [#470](https://github.com/lobehub/lobe-ui/issues/470) ([9e820f0](https://github.com/lobehub/lobe-ui/commit/9e820f0))
+
+## [4.38.1](https://github.com/lobehub/lobe-ui/compare/v4.38.0...v4.38.1) (2026-02-14)
+
+### 🐛 Bug Fixes
+
+- **select**: Correct list height overflow when search bar is present, closes [#468](https://github.com/lobehub/lobe-ui/issues/468) ([444b3ab](https://github.com/lobehub/lobe-ui/commit/444b3ab))
+
+# [4.38.0](https://github.com/lobehub/lobe-ui/compare/v4.37.0...v4.38.0) (2026-02-14)
+
+### ✨ Features
+
+- Add skills icon ([49d0dde](https://github.com/lobehub/lobe-ui/commit/49d0dde))
+
+# [4.37.0](https://github.com/lobehub/lobe-ui/compare/v4.36.3...v4.37.0) (2026-02-13)
+
+### ✨ Features
+
+- **markdown**: Integrate remend for content processing and update animations ([fc27f9c](https://github.com/lobehub/lobe-ui/commit/fc27f9c))
+
+## [4.36.3](https://github.com/lobehub/lobe-ui/compare/v4.36.2...v4.36.3) (2026-02-13)
+
+### 🐛 Bug Fixes
+
+- **select**: UseAppElement for portal container management ([03dfec0](https://github.com/lobehub/lobe-ui/commit/03dfec0))
+
+## [4.36.2](https://github.com/lobehub/lobe-ui/compare/v4.36.1...v4.36.2) (2026-02-11)
+
+### 🐛 Bug Fixes
+
+- Remove unused container attributes from DropdownMenu, EditorSlashMenu, LobeSelect, and Popover components ([0406d82](https://github.com/lobehub/lobe-ui/commit/0406d82))
+
+## [4.36.1](https://github.com/lobehub/lobe-ui/compare/v4.36.0...v4.36.1) (2026-02-11)
+
+### ♻ Code Refactoring
+
+- **portal**: Streamline modal and popover container management ([a99ec2e](https://github.com/lobehub/lobe-ui/commit/a99ec2e))
+
+# [4.36.0](https://github.com/lobehub/lobe-ui/compare/v4.35.3...v4.36.0) (2026-02-11)
+
+### ✨ Features
+
+- **portal**: Integrate useAppElement for portal container management ([b03c118](https://github.com/lobehub/lobe-ui/commit/b03c118))
+
+## [4.35.3](https://github.com/lobehub/lobe-ui/compare/v4.35.2...v4.35.3) (2026-02-10)
+
+### ♻ Code Refactoring
+
+- **portal**: Migrate portal container implementation, closes [#466](https://github.com/lobehub/lobe-ui/issues/466) ([f6897f5](https://github.com/lobehub/lobe-ui/commit/f6897f5))
+
+## [4.35.2](https://github.com/lobehub/lobe-ui/compare/v4.35.1...v4.35.2) (2026-02-09)
+
+### 🐛 Bug Fixes
+
+- **menu**: Extend dropdown styles to support nested menus ([70de4eb](https://github.com/lobehub/lobe-ui/commit/70de4eb))
+
+## [4.35.1](https://github.com/lobehub/lobe-ui/compare/v4.35.0...v4.35.1) (2026-02-09)
+
+### 🐛 Bug Fixes
+
+- **accordion**: Add alwaysShowAction prop to AccordionItem ([c55898f](https://github.com/lobehub/lobe-ui/commit/c55898f))
+
+# [4.35.0](https://github.com/lobehub/lobe-ui/compare/v4.34.1...v4.35.0) (2026-02-08)
+
+### ✨ Features
+
+- **freeze**: Introduce Freeze component to prevent DOM updates during animations ([ff6dbdf](https://github.com/lobehub/lobe-ui/commit/ff6dbdf))
+
 ## [4.34.1](https://github.com/lobehub/lobe-ui/compare/v4.34.0...v4.34.1) (2026-02-07)
 
 ### 🐛 Bug Fixes

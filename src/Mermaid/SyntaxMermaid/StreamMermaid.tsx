@@ -83,6 +83,16 @@ const StreamMermaid = memo<StreamMermaidProps>(
       setBlobUrl(url);
     }, [isLoading, data]);
 
+    const containerStyle = {
+      background: variant === 'filled' ? background : undefined,
+      margin: 0,
+      minWidth: 300,
+      padding: variant === 'borderless' ? 0 : 16,
+      position: 'relative' as const,
+      width: '100%',
+      ...style,
+    };
+
     if (!blobUrl) {
       return (
         <div className={fallbackClassName} style={style}>
@@ -100,18 +110,9 @@ const StreamMermaid = memo<StreamMermaidProps>(
         objectFit={'contain'}
         ref={ref}
         src={blobUrl}
+        style={containerStyle}
         variant={'borderless'}
         width={'100%'}
-        style={{
-          background: variant === 'filled' ? background : undefined,
-          borderRadius: 0,
-          margin: 0,
-          minWidth: 300,
-          padding: variant === 'borderless' ? 0 : 16,
-          position: 'relative',
-          width: '100%',
-          ...style,
-        }}
       />
     );
   },

@@ -6,7 +6,8 @@ import {
   showContextMenu,
   Text,
 } from '@lobehub/ui';
-import { GithubIcon, GlobeIcon, PencilIcon, UploadIcon } from 'lucide-react';
+import { GithubIcon } from '@lobehub/ui/icons';
+import { GlobeIcon, PencilIcon, UploadIcon } from 'lucide-react';
 import { type MouseEvent } from 'react';
 import { useCallback, useMemo } from 'react';
 

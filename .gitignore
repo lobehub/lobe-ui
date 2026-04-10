@@ -47,19 +47,3 @@ bun.lockb
 ./server
 
 
-awesome.d.ts
-awesome.js
-brand.d.ts
-brand.js
-chat.d.ts
-chat.js
-mdx.d.ts
-mdx.js
-mobile.d.ts
-mobile.js
-storybook.d.ts
-storybook.js
-color.d.ts
-color.js
-icons.d.ts
-icons.js

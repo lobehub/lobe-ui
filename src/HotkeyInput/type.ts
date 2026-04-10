@@ -2,6 +2,7 @@ import type { InputProps } from 'antd';
 import type { CSSProperties } from 'react';
 
 export interface HotkeyInputProps {
+  allowClear?: boolean;
   allowReset?: boolean;
   className?: string;
   defaultValue?: string;
@@ -10,6 +11,7 @@ export interface HotkeyInputProps {
   isApple?: boolean;
   onBlur?: InputProps['onBlur'];
   onChange?: (value: string) => void;
+  onClear?: (currentValue: string) => void;
   onConflict?: (conflictKey: string) => void;
   onFocus?: InputProps['onFocus'];
   onReset?: (currentValue: string, resetValue: string) => void;
@@ -18,6 +20,7 @@ export interface HotkeyInputProps {
   shadow?: boolean;
   style?: CSSProperties;
   texts?: {
+    clear?: string;
     conflicts?: string;
     invalidCombination?: string;
     reset?: string;

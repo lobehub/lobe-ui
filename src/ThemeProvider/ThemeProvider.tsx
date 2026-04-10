@@ -8,7 +8,7 @@ import {
   ThemeProvider as AntdThemeProvider,
 } from 'antd-style';
 import { merge } from 'es-toolkit/compat';
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
 import FontLoader from '@/FontLoader';
@@ -16,6 +16,7 @@ import { lobeCustomStylish, lobeCustomToken } from '@/styles';
 import { createLobeAntdTheme } from '@/styles/theme/antdTheme';
 import { type LobeCustomToken } from '@/types/customToken';
 
+import AppElementContext from './AppElementContext';
 import AntdConfigProvider from './ConfigProvider';
 import { LOBE_THEME_APP_ID } from './constants';
 import GlobalStyle from './GlobalStyle';
@@ -36,6 +37,7 @@ const ThemeProvider = memo<ThemeProviderProps>(
     ...rest
   }) => {
     const genCdnUrl = useCdnFn();
+    const [appRef, setAppRef] = useState<HTMLDivElement | null>(null);
 
     const webfontUrls = useMemo(
       () =>
@@ -90,9 +92,12 @@ const ThemeProvider = memo<ThemeProviderProps>(
           <AntdConfigProvider>
             {enableGlobalStyle && <GlobalStyle />}
 
-            <App className={className} style={{ minHeight: 'inherit', width: 'inherit', ...style }}>
-              <div id={LOBE_THEME_APP_ID} style={{ display: 'contents' }}>
-                {children}
+            <App
+              className={className}
+              style={{ isolation: 'isolate', minHeight: 'inherit', width: 'inherit', ...style }}
+            >
+              <div id={LOBE_THEME_APP_ID} ref={setAppRef} style={{ display: 'contents' }}>
+                <AppElementContext value={appRef}>{children}</AppElementContext>
               </div>
             </App>
           </AntdConfigProvider>

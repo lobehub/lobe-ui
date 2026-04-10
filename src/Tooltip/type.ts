@@ -86,6 +86,7 @@ export interface TooltipProps {
   disabled?: boolean;
   /**
    * An Ant Design compatible escape hatch for portal container.
+   * @deprecated Use `popupContainer` instead.
    */
   getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement;
   hotkey?: string;
@@ -122,6 +123,12 @@ export interface TooltipProps {
    * Tooltip placement. Supports Floating UI placements and Ant Design legacy placements.
    */
   placement?: TooltipPlacement;
+
+  /**
+   * Direct HTMLElement to use as the portal container.
+   * Takes precedence over `getPopupContainer`.
+   */
+  popupContainer?: HTMLElement;
 
   /**
    * Base UI Popup 组件的 props
@@ -202,6 +209,7 @@ export interface TooltipGroupProps {
   mouseLeaveDelay?: number;
   openDelay?: number;
   placement?: TooltipPlacement;
+  popupContainer?: TooltipProps['popupContainer'];
   popupProps?: TooltipPopupComponentProps;
   portalProps?: TooltipPortalProps;
   positionerProps?: TooltipPositionerProps;

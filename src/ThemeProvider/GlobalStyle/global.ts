@@ -2,8 +2,6 @@ import { css, type Theme } from 'antd-style';
 
 import { CLASSNAMES } from '@/styles/classNames';
 
-import { LOBE_THEME_APP_ID } from '../constants';
-
 export default (token: Theme) => css`
   :root {
     --font-settings: 'cv01', 'tnum', 'kern';
@@ -64,10 +62,7 @@ export default (token: Theme) => css`
     box-sizing: border-box;
     vertical-align: baseline;
   }
-  #${LOBE_THEME_APP_ID} {
-    /* https://base-ui.com/react/overview/quick-start#set-up-portals */
-    isolation: isolate;
-  }
+
   @layer lobe-popup {
     .${CLASSNAMES.ContextTrigger}[data-popup-open],
       .${CLASSNAMES.DropdownMenuTrigger}[data-popup-open] {
@@ -86,30 +81,27 @@ export default (token: Theme) => css`
       --lobe-flex-width: auto;
       --lobe-flex-height: auto;
       --lobe-flex-padding: 0;
+
       /* Keep padding-inline/block aligned with padding by default, and prevent inheriting from parent */
       --lobe-flex-padding-inline: var(--lobe-flex-padding);
       --lobe-flex-padding-block: var(--lobe-flex-padding);
       --lobe-flex-gap: 0;
 
       display: flex;
-
       flex: var(--lobe-flex);
-      flex-direction: var(--lobe-flex-direction);
-      flex-wrap: var(--lobe-flex-wrap);
-      justify-content: var(--lobe-flex-justify);
+      flex-flow: var(--lobe-flex-direction) var(--lobe-flex-wrap);
+      gap: var(--lobe-flex-gap);
       align-items: var(--lobe-flex-align);
+      justify-content: var(--lobe-flex-justify);
 
       width: var(--lobe-flex-width);
       height: var(--lobe-flex-height);
-
       padding: var(--lobe-flex-padding);
-      padding-inline: var(--lobe-flex-padding-inline);
       padding-block: var(--lobe-flex-padding-block);
-
-      gap: var(--lobe-flex-gap);
+      padding-inline: var(--lobe-flex-padding-inline);
     }
 
-    .lobe-flex--hidden {
+    .lobe-flex-hidden {
       display: none;
     }
   }
@@ -127,17 +119,17 @@ export default (token: Theme) => css`
 
   @keyframes fill {
     30% {
-      fill-opacity: 5%;
+      fill-opacity: 0.05;
     }
 
     100% {
-      fill-opacity: 100%;
+      fill-opacity: 1;
     }
   }
 
   .lobe-brand-loading path {
     fill: currentcolor;
-    fill-opacity: 0%;
+    fill-opacity: 0;
     stroke: currentcolor;
     stroke-dasharray: 1000;
     stroke-dashoffset: 1000;

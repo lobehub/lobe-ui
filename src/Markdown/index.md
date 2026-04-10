@@ -234,6 +234,12 @@ Explore different component variants `default` and `chat`.
 
 <code src="./demos/streaming.tsx" iframe nopadding></code>
 
+### Streamdown Profiler
+
+Use this demo to inspect stream-driven React commit frequency, block-level re-renders, and the JavaScript cost of smoothing and animation calculations before applying optimizations.
+
+<code src="./demos/streamingProfiler.tsx" iframe nopadding></code>
+
 ## Custom
 
 ### Markdown Components

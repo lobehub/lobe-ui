@@ -4,12 +4,10 @@ import { Autocomplete } from '@base-ui/react/autocomplete';
 import { cx } from 'antd-style';
 import type React from 'react';
 
-import { usePortalContainer } from '@/hooks/usePortalContainer';
 import { styles as menuStyles } from '@/Menu/sharedStyle';
+import { useAppElement } from '@/ThemeProvider';
 
 import { styles } from './style';
-
-export const EDITOR_SLASH_MENU_CONTAINER_ATTR = 'data-lobe-ui-editor-slash-menu-container';
 
 const mergeStateClassName = <TState,>(
   base: string,
@@ -45,8 +43,8 @@ export type EditorSlashMenuPortalProps = React.ComponentProps<typeof Autocomplet
 };
 
 export const EditorSlashMenuPortal = ({ container, ...rest }: EditorSlashMenuPortalProps) => {
-  const defaultContainer = usePortalContainer(EDITOR_SLASH_MENU_CONTAINER_ATTR);
-  return <Autocomplete.Portal container={container ?? defaultContainer} {...rest} />;
+  const appElement = useAppElement();
+  return <Autocomplete.Portal container={container ?? appElement ?? undefined} {...rest} />;
 };
 EditorSlashMenuPortal.displayName = 'EditorSlashMenuPortal';
 
