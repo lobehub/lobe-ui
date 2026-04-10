@@ -8,6 +8,7 @@ import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react'
 import type { Enable, NumberSize, Size } from 're-resizable';
 import { Resizable } from 're-resizable';
 import {
+  type CSSProperties,
   memo,
   startTransition,
   use,
@@ -397,19 +398,69 @@ const DraggablePanel = memo<DraggablePanelProps>(
     }
 
     const Arrow = ARROW_MAP[internalPlacement] ?? ChevronLeft;
+    const stableOuterFlex = stableLayout
+      ? ({
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: 0,
+        } as const)
+      : {};
+
     const sidebarOuterStyle = isVertical
       ? {
           height: isExpand ? expandedOuterSize : 0,
           overflow: 'hidden',
           transition: shouldTransition ? 'height 0.2s var(--ant-motion-ease-out, ease)' : 'none',
           width: '100%',
+          ...stableOuterFlex,
         }
       : {
           overflow: 'hidden',
           transition: shouldTransition ? 'width 0.2s var(--ant-motion-ease-out, ease)' : 'none',
           width: isExpand ? expandedOuterSize : 0,
+          ...(stableLayout
+            ? {
+                ...stableOuterFlex,
+                flex: 1,
+                minWidth: 0,
+                height: '100%',
+              }
+            : {}),
         };
-    const sidebarInnerStyle = isVertical ? { height: '100%', width: '100%' } : { width: '100%' };
+
+    const stableInnerStyle: CSSProperties = {
+      display: 'flex',
+      flex: 1,
+      flexDirection: 'column',
+      height: '100%',
+      minHeight: 0,
+      minWidth: 0,
+      width: '100%',
+    };
+    const sidebarInnerStyle: CSSProperties = stableLayout
+      ? stableInnerStyle
+      : isVertical
+        ? { height: '100%', width: '100%' }
+        : { width: '100%' };
+
+    const stableAsideStyle: CSSProperties = stableLayout
+      ? {
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: 0,
+          ...(mode === 'fixed' ? { height: '100%' } : {}),
+        }
+      : {};
+
+    const stableResizableStyle: CSSProperties = {
+      display: 'flex',
+      flex: 1,
+      flexDirection: 'column',
+      height: '100%',
+      minHeight: 0,
+      minWidth: 0,
+      width: '100%',
+    };
 
     const panelNode = (!destroyOnClose || isExpand) && (
       <Resizable
@@ -427,6 +478,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
         style={{
           ...cssVariables,
           transition: shouldTransition ? undefined : 'none',
+          ...(stableLayout ? stableResizableStyle : {}),
           ...style,
         }}
         onResize={handleResize}
@@ -441,7 +493,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
       <aside
         dir={dir}
         ref={ref}
-        style={cssVariables}
+        style={{ ...cssVariables, ...stableAsideStyle }}
         className={cx(
           panelVariants({ isExpand, mode, placement: internalPlacement, showBorder }),
           className,
