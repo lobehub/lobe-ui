@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.7.1](https://github.com/lobehub/lobe-ui/compare/v5.7.0...v5.7.1) (2026-04-15)
+
+### 🐛 Bug Fixes
+
+- **modal**: Adaptive ok-button text color and nested overlay stacking ([ae9a55f](https://github.com/lobehub/lobe-ui/commit/ae9a55f))
+
 # [5.7.0](https://github.com/lobehub/lobe-ui/compare/v5.6.5...v5.7.0) (2026-04-10)
 
 ### ✨ Features
