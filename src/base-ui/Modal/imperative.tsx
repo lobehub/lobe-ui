@@ -1,13 +1,14 @@
 'use client';
 
-import { cx } from 'antd-style';
+import { cx, useTheme } from 'antd-style';
 import type { ReactNode } from 'react';
-import { memo, useCallback, useEffect, useState, useSyncExternalStore } from 'react';
+import { memo, useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useIsClient } from '@/hooks/useIsClient';
 import { useAppElement } from '@/ThemeProvider';
 import { registerDevSingleton } from '@/utils/devSingleton';
+import { safeReadableColor } from '@/utils/safeReadableColor';
 
 import {
   ModalBackdrop,
@@ -23,6 +24,7 @@ import {
 import { ModalContext, useModalContext } from './context';
 import { styles } from './style';
 import type { ImperativeModalProps, ModalConfirmConfig, ModalInstance } from './type';
+import { acquireModalZIndex } from './zIndexManager';
 
 // --- Shared types ---
 
@@ -47,11 +49,14 @@ const ModalPortalWrapper = ({
 
 const ConfirmBody = ({ config }: { config: ModalConfirmConfig }) => {
   const { close } = useModalContext();
+  const theme = useTheme();
   const [loading, setLoading] = useState(false);
 
   const { cancelText = 'Cancel', content, okButtonProps, okText = 'OK', onCancel, onOk } = config;
 
-  const { danger, className: okUserCls, ...restOkProps } = okButtonProps ?? {};
+  const { danger, className: okUserCls, style: okUserStyle, ...restOkProps } = okButtonProps ?? {};
+  const okBgColor = danger ? theme.colorError : theme.colorPrimary;
+  const okTextColor = safeReadableColor(okBgColor);
 
   const handleCancel = useCallback(() => {
     close();
@@ -89,6 +94,7 @@ const ConfirmBody = ({ config }: { config: ModalConfirmConfig }) => {
         <button
           {...restOkProps}
           disabled={loading}
+          style={{ color: okTextColor, ...okUserStyle }}
           type="button"
           className={cx(
             styles.buttonBase,
@@ -181,6 +187,14 @@ export function createModalSystem(): ModalSystem {
 
     const isOpen = open ?? true;
 
+    const zIndexRef = useRef<number | undefined>(undefined);
+    const prevOpenRef = useRef(false);
+    if (isOpen && !prevOpenRef.current) {
+      zIndexRef.current = acquireModalZIndex();
+    }
+    prevOpenRef.current = isOpen;
+    const zIndex = zIndexRef.current ?? 1000;
+
     const handleOpenChange = useCallback(
       (nextOpen: boolean, eventDetails?: { reason: string }) => {
         if (!nextOpen && maskClosable === false && eventDetails?.reason === 'outside-press') return;
@@ -211,10 +225,13 @@ export function createModalSystem(): ModalSystem {
           onOpenChange={handleOpenChange}
         >
           <ModalPortal>
-            <ModalBackdrop className={classNames?.backdrop} style={semanticStyles?.backdrop} />
+            <ModalBackdrop
+              className={classNames?.backdrop}
+              style={{ zIndex, ...semanticStyles?.backdrop }}
+            />
             <ModalPopup
               className={classNames?.popup}
-              popupStyle={semanticStyles?.popup}
+              popupStyle={{ zIndex: zIndex + 1, ...semanticStyles?.popup }}
               width={width}
             >
               {showTitle && (

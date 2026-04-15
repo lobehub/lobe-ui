@@ -22,6 +22,10 @@ apiHeader:
 
 <code src="./demos/imperative.tsx" nopadding></code>
 
+## Nested Modals
+
+<code src="./demos/nested.tsx" nopadding></code>
+
 ## Atom Components
 
 <code src="./demos/atoms.tsx" nopadding></code>

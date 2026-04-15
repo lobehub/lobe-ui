@@ -1,6 +1,6 @@
 'use client';
 
-import { cx } from 'antd-style';
+import { cx, useTheme } from 'antd-style';
 import { Maximize2, Minimize2, X } from 'lucide-react';
 import { useDragControls } from 'motion/react';
 import type { MouseEvent, PointerEvent } from 'react';
@@ -8,6 +8,7 @@ import type React from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { stopPropagation } from '@/utils/dom';
+import { safeReadableColor } from '@/utils/safeReadableColor';
 
 import {
   ModalBackdrop,
@@ -21,6 +22,7 @@ import {
 } from './atoms';
 import { styles } from './style';
 import type { ModalComponentProps } from './type';
+import { acquireModalZIndex } from './zIndexManager';
 
 interface OkBtnProps {
   confirmLoading?: boolean;
@@ -30,19 +32,24 @@ interface OkBtnProps {
 }
 
 const OkBtn: React.FC<OkBtnProps> = ({ confirmLoading, okButtonProps, okText, onOk }) => {
+  const theme = useTheme();
   const {
     className: userCls,
     danger,
     disabled: userDisabled,
     onClick: userOnClick,
+    style: userStyle,
     ...restOk
   } = okButtonProps ?? {};
+  const bgColor = danger ? theme.colorError : theme.colorPrimary;
+  const textColor = safeReadableColor(bgColor);
   return (
     <button
       type="button"
       {...restOk}
       className={cx(styles.buttonBase, danger ? styles.dangerOkButton : styles.okButton, userCls)}
       disabled={confirmLoading || userDisabled}
+      style={{ color: textColor, ...userStyle }}
       onClick={(e) => {
         onOk(e);
         userOnClick?.(e);
@@ -219,8 +226,16 @@ const Modal = memo<ModalComponentProps>(
     ]);
 
     const container = getContainer === false ? undefined : (getContainer ?? undefined);
-    const backdropZIndex = zIndex ? { zIndex } : undefined;
-    const popupZIndex = zIndex ? { zIndex: (zIndex || 1000) + 1 } : undefined;
+
+    const prevOpenRef = useRef(false);
+    const acquiredZRef = useRef<number | undefined>(undefined);
+    if (open && !prevOpenRef.current) {
+      acquiredZRef.current = acquireModalZIndex();
+    }
+    prevOpenRef.current = !!open;
+    const effectiveZIndex = zIndex ?? acquiredZRef.current;
+    const backdropZIndex = effectiveZIndex ? { zIndex: effectiveZIndex } : undefined;
+    const popupZIndex = effectiveZIndex ? { zIndex: effectiveZIndex + 1 } : undefined;
 
     const shouldDrag = draggable && !isFullscreen;
     const dragProps = shouldDrag
