@@ -240,6 +240,18 @@ Use this demo to inspect stream-driven React commit frequency, block-level re-re
 
 <code src="./demos/streamingProfiler.tsx" iframe nopadding></code>
 
+### Character Animation Loss Repro
+
+Controlled reproductions for the missing character-by-character fade. Three scenarios target:
+
+- `syncImmediate` fallback when a single append exceeds `largeAppendChars`.
+- Timeline seeding at `latestCharStart` for newly born blocks.
+- 20 TPS input that still skips the fade at every paragraph boundary.
+
+The `skipped` counter tallies `.stream-char` spans that were inserted into the DOM already classed as `.stream-char-revealed` — i.e. the fade was burned before the user could see it.
+
+<code src="./demos/streamingAnimationRepro.tsx" iframe nopadding></code>
+
 ## Custom
 
 ### Markdown Components
