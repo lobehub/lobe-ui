@@ -2,6 +2,7 @@
 
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
+import { getLobeIconCDN, toc } from '@lobehub/icons';
 import { cx, useTheme } from 'antd-style';
 import chroma from 'chroma-js';
 import { SmileIcon, TrashIcon, UploadIcon } from 'lucide-react';
@@ -33,6 +34,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
     locale = 'en-US',
     allowUpload,
     allowDelete,
+    allowModelAvatar,
     texts,
     onDelete,
     compressSize = 256,
@@ -86,6 +88,26 @@ const EmojiPicker = memo<EmojiPickerProps>(
       setAva(emoji);
       setVisible(false);
     };
+
+    // Generate model avatars from @lobehub/icons when allowModelAvatar is enabled
+    const mergedCustomEmojis = useMemo(() => {
+      if (!allowModelAvatar) return customEmojis;
+
+      const modelIcons = toc.filter((item) => item.group !== 'application');
+
+      const modelEmojisCategory = {
+        id: 'models',
+        name: 'Models / Providers',
+        emojis: modelIcons.map((item) => ({
+          id: item.id.toLowerCase(),
+          name: item.title,
+          keywords: [item.title, item.id, item.fullTitle],
+          skins: [{ src: getLobeIconCDN(item.id, { format: 'avatar', cdn: 'aliyun' }) }],
+        })),
+      };
+
+      return customEmojis ? [modelEmojisCategory, ...customEmojis] : [modelEmojisCategory];
+    }, [allowModelAvatar, customEmojis]);
 
     const emojiText = texts?.emoji ?? t('emojiPicker.emoji');
     const uploadText = texts?.upload ?? t('emojiPicker.upload');
@@ -160,7 +182,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
         )}
         {tab === 'emoji' && (
           <Picker
-            custom={customEmojis}
+            custom={mergedCustomEmojis}
             data={data}
             i18n={i18n}
             icons={'outline'}
