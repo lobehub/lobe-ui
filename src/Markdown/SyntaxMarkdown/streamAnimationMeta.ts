@@ -1,18 +1,16 @@
 import { type BlockState } from './useStreamQueue';
 
 export interface ResolveBlockAnimationMetaOptions {
-  blockCharCount: number;
   currentCharDelay: number;
   fadeDuration: number;
+  lastElapsedMs: number;
   previousCharDelay?: number;
   state: BlockState;
-  timelineElapsedMs: number;
 }
 
 export interface BlockAnimationMeta {
   charDelay: number;
   settled: boolean;
-  timelineElapsedMs: number;
 }
 
 const isActiveBlock = (state: BlockState) => {
@@ -20,22 +18,19 @@ const isActiveBlock = (state: BlockState) => {
 };
 
 export const resolveBlockAnimationMeta = ({
-  blockCharCount,
   currentCharDelay,
   fadeDuration,
+  lastElapsedMs,
   previousCharDelay,
   state,
-  timelineElapsedMs,
 }: ResolveBlockAnimationMetaOptions): BlockAnimationMeta => {
   const charDelay = isActiveBlock(state)
     ? currentCharDelay
     : (previousCharDelay ?? currentCharDelay);
-  const latestCharStart = Math.max(0, (blockCharCount - 1) * charDelay);
-  const settled = state === 'revealed' && timelineElapsedMs >= latestCharStart + fadeDuration;
+  const settled = state === 'revealed' && lastElapsedMs >= fadeDuration;
 
   return {
     charDelay,
     settled,
-    timelineElapsedMs: settled ? latestCharStart + fadeDuration : timelineElapsedMs,
   };
 };

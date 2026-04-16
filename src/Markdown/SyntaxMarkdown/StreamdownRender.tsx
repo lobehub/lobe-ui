@@ -160,46 +160,57 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
   const blocks: BlockInfo[] = blocksResult.value;
 
   const { getBlockState, charDelay } = useStreamQueue(blocks);
-  const prevBlockCharCountRef = useRef<Map<number, number>>(new Map());
   const blockCharDelayRef = useRef<Map<number, number>>(new Map());
-  const blockTimelineRef = useRef<Map<number, number>>(new Map());
-  const lastRenderTsRef = useRef<number | null>(null);
+  const blockBirthsRef = useRef<Map<number, number[]>>(new Map());
 
-  const renderTs = getNow();
-  const frameDt =
-    lastRenderTsRef.current === null
-      ? 0
-      : Math.max(0, Math.min(renderTs - lastRenderTsRef.current, 120));
+  const renderNow = getNow();
 
-  const timelineResult = useMemo(() => {
+  const birthsResult = useMemo(() => {
     const start = profiler ? getNow() : 0;
-    const next = new Map<number, number>();
-    const prevTimeline = blockTimelineRef.current;
-    const prevCharCounts = prevBlockCharCountRef.current;
+    const nextBirths = new Map<number, number[]>();
+    const prevBirths = blockBirthsRef.current;
 
-    for (const block of blocks) {
+    for (const [index, block] of blocks.entries()) {
+      const state = getBlockState(index);
+      // Queued blocks are not rendered. Defer birth assignment so that
+      // when the block later transitions to animating/streaming, its
+      // chars start fading from that moment instead of having already
+      // "aged out" of the fade window.
+      if (state === 'queued') continue;
+
       const blockCharCount = countChars(block.content);
-      const prevCharCount = prevCharCounts.get(block.startOffset) ?? 0;
-      const prevElapsed = prevTimeline.get(block.startOffset);
-      const latestCharStart = Math.max(0, (blockCharCount - 1) * charDelay);
+      const prev = prevBirths.get(block.startOffset);
+      let arr: number[];
 
-      if (prevElapsed === undefined || blockCharCount < prevCharCount) {
-        next.set(block.startOffset, latestCharStart);
-        continue;
+      if (prev && prev.length === blockCharCount) {
+        arr = prev;
+      } else if (prev && prev.length > blockCharCount) {
+        // Block content shrunk (stream restart or upstream rewrite).
+        arr = prev.slice(0, blockCharCount);
+      } else {
+        arr = prev ? prev.slice() : [];
+        const startIdx = arr.length;
+        // Chain each new char monotonically after the previous one so fades
+        // never race out of order. Cap how far the fade queue can run ahead
+        // of renderNow to prevent stream-faster-than-fade producing seconds
+        // of invisible backlog at the tail.
+        const cap = renderNow + STREAM_FADE_DURATION;
+        for (let i = startIdx; i < blockCharCount; i++) {
+          const prevBirth = i > 0 ? (arr[i - 1] as number) : renderNow - charDelay;
+          const chained = prevBirth + charDelay;
+          arr.push(Math.min(cap, Math.max(chained, renderNow)));
+        }
       }
 
-      const elapsedByTime = prevElapsed + frameDt;
-      // Avoid huge hidden backlog when stream updates in bursts.
-      const minElapsed = Math.max(0, latestCharStart - charDelay * 2);
-      next.set(block.startOffset, Math.max(elapsedByTime, minElapsed));
+      nextBirths.set(block.startOffset, arr);
     }
 
     return {
       durationMs: profiler ? getNow() - start : 0,
-      value: next,
+      value: nextBirths,
     };
-  }, [blocks, charDelay, frameDt, profiler]);
-  const timelineForRender = timelineResult.value;
+  }, [blocks, charDelay, getBlockState, profiler, renderNow]);
+  const birthsForRender = birthsResult.value;
 
   useEffect(() => {
     if (!profiler) return;
@@ -226,12 +237,12 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
     if (!profiler) return;
 
     profiler.recordCalculation({
-      durationMs: timelineResult.durationMs,
+      durationMs: birthsResult.durationMs,
       itemCount: blocks.length,
-      name: 'block-timeline',
+      name: 'block-births',
       textLength: processedContent.length,
     });
-  }, [blocks.length, processedContent.length, profiler, timelineResult.durationMs]);
+  }, [birthsResult.durationMs, blocks.length, processedContent.length, profiler]);
 
   const blockAnimationMetaResult = useMemo(() => {
     const nextBlockCharDelay = new Map<number, number>();
@@ -239,14 +250,15 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
 
     for (const [index, block] of blocks.entries()) {
       const state = getBlockState(index);
-      const timelineElapsedMs = timelineForRender.get(block.startOffset) ?? 0;
+      const births = birthsForRender.get(block.startOffset);
+      const lastBirthTs = births && births.length > 0 ? (births.at(-1) ?? renderNow) : renderNow;
+      const lastElapsedMs = renderNow - lastBirthTs;
       const animationMeta = resolveBlockAnimationMeta({
-        blockCharCount: countChars(block.content),
         currentCharDelay: charDelay,
         fadeDuration: STREAM_FADE_DURATION,
+        lastElapsedMs,
         previousCharDelay: blockCharDelayRef.current.get(block.startOffset),
         state,
-        timelineElapsedMs,
       });
 
       nextBlockCharDelay.set(block.startOffset, animationMeta.charDelay);
@@ -257,18 +269,12 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
       blockAnimationMeta,
       blockCharDelay: nextBlockCharDelay,
     };
-  }, [blocks, charDelay, getBlockState, timelineForRender]);
+  }, [birthsForRender, blocks, charDelay, getBlockState, renderNow]);
 
   useEffect(() => {
-    const nextCharCount = new Map<number, number>();
-    for (const block of blocks) {
-      nextCharCount.set(block.startOffset, countChars(block.content));
-    }
     blockCharDelayRef.current = blockAnimationMetaResult.blockCharDelay;
-    prevBlockCharCountRef.current = nextCharCount;
-    blockTimelineRef.current = timelineForRender;
-    lastRenderTsRef.current = getNow();
-  }, [blockAnimationMetaResult.blockCharDelay, blocks, timelineForRender]);
+    blockBirthsRef.current = birthsForRender;
+  }, [birthsForRender, blockAnimationMetaResult.blockCharDelay]);
 
   const handleRootRender = useCallback<ProfilerOnRenderCallback>(
     (_, phase, actualDuration, baseDuration) => {
@@ -316,6 +322,7 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
         const animationMeta = blockAnimationMetaResult.blockAnimationMeta.get(block.startOffset);
         if (!animationMeta) return null;
 
+        const births = birthsForRender.get(block.startOffset);
         const plugins: Pluggable[] = animationMeta.settled
           ? [...baseRehypePlugins, REVEALED_STREAM_PLUGIN]
           : [
@@ -323,9 +330,9 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
               [
                 rehypeStreamAnimated,
                 {
-                  charDelay: animationMeta.charDelay,
+                  births,
                   fadeDuration: STREAM_FADE_DURATION,
-                  timelineElapsedMs: animationMeta.timelineElapsedMs,
+                  nowMs: renderNow,
                 },
               ],
             ];
