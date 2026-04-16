@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.8.0](https://github.com/lobehub/lobe-ui/compare/v5.7.1...v5.8.0) (2026-04-16)
+
+### ✨ Features
+
+- Emoji picker support select model and provider icon, closes [#501](https://github.com/lobehub/lobe-ui/issues/501) ([25491e7](https://github.com/lobehub/lobe-ui/commit/25491e7))
+
 ## [5.7.1](https://github.com/lobehub/lobe-ui/compare/v5.7.0...v5.7.1) (2026-04-15)
 
 ### 🐛 Bug Fixes
