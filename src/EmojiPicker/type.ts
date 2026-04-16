@@ -39,6 +39,7 @@ export interface EmojiPickerCustomTab {
 
 export interface EmojiPickerProps extends Omit<AvatarProps, 'onChange' | 'avatar'> {
   allowDelete?: boolean;
+  allowModelAvatar?: boolean;
   allowUpload?:
     | boolean
     | {
