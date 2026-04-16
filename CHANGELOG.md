@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.9.0](https://github.com/lobehub/lobe-ui/compare/v5.8.0...v5.9.0) (2026-04-16)
+
+### ✨ Features
+
+- **markdown**: Refine Streamdown streaming animation meta and rehype plugin, closes [#502](https://github.com/lobehub/lobe-ui/issues/502) ([725bd0a](https://github.com/lobehub/lobe-ui/commit/725bd0a))
+
 # [5.8.0](https://github.com/lobehub/lobe-ui/compare/v5.7.1...v5.8.0) (2026-04-16)
 
 ### ✨ Features
