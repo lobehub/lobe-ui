@@ -6,11 +6,12 @@ export function clamp(value: number, min: number, max: number): number {
 }
 
 /**
- * Logarithmic damping for drag resistance beyond snap bounds.
- * Adapted from vaul.
+ * Rubber-band damping for drag resistance beyond snap bounds.
+ * Returns 0 when v <= 0, near 1:1 for small v, then grows logarithmically.
  */
 export function dampenValue(v: number): number {
-  return 8 * (Math.log(v + 1) - 2);
+  if (v <= 0) return 0;
+  return 8 * Math.log1p(v / 8);
 }
 
 /**

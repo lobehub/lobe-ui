@@ -16,10 +16,24 @@ describe('clamp', () => {
 
 describe('dampenValue', () => {
   test('returns 0 for input 0', () => {
-    expect(dampenValue(0)).toBeCloseTo(8 * (Math.log(1) - 2));
+    expect(dampenValue(0)).toBe(0);
   });
 
-  test('increases logarithmically', () => {
+  test('returns 0 for negative input', () => {
+    expect(dampenValue(-10)).toBe(0);
+  });
+
+  test('returns positive damped value for positive input', () => {
+    expect(dampenValue(10)).toBeGreaterThan(0);
+    expect(dampenValue(1)).toBeGreaterThan(0);
+  });
+
+  test('damped value never exceeds raw input (resistance grows with distance)', () => {
+    expect(dampenValue(50)).toBeLessThan(50);
+    expect(dampenValue(200)).toBeLessThan(200);
+  });
+
+  test('increases monotonically and logarithmically', () => {
     const a = dampenValue(10);
     const b = dampenValue(100);
     expect(b).toBeGreaterThan(a);
