@@ -2,7 +2,7 @@
 nav: Components
 group: Feedback
 title: FloatingSheet
-description: Container-embedded bottom sheet with drag-to-resize, snap points, overlay/push layout modes, and elevated/embedded visual variants.
+description: Container-embedded bottom sheet with drag-to-resize, snap points, overlay/inline layout modes, and elevated/embedded visual variants.
 subType: base-ui
 apiHeader:
   pkg: '@lobehub/ui/base-ui'
@@ -18,6 +18,6 @@ apiHeader:
 
 <code src="./demos/index.tsx" nopadding></code>
 
-## Push Mode
+## Inline Mode
 
-<code src="./demos/push.tsx" nopadding></code>
+<code src="./demos/inline.tsx" nopadding></code>

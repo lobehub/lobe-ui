@@ -10,10 +10,11 @@ export interface FloatingSheetProps {
   headerActions?: ReactNode;
   maxHeight?: number;
   minHeight?: number;
-  mode?: 'overlay' | 'push';
+  mode?: 'overlay' | 'inline';
   onOpenChange?: (open: boolean) => void;
   onSnapPointChange?: (snapPoint: number) => void;
   open?: boolean;
+  restingHeight?: number;
   snapPoints?: number[];
   title?: ReactNode;
   variant?: 'elevated' | 'embedded';

@@ -19,6 +19,7 @@ export function FloatingSheet({
   onSnapPointChange,
   minHeight: minHeightProp = 200,
   maxHeight: maxHeightProp = 0.8,
+  restingHeight: restingHeightProp,
   mode = 'overlay',
   variant = 'elevated',
   width = '100%',
@@ -74,6 +75,13 @@ export function FloatingSheet({
     () => resolveSize(maxHeightProp, containerHeight),
     [maxHeightProp, containerHeight],
   );
+  const restingHeightPx = useMemo(
+    () =>
+      restingHeightProp !== undefined
+        ? clamp(resolveSize(restingHeightProp, containerHeight), minHeightPx, maxHeightPx)
+        : minHeightPx,
+    [restingHeightProp, containerHeight, minHeightPx, maxHeightPx],
+  );
 
   // Snap points
   const hasSnapPoints = !!snapPointsProp && snapPointsProp.length > 0;
@@ -96,7 +104,7 @@ export function FloatingSheet({
     if (hasSnapPoints && snapPointHeights.length > 0) {
       return snapPointHeights[0];
     }
-    return minHeightPx;
+    return restingHeightPx;
   }, [
     containerHeight,
     hasSnapPoints,
@@ -104,6 +112,7 @@ export function FloatingSheet({
     snapPointHeights,
     minHeightPx,
     maxHeightPx,
+    restingHeightPx,
   ]);
 
   const [height, setHeight] = useState(isOpen ? restingHeight : 0);
@@ -253,6 +262,8 @@ export function FloatingSheet({
 
   const isVisible = isOpen || isClosing || height > 0;
   const shouldAnimate = !isDragging && isAnimating;
+  const inlineOverflowUp =
+    mode === 'inline' && isVisible ? Math.max(0, height - restingHeightPx) : 0;
 
   return (
     <div
@@ -262,13 +273,15 @@ export function FloatingSheet({
       className={cx(
         s.root,
         variant === 'embedded' ? s.embedded : s.elevated,
-        mode === 'overlay' ? s.overlay : s.push,
+        mode === 'overlay' ? s.overlay : s.inline,
+        mode === 'overlay' ? s.overlayRadius : s.inlineRadius,
         shouldAnimate && s.transition,
         !isVisible && s.hidden,
         className,
       )}
       style={{
         height: isVisible ? height : 0,
+        marginTop: inlineOverflowUp ? -inlineOverflowUp : undefined,
         width,
       }}
     >

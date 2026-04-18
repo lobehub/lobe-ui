@@ -24,12 +24,14 @@ interface PlaygroundControls {
   dismissible: boolean;
   maxHeight: number;
   minHeight: number;
-  mode: 'overlay' | 'push';
+  mode: 'overlay' | 'inline';
   open: boolean;
+  restingHeight: number;
   showHeaderActions: boolean;
   snapPreset: SnapPreset;
   title: string;
   useActiveSnapPoint: boolean;
+  useRestingHeight: boolean;
   variant: 'elevated' | 'embedded';
   width: string;
 }
@@ -96,10 +98,16 @@ export default () => {
         value: 140,
       },
       mode: {
-        options: ['overlay', 'push'],
+        options: ['overlay', 'inline'],
         value: 'overlay',
       },
       open: true,
+      restingHeight: {
+        max: 320,
+        min: 80,
+        step: 10,
+        value: 180,
+      },
       showHeaderActions: true,
       snapPreset: {
         options: Object.keys(snapPresets),
@@ -107,6 +115,7 @@ export default () => {
       },
       title: 'FloatingSheet Playground',
       useActiveSnapPoint: true,
+      useRestingHeight: false,
       variant: {
         options: ['elevated', 'embedded'],
         value: 'elevated',
@@ -160,6 +169,7 @@ export default () => {
       ? (activeSnapPoint) => setControls({ activeSnapPoint })
       : undefined,
     open: controls.controlled ? controls.open : undefined,
+    restingHeight: controls.useRestingHeight ? controls.restingHeight : undefined,
     snapPoints,
     title: controls.title.trim() ? (
       <Text style={{ fontSize: 13, fontWeight: 600 }}>{controls.title}</Text>
@@ -281,7 +291,7 @@ export default () => {
                     'Toolbar region',
                     'Scrollable content area',
                     'Detail rows that remain visible behind the sheet',
-                    'Stage boundary for overlay and push layout modes',
+                    'Stage boundary for overlay and inline layout modes',
                   ].map((item) => (
                     <div key={item} style={statCardStyle}>
                       <Text style={{ fontSize: 13 }}>{item}</Text>
