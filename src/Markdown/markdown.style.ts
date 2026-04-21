@@ -19,7 +19,7 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
 
     font-size: var(--lobe-markdown-font-size);
     line-height: var(--lobe-markdown-line-height);
-    word-break: break-word;
+    overflow-wrap: break-word;
   `;
   const a = css`
     a {
@@ -57,7 +57,7 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
         font-family: ${cssVar.fontFamilyCode};
         font-size: 0.875em;
         line-height: 1;
-        word-break: break-word;
+        overflow-wrap: break-word;
         white-space: break-spaces;
 
         background: ${cssVar.colorFillSecondary};
@@ -301,11 +301,10 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
       word-break: auto-phrase;
       overflow-wrap: break-word;
 
-      background: ${cssVar.colorFillQuaternary};
       box-shadow: 0 0 0 1px ${cssVar.colorBorderSecondary};
 
       code {
-        word-break: break-word;
+        overflow-wrap: break-word;
       }
 
       thead {

@@ -14,4 +14,9 @@ export interface SortableListProps<T extends SortableListItem = SortableListItem
   onChange: (items: T[]) => void;
   ref?: Ref<HTMLUListElement>;
   renderItem: (item: T) => ReactNode;
+  /**
+   * Custom render function for the drag overlay
+   * If not provided, renderItem will be used
+   */
+  renderOverlay?: (item: T) => ReactNode;
 }
