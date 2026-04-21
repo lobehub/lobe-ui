@@ -129,6 +129,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     position: relative;
 
+    overflow: hidden;
     display: flex;
     flex-direction: column;
 
