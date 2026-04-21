@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.9.3](https://github.com/lobehub/lobe-ui/compare/v5.9.2...v5.9.3) (2026-04-21)
+
+### 💄 Styles
+
+- **base-ui**: Add overflow hidden to Modal popup inner ([3917b27](https://github.com/lobehub/lobe-ui/commit/3917b27))
+
 ## [5.9.2](https://github.com/lobehub/lobe-ui/compare/v5.9.1...v5.9.2) (2026-04-21)
 
 ### 🐛 Bug Fixes
