@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.9.2](https://github.com/lobehub/lobe-ui/compare/v5.9.1...v5.9.2) (2026-04-21)
+
+### 🐛 Bug Fixes
+
+- **markdown**: Remove background from table body, closes [#503](https://github.com/lobehub/lobe-ui/issues/503) [#420](https://github.com/lobehub/lobe-ui/issues/420) ([89871ea](https://github.com/lobehub/lobe-ui/commit/89871ea))
+
 ## [5.9.1](https://github.com/lobehub/lobe-ui/compare/v5.9.0...v5.9.1) (2026-04-18)
 
 ### 🎫 Chores
