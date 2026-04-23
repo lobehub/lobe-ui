@@ -99,14 +99,19 @@ const ContextMenuSwitchItemInternal = ({
       }}
     >
       {children}
-      <Switch
-        checked={checked}
-        disabled={disabled}
-        size="small"
-        style={{ marginInlineStart: 16 }}
-        onChange={handleCheckedChange}
-        onClick={(_, e) => e.stopPropagation()}
-      />
+      <span
+        style={{ display: 'inline-flex', marginInlineStart: 16 }}
+        onFocus={(e) => e.stopPropagation()}
+      >
+        <Switch
+          checked={checked}
+          disabled={disabled}
+          size="small"
+          tabIndex={-1}
+          onChange={handleCheckedChange}
+          onClick={(_, e) => e.stopPropagation()}
+        />
+      </span>
     </ContextMenu.Item>
   );
 };

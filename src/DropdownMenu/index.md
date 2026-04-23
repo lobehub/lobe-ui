@@ -57,6 +57,8 @@ When items have descriptions, use `iconAlign` to control icon vertical alignment
 
 <code src="./demos/switch.tsx" center></code>
 
+<code src="./demos/switch-mixed.tsx" center></code>
+
 ## Lazy Items
 
 <code src="./demos/lazy.tsx" center></code>
