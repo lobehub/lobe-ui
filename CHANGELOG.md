@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.9.5](https://github.com/lobehub/lobe-ui/compare/v5.9.4...v5.9.5) (2026-04-23)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Prevent switch item stealing highlight in dropdown/context menu ([5523054](https://github.com/lobehub/lobe-ui/commit/5523054))
+
 ## [5.9.4](https://github.com/lobehub/lobe-ui/compare/v5.9.3...v5.9.4) (2026-04-23)
 
 ### 🐛 Bug Fixes
