@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.9.4](https://github.com/lobehub/lobe-ui/compare/v5.9.3...v5.9.4) (2026-04-23)
+
+### 🐛 Bug Fixes
+
+- **draggable**: Improve resizing behavior with stable layout support ([b71ed8a](https://github.com/lobehub/lobe-ui/commit/b71ed8a))
+
 ## [5.9.3](https://github.com/lobehub/lobe-ui/compare/v5.9.2...v5.9.3) (2026-04-21)
 
 ### 💄 Styles
