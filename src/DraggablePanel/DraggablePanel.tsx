@@ -99,6 +99,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     const resetTransitionTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
     const resizableRef = useRef<Resizable>(null);
     const initialExpandedSizeRef = useRef<Size | undefined>(undefined);
+    const outerRef = useRef<HTMLDivElement>(null);
 
     const { direction: antdDirection } = use(ConfigProvider.ConfigContext);
     const direction = dir ?? antdDirection;
@@ -306,10 +307,20 @@ const DraggablePanel = memo<DraggablePanelProps>(
     const handleResize = useCallback(
       (_event: unknown, _direction: unknown, el: HTMLElement, delta: NumberSize) => {
         const nextSize = clampResizeSize(el);
+        if (stableLayout && outerRef.current) {
+          // Sync outer DOM width immediately so it doesn't lag behind the
+          // re-resizable inline style (which would otherwise trigger a 0.2s
+          // width transition on the outer/aside each frame during drag).
+          const dimension = isVertical ? nextSize.height : nextSize.width;
+          if (dimension) {
+            if (isVertical) outerRef.current.style.height = dimension;
+            else outerRef.current.style.width = dimension;
+          }
+        }
         setExpandedMainSize(nextSize);
         onSizeDragging?.(delta, nextSize);
       },
-      [clampResizeSize, onSizeDragging, setExpandedMainSize],
+      [clampResizeSize, isVertical, onSizeDragging, setExpandedMainSize, stableLayout],
     );
 
     const triggerResetWithoutTransition = useCallback(() => {
@@ -366,10 +377,16 @@ const DraggablePanel = memo<DraggablePanelProps>(
           resetTransitionTimeoutRef.current = undefined;
         }
 
+        // Synchronously disable the outer transition so the first drag frame
+        // does not animate. `setShouldTransition(false)` below is asynchronous
+        // and would only take effect after the next React commit.
+        if (stableLayout && outerRef.current) {
+          outerRef.current.style.transition = 'none';
+        }
         setShouldTransition(false);
         setShowExpand(false);
       },
-      [handleResetSize],
+      [handleResetSize, stableLayout],
     );
 
     const handleResizeStop = useCallback(
@@ -378,9 +395,16 @@ const DraggablePanel = memo<DraggablePanelProps>(
         setExpandedMainSize(nextSize);
         setShouldTransition(true);
         setShowExpand(true);
+        // Clear imperative inline overrides so React resumes owning the outer
+        // width/transition on the next render.
+        if (stableLayout && outerRef.current) {
+          outerRef.current.style.removeProperty('width');
+          outerRef.current.style.removeProperty('height');
+          outerRef.current.style.removeProperty('transition');
+        }
         onSizeChange?.(delta, nextSize);
       },
-      [clampResizeSize, onSizeChange, setExpandedMainSize],
+      [clampResizeSize, onSizeChange, setExpandedMainSize, stableLayout],
     );
 
     const resizeHandleClassName = useMemo(
@@ -524,7 +548,13 @@ const DraggablePanel = memo<DraggablePanelProps>(
             </Center>
           </Center>
         )}
-        {stableLayout ? <div style={sidebarOuterStyle}>{panelNode}</div> : panelNode}
+        {stableLayout ? (
+          <div ref={outerRef} style={sidebarOuterStyle}>
+            {panelNode}
+          </div>
+        ) : (
+          panelNode
+        )}
       </aside>
     );
   },
