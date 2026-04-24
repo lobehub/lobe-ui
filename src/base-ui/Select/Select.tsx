@@ -24,6 +24,7 @@ import {
   type SelectOptionGroup,
   type SelectOptions,
   type SelectProps,
+  type SelectRootChangeEventDetails,
 } from './type';
 
 const isGroupOption = <Value,>(
@@ -200,8 +201,8 @@ const Select = memo<SelectProps<any>>(
     const mergedOpen = open ?? uncontrolledOpen;
 
     const handleOpenChange = useCallback(
-      (nextOpen: boolean) => {
-        onOpenChange?.(nextOpen);
+      (nextOpen: boolean, eventDetails?: SelectRootChangeEventDetails) => {
+        onOpenChange?.(nextOpen, eventDetails);
         if (open === undefined) {
           setUncontrolledOpen(nextOpen);
         }
@@ -690,6 +691,18 @@ const Select = memo<SelectProps<any>>(
       });
 
     const appElement = useAppElement();
+    // `appElement` is the ThemeProvider wrapper div, which uses
+    // `display: contents` so it has no layout box. `@base-ui/react/select`
+    // fails to mount its Popup into a `display: contents` container in
+    // certain hosts (editor/chat inputs with focus traps). Fall back to
+    // `document.body` in that case; keep the original behavior when the
+    // wrapper has a real layout (older themes, SSR snapshot, etc.).
+    const portalContainer = useMemo(() => {
+      if (typeof window === 'undefined') return appElement;
+      if (!(appElement instanceof HTMLElement)) return undefined;
+      const display = window.getComputedStyle(appElement).display;
+      return display === 'contents' ? document.body : appElement;
+    }, [appElement]);
     return (
       <BaseSelect.Root
         disabled={disabled}
@@ -734,7 +747,7 @@ const Select = memo<SelectProps<any>>(
           </span>
         </BaseSelect.Trigger>
 
-        <BaseSelect.Portal container={appElement}>
+        <BaseSelect.Portal container={portalContainer}>
           <BaseSelect.Positioner
             align="start"
             alignItemWithTrigger={isItemAligned}

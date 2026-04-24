@@ -96,8 +96,19 @@ const ThemeProvider = memo<ThemeProviderProps>(
               className={className}
               style={{ isolation: 'isolate', minHeight: 'inherit', width: 'inherit', ...style }}
             >
-              <div id={LOBE_THEME_APP_ID} ref={setAppRef} style={{ display: 'contents' }}>
-                <AppElementContext value={appRef}>{children}</AppElementContext>
+              <div id={LOBE_THEME_APP_ID} style={contentsStyle}>
+                <AppElementContext value={appRef}>
+                  {children}
+                  {/*
+                    In-tree portal host for Base UI floating components
+                    (Select, Combobox, etc.). Keeping it inside `<App>` keeps
+                    the antd-style / emotion theme cascade intact so popups
+                    render with the correct tokens, while the layout-bearing
+                    block lets Base UI's Portal actually mount — the outer
+                    wrapper uses `display: contents` and cannot host portals.
+                  */}
+                  <div data-lobe-portal-host="" ref={setAppRef} style={hostPortalHostStyle} />
+                </AppElementContext>
               </div>
             </App>
           </AntdConfigProvider>
@@ -110,3 +121,16 @@ const ThemeProvider = memo<ThemeProviderProps>(
 ThemeProvider.displayName = 'LobeThemeProvider';
 
 export default ThemeProvider;
+
+const hostPortalHostStyle: React.CSSProperties = {
+  height: 0,
+  left: 0,
+  position: 'fixed',
+  top: 0,
+  width: 0,
+  zIndex: 1100,
+};
+
+const contentsStyle: React.CSSProperties = {
+  display: 'contents',
+};

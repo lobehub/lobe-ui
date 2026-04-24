@@ -1,6 +1,9 @@
+import type { SelectRootChangeEventDetails } from '@base-ui/react/select';
 import type { CSSProperties, ReactNode } from 'react';
 
 import type { IconProps } from '@/Icon';
+
+export type { SelectRootChangeEventDetails };
 
 export type SelectSize = 'large' | 'middle' | 'small';
 export type SelectVariant = 'borderless' | 'filled' | 'outlined';
@@ -82,7 +85,7 @@ export interface SelectProps<Value = string> {
     value: Value | Value[] | null,
     option?: SelectOption<Value> | SelectOption<Value>[],
   ) => void;
-  onOpenChange?: (open: boolean) => void;
+  onOpenChange?: (open: boolean, eventDetails?: SelectRootChangeEventDetails) => void;
   onSelect?: (value: Value, option?: SelectOption<Value>) => void;
   open?: boolean;
   optionRender?: (option: SelectOption<Value>, info: { index: number }) => ReactNode;

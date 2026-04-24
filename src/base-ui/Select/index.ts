@@ -42,6 +42,7 @@ export type {
   SelectOptionGroup,
   SelectOptions,
   SelectProps,
+  SelectRootChangeEventDetails,
   SelectSize,
   SelectVariant,
 } from './type';
