@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.9.6](https://github.com/lobehub/lobe-ui/compare/v5.9.5...v5.9.6) (2026-04-24)
+
+### 🐛 Bug Fixes
+
+- **select**: Enhance portal handling for floating components and update onOpenChange signature ([465a8b8](https://github.com/lobehub/lobe-ui/commit/465a8b8))
+
 ## [5.9.5](https://github.com/lobehub/lobe-ui/compare/v5.9.4...v5.9.5) (2026-04-23)
 
 ### 🐛 Bug Fixes
