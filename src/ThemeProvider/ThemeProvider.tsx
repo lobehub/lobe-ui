@@ -123,11 +123,20 @@ ThemeProvider.displayName = 'LobeThemeProvider';
 export default ThemeProvider;
 
 const hostPortalHostStyle: React.CSSProperties = {
+  // `height: 0` keeps the host invisible and gives it no hit region of
+  // its own; absolute children (Base UI Positioner) have their own hit
+  // region, so we must NOT set `pointer-events: none` here — it would
+  // be inherited by popup descendants and break clicks/hover.
   height: 0,
   left: 0,
+  // `position: fixed` keeps a stacking context so portaled popups can
+  // win over sibling z-indexes. `right: 0` (instead of `width: 0`)
+  // gives the host a full viewport-width containing block — without it,
+  // Base UI Positioner uses `position: absolute` against a 0-width
+  // containing block and collapses text to one character per line.
   position: 'fixed',
+  right: 0,
   top: 0,
-  width: 0,
   zIndex: 1100,
 };
 
