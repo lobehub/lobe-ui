@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.9.7](https://github.com/lobehub/lobe-ui/compare/v5.9.6...v5.9.7) (2026-04-26)
+
+### 🐛 Bug Fixes
+
+- **theme-provider**: Give portal host viewport width so popups don't collapse ([d22627a](https://github.com/lobehub/lobe-ui/commit/d22627a))
+
 ## [5.9.6](https://github.com/lobehub/lobe-ui/compare/v5.9.5...v5.9.6) (2026-04-24)
 
 ### 🐛 Bug Fixes
