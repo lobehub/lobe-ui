@@ -201,7 +201,7 @@
     "unified": "^11.0.5",
     "url-join": "^5.0.0",
     "use-merge-value": "^1.2.0",
-    "uuid": "^13.0.0",
+    "uuid": "^14.0.0",
     "virtua": "^0.49.0"
   },
   "devDependencies": {
