@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.10.0](https://github.com/lobehub/lobe-ui/compare/v5.9.7...v5.10.0) (2026-04-27)
+
+### ✨ Features
+
+- Add Line and DingTalk icons ([c37897d](https://github.com/lobehub/lobe-ui/commit/c37897d))
+
 ## [5.9.7](https://github.com/lobehub/lobe-ui/compare/v5.9.6...v5.9.7) (2026-04-26)
 
 ### 🐛 Bug Fixes
