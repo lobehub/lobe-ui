@@ -3,10 +3,12 @@ export { default as Authelia, type CompoundedIcon as AutheliaProps } from './Aut
 export { default as Authentik, type CompoundedIcon as AuthentikProps } from './Authentik';
 export { default as Casdoor, type CompoundedIcon as CasdoorProps } from './Casdoor';
 export { default as Clerk, type CompoundedIcon as ClerkProps } from './Clerk';
+export { default as DingTalk, type CompoundedIcon as DingTalkProps } from './DingTalk';
 export { default as Discord, type CompoundedIcon as DiscordProps } from './Discord';
 export { default as GoogleChat, type CompoundedIcon as GoogleChatProps } from './GoogleChat';
 export { default as IMessage, type CompoundedIcon as IMessageProps } from './IMessage';
 export { default as Lark, type CompoundedIcon as LarkProps } from './Lark';
+export { default as Line, type CompoundedIcon as LineProps } from './Line';
 export { default as Logto, type CompoundedIcon as LogtoProps } from './Logto';
 export * from './lucideExtra';
 export {
