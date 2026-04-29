@@ -184,7 +184,7 @@
     "react-markdown": "^10.1.0",
     "react-merge-refs": "^3.0.2",
     "react-rnd": "^10.5.3",
-    "react-zoom-pan-pinch": "^3.7.0",
+    "react-zoom-pan-pinch": "^4.0.0",
     "rehype-github-alerts": "^4.2.0",
     "rehype-katex": "^7.0.1",
     "rehype-raw": "^7.0.0",
