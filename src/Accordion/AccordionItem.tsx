@@ -22,7 +22,7 @@ import Text from '@/Text';
 import { stopPropagation } from '@/utils/dom';
 
 import ArrowIcon from './ArrowIcon';
-import { useAccordionContext } from './context';
+import { useAccordionConfig, useAccordionItemState } from './context';
 import { styles } from './style';
 import { type AccordionItemProps } from './type';
 
@@ -186,7 +186,6 @@ AccordionItemContent.displayName = 'AccordionItemContent';
 
 const AccordionItem = memo<AccordionItemProps>(
   ({
-    itemKey,
     title,
     children,
     action,
@@ -208,7 +207,10 @@ const AccordionItem = memo<AccordionItemProps>(
     expand,
     onExpandChange,
   }) => {
-    const context = useAccordionContext();
+    // Per-item state context: only this item's provider re-emits when its
+    // own isOpen flips, so siblings stay stable across toggles.
+    const itemStateContext = useAccordionItemState();
+    const configContext = useAccordionConfig();
 
     // Determine if using standalone mode (has expand or defaultExpand props)
     const isStandalone = expand !== undefined || defaultExpand !== undefined;
@@ -222,15 +224,12 @@ const AccordionItem = memo<AccordionItemProps>(
       },
     );
 
-    // Context values (may be null if used standalone)
-    const contextIsExpanded = context?.isExpanded;
-    const contextOnToggle = context?.onToggle;
-    const contextHideIndicator = context?.hideIndicator;
-    const contextIndicatorPlacement = context?.indicatorPlacement;
-    const contextKeepContentMounted = context?.keepContentMounted;
-    const contextDisableAnimation = context?.disableAnimation;
-    const contextMotionProps = context?.motionProps;
-    const contextVariant = context?.variant ?? 'borderless';
+    const contextHideIndicator = configContext?.hideIndicator;
+    const contextIndicatorPlacement = configContext?.indicatorPlacement;
+    const contextKeepContentMounted = configContext?.keepContentMounted;
+    const contextDisableAnimation = configContext?.disableAnimation;
+    const contextMotionProps = configContext?.motionProps;
+    const contextVariant = configContext?.variant ?? 'borderless';
 
     const isInitialRenderRef = useRef(true);
 
@@ -239,11 +238,7 @@ const AccordionItem = memo<AccordionItemProps>(
     }, []);
 
     // Determine expanded state
-    const isOpen = isStandalone
-      ? isExpandedStandalone
-      : contextIsExpanded
-        ? contextIsExpanded(itemKey)
-        : false;
+    const isOpen = isStandalone ? isExpandedStandalone : (itemStateContext?.isOpen ?? false);
 
     // Determine other props with fallbacks
     const hideIndicatorFinal = itemHideIndicator ?? contextHideIndicator ?? false;
@@ -251,6 +246,8 @@ const AccordionItem = memo<AccordionItemProps>(
     const keepContentMounted = contextKeepContentMounted ?? true;
     const disableAnimation = contextDisableAnimation ?? false;
     const variant = customVariant || contextVariant;
+
+    const contextOnToggle = itemStateContext?.onToggle;
 
     const handleToggle = useCallback(() => {
       // If allowExpand is false, only allow controlled expansion via expand prop
@@ -260,7 +257,7 @@ const AccordionItem = memo<AccordionItemProps>(
         if (isStandalone) {
           setIsExpandedStandalone(!isExpandedStandalone);
         } else if (contextOnToggle) {
-          contextOnToggle(itemKey);
+          contextOnToggle();
         }
       }
     }, [
@@ -270,7 +267,6 @@ const AccordionItem = memo<AccordionItemProps>(
       setIsExpandedStandalone,
       isExpandedStandalone,
       contextOnToggle,
-      itemKey,
     ]);
 
     const handleKeyDown = useCallback(
@@ -381,7 +377,7 @@ const AccordionItem = memo<AccordionItemProps>(
             {action}
           </Flexbox>
         ),
-      [action, alwaysShowAction, cx, styles, classNames?.action, customStyles?.action],
+      [action, alwaysShowAction, classNames?.action, customStyles?.action],
     );
 
     const headerElement = useMemo(() => {
