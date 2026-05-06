@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.10.1](https://github.com/lobehub/lobe-ui/compare/v5.10.0...v5.10.1) (2026-05-06)
+
+### ♻ Code Refactoring
+
+- **accordion**: Split context to minimize sibling re-renders, closes [#507](https://github.com/lobehub/lobe-ui/issues/507) ([b5b6f88](https://github.com/lobehub/lobe-ui/commit/b5b6f88))
+
 # [5.10.0](https://github.com/lobehub/lobe-ui/compare/v5.9.7...v5.10.0) (2026-04-27)
 
 ### ✨ Features
