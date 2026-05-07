@@ -57,6 +57,8 @@ const Accordion = memo<AccordionProps>(
     const setExpandedKeysRef = useRef(setExpandedKeys);
     setExpandedKeysRef.current = setExpandedKeys;
 
+    const isOpenKey = useCallback((key: Key) => expandedKeysRef.current.includes(key), []);
+
     const toggleExpand = useCallback(
       (key: Key) => {
         const prev = expandedKeysRef.current;
@@ -66,6 +68,25 @@ const Accordion = memo<AccordionProps>(
           newKeys = prev.includes(key) ? [] : [key];
         } else {
           newKeys = prev.includes(key) ? prev.filter((k: Key) => k !== key) : [...prev, key];
+        }
+
+        setExpandedKeysRef.current(newKeys);
+      },
+      [accordion],
+    );
+
+    const toggleExpandKeys = useCallback(
+      (keys: Key[], preferredKey: Key) => {
+        const prev = expandedKeysRef.current;
+        const isOpen = keys.some((key) => prev.includes(key));
+        let newKeys: Key[];
+
+        if (accordion) {
+          newKeys = isOpen ? [] : [preferredKey];
+        } else {
+          newKeys = isOpen
+            ? prev.filter((key: Key) => !keys.includes(key))
+            : [...prev, preferredKey];
         }
 
         setExpandedKeysRef.current(newKeys);
@@ -94,17 +115,25 @@ const Accordion = memo<AccordionProps>(
       ],
     );
 
+    const hasExplicitExpandedKeys =
+      expandedKeysProp !== undefined || defaultExpandedKeys !== undefined;
+
     const content = (
       <>
         {validChildren.map((child, index) => {
-          const childKey = (child.props as any).itemKey ?? index;
+          const hasChildItemKey = (child.props as any).itemKey !== undefined;
+          const childKey = hasChildItemKey ? (child.props as any).itemKey : index;
           const itemIsOpen = expandedKeys.includes(childKey);
           return (
             <Fragment key={childKey}>
               <AccordionItemStateProvider
+                expandedKeys={hasChildItemKey ? undefined : expandedKeys}
                 isOpen={itemIsOpen}
+                isOpenKey={isOpenKey}
                 itemKey={childKey}
+                preferProviderKeyForNestedItems={!hasExplicitExpandedKeys}
                 onToggleKey={toggleExpand}
+                onToggleKeys={toggleExpandKeys}
               >
                 {child}
               </AccordionItemStateProvider>

@@ -186,6 +186,7 @@ AccordionItemContent.displayName = 'AccordionItemContent';
 
 const AccordionItem = memo<AccordionItemProps>(
   ({
+    itemKey,
     title,
     children,
     action,
@@ -237,8 +238,17 @@ const AccordionItem = memo<AccordionItemProps>(
       isInitialRenderRef.current = false;
     }, []);
 
+    const isDirectContextItem = itemStateContext?.itemKey === itemKey;
+
     // Determine expanded state
-    const isOpen = isStandalone ? isExpandedStandalone : (itemStateContext?.isOpen ?? false);
+    let isOpen = false;
+    if (isStandalone) {
+      isOpen = isExpandedStandalone;
+    } else if (itemStateContext) {
+      isOpen = isDirectContextItem
+        ? itemStateContext.isOpen
+        : itemStateContext.isOpen || itemStateContext.isOpenKey(itemKey);
+    }
 
     // Determine other props with fallbacks
     const hideIndicatorFinal = itemHideIndicator ?? contextHideIndicator ?? false;
@@ -247,7 +257,14 @@ const AccordionItem = memo<AccordionItemProps>(
     const disableAnimation = contextDisableAnimation ?? false;
     const variant = customVariant || contextVariant;
 
-    const contextOnToggle = itemStateContext?.onToggle;
+    const contextOnToggle = useCallback(() => {
+      if (!itemStateContext) return;
+      if (itemStateContext.itemKey === itemKey) {
+        itemStateContext.onToggle();
+        return;
+      }
+      itemStateContext.onToggleNestedKey(itemKey);
+    }, [itemStateContext, itemKey]);
 
     const handleToggle = useCallback(() => {
       // If allowExpand is false, only allow controlled expansion via expand prop
