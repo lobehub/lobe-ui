@@ -239,16 +239,16 @@ const AccordionItem = memo<AccordionItemProps>(
     }, []);
 
     const isDirectContextItem = itemStateContext?.itemKey === itemKey;
-    const isOpenKey = itemStateContext?.isOpenKey(itemKey) ?? false;
 
     // Determine expanded state
-    const isOpen = isStandalone
-      ? isExpandedStandalone
-      : itemStateContext
-        ? isDirectContextItem
-          ? itemStateContext.isOpen
-          : itemStateContext.isOpen || isOpenKey
-        : false;
+    let isOpen = false;
+    if (isStandalone) {
+      isOpen = isExpandedStandalone;
+    } else if (itemStateContext) {
+      isOpen = isDirectContextItem
+        ? itemStateContext.isOpen
+        : itemStateContext.isOpen || itemStateContext.isOpenKey(itemKey);
+    }
 
     // Determine other props with fallbacks
     const hideIndicatorFinal = itemHideIndicator ?? contextHideIndicator ?? false;
