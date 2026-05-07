@@ -3,7 +3,11 @@ import { createContext, memo, use, useMemo } from 'react';
 
 interface AccordionItemStateValue {
   isOpen: boolean;
+  isOpenKey: (key: Key) => boolean;
+  itemKey: Key;
   onToggle: () => void;
+  onToggleKey: (key: Key) => void;
+  onToggleNestedKey: (key: Key) => void;
 }
 
 interface AccordionConfigValue {
@@ -34,19 +38,47 @@ export const useAccordionConfig = () => use(AccordionConfigContext);
 
 interface AccordionItemStateProviderProps {
   children: ReactNode;
+  // Used only to refresh the memoized context for wrapper children when
+  // controlled expanded keys change; direct children use `isOpen`.
+  expandedKeys?: Key[];
   isOpen: boolean;
+  isOpenKey: (key: Key) => boolean;
   itemKey: Key;
   onToggleKey: (key: Key) => void;
+  onToggleKeys: (keys: Key[], preferredKey: Key) => void;
+  preferProviderKeyForNestedItems: boolean;
 }
 
 export const AccordionItemStateProvider = memo<AccordionItemStateProviderProps>(
-  ({ children, isOpen, itemKey, onToggleKey }) => {
+  ({
+    children,
+    expandedKeys,
+    isOpenKey,
+    isOpen,
+    itemKey,
+    onToggleKey,
+    onToggleKeys,
+    preferProviderKeyForNestedItems,
+  }) => {
     const value = useMemo(
       () => ({
+        isOpenKey,
         isOpen,
+        itemKey,
         onToggle: () => onToggleKey(itemKey),
+        onToggleKey,
+        onToggleNestedKey: (key: Key) =>
+          onToggleKeys([itemKey, key], preferProviderKeyForNestedItems ? itemKey : key),
       }),
-      [isOpen, itemKey, onToggleKey],
+      [
+        expandedKeys,
+        isOpenKey,
+        isOpen,
+        itemKey,
+        onToggleKey,
+        onToggleKeys,
+        preferProviderKeyForNestedItems,
+      ],
     );
     return <AccordionItemStateContext value={value}>{children}</AccordionItemStateContext>;
   },
