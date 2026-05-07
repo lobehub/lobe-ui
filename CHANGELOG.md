@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.10.2](https://github.com/lobehub/lobe-ui/compare/v5.10.1...v5.10.2) (2026-05-07)
+
+### 🎫 Chores
+
+- **release**: Force patch release ([722abe4](https://github.com/lobehub/lobe-ui/commit/722abe4))
+
 ## [5.10.1](https://github.com/lobehub/lobe-ui/compare/v5.10.0...v5.10.1) (2026-05-06)
 
 ### ♻ Code Refactoring
