@@ -31,7 +31,7 @@ const Tag: FC<TagProps> = ({
     const isHexColor = color && color.startsWith('#');
 
     if (isPresetColor) {
-      textColor = colorsPreset(color);
+      textColor = colorsPreset(color, 'active');
       backgroundColor = isBorderless ? 'transparent' : colorsPreset(color, 'fillTertiary');
       borderColor = colorsPreset(color, isFilled ? 'fillQuaternary' : 'fillTertiary');
     }
