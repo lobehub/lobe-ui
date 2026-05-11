@@ -20,10 +20,11 @@ inline SVG carries the charts, CSS Grid handles the layout, and the result is
 self-contained: paste the source into any browser and it renders identically.
 `;
 
-// ~1500 chars/sec — closer to a fast model on a long artifact. Full
-// document (~11 KB) streams in about 7-8s.
-const CHUNK = 32;
-const TICK_MS = 22;
+// ~600 chars/sec — paced slow enough that each section of the report
+// (KPI grid, key findings, charts) visibly fades in piece by piece.
+// Full document (~11 KB) streams in about 18s.
+const CHUNK = 14;
+const TICK_MS = 24;
 
 export default () => {
   const [streamed, setStreamed] = useState('');
