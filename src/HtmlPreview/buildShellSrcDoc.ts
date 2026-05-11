@@ -110,11 +110,21 @@ export const buildShellSrcDoc = ({ background, frameId }: BuildShellSrcDocOption
       oldEl.removeChild(oldEl.lastChild);
     }
 
-    // Append the new tail with fade-in markers.
-    for (var k = commonLen; k < newKids.length; k++) {
-      var imported = importNode(newKids[k]);
-      markFadeIn(imported);
-      oldEl.appendChild(imported);
+    // Append the new tail with fade-in markers, batched through a
+    // DocumentFragment. A flat sequence of appendChild calls fires one
+    // mutation per element — MutationObserver libraries (Tailwind Play
+    // CDN, Stimulus, etc.) that batch their work can drop intermediate
+    // notifications if they arrive too quickly. Going through a fragment
+    // delivers exactly one childList mutation that lists all new nodes
+    // at once, which observers handle reliably.
+    if (commonLen < newKids.length) {
+      var frag = document.createDocumentFragment();
+      for (var k = commonLen; k < newKids.length; k++) {
+        var imported = importNode(newKids[k]);
+        markFadeIn(imported);
+        frag.appendChild(imported);
+      }
+      oldEl.appendChild(frag);
     }
 
     return true;
