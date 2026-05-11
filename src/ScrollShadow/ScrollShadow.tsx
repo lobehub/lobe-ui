@@ -1,10 +1,12 @@
 'use client';
 
 import { cx } from 'antd-style';
-import { type FC, useMemo, useRef } from 'react';
+import type { FC } from 'react';
+import { useMemo, useRef } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 import { Flexbox } from '@/Flex';
+import { useEventCallback } from '@/hooks/useEventCallback';
 
 import { variants } from './style';
 import type { ScrollShadowProps } from './type';
@@ -33,12 +35,17 @@ const ScrollShadow: FC<ScrollShadowProps> = ({
   );
   const domRef = useRef<HTMLDivElement>(null);
 
+  const onVisibilityChangeEvent = useEventCallback<
+    NonNullable<ScrollShadowProps['onVisibilityChange']>
+  >((visibility) => {
+    onVisibilityChange?.(visibility);
+  });
   // 使用滚动检测钩子
   const scrollState = useScrollOverflow({
     domRef,
     isEnabled: isEnabled && visibility === 'auto',
     offset,
-    onVisibilityChange,
+    onVisibilityChange: onVisibilityChangeEvent,
     orientation,
     updateDeps: [children],
   });

@@ -1,4 +1,21 @@
-import { type RefObject, useEffect, useState } from 'react';
+import { type RefObject, useEffect, useRef, useState } from 'react';
+
+interface ScrollState {
+  bottom: boolean;
+  left: boolean;
+  right: boolean;
+  top: boolean;
+}
+
+const initialScrollState: ScrollState = {
+  bottom: false,
+  left: false,
+  right: false,
+  top: false,
+};
+
+const isSameScrollState = (a: ScrollState, b: ScrollState) =>
+  a.bottom === b.bottom && a.left === b.left && a.right === b.right && a.top === b.top;
 
 interface UseScrollOverflowProps {
   domRef: RefObject<HTMLElement | null>;
@@ -22,19 +39,15 @@ export const useScrollOverflow = ({
   onVisibilityChange,
   updateDeps = [],
 }: UseScrollOverflowProps) => {
-  const [scrollState, setScrollState] = useState({
-    bottom: false,
-    left: false,
-    right: false,
-    top: false,
-  });
+  const [scrollState, setScrollState] = useState(initialScrollState);
+  const scrollStateRef = useRef(initialScrollState);
 
   useEffect(() => {
     const element = domRef.current;
     if (!element || !isEnabled) return;
 
     const checkScroll = () => {
-      const newState = { ...scrollState };
+      const newState = { ...initialScrollState };
 
       if (orientation === 'vertical') {
         const hasVerticalScroll = element.scrollHeight > element.clientHeight;
@@ -59,6 +72,9 @@ export const useScrollOverflow = ({
         }
       }
 
+      if (isSameScrollState(scrollStateRef.current, newState)) return;
+
+      scrollStateRef.current = newState;
       setScrollState(newState);
       onVisibilityChange?.(newState);
     };
@@ -79,7 +95,7 @@ export const useScrollOverflow = ({
       window.removeEventListener('resize', checkScroll);
       resizeObserver.disconnect();
     };
-  }, [domRef, offset, orientation, isEnabled, onVisibilityChange, ...updateDeps]);
+  }, [domRef, offset, orientation, isEnabled, ...updateDeps]);
 
   return scrollState;
 };
