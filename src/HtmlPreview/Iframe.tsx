@@ -195,9 +195,19 @@ export const HtmlPreviewIframe = memo<HtmlPreviewIframeProps>(
 
     const srcDoc = staticSrcDoc ?? shellSrcDoc ?? '';
 
+    // Key the iframe by mode so React fully unmounts the previous DOM
+    // element when we switch from shell (streaming) to static (finalised).
+    // Setting iframe.srcdoc on an already-loaded element doesn't reliably
+    // re-navigate in Chromium when the previous document was also srcdoc-
+    // based — the new srcdoc attribute lands, but the document doesn't
+    // reload, so the user sees stale (often empty) shell content. A fresh
+    // element forces the browser to parse and load the new srcdoc.
+    const iframeKey = animated ? 'shell' : 'static';
+
     return (
       <iframe
         className={cx(styles.iframe, className)}
+        key={iframeKey}
         ref={setRef}
         sandbox={sandbox}
         srcDoc={srcDoc}

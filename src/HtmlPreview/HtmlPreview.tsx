@@ -154,6 +154,7 @@ const HtmlPreview = memo<HtmlPreviewProps>(
     // Per-session tracking. Reset on `animated` edge false → true.
     const [scriptLocked, setScriptLocked] = useState(false);
     const [headClosed, setHeadClosed] = useState(false);
+    const [liveCommitted, setLiveCommitted] = useState(false);
     const prevAnimatedRef = useRef(animated);
     const lastCommitRef = useRef(0);
     const pendingTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -165,6 +166,7 @@ const HtmlPreview = memo<HtmlPreviewProps>(
       if (animated && !prevAnimatedRef.current) {
         setScriptLocked(false);
         setHeadClosed(false);
+        setLiveCommitted(false);
         lastCommitRef.current = 0;
         if (pendingTimerRef.current) {
           clearTimeout(pendingTimerRef.current);
@@ -253,14 +255,30 @@ const HtmlPreview = memo<HtmlPreviewProps>(
       [],
     );
 
+    // Live-streaming commitment is sticky for the rest of the session. The
+    // decision is made the moment the head seals:
+    //   • `live` → commit unconditionally
+    //   • `auto` → commit only if no `<script>` has appeared yet (script-
+    //     bearing docs go down the defer path to avoid running setup() on
+    //     partial source)
+    //   • `defer` → never commit; wait for `</html>`
+    // Sticky-ness matters for `auto`: if a `<script>` arrives *after* the
+    // head has already closed and we've started live-streaming, we keep
+    // streaming rather than yanking the rendered content back into a
+    // loading state mid-flight. The shell→static swap at end of streaming
+    // re-runs the document cleanly anyway.
+    useEffect(() => {
+      if (!animated || liveCommitted || !headClosed) return;
+      if (streamingMode === 'live' || (streamingMode === 'auto' && !scriptLocked)) {
+        setLiveCommitted(true);
+      }
+    }, [animated, headClosed, liveCommitted, scriptLocked, streamingMode]);
+
     // Streaming gate. The iframe can mount in three situations:
     //   1. content is no longer animating
     //   2. `</html>` has arrived
-    //   3. `streamingMode` permits live mounting AND we've at least closed
-    //      the head section (so we have something real to show)
-    const liveStreamingOk =
-      (streamingMode === 'live' || (streamingMode === 'auto' && !scriptLocked)) && headClosed;
-    const isStable = !animated || isHtmlContentClosed(trimmedChildren) || liveStreamingOk;
+    //   3. live streaming has been committed this session
+    const isStable = !animated || isHtmlContentClosed(trimmedChildren) || liveCommitted;
 
     const [mode, setMode] = useState<HtmlPreviewMode>(defaultMode);
 
