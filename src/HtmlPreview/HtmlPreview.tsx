@@ -18,9 +18,14 @@ import { containsScript, DEFAULT_HEIGHT, isFullHtmlDocument, isHtmlContentClosed
 import HtmlPreviewIframe from './Iframe';
 import type { HtmlPreviewMode, HtmlPreviewProps } from './type';
 
+// Sheen sweep direction: left → right.
+// `background-position` works inversely from "where the image is drawn":
+// at `200%` the over-sized gradient starts off to the left of the
+// container, at `-200%` it ends off to the right — so animating
+// 200% → -200% moves the visible bright spot from left to right.
 const shimmer = keyframes`
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 `;
 
 const useStyles = createStyles(({ css, cssVar, isDarkMode }) => ({
