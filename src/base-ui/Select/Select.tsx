@@ -77,6 +77,7 @@ const Select = memo<SelectProps<any>>(
     mode,
     name,
     onChange,
+    onActive,
     onOpenChange,
     onSelect,
     open,
@@ -206,8 +207,10 @@ const Select = memo<SelectProps<any>>(
         if (open === undefined) {
           setUncontrolledOpen(nextOpen);
         }
+        // Reset active preview when dropdown closes
+        if (!nextOpen) onActive?.(null);
       },
-      [onOpenChange, open],
+      [onActive, onOpenChange, open],
     );
 
     const [searchValue, setSearchValue] = useState('');
@@ -501,6 +504,7 @@ const Select = memo<SelectProps<any>>(
     );
 
     const listRef = useRef<HTMLDivElement | null>(null);
+    const onActiveListRef = useRef<HTMLDivElement | null>(null); // always attached, used for keyboard onActive
     const pointerScrollRef = useRef(false);
     const pointerScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -601,6 +605,73 @@ const Select = memo<SelectProps<any>>(
       classNames?.itemText,
     );
 
+    // Use a MutationObserver to watch for data-highlighted attribute changes on list items.
+    // This reliably catches both keyboard navigation (where focus stays on Trigger in modal=false
+    // mode and events never reach the List) and hover (as a supplement to onPointerEnter).
+    useEffect(() => {
+      if (!mergedOpen || !onActive) return;
+
+      let observer: MutationObserver | null = null;
+
+      const startObserver = () => {
+        const listEl = onActiveListRef.current;
+        if (!listEl) return;
+
+        observer = new MutationObserver((mutations) => {
+          let highlightedEl: HTMLElement | null = null;
+          for (const mutation of mutations) {
+            if (
+              mutation.type === 'attributes' &&
+              mutation.attributeName === 'data-highlighted' &&
+              mutation.target instanceof HTMLElement &&
+              mutation.target.hasAttribute('data-highlighted')
+            ) {
+              highlightedEl = mutation.target;
+              break;
+            }
+          }
+          if (!highlightedEl) return;
+
+          const allItems = listEl.querySelectorAll<HTMLElement>('[role="option"]');
+          const idx = Array.from(allItems).indexOf(highlightedEl);
+          if (idx < 0) return;
+
+          let flat = 0;
+          for (const opt of filteredOptions) {
+            if (isGroupOption(opt)) {
+              for (const child of opt.options) {
+                if (flat === idx) {
+                  onActive(child.value, getOption(child.value));
+                  return;
+                }
+                flat++;
+              }
+            } else {
+              if (flat === idx) {
+                onActive(opt.value, getOption(opt.value));
+                return;
+              }
+              flat++;
+            }
+          }
+        });
+
+        observer.observe(listEl, {
+          attributes: true,
+          attributeFilter: ['data-highlighted'],
+          subtree: true,
+        });
+      };
+
+      // One rAF to let the Portal render and ref callbacks run before we observe
+      const rafId = requestAnimationFrame(startObserver);
+
+      return () => {
+        cancelAnimationFrame(rafId);
+        observer?.disconnect();
+      };
+    }, [mergedOpen, onActive, filteredOptions, getOption]);
+
     const isBoldIndicator = selectedIndicatorVariant === 'bold';
     let optionIndex = 0;
     const renderOptions = (items: SelectOptions) =>
@@ -637,6 +708,9 @@ const Select = memo<SelectProps<any>>(
                       minHeight: listItemHeight,
                       ...option.style,
                     }}
+                    onPointerEnter={
+                      onActive ? () => onActive(option.value, getOption(option.value)) : undefined
+                    }
                   >
                     <BaseSelect.ItemText className={itemTextClassName}>
                       {optionRender ? optionRender(option, { index: currentIndex }) : option.label}
@@ -675,6 +749,9 @@ const Select = memo<SelectProps<any>>(
               minHeight: listItemHeight,
               ...item.style,
             }}
+            onPointerEnter={
+              onActive ? () => onActive(item.value, getOption(item.value)) : undefined
+            }
           >
             <BaseSelect.ItemText className={itemTextClassName}>
               {optionRender ? optionRender(item, { index: currentIndex }) : item.label}
@@ -798,6 +875,7 @@ const Select = memo<SelectProps<any>>(
                     <BaseSelect.List
                       className={cx(styles.list, classNames?.list)}
                       data-virtual={virtual || undefined}
+                      ref={onActiveListRef}
                     >
                       {content}
                     </BaseSelect.List>
@@ -808,9 +886,12 @@ const Select = memo<SelectProps<any>>(
                   <BaseSelect.List
                     className={cx(styles.list, classNames?.list)}
                     data-virtual={virtual || undefined}
-                    ref={listRef}
                     style={virtualListStyle}
                     tabIndex={virtual ? -1 : undefined}
+                    ref={(node) => {
+                      listRef.current = node;
+                      onActiveListRef.current = node;
+                    }}
                     onPointerDown={virtual ? markPointerScroll : undefined}
                     onScroll={virtual ? handleListScroll : undefined}
                     onTouchMove={virtual ? markPointerScroll : undefined}
