@@ -1,5 +1,5 @@
 import { Button, Markdown } from '@lobehub/ui';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
 import { reportHtml } from '@/HtmlPreview/demos/reportHtml';
@@ -56,6 +56,15 @@ export default () => {
   useEffect(() => start(), [start]);
   useEffect(() => () => stop(), [stop]);
 
+  // Stabilise the componentProps reference — an inline object literal here
+  // re-mounts the iframe ~50 times/second through the Markdown → react-
+  // markdown → CodeBlock chain, which destroys the shell-morph state and
+  // causes the rendered iframe to flicker between empty and partial.
+  const componentProps = useMemo(
+    () => ({ html: { defaultHeight: 1080, theme: 'dark' as const } }),
+    [],
+  );
+
   return (
     <Flexbox gap={12}>
       <Flexbox horizontal gap={8}>
@@ -79,7 +88,7 @@ export default () => {
       <Markdown
         enableHtmlPreview
         animated={isStreaming}
-        componentProps={{ html: { defaultHeight: 1080, theme: 'dark' } }}
+        componentProps={componentProps}
         enableStream={false}
       >
         {streamed}

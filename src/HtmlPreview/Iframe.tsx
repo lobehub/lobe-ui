@@ -95,6 +95,13 @@ export const HtmlPreviewIframe = memo<HtmlPreviewIframeProps>(
     const innerRef = useRef<HTMLIFrameElement | null>(null);
     const frameId = useId();
     const [height, setHeight] = useState<number>(defaultHeight);
+    // Track caller-supplied `defaultHeight` in a ref so the (frameId-keyed)
+    // message handler can floor auto-height updates without re-subscribing
+    // every render.
+    const defaultHeightRef = useRef(defaultHeight);
+    useEffect(() => {
+      defaultHeightRef.current = defaultHeight;
+    }, [defaultHeight]);
 
     const tooLarge = content.length > SRCDOC_MAX_LENGTH;
 
@@ -168,7 +175,19 @@ export const HtmlPreviewIframe = memo<HtmlPreviewIframeProps>(
         if (data.type === AUTO_HEIGHT_MESSAGE_TYPE) {
           const next = Number(data.height);
           if (!Number.isFinite(next) || next <= 0) return;
-          setHeight((prev) => (Math.abs(prev - next) < 1 ? prev : next));
+          // Floor at `defaultHeight`. During streaming the shell body
+          // briefly reports a small height between morph commits (empty
+          // body just after head closes, then partial body, etc.) and on
+          // every iframe remount the auto-height starts at body padding
+          // before climbing back to content height. Letting the iframe
+          // shrink to that interim height causes a visible up/down jitter
+          // that reads as flicker — especially under a Markdown wrapper
+          // that re-renders every chunk. Anchoring to the caller's stated
+          // minimum height eliminates that without affecting the final
+          // size: real content taller than `defaultHeight` grows the
+          // iframe; content shorter than it stays at the floor.
+          const floored = Math.max(next, defaultHeightRef.current);
+          setHeight((prev) => (Math.abs(prev - floored) < 1 ? prev : floored));
         }
       };
 
