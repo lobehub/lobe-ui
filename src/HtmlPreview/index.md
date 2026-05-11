@@ -11,7 +11,11 @@ description: HtmlPreview renders LLM-generated HTML inline using a hardened ifra
 
 ## Head resources (CDN scripts, stylesheets, fonts)
 
-`<script src>`, `<link rel="stylesheet">`, `<meta>` and other `<head>` children are preserved and replayed inside the iframe. This demo uses the Tailwind CDN from `<head>` to style its body.
+`<script src>`, `<link rel="stylesheet">`, `<meta>` and other `<head>` children are preserved and replayed inside the iframe — so full documents that depend on Tailwind, p5.js, Chart.js, custom fonts, etc. just work.
+
+The demo below loads **two** CDN scripts from `<head>` (Tailwind + Chart.js), then wires a body-level inline script to a live chart driven by three sliders. Multiple co-operating scripts, head + body, all running inside the sandbox.
+
+Head extras are only mounted once the document's `</head>` (or `<body>`) actually arrives in the stream, so partial CDN URLs never trigger 404s mid-flight.
 
 <code src="./demos/HeadResources.tsx" nopadding></code>
 

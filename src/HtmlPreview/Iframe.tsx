@@ -32,10 +32,22 @@ interface Payload {
    * documents. Inline `<style>` is intentionally excluded — those flow
    * through `styleContent` so streaming partial CSS grows in place rather
    * than stacking duplicate `<style>` blocks.
+   *
+   * Empty until the user's `<head>` is *sealed* (a `</head>` close tag has
+   * arrived, or `<body>` has opened — browsers auto-close head at that
+   * point). Holding off prevents partial `src="https://cd"` URLs from
+   * being mounted and 404-ing while the model is still streaming.
    */
   headExtrasHtml: string;
   styleContent: string;
 }
+
+// Head is "sealed" as soon as we see a close tag or the body has begun;
+// after that point, additional chunks land in body and head extras won't
+// change. Before that point we deliberately *don't* mount head resources
+// — a partial CDN URL would trigger a 404 we can't take back.
+const headSealedPattern = /<\/head\s*>|<body[\s>]/i;
+const isHeadSealed = (raw: string): boolean => headSealedPattern.test(raw);
 
 const parseContent = (() => {
   // Lazy-init: only need one parser instance, and only in the browser.
@@ -61,7 +73,7 @@ const parseContent = (() => {
 
     return {
       bodyHtml: doc.body ? doc.body.innerHTML : '',
-      headExtrasHtml: headExtras.join(''),
+      headExtrasHtml: isHeadSealed(content) ? headExtras.join('') : '',
       styleContent: styleParts.join('\n'),
     };
   };
