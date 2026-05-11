@@ -307,6 +307,7 @@ const HtmlPreview = memo<HtmlPreviewProps>(
     const iframeBody = useMemo(
       () => (
         <HtmlPreviewIframe
+          animated={animated}
           background={background}
           className={classNames?.iframe}
           content={throttledContent}

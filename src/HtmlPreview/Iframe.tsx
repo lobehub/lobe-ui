@@ -4,6 +4,7 @@ import { createStyles, cx } from 'antd-style';
 import { memo, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 
 import { buildShellSrcDoc, SHELL_UPDATE_MESSAGE_TYPE } from './buildShellSrcDoc';
+import { buildStaticSrcDoc } from './buildStaticSrcDoc';
 import { DEFAULT_HEIGHT, DEFAULT_SANDBOX, SRCDOC_MAX_LENGTH } from './const';
 import { AUTO_HEIGHT_MESSAGE_TYPE } from './injectAutoHeightScript';
 import type { HtmlPreviewIframeProps } from './type';
@@ -44,8 +45,7 @@ interface Payload {
 
 // Head is "sealed" as soon as we see a close tag or the body has begun;
 // after that point, additional chunks land in body and head extras won't
-// change. Before that point we deliberately *don't* mount head resources
-// — a partial CDN URL would trigger a 404 we can't take back.
+// change.
 const headSealedPattern = /<\/head\s*>|<body[\s>]/i;
 const isHeadSealed = (raw: string): boolean => headSealedPattern.test(raw);
 
@@ -81,6 +81,7 @@ const parseContent = (() => {
 
 export const HtmlPreviewIframe = memo<HtmlPreviewIframeProps>(
   ({
+    animated,
     background,
     content,
     className,
@@ -94,27 +95,52 @@ export const HtmlPreviewIframe = memo<HtmlPreviewIframeProps>(
     const innerRef = useRef<HTMLIFrameElement | null>(null);
     const frameId = useId();
     const [height, setHeight] = useState<number>(defaultHeight);
-    const [ready, setReady] = useState(false);
-
-    // The shell document is the *only* srcDoc this iframe ever loads. It's
-    // memoized so React never replaces the srcDoc attribute → the iframe
-    // mounts once and stays mounted.
-    const shellSrcDoc = useMemo(
-      () => buildShellSrcDoc({ background, frameId }),
-      [background, frameId],
-    );
 
     const tooLarge = content.length > SRCDOC_MAX_LENGTH;
 
-    const payload = useMemo<Payload | null>(() => {
-      if (tooLarge) return null;
-      return parseContent(content);
-    }, [content, tooLarge]);
+    // ── Static mode ─────────────────────────────────────────────────────
+    // When the content isn't being streamed we can hand the iframe the
+    // user's HTML directly. The browser's normal HTML parser runs:
+    //   <script src=…> tags fetch and execute as if on a regular page,
+    //   inline <script> blocks run in DOM order, MutationObservers (like
+    //   Tailwind Play CDN's) get the document at its expected lifecycle
+    //   stage. Anything that a model can produce as a standalone web
+    //   page works without special handling on our side.
+    const staticSrcDoc = useMemo(() => {
+      if (animated || tooLarge) return null;
+      return buildStaticSrcDoc({ background, content, frameId });
+    }, [animated, background, content, frameId, tooLarge]);
 
-    // Push content into the iframe whenever it changes — but only after
-    // the shell has signaled ready, so the listener actually exists.
+    // ── Shell mode ─────────────────────────────────────────────────────
+    // For streaming we keep one shell iframe loaded for the lifetime of
+    // the session and pump content updates through postMessage. The
+    // shell's morph script handles in-place DOM diffing + fade-in for
+    // new nodes (see buildShellSrcDoc.ts). Tradeoff: external <script
+    // src> tags appended this way don't always integrate cleanly with
+    // class-engine CDNs, so static content is preferred when possible.
+    const shellSrcDoc = useMemo(() => {
+      if (!animated || tooLarge) return null;
+      return buildShellSrcDoc({ background, frameId });
+    }, [animated, background, frameId, tooLarge]);
+
+    const [shellReady, setShellReady] = useState(false);
     useEffect(() => {
-      if (!ready || !payload) return;
+      // Each time we swap between shell and static modes (or rebuild the
+      // shell because the theme changed) we need to wait for a fresh
+      // ready ping before posting content.
+      setShellReady(false);
+    }, [shellSrcDoc]);
+
+    const payload = useMemo<Payload | null>(() => {
+      if (!animated || tooLarge) return null;
+      return parseContent(content);
+    }, [animated, content, tooLarge]);
+
+    // Push content into the shell iframe whenever it changes — but only
+    // after the shell has signalled ready, so its listener exists.
+    useEffect(() => {
+      if (!animated) return;
+      if (!shellReady || !payload) return;
       const win = innerRef.current?.contentWindow;
       if (!win) return;
       win.postMessage(
@@ -125,7 +151,7 @@ export const HtmlPreviewIframe = memo<HtmlPreviewIframeProps>(
         },
         '*',
       );
-    }, [payload, ready, frameId]);
+    }, [animated, payload, shellReady, frameId]);
 
     useEffect(() => {
       const handler = (event: MessageEvent) => {
@@ -135,7 +161,7 @@ export const HtmlPreviewIframe = memo<HtmlPreviewIframeProps>(
         if (event.source !== innerRef.current?.contentWindow) return;
 
         if (data.type === `${SHELL_UPDATE_MESSAGE_TYPE}:ready`) {
-          setReady(true);
+          setShellReady(true);
           return;
         }
 
@@ -167,12 +193,14 @@ export const HtmlPreviewIframe = memo<HtmlPreviewIframeProps>(
       );
     }
 
+    const srcDoc = staticSrcDoc ?? shellSrcDoc ?? '';
+
     return (
       <iframe
         className={cx(styles.iframe, className)}
         ref={setRef}
         sandbox={sandbox}
-        srcDoc={shellSrcDoc}
+        srcDoc={srcDoc}
         style={{ height, ...style }}
         title={title}
       />

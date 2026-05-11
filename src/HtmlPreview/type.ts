@@ -21,6 +21,16 @@ export type HtmlPreviewMode = 'preview' | 'source';
 export type HtmlPreviewStreamingMode = 'defer' | 'live' | 'auto';
 
 export interface HtmlPreviewIframeProps {
+  /**
+   * When `true` the iframe stays mounted as a "shell" and content arrives
+   * via postMessage + DOM morph — used during streaming so we can fade
+   * new nodes in without reloading. When `false` the iframe loads the
+   * user's HTML directly as `srcDoc`, which lets the browser's native
+   * HTML pipeline handle `<script src>` tags (Tailwind / Chart.js /
+   * p5.js style CDN integrations work the way they would on a normal
+   * page).
+   */
+  animated?: boolean;
   background?: string;
   className?: string;
   content: string;
