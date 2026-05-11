@@ -2,6 +2,13 @@
 
 # Changelog
 
+## [5.10.3](https://github.com/lobehub/lobe-ui/compare/v5.10.2...v5.10.3) (2026-05-11)
+
+### 🐛 Bug Fixes
+
+- **scroll-shadow**: Prevent infinite re-renders from unstable onVisibilityChange callback ([68f8da5](https://github.com/lobehub/lobe-ui/commit/68f8da5))
+- **Tag**: Correct text color for preset color tags ([0151567](https://github.com/lobehub/lobe-ui/commit/0151567))
+
 ## [5.10.2](https://github.com/lobehub/lobe-ui/compare/v5.10.1...v5.10.2) (2026-05-07)
 
 ### 🎫 Chores
