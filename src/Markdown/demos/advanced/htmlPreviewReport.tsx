@@ -1,5 +1,7 @@
-import { Markdown } from '@lobehub/ui';
+import { Button, Markdown } from '@lobehub/ui';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { Flexbox } from '@/Flex';
 import { reportHtml } from '@/HtmlPreview/demos/reportHtml';
 
 // Wrap the self-contained "Weekly product report" in a Markdown context.
@@ -18,8 +20,62 @@ inline SVG carries the charts, CSS Grid handles the layout, and the result is
 self-contained: paste the source into any browser and it renders identically.
 `;
 
-export default () => (
-  <Markdown enableHtmlPreview componentProps={{ html: { defaultHeight: 1080, theme: 'dark' } }}>
-    {article}
-  </Markdown>
-);
+// ~1500 chars/sec — closer to a fast model on a long artifact. Full
+// document (~11 KB) streams in about 7-8s.
+const CHUNK = 32;
+const TICK_MS = 22;
+
+export default () => {
+  const [streamed, setStreamed] = useState('');
+  const [isStreaming, setIsStreaming] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const stop = useCallback(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = null;
+    setIsStreaming(false);
+  }, []);
+
+  const start = useCallback(() => {
+    stop();
+    setStreamed('');
+    setIsStreaming(true);
+    let pos = 0;
+    const tick = () => {
+      pos = Math.min(pos + CHUNK, article.length);
+      setStreamed(article.slice(0, pos));
+      if (pos >= article.length) {
+        setIsStreaming(false);
+        return;
+      }
+      timerRef.current = setTimeout(tick, TICK_MS);
+    };
+    timerRef.current = setTimeout(tick, TICK_MS);
+  }, [stop]);
+
+  useEffect(() => start(), [start]);
+  useEffect(() => () => stop(), [stop]);
+
+  return (
+    <Flexbox gap={12}>
+      <Flexbox horizontal gap={8}>
+        <Button loading={isStreaming} type={'primary'} onClick={start}>
+          {isStreaming ? 'Streaming…' : 'Restart streaming'}
+        </Button>
+        {isStreaming && (
+          <Button danger onClick={stop}>
+            Stop
+          </Button>
+        )}
+      </Flexbox>
+      <Markdown
+        enableHtmlPreview
+        animated={isStreaming}
+        componentProps={{ html: { defaultHeight: 1080, theme: 'dark' } }}
+        streamSmoothingPreset={'realtime'}
+      >
+        {streamed}
+      </Markdown>
+    </Flexbox>
+  );
+};
