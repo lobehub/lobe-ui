@@ -68,11 +68,19 @@ export default () => {
           </Button>
         )}
       </Flexbox>
+      {/* `enableStream={false}` — bypass the StreamdownRender content
+          smoother. For an ~11 KB code block, even the `realtime` preset
+          (max ~360 cps in flush mode) throttles the partial HTML so far
+          behind the demo's tick that `HtmlPreview` never sees enough
+          content to seal its `<head>`. It stays on the loading
+          placeholder for the whole stream and pops the finished
+          document in at the end. Passing content straight through lets
+          the shell iframe morph chunks in as they arrive. */}
       <Markdown
         enableHtmlPreview
         animated={isStreaming}
         componentProps={{ html: { defaultHeight: 1080, theme: 'dark' } }}
-        streamSmoothingPreset={'realtime'}
+        enableStream={false}
       >
         {streamed}
       </Markdown>
