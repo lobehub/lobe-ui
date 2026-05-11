@@ -328,9 +328,15 @@ agent-browser wait 2000                 # Milliseconds
 agent-browser wait "#spinner" --state hidden   # Wait for element to disappear
 
 # Capture
-agent-browser screenshot                # Saves to ~/.agent-browser/tmp/screenshots/
+agent-browser screenshot                # Auto-named, lands in ~/.agent-browser/tmp/screenshots/
 agent-browser screenshot --full         # Full page (covers long demo lists)
 agent-browser screenshot --annotate     # Numbered overlay + legend mapping numbers → refs
+# IMPORTANT: A bare filename like `screenshot foo.png` is resolved against
+# the agent-browser DAEMON's CWD — not your shell's, and not this repo. If
+# the daemon was started from another project earlier in the day, your
+# PNGs will silently land there. Always pass either no path (auto-name in
+# the cache dir) or an absolute path. Never use bare relative filenames.
+agent-browser screenshot "$PWD/foo.png"      # explicit absolute → anchored to lobe-ui
 
 # Viewport (test responsive breakpoints)
 agent-browser set viewport 1280 720     # Default
@@ -445,14 +451,14 @@ lobe-ui ships light + dark themes. Verify both:
 # Toggle dumi's theme switch (look for it in the header)
 agent-browser snapshot -i | grep -i "theme\|dark\|light"
 agent-browser click @eN # the theme toggle ref
-agent-browser screenshot --full theme-dark.png
+agent-browser screenshot --full "$PWD/theme-dark.png"
 
 # Toggle back
 agent-browser click @eN
-agent-browser screenshot --full theme-light.png
+agent-browser screenshot --full "$PWD/theme-light.png"
 
 # Pixel diff
-agent-browser diff screenshot --baseline theme-light.png
+agent-browser diff screenshot --baseline "$PWD/theme-light.png"
 ```
 
 For responsive checks, set viewport before each screenshot:
@@ -460,7 +466,7 @@ For responsive checks, set viewport before each screenshot:
 ```bash
 for w in 375 768 1280 1920; do
   agent-browser set viewport $w 800
-  agent-browser screenshot --full "responsive-${w}.png"
+  agent-browser screenshot --full "$PWD/responsive-${w}.png"
 done
 ```
 
@@ -482,7 +488,7 @@ agent-browser upgrade  # update CLI
 - **HMR invalidates refs** — after editing a component, dumi hot-reloads and refs break. Re-snapshot.
 - **`snapshot -i` skips contenteditable** — use `snapshot -i -C` for rich-text inputs.
 - **`fill` doesn't work on contenteditable** — use `type` instead.
-- **Screenshots land in `~/.agent-browser/tmp/screenshots/`** — read them via the `Read` tool to inspect visually.
+- **Screenshots & relative paths** — `agent-browser screenshot foo.png` resolves the filename against the daemon's CWD, not your shell's. If the daemon was started from another project earlier (e.g. `lobehub-desktop`), the PNG silently lands there and you can't find it. Either pass no path (auto-name lands in `~/.agent-browser/tmp/screenshots/`) or pass an absolute path (`"$PWD/foo.png"`). After capture, `Read` the returned path.
 - **Default command timeout is 25s** — override via `AGENT_BROWSER_DEFAULT_TIMEOUT` (ms) or add explicit `wait`.
 - **Shell quoting corrupts `eval`** — always prefer `eval --stdin <<'EVALEOF' … EVALEOF` for non-trivial JS.
 - **Port 8000 already in use** — dumi will auto-bump to 8001, 8002… Check the dev-server log and adjust the URL.
