@@ -11,7 +11,7 @@ description: HtmlPreview renders LLM-generated HTML inline using a hardened ifra
 
 ## Full report
 
-A complete LLM-output-style analytics report: Tailwind for the layout, Chart.js for three different chart types, and an inline script that boots the dashboard once the CDNs settle. This is the kind of document a "give me a weekly product report" prompt produces.
+A complete LLM-output-style analytics report: header, KPI grid, narrative findings, three charts (line / donut / bar), an event table, and a footnote — the kind of document a "give me a weekly product report" prompt produces. Self-contained, no CDN dependency.
 
 <code src="./demos/Report.tsx" nopadding></code>
 

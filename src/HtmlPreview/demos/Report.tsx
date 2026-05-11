@@ -1,270 +1,341 @@
 import { HtmlPreview } from '@lobehub/ui';
 
-// "Weekly product report" — a full report-style HTML document of the kind
-// a model would produce when asked for analytics findings. Exercises a
-// realistic head/body resource matrix:
-//   - <head>: Tailwind CDN + Chart.js CDN + meta tags + a small inline
-//     <style> for chart container helpers
-//   - <body>: KPI cards, line chart with two series, donut chart, bar
-//     chart, an events table, and a footnote
-//   - <script>: simulates real LLM output that boots three Chart.js
-//     instances once the CDN settles
+// Self-contained "Weekly product report" — no CDN dependency so the
+// preview always renders the same regardless of the user's network /
+// proxy setup. Inline <style> handles layout, inline SVG handles the
+// three charts. This is the canonical "complete LLM-output document"
+// example: full <head>, structured <body>, scripts elided in favour of
+// pre-baked SVG so the visual is deterministic.
 const html = `<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Weekly product report — Apr 15 – Apr 21</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <title>Weekly product report — Apr 15 to Apr 21</title>
   <style>
-    body { font-feature-settings: "cv11", "ss01"; }
-    .chart-host { position: relative; }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+      font-feature-settings: "cv11", "ss01";
+      background: #020617;
+      color: #f1f5f9;
+      padding: 28px 32px;
+      line-height: 1.5;
+    }
+    .container { max-width: 1080px; margin: 0 auto; }
+    .stack > * + * { margin-top: 20px; }
+    .row { display: flex; align-items: center; gap: 12px; }
+    .row-between { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .muted { color: #94a3b8; }
+    .strong { color: #f1f5f9; }
+    .num { font-variant-numeric: tabular-nums; }
+    .code {
+      font-family: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: #0f172a;
+      color: #cbd5e1;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 10.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: rgba(16, 185, 129, 0.16);
+      color: #6ee7b7;
+    }
+    .badge::before {
+      content: "";
+      width: 6px; height: 6px;
+      border-radius: 999px;
+      background: #34d399;
+      box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.2);
+    }
+    h1 { font-size: 22px; font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+    h2 { font-size: 11px; font-weight: 600; margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; }
+    h3 { font-size: 13px; font-weight: 500; margin: 0; color: #e2e8f0; }
+    p { margin: 0; font-size: 14px; }
+    code { font-family: "SF Mono", ui-monospace, monospace; }
+
+    .card {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid #1e293b;
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .kpi .label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: #64748b; margin-bottom: 6px; }
+    .kpi .value { font-size: 26px; font-weight: 600; line-height: 1; }
+    .kpi .delta { margin-top: 8px; font-size: 12px; font-variant-numeric: tabular-nums; }
+    .up { color: #34d399; }
+    .down { color: #fb7185; }
+
+    .findings ul { margin: 0; padding-left: 20px; }
+    .findings li { font-size: 14px; color: #cbd5e1; margin: 6px 0; }
+    .findings li::marker { color: #22d3ee; }
+
+    .charts {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 12px;
+    }
+    .charts-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .legend { display: flex; gap: 12px; font-size: 11px; color: #94a3b8; }
+    .legend > span { display: inline-flex; align-items: center; gap: 6px; }
+    .dot { width: 8px; height: 8px; border-radius: 999px; display: inline-block; }
+    .dot-cyan { background: #22d3ee; }
+    .dot-slate { background: #475569; }
+    .dot-violet { background: #a78bfa; }
+    .dot-amber { background: #fbbf24; }
+    .dot-rose { background: #fb7185; }
+
+    .donut-legend { margin-top: 14px; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; font-size: 11px; color: #cbd5e1; }
+    .donut-legend > span { display: inline-flex; align-items: center; gap: 6px; }
+    .donut-legend .num { color: #94a3b8; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { font-size: 10.5px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: #64748b; text-align: left; padding: 0 0 10px; border-bottom: 1px solid #1e293b; }
+    th.right { text-align: right; }
+    td { padding: 10px 0; border-bottom: 1px solid rgba(30, 41, 59, 0.5); }
+    td.right { text-align: right; font-variant-numeric: tabular-nums; font-size: 12px; }
+    tbody tr:last-child td { border-bottom: 0; }
+    .ev { display: inline-flex; align-items: center; gap: 8px; }
+    .ev::before {
+      content: "";
+      width: 7px; height: 7px;
+      border-radius: 999px;
+    }
+    .ev.green::before { background: #34d399; }
+    .ev.amber::before { background: #fbbf24; }
+    .ev.cyan::before { background: #22d3ee; }
+    .ev.rose::before { background: #fb7185; }
+
+    .foot { font-size: 11px; color: #475569; padding-top: 8px; }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans">
-  <div class="max-w-5xl mx-auto p-6 space-y-6">
+<body>
+  <div class="container stack">
 
     <!-- Header -->
-    <header>
-      <div class="flex items-center justify-between mb-1">
-        <h1 class="text-xl font-semibold tracking-tight">Weekly product report</h1>
-        <div class="flex items-center gap-2">
-          <span class="px-2 py-0.5 text-[10px] uppercase tracking-wider rounded-full bg-emerald-500/20 text-emerald-300 font-semibold">live</span>
-          <span class="text-xs text-slate-400 tabular-nums">Apr 22, 2026</span>
-        </div>
+    <header class="row-between">
+      <div>
+        <h1>Weekly product report</h1>
+        <p class="muted" style="font-size: 13px; margin-top: 4px;">
+          Activity for <span class="strong">Apr 15 – Apr 21</span>, vs. the prior week. Aggregated from
+          <span class="code">events.warehouse.product_events</span>.
+        </p>
       </div>
-      <p class="text-sm text-slate-400">
-        Activity for <span class="text-slate-200">Apr 15 – Apr 21</span>, compared to the prior week. Numbers are aggregated from
-        <code class="text-xs text-slate-300 bg-slate-900 px-1.5 py-0.5 rounded">events.warehouse.product_events</code>.
-      </p>
+      <div class="row" style="gap: 8px;">
+        <span class="badge">live</span>
+        <span class="muted num" style="font-size: 12px;">Apr 22, 2026</span>
+      </div>
     </header>
 
-    <!-- KPI cards -->
-    <section class="grid grid-cols-2 md:grid-cols-4 gap-3">
-      <div class="rounded-xl bg-slate-900/70 border border-slate-800 p-4">
-        <div class="text-[10px] uppercase tracking-wider text-slate-500 mb-1.5">Active users</div>
-        <div class="text-2xl font-semibold tabular-nums">48,213</div>
-        <div class="mt-1.5 text-xs tabular-nums text-emerald-400">▲ 12.4% w/w</div>
+    <!-- KPI grid -->
+    <section class="kpi-grid">
+      <div class="card kpi">
+        <div class="label">Active users</div>
+        <div class="value num">48,213</div>
+        <div class="delta up">▲ 12.4% w/w</div>
       </div>
-      <div class="rounded-xl bg-slate-900/70 border border-slate-800 p-4">
-        <div class="text-[10px] uppercase tracking-wider text-slate-500 mb-1.5">Revenue</div>
-        <div class="text-2xl font-semibold tabular-nums">$284.5k</div>
-        <div class="mt-1.5 text-xs tabular-nums text-emerald-400">▲ 5.1% w/w</div>
+      <div class="card kpi">
+        <div class="label">Revenue</div>
+        <div class="value num">$284.5k</div>
+        <div class="delta up">▲ 5.1% w/w</div>
       </div>
-      <div class="rounded-xl bg-slate-900/70 border border-slate-800 p-4">
-        <div class="text-[10px] uppercase tracking-wider text-slate-500 mb-1.5">Conversion</div>
-        <div class="text-2xl font-semibold tabular-nums">3.42%</div>
-        <div class="mt-1.5 text-xs tabular-nums text-rose-400">▼ 0.3pp w/w</div>
+      <div class="card kpi">
+        <div class="label">Conversion</div>
+        <div class="value num">3.42%</div>
+        <div class="delta down">▼ 0.3pp w/w</div>
       </div>
-      <div class="rounded-xl bg-slate-900/70 border border-slate-800 p-4">
-        <div class="text-[10px] uppercase tracking-wider text-slate-500 mb-1.5">Retention · D7</div>
-        <div class="text-2xl font-semibold tabular-nums">38.6%</div>
-        <div class="mt-1.5 text-xs tabular-nums text-emerald-400">▲ 2.1pp w/w</div>
+      <div class="card kpi">
+        <div class="label">Retention · D7</div>
+        <div class="value num">38.6%</div>
+        <div class="delta up">▲ 2.1pp w/w</div>
       </div>
     </section>
 
-    <!-- Findings narrative -->
-    <section class="rounded-xl bg-slate-900/50 border border-slate-800 p-5">
-      <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-3">Key findings</h2>
-      <ul class="space-y-2 text-sm text-slate-300 list-disc list-inside marker:text-cyan-400">
-        <li>Active users are up <span class="text-emerald-300 tabular-nums">+12.4%</span>, driven by Tuesday's product-hunt feature.</li>
-        <li>Conversion dipped <span class="text-rose-300 tabular-nums">0.3pp</span>; the pricing-page experiment is the most likely culprit.</li>
-        <li>Mobile share crossed <span class="text-slate-100">62%</span> for the first time — the new responsive layout is paying off.</li>
-        <li>Retention at D7 improved <span class="text-emerald-300 tabular-nums">+2.1pp</span>, consistent with the onboarding rewrite shipping Apr 9.</li>
+    <!-- Findings -->
+    <section class="card findings">
+      <h2>Key findings</h2>
+      <ul>
+        <li>Active users are up <span class="up num">+12.4%</span>, driven by Tuesday's product-hunt feature.</li>
+        <li>Conversion dipped <span class="down num">0.3pp</span>; the pricing-page experiment is the most likely culprit.</li>
+        <li>Mobile share crossed <span class="strong">62%</span> for the first time — the new responsive layout is paying off.</li>
+        <li>Retention at D7 improved <span class="up num">+2.1pp</span>, consistent with the onboarding rewrite shipping Apr 9.</li>
       </ul>
     </section>
 
     <!-- Charts row 1 -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-3">
-      <div class="md:col-span-2 rounded-xl bg-slate-900/70 border border-slate-800 p-4">
-        <div class="flex items-center justify-between mb-3">
-          <h3 class="text-sm font-medium">Daily active users</h3>
-          <div class="flex gap-3 text-[11px] text-slate-400">
-            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cyan-400"></span>This week</span>
-            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-slate-600"></span>Last week</span>
+    <section class="charts">
+      <div class="card">
+        <div class="row-between" style="margin-bottom: 14px;">
+          <h3>Daily active users</h3>
+          <div class="legend">
+            <span><i class="dot dot-cyan"></i>This week</span>
+            <span><i class="dot dot-slate"></i>Last week</span>
           </div>
         </div>
-        <div class="chart-host" style="aspect-ratio: 16/7;"><canvas id="trafficChart"></canvas></div>
+        <svg viewBox="0 0 480 200" style="width: 100%; height: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+          <!-- grid -->
+          <g stroke="rgba(255,255,255,0.04)" stroke-width="1">
+            <line x1="0" y1="40"  x2="480" y2="40" />
+            <line x1="0" y1="90"  x2="480" y2="90" />
+            <line x1="0" y1="140" x2="480" y2="140" />
+            <line x1="0" y1="190" x2="480" y2="190" />
+          </g>
+          <!-- last week (dashed gray) -->
+          <path d="M 20 145 Q 70 142 100 138 T 180 130 T 260 122 T 340 116 T 420 108 L 460 105"
+                fill="none" stroke="rgba(148,163,184,0.55)" stroke-width="1.5" stroke-dasharray="4 4" />
+          <!-- this week (cyan, with area) -->
+          <path d="M 20 138 C 50 130 70 110 100 90 S 160 30 200 35 C 230 38 260 70 290 85 C 320 100 350 110 380 100 C 410 92 430 80 460 70 L 460 190 L 20 190 Z"
+                fill="rgba(34,211,238,0.10)" />
+          <path d="M 20 138 C 50 130 70 110 100 90 S 160 30 200 35 C 230 38 260 70 290 85 C 320 100 350 110 380 100 C 410 92 430 80 460 70"
+                fill="none" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <!-- data points -->
+          <g fill="#22d3ee">
+            <circle cx="20" cy="138" r="3" />
+            <circle cx="100" cy="90" r="3" />
+            <circle cx="200" cy="35" r="3" />
+            <circle cx="290" cy="85" r="3" />
+            <circle cx="380" cy="100" r="3" />
+            <circle cx="460" cy="70" r="3" />
+          </g>
+          <!-- x axis labels -->
+          <g fill="rgba(255,255,255,0.4)" font-size="10" font-family="ui-sans-serif, system-ui, sans-serif">
+            <text x="20"  y="200" text-anchor="middle">Mon</text>
+            <text x="93"  y="200" text-anchor="middle">Tue</text>
+            <text x="166" y="200" text-anchor="middle">Wed</text>
+            <text x="240" y="200" text-anchor="middle">Thu</text>
+            <text x="313" y="200" text-anchor="middle">Fri</text>
+            <text x="386" y="200" text-anchor="middle">Sat</text>
+            <text x="460" y="200" text-anchor="middle">Sun</text>
+          </g>
+        </svg>
       </div>
-      <div class="rounded-xl bg-slate-900/70 border border-slate-800 p-4">
-        <h3 class="text-sm font-medium mb-3">Traffic sources</h3>
-        <div class="chart-host" style="aspect-ratio: 1/1;"><canvas id="sourcesChart"></canvas></div>
-        <div class="mt-3 grid grid-cols-2 gap-x-3 gap-y-1.5 text-[11px]">
-          <span class="flex items-center gap-1.5 text-slate-300"><span class="w-2 h-2 rounded-full bg-cyan-400"></span>Organic search · <span class="tabular-nums text-slate-400">42%</span></span>
-          <span class="flex items-center gap-1.5 text-slate-300"><span class="w-2 h-2 rounded-full bg-violet-400"></span>Direct · <span class="tabular-nums text-slate-400">28%</span></span>
-          <span class="flex items-center gap-1.5 text-slate-300"><span class="w-2 h-2 rounded-full bg-amber-400"></span>Referral · <span class="tabular-nums text-slate-400">18%</span></span>
-          <span class="flex items-center gap-1.5 text-slate-300"><span class="w-2 h-2 rounded-full bg-rose-400"></span>Social · <span class="tabular-nums text-slate-400">12%</span></span>
+
+      <div class="card">
+        <h3 style="margin-bottom: 14px;">Traffic sources</h3>
+        <svg viewBox="0 0 200 200" style="width: 100%; height: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+          <!-- Donut segments — angles from a circle of circumference 502.65 (r=80) -->
+          <g fill="none" stroke-width="32" transform="rotate(-90 100 100)">
+            <!-- 42% organic — cyan -->
+            <circle cx="100" cy="100" r="70" stroke="#22d3ee" stroke-dasharray="184.73 439.82" stroke-dashoffset="0" />
+            <!-- 28% direct — violet — offset by 42% of full circumference (440) = 184.73 backwards -->
+            <circle cx="100" cy="100" r="70" stroke="#a78bfa" stroke-dasharray="123.15 439.82" stroke-dashoffset="-184.73" />
+            <!-- 18% referral — amber -->
+            <circle cx="100" cy="100" r="70" stroke="#fbbf24" stroke-dasharray="79.17  439.82" stroke-dashoffset="-307.88" />
+            <!-- 12% social — rose -->
+            <circle cx="100" cy="100" r="70" stroke="#fb7185" stroke-dasharray="52.78  439.82" stroke-dashoffset="-387.05" />
+          </g>
+          <text x="100" y="96" text-anchor="middle" fill="#f1f5f9" font-size="20" font-weight="600" font-family="ui-sans-serif, system-ui, sans-serif">102K</text>
+          <text x="100" y="116" text-anchor="middle" fill="#64748b" font-size="10" font-family="ui-sans-serif, system-ui, sans-serif">sessions</text>
+        </svg>
+        <div class="donut-legend">
+          <span><i class="dot dot-cyan"></i>Organic <span class="num">42%</span></span>
+          <span><i class="dot dot-violet"></i>Direct <span class="num">28%</span></span>
+          <span><i class="dot dot-amber"></i>Referral <span class="num">18%</span></span>
+          <span><i class="dot dot-rose"></i>Social <span class="num">12%</span></span>
         </div>
       </div>
     </section>
 
     <!-- Charts row 2 -->
-    <section class="grid grid-cols-1 md:grid-cols-2 gap-3">
-      <div class="rounded-xl bg-slate-900/70 border border-slate-800 p-4">
-        <div class="flex items-center justify-between mb-3">
-          <h3 class="text-sm font-medium">Top pages by views</h3>
-          <span class="text-[10px] uppercase tracking-wider text-slate-500">Top 6</span>
+    <section class="charts-bottom">
+      <div class="card">
+        <div class="row-between" style="margin-bottom: 14px;">
+          <h3>Top pages by views</h3>
+          <span class="muted" style="font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em;">Top 6</span>
         </div>
-        <div class="chart-host" style="aspect-ratio: 16/9;"><canvas id="pagesChart"></canvas></div>
+        <svg viewBox="0 0 380 200" style="width: 100%; height: auto; display: block;" xmlns="http://www.w3.org/2000/svg">
+          <g font-family="ui-sans-serif, system-ui, sans-serif" font-size="11">
+            <!-- Each row: label + bar + value -->
+            <text x="0" y="20" fill="#cbd5e1">/</text>
+            <rect x="64" y="10" width="240" height="14" rx="3" fill="rgba(34,211,238,0.75)" />
+            <text x="312" y="20" fill="#94a3b8" class="num">128.4k</text>
+
+            <text x="0" y="48" fill="#cbd5e1">/pricing</text>
+            <rect x="64" y="38" width="172" height="14" rx="3" fill="rgba(34,211,238,0.75)" />
+            <text x="244" y="48" fill="#94a3b8" class="num">92.1k</text>
+
+            <text x="0" y="76" fill="#cbd5e1">/docs</text>
+            <rect x="64" y="66" width="133" height="14" rx="3" fill="rgba(34,211,238,0.75)" />
+            <text x="205" y="76" fill="#94a3b8" class="num">71.2k</text>
+
+            <text x="0" y="104" fill="#cbd5e1">/blog/launch</text>
+            <rect x="64" y="94" width="110" height="14" rx="3" fill="rgba(34,211,238,0.75)" />
+            <text x="182" y="104" fill="#94a3b8" class="num">58.9k</text>
+
+            <text x="0" y="132" fill="#cbd5e1">/changelog</text>
+            <rect x="64" y="122" width="77" height="14" rx="3" fill="rgba(34,211,238,0.75)" />
+            <text x="149" y="132" fill="#94a3b8" class="num">41.2k</text>
+
+            <text x="0" y="160" fill="#cbd5e1">/login</text>
+            <rect x="64" y="150" width="61" height="14" rx="3" fill="rgba(34,211,238,0.75)" />
+            <text x="133" y="160" fill="#94a3b8" class="num">32.8k</text>
+          </g>
+        </svg>
       </div>
-      <div class="rounded-xl bg-slate-900/70 border border-slate-800 p-4">
-        <h3 class="text-sm font-medium mb-3">Notable events this week</h3>
-        <table class="w-full text-sm">
+
+      <div class="card">
+        <h3 style="margin-bottom: 14px;">Notable events this week</h3>
+        <table>
           <thead>
-            <tr class="text-[10px] uppercase tracking-wider text-slate-500 border-b border-slate-800">
-              <th class="text-left font-medium py-2">Event</th>
-              <th class="text-left font-medium py-2">When</th>
-              <th class="text-right font-medium py-2">Impact</th>
+            <tr>
+              <th>Event</th>
+              <th>When</th>
+              <th class="right">Impact</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-800/60">
+          <tbody>
             <tr>
-              <td class="py-2 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Product Hunt feature</td>
-              <td class="py-2 text-slate-400 text-xs tabular-nums">Apr 16</td>
-              <td class="py-2 text-right text-emerald-400 text-xs tabular-nums">+18.4k DAU</td>
+              <td><span class="ev green">Product Hunt feature</span></td>
+              <td class="muted num" style="font-size: 12px;">Apr 16</td>
+              <td class="right up">+18.4k DAU</td>
             </tr>
             <tr>
-              <td class="py-2 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>Pricing A/B test launched</td>
-              <td class="py-2 text-slate-400 text-xs tabular-nums">Apr 17</td>
-              <td class="py-2 text-right text-rose-400 text-xs tabular-nums">−0.3pp CVR</td>
+              <td><span class="ev amber">Pricing A/B test launched</span></td>
+              <td class="muted num" style="font-size: 12px;">Apr 17</td>
+              <td class="right down">−0.3pp CVR</td>
             </tr>
             <tr>
-              <td class="py-2 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span>Onboarding rewrite</td>
-              <td class="py-2 text-slate-400 text-xs tabular-nums">Apr 19</td>
-              <td class="py-2 text-right text-emerald-400 text-xs tabular-nums">+2.1pp D7</td>
+              <td><span class="ev cyan">Onboarding rewrite</span></td>
+              <td class="muted num" style="font-size: 12px;">Apr 19</td>
+              <td class="right up">+2.1pp D7</td>
             </tr>
             <tr>
-              <td class="py-2 flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>API latency incident</td>
-              <td class="py-2 text-slate-400 text-xs tabular-nums">Apr 20</td>
-              <td class="py-2 text-right text-rose-400 text-xs tabular-nums">−1.8k sessions</td>
+              <td><span class="ev rose">API latency incident</span></td>
+              <td class="muted num" style="font-size: 12px;">Apr 20</td>
+              <td class="right down">−1.8k sessions</td>
             </tr>
           </tbody>
         </table>
       </div>
     </section>
 
-    <p class="text-xs text-slate-500 pt-2">
-      Generated by the report agent · run id <code class="text-slate-400">rpt_2026w16_3f8a</code>
-    </p>
+    <p class="foot">Generated by the report agent · run id <code>rpt_2026w16_3f8a</code></p>
   </div>
-
-  <script>
-    (function () {
-      // Shared style — keep all three charts visually consistent.
-      function gridStyle() {
-        return {
-          grid: { color: 'rgba(255, 255, 255, 0.04)', drawBorder: false },
-          ticks: { color: 'rgba(255, 255, 255, 0.4)', font: { size: 10 } },
-        };
-      }
-
-      function init() {
-        // ── 1. Daily-active-users dual-line ────────────────────────────
-        var trafficCtx = document.getElementById('trafficChart').getContext('2d');
-        var thisWeek = [38421, 41203, 67890, 58102, 52341, 45123, 48213];
-        var lastWeek = [34890, 36120, 38450, 40210, 41500, 39800, 42890];
-        new Chart(trafficCtx, {
-          type: 'line',
-          data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [
-              {
-                data: thisWeek,
-                borderColor: 'rgb(34, 211, 238)',
-                backgroundColor: 'rgba(34, 211, 238, 0.08)',
-                borderWidth: 2,
-                tension: 0.35,
-                pointRadius: 3,
-                pointBackgroundColor: 'rgb(34, 211, 238)',
-                pointBorderWidth: 0,
-                fill: true,
-              },
-              {
-                data: lastWeek,
-                borderColor: 'rgba(148, 163, 184, 0.5)',
-                borderWidth: 1.5,
-                borderDash: [4, 4],
-                tension: 0.35,
-                pointRadius: 0,
-              },
-            ],
-          },
-          options: {
-            maintainAspectRatio: false,
-            responsive: true,
-            plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
-            scales: { x: gridStyle(), y: Object.assign({ beginAtZero: true }, gridStyle()) },
-          },
-        });
-
-        // ── 2. Traffic-sources doughnut ────────────────────────────────
-        var sourcesCtx = document.getElementById('sourcesChart').getContext('2d');
-        new Chart(sourcesCtx, {
-          type: 'doughnut',
-          data: {
-            labels: ['Organic', 'Direct', 'Referral', 'Social'],
-            datasets: [
-              {
-                data: [42, 28, 18, 12],
-                backgroundColor: ['#22d3ee', '#a78bfa', '#fbbf24', '#fb7185'],
-                borderColor: '#0f172a',
-                borderWidth: 3,
-              },
-            ],
-          },
-          options: {
-            maintainAspectRatio: false,
-            responsive: true,
-            cutout: '68%',
-            plugins: { legend: { display: false } },
-          },
-        });
-
-        // ── 3. Top-pages horizontal bar ────────────────────────────────
-        var pagesCtx = document.getElementById('pagesChart').getContext('2d');
-        new Chart(pagesCtx, {
-          type: 'bar',
-          data: {
-            labels: ['/', '/pricing', '/docs', '/blog/launch', '/changelog', '/login'],
-            datasets: [
-              {
-                data: [128400, 92100, 71200, 58900, 41200, 32800],
-                backgroundColor: 'rgba(34, 211, 238, 0.75)',
-                borderRadius: 4,
-                barThickness: 14,
-              },
-            ],
-          },
-          options: {
-            maintainAspectRatio: false,
-            responsive: true,
-            indexAxis: 'y',
-            plugins: { legend: { display: false } },
-            scales: { x: Object.assign({ beginAtZero: true }, gridStyle()), y: gridStyle() },
-          },
-        });
-      }
-
-      // Chart.js arrives async — wait for it before mounting the dashboard.
-      if (window.Chart) {
-        init();
-      } else {
-        var waitFor = setInterval(function () {
-          if (window.Chart) {
-            clearInterval(waitFor);
-            init();
-          }
-        }, 50);
-      }
-    })();
-  </script>
 </body>
 </html>
 `;
 
 export default () => (
-  <HtmlPreview defaultHeight={920} fileName={'weekly-report.html'} theme={'dark'}>
+  <HtmlPreview defaultHeight={1080} fileName={'weekly-report.html'} theme={'dark'}>
     {html}
   </HtmlPreview>
 );
