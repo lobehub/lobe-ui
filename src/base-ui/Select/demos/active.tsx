@@ -122,7 +122,7 @@ export default () => {
                 setPreview(null);
                 return;
               }
-              debounceRef.current = setTimeout(() => setPreview(v), 150);
+              debounceRef.current = setTimeout(() => setPreview(v), 80);
             }}
             onChange={(v: string) => {
               setPreview(null);
