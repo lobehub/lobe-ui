@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.10.4](https://github.com/lobehub/lobe-ui/compare/v5.10.3...v5.10.4) (2026-05-11)
+
+### 💄 Styles
+
+- **html-preview**: Inline HTML preview with sandboxed iframe, closes [#513](https://github.com/lobehub/lobe-ui/issues/513) ([7d15d44](https://github.com/lobehub/lobe-ui/commit/7d15d44))
+
 ## [5.10.3](https://github.com/lobehub/lobe-ui/compare/v5.10.2...v5.10.3) (2026-05-11)
 
 ### 🐛 Bug Fixes
