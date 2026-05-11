@@ -81,6 +81,11 @@ export interface SelectProps<Value = string> {
   loading?: boolean;
   mode?: 'multiple' | 'tags';
   name?: string;
+  /**
+   * Called when an option is highlighted (hovered or keyboard-navigated) but not yet confirmed.
+   * Useful for live-preview scenarios. Called with `null` when the dropdown closes.
+   */
+  onActive?: (value: Value | null, option?: SelectOption<Value>) => void;
   onChange?: (
     value: Value | Value[] | null,
     option?: SelectOption<Value> | SelectOption<Value>[],
