@@ -30,14 +30,24 @@ export const buildShellSrcDoc = ({ background, frameId }: BuildShellSrcDocOption
   var UPDATE_TYPE = ${JSON.stringify(SHELL_UPDATE_MESSAGE_TYPE)};
 
   function cloneScript(src) {
-    // <script> elements created via innerHTML are inert. Rebuild them as
+    // <script> elements parsed via DOMParser are inert. Rebuild them as
     // proper DOM scripts so the browser executes them.
+    //
+    // Important: only set .text for inline scripts. Setting it on a
+    // src-bearing script (even to an empty string) causes some browser /
+    // extension combinations to treat the element as an inline script
+    // with empty body and skip the external fetch — so the CDN never
+    // loads. We just copy attributes; the browser will fetch the src on
+    // append.
     var s = document.createElement('script');
     for (var i = 0; i < src.attributes.length; i++) {
       var a = src.attributes[i];
       s.setAttribute(a.name, a.value);
     }
-    s.text = src.textContent || '';
+    if (!src.hasAttribute('src')) {
+      var text = src.textContent;
+      if (text) s.text = text;
+    }
     return s;
   }
 
@@ -186,6 +196,18 @@ export const buildShellSrcDoc = ({ background, frameId }: BuildShellSrcDocOption
     // morph() returns false only for type mismatch on the root — body to
     // body always matches, so this is safe.
     morph(document.body, newDoc.body);
+
+    // Nudge class-engine CDNs (Tailwind Play CDN, Stimulus, etc.) into
+    // re-scanning the document. They watch via MutationObserver but some
+    // implementations only consider the directly-mutated nodes from each
+    // record and skip recursing into nested descendants, so deeply-styled
+    // subtrees can end up with un-generated utility classes. Toggling a
+    // throwaway class on body produces an attribute mutation that prompts
+    // a fresh full-document scan.
+    try {
+      document.body.classList.add('_lobe-rescan');
+      document.body.classList.remove('_lobe-rescan');
+    } catch (_) {}
   }
 
   window.addEventListener('message', function (event) {
