@@ -31,4 +31,12 @@ describe('buildShellSrcDoc', () => {
     const out = buildShellSrcDoc({ frameId: 'fid' });
     expect(out).not.toContain('background:');
   });
+
+  it('includes the head-extras sync helpers so CDN scripts/links are replayed', () => {
+    const out = buildShellSrcDoc({ frameId: 'fid' });
+    expect(out).toContain('syncHeadExtras');
+    expect(out).toContain('headSeen');
+    // Scripts are re-executed via the cloneScript helper, not innerHTML.
+    expect(out).toContain('cloneScript');
+  });
 });

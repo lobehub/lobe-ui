@@ -24,6 +24,16 @@ const useStyles = createStyles(({ css, cssVar }) => ({
 
 interface Payload {
   bodyHtml: string;
+  /**
+   * Non-inline-style children of `<head>` serialised in document order:
+   * `<script src=…>`, `<script>…</script>`, `<link>`, `<meta>`, `<base>`,
+   * `<title>` etc. The shell appends/dedupes these into its own head so
+   * head-loaded resources (Tailwind CDN, p5.js, fonts, …) work for full
+   * documents. Inline `<style>` is intentionally excluded — those flow
+   * through `styleContent` so streaming partial CSS grows in place rather
+   * than stacking duplicate `<style>` blocks.
+   */
+  headExtrasHtml: string;
   styleContent: string;
 }
 
@@ -32,15 +42,28 @@ const parseContent = (() => {
   let parser: DOMParser | null = null;
   return (content: string): Payload | null => {
     if (typeof window === 'undefined') return null;
-    if (!content) return { bodyHtml: '', styleContent: '' };
+    if (!content) return { bodyHtml: '', headExtrasHtml: '', styleContent: '' };
     if (!parser) parser = new DOMParser();
     const doc = parser.parseFromString(content, 'text/html');
-    const styleNodes = doc.querySelectorAll('style');
-    const styleContent = Array.from(styleNodes)
-      .map((s) => s.textContent || '')
-      .join('\n');
-    const bodyHtml = doc.body ? doc.body.innerHTML : '';
-    return { bodyHtml, styleContent };
+
+    const styleParts: string[] = [];
+    const headExtras: string[] = [];
+
+    if (doc.head) {
+      for (const child of Array.from(doc.head.children)) {
+        if (child.tagName === 'STYLE') {
+          styleParts.push(child.textContent || '');
+        } else {
+          headExtras.push(child.outerHTML);
+        }
+      }
+    }
+
+    return {
+      bodyHtml: doc.body ? doc.body.innerHTML : '',
+      headExtrasHtml: headExtras.join(''),
+      styleContent: styleParts.join('\n'),
+    };
   };
 })();
 

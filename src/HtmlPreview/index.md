@@ -9,6 +9,12 @@ description: HtmlPreview renders LLM-generated HTML inline using a hardened ifra
 
 <code src="./demos/index.tsx" nopadding></code>
 
+## Head resources (CDN scripts, stylesheets, fonts)
+
+`<script src>`, `<link rel="stylesheet">`, `<meta>` and other `<head>` children are preserved and replayed inside the iframe. This demo uses the Tailwind CDN from `<head>` to style its body.
+
+<code src="./demos/HeadResources.tsx" nopadding></code>
+
 ## Streaming
 
 The `streamingMode` prop controls how the iframe behaves while content is

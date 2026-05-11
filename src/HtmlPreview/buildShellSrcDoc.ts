@@ -120,15 +120,55 @@ export const buildShellSrcDoc = ({ background, frameId }: BuildShellSrcDocOption
     return true;
   }
 
+  // Track which head extras (scripts/links/meta/title/base) we've already
+  // mounted so re-arriving chunks don't re-execute scripts or duplicate
+  // resources. Keyed by outerHTML — for streaming partial URLs each
+  // partial-and-then-complete tag is a distinct key, which means a partial
+  // CDN URL may briefly 404 before the complete one succeeds. That's
+  // acceptable; the alternative (waiting for the closing tag heuristic) is
+  // fragile and would defeat the live-CDN use case entirely.
+  var headSeen = Object.create(null);
+
+  function syncHeadExtras(headExtrasHtml) {
+    if (typeof headExtrasHtml !== 'string') return;
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(
+      '<!doctype html><html><head>' + headExtrasHtml + '</head></html>',
+      'text/html',
+    );
+    var children = doc.head ? doc.head.children : [];
+    for (var i = 0; i < children.length; i++) {
+      var src = children[i];
+      var key = src.outerHTML;
+      if (headSeen[key]) continue;
+      headSeen[key] = true;
+      var clone = importNode(src);
+      // Tag for debugging — also keeps these distinguishable from the
+      // shell's own head children if anything ever needs to inspect them.
+      if (clone.setAttribute) clone.setAttribute('data-lobe-user', '');
+      document.head.appendChild(clone);
+    }
+  }
+
   function applyUpdate(payload) {
     if (!payload) return;
+
+    // 1) Inline user styles: merged into a single growing <style> element.
+    //    Streaming partial CSS just keeps overwriting this text until the
+    //    rules become complete, so we don't stack half-parsed <style>
+    //    blocks in the head.
     var styleEl = document.getElementById('lobe-user-style');
     if (styleEl && styleEl.textContent !== payload.styleContent) {
       styleEl.textContent = payload.styleContent || '';
     }
 
-    var parser = new DOMParser();
-    var newDoc = parser.parseFromString(
+    // 2) Everything else in the user's <head> (scripts, links, meta, …):
+    //    append-with-dedupe so head-loaded resources actually run.
+    syncHeadExtras(payload.headExtrasHtml);
+
+    // 3) Body: in-place morph with fade-in on new nodes.
+    var bodyParser = new DOMParser();
+    var newDoc = bodyParser.parseFromString(
       '<!doctype html><html><body>' + (payload.bodyHtml || '') + '</body></html>',
       'text/html',
     );
