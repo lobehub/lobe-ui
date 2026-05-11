@@ -175,6 +175,28 @@ For more information, see [Mermaid](https://www.mermaidchart.com).
 
 <code src="./demos/advanced/mermaid.tsx" iframe nopadding></code>
 
+### HTML preview
+
+Render LLM-generated HTML in an isolated sandbox iframe. Enable with `enableHtmlPreview`. See the [HtmlPreview](/components/html-preview) docs for the security model and streaming behavior.
+
+<code src="./demos/advanced/htmlPreview.tsx" iframe nopadding></code>
+
+#### Live streaming alongside prose
+
+The default `streamingMode: 'auto'` mounts the iframe as soon as the first
+chunk lands when the content has no `<script>` tag. Prose and HTML widgets
+paint together — no waiting for the closing tag.
+
+<code src="./demos/advanced/htmlPreviewArticle.tsx" iframe nopadding></code>
+
+#### Deferred mode for script-heavy content
+
+When a `<script>` tag is present, `streamingMode: 'auto'` falls back to
+deferred mode: the iframe waits for the closing `</html>` before mounting,
+so `setup()` runs exactly once.
+
+<code src="./demos/advanced/htmlPreviewStream.tsx" iframe nopadding></code>
+
 ---
 
 ## Footnotes
@@ -268,25 +290,26 @@ The `skipped` counter tallies `.stream-char` spans that were inserted into the D
 
 ## APIs
 
-| Property              | Description                                            | Type                                                                                               | Default     |
-| --------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------- | ----------- |
-| children              | Markdown content to render                             | `string`                                                                                           | -           |
-| variant               | Determines the style variant of the markdown           | `'default' \| 'chat'`                                                                              | `'default'` |
-| allowHtml             | Whether to allow HTML in markdown content              | `boolean`                                                                                          | `false`     |
-| citations             | Citations data for footnotes                           | `CitationItem[]`                                                                                   | -           |
-| enableLatex           | Enable LaTeX math expressions                          | `boolean`                                                                                          | `true`      |
-| enableMermaid         | Enable Mermaid diagrams                                | `boolean`                                                                                          | `true`      |
-| enableImageGallery    | Enable image gallery for images                        | `boolean`                                                                                          | `true`      |
-| enableCustomFootnotes | Enable custom footnotes rendering                      | `boolean`                                                                                          | -           |
-| fullFeaturedCodeBlock | Use full-featured code blocks with additional controls | `boolean`                                                                                          | -           |
-| fontSize              | Base font size in pixels                               | `number`                                                                                           | `14`        |
-| lineHeight            | Line height multiplier                                 | `number`                                                                                           | `1.6`       |
-| headerMultiple        | Header size multiplier                                 | `number`                                                                                           | `0.25`      |
-| marginMultiple        | Margin multiplier for spacing                          | `number`                                                                                           | `1`         |
-| componentProps        | Props for internal components                          | `{ a?: object, highlight?: object, img?: object, mermaid?: object, pre?: object, video?: object }` | -           |
-| components            | Custom components for markdown elements                | `Components & Record<string, FC>`                                                                  | -           |
-| customRender          | Custom render function for markdown content            | `(dom: ReactNode, context: { text: string }) => ReactNode`                                         | -           |
-| reactMarkdownProps    | Additional props for react-markdown                    | `object`                                                                                           | -           |
-| rehypePlugins         | Additional rehype plugins                              | `Pluggable[]`                                                                                      | -           |
-| remarkPlugins         | Additional remark plugins                              | `Pluggable[]`                                                                                      | -           |
-| remarkPluginsAhead    | Remark plugins to run before built-in plugins          | `Pluggable[]`                                                                                      | -           |
+| Property              | Description                                            | Type                                                       | Default     |
+| --------------------- | ------------------------------------------------------ | ---------------------------------------------------------- | ----------- |
+| children              | Markdown content to render                             | `string`                                                   | -           |
+| variant               | Determines the style variant of the markdown           | `'default' \| 'chat'`                                      | `'default'` |
+| allowHtml             | Whether to allow HTML in markdown content              | `boolean`                                                  | `false`     |
+| citations             | Citations data for footnotes                           | `CitationItem[]`                                           | -           |
+| enableLatex           | Enable LaTeX math expressions                          | `boolean`                                                  | `true`      |
+| enableMermaid         | Enable Mermaid diagrams                                | `boolean`                                                  | `true`      |
+| enableHtmlPreview     | Enable inline HTML preview (sandboxed iframe)          | `boolean`                                                  | `false`     |
+| enableImageGallery    | Enable image gallery for images                        | `boolean`                                                  | `true`      |
+| enableCustomFootnotes | Enable custom footnotes rendering                      | `boolean`                                                  | -           |
+| fullFeaturedCodeBlock | Use full-featured code blocks with additional controls | `boolean`                                                  | -           |
+| fontSize              | Base font size in pixels                               | `number`                                                   | `14`        |
+| lineHeight            | Line height multiplier                                 | `number`                                                   | `1.6`       |
+| headerMultiple        | Header size multiplier                                 | `number`                                                   | `0.25`      |
+| marginMultiple        | Margin multiplier for spacing                          | `number`                                                   | `1`         |
+| componentProps        | Props for internal components                          | `{ a?, highlight?, html?, img?, mermaid?, pre?, video? }`  | -           |
+| components            | Custom components for markdown elements                | `Components & Record<string, FC>`                          | -           |
+| customRender          | Custom render function for markdown content            | `(dom: ReactNode, context: { text: string }) => ReactNode` | -           |
+| reactMarkdownProps    | Additional props for react-markdown                    | `object`                                                   | -           |
+| rehypePlugins         | Additional rehype plugins                              | `Pluggable[]`                                              | -           |
+| remarkPlugins         | Additional remark plugins                              | `Pluggable[]`                                              | -           |
+| remarkPluginsAhead    | Remark plugins to run before built-in plugins          | `Pluggable[]`                                              | -           |

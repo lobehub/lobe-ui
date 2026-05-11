@@ -152,6 +152,20 @@ export {
 export { preprocessMarkdownContent } from './hooks/useMarkdown/utils';
 export { combineKeys, default as Hotkey, type HotkeyProps, KeyMapEnum } from './Hotkey';
 export { default as HotkeyInput, type HotkeyInputProps } from './HotkeyInput';
+export {
+  HTML_PREVIEW_DEFAULT_HEIGHT,
+  HTML_PREVIEW_DEFAULT_SANDBOX,
+  HTML_PREVIEW_RESIZE_MESSAGE,
+  default as HtmlPreview,
+  htmlPreviewContainsScript,
+  HtmlPreviewIframe,
+  type HtmlPreviewIframeProps,
+  type HtmlPreviewMode,
+  type HtmlPreviewProps,
+  type HtmlPreviewStreamingMode,
+  isFullHtmlDocument,
+  isHtmlContentClosed,
+} from './HtmlPreview';
 export { default as Icon, type IconProps, IconProvider, type IconSize } from './Icon';
 export { default as Image, type ImageProps, PreviewGroup, type PreviewGroupProps } from './Image';
 export { default as ImageSelect, type ImageSelectItem, type ImageSelectProps } from './ImageSelect';
@@ -244,6 +258,10 @@ export {
 } from './Modal';
 export type { MotionComponentType } from './MotionProvider';
 export { MotionComponent, MotionProvider, useMotionComponent } from './MotionProvider';
+export {
+  default as NeuralNetworkLoading,
+  type NeuralNetworkLoadingProps,
+} from './NeuralNetworkLoading';
 export {
   default as Popover,
   PopoverArrow,

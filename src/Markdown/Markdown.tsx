@@ -21,6 +21,7 @@ const Markdown = memo<MarkdownProps>((props) => {
     fullFeaturedCodeBlock,
     onDoubleClick,
     animated,
+    enableHtmlPreview = false,
     enableLatex = true,
     enableMermaid = true,
     enableImageGallery,
@@ -86,6 +87,7 @@ const Markdown = memo<MarkdownProps>((props) => {
           components={components}
           enableCustomFootnotes={enableCustomFootnotes}
           enableGithubAlert={enableGithubAlert}
+          enableHtmlPreview={enableHtmlPreview}
           enableLatex={enableLatex}
           enableMermaid={enableMermaid}
           fullFeaturedCodeBlock={fullFeaturedCodeBlock}
