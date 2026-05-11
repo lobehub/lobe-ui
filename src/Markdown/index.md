@@ -197,6 +197,14 @@ so `setup()` runs exactly once.
 
 <code src="./demos/advanced/htmlPreviewStream.tsx" iframe nopadding></code>
 
+#### Complete document inside Markdown
+
+When the model produces a full HTML artifact — a dashboard, a report, a
+spec — wrap it in a fenced ` ```html ` block and Markdown renders it inline
+via `HtmlPreview`. Surrounding prose stays as regular Markdown.
+
+<code src="./demos/advanced/htmlPreviewReport.tsx" iframe nopadding></code>
+
 ---
 
 ## Footnotes
