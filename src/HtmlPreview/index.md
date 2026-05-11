@@ -9,6 +9,12 @@ description: HtmlPreview renders LLM-generated HTML inline using a hardened ifra
 
 <code src="./demos/index.tsx" nopadding></code>
 
+## Full report
+
+A complete LLM-output-style analytics report: Tailwind for the layout, Chart.js for three different chart types, and an inline script that boots the dashboard once the CDNs settle. This is the kind of document a "give me a weekly product report" prompt produces.
+
+<code src="./demos/Report.tsx" nopadding></code>
+
 ## Head resources (CDN scripts, stylesheets, fonts)
 
 `<script src>`, `<link rel="stylesheet">`, `<meta>` and other `<head>` children are preserved and replayed inside the iframe — so full documents that depend on Tailwind, p5.js, Chart.js, custom fonts, etc. just work.
