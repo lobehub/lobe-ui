@@ -1,520 +1,489 @@
 ---
 name: local-testing
 description: >
-  Local app and bot testing. Uses agent-browser CLI for Electron/web app UI testing,
-  and osascript (AppleScript) for controlling native macOS apps (WeChat, Discord, Telegram, Slack, Lark/飞书, QQ)
-  to test bots. Triggers on 'local test', 'test in electron', 'test desktop', 'test bot',
-  'bot test', 'test in discord', 'test in telegram', 'test in slack', 'test in weixin',
-  'test in wechat', 'test in lark', 'test in feishu', 'test in qq',
-  'manual test', 'osascript', or UI/bot verification tasks.
+  Local UI automation testing for the lobe-ui component library. Uses agent-browser CLI
+  to drive the dumi dev server (default http://localhost:8000) via Chrome DevTools Protocol —
+  navigate to component demo pages, interact with components, capture screenshots, and verify
+  rendering. Triggers on 'local test', 'ui test', 'verify component', 'test component',
+  'test in browser', 'visual check', 'screenshot demo', or any UI verification task.
 ---
 
-# Local App & Bot Testing
+# Local UI Automation Testing
 
-Two approaches for local testing on macOS:
+Use `agent-browser` to drive the dumi dev server and verify component behavior visually and programmatically.
 
-| Approach                    | Tool                | Best For                                             |
-| --------------------------- | ------------------- | ---------------------------------------------------- |
-| **agent-browser + CDP**     | `agent-browser` CLI | Electron apps, web apps (DOM access, JS eval)        |
-| **osascript (AppleScript)** | `osascript -e`      | Native macOS apps (WeChat, Discord, Telegram, Slack) |
+| Layer        | Tool            | Default                 |
+| ------------ | --------------- | ----------------------- |
+| Dev server   | `dumi dev`      | `http://localhost:8000` |
+| Browser auto | `agent-browser` | Chromium via CDP        |
 
 ---
 
-# Part 1: agent-browser (Electron / Web Apps)
-
-Use `agent-browser` to automate Chromium-based apps via Chrome DevTools Protocol.
-
-Install via `npm i -g agent-browser`, `brew install agent-browser`, or `cargo install agent-browser`. Run `agent-browser install` to download Chrome. Run `agent-browser upgrade` to update.
-
-## Core Workflow
-
-Every browser automation follows this pattern:
-
-1. **Navigate**: `agent-browser open <url>`
-2. **Snapshot**: `agent-browser snapshot -i` (get element refs like `@e1`, `@e2`)
-3. **Interact**: Use refs to click, fill, select
-4. **Re-snapshot**: After navigation or DOM changes, get fresh refs
+## Quick Start
 
 ```bash
-agent-browser open https://example.com/form
+# 1. Self-start dumi (idempotent — see "Self-orchestrate" below for the full recipe)
+curl -fsS http://localhost:8000 > /dev/null \
+  || (
+    nohup bun run dev > /tmp/lobe-ui-dev.log 2>&1 &
+    disown
+  )
+until curl -fsS http://localhost:8000 > /dev/null 2>&1; do sleep 1; done
+
+# 2. Open an isolated demo (see "Test the demo, not the doc page" below)
+agent-browser open http://localhost:8000/~demos/src-html-preview-demo-headresources
+
+# 3. Get interactive element refs
 agent-browser snapshot -i
-# Output: @e1 [input type="email"], @e2 [input type="password"], @e3 [button] "Submit"
 
-agent-browser fill @e1 "user@example.com"
-agent-browser fill @e2 "password123"
-agent-browser click @e3
+# 4. Interact, then verify
+agent-browser click @e1
+agent-browser screenshot --full
+```
+
+---
+
+## Self-orchestrate: start + analyze without asking
+
+You are expected to run end-to-end without pinging the user for setup. Default flow:
+
+### 1. Probe — is dumi already up?
+
+```bash
+# Cheap: HTTP probe. Exits 0 if a server is listening on :8000.
+curl -fsS -o /dev/null http://localhost:8000 && echo "up" || echo "down"
+
+# Or: socket probe (works even before the SPA shell is ready)
+lsof -nP -iTCP:8000 -sTCP:LISTEN | tail -n +2
+```
+
+If `up`, **reuse it** — do not start a second instance.
+
+### 2. Start in background, capture logs
+
+```bash
+LOG=/tmp/lobe-ui-dev.log
+nohup bun run dev > "$LOG" 2>&1 &
+disown
+# 'disown' detaches it from this shell so it survives the tool call returning
+```
+
+Run this via Bash with `run_in_background: true` if you want the harness to track the PID; otherwise the `disown` form is fine since you'll find it again via `lsof`.
+
+### 3. Wait until ready (and detect the actual port)
+
+dumi auto-bumps to 8001/8002/… when 8000 is taken. **Never assume 8000 worked — read it from the log.**
+
+```bash
+# Poll up to 60s for dumi to print its URL
+LOG=/tmp/lobe-ui-dev.log
+for i in $(seq 1 60); do
+  URL=$(grep -Eo 'http://localhost:[0-9]+' "$LOG" | head -1)
+  [ -n "$URL" ] && curl -fsS -o /dev/null "$URL" && break
+  sleep 1
+done
+echo "$URL" # e.g. http://localhost:8001
+```
+
+Use that `$URL` as the base for every subsequent `agent-browser open` call.
+
+### 4. Discover what demos exist
+
+For a component named `<Foo>`, every isolated demo route is implied by a `<code src="./demos/X.tsx" />` tag in `src/Foo/index.md`:
+
+```bash
+# List demo files referenced by a component
+grep -oE 'src="\./demos/[^"]+"' src/HtmlPreview/index.md
+# → src="./demos/index.tsx"
+# → src="./demos/Report.tsx"
+# → src="./demos/HeadResources.tsx"
+
+# Convert a path → demo route
+demo_route() {
+  # $1 = file path relative to repo root, e.g. src/HtmlPreview/demos/HeadResources.tsx
+  local path="${1%.*}"     # strip extension
+  local dir="${path%/*}"   # directory portion
+  local base="${path##*/}" # basename
+  # kebab-case the directory (uppercase-after-letter → -lower), lowercase the basename whole
+  local dir_kebab
+  dir_kebab=$(printf '%s' "$dir" \
+    | sed -E 's/([a-z0-9])([A-Z])/\1-\2/g' \
+    | tr '[:upper:]' '[:lower:]' \
+    | sed 's/\//-/g; s/demos$/demo/; s/-demos-/-demo-/g')
+  local base_lower
+  base_lower=$(printf '%s' "$base" | tr '[:upper:]' '[:lower:]')
+  printf '%s-%s\n' "$dir_kebab" "$base_lower"
+}
+demo_route src/HtmlPreview/demos/HeadResources.tsx
+# → src-html-preview-demo-headresources
+```
+
+Slug rules (memorize these — dumi's convention):
+
+- Directories are kebab-cased on case boundaries (`HtmlPreview` → `html-preview`).
+- The directory literally named `demos` is singularized to `demo`.
+- File basename is **lowercased whole** (no internal dashes): `HeadResources` → `headresources`.
+- Path separators become `-`.
+
+When in doubt, open the component doc page (`/components/<name>`) and `snapshot -i` — dumi exposes the canonical `/~demos/<id>` link for each embedded demo.
+
+### 5. Install a console-error interceptor before interacting
+
+```bash
+agent-browser open "$URL/~demos/src-html-preview-demo-headresources"
 agent-browser wait --load networkidle
-agent-browser snapshot -i # Check result
-```
-
-## Command Chaining
-
-```bash
-# Chain open + wait + snapshot in one call
-agent-browser open https://example.com && agent-browser wait --load networkidle && agent-browser snapshot -i
-```
-
-Use `&&` when you don't need to read intermediate output. Run commands separately when you need to parse output first (e.g., snapshot to discover refs, then interact).
-
-## Essential Commands
-
-```bash
-# Navigation
-agent-browser open <url>              # Navigate (aliases: goto, navigate)
-agent-browser close                   # Close browser
-agent-browser close --all             # Close all active sessions
-
-# Snapshot
-agent-browser snapshot -i             # Interactive elements with refs (recommended)
-agent-browser snapshot -s "#selector" # Scope to CSS selector
-
-# Interaction (use @refs from snapshot)
-agent-browser click @e1               # Click element
-agent-browser click @e1 --new-tab     # Click and open in new tab
-agent-browser fill @e2 "text"         # Clear and type text
-agent-browser type @e2 "text"         # Type without clearing
-agent-browser select @e1 "option"     # Select dropdown option
-agent-browser check @e1               # Check checkbox
-agent-browser press Enter             # Press key
-agent-browser keyboard type "text"    # Type at current focus (no selector)
-agent-browser keyboard inserttext "text"  # Insert without key events
-agent-browser scroll down 500         # Scroll page
-agent-browser scroll down 500 --selector "div.content"  # Scroll within container
-
-# Get information
-agent-browser get text @e1            # Get element text
-agent-browser get url                 # Get current URL
-agent-browser get title               # Get page title
-agent-browser get cdp-url             # Get CDP WebSocket URL
-
-# Wait
-agent-browser wait @e1                # Wait for element
-agent-browser wait --load networkidle # Wait for network idle
-agent-browser wait --url "**/page"    # Wait for URL pattern
-agent-browser wait 2000               # Wait milliseconds
-agent-browser wait --text "Welcome"   # Wait for text to appear
-agent-browser wait --fn "!document.body.innerText.includes('Loading...')"  # Wait for text to disappear
-agent-browser wait "#spinner" --state hidden  # Wait for element to disappear
-
-# Downloads
-agent-browser download @e1 ./file.pdf          # Click element to trigger download
-agent-browser wait --download ./output.zip     # Wait for any download to complete
-
-# Network
-agent-browser network requests                 # Inspect tracked requests
-agent-browser network requests --type xhr,fetch  # Filter by resource type
-agent-browser network requests --method POST   # Filter by HTTP method
-agent-browser network route "**/api/*" --abort # Block matching requests
-agent-browser network har start                # Start HAR recording
-agent-browser network har stop ./capture.har   # Stop and save HAR file
-
-# Viewport & Device Emulation
-agent-browser set viewport 1920 1080          # Set viewport size (default: 1280x720)
-agent-browser set viewport 1920 1080 2        # 2x retina
-agent-browser set device "iPhone 14"          # Emulate device (viewport + user agent)
-
-# Capture
-agent-browser screenshot              # Screenshot to temp dir
-agent-browser screenshot --full       # Full page screenshot
-agent-browser screenshot --annotate   # Annotated screenshot with numbered element labels
-agent-browser pdf output.pdf          # Save as PDF
-
-# Clipboard
-agent-browser clipboard read          # Read text from clipboard
-agent-browser clipboard write "text"  # Write text to clipboard
-agent-browser clipboard copy          # Copy current selection
-agent-browser clipboard paste         # Paste from clipboard
-
-# Dialogs (alert, confirm, prompt, beforeunload)
-agent-browser dialog accept           # Accept dialog
-agent-browser dialog accept "input"   # Accept prompt dialog with text
-agent-browser dialog dismiss          # Dismiss/cancel dialog
-agent-browser dialog status           # Check if dialog is open
-
-# Diff (compare page states)
-agent-browser diff snapshot                        # Compare current vs last snapshot
-agent-browser diff screenshot --baseline before.png  # Visual pixel diff
-agent-browser diff url <url1> <url2>               # Compare two pages
-
-# Streaming
-agent-browser stream enable           # Start WebSocket streaming
-agent-browser stream status           # Inspect streaming state
-agent-browser stream disable          # Stop streaming
-```
-
-## Batch Execution
-
-```bash
-echo '[
-  ["open", "https://example.com"],
-  ["snapshot", "-i"],
-  ["click", "@e1"],
-  ["screenshot", "result.png"]
-]' | agent-browser batch --json
-```
-
-## Authentication
-
-```bash
-# Option 1: Auth vault (credentials stored encrypted)
-echo "$PASSWORD" | agent-browser auth save myapp --url https://app.example.com/login --username user --password-stdin
-agent-browser auth login myapp
-
-# Option 2: Session name (auto-save/restore cookies + localStorage)
-agent-browser --session-name myapp open https://app.example.com/login
-agent-browser close                                                       # State auto-saved
-agent-browser --session-name myapp open https://app.example.com/dashboard # Auto-restored
-
-# Option 3: Persistent profile
-agent-browser --profile ~/.myapp open https://app.example.com/login
-
-# Option 4: State file
-agent-browser state save auth.json
-agent-browser state load auth.json
-```
-
-### LobeHub dev server — inject better-auth cookie
-
-`agent-browser --headed` on macOS can create an off-screen Chromium window, blocking manual login. For a local LobeHub dev server (e.g. `localhost:3011`), copy the `better-auth.session_token` cookie out of a **Network request** in the user's own Chrome DevTools and load it via `state load`. See [references/agent-browser-login.md](./references/agent-browser-login.md) for the full recipe.
-
-## Semantic Locators (Alternative to Refs)
-
-```bash
-agent-browser find text "Sign In" click
-agent-browser find label "Email" fill "user@test.com"
-agent-browser find role button click --name "Submit"
-agent-browser find placeholder "Search" type "query"
-agent-browser find testid "submit-btn" click
-```
-
-## JavaScript Evaluation (eval)
-
-```bash
-# Simple expressions
-agent-browser eval 'document.title'
-
-# Complex JS: use --stdin with heredoc (RECOMMENDED)
 agent-browser eval --stdin << 'EVALEOF'
-JSON.stringify(
-  Array.from(document.querySelectorAll("img"))
-    .filter(i => !i.alt)
-    .map(i => ({ src: i.src.split("/").pop(), width: i.width }))
-)
-EVALEOF
-
-# Base64 encoding (avoids all shell escaping issues)
-agent-browser eval -b "$(echo -n 'document.title' | base64)"
-```
-
-## Ref Lifecycle
-
-Refs (`@e1`, `@e2`, etc.) are invalidated when the page changes. Always re-snapshot after clicking links/buttons that navigate, form submissions, or dynamic content loading.
-
-## Annotated Screenshots (Vision Mode)
-
-```bash
-agent-browser screenshot --annotate
-# Output includes the image path and a legend:
-#   [1] @e1 button "Submit"
-#   [2] @e2 link "Home"
-agent-browser click @e2 # Click using ref from annotated screenshot
-```
-
-## Parallel Sessions
-
-```bash
-agent-browser --session site1 open https://site-a.com
-agent-browser --session site2 open https://site-b.com
-agent-browser session list
-```
-
-## Connect to Existing Chrome
-
-```bash
-agent-browser --auto-connect snapshot # Auto-discover running Chrome
-agent-browser --cdp 9222 snapshot     # Explicit CDP port
-```
-
-## iOS Simulator (Mobile Safari)
-
-```bash
-agent-browser device list
-agent-browser -p ios --device "iPhone 16 Pro" open https://example.com
-agent-browser -p ios snapshot -i
-agent-browser -p ios tap @e1
-agent-browser -p ios swipe up
-agent-browser -p ios screenshot mobile.png
-agent-browser -p ios close
-```
-
-## Observability Dashboard
-
-```bash
-agent-browser dashboard install
-agent-browser dashboard start # Background server on port 4848
-agent-browser dashboard stop
-```
-
-## Cloud Providers
-
-Use `-p <provider>` to run against cloud browsers: `agentcore`, `browserbase`, `browserless`, `browseruse`, `kernel`.
-
-## Browser Engine Selection
-
-```bash
-agent-browser --engine lightpanda open example.com # 10x faster, 10x less memory
-```
-
-## Electron (LobeHub Desktop)
-
-### Setup / Teardown
-
-Use the `electron-dev.sh` script to manage the Electron dev environment. It handles process lifecycle, waits for SPA readiness, and reliably kills all child processes (main + helpers + vite).
-
-```bash
-SCRIPT=".agents/skills/local-testing/scripts/electron-dev.sh"
-
-# Start Electron dev with CDP (idempotent — skips if already running)
-$SCRIPT start
-
-# Check if Electron is running and CDP is reachable
-$SCRIPT status
-
-# Kill all Electron-related processes (main + helper + vite)
-$SCRIPT stop
-
-# Force fresh restart
-$SCRIPT restart
-```
-
-After `start` succeeds, connect with: `agent-browser --cdp 9222 snapshot -i`
-
-**Always run `$SCRIPT stop` when done testing** — `pkill -f "Electron"` alone won't catch all helper processes.
-
-#### Environment Variables
-
-| Variable          | Default                 | Description                              |
-| ----------------- | ----------------------- | ---------------------------------------- |
-| `CDP_PORT`        | `9222`                  | Chrome DevTools Protocol port            |
-| `ELECTRON_LOG`    | `/tmp/electron-dev.log` | Electron process log                     |
-| `ELECTRON_WAIT_S` | `60`                    | Max seconds to wait for Electron process |
-| `RENDERER_WAIT_S` | `60`                    | Max seconds to wait for SPA to load      |
-
-### LobeHub-Specific Patterns
-
-#### Access Zustand Store State
-
-```bash
-agent-browser --cdp 9222 eval --stdin << 'EVALEOF'
 (function() {
-  var chat = window.__LOBE_STORES.chat();
-  var ops = Object.values(chat.operations);
-  return JSON.stringify({
-    ops: ops.map(function(o) { return { type: o.type, status: o.status }; }),
-    activeAgent: chat.activeAgentId,
-    activeTopic: chat.activeTopicId,
-  });
-})()
-EVALEOF
-```
-
-#### Find and Use the Chat Input
-
-```bash
-# The chat input is contenteditable — must use -C flag
-agent-browser --cdp 9222 snapshot -i -C 2>&1 | grep "editable"
-
-agent-browser --cdp 9222 click @e48
-agent-browser --cdp 9222 type @e48 "Hello world"
-agent-browser --cdp 9222 press Enter
-```
-
-#### Wait for Agent to Complete
-
-```bash
-agent-browser --cdp 9222 eval --stdin << 'EVALEOF'
-(function() {
-  var chat = window.__LOBE_STORES.chat();
-  var ops = Object.values(chat.operations);
-  var running = ops.filter(function(o) { return o.status === 'running'; });
-  return running.length === 0 ? 'done' : 'running: ' + running.length;
-})()
-EVALEOF
-```
-
-#### Install Error Interceptor
-
-```bash
-agent-browser --cdp 9222 eval --stdin << 'EVALEOF'
-(function() {
-  window.__CAPTURED_ERRORS = [];
+  window.__CAPTURED_ERRORS = window.__CAPTURED_ERRORS || [];
   var orig = console.error;
   console.error = function() {
     var msg = Array.from(arguments).map(function(a) {
-      if (a instanceof Error) return a.message;
+      if (a instanceof Error) return a.stack || a.message;
       return typeof a === 'object' ? JSON.stringify(a) : String(a);
     }).join(' ');
     window.__CAPTURED_ERRORS.push(msg);
     orig.apply(console, arguments);
   };
+  window.addEventListener('error', function(e) {
+    window.__CAPTURED_ERRORS.push('window.onerror: ' + (e.error && e.error.stack || e.message));
+  });
+  window.addEventListener('unhandledrejection', function(e) {
+    window.__CAPTURED_ERRORS.push('unhandledrejection: ' + (e.reason && e.reason.stack || e.reason));
+  });
   return 'installed';
 })()
 EVALEOF
-
-# Later, check captured errors:
-agent-browser --cdp 9222 eval "JSON.stringify(window.__CAPTURED_ERRORS)"
 ```
 
-## Chrome / Web Apps
+After driving the UI, drain captured errors:
 
 ```bash
+agent-browser eval "JSON.stringify(window.__CAPTURED_ERRORS || [])"
+```
+
+Also tail the dev-server log for SSR / compile errors that never reach the browser:
+
+```bash
+tail -n 50 /tmp/lobe-ui-dev.log | grep -iE "error|warn|failed"
+```
+
+### 6. Analyze the demo programmatically (don't only screenshot)
+
+Screenshots verify pixels; `eval` verifies semantics. Combine both:
+
+```bash
+# Count rendered iframes, sandbox attrs, computed sizes
+agent-browser eval --stdin << 'EVALEOF'
+JSON.stringify(
+  Array.from(document.querySelectorAll('iframe')).map(f => ({
+    sandbox: f.getAttribute('sandbox'),
+    width: f.clientWidth,
+    height: f.clientHeight,
+    srcdocLen: (f.srcdoc || '').length,
+  }))
+)
+EVALEOF
+
+# Read into iframe content (only if same-origin or srcdoc-based)
+agent-browser eval --stdin << 'EVALEOF'
+(function() {
+  var f = document.querySelector('iframe');
+  if (!f || !f.contentDocument) return 'cross-origin';
+  return JSON.stringify({
+    title: f.contentDocument.title,
+    scripts: f.contentDocument.querySelectorAll('script').length,
+    links: f.contentDocument.querySelectorAll('link').length,
+  });
+})()
+EVALEOF
+```
+
+### 7. Always re-snapshot after HMR
+
+Editing a `.tsx` file under `src/` triggers HMR; all existing `@eN` refs go stale. After any code change run `agent-browser snapshot -i` before the next interaction.
+
+### 8. Cleanup
+
+Leave the dev server running across iterations — restarting costs ~10s. Only kill it when explicitly done:
+
+```bash
+# Find by listening port (handles the auto-bumped 8001/8002 case)
+PIDS=$(
+  lsof -nP -iTCP:8000 -sTCP:LISTEN -t
+  lsof -nP -iTCP:8001 -sTCP:LISTEN -t
+)
+[ -n "$PIDS" ] && kill $PIDS
+
+# Or by command line
+pkill -f "dumi dev" 2> /dev/null
+```
+
+Don't `agent-browser close --all` between iterations either — keeping the session warm preserves cookies and avoids cold-start latency.
+
+---
+
+## Test the demo, not the doc page (IMPORTANT)
+
+**Always prefer the isolated demo route `/~demos/<id>` over the full component doc page.** dumi mounts each `<code src="./demos/X.tsx" />` tag as a standalone full-window route — no theme switcher, no sidebar, no other demos stealing focus. This is the right surface for UI verification.
+
+### Deriving the demo route
+
+dumi renders this in `index.md`:
+
+```md
+<code src="./demos/HeadResources.tsx" nopadding></code>
+```
+
+…which corresponds to file `src/HtmlPreview/demos/HeadResources.tsx`, and produces the route:
+
+```
+http://localhost:8000/~demos/src-html-preview-demo-headresources
+                              └──────┬─────────────┘ └──────┬──────┘
+                                  kebab path             demo name
+```
+
+Rules:
+
+- The full file path under the repo root is kebab-cased with `/` and casing collapsed to `-`.
+- The segment `demos` is singularized to `demo` (dumi convention).
+- File extension is stripped; the basename is lowercased and joined to the rest with `-`.
+
+### How to find demo IDs
+
+```bash
+# 1. Grep the component's index.md for <code src="..."> tags — each one is a demo
+grep -n "<code src" src/HtmlPreview/index.md
+# → 10: <code src="./demos/index.tsx" nopadding></code>
+# → 16: <code src="./demos/Report.tsx" nopadding></code>
+# → 26: <code src="./demos/HeadResources.tsx" nopadding></code>
+
+# 2. Translate path → route as shown above, then open it
+agent-browser open http://localhost:8000/~demos/src-html-preview-demo-report
+```
+
+If you're unsure of the exact slug, navigate to the doc page once, run `agent-browser snapshot -i`, and look for the "Open in new tab" / demo link refs — they expose the canonical `/~demos/<id>` URL.
+
+Only fall back to the full doc page (`/components/<name>`) when you need to verify how a component composes with sibling demos or with dumi's chrome itself.
+
+---
+
+## Core Workflow
+
+Every UI verification follows this loop:
+
+1. **Navigate** to the demo page: `agent-browser open http://localhost:8000/components/<name>`
+2. **Snapshot** to discover element refs: `agent-browser snapshot -i`
+3. **Interact** using `@eN` refs: click, fill, type, select
+4. **Re-snapshot** after navigation or DOM mutation — refs are invalidated
+5. **Verify** via screenshot (visual) or `eval` (programmatic)
+
+```bash
+URL=http://localhost:8000/components/tag
+agent-browser open "$URL" && agent-browser wait --load networkidle && agent-browser snapshot -i
+# → @e1 button "Default", @e2 button "Primary", ...
+
+agent-browser click @e1
+agent-browser screenshot --full
+# Read the screenshot with the Read tool to visually verify the result
+```
+
+Chain with `&&` when you don't need to inspect intermediate output. Run separately when you need to parse refs out of `snapshot`.
+
+---
+
+## Essential Commands
+
+```bash
+# Navigation
+agent-browser open <url>                # Navigate (aliases: goto, navigate)
+agent-browser close                     # Close current session
+agent-browser close --all               # Close all sessions
+
+# Snapshot
+agent-browser snapshot -i               # Interactive elements with refs (recommended)
+agent-browser snapshot -i -C            # Include contenteditable (rich text inputs)
+agent-browser snapshot -s "#root"       # Scope to a CSS selector
+
+# Interaction (use @refs from snapshot)
+agent-browser click @e1                 # Click
+agent-browser fill @e2 "text"           # Clear + type into <input>/<textarea>
+agent-browser type @e2 "text"           # Type without clearing (also works for contenteditable)
+agent-browser select @e1 "option"       # Select dropdown
+agent-browser check @e1                 # Toggle checkbox
+agent-browser press Enter               # Press key
+agent-browser scroll down 500           # Scroll page
+agent-browser scroll down 500 --selector ".dumi-default-content"  # Scroll within container
+
+# Get information
+agent-browser get text @e1
+agent-browser get url
+agent-browser get title
+
+# Wait
+agent-browser wait --load networkidle   # Network idle
+agent-browser wait @e1                  # Element appears
+agent-browser wait --text "Loaded"      # Text appears
+agent-browser wait --url "**/components/**"  # URL matches pattern
+agent-browser wait 2000                 # Milliseconds
+agent-browser wait "#spinner" --state hidden   # Wait for element to disappear
+
+# Capture
+agent-browser screenshot                # Saves to ~/.agent-browser/tmp/screenshots/
+agent-browser screenshot --full         # Full page (covers long demo lists)
+agent-browser screenshot --annotate     # Numbered overlay + legend mapping numbers → refs
+
+# Viewport (test responsive breakpoints)
+agent-browser set viewport 1280 720     # Default
+agent-browser set viewport 375  667     # Mobile
+agent-browser set viewport 1920 1080 2  # Retina
+agent-browser set device "iPhone 14"    # Device emulation (viewport + UA)
+
+# Diff (regression checks)
+agent-browser diff snapshot                          # vs last snapshot
+agent-browser diff screenshot --baseline before.png  # Pixel diff
+```
+
+---
+
+## Recommended Pattern for lobe-ui
+
+```bash
+# 0. Make sure dumi is up on :8000
+curl -fsS http://localhost:8000 > /dev/null || bun run dev &
+
+# 1. Find the demo file referenced in the component's index.md
+grep "<code src" src/HtmlPreview/index.md
+# → <code src="./demos/HeadResources.tsx" ...>
+
+# 2. Open the isolated demo route (NOT the doc page)
+agent-browser open http://localhost:8000/~demos/src-html-preview-demo-headresources
+
+# 3. Wait for demo to mount, then inspect
+agent-browser wait --load networkidle
+agent-browser snapshot -i
+
+# 4. Drive the demo, then capture
+agent-browser click @e3
+agent-browser screenshot --full
+
+# 5. Optional: programmatic assertions on the live demo
+agent-browser eval 'document.querySelectorAll("iframe").length'
+```
+
+After taking a screenshot, **use the `Read` tool on the returned path** to visually verify the component renders correctly.
+
+---
+
+## Semantic Locators (no ref needed)
+
+```bash
+agent-browser find text "Primary" click
+agent-browser find role button click --name "Submit"
+agent-browser find label "Email" fill "user@test.com"
+agent-browser find placeholder "Search" type "query"
+agent-browser find testid "tag-demo" click
+```
+
+---
+
+## JavaScript Evaluation
+
+```bash
+# Simple expression
+agent-browser eval 'document.title'
+
+# Complex JS — always use --stdin with heredoc
+agent-browser eval --stdin << 'EVALEOF'
+JSON.stringify(
+  Array.from(document.querySelectorAll('.ant-tag'))
+    .map(el => ({ text: el.textContent, color: getComputedStyle(el).color }))
+)
+EVALEOF
+```
+
+Use `eval` to assert computed styles, ARIA attributes, dataset values, or store state without relying on visual diffs.
+
+---
+
+## Annotated Screenshots (Vision Mode)
+
+```bash
+agent-browser screenshot --annotate
+# Output includes the PNG path and a legend:
+#   [1] @e1 button "Default"
+#   [2] @e2 button "Primary"
+# Read the image with the Read tool, then drive the page using the matching @eN refs.
+```
+
+Useful when `snapshot -i` output is too dense to parse — let vision pick the target.
+
+---
+
+## Connect to Existing Chrome
+
+If you'd rather drive your already-open Chrome (handy for inspecting alongside the agent):
+
+```bash
+# Launch Chrome with remote debugging once
 /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome \
   --remote-debugging-port=9222 \
-  --user-data-dir=/tmp/chrome-test-profile \
-  "<URL>" &
-sleep 5
+  --user-data-dir=/tmp/lobe-ui-test-profile \
+  "http://localhost:8000" &
+
+agent-browser --auto-connect snapshot -i # auto-discover
+# or explicit:
 agent-browser --cdp 9222 snapshot -i
-
-# Or auto-discover running Chrome with remote debugging
-agent-browser --auto-connect snapshot -i
 ```
 
 ---
 
-# Part 2: osascript (Native macOS App Bot Testing)
+## Viewport & Theme Verification
 
-Use AppleScript via `osascript` to control native macOS desktop apps for bot testing. Works with any app that supports macOS Accessibility, no CDP or Chromium needed.
+lobe-ui ships light + dark themes. Verify both:
 
-The pattern is the same for every platform:
+```bash
+# Toggle dumi's theme switch (look for it in the header)
+agent-browser snapshot -i | grep -i "theme\|dark\|light"
+agent-browser click @eN # the theme toggle ref
+agent-browser screenshot --full theme-dark.png
 
-1. **Activate** the app (`tell application "X" to activate`)
-2. **Navigate** to a channel/chat (Quick Switcher `Cmd+K` or Search `Cmd+F`)
-3. **Send** a message (clipboard paste `Cmd+V` + Enter)
-4. **Wait** for the bot response
-5. **Screenshot** for verification (`screencapture` + `Read` tool)
+# Toggle back
+agent-browser click @eN
+agent-browser screenshot --full theme-light.png
 
-## Per-Platform References
+# Pixel diff
+agent-browser diff screenshot --baseline theme-light.png
+```
 
-Pick the file for your target platform — each contains activation, navigation, send-message, and verification snippets specific to that app:
+For responsive checks, set viewport before each screenshot:
 
-| Platform      | Reference                                          | Quick switcher |
-| ------------- | -------------------------------------------------- | -------------- |
-| Discord       | [references/discord.md](./references/discord.md)   | `Cmd+K`        |
-| Slack         | [references/slack.md](./references/slack.md)       | `Cmd+K`        |
-| Telegram      | [references/telegram.md](./references/telegram.md) | `Cmd+F`        |
-| WeChat / 微信 | [references/wechat.md](./references/wechat.md)     | `Cmd+F`        |
-| Lark / 飞书   | [references/lark.md](./references/lark.md)         | `Cmd+K`        |
-| QQ            | [references/qq.md](./references/qq.md)             | `Cmd+F`        |
-
-For **shared osascript patterns** (activate, type, paste, screenshot, read accessibility, common workflow template, gotchas), see [references/osascript-common.md](./references/osascript-common.md). Read this first if you're new to osascript automation.
+```bash
+for w in 375 768 1280 1920; do
+  agent-browser set viewport $w 800
+  agent-browser screenshot --full "responsive-${w}.png"
+done
+```
 
 ---
 
-# Scripts
-
-Ready-to-use scripts in `.agents/skills/local-testing/scripts/`:
-
-| Script                    | Usage                                               |
-| ------------------------- | --------------------------------------------------- |
-| `electron-dev.sh`         | Manage Electron dev env (start/stop/status/restart) |
-| `capture-app-window.sh`   | Capture screenshot of a specific app window         |
-| `record-electron-demo.sh` | Record Electron app demo with ffmpeg                |
-| `record-app-screen.sh`    | Record app screen (video + screenshots, start/stop) |
-| `test-discord-bot.sh`     | Send message to Discord bot via osascript           |
-| `test-slack-bot.sh`       | Send message to Slack bot via osascript             |
-| `test-telegram-bot.sh`    | Send message to Telegram bot via osascript          |
-| `test-wechat-bot.sh`      | Send message to WeChat bot via osascript            |
-| `test-lark-bot.sh`        | Send message to Lark / 飞书 bot via osascript       |
-| `test-qq-bot.sh`          | Send message to QQ bot via osascript                |
-
-### Window Screenshot Utility
-
-`capture-app-window.sh` captures a screenshot of a specific app window using `screencapture -l <windowID>`. It uses Swift + CGWindowList to find the window by process name, so screenshots work correctly even when the window is on an external monitor or behind other windows.
+## Install / Upgrade
 
 ```bash
-# Standalone usage
-./.agents/skills/local-testing/scripts/capture-app-window.sh "Discord" /tmp/discord.png
-./.agents/skills/local-testing/scripts/capture-app-window.sh "Slack" /tmp/slack.png
-./.agents/skills/local-testing/scripts/capture-app-window.sh "WeChat" /tmp/wechat.png
+npm i -g agent-browser # or: brew install agent-browser
+agent-browser install  # download Chromium
+agent-browser upgrade  # update CLI
 ```
-
-All bot test scripts use this utility automatically for their screenshots.
-
-### Bot Test Scripts
-
-All bot test scripts share the same interface:
-
-```bash
-./scripts/test-<platform>-bot.sh <channel_or_contact> <message> [wait_seconds] [screenshot_path]
-```
-
-Examples:
-
-```bash
-# Discord — test a bot in #bot-testing channel
-./.agents/skills/local-testing/scripts/test-discord-bot.sh "bot-testing" "!ping"
-./.agents/skills/local-testing/scripts/test-discord-bot.sh "bot-testing" "/ask Tell me a joke" 30
-
-# Slack — test a bot in #bot-testing channel
-./.agents/skills/local-testing/scripts/test-slack-bot.sh "bot-testing" "@mybot hello"
-./.agents/skills/local-testing/scripts/test-slack-bot.sh "bot-testing" "/ask What is 2+2?" 20
-
-# Telegram — test a bot by username
-./.agents/skills/local-testing/scripts/test-telegram-bot.sh "MyTestBot" "/start"
-./.agents/skills/local-testing/scripts/test-telegram-bot.sh "GPTBot" "Hello" 60
-
-# WeChat — test a bot or send to a contact
-./.agents/skills/local-testing/scripts/test-wechat-bot.sh "文件传输助手" "test message" 5
-./.agents/skills/local-testing/scripts/test-wechat-bot.sh "MyBot" "Tell me a joke" 30
-
-# Lark/飞书 — test a bot in a group chat
-./.agents/skills/local-testing/scripts/test-lark-bot.sh "bot-testing" "@MyBot hello"
-./.agents/skills/local-testing/scripts/test-lark-bot.sh "bot-testing" "Help me with this" 30
-
-# QQ — test a bot in a group or direct chat
-./.agents/skills/local-testing/scripts/test-qq-bot.sh "bot-testing" "Hello bot" 15
-./.agents/skills/local-testing/scripts/test-qq-bot.sh "MyBot" "/help" 10
-```
-
-Each script: activates the app, navigates to the channel/contact, pastes the message via clipboard, sends, waits, and takes a screenshot. Use the `Read` tool on the screenshot for visual verification.
 
 ---
 
-# Screen Recording
+## Gotchas
 
-Record automated demos using `record-app-screen.sh` (start/stop lifecycle, CDP screenshots + ffmpeg assembly). See [references/record-app-screen.md](references/record-app-screen.md) for full documentation.
-
-```bash
-./.agents/skills/local-testing/scripts/electron-dev.sh start
-./.agents/skills/local-testing/scripts/record-app-screen.sh start my-demo
-# ... run automation ...
-./.agents/skills/local-testing/scripts/record-app-screen.sh stop
-```
-
-Outputs to `.records/` directory (gitignored): `<name>.mp4` (video) + `<name>/` (screenshots every 3s).
-
----
-
-# Gotchas
-
-### agent-browser
-
-- **Daemon can get stuck** — if commands hang, `agent-browser close --all` or `pkill -f agent-browser` to reset
-- **HMR invalidates everything** — after code changes, refs break. Re-snapshot or restart
-- **`snapshot -i` doesn't find contenteditable** — use `snapshot -i -C` for rich text editors
-- **`fill` doesn't work on contenteditable** — use `type` for chat inputs
-- **Screenshots go to `~/.agent-browser/tmp/screenshots/`** — read them with the `Read` tool
-- **Dialogs block all commands** — if commands time out, check `agent-browser dialog status`
-- **Default timeout is 25s** — override with `AGENT_BROWSER_DEFAULT_TIMEOUT` (ms) or use explicit waits
-- **Shell quoting corrupts eval** — use `eval --stdin <<'EVALEOF'` for complex JS
-
-### Electron-specific
-
-- **Always use `electron-dev.sh stop` to clean up** — `pkill -f "Electron"` only kills the main process; helper processes (GPU, renderer, network) survive. The script finds and kills all of them via PID matching against the project's electron binary path.
-- **`npx electron-vite dev` must run from `apps/desktop/`** — running from project root fails silently. The `electron-dev.sh` script handles this automatically.
-- **Don't resize the Electron window after load** — resizing triggers full SPA reload
-- **Store is at `window.__LOBE_STORES`** not `window.__ZUSTAND_STORES__`
-
-### osascript
-
-See [references/osascript-common.md](./references/osascript-common.md#gotchas) for the full osascript gotchas list (accessibility permissions, `keystroke` non-ASCII issues, locale-specific app names, rate limiting, etc.).
+- **Daemon stuck?** `agent-browser close --all` (or `pkill -f agent-browser`) to reset.
+- **HMR invalidates refs** — after editing a component, dumi hot-reloads and refs break. Re-snapshot.
+- **`snapshot -i` skips contenteditable** — use `snapshot -i -C` for rich-text inputs.
+- **`fill` doesn't work on contenteditable** — use `type` instead.
+- **Screenshots land in `~/.agent-browser/tmp/screenshots/`** — read them via the `Read` tool to inspect visually.
+- **Default command timeout is 25s** — override via `AGENT_BROWSER_DEFAULT_TIMEOUT` (ms) or add explicit `wait`.
+- **Shell quoting corrupts `eval`** — always prefer `eval --stdin <<'EVALEOF' … EVALEOF` for non-trivial JS.
+- **Port 8000 already in use** — dumi will auto-bump to 8001, 8002… Check the dev-server log and adjust the URL.
+- **Dialogs block all commands** — if a command hangs, check `agent-browser dialog status` and `agent-browser dialog accept`/`dismiss`.
