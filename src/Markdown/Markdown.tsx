@@ -3,6 +3,7 @@
 import { cx } from 'antd-style';
 import { memo, useCallback } from 'react';
 
+import { useStableValue } from '@/hooks/useStableValue';
 import { PreviewGroup } from '@/Image';
 
 import { MarkdownProvider } from './components/MarkdownProvider';
@@ -51,6 +52,17 @@ const Markdown = memo<MarkdownProps>((props) => {
 
   const delayedAnimated = useDelayedAnimated(animated);
 
+  // Stabilise structural props so an inline `componentProps={{ html:
+  // {...} }}` from the caller doesn't cascade through MarkdownProvider →
+  // useMarkdownComponents → react-markdown's `components` and remount the
+  // entire code-block subtree (including the HtmlPreview iframe) on
+  // every parent render. The deep-equal compare treats inline literals
+  // as the same object as long as their structure matches. Inline
+  // callbacks (`actionsRender`, custom `components`) still need
+  // `useCallback` at the call site — function bodies aren't compared.
+  const stableComponentProps = useStableValue(componentProps);
+  const stableComponents = useStableValue(components);
+
   const Render = useCallback(
     ({
       enableStream,
@@ -83,8 +95,8 @@ const Markdown = memo<MarkdownProps>((props) => {
           allowHtml={allowHtml}
           animated={delayedAnimated}
           citations={citations}
-          componentProps={componentProps}
-          components={components}
+          componentProps={stableComponentProps}
+          components={stableComponents}
           enableCustomFootnotes={enableCustomFootnotes}
           enableGithubAlert={enableGithubAlert}
           enableHtmlPreview={enableHtmlPreview}

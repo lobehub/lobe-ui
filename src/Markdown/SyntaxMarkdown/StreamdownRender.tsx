@@ -24,6 +24,7 @@ import {
 import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
 import { rehypeStreamAnimated } from '@/Markdown/plugins/rehypeStreamAnimated';
 import { useStreamdownProfiler } from '@/Markdown/streamProfiler';
+import { isDeepEqual } from '@/utils/isDeepEqual';
 
 import { resolveBlockAnimationMeta } from './streamAnimationMeta';
 import { styles } from './style';
@@ -41,34 +42,6 @@ function getNow(): number {
   return typeof performance === 'undefined' ? Date.now() : performance.now();
 }
 
-const isRecord = (value: unknown): value is Record<string, unknown> =>
-  typeof value === 'object' && value !== null;
-
-const isDeepEqualValue = (a: unknown, b: unknown): boolean => {
-  if (a === b) return true;
-
-  if (Array.isArray(a) || Array.isArray(b)) {
-    if (!Array.isArray(a) || !Array.isArray(b)) return false;
-    if (a.length !== b.length) return false;
-    for (let i = 0; i < a.length; i++) {
-      if (!isDeepEqualValue(a[i], b[i])) return false;
-    }
-    return true;
-  }
-
-  if (!isRecord(a) || !isRecord(b)) return false;
-
-  const keysA = Object.keys(a);
-  const keysB = Object.keys(b);
-  if (keysA.length !== keysB.length) return false;
-
-  for (const key of keysA) {
-    if (!isDeepEqualValue(a[key], b[key])) return false;
-  }
-
-  return true;
-};
-
 const isSamePlugin = (prevPlugin: Pluggable, nextPlugin: Pluggable): boolean => {
   const prevTuple = Array.isArray(prevPlugin) ? prevPlugin : [prevPlugin];
   const nextTuple = Array.isArray(nextPlugin) ? nextPlugin : [nextPlugin];
@@ -76,7 +49,7 @@ const isSamePlugin = (prevPlugin: Pluggable, nextPlugin: Pluggable): boolean => 
   if (prevTuple.length !== nextTuple.length) return false;
   if (prevTuple[0] !== nextTuple[0]) return false;
 
-  return isDeepEqualValue(prevTuple.slice(1), nextTuple.slice(1));
+  return isDeepEqual(prevTuple.slice(1), nextTuple.slice(1));
 };
 
 const isSamePlugins = (
