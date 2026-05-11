@@ -17,6 +17,7 @@ export const useMarkdownComponents = (): Components => {
     animated,
     citations,
     componentProps,
+    enableHtmlPreview,
     enableMermaid,
     fullFeaturedCodeBlock,
     showFootnotes,
@@ -80,16 +81,18 @@ export const useMarkdownComponents = (): Components => {
       highlight: componentProps.highlight
         ? { ...componentProps.highlight, theme: highlightTheme }
         : undefined,
+      html: componentProps.html,
       mermaid: componentProps.mermaid
         ? { ...componentProps.mermaid, theme: mermaidTheme }
         : undefined,
     };
-  }, [highlightTheme, mermaidTheme]);
+  }, [highlightTheme, mermaidTheme, componentProps?.html]);
 
   const memoPre = useCallback(
     ({ node, ...props }: any) => (
       <CodeBlock
         animated={animated}
+        enableHtmlPreview={enableHtmlPreview}
         enableMermaid={enableMermaid}
         fullFeatured={fullFeaturedCodeBlock}
         {...stableComponentProps}
@@ -97,7 +100,14 @@ export const useMarkdownComponents = (): Components => {
         {...props}
       />
     ),
-    [animated, enableMermaid, fullFeaturedCodeBlock, stableComponentProps, componentProps?.pre],
+    [
+      animated,
+      enableHtmlPreview,
+      enableMermaid,
+      fullFeaturedCodeBlock,
+      stableComponentProps,
+      componentProps?.pre,
+    ],
   );
 
   const memoColorPreview = useCallback(({ node, ...props }: any) => <code {...props} />, []);

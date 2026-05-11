@@ -5,6 +5,7 @@ import type { FC } from 'react';
 
 import Highlighter, { type HighlighterProps } from '@/Highlighter';
 import { FALLBACK_LANG } from '@/Highlighter/const';
+import HtmlPreview, { type HtmlPreviewProps } from '@/HtmlPreview';
 import Mermaid, { type MermaidProps } from '@/Mermaid';
 import Snippet, { type SnippetProps } from '@/Snippet';
 
@@ -94,6 +95,31 @@ export const PreMermaid: FC<MermaidProps> = ({
     >
       {children}
     </Mermaid>
+  );
+};
+
+export const PreHtmlPreview: FC<HtmlPreviewProps> = ({
+  animated,
+  fullFeatured,
+  children,
+  className,
+  style,
+  variant = 'filled',
+  theme,
+  ...rest
+}) => {
+  return (
+    <HtmlPreview
+      animated={animated}
+      className={cx(styles.container, className)}
+      fullFeatured={fullFeatured}
+      style={style}
+      theme={theme}
+      variant={variant}
+      {...rest}
+    >
+      {children}
+    </HtmlPreview>
   );
 };
 

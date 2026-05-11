@@ -3,8 +3,22 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useStreamdownProfiler } from '@/Markdown/streamProfiler';
 import { type StreamSmoothingPreset } from '@/Markdown/type';
 
+import { findOpenFenceLanguage } from './fenceState';
+
 interface StreamSmoothingPresetConfig {
   activeInputWindowMs: number;
+  /**
+   * Code-fence languages whose contents bypass smoothing entirely. While
+   * the input ends inside an open fence in this set, every chunk is
+   * `syncImmediate`-d to the display so downstream consumers (the
+   * HtmlPreview iframe in particular) see partial HTML at the demo's
+   * actual production rate instead of waiting on the smoother's
+   * ~maxFlushCps budget. As soon as the fence closes — or another
+   * non-bypass fence opens — smoothing resumes for the rest of the
+   * stream. Default `['html']` covers the artifact case that motivated
+   * this; tune via preset if you need to bypass `mermaid`, `svg`, etc.
+   */
+  bypassFencedLanguages: readonly string[];
   defaultCps: number;
   emaAlpha: number;
   flushCps: number;
@@ -19,9 +33,12 @@ interface StreamSmoothingPresetConfig {
   targetBufferMs: number;
 }
 
+const DEFAULT_BYPASS_LANGUAGES = ['html'] as const;
+
 const PRESET_CONFIG: Record<StreamSmoothingPreset, StreamSmoothingPresetConfig> = {
   balanced: {
     activeInputWindowMs: 220,
+    bypassFencedLanguages: DEFAULT_BYPASS_LANGUAGES,
     defaultCps: 38,
     emaAlpha: 0.2,
     flushCps: 120,
@@ -37,6 +54,7 @@ const PRESET_CONFIG: Record<StreamSmoothingPreset, StreamSmoothingPresetConfig> 
   },
   realtime: {
     activeInputWindowMs: 140,
+    bypassFencedLanguages: DEFAULT_BYPASS_LANGUAGES,
     defaultCps: 50,
     emaAlpha: 0.3,
     flushCps: 170,
@@ -52,6 +70,7 @@ const PRESET_CONFIG: Record<StreamSmoothingPreset, StreamSmoothingPresetConfig> 
   },
   silky: {
     activeInputWindowMs: 320,
+    bypassFencedLanguages: DEFAULT_BYPASS_LANGUAGES,
     defaultCps: 28,
     emaAlpha: 0.14,
     flushCps: 96,
@@ -329,6 +348,20 @@ export const useSmoothStreamContent = (
       return;
     }
 
+    // Bypass smoothing entirely while the input ends inside an open
+    // fence whose language is opted out — see the preset config.
+    // Without this, a 5 KB inline `<style>` block can keep `</style>`
+    // (and therefore the HtmlPreview head-close trigger) trapped in the
+    // smoother's buffer for tens of seconds, leaving the iframe pinned
+    // on the loading placeholder while the artifact "looks stuck".
+    if (config.bypassFencedLanguages.length > 0) {
+      const openLang = findOpenFenceLanguage(content);
+      if (openLang !== null && config.bypassFencedLanguages.includes(openLang)) {
+        syncImmediate(content);
+        return;
+      }
+    }
+
     const appended = content.slice(prevTargetContent.length);
     const appendedChars = [...appended];
     const appendedCount = appendedChars.length;
@@ -368,6 +401,7 @@ export const useSmoothStreamContent = (
 
     startFrameLoop();
   }, [
+    config.bypassFencedLanguages,
     config.emaAlpha,
     config.largeAppendChars,
     config.maxActiveCps,

@@ -2,7 +2,9 @@ import { memo } from 'react';
 
 import type { HighlighterProps } from '@/Highlighter';
 import { FALLBACK_LANG } from '@/Highlighter/const';
-import Pre, { PreMermaid, PreSingleLine } from '@/mdx/mdxComponents/Pre';
+import { isFullHtmlDocument } from '@/HtmlPreview/const';
+import type { HtmlPreviewProps } from '@/HtmlPreview/type';
+import Pre, { PreHtmlPreview, PreMermaid, PreSingleLine } from '@/mdx/mdxComponents/Pre';
 import type { MermaidProps } from '@/Mermaid';
 
 const countLines = (str: string): number => {
@@ -34,14 +36,26 @@ export const useCode = (raw: any) => {
 interface CodeBlockProps {
   animated?: boolean;
   children: any;
+  enableHtmlPreview?: boolean;
   enableMermaid?: boolean;
   fullFeatured?: boolean;
   highlight?: HighlighterProps;
+  html?: HtmlPreviewProps;
   mermaid?: MermaidProps;
 }
 
 export const CodeBlock = memo<CodeBlockProps>(
-  ({ fullFeatured, enableMermaid, highlight, mermaid, children, animated, ...rest }) => {
+  ({
+    fullFeatured,
+    enableHtmlPreview,
+    enableMermaid,
+    highlight,
+    html,
+    mermaid,
+    children,
+    animated,
+    ...rest
+  }) => {
     const code = useCode(children);
 
     if (!code) return;
@@ -51,6 +65,17 @@ export const CodeBlock = memo<CodeBlockProps>(
         <PreMermaid animated={animated} fullFeatured={fullFeatured} {...mermaid} {...rest}>
           {code.content}
         </PreMermaid>
+      );
+
+    // Auto-route to HTML preview only for full HTML documents. Fragments fall
+    // through to the normal highlighter — inline-rendering a `<div>` snippet
+    // produces a degraded experience and risks hiding the actual code from
+    // the reader.
+    if (enableHtmlPreview && code.lang === 'html' && isFullHtmlDocument(code.content))
+      return (
+        <PreHtmlPreview animated={animated} fullFeatured={fullFeatured} {...html} {...rest}>
+          {code.content}
+        </PreHtmlPreview>
       );
 
     if (!highlight && code.isSingleLine)

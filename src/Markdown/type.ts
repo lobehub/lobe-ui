@@ -4,6 +4,7 @@ import { type Components, type Options as ReactMarkdownOptions } from 'react-mar
 import { type Pluggable } from 'unified';
 
 import { type HighlighterProps } from '@/Highlighter';
+import { type HtmlPreviewProps } from '@/HtmlPreview';
 import { type ImageProps, type PreProps, type VideoProps } from '@/mdx';
 import { type MermaidProps } from '@/Mermaid';
 import { type AProps, type DivProps } from '@/types';
@@ -29,6 +30,7 @@ export interface SyntaxMarkdownProps {
   componentProps?: {
     a?: Partial<AProps & AnchorProps>;
     highlight?: Partial<HighlighterProps>;
+    html?: Partial<HtmlPreviewProps>;
     img?: Partial<ImageProps>;
     mermaid?: Partial<MermaidProps>;
     pre?: Partial<PreProps>;
@@ -37,6 +39,7 @@ export interface SyntaxMarkdownProps {
   components?: Components & Record<string, FC>;
   enableCustomFootnotes?: boolean;
   enableGithubAlert?: boolean;
+  enableHtmlPreview?: boolean;
   enableLatex?: boolean;
   enableMermaid?: boolean;
   enableStream?: boolean;
