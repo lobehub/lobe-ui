@@ -26,12 +26,13 @@ export default () => {
           display: 'flex',
           flexDirection: 'row',
           gap: 8,
-          padding: 16,
+          paddingBlock: 8,
+          paddingInline: 12,
           width: 'max-content',
         },
       }}
       style={{
-        height: 80,
+        height: 48,
         maxWidth: 'calc(100vw - 8rem)',
         width: '100%',
       }}
@@ -46,7 +47,7 @@ export default () => {
             flexShrink: 0,
             fontSize: 13,
             fontWeight: 500,
-            padding: '6px 12px',
+            padding: '4px 12px',
             whiteSpace: 'nowrap',
           }}
         >

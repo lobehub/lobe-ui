@@ -25,11 +25,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   scrollbar: css`
     pointer-events: none;
 
-    position: relative;
-
-    display: flex;
-    justify-content: center;
-
     margin: 8px;
     border-radius: ${cssVar.borderRadiusSM};
 
