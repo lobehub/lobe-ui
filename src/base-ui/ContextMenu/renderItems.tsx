@@ -14,17 +14,17 @@ import common from '@/i18n/resources/en/common';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 import {
+  type BaseMenuItemGroupType,
+  type BaseSubMenuType,
   getItemKey,
   getItemLabel,
   hasAnyIcon,
   hasCheckboxAndIcon,
   type MenuDividerType,
-  type MenuItemGroupType,
   type MenuItemType,
   renderIcon,
   type RenderItemContentOptions,
   type RenderOptions,
-  type SubMenuType,
 } from '@/Menu';
 import { styles } from '@/Menu/sharedStyle';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
@@ -117,7 +117,7 @@ const ContextMenuSwitchItemInternal = ({
 };
 
 const renderItemContent = (
-  item: MenuItemType | SubMenuType | ContextMenuCheckboxItem | ContextMenuSwitchItem,
+  item: MenuItemType | BaseSubMenuType | ContextMenuCheckboxItem | ContextMenuSwitchItem,
   options?: RenderItemContentOptions,
   iconNode?: ReactNode,
 ) => {
@@ -254,8 +254,8 @@ export const renderContextMenuItems = (
       return <ContextMenu.Separator className={styles.separator} key={itemKey} />;
     }
 
-    if ((item as MenuItemGroupType).type === 'group') {
-      const group = item as MenuItemGroupType;
+    if ((item as BaseMenuItemGroupType).type === 'group') {
+      const group = item as BaseMenuItemGroupType;
       const groupReserveIconSpace =
         iconSpaceMode === 'group'
           ? group.children
@@ -283,20 +283,30 @@ export const renderContextMenuItems = (
     }
 
     if (
-      (item as SubMenuType).type === 'submenu' ||
-      ('children' in item && (item as SubMenuType).children)
+      (item as BaseSubMenuType).type === 'submenu' ||
+      ('children' in item && (item as BaseSubMenuType).children)
     ) {
-      const submenu = item as SubMenuType;
+      const submenu = item as BaseSubMenuType;
       const label = getItemLabel(submenu);
       const labelText = typeof label === 'string' ? label : undefined;
       const isDanger = 'danger' in submenu && Boolean(submenu.danger);
 
       return (
-        <ContextMenu.SubmenuRoot key={itemKey}>
+        <ContextMenu.SubmenuRoot
+          defaultOpen={submenu.defaultOpen}
+          key={itemKey}
+          open={submenu.open}
+          onOpenChange={submenu.onOpenChange}
+        >
           <ContextMenu.SubmenuTrigger
+            {...submenu.triggerProps}
             className={cx(styles.item, isDanger && styles.danger)}
+            closeDelay={submenu.closeDelay}
+            delay={submenu.delay}
             disabled={submenu.disabled}
             label={labelText}
+            openOnHover={submenu.openOnHover}
+            onClick={submenu.onClick}
           >
             {renderItemContent(submenu, {
               iconAlign,
