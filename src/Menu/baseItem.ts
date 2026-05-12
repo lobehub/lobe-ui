@@ -1,4 +1,7 @@
-import type { Key, ReactNode } from 'react';
+import type { MenuSubmenuRoot } from '@base-ui/react/menu';
+import type { ComponentPropsWithRef, Key, MouseEventHandler, ReactNode } from 'react';
+
+import type { IconProps } from '@/Icon';
 
 import type { MenuCheckboxItemType } from './checkboxItem';
 import type { MenuSwitchItemType } from './switchItem';
@@ -17,10 +20,36 @@ export interface BaseMenuItemGroupType {
 
 /**
  * Submenu type for Base UI driven menus (DropdownMenu / ContextMenu).
- * Unlike SubMenuType, this supports checkbox/switch items in children.
+ * Unlike rc-menu's SubMenuType, this maps to @base-ui's Menu.SubmenuRoot + Menu.SubmenuTrigger.
  */
-export interface BaseSubMenuType extends Omit<SubMenuType, 'children'> {
+export interface BaseSubMenuType {
   children?: BaseMenuItemType[];
+  /** Hover-close delay in ms. Requires `openOnHover`. */
+  closeDelay?: number;
+  danger?: boolean;
+  /** Initial open state when uncontrolled. */
+  defaultOpen?: boolean;
+  /** Hover-open delay in ms. Requires `openOnHover`. */
+  delay?: number;
+  desc?: ReactNode;
+  disabled?: boolean;
+  icon?: IconProps['icon'];
+  key?: Key;
+  label?: ReactNode;
+  /** Click handler on the trigger. */
+  onClick?: MouseEventHandler<HTMLElement>;
+  /** Fired when the submenu opens or closes. */
+  onOpenChange?: (open: boolean, eventDetails: MenuSubmenuRoot.ChangeEventDetails) => void;
+  /** Controlled open state of the submenu. */
+  open?: boolean;
+  /** Open the submenu when the trigger is hovered. */
+  openOnHover?: boolean;
+  /**
+   * Extra DOM props spread onto the trigger element.
+   * Use for `ref`, `id`, `style`, `data-*`, `aria-*`, mouse/focus events, etc.
+   */
+  triggerProps?: ComponentPropsWithRef<'div'>;
+  type?: 'submenu';
 }
 
 /**
@@ -32,6 +61,8 @@ export interface BaseSubMenuType extends Omit<SubMenuType, 'children'> {
 export type BaseMenuItemType =
   | MenuItemType
   | BaseSubMenuType
+  // Backward-compat: rc-menu's SubMenuType is still accepted for consumers that build items with rc-menu types.
+  | SubMenuType
   | BaseMenuItemGroupType
   | MenuDividerType
   | MenuCheckboxItemType

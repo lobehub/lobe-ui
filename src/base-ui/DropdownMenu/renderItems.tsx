@@ -7,17 +7,17 @@ import {
 } from 'react';
 
 import {
+  type BaseMenuItemGroupType,
+  type BaseSubMenuType,
   getItemKey,
   getItemLabel,
   hasAnyIcon,
   hasCheckboxAndIcon,
   type MenuDividerType,
-  type MenuItemGroupType,
   type MenuItemType,
   renderIcon,
   type RenderItemContentOptions,
   type RenderOptions,
-  type SubMenuType,
 } from '@/Menu';
 import { styles } from '@/Menu/sharedStyle';
 
@@ -51,7 +51,7 @@ import {
 export type { IconAlign, IconSpaceMode } from '@/Menu';
 
 const renderItemContent = (
-  item: MenuItemType | SubMenuType | DropdownMenuCheckboxItemType | DropdownMenuSwitchItemType,
+  item: MenuItemType | BaseSubMenuType | DropdownMenuCheckboxItemType | DropdownMenuSwitchItemType,
   options?: RenderItemContentOptions,
   iconNode?: ReactNode,
 ) => {
@@ -187,8 +187,8 @@ export const renderDropdownMenuItems = (
       return <DropdownMenuSeparator key={itemKey} />;
     }
 
-    if ((item as MenuItemGroupType).type === 'group') {
-      const group = item as MenuItemGroupType;
+    if ((item as BaseMenuItemGroupType).type === 'group') {
+      const group = item as BaseMenuItemGroupType;
       const groupReserveIconSpace =
         iconSpaceMode === 'group'
           ? group.children
@@ -211,18 +211,28 @@ export const renderDropdownMenuItems = (
       );
     }
 
-    if ((item as SubMenuType).type === 'submenu' || 'children' in item) {
-      const submenu = item as SubMenuType;
+    if ((item as BaseSubMenuType).type === 'submenu' || 'children' in item) {
+      const submenu = item as BaseSubMenuType;
       const label = getItemLabel(submenu);
       const labelText = typeof label === 'string' ? label : undefined;
       const isDanger = 'danger' in submenu && Boolean(submenu.danger);
 
       return (
-        <DropdownMenuSubmenuRoot key={itemKey}>
+        <DropdownMenuSubmenuRoot
+          defaultOpen={submenu.defaultOpen}
+          key={itemKey}
+          open={submenu.open}
+          onOpenChange={submenu.onOpenChange}
+        >
           <DropdownMenuSubmenuTrigger
+            {...submenu.triggerProps}
+            closeDelay={submenu.closeDelay}
             danger={isDanger}
+            delay={submenu.delay}
             disabled={submenu.disabled}
             label={labelText}
+            openOnHover={submenu.openOnHover}
+            onClick={submenu.onClick}
           >
             {renderItemContent(submenu, {
               iconAlign,
