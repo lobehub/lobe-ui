@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.11.0](https://github.com/lobehub/lobe-ui/compare/v5.10.5...v5.11.0) (2026-05-12)
+
+### ✨ Features
+
+- **menu**: Expose base-ui submenu props on Context/DropdownMenu, closes [#516](https://github.com/lobehub/lobe-ui/issues/516) ([e2bd53a](https://github.com/lobehub/lobe-ui/commit/e2bd53a))
+
 ## [5.10.5](https://github.com/lobehub/lobe-ui/compare/v5.10.4...v5.10.5) (2026-05-12)
 
 ### 💄 Styles
