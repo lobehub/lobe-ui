@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.10.5](https://github.com/lobehub/lobe-ui/compare/v5.10.4...v5.10.5) (2026-05-12)
+
+### 💄 Styles
+
+- **html-preview**: Stream raw source through the loading placeholder, closes [#515](https://github.com/lobehub/lobe-ui/issues/515) ([dd9cc72](https://github.com/lobehub/lobe-ui/commit/dd9cc72))
+
 ## [5.10.4](https://github.com/lobehub/lobe-ui/compare/v5.10.3...v5.10.4) (2026-05-11)
 
 ### 💄 Styles
