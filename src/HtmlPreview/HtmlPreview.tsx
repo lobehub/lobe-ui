@@ -51,7 +51,7 @@ const useStyles = createStyles(({ css, cssVar, isDarkMode }) => ({
   loadingBadge: css`
     position: absolute;
     z-index: 2;
-    inset-block-end: 12px;
+    inset-block-start: 12px;
     inset-inline-start: 12px;
 
     display: inline-flex;
