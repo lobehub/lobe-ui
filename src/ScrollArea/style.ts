@@ -73,6 +73,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   thumb: css`
     width: 100%;
+    height: 100%;
     border-radius: inherit;
     background: ${cssVar.colorTextQuaternary};
   `,
