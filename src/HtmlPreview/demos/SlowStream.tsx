@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
 
-import { chinaTimelineHtml } from './chinaTimelineHtml';
+import { jesusTimelineHtml } from './jesusTimelineHtml';
 
 // Simulate DeepSeek-class output speed (~30 tps × ~5 chars/token ≈
 // 150 cps). On this rate, the document's ~4 KB inline `<style>` block
@@ -31,9 +31,9 @@ export default () => {
     setIsStreaming(true);
     let pos = 0;
     const tick = () => {
-      pos = Math.min(pos + CHUNK, chinaTimelineHtml.length);
-      setStreamed(chinaTimelineHtml.slice(0, pos));
-      if (pos >= chinaTimelineHtml.length) {
+      pos = Math.min(pos + CHUNK, jesusTimelineHtml.length);
+      setStreamed(jesusTimelineHtml.slice(0, pos));
+      if (pos >= jesusTimelineHtml.length) {
         setIsStreaming(false);
         return;
       }
