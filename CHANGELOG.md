@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.12.0](https://github.com/lobehub/lobe-ui/compare/v5.11.0...v5.12.0) (2026-05-12)
+
+### ✨ Features
+
+- **scroll-area**: Support horizontal and both-axis scroll fade, closes [#517](https://github.com/lobehub/lobe-ui/issues/517) ([c81135d](https://github.com/lobehub/lobe-ui/commit/c81135d))
+
 # [5.11.0](https://github.com/lobehub/lobe-ui/compare/v5.10.5...v5.11.0) (2026-05-12)
 
 ### ✨ Features
