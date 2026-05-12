@@ -30,47 +30,77 @@ const shimmer = keyframes`
 
 const useStyles = createStyles(({ css, cssVar, isDarkMode }) => ({
   loadingBackdrop: css`
+    pointer-events: none;
+
     position: absolute;
+    z-index: 1;
     inset: 0;
 
     /* Subtle moving sheen so it doesn't look frozen. */
-    background:
-      linear-gradient(
-        90deg,
-        transparent 0%,
-        ${isDarkMode ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.04)'} 50%,
-        transparent 100%
-      ),
-      ${isDarkMode ? '#1f1f1f' : '#fafafa'};
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      ${isDarkMode ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.04)'} 50%,
+      transparent 100%
+    );
     background-repeat: no-repeat;
-    background-size:
-      200% 100%,
-      100% 100%;
+    background-size: 200% 100%;
 
     animation: ${shimmer} 1.6s ${cssVar.motionEaseInOut} infinite;
   `,
-  loadingLabel: css`
-    font-size: 13px;
+  loadingBadge: css`
+    position: absolute;
+    z-index: 2;
+    inset-block-end: 12px;
+    inset-inline-start: 12px;
+
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+
+    padding-block: 4px;
+    padding-inline: 6px 10px;
+    border-radius: 999px;
+
+    font-size: 12px;
     color: ${cssVar.colorTextDescription};
+
+    background: ${cssVar.colorBgContainer};
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 0 1px ${cssVar.colorBorderSecondary};
+  `,
+  // The streaming source visible during Phase 1 — heavily faded so it
+  // reads as "this is preview-pending content" rather than the finished
+  // article. Auto-follows the tail so the user can see new tokens land
+  // even on slow models.
+  loadingSource: css`
+    pointer-events: none;
+    overflow: hidden;
+    height: 100%;
+
+    /* Faded out so the iframe transition feels like content lighting up,
+       not like one document jump-cutting to another. */
+    opacity: 0.45;
+
+    /* SyntaxHighlighter sets its own background; flatten so the shimmer
+       overlay reads cleanly on top. */
+    & [data-code-type='highlighter'] {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    /* Tail-follow is layout-only — we anchor the scrollable element to
+       its scrollHeight via the ref + effect; CSS just keeps the
+       overflow hidden. */
+    & pre,
+    & code {
+      background: transparent !important;
+    }
   `,
   loadingRoot: css`
     position: relative;
-
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: center;
-    justify-content: center;
-  `,
-  loadingStack: css`
-    position: relative;
-    z-index: 1;
-
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: center;
+    background: ${isDarkMode ? '#1f1f1f' : '#fafafa'};
   `,
   // Inline top-right toolbar. Tagged with `actionsHoverCls` so the Highlighter
   // container's `&:hover .${actionsHoverCls} { opacity: 1 }` rule flips it
@@ -293,6 +323,17 @@ const HtmlPreview = memo<HtmlPreviewProps>(
       contentRef.current = trimmedChildren;
     }, [trimmedChildren]);
 
+    // Tail-follow the streaming source visible during Phase 1 — anchor
+    // the scroll position to the latest tokens so a slow model's output
+    // doesn't sit pinned to the document head while the user waits.
+    const loadingSourceRef = useRef<HTMLDivElement | null>(null);
+    useEffect(() => {
+      if (isStable) return;
+      const node = loadingSourceRef.current;
+      if (!node) return;
+      node.scrollTop = node.scrollHeight;
+    }, [trimmedChildren, isStable]);
+
     const getCopyContent = useCallback(() => contentRef.current, []);
 
     const handleDownload = useCallback(() => {
@@ -347,17 +388,29 @@ const HtmlPreview = memo<HtmlPreviewProps>(
     // Shown when the user is on preview mode but the iframe isn't ready
     // yet (Phase 1 of streaming: head still arriving). Holds the eventual
     // iframe height to avoid layout shift on mount.
+    //
+    // Stream the raw source through `SyntaxHighlighter` at low opacity so
+    // the user sees real progress on slow models (a 30-tps DeepSeek
+    // pumping a ~5 KB head can otherwise sit on a static spinner for
+    // 20+ seconds). A small "Preparing preview…" badge keeps the loading
+    // state unambiguous. Tail-follow keeps the visible region anchored
+    // to the latest tokens — see the `useEffect` below.
     const loadingBody = useMemo(
       () => (
         <div className={styles.loadingRoot} style={{ height: defaultHeight ?? DEFAULT_HEIGHT }}>
+          <div className={styles.loadingSource} ref={loadingSourceRef}>
+            <SyntaxHighlighter animated={animated} language={'html'} variant={'borderless'}>
+              {trimmedChildren}
+            </SyntaxHighlighter>
+          </div>
           <div className={styles.loadingBackdrop} />
-          <div className={styles.loadingStack}>
-            <NeuralNetworkLoading size={64} />
-            <span className={styles.loadingLabel}>Preparing preview…</span>
+          <div className={styles.loadingBadge}>
+            <NeuralNetworkLoading size={16} />
+            <span>Preparing preview…</span>
           </div>
         </div>
       ),
-      [defaultHeight, styles],
+      [animated, defaultHeight, styles, trimmedChildren],
     );
 
     const previewBody = isStable ? iframeBody : loadingBody;

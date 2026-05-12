@@ -40,6 +40,18 @@ still arriving:
 
 <code src="./demos/Streaming.tsx" nopadding></code>
 
+### Slow-model progress signal
+
+Phase 1 of streaming (before `</head>` arrives) renders the raw source
+through a dimmed highlighter rather than a static spinner. Tail-follow
+keeps the visible region anchored to the latest tokens, so on a slow
+model (e.g. DeepSeek at ~30 tps, where a 4 KB inline `<style>` block
+takes 25+ seconds to fully arrive) the user can see real progress
+instead of waiting on what looks like a frozen loader. Once `</head>`
+or `</style>` lands the iframe takes over.
+
+<code src="./demos/SlowStream.tsx" nopadding></code>
+
 ## Inside Markdown
 
 <code src="./demos/InMarkdown.tsx"></code>
