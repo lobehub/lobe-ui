@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import type {
   ScrollAreaContentProps,
   ScrollAreaCornerProps,
+  ScrollAreaFadeOrientation,
   ScrollAreaRootProps,
   ScrollAreaScrollbarProps,
   ScrollAreaThumbProps,
@@ -15,7 +16,15 @@ export interface ScrollAreaProps extends Omit<ScrollAreaRootProps, 'children'> {
   corner?: boolean;
   cornerProps?: ScrollAreaCornerProps;
   scrollbarProps?: Omit<ScrollAreaScrollbarProps, 'children'>;
-  scrollFade?: boolean;
+  /**
+   * Enable gradient scroll fade on the viewport edges.
+   *
+   * Accepts a boolean (true ≡ vertical) or an explicit orientation:
+   * `'vertical' | 'horizontal' | 'both'`.
+   *
+   * @default false
+   */
+  scrollFade?: boolean | ScrollAreaFadeOrientation;
   thumbProps?: ScrollAreaThumbProps;
   viewportProps?: Omit<ScrollAreaViewportProps, 'children' | 'scrollFade'>;
 }

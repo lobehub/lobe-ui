@@ -18,9 +18,24 @@ apiHeader:
 
 <code src="../../ScrollArea/demos/background.tsx" nopadding></code>
 
+## Horizontal fade
+
+Set `scrollFade="horizontal"` to mask the start and end edges of a horizontally
+scrolled viewport (tab strips, chip lists, etc.).
+
+<code src="../../ScrollArea/demos/horizontal.tsx" nopadding></code>
+
 ## Both scrollbars
 
 <code src="../../ScrollArea/demos/both.tsx" nopadding></code>
+
+## Fade in both directions
+
+Set `scrollFade="both"` to mask every edge that overflows. Vertical and
+horizontal gradient masks are combined via `mask-composite: intersect`, so the
+four corners only fade when both axes overflow.
+
+<code src="../../ScrollArea/demos/fade-both.tsx" nopadding></code>
 
 ## Usage
 
@@ -122,15 +137,15 @@ ScrollArea is built on top of Base UI Scroll Area and exposes the same primitive
 
 Composed scroll area with defaults for viewport, content, scrollbar, and thumb.
 
-| Prop           | Type                                                        | Default | Description                                        |
-| -------------- | ----------------------------------------------------------- | ------- | -------------------------------------------------- |
-| scrollFade     | `boolean`                                                   | `false` | Enable gradient scroll fade on the viewport edges. |
-| contentProps   | `Omit<ScrollAreaContentProps, 'children'>`                  | -       | Props passed to `ScrollAreaContent`.               |
-| corner         | `boolean`                                                   | `false` | Whether to render the corner.                      |
-| cornerProps    | `ScrollAreaCornerProps`                                     | -       | Props passed to `ScrollAreaCorner`.                |
-| scrollbarProps | `Omit<ScrollAreaScrollbarProps, 'children'>`                | -       | Props passed to `ScrollAreaScrollbar`.             |
-| thumbProps     | `ScrollAreaThumbProps`                                      | -       | Props passed to `ScrollAreaThumb`.                 |
-| viewportProps  | `Omit<ScrollAreaViewportProps, 'children' \| 'scrollFade'>` | -       | Props passed to `ScrollAreaViewport`.              |
+| Prop           | Type                                                        | Default | Description                                                                                                          |
+| -------------- | ----------------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
+| scrollFade     | `boolean \| 'vertical' \| 'horizontal' \| 'both'`           | `false` | Enable gradient scroll fade on the viewport edges. `true` ≡ `'vertical'`. `'both'` intersects vertical + horizontal. |
+| contentProps   | `Omit<ScrollAreaContentProps, 'children'>`                  | -       | Props passed to `ScrollAreaContent`.                                                                                 |
+| corner         | `boolean`                                                   | `false` | Whether to render the corner.                                                                                        |
+| cornerProps    | `ScrollAreaCornerProps`                                     | -       | Props passed to `ScrollAreaCorner`.                                                                                  |
+| scrollbarProps | `Omit<ScrollAreaScrollbarProps, 'children'>`                | -       | Props passed to `ScrollAreaScrollbar`.                                                                               |
+| thumbProps     | `ScrollAreaThumbProps`                                      | -       | Props passed to `ScrollAreaThumb`.                                                                                   |
+| viewportProps  | `Omit<ScrollAreaViewportProps, 'children' \| 'scrollFade'>` | -       | Props passed to `ScrollAreaViewport`.                                                                                |
 
 ### Root
 
@@ -169,12 +184,12 @@ The actual scrollable container of the scroll area. Renders a `div` element.
 
 **Viewport Props:**
 
-| Prop       | Type                                                                                     | Default | Description                                                                                        |
-| ---------- | ---------------------------------------------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------- |
-| scrollFade | `boolean`                                                                                | `false` | Enable gradient scroll fade on the viewport edges.                                                 |
-| className  | `string \| ((state: ScrollArea.Viewport.State) => string \| undefined)`                  | -       | CSS class applied to the element, or a function that returns a class based on the component state. |
-| style      | `CSSProperties \| ((state: ScrollArea.Viewport.State) => CSSProperties \| undefined)`    | -       | Inline styles for the viewport element.                                                            |
-| render     | `ReactElement \| ((props: HTMLProps, state: ScrollArea.Viewport.State) => ReactElement)` | -       | Replace the component element with a different tag or compose it with another component.           |
+| Prop       | Type                                                                                     | Default | Description                                                                                                          |
+| ---------- | ---------------------------------------------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
+| scrollFade | `boolean \| 'vertical' \| 'horizontal' \| 'both'`                                        | `false` | Enable gradient scroll fade on the viewport edges. `true` ≡ `'vertical'`. `'both'` intersects vertical + horizontal. |
+| className  | `string \| ((state: ScrollArea.Viewport.State) => string \| undefined)`                  | -       | CSS class applied to the element, or a function that returns a class based on the component state.                   |
+| style      | `CSSProperties \| ((state: ScrollArea.Viewport.State) => CSSProperties \| undefined)`    | -       | Inline styles for the viewport element.                                                                              |
+| render     | `ReactElement \| ((props: HTMLProps, state: ScrollArea.Viewport.State) => ReactElement)` | -       | Replace the component element with a different tag or compose it with another component.                             |
 
 **Viewport Data Attributes:**
 

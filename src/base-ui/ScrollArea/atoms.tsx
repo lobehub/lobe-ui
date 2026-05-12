@@ -16,12 +16,21 @@ const mergeStateClassName = <TState,>(
 };
 
 export type ScrollAreaRootProps = React.ComponentProps<typeof BaseScrollArea.Root>;
+
+export type ScrollAreaFadeOrientation = 'vertical' | 'horizontal' | 'both';
+
 export type ScrollAreaViewportProps = React.ComponentProps<typeof BaseScrollArea.Viewport> & {
   /**
    * Enable gradient scroll fade on the viewport edges.
+   *
+   * - `true` / `'vertical'`: fade top and bottom edges.
+   * - `'horizontal'`: fade start and end edges.
+   * - `'both'`: fade all four edges (combined via `mask-composite: intersect`).
+   * - `false`: no fade.
+   *
    * @default false
    */
-  scrollFade?: boolean;
+  scrollFade?: boolean | ScrollAreaFadeOrientation;
 };
 export type ScrollAreaContentProps = React.ComponentProps<typeof BaseScrollArea.Content>;
 export type ScrollAreaScrollbarProps = React.ComponentProps<typeof BaseScrollArea.Scrollbar>;
@@ -36,6 +45,16 @@ export const ScrollAreaRoot = ({ className, ...rest }: ScrollAreaRootProps) => {
 
 ScrollAreaRoot.displayName = 'ScrollAreaRoot';
 
+const resolveFadeClass = (
+  scrollFade: ScrollAreaViewportProps['scrollFade'],
+): string | undefined => {
+  if (!scrollFade) return undefined;
+  const orientation: ScrollAreaFadeOrientation = scrollFade === true ? 'vertical' : scrollFade;
+  if (orientation === 'horizontal') return styles.viewportFadeHorizontal;
+  if (orientation === 'both') return styles.viewportFadeBoth;
+  return styles.viewportFade;
+};
+
 export const ScrollAreaViewport = ({
   className,
   scrollFade = false,
@@ -47,10 +66,7 @@ export const ScrollAreaViewport = ({
       <BaseScrollArea.Viewport
         {...rest}
         className={
-          mergeStateClassName(
-            cx(styles.viewport, scrollFade && styles.viewportFade),
-            className,
-          ) as any
+          mergeStateClassName(cx(styles.viewport, resolveFadeClass(scrollFade)), className) as any
         }
       />
     </>
