@@ -2,7 +2,7 @@
 
 import { cx, useTheme } from 'antd-style';
 import type { ReactNode } from 'react';
-import { memo, useCallback, useEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { memo, useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useIsClient } from '@/hooks/useIsClient';
@@ -24,7 +24,6 @@ import {
 import { ModalContext, useModalContext } from './context';
 import { styles } from './style';
 import type { ImperativeModalProps, ModalConfirmConfig, ModalInstance } from './type';
-import { acquireModalZIndex } from './zIndexManager';
 
 // --- Shared types ---
 
@@ -187,14 +186,6 @@ export function createModalSystem(): ModalSystem {
 
     const isOpen = open ?? true;
 
-    const zIndexRef = useRef<number | undefined>(undefined);
-    const prevOpenRef = useRef(false);
-    if (isOpen && !prevOpenRef.current) {
-      zIndexRef.current = acquireModalZIndex();
-    }
-    prevOpenRef.current = isOpen;
-    const zIndex = zIndexRef.current ?? 1000;
-
     const handleOpenChange = useCallback(
       (nextOpen: boolean, eventDetails?: { reason: string }) => {
         if (!nextOpen && maskClosable === false && eventDetails?.reason === 'outside-press') return;
@@ -225,13 +216,10 @@ export function createModalSystem(): ModalSystem {
           onOpenChange={handleOpenChange}
         >
           <ModalPortal>
-            <ModalBackdrop
-              className={classNames?.backdrop}
-              style={{ zIndex, ...semanticStyles?.backdrop }}
-            />
+            <ModalBackdrop className={classNames?.backdrop} style={semanticStyles?.backdrop} />
             <ModalPopup
               className={classNames?.popup}
-              popupStyle={{ zIndex: zIndex + 1, ...semanticStyles?.popup }}
+              popupStyle={semanticStyles?.popup}
               width={width}
             >
               {showTitle && (

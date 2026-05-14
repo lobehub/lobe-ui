@@ -155,7 +155,7 @@ export const PopoverStandalone = memo<PopoverProps>(
         arrow: styleProps?.arrow,
         positioner: {
           ...styleProps?.root,
-          zIndex: zIndex ?? 1100,
+          ...(zIndex !== undefined ? { zIndex } : {}),
         },
         viewport: styleProps?.content,
       }),

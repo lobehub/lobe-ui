@@ -16,13 +16,15 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { mergeRefs } from 'react-merge-refs';
+import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { useMotionComponent } from '@/MotionProvider';
 import { useAppElement } from '@/ThemeProvider';
 
+import { useLayerZIndex } from '../zIndex';
 import { backdropTransition, modalMotionConfig } from './constants';
+import { ModalLayerProvider, useModalLayer } from './ModalLayerContext';
 import { styles } from './style';
 
 const mergeStateClassName = <TState,>(
@@ -50,12 +52,14 @@ export const useModalActions = () => use(ModalActionsContext);
 // --- Root ---
 export type ModalRootProps = Dialog.Root.Props & {
   onExitComplete?: () => void;
+  zIndex?: number;
 };
 
 const AnimatedModalRoot = ({
   open,
   children,
   onExitComplete: onExitCompleteProp,
+  zIndex: explicitZIndex,
   ...rest
 }: Omit<ModalRootProps, 'open'> & { open: boolean }) => {
   const [isPresent, setIsPresent] = useState(!!open);
@@ -71,16 +75,39 @@ const AnimatedModalRoot = ({
 
   const actions = useMemo(() => ({ onExitComplete: handleExitComplete }), [handleExitComplete]);
 
+  const { zIndex, ref: popupRef } = useLayerZIndex<HTMLDivElement>('modal', explicitZIndex);
+  const layer = useMemo(
+    () => ({ popupRef: popupRef as (node: HTMLElement | null) => void, zIndex }),
+    [zIndex, popupRef],
+  );
+
   if (!isPresent) return null;
 
   return (
     <ModalOpenContext value={open}>
       <ModalActionsContext value={actions}>
-        <Dialog.Root modal open {...rest}>
-          {children}
-        </Dialog.Root>
+        <ModalLayerProvider value={layer}>
+          <Dialog.Root modal open {...rest}>
+            {children}
+          </Dialog.Root>
+        </ModalLayerProvider>
       </ModalActionsContext>
     </ModalOpenContext>
+  );
+};
+
+const NonAnimatedModalRoot = ({ zIndex: explicitZIndex, children, ...rest }: ModalRootProps) => {
+  const { zIndex, ref: popupRef } = useLayerZIndex<HTMLDivElement>('modal', explicitZIndex);
+  const layer = useMemo(
+    () => ({ popupRef: popupRef as (node: HTMLElement | null) => void, zIndex }),
+    [zIndex, popupRef],
+  );
+  return (
+    <ModalLayerProvider value={layer}>
+      <Dialog.Root modal {...rest}>
+        {children}
+      </Dialog.Root>
+    </ModalLayerProvider>
   );
 };
 
@@ -88,7 +115,7 @@ export const ModalRoot = ({ open, onExitComplete, ...rest }: ModalRootProps) => 
   if (open !== undefined) {
     return <AnimatedModalRoot open={open} onExitComplete={onExitComplete} {...rest} />;
   }
-  return <Dialog.Root modal {...rest} />;
+  return <NonAnimatedModalRoot {...rest} />;
 };
 
 // --- Portal ---
@@ -113,14 +140,16 @@ export const ModalViewport = ({ className, ...rest }: ModalViewportProps) => (
 export type ModalBackdropProps = React.ComponentProps<typeof Dialog.Backdrop>;
 export const ModalBackdrop = ({ className, style, ...rest }: ModalBackdropProps) => {
   const open = useModalOpen();
+  const layer = useModalLayer();
   const Motion = useMotionComponent();
+  const layerStyle = layer?.zIndex !== undefined ? { zIndex: layer.zIndex } : undefined;
 
   if (open !== null) {
     return (
       <Dialog.Backdrop
         {...rest}
         className={cx(styles.backdrop, className as string)}
-        style={{ ...style, transition: 'none' }}
+        style={{ ...layerStyle, ...style, transition: 'none' }}
         render={
           <Motion.div
             animate={{ opacity: open ? 1 : 0 }}
@@ -136,7 +165,7 @@ export const ModalBackdrop = ({ className, style, ...rest }: ModalBackdropProps)
     <Dialog.Backdrop
       {...rest}
       className={mergeStateClassName(styles.backdrop, className as any) as any}
-      style={style}
+      style={{ ...layerStyle, ...style }}
     />
   );
 };
@@ -156,15 +185,24 @@ export const ModalPopup = ({
   motionProps,
   panelClassName,
   popupStyle,
+  ref: forwardedRef,
   ...rest
 }: ModalPopupProps) => {
   const open = useModalOpen();
   const actions = useModalActions();
+  const layer = useModalLayer();
   const Motion = useMotionComponent();
+  const popupZIndexStyle = layer?.zIndex !== undefined ? { zIndex: layer.zIndex + 1 } : undefined;
+  const composedRef = useMergeRefs([forwardedRef, layer?.popupRef]);
 
   if (open !== null && actions) {
     return (
-      <Dialog.Popup {...rest} className={cx(styles.popup, className as string)} style={popupStyle}>
+      <Dialog.Popup
+        {...rest}
+        className={cx(styles.popup, className as string)}
+        ref={composedRef as any}
+        style={{ ...popupZIndexStyle, ...popupStyle }}
+      >
         <AnimatePresence onExitComplete={actions.onExitComplete}>
           {open ? (
             <Motion.div
@@ -186,7 +224,8 @@ export const ModalPopup = ({
     <Dialog.Popup
       {...rest}
       className={mergeStateClassName(styles.popup, className as any) as any}
-      style={popupStyle}
+      ref={composedRef as any}
+      style={{ ...popupZIndexStyle, ...popupStyle }}
     >
       <div
         className={cx(styles.popupInner, panelClassName)}

@@ -26,6 +26,18 @@ apiHeader:
 
 <code src="./demos/nested.tsx" nopadding></code>
 
+## z-index with DropdownMenu (TDD repro)
+
+When a dropdown menu stays mounted and a modal opens, the modal must layer above the dropdown popup.
+
+<code src="./demos/zindex-with-dropdown.tsx" nopadding></code>
+
+## z-index — DropdownMenu inside Modal (TDD repro)
+
+A dropdown opened from inside a modal must layer above the modal popup.
+
+<code src="./demos/zindex-dropdown-in-modal.tsx" nopadding></code>
+
 ## Atom Components
 
 <code src="./demos/atoms.tsx" nopadding></code>

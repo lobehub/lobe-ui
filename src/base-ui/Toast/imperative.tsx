@@ -2,11 +2,12 @@
 
 import { Toast as BaseToast } from '@base-ui/react/toast';
 import { cx } from 'antd-style';
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import { useIsClient } from '@/hooks/useIsClient';
 import { useAppElement } from '@/ThemeProvider';
 
+import { acquireLayerZIndex } from '../zIndex';
 import { ToastContext } from './context';
 import { viewportVariants } from './style';
 import ToastItem from './Toast';
@@ -272,6 +273,7 @@ export const ToastHost = memo(
   }: ToastHostProps) => {
     const isClient = useIsClient();
     const appElement = useAppElement();
+    const [viewportZIndex, setViewportZIndex] = useState<number | undefined>(undefined);
 
     useEffect(() => {
       globalState = {
@@ -282,6 +284,10 @@ export const ToastHost = memo(
       };
     }, [duration, limit, position, swipeDirection]);
 
+    useEffect(() => {
+      setViewportZIndex(acquireLayerZIndex('toast'));
+    }, []);
+
     if (!isClient) return null;
 
     const container = root ?? appElement ?? document.body;
@@ -290,7 +296,10 @@ export const ToastHost = memo(
       <ToastContext key={pos} value={{ position: pos, swipeDirection }}>
         <BaseToast.Provider limit={limit} timeout={duration} toastManager={getManager(pos)}>
           <BaseToast.Portal container={container}>
-            <BaseToast.Viewport className={cx(viewportVariants({ position: pos }), className)}>
+            <BaseToast.Viewport
+              className={cx(viewportVariants({ position: pos }), className)}
+              style={{ zIndex: viewportZIndex }}
+            >
               <ToastList />
             </BaseToast.Viewport>
           </BaseToast.Portal>

@@ -7,7 +7,7 @@ import { cx } from 'antd-style';
 import clsx from 'clsx';
 import type React from 'react';
 import { cloneElement, isValidElement, useCallback, useState } from 'react';
-import { mergeRefs } from 'react-merge-refs';
+import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
@@ -16,6 +16,7 @@ import { CLASSNAMES } from '@/styles/classNames';
 import { useAppElement } from '@/ThemeProvider';
 import { placementMap } from '@/utils/placement';
 
+import { useLayerZIndex } from '../zIndex';
 import { type DropdownMenuPlacement } from './type';
 
 export const DropdownMenuRoot: typeof Menu.Root = (props) => <Menu.Root modal={false} {...props} />;
@@ -112,10 +113,16 @@ export const DropdownMenuPositioner = ({
   side,
   sideOffset,
   children,
+  style,
   ...rest
 }: DropdownMenuPositionerProps) => {
   const placementConfig = placement ? placementMap[placement] : undefined;
   const [positionerNode, setPositionerNode] = useState<HTMLDivElement | null>(null);
+
+  const explicitZIndex =
+    style?.zIndex != null && typeof style.zIndex === 'number' ? style.zIndex : undefined;
+  const { zIndex, ref: zRef } = useLayerZIndex<HTMLDivElement>('floating', explicitZIndex);
+  const composedRef = useMergeRefs([setPositionerNode, zRef]);
 
   return (
     <Menu.Positioner
@@ -124,9 +131,10 @@ export const DropdownMenuPositioner = ({
       className={mergeStateClassName(styles.positioner, className as any) as any}
       data-hover-trigger={hoverTrigger || undefined}
       data-placement={placement}
-      ref={setPositionerNode}
+      ref={composedRef as any}
       side={side ?? placementConfig?.side}
       sideOffset={sideOffset ?? (placementConfig ? 6 : undefined)}
+      style={{ zIndex, ...style }}
     >
       <FloatingLayerProvider value={positionerNode}>{children}</FloatingLayerProvider>
     </Menu.Positioner>

@@ -9,12 +9,13 @@ import {
   type ComponentPropsWithRef,
   isValidElement,
 } from 'react';
-import { mergeRefs } from 'react-merge-refs';
+import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { styles as menuStyles } from '@/Menu/sharedStyle';
 import { useAppElement } from '@/ThemeProvider';
 
+import { useLayerZIndex } from '../zIndex';
 import { styles, triggerVariants } from './style';
 import { type SelectSize, type SelectVariant } from './type';
 
@@ -143,15 +144,23 @@ export const SelectPositioner = ({
   className,
   side,
   sideOffset,
+  style,
+  ref: forwardedRef,
   ...rest
 }: SelectPositionerProps) => {
+  const explicitZIndex =
+    style?.zIndex != null && typeof style.zIndex === 'number' ? style.zIndex : undefined;
+  const { zIndex, ref: zRef } = useLayerZIndex<HTMLDivElement>('floating', explicitZIndex);
+  const composedRef = useMergeRefs([forwardedRef, zRef]);
   return (
     <Select.Positioner
       align={align ?? 'start'}
       alignItemWithTrigger={alignItemWithTrigger ?? false}
       className={mergeStateClassName(styles.positioner, className) as any}
+      ref={composedRef as any}
       side={side ?? 'bottom'}
       sideOffset={sideOffset ?? 6}
+      style={{ zIndex, ...style }}
       {...rest}
     />
   );

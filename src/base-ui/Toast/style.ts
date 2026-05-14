@@ -332,7 +332,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   viewport: css`
     position: fixed;
-    z-index: 1100;
+    z-index: 100000;
 
     width: 360px;
     max-width: calc(100vw - 32px);
