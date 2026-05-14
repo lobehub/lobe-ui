@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.12.2](https://github.com/lobehub/lobe-ui/compare/v5.12.1...v5.12.2) (2026-05-14)
+
+### 🐛 Bug Fixes
+
+- **action-icon**: Avoid nested tooltip popup triggers, closes [#519](https://github.com/lobehub/lobe-ui/issues/519) ([b3d1958](https://github.com/lobehub/lobe-ui/commit/b3d1958))
+
 ## [5.12.1](https://github.com/lobehub/lobe-ui/compare/v5.12.0...v5.12.1) (2026-05-14)
 
 ### 🐛 Bug Fixes
