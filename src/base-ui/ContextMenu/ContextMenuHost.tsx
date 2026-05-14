@@ -8,6 +8,7 @@ import { useAppElement } from '@/ThemeProvider';
 import { registerDevSingleton } from '@/utils/devSingleton';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
+import { useLayerZIndex } from '../zIndex';
 import { renderContextMenuItems } from './renderItems';
 import {
   closeContextMenu,
@@ -50,6 +51,7 @@ export const ContextMenuHost = memo(() => {
       }),
     [state.items, state.iconAlign, state.iconSpaceMode],
   );
+  const { zIndex, ref: zRef } = useLayerZIndex<HTMLDivElement>('floating');
   if (!isClient) return null;
   if (!state.open && state.items.length === 0) return null;
 
@@ -68,8 +70,9 @@ export const ContextMenuHost = memo(() => {
         <ContextMenu.Positioner
           anchor={state.anchor ?? undefined}
           className={styles.positioner}
+          ref={zRef as any}
           sideOffset={6}
-          style={noAnimationStyles}
+          style={{ ...noAnimationStyles, zIndex }}
         >
           <ContextMenu.Popup
             className={styles.popup}

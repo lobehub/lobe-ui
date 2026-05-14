@@ -3,7 +3,7 @@ import { createStaticStyles } from 'antd-style';
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   backdrop: css`
     position: fixed;
-    z-index: 1000;
+    z-index: 1200;
     inset: 0;
 
     background: color-mix(in srgb, ${cssVar.colorBgContainer} 60%, transparent);
@@ -116,7 +116,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     pointer-events: none;
 
     position: fixed;
-    z-index: 1001;
+    z-index: 1201;
     inset: 0;
 
     display: flex;
@@ -140,7 +140,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     border: 1px solid ${cssVar.colorBorderSecondary};
     border-radius: 12px;
 
-    background: ${cssVar.colorBgContainer};
+    background: ${cssVar.colorBgElevated};
     box-shadow: ${cssVar.boxShadow};
 
     transition:
@@ -319,7 +319,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   viewport: css`
     position: fixed;
-    z-index: 1000;
+    z-index: 1200;
     inset: 0;
     overflow: auto;
   `,

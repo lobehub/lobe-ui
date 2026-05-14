@@ -22,7 +22,6 @@ import {
 } from './atoms';
 import { styles } from './style';
 import type { ModalComponentProps } from './type';
-import { acquireModalZIndex } from './zIndexManager';
 
 interface OkBtnProps {
   confirmLoading?: boolean;
@@ -227,16 +226,6 @@ const Modal = memo<ModalComponentProps>(
 
     const container = getContainer === false ? undefined : (getContainer ?? undefined);
 
-    const prevOpenRef = useRef(false);
-    const acquiredZRef = useRef<number | undefined>(undefined);
-    if (open && !prevOpenRef.current) {
-      acquiredZRef.current = acquireModalZIndex();
-    }
-    prevOpenRef.current = !!open;
-    const effectiveZIndex = zIndex ?? acquiredZRef.current;
-    const backdropZIndex = effectiveZIndex ? { zIndex: effectiveZIndex } : undefined;
-    const popupZIndex = effectiveZIndex ? { zIndex: effectiveZIndex + 1 } : undefined;
-
     const shouldDrag = draggable && !isFullscreen;
     const dragProps = shouldDrag
       ? {
@@ -262,19 +251,15 @@ const Modal = memo<ModalComponentProps>(
     return (
       <ModalRoot
         open={open ?? false}
+        zIndex={zIndex}
         onExitComplete={handleExitComplete}
         onOpenChange={handleOpenChange}
       >
         <ModalPortal container={container}>
-          {mask && (
-            <ModalBackdrop
-              className={classNames?.mask}
-              style={{ ...backdropZIndex, ...semanticStyles?.mask }}
-            />
-          )}
+          {mask && <ModalBackdrop className={classNames?.mask} style={semanticStyles?.mask} />}
           <ModalPopup
             className={classNames?.wrapper}
-            popupStyle={{ ...popupZIndex, ...semanticStyles?.wrapper }}
+            popupStyle={semanticStyles?.wrapper}
             ref={constraintsRef}
             style={panelStyle}
             width={isFullscreen ? undefined : width}

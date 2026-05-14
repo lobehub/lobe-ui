@@ -10,12 +10,13 @@ import {
   isValidElement,
   useState,
 } from 'react';
-import { mergeRefs } from 'react-merge-refs';
+import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { placementMap } from '@/utils/placement';
 
+import { useLayerZIndex } from '../zIndex';
 import { PopoverArrowIcon } from './ArrowIcon';
 import { usePopoverPortalContainer } from './PopoverPortal';
 import { styles } from './style';
@@ -132,19 +133,32 @@ export const PopoverPositioner = ({
   align,
   side,
   sideOffset,
+  style,
   ...rest
 }: PopoverPositionerAtomProps) => {
   const placementConfig = placement ? placementMap[placement] : undefined;
   const [positionerNode, setPositionerNode] = useState<HTMLDivElement | null>(null);
+  const explicitZIndex =
+    typeof style !== 'function' && style?.zIndex != null && typeof style.zIndex === 'number'
+      ? style.zIndex
+      : undefined;
+  const { zIndex, ref: zRef } = useLayerZIndex<HTMLDivElement>('floating', explicitZIndex);
+  const composedRef = useMergeRefs([setPositionerNode, zRef]);
+
+  const resolvedStyle =
+    typeof style === 'function'
+      ? (state: any) => ({ zIndex, ...style(state) })
+      : { zIndex, ...style };
 
   return (
     <BasePopover.Positioner
       align={align ?? placementConfig?.align ?? 'center'}
       data-hover-trigger={hoverTrigger || undefined}
       data-placement={placement}
-      ref={setPositionerNode}
+      ref={composedRef as any}
       side={side ?? placementConfig?.side ?? 'bottom'}
       sideOffset={sideOffset ?? 6}
+      style={resolvedStyle}
       className={(state) =>
         cx(styles.positioner, typeof className === 'function' ? className(state) : className)
       }

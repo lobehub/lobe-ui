@@ -60,6 +60,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     min-width: 120px;
     max-width: var(--available-width);
+    border: 1px solid ${cssVar.colorBorderSecondary};
     border-radius: ${cssVar.borderRadius};
 
     color: ${cssVar.colorText};

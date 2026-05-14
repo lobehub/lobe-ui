@@ -7,6 +7,7 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { styles as menuStyles } from '@/Menu/sharedStyle';
 
+import { SelectPositioner } from './atoms';
 import { isValueEmpty } from './helpers';
 import {
   usePortalContainer,
@@ -247,7 +248,7 @@ const Select = memo<SelectProps<any>>(
         </BaseSelect.Trigger>
 
         <BaseSelect.Portal container={portalContainer}>
-          <BaseSelect.Positioner
+          <SelectPositioner
             align="start"
             alignItemWithTrigger={isItemAligned}
             className={styles.positioner}
@@ -283,7 +284,7 @@ const Select = memo<SelectProps<any>>(
                 virtualState={virtualState}
               />
             </BaseSelect.Popup>
-          </BaseSelect.Positioner>
+          </SelectPositioner>
         </BaseSelect.Portal>
       </BaseSelect.Root>
     );

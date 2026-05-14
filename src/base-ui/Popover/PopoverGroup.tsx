@@ -95,7 +95,7 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
               arrow: item.styles?.arrow,
               positioner: {
                 ...item.styles?.root,
-                zIndex: item.zIndex ?? 1100,
+                ...(item.zIndex !== undefined ? { zIndex: item.zIndex } : {}),
               },
               viewport: item.styles?.content,
             };
