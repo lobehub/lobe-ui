@@ -149,9 +149,17 @@ export const SelectPositioner = ({
   ...rest
 }: SelectPositionerProps) => {
   const explicitZIndex =
-    style?.zIndex != null && typeof style.zIndex === 'number' ? style.zIndex : undefined;
+    typeof style !== 'function' && style?.zIndex != null && typeof style.zIndex === 'number'
+      ? style.zIndex
+      : undefined;
   const { zIndex, ref: zRef } = useLayerZIndex<HTMLDivElement>('floating', explicitZIndex);
   const composedRef = useMergeRefs([forwardedRef, zRef]);
+
+  const resolvedStyle =
+    typeof style === 'function'
+      ? (state: any) => ({ zIndex, ...style(state) })
+      : { zIndex, ...style };
+
   return (
     <Select.Positioner
       align={align ?? 'start'}
@@ -160,7 +168,7 @@ export const SelectPositioner = ({
       ref={composedRef as any}
       side={side ?? 'bottom'}
       sideOffset={sideOffset ?? 6}
-      style={{ zIndex, ...style }}
+      style={resolvedStyle}
       {...rest}
     />
   );

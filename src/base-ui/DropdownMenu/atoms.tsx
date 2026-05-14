@@ -120,9 +120,16 @@ export const DropdownMenuPositioner = ({
   const [positionerNode, setPositionerNode] = useState<HTMLDivElement | null>(null);
 
   const explicitZIndex =
-    style?.zIndex != null && typeof style.zIndex === 'number' ? style.zIndex : undefined;
+    typeof style !== 'function' && style?.zIndex != null && typeof style.zIndex === 'number'
+      ? style.zIndex
+      : undefined;
   const { zIndex, ref: zRef } = useLayerZIndex<HTMLDivElement>('floating', explicitZIndex);
   const composedRef = useMergeRefs([setPositionerNode, zRef]);
+
+  const resolvedStyle =
+    typeof style === 'function'
+      ? (state: any) => ({ zIndex, ...style(state) })
+      : { zIndex, ...style };
 
   return (
     <Menu.Positioner
@@ -134,7 +141,7 @@ export const DropdownMenuPositioner = ({
       ref={composedRef as any}
       side={side ?? placementConfig?.side}
       sideOffset={sideOffset ?? (placementConfig ? 6 : undefined)}
-      style={{ zIndex, ...style }}
+      style={resolvedStyle}
     >
       <FloatingLayerProvider value={positionerNode}>{children}</FloatingLayerProvider>
     </Menu.Positioner>

@@ -28,6 +28,10 @@ export function useLayerZIndex<T extends HTMLElement = HTMLElement>(
     prevOpen: false,
   });
 
+  // Keep ref in sync with latest props so prop changes after mount are respected.
+  stateRef.current.tier = tier;
+  stateRef.current.explicit = explicitZIndex;
+
   const ref = useCallback((node: T | null) => {
     if (node === stateRef.current.node) return;
     stateRef.current.observer?.disconnect();

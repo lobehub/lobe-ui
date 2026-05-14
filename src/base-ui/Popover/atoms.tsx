@@ -139,9 +139,16 @@ export const PopoverPositioner = ({
   const placementConfig = placement ? placementMap[placement] : undefined;
   const [positionerNode, setPositionerNode] = useState<HTMLDivElement | null>(null);
   const explicitZIndex =
-    style?.zIndex != null && typeof style.zIndex === 'number' ? style.zIndex : undefined;
+    typeof style !== 'function' && style?.zIndex != null && typeof style.zIndex === 'number'
+      ? style.zIndex
+      : undefined;
   const { zIndex, ref: zRef } = useLayerZIndex<HTMLDivElement>('floating', explicitZIndex);
   const composedRef = useMergeRefs([setPositionerNode, zRef]);
+
+  const resolvedStyle =
+    typeof style === 'function'
+      ? (state: any) => ({ zIndex, ...style(state) })
+      : { zIndex, ...style };
 
   return (
     <BasePopover.Positioner
@@ -151,7 +158,7 @@ export const PopoverPositioner = ({
       ref={composedRef as any}
       side={side ?? placementConfig?.side ?? 'bottom'}
       sideOffset={sideOffset ?? 6}
-      style={{ zIndex, ...style }}
+      style={resolvedStyle}
       className={(state) =>
         cx(styles.positioner, typeof className === 'function' ? className(state) : className)
       }
