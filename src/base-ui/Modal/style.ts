@@ -140,7 +140,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     border: 1px solid ${cssVar.colorBorderSecondary};
     border-radius: 12px;
 
-    background: ${cssVar.colorBgContainer};
+    background: ${cssVar.colorBgElevated};
     box-shadow: ${cssVar.boxShadow};
 
     transition:
