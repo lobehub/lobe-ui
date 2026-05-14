@@ -7,6 +7,7 @@ import {
   DropdownMenuRoot,
   DropdownMenuTrigger,
   renderDropdownMenuItems,
+  Tooltip,
 } from '@lobehub/ui';
 import { createStaticStyles } from 'antd-style';
 import { FileTextIcon, PlusIcon, StoreIcon, WrenchIcon } from 'lucide-react';
@@ -293,17 +294,23 @@ const BaseUiPrimitiveCase = () => {
 
   return (
     <div>
-      <div className={styles.caseTitle}>Base UI Menu primitives</div>
+      <div className={styles.caseTitle}>Base UI Menu primitives with lobe-ui Tooltip</div>
       <div className={styles.triggerRow}>
         <Menu.Root modal={false} open={rootOpen} onOpenChange={handleRootOpenChange}>
-          <Menu.Trigger
-            nativeButton={false}
-            render={
-              <div className={styles.primitiveTrigger} tabIndex={0}>
-                <PlusIcon size={18} />
-              </div>
-            }
-          />
+          <Tooltip arrow={false} placement="top" title="Add files, skills, and more context">
+            <Menu.Trigger
+              nativeButton={false}
+              render={
+                <div
+                  aria-label="Add files, skills, and more context"
+                  className={styles.primitiveTrigger}
+                  tabIndex={0}
+                >
+                  <PlusIcon size={18} />
+                </div>
+              }
+            />
+          </Tooltip>
           <Menu.Portal>
             <Menu.Positioner align="start" side="top" sideOffset={6}>
               <Menu.Popup className={styles.menuPopup}>
