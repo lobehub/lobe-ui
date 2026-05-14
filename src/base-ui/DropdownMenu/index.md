@@ -24,6 +24,10 @@ Exported primitives can be composed to build custom dropdown menus.
 
 <code src="../../DropdownMenu/demos/submenu.tsx" center></code>
 
+## ActionIcon Trigger With Submenu
+
+<code src="../../DropdownMenu/demos/plus-action-submenu.tsx" center></code>
+
 ## Group
 
 <code src="../../DropdownMenu/demos/group.tsx" center></code>
