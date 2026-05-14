@@ -28,9 +28,45 @@ export function useLayerZIndex<T extends HTMLElement = HTMLElement>(
     prevOpen: false,
   });
 
+  const prevExplicitRef = useRef(explicitZIndex);
+
   // Keep ref in sync with latest props so prop changes after mount are respected.
   stateRef.current.tier = tier;
   stateRef.current.explicit = explicitZIndex;
+
+  // When explicitZIndex changes from a value to undefined, and the node is
+  // currently open, we need to acquire a dynamic z-index and start the
+  // observer — neither was set up because the initial mount had an explicit
+  // value that short-circuited the ref callback.
+  if (
+    prevExplicitRef.current !== undefined &&
+    explicitZIndex === undefined &&
+    stateRef.current.node
+  ) {
+    const node = stateRef.current.node;
+    const isOpen = node.hasAttribute('data-open');
+    if (isOpen) {
+      setZIndex(acquireLayerZIndex(tier));
+      stateRef.current.prevOpen = true;
+    }
+    // Ensure observer is running for future open/close changes.
+    if (!stateRef.current.observer) {
+      const handle = () => {
+        const open = node.hasAttribute('data-open');
+        if (open && !stateRef.current.prevOpen) {
+          setZIndex(acquireLayerZIndex(stateRef.current.tier));
+        }
+        stateRef.current.prevOpen = open;
+      };
+      const observer = new MutationObserver(handle);
+      observer.observe(node, {
+        attributes: true,
+        attributeFilter: ['data-open', 'data-closed'],
+      });
+      stateRef.current.observer = observer;
+    }
+  }
+  prevExplicitRef.current = explicitZIndex;
 
   const ref = useCallback((node: T | null) => {
     if (node === stateRef.current.node) return;
