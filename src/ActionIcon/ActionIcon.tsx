@@ -38,6 +38,17 @@ const ActionIcon = memo<ActionIconProps>(
     ...rest
   }) => {
     const { blockSize, borderRadius } = useMemo(() => calcSize(size), [size]);
+    const popupTriggerAria = rest as {
+      'aria-expanded'?: unknown;
+      'aria-haspopup'?: unknown;
+      'aria-label'?: string;
+    };
+    const isPopupTrigger =
+      popupTriggerAria['aria-haspopup'] !== undefined ||
+      popupTriggerAria['aria-expanded'] !== undefined;
+    const popupTriggerLabel =
+      popupTriggerAria['aria-label'] ??
+      (isPopupTrigger && typeof title === 'string' ? title : undefined);
 
     const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(
       (event) => {
@@ -58,6 +69,7 @@ const ActionIcon = memo<ActionIconProps>(
         tabIndex={disabled ? -1 : 0}
         onClick={handleClick}
         {...rest}
+        aria-label={popupTriggerLabel}
       >
         {icon && (
           <Icon
@@ -77,7 +89,7 @@ const ActionIcon = memo<ActionIconProps>(
       </Center>
     );
 
-    if (!title) return node;
+    if (!title || isPopupTrigger) return node;
 
     return (
       <Tooltip
