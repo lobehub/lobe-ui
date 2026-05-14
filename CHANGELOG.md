@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.12.1](https://github.com/lobehub/lobe-ui/compare/v5.12.0...v5.12.1) (2026-05-14)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Unify z-index via floor-and-stack manager, closes [#518](https://github.com/lobehub/lobe-ui/issues/518) ([ea45606](https://github.com/lobehub/lobe-ui/commit/ea45606))
+
 # [5.12.0](https://github.com/lobehub/lobe-ui/compare/v5.11.0...v5.12.0) (2026-05-12)
 
 ### ✨ Features
