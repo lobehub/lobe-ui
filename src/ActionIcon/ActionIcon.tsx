@@ -89,7 +89,7 @@ const ActionIcon = memo<ActionIconProps>(
       </Center>
     );
 
-    if (!title || isPopupTrigger) return node;
+    if (!title) return node;
 
     return (
       <Tooltip

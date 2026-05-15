@@ -150,9 +150,14 @@ export const TooltipStandalone = memo<TooltipProps>(
                 return triggerRest;
               })();
 
-              const mergedProps = mergeProps(restProps, (children as any).props, resolvedProps);
+              const childProps = (children as any).props;
+              const mergedProps = mergeProps(restProps, childProps, resolvedProps);
+              const shouldPreservePopupTriggerId =
+                childProps['aria-haspopup'] !== undefined && childProps.id !== undefined;
+
               return cloneElement(children as any, {
                 ...mergedProps,
+                id: shouldPreservePopupTriggerId ? childProps.id : mergedProps.id,
                 ref: mergeRefs([
                   (children as any).ref,
                   (props as any).ref,
