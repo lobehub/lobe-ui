@@ -118,6 +118,12 @@ export const TooltipInGroup: FC<TooltipProps> = ({
   });
 
   const childElement = isValidElement(children) ? children : null;
+  const popupTriggerId =
+    childElement &&
+    (childElement as any).props['aria-haspopup'] !== undefined &&
+    (childElement as any).props.id !== undefined
+      ? (childElement as any).props.id
+      : undefined;
 
   const renderTrigger = useCallback(
     (renderProps: unknown) => {
@@ -130,9 +136,14 @@ export const TooltipInGroup: FC<TooltipProps> = ({
         return triggerRest;
       })();
 
-      const mergedProps = mergeProps(restProps, (childElement as any).props, resolvedProps);
+      const childProps = (childElement as any).props;
+      const mergedProps = mergeProps(restProps, childProps, resolvedProps);
+      const shouldPreservePopupTriggerId =
+        childProps['aria-haspopup'] !== undefined && childProps.id !== undefined;
+
       return cloneElement(childElement as any, {
         ...mergedProps,
+        id: shouldPreservePopupTriggerId ? childProps.id : mergedProps.id,
         ref: mergeRefs([(childElement as any).ref, (renderProps as any).ref, refProp]),
       });
     },
@@ -149,6 +160,8 @@ export const TooltipInGroup: FC<TooltipProps> = ({
     closeDelay: resolvedCloseDelay,
     delay: resolvedOpenDelay,
     disabled,
+    ...item.triggerProps,
+    id: popupTriggerId ?? item.triggerProps?.id,
     payload: item,
   };
 

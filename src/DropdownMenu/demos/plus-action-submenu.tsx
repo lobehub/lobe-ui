@@ -7,6 +7,8 @@ import {
   DropdownMenuRoot,
   DropdownMenuTrigger,
   renderDropdownMenuItems,
+  Tooltip,
+  TooltipGroup,
 } from '@lobehub/ui';
 import { createStaticStyles } from 'antd-style';
 import { FileTextIcon, PlusIcon, StoreIcon, WrenchIcon } from 'lucide-react';
@@ -248,31 +250,33 @@ const LobeUiWrappedCase = () => {
 
   return (
     <div>
-      <div className={styles.caseTitle}>lobe-ui DropdownMenu composition</div>
+      <div className={styles.caseTitle}>lobe-ui DropdownMenu composition with TooltipGroup</div>
       <div className={styles.triggerRow}>
-        <DropdownMenuRoot open={rootOpen} onOpenChange={handleRootOpenChange}>
-          <DropdownMenuTrigger nativeButton={false}>
-            <ActionIcon
-              icon={PlusIcon}
-              title="Add files, skills, and more context"
-              tooltipProps={{
-                arrow: false,
-                placement: 'top',
-              }}
-            />
-          </DropdownMenuTrigger>
-          <DropdownMenuPortal>
-            <DropdownMenuPositioner placement="topLeft">
-              <DropdownMenuPopup
-                style={{
-                  minWidth: 220,
+        <TooltipGroup openDelay={0}>
+          <DropdownMenuRoot open={rootOpen} onOpenChange={handleRootOpenChange}>
+            <DropdownMenuTrigger nativeButton={false}>
+              <ActionIcon
+                icon={PlusIcon}
+                title="Add files, skills, and more context"
+                tooltipProps={{
+                  arrow: false,
+                  placement: 'top',
                 }}
-              >
-                {menuItems}
-              </DropdownMenuPopup>
-            </DropdownMenuPositioner>
-          </DropdownMenuPortal>
-        </DropdownMenuRoot>
+              />
+            </DropdownMenuTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuPositioner placement="topLeft">
+                <DropdownMenuPopup
+                  style={{
+                    minWidth: 220,
+                  }}
+                >
+                  {menuItems}
+                </DropdownMenuPopup>
+              </DropdownMenuPositioner>
+            </DropdownMenuPortal>
+          </DropdownMenuRoot>
+        </TooltipGroup>
 
         <StatusPanel lastRootReason={lastRootReason} rootOpen={rootOpen} toolsOpen={toolsOpen} />
       </div>
@@ -293,17 +297,23 @@ const BaseUiPrimitiveCase = () => {
 
   return (
     <div>
-      <div className={styles.caseTitle}>Base UI Menu primitives</div>
+      <div className={styles.caseTitle}>Base UI Menu primitives with lobe-ui Tooltip</div>
       <div className={styles.triggerRow}>
         <Menu.Root modal={false} open={rootOpen} onOpenChange={handleRootOpenChange}>
-          <Menu.Trigger
-            nativeButton={false}
-            render={
-              <div className={styles.primitiveTrigger} tabIndex={0}>
-                <PlusIcon size={18} />
-              </div>
-            }
-          />
+          <Tooltip arrow={false} placement="top" title="Add files, skills, and more context">
+            <Menu.Trigger
+              nativeButton={false}
+              render={
+                <div
+                  aria-label="Add files, skills, and more context"
+                  className={styles.primitiveTrigger}
+                  tabIndex={0}
+                >
+                  <PlusIcon size={18} />
+                </div>
+              }
+            />
+          </Tooltip>
           <Menu.Portal>
             <Menu.Positioner align="start" side="top" sideOffset={6}>
               <Menu.Popup className={styles.menuPopup}>
