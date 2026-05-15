@@ -60,14 +60,14 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
   return (
     <TooltipGroupHandleContext value={handle}>
       <TooltipGroupPropsContext value={sharedProps}>
-        {children}
-
         <BaseTooltip.Root handle={handle} key={key} onOpenChange={handleOpenChange}>
           {({ payload }) => {
             const item = (payload as TooltipGroupItem | null) ?? null;
             activeItemRef.current = item;
 
-            if (!item || (item.title == null && !item.hotkey)) return null;
+            if (!item || (item.title == null && !item.hotkey)) {
+              return children;
+            }
 
             const arrow = item.arrow ?? false;
             const placement = item.placement ?? 'top';
@@ -157,9 +157,16 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
             const resolvedPortalContainer =
               item.popupContainer ?? popupContainer ?? portalContainer;
 
-            return resolvedPortalContainer ? (
-              <BaseTooltip.Portal container={resolvedPortalContainer}>{popup}</BaseTooltip.Portal>
-            ) : null;
+            return (
+              <>
+                {children}
+                {resolvedPortalContainer ? (
+                  <BaseTooltip.Portal container={resolvedPortalContainer}>
+                    {popup}
+                  </BaseTooltip.Portal>
+                ) : null}
+              </>
+            );
           }}
         </BaseTooltip.Root>
       </TooltipGroupPropsContext>

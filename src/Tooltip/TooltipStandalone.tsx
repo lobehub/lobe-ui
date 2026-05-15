@@ -129,11 +129,19 @@ export const TooltipStandalone = memo<TooltipProps>(
     );
 
     const triggerElement = useMemo(() => {
+      const popupTriggerId =
+        isValidElement(children) &&
+        (children as any).props['aria-haspopup'] !== undefined &&
+        (children as any).props.id !== undefined
+          ? (children as any).props.id
+          : undefined;
+
       const baseTriggerProps = {
         closeDelay: resolvedCloseDelay,
         delay: resolvedOpenDelay,
         disabled,
         ...triggerProps,
+        id: popupTriggerId ?? triggerProps?.id,
       };
 
       if (isValidElement(children)) {
