@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.12.3](https://github.com/lobehub/lobe-ui/compare/v5.12.2...v5.12.3) (2026-05-15)
+
+### 🐛 Bug Fixes
+
+- **tooltip**: Preserve popup trigger tooltips, closes [#520](https://github.com/lobehub/lobe-ui/issues/520) ([731c0a3](https://github.com/lobehub/lobe-ui/commit/731c0a3))
+
 ## [5.12.2](https://github.com/lobehub/lobe-ui/compare/v5.12.1...v5.12.2) (2026-05-14)
 
 ### 🐛 Bug Fixes
