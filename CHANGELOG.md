@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.13.0](https://github.com/lobehub/lobe-ui/compare/v5.12.3...v5.13.0) (2026-05-15)
+
+### ✨ Features
+
+- **menu**: Add header and footer slots to DropdownMenu and ContextMenu ([245fede](https://github.com/lobehub/lobe-ui/commit/245fede))
+
 ## [5.12.3](https://github.com/lobehub/lobe-ui/compare/v5.12.2...v5.12.3) (2026-05-15)
 
 ### 🐛 Bug Fixes
