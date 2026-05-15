@@ -160,6 +160,33 @@ export const DropdownMenuPopup = ({ className, ...rest }: DropdownMenuPopupProps
 
 DropdownMenuPopup.displayName = 'DropdownMenuPopup';
 
+export type DropdownMenuHeaderProps = React.HTMLAttributes<HTMLDivElement>;
+
+export const DropdownMenuHeader = ({ className, ...rest }: DropdownMenuHeaderProps) => {
+  return <div {...rest} className={cx(styles.header, className)} />;
+};
+
+DropdownMenuHeader.displayName = 'DropdownMenuHeader';
+
+export type DropdownMenuFooterProps = React.HTMLAttributes<HTMLDivElement>;
+
+export const DropdownMenuFooter = ({ className, ...rest }: DropdownMenuFooterProps) => {
+  return <div {...rest} className={cx(styles.footer, className)} />;
+};
+
+DropdownMenuFooter.displayName = 'DropdownMenuFooter';
+
+export type DropdownMenuScrollViewportProps = React.HTMLAttributes<HTMLDivElement>;
+
+export const DropdownMenuScrollViewport = ({
+  className,
+  ...rest
+}: DropdownMenuScrollViewportProps) => {
+  return <div {...rest} className={cx(styles.slotViewport, className)} />;
+};
+
+DropdownMenuScrollViewport.displayName = 'DropdownMenuScrollViewport';
+
 export type DropdownMenuItemProps = React.ComponentProps<typeof Menu.Item> & { danger?: boolean };
 
 export const DropdownMenuItem = ({ className, danger, ...rest }: DropdownMenuItemProps) => {

@@ -22,6 +22,14 @@ import { type ContextMenuItem } from './type';
 export type ContextMenuTriggerProps = {
   children: ReactNode;
   /**
+   * Footer slot pinned below the scrollable items area, with a divider border.
+   */
+  footer?: ReactNode;
+  /**
+   * Header slot pinned above the scrollable items area, with a divider border.
+   */
+  header?: ReactNode;
+  /**
    * Menu items to display. Supports lazy rendering via function.
    * When provided, context menu will be automatically shown on right-click.
    */
@@ -39,7 +47,7 @@ const styles = {
 };
 
 export const ContextMenuTrigger = memo<ContextMenuTriggerProps>(
-  ({ children, items, onContextMenu, ...rest }) => {
+  ({ children, footer, header, items, onContextMenu, ...rest }) => {
     const triggerId = useId();
     const state = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
     const open = state.open && state.triggerId === triggerId;
@@ -49,11 +57,11 @@ export const ContextMenuTrigger = memo<ContextMenuTriggerProps>(
         if (items) {
           event.preventDefault();
           const resolvedItems = typeof items === 'function' ? items() : items;
-          showContextMenu(resolvedItems);
+          showContextMenu(resolvedItems, { footer, header });
         }
         onContextMenu?.(event);
       },
-      [items, onContextMenu],
+      [items, onContextMenu, footer, header],
     );
 
     const triggerProps = {

@@ -27,6 +27,16 @@ Items can display a secondary description below the label using the `desc` prope
 
 <code src="./demos/desc.tsx" center></code>
 
+## Header & Footer
+
+Pass `header` and `footer` to `showContextMenu` (or to `ContextMenuTrigger`) to pin custom content above and below the scrollable items area. Both slots carry a divider border. Slot content is not a menu item: it is not keyboard-navigable, and clicking it does not close the menu — close it via `closeContextMenu()`.
+
+<code src="./demos/header-footer.tsx" center></code>
+
+When the items exceed the available height, the items area scrolls while the header and footer stay pinned.
+
+<code src="./demos/header-footer-scroll.tsx" center></code>
+
 ## Empty Submenu
 
 <code src="./demos/emptySubmenu.tsx" center></code>
@@ -55,6 +65,8 @@ Control how icon spacing is reserved across menu items. In `global` mode (defaul
 
 | Property      | Description                                                                                    | Type                  | Default    |
 | ------------- | ---------------------------------------------------------------------------------------------- | --------------------- | ---------- |
+| footer        | Pinned footer slot rendered below the scrollable items area                                    | `ReactNode`           | -          |
+| header        | Pinned header slot rendered above the scrollable items area                                    | `ReactNode`           | -          |
 | iconAlign     | Icon vertical alignment when items have `desc`. Only effective with descriptions.              | `'center' \| 'start'` | `'center'` |
 | iconSpaceMode | Icon space reservation: `global` reserves for all items, `group` reserves per group with icons | `'global' \| 'group'` | `'global'` |
 
@@ -64,4 +76,4 @@ Render once near the root to host imperative context menus.
 
 ### ContextMenuTrigger
 
-Declarative trigger wrapper that attaches open state attributes (`data-popup-open`, `data-state`, `aria-expanded`) for styling alignment with DropdownMenu. Use `onContextMenu` to call `showContextMenu`.
+Declarative trigger wrapper that attaches open state attributes (`data-popup-open`, `data-state`, `aria-expanded`) for styling alignment with DropdownMenu. Use `onContextMenu` to call `showContextMenu`. When the `items` prop is provided, the optional `header` and `footer` props are forwarded to the menu.

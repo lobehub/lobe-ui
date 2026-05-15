@@ -3,7 +3,6 @@
 import {
   Block,
   closeContextMenu,
-  ContextMenuHost,
   type ContextMenuItem,
   ContextMenuTrigger,
   Icon,
@@ -160,7 +159,6 @@ export default () => {
           </Text>
         </Block>
       </ContextMenuTrigger>
-      <ContextMenuHost />
 
       {fileList.length > 0 && (
         <div className={styles.fileList}>

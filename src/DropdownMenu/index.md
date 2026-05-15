@@ -27,6 +27,16 @@ Exported primitives can be composed to build custom dropdown menus.
 
 <code src="./demos/group.tsx" center></code>
 
+## Header & Footer
+
+Use the `header` and `footer` props to pin custom content above and below the scrollable items area. Both slots carry a divider border. Slot content is not a menu item: it is not keyboard-navigable, and clicking it does not close the menu — close the menu from a slot through the controlled `open` prop.
+
+<code src="./demos/header-footer.tsx" center></code>
+
+When the menu is taller than its `max-height`, the items area scrolls while the header and footer stay pinned. Constrain the height through `popupProps.style`.
+
+<code src="./demos/header-footer-scroll.tsx" center></code>
+
 ## Icon Space Mode
 
 Control how icon spacing is reserved across menu items. In `global` mode (default), if any item has an icon, all items reserve icon space. In `group` mode, only groups containing icons reserve icon space.
@@ -93,6 +103,8 @@ When using Tooltip inside DropdownMenu, wrap both in `TooltipGroup` to ensure th
 | --------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------- |
 | items           | Menu items (lazy supported)                                                                    | `DropdownMenuV2ItemType[] \| (() => DropdownMenuV2ItemType[])`                                                   | -              |
 | children        | Trigger element                                                                                | `ReactNode`                                                                                                      | -              |
+| header          | Pinned header slot rendered above the scrollable items area                                    | `ReactNode`                                                                                                      | -              |
+| footer          | Pinned footer slot rendered below the scrollable items area                                    | `ReactNode`                                                                                                      | -              |
 | iconAlign       | Icon vertical alignment when items have `desc`. Only effective with descriptions.              | `'center' \| 'start'`                                                                                            | `'center'`     |
 | iconSpaceMode   | Icon space reservation: `global` reserves for all items, `group` reserves per group with icons | `'global' \| 'group'`                                                                                            | `'global'`     |
 | nativeButton    | Shortcut for trigger nativeButton                                                              | `boolean`                                                                                                        | -              |

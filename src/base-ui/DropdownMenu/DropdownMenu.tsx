@@ -1,15 +1,20 @@
 'use client';
 
 import { Menu } from '@base-ui/react/menu';
+import { cx } from 'antd-style';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
+import { styles } from '@/Menu/sharedStyle';
 import { parseTrigger } from '@/utils/parseTrigger';
 
 import {
+  DropdownMenuFooter,
+  DropdownMenuHeader,
   DropdownMenuPopup,
   DropdownMenuPortal,
   DropdownMenuPositioner,
+  DropdownMenuScrollViewport,
   DropdownMenuTrigger,
 } from './atoms';
 import { renderDropdownMenuItems } from './renderItems';
@@ -19,6 +24,8 @@ const DropdownMenu = memo<DropdownMenuProps>(
   ({
     children,
     defaultOpen,
+    footer,
+    header,
     iconAlign,
     iconSpaceMode,
     items,
@@ -84,6 +91,8 @@ const DropdownMenu = memo<DropdownMenuProps>(
       triggerNativeButton: triggerProps?.nativeButton,
     });
 
+    const hasSlots = header != null || footer != null;
+
     const triggerElement = (
       <DropdownMenuTrigger
         {...triggerProps}
@@ -110,7 +119,22 @@ const DropdownMenu = memo<DropdownMenuProps>(
             hoverTrigger={openOnHover}
             placement={placement}
           >
-            <DropdownMenuPopup {...popupProps}>{menuItems}</DropdownMenuPopup>
+            <DropdownMenuPopup
+              {...popupProps}
+              className={
+                hasSlots
+                  ? (cx(styles.popupWithSlots, popupProps?.className as string) as any)
+                  : popupProps?.className
+              }
+            >
+              {header == null ? null : <DropdownMenuHeader>{header}</DropdownMenuHeader>}
+              {hasSlots ? (
+                <DropdownMenuScrollViewport>{menuItems}</DropdownMenuScrollViewport>
+              ) : (
+                menuItems
+              )}
+              {footer == null ? null : <DropdownMenuFooter>{footer}</DropdownMenuFooter>}
+            </DropdownMenuPopup>
           </DropdownMenuPositioner>
         </DropdownMenuPortal>
       </Menu.Root>

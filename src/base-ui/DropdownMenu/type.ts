@@ -27,6 +27,14 @@ export interface DropdownMenuProps<Payload = unknown> extends Omit<
 > {
   children: ReactNode;
   /**
+   * 底部固定插槽，渲染于可滚动的 items 区域下方，自带分隔边框
+   */
+  footer?: ReactNode;
+  /**
+   * 顶部固定插槽，渲染于可滚动的 items 区域上方，自带分隔边框
+   */
+  header?: ReactNode;
+  /**
    * 图标与 label+desc 的垂直对齐方式
    * - 'center': 图标垂直居中（默认）
    * - 'start': 图标与第一行文本顶部对齐，仅在 item 有 desc 时生效

@@ -1,6 +1,7 @@
 'use client';
 
 import { ContextMenu } from '@base-ui/react/context-menu';
+import { cx } from 'antd-style';
 import { memo, useEffect, useMemo, useSyncExternalStore } from 'react';
 
 import { useIsClient } from '@/hooks/useIsClient';
@@ -52,6 +53,7 @@ export const ContextMenuHost = memo(() => {
     [state.items, state.iconAlign, state.iconSpaceMode],
   );
   const { zIndex, ref: zRef } = useLayerZIndex<HTMLDivElement>('floating');
+  const hasSlots = state.header != null || state.footer != null;
   if (!isClient) return null;
   if (!state.open && state.items.length === 0) return null;
 
@@ -75,10 +77,12 @@ export const ContextMenuHost = memo(() => {
           style={{ ...noAnimationStyles, zIndex }}
         >
           <ContextMenu.Popup
-            className={styles.popup}
+            className={cx(styles.popup, hasSlots && styles.popupWithSlots)}
             onContextMenu={preventDefaultAndStopPropagation}
           >
-            {menuItems}
+            {state.header == null ? null : <div className={styles.header}>{state.header}</div>}
+            {hasSlots ? <div className={styles.slotViewport}>{menuItems}</div> : menuItems}
+            {state.footer == null ? null : <div className={styles.footer}>{state.footer}</div>}
           </ContextMenu.Popup>
         </ContextMenu.Positioner>
       </ContextMenu.Portal>

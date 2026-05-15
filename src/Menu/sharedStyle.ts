@@ -22,6 +22,20 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     color: ${cssVar.colorTextTertiary};
   `,
 
+  footer: css`
+    flex-shrink: 0;
+    padding-block: 8px;
+    padding-inline: 12px;
+    border-block-start: 1px solid ${cssVar.colorBorder};
+  `,
+
+  header: css`
+    flex-shrink: 0;
+    padding-block: 8px;
+    padding-inline: 12px;
+    border-block-end: 1px solid ${cssVar.colorBorder};
+  `,
+
   groupLabel: css`
     user-select: none;
 
@@ -159,6 +173,20 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       0 0 15px 0 #00000008,
       0 2px 30px 0 #00000014;
   `,
+
+  popupWithSlots: css`
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    max-height: var(--available-height);
+  `,
+
+  slotViewport: css`
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+  `,
+
   positioner: css`
     --lobe-dropdown-animation-duration: 140ms;
     --lobe-dropdown-animation-scale-y: 0.92;
