@@ -33,6 +33,10 @@ export interface BaseSubMenuType {
   delay?: number;
   desc?: ReactNode;
   disabled?: boolean;
+  /** Pinned footer slot, rendered below the scrollable submenu items with a divider border. */
+  footer?: ReactNode;
+  /** Pinned header slot, rendered above the scrollable submenu items with a divider border. */
+  header?: ReactNode;
   icon?: IconProps['icon'];
   key?: Key;
   label?: ReactNode;

@@ -68,3 +68,43 @@ describe('ContextMenu header/footer slots', () => {
     expect(screen.queryByTestId('cm-header')).toBeNull();
   });
 });
+
+const submenuItems: ContextMenuItem[] = [
+  {
+    children: [{ key: 'sub-a', label: 'Sub A' }],
+    defaultOpen: true,
+    footer: <div data-testid="cm-submenu-footer">Submenu Footer</div>,
+    header: <div data-testid="cm-submenu-header">Submenu Header</div>,
+    key: 'parent',
+    label: 'Parent',
+  },
+];
+
+describe('ContextMenu submenu header/footer slots', () => {
+  afterEach(() => {
+    act(() => closeContextMenu());
+  });
+
+  test('renders header and footer inside the open submenu popup', () => {
+    renderHost();
+
+    act(() => {
+      showContextMenu(submenuItems);
+    });
+
+    expect(screen.getByTestId('cm-submenu-header')).toBeDefined();
+    expect(screen.getByTestId('cm-submenu-footer')).toBeDefined();
+    expect(screen.getByText('Sub A')).toBeDefined();
+  });
+
+  test('submenu slots are not registered as menu items', () => {
+    renderHost();
+
+    act(() => {
+      showContextMenu(submenuItems);
+    });
+
+    expect(screen.getByTestId('cm-submenu-header').closest('[role="menuitem"]')).toBeNull();
+    expect(screen.getByTestId('cm-submenu-footer').closest('[role="menuitem"]')).toBeNull();
+  });
+});

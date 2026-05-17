@@ -24,8 +24,10 @@ import { styles } from '@/Menu/sharedStyle';
 import {
   DropdownMenuCheckboxItemIndicator,
   DropdownMenuCheckboxItemPrimitive,
+  DropdownMenuFooter,
   DropdownMenuGroup,
   DropdownMenuGroupLabel,
+  DropdownMenuHeader,
   DropdownMenuItem,
   DropdownMenuItemContent,
   DropdownMenuItemDesc,
@@ -36,6 +38,7 @@ import {
   DropdownMenuPopup,
   DropdownMenuPortal,
   DropdownMenuPositioner,
+  DropdownMenuScrollViewport,
   DropdownMenuSeparator,
   DropdownMenuSubmenuArrow,
   DropdownMenuSubmenuRoot,
@@ -216,6 +219,13 @@ export const renderDropdownMenuItems = (
       const label = getItemLabel(submenu);
       const labelText = typeof label === 'string' ? label : undefined;
       const isDanger = 'danger' in submenu && Boolean(submenu.danger);
+      const submenuHasSlots = submenu.header != null || submenu.footer != null;
+      const submenuItems = submenu.children
+        ? renderDropdownMenuItems(submenu.children, nextKeyPath, {
+            iconAlign,
+            iconSpaceMode,
+          })
+        : null;
 
       return (
         <DropdownMenuSubmenuRoot
@@ -242,13 +252,18 @@ export const renderDropdownMenuItems = (
           </DropdownMenuSubmenuTrigger>
           <DropdownMenuPortal>
             <DropdownMenuPositioner alignOffset={-4} data-submenu="" sideOffset={-1}>
-              <DropdownMenuPopup>
-                {submenu.children
-                  ? renderDropdownMenuItems(submenu.children, nextKeyPath, {
-                      iconAlign,
-                      iconSpaceMode,
-                    })
-                  : null}
+              <DropdownMenuPopup className={submenuHasSlots ? styles.popupWithSlots : undefined}>
+                {submenu.header == null ? null : (
+                  <DropdownMenuHeader>{submenu.header}</DropdownMenuHeader>
+                )}
+                {submenuHasSlots ? (
+                  <DropdownMenuScrollViewport>{submenuItems}</DropdownMenuScrollViewport>
+                ) : (
+                  submenuItems
+                )}
+                {submenu.footer == null ? null : (
+                  <DropdownMenuFooter>{submenu.footer}</DropdownMenuFooter>
+                )}
               </DropdownMenuPopup>
             </DropdownMenuPositioner>
           </DropdownMenuPortal>
