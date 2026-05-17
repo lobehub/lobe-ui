@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.14.0](https://github.com/lobehub/lobe-ui/compare/v5.13.0...v5.14.0) (2026-05-17)
+
+### ✨ Features
+
+- **menu**: Add header and footer slots to submenu popups, closes [#533](https://github.com/lobehub/lobe-ui/issues/533) ([68ef623](https://github.com/lobehub/lobe-ui/commit/68ef623))
+
 # [5.13.0](https://github.com/lobehub/lobe-ui/compare/v5.12.3...v5.13.0) (2026-05-15)
 
 ### ✨ Features
