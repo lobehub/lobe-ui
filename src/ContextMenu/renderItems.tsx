@@ -26,9 +26,9 @@ import {
   type RenderItemContentOptions,
   type RenderOptions,
 } from '@/Menu';
+import { styles } from '@/Menu/sharedStyle';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
-import { styles } from './style';
 import {
   type ContextMenuCheckboxItem,
   type ContextMenuItem,
@@ -99,14 +99,19 @@ const ContextMenuSwitchItemInternal = ({
       }}
     >
       {children}
-      <Switch
-        checked={checked}
-        disabled={disabled}
-        size="small"
-        style={{ marginInlineStart: 16 }}
-        onChange={handleCheckedChange}
-        onClick={(_, e) => e.stopPropagation()}
-      />
+      <span
+        style={{ display: 'inline-flex', marginInlineStart: 16 }}
+        onFocus={(e) => e.stopPropagation()}
+      >
+        <Switch
+          checked={checked}
+          disabled={disabled}
+          size="small"
+          tabIndex={-1}
+          onChange={handleCheckedChange}
+          onClick={(_, e) => e.stopPropagation()}
+        />
+      </span>
     </ContextMenu.Item>
   );
 };
@@ -285,6 +290,16 @@ export const renderContextMenuItems = (
       const label = getItemLabel(submenu);
       const labelText = typeof label === 'string' ? label : undefined;
       const isDanger = 'danger' in submenu && Boolean(submenu.danger);
+      const submenuHasSlots = submenu.header != null || submenu.footer != null;
+      const submenuBody =
+        submenu.children && submenu.children.length > 0 ? (
+          renderContextMenuItems(submenu.children, nextKeyPath, {
+            iconAlign,
+            iconSpaceMode,
+          })
+        ) : (
+          <EmptyMenuItem />
+        );
 
       return (
         <ContextMenu.SubmenuRoot
@@ -317,14 +332,19 @@ export const renderContextMenuItems = (
               sideOffset={-1}
               onContextMenu={preventDefaultAndStopPropagation}
             >
-              <ContextMenu.Popup className={styles.popup}>
-                {submenu.children && submenu.children.length > 0 ? (
-                  renderContextMenuItems(submenu.children, nextKeyPath, {
-                    iconAlign,
-                    iconSpaceMode,
-                  })
+              <ContextMenu.Popup
+                className={submenuHasSlots ? cx(styles.popup, styles.popupWithSlots) : styles.popup}
+              >
+                {submenu.header == null ? null : (
+                  <div className={styles.header}>{submenu.header}</div>
+                )}
+                {submenuHasSlots ? (
+                  <div className={styles.slotViewport}>{submenuBody}</div>
                 ) : (
-                  <EmptyMenuItem />
+                  submenuBody
+                )}
+                {submenu.footer == null ? null : (
+                  <div className={styles.footer}>{submenu.footer}</div>
                 )}
               </ContextMenu.Popup>
             </ContextMenu.Positioner>

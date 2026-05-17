@@ -71,3 +71,42 @@ describe('DropdownMenu header/footer slots', () => {
     expect(screen.getByText('Item B')).toBeDefined();
   });
 });
+
+const submenuItems: DropdownItem[] = [
+  {
+    children: [
+      { key: 'sub-a', label: 'Sub A' },
+      { key: 'sub-b', label: 'Sub B' },
+    ],
+    defaultOpen: true,
+    footer: <div data-testid="submenu-footer">Submenu Footer</div>,
+    header: <div data-testid="submenu-header">Submenu Header</div>,
+    key: 'parent',
+    label: 'Parent',
+  },
+];
+
+describe('DropdownMenu submenu header/footer slots', () => {
+  test('renders header and footer inside the open submenu popup', () => {
+    render(
+      <DropdownMenu open items={submenuItems}>
+        <button type="button">trigger</button>
+      </DropdownMenu>,
+    );
+
+    expect(screen.getByTestId('submenu-header')).toBeDefined();
+    expect(screen.getByTestId('submenu-footer')).toBeDefined();
+    expect(screen.getByText('Sub A')).toBeDefined();
+  });
+
+  test('submenu slots are not registered as menu items', () => {
+    render(
+      <DropdownMenu open items={submenuItems}>
+        <button type="button">trigger</button>
+      </DropdownMenu>,
+    );
+
+    expect(screen.getByTestId('submenu-header').closest('[role="menuitem"]')).toBeNull();
+    expect(screen.getByTestId('submenu-footer').closest('[role="menuitem"]')).toBeNull();
+  });
+});
