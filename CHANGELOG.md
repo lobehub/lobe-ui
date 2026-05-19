@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.14.1](https://github.com/lobehub/lobe-ui/compare/v5.14.0...v5.14.1) (2026-05-19)
+
+### 💄 Styles
+
+- **toast**: Align actions with first line ([7ca79ac](https://github.com/lobehub/lobe-ui/commit/7ca79ac))
+
 # [5.14.0](https://github.com/lobehub/lobe-ui/compare/v5.13.0...v5.14.0) (2026-05-17)
 
 ### ✨ Features
