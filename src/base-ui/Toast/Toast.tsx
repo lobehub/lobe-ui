@@ -45,6 +45,11 @@ const ToastItem = memo<ToastProps>(({ toast, classNames, styles: customStyles })
   const iconColor = typeColors[type];
   const IconComponent = icon ?? typeIcons[type];
   const isLoading = type === 'loading';
+  const standaloneDescriptionClassName = cx(
+    styles.description,
+    styles.descriptionStandalone,
+    classNames?.description,
+  );
 
   const renderIcon = (): ReactNode => {
     if (!IconComponent) return null;
@@ -140,7 +145,7 @@ const ToastItem = memo<ToastProps>(({ toast, classNames, styles: customStyles })
               description && (
                 <div className={styles.titleRow}>
                   <BaseToast.Description
-                    className={cx(styles.description, classNames?.description)}
+                    className={standaloneDescriptionClassName}
                     style={customStyles?.description}
                   >
                     {description}

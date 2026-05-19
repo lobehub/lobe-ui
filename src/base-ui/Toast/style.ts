@@ -128,7 +128,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     border: none;
     border-radius: ${cssVar.borderRadiusSM};
 
-    color: ${cssVar.colorTextTertiary};
+    color: ${cssVar.colorTextSecondary};
 
     background: transparent;
 
@@ -167,6 +167,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     font-size: 13px;
     line-height: 1.5;
     color: ${cssVar.colorTextSecondary};
+  `,
+
+  descriptionStandalone: css`
+    color: ${cssVar.colorText};
   `,
 
   icon: css`
@@ -315,7 +319,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   titleRow: css`
     display: flex;
     gap: 8px;
-    align-items: center;
+    align-items: flex-start;
   `,
 
   toastBody: css`
@@ -327,7 +331,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   toastBodyCenter: css`
     display: flex;
     gap: 12px;
-    align-items: center;
+    align-items: flex-start;
   `,
 
   viewport: css`
