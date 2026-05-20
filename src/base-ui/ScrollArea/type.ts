@@ -15,6 +15,15 @@ export interface ScrollAreaProps extends Omit<ScrollAreaRootProps, 'children'> {
   contentProps?: Omit<ScrollAreaContentProps, 'children'>;
   corner?: boolean;
   cornerProps?: ScrollAreaCornerProps;
+  /**
+   * Override Base UI's default `min-width: fit-content` on the content node by
+   * setting `min-width: 0`. Use this when an unbreakable wide child (e.g. a
+   * `<pre>` code block) would otherwise propagate its intrinsic width up the
+   * ancestor chain and stretch the scroll container past its parent.
+   *
+   * @default false
+   */
+  disableContentFit?: boolean;
   scrollbarProps?: Omit<ScrollAreaScrollbarProps, 'children'>;
   /**
    * Enable gradient scroll fade on the viewport edges.

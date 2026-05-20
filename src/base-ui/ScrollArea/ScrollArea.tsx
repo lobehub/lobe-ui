@@ -17,16 +17,21 @@ export const ScrollArea: FC<ScrollAreaProps> = ({
   contentProps,
   corner = false,
   cornerProps,
+  disableContentFit = false,
   scrollFade = false,
   scrollbarProps,
   thumbProps,
   viewportProps,
   ...rest
 }) => {
+  const mergedContentProps = disableContentFit
+    ? { ...contentProps, style: { minWidth: 0, ...contentProps?.style } }
+    : contentProps;
+
   return (
     <ScrollAreaRoot {...rest}>
       <ScrollAreaViewport scrollFade={scrollFade} {...viewportProps}>
-        <ScrollAreaContent {...contentProps}>{children}</ScrollAreaContent>
+        <ScrollAreaContent {...mergedContentProps}>{children}</ScrollAreaContent>
       </ScrollAreaViewport>
       <ScrollAreaScrollbar {...scrollbarProps}>
         <ScrollAreaThumb {...thumbProps} />

@@ -32,6 +32,18 @@ four corners only fade when both axes overflow.
 
 <code src="./demos/fade-both.tsx" nopadding></code>
 
+## Content overflow (default `min-width: fit-content`)
+
+Base UI's `ScrollArea.Content` ships with inline `min-width: fit-content`. When a
+child (e.g. a `<pre>` code block) has a larger intrinsic width than the viewport,
+this default stretches the entire scroll container horizontally past its parent
+instead of constraining the content and exposing a horizontal scrollbar. Set
+`disableContentFit` to override the inline `min-width` with `0`, so the scroll
+container honours its width constraints and the wide child scrolls horizontally
+inside the viewport.
+
+<code src="./demos/content-fit-overflow.tsx" nopadding></code>
+
 ## Usage
 
 ```tsx | pure
@@ -132,15 +144,16 @@ ScrollArea is built on top of Base UI Scroll Area and exposes the same primitive
 
 Composed scroll area with defaults for viewport, content, scrollbar, and thumb.
 
-| Prop           | Type                                                        | Default | Description                                                                                                          |
-| -------------- | ----------------------------------------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------- |
-| scrollFade     | `boolean \| 'vertical' \| 'horizontal' \| 'both'`           | `false` | Enable gradient scroll fade on the viewport edges. `true` ≡ `'vertical'`. `'both'` intersects vertical + horizontal. |
-| contentProps   | `Omit<ScrollAreaContentProps, 'children'>`                  | -       | Props passed to `ScrollAreaContent`.                                                                                 |
-| corner         | `boolean`                                                   | `false` | Whether to render the corner.                                                                                        |
-| cornerProps    | `ScrollAreaCornerProps`                                     | -       | Props passed to `ScrollAreaCorner`.                                                                                  |
-| scrollbarProps | `Omit<ScrollAreaScrollbarProps, 'children'>`                | -       | Props passed to `ScrollAreaScrollbar`.                                                                               |
-| thumbProps     | `ScrollAreaThumbProps`                                      | -       | Props passed to `ScrollAreaThumb`.                                                                                   |
-| viewportProps  | `Omit<ScrollAreaViewportProps, 'children' \| 'scrollFade'>` | -       | Props passed to `ScrollAreaViewport`.                                                                                |
+| Prop              | Type                                                        | Default | Description                                                                                                                                                                                                                             |
+| ----------------- | ----------------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| scrollFade        | `boolean \| 'vertical' \| 'horizontal' \| 'both'`           | `false` | Enable gradient scroll fade on the viewport edges. `true` ≡ `'vertical'`. `'both'` intersects vertical + horizontal.                                                                                                                    |
+| disableContentFit | `boolean`                                                   | `false` | Override Base UI's default `min-width: fit-content` on the content node with `min-width: 0`. Prevents an unbreakable wide child (e.g. a `<pre>` code block) from propagating its intrinsic width upward and stretching the scroll root. |
+| contentProps      | `Omit<ScrollAreaContentProps, 'children'>`                  | -       | Props passed to `ScrollAreaContent`.                                                                                                                                                                                                    |
+| corner            | `boolean`                                                   | `false` | Whether to render the corner.                                                                                                                                                                                                           |
+| cornerProps       | `ScrollAreaCornerProps`                                     | -       | Props passed to `ScrollAreaCorner`.                                                                                                                                                                                                     |
+| scrollbarProps    | `Omit<ScrollAreaScrollbarProps, 'children'>`                | -       | Props passed to `ScrollAreaScrollbar`.                                                                                                                                                                                                  |
+| thumbProps        | `ScrollAreaThumbProps`                                      | -       | Props passed to `ScrollAreaThumb`.                                                                                                                                                                                                      |
+| viewportProps     | `Omit<ScrollAreaViewportProps, 'children' \| 'scrollFade'>` | -       | Props passed to `ScrollAreaViewport`.                                                                                                                                                                                                   |
 
 ### Root
 
