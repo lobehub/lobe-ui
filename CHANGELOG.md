@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.14.2](https://github.com/lobehub/lobe-ui/compare/v5.14.1...v5.14.2) (2026-05-20)
+
+### 🐛 Bug Fixes
+
+- **scroll-area**: Add disableContentFit prop ([b583d20](https://github.com/lobehub/lobe-ui/commit/b583d20))
+
 ## [5.14.1](https://github.com/lobehub/lobe-ui/compare/v5.14.0...v5.14.1) (2026-05-19)
 
 ### 💄 Styles
