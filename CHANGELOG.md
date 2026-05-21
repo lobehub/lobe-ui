@@ -2,6 +2,24 @@
 
 # Changelog
 
+## [5.14.1](https://github.com/lobehub/lobe-ui/compare/v5.14.0...v5.14.1) (2026-05-21)
+
+### 🎫 Chores
+
+- **release**: Force patch release ([156cf37](https://github.com/lobehub/lobe-ui/commit/156cf37))
+- **release**: Force patch release ([13a2a73](https://github.com/lobehub/lobe-ui/commit/13a2a73))
+- **release**: V5.14.1 [skip ci] ([2d3e5b0](https://github.com/lobehub/lobe-ui/commit/2d3e5b0))
+- **release**: V5.14.2 [skip ci] ([5a59db1](https://github.com/lobehub/lobe-ui/commit/5a59db1))
+- **release**: V5.14.3 [skip ci] ([931a800](https://github.com/lobehub/lobe-ui/commit/931a800))
+
+### 🐛 Bug Fixes
+
+- **scroll-area**: Add disableContentFit prop ([b583d20](https://github.com/lobehub/lobe-ui/commit/b583d20))
+
+### 💄 Styles
+
+- **toast**: Align actions with first line ([7ca79ac](https://github.com/lobehub/lobe-ui/commit/7ca79ac))
+
 ## [5.14.3](https://github.com/lobehub/lobe-ui/compare/v5.14.2...v5.14.3) (2026-05-21)
 
 ### 🎫 Chores
