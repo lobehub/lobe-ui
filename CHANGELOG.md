@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.14.3](https://github.com/lobehub/lobe-ui/compare/v5.14.2...v5.14.3) (2026-05-21)
+
+### 🎫 Chores
+
+- **release**: Force patch release ([13a2a73](https://github.com/lobehub/lobe-ui/commit/13a2a73))
+
 ## [5.14.2](https://github.com/lobehub/lobe-ui/compare/v5.14.1...v5.14.2) (2026-05-20)
 
 ### 🐛 Bug Fixes
