@@ -81,7 +81,7 @@ const ConfirmBody = ({ config }: { config: ModalConfirmConfig }) => {
 
   return (
     <>
-      {content && <div style={{ padding: '16px 24px' }}>{content}</div>}
+      {content && <div style={{ padding: '12px 16px' }}>{content}</div>}
       <ModalFooter>
         <button
           className={cx(styles.buttonBase, styles.cancelButton)}
