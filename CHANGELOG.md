@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.14.2](https://github.com/lobehub/lobe-ui/compare/v5.14.1...v5.14.2) (2026-05-22)
+
+### 💄 Styles
+
+- **modal**: Align ConfirmBody content padding with header/footer ([616f47d](https://github.com/lobehub/lobe-ui/commit/616f47d))
+
 ## [5.14.1](https://github.com/lobehub/lobe-ui/compare/v5.14.0...v5.14.1) (2026-05-21)
 
 ### 🎫 Chores
