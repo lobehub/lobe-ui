@@ -12,7 +12,7 @@ import { type DivProps } from '@/types';
 export type FormVariant = 'filled' | 'outlined' | 'borderless';
 export type ItemsType = 'group' | 'flat';
 
-export interface FormProps extends Omit<AntFormProps, 'variant'> {
+export interface FormProps extends Omit<AntFormProps, 'variant' | 'styles' | 'classNames'> {
   activeKey?: (string | number)[];
   children?: ReactNode;
   classNames?: FormGroupProps['classNames'] & {

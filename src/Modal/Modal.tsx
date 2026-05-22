@@ -59,7 +59,7 @@ const Modal = memo<ModalProps>(
             title={title}
             classNames={
               typeof classNames === 'function'
-                ? classNames
+                ? (classNames as any)
                 : {
                     ...classNames,
                     wrapper: cx(styles.wrap, classNames?.wrapper),
@@ -103,7 +103,7 @@ const Modal = memo<ModalProps>(
             }
             styles={
               typeof customStyles === 'function'
-                ? customStyles
+                ? (customStyles as any)
                 : {
                     ...customStyles,
                     body: {
@@ -131,13 +131,13 @@ const Modal = memo<ModalProps>(
       >
         <AntModal
           closable
-          mask={{ closable: true }}
           cancelText={cancelText}
           className={cx(styles.content, className)}
           closeIcon={<Icon icon={X} size={20} />}
           confirmLoading={confirmLoading}
           destroyOnHidden={destroyOnHidden}
           footer={hideFooter ? null : footer}
+          mask={{ closable: true }}
           okButtonProps={okButtonProps}
           okText={okText}
           open={open}

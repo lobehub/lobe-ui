@@ -179,7 +179,10 @@ export const TooltipStandalone = memo<TooltipProps>(
       }
 
       return (
-        <BaseTooltip.Trigger {...baseTriggerProps} ref={mergeRefs([refProp, triggerCallbackRef])}>
+        <BaseTooltip.Trigger
+          {...baseTriggerProps}
+          ref={mergeRefs([refProp, triggerCallbackRef]) as any}
+        >
           {children}
         </BaseTooltip.Trigger>
       );

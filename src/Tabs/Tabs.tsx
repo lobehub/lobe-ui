@@ -19,10 +19,10 @@ const Tabs: FC<TabsProps> = ({ className, compact, variant = 'rounded', items, .
       items={items}
       {...rest}
       classNames={{
-        ...rest?.classNames,
+        ...(rest?.classNames as any),
         popup: {
           root: styles.dropdown,
-          ...rest?.classNames?.popup,
+          ...(rest?.classNames as any)?.popup,
         },
       }}
       more={{
