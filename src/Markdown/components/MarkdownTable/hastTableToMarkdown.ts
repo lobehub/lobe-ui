@@ -8,16 +8,37 @@ type HastNode = {
 
 const escapeCell = (text: string) => text.replaceAll('|', '\\|').replaceAll(/\r?\n/g, '<br>');
 
+const matchAlign = (source: string): 'center' | 'left' | 'right' | null => {
+  if (source.includes('center')) return 'center';
+  if (source.includes('right')) return 'right';
+  if (source.includes('left')) return 'left';
+  return null;
+};
+
 const readAlign = (node: HastNode | undefined): 'center' | 'left' | 'right' | null => {
   const style = node?.properties?.style;
   const align = node?.properties?.align;
-  const haystack = typeof style === 'string' ? style.toLowerCase() : '';
-  const explicit = typeof align === 'string' ? align.toLowerCase() : '';
-  const value = haystack || explicit;
-  if (value.includes('center')) return 'center';
-  if (value.includes('right')) return 'right';
-  if (value.includes('left')) return 'left';
-  return null;
+  const styleStr = typeof style === 'string' ? style.toLowerCase() : '';
+  const alignStr = typeof align === 'string' ? align.toLowerCase() : '';
+  // Prefer the inline style hint (more specific) but fall back to the
+  // explicit `align` attribute when style has no alignment keyword —
+  // otherwise an unrelated style like `color: red` would suppress
+  // `align="right"`.
+  return matchAlign(styleStr) ?? matchAlign(alignStr);
+};
+
+// CommonMark code-span rule: open and close with N backticks where N is
+// longer than any run of consecutive backticks inside the content. If the
+// content starts or ends with a backtick, pad with a single space on each
+// side (the parser strips one space when both sides are padded).
+const encodeInlineCode = (text: string): string => {
+  let longestRun = 0;
+  const runs = text.match(/`+/g);
+  if (runs) for (const run of runs) longestRun = Math.max(longestRun, run.length);
+  const fence = '`'.repeat(longestRun + 1);
+  const needsPad = text.startsWith('`') || text.endsWith('`');
+  const body = needsPad ? ` ${text} ` : text;
+  return `${fence}${body}${fence}`;
 };
 
 const renderInline = (node: HastNode): string => {
@@ -31,7 +52,7 @@ const renderInline = (node: HastNode): string => {
       return '<br>';
     }
     case 'code': {
-      return `\`${inner}\``;
+      return encodeInlineCode(inner);
     }
     case 'strong':
     case 'b': {
