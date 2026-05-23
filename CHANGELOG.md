@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.15.0](https://github.com/lobehub/lobe-ui/compare/v5.14.2...v5.15.0) (2026-05-23)
+
+### ✨ Features
+
+- **markdown**: Add copy button to tables, closes [#536](https://github.com/lobehub/lobe-ui/issues/536) ([93099c8](https://github.com/lobehub/lobe-ui/commit/93099c8))
+
 ## [5.14.2](https://github.com/lobehub/lobe-ui/compare/v5.14.1...v5.14.2) (2026-05-22)
 
 ### 💄 Styles
