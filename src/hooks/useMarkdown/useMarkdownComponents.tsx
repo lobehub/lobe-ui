@@ -6,6 +6,7 @@ import type { Components } from 'react-markdown';
 import Hotkey from '@/Hotkey';
 import { CodeBlock } from '@/Markdown/components/CodeBlock';
 import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
+import MarkdownTable from '@/Markdown/components/MarkdownTable';
 import Image from '@/mdx/mdxComponents/Image';
 import Link from '@/mdx/mdxComponents/Link';
 import Section from '@/mdx/mdxComponents/Section';
@@ -112,6 +113,11 @@ export const useMarkdownComponents = (): Components => {
 
   const memoColorPreview = useCallback(({ node, ...props }: any) => <code {...props} />, []);
 
+  const memoTable = useCallback(
+    ({ node, ...props }: any) => <MarkdownTable node={node} {...props} />,
+    [],
+  );
+
   const memoComponents = useMemo(
     () => ({
       a: memoA,
@@ -122,9 +128,21 @@ export const useMarkdownComponents = (): Components => {
       p: memeP,
       pre: memoPre,
       section: memoSection,
+      table: memoTable,
       video: memoVideo,
     }),
-    [memoA, memoBr, memoImg, memoVideo, memoPre, memoSection, memeP, memoColorPreview, memoKbd],
+    [
+      memoA,
+      memoBr,
+      memoImg,
+      memoVideo,
+      memoPre,
+      memoSection,
+      memeP,
+      memoColorPreview,
+      memoKbd,
+      memoTable,
+    ],
   );
 
   return useMemo(
