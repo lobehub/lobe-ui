@@ -233,9 +233,12 @@ export const TooltipStandalone = memo<TooltipProps>(
                 {TooltipArrowIcon}
               </BaseTooltip.Arrow>
             )}
-            <div className={resolvedClassNames.viewport} style={resolvedStyles.viewport}>
+            <BaseTooltip.Viewport
+              className={resolvedClassNames.viewport}
+              style={resolvedStyles.viewport}
+            >
               <TooltipContent hotkey={hotkey} hotkeyProps={hotkeyProps} title={title} />
-            </div>
+            </BaseTooltip.Viewport>
           </BaseTooltip.Popup>
         </BaseTooltip.Positioner>
       ),

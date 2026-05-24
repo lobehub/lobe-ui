@@ -126,18 +126,12 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
                       {PopoverArrowIcon}
                     </PopoverArrow>
                   )}
-                  {contentLayoutAnimation ? (
-                    <PopoverViewport
-                      className={resolvedClassNames.viewport}
-                      style={resolvedStyles.viewport}
-                    >
-                      {contentNode}
-                    </PopoverViewport>
-                  ) : (
-                    <div className={resolvedClassNames.viewport} style={resolvedStyles.viewport}>
-                      {contentNode}
-                    </div>
-                  )}
+                  <PopoverViewport
+                    className={resolvedClassNames.viewport}
+                    style={resolvedStyles.viewport}
+                  >
+                    {contentNode}
+                  </PopoverViewport>
                 </PopoverPopup>
               </PopoverPositioner>
             );

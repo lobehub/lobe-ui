@@ -103,7 +103,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
               viewport: resolvedStyleProps?.content,
             };
 
-            const body = layoutAnimation ? (
+            const body = (
               <BaseTooltip.Viewport
                 className={resolvedClassNames.viewport}
                 style={resolvedStyles.viewport}
@@ -114,14 +114,6 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
                   title={item.title}
                 />
               </BaseTooltip.Viewport>
-            ) : (
-              <div className={resolvedClassNames.viewport} style={resolvedStyles.viewport}>
-                <TooltipContent
-                  hotkey={item.hotkey}
-                  hotkeyProps={item.hotkeyProps}
-                  title={item.title}
-                />
-              </div>
             );
 
             const popup = (
