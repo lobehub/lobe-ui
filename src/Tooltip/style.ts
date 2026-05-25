@@ -62,9 +62,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     background: ${cssVar.colorBgElevated};
     box-shadow:
-      0 1px 2px 0 rgba(0, 0, 0, 3%),
-      0 1px 6px -1px rgba(0, 0, 0, 2%),
-      0 2px 4px 0 rgba(0, 0, 0, 2%);
+      0 1px 2px 0 rgb(0 0 0 / 3%),
+      0 1px 6px -1px rgb(0 0 0 / 2%),
+      0 2px 4px 0 rgb(0 0 0 / 2%);
 
     transition-timing-function: var(--lobe-tooltip-animation-ease-out);
     transition-duration: var(--lobe-tooltip-animation-duration);
@@ -167,11 +167,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     gap: 6px;
     align-items: center;
 
-    max-width: var(--available-width);
     padding-block: 4px;
     padding-inline: var(--lobe-tooltip-viewport-inline-padding);
 
-    word-break: break-word;
+    overflow-wrap: break-word;
     white-space: normal;
 
     [data-previous],

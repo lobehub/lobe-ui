@@ -3,7 +3,15 @@
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import { cx } from 'antd-style';
-import { cloneElement, isValidElement, memo, useCallback, useMemo, useState } from 'react';
+import {
+  cloneElement,
+  isValidElement,
+  memo,
+  type Ref,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 import { useFloatingLayer } from '@/hooks/useFloatingLayer';
@@ -179,7 +187,10 @@ export const TooltipStandalone = memo<TooltipProps>(
       }
 
       return (
-        <BaseTooltip.Trigger {...baseTriggerProps} ref={mergeRefs([refProp, triggerCallbackRef])}>
+        <BaseTooltip.Trigger
+          {...baseTriggerProps}
+          ref={mergeRefs([refProp, triggerCallbackRef]) as Ref<HTMLButtonElement>}
+        >
           {children}
         </BaseTooltip.Trigger>
       );
@@ -222,9 +233,12 @@ export const TooltipStandalone = memo<TooltipProps>(
                 {TooltipArrowIcon}
               </BaseTooltip.Arrow>
             )}
-            <div className={resolvedClassNames.viewport} style={resolvedStyles.viewport}>
+            <BaseTooltip.Viewport
+              className={resolvedClassNames.viewport}
+              style={resolvedStyles.viewport}
+            >
               <TooltipContent hotkey={hotkey} hotkeyProps={hotkeyProps} title={title} />
-            </div>
+            </BaseTooltip.Viewport>
           </BaseTooltip.Popup>
         </BaseTooltip.Positioner>
       ),

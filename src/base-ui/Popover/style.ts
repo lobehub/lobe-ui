@@ -170,10 +170,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     --lobe-popover-viewport-inline-padding: 12px;
 
     position: relative;
-
     overflow: clip;
-
-    max-width: var(--available-width);
     padding-block: 12px;
     padding-inline: var(--lobe-popover-viewport-inline-padding);
 
