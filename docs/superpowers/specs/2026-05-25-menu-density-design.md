@@ -38,9 +38,6 @@ A secondary structural issue: `src/Menu/sharedStyle.ts` lives outside `src/base-
 
 Single-line item is the canonical baseline. All measurements assume single-row item; multi-line forms (label + desc stacked) grow naturally and are not the design target.
 
-| Token | Current | New (C) | Notes |
-| ----- | ------- | ------- | ----- |
-
 Notation: `padding-block / padding-inline`. Group label uses `block-start block-end / inline`.
 
 | Token                           | Current                                        | New (C)                           | Notes                                                                       |
