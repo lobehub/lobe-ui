@@ -2,6 +2,21 @@
 
 # Changelog
 
+## [5.15.1](https://github.com/lobehub/lobe-ui/compare/v5.15.0...v5.15.1) (2026-05-25)
+
+### ♻ Code Refactoring
+
+- Migrate ContextMenu/DropdownMenu to base-ui primitives ([f98968d](https://github.com/lobehub/lobe-ui/commit/f98968d))
+
+### 🎫 Chores
+
+- **deps**: Upgrade @base-ui/react to 1.5.0, closes [#543](https://github.com/lobehub/lobe-ui/issues/543) ([45adaf4](https://github.com/lobehub/lobe-ui/commit/45adaf4))
+
+### 📝 Documentation
+
+- **superpowers**: Add menu density refactor spec ([883b879](https://github.com/lobehub/lobe-ui/commit/883b879))
+- **superpowers**: Add menu density refactor spec ([516c311](https://github.com/lobehub/lobe-ui/commit/516c311))
+
 # [5.15.0](https://github.com/lobehub/lobe-ui/compare/v5.14.2...v5.15.0) (2026-05-23)
 
 ### ✨ Features
