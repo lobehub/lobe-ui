@@ -47,3 +47,6 @@ bun.lockb
 ./server
 
 
+
+# Superpowers brainstorm artifacts
+.superpowers/
