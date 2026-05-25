@@ -12,8 +12,8 @@ import {
 } from 'react';
 import { Virtualizer } from 'virtua';
 
+import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
 import Icon, { type IconProps } from '@/Icon';
-import { styles as menuStyles } from '@/Menu/sharedStyle';
 
 import { isValueEmpty } from './helpers';
 import { type useSelectVirtual } from './hooks';

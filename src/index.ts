@@ -15,6 +15,7 @@ export {
 export { default as Alert, type AlertProps } from './Alert';
 export { default as AutoComplete, type AutoCompleteProps } from './AutoComplete';
 export { default as Avatar, AvatarGroup, type AvatarGroupProps, type AvatarProps } from './Avatar';
+export { styles as menuSharedStyles } from './base-ui/DropdownMenu/sharedStyle';
 export { default as Block, type BlockProps } from './Block';
 export { default as Burger, type BurgerProps } from './Burger';
 export { default as Button, type ButtonProps } from './Button';
@@ -237,7 +238,6 @@ export {
   type MenuItemType,
   type MenuProps,
 } from './Menu';
-export { styles as menuSharedStyles } from './Menu/sharedStyle';
 export {
   default as Mermaid,
   type MermaidProps,

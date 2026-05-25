@@ -4,6 +4,7 @@ import {
   DropdownMenuPopup,
   DropdownMenuPortal,
   DropdownMenuPositioner,
+  type DropdownMenuProps,
   DropdownMenuRoot,
   DropdownMenuTrigger,
   renderDropdownMenuItems,
@@ -14,8 +15,6 @@ import { createStaticStyles } from 'antd-style';
 import { FileTextIcon, PlusIcon, StoreIcon, WrenchIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useCallback, useMemo, useRef, useState } from 'react';
-
-import type { DropdownMenuProps } from '../type';
 
 const styles = createStaticStyles(({ css, cssVar }) => ({
   caseTitle: css`

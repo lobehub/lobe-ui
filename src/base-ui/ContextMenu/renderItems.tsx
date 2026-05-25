@@ -1,7 +1,6 @@
 import { ContextMenu } from '@base-ui/react/context-menu';
-import { Switch } from 'antd';
 import { cx } from 'antd-style';
-import { Check, ChevronRight } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { type MenuInfo } from 'rc-menu/es/interface';
 import {
   type KeyboardEvent as ReactKeyboardEvent,
@@ -10,6 +9,9 @@ import {
 } from 'react';
 import { memo, useCallback, useState } from 'react';
 
+import { styles } from '@/base-ui/DropdownMenu/sharedStyle';
+import { SubmenuArrowIcon } from '@/base-ui/SubmenuArrowIcon';
+import Switch from '@/base-ui/Switch';
 import common from '@/i18n/resources/en/common';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
@@ -26,7 +28,6 @@ import {
   type RenderItemContentOptions,
   type RenderOptions,
 } from '@/Menu';
-import { styles } from '@/Menu/sharedStyle';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
 import {
@@ -156,7 +157,7 @@ const renderItemContent = (
       {indicatorOnRight && iconNode ? iconNode : null}
       {options?.submenu ? (
         <span className={styles.submenuArrow}>
-          <ChevronRight size={16} />
+          <SubmenuArrowIcon />
         </span>
       ) : null}
     </div>

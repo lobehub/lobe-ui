@@ -5,7 +5,6 @@ import { cx } from 'antd-style';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
-import { styles } from '@/Menu/sharedStyle';
 import { parseTrigger } from '@/utils/parseTrigger';
 
 import {
@@ -18,6 +17,7 @@ import {
   DropdownMenuTrigger,
 } from './atoms';
 import { renderDropdownMenuItems } from './renderItems';
+import { styles } from './sharedStyle';
 import type { DropdownMenuProps } from './type';
 
 const DropdownMenu = memo<DropdownMenuProps>(
@@ -44,6 +44,7 @@ const DropdownMenu = memo<DropdownMenuProps>(
     const [uncontrolledOpen, setUncontrolledOpen] = useState(Boolean(defaultOpen));
 
     const { openOnHover } = useMemo(() => parseTrigger(trigger), [trigger]);
+    const resolvedOpenOnHover = (triggerProps as any)?.openOnHover ?? openOnHover;
 
     useEffect(() => {
       if (open === undefined) return;
@@ -97,7 +98,7 @@ const DropdownMenu = memo<DropdownMenuProps>(
       <DropdownMenuTrigger
         {...triggerProps}
         nativeButton={resolvedNativeButton}
-        openOnHover={openOnHover}
+        openOnHover={resolvedOpenOnHover}
       >
         {children}
       </DropdownMenuTrigger>
@@ -116,11 +117,13 @@ const DropdownMenu = memo<DropdownMenuProps>(
         <DropdownMenuPortal container={portalContainer} {...restPortalProps}>
           <DropdownMenuPositioner
             {...positionerProps}
-            hoverTrigger={openOnHover}
+            hoverTrigger={resolvedOpenOnHover}
             placement={placement}
           >
             <DropdownMenuPopup
               {...popupProps}
+              data-has-footer={footer == null ? undefined : ''}
+              data-has-header={header == null ? undefined : ''}
               className={
                 hasSlots
                   ? (cx(styles.popupWithSlots, popupProps?.className as string) as any)

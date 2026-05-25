@@ -2,6 +2,8 @@ import { createStaticStyles } from 'antd-style';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   danger: css`
+    --lobe-menu-icon-color: ${cssVar.colorError};
+
     color: ${cssVar.colorError} !important;
 
     &:hover {
@@ -18,6 +20,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   extra: css`
     margin-inline-start: auto;
     padding-inline-start: 16px;
+
+    font-family: ${cssVar.fontFamilyCode};
     font-size: 12px;
     color: ${cssVar.colorTextTertiary};
   `,
@@ -39,12 +43,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   groupLabel: css`
     user-select: none;
 
-    padding-block: 8px 4px;
+    padding-block: 4px 2px;
     padding-inline: 12px;
 
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
-    line-height: 16px;
+    line-height: 14px;
     color: ${cssVar.colorTextTertiary};
     text-transform: capitalize;
   `,
@@ -55,9 +59,16 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     align-items: center;
     justify-content: center;
 
-    width: 16px;
-    height: 16px;
-    margin-inline-end: 8px;
+    width: 14px;
+    height: 14px;
+    margin-inline-end: 12px;
+
+    color: var(--lobe-menu-icon-color, ${cssVar.colorTextSecondary});
+
+    & svg {
+      width: 100%;
+      height: 100%;
+    }
   `,
 
   item: css`
@@ -71,8 +82,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     align-items: center;
 
     width: 100%;
-    min-height: 36px;
-    padding-block: 8px;
+    min-height: 32px;
+    padding-block: 6px;
     padding-inline: 12px;
     border-radius: ${cssVar.borderRadiusSM};
 
@@ -163,15 +174,24 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   popup: css`
-    min-width: 120px;
+    min-width: 220px;
     padding: 4px;
     border-radius: ${cssVar.borderRadius};
 
     background: ${cssVar.colorBgElevated};
     outline: none;
     box-shadow:
-      0 0 15px 0 #00000008,
-      0 2px 30px 0 #00000014;
+      0 0 0 1px ${cssVar.colorBorder},
+      0 8px 24px 0 rgb(0 0 0 / 18%),
+      0 2px 6px 0 rgb(0 0 0 / 12%);
+
+    &[data-has-header] {
+      padding-block-start: 0;
+    }
+
+    &[data-has-footer] {
+      padding-block-end: 0;
+    }
   `,
 
   popupWithSlots: css`
@@ -230,6 +250,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     &[data-nested] {
       --lobe-dropdown-animation-duration: 0ms;
       --lobe-dropdown-animation-scale-y: 1;
+
+      z-index: 1199;
     }
 
     &[data-side='left'],
@@ -252,9 +274,15 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     align-items: center;
     justify-content: center;
 
-    width: 20px;
-    height: 20px;
-    margin-inline-start: auto;
-    padding-inline-start: 8px;
+    width: 16px;
+    height: 16px;
+    margin-inline-start: 8px;
+
+    color: var(--lobe-menu-icon-color, ${cssVar.colorTextSecondary});
+
+    & svg {
+      width: 12px;
+      height: 12px;
+    }
   `,
 }));

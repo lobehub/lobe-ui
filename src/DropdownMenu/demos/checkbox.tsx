@@ -1,7 +1,5 @@
-import { Button, DropdownMenu } from '@lobehub/ui';
+import { Button, type DropdownItem, DropdownMenu } from '@lobehub/ui';
 import { useMemo, useState } from 'react';
-
-import type { DropdownItem } from '../type';
 
 export default () => {
   const [state, setState] = useState({ autoSave: true, notifications: false });

@@ -2,21 +2,21 @@
 
 import { Menu } from '@base-ui/react/menu';
 import { mergeProps } from '@base-ui/react/merge-props';
-import { Switch } from 'antd';
 import { cx } from 'antd-style';
 import clsx from 'clsx';
 import type React from 'react';
 import { cloneElement, isValidElement, useCallback, useState } from 'react';
 import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
+import Switch from '@/base-ui/Switch';
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
-import { styles } from '@/Menu/sharedStyle';
 import { CLASSNAMES } from '@/styles/classNames';
 import { useAppElement } from '@/ThemeProvider';
 import { placementMap } from '@/utils/placement';
 
 import { useLayerZIndex } from '../zIndex';
+import { styles } from './sharedStyle';
 import { type DropdownMenuPlacement } from './type';
 
 export const DropdownMenuRoot: typeof Menu.Root = (props) => <Menu.Root modal={false} {...props} />;

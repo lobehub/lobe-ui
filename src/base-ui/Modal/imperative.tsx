@@ -1,6 +1,6 @@
 'use client';
 
-import { cx, useTheme } from 'antd-style';
+import { cx } from 'antd-style';
 import type { ReactNode } from 'react';
 import { memo, useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
@@ -8,7 +8,6 @@ import { createPortal } from 'react-dom';
 import { useIsClient } from '@/hooks/useIsClient';
 import { useAppElement } from '@/ThemeProvider';
 import { registerDevSingleton } from '@/utils/devSingleton';
-import { safeReadableColor } from '@/utils/safeReadableColor';
 
 import {
   ModalBackdrop,
@@ -48,14 +47,11 @@ const ModalPortalWrapper = ({
 
 const ConfirmBody = ({ config }: { config: ModalConfirmConfig }) => {
   const { close } = useModalContext();
-  const theme = useTheme();
   const [loading, setLoading] = useState(false);
 
   const { cancelText = 'Cancel', content, okButtonProps, okText = 'OK', onCancel, onOk } = config;
 
   const { danger, className: okUserCls, style: okUserStyle, ...restOkProps } = okButtonProps ?? {};
-  const okBgColor = danger ? theme.colorError : theme.colorPrimary;
-  const okTextColor = safeReadableColor(okBgColor);
 
   const handleCancel = useCallback(() => {
     close();
@@ -93,7 +89,7 @@ const ConfirmBody = ({ config }: { config: ModalConfirmConfig }) => {
         <button
           {...restOkProps}
           disabled={loading}
-          style={{ color: okTextColor, ...okUserStyle }}
+          style={okUserStyle}
           type="button"
           className={cx(
             styles.buttonBase,

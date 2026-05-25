@@ -78,6 +78,8 @@ export const ContextMenuHost = memo(() => {
         >
           <ContextMenu.Popup
             className={cx(styles.popup, hasSlots && styles.popupWithSlots)}
+            data-has-footer={state.footer == null ? undefined : ''}
+            data-has-header={state.header == null ? undefined : ''}
             onContextMenu={preventDefaultAndStopPropagation}
           >
             {state.header == null ? null : <div className={styles.header}>{state.header}</div>}

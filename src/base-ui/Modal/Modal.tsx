@@ -1,6 +1,6 @@
 'use client';
 
-import { cx, useTheme } from 'antd-style';
+import { cx } from 'antd-style';
 import { Maximize2, Minimize2, X } from 'lucide-react';
 import { useDragControls } from 'motion/react';
 import type { MouseEvent, PointerEvent } from 'react';
@@ -8,7 +8,6 @@ import type React from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { stopPropagation } from '@/utils/dom';
-import { safeReadableColor } from '@/utils/safeReadableColor';
 
 import {
   ModalBackdrop,
@@ -31,7 +30,6 @@ interface OkBtnProps {
 }
 
 const OkBtn: React.FC<OkBtnProps> = ({ confirmLoading, okButtonProps, okText, onOk }) => {
-  const theme = useTheme();
   const {
     className: userCls,
     danger,
@@ -40,15 +38,13 @@ const OkBtn: React.FC<OkBtnProps> = ({ confirmLoading, okButtonProps, okText, on
     style: userStyle,
     ...restOk
   } = okButtonProps ?? {};
-  const bgColor = danger ? theme.colorError : theme.colorPrimary;
-  const textColor = safeReadableColor(bgColor);
   return (
     <button
       type="button"
       {...restOk}
       className={cx(styles.buttonBase, danger ? styles.dangerOkButton : styles.okButton, userCls)}
       disabled={confirmLoading || userDisabled}
-      style={{ color: textColor, ...userStyle }}
+      style={userStyle}
       onClick={(e) => {
         onOk(e);
         userOnClick?.(e);

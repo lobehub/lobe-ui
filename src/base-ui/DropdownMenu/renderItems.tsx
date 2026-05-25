@@ -1,4 +1,4 @@
-import { Check, ChevronRight } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { type MenuInfo } from 'rc-menu/es/interface';
 import {
   type KeyboardEvent as ReactKeyboardEvent,
@@ -6,6 +6,7 @@ import {
   type ReactNode,
 } from 'react';
 
+import { SubmenuArrowIcon } from '@/base-ui/SubmenuArrowIcon';
 import {
   type BaseMenuItemGroupType,
   type BaseSubMenuType,
@@ -19,7 +20,6 @@ import {
   type RenderItemContentOptions,
   type RenderOptions,
 } from '@/Menu';
-import { styles } from '@/Menu/sharedStyle';
 
 import {
   DropdownMenuCheckboxItemIndicator,
@@ -45,6 +45,7 @@ import {
   DropdownMenuSubmenuTrigger,
   DropdownMenuSwitchItem,
 } from './atoms';
+import { styles } from './sharedStyle';
 import {
   type DropdownItem,
   type DropdownMenuCheckboxItem as DropdownMenuCheckboxItemType,
@@ -94,7 +95,7 @@ const renderItemContent = (
       {indicatorOnRight && iconNode ? iconNode : null}
       {options?.submenu ? (
         <DropdownMenuSubmenuArrow>
-          <ChevronRight size={16} />
+          <SubmenuArrowIcon />
         </DropdownMenuSubmenuArrow>
       ) : null}
     </DropdownMenuItemContent>

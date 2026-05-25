@@ -5,7 +5,7 @@ import { cx, useThemeMode } from 'antd-style';
 import { type MouseEvent } from 'react';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
-import { styles as menuStyles } from '@/Menu/sharedStyle';
+import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
 
 import { SelectPositioner } from './atoms';
 import { isValueEmpty } from './helpers';

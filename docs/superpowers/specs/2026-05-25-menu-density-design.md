@@ -6,13 +6,13 @@
 
 ## Problem
 
-The current menu items in lobe-ui base-ui components feel oversized — described as "feature phone" aesthetics. Item min-height of 36px with 8/12 padding and 14/20 type results in a loose vertical rhythm out of step with modern compact menus (Linear ~28, Raycast ~32, macOS native ~22–24).
+The current menu items in lobe-ui base-ui components feel oversized — described as "feature phone" aesthetics. Item min-height of 36px with 8/12 padding results in a loose vertical rhythm out of step with modern compact menus (Linear ~28, Raycast ~32, macOS native ~22–24). Target: Linear-tier 28h with 14/20 type (compact but readable).
 
 A secondary structural issue: `src/Menu/sharedStyle.ts` lives outside `src/base-ui/` but is the styling source for all base-ui menu surfaces. The non-base-ui top-level `src/DropdownMenu/` and `src/ContextMenu/` folders contain legacy component files that are no longer wired into `index.ts` (only `index.ts` re-exports from base-ui).
 
 ## Goals
 
-1. Tighten menu density to a macOS-native-style baseline (C-tier).
+1. Tighten menu density to a Linear-tier baseline (28h + 14/20 type).
 2. Relocate `sharedStyle.ts` into `src/base-ui/` so the styling module sits inside the layer that owns it.
 3. Remove dead code in `src/DropdownMenu/` and `src/ContextMenu/`.
 
@@ -40,26 +40,28 @@ Single-line item is the canonical baseline. All measurements assume single-row i
 
 Notation: `padding-block / padding-inline`. Group label uses `block-start block-end / inline`.
 
-| Token                           | Current                                        | New (C)                           | Notes                                                                       |
-| ------------------------------- | ---------------------------------------------- | --------------------------------- | --------------------------------------------------------------------------- |
-| `item.min-height`               | 36                                             | **24**                            | core                                                                        |
-| `item.padding-block / inline`   | 8 / 12                                         | **2 / 8**                         |                                                                             |
-| `item.font-size / line-height`  | 14 / 20                                        | **13 / 16**                       |                                                                             |
-| `item.border-radius`            | `cssVar.borderRadiusSM`                        | unchanged                         | keep token, not literal                                                     |
-| `icon` container                | 16×16, mr 8                                    | **14×14, mr 6**                   | add `& svg { width:100%; height:100% }` to scale consumer icons (see below) |
-| `popup.padding`                 | 4                                              | **2**                             |                                                                             |
-| `popup.border-radius`           | `cssVar.borderRadius`                          | unchanged                         |                                                                             |
-| `popup.min-width`               | 120                                            | unchanged                         |                                                                             |
-| `groupLabel.padding`            | block 8/4, inline 12                           | **block 4/1, inline 8**           | top / bottom / inline                                                       |
-| `groupLabel.font / line`        | 12 / 16                                        | **11 / 14**                       |                                                                             |
-| `separator.margin-block`        | 4                                              | **2**                             |                                                                             |
-| `header.padding-block / inline` | 8 / 12                                         | **4 / 8**                         |                                                                             |
-| `footer.padding-block / inline` | 8 / 12                                         | **4 / 8**                         |                                                                             |
-| `desc.font / line`              | 12 / 16                                        | **11 / 14**                       | multi-line only                                                             |
-| `extra.padding-inline-start`    | 16                                             | **12**                            |                                                                             |
-| `extra.font`                    | 12                                             | **11**                            |                                                                             |
-| `submenuArrow`                  | 20×20, padding-inline-start 8                  | **16×16, padding-inline-start 6** |                                                                             |
-| hover / active / transition     | colorFillTertiary / Secondary / 150ms ease-out | unchanged                         |                                                                             |
+| Token                           | Current                                        | New (C)                              | Notes                                                                       |
+| ------------------------------- | ---------------------------------------------- | ------------------------------------ | --------------------------------------------------------------------------- |
+| `item.min-height`               | 36                                             | **28**                               | core (Linear-tier)                                                          |
+| `item.padding-block / inline`   | 8 / 12                                         | **4 / 8**                            |                                                                             |
+| `item.font-size / line-height`  | 14 / 20                                        | unchanged                            | 14/20 stays — pairs with 28h height                                         |
+| `item.border-radius`            | `cssVar.borderRadiusSM`                        | unchanged                            | keep token, not literal                                                     |
+| `icon` container                | 16×16, mr 8                                    | **14×14, mr 6**                      | add `& svg { width:100%; height:100% }` to scale consumer icons (see below) |
+| `popup.padding`                 | 4                                              | unchanged                            |                                                                             |
+| `popup.border-radius`           | `cssVar.borderRadius`                          | unchanged                            |                                                                             |
+| `popup.min-width`               | 120                                            | unchanged                            |                                                                             |
+| `groupLabel.padding`            | block 8/4, inline 12                           | **block 4/2, inline 8**              | top / bottom / inline                                                       |
+| `groupLabel.font / line`        | 12 / 16                                        | **11 / 14**                          | smaller for hierarchy contrast against 14px item                            |
+| `separator.margin-block`        | 4                                              | unchanged                            |                                                                             |
+| `header.padding-block / inline` | 8 / 12                                         | **6 / 10**                           |                                                                             |
+| `footer.padding-block / inline` | 8 / 12                                         | **6 / 10**                           |                                                                             |
+| `desc.font / line`              | 12 / 16                                        | unchanged                            | multi-line only; pairs with 14 label                                        |
+| `extra.padding-inline-start`    | 16                                             | **12**                               |                                                                             |
+| `extra.font`                    | 12                                             | unchanged                            |                                                                             |
+| `submenuArrow`                  | 20×20, padding-inline-start 8                  | **16×16, padding-inline-start 6**    |                                                                             |
+| hover / active / transition     | colorFillTertiary / Secondary / 150ms ease-out | unchanged                            |                                                                             |
+| `popup.box-shadow`              | 0 0 15px / 0 2px 30px                          | **+ 0 0 0 1px colorBorderSecondary** | hairline ring for clearer hierarchy                                         |
+| submenu `[data-nested]` z-index | (inherits 1100)                                | **1101**                             | CSS fallback so submenu paints above root if dynamic acquire misses         |
 
 **Unchanged (kept as-is)**: `itemContent`, `labelGroup`, `itemContentAlignStart`, `iconAlignStart`, `label`, `danger`, `empty`, `popupWithSlots`, `slotViewport`, `positioner` (all animation/layout helpers — not density-related).
 

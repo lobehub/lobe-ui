@@ -11,8 +11,8 @@ import {
 } from 'react';
 import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
+import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
 import { useNativeButton } from '@/hooks/useNativeButton';
-import { styles as menuStyles } from '@/Menu/sharedStyle';
 import { useAppElement } from '@/ThemeProvider';
 
 import { useLayerZIndex } from '../zIndex';

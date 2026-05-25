@@ -1,4 +1,4 @@
-import { ActionIcon, DropdownMenu } from '@lobehub/ui';
+import { ActionIcon, type DropdownItem, DropdownMenu } from '@lobehub/ui';
 import {
   CopyIcon,
   HashIcon,
@@ -10,8 +10,6 @@ import {
   TrashIcon,
 } from 'lucide-react';
 import { useMemo, useState } from 'react';
-
-import type { DropdownItem } from '../type';
 
 export default () => {
   const [fullWidth, setFullWidth] = useState(false);

@@ -5,8 +5,8 @@ import { cx } from 'antd-style';
 import { Check } from 'lucide-react';
 import { type ComponentProps } from 'react';
 
+import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
 import Icon from '@/Icon';
-import { styles as menuStyles } from '@/Menu/sharedStyle';
 
 import { getOptionSearchText, isGroupOption } from './helpers';
 import { styles } from './style';
