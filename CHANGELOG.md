@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.15.2](https://github.com/lobehub/lobe-ui/compare/v5.15.1...v5.15.2) (2026-05-26)
+
+### 💄 Styles
+
+- **menu**: Remove pointer cursor on dropdown/context menu items ([a274534](https://github.com/lobehub/lobe-ui/commit/a274534))
+
 ## [5.15.1](https://github.com/lobehub/lobe-ui/compare/v5.15.0...v5.15.1) (2026-05-25)
 
 ### ♻ Code Refactoring
