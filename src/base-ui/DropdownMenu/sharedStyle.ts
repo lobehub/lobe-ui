@@ -72,7 +72,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   item: css`
-    cursor: pointer;
     user-select: none;
 
     position: relative;
