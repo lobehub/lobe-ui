@@ -181,8 +181,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     outline: none;
     box-shadow:
       0 0 0 1px ${cssVar.colorBorder},
-      0 8px 24px 0 rgb(0 0 0 / 18%),
-      0 2px 6px 0 rgb(0 0 0 / 12%);
+      0 4px 12px 0 rgb(0 0 0 / 8%),
+      0 1px 3px 0 rgb(0 0 0 / 6%);
 
     &[data-has-header] {
       padding-block-start: 0;
