@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.15.3](https://github.com/lobehub/lobe-ui/compare/v5.15.2...v5.15.3) (2026-05-27)
+
+### 💄 Styles
+
+- **menu**: Soften dropdown/context menu popup shadow ([c8c9ef2](https://github.com/lobehub/lobe-ui/commit/c8c9ef2))
+
 ## [5.15.2](https://github.com/lobehub/lobe-ui/compare/v5.15.1...v5.15.2) (2026-05-26)
 
 ### 💄 Styles
