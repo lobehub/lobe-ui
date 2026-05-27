@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.15.4](https://github.com/lobehub/lobe-ui/compare/v5.15.3...v5.15.4) (2026-05-27)
+
+### 🐛 Bug Fixes
+
+- **modal**: Use colorTextLightSolid for ok/danger button labels so dark mode stays readable ([72e4d6c](https://github.com/lobehub/lobe-ui/commit/72e4d6c))
+
 ## [5.15.3](https://github.com/lobehub/lobe-ui/compare/v5.15.2...v5.15.3) (2026-05-27)
 
 ### 💄 Styles
