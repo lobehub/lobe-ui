@@ -25,6 +25,14 @@ Verify tooltips close when the trigger node is removed, for both standalone and 
 
 <code src="./demos/group-remove-trigger.tsx" nopadding></code>
 
+## Children Preservation On Reset
+
+When the active trigger becomes invalid the group hard-resets its popup. Sibling children must not be
+torn down with it. Type into the neighbor input, open a tooltip, then force a reset and confirm the
+input text and mount count survive.
+
+<code src="./demos/group-children-preserve.tsx" nopadding></code>
+
 ## APIs
 
 ### Tooltip
