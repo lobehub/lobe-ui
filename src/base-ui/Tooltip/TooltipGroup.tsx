@@ -60,13 +60,16 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
   return (
     <TooltipGroupHandleContext value={handle}>
       <TooltipGroupPropsContext value={sharedProps}>
+        {/* Outside Root on purpose: the handle/key reset remounts Root's subtree; children must
+            survive it. Triggers bind to the group via the handle, not DOM nesting. */}
+        {children}
         <BaseTooltip.Root handle={handle} key={key} onOpenChange={handleOpenChange}>
           {({ payload }) => {
             const item = (payload as TooltipGroupItem | null) ?? null;
             activeItemRef.current = item;
 
             if (!item || (item.title == null && !item.hotkey)) {
-              return children;
+              return null;
             }
 
             const arrow = item.arrow ?? false;
@@ -149,16 +152,9 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
             const resolvedPortalContainer =
               item.popupContainer ?? popupContainer ?? portalContainer;
 
-            return (
-              <>
-                {children}
-                {resolvedPortalContainer ? (
-                  <BaseTooltip.Portal container={resolvedPortalContainer}>
-                    {popup}
-                  </BaseTooltip.Portal>
-                ) : null}
-              </>
-            );
+            return resolvedPortalContainer ? (
+              <BaseTooltip.Portal container={resolvedPortalContainer}>{popup}</BaseTooltip.Portal>
+            ) : null;
           }}
         </BaseTooltip.Root>
       </TooltipGroupPropsContext>

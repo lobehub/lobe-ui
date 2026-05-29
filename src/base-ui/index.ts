@@ -28,3 +28,5 @@ export {
   type ToastType,
   useToast,
 } from './Toast';
+export { default as Tooltip } from './Tooltip';
+export * from './Tooltip';
