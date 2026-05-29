@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.15.5](https://github.com/lobehub/lobe-ui/compare/v5.15.4...v5.15.5) (2026-05-29)
+
+### ♻ Code Refactoring
+
+- **tooltip**: Move into base-ui and keep group children mounted on reset, closes [#544](https://github.com/lobehub/lobe-ui/issues/544) [#486](https://github.com/lobehub/lobe-ui/issues/486) ([9c1e028](https://github.com/lobehub/lobe-ui/commit/9c1e028))
+
 ## [5.15.4](https://github.com/lobehub/lobe-ui/compare/v5.15.3...v5.15.4) (2026-05-27)
 
 ### 🐛 Bug Fixes
