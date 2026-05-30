@@ -286,7 +286,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   okButton: css`
     border-color: ${cssVar.colorPrimary};
-    color: ${cssVar.colorTextLightSolid};
+    color: ${cssVar.colorBgContainer};
     background: ${cssVar.colorPrimary};
 
     &:hover:not(:disabled) {
