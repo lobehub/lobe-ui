@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.15.6](https://github.com/lobehub/lobe-ui/compare/v5.15.5...v5.15.6) (2026-05-30)
+
+### 🐛 Bug Fixes
+
+- **modal**: Use colorBgContainer for ok button text to fix white-on-white in dark mode, closes [#0d0d0](https://github.com/lobehub/lobe-ui/issues/0d0d0) ([f5d7538](https://github.com/lobehub/lobe-ui/commit/f5d7538))
+
 ## [5.15.5](https://github.com/lobehub/lobe-ui/compare/v5.15.4...v5.15.5) (2026-05-29)
 
 ### ♻ Code Refactoring
