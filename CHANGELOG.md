@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.15.7](https://github.com/lobehub/lobe-ui/compare/v5.15.6...v5.15.7) (2026-06-01)
+
+### 🐛 Bug Fixes
+
+- **scroll-area**: Drop default background and border-radius from root ([9e942f4](https://github.com/lobehub/lobe-ui/commit/9e942f4))
+
 ## [5.15.6](https://github.com/lobehub/lobe-ui/compare/v5.15.5...v5.15.6) (2026-05-30)
 
 ### 🐛 Bug Fixes
