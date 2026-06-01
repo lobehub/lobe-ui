@@ -18,8 +18,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   root: css`
     position: relative;
     box-sizing: border-box;
-    border-radius: ${cssVar.borderRadiusLG};
-    background: ${cssVar.colorBgLayout};
   `,
 
   scrollbar: css`
