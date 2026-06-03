@@ -9,6 +9,7 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { stopPropagation } from '@/utils/dom';
 
+import { Button } from '../Button';
 import {
   ModalBackdrop,
   ModalContent,
@@ -30,29 +31,19 @@ interface OkBtnProps {
 }
 
 const OkBtn: React.FC<OkBtnProps> = ({ confirmLoading, okButtonProps, okText, onOk }) => {
-  const {
-    className: userCls,
-    danger,
-    disabled: userDisabled,
-    onClick: userOnClick,
-    style: userStyle,
-    ...restOk
-  } = okButtonProps ?? {};
+  const { onClick: userOnClick, ...restOk } = okButtonProps ?? {};
   return (
-    <button
-      type="button"
+    <Button
+      loading={confirmLoading}
+      type="primary"
       {...restOk}
-      className={cx(styles.buttonBase, danger ? styles.dangerOkButton : styles.okButton, userCls)}
-      disabled={confirmLoading || userDisabled}
-      style={userStyle}
       onClick={(e) => {
-        onOk(e);
-        userOnClick?.(e);
+        onOk(e as MouseEvent<HTMLButtonElement>);
+        userOnClick?.(e as never);
       }}
     >
-      {confirmLoading && <span className={styles.loadingSpinner} />}
       {okText}
-    </button>
+    </Button>
   );
 };
 interface CancelBtnProps {
@@ -62,19 +53,17 @@ interface CancelBtnProps {
 }
 
 const CancelBtn: React.FC<CancelBtnProps> = ({ cancelButtonProps, cancelText, onCancel }) => {
-  const { className: userCls, onClick: userOnClick, ...restCancel } = cancelButtonProps ?? {};
+  const { onClick: userOnClick, ...restCancel } = cancelButtonProps ?? {};
   return (
-    <button
-      type="button"
+    <Button
       {...restCancel}
-      className={cx(styles.buttonBase, styles.cancelButton, userCls)}
       onClick={(e) => {
-        onCancel(e);
-        userOnClick?.(e);
+        onCancel(e as MouseEvent<HTMLButtonElement>);
+        userOnClick?.(e as never);
       }}
     >
       {cancelText}
-    </button>
+    </Button>
   );
 };
 
@@ -122,7 +111,7 @@ const Modal = memo<ModalComponentProps>(
     const triggerDeny = useCallback(() => {
       clearTimeout(denyTimerRef.current);
       setIsDenying(true);
-      denyTimerRef.current = setTimeout(() => setIsDenying(false), 400);
+      denyTimerRef.current = setTimeout(() => setIsDenying(false), 300);
     }, []);
 
     const handleOpenChange = useCallback(
@@ -305,7 +294,7 @@ const Modal = memo<ModalComponentProps>(
                       type="button"
                       onClick={handleCancel}
                     >
-                      {closeIcon ?? <X size={18} />}
+                      {closeIcon ?? <X size={16} />}
                     </button>
                   )}
                 </div>
