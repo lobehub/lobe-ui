@@ -43,14 +43,19 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   groupLabel: css`
     user-select: none;
 
-    padding-block: 4px 2px;
+    padding-block: 8px 4px;
     padding-inline: 12px;
 
-    font-size: 11px;
-    font-weight: 500;
+    font-size: 10px;
+    font-weight: 600;
     line-height: 14px;
     color: ${cssVar.colorTextTertiary};
-    text-transform: capitalize;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+
+    [role='group']:first-child > & {
+      padding-block-start: 4px;
+    }
   `,
 
   icon: css`
