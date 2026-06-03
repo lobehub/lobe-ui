@@ -2,6 +2,13 @@
 
 # Changelog
 
+## [5.15.8](https://github.com/lobehub/lobe-ui/compare/v5.15.7...v5.15.8) (2026-06-03)
+
+### 💄 Styles
+
+- **menu**: Polish dropdown/context group label typography and spacing ([27fe440](https://github.com/lobehub/lobe-ui/commit/27fe440))
+- **switch**: Refine track, lift thumb shadow on hover, tune spring, 36×22 default ([1cf8616](https://github.com/lobehub/lobe-ui/commit/1cf8616))
+
 ## [5.15.7](https://github.com/lobehub/lobe-ui/compare/v5.15.6...v5.15.7) (2026-06-01)
 
 ### 🐛 Bug Fixes
