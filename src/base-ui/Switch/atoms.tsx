@@ -2,6 +2,7 @@
 
 import { Switch } from '@base-ui/react/switch';
 import { cx } from 'antd-style';
+import { useReducedMotion } from 'motion/react';
 import type { KeyboardEvent, MouseEvent } from 'react';
 import { createContext, use, useMemo, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
@@ -127,26 +128,31 @@ export const SwitchThumb = ({
   className,
   pressedAnimation,
   size = 'default',
-  transition = { damping: 25, stiffness: 300, type: 'spring' },
+  transition = { damping: 24, stiffness: 360, type: 'spring' },
   children,
   ...rest
 }: SwitchThumbProps) => {
   const Motion = useMotionComponent();
   const { isPressed } = useSwitchContext();
+  const shouldReduceMotion = useReducedMotion();
   const baseClassName = thumbVariants({ size });
 
   const defaultPressedAnimation = {
     width: size === 'small' ? 16 : 22,
   };
 
+  const effectiveAnimate =
+    !shouldReduceMotion && isPressed ? pressedAnimation || defaultPressedAnimation : undefined;
+  const effectiveTransition = shouldReduceMotion ? { duration: 0 } : transition;
+
   return (
     <Switch.Thumb
       render={
         <Motion.span
           layout
-          animate={isPressed ? pressedAnimation || defaultPressedAnimation : undefined}
+          animate={effectiveAnimate}
           className={cx(baseClassName, className)}
-          transition={transition}
+          transition={effectiveTransition}
           {...rest}
         >
           {children}
@@ -168,12 +174,13 @@ export const SwitchIcon = ({
   children,
   className,
   position,
+  size = 'default',
   transition = { bounce: 0, type: 'spring' },
   ...rest
-}: SwitchIconProps & { children?: React.ReactNode; size?: 'default' | 'small' }) => {
+}: SwitchIconProps) => {
   const Motion = useMotionComponent();
   const { isChecked } = useSwitchContext();
-  const size = (rest as any).size || 'default';
+  const shouldReduceMotion = useReducedMotion();
 
   const isAnimated = useMemo(() => {
     if (position === 'right') return !isChecked;
@@ -183,12 +190,13 @@ export const SwitchIcon = ({
   }, [position, isChecked]);
 
   const positionClass = getIconPositionClass(position, size);
+  const effectiveTransition = shouldReduceMotion ? { duration: 0 } : transition;
 
   return (
     <Motion.span
       animate={isAnimated ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
       className={cx(styles.icon, positionClass, className)}
-      transition={transition}
+      transition={effectiveTransition}
       {...rest}
     >
       {children}

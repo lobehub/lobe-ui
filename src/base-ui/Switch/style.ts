@@ -15,13 +15,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     color: ${cssVar.colorTextLightSolid};
   `,
   iconLeft: css`
-    inset-inline-start: 5px;
+    inset-inline-start: 4px;
   `,
   iconLeftSmall: css`
     inset-inline-start: 4px;
   `,
   iconRight: css`
-    inset-inline-end: 5px;
+    inset-inline-end: 4px;
   `,
   iconRightSmall: css`
     inset-inline-end: 4px;
@@ -44,6 +44,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     animation: lobe-switch-loading 1s linear infinite;
+
+    @media (prefers-reduced-motion: reduce) {
+      animation-duration: 0s;
+    }
   `,
   root: css`
     cursor: pointer;
@@ -61,10 +65,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     border: 0;
     border-radius: 100px;
 
-    background: ${cssVar.colorTextQuaternary};
+    background: ${cssVar.colorFillSecondary};
     outline: none;
+    box-shadow: inset 0 1.5px 2px rgb(0 0 0 / 8%);
 
-    transition: background 150ms ${cssVar.motionEaseOut};
+    transition:
+      background 200ms ${cssVar.motionEaseOut},
+      box-shadow 200ms ${cssVar.motionEaseOut};
 
     &:focus-visible {
       outline: 2px solid ${cssVar.colorPrimaryBorder};
@@ -72,12 +79,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     &:hover:not([data-disabled]) {
-      background: ${cssVar.colorTextTertiary};
+      background: ${cssVar.colorFill};
     }
 
     &[data-checked] {
       justify-content: flex-end;
       background: ${cssVar.colorPrimary};
+      box-shadow: inset 0 1.5px 3px rgb(0 0 0 / 18%);
 
       &:hover:not([data-disabled]) {
         background: ${cssVar.colorPrimaryHover};
@@ -86,12 +94,16 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     &[data-disabled] {
       cursor: not-allowed;
-      opacity: 0.5;
+      opacity: 0.45;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition-duration: 0s;
     }
   `,
   rootDefault: css`
-    width: 44px;
-    min-width: 44px;
+    width: 36px;
+    min-width: 36px;
     height: 22px;
   `,
   rootSmall: css`
@@ -109,11 +121,25 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     background: ${cssVar.colorBgContainer};
     box-shadow:
-      0 2px 4px 0 rgb(0 35 11 / 20%),
-      0 1px 2px 0 rgb(0 0 0 / 8%);
+      0 0 0 0.5px rgb(0 0 0 / 4%),
+      0 1px 1px rgb(0 0 0 / 6%),
+      0 3px 8px rgb(0 30 80 / 16%);
+
+    transition: box-shadow 200ms ${cssVar.motionEaseOut};
+
+    [role='switch']:hover:not([data-disabled]) > & {
+      box-shadow:
+        0 0 0 0.5px rgb(0 0 0 / 4%),
+        0 1px 1px rgb(0 0 0 / 8%),
+        0 6px 14px rgb(0 30 80 / 24%);
+    }
 
     [data-disabled] > & {
       box-shadow: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition-duration: 0s;
     }
   `,
   thumbDefault: css`

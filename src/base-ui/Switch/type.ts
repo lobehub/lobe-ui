@@ -53,6 +53,7 @@ export type SwitchIconPosition = 'left' | 'right' | 'thumb';
 
 export type SwitchIconProps = HTMLMotionProps<'span'> & {
   position: SwitchIconPosition;
+  size?: SwitchSize;
   transition?: Transition;
 };
 
