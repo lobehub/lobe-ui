@@ -8,7 +8,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     background: color-mix(in srgb, ${cssVar.colorBgContainer} 60%, transparent);
 
-    transition: opacity 150ms ease-out;
+    transition: opacity 180ms cubic-bezier(0.32, 0.72, 0, 1);
 
     &[data-starting-style],
     &[data-ending-style] {
@@ -31,22 +31,23 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     height: 32px;
     padding: 0;
     border: none;
-    border-radius: ${cssVar.borderRadiusSM};
+    border-radius: 50%;
 
     color: ${cssVar.colorTextTertiary};
 
     background: transparent;
 
-    transition: all 150ms ease-out;
+    transition: all 160ms cubic-bezier(0.32, 0.72, 0, 1);
 
     &:hover {
+      transform: scale(1.04);
       color: ${cssVar.colorText};
       background: ${cssVar.colorFillSecondary};
     }
 
     &:focus-visible {
-      outline: 2px solid ${cssVar.colorPrimaryBorder};
-      outline-offset: 1px;
+      outline: none;
+      box-shadow: 0 0 0 2px ${cssVar.colorPrimaryBorder};
     }
   `,
 
@@ -61,22 +62,23 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     height: 32px;
     padding: 0;
     border: none;
-    border-radius: ${cssVar.borderRadiusSM};
+    border-radius: 50%;
 
     color: ${cssVar.colorTextTertiary};
 
     background: transparent;
 
-    transition: all 150ms ease-out;
+    transition: all 160ms cubic-bezier(0.32, 0.72, 0, 1);
 
     &:hover {
+      transform: scale(1.04);
       color: ${cssVar.colorText};
       background: ${cssVar.colorFillSecondary};
     }
 
     &:focus-visible {
-      outline: 2px solid ${cssVar.colorPrimaryBorder};
-      outline-offset: 1px;
+      outline: none;
+      box-shadow: 0 0 0 2px ${cssVar.colorPrimaryBorder};
     }
   `,
 
@@ -94,7 +96,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     padding-block: 12px;
     padding-inline: 16px;
-    border-block-start: 1px solid ${cssVar.colorBorderSecondary};
   `,
 
   header: css`
@@ -104,7 +105,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     padding-block: 12px;
     padding-inline: 16px;
-    border-block-end: 1px solid ${cssVar.colorBorderSecondary};
   `,
 
   headerDraggable: css`
@@ -144,64 +144,30 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     box-shadow: ${cssVar.boxShadow};
 
     transition:
-      transform 150ms cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 150ms ease-out;
+      transform 220ms cubic-bezier(0.32, 0.72, 0, 1),
+      opacity 220ms cubic-bezier(0.32, 0.72, 0, 1);
 
-    &[data-starting-style],
-    &[data-ending-style] {
-      transform: scale(0.96) translateY(4px);
+    &[data-starting-style] {
+      transform: scale(0.97);
       opacity: 0;
+    }
+
+    &[data-ending-style] {
+      transform: scale(0.98);
+      opacity: 0;
+      transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+      transition-duration: 120ms;
     }
   `,
 
   title: css`
     margin: 0;
 
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
-    line-height: 1.5;
+    line-height: 1.4;
     color: ${cssVar.colorText};
-  `,
-
-  buttonBase: css`
-    cursor: pointer;
-
-    display: inline-flex;
-    gap: 6px;
-    align-items: center;
-    justify-content: center;
-
-    height: 36px;
-    padding-block: 0;
-    padding-inline: 16px;
-    border: 1px solid ${cssVar.colorBorder};
-    border-radius: ${cssVar.borderRadiusSM};
-
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 1;
-
-    transition: all 150ms ease-out;
-
-    &:focus-visible {
-      outline: 2px solid ${cssVar.colorPrimaryBorder};
-      outline-offset: 1px;
-    }
-
-    &:disabled {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
-  `,
-
-  cancelButton: css`
-    color: ${cssVar.colorText};
-    background: ${cssVar.colorBgContainer};
-
-    &:hover:not(:disabled) {
-      border-color: ${cssVar.colorPrimaryBorder};
-      color: ${cssVar.colorPrimaryText};
-    }
+    letter-spacing: -0.005em;
   `,
 
   loadingSpinner: css`
@@ -220,22 +186,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     border-radius: 50%;
 
     animation: modal-spin 0.6s linear infinite;
-  `,
-
-  dangerOkButton: css`
-    border-color: ${cssVar.colorError};
-    color: ${cssVar.colorTextLightSolid};
-    background: ${cssVar.colorError};
-
-    &:hover:not(:disabled) {
-      border-color: ${cssVar.colorErrorHover};
-      background: ${cssVar.colorErrorHover};
-    }
-
-    &:active:not(:disabled) {
-      border-color: ${cssVar.colorErrorActive};
-      background: ${cssVar.colorErrorActive};
-    }
   `,
 
   fullscreenPopupInner: css`
@@ -258,22 +208,23 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     height: 28px;
     padding: 0;
     border: none;
-    border-radius: ${cssVar.borderRadiusSM};
+    border-radius: 50%;
 
     color: ${cssVar.colorTextTertiary};
 
     background: transparent;
 
-    transition: all 150ms ease-out;
+    transition: all 160ms cubic-bezier(0.32, 0.72, 0, 1);
 
     &:hover {
+      transform: scale(1.04);
       color: ${cssVar.colorText};
       background: ${cssVar.colorFillSecondary};
     }
 
     &:focus-visible {
-      outline: 2px solid ${cssVar.colorPrimaryBorder};
-      outline-offset: 1px;
+      outline: none;
+      box-shadow: 0 0 0 2px ${cssVar.colorPrimaryBorder};
     }
   `,
 
@@ -284,37 +235,31 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     margin-inline-end: -4px;
   `,
 
-  okButton: css`
-    border-color: ${cssVar.colorPrimary};
-    color: ${cssVar.colorBgContainer};
-    background: ${cssVar.colorPrimary};
-
-    &:hover:not(:disabled) {
-      border-color: ${cssVar.colorPrimaryHover};
-      background: ${cssVar.colorPrimaryHover};
-    }
-
-    &:active:not(:disabled) {
-      border-color: ${cssVar.colorPrimaryActive};
-      background: ${cssVar.colorPrimaryActive};
-    }
-  `,
-
   denyAnimation: css`
     @keyframes modal-deny {
-      0% {
-        outline-color: ${cssVar.colorPrimary};
-        outline-offset: 0;
+      0%,
+      100% {
+        transform: translateX(0);
       }
 
-      100% {
-        outline-color: transparent;
-        outline-offset: 4px;
+      20% {
+        transform: translateX(-5px);
+      }
+
+      40% {
+        transform: translateX(5px);
+      }
+
+      60% {
+        transform: translateX(-3px);
+      }
+
+      80% {
+        transform: translateX(2px);
       }
     }
 
-    outline: 2px solid transparent;
-    animation: modal-deny 400ms ease-out;
+    animation: modal-deny 280ms cubic-bezier(0.36, 0.66, 0.04, 1);
   `,
 
   viewport: css`

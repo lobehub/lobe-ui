@@ -1,6 +1,5 @@
 'use client';
 
-import { cx } from 'antd-style';
 import type { ReactNode } from 'react';
 import { memo, useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
@@ -9,6 +8,7 @@ import { useIsClient } from '@/hooks/useIsClient';
 import { useAppElement } from '@/ThemeProvider';
 import { registerDevSingleton } from '@/utils/devSingleton';
 
+import { Button } from '../Button';
 import {
   ModalBackdrop,
   ModalClose,
@@ -21,7 +21,6 @@ import {
   ModalTitle,
 } from './atoms';
 import { ModalContext, useModalContext } from './context';
-import { styles } from './style';
 import type { ImperativeModalProps, ModalConfirmConfig, ModalInstance } from './type';
 
 // --- Shared types ---
@@ -51,8 +50,6 @@ const ConfirmBody = ({ config }: { config: ModalConfirmConfig }) => {
 
   const { cancelText = 'Cancel', content, okButtonProps, okText = 'OK', onCancel, onOk } = config;
 
-  const { danger, className: okUserCls, style: okUserStyle, ...restOkProps } = okButtonProps ?? {};
-
   const handleCancel = useCallback(() => {
     close();
     onCancel?.();
@@ -79,28 +76,10 @@ const ConfirmBody = ({ config }: { config: ModalConfirmConfig }) => {
     <>
       {content && <div style={{ padding: '12px 16px' }}>{content}</div>}
       <ModalFooter>
-        <button
-          className={cx(styles.buttonBase, styles.cancelButton)}
-          type="button"
-          onClick={handleCancel}
-        >
-          {cancelText}
-        </button>
-        <button
-          {...restOkProps}
-          disabled={loading}
-          style={okUserStyle}
-          type="button"
-          className={cx(
-            styles.buttonBase,
-            danger ? styles.dangerOkButton : styles.okButton,
-            okUserCls,
-          )}
-          onClick={handleOk}
-        >
-          {loading && <span className={styles.loadingSpinner} />}
+        <Button onClick={handleCancel}>{cancelText}</Button>
+        <Button loading={loading} type="primary" {...okButtonProps} onClick={handleOk}>
           {okText}
-        </button>
+        </Button>
       </ModalFooter>
     </>
   );

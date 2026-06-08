@@ -1,4 +1,6 @@
-import type { ButtonHTMLAttributes, CSSProperties, MouseEvent, ReactNode } from 'react';
+import type { CSSProperties, MouseEvent, ReactNode } from 'react';
+
+import type { ButtonProps as BaseButtonProps } from '../Button';
 
 export interface BaseModalProps {
   children?: ReactNode;
@@ -44,7 +46,7 @@ export type ImperativeModalProps = BaseModalProps & {
   footer?: ReactNode;
 };
 
-type ModalButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
+type ModalButtonProps = BaseButtonProps;
 
 export interface ModalComponentProps {
   afterClose?: () => void;
@@ -79,7 +81,7 @@ export interface ModalComponentProps {
   loading?: boolean;
   mask?: boolean;
   maskClosable?: boolean;
-  okButtonProps?: ModalButtonProps & { danger?: boolean };
+  okButtonProps?: ModalButtonProps;
   okText?: ReactNode;
   onCancel?: (e: MouseEvent<HTMLButtonElement>) => void;
   onOk?: (e: MouseEvent<HTMLButtonElement>) => void;
@@ -101,7 +103,7 @@ export interface ModalComponentProps {
 export interface ModalConfirmConfig {
   cancelText?: ReactNode;
   content?: ReactNode;
-  okButtonProps?: ModalButtonProps & { danger?: boolean };
+  okButtonProps?: ModalButtonProps;
   okText?: ReactNode;
   onCancel?: () => void;
   onOk?: (() => void) | (() => Promise<void>);

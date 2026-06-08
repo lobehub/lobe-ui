@@ -275,7 +275,7 @@ export const ModalFooter = ({ className, ...rest }: ModalFooterProps) => (
 export type ModalCloseProps = React.ComponentProps<typeof Dialog.Close>;
 export const ModalClose = ({ className, children, ...rest }: ModalCloseProps) => (
   <Dialog.Close {...rest} className={mergeStateClassName(styles.close, className as any) as any}>
-    {children ?? <X size={18} />}
+    {children ?? <X size={16} />}
   </Dialog.Close>
 );
 
