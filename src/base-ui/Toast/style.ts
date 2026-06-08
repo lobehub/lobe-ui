@@ -30,7 +30,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   actionDanger: css`
-    color: ${cssVar.colorTextLightSolid};
+    color: ${cssVar.colorBgLayout};
     background: ${cssVar.colorError};
 
     &:hover {
@@ -63,7 +63,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   actionPrimary: css`
-    color: ${cssVar.colorTextLightSolid};
+    color: ${cssVar.colorBgLayout};
     background: ${cssVar.colorPrimary};
 
     &:hover {

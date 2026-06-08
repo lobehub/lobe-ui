@@ -107,7 +107,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   variantPrimary: css`
     border-color: ${cssVar.colorPrimary};
-    color: ${cssVar.colorTextLightSolid};
+    color: ${cssVar.colorBgLayout};
     background: ${cssVar.colorPrimary};
 
     &:hover:not(:disabled, [aria-disabled='true']) {
@@ -168,7 +168,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   dangerSolid: css`
     border-color: ${cssVar.colorError};
-    color: ${cssVar.colorTextLightSolid};
+    color: ${cssVar.colorBgLayout};
     background: ${cssVar.colorError};
 
     &:hover:not(:disabled, [aria-disabled='true']) {

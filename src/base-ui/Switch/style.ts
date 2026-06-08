@@ -12,7 +12,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     align-items: center;
     justify-content: center;
 
-    color: ${cssVar.colorTextLightSolid};
+    color: ${cssVar.colorBgLayout};
   `,
   iconLeft: css`
     inset-inline-start: 4px;
