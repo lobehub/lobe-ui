@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.15.11](https://github.com/lobehub/lobe-ui/compare/v5.15.10...v5.15.11) (2026-06-08)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Use colorBgLayout for solid button text color ([b874080](https://github.com/lobehub/lobe-ui/commit/b874080))
+
 ## [5.15.10](https://github.com/lobehub/lobe-ui/compare/v5.15.9...v5.15.10) (2026-06-08)
 
 ### 🎫 Chores
