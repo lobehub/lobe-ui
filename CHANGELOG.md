@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.15.10](https://github.com/lobehub/lobe-ui/compare/v5.15.9...v5.15.10) (2026-06-08)
+
+### 🎫 Chores
+
+- **release**: Force patch release ([d8abe9e](https://github.com/lobehub/lobe-ui/commit/d8abe9e))
+
 ## [5.15.9](https://github.com/lobehub/lobe-ui/compare/v5.15.8...v5.15.9) (2026-06-08)
 
 ### 💄 Styles
