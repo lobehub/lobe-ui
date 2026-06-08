@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.15.9](https://github.com/lobehub/lobe-ui/compare/v5.15.8...v5.15.9) (2026-06-08)
+
+### 💄 Styles
+
+- Update blue color, Tag, Code Diff, closes [#547](https://github.com/lobehub/lobe-ui/issues/547) ([51545e4](https://github.com/lobehub/lobe-ui/commit/51545e4))
+
 ## [5.15.8](https://github.com/lobehub/lobe-ui/compare/v5.15.7...v5.15.8) (2026-06-03)
 
 ### 💄 Styles
