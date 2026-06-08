@@ -8,12 +8,37 @@ export default () => {
     {
       children: 'processing',
       closable: false,
+      color: {
+        options: [
+          'success',
+          'warning',
+          'error',
+          'info',
+          'magenta',
+          'red',
+          'volcano',
+          'orange',
+          'gold',
+          'lime',
+          'green',
+          'cyan',
+          'blue',
+          'geekblue',
+          'purple',
+          'gray',
+        ],
+        value: 'info',
+      },
+      shape: {
+        options: ['normal', 'round'],
+        value: 'normal',
+      },
       size: {
         options: ['small', 'middle', 'large'],
         value: 'middle',
       },
       variant: {
-        options: ['filled', 'outlined', 'borderless'],
+        options: ['filled', 'outlined', 'borderless', 'solid'],
         value: 'filled',
       },
     },

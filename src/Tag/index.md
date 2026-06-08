@@ -17,13 +17,14 @@ description: Tag is used for marking and categorizing content with small colorfu
 
 ### Tag
 
-| Property | Description                  | Type                                     | Default    |
-| -------- | ---------------------------- | ---------------------------------------- | ---------- |
-| color    | Custom color of the tag      | `AntTagProps['color'] \| 'info'`         | -          |
-| size     | Size of the tag              | `'small' \| 'middle' \| 'large'`         | `'middle'` |
-| variant  | Style variant of the tag     | `'filled' \| 'outlined' \| 'borderless'` | `'filled'` |
-| onClick  | Callback when tag is clicked | `(e) => void`                            | -          |
-| children | Content of tag               | `ReactNode`                              | -          |
+| Property | Description                  | Type                                                | Default    |
+| -------- | ---------------------------- | --------------------------------------------------- | ---------- |
+| color    | Custom color of the tag      | `AntTagProps['color'] \| 'info'`                    | -          |
+| shape    | Shape of the tag             | `'normal' \| 'round'`                               | `'normal'` |
+| size     | Size of the tag              | `'small' \| 'middle' \| 'large'`                    | `'middle'` |
+| variant  | Style variant of the tag     | `'filled' \| 'outlined' \| 'borderless' \| 'solid'` | `'filled'` |
+| onClick  | Callback when tag is clicked | `(e) => void`                                       | -          |
+| children | Content of tag               | `ReactNode`                                         | -          |
 
 Additionally, Tag inherits all properties from Ant Design's Tag component except for 'color', which has been enhanced with additional options.
 

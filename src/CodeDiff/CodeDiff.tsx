@@ -2,14 +2,14 @@
 
 import type { FileDiffOptions } from '@pierre/diffs';
 import { MultiFileDiff } from '@pierre/diffs/react';
-import { cx } from 'antd-style';
+import { useThemeMode } from 'antd-style';
 import { memo, useMemo } from 'react';
 
-import { Flexbox } from '@/Flex';
-import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
-
-import { headerVariants, prefix, styles, variants } from './style';
+import { DiffPanel } from './DiffPanel';
+import { getLobeDiffOptions, registerLobeDiffThemes } from './theme';
 import type { CodeDiffProps } from './type';
+
+registerLobeDiffThemes();
 
 const countContentChanges = (
   oldContent: string,
@@ -47,6 +47,8 @@ export const CodeDiff = memo<CodeDiffProps>(
     fileName,
     viewMode = 'split',
     showHeader = true,
+    defaultExpand = true,
+    fullFeatured = true,
     variant = 'filled',
     className,
     classNames,
@@ -55,6 +57,8 @@ export const CodeDiff = memo<CodeDiffProps>(
     diffOptions,
     ...rest
   }) => {
+    const { isDarkMode } = useThemeMode();
+
     const displayName = useMemo(() => {
       if (fileName) return fileName;
       if (language) return language;
@@ -94,48 +98,28 @@ export const CodeDiff = memo<CodeDiffProps>(
     );
 
     const options = useMemo<FileDiffOptions<string>>(
-      () => ({
-        diffStyle: viewMode,
-        disableFileHeader: true,
-        ...diffOptions,
-      }),
-      [viewMode, diffOptions],
+      () => getLobeDiffOptions({ diffOptions, isDarkMode, viewMode }),
+      [isDarkMode, viewMode, diffOptions],
     );
 
     return (
-      <Flexbox
-        className={cx(variants({ variant }), className)}
-        data-code-type="code-diff"
+      <DiffPanel
+        actions={actions}
+        additions={additions}
+        body={<MultiFileDiff newFile={newFile} oldFile={oldFile} options={options} />}
+        className={className}
+        classNames={classNames}
+        dataCodeType="code-diff"
+        defaultExpand={defaultExpand}
+        deletions={deletions}
+        displayName={displayName}
+        fileName={fileName}
+        fullFeatured={fullFeatured}
+        showHeader={showHeader}
+        styles={customStyles}
+        variant={variant}
         {...rest}
-      >
-        {showHeader && (
-          <div
-            className={cx(headerVariants({ variant }), classNames?.header)}
-            style={customStyles?.header}
-          >
-            <Flexbox horizontal align="center" gap={8}>
-              <MaterialFileTypeIcon filename={fileName || displayName} size={18} type="file" />
-              <span>{displayName}</span>
-            </Flexbox>
-            <Flexbox horizontal align="center" gap={8}>
-              {(deletions > 0 || additions > 0) && (
-                <Flexbox horizontal className={styles.stats} gap={8}>
-                  {deletions > 0 && <span className={styles.deletions}>-{deletions}</span>}
-                  {additions > 0 && <span className={styles.additions}>+{additions}</span>}
-                </Flexbox>
-              )}
-              {actions && (
-                <Flexbox align="center" className={cx(`${prefix}-actions`, styles.actions)} gap={4}>
-                  {actions}
-                </Flexbox>
-              )}
-            </Flexbox>
-          </div>
-        )}
-        <div className={cx(styles.body, classNames?.body)} style={customStyles?.body}>
-          <MultiFileDiff newFile={newFile} oldFile={oldFile} options={options} />
-        </div>
-      </Flexbox>
+      />
     );
   },
 );

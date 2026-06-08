@@ -4,6 +4,9 @@ export default {
   displayName: 'Lobe Theme',
   name: 'lobe-theme',
   semanticHighlighting: true,
+  colors: {
+    'editor.background': cssVar.colorBgContainer,
+  },
   tokenColors: [
     {
       settings: {
