@@ -4,22 +4,32 @@ import { cva } from 'class-variance-authority';
 import { lobeStaticStylish } from '@/styles';
 
 export const prefix = 'lobe-code-diff';
+export const compactActionsCls = `${prefix}-actions-compact`;
+export const compactLangCls = `${prefix}-lang`;
 
 export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     actions: css`
-      position: absolute;
-      z-index: 2;
-      inset-block-start: 8px;
-      inset-inline-end: 8px;
-
       opacity: 0;
       transition: opacity 0.2s ${cssVar.motionEaseInOut};
     `,
+    actionsCompact: cx(
+      compactActionsCls,
+      css`
+        position: absolute;
+        z-index: 2;
+        inset-block-start: 8px;
+        inset-inline-end: 8px;
+
+        opacity: 0;
+
+        transition: opacity 0.2s ${cssVar.motionEaseInOut};
+      `,
+    ),
     additions: css`
-      color: ${cssVar.colorSuccess};
       font-family: ${cssVar.fontFamilyCode};
       font-size: 12px;
+      color: ${cssVar.colorSuccess};
     `,
     body: css`
       overflow: auto;
@@ -29,26 +39,20 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       font-family: ${cssVar.fontFamilyCode};
       font-size: 13px;
       line-height: 1.6;
-
-      /* Override @pierre/diffs shadow DOM CSS variables */
-      --pdiff-font-family: ${cssVar.fontFamilyCode};
-      --pdiff-font-size: 13px;
-      --pdiff-line-height: 1.6;
-      --pdiff-bg-color: transparent;
-      --pdiff-border-color: ${cssVar.colorBorderSecondary};
-      --pdiff-gutter-bg: ${cssVar.colorFillQuaternary};
-      --pdiff-gutter-color: ${cssVar.colorTextQuaternary};
-      --pdiff-added-bg: ${cssVar.colorSuccessBgHover};
-      --pdiff-added-highlight-bg: ${cssVar.colorSuccessBg};
-      --pdiff-removed-bg: ${cssVar.colorErrorBgHover};
-      --pdiff-removed-highlight-bg: ${cssVar.colorErrorBg};
-      --pdiff-info-bg: ${cssVar.colorInfoBg};
+    `,
+    bodyCollapsed: css`
+      height: 0;
+      opacity: 0;
+    `,
+    bodyRoot: css`
+      overflow: hidden;
+      transition: opacity 0.25s ${cssVar.motionEaseOut};
     `,
     borderless: lobeStaticStylish.variantBorderlessWithoutHover,
     deletions: css`
-      color: ${cssVar.colorError};
       font-family: ${cssVar.fontFamilyCode};
       font-size: 12px;
+      color: ${cssVar.colorError};
     `,
     filled: cx(
       lobeStaticStylish.variantFilledWithoutHover,
@@ -57,30 +61,51 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       `,
     ),
     header: css`
+      cursor: pointer;
+
+      position: relative;
+
       display: flex;
       gap: 8px;
       align-items: center;
       justify-content: space-between;
 
-      padding: 8px 12px;
+      padding: 4px;
 
       font-family: ${cssVar.fontFamilyCode};
       font-size: 13px;
       color: ${cssVar.colorTextSecondary};
-
-      border-block-end: 1px solid ${cssVar.colorBorderSecondary};
     `,
     headerBorderless: css`
       padding-inline: 0;
-      border-block-end: none;
     `,
     headerFilled: css`
       background: transparent;
     `,
     headerOutlined: css`
-      background: ${cssVar.colorFillQuaternary};
+      & + .${prefix}-body {
+        border-block-start: 1px solid ${cssVar.colorFillQuaternary};
+      }
     `,
     outlined: lobeStaticStylish.variantOutlinedWithoutHover,
+    lang: cx(
+      compactLangCls,
+      lobeStaticStylish.blur,
+      css`
+        position: absolute;
+        z-index: 2;
+        inset-block-end: 8px;
+        inset-inline-end: 8px;
+
+        font-family: ${cssVar.fontFamilyCode};
+        color: ${cssVar.colorTextSecondary};
+
+        opacity: 0;
+        background: ${cssVar.colorFillQuaternary};
+
+        transition: opacity 0.1s;
+      `,
+    ),
     root: cx(
       prefix,
       css`
@@ -93,8 +118,34 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 
         transition: background-color 100ms ${cssVar.motionEaseOut};
 
+        .language-title {
+          opacity: 0.5;
+          filter: grayscale(100%);
+          transition:
+            opacity,
+            grayscale 0.2s ${cssVar.motionEaseInOut};
+        }
+
+        .panel-actions {
+          opacity: 0;
+          transition: opacity 0.2s ${cssVar.motionEaseInOut};
+        }
+
         &:hover {
-          .${prefix}-actions {
+          .language-title {
+            opacity: 1;
+            filter: grayscale(0%);
+          }
+
+          .panel-actions {
+            opacity: 1;
+          }
+
+          .${compactActionsCls} {
+            opacity: 1;
+          }
+
+          .${compactLangCls} {
             opacity: 1;
           }
         }
@@ -129,9 +180,21 @@ export const headerVariants = cva(styles.header, {
 
   variants: {
     variant: {
-      filled: styles.headerFilled,
+      filled: cx(styles.headerFilled, styles.headerOutlined),
       outlined: styles.headerOutlined,
       borderless: styles.headerBorderless,
+    },
+  },
+});
+
+export const bodyVariants = cva(styles.bodyRoot, {
+  defaultVariants: {
+    expand: true,
+  },
+  variants: {
+    expand: {
+      false: styles.bodyCollapsed,
+      true: null,
     },
   },
 });

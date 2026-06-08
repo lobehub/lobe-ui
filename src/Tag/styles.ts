@@ -16,6 +16,26 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   outlined: lobeStaticStylish.variantOutlinedWithoutHover,
+  round: css`
+    &.${prefixCls}-tag {
+      border-radius: 999px !important;
+    }
+  `,
+  roundLarge: css`
+    &.${prefixCls}-tag {
+      padding-inline: 14px;
+    }
+  `,
+  roundMiddle: css`
+    &.${prefixCls}-tag {
+      padding-inline: 10px;
+    }
+  `,
+  roundSmall: css`
+    &.${prefixCls}-tag {
+      padding-inline: 8px;
+    }
+  `,
   root: css`
     color: ${cssVar.colorTextSecondary};
 
@@ -54,15 +74,39 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
 export const variants = cva(styles.root, {
   defaultVariants: {
+    shape: 'normal',
     size: 'middle',
     variant: 'filled',
   },
 
+  compoundVariants: [
+    {
+      className: styles.roundSmall,
+      shape: 'round',
+      size: 'small',
+    },
+    {
+      className: styles.roundMiddle,
+      shape: 'round',
+      size: 'middle',
+    },
+    {
+      className: styles.roundLarge,
+      shape: 'round',
+      size: 'large',
+    },
+  ],
+
   variants: {
+    shape: {
+      normal: null,
+      round: styles.round,
+    },
     variant: {
       filled: styles.filled,
       outlined: styles.outlined,
       borderless: styles.borderless,
+      solid: styles.filled,
     },
     size: {
       small: styles.small,

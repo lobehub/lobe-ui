@@ -22,6 +22,11 @@ export interface CodeDiffProps extends Omit<FlexboxProps, 'children'> {
     header?: string;
   };
   /**
+   * Whether diff body is expanded by default
+   * @default true
+   */
+  defaultExpand?: boolean;
+  /**
    * Options for the diff component
    */
   diffOptions?: FileDiffOptions<string>;
@@ -29,6 +34,11 @@ export interface CodeDiffProps extends Omit<FlexboxProps, 'children'> {
    * File name to display
    */
   fileName?: string;
+  /**
+   * Whether to enable full-featured mode (collapsible header, richer interactions)
+   * @default true
+   */
+  fullFeatured?: boolean;
   /**
    * Programming language for syntax highlighting
    */
@@ -78,6 +88,11 @@ export interface PatchDiffProps extends Omit<FlexboxProps, 'children'> {
     header?: string;
   };
   /**
+   * Whether diff body is expanded by default
+   * @default true
+   */
+  defaultExpand?: boolean;
+  /**
    * Options for the diff component
    */
   diffOptions?: FileDiffOptions<string>;
@@ -85,6 +100,11 @@ export interface PatchDiffProps extends Omit<FlexboxProps, 'children'> {
    * File name to display (optional, extracted from patch if not provided)
    */
   fileName?: string;
+  /**
+   * Whether to enable full-featured mode (collapsible header, richer interactions)
+   * @default true
+   */
+  fullFeatured?: boolean;
   /**
    * Programming language for syntax highlighting
    */
