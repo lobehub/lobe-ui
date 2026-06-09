@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.15.12](https://github.com/lobehub/lobe-ui/compare/v5.15.11...v5.15.12) (2026-06-09)
+
+### 💄 Styles
+
+- Update CodeDiff color ([bebe98f](https://github.com/lobehub/lobe-ui/commit/bebe98f))
+
 ## [5.15.11](https://github.com/lobehub/lobe-ui/compare/v5.15.10...v5.15.11) (2026-06-08)
 
 ### 🐛 Bug Fixes
