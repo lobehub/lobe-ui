@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.15.13](https://github.com/lobehub/lobe-ui/compare/v5.15.12...v5.15.13) (2026-06-10)
+
+### 🐛 Bug Fixes
+
+- Lock @pierre/diffs to 1.2.8 to avoid broken 1.2.9 dependency, closes [#548](https://github.com/lobehub/lobe-ui/issues/548) ([0944716](https://github.com/lobehub/lobe-ui/commit/0944716))
+
 ## [5.15.12](https://github.com/lobehub/lobe-ui/compare/v5.15.11...v5.15.12) (2026-06-09)
 
 ### 💄 Styles
