@@ -22,7 +22,10 @@ import {
   useMarkdownRemarkPlugins,
 } from '@/hooks/useMarkdown';
 import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
-import { rehypeStreamAnimated } from '@/Markdown/plugins/rehypeStreamAnimated';
+import {
+  rehypeStreamAnimated,
+  type StreamAnimatedRuntime,
+} from '@/Markdown/plugins/rehypeStreamAnimated';
 import { useStreamdownProfiler } from '@/Markdown/streamProfiler';
 import { isDeepEqual } from '@/utils/isDeepEqual';
 
@@ -32,7 +35,6 @@ import { useSmoothStreamContent } from './useSmoothStreamContent';
 import { type BlockInfo, useStreamQueue } from './useStreamQueue';
 
 const STREAM_FADE_DURATION = 280;
-const REVEALED_STREAM_PLUGIN: Pluggable = [rehypeStreamAnimated, { revealed: true }];
 
 function countChars(text: string): number {
   return [...text].length;
@@ -90,6 +92,17 @@ const StreamdownBlock = memo<Options>(
 
 StreamdownBlock.displayName = 'StreamdownBlock';
 
+interface BlockRuntime extends StreamAnimatedRuntime {
+  charCount: number;
+  rawLength: number;
+}
+
+interface BlockPluginsCacheEntry {
+  base: PluggableList;
+  settled: boolean;
+  value: PluggableList;
+}
+
 export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
   const { streamSmoothingPreset = 'balanced' } = useMarkdownContext();
   const profiler = useStreamdownProfiler();
@@ -134,56 +147,67 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
 
   const { getBlockState, charDelay } = useStreamQueue(blocks);
   const blockCharDelayRef = useRef<Map<number, number>>(new Map());
-  const blockBirthsRef = useRef<Map<number, number[]>>(new Map());
+  const blockRuntimesRef = useRef<Map<number, BlockRuntime>>(new Map());
+  const blockPluginsRef = useRef<Map<number, BlockPluginsCacheEntry>>(new Map());
 
   const renderNow = getNow();
 
-  const birthsResult = useMemo(() => {
+  const runtimesResult = useMemo(() => {
     const start = profiler ? getNow() : 0;
-    const nextBirths = new Map<number, number[]>();
-    const prevBirths = blockBirthsRef.current;
+    const runtimes = blockRuntimesRef.current;
+    const alive = new Set<number>();
 
     for (const [index, block] of blocks.entries()) {
-      const state = getBlockState(index);
+      alive.add(block.startOffset);
       // Queued blocks are not rendered. Defer birth assignment so that
       // when the block later transitions to animating/streaming, its
       // chars start fading from that moment instead of having already
       // "aged out" of the fade window.
-      if (state === 'queued') continue;
+      if (getBlockState(index) === 'queued') continue;
 
-      const blockCharCount = countChars(block.content);
-      const prev = prevBirths.get(block.startOffset);
-      let arr: number[];
+      let runtime = runtimes.get(block.startOffset);
+      if (!runtime) {
+        runtime = { births: [], charCount: 0, rawLength: -1, styles: [] };
+        runtimes.set(block.startOffset, runtime);
+      }
 
-      if (prev && prev.length === blockCharCount) {
-        arr = prev;
-      } else if (prev && prev.length > blockCharCount) {
+      if (runtime.rawLength !== block.content.length) {
+        runtime.charCount = countChars(block.content);
+        runtime.rawLength = block.content.length;
+      }
+
+      const blockCharCount = runtime.charCount;
+      const births = runtime.births;
+
+      if (births.length > blockCharCount) {
         // Block content shrunk (stream restart or upstream rewrite).
-        arr = prev.slice(0, blockCharCount);
-      } else {
-        arr = prev ? prev.slice() : [];
-        const startIdx = arr.length;
+        births.length = blockCharCount;
+        runtime.styles.length = blockCharCount;
+      }
+
+      if (births.length < blockCharCount) {
         // Chain each new char monotonically after the previous one so fades
         // never race out of order. Cap how far the fade queue can run ahead
         // of renderNow to prevent stream-faster-than-fade producing seconds
         // of invisible backlog at the tail.
         const cap = renderNow + STREAM_FADE_DURATION;
-        for (let i = startIdx; i < blockCharCount; i++) {
-          const prevBirth = i > 0 ? (arr[i - 1] as number) : renderNow - charDelay;
+        for (let i = births.length; i < blockCharCount; i++) {
+          const prevBirth = i > 0 ? births[i - 1] : renderNow - charDelay;
           const chained = prevBirth + charDelay;
-          arr.push(Math.min(cap, Math.max(chained, renderNow)));
+          births.push(Math.min(cap, Math.max(chained, renderNow)));
         }
       }
-
-      nextBirths.set(block.startOffset, arr);
     }
 
-    return {
-      durationMs: profiler ? getNow() - start : 0,
-      value: nextBirths,
-    };
+    for (const key of blockRuntimesRef.current.keys()) {
+      if (!alive.has(key)) {
+        blockRuntimesRef.current.delete(key);
+        blockPluginsRef.current.delete(key);
+      }
+    }
+
+    return { durationMs: profiler ? getNow() - start : 0 };
   }, [blocks, charDelay, getBlockState, profiler, renderNow]);
-  const birthsForRender = birthsResult.value;
 
   useEffect(() => {
     if (!profiler) return;
@@ -210,12 +234,12 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
     if (!profiler) return;
 
     profiler.recordCalculation({
-      durationMs: birthsResult.durationMs,
+      durationMs: runtimesResult.durationMs,
       itemCount: blocks.length,
       name: 'block-births',
       textLength: processedContent.length,
     });
-  }, [birthsResult.durationMs, blocks.length, processedContent.length, profiler]);
+  }, [runtimesResult.durationMs, blocks.length, processedContent.length, profiler]);
 
   const blockAnimationMetaResult = useMemo(() => {
     const nextBlockCharDelay = new Map<number, number>();
@@ -223,7 +247,9 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
 
     for (const [index, block] of blocks.entries()) {
       const state = getBlockState(index);
-      const births = birthsForRender.get(block.startOffset);
+      if (state === 'queued') continue;
+
+      const births = blockRuntimesRef.current.get(block.startOffset)?.births;
       const lastBirthTs = births && births.length > 0 ? (births.at(-1) ?? renderNow) : renderNow;
       const lastElapsedMs = renderNow - lastBirthTs;
       const animationMeta = resolveBlockAnimationMeta({
@@ -242,12 +268,29 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
       blockAnimationMeta,
       blockCharDelay: nextBlockCharDelay,
     };
-  }, [birthsForRender, blocks, charDelay, getBlockState, renderNow]);
+  }, [blocks, charDelay, getBlockState, renderNow]);
 
   useEffect(() => {
     blockCharDelayRef.current = blockAnimationMetaResult.blockCharDelay;
-    blockBirthsRef.current = birthsForRender;
-  }, [birthsForRender, blockAnimationMetaResult.blockCharDelay]);
+  }, [blockAnimationMetaResult.blockCharDelay]);
+
+  const resolveBlockPlugins = (startOffset: number, settled: boolean): PluggableList => {
+    if (settled) return baseRehypePlugins;
+
+    const cache = blockPluginsRef.current;
+    const entry = cache.get(startOffset);
+    if (entry && entry.base === baseRehypePlugins && entry.settled === settled) {
+      return entry.value;
+    }
+
+    const runtime = blockRuntimesRef.current.get(startOffset);
+    const value: PluggableList = [
+      ...baseRehypePlugins,
+      [rehypeStreamAnimated, { fadeDuration: STREAM_FADE_DURATION, runtime }],
+    ];
+    cache.set(startOffset, { base: baseRehypePlugins, settled, value });
+    return value;
+  };
 
   const handleRootRender = useCallback<ProfilerOnRenderCallback>(
     (_, phase, actualDuration, baseDuration) => {
@@ -295,32 +338,8 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
         const animationMeta = blockAnimationMetaResult.blockAnimationMeta.get(block.startOffset);
         if (!animationMeta) return null;
 
-        const births = birthsForRender.get(block.startOffset);
-        const plugins: Pluggable[] = animationMeta.settled
-          ? [...baseRehypePlugins, REVEALED_STREAM_PLUGIN]
-          : [
-              ...baseRehypePlugins,
-              [
-                rehypeStreamAnimated,
-                {
-                  births,
-                  fadeDuration: STREAM_FADE_DURATION,
-                  nowMs: renderNow,
-                },
-              ],
-            ];
-
+        const plugins = resolveBlockPlugins(block.startOffset, animationMeta.settled);
         const key = `${generatedId}-${block.startOffset}`;
-        const blockNode = (
-          <StreamdownBlock
-            {...rest}
-            components={components}
-            rehypePlugins={plugins}
-            remarkPlugins={remarkPlugins}
-          >
-            {block.content}
-          </StreamdownBlock>
-        );
 
         if (!profiler) {
           return (
@@ -342,7 +361,14 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
             key={key}
             onRender={handleBlockRender}
           >
-            {blockNode}
+            <StreamdownBlock
+              {...rest}
+              components={components}
+              rehypePlugins={plugins}
+              remarkPlugins={remarkPlugins}
+            >
+              {block.content}
+            </StreamdownBlock>
           </Profiler>
         );
       })}

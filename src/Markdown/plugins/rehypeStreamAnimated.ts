@@ -2,15 +2,33 @@ import { type Element, type ElementContent, type Root } from 'hast';
 import { type BuildVisitor } from 'unist-util-visit';
 import { visit } from 'unist-util-visit';
 
+export interface StreamAnimatedRuntime {
+  births: number[];
+  /**
+   * Write-once per-char render cache, indexed like `births`:
+   * `undefined` = char not rendered yet, `null` = born fully revealed,
+   * string = inline style frozen at first render ('' when no delay).
+   * Freezing the style keeps span props referentially stable across the
+   * tail block's re-renders, so React never rewrites `animation-delay`
+   * on an in-flight fade (a rewrite restarts the CSS animation).
+   */
+  styles: (string | null | undefined)[];
+}
+
 export interface StreamAnimatedOptions {
   births?: number[];
   fadeDuration?: number;
   nowMs?: number;
   revealed?: boolean;
+  runtime?: StreamAnimatedRuntime;
 }
 
 const BLOCK_TAGS = new Set(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li']);
 const SKIP_TAGS = new Set(['pre', 'code', 'table', 'svg']);
+
+const getNow = () => {
+  return typeof performance === 'undefined' ? Date.now() : performance.now();
+};
 
 function hasClass(node: Element, cls: string): boolean {
   const cn = node.properties?.className;
@@ -20,14 +38,37 @@ function hasClass(node: Element, cls: string): boolean {
 }
 
 export const rehypeStreamAnimated = (options: StreamAnimatedOptions = {}) => {
-  const { births, fadeDuration = 150, nowMs, revealed = false } = options;
-  const hasBirths = !revealed && Array.isArray(births) && typeof nowMs === 'number';
+  const { births, fadeDuration = 150, nowMs, revealed = false, runtime } = options;
+  const hasRuntime = !revealed && runtime !== undefined;
+  const hasBirths = !revealed && !hasRuntime && Array.isArray(births) && typeof nowMs === 'number';
 
   return (tree: Root) => {
     let globalCharIndex = 0;
+    const now = hasRuntime ? getNow() : 0;
 
     const shouldSkip = (node: Element): boolean => {
       return SKIP_TAGS.has(node.tagName) || hasClass(node, 'katex');
+    };
+
+    const resolveRuntimeStyle = (index: number): string | null => {
+      const styles = runtime!.styles;
+      const cached = styles[index];
+      if (cached !== undefined) return cached;
+
+      const birthTs = runtime!.births[index];
+      let resolved: string | null;
+      if (birthTs === undefined) {
+        resolved = null;
+      } else {
+        const elapsed = now - birthTs;
+        if (elapsed >= fadeDuration) {
+          resolved = null;
+        } else {
+          resolved = elapsed === 0 ? '' : `animation-delay:${-elapsed}ms`;
+        }
+      }
+      styles[index] = resolved;
+      return resolved;
     };
 
     const wrapText = (node: Element) => {
@@ -36,10 +77,17 @@ export const rehypeStreamAnimated = (options: StreamAnimatedOptions = {}) => {
         if (child.type === 'text') {
           for (const char of child.value) {
             let className = 'stream-char';
-            let delay: number | undefined;
+            let style: string | undefined;
 
             if (revealed) {
               className = 'stream-char stream-char-revealed';
+            } else if (hasRuntime) {
+              const resolved = resolveRuntimeStyle(globalCharIndex);
+              if (resolved === null) {
+                className = 'stream-char stream-char-revealed';
+              } else if (resolved !== '') {
+                style = resolved;
+              }
             } else if (hasBirths) {
               const birthTs = births![globalCharIndex];
               if (birthTs === undefined) {
@@ -48,18 +96,18 @@ export const rehypeStreamAnimated = (options: StreamAnimatedOptions = {}) => {
                 const elapsed = (nowMs as number) - birthTs;
                 if (elapsed >= fadeDuration) {
                   className = 'stream-char stream-char-revealed';
-                } else {
+                } else if (elapsed !== 0) {
                   // Negative delay = already elapsed ms into the fade.
                   // Positive delay = not started yet (char born in the future,
                   // i.e. staggered within the same commit).
-                  delay = -elapsed;
+                  style = `animation-delay:${-elapsed}ms`;
                 }
               }
             }
 
             const properties: Record<string, any> = { className };
-            if (delay !== undefined && delay !== 0) {
-              properties.style = `animation-delay:${delay}ms`;
+            if (style !== undefined) {
+              properties.style = style;
             }
             newChildren.push({
               children: [{ type: 'text', value: char }],

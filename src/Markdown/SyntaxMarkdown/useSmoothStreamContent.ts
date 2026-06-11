@@ -26,6 +26,7 @@ interface StreamSmoothingPresetConfig {
   maxActiveCps: number;
   maxCps: number;
   maxFlushCps: number;
+  minCommitIntervalMs: number;
   minCps: number;
   settleAfterMs: number;
   settleDrainMaxMs: number;
@@ -46,6 +47,7 @@ const PRESET_CONFIG: Record<StreamSmoothingPreset, StreamSmoothingPresetConfig> 
     maxActiveCps: 132,
     maxCps: 72,
     maxFlushCps: 280,
+    minCommitIntervalMs: 32,
     minCps: 18,
     settleAfterMs: 360,
     settleDrainMaxMs: 520,
@@ -62,6 +64,7 @@ const PRESET_CONFIG: Record<StreamSmoothingPreset, StreamSmoothingPresetConfig> 
     maxActiveCps: 180,
     maxCps: 96,
     maxFlushCps: 360,
+    minCommitIntervalMs: 24,
     minCps: 24,
     settleAfterMs: 260,
     settleDrainMaxMs: 360,
@@ -78,6 +81,7 @@ const PRESET_CONFIG: Record<StreamSmoothingPreset, StreamSmoothingPresetConfig> 
     maxActiveCps: 102,
     maxCps: 56,
     maxFlushCps: 220,
+    minCommitIntervalMs: 36,
     minCps: 14,
     settleAfterMs: 460,
     settleDrainMaxMs: 680,
@@ -88,6 +92,20 @@ const PRESET_CONFIG: Record<StreamSmoothingPreset, StreamSmoothingPresetConfig> 
 
 const clamp = (value: number, min: number, max: number): number => {
   return Math.min(max, Math.max(min, value));
+};
+
+// Every reveal commit re-parses and re-wraps the entire trailing block, so
+// the per-commit cost grows linearly with how far the content is from the
+// last block boundary. Widen the commit interval as that distance grows —
+// long paragraphs/code fences keep total work bounded while short blocks
+// stay at the preset's snappy interval. Per-char animation-delay stagger
+// hides the lower commit rate.
+const MAX_COMMIT_INTERVAL_MS = 64;
+const COMMIT_INTERVAL_TAIL_SCALE_UNITS = 256;
+
+const findTailUnits = (content: string): number => {
+  const boundary = content.lastIndexOf('\n\n');
+  return boundary === -1 ? content.length : content.length - boundary - 2;
 };
 
 const getNow = () => {
@@ -119,6 +137,7 @@ export const useSmoothStreamContent = (
   const targetCountRef = useRef(targetCharsRef.current.length);
 
   const emaCpsRef = useRef(config.defaultCps);
+  const tailUnitsRef = useRef(findTailUnits(content));
   const lastInputTsRef = useRef(0);
   const lastInputCountRef = useRef(targetCountRef.current);
   const chunkSizeEmaRef = useRef(1);
@@ -183,6 +202,7 @@ export const useSmoothStreamContent = (
       emaCpsRef.current = config.defaultCps;
       chunkSizeEmaRef.current = 1;
       arrivalCpsEmaRef.current = config.defaultCps;
+      tailUnitsRef.current = findTailUnits(nextContent);
       lastInputTsRef.current = now;
       lastInputCountRef.current = chars.length;
     },
@@ -194,18 +214,6 @@ export const useSmoothStreamContent = (
     if (rafRef.current !== null) return;
 
     const tick = (ts: number) => {
-      const frameStart = getNow();
-
-      if (lastFrameTsRef.current === null) {
-        lastFrameTsRef.current = ts;
-        rafRef.current = requestAnimationFrame(tick);
-        return;
-      }
-
-      const frameIntervalMs = Math.max(0, ts - lastFrameTsRef.current);
-      const dtSeconds = Math.max(0.001, Math.min(frameIntervalMs / 1000, 0.05));
-      lastFrameTsRef.current = ts;
-
       const targetCount = targetCountRef.current;
       const displayedCount = displayedCountRef.current;
       const backlog = targetCount - displayedCount;
@@ -214,6 +222,30 @@ export const useSmoothStreamContent = (
         stopFrameLoop();
         return;
       }
+
+      if (lastFrameTsRef.current === null) {
+        lastFrameTsRef.current = ts;
+        rafRef.current = requestAnimationFrame(tick);
+        return;
+      }
+
+      // Reveal commits are throttled below the display refresh rate: each
+      // commit re-renders the tail block and re-runs remend + lexing, so
+      // committing at 60-120fps burns CPU without visible benefit — the
+      // per-char stagger inside a commit is carried by animation-delay.
+      const commitIntervalMs = Math.min(
+        MAX_COMMIT_INTERVAL_MS,
+        config.minCommitIntervalMs * (1 + tailUnitsRef.current / COMMIT_INTERVAL_TAIL_SCALE_UNITS),
+      );
+      const frameIntervalMs = Math.max(0, ts - lastFrameTsRef.current);
+      if (frameIntervalMs < commitIntervalMs) {
+        rafRef.current = requestAnimationFrame(tick);
+        return;
+      }
+
+      const frameStart = getNow();
+      const dtSeconds = Math.max(0.001, Math.min(frameIntervalMs / 1000, 0.05));
+      lastFrameTsRef.current = ts;
 
       const now = getNow();
       const idleMs = now - lastInputTsRef.current;
@@ -321,6 +353,7 @@ export const useSmoothStreamContent = (
     config.maxActiveCps,
     config.maxCps,
     config.maxFlushCps,
+    config.minCommitIntervalMs,
     config.minCps,
     config.settleAfterMs,
     config.settleDrainMaxMs,
@@ -377,8 +410,10 @@ export const useSmoothStreamContent = (
     }
 
     targetContentRef.current = content;
-    targetCharsRef.current = [...targetCharsRef.current, ...appendedChars];
+    targetCharsRef.current.push(...appendedChars);
     targetCountRef.current += appendedCount;
+
+    tailUnitsRef.current = findTailUnits(content);
 
     const deltaChars = targetCountRef.current - lastInputCountRef.current;
     const deltaMs = Math.max(1, now - lastInputTsRef.current);
