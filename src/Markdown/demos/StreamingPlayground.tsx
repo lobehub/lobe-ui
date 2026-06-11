@@ -104,6 +104,7 @@ export const StreamingPlayground = ({ defaultShowProfiler = false }: StreamingPl
     chunkDelayMin,
     chunkDelayMax,
     language,
+    streamAnimationGranularity,
     streamSmoothingPreset,
     streamDebug,
     showProfilerPanel,
@@ -142,6 +143,10 @@ export const StreamingPlayground = ({ defaultShowProfiler = false }: StreamingPl
       },
       useReadableStream: {
         value: true,
+      },
+      streamAnimationGranularity: {
+        options: ['char', 'word'],
+        value: 'char',
       },
       streamSmoothingPreset: {
         options: ['realtime', 'balanced', 'silky'],
@@ -371,6 +376,7 @@ export const StreamingPlayground = ({ defaultShowProfiler = false }: StreamingPl
       components={components}
       fullFeaturedCodeBlock={rest.fullFeaturedCodeBlock}
       rehypePlugins={rehypePlugins}
+      streamAnimationGranularity={streamAnimationGranularity === 'char' ? 'char' : 'word'}
       streamSmoothingPreset={safeSmoothingPreset}
       variant="chat"
     >

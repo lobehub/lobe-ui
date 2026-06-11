@@ -2,6 +2,8 @@ import { createStaticStyles } from 'antd-style';
 
 import { fadeIn } from '@/styles/animations';
 
+export const STREAM_FADE_DURATION = 180;
+
 export const styles = createStaticStyles(({ css }) => {
   return {
     animated: css`
@@ -9,7 +11,7 @@ export const styles = createStaticStyles(({ css }) => {
         opacity: 0;
 
         animation-name: ${fadeIn};
-        animation-duration: 280ms;
+        animation-duration: ${STREAM_FADE_DURATION}ms;
         animation-timing-function: cubic-bezier(0.33, 0, 0.67, 1);
         animation-fill-mode: forwards;
       }

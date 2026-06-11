@@ -1,4 +1,5 @@
 import { type BlockState } from '@/Markdown/SyntaxMarkdown/useStreamQueue';
+import { getNow } from '@/utils/getNow';
 
 export type StreamdownProfilerPhase = 'mount' | 'nested-update' | 'update';
 
@@ -229,10 +230,6 @@ const DEFAULT_TARGET_FPS = 60;
 const MAX_FPS_SAMPLES = 90;
 const MAX_TRACKED_FPS = 120;
 const SLOW_FRAME_JS_BUDGET_MS = 4;
-
-const getNow = () => {
-  return typeof performance === 'undefined' ? Date.now() : performance.now();
-};
 
 const createMetric = (): MutableMetric => ({
   count: 0,

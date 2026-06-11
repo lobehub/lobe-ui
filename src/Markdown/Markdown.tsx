@@ -45,6 +45,7 @@ const Markdown = memo<MarkdownProps>((props) => {
     components = {},
     customRender,
     showFootnotes = true,
+    streamAnimationGranularity,
     streamSmoothingPreset,
     citations,
     ...rest
@@ -108,6 +109,7 @@ const Markdown = memo<MarkdownProps>((props) => {
           remarkPlugins={remarkPlugins}
           remarkPluginsAhead={remarkPluginsAhead}
           showFootnotes={showFootnotes}
+          streamAnimationGranularity={streamAnimationGranularity}
           streamSmoothingPreset={streamSmoothingPreset}
           variant={variant}
         >
