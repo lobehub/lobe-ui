@@ -145,8 +145,8 @@ export const StreamingPlayground = ({ defaultShowProfiler = false }: StreamingPl
         value: true,
       },
       streamAnimationGranularity: {
-        options: ['word', 'char'],
-        value: 'word',
+        options: ['char', 'word'],
+        value: 'char',
       },
       streamSmoothingPreset: {
         options: ['realtime', 'balanced', 'silky'],

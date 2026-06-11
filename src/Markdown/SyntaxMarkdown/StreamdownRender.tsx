@@ -103,8 +103,12 @@ interface UpdateBlockAnimationArgs {
   getBlockState: (index: number) => BlockState;
   pluginsCache: Map<number, BlockPluginsCacheEntry>;
   renderNow: number;
+  revealClock: { lastTs: number };
   runtimes: Map<number, BlockRuntime>;
 }
+
+const MIN_STREAM_CHAR_PACE_MS = 2;
+const MAX_REVEAL_GAP_MS = 160;
 
 // Runs in the render phase: extends each visible block's birth timeline in
 // place and resolves its animation meta in one pass. Mutations are
@@ -116,10 +120,12 @@ const updateBlockAnimation = ({
   getBlockState,
   pluginsCache,
   renderNow,
+  revealClock,
   runtimes,
 }: UpdateBlockAnimationArgs): Map<number, BlockAnimationMeta> => {
   const blockAnimationMeta = new Map<number, BlockAnimationMeta>();
   const alive = new Set<number>();
+  let revealedNewChars = false;
 
   for (const [index, block] of blocks.entries()) {
     alive.add(block.startOffset);
@@ -156,10 +162,24 @@ const updateBlockAnimation = ({
       // never race out of order. Cap how far the fade queue can run ahead
       // of renderNow to prevent stream-faster-than-fade producing seconds
       // of invisible backlog at the tail.
-      const cap = renderNow + STREAM_FADE_DURATION;
+      //
+      // The streaming tail paces its stagger from the observed reveal-commit
+      // gap instead of the queue's fixed charDelay: a commit's chars are
+      // spread to land exactly until the next commit arrives, so the flow
+      // stays per-char continuous no matter how far apart the throttled
+      // commits are.
+      const newChars = blockCharCount - births.length;
+      let pace = charDelay;
+      let cap = renderNow + STREAM_FADE_DURATION;
+      if (state === 'streaming') {
+        revealedNewChars = true;
+        const gapMs = Math.min(Math.max(renderNow - revealClock.lastTs, 16), MAX_REVEAL_GAP_MS);
+        pace = Math.min(charDelay, Math.max(gapMs / newChars, MIN_STREAM_CHAR_PACE_MS));
+        cap = renderNow + gapMs + STREAM_FADE_DURATION;
+      }
       for (let i = births.length; i < blockCharCount; i++) {
-        const prevBirth = i > 0 ? births[i - 1] : renderNow - charDelay;
-        const chained = prevBirth + charDelay;
+        const prevBirth = i > 0 ? births[i - 1] : renderNow - pace;
+        const chained = prevBirth + pace;
         births.push(Math.min(cap, Math.max(chained, renderNow)));
       }
     }
@@ -186,6 +206,10 @@ const updateBlockAnimation = ({
     blockAnimationMeta.set(block.startOffset, meta);
   }
 
+  if (revealedNewChars) {
+    revealClock.lastTs = renderNow;
+  }
+
   for (const key of runtimes.keys()) {
     if (!alive.has(key)) {
       runtimes.delete(key);
@@ -197,7 +221,7 @@ const updateBlockAnimation = ({
 };
 
 export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
-  const { streamAnimationGranularity = 'word', streamSmoothingPreset = 'balanced' } =
+  const { streamAnimationGranularity = 'char', streamSmoothingPreset = 'balanced' } =
     useMarkdownContext();
   const profiler = useStreamdownProfiler();
   const escapedContent = useMarkdownContent(children || '');
@@ -242,6 +266,7 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
   const { getBlockState, charDelay } = useStreamQueue(blocks);
   const blockRuntimesRef = useRef<Map<number, BlockRuntime>>(new Map());
   const blockPluginsRef = useRef<Map<number, BlockPluginsCacheEntry>>(new Map());
+  const revealClockRef = useRef<{ lastTs: number }>({ lastTs: 0 });
 
   const renderNow = getNow();
 
@@ -252,6 +277,7 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
     getBlockState,
     pluginsCache: blockPluginsRef.current,
     renderNow,
+    revealClock: revealClockRef.current,
     runtimes: blockRuntimesRef.current,
   });
   const blockAnimationDurationMs = profiler ? getNow() - animationStart : 0;
