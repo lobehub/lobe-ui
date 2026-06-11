@@ -2,12 +2,14 @@ import { type Element, type ElementContent, type Root } from 'hast';
 import { type BuildVisitor } from 'unist-util-visit';
 import { visit } from 'unist-util-visit';
 
+import { getNow } from '@/utils/getNow';
+
 export interface StreamAnimatedRuntime {
   births: number[];
   /**
    * Write-once per-char render cache, indexed like `births`:
    * `undefined` = char not rendered yet, `null` = born fully revealed,
-   * string = inline style frozen at first render ('' when no delay).
+   * string = inline style frozen at first render.
    * Freezing the style keeps span props referentially stable across the
    * tail block's re-renders, so React never rewrites `animation-delay`
    * on an in-flight fade (a rewrite restarts the CSS animation).
@@ -26,10 +28,6 @@ export interface StreamAnimatedOptions {
 const BLOCK_TAGS = new Set(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li']);
 const SKIP_TAGS = new Set(['pre', 'code', 'table', 'svg']);
 
-const getNow = () => {
-  return typeof performance === 'undefined' ? Date.now() : performance.now();
-};
-
 function hasClass(node: Element, cls: string): boolean {
   const cn = node.properties?.className;
   if (Array.isArray(cn)) return cn.some((c) => String(c).includes(cls));
@@ -39,33 +37,38 @@ function hasClass(node: Element, cls: string): boolean {
 
 export const rehypeStreamAnimated = (options: StreamAnimatedOptions = {}) => {
   const { births, fadeDuration = 150, nowMs, revealed = false, runtime } = options;
-  const hasRuntime = !revealed && runtime !== undefined;
-  const hasBirths = !revealed && !hasRuntime && Array.isArray(births) && typeof nowMs === 'number';
+  // Legacy births/nowMs callers share the runtime path through a throwaway
+  // cache: the plugin factory runs once per render, so their styles are
+  // recomputed against the caller's nowMs each run, exactly as before.
+  const resolvedRuntime = revealed
+    ? undefined
+    : (runtime ??
+      (Array.isArray(births) && typeof nowMs === 'number' ? { births, styles: [] } : undefined));
+  const nowOverride = runtime ? undefined : nowMs;
 
   return (tree: Root) => {
     let globalCharIndex = 0;
-    const now = hasRuntime ? getNow() : 0;
+    const now = nowOverride ?? (resolvedRuntime ? getNow() : 0);
 
     const shouldSkip = (node: Element): boolean => {
       return SKIP_TAGS.has(node.tagName) || hasClass(node, 'katex');
     };
 
-    const resolveRuntimeStyle = (index: number): string | null => {
-      const styles = runtime!.styles;
+    const resolveStyle = (index: number): string | null => {
+      const styles = resolvedRuntime!.styles;
       const cached = styles[index];
       if (cached !== undefined) return cached;
 
-      const birthTs = runtime!.births[index];
+      const birthTs = resolvedRuntime!.births[index];
       let resolved: string | null;
       if (birthTs === undefined) {
         resolved = null;
       } else {
         const elapsed = now - birthTs;
-        if (elapsed >= fadeDuration) {
-          resolved = null;
-        } else {
-          resolved = elapsed === 0 ? '' : `animation-delay:${-elapsed}ms`;
-        }
+        // Negative delay = already elapsed ms into the fade. Positive
+        // delay = not started yet (char born in the future, i.e.
+        // staggered within the same commit).
+        resolved = elapsed >= fadeDuration ? null : `animation-delay:${-elapsed}ms`;
       }
       styles[index] = resolved;
       return resolved;
@@ -81,27 +84,12 @@ export const rehypeStreamAnimated = (options: StreamAnimatedOptions = {}) => {
 
             if (revealed) {
               className = 'stream-char stream-char-revealed';
-            } else if (hasRuntime) {
-              const resolved = resolveRuntimeStyle(globalCharIndex);
+            } else if (resolvedRuntime) {
+              const resolved = resolveStyle(globalCharIndex);
               if (resolved === null) {
                 className = 'stream-char stream-char-revealed';
-              } else if (resolved !== '') {
-                style = resolved;
-              }
-            } else if (hasBirths) {
-              const birthTs = births![globalCharIndex];
-              if (birthTs === undefined) {
-                className = 'stream-char stream-char-revealed';
               } else {
-                const elapsed = (nowMs as number) - birthTs;
-                if (elapsed >= fadeDuration) {
-                  className = 'stream-char stream-char-revealed';
-                } else if (elapsed !== 0) {
-                  // Negative delay = already elapsed ms into the fade.
-                  // Positive delay = not started yet (char born in the future,
-                  // i.e. staggered within the same commit).
-                  style = `animation-delay:${-elapsed}ms`;
-                }
+                style = resolved;
               }
             }
 

@@ -27,22 +27,15 @@ import {
   type StreamAnimatedRuntime,
 } from '@/Markdown/plugins/rehypeStreamAnimated';
 import { useStreamdownProfiler } from '@/Markdown/streamProfiler';
+import { getNow } from '@/utils/getNow';
 import { isDeepEqual } from '@/utils/isDeepEqual';
 
-import { resolveBlockAnimationMeta } from './streamAnimationMeta';
+import { type BlockAnimationMeta, resolveBlockAnimationMeta } from './streamAnimationMeta';
 import { styles } from './style';
-import { useSmoothStreamContent } from './useSmoothStreamContent';
-import { type BlockInfo, useStreamQueue } from './useStreamQueue';
+import { countChars, useSmoothStreamContent } from './useSmoothStreamContent';
+import { type BlockInfo, type BlockState, useStreamQueue } from './useStreamQueue';
 
 const STREAM_FADE_DURATION = 280;
-
-function countChars(text: string): number {
-  return [...text].length;
-}
-
-function getNow(): number {
-  return typeof performance === 'undefined' ? Date.now() : performance.now();
-}
 
 const isSamePlugin = (prevPlugin: Pluggable, nextPlugin: Pluggable): boolean => {
   const prevTuple = Array.isArray(prevPlugin) ? prevPlugin : [prevPlugin];
@@ -94,14 +87,114 @@ StreamdownBlock.displayName = 'StreamdownBlock';
 
 interface BlockRuntime extends StreamAnimatedRuntime {
   charCount: number;
+  charDelay?: number;
   rawLength: number;
+  settled: boolean;
 }
 
 interface BlockPluginsCacheEntry {
   base: PluggableList;
-  settled: boolean;
   value: PluggableList;
 }
+
+interface UpdateBlockAnimationArgs {
+  blocks: BlockInfo[];
+  charDelay: number;
+  getBlockState: (index: number) => BlockState;
+  pluginsCache: Map<number, BlockPluginsCacheEntry>;
+  renderNow: number;
+  runtimes: Map<number, BlockRuntime>;
+}
+
+// Runs in the render phase: extends each visible block's birth timeline in
+// place and resolves its animation meta in one pass. Mutations are
+// idempotent for a given block content/length, so discarded or StrictMode
+// double renders re-derive the same state.
+const updateBlockAnimation = ({
+  blocks,
+  charDelay,
+  getBlockState,
+  pluginsCache,
+  renderNow,
+  runtimes,
+}: UpdateBlockAnimationArgs): Map<number, BlockAnimationMeta> => {
+  const blockAnimationMeta = new Map<number, BlockAnimationMeta>();
+  const alive = new Set<number>();
+
+  for (const [index, block] of blocks.entries()) {
+    alive.add(block.startOffset);
+
+    // Queued blocks are not rendered. Defer birth assignment so that
+    // when the block later transitions to animating/streaming, its
+    // chars start fading from that moment instead of having already
+    // "aged out" of the fade window.
+    const state = getBlockState(index);
+    if (state === 'queued') continue;
+
+    let runtime = runtimes.get(block.startOffset);
+    if (!runtime) {
+      runtime = { births: [], charCount: 0, rawLength: -1, settled: false, styles: [] };
+      runtimes.set(block.startOffset, runtime);
+    }
+
+    if (runtime.rawLength !== block.content.length) {
+      runtime.charCount = countChars(block.content);
+      runtime.rawLength = block.content.length;
+    }
+
+    const blockCharCount = runtime.charCount;
+    const births = runtime.births;
+
+    if (births.length > blockCharCount) {
+      // Block content shrunk (stream restart or upstream rewrite).
+      births.length = blockCharCount;
+      runtime.styles.length = blockCharCount;
+    }
+
+    if (births.length < blockCharCount) {
+      // Chain each new char monotonically after the previous one so fades
+      // never race out of order. Cap how far the fade queue can run ahead
+      // of renderNow to prevent stream-faster-than-fade producing seconds
+      // of invisible backlog at the tail.
+      const cap = renderNow + STREAM_FADE_DURATION;
+      for (let i = births.length; i < blockCharCount; i++) {
+        const prevBirth = i > 0 ? births[i - 1] : renderNow - charDelay;
+        const chained = prevBirth + charDelay;
+        births.push(Math.min(cap, Math.max(chained, renderNow)));
+      }
+    }
+
+    let meta: BlockAnimationMeta;
+    if (runtime.settled) {
+      // Settled is monotone: a revealed block's births are frozen, so once
+      // its last fade completed it stays settled until the runtime is
+      // pruned by a stream restart.
+      meta = { charDelay: runtime.charDelay ?? charDelay, settled: true };
+    } else {
+      const lastBirthTs = births.length > 0 ? (births.at(-1) ?? renderNow) : renderNow;
+      meta = resolveBlockAnimationMeta({
+        currentCharDelay: charDelay,
+        fadeDuration: STREAM_FADE_DURATION,
+        lastElapsedMs: renderNow - lastBirthTs,
+        previousCharDelay: runtime.charDelay,
+        state,
+      });
+      runtime.settled = meta.settled;
+    }
+    runtime.charDelay = meta.charDelay;
+
+    blockAnimationMeta.set(block.startOffset, meta);
+  }
+
+  for (const key of runtimes.keys()) {
+    if (!alive.has(key)) {
+      runtimes.delete(key);
+      pluginsCache.delete(key);
+    }
+  }
+
+  return blockAnimationMeta;
+};
 
 export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
   const { streamSmoothingPreset = 'balanced' } = useMarkdownContext();
@@ -146,68 +239,21 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
   const blocks: BlockInfo[] = blocksResult.value;
 
   const { getBlockState, charDelay } = useStreamQueue(blocks);
-  const blockCharDelayRef = useRef<Map<number, number>>(new Map());
   const blockRuntimesRef = useRef<Map<number, BlockRuntime>>(new Map());
   const blockPluginsRef = useRef<Map<number, BlockPluginsCacheEntry>>(new Map());
 
   const renderNow = getNow();
 
-  const runtimesResult = useMemo(() => {
-    const start = profiler ? getNow() : 0;
-    const runtimes = blockRuntimesRef.current;
-    const alive = new Set<number>();
-
-    for (const [index, block] of blocks.entries()) {
-      alive.add(block.startOffset);
-      // Queued blocks are not rendered. Defer birth assignment so that
-      // when the block later transitions to animating/streaming, its
-      // chars start fading from that moment instead of having already
-      // "aged out" of the fade window.
-      if (getBlockState(index) === 'queued') continue;
-
-      let runtime = runtimes.get(block.startOffset);
-      if (!runtime) {
-        runtime = { births: [], charCount: 0, rawLength: -1, styles: [] };
-        runtimes.set(block.startOffset, runtime);
-      }
-
-      if (runtime.rawLength !== block.content.length) {
-        runtime.charCount = countChars(block.content);
-        runtime.rawLength = block.content.length;
-      }
-
-      const blockCharCount = runtime.charCount;
-      const births = runtime.births;
-
-      if (births.length > blockCharCount) {
-        // Block content shrunk (stream restart or upstream rewrite).
-        births.length = blockCharCount;
-        runtime.styles.length = blockCharCount;
-      }
-
-      if (births.length < blockCharCount) {
-        // Chain each new char monotonically after the previous one so fades
-        // never race out of order. Cap how far the fade queue can run ahead
-        // of renderNow to prevent stream-faster-than-fade producing seconds
-        // of invisible backlog at the tail.
-        const cap = renderNow + STREAM_FADE_DURATION;
-        for (let i = births.length; i < blockCharCount; i++) {
-          const prevBirth = i > 0 ? births[i - 1] : renderNow - charDelay;
-          const chained = prevBirth + charDelay;
-          births.push(Math.min(cap, Math.max(chained, renderNow)));
-        }
-      }
-    }
-
-    for (const key of blockRuntimesRef.current.keys()) {
-      if (!alive.has(key)) {
-        blockRuntimesRef.current.delete(key);
-        blockPluginsRef.current.delete(key);
-      }
-    }
-
-    return { durationMs: profiler ? getNow() - start : 0 };
-  }, [blocks, charDelay, getBlockState, profiler, renderNow]);
+  const animationStart = profiler ? getNow() : 0;
+  const blockAnimationMeta = updateBlockAnimation({
+    blocks,
+    charDelay,
+    getBlockState,
+    pluginsCache: blockPluginsRef.current,
+    renderNow,
+    runtimes: blockRuntimesRef.current,
+  });
+  const blockAnimationDurationMs = profiler ? getNow() - animationStart : 0;
 
   useEffect(() => {
     if (!profiler) return;
@@ -234,52 +280,19 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
     if (!profiler) return;
 
     profiler.recordCalculation({
-      durationMs: runtimesResult.durationMs,
+      durationMs: blockAnimationDurationMs,
       itemCount: blocks.length,
       name: 'block-births',
       textLength: processedContent.length,
     });
-  }, [runtimesResult.durationMs, blocks.length, processedContent.length, profiler]);
-
-  const blockAnimationMetaResult = useMemo(() => {
-    const nextBlockCharDelay = new Map<number, number>();
-    const blockAnimationMeta = new Map<number, ReturnType<typeof resolveBlockAnimationMeta>>();
-
-    for (const [index, block] of blocks.entries()) {
-      const state = getBlockState(index);
-      if (state === 'queued') continue;
-
-      const births = blockRuntimesRef.current.get(block.startOffset)?.births;
-      const lastBirthTs = births && births.length > 0 ? (births.at(-1) ?? renderNow) : renderNow;
-      const lastElapsedMs = renderNow - lastBirthTs;
-      const animationMeta = resolveBlockAnimationMeta({
-        currentCharDelay: charDelay,
-        fadeDuration: STREAM_FADE_DURATION,
-        lastElapsedMs,
-        previousCharDelay: blockCharDelayRef.current.get(block.startOffset),
-        state,
-      });
-
-      nextBlockCharDelay.set(block.startOffset, animationMeta.charDelay);
-      blockAnimationMeta.set(block.startOffset, animationMeta);
-    }
-
-    return {
-      blockAnimationMeta,
-      blockCharDelay: nextBlockCharDelay,
-    };
-  }, [blocks, charDelay, getBlockState, renderNow]);
-
-  useEffect(() => {
-    blockCharDelayRef.current = blockAnimationMetaResult.blockCharDelay;
-  }, [blockAnimationMetaResult.blockCharDelay]);
+  }, [blockAnimationDurationMs, blocks.length, processedContent.length, profiler]);
 
   const resolveBlockPlugins = (startOffset: number, settled: boolean): PluggableList => {
     if (settled) return baseRehypePlugins;
 
     const cache = blockPluginsRef.current;
     const entry = cache.get(startOffset);
-    if (entry && entry.base === baseRehypePlugins && entry.settled === settled) {
+    if (entry && entry.base === baseRehypePlugins) {
       return entry.value;
     }
 
@@ -288,7 +301,7 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
       ...baseRehypePlugins,
       [rehypeStreamAnimated, { fadeDuration: STREAM_FADE_DURATION, runtime }],
     ];
-    cache.set(startOffset, { base: baseRehypePlugins, settled, value });
+    cache.set(startOffset, { base: baseRehypePlugins, value });
     return value;
   };
 
@@ -333,9 +346,7 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
   const content = (
     <div className={styles.animated}>
       {blocks.map((block, index) => {
-        const state = getBlockState(index);
-        if (state === 'queued') return null;
-        const animationMeta = blockAnimationMetaResult.blockAnimationMeta.get(block.startOffset);
+        const animationMeta = blockAnimationMeta.get(block.startOffset);
         if (!animationMeta) return null;
 
         const plugins = resolveBlockPlugins(block.startOffset, animationMeta.settled);

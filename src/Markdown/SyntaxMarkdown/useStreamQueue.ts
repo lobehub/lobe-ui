@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { countChars } from './useSmoothStreamContent';
+
 export interface BlockInfo {
   content: string;
   startOffset: number;
@@ -11,10 +13,6 @@ const BASE_DELAY = 18;
 const ACCELERATION_FACTOR = 0.3;
 const MAX_BLOCK_DURATION = 3000;
 const FADE_DURATION = 280;
-
-function countChars(text: string): number {
-  return [...text].length;
-}
 
 function computeCharDelay(queueLength: number, charCount: number): number {
   const acceleration = 1 + queueLength * ACCELERATION_FACTOR;

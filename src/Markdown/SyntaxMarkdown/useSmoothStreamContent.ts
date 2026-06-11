@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { useStreamdownProfiler } from '@/Markdown/streamProfiler';
 import { type StreamSmoothingPreset } from '@/Markdown/type';
+import { getNow } from '@/utils/getNow';
 
 import { findOpenFenceLanguage } from './fenceState';
 
@@ -108,12 +109,10 @@ const findTailUnits = (content: string): number => {
   return boundary === -1 ? content.length : content.length - boundary - 2;
 };
 
-const getNow = () => {
-  return typeof performance === 'undefined' ? Date.now() : performance.now();
-};
-
 export const countChars = (text: string): number => {
-  return [...text].length;
+  let count = 0;
+  for (const _char of text) count += 1;
+  return count;
 };
 
 interface UseSmoothStreamContentOptions {
@@ -247,7 +246,7 @@ export const useSmoothStreamContent = (
       const dtSeconds = Math.max(0.001, Math.min(frameIntervalMs / 1000, 0.05));
       lastFrameTsRef.current = ts;
 
-      const now = getNow();
+      const now = frameStart;
       const idleMs = now - lastInputTsRef.current;
       const inputActive = idleMs <= config.activeInputWindowMs;
       const settling = !inputActive && idleMs >= config.settleAfterMs;
