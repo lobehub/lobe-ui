@@ -54,10 +54,14 @@ const ThemeProvider = memo<ThemeProviderProps>(
           }),
           genCdnUrl({
             path: 'css/index.css',
-            pkg: '@lobehub/webfont-harmony-sans-sc',
+            pkg: '@lobehub/webfont-harmony-sans-sc-mini',
             version: '1.0.0',
           }),
-          genCdnUrl({ path: 'dist/katex.min.css', pkg: 'katex', version: '0.17.0' }),
+          genCdnUrl({
+            path: 'dist/katex.min.css',
+            pkg: 'katex',
+            version: '0.17.0',
+          }),
         ],
       [customFonts, genCdnUrl],
     );
