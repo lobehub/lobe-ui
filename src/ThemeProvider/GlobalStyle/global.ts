@@ -7,6 +7,7 @@ export default (token: Theme) => css`
     --font-settings: 'cv01', 'tnum', 'kern';
     --font-variations: 'opsz' auto, tabular-nums;
 
+    font-synthesis: none;
     text-autospace: normal;
   }
 
@@ -26,23 +27,39 @@ export default (token: Theme) => css`
     font-size: ${token.fontSize}px;
     font-feature-settings: var(--font-settings);
     font-variation-settings: var(--font-variations);
+    font-optical-sizing: auto;
+    font-kerning: normal;
+    font-variant-ligatures: common-ligatures contextual;
+    font-variant-numeric: tabular-nums;
+    font-size-adjust: from-font;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1;
     color: ${token.colorTextBase};
-    text-size-adjust: none;
+    text-wrap: pretty;
+    text-size-adjust: 100%;
+    text-size-adjust: 100%;
     text-rendering: optimizelegibility;
-    word-wrap: break-word;
+    overflow-wrap: anywhere;
     vertical-align: baseline;
 
     background-color: ${token.colorBgLayout};
+
+    font-synthesis: none;
 
     -webkit-overflow-scrolling: touch;
     -webkit-tap-highlight-color: transparent;
   }
 
-  code {
+  code,
+  kbd,
+  samp,
+  pre {
     font-family: ${token.fontFamilyCode} !important;
+    font-feature-settings:
+      'liga' 0,
+      'calt' 0;
+    font-variant-ligatures: none;
 
     span {
       font-family: ${token.fontFamilyCode} !important;
