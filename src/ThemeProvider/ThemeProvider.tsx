@@ -42,16 +42,26 @@ const ThemeProvider = memo<ThemeProviderProps>(
     const webfontUrls = useMemo(
       () =>
         customFonts || [
-          genCdnUrl({ path: 'css/index.css', pkg: '@lobehub/webfont-mono' }),
           genCdnUrl({
             path: 'css/index.css',
-            pkg: '@lobehub/webfont-harmony-sans',
+            pkg: '@lobehub/webfont-geist-mono',
+            version: '1.0.0',
           }),
           genCdnUrl({
             path: 'css/index.css',
-            pkg: '@lobehub/webfont-harmony-sans-sc',
+            pkg: '@lobehub/webfont-geist',
+            version: '1.0.0',
           }),
-          genCdnUrl({ path: 'dist/katex.min.css', pkg: 'katex' }),
+          genCdnUrl({
+            path: 'css/index.css',
+            pkg: '@lobehub/webfont-harmony-sans-sc-mini',
+            version: '1.0.0',
+          }),
+          genCdnUrl({
+            path: 'dist/katex.min.css',
+            pkg: 'katex',
+            version: '0.17.0',
+          }),
         ],
       [customFonts, genCdnUrl],
     );

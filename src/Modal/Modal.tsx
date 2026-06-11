@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, ConfigProvider, Drawer, Modal as AntModal } from 'antd';
+import { Button, ConfigProvider, Drawer, type DrawerProps,Modal as AntModal } from 'antd';
 import { cssVar, cx, useResponsive } from 'antd-style';
 import { Maximize2, Minimize2, X } from 'lucide-react';
 import { memo, type ReactNode, useState } from 'react';
@@ -58,12 +58,12 @@ const Modal = memo<ModalProps>(
             placement={'bottom'}
             title={title}
             classNames={
-              typeof classNames === 'function'
+              (typeof classNames === 'function'
                 ? classNames
                 : {
                     ...classNames,
                     wrapper: cx(styles.wrap, classNames?.wrapper),
-                  }
+                  }) as DrawerProps['classNames']
             }
             extra={
               allowFullscreen && (
@@ -102,7 +102,7 @@ const Modal = memo<ModalProps>(
                   )
             }
             styles={
-              typeof customStyles === 'function'
+              (typeof customStyles === 'function'
                 ? customStyles
                 : {
                     ...customStyles,
@@ -111,7 +111,7 @@ const Modal = memo<ModalProps>(
                       paddingInline: paddings?.desktop ?? 16,
                       ...customStyles?.body,
                     },
-                  }
+                  }) as DrawerProps['styles']
             }
             onClose={onCancel as any}
             {...rest}
@@ -131,13 +131,13 @@ const Modal = memo<ModalProps>(
       >
         <AntModal
           closable
-          mask={{ closable: true }}
           cancelText={cancelText}
           className={cx(styles.content, className)}
           closeIcon={<Icon icon={X} size={20} />}
           confirmLoading={confirmLoading}
           destroyOnHidden={destroyOnHidden}
           footer={hideFooter ? null : footer}
+          mask={{ closable: true }}
           okButtonProps={okButtonProps}
           okText={okText}
           open={open}
