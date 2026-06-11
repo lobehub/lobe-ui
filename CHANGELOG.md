@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.15.14](https://github.com/lobehub/lobe-ui/compare/v5.15.13...v5.15.14) (2026-06-11)
+
+### 💄 Styles
+
+- Geist font, closes [#549](https://github.com/lobehub/lobe-ui/issues/549) ([9b014d7](https://github.com/lobehub/lobe-ui/commit/9b014d7))
+
 ## [5.15.13](https://github.com/lobehub/lobe-ui/compare/v5.15.12...v5.15.13) (2026-06-10)
 
 ### 🐛 Bug Fixes
