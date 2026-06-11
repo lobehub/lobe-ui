@@ -270,6 +270,12 @@ Use this demo to inspect stream-driven React commit frequency, block-level re-re
 
 <code src="./demos/streamingProfiler.tsx" iframe nopadding></code>
 
+### Streaming Benchmark
+
+Noise-free page for CPU measurements: a single `Markdown` and a plain HTML button — no control panel, no chunk log, no spinner, no auto-scroll. Configure via query params: `?size=5&delay=50&granularity=char|word&preset=balanced`.
+
+<code src="./demos/streamingBench.tsx" iframe nopadding></code>
+
 ### Character Animation Loss Repro
 
 Controlled reproductions for the missing character-by-character fade. Three scenarios target:
