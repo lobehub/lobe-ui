@@ -27,15 +27,14 @@ import {
   type StreamAnimatedRuntime,
 } from '@/Markdown/plugins/rehypeStreamAnimated';
 import { useStreamdownProfiler } from '@/Markdown/streamProfiler';
+import { type StreamAnimationGranularity } from '@/Markdown/type';
 import { getNow } from '@/utils/getNow';
 import { isDeepEqual } from '@/utils/isDeepEqual';
 
 import { type BlockAnimationMeta, resolveBlockAnimationMeta } from './streamAnimationMeta';
-import { styles } from './style';
+import { STREAM_FADE_DURATION, styles } from './style';
 import { countChars, useSmoothStreamContent } from './useSmoothStreamContent';
 import { type BlockInfo, type BlockState, useStreamQueue } from './useStreamQueue';
-
-const STREAM_FADE_DURATION = 280;
 
 const isSamePlugin = (prevPlugin: Pluggable, nextPlugin: Pluggable): boolean => {
   const prevTuple = Array.isArray(prevPlugin) ? prevPlugin : [prevPlugin];
@@ -94,6 +93,7 @@ interface BlockRuntime extends StreamAnimatedRuntime {
 
 interface BlockPluginsCacheEntry {
   base: PluggableList;
+  granularity: StreamAnimationGranularity;
   value: PluggableList;
 }
 
@@ -197,7 +197,8 @@ const updateBlockAnimation = ({
 };
 
 export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
-  const { streamSmoothingPreset = 'balanced' } = useMarkdownContext();
+  const { streamAnimationGranularity = 'word', streamSmoothingPreset = 'balanced' } =
+    useMarkdownContext();
   const profiler = useStreamdownProfiler();
   const escapedContent = useMarkdownContent(children || '');
   const components = useMarkdownComponents();
@@ -292,16 +293,31 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
 
     const cache = blockPluginsRef.current;
     const entry = cache.get(startOffset);
-    if (entry && entry.base === baseRehypePlugins) {
+    if (
+      entry &&
+      entry.base === baseRehypePlugins &&
+      entry.granularity === streamAnimationGranularity
+    ) {
       return entry.value;
     }
 
     const runtime = blockRuntimesRef.current.get(startOffset);
     const value: PluggableList = [
       ...baseRehypePlugins,
-      [rehypeStreamAnimated, { fadeDuration: STREAM_FADE_DURATION, runtime }],
+      [
+        rehypeStreamAnimated,
+        {
+          fadeDuration: STREAM_FADE_DURATION,
+          granularity: streamAnimationGranularity,
+          runtime,
+        },
+      ],
     ];
-    cache.set(startOffset, { base: baseRehypePlugins, value });
+    cache.set(startOffset, {
+      base: baseRehypePlugins,
+      granularity: streamAnimationGranularity,
+      value,
+    });
     return value;
   };
 

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { STREAM_FADE_DURATION } from './style';
 import { countChars } from './useSmoothStreamContent';
 
 export interface BlockInfo {
@@ -12,7 +13,6 @@ export type BlockState = 'revealed' | 'animating' | 'streaming' | 'queued';
 const BASE_DELAY = 18;
 const ACCELERATION_FACTOR = 0.3;
 const MAX_BLOCK_DURATION = 3000;
-const FADE_DURATION = 280;
 
 function computeCharDelay(queueLength: number, charCount: number): number {
   const acceleration = 1 + queueLength * ACCELERATION_FACTOR;
@@ -105,7 +105,7 @@ export function useStreamQueue(blocks: BlockInfo[]): UseStreamQueueReturn {
 
     if (animatingIndex < 0) return;
 
-    const totalTime = Math.max(0, (animatingCharCount - 1) * charDelay) + FADE_DURATION;
+    const totalTime = Math.max(0, (animatingCharCount - 1) * charDelay) + STREAM_FADE_DURATION;
     timerRef.current = setTimeout(onAnimationDone, totalTime);
 
     return () => {

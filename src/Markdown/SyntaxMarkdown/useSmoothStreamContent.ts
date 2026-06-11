@@ -48,7 +48,7 @@ const PRESET_CONFIG: Record<StreamSmoothingPreset, StreamSmoothingPresetConfig> 
     maxActiveCps: 132,
     maxCps: 72,
     maxFlushCps: 280,
-    minCommitIntervalMs: 32,
+    minCommitIntervalMs: 48,
     minCps: 18,
     settleAfterMs: 360,
     settleDrainMaxMs: 520,
@@ -65,7 +65,7 @@ const PRESET_CONFIG: Record<StreamSmoothingPreset, StreamSmoothingPresetConfig> 
     maxActiveCps: 180,
     maxCps: 96,
     maxFlushCps: 360,
-    minCommitIntervalMs: 24,
+    minCommitIntervalMs: 32,
     minCps: 24,
     settleAfterMs: 260,
     settleDrainMaxMs: 360,
@@ -82,7 +82,7 @@ const PRESET_CONFIG: Record<StreamSmoothingPreset, StreamSmoothingPresetConfig> 
     maxActiveCps: 102,
     maxCps: 56,
     maxFlushCps: 220,
-    minCommitIntervalMs: 36,
+    minCommitIntervalMs: 56,
     minCps: 14,
     settleAfterMs: 460,
     settleDrainMaxMs: 680,
@@ -101,7 +101,7 @@ const clamp = (value: number, min: number, max: number): number => {
 // long paragraphs/code fences keep total work bounded while short blocks
 // stay at the preset's snappy interval. Per-char animation-delay stagger
 // hides the lower commit rate.
-const MAX_COMMIT_INTERVAL_MS = 64;
+const MAX_COMMIT_INTERVAL_MS = 96;
 const COMMIT_INTERVAL_TAIL_SCALE_UNITS = 256;
 
 const findTailUnits = (content: string): number => {
@@ -243,7 +243,7 @@ export const useSmoothStreamContent = (
       }
 
       const frameStart = getNow();
-      const dtSeconds = Math.max(0.001, Math.min(frameIntervalMs / 1000, 0.05));
+      const dtSeconds = Math.max(0.001, Math.min(frameIntervalMs / 1000, 0.12));
       lastFrameTsRef.current = ts;
 
       const now = frameStart;

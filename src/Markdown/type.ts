@@ -21,6 +21,8 @@ export interface TypographyProps extends DivProps {
 
 export type StreamSmoothingPreset = 'realtime' | 'balanced' | 'silky';
 
+export type StreamAnimationGranularity = 'char' | 'word';
+
 export interface SyntaxMarkdownProps {
   allowHtml?: boolean;
   allowHtmlList?: ElementType[];
@@ -53,6 +55,7 @@ export interface SyntaxMarkdownProps {
   remarkPlugins?: Pluggable[];
   remarkPluginsAhead?: Pluggable[];
   showFootnotes?: boolean;
+  streamAnimationGranularity?: StreamAnimationGranularity;
   streamSmoothingPreset?: StreamSmoothingPreset;
   variant?: 'default' | 'chat';
 }

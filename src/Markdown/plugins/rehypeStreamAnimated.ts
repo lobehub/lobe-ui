@@ -20,10 +20,38 @@ export interface StreamAnimatedRuntime {
 export interface StreamAnimatedOptions {
   births?: number[];
   fadeDuration?: number;
+  /**
+   * `'word'` wraps whitespace-delimited runs in one span instead of one
+   * span per char. Every concurrent CSS animation keeps the compositor
+   * producing frames and fires animationstart/end through React's root
+   * event delegation, so animating ~5x fewer nodes is the main CPU lever —
+   * char-level remains available for the finer-grained look.
+   */
+  granularity?: 'char' | 'word';
   nowMs?: number;
   revealed?: boolean;
   runtime?: StreamAnimatedRuntime;
 }
+
+// Intl.Segmenter splits CJK runs into words too — the whitespace regex
+// fallback would otherwise fade an entire unspaced CJK paragraph as one
+// unit.
+const WORD_SEGMENT_RE = /\s+|\S+/g;
+
+const wordSegmenter =
+  typeof Intl !== 'undefined' && 'Segmenter' in Intl
+    ? new Intl.Segmenter(undefined, { granularity: 'word' })
+    : null;
+
+const segmentWords = (value: string): string[] => {
+  if (!wordSegmenter) return value.match(WORD_SEGMENT_RE) ?? [];
+
+  const segments: string[] = [];
+  for (const item of wordSegmenter.segment(value)) {
+    segments.push(item.segment);
+  }
+  return segments;
+};
 
 const BLOCK_TAGS = new Set(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li']);
 const SKIP_TAGS = new Set(['pre', 'code', 'table', 'svg']);
@@ -36,7 +64,14 @@ function hasClass(node: Element, cls: string): boolean {
 }
 
 export const rehypeStreamAnimated = (options: StreamAnimatedOptions = {}) => {
-  const { births, fadeDuration = 150, nowMs, revealed = false, runtime } = options;
+  const {
+    births,
+    fadeDuration = 150,
+    granularity = 'char',
+    nowMs,
+    revealed = false,
+    runtime,
+  } = options;
   // Legacy births/nowMs callers share the runtime path through a throwaway
   // cache: the plugin factory runs once per render, so their styles are
   // recomputed against the caller's nowMs each run, exactly as before.
@@ -74,36 +109,53 @@ export const rehypeStreamAnimated = (options: StreamAnimatedOptions = {}) => {
       return resolved;
     };
 
+    const buildSpan = (value: string, startIndex: number): ElementContent => {
+      let className = 'stream-char';
+      let style: string | undefined;
+
+      if (revealed) {
+        className = 'stream-char stream-char-revealed';
+      } else if (resolvedRuntime) {
+        const resolved = resolveStyle(startIndex);
+        if (resolved === null) {
+          className = 'stream-char stream-char-revealed';
+        } else {
+          style = resolved;
+        }
+      }
+
+      const properties: Record<string, any> = { className };
+      if (style !== undefined) {
+        properties.style = style;
+      }
+      return {
+        children: [{ type: 'text', value }],
+        properties,
+        tagName: 'span',
+        type: 'element',
+      };
+    };
+
     const wrapText = (node: Element) => {
       const newChildren: ElementContent[] = [];
       for (const child of node.children) {
         if (child.type === 'text') {
-          for (const char of child.value) {
-            let className = 'stream-char';
-            let style: string | undefined;
+          if (granularity === 'word') {
+            for (const segment of segmentWords(child.value)) {
+              const startIndex = globalCharIndex;
+              for (const _char of segment) globalCharIndex++;
 
-            if (revealed) {
-              className = 'stream-char stream-char-revealed';
-            } else if (resolvedRuntime) {
-              const resolved = resolveStyle(globalCharIndex);
-              if (resolved === null) {
-                className = 'stream-char stream-char-revealed';
+              if (segment.trim() === '') {
+                newChildren.push({ type: 'text', value: segment });
               } else {
-                style = resolved;
+                newChildren.push(buildSpan(segment, startIndex));
               }
             }
-
-            const properties: Record<string, any> = { className };
-            if (style !== undefined) {
-              properties.style = style;
+          } else {
+            for (const char of child.value) {
+              newChildren.push(buildSpan(char, globalCharIndex));
+              globalCharIndex++;
             }
-            newChildren.push({
-              children: [{ type: 'text', value: char }],
-              properties,
-              tagName: 'span',
-              type: 'element',
-            });
-            globalCharIndex++;
           }
         } else if (child.type === 'element') {
           if (!shouldSkip(child)) {
