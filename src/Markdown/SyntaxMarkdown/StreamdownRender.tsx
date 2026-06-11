@@ -11,7 +11,7 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import Markdown, { type Options } from 'react-markdown';
+import { type Options } from 'react-markdown';
 import remend from 'remend';
 import type { Pluggable, PluggableList } from 'unified';
 
@@ -32,6 +32,7 @@ import { type StreamAnimationGranularity } from '@/Markdown/type';
 import { getNow } from '@/utils/getNow';
 import { isDeepEqual } from '@/utils/isDeepEqual';
 
+import { CachedMarkdown } from './CachedMarkdown';
 import { type BlockAnimationMeta, resolveBlockAnimationMeta } from './streamAnimationMeta';
 import { STREAM_FADE_DURATION, styles } from './style';
 import { countChars, useSmoothStreamContent } from './useSmoothStreamContent';
@@ -74,7 +75,7 @@ const useStablePlugins = (plugins: PluggableList): PluggableList => {
 
 const StreamdownBlock = memo<Options>(
   ({ children, ...rest }) => {
-    return <Markdown {...rest}>{children}</Markdown>;
+    return <CachedMarkdown {...rest}>{children}</CachedMarkdown>;
   },
   (prevProps, nextProps) =>
     prevProps.children === nextProps.children &&
