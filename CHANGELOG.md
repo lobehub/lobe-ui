@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.15.15](https://github.com/lobehub/lobe-ui/compare/v5.15.14...v5.15.15) (2026-06-12)
+
+### 💄 Styles
+
+- Rollback @lobehub/webfont-harmony-sans-sc ([3c80db7](https://github.com/lobehub/lobe-ui/commit/3c80db7))
+
 ## [5.15.14](https://github.com/lobehub/lobe-ui/compare/v5.15.13...v5.15.14) (2026-06-11)
 
 ### 💄 Styles
