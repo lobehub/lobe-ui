@@ -54,7 +54,8 @@ const ThemeProvider = memo<ThemeProviderProps>(
           }),
           genCdnUrl({
             path: 'css/index.css',
-            pkg: '@lobehub/webfont-harmony-sans-sc-mini',
+            pkg: '@lobehub/webfont-harmony-sans-sc',
+            // pkg: '@lobehub/webfont-harmony-sans-sc-mini',
             version: '1.0.0',
           }),
           genCdnUrl({
