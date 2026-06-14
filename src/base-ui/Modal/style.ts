@@ -31,7 +31,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     height: 32px;
     padding: 0;
     border: none;
-    border-radius: 50%;
+    border-radius: 12px;
 
     color: ${cssVar.colorTextTertiary};
 
@@ -62,7 +62,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     height: 32px;
     padding: 0;
     border: none;
-    border-radius: 50%;
+    border-radius: 12px;
 
     color: ${cssVar.colorTextTertiary};
 
@@ -194,7 +194,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     height: 100dvh !important;
     max-height: 100dvh !important;
     border: none;
-    border-radius: 0;
+    border-radius: 12px;
   `,
 
   fullscreenToggle: css`
@@ -208,7 +208,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     height: 28px;
     padding: 0;
     border: none;
-    border-radius: 50%;
+    border-radius: 12px;
 
     color: ${cssVar.colorTextTertiary};
 
