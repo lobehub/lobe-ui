@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.15.16](https://github.com/lobehub/lobe-ui/compare/v5.15.15...v5.15.16) (2026-06-14)
+
+### 💄 Styles
+
+- Match Modal close/fullscreen button radius to popup ([cbdc573](https://github.com/lobehub/lobe-ui/commit/cbdc573))
+
 ## [5.15.15](https://github.com/lobehub/lobe-ui/compare/v5.15.14...v5.15.15) (2026-06-12)
 
 ### 💄 Styles
