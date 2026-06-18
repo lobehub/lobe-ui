@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.15.17](https://github.com/lobehub/lobe-ui/compare/v5.15.16...v5.15.17) (2026-06-18)
+
+### ⚡ Performance Improvements
+
+- **markdown**: Cut streamdown streaming CPU by 2x, closes [#550](https://github.com/lobehub/lobe-ui/issues/550) ([ddf8d4f](https://github.com/lobehub/lobe-ui/commit/ddf8d4f))
+
 ## [5.15.16](https://github.com/lobehub/lobe-ui/compare/v5.15.15...v5.15.16) (2026-06-14)
 
 ### 💄 Styles
