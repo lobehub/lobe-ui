@@ -17,6 +17,8 @@ export { default as Select } from './Select';
 export * from './Select';
 export { default as Switch } from './Switch';
 export * from './Switch';
+export { default as Tabs } from './Tabs';
+export * from './Tabs';
 export {
   toast,
   type ToastAPI,
