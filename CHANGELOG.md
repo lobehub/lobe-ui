@@ -2,6 +2,16 @@
 
 # Changelog
 
+# [5.16.0](https://github.com/lobehub/lobe-ui/compare/v5.15.17...v5.16.0) (2026-06-23)
+
+### ✨ Features
+
+- Add base-ui Tabs component ([1ae117e](https://github.com/lobehub/lobe-ui/commit/1ae117e))
+
+### 🐛 Bug Fixes
+
+- Antd v6 Tabs classNames popup type error ([33b64e4](https://github.com/lobehub/lobe-ui/commit/33b64e4))
+
 ## [5.15.17](https://github.com/lobehub/lobe-ui/compare/v5.15.16...v5.15.17) (2026-06-18)
 
 ### ⚡ Performance Improvements
