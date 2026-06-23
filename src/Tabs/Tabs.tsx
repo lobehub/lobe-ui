@@ -19,25 +19,18 @@ const Tabs: FC<TabsProps> = ({
   ...rest
 }) => {
   const hasContent = items?.some((item) => !!item.children);
+  const popupClassNames = {
+    root: styles.dropdown,
+    ...(typeof classNames === 'function' ? undefined : classNames?.popup),
+  };
   const mergedClassNames: TabsProps['classNames'] =
     typeof classNames === 'function'
-      ? (info) => {
-          const resolved = classNames(info);
-
-          return {
-            ...resolved,
-            popup: {
-              root: styles.dropdown,
-              ...resolved?.popup,
-            },
-          };
-        }
+      ? Object.assign((info: Parameters<typeof classNames>[0]) => classNames(info), {
+          popup: popupClassNames,
+        })
       : {
           ...classNames,
-          popup: {
-            root: styles.dropdown,
-            ...classNames?.popup,
-          },
+          popup: popupClassNames,
         };
 
   return (
