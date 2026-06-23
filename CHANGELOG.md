@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.16.1](https://github.com/lobehub/lobe-ui/compare/v5.16.0...v5.16.1) (2026-06-23)
+
+### 💄 Styles
+
+- **tabs**: Refine rounded list bg, height and press feedback ([0aa5d6e](https://github.com/lobehub/lobe-ui/commit/0aa5d6e))
+
 # [5.16.0](https://github.com/lobehub/lobe-ui/compare/v5.15.17...v5.16.0) (2026-06-23)
 
 ### ✨ Features
