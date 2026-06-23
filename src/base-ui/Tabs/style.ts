@@ -58,6 +58,19 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       align-items: stretch;
     }
   `,
+  listRounded: css`
+    gap: 4px;
+    align-self: flex-start;
+
+    padding: 3px;
+    border-radius: ${cssVar.borderRadiusLG};
+
+    background: ${cssVar.colorFillTertiary};
+
+    &[data-orientation='vertical'] {
+      align-self: stretch;
+    }
+  `,
   listSquare: css`
     gap: 16px;
     box-shadow: inset 0 -1px 0 ${cssVar.colorBorderSecondary};
@@ -117,7 +130,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     &:active:not([data-disabled]) {
-      transform: scale(0.96);
+      transform: scale(0.98);
     }
 
     &:focus-visible {
@@ -151,7 +164,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     font-size: 13px;
   `,
   tabPoint: css`
-    padding-block-end: 6px;
+    height: auto;
+    padding-block: 8px 14px;
   `,
   tabSmall: css`
     height: 26px;
@@ -160,6 +174,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     font-size: 12px;
   `,
   tabSquare: css`
+    height: auto;
+    padding-block: 8px;
     border-radius: 0;
   `,
 }));
@@ -203,7 +219,7 @@ export const listVariants = cva(styles.list, {
   variants: {
     variant: {
       point: null,
-      rounded: null,
+      rounded: styles.listRounded,
       square: styles.listSquare,
     },
   },
