@@ -1,6 +1,5 @@
 'use client';
 
-import { getTokenStyleObject } from '@shikijs/core';
 import { cx } from 'antd-style';
 import type { CSSProperties } from 'react';
 import { memo } from 'react';
@@ -17,6 +16,24 @@ interface StreamRendererProps {
   style?: CSSProperties;
   theme?: BuiltinTheme;
 }
+
+// FontStyle bitmask values from @shikijs/vscode-textmate
+const FontStyle = { Bold: 2, Italic: 1, Strikethrough: 8, Underline: 4 } as const;
+
+const getTokenStyleObject = (token: ThemedToken): Record<string, string> => {
+  const styles: Record<string, string> = {};
+  if (token.color) styles.color = token.color;
+  if (token.bgColor) styles['background-color'] = token.bgColor;
+  if (token.fontStyle) {
+    if (token.fontStyle & FontStyle.Italic) styles['font-style'] = 'italic';
+    if (token.fontStyle & FontStyle.Bold) styles['font-weight'] = 'bold';
+    const decorations: string[] = [];
+    if (token.fontStyle & FontStyle.Underline) decorations.push('underline');
+    if (token.fontStyle & FontStyle.Strikethrough) decorations.push('line-through');
+    if (decorations.length) styles['text-decoration'] = decorations.join(' ');
+  }
+  return styles;
+};
 
 const normalizeStyleKeys = (style: Record<string, string | number>): CSSProperties => {
   const normalized: CSSProperties = {};
