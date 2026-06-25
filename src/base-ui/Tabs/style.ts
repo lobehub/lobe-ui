@@ -34,7 +34,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     height: var(--active-tab-height);
     border-radius: ${cssVar.borderRadius};
 
-    background: ${cssVar.colorFillSecondary};
+    background: ${cssVar.colorBgElevated};
+    box-shadow: ${cssVar.boxShadowTertiary};
   `,
   indicatorSquare: css`
     inset-block-end: 0;
