@@ -13,6 +13,8 @@ export * from './FloatingSheet';
 export * from './Modal';
 export * from './Popover';
 export * from './ScrollArea';
+export { default as Segmented } from './Segmented';
+export * from './Segmented';
 export { default as Select } from './Select';
 export * from './Select';
 export { default as Switch } from './Switch';
