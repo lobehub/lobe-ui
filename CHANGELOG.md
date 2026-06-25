@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.17.0](https://github.com/lobehub/lobe-ui/compare/v5.16.2...v5.17.0) (2026-06-25)
+
+### ✨ Features
+
+- Add base-ui Segmented component ([0427c1b](https://github.com/lobehub/lobe-ui/commit/0427c1b))
+
 ## [5.16.2](https://github.com/lobehub/lobe-ui/compare/v5.16.1...v5.16.2) (2026-06-25)
 
 ### 💄 Styles
