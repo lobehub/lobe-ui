@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.16.2](https://github.com/lobehub/lobe-ui/compare/v5.16.1...v5.16.2) (2026-06-25)
+
+### 💄 Styles
+
+- Update Tabs active tab highlight background and add box-shadow ([ccca037](https://github.com/lobehub/lobe-ui/commit/ccca037))
+
 ## [5.16.1](https://github.com/lobehub/lobe-ui/compare/v5.16.0...v5.16.1) (2026-06-23)
 
 ### 💄 Styles
