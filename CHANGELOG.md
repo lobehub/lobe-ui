@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.17.1](https://github.com/lobehub/lobe-ui/compare/v5.17.0...v5.17.1) (2026-06-26)
+
+### 🐛 Bug Fixes
+
+- Deprecate antd-based wrappers and add ESLint preset ([e496a86](https://github.com/lobehub/lobe-ui/commit/e496a86))
+
 # [5.17.0](https://github.com/lobehub/lobe-ui/compare/v5.16.2...v5.17.0) (2026-06-25)
 
 ### ✨ Features
