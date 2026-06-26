@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.17.2](https://github.com/lobehub/lobe-ui/compare/v5.17.1...v5.17.2) (2026-06-26)
+
+### 💄 Styles
+
+- Soften base-ui Button tap scale to 0.98 ([c4cc95d](https://github.com/lobehub/lobe-ui/commit/c4cc95d))
+
 ## [5.17.1](https://github.com/lobehub/lobe-ui/compare/v5.17.0...v5.17.1) (2026-06-26)
 
 ### 🐛 Bug Fixes
