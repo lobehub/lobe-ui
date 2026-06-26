@@ -55,7 +55,7 @@ const resolveVariantCls = ({
 };
 
 const hoverAnim = { y: -0.5 };
-const tapAnim = { scale: 0.96 };
+const tapAnim = { scale: 0.98 };
 const motionTransition = {
   damping: 26,
   mass: 0.6,
