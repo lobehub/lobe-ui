@@ -7,6 +7,9 @@ import { memo } from 'react';
 import { variants } from './style';
 import type { SegmentedProps } from './type';
 
+/**
+ * @deprecated Use `Segmented` from `@lobehub/ui/base-ui` instead.
+ */
 const Segmented = memo<SegmentedProps>(
   ({ ref, padding, style, className, variant = 'filled', shadow, glass, ...rest }) => {
     return (

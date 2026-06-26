@@ -10,6 +10,9 @@ import ActionIcon from '@/ActionIcon';
 import { styles, variants } from './style';
 import type { TabsProps } from './type';
 
+/**
+ * @deprecated Use `Tabs` from `@lobehub/ui/base-ui` instead.
+ */
 const Tabs: FC<TabsProps> = ({
   className,
   compact,

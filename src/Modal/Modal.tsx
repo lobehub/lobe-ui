@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, ConfigProvider, Drawer, type DrawerProps,Modal as AntModal } from 'antd';
+import { Button, ConfigProvider, Drawer, type DrawerProps, Modal as AntModal } from 'antd';
 import { cssVar, cx, useResponsive } from 'antd-style';
 import { Maximize2, Minimize2, X } from 'lucide-react';
 import { memo, type ReactNode, useState } from 'react';
@@ -11,6 +11,9 @@ import Icon from '@/Icon';
 import { styles } from './style';
 import { type ModalProps } from './type';
 
+/**
+ * @deprecated Use `Modal` from `@lobehub/ui/base-ui` instead.
+ */
 const Modal = memo<ModalProps>(
   ({
     panelRef,

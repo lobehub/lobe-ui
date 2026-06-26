@@ -10,6 +10,9 @@ import Icon from '@/Icon';
 import { variants } from './style';
 import type { ButtonProps } from './type';
 
+/**
+ * @deprecated Use `Button` from `@lobehub/ui/base-ui` instead.
+ */
 const Button: FC<ButtonProps> = ({
   icon,
   variant,
