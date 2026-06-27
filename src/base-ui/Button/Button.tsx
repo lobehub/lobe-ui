@@ -54,7 +54,6 @@ const resolveVariantCls = ({
   }
 };
 
-const hoverAnim = { y: -0.5 };
 const tapAnim = { scale: 0.98 };
 const motionTransition = {
   damping: 26,
@@ -109,26 +108,38 @@ const Button = ({
     className,
   );
 
-  const iconNode = loading ? (
-    <span className={cx(styles.iconBox, classNames?.icon)} style={userStyles?.icon}>
+  const spinnerNode = (
+    <span
+      aria-hidden={!loading}
+      style={userStyles?.icon}
+      className={cx(
+        styles.iconBox,
+        styles.spinnerSlot,
+        loading && styles.spinnerSlotShow,
+        iconPosition === 'end' && styles.spinnerSlotEnd,
+        classNames?.icon,
+      )}
+    >
       <span className={styles.spinner} />
     </span>
-  ) : icon ? (
-    <span className={cx(styles.iconBox, classNames?.icon)} style={userStyles?.icon}>
-      {icon}
-    </span>
-  ) : null;
+  );
+
+  const iconNode =
+    icon && !loading ? (
+      <span className={cx(styles.iconBox, classNames?.icon)} style={userStyles?.icon}>
+        {icon}
+      </span>
+    ) : null;
 
   const inner = (
     <>
+      {spinnerNode}
       {iconNode}
       {children}
     </>
   );
 
-  const motionGestures = isDisabled
-    ? {}
-    : { transition: motionTransition, whileHover: hoverAnim, whileTap: tapAnim };
+  const motionGestures = isDisabled ? {} : { transition: motionTransition, whileTap: tapAnim };
 
   if (href !== undefined) {
     const handleAnchorClick = (e: MouseEvent<HTMLAnchorElement>) => {

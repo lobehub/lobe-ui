@@ -95,6 +95,30 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     justify-content: center;
   `,
 
+  spinnerSlot: css`
+    overflow: hidden;
+
+    width: 0;
+    margin-inline-end: -6px;
+
+    opacity: 0;
+
+    transition:
+      width 380ms cubic-bezier(0.22, 1, 0.36, 1),
+      margin 380ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  `,
+
+  spinnerSlotEnd: css`
+    margin-inline: -6px 0;
+  `,
+
+  spinnerSlotShow: css`
+    width: 12px;
+    margin-inline: 0;
+    opacity: 1;
+  `,
+
   variantDefault: css`
     color: ${cssVar.colorText};
     background: ${cssVar.colorBgContainer};
