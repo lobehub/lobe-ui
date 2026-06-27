@@ -2,6 +2,16 @@
 
 # Changelog
 
+# [5.18.0](https://github.com/lobehub/lobe-ui/compare/v5.17.2...v5.18.0) (2026-06-27)
+
+### ✨ Features
+
+- **base-ui**: Add SplitButton component ([61f1631](https://github.com/lobehub/lobe-ui/commit/61f1631))
+
+### 💄 Styles
+
+- **base-ui**: Animate Button loading spinner width via CSS transition ([164092a](https://github.com/lobehub/lobe-ui/commit/164092a))
+
 ## [5.17.2](https://github.com/lobehub/lobe-ui/compare/v5.17.1...v5.17.2) (2026-06-26)
 
 ### 💄 Styles
