@@ -22,6 +22,12 @@ apiHeader:
 
 <code src="./demos/icons.tsx" nopadding></code>
 
+## Split button
+
+Compose a primary action and a dropdown menu sharing the same visual props.
+
+<code src="./demos/split.tsx" nopadding></code>
+
 ## API
 
 | Property     | Description                                           | Type                                                     | Default     |
