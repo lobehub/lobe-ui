@@ -16,7 +16,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     height: var(--active-item-height);
     border-radius: ${cssVar.borderRadius};
 
-    background: ${cssVar.colorBgElevated};
+    background: ${cssVar.colorBgLayout};
     box-shadow: ${cssVar.boxShadowTertiary};
 
     transition-timing-function: ${cssVar.motionEaseOut};
