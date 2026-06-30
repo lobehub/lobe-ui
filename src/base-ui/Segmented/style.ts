@@ -16,7 +16,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     height: var(--active-item-height);
     border-radius: ${cssVar.borderRadius};
 
-    background: ${cssVar.colorBgLayout};
+    background: ${cssVar.colorBgElevated};
     box-shadow: ${cssVar.boxShadowTertiary};
 
     transition-timing-function: ${cssVar.motionEaseOut};
@@ -137,7 +137,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   listFilled: css`
     border: 1px solid ${cssVar.colorFillQuaternary};
-    background: ${cssVar.colorFillTertiary};
+    background: ${cssVar.colorBgLayout};
   `,
   listGlass: lobeStaticStylish.blur,
   listOutlined: css`
