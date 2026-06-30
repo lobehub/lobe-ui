@@ -152,7 +152,7 @@
     "@giscus/react": "^3.1.0",
     "@mdx-js/mdx": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
-    "@pierre/diffs": "1.2.8",
+    "@pierre/diffs": "1.2.12",
     "@radix-ui/react-slot": "^1.2.5",
     "@shikijs/core": "^4.2.0",
     "@shikijs/transformers": "^4.2.0",
