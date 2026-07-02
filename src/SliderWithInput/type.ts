@@ -4,7 +4,10 @@ import type { CSSProperties } from 'react';
 import type { FlexboxProps } from '@/Flex';
 import type { InputNumberProps } from '@/Input';
 
-export interface SliderWithInputProps extends Omit<SliderSingleProps, 'classNames' | 'styles'> {
+export interface SliderWithInputProps extends Omit<
+  SliderSingleProps,
+  'classNames' | 'controls' | 'styles'
+> {
   changeOnWheel?: boolean;
   classNames?: {
     input?: string;
