@@ -156,6 +156,20 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
 
+  variantFill: css`
+    border-color: transparent;
+    color: ${cssVar.colorText};
+    background: ${cssVar.colorFillTertiary};
+
+    &:hover:not(:disabled, [aria-disabled='true']) {
+      background: ${cssVar.colorFillSecondary};
+    }
+
+    &:active:not(:disabled, [aria-disabled='true']) {
+      background: ${cssVar.colorFill};
+    }
+  `,
+
   variantText: css`
     border-color: transparent;
     color: ${cssVar.colorText};
@@ -206,6 +220,22 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
 
+  dangerFill: css`
+    border-color: transparent;
+    color: ${cssVar.colorError};
+    background: ${cssVar.colorErrorBg};
+
+    &:hover:not(:disabled, [aria-disabled='true']) {
+      color: ${cssVar.colorErrorHover};
+      background: ${cssVar.colorErrorBgHover};
+    }
+
+    &:active:not(:disabled, [aria-disabled='true']) {
+      color: ${cssVar.colorErrorActive};
+      background: ${cssVar.colorErrorBgHover};
+    }
+  `,
+
   dangerInline: css`
     color: ${cssVar.colorError};
 
@@ -215,15 +245,22 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   ghostDefault: css`
-    border-color: ${cssVar.colorBorder};
-    color: ${cssVar.colorText};
+    border-color: rgb(255 255 255 / 65%);
+    color: #fff;
     background: transparent;
 
     &:hover:not(:disabled, [aria-disabled='true']) {
-      border-color: ${cssVar.colorPrimaryBorder};
-      color: ${cssVar.colorPrimaryText};
-      background: transparent;
+      border-color: #fff;
+      background: color-mix(in srgb, currentcolor 8%, transparent);
     }
+
+    &:active:not(:disabled, [aria-disabled='true']) {
+      background: color-mix(in srgb, currentcolor 14%, transparent);
+    }
+  `,
+
+  ghostDashed: css`
+    border-style: dashed;
   `,
 
   ghostPrimary: css`
@@ -234,7 +271,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     &:hover:not(:disabled, [aria-disabled='true']) {
       border-color: ${cssVar.colorPrimaryHover};
       color: ${cssVar.colorPrimaryHover};
-      background: transparent;
+      background: color-mix(in srgb, currentcolor 8%, transparent);
+    }
+
+    &:active:not(:disabled, [aria-disabled='true']) {
+      background: color-mix(in srgb, currentcolor 14%, transparent);
     }
   `,
 
@@ -246,7 +287,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     &:hover:not(:disabled, [aria-disabled='true']) {
       border-color: ${cssVar.colorErrorHover};
       color: ${cssVar.colorErrorHover};
-      background: transparent;
+      background: color-mix(in srgb, currentcolor 8%, transparent);
+    }
+
+    &:active:not(:disabled, [aria-disabled='true']) {
+      background: color-mix(in srgb, currentcolor 14%, transparent);
     }
   `,
 

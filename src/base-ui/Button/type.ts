@@ -6,7 +6,7 @@ import type {
   Ref,
 } from 'react';
 
-export type ButtonType = 'default' | 'primary' | 'dashed' | 'link' | 'text';
+export type ButtonType = 'default' | 'primary' | 'dashed' | 'fill' | 'link' | 'text';
 export type ButtonShape = 'default' | 'circle' | 'round';
 export type ButtonSize = 'small' | 'middle' | 'large';
 export type ButtonIconPosition = 'start' | 'end';

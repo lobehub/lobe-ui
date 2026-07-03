@@ -32,6 +32,7 @@ const resolveVariantCls = ({
   if (ghost) {
     if (danger) return styles.ghostDanger;
     if (type === 'primary') return styles.ghostPrimary;
+    if (type === 'dashed') return cx(styles.ghostDefault, styles.ghostDashed);
     return styles.ghostDefault;
   }
 
@@ -41,6 +42,9 @@ const resolveVariantCls = ({
     }
     case 'dashed': {
       return danger ? cx(styles.variantDashed, styles.dangerOutlined) : styles.variantDashed;
+    }
+    case 'fill': {
+      return danger ? styles.dangerFill : styles.variantFill;
     }
     case 'text': {
       return danger ? cx(styles.variantText, styles.dangerInline) : styles.variantText;
