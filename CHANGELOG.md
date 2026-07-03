@@ -2,6 +2,22 @@
 
 # Changelog
 
+# [5.19.0](https://github.com/lobehub/lobe-ui/compare/v5.18.0...v5.19.0) (2026-07-03)
+
+### ✨ Features
+
+- **base-ui**: Add Button fill variant and polish ghost styles ([141e16b](https://github.com/lobehub/lobe-ui/commit/141e16b))
+- **base-ui**: Add floating panel ([88983d6](https://github.com/lobehub/lobe-ui/commit/88983d6))
+
+### 🐛 Bug Fixes
+
+- **slider**: Narrow input disabled prop ([1129424](https://github.com/lobehub/lobe-ui/commit/1129424))
+
+### 💄 Styles
+
+- Update CSS variable references ([12f96e5](https://github.com/lobehub/lobe-ui/commit/12f96e5))
+- Update styles ([37fa702](https://github.com/lobehub/lobe-ui/commit/37fa702))
+
 # [5.18.0](https://github.com/lobehub/lobe-ui/compare/v5.17.2...v5.18.0) (2026-06-27)
 
 ### ✨ Features
