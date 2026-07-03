@@ -9,6 +9,7 @@ export {
   updateContextMenuItems,
 } from './ContextMenu';
 export * from './DropdownMenu';
+export * from './FloatingPanel';
 export * from './FloatingSheet';
 export * from './Modal';
 export * from './Popover';
