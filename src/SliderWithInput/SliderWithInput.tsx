@@ -33,6 +33,7 @@ const SliderWithInput = memo<SliderWithInputProps>(
       if (Number.isNaN(value) || isNull(value)) return;
       onChange?.(value);
     };
+    const inputDisabled = Array.isArray(disabled) ? disabled.some(Boolean) : disabled;
 
     const { slider: sliderClassName, input: inputClassName, ...restClassNames } = classNames || {};
     const { slider: sliderStyle, input: inputStyle, ...restStyles } = styles || {};
@@ -65,7 +66,7 @@ const SliderWithInput = memo<SliderWithInputProps>(
           className={inputClassName}
           controls={size !== 'small' || controls}
           defaultValue={defaultValue}
-          disabled={disabled}
+          disabled={inputDisabled}
           max={unlimitedInput ? undefined : max}
           min={min}
           size={size}
