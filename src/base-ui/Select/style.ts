@@ -1,6 +1,7 @@
 import { createStaticStyles, cx } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
+import { controlHeight } from '@/base-ui/controlSize';
 import { lobeStaticStylish } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
@@ -261,7 +262,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   triggerLarge: css`
-    min-height: 40px;
+    min-height: ${controlHeight.large}px;
     padding-block: 6px;
     padding-inline: 12px;
 
@@ -269,7 +270,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     line-height: 24px;
   `,
   triggerMiddle: css`
-    min-height: 32px;
+    min-height: ${controlHeight.middle}px;
     padding-block: 4px;
     padding-inline: 11px;
 
@@ -277,7 +278,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     line-height: 20px;
   `,
   triggerSmall: css`
-    min-height: 24px;
+    min-height: ${controlHeight.small}px;
     padding-block: 0;
     padding-inline: 8px;
 
