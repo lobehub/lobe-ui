@@ -96,8 +96,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   variantDefault: css`
-    color: ${cssVar.colorText};
     background: ${cssVar.colorBgContainer};
+
+    /* &:hover/&:active included so the anchor form outranks antd's global a:hover/a:active link color */
+    &,
+    &:hover,
+    &:active {
+      color: ${cssVar.colorText};
+    }
 
     &:hover:not(:disabled, [aria-disabled='true']) {
       border-color: ${cssVar.colorPrimaryBorder};
@@ -107,8 +113,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   variantPrimary: css`
     border-color: ${cssVar.colorPrimary};
-    color: ${cssVar.colorTextLightSolid};
     background: ${cssVar.colorPrimary};
+
+    &,
+    &:hover,
+    &:active {
+      color: ${cssVar.colorTextLightSolid};
+    }
 
     &:hover:not(:disabled, [aria-disabled='true']) {
       border-color: ${cssVar.colorPrimaryHover};
@@ -123,8 +134,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   variantDashed: css`
     border-style: dashed;
-    color: ${cssVar.colorText};
     background: ${cssVar.colorBgContainer};
+
+    &,
+    &:hover,
+    &:active {
+      color: ${cssVar.colorText};
+    }
 
     &:hover:not(:disabled, [aria-disabled='true']) {
       border-color: ${cssVar.colorPrimaryBorder};
@@ -134,8 +150,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   variantText: css`
     border-color: transparent;
-    color: ${cssVar.colorText};
     background: transparent;
+
+    &,
+    &:hover,
+    &:active {
+      color: ${cssVar.colorText};
+    }
 
     &:hover:not(:disabled, [aria-disabled='true']) {
       background: ${cssVar.colorFillSecondary};
@@ -145,8 +166,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   variantLink: css`
     padding-inline: 0;
     border-color: transparent;
-    color: ${cssVar.colorPrimary};
     background: transparent;
+
+    &,
+    &:hover,
+    &:active {
+      color: ${cssVar.colorPrimary};
+    }
 
     &:hover:not(:disabled, [aria-disabled='true']) {
       color: ${cssVar.colorPrimaryHover};
@@ -156,8 +182,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   dangerOutlined: css`
     border-color: ${cssVar.colorError};
-    color: ${cssVar.colorError};
     background: ${cssVar.colorBgContainer};
+
+    &,
+    &:hover,
+    &:active {
+      color: ${cssVar.colorError};
+    }
 
     &:hover:not(:disabled, [aria-disabled='true']) {
       border-color: ${cssVar.colorErrorHover};
@@ -168,8 +199,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   dangerSolid: css`
     border-color: ${cssVar.colorError};
-    color: ${cssVar.colorTextLightSolid};
     background: ${cssVar.colorError};
+
+    &,
+    &:hover,
+    &:active {
+      color: ${cssVar.colorTextLightSolid};
+    }
 
     &:hover:not(:disabled, [aria-disabled='true']) {
       border-color: ${cssVar.colorErrorHover};
@@ -183,7 +219,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   dangerInline: css`
-    color: ${cssVar.colorError};
+    &,
+    &:hover,
+    &:active {
+      color: ${cssVar.colorError};
+    }
 
     &:hover:not(:disabled, [aria-disabled='true']) {
       color: ${cssVar.colorErrorHover};
@@ -192,8 +232,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   ghostDefault: css`
     border-color: ${cssVar.colorBorder};
-    color: ${cssVar.colorText};
     background: transparent;
+
+    &,
+    &:hover,
+    &:active {
+      color: ${cssVar.colorText};
+    }
 
     &:hover:not(:disabled, [aria-disabled='true']) {
       border-color: ${cssVar.colorPrimaryBorder};
@@ -204,8 +249,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   ghostPrimary: css`
     border-color: ${cssVar.colorPrimary};
-    color: ${cssVar.colorPrimary};
     background: transparent;
+
+    &,
+    &:hover,
+    &:active {
+      color: ${cssVar.colorPrimary};
+    }
 
     &:hover:not(:disabled, [aria-disabled='true']) {
       border-color: ${cssVar.colorPrimaryHover};
@@ -216,8 +266,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   ghostDanger: css`
     border-color: ${cssVar.colorError};
-    color: ${cssVar.colorError};
     background: transparent;
+
+    &,
+    &:hover,
+    &:active {
+      color: ${cssVar.colorError};
+    }
 
     &:hover:not(:disabled, [aria-disabled='true']) {
       border-color: ${cssVar.colorErrorHover};
