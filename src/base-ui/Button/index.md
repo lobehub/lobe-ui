@@ -30,23 +30,23 @@ Compose a primary action and a dropdown menu sharing the same visual props.
 
 ## API
 
-| Property     | Description                                              | Type                                                               | Default     |
-| ------------ | -------------------------------------------------------- | ------------------------------------------------------------------ | ----------- |
-| type         | Visual style                                             | `'default' \| 'primary' \| 'dashed' \| 'fill' \| 'link' \| 'text'` | `'default'` |
-| danger       | Danger color modifier                                    | `boolean`                                                          | `false`     |
-| ghost        | Transparent background variant (for colored backgrounds) | `boolean`                                                          | `false`     |
-| size         | Button size                                              | `'small' \| 'middle' \| 'large'`                                   | `'middle'`  |
-| shape        | Button shape                                             | `'default' \| 'circle' \| 'round'`                                 | `'default'` |
-| icon         | Icon node rendered next to the children                  | `ReactNode`                                                        | -           |
-| iconPosition | Where to place the icon                                  | `'start' \| 'end'`                                                 | `'start'`   |
-| loading      | Show a spinner and disable interaction                   | `boolean`                                                          | `false`     |
-| disabled     | Disabled state                                           | `boolean`                                                          | `false`     |
-| block        | Stretch to fill container width                          | `boolean`                                                          | `false`     |
-| href         | Render as an `<a>` element                               | `string`                                                           | -           |
-| target       | Anchor target when `href` is set                         | `string`                                                           | -           |
-| htmlType     | Underlying `<button>` type when not rendered as `<a>`    | `'button' \| 'submit' \| 'reset'`                                  | `'button'`  |
-| classNames   | Per-slot class names                                     | `{ icon?: string }`                                                | -           |
-| styles       | Per-slot inline styles                                   | `{ icon?: CSSProperties }`                                         | -           |
+| Property     | Description                                                                       | Type                                                               | Default     |
+| ------------ | --------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ----------- |
+| type         | Visual style                                                                      | `'default' \| 'primary' \| 'dashed' \| 'fill' \| 'link' \| 'text'` | `'default'` |
+| danger       | Danger color modifier                                                             | `boolean`                                                          | `false`     |
+| ghost        | Transparent background variant (for colored backgrounds)                          | `boolean`                                                          | `false`     |
+| size         | Button size                                                                       | `'small' \| 'middle' \| 'large'`                                   | `'middle'`  |
+| shape        | Button shape                                                                      | `'default' \| 'circle' \| 'round'`                                 | `'default'` |
+| icon         | Icon rendered next to the children — a Lucide icon component or a ready-made node | `IconProps['icon'] \| ReactNode`                                   | -           |
+| iconPosition | Where to place the icon                                                           | `'start' \| 'end'`                                                 | `'start'`   |
+| loading      | Show a spinner and disable interaction                                            | `boolean`                                                          | `false`     |
+| disabled     | Disabled state                                                                    | `boolean`                                                          | `false`     |
+| block        | Stretch to fill container width                                                   | `boolean`                                                          | `false`     |
+| href         | Render as an `<a>` element                                                        | `string`                                                           | -           |
+| target       | Anchor target when `href` is set                                                  | `string`                                                           | -           |
+| htmlType     | Underlying `<button>` type when not rendered as `<a>`                             | `'button' \| 'submit' \| 'reset'`                                  | `'button'`  |
+| classNames   | Per-slot class names                                                              | `{ icon?: string }`                                                | -           |
+| styles       | Per-slot inline styles                                                            | `{ icon?: CSSProperties }`                                         | -           |
 
 The component forwards all standard `<button>` (or `<a>` when `href` is set) HTML attributes including `onClick`, `aria-*`, `data-*`, and `ref`.
 
