@@ -6,6 +6,8 @@ import type {
   Ref,
 } from 'react';
 
+import type { IconProps } from '@/Icon';
+
 export type ButtonType = 'default' | 'primary' | 'dashed' | 'fill' | 'link' | 'text';
 export type ButtonShape = 'default' | 'circle' | 'round';
 export type ButtonSize = 'small' | 'middle' | 'large';
@@ -20,7 +22,7 @@ interface BaseButtonOwnProps {
   ghost?: boolean;
   href?: string;
   htmlType?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
-  icon?: ReactNode;
+  icon?: IconProps['icon'] | ReactNode;
   iconPosition?: ButtonIconPosition;
   loading?: boolean;
   ref?: Ref<HTMLButtonElement | HTMLAnchorElement>;

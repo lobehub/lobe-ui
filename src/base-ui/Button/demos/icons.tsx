@@ -23,6 +23,7 @@ export default () => {
           <Button icon={<ArrowRight size={14} />} iconPosition="end" type="primary">
             Continue
           </Button>
+          <Button icon={Trash}>Bare icon component</Button>
         </Flexbox>
       </Flexbox>
 

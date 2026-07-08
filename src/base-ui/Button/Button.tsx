@@ -1,12 +1,21 @@
 'use client';
 
 import { cx } from 'antd-style';
-import type { MouseEvent, Ref } from 'react';
+import { isValidElement, type MouseEvent, type ReactNode, type Ref } from 'react';
 
+import Icon, { type IconProps } from '@/Icon';
 import { useMotionComponent } from '@/MotionProvider';
 
 import { styles } from './style';
 import type { ButtonProps } from './type';
+
+const resolveIconNode = (node: ReactNode | IconProps['icon'] | undefined | null) => {
+  if (node === undefined || node === null) return null;
+  if (isValidElement(node) || typeof node === 'string' || typeof node === 'number') {
+    return node;
+  }
+  return <Icon icon={node as any} size={'small'} />;
+};
 
 const resolveSizeCls = (size: ButtonProps['size']) => {
   if (size === 'small') return styles.sizeSmall;
@@ -131,7 +140,7 @@ const Button = ({
   const iconNode =
     icon && !loading ? (
       <span className={cx(styles.iconBox, classNames?.icon)} style={userStyles?.icon}>
-        {icon}
+        {resolveIconNode(icon)}
       </span>
     ) : null;
 
