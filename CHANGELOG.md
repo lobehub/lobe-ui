@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.19.2](https://github.com/lobehub/lobe-ui/compare/v5.19.1...v5.19.2) (2026-07-08)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Accept a bare icon component reference in Button, closes [#558](https://github.com/lobehub/lobe-ui/issues/558) ([323f57f](https://github.com/lobehub/lobe-ui/commit/323f57f))
+
 ## [5.19.1](https://github.com/lobehub/lobe-ui/compare/v5.19.0...v5.19.1) (2026-07-07)
 
 ### 🐛 Bug Fixes
