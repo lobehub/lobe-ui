@@ -7,7 +7,8 @@ export default (token: Theme) => css`
     --font-settings: 'cv01', 'tnum', 'kern';
     --font-variations: 'opsz' auto, tabular-nums;
 
-    font-synthesis: none;
+    /* Real Geist italic for Latin; synthesize style for CJK fallback faces. */
+    font-synthesis: style;
     text-autospace: normal;
   }
 
@@ -45,7 +46,7 @@ export default (token: Theme) => css`
 
     background-color: ${token.colorBgLayout};
 
-    font-synthesis: none;
+    font-synthesis: style;
 
     -webkit-overflow-scrolling: touch;
     -webkit-tap-highlight-color: transparent;
