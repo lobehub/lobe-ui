@@ -25,6 +25,7 @@ import {
   PopoverGroupPropsContext,
   type PopoverGroupSharedProps,
 } from './groupContext';
+import { shouldCancelHoverOnlyPressOpen } from './hoverOnlyPress';
 import { usePopoverPortalContainer } from './PopoverPortal';
 
 type PopoverGroupProps = PopoverGroupSharedProps & {
@@ -55,9 +56,20 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
   }, [handle]);
   const contextValue = useMemo(() => ({ close }), [close]);
 
-  const handleOpenChange = useCallback((open: boolean) => {
-    activeItemRef.current?.onOpenChange?.(open);
-  }, []);
+  const handleOpenChange = useCallback(
+    (nextOpen: boolean, eventDetails?: { cancel?: () => void; reason?: string }) => {
+      const item = activeItemRef.current;
+      const { openOnClick } = parseTrigger(item?.trigger ?? 'hover');
+
+      if (shouldCancelHoverOnlyPressOpen(openOnClick, nextOpen, eventDetails?.reason)) {
+        eventDetails?.cancel?.();
+        return;
+      }
+
+      item?.onOpenChange?.(nextOpen);
+    },
+    [],
+  );
 
   useDestroyOnInvalidActiveTriggerElement(handle.store, destroy, {
     enabled: !disableDestroyOnInvalidTrigger,

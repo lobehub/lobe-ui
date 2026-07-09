@@ -37,6 +37,12 @@ Popover supports 12 placement positions arranged in a visual grid layout.
 
 <code src="./demos/dropdown-menu.tsx" nopadding></code>
 
+## Hover-only (no click pin)
+
+`trigger="hover"` must not pin open after a click on the trigger. Hover to open, click the trigger, then move away — the card should close on mouse leave.
+
+<code src="./demos/hover-only.tsx" nopadding></code>
+
 ## Controlled Mode
 
 Use `open` and `onOpenChange` for confirmation dialogs, inline editing, and external control.

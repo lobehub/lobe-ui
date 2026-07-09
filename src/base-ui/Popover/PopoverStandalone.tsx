@@ -19,6 +19,7 @@ import {
   PopoverViewport,
 } from './atoms';
 import { PopoverProvider } from './context';
+import { shouldCancelHoverOnlyPressOpen } from './hoverOnlyPress';
 import { usePopoverPortalContainer } from './PopoverPortal';
 import { type PopoverProps } from './type';
 
@@ -65,21 +66,25 @@ export const PopoverStandalone = memo<PopoverProps>(
     const mergedOpen = open ?? uncontrolledOpen;
     const resolvedOpen = disabled ? false : mergedOpen;
 
+    // Parse trigger mode
+    const { openOnClick, openOnHover } = useMemo(() => parseTrigger(trigger), [trigger]);
+
     const handleOpenChange = useCallback(
-      (nextOpen: boolean) => {
-        // Don't open if disabled
+      (nextOpen: boolean, eventDetails?: { cancel?: () => void; reason?: string }) => {
         if (disabled && nextOpen) return;
+
+        if (shouldCancelHoverOnlyPressOpen(openOnClick, nextOpen, eventDetails?.reason)) {
+          eventDetails?.cancel?.();
+          return;
+        }
 
         onOpenChange?.(nextOpen);
         if (open === undefined) {
           setUncontrolledOpen(nextOpen);
         }
       },
-      [onOpenChange, open, disabled],
+      [onOpenChange, open, disabled, openOnClick],
     );
-
-    // Parse trigger mode
-    const { openOnHover } = useMemo(() => parseTrigger(trigger), [trigger]);
 
     // Calculate delays (milliseconds take precedence over seconds)
     const resolvedOpenDelay = openDelay ?? mouseEnterDelay * 1000;
