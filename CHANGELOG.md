@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.20.0](https://github.com/lobehub/lobe-ui/compare/v5.19.3...v5.20.0) (2026-07-09)
+
+### ✨ Features
+
+- **base-ui**: Add Form, Input family, Slider, AutoComplete and Checkbox, closes [#557](https://github.com/lobehub/lobe-ui/issues/557) ([a2c58fd](https://github.com/lobehub/lobe-ui/commit/a2c58fd))
+
 ## [5.19.3](https://github.com/lobehub/lobe-ui/compare/v5.19.2...v5.19.3) (2026-07-09)
 
 ### 🐛 Bug Fixes
