@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.19.3](https://github.com/lobehub/lobe-ui/compare/v5.19.2...v5.19.3) (2026-07-09)
+
+### 🐛 Bug Fixes
+
+- Hover-only trigger should not pin open on click ([368a342](https://github.com/lobehub/lobe-ui/commit/368a342))
+
 ## [5.19.2](https://github.com/lobehub/lobe-ui/compare/v5.19.1...v5.19.2) (2026-07-08)
 
 ### 🐛 Bug Fixes
