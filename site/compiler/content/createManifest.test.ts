@@ -169,4 +169,38 @@ route: /components/legacy%20button/
 
     expect(document.pathname).toBe('/components/legacy%20button');
   });
+
+  it('aggregates malformed network paths with independent document errors', () => {
+    const root = createProjectFixture({
+      'src/AANetworkEmpty/index.mdx': `---
+title: Empty Network Path
+description: Empty network path route.
+category: General
+route: //
+---
+`,
+      'src/ABNetworkMalformed/index.mdx': `---
+title: Malformed Network Path
+description: Malformed network path route.
+category: General
+route: //[
+---
+`,
+      'src/ZIndependent/index.mdx': `---
+title: Independent Invalid Document
+---
+`,
+    });
+
+    let diagnostic = '';
+    try {
+      createContentManifest(root);
+    } catch (error) {
+      diagnostic = error instanceof Error ? error.message : String(error);
+    }
+
+    expect(diagnostic).toMatch(/src\/AANetworkEmpty\/index\.mdx[\s\S]*network-path/i);
+    expect(diagnostic).toMatch(/src\/ABNetworkMalformed\/index\.mdx[\s\S]*network-path/i);
+    expect(diagnostic).toMatch(/src\/ZIndependent\/index\.mdx[\s\S]*description[\s\S]*category/i);
+  });
 });

@@ -17,6 +17,9 @@ export const validateExplicitPathname = (pathname: string): string | undefined =
   if (!pathname.startsWith('/')) {
     return `route "${pathname}" must be a pathname beginning with "/"`;
   }
+  if (pathname.startsWith('//')) {
+    return `route "${pathname}" must be an origin-relative pathname without a network-path prefix`;
+  }
   if (pathname.includes('?')) {
     return `route "${pathname}" must be a pathname without a query string`;
   }
@@ -31,7 +34,13 @@ export const validateExplicitPathname = (pathname: string): string | undefined =
   }
 
   const base = new URL('https://docs.invalid');
-  const parsed = new URL(pathname, base);
+  let parsed: URL;
+  try {
+    parsed = new URL(pathname, base);
+  } catch (error) {
+    const reason = error instanceof Error ? error.message : String(error);
+    return `route "${pathname}" must be a valid URL pathname: ${reason}`;
+  }
   if (parsed.origin !== base.origin) {
     return `route "${pathname}" must be an origin-relative pathname`;
   }
