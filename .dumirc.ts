@@ -4,22 +4,11 @@ import { defineConfig } from 'dumi';
 import type { INavItem } from 'dumi/dist/client/theme-api/types';
 import type { SiteThemeConfig } from 'dumi-theme-lobehub';
 
+import { packageNamespaces } from './config/packageNamespaces';
 import { description, homepage, name } from './package.json';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const isWin = process.platform === 'win32';
-
-export const packages = [
-  'awesome',
-  'brand',
-  'chat',
-  'color',
-  'icons',
-  'mdx',
-  'mobile',
-  'storybook',
-  'base-ui',
-];
 
 const nav: INavItem[] = [
   { link: '/components/action-icon', title: 'Components' },
@@ -88,7 +77,8 @@ const themeConfig: SiteThemeConfig = {
 };
 
 const alias: Record<string, string> = {};
-for (const pkg of packages) alias[`@lobehub/ui/${pkg}`] = resolve(__dirname, `./src/${pkg}`);
+for (const pkg of packageNamespaces)
+  alias[`@lobehub/ui/${pkg}`] = resolve(__dirname, `./src/${pkg}`);
 
 export default defineConfig({
   alias,
@@ -108,7 +98,7 @@ export default defineConfig({
   resolve: {
     atomDirs: [
       { dir: 'src', type: 'component' },
-      ...packages.map((pkg) => ({ dir: `src/${pkg}`, subType: pkg, type: 'component' })),
+      ...packageNamespaces.map((pkg) => ({ dir: `src/${pkg}`, subType: pkg, type: 'component' })),
     ],
     entryFile: isProduction ? './src/index.ts' : undefined,
   },

@@ -1,7 +1,7 @@
 import { existsSync, unlinkSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-import { packages } from '../.dumirc';
+import { packageNamespaces } from '../config/packageNamespaces';
 
 const root = resolve(__dirname, '..');
 
@@ -12,4 +12,4 @@ const clean = async (filename: string) => {
   if (dtsPath) unlinkSync(dtsPath);
 };
 
-for (const pkg of packages) clean(pkg);
+for (const pkg of packageNamespaces) clean(pkg);
