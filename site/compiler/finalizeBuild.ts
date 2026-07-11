@@ -1,192 +1,179 @@
-import { copyFileSync, cpSync, readdirSync, readFileSync, rmSync, statSync } from 'node:fs';
+import {
+  copyFileSync,
+  cpSync,
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  renameSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import ts from 'typescript';
+import compatibilityJson from '../content/compatibility.json';
+import type { DocumentManifestEntry } from '../types/content';
+import {
+  type ArtifactAuditOptions,
+  auditDocumentationArtifact,
+  type MigrationCoverageResult,
+} from './audit/artifactAudit';
+import { createContentManifest } from './content/createManifest';
+import { getStandaloneDemoPaths } from './demo/readLegacyMap';
+import { buildPagefind } from './search/buildPagefind';
+import { createRobots, createSitemap } from './seo/createSitemap';
+import type { DocumentationInventory } from './types';
+
+export { auditStandaloneBundleIsolation } from './audit/artifactAudit';
 
 export interface FinalizeBuildOptions {
   clientDirectory: string;
   outputDirectory: string;
+  repositoryRoot?: string;
 }
 
-const documentationChromeMarkers = [
-  'Open documentation navigation',
-  'Search documentation',
-  'Skip to documentation',
-];
-
-const documentationLayoutChunkPattern = /^docs-layout(?:-[\w-]+)?\.m?js$/i;
-
-interface BundleDependency {
-  chain: string[];
-  url: URL;
+export interface FinalizeBuildDependencies {
+  auditArtifact?: (options: ArtifactAuditOptions) => MigrationCoverageResult;
+  buildSearchIndex?: typeof buildPagefind;
+  compatibility?: DocumentationInventory;
+  documents?: DocumentManifestEntry[];
+  expectedStandalonePaths?: string[];
+  fileSystem?: FinalizeFileSystem;
+  onCleanupError?: (error: unknown) => void;
 }
 
-interface BundleIsolationViolation {
-  chain: string[];
-  htmlPath: string;
-  reasons: string[];
+export interface FinalizeFileSystem {
+  remove: (target: string, options: { force: boolean; recursive: boolean }) => void;
+  rename: (source: string, destination: string) => void;
 }
 
-interface ParsedBundleAsset {
-  reasons: string[];
-  staticSpecifiers: string[];
-}
-
-const findHtmlFiles = (directory: string): string[] =>
-  readdirSync(directory).flatMap((name) => {
-    const entry = path.resolve(directory, name);
-    return statSync(entry).isDirectory()
-      ? findHtmlFiles(entry)
-      : name.endsWith('.html')
-        ? [entry]
-        : [];
-  });
-
-const readModulePreloads = (html: string): string[] =>
-  [...html.matchAll(/<link\b[^>]*>/gi)].flatMap(([tag]) => {
-    const rel = tag.match(/\brel=["']([^"']+)["']/i)?.[1];
-    const href = tag.match(/\bhref=["']([^"']+)["']/i)?.[1];
-    return rel?.split(/\s+/).includes('modulepreload') && href ? [href] : [];
-  });
-
-const readStaticModuleSpecifiers = (source: string, fileName: string): string[] => {
-  const sourceFile = ts.createSourceFile(
-    fileName,
-    source,
-    ts.ScriptTarget.Latest,
-    false,
-    ts.ScriptKind.JS,
-  );
-
-  return sourceFile.statements.flatMap((statement) => {
-    if (!ts.isImportDeclaration(statement) && !ts.isExportDeclaration(statement)) return [];
-    const { moduleSpecifier } = statement;
-    return moduleSpecifier && ts.isStringLiteralLike(moduleSpecifier) ? [moduleSpecifier.text] : [];
-  });
+const defaultFileSystem: FinalizeFileSystem = {
+  remove: (target, options) => rmSync(target, options),
+  rename: renameSync,
 };
 
-const resolveOutputAsset = (
+const reportCleanupError = (
+  error: unknown,
+  onCleanupError: ((error: unknown) => void) | undefined,
+): void => {
+  try {
+    if (onCleanupError) onCleanupError(error);
+    else console.warn('Documentation artifact cleanup failed:', error);
+  } catch (reportError) {
+    console.warn('Documentation artifact cleanup error reporting failed:', reportError);
+  }
+};
+
+const promoteArtifact = (
+  stagedDirectory: string,
   outputDirectory: string,
-  origin: string,
-  url: URL,
-): { displayPath: string; path: string } | undefined => {
-  if (url.origin !== origin || !/\.m?js$/i.test(url.pathname)) return;
-  const assetPath = path.resolve(outputDirectory, decodeURIComponent(url.pathname.slice(1)));
-  const relativePath = path.relative(outputDirectory, assetPath);
-  if (!relativePath || relativePath.startsWith('..') || path.isAbsolute(relativePath)) return;
-  return { displayPath: relativePath.replaceAll(path.sep, '/'), path: assetPath };
-};
-
-const resolveStaticSpecifier = (specifier: string, importer: URL): URL | undefined => {
-  if (
-    !specifier.startsWith('.') &&
-    !specifier.startsWith('/') &&
-    !/^https?:\/\//i.test(specifier)
-  ) {
-    return;
-  }
+  workDirectory: string,
+  fileSystem: FinalizeFileSystem,
+  onCleanupError?: (error: unknown) => void,
+) => {
+  const previousDirectory = path.resolve(
+    path.dirname(outputDirectory),
+    `.${path.basename(outputDirectory)}-previous-${path.basename(workDirectory)}`,
+  );
+  const hadPrevious = existsSync(outputDirectory);
+  if (hadPrevious) fileSystem.rename(outputDirectory, previousDirectory);
 
   try {
-    return new URL(specifier, importer);
-  } catch {
-    return;
-  }
-};
-
-export function auditStandaloneBundleIsolation(outputDirectory: string): void {
-  const standaloneDirectory = path.resolve(outputDirectory, '~demos');
-  try {
-    if (!statSync(standaloneDirectory).isDirectory()) return;
-  } catch {
-    return;
-  }
-
-  const violations: BundleIsolationViolation[] = [];
-  const parsedAssets = new Map<string, ParsedBundleAsset | undefined>();
-
-  for (const htmlPath of findHtmlFiles(standaloneDirectory)) {
-    const html = readFileSync(htmlPath, 'utf8');
-    const relativeHtmlPath = path.relative(outputDirectory, htmlPath).replaceAll(path.sep, '/');
-    const baseUrl = new URL(relativeHtmlPath, 'https://lobe-ui.local/');
-    const dependencies: BundleDependency[] = readModulePreloads(html).map((href) => ({
-      chain: [],
-      url: new URL(href, baseUrl),
-    }));
-    const visited = new Set<string>();
-
-    for (let index = 0; index < dependencies.length; index += 1) {
-      const dependency = dependencies[index];
-      if (visited.has(dependency.url.href)) continue;
-      visited.add(dependency.url.href);
-
-      const resolvedAsset = resolveOutputAsset(outputDirectory, baseUrl.origin, dependency.url);
-      if (!resolvedAsset) continue;
-      const chain = [...dependency.chain, resolvedAsset.displayPath];
-      let parsedAsset = parsedAssets.get(resolvedAsset.path);
-      if (!parsedAssets.has(resolvedAsset.path)) {
-        try {
-          const source = readFileSync(resolvedAsset.path, 'utf8');
-          const reasons: string[] = [];
-          if (documentationLayoutChunkPattern.test(path.basename(resolvedAsset.path))) {
-            reasons.push('documentation layout chunk');
-          }
-          const marker = documentationChromeMarkers.find((item) => source.includes(item));
-          if (marker) reasons.push(`documentation chrome marker ${JSON.stringify(marker)}`);
-          parsedAsset = {
-            reasons,
-            staticSpecifiers: readStaticModuleSpecifiers(source, resolvedAsset.path),
-          };
-        } catch {
-          parsedAsset = undefined;
-        }
-        parsedAssets.set(resolvedAsset.path, parsedAsset);
-      }
-      if (!parsedAsset) continue;
-
-      if (parsedAsset.reasons.length > 0) {
-        violations.push({ chain, htmlPath: relativeHtmlPath, reasons: parsedAsset.reasons });
-      }
-
-      for (const specifier of parsedAsset.staticSpecifiers) {
-        const url = resolveStaticSpecifier(specifier, dependency.url);
-        if (url) dependencies.push({ chain, url });
+    fileSystem.rename(stagedDirectory, outputDirectory);
+  } catch (promotionError) {
+    if (hadPrevious && existsSync(previousDirectory) && !existsSync(outputDirectory)) {
+      try {
+        fileSystem.rename(previousDirectory, outputDirectory);
+      } catch (rollbackError) {
+        throw new AggregateError(
+          [promotionError, rollbackError],
+          `Artifact promotion and rollback failed; previous artifact retained at ${previousDirectory}.`,
+        );
       }
     }
+    throw promotionError;
   }
 
-  if (violations.length > 0) {
-    throw new Error(
-      [
-        `Standalone bundle isolation audit found ${violations.length} documentation ${violations.length === 1 ? 'dependency' : 'dependencies'}.`,
-        ...violations.map(
-          ({ chain, htmlPath, reasons }) =>
-            `- ${htmlPath}: ${chain.join(' -> ')} (${reasons.join(', ')})`,
-        ),
-        'Remove these static dependencies from the standalone demo entry graph.',
-      ].join('\n'),
+  if (hadPrevious) {
+    try {
+      fileSystem.remove(previousDirectory, { force: true, recursive: true });
+    } catch (error) {
+      reportCleanupError(error, onCleanupError);
+    }
+  }
+};
+
+export async function finalizeDocumentationBuild(
+  { clientDirectory, outputDirectory, repositoryRoot }: FinalizeBuildOptions,
+  dependencies: FinalizeBuildDependencies = {},
+): Promise<MigrationCoverageResult> {
+  const root = path.resolve(repositoryRoot ?? path.resolve(import.meta.dirname, '../..'));
+  const client = path.resolve(clientDirectory);
+  const output = path.resolve(outputDirectory);
+  const outputParent = path.dirname(output);
+  mkdirSync(outputParent, { recursive: true });
+  const workDirectory = mkdtempSync(path.resolve(outputParent, `.${path.basename(output)}-stage-`));
+  const stagedDirectory = path.resolve(workDirectory, 'artifact');
+  const fileSystem = dependencies.fileSystem ?? defaultFileSystem;
+
+  try {
+    const compatibility =
+      dependencies.compatibility ?? (compatibilityJson as DocumentationInventory);
+    const documents = dependencies.documents ?? createContentManifest(root).documents;
+    const expectedStandalonePaths =
+      dependencies.expectedStandalonePaths ?? getStandaloneDemoPaths(compatibility);
+    const buildSearchIndex = dependencies.buildSearchIndex ?? buildPagefind;
+    const auditArtifact = dependencies.auditArtifact ?? auditDocumentationArtifact;
+
+    cpSync(client, stagedDirectory, { recursive: true });
+    copyFileSync(
+      path.resolve(stagedDirectory, '404/index.html'),
+      path.resolve(stagedDirectory, '404.html'),
     );
-  }
-}
 
-export function finalizeDocumentationBuild({
-  clientDirectory,
-  outputDirectory,
-}: FinalizeBuildOptions): void {
-  rmSync(outputDirectory, { force: true, recursive: true });
-  cpSync(clientDirectory, outputDirectory, { recursive: true });
-  copyFileSync(
-    path.resolve(outputDirectory, '__spa-fallback.html'),
-    path.resolve(outputDirectory, '404.html'),
-  );
-  auditStandaloneBundleIsolation(outputDirectory);
+    await buildSearchIndex({
+      inputDirectory: stagedDirectory,
+      outputDirectory: path.resolve(stagedDirectory, 'pagefind'),
+    });
+    writeFileSync(
+      path.resolve(stagedDirectory, 'sitemap.xml'),
+      createSitemap(documents.map(({ pathname }) => pathname)),
+    );
+    writeFileSync(path.resolve(stagedDirectory, 'robots.txt'), createRobots());
+
+    const coverage = auditArtifact({
+      clientDirectory: client,
+      compatibility,
+      documents,
+      expectedStandalonePaths,
+      outputDirectory: stagedDirectory,
+      repositoryRoot: root,
+    });
+    promoteArtifact(
+      stagedDirectory,
+      output,
+      workDirectory,
+      fileSystem,
+      dependencies.onCleanupError,
+    );
+    return coverage;
+  } finally {
+    try {
+      rmSync(workDirectory, { force: true, recursive: true });
+    } catch (error) {
+      reportCleanupError(error, dependencies.onCleanupError);
+    }
+  }
 }
 
 const entryPath = process.argv[1];
 
 if (entryPath && fileURLToPath(import.meta.url) === path.resolve(entryPath)) {
-  finalizeDocumentationBuild({
+  void finalizeDocumentationBuild({
     clientDirectory: path.resolve('.react-router/build/client'),
     outputDirectory: path.resolve('dist'),
+  }).catch((error: unknown) => {
+    console.error(error);
+    process.exitCode = 1;
   });
 }

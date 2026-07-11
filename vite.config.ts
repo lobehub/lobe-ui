@@ -1,4 +1,4 @@
-import { resolve } from 'node:path';
+import path from 'node:path';
 
 import mdx from '@mdx-js/rollup';
 import { reactRouter } from '@react-router/dev/vite';
@@ -9,16 +9,20 @@ import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 import { remarkApi } from './site/compiler/api/remarkApi';
+import { rehypeHeadingIds } from './site/compiler/content/rehypeHeadingIds';
+import { devPagefindPlugin } from './site/compiler/search/devPagefindPlugin';
 import { lobeDocs } from './site/compiler/vitePlugin';
 
-const sourceRoot = resolve(import.meta.dirname, 'src');
+const sourceRoot = path.resolve(import.meta.dirname, 'src');
 
 export default defineConfig({
   plugins: [
     lobeDocs(),
+    devPagefindPlugin(),
     mdx({
       include: /\.(md|mdx)$/,
       providerImportSource: '/site/app/mdx-components',
+      rehypePlugins: [rehypeHeadingIds],
       remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkApi],
     }),
     reactRouter(),

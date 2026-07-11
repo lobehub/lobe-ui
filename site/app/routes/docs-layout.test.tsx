@@ -3,7 +3,7 @@ import { MemoryRouter, Route, Routes } from 'react-router';
 
 import DocsRouteLayout, { ErrorBoundary } from './docs-layout';
 
-const layoutMocks = vi.hoisted(() => ({ setPreference: vi.fn() }));
+const layoutMocks = vi.hoisted(() => ({ searchModuleLoads: 0, setPreference: vi.fn() }));
 
 vi.mock('../content/registry', () => ({
   contentManifest: { navigation: [{ id: 'components', label: 'Components' }] },
@@ -17,17 +17,36 @@ vi.mock('../../components/Header/Header', () => ({
   default: ({
     navigation,
     onPreferenceChange,
+    onSearchOpen,
     preference,
   }: {
     navigation: { label: string }[];
     onPreferenceChange: (value: string) => void;
+    onSearchOpen: (trigger: HTMLButtonElement) => void;
     preference: string;
   }) => (
     <header data-preference={preference}>
       {navigation[0]?.label}
       <button onClick={() => onPreferenceChange('dark')}>Dark</button>
+      <button onClick={(event) => onSearchOpen(event.currentTarget)}>Search</button>
     </header>
   ),
+}));
+
+vi.mock('../../components/Search/SearchDialog', () => {
+  layoutMocks.searchModuleLoads += 1;
+  return {
+    default: ({ open }: { open: boolean }) =>
+      open ? (
+        <div aria-label="Search documentation" role="dialog">
+          <input autoFocus aria-label="Search input" />
+        </div>
+      ) : null,
+  };
+});
+
+vi.mock('../../components/Analytics/Plausible', () => ({
+  default: () => <script data-testid="plausible" />,
 }));
 
 afterEach(() => {
@@ -52,8 +71,87 @@ it('owns documentation chrome while rendering the nested document route', () => 
   expect(screen.getByRole('banner').dataset.preference).toBe('system');
   expect(screen.getByText('Components')).toBeTruthy();
   expect(screen.getByText('Document content')).toBeTruthy();
+  expect(layoutMocks.searchModuleLoads).toBe(0);
   fireEvent.click(screen.getByRole('button', { name: 'Dark' }));
   expect(layoutMocks.setPreference).toHaveBeenCalledWith('dark');
+  expect(screen.getByTestId('plausible')).toBeTruthy();
+});
+
+it('opens documentation search from a header intent', async () => {
+  render(
+    <MemoryRouter>
+      <Routes>
+        <Route element={<DocsRouteLayout />}>
+          <Route index element={<main id="docs-content">Document content</main>} />
+        </Route>
+      </Routes>
+    </MemoryRouter>,
+  );
+
+  expect(screen.queryByRole('dialog', { name: 'Search documentation' })).toBeNull();
+  fireEvent.click(screen.getByRole('button', { name: 'Search' }));
+  expect(await screen.findByRole('dialog', { name: 'Search documentation' })).toBeTruthy();
+});
+
+it('cancels a pending lazy search with Escape and restores the invoking control', () => {
+  render(
+    <MemoryRouter>
+      <Routes>
+        <Route element={<DocsRouteLayout />}>
+          <Route index element={<main id="docs-content">Document content</main>} />
+        </Route>
+      </Routes>
+    </MemoryRouter>,
+  );
+
+  const trigger = screen.getByRole('button', { name: 'Search' });
+  fireEvent.click(trigger);
+  fireEvent.keyDown(document, { key: 'Escape' });
+
+  expect(screen.queryByRole('dialog', { name: 'Search documentation' })).toBeNull();
+  expect(screen.queryByRole('status', { name: 'Loading search…' })).toBeNull();
+  expect(document.activeElement).toBe(trigger);
+});
+
+it.each([
+  ['Command', { metaKey: true }],
+  ['Control', { ctrlKey: true }],
+])('opens documentation search from %s + K', async (_label, modifier) => {
+  render(
+    <MemoryRouter>
+      <Routes>
+        <Route element={<DocsRouteLayout />}>
+          <Route index element={<main id="docs-content">Document content</main>} />
+        </Route>
+      </Routes>
+    </MemoryRouter>,
+  );
+
+  fireEvent.keyDown(document, { key: 'k', ...modifier });
+  expect(await screen.findByRole('dialog', { name: 'Search documentation' })).toBeTruthy();
+});
+
+it('preserves the original trigger when the search shortcut repeats inside the dialog', async () => {
+  render(
+    <MemoryRouter>
+      <Routes>
+        <Route element={<DocsRouteLayout />}>
+          <Route index element={<main id="docs-content">Document content</main>} />
+        </Route>
+      </Routes>
+    </MemoryRouter>,
+  );
+
+  const trigger = screen.getByRole('button', { name: 'Search' });
+  trigger.focus();
+  fireEvent.click(trigger);
+  const input = await screen.findByRole('textbox', { name: 'Search input' });
+  expect(document.activeElement).toBe(input);
+
+  fireEvent.keyDown(input, { ctrlKey: true, key: 'k' });
+  fireEvent.keyDown(document, { key: 'Escape' });
+
+  expect(document.activeElement).toBe(trigger);
 });
 
 it('retains a documentation-specific route error boundary', () => {

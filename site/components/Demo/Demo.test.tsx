@@ -270,3 +270,35 @@ it('renders an embedded isolated demo through the standalone route', () => {
   expect(html).toContain('/~demos/isolated-demo');
   expect(html).not.toContain('data-demo-placeholder');
 });
+
+it('excludes controls, rendered previews, and source while retaining the demo title for search', async () => {
+  const { container } = render(
+    <Demo of={{ ...descriptor, editable: false }} title="Searchable demo title" />,
+  );
+
+  expect(
+    screen
+      .getByRole('heading', { name: 'Searchable demo title' })
+      .closest('[data-pagefind-ignore]'),
+  ).toBeNull();
+  expect(screen.getByRole('heading', { name: 'Searchable demo title' }).id).toBe(descriptor.id);
+  expect(
+    screen
+      .getByRole('heading', { name: 'Searchable demo title' })
+      .closest('section')
+      ?.getAttribute('aria-labelledby'),
+  ).toBe(descriptor.id);
+  expect(
+    screen.getByRole('toolbar', { name: 'Demo controls' }).getAttribute('data-pagefind-ignore'),
+  ).toBe('all');
+  expect(
+    container.querySelector('.demo-frame__viewport')?.getAttribute('data-pagefind-ignore'),
+  ).toBe('all');
+  await waitFor(() =>
+    expect(screen.queryByRole('status', { name: 'Loading demo preview' })).toBeNull(),
+  );
+  fireEvent.click(screen.getByRole('button', { name: 'Show source' }));
+  expect(
+    container.querySelector('.demo-frame__source-panel')?.getAttribute('data-pagefind-ignore'),
+  ).toBe('all');
+});

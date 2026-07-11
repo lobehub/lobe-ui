@@ -1,3 +1,10 @@
+import type { MetaFunction } from 'react-router';
+
+export const meta: MetaFunction = () => [
+  { title: 'Documentation not found - Lobe UI' },
+  { content: 'noindex, nofollow', name: 'robots' },
+];
+
 export default function NotFound() {
   return (
     <main>

@@ -14,6 +14,7 @@ import Sidebar from '../Sidebar/Sidebar';
 interface HeaderProps {
   navigation: NavigationSection[];
   onPreferenceChange: (preference: ThemePreference) => void;
+  onSearchOpen: (trigger: HTMLButtonElement) => void;
   preference: ThemePreference;
 }
 
@@ -33,7 +34,12 @@ const prefersReducedMotion = () => {
   }
 };
 
-export default function Header({ navigation, onPreferenceChange, preference }: HeaderProps) {
+export default function Header({
+  navigation,
+  onPreferenceChange,
+  onSearchOpen,
+  preference,
+}: HeaderProps) {
   const [sheetState, setSheetState] = useState<'closed' | 'closing' | 'open'>('closed');
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const closeTimerRef = useRef<number | undefined>(undefined);
@@ -129,11 +135,11 @@ export default function Header({ navigation, onPreferenceChange, preference }: H
           </div>
 
           <button
-            disabled
+            aria-keyshortcuts="Meta+K Control+K"
             aria-label="Search documentation"
             className="site-header__search"
-            title="Search indexing is provided by the documentation migration"
             type="button"
+            onClick={(event) => onSearchOpen(event.currentTarget)}
           >
             <Search aria-hidden size={16} strokeWidth={1.8} />
             <span>Search documentation</span>
@@ -141,6 +147,15 @@ export default function Header({ navigation, onPreferenceChange, preference }: H
           </button>
 
           <div className="site-header__actions">
+            <button
+              aria-keyshortcuts="Meta+K Control+K"
+              aria-label="Open search"
+              className="site-header__icon-button site-header__mobile-search"
+              type="button"
+              onClick={(event) => onSearchOpen(event.currentTarget)}
+            >
+              <Search aria-hidden size={17} strokeWidth={1.8} />
+            </button>
             <div aria-label="Theme preference" className="site-header__theme-selector" role="group">
               {themes.map(({ icon: ThemeIcon, label, preference: themePreference }) => (
                 <button

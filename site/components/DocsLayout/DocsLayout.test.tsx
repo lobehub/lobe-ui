@@ -4,6 +4,10 @@ import { MemoryRouter, useLocation } from 'react-router';
 import type { DocumentManifestEntry } from '../../types/content';
 import DocsLayout from './DocsLayout';
 
+vi.mock('../../app/providers/SiteProviders', () => ({
+  useSiteTheme: () => ({ appearance: 'light' }),
+}));
+
 const alphaDocument: DocumentManifestEntry = {
   category: 'General',
   description: 'Alpha component.',
@@ -29,7 +33,7 @@ const TestPage = () => {
         document={alphaDocument}
         navigation={[{ documents: [alphaDocument, betaDocument], title: 'General' }]}
       >
-        <h2>Usage</h2>
+        <h2 id="usage">Usage</h2>
         <p>Content</p>
       </DocsLayout>
     </>
@@ -61,4 +65,27 @@ it('navigates with the memory router while preserving link semantics', async () 
   const tableOfContents = await screen.findByRole('navigation', { name: 'On this page' });
   expect(tableOfContents.textContent).toContain('Usage');
   expect(screen.getByRole('link', { name: 'Usage' }).getAttribute('href')).toBe('#usage');
+});
+
+it('marks one searchable article with title, description, category, and status metadata', () => {
+  const stableDocument = { ...alphaDocument, status: 'stable' as const };
+  const { container } = render(
+    <MemoryRouter>
+      <DocsLayout document={stableDocument} navigation={[]}>
+        <p>Human prose</p>
+      </DocsLayout>
+    </MemoryRouter>,
+  );
+
+  expect(container.querySelectorAll('article[data-pagefind-body]')).toHaveLength(1);
+  expect(container.querySelector('[data-pagefind-meta="title"]')?.textContent).toBe('Alpha');
+  expect(container.querySelector('[data-pagefind-meta="description"]')?.textContent).toBe(
+    'Alpha component.',
+  );
+  expect(container.querySelector('[data-pagefind-meta="category"]')?.textContent).toBe('General');
+  expect(container.querySelector('[data-pagefind-meta="status"]')?.textContent).toBe('stable');
+  expect(screen.getByText('Load discussion').closest('[data-pagefind-ignore="all"]')).toBeTruthy();
+  expect(
+    screen.getByText('Was this page helpful?').closest('[data-pagefind-ignore="all"]'),
+  ).toBeTruthy();
 });

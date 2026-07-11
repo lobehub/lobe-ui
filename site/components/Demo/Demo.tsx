@@ -44,6 +44,7 @@ function EmbeddedPreview({ appearance, demo, style, viewport }: PreviewProps) {
       className="demo-frame__viewport"
       data-demo-appearance={appearance}
       data-demo-viewport={viewport}
+      data-pagefind-ignore="all"
     >
       <div className="demo-frame__preview" style={style}>
         <CanonicalPreview appearance={appearance} demo={demo} />
@@ -58,6 +59,7 @@ function IsolatedPreview({ appearance, demo, standaloneHref, style, viewport }: 
       className="demo-frame__viewport"
       data-demo-appearance={appearance}
       data-demo-viewport={viewport}
+      data-pagefind-ignore="all"
     >
       <iframe
         className="demo-frame__iframe"
@@ -72,7 +74,7 @@ function IsolatedPreview({ appearance, demo, standaloneHref, style, viewport }: 
 
 function ReadOnlySource({ source }: Pick<DemoModule, 'source'>) {
   return (
-    <pre className="demo-frame__source" data-pagefind-ignore="" tabIndex={0}>
+    <pre className="demo-frame__source" data-pagefind-ignore="all" tabIndex={0}>
       <code>{source}</code>
     </pre>
   );
@@ -116,7 +118,7 @@ export default function Demo({
   of,
   title,
 }: DemoProps) {
-  const headingId = useId();
+  const headingId = of.id;
   const sourcePanelId = useId();
   const frameRef = useRef<HTMLElement>(null);
   const resolvedEditable = editable ?? of.editable;
@@ -263,6 +265,7 @@ export default function Demo({
         <div
           aria-hidden={expanded ? undefined : true}
           className="demo-frame__source-panel"
+          data-pagefind-ignore="all"
           hidden={!expanded}
           id={sourcePanelId}
           inert={!expanded}

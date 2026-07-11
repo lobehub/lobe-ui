@@ -22,7 +22,12 @@ it('changes theme preference through accessible named controls', () => {
   const onPreferenceChange = vi.fn();
   render(
     <MemoryRouter>
-      <Header navigation={[]} preference="system" onPreferenceChange={onPreferenceChange} />
+      <Header
+        navigation={[]}
+        preference="system"
+        onPreferenceChange={onPreferenceChange}
+        onSearchOpen={vi.fn()}
+      />
     </MemoryRouter>,
   );
 
@@ -34,6 +39,32 @@ it('changes theme preference through accessible named controls', () => {
   ).toBe('true');
 });
 
+it('exposes enabled desktop and mobile search entry points with their invoking controls', () => {
+  const onSearchOpen = vi.fn();
+  render(
+    <MemoryRouter>
+      <Header
+        navigation={[]}
+        preference="system"
+        onPreferenceChange={vi.fn()}
+        onSearchOpen={onSearchOpen}
+      />
+    </MemoryRouter>,
+  );
+
+  const desktop = screen.getByRole('button', { name: 'Search documentation' });
+  const mobile = screen.getByRole('button', { name: 'Open search' });
+  expect((desktop as HTMLButtonElement).disabled).toBe(false);
+  expect((mobile as HTMLButtonElement).disabled).toBe(false);
+  expect(desktop.getAttribute('aria-keyshortcuts')).toBe('Meta+K Control+K');
+  expect(mobile.getAttribute('aria-keyshortcuts')).toBe('Meta+K Control+K');
+  fireEvent.click(desktop);
+  fireEvent.click(mobile);
+
+  expect(onSearchOpen).toHaveBeenNthCalledWith(1, desktop);
+  expect(onSearchOpen).toHaveBeenNthCalledWith(2, mobile);
+});
+
 it('opens and closes the named mobile navigation sheet and restores trigger focus', async () => {
   render(
     <MemoryRouter initialEntries={['/components/alpha']}>
@@ -41,6 +72,7 @@ it('opens and closes the named mobile navigation sheet and restores trigger focu
         navigation={[{ documents: [alphaDocument], title: 'General' }]}
         preference="light"
         onPreferenceChange={vi.fn()}
+        onSearchOpen={vi.fn()}
       />
     </MemoryRouter>,
   );
@@ -69,7 +101,12 @@ it('closes the mobile sheet synchronously when reduced motion is requested', () 
   );
   render(
     <MemoryRouter>
-      <Header navigation={[]} preference="system" onPreferenceChange={vi.fn()} />
+      <Header
+        navigation={[]}
+        preference="system"
+        onPreferenceChange={vi.fn()}
+        onSearchOpen={vi.fn()}
+      />
     </MemoryRouter>,
   );
 

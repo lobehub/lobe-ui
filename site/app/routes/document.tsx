@@ -3,6 +3,7 @@ import type { MetaFunction } from 'react-router';
 import { useLocation } from 'react-router';
 
 import DocsLayout from '../../components/DocsLayout/DocsLayout';
+import { siteMetadata } from '../../content/siteMetadata';
 import type { DocumentManifestEntry } from '../../types/content';
 import { contentManifest, findDocument, loadDocument } from '../content/registry';
 
@@ -24,12 +25,27 @@ const getDocumentOrThrow = (pathname: string): DocumentManifestEntry => {
 
 export const meta: MetaFunction = ({ location }) => {
   const document = findDocument(location.pathname);
-  if (!document) return [{ title: 'Documentation not found - Lobe UI' }];
+  if (!document) {
+    return [
+      { title: 'Documentation not found - Lobe UI' },
+      { content: 'noindex, nofollow', name: 'robots' },
+    ];
+  }
+
+  const title = `${document.title} - ${siteMetadata.name}`;
+  const canonicalUrl = new URL(document.pathname, siteMetadata.origin).href;
 
   return [
-    { title: `${document.title} - Lobe UI` },
+    { title },
     { content: document.description, name: 'description' },
-    { href: document.pathname, rel: 'canonical', tagName: 'link' },
+    { href: canonicalUrl, rel: 'canonical', tagName: 'link' },
+    { content: 'website', property: 'og:type' },
+    { content: siteMetadata.name, property: 'og:site_name' },
+    { content: title, property: 'og:title' },
+    { content: document.description, property: 'og:description' },
+    { content: canonicalUrl, property: 'og:url' },
+    { content: siteMetadata.openGraphImage, property: 'og:image' },
+    { content: 'summary_large_image', name: 'twitter:card' },
   ];
 };
 

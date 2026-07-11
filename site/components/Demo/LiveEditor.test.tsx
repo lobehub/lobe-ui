@@ -152,6 +152,9 @@ it('loads scope while containing each promoted preview and its portal host in on
   );
 
   expect(await screen.findByText('Edited result: Original')).toBeTruthy();
+  expect(container.querySelector('.demo-live-editor')?.getAttribute('data-pagefind-ignore')).toBe(
+    'all',
+  );
   expect(loadScope).toHaveBeenCalledTimes(1);
   expect(screen.getByLabelText('Read-only imports').textContent).toContain("from 'react'");
   expect(getEditor().value).not.toContain("from 'react'");

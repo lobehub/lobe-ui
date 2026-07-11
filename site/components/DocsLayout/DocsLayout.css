@@ -49,6 +49,15 @@
   text-wrap: pretty;
 }
 
+.docs-layout__search-metadata {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .docs-layout__content {
   color: var(--docs-text-secondary);
   font-size: 0.96875rem;

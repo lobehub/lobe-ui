@@ -365,7 +365,7 @@ export default function LiveEditor({ appearance, demo, resetSignal }: LiveEditor
   );
 
   return (
-    <section className="demo-live-editor" data-pagefind-ignore="">
+    <section className="demo-live-editor" data-pagefind-ignore="all">
       <div className="demo-live-editor__source">
         {sourceParts.immutableSource ? (
           <pre aria-label="Read-only imports" className="demo-live-editor__imports" tabIndex={0}>

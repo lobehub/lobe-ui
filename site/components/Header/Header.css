@@ -70,7 +70,17 @@
   background: var(--docs-surface-raised);
   box-shadow: var(--docs-shadow-control);
   font: inherit;
-  cursor: not-allowed;
+  cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    color 140ms ease,
+    background-color 140ms ease;
+}
+
+.site-header__search:hover {
+  border-color: var(--docs-border-strong);
+  color: var(--docs-text-primary);
+  background: var(--docs-surface-hover);
 }
 
 .site-header__search span {
@@ -153,6 +163,19 @@
   display: none;
 }
 
+.site-header__mobile-search {
+  display: none;
+}
+
+.docs-search-loading {
+  position: fixed;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .site-header__sheet-layer {
   position: fixed;
   z-index: 110;
@@ -226,6 +249,10 @@
   }
 
   .site-header__menu-button {
+    display: inline-grid;
+  }
+
+  .site-header__mobile-search {
     display: inline-grid;
   }
 

@@ -7,7 +7,12 @@ import type {
 
 export default function DemoToolbar({ children }: PropsWithChildren) {
   return (
-    <div aria-label="Demo controls" className="demo-toolbar" role="toolbar">
+    <div
+      aria-label="Demo controls"
+      className="demo-toolbar"
+      data-pagefind-ignore="all"
+      role="toolbar"
+    >
       {children}
     </div>
   );
