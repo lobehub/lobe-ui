@@ -2,6 +2,21 @@
 
 # Changelog
 
+## [5.20.1](https://github.com/lobehub/lobe-ui/compare/v5.20.0...v5.20.1) (2026-07-11)
+
+### 🎫 Chores
+
+- Disable pnpm lockfile generation ([0ce9d99](https://github.com/lobehub/lobe-ui/commit/0ce9d99))
+
+### 🐛 Bug Fixes
+
+- Preserve HAST runtime compatibility ([75b39f8](https://github.com/lobehub/lobe-ui/commit/75b39f8))
+- Restore Button positioning context ([e71aa36](https://github.com/lobehub/lobe-ui/commit/e71aa36))
+
+### 💄 Styles
+
+- Enable Geist italic and CJK style synthesis ([0f12bf6](https://github.com/lobehub/lobe-ui/commit/0f12bf6))
+
 # [5.20.0](https://github.com/lobehub/lobe-ui/compare/v5.19.3...v5.20.0) (2026-07-09)
 
 ### ✨ Features
