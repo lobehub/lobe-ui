@@ -46,10 +46,15 @@ export interface ApiTarget {
   name: string;
 }
 
+export type ApiTableSelector =
+  | { headingPath: string[]; occurrence?: number; unheadedOccurrence?: never }
+  | { headingPath?: never; occurrence?: never; unheadedOccurrence: number };
+
 export interface ApiMigrationConfig {
   bodySha?: string;
   disposition: ApiDisposition;
   reason?: string;
+  tableSelectors?: ApiTableSelector[];
   targets?: ApiTarget[];
 }
 
@@ -90,6 +95,7 @@ export interface Diagnostic {
 }
 
 export interface ApiBodyDispositionRecord {
+  diagnostics?: string[];
   disposition: ApiDisposition | 'pending';
   document: string;
   manualContent: boolean;
@@ -201,6 +207,21 @@ interface ApiSection {
   bodyNodes: MdxNode[];
   bodyStart: number;
   heading: MdxNode;
+}
+
+interface RecognizedApiTable {
+  headingPath: string[];
+  index: number;
+  node: MdxNode;
+}
+
+interface SelectedApiTable {
+  migrationKey?: string;
+  table: RecognizedApiTable;
+}
+
+interface MigratedApiTarget extends ApiTarget {
+  migrationKey?: string;
 }
 
 interface PlannedDocument {
@@ -623,11 +644,11 @@ const maskEscapedCodeTags = (source: string): string => {
   return characters.join('');
 };
 
-const apiMarkup = (targets: readonly ApiTarget[]): string =>
+const apiMarkup = (targets: readonly ApiTarget[], migrationKeys?: readonly string[]): string =>
   targets
     .map(
-      ({ from, name }) =>
-        `<Api name=${JSON.stringify(name)}${from ? ` from=${JSON.stringify(from)}` : ''} />`,
+      ({ from, name }, index) =>
+        `<Api name=${JSON.stringify(name)}${from ? ` from=${JSON.stringify(from)}` : ''}${migrationKeys?.[index] ? ` migrationKey=${JSON.stringify(migrationKeys[index])}` : ''} />`,
     )
     .join('\n');
 
@@ -673,15 +694,24 @@ const removeNodeRanges = (source: string, start: number, end: number, nodes: Mdx
 const isApiComponent = (node: MdxNode): boolean =>
   node.type === 'mdxJsxFlowElement' && node.name === 'Api';
 
-const apiComponentTarget = (node: MdxNode): ApiTarget | undefined => {
+const apiComponentTarget = (node: MdxNode): MigratedApiTarget | undefined => {
   const attributes = attributesFor(node);
-  if ((attributes.get('name')?.length ?? 0) !== 1 || (attributes.get('from')?.length ?? 0) > 1) {
+  if (
+    (attributes.get('name')?.length ?? 0) !== 1 ||
+    (attributes.get('from')?.length ?? 0) > 1 ||
+    (attributes.get('migrationKey')?.length ?? 0) > 1
+  ) {
     return;
   }
   const name = stringAttribute(attributes.get('name')?.[0]);
   const from = stringAttribute(attributes.get('from')?.[0]);
+  const migrationKey = stringAttribute(attributes.get('migrationKey')?.[0]);
   if (!name) return;
-  return { ...(from ? { from } : {}), name };
+  return {
+    ...(from ? { from } : {}),
+    ...(migrationKey ? { migrationKey } : {}),
+    name,
+  };
 };
 
 const apiTargetsMatch = (nodes: MdxNode[], targets: ApiTarget[]): boolean =>
@@ -706,6 +736,186 @@ const isRecognizedApiTable = (node: MdxNode): boolean => {
   );
 };
 
+const recognizedApiTables = (section: ApiSection): RecognizedApiTable[] => {
+  const tables: RecognizedApiTable[] = [];
+  const headingByDepth = new Map<number, string>();
+  for (const node of section.bodyNodes) {
+    if (node.type === 'heading' && (node.depth ?? 0) >= 3) {
+      const depth = node.depth as number;
+      for (const candidate of headingByDepth.keys()) {
+        if (candidate >= depth) headingByDepth.delete(candidate);
+      }
+      const heading = textContent(node).trim();
+      if (heading) headingByDepth.set(depth, heading);
+      continue;
+    }
+    if (!isRecognizedApiTable(node)) continue;
+    tables.push({
+      headingPath: [...headingByDepth.entries()]
+        .toSorted(([left], [right]) => left - right)
+        .map(([, heading]) => heading),
+      index: tables.length,
+      node,
+    });
+  }
+  return tables;
+};
+
+const sameHeadingPath = (left: readonly string[], right: readonly string[]): boolean =>
+  left.length === right.length && left.every((heading, index) => heading === right[index]);
+
+const migrationKeyForSelector = (
+  selector: ApiTableSelector,
+  diagnostics: string[],
+): string | undefined => {
+  const hasHeadingPath =
+    Array.isArray(selector.headingPath) &&
+    selector.headingPath.length > 0 &&
+    selector.headingPath.every((heading) => typeof heading === 'string' && heading.trim());
+  const hasUnheadedOccurrence = Number.isInteger(selector.unheadedOccurrence);
+  if (hasHeadingPath === hasUnheadedOccurrence) {
+    diagnostics.push(
+      'Each API table selector must contain exactly one headingPath or unheadedOccurrence.',
+    );
+    return;
+  }
+  if (hasHeadingPath) {
+    const headingPath = selector.headingPath?.map((heading) => heading.trim()) ?? [];
+    const occurrence = selector.occurrence ?? 0;
+    if (!Number.isInteger(occurrence) || occurrence < 0) {
+      diagnostics.push('API table heading occurrence must be a non-negative integer.');
+      return;
+    }
+    return `heading:${encodeURIComponent(JSON.stringify(headingPath))}:${occurrence}`;
+  }
+  const occurrence = selector.unheadedOccurrence as number;
+  if (occurrence < 0) {
+    diagnostics.push('API unheaded table occurrence must be a non-negative integer.');
+    return;
+  }
+  return `unheaded:${occurrence}`;
+};
+
+const selectApiTables = (
+  tables: RecognizedApiTable[],
+  selectors: ApiTableSelector[] | undefined,
+  targets: ApiTarget[],
+  diagnostics: string[],
+): SelectedApiTable[] => {
+  if (!selectors) {
+    if (tables.length !== 1 || targets.length !== 1) {
+      diagnostics.push(
+        `replace-tables found ${tables.length} recognized tables for ${targets.length} targets; multi-table or multi-target sections require explicit tableSelectors.`,
+      );
+      return [];
+    }
+    const table = tables[0];
+    return table ? [{ table }] : [];
+  }
+  if (selectors.length !== targets.length) {
+    diagnostics.push(
+      `tableSelectors contains ${selectors.length} entries for ${targets.length} targets.`,
+    );
+  }
+
+  const selected: SelectedApiTable[] = [];
+  for (const selector of selectors) {
+    const migrationKey = migrationKeyForSelector(selector, diagnostics);
+    if (!migrationKey) continue;
+    const hasHeadingPath = migrationKey.startsWith('heading:');
+
+    let table: RecognizedApiTable | undefined;
+    if (hasHeadingPath) {
+      const headingPath = selector.headingPath?.map((heading) => heading.trim()) ?? [];
+      const matches = tables.filter((candidate) =>
+        sameHeadingPath(candidate.headingPath, headingPath),
+      );
+      const occurrence = selector.occurrence ?? 0;
+      if (!Number.isInteger(occurrence) || occurrence < 0 || occurrence >= matches.length) {
+        diagnostics.push(
+          `API table heading path ${JSON.stringify(headingPath)} occurrence ${occurrence} is outside the matching table range.`,
+        );
+        continue;
+      }
+      if (matches.length > 1 && selector.occurrence === undefined) {
+        diagnostics.push(
+          `API table heading path ${JSON.stringify(headingPath)} matched ${matches.length} recognized tables; add an occurrence.`,
+        );
+        continue;
+      }
+      table = matches[occurrence];
+    } else {
+      const occurrence = selector.unheadedOccurrence as number;
+      const matches = tables.filter(({ headingPath }) => headingPath.length === 0);
+      if (occurrence < 0 || occurrence >= matches.length) {
+        diagnostics.push(
+          `API unheaded table occurrence ${occurrence} is outside the unheaded table range.`,
+        );
+        continue;
+      }
+      table = matches[occurrence];
+    }
+
+    if (selected.some((entry) => entry.table === table)) {
+      diagnostics.push(`API table index ${table.index} was already selected by another target.`);
+      continue;
+    }
+    selected.push({ migrationKey, table });
+  }
+  return selected;
+};
+
+const apiTargetsWithSelectorsMatch = (
+  nodes: MdxNode[],
+  targets: ApiTarget[],
+  selectors: ApiTableSelector[],
+  diagnostics: string[],
+): boolean => {
+  if (selectors.length !== targets.length) {
+    diagnostics.push(
+      `tableSelectors contains ${selectors.length} entries for ${targets.length} targets.`,
+    );
+    return false;
+  }
+  const expected = new Map<string, ApiTarget>();
+  for (const [index, selector] of selectors.entries()) {
+    const key = migrationKeyForSelector(selector, diagnostics);
+    const target = targets[index];
+    if (!key || !target) continue;
+    if (expected.has(key)) {
+      diagnostics.push(`API migration selector ${JSON.stringify(key)} is duplicated.`);
+      continue;
+    }
+    expected.set(key, target);
+  }
+  if (nodes.length !== targets.length) {
+    diagnostics.push(
+      `Found ${nodes.length} generated Api components for ${targets.length} targets.`,
+    );
+  }
+  for (const node of nodes) {
+    const actual = apiComponentTarget(node);
+    if (!actual?.migrationKey) {
+      diagnostics.push('Generated Api component is missing its migrationKey provenance.');
+      continue;
+    }
+    const target = expected.get(actual.migrationKey);
+    if (!target || target.name !== actual.name || target.from !== actual.from) {
+      diagnostics.push(
+        `Generated Api migrationKey ${JSON.stringify(actual.migrationKey)} does not match its reviewed target.`,
+      );
+      continue;
+    }
+    expected.delete(actual.migrationKey);
+  }
+  if (expected.size > 0) {
+    diagnostics.push(
+      `${expected.size} reviewed API table selectors have no generated Api component.`,
+    );
+  }
+  return diagnostics.length === 0;
+};
+
 const apiDisposition = (
   source: string,
   document: string,
@@ -713,48 +923,72 @@ const apiDisposition = (
   config: ApiMigrationConfig | undefined,
   edits: TextEdit[],
 ): ApiBodyDispositionRecord => {
-  const tables = section.bodyNodes.filter(isRecognizedApiTable);
+  const tables = recognizedApiTables(section);
   const migratedApis = section.bodyNodes.filter(isApiComponent);
-  const removable = [...tables];
+  const diagnostics: string[] = [];
   const original = source.slice(section.bodyStart, section.bodyEnd);
-  const manualNodes = section.bodyNodes.filter(
-    (node) => !tables.includes(node) && !migratedApis.includes(node),
+  const automatic = migratedApis.length > 0 && !config;
+  const disposition = automatic ? 'preserve-all' : config?.disposition;
+  const reason = automatic ? 'Already migrated to the generated Api component.' : config?.reason;
+  const targets = config?.targets ?? [];
+  const selectedTables =
+    disposition === 'replace-tables' && migratedApis.length === 0
+      ? selectApiTables(tables, config?.tableSelectors, targets, diagnostics)
+      : [];
+  const removableNodes = [...selectedTables.map(({ table }) => table.node), ...migratedApis];
+  const preservedBody = removeNodeRanges(
+    source,
+    section.bodyStart,
+    section.bodyEnd,
+    removableNodes,
+  ).trim();
+  const frozenManualNodes = section.bodyNodes.filter(
+    (node) => !tables.some((table) => table.node === node) && !migratedApis.includes(node),
   );
-  const manual = removeNodeRanges(source, section.bodyStart, section.bodyEnd, [
-    ...tables,
+  const frozenManualBody = removeNodeRanges(source, section.bodyStart, section.bodyEnd, [
+    ...tables.map(({ node }) => node),
     ...migratedApis,
   ]).trim();
   const originalSha = sha(original);
-  const manualContent = Boolean(manual) && manualNodes.some(({ type }) => type !== 'heading');
-  const automatic = migratedApis.length > 0 && !config;
-  const disposition = automatic ? 'preserve-all' : config?.disposition;
-  const preservedSha = sha(disposition === 'replace-tables' ? manual : original);
-  const reason = automatic ? 'Already migrated to the generated Api component.' : config?.reason;
-  const targets = config?.targets ?? [];
+  const manualContent =
+    Boolean(frozenManualBody) && frozenManualNodes.some(({ type }) => type !== 'heading');
+  const preservedSha = sha(disposition === 'replace-tables' ? preservedBody : original);
   const invalidReason =
     (disposition === 'preserve-all' || disposition === 'replace-all') && !reason?.trim();
   const invalidTargets =
     (disposition === 'replace-all' || disposition === 'replace-tables') && targets.length === 0;
-  const migratedTargetsMatch = apiTargetsMatch(migratedApis, targets);
+  const migratedTargetsMatch =
+    migratedApis.length > 0 &&
+    (config?.tableSelectors && disposition === 'replace-tables'
+      ? apiTargetsWithSelectorsMatch(migratedApis, targets, config.tableSelectors, diagnostics)
+      : apiTargetsMatch(migratedApis, targets));
   const invalidTables =
     disposition === 'replace-tables' &&
-    ((removable.length === 0 && migratedApis.length === 0) ||
-      (removable.length > 0 && migratedApis.length > 0) ||
-      (removable.length > 0 && removable.length !== targets.length) ||
-      (migratedApis.length > 0 && !migratedTargetsMatch));
+    (migratedApis.length > 0
+      ? !migratedTargetsMatch
+      : selectedTables.length !== targets.length || diagnostics.length > 0);
   const alreadyMigratedReplaceAll =
-    disposition === 'replace-all' &&
-    migratedTargetsMatch &&
-    removable.length === 0 &&
-    !manualContent;
+    disposition === 'replace-all' && migratedTargetsMatch && tables.length === 0 && !manualContent;
   const invalidSha =
     Boolean(config) && !alreadyMigratedReplaceAll && config?.bodySha !== preservedSha;
 
+  if (!disposition) diagnostics.push('API body disposition is not reviewed.');
+  if (invalidReason) diagnostics.push(`${disposition} requires an explicit reviewed reason.`);
+  if (invalidTargets) diagnostics.push(`${disposition} requires at least one callable API target.`);
+  if (invalidTables && diagnostics.length === 0) {
+    diagnostics.push('Generated API targets do not match the selected legacy tables.');
+  }
+  if (invalidSha) diagnostics.push('Reviewed API body SHA does not match the preserved body.');
+
   if (disposition === 'replace-tables' && !invalidTargets && !invalidTables) {
-    for (const [index, node] of removable.entries()) {
+    for (const [index, selected] of selectedTables.entries()) {
       const target = targets[index];
       if (target) {
-        edits.push({ end: nodeEnd(node), start: nodeStart(node), text: apiMarkup([target]) });
+        edits.push({
+          end: nodeEnd(selected.table.node),
+          start: nodeStart(selected.table.node),
+          text: apiMarkup([target], selected.migrationKey ? [selected.migrationKey] : undefined),
+        });
       }
     }
   }
@@ -769,6 +1003,7 @@ const apiDisposition = (
   const accepted =
     disposition && !invalidReason && !invalidTargets && !invalidTables && !invalidSha;
   return {
+    ...(diagnostics.length > 0 ? { diagnostics } : {}),
     disposition: accepted ? disposition : 'pending',
     document,
     manualContent,

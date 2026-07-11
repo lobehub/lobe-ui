@@ -114,12 +114,17 @@ describe('deterministic dumi demo migration', () => {
     expect(options).not.toMatch(/^(nav|group|apiHeader|atomId|subType):/m);
     expect(options).toContain('Manual API guidance must survive.');
     expect(options).toContain('const preservedAroundTable = true;');
-    expect(options).toContain('<Api name="Options" from="./options" />');
-    expect(options).toContain('<Api name="OptionsItem" />');
-    expect(options).not.toContain('| Property | Description | Type |');
+    expect(options).toContain('<Api name="Options" from="./options" migrationKey=');
+    expect(options).toContain('<Api name="OptionsItem" migrationKey=');
+    expect(options).not.toContain('| value    | Fixture value | `string` |');
+    expect(options).not.toContain('| active   | Active state | `boolean` | `false` |');
+    expect(options).toContain('This nested data shape is not a callable component API');
+    expect(options).toContain('| label    | Display label | `string` |');
     expect(comparisonTable).toBeTruthy();
     expect(options).toContain(comparisonTable);
-    expect(options).toMatch(/Secondary API guidance\.[\s\S]*<Api name="OptionsItem" \/>/);
+    expect(options).toMatch(
+      /Secondary API guidance\.[\s\S]*<Api name="OptionsItem" migrationKey="[^"]+" \/>/,
+    );
     expect(preserved).toContain('This entire legacy API body stays unchanged.');
     expect(preservedBefore.split('## APIs')[1]).toBe(preserved.split('## APIs')[1]);
     expect(replaced).toContain('<Api name="Replace" from="./public" />');
@@ -153,6 +158,12 @@ describe('deterministic dumi demo migration', () => {
           reason: 'The reviewed generated contract supersedes this section.',
         }),
       ]),
+    );
+
+    const complete = await migrateDumiDocs({ check: true, root });
+    expect(complete.apiBodyDispositions.missing).toEqual([]);
+    expect(readFileSync(resolve(root, 'src/Options/index.mdx'), 'utf8')).toContain(
+      '| label    | Display label | `string` |',
     );
   });
 
@@ -403,6 +414,100 @@ describe('deterministic dumi demo migration', () => {
     await expect(migrateDumiDocs({ check: false, root, write: true })).rejects.toBeInstanceOf(
       MigrationBlockedError,
     );
+  });
+
+  it('requires explicit selectors for every multi-table or multi-target API section', async () => {
+    const root = copyFixture('complete');
+    const configPath = resolve(root, 'site/content/migration.json');
+    const config = JSON.parse(readFileSync(configPath, 'utf8'));
+    const api = config.documents['src/Options/index.md'].api;
+    delete api.tableSelectors;
+    api.targets = [
+      { name: 'OptionsItem' },
+      { from: './options', name: 'Options' },
+      { name: 'OptionsMetadata' },
+    ];
+    api.bodySha = 'pending';
+    writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
+    const discovery = await migrateDumiDocs({ check: true, root });
+    api.bodySha = discovery.apiBodyDispositions.records.find(
+      ({ document }) => document === 'src/Options/index.md',
+    )?.preservedSha;
+    writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
+
+    const report = await migrateDumiDocs({ check: true, root });
+    const record = report.apiBodyDispositions.records.find(
+      ({ document }) => document === 'src/Options/index.md',
+    );
+
+    expect(record?.diagnostics).toEqual(
+      expect.arrayContaining([expect.stringContaining('explicit tableSelectors')]),
+    );
+    expect(report.apiBodyDispositions.missing).toContain('src/Options/index.md');
+  });
+
+  it('aggregates duplicate and out-of-range reviewed API table selectors', async () => {
+    const root = copyFixture('complete');
+    const configPath = resolve(root, 'site/content/migration.json');
+    const config = JSON.parse(readFileSync(configPath, 'utf8'));
+    const api = config.documents['src/Options/index.md'].api;
+    api.targets.push({ name: 'OptionsMetadata' });
+    api.tableSelectors = [
+      { unheadedOccurrence: 0 },
+      { unheadedOccurrence: 0 },
+      { unheadedOccurrence: 99 },
+    ];
+    writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
+
+    const report = await migrateDumiDocs({ check: true, root });
+    const record = report.apiBodyDispositions.records.find(
+      ({ document }) => document === 'src/Options/index.md',
+    );
+
+    expect(record?.diagnostics).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining('already selected'),
+        expect.stringContaining('outside the unheaded table range'),
+      ]),
+    );
+    expect(report.apiBodyDispositions.missing).toContain('src/Options/index.md');
+  });
+
+  it('keeps reversed selector-to-target mappings stable after migration', async () => {
+    const root = copyFixture('complete');
+    const configPath = resolve(root, 'site/content/migration.json');
+    const config = JSON.parse(readFileSync(configPath, 'utf8'));
+    const api = config.documents['src/Options/index.md'].api;
+    api.targets = [api.targets[1], api.targets[0]];
+    api.tableSelectors = [api.tableSelectors[1], api.tableSelectors[0]];
+    writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
+
+    await migrateDumiDocs({ check: false, root, write: true });
+    const complete = await migrateDumiDocs({ check: true, root });
+
+    expect(complete.apiBodyDispositions.missing).toEqual([]);
+  });
+
+  it('rejects selector drift after generated API components replace their tables', async () => {
+    const root = copyFixture('complete');
+    await migrateDumiDocs({ check: false, root, write: true });
+    const migratedPath = resolve(root, 'src/Options/index.mdx');
+    const migratedBefore = readFileSync(migratedPath, 'utf8');
+    const migratedMtime = statSync(migratedPath).mtimeMs;
+    const configPath = resolve(root, 'site/content/migration.json');
+    const config = JSON.parse(readFileSync(configPath, 'utf8'));
+    config.documents['src/Options/index.md'].api.tableSelectors[0] = {
+      unheadedOccurrence: 99,
+    };
+    writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
+
+    const report = await migrateDumiDocs({ check: true, root });
+    expect(report.apiBodyDispositions.missing).toContain('src/Options/index.mdx');
+    await expect(migrateDumiDocs({ check: false, root, write: true })).rejects.toBeInstanceOf(
+      MigrationBlockedError,
+    );
+    expect(readFileSync(migratedPath, 'utf8')).toBe(migratedBefore);
+    expect(statSync(migratedPath).mtimeMs).toBe(migratedMtime);
   });
 
   it('blocks mutation when a reviewed API body SHA no longer matches', async () => {

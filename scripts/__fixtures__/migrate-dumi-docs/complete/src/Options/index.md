@@ -69,3 +69,11 @@ Secondary API guidance.
 | Property | Description  | Type      | Default |
 | -------- | ------------ | --------- | ------- |
 | active   | Active state | `boolean` | `false` |
+
+### OptionsMetadata
+
+This nested data shape is not a callable component API and must remain authored content.
+
+| Property | Description   | Type     |
+| -------- | ------------- | -------- |
+| label    | Display label | `string` |

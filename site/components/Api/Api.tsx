@@ -5,6 +5,7 @@ import type { ApiComponent, ApiProperty, ApiSourceLocation } from '../../types/a
 interface ApiProps {
   data?: ApiComponent;
   from?: string;
+  migrationKey?: string;
   name: string;
 }
 

@@ -22,9 +22,10 @@
       "nav": "Components",
       "subType": "Tool",
       "api": {
-        "bodySha": "f0dad33fcbdfa28ce64be0d2eef0c00c02cb559a974fbad4322725745512d0d6",
+        "bodySha": "4eaca9c903b4c6af0a7a03d1400ed80e9518daa8367e5db7c5a8fd75ef6678dc",
         "disposition": "replace-tables",
-        "targets": [{ "name": "Options", "from": "./options" }, { "name": "OptionsItem" }]
+        "targets": [{ "name": "Options", "from": "./options" }, { "name": "OptionsItem" }],
+        "tableSelectors": [{ "unheadedOccurrence": 0 }, { "headingPath": ["OptionsItem"] }]
       }
     },
     "src/Preserve/index.md": {
