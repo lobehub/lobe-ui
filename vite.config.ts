@@ -8,6 +8,7 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
+import { remarkApi } from './site/compiler/api/remarkApi';
 import { lobeDocs } from './site/compiler/vitePlugin';
 
 const sourceRoot = resolve(import.meta.dirname, 'src');
@@ -18,7 +19,7 @@ export default defineConfig({
     mdx({
       include: /\.(md|mdx)$/,
       providerImportSource: '/site/app/mdx-components',
-      remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+      remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkApi],
     }),
     reactRouter(),
     tsconfigPaths({ projects: ['./tsconfig.json', './tsconfig.site.json'] }),

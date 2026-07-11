@@ -253,7 +253,7 @@
       "source": "src/Burger/demos/index.tsx"
     },
     {
-      "document": "src/Button/index.md",
+      "document": "src/Button/index.mdx",
       "legacyId": "src-button-demo-demos",
       "legacyRouteId": "components/Button/index",
       "options": {
@@ -265,7 +265,7 @@
       "source": "src/Button/demos/index.tsx"
     },
     {
-      "document": "src/Button/index.md",
+      "document": "src/Button/index.mdx",
       "legacyId": "src-button-demo-variant",
       "legacyRouteId": "components/Button/index",
       "options": {
@@ -4495,7 +4495,7 @@
       "legacyRouteId": "components/Button/index",
       "pathname": "/components/button",
       "section": "Components",
-      "source": "src/Button/index.md",
+      "source": "src/Button/index.mdx",
       "title": "Button"
     },
     {

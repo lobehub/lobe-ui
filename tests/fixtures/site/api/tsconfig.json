@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "declaration": false,
+    "noEmit": true,
+    "types": ["react"]
+  },
+  "exclude": [],
+  "extends": "../../../../tsconfig.json",
+  "include": ["./**/*.ts", "./**/*.tsx"]
+}

@@ -3,6 +3,7 @@ import { dirname, resolve } from 'node:path';
 
 import type { Plugin } from 'vite';
 
+import { apiPlugin } from './api/apiPlugin';
 import { createContentManifest } from './content/createManifest';
 import { demoPlugin } from './demo/demoPlugin';
 
@@ -27,6 +28,7 @@ const resolveMetadataPath = (path: string, importer?: string): string => {
 export function lobeDocs(): Plugin[] {
   return [
     demoPlugin(),
+    apiPlugin(),
     {
       enforce: 'pre',
       load(id) {
