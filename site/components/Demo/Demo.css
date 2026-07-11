@@ -131,9 +131,19 @@
   background: var(--docs-background);
 }
 
+.demo-frame__viewport[data-demo-appearance='light'] .demo-frame__preview,
+.demo-live-editor__preview[data-demo-appearance='light'],
+.standalone-demo-page[data-demo-appearance='light'],
+:root[data-standalone-appearance='light'] .standalone-demo-page {
+  color-scheme: light;
+  color: #111113;
+  background: #fff;
+}
+
 .demo-frame__viewport[data-demo-appearance='dark'] .demo-frame__preview,
 .demo-live-editor__preview[data-demo-appearance='dark'],
-.standalone-demo-page[data-demo-appearance='dark'] {
+.standalone-demo-page[data-demo-appearance='dark'],
+:root[data-standalone-appearance='dark'] .standalone-demo-page {
   color-scheme: dark;
   color: #f4f4f5;
   background: #0d0d0f;

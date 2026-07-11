@@ -15,6 +15,10 @@ export interface LiveSourceParts {
   immutableSource: string;
 }
 
+export interface LiveTransformOptions {
+  diagnosticLineOffset?: number;
+}
+
 interface SourceFileWithParseDiagnostics extends ts.SourceFile {
   parseDiagnostics: readonly ts.DiagnosticWithLocation[];
 }
@@ -129,6 +133,9 @@ const defaultExportReplacement = (
     (ts.isFunctionDeclaration(statement) || ts.isClassDeclaration(statement)) &&
     hasModifier(statement, ts.SyntaxKind.DefaultKeyword)
   ) {
+    if (statement.name) {
+      return `${withoutExportDefaultPrefix(statement, sourceFile)}\nconst DemoEntry = ${statement.name.text};`;
+    }
     return `const DemoEntry = ${withoutExportDefaultPrefix(statement, sourceFile)};`;
   }
 
@@ -169,10 +176,21 @@ export function splitLiveSource(source: string): LiveSourceParts {
 export function transformLiveSource(
   source: string,
   immutableImports: readonly string[],
+  { diagnosticLineOffset = 0 }: LiveTransformOptions = {},
 ): LiveTransformResult {
+  const mapDiagnostics = (diagnostics: LiveDiagnostic[]): LiveDiagnostic[] =>
+    diagnostics.map((diagnostic) => ({
+      ...diagnostic,
+      line:
+        diagnostic.line === undefined
+          ? undefined
+          : Math.max(1, diagnostic.line - diagnosticLineOffset),
+    }));
   const sourceFile = createSourceFile(source);
   const parseDiagnostics = syntaxDiagnostics(sourceFile);
-  if (parseDiagnostics.length > 0) return { diagnostics: parseDiagnostics, ok: false };
+  if (parseDiagnostics.length > 0) {
+    return { diagnostics: mapDiagnostics(parseDiagnostics), ok: false };
+  }
 
   const imports = sourceFile.statements.filter(ts.isImportDeclaration);
   const actualImports = imports.map(importSignature);
@@ -186,14 +204,14 @@ export function transformLiveSource(
   if (mismatchIndex >= 0) {
     const declaration = imports[mismatchIndex];
     return {
-      diagnostics: [
+      diagnostics: mapDiagnostics([
         {
           ...(declaration
             ? locationForPosition(sourceFile, declaration.getStart(sourceFile))
             : { column: 1, line: 1 }),
           message: 'Imports are read-only. Restore the repository import declarations.',
         },
-      ],
+      ]),
       ok: false,
     };
   }
@@ -222,7 +240,7 @@ export function transformLiveSource(
   if (defaultExports.length !== 1) {
     const node = defaultExports[1] ?? sourceFile;
     return {
-      diagnostics: [
+      diagnostics: mapDiagnostics([
         {
           ...locationForPosition(sourceFile, node.getStart(sourceFile)),
           message:
@@ -230,7 +248,7 @@ export function transformLiveSource(
               ? 'A live demo must have one default component export.'
               : 'A live demo cannot have more than one default component export.',
         },
-      ],
+      ]),
       ok: false,
     };
   }

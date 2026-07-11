@@ -1,8 +1,6 @@
 import { expect, it } from 'vitest';
 
-import { isStandaloneDemoPathname, links } from './root';
-
-vi.mock('./app/content/registry', () => ({ contentManifest: { navigation: [] } }));
+import { links } from './root';
 
 const GEIST_FONT_STYLESHEET =
   'https://registry.npmmirror.com/@lobehub/webfont-geist/1.0.0/files/css/index.css';
@@ -19,9 +17,4 @@ it('publishes the exact Geist font resources in the document head', async () => 
       { href: GEIST_MONO_FONT_STYLESHEET, rel: 'stylesheet' },
     ]),
   );
-});
-
-it('suppresses all documentation chrome for standalone demo routes', () => {
-  expect(isStandaloneDemoPathname('/~demos/src-button-demo-demos')).toBe(true);
-  expect(isStandaloneDemoPathname('/components/button')).toBe(false);
 });

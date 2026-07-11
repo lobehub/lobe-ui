@@ -16,6 +16,14 @@ export const THEME_BOOTSTRAP_SCRIPT = `(() => {
   const root = document.documentElement;
   root.dataset.theme = appearance;
   root.style.colorScheme = appearance;
+  try {
+    if (location.pathname === '/~demos' || location.pathname.startsWith('/~demos/')) {
+      const standaloneAppearance = new URLSearchParams(location.search).get('appearance');
+      if (standaloneAppearance === 'light' || standaloneAppearance === 'dark') {
+        root.dataset.standaloneAppearance = standaloneAppearance;
+      }
+    }
+  } catch {}
 })();`;
 
 export default function ThemeBootstrap() {

@@ -4,6 +4,11 @@ import type { ComponentType } from 'react';
 import type { DemoModule } from '../../types/demo';
 import LiveEditor from './LiveEditor';
 
+const liveMocks = vi.hoisted(() => ({
+  deferredErrors: [] as (() => void)[],
+  deferredResults: [] as (() => void)[],
+}));
+
 vi.mock('react-live', async () => {
   const React = await import('react');
 
@@ -16,13 +21,52 @@ vi.mock('react-live', async () => {
       onResult: (component: ComponentType) => void,
       onError: (error: Error) => void,
     ) => {
+      if (code.includes('TOP_LEVEL_FAILURE')) {
+        throw new Error('Top-level evaluation failed');
+      }
       if (code.includes('RUNTIME_FAILURE')) {
         onError(new Error('Runtime compilation failed'));
         return;
       }
+      if (code.includes('DEFERRED_ERROR')) {
+        liveMocks.deferredErrors.push(() => onError(new Error('Obsolete runtime failure')));
+        return;
+      }
+      if (code.includes('DEFERRED_RESULT')) {
+        liveMocks.deferredResults.push(() =>
+          onResult(() => React.createElement('div', null, 'Edited result: Obsolete')),
+        );
+        return;
+      }
 
-      const label = code.includes('Second') ? 'Edited result: Second' : 'Edited result: Original';
-      onResult(() => React.createElement('div', null, label));
+      const label = code.includes('Second')
+        ? 'Edited result: Second'
+        : code.includes('Replacement')
+          ? 'Edited result: Replacement'
+          : 'Edited result: Original';
+      const Candidate = () => {
+        if (code.includes('RENDER_FAILURE')) throw new Error('Candidate render failed');
+        return React.createElement('div', null, label);
+      };
+      class MockLiveBoundary extends React.Component<
+        { children?: ReturnType<typeof React.createElement> },
+        { failed: boolean }
+      > {
+        state = { failed: false };
+
+        static getDerivedStateFromError() {
+          return { failed: true };
+        }
+
+        componentDidCatch(error: Error) {
+          onError(error);
+        }
+
+        render() {
+          return this.state.failed ? null : (this.props.children ?? null);
+        }
+      }
+      onResult(() => React.createElement(MockLiveBoundary, null, React.createElement(Candidate)));
     },
   };
 });
@@ -55,6 +99,8 @@ const getEditor = (): HTMLTextAreaElement => {
 afterEach(() => {
   cleanup();
   vi.clearAllMocks();
+  liveMocks.deferredErrors.length = 0;
+  liveMocks.deferredResults.length = 0;
 });
 
 beforeAll(() => {
@@ -102,6 +148,103 @@ it('retains the last successful element when a subsequent compile fails', async 
 
   expect((await screen.findByRole('alert')).textContent).toContain('Runtime compilation failed');
   expect(screen.getByText('Edited result: Second')).toBeTruthy();
+});
+
+it('retains the last successful element when top-level evaluation throws synchronously', async () => {
+  render(<LiveEditor appearance="light" demo={createDescriptor()} resetSignal={0} />);
+  expect(await screen.findByText('Edited result: Original')).toBeTruthy();
+
+  fireEvent.change(getEditor(), {
+    target: { value: 'export default function TOP_LEVEL_FAILURE() {}' },
+  });
+
+  expect((await screen.findByRole('alert')).textContent).toContain('Top-level evaluation failed');
+  expect(screen.getByText('Edited result: Original')).toBeTruthy();
+});
+
+it('promotes a candidate only after its React render commits successfully', async () => {
+  const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+  render(<LiveEditor appearance="light" demo={createDescriptor()} resetSignal={0} />);
+  expect(await screen.findByText('Edited result: Original')).toBeTruthy();
+
+  fireEvent.change(getEditor(), {
+    target: {
+      value: 'export default function RENDER_FAILURE() { return <div>Replacement</div>; }',
+    },
+  });
+
+  expect((await screen.findByRole('alert')).textContent).toContain('Candidate render failed');
+  expect(screen.getByText('Edited result: Original')).toBeTruthy();
+  expect(screen.queryByText('Edited result: Replacement')).toBeNull();
+  consoleError.mockRestore();
+});
+
+it('ignores obsolete evaluator result and error callbacks after a newer generation commits', async () => {
+  render(<LiveEditor appearance="light" demo={createDescriptor()} resetSignal={0} />);
+  expect(await screen.findByText('Edited result: Original')).toBeTruthy();
+
+  fireEvent.change(getEditor(), {
+    target: { value: 'export default function DEFERRED_RESULT() { return null; }' },
+  });
+  expect(liveMocks.deferredResults).toHaveLength(1);
+  fireEvent.change(getEditor(), {
+    target: { value: 'export default function DEFERRED_ERROR() { return null; }' },
+  });
+  expect(liveMocks.deferredErrors).toHaveLength(1);
+  fireEvent.change(getEditor(), {
+    target: { value: 'export default function Second() { return <div>Second</div>; }' },
+  });
+  expect(await screen.findByText('Edited result: Second')).toBeTruthy();
+
+  liveMocks.deferredResults[0]();
+  liveMocks.deferredErrors[0]();
+  await waitFor(() => expect(screen.queryByText('Edited result: Obsolete')).toBeNull());
+  expect(screen.queryByRole('alert')).toBeNull();
+  expect(screen.getByText('Edited result: Second')).toBeTruthy();
+});
+
+it('reports scope failure without leaving a perpetual loading status', async () => {
+  const loadScope = vi.fn(async () => {
+    throw new Error('Dependency unavailable');
+  });
+  render(<LiveEditor appearance="light" demo={createDescriptor(loadScope)} resetSignal={0} />);
+
+  expect((await screen.findByRole('alert')).textContent).toContain('Dependency unavailable');
+  expect(screen.queryByText('Loading editable dependencies…')).toBeNull();
+});
+
+it('reports a syntax error on visible editor line one as line one', async () => {
+  render(<LiveEditor appearance="light" demo={createDescriptor()} resetSignal={0} />);
+  await screen.findByText('Edited result: Original');
+
+  fireEvent.change(getEditor(), {
+    target: { value: 'export default () => <div>;' },
+  });
+
+  expect((await screen.findByRole('alert')).textContent).toMatch(/^Line 1,/);
+  expect(screen.getByText('Edited result: Original')).toBeTruthy();
+});
+
+it('replaces the source revision atomically and never retains a stale preview after scope failure', async () => {
+  const initial = createDescriptor();
+  const replacementScope = vi.fn(async () => {
+    throw new Error('Replacement scope failed');
+  });
+  const replacement: DemoModule = {
+    ...createDescriptor(replacementScope),
+    id: 'replacement-editor',
+    source: 'export default function Replacement() { return <div>Replacement</div>; }',
+    sourcePath: 'src/Replacement/demos/index.tsx',
+  };
+  const { rerender } = render(<LiveEditor appearance="light" demo={initial} resetSignal={0} />);
+  expect(await screen.findByText('Edited result: Original')).toBeTruthy();
+
+  rerender(<LiveEditor appearance="light" demo={replacement} resetSignal={0} />);
+
+  expect((await screen.findByRole('alert')).textContent).toContain('Replacement scope failed');
+  expect(screen.queryByText('Edited result: Original')).toBeNull();
+  expect(getEditor().value).toContain('function Replacement');
+  expect(replacementScope).toHaveBeenCalledTimes(1);
 });
 
 it('resets the editor to repository source without reloading scope', async () => {

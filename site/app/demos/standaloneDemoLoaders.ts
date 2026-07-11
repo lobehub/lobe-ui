@@ -1,4 +1,5 @@
 import type { DemoModule } from '../../types/demo';
+import { createDescriptorPromiseCache } from './descriptorPromiseCache';
 
 type DemoDescriptorLoader = () => Promise<DemoModule>;
 
@@ -10,7 +11,12 @@ const descriptorLoaders = import.meta.glob<DemoModule>(
   },
 ) as Record<string, DemoDescriptorLoader>;
 
-const descriptorPromises = new Map<string, Promise<DemoModule>>();
+const descriptorCache = createDescriptorPromiseCache<DemoModule>();
+
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => descriptorCache.clear());
+  import.meta.hot.accept(() => descriptorCache.clear());
+}
 
 export function assertStandaloneLoaderCoverage(sourcePaths: Iterable<string>): void {
   const missing = [...sourcePaths].filter(
@@ -23,9 +29,6 @@ export function assertStandaloneLoaderCoverage(sourcePaths: Iterable<string>): v
 
 export function loadStandaloneDemoDescriptor(sourcePath: string): Promise<DemoModule> {
   const normalizedSourcePath = sourcePath.replaceAll('\\', '/');
-  const cached = descriptorPromises.get(normalizedSourcePath);
-  if (cached) return cached;
-
   const loader = descriptorLoaders[`/${normalizedSourcePath}`];
   if (!loader) {
     return Promise.reject(
@@ -33,7 +36,5 @@ export function loadStandaloneDemoDescriptor(sourcePath: string): Promise<DemoMo
     );
   }
 
-  const promise = loader();
-  descriptorPromises.set(normalizedSourcePath, promise);
-  return promise;
+  return descriptorCache.load(normalizedSourcePath, loader);
 }

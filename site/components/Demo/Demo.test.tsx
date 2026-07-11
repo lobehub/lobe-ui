@@ -9,8 +9,12 @@ vi.mock('react-live', () => ({
   Editor: ({ code, onChange }: { code: string; onChange?: (value: string) => void }) => (
     <textarea value={code} onChange={(event) => onChange?.(event.currentTarget.value)} />
   ),
-  renderElementAsync: (_input: unknown, onResult: (component: ComponentType) => void) =>
-    onResult(() => <div>Edited preview result</div>),
+  renderElementAsync: ({ code }: { code: string }, onResult: (component: ComponentType) => void) =>
+    onResult(() => (
+      <div>
+        {code.includes('Persisted edit') ? 'Persisted edit result' : 'Edited preview result'}
+      </div>
+    )),
 }));
 
 const descriptor: DemoModule = {
@@ -89,6 +93,36 @@ it('persists source expansion as a per-demo local preference', async () => {
   render(<Demo of={persistedDescriptor} />);
 
   expect(await screen.findByRole('button', { name: 'Hide source editor' })).toBeTruthy();
+});
+
+it('keeps the edited session mounted and inaccessible while the editor is collapsed', async () => {
+  const loadScope = vi.fn(async () => ({}));
+  const editableDescriptor = { ...descriptor, id: 'persistent-session', loadScope };
+  render(<Demo of={editableDescriptor} />);
+
+  fireEvent.click(screen.getByRole('button', { name: 'Show source editor' }));
+  const wrapper = await screen.findByRole('textbox', { name: 'Demo source editor' });
+  const textarea = wrapper.querySelector('textarea');
+  if (!textarea) throw new Error('Expected the react-live editor fixture');
+  fireEvent.change(textarea, {
+    target: { value: 'export default () => <div>Persisted edit</div>;' },
+  });
+  expect(await screen.findByText('Persisted edit result')).toBeTruthy();
+
+  fireEvent.click(screen.getByRole('button', { name: 'Hide source editor' }));
+  expect(screen.queryByRole('textbox', { name: 'Demo source editor' })).toBeNull();
+  expect(
+    screen.getByText('Persisted edit result').closest<HTMLElement>('.demo-frame__source-panel')
+      ?.hidden,
+  ).toBe(true);
+
+  fireEvent.click(screen.getByRole('button', { name: 'Show source editor' }));
+  const reopened = await screen.findByRole('textbox', { name: 'Demo source editor' });
+  expect((reopened.querySelector('textarea') as HTMLTextAreaElement | null)?.value).toContain(
+    'Persisted edit',
+  );
+  expect(await screen.findByText('Persisted edit result')).toBeTruthy();
+  expect(loadScope).toHaveBeenCalledTimes(1);
 });
 
 it('keeps source and every non-edit action available for read-only demos', async () => {

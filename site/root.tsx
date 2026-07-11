@@ -1,11 +1,9 @@
 import type { ReactNode } from 'react';
 import type { LinksFunction } from 'react-router';
-import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from 'react-router';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 
-import { contentManifest } from './app/content/registry';
-import SiteProviders, { useSiteTheme } from './app/providers/SiteProviders';
+import SiteProviders from './app/providers/SiteProviders';
 import ThemeBootstrap from './app/providers/ThemeBootstrap';
-import Header from './components/Header/Header';
 import globalStyles from './styles/global.css?url';
 import tokenStyles from './styles/tokens.css?url';
 
@@ -43,32 +41,12 @@ export function Layout({ children }: { children: ReactNode }) {
 export function ErrorBoundary() {
   return (
     <main className="docs-error" id="docs-content">
-      <h1>Documentation unavailable</h1>
-      <p>The requested documentation could not be rendered.</p>
+      <h1>Site unavailable</h1>
+      <p>The requested page could not be rendered.</p>
     </main>
   );
 }
 
-export const isStandaloneDemoPathname = (pathname: string): boolean =>
-  pathname === '/~demos' || pathname.startsWith('/~demos/');
-
 export default function Root() {
-  const location = useLocation();
-  const { preference, setPreference } = useSiteTheme();
-
-  if (isStandaloneDemoPathname(location.pathname)) return <Outlet />;
-
-  return (
-    <>
-      <a className="docs-skip-link" href="#docs-content">
-        Skip to documentation
-      </a>
-      <Header
-        navigation={contentManifest.navigation}
-        preference={preference}
-        onPreferenceChange={setPreference}
-      />
-      <Outlet />
-    </>
-  );
+  return <Outlet />;
 }

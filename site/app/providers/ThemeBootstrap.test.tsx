@@ -21,7 +21,9 @@ const replaceMatchMediaWithThrowingGetter = (): (() => void) => {
 afterEach(() => {
   localStorage.clear();
   delete document.documentElement.dataset.theme;
+  delete document.documentElement.dataset.standaloneAppearance;
   document.documentElement.style.colorScheme = '';
+  history.replaceState(null, '', '/');
   vi.unstubAllGlobals();
 });
 
@@ -85,3 +87,18 @@ it('falls back to light without replacing system preference when matchMedia invo
   expect(document.documentElement.style.colorScheme).toBe('light');
   expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe('system');
 });
+
+it.each(['light', 'dark'] as const)(
+  'marks an explicit standalone %s canvas before hydration',
+  (appearance) => {
+    history.replaceState(
+      null,
+      '',
+      `/~demos/example?routeId=metadata%2Fonly&appearance=${appearance}`,
+    );
+
+    new Function(THEME_BOOTSTRAP_SCRIPT)();
+
+    expect(document.documentElement.dataset.standaloneAppearance).toBe(appearance);
+  },
+);

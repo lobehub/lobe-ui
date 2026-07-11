@@ -122,6 +122,7 @@ export default function Demo({
   const [appearance, setAppearance] = useState<DemoAppearance>('light');
   const [copyStatus, setCopyStatus] = useState('');
   const [editorResetSignal, setEditorResetSignal] = useState(0);
+  const [editorOpened, setEditorOpened] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [fullScreen, setFullScreen] = useState(false);
   const [viewport, setViewport] = useState<DemoViewport>('responsive');
@@ -132,7 +133,9 @@ export default function Demo({
   const standaloneHref = createStandaloneHref(of, appearance);
 
   useEffect(() => {
-    setExpanded(readStoredExpansion(of.id));
+    const storedExpansion = readStoredExpansion(of.id);
+    setExpanded(storedExpansion);
+    setEditorOpened(storedExpansion);
   }, [of.id]);
 
   useEffect(() => {
@@ -144,6 +147,7 @@ export default function Demo({
   const onToggleSource = () => {
     setExpanded((current) => {
       const next = !current;
+      if (next && resolvedEditable) setEditorOpened(true);
       writeStoredExpansion(of.id, next);
       return next;
     });
@@ -254,8 +258,14 @@ export default function Demo({
         </span>
       </DemoToolbar>
       {isolated ? <IsolatedPreview {...previewProps} /> : <EmbeddedPreview {...previewProps} />}
-      {expanded ? (
-        <div className="demo-frame__source-panel" id={sourcePanelId}>
+      {expanded || (resolvedEditable && editorOpened) ? (
+        <div
+          aria-hidden={expanded ? undefined : true}
+          className="demo-frame__source-panel"
+          hidden={!expanded}
+          id={sourcePanelId}
+          inert={!expanded}
+        >
           {resolvedEditable ? (
             <Suspense
               fallback={

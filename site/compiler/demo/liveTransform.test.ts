@@ -35,6 +35,24 @@ export default () => {
     expect(result.code).not.toContain('export default');
   });
 
+  it.each([
+    [
+      'function',
+      "export default function Original() { return 'function'; }\nconst later = Original;",
+    ],
+    ['class', "export default class Original { value = 'class'; }\nconst later = Original;"],
+  ])('preserves the binding of a named default %s declaration', (_kind, source) => {
+    const result = transformLiveSource(source, []);
+
+    expect(result).toMatchObject({ ok: true });
+    if (!result.ok) return;
+    expect(result.code).toContain('const DemoEntry = Original;');
+
+    const executable = result.code.replace(/render\(<DemoEntry \/>\);\s*$/, '');
+    expect(() => new Function(`${executable}\nreturn later === DemoEntry;`)()).not.toThrow();
+    expect(new Function(`${executable}\nreturn later === DemoEntry;`)()).toBe(true);
+  });
+
   it('aliases an existing identifier default export without rewriting its declaration', () => {
     const source = `const StreamingPlayground = () => <div>Streaming</div>;
 export default StreamingPlayground;`;
@@ -91,6 +109,21 @@ export default () => <Input />;`;
           message: expect.any(String),
         },
       ]),
+      ok: false,
+    });
+  });
+
+  it('maps diagnostics back to the visible editable source line numbers', () => {
+    const immutableSource = "import { Button } from '@lobehub/ui';";
+    const editableSource = 'export default () => <div>;';
+    const result = transformLiveSource(
+      `${immutableSource}\n\n${editableSource}`,
+      extractImmutableImports(immutableSource),
+      { diagnosticLineOffset: 2 },
+    );
+
+    expect(result).toMatchObject({
+      diagnostics: expect.arrayContaining([expect.objectContaining({ line: 1 })]),
       ok: false,
     });
   });
