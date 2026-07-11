@@ -40,6 +40,11 @@ body {
   text-rendering: optimizelegibility;
 }
 
+body:has([data-standalone-demo]) {
+  padding-top: 0;
+  background-image: none;
+}
+
 button,
 input,
 textarea,

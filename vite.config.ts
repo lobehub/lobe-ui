@@ -1,3 +1,5 @@
+import { resolve } from 'node:path';
+
 import mdx from '@mdx-js/rollup';
 import { reactRouter } from '@react-router/dev/vite';
 import remarkFrontmatter from 'remark-frontmatter';
@@ -7,6 +9,8 @@ import { defineConfig } from 'vite';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 import { lobeDocs } from './site/compiler/vitePlugin';
+
+const sourceRoot = resolve(import.meta.dirname, 'src');
 
 export default defineConfig({
   plugins: [
@@ -22,4 +26,11 @@ export default defineConfig({
       ? visualizer({ filename: '.react-router/build/client/stats.html' })
       : undefined,
   ],
+  resolve: {
+    alias: [
+      { find: '@', replacement: sourceRoot },
+      { find: /^@lobehub\/ui$/, replacement: sourceRoot },
+      { find: /^@lobehub\/ui\/(.+)$/, replacement: `${sourceRoot}/$1` },
+    ],
+  },
 });

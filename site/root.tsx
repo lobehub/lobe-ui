@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { LinksFunction } from 'react-router';
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration, useLocation } from 'react-router';
 
 import { contentManifest } from './app/content/registry';
 import SiteProviders, { useSiteTheme } from './app/providers/SiteProviders';
@@ -49,8 +49,14 @@ export function ErrorBoundary() {
   );
 }
 
+export const isStandaloneDemoPathname = (pathname: string): boolean =>
+  pathname === '/~demos' || pathname.startsWith('/~demos/');
+
 export default function Root() {
+  const location = useLocation();
   const { preference, setPreference } = useSiteTheme();
+
+  if (isStandaloneDemoPathname(location.pathname)) return <Outlet />;
 
   return (
     <>

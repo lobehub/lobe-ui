@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest';
 
-import { links } from './root';
+import { isStandaloneDemoPathname, links } from './root';
 
 vi.mock('./app/content/registry', () => ({ contentManifest: { navigation: [] } }));
 
@@ -19,4 +19,9 @@ it('publishes the exact Geist font resources in the document head', async () => 
       { href: GEIST_MONO_FONT_STYLESHEET, rel: 'stylesheet' },
     ]),
   );
+});
+
+it('suppresses all documentation chrome for standalone demo routes', () => {
+  expect(isStandaloneDemoPathname('/~demos/src-button-demo-demos')).toBe(true);
+  expect(isStandaloneDemoPathname('/components/button')).toBe(false);
 });

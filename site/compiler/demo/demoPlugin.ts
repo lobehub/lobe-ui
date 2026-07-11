@@ -5,6 +5,7 @@ import type { Plugin } from 'vite';
 
 import type { DocumentationInventory } from '../types';
 import { analyzeDemo, type DemoAnalysis, type DemoScopeImport } from './demoAnalysis';
+import { createCanonicalDemoId } from './readLegacyMap';
 
 const descriptorPrefix = '\0lobe-docs:demo-descriptor:';
 const scopePrefix = '\0lobe-docs:demo-scope:';
@@ -56,6 +57,14 @@ const decodeVirtualPath = (path: string): string => decodeURIComponent(path);
 const scopeModuleId = (sourcePath: string): string =>
   `${scopePrefix}${encodeVirtualPath(sourcePath)}`;
 
+const resolveRepositoryAlias = (root: string, source: string): string | undefined => {
+  if (source.startsWith('@/')) return resolve(root, 'src', source.slice(2));
+  if (source === '@lobehub/ui') return resolve(root, 'src');
+  if (source.startsWith('@lobehub/ui/')) {
+    return resolve(root, 'src', source.slice('@lobehub/ui/'.length));
+  }
+};
+
 const encodeDescriptorRequest = (request: DemoDescriptorRequest): string =>
   encodeURIComponent(JSON.stringify(request));
 
@@ -66,14 +75,6 @@ const sourcePathFromRoot = (root: string, absolutePath: string): string => {
   const path = normalizePath(relative(root, absolutePath));
   return path.startsWith('../') ? normalizePath(absolutePath) : path;
 };
-
-const createCanonicalId = (sourcePath: string): string =>
-  sourcePath
-    .replace(/\.[^.]+$/, '')
-    .replaceAll(/([a-z\d])([A-Z])/g, '$1-$2')
-    .replaceAll(/[^A-Za-z\d]+/g, '-')
-    .replaceAll(/^-|-$/g, '')
-    .toLowerCase();
 
 const documentStem = (path: string): string => normalizePath(path).replace(/\.mdx?$/, '');
 
@@ -140,7 +141,7 @@ const createDescriptorModule = (
     contextualReference?.legacyRouteId ?? (routeIds.size === 1 ? [...routeIds][0] : '');
   const scopeId = `${publicScopePrefix}${encodeVirtualPath(sourcePath)}`;
   const source = readFileSync(sourcePath, 'utf8');
-  const id = createCanonicalId(relativeSourcePath);
+  const id = createCanonicalDemoId(relativeSourcePath);
 
   return `const descriptor = {
   editable: true,
@@ -283,6 +284,13 @@ export function demoPlugin(options: DemoPluginOptions = {}): Plugin {
     },
     name: 'lobe-docs-demo',
     async resolveId(source, importer) {
+      if (importer?.startsWith(scopePrefix)) {
+        const aliasPath = resolveRepositoryAlias(root, source);
+        if (aliasPath) {
+          return (await this.resolve(aliasPath, undefined, { skipSelf: true }))?.id ?? aliasPath;
+        }
+      }
+
       if (source.startsWith(publicScopePrefix)) {
         const sourcePath = normalizeFilePath(
           decodeVirtualPath(source.slice(publicScopePrefix.length)),

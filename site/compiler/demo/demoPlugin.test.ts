@@ -105,6 +105,26 @@ it('loads the editable scope without evaluating the selected demo entry', async 
   expect((globalThis as any).__lobeDemoScopeLog).toEqual(['helper']);
 });
 
+it('resolves repository aliases from virtual editable scope modules', async () => {
+  const root = createTemporaryProject({
+    'compatibility.json': compatibilitySource('legacy-alias', 'docs/alias'),
+    'demo.tsx': "import { Flexbox } from '@/Flex';\nexport default () => Flexbox;\n",
+    'src/Flex.ts': "export const Flexbox = () => 'flexbox';\n",
+  });
+  server = await createServer({
+    configFile: false,
+    logLevel: 'silent',
+    plugins: [demoPlugin({ compatibilityPath: resolve(root, 'compatibility.json'), root })],
+    root,
+    server: { middlewareMode: true },
+  });
+  const descriptor = (await server.ssrLoadModule('/demo.tsx?demo')).default as DemoModule;
+
+  const scope = await descriptor.loadScope();
+
+  expect(scope.Flexbox).toBeTypeOf('function');
+});
+
 it('preserves empty JavaScript imports as editable-scope side effects', async () => {
   const descriptor = await loadDescriptor('/tests/fixtures/site/demos/empty-import-entry.js?demo');
 

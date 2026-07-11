@@ -45,6 +45,13 @@ it('requires an authored read-only use for dynamic imports and browser workers',
   );
 });
 
+it('classifies the explicit dynamic-import fixture as read-only', () => {
+  const analysis = analyzeDemo(resolve(fixtureRoot, 'dynamic-import.tsx'));
+
+  expect(analysis.requiresReadOnly).toBe(true);
+  expect(analysis.diagnostics).toContainEqual(expect.objectContaining({ code: 'dynamic-import' }));
+});
+
 it('reports unsupported local dependency graphs instead of silently changing editability', () => {
   const root = createFixture({
     'demo.tsx': "import value from './missing.data';\nexport default () => <div>{value}</div>;\n",

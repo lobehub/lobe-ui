@@ -94,3 +94,15 @@ it('retries only the rejected canonical demo load', async () => {
   expect(failedLoad).toHaveBeenCalledTimes(2);
   expect(healthyLoad).toHaveBeenCalledTimes(1);
 });
+
+it('contains a component that throws during canonical rendering', async () => {
+  vi.spyOn(console, 'error').mockImplementation(() => {});
+  function ThrowingDemo(): never {
+    throw new Error('Throwing demo fixture');
+  }
+
+  render(<CanonicalPreview demo={createDescriptor(async () => ThrowingDemo, 'throws')} />);
+
+  expect(await screen.findByRole('alert')).toBeTruthy();
+  expect(screen.getByText('Throwing demo fixture')).toBeTruthy();
+});
