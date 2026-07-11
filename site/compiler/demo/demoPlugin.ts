@@ -1,5 +1,5 @@
-import { existsSync, readFileSync } from 'node:fs';
-import { relative, resolve } from 'node:path';
+import { existsSync, readFileSync, realpathSync } from 'node:fs';
+import { basename, dirname, relative, resolve } from 'node:path';
 
 import type { Plugin } from 'vite';
 
@@ -15,7 +15,32 @@ export interface DemoPluginOptions {
   root?: string;
 }
 
+interface DemoDescriptorRequest {
+  documentPath?: string;
+  sourcePath: string;
+}
+
+interface CompilerInvalidation {
+  compatibility: boolean;
+  sources: Set<string>;
+}
+
 const normalizePath = (path: string): string => path.replaceAll('\\', '/');
+
+const canonicalPath = (path: string): string => {
+  const absolutePath = resolve(path);
+  try {
+    return normalizePath(realpathSync.native(absolutePath));
+  } catch {
+    try {
+      return normalizePath(
+        resolve(realpathSync.native(dirname(absolutePath)), basename(absolutePath)),
+      );
+    } catch {
+      return normalizePath(absolutePath);
+    }
+  }
+};
 
 const parseDemoRequest = (source: string): string | undefined => {
   const queryIndex = source.indexOf('?');
@@ -28,6 +53,14 @@ const withoutQuery = (id: string): string => id.split('?')[0];
 
 const encodeVirtualPath = (path: string): string => encodeURIComponent(path);
 const decodeVirtualPath = (path: string): string => decodeURIComponent(path);
+const scopeModuleId = (sourcePath: string): string =>
+  `${scopePrefix}${encodeVirtualPath(sourcePath)}`;
+
+const encodeDescriptorRequest = (request: DemoDescriptorRequest): string =>
+  encodeURIComponent(JSON.stringify(request));
+
+const decodeDescriptorRequest = (request: string): DemoDescriptorRequest =>
+  JSON.parse(decodeURIComponent(request)) as DemoDescriptorRequest;
 
 const sourcePathFromRoot = (root: string, absolutePath: string): string => {
   const path = normalizePath(relative(root, absolutePath));
@@ -41,6 +74,15 @@ const createCanonicalId = (sourcePath: string): string =>
     .replaceAll(/[^A-Za-z\d]+/g, '-')
     .replaceAll(/^-|-$/g, '')
     .toLowerCase();
+
+const documentStem = (path: string): string => normalizePath(path).replace(/\.mdx?$/, '');
+
+const documentPathFromImporter = (root: string, importer?: string): string | undefined => {
+  if (!importer) return;
+  const importerPath = withoutQuery(importer);
+  if (!/\.mdx?$/.test(importerPath)) return;
+  return sourcePathFromRoot(root, importerPath);
+};
 
 const readCompatibility = (path: string): DocumentationInventory => {
   if (!existsSync(path)) return { demoReferences: [], documents: [] };
@@ -80,13 +122,22 @@ const createScopeModule = (imports: DemoScopeImport[]): string => {
 
 const createDescriptorModule = (
   root: string,
-  sourcePath: string,
+  request: DemoDescriptorRequest,
   compatibility: DocumentationInventory,
 ): string => {
+  const { documentPath, sourcePath } = request;
   const relativeSourcePath = sourcePathFromRoot(root, sourcePath);
   const references = compatibility.demoReferences.filter(
     (reference) => normalizePath(reference.source) === relativeSourcePath,
   );
+  const contextualReference = documentPath
+    ? references.find(
+        (reference) => documentStem(reference.document) === documentStem(documentPath),
+      )
+    : undefined;
+  const routeIds = new Set(references.map(({ legacyRouteId }) => legacyRouteId));
+  const routeId =
+    contextualReference?.legacyRouteId ?? (routeIds.size === 1 ? [...routeIds][0] : '');
   const scopeId = `${publicScopePrefix}${encodeVirtualPath(sourcePath)}`;
   const source = readFileSync(sourcePath, 'utf8');
   const id = createCanonicalId(relativeSourcePath);
@@ -97,7 +148,7 @@ const createDescriptorModule = (
   legacyIds: ${JSON.stringify(references.map(({ legacyId }) => legacyId))},
   load: () => import(${JSON.stringify(sourcePath)}).then((module) => module.default),
   loadScope: () => import(${JSON.stringify(scopeId)}).then((module) => module.default),
-  routeId: ${JSON.stringify(references[0]?.legacyRouteId ?? '')},
+  routeId: ${JSON.stringify(routeId)},
   source: ${JSON.stringify(source)},
   sourcePath: ${JSON.stringify(relativeSourcePath)},
 };
@@ -110,22 +161,69 @@ const formatDiagnostic = (analysis: DemoAnalysis): string[] =>
   );
 
 export function demoPlugin(options: DemoPluginOptions = {}): Plugin {
-  let root = resolve(options.root ?? process.cwd());
-  let compatibilityPath = resolve(
-    options.compatibilityPath ?? root,
-    options.compatibilityPath ? '' : 'site/content/compatibility.json',
-  );
+  let root = canonicalPath(options.root ?? process.cwd());
+  const resolveCompatibilityPath = () =>
+    options.compatibilityPath
+      ? canonicalPath(resolve(root, options.compatibilityPath))
+      : canonicalPath(resolve(root, 'site/content/compatibility.json'));
+  let compatibilityPath = resolveCompatibilityPath();
   let compatibility: DocumentationInventory | undefined;
   const analysisCache = new Map<string, DemoAnalysis>();
-  const reportedDiagnostics = new Set<string>();
+  const dependenciesBySource = new Map<string, Set<string>>();
+  const descriptorIdsBySource = new Map<string, Set<string>>();
+  const knownSources = new Set<string>();
+  const reportedDiagnostics = new Map<string, Set<string>>();
+  const sourcesByDependency = new Map<string, Set<string>>();
+
+  const normalizeFilePath = canonicalPath;
+
+  const updateDependencyOwnership = (sourcePath: string, dependencyPaths: string[]) => {
+    const previousDependencies = dependenciesBySource.get(sourcePath);
+    for (const dependencyPath of previousDependencies ?? []) {
+      const owners = sourcesByDependency.get(dependencyPath);
+      owners?.delete(sourcePath);
+      if (owners?.size === 0) sourcesByDependency.delete(dependencyPath);
+    }
+
+    const nextDependencies = new Set(dependencyPaths.map(normalizeFilePath));
+    dependenciesBySource.set(sourcePath, nextDependencies);
+    for (const dependencyPath of nextDependencies) {
+      const owners = sourcesByDependency.get(dependencyPath) ?? new Set<string>();
+      owners.add(sourcePath);
+      sourcesByDependency.set(dependencyPath, owners);
+    }
+  };
+
+  const invalidateCompilerState = (changedPath: string): CompilerInvalidation => {
+    const filePath = normalizeFilePath(changedPath);
+    const compatibilityChanged = filePath === normalizeFilePath(compatibilityPath);
+    const sources = compatibilityChanged
+      ? new Set(knownSources)
+      : new Set([
+          ...(knownSources.has(filePath) ? [filePath] : []),
+          ...(sourcesByDependency.get(filePath) ?? []),
+        ]);
+
+    if (compatibilityChanged) {
+      compatibility = undefined;
+    } else {
+      for (const sourcePath of sources) {
+        analysisCache.delete(sourcePath);
+        reportedDiagnostics.delete(sourcePath);
+      }
+    }
+    return { compatibility: compatibilityChanged, sources };
+  };
 
   const getCompatibility = () => (compatibility ??= readCompatibility(compatibilityPath));
   const getAnalysis = (sourcePath: string) => {
-    const absolutePath = resolve(sourcePath);
+    const absolutePath = normalizeFilePath(sourcePath);
+    knownSources.add(absolutePath);
     let analysis = analysisCache.get(absolutePath);
     if (!analysis) {
       analysis = analyzeDemo(absolutePath);
       analysisCache.set(absolutePath, analysis);
+      updateDependencyOwnership(absolutePath, analysis.dependencyPaths);
     }
     return analysis;
   };
@@ -133,34 +231,64 @@ export function demoPlugin(options: DemoPluginOptions = {}): Plugin {
   return {
     configResolved(config) {
       if (options.root) return;
-      root = resolve(config.root);
-      compatibilityPath = resolve(
-        options.compatibilityPath ?? root,
-        options.compatibilityPath ? '' : 'site/content/compatibility.json',
-      );
+      root = canonicalPath(config.root);
+      compatibilityPath = resolveCompatibilityPath();
       compatibility = undefined;
     },
     enforce: 'pre',
+    hotUpdate(options) {
+      const invalidation = invalidateCompilerState(options.file);
+      const modules = new Set(options.modules);
+
+      for (const sourcePath of invalidation.sources) {
+        const virtualIds = new Set(descriptorIdsBySource.get(sourcePath) ?? []);
+        if (!invalidation.compatibility) virtualIds.add(scopeModuleId(sourcePath));
+
+        for (const id of virtualIds) {
+          const module = this.environment.moduleGraph.getModuleById(id);
+          if (!module) continue;
+          this.environment.moduleGraph.invalidateModule(module);
+          modules.add(module);
+        }
+      }
+
+      return [...modules];
+    },
     load(id) {
       if (id.startsWith(descriptorPrefix)) {
-        const sourcePath = decodeVirtualPath(id.slice(descriptorPrefix.length));
+        const request = decodeDescriptorRequest(id.slice(descriptorPrefix.length));
+        const sourcePath = normalizeFilePath(request.sourcePath);
+        request.sourcePath = sourcePath;
         const analysis = getAnalysis(sourcePath);
+        this.addWatchFile(compatibilityPath);
+        this.addWatchFile(sourcePath);
+        for (const dependencyPath of analysis.dependencyPaths) this.addWatchFile(dependencyPath);
+
+        const reported = reportedDiagnostics.get(sourcePath) ?? new Set<string>();
         for (const diagnostic of formatDiagnostic(analysis)) {
-          if (reportedDiagnostics.has(diagnostic)) continue;
-          reportedDiagnostics.add(diagnostic);
+          if (reported.has(diagnostic)) continue;
+          reported.add(diagnostic);
           this.warn(diagnostic);
         }
-        return createDescriptorModule(root, sourcePath, getCompatibility());
+        reportedDiagnostics.set(sourcePath, reported);
+        return createDescriptorModule(root, request, getCompatibility());
       }
       if (id.startsWith(scopePrefix)) {
-        const sourcePath = decodeVirtualPath(id.slice(scopePrefix.length));
-        return createScopeModule(getAnalysis(sourcePath).imports);
+        const sourcePath = normalizeFilePath(decodeVirtualPath(id.slice(scopePrefix.length)));
+        const analysis = getAnalysis(sourcePath);
+        this.addWatchFile(sourcePath);
+        for (const dependencyPath of analysis.dependencyPaths) this.addWatchFile(dependencyPath);
+        return createScopeModule(analysis.imports);
       }
     },
     name: 'lobe-docs-demo',
     async resolveId(source, importer) {
       if (source.startsWith(publicScopePrefix)) {
-        return `${scopePrefix}${source.slice(publicScopePrefix.length)}`;
+        const sourcePath = normalizeFilePath(
+          decodeVirtualPath(source.slice(publicScopePrefix.length)),
+        );
+        knownSources.add(sourcePath);
+        return scopeModuleId(sourcePath);
       }
 
       const request = parseDemoRequest(source);
@@ -169,7 +297,19 @@ export function demoPlugin(options: DemoPluginOptions = {}): Plugin {
       if (!resolvedRequest) {
         throw new Error(`Unable to resolve demo source "${request}" from ${importer ?? root}`);
       }
-      return `${descriptorPrefix}${encodeVirtualPath(withoutQuery(resolvedRequest.id))}`;
+      const sourcePath = normalizeFilePath(withoutQuery(resolvedRequest.id));
+      knownSources.add(sourcePath);
+      const descriptorId = `${descriptorPrefix}${encodeDescriptorRequest({
+        documentPath: documentPathFromImporter(root, importer),
+        sourcePath,
+      })}`;
+      const descriptorIds = descriptorIdsBySource.get(sourcePath) ?? new Set<string>();
+      descriptorIds.add(descriptorId);
+      descriptorIdsBySource.set(sourcePath, descriptorIds);
+      return descriptorId;
+    },
+    watchChange(id) {
+      invalidateCompilerState(id);
     },
   };
 }

@@ -18,9 +18,10 @@ export default function Demo({
 }: DemoProps) {
   const headingId = useId();
   const resolvedEditable = editable ?? of.editable;
-  const style: DemoFrameStyle | undefined = height
-    ? { '--demo-frame-height': typeof height === 'number' ? `${height}px` : height }
-    : undefined;
+  const style: DemoFrameStyle | undefined =
+    height === undefined
+      ? undefined
+      : { '--demo-frame-height': typeof height === 'number' ? `${height}px` : height };
 
   return (
     <section

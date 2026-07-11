@@ -59,3 +59,47 @@ it('reports unsupported local dependency graphs instead of silently changing edi
     }),
   ]);
 });
+
+it('follows local runtime re-exports and exposes their dependency paths', () => {
+  const analysis = analyzeDemo(resolve(fixtureRoot, 'reexport-entry.tsx'));
+
+  expect(analysis.diagnostics).toContainEqual(
+    expect.objectContaining({
+      code: 'dynamic-import',
+      sourcePath: expect.stringMatching(/reexport-helper\.ts$/),
+    }),
+  );
+  expect(analysis.dependencyPaths).toEqual(
+    expect.arrayContaining([
+      resolve(fixtureRoot, 'reexport-barrel.ts'),
+      resolve(fixtureRoot, 'reexport-helper.ts'),
+    ]),
+  );
+});
+
+it('reports an unresolved local runtime re-export at the barrel edge', () => {
+  const root = createFixture({
+    'barrel.ts': "export { missing } from './missing';\n",
+    'demo.tsx': "import { missing } from './barrel';\nexport default () => <div>{missing}</div>;\n",
+  });
+  const analysis = analyzeDemo(resolve(root, 'demo.tsx'));
+
+  expect(analysis.diagnostics).toContainEqual(
+    expect.objectContaining({
+      code: 'unsupported-local-dependency',
+      line: 1,
+      sourcePath: resolve(root, 'barrel.ts'),
+    }),
+  );
+});
+
+it('does not traverse type-only local re-exports', () => {
+  const root = createFixture({
+    'barrel.ts': "export type { Missing } from './missing';\n",
+    'demo.tsx': "import type { Missing } from './barrel';\nexport default () => null;\n",
+  });
+  const analysis = analyzeDemo(resolve(root, 'demo.tsx'));
+
+  expect(analysis.diagnostics).toEqual([]);
+  expect(analysis.dependencyPaths).toEqual([]);
+});

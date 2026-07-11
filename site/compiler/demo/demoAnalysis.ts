@@ -27,6 +27,7 @@ export interface DemoScopeImport {
 }
 
 export interface DemoAnalysis {
+  dependencyPaths: string[];
   diagnostics: DemoAnalysisDiagnostic[];
   imports: DemoScopeImport[];
   requiresReadOnly: boolean;
@@ -100,6 +101,22 @@ const isWorkerConstructor = (node: ts.Node): boolean => {
 const isServiceWorkerAccess = (node: ts.Node): boolean =>
   ts.isPropertyAccessExpression(node) && node.name.text === 'serviceWorker';
 
+const hasRuntimeImport = (declaration: ts.ImportDeclaration): boolean => {
+  const clause = declaration.importClause;
+  if (!clause) return true;
+  if (clause.isTypeOnly) return false;
+  if (clause.name || (clause.namedBindings && ts.isNamespaceImport(clause.namedBindings))) {
+    return true;
+  }
+  return Boolean(clause.namedBindings?.elements.some((element) => !element.isTypeOnly));
+};
+
+const hasRuntimeExport = (declaration: ts.ExportDeclaration): boolean => {
+  if (declaration.isTypeOnly) return false;
+  if (!declaration.exportClause || ts.isNamespaceExport(declaration.exportClause)) return true;
+  return declaration.exportClause.elements.some((element) => !element.isTypeOnly);
+};
+
 const createScopeImport = (
   declaration: ts.ImportDeclaration,
   source: string,
@@ -139,6 +156,7 @@ export function analyzeDemo(sourcePath: string): DemoAnalysis {
   const activePaths = new Set<string>();
   const visitedPaths = new Set<string>();
   const diagnosticKeys = new Set<string>();
+  const dependencyPaths = new Set<string>();
 
   const addDiagnostic = (
     code: DemoAnalysisDiagnosticCode,
@@ -202,11 +220,15 @@ export function analyzeDemo(sourcePath: string): DemoAnalysis {
     visitNode(sourceFile);
 
     for (const statement of sourceFile.statements) {
-      if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier)) {
-        continue;
-      }
+      const importDeclaration = ts.isImportDeclaration(statement) ? statement : undefined;
+      const exportDeclaration = ts.isExportDeclaration(statement) ? statement : undefined;
+      const moduleSpecifier =
+        importDeclaration?.moduleSpecifier ?? exportDeclaration?.moduleSpecifier;
+      if (!moduleSpecifier || !ts.isStringLiteral(moduleSpecifier)) continue;
+      if (importDeclaration && !hasRuntimeImport(importDeclaration)) continue;
+      if (exportDeclaration && !hasRuntimeExport(exportDeclaration)) continue;
 
-      const specifier = statement.moduleSpecifier.text;
+      const specifier = moduleSpecifier.text;
       const isLocal = specifier.startsWith('.');
       const requestsWorker = /(?:\?|&)\w*(?:shared)?worker(?:&|$)/i.test(specifier);
       if (requestsWorker) {
@@ -214,7 +236,7 @@ export function analyzeDemo(sourcePath: string): DemoAnalysis {
           'browser-worker',
           absolutePath,
           sourceFile,
-          statement.moduleSpecifier,
+          moduleSpecifier,
           `Worker import "${specifier}" cannot be represented by the editable dependency scope.`,
         );
       }
@@ -227,19 +249,20 @@ export function analyzeDemo(sourcePath: string): DemoAnalysis {
             'unsupported-local-dependency',
             absolutePath,
             sourceFile,
-            statement.moduleSpecifier,
+            moduleSpecifier,
             `Local dependency "${specifier}" does not resolve to a supported JavaScript or TypeScript module.`,
           );
           continue;
         }
 
         resolvedSource = localPath;
+        dependencyPaths.add(localPath);
         if (activePaths.has(localPath)) {
           addDiagnostic(
             'unsupported-local-dependency',
             absolutePath,
             sourceFile,
-            statement.moduleSpecifier,
+            moduleSpecifier,
             `Circular local dependency "${specifier}" is not supported by the editable dependency scope.`,
           );
         } else {
@@ -247,8 +270,8 @@ export function analyzeDemo(sourcePath: string): DemoAnalysis {
         }
       }
 
-      if (absolutePath === entryPath) {
-        const scopeImport = createScopeImport(statement, specifier, resolvedSource);
+      if (absolutePath === entryPath && importDeclaration) {
+        const scopeImport = createScopeImport(importDeclaration, specifier, resolvedSource);
         if (scopeImport) imports.push(scopeImport);
       }
     }
@@ -259,6 +282,7 @@ export function analyzeDemo(sourcePath: string): DemoAnalysis {
   visitModule(entryPath);
 
   return {
+    dependencyPaths: [...dependencyPaths],
     diagnostics,
     imports,
     requiresReadOnly: diagnostics.length > 0,
