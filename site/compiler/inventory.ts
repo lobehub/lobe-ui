@@ -18,7 +18,7 @@ interface ParsedCodeTag {
   attributes: Map<string, string | true>;
 }
 
-const publicDocumentationFiles = ['docs/index.md', 'docs/changelog.md'] as const;
+const publicDocumentationStems = ['docs/index', 'docs/changelog'] as const;
 const packageSectionLabels: Record<(typeof packageNamespaces)[number], string> = {
   'awesome': 'Awesome',
   'base-ui': 'Base UI',
@@ -47,19 +47,52 @@ const sortStrings = (left: string, right: string): number =>
 
 const isFile = (path: string): boolean => existsSync(path) && statSync(path).isFile();
 
+const readFrozenInventory = (root: string): DocumentationInventory | undefined => {
+  const path = resolve(root, 'site/content/compatibility.json');
+  if (!isFile(path)) return;
+
+  const inventory = JSON.parse(readFileSync(path, 'utf8')) as DocumentationInventory;
+  if (!Array.isArray(inventory.documents) || !Array.isArray(inventory.demoReferences)) {
+    throw new Error(`Invalid compatibility manifest: ${path}`);
+  }
+  return inventory;
+};
+
+const documentStem = (source: string): string => source.replace(/\.mdx?$/, '');
+
+const selectDocumentFormat = (root: string, stem: string): string => {
+  const candidates = [`${stem}.md`, `${stem}.mdx`];
+  const existing = candidates.filter((source) => isFile(resolve(root, source)));
+  if (existing.length === 1) return existing[0];
+
+  const state = existing.length === 0 ? 'neither' : 'both';
+  throw new Error(
+    `Expected exactly one public documentation source, found ${state}: ${candidates.join(' and ')}`,
+  );
+};
+
 const collectSourceDocuments = (directory: string): string[] => {
   if (!existsSync(directory) || !statSync(directory).isDirectory()) {
     throw new Error(`Missing documentation source directory: ${directory}`);
   }
 
   const documents: string[] = [];
+  const markdownPath = resolve(directory, 'index.md');
+  const mdxPath = resolve(directory, 'index.mdx');
+  const formats = [markdownPath, mdxPath].filter(isFile);
+
+  if (formats.length > 1) {
+    throw new Error(
+      `Expected exactly one public documentation source, found both: ${normalizePath(markdownPath)} and ${normalizePath(mdxPath)}`,
+    );
+  }
+  if (formats.length === 1) documents.push(formats[0]);
 
   for (const entry of readdirSync(directory, { withFileTypes: true }).sort((left, right) =>
     sortStrings(left.name, right.name),
   )) {
     const absolutePath = resolve(directory, entry.name);
     if (entry.isDirectory()) documents.push(...collectSourceDocuments(absolutePath));
-    if (entry.isFile() && entry.name === 'index.md') documents.push(absolutePath);
   }
 
   return documents;
@@ -174,12 +207,13 @@ const kebabRouteSegment = (value: string): string =>
 const deriveDocumentLocation = (
   source: string,
 ): Pick<DocumentRecord, 'legacyRouteId' | 'pathname'> => {
-  if (source === 'docs/index.md') return { legacyRouteId: 'docs/index', pathname: '/' };
-  if (source === 'docs/changelog.md') {
+  const stem = documentStem(source);
+  if (stem === 'docs/index') return { legacyRouteId: 'docs/index', pathname: '/' };
+  if (stem === 'docs/changelog') {
     return { legacyRouteId: 'docs/changelog', pathname: '/changelog' };
   }
 
-  const componentPath = source.slice('src/'.length, -'/index.md'.length);
+  const componentPath = stem.slice('src/'.length, -'/index'.length);
   const pathname = `/components/${componentPath.split('/').map(kebabRouteSegment).join('/')}`;
   return {
     legacyRouteId: `components/${componentPath}/index`,
@@ -188,9 +222,10 @@ const deriveDocumentLocation = (
 };
 
 const deriveDocumentSection = (source: string): string => {
-  if (source === 'docs/index.md') return 'Home';
-  if (source === 'docs/changelog.md') return 'Changelog';
-  if (source === 'src/i18n/index.md') return 'Hooks & Providers';
+  const stem = documentStem(source);
+  if (stem === 'docs/index') return 'Home';
+  if (stem === 'docs/changelog') return 'Changelog';
+  if (stem === 'src/i18n/index') return 'Hooks & Providers';
 
   const namespace = source.split('/')[1] as (typeof packageNamespaces)[number];
   return packageSectionLabels[namespace] ?? 'Components';
@@ -309,13 +344,52 @@ const createDemoReferences = (
   return references;
 };
 
+const findFrozenDocument = (
+  inventory: DocumentationInventory | undefined,
+  document: DocumentRecord,
+): DocumentRecord | undefined =>
+  inventory?.documents.find(
+    ({ legacyRouteId, pathname }) =>
+      legacyRouteId === document.legacyRouteId && pathname === document.pathname,
+  );
+
+const inheritFrozenDemoReferences = (
+  root: string,
+  inventory: DocumentationInventory | undefined,
+  document: DocumentRecord,
+): DemoReference[] => {
+  if (!inventory) return [];
+
+  return inventory.demoReferences
+    .filter(
+      ({ legacyRouteId, pathname }) =>
+        legacyRouteId === document.legacyRouteId && pathname === document.pathname,
+    )
+    .map((reference) => {
+      if (!isFile(resolve(root, reference.source))) {
+        throw new Error(
+          `Missing frozen demo source "${reference.source}" inherited by ${document.source}`,
+        );
+      }
+      return { ...reference, document: document.source };
+    });
+};
+
 export function buildDocumentationInventory(root: string): DocumentationInventory {
   const absoluteRoot = resolve(root);
+  const frozenInventory = readFrozenInventory(absoluteRoot);
+  const requiredStems = new Set<string>([
+    ...publicDocumentationStems,
+    ...(frozenInventory?.documents.map(({ source }) => documentStem(source)) ?? []),
+  ]);
+
+  for (const stem of requiredStems) selectDocumentFormat(absoluteRoot, stem);
+
   const sources = [
     ...collectSourceDocuments(resolve(absoluteRoot, 'src')).map((path) =>
       normalizePath(relative(absoluteRoot, path)),
     ),
-    ...publicDocumentationFiles,
+    ...publicDocumentationStems.map((stem) => selectDocumentFormat(absoluteRoot, stem)),
   ].sort(sortStrings);
 
   const documents: DocumentRecord[] = [];
@@ -336,7 +410,11 @@ export function buildDocumentationInventory(root: string): DocumentationInventor
       yamlNode && 'value' in yamlNode && typeof yamlNode.value === 'string'
         ? parseFrontmatter(yamlNode.value)
         : {};
-    const document = createDocumentRecord(source, frontmatter);
+    const parsedDocument = createDocumentRecord(source, frontmatter);
+    const frozenDocument = source.endsWith('.mdx')
+      ? findFrozenDocument(frozenInventory, parsedDocument)
+      : undefined;
+    const document = frozenDocument ? { ...frozenDocument, source } : parsedDocument;
 
     const previousDocument = pathnames.get(document.pathname);
     if (previousDocument) {
@@ -347,7 +425,11 @@ export function buildDocumentationInventory(root: string): DocumentationInventor
     pathnames.set(document.pathname, source);
     documents.push(document);
 
-    for (const reference of createDemoReferences(absoluteRoot, document, frontmatter, tree)) {
+    const references = source.endsWith('.mdx')
+      ? inheritFrozenDemoReferences(absoluteRoot, frozenInventory, document)
+      : createDemoReferences(absoluteRoot, document, frontmatter, tree);
+
+    for (const reference of references) {
       const previousReference = legacyIds.get(reference.legacyId);
       if (previousReference) {
         throw new Error(

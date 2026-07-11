@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 
 import { buildDocumentationInventory, deriveAtomIdFromPaths } from './inventory';
+import type { DocumentationInventory } from './types';
 
 const temporaryRoots: string[] = [];
 
@@ -55,6 +56,92 @@ describe('documentation inventory', () => {
 
     expect(aliases.length).toBeGreaterThan(1);
     expect(new Set(aliases.map(({ legacyId }) => legacyId)).size).toBe(aliases.length);
+  });
+
+  it('inherits frozen demo aliases when a public document migrates to MDX', () => {
+    const frozenInventory = {
+      demoReferences: [
+        {
+          document: 'src/Fixture/index.md',
+          legacyId: 'src-fixture-demo-primary',
+          legacyRouteId: 'components/Fixture/index',
+          options: {
+            inline: false,
+            isolated: true,
+            layout: 'center',
+          },
+          pathname: '/components/fixture',
+          source: 'src/Fixture/demos/index.tsx',
+        },
+      ],
+      documents: [
+        {
+          category: 'General',
+          legacyRouteId: 'components/Fixture/index',
+          pathname: '/components/fixture',
+          section: 'Components',
+          source: 'src/Fixture/index.md',
+          title: 'Fixture',
+        },
+      ],
+    } satisfies DocumentationInventory;
+    const root = createFixture({
+      'site/content/compatibility.json': `${JSON.stringify(frozenInventory, null, 2)}\n`,
+      'src/Fixture/demos/index.tsx': '',
+      'src/Fixture/index.mdx': `---
+title: Fixture
+description: Migrated fixture.
+category: General
+---
+
+No legacy dumi code tag remains.
+`,
+    });
+
+    const inventory = buildDocumentationInventory(root);
+    const [alias] = inventory.demoReferences;
+
+    expect(alias).toEqual({
+      ...frozenInventory.demoReferences[0],
+      document: 'src/Fixture/index.mdx',
+    });
+    expect(inventory.documents).toContainEqual({
+      ...frozenInventory.documents[0],
+      source: 'src/Fixture/index.mdx',
+    });
+  });
+
+  it('fails when both Markdown document formats exist for one public source', () => {
+    const root = createFixture({
+      'src/Fixture/index.md': '---\ntitle: Fixture\n---\n',
+      'src/Fixture/index.mdx': '---\ntitle: Fixture\n---\n',
+    });
+
+    expect(() => buildDocumentationInventory(root)).toThrow(
+      /exactly one.*src\/Fixture\/index\.md.*src\/Fixture\/index\.mdx/i,
+    );
+  });
+
+  it('fails when a frozen public document has neither Markdown format', () => {
+    const frozenInventory = {
+      demoReferences: [],
+      documents: [
+        {
+          legacyRouteId: 'components/Missing/index',
+          pathname: '/components/missing',
+          section: 'Components',
+          source: 'src/Missing/index.md',
+        },
+      ],
+    } satisfies DocumentationInventory;
+    const root = createFixture({
+      'site/content/compatibility.json': `${JSON.stringify(frozenInventory, null, 2)}\n`,
+      'src/.keep': '',
+    });
+
+    expect(() => buildDocumentationInventory(root)).toThrow(
+      /exactly one.*src\/Missing\/index\.md.*src\/Missing\/index\.mdx/i,
+    );
   });
 
   it('associates each demo with its owning document pathname', () => {

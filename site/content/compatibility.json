@@ -1,7 +1,7 @@
 {
   "demoReferences": [
     {
-      "document": "docs/index.md",
+      "document": "docs/index.mdx",
       "legacyId": "docs-demo-docs",
       "legacyRouteId": "docs/index",
       "options": {
@@ -4411,7 +4411,7 @@
       "legacyRouteId": "docs/changelog",
       "pathname": "/changelog",
       "section": "Changelog",
-      "source": "docs/changelog.md",
+      "source": "docs/changelog.mdx",
       "title": "Changelog"
     },
     {
@@ -4419,7 +4419,7 @@
       "legacyRouteId": "docs/index",
       "pathname": "/",
       "section": "Home",
-      "source": "docs/index.md"
+      "source": "docs/index.mdx"
     },
     {
       "category": "Data Display",
