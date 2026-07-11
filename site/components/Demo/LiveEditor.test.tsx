@@ -1,10 +1,12 @@
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import type { ComponentType } from 'react';
 
 import type { DemoModule } from '../../types/demo';
 import LiveEditor from './LiveEditor';
 
 const liveMocks = vi.hoisted(() => ({
+  activeFailureTrigger: undefined as (() => void) | undefined,
+  activeShouldThrow: false,
   deferredErrors: [] as (() => void)[],
   deferredResults: [] as (() => void)[],
 }));
@@ -45,6 +47,20 @@ vi.mock('react-live', async () => {
           ? 'Edited result: Replacement'
           : 'Edited result: Original';
       const Candidate = () => {
+        const [, forceRender] = React.useState(0);
+        React.useEffect(() => {
+          if (!code.includes('ACTIVE_LATE_FAILURE')) return;
+          liveMocks.activeFailureTrigger = () => {
+            liveMocks.activeShouldThrow = true;
+            forceRender((value) => value + 1);
+          };
+          return () => {
+            liveMocks.activeFailureTrigger = undefined;
+          };
+        }, []);
+        if (code.includes('ACTIVE_LATE_FAILURE') && liveMocks.activeShouldThrow) {
+          throw new Error('Active candidate failed');
+        }
         if (code.includes('RENDER_FAILURE')) throw new Error('Candidate render failed');
         return React.createElement('div', null, label);
       };
@@ -90,15 +106,18 @@ const createDescriptor = (loadScope = vi.fn(async () => ({ useState: vi.fn() }))
 });
 
 const getEditor = (): HTMLTextAreaElement => {
-  const wrapper = screen.getByRole('textbox', { name: 'Demo source editor' });
-  const editor = wrapper.querySelector('textarea');
-  if (!editor) throw new Error('Expected the react-live editor fixture');
+  const editor = screen.getByRole('textbox', { name: 'Demo source editor' });
+  if (!(editor instanceof HTMLTextAreaElement)) {
+    throw new TypeError('Expected the react-live editor fixture');
+  }
   return editor;
 };
 
 afterEach(() => {
   cleanup();
   vi.clearAllMocks();
+  liveMocks.activeFailureTrigger = undefined;
+  liveMocks.activeShouldThrow = false;
   liveMocks.deferredErrors.length = 0;
   liveMocks.deferredResults.length = 0;
 });
@@ -119,15 +138,22 @@ afterAll(() => {
   vi.unstubAllGlobals();
 });
 
-it('loads scope on mount while keeping imports outside the editable surface', async () => {
+it('loads scope while containing each promoted preview and its portal host in one slot', async () => {
   const loadScope = vi.fn(async () => ({ useState: vi.fn() }));
-  render(<LiveEditor appearance="dark" demo={createDescriptor(loadScope)} resetSignal={0} />);
+  const { container } = render(
+    <LiveEditor appearance="dark" demo={createDescriptor(loadScope)} resetSignal={0} />,
+  );
 
   expect(await screen.findByText('Edited result: Original')).toBeTruthy();
   expect(loadScope).toHaveBeenCalledTimes(1);
   expect(screen.getByLabelText('Read-only imports').textContent).toContain("from 'react'");
   expect(getEditor().value).not.toContain("from 'react'");
-  expect(document.getElementById('lobe-demo-live-editor-live')).toBeTruthy();
+  const stage = container.querySelector('.demo-live-editor__stage');
+  const active = stage?.querySelector<HTMLElement>('[data-live-state="active"]');
+  expect(stage).toBeTruthy();
+  expect(active?.hasAttribute('hidden')).toBe(false);
+  expect(active?.querySelector('[id^="lobe-demo-live-editor-live-"]')).toBeTruthy();
+  expect(active?.querySelector('[data-lobe-portal-host]')).toBeTruthy();
 });
 
 it('retains the last successful element when a subsequent compile fails', async () => {
@@ -201,6 +227,40 @@ it('ignores obsolete evaluator result and error callbacks after a newer generati
   await waitFor(() => expect(screen.queryByText('Edited result: Obsolete')).toBeNull());
   expect(screen.queryByRole('alert')).toBeNull();
   expect(screen.getByText('Edited result: Second')).toBeTruthy();
+});
+
+it('reports a still-active generation failure and restores the previous successful preview', async () => {
+  const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+  const { container } = render(
+    <LiveEditor appearance="light" demo={createDescriptor()} resetSignal={0} />,
+  );
+  expect(await screen.findByText('Edited result: Original')).toBeTruthy();
+
+  fireEvent.change(getEditor(), {
+    target: {
+      value: 'export default function ACTIVE_LATE_FAILURE() { return <div>Second</div>; }',
+    },
+  });
+  await waitFor(() =>
+    expect(container.querySelector('[data-live-state="active"]')?.textContent).toContain('Second'),
+  );
+  expect(liveMocks.activeFailureTrigger).toBeTypeOf('function');
+
+  fireEvent.change(getEditor(), {
+    target: { value: 'export default function RUNTIME_FAILURE() {}' },
+  });
+  expect((await screen.findByRole('alert')).textContent).toContain('Runtime compilation failed');
+
+  act(() => liveMocks.activeFailureTrigger?.());
+
+  await waitFor(() =>
+    expect(screen.getByRole('alert').textContent).toContain('Active candidate failed'),
+  );
+  expect(container.querySelector('[data-live-state="active"]')?.textContent).toContain('Original');
+  expect(container.querySelector('[data-live-state="active"]')?.textContent).not.toContain(
+    'Second',
+  );
+  consoleError.mockRestore();
 });
 
 it('reports scope failure without leaving a perpetual loading status', async () => {

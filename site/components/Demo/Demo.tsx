@@ -1,6 +1,7 @@
 import './Demo.css';
 
 import {
+  Activity,
   type CSSProperties,
   lazy,
   type RefObject,
@@ -267,15 +268,17 @@ export default function Demo({
           inert={!expanded}
         >
           {resolvedEditable ? (
-            <Suspense
-              fallback={
-                <div className="demo-live-editor__status" role="status">
-                  Loading source editor…
-                </div>
-              }
-            >
-              <LazyLiveEditor appearance={appearance} demo={of} resetSignal={editorResetSignal} />
-            </Suspense>
+            <Activity mode={expanded ? 'visible' : 'hidden'}>
+              <Suspense
+                fallback={
+                  <div className="demo-live-editor__status" role="status">
+                    Loading source editor…
+                  </div>
+                }
+              >
+                <LazyLiveEditor appearance={appearance} demo={of} resetSignal={editorResetSignal} />
+              </Suspense>
+            </Activity>
           ) : (
             <ReadOnlySource source={of.source} />
           )}

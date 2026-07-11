@@ -67,3 +67,36 @@ it('applies the pre-hydration standalone appearance marker before page attribute
     ),
   ).toBe('#0d0d0f');
 });
+
+it('keeps pending live candidates measurable while making their entire subtree non-interactive', () => {
+  container.innerHTML = `
+    <div class="demo-live-editor__stage">
+      <div class="demo-live-editor__candidate" data-live-state="candidate" aria-hidden="true" inert>
+        <div data-lobe-portal-host><div role="dialog">Pending overlay</div></div>
+      </div>
+    </div>`;
+  const stage = container.querySelector<HTMLElement>('.demo-live-editor__stage')!;
+  const candidate = container.querySelector<HTMLElement>('[data-live-state="candidate"]')!;
+  const rules = [...style.sheet!.cssRules].filter(
+    (rule): rule is CSSStyleRule => 'selectorText' in rule,
+  );
+  const stageRule = rules.find(
+    (rule) =>
+      rule.selectorText.includes('.demo-live-editor__stage') &&
+      rule.selectorText.split(',').some((selector) => stage.matches(selector.trim())),
+  );
+  const pendingRule = rules.find(
+    (rule) =>
+      rule.selectorText.includes("[data-live-state='candidate']") &&
+      rule.style.getPropertyValue('visibility') === 'hidden' &&
+      rule.selectorText.split(',').some((selector) => candidate.matches(selector.trim())),
+  );
+
+  expect(candidate.hasAttribute('hidden')).toBe(false);
+  expect(candidate.getAttribute('aria-hidden')).toBe('true');
+  expect(candidate.hasAttribute('inert')).toBe(true);
+  expect(stageRule?.style.getPropertyValue('display')).toBe('grid');
+  expect(pendingRule?.style.getPropertyValue('opacity')).toBe('0');
+  expect(pendingRule?.style.getPropertyValue('pointer-events')).toBe('none');
+  expect(pendingRule?.style.getPropertyValue('display')).not.toBe('none');
+});

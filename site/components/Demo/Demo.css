@@ -232,6 +232,23 @@
   background: var(--docs-background);
 }
 
+.demo-live-editor__stage {
+  display: grid;
+  min-height: inherit;
+}
+
+.demo-live-editor__candidate {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+
+.demo-live-editor__candidate[data-live-state='candidate'],
+.demo-live-editor__candidate[data-live-state='fallback'] {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
 .demo-frame:fullscreen {
   overflow: auto;
   margin: 0;

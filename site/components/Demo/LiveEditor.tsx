@@ -1,5 +1,13 @@
 import type { ComponentType } from 'react';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Activity,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Editor, renderElementAsync } from 'react-live';
 
 import {
@@ -39,10 +47,23 @@ interface PreviewCandidate extends RevisionTag {
   generation: number;
 }
 
+interface EvaluationInput extends RevisionTag {
+  resetSignal: number;
+  scope: Record<string, unknown>;
+  value: string;
+}
+
 interface CandidateSlotProps {
-  active: boolean;
+  appearance: DemoAppearance;
   candidate: PreviewCandidate;
+  demoId: string;
   onCommit: (candidate: PreviewCandidate) => void;
+  state: 'active' | 'candidate' | 'fallback';
+}
+
+interface SourceEditorProps {
+  code: string;
+  onChange: (value: string) => void;
 }
 
 const isCurrentRevision = (tag: RevisionTag, demo: DemoModule): boolean =>
@@ -53,22 +74,63 @@ const formatDiagnostic = ({ column, line, message }: LiveDiagnostic): string => 
   return `${location}${message}`;
 };
 
-function CandidateSlot({ active, candidate, onCommit }: CandidateSlotProps) {
+function SourceEditor({ code, onChange }: SourceEditorProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const annotateEditor = () => {
+      const editor = container.querySelector<HTMLElement>(
+        'textarea, [contenteditable], pre.prism-code',
+      );
+      if (!editor) return;
+      if (editor.matches('pre') && !editor.hasAttribute('contenteditable')) {
+        editor.setAttribute('contenteditable', 'plaintext-only');
+      }
+      editor.setAttribute('aria-label', 'Demo source editor');
+      editor.setAttribute('aria-multiline', 'true');
+      editor.setAttribute('role', 'textbox');
+      if (editor.tabIndex < 0) editor.tabIndex = 0;
+    };
+
+    annotateEditor();
+    if (typeof MutationObserver === 'undefined') return;
+    const observer = new MutationObserver(annotateEditor);
+    observer.observe(container, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={containerRef}>
+      <Editor code={code} language="tsx" onChange={onChange} />
+    </div>
+  );
+}
+
+function CandidateSlot({ appearance, candidate, demoId, onCommit, state }: CandidateSlotProps) {
   const Candidate = candidate.Component;
 
   useEffect(() => {
-    onCommit(candidate);
-  }, [candidate, onCommit]);
+    if (state === 'candidate') onCommit(candidate);
+  }, [candidate, onCommit, state]);
+
+  const content = (
+    <DemoEnvironment appearance={appearance} demoId={`${demoId}-${candidate.generation}`}>
+      <Candidate />
+    </DemoEnvironment>
+  );
 
   return (
     <div
-      aria-hidden={active ? undefined : true}
+      aria-hidden={state === 'active' ? undefined : true}
       className="demo-live-editor__candidate"
-      data-live-state={active ? 'active' : 'candidate'}
-      hidden={!active}
-      inert={!active}
+      data-live-generation={candidate.generation}
+      data-live-state={state}
+      inert={state !== 'active'}
     >
-      <Candidate />
+      {state === 'fallback' ? <Activity mode="hidden">{content}</Activity> : content}
     </div>
   );
 }
@@ -91,12 +153,20 @@ export default function LiveEditor({ appearance, demo, resetSignal }: LiveEditor
     values: [],
   });
   const [activeCandidate, setActiveCandidate] = useState<PreviewCandidate>();
+  const [fallbackCandidate, setFallbackCandidate] = useState<PreviewCandidate>();
   const [pendingCandidate, setPendingCandidate] = useState<PreviewCandidate>();
+  const activeCandidateRef = useRef<PreviewCandidate | undefined>(undefined);
   const currentRevisionRef = useRef<RevisionTag>({ demo, source: demo.source });
+  const fallbackCandidateRef = useRef<PreviewCandidate | undefined>(undefined);
   const failedGenerationsRef = useRef(new Set<number>());
   const generationRef = useRef(0);
+  const initializedRevisionRef = useRef<RevisionTag | undefined>(undefined);
+  const lastEvaluationInputRef = useRef<EvaluationInput | undefined>(undefined);
+  const pendingCandidateRef = useRef<PreviewCandidate | undefined>(undefined);
   const previousResetSignalRef = useRef(resetSignal);
+  const scopeStateRef = useRef(scopeState);
   currentRevisionRef.current = { demo, source: demo.source };
+  scopeStateRef.current = scopeState;
 
   const editableSource = isCurrentRevision(editorSession, demo)
     ? editorSession.value
@@ -111,19 +181,35 @@ export default function LiveEditor({ appearance, demo, resetSignal }: LiveEditor
   const diagnostics = isCurrentRevision(diagnosticState, demo) ? diagnosticState.values : [];
   const currentActiveCandidate =
     activeCandidate && isCurrentRevision(activeCandidate, demo) ? activeCandidate : undefined;
+  const currentFallbackCandidate =
+    fallbackCandidate && isCurrentRevision(fallbackCandidate, demo) ? fallbackCandidate : undefined;
   const currentPendingCandidate =
     pendingCandidate && isCurrentRevision(pendingCandidate, demo) ? pendingCandidate : undefined;
+  activeCandidateRef.current = currentActiveCandidate;
+  fallbackCandidateRef.current = currentFallbackCandidate;
+  pendingCandidateRef.current = currentPendingCandidate;
 
   useEffect(() => {
     let subscribed = true;
     const source = demo.source;
-    generationRef.current += 1;
-    failedGenerationsRef.current.clear();
-    setEditorSession({ demo, source, value: sourceParts.editableSource });
-    setScopeState({ demo, source, status: 'loading' });
-    setDiagnosticState({ demo, source, values: [] });
-    setActiveCandidate(undefined);
-    setPendingCandidate(undefined);
+    const initialized = initializedRevisionRef.current;
+    const sameRevision = initialized?.demo === demo && initialized.source === source;
+    if (!sameRevision) {
+      initializedRevisionRef.current = { demo, source };
+      generationRef.current += 1;
+      failedGenerationsRef.current.clear();
+      setEditorSession({ demo, source, value: sourceParts.editableSource });
+      setScopeState({ demo, source, status: 'loading' });
+      setDiagnosticState({ demo, source, values: [] });
+      setActiveCandidate(undefined);
+      setFallbackCandidate(undefined);
+      setPendingCandidate(undefined);
+    } else if (
+      isCurrentRevision(scopeStateRef.current, demo) &&
+      scopeStateRef.current.status !== 'loading'
+    ) {
+      return;
+    }
 
     demo.loadScope().then(
       (value) => {
@@ -166,6 +252,23 @@ export default function LiveEditor({ appearance, demo, resetSignal }: LiveEditor
   useEffect(() => {
     if (currentScopeState.status !== 'ready') return;
     const source = demo.source;
+    const previousEvaluation = lastEvaluationInputRef.current;
+    if (
+      previousEvaluation?.demo === demo &&
+      previousEvaluation.source === source &&
+      previousEvaluation.scope === currentScopeState.value &&
+      previousEvaluation.value === editableSource &&
+      previousEvaluation.resetSignal === resetSignal
+    ) {
+      return;
+    }
+    lastEvaluationInputRef.current = {
+      demo,
+      resetSignal,
+      scope: currentScopeState.value,
+      source,
+      value: editableSource,
+    };
     const generation = generationRef.current + 1;
     generationRef.current = generation;
     const immutablePrefix = sourceParts.immutableSource ? `${sourceParts.immutableSource}\n\n` : '';
@@ -179,18 +282,25 @@ export default function LiveEditor({ appearance, demo, resetSignal }: LiveEditor
       return;
     }
 
-    const isCurrentGeneration = (): boolean => {
+    const matchesCurrentRevision = (): boolean => {
       const current = currentRevisionRef.current;
-      return (
-        current.demo === demo && current.source === source && generationRef.current === generation
-      );
+      return current.demo === demo && current.source === source;
     };
     const onError = (error: Error): void => {
-      if (!isCurrentGeneration()) return;
+      const isActive = activeCandidateRef.current?.generation === generation;
+      const isPending = pendingCandidateRef.current?.generation === generation;
+      const isNewest = generationRef.current === generation;
+      if (!matchesCurrentRevision() || (!isActive && !isPending && !isNewest)) return;
       failedGenerationsRef.current.add(generation);
-      setPendingCandidate((candidate) =>
-        candidate?.generation === generation ? undefined : candidate,
-      );
+      if (isActive) {
+        setActiveCandidate(fallbackCandidateRef.current);
+        setFallbackCandidate(undefined);
+      }
+      if (isPending || isNewest) {
+        setPendingCandidate((candidate) =>
+          candidate?.generation === generation ? undefined : candidate,
+        );
+      }
       setDiagnosticState({ demo, source, values: [{ message: error.message }] });
     };
 
@@ -198,7 +308,13 @@ export default function LiveEditor({ appearance, demo, resetSignal }: LiveEditor
       renderElementAsync(
         { code: transformed.code, enableTypeScript: true, scope: currentScopeState.value },
         (Component) => {
-          if (!isCurrentGeneration() || failedGenerationsRef.current.has(generation)) return;
+          if (
+            !matchesCurrentRevision() ||
+            generationRef.current !== generation ||
+            failedGenerationsRef.current.has(generation)
+          ) {
+            return;
+          }
           setPendingCandidate({ Component, demo, generation, source });
         },
         onError,
@@ -210,6 +326,7 @@ export default function LiveEditor({ appearance, demo, resetSignal }: LiveEditor
     currentScopeState,
     demo,
     editableSource,
+    resetSignal,
     sourceParts.immutableImports,
     sourceParts.immutableSource,
   ]);
@@ -225,6 +342,7 @@ export default function LiveEditor({ appearance, demo, resetSignal }: LiveEditor
       ) {
         return;
       }
+      setFallbackCandidate(activeCandidateRef.current);
       setActiveCandidate(candidate);
       setPendingCandidate((pending) =>
         pending?.generation === candidate.generation ? undefined : pending,
@@ -235,11 +353,16 @@ export default function LiveEditor({ appearance, demo, resetSignal }: LiveEditor
   );
 
   const candidates = [
+    currentFallbackCandidate,
     currentActiveCandidate,
     currentPendingCandidate?.generation === currentActiveCandidate?.generation
       ? undefined
       : currentPendingCandidate,
-  ].filter((candidate): candidate is PreviewCandidate => Boolean(candidate));
+  ].filter(
+    (candidate, index, values): candidate is PreviewCandidate =>
+      Boolean(candidate) &&
+      values.findIndex((value) => value?.generation === candidate?.generation) === index,
+  );
 
   return (
     <section className="demo-live-editor" data-pagefind-ignore="">
@@ -249,15 +372,9 @@ export default function LiveEditor({ appearance, demo, resetSignal }: LiveEditor
             <code>{sourceParts.immutableSource}</code>
           </pre>
         ) : null}
-        <div
-          aria-label="Demo source editor"
-          aria-multiline="true"
-          className="demo-live-editor__input"
-          role="textbox"
-        >
-          <Editor
+        <div className="demo-live-editor__input">
+          <SourceEditor
             code={editableSource}
-            language="tsx"
             onChange={(value) => setEditorSession({ demo, source: demo.source, value })}
           />
         </div>
@@ -282,16 +399,24 @@ export default function LiveEditor({ appearance, demo, resetSignal }: LiveEditor
         data-demo-appearance={appearance}
       >
         {candidates.length > 0 ? (
-          <DemoEnvironment appearance={appearance} demoId={`${demo.id}-live`}>
+          <div className="demo-live-editor__stage">
             {candidates.map((candidate) => (
               <CandidateSlot
-                active={candidate.generation === currentActiveCandidate?.generation}
+                appearance={appearance}
                 candidate={candidate}
+                demoId={`${demo.id}-live`}
                 key={candidate.generation}
+                state={
+                  candidate.generation === currentActiveCandidate?.generation
+                    ? 'active'
+                    : candidate.generation === currentPendingCandidate?.generation
+                      ? 'candidate'
+                      : 'fallback'
+                }
                 onCommit={promoteCandidate}
               />
             ))}
-          </DemoEnvironment>
+          </div>
         ) : null}
       </div>
     </section>
