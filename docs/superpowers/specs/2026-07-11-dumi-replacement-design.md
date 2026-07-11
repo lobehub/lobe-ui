@@ -60,7 +60,7 @@ The repository currently uses dumi for route discovery, navigation generation, M
 
 An initial repository scan found:
 
-- 369 dumi `<code src="...">` references;
+- 367 executable dumi `<code src="...">` references;
 - 375 tracked files under demo directory trees, including demo entries, helpers, data, and tests;
 - component documentation spread across the root component namespace and the `awesome`, `brand`, `chat`, `color`, `icons`, `mdx`, `mobile`, `storybook`, and `base-ui` namespaces;
 - a non-documentation build script importing the package namespace list from `.dumirc.ts`.
