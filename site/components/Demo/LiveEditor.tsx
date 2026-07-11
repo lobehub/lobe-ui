@@ -130,7 +130,7 @@ function CandidateSlot({ appearance, candidate, demoId, onCommit, state }: Candi
       data-live-state={state}
       inert={state !== 'active'}
     >
-      {state === 'fallback' ? <Activity mode="hidden">{content}</Activity> : content}
+      <Activity mode={state === 'fallback' ? 'hidden' : 'visible'}>{content}</Activity>
     </div>
   );
 }

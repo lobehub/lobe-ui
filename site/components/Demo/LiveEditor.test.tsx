@@ -47,12 +47,12 @@ vi.mock('react-live', async () => {
           ? 'Edited result: Replacement'
           : 'Edited result: Original';
       const Candidate = () => {
-        const [, forceRender] = React.useState(0);
+        const [count, setCount] = React.useState(0);
         React.useEffect(() => {
           if (!code.includes('ACTIVE_LATE_FAILURE')) return;
           liveMocks.activeFailureTrigger = () => {
             liveMocks.activeShouldThrow = true;
-            forceRender((value) => value + 1);
+            setCount((value) => value + 1);
           };
           return () => {
             liveMocks.activeFailureTrigger = undefined;
@@ -62,6 +62,13 @@ vi.mock('react-live', async () => {
           throw new Error('Active candidate failed');
         }
         if (code.includes('RENDER_FAILURE')) throw new Error('Candidate render failed');
+        if (code.includes('STATEFUL_ORIGINAL')) {
+          return React.createElement(
+            'button',
+            { onClick: () => setCount((value) => value + 1) },
+            `Original count ${count}`,
+          );
+        }
         return React.createElement('div', null, label);
       };
       class MockLiveBoundary extends React.Component<
@@ -259,6 +266,40 @@ it('reports a still-active generation failure and restores the previous successf
   expect(container.querySelector('[data-live-state="active"]')?.textContent).toContain('Original');
   expect(container.querySelector('[data-live-state="active"]')?.textContent).not.toContain(
     'Second',
+  );
+  consoleError.mockRestore();
+});
+
+it('restores the previous preview without resetting its local state', async () => {
+  const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+  const statefulDescriptor: DemoModule = {
+    ...createDescriptor(),
+    source: 'export default function STATEFUL_ORIGINAL() { return <button>Original</button>; }',
+  };
+  const { container } = render(
+    <LiveEditor appearance="light" demo={statefulDescriptor} resetSignal={0} />,
+  );
+  const original = await screen.findByRole('button', { name: 'Original count 0' });
+
+  fireEvent.click(original);
+  expect(screen.getByRole('button', { name: 'Original count 1' })).toBeTruthy();
+
+  fireEvent.change(getEditor(), {
+    target: {
+      value: 'export default function ACTIVE_LATE_FAILURE() { return <div>Second</div>; }',
+    },
+  });
+  await waitFor(() =>
+    expect(container.querySelector('[data-live-state="active"]')?.textContent).toContain('Second'),
+  );
+  expect(liveMocks.activeFailureTrigger).toBeTypeOf('function');
+
+  act(() => liveMocks.activeFailureTrigger?.());
+
+  await waitFor(() =>
+    expect(container.querySelector('[data-live-state="active"]')?.textContent).toContain(
+      'Original count 1',
+    ),
   );
   consoleError.mockRestore();
 });
