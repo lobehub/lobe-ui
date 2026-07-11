@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.20.2](https://github.com/lobehub/lobe-ui/compare/v5.20.1...v5.20.2) (2026-07-11)
+
+### 🐛 Bug Fixes
+
+- Resolve base UI migration regressions, closes [#560](https://github.com/lobehub/lobe-ui/issues/560) ([f761fe8](https://github.com/lobehub/lobe-ui/commit/f761fe8))
+
 ## [5.20.1](https://github.com/lobehub/lobe-ui/compare/v5.20.0...v5.20.1) (2026-07-11)
 
 ### 🎫 Chores
