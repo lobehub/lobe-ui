@@ -1,0 +1,29 @@
+{
+  "demoReferences": [
+    {
+      "document": "src/Broken/index.md",
+      "legacyId": "broken-missing",
+      "legacyRouteId": "components/Broken/index",
+      "pathname": "/components/broken",
+      "source": "src/Broken/demos/missing.tsx",
+      "options": { "inline": false, "isolated": false, "layout": "default" }
+    },
+    {
+      "document": "src/Broken/index.md",
+      "legacyId": "broken-no-source",
+      "legacyRouteId": "components/Broken/index",
+      "pathname": "/components/broken",
+      "source": "src/Broken/demos/also-missing.tsx",
+      "options": { "inline": false, "isolated": false, "layout": "center" }
+    }
+  ],
+  "documents": [
+    {
+      "source": "src/Broken/index.md",
+      "pathname": "/components/broken",
+      "legacyRouteId": "components/Broken/index",
+      "section": "Components",
+      "title": "Broken"
+    }
+  ]
+}

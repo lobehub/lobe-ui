@@ -1,0 +1,57 @@
+{
+  "acknowledgedStandaloneOnly": ["docs-home-only"],
+  "documents": {
+    "src/Omitted/index.md": {
+      "deliberateApiOmission": { "reason": "This fixture intentionally exposes no component API." },
+      "nav": "Components"
+    },
+    "src/Options/index.md": {
+      "atomId": "Options",
+      "apiHeader": {
+        "pkg": "@fixture/options",
+        "docUrl": "https://example.test/options",
+        "sourceUrl": "https://example.test/source"
+      },
+      "category": "General",
+      "categoryOrder": 2,
+      "description": "Exercises every legacy option.",
+      "hero": {
+        "title": "Options fixture",
+        "description": "Reviewed fixture hero."
+      },
+      "nav": "Components",
+      "subType": "Tool",
+      "api": {
+        "bodySha": "f0dad33fcbdfa28ce64be0d2eef0c00c02cb559a974fbad4322725745512d0d6",
+        "disposition": "replace-tables",
+        "targets": [{ "name": "Options", "from": "./options" }, { "name": "OptionsItem" }]
+      }
+    },
+    "src/Preserve/index.md": {
+      "nav": "Components",
+      "api": {
+        "bodySha": "329642623fe3a6dc9a4af7a9c4eb56ac160f7db206122fb41b7efc757f6e5d95",
+        "disposition": "preserve-all",
+        "reason": "The prose and compatibility table are intentionally retained."
+      }
+    },
+    "src/Replace/index.md": {
+      "nav": "Components",
+      "api": {
+        "bodySha": "577c7f22c92d4f62eedef5045d58eec3abe216c9421413b902d8b07b2b68d9ce",
+        "disposition": "replace-all",
+        "reason": "The reviewed generated contract supersedes this section.",
+        "targets": [{ "name": "Replace", "from": "./public" }]
+      }
+    }
+  },
+  "frozenInventory": {
+    "apiSourceOverrides": 1,
+    "componentApiDecisions": 5,
+    "demoReferences": 10,
+    "documents": 7,
+    "initiallyMissingDescriptions": 1,
+    "isolatedDemos": 2,
+    "legacyManualApiSections": 3
+  }
+}
