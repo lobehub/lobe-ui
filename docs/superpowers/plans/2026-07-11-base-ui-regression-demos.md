@@ -199,3 +199,45 @@ git add src/base-ui/Select/demos src/base-ui/Select/index.md src/base-ui/Switch/
 git commit -m "📚 docs: add base UI regression demos"
 git push
 ```
+
+---
+
+### Task 7: Select popup search list spacing
+
+**Files:**
+
+- Modify: `src/base-ui/Select/Select.tsx`
+- Modify: `src/base-ui/Select/parts.tsx`
+- Modify: `src/base-ui/Select/style.ts`
+- Test: `src/base-ui/Select/__tests__/Select.searchSpacing.test.tsx`
+
+**Interfaces:**
+
+- Consumes: `shouldShowSearch` from `useSelectSearch` and `SelectListSection`.
+- Produces: conditional `4px` block-start padding on lists that follow a popup search field.
+
+- [ ] **Step 1: Write the failing spacing test**
+
+Render an open searchable Select, locate its listbox, and assert that `getComputedStyle(listbox).paddingTop` is `4px`. Render a second open Select without `showSearch` and assert its listbox padding-top remains `0px`.
+
+- [ ] **Step 2: Verify RED**
+
+Run: `npm test -- --run src/base-ui/Select/__tests__/Select.searchSpacing.test.tsx`
+
+Expected: the searchable Select assertion fails with received padding `0px`.
+
+- [ ] **Step 3: Implement conditional list spacing**
+
+Add a `hasSearch` boolean to `SelectListSection`, compose a `listWithSearch` class when true, define `padding-block-start: 4px`, and pass `shouldShowSearch && !isTags` from `Select.tsx`.
+
+- [ ] **Step 4: Verify GREEN and regressions**
+
+Run: `npm test -- --run src/base-ui/Select/__tests__`
+
+Expected: all Select regression tests pass.
+
+- [ ] **Step 5: Run static and build verification**
+
+Run: `npm run type-check && npx eslint src/base-ui/Select/Select.tsx src/base-ui/Select/parts.tsx src/base-ui/Select/style.ts src/base-ui/Select/__tests__/Select.searchSpacing.test.tsx && npm run build`
+
+Expected: all commands exit 0; existing Select lint warnings may remain unchanged.
