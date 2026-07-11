@@ -14,6 +14,18 @@ apiHeader:
 
 <code src="./demos/index.tsx" nopadding></code>
 
+## Clear Value Contract
+
+<code src="./demos/clearValue.tsx" nopadding></code>
+
+## ReactNode Label Search
+
+<code src="./demos/reactNodeSearch.tsx" nopadding></code>
+
+## Tags with Closed Popup
+
+<code src="./demos/closedTags.tsx" nopadding></code>
+
 ## Atom Components
 
 <code src="./demos/atoms.tsx" nopadding></code>

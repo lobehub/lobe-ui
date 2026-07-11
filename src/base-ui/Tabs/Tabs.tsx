@@ -22,8 +22,9 @@ const Tabs: FC<TabsProps> = ({
   styles: customStyles,
   variant = 'rounded',
 }) => {
-  const [value, setValue] = useControlledState<string | null>(defaultActiveKey ?? null, {
-    defaultValue: defaultActiveKey,
+  const initialActiveKey = defaultActiveKey ?? items?.find((item) => !item.disabled)?.key ?? null;
+  const [value, setValue] = useControlledState<string | null>(initialActiveKey, {
+    defaultValue: initialActiveKey,
     onChange: (next) => {
       if (next != null) onChange?.(next);
     },

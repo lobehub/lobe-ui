@@ -82,6 +82,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     max-height: var(--lobe-select-available-height, var(--available-height));
     padding-block: 0;
   `,
+  listWithSearch: css`
+    padding-block-start: 4px;
+  `,
   outlined: cx(
     lobeStaticStylish.variantOutlined,
     css`
@@ -187,12 +190,39 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     color: ${cssVar.colorText};
 
     background: ${cssVar.colorFillTertiary};
+
+    &:hover [data-role='lobe-select-tag-remove'] {
+      opacity: 1;
+    }
+  `,
+  tagClose: css`
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-inline-start: 4px;
+
+    color: ${cssVar.colorTextSecondary};
+
+    opacity: 0;
+
+    transition: opacity 150ms ${cssVar.motionEaseOut};
   `,
   tags: css`
     display: flex;
     flex-wrap: wrap;
     gap: 4px;
     align-items: center;
+  `,
+  tagsValue: css`
+    flex: none;
+  `,
+  tagsSearch: css`
+    display: flex;
+    flex: 1;
+    min-width: 48px;
   `,
   trigger: css`
     cursor: pointer;

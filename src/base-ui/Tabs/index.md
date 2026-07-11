@@ -14,6 +14,10 @@ apiHeader:
 
 <code src="./demos/index.tsx" nopadding></code>
 
+## Implicit Initial Selection
+
+<code src="./demos/implicitDefault.tsx" nopadding></code>
+
 ## Atom Components
 
 <code src="./demos/atoms.tsx" nopadding></code>
