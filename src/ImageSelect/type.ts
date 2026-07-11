@@ -18,6 +18,9 @@ export interface ImageSelectProps extends FlexboxProps {
     img?: string;
   };
   defaultValue?: SelectProps['defaultValue'];
+  /**
+   * @default 86
+   */
   height?: number;
   onChange?: (value: this['value']) => void;
   options?: ImageSelectItem[];
@@ -28,5 +31,8 @@ export interface ImageSelectProps extends FlexboxProps {
   };
   unoptimized?: boolean;
   value?: SelectProps['value'];
+  /**
+   * @default 144
+   */
   width?: number;
 }

@@ -24,6 +24,10 @@ export interface EditableTextProps
     input?: string;
   };
   editing?: boolean;
+  /**
+   * @default 8
+   */
+  gap?: number;
   inputProps?: Omit<
     ControlInputProps,
     | 'onChange'
@@ -46,4 +50,8 @@ export interface EditableTextProps
     container?: CSSProperties;
     input?: CSSProperties;
   };
+  /**
+   * @default 'borderless'
+   */
+  variant?: ControlInputProps['variant'];
 }

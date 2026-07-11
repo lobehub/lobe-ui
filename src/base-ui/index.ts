@@ -12,6 +12,7 @@ export * from './DropdownMenu';
 export * from './FloatingPanel';
 export * from './FloatingSheet';
 export * from './Modal';
+export { default as Popover } from './Popover';
 export * from './Popover';
 export * from './ScrollArea';
 export { default as Segmented } from './Segmented';

@@ -10,6 +10,10 @@ export interface SortableListProps<T extends SortableListItem = SortableListItem
   FlexboxProps,
   'onChange'
 > {
+  /**
+   * @default 8
+   */
+  gap?: number;
   items: T[];
   onChange: (items: T[]) => void;
   ref?: Ref<HTMLUListElement>;
