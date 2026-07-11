@@ -1,0 +1,81 @@
+.docs-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  padding-block: 0.25rem 2rem;
+}
+
+.docs-sidebar__section h2 {
+  margin: 0 0 0.5rem 0.75rem;
+  color: var(--docs-text-subtle);
+  font-size: 0.6875rem;
+  font-weight: 650;
+  letter-spacing: 0.09em;
+  line-height: 1.25rem;
+  text-transform: uppercase;
+}
+
+.docs-sidebar__section ul {
+  display: grid;
+  gap: 0.125rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.docs-sidebar__section a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  color: var(--docs-text-secondary);
+  font-size: 0.875rem;
+  font-weight: 480;
+  line-height: 1.25rem;
+  text-decoration: none;
+  transition:
+    color 140ms ease,
+    background-color 140ms ease,
+    padding-inline 140ms ease;
+}
+
+.docs-sidebar__section a::before {
+  position: absolute;
+  inset-block: 0.625rem;
+  inset-inline-start: 0;
+  width: 2px;
+  border-radius: 1px;
+  background: var(--docs-accent);
+  content: '';
+  opacity: 0;
+  transform: scaleY(0.35);
+  transition:
+    opacity 140ms ease,
+    transform 140ms ease;
+}
+
+.docs-sidebar__section a:hover {
+  color: var(--docs-text-primary);
+  background: var(--docs-surface-hover);
+}
+
+.docs-sidebar__section a[aria-current='page'] {
+  padding-inline-start: 1rem;
+  color: var(--docs-text-primary);
+  background: var(--docs-surface-active);
+  font-weight: 590;
+}
+
+.docs-sidebar__section a[aria-current='page']::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .docs-sidebar__section a,
+  .docs-sidebar__section a::before {
+    transition-duration: 0.01ms;
+  }
+}

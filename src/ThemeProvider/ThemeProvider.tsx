@@ -24,6 +24,7 @@ import { type ThemeProviderProps } from './type';
 
 const ThemeProvider = memo<ThemeProviderProps>(
   ({
+    appId = LOBE_THEME_APP_ID,
     children,
     customStylish,
     customToken,
@@ -107,7 +108,7 @@ const ThemeProvider = memo<ThemeProviderProps>(
               className={className}
               style={{ isolation: 'isolate', minHeight: 'inherit', width: 'inherit', ...style }}
             >
-              <div id={LOBE_THEME_APP_ID} style={contentsStyle}>
+              <div id={appId} style={contentsStyle}>
                 <AppElementContext value={appRef}>
                   {children}
                   {/*

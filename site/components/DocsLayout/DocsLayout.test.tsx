@@ -29,7 +29,8 @@ const TestPage = () => {
         document={alphaDocument}
         navigation={[{ documents: [alphaDocument, betaDocument], title: 'General' }]}
       >
-        Content
+        <h2>Usage</h2>
+        <p>Content</p>
       </DocsLayout>
     </>
   );
@@ -55,4 +56,9 @@ it('navigates with the memory router while preserving link semantics', async () 
 
   expect(alphaLink.getAttribute('aria-current')).toBeNull();
   expect(betaLink.getAttribute('aria-current')).toBe('page');
+
+  expect(screen.getByRole('navigation', { name: 'Component documentation' })).toBeTruthy();
+  const tableOfContents = await screen.findByRole('navigation', { name: 'On this page' });
+  expect(tableOfContents.textContent).toContain('Usage');
+  expect(screen.getByRole('link', { name: 'Usage' }).getAttribute('href')).toBe('#usage');
 });
