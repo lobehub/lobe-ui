@@ -116,4 +116,57 @@ route: /guides/foo
       /src\/Guide\/index\.mdx[\s\S]*route "\/guides\/foo"[\s\S]*"\/components\/"/i,
     );
   });
+
+  it('aggregates source-qualified diagnostics for non-pathname route syntax', () => {
+    const root = createProjectFixture({
+      'src/DotSegment/index.mdx': `---
+title: Dot Segment
+description: Dot segment route.
+category: General
+route: /components/a/../b
+---
+`,
+      'src/Hash/index.mdx': `---
+title: Hash
+description: Hash route.
+category: General
+route: /components/foo#section
+---
+`,
+      'src/Query/index.mdx': `---
+title: Query
+description: Query route.
+category: General
+route: /components/foo?preview=1
+---
+`,
+    });
+
+    let diagnostic = '';
+    try {
+      createContentManifest(root);
+    } catch (error) {
+      diagnostic = error instanceof Error ? error.message : String(error);
+    }
+
+    expect(diagnostic).toMatch(/src\/DotSegment\/index\.mdx[\s\S]*dot segment/i);
+    expect(diagnostic).toMatch(/src\/Hash\/index\.mdx[\s\S]*hash fragment/i);
+    expect(diagnostic).toMatch(/src\/Query\/index\.mdx[\s\S]*query string/i);
+  });
+
+  it('preserves a valid encoded legacy segment while canonicalizing its trailing slash', () => {
+    const root = createProjectFixture({
+      'src/Encoded/index.mdx': `---
+title: Encoded
+description: Encoded legacy route.
+category: General
+route: /components/legacy%20button/
+---
+`,
+    });
+
+    const [document] = createContentManifest(root).documents;
+
+    expect(document.pathname).toBe('/components/legacy%20button');
+  });
 });

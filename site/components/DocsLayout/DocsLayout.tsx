@@ -1,6 +1,7 @@
 import './DocsLayout.css';
 
 import type { ReactNode } from 'react';
+import { NavLink } from 'react-router';
 
 import type { DocumentManifestEntry, NavigationSection } from '../../types/content';
 
@@ -22,12 +23,9 @@ export default function DocsLayout({ children, document, navigation }: DocsLayou
                 <ul>
                   {section.documents.map((item) => (
                     <li key={item.pathname}>
-                      <a
-                        aria-current={item.pathname === document.pathname ? 'page' : undefined}
-                        href={item.pathname}
-                      >
+                      <NavLink end to={item.pathname}>
                         {item.title}
-                      </a>
+                      </NavLink>
                     </li>
                   ))}
                 </ul>

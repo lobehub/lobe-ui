@@ -4,7 +4,7 @@ import { relative } from 'node:path';
 import { parse } from 'yaml';
 
 import { createNavigation } from '../../content/navigation';
-import { canonicalizePathname } from '../../content/pathname';
+import { canonicalizePathname, validateExplicitPathname } from '../../content/pathname';
 import type {
   ContentFrontmatter,
   ContentManifest,
@@ -87,6 +87,14 @@ export function createContentManifest(root: string): ContentManifest {
 
     if (documentDiagnostics.length > 0 || !validation.frontmatter) {
       diagnostics.push(`${document.absolutePath}: ${documentDiagnostics.join('; ')}`);
+      continue;
+    }
+
+    const pathnameDiagnostic = validation.frontmatter.route
+      ? validateExplicitPathname(validation.frontmatter.route)
+      : undefined;
+    if (pathnameDiagnostic) {
+      diagnostics.push(`${document.absolutePath}: ${pathnameDiagnostic}`);
       continue;
     }
 

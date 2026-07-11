@@ -51,7 +51,6 @@ export function validateFrontmatter(
   }
 
   const route = readOptionalString(value, 'route', diagnostics);
-  if (route && !route.startsWith('/')) diagnostics.push('field "route" must begin with "/"');
 
   const since = readOptionalString(value, 'since', diagnostics);
   const order = value.order;
