@@ -190,6 +190,25 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     color: ${cssVar.colorText};
 
     background: ${cssVar.colorFillTertiary};
+
+    &:hover [data-role='lobe-select-tag-remove'] {
+      opacity: 1;
+    }
+  `,
+  tagClose: css`
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-inline-start: 4px;
+
+    color: ${cssVar.colorTextSecondary};
+
+    opacity: 0;
+
+    transition: opacity 150ms ${cssVar.motionEaseOut};
   `,
   tags: css`
     display: flex;

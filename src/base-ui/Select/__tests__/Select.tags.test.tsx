@@ -48,6 +48,47 @@ describe('Select tags mode', () => {
     expect(screen.getByRole('combobox').textContent).not.toContain('second');
   });
 
+  test('keeps tag order when adding a duplicate and removes a tag from its close control', () => {
+    const ControlledTags = () => {
+      const [value, setValue] = useState<string[]>([]);
+
+      return (
+        <>
+          <ConfigProvider motion={motion}>
+            <Select
+              mode="tags"
+              open={false}
+              value={value}
+              onChange={(nextValue) => setValue(Array.isArray(nextValue) ? nextValue : [])}
+            />
+          </ConfigProvider>
+          <output data-testid="tags-value">{JSON.stringify(value)}</output>
+        </>
+      );
+    };
+
+    render(<ControlledTags />);
+
+    const input = screen.getByRole('textbox');
+    for (const tag of ['first', 'second', 'third', 'second']) {
+      fireEvent.change(input, { target: { value: tag } });
+      fireEvent.keyDown(input, { key: 'Enter' });
+    }
+
+    const trigger = screen.getByRole('combobox');
+    expect(screen.getByTestId('tags-value').textContent).toBe('["first","second","third"]');
+    expect(trigger.querySelectorAll('[data-role="lobe-select-tag"]')).toHaveLength(3);
+    expect(trigger.textContent).toContain('first');
+    expect(trigger.textContent).toContain('second');
+    expect(trigger.textContent).toContain('third');
+
+    fireEvent.click(trigger.querySelectorAll('[data-role="lobe-select-tag-remove"]')[1]);
+
+    expect(trigger.textContent).toContain('first');
+    expect(trigger.textContent).not.toContain('second');
+    expect(trigger.textContent).toContain('third');
+  });
+
   test('lets the inline input use the full width when there are no tags', () => {
     render(
       <ConfigProvider motion={motion}>

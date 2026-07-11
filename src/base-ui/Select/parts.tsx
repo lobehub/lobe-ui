@@ -58,16 +58,20 @@ export function resolveSuffixIcon(
 interface TriggerValueRendererParams {
   getOption: (value: any) => SelectOption<any>;
   isMultiple: boolean;
+  isTags: boolean;
   labelRender: SelectProps['labelRender'];
   normalizeValue: (value: any) => any;
+  onRemoveValue: (index: number) => void;
   placeholder: ReactNode;
 }
 
 export function createTriggerValueRenderer({
   getOption,
   isMultiple,
+  isTags,
   labelRender,
   normalizeValue,
+  onRemoveValue,
   placeholder,
 }: TriggerValueRendererParams) {
   return function renderValue(currentValue: any): ReactNode {
@@ -84,8 +88,32 @@ export function createTriggerValueRenderer({
             const option = getOption(val);
             const content = labelRender ? labelRender(option) : (option.label ?? String(val));
             return (
-              <span className={styles.tag} key={`${String(val)}-${index}`}>
+              <span
+                className={styles.tag}
+                data-role="lobe-select-tag"
+                key={`${String(val)}-${index}`}
+              >
                 {content}
+                {isTags && (
+                  <span
+                    aria-label={`Remove ${String(val)}`}
+                    className={styles.tagClose}
+                    data-role="lobe-select-tag-remove"
+                    role="button"
+                    tabIndex={0}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      onRemoveValue(index);
+                    }}
+                    onPointerDown={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                    }}
+                  >
+                    <X size={12} />
+                  </span>
+                )}
               </span>
             );
           })}

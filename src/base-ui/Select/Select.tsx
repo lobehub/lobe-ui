@@ -108,15 +108,15 @@ const Select = memo<SelectProps<any>>(
 
     const handleRootValueChange = useCallback(
       (nextValue: any) => {
-        const isClosedTagsReset =
-          isTags &&
-          !mergedOpen &&
-          Array.isArray(nextValue) &&
-          nextValue.length === 0 &&
-          valueArray.length > 0;
-        if (!isClosedTagsReset) handleValueChange(nextValue);
+        if (!(isTags && !mergedOpen)) handleValueChange(nextValue);
       },
-      [handleValueChange, isTags, mergedOpen, valueArray.length],
+      [handleValueChange, isTags, mergedOpen],
+    );
+
+    const handleRemoveTag = useCallback(
+      (index: number) =>
+        handleValueChange(valueArray.filter((_, itemIndex) => itemIndex !== index)),
+      [handleValueChange, valueArray],
     );
 
     const {
@@ -152,11 +152,13 @@ const Select = memo<SelectProps<any>>(
         createTriggerValueRenderer({
           getOption,
           isMultiple,
+          isTags,
           labelRender,
           normalizeValue,
+          onRemoveValue: handleRemoveTag,
           placeholder: isTags ? undefined : placeholder,
         }),
-      [getOption, isMultiple, isTags, labelRender, normalizeValue, placeholder],
+      [getOption, handleRemoveTag, isMultiple, isTags, labelRender, normalizeValue, placeholder],
     );
 
     const hasValue = isMultiple ? valueArray.length > 0 : !isValueEmpty(normalizedValue);
