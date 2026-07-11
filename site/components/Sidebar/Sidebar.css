@@ -15,6 +15,19 @@
   text-transform: uppercase;
 }
 
+.docs-sidebar__category + .docs-sidebar__category {
+  margin-block-start: 0.875rem;
+}
+
+.docs-sidebar__category h3 {
+  margin: 0 0 0.25rem 0.75rem;
+  color: var(--docs-text-subtle);
+  font-size: 0.75rem;
+  font-weight: 540;
+  letter-spacing: 0.01em;
+  line-height: 1.25rem;
+}
+
 .docs-sidebar__section ul {
   display: grid;
   gap: 0.125rem;

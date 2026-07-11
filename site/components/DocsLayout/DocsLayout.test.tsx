@@ -31,7 +31,12 @@ const TestPage = () => {
       <output data-testid="location">{location.pathname}</output>
       <DocsLayout
         document={alphaDocument}
-        navigation={[{ documents: [alphaDocument, betaDocument], title: 'General' }]}
+        navigation={[
+          {
+            categories: [{ documents: [alphaDocument, betaDocument], title: 'General' }],
+            title: 'Components',
+          },
+        ]}
       >
         <h2 id="usage">Usage</h2>
         <p>Content</p>

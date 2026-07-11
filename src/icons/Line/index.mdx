@@ -1,0 +1,40 @@
+---
+title: Line
+description: Provides the Line monochrome icon and avatar variant, together with title and primary-color metadata.
+category: Channel Icons
+---
+
+## Icons
+
+```tsx
+import { Line } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <Line size={64} />;
+```
+
+## Color
+
+```tsx
+import { Line } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <Line.Color size={64} />;
+```
+
+## Avatars
+
+```tsx
+import { Line } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => (
+  <Flexbox gap={16} horizontal>
+    <Line.Avatar size={64} />
+    <Line.Avatar size={64} shape={'square'} />
+  </Flexbox>
+);
+```

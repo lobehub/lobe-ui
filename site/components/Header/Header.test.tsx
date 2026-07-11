@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { afterEach, expect, it, vi } from 'vitest';
 
@@ -69,8 +69,13 @@ it('opens and closes the named mobile navigation sheet and restores trigger focu
   render(
     <MemoryRouter initialEntries={['/components/alpha']}>
       <Header
-        navigation={[{ documents: [alphaDocument], title: 'General' }]}
         preference="light"
+        navigation={[
+          {
+            categories: [{ documents: [alphaDocument], title: 'General' }],
+            title: 'Components',
+          },
+        ]}
         onPreferenceChange={vi.fn()}
         onSearchOpen={vi.fn()}
       />
@@ -115,5 +120,43 @@ it('closes the mobile sheet synchronously when reduced motion is requested', () 
   fireEvent.keyDown(document, { key: 'Escape' });
 
   expect(screen.queryByRole('dialog')).toBeNull();
+  expect(document.activeElement).toBe(trigger);
+});
+
+it('preserves the active nested link and closes the mobile sheet after navigation', () => {
+  vi.stubGlobal(
+    'matchMedia',
+    vi.fn((query: string) => ({
+      addEventListener: vi.fn(),
+      matches: query === '(prefers-reduced-motion: reduce)',
+      media: query,
+      removeEventListener: vi.fn(),
+    })),
+  );
+  render(
+    <MemoryRouter initialEntries={[alphaDocument.pathname]}>
+      <Header
+        preference="system"
+        navigation={[
+          {
+            categories: [{ documents: [alphaDocument], title: 'General' }],
+            title: 'Components',
+          },
+        ]}
+        onPreferenceChange={vi.fn()}
+        onSearchOpen={vi.fn()}
+      />
+    </MemoryRouter>,
+  );
+
+  const trigger = screen.getByRole('button', { name: 'Open documentation navigation' });
+  fireEvent.click(trigger);
+  const dialog = screen.getByRole('dialog', { name: 'Documentation navigation' });
+  const activeLink = within(dialog).getByRole('link', { name: 'Alpha' });
+  expect(activeLink.getAttribute('aria-current')).toBe('page');
+
+  fireEvent.click(activeLink);
+
+  expect(screen.queryByRole('dialog', { name: 'Documentation navigation' })).toBeNull();
   expect(document.activeElement).toBe(trigger);
 });

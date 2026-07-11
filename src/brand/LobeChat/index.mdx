@@ -1,0 +1,29 @@
+---
+title: LobeChat
+description: A versatile brand component for displaying LobeChat logo in various styles including 3D, flat, monochrome, text, and combined formats.
+category: Combine
+---
+
+## Example
+
+```tsx
+import { LobeChat } from '@lobehub/ui/brand';
+
+import { Flexbox } from '@/Flex';
+
+export default () => (
+  <Flexbox gap={16} align={'flex-start'}>
+    <LobeChat size={64} />
+    <LobeChat size={64} type={'mono'} />
+    <LobeChat size={64} type={'flat'} />
+    <LobeChat size={64} type={'text'} />
+    <LobeChat size={64} type={'combine'} />
+    <LobeChat size={64} extra={'Discover'} />
+    <LobeChat size={64} type={'combine'} extra={'Discover'} />
+  </Flexbox>
+);
+```
+
+## APIs
+
+<Api name="LobeChat" from=".." migrationKey="unheaded:0" />

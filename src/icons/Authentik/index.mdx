@@ -1,0 +1,40 @@
+---
+title: Authentik
+description: Provides the Authentik monochrome icon and avatar variant, together with title and primary-color metadata.
+category: Auth Icons
+---
+
+## Icons
+
+```tsx
+import { Authentik } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <Authentik size={64} />;
+```
+
+## Color
+
+```tsx
+import { Authentik } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <Authentik.Color size={64} />;
+```
+
+## Avatars
+
+```tsx
+import { Authentik } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => (
+  <Flexbox gap={16} horizontal>
+    <Authentik.Avatar size={64} />
+    <Authentik.Avatar size={64} shape={'square'} />
+  </Flexbox>
+);
+```

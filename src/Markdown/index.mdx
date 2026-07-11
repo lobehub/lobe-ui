@@ -1,0 +1,340 @@
+---
+title: Markdown
+description: Markdown is a React component used to render markdown text. It supports various markdown syntax such as headings, lists, links, images, code blocks and more. It is commonly used in documentation, blogs, and other text-heavy applications.
+category: Data Display
+---
+
+import DemoHeadings from './demos/basic/headings.tsx?demo';
+import DemoParagraphs from './demos/basic/paragraphs.tsx?demo';
+import DemoStylingText from './demos/basic/stylingText.tsx?demo';
+import DemoBr from './demos/basic/br.tsx?demo';
+import DemoQuotes from './demos/basic/quotes.tsx?demo';
+import DemoLinks from './demos/basic/links.tsx?demo';
+import DemoTables from './demos/basic/tables.tsx?demo';
+import DemoImages from './demos/media/images.tsx?demo';
+import DemoVideos from './demos/media/videos.tsx?demo';
+import DemoBasicLists from './demos/basic/lists/basic-lists.tsx?demo';
+import DemoTaskLists from './demos/basic/lists/task-lists.tsx?demo';
+import DemoCode from './demos/code/code.tsx?demo';
+import DemoColors from './demos/code/colors.tsx?demo';
+import DemoCodeBlocks from './demos/code/codeBlocks.tsx?demo';
+import DemoTransformer from './demos/code/transformer.tsx?demo';
+import DemoCustomHighlight from './demos/code/customHighlight.tsx?demo';
+import DemoMath from './demos/advanced/math.tsx?demo';
+import DemoMermaid from './demos/advanced/mermaid.tsx?demo';
+import DemoHtmlPreview from './demos/advanced/htmlPreview.tsx?demo';
+import DemoHtmlPreviewArticle from './demos/advanced/htmlPreviewArticle.tsx?demo';
+import DemoHtmlPreviewStream from './demos/advanced/htmlPreviewStream.tsx?demo';
+import DemoHtmlPreviewReport from './demos/advanced/htmlPreviewReport.tsx?demo';
+import DemoFootnotes from './demos/footnotes/footnotes.tsx?demo';
+import DemoCustomFootnotes from './demos/footnotes/customFootnotes.tsx?demo';
+import DemoAlerts from './demos/advanced/alerts.tsx?demo';
+import DemoVariant from './demos/variant.tsx?demo';
+import DemoStreaming from './demos/streaming.tsx?demo';
+import DemoStreamingProfiler from './demos/streamingProfiler.tsx?demo';
+import DemoStreamingBench from './demos/streamingBench.tsx?demo';
+import DemoStreamingAnimationRepro from './demos/streamingAnimationRepro.tsx?demo';
+import DemoComponents from './demos/custom/components.tsx?demo';
+import DemoIndex from './demos/custom/citations/index.tsx?demo';
+import DemoIndex2 from './demos/custom/plugins/index.tsx?demo';
+
+## Basic
+
+Create sophisticated formatting for your prose and code with simple syntax.
+
+The Markdown component is a React component that renders markdown text with GitHub-flavored markdown support, syntax highlighting, mathematical expressions, and interactive features.
+
+### Headings
+
+To create a heading, add one to six `#` symbols before your heading text. The number of `#` you use will determine the hierarchy level and typeface size of the heading.
+
+<Demo of={DemoHeadings} isolated layout="bare" />
+
+### Paragraph
+
+To create multiple paragraphs, add multiple lines of text.
+
+<Demo of={DemoParagraphs} isolated layout="bare" />
+
+### Styling text
+
+You can indicate emphasis with bold, italic, strikethrough, subscript, or superscript text in comment fields and `.md` files.
+
+| Style                  | Syntax             | Example                                  | Output                                 |
+| ---------------------- | ------------------ | ---------------------------------------- | -------------------------------------- |
+| Bold                   | `** **` or `__ __` | `**This is bold text**`                  | **This is bold text**                  |
+| Italic                 | `* *` or `_ _`     | `_This text is italicized_`              | _This text is italicized_              |
+| Strikethrough          | `~~ ~~`            | `~~This was mistaken text~~`             | ~~This was mistaken text~~             |
+| Bold and nested italic | `** **` and `_ _`  | `**This text is _extremely_ important**` | **This text is _extremely_ important** |
+| All bold and italic    | `*** ***`          | `***All this text is important***`       | **_All this text is important_**       |
+| Underline              | `<ins> </ins>`     | `This is a <ins>underline</ins> text`    | This is a <ins>underline</ins> text    |
+| Subscript              | `<sub> </sub>`     | `This is a <sub>subscript</sub> text`    | This is a <sub>subscript</sub> text    |
+| Superscript            | `<sup> </sup>`     | `This is a <sup>superscript</sup> text`  | This is a <sup>superscript</sup> text  |
+| Keyboard               | `<kbd> </kbd>`     | `Press <kbd>mod+c</kbd>`                 | Press <kbd>mod+c</kbd>                 |
+
+<Demo of={DemoStylingText} isolated layout="bare" />
+
+### Break Lines
+
+Support `<br>` tags to create a line break.
+
+<Demo of={DemoBr} isolated layout="bare" />
+
+### Quoting text
+
+You can quote text with a `>`.
+
+Quoted text is rendered with a vertical line on the left and displayed using gray type.
+
+<Demo of={DemoQuotes} isolated layout="bare" />
+
+### Links
+
+You can create an inline link by wrapping link text in brackets `[ ]`, and then wrapping the URL in parentheses `( )`.
+
+The component automatically creates links when valid URLs are written in the markdown content.
+
+<Demo of={DemoLinks} isolated layout="bare" />
+
+### Tables
+
+You can create tables by assembling a list of words and dividing them with hyphens `-` (for the first row), and then separating each column with a pipe `|`.
+
+<Demo of={DemoTables} isolated layout="bare" />
+
+---
+
+## Media
+
+### Images
+
+You can display an image by adding `!` and wrapping the alt text in `[ ]`. Alt text is a short text equivalent of the information in the image. Then, wrap the link for the image in parentheses `()`.
+
+```markdown
+![Screenshot](https://myoctocat.com/assets/images/base-octocat.svg)
+```
+
+<Demo of={DemoImages} isolated layout="bare" />
+
+The component supports embedding images from various sources. You can display images from URLs, relative paths, or data URIs.
+
+### Videos
+
+```markdown
+<video src="https://github.com/lobehub/lobe-chat/assets/28616219/f29475a3-f346-4196-a435-41a6373ab9e2"/>
+```
+
+<Demo of={DemoVideos} isolated layout="bare" />
+
+---
+
+## Lists
+
+You can organize items into ordered and unordered lists.
+
+<Demo of={DemoBasicLists} isolated layout="bare" />
+
+### Task lists
+
+To create a task list, preface list items with a hyphen and space followed by `[ ]`. To mark a task as complete, use `[x]`.
+
+<Demo of={DemoTaskLists} isolated layout="bare" />
+
+For more information, see [About task lists](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/about-task-lists).
+
+---
+
+## Code
+
+### Inline code
+
+You can call out code or a command within a sentence with single backticks. The text within the backticks will not be formatted.
+
+```javascript
+function greetUser(name) {
+  console.log(`Hello, ${name}!`);
+}
+```
+
+<Demo of={DemoCode} isolated layout="bare" />
+
+### Color models
+
+You can call out colors within a sentence by using backticks. A supported color model within backticks will display a visualization of the color.
+
+| Color | Syntax       | Example              |
+| :---- | :----------- | :------------------- |
+| HEX   | `#RRGGBB`    | `#0969DA`            |
+| RGB   | `rgb(R,G,B)` | `rgb(9, 105, 218)`   |
+| HSL   | `hsl(H,S,L)` | `hsl(212, 92%, 45%)` |
+
+<Demo of={DemoColors} isolated layout="bare" />
+
+### Code blocks
+
+You can add an optional language identifier to enable syntax highlighting in your fenced code block.
+
+For more information, see [Creating and highlighting code blocks](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-and-highlighting-code-blocks).
+
+<Demo of={DemoCodeBlocks} isolated layout="bare" />
+
+#### Shiki Transformers
+
+For more information, see [Shiki Transformers](https://shiki.style/guide/transformers).
+
+<Demo of={DemoTransformer} isolated layout="bare" />
+
+### Custom Highlight
+
+<Demo of={DemoCustomHighlight} isolated layout="bare" />
+
+---
+
+## Math and Diagrams
+
+### LaTeX Math
+
+You can enable the display of mathematical expressions in Markdown by using `$` delimiters for inline expressions and `$$` delimiters for block expressions.
+
+For more information, see [KaTeX](https://katex.org).
+
+<Demo of={DemoMath} isolated layout="bare" />
+
+### Mermaid diagrams
+
+Mermaid is a Markdown-inspired syntax for generating diagrams.
+
+For more information, see [Mermaid](https://www.mermaidchart.com).
+
+<Demo of={DemoMermaid} isolated layout="bare" />
+
+### HTML preview
+
+Render LLM-generated HTML in an isolated sandbox iframe. Enable with `enableHtmlPreview`. See the [HtmlPreview](/components/html-preview) docs for the security model and streaming behavior.
+
+<Demo of={DemoHtmlPreview} isolated layout="bare" />
+
+#### Live streaming alongside prose
+
+The default `streamingMode: 'auto'` mounts the iframe as soon as the first
+chunk lands when the content has no `<script>` tag. Prose and HTML widgets
+paint together — no waiting for the closing tag.
+
+<Demo of={DemoHtmlPreviewArticle} isolated layout="bare" />
+
+#### Deferred mode for script-heavy content
+
+When a `<script>` tag is present, `streamingMode: 'auto'` falls back to
+deferred mode: the iframe waits for the closing `</html>` before mounting,
+so `setup()` runs exactly once.
+
+<Demo of={DemoHtmlPreviewStream} isolated layout="bare" />
+
+#### Complete document inside Markdown
+
+When the model produces a full HTML artifact — a dashboard, a report, a
+spec — wrap it in a fenced ` ```html ` block and Markdown renders it inline
+via `HtmlPreview`. Surrounding prose stays as regular Markdown.
+
+<Demo of={DemoHtmlPreviewReport} isolated layout="bare" />
+
+---
+
+## Footnotes
+
+You can add footnotes to your content by using this bracket syntax:
+
+```markdown
+Here is a simple footnote[^1].
+
+[^1]: My reference.
+```
+
+The position of a footnote in your Markdown does not influence where the footnote will be rendered. Footnotes will always render at the bottom of the content.
+
+<Demo of={DemoFootnotes} isolated layout="bare" />
+
+### Custom Footnotes
+
+<Demo of={DemoCustomFootnotes} isolated layout="bare" />
+
+---
+
+## Alerts
+
+Alerts are a Markdown extension based on the blockquote syntax that you can use to emphasize critical information. They are displayed with distinctive colors and icons to indicate the significance of the content.
+
+Use alerts only when they are crucial for user success and limit them to one or two per article to prevent overloading the reader. Additionally, you should avoid placing alerts consecutively. Alerts cannot be nested within other elements.
+
+To add an alert, use a special blockquote line specifying the alert type, followed by the alert information in a standard blockquote. Five types of alerts are available:
+
+```markdown
+> [!NOTE]
+> Useful information that users should know, even when skimming content.
+
+> [!TIP]
+> Helpful advice for doing things better or more easily.
+
+> [!IMPORTANT]
+> Key information users need to know to achieve their goal.
+
+> [!WARNING]
+> Urgent info that needs immediate user attention to avoid problems.
+
+> [!CAUTION]
+> Advises about risks or negative outcomes of certain actions.
+```
+
+<Demo of={DemoAlerts} isolated layout="bare" />
+
+## Variants
+
+Explore different component variants `default` and `chat`.
+
+<Demo of={DemoVariant} isolated layout="bare" />
+
+## Streamdown
+
+<Demo of={DemoStreaming} isolated layout="bare" />
+
+### Streamdown Profiler
+
+Use this demo to inspect stream-driven React commit frequency, block-level re-renders, and the JavaScript cost of smoothing and animation calculations before applying optimizations.
+
+<Demo of={DemoStreamingProfiler} isolated layout="bare" />
+
+### Streaming Benchmark
+
+Noise-free page for CPU measurements: a single `Markdown` and a plain HTML button — no control panel, no chunk log, no spinner, no auto-scroll. Configure via query params: `?size=5&delay=50&granularity=char|word&preset=balanced`.
+
+<Demo of={DemoStreamingBench} isolated layout="bare" />
+
+### Character Animation Loss Repro
+
+Controlled reproductions for the missing character-by-character fade. Three scenarios target:
+
+- `syncImmediate` fallback when a single append exceeds `largeAppendChars`.
+- Timeline seeding at `latestCharStart` for newly born blocks.
+- 20 TPS input that still skips the fade at every paragraph boundary.
+
+The `skipped` counter tallies `.stream-char` spans that were inserted into the DOM already classed as `.stream-char-revealed` — i.e. the fade was burned before the user could see it.
+
+<Demo of={DemoStreamingAnimationRepro} isolated layout="bare" />
+
+## Custom
+
+### Markdown Components
+
+<Demo of={DemoComponents} isolated layout="bare" />
+
+### Citations
+
+<Demo of={DemoIndex} isolated layout="bare" />
+
+### Custom Plugins
+
+<Demo of={DemoIndex2} isolated layout="bare" />
+
+## APIs
+
+<Api name="Markdown" migrationKey="unheaded:0" />

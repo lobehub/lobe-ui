@@ -1,0 +1,29 @@
+---
+title: ChatItem
+description: ChatItem is a versatile React component that displays chat messages with support for avatars, message content, and interactive actions. It offers various styling options including bubble and docs variants, left/right placement, and responsive layouts. Features include loading states, error handling, editability, and custom rendering options.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoTable from './demos/table.tsx?demo';
+import DemoCode from './demos/code.tsx?demo';
+import DemoEditing from './demos/Editing.tsx?demo';
+import DemoAlert from './demos/Alert.tsx?demo';
+import DemoAlertWithDefaultMessagePlacehoder from './demos/AlertWithDefaultMessagePlacehoder.tsx?demo';
+import DemoAlertWithContent from './demos/AlertWithContent.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" /> <Demo of={DemoTable} layout="bare" /> <Demo of={DemoCode} layout="bare" /> <Demo of={DemoEditing} />
+
+## Alert
+
+<Demo of={DemoAlert} layout="bare" /> <Demo of={DemoAlertWithDefaultMessagePlacehoder} layout="bare" />
+
+## AlertWithContent
+
+<Demo of={DemoAlertWithContent} layout="bare" />
+
+## APIs
+
+<Api name="ChatItem" from=".." migrationKey="unheaded:0" />

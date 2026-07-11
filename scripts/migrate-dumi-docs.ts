@@ -68,6 +68,7 @@ export interface DocumentMigrationConfig {
   description?: string;
   hero?: Record<string, unknown> | string;
   nav?: Record<string, unknown> | string;
+  reviewedApiHeaderOverride?: boolean;
   subType?: string;
 }
 
@@ -993,10 +994,11 @@ const apiDisposition = (
     }
   }
   if (disposition === 'replace-all' && !invalidReason && !invalidTargets) {
+    const trailingSpacing = section.bodyEnd === source.length ? '\n' : '\n\n';
     edits.push({
       end: section.bodyEnd,
       start: section.bodyStart,
-      text: `\n\n${apiMarkup(targets)}\n\n`,
+      text: `\n\n${apiMarkup(targets)}${trailingSpacing}`,
     });
   }
 
@@ -1151,6 +1153,13 @@ const validateMetadataPersistence = ({
   for (const key of migrationOnlyMetadataKeys) {
     if (extracted[key] === undefined || isDeepStrictEqual(extracted[key], configured[key]))
       continue;
+    if (
+      key === 'apiHeader' &&
+      config?.reviewedApiHeaderOverride === true &&
+      configured.apiHeader !== undefined
+    ) {
+      continue;
+    }
     unpersistedMetadata.push(
       diagnosticFor(
         document,
@@ -1738,4 +1747,10 @@ const runCli = async (): Promise<void> => {
 };
 
 const isMain = process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
-if (isMain) await runCli();
+if (isMain) {
+  void runCli().catch((error: unknown) => {
+    const message = error instanceof Error ? (error.stack ?? error.message) : String(error);
+    process.stderr.write(`${message}\n`);
+    process.exitCode = 1;
+  });
+}

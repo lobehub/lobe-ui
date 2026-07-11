@@ -1,0 +1,63 @@
+---
+title: CodeDiff
+description: The CodeDiff component is used to display code differences with syntax highlighting. It supports split and unified view modes, full-featured collapsible headers, patch rendering, custom actions, and visual variants for different display styles.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoUnified from './demos/Unified.tsx?demo';
+import DemoActionsRender from './demos/ActionsRender.tsx?demo';
+import DemoPatch from './demos/Patch.tsx?demo';
+import DemoPatchFullFeatured from './demos/PatchFullFeatured.tsx?demo';
+import DemoVariants from './demos/Variants.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Unified View
+
+<Demo of={DemoUnified} />
+
+## Actions Render
+
+Customize the header action area with `actionsRender`.
+
+<Demo of={DemoActionsRender} />
+
+## Patch Diff
+
+Render from a unified diff patch string.
+
+<Demo of={DemoPatch} />
+
+## Patch Full Featured
+
+<Demo of={DemoPatchFullFeatured} layout="bare" />
+
+## Variants
+
+<Demo of={DemoVariants} />
+
+## APIs
+
+### CodeDiff
+
+<Api name="CodeDiff" migrationKey="heading:%5B%22CodeDiff%22%5D:0" />
+
+### PatchDiff
+
+| Property      | Description                                                 | Type                                                               | Default    |
+| ------------- | ----------------------------------------------------------- | ------------------------------------------------------------------ | ---------- |
+| patch         | Unified diff patch string                                   | `string`                                                           | -          |
+| language      | Programming language for syntax highlighting                | `string`                                                           | -          |
+| fileName      | File name to display (extracted from patch if not provided) | `string`                                                           | -          |
+| viewMode      | View mode for diff display                                  | `'split' \| 'unified'`                                             | `'split'`  |
+| variant       | Visual style variant                                        | `'filled' \| 'outlined' \| 'borderless'`                           | `'filled'` |
+| showHeader    | Whether to show file header                                 | `boolean`                                                          | `true`     |
+| fullFeatured  | Whether to enable full-featured mode                        | `boolean`                                                          | `true`     |
+| defaultExpand | Default expansion state when fullFeatured                   | `boolean`                                                          | `true`     |
+| diffOptions   | Options for the underlying diff engine                      | `FileDiffOptions<string>`                                          | -          |
+| classNames    | Custom class names for different parts                      | `{ header?: string; body?: string }`                               | -          |
+| styles        | Custom inline styles for different parts                    | `{ header?: CSSProperties; body?: CSSProperties }`                 | -          |
+| actionsRender | Custom render function for header actions                   | `(props: { patch: string; originalNode: ReactNode }) => ReactNode` | -          |

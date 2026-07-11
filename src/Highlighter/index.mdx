@@ -1,0 +1,37 @@
+---
+title: Highlighter
+description: The Highlighter component is used to display syntax-highlighted code blocks with powerful features like code copying, language selection, custom themes, and transformers. It supports multiple display variants, expandable views, and customizable actions.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoFullFeatured from './demos/FullFeatured.tsx?demo';
+import DemoActionsRender from './demos/ActionsRender.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Full Featured
+
+<Demo of={DemoFullFeatured} layout="bare" />
+
+## Actions Render
+
+<Demo of={DemoActionsRender} />
+
+## APIs
+
+### Highlighter
+
+<Api name="Highlighter" migrationKey="heading:%5B%22Highlighter%22%5D:0" />
+
+### SyntaxHighlighter
+
+| Property          | Description                                  | Type                                     | Default |
+| ----------------- | -------------------------------------------- | ---------------------------------------- | ------- |
+| children          | Code content to highlight                    | `string`                                 | -       |
+| language          | Programming language for syntax highlighting | `string`                                 | -       |
+| theme             | Syntax highlighting theme                    | `'lobe-theme' \| BuiltinTheme`           | -       |
+| variant           | Visual style variant                         | `'filled' \| 'outlined' \| 'borderless'` | -       |
+| enableTransformer | Whether to enable content transformers       | `boolean`                                | -       |

@@ -1,0 +1,89 @@
+---
+title: Hotkey
+description: Hotkey component displays keyboard shortcuts or key combinations in a visually appealing way, supporting both standard and Mac keyboard styles with various visual options.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoMacStyle from './demos/MacStyle.tsx?demo';
+import DemoMouse from './demos/Mouse.tsx?demo';
+import DemoInverseTheme from './demos/InverseTheme.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Mac Style
+
+<Demo of={DemoMacStyle} layout="bare" />
+
+## Mouse
+
+<Demo of={DemoMouse} layout="center" />
+
+## InverseTheme
+
+<Demo of={DemoInverseTheme} layout="center" />
+
+## APIs
+
+### Hotkey
+
+<Api name="Hotkey" migrationKey="heading:%5B%22Hotkey%22%5D:0" />
+
+Additionally, Hotkey accepts all properties from the Flexbox component except for 'children'.
+
+### Key Format
+
+The `keys` prop should be a string with keys separated by `+`. For example:
+
+```tsx
+import { Hotkey } from '@lobehub/ui';
+
+export default () => {
+  return (
+    <>
+      <Hotkey keys="shift+a" />
+      <Hotkey keys="ctrl+alt+delete" />
+      <Hotkey keys="mod+k" />
+    </>
+  );
+};
+```
+
+> 'mod' will be Command on Mac and Ctrl on Windows
+
+### KeyMapEnum
+
+For convenience, common keys are available as constants via the exported `KeyMapEnum` object:
+
+```tsx
+import { Hotkey, KeyMapEnum } from '@lobehub/ui';
+
+export default () => {
+  return (
+    <>
+      <Hotkey keys={KeyMapEnum.LeftClick} />
+      <Hotkey keys={`${KeyMapEnum.Shift}+${KeyMapEnum.Alt}+r`} />
+    </>
+  );
+};
+```
+
+Some notable keys in KeyMapEnum:
+
+| Key                           | Description                            |
+| ----------------------------- | -------------------------------------- |
+| `Alt`                         | Alt key                                |
+| `Ctrl`                        | Control key                            |
+| `CommandOrControl`            | Command on Mac, Control on Windows     |
+| `Shift`                       | Shift key                              |
+| `Mod`                         | Command on Mac, Control on Windows     |
+| `Meta`                        | Command on Mac, Windows key on Windows |
+| `Enter`                       | Enter/Return key                       |
+| `Space`                       | Space bar                              |
+| `LeftClick`                   | Left mouse button click                |
+| `RightClick`                  | Right mouse button click               |
+| `MiddleClick`                 | Middle mouse button click              |
+| `LeftDoubleClick`             | Left mouse button double click         |
+| `Up`, `Down`, `Left`, `Right` | Arrow keys                             |

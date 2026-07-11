@@ -1,0 +1,40 @@
+---
+title: Clerk
+description: Provides the Clerk monochrome icon and avatar variant, together with title and primary-color metadata.
+category: Auth Icons
+---
+
+## Icons
+
+```tsx
+import { Clerk } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <Clerk size={64} />;
+```
+
+## Color
+
+```tsx
+import { Clerk } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <Clerk.Color size={64} />;
+```
+
+## Avatars
+
+```tsx
+import { Clerk } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => (
+  <Flexbox gap={16} horizontal>
+    <Clerk.Avatar size={64} />
+    <Clerk.Avatar size={64} shape={'square'} />
+  </Flexbox>
+);
+```

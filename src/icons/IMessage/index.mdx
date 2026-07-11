@@ -1,0 +1,40 @@
+---
+title: IMessage
+description: Provides the IMessage monochrome icon and avatar variant, together with title and primary-color metadata.
+category: Channel Icons
+---
+
+## Icons
+
+```tsx
+import { IMessage } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <IMessage size={64} />;
+```
+
+## Color
+
+```tsx
+import { IMessage } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <IMessage.Color size={64} />;
+```
+
+## Avatars
+
+```tsx
+import { IMessage } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => (
+  <Flexbox gap={16} horizontal>
+    <IMessage.Avatar size={64} />
+    <IMessage.Avatar size={64} shape={'square'} />
+  </Flexbox>
+);
+```

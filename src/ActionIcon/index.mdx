@@ -1,0 +1,60 @@
+---
+title: ActionIcon
+description: ActionIcon is a component for rendering icon buttons with background, supporting multiple style variants, sizes, and interaction states. It integrates with the Lucide icon library and provides tooltip capabilities.
+category: General
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoSize from './demos/Size.tsx?demo';
+import DemoCustomSize from './demos/CustomSize.tsx?demo';
+import DemoVariant from './demos/Variant.tsx?demo';
+import DemoDropdownMenu from './demos/DropdownMenu.tsx?demo';
+
+## Introduction
+
+ActionIcon is a powerful icon button component based on the Lucide icon library, offering rich styling and interaction options. It's particularly suitable for toolbars, action buttons, and similar UI elements.
+
+## Basic Usage
+
+Search icons in [`Lucide Icon`](https://lucide.dev/)
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Size
+
+### Preset Sizes
+
+ActionIcon provides multiple preset size options, including `small`, `normal`, `large`, and more.
+
+<Demo of={DemoSize} layout="center" />
+
+### Custom Size
+
+You can customize the icon size by passing a number or configuration object.
+
+<Demo of={DemoCustomSize} layout="bare" />
+
+## Variants
+
+ActionIcon supports multiple style variants, including default, filled, outlined, and dashed styles.
+
+<Demo of={DemoVariant} layout="center" />
+
+## With DropdownMenu
+
+Use ActionIcon as a dropdown trigger for compact action menus.
+
+<Demo of={DemoDropdownMenu} layout="center" />
+
+## APIs
+
+### ActionIcon
+
+<Api name="ActionIcon" migrationKey="heading:%5B%22ActionIcon%22%5D:0" />
+
+### ActionIconSizeConfig
+
+| Property     | Description                 | Type               |
+| ------------ | --------------------------- | ------------------ |
+| blockSize    | Set button width and height | `number \| string` |
+| borderRadius | Set button border radius    | `number \| string` |

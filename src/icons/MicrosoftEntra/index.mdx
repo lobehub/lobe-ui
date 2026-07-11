@@ -1,0 +1,40 @@
+---
+title: MicrosoftEntra
+description: Provides the MicrosoftEntra monochrome icon and avatar variant, together with title and primary-color metadata.
+category: Auth Icons
+---
+
+## Icons
+
+```tsx
+import { MicrosoftEntra } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <MicrosoftEntra size={64} />;
+```
+
+## Color
+
+```tsx
+import { MicrosoftEntra } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <MicrosoftEntra.Color size={64} />;
+```
+
+## Avatars
+
+```tsx
+import { MicrosoftEntra } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => (
+  <Flexbox gap={16} horizontal>
+    <MicrosoftEntra.Avatar size={64} />
+    <MicrosoftEntra.Avatar size={64} shape={'square'} />
+  </Flexbox>
+);
+```

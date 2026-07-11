@@ -1,0 +1,25 @@
+---
+title: EditableMessageList
+description: EditableMessageList is a React component that allows users to edit a list of chat messages, including their content and role. It is designed to be used in chatbot building applications.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} />
+
+## APIs
+
+<Api name="EditableMessageList" from=".." migrationKey="unheaded:0" />
+
+### Types
+
+```typescript
+interface LLMMessage {
+  content: string;
+  role: string;
+  // Additional properties for chat messages
+}
+```

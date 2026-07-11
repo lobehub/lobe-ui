@@ -1,0 +1,30 @@
+---
+title: Auth0
+description: Provides the Auth0 monochrome icon and avatar variant, together with title and primary-color metadata.
+category: Auth Icons
+---
+
+## Icons
+
+```tsx
+import { Auth0 } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <Auth0 size={64} />;
+```
+
+## Avatars
+
+```tsx
+import { Auth0 } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => (
+  <Flexbox gap={16} horizontal>
+    <Auth0.Avatar size={64} />
+    <Auth0.Avatar size={64} shape={'square'} />
+  </Flexbox>
+);
+```

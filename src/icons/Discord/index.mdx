@@ -1,0 +1,40 @@
+---
+title: Discord
+description: Provides the Discord monochrome icon and avatar variant, together with title and primary-color metadata.
+category: Channel Icons
+---
+
+## Icons
+
+```tsx
+import { Discord } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <Discord size={64} />;
+```
+
+## Color
+
+```tsx
+import { Discord } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <Discord.Color size={64} />;
+```
+
+## Avatars
+
+```tsx
+import { Discord } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => (
+  <Flexbox gap={16} horizontal>
+    <Discord.Avatar size={64} />
+    <Discord.Avatar size={64} shape={'square'} />
+  </Flexbox>
+);
+```

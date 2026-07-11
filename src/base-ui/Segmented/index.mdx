@@ -1,0 +1,34 @@
+---
+title: Segmented
+description: Base UI-powered Segmented control — toggle-group semantics with a sliding active indicator. Drops antd dependency in favor of @base-ui/react/toggle-group.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoAtoms from './demos/atoms.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Atom Components
+
+<Demo of={DemoAtoms} layout="bare" />
+
+## APIs
+
+### Segmented
+
+<Api name="Segmented" from=".." migrationKey="heading:%5B%22Segmented%22%5D:0" />
+
+### SegmentedOption
+
+| Property | Description                  | Type        | Default |
+| -------- | ---------------------------- | ----------- | ------- |
+| value    | Unique value                 | `string`    | -       |
+| label    | Option label                 | `ReactNode` | -       |
+| icon     | Leading icon                 | `ReactNode` | -       |
+| disabled | Whether the item is disabled | `boolean`   | `false` |
+| title    | Native title attribute       | `string`    | -       |
+
+`options` also accepts an array of plain strings as shorthand: `['Light', 'Dark']` is equivalent to `[{ value: 'Light', label: 'Light' }, ...]`.

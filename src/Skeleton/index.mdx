@@ -1,0 +1,119 @@
+---
+title: Skeleton
+description: Skeleton component provides a placeholder loading state for content that is being loaded. It displays animated placeholder blocks that mimic the structure of the actual content, improving user experience during data loading.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoWithAvatar from './demos/WithAvatar.tsx?demo';
+import DemoCustom from './demos/Custom.tsx?demo';
+import DemoAvatar from './demos/Avatar.tsx?demo';
+import DemoBlock from './demos/Block.tsx?demo';
+import DemoButton from './demos/Button.tsx?demo';
+import DemoTitle from './demos/Title.tsx?demo';
+import DemoParagraph from './demos/Paragraph.tsx?demo';
+import DemoTags from './demos/Tags.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## With Avatar
+
+<Demo of={DemoWithAvatar} />
+
+## Custom
+
+<Demo of={DemoCustom} />
+
+## Avatar
+
+<Demo of={DemoAvatar} />
+
+## Block
+
+<Demo of={DemoBlock} />
+
+## Button
+
+<Demo of={DemoButton} />
+
+## Title
+
+<Demo of={DemoTitle} />
+
+## Paragraph
+
+<Demo of={DemoParagraph} />
+
+## Tags
+
+<Demo of={DemoTags} />
+
+## APIs
+
+### Skeleton
+
+<Api name="Skeleton" migrationKey="heading:%5B%22Skeleton%22%5D:0" />
+
+### Skeleton.Avatar
+
+| Property | Description           | Type                   | Default    |
+| -------- | --------------------- | ---------------------- | ---------- |
+| active   | Show animation effect | `boolean`              | `true`     |
+| shape    | Shape of the avatar   | `'circle' \| 'square'` | `'circle'` |
+| size     | Size of the avatar    | `number \| string`     | `40`       |
+| width    | Width of the avatar   | `number \| string`     | -          |
+| height   | Height of the avatar  | `number \| string`     | -          |
+
+### Skeleton.Block
+
+| Property | Description           | Type               | Default  |
+| -------- | --------------------- | ------------------ | -------- |
+| active   | Show animation effect | `boolean`          | -        |
+| height   | Height of the block   | `number \| string` | `'1em'`  |
+| width    | Width of the block    | `number \| string` | `'100%'` |
+
+### Skeleton.Button
+
+| Property | Description           | Type                               | Default     |
+| -------- | --------------------- | ---------------------------------- | ----------- |
+| active   | Show animation effect | `boolean`                          | `true`      |
+| block    | Fill the parent width | `boolean`                          | `false`     |
+| height   | Height of the button  | `number \| string`                 | -           |
+| shape    | Shape of the button   | `'circle' \| 'round' \| 'default'` | `'default'` |
+| size     | Size of the button    | `'large' \| 'small' \| 'default'`  | `'default'` |
+| width    | Width of the button   | `number \| string`                 | -           |
+
+### Skeleton.Title
+
+| Property   | Description           | Type               | Default |
+| ---------- | --------------------- | ------------------ | ------- |
+| active     | Show animation effect | `boolean`          | `true`  |
+| fontSize   | Font size             | `number`           | -       |
+| height     | Height of the title   | `number \| string` | -       |
+| lineHeight | Line height           | `number`           | -       |
+| width      | Width of the title    | `number \| string` | `'60%'` |
+
+### Skeleton.Paragraph
+
+| Property   | Description           | Type                                       | Default |
+| ---------- | --------------------- | ------------------------------------------ | ------- |
+| active     | Show animation effect | `boolean`                                  | `true`  |
+| fontSize   | Font size             | `number`                                   | -       |
+| gap        | Gap between rows      | `number`                                   | -       |
+| height     | Height of each row    | `number \| string`                         | -       |
+| lineHeight | Line height           | `number`                                   | -       |
+| rows       | Number of rows        | `number`                                   | `3`     |
+| width      | Width of rows         | `number \| string \| (number \| string)[]` | -       |
+
+### Skeleton.Tags
+
+| Property | Description                    | Type                                       | Default                                       |
+| -------- | ------------------------------ | ------------------------------------------ | --------------------------------------------- |
+| active   | Show animation effect          | `boolean`                                  | `true`                                        |
+| count    | Number of placeholder tags     | `number`                                   | `3`                                           |
+| gap      | Spacing between tags           | `number`                                   | `theme.paddingXS`                             |
+| height   | Tag height (can override size) | `number \| string`                         | `size` map (small: 20, middle: 22, large: 28) |
+| size     | Tag size                       | `'small' \| 'middle' \| 'large'`           | `'middle'`                                    |
+| width    | Width(s) for each tag          | `number \| string \| (number \| string)[]` | `size` map (small: 56, middle: 68, large: 88) |

@@ -33,15 +33,20 @@ export default function Sidebar({ navigation, onNavigate }: SidebarProps) {
       {navigation.map((section) => (
         <section className="docs-sidebar__section" key={section.title}>
           <h2>{section.title}</h2>
-          <ul>
-            {section.documents.map((item) => (
-              <li key={item.pathname}>
-                <NavLink end to={item.pathname} onClick={onNavigate}>
-                  {item.title}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
+          {section.categories.map((category) => (
+            <div className="docs-sidebar__category" key={category.title}>
+              <h3>{category.title}</h3>
+              <ul>
+                {category.documents.map((item) => (
+                  <li key={item.pathname}>
+                    <NavLink end to={item.pathname} onClick={onNavigate}>
+                      {item.title}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </section>
       ))}
     </nav>

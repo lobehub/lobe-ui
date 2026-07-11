@@ -1,0 +1,40 @@
+---
+title: Slack
+description: Provides the Slack monochrome icon and avatar variant, together with title and primary-color metadata.
+category: Channel Icons
+---
+
+## Icons
+
+```tsx
+import { Slack } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <Slack size={64} />;
+```
+
+## Color
+
+```tsx
+import { Slack } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <Slack.Color size={64} />;
+```
+
+## Avatars
+
+```tsx
+import { Slack } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => (
+  <Flexbox gap={16} horizontal>
+    <Slack.Avatar size={64} />
+    <Slack.Avatar size={64} shape={'square'} />
+  </Flexbox>
+);
+```

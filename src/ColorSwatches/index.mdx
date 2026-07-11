@@ -1,0 +1,27 @@
+---
+title: ColorSwatches
+description: Displays selectable color swatches with an optional picker for custom colors.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+ColorSwatches is a component for displaying and selecting colors. It provides a set of predefined color swatches and optionally a color picker for custom colors.
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="ColorSwatches" migrationKey="unheaded:0" />
+
+### ColorSwatchesItemType
+
+| Property | Description                      | Type        | Default |
+| -------- | -------------------------------- | ----------- | ------- |
+| color    | The color value (hex, rgb, etc.) | `string`    | -       |
+| key      | Unique identifier                | `Key`       | -       |
+| title    | Tooltip text for the color       | `ReactNode` | -       |
+
+> ColorSwatches also inherits properties from Flexbox component except for 'onChange'

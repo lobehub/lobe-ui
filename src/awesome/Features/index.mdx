@@ -1,0 +1,33 @@
+---
+title: Features
+description: Features is a component for displaying a grid of feature items with icons, descriptions, and optional images.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+### Features
+
+<Api name="Features" from=".." migrationKey="heading:%5B%22Features%22%5D:0" />
+
+### FeatureItemType
+
+| Property     | Description                             | Type                             | Default |
+| ------------ | --------------------------------------- | -------------------------------- | ------- |
+| title        | Title of the feature                    | `string`                         | -       |
+| description  | Description of the feature              | `string`                         | -       |
+| icon         | Icon for the feature                    | `IconProps['icon']`              | -       |
+| image        | URL of the image                        | `string`                         | -       |
+| imageType    | Type of image styling                   | `'light' \| 'primary' \| 'soon'` | -       |
+| imageStyle   | Custom style for the image              | `CSSProperties`                  | -       |
+| link         | URL to navigate to when clicked         | `string`                         | -       |
+| openExternal | Whether to open link in new tab         | `boolean`                        | -       |
+| hero         | Whether this is a hero feature (larger) | `boolean`                        | -       |
+| column       | Custom column span                      | `number`                         | -       |
+| row          | Custom row span                         | `number`                         | -       |

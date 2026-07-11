@@ -1,0 +1,29 @@
+---
+title: HotkeyInput
+description: HotkeyInput is a specialized input component for capturing keyboard shortcuts. It allows users to record key combinations by pressing keys, with visual feedback and validation.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+### HotkeyInput
+
+<Api name="HotkeyInput" migrationKey="heading:%5B%22HotkeyInput%22%5D:0" />
+
+### Features
+
+1. **Hotkey Recording**: Press keys to record keyboard shortcuts
+2. **Validation**: Ensures shortcuts contain valid key combinations
+3. **Conflict Detection**: Warns when shortcuts conflict with existing ones
+4. **Reset Support**: Allows resetting to default shortcut
+5. **Platform Detection**: Automatically adjusts key display based on Mac/Windows
+
+### Key Format
+
+The input and output values use the same format as the Hotkey component, with keys separated by `+` (e.g., `"ctrl+shift+a"`). The component supports both standard keyboard keys and modifier keys.

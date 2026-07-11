@@ -1,12 +1,20 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router';
 
+import type { NavigationSection } from '../../types/content';
 import DocsRouteLayout, { ErrorBoundary } from './docs-layout';
 
 const layoutMocks = vi.hoisted(() => ({ searchModuleLoads: 0, setPreference: vi.fn() }));
 
 vi.mock('../content/registry', () => ({
-  contentManifest: { navigation: [{ id: 'components', label: 'Components' }] },
+  contentManifest: {
+    navigation: [
+      {
+        categories: [{ documents: [], title: 'General' }],
+        title: 'Components',
+      },
+    ] satisfies NavigationSection[],
+  },
 }));
 
 vi.mock('../providers/SiteProviders', () => ({
@@ -20,13 +28,13 @@ vi.mock('../../components/Header/Header', () => ({
     onSearchOpen,
     preference,
   }: {
-    navigation: { label: string }[];
+    navigation: NavigationSection[];
     onPreferenceChange: (value: string) => void;
     onSearchOpen: (trigger: HTMLButtonElement) => void;
     preference: string;
   }) => (
     <header data-preference={preference}>
-      {navigation[0]?.label}
+      {navigation[0]?.title}
       <button onClick={() => onPreferenceChange('dark')}>Dark</button>
       <button onClick={(event) => onSearchOpen(event.currentTarget)}>Search</button>
     </header>

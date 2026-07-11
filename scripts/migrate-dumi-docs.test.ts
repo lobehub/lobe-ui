@@ -128,6 +128,7 @@ describe('deterministic dumi demo migration', () => {
     expect(preserved).toContain('This entire legacy API body stays unchanged.');
     expect(preservedBefore.split('## APIs')[1]).toBe(preserved.split('## APIs')[1]);
     expect(replaced).toContain('<Api name="Replace" from="./public" />');
+    expect(replaced.endsWith('<Api name="Replace" from="./public" />\n')).toBe(true);
     expect(replaced).not.toContain('Reviewed content to replace.');
     expect(readFileSync(resolve(root, 'src/Button/index.mdx'), 'utf8')).toBe(buttonBefore);
     expect(readFileSync(resolve(root, 'docs/changelog.mdx'), 'utf8')).toContain(
@@ -264,6 +265,32 @@ describe('deterministic dumi demo migration', () => {
     );
     await expect(migrateDumiDocs({ check: false, root, write: true })).rejects.toBeInstanceOf(
       MigrationBlockedError,
+    );
+  });
+
+  it('accepts an explicit reviewed apiHeader link correction while still requiring persistence', async () => {
+    const root = copyFixture('complete');
+    const configPath = resolve(root, 'site/content/migration.json');
+    const config = JSON.parse(readFileSync(configPath, 'utf8'));
+    const options = config.documents['src/Options/index.md'];
+    options.apiHeader = {
+      ...options.apiHeader,
+      docUrl: 'https://example.test/options/index.mdx',
+      sourceUrl: 'https://example.test/options/source.tsx',
+    };
+    options.reviewedApiHeaderOverride = true;
+    writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
+
+    const report = await migrateDumiDocs({ check: true, root });
+    expect(report.unpersistedMetadata.map(({ message }) => message)).not.toEqual(
+      expect.arrayContaining([expect.stringContaining('apiHeader')]),
+    );
+
+    delete options.apiHeader;
+    writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
+    const missing = await migrateDumiDocs({ check: true, root });
+    expect(missing.unpersistedMetadata.map(({ message }) => message)).toEqual(
+      expect.arrayContaining([expect.stringContaining('apiHeader')]),
     );
   });
 

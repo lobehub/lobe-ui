@@ -1,0 +1,40 @@
+---
+title: DingTalk
+description: Provides the DingTalk monochrome icon and avatar variant, together with title and primary-color metadata.
+category: Channel Icons
+---
+
+## Icons
+
+```tsx
+import { DingTalk } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <DingTalk size={64} />;
+```
+
+## Color
+
+```tsx
+import { DingTalk } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <DingTalk.Color size={64} />;
+```
+
+## Avatars
+
+```tsx
+import { DingTalk } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => (
+  <Flexbox gap={16} horizontal>
+    <DingTalk.Avatar size={64} />
+    <DingTalk.Avatar size={64} shape={'square'} />
+  </Flexbox>
+);
+```

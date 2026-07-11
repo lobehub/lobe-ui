@@ -1,0 +1,40 @@
+---
+title: Authelia
+description: Provides the Authelia monochrome icon and avatar variant, together with title and primary-color metadata.
+category: Auth Icons
+---
+
+## Icons
+
+```tsx
+import { Authelia } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <Authelia size={64} />;
+```
+
+## Color
+
+```tsx
+import { Authelia } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <Authelia.Color size={64} />;
+```
+
+## Avatars
+
+```tsx
+import { Authelia } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => (
+  <Flexbox gap={16} horizontal>
+    <Authelia.Avatar size={64} />
+    <Authelia.Avatar size={64} shape={'square'} />
+  </Flexbox>
+);
+```

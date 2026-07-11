@@ -1,0 +1,19 @@
+---
+title: FloatingPanel
+description: Viewport-anchored floating panel built from Base UI modal atoms for contextual side conversations, task runs, inspectors, and other non-blocking auxiliary surfaces.
+category: Feedback
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Notes
+
+- `FloatingPanel` is resizable by default. The active resize handles follow the
+  placement anchor so the panel remains attached to its viewport corner.
+- Use `minWidth`, `maxWidth`, `minHeight`, and `maxHeight` to constrain resize
+  bounds.
+- Use `resizable={false}` for fixed auxiliary panels.

@@ -1,0 +1,34 @@
+---
+title: Empty
+description: Empty component displays an empty state with customizable icon, emoji, image, title, description, and action buttons. It's commonly used to indicate that there's no data or content to display.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoWithIcon from './demos/WithIcon.tsx?demo';
+import DemoWithEmoji from './demos/WithEmoji.tsx?demo';
+import DemoWithAction from './demos/WithAction.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## With Icon
+
+<Demo of={DemoWithIcon} layout="bare" />
+
+## With Emoji
+
+<Demo of={DemoWithEmoji} layout="bare" />
+
+## With Action Button
+
+<Demo of={DemoWithAction} layout="bare" />
+
+## APIs
+
+### Empty
+
+<Api name="Empty" migrationKey="heading:%5B%22Empty%22%5D:0" />
+
+> Empty component inherits all properties from [Flexbox](https://github.com/ant-design/react-layout-kit)

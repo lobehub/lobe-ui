@@ -1,0 +1,40 @@
+---
+title: NextAuth
+description: Provides the NextAuth monochrome icon and avatar variant, together with title and primary-color metadata.
+category: Auth Icons
+---
+
+## Icons
+
+```tsx
+import { NextAuth } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <NextAuth size={64} />;
+```
+
+## Color
+
+```tsx
+import { NextAuth } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <NextAuth.Color size={64} />;
+```
+
+## Avatars
+
+```tsx
+import { NextAuth } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => (
+  <Flexbox gap={16} horizontal>
+    <NextAuth.Avatar size={64} />
+    <NextAuth.Avatar size={64} shape={'square'} />
+  </Flexbox>
+);
+```

@@ -1,0 +1,30 @@
+---
+title: Github
+description: Re-exports the GitHub icon and avatar variants from @lobehub/icons.
+category: Auth Icons
+---
+
+## Icons
+
+```tsx
+import { Github } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <Github size={64} />;
+```
+
+## Avatars
+
+```tsx
+import { Github } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => (
+  <Flexbox gap={16} horizontal>
+    <Github.Avatar size={64} />
+    <Github.Avatar size={64} shape={'square'} />
+  </Flexbox>
+);
+```

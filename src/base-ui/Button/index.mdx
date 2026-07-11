@@ -1,0 +1,38 @@
+---
+title: Button
+description: Polished base-ui Button. API-compatible drop-in for antd Button core props.
+category: General
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoSizes from './demos/sizes.tsx?demo';
+import DemoIcons from './demos/icons.tsx?demo';
+import DemoSplit from './demos/split.tsx?demo';
+
+## Type, danger & ghost
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Sizes, shapes & block
+
+<Demo of={DemoSizes} layout="bare" />
+
+## Icons, loading & link
+
+<Demo of={DemoIcons} layout="bare" />
+
+## Split button
+
+Compose a primary action and a dropdown menu sharing the same visual props.
+
+<Demo of={DemoSplit} layout="bare" />
+
+## API
+
+<Api name="Button" from=".." migrationKey="unheaded:0" />
+
+The component forwards all standard `<button>` (or `<a>` when `href` is set) HTML attributes including `onClick`, `aria-*`, `data-*`, and `ref`.
+
+## Migrating from `antd`'s `Button`
+
+The props listed above match antd `Button`'s behaviour, so most call sites swap import only. Styling matches the rest of `base-ui` — tighter heights (`24 / 32 / 40` for `small / middle / large`) and a subtle hover micro-lift, no hover shadow.

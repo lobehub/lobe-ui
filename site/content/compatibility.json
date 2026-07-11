@@ -13,7 +13,7 @@
       "source": "docs/index.tsx"
     },
     {
-      "document": "src/Accordion/index.md",
+      "document": "src/Accordion/index.mdx",
       "legacyId": "src-accordion-demo-demos",
       "legacyRouteId": "components/Accordion/index",
       "options": {
@@ -25,7 +25,7 @@
       "source": "src/Accordion/demos/index.tsx"
     },
     {
-      "document": "src/Accordion/index.md",
+      "document": "src/Accordion/index.mdx",
       "legacyId": "src-accordion-demo-data",
       "legacyRouteId": "components/Accordion/index",
       "options": {
@@ -37,7 +37,7 @@
       "source": "src/Accordion/demos/data.tsx"
     },
     {
-      "document": "src/Accordion/index.md",
+      "document": "src/Accordion/index.mdx",
       "legacyId": "src-accordion-demo-standalone",
       "legacyRouteId": "components/Accordion/index",
       "options": {
@@ -49,7 +49,7 @@
       "source": "src/Accordion/demos/Standalone.tsx"
     },
     {
-      "document": "src/Accordion/index.md",
+      "document": "src/Accordion/index.mdx",
       "legacyId": "src-accordion-demo-action",
       "legacyRouteId": "components/Accordion/index",
       "options": {
@@ -61,7 +61,7 @@
       "source": "src/Accordion/demos/Action.tsx"
     },
     {
-      "document": "src/ActionIcon/index.md",
+      "document": "src/ActionIcon/index.mdx",
       "legacyId": "src-action-icon-demo-demos",
       "legacyRouteId": "components/ActionIcon/index",
       "options": {
@@ -73,7 +73,7 @@
       "source": "src/ActionIcon/demos/index.tsx"
     },
     {
-      "document": "src/ActionIcon/index.md",
+      "document": "src/ActionIcon/index.mdx",
       "legacyId": "src-action-icon-demo-size",
       "legacyRouteId": "components/ActionIcon/index",
       "options": {
@@ -85,7 +85,7 @@
       "source": "src/ActionIcon/demos/Size.tsx"
     },
     {
-      "document": "src/ActionIcon/index.md",
+      "document": "src/ActionIcon/index.mdx",
       "legacyId": "src-action-icon-demo-customsize",
       "legacyRouteId": "components/ActionIcon/index",
       "options": {
@@ -97,7 +97,7 @@
       "source": "src/ActionIcon/demos/CustomSize.tsx"
     },
     {
-      "document": "src/ActionIcon/index.md",
+      "document": "src/ActionIcon/index.mdx",
       "legacyId": "src-action-icon-demo-variant",
       "legacyRouteId": "components/ActionIcon/index",
       "options": {
@@ -109,7 +109,7 @@
       "source": "src/ActionIcon/demos/Variant.tsx"
     },
     {
-      "document": "src/ActionIcon/index.md",
+      "document": "src/ActionIcon/index.mdx",
       "legacyId": "src-action-icon-demo-dropdownmenu",
       "legacyRouteId": "components/ActionIcon/index",
       "options": {
@@ -121,7 +121,7 @@
       "source": "src/ActionIcon/demos/DropdownMenu.tsx"
     },
     {
-      "document": "src/ActionIconGroup/index.md",
+      "document": "src/ActionIconGroup/index.mdx",
       "legacyId": "src-action-icon-group-demo-demos",
       "legacyRouteId": "components/ActionIconGroup/index",
       "options": {
@@ -133,7 +133,7 @@
       "source": "src/ActionIconGroup/demos/index.tsx"
     },
     {
-      "document": "src/Alert/index.md",
+      "document": "src/Alert/index.mdx",
       "legacyId": "src-alert-demo-demos",
       "legacyRouteId": "components/Alert/index",
       "options": {
@@ -145,7 +145,7 @@
       "source": "src/Alert/demos/index.tsx"
     },
     {
-      "document": "src/Alert/index.md",
+      "document": "src/Alert/index.mdx",
       "legacyId": "src-alert-demo-extra",
       "legacyRouteId": "components/Alert/index",
       "options": {
@@ -157,7 +157,7 @@
       "source": "src/Alert/demos/Extra.tsx"
     },
     {
-      "document": "src/AutoComplete/index.md",
+      "document": "src/AutoComplete/index.mdx",
       "legacyId": "src-auto-complete-demo-demos",
       "legacyRouteId": "components/AutoComplete/index",
       "options": {
@@ -169,7 +169,7 @@
       "source": "src/AutoComplete/demos/index.tsx"
     },
     {
-      "document": "src/Avatar/index.md",
+      "document": "src/Avatar/index.mdx",
       "legacyId": "src-avatar-demo-demos",
       "legacyRouteId": "components/Avatar/index",
       "options": {
@@ -181,7 +181,7 @@
       "source": "src/Avatar/demos/index.tsx"
     },
     {
-      "document": "src/Avatar/index.md",
+      "document": "src/Avatar/index.mdx",
       "legacyId": "src-avatar-demo-text",
       "legacyRouteId": "components/Avatar/index",
       "options": {
@@ -193,7 +193,7 @@
       "source": "src/Avatar/demos/Text.tsx"
     },
     {
-      "document": "src/Avatar/index.md",
+      "document": "src/Avatar/index.mdx",
       "legacyId": "src-avatar-demo-bordered",
       "legacyRouteId": "components/Avatar/index",
       "options": {
@@ -205,7 +205,7 @@
       "source": "src/Avatar/demos/Bordered.tsx"
     },
     {
-      "document": "src/Avatar/index.md",
+      "document": "src/Avatar/index.mdx",
       "legacyId": "src-avatar-demo-group",
       "legacyRouteId": "components/Avatar/index",
       "options": {
@@ -217,7 +217,7 @@
       "source": "src/Avatar/demos/Group.tsx"
     },
     {
-      "document": "src/Avatar/index.md",
+      "document": "src/Avatar/index.mdx",
       "legacyId": "src-avatar-demo-errorfallback",
       "legacyRouteId": "components/Avatar/index",
       "options": {
@@ -229,7 +229,7 @@
       "source": "src/Avatar/demos/ErrorFallback.tsx"
     },
     {
-      "document": "src/Block/index.md",
+      "document": "src/Block/index.mdx",
       "legacyId": "src-block-demo-demos",
       "legacyRouteId": "components/Block/index",
       "options": {
@@ -241,7 +241,7 @@
       "source": "src/Block/demos/index.tsx"
     },
     {
-      "document": "src/Burger/index.md",
+      "document": "src/Burger/index.mdx",
       "legacyId": "src-burger-demo-demos",
       "legacyRouteId": "components/Burger/index",
       "options": {
@@ -277,7 +277,7 @@
       "source": "src/Button/demos/Variant.tsx"
     },
     {
-      "document": "src/Checkbox/index.md",
+      "document": "src/Checkbox/index.mdx",
       "legacyId": "src-checkbox-demo-demos",
       "legacyRouteId": "components/Checkbox/index",
       "options": {
@@ -289,7 +289,7 @@
       "source": "src/Checkbox/demos/index.tsx"
     },
     {
-      "document": "src/Checkbox/index.md",
+      "document": "src/Checkbox/index.mdx",
       "legacyId": "src-checkbox-demo-size",
       "legacyRouteId": "components/Checkbox/index",
       "options": {
@@ -301,7 +301,7 @@
       "source": "src/Checkbox/demos/Size.tsx"
     },
     {
-      "document": "src/Checkbox/index.md",
+      "document": "src/Checkbox/index.mdx",
       "legacyId": "src-checkbox-demo-withtext",
       "legacyRouteId": "components/Checkbox/index",
       "options": {
@@ -313,7 +313,7 @@
       "source": "src/Checkbox/demos/WithText.tsx"
     },
     {
-      "document": "src/Checkbox/index.md",
+      "document": "src/Checkbox/index.mdx",
       "legacyId": "src-checkbox-demo-indeterminate",
       "legacyRouteId": "components/Checkbox/index",
       "options": {
@@ -325,7 +325,7 @@
       "source": "src/Checkbox/demos/Indeterminate.tsx"
     },
     {
-      "document": "src/Checkbox/index.md",
+      "document": "src/Checkbox/index.mdx",
       "legacyId": "src-checkbox-demo-checkboxgroup",
       "legacyRouteId": "components/Checkbox/index",
       "options": {
@@ -337,7 +337,7 @@
       "source": "src/Checkbox/demos/CheckboxGroup.tsx"
     },
     {
-      "document": "src/Checkbox/index.md",
+      "document": "src/Checkbox/index.mdx",
       "legacyId": "src-checkbox-demo-checkboxgroupusage",
       "legacyRouteId": "components/Checkbox/index",
       "options": {
@@ -349,7 +349,7 @@
       "source": "src/Checkbox/demos/CheckboxGroupUsage.tsx"
     },
     {
-      "document": "src/Checkbox/index.md",
+      "document": "src/Checkbox/index.mdx",
       "legacyId": "src-checkbox-demo-checkboxgroupoptions",
       "legacyRouteId": "components/Checkbox/index",
       "options": {
@@ -361,7 +361,7 @@
       "source": "src/Checkbox/demos/CheckboxGroupOptions.tsx"
     },
     {
-      "document": "src/Checkbox/index.md",
+      "document": "src/Checkbox/index.mdx",
       "legacyId": "src-checkbox-demo-checkboxgroupdisabled",
       "legacyRouteId": "components/Checkbox/index",
       "options": {
@@ -373,7 +373,7 @@
       "source": "src/Checkbox/demos/CheckboxGroupDisabled.tsx"
     },
     {
-      "document": "src/CodeDiff/index.md",
+      "document": "src/CodeDiff/index.mdx",
       "legacyId": "src-code-diff-demo-demos",
       "legacyRouteId": "components/CodeDiff/index",
       "options": {
@@ -385,7 +385,7 @@
       "source": "src/CodeDiff/demos/index.tsx"
     },
     {
-      "document": "src/CodeDiff/index.md",
+      "document": "src/CodeDiff/index.mdx",
       "legacyId": "src-code-diff-demo-unified",
       "legacyRouteId": "components/CodeDiff/index",
       "options": {
@@ -397,7 +397,7 @@
       "source": "src/CodeDiff/demos/Unified.tsx"
     },
     {
-      "document": "src/CodeDiff/index.md",
+      "document": "src/CodeDiff/index.mdx",
       "legacyId": "src-code-diff-demo-actionsrender",
       "legacyRouteId": "components/CodeDiff/index",
       "options": {
@@ -409,7 +409,7 @@
       "source": "src/CodeDiff/demos/ActionsRender.tsx"
     },
     {
-      "document": "src/CodeDiff/index.md",
+      "document": "src/CodeDiff/index.mdx",
       "legacyId": "src-code-diff-demo-patch",
       "legacyRouteId": "components/CodeDiff/index",
       "options": {
@@ -421,7 +421,7 @@
       "source": "src/CodeDiff/demos/Patch.tsx"
     },
     {
-      "document": "src/CodeDiff/index.md",
+      "document": "src/CodeDiff/index.mdx",
       "legacyId": "src-code-diff-demo-patchfullfeatured",
       "legacyRouteId": "components/CodeDiff/index",
       "options": {
@@ -433,7 +433,7 @@
       "source": "src/CodeDiff/demos/PatchFullFeatured.tsx"
     },
     {
-      "document": "src/CodeDiff/index.md",
+      "document": "src/CodeDiff/index.mdx",
       "legacyId": "src-code-diff-demo-variants",
       "legacyRouteId": "components/CodeDiff/index",
       "options": {
@@ -445,7 +445,7 @@
       "source": "src/CodeDiff/demos/Variants.tsx"
     },
     {
-      "document": "src/CodeEditor/index.md",
+      "document": "src/CodeEditor/index.mdx",
       "legacyId": "src-code-editor-demo-demos",
       "legacyRouteId": "components/CodeEditor/index",
       "options": {
@@ -457,7 +457,7 @@
       "source": "src/CodeEditor/demos/index.tsx"
     },
     {
-      "document": "src/Collapse/index.md",
+      "document": "src/Collapse/index.mdx",
       "legacyId": "src-collapse-demo-demos",
       "legacyRouteId": "components/Collapse/index",
       "options": {
@@ -469,7 +469,7 @@
       "source": "src/Collapse/demos/index.tsx"
     },
     {
-      "document": "src/Collapse/index.md",
+      "document": "src/Collapse/index.mdx",
       "legacyId": "src-collapse-demo-padding",
       "legacyRouteId": "components/Collapse/index",
       "options": {
@@ -481,7 +481,7 @@
       "source": "src/Collapse/demos/Padding.tsx"
     },
     {
-      "document": "src/ColorSwatches/index.md",
+      "document": "src/ColorSwatches/index.mdx",
       "legacyId": "src-color-swatches-demo-demos",
       "legacyRouteId": "components/ColorSwatches/index",
       "options": {
@@ -493,7 +493,7 @@
       "source": "src/ColorSwatches/demos/index.tsx"
     },
     {
-      "document": "src/ConfigProvider/index.md",
+      "document": "src/ConfigProvider/index.mdx",
       "legacyId": "configprovider-demo-demos",
       "legacyRouteId": "components/ConfigProvider/index",
       "options": {
@@ -505,7 +505,7 @@
       "source": "src/ConfigProvider/demos/index.tsx"
     },
     {
-      "document": "src/ContextMenu/index.md",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-context-menu-demo-imperative",
       "legacyRouteId": "components/ContextMenu/index",
       "options": {
@@ -517,7 +517,7 @@
       "source": "src/ContextMenu/demos/imperative.tsx"
     },
     {
-      "document": "src/ContextMenu/index.md",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-context-menu-demo-trigger",
       "legacyRouteId": "components/ContextMenu/index",
       "options": {
@@ -529,7 +529,7 @@
       "source": "src/ContextMenu/demos/trigger.tsx"
     },
     {
-      "document": "src/ContextMenu/index.md",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-context-menu-demo-checkbox",
       "legacyRouteId": "components/ContextMenu/index",
       "options": {
@@ -541,7 +541,7 @@
       "source": "src/ContextMenu/demos/checkbox.tsx"
     },
     {
-      "document": "src/ContextMenu/index.md",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-context-menu-demo-switch",
       "legacyRouteId": "components/ContextMenu/index",
       "options": {
@@ -553,7 +553,7 @@
       "source": "src/ContextMenu/demos/switch.tsx"
     },
     {
-      "document": "src/ContextMenu/index.md",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-context-menu-demo-desc",
       "legacyRouteId": "components/ContextMenu/index",
       "options": {
@@ -565,7 +565,7 @@
       "source": "src/ContextMenu/demos/desc.tsx"
     },
     {
-      "document": "src/ContextMenu/index.md",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-context-menu-demo-header-footer",
       "legacyRouteId": "components/ContextMenu/index",
       "options": {
@@ -577,7 +577,7 @@
       "source": "src/ContextMenu/demos/header-footer.tsx"
     },
     {
-      "document": "src/ContextMenu/index.md",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-context-menu-demo-header-footer-scroll",
       "legacyRouteId": "components/ContextMenu/index",
       "options": {
@@ -589,7 +589,7 @@
       "source": "src/ContextMenu/demos/header-footer-scroll.tsx"
     },
     {
-      "document": "src/ContextMenu/index.md",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-context-menu-demo-emptysubmenu",
       "legacyRouteId": "components/ContextMenu/index",
       "options": {
@@ -601,7 +601,7 @@
       "source": "src/ContextMenu/demos/emptySubmenu.tsx"
     },
     {
-      "document": "src/ContextMenu/index.md",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-context-menu-demo-uploader",
       "legacyRouteId": "components/ContextMenu/index",
       "options": {
@@ -613,7 +613,7 @@
       "source": "src/ContextMenu/demos/uploader.tsx"
     },
     {
-      "document": "src/ContextMenu/index.md",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-context-menu-demo-iconspacemode",
       "legacyRouteId": "components/ContextMenu/index",
       "options": {
@@ -625,7 +625,7 @@
       "source": "src/ContextMenu/demos/iconSpaceMode.tsx"
     },
     {
-      "document": "src/CopyButton/index.md",
+      "document": "src/CopyButton/index.mdx",
       "legacyId": "src-copy-button-demo-demos",
       "legacyRouteId": "components/CopyButton/index",
       "options": {
@@ -637,7 +637,7 @@
       "source": "src/CopyButton/demos/index.tsx"
     },
     {
-      "document": "src/DatePicker/index.md",
+      "document": "src/DatePicker/index.mdx",
       "legacyId": "src-date-picker-demo-demos",
       "legacyRouteId": "components/DatePicker/index",
       "options": {
@@ -649,7 +649,7 @@
       "source": "src/DatePicker/demos/index.tsx"
     },
     {
-      "document": "src/DownloadButton/index.md",
+      "document": "src/DownloadButton/index.mdx",
       "legacyId": "src-download-button-demo-demos",
       "legacyRouteId": "components/DownloadButton/index",
       "options": {
@@ -661,7 +661,7 @@
       "source": "src/DownloadButton/demos/index.tsx"
     },
     {
-      "document": "src/DownloadButton/index.md",
+      "document": "src/DownloadButton/index.mdx",
       "legacyId": "src-download-button-demo-customfile",
       "legacyRouteId": "components/DownloadButton/index",
       "options": {
@@ -673,7 +673,7 @@
       "source": "src/DownloadButton/demos/customFile.tsx"
     },
     {
-      "document": "src/DraggablePanel/index.md",
+      "document": "src/DraggablePanel/index.mdx",
       "legacyId": "src-draggable-panel-demo-demos",
       "legacyRouteId": "components/DraggablePanel/index",
       "options": {
@@ -685,7 +685,7 @@
       "source": "src/DraggablePanel/demos/index.tsx"
     },
     {
-      "document": "src/DraggablePanel/index.md",
+      "document": "src/DraggablePanel/index.mdx",
       "legacyId": "src-draggable-panel-demo-layout",
       "legacyRouteId": "components/DraggablePanel/index",
       "options": {
@@ -697,7 +697,7 @@
       "source": "src/DraggablePanel/demos/Layout.tsx"
     },
     {
-      "document": "src/DraggablePanel/index.md",
+      "document": "src/DraggablePanel/index.mdx",
       "legacyId": "src-draggable-panel-demo-stablelayout",
       "legacyRouteId": "components/DraggablePanel/index",
       "options": {
@@ -709,7 +709,7 @@
       "source": "src/DraggablePanel/demos/StableLayout.tsx"
     },
     {
-      "document": "src/DraggablePanel/index.md",
+      "document": "src/DraggablePanel/index.mdx",
       "legacyId": "src-draggable-panel-demo-dragtocollapse",
       "legacyRouteId": "components/DraggablePanel/index",
       "options": {
@@ -721,7 +721,7 @@
       "source": "src/DraggablePanel/demos/DragToCollapse.tsx"
     },
     {
-      "document": "src/DraggableSideNav/index.md",
+      "document": "src/DraggableSideNav/index.mdx",
       "legacyId": "src-draggable-side-nav-demo-demos",
       "legacyRouteId": "components/DraggableSideNav/index",
       "options": {
@@ -733,7 +733,7 @@
       "source": "src/DraggableSideNav/demos/index.tsx"
     },
     {
-      "document": "src/Drawer/index.md",
+      "document": "src/Drawer/index.mdx",
       "legacyId": "src-drawer-demo-demos",
       "legacyRouteId": "components/Drawer/index",
       "options": {
@@ -745,7 +745,7 @@
       "source": "src/Drawer/demos/index.tsx"
     },
     {
-      "document": "src/Drawer/index.md",
+      "document": "src/Drawer/index.mdx",
       "legacyId": "src-drawer-demo-sidebar",
       "legacyRouteId": "components/Drawer/index",
       "options": {
@@ -757,7 +757,7 @@
       "source": "src/Drawer/demos/Sidebar.tsx"
     },
     {
-      "document": "src/Dropdown/index.md",
+      "document": "src/Dropdown/index.mdx",
       "legacyId": "src-dropdown-demo-demos",
       "legacyRouteId": "components/Dropdown/index",
       "options": {
@@ -769,7 +769,7 @@
       "source": "src/Dropdown/demos/index.tsx"
     },
     {
-      "document": "src/Dropdown/index.md",
+      "document": "src/Dropdown/index.mdx",
       "legacyId": "src-dropdown-demo-contextmenu",
       "legacyRouteId": "components/Dropdown/index",
       "options": {
@@ -781,7 +781,7 @@
       "source": "src/Dropdown/demos/ContextMenu.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-demos",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -793,7 +793,7 @@
       "source": "src/DropdownMenu/demos/index.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-atoms",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -805,7 +805,7 @@
       "source": "src/DropdownMenu/demos/atoms.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-submenu",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -817,7 +817,7 @@
       "source": "src/DropdownMenu/demos/submenu.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-plus-action-submenu",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -829,7 +829,7 @@
       "source": "src/DropdownMenu/demos/plus-action-submenu.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-group",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -841,7 +841,7 @@
       "source": "src/DropdownMenu/demos/group.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-header-footer",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -853,7 +853,7 @@
       "source": "src/DropdownMenu/demos/header-footer.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-header-footer-scroll",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -865,7 +865,7 @@
       "source": "src/DropdownMenu/demos/header-footer-scroll.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-iconspacemode",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -877,7 +877,7 @@
       "source": "src/DropdownMenu/demos/iconSpaceMode.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-desc",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -889,7 +889,7 @@
       "source": "src/DropdownMenu/demos/desc.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-iconalign",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -901,7 +901,7 @@
       "source": "src/DropdownMenu/demos/iconAlign.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-danger",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -913,7 +913,7 @@
       "source": "src/DropdownMenu/demos/danger.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-hover",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -925,7 +925,7 @@
       "source": "src/DropdownMenu/demos/hover.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-checkbox",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -937,7 +937,7 @@
       "source": "src/DropdownMenu/demos/checkbox.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-switch",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -949,7 +949,7 @@
       "source": "src/DropdownMenu/demos/switch.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-switch-mixed",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -961,7 +961,7 @@
       "source": "src/DropdownMenu/demos/switch-mixed.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-lazy",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -973,7 +973,7 @@
       "source": "src/DropdownMenu/demos/lazy.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-custom-trigger",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -985,7 +985,7 @@
       "source": "src/DropdownMenu/demos/custom-trigger.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-link-label",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -997,7 +997,7 @@
       "source": "src/DropdownMenu/demos/link-label.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-uploader",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -1009,7 +1009,7 @@
       "source": "src/DropdownMenu/demos/uploader.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.md",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-dropdown-menu-demo-tooltip-hover-stay",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
@@ -1021,7 +1021,7 @@
       "source": "src/DropdownMenu/demos/tooltip-hover-stay.tsx"
     },
     {
-      "document": "src/EditableText/index.md",
+      "document": "src/EditableText/index.mdx",
       "legacyId": "src-editable-text-demo-demos",
       "legacyRouteId": "components/EditableText/index",
       "options": {
@@ -1033,7 +1033,7 @@
       "source": "src/EditableText/demos/index.tsx"
     },
     {
-      "document": "src/EditorSlashMenu/index.md",
+      "document": "src/EditorSlashMenu/index.mdx",
       "legacyId": "src-editor-slash-menu-demo-demos",
       "legacyRouteId": "components/EditorSlashMenu/index",
       "options": {
@@ -1045,7 +1045,7 @@
       "source": "src/EditorSlashMenu/demos/index.tsx"
     },
     {
-      "document": "src/EmojiPicker/index.md",
+      "document": "src/EmojiPicker/index.mdx",
       "legacyId": "src-emoji-picker-demo-demos",
       "legacyRouteId": "components/EmojiPicker/index",
       "options": {
@@ -1057,7 +1057,7 @@
       "source": "src/EmojiPicker/demos/index.tsx"
     },
     {
-      "document": "src/EmojiPicker/index.md",
+      "document": "src/EmojiPicker/index.mdx",
       "legacyId": "src-emoji-picker-demo-upload",
       "legacyRouteId": "components/EmojiPicker/index",
       "options": {
@@ -1069,7 +1069,7 @@
       "source": "src/EmojiPicker/demos/Upload.tsx"
     },
     {
-      "document": "src/EmojiPicker/index.md",
+      "document": "src/EmojiPicker/index.mdx",
       "legacyId": "src-emoji-picker-demo-customemoji",
       "legacyRouteId": "components/EmojiPicker/index",
       "options": {
@@ -1081,7 +1081,7 @@
       "source": "src/EmojiPicker/demos/CustomEmoji.tsx"
     },
     {
-      "document": "src/EmojiPicker/index.md",
+      "document": "src/EmojiPicker/index.mdx",
       "legacyId": "src-emoji-picker-demo-customtabs",
       "legacyRouteId": "components/EmojiPicker/index",
       "options": {
@@ -1093,7 +1093,7 @@
       "source": "src/EmojiPicker/demos/CustomTabs.tsx"
     },
     {
-      "document": "src/EmojiPicker/index.md",
+      "document": "src/EmojiPicker/index.mdx",
       "legacyId": "src-emoji-picker-demo-modelavatar",
       "legacyRouteId": "components/EmojiPicker/index",
       "options": {
@@ -1105,7 +1105,7 @@
       "source": "src/EmojiPicker/demos/ModelAvatar.tsx"
     },
     {
-      "document": "src/EmojiPicker/index.md",
+      "document": "src/EmojiPicker/index.mdx",
       "legacyId": "src-emoji-picker-demo-control",
       "legacyRouteId": "components/EmojiPicker/index",
       "options": {
@@ -1117,7 +1117,7 @@
       "source": "src/EmojiPicker/demos/Control.tsx"
     },
     {
-      "document": "src/Empty/index.md",
+      "document": "src/Empty/index.mdx",
       "legacyId": "src-empty-demo-demos",
       "legacyRouteId": "components/Empty/index",
       "options": {
@@ -1129,7 +1129,7 @@
       "source": "src/Empty/demos/index.tsx"
     },
     {
-      "document": "src/Empty/index.md",
+      "document": "src/Empty/index.mdx",
       "legacyId": "src-empty-demo-withicon",
       "legacyRouteId": "components/Empty/index",
       "options": {
@@ -1141,7 +1141,7 @@
       "source": "src/Empty/demos/WithIcon.tsx"
     },
     {
-      "document": "src/Empty/index.md",
+      "document": "src/Empty/index.mdx",
       "legacyId": "src-empty-demo-withemoji",
       "legacyRouteId": "components/Empty/index",
       "options": {
@@ -1153,7 +1153,7 @@
       "source": "src/Empty/demos/WithEmoji.tsx"
     },
     {
-      "document": "src/Empty/index.md",
+      "document": "src/Empty/index.mdx",
       "legacyId": "src-empty-demo-withaction",
       "legacyRouteId": "components/Empty/index",
       "options": {
@@ -1165,7 +1165,7 @@
       "source": "src/Empty/demos/WithAction.tsx"
     },
     {
-      "document": "src/FileTypeIcon/index.md",
+      "document": "src/FileTypeIcon/index.mdx",
       "legacyId": "src-file-type-icon-demo-demos",
       "legacyRouteId": "components/FileTypeIcon/index",
       "options": {
@@ -1177,7 +1177,7 @@
       "source": "src/FileTypeIcon/demos/index.tsx"
     },
     {
-      "document": "src/FileTypeIcon/index.md",
+      "document": "src/FileTypeIcon/index.mdx",
       "legacyId": "src-file-type-icon-demo-icon",
       "legacyRouteId": "components/FileTypeIcon/index",
       "options": {
@@ -1189,7 +1189,7 @@
       "source": "src/FileTypeIcon/demos/Icon.tsx"
     },
     {
-      "document": "src/Flex/index.md",
+      "document": "src/Flex/index.mdx",
       "legacyId": "src-flex-demo-basic",
       "legacyRouteId": "components/Flex/index",
       "options": {
@@ -1201,7 +1201,7 @@
       "source": "src/Flex/demos/basic.tsx"
     },
     {
-      "document": "src/Flex/index.md",
+      "document": "src/Flex/index.mdx",
       "legacyId": "src-flex-demo-direction",
       "legacyRouteId": "components/Flex/index",
       "options": {
@@ -1213,7 +1213,7 @@
       "source": "src/Flex/demos/direction.tsx"
     },
     {
-      "document": "src/Flex/index.md",
+      "document": "src/Flex/index.mdx",
       "legacyId": "src-flex-demo-alignment",
       "legacyRouteId": "components/Flex/index",
       "options": {
@@ -1225,7 +1225,7 @@
       "source": "src/Flex/demos/alignment.tsx"
     },
     {
-      "document": "src/Flex/index.md",
+      "document": "src/Flex/index.mdx",
       "legacyId": "src-flex-demo-gap",
       "legacyRouteId": "components/Flex/index",
       "options": {
@@ -1237,7 +1237,7 @@
       "source": "src/Flex/demos/gap.tsx"
     },
     {
-      "document": "src/Flex/index.md",
+      "document": "src/Flex/index.mdx",
       "legacyId": "src-flex-demo-wrap",
       "legacyRouteId": "components/Flex/index",
       "options": {
@@ -1249,7 +1249,7 @@
       "source": "src/Flex/demos/wrap.tsx"
     },
     {
-      "document": "src/Flex/index.md",
+      "document": "src/Flex/index.mdx",
       "legacyId": "src-flex-demo-center",
       "legacyRouteId": "components/Flex/index",
       "options": {
@@ -1261,7 +1261,7 @@
       "source": "src/Flex/demos/center.tsx"
     },
     {
-      "document": "src/FluentEmoji/index.md",
+      "document": "src/FluentEmoji/index.mdx",
       "legacyId": "src-fluent-emoji-demo-demos",
       "legacyRouteId": "components/FluentEmoji/index",
       "options": {
@@ -1273,7 +1273,7 @@
       "source": "src/FluentEmoji/demos/index.tsx"
     },
     {
-      "document": "src/Footer/index.md",
+      "document": "src/Footer/index.mdx",
       "legacyId": "src-footer-demo-demos",
       "legacyRouteId": "components/Footer/index",
       "options": {
@@ -1285,7 +1285,7 @@
       "source": "src/Footer/demos/index.tsx"
     },
     {
-      "document": "src/Form/index.md",
+      "document": "src/Form/index.mdx",
       "legacyId": "src-form-demo-demos",
       "legacyRouteId": "components/Form/index",
       "options": {
@@ -1297,7 +1297,7 @@
       "source": "src/Form/demos/index.tsx"
     },
     {
-      "document": "src/Form/index.md",
+      "document": "src/Form/index.mdx",
       "legacyId": "src-form-demo-flat",
       "legacyRouteId": "components/Form/index",
       "options": {
@@ -1309,7 +1309,7 @@
       "source": "src/Form/demos/Flat.tsx"
     },
     {
-      "document": "src/Form/index.md",
+      "document": "src/Form/index.mdx",
       "legacyId": "src-form-demo-statecontrol",
       "legacyRouteId": "components/Form/index",
       "options": {
@@ -1321,7 +1321,7 @@
       "source": "src/Form/demos/StateControl.tsx"
     },
     {
-      "document": "src/Form/index.md",
+      "document": "src/Form/index.mdx",
       "legacyId": "src-form-demo-submitfooter",
       "legacyRouteId": "components/Form/index",
       "options": {
@@ -1333,7 +1333,7 @@
       "source": "src/Form/demos/SubmitFooter.tsx"
     },
     {
-      "document": "src/FormModal/index.md",
+      "document": "src/FormModal/index.mdx",
       "legacyId": "src-form-modal-demo-demos",
       "legacyRouteId": "components/FormModal/index",
       "options": {
@@ -1345,7 +1345,7 @@
       "source": "src/FormModal/demos/index.tsx"
     },
     {
-      "document": "src/FormModal/index.md",
+      "document": "src/FormModal/index.mdx",
       "legacyId": "src-form-modal-demo-flat",
       "legacyRouteId": "components/FormModal/index",
       "options": {
@@ -1357,7 +1357,7 @@
       "source": "src/FormModal/demos/Flat.tsx"
     },
     {
-      "document": "src/FormModal/index.md",
+      "document": "src/FormModal/index.mdx",
       "legacyId": "src-form-modal-demo-error",
       "legacyRouteId": "components/FormModal/index",
       "options": {
@@ -1369,7 +1369,7 @@
       "source": "src/FormModal/demos/Error.tsx"
     },
     {
-      "document": "src/Freeze/index.md",
+      "document": "src/Freeze/index.mdx",
       "legacyId": "src-freeze-demo-demos",
       "legacyRouteId": "components/Freeze/index",
       "options": {
@@ -1381,7 +1381,7 @@
       "source": "src/Freeze/demos/index.tsx"
     },
     {
-      "document": "src/Grid/index.md",
+      "document": "src/Grid/index.mdx",
       "legacyId": "src-grid-demo-demos",
       "legacyRouteId": "components/Grid/index",
       "options": {
@@ -1393,7 +1393,7 @@
       "source": "src/Grid/demos/index.tsx"
     },
     {
-      "document": "src/GroupAvatar/index.md",
+      "document": "src/GroupAvatar/index.mdx",
       "legacyId": "src-group-avatar-demo-demos",
       "legacyRouteId": "components/GroupAvatar/index",
       "options": {
@@ -1405,7 +1405,7 @@
       "source": "src/GroupAvatar/demos/index.tsx"
     },
     {
-      "document": "src/GroupAvatar/index.md",
+      "document": "src/GroupAvatar/index.mdx",
       "legacyId": "src-group-avatar-demo-cornershape",
       "legacyRouteId": "components/GroupAvatar/index",
       "options": {
@@ -1417,7 +1417,7 @@
       "source": "src/GroupAvatar/demos/CornerShape.tsx"
     },
     {
-      "document": "src/GuideCard/index.md",
+      "document": "src/GuideCard/index.mdx",
       "legacyId": "guidecard-demo-demos",
       "legacyRouteId": "components/GuideCard/index",
       "options": {
@@ -1429,7 +1429,7 @@
       "source": "src/GuideCard/demos/index.tsx"
     },
     {
-      "document": "src/Header/index.md",
+      "document": "src/Header/index.mdx",
       "legacyId": "src-header-demo-demos",
       "legacyRouteId": "components/Header/index",
       "options": {
@@ -1441,7 +1441,7 @@
       "source": "src/Header/demos/index.tsx"
     },
     {
-      "document": "src/Highlighter/index.md",
+      "document": "src/Highlighter/index.mdx",
       "legacyId": "src-highlighter-demo-demos",
       "legacyRouteId": "components/Highlighter/index",
       "options": {
@@ -1453,7 +1453,7 @@
       "source": "src/Highlighter/demos/index.tsx"
     },
     {
-      "document": "src/Highlighter/index.md",
+      "document": "src/Highlighter/index.mdx",
       "legacyId": "src-highlighter-demo-fullfeatured",
       "legacyRouteId": "components/Highlighter/index",
       "options": {
@@ -1465,7 +1465,7 @@
       "source": "src/Highlighter/demos/FullFeatured.tsx"
     },
     {
-      "document": "src/Highlighter/index.md",
+      "document": "src/Highlighter/index.mdx",
       "legacyId": "src-highlighter-demo-actionsrender",
       "legacyRouteId": "components/Highlighter/index",
       "options": {
@@ -1477,7 +1477,7 @@
       "source": "src/Highlighter/demos/ActionsRender.tsx"
     },
     {
-      "document": "src/Hotkey/index.md",
+      "document": "src/Hotkey/index.mdx",
       "legacyId": "src-hotkey-demo-demos",
       "legacyRouteId": "components/Hotkey/index",
       "options": {
@@ -1489,7 +1489,7 @@
       "source": "src/Hotkey/demos/index.tsx"
     },
     {
-      "document": "src/Hotkey/index.md",
+      "document": "src/Hotkey/index.mdx",
       "legacyId": "src-hotkey-demo-macstyle",
       "legacyRouteId": "components/Hotkey/index",
       "options": {
@@ -1501,7 +1501,7 @@
       "source": "src/Hotkey/demos/MacStyle.tsx"
     },
     {
-      "document": "src/Hotkey/index.md",
+      "document": "src/Hotkey/index.mdx",
       "legacyId": "src-hotkey-demo-mouse",
       "legacyRouteId": "components/Hotkey/index",
       "options": {
@@ -1513,7 +1513,7 @@
       "source": "src/Hotkey/demos/Mouse.tsx"
     },
     {
-      "document": "src/Hotkey/index.md",
+      "document": "src/Hotkey/index.mdx",
       "legacyId": "src-hotkey-demo-inversetheme",
       "legacyRouteId": "components/Hotkey/index",
       "options": {
@@ -1525,7 +1525,7 @@
       "source": "src/Hotkey/demos/InverseTheme.tsx"
     },
     {
-      "document": "src/HotkeyInput/index.md",
+      "document": "src/HotkeyInput/index.mdx",
       "legacyId": "src-hotkey-input-demo-demos",
       "legacyRouteId": "components/HotkeyInput/index",
       "options": {
@@ -1537,7 +1537,7 @@
       "source": "src/HotkeyInput/demos/index.tsx"
     },
     {
-      "document": "src/HtmlPreview/index.md",
+      "document": "src/HtmlPreview/index.mdx",
       "legacyId": "src-html-preview-demo-demos",
       "legacyRouteId": "components/HtmlPreview/index",
       "options": {
@@ -1549,7 +1549,7 @@
       "source": "src/HtmlPreview/demos/index.tsx"
     },
     {
-      "document": "src/HtmlPreview/index.md",
+      "document": "src/HtmlPreview/index.mdx",
       "legacyId": "src-html-preview-demo-report",
       "legacyRouteId": "components/HtmlPreview/index",
       "options": {
@@ -1561,7 +1561,7 @@
       "source": "src/HtmlPreview/demos/Report.tsx"
     },
     {
-      "document": "src/HtmlPreview/index.md",
+      "document": "src/HtmlPreview/index.mdx",
       "legacyId": "src-html-preview-demo-headresources",
       "legacyRouteId": "components/HtmlPreview/index",
       "options": {
@@ -1573,7 +1573,7 @@
       "source": "src/HtmlPreview/demos/HeadResources.tsx"
     },
     {
-      "document": "src/HtmlPreview/index.md",
+      "document": "src/HtmlPreview/index.mdx",
       "legacyId": "src-html-preview-demo-streaming",
       "legacyRouteId": "components/HtmlPreview/index",
       "options": {
@@ -1585,7 +1585,7 @@
       "source": "src/HtmlPreview/demos/Streaming.tsx"
     },
     {
-      "document": "src/HtmlPreview/index.md",
+      "document": "src/HtmlPreview/index.mdx",
       "legacyId": "src-html-preview-demo-slowstream",
       "legacyRouteId": "components/HtmlPreview/index",
       "options": {
@@ -1597,7 +1597,7 @@
       "source": "src/HtmlPreview/demos/SlowStream.tsx"
     },
     {
-      "document": "src/HtmlPreview/index.md",
+      "document": "src/HtmlPreview/index.mdx",
       "legacyId": "src-html-preview-demo-inmarkdown",
       "legacyRouteId": "components/HtmlPreview/index",
       "options": {
@@ -1609,7 +1609,7 @@
       "source": "src/HtmlPreview/demos/InMarkdown.tsx"
     },
     {
-      "document": "src/Icon/index.md",
+      "document": "src/Icon/index.mdx",
       "legacyId": "src-icon-demo-demos",
       "legacyRouteId": "components/Icon/index",
       "options": {
@@ -1621,7 +1621,7 @@
       "source": "src/Icon/demos/index.tsx"
     },
     {
-      "document": "src/Image/index.md",
+      "document": "src/Image/index.mdx",
       "legacyId": "src-image-demo-demos",
       "legacyRouteId": "components/Image/index",
       "options": {
@@ -1633,7 +1633,7 @@
       "source": "src/Image/demos/index.tsx"
     },
     {
-      "document": "src/Image/index.md",
+      "document": "src/Image/index.mdx",
       "legacyId": "src-image-demo-gallery",
       "legacyRouteId": "components/Image/index",
       "options": {
@@ -1645,7 +1645,7 @@
       "source": "src/Image/demos/Gallery.tsx"
     },
     {
-      "document": "src/Image/index.md",
+      "document": "src/Image/index.mdx",
       "legacyId": "src-image-demo-fallback",
       "legacyRouteId": "components/Image/index",
       "options": {
@@ -1657,7 +1657,7 @@
       "source": "src/Image/demos/Fallback.tsx"
     },
     {
-      "document": "src/Image/index.md",
+      "document": "src/Image/index.mdx",
       "legacyId": "src-image-demo-customactions",
       "legacyRouteId": "components/Image/index",
       "options": {
@@ -1669,7 +1669,7 @@
       "source": "src/Image/demos/CustomActions.tsx"
     },
     {
-      "document": "src/ImageSelect/index.md",
+      "document": "src/ImageSelect/index.mdx",
       "legacyId": "imageselect-demo-demos",
       "legacyRouteId": "components/ImageSelect/index",
       "options": {
@@ -1681,7 +1681,7 @@
       "source": "src/ImageSelect/demos/index.tsx"
     },
     {
-      "document": "src/Input/index.md",
+      "document": "src/Input/index.mdx",
       "legacyId": "input-demo-demos",
       "legacyRouteId": "components/Input/index",
       "options": {
@@ -1693,7 +1693,7 @@
       "source": "src/Input/demos/index.tsx"
     },
     {
-      "document": "src/Input/index.md",
+      "document": "src/Input/index.mdx",
       "legacyId": "input-demo-textarea",
       "legacyRouteId": "components/Input/index",
       "options": {
@@ -1705,7 +1705,7 @@
       "source": "src/Input/demos/TextArea.tsx"
     },
     {
-      "document": "src/Input/index.md",
+      "document": "src/Input/index.mdx",
       "legacyId": "input-demo-inputnumber",
       "legacyRouteId": "components/Input/index",
       "options": {
@@ -1717,7 +1717,7 @@
       "source": "src/Input/demos/InputNumber.tsx"
     },
     {
-      "document": "src/Input/index.md",
+      "document": "src/Input/index.mdx",
       "legacyId": "input-demo-inputpassword",
       "legacyRouteId": "components/Input/index",
       "options": {
@@ -1729,7 +1729,7 @@
       "source": "src/Input/demos/InputPassword.tsx"
     },
     {
-      "document": "src/Input/index.md",
+      "document": "src/Input/index.mdx",
       "legacyId": "input-demo-inputopt",
       "legacyRouteId": "components/Input/index",
       "options": {
@@ -1741,7 +1741,7 @@
       "source": "src/Input/demos/InputOPT.tsx"
     },
     {
-      "document": "src/Layout/index.md",
+      "document": "src/Layout/index.mdx",
       "legacyId": "src-layout-demo-demos",
       "legacyRouteId": "components/Layout/index",
       "options": {
@@ -1753,7 +1753,7 @@
       "source": "src/Layout/demos/index.tsx"
     },
     {
-      "document": "src/List/index.md",
+      "document": "src/List/index.mdx",
       "legacyId": "src-list-demo-demos",
       "legacyRouteId": "components/List/index",
       "options": {
@@ -1765,7 +1765,7 @@
       "source": "src/List/demos/index.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-headings",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1777,7 +1777,7 @@
       "source": "src/Markdown/demos/basic/headings.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-paragraphs",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1789,7 +1789,7 @@
       "source": "src/Markdown/demos/basic/paragraphs.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-stylingtext",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1801,7 +1801,7 @@
       "source": "src/Markdown/demos/basic/stylingText.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-br",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1813,7 +1813,7 @@
       "source": "src/Markdown/demos/basic/br.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-quotes",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1825,7 +1825,7 @@
       "source": "src/Markdown/demos/basic/quotes.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-links",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1837,7 +1837,7 @@
       "source": "src/Markdown/demos/basic/links.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-tables",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1849,7 +1849,7 @@
       "source": "src/Markdown/demos/basic/tables.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-images",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1861,7 +1861,7 @@
       "source": "src/Markdown/demos/media/images.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-videos",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1873,7 +1873,7 @@
       "source": "src/Markdown/demos/media/videos.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-basic-lists",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1885,7 +1885,7 @@
       "source": "src/Markdown/demos/basic/lists/basic-lists.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-task-lists",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1897,7 +1897,7 @@
       "source": "src/Markdown/demos/basic/lists/task-lists.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-code",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1909,7 +1909,7 @@
       "source": "src/Markdown/demos/code/code.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-colors",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1921,7 +1921,7 @@
       "source": "src/Markdown/demos/code/colors.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-codeblocks",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1933,7 +1933,7 @@
       "source": "src/Markdown/demos/code/codeBlocks.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-transformer",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1945,7 +1945,7 @@
       "source": "src/Markdown/demos/code/transformer.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-customhighlight",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1957,7 +1957,7 @@
       "source": "src/Markdown/demos/code/customHighlight.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-math",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1969,7 +1969,7 @@
       "source": "src/Markdown/demos/advanced/math.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-mermaid",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1981,7 +1981,7 @@
       "source": "src/Markdown/demos/advanced/mermaid.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-htmlpreview",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1993,7 +1993,7 @@
       "source": "src/Markdown/demos/advanced/htmlPreview.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-htmlpreviewarticle",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -2005,7 +2005,7 @@
       "source": "src/Markdown/demos/advanced/htmlPreviewArticle.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-htmlpreviewstream",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -2017,7 +2017,7 @@
       "source": "src/Markdown/demos/advanced/htmlPreviewStream.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-htmlpreviewreport",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -2029,7 +2029,7 @@
       "source": "src/Markdown/demos/advanced/htmlPreviewReport.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-footnotes",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -2041,7 +2041,7 @@
       "source": "src/Markdown/demos/footnotes/footnotes.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-customfootnotes",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -2053,7 +2053,7 @@
       "source": "src/Markdown/demos/footnotes/customFootnotes.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-alerts",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -2065,7 +2065,7 @@
       "source": "src/Markdown/demos/advanced/alerts.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-variant",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -2077,7 +2077,7 @@
       "source": "src/Markdown/demos/variant.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-streaming",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -2089,7 +2089,7 @@
       "source": "src/Markdown/demos/streaming.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-streamingprofiler",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -2101,7 +2101,7 @@
       "source": "src/Markdown/demos/streamingProfiler.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-streamingbench",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -2113,7 +2113,7 @@
       "source": "src/Markdown/demos/streamingBench.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-streaminganimationrepro",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -2125,7 +2125,7 @@
       "source": "src/Markdown/demos/streamingAnimationRepro.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-components",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -2137,7 +2137,7 @@
       "source": "src/Markdown/demos/custom/components.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-citations",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -2149,7 +2149,7 @@
       "source": "src/Markdown/demos/custom/citations/index.tsx"
     },
     {
-      "document": "src/Markdown/index.md",
+      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-plugins",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -2161,7 +2161,7 @@
       "source": "src/Markdown/demos/custom/plugins/index.tsx"
     },
     {
-      "document": "src/MaskShadow/index.md",
+      "document": "src/MaskShadow/index.mdx",
       "legacyId": "src-mask-shadow-demo-demos",
       "legacyRouteId": "components/MaskShadow/index",
       "options": {
@@ -2173,7 +2173,7 @@
       "source": "src/MaskShadow/demos/index.tsx"
     },
     {
-      "document": "src/MaterialFileTypeIcon/index.md",
+      "document": "src/MaterialFileTypeIcon/index.mdx",
       "legacyId": "src-material-file-type-icon-demo-demos",
       "legacyRouteId": "components/MaterialFileTypeIcon/index",
       "options": {
@@ -2185,7 +2185,7 @@
       "source": "src/MaterialFileTypeIcon/demos/index.tsx"
     },
     {
-      "document": "src/Menu/index.md",
+      "document": "src/Menu/index.mdx",
       "legacyId": "src-menu-demo-demos",
       "legacyRouteId": "components/Menu/index",
       "options": {
@@ -2197,7 +2197,7 @@
       "source": "src/Menu/demos/index.tsx"
     },
     {
-      "document": "src/Mermaid/index.md",
+      "document": "src/Mermaid/index.mdx",
       "legacyId": "src-mermaid-demo-demos",
       "legacyRouteId": "components/Mermaid/index",
       "options": {
@@ -2209,7 +2209,7 @@
       "source": "src/Mermaid/demos/index.tsx"
     },
     {
-      "document": "src/Mermaid/index.md",
+      "document": "src/Mermaid/index.mdx",
       "legacyId": "src-mermaid-demo-fullfeatured",
       "legacyRouteId": "components/Mermaid/index",
       "options": {
@@ -2221,7 +2221,7 @@
       "source": "src/Mermaid/demos/FullFeatured.tsx"
     },
     {
-      "document": "src/Mermaid/index.md",
+      "document": "src/Mermaid/index.mdx",
       "legacyId": "src-mermaid-demo-actionsrender",
       "legacyRouteId": "components/Mermaid/index",
       "options": {
@@ -2233,7 +2233,7 @@
       "source": "src/Mermaid/demos/ActionsRender.tsx"
     },
     {
-      "document": "src/Modal/index.md",
+      "document": "src/Modal/index.mdx",
       "legacyId": "src-modal-demo-demos",
       "legacyRouteId": "components/Modal/index",
       "options": {
@@ -2245,7 +2245,7 @@
       "source": "src/Modal/demos/index.tsx"
     },
     {
-      "document": "src/Modal/index.md",
+      "document": "src/Modal/index.mdx",
       "legacyId": "src-modal-demo-imperative",
       "legacyRouteId": "components/Modal/index",
       "options": {
@@ -2257,7 +2257,7 @@
       "source": "src/Modal/demos/imperative.tsx"
     },
     {
-      "document": "src/Modal/index.md",
+      "document": "src/Modal/index.mdx",
       "legacyId": "src-modal-demo-raw",
       "legacyRouteId": "components/Modal/index",
       "options": {
@@ -2269,7 +2269,7 @@
       "source": "src/Modal/demos/raw.tsx"
     },
     {
-      "document": "src/NeuralNetworkLoading/index.md",
+      "document": "src/NeuralNetworkLoading/index.mdx",
       "legacyId": "src-neural-network-loading-demo-demos",
       "legacyRouteId": "components/NeuralNetworkLoading/index",
       "options": {
@@ -2281,7 +2281,7 @@
       "source": "src/NeuralNetworkLoading/demos/index.tsx"
     },
     {
-      "document": "src/ScrollArea/index.md",
+      "document": "src/ScrollArea/index.mdx",
       "legacyId": "src-scroll-area-demo-demos",
       "legacyRouteId": "components/ScrollArea/index",
       "options": {
@@ -2293,7 +2293,7 @@
       "source": "src/ScrollArea/demos/index.tsx"
     },
     {
-      "document": "src/ScrollArea/index.md",
+      "document": "src/ScrollArea/index.mdx",
       "legacyId": "src-scroll-area-demo-background",
       "legacyRouteId": "components/ScrollArea/index",
       "options": {
@@ -2305,7 +2305,7 @@
       "source": "src/ScrollArea/demos/background.tsx"
     },
     {
-      "document": "src/ScrollArea/index.md",
+      "document": "src/ScrollArea/index.mdx",
       "legacyId": "src-scroll-area-demo-horizontal",
       "legacyRouteId": "components/ScrollArea/index",
       "options": {
@@ -2317,7 +2317,7 @@
       "source": "src/ScrollArea/demos/horizontal.tsx"
     },
     {
-      "document": "src/ScrollArea/index.md",
+      "document": "src/ScrollArea/index.mdx",
       "legacyId": "src-scroll-area-demo-both",
       "legacyRouteId": "components/ScrollArea/index",
       "options": {
@@ -2329,7 +2329,7 @@
       "source": "src/ScrollArea/demos/both.tsx"
     },
     {
-      "document": "src/ScrollArea/index.md",
+      "document": "src/ScrollArea/index.mdx",
       "legacyId": "src-scroll-area-demo-fade-both",
       "legacyRouteId": "components/ScrollArea/index",
       "options": {
@@ -2341,7 +2341,7 @@
       "source": "src/ScrollArea/demos/fade-both.tsx"
     },
     {
-      "document": "src/ScrollArea/index.md",
+      "document": "src/ScrollArea/index.mdx",
       "legacyId": "src-scroll-area-demo-content-fit-overflow",
       "legacyRouteId": "components/ScrollArea/index",
       "options": {
@@ -2353,7 +2353,7 @@
       "source": "src/ScrollArea/demos/content-fit-overflow.tsx"
     },
     {
-      "document": "src/ScrollShadow/index.md",
+      "document": "src/ScrollShadow/index.mdx",
       "legacyId": "src-scroll-shadow-demo-demos",
       "legacyRouteId": "components/ScrollShadow/index",
       "options": {
@@ -2365,7 +2365,7 @@
       "source": "src/ScrollShadow/demos/index.tsx"
     },
     {
-      "document": "src/SearchBar/index.md",
+      "document": "src/SearchBar/index.mdx",
       "legacyId": "src-search-bar-demo-demos",
       "legacyRouteId": "components/SearchBar/index",
       "options": {
@@ -2377,7 +2377,7 @@
       "source": "src/SearchBar/demos/index.tsx"
     },
     {
-      "document": "src/Segmented/index.md",
+      "document": "src/Segmented/index.mdx",
       "legacyId": "src-segmented-demo-demos",
       "legacyRouteId": "components/Segmented/index",
       "options": {
@@ -2389,7 +2389,7 @@
       "source": "src/Segmented/demos/index.tsx"
     },
     {
-      "document": "src/Segmented/index.md",
+      "document": "src/Segmented/index.mdx",
       "legacyId": "src-segmented-demo-tooltip",
       "legacyRouteId": "components/Segmented/index",
       "options": {
@@ -2401,7 +2401,7 @@
       "source": "src/Segmented/demos/tooltip.tsx"
     },
     {
-      "document": "src/Select/index.md",
+      "document": "src/Select/index.mdx",
       "legacyId": "src-select-demo-demos",
       "legacyRouteId": "components/Select/index",
       "options": {
@@ -2413,7 +2413,7 @@
       "source": "src/Select/demos/index.tsx"
     },
     {
-      "document": "src/SideNav/index.md",
+      "document": "src/SideNav/index.mdx",
       "legacyId": "src-side-nav-demo-demos",
       "legacyRouteId": "components/SideNav/index",
       "options": {
@@ -2425,7 +2425,7 @@
       "source": "src/SideNav/demos/index.tsx"
     },
     {
-      "document": "src/Skeleton/index.md",
+      "document": "src/Skeleton/index.mdx",
       "legacyId": "src-skeleton-demo-demos",
       "legacyRouteId": "components/Skeleton/index",
       "options": {
@@ -2437,7 +2437,7 @@
       "source": "src/Skeleton/demos/index.tsx"
     },
     {
-      "document": "src/Skeleton/index.md",
+      "document": "src/Skeleton/index.mdx",
       "legacyId": "src-skeleton-demo-withavatar",
       "legacyRouteId": "components/Skeleton/index",
       "options": {
@@ -2449,7 +2449,7 @@
       "source": "src/Skeleton/demos/WithAvatar.tsx"
     },
     {
-      "document": "src/Skeleton/index.md",
+      "document": "src/Skeleton/index.mdx",
       "legacyId": "src-skeleton-demo-custom",
       "legacyRouteId": "components/Skeleton/index",
       "options": {
@@ -2461,7 +2461,7 @@
       "source": "src/Skeleton/demos/Custom.tsx"
     },
     {
-      "document": "src/Skeleton/index.md",
+      "document": "src/Skeleton/index.mdx",
       "legacyId": "src-skeleton-demo-avatar",
       "legacyRouteId": "components/Skeleton/index",
       "options": {
@@ -2473,7 +2473,7 @@
       "source": "src/Skeleton/demos/Avatar.tsx"
     },
     {
-      "document": "src/Skeleton/index.md",
+      "document": "src/Skeleton/index.mdx",
       "legacyId": "src-skeleton-demo-block",
       "legacyRouteId": "components/Skeleton/index",
       "options": {
@@ -2485,7 +2485,7 @@
       "source": "src/Skeleton/demos/Block.tsx"
     },
     {
-      "document": "src/Skeleton/index.md",
+      "document": "src/Skeleton/index.mdx",
       "legacyId": "src-skeleton-demo-button",
       "legacyRouteId": "components/Skeleton/index",
       "options": {
@@ -2497,7 +2497,7 @@
       "source": "src/Skeleton/demos/Button.tsx"
     },
     {
-      "document": "src/Skeleton/index.md",
+      "document": "src/Skeleton/index.mdx",
       "legacyId": "src-skeleton-demo-title",
       "legacyRouteId": "components/Skeleton/index",
       "options": {
@@ -2509,7 +2509,7 @@
       "source": "src/Skeleton/demos/Title.tsx"
     },
     {
-      "document": "src/Skeleton/index.md",
+      "document": "src/Skeleton/index.mdx",
       "legacyId": "src-skeleton-demo-paragraph",
       "legacyRouteId": "components/Skeleton/index",
       "options": {
@@ -2521,7 +2521,7 @@
       "source": "src/Skeleton/demos/Paragraph.tsx"
     },
     {
-      "document": "src/Skeleton/index.md",
+      "document": "src/Skeleton/index.mdx",
       "legacyId": "src-skeleton-demo-tags",
       "legacyRouteId": "components/Skeleton/index",
       "options": {
@@ -2533,7 +2533,7 @@
       "source": "src/Skeleton/demos/Tags.tsx"
     },
     {
-      "document": "src/SliderWithInput/index.md",
+      "document": "src/SliderWithInput/index.mdx",
       "legacyId": "src-slider-with-input-demo-demos",
       "legacyRouteId": "components/SliderWithInput/index",
       "options": {
@@ -2545,7 +2545,7 @@
       "source": "src/SliderWithInput/demos/index.tsx"
     },
     {
-      "document": "src/Snippet/index.md",
+      "document": "src/Snippet/index.mdx",
       "legacyId": "src-snippet-demo-demos",
       "legacyRouteId": "components/Snippet/index",
       "options": {
@@ -2557,7 +2557,7 @@
       "source": "src/Snippet/demos/index.tsx"
     },
     {
-      "document": "src/SortableList/index.md",
+      "document": "src/SortableList/index.mdx",
       "legacyId": "src-sortable-list-demo-demos",
       "legacyRouteId": "components/SortableList/index",
       "options": {
@@ -2569,7 +2569,7 @@
       "source": "src/SortableList/demos/index.tsx"
     },
     {
-      "document": "src/Tabs/index.md",
+      "document": "src/Tabs/index.mdx",
       "legacyId": "src-tabs-demo-demos",
       "legacyRouteId": "components/Tabs/index",
       "options": {
@@ -2581,7 +2581,7 @@
       "source": "src/Tabs/demos/index.tsx"
     },
     {
-      "document": "src/Tag/index.md",
+      "document": "src/Tag/index.mdx",
       "legacyId": "tag-demo-demos",
       "legacyRouteId": "components/Tag/index",
       "options": {
@@ -2593,7 +2593,7 @@
       "source": "src/Tag/demos/index.tsx"
     },
     {
-      "document": "src/Tag/index.md",
+      "document": "src/Tag/index.mdx",
       "legacyId": "tag-demo-color",
       "legacyRouteId": "components/Tag/index",
       "options": {
@@ -2605,7 +2605,7 @@
       "source": "src/Tag/demos/Color.tsx"
     },
     {
-      "document": "src/Text/index.md",
+      "document": "src/Text/index.mdx",
       "legacyId": "src-text-demo-demos",
       "legacyRouteId": "components/Text/index",
       "options": {
@@ -2617,7 +2617,7 @@
       "source": "src/Text/demos/index.tsx"
     },
     {
-      "document": "src/Text/index.md",
+      "document": "src/Text/index.mdx",
       "legacyId": "src-text-demo-tooltipwhenoverflow",
       "legacyRouteId": "components/Text/index",
       "options": {
@@ -2629,7 +2629,7 @@
       "source": "src/Text/demos/TooltipWhenOverflow.tsx"
     },
     {
-      "document": "src/ThemeProvider/index.md",
+      "document": "src/ThemeProvider/index.mdx",
       "legacyId": "src-theme-provider-demo-demos",
       "legacyRouteId": "components/ThemeProvider/index",
       "options": {
@@ -2641,7 +2641,7 @@
       "source": "src/ThemeProvider/demos/index.tsx"
     },
     {
-      "document": "src/ThemeProvider/index.md",
+      "document": "src/ThemeProvider/index.mdx",
       "legacyId": "src-theme-provider-demo-customfonts",
       "legacyRouteId": "components/ThemeProvider/index",
       "options": {
@@ -2653,7 +2653,7 @@
       "source": "src/ThemeProvider/demos/CustomFonts.tsx"
     },
     {
-      "document": "src/ThemeSwitch/index.md",
+      "document": "src/ThemeSwitch/index.mdx",
       "legacyId": "src-theme-switch-demo-demos",
       "legacyRouteId": "components/ThemeSwitch/index",
       "options": {
@@ -2665,7 +2665,7 @@
       "source": "src/ThemeSwitch/demos/index.tsx"
     },
     {
-      "document": "src/Toc/index.md",
+      "document": "src/Toc/index.mdx",
       "legacyId": "src-toc-demo-demos",
       "legacyRouteId": "components/Toc/index",
       "options": {
@@ -2677,7 +2677,7 @@
       "source": "src/Toc/demos/index.tsx"
     },
     {
-      "document": "src/Video/index.md",
+      "document": "src/Video/index.mdx",
       "legacyId": "video-demo-demos",
       "legacyRouteId": "components/Video/index",
       "options": {
@@ -2689,7 +2689,7 @@
       "source": "src/Video/demos/index.tsx"
     },
     {
-      "document": "src/awesome/AuroraBackground/index.md",
+      "document": "src/awesome/AuroraBackground/index.mdx",
       "legacyId": "src-awesome-aurora-background-demo-demos",
       "legacyRouteId": "components/awesome/AuroraBackground/index",
       "options": {
@@ -2701,7 +2701,7 @@
       "source": "src/awesome/AuroraBackground/demos/index.tsx"
     },
     {
-      "document": "src/awesome/BottomGradientButton/index.md",
+      "document": "src/awesome/BottomGradientButton/index.mdx",
       "legacyId": "src-awesome-bottom-gradient-button-demo-demos",
       "legacyRouteId": "components/awesome/BottomGradientButton/index",
       "options": {
@@ -2713,7 +2713,7 @@
       "source": "src/awesome/BottomGradientButton/demos/index.tsx"
     },
     {
-      "document": "src/awesome/Features/index.md",
+      "document": "src/awesome/Features/index.mdx",
       "legacyId": "src-awesome-features-demo-demos",
       "legacyRouteId": "components/awesome/Features/index",
       "options": {
@@ -2725,7 +2725,7 @@
       "source": "src/awesome/Features/demos/index.tsx"
     },
     {
-      "document": "src/awesome/Giscus/index.md",
+      "document": "src/awesome/Giscus/index.mdx",
       "legacyId": "src-awesome-giscus-demo-demos",
       "legacyRouteId": "components/awesome/Giscus/index",
       "options": {
@@ -2737,7 +2737,7 @@
       "source": "src/awesome/Giscus/demos/index.tsx"
     },
     {
-      "document": "src/awesome/GradientButton/index.md",
+      "document": "src/awesome/GradientButton/index.mdx",
       "legacyId": "src-awesome-gradient-button-demo-demos",
       "legacyRouteId": "components/awesome/GradientButton/index",
       "options": {
@@ -2749,7 +2749,7 @@
       "source": "src/awesome/GradientButton/demos/index.tsx"
     },
     {
-      "document": "src/awesome/GridBackground/index.md",
+      "document": "src/awesome/GridBackground/index.mdx",
       "legacyId": "src-awesome-grid-background-demo-demos",
       "legacyRouteId": "components/awesome/GridBackground/index",
       "options": {
@@ -2761,7 +2761,7 @@
       "source": "src/awesome/GridBackground/demos/index.tsx"
     },
     {
-      "document": "src/awesome/GridBackground/index.md",
+      "document": "src/awesome/GridBackground/index.mdx",
       "legacyId": "src-awesome-grid-background-demo-showcase",
       "legacyRouteId": "components/awesome/GridBackground/index",
       "options": {
@@ -2773,7 +2773,7 @@
       "source": "src/awesome/GridBackground/demos/Showcase.tsx"
     },
     {
-      "document": "src/awesome/Hero/index.md",
+      "document": "src/awesome/Hero/index.mdx",
       "legacyId": "src-awesome-hero-demo-demos",
       "legacyRouteId": "components/awesome/Hero/index",
       "options": {
@@ -2785,7 +2785,7 @@
       "source": "src/awesome/Hero/demos/index.tsx"
     },
     {
-      "document": "src/awesome/Spotlight/index.md",
+      "document": "src/awesome/Spotlight/index.mdx",
       "legacyId": "src-awesome-spotlight-demo-demos",
       "legacyRouteId": "components/awesome/Spotlight/index",
       "options": {
@@ -2797,7 +2797,7 @@
       "source": "src/awesome/Spotlight/demos/index.tsx"
     },
     {
-      "document": "src/awesome/SpotlightCard/index.md",
+      "document": "src/awesome/SpotlightCard/index.mdx",
       "legacyId": "src-awesome-spotlight-card-demo-demos",
       "legacyRouteId": "components/awesome/SpotlightCard/index",
       "options": {
@@ -2809,7 +2809,7 @@
       "source": "src/awesome/SpotlightCard/demos/index.tsx"
     },
     {
-      "document": "src/awesome/TypewriterEffect/index.md",
+      "document": "src/awesome/TypewriterEffect/index.mdx",
       "legacyId": "src-awesome-typewriter-effect-demo-demos",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
@@ -2821,7 +2821,7 @@
       "source": "src/awesome/TypewriterEffect/demos/index.tsx"
     },
     {
-      "document": "src/awesome/TypewriterEffect/index.md",
+      "document": "src/awesome/TypewriterEffect/index.mdx",
       "legacyId": "src-awesome-typewriter-effect-demo-cursorstyles",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
@@ -2833,7 +2833,7 @@
       "source": "src/awesome/TypewriterEffect/demos/cursorStyles.tsx"
     },
     {
-      "document": "src/awesome/TypewriterEffect/index.md",
+      "document": "src/awesome/TypewriterEffect/index.mdx",
       "legacyId": "src-awesome-typewriter-effect-demo-cursorbehavior",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
@@ -2845,7 +2845,7 @@
       "source": "src/awesome/TypewriterEffect/demos/cursorBehavior.tsx"
     },
     {
-      "document": "src/awesome/TypewriterEffect/index.md",
+      "document": "src/awesome/TypewriterEffect/index.mdx",
       "legacyId": "src-awesome-typewriter-effect-demo-colors",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
@@ -2857,7 +2857,7 @@
       "source": "src/awesome/TypewriterEffect/demos/colors.tsx"
     },
     {
-      "document": "src/awesome/TypewriterEffect/index.md",
+      "document": "src/awesome/TypewriterEffect/index.mdx",
       "legacyId": "src-awesome-typewriter-effect-demo-emoji",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
@@ -2869,7 +2869,7 @@
       "source": "src/awesome/TypewriterEffect/demos/emoji.tsx"
     },
     {
-      "document": "src/awesome/TypewriterEffect/index.md",
+      "document": "src/awesome/TypewriterEffect/index.mdx",
       "legacyId": "src-awesome-typewriter-effect-demo-segmentmodes",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
@@ -2881,7 +2881,7 @@
       "source": "src/awesome/TypewriterEffect/demos/segmentModes.tsx"
     },
     {
-      "document": "src/awesome/TypewriterEffect/index.md",
+      "document": "src/awesome/TypewriterEffect/index.mdx",
       "legacyId": "src-awesome-typewriter-effect-demo-customspeed",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
@@ -2893,7 +2893,7 @@
       "source": "src/awesome/TypewriterEffect/demos/customSpeed.tsx"
     },
     {
-      "document": "src/awesome/TypewriterEffect/index.md",
+      "document": "src/awesome/TypewriterEffect/index.mdx",
       "legacyId": "src-awesome-typewriter-effect-demo-initialdelay",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
@@ -2905,7 +2905,7 @@
       "source": "src/awesome/TypewriterEffect/demos/initialDelay.tsx"
     },
     {
-      "document": "src/awesome/TypewriterEffect/index.md",
+      "document": "src/awesome/TypewriterEffect/index.mdx",
       "legacyId": "src-awesome-typewriter-effect-demo-advanced",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
@@ -2917,7 +2917,7 @@
       "source": "src/awesome/TypewriterEffect/demos/advanced.tsx"
     },
     {
-      "document": "src/awesome/TypewriterEffect/index.md",
+      "document": "src/awesome/TypewriterEffect/index.mdx",
       "legacyId": "src-awesome-typewriter-effect-demo-variablespeed",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
@@ -2929,7 +2929,7 @@
       "source": "src/awesome/TypewriterEffect/demos/variableSpeed.tsx"
     },
     {
-      "document": "src/awesome/TypewriterEffect/index.md",
+      "document": "src/awesome/TypewriterEffect/index.mdx",
       "legacyId": "src-awesome-typewriter-effect-demo-callback",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
@@ -2941,7 +2941,7 @@
       "source": "src/awesome/TypewriterEffect/demos/callback.tsx"
     },
     {
-      "document": "src/base-ui/Button/index.md",
+      "document": "src/base-ui/Button/index.mdx",
       "legacyId": "src-base-ui-button-demo-demos",
       "legacyRouteId": "components/base-ui/Button/index",
       "options": {
@@ -2953,7 +2953,7 @@
       "source": "src/base-ui/Button/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Button/index.md",
+      "document": "src/base-ui/Button/index.mdx",
       "legacyId": "src-base-ui-button-demo-sizes",
       "legacyRouteId": "components/base-ui/Button/index",
       "options": {
@@ -2965,7 +2965,7 @@
       "source": "src/base-ui/Button/demos/sizes.tsx"
     },
     {
-      "document": "src/base-ui/Button/index.md",
+      "document": "src/base-ui/Button/index.mdx",
       "legacyId": "src-base-ui-button-demo-icons",
       "legacyRouteId": "components/base-ui/Button/index",
       "options": {
@@ -2977,7 +2977,7 @@
       "source": "src/base-ui/Button/demos/icons.tsx"
     },
     {
-      "document": "src/base-ui/Button/index.md",
+      "document": "src/base-ui/Button/index.mdx",
       "legacyId": "src-base-ui-button-demo-split",
       "legacyRouteId": "components/base-ui/Button/index",
       "options": {
@@ -2989,7 +2989,7 @@
       "source": "src/base-ui/Button/demos/split.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.md",
+      "document": "src/base-ui/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-imperative",
       "legacyRouteId": "components/base-ui/ContextMenu/index",
       "options": {
@@ -3001,7 +3001,7 @@
       "source": "src/ContextMenu/demos/imperative.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.md",
+      "document": "src/base-ui/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-trigger",
       "legacyRouteId": "components/base-ui/ContextMenu/index",
       "options": {
@@ -3013,7 +3013,7 @@
       "source": "src/ContextMenu/demos/trigger.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.md",
+      "document": "src/base-ui/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-checkbox",
       "legacyRouteId": "components/base-ui/ContextMenu/index",
       "options": {
@@ -3025,7 +3025,7 @@
       "source": "src/ContextMenu/demos/checkbox.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.md",
+      "document": "src/base-ui/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-switch",
       "legacyRouteId": "components/base-ui/ContextMenu/index",
       "options": {
@@ -3037,7 +3037,7 @@
       "source": "src/ContextMenu/demos/switch.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.md",
+      "document": "src/base-ui/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-desc",
       "legacyRouteId": "components/base-ui/ContextMenu/index",
       "options": {
@@ -3049,7 +3049,7 @@
       "source": "src/ContextMenu/demos/desc.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.md",
+      "document": "src/base-ui/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-header-footer",
       "legacyRouteId": "components/base-ui/ContextMenu/index",
       "options": {
@@ -3061,7 +3061,7 @@
       "source": "src/ContextMenu/demos/header-footer.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.md",
+      "document": "src/base-ui/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-header-footer-scroll",
       "legacyRouteId": "components/base-ui/ContextMenu/index",
       "options": {
@@ -3073,7 +3073,7 @@
       "source": "src/ContextMenu/demos/header-footer-scroll.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.md",
+      "document": "src/base-ui/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-emptysubmenu",
       "legacyRouteId": "components/base-ui/ContextMenu/index",
       "options": {
@@ -3085,7 +3085,7 @@
       "source": "src/ContextMenu/demos/emptySubmenu.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.md",
+      "document": "src/base-ui/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-uploader",
       "legacyRouteId": "components/base-ui/ContextMenu/index",
       "options": {
@@ -3097,7 +3097,7 @@
       "source": "src/ContextMenu/demos/uploader.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.md",
+      "document": "src/base-ui/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-iconspacemode",
       "legacyRouteId": "components/base-ui/ContextMenu/index",
       "options": {
@@ -3109,7 +3109,7 @@
       "source": "src/ContextMenu/demos/iconSpaceMode.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-demos",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3121,7 +3121,7 @@
       "source": "src/DropdownMenu/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-atoms",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3133,7 +3133,7 @@
       "source": "src/DropdownMenu/demos/atoms.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-submenu",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3145,7 +3145,7 @@
       "source": "src/DropdownMenu/demos/submenu.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-plus-action-submenu",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3157,7 +3157,7 @@
       "source": "src/DropdownMenu/demos/plus-action-submenu.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-group",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3169,7 +3169,7 @@
       "source": "src/DropdownMenu/demos/group.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-header-footer",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3181,7 +3181,7 @@
       "source": "src/DropdownMenu/demos/header-footer.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-header-footer-scroll",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3193,7 +3193,7 @@
       "source": "src/DropdownMenu/demos/header-footer-scroll.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-iconspacemode",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3205,7 +3205,7 @@
       "source": "src/DropdownMenu/demos/iconSpaceMode.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-desc",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3217,7 +3217,7 @@
       "source": "src/DropdownMenu/demos/desc.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-iconalign",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3229,7 +3229,7 @@
       "source": "src/DropdownMenu/demos/iconAlign.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-danger",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3241,7 +3241,7 @@
       "source": "src/DropdownMenu/demos/danger.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-hover",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3253,7 +3253,7 @@
       "source": "src/DropdownMenu/demos/hover.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-checkbox",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3265,7 +3265,7 @@
       "source": "src/DropdownMenu/demos/checkbox.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-switch",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3277,7 +3277,7 @@
       "source": "src/DropdownMenu/demos/switch.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-switch-mixed",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3289,7 +3289,7 @@
       "source": "src/DropdownMenu/demos/switch-mixed.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-lazy",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3301,7 +3301,7 @@
       "source": "src/DropdownMenu/demos/lazy.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-custom-trigger",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3313,7 +3313,7 @@
       "source": "src/DropdownMenu/demos/custom-trigger.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-link-label",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3325,7 +3325,7 @@
       "source": "src/DropdownMenu/demos/link-label.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-uploader",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3337,7 +3337,7 @@
       "source": "src/DropdownMenu/demos/uploader.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.md",
+      "document": "src/base-ui/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-tooltip-hover-stay",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
@@ -3349,7 +3349,7 @@
       "source": "src/DropdownMenu/demos/tooltip-hover-stay.tsx"
     },
     {
-      "document": "src/base-ui/FloatingPanel/index.md",
+      "document": "src/base-ui/FloatingPanel/index.mdx",
       "legacyId": "src-base-ui-floating-panel-demo-demos",
       "legacyRouteId": "components/base-ui/FloatingPanel/index",
       "options": {
@@ -3361,7 +3361,7 @@
       "source": "src/base-ui/FloatingPanel/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/FloatingSheet/index.md",
+      "document": "src/base-ui/FloatingSheet/index.mdx",
       "legacyId": "src-base-ui-floating-sheet-demo-playground",
       "legacyRouteId": "components/base-ui/FloatingSheet/index",
       "options": {
@@ -3373,7 +3373,7 @@
       "source": "src/base-ui/FloatingSheet/demos/playground.tsx"
     },
     {
-      "document": "src/base-ui/FloatingSheet/index.md",
+      "document": "src/base-ui/FloatingSheet/index.mdx",
       "legacyId": "src-base-ui-floating-sheet-demo-demos",
       "legacyRouteId": "components/base-ui/FloatingSheet/index",
       "options": {
@@ -3385,7 +3385,7 @@
       "source": "src/base-ui/FloatingSheet/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/FloatingSheet/index.md",
+      "document": "src/base-ui/FloatingSheet/index.mdx",
       "legacyId": "src-base-ui-floating-sheet-demo-inline",
       "legacyRouteId": "components/base-ui/FloatingSheet/index",
       "options": {
@@ -3397,7 +3397,7 @@
       "source": "src/base-ui/FloatingSheet/demos/inline.tsx"
     },
     {
-      "document": "src/base-ui/Modal/index.md",
+      "document": "src/base-ui/Modal/index.mdx",
       "legacyId": "src-base-ui-modal-demo-demos",
       "legacyRouteId": "components/base-ui/Modal/index",
       "options": {
@@ -3409,7 +3409,7 @@
       "source": "src/base-ui/Modal/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Modal/index.md",
+      "document": "src/base-ui/Modal/index.mdx",
       "legacyId": "src-base-ui-modal-demo-business",
       "legacyRouteId": "components/base-ui/Modal/index",
       "options": {
@@ -3421,7 +3421,7 @@
       "source": "src/base-ui/Modal/demos/business.tsx"
     },
     {
-      "document": "src/base-ui/Modal/index.md",
+      "document": "src/base-ui/Modal/index.mdx",
       "legacyId": "src-base-ui-modal-demo-imperative",
       "legacyRouteId": "components/base-ui/Modal/index",
       "options": {
@@ -3433,7 +3433,7 @@
       "source": "src/base-ui/Modal/demos/imperative.tsx"
     },
     {
-      "document": "src/base-ui/Modal/index.md",
+      "document": "src/base-ui/Modal/index.mdx",
       "legacyId": "src-base-ui-modal-demo-nested",
       "legacyRouteId": "components/base-ui/Modal/index",
       "options": {
@@ -3445,7 +3445,7 @@
       "source": "src/base-ui/Modal/demos/nested.tsx"
     },
     {
-      "document": "src/base-ui/Modal/index.md",
+      "document": "src/base-ui/Modal/index.mdx",
       "legacyId": "src-base-ui-modal-demo-zindex-with-dropdown",
       "legacyRouteId": "components/base-ui/Modal/index",
       "options": {
@@ -3457,7 +3457,7 @@
       "source": "src/base-ui/Modal/demos/zindex-with-dropdown.tsx"
     },
     {
-      "document": "src/base-ui/Modal/index.md",
+      "document": "src/base-ui/Modal/index.mdx",
       "legacyId": "src-base-ui-modal-demo-zindex-dropdown-in-modal",
       "legacyRouteId": "components/base-ui/Modal/index",
       "options": {
@@ -3469,7 +3469,7 @@
       "source": "src/base-ui/Modal/demos/zindex-dropdown-in-modal.tsx"
     },
     {
-      "document": "src/base-ui/Modal/index.md",
+      "document": "src/base-ui/Modal/index.mdx",
       "legacyId": "src-base-ui-modal-demo-atoms",
       "legacyRouteId": "components/base-ui/Modal/index",
       "options": {
@@ -3481,7 +3481,7 @@
       "source": "src/base-ui/Modal/demos/atoms.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.md",
+      "document": "src/base-ui/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-demos",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
@@ -3493,7 +3493,7 @@
       "source": "src/base-ui/Popover/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.md",
+      "document": "src/base-ui/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-atoms",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
@@ -3505,7 +3505,7 @@
       "source": "src/base-ui/Popover/demos/atoms.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.md",
+      "document": "src/base-ui/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-group",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
@@ -3517,7 +3517,7 @@
       "source": "src/base-ui/Popover/demos/group.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.md",
+      "document": "src/base-ui/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-trigger",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
@@ -3529,7 +3529,7 @@
       "source": "src/base-ui/Popover/demos/trigger.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.md",
+      "document": "src/base-ui/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-placement",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
@@ -3541,7 +3541,7 @@
       "source": "src/base-ui/Popover/demos/placement.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.md",
+      "document": "src/base-ui/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-dropdown-menu",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
@@ -3553,7 +3553,7 @@
       "source": "src/base-ui/Popover/demos/dropdown-menu.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.md",
+      "document": "src/base-ui/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-hover-only",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
@@ -3565,7 +3565,7 @@
       "source": "src/base-ui/Popover/demos/hover-only.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.md",
+      "document": "src/base-ui/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-controlled",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
@@ -3577,7 +3577,7 @@
       "source": "src/base-ui/Popover/demos/controlled.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.md",
+      "document": "src/base-ui/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-context",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
@@ -3589,7 +3589,7 @@
       "source": "src/base-ui/Popover/demos/context.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.md",
+      "document": "src/base-ui/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-tooltip-inside",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
@@ -3601,7 +3601,7 @@
       "source": "src/base-ui/Popover/demos/tooltip-inside.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.md",
+      "document": "src/base-ui/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-tooltip-hover-stay",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
@@ -3613,7 +3613,7 @@
       "source": "src/base-ui/Popover/demos/tooltip-hover-stay.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.md",
+      "document": "src/base-ui/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-popover-wrapping-tooltip",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
@@ -3625,7 +3625,7 @@
       "source": "src/base-ui/Popover/demos/popover-wrapping-tooltip.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.md",
+      "document": "src/base-ui/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-popover-wrapping-tooltip-group",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
@@ -3637,7 +3637,7 @@
       "source": "src/base-ui/Popover/demos/popover-wrapping-tooltip-group.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.md",
+      "document": "src/base-ui/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-native-button",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
@@ -3649,7 +3649,7 @@
       "source": "src/base-ui/Popover/demos/native-button.tsx"
     },
     {
-      "document": "src/base-ui/ScrollArea/index.md",
+      "document": "src/base-ui/ScrollArea/index.mdx",
       "legacyId": "src-base-ui-scroll-area-demo-demos",
       "legacyRouteId": "components/base-ui/ScrollArea/index",
       "options": {
@@ -3661,7 +3661,7 @@
       "source": "src/ScrollArea/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/ScrollArea/index.md",
+      "document": "src/base-ui/ScrollArea/index.mdx",
       "legacyId": "src-base-ui-scroll-area-demo-background",
       "legacyRouteId": "components/base-ui/ScrollArea/index",
       "options": {
@@ -3673,7 +3673,7 @@
       "source": "src/ScrollArea/demos/background.tsx"
     },
     {
-      "document": "src/base-ui/ScrollArea/index.md",
+      "document": "src/base-ui/ScrollArea/index.mdx",
       "legacyId": "src-base-ui-scroll-area-demo-horizontal",
       "legacyRouteId": "components/base-ui/ScrollArea/index",
       "options": {
@@ -3685,7 +3685,7 @@
       "source": "src/ScrollArea/demos/horizontal.tsx"
     },
     {
-      "document": "src/base-ui/ScrollArea/index.md",
+      "document": "src/base-ui/ScrollArea/index.mdx",
       "legacyId": "src-base-ui-scroll-area-demo-both",
       "legacyRouteId": "components/base-ui/ScrollArea/index",
       "options": {
@@ -3697,7 +3697,7 @@
       "source": "src/ScrollArea/demos/both.tsx"
     },
     {
-      "document": "src/base-ui/ScrollArea/index.md",
+      "document": "src/base-ui/ScrollArea/index.mdx",
       "legacyId": "src-base-ui-scroll-area-demo-fade-both",
       "legacyRouteId": "components/base-ui/ScrollArea/index",
       "options": {
@@ -3709,7 +3709,7 @@
       "source": "src/ScrollArea/demos/fade-both.tsx"
     },
     {
-      "document": "src/base-ui/ScrollArea/index.md",
+      "document": "src/base-ui/ScrollArea/index.mdx",
       "legacyId": "src-base-ui-scroll-area-demo-content-fit-overflow",
       "legacyRouteId": "components/base-ui/ScrollArea/index",
       "options": {
@@ -3721,7 +3721,7 @@
       "source": "src/ScrollArea/demos/content-fit-overflow.tsx"
     },
     {
-      "document": "src/base-ui/Segmented/index.md",
+      "document": "src/base-ui/Segmented/index.mdx",
       "legacyId": "src-base-ui-segmented-demo-demos",
       "legacyRouteId": "components/base-ui/Segmented/index",
       "options": {
@@ -3733,7 +3733,7 @@
       "source": "src/base-ui/Segmented/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Segmented/index.md",
+      "document": "src/base-ui/Segmented/index.mdx",
       "legacyId": "src-base-ui-segmented-demo-atoms",
       "legacyRouteId": "components/base-ui/Segmented/index",
       "options": {
@@ -3745,7 +3745,7 @@
       "source": "src/base-ui/Segmented/demos/atoms.tsx"
     },
     {
-      "document": "src/base-ui/Select/index.md",
+      "document": "src/base-ui/Select/index.mdx",
       "legacyId": "src-base-ui-select-demo-demos",
       "legacyRouteId": "components/base-ui/Select/index",
       "options": {
@@ -3757,7 +3757,7 @@
       "source": "src/base-ui/Select/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Select/index.md",
+      "document": "src/base-ui/Select/index.mdx",
       "legacyId": "src-base-ui-select-demo-atoms",
       "legacyRouteId": "components/base-ui/Select/index",
       "options": {
@@ -3769,7 +3769,7 @@
       "source": "src/base-ui/Select/demos/atoms.tsx"
     },
     {
-      "document": "src/base-ui/Select/index.md",
+      "document": "src/base-ui/Select/index.mdx",
       "legacyId": "src-base-ui-select-demo-render",
       "legacyRouteId": "components/base-ui/Select/index",
       "options": {
@@ -3781,7 +3781,7 @@
       "source": "src/base-ui/Select/demos/render.tsx"
     },
     {
-      "document": "src/base-ui/Select/index.md",
+      "document": "src/base-ui/Select/index.mdx",
       "legacyId": "src-base-ui-select-demo-indicator",
       "legacyRouteId": "components/base-ui/Select/index",
       "options": {
@@ -3793,7 +3793,7 @@
       "source": "src/base-ui/Select/demos/indicator.tsx"
     },
     {
-      "document": "src/base-ui/Select/index.md",
+      "document": "src/base-ui/Select/index.mdx",
       "legacyId": "src-base-ui-select-demo-virtual",
       "legacyRouteId": "components/base-ui/Select/index",
       "options": {
@@ -3805,7 +3805,7 @@
       "source": "src/base-ui/Select/demos/virtual.tsx"
     },
     {
-      "document": "src/base-ui/Switch/index.md",
+      "document": "src/base-ui/Switch/index.mdx",
       "legacyId": "src-base-ui-switch-demo-demos",
       "legacyRouteId": "components/base-ui/Switch/index",
       "options": {
@@ -3817,7 +3817,7 @@
       "source": "src/base-ui/Switch/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Switch/index.md",
+      "document": "src/base-ui/Switch/index.mdx",
       "legacyId": "src-base-ui-switch-demo-atoms",
       "legacyRouteId": "components/base-ui/Switch/index",
       "options": {
@@ -3829,7 +3829,7 @@
       "source": "src/base-ui/Switch/demos/atoms.tsx"
     },
     {
-      "document": "src/base-ui/Tabs/index.md",
+      "document": "src/base-ui/Tabs/index.mdx",
       "legacyId": "src-base-ui-tabs-demo-demos",
       "legacyRouteId": "components/base-ui/Tabs/index",
       "options": {
@@ -3841,7 +3841,7 @@
       "source": "src/base-ui/Tabs/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Tabs/index.md",
+      "document": "src/base-ui/Tabs/index.mdx",
       "legacyId": "src-base-ui-tabs-demo-atoms",
       "legacyRouteId": "components/base-ui/Tabs/index",
       "options": {
@@ -3853,7 +3853,7 @@
       "source": "src/base-ui/Tabs/demos/atoms.tsx"
     },
     {
-      "document": "src/base-ui/Toast/index.md",
+      "document": "src/base-ui/Toast/index.mdx",
       "legacyId": "src-base-ui-toast-demo-demos",
       "legacyRouteId": "components/base-ui/Toast/index",
       "options": {
@@ -3865,7 +3865,7 @@
       "source": "src/base-ui/Toast/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Toast/index.md",
+      "document": "src/base-ui/Toast/index.mdx",
       "legacyId": "src-base-ui-toast-demo-actions",
       "legacyRouteId": "components/base-ui/Toast/index",
       "options": {
@@ -3877,7 +3877,7 @@
       "source": "src/base-ui/Toast/demos/actions.tsx"
     },
     {
-      "document": "src/base-ui/Toast/index.md",
+      "document": "src/base-ui/Toast/index.mdx",
       "legacyId": "src-base-ui-toast-demo-promise",
       "legacyRouteId": "components/base-ui/Toast/index",
       "options": {
@@ -3889,7 +3889,7 @@
       "source": "src/base-ui/Toast/demos/promise.tsx"
     },
     {
-      "document": "src/base-ui/Toast/index.md",
+      "document": "src/base-ui/Toast/index.mdx",
       "legacyId": "src-base-ui-toast-demo-position",
       "legacyRouteId": "components/base-ui/Toast/index",
       "options": {
@@ -3901,7 +3901,7 @@
       "source": "src/base-ui/Toast/demos/position.tsx"
     },
     {
-      "document": "src/base-ui/Tooltip/index.md",
+      "document": "src/base-ui/Tooltip/index.mdx",
       "legacyId": "tooltip-demo-demos",
       "legacyRouteId": "components/base-ui/Tooltip/index",
       "options": {
@@ -3913,7 +3913,7 @@
       "source": "src/base-ui/Tooltip/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Tooltip/index.md",
+      "document": "src/base-ui/Tooltip/index.mdx",
       "legacyId": "tooltip-demo-group",
       "legacyRouteId": "components/base-ui/Tooltip/index",
       "options": {
@@ -3925,7 +3925,7 @@
       "source": "src/base-ui/Tooltip/demos/group.tsx"
     },
     {
-      "document": "src/base-ui/Tooltip/index.md",
+      "document": "src/base-ui/Tooltip/index.mdx",
       "legacyId": "tooltip-demo-group-shared",
       "legacyRouteId": "components/base-ui/Tooltip/index",
       "options": {
@@ -3937,7 +3937,7 @@
       "source": "src/base-ui/Tooltip/demos/group-shared.tsx"
     },
     {
-      "document": "src/base-ui/Tooltip/index.md",
+      "document": "src/base-ui/Tooltip/index.mdx",
       "legacyId": "tooltip-demo-group-remove-trigger",
       "legacyRouteId": "components/base-ui/Tooltip/index",
       "options": {
@@ -3949,7 +3949,7 @@
       "source": "src/base-ui/Tooltip/demos/group-remove-trigger.tsx"
     },
     {
-      "document": "src/base-ui/Tooltip/index.md",
+      "document": "src/base-ui/Tooltip/index.mdx",
       "legacyId": "tooltip-demo-group-children-preserve",
       "legacyRouteId": "components/base-ui/Tooltip/index",
       "options": {
@@ -3961,7 +3961,7 @@
       "source": "src/base-ui/Tooltip/demos/group-children-preserve.tsx"
     },
     {
-      "document": "src/brand/LogoThree/index.md",
+      "document": "src/brand/LogoThree/index.mdx",
       "legacyId": "logothree-demo-demos",
       "legacyRouteId": "components/brand/LogoThree/index",
       "options": {
@@ -3973,7 +3973,7 @@
       "source": "src/brand/LogoThree/demos/index.tsx"
     },
     {
-      "document": "src/brand/LogoThree/index.md",
+      "document": "src/brand/LogoThree/index.mdx",
       "legacyId": "logothree-demo-logospline",
       "legacyRouteId": "components/brand/LogoThree/index",
       "options": {
@@ -3985,7 +3985,7 @@
       "source": "src/brand/LogoThree/demos/LogoSpline.tsx"
     },
     {
-      "document": "src/chat/BackBottom/index.md",
+      "document": "src/chat/BackBottom/index.mdx",
       "legacyId": "src-chat-back-bottom-demo-demos",
       "legacyRouteId": "components/chat/BackBottom/index",
       "options": {
@@ -3997,7 +3997,7 @@
       "source": "src/chat/BackBottom/demos/index.tsx"
     },
     {
-      "document": "src/chat/ChatHeader/index.md",
+      "document": "src/chat/ChatHeader/index.mdx",
       "legacyId": "src-chat-chat-header-demo-demos",
       "legacyRouteId": "components/chat/ChatHeader/index",
       "options": {
@@ -4009,7 +4009,7 @@
       "source": "src/chat/ChatHeader/demos/index.tsx"
     },
     {
-      "document": "src/chat/ChatInputArea/index.md",
+      "document": "src/chat/ChatInputArea/index.mdx",
       "legacyId": "src-chat-chat-input-area-demo-demos",
       "legacyRouteId": "components/chat/ChatInputArea/index",
       "options": {
@@ -4021,7 +4021,7 @@
       "source": "src/chat/ChatInputArea/demos/index.tsx"
     },
     {
-      "document": "src/chat/ChatItem/index.md",
+      "document": "src/chat/ChatItem/index.mdx",
       "legacyId": "src-chat-chat-item-demo-demos",
       "legacyRouteId": "components/chat/ChatItem/index",
       "options": {
@@ -4033,7 +4033,7 @@
       "source": "src/chat/ChatItem/demos/index.tsx"
     },
     {
-      "document": "src/chat/ChatItem/index.md",
+      "document": "src/chat/ChatItem/index.mdx",
       "legacyId": "src-chat-chat-item-demo-table",
       "legacyRouteId": "components/chat/ChatItem/index",
       "options": {
@@ -4045,7 +4045,7 @@
       "source": "src/chat/ChatItem/demos/table.tsx"
     },
     {
-      "document": "src/chat/ChatItem/index.md",
+      "document": "src/chat/ChatItem/index.mdx",
       "legacyId": "src-chat-chat-item-demo-code",
       "legacyRouteId": "components/chat/ChatItem/index",
       "options": {
@@ -4057,7 +4057,7 @@
       "source": "src/chat/ChatItem/demos/code.tsx"
     },
     {
-      "document": "src/chat/ChatItem/index.md",
+      "document": "src/chat/ChatItem/index.mdx",
       "legacyId": "src-chat-chat-item-demo-editing",
       "legacyRouteId": "components/chat/ChatItem/index",
       "options": {
@@ -4069,7 +4069,7 @@
       "source": "src/chat/ChatItem/demos/Editing.tsx"
     },
     {
-      "document": "src/chat/ChatItem/index.md",
+      "document": "src/chat/ChatItem/index.mdx",
       "legacyId": "src-chat-chat-item-demo-alert",
       "legacyRouteId": "components/chat/ChatItem/index",
       "options": {
@@ -4081,7 +4081,7 @@
       "source": "src/chat/ChatItem/demos/Alert.tsx"
     },
     {
-      "document": "src/chat/ChatItem/index.md",
+      "document": "src/chat/ChatItem/index.mdx",
       "legacyId": "src-chat-chat-item-demo-alertwithdefaultmessageplacehoder",
       "legacyRouteId": "components/chat/ChatItem/index",
       "options": {
@@ -4093,7 +4093,7 @@
       "source": "src/chat/ChatItem/demos/AlertWithDefaultMessagePlacehoder.tsx"
     },
     {
-      "document": "src/chat/ChatItem/index.md",
+      "document": "src/chat/ChatItem/index.mdx",
       "legacyId": "src-chat-chat-item-demo-alertwithcontent",
       "legacyRouteId": "components/chat/ChatItem/index",
       "options": {
@@ -4105,7 +4105,7 @@
       "source": "src/chat/ChatItem/demos/AlertWithContent.tsx"
     },
     {
-      "document": "src/chat/ChatList/index.md",
+      "document": "src/chat/ChatList/index.mdx",
       "legacyId": "src-chat-chat-list-demo-demos",
       "legacyRouteId": "components/chat/ChatList/index",
       "options": {
@@ -4117,7 +4117,7 @@
       "source": "src/chat/ChatList/demos/index.tsx"
     },
     {
-      "document": "src/chat/EditableMessage/index.md",
+      "document": "src/chat/EditableMessage/index.mdx",
       "legacyId": "src-chat-editable-message-demo-demos",
       "legacyRouteId": "components/chat/EditableMessage/index",
       "options": {
@@ -4129,7 +4129,7 @@
       "source": "src/chat/EditableMessage/demos/index.tsx"
     },
     {
-      "document": "src/chat/EditableMessageList/index.md",
+      "document": "src/chat/EditableMessageList/index.mdx",
       "legacyId": "src-chat-editable-message-list-demo-demos",
       "legacyRouteId": "components/chat/EditableMessageList/index",
       "options": {
@@ -4141,7 +4141,7 @@
       "source": "src/chat/EditableMessageList/demos/index.tsx"
     },
     {
-      "document": "src/chat/LoadingDots/index.md",
+      "document": "src/chat/LoadingDots/index.mdx",
       "legacyId": "loadingdots-demo-demos",
       "legacyRouteId": "components/chat/LoadingDots/index",
       "options": {
@@ -4153,7 +4153,7 @@
       "source": "src/chat/LoadingDots/demos/index.tsx"
     },
     {
-      "document": "src/chat/MessageInput/index.md",
+      "document": "src/chat/MessageInput/index.mdx",
       "legacyId": "src-chat-message-input-demo-demos",
       "legacyRouteId": "components/chat/MessageInput/index",
       "options": {
@@ -4165,7 +4165,7 @@
       "source": "src/chat/MessageInput/demos/index.tsx"
     },
     {
-      "document": "src/chat/MessageModal/index.md",
+      "document": "src/chat/MessageModal/index.mdx",
       "legacyId": "src-chat-message-modal-demo-demos",
       "legacyRouteId": "components/chat/MessageModal/index",
       "options": {
@@ -4177,7 +4177,7 @@
       "source": "src/chat/MessageModal/demos/index.tsx"
     },
     {
-      "document": "src/chat/MessageModal/index.md",
+      "document": "src/chat/MessageModal/index.mdx",
       "legacyId": "src-chat-message-modal-demo-edit",
       "legacyRouteId": "components/chat/MessageModal/index",
       "options": {
@@ -4189,7 +4189,7 @@
       "source": "src/chat/MessageModal/demos/edit.tsx"
     },
     {
-      "document": "src/chat/TokenTag/index.md",
+      "document": "src/chat/TokenTag/index.mdx",
       "legacyId": "tokentag-demo-demos",
       "legacyRouteId": "components/chat/TokenTag/index",
       "options": {
@@ -4201,7 +4201,7 @@
       "source": "src/chat/TokenTag/demos/index.tsx"
     },
     {
-      "document": "src/i18n/index.md",
+      "document": "src/i18n/index.mdx",
       "legacyId": "src-i-18-n-demo-demos",
       "legacyRouteId": "components/i18n/index",
       "options": {
@@ -4213,7 +4213,7 @@
       "source": "src/i18n/demos/index.tsx"
     },
     {
-      "document": "src/i18n/index.md",
+      "document": "src/i18n/index.mdx",
       "legacyId": "src-i-18-n-demo-configprovider",
       "legacyRouteId": "components/i18n/index",
       "options": {
@@ -4225,7 +4225,7 @@
       "source": "src/i18n/demos/ConfigProvider.tsx"
     },
     {
-      "document": "src/i18n/index.md",
+      "document": "src/i18n/index.mdx",
       "legacyId": "src-i-18-n-demo-dynamicimport",
       "legacyRouteId": "components/i18n/index",
       "options": {
@@ -4237,7 +4237,7 @@
       "source": "src/i18n/demos/DynamicImport.tsx"
     },
     {
-      "document": "src/icons/lucideExtra/index.md",
+      "document": "src/icons/lucideExtra/index.mdx",
       "legacyId": "src-icons-lucide-extra-demo-demos",
       "legacyRouteId": "components/icons/lucideExtra/index",
       "options": {
@@ -4249,7 +4249,7 @@
       "source": "src/icons/lucideExtra/demos/index.tsx"
     },
     {
-      "document": "src/mdx/Callout/index.md",
+      "document": "src/mdx/Callout/index.mdx",
       "legacyId": "callout-demo-demos",
       "legacyRouteId": "components/mdx/Callout/index",
       "options": {
@@ -4261,7 +4261,7 @@
       "source": "src/mdx/Callout/demos/index.tsx"
     },
     {
-      "document": "src/mdx/Callout/index.md",
+      "document": "src/mdx/Callout/index.mdx",
       "legacyId": "callout-demo-story",
       "legacyRouteId": "components/mdx/Callout/index",
       "options": {
@@ -4273,7 +4273,7 @@
       "source": "src/mdx/Callout/demos/Story.tsx"
     },
     {
-      "document": "src/mdx/Cards/index.md",
+      "document": "src/mdx/Cards/index.mdx",
       "legacyId": "cards, card-demo-demos",
       "legacyRouteId": "components/mdx/Cards/index",
       "options": {
@@ -4285,7 +4285,7 @@
       "source": "src/mdx/Cards/demos/index.tsx"
     },
     {
-      "document": "src/mdx/Cards/index.md",
+      "document": "src/mdx/Cards/index.mdx",
       "legacyId": "cards, card-demo-rows",
       "legacyRouteId": "components/mdx/Cards/index",
       "options": {
@@ -4297,7 +4297,7 @@
       "source": "src/mdx/Cards/demos/Rows.tsx"
     },
     {
-      "document": "src/mdx/FileTree/index.md",
+      "document": "src/mdx/FileTree/index.mdx",
       "legacyId": "file, filetree, folder-demo-demos",
       "legacyRouteId": "components/mdx/FileTree/index",
       "options": {
@@ -4309,7 +4309,7 @@
       "source": "src/mdx/FileTree/demos/index.tsx"
     },
     {
-      "document": "src/mdx/Mdx/index.md",
+      "document": "src/mdx/Mdx/index.mdx",
       "legacyId": "mdx-demo-demos",
       "legacyRouteId": "components/mdx/Mdx/index",
       "options": {
@@ -4321,7 +4321,7 @@
       "source": "src/mdx/Mdx/demos/index.tsx"
     },
     {
-      "document": "src/mdx/Steps/index.md",
+      "document": "src/mdx/Steps/index.mdx",
       "legacyId": "steps-demo-demos",
       "legacyRouteId": "components/mdx/Steps/index",
       "options": {
@@ -4333,7 +4333,7 @@
       "source": "src/mdx/Steps/demos/index.tsx"
     },
     {
-      "document": "src/mdx/Tabs/index.md",
+      "document": "src/mdx/Tabs/index.mdx",
       "legacyId": "tabs, tab-demo-demos",
       "legacyRouteId": "components/mdx/Tabs/index",
       "options": {
@@ -4345,7 +4345,7 @@
       "source": "src/mdx/Tabs/demos/index.tsx"
     },
     {
-      "document": "src/mobile/ChatHeader/index.md",
+      "document": "src/mobile/ChatHeader/index.mdx",
       "legacyId": "src-mobile-chat-header-demo-demos",
       "legacyRouteId": "components/mobile/ChatHeader/index",
       "options": {
@@ -4357,7 +4357,7 @@
       "source": "src/mobile/ChatHeader/demos/index.tsx"
     },
     {
-      "document": "src/mobile/ChatInputArea/index.md",
+      "document": "src/mobile/ChatInputArea/index.mdx",
       "legacyId": "src-mobile-chat-input-area-demo-demos",
       "legacyRouteId": "components/mobile/ChatInputArea/index",
       "options": {
@@ -4369,7 +4369,7 @@
       "source": "src/mobile/ChatInputArea/demos/index.tsx"
     },
     {
-      "document": "src/mobile/SafeArea/index.md",
+      "document": "src/mobile/SafeArea/index.mdx",
       "legacyId": "safearea-demo-demos",
       "legacyRouteId": "components/mobile/SafeArea/index",
       "options": {
@@ -4381,7 +4381,7 @@
       "source": "src/mobile/SafeArea/demos/index.tsx"
     },
     {
-      "document": "src/mobile/TabBar/index.md",
+      "document": "src/mobile/TabBar/index.mdx",
       "legacyId": "src-mobile-tab-bar-demo-demos",
       "legacyRouteId": "components/mobile/TabBar/index",
       "options": {
@@ -4393,7 +4393,7 @@
       "source": "src/mobile/TabBar/demos/index.tsx"
     },
     {
-      "document": "src/storybook/StoryBook/index.md",
+      "document": "src/storybook/StoryBook/index.mdx",
       "legacyId": "storybook-demo-demos",
       "legacyRouteId": "components/storybook/StoryBook/index",
       "options": {
@@ -4426,7 +4426,7 @@
       "legacyRouteId": "components/Accordion/index",
       "pathname": "/components/accordion",
       "section": "Components",
-      "source": "src/Accordion/index.md",
+      "source": "src/Accordion/index.mdx",
       "title": "Accordion"
     },
     {
@@ -4435,7 +4435,7 @@
       "legacyRouteId": "components/ActionIcon/index",
       "pathname": "/components/action-icon",
       "section": "Components",
-      "source": "src/ActionIcon/index.md",
+      "source": "src/ActionIcon/index.mdx",
       "title": "ActionIcon"
     },
     {
@@ -4444,7 +4444,7 @@
       "legacyRouteId": "components/ActionIconGroup/index",
       "pathname": "/components/action-icon-group",
       "section": "Components",
-      "source": "src/ActionIconGroup/index.md",
+      "source": "src/ActionIconGroup/index.mdx",
       "title": "ActionIconGroup"
     },
     {
@@ -4453,7 +4453,7 @@
       "legacyRouteId": "components/Alert/index",
       "pathname": "/components/alert",
       "section": "Components",
-      "source": "src/Alert/index.md",
+      "source": "src/Alert/index.mdx",
       "title": "Alert"
     },
     {
@@ -4461,7 +4461,7 @@
       "legacyRouteId": "components/AutoComplete/index",
       "pathname": "/components/auto-complete",
       "section": "Components",
-      "source": "src/AutoComplete/index.md",
+      "source": "src/AutoComplete/index.mdx",
       "title": "AutoComplete"
     },
     {
@@ -4470,7 +4470,7 @@
       "legacyRouteId": "components/Avatar/index",
       "pathname": "/components/avatar",
       "section": "Components",
-      "source": "src/Avatar/index.md",
+      "source": "src/Avatar/index.mdx",
       "title": "Avatar"
     },
     {
@@ -4478,7 +4478,7 @@
       "legacyRouteId": "components/Block/index",
       "pathname": "/components/block",
       "section": "Components",
-      "source": "src/Block/index.md",
+      "source": "src/Block/index.mdx",
       "title": "Block"
     },
     {
@@ -4486,7 +4486,7 @@
       "legacyRouteId": "components/Burger/index",
       "pathname": "/components/burger",
       "section": "Components",
-      "source": "src/Burger/index.md",
+      "source": "src/Burger/index.mdx",
       "title": "Burger"
     },
     {
@@ -4504,7 +4504,7 @@
       "legacyRouteId": "components/Checkbox/index",
       "pathname": "/components/checkbox",
       "section": "Components",
-      "source": "src/Checkbox/index.md",
+      "source": "src/Checkbox/index.mdx",
       "title": "Checkbox"
     },
     {
@@ -4513,7 +4513,7 @@
       "legacyRouteId": "components/CodeDiff/index",
       "pathname": "/components/code-diff",
       "section": "Components",
-      "source": "src/CodeDiff/index.md",
+      "source": "src/CodeDiff/index.mdx",
       "title": "CodeDiff"
     },
     {
@@ -4521,7 +4521,7 @@
       "legacyRouteId": "components/CodeEditor/index",
       "pathname": "/components/code-editor",
       "section": "Components",
-      "source": "src/CodeEditor/index.md",
+      "source": "src/CodeEditor/index.mdx",
       "title": "CodeEditor"
     },
     {
@@ -4529,7 +4529,7 @@
       "legacyRouteId": "components/Collapse/index",
       "pathname": "/components/collapse",
       "section": "Components",
-      "source": "src/Collapse/index.md",
+      "source": "src/Collapse/index.mdx",
       "title": "Collapse"
     },
     {
@@ -4537,7 +4537,7 @@
       "legacyRouteId": "components/ColorSwatches/index",
       "pathname": "/components/color-swatches",
       "section": "Components",
-      "source": "src/ColorSwatches/index.md",
+      "source": "src/ColorSwatches/index.mdx",
       "title": "ColorSwatches"
     },
     {
@@ -4545,7 +4545,7 @@
       "legacyRouteId": "components/ConfigProvider/index",
       "pathname": "/components/config-provider",
       "section": "Components",
-      "source": "src/ConfigProvider/index.md",
+      "source": "src/ConfigProvider/index.mdx",
       "title": "ConfigProvider"
     },
     {
@@ -4554,7 +4554,7 @@
       "legacyRouteId": "components/ContextMenu/index",
       "pathname": "/components/context-menu",
       "section": "Components",
-      "source": "src/ContextMenu/index.md",
+      "source": "src/ContextMenu/index.mdx",
       "title": "ContextMenu"
     },
     {
@@ -4563,7 +4563,7 @@
       "legacyRouteId": "components/CopyButton/index",
       "pathname": "/components/copy-button",
       "section": "Components",
-      "source": "src/CopyButton/index.md",
+      "source": "src/CopyButton/index.mdx",
       "title": "CopyButton"
     },
     {
@@ -4572,7 +4572,7 @@
       "legacyRouteId": "components/DatePicker/index",
       "pathname": "/components/date-picker",
       "section": "Components",
-      "source": "src/DatePicker/index.md",
+      "source": "src/DatePicker/index.mdx",
       "title": "DatePicker"
     },
     {
@@ -4581,7 +4581,7 @@
       "legacyRouteId": "components/DownloadButton/index",
       "pathname": "/components/download-button",
       "section": "Components",
-      "source": "src/DownloadButton/index.md",
+      "source": "src/DownloadButton/index.mdx",
       "title": "DownloadButton"
     },
     {
@@ -4590,7 +4590,7 @@
       "legacyRouteId": "components/DraggablePanel/index",
       "pathname": "/components/draggable-panel",
       "section": "Components",
-      "source": "src/DraggablePanel/index.md",
+      "source": "src/DraggablePanel/index.mdx",
       "title": "DraggablePanel"
     },
     {
@@ -4599,7 +4599,7 @@
       "legacyRouteId": "components/DraggableSideNav/index",
       "pathname": "/components/draggable-side-nav",
       "section": "Components",
-      "source": "src/DraggableSideNav/index.md",
+      "source": "src/DraggableSideNav/index.mdx",
       "title": "DraggableSideNav"
     },
     {
@@ -4608,7 +4608,7 @@
       "legacyRouteId": "components/Drawer/index",
       "pathname": "/components/drawer",
       "section": "Components",
-      "source": "src/Drawer/index.md",
+      "source": "src/Drawer/index.mdx",
       "title": "Drawer"
     },
     {
@@ -4617,7 +4617,7 @@
       "legacyRouteId": "components/Dropdown/index",
       "pathname": "/components/dropdown",
       "section": "Components",
-      "source": "src/Dropdown/index.md",
+      "source": "src/Dropdown/index.mdx",
       "title": "Dropdown"
     },
     {
@@ -4626,7 +4626,7 @@
       "legacyRouteId": "components/DropdownMenu/index",
       "pathname": "/components/dropdown-menu",
       "section": "Components",
-      "source": "src/DropdownMenu/index.md",
+      "source": "src/DropdownMenu/index.mdx",
       "title": "DropdownMenu"
     },
     {
@@ -4635,7 +4635,7 @@
       "legacyRouteId": "components/EditableText/index",
       "pathname": "/components/editable-text",
       "section": "Components",
-      "source": "src/EditableText/index.md",
+      "source": "src/EditableText/index.mdx",
       "title": "EditableText"
     },
     {
@@ -4644,7 +4644,7 @@
       "legacyRouteId": "components/EditorSlashMenu/index",
       "pathname": "/components/editor-slash-menu",
       "section": "Components",
-      "source": "src/EditorSlashMenu/index.md",
+      "source": "src/EditorSlashMenu/index.mdx",
       "title": "EditorSlashMenu"
     },
     {
@@ -4653,7 +4653,7 @@
       "legacyRouteId": "components/EmojiPicker/index",
       "pathname": "/components/emoji-picker",
       "section": "Components",
-      "source": "src/EmojiPicker/index.md",
+      "source": "src/EmojiPicker/index.mdx",
       "title": "EmojiPicker"
     },
     {
@@ -4662,7 +4662,7 @@
       "legacyRouteId": "components/Empty/index",
       "pathname": "/components/empty",
       "section": "Components",
-      "source": "src/Empty/index.md",
+      "source": "src/Empty/index.mdx",
       "title": "Empty"
     },
     {
@@ -4671,7 +4671,7 @@
       "legacyRouteId": "components/FileTypeIcon/index",
       "pathname": "/components/file-type-icon",
       "section": "Components",
-      "source": "src/FileTypeIcon/index.md",
+      "source": "src/FileTypeIcon/index.mdx",
       "title": "FileTypeIcon"
     },
     {
@@ -4680,7 +4680,7 @@
       "legacyRouteId": "components/Flex/index",
       "pathname": "/components/flex",
       "section": "Components",
-      "source": "src/Flex/index.md",
+      "source": "src/Flex/index.mdx",
       "title": "Flex"
     },
     {
@@ -4689,7 +4689,7 @@
       "legacyRouteId": "components/FluentEmoji/index",
       "pathname": "/components/fluent-emoji",
       "section": "Components",
-      "source": "src/FluentEmoji/index.md",
+      "source": "src/FluentEmoji/index.mdx",
       "title": "FluentEmoji"
     },
     {
@@ -4698,7 +4698,7 @@
       "legacyRouteId": "components/FontLoader/index",
       "pathname": "/components/font-loader",
       "section": "Components",
-      "source": "src/FontLoader/index.md",
+      "source": "src/FontLoader/index.mdx",
       "title": "FontLoader"
     },
     {
@@ -4707,7 +4707,7 @@
       "legacyRouteId": "components/Footer/index",
       "pathname": "/components/footer",
       "section": "Components",
-      "source": "src/Footer/index.md",
+      "source": "src/Footer/index.mdx",
       "title": "Footer"
     },
     {
@@ -4716,7 +4716,7 @@
       "legacyRouteId": "components/Form/index",
       "pathname": "/components/form",
       "section": "Components",
-      "source": "src/Form/index.md",
+      "source": "src/Form/index.mdx",
       "title": "Form"
     },
     {
@@ -4725,7 +4725,7 @@
       "legacyRouteId": "components/FormModal/index",
       "pathname": "/components/form-modal",
       "section": "Components",
-      "source": "src/FormModal/index.md",
+      "source": "src/FormModal/index.mdx",
       "title": "FormModal"
     },
     {
@@ -4733,7 +4733,7 @@
       "legacyRouteId": "components/Freeze/index",
       "pathname": "/components/freeze",
       "section": "Components",
-      "source": "src/Freeze/index.md",
+      "source": "src/Freeze/index.mdx",
       "title": "Freeze"
     },
     {
@@ -4742,7 +4742,7 @@
       "legacyRouteId": "components/Grid/index",
       "pathname": "/components/grid",
       "section": "Components",
-      "source": "src/Grid/index.md",
+      "source": "src/Grid/index.mdx",
       "title": "Grid"
     },
     {
@@ -4751,7 +4751,7 @@
       "legacyRouteId": "components/GroupAvatar/index",
       "pathname": "/components/group-avatar",
       "section": "Components",
-      "source": "src/GroupAvatar/index.md",
+      "source": "src/GroupAvatar/index.mdx",
       "title": "GroupAvatar"
     },
     {
@@ -4760,7 +4760,7 @@
       "legacyRouteId": "components/GuideCard/index",
       "pathname": "/components/guide-card",
       "section": "Components",
-      "source": "src/GuideCard/index.md",
+      "source": "src/GuideCard/index.mdx",
       "title": "GuideCard"
     },
     {
@@ -4769,7 +4769,7 @@
       "legacyRouteId": "components/Header/index",
       "pathname": "/components/header",
       "section": "Components",
-      "source": "src/Header/index.md",
+      "source": "src/Header/index.mdx",
       "title": "Header"
     },
     {
@@ -4778,7 +4778,7 @@
       "legacyRouteId": "components/Highlighter/index",
       "pathname": "/components/highlighter",
       "section": "Components",
-      "source": "src/Highlighter/index.md",
+      "source": "src/Highlighter/index.mdx",
       "title": "Highlighter"
     },
     {
@@ -4787,7 +4787,7 @@
       "legacyRouteId": "components/Hotkey/index",
       "pathname": "/components/hotkey",
       "section": "Components",
-      "source": "src/Hotkey/index.md",
+      "source": "src/Hotkey/index.mdx",
       "title": "Hotkey"
     },
     {
@@ -4796,7 +4796,7 @@
       "legacyRouteId": "components/HotkeyInput/index",
       "pathname": "/components/hotkey-input",
       "section": "Components",
-      "source": "src/HotkeyInput/index.md",
+      "source": "src/HotkeyInput/index.mdx",
       "title": "HotkeyInput"
     },
     {
@@ -4805,7 +4805,7 @@
       "legacyRouteId": "components/HtmlPreview/index",
       "pathname": "/components/html-preview",
       "section": "Components",
-      "source": "src/HtmlPreview/index.md",
+      "source": "src/HtmlPreview/index.mdx",
       "title": "HtmlPreview"
     },
     {
@@ -4814,7 +4814,7 @@
       "legacyRouteId": "components/Icon/index",
       "pathname": "/components/icon",
       "section": "Components",
-      "source": "src/Icon/index.md",
+      "source": "src/Icon/index.mdx",
       "title": "Icon"
     },
     {
@@ -4823,7 +4823,7 @@
       "legacyRouteId": "components/Image/index",
       "pathname": "/components/image",
       "section": "Components",
-      "source": "src/Image/index.md",
+      "source": "src/Image/index.mdx",
       "title": "Image"
     },
     {
@@ -4832,7 +4832,7 @@
       "legacyRouteId": "components/ImageSelect/index",
       "pathname": "/components/image-select",
       "section": "Components",
-      "source": "src/ImageSelect/index.md",
+      "source": "src/ImageSelect/index.mdx",
       "title": "ImageSelect"
     },
     {
@@ -4841,7 +4841,7 @@
       "legacyRouteId": "components/Input/index",
       "pathname": "/components/input",
       "section": "Components",
-      "source": "src/Input/index.md",
+      "source": "src/Input/index.mdx",
       "title": "Input"
     },
     {
@@ -4850,7 +4850,7 @@
       "legacyRouteId": "components/Layout/index",
       "pathname": "/components/layout",
       "section": "Components",
-      "source": "src/Layout/index.md",
+      "source": "src/Layout/index.mdx",
       "title": "Layout"
     },
     {
@@ -4858,7 +4858,7 @@
       "legacyRouteId": "components/List/index",
       "pathname": "/components/list",
       "section": "Components",
-      "source": "src/List/index.md",
+      "source": "src/List/index.mdx",
       "title": "List"
     },
     {
@@ -4867,7 +4867,7 @@
       "legacyRouteId": "components/Markdown/index",
       "pathname": "/components/markdown",
       "section": "Components",
-      "source": "src/Markdown/index.md",
+      "source": "src/Markdown/index.mdx",
       "title": "Markdown"
     },
     {
@@ -4876,7 +4876,7 @@
       "legacyRouteId": "components/MaskShadow/index",
       "pathname": "/components/mask-shadow",
       "section": "Components",
-      "source": "src/MaskShadow/index.md",
+      "source": "src/MaskShadow/index.mdx",
       "title": "MaskShadow"
     },
     {
@@ -4885,7 +4885,7 @@
       "legacyRouteId": "components/MaterialFileTypeIcon/index",
       "pathname": "/components/material-file-type-icon",
       "section": "Components",
-      "source": "src/MaterialFileTypeIcon/index.md",
+      "source": "src/MaterialFileTypeIcon/index.mdx",
       "title": "MaterialFileTypeIcon"
     },
     {
@@ -4894,7 +4894,7 @@
       "legacyRouteId": "components/Menu/index",
       "pathname": "/components/menu",
       "section": "Components",
-      "source": "src/Menu/index.md",
+      "source": "src/Menu/index.mdx",
       "title": "Menu"
     },
     {
@@ -4903,7 +4903,7 @@
       "legacyRouteId": "components/Mermaid/index",
       "pathname": "/components/mermaid",
       "section": "Components",
-      "source": "src/Mermaid/index.md",
+      "source": "src/Mermaid/index.mdx",
       "title": "Mermaid"
     },
     {
@@ -4912,7 +4912,7 @@
       "legacyRouteId": "components/Modal/index",
       "pathname": "/components/modal",
       "section": "Components",
-      "source": "src/Modal/index.md",
+      "source": "src/Modal/index.mdx",
       "title": "Modal"
     },
     {
@@ -4921,7 +4921,7 @@
       "legacyRouteId": "components/MotionProvider/index",
       "pathname": "/components/motion-provider",
       "section": "Components",
-      "source": "src/MotionProvider/index.md",
+      "source": "src/MotionProvider/index.mdx",
       "title": "MotionProvider"
     },
     {
@@ -4930,7 +4930,7 @@
       "legacyRouteId": "components/NeuralNetworkLoading/index",
       "pathname": "/components/neural-network-loading",
       "section": "Components",
-      "source": "src/NeuralNetworkLoading/index.md",
+      "source": "src/NeuralNetworkLoading/index.mdx",
       "title": "NeuralNetworkLoading"
     },
     {
@@ -4939,7 +4939,7 @@
       "legacyRouteId": "components/ScrollArea/index",
       "pathname": "/components/scroll-area",
       "section": "Components",
-      "source": "src/ScrollArea/index.md",
+      "source": "src/ScrollArea/index.mdx",
       "title": "ScrollArea"
     },
     {
@@ -4948,7 +4948,7 @@
       "legacyRouteId": "components/ScrollShadow/index",
       "pathname": "/components/scroll-shadow",
       "section": "Components",
-      "source": "src/ScrollShadow/index.md",
+      "source": "src/ScrollShadow/index.mdx",
       "title": "ScrollShadow"
     },
     {
@@ -4957,7 +4957,7 @@
       "legacyRouteId": "components/SearchBar/index",
       "pathname": "/components/search-bar",
       "section": "Components",
-      "source": "src/SearchBar/index.md",
+      "source": "src/SearchBar/index.mdx",
       "title": "SearchBar"
     },
     {
@@ -4965,7 +4965,7 @@
       "legacyRouteId": "components/Segmented/index",
       "pathname": "/components/segmented",
       "section": "Components",
-      "source": "src/Segmented/index.md",
+      "source": "src/Segmented/index.mdx",
       "title": "Segmented"
     },
     {
@@ -4974,7 +4974,7 @@
       "legacyRouteId": "components/Select/index",
       "pathname": "/components/select",
       "section": "Components",
-      "source": "src/Select/index.md",
+      "source": "src/Select/index.mdx",
       "title": "Select"
     },
     {
@@ -4983,7 +4983,7 @@
       "legacyRouteId": "components/SideNav/index",
       "pathname": "/components/side-nav",
       "section": "Components",
-      "source": "src/SideNav/index.md",
+      "source": "src/SideNav/index.mdx",
       "title": "SideNav"
     },
     {
@@ -4992,7 +4992,7 @@
       "legacyRouteId": "components/Skeleton/index",
       "pathname": "/components/skeleton",
       "section": "Components",
-      "source": "src/Skeleton/index.md",
+      "source": "src/Skeleton/index.mdx",
       "title": "Skeleton"
     },
     {
@@ -5001,7 +5001,7 @@
       "legacyRouteId": "components/SliderWithInput/index",
       "pathname": "/components/slider-with-input",
       "section": "Components",
-      "source": "src/SliderWithInput/index.md",
+      "source": "src/SliderWithInput/index.mdx",
       "title": "SliderWithInput"
     },
     {
@@ -5010,7 +5010,7 @@
       "legacyRouteId": "components/Snippet/index",
       "pathname": "/components/snippet",
       "section": "Components",
-      "source": "src/Snippet/index.md",
+      "source": "src/Snippet/index.mdx",
       "title": "Snippet"
     },
     {
@@ -5019,7 +5019,7 @@
       "legacyRouteId": "components/SortableList/index",
       "pathname": "/components/sortable-list",
       "section": "Components",
-      "source": "src/SortableList/index.md",
+      "source": "src/SortableList/index.mdx",
       "title": "SortableList"
     },
     {
@@ -5028,7 +5028,7 @@
       "legacyRouteId": "components/Tabs/index",
       "pathname": "/components/tabs",
       "section": "Components",
-      "source": "src/Tabs/index.md",
+      "source": "src/Tabs/index.mdx",
       "title": "Tabs"
     },
     {
@@ -5037,7 +5037,7 @@
       "legacyRouteId": "components/Tag/index",
       "pathname": "/components/tag",
       "section": "Components",
-      "source": "src/Tag/index.md",
+      "source": "src/Tag/index.mdx",
       "title": "Tag"
     },
     {
@@ -5046,7 +5046,7 @@
       "legacyRouteId": "components/Text/index",
       "pathname": "/components/text",
       "section": "Components",
-      "source": "src/Text/index.md",
+      "source": "src/Text/index.mdx",
       "title": "Text"
     },
     {
@@ -5055,7 +5055,7 @@
       "legacyRouteId": "components/ThemeProvider/index",
       "pathname": "/components/theme-provider",
       "section": "Components",
-      "source": "src/ThemeProvider/index.md",
+      "source": "src/ThemeProvider/index.mdx",
       "title": "ThemeProvider"
     },
     {
@@ -5064,7 +5064,7 @@
       "legacyRouteId": "components/ThemeSwitch/index",
       "pathname": "/components/theme-switch",
       "section": "Components",
-      "source": "src/ThemeSwitch/index.md",
+      "source": "src/ThemeSwitch/index.mdx",
       "title": "ThemeSwitch"
     },
     {
@@ -5073,7 +5073,7 @@
       "legacyRouteId": "components/Toc/index",
       "pathname": "/components/toc",
       "section": "Components",
-      "source": "src/Toc/index.md",
+      "source": "src/Toc/index.mdx",
       "title": "Toc"
     },
     {
@@ -5082,7 +5082,7 @@
       "legacyRouteId": "components/Video/index",
       "pathname": "/components/video",
       "section": "Components",
-      "source": "src/Video/index.md",
+      "source": "src/Video/index.mdx",
       "title": "Video"
     },
     {
@@ -5091,7 +5091,7 @@
       "legacyRouteId": "components/awesome/AuroraBackground/index",
       "pathname": "/components/awesome/aurora-background",
       "section": "Awesome",
-      "source": "src/awesome/AuroraBackground/index.md",
+      "source": "src/awesome/AuroraBackground/index.mdx",
       "title": "AuroraBackground"
     },
     {
@@ -5099,7 +5099,7 @@
       "legacyRouteId": "components/awesome/BottomGradientButton/index",
       "pathname": "/components/awesome/bottom-gradient-button",
       "section": "Awesome",
-      "source": "src/awesome/BottomGradientButton/index.md",
+      "source": "src/awesome/BottomGradientButton/index.mdx",
       "title": "BottomGradientButton"
     },
     {
@@ -5108,7 +5108,7 @@
       "legacyRouteId": "components/awesome/Features/index",
       "pathname": "/components/awesome/features",
       "section": "Awesome",
-      "source": "src/awesome/Features/index.md",
+      "source": "src/awesome/Features/index.mdx",
       "title": "Features"
     },
     {
@@ -5117,7 +5117,7 @@
       "legacyRouteId": "components/awesome/Giscus/index",
       "pathname": "/components/awesome/giscus",
       "section": "Awesome",
-      "source": "src/awesome/Giscus/index.md",
+      "source": "src/awesome/Giscus/index.mdx",
       "title": "Giscus"
     },
     {
@@ -5126,7 +5126,7 @@
       "legacyRouteId": "components/awesome/GradientButton/index",
       "pathname": "/components/awesome/gradient-button",
       "section": "Awesome",
-      "source": "src/awesome/GradientButton/index.md",
+      "source": "src/awesome/GradientButton/index.mdx",
       "title": "GradientButton"
     },
     {
@@ -5135,7 +5135,7 @@
       "legacyRouteId": "components/awesome/GridBackground/index",
       "pathname": "/components/awesome/grid-background",
       "section": "Awesome",
-      "source": "src/awesome/GridBackground/index.md",
+      "source": "src/awesome/GridBackground/index.mdx",
       "title": "GridBackground"
     },
     {
@@ -5144,7 +5144,7 @@
       "legacyRouteId": "components/awesome/Hero/index",
       "pathname": "/components/awesome/hero",
       "section": "Awesome",
-      "source": "src/awesome/Hero/index.md",
+      "source": "src/awesome/Hero/index.mdx",
       "title": "Hero"
     },
     {
@@ -5153,7 +5153,7 @@
       "legacyRouteId": "components/awesome/Spotlight/index",
       "pathname": "/components/awesome/spotlight",
       "section": "Awesome",
-      "source": "src/awesome/Spotlight/index.md",
+      "source": "src/awesome/Spotlight/index.mdx",
       "title": "Spotlight"
     },
     {
@@ -5162,7 +5162,7 @@
       "legacyRouteId": "components/awesome/SpotlightCard/index",
       "pathname": "/components/awesome/spotlight-card",
       "section": "Awesome",
-      "source": "src/awesome/SpotlightCard/index.md",
+      "source": "src/awesome/SpotlightCard/index.mdx",
       "title": "SpotlightCard"
     },
     {
@@ -5171,7 +5171,7 @@
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "pathname": "/components/awesome/typewriter-effect",
       "section": "Awesome",
-      "source": "src/awesome/TypewriterEffect/index.md",
+      "source": "src/awesome/TypewriterEffect/index.mdx",
       "title": "TypewriterEffect"
     },
     {
@@ -5180,7 +5180,7 @@
       "legacyRouteId": "components/base-ui/Button/index",
       "pathname": "/components/base-ui/button",
       "section": "Base UI",
-      "source": "src/base-ui/Button/index.md",
+      "source": "src/base-ui/Button/index.mdx",
       "title": "Button"
     },
     {
@@ -5189,7 +5189,7 @@
       "legacyRouteId": "components/base-ui/ContextMenu/index",
       "pathname": "/components/base-ui/context-menu",
       "section": "Base UI",
-      "source": "src/base-ui/ContextMenu/index.md",
+      "source": "src/base-ui/ContextMenu/index.mdx",
       "title": "ContextMenu"
     },
     {
@@ -5198,7 +5198,7 @@
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "pathname": "/components/base-ui/dropdown-menu",
       "section": "Base UI",
-      "source": "src/base-ui/DropdownMenu/index.md",
+      "source": "src/base-ui/DropdownMenu/index.mdx",
       "title": "DropdownMenu"
     },
     {
@@ -5207,7 +5207,7 @@
       "legacyRouteId": "components/base-ui/FloatingPanel/index",
       "pathname": "/components/base-ui/floating-panel",
       "section": "Base UI",
-      "source": "src/base-ui/FloatingPanel/index.md",
+      "source": "src/base-ui/FloatingPanel/index.mdx",
       "title": "FloatingPanel"
     },
     {
@@ -5216,7 +5216,7 @@
       "legacyRouteId": "components/base-ui/FloatingSheet/index",
       "pathname": "/components/base-ui/floating-sheet",
       "section": "Base UI",
-      "source": "src/base-ui/FloatingSheet/index.md",
+      "source": "src/base-ui/FloatingSheet/index.mdx",
       "title": "FloatingSheet"
     },
     {
@@ -5225,7 +5225,7 @@
       "legacyRouteId": "components/base-ui/Modal/index",
       "pathname": "/components/base-ui/modal",
       "section": "Base UI",
-      "source": "src/base-ui/Modal/index.md",
+      "source": "src/base-ui/Modal/index.mdx",
       "title": "Modal"
     },
     {
@@ -5234,7 +5234,7 @@
       "legacyRouteId": "components/base-ui/Popover/index",
       "pathname": "/components/base-ui/popover",
       "section": "Base UI",
-      "source": "src/base-ui/Popover/index.md",
+      "source": "src/base-ui/Popover/index.mdx",
       "title": "Popover"
     },
     {
@@ -5243,7 +5243,7 @@
       "legacyRouteId": "components/base-ui/ScrollArea/index",
       "pathname": "/components/base-ui/scroll-area",
       "section": "Base UI",
-      "source": "src/base-ui/ScrollArea/index.md",
+      "source": "src/base-ui/ScrollArea/index.mdx",
       "title": "ScrollArea"
     },
     {
@@ -5252,7 +5252,7 @@
       "legacyRouteId": "components/base-ui/Segmented/index",
       "pathname": "/components/base-ui/segmented",
       "section": "Base UI",
-      "source": "src/base-ui/Segmented/index.md",
+      "source": "src/base-ui/Segmented/index.mdx",
       "title": "Segmented"
     },
     {
@@ -5261,7 +5261,7 @@
       "legacyRouteId": "components/base-ui/Select/index",
       "pathname": "/components/base-ui/select",
       "section": "Base UI",
-      "source": "src/base-ui/Select/index.md",
+      "source": "src/base-ui/Select/index.mdx",
       "title": "Select"
     },
     {
@@ -5270,7 +5270,7 @@
       "legacyRouteId": "components/base-ui/Switch/index",
       "pathname": "/components/base-ui/switch",
       "section": "Base UI",
-      "source": "src/base-ui/Switch/index.md",
+      "source": "src/base-ui/Switch/index.mdx",
       "title": "Switch"
     },
     {
@@ -5279,7 +5279,7 @@
       "legacyRouteId": "components/base-ui/Tabs/index",
       "pathname": "/components/base-ui/tabs",
       "section": "Base UI",
-      "source": "src/base-ui/Tabs/index.md",
+      "source": "src/base-ui/Tabs/index.mdx",
       "title": "Tabs"
     },
     {
@@ -5288,7 +5288,7 @@
       "legacyRouteId": "components/base-ui/Toast/index",
       "pathname": "/components/base-ui/toast",
       "section": "Base UI",
-      "source": "src/base-ui/Toast/index.md",
+      "source": "src/base-ui/Toast/index.mdx",
       "title": "Toast"
     },
     {
@@ -5297,7 +5297,7 @@
       "legacyRouteId": "components/base-ui/Tooltip/index",
       "pathname": "/components/base-ui/tooltip",
       "section": "Base UI",
-      "source": "src/base-ui/Tooltip/index.md",
+      "source": "src/base-ui/Tooltip/index.mdx",
       "title": "Tooltip"
     },
     {
@@ -5306,7 +5306,7 @@
       "legacyRouteId": "components/brand/BrandLoading/index",
       "pathname": "/components/brand/brand-loading",
       "section": "Brand",
-      "source": "src/brand/BrandLoading/index.md",
+      "source": "src/brand/BrandLoading/index.mdx",
       "title": "BrandLoading"
     },
     {
@@ -5315,7 +5315,7 @@
       "legacyRouteId": "components/brand/LobeChat/index",
       "pathname": "/components/brand/lobe-chat",
       "section": "Brand",
-      "source": "src/brand/LobeChat/index.md",
+      "source": "src/brand/LobeChat/index.mdx",
       "title": "LobeChat"
     },
     {
@@ -5323,7 +5323,7 @@
       "legacyRouteId": "components/brand/LobeChatText/index",
       "pathname": "/components/brand/lobe-chat-text",
       "section": "Brand",
-      "source": "src/brand/LobeChatText/index.md",
+      "source": "src/brand/LobeChatText/index.mdx",
       "title": "LobeChatText"
     },
     {
@@ -5332,7 +5332,7 @@
       "legacyRouteId": "components/brand/LobeHub/index",
       "pathname": "/components/brand/lobe-hub",
       "section": "Brand",
-      "source": "src/brand/LobeHub/index.md",
+      "source": "src/brand/LobeHub/index.mdx",
       "title": "LobeHub"
     },
     {
@@ -5340,7 +5340,7 @@
       "legacyRouteId": "components/brand/LobeHubText/index",
       "pathname": "/components/brand/lobe-hub-text",
       "section": "Brand",
-      "source": "src/brand/LobeHubText/index.md",
+      "source": "src/brand/LobeHubText/index.mdx",
       "title": "LobeHubText"
     },
     {
@@ -5349,7 +5349,7 @@
       "legacyRouteId": "components/brand/Logo3d/index",
       "pathname": "/components/brand/logo3d",
       "section": "Brand",
-      "source": "src/brand/Logo3d/index.md",
+      "source": "src/brand/Logo3d/index.mdx",
       "title": "Logo3d"
     },
     {
@@ -5357,7 +5357,7 @@
       "legacyRouteId": "components/brand/LogoFlat/index",
       "pathname": "/components/brand/logo-flat",
       "section": "Brand",
-      "source": "src/brand/LogoFlat/index.md",
+      "source": "src/brand/LogoFlat/index.mdx",
       "title": "LogoFlat"
     },
     {
@@ -5365,7 +5365,7 @@
       "legacyRouteId": "components/brand/LogoMono/index",
       "pathname": "/components/brand/logo-mono",
       "section": "Brand",
-      "source": "src/brand/LogoMono/index.md",
+      "source": "src/brand/LogoMono/index.mdx",
       "title": "LogoMono"
     },
     {
@@ -5374,7 +5374,7 @@
       "legacyRouteId": "components/brand/LogoThree/index",
       "pathname": "/components/brand/logo-three",
       "section": "Brand",
-      "source": "src/brand/LogoThree/index.md",
+      "source": "src/brand/LogoThree/index.mdx",
       "title": "LogoThree"
     },
     {
@@ -5383,7 +5383,7 @@
       "legacyRouteId": "components/chat/BackBottom/index",
       "pathname": "/components/chat/back-bottom",
       "section": "Chat",
-      "source": "src/chat/BackBottom/index.md",
+      "source": "src/chat/BackBottom/index.mdx",
       "title": "BackBottom"
     },
     {
@@ -5392,7 +5392,7 @@
       "legacyRouteId": "components/chat/ChatHeader/index",
       "pathname": "/components/chat/chat-header",
       "section": "Chat",
-      "source": "src/chat/ChatHeader/index.md",
+      "source": "src/chat/ChatHeader/index.mdx",
       "title": "ChatHeader"
     },
     {
@@ -5401,7 +5401,7 @@
       "legacyRouteId": "components/chat/ChatInputArea/index",
       "pathname": "/components/chat/chat-input-area",
       "section": "Chat",
-      "source": "src/chat/ChatInputArea/index.md",
+      "source": "src/chat/ChatInputArea/index.mdx",
       "title": "ChatInputArea"
     },
     {
@@ -5410,7 +5410,7 @@
       "legacyRouteId": "components/chat/ChatItem/index",
       "pathname": "/components/chat/chat-item",
       "section": "Chat",
-      "source": "src/chat/ChatItem/index.md",
+      "source": "src/chat/ChatItem/index.mdx",
       "title": "ChatItem"
     },
     {
@@ -5419,7 +5419,7 @@
       "legacyRouteId": "components/chat/ChatList/index",
       "pathname": "/components/chat/chat-list",
       "section": "Chat",
-      "source": "src/chat/ChatList/index.md",
+      "source": "src/chat/ChatList/index.mdx",
       "title": "ChatList"
     },
     {
@@ -5428,7 +5428,7 @@
       "legacyRouteId": "components/chat/EditableMessage/index",
       "pathname": "/components/chat/editable-message",
       "section": "Chat",
-      "source": "src/chat/EditableMessage/index.md",
+      "source": "src/chat/EditableMessage/index.mdx",
       "title": "EditableMessage"
     },
     {
@@ -5437,7 +5437,7 @@
       "legacyRouteId": "components/chat/EditableMessageList/index",
       "pathname": "/components/chat/editable-message-list",
       "section": "Chat",
-      "source": "src/chat/EditableMessageList/index.md",
+      "source": "src/chat/EditableMessageList/index.mdx",
       "title": "EditableMessageList"
     },
     {
@@ -5446,7 +5446,7 @@
       "legacyRouteId": "components/chat/LoadingDots/index",
       "pathname": "/components/chat/loading-dots",
       "section": "Chat",
-      "source": "src/chat/LoadingDots/index.md",
+      "source": "src/chat/LoadingDots/index.mdx",
       "title": "LoadingDots"
     },
     {
@@ -5455,7 +5455,7 @@
       "legacyRouteId": "components/chat/MessageInput/index",
       "pathname": "/components/chat/message-input",
       "section": "Chat",
-      "source": "src/chat/MessageInput/index.md",
+      "source": "src/chat/MessageInput/index.mdx",
       "title": "MessageInput"
     },
     {
@@ -5464,7 +5464,7 @@
       "legacyRouteId": "components/chat/MessageModal/index",
       "pathname": "/components/chat/message-modal",
       "section": "Chat",
-      "source": "src/chat/MessageModal/index.md",
+      "source": "src/chat/MessageModal/index.mdx",
       "title": "MessageModal"
     },
     {
@@ -5473,7 +5473,7 @@
       "legacyRouteId": "components/chat/TokenTag/index",
       "pathname": "/components/chat/token-tag",
       "section": "Chat",
-      "source": "src/chat/TokenTag/index.md",
+      "source": "src/chat/TokenTag/index.mdx",
       "title": "TokenTag"
     },
     {
@@ -5481,7 +5481,7 @@
       "legacyRouteId": "components/color/ColorScales/index",
       "pathname": "/components/color/color-scales",
       "section": "Color",
-      "source": "src/color/ColorScales/index.md",
+      "source": "src/color/ColorScales/index.mdx",
       "title": "ColorScales"
     },
     {
@@ -5489,7 +5489,7 @@
       "legacyRouteId": "components/color/CssVar/index",
       "pathname": "/components/color/css-var",
       "section": "Color",
-      "source": "src/color/CssVar/index.md",
+      "source": "src/color/CssVar/index.mdx",
       "title": "CssVar"
     },
     {
@@ -5498,7 +5498,7 @@
       "legacyRouteId": "components/i18n/index",
       "pathname": "/components/i18n",
       "section": "Hooks & Providers",
-      "source": "src/i18n/index.md",
+      "source": "src/i18n/index.mdx",
       "title": "I18n"
     },
     {
@@ -5506,7 +5506,7 @@
       "legacyRouteId": "components/icons/Auth0/index",
       "pathname": "/components/icons/auth0",
       "section": "Icons",
-      "source": "src/icons/Auth0/index.md",
+      "source": "src/icons/Auth0/index.mdx",
       "title": "Auth0"
     },
     {
@@ -5514,7 +5514,7 @@
       "legacyRouteId": "components/icons/Authelia/index",
       "pathname": "/components/icons/authelia",
       "section": "Icons",
-      "source": "src/icons/Authelia/index.md",
+      "source": "src/icons/Authelia/index.mdx",
       "title": "Authelia"
     },
     {
@@ -5522,7 +5522,7 @@
       "legacyRouteId": "components/icons/Authentik/index",
       "pathname": "/components/icons/authentik",
       "section": "Icons",
-      "source": "src/icons/Authentik/index.md",
+      "source": "src/icons/Authentik/index.mdx",
       "title": "Authentik"
     },
     {
@@ -5530,7 +5530,7 @@
       "legacyRouteId": "components/icons/Casdoor/index",
       "pathname": "/components/icons/casdoor",
       "section": "Icons",
-      "source": "src/icons/Casdoor/index.md",
+      "source": "src/icons/Casdoor/index.mdx",
       "title": "Casdoor"
     },
     {
@@ -5538,7 +5538,7 @@
       "legacyRouteId": "components/icons/Clerk/index",
       "pathname": "/components/icons/clerk",
       "section": "Icons",
-      "source": "src/icons/Clerk/index.md",
+      "source": "src/icons/Clerk/index.mdx",
       "title": "Clerk"
     },
     {
@@ -5546,7 +5546,7 @@
       "legacyRouteId": "components/icons/Cloudflare/index",
       "pathname": "/components/icons/cloudflare",
       "section": "Icons",
-      "source": "src/icons/Cloudflare/index.md",
+      "source": "src/icons/Cloudflare/index.mdx",
       "title": "Cloudflare"
     },
     {
@@ -5554,7 +5554,7 @@
       "legacyRouteId": "components/icons/DingTalk/index",
       "pathname": "/components/icons/ding-talk",
       "section": "Icons",
-      "source": "src/icons/DingTalk/index.md",
+      "source": "src/icons/DingTalk/index.mdx",
       "title": "DingTalk"
     },
     {
@@ -5562,7 +5562,7 @@
       "legacyRouteId": "components/icons/Discord/index",
       "pathname": "/components/icons/discord",
       "section": "Icons",
-      "source": "src/icons/Discord/index.md",
+      "source": "src/icons/Discord/index.mdx",
       "title": "Discord"
     },
     {
@@ -5570,7 +5570,7 @@
       "legacyRouteId": "components/icons/Github/index",
       "pathname": "/components/icons/github",
       "section": "Icons",
-      "source": "src/icons/Github/index.md",
+      "source": "src/icons/Github/index.mdx",
       "title": "Github"
     },
     {
@@ -5578,7 +5578,7 @@
       "legacyRouteId": "components/icons/GoogleChat/index",
       "pathname": "/components/icons/google-chat",
       "section": "Icons",
-      "source": "src/icons/GoogleChat/index.md",
+      "source": "src/icons/GoogleChat/index.mdx",
       "title": "GoogleChat"
     },
     {
@@ -5586,7 +5586,7 @@
       "legacyRouteId": "components/icons/IMessage/index",
       "pathname": "/components/icons/i-message",
       "section": "Icons",
-      "source": "src/icons/IMessage/index.md",
+      "source": "src/icons/IMessage/index.mdx",
       "title": "IMessage"
     },
     {
@@ -5594,7 +5594,7 @@
       "legacyRouteId": "components/icons/Lark/index",
       "pathname": "/components/icons/lark",
       "section": "Icons",
-      "source": "src/icons/Lark/index.md",
+      "source": "src/icons/Lark/index.mdx",
       "title": "Lark"
     },
     {
@@ -5602,7 +5602,7 @@
       "legacyRouteId": "components/icons/Line/index",
       "pathname": "/components/icons/line",
       "section": "Icons",
-      "source": "src/icons/Line/index.md",
+      "source": "src/icons/Line/index.mdx",
       "title": "Line"
     },
     {
@@ -5610,7 +5610,7 @@
       "legacyRouteId": "components/icons/Logto/index",
       "pathname": "/components/icons/logto",
       "section": "Icons",
-      "source": "src/icons/Logto/index.md",
+      "source": "src/icons/Logto/index.mdx",
       "title": "Logto"
     },
     {
@@ -5618,7 +5618,7 @@
       "legacyRouteId": "components/icons/MicrosoftEntra/index",
       "pathname": "/components/icons/microsoft-entra",
       "section": "Icons",
-      "source": "src/icons/MicrosoftEntra/index.md",
+      "source": "src/icons/MicrosoftEntra/index.mdx",
       "title": "MicrosoftEntra"
     },
     {
@@ -5626,7 +5626,7 @@
       "legacyRouteId": "components/icons/MicrosoftTeams/index",
       "pathname": "/components/icons/microsoft-teams",
       "section": "Icons",
-      "source": "src/icons/MicrosoftTeams/index.md",
+      "source": "src/icons/MicrosoftTeams/index.mdx",
       "title": "MicrosoftTeams"
     },
     {
@@ -5634,7 +5634,7 @@
       "legacyRouteId": "components/icons/NextAuth/index",
       "pathname": "/components/icons/next-auth",
       "section": "Icons",
-      "source": "src/icons/NextAuth/index.md",
+      "source": "src/icons/NextAuth/index.mdx",
       "title": "NextAuth"
     },
     {
@@ -5642,7 +5642,7 @@
       "legacyRouteId": "components/icons/QQ/index",
       "pathname": "/components/icons/qq",
       "section": "Icons",
-      "source": "src/icons/QQ/index.md",
+      "source": "src/icons/QQ/index.mdx",
       "title": "QQ"
     },
     {
@@ -5650,7 +5650,7 @@
       "legacyRouteId": "components/icons/Slack/index",
       "pathname": "/components/icons/slack",
       "section": "Icons",
-      "source": "src/icons/Slack/index.md",
+      "source": "src/icons/Slack/index.mdx",
       "title": "Slack"
     },
     {
@@ -5658,7 +5658,7 @@
       "legacyRouteId": "components/icons/Telegram/index",
       "pathname": "/components/icons/telegram",
       "section": "Icons",
-      "source": "src/icons/Telegram/index.md",
+      "source": "src/icons/Telegram/index.mdx",
       "title": "Telegram"
     },
     {
@@ -5666,7 +5666,7 @@
       "legacyRouteId": "components/icons/WeChat/index",
       "pathname": "/components/icons/we-chat",
       "section": "Icons",
-      "source": "src/icons/WeChat/index.md",
+      "source": "src/icons/WeChat/index.mdx",
       "title": "WeChat"
     },
     {
@@ -5674,7 +5674,7 @@
       "legacyRouteId": "components/icons/WhatsApp/index",
       "pathname": "/components/icons/whats-app",
       "section": "Icons",
-      "source": "src/icons/WhatsApp/index.md",
+      "source": "src/icons/WhatsApp/index.mdx",
       "title": "WhatsApp"
     },
     {
@@ -5682,7 +5682,7 @@
       "legacyRouteId": "components/icons/Zitadel/index",
       "pathname": "/components/icons/zitadel",
       "section": "Icons",
-      "source": "src/icons/Zitadel/index.md",
+      "source": "src/icons/Zitadel/index.mdx",
       "title": "Zitadel"
     },
     {
@@ -5690,7 +5690,7 @@
       "legacyRouteId": "components/icons/lucideExtra/index",
       "pathname": "/components/icons/lucide-extra",
       "section": "Icons",
-      "source": "src/icons/lucideExtra/index.md",
+      "source": "src/icons/lucideExtra/index.mdx",
       "title": "Extra Icons"
     },
     {
@@ -5699,7 +5699,7 @@
       "legacyRouteId": "components/mdx/Callout/index",
       "pathname": "/components/mdx/callout",
       "section": "Mdx",
-      "source": "src/mdx/Callout/index.md",
+      "source": "src/mdx/Callout/index.mdx",
       "title": "Callout"
     },
     {
@@ -5708,7 +5708,7 @@
       "legacyRouteId": "components/mdx/Cards/index",
       "pathname": "/components/mdx/cards",
       "section": "Mdx",
-      "source": "src/mdx/Cards/index.md",
+      "source": "src/mdx/Cards/index.mdx",
       "title": "Cards"
     },
     {
@@ -5717,7 +5717,7 @@
       "legacyRouteId": "components/mdx/FileTree/index",
       "pathname": "/components/mdx/file-tree",
       "section": "Mdx",
-      "source": "src/mdx/FileTree/index.md",
+      "source": "src/mdx/FileTree/index.mdx",
       "title": "FileTree"
     },
     {
@@ -5726,7 +5726,7 @@
       "legacyRouteId": "components/mdx/Mdx/index",
       "pathname": "/components/mdx/mdx",
       "section": "Mdx",
-      "source": "src/mdx/Mdx/index.md",
+      "source": "src/mdx/Mdx/index.mdx",
       "title": "Mdx"
     },
     {
@@ -5735,7 +5735,7 @@
       "legacyRouteId": "components/mdx/Steps/index",
       "pathname": "/components/mdx/steps",
       "section": "Mdx",
-      "source": "src/mdx/Steps/index.md",
+      "source": "src/mdx/Steps/index.mdx",
       "title": "Steps"
     },
     {
@@ -5744,7 +5744,7 @@
       "legacyRouteId": "components/mdx/Tabs/index",
       "pathname": "/components/mdx/tabs",
       "section": "Mdx",
-      "source": "src/mdx/Tabs/index.md",
+      "source": "src/mdx/Tabs/index.mdx",
       "title": "Tabs"
     },
     {
@@ -5753,7 +5753,7 @@
       "legacyRouteId": "components/mdx/mdxComponents/index",
       "pathname": "/components/mdx/mdx-components",
       "section": "Mdx",
-      "source": "src/mdx/mdxComponents/index.md",
+      "source": "src/mdx/mdxComponents/index.mdx",
       "title": "mdxComponents"
     },
     {
@@ -5761,7 +5761,7 @@
       "legacyRouteId": "components/mobile/ChatHeader/index",
       "pathname": "/components/mobile/chat-header",
       "section": "Mobile",
-      "source": "src/mobile/ChatHeader/index.md",
+      "source": "src/mobile/ChatHeader/index.mdx",
       "title": "ChatHeader"
     },
     {
@@ -5770,7 +5770,7 @@
       "legacyRouteId": "components/mobile/ChatInputArea/index",
       "pathname": "/components/mobile/chat-input-area",
       "section": "Mobile",
-      "source": "src/mobile/ChatInputArea/index.md",
+      "source": "src/mobile/ChatInputArea/index.mdx",
       "title": "ChatInputArea"
     },
     {
@@ -5778,7 +5778,7 @@
       "legacyRouteId": "components/mobile/SafeArea/index",
       "pathname": "/components/mobile/safe-area",
       "section": "Mobile",
-      "source": "src/mobile/SafeArea/index.md",
+      "source": "src/mobile/SafeArea/index.mdx",
       "title": "SafeArea"
     },
     {
@@ -5786,7 +5786,7 @@
       "legacyRouteId": "components/mobile/TabBar/index",
       "pathname": "/components/mobile/tab-bar",
       "section": "Mobile",
-      "source": "src/mobile/TabBar/index.md",
+      "source": "src/mobile/TabBar/index.mdx",
       "title": "TabBar"
     },
     {
@@ -5795,7 +5795,7 @@
       "legacyRouteId": "components/storybook/StoryBook/index",
       "pathname": "/components/storybook/story-book",
       "section": "StoryBook",
-      "source": "src/storybook/StoryBook/index.md",
+      "source": "src/storybook/StoryBook/index.mdx",
       "title": "StoryBook"
     }
   ]

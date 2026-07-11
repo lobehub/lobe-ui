@@ -17,8 +17,13 @@ export interface DocumentManifestEntry extends ContentFrontmatter {
   source: string;
 }
 
-export interface NavigationSection {
+export interface NavigationCategory {
   documents: DocumentManifestEntry[];
+  title: string;
+}
+
+export interface NavigationSection {
+  categories: NavigationCategory[];
   title: string;
 }
 

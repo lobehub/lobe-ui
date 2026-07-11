@@ -1,19 +1,19 @@
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { dirname, join, resolve } from 'node:path';
+import path from 'node:path';
 
 import { createContentManifest } from './createManifest';
 
-const fixtureRoot = resolve(import.meta.dirname, '../../../tests/fixtures/site/content');
+const fixtureRoot = path.resolve(import.meta.dirname, '../../../tests/fixtures/site/content');
 const temporaryRoots: string[] = [];
 
 const createProjectFixture = (files: Record<string, string>): string => {
-  const root = mkdtempSync(join(tmpdir(), 'lobe-ui-content-'));
+  const root = mkdtempSync(path.join(tmpdir(), 'lobe-ui-content-'));
   temporaryRoots.push(root);
 
-  for (const [path, contents] of Object.entries(files)) {
-    const absolutePath = resolve(root, path);
-    mkdirSync(dirname(absolutePath), { recursive: true });
+  for (const [filePath, contents] of Object.entries(files)) {
+    const absolutePath = path.resolve(root, filePath);
+    mkdirSync(path.dirname(absolutePath), { recursive: true });
     writeFileSync(absolutePath, contents);
   }
 
@@ -26,7 +26,10 @@ afterEach(() => {
 
 describe('content manifest', () => {
   it('derives stable paths and navigation from MDX frontmatter', () => {
-    const manifest = createContentManifest(resolve(fixtureRoot, 'valid.mdx'));
+    const root = createProjectFixture({
+      'src/Button/index.mdx': readFileSync(path.resolve(fixtureRoot, 'valid.mdx'), 'utf8'),
+    });
+    const manifest = createContentManifest(root);
 
     expect(manifest.documents[0]).toMatchObject({
       category: 'General',
@@ -34,12 +37,15 @@ describe('content manifest', () => {
       title: 'Button',
     });
     expect(manifest.navigation).toHaveLength(1);
-    expect(manifest.navigation[0]?.title).toBe('General');
-    expect(manifest.navigation[0]?.documents[0]?.pathname).toBe('/components/button');
+    expect(manifest.navigation[0]?.title).toBe('Components');
+    expect(manifest.navigation[0]?.categories[0]?.title).toBe('General');
+    expect(manifest.navigation[0]?.categories[0]?.documents[0]?.pathname).toBe(
+      '/components/button',
+    );
   });
 
   it('reports every invalid field in one actionable diagnostic set', () => {
-    expect(() => createContentManifest(resolve(fixtureRoot, 'invalid.mdx'))).toThrow(
+    expect(() => createContentManifest(path.resolve(fixtureRoot, 'invalid.mdx'))).toThrow(
       /invalid\.mdx[\s\S]*description[\s\S]*category[\s\S]*status/,
     );
   });
@@ -64,7 +70,7 @@ describe('content manifest', () => {
 
   it('canonicalizes a trailing slash in an explicit component route', () => {
     const root = createProjectFixture({
-      'src/Foo/index.mdx': `---
+      'src/Button/index.mdx': `---
 title: Foo
 description: Foo component.
 category: General
@@ -156,7 +162,7 @@ route: /components/foo?preview=1
 
   it('preserves a valid encoded legacy segment while canonicalizing its trailing slash', () => {
     const root = createProjectFixture({
-      'src/Encoded/index.mdx': `---
+      'src/Button/index.mdx': `---
 title: Encoded
 description: Encoded legacy route.
 category: General

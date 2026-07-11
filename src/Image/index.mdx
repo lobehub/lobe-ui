@@ -1,0 +1,50 @@
+---
+title: Image
+description: Image is an enhanced image component with preview capabilities, custom actions, and various display styles. It extends Ant Design's Image component with additional features like size control, loading state, and custom toolbar addons.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoGallery from './demos/Gallery.tsx?demo';
+import DemoFallback from './demos/Fallback.tsx?demo';
+import DemoCustomActions from './demos/CustomActions.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Gallery
+
+<Demo of={DemoGallery} layout="center" />
+
+## Fallback
+
+<Demo of={DemoFallback} layout="center" />
+
+## Custom Actions
+
+<Demo of={DemoCustomActions} layout="center" />
+
+## APIs
+
+### Image
+
+<Api name="Image" migrationKey="heading:%5B%22Image%22%5D:0" />
+
+> Additional props are inherited from Ant Design's [Image](https://ant.design/components/image/) component.
+
+### PreviewGroup
+
+| Property | Description                                  | Type                         | Default |
+| -------- | -------------------------------------------- | ---------------------------- | ------- |
+| enable   | Whether to enable the preview group          | `boolean`                    | `true`  |
+| items    | List of image URLs to include in the preview | `string[]`                   | -       |
+| preview  | Preview options                              | `PreviewGroupPreviewOptions` | -       |
+
+### ImagePreviewOptions
+
+| Property     | Description                                | Type        | Default |
+| ------------ | ------------------------------------------ | ----------- | ------- |
+| toolbarAddon | Additional content for the preview toolbar | `ReactNode` | -       |
+
+> Additional options are inherited from rc-image's ImagePreviewType.

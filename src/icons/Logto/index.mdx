@@ -1,0 +1,40 @@
+---
+title: Logto
+description: Provides the Logto monochrome icon and avatar variant, together with title and primary-color metadata.
+category: Auth Icons
+---
+
+## Icons
+
+```tsx
+import { Logto } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <Logto size={64} />;
+```
+
+## Color
+
+```tsx
+import { Logto } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <Logto.Color size={64} />;
+```
+
+## Avatars
+
+```tsx
+import { Logto } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => (
+  <Flexbox gap={16} horizontal>
+    <Logto.Avatar size={64} />
+    <Logto.Avatar size={64} shape={'square'} />
+  </Flexbox>
+);
+```

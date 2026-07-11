@@ -1,0 +1,40 @@
+---
+title: QQ
+description: Provides the QQ monochrome icon and avatar variant, together with title and primary-color metadata.
+category: Channel Icons
+---
+
+## Icons
+
+```tsx
+import { QQ } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <QQ size={64} />;
+```
+
+## Color
+
+```tsx
+import { QQ } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => <QQ.Color size={64} />;
+```
+
+## Avatars
+
+```tsx
+import { QQ } from '@lobehub/ui/icons';
+
+import { Flexbox } from '@/Flex';
+
+export default () => (
+  <Flexbox gap={16} horizontal>
+    <QQ.Avatar size={64} />
+    <QQ.Avatar size={64} shape={'square'} />
+  </Flexbox>
+);
+```
