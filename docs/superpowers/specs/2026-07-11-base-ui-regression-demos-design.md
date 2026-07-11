@@ -30,6 +30,12 @@ Each demo includes a short instruction and a visible result area. A reviewer mus
 
 The demos use existing Lobe UI layout and typography components and local React state. They do not call external services or depend on application-specific modules.
 
+## Select Search List Spacing
+
+The ReactNode search demo exposed a missing separation between the popup search field and the first option. When a popup search field is rendered, the Select list receives `4px` of block-start padding. This matches the existing DropdownMenu spacing scale while preserving the search divider and individual option heights.
+
+The spacing is conditional: Select popups without a search field keep their existing list geometry. The inline tags input is not a popup search field and does not activate this padding.
+
 ## Alternatives Considered
 
 1. **Component-local demos (selected):** discoverable beside the API and independently reusable during component development.
@@ -48,3 +54,4 @@ The demos use existing Lobe UI layout and typography components and local React 
 - Reproducing LobeHub application screens or product data.
 - Adding network requests, authentication fixtures, or visual snapshot tests.
 - Changing the component fixes already included in PR #560.
+- Changing popup spacing for Select instances without a search field.
