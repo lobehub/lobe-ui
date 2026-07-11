@@ -25,6 +25,14 @@ const themes = [
 
 const SHEET_EXIT_DURATION = 180;
 
+const prefersReducedMotion = () => {
+  try {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  } catch {
+    return false;
+  }
+};
+
 export default function Header({ navigation, onPreferenceChange, preference }: HeaderProps) {
   const [sheetState, setSheetState] = useState<'closed' | 'closing' | 'open'>('closed');
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -39,6 +47,13 @@ export default function Header({ navigation, onPreferenceChange, preference }: H
   const closeNavigation = useCallback(() => {
     if (sheetState === 'closed') return;
     window.clearTimeout(closeTimerRef.current);
+
+    if (prefersReducedMotion()) {
+      setSheetState('closed');
+      menuButtonRef.current?.focus();
+      return;
+    }
+
     setSheetState('closing');
     closeTimerRef.current = window.setTimeout(() => {
       setSheetState('closed');

@@ -13,7 +13,10 @@ const alphaDocument: DocumentManifestEntry = {
   title: 'Alpha',
 };
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  vi.unstubAllGlobals();
+});
 
 it('changes theme preference through accessible named controls', () => {
   const onPreferenceChange = vi.fn();
@@ -51,5 +54,29 @@ it('opens and closes the named mobile navigation sheet and restores trigger focu
   fireEvent.keyDown(document, { key: 'Escape' });
 
   await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+  expect(document.activeElement).toBe(trigger);
+});
+
+it('closes the mobile sheet synchronously when reduced motion is requested', () => {
+  vi.stubGlobal(
+    'matchMedia',
+    vi.fn((query: string) => ({
+      addEventListener: vi.fn(),
+      matches: query === '(prefers-reduced-motion: reduce)',
+      media: query,
+      removeEventListener: vi.fn(),
+    })),
+  );
+  render(
+    <MemoryRouter>
+      <Header navigation={[]} preference="system" onPreferenceChange={vi.fn()} />
+    </MemoryRouter>,
+  );
+
+  const trigger = screen.getByRole('button', { name: 'Open documentation navigation' });
+  fireEvent.click(trigger);
+  fireEvent.keyDown(document, { key: 'Escape' });
+
+  expect(screen.queryByRole('dialog')).toBeNull();
   expect(document.activeElement).toBe(trigger);
 });

@@ -123,12 +123,6 @@
     transform 90ms ease;
 }
 
-.site-header__theme-selector button {
-  width: 2.25rem;
-  min-width: 2.25rem;
-  height: 2.25rem;
-}
-
 .site-header__theme-selector button svg {
   transform: scale(0.9);
   transition: transform 140ms ease;

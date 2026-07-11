@@ -53,12 +53,27 @@ const applyAppearance = (appearance: ResolvedAppearance): void => {
   document.documentElement.style.colorScheme = appearance;
 };
 
+const getBrowserMatchMedia = (): ((query: string) => MediaQueryList) | undefined => {
+  if (typeof window === 'undefined') return;
+  try {
+    return window.matchMedia?.bind(window);
+  } catch {
+    return;
+  }
+};
+
+const getBrowserStorage = (): Storage | undefined => {
+  if (typeof window === 'undefined') return;
+  try {
+    return window.localStorage;
+  } catch {
+    return;
+  }
+};
+
 export function createThemeStore(options: ThemeStoreOptions = {}): ThemeStore {
-  const browserMatchMedia =
-    typeof window === 'undefined' ? undefined : window.matchMedia?.bind(window);
-  const matchMedia = options.matchMedia ?? browserMatchMedia;
-  const storage =
-    options.storage ?? (typeof window === 'undefined' ? undefined : window.localStorage);
+  const matchMedia = options.matchMedia ?? getBrowserMatchMedia();
+  const storage = options.storage ?? getBrowserStorage();
   const media = matchMedia?.(THEME_MEDIA_QUERY);
   const listeners = new Set<() => void>();
   let preference = readPreference(storage);
@@ -89,7 +104,21 @@ export function createThemeStore(options: ThemeStoreOptions = {}): ThemeStore {
     if (preference === 'system') updateSnapshot(preference);
   };
 
-  media?.addEventListener('change', handleSystemChange);
+  let isMediaListening = false;
+
+  const attachMediaListener = (): void => {
+    if (!media || isMediaListening) return;
+    media.addEventListener('change', handleSystemChange);
+    isMediaListening = true;
+    updateSnapshot(preference);
+  };
+
+  const detachMediaListener = (): void => {
+    if (!media || !isMediaListening) return;
+    media.removeEventListener('change', handleSystemChange);
+    isMediaListening = false;
+  };
+
   applyAppearance(snapshot.appearance);
 
   return {
@@ -104,8 +133,14 @@ export function createThemeStore(options: ThemeStoreOptions = {}): ThemeStore {
       updateSnapshot(nextPreference);
     },
     subscribe(listener) {
+      const isFirstSubscriber = listeners.size === 0;
       listeners.add(listener);
-      return () => listeners.delete(listener);
+      if (isFirstSubscriber) attachMediaListener();
+
+      return () => {
+        if (!listeners.delete(listener)) return;
+        if (listeners.size === 0) detachMediaListener();
+      };
     },
   };
 }

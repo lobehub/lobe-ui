@@ -30,24 +30,27 @@ export default function TableOfContents({ contentId, scopeKey }: TableOfContents
       return;
     }
 
-    const usedIds = new Set<string>();
-    const nextItems = Array.from(content.querySelectorAll<HTMLHeadingElement>('h2, h3')).flatMap(
-      (heading) => {
-        const title = heading.textContent?.trim();
-        if (!title) return [];
-
-        const baseId = heading.id || toSlug(title);
-        let id = baseId;
-        let suffix = 2;
-        while (usedIds.has(id)) id = `${baseId}-${suffix++}`;
-        usedIds.add(id);
-        heading.id = id;
-
-        return [
-          { id, level: heading.tagName === 'H3' ? 3 : 2, title } satisfies TableOfContentsItem,
-        ];
-      },
+    const headings = Array.from(content.querySelectorAll<HTMLHeadingElement>('h2, h3'));
+    const candidateHeadings = new Set<Element>(headings);
+    const usedIds = new Set(
+      Array.from(document.querySelectorAll<HTMLElement>('[id]'))
+        .filter((element) => !candidateHeadings.has(element))
+        .map((element) => element.id)
+        .filter(Boolean),
     );
+    const nextItems = headings.flatMap((heading) => {
+      const title = heading.textContent?.trim();
+      if (!title) return [];
+
+      const baseId = heading.id || toSlug(title);
+      let id = baseId;
+      let suffix = 2;
+      while (usedIds.has(id)) id = `${baseId}-${suffix++}`;
+      usedIds.add(id);
+      heading.id = id;
+
+      return [{ id, level: heading.tagName === 'H3' ? 3 : 2, title } satisfies TableOfContentsItem];
+    });
     setItems(nextItems);
   }, [contentId, scopeKey]);
 

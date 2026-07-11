@@ -9,7 +9,14 @@ import Header from './components/Header/Header';
 import globalStyles from './styles/global.css?url';
 import tokenStyles from './styles/tokens.css?url';
 
+const FONT_REGISTRY_ORIGIN = 'https://registry.npmmirror.com';
+const GEIST_FONT_STYLESHEET = `${FONT_REGISTRY_ORIGIN}/@lobehub/webfont-geist/1.0.0/files/css/index.css`;
+const GEIST_MONO_FONT_STYLESHEET = `${FONT_REGISTRY_ORIGIN}/@lobehub/webfont-geist-mono/1.0.0/files/css/index.css`;
+
 export const links: LinksFunction = () => [
+  { crossOrigin: 'anonymous', href: FONT_REGISTRY_ORIGIN, rel: 'preconnect' },
+  { href: GEIST_FONT_STYLESHEET, rel: 'stylesheet' },
+  { href: GEIST_MONO_FONT_STYLESHEET, rel: 'stylesheet' },
   { href: tokenStyles, rel: 'stylesheet' },
   { href: globalStyles, rel: 'stylesheet' },
 ];
