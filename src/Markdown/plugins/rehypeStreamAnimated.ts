@@ -57,7 +57,7 @@ const BLOCK_TAGS = new Set(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li']);
 const SKIP_TAGS = new Set(['pre', 'code', 'table', 'svg']);
 
 function hasClass(node: Element, cls: string): boolean {
-  const cn = node.properties?.className;
+  const cn: unknown = node.properties?.className;
   if (Array.isArray(cn)) return cn.some((c) => String(c).includes(cls));
   if (typeof cn === 'string') return cn.includes(cls);
   return false;
