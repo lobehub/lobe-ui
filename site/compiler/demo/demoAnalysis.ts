@@ -105,16 +105,24 @@ const hasRuntimeImport = (declaration: ts.ImportDeclaration): boolean => {
   const clause = declaration.importClause;
   if (!clause) return true;
   if (clause.isTypeOnly) return false;
-  if (clause.name || (clause.namedBindings && ts.isNamespaceImport(clause.namedBindings))) {
-    return true;
-  }
-  return Boolean(clause.namedBindings?.elements.some((element) => !element.isTypeOnly));
+  if (clause.name) return true;
+
+  const namedBindings = clause.namedBindings;
+  if (!namedBindings) return false;
+  if (ts.isNamespaceImport(namedBindings)) return true;
+  return (
+    namedBindings.elements.length === 0 ||
+    namedBindings.elements.some((element) => !element.isTypeOnly)
+  );
 };
 
 const hasRuntimeExport = (declaration: ts.ExportDeclaration): boolean => {
   if (declaration.isTypeOnly) return false;
   if (!declaration.exportClause || ts.isNamespaceExport(declaration.exportClause)) return true;
-  return declaration.exportClause.elements.some((element) => !element.isTypeOnly);
+  return (
+    declaration.exportClause.elements.length === 0 ||
+    declaration.exportClause.elements.some((element) => !element.isTypeOnly)
+  );
 };
 
 const createScopeImport = (
@@ -145,7 +153,12 @@ const createScopeImport = (
     }
   }
 
-  if (bindings.length === 0) return;
+  if (bindings.length === 0) {
+    if (namedBindings && ts.isNamedImports(namedBindings) && namedBindings.elements.length === 0) {
+      return { bindings, resolvedSource, sideEffect: true, source };
+    }
+    return;
+  }
   return { bindings, resolvedSource, sideEffect: false, source };
 };
 

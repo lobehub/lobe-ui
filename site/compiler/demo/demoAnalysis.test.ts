@@ -103,3 +103,43 @@ it('does not traverse type-only local re-exports', () => {
   expect(analysis.diagnostics).toEqual([]);
   expect(analysis.dependencyPaths).toEqual([]);
 });
+
+it('does not traverse non-empty named clauses whose elements are all type-only', () => {
+  const root = createFixture({
+    'barrel.ts': "export { type Missing } from './missing';\n",
+    'demo.tsx': "import { type Missing } from './barrel';\nexport default () => null;\n",
+  });
+  const analysis = analyzeDemo(resolve(root, 'demo.tsx'));
+
+  expect(analysis.diagnostics).toEqual([]);
+  expect(analysis.dependencyPaths).toEqual([]);
+});
+
+it('treats an empty JavaScript import clause as a runtime dependency edge', () => {
+  const analysis = analyzeDemo(resolve(fixtureRoot, 'empty-import-entry.js'));
+
+  expect(analysis.diagnostics).toContainEqual(
+    expect.objectContaining({
+      code: 'dynamic-import',
+      sourcePath: expect.stringMatching(/empty-import-helper\.js$/),
+    }),
+  );
+  expect(analysis.dependencyPaths).toContain(resolve(fixtureRoot, 'empty-import-helper.js'));
+});
+
+it('treats an empty JavaScript re-export clause as a runtime dependency edge', () => {
+  const analysis = analyzeDemo(resolve(fixtureRoot, 'empty-reexport-entry.js'));
+
+  expect(analysis.diagnostics).toContainEqual(
+    expect.objectContaining({
+      code: 'browser-worker',
+      sourcePath: expect.stringMatching(/empty-reexport-helper\.js$/),
+    }),
+  );
+  expect(analysis.dependencyPaths).toEqual(
+    expect.arrayContaining([
+      resolve(fixtureRoot, 'empty-reexport-barrel.js'),
+      resolve(fixtureRoot, 'empty-reexport-helper.js'),
+    ]),
+  );
+});

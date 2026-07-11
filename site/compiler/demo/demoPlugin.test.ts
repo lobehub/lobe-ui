@@ -70,6 +70,7 @@ const loadDescriptor = async (source: string): Promise<DemoModule> => {
 };
 
 beforeEach(() => {
+  (globalThis as any).__lobeDemoEmptyImportLog = [];
   (globalThis as any).__lobeDemoExecutionLog = [];
   (globalThis as any).__lobeDemoScopeLog = [];
 });
@@ -78,6 +79,7 @@ afterEach(async () => {
   await server?.close();
   server = undefined;
   for (const root of temporaryRoots.splice(0)) rmSync(root, { force: true, recursive: true });
+  delete (globalThis as any).__lobeDemoEmptyImportLog;
   delete (globalThis as any).__lobeDemoExecutionLog;
   delete (globalThis as any).__lobeDemoScopeLog;
 });
@@ -101,6 +103,17 @@ it('loads the editable scope without evaluating the selected demo entry', async 
 
   expect((globalThis as any).__lobeDemoExecutionLog).toEqual([]);
   expect((globalThis as any).__lobeDemoScopeLog).toEqual(['helper']);
+});
+
+it('preserves empty JavaScript imports as editable-scope side effects', async () => {
+  const descriptor = await loadDescriptor('/tests/fixtures/site/demos/empty-import-entry.js?demo');
+
+  expect((globalThis as any).__lobeDemoEmptyImportLog).toEqual([]);
+
+  await descriptor.loadScope();
+
+  expect((globalThis as any).__lobeDemoEmptyImportLog).toEqual(['empty-import-helper']);
+  expect((globalThis as any).__lobeDemoExecutionLog).toEqual([]);
 });
 
 it('preserves every frozen alias by source, including repeated and punctuation-bearing IDs', async () => {
