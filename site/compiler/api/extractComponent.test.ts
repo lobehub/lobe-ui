@@ -1,6 +1,8 @@
 // @vitest-environment node
 
-import { resolve } from 'node:path';
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
 
 import { extractComponentApi } from './extractComponent';
 
@@ -11,6 +13,44 @@ const request = (document: string, name: string, from?: string) => ({
   from,
   name,
   tsconfigPath,
+});
+
+const temporaryRoots: string[] = [];
+
+const temporaryRequest = (
+  files: Record<string, string>,
+  name: string,
+): ReturnType<typeof request> => {
+  const root = mkdtempSync(join(tmpdir(), 'lobe-ui-api-'));
+  temporaryRoots.push(root);
+  for (const [path, source] of Object.entries(files)) {
+    const file = resolve(root, path);
+    mkdirSync(resolve(file, '..'), { recursive: true });
+    writeFileSync(file, source);
+  }
+  writeFileSync(
+    resolve(root, 'tsconfig.json'),
+    JSON.stringify({
+      compilerOptions: {
+        module: 'ESNext',
+        moduleResolution: 'Bundler',
+        noEmit: true,
+        strict: true,
+        target: 'ES2022',
+      },
+      include: ['./**/*.ts'],
+    }),
+  );
+  return {
+    documentPath: resolve(root, 'index.mdx'),
+    from: undefined,
+    name,
+    tsconfigPath: resolve(root, 'tsconfig.json'),
+  };
+};
+
+afterEach(() => {
+  for (const root of temporaryRoots.splice(0)) rmSync(root, { force: true, recursive: true });
 });
 
 describe('public component resolution', () => {
@@ -137,6 +177,54 @@ describe('callable props extraction', () => {
     );
   });
 
+  it('keys a renamed destructuring default by the public property name and detects conflicts', () => {
+    expect(() =>
+      extractComponentApi(
+        request('Button/index.mdx', 'RenamedConflictingDefaultButton', '../component'),
+      ),
+    ).toThrow(
+      /RenamedConflictingDefaultButton[\s\S]*active[\s\S]*runtime[\s\S]*true[\s\S]*@default[\s\S]*false/,
+    );
+  });
+
+  it('does not attribute a nested binding initializer to its public object property', () => {
+    const component = extractComponentApi(
+      request('Button/index.mdx', 'NestedBindingDefaultButton', '../component'),
+    );
+
+    expect(component.properties.find(({ name }) => name === 'settings')?.defaultValue).toBe(
+      undefined,
+    );
+  });
+
+  it('collects a literal default through a real nested memo(forwardRef()) wrapper', () => {
+    const component = extractComponentApi(
+      request('Button/index.mdx', 'NestedForwardDefaultButton', '../component'),
+    );
+
+    expect(component.properties.find(({ name }) => name === 'tone')?.defaultValue).toBe(
+      '"neutral"',
+    );
+  });
+
+  it('follows a memo(ComponentWithDefaults) identifier wrapper', () => {
+    const component = extractComponentApi(
+      request('Button/index.mdx', 'MemoDefaultButton', '../component'),
+    );
+
+    expect(component.properties.find(({ name }) => name === 'active')?.defaultValue).toBe('true');
+  });
+
+  it('does not let an identifier wrapper hide a conflicting runtime default', () => {
+    expect(() =>
+      extractComponentApi(
+        request('Button/index.mdx', 'MemoConflictingDefaultButton', '../component'),
+      ),
+    ).toThrow(
+      /MemoConflictingDefaultButton[\s\S]*active[\s\S]*runtime[\s\S]*true[\s\S]*@default[\s\S]*false/,
+    );
+  });
+
   it('preserves a bare deprecated marker without inventing duplicate badge text', () => {
     const component = extractComponentApi(request('Button/index.mdx', 'Button'));
 
@@ -165,5 +253,67 @@ describe('callable props extraction', () => {
     expect(() =>
       extractComponentApi(request('Button/index.mdx', 'OverloadedButton', '../component')),
     ).toThrow(/OverloadedButton[\s\S]*multiple callable signatures[\s\S]*from=/);
+  });
+
+  it('distinguishes required and optional overload props under exactOptionalPropertyTypes', () => {
+    expect(() =>
+      extractComponentApi(
+        request('Button/index.mdx', 'ExactOptionalOverloadedButton', '../component'),
+      ),
+    ).toThrow(/ExactOptionalOverloadedButton[\s\S]*multiple callable signatures[\s\S]*from=/);
+  });
+
+  it('includes index signatures when comparing overload props contracts', () => {
+    expect(() =>
+      extractComponentApi(request('Button/index.mdx', 'IndexOverloadedButton', '../component')),
+    ).toThrow(/IndexOverloadedButton[\s\S]*multiple callable signatures[\s\S]*from=/);
+  });
+});
+
+describe('props graph integrity', () => {
+  it('fails with the related TypeScript diagnostic when a props import is unresolved', () => {
+    const invalidRequest = temporaryRequest(
+      {
+        'component.ts': `import type { MissingProps } from './missing-props';\nexport const MissingPropsButton = (props: MissingProps) => props;\n`,
+        'index.ts': `export { MissingPropsButton } from './component';\n`,
+      },
+      'MissingPropsButton',
+    );
+
+    expect(() => extractComponentApi(invalidRequest)).toThrow(
+      /index\.mdx[\s\S]*MissingPropsButton[\s\S]*component\.ts[\s\S]*TS2307[\s\S]*missing-props[\s\S]*resolve/i,
+    );
+  });
+
+  it.each([
+    ['AnyPropsButton', 'any'],
+    ['UnknownPropsButton', 'unknown'],
+  ])('rejects an explicit error-like props contract on %s', (name, kind) => {
+    const invalidRequest = temporaryRequest(
+      {
+        'component.ts': `export const ${name} = (props: ${kind}) => props;\n`,
+        'index.ts': `export { ${name} } from './component';\n`,
+      },
+      name,
+    );
+
+    expect(() => extractComponentApi(invalidRequest)).toThrow(
+      new RegExp(`${name}[\\s\\S]*(any|unknown)[\\s\\S]*props`, 'i'),
+    );
+  });
+
+  it('does not fail a valid component because another program file has diagnostics', () => {
+    const validRequest = temporaryRequest(
+      {
+        'component.ts': `export interface ValidProps { label: string }\nexport const ValidButton = (props: ValidProps) => props.label;\n`,
+        'index.ts': `export { ValidButton } from './component';\n`,
+        'unrelated.ts': `const unrelated: string = 123;\n`,
+      },
+      'ValidButton',
+    );
+
+    expect(extractComponentApi(validRequest).properties).toEqual([
+      expect.objectContaining({ name: 'label', required: true, type: 'string' }),
+    ]);
   });
 });

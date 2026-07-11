@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "declaration": false,
+    "exactOptionalPropertyTypes": true,
     "noEmit": true,
     "types": ["react"]
   },

@@ -70,9 +70,51 @@ const unwrapExpression = (expression: ts.Expression): ts.Expression => {
   return current;
 };
 
-const componentImplementation = (
-  declaration: ts.Declaration,
+const resolveAliasSymbol = (checker: ts.TypeChecker, symbol: ts.Symbol): ts.Symbol =>
+  (symbol.flags & ts.SymbolFlags.Alias) === 0 ? symbol : checker.getAliasedSymbol(symbol);
+
+const wrapperName = (expression: ts.LeftHandSideExpression): string | undefined => {
+  if (ts.isIdentifier(expression)) return expression.text;
+  if (ts.isPropertyAccessExpression(expression)) return expression.name.text;
+};
+
+const implementationFromExpression = (
+  context: ApiProgramContext,
+  expression: ts.Expression,
+  visited: Set<ts.Node>,
 ): ts.FunctionLikeDeclaration | undefined => {
+  const unwrapped = unwrapExpression(expression);
+  if (visited.has(unwrapped)) return;
+  visited.add(unwrapped);
+
+  if (ts.isArrowFunction(unwrapped) || ts.isFunctionExpression(unwrapped)) return unwrapped;
+  if (ts.isIdentifier(unwrapped)) {
+    const symbol = context.checker.getSymbolAtLocation(unwrapped);
+    if (!symbol) return;
+    const resolved = resolveAliasSymbol(context.checker, symbol);
+    for (const declaration of [resolved.valueDeclaration, ...(resolved.declarations ?? [])]) {
+      if (!declaration) continue;
+      const implementation = componentImplementation(context, declaration, visited);
+      if (implementation) return implementation;
+    }
+    return;
+  }
+  if (
+    ts.isCallExpression(unwrapped) &&
+    ['assign', 'forwardRef', 'memo'].includes(wrapperName(unwrapped.expression) ?? '')
+  ) {
+    const wrapped = unwrapped.arguments[0];
+    if (wrapped) return implementationFromExpression(context, wrapped, visited);
+  }
+};
+
+const componentImplementation = (
+  context: ApiProgramContext,
+  declaration: ts.Declaration,
+  visited = new Set<ts.Node>(),
+): ts.FunctionLikeDeclaration | undefined => {
+  if (visited.has(declaration)) return;
+  visited.add(declaration);
   if (ts.isFunctionDeclaration(declaration)) return declaration;
 
   let expression: ts.Expression | undefined;
@@ -80,26 +122,36 @@ const componentImplementation = (
   if (ts.isExportAssignment(declaration)) expression = declaration.expression;
   if (!expression) return;
 
-  const unwrapped = unwrapExpression(expression);
-  if (ts.isArrowFunction(unwrapped) || ts.isFunctionExpression(unwrapped)) return unwrapped;
-  if (ts.isCallExpression(unwrapped)) {
-    for (const argument of unwrapped.arguments) {
-      const candidate = unwrapExpression(argument);
-      if (ts.isArrowFunction(candidate) || ts.isFunctionExpression(candidate)) return candidate;
-    }
+  return implementationFromExpression(context, expression, visited);
+};
+
+const bindingPropertyName = (element: ts.BindingElement): string | undefined => {
+  if (!ts.isIdentifier(element.name) || element.dotDotDotToken) return;
+  if (!element.propertyName) return element.name.text;
+  if (
+    ts.isIdentifier(element.propertyName) ||
+    ts.isStringLiteral(element.propertyName) ||
+    ts.isNumericLiteral(element.propertyName)
+  ) {
+    return element.propertyName.text;
   }
 };
 
-const collectRuntimeDefaults = (declaration: ts.Declaration): Map<string, string> => {
+const collectRuntimeDefaults = (
+  context: ApiProgramContext,
+  declaration: ts.Declaration,
+): Map<string, string> => {
   const defaults = new Map<string, string>();
-  const implementation = componentImplementation(declaration);
+  const implementation = componentImplementation(context, declaration);
   const parameter = implementation?.parameters[0];
   if (!parameter || !ts.isObjectBindingPattern(parameter.name)) return defaults;
 
   for (const element of parameter.name.elements) {
-    if (!element.initializer || !ts.isIdentifier(element.name)) continue;
+    if (!element.initializer) continue;
+    const name = bindingPropertyName(element);
+    if (!name) continue;
     const value = literalDefault(element.initializer);
-    if (value !== undefined) defaults.set(element.name.text, value);
+    if (value !== undefined) defaults.set(name, value);
   }
   return defaults;
 };
@@ -135,9 +187,6 @@ const comparableDefault = (value: string): unknown => {
 
 const propertyDeclaration = (symbol: ts.Symbol): ts.Declaration | undefined =>
   symbol.valueDeclaration ?? symbol.declarations?.[0];
-
-const resolveAliasSymbol = (checker: ts.TypeChecker, symbol: ts.Symbol): ts.Symbol =>
-  (symbol.flags & ts.SymbolFlags.Alias) === 0 ? symbol : checker.getAliasedSymbol(symbol);
 
 const containerInfo = (
   checker: ts.TypeChecker,
@@ -200,15 +249,167 @@ const signatureShape = (context: ApiProgramContext, signature: ts.Signature): st
   const declaration = parameter.valueDeclaration ?? parameter.declarations?.[0];
   if (!declaration) return parameter.getName();
   const props = context.checker.getTypeOfSymbolAtLocation(parameter, declaration);
-  return context.checker
-    .getPropertiesOfType(props)
-    .map((property) => {
-      const propertyNode = propertyDeclaration(property) ?? declaration;
-      const type = context.checker.getTypeOfSymbolAtLocation(property, propertyNode);
-      return `${property.getName()}:${renderType(context.checker, type, propertyNode)}`;
-    })
-    .sort()
-    .join(';');
+  const properties = context.checker.getPropertiesOfType(props).map((property) => {
+    const propertyNode = propertyDeclaration(property) ?? declaration;
+    const type = context.checker.getTypeOfSymbolAtLocation(property, propertyNode);
+    const optional = (property.flags & ts.SymbolFlags.Optional) !== 0 ? '?' : '!';
+    return `property:${JSON.stringify(property.getName())}:${optional}:${renderType(context.checker, type, propertyNode)}`;
+  });
+  const indexes = context.checker.getIndexInfosOfType(props).map((index) => {
+    const indexNode = index.declaration ?? declaration;
+    return `index:${index.isReadonly ? 'readonly' : 'mutable'}:${renderType(context.checker, index.keyType, indexNode)}:${renderType(context.checker, index.type, indexNode)}`;
+  });
+  return [...properties, ...indexes].sort().join(';');
+};
+
+interface ReferencedSymbols {
+  names: Set<string>;
+  symbols: Set<ts.Symbol>;
+}
+
+const collectReferencedSymbols = (
+  context: ApiProgramContext,
+  declarations: readonly ts.Node[],
+): ReferencedSymbols => {
+  const names = new Set<string>();
+  const symbols = new Set<ts.Symbol>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node)) {
+      names.add(node.text);
+      const symbol = context.checker.getSymbolAtLocation(node);
+      if (symbol) {
+        symbols.add(symbol);
+        symbols.add(resolveAliasSymbol(context.checker, symbol));
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  for (const declaration of declarations) visit(declaration);
+  return { names, symbols };
+};
+
+const importBindings = (declaration: ts.ImportDeclaration): ts.Identifier[] => {
+  const clause = declaration.importClause;
+  if (!clause) return [];
+  const bindings: ts.Identifier[] = [];
+  if (clause.name) bindings.push(clause.name);
+  if (clause.namedBindings) {
+    if (ts.isNamespaceImport(clause.namedBindings)) bindings.push(clause.namedBindings.name);
+    else {
+      for (const element of clause.namedBindings.elements) bindings.push(element.name);
+    }
+  }
+  return bindings;
+};
+
+const overlaps = (diagnostic: ts.Diagnostic, declaration: ts.Node): boolean => {
+  if (diagnostic.start === undefined || diagnostic.length === undefined) return false;
+  const diagnosticEnd = diagnostic.start + diagnostic.length;
+  return diagnostic.start < declaration.end && diagnosticEnd > declaration.getStart();
+};
+
+const relatedSemanticDiagnostics = (
+  context: ApiProgramContext,
+  declarations: readonly ts.Node[],
+): ts.Diagnostic[] => {
+  const references = collectReferencedSymbols(context, declarations);
+  const byFile = new Map<ts.SourceFile, ts.Node[]>();
+  for (const declaration of declarations) {
+    const sourceFile = declaration.getSourceFile();
+    const entries = byFile.get(sourceFile) ?? [];
+    entries.push(declaration);
+    byFile.set(sourceFile, entries);
+  }
+
+  const diagnostics: ts.Diagnostic[] = [];
+  for (const [sourceFile, relevantDeclarations] of byFile) {
+    for (const diagnostic of context.program.getSemanticDiagnostics(sourceFile)) {
+      if (diagnostic.category !== ts.DiagnosticCategory.Error || diagnostic.file !== sourceFile)
+        continue;
+      if (relevantDeclarations.some((declaration) => overlaps(diagnostic, declaration))) {
+        diagnostics.push(diagnostic);
+        continue;
+      }
+      const relatedImport = sourceFile.statements.find(
+        (statement): statement is ts.ImportDeclaration =>
+          ts.isImportDeclaration(statement) && overlaps(diagnostic, statement),
+      );
+      if (!relatedImport) continue;
+      if (
+        importBindings(relatedImport).some((binding) => {
+          const symbol = context.checker.getSymbolAtLocation(binding);
+          if (!symbol) return references.names.has(binding.text);
+          return (
+            references.symbols.has(symbol) ||
+            references.symbols.has(resolveAliasSymbol(context.checker, symbol))
+          );
+        })
+      ) {
+        diagnostics.push(diagnostic);
+      }
+    }
+  }
+  return diagnostics;
+};
+
+const formatDiagnostics = (diagnostics: readonly ts.Diagnostic[]): string => {
+  const host: ts.FormatDiagnosticsHost = {
+    getCanonicalFileName: (file) => file,
+    getCurrentDirectory: () => process.cwd(),
+    getNewLine: () => '\n',
+  };
+  return ts.formatDiagnostics(diagnostics, host).trim();
+};
+
+const propsDeclarations = (
+  context: ApiProgramContext,
+  componentDeclaration: ts.Declaration,
+  propsType: ts.Type,
+): ts.Node[] => {
+  const declarations = new Set<ts.Node>();
+  if (ts.isVariableDeclaration(componentDeclaration) && componentDeclaration.type) {
+    declarations.add(componentDeclaration.type);
+  }
+  if (ts.isFunctionLike(componentDeclaration)) {
+    for (const parameter of componentDeclaration.parameters) declarations.add(parameter);
+  }
+  const implementation = componentImplementation(context, componentDeclaration);
+  if (implementation?.parameters[0]) declarations.add(implementation.parameters[0]);
+  for (const symbol of collectRootTypeSymbols(context.checker, propsType)) {
+    for (const declaration of symbol.declarations ?? []) declarations.add(declaration);
+  }
+  for (const property of context.checker.getPropertiesOfType(propsType)) {
+    for (const declaration of property.declarations ?? []) declarations.add(declaration);
+  }
+  return [...declarations];
+};
+
+const assertPropsGraph = (
+  context: ApiProgramContext,
+  request: ApiRequest,
+  componentDeclaration: ts.Declaration,
+  propsType: ts.Type,
+): void => {
+  const diagnostics = relatedSemanticDiagnostics(
+    context,
+    propsDeclarations(context, componentDeclaration, propsType),
+  );
+  if (diagnostics.length > 0) {
+    throw new Error(
+      `${request.documentPath}: API "${request.name}" has an incomplete TypeScript props graph related to ${componentDeclaration.getSourceFile().fileName}:\n${formatDiagnostics(diagnostics)}\nResolve the related TypeScript errors before generating this API reference.`,
+    );
+  }
+  const kind =
+    (propsType.flags & ts.TypeFlags.Any) !== 0
+      ? 'any'
+      : (propsType.flags & ts.TypeFlags.Unknown) !== 0
+        ? 'unknown'
+        : undefined;
+  if (kind) {
+    throw new Error(
+      `${request.documentPath}: API "${request.name}" resolves to ${kind} instead of a concrete props contract; define and export a complete props type.`,
+    );
+  }
 };
 
 const resolvePropsType = (
@@ -223,6 +424,14 @@ const resolvePropsType = (
     throw new Error(
       `${request.documentPath}: API "${request.name}" target ${declaration.getSourceFile().fileName} is not callable; export a React component or correct from=.`,
     );
+  }
+  for (const signature of signatures) {
+    const parameter = signature.getParameters()[0];
+    if (!parameter) continue;
+    const parameterDeclaration =
+      parameter.valueDeclaration ?? parameter.declarations?.[0] ?? declaration;
+    const propsType = context.checker.getTypeOfSymbolAtLocation(parameter, parameterDeclaration);
+    assertPropsGraph(context, request, declaration, propsType);
   }
   const shapes = new Set(signatures.map((signature) => signatureShape(context, signature)));
   if (shapes.size > 1) {
@@ -323,7 +532,7 @@ export class ApiExtractor {
         context,
         request,
         propsType,
-        collectRuntimeDefaults(resolved.declaration),
+        collectRuntimeDefaults(context, resolved.declaration),
         dependencies,
       ),
       since: tags.get('since'),

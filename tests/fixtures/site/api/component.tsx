@@ -77,6 +77,64 @@ export const NestedDefaultButton = ({ items, tone = 'neutral' }: NestedDefaultPr
   </div>
 );
 
+interface RenamedConflictingDefaultProps {
+  /**
+   * Whether the fixture is active.
+   * @default false
+   */
+  active?: boolean;
+  nested?: { active?: boolean };
+}
+
+export const RenamedConflictingDefaultButton = ({
+  active: enabled = true,
+  nested: { active: nestedActive = false } = {},
+}: RenamedConflictingDefaultProps) => <button>{String(enabled || nestedActive)}</button>;
+
+interface NestedBindingDefaultProps {
+  settings?: { tone?: string };
+}
+
+export const NestedBindingDefaultButton = ({
+  settings: { tone = 'nested-only' } = {},
+}: NestedBindingDefaultProps) => <button>{tone}</button>;
+
+interface NestedForwardDefaultProps {
+  /** Visual tone selected by the wrapped component. */
+  tone?: string;
+}
+
+export const NestedForwardDefaultButton = memo(
+  ({ ref, tone = 'neutral' }: NestedForwardDefaultProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => (
+    <button data-tone={tone} ref={ref} />
+  ),
+);
+
+interface MemoDefaultProps {
+  /** Whether the memoized fixture is active. */
+  active?: boolean;
+}
+
+const ComponentWithDefaults = ({ active = true }: MemoDefaultProps) => (
+  <button>{String(active)}</button>
+);
+
+export const MemoDefaultButton = memo(ComponentWithDefaults);
+
+interface MemoConflictingDefaultProps {
+  /**
+   * Whether the memoized fixture is active.
+   * @default false
+   */
+  active?: boolean;
+}
+
+const ComponentWithConflictingDefaults = ({ active = true }: MemoConflictingDefaultProps) => (
+  <button>{String(active)}</button>
+);
+
+export const MemoConflictingDefaultButton = memo(ComponentWithConflictingDefaults);
+
 interface EquivalentDefaultProps {
   /** @default 'neutral' */
   tone?: string;
@@ -110,6 +168,34 @@ export function OverloadedButton(props: PrimaryOverloadProps): React.ReactNode;
 export function OverloadedButton(props: SecondaryOverloadProps): React.ReactNode;
 export function OverloadedButton(props: PrimaryOverloadProps | SecondaryOverloadProps) {
   return <button>{'primary' in props ? props.primary : props.secondary}</button>;
+}
+
+interface ExactOptionalProps {
+  value?: string;
+}
+
+interface ExactRequiredProps {
+  value: string;
+}
+
+export function ExactOptionalOverloadedButton(props: ExactOptionalProps): React.ReactNode;
+export function ExactOptionalOverloadedButton(props: ExactRequiredProps): React.ReactNode;
+export function ExactOptionalOverloadedButton(props: ExactOptionalProps | ExactRequiredProps) {
+  return <button>{props.value}</button>;
+}
+
+interface StringIndexProps {
+  [key: string]: string;
+}
+
+interface NumberIndexProps {
+  [key: string]: number;
+}
+
+export function IndexOverloadedButton(props: StringIndexProps): React.ReactNode;
+export function IndexOverloadedButton(props: NumberIndexProps): React.ReactNode;
+export function IndexOverloadedButton(props: StringIndexProps | NumberIndexProps) {
+  return <button>{Object.keys(props).length}</button>;
 }
 
 export default Button;
