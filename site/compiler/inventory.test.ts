@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 
-import { buildDocumentationInventory } from './inventory';
+import { buildDocumentationInventory, deriveAtomIdFromPaths } from './inventory';
 
 const temporaryRoots: string[] = [];
 
@@ -30,6 +30,15 @@ afterEach(() => {
 });
 
 describe('documentation inventory', () => {
+  it('infers the deepest atom namespace from Windows paths', () => {
+    expect(
+      deriveAtomIdFromPaths(
+        ['C:\\repo\\src', 'C:\\repo\\src\\storybook'],
+        'C:\\repo\\src\\storybook\\StoryBook\\index.tsx',
+      ),
+    ).toBe('StoryBook');
+  });
+
   it('selects public source docs while excluding internal specifications', () => {
     const inventory = buildDocumentationInventory(resolve(import.meta.dirname, '../..'));
 

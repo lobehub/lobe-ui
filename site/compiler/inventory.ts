@@ -195,6 +195,26 @@ const deriveDocumentSection = (source: string): string => {
   return packageSectionLabels[namespace] ?? 'Components';
 };
 
+export const deriveAtomIdFromPaths = (
+  atomDirectories: readonly string[],
+  atomFile: string,
+): string | undefined => {
+  const normalizedAtomFile = normalizePath(atomFile);
+  const atomDirectory = atomDirectories
+    .map((directory) => normalizePath(directory).replace(/\/+$/, ''))
+    .sort((left, right) => right.split('/').length - left.split('/').length)
+    .find(
+      (directory) =>
+        normalizedAtomFile === directory || normalizedAtomFile.startsWith(`${directory}/`),
+    );
+  if (!atomDirectory) return undefined;
+
+  return normalizedAtomFile
+    .slice(atomDirectory.length)
+    .replace(/^\/+/, '')
+    .replace(/((^|\/)index)?\.\w+$/, '');
+};
+
 const inferAtomId = (root: string, document: string): string | undefined => {
   const documentDirectory = dirname(resolve(root, document));
   const atomFile = ['index.tsx', 'index.jsx']
@@ -205,13 +225,9 @@ const inferAtomId = (root: string, document: string): string | undefined => {
   const atomDirectories = [
     resolve(root, 'src'),
     ...packageNamespaces.map((namespace) => resolve(root, 'src', namespace)),
-  ].sort((left, right) => right.split('/').length - left.split('/').length);
-  const atomDirectory = atomDirectories.find(
-    (directory) => atomFile === directory || atomFile.startsWith(`${directory}/`),
-  );
-  if (!atomDirectory) return undefined;
+  ];
 
-  return normalizePath(relative(atomDirectory, atomFile)).replace(/((^|\/)index)?\.\w+$/, '');
+  return deriveAtomIdFromPaths(atomDirectories, atomFile);
 };
 
 const createDemoOptions = (attributes: Map<string, string | true>): DemoOptions => ({
