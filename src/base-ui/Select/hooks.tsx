@@ -158,7 +158,10 @@ export function useSelectValue({
       const valuesToAdd = rawValues.map((val) => val.trim()).filter(Boolean);
       if (!valuesToAdd.length) return;
 
-      const nextValues = [...valueArray];
+      const currentValues = Array.isArray(previousValueRef.current)
+        ? previousValueRef.current
+        : valueArray;
+      const nextValues = [...currentValues];
       const newOptionValues = valuesToAdd.filter((val) => !optionMap.has(val));
 
       if (newOptionValues.length > 0) {
@@ -187,6 +190,13 @@ export function useSelectValue({
     [handleValueChange, optionMap, setExtraOptions, valueArray],
   );
 
+  const removeLastTagValue = useCallback(() => {
+    const currentValues = Array.isArray(previousValueRef.current)
+      ? previousValueRef.current
+      : valueArray;
+    if (currentValues.length > 0) handleValueChange(currentValues.slice(0, -1));
+  }, [handleValueChange, valueArray]);
+
   return {
     appendTagValues,
     getOption,
@@ -195,6 +205,7 @@ export function useSelectValue({
     normalizeValue,
     optionMap,
     resolvedOptions,
+    removeLastTagValue,
     valueArray,
   };
 }
@@ -230,6 +241,7 @@ interface UseSelectSearchParams {
   handleOpenChange: (nextOpen: boolean) => void;
   mergedOpen: boolean;
   mode: SelectProps['mode'];
+  removeLastTagValue: () => void;
   resolvedOptions: SelectOptions;
   showSearch: boolean | undefined;
   tokenSeparators: string[] | undefined;
@@ -240,6 +252,7 @@ export function useSelectSearch({
   handleOpenChange,
   mergedOpen,
   mode,
+  removeLastTagValue,
   resolvedOptions,
   showSearch,
   tokenSeparators,
@@ -278,6 +291,12 @@ export function useSelectSearch({
       }
       if (mode !== 'tags') return;
 
+      if (event.key === 'Backspace' && !searchValue) {
+        event.preventDefault();
+        removeLastTagValue();
+        return;
+      }
+
       const isSeparator = tokenSeparators?.includes(event.key);
       if (event.key === 'Enter' || isSeparator) {
         event.preventDefault();
@@ -286,7 +305,7 @@ export function useSelectSearch({
         setSearchValue('');
       }
     },
-    [appendTagValues, handleOpenChange, mode, searchValue, tokenSeparators],
+    [appendTagValues, handleOpenChange, mode, removeLastTagValue, searchValue, tokenSeparators],
   );
 
   // Stop propagation in capture phase + on keyup to block base-ui Popup-level

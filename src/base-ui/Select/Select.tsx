@@ -90,6 +90,7 @@ const Select = memo<SelectProps<any>>(
       handleValueChange,
       normalizedValue,
       normalizeValue,
+      removeLastTagValue,
       resolvedOptions,
       valueArray,
     } = useSelectValue({
@@ -105,6 +106,19 @@ const Select = memo<SelectProps<any>>(
 
     const { handleOpenChange, mergedOpen } = useSelectOpen({ defaultOpen, onOpenChange, open });
 
+    const handleRootValueChange = useCallback(
+      (nextValue: any) => {
+        const isClosedTagsReset =
+          isTags &&
+          !mergedOpen &&
+          Array.isArray(nextValue) &&
+          nextValue.length === 0 &&
+          valueArray.length > 0;
+        if (!isClosedTagsReset) handleValueChange(nextValue);
+      },
+      [handleValueChange, isTags, mergedOpen, valueArray.length],
+    );
+
     const {
       filteredOptions,
       handleSearchChange,
@@ -117,6 +131,7 @@ const Select = memo<SelectProps<any>>(
       handleOpenChange,
       mergedOpen,
       mode,
+      removeLastTagValue,
       resolvedOptions,
       showSearch,
       tokenSeparators,
@@ -226,7 +241,7 @@ const Select = memo<SelectProps<any>>(
         required={required}
         value={normalizedValue}
         onOpenChange={handleOpenChange}
-        onValueChange={handleValueChange}
+        onValueChange={handleRootValueChange}
       >
         <BaseSelect.Trigger
           autoFocus={!isTags && autoFocus}
