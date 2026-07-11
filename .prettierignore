@@ -33,10 +33,13 @@ __snapshots__
 *.snap
 
 # production
+.react-router/
 dist
 es
 lib
 logs
+site/compiler/.cache/
+site/compiler/__fixtures__/
 
 # umi
 .umi

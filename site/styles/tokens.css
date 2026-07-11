@@ -1,0 +1,12 @@
+:root {
+  --docs-background: #fff;
+  --docs-foreground: #111;
+  --docs-font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --docs-background: #111;
+    --docs-foreground: #f5f5f5;
+  }
+}

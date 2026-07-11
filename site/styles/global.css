@@ -1,0 +1,25 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  color: var(--docs-foreground);
+  background: var(--docs-background);
+  font-family: var(--docs-font-sans);
+}
+
+main {
+  width: min(100% - 3rem, 72rem);
+  margin-inline: auto;
+  padding-block: 4rem;
+}
+
+a {
+  color: inherit;
+}

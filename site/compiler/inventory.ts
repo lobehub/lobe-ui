@@ -102,8 +102,9 @@ const parseFrontmatter = (value: string): FrontmatterRecord => {
       continue;
     }
 
-    if (nestedKey && typeof frontmatter[nestedKey] === 'object') {
-      frontmatter[nestedKey][key] = parseScalar(rawValue);
+    const nestedRecord = nestedKey ? frontmatter[nestedKey] : undefined;
+    if (nestedRecord && typeof nestedRecord === 'object') {
+      nestedRecord[key] = parseScalar(rawValue);
     }
   }
 

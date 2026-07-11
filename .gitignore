@@ -25,10 +25,13 @@ coverage
 .stylelintcache
 
 # production
+.react-router/
 dist
 es
 lib
 logs
+site/compiler/.cache/
+site/compiler/__fixtures__/
 test-output
 
 # umi

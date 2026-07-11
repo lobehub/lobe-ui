@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "declaration": false,
+    "noEmit": true,
+    "rootDirs": [".", "./.react-router/types"],
+    "types": ["node", "vite/client", "vitest/globals"]
+  },
+  "exclude": [],
+  "extends": "./tsconfig.json",
+  "include": [
+    "site/**/*.ts",
+    "site/**/*.tsx",
+    "vite.config.ts",
+    "react-router.config.ts",
+    ".react-router/types/**/*"
+  ]
+}
