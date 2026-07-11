@@ -104,6 +104,7 @@ type SelectVirtualReturn = ReturnType<typeof useSelectVirtual>;
 
 interface SelectListSectionProps {
   classNames: SelectClassNames | undefined;
+  hasSearch: boolean;
   isEmpty: boolean;
   listContent: ReactNode;
   listItemHeight: number | undefined;
@@ -113,13 +114,14 @@ interface SelectListSectionProps {
 
 export function SelectListSection({
   classNames,
+  hasSearch,
   isEmpty,
   listContent,
   listItemHeight,
   virtual,
   virtualState,
 }: SelectListSectionProps) {
-  const listClassName = cx(styles.list, classNames?.list);
+  const listClassName = cx(styles.list, hasSearch && styles.listWithSearch, classNames?.list);
 
   if (!virtual || isEmpty) {
     return (

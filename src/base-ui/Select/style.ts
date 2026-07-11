@@ -82,6 +82,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     max-height: var(--lobe-select-available-height, var(--available-height));
     padding-block: 0;
   `,
+  listWithSearch: css`
+    padding-block-start: 4px;
+  `,
   outlined: cx(
     lobeStaticStylish.variantOutlined,
     css`

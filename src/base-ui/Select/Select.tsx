@@ -294,6 +294,7 @@ const Select = memo<SelectProps<any>>(
               )}
               <SelectListSection
                 classNames={classNames}
+                hasSearch={shouldShowSearch && !isTags}
                 isEmpty={isEmpty}
                 listContent={listContent}
                 listItemHeight={listItemHeight}
