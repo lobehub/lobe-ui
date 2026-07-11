@@ -197,6 +197,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     gap: 4px;
     align-items: center;
   `,
+  tagsValue: css`
+    flex: none;
+  `,
   tagsSearch: css`
     display: flex;
     flex: 1;

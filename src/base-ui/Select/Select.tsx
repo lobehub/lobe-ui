@@ -239,7 +239,9 @@ const Select = memo<SelectProps<any>>(
           {prefixNode !== null && prefixNode !== undefined && (
             <span className={cx(styles.prefix, classNames?.prefix)}>{prefixNode}</span>
           )}
-          <BaseSelect.Value className={cx(styles.value, classNames?.value)}>
+          <BaseSelect.Value
+            className={cx(styles.value, isTags && styles.tagsValue, classNames?.value)}
+          >
             {renderValue}
           </BaseSelect.Value>
           {isTags && (
