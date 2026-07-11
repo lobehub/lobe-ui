@@ -1,4 +1,4 @@
-import { type FC, memo } from 'react';
+import { type FC, forwardRef, memo } from 'react';
 
 import type { ButtonProps as ExternalButtonProps, InheritedProps } from './inherited';
 
@@ -105,9 +105,10 @@ interface NestedForwardDefaultProps {
 }
 
 export const NestedForwardDefaultButton = memo(
-  ({ ref, tone = 'neutral' }: NestedForwardDefaultProps & { ref?: React.RefObject<HTMLButtonElement | null> }) => (
+  // eslint-disable-next-line @eslint-react/no-forward-ref -- This fixture verifies nested React wrapper extraction.
+  forwardRef<HTMLButtonElement, NestedForwardDefaultProps>(({ tone = 'neutral' }, ref) => (
     <button data-tone={tone} ref={ref} />
-  ),
+  )),
 );
 
 interface MemoDefaultProps {

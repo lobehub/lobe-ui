@@ -308,7 +308,7 @@ const overlaps = (diagnostic: ts.Diagnostic, declaration: ts.Node): boolean => {
   return diagnostic.start < declaration.end && diagnosticEnd > declaration.getStart();
 };
 
-const relatedSemanticDiagnostics = (
+const relatedTypeDiagnostics = (
   context: ApiProgramContext,
   declarations: readonly ts.Node[],
 ): ts.Diagnostic[] => {
@@ -323,7 +323,11 @@ const relatedSemanticDiagnostics = (
 
   const diagnostics: ts.Diagnostic[] = [];
   for (const [sourceFile, relevantDeclarations] of byFile) {
-    for (const diagnostic of context.program.getSemanticDiagnostics(sourceFile)) {
+    const sourceDiagnostics = [
+      ...context.program.getSyntacticDiagnostics(sourceFile),
+      ...context.program.getSemanticDiagnostics(sourceFile),
+    ];
+    for (const diagnostic of sourceDiagnostics) {
       if (diagnostic.category !== ts.DiagnosticCategory.Error || diagnostic.file !== sourceFile)
         continue;
       if (relevantDeclarations.some((declaration) => overlaps(diagnostic, declaration))) {
@@ -390,7 +394,7 @@ const assertPropsGraph = (
   componentDeclaration: ts.Declaration,
   propsType: ts.Type,
 ): void => {
-  const diagnostics = relatedSemanticDiagnostics(
+  const diagnostics = relatedTypeDiagnostics(
     context,
     propsDeclarations(context, componentDeclaration, propsType),
   );

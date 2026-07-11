@@ -271,6 +271,20 @@ describe('callable props extraction', () => {
 });
 
 describe('props graph integrity', () => {
+  it('fails with a related syntactic diagnostic instead of emitting a partial props table', () => {
+    const invalidRequest = temporaryRequest(
+      {
+        'component.ts': `export interface BrokenProps { good: string; broken: }\nexport const BrokenPropsButton = (props: BrokenProps) => props.good;\n`,
+        'index.ts': `export { BrokenPropsButton } from './component';\n`,
+      },
+      'BrokenPropsButton',
+    );
+
+    expect(() => extractComponentApi(invalidRequest)).toThrow(
+      /index\.mdx[\s\S]*BrokenPropsButton[\s\S]*component\.ts[\s\S]*TS1110[\s\S]*resolve/i,
+    );
+  });
+
   it('fails with the related TypeScript diagnostic when a props import is unresolved', () => {
     const invalidRequest = temporaryRequest(
       {
@@ -308,6 +322,20 @@ describe('props graph integrity', () => {
         'component.ts': `export interface ValidProps { label: string }\nexport const ValidButton = (props: ValidProps) => props.label;\n`,
         'index.ts': `export { ValidButton } from './component';\n`,
         'unrelated.ts': `const unrelated: string = 123;\n`,
+      },
+      'ValidButton',
+    );
+
+    expect(extractComponentApi(validRequest).properties).toEqual([
+      expect.objectContaining({ name: 'label', required: true, type: 'string' }),
+    ]);
+  });
+
+  it('does not treat an unrelated component-body syntax error as a props graph failure', () => {
+    const validRequest = temporaryRequest(
+      {
+        'component.ts': `export interface ValidProps { label: string }\nexport const ValidButton = (props: ValidProps) => { const unrelated = ; return props.label; };\n`,
+        'index.ts': `export { ValidButton } from './component';\n`,
       },
       'ValidButton',
     );
