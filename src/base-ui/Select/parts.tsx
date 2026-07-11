@@ -164,31 +164,41 @@ export function EmptyContent({ classNames }: EmptyContentProps) {
 }
 
 interface SelectSearchInputProps {
+  autoFocus?: boolean;
   classNames: SelectClassNames | undefined;
+  disabled?: boolean;
+  inline?: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void;
   placeholder: ReactNode;
+  readOnly?: boolean;
   stopPropagation: (event: KeyboardEvent<HTMLInputElement>) => void;
   value: string;
 }
 
 export function SelectSearchInput({
+  autoFocus,
   classNames,
+  disabled,
+  inline,
   onChange,
   onKeyDown,
   placeholder,
+  readOnly,
   stopPropagation,
   value,
 }: SelectSearchInputProps) {
   return (
-    <div className={cx(styles.search, classNames?.search)}>
+    <div className={cx(inline ? styles.tagsSearch : styles.search, classNames?.search)}>
       <input
+        autoFocus={autoFocus}
         className={styles.searchInput}
+        disabled={disabled}
         placeholder={typeof placeholder === 'string' ? placeholder : undefined}
+        readOnly={readOnly}
         value={value}
         onChange={onChange}
-        onKeyDown={onKeyDown}
-        onKeyDownCapture={stopPropagation}
+        onKeyDownCapture={onKeyDown}
         onKeyUp={stopPropagation}
         onKeyUpCapture={stopPropagation}
       />

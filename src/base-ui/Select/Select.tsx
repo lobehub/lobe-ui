@@ -72,6 +72,7 @@ const Select = memo<SelectProps<any>>(
   }) => {
     const { isDarkMode } = useThemeMode();
     const resolvedVariant = variant ?? (isDarkMode ? 'filled' : 'outlined');
+    const isTags = mode === 'tags';
     const isMultiple = mode === 'multiple' || mode === 'tags';
     const isItemAligned = behaviorVariant === 'item-aligned';
 
@@ -138,9 +139,9 @@ const Select = memo<SelectProps<any>>(
           isMultiple,
           labelRender,
           normalizeValue,
-          placeholder,
+          placeholder: isTags ? undefined : placeholder,
         }),
-      [getOption, isMultiple, labelRender, normalizeValue, placeholder],
+      [getOption, isMultiple, isTags, labelRender, normalizeValue, placeholder],
     );
 
     const hasValue = isMultiple ? valueArray.length > 0 : !isValueEmpty(normalizedValue);
@@ -228,9 +229,11 @@ const Select = memo<SelectProps<any>>(
         onValueChange={handleValueChange}
       >
         <BaseSelect.Trigger
-          autoFocus={autoFocus}
+          autoFocus={!isTags && autoFocus}
           className={triggerClassName}
           disabled={disabled}
+          nativeButton={!isTags}
+          render={isTags ? <div /> : undefined}
           style={style}
         >
           {prefixNode !== null && prefixNode !== undefined && (
@@ -239,6 +242,20 @@ const Select = memo<SelectProps<any>>(
           <BaseSelect.Value className={cx(styles.value, classNames?.value)}>
             {renderValue}
           </BaseSelect.Value>
+          {isTags && (
+            <SelectSearchInput
+              inline
+              autoFocus={autoFocus}
+              classNames={classNames}
+              disabled={disabled}
+              placeholder={valueArray.length === 0 ? placeholder : undefined}
+              readOnly={readOnly}
+              stopPropagation={stopSearchPropagation}
+              value={searchValue}
+              onChange={handleSearchChange}
+              onKeyDown={handleSearchKeyDown}
+            />
+          )}
           <SelectTriggerSuffix
             classNames={classNames}
             showClear={showClear}
@@ -265,7 +282,7 @@ const Select = memo<SelectProps<any>>(
                 classNames?.dropdown,
               )}
             >
-              {shouldShowSearch && (
+              {shouldShowSearch && !isTags && (
                 <SelectSearchInput
                   classNames={classNames}
                   placeholder={placeholder}

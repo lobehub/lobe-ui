@@ -194,6 +194,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     gap: 4px;
     align-items: center;
   `,
+  tagsSearch: css`
+    display: flex;
+    flex: 1;
+    min-width: 48px;
+  `,
   trigger: css`
     cursor: pointer;
     user-select: none;

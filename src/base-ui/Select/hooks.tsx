@@ -143,7 +143,7 @@ export function useSelectValue({
         }
         if (value === undefined) setUncontrolledValue(normalizedNextValue);
         onChange?.(
-          normalizedNextValue,
+          isValueEmpty(normalizedNextValue) ? undefined : normalizedNextValue,
           isValueEmpty(normalizedNextValue) ? undefined : getOption(normalizedNextValue),
         );
       }
