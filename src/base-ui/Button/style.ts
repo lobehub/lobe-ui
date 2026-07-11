@@ -6,6 +6,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   base: css`
     cursor: pointer;
 
+    position: relative;
+
     display: inline-flex;
     gap: 6px;
     align-items: center;
