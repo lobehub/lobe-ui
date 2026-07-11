@@ -6,9 +6,13 @@ export const THEME_BOOTSTRAP_SCRIPT = `(() => {
     const stored = localStorage.getItem(${JSON.stringify(THEME_STORAGE_KEY)});
     if (stored === 'light' || stored === 'system' || stored === 'dark') preference = stored;
   } catch {}
-  const appearance = preference === 'system'
-    ? (matchMedia(${JSON.stringify(THEME_MEDIA_QUERY)}).matches ? 'dark' : 'light')
-    : preference;
+  let appearance = preference;
+  if (preference === 'system') {
+    appearance = 'light';
+    try {
+      if (matchMedia(${JSON.stringify(THEME_MEDIA_QUERY)}).matches) appearance = 'dark';
+    } catch {}
+  }
   const root = document.documentElement;
   root.dataset.theme = appearance;
   root.style.colorScheme = appearance;
