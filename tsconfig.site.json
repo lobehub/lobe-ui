@@ -10,6 +10,7 @@
   "include": [
     "site/**/*.ts",
     "site/**/*.tsx",
+    "src/types/global.d.ts",
     "vite.config.ts",
     "react-router.config.ts",
     ".react-router/types/**/*"

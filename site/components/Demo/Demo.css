@@ -1,0 +1,117 @@
+.demo-frame {
+  overflow: hidden;
+  border: 1px solid var(--docs-border-default);
+  border-radius: 0.875rem;
+  margin: 1.75rem 0;
+  background: var(--docs-surface-raised);
+  box-shadow: var(--docs-shadow-control);
+}
+
+.demo-frame__header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--docs-border-subtle);
+}
+
+.demo-frame__header h3 {
+  padding: 0;
+  margin: 0;
+  color: var(--docs-text-primary);
+  font-size: 0.9375rem;
+  font-weight: 620;
+  letter-spacing: -0.015em;
+  line-height: 1.4;
+}
+
+.demo-frame__header p {
+  max-width: 62ch;
+  margin: 0.375rem 0 0;
+  color: var(--docs-text-subtle);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+.demo-frame__preview {
+  display: block;
+  min-height: var(--demo-frame-height, 10rem);
+  padding: 1.5rem;
+  background: var(--docs-background);
+}
+
+.demo-frame[data-demo-layout='center'] .demo-frame__preview {
+  display: grid;
+  place-items: center;
+}
+
+.demo-frame[data-demo-layout='bare'] .demo-frame__preview {
+  padding: 0;
+}
+
+.demo-frame__placeholder {
+  display: grid;
+  place-items: center;
+  min-height: var(--demo-frame-height, 10rem);
+  color: var(--docs-text-subtle);
+  font-size: 0.8125rem;
+}
+
+.demo-frame__error {
+  display: grid;
+  gap: 0.75rem;
+  align-content: center;
+  justify-items: start;
+  min-height: var(--demo-frame-height, 10rem);
+  padding: 1.5rem;
+  color: var(--docs-text-secondary);
+  background: var(--docs-surface-muted);
+}
+
+.demo-frame__error strong {
+  color: var(--docs-text-primary);
+}
+
+.demo-frame__error code {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  color: var(--docs-text-secondary);
+  font-size: 0.75rem;
+}
+
+.demo-frame__error button {
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  padding: 0 0.875rem;
+  border: 1px solid var(--docs-border-default);
+  border-radius: 0.5rem;
+  color: var(--docs-text-primary);
+  background: var(--docs-surface-raised);
+  box-shadow: var(--docs-shadow-control);
+  cursor: pointer;
+  transition:
+    color 140ms ease,
+    background-color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 90ms ease;
+}
+
+.demo-frame__error button:hover {
+  border-color: var(--docs-border-strong);
+  background: var(--docs-surface-hover);
+}
+
+.demo-frame__error button:active {
+  transform: scale(0.96);
+}
+
+@media (max-width: 47.5rem) {
+  .demo-frame__preview,
+  .demo-frame__error {
+    padding: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demo-frame__error button {
+    transition-duration: 0.01ms;
+  }
+}

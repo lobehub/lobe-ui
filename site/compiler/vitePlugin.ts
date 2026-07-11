@@ -4,6 +4,7 @@ import { dirname, resolve } from 'node:path';
 import type { Plugin } from 'vite';
 
 import { createContentManifest } from './content/createManifest';
+import { demoPlugin } from './demo/demoPlugin';
 
 const metadataQuery = 'document-metadata';
 const metadataPrefix = '\0lobe-docs:document-metadata:';
@@ -23,22 +24,25 @@ const resolveMetadataPath = (path: string, importer?: string): string => {
   return resolve(path);
 };
 
-export function lobeDocs(): Plugin {
-  return {
-    enforce: 'pre',
-    load(id) {
-      if (!id.startsWith(metadataPrefix)) return;
-      const path = id.slice(metadataPrefix.length);
-      const document = createContentManifest(path).documents[0];
-      if (!document) throw new Error(`No public document metadata found for ${path}`);
+export function lobeDocs(): Plugin[] {
+  return [
+    demoPlugin(),
+    {
+      enforce: 'pre',
+      load(id) {
+        if (!id.startsWith(metadataPrefix)) return;
+        const path = id.slice(metadataPrefix.length);
+        const document = createContentManifest(path).documents[0];
+        if (!document) throw new Error(`No public document metadata found for ${path}`);
 
-      return `export default ${JSON.stringify(document)};`;
+        return `export default ${JSON.stringify(document)};`;
+      },
+      name: 'lobe-docs',
+      resolveId(source, importer) {
+        const metadataPath = getMetadataPath(source);
+        if (!metadataPath) return;
+        return `${metadataPrefix}${resolveMetadataPath(metadataPath, importer)}`;
+      },
     },
-    name: 'lobe-docs',
-    resolveId(source, importer) {
-      const metadataPath = getMetadataPath(source);
-      if (!metadataPath) return;
-      return `${metadataPrefix}${resolveMetadataPath(metadataPath, importer)}`;
-    },
-  };
+  ];
 }

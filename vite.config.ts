@@ -17,7 +17,7 @@ export default defineConfig({
       remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
     }),
     reactRouter(),
-    tsconfigPaths(),
+    tsconfigPaths({ projects: ['./tsconfig.json', './tsconfig.site.json'] }),
     process.env.ANALYZE
       ? visualizer({ filename: '.react-router/build/client/stats.html' })
       : undefined,
