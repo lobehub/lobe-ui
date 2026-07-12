@@ -1,6 +1,31 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
 import TableOfContents from './TableOfContents';
+
+if (!Element.prototype.getAnimations) {
+  Element.prototype.getAnimations = () => [];
+}
+
+if (!globalThis.ResizeObserver) {
+  globalThis.ResizeObserver = class {
+    disconnect() {}
+    observe() {}
+    unobserve() {}
+  } as never;
+}
+
+const rect = (top: number, bottom: number) =>
+  ({
+    bottom,
+    height: bottom - top,
+    left: 0,
+    right: 0,
+    toJSON: () => ({}),
+    top,
+    width: 0,
+    x: 0,
+    y: top,
+  }) as DOMRect;
 
 it('renders links from compile-time heading identifiers without rewriting them', async () => {
   render(
@@ -36,4 +61,26 @@ it('skips a heading without a compile-time identifier and never mutates the DOM'
   expect(document.querySelector<HTMLHeadingElement>('#toc-content h2')?.hasAttribute('id')).toBe(
     false,
   );
+});
+
+it('scrolls the active link into view inside the viewport', async () => {
+  render(
+    <>
+      <main id="toc-content">
+        <h2 id="alpha">Alpha</h2>
+        <h2 id="omega">Omega</h2>
+      </main>
+      <TableOfContents contentId="toc-content" scopeKey="scroll" />
+    </>,
+  );
+
+  const omega = await screen.findByRole('link', { name: 'Omega' });
+  const viewport = document.querySelector<HTMLElement>('[data-toc-viewport]');
+  expect(viewport).not.toBeNull();
+
+  viewport!.getBoundingClientRect = () => rect(0, 100);
+  omega.getBoundingClientRect = () => rect(150, 170);
+
+  fireEvent.click(omega);
+  expect(viewport!.scrollTop).toBeGreaterThan(0);
 });

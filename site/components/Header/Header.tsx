@@ -63,9 +63,6 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
   const overflowSections = navigation.filter(
     (section) => !primarySectionTitles.includes(section.title),
   );
-  const overflowActive =
-    pathname === '/changelog' ||
-    (activeSection !== undefined && overflowSections.includes(activeSection));
 
   const openNavigation = useCallback(() => {
     window.clearTimeout(closeTimerRef.current);
@@ -196,13 +193,11 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
             {overflowSections.length > 0 ? (
               <DropdownMenu items={moreItems} placement="bottomLeft">
                 <button
-                  aria-current={overflowActive ? 'true' : undefined}
                   aria-label="More documentation sections"
                   className={`${styles.navLink} ${styles.moreButton}`}
                   type="button"
                 >
                   <Ellipsis aria-hidden size={16} strokeWidth={1.8} />
-                  {overflowActive ? <NavIndicator /> : null}
                 </button>
               </DropdownMenu>
             ) : null}

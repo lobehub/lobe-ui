@@ -108,13 +108,19 @@ export const styles = createStaticStyles(({ css }) => {
 
     panel,
 
+    scrollArea: css`
+      border-radius: 0;
+      background: none;
+    `,
+
+    viewport: css`
+      max-height: calc(100dvh - var(--docs-header-height) - 4rem - 1.875rem);
+    `,
+
     root: css`
       position: sticky;
       inset-block-start: calc(var(--docs-header-height) + 2rem);
-
-      overflow: auto;
       align-self: start;
-
       max-height: calc(100dvh - var(--docs-header-height) - 4rem);
 
       h2 {

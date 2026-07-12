@@ -1,4 +1,6 @@
+import { ScrollArea, type ScrollAreaViewportProps } from '@lobehub/ui/ScrollArea';
 import { ChevronDown } from 'lucide-react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useEffect, useId, useRef, useState } from 'react';
 
 import { styles } from './style';
@@ -43,7 +45,9 @@ export default function TableOfContents({ contentId, scopeKey }: TableOfContents
   const [activeId, setActiveId] = useState<string | undefined>(undefined);
   const [barOpen, setBarOpen] = useState(false);
   const barRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
   const barPanelId = useId();
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const content = document.getElementById(contentId);
@@ -96,6 +100,22 @@ export default function TableOfContents({ contentId, scopeKey }: TableOfContents
   }, [items]);
 
   useEffect(() => {
+    const viewport = viewportRef.current;
+    if (!viewport || !activeId) return;
+
+    const link = viewport.querySelector<HTMLElement>('a[aria-current]');
+    if (!link) return;
+
+    const viewportRect = viewport.getBoundingClientRect();
+    const linkRect = link.getBoundingClientRect();
+    if (linkRect.top < viewportRect.top) {
+      viewport.scrollTop += linkRect.top - viewportRect.top - 8;
+    } else if (linkRect.bottom > viewportRect.bottom) {
+      viewport.scrollTop += linkRect.bottom - viewportRect.bottom + 8;
+    }
+  }, [activeId]);
+
+  useEffect(() => {
     if (!barOpen) return;
 
     const onPointerDown = (event: PointerEvent) => {
@@ -122,7 +142,19 @@ export default function TableOfContents({ contentId, scopeKey }: TableOfContents
       <aside className={styles.root}>
         <nav aria-label="On this page">
           <h2>On this page</h2>
-          <TocList activeId={activeId} items={items} onNavigate={setActiveId} />
+          <ScrollArea
+            scrollFade
+            className={styles.scrollArea}
+            viewportProps={
+              {
+                'className': styles.viewport,
+                'data-toc-viewport': '',
+                'ref': viewportRef,
+              } as ScrollAreaViewportProps
+            }
+          >
+            <TocList activeId={activeId} items={items} onNavigate={setActiveId} />
+          </ScrollArea>
         </nav>
       </aside>
       <div className={styles.bar} ref={barRef}>
@@ -137,18 +169,28 @@ export default function TableOfContents({ contentId, scopeKey }: TableOfContents
           <span className={styles.current}>{activeItem.title}</span>
           <ChevronDown aria-hidden className={styles.chevron} size={14} strokeWidth={1.8} />
         </button>
-        {barOpen ? (
-          <nav aria-label="On this page" className={styles.panel} id={barPanelId}>
-            <TocList
-              activeId={activeId}
-              items={items}
-              onNavigate={(id) => {
-                setActiveId(id);
-                setBarOpen(false);
-              }}
-            />
-          </nav>
-        ) : null}
+        <AnimatePresence initial={false}>
+          {barOpen ? (
+            <motion.nav
+              animate={{ opacity: 1, y: 0 }}
+              aria-label="On this page"
+              className={styles.panel}
+              exit={{ opacity: 0, transition: { duration: reducedMotion ? 0 : 0.15 }, y: -8 }}
+              id={barPanelId}
+              initial={{ opacity: 0, y: -8 }}
+              transition={{ duration: reducedMotion ? 0 : 0.2, ease: [0.2, 0, 0, 1] }}
+            >
+              <TocList
+                activeId={activeId}
+                items={items}
+                onNavigate={(id) => {
+                  setActiveId(id);
+                  setBarOpen(false);
+                }}
+              />
+            </motion.nav>
+          ) : null}
+        </AnimatePresence>
       </div>
     </>
   );
