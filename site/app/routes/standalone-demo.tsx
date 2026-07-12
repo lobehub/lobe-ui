@@ -5,6 +5,7 @@ import { isRouteErrorResponse, useParams, useRouteError } from 'react-router';
 import { readLegacyMap, type StandaloneDemoMapEntry } from '../../compiler/demo/readLegacyMap';
 import type { DocumentationInventory } from '../../compiler/types';
 import StandaloneDemoPage from '../../components/Demo/StandaloneDemoPage';
+import { styles as demoStyles } from '../../components/Demo/style';
 import compatibility from '../../content/compatibility.json';
 import type { DemoAppearance, DemoModule } from '../../types/demo';
 import { createDescriptorPromiseCache } from '../demos/descriptorPromiseCache';
@@ -127,7 +128,10 @@ export function ErrorBoundary() {
   const notFound = isRouteErrorResponse(error) && error.status === 404;
 
   return (
-    <main className="standalone-demo-page standalone-demo-page--error" data-standalone-demo="">
+    <main
+      className={`${demoStyles.standalonePage} ${demoStyles.standalonePageError}`}
+      data-standalone-demo=""
+    >
       <h1>{notFound ? 'Demo not found' : 'Demo unavailable'}</h1>
       <p>
         {notFound

@@ -3,6 +3,7 @@ import { MemoryRouter, useLocation } from 'react-router';
 
 import type { DocumentManifestEntry } from '../../types/content';
 import DocsLayout from './DocsLayout';
+import { styles } from './style';
 
 vi.mock('../../app/providers/SiteProviders', () => ({
   useSiteTheme: () => ({ appearance: 'light' }),
@@ -89,8 +90,28 @@ it('marks one searchable article with title, description, category, and status m
   );
   expect(container.querySelector('[data-pagefind-meta="category"]')?.textContent).toBe('General');
   expect(container.querySelector('[data-pagefind-meta="status"]')?.textContent).toBe('stable');
-  expect(screen.getByText('Load discussion').closest('[data-pagefind-ignore="all"]')).toBeTruthy();
+  expect(screen.getByText('Helpful?').closest('[data-pagefind-ignore="all"]')).toBeTruthy();
   expect(
-    screen.getByText('Was this page helpful?').closest('[data-pagefind-ignore="all"]'),
+    screen
+      .getByRole('button', { name: 'Yes, this page was helpful' })
+      .closest('[data-pagefind-ignore="all"]'),
   ).toBeTruthy();
+  expect(screen.queryByText('Was this page helpful?')).toBeNull();
+  expect(screen.queryByText('Community')).toBeNull();
+});
+
+it('syntax-highlights the component import statement', () => {
+  const { container } = render(
+    <MemoryRouter>
+      <DocsLayout document={alphaDocument} navigation={[]}>
+        <p>Content</p>
+      </DocsLayout>
+    </MemoryRouter>,
+  );
+
+  const importCode = container.querySelector(`.${styles.importBlock} code`);
+  expect(importCode?.textContent).toBe("import { Alpha } from '@lobehub/ui';");
+  expect(importCode?.querySelectorAll(`.${styles.syntaxKeyword}`)).toHaveLength(2);
+  expect(importCode?.querySelector(`.${styles.syntaxEntity}`)?.textContent).toBe('Alpha');
+  expect(importCode?.querySelector(`.${styles.syntaxString}`)?.textContent).toBe("'@lobehub/ui'");
 });

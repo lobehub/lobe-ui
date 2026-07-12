@@ -1,25 +1,39 @@
-import './Demo.css';
-
+import ActionIcon from '@lobehub/ui/ActionIcon';
+import type { DropdownItem } from '@lobehub/ui/DropdownMenu';
+import DropdownMenu from '@lobehub/ui/DropdownMenu';
 import {
-  Activity,
-  type CSSProperties,
-  lazy,
-  type RefObject,
-  Suspense,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from 'react';
+  Code,
+  Copy,
+  ExternalLink,
+  Maximize,
+  Minimize,
+  Monitor,
+  Moon,
+  RotateCcw,
+  Smartphone,
+  Sun,
+  Tablet,
+} from 'lucide-react';
+import { lazy, type RefObject, Suspense, useEffect, useId, useRef, useState } from 'react';
 
 import type { DemoAppearance, DemoModule, DemoProps } from '../../types/demo';
 import CanonicalPreview from './CanonicalPreview';
-import DemoToolbar, { DemoToolbarButton, DemoToolbarLink, DemoToolbarSelect } from './DemoToolbar';
+import type { DemoFrameStyle, DemoViewport } from './LiveDemo';
+import { styles } from './style';
 
-type DemoFrameStyle = CSSProperties & { '--demo-frame-height'?: string };
-type DemoViewport = 'mobile' | 'responsive' | 'tablet';
+const viewportOptions = [
+  { icon: Monitor, label: 'Responsive', value: 'responsive' },
+  { icon: Tablet, label: 'Tablet', value: 'tablet' },
+  { icon: Smartphone, label: 'Mobile', value: 'mobile' },
+] as const;
 
-const LazyLiveEditor = lazy(() => import('./LiveEditor'));
+const standaloneLinkProps = (href: string) =>
+  ({ href, rel: 'noreferrer', role: undefined, target: '_blank' }) as unknown as Record<
+    string,
+    never
+  >;
+
+const LazyLiveDemo = lazy(() => import('./LiveDemo'));
 
 const sourcePreferenceKey = (demoId: string): string => `lobe-docs:demo-source:${demoId}`;
 
@@ -41,12 +55,12 @@ interface PreviewProps {
 function EmbeddedPreview({ appearance, demo, style, viewport }: PreviewProps) {
   return (
     <div
-      className="demo-frame__viewport"
+      className={styles.viewport}
       data-demo-appearance={appearance}
       data-demo-viewport={viewport}
       data-pagefind-ignore="all"
     >
-      <div className="demo-frame__preview" style={style}>
+      <div className={styles.preview} style={style}>
         <CanonicalPreview appearance={appearance} demo={demo} />
       </div>
     </div>
@@ -56,13 +70,13 @@ function EmbeddedPreview({ appearance, demo, style, viewport }: PreviewProps) {
 function IsolatedPreview({ appearance, demo, standaloneHref, style, viewport }: PreviewProps) {
   return (
     <div
-      className="demo-frame__viewport"
+      className={styles.viewport}
       data-demo-appearance={appearance}
       data-demo-viewport={viewport}
       data-pagefind-ignore="all"
     >
       <iframe
-        className="demo-frame__iframe"
+        className={styles.iframe}
         loading="lazy"
         src={standaloneHref}
         style={style}
@@ -74,7 +88,7 @@ function IsolatedPreview({ appearance, demo, standaloneHref, style, viewport }: 
 
 function ReadOnlySource({ source }: Pick<DemoModule, 'source'>) {
   return (
-    <pre className="demo-frame__source" data-pagefind-ignore="all" tabIndex={0}>
+    <pre className={styles.source} data-pagefind-ignore="all" tabIndex={0}>
       <code>{source}</code>
     </pre>
   );
@@ -182,111 +196,137 @@ export default function Demo({
     viewport,
   };
 
+  const appearanceActionLabel =
+    appearance === 'light' ? 'Use dark demo theme' : 'Use light demo theme';
+  const fullScreenActionLabel = fullScreen ? 'Exit full screen' : 'Enter full screen';
+  const activeViewport =
+    viewportOptions.find((option) => option.value === viewport) ?? viewportOptions[0];
+  const viewportItems: DropdownItem[] = viewportOptions.map(({ icon, label, value }) => ({
+    checked: viewport === value,
+    icon,
+    key: value,
+    label,
+    onCheckedChange: (checked: boolean) => {
+      if (checked) setViewport(value);
+    },
+    type: 'checkbox',
+  }));
+
   return (
     <section
       aria-label={title ? undefined : `Demo: ${of.sourcePath}`}
       aria-labelledby={title ? headingId : undefined}
-      className="demo-frame"
+      className={styles.frame}
       data-demo-editable={resolvedEditable}
       data-demo-isolated={isolated}
       data-demo-layout={layout}
       ref={frameRef}
     >
-      {title || description ? (
-        <header className="demo-frame__header">
-          {title ? <h3 id={headingId}>{title}</h3> : null}
-          {description ? <p>{description}</p> : null}
-        </header>
-      ) : null}
-      <DemoToolbar>
-        <DemoToolbarButton
-          aria-controls={sourcePanelId}
-          aria-expanded={expanded}
-          onClick={onToggleSource}
-        >
-          {sourceActionLabel}
-        </DemoToolbarButton>
-        {resolvedEditable && expanded ? (
-          <DemoToolbarButton
-            aria-label="Reset source"
-            onClick={() => setEditorResetSignal((value) => value + 1)}
-          >
-            Reset
-          </DemoToolbarButton>
-        ) : null}
-        <DemoToolbarButton aria-label="Copy source" onClick={onCopy}>
-          Copy
-        </DemoToolbarButton>
-        <DemoToolbarLink
-          aria-label="Open standalone preview"
-          href={standaloneHref}
-          rel="noreferrer"
-          target="_blank"
-        >
-          Standalone
-        </DemoToolbarLink>
-        <DemoToolbarButton
-          aria-label={fullScreen ? 'Exit full screen' : 'Enter full screen'}
-          onClick={() => void toggleFullScreen(frameRef, fullScreen)}
-        >
-          {fullScreen ? 'Exit full screen' : 'Full screen'}
-        </DemoToolbarButton>
-        <DemoToolbarSelect
-          aria-label="Preview viewport"
-          value={viewport}
-          onChange={(event) => setViewport(event.currentTarget.value as DemoViewport)}
-        >
-          <option value="responsive">Responsive</option>
-          <option value="tablet">Tablet</option>
-          <option value="mobile">Mobile</option>
-        </DemoToolbarSelect>
-        <span aria-label="Demo theme" className="demo-toolbar__group" role="group">
-          <DemoToolbarButton
-            aria-label="Use light demo theme"
-            aria-pressed={appearance === 'light'}
-            onClick={() => setAppearance('light')}
-          >
-            Light
-          </DemoToolbarButton>
-          <DemoToolbarButton
-            aria-label="Use dark demo theme"
-            aria-pressed={appearance === 'dark'}
-            onClick={() => setAppearance('dark')}
-          >
-            Dark
-          </DemoToolbarButton>
-        </span>
-        <span aria-live="polite" className="demo-toolbar__status">
-          {copyStatus}
-        </span>
-      </DemoToolbar>
-      {isolated ? <IsolatedPreview {...previewProps} /> : <EmbeddedPreview {...previewProps} />}
-      {expanded || (resolvedEditable && editorOpened) ? (
+      <header className={styles.caption}>
+        {title ? <h3 id={headingId}>{title}</h3> : null}
+        {description ? <p>{description}</p> : null}
         <div
-          aria-hidden={expanded ? undefined : true}
-          className="demo-frame__source-panel"
+          aria-label="Demo controls"
+          className={styles.actions}
           data-pagefind-ignore="all"
-          hidden={!expanded}
-          id={sourcePanelId}
-          inert={!expanded}
+          role="toolbar"
         >
-          {resolvedEditable ? (
-            <Activity mode={expanded ? 'visible' : 'hidden'}>
-              <Suspense
-                fallback={
-                  <div className="demo-live-editor__status" role="status">
-                    Loading source editor…
-                  </div>
-                }
-              >
-                <LazyLiveEditor appearance={appearance} demo={of} resetSignal={editorResetSignal} />
-              </Suspense>
-            </Activity>
-          ) : (
-            <ReadOnlySource source={of.source} />
-          )}
+          <ActionIcon
+            active={expanded}
+            aria-controls={sourcePanelId}
+            aria-expanded={expanded}
+            aria-label={sourceActionLabel}
+            icon={Code}
+            size="small"
+            title={sourceActionLabel}
+            onClick={onToggleSource}
+          />
+          {resolvedEditable && expanded ? (
+            <ActionIcon
+              aria-label="Reset source"
+              icon={RotateCcw}
+              size="small"
+              title="Reset source"
+              onClick={() => setEditorResetSignal((value) => value + 1)}
+            />
+          ) : null}
+          <ActionIcon
+            aria-label="Copy source"
+            icon={Copy}
+            size="small"
+            title="Copy source"
+            onClick={onCopy}
+          />
+          <ActionIcon
+            aria-label={appearanceActionLabel}
+            icon={appearance === 'light' ? Moon : Sun}
+            size="small"
+            title={appearanceActionLabel}
+            onClick={() => setAppearance(appearance === 'light' ? 'dark' : 'light')}
+          />
+          <DropdownMenu items={viewportItems} placement="bottomRight">
+            <ActionIcon
+              aria-label="Preview viewport"
+              icon={activeViewport.icon}
+              size="small"
+              title="Preview viewport"
+            />
+          </DropdownMenu>
+          <ActionIcon
+            aria-label="Open standalone preview"
+            as="a"
+            icon={ExternalLink}
+            size="small"
+            title="Open standalone preview"
+            {...standaloneLinkProps(standaloneHref)}
+          />
+          <ActionIcon
+            aria-label={fullScreenActionLabel}
+            icon={fullScreen ? Minimize : Maximize}
+            size="small"
+            title={fullScreenActionLabel}
+            onClick={() => void toggleFullScreen(frameRef, fullScreen)}
+          />
+          <span aria-live="polite" className={styles.status}>
+            {copyStatus}
+          </span>
         </div>
-      ) : null}
+      </header>
+      {resolvedEditable && editorOpened ? (
+        <Suspense
+          fallback={
+            <>
+              {isolated ? (
+                <IsolatedPreview {...previewProps} />
+              ) : (
+                <EmbeddedPreview {...previewProps} />
+              )}
+              <div className={styles.liveStatus} role="status">
+                Loading source editor…
+              </div>
+            </>
+          }
+        >
+          <LazyLiveDemo
+            appearance={appearance}
+            demo={of}
+            expanded={expanded}
+            resetSignal={editorResetSignal}
+            sourcePanelId={sourcePanelId}
+            style={style}
+            viewport={viewport}
+          />
+        </Suspense>
+      ) : (
+        <>
+          {isolated ? <IsolatedPreview {...previewProps} /> : <EmbeddedPreview {...previewProps} />}
+          {expanded ? (
+            <div className={styles.sourcePanel} data-pagefind-ignore="all" id={sourcePanelId}>
+              <ReadOnlySource source={of.source} />
+            </div>
+          ) : null}
+        </>
+      )}
     </section>
   );
 }

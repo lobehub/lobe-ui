@@ -2,7 +2,9 @@ import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { Outlet } from 'react-router';
 
 import Plausible from '../../components/Analytics/Plausible';
+import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
+import { styles } from '../../styles/globalStyles';
 import { contentManifest } from '../content/registry';
 
 const SearchDialog = lazy(() => import('../../components/Search/SearchDialog'));
@@ -39,15 +41,16 @@ export default function DocsRouteLayout() {
 
   return (
     <>
-      <a className="docs-skip-link" href="#docs-content">
+      <a className={styles.skipLink} href="#docs-content">
         Skip to documentation
       </a>
       <Header navigation={contentManifest.navigation} onSearchOpen={openSearch} />
       <Outlet />
+      <Footer />
       {searchOpen ? (
         <Suspense
           fallback={
-            <span className="docs-search-loading" data-pagefind-ignore="all" role="status">
+            <span className={styles.searchLoading} data-pagefind-ignore="all" role="status">
               Loading search…
             </span>
           }
@@ -67,7 +70,7 @@ export default function DocsRouteLayout() {
 
 export function ErrorBoundary() {
   return (
-    <main className="docs-error" id="docs-content">
+    <main className={styles.error} id="docs-content">
       <h1>Documentation unavailable</h1>
       <p>The requested documentation could not be rendered.</p>
     </main>

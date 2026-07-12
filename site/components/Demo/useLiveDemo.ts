@@ -1,28 +1,13 @@
 import type { ComponentType } from 'react';
-import {
-  Activity,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { Editor, renderElementAsync } from 'react-live';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { renderElementAsync } from 'react-live';
 
 import {
   type LiveDiagnostic,
   splitLiveSource,
   transformLiveSource,
 } from '../../compiler/demo/liveTransform';
-import type { DemoAppearance, DemoModule } from '../../types/demo';
-import DemoEnvironment from './DemoEnvironment';
-
-interface LiveEditorProps {
-  appearance: DemoAppearance;
-  demo: DemoModule;
-  resetSignal: number;
-}
+import type { DemoModule } from '../../types/demo';
 
 interface RevisionTag {
   demo: DemoModule;
@@ -42,7 +27,7 @@ interface DiagnosticState extends RevisionTag {
   values: LiveDiagnostic[];
 }
 
-interface PreviewCandidate extends RevisionTag {
+export interface PreviewCandidate extends RevisionTag {
   Component: ComponentType;
   generation: number;
 }
@@ -53,89 +38,22 @@ interface EvaluationInput extends RevisionTag {
   value: string;
 }
 
-interface CandidateSlotProps {
-  appearance: DemoAppearance;
-  candidate: PreviewCandidate;
-  demoId: string;
-  onCommit: (candidate: PreviewCandidate) => void;
-  state: 'active' | 'candidate' | 'fallback';
-}
-
-interface SourceEditorProps {
-  code: string;
-  onChange: (value: string) => void;
+export interface LiveDemoState {
+  activeCandidate?: PreviewCandidate;
+  candidates: PreviewCandidate[];
+  diagnostics: LiveDiagnostic[];
+  editableSource: string;
+  pendingCandidate?: PreviewCandidate;
+  promoteCandidate: (candidate: PreviewCandidate) => void;
+  scopeStatus: ScopeState['status'];
+  setEditableSource: (value: string) => void;
+  sourceParts: ReturnType<typeof splitLiveSource>;
 }
 
 const isCurrentRevision = (tag: RevisionTag, demo: DemoModule): boolean =>
   tag.demo === demo && tag.source === demo.source;
 
-const formatDiagnostic = ({ column, line, message }: LiveDiagnostic): string => {
-  const location = line ? `Line ${line}${column ? `, column ${column}` : ''}: ` : '';
-  return `${location}${message}`;
-};
-
-function SourceEditor({ code, onChange }: SourceEditorProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useLayoutEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const annotateEditor = () => {
-      const editor = container.querySelector<HTMLElement>(
-        'textarea, [contenteditable], pre.prism-code',
-      );
-      if (!editor) return;
-      if (editor.matches('pre') && !editor.hasAttribute('contenteditable')) {
-        editor.setAttribute('contenteditable', 'plaintext-only');
-      }
-      editor.setAttribute('aria-label', 'Demo source editor');
-      editor.setAttribute('aria-multiline', 'true');
-      editor.setAttribute('role', 'textbox');
-      if (editor.tabIndex < 0) editor.tabIndex = 0;
-    };
-
-    annotateEditor();
-    if (typeof MutationObserver === 'undefined') return;
-    const observer = new MutationObserver(annotateEditor);
-    observer.observe(container, { childList: true, subtree: true });
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <div ref={containerRef}>
-      <Editor code={code} language="tsx" onChange={onChange} />
-    </div>
-  );
-}
-
-function CandidateSlot({ appearance, candidate, demoId, onCommit, state }: CandidateSlotProps) {
-  const Candidate = candidate.Component;
-
-  useEffect(() => {
-    if (state === 'candidate') onCommit(candidate);
-  }, [candidate, onCommit, state]);
-
-  const content = (
-    <DemoEnvironment appearance={appearance} demoId={`${demoId}-${candidate.generation}`}>
-      <Candidate />
-    </DemoEnvironment>
-  );
-
-  return (
-    <div
-      aria-hidden={state === 'active' ? undefined : true}
-      className="demo-live-editor__candidate"
-      data-live-generation={candidate.generation}
-      data-live-state={state}
-      inert={state !== 'active'}
-    >
-      <Activity mode={state === 'fallback' ? 'hidden' : 'visible'}>{content}</Activity>
-    </div>
-  );
-}
-
-export default function LiveEditor({ appearance, demo, resetSignal }: LiveEditorProps) {
+export default function useLiveDemo(demo: DemoModule, resetSignal: number): LiveDemoState {
   const sourceParts = useMemo(() => splitLiveSource(demo.source), [demo.source]);
   const [editorSession, setEditorSession] = useState<EditorSession>({
     demo,
@@ -352,6 +270,11 @@ export default function LiveEditor({ appearance, demo, resetSignal }: LiveEditor
     [demo],
   );
 
+  const setEditableSource = useCallback(
+    (value: string) => setEditorSession({ demo, source: demo.source, value }),
+    [demo],
+  );
+
   const candidates = [
     currentFallbackCandidate,
     currentActiveCandidate,
@@ -364,61 +287,15 @@ export default function LiveEditor({ appearance, demo, resetSignal }: LiveEditor
       values.findIndex((value) => value?.generation === candidate?.generation) === index,
   );
 
-  return (
-    <section className="demo-live-editor" data-pagefind-ignore="all">
-      <div className="demo-live-editor__source">
-        {sourceParts.immutableSource ? (
-          <pre aria-label="Read-only imports" className="demo-live-editor__imports" tabIndex={0}>
-            <code>{sourceParts.immutableSource}</code>
-          </pre>
-        ) : null}
-        <div className="demo-live-editor__input">
-          <SourceEditor
-            code={editableSource}
-            onChange={(value) => setEditorSession({ demo, source: demo.source, value })}
-          />
-        </div>
-      </div>
-      {currentScopeState.status === 'loading' ? (
-        <div className="demo-live-editor__status" role="status">
-          Loading editable dependencies…
-        </div>
-      ) : null}
-      {diagnostics.length > 0 ? (
-        <div aria-live="polite" className="demo-live-editor__diagnostics" role="alert">
-          {diagnostics.map((diagnostic) => (
-            <p key={`${diagnostic.line ?? 0}:${diagnostic.column ?? 0}:${diagnostic.message}`}>
-              {formatDiagnostic(diagnostic)}
-            </p>
-          ))}
-        </div>
-      ) : null}
-      <div
-        aria-label="Edited demo preview"
-        className="demo-live-editor__preview"
-        data-demo-appearance={appearance}
-      >
-        {candidates.length > 0 ? (
-          <div className="demo-live-editor__stage">
-            {candidates.map((candidate) => (
-              <CandidateSlot
-                appearance={appearance}
-                candidate={candidate}
-                demoId={`${demo.id}-live`}
-                key={candidate.generation}
-                state={
-                  candidate.generation === currentActiveCandidate?.generation
-                    ? 'active'
-                    : candidate.generation === currentPendingCandidate?.generation
-                      ? 'candidate'
-                      : 'fallback'
-                }
-                onCommit={promoteCandidate}
-              />
-            ))}
-          </div>
-        ) : null}
-      </div>
-    </section>
-  );
+  return {
+    activeCandidate: currentActiveCandidate,
+    candidates,
+    diagnostics,
+    editableSource,
+    pendingCandidate: currentPendingCandidate,
+    promoteCandidate,
+    scopeStatus: currentScopeState.status,
+    setEditableSource,
+    sourceParts,
+  };
 }

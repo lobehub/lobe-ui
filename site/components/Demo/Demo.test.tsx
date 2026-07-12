@@ -4,6 +4,7 @@ import { renderToString } from 'react-dom/server';
 
 import type { DemoModule } from '../../types/demo';
 import Demo from './Demo';
+import { styles } from './style';
 
 const activityMocks = vi.hoisted(() => ({ cleanups: 0, starts: 0 }));
 
@@ -93,20 +94,27 @@ it('does not load editable scope until source editing is explicitly expanded', a
   await waitFor(() => expect(loadScope).toHaveBeenCalledTimes(1));
 });
 
-it('keeps canonical preview visible beside the expanded edited preview', async () => {
+it('replaces the canonical preview in place once the live preview is ready', async () => {
   const canonicalDescriptor: DemoModule = {
     ...descriptor,
-    id: 'dual-preview',
+    id: 'single-preview',
     load: async () => () => <div>Canonical result</div>,
     source: 'export default () => <div>Edited result</div>;',
   };
-  render(<Demo of={canonicalDescriptor} />);
+  const { container } = render(<Demo of={canonicalDescriptor} />);
 
   expect(await screen.findByText('Canonical result')).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: 'Show source editor' }));
 
-  expect(await screen.findByLabelText('Edited demo preview')).toBeTruthy();
-  expect(screen.getByText('Canonical result')).toBeTruthy();
+  expect(await screen.findByText('Edited preview result')).toBeTruthy();
+  await waitFor(() => expect(screen.queryByText('Canonical result')).toBeNull());
+  expect(container.querySelectorAll(`.${styles.preview}`)).toHaveLength(1);
+  expect(screen.getByLabelText('Edited demo preview').closest(`.${styles.preview}`)).toBeTruthy();
+
+  fireEvent.click(screen.getByRole('button', { name: 'Hide source editor' }));
+
+  expect(await screen.findByText('Canonical result')).toBeTruthy();
+  expect(screen.getByLabelText('Edited demo preview')).toHaveProperty('hidden', true);
 });
 
 it('persists source expansion as a per-demo local preference', async () => {
@@ -139,8 +147,7 @@ it('keeps the edited session mounted and inaccessible while the editor is collap
   fireEvent.click(screen.getByRole('button', { name: 'Hide source editor' }));
   expect(screen.queryByRole('textbox', { name: 'Demo source editor' })).toBeNull();
   expect(
-    screen.getByText('Persisted edit result').closest<HTMLElement>('.demo-frame__source-panel')
-      ?.hidden,
+    screen.getByText('Persisted edit result').closest<HTMLElement>(`.${styles.liveStage}`)?.hidden,
   ).toBe(true);
 
   fireEvent.click(screen.getByRole('button', { name: 'Show source editor' }));
@@ -239,7 +246,7 @@ it('keeps source and every non-edit action available for read-only demos', async
   expect(screen.getByRole('button', { name: 'Copy source' })).toBeTruthy();
   expect(screen.getByRole('link', { name: 'Open standalone preview' })).toBeTruthy();
   expect(screen.getByRole('button', { name: 'Enter full screen' })).toBeTruthy();
-  expect(screen.getByRole('combobox', { name: 'Preview viewport' })).toBeTruthy();
+  expect(screen.getByRole('button', { name: 'Preview viewport' })).toBeTruthy();
   expect(screen.getByRole('button', { name: 'Use dark demo theme' })).toBeTruthy();
   expect(screen.queryByRole('button', { name: 'Reset source' })).toBeNull();
 
@@ -255,9 +262,9 @@ it('applies an independent dark canvas and keeps it in standalone URLs', async (
 
   fireEvent.click(screen.getByRole('button', { name: 'Use dark demo theme' }));
 
-  expect(
-    container.querySelector('.demo-frame__viewport')?.getAttribute('data-demo-appearance'),
-  ).toBe('dark');
+  expect(container.querySelector(`.${styles.viewport}`)?.getAttribute('data-demo-appearance')).toBe(
+    'dark',
+  );
   expect(
     screen.getByRole('link', { name: 'Open standalone preview' }).getAttribute('href'),
   ).toContain('appearance=dark');
@@ -291,14 +298,14 @@ it('excludes controls, rendered previews, and source while retaining the demo ti
   expect(
     screen.getByRole('toolbar', { name: 'Demo controls' }).getAttribute('data-pagefind-ignore'),
   ).toBe('all');
-  expect(
-    container.querySelector('.demo-frame__viewport')?.getAttribute('data-pagefind-ignore'),
-  ).toBe('all');
+  expect(container.querySelector(`.${styles.viewport}`)?.getAttribute('data-pagefind-ignore')).toBe(
+    'all',
+  );
   await waitFor(() =>
     expect(screen.queryByRole('status', { name: 'Loading demo preview' })).toBeNull(),
   );
   fireEvent.click(screen.getByRole('button', { name: 'Show source' }));
   expect(
-    container.querySelector('.demo-frame__source-panel')?.getAttribute('data-pagefind-ignore'),
+    container.querySelector(`.${styles.sourcePanel}`)?.getAttribute('data-pagefind-ignore'),
   ).toBe('all');
 });

@@ -3,6 +3,7 @@ import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import type { DemoAppearance, DemoModule } from '../../types/demo';
 import DemoEnvironment from './DemoEnvironment';
 import DemoErrorBoundary from './DemoErrorBoundary';
+import { styles } from './style';
 
 interface CanonicalPreviewProps {
   appearance?: DemoAppearance;
@@ -11,8 +12,13 @@ interface CanonicalPreviewProps {
 
 function DemoPlaceholder() {
   return (
-    <div aria-label="Loading demo preview" className="demo-frame__placeholder" role="status">
-      <span data-demo-placeholder="">Loading preview</span>
+    <div
+      aria-label="Loading demo preview"
+      className={styles.placeholder}
+      data-demo-placeholder=""
+      role="status"
+    >
+      <span>Loading preview</span>
     </div>
   );
 }

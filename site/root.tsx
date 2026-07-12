@@ -4,8 +4,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 
 import SiteProviders from './app/providers/SiteProviders';
 import ThemeBootstrap from './app/providers/ThemeBootstrap';
-import globalStyles from './styles/global.css?url';
-import tokenStyles from './styles/tokens.css?url';
+import { styles } from './styles/globalStyles';
 
 const FONT_REGISTRY_ORIGIN = 'https://registry.npmmirror.com';
 const GEIST_FONT_STYLESHEET = `${FONT_REGISTRY_ORIGIN}/@lobehub/webfont-geist/1.0.0/files/css/index.css`;
@@ -15,8 +14,6 @@ export const links: LinksFunction = () => [
   { crossOrigin: 'anonymous', href: FONT_REGISTRY_ORIGIN, rel: 'preconnect' },
   { href: GEIST_FONT_STYLESHEET, rel: 'stylesheet' },
   { href: GEIST_MONO_FONT_STYLESHEET, rel: 'stylesheet' },
-  { href: tokenStyles, rel: 'stylesheet' },
-  { href: globalStyles, rel: 'stylesheet' },
 ];
 
 export function Layout({ children }: { children: ReactNode }) {
@@ -40,7 +37,7 @@ export function Layout({ children }: { children: ReactNode }) {
 
 export function ErrorBoundary() {
   return (
-    <main className="docs-error" id="docs-content">
+    <main className={styles.error} id="docs-content">
       <h1>Site unavailable</h1>
       <p>The requested page could not be rendered.</p>
     </main>

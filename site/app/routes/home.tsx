@@ -1,5 +1,3 @@
-import './home.css';
-
 import { GithubIcon } from '@lobehub/ui/icons/lucideExtra';
 import { ArrowRight, Palette, SunMoon, Zap } from 'lucide-react';
 import type { MetaFunction } from 'react-router';
@@ -9,6 +7,7 @@ import CopyControl from '../../components/CopyControl/CopyControl';
 import { sectionLandingPathname } from '../../content/pageChrome';
 import { siteMetadata } from '../../content/siteMetadata';
 import { contentManifest, findDocument } from '../content/registry';
+import { styles } from './homeStyle';
 
 const INSTALL_COMMAND = 'bun add @lobehub/ui';
 
@@ -59,18 +58,18 @@ export default function Home() {
   const getStartedPathname = firstSection ? sectionLandingPathname(firstSection) : '/changelog';
 
   return (
-    <main className="home" id="docs-content">
-      <article data-pagefind-body className="home__document">
-        <section className="home__hero">
+    <main className={styles.root} id="docs-content">
+      <article data-pagefind-body className={styles.document}>
+        <section className={styles.hero}>
           <h1 data-pagefind-meta="title">
-            LobeHub <span className="home__hero-gradient">UI Kit</span>
+            LobeHub <span className={styles.heroGradient}>UI Kit</span>
           </h1>
           <p data-pagefind-meta="description">
             {document?.description ?? siteMetadata.description}
           </p>
-          <div className="home__hero-actions">
+          <div className={styles.heroActions}>
             <a
-              className="home__button home__button--primary"
+              className={`${styles.button} ${styles.buttonPrimary}`}
               href="https://github.com/lobehub/lobe-ui"
               rel="noreferrer"
               target="_blank"
@@ -78,25 +77,25 @@ export default function Home() {
               <GithubIcon aria-hidden size={16} strokeWidth={1.8} />
               GitHub
             </a>
-            <Link className="home__button" to={getStartedPathname}>
+            <Link className={styles.button} to={getStartedPathname}>
               Get Started
               <ArrowRight aria-hidden size={16} strokeWidth={1.8} />
             </Link>
           </div>
         </section>
 
-        <section aria-labelledby="home-install" className="home__install">
+        <section aria-labelledby="home-install" className={styles.install}>
           <h2 id="home-install">Start building your AIGC app now</h2>
-          <div className="home__install-command">
+          <div className={styles.installCommand}>
             <code>{INSTALL_COMMAND}</code>
             <CopyControl label="Copy install command" value={INSTALL_COMMAND} />
           </div>
         </section>
 
-        <section aria-label="Library highlights" className="home__features">
+        <section aria-label="Library highlights" className={styles.features}>
           {features.map(({ description, icon: FeatureIcon, title }) => (
-            <div className="home__feature" key={title}>
-              <span className="home__feature-icon">
+            <div className={styles.feature} key={title}>
+              <span className={styles.featureIcon}>
                 <FeatureIcon aria-hidden size={16} strokeWidth={1.7} />
               </span>
               <h3>{title}</h3>
@@ -104,22 +103,6 @@ export default function Home() {
             </div>
           ))}
         </section>
-
-        <footer className="home__footer">
-          <span>© {new Date().getFullYear()} LobeHub</span>
-          <nav aria-label="Footer">
-            <a href="https://github.com/lobehub/lobe-ui" rel="noreferrer" target="_blank">
-              GitHub
-            </a>
-            <a href="https://www.npmjs.com/package/@lobehub/ui" rel="noreferrer" target="_blank">
-              NPM
-            </a>
-            <a href="https://lobehub.com" rel="noreferrer" target="_blank">
-              LobeHub
-            </a>
-            <Link to="/changelog">Changelog</Link>
-          </nav>
-        </footer>
       </article>
     </main>
   );

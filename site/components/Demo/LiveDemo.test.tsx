@@ -1,8 +1,19 @@
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import type { ComponentType } from 'react';
 
-import type { DemoModule } from '../../types/demo';
-import LiveEditor from './LiveEditor';
+import type { DemoAppearance, DemoModule } from '../../types/demo';
+import LiveDemo from './LiveDemo';
+import { styles } from './style';
+
+interface HarnessProps {
+  appearance: DemoAppearance;
+  demo: DemoModule;
+  resetSignal: number;
+}
+
+const Harness = (props: HarnessProps) => (
+  <LiveDemo expanded sourcePanelId="live-demo-source" viewport="responsive" {...props} />
+);
 
 const liveMocks = vi.hoisted(() => ({
   activeFailureTrigger: undefined as (() => void) | undefined,
@@ -107,9 +118,9 @@ const createDescriptor = (loadScope = vi.fn(async () => ({ useState: vi.fn() }))
   legacyIds: ['legacy-live-editor'],
   load: async () => () => null,
   loadScope,
-  routeId: 'components/LiveEditor/index',
+  routeId: 'components/LiveDemo/index',
   source,
-  sourcePath: 'src/LiveEditor/demos/index.tsx',
+  sourcePath: 'src/LiveDemo/demos/index.tsx',
 });
 
 const getEditor = (): HTMLTextAreaElement => {
@@ -148,17 +159,19 @@ afterAll(() => {
 it('loads scope while containing each promoted preview and its portal host in one slot', async () => {
   const loadScope = vi.fn(async () => ({ useState: vi.fn() }));
   const { container } = render(
-    <LiveEditor appearance="dark" demo={createDescriptor(loadScope)} resetSignal={0} />,
+    <Harness appearance="dark" demo={createDescriptor(loadScope)} resetSignal={0} />,
   );
 
   expect(await screen.findByText('Edited result: Original')).toBeTruthy();
-  expect(container.querySelector('.demo-live-editor')?.getAttribute('data-pagefind-ignore')).toBe(
-    'all',
-  );
+  expect(
+    container
+      .querySelector(`.${styles.sourcePanel} [data-pagefind-ignore]`)
+      ?.getAttribute('data-pagefind-ignore'),
+  ).toBe('all');
   expect(loadScope).toHaveBeenCalledTimes(1);
   expect(screen.getByLabelText('Read-only imports').textContent).toContain("from 'react'");
   expect(getEditor().value).not.toContain("from 'react'");
-  const stage = container.querySelector('.demo-live-editor__stage');
+  const stage = container.querySelector(`.${styles.liveStage}`);
   const active = stage?.querySelector<HTMLElement>('[data-live-state="active"]');
   expect(stage).toBeTruthy();
   expect(active?.hasAttribute('hidden')).toBe(false);
@@ -167,7 +180,7 @@ it('loads scope while containing each promoted preview and its portal host in on
 });
 
 it('retains the last successful element when a subsequent compile fails', async () => {
-  render(<LiveEditor appearance="light" demo={createDescriptor()} resetSignal={0} />);
+  render(<Harness appearance="light" demo={createDescriptor()} resetSignal={0} />);
   await screen.findByRole('textbox', { name: 'Demo source editor' });
   const editor = getEditor();
 
@@ -187,7 +200,7 @@ it('retains the last successful element when a subsequent compile fails', async 
 });
 
 it('retains the last successful element when top-level evaluation throws synchronously', async () => {
-  render(<LiveEditor appearance="light" demo={createDescriptor()} resetSignal={0} />);
+  render(<Harness appearance="light" demo={createDescriptor()} resetSignal={0} />);
   expect(await screen.findByText('Edited result: Original')).toBeTruthy();
 
   fireEvent.change(getEditor(), {
@@ -200,7 +213,7 @@ it('retains the last successful element when top-level evaluation throws synchro
 
 it('promotes a candidate only after its React render commits successfully', async () => {
   const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
-  render(<LiveEditor appearance="light" demo={createDescriptor()} resetSignal={0} />);
+  render(<Harness appearance="light" demo={createDescriptor()} resetSignal={0} />);
   expect(await screen.findByText('Edited result: Original')).toBeTruthy();
 
   fireEvent.change(getEditor(), {
@@ -216,7 +229,7 @@ it('promotes a candidate only after its React render commits successfully', asyn
 });
 
 it('ignores obsolete evaluator result and error callbacks after a newer generation commits', async () => {
-  render(<LiveEditor appearance="light" demo={createDescriptor()} resetSignal={0} />);
+  render(<Harness appearance="light" demo={createDescriptor()} resetSignal={0} />);
   expect(await screen.findByText('Edited result: Original')).toBeTruthy();
 
   fireEvent.change(getEditor(), {
@@ -242,7 +255,7 @@ it('ignores obsolete evaluator result and error callbacks after a newer generati
 it('reports a still-active generation failure and restores the previous successful preview', async () => {
   const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
   const { container } = render(
-    <LiveEditor appearance="light" demo={createDescriptor()} resetSignal={0} />,
+    <Harness appearance="light" demo={createDescriptor()} resetSignal={0} />,
   );
   expect(await screen.findByText('Edited result: Original')).toBeTruthy();
 
@@ -280,7 +293,7 @@ it('restores the previous preview without resetting its local state', async () =
     source: 'export default function STATEFUL_ORIGINAL() { return <button>Original</button>; }',
   };
   const { container } = render(
-    <LiveEditor appearance="light" demo={statefulDescriptor} resetSignal={0} />,
+    <Harness appearance="light" demo={statefulDescriptor} resetSignal={0} />,
   );
   const original = await screen.findByRole('button', { name: 'Original count 0' });
 
@@ -311,14 +324,14 @@ it('reports scope failure without leaving a perpetual loading status', async () 
   const loadScope = vi.fn(async () => {
     throw new Error('Dependency unavailable');
   });
-  render(<LiveEditor appearance="light" demo={createDescriptor(loadScope)} resetSignal={0} />);
+  render(<Harness appearance="light" demo={createDescriptor(loadScope)} resetSignal={0} />);
 
   expect((await screen.findByRole('alert')).textContent).toContain('Dependency unavailable');
   expect(screen.queryByText('Loading editable dependencies…')).toBeNull();
 });
 
 it('reports a syntax error on visible editor line one as line one', async () => {
-  render(<LiveEditor appearance="light" demo={createDescriptor()} resetSignal={0} />);
+  render(<Harness appearance="light" demo={createDescriptor()} resetSignal={0} />);
   await screen.findByText('Edited result: Original');
 
   fireEvent.change(getEditor(), {
@@ -340,10 +353,10 @@ it('replaces the source revision atomically and never retains a stale preview af
     source: 'export default function Replacement() { return <div>Replacement</div>; }',
     sourcePath: 'src/Replacement/demos/index.tsx',
   };
-  const { rerender } = render(<LiveEditor appearance="light" demo={initial} resetSignal={0} />);
+  const { rerender } = render(<Harness appearance="light" demo={initial} resetSignal={0} />);
   expect(await screen.findByText('Edited result: Original')).toBeTruthy();
 
-  rerender(<LiveEditor appearance="light" demo={replacement} resetSignal={0} />);
+  rerender(<Harness appearance="light" demo={replacement} resetSignal={0} />);
 
   expect((await screen.findByRole('alert')).textContent).toContain('Replacement scope failed');
   expect(screen.queryByText('Edited result: Original')).toBeNull();
@@ -354,14 +367,14 @@ it('replaces the source revision atomically and never retains a stale preview af
 it('resets the editor to repository source without reloading scope', async () => {
   const loadScope = vi.fn(async () => ({ useState: vi.fn() }));
   const descriptor = createDescriptor(loadScope);
-  const { rerender } = render(<LiveEditor appearance="light" demo={descriptor} resetSignal={0} />);
+  const { rerender } = render(<Harness appearance="light" demo={descriptor} resetSignal={0} />);
   await screen.findByRole('textbox', { name: 'Demo source editor' });
   const editor = getEditor();
   fireEvent.change(editor, {
     target: { value: 'export default () => <div>Second</div>;' },
   });
 
-  rerender(<LiveEditor appearance="light" demo={descriptor} resetSignal={1} />);
+  rerender(<Harness appearance="light" demo={descriptor} resetSignal={1} />);
 
   await waitFor(() => {
     expect(getEditor().value).toContain("useState('Original')");

@@ -1,7 +1,7 @@
-import './CopyControl.css';
-
 import { Check, Copy } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+
+import { styles } from './style';
 
 interface CopyControlProps {
   label: string;
@@ -35,7 +35,7 @@ export default function CopyControl({ label, value }: CopyControlProps) {
   return (
     <button
       aria-label={copied ? 'Copied' : label}
-      className="docs-copy-control"
+      className={styles.root}
       data-copied={copied || undefined}
       title={label}
       type="button"

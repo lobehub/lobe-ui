@@ -1,6 +1,5 @@
-import './Api.css';
-
-import type { ApiComponent, ApiProperty, ApiSourceLocation } from '../../types/api';
+import type { ApiComponent, ApiProperty } from '../../types/api';
+import { styles } from './style';
 
 interface ApiProps {
   data?: ApiComponent;
@@ -9,39 +8,35 @@ interface ApiProps {
   name: string;
 }
 
-const formatSource = ({ column, file, line }: ApiSourceLocation): string =>
-  `${file}:${line}:${column}`;
+const isNativeAttribute = (property: ApiProperty): boolean =>
+  property.source?.file.includes('@types/react') ?? false;
 
-function PropertyDetails({ property }: { property: ApiProperty }) {
-  const hasDetails =
-    property.deprecated !== undefined ||
-    property.since !== undefined ||
-    property.inheritedFrom !== undefined ||
-    property.source !== undefined;
+const isInternalProperty = (property: ApiProperty): boolean => property.name.startsWith('_');
 
-  if (!hasDetails) return <span className="api-reference__empty">None</span>;
-
+function PropertyRow({ property }: { property: ApiProperty }) {
   return (
-    <div className="api-reference__details">
-      {property.deprecated !== undefined ? (
-        <div className="api-reference__detail api-reference__detail--deprecated">
-          <span className="api-reference__badge api-reference__badge--deprecated">Deprecated</span>
-          {property.deprecated ? <span>{property.deprecated}</span> : null}
-        </div>
-      ) : null}
-      {property.since ? (
-        <span className="api-reference__badge api-reference__badge--since">
-          Since {property.since}
-        </span>
-      ) : null}
-      {property.inheritedFrom ? (
-        <span className="api-reference__detail">Inherited from {property.inheritedFrom}</span>
-      ) : null}
-      {property.source ? (
-        <span className="api-reference__source" title={formatSource(property.source)}>
-          Source {formatSource(property.source)}
-        </span>
-      ) : null}
+    <div className={styles.row}>
+      <dt className={styles.term}>
+        <code className={styles.propertyName}>{property.name}</code>
+        {property.required ? <span className={styles.flag}>Required</span> : null}
+        {property.deprecated !== undefined ? (
+          <span className={styles.flagDeprecated}>Deprecated</span>
+        ) : null}
+        {property.since ? <span className={styles.origin}>Since {property.since}</span> : null}
+        {property.inheritedFrom ? (
+          <span className={styles.origin}>{property.inheritedFrom}</span>
+        ) : null}
+      </dt>
+      <dd className={styles.definition}>
+        <code className={styles.type}>{property.type}</code>
+        {property.deprecated ? <p className={styles.prose}>{property.deprecated}</p> : null}
+        {property.description ? <p className={styles.prose}>{property.description}</p> : null}
+        {property.defaultValue === undefined ? null : (
+          <p className={styles.proseDefault}>
+            Defaults to <code>{property.defaultValue}</code>.
+          </p>
+        )}
+      </dd>
     </div>
   );
 }
@@ -54,92 +49,44 @@ export default function Api({ data, name }: ApiProps) {
   }
 
   const label = `${data.name} properties`;
+  const documentedProperties = data.properties.filter(
+    (property) => !isNativeAttribute(property) && !isInternalProperty(property),
+  );
+  const hasNativeAttributes = data.properties.some((property) => isNativeAttribute(property));
 
   return (
     <section
       aria-label={`${data.name} API reference`}
-      className="api-reference"
+      className={styles.root}
       data-pagefind-meta="api"
     >
-      {data.description ? <p className="api-reference__description">{data.description}</p> : null}
+      {data.description ? <p className={styles.description}>{data.description}</p> : null}
       {data.deprecated !== undefined || data.since ? (
-        <div className="api-reference__component-details">
+        <div className={styles.componentDetails}>
           {data.deprecated !== undefined ? (
-            <span className="api-reference__detail api-reference__detail--deprecated">
-              <span className="api-reference__badge api-reference__badge--deprecated">
-                Deprecated
-              </span>
+            <span className={styles.detailDeprecated}>
+              <span className={styles.flagDeprecated}>Deprecated</span>
               {data.deprecated ? <span>{data.deprecated}</span> : null}
             </span>
           ) : null}
-          {data.since ? (
-            <span className="api-reference__badge api-reference__badge--since">
-              Since {data.since}
-            </span>
-          ) : null}
+          {data.since ? <span className={styles.origin}>Since {data.since}</span> : null}
         </div>
       ) : null}
 
-      <div
-        aria-label={`Scrollable ${label} table`}
-        className="api-reference__overflow"
-        role="region"
-        tabIndex={0}
-      >
-        <table className="api-reference__table">
-          <caption>{label}</caption>
-          <thead>
-            <tr>
-              <th scope="col">Property</th>
-              <th scope="col">Type</th>
-              <th scope="col">Default</th>
-              <th scope="col">Details</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.properties.length === 0 ? (
-              <tr>
-                <td className="api-reference__empty-row" colSpan={4}>
-                  No public properties.
-                </td>
-              </tr>
-            ) : (
-              data.properties.map((property) => (
-                <tr key={property.name}>
-                  <th scope="row">
-                    <code className="api-reference__property-name">{property.name}</code>
-                    <span
-                      className="api-reference__badge"
-                      data-required={property.required ? 'true' : 'false'}
-                    >
-                      {property.required ? 'Required' : 'Optional'}
-                    </span>
-                    {property.description ? (
-                      <span className="api-reference__property-description">
-                        {property.description}
-                      </span>
-                    ) : null}
-                  </th>
-                  <td>
-                    <code className="api-reference__type">{property.type}</code>
-                  </td>
-                  <td>
-                    {property.defaultValue === undefined ? (
-                      <span aria-label="No default value" className="api-reference__empty">
-                        —
-                      </span>
-                    ) : (
-                      <code className="api-reference__default">{property.defaultValue}</code>
-                    )}
-                  </td>
-                  <td>
-                    <PropertyDetails property={property} />
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+      <div aria-label={label} className={styles.card} role="group">
+        <div className={styles.caption}>{label}</div>
+        {documentedProperties.length === 0 ? (
+          <p className={styles.empty}>No public properties.</p>
+        ) : (
+          <dl className={styles.list}>
+            {documentedProperties.map((property) => (
+              <PropertyRow key={property.name} property={property} />
+            ))}
+          </dl>
+        )}
+        {hasNativeAttributes ? (
+          <p className={styles.footnote}>Also accepts all native HTML and ARIA attributes.</p>
+        ) : null}
       </div>
     </section>
   );

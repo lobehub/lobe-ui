@@ -1,5 +1,3 @@
-import './Header.css';
-
 import { LobeHubText } from '@lobehub/ui/brand';
 import type { DropdownItem } from '@lobehub/ui/DropdownMenu';
 import DropdownMenu from '@lobehub/ui/DropdownMenu';
@@ -13,6 +11,7 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import { findSectionByPathname, sectionLandingPathname } from '../../content/pageChrome';
 import type { NavigationSection } from '../../types/content';
 import Sidebar from '../Sidebar/Sidebar';
+import { styles } from './style';
 import ThemeMenu from './ThemeMenu';
 
 interface HeaderProps {
@@ -23,12 +22,17 @@ interface HeaderProps {
 const LOGO_URL =
   'https://registry.npmmirror.com/@lobehub/assets-logo/1.2.0/files/assets/logo-3d.webp';
 
+// LobeHubText viewBox keeps ~49% vertical padding, so the wordmark box must
+// be larger than the 3d logo for letter ink to optically match the icon.
+const LOGO_SIZE = 20;
+const WORDMARK_SIZE = 36;
+
 const primarySectionTitles = ['Components', 'Base UI', 'Chat', 'Icons', 'Brand'];
 
 const NavIndicator = () => (
   <motion.span
     aria-hidden
-    className="site-header__nav-indicator"
+    className={styles.navIndicator}
     layoutId="site-header-nav-indicator"
     transition={{ bounce: 0.25, duration: 0.4, type: 'spring' }}
   />
@@ -143,13 +147,13 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
 
   return (
     <>
-      <header className="site-header">
-        <div className="site-header__inner">
+      <header className={styles.root}>
+        <div className={styles.inner}>
           <button
             aria-controls="mobile-documentation-navigation"
             aria-expanded={sheetState !== 'closed'}
             aria-label="Open documentation navigation"
-            className="site-header__icon-button site-header__menu-button"
+            className={`${styles.iconButton} ${styles.menuButton}`}
             ref={menuButtonRef}
             type="button"
             onClick={openNavigation}
@@ -157,35 +161,31 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
             <Menu aria-hidden size={18} strokeWidth={1.8} />
           </button>
 
-          <Link aria-label="Lobe UI documentation home" className="site-header__brand" to="/">
+          <Link aria-label="Lobe UI documentation home" className={styles.brand} to="/">
             <img
               aria-hidden
               alt=""
-              className="site-header__logo"
-              height={22}
+              className={styles.logo}
+              height={LOGO_SIZE}
               src={LOGO_URL}
-              width={22}
+              width={LOGO_SIZE}
             />
-            <LobeHubText aria-hidden className="site-header__wordmark" size={18} />
-            <span aria-hidden className="site-header__brand-divider">
+            <LobeHubText aria-hidden className={styles.wordmark} size={WORDMARK_SIZE} />
+            <span aria-hidden className={styles.brandDivider}>
               /
             </span>
-            <span className="site-header__product-name">UI</span>
+            <span className={styles.productName}>UI</span>
           </Link>
 
-          <nav aria-label="Documentation sections" className="site-header__nav">
-            <Link
-              aria-current={isHome ? 'page' : undefined}
-              className="site-header__nav-link"
-              to="/"
-            >
+          <nav aria-label="Documentation sections" className={styles.nav}>
+            <Link aria-current={isHome ? 'page' : undefined} className={styles.navLink} to="/">
               Home
               {isHome ? <NavIndicator /> : null}
             </Link>
             {primarySections.map((section) => (
               <Link
                 aria-current={section === activeSection ? 'true' : undefined}
-                className="site-header__nav-link"
+                className={styles.navLink}
                 key={section.title}
                 to={sectionLandingPathname(section)}
               >
@@ -198,7 +198,7 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
                 <button
                   aria-current={overflowActive ? 'true' : undefined}
                   aria-label="More documentation sections"
-                  className="site-header__nav-link site-header__more-button"
+                  className={`${styles.navLink} ${styles.moreButton}`}
                   type="button"
                 >
                   <Ellipsis aria-hidden size={16} strokeWidth={1.8} />
@@ -208,11 +208,11 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
             ) : null}
           </nav>
 
-          <div className="site-header__actions">
+          <div className={styles.actions}>
             <button
               aria-keyshortcuts="Meta+K Control+K"
               aria-label="Search documentation"
-              className="site-header__search"
+              className={styles.search}
               type="button"
               onClick={(event) => onSearchOpen(event.currentTarget)}
             >
@@ -223,7 +223,7 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
             <button
               aria-keyshortcuts="Meta+K Control+K"
               aria-label="Open search"
-              className="site-header__icon-button site-header__mobile-search"
+              className={`${styles.iconButton} ${styles.mobileSearch}`}
               type="button"
               onClick={(event) => onSearchOpen(event.currentTarget)}
             >
@@ -232,7 +232,7 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
             <ThemeMenu />
             <a
               aria-label="Lobe UI on GitHub"
-              className="site-header__icon-button site-header__github"
+              className={`${styles.iconButton} ${styles.github}`}
               href="https://github.com/lobehub/lobe-ui"
               rel="noreferrer"
               target="_blank"
@@ -245,10 +245,10 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
 
       {sheetState !== 'closed'
         ? createPortal(
-            <div className="site-header__sheet-layer" data-state={sheetState}>
+            <div className={styles.sheetLayer} data-state={sheetState}>
               <button
                 aria-label="Close documentation navigation"
-                className="site-header__sheet-backdrop"
+                className={styles.sheetBackdrop}
                 tabIndex={-1}
                 type="button"
                 onClick={closeNavigation}
@@ -256,16 +256,16 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
               <aside
                 aria-label="Documentation navigation"
                 aria-modal="true"
-                className="site-header__sheet"
+                className={styles.sheet}
                 id="mobile-documentation-navigation"
                 role="dialog"
                 onKeyDown={handleSheetKeyDown}
               >
-                <div className="site-header__sheet-heading">
+                <div className={styles.sheetHeading}>
                   <span>Navigation</span>
                   <button
                     aria-label="Close documentation navigation"
-                    className="site-header__icon-button"
+                    className={styles.iconButton}
                     ref={closeButtonRef}
                     type="button"
                     onClick={closeNavigation}

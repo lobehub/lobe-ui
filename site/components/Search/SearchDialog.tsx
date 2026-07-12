@@ -1,5 +1,3 @@
-import './SearchDialog.css';
-
 import { ArrowUpRight, Search, X } from 'lucide-react';
 import type { ChangeEvent, KeyboardEvent, RefObject } from 'react';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
@@ -8,6 +6,7 @@ import { useNavigate } from 'react-router';
 import { loadSearchEngine } from '../../search/loadSearchEngine';
 import type { SearchEngine, SearchHit } from '../../search/types';
 import type { DocumentManifestEntry } from '../../types/content';
+import { styles } from './style';
 
 interface SearchDialogProps {
   documents: readonly DocumentManifestEntry[];
@@ -142,10 +141,10 @@ export default function SearchDialog({
   if (!open) return null;
 
   return (
-    <div className="search-dialog__layer" data-pagefind-ignore="all">
+    <div className={styles.layer} data-pagefind-ignore="all">
       <button
         aria-label="Dismiss search overlay"
-        className="search-dialog__backdrop"
+        className={styles.backdrop}
         tabIndex={-1}
         type="button"
         onClick={close}
@@ -153,12 +152,12 @@ export default function SearchDialog({
       <div
         aria-label="Search documentation"
         aria-modal="true"
-        className="search-dialog"
+        className={styles.dialog}
         ref={dialogRef}
         role="dialog"
         onKeyDown={handleKeyDown}
       >
-        <div className="search-dialog__input-row">
+        <div className={styles.inputRow}>
           <Search aria-hidden size={18} strokeWidth={1.8} />
           <input
             aria-activedescendant={hits[activeIndex] ? `${resultListId}-${activeIndex}` : undefined}
@@ -176,14 +175,14 @@ export default function SearchDialog({
           </button>
         </div>
 
-        <div aria-live="polite" className="search-dialog__results-status">
+        <div aria-live="polite" className={styles.resultsStatus}>
           {loading ? 'Searching…' : query && hits.length === 0 ? 'No results found' : ''}
         </div>
-        <div className="search-dialog__results" id={resultListId} role="listbox">
+        <div className={styles.results} id={resultListId} role="listbox">
           {hits.map((hit, index) => (
             <button
               aria-selected={activeIndex === index}
-              className="search-dialog__result"
+              className={styles.result}
               id={`${resultListId}-${index}`}
               key={hit.id}
               role="option"
@@ -191,7 +190,7 @@ export default function SearchDialog({
               onClick={() => activate(hit)}
               onMouseEnter={() => setActiveIndex(index)}
             >
-              <span className="search-dialog__result-copy">
+              <span className={styles.resultCopy}>
                 <strong>{hit.title}</strong>
                 {hit.section ? <small>{hit.section}</small> : null}
                 <span>{hit.excerpt}</span>
@@ -201,7 +200,7 @@ export default function SearchDialog({
           ))}
         </div>
 
-        <footer className="search-dialog__footer">
+        <footer className={styles.footer}>
           <span>
             <kbd>↑</kbd>
             <kbd>↓</kbd> Navigate

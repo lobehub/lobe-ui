@@ -1,7 +1,18 @@
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 
-import type { DemoModule } from '../../types/demo';
-import LiveEditor from './LiveEditor';
+import type { DemoAppearance, DemoModule } from '../../types/demo';
+import LiveDemo from './LiveDemo';
+import { styles } from './style';
+
+interface HarnessProps {
+  appearance: DemoAppearance;
+  demo: DemoModule;
+  resetSignal: number;
+}
+
+const Harness = (props: HarnessProps) => (
+  <LiveDemo expanded sourcePanelId="live-demo-source" viewport="responsive" {...props} />
+);
 
 const descriptor: DemoModule = {
   editable: true,
@@ -9,9 +20,9 @@ const descriptor: DemoModule = {
   legacyIds: [],
   load: async () => () => null,
   loadScope: async () => ({}),
-  routeId: 'components/LiveEditor/index',
+  routeId: 'components/LiveDemo/index',
   source: 'export default () => <div>Accessible preview</div>;',
-  sourcePath: 'src/LiveEditor/demos/accessible.tsx',
+  sourcePath: 'src/LiveDemo/demos/accessible.tsx',
 };
 
 beforeAll(() => {
@@ -33,15 +44,13 @@ afterAll(() => {
 });
 
 it('puts textbox semantics on the real react-live contenteditable control', async () => {
-  const { container } = render(<LiveEditor appearance="light" demo={descriptor} resetSignal={0} />);
+  const { container } = render(<Harness appearance="light" demo={descriptor} resetSignal={0} />);
 
   const editor = await screen.findByRole('textbox', { name: 'Demo source editor' });
 
   await waitFor(() => expect(editor.hasAttribute('contenteditable')).toBe(true));
   expect(editor.getAttribute('aria-multiline')).toBe('true');
   expect(editor.tabIndex).toBe(0);
-  expect(container.querySelector('.demo-live-editor__input')?.hasAttribute('role')).toBe(false);
-  expect(container.querySelector('.demo-live-editor__input')?.hasAttribute('aria-label')).toBe(
-    false,
-  );
+  expect(container.querySelector(`.${styles.liveInput}`)?.hasAttribute('role')).toBe(false);
+  expect(container.querySelector(`.${styles.liveInput}`)?.hasAttribute('aria-label')).toBe(false);
 });

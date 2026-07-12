@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import type { ThemePreference } from '../../app/providers/SiteProviders';
 import { useSiteTheme } from '../../app/providers/SiteProviders';
+import { styles } from './style';
 
 const themeOptions: { icon: typeof Sun; label: string; value: ThemePreference }[] = [
   { icon: Sun, label: 'Light', value: 'light' },
@@ -40,7 +41,7 @@ export default function ThemeMenu() {
     <DropdownMenu items={items} placement="bottomRight">
       <button
         aria-label="Select theme"
-        className="site-header__icon-button"
+        className={styles.iconButton}
         title="Select theme"
         type="button"
       >

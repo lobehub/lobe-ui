@@ -121,7 +121,7 @@ it('exposes enabled desktop and mobile search entry points with their invoking c
   renderHeader(<Header navigation={[]} onSearchOpen={onSearchOpen} />);
 
   const desktop = screen.getByRole('button', { name: 'Search documentation' });
-  const mobile = screen.getByRole('button', { name: 'Open search' });
+  const mobile = screen.getByLabelText('Open search');
   expect((desktop as HTMLButtonElement).disabled).toBe(false);
   expect((mobile as HTMLButtonElement).disabled).toBe(false);
   expect(desktop.getAttribute('aria-keyshortcuts')).toBe('Meta+K Control+K');
@@ -147,7 +147,7 @@ it('opens and closes the named mobile navigation sheet and restores trigger focu
     ['/components/alpha'],
   );
 
-  const trigger = screen.getByRole('button', { name: 'Open documentation navigation' });
+  const trigger = screen.getByLabelText('Open documentation navigation');
   fireEvent.click(trigger);
 
   const dialog = screen.getByRole('dialog', { name: 'Documentation navigation' });
@@ -163,7 +163,7 @@ it('closes the mobile sheet synchronously when reduced motion is requested', () 
   vi.stubGlobal('matchMedia', vi.fn(createMatchMedia('(prefers-reduced-motion: reduce)')));
   renderHeader(<Header navigation={[]} onSearchOpen={vi.fn()} />);
 
-  const trigger = screen.getByRole('button', { name: 'Open documentation navigation' });
+  const trigger = screen.getByLabelText('Open documentation navigation');
   fireEvent.click(trigger);
   fireEvent.keyDown(document, { key: 'Escape' });
 
@@ -186,7 +186,7 @@ it('preserves the active nested link and closes the mobile sheet after navigatio
     [alphaDocument.pathname],
   );
 
-  const trigger = screen.getByRole('button', { name: 'Open documentation navigation' });
+  const trigger = screen.getByLabelText('Open documentation navigation');
   fireEvent.click(trigger);
   const dialog = screen.getByRole('dialog', { name: 'Documentation navigation' });
   const activeLink = within(dialog).getByRole('link', { name: 'Alpha' });

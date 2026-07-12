@@ -1,5 +1,7 @@
 import { Component, type ReactNode } from 'react';
 
+import { styles } from './style';
+
 interface DemoErrorBoundaryProps {
   children: ReactNode;
   resetKey: string;
@@ -34,7 +36,7 @@ export default class DemoErrorBoundary extends Component<
     if (!error) return this.props.children;
 
     return (
-      <div className="demo-frame__error" role="alert">
+      <div className={styles.error} role="alert">
         <strong>Unable to render this demo.</strong>
         <code>{error.message}</code>
         <button type="button" onClick={this.retry}>
