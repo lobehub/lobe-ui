@@ -4,7 +4,7 @@ import { MemoryRouter, Route, Routes } from 'react-router';
 import type { NavigationSection } from '../../types/content';
 import DocsRouteLayout, { ErrorBoundary } from './docs-layout';
 
-const layoutMocks = vi.hoisted(() => ({ searchModuleLoads: 0, setPreference: vi.fn() }));
+const layoutMocks = vi.hoisted(() => ({ searchModuleLoads: 0 }));
 
 vi.mock('../content/registry', () => ({
   contentManifest: {
@@ -17,25 +17,16 @@ vi.mock('../content/registry', () => ({
   },
 }));
 
-vi.mock('../providers/SiteProviders', () => ({
-  useSiteTheme: () => ({ preference: 'system', setPreference: layoutMocks.setPreference }),
-}));
-
 vi.mock('../../components/Header/Header', () => ({
   default: ({
     navigation,
-    onPreferenceChange,
     onSearchOpen,
-    preference,
   }: {
     navigation: NavigationSection[];
-    onPreferenceChange: (value: string) => void;
     onSearchOpen: (trigger: HTMLButtonElement) => void;
-    preference: string;
   }) => (
-    <header data-preference={preference}>
+    <header>
       {navigation[0]?.title}
-      <button onClick={() => onPreferenceChange('dark')}>Dark</button>
       <button onClick={(event) => onSearchOpen(event.currentTarget)}>Search</button>
     </header>
   ),
@@ -76,12 +67,9 @@ it('owns documentation chrome while rendering the nested document route', () => 
   expect(screen.getByRole('link', { name: 'Skip to documentation' }).getAttribute('href')).toBe(
     '#docs-content',
   );
-  expect(screen.getByRole('banner').dataset.preference).toBe('system');
   expect(screen.getByText('Components')).toBeTruthy();
   expect(screen.getByText('Document content')).toBeTruthy();
   expect(layoutMocks.searchModuleLoads).toBe(0);
-  fireEvent.click(screen.getByRole('button', { name: 'Dark' }));
-  expect(layoutMocks.setPreference).toHaveBeenCalledWith('dark');
   expect(screen.getByTestId('plausible')).toBeTruthy();
 });
 

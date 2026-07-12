@@ -13,9 +13,8 @@
     "ignoreDeprecations": "6.0",
     "strict": true,
     "target": "es6",
-    "types": ["vitest/globals"],
+    "types": ["node", "vitest/globals"],
     "paths": {
-      "@@/*": [".dumi/tmp/*"],
       "@/*": ["src/*"],
       "@lobehub/ui": ["src"],
       "@lobehub/ui/*": ["src/*"],
@@ -40,5 +39,5 @@
     }
   },
   "exclude": [".react-router", "site"],
-  "include": ["src", "docs", "tests", ".dumirc.ts", ".fatherrc.ts"]
+  "include": ["src", "docs", "tests", ".fatherrc.ts"]
 }

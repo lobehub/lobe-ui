@@ -2,6 +2,7 @@ import path from 'node:path';
 
 import mdx from '@mdx-js/rollup';
 import { reactRouter } from '@react-router/dev/vite';
+import { codeInspectorPlugin } from 'code-inspector-plugin';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import { visualizer } from 'rollup-plugin-visualizer';
@@ -17,6 +18,9 @@ const sourceRoot = path.resolve(import.meta.dirname, 'src');
 
 export default defineConfig({
   plugins: [
+    codeInspectorPlugin({
+      bundler: 'vite',
+    }),
     lobeDocs(),
     devPagefindPlugin(),
     mdx({
@@ -37,5 +41,8 @@ export default defineConfig({
       { find: /^@lobehub\/ui$/, replacement: sourceRoot },
       { find: /^@lobehub\/ui\/(.+)$/, replacement: `${sourceRoot}/$1` },
     ],
+  },
+  ssr: {
+    noExternal: ['@lobehub/icons', '@lobehub/fluent-emoji'],
   },
 });

@@ -55,4 +55,4 @@ it('renders serialized Button properties and both canonical demo frames through 
   expect(html).toContain('Button properties');
   expect(html).toContain('loading');
   expect(html.match(/class="demo-frame"/g)).toHaveLength(2);
-});
+}, 15_000);

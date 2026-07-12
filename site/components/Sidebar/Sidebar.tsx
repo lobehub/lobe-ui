@@ -2,11 +2,12 @@ import './Sidebar.css';
 
 import { NavLink } from 'react-router';
 
-import type { NavigationSection } from '../../types/content';
+import type { NavigationCategory, NavigationSection } from '../../types/content';
 
 interface SidebarProps {
   navigation: NavigationSection[];
   onNavigate?: () => void;
+  section?: NavigationSection;
 }
 
 const overviewLinks = [
@@ -14,7 +15,40 @@ const overviewLinks = [
   { pathname: '/changelog', title: 'Changelog' },
 ] as const;
 
-export default function Sidebar({ navigation, onNavigate }: SidebarProps) {
+const CategoryGroup = ({
+  category,
+  onNavigate,
+}: {
+  category: NavigationCategory;
+  onNavigate?: () => void;
+}) => (
+  <div className="docs-sidebar__category">
+    <h3>{category.title}</h3>
+    <ul>
+      {category.documents.map((item) => (
+        <li key={item.pathname}>
+          <NavLink end to={item.pathname} onClick={onNavigate}>
+            {item.title}
+          </NavLink>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
+export default function Sidebar({ navigation, onNavigate, section }: SidebarProps) {
+  if (section) {
+    return (
+      <nav aria-label="Component documentation" className="docs-sidebar">
+        <section aria-label={section.title} className="docs-sidebar__section">
+          {section.categories.map((category) => (
+            <CategoryGroup category={category} key={category.title} onNavigate={onNavigate} />
+          ))}
+        </section>
+      </nav>
+    );
+  }
+
   return (
     <nav aria-label="Component documentation" className="docs-sidebar">
       <section className="docs-sidebar__section">
@@ -30,22 +64,11 @@ export default function Sidebar({ navigation, onNavigate }: SidebarProps) {
         </ul>
       </section>
 
-      {navigation.map((section) => (
-        <section className="docs-sidebar__section" key={section.title}>
-          <h2>{section.title}</h2>
-          {section.categories.map((category) => (
-            <div className="docs-sidebar__category" key={category.title}>
-              <h3>{category.title}</h3>
-              <ul>
-                {category.documents.map((item) => (
-                  <li key={item.pathname}>
-                    <NavLink end to={item.pathname} onClick={onNavigate}>
-                      {item.title}
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
-            </div>
+      {navigation.map((navigationSection) => (
+        <section className="docs-sidebar__section" key={navigationSection.title}>
+          <h2>{navigationSection.title}</h2>
+          {navigationSection.categories.map((category) => (
+            <CategoryGroup category={category} key={category.title} onNavigate={onNavigate} />
           ))}
         </section>
       ))}

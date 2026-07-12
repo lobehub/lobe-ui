@@ -41,12 +41,6 @@ logs
 site/compiler/.cache/
 site/compiler/__fixtures__/
 
-# umi
-.umi
-.umi-production
-.umi-test
-.dumi/tmp*
-
 # ignore files
 .*ignore
 

@@ -70,7 +70,6 @@ it('uses route-level not-found behavior for an unknown demo id', () => {
 
 it('emits noindex metadata for standalone demos', () => {
   const descriptors = meta({
-    data: undefined,
     loaderData: {},
     location: {
       hash: '',

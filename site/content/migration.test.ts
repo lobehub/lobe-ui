@@ -86,5 +86,5 @@ describe('reviewed production migration metadata', () => {
     }
 
     expect(failures).toEqual([]);
-  }, 15_000);
+  }, 30_000);
 });

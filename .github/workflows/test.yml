@@ -23,5 +23,11 @@ jobs:
       - name: Test and coverage
         run: bun run test:coverage
 
+      - name: Documentation verification
+        run: |
+          bunx vitest run site scripts/migrate-dumi-docs.test.ts
+          bunx tsx scripts/migrate-dumi-docs.ts --check
+          bun run docs:build
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5

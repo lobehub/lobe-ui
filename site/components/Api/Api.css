@@ -23,7 +23,7 @@
   max-width: 100%;
   overflow-x: auto;
   border: 1px solid var(--docs-border-default);
-  border-radius: 0.75rem;
+  border-radius: var(--docs-radius-lg);
   background: var(--docs-surface-raised);
   box-shadow: var(--docs-shadow-inset);
   scrollbar-color: var(--docs-border-strong) transparent;

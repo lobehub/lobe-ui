@@ -15,6 +15,7 @@ interface TableOfContentsItem {
 
 export default function TableOfContents({ contentId, scopeKey }: TableOfContentsProps) {
   const [items, setItems] = useState<TableOfContentsItem[]>([]);
+  const [activeId, setActiveId] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const content = document.getElementById(contentId);
@@ -37,7 +38,34 @@ export default function TableOfContents({ contentId, scopeKey }: TableOfContents
       ];
     });
     setItems(nextItems);
+    setActiveId(nextItems[0]?.id);
   }, [contentId, scopeKey]);
+
+  useEffect(() => {
+    if (items.length === 0 || typeof IntersectionObserver === 'undefined') return;
+
+    const headings = items.flatMap((item) => {
+      const heading = document.getElementById(item.id);
+      return heading ? [heading] : [];
+    });
+    if (headings.length === 0) return;
+
+    const visible = new Set<string>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) visible.add(entry.target.id);
+          else visible.delete(entry.target.id);
+        }
+        const first = headings.find((heading) => visible.has(heading.id));
+        if (first) setActiveId(first.id);
+      },
+      { rootMargin: '-96px 0px -66% 0px' },
+    );
+    for (const heading of headings) observer.observe(heading);
+
+    return () => observer.disconnect();
+  }, [items]);
 
   if (items.length === 0) return null;
 
@@ -48,7 +76,13 @@ export default function TableOfContents({ contentId, scopeKey }: TableOfContents
         <ol>
           {items.map((item) => (
             <li data-level={item.level} key={item.id}>
-              <a href={`#${item.id}`}>{item.title}</a>
+              <a
+                aria-current={item.id === activeId ? 'location' : undefined}
+                href={`#${item.id}`}
+                onClick={() => setActiveId(item.id)}
+              >
+                {item.title}
+              </a>
             </li>
           ))}
         </ol>

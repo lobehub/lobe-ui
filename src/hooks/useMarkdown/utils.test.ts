@@ -17,7 +17,7 @@ describe('contentCache and addToCache', () => {
     deleteSpy = vi.fn(function (this: Map<unknown, unknown>, key: unknown) {
       return originalDelete.call(this, key);
     });
-    Map.prototype.delete = deleteSpy;
+    Map.prototype.delete = deleteSpy as typeof Map.prototype.delete;
   });
 
   afterEach(() => {

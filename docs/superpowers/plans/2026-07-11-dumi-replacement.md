@@ -1129,7 +1129,7 @@ rtk git commit -m "🚚 refactor(docs): migrate documentation to MDX"
 - Modify: `.agents/skills/local-testing/SKILL.md`
 - Modify: `src/awesome/SpotlightCard/demos/data.ts`
 - Delete: `.dumirc.ts`
-- Delete: obsolete `docs/index.tsx`
+- Preserve: `docs/index.tsx` as the frozen homepage standalone demo source
 
 **Interfaces:**
 
@@ -1193,7 +1193,7 @@ Expected: no executable dumi reference; library tests and full documentation bui
 - [ ] **Step 6: Commit**
 
 ```bash
-rtk git add package.json tsconfig.json eslint.config.mjs .gitignore .prettierignore .github/workflows/test.yml .agents/skills/local-testing/SKILL.md src/awesome/SpotlightCard/demos/data.ts site .dumirc.ts docs/index.tsx
+rtk git add package.json pnpm-workspace.yaml vercel.json tsconfig.json eslint.config.mjs .gitignore .prettierignore .github/workflows/test.yml .agents/skills/local-testing/SKILL.md src/awesome/SpotlightCard/demos/data.ts site .dumirc.ts docs/superpowers/plans/2026-07-11-dumi-replacement.md
 rtk git commit -m "🔥 refactor(docs): remove dumi framework"
 ```
 

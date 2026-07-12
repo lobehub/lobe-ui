@@ -4,12 +4,10 @@ import { Outlet } from 'react-router';
 import Plausible from '../../components/Analytics/Plausible';
 import Header from '../../components/Header/Header';
 import { contentManifest } from '../content/registry';
-import { useSiteTheme } from '../providers/SiteProviders';
 
 const SearchDialog = lazy(() => import('../../components/Search/SearchDialog'));
 
 export default function DocsRouteLayout() {
-  const { preference, setPreference } = useSiteTheme();
   const [searchOpen, setSearchOpen] = useState(false);
   const searchTriggerRef = useRef<HTMLElement>(null);
 
@@ -44,12 +42,7 @@ export default function DocsRouteLayout() {
       <a className="docs-skip-link" href="#docs-content">
         Skip to documentation
       </a>
-      <Header
-        navigation={contentManifest.navigation}
-        preference={preference}
-        onPreferenceChange={setPreference}
-        onSearchOpen={openSearch}
-      />
+      <Header navigation={contentManifest.navigation} onSearchOpen={openSearch} />
       <Outlet />
       {searchOpen ? (
         <Suspense

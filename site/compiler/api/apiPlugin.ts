@@ -1,6 +1,6 @@
 import { basename, relative, resolve } from 'node:path';
 
-import type { Plugin } from 'vite';
+import type { Plugin, ViteDevServer } from 'vite';
 
 import type { ApiRequest } from '../../types/api';
 import { validateApiRequest } from './diagnostics';
@@ -45,6 +45,7 @@ export function apiPlugin(options: ApiPluginOptions = {}): Plugin {
   let root = normalizePath(options.root ?? process.cwd());
   let tsconfigPath = normalizePath(options.tsconfigPath ?? resolve(root, 'tsconfig.json'));
   let extractor: ApiExtractor | undefined;
+  let server: ViteDevServer | undefined;
   const dependencies = new Set<string>();
   const virtualModuleIds = new Set<string>();
 
@@ -52,6 +53,18 @@ export function apiPlugin(options: ApiPluginOptions = {}): Plugin {
     extractor?.invalidate();
     extractor = undefined;
     dependencies.clear();
+  };
+
+  const invalidateVirtualModules = (): void => {
+    extractor?.invalidate();
+    dependencies.clear();
+    if (!server) return;
+    for (const environment of Object.values(server.environments)) {
+      for (const id of virtualModuleIds) {
+        const module = environment.moduleGraph.getModuleById(id);
+        if (module) environment.moduleGraph.invalidateModule(module);
+      }
+    }
   };
 
   const requestFor = (encoded: string): ApiRequest => {
@@ -90,11 +103,20 @@ export function apiPlugin(options: ApiPluginOptions = {}): Plugin {
       tsconfigPath = normalizePath(options.tsconfigPath ?? resolve(root, 'tsconfig.json'));
       releaseCompiler();
     },
+    configureServer(devServer) {
+      server = devServer;
+      const onChange = (file: string) => {
+        if (!isRelevantSource(root, file, dependencies)) return;
+        invalidateVirtualModules();
+      };
+      devServer.watcher.on('change', onChange);
+      devServer.watcher.on('add', onChange);
+      devServer.watcher.on('unlink', onChange);
+    },
     enforce: 'pre',
     hotUpdate(update) {
       if (!isRelevantSource(root, update.file, dependencies)) return;
-      extractor?.invalidate();
-      dependencies.clear();
+      invalidateVirtualModules();
       const modules = new Set(update.modules);
       for (const id of virtualModuleIds) {
         const module = this.environment.moduleGraph.getModuleById(id);

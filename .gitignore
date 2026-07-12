@@ -34,12 +34,6 @@ site/compiler/.cache/
 site/compiler/__fixtures__/
 test-output
 
-# umi
-.umi
-.umi-production
-.umi-test
-.dumi/tmp*
-
 # husky
 .husky/prepare-commit-msg
 

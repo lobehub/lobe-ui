@@ -147,6 +147,18 @@ const resolveWithin = (root: string, relative: string): string | undefined => {
   return resolved;
 };
 
+const encodeArtifactPathSegment = (segment: string): string => encodeURI(segment);
+
+const artifactRelativeHtmlPath = (decodedPathname: string): string => {
+  if (decodedPathname === '/') return 'index.html';
+  const encoded = decodedPathname
+    .replace(/^\//, '')
+    .split('/')
+    .map(encodeArtifactPathSegment)
+    .join('/');
+  return `${encoded}/index.html`;
+};
+
 export const artifactHtmlPath = (outputDirectory: string, pathname: string): string | undefined => {
   let decoded: string;
   try {
@@ -154,8 +166,15 @@ export const artifactHtmlPath = (outputDirectory: string, pathname: string): str
   } catch {
     return;
   }
-  const relative = decoded === '/' ? 'index.html' : `${decoded.replace(/^\//, '')}/index.html`;
-  return resolveWithin(outputDirectory, relative);
+  const candidates = [
+    artifactRelativeHtmlPath(decoded),
+    decoded === '/' ? 'index.html' : `${decoded.replace(/^\//, '')}/index.html`,
+  ];
+  for (const relative of new Set(candidates)) {
+    const resolved = resolveWithin(outputDirectory, relative);
+    if (resolved && existsSync(resolved)) return resolved;
+  }
+  return resolveWithin(outputDirectory, candidates[0]!);
 };
 
 const readHtml = (file: string): CheerioAPI | undefined => {

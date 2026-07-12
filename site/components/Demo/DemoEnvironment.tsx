@@ -14,7 +14,11 @@ interface DemoEnvironmentProps extends PropsWithChildren {
 export default function DemoEnvironment({ appearance, children, demoId }: DemoEnvironmentProps) {
   return (
     <ConfigProvider motion={motion}>
-      <ThemeProvider appId={`lobe-demo-${demoId}`} appearance={appearance}>
+      <ThemeProvider
+        appId={`lobe-demo-${demoId}`}
+        appearance={appearance}
+        enableGlobalStyle={false}
+      >
         {children}
       </ThemeProvider>
     </ConfigProvider>
