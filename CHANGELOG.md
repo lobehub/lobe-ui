@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [5.20.2](https://github.com/lobehub/lobe-ui/compare/v5.20.1...v5.20.2) (2026-07-11)
+
+### 🐛 Bug Fixes
+
+- Resolve base UI migration regressions, closes [#560](https://github.com/lobehub/lobe-ui/issues/560) ([f761fe8](https://github.com/lobehub/lobe-ui/commit/f761fe8))
+
+## [5.20.1](https://github.com/lobehub/lobe-ui/compare/v5.20.0...v5.20.1) (2026-07-11)
+
+### 🎫 Chores
+
+- Disable pnpm lockfile generation ([0ce9d99](https://github.com/lobehub/lobe-ui/commit/0ce9d99))
+
+### 🐛 Bug Fixes
+
+- Preserve HAST runtime compatibility ([75b39f8](https://github.com/lobehub/lobe-ui/commit/75b39f8))
+- Restore Button positioning context ([e71aa36](https://github.com/lobehub/lobe-ui/commit/e71aa36))
+
+### 💄 Styles
+
+- Enable Geist italic and CJK style synthesis ([0f12bf6](https://github.com/lobehub/lobe-ui/commit/0f12bf6))
+
+# [5.20.0](https://github.com/lobehub/lobe-ui/compare/v5.19.3...v5.20.0) (2026-07-09)
+
+### ✨ Features
+
+- **base-ui**: Add Form, Input family, Slider, AutoComplete and Checkbox, closes [#557](https://github.com/lobehub/lobe-ui/issues/557) ([a2c58fd](https://github.com/lobehub/lobe-ui/commit/a2c58fd))
+
+## [5.19.3](https://github.com/lobehub/lobe-ui/compare/v5.19.2...v5.19.3) (2026-07-09)
+
+### 🐛 Bug Fixes
+
+- Hover-only trigger should not pin open on click ([368a342](https://github.com/lobehub/lobe-ui/commit/368a342))
+
 ## [5.19.2](https://github.com/lobehub/lobe-ui/compare/v5.19.1...v5.19.2) (2026-07-08)
 
 ### 🐛 Bug Fixes

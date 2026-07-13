@@ -58,16 +58,20 @@ export function resolveSuffixIcon(
 interface TriggerValueRendererParams {
   getOption: (value: any) => SelectOption<any>;
   isMultiple: boolean;
+  isTags: boolean;
   labelRender: SelectProps['labelRender'];
   normalizeValue: (value: any) => any;
+  onRemoveValue: (index: number) => void;
   placeholder: ReactNode;
 }
 
 export function createTriggerValueRenderer({
   getOption,
   isMultiple,
+  isTags,
   labelRender,
   normalizeValue,
+  onRemoveValue,
   placeholder,
 }: TriggerValueRendererParams) {
   return function renderValue(currentValue: any): ReactNode {
@@ -84,8 +88,32 @@ export function createTriggerValueRenderer({
             const option = getOption(val);
             const content = labelRender ? labelRender(option) : (option.label ?? String(val));
             return (
-              <span className={styles.tag} key={`${String(val)}-${index}`}>
+              <span
+                className={styles.tag}
+                data-role="lobe-select-tag"
+                key={`${String(val)}-${index}`}
+              >
                 {content}
+                {isTags && (
+                  <span
+                    aria-label={`Remove ${String(val)}`}
+                    className={styles.tagClose}
+                    data-role="lobe-select-tag-remove"
+                    role="button"
+                    tabIndex={0}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                      onRemoveValue(index);
+                    }}
+                    onPointerDown={(event) => {
+                      event.preventDefault();
+                      event.stopPropagation();
+                    }}
+                  >
+                    <X size={12} />
+                  </span>
+                )}
               </span>
             );
           })}
@@ -104,6 +132,7 @@ type SelectVirtualReturn = ReturnType<typeof useSelectVirtual>;
 
 interface SelectListSectionProps {
   classNames: SelectClassNames | undefined;
+  hasSearch: boolean;
   isEmpty: boolean;
   listContent: ReactNode;
   listItemHeight: number | undefined;
@@ -113,13 +142,14 @@ interface SelectListSectionProps {
 
 export function SelectListSection({
   classNames,
+  hasSearch,
   isEmpty,
   listContent,
   listItemHeight,
   virtual,
   virtualState,
 }: SelectListSectionProps) {
-  const listClassName = cx(styles.list, classNames?.list);
+  const listClassName = cx(styles.list, hasSearch && styles.listWithSearch, classNames?.list);
 
   if (!virtual || isEmpty) {
     return (
@@ -164,31 +194,41 @@ export function EmptyContent({ classNames }: EmptyContentProps) {
 }
 
 interface SelectSearchInputProps {
+  autoFocus?: boolean;
   classNames: SelectClassNames | undefined;
+  disabled?: boolean;
+  inline?: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void;
   placeholder: ReactNode;
+  readOnly?: boolean;
   stopPropagation: (event: KeyboardEvent<HTMLInputElement>) => void;
   value: string;
 }
 
 export function SelectSearchInput({
+  autoFocus,
   classNames,
+  disabled,
+  inline,
   onChange,
   onKeyDown,
   placeholder,
+  readOnly,
   stopPropagation,
   value,
 }: SelectSearchInputProps) {
   return (
-    <div className={cx(styles.search, classNames?.search)}>
+    <div className={cx(inline ? styles.tagsSearch : styles.search, classNames?.search)}>
       <input
+        autoFocus={autoFocus}
         className={styles.searchInput}
+        disabled={disabled}
         placeholder={typeof placeholder === 'string' ? placeholder : undefined}
+        readOnly={readOnly}
         value={value}
         onChange={onChange}
-        onKeyDown={onKeyDown}
-        onKeyDownCapture={stopPropagation}
+        onKeyDownCapture={onKeyDown}
         onKeyUp={stopPropagation}
         onKeyUpCapture={stopPropagation}
       />

@@ -8,10 +8,10 @@ export const getOptionSearchText = <Value>(option: SelectOption<Value>) => {
   if (typeof option.label === 'string' || typeof option.label === 'number') {
     return String(option.label);
   }
+  if (option.title) return option.title;
   if (typeof option.value === 'string' || typeof option.value === 'number') {
     return String(option.value);
   }
-  if (option.title) return option.title;
   return '';
 };
 

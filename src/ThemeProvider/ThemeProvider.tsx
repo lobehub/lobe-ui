@@ -49,7 +49,7 @@ const ThemeProvider = memo<ThemeProviderProps>(
             version: '1.0.0',
           }),
           genCdnUrl({
-            path: 'css/index.css',
+            path: 'css/index-full.css',
             pkg: '@lobehub/webfont-geist',
             version: '1.0.0',
           }),

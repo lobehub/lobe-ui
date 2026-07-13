@@ -1,8 +1,12 @@
 import { createStaticStyles } from 'antd-style';
 
+import { controlHeight } from '@/base-ui/controlSize';
+
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   base: css`
     cursor: pointer;
+
+    position: relative;
 
     display: inline-flex;
     gap: 6px;
@@ -37,21 +41,21 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   sizeSmall: css`
-    height: 24px;
+    height: ${controlHeight.small}px;
     padding-inline: 8px;
     border-radius: ${cssVar.borderRadiusSM};
     font-size: 12px;
   `,
 
   sizeMiddle: css`
-    height: 32px;
+    height: ${controlHeight.middle}px;
     padding-inline: 14px;
     border-radius: ${cssVar.borderRadiusSM};
     font-size: 13px;
   `,
 
   sizeLarge: css`
-    height: 40px;
+    height: ${controlHeight.large}px;
     padding-inline: 16px;
     border-radius: ${cssVar.borderRadius};
     font-size: 14px;

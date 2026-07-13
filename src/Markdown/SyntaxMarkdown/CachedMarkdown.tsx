@@ -63,11 +63,17 @@ function post(tree: Nodes, options: Options) {
   }
 
   const transform: BuildVisitor<Root> = (node, index, parent) => {
-    if (node.type === 'raw' && parent && typeof index === 'number') {
+    const rawNode = node as unknown as { type?: string; value?: unknown };
+    if (
+      rawNode.type === 'raw' &&
+      typeof rawNode.value === 'string' &&
+      parent &&
+      typeof index === 'number'
+    ) {
       if (skipHtml) {
         parent.children.splice(index, 1);
       } else {
-        parent.children[index] = { type: 'text', value: node.value };
+        parent.children[index] = { type: 'text', value: rawNode.value };
       }
 
       return index;

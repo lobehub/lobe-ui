@@ -72,6 +72,7 @@ const Select = memo<SelectProps<any>>(
   }) => {
     const { isDarkMode } = useThemeMode();
     const resolvedVariant = variant ?? (isDarkMode ? 'filled' : 'outlined');
+    const isTags = mode === 'tags';
     const isMultiple = mode === 'multiple' || mode === 'tags';
     const isItemAligned = behaviorVariant === 'item-aligned';
 
@@ -89,6 +90,7 @@ const Select = memo<SelectProps<any>>(
       handleValueChange,
       normalizedValue,
       normalizeValue,
+      removeLastTagValue,
       resolvedOptions,
       valueArray,
     } = useSelectValue({
@@ -104,6 +106,19 @@ const Select = memo<SelectProps<any>>(
 
     const { handleOpenChange, mergedOpen } = useSelectOpen({ defaultOpen, onOpenChange, open });
 
+    const handleRootValueChange = useCallback(
+      (nextValue: any) => {
+        if (!(isTags && !mergedOpen)) handleValueChange(nextValue);
+      },
+      [handleValueChange, isTags, mergedOpen],
+    );
+
+    const handleRemoveTag = useCallback(
+      (index: number) =>
+        handleValueChange(valueArray.filter((_, itemIndex) => itemIndex !== index)),
+      [handleValueChange, valueArray],
+    );
+
     const {
       filteredOptions,
       handleSearchChange,
@@ -116,6 +131,7 @@ const Select = memo<SelectProps<any>>(
       handleOpenChange,
       mergedOpen,
       mode,
+      removeLastTagValue,
       resolvedOptions,
       showSearch,
       tokenSeparators,
@@ -136,11 +152,13 @@ const Select = memo<SelectProps<any>>(
         createTriggerValueRenderer({
           getOption,
           isMultiple,
+          isTags,
           labelRender,
           normalizeValue,
-          placeholder,
+          onRemoveValue: handleRemoveTag,
+          placeholder: isTags ? undefined : placeholder,
         }),
-      [getOption, isMultiple, labelRender, normalizeValue, placeholder],
+      [getOption, handleRemoveTag, isMultiple, isTags, labelRender, normalizeValue, placeholder],
     );
 
     const hasValue = isMultiple ? valueArray.length > 0 : !isValueEmpty(normalizedValue);
@@ -225,20 +243,38 @@ const Select = memo<SelectProps<any>>(
         required={required}
         value={normalizedValue}
         onOpenChange={handleOpenChange}
-        onValueChange={handleValueChange}
+        onValueChange={handleRootValueChange}
       >
         <BaseSelect.Trigger
-          autoFocus={autoFocus}
+          autoFocus={!isTags && autoFocus}
           className={triggerClassName}
           disabled={disabled}
+          nativeButton={!isTags}
+          render={isTags ? <div /> : undefined}
           style={style}
         >
           {prefixNode !== null && prefixNode !== undefined && (
             <span className={cx(styles.prefix, classNames?.prefix)}>{prefixNode}</span>
           )}
-          <BaseSelect.Value className={cx(styles.value, classNames?.value)}>
+          <BaseSelect.Value
+            className={cx(styles.value, isTags && styles.tagsValue, classNames?.value)}
+          >
             {renderValue}
           </BaseSelect.Value>
+          {isTags && (
+            <SelectSearchInput
+              inline
+              autoFocus={autoFocus}
+              classNames={classNames}
+              disabled={disabled}
+              placeholder={valueArray.length === 0 ? placeholder : undefined}
+              readOnly={readOnly}
+              stopPropagation={stopSearchPropagation}
+              value={searchValue}
+              onChange={handleSearchChange}
+              onKeyDown={handleSearchKeyDown}
+            />
+          )}
           <SelectTriggerSuffix
             classNames={classNames}
             showClear={showClear}
@@ -265,7 +301,7 @@ const Select = memo<SelectProps<any>>(
                 classNames?.dropdown,
               )}
             >
-              {shouldShowSearch && (
+              {shouldShowSearch && !isTags && (
                 <SelectSearchInput
                   classNames={classNames}
                   placeholder={placeholder}
@@ -277,6 +313,7 @@ const Select = memo<SelectProps<any>>(
               )}
               <SelectListSection
                 classNames={classNames}
+                hasSearch={shouldShowSearch && !isTags}
                 isEmpty={isEmpty}
                 listContent={listContent}
                 listItemHeight={listItemHeight}

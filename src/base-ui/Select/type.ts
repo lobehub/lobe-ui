@@ -82,7 +82,7 @@ export interface SelectProps<Value = string> {
   mode?: 'multiple' | 'tags';
   name?: string;
   onChange?: (
-    value: Value | Value[] | null,
+    value: Value | Value[] | null | undefined,
     option?: SelectOption<Value> | SelectOption<Value>[],
   ) => void;
   onOpenChange?: (open: boolean, eventDetails?: SelectRootChangeEventDetails) => void;

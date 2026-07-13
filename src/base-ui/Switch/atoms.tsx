@@ -93,6 +93,7 @@ export const SwitchRoot = ({
   return (
     <SwitchContext value={contextValue}>
       <Switch.Root
+        nativeButton
         checked={isChecked}
         defaultChecked={defaultChecked}
         disabled={disabled}
