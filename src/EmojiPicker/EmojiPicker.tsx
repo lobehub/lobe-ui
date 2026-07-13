@@ -74,7 +74,8 @@ const EmojiPicker = memo<EmojiPickerProps>(
 
     const { data: i18n } = useSWR(
       locale,
-      async () => await import(`@emoji-mart/data/i18n/${locale.split('-')[0]}.json`),
+      async () =>
+        await import(/* @vite-ignore */ `@emoji-mart/data/i18n/${locale.split('-')[0]}.json`),
       { revalidateOnFocus: false, revalidateOnMount: false },
     );
 
