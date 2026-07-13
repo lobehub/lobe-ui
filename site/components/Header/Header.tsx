@@ -25,7 +25,6 @@ const LOGO_URL =
 // LobeHubText viewBox keeps ~49% vertical padding, so the wordmark box must
 // be larger than the 3d logo for letter ink to optically match the icon.
 const LOGO_SIZE = 20;
-const WORDMARK_SIZE = 36;
 
 const primarySectionTitles = ['Components', 'Base UI', 'Chat', 'Icons', 'Brand'];
 
@@ -167,7 +166,7 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
               src={LOGO_URL}
               width={LOGO_SIZE}
             />
-            <LobeHubText aria-hidden className={styles.wordmark} size={WORDMARK_SIZE} />
+            <LobeHubText aria-hidden className={styles.wordmark} />
             <span aria-hidden className={styles.brandDivider}>
               /
             </span>

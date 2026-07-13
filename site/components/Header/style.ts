@@ -279,7 +279,7 @@ export const styles = createStaticStyles(({ css }) => {
 
     moreButton: css`
       padding-block: 0;
-padding-inline: 0.625rem;
+      padding-inline: 0.625rem;
     `,
 
     nav: css`
@@ -374,7 +374,7 @@ padding-inline: 0.625rem;
       display: block;
       flex: none;
       width: auto;
-      height: 2.25rem;
+      height: 28px;
     `,
   };
 });
