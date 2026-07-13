@@ -4,6 +4,8 @@ import { motion } from 'motion/react';
 import { ThemeProvider as NextThemeProvider, useTheme } from 'next-themes';
 import type { PropsWithChildren } from 'react';
 
+import StyleRegistry from './StyleRegistry';
+
 export type ThemePreference = 'light' | 'system' | 'dark';
 export type ResolvedAppearance = 'light' | 'dark';
 
@@ -45,7 +47,9 @@ function LibraryProviders({ children }: PropsWithChildren) {
 export default function SiteProviders({ children }: PropsWithChildren) {
   return (
     <NextThemeProvider attribute="data-theme" storageKey={THEME_STORAGE_KEY}>
-      <LibraryProviders>{children}</LibraryProviders>
+      <StyleRegistry>
+        <LibraryProviders>{children}</LibraryProviders>
+      </StyleRegistry>
     </NextThemeProvider>
   );
 }

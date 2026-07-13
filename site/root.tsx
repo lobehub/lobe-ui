@@ -12,6 +12,7 @@ const GEIST_MONO_FONT_STYLESHEET = `${FONT_REGISTRY_ORIGIN}/@lobehub/webfont-gei
 
 export const links: LinksFunction = () => [
   { crossOrigin: 'anonymous', href: FONT_REGISTRY_ORIGIN, rel: 'preconnect' },
+  { href: '/antd.css', rel: 'stylesheet' },
   { href: GEIST_FONT_STYLESHEET, rel: 'stylesheet' },
   { href: GEIST_MONO_FONT_STYLESHEET, rel: 'stylesheet' },
 ];

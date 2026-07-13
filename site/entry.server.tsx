@@ -1,5 +1,8 @@
+import { extractStaticStyle } from 'antd-style';
 import { prerender } from 'react-dom/static';
 import { type EntryContext, ServerRouter } from 'react-router';
+
+import { buildInlineAntdStyle } from './app/antdStaticCss.server';
 
 const STREAM_TIMEOUT = 5000;
 
@@ -38,9 +41,22 @@ export default async function handleRequest(
       );
     }
 
+    const html = await new Response(prelude).text();
+    // antd rules ship via /antd.css, so the inline antd entry shrinks to component
+    // css-var blocks (+ fallback rules for components the probe missed); emotion
+    // styles (createStaticStyles / injectGlobal / createStyles) stay per-page.
+    const styles =
+      buildInlineAntdStyle(extractStaticStyle.cache) +
+      extractStaticStyle(html, { includeAntd: false })
+        .map(({ tag }) => tag)
+        .join('');
+    // replacer fn: extracted CSS can contain `$'` (e.g. content:'$ ') which
+    // String.replace would expand as a substitution pattern
+    const document = styles ? html.replace('</head>', () => `${styles}</head>`) : html;
+
     responseHeaders.set('Content-Type', 'text/html');
 
-    return new Response(prelude, {
+    return new Response(document, {
       headers: responseHeaders,
       status,
     });
