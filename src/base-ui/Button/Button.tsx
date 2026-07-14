@@ -98,7 +98,7 @@ const Button = ({
   ...rest
 }: ButtonProps) => {
   const Motion = useMotionComponent();
-  const isDisabled = disabled || loading;
+  const isInteractionDisabled = disabled || loading;
   const sizeCls = resolveSizeCls(size);
   const variantCls = resolveVariantCls({ danger, ghost, type });
   const shapeCls =
@@ -152,11 +152,13 @@ const Button = ({
     </>
   );
 
-  const motionGestures = isDisabled ? {} : { transition: motionTransition, whileTap: tapAnim };
+  const motionGestures = isInteractionDisabled
+    ? {}
+    : { transition: motionTransition, whileTap: tapAnim };
 
   if (href !== undefined) {
     const handleAnchorClick = (e: MouseEvent<HTMLAnchorElement>) => {
-      if (isDisabled) {
+      if (isInteractionDisabled) {
         e.preventDefault();
         return;
       }
@@ -165,8 +167,9 @@ const Button = ({
 
     return (
       <Motion.a
-        aria-disabled={isDisabled || undefined}
-        href={isDisabled ? undefined : href}
+        aria-busy={loading || undefined}
+        aria-disabled={isInteractionDisabled || undefined}
+        href={disabled ? undefined : href}
         target={target}
         {...(rest as any)}
         className={composedClassName}
@@ -179,14 +182,24 @@ const Button = ({
     );
   }
 
+  const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+    if (isInteractionDisabled) {
+      e.preventDefault();
+      return;
+    }
+    onClick?.(e);
+  };
+
   return (
     <Motion.button
       type={htmlType}
       {...(rest as any)}
+      aria-busy={loading || undefined}
+      aria-disabled={isInteractionDisabled || undefined}
       className={composedClassName}
-      disabled={isDisabled}
+      disabled={disabled}
       ref={ref as Ref<HTMLButtonElement>}
-      onClick={onClick}
+      onClick={handleButtonClick}
       {...motionGestures}
     >
       {inner}
