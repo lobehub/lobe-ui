@@ -39,7 +39,7 @@ Compose a primary action and a dropdown menu sharing the same visual props.
 | shape        | Button shape                                                                      | `'default' \| 'circle' \| 'round'`                                 | `'default'` |
 | icon         | Icon rendered next to the children — a Lucide icon component or a ready-made node | `IconProps['icon'] \| ReactNode`                                   | -           |
 | iconPosition | Where to place the icon                                                           | `'start' \| 'end'`                                                 | `'start'`   |
-| loading      | Show a spinner and disable interaction                                            | `boolean`                                                          | `false`     |
+| loading      | Show a spinner and prevent repeated interaction                                   | `boolean`                                                          | `false`     |
 | disabled     | Disabled state                                                                    | `boolean`                                                          | `false`     |
 | block        | Stretch to fill container width                                                   | `boolean`                                                          | `false`     |
 | href         | Render as an `<a>` element                                                        | `string`                                                           | -           |
@@ -49,6 +49,8 @@ Compose a primary action and a dropdown menu sharing the same visual props.
 | styles       | Per-slot inline styles                                                            | `{ icon?: CSSProperties }`                                         | -           |
 
 The component forwards all standard `<button>` (or `<a>` when `href` is set) HTML attributes including `onClick`, `aria-*`, `data-*`, and `ref`.
+
+`loading` preserves the native state of the underlying element while blocking new user activations. In particular, setting `loading` during the first click of an `htmlType="submit"` button does not cancel that form submission or remove its submitter data. Use `disabled` when native disabled semantics are required.
 
 ## Migrating from `antd`'s `Button`
 
