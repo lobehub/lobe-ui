@@ -35,16 +35,18 @@ export const styles = createStaticStyles(({ css }) => ({
     }
 
     &:active {
-      transform: scale(0.98);
+      transform: scale(0.96);
     }
   `,
 
   buttonPrimary: css`
-    color: var(--docs-background);
-    background-color: var(--docs-text-primary);
-    background-image: none;
+    && {
+      color: var(--docs-background);
+      background-color: var(--docs-text-primary);
+      background-image: none;
+    }
 
-    &:hover {
+    &&:hover {
       background-color: color-mix(in srgb, var(--docs-text-primary) 86%, var(--docs-background));
       background-image: none;
     }
@@ -83,9 +85,11 @@ export const styles = createStaticStyles(({ css }) => ({
 
     p {
       margin: 0;
+
       font-size: 0.8438rem;
       line-height: 1.65;
       color: var(--docs-text-secondary);
+      text-wrap: pretty;
     }
   `,
 
@@ -104,10 +108,36 @@ export const styles = createStaticStyles(({ css }) => ({
   `,
 
   features: css`
+    padding-block: clamp(3rem, 8vh, 5rem);
+    border-block-start: 1px solid var(--docs-border-subtle);
+
+    h2 {
+      margin: 0;
+
+      font-size: 1.5rem;
+      font-weight: 650;
+      color: var(--docs-text-primary);
+      text-align: center;
+      text-wrap: balance;
+      letter-spacing: -0.02em;
+    }
+
+    > p {
+      margin-block: 0.5rem 0;
+      margin-inline: 0;
+
+      font-size: 0.875rem;
+      color: var(--docs-text-secondary);
+      text-align: center;
+      text-wrap: pretty;
+    }
+  `,
+
+  featuresGrid: css`
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1rem;
-    padding-block-end: clamp(3rem, 8vh, 6rem);
+    margin-block-start: 1.75rem;
 
     @media (width <= 47.5rem) {
       grid-template-columns: 1fr;
@@ -141,6 +171,22 @@ export const styles = createStaticStyles(({ css }) => ({
         radial-gradient(26% 45% at 84% 12%, var(--docs-aurora-pink), transparent 70%);
     }
 
+    > * {
+      animation: home-hero-enter 500ms cubic-bezier(0.2, 0, 0, 1) backwards;
+    }
+
+    > :nth-child(2) {
+      animation-delay: 90ms;
+    }
+
+    > :nth-child(3) {
+      animation-delay: 180ms;
+    }
+
+    > :nth-child(4) {
+      animation-delay: 270ms;
+    }
+
     h1 {
       margin: 0;
 
@@ -162,6 +208,19 @@ export const styles = createStaticStyles(({ css }) => ({
       color: var(--docs-text-secondary);
       text-wrap: balance;
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      > * {
+        animation: none;
+      }
+    }
+
+    @keyframes home-hero-enter {
+      from {
+        transform: translateY(10px);
+        opacity: 0;
+      }
+    }
   `,
 
   heroActions: css`
@@ -177,19 +236,60 @@ export const styles = createStaticStyles(({ css }) => ({
     -webkit-text-fill-color: transparent;
   `,
 
-  install: css`
+  cta: css`
+    position: relative;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-block: 1.25rem 3.75rem;
+
+    padding-block: clamp(3.5rem, 9vh, 5.5rem);
+    border-block-start: 1px solid var(--docs-border-subtle);
+
+    &::after {
+      pointer-events: none;
+      content: '';
+
+      position: absolute;
+      z-index: -1;
+      inset-block: 0 calc(-1 * clamp(2rem, 5vh, 4rem));
+      inset-inline: -20%;
+
+      background: radial-gradient(50% 80% at 50% 100%, var(--docs-aurora-violet), transparent 70%);
+
+      mask-image: linear-gradient(#000 calc(100% - clamp(2rem, 5vh, 4rem)), transparent);
+    }
 
     h2 {
-      margin-block: 0 1rem;
+      margin-block: 0 1.25rem;
       margin-inline: 0;
 
-      font-size: 0.9375rem;
-      font-weight: 500;
-      color: var(--docs-text-secondary);
+      font-size: 1.5rem;
+      font-weight: 650;
+      color: var(--docs-text-primary);
+      text-align: center;
+      text-wrap: balance;
+      letter-spacing: -0.02em;
+    }
+  `,
+
+  ctaFootnote: css`
+    margin-block: 1.125rem 0;
+    margin-inline: 0;
+    font-size: 0.8125rem;
+    color: var(--docs-text-subtle);
+
+    a {
+      display: inline-flex;
+      gap: 0.25rem;
+      align-items: center;
+
+      color: var(--docs-accent);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
     }
   `,
 
@@ -219,6 +319,7 @@ export const styles = createStaticStyles(({ css }) => ({
   `,
 
   root: css`
+    overflow-x: clip;
     display: flex;
     flex-direction: column;
 

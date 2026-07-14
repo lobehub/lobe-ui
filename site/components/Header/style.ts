@@ -327,6 +327,20 @@ export const styles = createStaticStyles(({ css }) => {
 
       background: color-mix(in srgb, var(--docs-background) 86%, transparent);
       backdrop-filter: blur(18px) saturate(130%);
+
+      transition:
+        background-color 200ms ease,
+        border-color 200ms ease;
+
+      &[data-transparent] {
+        border-block-end-color: transparent;
+        background: transparent;
+        backdrop-filter: none;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        transition-duration: 0.01ms;
+      }
     `,
 
     search,

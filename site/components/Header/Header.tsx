@@ -49,6 +49,7 @@ const prefersReducedMotion = () => {
 
 export default function Header({ navigation, onSearchOpen }: HeaderProps) {
   const [sheetState, setSheetState] = useState<'closed' | 'closing' | 'open'>('closed');
+  const [atTop, setAtTop] = useState(true);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const closeTimerRef = useRef<number | undefined>(undefined);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -109,6 +110,13 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
     [],
   );
 
+  useEffect(() => {
+    const handleScroll = () => setAtTop(window.scrollY < 8);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const handleSheetKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.key !== 'Tab') return;
     const controls = Array.from(
@@ -143,7 +151,7 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
 
   return (
     <>
-      <header className={styles.root}>
+      <header className={styles.root} data-transparent={isHome && atTop ? '' : undefined}>
         <div className={styles.inner}>
           <button
             aria-controls="mobile-documentation-navigation"
