@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.20.3](https://github.com/lobehub/lobe-ui/compare/v5.20.2...v5.20.3) (2026-07-14)
+
+### 🐛 Bug Fixes
+
+- **button**: Preserve form submission while loading, closes [#563](https://github.com/lobehub/lobe-ui/issues/563) ([fedc22c](https://github.com/lobehub/lobe-ui/commit/fedc22c))
+
 ## [5.20.2](https://github.com/lobehub/lobe-ui/compare/v5.20.1...v5.20.2) (2026-07-11)
 
 ### 🐛 Bug Fixes
