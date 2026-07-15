@@ -44,7 +44,7 @@ export default () => {
           },
         ]}
         onChange={(value) => {
-          console.log(value);
+          console.info(value);
         }}
       />
     </StoryBook>

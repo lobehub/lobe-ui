@@ -2,10 +2,10 @@ import { Link } from 'lucide-react';
 import type { MDXComponents } from 'mdx/types';
 import type { ComponentProps, MouseEvent } from 'react';
 
-import Api from '../components/Api/Api';
-import Demo from '../components/Demo/Demo';
+import { Api } from '../components/Api/Api';
+import { Demo } from '../components/Demo/Demo';
 import { styles as docsLayoutStyles } from '../components/DocsLayout/style';
-import CodeBlock from '../components/Mdx/CodeBlock';
+import { CodeBlock } from '../components/Mdx/CodeBlock';
 import { springScrollToElement } from '../lib/scroller';
 
 const createAnchoredHeading = (Tag: 'h2' | 'h3' | 'h4' | 'h5' | 'h6') =>

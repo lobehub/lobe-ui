@@ -2,7 +2,7 @@ import { DatePicker, type DatePickerProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-  console.log(date, dateString);
+  console.info(date, dateString);
 };
 export default () => {
   const store = useCreateStore();

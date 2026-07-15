@@ -18,7 +18,7 @@ export default () => {
         ]}
         onChange={(values) => {
           setValue(values);
-          console.log('Selected:', values);
+          console.info('Selected:', values);
         }}
       />
     </Center>

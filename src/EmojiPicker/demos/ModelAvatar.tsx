@@ -1,3 +1,3 @@
 import { EmojiPicker } from '@lobehub/ui';
 
-export default () => <EmojiPicker allowModelAvatar onChange={console.log} />;
+export default () => <EmojiPicker allowModelAvatar onChange={console.info} />;

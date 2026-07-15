@@ -5,7 +5,7 @@ import { MemoryRouter, useLocation } from 'react-router';
 import type { SearchEngine } from '../../search/types';
 import { deferred } from '../../tests/deferred';
 import type { DocumentManifestEntry } from '../../types/content';
-import SearchDialog from './SearchDialog';
+import { SearchDialog } from './SearchDialog';
 
 const documents: DocumentManifestEntry[] = [
   {

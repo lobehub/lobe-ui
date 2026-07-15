@@ -11,10 +11,7 @@ interface DemoErrorBoundaryState {
   error?: Error;
 }
 
-export default class DemoErrorBoundary extends Component<
-  DemoErrorBoundaryProps,
-  DemoErrorBoundaryState
-> {
+export class DemoErrorBoundary extends Component<DemoErrorBoundaryProps, DemoErrorBoundaryState> {
   state: DemoErrorBoundaryState = {};
 
   static getDerivedStateFromError(error: unknown): DemoErrorBoundaryState {

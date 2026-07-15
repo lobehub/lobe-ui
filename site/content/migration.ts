@@ -593,4 +593,4 @@ const migration = {
   },
 } satisfies MigrationConfig;
 
-export default migration;
+export { migration };

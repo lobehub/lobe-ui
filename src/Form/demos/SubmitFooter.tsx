@@ -32,7 +32,7 @@ export default () => {
       setTimeout(resolve, 1000);
     });
     setData(values);
-    console.log('submit:', values);
+    console.info('submit:', values);
   };
 
   return (

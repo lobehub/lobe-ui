@@ -53,7 +53,7 @@ export interface LiveDemoState {
 const isCurrentRevision = (tag: RevisionTag, demo: DemoModule): boolean =>
   tag.demo === demo && tag.source === demo.source;
 
-export default function useLiveDemo(demo: DemoModule, resetSignal: number): LiveDemoState {
+export function useLiveDemo(demo: DemoModule, resetSignal: number): LiveDemoState {
   const sourceParts = useMemo(() => splitLiveSource(demo.source), [demo.source]);
   const [editorSession, setEditorSession] = useState<EditorSession>({
     demo,

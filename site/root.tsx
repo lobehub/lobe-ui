@@ -2,8 +2,8 @@ import type { ReactNode } from 'react';
 import type { LinksFunction } from 'react-router';
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 
-import SiteProviders from './app/providers/SiteProviders';
-import ThemeBootstrap from './app/providers/ThemeBootstrap';
+import { SiteProviders } from './app/providers/SiteProviders';
+import { ThemeBootstrap } from './app/providers/ThemeBootstrap';
 import { styles } from './styles/globalStyles';
 
 const FONT_REGISTRY_ORIGIN = 'https://registry.npmmirror.com';

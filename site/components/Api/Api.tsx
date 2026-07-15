@@ -41,7 +41,7 @@ function PropertyRow({ property }: { property: ApiProperty }) {
   );
 }
 
-export default function Api({ data, name }: ApiProps) {
+export function Api({ data, name }: ApiProps) {
   if (!data) {
     throw new Error(
       `Missing compile-time API metadata for "${name}". Ensure the MDX compiler injects the serialized data prop.`,

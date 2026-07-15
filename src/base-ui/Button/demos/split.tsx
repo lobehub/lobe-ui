@@ -7,19 +7,19 @@ const primaryItems = [
     icon: <DownloadIcon size={14} />,
     key: 'download',
     label: 'Download',
-    onClick: () => console.log('download'),
+    onClick: () => console.info('download'),
   },
   {
     icon: <ShareIcon size={14} />,
     key: 'share',
     label: 'Share link',
-    onClick: () => console.log('share'),
+    onClick: () => console.info('share'),
   },
   {
     icon: <CopyIcon size={14} />,
     key: 'duplicate',
     label: 'Duplicate',
-    onClick: () => console.log('duplicate'),
+    onClick: () => console.info('duplicate'),
   },
 ];
 
@@ -28,9 +28,9 @@ const dangerItems = [
     icon: <Trash2Icon size={14} />,
     key: 'delete',
     label: 'Delete permanently',
-    onClick: () => console.log('delete'),
+    onClick: () => console.info('delete'),
   },
-  { key: 'archive', label: 'Move to archive', onClick: () => console.log('archive') },
+  { key: 'archive', label: 'Move to archive', onClick: () => console.info('archive') },
 ];
 
 export default () => (
@@ -39,17 +39,17 @@ export default () => (
       <span style={{ fontSize: 12, opacity: 0.6 }}>Type</span>
       <Flexbox horizontal gap={12} style={{ flexWrap: 'wrap' }}>
         <SplitButton type="primary">
-          <SplitButton.Main onClick={() => console.log('save')}>Save</SplitButton.Main>
+          <SplitButton.Main onClick={() => console.info('save')}>Save</SplitButton.Main>
           <SplitButton.Menu items={primaryItems} />
         </SplitButton>
 
         <SplitButton>
-          <SplitButton.Main onClick={() => console.log('save')}>Save</SplitButton.Main>
+          <SplitButton.Main onClick={() => console.info('save')}>Save</SplitButton.Main>
           <SplitButton.Menu items={primaryItems} />
         </SplitButton>
 
         <SplitButton type="dashed">
-          <SplitButton.Main onClick={() => console.log('save')}>Save</SplitButton.Main>
+          <SplitButton.Main onClick={() => console.info('save')}>Save</SplitButton.Main>
           <SplitButton.Menu items={primaryItems} />
         </SplitButton>
       </Flexbox>
@@ -59,12 +59,12 @@ export default () => (
       <span style={{ fontSize: 12, opacity: 0.6 }}>Danger</span>
       <Flexbox horizontal gap={12} style={{ flexWrap: 'wrap' }}>
         <SplitButton danger type="primary">
-          <SplitButton.Main onClick={() => console.log('delete')}>Delete</SplitButton.Main>
+          <SplitButton.Main onClick={() => console.info('delete')}>Delete</SplitButton.Main>
           <SplitButton.Menu items={dangerItems} />
         </SplitButton>
 
         <SplitButton danger>
-          <SplitButton.Main onClick={() => console.log('delete')}>Delete</SplitButton.Main>
+          <SplitButton.Main onClick={() => console.info('delete')}>Delete</SplitButton.Main>
           <SplitButton.Menu items={dangerItems} />
         </SplitButton>
       </Flexbox>

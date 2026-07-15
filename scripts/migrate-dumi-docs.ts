@@ -302,11 +302,15 @@ const readJson = <Value>(path: string): Value => JSON.parse(readFileSync(path, '
 const readMigrationConfig = async (root: string): Promise<MigrationConfig> => {
   const typedPath = resolve(root, 'site/content/migration.ts');
   if (isFile(typedPath)) {
-    const module = (await import(pathToFileURL(typedPath).href)) as { default?: unknown };
-    if (!module.default || typeof module.default !== 'object') {
-      throw new Error(`Typed migration metadata must export a default object: ${typedPath}`);
+    const module = (await import(pathToFileURL(typedPath).href)) as {
+      default?: unknown;
+      migration?: unknown;
+    };
+    const config = module.migration ?? module.default;
+    if (!config || typeof config !== 'object') {
+      throw new Error(`Typed migration metadata must export named migration: ${typedPath}`);
     }
-    return module.default as MigrationConfig;
+    return config as MigrationConfig;
   }
   const jsonPath = resolve(root, 'site/content/migration.json');
   return isFile(jsonPath) ? readJson<MigrationConfig>(jsonPath) : {};

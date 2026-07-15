@@ -85,7 +85,7 @@ export default () => {
             title: 'Volcano',
           },
         ]}
-        onChange={(color) => console.log(color)}
+        onChange={(color) => console.info(color)}
       />
     </StoryBook>
   );

@@ -80,7 +80,7 @@ export default () => (
   },
 ] as const;
 
-export default function CodeShowcase() {
+export function CodeShowcase() {
   const [activeKey, setActiveKey] = useState<(typeof EXAMPLES)[number]['key']>('markdown');
   const active = EXAMPLES.find((example) => example.key === activeKey) ?? EXAMPLES[0];
 

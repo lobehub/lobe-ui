@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import type { DemoModule } from '../../types/demo';
-import CanonicalPreview from './CanonicalPreview';
+import { CanonicalPreview } from './CanonicalPreview';
 
 const createDescriptor = (load: DemoModule['load'], id = 'hook-demo'): DemoModule => ({
   editable: true,

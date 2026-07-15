@@ -1,5 +1,5 @@
 import type { DemoAppearance, DemoModule } from '../../types/demo';
-import CanonicalPreview from './CanonicalPreview';
+import { CanonicalPreview } from './CanonicalPreview';
 import { styles } from './style';
 
 interface StandaloneDemoPageProps {
@@ -9,7 +9,7 @@ interface StandaloneDemoPageProps {
   requestedRouteId?: string;
 }
 
-export default function StandaloneDemoPage({
+export function StandaloneDemoPage({
   appearance = 'light',
   demo,
   metadataRouteId,

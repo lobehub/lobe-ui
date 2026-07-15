@@ -3,7 +3,7 @@ import type { ComponentType } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import type { DemoModule } from '../../types/demo';
-import Demo from './Demo';
+import { Demo } from './Demo';
 import { styles } from './style';
 
 const activityMocks = vi.hoisted(() => ({ cleanups: 0, starts: 0 }));

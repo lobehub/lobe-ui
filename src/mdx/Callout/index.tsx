@@ -56,7 +56,7 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info', className, style, 
       align={'flex-start'}
       className={cx(styles.container, className)}
       style={{
-        background: background,
+        background,
         boxShadow: `0 0 0 1px ${background} inset`,
         color,
         ...style,

@@ -1,13 +1,17 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { Outlet } from 'react-router';
 
-import Plausible from '../../components/Analytics/Plausible';
-import Footer from '../../components/Footer/Footer';
-import Header from '../../components/Header/Header';
+import { Plausible } from '../../components/Analytics/Plausible';
+import { Footer } from '../../components/Footer/Footer';
+import { Header } from '../../components/Header/Header';
 import { styles } from '../../styles/globalStyles';
 import { contentManifest } from '../content/registry';
 
-const SearchDialog = lazy(() => import('../../components/Search/SearchDialog'));
+const SearchDialog = lazy(() =>
+  import('../../components/Search/SearchDialog').then((module) => ({
+    default: module.SearchDialog,
+  })),
+);
 
 export default function DocsRouteLayout() {
   const [searchOpen, setSearchOpen] = useState(false);

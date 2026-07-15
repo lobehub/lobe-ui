@@ -152,7 +152,7 @@ const Accordion = memo<AccordionProps>(
           className={cx(styles.base, classNames?.base, userClassName)}
           ref={ref}
           style={{
-            gap: gap,
+            gap,
             ...customStyles?.base,
             ...userStyle,
           }}

@@ -9,6 +9,6 @@ export const STANDALONE_APPEARANCE_SCRIPT = `(() => {
   } catch {}
 })();`;
 
-export default function ThemeBootstrap() {
+export function ThemeBootstrap() {
   return <script dangerouslySetInnerHTML={{ __html: STANDALONE_APPEARANCE_SCRIPT }} />;
 }

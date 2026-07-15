@@ -11,7 +11,7 @@ interface DemoEnvironmentProps extends PropsWithChildren {
   demoId: string;
 }
 
-export default function DemoEnvironment({ appearance, children, demoId }: DemoEnvironmentProps) {
+export function DemoEnvironment({ appearance, children, demoId }: DemoEnvironmentProps) {
   return (
     <ConfigProvider motion={motion}>
       <ThemeProvider

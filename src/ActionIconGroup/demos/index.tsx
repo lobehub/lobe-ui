@@ -27,7 +27,7 @@ export default () => {
       <ActionIconGroup
         items={items}
         menu={dropdownMenu}
-        onActionClick={(key) => console.log(key)}
+        onActionClick={(key) => console.info(key)}
         {...control}
       />
     </StoryBook>

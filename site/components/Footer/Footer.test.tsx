@@ -2,7 +2,7 @@ import { cleanup, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { afterEach, expect, it } from 'vitest';
 
-import Footer from './Footer';
+import { Footer } from './Footer';
 
 afterEach(cleanup);
 

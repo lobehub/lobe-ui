@@ -33,10 +33,10 @@ export default () => {
         value={shortcut}
         onChange={(value) => {
           setShortcut(value);
-          console.log(value);
+          console.info(value);
         }}
         onClear={(currentValue) => {
-          console.log('Cleared:', currentValue);
+          console.info('Cleared:', currentValue);
         }}
         {...controls}
       />

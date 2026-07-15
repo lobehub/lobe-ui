@@ -64,7 +64,7 @@ const CategoryGroup = ({
   </div>
 );
 
-export default function Sidebar({ navigation, onNavigate, section }: SidebarProps) {
+export function Sidebar({ navigation, onNavigate, section }: SidebarProps) {
   const layoutGroupId = useId();
 
   return (

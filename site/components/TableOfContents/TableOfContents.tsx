@@ -54,7 +54,7 @@ function TocList({ activeId, items, onNavigate }: TocListProps) {
   );
 }
 
-export default function TableOfContents({ contentId, scopeKey }: TableOfContentsProps) {
+export function TableOfContents({ contentId, scopeKey }: TableOfContentsProps) {
   const [items, setItems] = useState<TableOfContentsItem[]>([]);
   const [activeId, setActiveId] = useState<string | undefined>(undefined);
   const [barOpen, setBarOpen] = useState(false);

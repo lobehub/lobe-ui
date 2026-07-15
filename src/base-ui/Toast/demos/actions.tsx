@@ -22,7 +22,7 @@ export default () => {
               actions: [
                 {
                   label: 'Noop',
-                  onClick: () => console.log('noop'),
+                  onClick: () => console.info('noop'),
                   variant: 'text',
                 },
                 {

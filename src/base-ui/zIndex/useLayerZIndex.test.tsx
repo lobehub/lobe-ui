@@ -19,13 +19,7 @@ function Probe({
   return <div data-testid="probe" ref={ref} style={{ zIndex }} {...{ [`data-${initial}`]: '' }} />;
 }
 
-function DynamicProbe({
-  initial,
-  explicit,
-}: {
-  initial: 'open' | 'closed';
-  explicit?: number;
-}) {
+function DynamicProbe({ initial, explicit }: { initial: 'open' | 'closed'; explicit?: number }) {
   const { zIndex, ref } = useLayerZIndex('floating', explicit);
   return <div data-testid="probe" ref={ref} style={{ zIndex }} {...{ [`data-${initial}`]: '' }} />;
 }
@@ -92,12 +86,12 @@ describe('useLayerZIndex', () => {
   });
 
   it('updates explicit zIndex when prop changes', () => {
-    const { getByTestId, rerender } = render(<DynamicProbe initial="open" explicit={100} />);
+    const { getByTestId, rerender } = render(<DynamicProbe explicit={100} initial="open" />);
     expect(getByTestId('probe').style.zIndex).toBe('100');
-    rerender(<DynamicProbe initial="open" explicit={200} />);
+    rerender(<DynamicProbe explicit={200} initial="open" />);
     expect(getByTestId('probe').style.zIndex).toBe('200');
     // Switching to undefined should fall back to dynamic acquire
-    rerender(<DynamicProbe initial="open" explicit={undefined} />);
+    rerender(<DynamicProbe explicit={undefined} initial="open" />);
     expect(Number(getByTestId('probe').style.zIndex)).toBeGreaterThanOrEqual(
       Z_INDEX_LAYER.floating + Z_INDEX_LAYER.step,
     );

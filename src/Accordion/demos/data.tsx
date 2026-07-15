@@ -13,7 +13,7 @@ export default () => {
           <ActionIcon
             icon={MoreHorizontal}
             size="small"
-            onClick={() => console.log('action clicked')}
+            onClick={() => console.info('action clicked')}
           />
         }
       >

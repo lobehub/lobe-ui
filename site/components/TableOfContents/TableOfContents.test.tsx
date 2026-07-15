@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, expect, it, vi } from 'vitest';
 
 import * as scroller from '../../lib/scroller';
-import TableOfContents from './TableOfContents';
+import { TableOfContents } from './TableOfContents';
 
 if (!Element.prototype.getAnimations) {
   Element.prototype.getAnimations = () => [];

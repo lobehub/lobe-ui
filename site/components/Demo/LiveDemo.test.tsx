@@ -2,7 +2,7 @@ import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-libra
 import type { ComponentType } from 'react';
 
 import type { DemoAppearance, DemoModule } from '../../types/demo';
-import LiveDemo from './LiveDemo';
+import { LiveDemo } from './LiveDemo';
 import { styles } from './style';
 
 interface HarnessProps {

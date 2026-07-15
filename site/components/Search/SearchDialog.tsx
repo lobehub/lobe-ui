@@ -19,7 +19,7 @@ interface SearchDialogProps {
 const focusableSelector =
   'input:not([disabled]), button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])';
 
-export default function SearchDialog({
+export function SearchDialog({
   documents,
   loadEngine = loadSearchEngine,
   onOpenChange,

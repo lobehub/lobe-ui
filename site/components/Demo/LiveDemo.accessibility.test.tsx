@@ -1,7 +1,7 @@
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 
 import type { DemoAppearance, DemoModule } from '../../types/demo';
-import LiveDemo from './LiveDemo';
+import { LiveDemo } from './LiveDemo';
 import { styles } from './style';
 
 interface HarnessProps {

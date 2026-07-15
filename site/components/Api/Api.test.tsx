@@ -3,7 +3,7 @@
 import { render, screen, within } from '@testing-library/react';
 
 import type { ApiComponent } from '../../types/api';
-import Api from './Api';
+import { Api } from './Api';
 
 const data: ApiComponent = {
   description: 'Public Button API.',

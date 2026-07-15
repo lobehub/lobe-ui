@@ -4,7 +4,7 @@ import { isRouteErrorResponse, useParams, useRouteError } from 'react-router';
 
 import { readLegacyMap, type StandaloneDemoMapEntry } from '../../compiler/demo/readLegacyMap';
 import type { DocumentationInventory } from '../../compiler/types';
-import StandaloneDemoPage from '../../components/Demo/StandaloneDemoPage';
+import { StandaloneDemoPage } from '../../components/Demo/StandaloneDemoPage';
 import { styles as demoStyles } from '../../components/Demo/style';
 import compatibility from '../../content/compatibility.json';
 import type { DemoAppearance, DemoModule } from '../../types/demo';

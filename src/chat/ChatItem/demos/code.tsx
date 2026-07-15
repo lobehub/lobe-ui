@@ -25,7 +25,7 @@ export default () => {
         />
       }
       onEditingChange={(editing) => {
-        console.log('editing:', editing);
+        console.info('editing:', editing);
         setEdit(editing);
       }}
     />

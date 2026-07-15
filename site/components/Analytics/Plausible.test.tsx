@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 
 import { siteMetadata } from '../../content/siteMetadata';
-import Plausible from './Plausible';
+import { Plausible } from './Plausible';
 
 it('emits the exact production-only deferred script attributes', () => {
   const { container } = render(<Plausible enabled />);

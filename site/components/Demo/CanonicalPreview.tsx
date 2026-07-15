@@ -1,8 +1,8 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 
 import type { DemoAppearance, DemoModule } from '../../types/demo';
-import DemoEnvironment from './DemoEnvironment';
-import DemoErrorBoundary from './DemoErrorBoundary';
+import { DemoEnvironment } from './DemoEnvironment';
+import { DemoErrorBoundary } from './DemoErrorBoundary';
 import { styles } from './style';
 
 interface CanonicalPreviewProps {
@@ -43,7 +43,7 @@ function HydratedPreview({ appearance, demo }: Required<CanonicalPreviewProps>) 
   );
 }
 
-export default function CanonicalPreview({ appearance = 'light', demo }: CanonicalPreviewProps) {
+export function CanonicalPreview({ appearance = 'light', demo }: CanonicalPreviewProps) {
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {

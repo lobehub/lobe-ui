@@ -27,7 +27,7 @@ export default () => {
         height={300}
         padding={16}
         width={'100%'}
-        onVisibilityChange={console.log}
+        onVisibilityChange={console.info}
         {...control}
       >
         {/* 长内容 */}

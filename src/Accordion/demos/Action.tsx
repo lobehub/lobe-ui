@@ -9,13 +9,13 @@ export default () => {
       icon: <Icon icon={Edit} />,
       key: 'edit',
       label: 'Edit',
-      onClick: () => console.log('Edit clicked'),
+      onClick: () => console.info('Edit clicked'),
     },
     {
       icon: <Icon icon={Settings} />,
       key: 'settings',
       label: 'Settings',
-      onClick: () => console.log('Settings clicked'),
+      onClick: () => console.info('Settings clicked'),
     },
     {
       type: 'divider' as const,
@@ -25,7 +25,7 @@ export default () => {
       icon: <Icon icon={Trash2} />,
       key: 'delete',
       label: 'Delete',
-      onClick: () => console.log('Delete clicked'),
+      onClick: () => console.info('Delete clicked'),
     },
   ];
 
@@ -61,20 +61,20 @@ export default () => {
                   icon={Edit}
                   size="small"
                   title="Edit"
-                  onClick={() => console.log('Edit clicked')}
+                  onClick={() => console.info('Edit clicked')}
                 />
                 <ActionIcon
                   icon={Settings}
                   size="small"
                   title="Settings"
-                  onClick={() => console.log('Settings clicked')}
+                  onClick={() => console.info('Settings clicked')}
                 />
                 <ActionIcon
                   danger
                   icon={Trash2}
                   size="small"
                   title="Delete"
-                  onClick={() => console.log('Delete clicked')}
+                  onClick={() => console.info('Delete clicked')}
                 />
               </Flexbox>
             }
@@ -98,7 +98,7 @@ export default () => {
               icon={Settings}
               size="small"
               title="Settings"
-              onClick={() => console.log('Standalone action clicked')}
+              onClick={() => console.info('Standalone action clicked')}
             />
           }
         >

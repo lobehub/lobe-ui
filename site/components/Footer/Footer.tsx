@@ -4,7 +4,7 @@ import { styles } from './style';
 
 const externalLinkProps = { rel: 'noreferrer', target: '_blank' } as const;
 
-export default function Footer() {
+export function Footer() {
   return (
     <footer className={styles.root} data-pagefind-ignore="all">
       <span className={styles.colophon}>

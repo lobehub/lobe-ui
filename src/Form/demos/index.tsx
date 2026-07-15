@@ -30,7 +30,7 @@ export default () => {
 
   const handleSubmit = async (values: any) => {
     setData(values);
-    console.log('submit:', values);
+    console.info('submit:', values);
   };
 
   return (
@@ -41,7 +41,7 @@ export default () => {
         initialValues={data}
         itemMinWidth={'max(30%,240px)'}
         items={items}
-        onCollapse={console.log}
+        onCollapse={console.info}
         onFinish={handleSubmit}
         {...controls}
       />

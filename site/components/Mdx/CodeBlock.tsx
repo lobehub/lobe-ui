@@ -35,7 +35,7 @@ const extractCode = (children: ReactNode): { content: string; language: string }
   };
 };
 
-export default function CodeBlock({ children }: { children?: ReactNode }) {
+export function CodeBlock({ children }: { children?: ReactNode }) {
   const { content, language } = extractCode(children);
 
   if (!content) return null;

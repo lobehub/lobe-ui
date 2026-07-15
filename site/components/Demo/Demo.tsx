@@ -17,7 +17,7 @@ import {
 import { lazy, type RefObject, Suspense, useEffect, useId, useRef, useState } from 'react';
 
 import type { DemoAppearance, DemoModule, DemoProps } from '../../types/demo';
-import CanonicalPreview from './CanonicalPreview';
+import { CanonicalPreview } from './CanonicalPreview';
 import type { DemoFrameStyle, DemoViewport } from './LiveDemo';
 import { styles } from './style';
 
@@ -33,7 +33,9 @@ const standaloneLinkProps = (href: string) =>
     never
   >;
 
-const LazyLiveDemo = lazy(() => import('./LiveDemo'));
+const LazyLiveDemo = lazy(() =>
+  import('./LiveDemo').then((module) => ({ default: module.LiveDemo })),
+);
 
 const sourcePreferenceKey = (demoId: string): string => `lobe-docs:demo-source:${demoId}`;
 
@@ -123,7 +125,7 @@ const toggleFullScreen = async (
   }
 };
 
-export default function Demo({
+export function Demo({
   description,
   editable,
   height,

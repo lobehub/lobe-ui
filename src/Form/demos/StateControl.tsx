@@ -139,7 +139,7 @@ export default () => {
         itemMinWidth={'max(30%,240px)'}
         items={items}
         variant={variant}
-        onCollapse={console.log}
+        onCollapse={console.info}
         onFinish={console.table}
       />
     </StoryBook>

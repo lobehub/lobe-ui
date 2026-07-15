@@ -4,11 +4,11 @@ import { Editor } from 'react-live';
 
 import type { LiveDiagnostic } from '../../compiler/demo/liveTransform';
 import type { DemoAppearance, DemoModule } from '../../types/demo';
-import CanonicalPreview from './CanonicalPreview';
-import DemoEnvironment from './DemoEnvironment';
+import { CanonicalPreview } from './CanonicalPreview';
+import { DemoEnvironment } from './DemoEnvironment';
 import { styles } from './style';
 import type { PreviewCandidate } from './useLiveDemo';
-import useLiveDemo from './useLiveDemo';
+import { useLiveDemo } from './useLiveDemo';
 
 export type DemoFrameStyle = CSSProperties & { '--demo-frame-height'?: string };
 export type DemoViewport = 'mobile' | 'responsive' | 'tablet';
@@ -128,7 +128,7 @@ function CandidateSlot({ appearance, candidate, demoId, onCommit, state }: Candi
   );
 }
 
-export default function LiveDemo({
+export function LiveDemo({
   appearance,
   demo,
   expanded,

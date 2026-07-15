@@ -45,10 +45,7 @@ const defaultLoadGiscus = () =>
 
 const discussionsUrl = `https://github.com/${siteMetadata.giscus.repo}/discussions`;
 
-export default function PageEndActions({
-  loadGiscus = defaultLoadGiscus,
-  pathname,
-}: PageEndActionsProps) {
+export function PageEndActions({ loadGiscus = defaultLoadGiscus, pathname }: PageEndActionsProps) {
   const discussionPanelId = useId();
   const routeRef = useRef({ generation: 0, pathname });
   if (routeRef.current.pathname !== pathname) {

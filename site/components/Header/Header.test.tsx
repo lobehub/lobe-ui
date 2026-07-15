@@ -3,9 +3,9 @@ import type { ReactElement } from 'react';
 import { MemoryRouter, useLocation } from 'react-router';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 
-import SiteProviders, { THEME_STORAGE_KEY } from '../../app/providers/SiteProviders';
+import { SiteProviders, THEME_STORAGE_KEY } from '../../app/providers/SiteProviders';
 import type { DocumentManifestEntry } from '../../types/content';
-import Header from './Header';
+import { Header } from './Header';
 
 if (!Element.prototype.getAnimations) {
   Element.prototype.getAnimations = () => [];

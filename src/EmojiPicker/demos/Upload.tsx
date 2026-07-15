@@ -8,10 +8,10 @@ export default () => {
       allowDelete
       allowUpload
       loading={loading}
-      onDelete={() => console.log('delete')}
+      onDelete={() => console.info('delete')}
       onUpload={(file) => {
         setLoading(true);
-        console.log(file);
+        console.info(file);
         setTimeout(() => {
           setLoading(false);
         }, 2000);

@@ -13,7 +13,7 @@ const themeOptions: { icon: typeof Sun; label: string; value: ThemePreference }[
   { icon: Monitor, label: 'System', value: 'system' },
 ];
 
-export default function ThemeMenu() {
+export function ThemeMenu() {
   const { preference, setPreference } = useSiteTheme();
   const [mounted, setMounted] = useState(false);
 

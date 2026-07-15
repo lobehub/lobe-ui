@@ -2,7 +2,7 @@ import { Select, type SelectProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 const handleChange = (value: string) => {
-  console.log(`selected ${value}`);
+  console.info(`selected ${value}`);
 };
 
 export default () => {

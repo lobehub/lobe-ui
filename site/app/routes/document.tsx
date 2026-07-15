@@ -2,7 +2,7 @@ import { use } from 'react';
 import type { MetaFunction } from 'react-router';
 import { useLocation } from 'react-router';
 
-import DocsLayout from '../../components/DocsLayout/DocsLayout';
+import { DocsLayout } from '../../components/DocsLayout/DocsLayout';
 import { siteMetadata } from '../../content/siteMetadata';
 import type { DocumentManifestEntry } from '../../types/content';
 import { contentManifest, findDocument, loadDocument } from '../content/registry';

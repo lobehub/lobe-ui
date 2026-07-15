@@ -1,6 +1,6 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 
-import DemoErrorBoundary from './DemoErrorBoundary';
+import { DemoErrorBoundary } from './DemoErrorBoundary';
 
 afterEach(() => {
   cleanup();

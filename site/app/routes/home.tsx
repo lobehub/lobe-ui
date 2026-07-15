@@ -3,10 +3,10 @@ import { ArrowRight, BookOpenText, Languages, Palette, Sparkles, SunMoon, Zap } 
 import type { MetaFunction } from 'react-router';
 import { Link } from 'react-router';
 
-import CopyControl from '../../components/CopyControl/CopyControl';
-import BentoGallery from '../../components/Home/BentoGallery';
-import CodeShowcase from '../../components/Home/CodeShowcase';
-import HeroIconMarquee from '../../components/Home/HeroIconMarquee';
+import { CopyControl } from '../../components/CopyControl/CopyControl';
+import { BentoGallery } from '../../components/Home/BentoGallery';
+import { CodeShowcase } from '../../components/Home/CodeShowcase';
+import { HeroIconMarquee } from '../../components/Home/HeroIconMarquee';
 import { sectionLandingPathname } from '../../content/pageChrome';
 import { siteMetadata } from '../../content/siteMetadata';
 import { contentManifest, findDocument } from '../content/registry';

@@ -8,7 +8,7 @@ export default () => {
     <EditableText
       value={value}
       onChange={(v) => {
-        console.log('changed', v);
+        console.info('changed', v);
         setValue(v);
       }}
     />

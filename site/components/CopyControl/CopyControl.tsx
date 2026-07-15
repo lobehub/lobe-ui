@@ -8,7 +8,7 @@ interface CopyControlProps {
   value: string;
 }
 
-export default function CopyControl({ label, value }: CopyControlProps) {
+export function CopyControl({ label, value }: CopyControlProps) {
   const [copied, setCopied] = useState(false);
   const timerRef = useRef<number | undefined>(undefined);
 

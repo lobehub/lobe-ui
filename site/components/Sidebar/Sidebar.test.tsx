@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router';
 import { expect, it, vi } from 'vitest';
 
 import type { DocumentManifestEntry, NavigationSection } from '../../types/content';
-import Sidebar from './Sidebar';
+import { Sidebar } from './Sidebar';
 
 const actionDocument: DocumentManifestEntry = {
   category: 'General',

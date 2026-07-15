@@ -2,7 +2,7 @@ import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-libra
 import type { ComponentType } from 'react';
 import { useEffect } from 'react';
 
-import PageEndActions, { type GiscusModule } from './PageEndActions';
+import { type GiscusModule,PageEndActions } from './PageEndActions';
 
 const themeMocks = vi.hoisted(() => ({ appearance: 'light' as 'dark' | 'light' }));
 

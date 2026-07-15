@@ -19,10 +19,7 @@ const LogoSpline = memo<LogoSplineProps>(({ className, style, width, height, onL
   const { isDarkMode } = useThemeMode();
   const [loading, setLoading] = useState(true);
   return (
-    <div
-      className={className}
-      style={{ height: height, position: 'relative', width: width, ...style }}
-    >
+    <div className={className} style={{ height, position: 'relative', width, ...style }}>
       {loading && <Loading />}
       <Spline
         scene={isDarkMode ? DARK : LIGHT}

@@ -12,9 +12,9 @@ import { Link, useLocation, useNavigate } from 'react-router';
 
 import { findSectionByPathname, sectionLandingPathname } from '../../content/pageChrome';
 import type { NavigationSection } from '../../types/content';
-import Sidebar from '../Sidebar/Sidebar';
+import { Sidebar } from '../Sidebar/Sidebar';
 import { styles } from './style';
-import ThemeMenu from './ThemeMenu';
+import { ThemeMenu } from './ThemeMenu';
 
 interface HeaderProps {
   navigation: NavigationSection[];
@@ -49,7 +49,7 @@ const prefersReducedMotion = () => {
   }
 };
 
-export default function Header({ navigation, onSearchOpen }: HeaderProps) {
+export function Header({ navigation, onSearchOpen }: HeaderProps) {
   const [sheetState, setSheetState] = useState<'closed' | 'closing' | 'open'>('closed');
   const [atTop, setAtTop] = useState(true);
   const closeButtonRef = useRef<HTMLButtonElement>(null);

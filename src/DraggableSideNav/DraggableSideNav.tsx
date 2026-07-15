@@ -417,8 +417,8 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
     // Size configuration - 使用内部宽度状态
     const sizeConfig = useMemo(() => {
       return {
-        maxWidth: maxWidth,
-        minWidth: minWidth,
+        maxWidth,
+        minWidth,
         size: { height: '100%', width: state.internalWidth },
       };
     }, [state.internalWidth, minWidth, maxWidth]);

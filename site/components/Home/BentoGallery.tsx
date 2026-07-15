@@ -70,7 +70,7 @@ function ThemeSwitchTile() {
   );
 }
 
-export default function BentoGallery() {
+export function BentoGallery() {
   return (
     <section aria-labelledby="home-gallery" className={styles.root}>
       <h2 id="home-gallery">Built for AI interfaces</h2>

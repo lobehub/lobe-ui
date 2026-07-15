@@ -4,7 +4,7 @@ interface PlausibleProps {
   enabled?: boolean;
 }
 
-export default function Plausible({ enabled = import.meta.env.PROD }: PlausibleProps) {
+export function Plausible({ enabled = import.meta.env.PROD }: PlausibleProps) {
   if (!enabled) return null;
 
   return (

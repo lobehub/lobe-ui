@@ -18,7 +18,7 @@ vi.mock('../content/registry', () => ({
 }));
 
 vi.mock('../../components/Header/Header', () => ({
-  default: ({
+  Header: ({
     navigation,
     onSearchOpen,
   }: {
@@ -35,7 +35,7 @@ vi.mock('../../components/Header/Header', () => ({
 vi.mock('../../components/Search/SearchDialog', () => {
   layoutMocks.searchModuleLoads += 1;
   return {
-    default: ({ open }: { open: boolean }) =>
+    SearchDialog: ({ open }: { open: boolean }) =>
       open ? (
         <div aria-label="Search documentation" role="dialog">
           <input autoFocus aria-label="Search input" />
@@ -45,7 +45,7 @@ vi.mock('../../components/Search/SearchDialog', () => {
 });
 
 vi.mock('../../components/Analytics/Plausible', () => ({
-  default: () => <script data-testid="plausible" />,
+  Plausible: () => <script data-testid="plausible" />,
 }));
 
 afterEach(() => {

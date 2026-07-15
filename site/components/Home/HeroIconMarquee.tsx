@@ -44,7 +44,7 @@ function Track({ hidden }: { hidden?: boolean }) {
   );
 }
 
-export default function HeroIconMarquee({ iconsPathname }: { iconsPathname?: string }) {
+export function HeroIconMarquee({ iconsPathname }: { iconsPathname?: string }) {
   return (
     <div className={styles.root}>
       <div className={styles.marquee}>

@@ -27,7 +27,7 @@ export default () => {
         value={value}
         onChange={(values) => {
           setValue(values);
-          console.log('Selected values:', values);
+          console.info('Selected values:', values);
         }}
       />
     </StoryBook>

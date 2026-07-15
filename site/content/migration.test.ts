@@ -4,7 +4,7 @@ import path from 'node:path';
 
 import { migrateDumiDocs } from '../../scripts/migrate-dumi-docs';
 import { extractComponentApi } from '../compiler/api/extractComponent';
-import migration from './migration';
+import { migration } from './migration';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../..');
 

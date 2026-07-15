@@ -1,7 +1,7 @@
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { renderToString } from 'react-dom/server';
 
-import StandaloneDemoPage from '../../components/Demo/StandaloneDemoPage';
+import { StandaloneDemoPage } from '../../components/Demo/StandaloneDemoPage';
 import type { DemoModule } from '../../types/demo';
 import {
   getStandaloneDemoOrThrow,

@@ -85,7 +85,7 @@ const items: DropdownItem[] = [
     checked: false,
     key: 'full-width',
     label: 'Full Width',
-    onCheckedChange: (checked: boolean) => console.log('checked', checked),
+    onCheckedChange: (checked: boolean) => console.info('checked', checked),
     type: 'switch' as const,
   },
   {

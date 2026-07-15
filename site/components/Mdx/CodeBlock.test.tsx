@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import CodeBlock from './CodeBlock';
+import { CodeBlock } from './CodeBlock';
 
 vi.mock('@lobehub/ui/Highlighter', () => ({
   default: ({ children, language }: { children: string; language: string }) => (

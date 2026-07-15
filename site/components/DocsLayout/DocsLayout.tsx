@@ -10,11 +10,11 @@ import {
   findSectionByPathname,
 } from '../../content/pageChrome';
 import type { DocumentManifestEntry, NavigationSection } from '../../types/content';
-import CopyControl from '../CopyControl/CopyControl';
-import PageEndActions from '../Feedback/PageEndActions';
-import Sidebar from '../Sidebar/Sidebar';
-import TableOfContents from '../TableOfContents/TableOfContents';
-import NpmIcon from './NpmIcon';
+import { CopyControl } from '../CopyControl/CopyControl';
+import { PageEndActions } from '../Feedback/PageEndActions';
+import { Sidebar } from '../Sidebar/Sidebar';
+import { TableOfContents } from '../TableOfContents/TableOfContents';
+import { NpmIcon } from './NpmIcon';
 import { styles } from './style';
 
 interface DocsLayoutProps {
@@ -46,7 +46,7 @@ function HighlightedImport({ value }: { value: string }) {
   );
 }
 
-export default function DocsLayout({ children, document, navigation }: DocsLayoutProps) {
+export function DocsLayout({ children, document, navigation }: DocsLayoutProps) {
   const section = findSectionByPathname(navigation, document.pathname);
   const links = createDocumentLinks(document);
   const { next, previous } = findAdjacentDocuments(navigation, document.pathname);

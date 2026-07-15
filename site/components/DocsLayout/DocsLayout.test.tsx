@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, useLocation } from 'react-router';
 
 import type { DocumentManifestEntry } from '../../types/content';
-import DocsLayout from './DocsLayout';
+import { DocsLayout } from './DocsLayout';
 import { styles } from './style';
 
 if (!Element.prototype.getAnimations) {

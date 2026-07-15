@@ -43,7 +43,7 @@ export default () => {
   ) as AvatarGroupProps;
   return (
     <StoryBook levaStore={store}>
-      <Avatar.Group {...control} items={items} onClick={console.log} />
+      <Avatar.Group {...control} items={items} onClick={console.info} />
     </StoryBook>
   );
 };
