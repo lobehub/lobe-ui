@@ -5,6 +5,18 @@ import type { DocumentManifestEntry } from '../../types/content';
 import DocsLayout from './DocsLayout';
 import { styles } from './style';
 
+if (!Element.prototype.getAnimations) {
+  Element.prototype.getAnimations = () => [];
+}
+
+if (!globalThis.ResizeObserver) {
+  globalThis.ResizeObserver = class {
+    disconnect() {}
+    observe() {}
+    unobserve() {}
+  } as never;
+}
+
 vi.mock('../../app/providers/SiteProviders', () => ({
   useSiteTheme: () => ({ appearance: 'light' }),
 }));

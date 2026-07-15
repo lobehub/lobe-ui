@@ -1,7 +1,9 @@
 import { LobeHubText } from '@lobehub/ui/brand';
 import type { DropdownItem } from '@lobehub/ui/DropdownMenu';
 import DropdownMenu from '@lobehub/ui/DropdownMenu';
+import Hotkey from '@lobehub/ui/Hotkey';
 import { GithubIcon } from '@lobehub/ui/icons/lucideExtra';
+import { ScrollArea } from '@lobehub/ui/ScrollArea';
 import { Ellipsis, Menu, Search, X } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -115,7 +117,7 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [pathname]);
 
   const handleSheetKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.key !== 'Tab') return;
@@ -151,7 +153,7 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
 
   return (
     <>
-      <header className={styles.root} data-transparent={isHome && atTop ? '' : undefined}>
+      <header className={styles.root} data-transparent={atTop ? '' : undefined}>
         <div className={styles.inner}>
           <button
             aria-controls="mobile-documentation-navigation"
@@ -220,7 +222,7 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
             >
               <Search aria-hidden size={15} strokeWidth={1.8} />
               <span>Search</span>
-              <kbd>⌘K</kbd>
+              <Hotkey compact className={styles.searchHotkey} keys="mod+k" />
             </button>
             <button
               aria-keyshortcuts="Meta+K Control+K"
@@ -275,7 +277,16 @@ export default function Header({ navigation, onSearchOpen }: HeaderProps) {
                     <X aria-hidden size={18} strokeWidth={1.8} />
                   </button>
                 </div>
-                <Sidebar navigation={navigation} onNavigate={closeNavigation} />
+                <ScrollArea
+                  disableContentFit
+                  scrollFade
+                  className={styles.sheetScroll}
+                  contentProps={{ className: styles.sheetContent }}
+                  scrollbarProps={{ className: styles.sheetScrollbar }}
+                  viewportProps={{ className: styles.sheetViewport }}
+                >
+                  <Sidebar navigation={navigation} onNavigate={closeNavigation} />
+                </ScrollArea>
               </aside>
             </div>,
             document.body,

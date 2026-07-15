@@ -4,37 +4,18 @@ description: Provides the MicrosoftTeams monochrome icon and avatar variant, tog
 category: Channel Icons
 ---
 
+import DemoIcons from './demos/Icons.tsx?demo';
+import DemoColor from './demos/Color.tsx?demo';
+import DemoAvatars from './demos/Avatars.tsx?demo';
+
 ## Icons
 
-```tsx
-import { MicrosoftTeams } from '@lobehub/ui/icons';
-
-import { Flexbox } from '@/Flex';
-
-export default () => <MicrosoftTeams size={64} />;
-```
+<Demo of={DemoIcons} layout="center" />
 
 ## Color
 
-```tsx
-import { MicrosoftTeams } from '@lobehub/ui/icons';
-
-import { Flexbox } from '@/Flex';
-
-export default () => <MicrosoftTeams.Color size={64} />;
-```
+<Demo of={DemoColor} layout="center" />
 
 ## Avatars
 
-```tsx
-import { MicrosoftTeams } from '@lobehub/ui/icons';
-
-import { Flexbox } from '@/Flex';
-
-export default () => (
-  <Flexbox gap={16} horizontal>
-    <MicrosoftTeams.Avatar size={64} />
-    <MicrosoftTeams.Avatar size={64} shape={'square'} />
-  </Flexbox>
-);
-```
+<Demo of={DemoAvatars} layout="center" />

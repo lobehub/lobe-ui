@@ -4,6 +4,8 @@ description: Text component is used to display text content with various styles 
 category: Typography
 ---
 
+import DemoText from './demos/text.tsx?demo';
+import DemoText2 from './demos/text-2.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoTooltipWhenOverflow from './demos/TooltipWhenOverflow.tsx?demo';
 
@@ -50,30 +52,8 @@ The ellipsis feature supports two modes:
 
 1. Single line ellipsis:
 
-```tsx
-import { Text } from '@lobehub/ui';
-
-export default () => (
-  <Text ellipsis>
-    This is a very long text that will be truncated with ellipsis when it exceeds the container
-    width. This is a very long text that will be truncated with ellipsis when it exceeds the
-    container width.
-  </Text>
-);
-```
+<Demo of={DemoText} />
 
 2. Multi-line ellipsis with tooltip:
 
-```tsx
-import { Text } from '@lobehub/ui';
-
-export default () => (
-  <Text ellipsis={{ rows: 2, tooltip: 'Full text content' }}>
-    This is a very long text that will be truncated with ellipsis when it exceeds the container
-    width. This is a very long text that will be truncated with ellipsis when it exceeds the
-    container width. This is a very long text that will be truncated with ellipsis when it exceeds
-    the container width. This is a very long text that will be truncated with ellipsis when it
-    exceeds the container width.
-  </Text>
-);
-```
+<Demo of={DemoText2} />

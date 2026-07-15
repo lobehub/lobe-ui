@@ -2,11 +2,9 @@ import { createStaticStyles } from 'antd-style';
 
 export const styles = createStaticStyles(({ css }) => {
   const paginationArrow = css`
-    font-size: 0.875rem;
+    flex: none;
     color: var(--docs-text-subtle);
-    transition:
-      color 140ms ease,
-      transform 140ms ease;
+    transition: color 140ms ease;
   `;
 
   const paginationText = css`
@@ -42,12 +40,11 @@ export const styles = createStaticStyles(({ css }) => {
     text-decoration: none;
 
     &:hover {
-      .${paginationText} > strong {
+      strong {
         color: var(--docs-text-primary);
       }
 
-      .${paginationArrow} {
-        transform: translateX(-2px);
+      svg {
         color: var(--docs-text-primary);
       }
     }
@@ -55,12 +52,6 @@ export const styles = createStaticStyles(({ css }) => {
 
   const paginationLinkNext = css`
     text-align: end;
-
-    &:hover {
-      .${paginationArrow} {
-        transform: translateX(2px);
-      }
-    }
   `;
 
   return {
@@ -107,7 +98,7 @@ export const styles = createStaticStyles(({ css }) => {
         text-wrap: pretty;
       }
 
-      pre {
+      pre:not(:where([data-code-type='highlighter'] *)) {
         overflow-x: auto;
 
         max-width: 100%;
@@ -134,6 +125,61 @@ export const styles = createStaticStyles(({ css }) => {
         color: var(--docs-text-primary);
 
         background: var(--docs-surface-muted);
+      }
+
+      table {
+        overflow-x: auto;
+        display: block;
+        border-spacing: 0;
+        border-collapse: collapse;
+
+        width: max-content;
+        max-width: 100%;
+        margin-block: 1.5rem;
+        margin-inline: 0;
+        border: 1px solid var(--docs-border-default);
+        border-radius: var(--docs-radius-lg);
+
+        text-align: start;
+
+        background: var(--docs-surface-raised);
+        box-shadow: var(--docs-shadow-inset);
+      }
+
+      thead {
+        background: var(--docs-surface-muted);
+      }
+
+      tr + tr {
+        border-block-start: 1px solid var(--docs-border-subtle);
+      }
+
+      th,
+      td {
+        min-width: 7.5rem;
+        padding-block: 0.75rem;
+        padding-inline: 1rem;
+
+        font-size: 0.875rem;
+        line-height: 1.55;
+        text-align: start;
+        overflow-wrap: break-word;
+        vertical-align: top;
+      }
+
+      th {
+        font-weight: 620;
+        color: var(--docs-text-primary);
+        white-space: nowrap;
+      }
+
+      td {
+        color: var(--docs-text-secondary);
+      }
+
+      td code {
+        font-size: 0.8125em;
+        overflow-wrap: anywhere;
       }
     `,
 
@@ -322,15 +368,40 @@ export const styles = createStaticStyles(({ css }) => {
       position: sticky;
       inset-block-start: calc(var(--docs-header-height) + 2rem);
 
-      overflow: auto;
+      overflow: hidden;
       align-self: start;
 
       max-height: calc(100dvh - var(--docs-header-height) - 4rem);
-      padding-inline-end: 1rem;
+      padding-inline-end: 0.25rem;
 
       @media (width <= 47.5rem) {
         display: none;
       }
+    `,
+
+    sidebarContent: css`
+      gap: 0;
+      min-width: 0;
+      padding-inline-end: 0.75rem;
+    `,
+
+    sidebarScroll: css`
+      overflow: hidden;
+
+      width: 100%;
+      max-height: calc(100dvh - var(--docs-header-height) - 4rem);
+      border-radius: 0;
+
+      background: none;
+    `,
+
+    sidebarScrollbar: css`
+      margin-block: 0.5rem;
+      margin-inline: 0 0.125rem;
+    `,
+
+    sidebarViewport: css`
+      max-height: calc(100dvh - var(--docs-header-height) - 4rem);
     `,
 
     syntaxEntity: css`

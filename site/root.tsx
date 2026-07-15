@@ -12,6 +12,10 @@ const GEIST_MONO_FONT_STYLESHEET = `${FONT_REGISTRY_ORIGIN}/@lobehub/webfont-gei
 
 export const links: LinksFunction = () => [
   { crossOrigin: 'anonymous', href: FONT_REGISTRY_ORIGIN, rel: 'preconnect' },
+  { href: '/favicon.ico', rel: 'icon', sizes: 'any' },
+  { href: '/favicon-16x16.png', rel: 'icon', sizes: '16x16', type: 'image/png' },
+  { href: '/favicon-32x32.png', rel: 'icon', sizes: '32x32', type: 'image/png' },
+  { href: '/apple-touch-icon.png', rel: 'apple-touch-icon', sizes: '180x180' },
   { href: '/antd.css', rel: 'stylesheet' },
   { href: GEIST_FONT_STYLESHEET, rel: 'stylesheet' },
   { href: GEIST_MONO_FONT_STYLESHEET, rel: 'stylesheet' },

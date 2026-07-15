@@ -4,6 +4,9 @@ description: Configures library-wide CDN resource resolution and the motion runt
 category: Theme
 ---
 
+import DemoConfigProvider from './demos/config-provider.tsx?demo';
+import DemoConfigProvider2 from './demos/config-provider-2.tsx?demo';
+import DemoLazyMotion from './demos/lazy-motion.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 
 ConfigProvider is a context provider component that allows you to configure global settings for other components in the library, such as CDN settings for external resources and the motion runtime.
@@ -18,72 +21,17 @@ The `proxy` provides two CDN resolution addresses, `aliyun` and `unpkg`, with `a
 
 At the same time, it provides custom CDN configuration, set `proxy` to `custom` and configure through the `customCdnFn` attribute.
 
-```ts
-import { ConfigProvider, Logo } from '@lobehub/ui';
-
-export default () => {
-  return (
-    <ConfigProvider config={{
-        proxy: 'custom',
-        customCdnFn: (e: {pkg:string, version:string, path:string}) => `https://yourcdn/${pkg}/${version}/${path}`
-    }}>
-      <Logo />
-    </ConfigProvider>
-  );
-};
-```
+<Demo of={DemoConfigProvider} />
 
 ## Motion
 
-Lobe UI uses Motion components via context. You must pass a motion component to `ConfigProvider`.
-If your app uses `LazyMotion`, pass `m`:
+Lobe UI uses Motion components via context. You must pass a motion component to `ConfigProvider`. If your app uses `LazyMotion`, pass `m`:
 
-```tsx
-import { ConfigProvider } from '@lobehub/ui';
-import { motion } from 'motion/react';
-
-const App = () => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5 }}
-  >
-    Your App Content
-  </motion.div>
-);
-
-export default () => (
-  <ConfigProvider motion={motion}>
-    <App />
-  </ConfigProvider>
-);
-```
+<Demo of={DemoConfigProvider2} />
 
 If your app uses [`LazyMotion`](https://motion.dev/docs/react-lazy-motion):
 
-```tsx
-import { ConfigProvider } from '@lobehub/ui';
-import { LazyMotion, domAnimation } from 'motion/react';
-import * as m from 'motion/react-m';
-
-const App = () => (
-  <m.div
-    initial={{ opacity: 0, scale: 0.8 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 0.3 }}
-  >
-    Your App Content
-  </m.div>
-);
-
-export default () => (
-  <LazyMotion features={domAnimation}>
-    <ConfigProvider motion={m}>
-      <App />
-    </ConfigProvider>
-  </LazyMotion>
-);
-```
+<Demo of={DemoLazyMotion} />
 
 ## APIs
 
@@ -93,13 +41,13 @@ export default () => (
 
 ### Config
 
-| Property       | Description                                                    | Type                                            | Default |
-| -------------- | -------------------------------------------------------------- | ----------------------------------------------- | ------- |
-| proxy          | CDN proxy to use for external resources                        | `'jsdelivr' \| 'unpkg' \| 'aliyun' \| 'custom'` | -       |
-| customCdnFn    | Custom function for generating CDN URLs when proxy is 'custom' | `CdnFn`                                         | -       |
-| aAs            | Custom component to use for rendering anchor tags              | `ElementType`                                   | -       |
-| imgAs          | Custom component to use for rendering image tags               | `ElementType`                                   | -       |
-| imgUnoptimized | Whether to disable image optimization                          | `boolean`                                       | -       |
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| proxy | CDN proxy to use for external resources | `'jsdelivr' \| 'unpkg' \| 'aliyun' \| 'custom'` | - |
+| customCdnFn | Custom function for generating CDN URLs when proxy is 'custom' | `CdnFn` | - |
+| aAs | Custom component to use for rendering anchor tags | `ElementType` | - |
+| imgAs | Custom component to use for rendering image tags | `ElementType` | - |
+| imgUnoptimized | Whether to disable image optimization | `boolean` | - |
 
 ### CdnFn
 

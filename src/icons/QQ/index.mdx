@@ -4,37 +4,18 @@ description: Provides the QQ monochrome icon and avatar variant, together with t
 category: Channel Icons
 ---
 
+import DemoIcons from './demos/Icons.tsx?demo';
+import DemoColor from './demos/Color.tsx?demo';
+import DemoAvatars from './demos/Avatars.tsx?demo';
+
 ## Icons
 
-```tsx
-import { QQ } from '@lobehub/ui/icons';
-
-import { Flexbox } from '@/Flex';
-
-export default () => <QQ size={64} />;
-```
+<Demo of={DemoIcons} layout="center" />
 
 ## Color
 
-```tsx
-import { QQ } from '@lobehub/ui/icons';
-
-import { Flexbox } from '@/Flex';
-
-export default () => <QQ.Color size={64} />;
-```
+<Demo of={DemoColor} layout="center" />
 
 ## Avatars
 
-```tsx
-import { QQ } from '@lobehub/ui/icons';
-
-import { Flexbox } from '@/Flex';
-
-export default () => (
-  <Flexbox gap={16} horizontal>
-    <QQ.Avatar size={64} />
-    <QQ.Avatar size={64} shape={'square'} />
-  </Flexbox>
-);
-```
+<Demo of={DemoAvatars} layout="center" />

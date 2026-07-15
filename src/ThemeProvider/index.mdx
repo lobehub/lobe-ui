@@ -4,6 +4,7 @@ description: ThemeProvider is a component that provides a theme to all the child
 category: Theme
 ---
 
+import DemoThemeProvider from './demos/theme-provider.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoCustomFonts from './demos/CustomFonts.tsx?demo';
 
@@ -37,25 +38,4 @@ The ThemeProvider component provides several key features:
 
 The ThemeProvider allows for extensive customization:
 
-```tsx
-import { ThemeProvider } from '@lobehub/ui';
-
-export default () => (
-  <ThemeProvider
-    customTheme={{
-      // Customize primary colors
-      primaryColor: {
-        primary: '#1677ff',
-      },
-      // Customize neutral colors
-      neutralColor: {
-        gray: '#666',
-      },
-    }}
-    // Load custom fonts
-    customFonts={['https://fonts.googleapis.com/css2?family=Roboto&display=swap']}
-  >
-    {/* Your application content */}
-  </ThemeProvider>
-);
-```
+<Demo of={DemoThemeProvider} />

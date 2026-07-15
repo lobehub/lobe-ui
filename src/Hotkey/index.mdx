@@ -4,6 +4,8 @@ description: Hotkey component displays keyboard shortcuts or key combinations in
 category: Data Display
 ---
 
+import DemoHotkey from './demos/hotkey.tsx?demo';
+import DemoHotkey2 from './demos/hotkey-2.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoMacStyle from './demos/MacStyle.tsx?demo';
 import DemoMouse from './demos/Mouse.tsx?demo';
@@ -37,19 +39,7 @@ Additionally, Hotkey accepts all properties from the Flexbox component except fo
 
 The `keys` prop should be a string with keys separated by `+`. For example:
 
-```tsx
-import { Hotkey } from '@lobehub/ui';
-
-export default () => {
-  return (
-    <>
-      <Hotkey keys="shift+a" />
-      <Hotkey keys="ctrl+alt+delete" />
-      <Hotkey keys="mod+k" />
-    </>
-  );
-};
-```
+<Demo of={DemoHotkey} />
 
 > 'mod' will be Command on Mac and Ctrl on Windows
 
@@ -57,18 +47,7 @@ export default () => {
 
 For convenience, common keys are available as constants via the exported `KeyMapEnum` object:
 
-```tsx
-import { Hotkey, KeyMapEnum } from '@lobehub/ui';
-
-export default () => {
-  return (
-    <>
-      <Hotkey keys={KeyMapEnum.LeftClick} />
-      <Hotkey keys={`${KeyMapEnum.Shift}+${KeyMapEnum.Alt}+r`} />
-    </>
-  );
-};
-```
+<Demo of={DemoHotkey2} />
 
 Some notable keys in KeyMapEnum:
 

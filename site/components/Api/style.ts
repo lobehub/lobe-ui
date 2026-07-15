@@ -2,17 +2,17 @@ import { createStaticStyles } from 'antd-style';
 
 export const styles = createStaticStyles(({ css }) => ({
   caption: css`
-    padding-block: 0.875rem;
-    padding-inline: 1.125rem;
+    padding-block: 0.5rem;
+    padding-inline: 0.875rem;
     border-block-end: 1px solid var(--docs-border-subtle);
 
-    font-size: 0.9375rem;
+    font-size: 0.8125rem;
     font-weight: 640;
     color: var(--docs-text-primary);
     letter-spacing: -0.015em;
 
     @media (width <= 47.5rem) {
-      padding-inline: 0.875rem;
+      padding-inline: 0.75rem;
     }
   `,
 
@@ -24,6 +24,12 @@ export const styles = createStaticStyles(({ css }) => ({
 
     background: var(--docs-surface-raised);
     box-shadow: var(--docs-shadow-inset);
+
+    && p {
+      max-width: none;
+      margin-block: 0;
+      margin-inline: 0;
+    }
   `,
 
   componentDetails: css`
@@ -39,20 +45,22 @@ export const styles = createStaticStyles(({ css }) => ({
   definition: css`
     display: flex;
     flex-direction: column;
-    gap: 0.3125rem;
+    gap: 0.25rem;
 
     min-width: 0;
     margin: 0;
   `,
 
   description: css`
-    max-width: 68ch;
-    margin-block: 0 1rem;
-    margin-inline: 0;
+    && {
+      max-width: 68ch;
+      margin-block: 0 1rem;
+      margin-inline: 0;
 
-    line-height: 1.7;
-    color: var(--docs-text-secondary);
-    text-wrap: pretty;
+      line-height: 1.7;
+      color: var(--docs-text-secondary);
+      text-wrap: pretty;
+    }
   `,
 
   detailDeprecated: css`
@@ -67,15 +75,15 @@ export const styles = createStaticStyles(({ css }) => ({
 
   empty: css`
     margin: 0;
-    padding-block: 1rem;
-    padding-inline: 1.125rem;
+    padding-block: 0.75rem;
+    padding-inline: 0.875rem;
 
     font-size: 0.8125rem;
     color: var(--docs-text-subtle);
     text-align: center;
 
     @media (width <= 47.5rem) {
-      padding-inline: 0.875rem;
+      padding-inline: 0.75rem;
     }
   `,
 
@@ -98,8 +106,8 @@ export const styles = createStaticStyles(({ css }) => ({
   footnote: css`
     max-width: none;
     margin: 0;
-    padding-block: 0.5rem;
-    padding-inline: 1.125rem;
+    padding-block: 0.375rem;
+    padding-inline: 0.875rem;
     border-block-start: 1px solid var(--docs-border-subtle);
 
     font-size: 0.75rem;
@@ -108,7 +116,7 @@ export const styles = createStaticStyles(({ css }) => ({
     background: color-mix(in srgb, var(--docs-surface-muted) 55%, transparent);
 
     @media (width <= 47.5rem) {
-      padding-inline: 0.875rem;
+      padding-inline: 0.75rem;
     }
   `,
 
@@ -136,11 +144,8 @@ export const styles = createStaticStyles(({ css }) => ({
   `,
 
   prose: css`
-    max-width: 60ch;
-    margin: 0;
-
     font-size: 0.8125rem;
-    line-height: 1.6;
+    line-height: 1.5;
     color: var(--docs-text-secondary);
 
     code {
@@ -151,11 +156,8 @@ export const styles = createStaticStyles(({ css }) => ({
   `,
 
   proseDefault: css`
-    max-width: 60ch;
-    margin: 0;
-
     font-size: 0.8125rem;
-    line-height: 1.6;
+    line-height: 1.5;
     color: var(--docs-text-subtle);
 
     code {
@@ -166,21 +168,21 @@ export const styles = createStaticStyles(({ css }) => ({
   `,
 
   root: css`
-    margin-block: 0.75rem 2.5rem;
+    margin-block: 0.75rem 2rem;
     color: var(--docs-text-secondary);
 
     @media (width <= 47.5rem) {
-      margin-block: 0.5rem 2rem;
+      margin-block: 0.5rem 1.5rem;
     }
   `,
 
   row: css`
     display: grid;
-    grid-template-columns: minmax(9rem, 11rem) minmax(0, 1fr);
-    gap: 1.25rem;
+    grid-template-columns: minmax(8rem, 10rem) minmax(0, 1fr);
+    gap: 0.75rem 1rem;
 
-    padding-block: 0.75rem;
-    padding-inline: 1.125rem;
+    padding-block: 0.5rem;
+    padding-inline: 0.875rem;
 
     & + & {
       border-block-start: 1px solid var(--docs-border-subtle);
@@ -192,22 +194,22 @@ export const styles = createStaticStyles(({ css }) => ({
 
     @media (width <= 47.5rem) {
       grid-template-columns: 1fr;
-      gap: 0.5rem;
-      padding-inline: 0.875rem;
+      gap: 0.375rem;
+      padding-inline: 0.75rem;
     }
   `,
 
   term: css`
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.1875rem;
     align-items: flex-start;
 
     min-width: 0;
 
     @media (width <= 47.5rem) {
       flex-flow: row wrap;
-      gap: 0.375rem 0.5rem;
+      gap: 0.25rem 0.5rem;
       align-items: baseline;
     }
   `,
@@ -220,7 +222,7 @@ export const styles = createStaticStyles(({ css }) => ({
 
     font-family: var(--docs-font-mono);
     font-size: 0.75rem;
-    line-height: 1.7;
+    line-height: 1.5;
     color: var(--docs-accent);
     overflow-wrap: break-word;
 

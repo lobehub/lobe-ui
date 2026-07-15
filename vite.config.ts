@@ -4,10 +4,10 @@ import mdx from '@mdx-js/rollup';
 import { reactRouter } from '@react-router/dev/vite';
 import { codeInspectorPlugin } from 'code-inspector-plugin';
 import remarkFrontmatter from 'remark-frontmatter';
+import remarkGfm from 'remark-gfm';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
-import tsconfigPaths from 'vite-tsconfig-paths';
 
 import { remarkApi } from './site/compiler/api/remarkApi';
 import { rehypeHeadingIds } from './site/compiler/content/rehypeHeadingIds';
@@ -42,10 +42,9 @@ export default defineConfig({
       include: /\.(md|mdx)$/,
       providerImportSource: '/site/app/mdx-components',
       rehypePlugins: [rehypeHeadingIds],
-      remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkApi],
+      remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm, remarkApi],
     }),
     reactRouter(),
-    tsconfigPaths({ projects: ['./tsconfig.json', './tsconfig.site.json'] }),
     process.env.ANALYZE
       ? visualizer({ filename: '.react-router/build/client/stats.html' })
       : undefined,
@@ -56,6 +55,7 @@ export default defineConfig({
       { find: /^@lobehub\/ui$/, replacement: sourceRoot },
       { find: /^@lobehub\/ui\/(.+)$/, replacement: `${sourceRoot}/$1` },
     ],
+    tsconfigPaths: true,
   },
   ssr: {
     noExternal: ['@lobehub/icons', '@lobehub/fluent-emoji'],

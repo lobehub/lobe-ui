@@ -1,0 +1,3 @@
+import { ColorScales, magenta } from '@lobehub/ui/color';
+
+export default () => <ColorScales midHighLight={9} name="magenta" scale={magenta} />;

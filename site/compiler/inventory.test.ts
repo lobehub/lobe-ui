@@ -43,8 +43,8 @@ describe('documentation inventory', () => {
   it('selects public source docs while excluding internal specifications', () => {
     const inventory = buildDocumentationInventory(resolve(import.meta.dirname, '../..'));
 
-    expect(inventory.documents).toHaveLength(160);
-    expect(inventory.demoReferences).toHaveLength(367);
+    expect(inventory.documents).toHaveLength(165);
+    expect(inventory.demoReferences).toHaveLength(524);
     expect(inventory.documents.some(({ source }) => source.includes('/superpowers/'))).toBe(false);
   });
 

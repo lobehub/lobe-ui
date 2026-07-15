@@ -1,8 +1,10 @@
 import { ScrollArea, type ScrollAreaViewportProps } from '@lobehub/ui/ScrollArea';
 import { ChevronDown } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { useEffect, useId, useRef, useState } from 'react';
+import type { MouseEvent as ReactMouseEvent } from 'react';
+import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
+import { springScrollToElement } from '../../lib/scroller';
 import { styles } from './style';
 
 interface TableOfContentsProps {
@@ -23,6 +25,18 @@ interface TocListProps {
 }
 
 function TocList({ activeId, items, onNavigate }: TocListProps) {
+  const handleClick = useCallback(
+    (event: ReactMouseEvent<HTMLAnchorElement>, id: string) => {
+      event.preventDefault();
+      const heading = document.getElementById(id);
+      if (heading) {
+        springScrollToElement(heading, -100);
+      }
+      onNavigate(id);
+    },
+    [onNavigate],
+  );
+
   return (
     <ol>
       {items.map((item) => (
@@ -30,7 +44,7 @@ function TocList({ activeId, items, onNavigate }: TocListProps) {
           <a
             aria-current={item.id === activeId ? 'location' : undefined}
             href={`#${item.id}`}
-            onClick={() => onNavigate(item.id)}
+            onClick={(event) => handleClick(event, item.id)}
           >
             {item.title}
           </a>
@@ -143,8 +157,11 @@ export default function TableOfContents({ contentId, scopeKey }: TableOfContents
         <nav aria-label="On this page">
           <h2>On this page</h2>
           <ScrollArea
+            disableContentFit
             scrollFade
             className={styles.scrollArea}
+            contentProps={{ className: styles.scrollContent }}
+            scrollbarProps={{ className: styles.scrollbar }}
             viewportProps={
               {
                 'className': styles.viewport,
@@ -180,14 +197,23 @@ export default function TableOfContents({ contentId, scopeKey }: TableOfContents
               initial={{ opacity: 0, y: -8 }}
               transition={{ duration: reducedMotion ? 0 : 0.2, ease: [0.2, 0, 0, 1] }}
             >
-              <TocList
-                activeId={activeId}
-                items={items}
-                onNavigate={(id) => {
-                  setActiveId(id);
-                  setBarOpen(false);
-                }}
-              />
+              <ScrollArea
+                disableContentFit
+                scrollFade
+                className={styles.panelScroll}
+                contentProps={{ className: styles.scrollContent }}
+                scrollbarProps={{ className: styles.scrollbar }}
+                viewportProps={{ className: styles.panelViewport }}
+              >
+                <TocList
+                  activeId={activeId}
+                  items={items}
+                  onNavigate={(id) => {
+                    setActiveId(id);
+                    setBarOpen(false);
+                  }}
+                />
+              </ScrollArea>
             </motion.nav>
           ) : null}
         </AnimatePresence>

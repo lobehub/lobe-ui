@@ -4,27 +4,13 @@ description: Re-exports the Cloudflare icon and avatar variants from @lobehub/ic
 category: Auth Icons
 ---
 
+import DemoIcons from './demos/Icons.tsx?demo';
+import DemoAvatars from './demos/Avatars.tsx?demo';
+
 ## Icons
 
-```tsx
-import { Cloudflare } from '@lobehub/ui/icons';
-
-import { Flexbox } from '@/Flex';
-
-export default () => <Cloudflare size={64} />;
-```
+<Demo of={DemoIcons} layout="center" />
 
 ## Avatars
 
-```tsx
-import { Cloudflare } from '@lobehub/ui/icons';
-
-import { Flexbox } from '@/Flex';
-
-export default () => (
-  <Flexbox gap={16} horizontal>
-    <Cloudflare.Avatar size={64} />
-    <Cloudflare.Avatar size={64} shape={'square'} />
-  </Flexbox>
-);
-```
+<Demo of={DemoAvatars} layout="center" />

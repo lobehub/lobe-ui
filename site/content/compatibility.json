@@ -14,15 +14,15 @@
     },
     {
       "document": "src/Accordion/index.mdx",
-      "legacyId": "src-accordion-demo-demos",
+      "legacyId": "src-accordion-demo-action",
       "legacyRouteId": "components/Accordion/index",
       "options": {
         "inline": false,
         "isolated": false,
-        "layout": "bare"
+        "layout": "default"
       },
       "pathname": "/components/accordion",
-      "source": "src/Accordion/demos/index.tsx"
+      "source": "src/Accordion/demos/Action.tsx"
     },
     {
       "document": "src/Accordion/index.mdx",
@@ -38,6 +38,18 @@
     },
     {
       "document": "src/Accordion/index.mdx",
+      "legacyId": "src-accordion-demo-demos",
+      "legacyRouteId": "components/Accordion/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/accordion",
+      "source": "src/Accordion/demos/index.tsx"
+    },
+    {
+      "document": "src/Accordion/index.mdx",
       "legacyId": "src-accordion-demo-standalone",
       "legacyRouteId": "components/Accordion/index",
       "options": {
@@ -47,42 +59,6 @@
       },
       "pathname": "/components/accordion",
       "source": "src/Accordion/demos/Standalone.tsx"
-    },
-    {
-      "document": "src/Accordion/index.mdx",
-      "legacyId": "src-accordion-demo-action",
-      "legacyRouteId": "components/Accordion/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/accordion",
-      "source": "src/Accordion/demos/Action.tsx"
-    },
-    {
-      "document": "src/ActionIcon/index.mdx",
-      "legacyId": "src-action-icon-demo-demos",
-      "legacyRouteId": "components/ActionIcon/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/action-icon",
-      "source": "src/ActionIcon/demos/index.tsx"
-    },
-    {
-      "document": "src/ActionIcon/index.mdx",
-      "legacyId": "src-action-icon-demo-size",
-      "legacyRouteId": "components/ActionIcon/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/action-icon",
-      "source": "src/ActionIcon/demos/Size.tsx"
     },
     {
       "document": "src/ActionIcon/index.mdx",
@@ -98,15 +74,15 @@
     },
     {
       "document": "src/ActionIcon/index.mdx",
-      "legacyId": "src-action-icon-demo-variant",
+      "legacyId": "src-action-icon-demo-demos",
       "legacyRouteId": "components/ActionIcon/index",
       "options": {
         "inline": false,
         "isolated": false,
-        "layout": "center"
+        "layout": "bare"
       },
       "pathname": "/components/action-icon",
-      "source": "src/ActionIcon/demos/Variant.tsx"
+      "source": "src/ActionIcon/demos/index.tsx"
     },
     {
       "document": "src/ActionIcon/index.mdx",
@@ -119,6 +95,30 @@
       },
       "pathname": "/components/action-icon",
       "source": "src/ActionIcon/demos/DropdownMenu.tsx"
+    },
+    {
+      "document": "src/ActionIcon/index.mdx",
+      "legacyId": "src-action-icon-demo-size",
+      "legacyRouteId": "components/ActionIcon/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/action-icon",
+      "source": "src/ActionIcon/demos/Size.tsx"
+    },
+    {
+      "document": "src/ActionIcon/index.mdx",
+      "legacyId": "src-action-icon-demo-variant",
+      "legacyRouteId": "components/ActionIcon/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/action-icon",
+      "source": "src/ActionIcon/demos/Variant.tsx"
     },
     {
       "document": "src/ActionIconGroup/index.mdx",
@@ -170,6 +170,18 @@
     },
     {
       "document": "src/Avatar/index.mdx",
+      "legacyId": "src-avatar-demo-bordered",
+      "legacyRouteId": "components/Avatar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/avatar",
+      "source": "src/Avatar/demos/Bordered.tsx"
+    },
+    {
+      "document": "src/Avatar/index.mdx",
       "legacyId": "src-avatar-demo-demos",
       "legacyRouteId": "components/Avatar/index",
       "options": {
@@ -182,7 +194,7 @@
     },
     {
       "document": "src/Avatar/index.mdx",
-      "legacyId": "src-avatar-demo-text",
+      "legacyId": "src-avatar-demo-errorfallback",
       "legacyRouteId": "components/Avatar/index",
       "options": {
         "inline": false,
@@ -190,19 +202,7 @@
         "layout": "center"
       },
       "pathname": "/components/avatar",
-      "source": "src/Avatar/demos/Text.tsx"
-    },
-    {
-      "document": "src/Avatar/index.mdx",
-      "legacyId": "src-avatar-demo-bordered",
-      "legacyRouteId": "components/Avatar/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/avatar",
-      "source": "src/Avatar/demos/Bordered.tsx"
+      "source": "src/Avatar/demos/ErrorFallback.tsx"
     },
     {
       "document": "src/Avatar/index.mdx",
@@ -218,7 +218,7 @@
     },
     {
       "document": "src/Avatar/index.mdx",
-      "legacyId": "src-avatar-demo-errorfallback",
+      "legacyId": "src-avatar-demo-text",
       "legacyRouteId": "components/Avatar/index",
       "options": {
         "inline": false,
@@ -226,7 +226,7 @@
         "layout": "center"
       },
       "pathname": "/components/avatar",
-      "source": "src/Avatar/demos/ErrorFallback.tsx"
+      "source": "src/Avatar/demos/Text.tsx"
     },
     {
       "document": "src/Block/index.mdx",
@@ -278,6 +278,54 @@
     },
     {
       "document": "src/Checkbox/index.mdx",
+      "legacyId": "src-checkbox-demo-checkboxgroup",
+      "legacyRouteId": "components/Checkbox/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/checkbox",
+      "source": "src/Checkbox/demos/CheckboxGroup.tsx"
+    },
+    {
+      "document": "src/Checkbox/index.mdx",
+      "legacyId": "src-checkbox-demo-checkboxgroupdisabled",
+      "legacyRouteId": "components/Checkbox/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/checkbox",
+      "source": "src/Checkbox/demos/CheckboxGroupDisabled.tsx"
+    },
+    {
+      "document": "src/Checkbox/index.mdx",
+      "legacyId": "src-checkbox-demo-checkboxgroupoptions",
+      "legacyRouteId": "components/Checkbox/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/checkbox",
+      "source": "src/Checkbox/demos/CheckboxGroupOptions.tsx"
+    },
+    {
+      "document": "src/Checkbox/index.mdx",
+      "legacyId": "src-checkbox-demo-checkboxgroupusage",
+      "legacyRouteId": "components/Checkbox/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/checkbox",
+      "source": "src/Checkbox/demos/CheckboxGroupUsage.tsx"
+    },
+    {
+      "document": "src/Checkbox/index.mdx",
       "legacyId": "src-checkbox-demo-demos",
       "legacyRouteId": "components/Checkbox/index",
       "options": {
@@ -287,6 +335,18 @@
       },
       "pathname": "/components/checkbox",
       "source": "src/Checkbox/demos/index.tsx"
+    },
+    {
+      "document": "src/Checkbox/index.mdx",
+      "legacyId": "src-checkbox-demo-indeterminate",
+      "legacyRouteId": "components/Checkbox/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/checkbox",
+      "source": "src/Checkbox/demos/Indeterminate.tsx"
     },
     {
       "document": "src/Checkbox/index.mdx",
@@ -313,64 +373,16 @@
       "source": "src/Checkbox/demos/WithText.tsx"
     },
     {
-      "document": "src/Checkbox/index.mdx",
-      "legacyId": "src-checkbox-demo-indeterminate",
-      "legacyRouteId": "components/Checkbox/index",
+      "document": "src/CodeDiff/index.mdx",
+      "legacyId": "src-code-diff-demo-actionsrender",
+      "legacyRouteId": "components/CodeDiff/index",
       "options": {
         "inline": false,
         "isolated": false,
-        "layout": "center"
+        "layout": "default"
       },
-      "pathname": "/components/checkbox",
-      "source": "src/Checkbox/demos/Indeterminate.tsx"
-    },
-    {
-      "document": "src/Checkbox/index.mdx",
-      "legacyId": "src-checkbox-demo-checkboxgroup",
-      "legacyRouteId": "components/Checkbox/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/checkbox",
-      "source": "src/Checkbox/demos/CheckboxGroup.tsx"
-    },
-    {
-      "document": "src/Checkbox/index.mdx",
-      "legacyId": "src-checkbox-demo-checkboxgroupusage",
-      "legacyRouteId": "components/Checkbox/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/checkbox",
-      "source": "src/Checkbox/demos/CheckboxGroupUsage.tsx"
-    },
-    {
-      "document": "src/Checkbox/index.mdx",
-      "legacyId": "src-checkbox-demo-checkboxgroupoptions",
-      "legacyRouteId": "components/Checkbox/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/checkbox",
-      "source": "src/Checkbox/demos/CheckboxGroupOptions.tsx"
-    },
-    {
-      "document": "src/Checkbox/index.mdx",
-      "legacyId": "src-checkbox-demo-checkboxgroupdisabled",
-      "legacyRouteId": "components/Checkbox/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/checkbox",
-      "source": "src/Checkbox/demos/CheckboxGroupDisabled.tsx"
+      "pathname": "/components/code-diff",
+      "source": "src/CodeDiff/demos/ActionsRender.tsx"
     },
     {
       "document": "src/CodeDiff/index.mdx",
@@ -383,30 +395,6 @@
       },
       "pathname": "/components/code-diff",
       "source": "src/CodeDiff/demos/index.tsx"
-    },
-    {
-      "document": "src/CodeDiff/index.mdx",
-      "legacyId": "src-code-diff-demo-unified",
-      "legacyRouteId": "components/CodeDiff/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/code-diff",
-      "source": "src/CodeDiff/demos/Unified.tsx"
-    },
-    {
-      "document": "src/CodeDiff/index.mdx",
-      "legacyId": "src-code-diff-demo-actionsrender",
-      "legacyRouteId": "components/CodeDiff/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/code-diff",
-      "source": "src/CodeDiff/demos/ActionsRender.tsx"
     },
     {
       "document": "src/CodeDiff/index.mdx",
@@ -431,6 +419,18 @@
       },
       "pathname": "/components/code-diff",
       "source": "src/CodeDiff/demos/PatchFullFeatured.tsx"
+    },
+    {
+      "document": "src/CodeDiff/index.mdx",
+      "legacyId": "src-code-diff-demo-unified",
+      "legacyRouteId": "components/CodeDiff/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/code-diff",
+      "source": "src/CodeDiff/demos/Unified.tsx"
     },
     {
       "document": "src/CodeDiff/index.mdx",
@@ -494,6 +494,30 @@
     },
     {
       "document": "src/ConfigProvider/index.mdx",
+      "legacyId": "configprovider-demo-config-provider",
+      "legacyRouteId": "components/ConfigProvider/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/config-provider",
+      "source": "src/ConfigProvider/demos/config-provider.tsx"
+    },
+    {
+      "document": "src/ConfigProvider/index.mdx",
+      "legacyId": "configprovider-demo-config-provider-2",
+      "legacyRouteId": "components/ConfigProvider/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/config-provider",
+      "source": "src/ConfigProvider/demos/config-provider-2.tsx"
+    },
+    {
+      "document": "src/ConfigProvider/index.mdx",
       "legacyId": "configprovider-demo-demos",
       "legacyRouteId": "components/ConfigProvider/index",
       "options": {
@@ -505,28 +529,16 @@
       "source": "src/ConfigProvider/demos/index.tsx"
     },
     {
-      "document": "src/ContextMenu/index.mdx",
-      "legacyId": "src-context-menu-demo-imperative",
-      "legacyRouteId": "components/ContextMenu/index",
+      "document": "src/ConfigProvider/index.mdx",
+      "legacyId": "configprovider-demo-lazy-motion",
+      "legacyRouteId": "components/ConfigProvider/index",
       "options": {
         "inline": false,
         "isolated": false,
-        "layout": "center"
+        "layout": "default"
       },
-      "pathname": "/components/context-menu",
-      "source": "src/ContextMenu/demos/imperative.tsx"
-    },
-    {
-      "document": "src/ContextMenu/index.mdx",
-      "legacyId": "src-context-menu-demo-trigger",
-      "legacyRouteId": "components/ContextMenu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/context-menu",
-      "source": "src/ContextMenu/demos/trigger.tsx"
+      "pathname": "/components/config-provider",
+      "source": "src/ConfigProvider/demos/lazy-motion.tsx"
     },
     {
       "document": "src/ContextMenu/index.mdx",
@@ -542,18 +554,6 @@
     },
     {
       "document": "src/ContextMenu/index.mdx",
-      "legacyId": "src-context-menu-demo-switch",
-      "legacyRouteId": "components/ContextMenu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/context-menu",
-      "source": "src/ContextMenu/demos/switch.tsx"
-    },
-    {
-      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-context-menu-demo-desc",
       "legacyRouteId": "components/ContextMenu/index",
       "options": {
@@ -563,6 +563,18 @@
       },
       "pathname": "/components/context-menu",
       "source": "src/ContextMenu/demos/desc.tsx"
+    },
+    {
+      "document": "src/ContextMenu/index.mdx",
+      "legacyId": "src-context-menu-demo-emptysubmenu",
+      "legacyRouteId": "components/ContextMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/context-menu",
+      "source": "src/ContextMenu/demos/emptySubmenu.tsx"
     },
     {
       "document": "src/ContextMenu/index.mdx",
@@ -590,7 +602,7 @@
     },
     {
       "document": "src/ContextMenu/index.mdx",
-      "legacyId": "src-context-menu-demo-emptysubmenu",
+      "legacyId": "src-context-menu-demo-iconspacemode",
       "legacyRouteId": "components/ContextMenu/index",
       "options": {
         "inline": false,
@@ -598,7 +610,43 @@
         "layout": "center"
       },
       "pathname": "/components/context-menu",
-      "source": "src/ContextMenu/demos/emptySubmenu.tsx"
+      "source": "src/ContextMenu/demos/iconSpaceMode.tsx"
+    },
+    {
+      "document": "src/ContextMenu/index.mdx",
+      "legacyId": "src-context-menu-demo-imperative",
+      "legacyRouteId": "components/ContextMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/context-menu",
+      "source": "src/ContextMenu/demos/imperative.tsx"
+    },
+    {
+      "document": "src/ContextMenu/index.mdx",
+      "legacyId": "src-context-menu-demo-switch",
+      "legacyRouteId": "components/ContextMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/context-menu",
+      "source": "src/ContextMenu/demos/switch.tsx"
+    },
+    {
+      "document": "src/ContextMenu/index.mdx",
+      "legacyId": "src-context-menu-demo-trigger",
+      "legacyRouteId": "components/ContextMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/context-menu",
+      "source": "src/ContextMenu/demos/trigger.tsx"
     },
     {
       "document": "src/ContextMenu/index.mdx",
@@ -611,18 +659,6 @@
       },
       "pathname": "/components/context-menu",
       "source": "src/ContextMenu/demos/uploader.tsx"
-    },
-    {
-      "document": "src/ContextMenu/index.mdx",
-      "legacyId": "src-context-menu-demo-iconspacemode",
-      "legacyRouteId": "components/ContextMenu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/context-menu",
-      "source": "src/ContextMenu/demos/iconSpaceMode.tsx"
     },
     {
       "document": "src/CopyButton/index.mdx",
@@ -650,18 +686,6 @@
     },
     {
       "document": "src/DownloadButton/index.mdx",
-      "legacyId": "src-download-button-demo-demos",
-      "legacyRouteId": "components/DownloadButton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/download-button",
-      "source": "src/DownloadButton/demos/index.tsx"
-    },
-    {
-      "document": "src/DownloadButton/index.mdx",
       "legacyId": "src-download-button-demo-customfile",
       "legacyRouteId": "components/DownloadButton/index",
       "options": {
@@ -671,6 +695,18 @@
       },
       "pathname": "/components/download-button",
       "source": "src/DownloadButton/demos/customFile.tsx"
+    },
+    {
+      "document": "src/DownloadButton/index.mdx",
+      "legacyId": "src-download-button-demo-demos",
+      "legacyRouteId": "components/DownloadButton/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/download-button",
+      "source": "src/DownloadButton/demos/index.tsx"
     },
     {
       "document": "src/DraggablePanel/index.mdx",
@@ -683,6 +719,18 @@
       },
       "pathname": "/components/draggable-panel",
       "source": "src/DraggablePanel/demos/index.tsx"
+    },
+    {
+      "document": "src/DraggablePanel/index.mdx",
+      "legacyId": "src-draggable-panel-demo-dragtocollapse",
+      "legacyRouteId": "components/DraggablePanel/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/draggable-panel",
+      "source": "src/DraggablePanel/demos/DragToCollapse.tsx"
     },
     {
       "document": "src/DraggablePanel/index.mdx",
@@ -707,18 +755,6 @@
       },
       "pathname": "/components/draggable-panel",
       "source": "src/DraggablePanel/demos/StableLayout.tsx"
-    },
-    {
-      "document": "src/DraggablePanel/index.mdx",
-      "legacyId": "src-draggable-panel-demo-dragtocollapse",
-      "legacyRouteId": "components/DraggablePanel/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/draggable-panel",
-      "source": "src/DraggablePanel/demos/DragToCollapse.tsx"
     },
     {
       "document": "src/DraggableSideNav/index.mdx",
@@ -758,18 +794,6 @@
     },
     {
       "document": "src/Dropdown/index.mdx",
-      "legacyId": "src-dropdown-demo-demos",
-      "legacyRouteId": "components/Dropdown/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/dropdown",
-      "source": "src/Dropdown/demos/index.tsx"
-    },
-    {
-      "document": "src/Dropdown/index.mdx",
       "legacyId": "src-dropdown-demo-contextmenu",
       "legacyRouteId": "components/Dropdown/index",
       "options": {
@@ -781,16 +805,16 @@
       "source": "src/Dropdown/demos/ContextMenu.tsx"
     },
     {
-      "document": "src/DropdownMenu/index.mdx",
-      "legacyId": "src-dropdown-menu-demo-demos",
-      "legacyRouteId": "components/DropdownMenu/index",
+      "document": "src/Dropdown/index.mdx",
+      "legacyId": "src-dropdown-demo-demos",
+      "legacyRouteId": "components/Dropdown/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/dropdown-menu",
-      "source": "src/DropdownMenu/demos/index.tsx"
+      "pathname": "/components/dropdown",
+      "source": "src/Dropdown/demos/index.tsx"
     },
     {
       "document": "src/DropdownMenu/index.mdx",
@@ -806,7 +830,7 @@
     },
     {
       "document": "src/DropdownMenu/index.mdx",
-      "legacyId": "src-dropdown-menu-demo-submenu",
+      "legacyId": "src-dropdown-menu-demo-checkbox",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
@@ -814,11 +838,11 @@
         "layout": "center"
       },
       "pathname": "/components/dropdown-menu",
-      "source": "src/DropdownMenu/demos/submenu.tsx"
+      "source": "src/DropdownMenu/demos/checkbox.tsx"
     },
     {
       "document": "src/DropdownMenu/index.mdx",
-      "legacyId": "src-dropdown-menu-demo-plus-action-submenu",
+      "legacyId": "src-dropdown-menu-demo-custom-trigger",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
@@ -826,7 +850,43 @@
         "layout": "center"
       },
       "pathname": "/components/dropdown-menu",
-      "source": "src/DropdownMenu/demos/plus-action-submenu.tsx"
+      "source": "src/DropdownMenu/demos/custom-trigger.tsx"
+    },
+    {
+      "document": "src/DropdownMenu/index.mdx",
+      "legacyId": "src-dropdown-menu-demo-danger",
+      "legacyRouteId": "components/DropdownMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/dropdown-menu",
+      "source": "src/DropdownMenu/demos/danger.tsx"
+    },
+    {
+      "document": "src/DropdownMenu/index.mdx",
+      "legacyId": "src-dropdown-menu-demo-demos",
+      "legacyRouteId": "components/DropdownMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/dropdown-menu",
+      "source": "src/DropdownMenu/demos/index.tsx"
+    },
+    {
+      "document": "src/DropdownMenu/index.mdx",
+      "legacyId": "src-dropdown-menu-demo-desc",
+      "legacyRouteId": "components/DropdownMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/dropdown-menu",
+      "source": "src/DropdownMenu/demos/desc.tsx"
     },
     {
       "document": "src/DropdownMenu/index.mdx",
@@ -866,7 +926,7 @@
     },
     {
       "document": "src/DropdownMenu/index.mdx",
-      "legacyId": "src-dropdown-menu-demo-iconspacemode",
+      "legacyId": "src-dropdown-menu-demo-hover",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
@@ -874,19 +934,7 @@
         "layout": "center"
       },
       "pathname": "/components/dropdown-menu",
-      "source": "src/DropdownMenu/demos/iconSpaceMode.tsx"
-    },
-    {
-      "document": "src/DropdownMenu/index.mdx",
-      "legacyId": "src-dropdown-menu-demo-desc",
-      "legacyRouteId": "components/DropdownMenu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/dropdown-menu",
-      "source": "src/DropdownMenu/demos/desc.tsx"
+      "source": "src/DropdownMenu/demos/hover.tsx"
     },
     {
       "document": "src/DropdownMenu/index.mdx",
@@ -902,7 +950,7 @@
     },
     {
       "document": "src/DropdownMenu/index.mdx",
-      "legacyId": "src-dropdown-menu-demo-danger",
+      "legacyId": "src-dropdown-menu-demo-iconspacemode",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
@@ -910,11 +958,11 @@
         "layout": "center"
       },
       "pathname": "/components/dropdown-menu",
-      "source": "src/DropdownMenu/demos/danger.tsx"
+      "source": "src/DropdownMenu/demos/iconSpaceMode.tsx"
     },
     {
       "document": "src/DropdownMenu/index.mdx",
-      "legacyId": "src-dropdown-menu-demo-hover",
+      "legacyId": "src-dropdown-menu-demo-lazy",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
@@ -922,11 +970,11 @@
         "layout": "center"
       },
       "pathname": "/components/dropdown-menu",
-      "source": "src/DropdownMenu/demos/hover.tsx"
+      "source": "src/DropdownMenu/demos/lazy.tsx"
     },
     {
       "document": "src/DropdownMenu/index.mdx",
-      "legacyId": "src-dropdown-menu-demo-checkbox",
+      "legacyId": "src-dropdown-menu-demo-link-label",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
@@ -934,7 +982,31 @@
         "layout": "center"
       },
       "pathname": "/components/dropdown-menu",
-      "source": "src/DropdownMenu/demos/checkbox.tsx"
+      "source": "src/DropdownMenu/demos/link-label.tsx"
+    },
+    {
+      "document": "src/DropdownMenu/index.mdx",
+      "legacyId": "src-dropdown-menu-demo-plus-action-submenu",
+      "legacyRouteId": "components/DropdownMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/dropdown-menu",
+      "source": "src/DropdownMenu/demos/plus-action-submenu.tsx"
+    },
+    {
+      "document": "src/DropdownMenu/index.mdx",
+      "legacyId": "src-dropdown-menu-demo-submenu",
+      "legacyRouteId": "components/DropdownMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/dropdown-menu",
+      "source": "src/DropdownMenu/demos/submenu.tsx"
     },
     {
       "document": "src/DropdownMenu/index.mdx",
@@ -962,7 +1034,7 @@
     },
     {
       "document": "src/DropdownMenu/index.mdx",
-      "legacyId": "src-dropdown-menu-demo-lazy",
+      "legacyId": "src-dropdown-menu-demo-tooltip-hover-stay",
       "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
@@ -970,31 +1042,7 @@
         "layout": "center"
       },
       "pathname": "/components/dropdown-menu",
-      "source": "src/DropdownMenu/demos/lazy.tsx"
-    },
-    {
-      "document": "src/DropdownMenu/index.mdx",
-      "legacyId": "src-dropdown-menu-demo-custom-trigger",
-      "legacyRouteId": "components/DropdownMenu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/dropdown-menu",
-      "source": "src/DropdownMenu/demos/custom-trigger.tsx"
-    },
-    {
-      "document": "src/DropdownMenu/index.mdx",
-      "legacyId": "src-dropdown-menu-demo-link-label",
-      "legacyRouteId": "components/DropdownMenu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/dropdown-menu",
-      "source": "src/DropdownMenu/demos/link-label.tsx"
+      "source": "src/DropdownMenu/demos/tooltip-hover-stay.tsx"
     },
     {
       "document": "src/DropdownMenu/index.mdx",
@@ -1007,18 +1055,6 @@
       },
       "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/uploader.tsx"
-    },
-    {
-      "document": "src/DropdownMenu/index.mdx",
-      "legacyId": "src-dropdown-menu-demo-tooltip-hover-stay",
-      "legacyRouteId": "components/DropdownMenu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/dropdown-menu",
-      "source": "src/DropdownMenu/demos/tooltip-hover-stay.tsx"
     },
     {
       "document": "src/EditableText/index.mdx",
@@ -1046,7 +1082,7 @@
     },
     {
       "document": "src/EmojiPicker/index.mdx",
-      "legacyId": "src-emoji-picker-demo-demos",
+      "legacyId": "src-emoji-picker-demo-control",
       "legacyRouteId": "components/EmojiPicker/index",
       "options": {
         "inline": false,
@@ -1054,19 +1090,7 @@
         "layout": "center"
       },
       "pathname": "/components/emoji-picker",
-      "source": "src/EmojiPicker/demos/index.tsx"
-    },
-    {
-      "document": "src/EmojiPicker/index.mdx",
-      "legacyId": "src-emoji-picker-demo-upload",
-      "legacyRouteId": "components/EmojiPicker/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/emoji-picker",
-      "source": "src/EmojiPicker/demos/Upload.tsx"
+      "source": "src/EmojiPicker/demos/Control.tsx"
     },
     {
       "document": "src/EmojiPicker/index.mdx",
@@ -1094,6 +1118,18 @@
     },
     {
       "document": "src/EmojiPicker/index.mdx",
+      "legacyId": "src-emoji-picker-demo-demos",
+      "legacyRouteId": "components/EmojiPicker/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/emoji-picker",
+      "source": "src/EmojiPicker/demos/index.tsx"
+    },
+    {
+      "document": "src/EmojiPicker/index.mdx",
       "legacyId": "src-emoji-picker-demo-modelavatar",
       "legacyRouteId": "components/EmojiPicker/index",
       "options": {
@@ -1106,7 +1142,7 @@
     },
     {
       "document": "src/EmojiPicker/index.mdx",
-      "legacyId": "src-emoji-picker-demo-control",
+      "legacyId": "src-emoji-picker-demo-upload",
       "legacyRouteId": "components/EmojiPicker/index",
       "options": {
         "inline": false,
@@ -1114,7 +1150,7 @@
         "layout": "center"
       },
       "pathname": "/components/emoji-picker",
-      "source": "src/EmojiPicker/demos/Control.tsx"
+      "source": "src/EmojiPicker/demos/Upload.tsx"
     },
     {
       "document": "src/Empty/index.mdx",
@@ -1130,7 +1166,7 @@
     },
     {
       "document": "src/Empty/index.mdx",
-      "legacyId": "src-empty-demo-withicon",
+      "legacyId": "src-empty-demo-withaction",
       "legacyRouteId": "components/Empty/index",
       "options": {
         "inline": false,
@@ -1138,7 +1174,7 @@
         "layout": "bare"
       },
       "pathname": "/components/empty",
-      "source": "src/Empty/demos/WithIcon.tsx"
+      "source": "src/Empty/demos/WithAction.tsx"
     },
     {
       "document": "src/Empty/index.mdx",
@@ -1154,7 +1190,7 @@
     },
     {
       "document": "src/Empty/index.mdx",
-      "legacyId": "src-empty-demo-withaction",
+      "legacyId": "src-empty-demo-withicon",
       "legacyRouteId": "components/Empty/index",
       "options": {
         "inline": false,
@@ -1162,7 +1198,7 @@
         "layout": "bare"
       },
       "pathname": "/components/empty",
-      "source": "src/Empty/demos/WithAction.tsx"
+      "source": "src/Empty/demos/WithIcon.tsx"
     },
     {
       "document": "src/FileTypeIcon/index.mdx",
@@ -1190,6 +1226,18 @@
     },
     {
       "document": "src/Flex/index.mdx",
+      "legacyId": "src-flex-demo-alignment",
+      "legacyRouteId": "components/Flex/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/flex",
+      "source": "src/Flex/demos/alignment.tsx"
+    },
+    {
+      "document": "src/Flex/index.mdx",
       "legacyId": "src-flex-demo-basic",
       "legacyRouteId": "components/Flex/index",
       "options": {
@@ -1202,6 +1250,18 @@
     },
     {
       "document": "src/Flex/index.mdx",
+      "legacyId": "src-flex-demo-center",
+      "legacyRouteId": "components/Flex/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/flex",
+      "source": "src/Flex/demos/center.tsx"
+    },
+    {
+      "document": "src/Flex/index.mdx",
       "legacyId": "src-flex-demo-direction",
       "legacyRouteId": "components/Flex/index",
       "options": {
@@ -1211,18 +1271,6 @@
       },
       "pathname": "/components/flex",
       "source": "src/Flex/demos/direction.tsx"
-    },
-    {
-      "document": "src/Flex/index.mdx",
-      "legacyId": "src-flex-demo-alignment",
-      "legacyRouteId": "components/Flex/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/flex",
-      "source": "src/Flex/demos/alignment.tsx"
     },
     {
       "document": "src/Flex/index.mdx",
@@ -1247,18 +1295,6 @@
       },
       "pathname": "/components/flex",
       "source": "src/Flex/demos/wrap.tsx"
-    },
-    {
-      "document": "src/Flex/index.mdx",
-      "legacyId": "src-flex-demo-center",
-      "legacyRouteId": "components/Flex/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/flex",
-      "source": "src/Flex/demos/center.tsx"
     },
     {
       "document": "src/FluentEmoji/index.mdx",
@@ -1346,18 +1382,6 @@
     },
     {
       "document": "src/FormModal/index.mdx",
-      "legacyId": "src-form-modal-demo-flat",
-      "legacyRouteId": "components/FormModal/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/form-modal",
-      "source": "src/FormModal/demos/Flat.tsx"
-    },
-    {
-      "document": "src/FormModal/index.mdx",
       "legacyId": "src-form-modal-demo-error",
       "legacyRouteId": "components/FormModal/index",
       "options": {
@@ -1367,6 +1391,18 @@
       },
       "pathname": "/components/form-modal",
       "source": "src/FormModal/demos/Error.tsx"
+    },
+    {
+      "document": "src/FormModal/index.mdx",
+      "legacyId": "src-form-modal-demo-flat",
+      "legacyRouteId": "components/FormModal/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/form-modal",
+      "source": "src/FormModal/demos/Flat.tsx"
     },
     {
       "document": "src/Freeze/index.mdx",
@@ -1394,18 +1430,6 @@
     },
     {
       "document": "src/GroupAvatar/index.mdx",
-      "legacyId": "src-group-avatar-demo-demos",
-      "legacyRouteId": "components/GroupAvatar/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/group-avatar",
-      "source": "src/GroupAvatar/demos/index.tsx"
-    },
-    {
-      "document": "src/GroupAvatar/index.mdx",
       "legacyId": "src-group-avatar-demo-cornershape",
       "legacyRouteId": "components/GroupAvatar/index",
       "options": {
@@ -1415,6 +1439,18 @@
       },
       "pathname": "/components/group-avatar",
       "source": "src/GroupAvatar/demos/CornerShape.tsx"
+    },
+    {
+      "document": "src/GroupAvatar/index.mdx",
+      "legacyId": "src-group-avatar-demo-demos",
+      "legacyRouteId": "components/GroupAvatar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/group-avatar",
+      "source": "src/GroupAvatar/demos/index.tsx"
     },
     {
       "document": "src/GuideCard/index.mdx",
@@ -1442,6 +1478,18 @@
     },
     {
       "document": "src/Highlighter/index.mdx",
+      "legacyId": "src-highlighter-demo-actionsrender",
+      "legacyRouteId": "components/Highlighter/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/highlighter",
+      "source": "src/Highlighter/demos/ActionsRender.tsx"
+    },
+    {
+      "document": "src/Highlighter/index.mdx",
       "legacyId": "src-highlighter-demo-demos",
       "legacyRouteId": "components/Highlighter/index",
       "options": {
@@ -1465,18 +1513,6 @@
       "source": "src/Highlighter/demos/FullFeatured.tsx"
     },
     {
-      "document": "src/Highlighter/index.mdx",
-      "legacyId": "src-highlighter-demo-actionsrender",
-      "legacyRouteId": "components/Highlighter/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/highlighter",
-      "source": "src/Highlighter/demos/ActionsRender.tsx"
-    },
-    {
       "document": "src/Hotkey/index.mdx",
       "legacyId": "src-hotkey-demo-demos",
       "legacyRouteId": "components/Hotkey/index",
@@ -1487,6 +1523,42 @@
       },
       "pathname": "/components/hotkey",
       "source": "src/Hotkey/demos/index.tsx"
+    },
+    {
+      "document": "src/Hotkey/index.mdx",
+      "legacyId": "src-hotkey-demo-hotkey",
+      "legacyRouteId": "components/Hotkey/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/hotkey",
+      "source": "src/Hotkey/demos/hotkey.tsx"
+    },
+    {
+      "document": "src/Hotkey/index.mdx",
+      "legacyId": "src-hotkey-demo-hotkey-2",
+      "legacyRouteId": "components/Hotkey/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/hotkey",
+      "source": "src/Hotkey/demos/hotkey-2.tsx"
+    },
+    {
+      "document": "src/Hotkey/index.mdx",
+      "legacyId": "src-hotkey-demo-inversetheme",
+      "legacyRouteId": "components/Hotkey/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/hotkey",
+      "source": "src/Hotkey/demos/InverseTheme.tsx"
     },
     {
       "document": "src/Hotkey/index.mdx",
@@ -1511,18 +1583,6 @@
       },
       "pathname": "/components/hotkey",
       "source": "src/Hotkey/demos/Mouse.tsx"
-    },
-    {
-      "document": "src/Hotkey/index.mdx",
-      "legacyId": "src-hotkey-demo-inversetheme",
-      "legacyRouteId": "components/Hotkey/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/hotkey",
-      "source": "src/Hotkey/demos/InverseTheme.tsx"
     },
     {
       "document": "src/HotkeyInput/index.mdx",
@@ -1550,18 +1610,6 @@
     },
     {
       "document": "src/HtmlPreview/index.mdx",
-      "legacyId": "src-html-preview-demo-report",
-      "legacyRouteId": "components/HtmlPreview/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/html-preview",
-      "source": "src/HtmlPreview/demos/Report.tsx"
-    },
-    {
-      "document": "src/HtmlPreview/index.mdx",
       "legacyId": "src-html-preview-demo-headresources",
       "legacyRouteId": "components/HtmlPreview/index",
       "options": {
@@ -1574,7 +1622,19 @@
     },
     {
       "document": "src/HtmlPreview/index.mdx",
-      "legacyId": "src-html-preview-demo-streaming",
+      "legacyId": "src-html-preview-demo-inmarkdown",
+      "legacyRouteId": "components/HtmlPreview/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/html-preview",
+      "source": "src/HtmlPreview/demos/InMarkdown.tsx"
+    },
+    {
+      "document": "src/HtmlPreview/index.mdx",
+      "legacyId": "src-html-preview-demo-report",
       "legacyRouteId": "components/HtmlPreview/index",
       "options": {
         "inline": false,
@@ -1582,7 +1642,7 @@
         "layout": "bare"
       },
       "pathname": "/components/html-preview",
-      "source": "src/HtmlPreview/demos/Streaming.tsx"
+      "source": "src/HtmlPreview/demos/Report.tsx"
     },
     {
       "document": "src/HtmlPreview/index.mdx",
@@ -1598,15 +1658,15 @@
     },
     {
       "document": "src/HtmlPreview/index.mdx",
-      "legacyId": "src-html-preview-demo-inmarkdown",
+      "legacyId": "src-html-preview-demo-streaming",
       "legacyRouteId": "components/HtmlPreview/index",
       "options": {
         "inline": false,
         "isolated": false,
-        "layout": "default"
+        "layout": "bare"
       },
       "pathname": "/components/html-preview",
-      "source": "src/HtmlPreview/demos/InMarkdown.tsx"
+      "source": "src/HtmlPreview/demos/Streaming.tsx"
     },
     {
       "document": "src/Icon/index.mdx",
@@ -1619,6 +1679,30 @@
       },
       "pathname": "/components/icon",
       "source": "src/Icon/demos/index.tsx"
+    },
+    {
+      "document": "src/Icon/index.mdx",
+      "legacyId": "src-icon-demo-icon-provider",
+      "legacyRouteId": "components/Icon/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/icon",
+      "source": "src/Icon/demos/icon-provider.tsx"
+    },
+    {
+      "document": "src/Image/index.mdx",
+      "legacyId": "src-image-demo-customactions",
+      "legacyRouteId": "components/Image/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/image",
+      "source": "src/Image/demos/CustomActions.tsx"
     },
     {
       "document": "src/Image/index.mdx",
@@ -1634,18 +1718,6 @@
     },
     {
       "document": "src/Image/index.mdx",
-      "legacyId": "src-image-demo-gallery",
-      "legacyRouteId": "components/Image/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/image",
-      "source": "src/Image/demos/Gallery.tsx"
-    },
-    {
-      "document": "src/Image/index.mdx",
       "legacyId": "src-image-demo-fallback",
       "legacyRouteId": "components/Image/index",
       "options": {
@@ -1658,7 +1730,7 @@
     },
     {
       "document": "src/Image/index.mdx",
-      "legacyId": "src-image-demo-customactions",
+      "legacyId": "src-image-demo-gallery",
       "legacyRouteId": "components/Image/index",
       "options": {
         "inline": false,
@@ -1666,7 +1738,7 @@
         "layout": "center"
       },
       "pathname": "/components/image",
-      "source": "src/Image/demos/CustomActions.tsx"
+      "source": "src/Image/demos/Gallery.tsx"
     },
     {
       "document": "src/ImageSelect/index.mdx",
@@ -1694,18 +1766,6 @@
     },
     {
       "document": "src/Input/index.mdx",
-      "legacyId": "input-demo-textarea",
-      "legacyRouteId": "components/Input/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/input",
-      "source": "src/Input/demos/TextArea.tsx"
-    },
-    {
-      "document": "src/Input/index.mdx",
       "legacyId": "input-demo-inputnumber",
       "legacyRouteId": "components/Input/index",
       "options": {
@@ -1715,6 +1775,18 @@
       },
       "pathname": "/components/input",
       "source": "src/Input/demos/InputNumber.tsx"
+    },
+    {
+      "document": "src/Input/index.mdx",
+      "legacyId": "input-demo-inputopt",
+      "legacyRouteId": "components/Input/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/input",
+      "source": "src/Input/demos/InputOPT.tsx"
     },
     {
       "document": "src/Input/index.mdx",
@@ -1730,7 +1802,7 @@
     },
     {
       "document": "src/Input/index.mdx",
-      "legacyId": "input-demo-inputopt",
+      "legacyId": "input-demo-textarea",
       "legacyRouteId": "components/Input/index",
       "options": {
         "inline": false,
@@ -1738,7 +1810,7 @@
         "layout": "bare"
       },
       "pathname": "/components/input",
-      "source": "src/Input/demos/InputOPT.tsx"
+      "source": "src/Input/demos/TextArea.tsx"
     },
     {
       "document": "src/Layout/index.mdx",
@@ -1766,7 +1838,7 @@
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-headings",
+      "legacyId": "src-markdown-demo-alerts",
       "legacyRouteId": "components/Markdown/index",
       "options": {
         "inline": false,
@@ -1774,103 +1846,7 @@
         "layout": "bare"
       },
       "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/basic/headings.tsx"
-    },
-    {
-      "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-paragraphs",
-      "legacyRouteId": "components/Markdown/index",
-      "options": {
-        "inline": false,
-        "isolated": true,
-        "layout": "bare"
-      },
-      "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/basic/paragraphs.tsx"
-    },
-    {
-      "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-stylingtext",
-      "legacyRouteId": "components/Markdown/index",
-      "options": {
-        "inline": false,
-        "isolated": true,
-        "layout": "bare"
-      },
-      "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/basic/stylingText.tsx"
-    },
-    {
-      "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-br",
-      "legacyRouteId": "components/Markdown/index",
-      "options": {
-        "inline": false,
-        "isolated": true,
-        "layout": "bare"
-      },
-      "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/basic/br.tsx"
-    },
-    {
-      "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-quotes",
-      "legacyRouteId": "components/Markdown/index",
-      "options": {
-        "inline": false,
-        "isolated": true,
-        "layout": "bare"
-      },
-      "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/basic/quotes.tsx"
-    },
-    {
-      "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-links",
-      "legacyRouteId": "components/Markdown/index",
-      "options": {
-        "inline": false,
-        "isolated": true,
-        "layout": "bare"
-      },
-      "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/basic/links.tsx"
-    },
-    {
-      "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-tables",
-      "legacyRouteId": "components/Markdown/index",
-      "options": {
-        "inline": false,
-        "isolated": true,
-        "layout": "bare"
-      },
-      "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/basic/tables.tsx"
-    },
-    {
-      "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-images",
-      "legacyRouteId": "components/Markdown/index",
-      "options": {
-        "inline": false,
-        "isolated": true,
-        "layout": "bare"
-      },
-      "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/media/images.tsx"
-    },
-    {
-      "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-videos",
-      "legacyRouteId": "components/Markdown/index",
-      "options": {
-        "inline": false,
-        "isolated": true,
-        "layout": "bare"
-      },
-      "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/media/videos.tsx"
+      "source": "src/Markdown/demos/advanced/alerts.tsx"
     },
     {
       "document": "src/Markdown/index.mdx",
@@ -1886,7 +1862,7 @@
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-task-lists",
+      "legacyId": "src-markdown-demo-br",
       "legacyRouteId": "components/Markdown/index",
       "options": {
         "inline": false,
@@ -1894,7 +1870,19 @@
         "layout": "bare"
       },
       "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/basic/lists/task-lists.tsx"
+      "source": "src/Markdown/demos/basic/br.tsx"
+    },
+    {
+      "document": "src/Markdown/index.mdx",
+      "legacyId": "src-markdown-demo-citations",
+      "legacyRouteId": "components/Markdown/index",
+      "options": {
+        "inline": false,
+        "isolated": true,
+        "layout": "bare"
+      },
+      "pathname": "/components/markdown",
+      "source": "src/Markdown/demos/custom/citations/index.tsx"
     },
     {
       "document": "src/Markdown/index.mdx",
@@ -1910,18 +1898,6 @@
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-colors",
-      "legacyRouteId": "components/Markdown/index",
-      "options": {
-        "inline": false,
-        "isolated": true,
-        "layout": "bare"
-      },
-      "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/code/colors.tsx"
-    },
-    {
-      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-codeblocks",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -1934,7 +1910,7 @@
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-transformer",
+      "legacyId": "src-markdown-demo-colors",
       "legacyRouteId": "components/Markdown/index",
       "options": {
         "inline": false,
@@ -1942,7 +1918,31 @@
         "layout": "bare"
       },
       "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/code/transformer.tsx"
+      "source": "src/Markdown/demos/code/colors.tsx"
+    },
+    {
+      "document": "src/Markdown/index.mdx",
+      "legacyId": "src-markdown-demo-components",
+      "legacyRouteId": "components/Markdown/index",
+      "options": {
+        "inline": false,
+        "isolated": true,
+        "layout": "bare"
+      },
+      "pathname": "/components/markdown",
+      "source": "src/Markdown/demos/custom/components.tsx"
+    },
+    {
+      "document": "src/Markdown/index.mdx",
+      "legacyId": "src-markdown-demo-customfootnotes",
+      "legacyRouteId": "components/Markdown/index",
+      "options": {
+        "inline": false,
+        "isolated": true,
+        "layout": "bare"
+      },
+      "pathname": "/components/markdown",
+      "source": "src/Markdown/demos/footnotes/customFootnotes.tsx"
     },
     {
       "document": "src/Markdown/index.mdx",
@@ -1958,7 +1958,7 @@
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-math",
+      "legacyId": "src-markdown-demo-footnotes",
       "legacyRouteId": "components/Markdown/index",
       "options": {
         "inline": false,
@@ -1966,11 +1966,11 @@
         "layout": "bare"
       },
       "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/advanced/math.tsx"
+      "source": "src/Markdown/demos/footnotes/footnotes.tsx"
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-mermaid",
+      "legacyId": "src-markdown-demo-headings",
       "legacyRouteId": "components/Markdown/index",
       "options": {
         "inline": false,
@@ -1978,7 +1978,7 @@
         "layout": "bare"
       },
       "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/advanced/mermaid.tsx"
+      "source": "src/Markdown/demos/basic/headings.tsx"
     },
     {
       "document": "src/Markdown/index.mdx",
@@ -2006,18 +2006,6 @@
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-htmlpreviewstream",
-      "legacyRouteId": "components/Markdown/index",
-      "options": {
-        "inline": false,
-        "isolated": true,
-        "layout": "bare"
-      },
-      "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/advanced/htmlPreviewStream.tsx"
-    },
-    {
-      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-htmlpreviewreport",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -2030,7 +2018,7 @@
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-footnotes",
+      "legacyId": "src-markdown-demo-htmlpreviewstream",
       "legacyRouteId": "components/Markdown/index",
       "options": {
         "inline": false,
@@ -2038,11 +2026,11 @@
         "layout": "bare"
       },
       "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/footnotes/footnotes.tsx"
+      "source": "src/Markdown/demos/advanced/htmlPreviewStream.tsx"
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-customfootnotes",
+      "legacyId": "src-markdown-demo-images",
       "legacyRouteId": "components/Markdown/index",
       "options": {
         "inline": false,
@@ -2050,11 +2038,11 @@
         "layout": "bare"
       },
       "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/footnotes/customFootnotes.tsx"
+      "source": "src/Markdown/demos/media/images.tsx"
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-alerts",
+      "legacyId": "src-markdown-demo-links",
       "legacyRouteId": "components/Markdown/index",
       "options": {
         "inline": false,
@@ -2062,11 +2050,11 @@
         "layout": "bare"
       },
       "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/advanced/alerts.tsx"
+      "source": "src/Markdown/demos/basic/links.tsx"
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-variant",
+      "legacyId": "src-markdown-demo-math",
       "legacyRouteId": "components/Markdown/index",
       "options": {
         "inline": false,
@@ -2074,7 +2062,55 @@
         "layout": "bare"
       },
       "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/variant.tsx"
+      "source": "src/Markdown/demos/advanced/math.tsx"
+    },
+    {
+      "document": "src/Markdown/index.mdx",
+      "legacyId": "src-markdown-demo-mermaid",
+      "legacyRouteId": "components/Markdown/index",
+      "options": {
+        "inline": false,
+        "isolated": true,
+        "layout": "bare"
+      },
+      "pathname": "/components/markdown",
+      "source": "src/Markdown/demos/advanced/mermaid.tsx"
+    },
+    {
+      "document": "src/Markdown/index.mdx",
+      "legacyId": "src-markdown-demo-paragraphs",
+      "legacyRouteId": "components/Markdown/index",
+      "options": {
+        "inline": false,
+        "isolated": true,
+        "layout": "bare"
+      },
+      "pathname": "/components/markdown",
+      "source": "src/Markdown/demos/basic/paragraphs.tsx"
+    },
+    {
+      "document": "src/Markdown/index.mdx",
+      "legacyId": "src-markdown-demo-plugins",
+      "legacyRouteId": "components/Markdown/index",
+      "options": {
+        "inline": false,
+        "isolated": true,
+        "layout": "bare"
+      },
+      "pathname": "/components/markdown",
+      "source": "src/Markdown/demos/custom/plugins/index.tsx"
+    },
+    {
+      "document": "src/Markdown/index.mdx",
+      "legacyId": "src-markdown-demo-quotes",
+      "legacyRouteId": "components/Markdown/index",
+      "options": {
+        "inline": false,
+        "isolated": true,
+        "layout": "bare"
+      },
+      "pathname": "/components/markdown",
+      "source": "src/Markdown/demos/basic/quotes.tsx"
     },
     {
       "document": "src/Markdown/index.mdx",
@@ -2090,7 +2126,7 @@
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-streamingprofiler",
+      "legacyId": "src-markdown-demo-streaminganimationrepro",
       "legacyRouteId": "components/Markdown/index",
       "options": {
         "inline": false,
@@ -2098,7 +2134,7 @@
         "layout": "bare"
       },
       "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/streamingProfiler.tsx"
+      "source": "src/Markdown/demos/streamingAnimationRepro.tsx"
     },
     {
       "document": "src/Markdown/index.mdx",
@@ -2114,7 +2150,7 @@
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-streaminganimationrepro",
+      "legacyId": "src-markdown-demo-streamingprofiler",
       "legacyRouteId": "components/Markdown/index",
       "options": {
         "inline": false,
@@ -2122,11 +2158,11 @@
         "layout": "bare"
       },
       "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/streamingAnimationRepro.tsx"
+      "source": "src/Markdown/demos/streamingProfiler.tsx"
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-components",
+      "legacyId": "src-markdown-demo-stylingtext",
       "legacyRouteId": "components/Markdown/index",
       "options": {
         "inline": false,
@@ -2134,11 +2170,11 @@
         "layout": "bare"
       },
       "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/custom/components.tsx"
+      "source": "src/Markdown/demos/basic/stylingText.tsx"
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-citations",
+      "legacyId": "src-markdown-demo-tables",
       "legacyRouteId": "components/Markdown/index",
       "options": {
         "inline": false,
@@ -2146,11 +2182,11 @@
         "layout": "bare"
       },
       "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/custom/citations/index.tsx"
+      "source": "src/Markdown/demos/basic/tables.tsx"
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-plugins",
+      "legacyId": "src-markdown-demo-task-lists",
       "legacyRouteId": "components/Markdown/index",
       "options": {
         "inline": false,
@@ -2158,7 +2194,43 @@
         "layout": "bare"
       },
       "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/custom/plugins/index.tsx"
+      "source": "src/Markdown/demos/basic/lists/task-lists.tsx"
+    },
+    {
+      "document": "src/Markdown/index.mdx",
+      "legacyId": "src-markdown-demo-transformer",
+      "legacyRouteId": "components/Markdown/index",
+      "options": {
+        "inline": false,
+        "isolated": true,
+        "layout": "bare"
+      },
+      "pathname": "/components/markdown",
+      "source": "src/Markdown/demos/code/transformer.tsx"
+    },
+    {
+      "document": "src/Markdown/index.mdx",
+      "legacyId": "src-markdown-demo-variant",
+      "legacyRouteId": "components/Markdown/index",
+      "options": {
+        "inline": false,
+        "isolated": true,
+        "layout": "bare"
+      },
+      "pathname": "/components/markdown",
+      "source": "src/Markdown/demos/variant.tsx"
+    },
+    {
+      "document": "src/Markdown/index.mdx",
+      "legacyId": "src-markdown-demo-videos",
+      "legacyRouteId": "components/Markdown/index",
+      "options": {
+        "inline": false,
+        "isolated": true,
+        "layout": "bare"
+      },
+      "pathname": "/components/markdown",
+      "source": "src/Markdown/demos/media/videos.tsx"
     },
     {
       "document": "src/MaskShadow/index.mdx",
@@ -2198,6 +2270,18 @@
     },
     {
       "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-actionsrender",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/ActionsRender.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
       "legacyId": "src-mermaid-demo-demos",
       "legacyRouteId": "components/Mermaid/index",
       "options": {
@@ -2222,7 +2306,7 @@
     },
     {
       "document": "src/Mermaid/index.mdx",
-      "legacyId": "src-mermaid-demo-actionsrender",
+      "legacyId": "src-mermaid-demo-mermaid",
       "legacyRouteId": "components/Mermaid/index",
       "options": {
         "inline": false,
@@ -2230,7 +2314,199 @@
         "layout": "default"
       },
       "pathname": "/components/mermaid",
-      "source": "src/Mermaid/demos/ActionsRender.tsx"
+      "source": "src/Mermaid/demos/mermaid.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-10",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-10.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-11",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-11.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-12",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-12.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-13",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-13.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-14",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-14.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-15",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-15.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-16",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-16.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-17",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-17.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-2",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-2.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-3",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-3.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-4",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-4.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-5",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-5.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-6",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-6.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-7",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-7.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-8",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-8.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-9",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-9.tsx"
     },
     {
       "document": "src/Modal/index.mdx",
@@ -2269,6 +2545,30 @@
       "source": "src/Modal/demos/raw.tsx"
     },
     {
+      "document": "src/MotionProvider/index.mdx",
+      "legacyId": "motionprovider-demo-config-provider",
+      "legacyRouteId": "components/MotionProvider/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/motion-provider",
+      "source": "src/MotionProvider/demos/config-provider.tsx"
+    },
+    {
+      "document": "src/MotionProvider/index.mdx",
+      "legacyId": "motionprovider-demo-lazy-motion",
+      "legacyRouteId": "components/MotionProvider/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/motion-provider",
+      "source": "src/MotionProvider/demos/lazy-motion.tsx"
+    },
+    {
       "document": "src/NeuralNetworkLoading/index.mdx",
       "legacyId": "src-neural-network-loading-demo-demos",
       "legacyRouteId": "components/NeuralNetworkLoading/index",
@@ -2279,18 +2579,6 @@
       },
       "pathname": "/components/neural-network-loading",
       "source": "src/NeuralNetworkLoading/demos/index.tsx"
-    },
-    {
-      "document": "src/ScrollArea/index.mdx",
-      "legacyId": "src-scroll-area-demo-demos",
-      "legacyRouteId": "components/ScrollArea/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/scroll-area",
-      "source": "src/ScrollArea/demos/index.tsx"
     },
     {
       "document": "src/ScrollArea/index.mdx",
@@ -2306,18 +2594,6 @@
     },
     {
       "document": "src/ScrollArea/index.mdx",
-      "legacyId": "src-scroll-area-demo-horizontal",
-      "legacyRouteId": "components/ScrollArea/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/scroll-area",
-      "source": "src/ScrollArea/demos/horizontal.tsx"
-    },
-    {
-      "document": "src/ScrollArea/index.mdx",
       "legacyId": "src-scroll-area-demo-both",
       "legacyRouteId": "components/ScrollArea/index",
       "options": {
@@ -2327,6 +2603,30 @@
       },
       "pathname": "/components/scroll-area",
       "source": "src/ScrollArea/demos/both.tsx"
+    },
+    {
+      "document": "src/ScrollArea/index.mdx",
+      "legacyId": "src-scroll-area-demo-content-fit-overflow",
+      "legacyRouteId": "components/ScrollArea/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/scroll-area",
+      "source": "src/ScrollArea/demos/content-fit-overflow.tsx"
+    },
+    {
+      "document": "src/ScrollArea/index.mdx",
+      "legacyId": "src-scroll-area-demo-demos",
+      "legacyRouteId": "components/ScrollArea/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/scroll-area",
+      "source": "src/ScrollArea/demos/index.tsx"
     },
     {
       "document": "src/ScrollArea/index.mdx",
@@ -2342,7 +2642,7 @@
     },
     {
       "document": "src/ScrollArea/index.mdx",
-      "legacyId": "src-scroll-area-demo-content-fit-overflow",
+      "legacyId": "src-scroll-area-demo-horizontal",
       "legacyRouteId": "components/ScrollArea/index",
       "options": {
         "inline": false,
@@ -2350,7 +2650,7 @@
         "layout": "bare"
       },
       "pathname": "/components/scroll-area",
-      "source": "src/ScrollArea/demos/content-fit-overflow.tsx"
+      "source": "src/ScrollArea/demos/horizontal.tsx"
     },
     {
       "document": "src/ScrollShadow/index.mdx",
@@ -2426,42 +2726,6 @@
     },
     {
       "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-demos",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/index.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-withavatar",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/WithAvatar.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-custom",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/Custom.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
       "legacyId": "src-skeleton-demo-avatar",
       "legacyRouteId": "components/Skeleton/index",
       "options": {
@@ -2498,7 +2762,7 @@
     },
     {
       "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-title",
+      "legacyId": "src-skeleton-demo-custom",
       "legacyRouteId": "components/Skeleton/index",
       "options": {
         "inline": false,
@@ -2506,7 +2770,19 @@
         "layout": "default"
       },
       "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/Title.tsx"
+      "source": "src/Skeleton/demos/Custom.tsx"
+    },
+    {
+      "document": "src/Skeleton/index.mdx",
+      "legacyId": "src-skeleton-demo-demos",
+      "legacyRouteId": "components/Skeleton/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/skeleton",
+      "source": "src/Skeleton/demos/index.tsx"
     },
     {
       "document": "src/Skeleton/index.mdx",
@@ -2531,6 +2807,30 @@
       },
       "pathname": "/components/skeleton",
       "source": "src/Skeleton/demos/Tags.tsx"
+    },
+    {
+      "document": "src/Skeleton/index.mdx",
+      "legacyId": "src-skeleton-demo-title",
+      "legacyRouteId": "components/Skeleton/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/skeleton",
+      "source": "src/Skeleton/demos/Title.tsx"
+    },
+    {
+      "document": "src/Skeleton/index.mdx",
+      "legacyId": "src-skeleton-demo-withavatar",
+      "legacyRouteId": "components/Skeleton/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/skeleton",
+      "source": "src/Skeleton/demos/WithAvatar.tsx"
     },
     {
       "document": "src/SliderWithInput/index.mdx",
@@ -2582,18 +2882,6 @@
     },
     {
       "document": "src/Tag/index.mdx",
-      "legacyId": "tag-demo-demos",
-      "legacyRouteId": "components/Tag/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/tag",
-      "source": "src/Tag/demos/index.tsx"
-    },
-    {
-      "document": "src/Tag/index.mdx",
       "legacyId": "tag-demo-color",
       "legacyRouteId": "components/Tag/index",
       "options": {
@@ -2603,6 +2891,18 @@
       },
       "pathname": "/components/tag",
       "source": "src/Tag/demos/Color.tsx"
+    },
+    {
+      "document": "src/Tag/index.mdx",
+      "legacyId": "tag-demo-demos",
+      "legacyRouteId": "components/Tag/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/tag",
+      "source": "src/Tag/demos/index.tsx"
     },
     {
       "document": "src/Text/index.mdx",
@@ -2618,6 +2918,30 @@
     },
     {
       "document": "src/Text/index.mdx",
+      "legacyId": "src-text-demo-text",
+      "legacyRouteId": "components/Text/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/text",
+      "source": "src/Text/demos/text.tsx"
+    },
+    {
+      "document": "src/Text/index.mdx",
+      "legacyId": "src-text-demo-text-2",
+      "legacyRouteId": "components/Text/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/text",
+      "source": "src/Text/demos/text-2.tsx"
+    },
+    {
+      "document": "src/Text/index.mdx",
       "legacyId": "src-text-demo-tooltipwhenoverflow",
       "legacyRouteId": "components/Text/index",
       "options": {
@@ -2627,6 +2951,18 @@
       },
       "pathname": "/components/text",
       "source": "src/Text/demos/TooltipWhenOverflow.tsx"
+    },
+    {
+      "document": "src/ThemeProvider/index.mdx",
+      "legacyId": "src-theme-provider-demo-customfonts",
+      "legacyRouteId": "components/ThemeProvider/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/theme-provider",
+      "source": "src/ThemeProvider/demos/CustomFonts.tsx"
     },
     {
       "document": "src/ThemeProvider/index.mdx",
@@ -2642,15 +2978,15 @@
     },
     {
       "document": "src/ThemeProvider/index.mdx",
-      "legacyId": "src-theme-provider-demo-customfonts",
+      "legacyId": "src-theme-provider-demo-theme-provider",
       "legacyRouteId": "components/ThemeProvider/index",
       "options": {
         "inline": false,
         "isolated": false,
-        "layout": "center"
+        "layout": "default"
       },
       "pathname": "/components/theme-provider",
-      "source": "src/ThemeProvider/demos/CustomFonts.tsx"
+      "source": "src/ThemeProvider/demos/theme-provider.tsx"
     },
     {
       "document": "src/ThemeSwitch/index.mdx",
@@ -2810,19 +3146,7 @@
     },
     {
       "document": "src/awesome/TypewriterEffect/index.mdx",
-      "legacyId": "src-awesome-typewriter-effect-demo-demos",
-      "legacyRouteId": "components/awesome/TypewriterEffect/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/awesome/typewriter-effect",
-      "source": "src/awesome/TypewriterEffect/demos/index.tsx"
-    },
-    {
-      "document": "src/awesome/TypewriterEffect/index.mdx",
-      "legacyId": "src-awesome-typewriter-effect-demo-cursorstyles",
+      "legacyId": "src-awesome-typewriter-effect-demo-advanced",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
         "inline": false,
@@ -2830,11 +3154,11 @@
         "layout": "default"
       },
       "pathname": "/components/awesome/typewriter-effect",
-      "source": "src/awesome/TypewriterEffect/demos/cursorStyles.tsx"
+      "source": "src/awesome/TypewriterEffect/demos/advanced.tsx"
     },
     {
       "document": "src/awesome/TypewriterEffect/index.mdx",
-      "legacyId": "src-awesome-typewriter-effect-demo-cursorbehavior",
+      "legacyId": "src-awesome-typewriter-effect-demo-callback",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
         "inline": false,
@@ -2842,7 +3166,7 @@
         "layout": "default"
       },
       "pathname": "/components/awesome/typewriter-effect",
-      "source": "src/awesome/TypewriterEffect/demos/cursorBehavior.tsx"
+      "source": "src/awesome/TypewriterEffect/demos/callback.tsx"
     },
     {
       "document": "src/awesome/TypewriterEffect/index.mdx",
@@ -2858,7 +3182,7 @@
     },
     {
       "document": "src/awesome/TypewriterEffect/index.mdx",
-      "legacyId": "src-awesome-typewriter-effect-demo-emoji",
+      "legacyId": "src-awesome-typewriter-effect-demo-cursorbehavior",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
         "inline": false,
@@ -2866,11 +3190,11 @@
         "layout": "default"
       },
       "pathname": "/components/awesome/typewriter-effect",
-      "source": "src/awesome/TypewriterEffect/demos/emoji.tsx"
+      "source": "src/awesome/TypewriterEffect/demos/cursorBehavior.tsx"
     },
     {
       "document": "src/awesome/TypewriterEffect/index.mdx",
-      "legacyId": "src-awesome-typewriter-effect-demo-segmentmodes",
+      "legacyId": "src-awesome-typewriter-effect-demo-cursorstyles",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
         "inline": false,
@@ -2878,7 +3202,7 @@
         "layout": "default"
       },
       "pathname": "/components/awesome/typewriter-effect",
-      "source": "src/awesome/TypewriterEffect/demos/segmentModes.tsx"
+      "source": "src/awesome/TypewriterEffect/demos/cursorStyles.tsx"
     },
     {
       "document": "src/awesome/TypewriterEffect/index.mdx",
@@ -2894,6 +3218,30 @@
     },
     {
       "document": "src/awesome/TypewriterEffect/index.mdx",
+      "legacyId": "src-awesome-typewriter-effect-demo-demos",
+      "legacyRouteId": "components/awesome/TypewriterEffect/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/awesome/typewriter-effect",
+      "source": "src/awesome/TypewriterEffect/demos/index.tsx"
+    },
+    {
+      "document": "src/awesome/TypewriterEffect/index.mdx",
+      "legacyId": "src-awesome-typewriter-effect-demo-emoji",
+      "legacyRouteId": "components/awesome/TypewriterEffect/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/awesome/typewriter-effect",
+      "source": "src/awesome/TypewriterEffect/demos/emoji.tsx"
+    },
+    {
+      "document": "src/awesome/TypewriterEffect/index.mdx",
       "legacyId": "src-awesome-typewriter-effect-demo-initialdelay",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
@@ -2906,7 +3254,7 @@
     },
     {
       "document": "src/awesome/TypewriterEffect/index.mdx",
-      "legacyId": "src-awesome-typewriter-effect-demo-advanced",
+      "legacyId": "src-awesome-typewriter-effect-demo-segmentmodes",
       "legacyRouteId": "components/awesome/TypewriterEffect/index",
       "options": {
         "inline": false,
@@ -2914,7 +3262,7 @@
         "layout": "default"
       },
       "pathname": "/components/awesome/typewriter-effect",
-      "source": "src/awesome/TypewriterEffect/demos/advanced.tsx"
+      "source": "src/awesome/TypewriterEffect/demos/segmentModes.tsx"
     },
     {
       "document": "src/awesome/TypewriterEffect/index.mdx",
@@ -2927,18 +3275,6 @@
       },
       "pathname": "/components/awesome/typewriter-effect",
       "source": "src/awesome/TypewriterEffect/demos/variableSpeed.tsx"
-    },
-    {
-      "document": "src/awesome/TypewriterEffect/index.mdx",
-      "legacyId": "src-awesome-typewriter-effect-demo-callback",
-      "legacyRouteId": "components/awesome/TypewriterEffect/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/awesome/typewriter-effect",
-      "source": "src/awesome/TypewriterEffect/demos/callback.tsx"
     },
     {
       "document": "src/base-ui/Button/index.mdx",
@@ -2954,18 +3290,6 @@
     },
     {
       "document": "src/base-ui/Button/index.mdx",
-      "legacyId": "src-base-ui-button-demo-sizes",
-      "legacyRouteId": "components/base-ui/Button/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/button",
-      "source": "src/base-ui/Button/demos/sizes.tsx"
-    },
-    {
-      "document": "src/base-ui/Button/index.mdx",
       "legacyId": "src-base-ui-button-demo-icons",
       "legacyRouteId": "components/base-ui/Button/index",
       "options": {
@@ -2975,6 +3299,18 @@
       },
       "pathname": "/components/base-ui/button",
       "source": "src/base-ui/Button/demos/icons.tsx"
+    },
+    {
+      "document": "src/base-ui/Button/index.mdx",
+      "legacyId": "src-base-ui-button-demo-sizes",
+      "legacyRouteId": "components/base-ui/Button/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/button",
+      "source": "src/base-ui/Button/demos/sizes.tsx"
     },
     {
       "document": "src/base-ui/Button/index.mdx",
@@ -2990,30 +3326,6 @@
     },
     {
       "document": "src/base-ui/ContextMenu/index.mdx",
-      "legacyId": "src-base-ui-context-menu-demo-imperative",
-      "legacyRouteId": "components/base-ui/ContextMenu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/base-ui/context-menu",
-      "source": "src/ContextMenu/demos/imperative.tsx"
-    },
-    {
-      "document": "src/base-ui/ContextMenu/index.mdx",
-      "legacyId": "src-base-ui-context-menu-demo-trigger",
-      "legacyRouteId": "components/base-ui/ContextMenu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/base-ui/context-menu",
-      "source": "src/ContextMenu/demos/trigger.tsx"
-    },
-    {
-      "document": "src/base-ui/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-checkbox",
       "legacyRouteId": "components/base-ui/ContextMenu/index",
       "options": {
@@ -3026,18 +3338,6 @@
     },
     {
       "document": "src/base-ui/ContextMenu/index.mdx",
-      "legacyId": "src-base-ui-context-menu-demo-switch",
-      "legacyRouteId": "components/base-ui/ContextMenu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/base-ui/context-menu",
-      "source": "src/ContextMenu/demos/switch.tsx"
-    },
-    {
-      "document": "src/base-ui/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-desc",
       "legacyRouteId": "components/base-ui/ContextMenu/index",
       "options": {
@@ -3047,6 +3347,18 @@
       },
       "pathname": "/components/base-ui/context-menu",
       "source": "src/ContextMenu/demos/desc.tsx"
+    },
+    {
+      "document": "src/base-ui/ContextMenu/index.mdx",
+      "legacyId": "src-base-ui-context-menu-demo-emptysubmenu",
+      "legacyRouteId": "components/base-ui/ContextMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/base-ui/context-menu",
+      "source": "src/ContextMenu/demos/emptySubmenu.tsx"
     },
     {
       "document": "src/base-ui/ContextMenu/index.mdx",
@@ -3074,7 +3386,7 @@
     },
     {
       "document": "src/base-ui/ContextMenu/index.mdx",
-      "legacyId": "src-base-ui-context-menu-demo-emptysubmenu",
+      "legacyId": "src-base-ui-context-menu-demo-iconspacemode",
       "legacyRouteId": "components/base-ui/ContextMenu/index",
       "options": {
         "inline": false,
@@ -3082,7 +3394,43 @@
         "layout": "center"
       },
       "pathname": "/components/base-ui/context-menu",
-      "source": "src/ContextMenu/demos/emptySubmenu.tsx"
+      "source": "src/ContextMenu/demos/iconSpaceMode.tsx"
+    },
+    {
+      "document": "src/base-ui/ContextMenu/index.mdx",
+      "legacyId": "src-base-ui-context-menu-demo-imperative",
+      "legacyRouteId": "components/base-ui/ContextMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/base-ui/context-menu",
+      "source": "src/ContextMenu/demos/imperative.tsx"
+    },
+    {
+      "document": "src/base-ui/ContextMenu/index.mdx",
+      "legacyId": "src-base-ui-context-menu-demo-switch",
+      "legacyRouteId": "components/base-ui/ContextMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/base-ui/context-menu",
+      "source": "src/ContextMenu/demos/switch.tsx"
+    },
+    {
+      "document": "src/base-ui/ContextMenu/index.mdx",
+      "legacyId": "src-base-ui-context-menu-demo-trigger",
+      "legacyRouteId": "components/base-ui/ContextMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/base-ui/context-menu",
+      "source": "src/ContextMenu/demos/trigger.tsx"
     },
     {
       "document": "src/base-ui/ContextMenu/index.mdx",
@@ -3095,30 +3443,6 @@
       },
       "pathname": "/components/base-ui/context-menu",
       "source": "src/ContextMenu/demos/uploader.tsx"
-    },
-    {
-      "document": "src/base-ui/ContextMenu/index.mdx",
-      "legacyId": "src-base-ui-context-menu-demo-iconspacemode",
-      "legacyRouteId": "components/base-ui/ContextMenu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/base-ui/context-menu",
-      "source": "src/ContextMenu/demos/iconSpaceMode.tsx"
-    },
-    {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
-      "legacyId": "src-base-ui-dropdown-menu-demo-demos",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/base-ui/dropdown-menu",
-      "source": "src/DropdownMenu/demos/index.tsx"
     },
     {
       "document": "src/base-ui/DropdownMenu/index.mdx",
@@ -3134,7 +3458,7 @@
     },
     {
       "document": "src/base-ui/DropdownMenu/index.mdx",
-      "legacyId": "src-base-ui-dropdown-menu-demo-submenu",
+      "legacyId": "src-base-ui-dropdown-menu-demo-checkbox",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
         "inline": false,
@@ -3142,11 +3466,11 @@
         "layout": "center"
       },
       "pathname": "/components/base-ui/dropdown-menu",
-      "source": "src/DropdownMenu/demos/submenu.tsx"
+      "source": "src/DropdownMenu/demos/checkbox.tsx"
     },
     {
       "document": "src/base-ui/DropdownMenu/index.mdx",
-      "legacyId": "src-base-ui-dropdown-menu-demo-plus-action-submenu",
+      "legacyId": "src-base-ui-dropdown-menu-demo-custom-trigger",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
         "inline": false,
@@ -3154,7 +3478,43 @@
         "layout": "center"
       },
       "pathname": "/components/base-ui/dropdown-menu",
-      "source": "src/DropdownMenu/demos/plus-action-submenu.tsx"
+      "source": "src/DropdownMenu/demos/custom-trigger.tsx"
+    },
+    {
+      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "legacyId": "src-base-ui-dropdown-menu-demo-danger",
+      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/base-ui/dropdown-menu",
+      "source": "src/DropdownMenu/demos/danger.tsx"
+    },
+    {
+      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "legacyId": "src-base-ui-dropdown-menu-demo-demos",
+      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/base-ui/dropdown-menu",
+      "source": "src/DropdownMenu/demos/index.tsx"
+    },
+    {
+      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "legacyId": "src-base-ui-dropdown-menu-demo-desc",
+      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/base-ui/dropdown-menu",
+      "source": "src/DropdownMenu/demos/desc.tsx"
     },
     {
       "document": "src/base-ui/DropdownMenu/index.mdx",
@@ -3194,7 +3554,7 @@
     },
     {
       "document": "src/base-ui/DropdownMenu/index.mdx",
-      "legacyId": "src-base-ui-dropdown-menu-demo-iconspacemode",
+      "legacyId": "src-base-ui-dropdown-menu-demo-hover",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
         "inline": false,
@@ -3202,19 +3562,7 @@
         "layout": "center"
       },
       "pathname": "/components/base-ui/dropdown-menu",
-      "source": "src/DropdownMenu/demos/iconSpaceMode.tsx"
-    },
-    {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
-      "legacyId": "src-base-ui-dropdown-menu-demo-desc",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/base-ui/dropdown-menu",
-      "source": "src/DropdownMenu/demos/desc.tsx"
+      "source": "src/DropdownMenu/demos/hover.tsx"
     },
     {
       "document": "src/base-ui/DropdownMenu/index.mdx",
@@ -3230,7 +3578,7 @@
     },
     {
       "document": "src/base-ui/DropdownMenu/index.mdx",
-      "legacyId": "src-base-ui-dropdown-menu-demo-danger",
+      "legacyId": "src-base-ui-dropdown-menu-demo-iconspacemode",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
         "inline": false,
@@ -3238,11 +3586,11 @@
         "layout": "center"
       },
       "pathname": "/components/base-ui/dropdown-menu",
-      "source": "src/DropdownMenu/demos/danger.tsx"
+      "source": "src/DropdownMenu/demos/iconSpaceMode.tsx"
     },
     {
       "document": "src/base-ui/DropdownMenu/index.mdx",
-      "legacyId": "src-base-ui-dropdown-menu-demo-hover",
+      "legacyId": "src-base-ui-dropdown-menu-demo-lazy",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
         "inline": false,
@@ -3250,11 +3598,11 @@
         "layout": "center"
       },
       "pathname": "/components/base-ui/dropdown-menu",
-      "source": "src/DropdownMenu/demos/hover.tsx"
+      "source": "src/DropdownMenu/demos/lazy.tsx"
     },
     {
       "document": "src/base-ui/DropdownMenu/index.mdx",
-      "legacyId": "src-base-ui-dropdown-menu-demo-checkbox",
+      "legacyId": "src-base-ui-dropdown-menu-demo-link-label",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
         "inline": false,
@@ -3262,7 +3610,31 @@
         "layout": "center"
       },
       "pathname": "/components/base-ui/dropdown-menu",
-      "source": "src/DropdownMenu/demos/checkbox.tsx"
+      "source": "src/DropdownMenu/demos/link-label.tsx"
+    },
+    {
+      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "legacyId": "src-base-ui-dropdown-menu-demo-plus-action-submenu",
+      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/base-ui/dropdown-menu",
+      "source": "src/DropdownMenu/demos/plus-action-submenu.tsx"
+    },
+    {
+      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "legacyId": "src-base-ui-dropdown-menu-demo-submenu",
+      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/base-ui/dropdown-menu",
+      "source": "src/DropdownMenu/demos/submenu.tsx"
     },
     {
       "document": "src/base-ui/DropdownMenu/index.mdx",
@@ -3290,7 +3662,7 @@
     },
     {
       "document": "src/base-ui/DropdownMenu/index.mdx",
-      "legacyId": "src-base-ui-dropdown-menu-demo-lazy",
+      "legacyId": "src-base-ui-dropdown-menu-demo-tooltip-hover-stay",
       "legacyRouteId": "components/base-ui/DropdownMenu/index",
       "options": {
         "inline": false,
@@ -3298,31 +3670,7 @@
         "layout": "center"
       },
       "pathname": "/components/base-ui/dropdown-menu",
-      "source": "src/DropdownMenu/demos/lazy.tsx"
-    },
-    {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
-      "legacyId": "src-base-ui-dropdown-menu-demo-custom-trigger",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/base-ui/dropdown-menu",
-      "source": "src/DropdownMenu/demos/custom-trigger.tsx"
-    },
-    {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
-      "legacyId": "src-base-ui-dropdown-menu-demo-link-label",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/base-ui/dropdown-menu",
-      "source": "src/DropdownMenu/demos/link-label.tsx"
+      "source": "src/DropdownMenu/demos/tooltip-hover-stay.tsx"
     },
     {
       "document": "src/base-ui/DropdownMenu/index.mdx",
@@ -3337,18 +3685,6 @@
       "source": "src/DropdownMenu/demos/uploader.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
-      "legacyId": "src-base-ui-dropdown-menu-demo-tooltip-hover-stay",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/base-ui/dropdown-menu",
-      "source": "src/DropdownMenu/demos/tooltip-hover-stay.tsx"
-    },
-    {
       "document": "src/base-ui/FloatingPanel/index.mdx",
       "legacyId": "src-base-ui-floating-panel-demo-demos",
       "legacyRouteId": "components/base-ui/FloatingPanel/index",
@@ -3359,18 +3695,6 @@
       },
       "pathname": "/components/base-ui/floating-panel",
       "source": "src/base-ui/FloatingPanel/demos/index.tsx"
-    },
-    {
-      "document": "src/base-ui/FloatingSheet/index.mdx",
-      "legacyId": "src-base-ui-floating-sheet-demo-playground",
-      "legacyRouteId": "components/base-ui/FloatingSheet/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/floating-sheet",
-      "source": "src/base-ui/FloatingSheet/demos/playground.tsx"
     },
     {
       "document": "src/base-ui/FloatingSheet/index.mdx",
@@ -3397,8 +3721,20 @@
       "source": "src/base-ui/FloatingSheet/demos/inline.tsx"
     },
     {
+      "document": "src/base-ui/FloatingSheet/index.mdx",
+      "legacyId": "src-base-ui-floating-sheet-demo-playground",
+      "legacyRouteId": "components/base-ui/FloatingSheet/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/floating-sheet",
+      "source": "src/base-ui/FloatingSheet/demos/playground.tsx"
+    },
+    {
       "document": "src/base-ui/Modal/index.mdx",
-      "legacyId": "src-base-ui-modal-demo-demos",
+      "legacyId": "src-base-ui-modal-demo-atoms",
       "legacyRouteId": "components/base-ui/Modal/index",
       "options": {
         "inline": false,
@@ -3406,7 +3742,7 @@
         "layout": "bare"
       },
       "pathname": "/components/base-ui/modal",
-      "source": "src/base-ui/Modal/demos/index.tsx"
+      "source": "src/base-ui/Modal/demos/atoms.tsx"
     },
     {
       "document": "src/base-ui/Modal/index.mdx",
@@ -3419,6 +3755,18 @@
       },
       "pathname": "/components/base-ui/modal",
       "source": "src/base-ui/Modal/demos/business.tsx"
+    },
+    {
+      "document": "src/base-ui/Modal/index.mdx",
+      "legacyId": "src-base-ui-modal-demo-demos",
+      "legacyRouteId": "components/base-ui/Modal/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/modal",
+      "source": "src/base-ui/Modal/demos/index.tsx"
     },
     {
       "document": "src/base-ui/Modal/index.mdx",
@@ -3446,18 +3794,6 @@
     },
     {
       "document": "src/base-ui/Modal/index.mdx",
-      "legacyId": "src-base-ui-modal-demo-zindex-with-dropdown",
-      "legacyRouteId": "components/base-ui/Modal/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/modal",
-      "source": "src/base-ui/Modal/demos/zindex-with-dropdown.tsx"
-    },
-    {
-      "document": "src/base-ui/Modal/index.mdx",
       "legacyId": "src-base-ui-modal-demo-zindex-dropdown-in-modal",
       "legacyRouteId": "components/base-ui/Modal/index",
       "options": {
@@ -3470,7 +3806,7 @@
     },
     {
       "document": "src/base-ui/Modal/index.mdx",
-      "legacyId": "src-base-ui-modal-demo-atoms",
+      "legacyId": "src-base-ui-modal-demo-zindex-with-dropdown",
       "legacyRouteId": "components/base-ui/Modal/index",
       "options": {
         "inline": false,
@@ -3478,19 +3814,7 @@
         "layout": "bare"
       },
       "pathname": "/components/base-ui/modal",
-      "source": "src/base-ui/Modal/demos/atoms.tsx"
-    },
-    {
-      "document": "src/base-ui/Popover/index.mdx",
-      "legacyId": "src-base-ui-popover-demo-demos",
-      "legacyRouteId": "components/base-ui/Popover/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/index.tsx"
+      "source": "src/base-ui/Modal/demos/zindex-with-dropdown.tsx"
     },
     {
       "document": "src/base-ui/Popover/index.mdx",
@@ -3506,7 +3830,7 @@
     },
     {
       "document": "src/base-ui/Popover/index.mdx",
-      "legacyId": "src-base-ui-popover-demo-group",
+      "legacyId": "src-base-ui-popover-demo-context",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
         "inline": false,
@@ -3514,55 +3838,7 @@
         "layout": "bare"
       },
       "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/group.tsx"
-    },
-    {
-      "document": "src/base-ui/Popover/index.mdx",
-      "legacyId": "src-base-ui-popover-demo-trigger",
-      "legacyRouteId": "components/base-ui/Popover/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/trigger.tsx"
-    },
-    {
-      "document": "src/base-ui/Popover/index.mdx",
-      "legacyId": "src-base-ui-popover-demo-placement",
-      "legacyRouteId": "components/base-ui/Popover/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/placement.tsx"
-    },
-    {
-      "document": "src/base-ui/Popover/index.mdx",
-      "legacyId": "src-base-ui-popover-demo-dropdown-menu",
-      "legacyRouteId": "components/base-ui/Popover/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/dropdown-menu.tsx"
-    },
-    {
-      "document": "src/base-ui/Popover/index.mdx",
-      "legacyId": "src-base-ui-popover-demo-hover-only",
-      "legacyRouteId": "components/base-ui/Popover/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/hover-only.tsx"
+      "source": "src/base-ui/Popover/demos/context.tsx"
     },
     {
       "document": "src/base-ui/Popover/index.mdx",
@@ -3578,7 +3854,7 @@
     },
     {
       "document": "src/base-ui/Popover/index.mdx",
-      "legacyId": "src-base-ui-popover-demo-context",
+      "legacyId": "src-base-ui-popover-demo-demos",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
         "inline": false,
@@ -3586,11 +3862,11 @@
         "layout": "bare"
       },
       "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/context.tsx"
+      "source": "src/base-ui/Popover/demos/index.tsx"
     },
     {
       "document": "src/base-ui/Popover/index.mdx",
-      "legacyId": "src-base-ui-popover-demo-tooltip-inside",
+      "legacyId": "src-base-ui-popover-demo-dropdown-menu",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
         "inline": false,
@@ -3598,11 +3874,11 @@
         "layout": "bare"
       },
       "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/tooltip-inside.tsx"
+      "source": "src/base-ui/Popover/demos/dropdown-menu.tsx"
     },
     {
       "document": "src/base-ui/Popover/index.mdx",
-      "legacyId": "src-base-ui-popover-demo-tooltip-hover-stay",
+      "legacyId": "src-base-ui-popover-demo-group",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
         "inline": false,
@@ -3610,7 +3886,43 @@
         "layout": "bare"
       },
       "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/tooltip-hover-stay.tsx"
+      "source": "src/base-ui/Popover/demos/group.tsx"
+    },
+    {
+      "document": "src/base-ui/Popover/index.mdx",
+      "legacyId": "src-base-ui-popover-demo-hover-only",
+      "legacyRouteId": "components/base-ui/Popover/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/popover",
+      "source": "src/base-ui/Popover/demos/hover-only.tsx"
+    },
+    {
+      "document": "src/base-ui/Popover/index.mdx",
+      "legacyId": "src-base-ui-popover-demo-native-button",
+      "legacyRouteId": "components/base-ui/Popover/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/popover",
+      "source": "src/base-ui/Popover/demos/native-button.tsx"
+    },
+    {
+      "document": "src/base-ui/Popover/index.mdx",
+      "legacyId": "src-base-ui-popover-demo-placement",
+      "legacyRouteId": "components/base-ui/Popover/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/popover",
+      "source": "src/base-ui/Popover/demos/placement.tsx"
     },
     {
       "document": "src/base-ui/Popover/index.mdx",
@@ -3638,7 +3950,7 @@
     },
     {
       "document": "src/base-ui/Popover/index.mdx",
-      "legacyId": "src-base-ui-popover-demo-native-button",
+      "legacyId": "src-base-ui-popover-demo-tooltip-hover-stay",
       "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
         "inline": false,
@@ -3646,19 +3958,31 @@
         "layout": "bare"
       },
       "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/native-button.tsx"
+      "source": "src/base-ui/Popover/demos/tooltip-hover-stay.tsx"
     },
     {
-      "document": "src/base-ui/ScrollArea/index.mdx",
-      "legacyId": "src-base-ui-scroll-area-demo-demos",
-      "legacyRouteId": "components/base-ui/ScrollArea/index",
+      "document": "src/base-ui/Popover/index.mdx",
+      "legacyId": "src-base-ui-popover-demo-tooltip-inside",
+      "legacyRouteId": "components/base-ui/Popover/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/scroll-area",
-      "source": "src/ScrollArea/demos/index.tsx"
+      "pathname": "/components/base-ui/popover",
+      "source": "src/base-ui/Popover/demos/tooltip-inside.tsx"
+    },
+    {
+      "document": "src/base-ui/Popover/index.mdx",
+      "legacyId": "src-base-ui-popover-demo-trigger",
+      "legacyRouteId": "components/base-ui/Popover/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/popover",
+      "source": "src/base-ui/Popover/demos/trigger.tsx"
     },
     {
       "document": "src/base-ui/ScrollArea/index.mdx",
@@ -3674,18 +3998,6 @@
     },
     {
       "document": "src/base-ui/ScrollArea/index.mdx",
-      "legacyId": "src-base-ui-scroll-area-demo-horizontal",
-      "legacyRouteId": "components/base-ui/ScrollArea/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/scroll-area",
-      "source": "src/ScrollArea/demos/horizontal.tsx"
-    },
-    {
-      "document": "src/base-ui/ScrollArea/index.mdx",
       "legacyId": "src-base-ui-scroll-area-demo-both",
       "legacyRouteId": "components/base-ui/ScrollArea/index",
       "options": {
@@ -3695,6 +4007,30 @@
       },
       "pathname": "/components/base-ui/scroll-area",
       "source": "src/ScrollArea/demos/both.tsx"
+    },
+    {
+      "document": "src/base-ui/ScrollArea/index.mdx",
+      "legacyId": "src-base-ui-scroll-area-demo-content-fit-overflow",
+      "legacyRouteId": "components/base-ui/ScrollArea/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/scroll-area",
+      "source": "src/ScrollArea/demos/content-fit-overflow.tsx"
+    },
+    {
+      "document": "src/base-ui/ScrollArea/index.mdx",
+      "legacyId": "src-base-ui-scroll-area-demo-demos",
+      "legacyRouteId": "components/base-ui/ScrollArea/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/scroll-area",
+      "source": "src/ScrollArea/demos/index.tsx"
     },
     {
       "document": "src/base-ui/ScrollArea/index.mdx",
@@ -3710,7 +4046,7 @@
     },
     {
       "document": "src/base-ui/ScrollArea/index.mdx",
-      "legacyId": "src-base-ui-scroll-area-demo-content-fit-overflow",
+      "legacyId": "src-base-ui-scroll-area-demo-horizontal",
       "legacyRouteId": "components/base-ui/ScrollArea/index",
       "options": {
         "inline": false,
@@ -3718,19 +4054,7 @@
         "layout": "bare"
       },
       "pathname": "/components/base-ui/scroll-area",
-      "source": "src/ScrollArea/demos/content-fit-overflow.tsx"
-    },
-    {
-      "document": "src/base-ui/Segmented/index.mdx",
-      "legacyId": "src-base-ui-segmented-demo-demos",
-      "legacyRouteId": "components/base-ui/Segmented/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/segmented",
-      "source": "src/base-ui/Segmented/demos/index.tsx"
+      "source": "src/ScrollArea/demos/horizontal.tsx"
     },
     {
       "document": "src/base-ui/Segmented/index.mdx",
@@ -3745,16 +4069,16 @@
       "source": "src/base-ui/Segmented/demos/atoms.tsx"
     },
     {
-      "document": "src/base-ui/Select/index.mdx",
-      "legacyId": "src-base-ui-select-demo-demos",
-      "legacyRouteId": "components/base-ui/Select/index",
+      "document": "src/base-ui/Segmented/index.mdx",
+      "legacyId": "src-base-ui-segmented-demo-demos",
+      "legacyRouteId": "components/base-ui/Segmented/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/select",
-      "source": "src/base-ui/Select/demos/index.tsx"
+      "pathname": "/components/base-ui/segmented",
+      "source": "src/base-ui/Segmented/demos/index.tsx"
     },
     {
       "document": "src/base-ui/Select/index.mdx",
@@ -3770,7 +4094,7 @@
     },
     {
       "document": "src/base-ui/Select/index.mdx",
-      "legacyId": "src-base-ui-select-demo-render",
+      "legacyId": "src-base-ui-select-demo-clearvalue",
       "legacyRouteId": "components/base-ui/Select/index",
       "options": {
         "inline": false,
@@ -3778,7 +4102,31 @@
         "layout": "bare"
       },
       "pathname": "/components/base-ui/select",
-      "source": "src/base-ui/Select/demos/render.tsx"
+      "source": "src/base-ui/Select/demos/clearValue.tsx"
+    },
+    {
+      "document": "src/base-ui/Select/index.mdx",
+      "legacyId": "src-base-ui-select-demo-closedtags",
+      "legacyRouteId": "components/base-ui/Select/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/select",
+      "source": "src/base-ui/Select/demos/closedTags.tsx"
+    },
+    {
+      "document": "src/base-ui/Select/index.mdx",
+      "legacyId": "src-base-ui-select-demo-demos",
+      "legacyRouteId": "components/base-ui/Select/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/select",
+      "source": "src/base-ui/Select/demos/index.tsx"
     },
     {
       "document": "src/base-ui/Select/index.mdx",
@@ -3794,6 +4142,30 @@
     },
     {
       "document": "src/base-ui/Select/index.mdx",
+      "legacyId": "src-base-ui-select-demo-reactnodesearch",
+      "legacyRouteId": "components/base-ui/Select/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/select",
+      "source": "src/base-ui/Select/demos/reactNodeSearch.tsx"
+    },
+    {
+      "document": "src/base-ui/Select/index.mdx",
+      "legacyId": "src-base-ui-select-demo-render",
+      "legacyRouteId": "components/base-ui/Select/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/select",
+      "source": "src/base-ui/Select/demos/render.tsx"
+    },
+    {
+      "document": "src/base-ui/Select/index.mdx",
       "legacyId": "src-base-ui-select-demo-virtual",
       "legacyRouteId": "components/base-ui/Select/index",
       "options": {
@@ -3803,6 +4175,18 @@
       },
       "pathname": "/components/base-ui/select",
       "source": "src/base-ui/Select/demos/virtual.tsx"
+    },
+    {
+      "document": "src/base-ui/Switch/index.mdx",
+      "legacyId": "src-base-ui-switch-demo-atoms",
+      "legacyRouteId": "components/base-ui/Switch/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/switch",
+      "source": "src/base-ui/Switch/demos/atoms.tsx"
     },
     {
       "document": "src/base-ui/Switch/index.mdx",
@@ -3818,7 +4202,7 @@
     },
     {
       "document": "src/base-ui/Switch/index.mdx",
-      "legacyId": "src-base-ui-switch-demo-atoms",
+      "legacyId": "src-base-ui-switch-demo-nativebutton",
       "legacyRouteId": "components/base-ui/Switch/index",
       "options": {
         "inline": false,
@@ -3826,7 +4210,19 @@
         "layout": "bare"
       },
       "pathname": "/components/base-ui/switch",
-      "source": "src/base-ui/Switch/demos/atoms.tsx"
+      "source": "src/base-ui/Switch/demos/nativeButton.tsx"
+    },
+    {
+      "document": "src/base-ui/Tabs/index.mdx",
+      "legacyId": "src-base-ui-tabs-demo-atoms",
+      "legacyRouteId": "components/base-ui/Tabs/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/tabs",
+      "source": "src/base-ui/Tabs/demos/atoms.tsx"
     },
     {
       "document": "src/base-ui/Tabs/index.mdx",
@@ -3842,7 +4238,7 @@
     },
     {
       "document": "src/base-ui/Tabs/index.mdx",
-      "legacyId": "src-base-ui-tabs-demo-atoms",
+      "legacyId": "src-base-ui-tabs-demo-implicitdefault",
       "legacyRouteId": "components/base-ui/Tabs/index",
       "options": {
         "inline": false,
@@ -3850,19 +4246,7 @@
         "layout": "bare"
       },
       "pathname": "/components/base-ui/tabs",
-      "source": "src/base-ui/Tabs/demos/atoms.tsx"
-    },
-    {
-      "document": "src/base-ui/Toast/index.mdx",
-      "legacyId": "src-base-ui-toast-demo-demos",
-      "legacyRouteId": "components/base-ui/Toast/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/toast",
-      "source": "src/base-ui/Toast/demos/index.tsx"
+      "source": "src/base-ui/Tabs/demos/implicitDefault.tsx"
     },
     {
       "document": "src/base-ui/Toast/index.mdx",
@@ -3878,7 +4262,7 @@
     },
     {
       "document": "src/base-ui/Toast/index.mdx",
-      "legacyId": "src-base-ui-toast-demo-promise",
+      "legacyId": "src-base-ui-toast-demo-demos",
       "legacyRouteId": "components/base-ui/Toast/index",
       "options": {
         "inline": false,
@@ -3886,7 +4270,7 @@
         "layout": "bare"
       },
       "pathname": "/components/base-ui/toast",
-      "source": "src/base-ui/Toast/demos/promise.tsx"
+      "source": "src/base-ui/Toast/demos/index.tsx"
     },
     {
       "document": "src/base-ui/Toast/index.mdx",
@@ -3899,6 +4283,18 @@
       },
       "pathname": "/components/base-ui/toast",
       "source": "src/base-ui/Toast/demos/position.tsx"
+    },
+    {
+      "document": "src/base-ui/Toast/index.mdx",
+      "legacyId": "src-base-ui-toast-demo-promise",
+      "legacyRouteId": "components/base-ui/Toast/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/toast",
+      "source": "src/base-ui/Toast/demos/promise.tsx"
     },
     {
       "document": "src/base-ui/Tooltip/index.mdx",
@@ -3926,7 +4322,7 @@
     },
     {
       "document": "src/base-ui/Tooltip/index.mdx",
-      "legacyId": "tooltip-demo-group-shared",
+      "legacyId": "tooltip-demo-group-children-preserve",
       "legacyRouteId": "components/base-ui/Tooltip/index",
       "options": {
         "inline": false,
@@ -3934,7 +4330,7 @@
         "layout": "bare"
       },
       "pathname": "/components/base-ui/tooltip",
-      "source": "src/base-ui/Tooltip/demos/group-shared.tsx"
+      "source": "src/base-ui/Tooltip/demos/group-children-preserve.tsx"
     },
     {
       "document": "src/base-ui/Tooltip/index.mdx",
@@ -3950,7 +4346,7 @@
     },
     {
       "document": "src/base-ui/Tooltip/index.mdx",
-      "legacyId": "tooltip-demo-group-children-preserve",
+      "legacyId": "tooltip-demo-group-shared",
       "legacyRouteId": "components/base-ui/Tooltip/index",
       "options": {
         "inline": false,
@@ -3958,7 +4354,127 @@
         "layout": "bare"
       },
       "pathname": "/components/base-ui/tooltip",
-      "source": "src/base-ui/Tooltip/demos/group-children-preserve.tsx"
+      "source": "src/base-ui/Tooltip/demos/group-shared.tsx"
+    },
+    {
+      "document": "src/base-ui/Tooltip/index.mdx",
+      "legacyId": "tooltip-demo-tooltip",
+      "legacyRouteId": "components/base-ui/Tooltip/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/base-ui/tooltip",
+      "source": "src/base-ui/Tooltip/demos/tooltip.tsx"
+    },
+    {
+      "document": "src/brand/BrandLoading/index.mdx",
+      "legacyId": "brandloading-demo-lobe-chat",
+      "legacyRouteId": "components/brand/BrandLoading/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/brand/brand-loading",
+      "source": "src/brand/BrandLoading/demos/lobe-chat.tsx"
+    },
+    {
+      "document": "src/brand/BrandLoading/index.mdx",
+      "legacyId": "brandloading-demo-lobe-hub",
+      "legacyRouteId": "components/brand/BrandLoading/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/brand/brand-loading",
+      "source": "src/brand/BrandLoading/demos/lobe-hub.tsx"
+    },
+    {
+      "document": "src/brand/LobeChat/index.mdx",
+      "legacyId": "lobechat-demo-flexbox",
+      "legacyRouteId": "components/brand/LobeChat/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/brand/lobe-chat",
+      "source": "src/brand/LobeChat/demos/flexbox.tsx"
+    },
+    {
+      "document": "src/brand/LobeChatText/index.mdx",
+      "legacyId": "lobechattext-demo-lobe-chat-text",
+      "legacyRouteId": "components/brand/LobeChatText/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/brand/lobe-chat-text",
+      "source": "src/brand/LobeChatText/demos/lobe-chat-text.tsx"
+    },
+    {
+      "document": "src/brand/LobeHub/index.mdx",
+      "legacyId": "lobehub-demo-flexbox",
+      "legacyRouteId": "components/brand/LobeHub/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/brand/lobe-hub",
+      "source": "src/brand/LobeHub/demos/flexbox.tsx"
+    },
+    {
+      "document": "src/brand/LobeHubText/index.mdx",
+      "legacyId": "lobehubtext-demo-lobe-hub-text",
+      "legacyRouteId": "components/brand/LobeHubText/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/brand/lobe-hub-text",
+      "source": "src/brand/LobeHubText/demos/lobe-hub-text.tsx"
+    },
+    {
+      "document": "src/brand/Logo3d/index.mdx",
+      "legacyId": "logo3d-demo-logo3d",
+      "legacyRouteId": "components/brand/Logo3d/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/brand/logo3d",
+      "source": "src/brand/Logo3d/demos/logo3d.tsx"
+    },
+    {
+      "document": "src/brand/LogoFlat/index.mdx",
+      "legacyId": "logoflat-demo-logo-flat",
+      "legacyRouteId": "components/brand/LogoFlat/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/brand/logo-flat",
+      "source": "src/brand/LogoFlat/demos/logo-flat.tsx"
+    },
+    {
+      "document": "src/brand/LogoMono/index.mdx",
+      "legacyId": "logomono-demo-logo-mono",
+      "legacyRouteId": "components/brand/LogoMono/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/brand/logo-mono",
+      "source": "src/brand/LogoMono/demos/logo-mono.tsx"
     },
     {
       "document": "src/brand/LogoThree/index.mdx",
@@ -4022,54 +4538,6 @@
     },
     {
       "document": "src/chat/ChatItem/index.mdx",
-      "legacyId": "src-chat-chat-item-demo-demos",
-      "legacyRouteId": "components/chat/ChatItem/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/chat/chat-item",
-      "source": "src/chat/ChatItem/demos/index.tsx"
-    },
-    {
-      "document": "src/chat/ChatItem/index.mdx",
-      "legacyId": "src-chat-chat-item-demo-table",
-      "legacyRouteId": "components/chat/ChatItem/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/chat/chat-item",
-      "source": "src/chat/ChatItem/demos/table.tsx"
-    },
-    {
-      "document": "src/chat/ChatItem/index.mdx",
-      "legacyId": "src-chat-chat-item-demo-code",
-      "legacyRouteId": "components/chat/ChatItem/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/chat/chat-item",
-      "source": "src/chat/ChatItem/demos/code.tsx"
-    },
-    {
-      "document": "src/chat/ChatItem/index.mdx",
-      "legacyId": "src-chat-chat-item-demo-editing",
-      "legacyRouteId": "components/chat/ChatItem/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/chat/chat-item",
-      "source": "src/chat/ChatItem/demos/Editing.tsx"
-    },
-    {
-      "document": "src/chat/ChatItem/index.mdx",
       "legacyId": "src-chat-chat-item-demo-alert",
       "legacyRouteId": "components/chat/ChatItem/index",
       "options": {
@@ -4079,6 +4547,18 @@
       },
       "pathname": "/components/chat/chat-item",
       "source": "src/chat/ChatItem/demos/Alert.tsx"
+    },
+    {
+      "document": "src/chat/ChatItem/index.mdx",
+      "legacyId": "src-chat-chat-item-demo-alertwithcontent",
+      "legacyRouteId": "components/chat/ChatItem/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/chat/chat-item",
+      "source": "src/chat/ChatItem/demos/AlertWithContent.tsx"
     },
     {
       "document": "src/chat/ChatItem/index.mdx",
@@ -4094,7 +4574,7 @@
     },
     {
       "document": "src/chat/ChatItem/index.mdx",
-      "legacyId": "src-chat-chat-item-demo-alertwithcontent",
+      "legacyId": "src-chat-chat-item-demo-code",
       "legacyRouteId": "components/chat/ChatItem/index",
       "options": {
         "inline": false,
@@ -4102,7 +4582,43 @@
         "layout": "bare"
       },
       "pathname": "/components/chat/chat-item",
-      "source": "src/chat/ChatItem/demos/AlertWithContent.tsx"
+      "source": "src/chat/ChatItem/demos/code.tsx"
+    },
+    {
+      "document": "src/chat/ChatItem/index.mdx",
+      "legacyId": "src-chat-chat-item-demo-demos",
+      "legacyRouteId": "components/chat/ChatItem/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/chat/chat-item",
+      "source": "src/chat/ChatItem/demos/index.tsx"
+    },
+    {
+      "document": "src/chat/ChatItem/index.mdx",
+      "legacyId": "src-chat-chat-item-demo-editing",
+      "legacyRouteId": "components/chat/ChatItem/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/chat/chat-item",
+      "source": "src/chat/ChatItem/demos/Editing.tsx"
+    },
+    {
+      "document": "src/chat/ChatItem/index.mdx",
+      "legacyId": "src-chat-chat-item-demo-table",
+      "legacyRouteId": "components/chat/ChatItem/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/chat/chat-item",
+      "source": "src/chat/ChatItem/demos/table.tsx"
     },
     {
       "document": "src/chat/ChatList/index.mdx",
@@ -4201,16 +4717,460 @@
       "source": "src/chat/TokenTag/demos/index.tsx"
     },
     {
-      "document": "src/i18n/index.mdx",
-      "legacyId": "src-i-18-n-demo-demos",
-      "legacyRouteId": "components/i18n/index",
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-blue",
+      "legacyRouteId": "components/color/ColorScales/index",
       "options": {
         "inline": false,
         "isolated": false,
-        "layout": "bare"
+        "layout": "default"
       },
-      "pathname": "/components/i18n",
-      "source": "src/i18n/demos/index.tsx"
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/blue.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-cyan",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/cyan.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-geekblue",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/geekblue.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-gold",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/gold.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-gray",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/gray.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-green",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/green.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-lime",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/lime.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-magenta",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/magenta.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-mauve",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/mauve.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-olive",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/olive.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-orange",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/orange.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-primary",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/primary.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-purple",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/purple.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-red",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/red.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-sage",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/sage.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-sand",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/sand.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-slate",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/slate.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-volcano",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/volcano.tsx"
+    },
+    {
+      "document": "src/color/ColorScales/index.mdx",
+      "legacyId": "colorscales-demo-yellow",
+      "legacyRouteId": "components/color/ColorScales/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/color-scales",
+      "source": "src/color/ColorScales/demos/yellow.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-blue",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/blue.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-cyan",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/cyan.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-geekblue",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/geekblue.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-gold",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/gold.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-gray",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/gray.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-green",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/green.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-lime",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/lime.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-magenta",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/magenta.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-mauve",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/mauve.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-olive",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/olive.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-orange",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/orange.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-primary",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/primary.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-purple",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/purple.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-red",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/red.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-sage",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/sage.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-sand",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/sand.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-slate",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/slate.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-volcano",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/volcano.tsx"
+    },
+    {
+      "document": "src/color/CssVar/index.mdx",
+      "legacyId": "cssvar-demo-yellow",
+      "legacyRouteId": "components/color/CssVar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/color/css-var",
+      "source": "src/color/CssVar/demos/yellow.tsx"
     },
     {
       "document": "src/i18n/index.mdx",
@@ -4226,6 +5186,18 @@
     },
     {
       "document": "src/i18n/index.mdx",
+      "legacyId": "src-i-18-n-demo-demos",
+      "legacyRouteId": "components/i18n/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/i18n",
+      "source": "src/i18n/demos/index.tsx"
+    },
+    {
+      "document": "src/i18n/index.mdx",
       "legacyId": "src-i-18-n-demo-dynamicimport",
       "legacyRouteId": "components/i18n/index",
       "options": {
@@ -4235,6 +5207,798 @@
       },
       "pathname": "/components/i18n",
       "source": "src/i18n/demos/DynamicImport.tsx"
+    },
+    {
+      "document": "src/icons/Auth0/index.mdx",
+      "legacyId": "src-icons-auth-0-demo-avatars",
+      "legacyRouteId": "components/icons/Auth0/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/auth0",
+      "source": "src/icons/Auth0/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/Auth0/index.mdx",
+      "legacyId": "src-icons-auth-0-demo-icons",
+      "legacyRouteId": "components/icons/Auth0/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/auth0",
+      "source": "src/icons/Auth0/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/Authelia/index.mdx",
+      "legacyId": "src-icons-authelia-demo-avatars",
+      "legacyRouteId": "components/icons/Authelia/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/authelia",
+      "source": "src/icons/Authelia/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/Authelia/index.mdx",
+      "legacyId": "src-icons-authelia-demo-color",
+      "legacyRouteId": "components/icons/Authelia/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/authelia",
+      "source": "src/icons/Authelia/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/Authelia/index.mdx",
+      "legacyId": "src-icons-authelia-demo-icons",
+      "legacyRouteId": "components/icons/Authelia/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/authelia",
+      "source": "src/icons/Authelia/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/Authentik/index.mdx",
+      "legacyId": "src-icons-authentik-demo-avatars",
+      "legacyRouteId": "components/icons/Authentik/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/authentik",
+      "source": "src/icons/Authentik/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/Authentik/index.mdx",
+      "legacyId": "src-icons-authentik-demo-color",
+      "legacyRouteId": "components/icons/Authentik/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/authentik",
+      "source": "src/icons/Authentik/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/Authentik/index.mdx",
+      "legacyId": "src-icons-authentik-demo-icons",
+      "legacyRouteId": "components/icons/Authentik/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/authentik",
+      "source": "src/icons/Authentik/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/Casdoor/index.mdx",
+      "legacyId": "src-icons-casdoor-demo-avatars",
+      "legacyRouteId": "components/icons/Casdoor/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/casdoor",
+      "source": "src/icons/Casdoor/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/Casdoor/index.mdx",
+      "legacyId": "src-icons-casdoor-demo-color",
+      "legacyRouteId": "components/icons/Casdoor/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/casdoor",
+      "source": "src/icons/Casdoor/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/Casdoor/index.mdx",
+      "legacyId": "src-icons-casdoor-demo-icons",
+      "legacyRouteId": "components/icons/Casdoor/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/casdoor",
+      "source": "src/icons/Casdoor/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/Clerk/index.mdx",
+      "legacyId": "src-icons-clerk-demo-avatars",
+      "legacyRouteId": "components/icons/Clerk/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/clerk",
+      "source": "src/icons/Clerk/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/Clerk/index.mdx",
+      "legacyId": "src-icons-clerk-demo-color",
+      "legacyRouteId": "components/icons/Clerk/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/clerk",
+      "source": "src/icons/Clerk/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/Clerk/index.mdx",
+      "legacyId": "src-icons-clerk-demo-icons",
+      "legacyRouteId": "components/icons/Clerk/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/clerk",
+      "source": "src/icons/Clerk/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/Cloudflare/index.mdx",
+      "legacyId": "src-icons-cloudflare-demo-avatars",
+      "legacyRouteId": "components/icons/Cloudflare/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/cloudflare",
+      "source": "src/icons/Cloudflare/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/Cloudflare/index.mdx",
+      "legacyId": "src-icons-cloudflare-demo-icons",
+      "legacyRouteId": "components/icons/Cloudflare/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/cloudflare",
+      "source": "src/icons/Cloudflare/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/DingTalk/index.mdx",
+      "legacyId": "src-icons-ding-talk-demo-avatars",
+      "legacyRouteId": "components/icons/DingTalk/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/ding-talk",
+      "source": "src/icons/DingTalk/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/DingTalk/index.mdx",
+      "legacyId": "src-icons-ding-talk-demo-color",
+      "legacyRouteId": "components/icons/DingTalk/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/ding-talk",
+      "source": "src/icons/DingTalk/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/DingTalk/index.mdx",
+      "legacyId": "src-icons-ding-talk-demo-icons",
+      "legacyRouteId": "components/icons/DingTalk/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/ding-talk",
+      "source": "src/icons/DingTalk/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/Discord/index.mdx",
+      "legacyId": "src-icons-discord-demo-avatars",
+      "legacyRouteId": "components/icons/Discord/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/discord",
+      "source": "src/icons/Discord/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/Discord/index.mdx",
+      "legacyId": "src-icons-discord-demo-color",
+      "legacyRouteId": "components/icons/Discord/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/discord",
+      "source": "src/icons/Discord/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/Discord/index.mdx",
+      "legacyId": "src-icons-discord-demo-icons",
+      "legacyRouteId": "components/icons/Discord/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/discord",
+      "source": "src/icons/Discord/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/Github/index.mdx",
+      "legacyId": "src-icons-github-demo-avatars",
+      "legacyRouteId": "components/icons/Github/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/github",
+      "source": "src/icons/Github/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/Github/index.mdx",
+      "legacyId": "src-icons-github-demo-icons",
+      "legacyRouteId": "components/icons/Github/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/github",
+      "source": "src/icons/Github/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/GoogleChat/index.mdx",
+      "legacyId": "src-icons-google-chat-demo-avatars",
+      "legacyRouteId": "components/icons/GoogleChat/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/google-chat",
+      "source": "src/icons/GoogleChat/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/GoogleChat/index.mdx",
+      "legacyId": "src-icons-google-chat-demo-color",
+      "legacyRouteId": "components/icons/GoogleChat/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/google-chat",
+      "source": "src/icons/GoogleChat/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/GoogleChat/index.mdx",
+      "legacyId": "src-icons-google-chat-demo-icons",
+      "legacyRouteId": "components/icons/GoogleChat/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/google-chat",
+      "source": "src/icons/GoogleChat/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/IMessage/index.mdx",
+      "legacyId": "src-icons-i-message-demo-avatars",
+      "legacyRouteId": "components/icons/IMessage/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/i-message",
+      "source": "src/icons/IMessage/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/IMessage/index.mdx",
+      "legacyId": "src-icons-i-message-demo-color",
+      "legacyRouteId": "components/icons/IMessage/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/i-message",
+      "source": "src/icons/IMessage/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/IMessage/index.mdx",
+      "legacyId": "src-icons-i-message-demo-icons",
+      "legacyRouteId": "components/icons/IMessage/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/i-message",
+      "source": "src/icons/IMessage/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/Lark/index.mdx",
+      "legacyId": "src-icons-lark-demo-avatars",
+      "legacyRouteId": "components/icons/Lark/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/lark",
+      "source": "src/icons/Lark/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/Lark/index.mdx",
+      "legacyId": "src-icons-lark-demo-color",
+      "legacyRouteId": "components/icons/Lark/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/lark",
+      "source": "src/icons/Lark/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/Lark/index.mdx",
+      "legacyId": "src-icons-lark-demo-icons",
+      "legacyRouteId": "components/icons/Lark/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/lark",
+      "source": "src/icons/Lark/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/Line/index.mdx",
+      "legacyId": "src-icons-line-demo-avatars",
+      "legacyRouteId": "components/icons/Line/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/line",
+      "source": "src/icons/Line/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/Line/index.mdx",
+      "legacyId": "src-icons-line-demo-color",
+      "legacyRouteId": "components/icons/Line/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/line",
+      "source": "src/icons/Line/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/Line/index.mdx",
+      "legacyId": "src-icons-line-demo-icons",
+      "legacyRouteId": "components/icons/Line/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/line",
+      "source": "src/icons/Line/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/Logto/index.mdx",
+      "legacyId": "src-icons-logto-demo-avatars",
+      "legacyRouteId": "components/icons/Logto/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/logto",
+      "source": "src/icons/Logto/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/Logto/index.mdx",
+      "legacyId": "src-icons-logto-demo-color",
+      "legacyRouteId": "components/icons/Logto/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/logto",
+      "source": "src/icons/Logto/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/Logto/index.mdx",
+      "legacyId": "src-icons-logto-demo-icons",
+      "legacyRouteId": "components/icons/Logto/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/logto",
+      "source": "src/icons/Logto/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/MicrosoftEntra/index.mdx",
+      "legacyId": "src-icons-microsoft-entra-demo-avatars",
+      "legacyRouteId": "components/icons/MicrosoftEntra/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/microsoft-entra",
+      "source": "src/icons/MicrosoftEntra/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/MicrosoftEntra/index.mdx",
+      "legacyId": "src-icons-microsoft-entra-demo-color",
+      "legacyRouteId": "components/icons/MicrosoftEntra/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/microsoft-entra",
+      "source": "src/icons/MicrosoftEntra/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/MicrosoftEntra/index.mdx",
+      "legacyId": "src-icons-microsoft-entra-demo-icons",
+      "legacyRouteId": "components/icons/MicrosoftEntra/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/microsoft-entra",
+      "source": "src/icons/MicrosoftEntra/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/MicrosoftTeams/index.mdx",
+      "legacyId": "src-icons-microsoft-teams-demo-avatars",
+      "legacyRouteId": "components/icons/MicrosoftTeams/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/microsoft-teams",
+      "source": "src/icons/MicrosoftTeams/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/MicrosoftTeams/index.mdx",
+      "legacyId": "src-icons-microsoft-teams-demo-color",
+      "legacyRouteId": "components/icons/MicrosoftTeams/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/microsoft-teams",
+      "source": "src/icons/MicrosoftTeams/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/MicrosoftTeams/index.mdx",
+      "legacyId": "src-icons-microsoft-teams-demo-icons",
+      "legacyRouteId": "components/icons/MicrosoftTeams/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/microsoft-teams",
+      "source": "src/icons/MicrosoftTeams/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/NextAuth/index.mdx",
+      "legacyId": "src-icons-next-auth-demo-avatars",
+      "legacyRouteId": "components/icons/NextAuth/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/next-auth",
+      "source": "src/icons/NextAuth/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/NextAuth/index.mdx",
+      "legacyId": "src-icons-next-auth-demo-color",
+      "legacyRouteId": "components/icons/NextAuth/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/next-auth",
+      "source": "src/icons/NextAuth/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/NextAuth/index.mdx",
+      "legacyId": "src-icons-next-auth-demo-icons",
+      "legacyRouteId": "components/icons/NextAuth/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/next-auth",
+      "source": "src/icons/NextAuth/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/QQ/index.mdx",
+      "legacyId": "src-icons-qq-demo-avatars",
+      "legacyRouteId": "components/icons/QQ/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/qq",
+      "source": "src/icons/QQ/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/QQ/index.mdx",
+      "legacyId": "src-icons-qq-demo-color",
+      "legacyRouteId": "components/icons/QQ/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/qq",
+      "source": "src/icons/QQ/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/QQ/index.mdx",
+      "legacyId": "src-icons-qq-demo-icons",
+      "legacyRouteId": "components/icons/QQ/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/qq",
+      "source": "src/icons/QQ/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/Slack/index.mdx",
+      "legacyId": "src-icons-slack-demo-avatars",
+      "legacyRouteId": "components/icons/Slack/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/slack",
+      "source": "src/icons/Slack/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/Slack/index.mdx",
+      "legacyId": "src-icons-slack-demo-color",
+      "legacyRouteId": "components/icons/Slack/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/slack",
+      "source": "src/icons/Slack/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/Slack/index.mdx",
+      "legacyId": "src-icons-slack-demo-icons",
+      "legacyRouteId": "components/icons/Slack/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/slack",
+      "source": "src/icons/Slack/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/Telegram/index.mdx",
+      "legacyId": "src-icons-telegram-demo-avatars",
+      "legacyRouteId": "components/icons/Telegram/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/telegram",
+      "source": "src/icons/Telegram/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/Telegram/index.mdx",
+      "legacyId": "src-icons-telegram-demo-color",
+      "legacyRouteId": "components/icons/Telegram/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/telegram",
+      "source": "src/icons/Telegram/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/Telegram/index.mdx",
+      "legacyId": "src-icons-telegram-demo-icons",
+      "legacyRouteId": "components/icons/Telegram/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/telegram",
+      "source": "src/icons/Telegram/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/WeChat/index.mdx",
+      "legacyId": "src-icons-we-chat-demo-avatars",
+      "legacyRouteId": "components/icons/WeChat/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/we-chat",
+      "source": "src/icons/WeChat/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/WeChat/index.mdx",
+      "legacyId": "src-icons-we-chat-demo-color",
+      "legacyRouteId": "components/icons/WeChat/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/we-chat",
+      "source": "src/icons/WeChat/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/WeChat/index.mdx",
+      "legacyId": "src-icons-we-chat-demo-icons",
+      "legacyRouteId": "components/icons/WeChat/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/we-chat",
+      "source": "src/icons/WeChat/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/WhatsApp/index.mdx",
+      "legacyId": "src-icons-whats-app-demo-avatars",
+      "legacyRouteId": "components/icons/WhatsApp/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/whats-app",
+      "source": "src/icons/WhatsApp/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/WhatsApp/index.mdx",
+      "legacyId": "src-icons-whats-app-demo-color",
+      "legacyRouteId": "components/icons/WhatsApp/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/whats-app",
+      "source": "src/icons/WhatsApp/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/WhatsApp/index.mdx",
+      "legacyId": "src-icons-whats-app-demo-icons",
+      "legacyRouteId": "components/icons/WhatsApp/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/whats-app",
+      "source": "src/icons/WhatsApp/demos/Icons.tsx"
+    },
+    {
+      "document": "src/icons/Zitadel/index.mdx",
+      "legacyId": "src-icons-zitadel-demo-avatars",
+      "legacyRouteId": "components/icons/Zitadel/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/zitadel",
+      "source": "src/icons/Zitadel/demos/Avatars.tsx"
+    },
+    {
+      "document": "src/icons/Zitadel/index.mdx",
+      "legacyId": "src-icons-zitadel-demo-color",
+      "legacyRouteId": "components/icons/Zitadel/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/zitadel",
+      "source": "src/icons/Zitadel/demos/Color.tsx"
+    },
+    {
+      "document": "src/icons/Zitadel/index.mdx",
+      "legacyId": "src-icons-zitadel-demo-icons",
+      "legacyRouteId": "components/icons/Zitadel/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/icons/zitadel",
+      "source": "src/icons/Zitadel/demos/Icons.tsx"
     },
     {
       "document": "src/icons/lucideExtra/index.mdx",
@@ -4801,7 +6565,7 @@
     },
     {
       "category": "Data Display",
-      "description": "HtmlPreview renders LLM-generated HTML inline using a hardened iframe sandbox. It mirrors how Mermaid is embedded in Markdown, but treats the content as code rather than data — scripts execute inside an isolated frame that cannot reach the host page.",
+      "description": "HtmlPreview renders LLM-generated HTML inline using a hardened iframe sandbox. It mirrors how Mermaid is embedded in Markdown, but treats the content as code rather than data \u2014 scripts execute inside an isolated frame that cannot reach the host page.",
       "legacyRouteId": "components/HtmlPreview/index",
       "pathname": "/components/html-preview",
       "section": "Components",
@@ -4926,7 +6690,7 @@
     },
     {
       "category": "Feedback",
-      "description": "An animated SVG loading indicator depicting a neural network — pulsing nodes connected across layers, particles flowing through the connections, and a slowly rotating outer ring. Suitable for \"AI is thinking / preparing\" empty states.",
+      "description": "An animated SVG loading indicator depicting a neural network \u2014 pulsing nodes connected across layers, particles flowing through the connections, and a slowly rotating outer ring. Suitable for \"AI is thinking / preparing\" empty states.",
       "legacyRouteId": "components/NeuralNetworkLoading/index",
       "pathname": "/components/neural-network-loading",
       "section": "Components",
@@ -5113,7 +6877,7 @@
     },
     {
       "category": "Feedback",
-      "description": "A wrapper component for giscus 💎, a comments system powered by GitHub Discussions.",
+      "description": "A wrapper component for giscus \ud83d\udc8e, a comments system powered by GitHub Discussions.",
       "legacyRouteId": "components/awesome/Giscus/index",
       "pathname": "/components/awesome/giscus",
       "section": "Awesome",
@@ -5248,7 +7012,7 @@
     },
     {
       "category": "Data Entry",
-      "description": "Base UI-powered Segmented control — toggle-group semantics with a sliding active indicator. Drops antd dependency in favor of @base-ui/react/toggle-group.",
+      "description": "Base UI-powered Segmented control \u2014 toggle-group semantics with a sliding active indicator. Drops antd dependency in favor of @base-ui/react/toggle-group.",
       "legacyRouteId": "components/base-ui/Segmented/index",
       "pathname": "/components/base-ui/segmented",
       "section": "Base UI",
@@ -5275,7 +7039,7 @@
     },
     {
       "category": "Navigation",
-      "description": "Base UI-powered Tabs with iOS-flavored interactions — no hover background, tap-scale feedback, and a sliding active indicator across rounded / square / point variants.",
+      "description": "Base UI-powered Tabs with iOS-flavored interactions \u2014 no hover background, tap-scale feedback, and a sliding active indicator across rounded / square / point variants.",
       "legacyRouteId": "components/base-ui/Tabs/index",
       "pathname": "/components/base-ui/tabs",
       "section": "Base UI",

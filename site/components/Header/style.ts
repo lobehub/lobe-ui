@@ -28,10 +28,11 @@ export const styles = createStaticStyles(({ css }) => {
     inset-inline: 0 auto;
     transform: translateX(0);
 
-    overflow: auto;
+    display: flex;
+    flex-direction: column;
 
     width: min(21rem, calc(100vw - 3rem));
-    padding-block: 0 2rem;
+    padding-block: 0;
     padding-inline: 1rem;
     border: 0;
     border-inline-end: 1px solid var(--docs-border-default);
@@ -118,21 +119,6 @@ export const styles = createStaticStyles(({ css }) => {
       font-size: 0.8125rem;
     }
 
-    kbd {
-      margin-inline-start: auto;
-      padding-block: 0.0625rem;
-      padding-inline: 0.3125rem;
-      border: 1px solid var(--docs-border-subtle);
-      border-radius: var(--docs-radius-sm);
-
-      font-family: var(--docs-font-mono);
-      font-size: 0.625rem;
-      line-height: 1rem;
-      color: var(--docs-text-subtle);
-
-      background: var(--docs-surface-muted);
-    }
-
     @media (width <= 64rem) {
       justify-content: center;
 
@@ -143,8 +129,7 @@ export const styles = createStaticStyles(({ css }) => {
 
       background: transparent;
 
-      span,
-      kbd {
+      span {
         display: none;
       }
 
@@ -238,6 +223,14 @@ export const styles = createStaticStyles(({ css }) => {
     `,
 
     iconButton,
+
+    searchHotkey: css`
+      margin-inline-start: auto;
+
+      @media (width <= 64rem) {
+        display: none;
+      }
+    `,
 
     inner: css`
       display: flex;
@@ -350,11 +343,8 @@ export const styles = createStaticStyles(({ css }) => {
     sheetBackdrop,
 
     sheetHeading: css`
-      position: sticky;
-      z-index: 1;
-      inset-block-start: 0;
-
       display: flex;
+      flex: none;
       align-items: center;
       justify-content: space-between;
 
@@ -366,6 +356,33 @@ export const styles = createStaticStyles(({ css }) => {
       font-weight: 620;
 
       background: var(--docs-background);
+    `,
+
+    sheetContent: css`
+      gap: 0;
+      min-width: 0;
+      padding-inline-end: 0.5rem;
+    `,
+
+    sheetScroll: css`
+      overflow: hidden;
+      flex: 1;
+
+      min-height: 0;
+      border-radius: 0;
+
+      background: none;
+    `,
+
+    sheetScrollbar: css`
+      margin-block: 0.5rem;
+      margin-inline: 0 0.125rem;
+    `,
+
+    sheetViewport: css`
+      height: 100%;
+      max-height: 100%;
+      padding-block-end: 2rem;
     `,
 
     sheetLayer: css`

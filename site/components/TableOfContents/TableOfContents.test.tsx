@@ -1,5 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, expect, it, vi } from 'vitest';
 
+import * as scroller from '../../lib/scroller';
 import TableOfContents from './TableOfContents';
 
 if (!Element.prototype.getAnimations) {
@@ -26,6 +28,10 @@ const rect = (top: number, bottom: number) =>
     x: 0,
     y: top,
   }) as DOMRect;
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 it('renders links from compile-time heading identifiers without rewriting them', async () => {
   render(
@@ -61,6 +67,27 @@ it('skips a heading without a compile-time identifier and never mutates the DOM'
   expect(document.querySelector<HTMLHeadingElement>('#toc-content h2')?.hasAttribute('id')).toBe(
     false,
   );
+});
+
+it('spring-scrolls to the heading when a toc link is clicked', async () => {
+  const springScrollToElement = vi
+    .spyOn(scroller, 'springScrollToElement')
+    .mockReturnValue({ stop() {} } as never);
+
+  render(
+    <>
+      <main id="toc-content">
+        <h2 id="usage">Usage</h2>
+      </main>
+      <TableOfContents contentId="toc-content" scopeKey="click" />
+    </>,
+  );
+
+  const link = await screen.findByRole('link', { name: 'Usage' });
+  const heading = document.getElementById('usage');
+  fireEvent.click(link);
+
+  expect(springScrollToElement).toHaveBeenCalledWith(heading, -100);
 });
 
 it('scrolls the active link into view inside the viewport', async () => {

@@ -87,7 +87,6 @@ injectGlobal`
 
   html {
     min-height: 100%;
-    scroll-behavior: smooth;
     scroll-padding-top: calc(var(--docs-header-height) + 1.5rem);
     background: var(--docs-background);
     font-synthesis: none;
@@ -161,11 +160,6 @@ injectGlobal`
     outline-offset: 3px;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-  }
 `;
 
 export const styles = createStaticStyles(({ css }) => ({

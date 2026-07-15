@@ -1,5 +1,6 @@
 import { GithubIcon } from '@lobehub/ui/icons/lucideExtra';
-import { ArrowUpRight, PencilLine } from 'lucide-react';
+import { ScrollArea } from '@lobehub/ui/ScrollArea';
+import { ArrowLeft, ArrowRight, ArrowUpRight, PencilLine } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 
@@ -54,7 +55,16 @@ export default function DocsLayout({ children, document, navigation }: DocsLayou
     <main className={styles.root} data-sidebar={section ? 'true' : 'false'} id="docs-content">
       {section ? (
         <aside className={styles.sidebar}>
-          <Sidebar navigation={navigation} section={section} />
+          <ScrollArea
+            disableContentFit
+            scrollFade
+            className={styles.sidebarScroll}
+            contentProps={{ className: styles.sidebarContent }}
+            scrollbarProps={{ className: styles.sidebarScrollbar }}
+            viewportProps={{ className: styles.sidebarViewport }}
+          >
+            <Sidebar navigation={navigation} section={section} />
+          </ScrollArea>
         </aside>
       ) : null}
 
@@ -101,9 +111,12 @@ export default function DocsLayout({ children, document, navigation }: DocsLayou
           <nav aria-label="Adjacent documents" className={styles.pagination}>
             {previous ? (
               <Link className={styles.paginationLink} rel="prev" to={previous.pathname}>
-                <span aria-hidden className={styles.paginationArrow}>
-                  ←
-                </span>
+                <ArrowLeft
+                  aria-hidden
+                  className={styles.paginationArrow}
+                  size={16}
+                  strokeWidth={1.8}
+                />
                 <span className={styles.paginationText}>
                   <span>Previous</span>
                   <strong>{previous.title}</strong>
@@ -122,9 +135,12 @@ export default function DocsLayout({ children, document, navigation }: DocsLayou
                   <span>Next</span>
                   <strong>{next.title}</strong>
                 </span>
-                <span aria-hidden className={styles.paginationArrow}>
-                  →
-                </span>
+                <ArrowRight
+                  aria-hidden
+                  className={styles.paginationArrow}
+                  size={16}
+                  strokeWidth={1.8}
+                />
               </Link>
             ) : null}
           </nav>

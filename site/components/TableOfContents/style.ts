@@ -21,8 +21,6 @@ export const styles = createStaticStyles(({ css }) => {
   `;
 
   const panel = css`
-    overflow: auto;
-
     max-height: min(50dvh, 20rem);
     padding-block: 0.5rem 0.75rem;
     padding-inline: max(1rem, calc((100% - 47rem) / 2));
@@ -108,9 +106,36 @@ export const styles = createStaticStyles(({ css }) => {
 
     panel,
 
-    scrollArea: css`
+    panelScroll: css`
+      overflow: hidden;
+      max-height: calc(min(50dvh, 20rem) - 1.25rem);
       border-radius: 0;
       background: none;
+    `,
+
+    panelViewport: css`
+      max-height: calc(min(50dvh, 20rem) - 1.25rem);
+    `,
+
+    scrollArea: css`
+      overflow: hidden;
+
+      width: 100%;
+      max-height: calc(100dvh - var(--docs-header-height) - 4rem - 1.875rem);
+      border-radius: 0;
+
+      background: none;
+    `,
+
+    scrollContent: css`
+      gap: 0;
+      min-width: 0;
+      padding-inline-end: 0.5rem;
+    `,
+
+    scrollbar: css`
+      margin-block: 0.25rem;
+      margin-inline: 0 0.125rem;
     `,
 
     viewport: css`
@@ -120,7 +145,10 @@ export const styles = createStaticStyles(({ css }) => {
     root: css`
       position: sticky;
       inset-block-start: calc(var(--docs-header-height) + 2rem);
+
+      overflow: hidden;
       align-self: start;
+
       max-height: calc(100dvh - var(--docs-header-height) - 4rem);
 
       h2 {

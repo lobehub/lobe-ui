@@ -28,7 +28,7 @@ coverage
 .react-router/
 dist
 es
-lib
+/lib/
 logs
 site/compiler/.cache/
 site/compiler/__fixtures__/

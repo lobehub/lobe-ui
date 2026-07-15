@@ -62,7 +62,7 @@ describe('reviewed production migration metadata', () => {
     expect(report.legacyDocuments + report.migratedDocuments).toBe(160);
     expect(
       report.legacyDemoTags + report.migratedDemoUses + report.acknowledgedStandaloneOnly,
-    ).toBe(367);
+    ).toBe(514);
     expect(report.apiSections + report.deliberateApiOmissions).toBe(158);
   });
 

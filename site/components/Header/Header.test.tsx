@@ -7,6 +7,10 @@ import SiteProviders, { THEME_STORAGE_KEY } from '../../app/providers/SiteProvid
 import type { DocumentManifestEntry } from '../../types/content';
 import Header from './Header';
 
+if (!Element.prototype.getAnimations) {
+  Element.prototype.getAnimations = () => [];
+}
+
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {
     disconnect() {}
@@ -75,6 +79,24 @@ it('selects theme preference through a dropdown menu with a system option', asyn
 
   await waitFor(() => expect(document.documentElement.dataset.theme).toBe('dark'));
   expect(localStorage.getItem(THEME_STORAGE_KEY)).toBe('dark');
+});
+
+it('keeps the header transparent at the top of every page and solidifies after scroll', () => {
+  Object.defineProperty(window, 'scrollY', { configurable: true, value: 0, writable: true });
+  renderHeader(<Header navigation={[]} onSearchOpen={vi.fn()} />, ['/components/alpha']);
+
+  const header = document.querySelector('header');
+  expect(header?.hasAttribute('data-transparent')).toBe(true);
+
+  Object.defineProperty(window, 'scrollY', { configurable: true, value: 24, writable: true });
+  fireEvent.scroll(window);
+
+  expect(header?.hasAttribute('data-transparent')).toBe(false);
+
+  Object.defineProperty(window, 'scrollY', { configurable: true, value: 0, writable: true });
+  fireEvent.scroll(window);
+
+  expect(header?.hasAttribute('data-transparent')).toBe(true);
 });
 
 it('marks the active section tab and lists overflow sections in the more menu', async () => {
