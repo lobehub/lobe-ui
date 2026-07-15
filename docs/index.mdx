@@ -1,0 +1,40 @@
+---
+title: LobeHub UI Kit
+description: Lobe UI is an open-source UI component library for building AIGC web apps.
+order: 0
+---
+
+Lobe UI is an open-source UI component library for building AIGC web apps.
+
+## Start building your AIGC app now
+
+```bash
+bun add @lobehub/ui
+```
+
+```tsx | pure
+import { Button, I18nProvider, ThemeProvider } from '@lobehub/ui';
+import allResources from '@lobehub/ui/i18n/resources/all';
+
+export default () => (
+  <I18nProvider resources={allResources}>
+    <ThemeProvider>
+      <Button>Hello AIGC</Button>
+    </ThemeProvider>
+  </I18nProvider>
+);
+```
+
+The components are based on [Ant Design](https://ant.design/components/overview) and are fully compatible with its component APIs. [antd-style](https://ant-design.github.io/antd-style) is the recommended CSS-in-JS styling solution.
+
+### Themeable
+
+Customize colors, typography, breakpoints, and other design foundations through the theme system.
+
+### Fast
+
+Avoid unnecessary style-prop processing at runtime while retaining a flexible component API.
+
+### Light and dark UI
+
+Build interfaces that adapt consistently to light and dark appearance preferences.

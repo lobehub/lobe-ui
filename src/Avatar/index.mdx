@@ -1,0 +1,66 @@
+---
+title: Avatar
+description: Avatar is a component that displays a user's profile picture or initials. It can be customized with props like size, shape, background color, and image source. If no image source is provided, it will display the user's initials. This component is typically used in user profile pages, comment sections, or messaging applications.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoText from './demos/Text.tsx?demo';
+import DemoBordered from './demos/Bordered.tsx?demo';
+import DemoGroup from './demos/Group.tsx?demo';
+import DemoErrorFallback from './demos/ErrorFallback.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Text
+
+<Demo of={DemoText} layout="center" />
+
+## Bordered
+
+<Demo of={DemoBordered} layout="center" />
+
+## Group
+
+<Demo of={DemoGroup} layout="bare" />
+
+## Error Fallback
+
+<Demo of={DemoErrorFallback} layout="center" />
+
+## APIs
+
+### Avatar
+
+<Api name="Avatar" migrationKey="heading:%5B%22Avatar%22%5D:0" />
+
+### Avatar.Group
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| animation | Enable animation for emoji avatars | `boolean` | `false` |
+| background | Background color of avatars | `string` | - |
+| bordered | Whether to show borders | `boolean` | `false` |
+| classNames | Custom class names | `{ avatar?: string; count?: string }` | - |
+| gap | Gap between avatars | `number` | -size/4 |
+| items | Array of avatar items | `AvatarGroupItemType[]` | - |
+| max | Maximum number of avatars to show | `number` | - |
+| onClick | Click handler for avatar | `(props: { item: AvatarGroupItemType; key: string }) => void` | - |
+| shadow | Whether to show shadows | `boolean` | `false` |
+| shape | Shape of avatars | `'circle' \| 'square'` | `'circle'` |
+| size | Size of avatars | `number` | `48` |
+| styles | Custom styles | `{ avatar?: CSSProperties; count?: CSSProperties }` | - |
+| variant | Style variant | `'borderless' \| 'filled' \| 'outlined'` | `'borderless'` |
+
+### AvatarGroupItemType
+
+| Property | Description                | Type                      |
+| -------- | -------------------------- | ------------------------- |
+| avatar   | Avatar content             | `string \| ReactNode`     |
+| key      | Unique identifier          | `string`                  |
+| title    | Title for tooltip          | `string`                  |
+| alt      | Alternative text for image | `string`                  |
+| loading  | Show loading state         | `boolean`                 |
+| onClick  | Click handler for avatar   | `(e: MouseEvent) => void` |

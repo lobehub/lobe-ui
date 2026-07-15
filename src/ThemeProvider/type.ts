@@ -8,6 +8,7 @@ import { type CSSProperties } from 'react';
 import { type NeutralColors, type PrimaryColors } from '@/styles';
 
 export interface ThemeProviderProps extends AntdThemeProviderProps<any> {
+  appId?: string;
   className?: string;
   customFonts?: string[];
   customStylish?: (theme: CustomStylishParams) => { [key: string]: any };

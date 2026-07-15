@@ -1,8 +1,8 @@
 'use client';
 
+import { ShikiStreamTokenizer } from '@shikijs/stream';
 import { type CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { type BuiltinTheme, type ThemedToken } from 'shiki';
-import { ShikiStreamTokenizer } from 'shiki-stream';
 
 import { getCodeLanguageByInput } from '@/Highlighter/const';
 import lobeTheme from '@/Highlighter/theme/lobe-theme';

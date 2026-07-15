@@ -1,0 +1,39 @@
+---
+title: ChatInputArea
+description: The ChatInputArea component is used to display a chat input area with expandable and collapsible feature, and a send button to submit the chat message. It can be customized with actions and footer, and also supports input value change and composition event for Chinese input.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+### ChatInputArea
+
+<Api name="ChatInputArea" from=".." migrationKey="heading:%5B%22ChatInputArea%22%5D:0" />
+
+### ChatInputActionBar
+
+| Property    | Description                                  | Type                  | Default |
+| ----------- | -------------------------------------------- | --------------------- | ------- |
+| leftAddons  | Content for the left side of the action bar  | `ReactNode`           | -       |
+| mobile      | Whether to use mobile layout                 | `boolean`             | `false` |
+| padding     | Padding for the action bar                   | `number \| string`    | -       |
+| ref         | Reference to the action bar element          | `Ref<HTMLDivElement>` | -       |
+| rightAddons | Content for the right side of the action bar | `ReactNode`           | -       |
+
+### ChatSendButton
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| leftAddons | Content for the left side of the button | `ReactNode` | - |
+| loading | Whether the button is in loading state | `boolean` | `false` |
+| onSend | Callback when send button is clicked | `() => void` | - |
+| onStop | Callback when stop button is clicked | `() => void` | - |
+| rightAddons | Content for the right side of the button | `ReactNode` | - |
+| texts | Customizable button text labels | `{ send?: string; stop?: string; warp?: string; }` | - |
+| ...FlexboxProps | All properties from FlexboxProps | `FlexboxProps` | - |

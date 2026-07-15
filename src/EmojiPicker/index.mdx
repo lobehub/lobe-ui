@@ -1,0 +1,56 @@
+---
+title: EmojiPicker
+description: EmojiPicker is a component that allows users to select emoji icons or upload custom avatars. It supports multiple tabs, custom emoji sets, model avatars from @lobehub/icons, and includes options for uploading and deleting avatars.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoUpload from './demos/Upload.tsx?demo';
+import DemoCustomEmoji from './demos/CustomEmoji.tsx?demo';
+import DemoCustomTabs from './demos/CustomTabs.tsx?demo';
+import DemoModelAvatar from './demos/ModelAvatar.tsx?demo';
+import DemoControl from './demos/Control.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="center" />
+
+## Upload
+
+<Demo of={DemoUpload} layout="center" />
+
+## Custom Emoji
+
+<Demo of={DemoCustomEmoji} layout="center" />
+
+## Custom Tabs
+
+<Demo of={DemoCustomTabs} layout="center" />
+
+## Model Avatar
+
+<Demo of={DemoModelAvatar} layout="center" />
+
+## Controlled
+
+<Demo of={DemoControl} layout="center" />
+
+## APIs
+
+<Api name="EmojiPicker" migrationKey="unheaded:0" />
+
+### EmojiPickerCustomEmoji
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| id | Unique identifier for the emoji set | `string` | - |
+| name | Name of the emoji set | `string` | - |
+| emojis | Array of emoji definitions | `Array<{ id: string; name: string; keywords?: string[]; skins: Array<{ src: string }> }>` | - |
+
+### EmojiPickerCustomTab
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| value | Unique identifier for the tab | `string` | - |
+| label | Label to display for the tab | `ReactNode` | - |
+| render | Render function for the tab content | `(handleAvatarChange: (avatar: string) => void) => ReactNode` | - |

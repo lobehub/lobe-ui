@@ -1,0 +1,25 @@
+---
+title: Hero
+description: Hero is a component for creating attractive landing page hero sections with a title, description, and customizable action buttons.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="Hero" from=".." migrationKey="unheaded:0" />
+
+### HeroAction
+
+| Property     | Description                     | Type                     | Default |
+| ------------ | ------------------------------- | ------------------------ | ------- |
+| text         | Button text                     | `string`                 | -       |
+| link         | URL to navigate to              | `string`                 | -       |
+| type         | Button type                     | `'primary' \| 'default'` | -       |
+| github       | Whether to show GitHub icon     | `boolean`                | -       |
+| openExternal | Whether to open link in new tab | `boolean`                | -       |

@@ -59,7 +59,6 @@ const SKIP_TAGS = new Set(['pre', 'code', 'table', 'svg']);
 function hasClass(node: Element, cls: string): boolean {
   const cn: unknown = node.properties?.className;
   if (Array.isArray(cn)) return cn.some((c) => String(c).includes(cls));
-  if (typeof cn === 'string') return cn.includes(cls);
   return false;
 }
 

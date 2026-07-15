@@ -1,0 +1,41 @@
+---
+title: ThemeProvider
+description: ThemeProvider is a component that provides a theme to all the child components. It supports theme customization, custom stylish objects, and font loading.
+category: Theme
+---
+
+import DemoThemeProvider from './demos/theme-provider.tsx?demo';
+import DemoIndex from './demos/index.tsx?demo';
+import DemoCustomFonts from './demos/CustomFonts.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="center" />
+
+## Custom Fonts
+
+<Demo of={DemoCustomFonts} layout="center" />
+
+## APIs
+
+### ThemeProvider
+
+<Api name="ThemeProvider" migrationKey="heading:%5B%22ThemeProvider%22%5D:0" />
+
+ThemeProvider inherits all properties from antd-style's ThemeProvider component, including the common appearance-related properties.
+
+### ThemeProvider Features
+
+The ThemeProvider component provides several key features:
+
+1. **Theming**: Provides consistent theming across components with automatic light/dark mode support
+2. **Global Styles**: Applies base styles including font settings and scrollbar styling
+3. **Font Loading**: Automatically loads Lobe's custom webfonts
+4. **Style Extensions**: Adds utility styles like blur effects, gradients, and animations
+5. **Component Styling**: Enhances Ant Design components with Lobe UI styling
+
+### Customization
+
+The ThemeProvider allows for extensive customization:
+
+<Demo of={DemoThemeProvider} />

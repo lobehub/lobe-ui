@@ -1,0 +1,39 @@
+---
+title: ChatList
+description: ChatList is a flexible component for rendering chat conversations with rich customization options. It displays an array of ChatMessage objects with support for loading states, custom message rendering, action handling, and error management. The component supports 'bubble' and 'docs' variants, can display history dividers, and allows for role-specific customization of messages, items, and actions.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+### ChatList
+
+<Api name="ChatList" from=".." migrationKey="heading:%5B%22ChatList%22%5D:0" />
+
+### Types
+
+```typescript
+type ChatMessage = {
+  id: string;
+  content: string;
+  role: LLMRoleType | string;
+  // Additional properties defined in the chat message type
+};
+
+type RenderRole = LLMRoleType | 'default' | string;
+type RenderItem = FC<{ key: string } & ChatMessage & ListItemProps>;
+type RenderMessage = FC<ChatMessage & { editableContent: ReactNode }>;
+type RenderMessageExtra = FC<ChatMessage>;
+type RenderAction = FC<ChatActionsBarProps & ChatMessage>;
+
+interface RenderErrorMessage {
+  Render?: FC<ChatMessage>;
+  config?: AlertProps;
+}
+```

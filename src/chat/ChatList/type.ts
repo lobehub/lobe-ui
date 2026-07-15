@@ -73,7 +73,7 @@ export interface ListItemProps {
     };
   /**
    * @description 聊天列表的类型
-   * @default 'chat'
+   * @default 'bubble'
    */
   variant?: 'docs' | 'bubble';
 }

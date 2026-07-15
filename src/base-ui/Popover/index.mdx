@@ -1,0 +1,126 @@
+---
+title: Popover
+description: A floating card that displays additional content when triggered by hover or click.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoAtoms from './demos/atoms.tsx?demo';
+import DemoGroup from './demos/group.tsx?demo';
+import DemoTrigger from './demos/trigger.tsx?demo';
+import DemoPlacement from './demos/placement.tsx?demo';
+import DemoDropdownMenu from './demos/dropdown-menu.tsx?demo';
+import DemoHoverOnly from './demos/hover-only.tsx?demo';
+import DemoControlled from './demos/controlled.tsx?demo';
+import DemoContext from './demos/context.tsx?demo';
+import DemoTooltipInside from './demos/tooltip-inside.tsx?demo';
+import DemoTooltipHoverStay from './demos/tooltip-hover-stay.tsx?demo';
+import DemoPopoverWrappingTooltip from './demos/popover-wrapping-tooltip.tsx?demo';
+import DemoPopoverWrappingTooltipGroup from './demos/popover-wrapping-tooltip-group.tsx?demo';
+import DemoNativeButton from './demos/native-button.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Atom Components
+
+Exported primitives can be composed to build custom popovers.
+
+<Demo of={DemoAtoms} layout="bare" />
+
+## Popover Group (Singleton)
+
+Wrap multiple popovers in `PopoverGroup` to share a single floating instance. When you hover different triggers, the popover only updates the anchor + content, enabling smooth transitions.
+
+<Demo of={DemoGroup} layout="bare" />
+
+## Header Navigation
+
+A typical use case: navigation menus, notification panel, and user dropdown in a header.
+
+<Demo of={DemoTrigger} layout="bare" />
+
+## Placement
+
+Popover supports 12 placement positions arranged in a visual grid layout.
+
+<Demo of={DemoPlacement} layout="bare" />
+
+## Dropdown Menu
+
+<Demo of={DemoDropdownMenu} layout="bare" />
+
+## Hover-only (no click pin)
+
+`trigger="hover"` must not pin open after a click on the trigger. Hover to open, click the trigger, then move away — the card should close on mouse leave.
+
+<Demo of={DemoHoverOnly} layout="bare" />
+
+## Controlled Mode
+
+Use `open` and `onOpenChange` for confirmation dialogs, inline editing, and external control.
+
+<Demo of={DemoControlled} layout="bare" />
+
+## Context (Imperative)
+
+Popover provides an internal context so that content can close the current popover without switching to controlled mode.
+
+<Demo of={DemoContext} layout="bare" />
+
+## Tooltip Inside Popover
+
+When using Tooltip inside Popover, the Tooltip will automatically render into the Popover's container to avoid z-index stacking issues.
+
+<Demo of={DemoTooltipInside} layout="bare" />
+
+## Tooltip Hover Stay
+
+When using Tooltip inside Popover, the Tooltip will automatically render into the Popover's container to avoid z-index stacking issues.
+
+<Demo of={DemoTooltipHoverStay} layout="bare" />
+
+## Popover wrapping Tooltip (Edge Case)
+
+Edge case where the Popover trigger is a Tooltip-wrapped element: `<Popover><Tooltip>...</Tooltip></Popover>`. Hover shows the tooltip; click (or hover, depending on trigger) opens the popover.
+
+<Demo of={DemoPopoverWrappingTooltip} layout="bare" />
+
+## Popover wrapping Tooltip in Group (Edge Case)
+
+Same as above, but with `TooltipGroup` (singleton mode). Hovering between buttons smoothly transitions the shared tooltip; clicking opens each button's own popover.
+
+<Demo of={DemoPopoverWrappingTooltipGroup} layout="bare" />
+
+## Native Button Auto Detection
+
+<Demo of={DemoNativeButton} layout="bare" />
+
+## APIs
+
+### Popover
+
+<Api name="Popover" from=".." migrationKey="heading:%5B%22Popover%22%5D:0" />
+
+Popover is built on top of `@base-ui/react/popover`. It provides an Ant Design compatible API for easy migration.
+
+### usePopoverContext
+
+Returns the imperative popover instance for the current content tree.
+
+```ts
+type PopoverContextValue = {
+  close: () => void;
+};
+```
+
+### PopoverGroup
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| children | Popover subtree that shares a single popover instance | `ReactNode` | - |
+| contentLayoutAnimation | Animate content layout when switching triggers | `boolean` | `false` |
+| disableDestroyOnInvalidTrigger | Disable auto-destroy when the active trigger becomes invalid (e.g. disconnected / `display: none`) | `boolean` | `false` |
+| disableZeroOriginGuard | Disable the visual guard that hides the popup when it falls back to viewport (0,0) | `boolean` | `false` |
+| ...props | Shared popover props applied to each group member | `Omit<PopoverProps, 'children' \| 'defaultOpen' \| 'open' \| 'ref' \| 'content'>` | - |

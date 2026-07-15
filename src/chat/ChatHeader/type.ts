@@ -8,6 +8,10 @@ export interface ChatHeaderProps extends FlexboxProps {
     left?: string;
     right?: string;
   };
+  /**
+   * @default 16
+   */
+  gap?: number;
   gaps?: {
     center?: number;
     left?: number;

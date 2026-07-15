@@ -1,0 +1,35 @@
+---
+title: Tabs
+description: Tabs are used to display multiple sections of content within the same space on a webpage. They allow users to quickly switch between different sections of content without having to navigate away from the current page.
+category: Navigation
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+### Tabs
+
+<Api name="Tabs" migrationKey="heading:%5B%22Tabs%22%5D:0" />
+
+Additionally, Tabs inherits all properties from Ant Design's Tabs component, including commonly used props like:
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| activeKey | Currently active TabPane's key | `string` | - |
+| defaultActiveKey | Initial active TabPane's key | `string` | First tab |
+| onChange | Callback when active tab is changed | `(activeKey) => void` | - |
+| tabPlacement | Position of tabs | `'top' \| 'right' \| 'bottom' \| 'left'` | `'top'` |
+| size | Size of tabs | `'large' \| 'middle' \| 'small'` | `'middle'` |
+
+### Tab Variants
+
+The component supports the following style variants:
+
+- `rounded`: Tabs with rounded corners (default)
+- `square`: Tabs with square corners
+- `point`: Tabs with point indicators

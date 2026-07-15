@@ -1,0 +1,85 @@
+---
+title: Flex
+description: Flexible layout components based on Flexbox
+category: Layout
+---
+
+import DemoBasic from './demos/basic.tsx?demo';
+import DemoDirection from './demos/direction.tsx?demo';
+import DemoAlignment from './demos/alignment.tsx?demo';
+import DemoGap from './demos/gap.tsx?demo';
+import DemoWrap from './demos/wrap.tsx?demo';
+import DemoCenter from './demos/center.tsx?demo';
+
+## Flexbox
+
+A flexible layout component based on CSS Flexbox.
+
+### Basic Usage
+
+<Demo of={DemoBasic} />
+
+### Direction
+
+Control the flex direction with `direction` or `horizontal` props.
+
+<Demo of={DemoDirection} />
+
+### Alignment
+
+Control alignment with `align` and `justify` props.
+
+<Demo of={DemoAlignment} />
+
+### Gap
+
+Control spacing between items with `gap` prop.
+
+<Demo of={DemoGap} />
+
+### Wrap
+
+Control wrapping behavior with `wrap` prop.
+
+<Demo of={DemoWrap} />
+
+## Center
+
+A convenience component for centering content both horizontally and vertically.
+
+<Demo of={DemoCenter} />
+
+## API
+
+### Flexbox
+
+<Api name="Flexbox" migrationKey="heading:%5B%22Flexbox%22%5D:0" />
+
+### Center
+
+Extends all Flexbox props except `distribution`, `direction`, and `align` (which are fixed to center content).
+
+### FlexBasic
+
+Same as Flexbox. This is the base component that both Flexbox and Center use internally.
+
+## Types
+
+### ContentPosition
+
+```typescript
+type ContentPosition =
+  'center' | 'end' | 'flex-end' | 'flex-start' | 'start' | 'stretch' | 'baseline';
+```
+
+### FlexDirection
+
+```typescript
+type FlexDirection = 'vertical' | 'vertical-reverse' | 'horizontal' | 'horizontal-reverse';
+```
+
+### CommonSpaceNumber
+
+```typescript
+type CommonSpaceNumber = 2 | 4 | 8 | 12 | 16 | 24;
+```

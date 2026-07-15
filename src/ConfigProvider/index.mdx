@@ -1,0 +1,62 @@
+---
+title: ConfigProvider
+description: Configures library-wide CDN resource resolution and the motion runtime for descendant components.
+category: Theme
+---
+
+import DemoConfigProvider from './demos/config-provider.tsx?demo';
+import DemoConfigProvider2 from './demos/config-provider-2.tsx?demo';
+import DemoLazyMotion from './demos/lazy-motion.tsx?demo';
+import DemoIndex from './demos/index.tsx?demo';
+
+ConfigProvider is a context provider component that allows you to configure global settings for other components in the library, such as CDN settings for external resources and the motion runtime.
+
+## Default
+
+The `proxy` provides two CDN resolution addresses, `aliyun` and `unpkg`, with `aliyun` as the default. This can be configured through the `cdn` attribute of `ConfigProvider`.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Custom CDN
+
+At the same time, it provides custom CDN configuration, set `proxy` to `custom` and configure through the `customCdnFn` attribute.
+
+<Demo of={DemoConfigProvider} />
+
+## Motion
+
+Lobe UI uses Motion components via context. You must pass a motion component to `ConfigProvider`. If your app uses `LazyMotion`, pass `m`:
+
+<Demo of={DemoConfigProvider2} />
+
+If your app uses [`LazyMotion`](https://motion.dev/docs/react-lazy-motion):
+
+<Demo of={DemoLazyMotion} />
+
+## APIs
+
+### ConfigProvider
+
+<Api name="ConfigProvider" migrationKey="heading:%5B%22ConfigProvider%22%5D:0" />
+
+### Config
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| proxy | CDN proxy to use for external resources | `'jsdelivr' \| 'unpkg' \| 'aliyun' \| 'custom'` | - |
+| customCdnFn | Custom function for generating CDN URLs when proxy is 'custom' | `CdnFn` | - |
+| aAs | Custom component to use for rendering anchor tags | `ElementType` | - |
+| imgAs | Custom component to use for rendering image tags | `ElementType` | - |
+| imgUnoptimized | Whether to disable image optimization | `boolean` | - |
+
+### CdnFn
+
+```ts
+type CdnFn = ({ pkg, version, path }: CdnApi) => string;
+
+interface CdnApi {
+  pkg: string;
+  version: string;
+  path: string;
+}
+```

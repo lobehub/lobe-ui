@@ -35,9 +35,8 @@ export default [
   },
   {
     content:
-      'dumi-theme-lobehub is a documentation site theme package designed for dumi2. It provides a more beautiful and user-friendly development and reading ...',
-    favicon:
-      'https://serpapi.com/searches/64e83bc4c9990330f48fd62f/images/f40516e98093ab4c002d39bf835b3922f5fc8b00bf3ee8f0db2499a79c5f1e36.png',
-    title: 'canisminor1990 - npm',
+      'Lobe UI provides composable React components, isolated examples, and typed API references for building AI products.',
+    favicon: 'https://ui.lobehub.com/favicon.ico',
+    title: 'Lobe UI documentation',
   },
 ];

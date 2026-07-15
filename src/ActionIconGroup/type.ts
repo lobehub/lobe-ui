@@ -11,6 +11,10 @@ export interface ActionIconGroupProps extends Omit<CenterProps, 'children'> {
   actionIconProps?: Partial<Omit<ActionIconProps, 'icon' | 'size' | 'ref'>>;
   disabled?: boolean;
   glass?: boolean;
+  /**
+   * @default true
+   */
+  horizontal?: boolean;
   items?: MenuItemType[];
   menu?: DropdownMenuProps['items'];
   onActionClick?: (action: ActionIconGroupEvent) => void;

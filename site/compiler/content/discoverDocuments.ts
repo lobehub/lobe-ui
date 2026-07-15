@@ -1,0 +1,68 @@
+import { existsSync, readdirSync, statSync } from 'node:fs';
+import { basename, extname, relative, resolve } from 'node:path';
+
+export type DocumentKind = 'home' | 'changelog' | 'component';
+
+export interface DiscoveredDocument {
+  absolutePath: string;
+  kind: DocumentKind;
+  source: string;
+}
+
+const inferKind = (source: string): DocumentKind => {
+  if (source === 'docs/index.mdx') return 'home';
+  if (source === 'docs/changelog.mdx') return 'changelog';
+  return 'component';
+};
+
+const normalizePath = (path: string): string => path.replaceAll('\\', '/');
+
+const inferStandaloneSource = (absolutePath: string): string => {
+  const normalizedPath = normalizePath(absolutePath);
+  if (normalizedPath.endsWith('/docs/index.mdx')) return 'docs/index.mdx';
+  if (normalizedPath.endsWith('/docs/changelog.mdx')) return 'docs/changelog.mdx';
+
+  const sourceMarker = '/src/';
+  const sourceIndex = normalizedPath.lastIndexOf(sourceMarker);
+  if (sourceIndex >= 0) return normalizedPath.slice(sourceIndex + 1);
+  return basename(absolutePath);
+};
+
+const collectComponentDocuments = (directory: string): string[] => {
+  if (!existsSync(directory)) return [];
+
+  const documents: string[] = [];
+  for (const entry of readdirSync(directory, { withFileTypes: true }).sort((left, right) =>
+    left.name.localeCompare(right.name, 'en'),
+  )) {
+    const absolutePath = resolve(directory, entry.name);
+    if (entry.isDirectory()) documents.push(...collectComponentDocuments(absolutePath));
+    if (entry.isFile() && entry.name === 'index.mdx') documents.push(absolutePath);
+  }
+  return documents;
+};
+
+export function discoverDocuments(root: string): DiscoveredDocument[] {
+  const absoluteRoot = resolve(root);
+  const stat = statSync(absoluteRoot);
+
+  if (stat.isFile() && extname(absoluteRoot) === '.mdx') {
+    const source = inferStandaloneSource(absoluteRoot);
+    return [{ absolutePath: absoluteRoot, kind: inferKind(source), source }];
+  }
+
+  if (!stat.isDirectory()) {
+    throw new Error(`Expected an MDX document: ${absoluteRoot}`);
+  }
+
+  const absolutePaths = [
+    resolve(absoluteRoot, 'docs/index.mdx'),
+    resolve(absoluteRoot, 'docs/changelog.mdx'),
+    ...collectComponentDocuments(resolve(absoluteRoot, 'src')),
+  ].filter((path) => existsSync(path) && statSync(path).isFile());
+
+  return absolutePaths.map((absolutePath) => {
+    const source = normalizePath(relative(absoluteRoot, absolutePath));
+    return { absolutePath, kind: inferKind(source), source };
+  });
+}

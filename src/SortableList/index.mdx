@@ -1,0 +1,30 @@
+---
+title: SortableList
+description: SortableList is a component for creating drag-and-drop sortable lists. It allows users to reorder list items through mouse or keyboard interactions with smooth animations and accessibility features.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="SortableList" migrationKey="unheaded:0" />
+
+### SortableListItem
+
+| Property       | Description                    | Type               | Default |
+| -------------- | ------------------------------ | ------------------ | ------- |
+| id             | Unique identifier for the item | `string \| number` | -       |
+| \[key: string] | Additional item properties     | `any`              | -       |
+
+### SortableList.Item
+
+A wrapper component for sortable items.
+
+### SortableList.DragHandle
+
+A drag handle component that can be used within sortable items.

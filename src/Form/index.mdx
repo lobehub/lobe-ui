@@ -1,0 +1,63 @@
+---
+title: Form
+description: High performance Form component with data scope management. Including data collection, verification, and styles.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoFlat from './demos/Flat.tsx?demo';
+import DemoStateControl from './demos/StateControl.tsx?demo';
+import DemoSubmitFooter from './demos/SubmitFooter.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Flat Type
+
+<Demo of={DemoFlat} layout="bare" />
+
+## State Control
+
+<Demo of={DemoStateControl} layout="bare" />
+
+## Submit Footer
+
+<Demo of={DemoSubmitFooter} isolated layout="bare" />
+
+## APIs
+
+### Form
+
+<Api name="Form" migrationKey="heading:%5B%22Form%22%5D:0" />
+
+In addition to the above props, Form inherits all properties from Ant Design's Form component.
+
+### Form.Item
+
+| Property | Description                                   | Type               | Default |
+| -------- | --------------------------------------------- | ------------------ | ------- |
+| avatar   | Avatar to display next to form item title     | `ReactNode`        | -       |
+| desc     | Description text for the form item            | `ReactNode`        | -       |
+| divider  | Whether to show a divider after the form item | `boolean`          | `false` |
+| hidden   | Whether to hide the form item                 | `boolean`          | `false` |
+| minWidth | Minimum width of the form item                | `string \| number` | -       |
+| tag      | Tag to display next to form item title        | `TagProps`         | -       |
+| variant  | Style variant for the form item               | `FormVariant`      | -       |
+
+Form.Item also inherits all properties from Ant Design's Form.Item component.
+
+### Form.SubmitFooter
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| buttonProps | Props applied to both buttons | `Omit<ButtonProps, 'children'>` | - |
+| enableReset | Whether to show the reset button | `boolean` | `true` |
+| enableUnsavedWarning | Show warning when there are unsaved changes | `boolean` | `false` |
+| float | Whether the footer should float at the bottom | `boolean` | `false` |
+| onReset | Callback when reset button is clicked | `(value: any, preValue: any) => void` | - |
+| resetButtonProps | Props for the reset button | `Omit<ButtonProps, 'children'>` | - |
+| saveButtonProps | Props for the save/submit button | `Omit<ButtonProps, 'children'>` | - |
+| texts | Custom text for buttons and warnings | `{ reset?: string; submit?: string; unSaved?: string; unSavedWarning?: string }` | - |
+
+Form.SubmitFooter also inherits all properties from Flexbox component except for 'onReset'.

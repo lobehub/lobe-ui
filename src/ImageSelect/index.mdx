@@ -1,0 +1,29 @@
+---
+title: ImageSelect
+description: ImageSelect allows users to choose an option from a list of images. It's ideal for visual selection interfaces where images better represent options than text.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="center" />
+
+## APIs
+
+### ImageSelect
+
+<Api name="ImageSelect" migrationKey="heading:%5B%22ImageSelect%22%5D:0" />
+
+Additionally, ImageSelect accepts all properties from Flexbox component.
+
+### ImageSelectItem
+
+| Property | Description                      | Type                | Default |
+| -------- | -------------------------------- | ------------------- | ------- |
+| value    | Unique identifier for the option | `string`            | -       |
+| label    | Display text for the option      | `ReactNode`         | -       |
+| img      | Image URL                        | `string`            | -       |
+| icon     | Optional icon to display         | `IconProps['icon']` | -       |
+| alt      | Alternative text for the image   | `string`            | -       |

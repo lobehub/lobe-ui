@@ -1,0 +1,141 @@
+{
+  "demoReferences": [
+    {
+      "document": "docs/index.mdx",
+      "legacyId": "docs-home-only",
+      "legacyRouteId": "docs/index",
+      "pathname": "/",
+      "source": "docs/home.tsx",
+      "options": { "inline": true, "isolated": false, "layout": "default" }
+    },
+    {
+      "document": "src/Button/index.mdx",
+      "legacyId": "button-demo",
+      "legacyRouteId": "components/Button/index",
+      "pathname": "/components/button",
+      "source": "src/Button/demos/button.tsx",
+      "options": { "inline": false, "isolated": false, "layout": "bare" }
+    },
+    {
+      "document": "src/Options/index.md",
+      "legacyId": "options-basic-1",
+      "legacyRouteId": "components/Options/index",
+      "pathname": "/components/options",
+      "source": "src/Options/demos/basic.tsx",
+      "options": { "inline": false, "isolated": false, "layout": "default" }
+    },
+    {
+      "document": "src/Options/index.md",
+      "legacyId": "options-basic-2",
+      "legacyRouteId": "components/Options/index",
+      "pathname": "/components/options",
+      "source": "src/Options/demos/basic.tsx",
+      "options": { "inline": false, "isolated": false, "layout": "default" }
+    },
+    {
+      "document": "src/Options/index.md",
+      "legacyId": "options-center",
+      "legacyRouteId": "components/Options/index",
+      "pathname": "/components/options",
+      "source": "src/Options/demos/windows.tsx",
+      "options": { "inline": false, "isolated": false, "layout": "center" }
+    },
+    {
+      "document": "src/Options/index.md",
+      "legacyId": "options-bare-lower",
+      "legacyRouteId": "components/Options/index",
+      "pathname": "/components/options",
+      "source": "src/Options/demos/bare-lower.tsx",
+      "options": { "inline": false, "isolated": false, "layout": "bare" }
+    },
+    {
+      "document": "src/Options/index.md",
+      "legacyId": "options-bare-camel",
+      "legacyRouteId": "components/Options/index",
+      "pathname": "/components/options",
+      "source": "src/Options/demos/bare-camel.tsx",
+      "options": { "inline": false, "isolated": false, "layout": "bare" }
+    },
+    {
+      "document": "src/Options/index.md",
+      "legacyId": "options-isolated",
+      "legacyRouteId": "components/Options/index",
+      "pathname": "/components/options",
+      "source": "src/Options/demos/isolated.tsx",
+      "options": { "inline": false, "isolated": true, "layout": "default" }
+    },
+    {
+      "document": "src/Options/index.md",
+      "legacyId": "options-isolated-bare",
+      "legacyRouteId": "components/Options/index",
+      "pathname": "/components/options",
+      "source": "src/Options/demos/isolated-bare.tsx",
+      "options": { "inline": false, "isolated": true, "layout": "bare" }
+    },
+    {
+      "document": "src/Options/index.md",
+      "legacyId": "options-inline",
+      "legacyRouteId": "components/Options/index",
+      "pathname": "/components/options",
+      "source": "src/Options/demos/inline.tsx",
+      "options": { "inline": true, "isolated": false, "layout": "default" }
+    }
+  ],
+  "documents": [
+    {
+      "source": "docs/changelog.md",
+      "pathname": "/changelog",
+      "legacyRouteId": "docs/changelog",
+      "section": "Changelog",
+      "title": "Changelog",
+      "description": "Changes."
+    },
+    {
+      "source": "docs/index.mdx",
+      "pathname": "/",
+      "legacyRouteId": "docs/index",
+      "section": "Home",
+      "title": "Home",
+      "description": "Home."
+    },
+    {
+      "source": "src/Button/index.mdx",
+      "pathname": "/components/button",
+      "legacyRouteId": "components/Button/index",
+      "section": "Components",
+      "title": "Button",
+      "description": "Button."
+    },
+    {
+      "source": "src/Omitted/index.md",
+      "pathname": "/components/omitted",
+      "legacyRouteId": "components/Omitted/index",
+      "section": "Components",
+      "title": "Omitted",
+      "description": "Omitted."
+    },
+    {
+      "source": "src/Options/index.md",
+      "pathname": "/components/options",
+      "legacyRouteId": "components/Options/index",
+      "section": "Components",
+      "title": "Options"
+    },
+    {
+      "source": "src/Preserve/index.md",
+      "pathname": "/components/preserve",
+      "legacyRouteId": "components/Preserve/index",
+      "section": "Components",
+      "title": "Preserve",
+      "description": "Preserve."
+    },
+    {
+      "source": "src/Replace/index.md",
+      "pathname": "/components/replace",
+      "legacyRouteId": "components/Replace/index",
+      "section": "Components",
+      "title": "Replace",
+      "description": "Replace."
+    }
+  ]
+}

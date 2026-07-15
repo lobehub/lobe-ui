@@ -74,7 +74,7 @@ export interface SelectProps<Value = string> {
   labelRender?: (option: SelectOption<Value>) => ReactNode;
   /**
    * 设置弹窗滚动高度
-   * @default 256
+   * @default 512
    */
   listHeight?: number;
   listItemHeight?: number;

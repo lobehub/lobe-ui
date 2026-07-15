@@ -1,0 +1,94 @@
+---
+title: Select
+description: Base UI-powered Select component.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoAtoms from './demos/atoms.tsx?demo';
+import DemoRender from './demos/render.tsx?demo';
+import DemoIndicator from './demos/indicator.tsx?demo';
+import DemoVirtual from './demos/virtual.tsx?demo';
+import DemoClearValue from './demos/clearValue.tsx?demo';
+import DemoReactNodeSearch from './demos/reactNodeSearch.tsx?demo';
+import DemoClosedTags from './demos/closedTags.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Clear Value Contract
+
+<Demo of={DemoClearValue} layout="bare" />
+
+## ReactNode Label Search
+
+<Demo of={DemoReactNodeSearch} layout="bare" />
+
+## Tags with Closed Popup
+
+<Demo of={DemoClosedTags} layout="bare" />
+
+## Atom Components
+
+<Demo of={DemoAtoms} layout="bare" />
+
+## Custom Render
+
+<Demo of={DemoRender} layout="bare" />
+
+## Selected Indicator Variant
+
+<Demo of={DemoIndicator} layout="bare" />
+
+## Virtual List
+
+<Demo of={DemoVirtual} layout="bare" />
+
+## APIs
+
+### Select
+
+<Api name="Select" from=".." migrationKey="heading:%5B%22Select%22%5D:0" />
+
+### SelectOption
+
+| Property  | Description                | Type            | Default |
+| --------- | -------------------------- | --------------- | ------- |
+| className | The className of option    | `string`        | -       |
+| disabled  | Whether disabled           | `boolean`       | -       |
+| label     | Display text of option     | `ReactNode`     | -       |
+| style     | CSS style of option        | `CSSProperties` | -       |
+| title     | Title attribute for option | `string`        | -       |
+| value     | Value of option            | `Value`         | -       |
+
+### SelectOptionGroup
+
+| Property | Description           | Type             | Default |
+| -------- | --------------------- | ---------------- | ------- |
+| disabled | Whether disabled      | `boolean`        | -       |
+| label    | Display text of group | `ReactNode`      | -       |
+| options  | Options in this group | `SelectOption[]` | -       |
+
+### SelectClassNames
+
+| Property      | Description                          |
+| ------------- | ------------------------------------ |
+| clear         | Clear button                         |
+| dropdown      | Dropdown container (alias for popup) |
+| empty         | Empty state                          |
+| group         | Option group                         |
+| groupLabel    | Group label                          |
+| icon          | Suffix icon                          |
+| item          | Option item                          |
+| itemIndicator | Selected indicator                   |
+| itemText      | Option text                          |
+| list          | Options list                         |
+| option        | Option item (alias for item)         |
+| popup         | Popup container                      |
+| prefix        | Prefix element                       |
+| root          | Root container (alias for trigger)   |
+| search        | Search input container               |
+| suffix        | Suffix container                     |
+| trigger       | Trigger element                      |
+| value         | Value display                        |

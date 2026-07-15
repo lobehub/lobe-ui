@@ -19,11 +19,12 @@ import { type LobeCustomToken } from '@/types/customToken';
 import AppElementContext from './AppElementContext';
 import AntdConfigProvider from './ConfigProvider';
 import { LOBE_THEME_APP_ID } from './constants';
-import GlobalStyle from './GlobalStyle';
+import GlobalStyle, { EssentialStyle } from './GlobalStyle';
 import { type ThemeProviderProps } from './type';
 
 const ThemeProvider = memo<ThemeProviderProps>(
   ({
+    appId = LOBE_THEME_APP_ID,
     children,
     customStylish,
     customToken,
@@ -101,13 +102,14 @@ const ThemeProvider = memo<ThemeProviderProps>(
           {...rest}
         >
           <AntdConfigProvider>
+            <EssentialStyle />
             {enableGlobalStyle && <GlobalStyle />}
 
             <App
               className={className}
               style={{ isolation: 'isolate', minHeight: 'inherit', width: 'inherit', ...style }}
             >
-              <div id={LOBE_THEME_APP_ID} style={contentsStyle}>
+              <div id={appId} style={contentsStyle}>
                 <AppElementContext value={appRef}>
                   {children}
                   {/*

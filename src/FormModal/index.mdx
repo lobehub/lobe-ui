@@ -1,0 +1,48 @@
+---
+title: FormModal
+description: FormModal combines Form and Modal components to create a modal dialog with an integrated form. It provides a convenient way to collect user input in a popup interface.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoFlat from './demos/Flat.tsx?demo';
+import DemoError from './demos/Error.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Flat Type
+
+<Demo of={DemoFlat} layout="bare" />
+
+## Scroll To Error
+
+<Demo of={DemoError} layout="bare" />
+
+## APIs
+
+### FormModal
+
+<Api name="FormModal" migrationKey="heading:%5B%22FormModal%22%5D:0" />
+
+FormModal combines the properties from both Form and Modal components. It includes properties from Form (except for 'className', 'style', and 'title') and properties from Modal (including 'title', 'width', 'open', etc.).
+
+#### Modal Properties
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| open | Whether the modal is visible | `boolean` | `false` |
+| title | Title of the modal | `ReactNode` | - |
+| width | Width of the modal | `string \| number` | `520` |
+| centered | Whether to center the modal | `boolean` | `false` |
+| onCancel | Callback when the modal is closed | `(e) => void` | - |
+| allowFullscreen | Whether to allow the modal to be fullscreen | `boolean` | `false` |
+| enableResponsive | Enable responsive sizing for different screens | `boolean` | `false` |
+| paddings | Custom padding for the modal | `{ desktop?: number; mobile?: number }` | - |
+
+For a complete list of Modal properties, see the [Modal](/components/modal) documentation.
+
+#### Form Properties
+
+FormModal includes most properties from the Form component, such as 'onFinish', 'items', 'layout', etc. For a complete list of Form properties, see the [Form](/components/form) documentation.

@@ -1,0 +1,34 @@
+---
+title: Collapse
+description: An expandable content container that extends Ant Design Collapse with additional styling, icons, and header descriptions.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoPadding from './demos/Padding.tsx?demo';
+
+Collapse is a content container that can be expanded or collapsed. It extends Ant Design's Collapse with additional styling options and features like icons and descriptions in headers.
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Custom Padding
+
+<Demo of={DemoPadding} layout="center" />
+
+## APIs
+
+<Api name="Collapse" migrationKey="unheaded:0" />
+
+### CollapseItemType
+
+| Property | Description                      | Type                | Default |
+| -------- | -------------------------------- | ------------------- | ------- |
+| key      | Unique identifier of the panel   | `string \| number`  | -       |
+| label    | Title of the panel               | `ReactNode`         | -       |
+| desc     | Description text below the title | `ReactNode`         | -       |
+| icon     | Icon displayed before the title  | `IconProps['icon']` | -       |
+| children | Content of the panel             | `ReactNode`         | -       |
+
+> More API properties are inherited from [Ant Design Collapse](https://ant.design/components/collapse)

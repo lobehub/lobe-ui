@@ -1,0 +1,11 @@
+{
+  "frozenInventory": {
+    "apiSourceOverrides": 0,
+    "componentApiDecisions": 1,
+    "demoReferences": 2,
+    "documents": 1,
+    "initiallyMissingDescriptions": 1,
+    "isolatedDemos": 0,
+    "legacyManualApiSections": 0
+  }
+}

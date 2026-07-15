@@ -1,0 +1,31 @@
+---
+title: GridBackground
+description: GridBackground creates a dynamic grid pattern background with customizable colors and animation effects.
+category: Effect
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoShowcase from './demos/Showcase.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Showcase
+
+<Demo of={DemoShowcase} layout="center" />
+
+## APIs
+
+### GridBackground
+
+<Api name="GridBackground" from=".." migrationKey="heading:%5B%22GridBackground%22%5D:0" />
+
+### GridShowcase
+
+| Property        | Description                   | Type           | Default |
+| --------------- | ----------------------------- | -------------- | ------- |
+| backgroundColor | Background color              | `string`       | -       |
+| innerProps      | Props for the inner container | `FlexboxProps` | -       |
+
+> GridBackground inherits all div element properties GridShowcase inherits all Flexbox properties

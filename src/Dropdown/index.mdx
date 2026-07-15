@@ -1,0 +1,36 @@
+---
+title: Dropdown
+description: Dropdown displays a list of options that appear when users click or hover over a trigger element. It's commonly used for showing context menus, additional actions, or navigation options.
+category: Navigation
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoContextMenu from './demos/ContextMenu.tsx?demo';
+
+## default
+
+<Demo of={DemoIndex} layout="center" />
+
+## ContextMenu
+
+<Demo of={DemoContextMenu} layout="center" />
+
+## APIs
+
+### Dropdown
+
+<Api name="Dropdown" migrationKey="heading:%5B%22Dropdown%22%5D:0" />
+
+Additionally, Dropdown inherits all properties from Ant Design's Dropdown component except for the `menu` property, which has been enhanced.
+
+### DropdownMenuItemType
+
+Menu items for dropdown are the same as those used for the Menu component. See [Menu](/components/menu) for more details about item configuration.
+
+| Property | Description                     | Type                | Default |
+| -------- | ------------------------------- | ------------------- | ------- |
+| key      | Unique identifier for menu item | `string`            | -       |
+| label    | Display content of menu item    | `ReactNode`         | -       |
+| icon     | Icon for menu item              | `IconProps['icon']` | -       |
+| danger   | Whether menu item is dangerous  | `boolean`           | `false` |
+| disabled | Whether menu item is disabled   | `boolean`           | `false` |

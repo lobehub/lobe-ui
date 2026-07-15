@@ -1,0 +1,17 @@
+---
+title: TokenTag
+description: TokenTag is a dynamic button component that visualizes token usage with emoji indicators and textual information. It displays either remaining or used tokens with visual states (normal, low, overload) based on usage percentage. The component adapts to different screen sizes and supports customizable text labels and button shapes.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+The remaining tokens are calculated based on the `maxValue` and `value` props. The component has three types of visual styles: normal (😀), low (😅), and overload (🤯), which are determined by the percentage of remaining tokens. The component is memoized for performance optimization.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="TokenTag" from=".." />

@@ -1,0 +1,25 @@
+---
+title: ChatHeader
+description: ChatHeader is a versatile navigation component for chat interfaces. It offers a three-section layout (left, center, right) with customizable content and styling. The header includes an optional back button, supports flexible content arrangement, and inherits all FlexboxProps for additional layout customization.
+category: Layout
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+### ChatHeader
+
+<Api name="ChatHeader" from=".." migrationKey="heading:%5B%22ChatHeader%22%5D:0" />
+
+### ChatHeaderTitle
+
+| Property | Description                     | Type                  | Default |
+| -------- | ------------------------------- | --------------------- | ------- |
+| desc     | Description or subtitle text    | `string \| ReactNode` | -       |
+| tag      | Tag element shown next to title | `ReactNode`           | -       |
+| title    | Main title content (required)   | `string \| ReactNode` | -       |

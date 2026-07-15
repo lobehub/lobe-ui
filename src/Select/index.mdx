@@ -1,0 +1,19 @@
+---
+title: Select
+description: Select component lets users choose from a list of options in a dropdown menu. It supports various styling options and custom suffix icons.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+### Select
+
+<Api name="Select" migrationKey="heading:%5B%22Select%22%5D:0" />
+
+Select inherits all properties from Ant Design's Select component except for 'suffixIcon', which has been enhanced to support Lucide icons directly. The component automatically adjusts its appearance based on the current theme (light/dark mode) unless a specific variant is provided.

@@ -1,0 +1,53 @@
+---
+title: Tag
+description: Tag is used for marking and categorizing content with small colorful labels. It offers multiple styles, sizes, and color options for different scenarios.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoColor from './demos/Color.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Color
+
+<Demo of={DemoColor} layout="center" />
+
+## APIs
+
+### Tag
+
+<Api name="Tag" migrationKey="heading:%5B%22Tag%22%5D:0" />
+
+Additionally, Tag inherits all properties from Ant Design's Tag component except for 'color', which has been enhanced with additional options.
+
+### Color Presets
+
+The component supports the following color presets:
+
+#### System Colors
+
+- `success`: Green color indicating successful actions
+- `warning`: Yellow/orange color for warnings
+- `error`: Red color for errors
+- `info`: Blue color for informational content
+
+#### Theme Colors
+
+- `red`
+- `volcano`
+- `orange`
+- `gold`
+- `yellow`
+- `lime`
+- `green`
+- `cyan`
+- `blue`
+- `geekblue`
+- `purple`
+- `magenta`
+- `gray`
+
+You can also provide any hex color code (e.g., `#ff5500`) for custom colors.

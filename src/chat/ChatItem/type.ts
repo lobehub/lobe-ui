@@ -69,8 +69,8 @@ export interface ChatItemProps extends Omit<FlexboxProps, 'children' | 'onChange
   primary?: boolean;
   renderMessage?: (content: ReactNode) => ReactNode;
   /**
-   * @description Whether to hide the avatar
-   * @default false
+   * @description Whether to show the avatar
+   * @default true
    */
   showAvatar?: boolean;
   /**

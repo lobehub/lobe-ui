@@ -1,0 +1,43 @@
+---
+title: Tabs
+description: Base UI-powered Tabs with iOS-flavored interactions — no hover background, tap-scale feedback, and a sliding active indicator across rounded / square / point variants.
+category: Navigation
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoAtoms from './demos/atoms.tsx?demo';
+import DemoImplicitDefault from './demos/implicitDefault.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Implicit Initial Selection
+
+<Demo of={DemoImplicitDefault} layout="bare" />
+
+## Atom Components
+
+<Demo of={DemoAtoms} layout="bare" />
+
+## APIs
+
+### Tabs
+
+<Api name="Tabs" from=".." migrationKey="heading:%5B%22Tabs%22%5D:0" />
+
+### TabsItem
+
+| Property | Description                 | Type        | Default |
+| -------- | --------------------------- | ----------- | ------- |
+| key      | Unique key                  | `string`    | -       |
+| label    | Tab label                   | `ReactNode` | -       |
+| icon     | Leading icon                | `ReactNode` | -       |
+| children | Panel content               | `ReactNode` | -       |
+| disabled | Whether the tab is disabled | `boolean`   | `false` |
+
+### Variants
+
+- `rounded` (default) — pill-shaped filled background slides between tabs.
+- `square` — underline bar with square ends, anchored to the list bottom.
+- `point` — small dot indicator centered under the active tab.

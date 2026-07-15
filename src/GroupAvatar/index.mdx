@@ -1,0 +1,53 @@
+---
+title: GroupAvatar
+description: GroupAvatar is a component that displays multiple user avatars in a grid layout with smooth corner styling. It supports different corner types including iOS-style superellipse shapes for modern visual appeal. The component automatically arranges up to 4 avatars in a 2x2 grid and applies smooth corner masks for enhanced visual presentation.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoCornerShape from './demos/CornerShape.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Corner Shape
+
+<Demo of={DemoCornerShape} layout="center" />
+
+## APIs
+
+### GroupAvatar
+
+<Api name="GroupAvatar" migrationKey="heading:%5B%22GroupAvatar%22%5D:0" />
+
+### AvatarItem
+
+Avatar items can be either:
+
+- **String**: Direct URL to an avatar image
+- **Object**: Avatar configuration with the following properties:
+
+| Property   | Description                   | Type                  | Default |
+| ---------- | ----------------------------- | --------------------- | ------- |
+| avatar     | Avatar content (URL or emoji) | `string \| ReactNode` | -       |
+| background | Background color              | `string`              | -       |
+
+### Corner Shape Types
+
+- **`circle`**: Perfect circle shape (50% border radius)
+- **`square`**: Rounded square (15% border radius)
+- **`squircle`**: Classic squircle shape (n=4) - balanced between square and circle
+- **`ios`**: iOS-style corners (n=5) - used in Apple icons since iOS 7
+- **`smooth`**: Extra smooth corners (n=3) - more rounded appearance
+- **`sharp`**: Sharp corners (n=6) - subtle rounding, closer to rectangle
+
+### Grid Layout
+
+The `grid` property controls how avatars are arranged in the group:
+
+- **`2`**: 2x2 grid layout (displays up to 4 avatars)
+- **`3`**: 3x3 grid layout (displays up to 9 avatars)
+- **`'auto'`**: Automatically determines grid size based on avatar count
+  - Uses 2x2 grid for 4 or fewer avatars
+  - Uses 3x3 grid for more than 4 avatars
