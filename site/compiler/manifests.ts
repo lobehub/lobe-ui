@@ -12,6 +12,7 @@ export function getPrerenderPaths(): string[] {
     ...createContentManifest(repositoryRoot).documents.map(({ pathname }) => pathname),
     '/404',
     '/antd.css',
+    '/theme-vars.css',
     ...getStandaloneDemoPaths(compatibility as DocumentationInventory),
   ];
 }

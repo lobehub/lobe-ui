@@ -42,9 +42,9 @@ export default async function handleRequest(
     }
 
     const html = await new Response(prelude).text();
-    // antd rules ship via /antd.css, so the inline antd entry shrinks to component
-    // css-var blocks (+ fallback rules for components the probe missed); emotion
-    // styles (createStaticStyles / injectGlobal / createStyles) stay per-page.
+    // antd rules ship via /antd.css and token palettes via /theme-vars.css, so the
+    // inline antd entry shrinks to component css-var blocks (+ fallback rules for
+    // components the probe missed); emotion styles stay per-page.
     const styles =
       buildInlineAntdStyle(extractStaticStyle.cache) +
       extractStaticStyle(html, { includeAntd: false })

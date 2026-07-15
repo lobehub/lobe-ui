@@ -157,7 +157,10 @@ it('preserves the homepage demo source and every frozen standalone path', () => 
   expect(
     prerenderPaths.filter(
       (pathname) =>
-        pathname !== '/404' && pathname !== '/antd.css' && !pathname.startsWith('/~demos/'),
+        pathname !== '/404' &&
+        pathname !== '/antd.css' &&
+        pathname !== '/theme-vars.css' &&
+        !pathname.startsWith('/~demos/'),
     ),
   ).toHaveLength(160);
 });

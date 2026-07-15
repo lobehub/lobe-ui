@@ -17,6 +17,7 @@ export const links: LinksFunction = () => [
   { href: '/favicon-32x32.png', rel: 'icon', sizes: '32x32', type: 'image/png' },
   { href: '/apple-touch-icon.png', rel: 'apple-touch-icon', sizes: '180x180' },
   { href: '/antd.css', rel: 'stylesheet' },
+  { href: '/theme-vars.css', rel: 'stylesheet' },
   { href: GEIST_FONT_STYLESHEET, rel: 'stylesheet' },
   { href: GEIST_MONO_FONT_STYLESHEET, rel: 'stylesheet' },
 ];

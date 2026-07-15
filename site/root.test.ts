@@ -31,3 +31,14 @@ it('publishes favicon link tags for browsers and Apple devices', async () => {
     ]),
   );
 });
+
+it('publishes antd and theme-vars stylesheets for pre-paint tokens', async () => {
+  const descriptors = await links();
+
+  expect(descriptors).toEqual(
+    expect.arrayContaining([
+      { href: '/antd.css', rel: 'stylesheet' },
+      { href: '/theme-vars.css', rel: 'stylesheet' },
+    ]),
+  );
+});
