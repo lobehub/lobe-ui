@@ -18,7 +18,12 @@ export const createCliContext = (kitRoot: string, cwd: string): CliContext => ({
   viteConfigPath: path.join(kitRoot, 'vite.config.ts'),
 });
 
-const runReactRouter = (context: CliContext, subcommand: string, extraArgs: string[]) => {
+const runReactRouter = (
+  context: CliContext,
+  subcommand: string,
+  extraArgs: string[],
+  options: { treatSignalsAsSuccess?: boolean } = {},
+) => {
   const consumerRequire = createRequire(pathToFileURL(path.join(context.cwd, 'package.json')).href);
   const reactRouterBinPath = resolveBin(
     '@react-router/dev',
@@ -32,7 +37,7 @@ const runReactRouter = (context: CliContext, subcommand: string, extraArgs: stri
       reactRouterBinPath,
       ...buildReactRouterArgs(subcommand, context.cwd, context.viteConfigPath, extraArgs),
     ],
-    { cwd: context.cwd },
+    { cwd: context.cwd, ...options },
   );
 };
 
@@ -51,7 +56,7 @@ export const commands = {
     await runFinalizeBuild(context);
   },
   dev: async (context: CliContext, args: string[]) => {
-    await runReactRouter(context, 'dev', args);
+    await runReactRouter(context, 'dev', args, { treatSignalsAsSuccess: true });
   },
   typegen: async (context: CliContext, args: string[]) => {
     await runReactRouter(context, 'typegen', args);
