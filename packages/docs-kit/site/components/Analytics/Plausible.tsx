@@ -1,4 +1,4 @@
-import { siteMetadata } from '../../content/siteMetadata';
+import siteConfig from 'virtual:lobedocs/site-config';
 
 interface PlausibleProps {
   enabled?: boolean;
@@ -7,7 +7,8 @@ interface PlausibleProps {
 export function Plausible({ enabled = import.meta.env.PROD }: PlausibleProps) {
   if (!enabled) return null;
 
-  return (
-    <script defer data-domain={siteMetadata.plausible.domain} src={siteMetadata.plausible.source} />
-  );
+  const plausible = siteConfig.themeConfig?.analytics?.plausible;
+  if (!plausible) return null;
+
+  return <script defer data-domain={plausible.domain} src={plausible.source} />;
 }

@@ -7,6 +7,8 @@ import { unified } from 'unified';
 import type { Node, Parent } from 'unist';
 
 import { packageNamespaces } from '../../../../config/packageNamespaces';
+import { type AtomDirConfig } from '../../src/config';
+import { defaultAtomDirs } from './content/discoverDocuments';
 import { createLegacyDemoId } from './legacyDumiIds';
 import type { DemoOptions, DemoReference, DocumentationInventory, DocumentRecord } from './types';
 
@@ -46,17 +48,6 @@ const sortStrings = (left: string, right: string): number =>
   left === right ? 0 : left < right ? -1 : 1;
 
 const isFile = (path: string): boolean => existsSync(path) && statSync(path).isFile();
-
-const readFrozenInventory = (root: string): DocumentationInventory | undefined => {
-  const path = resolve(root, 'packages/docs-kit/site/content/compatibility.json');
-  if (!isFile(path)) return;
-
-  const inventory = JSON.parse(readFileSync(path, 'utf8')) as DocumentationInventory;
-  if (!Array.isArray(inventory.documents) || !Array.isArray(inventory.demoReferences)) {
-    throw new Error(`Invalid compatibility manifest: ${path}`);
-  }
-  return inventory;
-};
 
 const documentStem = (source: string): string => source.replace(/\.mdx?$/, '');
 
@@ -206,6 +197,7 @@ const kebabRouteSegment = (value: string): string =>
 
 const deriveDocumentLocation = (
   source: string,
+  atomDirs: readonly AtomDirConfig[],
 ): Pick<DocumentRecord, 'legacyRouteId' | 'pathname'> => {
   const stem = documentStem(source);
   if (stem === 'docs/index') return { legacyRouteId: 'docs/index', pathname: '/' };
@@ -213,7 +205,9 @@ const deriveDocumentLocation = (
     return { legacyRouteId: 'docs/changelog', pathname: '/changelog' };
   }
 
-  const componentPath = stem.slice('src/'.length, -'/index'.length);
+  const atomDir = atomDirs.find(({ dir }) => stem.startsWith(`${dir}/`));
+  if (!atomDir) throw new Error(`Unable to resolve documentation route for ${source}`);
+  const componentPath = stem.slice(atomDir.dir.length + 1, -'/index'.length);
   const pathname = `/components/${componentPath.split('/').map(kebabRouteSegment).join('/')}`;
   return {
     legacyRouteId: `components/${componentPath}/index`,
@@ -221,11 +215,13 @@ const deriveDocumentLocation = (
   };
 };
 
-const deriveDocumentSection = (source: string): string => {
+const deriveDocumentSection = (source: string, navSections: Record<string, string>): string => {
   const stem = documentStem(source);
   if (stem === 'docs/index') return 'Home';
   if (stem === 'docs/changelog') return 'Changelog';
-  if (stem === 'src/i18n/index') return 'Hooks & Providers';
+
+  const override = navSections[`${stem}.mdx`] ?? navSections[`${stem}.md`];
+  if (override) return override;
 
   const namespace = source.split('/')[1] as (typeof packageNamespaces)[number];
   return packageSectionLabels[namespace] ?? 'Components';
@@ -251,17 +247,21 @@ export const deriveAtomIdFromPaths = (
     .replace(/((^|\/)index)?\.\w+$/, '');
 };
 
-const inferAtomId = (root: string, document: string): string | undefined => {
+const inferAtomId = (
+  root: string,
+  document: string,
+  atomDirs: readonly AtomDirConfig[],
+): string | undefined => {
   const documentDirectory = dirname(resolve(root, document));
   const atomFile = ['index.tsx', 'index.jsx']
     .map((filename) => resolve(documentDirectory, filename))
     .find(isFile);
   if (!atomFile) return undefined;
 
-  const atomDirectories = [
-    resolve(root, 'src'),
-    ...packageNamespaces.map((namespace) => resolve(root, 'src', namespace)),
-  ];
+  const atomDirectories = atomDirs.flatMap(({ dir }) => [
+    resolve(root, dir),
+    ...packageNamespaces.map((namespace) => resolve(root, dir, namespace)),
+  ]);
 
   return deriveAtomIdFromPaths(atomDirectories, atomFile);
 };
@@ -277,13 +277,18 @@ const createDemoOptions = (attributes: Map<string, string | true>): DemoOptions 
         : 'default',
 });
 
-const createDocumentRecord = (source: string, frontmatter: FrontmatterRecord): DocumentRecord => {
-  const location = deriveDocumentLocation(source);
+const createDocumentRecord = (
+  source: string,
+  frontmatter: FrontmatterRecord,
+  atomDirs: readonly AtomDirConfig[],
+  navSections: Record<string, string>,
+): DocumentRecord => {
+  const location = deriveDocumentLocation(source, atomDirs);
   const category =
     getString(frontmatter, 'group') ?? getNestedString(frontmatter, 'group', 'title');
   const description =
     getString(frontmatter, 'description') ?? getNestedString(frontmatter, 'hero', 'description');
-  const section = deriveDocumentSection(source);
+  const section = deriveDocumentSection(source, navSections);
   const title = getString(frontmatter, 'title');
 
   return {
@@ -301,9 +306,10 @@ const createDemoReferences = (
   document: DocumentRecord,
   frontmatter: FrontmatterRecord,
   tree: Node,
+  atomDirs: readonly AtomDirConfig[],
 ): DemoReference[] => {
   const references: DemoReference[] = [];
-  const atomId = getString(frontmatter, 'atomId') ?? inferAtomId(root, document.source);
+  const atomId = getString(frontmatter, 'atomId') ?? inferAtomId(root, document.source, atomDirs);
 
   for (const node of findNodes(tree, 'html')) {
     const value = 'value' in node && typeof node.value === 'string' ? node.value : '';
@@ -375,9 +381,20 @@ const inheritFrozenDemoReferences = (
     });
 };
 
-export function buildDocumentationInventory(root: string): DocumentationInventory {
+export interface BuildDocumentationInventoryOptions {
+  atomDirs?: readonly AtomDirConfig[];
+  legacyRedirects?: DocumentationInventory;
+  navSections?: Record<string, string>;
+}
+
+export function buildDocumentationInventory(
+  root: string,
+  options: BuildDocumentationInventoryOptions = {},
+): DocumentationInventory {
   const absoluteRoot = resolve(root);
-  const frozenInventory = readFrozenInventory(absoluteRoot);
+  const atomDirs = options.atomDirs ?? defaultAtomDirs;
+  const navSections = options.navSections ?? {};
+  const frozenInventory = options.legacyRedirects;
   const requiredStems = new Set<string>([
     ...publicDocumentationStems,
     ...(frozenInventory?.documents.map(({ source }) => documentStem(source)) ?? []),
@@ -386,8 +403,10 @@ export function buildDocumentationInventory(root: string): DocumentationInventor
   for (const stem of requiredStems) selectDocumentFormat(absoluteRoot, stem);
 
   const sources = [
-    ...collectSourceDocuments(resolve(absoluteRoot, 'src')).map((path) =>
-      normalizePath(relative(absoluteRoot, path)),
+    ...atomDirs.flatMap(({ dir }) =>
+      collectSourceDocuments(resolve(absoluteRoot, dir)).map((path) =>
+        normalizePath(relative(absoluteRoot, path)),
+      ),
     ),
     ...publicDocumentationStems.map((stem) => selectDocumentFormat(absoluteRoot, stem)),
   ].sort(sortStrings);
@@ -410,7 +429,7 @@ export function buildDocumentationInventory(root: string): DocumentationInventor
       yamlNode && 'value' in yamlNode && typeof yamlNode.value === 'string'
         ? parseFrontmatter(yamlNode.value)
         : {};
-    const parsedDocument = createDocumentRecord(source, frontmatter);
+    const parsedDocument = createDocumentRecord(source, frontmatter, atomDirs, navSections);
     const frozenDocument = source.endsWith('.mdx')
       ? findFrozenDocument(frozenInventory, parsedDocument)
       : undefined;
@@ -427,7 +446,7 @@ export function buildDocumentationInventory(root: string): DocumentationInventor
 
     const references = source.endsWith('.mdx')
       ? inheritFrozenDemoReferences(absoluteRoot, frozenInventory, document)
-      : createDemoReferences(absoluteRoot, document, frontmatter, tree);
+      : createDemoReferences(absoluteRoot, document, frontmatter, tree, atomDirs);
 
     for (const reference of references) {
       const previousReference = legacyIds.get(reference.legacyId);
@@ -445,7 +464,7 @@ export function buildDocumentationInventory(root: string): DocumentationInventor
 }
 
 export function writeCompatibilityManifest(root: string, inventory: DocumentationInventory): void {
-  const outputPath = resolve(root, 'packages/docs-kit/site/content/compatibility.json');
+  const outputPath = resolve(root, 'compatibility.json');
   const output = `${JSON.stringify(inventory, null, 2)}\n`;
   if (existsSync(outputPath) && readFileSync(outputPath, 'utf8') === output) return;
 

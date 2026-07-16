@@ -3,16 +3,16 @@ import type {
   NavigationCategory,
   NavigationSection,
 } from '../types/content';
-import navigationSections from './navigationSections.json';
 
 export interface FrozenNavigationDocument {
   section: string;
   source: string;
 }
 
-const frozenNavigationDocuments: FrozenNavigationDocument[] = Object.entries(
-  navigationSections,
-).map(([source, section]) => ({ section, source }));
+export const toFrozenNavigationDocuments = (
+  navSections: Record<string, string>,
+): FrozenNavigationDocument[] =>
+  Object.entries(navSections).map(([source, section]) => ({ section, source }));
 
 export const reviewedCategoryOrder = {
   General: -1,
@@ -66,7 +66,7 @@ const compareSections = (left: NavigationSection, right: NavigationSection): num
 
 export function createNavigation(
   documents: readonly DocumentManifestEntry[],
-  frozenDocuments: readonly FrozenNavigationDocument[] = frozenNavigationDocuments,
+  frozenDocuments: readonly FrozenNavigationDocument[],
 ): NavigationSection[] {
   const frozenBySource = new Map<string, FrozenNavigationDocument[]>();
   for (const frozenDocument of frozenDocuments) {

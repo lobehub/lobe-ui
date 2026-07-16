@@ -1,6 +1,8 @@
 import { existsSync, readdirSync, statSync } from 'node:fs';
 import { basename, extname, relative, resolve } from 'node:path';
 
+import type { AtomDirConfig } from '../../../src/config';
+
 export type DocumentKind = 'home' | 'changelog' | 'component';
 
 export interface DiscoveredDocument {
@@ -8,6 +10,8 @@ export interface DiscoveredDocument {
   kind: DocumentKind;
   source: string;
 }
+
+export const defaultAtomDirs: AtomDirConfig[] = [{ dir: 'src' }];
 
 const inferKind = (source: string): DocumentKind => {
   if (source === 'docs/index.mdx') return 'home';
@@ -17,14 +21,19 @@ const inferKind = (source: string): DocumentKind => {
 
 const normalizePath = (path: string): string => path.replaceAll('\\', '/');
 
-const inferStandaloneSource = (absolutePath: string): string => {
+const inferStandaloneSource = (
+  absolutePath: string,
+  atomDirs: readonly AtomDirConfig[],
+): string => {
   const normalizedPath = normalizePath(absolutePath);
   if (normalizedPath.endsWith('/docs/index.mdx')) return 'docs/index.mdx';
   if (normalizedPath.endsWith('/docs/changelog.mdx')) return 'docs/changelog.mdx';
 
-  const sourceMarker = '/src/';
-  const sourceIndex = normalizedPath.lastIndexOf(sourceMarker);
-  if (sourceIndex >= 0) return normalizedPath.slice(sourceIndex + 1);
+  for (const { dir } of atomDirs) {
+    const sourceMarker = `/${dir}/`;
+    const sourceIndex = normalizedPath.lastIndexOf(sourceMarker);
+    if (sourceIndex >= 0) return normalizedPath.slice(sourceIndex + 1);
+  }
   return basename(absolutePath);
 };
 
@@ -42,12 +51,15 @@ const collectComponentDocuments = (directory: string): string[] => {
   return documents;
 };
 
-export function discoverDocuments(root: string): DiscoveredDocument[] {
+export function discoverDocuments(
+  root: string,
+  atomDirs: readonly AtomDirConfig[] = defaultAtomDirs,
+): DiscoveredDocument[] {
   const absoluteRoot = resolve(root);
   const stat = statSync(absoluteRoot);
 
   if (stat.isFile() && extname(absoluteRoot) === '.mdx') {
-    const source = inferStandaloneSource(absoluteRoot);
+    const source = inferStandaloneSource(absoluteRoot, atomDirs);
     return [{ absolutePath: absoluteRoot, kind: inferKind(source), source }];
   }
 
@@ -58,7 +70,7 @@ export function discoverDocuments(root: string): DiscoveredDocument[] {
   const absolutePaths = [
     resolve(absoluteRoot, 'docs/index.mdx'),
     resolve(absoluteRoot, 'docs/changelog.mdx'),
-    ...collectComponentDocuments(resolve(absoluteRoot, 'src')),
+    ...atomDirs.flatMap(({ dir }) => collectComponentDocuments(resolve(absoluteRoot, dir))),
   ].filter((path) => existsSync(path) && statSync(path).isFile());
 
   return absolutePaths.map((absolutePath) => {

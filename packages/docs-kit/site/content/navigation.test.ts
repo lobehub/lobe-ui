@@ -1,7 +1,7 @@
+import compatibility from '../../../../compatibility.json';
+import navigationSections from '../../../../navigationSections.json';
 import type { DocumentManifestEntry } from '../types/content';
-import compatibility from './compatibility.json';
-import { createNavigation } from './navigation';
-import navigationSections from './navigationSections.json';
+import { createNavigation, toFrozenNavigationDocuments } from './navigation';
 
 interface FrozenDocument {
   section: string;
@@ -190,7 +190,7 @@ describe('reviewed documentation navigation', () => {
         title: record.title ?? 'Documentation overview',
       }),
     );
-    const navigation = createNavigation(documents);
+    const navigation = createNavigation(documents, toFrozenNavigationDocuments(navigationSections));
     const nestedDocuments = navigation.flatMap(({ categories }) =>
       categories.flatMap(({ documents: categoryDocuments }) => categoryDocuments),
     );

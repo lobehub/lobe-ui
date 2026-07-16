@@ -1,4 +1,6 @@
-import { createNavigation } from '../../content/navigation';
+import siteConfig from 'virtual:lobedocs/site-config';
+
+import { createNavigation, toFrozenNavigationDocuments } from '../../content/navigation';
 import { canonicalizePathname } from '../../content/pathname';
 import type { ContentManifest, DocumentManifestEntry, MDXModule } from '../../types/content';
 
@@ -37,7 +39,7 @@ const documents = [...Object.values(publicMetadata), ...Object.values(componentM
 
 export const contentManifest: ContentManifest = {
   documents,
-  navigation: createNavigation(documents),
+  navigation: createNavigation(documents, toFrozenNavigationDocuments(siteConfig.navSections)),
 };
 
 const entriesByPathname = new Map<string, DocumentManifestEntry>();

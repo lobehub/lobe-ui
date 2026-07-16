@@ -1,9 +1,9 @@
 import { use } from 'react';
 import type { MetaFunction } from 'react-router';
 import { useLocation } from 'react-router';
+import siteConfig from 'virtual:lobedocs/site-config';
 
 import { DocsLayout } from '../../components/DocsLayout/DocsLayout';
-import { siteMetadata } from '../../content/siteMetadata';
 import type { DocumentManifestEntry } from '../../types/content';
 import { contentManifest, findDocument, loadDocument } from '../content/registry';
 
@@ -32,19 +32,20 @@ export const meta: MetaFunction = ({ location }) => {
     ];
   }
 
-  const title = `${document.title} - ${siteMetadata.name}`;
-  const canonicalUrl = new URL(document.pathname, siteMetadata.origin).href;
+  const title = `${document.title} - ${siteConfig.title}`;
+  const canonicalUrl = new URL(document.pathname, siteConfig.siteUrl).href;
+  const openGraphImage = siteConfig.themeConfig?.metadata?.openGraph?.image ?? '';
 
   return [
     { title },
     { content: document.description, name: 'description' },
     { href: canonicalUrl, rel: 'canonical', tagName: 'link' },
     { content: 'website', property: 'og:type' },
-    { content: siteMetadata.name, property: 'og:site_name' },
+    { content: siteConfig.title, property: 'og:site_name' },
     { content: title, property: 'og:title' },
     { content: document.description, property: 'og:description' },
     { content: canonicalUrl, property: 'og:url' },
-    { content: siteMetadata.openGraphImage, property: 'og:image' },
+    { content: openGraphImage, property: 'og:image' },
     { content: 'summary_large_image', name: 'twitter:card' },
   ];
 };

@@ -1476,7 +1476,7 @@ const promoteMigration = ({
 
 export async function migrateDumiDocs(options: MigrateDumiDocsOptions): Promise<MigrationReport> {
   const root = resolve(options.root);
-  const compatibilityPath = resolve(root, 'packages/docs-kit/site/content/compatibility.json');
+  const compatibilityPath = resolve(root, 'compatibility.json');
   const compatibility = readJson<CompatibilityManifest>(compatibilityPath);
   const config = await readMigrationConfig(root);
   const unknownAttributes: Diagnostic[] = [];

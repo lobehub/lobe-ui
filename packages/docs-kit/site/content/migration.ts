@@ -1,3 +1,4 @@
+import compatibility from '../../../../compatibility.json';
 import type {
   ApiMigrationConfig,
   ApiTarget,
@@ -5,7 +6,6 @@ import type {
   MigrationConfig,
 } from '../../../../scripts/migrate-dumi-docs';
 import { apiOverrides } from './apiOverrides';
-import compatibility from './compatibility.json';
 import { reviewedCategoryOrder } from './navigation';
 
 const finalDocument = (source: string): string => source.replace(/\.md$/, '.mdx');

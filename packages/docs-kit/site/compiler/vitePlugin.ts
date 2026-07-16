@@ -3,12 +3,17 @@ import { dirname, resolve } from 'node:path';
 
 import type { Plugin } from 'vite';
 
+import { getDocsConfig } from '../../src/config';
 import { apiPlugin } from './api/apiPlugin';
 import { createContentManifest } from './content/createManifest';
 import { demoPlugin } from './demo/demoPlugin';
 
 const metadataQuery = 'document-metadata';
 const metadataPrefix = '\0lobe-docs:document-metadata:';
+const siteConfigVirtualId = 'virtual:lobedocs/site-config';
+const resolvedSiteConfigVirtualId = `\0${siteConfigVirtualId}`;
+const compatibilityVirtualId = 'virtual:lobedocs/compatibility';
+const resolvedCompatibilityVirtualId = `\0${compatibilityVirtualId}`;
 
 const getMetadataPath = (id: string): string | undefined => {
   const queryIndex = id.indexOf('?');
@@ -25,10 +30,40 @@ const resolveMetadataPath = (path: string, importer?: string): string => {
   return resolve(path);
 };
 
+export function lobeDocsSiteConfigPlugin(root: string = process.cwd()): Plugin {
+  return {
+    load(id) {
+      if (id === resolvedSiteConfigVirtualId) {
+        const config = getDocsConfig(root);
+        const clientConfig = {
+          description: config.description,
+          favicons: config.favicons,
+          navSections: config.navSections,
+          siteUrl: config.siteUrl,
+          themeConfig: config.themeConfig,
+          title: config.title,
+        };
+        return `export default ${JSON.stringify(clientConfig)};`;
+      }
+      if (id === resolvedCompatibilityVirtualId) {
+        const config = getDocsConfig(root);
+        const legacyRedirects = config.legacyRedirects ?? { demoReferences: [], documents: [] };
+        return `export default ${JSON.stringify(legacyRedirects)};`;
+      }
+    },
+    name: 'lobe-docs-site-config',
+    resolveId(source) {
+      if (source === siteConfigVirtualId) return resolvedSiteConfigVirtualId;
+      if (source === compatibilityVirtualId) return resolvedCompatibilityVirtualId;
+    },
+  };
+}
+
 export function lobeDocs(): Plugin[] {
   return [
     demoPlugin(),
     apiPlugin(),
+    lobeDocsSiteConfigPlugin(),
     {
       enforce: 'pre',
       load(id) {

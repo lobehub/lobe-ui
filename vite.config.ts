@@ -7,14 +7,28 @@ import remarkFrontmatter from 'remark-frontmatter';
 import remarkGfm from 'remark-gfm';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import { visualizer } from 'rollup-plugin-visualizer';
-import { defineConfig } from 'vite';
+import { type Alias, defineConfig } from 'vite';
 
 import { remarkApi } from './packages/docs-kit/site/compiler/api/remarkApi';
 import { rehypeHeadingIds } from './packages/docs-kit/site/compiler/content/rehypeHeadingIds';
 import { devPagefindPlugin } from './packages/docs-kit/site/compiler/search/devPagefindPlugin';
 import { lobeDocs } from './packages/docs-kit/site/compiler/vitePlugin';
+import { getDocsConfig } from './packages/docs-kit/src/config';
 
-const sourceRoot = path.resolve(import.meta.dirname, 'src');
+const repositoryRoot = import.meta.dirname;
+const docsConfig = getDocsConfig(repositoryRoot);
+
+const escapeRegExp = (value: string): string => value.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+const createAliasEntries = (alias: Record<string, string> = {}): Alias[] =>
+  Object.entries(alias).flatMap(([find, target]) => {
+    const replacement = path.resolve(repositoryRoot, target);
+    const escapedFind = escapeRegExp(find);
+    return [
+      { find: new RegExp(`^${escapedFind}$`), replacement },
+      { find: new RegExp(`^${escapedFind}/(.+)$`), replacement: `${replacement}/$1` },
+    ];
+  });
 
 export default defineConfig({
   optimizeDeps: {
@@ -50,11 +64,7 @@ export default defineConfig({
       : undefined,
   ],
   resolve: {
-    alias: [
-      { find: '@', replacement: sourceRoot },
-      { find: /^@lobehub\/ui$/, replacement: sourceRoot },
-      { find: /^@lobehub\/ui\/(.+)$/, replacement: `${sourceRoot}/$1` },
-    ],
+    alias: createAliasEntries(docsConfig.alias),
     tsconfigPaths: true,
   },
   ssr: {

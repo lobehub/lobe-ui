@@ -296,7 +296,7 @@ describe('deterministic dumi demo migration', () => {
 
   it('enforces the configured frozen inventory when a manifest entry disappears', async () => {
     const root = copyFixture('complete');
-    const compatibilityPath = resolve(root, 'packages/docs-kit/site/content/compatibility.json');
+    const compatibilityPath = resolve(root, 'compatibility.json');
     const compatibility = JSON.parse(readFileSync(compatibilityPath, 'utf8'));
     compatibility.documents = compatibility.documents.filter(
       ({ source }: { source: string }) => source !== 'src/Replace/index.md',
@@ -344,7 +344,7 @@ describe('deterministic dumi demo migration', () => {
         check: false,
         fileOperations: {
           writeFile(path, contents) {
-            if (path.endsWith('packages/docs-kit/site/content/compatibility.json')) {
+            if (path.endsWith('compatibility.json')) {
               throw new Error('injected promotion failure');
             }
             writeFileSync(path, contents);
