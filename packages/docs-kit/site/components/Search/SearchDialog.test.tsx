@@ -201,6 +201,22 @@ it('enters the anchor list with Arrow keys and navigates to a sub-result with ha
   expect(readRecents()[0]).toMatchObject({ pathname: '/components/button', title: 'Button' });
 });
 
+it('decodes HTML entities in the preview excerpt and still renders it as text', async () => {
+  const engine = createEngine([
+    {
+      category: 'Components',
+      excerpt: 'ReactElement&lt;unknown&gt; &amp; &lt;img src=x&gt;',
+      id: 'button',
+      pathname: '/components/button',
+      title: 'Button',
+    },
+  ]);
+  await openAndType(engine, 'button');
+
+  expect(document.body.textContent).toContain('ReactElement<unknown> & <img src=x>');
+  expect(document.querySelector('img')).toBeNull();
+});
+
 it('dedupes recents by page pathname when activating hits with different hashes', async () => {
   const searchbox1 = await openAndType(
     createEngine([

@@ -16,9 +16,9 @@ export const styles = createStaticStyles(({ css }) => {
     display: flex;
     flex-direction: column;
 
-    width: min(100%, 44rem);
-    height: min(37rem, calc(100dvh - 2rem));
-    max-height: min(37rem, calc(100dvh - 2rem));
+    width: min(100%, 52rem);
+    height: min(40rem, calc(100dvh - 2rem));
+    max-height: min(40rem, calc(100dvh - 2rem));
     border: 1px solid var(--docs-border-default);
     border-radius: var(--docs-radius-lg);
 
@@ -166,6 +166,12 @@ export const styles = createStaticStyles(({ css }) => {
         &::placeholder {
           color: var(--docs-text-subtle);
         }
+
+        &::-webkit-search-cancel-button,
+        &::-webkit-search-decoration {
+          display: none;
+          appearance: none;
+        }
       }
     `,
 
@@ -190,6 +196,7 @@ export const styles = createStaticStyles(({ css }) => {
       flex-basis: 55%;
       flex-direction: column;
 
+      min-width: 0;
       min-height: 0;
       border-inline-end: 1px solid var(--docs-border-subtle);
 
@@ -393,6 +400,7 @@ export const styles = createStaticStyles(({ css }) => {
       overflow: auto;
       flex: 1;
 
+      min-width: 0;
       min-height: 0;
       padding-block: 0.4rem 0.75rem;
       padding-inline: 0.5rem;

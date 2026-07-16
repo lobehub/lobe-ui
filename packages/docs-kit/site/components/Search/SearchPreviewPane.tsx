@@ -1,6 +1,7 @@
 import { ChevronRight } from 'lucide-react';
 
 import type { SearchHit, SearchSubResult } from '../../search/types';
+import { decodeEntities } from './entities';
 import { Highlight } from './highlight';
 import { styles } from './style';
 
@@ -33,7 +34,7 @@ export function SearchPreviewPane({
           </h2>
           {activeHit.excerpt ? (
             <p className={styles.previewExcerpt}>
-              <Highlight query={query} text={activeHit.excerpt} />
+              <Highlight query={query} text={decodeEntities(activeHit.excerpt)} />
             </p>
           ) : null}
           {anchors.length > 0 ? (
