@@ -2,6 +2,7 @@ import { existsSync, readdirSync, statSync } from 'node:fs';
 import { basename, extname, relative, resolve } from 'node:path';
 
 import type { AtomDirConfig } from '../../../src/config';
+import { shouldUseChangelogFallback } from './changelogFallback';
 
 export type DocumentKind = 'home' | 'changelog' | 'component';
 
@@ -69,7 +70,7 @@ export function discoverDocuments(
 
   const changelogPath = resolve(absoluteRoot, 'docs/changelog.mdx');
   const changelogFallbackPath = resolve(absoluteRoot, 'CHANGELOG.md');
-  const useChangelogFallback = !existsSync(changelogPath) && existsSync(changelogFallbackPath);
+  const useChangelogFallback = shouldUseChangelogFallback(absoluteRoot);
 
   const absolutePaths = [
     resolve(absoluteRoot, 'docs/index.mdx'),

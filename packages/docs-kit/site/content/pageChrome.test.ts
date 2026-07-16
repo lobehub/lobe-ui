@@ -84,7 +84,11 @@ describe('createDocumentLinks', () => {
         source: 'src/Alpha/index.mdx',
         title: 'Alpha',
       },
-      'https://github.com/lobehub/lobe-ui',
+      {
+        docUrl: '{github}/edit/master/{atomId}',
+        github: 'https://github.com/lobehub/lobe-ui',
+        sourceUrl: '{github}/tree/master/{atomId}',
+      },
     );
 
     expect(links).toMatchObject({
@@ -92,6 +96,32 @@ describe('createDocumentLinks', () => {
       importStatement: "import { Alpha } from '@lobehub/ui';",
       sourceUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/Alpha',
     });
+  });
+
+  it('resolves editor-style templates with a distinct branch and pkg-scoped match', () => {
+    const document = {
+      category: 'General',
+      description: 'Alpha.',
+      pathname: '/components/alpha',
+      source: 'src/Alpha/index.mdx',
+      title: 'Alpha',
+    };
+
+    const links = createDocumentLinks(document, {
+      docUrl: '{github}/edit/main/{atomId}',
+      github: 'https://github.com/lobehub/lobe-editor',
+      match: ['/components/'],
+      sourceUrl: '{github}/blob/main/{atomId}',
+    });
+
+    expect(links).toMatchObject({
+      editUrl: 'https://github.com/lobehub/lobe-editor/edit/main/src/Alpha/index.mdx',
+      sourceUrl: 'https://github.com/lobehub/lobe-editor/blob/main/src/Alpha',
+    });
+
+    expect(
+      createDocumentLinks({ ...document, pathname: '/guides/alpha' }, { match: ['/components/'] }),
+    ).toBeUndefined();
   });
 
   it('falls back to an empty repository base when apiHeader is not configured', () => {

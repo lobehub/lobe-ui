@@ -6,6 +6,7 @@ import type { Plugin } from 'vite';
 import type { ClientSiteConfig } from '../../src/config';
 import { emptyLegacyRedirects, getDocsConfig } from '../../src/config';
 import { apiPlugin } from './api/apiPlugin';
+import { shouldUseChangelogFallback } from './content/changelogFallback';
 import { createContentManifest } from './content/createManifest';
 import { defaultAtomDirs } from './content/discoverDocuments';
 import { demoPlugin } from './demo/demoPlugin';
@@ -71,9 +72,7 @@ export function lobeDocsDocumentModulesPlugin(root: string = process.cwd()): Plu
       const config = getDocsConfig(root);
       const atomDirs = config.atomDirs ?? defaultAtomDirs;
       const componentPatterns = atomDirs.map(({ dir }) => `/${dir}/**/index.mdx`);
-      const useChangelogFallback =
-        !existsSync(resolve(root, 'docs/changelog.mdx')) &&
-        existsSync(resolve(root, 'CHANGELOG.md'));
+      const useChangelogFallback = shouldUseChangelogFallback(root);
       const publicPatterns = [
         '/docs/index.mdx',
         '/docs/changelog.mdx',

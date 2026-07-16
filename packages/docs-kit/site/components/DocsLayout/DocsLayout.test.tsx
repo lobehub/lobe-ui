@@ -87,7 +87,7 @@ it('navigates with the memory router while preserving link semantics', async () 
 });
 
 it('derives the Source and Edit links from the real docs.config.ts apiHeader', () => {
-  const repositoryUrl = siteConfig.themeConfig?.apiHeader;
+  const repositoryUrl = siteConfig.themeConfig?.apiHeader?.github;
   expect(repositoryUrl).toBeDefined();
 
   render(

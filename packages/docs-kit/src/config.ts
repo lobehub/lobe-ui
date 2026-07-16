@@ -45,10 +45,17 @@ export interface DocsMetadataConfig {
   };
 }
 
+export interface DocsApiHeaderConfig {
+  docUrl?: string;
+  github?: string;
+  match?: string[];
+  sourceUrl?: string;
+}
+
 export interface DocsThemeConfig {
   actions?: DocsNavItem[];
   analytics?: DocsAnalyticsConfig;
-  apiHeader?: string;
+  apiHeader?: DocsApiHeaderConfig;
   giscus?: DocsGiscusConfig;
   metadata?: DocsMetadataConfig;
   navItems?: DocsNavItem[];

@@ -1,4 +1,5 @@
 import { packageNamespaces } from '../../../../config/packageNamespaces';
+import type { DocsApiHeaderConfig } from '../../src/config';
 import type { DocumentManifestEntry, NavigationSection } from '../types/content';
 
 export interface DocumentLinks {
@@ -49,23 +50,41 @@ export function findAdjacentDocuments(
   return { next: documents[index + 1], previous: documents[index - 1] };
 }
 
+const defaultDocUrlTemplate = '{github}/edit/master/{atomId}';
+const defaultSourceUrlTemplate = '{github}/tree/master/{atomId}';
+
+const resolveApiHeaderTemplate = (
+  template: string,
+  values: { atomId: string; github: string },
+): string => template.replaceAll('{github}', values.github).replaceAll('{atomId}', values.atomId);
+
 export function createDocumentLinks(
   document: DocumentManifestEntry,
-  repositoryUrl = '',
+  apiHeader?: DocsApiHeaderConfig,
 ): DocumentLinks | undefined {
   const source = document.source.replaceAll('\\', '/');
   if (!source.startsWith('src/')) return undefined;
+  if (apiHeader?.match && !apiHeader.match.some((prefix) => document.pathname.startsWith(prefix))) {
+    return undefined;
+  }
 
   const [, namespace] = source.split('/');
   const packageName = namespaceSet.has(namespace) ? `@lobehub/ui/${namespace}` : '@lobehub/ui';
   const directory = source.replace(/\/index\.mdx?$/, '');
+  const github = apiHeader?.github ?? '';
 
   return {
-    editUrl: `${repositoryUrl}/edit/master/${source}`,
+    editUrl: resolveApiHeaderTemplate(apiHeader?.docUrl ?? defaultDocUrlTemplate, {
+      atomId: source,
+      github,
+    }),
     importStatement: identifierPattern.test(document.title)
       ? `import { ${document.title} } from '${packageName}';`
       : undefined,
     npmUrl: 'https://www.npmjs.com/package/@lobehub/ui',
-    sourceUrl: `${repositoryUrl}/tree/master/${directory}`,
+    sourceUrl: resolveApiHeaderTemplate(apiHeader?.sourceUrl ?? defaultSourceUrlTemplate, {
+      atomId: directory,
+      github,
+    }),
   };
 }

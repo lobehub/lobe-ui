@@ -25,7 +25,11 @@ export default defineDocsConfig({
         source: 'https://plausible.lobehub-inc.cn/js/script.js',
       },
     },
-    apiHeader: 'https://github.com/lobehub/lobe-ui',
+    apiHeader: {
+      docUrl: '{github}/edit/master/{atomId}',
+      github: 'https://github.com/lobehub/lobe-ui',
+      sourceUrl: '{github}/tree/master/{atomId}',
+    },
     giscus: {
       category: 'Q&A',
       categoryId: 'DIC_kwDOJloKoM4CXsCu',
