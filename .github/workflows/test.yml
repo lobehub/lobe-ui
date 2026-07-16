@@ -25,7 +25,7 @@ jobs:
 
       - name: Documentation verification
         run: |
-          bunx vitest run site scripts/migrate-dumi-docs.test.ts
+          bunx vitest run packages/docs-kit/site scripts/migrate-dumi-docs.test.ts
           bunx tsx scripts/migrate-dumi-docs.ts --check
           bun run docs:build
 

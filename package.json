@@ -99,7 +99,7 @@
     "ci": "npm run lint:circular && npm run lint && npm run type-check",
     "clean": "rm -r es lib dist coverage .eslintcache node_modules/.cache",
     "dev": "react-router dev",
-    "docs:build": "react-router build && tsx site/compiler/finalizeBuild.ts",
+    "docs:build": "react-router build && tsx packages/docs-kit/site/compiler/finalizeBuild.ts",
     "docs:build-analyze": "cross-env ANALYZE=1 bun run docs:build",
     "docs:dev": "react-router dev",
     "gen:icons": "tsx ./scripts/icons/index.ts",

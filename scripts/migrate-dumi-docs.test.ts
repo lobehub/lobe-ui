@@ -245,7 +245,7 @@ describe('deterministic dumi demo migration', () => {
 
   it('requires deep-equivalent reviewed config before removing migration-only metadata', async () => {
     const root = copyFixture('complete');
-    const configPath = resolve(root, 'site/content/migration.json');
+    const configPath = resolve(root, 'packages/docs-kit/site/content/migration.json');
     const config = JSON.parse(readFileSync(configPath, 'utf8'));
     const options = config.documents['src/Options/index.md'];
     for (const key of ['apiHeader', 'atomId', 'categoryOrder', 'nav', 'subType']) {
@@ -270,7 +270,7 @@ describe('deterministic dumi demo migration', () => {
 
   it('accepts an explicit reviewed apiHeader link correction while still requiring persistence', async () => {
     const root = copyFixture('complete');
-    const configPath = resolve(root, 'site/content/migration.json');
+    const configPath = resolve(root, 'packages/docs-kit/site/content/migration.json');
     const config = JSON.parse(readFileSync(configPath, 'utf8'));
     const options = config.documents['src/Options/index.md'];
     options.apiHeader = {
@@ -296,7 +296,7 @@ describe('deterministic dumi demo migration', () => {
 
   it('enforces the configured frozen inventory when a manifest entry disappears', async () => {
     const root = copyFixture('complete');
-    const compatibilityPath = resolve(root, 'site/content/compatibility.json');
+    const compatibilityPath = resolve(root, 'packages/docs-kit/site/content/compatibility.json');
     const compatibility = JSON.parse(readFileSync(compatibilityPath, 'utf8'));
     compatibility.documents = compatibility.documents.filter(
       ({ source }: { source: string }) => source !== 'src/Replace/index.md',
@@ -344,7 +344,7 @@ describe('deterministic dumi demo migration', () => {
         check: false,
         fileOperations: {
           writeFile(path, contents) {
-            if (path.endsWith('site/content/compatibility.json')) {
+            if (path.endsWith('packages/docs-kit/site/content/compatibility.json')) {
               throw new Error('injected promotion failure');
             }
             writeFileSync(path, contents);
@@ -417,7 +417,7 @@ describe('deterministic dumi demo migration', () => {
 
   it('requires reasons for preserve-all and replace-all dispositions', async () => {
     const root = copyFixture('complete');
-    const configPath = resolve(root, 'site/content/migration.json');
+    const configPath = resolve(root, 'packages/docs-kit/site/content/migration.json');
     const config = JSON.parse(readFileSync(configPath, 'utf8'));
     delete config.documents['src/Preserve/index.md'].api.reason;
     writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
@@ -431,7 +431,7 @@ describe('deterministic dumi demo migration', () => {
 
   it('blocks replace-tables when reviewed targets cannot map one-to-one to recognized tables', async () => {
     const root = copyFixture('complete');
-    const configPath = resolve(root, 'site/content/migration.json');
+    const configPath = resolve(root, 'packages/docs-kit/site/content/migration.json');
     const config = JSON.parse(readFileSync(configPath, 'utf8'));
     config.documents['src/Options/index.md'].api.targets = [{ name: 'Options' }];
     writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
@@ -445,7 +445,7 @@ describe('deterministic dumi demo migration', () => {
 
   it('requires explicit selectors for every multi-table or multi-target API section', async () => {
     const root = copyFixture('complete');
-    const configPath = resolve(root, 'site/content/migration.json');
+    const configPath = resolve(root, 'packages/docs-kit/site/content/migration.json');
     const config = JSON.parse(readFileSync(configPath, 'utf8'));
     const api = config.documents['src/Options/index.md'].api;
     delete api.tableSelectors;
@@ -475,7 +475,7 @@ describe('deterministic dumi demo migration', () => {
 
   it('aggregates duplicate and out-of-range reviewed API table selectors', async () => {
     const root = copyFixture('complete');
-    const configPath = resolve(root, 'site/content/migration.json');
+    const configPath = resolve(root, 'packages/docs-kit/site/content/migration.json');
     const config = JSON.parse(readFileSync(configPath, 'utf8'));
     const api = config.documents['src/Options/index.md'].api;
     api.targets.push({ name: 'OptionsMetadata' });
@@ -502,7 +502,7 @@ describe('deterministic dumi demo migration', () => {
 
   it('keeps reversed selector-to-target mappings stable after migration', async () => {
     const root = copyFixture('complete');
-    const configPath = resolve(root, 'site/content/migration.json');
+    const configPath = resolve(root, 'packages/docs-kit/site/content/migration.json');
     const config = JSON.parse(readFileSync(configPath, 'utf8'));
     const api = config.documents['src/Options/index.md'].api;
     api.targets = [api.targets[1], api.targets[0]];
@@ -521,7 +521,7 @@ describe('deterministic dumi demo migration', () => {
     const migratedPath = resolve(root, 'src/Options/index.mdx');
     const migratedBefore = readFileSync(migratedPath, 'utf8');
     const migratedMtime = statSync(migratedPath).mtimeMs;
-    const configPath = resolve(root, 'site/content/migration.json');
+    const configPath = resolve(root, 'packages/docs-kit/site/content/migration.json');
     const config = JSON.parse(readFileSync(configPath, 'utf8'));
     config.documents['src/Options/index.md'].api.tableSelectors[0] = {
       unheadedOccurrence: 99,
@@ -554,7 +554,7 @@ describe('deterministic dumi demo migration', () => {
 
   it('requires a reviewed reason for deliberate API omissions', async () => {
     const root = copyFixture('complete');
-    const configPath = resolve(root, 'site/content/migration.json');
+    const configPath = resolve(root, 'packages/docs-kit/site/content/migration.json');
     const config = JSON.parse(readFileSync(configPath, 'utf8'));
     config.documents['src/Omitted/index.md'].deliberateApiOmission = true;
     writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`);
@@ -565,11 +565,11 @@ describe('deterministic dumi demo migration', () => {
 
   it('loads reviewed typed migration metadata when Task 10 provides it', async () => {
     const root = copyFixture('complete');
-    const jsonPath = resolve(root, 'site/content/migration.json');
+    const jsonPath = resolve(root, 'packages/docs-kit/site/content/migration.json');
     const config = JSON.parse(readFileSync(jsonPath, 'utf8'));
     rmSync(jsonPath);
     writeFileSync(
-      resolve(root, 'site/content/migration.ts'),
+      resolve(root, 'packages/docs-kit/site/content/migration.ts'),
       `export default ${JSON.stringify(config, null, 2)} as const;\n`,
     );
 

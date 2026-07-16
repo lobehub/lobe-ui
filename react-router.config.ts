@@ -1,9 +1,9 @@
 import type { Config } from '@react-router/dev/config';
 
-import { getPrerenderPaths } from './site/compiler/manifests';
+import { getPrerenderPaths } from './packages/docs-kit/site/compiler/manifests';
 
 export default {
-  appDirectory: 'site',
+  appDirectory: 'packages/docs-kit/site',
   buildDirectory: '.react-router/build',
   prerender: async () => getPrerenderPaths(),
   routeDiscovery: { mode: 'initial' },

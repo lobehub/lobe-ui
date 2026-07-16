@@ -300,7 +300,7 @@ const diagnosticFor = (document: string, node: Node, message: string): Diagnosti
 const readJson = <Value>(path: string): Value => JSON.parse(readFileSync(path, 'utf8')) as Value;
 
 const readMigrationConfig = async (root: string): Promise<MigrationConfig> => {
-  const typedPath = resolve(root, 'site/content/migration.ts');
+  const typedPath = resolve(root, 'packages/docs-kit/site/content/migration.ts');
   if (isFile(typedPath)) {
     const module = (await import(pathToFileURL(typedPath).href)) as {
       default?: unknown;
@@ -312,7 +312,7 @@ const readMigrationConfig = async (root: string): Promise<MigrationConfig> => {
     }
     return config as MigrationConfig;
   }
-  const jsonPath = resolve(root, 'site/content/migration.json');
+  const jsonPath = resolve(root, 'packages/docs-kit/site/content/migration.json');
   return isFile(jsonPath) ? readJson<MigrationConfig>(jsonPath) : {};
 };
 
@@ -1476,7 +1476,7 @@ const promoteMigration = ({
 
 export async function migrateDumiDocs(options: MigrateDumiDocsOptions): Promise<MigrationReport> {
   const root = resolve(options.root);
-  const compatibilityPath = resolve(root, 'site/content/compatibility.json');
+  const compatibilityPath = resolve(root, 'packages/docs-kit/site/content/compatibility.json');
   const compatibility = readJson<CompatibilityManifest>(compatibilityPath);
   const config = await readMigrationConfig(root);
   const unknownAttributes: Diagnostic[] = [];

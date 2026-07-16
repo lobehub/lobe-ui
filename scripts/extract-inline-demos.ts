@@ -4,13 +4,16 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { packageNamespaces } from '../config/packageNamespaces';
-import { createLegacyDemoId } from '../site/compiler/legacyDumiIds';
-import type { DemoReference, DocumentationInventory } from '../site/compiler/types';
+import { createLegacyDemoId } from '../packages/docs-kit/site/compiler/legacyDumiIds';
+import type {
+  DemoReference,
+  DocumentationInventory,
+} from '../packages/docs-kit/site/compiler/types';
 
 const { basename, dirname, extname, relative, resolve } = path;
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const compatibilityPath = resolve(root, 'site/content/compatibility.json');
+const compatibilityPath = resolve(root, 'packages/docs-kit/site/content/compatibility.json');
 
 const DEMO_LANGS = new Set(['tsx', 'jsx', 'ts', 'js', 'typescript', 'javascript']);
 const FENCE_RE = /^```([^\n]*)\n([\s\S]*?)```/gm;

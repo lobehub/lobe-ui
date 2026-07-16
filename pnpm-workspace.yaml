@@ -1,6 +1,12 @@
 lockfile: false
 
+packages:
+  - packages/*
+
 allowBuilds:
   '@parcel/watcher': true
+  '@swc/core': true
+  core-js: false
+  core-js-pure: false
   esbuild: true
   unrs-resolver: true

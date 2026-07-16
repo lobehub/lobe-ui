@@ -9,10 +9,10 @@ import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { defineConfig } from 'vite';
 
-import { remarkApi } from './site/compiler/api/remarkApi';
-import { rehypeHeadingIds } from './site/compiler/content/rehypeHeadingIds';
-import { devPagefindPlugin } from './site/compiler/search/devPagefindPlugin';
-import { lobeDocs } from './site/compiler/vitePlugin';
+import { remarkApi } from './packages/docs-kit/site/compiler/api/remarkApi';
+import { rehypeHeadingIds } from './packages/docs-kit/site/compiler/content/rehypeHeadingIds';
+import { devPagefindPlugin } from './packages/docs-kit/site/compiler/search/devPagefindPlugin';
+import { lobeDocs } from './packages/docs-kit/site/compiler/vitePlugin';
 
 const sourceRoot = path.resolve(import.meta.dirname, 'src');
 
@@ -24,8 +24,8 @@ export default defineConfig({
     // upfront so every dep is found in the initial optimize pass.
     entries: [
       'src/**/*.{ts,tsx}',
-      'site/app/**/*.{ts,tsx}',
-      'site/components/**/*.{ts,tsx}',
+      'packages/docs-kit/site/app/**/*.{ts,tsx}',
+      'packages/docs-kit/site/components/**/*.{ts,tsx}',
       '!**/*.test.*',
     ],
     // Reached only through a transitive runtime import inside node_modules,
@@ -40,7 +40,7 @@ export default defineConfig({
     devPagefindPlugin(),
     mdx({
       include: /\.(md|mdx)$/,
-      providerImportSource: '/site/app/mdx-components',
+      providerImportSource: '/packages/docs-kit/site/app/mdx-components',
       rehypePlugins: [rehypeHeadingIds],
       remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm, remarkApi],
     }),
