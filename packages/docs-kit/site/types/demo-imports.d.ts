@@ -22,3 +22,13 @@ declare module 'virtual:lobedocs/site-config' {
 
   export default siteConfig;
 }
+
+declare module 'virtual:lobedocs/document-modules' {
+  type DocumentMetadata = import('./content').DocumentManifestEntry;
+  type MDXModule = import('./content').MDXModule;
+
+  export const componentMetadata: Record<string, DocumentMetadata>;
+  export const publicMetadata: Record<string, DocumentMetadata>;
+  export const publicModuleLoaders: Record<string, () => Promise<MDXModule>>;
+  export const componentModuleLoaders: Record<string, () => Promise<MDXModule>>;
+}

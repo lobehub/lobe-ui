@@ -41,6 +41,9 @@ const specialSections = new Map([
 const sourceIdentity = (source: string): string =>
   source.replaceAll('\\', '/').replace(/\.mdx?$/, '');
 
+const subTypeSectionTitle = (subType: string): string =>
+  subType.charAt(0).toUpperCase() + subType.slice(1);
+
 const compareDocuments = (left: DocumentManifestEntry, right: DocumentManifestEntry): number => {
   const orderDifference =
     (left.order ?? Number.MAX_SAFE_INTEGER) - (right.order ?? Number.MAX_SAFE_INTEGER);
@@ -81,6 +84,22 @@ export function createNavigation(
 
   for (const document of documents) {
     const frozenRecords = frozenBySource.get(sourceIdentity(document.source)) ?? [];
+
+    if (frozenRecords.length === 0 && document.subType) {
+      if (!document.category) {
+        diagnostics.push(`${document.source}: component navigation requires a category`);
+        continue;
+      }
+
+      const section = subTypeSectionTitle(document.subType);
+      const categories = sections.get(section) ?? new Map<string, DocumentManifestEntry[]>();
+      const categoryDocuments = categories.get(document.category) ?? [];
+      categoryDocuments.push(document);
+      categories.set(document.category, categoryDocuments);
+      sections.set(section, categories);
+      continue;
+    }
+
     if (frozenRecords.length === 0) {
       diagnostics.push(`${document.source}: no frozen section record`);
       continue;

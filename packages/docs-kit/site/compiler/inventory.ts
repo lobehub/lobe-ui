@@ -8,6 +8,7 @@ import type { Node, Parent } from 'unist';
 
 import { packageNamespaces } from '../../../../config/packageNamespaces';
 import { type AtomDirConfig } from '../../src/config';
+import { deriveComponentRoute, resolveAtomDir } from './content/atomRouting';
 import { defaultAtomDirs } from './content/discoverDocuments';
 import { createLegacyDemoId } from './legacyDumiIds';
 import type { DemoOptions, DemoReference, DocumentationInventory, DocumentRecord } from './types';
@@ -186,15 +187,6 @@ const parseCodeTag = (value: string, document: string): ParsedCodeTag | undefine
   return { attributes };
 };
 
-const kebabRouteSegment = (value: string): string =>
-  value
-    .replaceAll(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
-    .replaceAll(/([a-z\d])([A-Z])/g, '$1-$2')
-    .replaceAll(/[’']/g, '')
-    .replaceAll(/[^A-Za-z\d]+/g, '-')
-    .replaceAll(/^-|-$/g, '')
-    .toLowerCase();
-
 const deriveDocumentLocation = (
   source: string,
   atomDirs: readonly AtomDirConfig[],
@@ -205,14 +197,14 @@ const deriveDocumentLocation = (
     return { legacyRouteId: 'docs/changelog', pathname: '/changelog' };
   }
 
-  const atomDir = atomDirs.find(({ dir }) => stem.startsWith(`${dir}/`));
-  if (!atomDir) throw new Error(`Unable to resolve documentation route for ${source}`);
+  const atomDir = resolveAtomDir(stem, atomDirs);
   const componentPath = stem.slice(atomDir.dir.length + 1, -'/index'.length);
-  const pathname = `/components/${componentPath.split('/').map(kebabRouteSegment).join('/')}`;
-  return {
-    legacyRouteId: `components/${componentPath}/index`,
-    pathname,
-  };
+  const { pathname } = deriveComponentRoute(componentPath, atomDir, atomDirs);
+  const legacyRouteId =
+    atomDirs.length > 1 && atomDir.subType
+      ? `components/${atomDir.subType}/${componentPath}/index`
+      : `components/${componentPath}/index`;
+  return { legacyRouteId, pathname };
 };
 
 const deriveDocumentSection = (source: string, navSections: Record<string, string>): string => {
