@@ -56,23 +56,8 @@ export const styles = createStaticStyles(({ css }) => {
 
     span {
       display: inline-flex;
-      gap: 0.25rem;
+      gap: 0.35rem;
       align-items: center;
-    }
-
-    kbd {
-      min-width: 1.25rem;
-      padding-inline: 0.2rem;
-      border: 1px solid var(--docs-border-default);
-      border-radius: 0.25rem;
-
-      font-family: var(--docs-font-mono);
-      font-size: 0.625rem;
-      line-height: 1.125rem;
-      color: var(--docs-text-secondary);
-      text-align: center;
-
-      background: var(--docs-surface-raised);
     }
 
     @media (width <= 32rem) {
@@ -105,19 +90,6 @@ export const styles = createStaticStyles(({ css }) => {
     `,
 
     dialog,
-
-    escHint: css`
-      padding-block: 0.15rem;
-      padding-inline: 0.4rem;
-      border: 1px solid var(--docs-border-default);
-      border-radius: 0.3rem;
-
-      font-family: var(--docs-font-mono);
-      font-size: 0.625rem;
-      color: var(--docs-text-subtle);
-
-      background: var(--docs-surface-raised);
-    `,
 
     footer,
 

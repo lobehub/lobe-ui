@@ -3,6 +3,8 @@ import type { ChangeEvent, KeyboardEvent, RefObject } from 'react';
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 
+import Hotkey from '@/Hotkey';
+
 import { loadSearchEngine } from '../../search/loadSearchEngine';
 import type { SearchEngine, SearchSubResult } from '../../search/types';
 import type { DocumentManifestEntry } from '../../types/content';
@@ -209,7 +211,7 @@ export function SearchDialog({
             value={query}
             onChange={handleChange}
           />
-          <kbd className={styles.escHint}>esc</kbd>
+          <Hotkey keys="esc" variant="outlined" />
         </div>
 
         <div className={styles.body}>
@@ -239,17 +241,16 @@ export function SearchDialog({
 
         <footer className={styles.footer}>
           <span>
-            <kbd>↑</kbd>
-            <kbd>↓</kbd> navigate
+            <Hotkey keys="up+down" variant="outlined" /> navigate
           </span>
           <span>
-            <kbd>↵</kbd> open
+            <Hotkey keys="enter" variant="outlined" /> open
           </span>
           <span>
-            <kbd>→</kbd> jump to section
+            <Hotkey keys="right" variant="outlined" /> jump to section
           </span>
           <span>
-            <kbd>esc</kbd> close
+            <Hotkey keys="esc" variant="outlined" /> close
           </span>
         </footer>
       </div>
