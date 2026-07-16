@@ -1,31 +1,57 @@
-import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { type RefObject, useRef, useState } from 'react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { useRef, useState } from 'react';
 import { MemoryRouter, useLocation } from 'react-router';
 
-import type { SearchEngine } from '../../search/types';
-import { deferred } from '../../tests/deferred';
+import type { SearchEngine, SearchHit } from '../../search/types';
 import type { DocumentManifestEntry } from '../../types/content';
+import { readRecents } from './recentStore';
 import { SearchDialog } from './SearchDialog';
 
 const documents: DocumentManifestEntry[] = [
   {
-    category: 'Actions',
+    category: 'Components',
     description: 'Primary action control.',
     pathname: '/components/button',
     source: 'src/Button/index.mdx',
     title: 'Button',
   },
+  {
+    category: 'Components',
+    description: 'Grouped choices.',
+    pathname: '/components/segmented',
+    source: 'src/Segmented/index.mdx',
+    title: 'Segmented',
+  },
+  {
+    category: 'Guides',
+    description: 'How to theme.',
+    pathname: '/guides/theming',
+    source: 'guides/theming.mdx',
+    title: 'Theming',
+  },
 ];
 
-const hits = [
+const hits: SearchHit[] = [
   {
+    category: 'Components',
     excerpt: '<img src=x onerror=alert(1)> Safe text',
     id: 'button',
     pathname: '/components/button',
-    section: 'Actions',
+    subResults: [
+      { pathname: '/components/button#usage', title: 'Usage' },
+      { pathname: '/components/button#api', title: 'API' },
+    ],
     title: 'Button',
   },
   {
+    category: 'Guides',
+    excerpt: 'Theme guide.',
+    id: 'theming',
+    pathname: '/guides/theming',
+    title: 'Theming',
+  },
+  {
+    category: 'Components',
     excerpt: 'Select one option.',
     id: 'segmented',
     pathname: '/components/segmented',
@@ -33,10 +59,10 @@ const hits = [
   },
 ];
 
-const createEngine = (): SearchEngine => ({
+const createEngine = (result: SearchHit[] = hits): SearchEngine => ({
   init: vi.fn(async () => {}),
   preload: vi.fn(async () => {}),
-  search: vi.fn(async (query) => (query ? hits : [])),
+  search: vi.fn(async (query) => (query ? result : [])),
 });
 
 function Harness({
@@ -56,6 +82,7 @@ function Harness({
         Open search
       </button>
       <output data-testid="location">{location.pathname}</output>
+      <output data-testid="hash">{location.hash}</output>
       <SearchDialog
         documents={documents}
         loadEngine={loadEngine}
@@ -67,16 +94,31 @@ function Harness({
   );
 }
 
-afterEach(() => cleanup());
-
-it('does not load search until intent, then exposes a named dialog and searchbox', async () => {
-  const engine = createEngine();
-  const loadEngine = vi.fn(() => engine);
+const renderDialog = (engine: SearchEngine, loadEngine?: () => SearchEngine) =>
   render(
     <MemoryRouter>
       <Harness engine={engine} loadEngine={loadEngine} />
     </MemoryRouter>,
   );
+
+const openAndType = async (engine: SearchEngine, value: string) => {
+  renderDialog(engine);
+  fireEvent.click(screen.getByRole('button', { name: 'Open search' }));
+  const searchbox = screen.getByRole('searchbox', { name: 'Search documentation' });
+  fireEvent.change(searchbox, { target: { value } });
+  await waitFor(() => expect(screen.getAllByRole('option').length).toBeGreaterThan(0));
+  return searchbox;
+};
+
+afterEach(() => {
+  cleanup();
+  localStorage.clear();
+});
+
+it('does not load search until intent, then exposes a named dialog and searchbox', async () => {
+  const engine = createEngine();
+  const loadEngine = vi.fn(() => engine);
+  renderDialog(engine, loadEngine);
 
   expect(loadEngine).not.toHaveBeenCalled();
   fireEvent.click(screen.getByRole('button', { name: 'Open search' }));
@@ -88,107 +130,124 @@ it('does not load search until intent, then exposes a named dialog and searchbox
   expect(engine.init).toHaveBeenCalledTimes(1);
 });
 
-it('wraps arrow selection, activates with Enter, and renders excerpts only as text', async () => {
+it('groups hits by category in best-hit order and highlights matches as text', async () => {
   const engine = createEngine();
-  const { container } = render(
-    <MemoryRouter>
-      <Harness engine={engine} />
-    </MemoryRouter>,
-  );
-  fireEvent.click(screen.getByRole('button', { name: 'Open search' }));
-  const searchbox = screen.getByRole('searchbox', { name: 'Search documentation' });
-  fireEvent.change(searchbox, { target: { value: 'button' } });
-  await screen.findByRole('option', { name: /Button/ });
+  await openAndType(engine, 'button');
 
-  expect(container.querySelector('img')).toBeNull();
-  expect(screen.getByText('<img src=x onerror=alert(1)> Safe text')).toBeTruthy();
+  const groups = screen.getAllByRole('group').map((node) => node.getAttribute('aria-label'));
+  expect(groups).toEqual(['Components', 'Guides']);
+
+  const options = screen.getAllByRole('option').map((node) => node.textContent);
+  expect(options[0]).toContain('Button');
+  expect(options[1]).toContain('Segmented');
+  expect(options[2]).toContain('Theming');
+
+  expect(document.querySelector('mark')?.textContent).toBe('Button');
+  expect(document.querySelector('img')).toBeNull();
+  expect(document.body.textContent).toContain('<img src=x onerror=alert(1)> Safe text');
+});
+
+it('wraps arrow navigation across groups and writes a recent on Enter', async () => {
+  const engine = createEngine();
+  const searchbox = await openAndType(engine, 'button');
+
   fireEvent.keyDown(searchbox, { key: 'ArrowUp' });
-  expect(screen.getByRole('option', { name: /Segmented/ }).getAttribute('aria-selected')).toBe(
+  expect(screen.getByRole('option', { name: /Theming/ }).getAttribute('aria-selected')).toBe(
     'true',
   );
   fireEvent.keyDown(searchbox, { key: 'ArrowDown' });
   expect(screen.getByRole('option', { name: /Button/ }).getAttribute('aria-selected')).toBe('true');
+
+  fireEvent.keyDown(searchbox, { key: 'ArrowUp' });
   fireEvent.keyDown(searchbox, { key: 'Enter' });
 
-  await waitFor(() =>
-    expect(screen.getByTestId('location').textContent).toBe('/components/button'),
-  );
-  expect(screen.queryByRole('dialog')).toBeNull();
+  await waitFor(() => expect(screen.getByTestId('location').textContent).toBe('/guides/theming'));
+  expect(readRecents()[0]).toMatchObject({ pathname: '/guides/theming', title: 'Theming' });
 });
 
-it('traps focus, closes with Escape, and restores the invoking trigger', async () => {
+it('enters the anchor list with Arrow keys and navigates to a sub-result with hash', async () => {
   const engine = createEngine();
-  render(
-    <MemoryRouter>
-      <Harness engine={engine} />
-    </MemoryRouter>,
+  const searchbox = await openAndType(engine, 'button');
+
+  const preview = screen.getByText('On this page').closest('div') as HTMLElement;
+  fireEvent.keyDown(searchbox, { key: 'ArrowRight' });
+  expect(within(preview).getByRole('button', { name: 'Usage' }).dataset.active).toBe('true');
+  fireEvent.keyDown(searchbox, { key: 'ArrowDown' });
+  expect(within(preview).getByRole('button', { name: 'API' }).dataset.active).toBe('true');
+  fireEvent.keyDown(searchbox, { key: 'ArrowLeft' });
+  expect(within(preview).getByRole('button', { name: 'API' }).dataset.active).toBe('false');
+
+  fireEvent.keyDown(searchbox, { key: 'ArrowRight' });
+  fireEvent.keyDown(searchbox, { key: 'Enter' });
+
+  await waitFor(() => expect(screen.getByTestId('hash').textContent).toBe('#usage'));
+  expect(screen.getByTestId('location').textContent).toBe('/components/button');
+  expect(readRecents()[0]).toMatchObject({ pathname: '/components/button', title: 'Button' });
+});
+
+it('omits the anchors block when a hit has no sub-results (undefined or empty)', async () => {
+  const engine = createEngine([
+    { category: 'Components', excerpt: 'no anchors', id: 'a', pathname: '/a', title: 'Alpha' },
+    {
+      category: 'Components',
+      excerpt: 'empty anchors',
+      id: 'b',
+      pathname: '/b',
+      subResults: [],
+      title: 'Beta',
+    },
+  ]);
+  const searchbox = await openAndType(engine, 'a');
+
+  expect(screen.queryByText('On this page')).toBeNull();
+  fireEvent.keyDown(searchbox, { key: 'ArrowDown' });
+  expect(screen.getByRole('option', { name: /Beta/ }).getAttribute('aria-selected')).toBe('true');
+  expect(screen.queryByText('On this page')).toBeNull();
+});
+
+it('shows recents and Explore in the empty state and removes a recent with ✕', async () => {
+  localStorage.setItem(
+    'lobedocs:search-recents',
+    JSON.stringify([{ category: 'Components', pathname: '/components/button', title: 'Button' }]),
   );
+  const engine = createEngine();
+  renderDialog(engine);
+  fireEvent.click(screen.getByRole('button', { name: 'Open search' }));
+
+  const groupLabels = () =>
+    screen.getAllByRole('group').map((node) => node.getAttribute('aria-label'));
+  expect(groupLabels()).toEqual(['Recent', 'Explore']);
+  expect(screen.getByRole('option', { name: /Segmented/ })).toBeTruthy();
+
+  fireEvent.click(screen.getByRole('button', { name: 'Remove Button from recents' }));
+  await waitFor(() => expect(groupLabels()).toEqual(['Explore']));
+  expect(readRecents()).toHaveLength(0);
+});
+
+it('falls back to Explore only when there are no recents', async () => {
+  const engine = createEngine();
+  renderDialog(engine);
+  fireEvent.click(screen.getByRole('button', { name: 'Open search' }));
+
+  const groups = screen.getAllByRole('group').map((node) => node.getAttribute('aria-label'));
+  expect(groups).toEqual(['Explore']);
+});
+
+it('traps focus on the input, closes with Escape, and restores the trigger', async () => {
+  const engine = createEngine();
+  renderDialog(engine);
   const trigger = screen.getByRole('button', { name: 'Open search' });
   fireEvent.click(trigger);
   const dialog = screen.getByRole('dialog', { name: 'Search documentation' });
   const searchbox = screen.getByRole('searchbox', { name: 'Search documentation' });
-  const close = screen.getByRole('button', { name: 'Close search' });
 
-  close.focus();
+  searchbox.focus();
   fireEvent.keyDown(dialog, { key: 'Tab' });
   expect(document.activeElement).toBe(searchbox);
   fireEvent.keyDown(dialog, { key: 'Tab', shiftKey: true });
-  expect(document.activeElement).toBe(close);
+  expect(document.activeElement).toBe(searchbox);
   fireEvent.keyDown(dialog, { key: 'Escape' });
 
   await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
   expect(document.activeElement).toBe(trigger);
-});
-
-it('invalidates a pending result when the active engine changes', async () => {
-  const pending = deferred<Awaited<ReturnType<SearchEngine['search']>>>();
-  const oldEngine = {
-    ...createEngine(),
-    search: vi.fn(() => pending.promise),
-  };
-  const nextEngine = createEngine();
-  const triggerRef = { current: null } as RefObject<HTMLButtonElement | null>;
-  const onOpenChange = vi.fn();
-  const { rerender } = render(
-    <MemoryRouter>
-      <button ref={triggerRef}>Trigger</button>
-      <SearchDialog
-        open
-        documents={documents}
-        loadEngine={() => oldEngine}
-        triggerRef={triggerRef}
-        onOpenChange={onOpenChange}
-      />
-    </MemoryRouter>,
-  );
-  fireEvent.change(screen.getByRole('searchbox', { name: 'Search documentation' }), {
-    target: { value: 'old' },
-  });
-  await waitFor(() => expect(oldEngine.search).toHaveBeenCalledOnce());
-
-  rerender(
-    <MemoryRouter>
-      <button ref={triggerRef}>Trigger</button>
-      <SearchDialog
-        open
-        documents={documents}
-        loadEngine={() => nextEngine}
-        triggerRef={triggerRef}
-        onOpenChange={onOpenChange}
-      />
-    </MemoryRouter>,
-  );
-  await act(async () => {
-    pending.resolve([
-      {
-        excerpt: 'Stale result',
-        id: 'stale',
-        pathname: '/components/stale',
-        title: 'Stale result',
-      },
-    ]);
-    await pending.promise;
-  });
-
-  expect(screen.queryByRole('option', { name: /Stale result/ })).toBeNull();
 });

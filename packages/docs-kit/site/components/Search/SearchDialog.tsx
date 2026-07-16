@@ -1,12 +1,16 @@
-import { ArrowUpRight, Search, X } from 'lucide-react';
+import { Search } from 'lucide-react';
 import type { ChangeEvent, KeyboardEvent, RefObject } from 'react';
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import { loadSearchEngine } from '../../search/loadSearchEngine';
-import type { SearchEngine, SearchHit } from '../../search/types';
+import type { SearchEngine, SearchSubResult } from '../../search/types';
 import type { DocumentManifestEntry } from '../../types/content';
+import { addRecent, readRecents, type RecentEntry, removeRecent } from './recentStore';
+import { SearchPreviewPane } from './SearchPreviewPane';
+import { buildGroups, flattenGroups, type ResultRow, SearchResultList } from './SearchResultList';
 import { styles } from './style';
+import { useSearchQuery } from './useSearchQuery';
 
 interface SearchDialogProps {
   documents: readonly DocumentManifestEntry[];
@@ -19,6 +23,8 @@ interface SearchDialogProps {
 const focusableSelector =
   'input:not([disabled]), button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])';
 
+const stripHash = (pathname: string): string => pathname.split('#')[0] ?? pathname;
+
 export function SearchDialog({
   documents,
   loadEngine = loadSearchEngine,
@@ -27,77 +33,82 @@ export function SearchDialog({
   triggerRef,
 }: SearchDialogProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [hits, setHits] = useState<SearchHit[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [anchorIndex, setAnchorIndex] = useState(-1);
   const [query, setQuery] = useState('');
+  const [recents, setRecents] = useState<RecentEntry[]>([]);
   const dialogRef = useRef<HTMLDivElement>(null);
-  const engineRef = useRef<SearchEngine | undefined>(undefined);
   const inputRef = useRef<HTMLInputElement>(null);
-  const requestRef = useRef(0);
-  const resultListId = useId();
+  const listId = useId();
   const navigate = useNavigate();
 
-  const close = useCallback(() => {
-    requestRef.current += 1;
-    setActiveIndex(0);
-    setHits([]);
-    setLoading(false);
-    setQuery('');
-    onOpenChange(false);
-    triggerRef.current?.focus();
-  }, [onOpenChange, triggerRef]);
+  const { hits, loading, reset, search } = useSearchQuery({ documents, loadEngine, open });
 
-  const search = useCallback(async (value: string) => {
-    const engine = engineRef.current;
-    if (!engine) return;
-    const request = ++requestRef.current;
-    const isCurrent = () => request === requestRef.current && engineRef.current === engine;
-    setLoading(Boolean(value.trim()));
-    try {
-      await engine.preload(value);
-      if (!isCurrent()) return;
-      const nextHits = await engine.search(value);
-      if (!isCurrent()) return;
-      setHits(nextHits);
-      setActiveIndex(0);
-    } catch {
-      if (!isCurrent()) return;
-      setHits([]);
-      setActiveIndex(0);
-    } finally {
-      if (isCurrent()) setLoading(false);
-    }
-  }, []);
+  const groups = useMemo(
+    () => buildGroups({ documents, hits, query, recents }),
+    [documents, hits, query, recents],
+  );
+  const rows = useMemo(() => flattenGroups(groups), [groups]);
+
+  const boundedIndex = rows.length > 0 ? Math.min(Math.max(activeIndex, 0), rows.length - 1) : 0;
+  const activeHit = rows[boundedIndex]?.hit;
+  const anchors = activeHit?.subResults ?? [];
+
+  const optionId = useCallback((flatIndex: number) => `${listId}-opt-${flatIndex}`, [listId]);
+
+  useEffect(() => {
+    setActiveIndex(0);
+    setAnchorIndex(-1);
+  }, [hits, query]);
 
   useEffect(() => {
     if (!open) return;
-    const request = ++requestRef.current;
-    const engine = loadEngine(documents);
-    engineRef.current = engine;
-    let active = true;
-    void engine.init().catch(() => {
-      if (!active || request !== requestRef.current || engineRef.current !== engine) return;
-      setHits([]);
-      setActiveIndex(0);
-      setLoading(false);
-    });
+    setRecents(readRecents());
     inputRef.current?.focus();
-    return () => {
-      active = false;
-      requestRef.current += 1;
-      if (engineRef.current === engine) engineRef.current = undefined;
-    };
-  }, [documents, loadEngine, open]);
+  }, [open]);
 
-  const activate = (hit: SearchHit) => {
-    close();
-    void navigate(hit.pathname);
-  };
+  const close = useCallback(() => {
+    reset();
+    setActiveIndex(0);
+    setAnchorIndex(-1);
+    setQuery('');
+    onOpenChange(false);
+    triggerRef.current?.focus();
+  }, [onOpenChange, reset, triggerRef]);
+
+  const activate = useCallback(
+    (row: ResultRow) => {
+      addRecent({ category: row.hit.category, pathname: row.hit.pathname, title: row.hit.title });
+      close();
+      void navigate(row.hit.pathname);
+    },
+    [close, navigate],
+  );
+
+  const activateAnchor = useCallback(
+    (anchor: SearchSubResult) => {
+      if (activeHit) {
+        addRecent({
+          category: activeHit.category,
+          pathname: stripHash(anchor.pathname),
+          title: activeHit.title,
+        });
+      }
+      close();
+      void navigate(anchor.pathname);
+    },
+    [activeHit, close, navigate],
+  );
+
+  const handleRemove = useCallback((pathname: string) => {
+    removeRecent(pathname);
+    setRecents(readRecents());
+  }, []);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.currentTarget.value;
     setQuery(value);
-    void search(value);
+    setAnchorIndex(-1);
+    search(value);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -106,39 +117,58 @@ export function SearchDialog({
       close();
       return;
     }
-    if (event.key === 'ArrowDown' && hits.length > 0) {
-      event.preventDefault();
-      setActiveIndex((current) => (current + 1) % hits.length);
+    if (event.key === 'Tab') {
+      const controls = Array.from(
+        dialogRef.current?.querySelectorAll<HTMLElement>(focusableSelector) ?? [],
+      );
+      const first = controls[0];
+      const last = controls.at(-1);
+      if (!first || !last) return;
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
       return;
     }
-    if (event.key === 'ArrowUp' && hits.length > 0) {
-      event.preventDefault();
-      setActiveIndex((current) => (current - 1 + hits.length) % hits.length);
-      return;
-    }
-    if (event.key === 'Enter' && hits[activeIndex]) {
-      event.preventDefault();
-      activate(hits[activeIndex]);
-      return;
-    }
-    if (event.key !== 'Tab') return;
 
-    const controls = Array.from(
-      dialogRef.current?.querySelectorAll<HTMLElement>(focusableSelector) ?? [],
-    );
-    const first = controls[0];
-    const last = controls.at(-1);
-    if (!first || !last) return;
-    if (event.shiftKey && document.activeElement === first) {
+    if (anchorIndex >= 0) {
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        setAnchorIndex((current) => Math.min(current + 1, anchors.length - 1));
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        setAnchorIndex((current) => Math.max(current - 1, 0));
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        setAnchorIndex(-1);
+      } else if (event.key === 'Enter' && anchors[anchorIndex]) {
+        event.preventDefault();
+        activateAnchor(anchors[anchorIndex]);
+      }
+      return;
+    }
+
+    if (event.key === 'ArrowDown' && rows.length > 0) {
       event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
+      setActiveIndex((current) => (current + 1) % rows.length);
+    } else if (event.key === 'ArrowUp' && rows.length > 0) {
       event.preventDefault();
-      first.focus();
+      setActiveIndex((current) => (current - 1 + rows.length) % rows.length);
+    } else if (event.key === 'ArrowRight' && anchors.length > 0) {
+      event.preventDefault();
+      setAnchorIndex(0);
+    } else if (event.key === 'Enter' && rows[boundedIndex]) {
+      event.preventDefault();
+      activate(rows[boundedIndex]);
     }
   };
 
   if (!open) return null;
+
+  const activeDescendant = activeHit ? optionId(boundedIndex) : undefined;
 
   return (
     <div className={styles.layer} data-pagefind-ignore="all">
@@ -160,8 +190,8 @@ export function SearchDialog({
         <div className={styles.inputRow}>
           <Search aria-hidden size={18} strokeWidth={1.8} />
           <input
-            aria-activedescendant={hits[activeIndex] ? `${resultListId}-${activeIndex}` : undefined}
-            aria-controls={resultListId}
+            aria-activedescendant={activeDescendant}
+            aria-controls={listId}
             aria-label="Search documentation"
             autoComplete="off"
             placeholder="Search components and guides"
@@ -170,46 +200,47 @@ export function SearchDialog({
             value={query}
             onChange={handleChange}
           />
-          <button aria-label="Close search" type="button" onClick={close}>
-            <X aria-hidden size={17} strokeWidth={1.8} />
-          </button>
+          <kbd className={styles.escHint}>esc</kbd>
         </div>
 
-        <div aria-live="polite" className={styles.resultsStatus}>
-          {loading ? 'Searching…' : query && hits.length === 0 ? 'No results found' : ''}
-        </div>
-        <div className={styles.results} id={resultListId} role="listbox">
-          {hits.map((hit, index) => (
-            <button
-              aria-selected={activeIndex === index}
-              className={styles.result}
-              id={`${resultListId}-${index}`}
-              key={hit.id}
-              role="option"
-              type="button"
-              onClick={() => activate(hit)}
-              onMouseEnter={() => setActiveIndex(index)}
-            >
-              <span className={styles.resultCopy}>
-                <strong>{hit.title}</strong>
-                {hit.section ? <small>{hit.section}</small> : null}
-                <span>{hit.excerpt}</span>
-              </span>
-              <ArrowUpRight aria-hidden size={16} strokeWidth={1.8} />
-            </button>
-          ))}
+        <div className={styles.body}>
+          <SearchResultList
+            activeIndex={boundedIndex}
+            groups={groups}
+            listId={listId}
+            optionId={optionId}
+            query={query}
+            onActivate={activate}
+            onRemove={handleRemove}
+            onHover={(flatIndex) => {
+              setActiveIndex(flatIndex);
+              setAnchorIndex(-1);
+            }}
+          />
+          <SearchPreviewPane
+            activeHit={activeHit}
+            anchorIndex={anchorIndex}
+            hasResults={rows.length > 0}
+            loading={loading}
+            query={query}
+            onActivateAnchor={activateAnchor}
+            onHoverAnchor={setAnchorIndex}
+          />
         </div>
 
         <footer className={styles.footer}>
           <span>
             <kbd>↑</kbd>
-            <kbd>↓</kbd> Navigate
+            <kbd>↓</kbd> navigate
           </span>
           <span>
-            <kbd>↵</kbd> Open
+            <kbd>↵</kbd> open
           </span>
           <span>
-            <kbd>Esc</kbd> Close
+            <kbd>→</kbd> jump to section
+          </span>
+          <span>
+            <kbd>esc</kbd> close
           </span>
         </footer>
       </div>
