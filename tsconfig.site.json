@@ -8,8 +8,8 @@
   "exclude": [],
   "extends": "./tsconfig.json",
   "include": [
-    "site/**/*.ts",
-    "site/**/*.tsx",
+    "packages/docs-kit/site/**/*.ts",
+    "packages/docs-kit/site/**/*.tsx",
     "src/types/global.d.ts",
     "vite.config.ts",
     "react-router.config.ts",
