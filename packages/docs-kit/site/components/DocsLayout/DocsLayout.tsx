@@ -86,16 +86,20 @@ export function DocsLayout({ children, document, navigation }: DocsLayoutProps) 
                 NPM
                 <ArrowUpRight aria-hidden size={13} strokeWidth={1.8} />
               </a>
-              <a href={links.sourceUrl} {...externalLinkProps}>
-                <GithubIcon aria-hidden className={styles.linkIcon} size={13} strokeWidth={1.8} />
-                Source
-                <ArrowUpRight aria-hidden size={13} strokeWidth={1.8} />
-              </a>
-              <a href={links.editUrl} {...externalLinkProps}>
-                <PencilLine aria-hidden className={styles.linkIcon} size={13} strokeWidth={1.8} />
-                Edit
-                <ArrowUpRight aria-hidden size={13} strokeWidth={1.8} />
-              </a>
+              {links.sourceUrl ? (
+                <a href={links.sourceUrl} {...externalLinkProps}>
+                  <GithubIcon aria-hidden className={styles.linkIcon} size={13} strokeWidth={1.8} />
+                  Source
+                  <ArrowUpRight aria-hidden size={13} strokeWidth={1.8} />
+                </a>
+              ) : null}
+              {links.editUrl ? (
+                <a href={links.editUrl} {...externalLinkProps}>
+                  <PencilLine aria-hidden className={styles.linkIcon} size={13} strokeWidth={1.8} />
+                  Edit
+                  <ArrowUpRight aria-hidden size={13} strokeWidth={1.8} />
+                </a>
+              ) : null}
             </div>
           ) : null}
           <div className={styles.searchMetadata}>

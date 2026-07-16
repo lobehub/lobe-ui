@@ -2,6 +2,7 @@ import { use, useEffect, useMemo, useSyncExternalStore } from 'react';
 import type { MetaFunction } from 'react-router';
 import { isRouteErrorResponse, useParams, useRouteError } from 'react-router';
 import compatibility from 'virtual:lobedocs/compatibility';
+import siteConfig from 'virtual:lobedocs/site-config';
 
 import { readLegacyMap, type StandaloneDemoMapEntry } from '../../compiler/demo/readLegacyMap';
 import type { DocumentationInventory } from '../../compiler/types';
@@ -61,7 +62,9 @@ export function getStandaloneDemoOrThrow(
 export const meta: MetaFunction = ({ location, params }) => {
   const requestedRouteId = new URLSearchParams(location.search).get('routeId');
   const entry = resolveStandaloneDemo(params.demoId ?? '', requestedRouteId);
-  const title = entry ? `${entry.id} demo - Lobe UI` : 'Demo not found - Lobe UI';
+  const title = entry
+    ? `${entry.id} demo - ${siteConfig.title}`
+    : `Demo not found - ${siteConfig.title}`;
   return [{ title }, { content: 'noindex, nofollow', name: 'robots' }];
 };
 
