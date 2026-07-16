@@ -13,7 +13,6 @@ export interface AdjacentDocuments {
   previous?: DocumentManifestEntry;
 }
 
-const repositoryUrl = 'https://github.com/lobehub/lobe-ui';
 const namespaceSet = new Set<string>(packageNamespaces);
 const identifierPattern = /^[A-Z][A-Za-z0-9]*$/;
 
@@ -50,7 +49,10 @@ export function findAdjacentDocuments(
   return { next: documents[index + 1], previous: documents[index - 1] };
 }
 
-export function createDocumentLinks(document: DocumentManifestEntry): DocumentLinks | undefined {
+export function createDocumentLinks(
+  document: DocumentManifestEntry,
+  repositoryUrl = '',
+): DocumentLinks | undefined {
   const source = document.source.replaceAll('\\', '/');
   if (!source.startsWith('src/')) return undefined;
 

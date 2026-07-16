@@ -9,6 +9,12 @@ export default defineDocsConfig({
   },
   atomDirs: [{ dir: 'src' }],
   description: 'A modern React component library for building LobeHub products.',
+  favicons: {
+    appleTouchIcon: '/apple-touch-icon.png',
+    icon: '/favicon.ico',
+    icon16: '/favicon-16x16.png',
+    icon32: '/favicon-32x32.png',
+  },
   legacyRedirects,
   navSections,
   siteUrl: 'https://ui.lobehub.com',
@@ -19,6 +25,7 @@ export default defineDocsConfig({
         source: 'https://plausible.lobehub-inc.cn/js/script.js',
       },
     },
+    apiHeader: 'https://github.com/lobehub/lobe-ui',
     giscus: {
       category: 'Q&A',
       categoryId: 'DIC_kwDOJloKoM4CXsCu',
@@ -31,6 +38,11 @@ export default defineDocsConfig({
           'https://repository-images.githubusercontent.com/643435168/789cab53-cae5-43fa-965d-5928c3c63c1c',
       },
     },
+    prefersColor: 'auto',
+    socialLinks: [
+      { href: 'https://github.com/lobehub/lobe-ui', icon: 'github', label: 'GitHub' },
+      { href: 'https://www.npmjs.com/package/@lobehub/ui', icon: 'npm', label: 'NPM' },
+    ],
   },
   title: 'Lobe UI',
 });

@@ -76,6 +76,25 @@ describe('findAdjacentDocuments', () => {
 
 describe('createDocumentLinks', () => {
   it('derives root package imports and repository links', () => {
+    const links = createDocumentLinks(
+      {
+        category: 'General',
+        description: 'Alpha.',
+        pathname: '/components/alpha',
+        source: 'src/Alpha/index.mdx',
+        title: 'Alpha',
+      },
+      'https://github.com/lobehub/lobe-ui',
+    );
+
+    expect(links).toMatchObject({
+      editUrl: 'https://github.com/lobehub/lobe-ui/edit/master/src/Alpha/index.mdx',
+      importStatement: "import { Alpha } from '@lobehub/ui';",
+      sourceUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/Alpha',
+    });
+  });
+
+  it('falls back to an empty repository base when apiHeader is not configured', () => {
     const links = createDocumentLinks({
       category: 'General',
       description: 'Alpha.',
@@ -85,9 +104,8 @@ describe('createDocumentLinks', () => {
     });
 
     expect(links).toMatchObject({
-      editUrl: 'https://github.com/lobehub/lobe-ui/edit/master/src/Alpha/index.mdx',
-      importStatement: "import { Alpha } from '@lobehub/ui';",
-      sourceUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/Alpha',
+      editUrl: '/edit/master/src/Alpha/index.mdx',
+      sourceUrl: '/tree/master/src/Alpha',
     });
   });
 

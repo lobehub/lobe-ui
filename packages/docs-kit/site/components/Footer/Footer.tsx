@@ -1,10 +1,13 @@
 import { Link } from 'react-router';
+import siteConfig from 'virtual:lobedocs/site-config';
 
 import { styles } from './style';
 
 const externalLinkProps = { rel: 'noreferrer', target: '_blank' } as const;
 
 export function Footer() {
+  const socialLinks = siteConfig.themeConfig?.socialLinks ?? [];
+
   return (
     <footer className={styles.root} data-pagefind-ignore="all">
       <span className={styles.colophon}>
@@ -20,20 +23,11 @@ export function Footer() {
         </span>
       </span>
       <nav aria-label="Footer">
-        <a
-          className={styles.external}
-          href="https://github.com/lobehub/lobe-ui"
-          {...externalLinkProps}
-        >
-          GitHub
-        </a>
-        <a
-          className={styles.external}
-          href="https://www.npmjs.com/package/@lobehub/ui"
-          {...externalLinkProps}
-        >
-          NPM
-        </a>
+        {socialLinks.map((link) => (
+          <a className={styles.external} href={link.href} key={link.label} {...externalLinkProps}>
+            {link.label}
+          </a>
+        ))}
         <Link to="/changelog">Changelog</Link>
       </nav>
     </footer>

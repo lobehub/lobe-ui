@@ -15,7 +15,7 @@ export const defaultAtomDirs: AtomDirConfig[] = [{ dir: 'src' }];
 
 const inferKind = (source: string): DocumentKind => {
   if (source === 'docs/index.mdx') return 'home';
-  if (source === 'docs/changelog.mdx') return 'changelog';
+  if (source === 'docs/changelog.mdx' || source === 'CHANGELOG.md') return 'changelog';
   return 'component';
 };
 
@@ -58,7 +58,7 @@ export function discoverDocuments(
   const absoluteRoot = resolve(root);
   const stat = statSync(absoluteRoot);
 
-  if (stat.isFile() && extname(absoluteRoot) === '.mdx') {
+  if (stat.isFile() && (extname(absoluteRoot) === '.mdx' || extname(absoluteRoot) === '.md')) {
     const source = inferStandaloneSource(absoluteRoot, atomDirs);
     return [{ absolutePath: absoluteRoot, kind: inferKind(source), source }];
   }
@@ -67,9 +67,14 @@ export function discoverDocuments(
     throw new Error(`Expected an MDX document: ${absoluteRoot}`);
   }
 
+  const changelogPath = resolve(absoluteRoot, 'docs/changelog.mdx');
+  const changelogFallbackPath = resolve(absoluteRoot, 'CHANGELOG.md');
+  const useChangelogFallback = !existsSync(changelogPath) && existsSync(changelogFallbackPath);
+
   const absolutePaths = [
     resolve(absoluteRoot, 'docs/index.mdx'),
-    resolve(absoluteRoot, 'docs/changelog.mdx'),
+    changelogPath,
+    ...(useChangelogFallback ? [changelogFallbackPath] : []),
     ...atomDirs.flatMap(({ dir }) => collectComponentDocuments(resolve(absoluteRoot, dir))),
   ].filter((path) => existsSync(path) && statSync(path).isFile());
 

@@ -1,6 +1,7 @@
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import type { ComponentType } from 'react';
 import { useEffect } from 'react';
+import siteConfig from 'virtual:lobedocs/site-config';
 
 import { type GiscusModule, PageEndActions } from './PageEndActions';
 
@@ -84,6 +85,18 @@ it('does not load giscus until discussion is opened and maps by page title', asy
   expect(screen.getByText('Discussion loaded').dataset.mapping).toBe('title');
   expect(screen.getByText('Discussion loaded').dataset.strict).toBe('0');
   expect(screen.getByText('Discussion loaded').dataset.term).toBeUndefined();
+});
+
+it('passes the real docs.config.ts giscus settings through to the Giscus component', async () => {
+  const giscusConfig = siteConfig.themeConfig?.giscus;
+  expect(giscusConfig).toBeDefined();
+
+  render(<PageEndActions loadGiscus={async () => moduleFixture} pathname="/components/button" />);
+  openDiscussion();
+
+  const discussion = await screen.findByText('Discussion loaded');
+  expect(discussion.dataset.category).toBe(giscusConfig?.category);
+  expect(discussion.dataset.repo).toBe(giscusConfig?.repo);
 });
 
 it('synchronizes the rendered discussion theme with React theme state', async () => {
