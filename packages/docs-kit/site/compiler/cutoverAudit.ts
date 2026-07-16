@@ -24,6 +24,8 @@ const expectedVercelConfig = {
   installCommand: 'bun install',
   buildCommand: 'bun run docs:build',
   devCommand: 'bun run docs:dev',
+  ignoreCommand:
+    'git diff HEAD^ HEAD --quiet -- ./package.json ./src ./docs ./packages ./public ./vercel.json ./docs.config.ts ./compatibility.json ./navigationSections.json ./tsconfig.site.json ./tsconfig.json',
   outputDirectory: 'dist',
   trailingSlash: false,
 };
