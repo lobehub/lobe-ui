@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'nod
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
-import compatibility from '../content/compatibility.json';
+import compatibility from '../../../../compatibility.json';
 import { findExecutableDumiReferences } from './cutoverAudit';
 import { getStandaloneDemoPaths } from './demo/readLegacyMap';
 import { getPrerenderPaths } from './manifests';

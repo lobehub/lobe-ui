@@ -1,12 +1,12 @@
 import { use, useEffect, useMemo, useSyncExternalStore } from 'react';
 import type { MetaFunction } from 'react-router';
 import { isRouteErrorResponse, useParams, useRouteError } from 'react-router';
+import compatibility from 'virtual:lobedocs/compatibility';
 
 import { readLegacyMap, type StandaloneDemoMapEntry } from '../../compiler/demo/readLegacyMap';
 import type { DocumentationInventory } from '../../compiler/types';
 import { StandaloneDemoPage } from '../../components/Demo/StandaloneDemoPage';
 import { styles as demoStyles } from '../../components/Demo/style';
-import compatibility from '../../content/compatibility.json';
 import type { DemoAppearance, DemoModule } from '../../types/demo';
 import { createDescriptorPromiseCache } from '../demos/descriptorPromiseCache';
 

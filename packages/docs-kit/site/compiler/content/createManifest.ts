@@ -1,17 +1,20 @@
 import { readFileSync } from 'node:fs';
-import { relative } from 'node:path';
+import path, { relative } from 'node:path';
 
 import { parse } from 'yaml';
 
-import { createNavigation } from '../../content/navigation';
+import { type AtomDirConfig, getDocsConfig } from '../../../src/config';
+import { createNavigation, toFrozenNavigationDocuments } from '../../content/navigation';
 import { canonicalizePathname, validateExplicitPathname } from '../../content/pathname';
 import type {
   ContentFrontmatter,
   ContentManifest,
   DocumentManifestEntry,
 } from '../../types/content';
-import { discoverDocuments, type DiscoveredDocument } from './discoverDocuments';
+import { defaultAtomDirs, discoverDocuments, type DiscoveredDocument } from './discoverDocuments';
 import { validateFrontmatter } from './validateFrontmatter';
+
+const repositoryRoot = path.resolve(import.meta.dirname, '../../../../..');
 
 const frontmatterPattern = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/;
 
@@ -42,13 +45,19 @@ const parseDocumentFrontmatter = (
   }
 };
 
-const derivePathname = (document: DiscoveredDocument, frontmatter: ContentFrontmatter): string => {
+const derivePathname = (
+  document: DiscoveredDocument,
+  frontmatter: ContentFrontmatter,
+  atomDirs: readonly AtomDirConfig[],
+): string => {
   if (frontmatter.route) return canonicalizePathname(frontmatter.route);
   if (document.kind === 'home') return '/';
   if (document.kind === 'changelog') return '/changelog';
 
+  const atomDir = atomDirs.find(({ dir }) => document.source.startsWith(`${dir}/`));
+  const prefix = atomDir ? `${atomDir.dir}/` : 'src/';
   const componentPath = document.source
-    .slice('src/'.length, -'/index.mdx'.length)
+    .slice(prefix.length, -'/index.mdx'.length)
     .split('/')
     .map(kebabRouteSegment)
     .join('/');
@@ -73,12 +82,16 @@ const validateRouteSurface = (
   }
 };
 
-export function createContentManifest(root: string): ContentManifest {
+export function createContentManifest(
+  root: string,
+  atomDirs: readonly AtomDirConfig[] = getDocsConfig(repositoryRoot).atomDirs ?? defaultAtomDirs,
+  navSections: Record<string, string> = getDocsConfig(repositoryRoot).navSections ?? {},
+): ContentManifest {
   const documents: DocumentManifestEntry[] = [];
   const diagnostics: string[] = [];
   const pathnames = new Map<string, string>();
 
-  for (const document of discoverDocuments(root)) {
+  for (const document of discoverDocuments(root, atomDirs)) {
     const parsed = parseDocumentFrontmatter(document);
     const validation = validateFrontmatter(parsed.value, {
       requireCategory: document.kind === 'component',
@@ -98,7 +111,7 @@ export function createContentManifest(root: string): ContentManifest {
       continue;
     }
 
-    const pathname = derivePathname(document, validation.frontmatter);
+    const pathname = derivePathname(document, validation.frontmatter, atomDirs);
     const routeDiagnostic = validateRouteSurface(document, pathname);
     if (routeDiagnostic) {
       diagnostics.push(`${document.absolutePath}: ${routeDiagnostic}`);
@@ -128,6 +141,6 @@ export function createContentManifest(root: string): ContentManifest {
   const sortedDocuments = documents.toSorted(compareDocuments);
   return {
     documents: sortedDocuments,
-    navigation: createNavigation(sortedDocuments),
+    navigation: createNavigation(sortedDocuments, toFrozenNavigationDocuments(navSections)),
   };
 }

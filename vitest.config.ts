@@ -3,10 +3,12 @@ import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
 
 import { name } from './package.json';
+import { lobeDocsSiteConfigPlugin } from './packages/docs-kit/site/compiler/vitePlugin';
 
 const srcPath = fileURLToPath(new URL('./src', import.meta.url));
 
 export default defineConfig({
+  plugins: [lobeDocsSiteConfigPlugin()],
   resolve: {
     alias: {
       '@': srcPath,

@@ -2,8 +2,18 @@ import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 
+import { getDocsConfig } from '../../src/config';
 import { buildDocumentationInventory, deriveAtomIdFromPaths } from './inventory';
 import type { DocumentationInventory } from './types';
+
+const realRoot = resolve(import.meta.dirname, '../../../..');
+const realConfig = getDocsConfig(realRoot);
+const buildRealInventory = (): DocumentationInventory =>
+  buildDocumentationInventory(realRoot, {
+    atomDirs: realConfig.atomDirs,
+    legacyRedirects: realConfig.legacyRedirects,
+    navSections: realConfig.navSections,
+  });
 
 const temporaryRoots: string[] = [];
 
@@ -41,7 +51,7 @@ describe('documentation inventory', () => {
   });
 
   it('selects public source docs while excluding internal specifications', () => {
-    const inventory = buildDocumentationInventory(resolve(import.meta.dirname, '../../../..'));
+    const inventory = buildRealInventory();
 
     expect(inventory.documents).toHaveLength(165);
     expect(inventory.demoReferences).toHaveLength(524);
@@ -49,7 +59,7 @@ describe('documentation inventory', () => {
   });
 
   it('preserves duplicate-source demos as separate legacy aliases', () => {
-    const inventory = buildDocumentationInventory(resolve(import.meta.dirname, '../../../..'));
+    const inventory = buildRealInventory();
     const aliases = inventory.demoReferences.filter(
       ({ source }) => source === 'src/DropdownMenu/demos/index.tsx',
     );
@@ -86,7 +96,6 @@ describe('documentation inventory', () => {
       ],
     } satisfies DocumentationInventory;
     const root = createFixture({
-      'packages/docs-kit/site/content/compatibility.json': `${JSON.stringify(frozenInventory, null, 2)}\n`,
       'src/Fixture/demos/index.tsx': '',
       'src/Fixture/index.mdx': `---
 title: Fixture
@@ -98,7 +107,7 @@ No legacy dumi code tag remains.
 `,
     });
 
-    const inventory = buildDocumentationInventory(root);
+    const inventory = buildDocumentationInventory(root, { legacyRedirects: frozenInventory });
     const [alias] = inventory.demoReferences;
 
     expect(alias).toEqual({
@@ -135,11 +144,10 @@ No legacy dumi code tag remains.
       ],
     } satisfies DocumentationInventory;
     const root = createFixture({
-      'packages/docs-kit/site/content/compatibility.json': `${JSON.stringify(frozenInventory, null, 2)}\n`,
       'src/.keep': '',
     });
 
-    expect(() => buildDocumentationInventory(root)).toThrow(
+    expect(() => buildDocumentationInventory(root, { legacyRedirects: frozenInventory })).toThrow(
       /exactly one.*src\/Missing\/index\.md.*src\/Missing\/index\.mdx/i,
     );
   });
@@ -230,7 +238,9 @@ title: Fixture
     });
 
     const sections = Object.fromEntries(
-      buildDocumentationInventory(root).documents.map(({ section, source }) => [source, section]),
+      buildDocumentationInventory(root, {
+        navSections: { 'src/i18n/index.md': 'Hooks & Providers' },
+      }).documents.map(({ section, source }) => [source, section]),
     );
 
     expect(sections['src/Button/index.md']).toBe('Components');

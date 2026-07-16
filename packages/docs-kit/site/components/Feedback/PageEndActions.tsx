@@ -3,9 +3,9 @@ import { GithubIcon } from '@lobehub/ui/icons/lucideExtra';
 import { MessageCircle, ThumbsDown, ThumbsUp } from 'lucide-react';
 import type { ComponentType } from 'react';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import siteConfig from 'virtual:lobedocs/site-config';
 
 import { useSiteTheme } from '../../app/providers/SiteProviders';
-import { siteMetadata } from '../../content/siteMetadata';
 import { styles } from './pageEndActionsStyle';
 
 export interface GiscusRuntimeProps {
@@ -43,7 +43,8 @@ interface HelpfulSelection {
 const defaultLoadGiscus = () =>
   import('@giscus/react') as Promise<unknown> as Promise<GiscusModule>;
 
-const discussionsUrl = `https://github.com/${siteMetadata.giscus.repo}/discussions`;
+const giscusConfig = siteConfig.themeConfig?.giscus;
+const discussionsUrl = giscusConfig ? `https://github.com/${giscusConfig.repo}/discussions` : '';
 
 export function PageEndActions({ loadGiscus = defaultLoadGiscus, pathname }: PageEndActionsProps) {
   const discussionPanelId = useId();
@@ -157,10 +158,10 @@ export function PageEndActions({ loadGiscus = defaultLoadGiscus, pathname }: Pag
 
       {discussionOpen ? (
         <div className={styles.panel} id={discussionPanelId}>
-          {loadState === 'ready' && Giscus ? (
+          {loadState === 'ready' && Giscus && giscusConfig ? (
             <Giscus
-              category={siteMetadata.giscus.category}
-              categoryId={siteMetadata.giscus.categoryId}
+              category={giscusConfig.category}
+              categoryId={giscusConfig.categoryId}
               emitMetadata="0"
               inputPosition="top"
               key={pathname}
@@ -168,8 +169,8 @@ export function PageEndActions({ loadGiscus = defaultLoadGiscus, pathname }: Pag
               loading="lazy"
               mapping="title"
               reactionsEnabled="1"
-              repo={siteMetadata.giscus.repo}
-              repoId={siteMetadata.giscus.repoId}
+              repo={giscusConfig.repo as `${string}/${string}`}
+              repoId={giscusConfig.repoId}
               strict="0"
               theme={appearance}
             />

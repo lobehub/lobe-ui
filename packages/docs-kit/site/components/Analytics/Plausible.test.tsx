@@ -7,8 +7,8 @@ it('emits the exact production-only deferred script attributes', () => {
   const { container } = render(<Plausible enabled />);
   const script = container.querySelector('script');
 
-  expect(script?.getAttribute('data-domain')).toBe(siteMetadata.plausible.domain);
-  expect(script?.getAttribute('src')).toBe(siteMetadata.plausible.source);
+  expect(script?.getAttribute('data-domain')).toBe(siteMetadata.plausible?.domain);
+  expect(script?.getAttribute('src')).toBe(siteMetadata.plausible?.source);
   expect(script?.defer).toBe(true);
   expect(script?.hasAttribute('async')).toBe(false);
 });

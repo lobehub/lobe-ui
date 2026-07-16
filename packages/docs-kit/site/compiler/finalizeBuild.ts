@@ -11,7 +11,7 @@ import {
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import compatibilityJson from '../content/compatibility.json';
+import { getDocsConfig } from '../../src/config';
 import type { DocumentManifestEntry } from '../types/content';
 import {
   type ArtifactAuditOptions,
@@ -25,6 +25,8 @@ import { createRobots, createSitemap } from './seo/createSitemap';
 import type { DocumentationInventory } from './types';
 
 export { auditStandaloneBundleIsolation } from './audit/artifactAudit';
+
+const defaultRepositoryRoot = path.resolve(import.meta.dirname, '../../../..');
 
 export interface FinalizeBuildOptions {
   clientDirectory: string;
@@ -119,7 +121,11 @@ export async function finalizeDocumentationBuild(
 
   try {
     const compatibility =
-      dependencies.compatibility ?? (compatibilityJson as DocumentationInventory);
+      dependencies.compatibility ??
+      ((getDocsConfig(defaultRepositoryRoot).legacyRedirects ?? {
+        demoReferences: [],
+        documents: [],
+      }) as DocumentationInventory);
     const documents = dependencies.documents ?? createContentManifest(root).documents;
     const expectedStandalonePaths =
       dependencies.expectedStandalonePaths ?? getStandaloneDemoPaths(compatibility);

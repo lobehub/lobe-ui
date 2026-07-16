@@ -166,7 +166,7 @@ export function demoPlugin(options: DemoPluginOptions = {}): Plugin {
   const resolveCompatibilityPath = () =>
     options.compatibilityPath
       ? canonicalPath(resolve(root, options.compatibilityPath))
-      : canonicalPath(resolve(root, 'packages/docs-kit/site/content/compatibility.json'));
+      : canonicalPath(resolve(root, 'compatibility.json'));
   let compatibilityPath = resolveCompatibilityPath();
   let compatibility: DocumentationInventory | undefined;
   const analysisCache = new Map<string, DemoAnalysis>();

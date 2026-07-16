@@ -1,4 +1,4 @@
-import compatibility from '../../content/compatibility.json';
+import compatibility from '../../../../../compatibility.json';
 import type { DocumentationInventory } from '../types';
 import {
   createStandaloneDemoPath,

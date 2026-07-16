@@ -2,13 +2,13 @@ import { GithubIcon } from '@lobehub/ui/icons/lucideExtra';
 import { ArrowRight, BookOpenText, Languages, Palette, Sparkles, SunMoon, Zap } from 'lucide-react';
 import type { MetaFunction } from 'react-router';
 import { Link } from 'react-router';
+import siteConfig from 'virtual:lobedocs/site-config';
 
 import { CopyControl } from '../../components/CopyControl/CopyControl';
 import { BentoGallery } from '../../components/Home/BentoGallery';
 import { CodeShowcase } from '../../components/Home/CodeShowcase';
 import { HeroIconMarquee } from '../../components/Home/HeroIconMarquee';
 import { sectionLandingPathname } from '../../content/pageChrome';
-import { siteMetadata } from '../../content/siteMetadata';
 import { contentManifest, findDocument } from '../content/registry';
 import { styles } from './homeStyle';
 
@@ -55,20 +55,21 @@ const features = [
 
 export const meta: MetaFunction = () => {
   const document = findDocument('/');
-  const title = document ? `${document.title} - ${siteMetadata.name}` : siteMetadata.name;
-  const description = document?.description ?? siteMetadata.description;
-  const canonicalUrl = new URL('/', siteMetadata.origin).href;
+  const title = document ? `${document.title} - ${siteConfig.title}` : siteConfig.title;
+  const description = document?.description ?? siteConfig.description;
+  const canonicalUrl = new URL('/', siteConfig.siteUrl).href;
+  const openGraphImage = siteConfig.themeConfig?.metadata?.openGraph?.image ?? '';
 
   return [
     { title },
     { content: description, name: 'description' },
     { href: canonicalUrl, rel: 'canonical', tagName: 'link' },
     { content: 'website', property: 'og:type' },
-    { content: siteMetadata.name, property: 'og:site_name' },
+    { content: siteConfig.title, property: 'og:site_name' },
     { content: title, property: 'og:title' },
     { content: description, property: 'og:description' },
     { content: canonicalUrl, property: 'og:url' },
-    { content: siteMetadata.openGraphImage, property: 'og:image' },
+    { content: openGraphImage, property: 'og:image' },
     { content: 'summary_large_image', name: 'twitter:card' },
   ];
 };
@@ -87,9 +88,7 @@ export default function Home() {
           <h1 data-pagefind-meta="title">
             LobeHub <span className={styles.heroGradient}>UI Kit</span>
           </h1>
-          <p data-pagefind-meta="description">
-            {document?.description ?? siteMetadata.description}
-          </p>
+          <p data-pagefind-meta="description">{document?.description ?? siteConfig.description}</p>
           <div className={styles.heroActions}>
             <a
               className={`${styles.button} ${styles.buttonPrimary}`}
