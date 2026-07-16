@@ -1,6 +1,6 @@
 import path from 'node:path';
 
-import { getDocsConfig } from '../../src/config';
+import { emptyLegacyRedirects, getDocsConfig } from '../../src/config';
 import { createContentManifest } from './content/createManifest';
 import { defaultAtomDirs } from './content/discoverDocuments';
 import { getStandaloneDemoPaths } from './demo/readLegacyMap';
@@ -9,10 +9,7 @@ const repositoryRoot = path.resolve(import.meta.dirname, '../../../..');
 
 export function getPrerenderPaths(): string[] {
   const config = getDocsConfig(repositoryRoot);
-  const legacyRedirects = config.legacyRedirects ?? {
-    demoReferences: [],
-    documents: [],
-  };
+  const legacyRedirects = config.legacyRedirects ?? emptyLegacyRedirects;
 
   return [
     ...createContentManifest(
