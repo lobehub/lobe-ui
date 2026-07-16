@@ -153,6 +153,7 @@ interface SearchResultListProps {
   onRemove: (pathname: string) => void;
   optionId: (flatIndex: number) => string;
   query: string;
+  status: string;
 }
 
 export function SearchResultList({
@@ -161,68 +162,74 @@ export function SearchResultList({
   listId,
   optionId,
   query,
+  status,
   onActivate,
   onHover,
   onRemove,
 }: SearchResultListProps) {
   return (
-    <div className={styles.results} id={listId} role="listbox">
-      {groups.map((group) => (
-        <div aria-label={group.label} className={styles.group} key={group.label} role="group">
-          <div aria-hidden className={styles.groupLabel}>
-            {group.label}
-          </div>
-          {group.rows.map((row) => {
-            const RowIcon = group.icon;
-            const selected = row.flatIndex === activeIndex;
-            return (
-              <div
-                aria-selected={selected}
-                className={styles.result}
-                id={optionId(row.flatIndex)}
-                key={row.hit.id}
-                role="option"
-                onClick={() => onActivate(row)}
-                onMouseMove={() => onHover(row.flatIndex)}
-              >
-                <span className={styles.resultIcon}>
-                  <RowIcon aria-hidden size={14} strokeWidth={1.8} />
-                </span>
-                <span className={styles.resultTitle}>
-                  <Highlight query={query} text={row.hit.title} />
-                  {row.hit.excerpt && query.trim() && !hasTitleMatch(row.hit.title, query) ? (
-                    <span className={styles.resultExcerpt}>
-                      {' — '}
-                      <Highlight query={query} text={row.hit.excerpt} />
-                    </span>
+    <div className={styles.listPane}>
+      <div aria-live="polite" className={styles.resultsStatus}>
+        {status}
+      </div>
+      <div className={styles.results} id={listId} role="listbox">
+        {groups.map((group) => (
+          <div aria-label={group.label} className={styles.group} key={group.label} role="group">
+            <div aria-hidden className={styles.groupLabel}>
+              {group.label}
+            </div>
+            {group.rows.map((row) => {
+              const RowIcon = group.icon;
+              const selected = row.flatIndex === activeIndex;
+              return (
+                <div
+                  aria-selected={selected}
+                  className={styles.result}
+                  id={optionId(row.flatIndex)}
+                  key={row.hit.id}
+                  role="option"
+                  onClick={() => onActivate(row)}
+                  onMouseMove={() => onHover(row.flatIndex)}
+                >
+                  <span className={styles.resultIcon}>
+                    <RowIcon aria-hidden size={14} strokeWidth={1.8} />
+                  </span>
+                  <span className={styles.resultTitle}>
+                    <Highlight query={query} text={row.hit.title} />
+                    {row.hit.excerpt && query.trim() && !hasTitleMatch(row.hit.title, query) ? (
+                      <span className={styles.resultExcerpt}>
+                        {' — '}
+                        <Highlight query={query} text={row.hit.excerpt} />
+                      </span>
+                    ) : null}
+                  </span>
+                  {row.removable ? (
+                    <button
+                      aria-label={`Remove ${row.hit.title} from recents`}
+                      className={styles.resultRemove}
+                      tabIndex={-1}
+                      type="button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        onRemove(row.hit.pathname);
+                      }}
+                    >
+                      <X aria-hidden size={13} strokeWidth={1.8} />
+                    </button>
+                  ) : selected ? (
+                    <CornerDownLeft
+                      aria-hidden
+                      className={styles.resultEnter}
+                      size={13}
+                      strokeWidth={1.8}
+                    />
                   ) : null}
-                </span>
-                {row.removable ? (
-                  <button
-                    aria-label={`Remove ${row.hit.title} from recents`}
-                    className={styles.resultRemove}
-                    tabIndex={-1}
-                    type="button"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      onRemove(row.hit.pathname);
-                    }}
-                  >
-                    <X aria-hidden size={13} strokeWidth={1.8} />
-                  </button>
-                ) : selected ? (
-                  <CornerDownLeft
-                    aria-hidden
-                    className={styles.resultEnter}
-                    size={13}
-                    strokeWidth={1.8}
-                  />
-                ) : null}
-              </div>
-            );
-          })}
-        </div>
-      ))}
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

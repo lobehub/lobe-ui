@@ -183,6 +183,21 @@ export const styles = createStaticStyles(({ css }) => {
       }
     `,
 
+    listPane: css`
+      display: flex;
+      flex-basis: 55%;
+      flex-direction: column;
+
+      min-height: 0;
+      border-inline-end: 1px solid var(--docs-border-subtle);
+
+      @media (width <= 48rem) {
+        flex-basis: auto;
+        flex-grow: 1;
+        border-inline-end: 0;
+      }
+    `,
+
     preview: css`
       ${markReset}
       overflow: auto;
@@ -270,11 +285,6 @@ export const styles = createStaticStyles(({ css }) => {
       font-size: 0.8125rem;
       line-height: 1.55;
       color: var(--docs-text-secondary);
-    `,
-
-    previewStatus: css`
-      font-size: 0.8125rem;
-      color: var(--docs-text-subtle);
     `,
 
     previewTitle: css`
@@ -368,17 +378,20 @@ export const styles = createStaticStyles(({ css }) => {
 
     results: css`
       overflow: auto;
-      flex-basis: 55%;
+      flex: 1;
 
       min-height: 0;
       padding-block: 0.4rem 0.75rem;
       padding-inline: 0.5rem;
-      border-inline-end: 1px solid var(--docs-border-subtle);
+    `,
 
-      @media (width <= 48rem) {
-        flex-basis: auto;
-        flex-grow: 1;
-        border-inline-end: 0;
+    resultsStatus: css`
+      font-size: 0.75rem;
+      color: var(--docs-text-subtle);
+
+      &:not(:empty) {
+        padding-block: 0.6rem 0.2rem;
+        padding-inline: 1rem;
       }
     `,
   };

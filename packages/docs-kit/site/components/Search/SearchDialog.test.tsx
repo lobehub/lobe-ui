@@ -233,6 +233,23 @@ it('falls back to Explore only when there are no recents', async () => {
   expect(groups).toEqual(['Explore']);
 });
 
+it('renders the no-results status inside the list pane, not the preview', async () => {
+  const engine = createEngine([]);
+  renderDialog(engine);
+  fireEvent.click(screen.getByRole('button', { name: 'Open search' }));
+  fireEvent.change(screen.getByRole('searchbox', { name: 'Search documentation' }), {
+    target: { value: 'zzz' },
+  });
+
+  const status = await screen.findByText('No results found');
+  const listPane = screen.getByRole('listbox').parentElement as HTMLElement;
+  const body = listPane.parentElement as HTMLElement;
+  const preview = Array.from(body.children).find((child) => child !== listPane) as HTMLElement;
+
+  expect(listPane.contains(status)).toBe(true);
+  expect(preview.contains(status)).toBe(false);
+});
+
 it('traps focus on the input, closes with Escape, and restores the trigger', async () => {
   const engine = createEngine();
   renderDialog(engine);
