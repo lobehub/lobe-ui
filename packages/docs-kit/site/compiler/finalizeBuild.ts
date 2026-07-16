@@ -19,14 +19,13 @@ import {
   type MigrationCoverageResult,
 } from './audit/artifactAudit';
 import { createContentManifest } from './content/createManifest';
+import { defaultAtomDirs } from './content/discoverDocuments';
 import { getStandaloneDemoPaths } from './demo/readLegacyMap';
 import { buildPagefind } from './search/buildPagefind';
 import { createRobots, createSitemap } from './seo/createSitemap';
 import type { DocumentationInventory } from './types';
 
 export { auditStandaloneBundleIsolation } from './audit/artifactAudit';
-
-const defaultRepositoryRoot = path.resolve(import.meta.dirname, '../../../..');
 
 export interface FinalizeBuildOptions {
   clientDirectory: string;
@@ -120,12 +119,20 @@ export async function finalizeDocumentationBuild(
   const fileSystem = dependencies.fileSystem ?? defaultFileSystem;
 
   try {
+    const needsDocsConfig = !dependencies.compatibility || !dependencies.documents;
+    const docsConfig = needsDocsConfig ? getDocsConfig(root) : undefined;
     const compatibility = dependencies.compatibility ??
-      getDocsConfig(defaultRepositoryRoot).legacyRedirects ?? {
+      docsConfig?.legacyRedirects ?? {
         demoReferences: [],
         documents: [],
       };
-    const documents = dependencies.documents ?? createContentManifest(root).documents;
+    const documents =
+      dependencies.documents ??
+      createContentManifest(
+        root,
+        docsConfig?.atomDirs ?? defaultAtomDirs,
+        docsConfig?.navSections ?? {},
+      ).documents;
     const expectedStandalonePaths =
       dependencies.expectedStandalonePaths ?? getStandaloneDemoPaths(compatibility);
     const buildSearchIndex = dependencies.buildSearchIndex ?? buildPagefind;

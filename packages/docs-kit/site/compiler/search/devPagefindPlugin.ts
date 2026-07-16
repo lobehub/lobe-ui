@@ -4,8 +4,10 @@ import { load } from 'cheerio';
 import type { PagefindIndex } from 'pagefind';
 import type { Plugin, ViteDevServer } from 'vite';
 
+import { getDocsConfig } from '../../../src/config';
 import { PAGEFIND_HMR_EVENT } from '../../search/types';
 import { createContentManifest } from '../content/createManifest';
+import { defaultAtomDirs } from '../content/discoverDocuments';
 import { PAGEFIND_ROOT_SELECTOR } from './buildPagefind';
 
 export type DevPagefindNodeApi = Pick<typeof import('pagefind'), 'close' | 'createIndex'>;
@@ -259,9 +261,14 @@ export function devPagefindPlugin(options: DevPagefindPluginOptions = {}): Plugi
         build: async () => {
           const origin = devServerOrigin(server);
           if (!origin) throw new Error('Vite development server has no listening origin');
+          const docsConfig = getDocsConfig(root);
           const documents =
             options.getDocuments?.() ??
-            createContentManifest(root).documents.map(({ pathname }) => pathname);
+            createContentManifest(
+              root,
+              docsConfig.atomDirs ?? defaultAtomDirs,
+              docsConfig.navSections ?? {},
+            ).documents.map(({ pathname }) => pathname);
           return buildDevPagefindFiles({
             api: await getApi(),
             documents,

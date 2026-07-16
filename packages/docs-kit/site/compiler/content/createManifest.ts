@@ -1,9 +1,9 @@
 import { readFileSync } from 'node:fs';
-import path, { relative } from 'node:path';
+import path from 'node:path';
 
 import { parse } from 'yaml';
 
-import { type AtomDirConfig, getDocsConfig } from '../../../src/config';
+import type { AtomDirConfig } from '../../../src/config';
 import { createNavigation, toFrozenNavigationDocuments } from '../../content/navigation';
 import { canonicalizePathname, validateExplicitPathname } from '../../content/pathname';
 import type {
@@ -11,10 +11,8 @@ import type {
   ContentManifest,
   DocumentManifestEntry,
 } from '../../types/content';
-import { defaultAtomDirs, discoverDocuments, type DiscoveredDocument } from './discoverDocuments';
+import { discoverDocuments, type DiscoveredDocument } from './discoverDocuments';
 import { validateFrontmatter } from './validateFrontmatter';
-
-const repositoryRoot = path.resolve(import.meta.dirname, '../../../../..');
 
 const frontmatterPattern = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/;
 
@@ -84,8 +82,8 @@ const validateRouteSurface = (
 
 export function createContentManifest(
   root: string,
-  atomDirs: readonly AtomDirConfig[] = getDocsConfig(repositoryRoot).atomDirs ?? defaultAtomDirs,
-  navSections: Record<string, string> = getDocsConfig(repositoryRoot).navSections ?? {},
+  atomDirs: readonly AtomDirConfig[],
+  navSections: Record<string, string>,
 ): ContentManifest {
   const documents: DocumentManifestEntry[] = [];
   const diagnostics: string[] = [];
@@ -130,7 +128,7 @@ export function createContentManifest(
     documents.push({
       ...validation.frontmatter,
       pathname,
-      source: document.source || relative(root, document.absolutePath),
+      source: document.source || path.relative(root, document.absolutePath),
     });
   }
 

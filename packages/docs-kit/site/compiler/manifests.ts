@@ -2,6 +2,7 @@ import path from 'node:path';
 
 import { getDocsConfig } from '../../src/config';
 import { createContentManifest } from './content/createManifest';
+import { defaultAtomDirs } from './content/discoverDocuments';
 import { getStandaloneDemoPaths } from './demo/readLegacyMap';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../../..');
@@ -14,7 +15,11 @@ export function getPrerenderPaths(): string[] {
   };
 
   return [
-    ...createContentManifest(repositoryRoot).documents.map(({ pathname }) => pathname),
+    ...createContentManifest(
+      repositoryRoot,
+      config.atomDirs ?? defaultAtomDirs,
+      config.navSections ?? {},
+    ).documents.map(({ pathname }) => pathname),
     '/404',
     '/antd.css',
     '/theme-vars.css',

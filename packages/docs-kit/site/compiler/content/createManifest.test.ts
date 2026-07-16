@@ -2,10 +2,18 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'nod
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
+import { getDocsConfig } from '../../../src/config';
 import { createContentManifest } from './createManifest';
+import { defaultAtomDirs } from './discoverDocuments';
 
 const fixtureRoot = path.resolve(import.meta.dirname, '../../../../../tests/fixtures/site/content');
+const repositoryRoot = path.resolve(import.meta.dirname, '../../../../..');
 const temporaryRoots: string[] = [];
+
+const createManifestWithRepositoryConfig = (root: string) => {
+  const config = getDocsConfig(repositoryRoot);
+  return createContentManifest(root, config.atomDirs ?? defaultAtomDirs, config.navSections ?? {});
+};
 
 const createProjectFixture = (files: Record<string, string>): string => {
   const root = mkdtempSync(path.join(tmpdir(), 'lobe-ui-content-'));
@@ -29,7 +37,7 @@ describe('content manifest', () => {
     const root = createProjectFixture({
       'src/Button/index.mdx': readFileSync(path.resolve(fixtureRoot, 'valid.mdx'), 'utf8'),
     });
-    const manifest = createContentManifest(root);
+    const manifest = createManifestWithRepositoryConfig(root);
 
     expect(manifest.documents[0]).toMatchObject({
       category: 'General',
@@ -45,9 +53,9 @@ describe('content manifest', () => {
   });
 
   it('reports every invalid field in one actionable diagnostic set', () => {
-    expect(() => createContentManifest(path.resolve(fixtureRoot, 'invalid.mdx'))).toThrow(
-      /invalid\.mdx[\s\S]*description[\s\S]*category[\s\S]*status/,
-    );
+    expect(() =>
+      createManifestWithRepositoryConfig(path.resolve(fixtureRoot, 'invalid.mdx')),
+    ).toThrow(/invalid\.mdx[\s\S]*description[\s\S]*category[\s\S]*status/);
   });
 
   it('discovers only public MDX documents and excludes internal specifications', () => {
@@ -59,7 +67,7 @@ describe('content manifest', () => {
         '---\ntitle: Button\ndescription: Triggers actions.\ncategory: General\n---\n',
     });
 
-    const manifest = createContentManifest(root);
+    const manifest = createManifestWithRepositoryConfig(root);
 
     expect(manifest.documents).toHaveLength(3);
     expect(manifest.documents.some(({ pathname }) => pathname === '/')).toBe(true);
@@ -79,7 +87,7 @@ route: /components/foo/
 `,
     });
 
-    const [document] = createContentManifest(root).documents;
+    const [document] = createManifestWithRepositoryConfig(root).documents;
 
     expect(document.pathname).toBe('/components/foo');
   });
@@ -102,7 +110,7 @@ route: /components/foo/
 `,
     });
 
-    expect(() => createContentManifest(root)).toThrow(
+    expect(() => createManifestWithRepositoryConfig(root)).toThrow(
       /duplicate documentation pathname[\s\S]*src\/Foo\/index\.mdx[\s\S]*src\/LegacyFoo\/index\.mdx/i,
     );
   });
@@ -118,7 +126,7 @@ route: /guides/foo
 `,
     });
 
-    expect(() => createContentManifest(root)).toThrow(
+    expect(() => createManifestWithRepositoryConfig(root)).toThrow(
       /src\/Guide\/index\.mdx[\s\S]*route "\/guides\/foo"[\s\S]*"\/components\/"/i,
     );
   });
@@ -150,7 +158,7 @@ route: /components/foo?preview=1
 
     let diagnostic = '';
     try {
-      createContentManifest(root);
+      createManifestWithRepositoryConfig(root);
     } catch (error) {
       diagnostic = error instanceof Error ? error.message : String(error);
     }
@@ -171,7 +179,7 @@ route: /components/legacy%20button/
 `,
     });
 
-    const [document] = createContentManifest(root).documents;
+    const [document] = createManifestWithRepositoryConfig(root).documents;
 
     expect(document.pathname).toBe('/components/legacy%20button');
   });
@@ -200,7 +208,7 @@ title: Independent Invalid Document
 
     let diagnostic = '';
     try {
-      createContentManifest(root);
+      createManifestWithRepositoryConfig(root);
     } catch (error) {
       diagnostic = error instanceof Error ? error.message : String(error);
     }
