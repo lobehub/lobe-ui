@@ -11,14 +11,7 @@ declare module 'virtual:lobedocs/compatibility' {
 }
 
 declare module 'virtual:lobedocs/site-config' {
-  const siteConfig: {
-    description: string;
-    favicons?: Record<string, string>;
-    navSections: Record<string, string>;
-    siteUrl: string;
-    themeConfig?: import('../../src/config').DocsThemeConfig;
-    title: string;
-  };
+  const siteConfig: import('../../src/config').ClientSiteConfig;
 
   export default siteConfig;
 }

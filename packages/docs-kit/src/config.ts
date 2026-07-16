@@ -1,6 +1,8 @@
-import { execFileSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync, readFileSync, rmSync } from 'node:fs';
 import { createRequire } from 'node:module';
-import { resolve } from 'node:path';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 import type { DocumentationInventory } from './types';
@@ -66,6 +68,16 @@ export interface DocsConfig {
   title: string;
 }
 
+export type ClientSiteConfig = Pick<
+  DocsConfig,
+  'description' | 'favicons' | 'navSections' | 'siteUrl' | 'themeConfig' | 'title'
+>;
+
+export const emptyLegacyRedirects: DocumentationInventory = {
+  demoReferences: [],
+  documents: [],
+};
+
 export function defineDocsConfig(config: DocsConfig): DocsConfig {
   return config;
 }
@@ -85,29 +97,51 @@ const tsxLoaderUrl = pathToFileURL(createRequire(import.meta.url).resolve('tsx')
 
 const loadConfigInSubprocess = (configPath: string, root: string): DocsConfig => {
   const configUrl = pathToFileURL(configPath).href;
+  const resultDirectory = mkdtempSync(join(tmpdir(), 'lobedocs-config-'));
+  const resultPath = join(resultDirectory, 'result.json');
+  const resultUrl = pathToFileURL(resultPath).href;
   // In a package without "type": "module", tsx's loader falls back to CJS
   // interop and double-wraps the export (`mod.default.default`) instead of
   // exposing it directly (`mod.default`) — unwrap defensively for both.
+  // The result is written to a temp file rather than stdout so a consumer
+  // config that itself prints to stdout (directly or via a dependency)
+  // cannot corrupt the JSON payload; stdout/stderr are captured and relayed
+  // rather than inherited, since inheriting a subprocess's stdio here can
+  // clobber a host process's own stdio-based IPC (e.g. a Vitest worker).
   const script = `
+    const { writeFileSync } = await import('node:fs');
+    const { fileURLToPath } = await import('node:url');
     const mod = await import(${JSON.stringify(configUrl)});
     const exported = mod.default ?? mod;
     const config = exported && typeof exported === 'object' && 'default' in exported
       ? exported.default
       : exported;
-    process.stdout.write(JSON.stringify(config));
+    writeFileSync(fileURLToPath(${JSON.stringify(resultUrl)}), JSON.stringify(config));
   `;
 
-  const output = execFileSync(
-    process.execPath,
-    ['--import', tsxLoaderUrl, '--input-type=module', '-e', script],
-    { cwd: root, encoding: 'utf8', maxBuffer: 1024 * 1024 * 64 },
-  );
+  try {
+    const child = spawnSync(
+      process.execPath,
+      ['--import', tsxLoaderUrl, '--input-type=module', '-e', script],
+      { cwd: root, encoding: 'utf8', maxBuffer: 1024 * 1024 * 64 },
+    );
+    if (child.stdout) process.stdout.write(child.stdout);
+    if (child.stderr) process.stderr.write(child.stderr);
+    if (child.error) throw child.error;
+    if (child.status !== 0) {
+      throw new Error(
+        `Failed to load docs.config.ts at ${configPath} (exit code ${child.status}).`,
+      );
+    }
 
-  const config = JSON.parse(output) as DocsConfig;
-  if (!config || typeof config !== 'object') {
-    throw new Error(`docs.config.ts at ${configPath} must have a default export.`);
+    const config = JSON.parse(readFileSync(resultPath, 'utf8')) as DocsConfig;
+    if (!config || typeof config !== 'object') {
+      throw new Error(`docs.config.ts at ${configPath} must have a default export.`);
+    }
+    return config;
+  } finally {
+    rmSync(resultDirectory, { force: true, recursive: true });
   }
-  return config;
 };
 
 export function getDocsConfig(root: string): DocsConfig {
