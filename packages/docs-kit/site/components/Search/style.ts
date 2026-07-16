@@ -17,6 +17,7 @@ export const styles = createStaticStyles(({ css }) => {
     flex-direction: column;
 
     width: min(100%, 44rem);
+    height: min(37rem, calc(100dvh - 2rem));
     max-height: min(37rem, calc(100dvh - 2rem));
     border: 1px solid var(--docs-border-default);
     border-radius: var(--docs-radius-lg);
@@ -31,6 +32,7 @@ export const styles = createStaticStyles(({ css }) => {
 
     @media (width <= 32rem) {
       width: 100%;
+      height: 100dvh;
       min-height: 100dvh;
       max-height: 100dvh;
       border: 0;
@@ -315,6 +317,17 @@ export const styles = createStaticStyles(({ css }) => {
         border-color: var(--docs-border-subtle);
         color: var(--docs-text-primary);
         background: var(--docs-surface-hover);
+      }
+
+      [data-remove] {
+        opacity: 0;
+        transition: opacity 0.12s ease;
+      }
+
+      &:hover [data-remove],
+      &[aria-selected='true'] [data-remove],
+      [data-remove]:focus-visible {
+        opacity: 1;
       }
     `,
 

@@ -77,7 +77,11 @@ export function SearchDialog({
 
   const activate = useCallback(
     (row: ResultRow) => {
-      addRecent({ category: row.hit.category, pathname: row.hit.pathname, title: row.hit.title });
+      addRecent({
+        category: row.hit.category,
+        pathname: stripHash(row.hit.pathname),
+        title: row.hit.title,
+      });
       close();
       void navigate(row.hit.pathname);
     },

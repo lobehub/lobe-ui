@@ -194,6 +194,43 @@ it('enters the anchor list with Arrow keys and navigates to a sub-result with ha
   expect(readRecents()[0]).toMatchObject({ pathname: '/components/button', title: 'Button' });
 });
 
+it('dedupes recents by page pathname when activating hits with different hashes', async () => {
+  const searchbox1 = await openAndType(
+    createEngine([
+      {
+        category: 'Components',
+        excerpt: 'x',
+        id: 'u',
+        pathname: '/components/button#usage',
+        title: 'Button',
+      },
+    ]),
+    'button',
+  );
+  fireEvent.keyDown(searchbox1, { key: 'Enter' });
+  await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+  cleanup();
+
+  const searchbox2 = await openAndType(
+    createEngine([
+      {
+        category: 'Components',
+        excerpt: 'y',
+        id: 'a',
+        pathname: '/components/button#api',
+        title: 'Button',
+      },
+    ]),
+    'button',
+  );
+  fireEvent.keyDown(searchbox2, { key: 'Enter' });
+  await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull());
+
+  const recents = readRecents();
+  expect(recents).toHaveLength(1);
+  expect(recents[0].pathname).toBe('/components/button');
+});
+
 it('omits the anchors block when a hit has no sub-results (undefined or empty)', async () => {
   const engine = createEngine([
     { category: 'Components', excerpt: 'no anchors', id: 'a', pathname: '/a', title: 'Alpha' },
