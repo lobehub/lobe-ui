@@ -39,6 +39,24 @@ export interface DocsAnalyticsConfig {
   };
 }
 
+export interface DocsHomeFeature {
+  description: string;
+  icon?: string;
+  title: string;
+}
+
+export interface DocsHomeConfig {
+  ctaFootnote?: string;
+  ctaTitle?: string;
+  features?: DocsHomeFeature[];
+  hero?: {
+    accent?: string;
+    actions?: DocsNavItem[];
+    title?: string;
+  };
+  install?: string;
+}
+
 export interface DocsMetadataConfig {
   openGraph?: {
     image?: string;
@@ -57,6 +75,7 @@ export interface DocsThemeConfig {
   analytics?: DocsAnalyticsConfig;
   apiHeader?: DocsApiHeaderConfig;
   giscus?: DocsGiscusConfig;
+  home?: DocsHomeConfig;
   metadata?: DocsMetadataConfig;
   navItems?: DocsNavItem[];
   prefersColor?: 'auto' | 'dark' | 'light';
@@ -68,6 +87,7 @@ export interface DocsConfig {
   atomDirs: AtomDirConfig[];
   description: string;
   favicons?: Record<string, string>;
+  homePage?: string;
   legacyRedirects?: DocumentationInventory;
   navSections: Record<string, string>;
   siteUrl: string;

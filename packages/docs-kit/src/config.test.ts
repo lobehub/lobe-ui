@@ -120,6 +120,74 @@ describe('getDocsConfig', () => {
 
     expect(config.title).toBe('Noisy Config');
   });
+
+  it('loads homePage and themeConfig.home fields through round-trip', () => {
+    const root = createFixtureRoot(`
+      export default {
+        atomDirs: [{ dir: 'src' }],
+        description: 'desc',
+        homePage: './home.mdx',
+        navSections: {},
+        siteUrl: 'https://example.test',
+        themeConfig: {
+          home: {
+            ctaFootnote: 'Join our community',
+            ctaTitle: 'Get started',
+            features: [
+              {
+                description: 'Lightning fast',
+                icon: 'zap',
+                title: 'Performance',
+              },
+            ],
+            hero: {
+              accent: '#ff0000',
+              title: 'Welcome',
+            },
+            install: 'npm install',
+          },
+        },
+        title: 'Home Config',
+      };
+    `);
+
+    const config = getDocsConfig(root);
+
+    expect(config.homePage).toBe('./home.mdx');
+    expect(config.themeConfig?.home).toEqual({
+      ctaFootnote: 'Join our community',
+      ctaTitle: 'Get started',
+      features: [
+        {
+          description: 'Lightning fast',
+          icon: 'zap',
+          title: 'Performance',
+        },
+      ],
+      hero: {
+        accent: '#ff0000',
+        title: 'Welcome',
+      },
+      install: 'npm install',
+    });
+  });
+
+  it('loads config omitting homePage and home without error', () => {
+    const root = createFixtureRoot(`
+      export default {
+        atomDirs: [{ dir: 'src' }],
+        description: 'desc',
+        navSections: {},
+        siteUrl: 'https://example.test',
+        title: 'No Home Config',
+      };
+    `);
+
+    const config = getDocsConfig(root);
+
+    expect(config.homePage).toBeUndefined();
+    expect(config.themeConfig?.home).toBeUndefined();
+  });
 });
 
 describe('loadDocsConfig', () => {
