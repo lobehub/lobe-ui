@@ -6,6 +6,7 @@ import { styles } from './style';
 
 interface SearchPreviewPaneProps {
   activeHit?: SearchHit;
+  activeOptionId?: string;
   anchorIndex: number;
   onActivateAnchor: (subResult: SearchSubResult) => void;
   onHoverAnchor: (index: number) => void;
@@ -14,6 +15,7 @@ interface SearchPreviewPaneProps {
 
 export function SearchPreviewPane({
   activeHit,
+  activeOptionId,
   anchorIndex,
   query,
   onActivateAnchor,
@@ -22,7 +24,7 @@ export function SearchPreviewPane({
   const anchors = activeHit?.subResults ?? [];
 
   return (
-    <div aria-live="polite" className={styles.preview}>
+    <div aria-labelledby={activeOptionId} aria-live="polite" className={styles.preview}>
       {activeHit ? (
         <>
           <span className={styles.previewCategory}>{activeHit.category ?? 'Results'}</span>

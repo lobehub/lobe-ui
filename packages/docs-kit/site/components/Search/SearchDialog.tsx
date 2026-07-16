@@ -21,7 +21,7 @@ interface SearchDialogProps {
 }
 
 const focusableSelector =
-  'input:not([disabled]), button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])';
+  'input:not([disabled]):not([tabindex="-1"]), button:not([disabled]):not([tabindex="-1"]), a[href]:not([tabindex="-1"]), [tabindex]:not([tabindex="-1"])';
 
 const stripHash = (pathname: string): string => pathname.split('#')[0] ?? pathname;
 
@@ -225,6 +225,7 @@ export function SearchDialog({
           />
           <SearchPreviewPane
             activeHit={activeHit}
+            activeOptionId={activeDescendant}
             anchorIndex={anchorIndex}
             query={query}
             onActivateAnchor={activateAnchor}

@@ -37,8 +37,7 @@ export function useSearchQuery({
     }
   }, []);
 
-  const runSearch = useCallback(async (engine: SearchEngine, value: string) => {
-    const request = ++requestRef.current;
+  const runSearch = useCallback(async (engine: SearchEngine, value: string, request: number) => {
     const isCurrent = () => request === requestRef.current && engineRef.current === engine;
     try {
       const nextHits = await engine.search(value);
@@ -56,10 +55,10 @@ export function useSearchQuery({
     (value: string) => {
       const engine = engineRef.current;
       if (!engine) return;
+      const request = ++requestRef.current;
       void engine.preload(value).catch(() => {});
       clearTimer();
       if (!value.trim()) {
-        requestRef.current += 1;
         setHits([]);
         setLoading(false);
         return;
@@ -67,7 +66,7 @@ export function useSearchQuery({
       setLoading(true);
       timerRef.current = setTimeout(() => {
         timerRef.current = undefined;
-        void runSearch(engine, value);
+        void runSearch(engine, value, request);
       }, SEARCH_DEBOUNCE_MS);
     },
     [clearTimer, runSearch],
