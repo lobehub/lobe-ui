@@ -15,6 +15,7 @@ export interface ContentFrontmatter {
 export interface DocumentManifestEntry extends ContentFrontmatter {
   pathname: string;
   source: string;
+  subType?: string;
 }
 
 export interface NavigationCategory {

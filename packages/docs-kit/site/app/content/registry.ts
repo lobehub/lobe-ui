@@ -1,3 +1,9 @@
+import {
+  componentMetadata,
+  componentModuleLoaders,
+  publicMetadata,
+  publicModuleLoaders,
+} from 'virtual:lobedocs/document-modules';
 import siteConfig from 'virtual:lobedocs/site-config';
 
 import { createNavigation, toFrozenNavigationDocuments } from '../../content/navigation';
@@ -12,25 +18,9 @@ interface ReactImportPromise<T> extends Promise<T> {
   value?: T;
 }
 
-const componentMetadata = import.meta.glob<DocumentManifestEntry>('/src/**/index.mdx', {
-  eager: true,
-  import: 'default',
-  query: '?document-metadata',
-});
-const publicMetadata = import.meta.glob<DocumentManifestEntry>(
-  ['/docs/index.mdx', '/docs/changelog.mdx'],
-  {
-    eager: true,
-    import: 'default',
-    query: '?document-metadata',
-  },
-);
-
-const publicModuleLoaders = import.meta.glob<MDXModule>(['/docs/index.mdx', '/docs/changelog.mdx']);
-
 const moduleLoaders: Record<string, DocumentLoader> = {
   ...publicModuleLoaders,
-  ...import.meta.glob<MDXModule>('/src/**/index.mdx'),
+  ...componentModuleLoaders,
 };
 
 const documents = [...Object.values(publicMetadata), ...Object.values(componentMetadata)].toSorted(

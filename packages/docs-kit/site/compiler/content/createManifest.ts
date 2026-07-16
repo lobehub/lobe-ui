@@ -11,19 +11,11 @@ import type {
   ContentManifest,
   DocumentManifestEntry,
 } from '../../types/content';
+import { deriveComponentRoute, resolveAtomDir } from './atomRouting';
 import { discoverDocuments, type DiscoveredDocument } from './discoverDocuments';
 import { validateFrontmatter } from './validateFrontmatter';
 
 const frontmatterPattern = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/;
-
-const kebabRouteSegment = (value: string): string =>
-  value
-    .replaceAll(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
-    .replaceAll(/([a-z\d])([A-Z])/g, '$1-$2')
-    .replaceAll(/[’']/g, '')
-    .replaceAll(/[^A-Za-z\d]+/g, '-')
-    .replaceAll(/^-|-$/g, '')
-    .toLowerCase();
 
 const parseDocumentFrontmatter = (
   document: DiscoveredDocument,
@@ -43,23 +35,26 @@ const parseDocumentFrontmatter = (
   }
 };
 
+interface DerivedPathname {
+  pathname: string;
+  subType?: string;
+}
+
 const derivePathname = (
   document: DiscoveredDocument,
   frontmatter: ContentFrontmatter,
   atomDirs: readonly AtomDirConfig[],
-): string => {
-  if (frontmatter.route) return canonicalizePathname(frontmatter.route);
-  if (document.kind === 'home') return '/';
-  if (document.kind === 'changelog') return '/changelog';
+): DerivedPathname => {
+  if (frontmatter.route) return { pathname: canonicalizePathname(frontmatter.route) };
+  if (document.kind === 'home') return { pathname: '/' };
+  if (document.kind === 'changelog') return { pathname: '/changelog' };
 
-  const atomDir = atomDirs.find(({ dir }) => document.source.startsWith(`${dir}/`));
-  const prefix = atomDir ? `${atomDir.dir}/` : 'src/';
-  const componentPath = document.source
-    .slice(prefix.length, -'/index.mdx'.length)
-    .split('/')
-    .map(kebabRouteSegment)
-    .join('/');
-  return canonicalizePathname(`/components/${componentPath}`);
+  const atomDir = resolveAtomDir(document.source, atomDirs);
+  const componentPath = document.source.slice(atomDir.dir.length + 1, -'/index.mdx'.length);
+  const { pathname } = deriveComponentRoute(componentPath, atomDir, atomDirs);
+  return atomDir.subType
+    ? { pathname: canonicalizePathname(pathname), subType: atomDir.subType }
+    : { pathname: canonicalizePathname(pathname) };
 };
 
 const compareDocuments = (left: DocumentManifestEntry, right: DocumentManifestEntry): number =>
@@ -109,7 +104,7 @@ export function createContentManifest(
       continue;
     }
 
-    const pathname = derivePathname(document, validation.frontmatter, atomDirs);
+    const { pathname, subType } = derivePathname(document, validation.frontmatter, atomDirs);
     const routeDiagnostic = validateRouteSurface(document, pathname);
     if (routeDiagnostic) {
       diagnostics.push(`${document.absolutePath}: ${routeDiagnostic}`);
@@ -129,6 +124,7 @@ export function createContentManifest(
       ...validation.frontmatter,
       pathname,
       source: document.source || path.relative(root, document.absolutePath),
+      ...(subType ? { subType } : {}),
     });
   }
 

@@ -15,6 +15,8 @@ const siteConfigVirtualId = 'virtual:lobedocs/site-config';
 const resolvedSiteConfigVirtualId = `\0${siteConfigVirtualId}`;
 const compatibilityVirtualId = 'virtual:lobedocs/compatibility';
 const resolvedCompatibilityVirtualId = `\0${compatibilityVirtualId}`;
+const documentModulesVirtualId = 'virtual:lobedocs/document-modules';
+const resolvedDocumentModulesVirtualId = `\0${documentModulesVirtualId}`;
 
 const getMetadataPath = (id: string): string | undefined => {
   const queryIndex = id.indexOf('?');
@@ -60,11 +62,43 @@ export function lobeDocsSiteConfigPlugin(root: string = process.cwd()): Plugin {
   };
 }
 
+export function lobeDocsDocumentModulesPlugin(root: string = process.cwd()): Plugin {
+  return {
+    load(id) {
+      if (id !== resolvedDocumentModulesVirtualId) return;
+
+      const config = getDocsConfig(root);
+      const atomDirs = config.atomDirs ?? defaultAtomDirs;
+      const componentPatterns = atomDirs.map(({ dir }) => `/${dir}/**/index.mdx`);
+      const publicPatterns = ['/docs/index.mdx', '/docs/changelog.mdx'];
+
+      return `export const componentMetadata = import.meta.glob(${JSON.stringify(componentPatterns)}, {
+  eager: true,
+  import: 'default',
+  query: '?document-metadata',
+});
+export const publicMetadata = import.meta.glob(${JSON.stringify(publicPatterns)}, {
+  eager: true,
+  import: 'default',
+  query: '?document-metadata',
+});
+export const publicModuleLoaders = import.meta.glob(${JSON.stringify(publicPatterns)});
+export const componentModuleLoaders = import.meta.glob(${JSON.stringify(componentPatterns)});
+`;
+    },
+    name: 'lobe-docs-document-modules',
+    resolveId(source) {
+      if (source === documentModulesVirtualId) return resolvedDocumentModulesVirtualId;
+    },
+  };
+}
+
 export function lobeDocs(root: string = process.cwd()): Plugin[] {
   return [
     demoPlugin(),
     apiPlugin(),
     lobeDocsSiteConfigPlugin(root),
+    lobeDocsDocumentModulesPlugin(root),
     {
       enforce: 'pre',
       load(id) {
