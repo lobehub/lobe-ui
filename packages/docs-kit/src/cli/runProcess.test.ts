@@ -11,21 +11,45 @@ describe('runProcess', () => {
     );
   });
 
-  it('resolves when the child is terminated by SIGINT', async () => {
+  it('rejects when the child is terminated by SIGINT by default', async () => {
     await expect(
       runProcess(process.execPath, ['-e', 'process.kill(process.pid, "SIGINT")']),
-    ).resolves.toBeUndefined();
+    ).rejects.toThrow(/exited via signal SIGINT/);
   });
 
-  it('resolves when the child is terminated by SIGTERM', async () => {
+  it('rejects when the child is terminated by SIGTERM by default', async () => {
     await expect(
       runProcess(process.execPath, ['-e', 'process.kill(process.pid, "SIGTERM")']),
-    ).resolves.toBeUndefined();
+    ).rejects.toThrow(/exited via signal SIGTERM/);
   });
 
   it('rejects when the child is terminated by another signal', async () => {
     await expect(
       runProcess(process.execPath, ['-e', 'process.kill(process.pid, "SIGHUP")']),
+    ).rejects.toThrow(/exited via signal SIGHUP/);
+  });
+
+  it('resolves when the child is terminated by SIGINT and treatSignalsAsSuccess is set', async () => {
+    await expect(
+      runProcess(process.execPath, ['-e', 'process.kill(process.pid, "SIGINT")'], {
+        treatSignalsAsSuccess: true,
+      }),
+    ).resolves.toBeUndefined();
+  });
+
+  it('resolves when the child is terminated by SIGTERM and treatSignalsAsSuccess is set', async () => {
+    await expect(
+      runProcess(process.execPath, ['-e', 'process.kill(process.pid, "SIGTERM")'], {
+        treatSignalsAsSuccess: true,
+      }),
+    ).resolves.toBeUndefined();
+  });
+
+  it('rejects when the child is terminated by another signal even if treatSignalsAsSuccess is set', async () => {
+    await expect(
+      runProcess(process.execPath, ['-e', 'process.kill(process.pid, "SIGHUP")'], {
+        treatSignalsAsSuccess: true,
+      }),
     ).rejects.toThrow(/exited via signal SIGHUP/);
   });
 });
