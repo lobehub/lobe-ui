@@ -16,6 +16,15 @@ declare module 'virtual:lobedocs/site-config' {
   export default siteConfig;
 }
 
+declare module 'virtual:lobedocs/home-page' {
+  const HomePage: import('react').ComponentType<{
+    description: string;
+    getStartedPathname: string;
+  }>;
+
+  export default HomePage;
+}
+
 declare module 'virtual:lobedocs/document-modules' {
   type DocumentMetadata = import('./content').DocumentManifestEntry;
   type MDXModule = import('./content').MDXModule;

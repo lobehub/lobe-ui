@@ -19,6 +19,8 @@ const compatibilityVirtualId = 'virtual:lobedocs/compatibility';
 const resolvedCompatibilityVirtualId = `\0${compatibilityVirtualId}`;
 const documentModulesVirtualId = 'virtual:lobedocs/document-modules';
 const resolvedDocumentModulesVirtualId = `\0${documentModulesVirtualId}`;
+const homePageVirtualId = 'virtual:lobedocs/home-page';
+const defaultHomePagePath = resolve(import.meta.dirname, '../components/Home/DefaultHome.tsx');
 
 const getMetadataPath = (id: string): string | undefined => {
   const queryIndex = id.indexOf('?');
@@ -60,6 +62,18 @@ export function lobeDocsSiteConfigPlugin(root: string = process.cwd()): Plugin {
     resolveId(source) {
       if (source === siteConfigVirtualId) return resolvedSiteConfigVirtualId;
       if (source === compatibilityVirtualId) return resolvedCompatibilityVirtualId;
+      if (source === homePageVirtualId) {
+        const config = getDocsConfig(root);
+        if (!config.homePage) return defaultHomePagePath;
+
+        const homePagePath = resolve(root, config.homePage);
+        if (!existsSync(homePagePath)) {
+          throw new Error(
+            `docs.config.ts sets homePage to "${config.homePage}", but no file exists at ${homePagePath}.`,
+          );
+        }
+        return homePagePath;
+      }
     },
   };
 }
