@@ -245,7 +245,15 @@ export const loadHelper = () => import('./secondary');
       server!.watcher.on('change', onChange);
     });
     writeFileSync(path, contents);
-    await observed;
+    // A write landing while chokidar's poll baseline is being (re)established is
+    // swallowed forever; rewriting the same contents bumps mtime so a lost event
+    // self-heals on the next poll cycle.
+    const rewrite = setInterval(() => writeFileSync(path, contents), 1000);
+    try {
+      await observed;
+    } finally {
+      clearInterval(rewrite);
+    }
   };
 
   const initialDescriptor = await loadCurrentDescriptor();
