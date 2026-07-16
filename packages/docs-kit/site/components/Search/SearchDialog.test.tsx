@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { useRef, useState } from 'react';
 import { MemoryRouter, useLocation } from 'react-router';
 
@@ -177,14 +177,21 @@ it('wraps arrow navigation across groups and writes a recent on Enter', async ()
 it('enters the anchor list with Arrow keys and navigates to a sub-result with hash', async () => {
   const engine = createEngine();
   const searchbox = await openAndType(engine, 'button');
+  await act(async () => {});
 
   const preview = screen.getByText('On this page').closest('div') as HTMLElement;
   fireEvent.keyDown(searchbox, { key: 'ArrowRight' });
-  expect(within(preview).getByRole('button', { name: 'Usage' }).dataset.active).toBe('true');
+  await waitFor(() =>
+    expect(within(preview).getByRole('button', { name: 'Usage' }).dataset.active).toBe('true'),
+  );
   fireEvent.keyDown(searchbox, { key: 'ArrowDown' });
-  expect(within(preview).getByRole('button', { name: 'API' }).dataset.active).toBe('true');
+  await waitFor(() =>
+    expect(within(preview).getByRole('button', { name: 'API' }).dataset.active).toBe('true'),
+  );
   fireEvent.keyDown(searchbox, { key: 'ArrowLeft' });
-  expect(within(preview).getByRole('button', { name: 'API' }).dataset.active).toBe('false');
+  await waitFor(() =>
+    expect(within(preview).getByRole('button', { name: 'API' }).dataset.active).toBe('false'),
+  );
 
   fireEvent.keyDown(searchbox, { key: 'ArrowRight' });
   fireEvent.keyDown(searchbox, { key: 'Enter' });
