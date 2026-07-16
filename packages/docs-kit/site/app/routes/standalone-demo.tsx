@@ -9,6 +9,7 @@ import { StandaloneDemoPage } from '../../components/Demo/StandaloneDemoPage';
 import { styles as demoStyles } from '../../components/Demo/style';
 import type { DemoAppearance, DemoModule } from '../../types/demo';
 import { createDescriptorPromiseCache } from '../demos/descriptorPromiseCache';
+import { useSiteTheme } from '../providers/SiteProviders';
 
 export interface ResolvedStandaloneDemo extends StandaloneDemoMapEntry {
   requestedRouteId?: string;
@@ -64,11 +65,11 @@ export const meta: MetaFunction = ({ location, params }) => {
   return [{ title }, { content: 'noindex, nofollow', name: 'robots' }];
 };
 
-const getAppearance = (value: null | string): DemoAppearance =>
-  value === 'dark' ? 'dark' : 'light';
+const getExplicitAppearance = (value: null | string): DemoAppearance | undefined =>
+  value === 'dark' || value === 'light' ? value : undefined;
 
 interface StandaloneQueryState {
-  appearance: DemoAppearance;
+  appearance?: DemoAppearance;
   requestedRouteId?: string;
 }
 
@@ -81,7 +82,7 @@ interface StandaloneQuerySyncProps {
 const parseStandaloneQuery = (search: string): StandaloneQueryState => {
   const searchParams = new URLSearchParams(search);
   return {
-    appearance: getAppearance(searchParams.get('appearance')),
+    appearance: getExplicitAppearance(searchParams.get('appearance')),
     requestedRouteId: searchParams.get('routeId') || undefined,
   };
 };
@@ -100,14 +101,16 @@ export function StandaloneQuerySync({
 }: StandaloneQuerySyncProps) {
   const search = useSyncExternalStore(subscribeToLocation, getLocationSearch, () => initialSearch);
   const query = useMemo(() => parseStandaloneQuery(search), [search]);
+  const { appearance: siteAppearance } = useSiteTheme();
+  const resolvedAppearance = query.appearance ?? siteAppearance;
 
   useEffect(() => {
-    document.documentElement.dataset.standaloneAppearance = query.appearance;
-  }, [query.appearance]);
+    document.documentElement.dataset.standaloneAppearance = resolvedAppearance;
+  }, [resolvedAppearance]);
 
   return (
     <StandaloneDemoPage
-      appearance={query.appearance}
+      appearance={resolvedAppearance}
       demo={demo}
       metadataRouteId={metadataRouteId}
       requestedRouteId={query.requestedRouteId}

@@ -5,10 +5,12 @@ export const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem('${
 export const STANDALONE_APPEARANCE_SCRIPT = `(() => {
   try {
     if (location.pathname === '/~demos' || location.pathname.startsWith('/~demos/')) {
-      const appearance = new URLSearchParams(location.search).get('appearance');
-      if (appearance === 'light' || appearance === 'dark') {
-        document.documentElement.dataset.standaloneAppearance = appearance;
-      }
+      var e = document.documentElement;
+      var appearance = new URLSearchParams(location.search).get('appearance');
+      e.dataset.standaloneAppearance =
+        appearance === 'light' || appearance === 'dark'
+          ? appearance
+          : e.dataset.theme === 'dark' ? 'dark' : 'light';
     }
   } catch {}
 })();`;

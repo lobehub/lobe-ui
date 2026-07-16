@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import type { PropsWithChildren } from 'react';
+import type { CSSProperties, PropsWithChildren } from 'react';
 
 import ConfigProvider from '@/ConfigProvider';
 import ThemeProvider from '@/ThemeProvider';
@@ -13,14 +13,18 @@ interface DemoEnvironmentProps extends PropsWithChildren {
 
 export function DemoEnvironment({ appearance, children, demoId }: DemoEnvironmentProps) {
   return (
-    <ConfigProvider motion={motion}>
-      <ThemeProvider
-        appId={`lobe-demo-${demoId}`}
-        appearance={appearance}
-        enableGlobalStyle={false}
-      >
-        {children}
-      </ThemeProvider>
-    </ConfigProvider>
+    <div data-lobe-demo-appearance={appearance} style={demoScopeStyle}>
+      <ConfigProvider motion={motion}>
+        <ThemeProvider
+          appId={`lobe-demo-${demoId}`}
+          appearance={appearance}
+          enableGlobalStyle={false}
+        >
+          {children}
+        </ThemeProvider>
+      </ConfigProvider>
+    </div>
   );
 }
+
+const demoScopeStyle: CSSProperties = { display: 'contents' };

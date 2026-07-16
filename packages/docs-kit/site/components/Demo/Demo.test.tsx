@@ -1,10 +1,17 @@
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import type { ComponentType } from 'react';
 import { renderToString } from 'react-dom/server';
 
+import { SiteProviders, useSiteTheme } from '../../app/providers/SiteProviders';
 import type { DemoModule } from '../../types/demo';
 import { Demo } from './Demo';
 import { styles } from './style';
+
+const openMenu = (trigger: HTMLElement) => {
+  fireEvent.pointerDown(trigger);
+  fireEvent.mouseDown(trigger);
+  fireEvent.click(trigger);
+};
 
 const activityMocks = vi.hoisted(() => ({ cleanups: 0, starts: 0 }));
 
@@ -60,9 +67,11 @@ beforeAll(() => {
     'matchMedia',
     vi.fn(() => ({
       addEventListener: vi.fn(),
+      addListener: vi.fn(),
       matches: false,
       media: '',
       removeEventListener: vi.fn(),
+      removeListener: vi.fn(),
     })),
   );
 });
@@ -247,7 +256,7 @@ it('keeps source and every non-edit action available for read-only demos', async
   expect(screen.getByRole('link', { name: 'Open standalone preview' })).toBeTruthy();
   expect(screen.getByRole('button', { name: 'Enter full screen' })).toBeTruthy();
   expect(screen.getByRole('button', { name: 'Preview viewport' })).toBeTruthy();
-  expect(screen.getByRole('button', { name: 'Use dark demo theme' })).toBeTruthy();
+  expect(screen.getByRole('button', { name: 'Preview theme' })).toBeTruthy();
   expect(screen.queryByRole('button', { name: 'Reset source' })).toBeNull();
 
   fireEvent.click(screen.getByRole('button', { name: 'Show source' }));
@@ -260,7 +269,9 @@ it('applies an independent dark canvas and keeps it in standalone URLs', async (
 
   await waitFor(() => expect(document.getElementById('lobe-demo-dark-canvas')).toBeTruthy());
 
-  fireEvent.click(screen.getByRole('button', { name: 'Use dark demo theme' }));
+  openMenu(screen.getByRole('button', { name: 'Preview theme' }));
+  const menu = await screen.findByRole('menu');
+  fireEvent.click(within(menu).getByRole('menuitemcheckbox', { name: 'Dark' }));
 
   expect(container.querySelector(`.${styles.viewport}`)?.getAttribute('data-demo-appearance')).toBe(
     'dark',
@@ -268,6 +279,72 @@ it('applies an independent dark canvas and keeps it in standalone URLs', async (
   expect(
     screen.getByRole('link', { name: 'Open standalone preview' }).getAttribute('href'),
   ).toContain('appearance=dark');
+});
+
+it('defaults the demo theme control to auto', async () => {
+  render(<Demo of={{ ...descriptor, id: 'auto-default' }} />);
+
+  await waitFor(() => expect(document.getElementById('lobe-demo-auto-default')).toBeTruthy());
+
+  openMenu(screen.getByRole('button', { name: 'Preview theme' }));
+  const menu = await screen.findByRole('menu');
+  expect(
+    within(menu).getByRole('menuitemcheckbox', { name: 'Auto' }).getAttribute('aria-checked'),
+  ).toBe('true');
+});
+
+it('follows the site theme while the demo theme is auto, and stops once pinned', async () => {
+  function ThemeToggle() {
+    const { setPreference } = useSiteTheme();
+    return <button onClick={() => setPreference('dark')}>force site dark</button>;
+  }
+
+  render(
+    <SiteProviders>
+      <ThemeToggle />
+      <Demo of={{ ...descriptor, id: 'auto-follow' }} />
+    </SiteProviders>,
+  );
+
+  await waitFor(() => expect(document.getElementById('lobe-demo-auto-follow')).toBeTruthy());
+  const viewport = () => document.querySelector(`.${styles.viewport}`);
+  expect(viewport()?.getAttribute('data-demo-appearance')).toBe('light');
+
+  fireEvent.click(screen.getByRole('button', { name: 'force site dark' }));
+
+  await waitFor(() => expect(viewport()?.getAttribute('data-demo-appearance')).toBe('dark'));
+
+  openMenu(screen.getByRole('button', { name: 'Preview theme' }));
+  const menu = await screen.findByRole('menu');
+  fireEvent.click(within(menu).getByRole('menuitemcheckbox', { name: 'Light' }));
+
+  expect(viewport()?.getAttribute('data-demo-appearance')).toBe('light');
+});
+
+it('scopes an explicit demo theme choice to its own theme provider instead of only recoloring the canvas', async () => {
+  render(
+    <SiteProviders>
+      <Demo of={{ ...descriptor, id: 'scoped-theme' }} />
+    </SiteProviders>,
+  );
+
+  await waitFor(() => expect(document.getElementById('lobe-demo-scoped-theme')).toBeTruthy());
+
+  const scopeAttribute = () =>
+    document
+      .getElementById('lobe-demo-scoped-theme')
+      ?.closest('[data-lobe-demo-appearance]')
+      ?.getAttribute('data-lobe-demo-appearance');
+
+  const trigger = screen.getByRole('button', { name: 'Preview theme' });
+
+  openMenu(trigger);
+  const menu = await screen.findByRole('menu');
+  fireEvent.click(within(menu).getByRole('menuitemcheckbox', { name: 'Dark' }));
+  await waitFor(() => expect(scopeAttribute()).toBe('dark'));
+
+  fireEvent.click(within(menu).getByRole('menuitemcheckbox', { name: 'Light' }));
+  await waitFor(() => expect(scopeAttribute()).toBe('light'));
 });
 
 it('renders an embedded isolated demo through the standalone route', () => {
