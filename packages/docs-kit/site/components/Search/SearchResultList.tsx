@@ -205,6 +205,7 @@ export function SearchResultList({
                   </span>
                   {row.removable ? (
                     <button
+                      data-remove
                       aria-label={`Remove ${row.hit.title} from recents`}
                       className={styles.resultRemove}
                       tabIndex={-1}

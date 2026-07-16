@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { loadSearchEngine } from '../../search/loadSearchEngine';
 import type { SearchEngine, SearchHit } from '../../search/types';
 import type { DocumentManifestEntry } from '../../types/content';
 
@@ -100,5 +99,3 @@ export function useSearchQuery({
 
   return { hits, loading, reset, search };
 }
-
-export const loadDefaultSearchEngine = loadSearchEngine;
