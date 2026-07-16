@@ -145,6 +145,15 @@ it('groups hits by category in best-hit order and highlights matches as text', a
   expect(document.querySelector('mark')?.textContent).toBe('Button');
   expect(document.querySelector('img')).toBeNull();
   expect(document.body.textContent).toContain('<img src=x onerror=alert(1)> Safe text');
+
+  const listPane = screen.getByRole('listbox').parentElement as HTMLElement;
+  const preview = Array.from(listPane.parentElement!.children).find(
+    (child) => child !== listPane,
+  ) as HTMLElement;
+  const activeOption = screen
+    .getAllByRole('option')
+    .find((node) => node.getAttribute('aria-selected') === 'true') as HTMLElement;
+  expect(preview.getAttribute('aria-labelledby')).toBe(activeOption.id);
 });
 
 it('wraps arrow navigation across groups and writes a recent on Enter', async () => {
@@ -248,6 +257,42 @@ it('renders the no-results status inside the list pane, not the preview', async 
 
   expect(listPane.contains(status)).toBe(true);
   expect(preview.contains(status)).toBe(false);
+});
+
+it('keeps Tab focus trapped when anchor buttons (tabindex=-1) are present', async () => {
+  const engine = createEngine();
+  const searchbox = await openAndType(engine, 'button');
+  expect(screen.getAllByRole('button').some((node) => node.getAttribute('tabindex') === '-1')).toBe(
+    true,
+  );
+  const dialog = screen.getByRole('dialog', { name: 'Search documentation' });
+
+  searchbox.focus();
+  fireEvent.keyDown(dialog, { key: 'Tab' });
+  expect(document.activeElement).toBe(searchbox);
+  fireEvent.keyDown(dialog, { key: 'Tab', shiftKey: true });
+  expect(document.activeElement).toBe(searchbox);
+});
+
+it('keeps Tab focus trapped when recent remove buttons (tabindex=-1) are present', async () => {
+  localStorage.setItem(
+    'lobedocs:search-recents',
+    JSON.stringify([{ category: 'Components', pathname: '/components/button', title: 'Button' }]),
+  );
+  const engine = createEngine();
+  renderDialog(engine);
+  fireEvent.click(screen.getByRole('button', { name: 'Open search' }));
+  const searchbox = screen.getByRole('searchbox', { name: 'Search documentation' });
+  expect(
+    screen.getByRole('button', { name: 'Remove Button from recents' }).getAttribute('tabindex'),
+  ).toBe('-1');
+  const dialog = screen.getByRole('dialog', { name: 'Search documentation' });
+
+  searchbox.focus();
+  fireEvent.keyDown(dialog, { key: 'Tab', shiftKey: true });
+  expect(document.activeElement).toBe(searchbox);
+  fireEvent.keyDown(dialog, { key: 'Tab' });
+  expect(document.activeElement).toBe(searchbox);
 });
 
 it('traps focus on the input, closes with Escape, and restores the trigger', async () => {

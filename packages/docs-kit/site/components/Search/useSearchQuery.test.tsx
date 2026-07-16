@@ -81,6 +81,36 @@ it('discards a stale in-flight search when a newer one resolves first', async ()
   expect(result.current.hits).toEqual([hit('Newer')]);
 });
 
+it('does not commit a stale in-flight search that resolves mid-burst', async () => {
+  const slowA = deferred<SearchHit[]>();
+  const slowB = deferred<SearchHit[]>();
+  const queue = [slowA, slowB];
+  const engine = createEngine(() => queue.shift()!.promise);
+  const loadEngine = () => engine;
+  const { result } = renderHook(() => useSearchQuery({ documents, loadEngine, open: true }));
+
+  act(() => result.current.search('a'));
+  await advance(150);
+  act(() => result.current.search('ab'));
+
+  await act(async () => {
+    slowA.resolve([hit('Stale')]);
+    await slowA.promise;
+  });
+
+  expect(result.current.hits).toEqual([]);
+  expect(result.current.loading).toBe(true);
+
+  await advance(150);
+  await act(async () => {
+    slowB.resolve([hit('Fresh')]);
+    await slowB.promise;
+  });
+
+  expect(result.current.hits).toEqual([hit('Fresh')]);
+  expect(result.current.loading).toBe(false);
+});
+
 it('cancels a pending search and clears results on an empty query', async () => {
   const engine = createEngine(async () => [hit('Button')]);
   const loadEngine = () => engine;
