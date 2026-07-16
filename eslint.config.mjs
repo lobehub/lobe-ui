@@ -64,6 +64,7 @@ export default defineConfig(
       'packages/docs-kit/site/routes.ts',
       'packages/docs-kit/site/types/*.d.ts',
       'packages/docs-kit/site/components/Home/DefaultHome.tsx',
+      'docs/home/home.tsx',
     ],
     rules: {
       'no-restricted-syntax': 'off',

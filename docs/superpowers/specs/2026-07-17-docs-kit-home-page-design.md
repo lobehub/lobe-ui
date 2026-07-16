@@ -106,7 +106,9 @@ Renders purely from `siteConfig` and `themeConfig.home`:
   - `BentoGallery`, `CodeShowcase`, `HeroIconMarquee` with their style files;
   - a copy of `homeStyle.ts`.
 - `docs.config.ts` adds `homePage: './docs/home/home.tsx'`.
-- Delete the dead dumi-era `docs/index.tsx`.
+- `docs/index.tsx` stays: although it is the dumi-era home, it doubles as a frozen
+  legacy demo source backing the `/~demos/docs-demo-docs` backward-compat route
+  (compatibility.json + cutoverAudit). Retiring legacy routes is out of scope.
 - Remove the three showcase components (and their tests) from docs-kit; after the
   move, docs-kit source must have no `@lobehub/ui` / `@lobehub/icons` imports in
   home-related code.
