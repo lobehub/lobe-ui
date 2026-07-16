@@ -56,7 +56,8 @@ export default defineConfig(
   {
     // React Router framework mode requires default exports from route modules,
     // root, server entry, and the route config; the .d.ts mirrors a virtual
-    // module's default export shape.
+    // module's default export shape; home page components must default-export
+    // to satisfy the virtual:lobedocs/home-page module contract.
     files: [
       'packages/docs-kit/site/app/routes/*.tsx',
       'packages/docs-kit/site/root.tsx',
