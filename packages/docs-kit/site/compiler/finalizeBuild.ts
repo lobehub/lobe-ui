@@ -120,12 +120,11 @@ export async function finalizeDocumentationBuild(
   const fileSystem = dependencies.fileSystem ?? defaultFileSystem;
 
   try {
-    const compatibility =
-      dependencies.compatibility ??
-      ((getDocsConfig(defaultRepositoryRoot).legacyRedirects ?? {
+    const compatibility = dependencies.compatibility ??
+      getDocsConfig(defaultRepositoryRoot).legacyRedirects ?? {
         demoReferences: [],
         documents: [],
-      }) as DocumentationInventory);
+      };
     const documents = dependencies.documents ?? createContentManifest(root).documents;
     const expectedStandalonePaths =
       dependencies.expectedStandalonePaths ?? getStandaloneDemoPaths(compatibility);
