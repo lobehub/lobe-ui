@@ -67,6 +67,8 @@ const createValidFixture = (): string => {
       buildCommand: 'bun run docs:build',
       devCommand: 'bun run docs:dev',
       framework: null,
+      ignoreCommand:
+        'git diff HEAD^ HEAD --quiet -- ./package.json ./src ./docs ./packages ./public ./vercel.json ./docs.config.ts ./compatibility.json ./navigationSections.json ./tsconfig.site.json ./tsconfig.json',
       installCommand: 'bun install',
       outputDirectory: 'dist',
       trailingSlash: false,

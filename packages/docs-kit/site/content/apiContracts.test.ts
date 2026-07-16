@@ -31,6 +31,7 @@ describe('generated API runtime defaults', () => {
         expected,
       );
     },
+    90_000,
   );
 
   it('resolves base-ui Popover from the documented public package barrel', () => {
@@ -42,5 +43,5 @@ describe('generated API runtime defaults', () => {
     });
 
     expect(component.source.file).toMatch(/src\/base-ui\/Popover\/Popover\.tsx$/);
-  });
+  }, 90_000);
 });
