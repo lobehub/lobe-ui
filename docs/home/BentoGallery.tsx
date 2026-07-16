@@ -6,10 +6,10 @@ import Hotkey from '@lobehub/ui/Hotkey';
 import Markdown from '@lobehub/ui/Markdown';
 import Snippet from '@lobehub/ui/Snippet';
 import ThemeSwitch from '@lobehub/ui/ThemeSwitch';
+import { useTheme } from 'next-themes';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
 
-import { useSiteTheme } from '../../app/providers/SiteProviders';
 import { styles } from './bentoGalleryStyle';
 
 const MARKDOWN_SAMPLE = `#### Streaming Markdown
@@ -59,13 +59,14 @@ function Tile({ children, className, hint, title, to }: TileProps) {
 }
 
 function ThemeSwitchTile() {
-  const { preference, setPreference } = useSiteTheme();
+  const { setTheme, theme } = useTheme();
+  const preference = theme === 'light' || theme === 'dark' ? theme : 'system';
 
   return (
     <ThemeSwitch
       themeMode={preference === 'system' ? 'auto' : preference}
       variant={'outlined'}
-      onThemeSwitch={(mode) => setPreference(mode === 'auto' ? 'system' : mode)}
+      onThemeSwitch={(mode) => setTheme(mode === 'auto' ? 'system' : mode)}
     />
   );
 }

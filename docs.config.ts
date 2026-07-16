@@ -15,6 +15,7 @@ export default defineDocsConfig({
     icon16: '/favicon-16x16.png',
     icon32: '/favicon-32x32.png',
   },
+  homePage: './docs/home/home.tsx',
   legacyRedirects,
   navSections,
   siteUrl: 'https://ui.lobehub.com',
