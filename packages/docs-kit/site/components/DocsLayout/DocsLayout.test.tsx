@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, useLocation } from 'react-router';
+import siteConfig from 'virtual:lobedocs/site-config';
 
 import type { DocumentManifestEntry } from '../../types/content';
 import { DocsLayout } from './DocsLayout';
@@ -83,6 +84,24 @@ it('navigates with the memory router while preserving link semantics', async () 
   const tableOfContents = await screen.findByRole('navigation', { name: 'On this page' });
   expect(tableOfContents.textContent).toContain('Usage');
   expect(screen.getByRole('link', { name: 'Usage' }).getAttribute('href')).toBe('#usage');
+});
+
+it('derives the Source and Edit links from the real docs.config.ts apiHeader', () => {
+  const repositoryUrl = siteConfig.themeConfig?.apiHeader;
+  expect(repositoryUrl).toBeDefined();
+
+  render(
+    <MemoryRouter initialEntries={['/components/alpha']}>
+      <TestPage />
+    </MemoryRouter>,
+  );
+
+  expect(screen.getByRole('link', { name: /Source/ }).getAttribute('href')).toBe(
+    `${repositoryUrl}/tree/master/src/Alpha`,
+  );
+  expect(screen.getByRole('link', { name: /Edit/ }).getAttribute('href')).toBe(
+    `${repositoryUrl}/edit/master/src/Alpha/index.mdx`,
+  );
 });
 
 it('marks one searchable article with title, description, category, and status metadata', () => {

@@ -1,6 +1,7 @@
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import type { ReactElement } from 'react';
 import { MemoryRouter, useLocation } from 'react-router';
+import siteConfig from 'virtual:lobedocs/site-config';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 
 import { SiteProviders, THEME_STORAGE_KEY } from '../../app/providers/SiteProviders';
@@ -218,4 +219,18 @@ it('preserves the active nested link and closes the mobile sheet after navigatio
 
   expect(screen.queryByRole('dialog', { name: 'Documentation navigation' })).toBeNull();
   expect(document.activeElement).toBe(trigger);
+});
+
+it('renders the GitHub icon link and theme switcher from themeConfig', () => {
+  renderHeader(<Header navigation={[]} onSearchOpen={vi.fn()} />);
+
+  const githubLink = siteConfig.themeConfig?.socialLinks?.find((link) => link.icon === 'github');
+  expect(githubLink).toBeDefined();
+
+  const githubButton = screen.getByLabelText(`${siteConfig.title} on GitHub`);
+  expect(githubButton.getAttribute('href')).toBe(githubLink?.href);
+
+  const showThemeMenu = (siteConfig.themeConfig?.prefersColor ?? 'auto') === 'auto';
+  const themeMenu = screen.queryByRole('button', { name: 'Select theme' });
+  expect(themeMenu === null).toBe(!showThemeMenu);
 });

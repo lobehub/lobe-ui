@@ -4,6 +4,7 @@ import type { ThemeMode } from 'antd-style';
 import { motion } from 'motion/react';
 import { ThemeProvider as NextThemeProvider, useTheme } from 'next-themes';
 import type { PropsWithChildren } from 'react';
+import siteConfig from 'virtual:lobedocs/site-config';
 
 import { StyleRegistry } from './StyleRegistry';
 import { THEME_STORAGE_KEY } from './themeConstants';
@@ -52,12 +53,17 @@ function LibraryProviders({ children }: PropsWithChildren) {
 }
 
 export function SiteProviders({ children }: PropsWithChildren) {
+  const prefersColor = siteConfig.themeConfig?.prefersColor ?? 'auto';
+  const defaultTheme = prefersColor === 'auto' ? 'system' : prefersColor;
+  const forcedTheme = prefersColor === 'auto' ? undefined : prefersColor;
+
   return (
     <NextThemeProvider
       disableTransitionOnChange
       enableSystem
       attribute="data-theme"
-      defaultTheme="system"
+      defaultTheme={defaultTheme}
+      forcedTheme={forcedTheme}
       storageKey={THEME_STORAGE_KEY}
     >
       <StyleRegistry>

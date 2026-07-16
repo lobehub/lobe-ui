@@ -71,7 +71,14 @@ export function lobeDocsDocumentModulesPlugin(root: string = process.cwd()): Plu
       const config = getDocsConfig(root);
       const atomDirs = config.atomDirs ?? defaultAtomDirs;
       const componentPatterns = atomDirs.map(({ dir }) => `/${dir}/**/index.mdx`);
-      const publicPatterns = ['/docs/index.mdx', '/docs/changelog.mdx'];
+      const useChangelogFallback =
+        !existsSync(resolve(root, 'docs/changelog.mdx')) &&
+        existsSync(resolve(root, 'CHANGELOG.md'));
+      const publicPatterns = [
+        '/docs/index.mdx',
+        '/docs/changelog.mdx',
+        ...(useChangelogFallback ? ['/CHANGELOG.md'] : []),
+      ];
 
       return `export const componentMetadata = import.meta.glob(${JSON.stringify(componentPatterns)}, {
   eager: true,

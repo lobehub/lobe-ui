@@ -1,6 +1,6 @@
-import { THEME_STORAGE_KEY } from './themeConstants';
+import { createThemeInitScript, type PrefersColor } from './themeConstants';
 
-export const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem('${THEME_STORAGE_KEY}');if(t!=='dark'&&t!=='light'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}var e=document.documentElement;e.dataset.theme=t;e.style.colorScheme=t}catch(e){}})();`;
+export const THEME_INIT_SCRIPT = createThemeInitScript('auto');
 
 export const STANDALONE_APPEARANCE_SCRIPT = `(() => {
   try {
@@ -15,10 +15,13 @@ export const STANDALONE_APPEARANCE_SCRIPT = `(() => {
   } catch {}
 })();`;
 
-export function ThemeBootstrap() {
+export function ThemeBootstrap({ prefersColor = 'auto' }: { prefersColor?: PrefersColor } = {}) {
+  const initScript =
+    prefersColor === 'auto' ? THEME_INIT_SCRIPT : createThemeInitScript(prefersColor);
+
   return (
     <>
-      <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      <script dangerouslySetInnerHTML={{ __html: initScript }} />
       <script dangerouslySetInnerHTML={{ __html: STANDALONE_APPEARANCE_SCRIPT }} />
     </>
   );

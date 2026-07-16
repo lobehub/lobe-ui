@@ -3,6 +3,7 @@ import { ScrollArea } from '@lobehub/ui/ScrollArea';
 import { ArrowLeft, ArrowRight, ArrowUpRight, PencilLine } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
+import siteConfig from 'virtual:lobedocs/site-config';
 
 import {
   createDocumentLinks,
@@ -48,7 +49,7 @@ function HighlightedImport({ value }: { value: string }) {
 
 export function DocsLayout({ children, document, navigation }: DocsLayoutProps) {
   const section = findSectionByPathname(navigation, document.pathname);
-  const links = createDocumentLinks(document);
+  const links = createDocumentLinks(document, siteConfig.themeConfig?.apiHeader);
   const { next, previous } = findAdjacentDocuments(navigation, document.pathname);
 
   return (

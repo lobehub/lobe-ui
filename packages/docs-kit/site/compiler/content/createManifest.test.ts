@@ -76,6 +76,33 @@ describe('content manifest', () => {
     expect(manifest.documents.some(({ source }) => source.includes('superpowers'))).toBe(false);
   });
 
+  it('falls back to a root CHANGELOG.md when docs/changelog.mdx is absent', () => {
+    const root = createProjectFixture({
+      'CHANGELOG.md': '# 1.0.0\n\n- Initial release.\n',
+      'docs/index.mdx': '---\ntitle: Home\ndescription: Documentation home.\n---\n',
+      'src/Button/index.mdx':
+        '---\ntitle: Button\ndescription: Triggers actions.\ncategory: General\n---\n',
+    });
+
+    const manifest = createManifestWithRepositoryConfig(root);
+    const changelog = manifest.documents.find(({ pathname }) => pathname === '/changelog');
+
+    expect(changelog).toMatchObject({ source: 'CHANGELOG.md', title: 'Changelog' });
+  });
+
+  it('prefers docs/changelog.mdx over a root CHANGELOG.md when both exist', () => {
+    const root = createProjectFixture({
+      'CHANGELOG.md': '# 1.0.0\n\n- Initial release.\n',
+      'docs/changelog.mdx': '---\ntitle: Changelog\ndescription: Release history.\n---\n',
+      'docs/index.mdx': '---\ntitle: Home\ndescription: Documentation home.\n---\n',
+    });
+
+    const manifest = createManifestWithRepositoryConfig(root);
+    const changelog = manifest.documents.find(({ pathname }) => pathname === '/changelog');
+
+    expect(changelog).toMatchObject({ source: 'docs/changelog.mdx' });
+  });
+
   it('canonicalizes a trailing slash in an explicit component route', () => {
     const root = createProjectFixture({
       'src/Button/index.mdx': `---

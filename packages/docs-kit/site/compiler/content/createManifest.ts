@@ -17,9 +17,18 @@ import { validateFrontmatter } from './validateFrontmatter';
 
 const frontmatterPattern = /^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/;
 
+const changelogFallbackFrontmatter = {
+  description: 'Release history for this project.',
+  title: 'Changelog',
+};
+
 const parseDocumentFrontmatter = (
   document: DiscoveredDocument,
 ): { diagnostics: string[]; value?: unknown } => {
+  if (document.source === 'CHANGELOG.md') {
+    return { diagnostics: [], value: changelogFallbackFrontmatter };
+  }
+
   const contents = readFileSync(document.absolutePath, 'utf8');
   const match = contents.match(frontmatterPattern);
   if (!match) return { diagnostics: ['missing YAML frontmatter block'] };

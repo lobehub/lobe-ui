@@ -9,6 +9,7 @@ import { motion } from 'motion/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link, useLocation, useNavigate } from 'react-router';
+import siteConfig from 'virtual:lobedocs/site-config';
 
 import { findSectionByPathname, sectionLandingPathname } from '../../content/pageChrome';
 import type { NavigationSection } from '../../types/content';
@@ -140,6 +141,12 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
   };
 
   const isHome = pathname === '/';
+  const navItems = siteConfig.themeConfig?.navItems ?? [];
+  const actions = siteConfig.themeConfig?.actions ?? [];
+  const githubSocialLink = siteConfig.themeConfig?.socialLinks?.find(
+    (link) => link.icon === 'github',
+  );
+  const showThemeMenu = (siteConfig.themeConfig?.prefersColor ?? 'auto') === 'auto';
 
   const moreItems: DropdownItem[] = [
     ...overflowSections.map((section) => ({
@@ -210,6 +217,23 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
                 </button>
               </DropdownMenu>
             ) : null}
+            {navItems.map((item) =>
+              item.external ? (
+                <a
+                  className={styles.navLink}
+                  href={item.href}
+                  key={item.label}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link className={styles.navLink} key={item.label} to={item.href}>
+                  {item.label}
+                </Link>
+              ),
+            )}
           </nav>
 
           <div className={styles.actions}>
@@ -233,16 +257,29 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
             >
               <Search aria-hidden size={17} strokeWidth={1.8} />
             </button>
-            <ThemeMenu />
-            <a
-              aria-label="Lobe UI on GitHub"
-              className={`${styles.iconButton} ${styles.github}`}
-              href="https://github.com/lobehub/lobe-ui"
-              rel="noreferrer"
-              target="_blank"
-            >
-              <GithubIcon aria-hidden size={16} strokeWidth={1.8} />
-            </a>
+            {actions.map((item) => (
+              <a
+                className={styles.navLink}
+                href={item.href}
+                key={item.label}
+                rel={item.external ? 'noreferrer' : undefined}
+                target={item.external ? '_blank' : undefined}
+              >
+                {item.label}
+              </a>
+            ))}
+            {showThemeMenu ? <ThemeMenu /> : null}
+            {githubSocialLink ? (
+              <a
+                aria-label={`${siteConfig.title} on GitHub`}
+                className={`${styles.iconButton} ${styles.github}`}
+                href={githubSocialLink.href}
+                rel="noreferrer"
+                target="_blank"
+              >
+                <GithubIcon aria-hidden size={16} strokeWidth={1.8} />
+              </a>
+            ) : null}
           </div>
         </div>
       </header>
