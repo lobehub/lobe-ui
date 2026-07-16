@@ -72,7 +72,7 @@ it('renders accent, custom actions, features, and install cta from full config',
   renderHome();
 
   const heading = screen.getByRole('heading', { level: 1 });
-  expect(heading.textContent).toBe('Build FasterKit');
+  expect(heading.textContent).toBe('Build Faster Kit');
 
   const githubLink = screen.getByRole('link', { name: 'GitHub' });
   expect(githubLink.getAttribute('href')).toBe('https://github.com/example/repo');
