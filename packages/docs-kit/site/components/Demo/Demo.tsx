@@ -16,7 +16,13 @@ import {
 } from 'lucide-react';
 import { lazy, type RefObject, Suspense, useEffect, useId, useRef, useState } from 'react';
 
-import type { DemoAppearance, DemoModule, DemoProps } from '../../types/demo';
+import { useSiteTheme } from '../../app/providers/SiteProviders';
+import type {
+  DemoAppearance,
+  DemoAppearancePreference,
+  DemoModule,
+  DemoProps,
+} from '../../types/demo';
 import { CanonicalPreview } from './CanonicalPreview';
 import type { DemoFrameStyle, DemoViewport } from './LiveDemo';
 import { styles } from './style';
@@ -26,6 +32,16 @@ const viewportOptions = [
   { icon: Tablet, label: 'Tablet', value: 'tablet' },
   { icon: Smartphone, label: 'Mobile', value: 'mobile' },
 ] as const;
+
+const appearanceOptions = [
+  { icon: Monitor, label: 'Auto', value: 'auto' },
+  { icon: Sun, label: 'Light', value: 'light' },
+  { icon: Moon, label: 'Dark', value: 'dark' },
+] as const satisfies readonly {
+  icon: typeof Monitor;
+  label: string;
+  value: DemoAppearancePreference;
+}[];
 
 const standaloneLinkProps = (href: string) =>
   ({ href, rel: 'noreferrer', role: undefined, target: '_blank' }) as unknown as Record<
@@ -138,7 +154,11 @@ export function Demo({
   const sourcePanelId = useId();
   const frameRef = useRef<HTMLElement>(null);
   const resolvedEditable = editable ?? of.editable;
-  const [appearance, setAppearance] = useState<DemoAppearance>('light');
+  const [appearancePreference, setAppearancePreference] =
+    useState<DemoAppearancePreference>('auto');
+  const { appearance: siteAppearance } = useSiteTheme();
+  const appearance: DemoAppearance =
+    appearancePreference === 'auto' ? siteAppearance : appearancePreference;
   const [copyStatus, setCopyStatus] = useState('');
   const [editorResetSignal, setEditorResetSignal] = useState(0);
   const [editorOpened, setEditorOpened] = useState(false);
@@ -198,8 +218,6 @@ export function Demo({
     viewport,
   };
 
-  const appearanceActionLabel =
-    appearance === 'light' ? 'Use dark demo theme' : 'Use light demo theme';
   const fullScreenActionLabel = fullScreen ? 'Exit full screen' : 'Enter full screen';
   const activeViewport =
     viewportOptions.find((option) => option.value === viewport) ?? viewportOptions[0];
@@ -210,6 +228,19 @@ export function Demo({
     label,
     onCheckedChange: (checked: boolean) => {
       if (checked) setViewport(value);
+    },
+    type: 'checkbox',
+  }));
+  const activeAppearanceOption =
+    appearanceOptions.find((option) => option.value === appearancePreference) ??
+    appearanceOptions[0];
+  const appearanceItems: DropdownItem[] = appearanceOptions.map(({ icon, label, value }) => ({
+    checked: appearancePreference === value,
+    icon,
+    key: value,
+    label,
+    onCheckedChange: (checked: boolean) => {
+      if (checked) setAppearancePreference(value);
     },
     type: 'checkbox',
   }));
@@ -259,13 +290,14 @@ export function Demo({
             title="Copy source"
             onClick={onCopy}
           />
-          <ActionIcon
-            aria-label={appearanceActionLabel}
-            icon={appearance === 'light' ? Moon : Sun}
-            size="small"
-            title={appearanceActionLabel}
-            onClick={() => setAppearance(appearance === 'light' ? 'dark' : 'light')}
-          />
+          <DropdownMenu items={appearanceItems} placement="bottomRight">
+            <ActionIcon
+              aria-label="Preview theme"
+              icon={activeAppearanceOption.icon}
+              size="small"
+              title="Preview theme"
+            />
+          </DropdownMenu>
           <DropdownMenu items={viewportItems} placement="bottomRight">
             <ActionIcon
               aria-label="Preview viewport"

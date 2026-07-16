@@ -26,6 +26,26 @@ it.each(['light', 'dark'] as const)(
   },
 );
 
+it.each(['light', 'dark'] as const)(
+  'falls back to the resolved site theme when no appearance query param is present (%s)',
+  (theme) => {
+    document.documentElement.dataset.theme = theme;
+    history.replaceState(null, '', '/~demos/example?routeId=metadata%2Fonly');
+
+    new Function(STANDALONE_APPEARANCE_SCRIPT)();
+
+    expect(document.documentElement.dataset.standaloneAppearance).toBe(theme);
+  },
+);
+
+it('defaults the standalone canvas to light when neither the query nor the site theme is set', () => {
+  history.replaceState(null, '', '/~demos/example?routeId=metadata%2Fonly');
+
+  new Function(STANDALONE_APPEARANCE_SCRIPT)();
+
+  expect(document.documentElement.dataset.standaloneAppearance).toBe('light');
+});
+
 it('ignores appearance overrides outside standalone demo routes', () => {
   history.replaceState(null, '', '/components/button?appearance=dark');
 

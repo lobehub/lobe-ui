@@ -2,6 +2,8 @@ import type { ComponentType } from 'react';
 
 export type DemoAppearance = 'dark' | 'light';
 
+export type DemoAppearancePreference = 'auto' | DemoAppearance;
+
 export type DemoLayout = 'bare' | 'center' | 'default';
 
 export interface DemoModule {
