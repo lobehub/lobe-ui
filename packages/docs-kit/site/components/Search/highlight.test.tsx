@@ -57,6 +57,23 @@ describe('Highlight', () => {
     expect(marks(container)).toEqual(['c++']);
   });
 
+  it('highlights a word before trailing punctuation when the query is a prefix of it', () => {
+    const { container } = render(<Highlight query="components" text="a component, and a button" />);
+    expect(marks(container)).toEqual(['component']);
+    expect(container.textContent).toBe('a component, and a button');
+  });
+
+  it('highlights a prefix query against a punctuated word', () => {
+    const { container } = render(<Highlight query="button" text="Buttons, and links" />);
+    expect(marks(container)).toEqual(['Button']);
+    expect(container.textContent).toBe('Buttons, and links');
+  });
+
+  it('picks the longest matching term when multiple terms match the same token', () => {
+    const { container } = render(<Highlight query="but button" text="a button component" />);
+    expect(marks(container)).toEqual(['button']);
+  });
+
   it('does not use dangerouslySetInnerHTML', () => {
     const source = Highlight.toString();
     expect(source).not.toContain('dangerouslySetInnerHTML');

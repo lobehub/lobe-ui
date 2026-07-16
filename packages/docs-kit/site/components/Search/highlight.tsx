@@ -5,15 +5,21 @@ interface HighlightProps {
   text: string;
 }
 
+const trailingPunctuation = /[^0-9a-z]+$/i;
+
 const matchLength = (token: string, terms: string[]): number | undefined => {
   const lowerToken = token.toLowerCase();
+  const wordPart = lowerToken.replace(trailingPunctuation, '');
+  let best: number | undefined;
   for (const term of terms) {
     const lowerTerm = term.toLowerCase();
     if (!lowerTerm) continue;
-    if (lowerToken.startsWith(lowerTerm)) return lowerTerm.length;
-    if (lowerTerm.startsWith(lowerToken)) return lowerToken.length;
+    let candidate: number | undefined;
+    if (lowerToken.startsWith(lowerTerm)) candidate = lowerTerm.length;
+    else if (wordPart && lowerTerm.startsWith(wordPart)) candidate = wordPart.length;
+    if (candidate !== undefined && (best === undefined || candidate > best)) best = candidate;
   }
-  return undefined;
+  return best;
 };
 
 export const Highlight = ({ query, text }: HighlightProps) => {
