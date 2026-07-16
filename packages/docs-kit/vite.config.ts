@@ -1,16 +1,11 @@
 import path from 'node:path';
 
-import mdx from '@mdx-js/rollup';
 import { reactRouter } from '@react-router/dev/vite';
 import { codeInspectorPlugin } from 'code-inspector-plugin';
-import remarkFrontmatter from 'remark-frontmatter';
-import remarkGfm from 'remark-gfm';
-import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { type Alias, defineConfig } from 'vite';
 
-import { remarkApi } from './site/compiler/api/remarkApi';
-import { rehypeHeadingIds } from './site/compiler/content/rehypeHeadingIds';
+import { createMdxPlugin } from './site/compiler/content/mdxPlugin';
 import { devPagefindPlugin } from './site/compiler/search/devPagefindPlugin';
 import { lobeDocs } from './site/compiler/vitePlugin';
 import { getDocsConfig } from './src/config';
@@ -52,12 +47,7 @@ export default defineConfig({
     }),
     lobeDocs(),
     devPagefindPlugin(),
-    mdx({
-      include: /\.(md|mdx)$/,
-      providerImportSource: '/packages/docs-kit/site/app/mdx-components',
-      rehypePlugins: [rehypeHeadingIds],
-      remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm, remarkApi],
-    }),
+    createMdxPlugin(),
     reactRouter(),
     process.env.ANALYZE
       ? visualizer({ filename: '.react-router/build/client/stats.html' })

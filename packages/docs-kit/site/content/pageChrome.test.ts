@@ -124,7 +124,7 @@ describe('createDocumentLinks', () => {
     ).toBeUndefined();
   });
 
-  it('falls back to an empty repository base when apiHeader is not configured', () => {
+  it('hides source and edit links when apiHeader is not configured', () => {
     const links = createDocumentLinks({
       category: 'General',
       description: 'Alpha.',
@@ -134,9 +134,24 @@ describe('createDocumentLinks', () => {
     });
 
     expect(links).toMatchObject({
-      editUrl: '/edit/master/src/Alpha/index.mdx',
-      sourceUrl: '/tree/master/src/Alpha',
+      editUrl: undefined,
+      sourceUrl: undefined,
     });
+  });
+
+  it('hides source and edit links when a custom template still references {github}', () => {
+    const links = createDocumentLinks(
+      {
+        category: 'General',
+        description: 'Alpha.',
+        pathname: '/components/alpha',
+        source: 'src/Alpha/index.mdx',
+        title: 'Alpha',
+      },
+      { docUrl: '{github}/edit/main/{atomId}', sourceUrl: '{github}/blob/main/{atomId}' },
+    );
+
+    expect(links).toMatchObject({ editUrl: undefined, sourceUrl: undefined });
   });
 
   it('uses the namespace subpath package for namespaced sources', () => {

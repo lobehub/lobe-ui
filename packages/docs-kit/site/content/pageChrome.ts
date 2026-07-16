@@ -3,10 +3,10 @@ import type { DocsApiHeaderConfig } from '../../src/config';
 import type { DocumentManifestEntry, NavigationSection } from '../types/content';
 
 export interface DocumentLinks {
-  editUrl: string;
+  editUrl?: string;
   importStatement?: string;
   npmUrl: string;
-  sourceUrl: string;
+  sourceUrl?: string;
 }
 
 export interface AdjacentDocuments {
@@ -56,7 +56,13 @@ const defaultSourceUrlTemplate = '{github}/tree/master/{atomId}';
 const resolveApiHeaderTemplate = (
   template: string,
   values: { atomId: string; github: string },
-): string => template.replaceAll('{github}', values.github).replaceAll('{atomId}', values.atomId);
+): string | undefined => {
+  const resolved = template
+    .replaceAll('{github}', values.github)
+    .replaceAll('{atomId}', values.atomId);
+  if (resolved.includes('{github}') || resolved.startsWith('/')) return undefined;
+  return resolved;
+};
 
 export function createDocumentLinks(
   document: DocumentManifestEntry,

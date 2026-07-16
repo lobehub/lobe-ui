@@ -21,6 +21,17 @@ vi.mock('../demos/standaloneDemoLoaders', () => ({
   loadStandaloneDemoDescriptor: loaderMocks.loadDescriptor,
 }));
 
+vi.mock('virtual:lobedocs/site-config', () => ({
+  default: {
+    description: 'Test site.',
+    favicons: {},
+    navSections: {},
+    siteUrl: 'https://example.com',
+    themeConfig: {},
+    title: 'Test Docs',
+  },
+}));
+
 beforeAll(() => {
   vi.stubGlobal(
     'matchMedia',
@@ -83,8 +94,28 @@ it('emits noindex metadata for standalone demos', () => {
   });
 
   expect(descriptors).toEqual(
-    expect.arrayContaining([{ content: 'noindex, nofollow', name: 'robots' }]),
+    expect.arrayContaining([
+      { content: 'noindex, nofollow', name: 'robots' },
+      { title: 'src-button-demo-demos demo - Test Docs' },
+    ]),
   );
+});
+
+it('derives a site-scoped not-found title for an unknown demo id instead of a hardcoded brand', () => {
+  const descriptors = meta({
+    loaderData: {},
+    location: {
+      hash: '',
+      key: 'standalone',
+      pathname: '/~demos/unknown',
+      search: '',
+      state: null,
+    },
+    matches: [],
+    params: { demoId: 'unknown' },
+  });
+
+  expect(descriptors).toEqual(expect.arrayContaining([{ title: 'Demo not found - Test Docs' }]));
 });
 
 it('renders a canonical standalone preview without recursively creating an iframe', () => {
