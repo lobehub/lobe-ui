@@ -6,6 +6,7 @@ import type { Plugin } from 'vite';
 import { getDocsConfig } from '../../src/config';
 import { apiPlugin } from './api/apiPlugin';
 import { createContentManifest } from './content/createManifest';
+import { defaultAtomDirs } from './content/discoverDocuments';
 import { demoPlugin } from './demo/demoPlugin';
 
 const metadataQuery = 'document-metadata';
@@ -59,17 +60,22 @@ export function lobeDocsSiteConfigPlugin(root: string = process.cwd()): Plugin {
   };
 }
 
-export function lobeDocs(): Plugin[] {
+export function lobeDocs(root: string = process.cwd()): Plugin[] {
   return [
     demoPlugin(),
     apiPlugin(),
-    lobeDocsSiteConfigPlugin(),
+    lobeDocsSiteConfigPlugin(root),
     {
       enforce: 'pre',
       load(id) {
         if (!id.startsWith(metadataPrefix)) return;
         const path = id.slice(metadataPrefix.length);
-        const document = createContentManifest(path).documents[0];
+        const docsConfig = getDocsConfig(root);
+        const document = createContentManifest(
+          path,
+          docsConfig.atomDirs ?? defaultAtomDirs,
+          docsConfig.navSections ?? {},
+        ).documents[0];
         if (!document) throw new Error(`No public document metadata found for ${path}`);
 
         return `export default ${JSON.stringify(document)};`;
