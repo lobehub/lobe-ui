@@ -69,6 +69,7 @@
   "src/SliderWithInput/index.mdx": "Components",
   "src/Snippet/index.mdx": "Components",
   "src/SortableList/index.mdx": "Components",
+  "src/StatisticCard/index.mdx": "Components",
   "src/Tabs/index.mdx": "Components",
   "src/Tag/index.mdx": "Components",
   "src/Text/index.mdx": "Components",

@@ -320,6 +320,15 @@ export {
 export { default as SliderWithInput, type SliderWithInputProps } from './SliderWithInput';
 export { default as Snippet, type SnippetProps } from './Snippet';
 export { default as SortableList, type SortableListProps } from './SortableList';
+export {
+  Statistic,
+  StatisticCard,
+  type StatisticCardProps,
+  type StatisticCardSlot,
+  type StatisticProps,
+  TitleWithPercentage,
+  type TitleWithPercentageProps,
+} from './StatisticCard';
 export * from './styles';
 export { CLASSNAMES } from './styles/classNames';
 export { default as Tabs, type TabsProps } from './Tabs';
