@@ -1,6 +1,6 @@
 import siteConfig from 'virtual:lobedocs/site-config';
 
-import type { SearchEngine, SearchHit } from './types';
+import type { SearchEngine, SearchHit, SearchSubResult } from './types';
 
 const RESULT_LIMIT = 10;
 const PAGEFIND_BASE_URL = siteConfig.siteUrl;
@@ -45,24 +45,46 @@ const stringMeta = (fragment: PagefindFragment, key: string): string => {
   return typeof value === 'string' ? value : '';
 };
 
-const toSearchHit = (fragment: PagefindFragment): SearchHit | undefined => {
+const toSubResults = (fragment: PagefindFragment, pageUrl: string): SearchSubResult[] => {
+  const pageRoot = toPathname(pageUrl);
+  return (fragment.sub_results ?? []).flatMap((result) => {
+    if (!result.url) return [];
+    const pathname = toPathname(result.url);
+    if (pathname === pageRoot) return [];
+    return [{ pathname, title: result.title || pathname }];
+  });
+};
+
+export type ResolveCategory = (pathname: string) => string | undefined;
+
+const toSearchHit = (
+  fragment: PagefindFragment,
+  resolveCategory?: ResolveCategory,
+): SearchHit | undefined => {
   const pageUrl = fragment.url;
   if (!pageUrl) return;
 
   const subResult = fragment.sub_results?.find((result) => Boolean(result.url));
   const pathname = toPathname(subResult?.url ?? pageUrl);
   const title = stringMeta(fragment, 'title') || subResult?.title || pathname;
+  const category = stringMeta(fragment, 'category') || resolveCategory?.(pathname);
+  const subResults = toSubResults(fragment, pageUrl);
 
   return {
+    category,
     excerpt: subResult?.plain_excerpt ?? fragment.plain_excerpt ?? '',
     id: pathname,
     pathname,
     section: subResult?.title || undefined,
+    subResults: subResults.length > 0 ? subResults : undefined,
     title,
   };
 };
 
-export function createPagefindEngine(loadPagefind: PagefindLoader): SearchEngine {
+export function createPagefindEngine(
+  loadPagefind: PagefindLoader,
+  resolveCategory?: ResolveCategory,
+): SearchEngine {
   let searchGeneration = 0;
   let lifecycleGeneration = 0;
   let module: PagefindModule | undefined;
@@ -199,7 +221,7 @@ export function createPagefindEngine(loadPagefind: PagefindLoader): SearchEngine
           }
 
           return fragments.flatMap((fragment) => {
-            const hit = toSearchHit(fragment);
+            const hit = toSearchHit(fragment, resolveCategory);
             return hit ? [hit] : [];
           });
         })(),

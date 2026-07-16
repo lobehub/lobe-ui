@@ -46,6 +46,7 @@ const rankDocument = (document: DocumentManifestEntry, query: string): RankedHit
 
   return {
     hit: {
+      category: document.category,
       excerpt: document.description,
       id: document.pathname,
       pathname: document.pathname,
