@@ -18,13 +18,13 @@ const write = (root: string, file: string, source: string): void => {
 
 const validScripts = {
   'build': 'tsdown && npm run build:packages',
-  'dev': 'react-router dev',
-  'docs:build': 'react-router build && tsx packages/docs-kit/site/compiler/finalizeBuild.ts',
-  'docs:build-analyze': 'cross-env ANALYZE=1 bun run docs:build',
-  'docs:dev': 'react-router dev',
-  'setup': 'react-router typegen',
+  'dev': 'lobedocs dev',
+  'docs:build': 'lobedocs build',
+  'docs:build-analyze': 'cross-env ANALYZE=1 lobedocs build',
+  'docs:dev': 'lobedocs dev',
+  'setup': 'lobedocs typegen',
   'start': 'bun run docs:dev',
-  'type-check': 'react-router typegen && tsc --noEmit && tsc --noEmit -p tsconfig.site.json',
+  'type-check': 'lobedocs typegen && tsc --noEmit && tsc --noEmit -p tsconfig.site.json',
 };
 
 const createValidFixture = (): string => {
