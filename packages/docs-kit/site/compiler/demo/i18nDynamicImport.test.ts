@@ -17,7 +17,7 @@ afterEach(async () => {
 
 it('renders the production dynamic-import demo through the read-only source contract', async () => {
   server = await createServer({
-    configFile: path.resolve(repositoryRoot, 'vite.config.ts'),
+    configFile: path.resolve(repositoryRoot, 'packages/docs-kit/vite.config.ts'),
     logLevel: 'silent',
     server: { middlewareMode: true },
   });

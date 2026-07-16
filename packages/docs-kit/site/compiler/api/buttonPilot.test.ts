@@ -46,7 +46,7 @@ it('migrates the Button guide once while preserving both demos and the generated
 
 it('renders serialized Button properties and both canonical demo frames through Vite MDX', async () => {
   server = await createServer({
-    configFile: resolve(repositoryRoot, 'vite.config.ts'),
+    configFile: resolve(repositoryRoot, 'packages/docs-kit/vite.config.ts'),
     logLevel: 'silent',
     server: { middlewareMode: true },
   });

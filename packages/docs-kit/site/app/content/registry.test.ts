@@ -14,7 +14,7 @@ afterEach(async () => {
 
 it('caches one React-compatible import promise per document pathname', async () => {
   server = await createServer({
-    configFile: resolve(repositoryRoot, 'vite.config.ts'),
+    configFile: resolve(repositoryRoot, 'packages/docs-kit/vite.config.ts'),
     logLevel: 'silent',
     server: { middlewareMode: true },
   });

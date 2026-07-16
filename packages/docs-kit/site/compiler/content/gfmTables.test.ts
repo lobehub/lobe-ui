@@ -16,7 +16,7 @@ afterEach(async () => {
 
 const renderDocument = async (source: string) => {
   server = await createServer({
-    configFile: resolve(repositoryRoot, 'vite.config.ts'),
+    configFile: resolve(repositoryRoot, 'packages/docs-kit/vite.config.ts'),
     logLevel: 'silent',
     server: { middlewareMode: true },
   });
