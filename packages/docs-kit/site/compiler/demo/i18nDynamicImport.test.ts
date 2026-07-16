@@ -27,9 +27,9 @@ it('renders the production dynamic-import demo through the read-only source cont
   const $ = load(renderToStaticMarkup(createElement(module.default)));
   const frame = $('section[aria-label="Demo: src/i18n/demos/DynamicImport.tsx"]');
   const toolbarLabels = frame
-    .find('button')
+    .find('button, [role="button"]')
     .toArray()
-    .map((button) => $(button).text().trim());
+    .map((button) => ($(button).attr('aria-label') ?? $(button).text()).trim());
 
   expect(frame).toHaveLength(1);
   expect(frame.attr('data-demo-editable')).toBe('false');

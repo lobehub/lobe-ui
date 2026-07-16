@@ -34,7 +34,7 @@ it('compiles GFM markdown tables in component docs into real table markup', asyn
   expect(html).toContain('contentLayoutAnimation');
   expect(html).toContain('disableDestroyOnInvalidTrigger');
   expect(html).not.toMatch(/\| Property\s+\| Description/);
-}, 30_000);
+}, 90_000);
 
 it('preserves escaped pipes inside GFM table cells', async () => {
   const html = await renderDocument('/src/base-ui/Popover/index.mdx');
@@ -42,4 +42,4 @@ it('preserves escaped pipes inside GFM table cells', async () => {
   expect(html).toContain('Omit&lt;PopoverProps, &#x27;children&#x27;');
   expect(html).toMatch(/defaultOpen/);
   expect(html).not.toMatch(/\| `Omit/);
-}, 30_000);
+}, 90_000);

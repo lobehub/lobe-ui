@@ -107,6 +107,7 @@ const openAndType = async (engine: SearchEngine, value: string) => {
   const searchbox = screen.getByRole('searchbox', { name: 'Search documentation' });
   fireEvent.change(searchbox, { target: { value } });
   await waitFor(() => expect(screen.getAllByRole('option').length).toBeGreaterThan(0));
+  await act(async () => {});
   return searchbox;
 };
 

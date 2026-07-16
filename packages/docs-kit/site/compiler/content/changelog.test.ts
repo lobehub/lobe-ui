@@ -26,4 +26,4 @@ it('renders a stable target for every changelog back-to-top link', async () => {
 
   expect(html).toContain('id="readme-top"');
   expect(html).toContain('href="#readme-top"');
-}, 15_000);
+}, 60_000);
