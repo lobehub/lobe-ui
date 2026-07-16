@@ -3,6 +3,8 @@ import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
+import type { DocumentationInventory } from './types';
+
 export interface AtomDirConfig {
   dir: string;
   subType?: string;
@@ -52,42 +54,12 @@ export interface DocsThemeConfig {
   socialLinks?: DocsSocialLink[];
 }
 
-export interface LegacyDemoOptions {
-  inline: boolean;
-  isolated: boolean;
-  layout: 'bare' | 'center' | 'default';
-}
-
-export interface LegacyDemoReference {
-  document: string;
-  legacyId: string;
-  legacyRouteId: string;
-  options: LegacyDemoOptions;
-  pathname: string;
-  source: string;
-}
-
-export interface LegacyDocumentRecord {
-  category?: string;
-  description?: string;
-  legacyRouteId: string;
-  pathname: string;
-  section: string;
-  source: string;
-  title?: string;
-}
-
-export interface LegacyRedirects {
-  demoReferences: LegacyDemoReference[];
-  documents: LegacyDocumentRecord[];
-}
-
 export interface DocsConfig {
   alias?: Record<string, string>;
   atomDirs: AtomDirConfig[];
   description: string;
   favicons?: Record<string, string>;
-  legacyRedirects?: LegacyRedirects;
+  legacyRedirects?: DocumentationInventory;
   navSections: Record<string, string>;
   siteUrl: string;
   themeConfig?: DocsThemeConfig;

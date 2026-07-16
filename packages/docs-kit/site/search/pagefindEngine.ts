@@ -1,7 +1,9 @@
+import siteConfig from 'virtual:lobedocs/site-config';
+
 import type { SearchEngine, SearchHit } from './types';
 
 const RESULT_LIMIT = 10;
-const PAGEFIND_BASE_URL = 'https://ui.lobehub.com';
+const PAGEFIND_BASE_URL = siteConfig.siteUrl;
 
 export interface PagefindSubResult {
   plain_excerpt?: string;
