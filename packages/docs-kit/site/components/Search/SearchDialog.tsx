@@ -169,6 +169,11 @@ export function SearchDialog({
   if (!open) return null;
 
   const activeDescendant = activeHit ? optionId(boundedIndex) : undefined;
+  const status = loading
+    ? 'Searching…'
+    : query.trim() && rows.length === 0
+      ? 'No results found'
+      : '';
 
   return (
     <div className={styles.layer} data-pagefind-ignore="all">
@@ -210,6 +215,7 @@ export function SearchDialog({
             listId={listId}
             optionId={optionId}
             query={query}
+            status={status}
             onActivate={activate}
             onRemove={handleRemove}
             onHover={(flatIndex) => {
@@ -220,8 +226,6 @@ export function SearchDialog({
           <SearchPreviewPane
             activeHit={activeHit}
             anchorIndex={anchorIndex}
-            hasResults={rows.length > 0}
-            loading={loading}
             query={query}
             onActivateAnchor={activateAnchor}
             onHoverAnchor={setAnchorIndex}

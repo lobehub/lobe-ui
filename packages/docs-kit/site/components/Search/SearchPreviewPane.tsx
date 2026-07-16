@@ -7,8 +7,6 @@ import { styles } from './style';
 interface SearchPreviewPaneProps {
   activeHit?: SearchHit;
   anchorIndex: number;
-  hasResults: boolean;
-  loading: boolean;
   onActivateAnchor: (subResult: SearchSubResult) => void;
   onHoverAnchor: (index: number) => void;
   query: string;
@@ -17,25 +15,15 @@ interface SearchPreviewPaneProps {
 export function SearchPreviewPane({
   activeHit,
   anchorIndex,
-  hasResults,
-  loading,
   query,
   onActivateAnchor,
   onHoverAnchor,
 }: SearchPreviewPaneProps) {
-  const status = loading
-    ? 'Searching…'
-    : query.trim() && !hasResults
-      ? 'No results found'
-      : undefined;
-
   const anchors = activeHit?.subResults ?? [];
 
   return (
     <div aria-live="polite" className={styles.preview}>
-      {status ? (
-        <p className={styles.previewStatus}>{status}</p>
-      ) : activeHit ? (
+      {activeHit ? (
         <>
           <span className={styles.previewCategory}>{activeHit.category ?? 'Results'}</span>
           <h2 className={styles.previewTitle}>
