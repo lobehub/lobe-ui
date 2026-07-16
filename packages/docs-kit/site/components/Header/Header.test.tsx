@@ -40,6 +40,11 @@ const createMatchMedia =
       removeListener: vi.fn(),
     }) as unknown as MediaQueryList;
 
+// antd-style's ThemeObserver leaks a setTimeout past unmount; the shim must
+// stay valid for the whole file so a late timer never sees a torn-down stub.
+let matchMediaImpl = createMatchMedia();
+window.matchMedia = ((query: string) => matchMediaImpl(query)) as typeof window.matchMedia;
+
 const LocationDisplay = () => <output data-testid="location">{useLocation().pathname}</output>;
 
 const renderHeader = (header: ReactElement, initialEntries?: string[]) =>
@@ -59,12 +64,11 @@ const openMenu = (trigger: HTMLElement) => {
 };
 
 beforeEach(() => {
-  vi.stubGlobal('matchMedia', vi.fn(createMatchMedia()));
+  matchMediaImpl = createMatchMedia();
 });
 
 afterEach(() => {
   cleanup();
-  vi.unstubAllGlobals();
   localStorage.clear();
   delete document.documentElement.dataset.theme;
 });
@@ -183,7 +187,7 @@ it('opens and closes the named mobile navigation sheet and restores trigger focu
 });
 
 it('closes the mobile sheet synchronously when reduced motion is requested', () => {
-  vi.stubGlobal('matchMedia', vi.fn(createMatchMedia('(prefers-reduced-motion: reduce)')));
+  matchMediaImpl = createMatchMedia('(prefers-reduced-motion: reduce)');
   renderHeader(<Header navigation={[]} onSearchOpen={vi.fn()} />);
 
   const trigger = screen.getByLabelText('Open documentation navigation');
@@ -195,7 +199,7 @@ it('closes the mobile sheet synchronously when reduced motion is requested', () 
 });
 
 it('preserves the active nested link and closes the mobile sheet after navigation', () => {
-  vi.stubGlobal('matchMedia', vi.fn(createMatchMedia('(prefers-reduced-motion: reduce)')));
+  matchMediaImpl = createMatchMedia('(prefers-reduced-motion: reduce)');
   renderHeader(
     <Header
       navigation={[

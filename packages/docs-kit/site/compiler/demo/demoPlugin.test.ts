@@ -223,7 +223,10 @@ export const loadHelper = () => import('./secondary');
     customLogger: logger,
     plugins: [demoPlugin({ compatibilityPath, root })],
     root,
-    server: { middlewareMode: true },
+    // inotify events are unreliable on loaded CI runners (watch registration
+    // races and descriptor exhaustion drop them permanently); polling the tiny
+    // temp project is cheap and deterministic.
+    server: { middlewareMode: true, watch: { interval: 50, usePolling: true } },
   });
   const loadCurrentDescriptor = async () =>
     (await server!.ssrLoadModule('/demo.tsx?demo')).default as DemoModule;
