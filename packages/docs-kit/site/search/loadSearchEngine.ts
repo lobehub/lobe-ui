@@ -3,6 +3,11 @@ import { createManifestEngine } from './manifestEngine';
 import { createPagefindEngine, type PagefindLoader, type PagefindModule } from './pagefindEngine';
 import { PAGEFIND_HMR_EVENT, type SearchEngine } from './types';
 
+const toComparablePathname = (pathname: string): string => {
+  const withoutHash = pathname.split('#')[0] ?? pathname;
+  return withoutHash.split('?')[0] ?? withoutHash;
+};
+
 export { PAGEFIND_HMR_EVENT } from './types';
 const PAGEFIND_MODULE_PATH = '/pagefind/pagefind.js';
 let browserPagefindGeneration = 0;
@@ -37,8 +42,14 @@ export function createResilientSearchEngine({
   documents,
   loadPagefind,
 }: ResilientSearchEngineOptions): ResilientSearchEngine {
-  let fallback = createManifestEngine(documents);
-  let primary = createPagefindEngine(loadPagefind);
+  let documentsRef = documents;
+  const resolveCategory = (pathname: string): string | undefined => {
+    const target = toComparablePathname(pathname);
+    return documentsRef.find((document) => toComparablePathname(document.pathname) === target)
+      ?.category;
+  };
+  let fallback = createManifestEngine(documentsRef);
+  let primary = createPagefindEngine(loadPagefind, resolveCategory);
   let failed = false;
   let generation = 0;
   let resetting: Promise<void> | undefined;
@@ -97,7 +108,7 @@ export function createResilientSearchEngine({
       if (resetting) return resetting;
       generation += 1;
       const previous = primary;
-      primary = createPagefindEngine(loadPagefind);
+      primary = createPagefindEngine(loadPagefind, resolveCategory);
       failed = false;
       const pendingReset = previous.dispose?.() ?? Promise.resolve();
       resetting = pendingReset;
@@ -114,6 +125,7 @@ export function createResilientSearchEngine({
       );
     },
     updateDocuments(nextDocuments) {
+      documentsRef = nextDocuments;
       fallback = createManifestEngine(nextDocuments);
     },
   };

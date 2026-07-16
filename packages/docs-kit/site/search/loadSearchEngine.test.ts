@@ -120,6 +120,26 @@ it('resets a held singleton facade so an open dialog retries after HMR', async (
   await disposeSearchEngine();
 });
 
+it('resolves category via manifest documents when pagefind fragments omit meta.category', async () => {
+  const engine = createResilientSearchEngine({
+    documents,
+    loadPagefind: async () => workingModule(),
+  });
+  const [hit] = await engine.search('button');
+  expect(hit?.category).toBe('Actions');
+});
+
+it('keeps the category fallback fresh after updateDocuments', async () => {
+  const engine = createResilientSearchEngine({
+    documents,
+    loadPagefind: async () => workingModule(),
+  });
+  engine.updateDocuments([{ ...documents[0]!, category: 'Updated Category' }]);
+
+  const [hit] = await engine.search('button');
+  expect(hit?.category).toBe('Updated Category');
+});
+
 it('changes the browser module URL after reset so a rejected import is not cached', async () => {
   const importModule = vi.fn(async (_specifier: string) => workingModule());
   const load = createBrowserPagefindLoader(importModule);

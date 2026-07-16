@@ -117,6 +117,7 @@ it('prefers matching sub-results and exposes only plain excerpts as text', async
       id: '/components/button#keyboard-usage',
       pathname: '/components/button#keyboard-usage',
       section: 'Keyboard usage',
+      subResults: [{ pathname: '/components/button#keyboard-usage', title: 'Keyboard usage' }],
       title: 'Button',
     },
   ]);
@@ -178,4 +179,145 @@ it('waits for a pending search before destroying its module and invalidates the 
   await expect(search).resolves.toEqual([]);
   await disposal;
   expect(destroy).toHaveBeenCalledOnce();
+});
+
+it('maps every usable sub-result, skips URL-less entries, and skips the page-root duplicate', async () => {
+  const engine = createPagefindEngine(async () => ({
+    init: vi.fn(async () => {}),
+    preload: vi.fn(async () => {}),
+    search: vi.fn(async () => ({
+      results: [
+        {
+          data: async () => ({
+            meta: { title: 'Button' },
+            plain_excerpt: 'Root excerpt',
+            sub_results: [
+              { plain_excerpt: 'Root again', title: 'Button', url: '/components/button' },
+              {
+                plain_excerpt: 'Usage details',
+                title: 'Usage',
+                url: '/components/button#usage',
+              },
+              { plain_excerpt: 'No URL', title: 'Orphan' },
+              {
+                plain_excerpt: 'Keyboard details',
+                title: 'Keyboard usage',
+                url: '/components/button#keyboard-usage',
+              },
+            ],
+            url: '/components/button',
+          }),
+        },
+      ],
+    })),
+  }));
+
+  await expect(engine.search('button')).resolves.toEqual([
+    expect.objectContaining({
+      subResults: [
+        { pathname: '/components/button#usage', title: 'Usage' },
+        { pathname: '/components/button#keyboard-usage', title: 'Keyboard usage' },
+      ],
+    }),
+  ]);
+});
+
+it('omits subResults when no sub-result survives filtering', async () => {
+  const engine = createPagefindEngine(async () => ({
+    init: vi.fn(async () => {}),
+    preload: vi.fn(async () => {}),
+    search: vi.fn(async () => ({
+      results: [
+        {
+          data: async () => ({
+            meta: { title: 'Button' },
+            plain_excerpt: 'Root excerpt',
+            sub_results: [
+              { plain_excerpt: 'Root again', title: 'Button', url: '/components/button' },
+              { plain_excerpt: 'No URL', title: 'Orphan' },
+            ],
+            url: '/components/button',
+          }),
+        },
+      ],
+    })),
+  }));
+
+  await expect(engine.search('button')).resolves.toEqual([
+    expect.not.objectContaining({ subResults: expect.anything() }),
+  ]);
+});
+
+it('resolves category from fragment meta over the resolveCategory fallback', async () => {
+  const engine = createPagefindEngine(
+    async () => ({
+      init: vi.fn(async () => {}),
+      preload: vi.fn(async () => {}),
+      search: vi.fn(async () => ({
+        results: [
+          {
+            data: async () => ({
+              meta: { category: 'Actions', title: 'Button' },
+              plain_excerpt: 'Excerpt',
+              sub_results: [],
+              url: '/components/button',
+            }),
+          },
+        ],
+      })),
+    }),
+    () => 'Fallback category',
+  );
+
+  await expect(engine.search('button')).resolves.toEqual([
+    expect.objectContaining({ category: 'Actions' }),
+  ]);
+});
+
+it('falls back to resolveCategory when fragment meta has no category', async () => {
+  const engine = createPagefindEngine(
+    async () => ({
+      init: vi.fn(async () => {}),
+      preload: vi.fn(async () => {}),
+      search: vi.fn(async () => ({
+        results: [
+          {
+            data: async () => ({
+              meta: { title: 'Button' },
+              plain_excerpt: 'Excerpt',
+              sub_results: [],
+              url: '/components/button',
+            }),
+          },
+        ],
+      })),
+    }),
+    (pathname) => (pathname === '/components/button' ? 'Actions' : undefined),
+  );
+
+  await expect(engine.search('button')).resolves.toEqual([
+    expect.objectContaining({ category: 'Actions' }),
+  ]);
+});
+
+it('leaves category undefined when both meta and resolveCategory are absent', async () => {
+  const engine = createPagefindEngine(async () => ({
+    init: vi.fn(async () => {}),
+    preload: vi.fn(async () => {}),
+    search: vi.fn(async () => ({
+      results: [
+        {
+          data: async () => ({
+            meta: { title: 'Button' },
+            plain_excerpt: 'Excerpt',
+            sub_results: [],
+            url: '/components/button',
+          }),
+        },
+      ],
+    })),
+  }));
+
+  const [hit] = await engine.search('button');
+  expect(hit?.category).toBeUndefined();
 });

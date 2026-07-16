@@ -41,6 +41,12 @@ it.each([
   expect(hits).toContainEqual(expect.objectContaining({ pathname: expectedPathname }));
 });
 
+it('carries the document category on each hit', async () => {
+  const engine = createManifestEngine(documents);
+  const hits = await engine.search('button');
+  expect(hits).toContainEqual(expect.objectContaining({ category: 'Actions' }));
+});
+
 it('uses deterministic relevance, title, and pathname ranking', async () => {
   const engine = createManifestEngine(documents);
 

@@ -1,10 +1,17 @@
 export const PAGEFIND_HMR_EVENT = 'lobe-docs:pagefind-updated';
 
+export interface SearchSubResult {
+  pathname: string;
+  title: string;
+}
+
 export interface SearchHit {
+  category?: string;
   excerpt: string;
   id: string;
   pathname: string;
   section?: string;
+  subResults?: SearchSubResult[];
   title: string;
 }
 
