@@ -66,7 +66,7 @@ export default defineDocsConfig({
 | `themeConfig.prefersColor`                         | `'auto' \| 'dark' \| 'light'`                        | Default color scheme                                                                                     |
 | `themeConfig.metadata.openGraph.image`             | `string`                                             | Default OG image                                                                                         |
 
-Config is loaded once per process (out-of-process, via `node --import tsx`, to sidestep an esbuild/jsdom startup conflict — see the comment in `src/config.ts`) and injected into the app shell through Vite virtual modules.
+Config is loaded once per process (out-of-process, via `node --import tsx`, to sidestep an esbuild/jsdom startup conflict — see the comment in `src/config.ts`) and injected into the app shell through Vite virtual modules. Because it's cached per process, restart `lobedocs dev` after editing `docs.config.ts` — the running dev server won't pick up the change otherwise.
 
 ## Internal structure
 

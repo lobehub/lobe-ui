@@ -27,7 +27,7 @@ export const meta: MetaFunction = ({ location }) => {
   const document = findDocument(location.pathname);
   if (!document) {
     return [
-      { title: 'Documentation not found - Lobe UI' },
+      { title: `Documentation not found - ${siteConfig.title}` },
       { content: 'noindex, nofollow', name: 'robots' },
     ];
   }

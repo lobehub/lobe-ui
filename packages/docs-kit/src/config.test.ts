@@ -61,7 +61,7 @@ describe('getDocsConfig', () => {
 
   it('resolves a config authored with defineDocsConfig', () => {
     const root = createFixtureRoot(`
-      import { defineDocsConfig } from ${JSON.stringify(join(__dirname, 'config.ts'))};
+      import { defineDocsConfig } from ${JSON.stringify(join(import.meta.dirname, 'config.ts'))};
 
       export default defineDocsConfig({
         atomDirs: [{ dir: 'src' }],
@@ -100,6 +100,25 @@ describe('getDocsConfig', () => {
     temporaryRoots.push(root);
 
     expect(() => getDocsConfig(root)).toThrow();
+  });
+
+  it('loads the config even when docs.config.ts prints garbage to stdout', () => {
+    const root = createFixtureRoot(`
+      console.log('not json at all, this would corrupt stdout parsing');
+      console.log('{"totally": "unrelated"}');
+
+      export default {
+        atomDirs: [{ dir: 'src' }],
+        description: 'desc',
+        navSections: {},
+        siteUrl: 'https://example.test',
+        title: 'Noisy Config',
+      };
+    `);
+
+    const config = getDocsConfig(root);
+
+    expect(config.title).toBe('Noisy Config');
   });
 });
 

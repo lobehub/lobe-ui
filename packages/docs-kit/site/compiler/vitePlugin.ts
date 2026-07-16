@@ -3,7 +3,8 @@ import { dirname, resolve } from 'node:path';
 
 import type { Plugin } from 'vite';
 
-import { getDocsConfig } from '../../src/config';
+import type { ClientSiteConfig } from '../../src/config';
+import { emptyLegacyRedirects, getDocsConfig } from '../../src/config';
 import { apiPlugin } from './api/apiPlugin';
 import { createContentManifest } from './content/createManifest';
 import { defaultAtomDirs } from './content/discoverDocuments';
@@ -38,7 +39,7 @@ export function lobeDocsSiteConfigPlugin(root: string = process.cwd()): Plugin {
     load(id) {
       if (id === resolvedSiteConfigVirtualId) {
         const config = getDocsConfig(root);
-        const clientConfig = {
+        const clientConfig: ClientSiteConfig = {
           description: config.description,
           favicons: config.favicons,
           navSections: config.navSections,
@@ -50,7 +51,7 @@ export function lobeDocsSiteConfigPlugin(root: string = process.cwd()): Plugin {
       }
       if (id === resolvedCompatibilityVirtualId) {
         const config = getDocsConfig(root);
-        const legacyRedirects = config.legacyRedirects ?? { demoReferences: [], documents: [] };
+        const legacyRedirects = config.legacyRedirects ?? emptyLegacyRedirects;
         return `export default ${JSON.stringify(legacyRedirects)};`;
       }
     },

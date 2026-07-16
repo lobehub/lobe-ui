@@ -11,7 +11,7 @@ import {
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { getDocsConfig } from '../../src/config';
+import { emptyLegacyRedirects, getDocsConfig } from '../../src/config';
 import type { DocumentManifestEntry } from '../types/content';
 import {
   type ArtifactAuditOptions,
@@ -121,11 +121,8 @@ export async function finalizeDocumentationBuild(
   try {
     const needsDocsConfig = !dependencies.compatibility || !dependencies.documents;
     const docsConfig = needsDocsConfig ? getDocsConfig(root) : undefined;
-    const compatibility = dependencies.compatibility ??
-      docsConfig?.legacyRedirects ?? {
-        demoReferences: [],
-        documents: [],
-      };
+    const compatibility =
+      dependencies.compatibility ?? docsConfig?.legacyRedirects ?? emptyLegacyRedirects;
     const documents =
       dependencies.documents ??
       createContentManifest(
