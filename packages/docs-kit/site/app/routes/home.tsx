@@ -8,9 +8,9 @@ import { CopyControl } from '../../components/CopyControl/CopyControl';
 import { BentoGallery } from '../../components/Home/BentoGallery';
 import { CodeShowcase } from '../../components/Home/CodeShowcase';
 import { HeroIconMarquee } from '../../components/Home/HeroIconMarquee';
+import { styles } from '../../components/Home/homeStyle';
 import { sectionLandingPathname } from '../../content/pageChrome';
 import { contentManifest, findDocument } from '../content/registry';
-import { styles } from './homeStyle';
 
 const INSTALL_COMMAND = 'bun add @lobehub/ui';
 

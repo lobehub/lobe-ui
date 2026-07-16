@@ -3,7 +3,7 @@ import type { MetaFunction } from 'react-router';
 import { Link } from 'react-router';
 import siteConfig from 'virtual:lobedocs/site-config';
 
-import { styles } from './notFoundStyle';
+import { styles } from '../../styles/notFoundStyle';
 
 export const meta: MetaFunction = () => [
   { title: `Documentation not found - ${siteConfig.title}` },
