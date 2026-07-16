@@ -3,6 +3,7 @@ import { Box, CornerDownLeft, FileText, History, PenLine, Sparkles, X } from 'lu
 
 import type { SearchHit } from '../../search/types';
 import type { DocumentManifestEntry } from '../../types/content';
+import { decodeEntities } from './entities';
 import { Highlight } from './highlight';
 import type { RecentEntry } from './recentStore';
 import { styles } from './style';
@@ -199,7 +200,7 @@ export function SearchResultList({
                     {row.hit.excerpt && query.trim() && !hasTitleMatch(row.hit.title, query) ? (
                       <span className={styles.resultExcerpt}>
                         {' — '}
-                        <Highlight query={query} text={row.hit.excerpt} />
+                        <Highlight query={query} text={decodeEntities(row.hit.excerpt)} />
                       </span>
                     ) : null}
                   </span>
