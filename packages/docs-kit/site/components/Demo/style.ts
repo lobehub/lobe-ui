@@ -20,7 +20,7 @@ export const styles = createStaticStyles(({ css }) => ({
     padding-inline: 0.875rem 0.5rem;
     border-block-end: 1px solid var(--docs-border-subtle);
 
-    h3 {
+    && h3 {
       flex: none;
 
       margin: 0;
@@ -33,7 +33,7 @@ export const styles = createStaticStyles(({ css }) => ({
       letter-spacing: -0.01em;
     }
 
-    p {
+    && p {
       overflow: hidden;
 
       min-width: 0;
