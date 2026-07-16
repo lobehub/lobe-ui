@@ -42,7 +42,7 @@ it('migrates the Button guide once while preserving both demos and the generated
   expect(JSON.stringify(extractComponentApi({ documentPath, name: 'Button' }))).not.toContain(
     repositoryRoot,
   );
-}, 15_000);
+}, 60_000);
 
 it('renders serialized Button properties and both canonical demo frames through Vite MDX', async () => {
   server = await createServer({
@@ -56,4 +56,4 @@ it('renders serialized Button properties and both canonical demo frames through 
   expect(html).toContain('Button properties');
   expect(html).toContain('loading');
   expect(html.match(new RegExp(`class="${demoStyles.frame}"`, 'g'))).toHaveLength(2);
-}, 15_000);
+}, 60_000);

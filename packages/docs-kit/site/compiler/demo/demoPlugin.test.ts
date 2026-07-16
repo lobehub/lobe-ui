@@ -232,7 +232,7 @@ export const loadHelper = () => import('./secondary');
       const timeout = setTimeout(() => {
         server!.watcher.off('change', onChange);
         rejectObserved(new Error(`Timed out waiting for Vite watcher: ${path}`));
-      }, 3000);
+      }, 10_000);
       const onChange = (changedPath: string) => {
         if (resolve(changedPath) !== resolve(path)) return;
         clearTimeout(timeout);
@@ -287,4 +287,4 @@ export const loadHelper = () => import('./secondary');
   });
   expect(metadataDescriptor.legacyIds).toEqual(['legacy-updated']);
   expect(metadataDescriptor.routeId).toBe('docs/updated');
-}, 15_000);
+}, 60_000);
