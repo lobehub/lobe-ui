@@ -44,7 +44,12 @@ export const DefaultHome = ({
         <section className={styles.hero}>
           <h1 data-pagefind-meta="title">
             {home?.hero?.title ?? siteConfig.title}
-            {home?.hero?.accent && <span className={styles.heroGradient}>{home.hero.accent}</span>}
+            {home?.hero?.accent && (
+              <>
+                {' '}
+                <span className={styles.heroGradient}>{home.hero.accent}</span>
+              </>
+            )}
           </h1>
           <p data-pagefind-meta="description">{description}</p>
           <div className={styles.heroActions}>
