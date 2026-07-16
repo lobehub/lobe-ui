@@ -17,7 +17,13 @@ A repo adopting the kit needs:
   CHANGELOG.md            # rendered by the changelog route
 ```
 
-No `vite.config.ts` or `react-router.config.ts` in the consumer repo — the `lobedocs` CLI drives react-router dev/build programmatically using kit-internal config, with the consumer repo as cwd/root.
+No `vite.config.ts` in the consumer repo — the `lobedocs` CLI drives react-router dev/build programmatically using kit-internal config, with the consumer repo as cwd/root. A 1-line `react-router.config.ts` shell must still exist at the consumer root:
+
+```ts
+export { default } from './packages/docs-kit/site/react-router.config';
+```
+
+This is required because react-router 8.2 resolves `rootDirectory` and Vite's `root` to the same value with no way to split them via the public CLI, so `react-router.config.ts` discovery can't be redirected into the kit.
 
 The package is workspace-internal for now (`"private": true`, no `exports` field) — `docs.config.ts` imports `defineDocsConfig` by relative path. Package-name imports (`@lobehub/docs-kit/config`) arrive once the kit is published, per the Phase 3+ roadmap below.
 
