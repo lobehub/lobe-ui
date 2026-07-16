@@ -9,13 +9,13 @@ import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { type Alias, defineConfig } from 'vite';
 
-import { remarkApi } from './packages/docs-kit/site/compiler/api/remarkApi';
-import { rehypeHeadingIds } from './packages/docs-kit/site/compiler/content/rehypeHeadingIds';
-import { devPagefindPlugin } from './packages/docs-kit/site/compiler/search/devPagefindPlugin';
-import { lobeDocs } from './packages/docs-kit/site/compiler/vitePlugin';
-import { getDocsConfig } from './packages/docs-kit/src/config';
+import { remarkApi } from './site/compiler/api/remarkApi';
+import { rehypeHeadingIds } from './site/compiler/content/rehypeHeadingIds';
+import { devPagefindPlugin } from './site/compiler/search/devPagefindPlugin';
+import { lobeDocs } from './site/compiler/vitePlugin';
+import { getDocsConfig } from './src/config';
 
-const repositoryRoot = import.meta.dirname;
+const repositoryRoot = process.cwd();
 const docsConfig = getDocsConfig(repositoryRoot);
 
 const escapeRegExp = (value: string): string => value.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&');

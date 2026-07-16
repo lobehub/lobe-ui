@@ -14,7 +14,7 @@ afterEach(async () => {
 
 it('loads synchronous document metadata without compiling the MDX component', async () => {
   server = await createServer({
-    configFile: resolve(repositoryRoot, 'vite.config.ts'),
+    configFile: resolve(repositoryRoot, 'packages/docs-kit/vite.config.ts'),
     logLevel: 'silent',
     server: { middlewareMode: true },
   });

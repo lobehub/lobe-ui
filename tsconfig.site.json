@@ -11,7 +11,7 @@
     "packages/docs-kit/site/**/*.ts",
     "packages/docs-kit/site/**/*.tsx",
     "src/types/global.d.ts",
-    "vite.config.ts",
+    "packages/docs-kit/vite.config.ts",
     "react-router.config.ts",
     ".react-router/types/**/*"
   ]

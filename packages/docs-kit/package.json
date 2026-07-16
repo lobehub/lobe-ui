@@ -2,5 +2,8 @@
   "name": "@lobehub/docs-kit",
   "version": "0.0.0",
   "private": true,
-  "type": "module"
+  "type": "module",
+  "bin": {
+    "lobedocs": "bin/lobedocs.mjs"
+  }
 }

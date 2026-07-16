@@ -98,10 +98,10 @@
     "build:watch": "tsdown --watch",
     "ci": "npm run lint:circular && npm run lint && npm run type-check",
     "clean": "rm -r es lib dist coverage .eslintcache node_modules/.cache",
-    "dev": "react-router dev",
-    "docs:build": "react-router build && tsx packages/docs-kit/site/compiler/finalizeBuild.ts",
-    "docs:build-analyze": "cross-env ANALYZE=1 bun run docs:build",
-    "docs:dev": "react-router dev",
+    "dev": "lobedocs dev",
+    "docs:build": "lobedocs build",
+    "docs:build-analyze": "cross-env ANALYZE=1 lobedocs build",
+    "docs:dev": "lobedocs dev",
     "gen:icons": "tsx ./scripts/icons/index.ts",
     "lint": "eslint \"{src,tests}/**/*.{js,jsx,ts,tsx}\" --fix",
     "lint:circular": "dpdm src/**/*.{ts,tsx}  --warning false  --tree false  --exit-code circular:1  -T true",
@@ -113,12 +113,12 @@
     "prettier": "prettier -c --write --no-error-on-unmatched-pattern \"**/**\"",
     "pull": "git pull",
     "release": "semantic-release",
-    "setup": "react-router typegen",
+    "setup": "lobedocs typegen",
     "start": "bun run docs:dev",
     "test": "vitest --passWithNoTests",
     "test:coverage": "vitest run --coverage  --passWithNoTests",
     "test:update": "vitest -u",
-    "type-check": "react-router typegen && tsc --noEmit && tsc --noEmit -p tsconfig.site.json"
+    "type-check": "lobedocs typegen && tsc --noEmit && tsc --noEmit -p tsconfig.site.json"
   },
   "lint-staged": {
     "*.{md,mdx}": [
@@ -216,6 +216,7 @@
   "devDependencies": {
     "@ant-design/icons": "^6.3.2",
     "@commitlint/cli": "^21.2.1",
+    "@lobehub/docs-kit": "workspace:*",
     "@lobehub/eslint-config": "2.1.5",
     "@lobehub/fluent-emoji": "^4.1.0",
     "@lobehub/icons": "^5.10.1",
