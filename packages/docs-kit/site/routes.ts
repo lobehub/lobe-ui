@@ -6,8 +6,6 @@ export default [
   route('~demos/:demoId', './app/routes/standalone-demo.tsx', { id: 'standalone-demo' }),
   layout('./app/routes/docs-layout.tsx', [
     index('./app/routes/home.tsx'),
-    route('changelog', './app/routes/document.tsx', { id: 'document-changelog' }),
-    route('components/*', './app/routes/document.tsx', { id: 'document-component' }),
-    route('*', './app/routes/not-found.tsx'),
+    route('*', './app/routes/document.tsx', { id: 'document' }),
   ]),
 ] satisfies RouteConfig;
