@@ -15,13 +15,21 @@ export const styles = createStaticStyles(({ css }) => ({
     -webkit-text-fill-color: transparent;
   `,
 
+  actions: css`
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+
+    margin-block-start: 2rem;
+  `,
+
   link: css`
     display: inline-flex;
     gap: 0.5rem;
     align-items: center;
 
     min-height: 2.5rem;
-    margin-block-start: 2rem;
     padding-block: 0;
     padding-inline: 1.125rem;
     border: 1px solid var(--docs-border-default);
@@ -44,8 +52,89 @@ export const styles = createStaticStyles(({ css }) => ({
     }
   `,
 
+  path: css`
+    padding-block: 0.125rem;
+    padding-inline: 0.375rem;
+    border: 1px solid var(--docs-border-default);
+    border-radius: var(--docs-radius-sm);
+
+    font-family: var(--docs-font-mono);
+    font-size: 0.8125rem;
+    color: var(--docs-text-primary);
+
+    background: var(--docs-surface-raised);
+  `,
+
+  searchButton: css`
+    cursor: pointer;
+
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+
+    min-height: 2.5rem;
+    padding-block: 0;
+    padding-inline: 1.125rem;
+    border: none;
+    border-radius: var(--docs-radius-md);
+
+    font-size: 0.875rem;
+    font-weight: 550;
+    color: var(--docs-accent-contrast);
+
+    background: var(--docs-accent);
+
+    transition: filter 140ms ease;
+
+    &:hover {
+      filter: brightness(1.08);
+    }
+  `,
+
+  suggestions: css`
+    margin-block-start: 1.75rem;
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.25rem;
+      justify-content: center;
+
+      margin: 0;
+      padding: 0;
+
+      list-style: none;
+    }
+
+    a {
+      border-block-end: 1px solid var(--docs-border-strong);
+
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: var(--docs-text-primary);
+      text-decoration: none;
+
+      transition:
+        color 140ms ease,
+        border-color 140ms ease;
+
+      &:hover {
+        border-block-end-color: var(--docs-accent);
+        color: var(--docs-accent);
+      }
+    }
+  `,
+
+  suggestionsTitle: css`
+    margin-block: 0 0.625rem;
+    margin-inline: 0;
+    font-size: 0.8125rem;
+    color: var(--docs-text-subtle);
+  `,
+
   root: css`
     display: flex;
+    flex: 1;
     flex-direction: column;
     align-items: center;
 

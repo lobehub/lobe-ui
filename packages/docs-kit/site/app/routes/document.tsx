@@ -6,21 +6,12 @@ import siteConfig from 'virtual:lobedocs/site-config';
 import { DocsLayout } from '../../components/DocsLayout/DocsLayout';
 import type { DocumentManifestEntry } from '../../types/content';
 import { contentManifest, findDocument, loadDocument } from '../content/registry';
+import NotFound from './not-found';
 
 const DocumentContent = ({ document }: { document: DocumentManifestEntry }) => {
   const module = use(loadDocument(document.pathname));
   const Content = module.default;
   return <Content />;
-};
-
-const getDocumentOrThrow = (pathname: string): DocumentManifestEntry => {
-  const document = findDocument(pathname);
-  if (document) return document;
-
-  throw new Response('Documentation not found', {
-    status: 404,
-    statusText: 'Not Found',
-  });
 };
 
 export const meta: MetaFunction = ({ location }) => {
@@ -52,7 +43,8 @@ export const meta: MetaFunction = ({ location }) => {
 
 export default function DocumentRoute() {
   const location = useLocation();
-  const document = getDocumentOrThrow(location.pathname);
+  const document = findDocument(location.pathname);
+  if (!document) return <NotFound />;
 
   return (
     <DocsLayout document={document} navigation={contentManifest.navigation}>

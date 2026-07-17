@@ -183,6 +183,12 @@ export const styles = createStaticStyles(({ css }) => ({
     }
   `,
 
+  page: css`
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100dvh - var(--docs-header-height));
+  `,
+
   searchLoading: css`
     position: fixed;
 

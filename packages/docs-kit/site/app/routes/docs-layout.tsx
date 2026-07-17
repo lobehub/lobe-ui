@@ -13,6 +13,10 @@ const SearchDialog = lazy(() =>
   })),
 );
 
+export interface DocsOutletContext {
+  openSearch: (trigger?: HTMLElement) => void;
+}
+
 export default function DocsRouteLayout() {
   const [searchOpen, setSearchOpen] = useState(false);
   const searchTriggerRef = useRef<HTMLElement>(null);
@@ -49,8 +53,10 @@ export default function DocsRouteLayout() {
         Skip to documentation
       </a>
       <Header navigation={contentManifest.navigation} onSearchOpen={openSearch} />
-      <Outlet />
-      <Footer />
+      <div className={styles.page}>
+        <Outlet context={{ openSearch } satisfies DocsOutletContext} />
+        <Footer />
+      </div>
       {searchOpen ? (
         <Suspense
           fallback={
