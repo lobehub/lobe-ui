@@ -58,6 +58,22 @@ it('applies the pre-hydration standalone appearance marker before page attribute
   );
 });
 
+it('gives the provider-wrapped standalone demo a full-width grid track', () => {
+  container.innerHTML = `
+    <main class="${styles.standalonePage}" data-standalone-demo="">
+      <div data-lobe-demo-appearance="dark" style="display: contents">
+        <div data-demo-provider="">
+          <div id="lobe-demo-example"></div>
+        </div>
+      </div>
+    </main>`;
+
+  const appearance = container.querySelector<HTMLElement>('[data-lobe-demo-appearance]')!;
+  const standalonePage = container.querySelector<HTMLElement>('[data-standalone-demo]')!;
+  expect(getComputedStyle(standalonePage).gridTemplateColumns).toBe('minmax(0, 1fr)');
+  expect(getComputedStyle(appearance).width).toBe('100%');
+});
+
 it('keeps pending live candidates measurable while making their entire subtree non-interactive', () => {
   container.innerHTML = `
     <div class="${styles.liveStage}">

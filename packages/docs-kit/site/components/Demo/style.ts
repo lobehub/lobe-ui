@@ -389,6 +389,7 @@ export const styles = createStaticStyles(({ css }) => ({
 
   standalonePage: css`
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     place-items: center;
 
     min-width: 20rem;
@@ -411,6 +412,10 @@ export const styles = createStaticStyles(({ css }) => ({
 
     > [data-demo-placeholder],
     > [id^='lobe-demo-'] {
+      width: 100%;
+    }
+
+    > [data-lobe-demo-appearance] {
       width: 100%;
     }
   `,
