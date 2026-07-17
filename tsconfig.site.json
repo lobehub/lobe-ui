@@ -12,7 +12,6 @@
     "packages/docs-kit/site/**/*.tsx",
     "src/types/global.d.ts",
     "packages/docs-kit/vite.config.ts",
-    "react-router.config.ts",
     ".react-router/types/**/*"
   ]
 }

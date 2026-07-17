@@ -102,6 +102,7 @@ export function createNavigation(
 
     if (frozenRecords.length === 0) {
       if ([...specialSections.values()].includes(document.pathname)) continue;
+      if (document.source.startsWith('docs/')) continue;
       diagnostics.push(`${document.source}: no frozen section record`);
       continue;
     }

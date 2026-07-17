@@ -1,8 +1,6 @@
-import path from 'node:path';
-
 import { getDocsConfig } from '../../src/config';
 
-const repositoryRoot = path.resolve(import.meta.dirname, '../../../..');
+const repositoryRoot = process.cwd();
 const config = getDocsConfig(repositoryRoot);
 
 export const siteMetadata = {

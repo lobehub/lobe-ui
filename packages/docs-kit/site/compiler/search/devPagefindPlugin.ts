@@ -268,6 +268,7 @@ export function devPagefindPlugin(options: DevPagefindPluginOptions = {}): Plugi
               root,
               docsConfig.atomDirs ?? defaultAtomDirs,
               docsConfig.navSections ?? {},
+              docsConfig.publicDocs ?? [],
             ).documents.map(({ pathname }) => pathname);
           return buildDevPagefindFiles({
             api: await getApi(),

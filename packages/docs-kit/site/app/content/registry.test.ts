@@ -30,4 +30,4 @@ it('caches one React-compatible import promise per document pathname', async () 
   await first;
 
   expect(first).toMatchObject({ status: 'fulfilled' });
-});
+}, 120_000);

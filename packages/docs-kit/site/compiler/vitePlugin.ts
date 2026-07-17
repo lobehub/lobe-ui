@@ -90,8 +90,11 @@ export function lobeDocsDocumentModulesPlugin(root: string = process.cwd()): Plu
       const publicPatterns = [
         '/docs/index.mdx',
         '/docs/changelog.mdx',
+        ...(config.publicDocs ?? []).map(
+          (source) => `/${source.replace(/^\.\//, '').replace(/^\//, '')}`,
+        ),
         ...(useChangelogFallback ? ['/CHANGELOG.md'] : []),
-      ];
+      ].filter((source, index, sources) => sources.indexOf(source) === index);
 
       return `export const componentMetadata = import.meta.glob(${JSON.stringify(componentPatterns)}, {
   eager: true,
@@ -130,6 +133,7 @@ export function lobeDocs(root: string = process.cwd()): Plugin[] {
           path,
           docsConfig.atomDirs ?? defaultAtomDirs,
           docsConfig.navSections ?? {},
+          docsConfig.publicDocs ?? [],
         ).documents[0];
         if (!document) throw new Error(`No public document metadata found for ${path}`);
 

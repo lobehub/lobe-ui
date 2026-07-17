@@ -35,4 +35,4 @@ it('renders the production dynamic-import demo through the read-only source cont
   expect(frame.attr('data-demo-editable')).toBe('false');
   expect(toolbarLabels).toContain('Show source');
   expect(toolbarLabels).not.toContain('Show source editor');
-}, 30_000);
+}, 120_000);

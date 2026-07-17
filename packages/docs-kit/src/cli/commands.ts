@@ -3,22 +3,25 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 import { buildReactRouterArgs } from './reactRouterArgs';
+import { withReactRouterConfig } from './reactRouterConfig';
 import { resolveBin } from './resolveBin';
 import { runProcess } from './runProcess';
 
 export interface CliContext {
   cwd: string;
   finalizeBuildPath: string;
+  reactRouterConfigPath: string;
   viteConfigPath: string;
 }
 
 export const createCliContext = (kitRoot: string, cwd: string): CliContext => ({
   cwd,
   finalizeBuildPath: path.join(kitRoot, 'site/compiler/finalizeBuild.ts'),
+  reactRouterConfigPath: path.join(kitRoot, 'site/react-router.config.ts'),
   viteConfigPath: path.join(kitRoot, 'vite.config.ts'),
 });
 
-const runReactRouter = (
+const runReactRouter = async (
   context: CliContext,
   subcommand: string,
   extraArgs: string[],
@@ -31,13 +34,17 @@ const runReactRouter = (
     consumerRequire.resolve,
   );
 
-  return runProcess(
-    process.execPath,
-    [
-      reactRouterBinPath,
-      ...buildReactRouterArgs(subcommand, context.cwd, context.viteConfigPath, extraArgs),
-    ],
-    { cwd: context.cwd, ...options },
+  return withReactRouterConfig(
+    { cwd: context.cwd, defaultConfigPath: context.reactRouterConfigPath },
+    async () =>
+      runProcess(
+        process.execPath,
+        [
+          reactRouterBinPath,
+          ...buildReactRouterArgs(subcommand, context.cwd, context.viteConfigPath, extraArgs),
+        ],
+        { cwd: context.cwd, ...options },
+      ),
   );
 };
 

@@ -57,6 +57,13 @@ const derivePathname = (
   if (frontmatter.route) return { pathname: canonicalizePathname(frontmatter.route) };
   if (document.kind === 'home') return { pathname: '/' };
   if (document.kind === 'changelog') return { pathname: '/changelog' };
+  if (document.kind === 'guide') {
+    const guidePath = document.source
+      .slice('docs/'.length)
+      .replace(/\.mdx?$/, '')
+      .replace(/\/index$/, '');
+    return { pathname: canonicalizePathname(`/${guidePath}`) };
+  }
 
   const atomDir = resolveAtomDir(document.source, atomDirs);
   const componentPath = document.source.slice(atomDir.dir.length + 1, -'/index.mdx'.length);
@@ -88,12 +95,13 @@ export function createContentManifest(
   root: string,
   atomDirs: readonly AtomDirConfig[],
   navSections: Record<string, string>,
+  publicDocs: readonly string[] = [],
 ): ContentManifest {
   const documents: DocumentManifestEntry[] = [];
   const diagnostics: string[] = [];
   const pathnames = new Map<string, string>();
 
-  for (const document of discoverDocuments(root, atomDirs)) {
+  for (const document of discoverDocuments(root, atomDirs, publicDocs)) {
     const parsed = parseDocumentFrontmatter(document);
     const validation = validateFrontmatter(parsed.value, {
       requireCategory: document.kind === 'component',

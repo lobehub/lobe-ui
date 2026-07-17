@@ -1,9 +1,34 @@
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import { expect, it, vi } from 'vitest';
+import { afterEach, expect, it, vi } from 'vitest';
 
 import type { DocumentManifestEntry, NavigationSection } from '../../types/content';
 import { Sidebar } from './Sidebar';
+
+const createRect = ({
+  height,
+  left,
+  top,
+  width,
+}: {
+  height: number;
+  left: number;
+  top: number;
+  width: number;
+}): DOMRect =>
+  ({
+    bottom: top + height,
+    height,
+    left,
+    right: left + width,
+    toJSON: () => ({}),
+    top,
+    width,
+    x: left,
+    y: top,
+  }) as DOMRect;
+
+afterEach(() => vi.restoreAllMocks());
 
 const actionDocument: DocumentManifestEntry = {
   category: 'General',
@@ -68,4 +93,45 @@ it('preserves active-link semantics and invokes the mobile navigation callback',
   expect(onNavigate).toHaveBeenCalledOnce();
   await waitFor(() => expect(baseActionLink.getAttribute('aria-current')).toBe('page'));
   expect(actionLink.getAttribute('aria-current')).toBeNull();
+});
+
+it('keeps one indicator positioned from active-link geometry across navigation', async () => {
+  let rootTop = -1112;
+  vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (
+    this: HTMLElement,
+  ) {
+    if (this.getAttribute('aria-label') === 'Component documentation') {
+      return createRect({ height: 400, left: 24, top: rootTop, width: 224 });
+    }
+
+    if (this.textContent === 'Action') {
+      return createRect({ height: 32, left: 24, top: rootTop + 30, width: 224 });
+    }
+
+    if (this.textContent === 'Base Action') {
+      return createRect({ height: 32, left: 24, top: rootTop + 112, width: 224 });
+    }
+
+    return createRect({ height: 0, left: 0, top: 0, width: 0 });
+  });
+
+  const { container } = render(
+    <MemoryRouter initialEntries={[actionDocument.pathname]}>
+      <Sidebar navigation={navigation} />
+    </MemoryRouter>,
+  );
+
+  const initialIndicator = container.querySelector<HTMLElement>('[data-sidebar-active-indicator]');
+  expect(initialIndicator?.style.transform).toBe('translate3d(0px, 30px, 0)');
+
+  rootTop = 132;
+  fireEvent.click(screen.getByRole('link', { name: 'Base Action' }));
+
+  await waitFor(() => {
+    const indicator = container.querySelector<HTMLElement>('[data-sidebar-active-indicator]');
+    expect(indicator).toBe(initialIndicator);
+    expect(indicator?.style.transform).toBe('translate3d(0px, 112px, 0)');
+  });
+
+  expect(container.querySelectorAll('[data-sidebar-active-indicator]')).toHaveLength(1);
 });

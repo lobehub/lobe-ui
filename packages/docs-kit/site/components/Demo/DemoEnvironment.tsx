@@ -1,8 +1,6 @@
+import { ConfigProvider, ThemeProvider } from '@lobehub/ui';
 import { motion } from 'motion/react';
 import type { CSSProperties, PropsWithChildren } from 'react';
-
-import ConfigProvider from '@/ConfigProvider';
-import ThemeProvider from '@/ThemeProvider';
 
 import type { DemoAppearance } from '../../types/demo';
 

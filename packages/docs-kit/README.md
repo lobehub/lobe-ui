@@ -17,15 +17,21 @@ A repo adopting the kit needs:
   CHANGELOG.md            # rendered at "/changelog" when docs/changelog.mdx is absent — see "Changelog" below
 ```
 
-No `vite.config.ts` in the consumer repo — the `lobedocs` CLI drives react-router dev/build programmatically using kit-internal config, with the consumer repo as cwd/root. A 1-line `react-router.config.ts` shell must still exist at the consumer root:
+No `vite.config.ts` or `react-router.config.ts` is required in the consumer repo. The `lobedocs` CLI keeps the consumer repo as the React Router/Vite root and supplies the kit-owned React Router config automatically for the lifetime of each command.
+
+Consumers that need to override React Router settings may add an optional `react-router.config.ts` based on the exported defaults:
 
 ```ts
-export { default } from './packages/docs-kit/site/react-router.config';
+import { defineLobeDocsReactRouterConfig } from '@lobehub/docs-kit/react-router-config';
+
+export default defineLobeDocsReactRouterConfig({
+  basename: '/docs',
+});
 ```
 
-This is required because react-router 8.2 resolves `rootDirectory` and Vite's `root` to the same value with no way to split them via the public CLI, so `react-router.config.ts` discovery can't be redirected into the kit.
+React Router 8.2 does not expose a separate config-file argument, so the CLI provides its default through a process-scoped generated config. The file is removed when the command exits, guarded by cross-process leases when multiple `lobedocs` commands run concurrently. Any consumer-authored `react-router.config.{js,jsx,ts,tsx,mjs,mts}` takes precedence and is never modified.
 
-The package is published as `@lobehub/docs-kit` alongside `@lobehub/ui`. Its `lobedocs` CLI is the supported public entry point; JavaScript package exports remain intentionally unstabilized while the first consumers are migrated.
+The package is published as `@lobehub/docs-kit` alongside `@lobehub/ui`. Its supported public entry points are the `lobedocs` CLI and `@lobehub/docs-kit/react-router-config` for optional React Router overrides; other JavaScript deep imports remain intentionally unstabilized while the first consumers are migrated.
 
 ### CLI
 

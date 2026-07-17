@@ -1,6 +1,4 @@
-import ActionIcon from '@lobehub/ui/ActionIcon';
-import type { DropdownItem } from '@lobehub/ui/DropdownMenu';
-import DropdownMenu from '@lobehub/ui/DropdownMenu';
+import { ActionIcon, type DropdownItem, DropdownMenu } from '@lobehub/ui';
 import {
   Code,
   Copy,

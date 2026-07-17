@@ -1,9 +1,11 @@
+import { resolve } from 'node:path';
+
 import mdx from '@mdx-js/rollup';
 import rehypeRaw from 'rehype-raw';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkGfm from 'remark-gfm';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
-import type { Plugin } from 'vite';
+import { normalizePath, type Plugin } from 'vite';
 
 import { remarkApi } from '../api/remarkApi';
 import { rehypeHeadingIds } from './rehypeHeadingIds';
@@ -25,7 +27,7 @@ const mdxPassThroughNodeTypes = [
 export function createMdxPlugin(): Plugin {
   return mdx({
     include: /\.(md|mdx)$/,
-    providerImportSource: '/packages/docs-kit/site/app/mdx-components',
+    providerImportSource: normalizePath(resolve(import.meta.dirname, '../../app/mdx-components')),
     // rehype-raw expands the raw HTML nodes that `.md` format keeps around
     // (details/summary/kbd/div, entities); without it @mdx-js/mdx's
     // rehypeRemoveRaw silently drops that markup for `format: 'md'` files

@@ -12,5 +12,6 @@ const inventory = buildDocumentationInventory(root, {
   atomDirs: config.atomDirs,
   legacyRedirects: config.legacyRedirects,
   navSections: config.navSections,
+  publicDocs: config.publicDocs,
 });
 writeCompatibilityManifest(root, inventory);

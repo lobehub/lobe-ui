@@ -1,4 +1,5 @@
 import { createCache, extractStyle as extractCssinjsStyle } from '@ant-design/cssinjs';
+import { createLobeAntdTheme } from '@lobehub/ui/es/styles/theme/antdTheme';
 import {
   Alert,
   Anchor,
@@ -45,9 +46,6 @@ import {
 import { StyleProvider } from 'antd-style';
 import type { ReactElement } from 'react';
 import { renderToString } from 'react-dom/server';
-
-import { createLobeAntdTheme } from '@/styles/theme/antdTheme';
-import LobeAntdConfigProvider from '@/ThemeProvider/ConfigProvider';
 
 const themeConfig = (() => {
   const config = createLobeAntdTheme({ appearance: 'light' });
@@ -148,9 +146,7 @@ const build = () => {
     try {
       renderToString(
         <StyleProvider cache={cache}>
-          <ConfigProvider theme={themeConfig}>
-            <LobeAntdConfigProvider>{probe()}</LobeAntdConfigProvider>
-          </ConfigProvider>
+          <ConfigProvider theme={themeConfig}>{probe()}</ConfigProvider>
         </StyleProvider>,
       );
     } catch {
