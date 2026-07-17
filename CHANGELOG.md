@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.22.2](https://github.com/lobehub/lobe-ui/compare/v5.22.1...v5.22.2) (2026-07-17)
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Require flex-compatible ui runtime, closes [#570](https://github.com/lobehub/lobe-ui/issues/570) ([76516b8](https://github.com/lobehub/lobe-ui/commit/76516b8))
+
 ## [5.22.1](https://github.com/lobehub/lobe-ui/compare/v5.22.0...v5.22.1) (2026-07-17)
 
 ### 🐛 Bug Fixes
