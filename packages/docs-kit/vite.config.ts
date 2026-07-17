@@ -49,23 +49,25 @@ const createAliasEntries = (alias: Record<string, string> = {}): Alias[] =>
     });
 
 export default defineConfig({
-  optimizeDeps: {
-    // Components and demos are lazy-loaded per docs page, so with default entry
-    // crawling Vite keeps discovering deps mid-session, re-optimizing and
-    // full-reloading on nearly every navigation. Crawl all client sources
-    // upfront so every dep is found in the initial optimize pass.
-    entries: [
-      'src/**/*.{ts,tsx}',
-      `${docsKitRoot}/site/app/**/*.{ts,tsx}`,
-      `${docsKitRoot}/site/components/**/*.{ts,tsx}`,
-      '!**/*.d.ts',
-      '!**/*.test.*',
-    ],
-    // Installed UI packages and generated demo modules expose these only at
-    // runtime. Pre-bundle the dependencies available in the consuming project
-    // to avoid an invalidating second optimization pass after first paint.
-    include: runtimeOptimizeDeps,
-  },
+  optimizeDeps: process.env.VITEST
+    ? { noDiscovery: true }
+    : {
+        // Components and demos are lazy-loaded per docs page, so with default entry
+        // crawling Vite keeps discovering deps mid-session, re-optimizing and
+        // full-reloading on nearly every navigation. Crawl all client sources
+        // upfront so every dep is found in the initial optimize pass.
+        entries: [
+          'src/**/*.{ts,tsx}',
+          `${docsKitRoot}/site/app/**/*.{ts,tsx}`,
+          `${docsKitRoot}/site/components/**/*.{ts,tsx}`,
+          '!**/*.d.ts',
+          '!**/*.test.*',
+        ],
+        // Installed UI packages and generated demo modules expose these only at
+        // runtime. Pre-bundle the dependencies available in the consuming project
+        // to avoid an invalidating second optimization pass after first paint.
+        include: runtimeOptimizeDeps,
+      },
   plugins: [
     codeInspectorPlugin({
       bundler: 'vite',
