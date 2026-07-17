@@ -252,22 +252,6 @@ export const styles = createStaticStyles(({ css }) => ({
         radial-gradient(26% 45% at 84% 12%, var(--docs-aurora-pink), transparent 70%);
     }
 
-    > * {
-      animation: home-hero-enter 500ms cubic-bezier(0.2, 0, 0, 1) backwards;
-    }
-
-    > :nth-child(2) {
-      animation-delay: 90ms;
-    }
-
-    > :nth-child(3) {
-      animation-delay: 180ms;
-    }
-
-    > :nth-child(4) {
-      animation-delay: 270ms;
-    }
-
     h1 {
       margin: 0;
 
@@ -288,19 +272,6 @@ export const styles = createStaticStyles(({ css }) => ({
       line-height: 1.6;
       color: var(--docs-text-secondary);
       text-wrap: balance;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      > * {
-        animation: none;
-      }
-    }
-
-    @keyframes home-hero-enter {
-      from {
-        transform: translateY(10px);
-        opacity: 0;
-      }
     }
   `,
 
