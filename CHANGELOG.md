@@ -2,6 +2,21 @@
 
 # Changelog
 
+# [5.22.0](https://github.com/lobehub/lobe-ui/compare/v5.21.0...v5.22.0) (2026-07-17)
+
+### ✅ Tests
+
+- **docs-kit**: Allow Vite registry startup on CI ([0326fdf](https://github.com/lobehub/lobe-ui/commit/0326fdf))
+- **docs-kit**: Stabilize Vite integrations on CI ([9abeba3](https://github.com/lobehub/lobe-ui/commit/9abeba3))
+
+### ✨ Features
+
+- **docs-kit**: Improve lobedocs consumer integration ([e5be87e](https://github.com/lobehub/lobe-ui/commit/e5be87e))
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Skip dependency discovery in compiler tests ([11adcde](https://github.com/lobehub/lobe-ui/commit/11adcde))
+
 # [5.21.0](https://github.com/lobehub/lobe-ui/compare/v5.20.3...v5.21.0) (2026-07-17)
 
 ### ♻ Code Refactoring
