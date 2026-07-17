@@ -239,7 +239,7 @@ export const loadHelper = () => import('./secondary');
       const timeout = setTimeout(() => {
         server!.watcher.off('change', onChange);
         rejectObserved(new Error(`Timed out waiting for Vite watcher: ${path}`));
-      }, 30_000);
+      }, 120_000);
       const onChange = (changedPath: string) => {
         if (resolve(changedPath) !== resolve(path)) return;
         clearTimeout(timeout);

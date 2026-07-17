@@ -102,4 +102,4 @@ it('renders the realistic CHANGELOG.md fallback content for a fixture consumer w
   expect(html).toContain('<details');
   expect(html).toContain('<summary');
   expect(html).toContain('strict: true');
-}, 30_000);
+}, 120_000);

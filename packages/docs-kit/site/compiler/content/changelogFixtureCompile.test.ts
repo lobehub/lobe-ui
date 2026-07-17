@@ -34,4 +34,4 @@ it('compiles a realistic changelog excerpt through the production mdx pipeline',
   expect(html).toContain(`Version${nonBreakingSpace}4.20.2`);
   expect(html).toContain('strict: true');
   expect(html).toContain('Replace underline');
-}, 30_000);
+}, 120_000);

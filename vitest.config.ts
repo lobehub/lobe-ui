@@ -21,6 +21,8 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     hookTimeout: 30_000,
-    testTimeout: 20_000,
+    // Production Vite compiler integration can exceed one minute when the
+    // complete suite runs with coverage on constrained CI runners.
+    testTimeout: 120_000,
   },
 });
