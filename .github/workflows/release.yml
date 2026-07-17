@@ -59,6 +59,9 @@ jobs:
       - name: Verify lobedocs package
         run: npm pack --dry-run ./packages/docs-kit
 
+      - name: Remove Bun-generated workspace metadata
+        run: npm pkg delete workspaces
+
       - name: Force Release Commit
         if: github.event.inputs.force_release == 'true'
         run: |
