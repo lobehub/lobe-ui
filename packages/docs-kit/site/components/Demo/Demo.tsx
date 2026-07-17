@@ -251,6 +251,7 @@ export function Demo({
       data-demo-editable={resolvedEditable}
       data-demo-isolated={isolated}
       data-demo-layout={layout}
+      data-toc-ignore=""
       ref={frameRef}
     >
       <header className={styles.caption}>

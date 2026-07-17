@@ -70,7 +70,9 @@ export function TableOfContents({ contentId, scopeKey }: TableOfContentsProps) {
       return;
     }
 
-    const headings = Array.from(content.querySelectorAll<HTMLHeadingElement>('h2, h3'));
+    const headings = Array.from(content.querySelectorAll<HTMLHeadingElement>('h2, h3')).filter(
+      (heading) => !heading.closest('[data-toc-ignore]'),
+    );
     const nextItems = headings.flatMap((heading) => {
       const title = heading.textContent?.trim();
       if (!title || !heading.id) return [];

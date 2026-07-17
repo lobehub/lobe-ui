@@ -69,6 +69,29 @@ it('skips a heading without a compile-time identifier and never mutates the DOM'
   );
 });
 
+it('excludes headings inside regions that are not part of the document outline', async () => {
+  render(
+    <>
+      <main id="toc-content">
+        <h2 id="usage">Usage</h2>
+        <section data-toc-ignore="">
+          <h3 id="demo-title">Demo title</h3>
+          <div>
+            <h3 id="preview-heading">Preview heading</h3>
+          </div>
+        </section>
+        <h3 id="configuration">Configuration</h3>
+      </main>
+      <TableOfContents contentId="toc-content" scopeKey="ignored-region" />
+    </>,
+  );
+
+  expect(await screen.findByRole('link', { name: 'Usage' })).toBeTruthy();
+  expect(screen.getByRole('link', { name: 'Configuration' })).toBeTruthy();
+  expect(screen.queryByRole('link', { name: 'Demo title' })).toBeNull();
+  expect(screen.queryByRole('link', { name: 'Preview heading' })).toBeNull();
+});
+
 it('spring-scrolls to the heading when a toc link is clicked', async () => {
   const springScrollToElement = vi
     .spyOn(scroller, 'springScrollToElement')
