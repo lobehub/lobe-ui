@@ -2,6 +2,79 @@
 
 # Changelog
 
+# [5.21.0](https://github.com/lobehub/lobe-ui/compare/v5.20.3...v5.21.0) (2026-07-17)
+
+### ♻ Code Refactoring
+
+- **docs-kit**: Dedupe legacy-redirect types and drop hardcoded site host ([15234de](https://github.com/lobehub/lobe-ui/commit/15234de))
+- **docs-kit**: Extract lobedocs CLI logic into importable modules ([3c40d85](https://github.com/lobehub/lobe-ui/commit/3c40d85))
+- **docs-kit**: Relocate site/ into packages/docs-kit ([393a069](https://github.com/lobehub/lobe-ui/commit/393a069))
+- **docs-kit**: Use lobe-ui Hotkey for search panel kbd chips ([033e384](https://github.com/lobehub/lobe-ui/commit/033e384))
+- **docs**: Move bespoke home page from docs-kit into docs/home via homePage config ([094044f](https://github.com/lobehub/lobe-ui/commit/094044f))
+
+### ✅ Tests
+
+- **docs-kit**: Deflake HMR watcher and Header matchMedia teardown on CI ([8d74035](https://github.com/lobehub/lobe-ui/commit/8d74035))
+- **docs-kit**: Fix inherited CI failures and harden flaky tests ([99471f0](https://github.com/lobehub/lobe-ui/commit/99471f0))
+- **docs-kit**: Harden anchor-list search test against effect-flush flake ([c7f2ca7](https://github.com/lobehub/lobe-ui/commit/c7f2ca7))
+- **docs-kit**: Self-heal lost chokidar poll events in HMR watcher test ([b09ad04](https://github.com/lobehub/lobe-ui/commit/b09ad04))
+- **docs-kit**: Sync vercel.json audit and raise slow-CI timeouts ([ecc5849](https://github.com/lobehub/lobe-ui/commit/ecc5849))
+
+### ✨ Features
+
+- **docs-kit**: Activate themeConfig navItems/actions/socialLinks/apiHeader/prefersColor/favicons ([472ce5b](https://github.com/lobehub/lobe-ui/commit/472ce5b))
+- **docs-kit**: Add config-driven DefaultHome page ([4b15086](https://github.com/lobehub/lobe-ui/commit/4b15086))
+- **docs-kit**: Add docs.config.ts surface and parameterize consumer data ([fd56cb2](https://github.com/lobehub/lobe-ui/commit/fd56cb2))
+- **docs-kit**: Add home page config surface ([16ca810](https://github.com/lobehub/lobe-ui/commit/16ca810))
+- **docs-kit**: Add lobedocs CLI, kit owns vite config entirely ([b130f61](https://github.com/lobehub/lobe-ui/commit/b130f61))
+- **docs-kit**: Add search highlight renderer and recents store ([2a2f4da](https://github.com/lobehub/lobe-ui/commit/2a2f4da))
+- **docs-kit**: Extend search data layer with category and subResults ([368e86f](https://github.com/lobehub/lobe-ui/commit/368e86f))
+- **docs-kit**: Resolve home page through virtual module with homePage override ([d61820e](https://github.com/lobehub/lobe-ui/commit/d61820e))
+- **docs-kit**: Route and group multi-atomDir documents end-to-end ([86d3ee5](https://github.com/lobehub/lobe-ui/commit/86d3ee5))
+- **docs-kit**: Split-view search panel with preview, empty state, keyboard model ([3449596](https://github.com/lobehub/lobe-ui/commit/3449596))
+- **docs**: Replace dumi with React Router + Vite static site ([5323852](https://github.com/lobehub/lobe-ui/commit/5323852))
+- **release**: Publish lobedocs alongside ui ([fd83c5c](https://github.com/lobehub/lobe-ui/commit/fd83c5c))
+
+### 🎫 Chores
+
+- **docs-kit**: Document home-page default-export exemption rationale ([1ab4bcc](https://github.com/lobehub/lobe-ui/commit/1ab4bcc))
+- **docs-kit**: Move style files out of routes dir and exempt framework default exports ([88ce96b](https://github.com/lobehub/lobe-ui/commit/88ce96b))
+
+### 🐛 Bug Fixes
+
+- **ci**: Fix no-console lint errors and use named exports in site ([691c376](https://github.com/lobehub/lobe-ui/commit/691c376))
+- **docs-kit**: Address Task 6 review findings — apiHeader templates, Header nav coverage, changelog gate dedupe ([25ff96e](https://github.com/lobehub/lobe-ui/commit/25ff96e))
+- **docs-kit**: Correct README claim about react-router.config.ts shell ([a81b069](https://github.com/lobehub/lobe-ui/commit/a81b069))
+- **docs-kit**: Fix highlight matching for punctuated tokens and longest-term selection ([584f8e1](https://github.com/lobehub/lobe-ui/commit/584f8e1))
+- **docs-kit**: Fix search focus trap, race guard, and preview labelling ([be80a67](https://github.com/lobehub/lobe-ui/commit/be80a67))
+- **docs-kit**: Fix search split-view overflow, native ✕, width, and entity excerpts ([d1469cb](https://github.com/lobehub/lobe-ui/commit/d1469cb))
+- **docs-kit**: Full-height search dialog, recents hash dedupe, hover-only remove ([dfb20c4](https://github.com/lobehub/lobe-ui/commit/dfb20c4))
+- **docs-kit**: Hoist search status into list pane so it survives the mobile breakpoint ([e176d7e](https://github.com/lobehub/lobe-ui/commit/e176d7e))
+- **docs-kit**: Pre-Phase-3 hardening pass ([e9f702e](https://github.com/lobehub/lobe-ui/commit/e9f702e))
+- **docs-kit**: Raise demo caption h3/p specificity over prose styles ([63e38b1](https://github.com/lobehub/lobe-ui/commit/63e38b1))
+- **docs-kit**: Resolve docs config from the caller's root, not the kit's ([512fb91](https://github.com/lobehub/lobe-ui/commit/512fb91))
+- **docs-kit**: Resolve Phase 2 review findings — changelog raw-HTML compile, site-scoped titles, apiHeader link gating ([a848f32](https://github.com/lobehub/lobe-ui/commit/a848f32))
+- **docs-kit**: Scope demo theme forcing to survive the site's data-theme CSS cascade ([190281f](https://github.com/lobehub/lobe-ui/commit/190281f))
+- **docs-kit**: Scope signal leniency to the dev command only ([2ca5b24](https://github.com/lobehub/lobe-ui/commit/2ca5b24))
+- **docs-kit**: Separate hero title and accent with a space ([59b761c](https://github.com/lobehub/lobe-ui/commit/59b761c))
+- **docs-kit**: Sync cutoverAudit expectations with lobedocs CLI and clean allowBuilds ([7c84d96](https://github.com/lobehub/lobe-ui/commit/7c84d96))
+- **docs**: Eliminate dark-mode FOUC with theme-vars and pre-paint bootstrap ([af6b75f](https://github.com/lobehub/lobe-ui/commit/af6b75f))
+- **docs**: Override Vercel ignored build step for relocated site ([b9b1c28](https://github.com/lobehub/lobe-ui/commit/b9b1c28))
+- **docs**: Render full-height not-found pages ([41ec80d](https://github.com/lobehub/lobe-ui/commit/41ec80d))
+- **release**: Adapt gitmoji preset for semantic-release 25 ([fb5f33a](https://github.com/lobehub/lobe-ui/commit/fb5f33a))
+- **release**: Strip Bun workspace metadata before npm publish ([c15b26b](https://github.com/lobehub/lobe-ui/commit/c15b26b))
+
+### 💄 Styles
+
+- **docs**: Remove home hero entrance animation ([53070de](https://github.com/lobehub/lobe-ui/commit/53070de))
+
+### 📝 Documentation
+
+- **docs-kit**: Add extraction design spec and phase 1 task breakdown ([5a91a92](https://github.com/lobehub/lobe-ui/commit/5a91a92))
+- **docs-kit**: Add package README with config reference and roadmap ([4530f1e](https://github.com/lobehub/lobe-ui/commit/4530f1e))
+- **docs-kit**: Add phase 2 task breakdown ([a62ac8e](https://github.com/lobehub/lobe-ui/commit/a62ac8e))
+- **docs-kit**: Add phase 3 entry checklist from phase 2 review ([db5c577](https://github.com/lobehub/lobe-ui/commit/db5c577))
+
 ## [5.20.3](https://github.com/lobehub/lobe-ui/compare/v5.20.2...v5.20.3) (2026-07-14)
 
 ### 🐛 Bug Fixes

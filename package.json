@@ -1,6 +1,6 @@
 {
   "name": "@lobehub/ui",
-  "version": "5.20.3",
+  "version": "5.21.0",
   "description": "Lobe UI is an open-source UI component library for building AIGC web apps",
   "keywords": [
     "lobehub",
@@ -175,7 +175,7 @@
     "lucide-react": "^1.24.0",
     "marked": "^18.0.6",
     "mermaid": "^11.16.0",
-    "motion": "^12.42.2",
+    "motion": "^12.0.0",
     "numeral": "^2.0.6",
     "polished": "^4.3.1",
     "query-string": "^9.4.1",
