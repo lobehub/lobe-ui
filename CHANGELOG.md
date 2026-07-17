@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.22.3](https://github.com/lobehub/lobe-ui/compare/v5.22.2...v5.22.3) (2026-07-17)
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Keep standalone demos full width, closes [#571](https://github.com/lobehub/lobe-ui/issues/571) ([05093d9](https://github.com/lobehub/lobe-ui/commit/05093d9))
+
 ## [5.22.2](https://github.com/lobehub/lobe-ui/compare/v5.22.1...v5.22.2) (2026-07-17)
 
 ### 🐛 Bug Fixes
