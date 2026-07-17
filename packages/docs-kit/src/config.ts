@@ -67,6 +67,8 @@ export interface DocsApiHeaderConfig {
   docUrl?: string;
   github?: string;
   match?: string[];
+  packageName?: string;
+  packageNames?: Record<string, string>;
   sourceUrl?: string;
 }
 
@@ -90,6 +92,7 @@ export interface DocsConfig {
   homePage?: string;
   legacyRedirects?: DocumentationInventory;
   navSections: Record<string, string>;
+  publicDocs?: string[];
   siteUrl: string;
   themeConfig?: DocsThemeConfig;
   title: string;

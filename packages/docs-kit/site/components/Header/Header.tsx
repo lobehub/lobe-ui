@@ -1,12 +1,8 @@
+import { type DropdownItem, DropdownMenu, Hotkey, ScrollArea } from '@lobehub/ui';
 import { LobeHubText } from '@lobehub/ui/brand';
-import type { DropdownItem } from '@lobehub/ui/DropdownMenu';
-import DropdownMenu from '@lobehub/ui/DropdownMenu';
-import Hotkey from '@lobehub/ui/Hotkey';
-import { GithubIcon } from '@lobehub/ui/icons/lucideExtra';
-import { ScrollArea } from '@lobehub/ui/ScrollArea';
+import { GithubIcon } from '@lobehub/ui/icons';
 import { Ellipsis, Menu, Search, X } from 'lucide-react';
-import { motion } from 'motion/react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { Link, useLocation, useNavigate } from 'react-router';
 import siteConfig from 'virtual:lobedocs/site-config';
@@ -29,16 +25,16 @@ const LOGO_URL =
 // be larger than the 3d logo for letter ink to optically match the icon.
 const LOGO_SIZE = 20;
 
-const primarySectionTitles = ['Components', 'Base UI', 'Chat', 'Icons', 'Brand'];
+const MAX_PRIMARY_SECTIONS = 5;
+const preferredSectionTitles = ['Components', 'Base UI', 'Chat', 'Icons', 'Brand'];
 
-const NavIndicator = () => (
-  <motion.span
-    aria-hidden
-    className={styles.navIndicator}
-    layoutId="site-header-nav-indicator"
-    transition={{ bounce: 0.25, duration: 0.4, type: 'spring' }}
-  />
-);
+interface IndicatorGeometry {
+  width: number;
+  x: number;
+}
+
+const isSameGeometry = (left: IndicatorGeometry, right: IndicatorGeometry) =>
+  left.width === right.width && left.x === right.x;
 
 const SHEET_EXIT_DURATION = 180;
 
@@ -53,19 +49,29 @@ const prefersReducedMotion = () => {
 export function Header({ navigation, onSearchOpen }: HeaderProps) {
   const [sheetState, setSheetState] = useState<'closed' | 'closing' | 'open'>('closed');
   const [atTop, setAtTop] = useState(true);
+  const [isAppleShortcut, setIsAppleShortcut] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const closeTimerRef = useRef<number | undefined>(undefined);
+  const indicatorGeometryRef = useRef<IndicatorGeometry>(undefined);
+  const indicatorRef = useRef<HTMLSpanElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const navRef = useRef<HTMLElement>(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const activeSection = findSectionByPathname(navigation, pathname);
-  const primarySections = primarySectionTitles
+  const preferredSections = preferredSectionTitles
     .map((title) => navigation.find((section) => section.title === title))
     .filter((section) => section !== undefined);
-  const overflowSections = navigation.filter(
-    (section) => !primarySectionTitles.includes(section.title),
+  const remainingSections = navigation.filter(
+    (section) => !preferredSectionTitles.includes(section.title),
   );
+  const primarySections = [...preferredSections, ...remainingSections].slice(
+    0,
+    MAX_PRIMARY_SECTIONS,
+  );
+  const primarySectionSet = new Set(primarySections);
+  const overflowSections = navigation.filter((section) => !primarySectionSet.has(section));
 
   const openNavigation = useCallback(() => {
     window.clearTimeout(closeTimerRef.current);
@@ -120,6 +126,10 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [pathname]);
 
+  useEffect(() => {
+    setIsAppleShortcut(/mac|iphone|ipod|ipad|ios/i.test(navigator.userAgent));
+  }, []);
+
   const handleSheetKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.key !== 'Tab') return;
     const controls = Array.from(
@@ -142,21 +152,85 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
 
   const isHome = pathname === '/';
   const navItems = siteConfig.themeConfig?.navItems ?? [];
+  const directNavItems = navItems.filter((item) => !item.external);
+  const externalNavItems = navItems.filter((item) => item.external);
   const actions = siteConfig.themeConfig?.actions ?? [];
   const githubSocialLink = siteConfig.themeConfig?.socialLinks?.find(
     (link) => link.icon === 'github',
   );
+  const productName = siteConfig.title.replace(/^Lobe(?:Hub)?\s+/i, '') || siteConfig.title;
   const showThemeMenu = (siteConfig.themeConfig?.prefersColor ?? 'auto') === 'auto';
 
+  const secondaryItems: DropdownItem[] = [
+    ...externalNavItems.map((item) => ({
+      key: `nav:${item.label}`,
+      label: item.label,
+      onClick: () => window.open(item.href, '_blank', 'noopener,noreferrer'),
+    })),
+    ...(navItems.some((item) => item.href === '/changelog')
+      ? []
+      : [{ key: 'changelog', label: 'Changelog', onClick: () => navigate('/changelog') }]),
+  ];
   const moreItems: DropdownItem[] = [
     ...overflowSections.map((section) => ({
-      key: section.title,
+      key: `section:${section.title}`,
       label: section.title,
       onClick: () => navigate(sectionLandingPathname(section)),
     })),
-    { type: 'divider' as const },
-    { key: 'changelog', label: 'Changelog', onClick: () => navigate('/changelog') },
+    ...(overflowSections.length > 0 && secondaryItems.length > 0
+      ? [{ type: 'divider' as const }]
+      : []),
+    ...secondaryItems,
   ];
+  const isMoreActive =
+    (activeSection ? overflowSections.includes(activeSection) : false) ||
+    (!navItems.some((item) => item.href === '/changelog') && pathname === '/changelog');
+
+  const measureIndicator = useCallback(() => {
+    const nav = navRef.current;
+    const indicator = indicatorRef.current;
+    const activeTab = nav?.querySelector<HTMLElement>('[aria-current]');
+
+    if (!nav || !indicator || !activeTab) {
+      indicatorGeometryRef.current = undefined;
+      indicator?.removeAttribute('data-positioned');
+      return;
+    }
+
+    const navRect = nav.getBoundingClientRect();
+    const activeRect = activeTab.getBoundingClientRect();
+    const nextGeometry = {
+      width: activeRect.width,
+      x: activeRect.left - navRect.left,
+    };
+
+    if (indicatorGeometryRef.current && isSameGeometry(indicatorGeometryRef.current, nextGeometry))
+      return;
+
+    indicatorGeometryRef.current = nextGeometry;
+    indicator.style.transform = `translate3d(${nextGeometry.x}px, 0, 0)`;
+    indicator.style.width = `${nextGeometry.width}px`;
+    indicator.setAttribute('data-positioned', '');
+
+    if (!indicator.hasAttribute('data-animated')) {
+      indicator.getBoundingClientRect();
+      indicator.setAttribute('data-animated', '');
+    }
+  }, []);
+
+  useLayoutEffect(() => {
+    measureIndicator();
+
+    const nav = navRef.current;
+    const activeTab = nav?.querySelector<HTMLElement>('[aria-current]');
+    if (!nav || !activeTab || typeof ResizeObserver === 'undefined') return;
+
+    const resizeObserver = new ResizeObserver(measureIndicator);
+    resizeObserver.observe(nav);
+    resizeObserver.observe(activeTab);
+
+    return () => resizeObserver.disconnect();
+  }, [measureIndicator, navigation, pathname]);
 
   return (
     <>
@@ -174,7 +248,11 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
             <Menu aria-hidden size={18} strokeWidth={1.8} />
           </button>
 
-          <Link aria-label="Lobe UI documentation home" className={styles.brand} to="/">
+          <Link
+            aria-label={`${siteConfig.title} documentation home`}
+            className={styles.brand}
+            to="/"
+          >
             <img
               aria-hidden
               alt=""
@@ -187,13 +265,18 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
             <span aria-hidden className={styles.brandDivider}>
               /
             </span>
-            <span className={styles.productName}>UI</span>
+            <span className={styles.productName}>{productName}</span>
           </Link>
 
-          <nav aria-label="Documentation sections" className={styles.nav}>
+          <nav aria-label="Documentation sections" className={styles.nav} ref={navRef}>
+            <span
+              aria-hidden
+              className={styles.navIndicator}
+              data-header-nav-indicator=""
+              ref={indicatorRef}
+            />
             <Link aria-current={isHome ? 'page' : undefined} className={styles.navLink} to="/">
               Home
-              {isHome ? <NavIndicator /> : null}
             </Link>
             {primarySections.map((section) => (
               <Link
@@ -203,13 +286,13 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
                 to={sectionLandingPathname(section)}
               >
                 {section.title}
-                {section === activeSection ? <NavIndicator /> : null}
               </Link>
             ))}
-            {overflowSections.length > 0 ? (
+            {moreItems.length > 0 ? (
               <DropdownMenu items={moreItems} placement="bottomLeft">
                 <button
-                  aria-label="More documentation sections"
+                  aria-current={isMoreActive ? 'true' : undefined}
+                  aria-label="More navigation links"
                   className={`${styles.navLink} ${styles.moreButton}`}
                   type="button"
                 >
@@ -217,23 +300,16 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
                 </button>
               </DropdownMenu>
             ) : null}
-            {navItems.map((item) =>
-              item.external ? (
-                <a
-                  className={styles.navLink}
-                  href={item.href}
-                  key={item.label}
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  {item.label}
-                </a>
-              ) : (
-                <Link className={styles.navLink} key={item.label} to={item.href}>
-                  {item.label}
-                </Link>
-              ),
-            )}
+            {directNavItems.map((item) => (
+              <Link
+                aria-current={pathname === item.href ? 'page' : undefined}
+                className={styles.navLink}
+                key={item.label}
+                to={item.href}
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
 
           <div className={styles.actions}>
@@ -246,7 +322,12 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
             >
               <Search aria-hidden size={15} strokeWidth={1.8} />
               <span>Search</span>
-              <Hotkey compact className={styles.searchHotkey} keys="mod+k" />
+              <Hotkey
+                compact
+                className={styles.searchHotkey}
+                isApple={isAppleShortcut}
+                keys="mod+k"
+              />
             </button>
             <button
               aria-keyshortcuts="Meta+K Control+K"

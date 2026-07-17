@@ -104,6 +104,7 @@ describe('createDocumentLinks', () => {
       description: 'Alpha.',
       pathname: '/components/alpha',
       source: 'src/Alpha/index.mdx',
+      subType: 'react',
       title: 'Alpha',
     };
 
@@ -111,11 +112,15 @@ describe('createDocumentLinks', () => {
       docUrl: '{github}/edit/main/{atomId}',
       github: 'https://github.com/lobehub/lobe-editor',
       match: ['/components/'],
+      packageName: '@lobehub/editor',
+      packageNames: { react: '@lobehub/editor/react' },
       sourceUrl: '{github}/blob/main/{atomId}',
     });
 
     expect(links).toMatchObject({
       editUrl: 'https://github.com/lobehub/lobe-editor/edit/main/src/Alpha/index.mdx',
+      importStatement: "import { Alpha } from '@lobehub/editor/react';",
+      npmUrl: 'https://www.npmjs.com/package/@lobehub/editor',
       sourceUrl: 'https://github.com/lobehub/lobe-editor/blob/main/src/Alpha',
     });
 

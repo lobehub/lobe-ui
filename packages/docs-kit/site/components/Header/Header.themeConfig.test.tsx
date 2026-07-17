@@ -1,8 +1,8 @@
-import { cleanup, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 
-import { SiteProviders } from '../../app/providers/SiteProviders';
+import { SiteProviders, useSiteTheme } from '../../app/providers/SiteProviders';
 import { Header } from './Header';
 
 vi.mock('virtual:lobedocs/site-config', () => ({
@@ -54,10 +54,36 @@ beforeEach(() => {
 
 afterEach(() => {
   cleanup();
+  vi.restoreAllMocks();
   vi.unstubAllGlobals();
 });
 
-it('renders configured navItems as internal and external links, and configured actions', () => {
+const openMenu = (trigger: HTMLElement) => {
+  fireEvent.pointerDown(trigger);
+  fireEvent.mouseDown(trigger);
+  fireEvent.click(trigger);
+};
+
+const ThemeProbe = () => {
+  const { appearance, preference } = useSiteTheme();
+
+  return <output data-preference={preference}>{appearance}</output>;
+};
+
+it('exposes the configured forced theme during the initial render', () => {
+  render(
+    <SiteProviders>
+      <ThemeProbe />
+    </SiteProviders>,
+  );
+
+  const probe = screen.getByText('dark');
+  expect(probe.getAttribute('data-preference')).toBe('dark');
+});
+
+it('keeps internal navItems visible and moves external ecosystem links into the more menu', async () => {
+  const open = vi.spyOn(window, 'open').mockImplementation(() => null);
+
   render(
     <SiteProviders>
       <MemoryRouter>
@@ -71,10 +97,14 @@ it('renders configured navItems as internal and external links, and configured a
   expect(guidesLink.getAttribute('href')).toBe('/guides/getting-started');
   expect(guidesLink.getAttribute('target')).toBeNull();
 
-  const blogLink = within(nav).getByRole('link', { name: 'Blog' });
-  expect(blogLink.getAttribute('href')).toBe('https://example.com/blog');
-  expect(blogLink.getAttribute('target')).toBe('_blank');
-  expect(blogLink.getAttribute('rel')).toBe('noreferrer');
+  expect(within(nav).queryByRole('link', { name: 'Blog' })).toBeNull();
+
+  openMenu(within(nav).getByRole('button', { name: 'More navigation links' }));
+  const menu = await screen.findByRole('menu');
+  const blogItem = within(menu).getByRole('menuitem', { name: 'Blog' });
+  fireEvent.click(blogItem);
+  expect(open).toHaveBeenCalledWith('https://example.com/blog', '_blank', 'noopener,noreferrer');
+  expect(within(menu).getByRole('menuitem', { name: 'Changelog' })).toBeTruthy();
 
   const sponsorLink = screen.getByRole('link', { name: 'Sponsor' });
   expect(sponsorLink.getAttribute('href')).toBe('https://example.com/sponsor');
@@ -82,5 +112,8 @@ it('renders configured navItems as internal and external links, and configured a
   expect(sponsorLink.getAttribute('rel')).toBe('noreferrer');
 
   const navLinks = within(nav).getAllByRole('link');
-  expect(navLinks.map((link) => link.textContent)).toEqual(['Home', 'Guides', 'Blog']);
+  expect(navLinks.map((link) => link.textContent)).toEqual(['Home', 'Guides']);
+
+  const homeLink = screen.getByRole('link', { name: 'Test Docs documentation home' });
+  expect(homeLink.textContent).toContain('Test Docs');
 });

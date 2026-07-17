@@ -57,11 +57,28 @@ const decodeVirtualPath = (path: string): string => decodeURIComponent(path);
 const scopeModuleId = (sourcePath: string): string =>
   `${scopePrefix}${encodeVirtualPath(sourcePath)}`;
 
-const resolveRepositoryAlias = (root: string, source: string): string | undefined => {
+const readRepositoryPackageName = (root: string): string | undefined => {
+  const packagePath = resolve(root, 'package.json');
+  if (!existsSync(packagePath)) return;
+
+  try {
+    const packageJson = JSON.parse(readFileSync(packagePath, 'utf8')) as { name?: unknown };
+    return typeof packageJson.name === 'string' ? packageJson.name : undefined;
+  } catch {
+    return;
+  }
+};
+
+const resolveRepositoryAlias = (
+  root: string,
+  packageName: string | undefined,
+  source: string,
+): string | undefined => {
   if (source.startsWith('@/')) return resolve(root, 'src', source.slice(2));
-  if (source === '@lobehub/ui') return resolve(root, 'src');
-  if (source.startsWith('@lobehub/ui/')) {
-    return resolve(root, 'src', source.slice('@lobehub/ui/'.length));
+  if (!packageName) return;
+  if (source === packageName) return resolve(root, 'src');
+  if (source.startsWith(`${packageName}/`)) {
+    return resolve(root, 'src', source.slice(packageName.length + 1));
   }
 };
 
@@ -163,6 +180,7 @@ const formatDiagnostic = (analysis: DemoAnalysis): string[] =>
 
 export function demoPlugin(options: DemoPluginOptions = {}): Plugin {
   let root = canonicalPath(options.root ?? process.cwd());
+  let packageName = readRepositoryPackageName(root);
   const resolveCompatibilityPath = () =>
     options.compatibilityPath
       ? canonicalPath(resolve(root, options.compatibilityPath))
@@ -233,6 +251,7 @@ export function demoPlugin(options: DemoPluginOptions = {}): Plugin {
     configResolved(config) {
       if (options.root) return;
       root = canonicalPath(config.root);
+      packageName = readRepositoryPackageName(root);
       compatibilityPath = resolveCompatibilityPath();
       compatibility = undefined;
     },
@@ -285,7 +304,7 @@ export function demoPlugin(options: DemoPluginOptions = {}): Plugin {
     name: 'lobe-docs-demo',
     async resolveId(source, importer) {
       if (importer?.startsWith(scopePrefix)) {
-        const aliasPath = resolveRepositoryAlias(root, source);
+        const aliasPath = resolveRepositoryAlias(root, packageName, source);
         if (aliasPath) {
           return (await this.resolve(aliasPath, undefined, { skipSelf: true }))?.id ?? aliasPath;
         }

@@ -1,4 +1,4 @@
-import { ScrollArea, type ScrollAreaViewportProps } from '@lobehub/ui/ScrollArea';
+import { ScrollArea, type ScrollAreaViewportProps } from '@lobehub/ui';
 import { ChevronDown } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import type { MouseEvent as ReactMouseEvent } from 'react';

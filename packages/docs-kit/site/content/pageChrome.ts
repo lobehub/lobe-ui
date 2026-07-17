@@ -1,5 +1,5 @@
-import { packageNamespaces } from '../../../../config/packageNamespaces';
 import type { DocsApiHeaderConfig } from '../../src/config';
+import { packageNamespaces } from '../../src/packageNamespaces';
 import type { DocumentManifestEntry, NavigationSection } from '../types/content';
 
 export interface DocumentLinks {
@@ -75,7 +75,14 @@ export function createDocumentLinks(
   }
 
   const [, namespace] = source.split('/');
-  const packageName = namespaceSet.has(namespace) ? `@lobehub/ui/${namespace}` : '@lobehub/ui';
+  const defaultPackageName = namespaceSet.has(namespace)
+    ? `@lobehub/ui/${namespace}`
+    : '@lobehub/ui';
+  const packageName =
+    (document.subType ? apiHeader?.packageNames?.[document.subType] : undefined) ??
+    apiHeader?.packageName ??
+    defaultPackageName;
+  const npmPackageName = apiHeader?.packageName ?? '@lobehub/ui';
   const directory = source.replace(/\/index\.mdx?$/, '');
   const github = apiHeader?.github ?? '';
 
@@ -87,7 +94,7 @@ export function createDocumentLinks(
     importStatement: identifierPattern.test(document.title)
       ? `import { ${document.title} } from '${packageName}';`
       : undefined,
-    npmUrl: 'https://www.npmjs.com/package/@lobehub/ui',
+    npmUrl: `https://www.npmjs.com/package/${npmPackageName}`,
     sourceUrl: resolveApiHeaderTemplate(apiHeader?.sourceUrl ?? defaultSourceUrlTemplate, {
       atomId: directory,
       github,

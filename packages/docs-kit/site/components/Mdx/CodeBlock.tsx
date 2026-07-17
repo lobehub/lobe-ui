@@ -1,4 +1,4 @@
-import Highlighter from '@lobehub/ui/Highlighter';
+import { Highlighter } from '@lobehub/ui';
 import { Children, isValidElement, type ReactElement, type ReactNode } from 'react';
 
 import { styles } from './codeBlockStyle';

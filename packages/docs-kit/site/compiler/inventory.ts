@@ -6,8 +6,9 @@ import remarkParse from 'remark-parse';
 import { unified } from 'unified';
 import type { Node, Parent } from 'unist';
 
-import { packageNamespaces } from '../../../../config/packageNamespaces';
 import { type AtomDirConfig } from '../../src/config';
+import { packageNamespaces } from '../../src/packageNamespaces';
+import { canonicalizePathname } from '../content/pathname';
 import { deriveComponentRoute, resolveAtomDir } from './content/atomRouting';
 import { defaultAtomDirs } from './content/discoverDocuments';
 import { createLegacyDemoId } from './legacyDumiIds';
@@ -189,12 +190,20 @@ const parseCodeTag = (value: string, document: string): ParsedCodeTag | undefine
 
 const deriveDocumentLocation = (
   source: string,
+  frontmatter: FrontmatterRecord,
   atomDirs: readonly AtomDirConfig[],
 ): Pick<DocumentRecord, 'legacyRouteId' | 'pathname'> => {
   const stem = documentStem(source);
   if (stem === 'docs/index') return { legacyRouteId: 'docs/index', pathname: '/' };
   if (stem === 'docs/changelog') {
     return { legacyRouteId: 'docs/changelog', pathname: '/changelog' };
+  }
+  if (stem.startsWith('docs/')) {
+    const route = getString(frontmatter, 'route');
+    const pathname = route
+      ? canonicalizePathname(route)
+      : canonicalizePathname(`/${stem.slice('docs/'.length).replace(/\/index$/, '')}`);
+    return { legacyRouteId: stem, pathname };
   }
 
   const atomDir = resolveAtomDir(stem, atomDirs);
@@ -211,6 +220,7 @@ const deriveDocumentSection = (source: string, navSections: Record<string, strin
   const stem = documentStem(source);
   if (stem === 'docs/index') return 'Home';
   if (stem === 'docs/changelog') return 'Changelog';
+  if (stem.startsWith('docs/')) return 'Guides';
 
   const override = navSections[`${stem}.mdx`] ?? navSections[`${stem}.md`];
   if (override) return override;
@@ -275,7 +285,7 @@ const createDocumentRecord = (
   atomDirs: readonly AtomDirConfig[],
   navSections: Record<string, string>,
 ): DocumentRecord => {
-  const location = deriveDocumentLocation(source, atomDirs);
+  const location = deriveDocumentLocation(source, frontmatter, atomDirs);
   const category =
     getString(frontmatter, 'group') ?? getNestedString(frontmatter, 'group', 'title');
   const description =
@@ -377,6 +387,7 @@ export interface BuildDocumentationInventoryOptions {
   atomDirs?: readonly AtomDirConfig[];
   legacyRedirects?: DocumentationInventory;
   navSections?: Record<string, string>;
+  publicDocs?: readonly string[];
 }
 
 export function buildDocumentationInventory(
@@ -386,21 +397,26 @@ export function buildDocumentationInventory(
   const absoluteRoot = resolve(root);
   const atomDirs = options.atomDirs ?? defaultAtomDirs;
   const navSections = options.navSections ?? {};
+  const publicDocs = options.publicDocs ?? [];
   const frozenInventory = options.legacyRedirects;
   const requiredStems = new Set<string>([
     ...publicDocumentationStems,
+    ...publicDocs.map(documentStem),
     ...(frozenInventory?.documents.map(({ source }) => documentStem(source)) ?? []),
   ]);
 
   for (const stem of requiredStems) selectDocumentFormat(absoluteRoot, stem);
 
   const sources = [
-    ...atomDirs.flatMap(({ dir }) =>
-      collectSourceDocuments(resolve(absoluteRoot, dir)).map((path) =>
-        normalizePath(relative(absoluteRoot, path)),
+    ...new Set([
+      ...atomDirs.flatMap(({ dir }) =>
+        collectSourceDocuments(resolve(absoluteRoot, dir)).map((path) =>
+          normalizePath(relative(absoluteRoot, path)),
+        ),
       ),
-    ),
-    ...publicDocumentationStems.map((stem) => selectDocumentFormat(absoluteRoot, stem)),
+      ...publicDocumentationStems.map((stem) => selectDocumentFormat(absoluteRoot, stem)),
+      ...publicDocs.map((source) => selectDocumentFormat(absoluteRoot, documentStem(source))),
+    ]),
   ].sort(sortStrings);
 
   const documents: DocumentRecord[] = [];

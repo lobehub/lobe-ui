@@ -1,11 +1,9 @@
-import path from 'node:path';
-
 import { emptyLegacyRedirects, getDocsConfig } from '../../src/config';
 import { createContentManifest } from './content/createManifest';
 import { defaultAtomDirs } from './content/discoverDocuments';
 import { getStandaloneDemoPaths } from './demo/readLegacyMap';
 
-const repositoryRoot = path.resolve(import.meta.dirname, '../../../..');
+const repositoryRoot = process.cwd();
 
 export function getPrerenderPaths(): string[] {
   const config = getDocsConfig(repositoryRoot);
@@ -16,6 +14,7 @@ export function getPrerenderPaths(): string[] {
       repositoryRoot,
       config.atomDirs ?? defaultAtomDirs,
       config.navSections ?? {},
+      config.publicDocs ?? [],
     ).documents.map(({ pathname }) => pathname),
     '/404',
     '/antd.css',

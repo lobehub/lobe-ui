@@ -184,6 +184,7 @@ export const styles = createStaticStyles(({ css }) => ({
   `,
 
   page: css`
+    overflow-x: clip;
     display: flex;
     flex-direction: column;
     min-height: calc(100dvh - var(--docs-header-height));

@@ -1,6 +1,5 @@
+import { createLobeAntdTheme } from '@lobehub/ui/es/styles/theme/antdTheme';
 import { theme as antdTheme } from 'antd';
-
-import { createLobeAntdTheme } from '@/styles/theme/antdTheme';
 
 type ThemeAppearance = 'dark' | 'light';
 

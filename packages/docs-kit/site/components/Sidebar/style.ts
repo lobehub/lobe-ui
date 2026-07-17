@@ -2,10 +2,34 @@ import { createStaticStyles } from 'antd-style';
 
 export const styles = createStaticStyles(({ css }) => ({
   activePill: css`
+    pointer-events: none;
+    will-change: transform;
+
     position: absolute;
-    inset: 0;
+    z-index: 0;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+
+    width: 0;
+    height: 0;
     border-radius: var(--docs-radius-md);
+
+    opacity: 0;
     background: var(--docs-surface-active);
+
+    &[data-positioned] {
+      opacity: 1;
+    }
+
+    &[data-animated] {
+      transition:
+        opacity 120ms ease,
+        transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition-duration: 0.01ms;
+    }
   `,
 
   category: css`
@@ -28,12 +52,16 @@ export const styles = createStaticStyles(({ css }) => ({
 
   label: css`
     position: relative;
+    z-index: 1;
   `,
 
   root: css`
+    position: relative;
+
     display: flex;
     flex-direction: column;
     gap: 1.75rem;
+
     padding-block: 0.25rem 2rem;
   `,
 

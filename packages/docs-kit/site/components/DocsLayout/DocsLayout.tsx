@@ -1,5 +1,5 @@
-import { GithubIcon } from '@lobehub/ui/icons/lucideExtra';
-import { ScrollArea } from '@lobehub/ui/ScrollArea';
+import { ScrollArea } from '@lobehub/ui';
+import { GithubIcon } from '@lobehub/ui/icons';
 import { ArrowLeft, ArrowRight, ArrowUpRight, PencilLine } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';

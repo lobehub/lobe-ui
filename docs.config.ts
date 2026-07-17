@@ -5,6 +5,9 @@ import { defineDocsConfig } from './packages/docs-kit/src/config';
 export default defineDocsConfig({
   alias: {
     '@': 'src',
+    // docs-kit consumes published `es/*` subpaths. Resolve those imports back
+    // to source while developing @lobehub/ui itself.
+    '@lobehub/ui/es': 'src',
     '@lobehub/ui': 'src',
   },
   atomDirs: [{ dir: 'src' }],

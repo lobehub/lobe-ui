@@ -319,7 +319,6 @@ export const styles = createStaticStyles(({ css }) => ({
   `,
 
   root: css`
-    overflow-x: clip;
     display: flex;
     flex-direction: column;
 

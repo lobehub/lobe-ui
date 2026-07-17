@@ -1,5 +1,5 @@
-import ActionIcon from '@lobehub/ui/ActionIcon';
-import { GithubIcon } from '@lobehub/ui/icons/lucideExtra';
+import { ActionIcon } from '@lobehub/ui';
+import { GithubIcon } from '@lobehub/ui/icons';
 import { MessageCircle, ThumbsDown, ThumbsUp } from 'lucide-react';
 import type { ComponentType } from 'react';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';

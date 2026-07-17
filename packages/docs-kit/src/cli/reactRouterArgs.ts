@@ -6,8 +6,8 @@
 // once `--config` is passed, the CLI's own root-resolution fallback becomes
 // `dirname(configFile)` (the kit), not `cwd`. Passing `cwd` as the explicit
 // positional project directory pins root resolution to the consumer repo
-// regardless of `--config`, so a 2-line `react-router.config.ts` shell stays
-// required at the consumer root for `react-router.config` discovery.
+// regardless of `--config`. The CLI supplies the kit-owned React Router config
+// separately when the consumer has not provided an explicit override.
 export const buildReactRouterArgs = (
   subcommand: string,
   cwd: string,

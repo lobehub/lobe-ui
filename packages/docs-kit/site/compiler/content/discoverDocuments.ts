@@ -4,7 +4,7 @@ import { basename, extname, relative, resolve } from 'node:path';
 import type { AtomDirConfig } from '../../../src/config';
 import { shouldUseChangelogFallback } from './changelogFallback';
 
-export type DocumentKind = 'home' | 'changelog' | 'component';
+export type DocumentKind = 'home' | 'changelog' | 'component' | 'guide';
 
 export interface DiscoveredDocument {
   absolutePath: string;
@@ -17,6 +17,7 @@ export const defaultAtomDirs: AtomDirConfig[] = [{ dir: 'src' }];
 const inferKind = (source: string): DocumentKind => {
   if (source === 'docs/index.mdx') return 'home';
   if (source === 'docs/changelog.mdx' || source === 'CHANGELOG.md') return 'changelog';
+  if (source.startsWith('docs/')) return 'guide';
   return 'component';
 };
 
@@ -29,6 +30,10 @@ const inferStandaloneSource = (
   const normalizedPath = normalizePath(absolutePath);
   if (normalizedPath.endsWith('/docs/index.mdx')) return 'docs/index.mdx';
   if (normalizedPath.endsWith('/docs/changelog.mdx')) return 'docs/changelog.mdx';
+
+  const docsMarker = '/docs/';
+  const docsIndex = normalizedPath.lastIndexOf(docsMarker);
+  if (docsIndex >= 0) return normalizedPath.slice(docsIndex + 1);
 
   for (const { dir } of atomDirs) {
     const sourceMarker = `/${dir}/`;
@@ -55,6 +60,7 @@ const collectComponentDocuments = (directory: string): string[] => {
 export function discoverDocuments(
   root: string,
   atomDirs: readonly AtomDirConfig[] = defaultAtomDirs,
+  publicDocs: readonly string[] = [],
 ): DiscoveredDocument[] {
   const absoluteRoot = resolve(root);
   const stat = statSync(absoluteRoot);
@@ -76,10 +82,11 @@ export function discoverDocuments(
     resolve(absoluteRoot, 'docs/index.mdx'),
     changelogPath,
     ...(useChangelogFallback ? [changelogFallbackPath] : []),
+    ...publicDocs.map((source) => resolve(absoluteRoot, source)),
     ...atomDirs.flatMap(({ dir }) => collectComponentDocuments(resolve(absoluteRoot, dir))),
   ].filter((path) => existsSync(path) && statSync(path).isFile());
 
-  return absolutePaths.map((absolutePath) => {
+  return [...new Set(absolutePaths)].map((absolutePath) => {
     const source = normalizePath(relative(absoluteRoot, absolutePath));
     return { absolutePath, kind: inferKind(source), source };
   });

@@ -1,5 +1,4 @@
-import ConfigProvider from '@lobehub/ui/ConfigProvider';
-import LobeThemeProvider from '@lobehub/ui/ThemeProvider';
+import { ConfigProvider, ThemeProvider as LobeThemeProvider } from '@lobehub/ui';
 import type { ThemeMode } from 'antd-style';
 import { motion } from 'motion/react';
 import { ThemeProvider as NextThemeProvider, useTheme } from 'next-themes';
@@ -22,11 +21,19 @@ export interface SiteThemeValue {
 }
 
 export function useSiteTheme(): SiteThemeValue {
-  const { resolvedTheme, setTheme, theme } = useTheme();
+  const { forcedTheme, resolvedTheme, setTheme, theme } = useTheme();
+  const configuredTheme = siteConfig.themeConfig?.prefersColor;
+  const configuredAppearance =
+    configuredTheme === 'dark' || configuredTheme === 'light' ? configuredTheme : undefined;
+  const fallbackAppearance =
+    forcedTheme === 'dark' || forcedTheme === 'light'
+      ? forcedTheme
+      : (configuredAppearance ?? 'light');
 
   return {
-    appearance: resolvedTheme === 'dark' ? 'dark' : 'light',
-    preference: theme === 'light' || theme === 'dark' ? theme : 'system',
+    appearance:
+      resolvedTheme === 'dark' || resolvedTheme === 'light' ? resolvedTheme : fallbackAppearance,
+    preference: theme === 'light' || theme === 'dark' ? theme : (configuredAppearance ?? 'system'),
     setPreference: setTheme,
   };
 }

@@ -76,6 +76,32 @@ describe('content manifest', () => {
     expect(manifest.documents.some(({ source }) => source.includes('superpowers'))).toBe(false);
   });
 
+  it('includes explicitly configured public guide documents without adding sidebar entries', () => {
+    const root = createProjectFixture({
+      'docs/components.mdx': `---
+title: Components
+description: Component documentation index.
+---
+`,
+      'docs/superpowers/internal.mdx': `---
+title: Internal
+description: Internal specification.
+---
+`,
+    });
+
+    const manifest = createContentManifest(root, defaultAtomDirs, {}, ['docs/components.mdx']);
+
+    expect(manifest.documents).toEqual([
+      expect.objectContaining({
+        pathname: '/components',
+        source: 'docs/components.mdx',
+        title: 'Components',
+      }),
+    ]);
+    expect(manifest.navigation).toEqual([]);
+  });
+
   it('falls back to a root CHANGELOG.md when docs/changelog.mdx is absent', () => {
     const root = createProjectFixture({
       'CHANGELOG.md': '# 1.0.0\n\n- Initial release.\n',

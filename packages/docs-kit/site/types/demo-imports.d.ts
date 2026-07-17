@@ -4,6 +4,14 @@ declare module '*?demo' {
   export default demo;
 }
 
+declare module '@lobehub/ui/es/styles/theme/antdTheme' {
+  export const createLobeAntdTheme: (options: {
+    appearance: 'dark' | 'light';
+    neutralColor?: string;
+    primaryColor?: string;
+  }) => import('antd').ThemeConfig;
+}
+
 declare module 'virtual:lobedocs/compatibility' {
   const compatibility: import('../compiler/types').DocumentationInventory;
 

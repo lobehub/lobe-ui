@@ -1,5 +1,4 @@
-import type { DropdownItem } from '@lobehub/ui/DropdownMenu';
-import DropdownMenu from '@lobehub/ui/DropdownMenu';
+import { type DropdownItem, DropdownMenu } from '@lobehub/ui';
 import { Monitor, Moon, Sun } from 'lucide-react';
 import { useEffect, useState } from 'react';
 

@@ -5,7 +5,7 @@ import siteConfig from 'virtual:lobedocs/site-config';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 
 import { SiteProviders, THEME_STORAGE_KEY } from '../../app/providers/SiteProviders';
-import type { DocumentManifestEntry } from '../../types/content';
+import type { DocumentManifestEntry, NavigationSection } from '../../types/content';
 import { Header } from './Header';
 
 if (!Element.prototype.getAnimations) {
@@ -27,6 +27,39 @@ const alphaDocument: DocumentManifestEntry = {
   source: 'src/Alpha/index.mdx',
   title: 'Alpha',
 };
+
+const createSection = (title: string, pathname: string): NavigationSection => ({
+  categories: [
+    {
+      documents: [{ ...alphaDocument, pathname, title: `${title} entry` }],
+      title: 'General',
+    },
+  ],
+  title,
+});
+
+const createRect = ({
+  height,
+  left,
+  top,
+  width,
+}: {
+  height: number;
+  left: number;
+  top: number;
+  width: number;
+}): DOMRect =>
+  ({
+    bottom: top + height,
+    height,
+    left,
+    right: left + width,
+    toJSON: () => ({}),
+    top,
+    width,
+    x: left,
+    y: top,
+  }) as DOMRect;
 
 const createMatchMedia =
   (matchesQuery?: string) =>
@@ -71,6 +104,7 @@ afterEach(() => {
   cleanup();
   localStorage.clear();
   delete document.documentElement.dataset.theme;
+  vi.restoreAllMocks();
 });
 
 it('selects theme preference through a dropdown menu with a system option', async () => {
@@ -108,19 +142,12 @@ it('marks the active section tab and lists overflow sections in the more menu', 
   renderHeader(
     <Header
       navigation={[
-        {
-          categories: [{ documents: [alphaDocument], title: 'General' }],
-          title: 'Components',
-        },
-        {
-          categories: [
-            {
-              documents: [{ ...alphaDocument, pathname: '/components/color-a', title: 'ColorA' }],
-              title: 'General',
-            },
-          ],
-          title: 'Color',
-        },
+        createSection('Components', alphaDocument.pathname),
+        createSection('Base UI', '/components/base-ui/alpha'),
+        createSection('Chat', '/components/chat/alpha'),
+        createSection('Icons', '/components/icons/alpha'),
+        createSection('Brand', '/components/brand/alpha'),
+        createSection('Color', '/components/color-a'),
       ]}
       onSearchOpen={vi.fn()}
     />,
@@ -132,7 +159,7 @@ it('marks the active section tab and lists overflow sections in the more menu', 
   expect(componentsTab.getAttribute('aria-current')).toBe('true');
   expect(componentsTab.getAttribute('href')).toBe(alphaDocument.pathname);
 
-  openMenu(within(nav).getByRole('button', { name: 'More documentation sections' }));
+  openMenu(within(nav).getByRole('button', { name: 'More navigation links' }));
   const menu = await screen.findByRole('menu');
   expect(within(menu).getByRole('menuitem', { name: 'Changelog' })).toBeTruthy();
 
@@ -141,6 +168,73 @@ it('marks the active section tab and lists overflow sections in the more menu', 
   await waitFor(() =>
     expect(screen.getByTestId('location').textContent).toBe('/components/color-a'),
   );
+});
+
+it('keeps one indicator positioned relative to the navigation across route and viewport offsets', async () => {
+  let navLeft = 80;
+  let navTop = -1400;
+  vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(function (
+    this: HTMLElement,
+  ) {
+    if (this.getAttribute('aria-label') === 'Documentation sections') {
+      return createRect({ height: 55, left: navLeft, top: navTop, width: 480 });
+    }
+
+    if (this.getAttribute('href') === '/') {
+      return createRect({ height: 55, left: navLeft + 20, top: navTop, width: 64 });
+    }
+
+    if (this.getAttribute('href') === alphaDocument.pathname) {
+      return createRect({ height: 55, left: navLeft + 92, top: navTop, width: 112 });
+    }
+
+    return createRect({ height: 0, left: 0, top: 0, width: 0 });
+  });
+
+  const { container } = renderHeader(
+    <Header
+      navigation={[createSection('Components', alphaDocument.pathname)]}
+      onSearchOpen={vi.fn()}
+    />,
+    ['/'],
+  );
+
+  const initialIndicator = container.querySelector<HTMLElement>('[data-header-nav-indicator]');
+  expect(initialIndicator?.style.transform).toBe('translate3d(20px, 0, 0)');
+  expect(initialIndicator?.style.width).toBe('64px');
+
+  navLeft = 260;
+  navTop = 0;
+  fireEvent.click(screen.getByRole('link', { name: 'Components' }));
+
+  await waitFor(() => {
+    const indicator = container.querySelector<HTMLElement>('[data-header-nav-indicator]');
+    expect(indicator).toBe(initialIndicator);
+    expect(indicator?.style.transform).toBe('translate3d(92px, 0, 0)');
+    expect(indicator?.style.width).toBe('112px');
+  });
+
+  expect(container.querySelectorAll('[data-header-nav-indicator]')).toHaveLength(1);
+});
+
+it('keeps consumer-specific documentation sections visible in the primary navigation', () => {
+  renderHeader(
+    <Header
+      navigation={[
+        createSection('React', '/components/react/editor'),
+        createSection('Plugins', '/components/plugins/common'),
+        createSection('Renderer', '/components/renderer/lexical-renderer'),
+      ]}
+      onSearchOpen={vi.fn()}
+    />,
+  );
+
+  const nav = screen.getByRole('navigation', { name: 'Documentation sections' });
+  expect(
+    within(nav)
+      .getAllByRole('link')
+      .map((link) => link.textContent),
+  ).toEqual(['Home', 'React', 'Plugins', 'Renderer']);
 });
 
 it('exposes enabled desktop and mobile search entry points with their invoking controls', () => {
@@ -227,6 +321,8 @@ it('preserves the active nested link and closes the mobile sheet after navigatio
 
 it('renders the GitHub icon link and theme switcher from themeConfig', () => {
   renderHeader(<Header navigation={[]} onSearchOpen={vi.fn()} />);
+
+  expect(screen.getByRole('link', { name: `${siteConfig.title} documentation home` })).toBeTruthy();
 
   const githubLink = siteConfig.themeConfig?.socialLinks?.find((link) => link.icon === 'github');
   expect(githubLink).toBeDefined();

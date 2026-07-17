@@ -13,6 +13,7 @@ const buildRealInventory = (): DocumentationInventory =>
     atomDirs: realConfig.atomDirs,
     legacyRedirects: realConfig.legacyRedirects,
     navSections: realConfig.navSections,
+    publicDocs: realConfig.publicDocs,
   });
 
 const temporaryRoots: string[] = [];
@@ -248,6 +249,33 @@ title: Fixture
     expect(sections['src/i18n/index.md']).toBe('Hooks & Providers');
     expect(sections['docs/index.md']).toBe('Home');
     expect(sections['docs/changelog.md']).toBe('Changelog');
+  });
+
+  it('freezes explicitly configured public guides without discovering internal docs', () => {
+    const root = createFixture({
+      'docs/components.md': `---
+title: Components
+description: Component documentation index.
+route: /components/
+---
+`,
+      'docs/internal.md': '---\ntitle: Internal\n---\n',
+      'src/Fixture/index.md': '---\ntitle: Fixture\n---\n',
+    });
+
+    const inventory = buildDocumentationInventory(root, {
+      publicDocs: ['docs/components.mdx'],
+    });
+
+    expect(inventory.documents).toContainEqual({
+      description: 'Component documentation index.',
+      legacyRouteId: 'docs/components',
+      pathname: '/components',
+      section: 'Guides',
+      source: 'docs/components.md',
+      title: 'Components',
+    });
+    expect(inventory.documents.some(({ source }) => source === 'docs/internal.md')).toBe(false);
   });
 
   it('retains the home page description from its hero metadata', () => {

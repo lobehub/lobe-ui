@@ -276,6 +276,8 @@ export const styles = createStaticStyles(({ css }) => {
     `,
 
     nav: css`
+      position: relative;
+
       display: flex;
       gap: 0.25rem;
       align-items: center;
@@ -289,14 +291,45 @@ export const styles = createStaticStyles(({ css }) => {
     `,
 
     navIndicator: css`
+      pointer-events: none;
+      will-change: transform, width;
+
       position: absolute;
+      z-index: 1;
       inset-block: auto -1px;
-      inset-inline: 0.75rem;
+      inset-inline: 0 auto;
 
+      width: 0;
       height: 2px;
-      border-radius: 1px;
 
-      background: var(--docs-text-primary);
+      opacity: 0;
+
+      &::after {
+        content: '';
+
+        position: absolute;
+        inset-block: 0;
+        inset-inline: 0.75rem;
+
+        border-radius: 1px;
+
+        background: var(--docs-text-primary);
+      }
+
+      &[data-positioned] {
+        opacity: 1;
+      }
+
+      &[data-animated] {
+        transition:
+          opacity 120ms ease,
+          transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1),
+          width 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        transition-duration: 0.01ms;
+      }
     `,
 
     navLink,

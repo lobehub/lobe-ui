@@ -1,9 +1,8 @@
+import { Hotkey } from '@lobehub/ui';
 import { Search } from 'lucide-react';
 import type { ChangeEvent, KeyboardEvent, RefObject } from 'react';
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router';
-
-import Hotkey from '@/Hotkey';
 
 import { loadSearchEngine } from '../../search/loadSearchEngine';
 import type { SearchEngine, SearchSubResult } from '../../search/types';

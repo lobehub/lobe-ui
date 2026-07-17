@@ -108,8 +108,11 @@ it('loads the editable scope without evaluating the selected demo entry', async 
 it('resolves repository aliases from virtual editable scope modules', async () => {
   const root = createTemporaryProject({
     'compatibility.json': compatibilitySource('legacy-alias', 'docs/alias'),
-    'demo.tsx': "import { Flexbox } from '@/Flex';\nexport default () => Flexbox;\n",
+    'demo.tsx':
+      "import { Flexbox } from '@/Flex';\nimport { SelfFlexbox } from '@example/editor/SelfFlex';\nexport default () => [Flexbox, SelfFlexbox];\n",
+    'package.json': '{"name":"@example/editor","type":"module"}\n',
     'src/Flex.ts': "export const Flexbox = () => 'flexbox';\n",
+    'src/SelfFlex.ts': "export const SelfFlexbox = () => 'self-flexbox';\n",
   });
   server = await createServer({
     configFile: false,
@@ -123,6 +126,7 @@ it('resolves repository aliases from virtual editable scope modules', async () =
   const scope = await descriptor.loadScope();
 
   expect(scope.Flexbox).toBeTypeOf('function');
+  expect(scope.SelfFlexbox).toBeTypeOf('function');
 });
 
 it('preserves empty JavaScript imports as editable-scope side effects', async () => {
