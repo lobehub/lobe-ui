@@ -1,9 +1,63 @@
 {
   "name": "@lobehub/docs-kit",
   "version": "0.0.0",
-  "private": true,
+  "description": "Reusable documentation toolkit and lobedocs CLI for LobeHub component libraries",
+  "homepage": "https://github.com/lobehub/lobe-ui/tree/master/packages/docs-kit",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lobehub/lobe-ui.git",
+    "directory": "packages/docs-kit"
+  },
+  "license": "MIT",
   "type": "module",
   "bin": {
     "lobedocs": "bin/lobedocs.mjs"
+  },
+  "files": [
+    "bin",
+    "site",
+    "src",
+    "vite.config.ts"
+  ],
+  "dependencies": {
+    "@ant-design/cssinjs": "^2.1.2",
+    "@giscus/react": "^3.1.0",
+    "@lobehub/ui": "^5.20.3",
+    "@mdx-js/rollup": "3.1.1",
+    "antd": "^6.5.0",
+    "antd-style": "^4.1.0",
+    "cheerio": "^1.2.0",
+    "code-inspector-plugin": "^1.6.6",
+    "es-toolkit": "^1.49.0",
+    "lucide-react": "^1.24.0",
+    "motion": "^12.42.2",
+    "next-themes": "^0.4.6",
+    "pagefind": "1.5.2",
+    "react-live": "4.1.8",
+    "rehype-raw": "^7.0.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-mdx-frontmatter": "^5.2.0",
+    "remark-parse": "^11.0.0",
+    "rollup-plugin-visualizer": "7.0.1",
+    "typescript": "^6.0.3",
+    "unified": "^11.0.5",
+    "yaml": "^2.9.0"
+  },
+  "peerDependencies": {
+    "@react-router/dev": "8.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router": "8.2.0",
+    "tsx": "^4.23.0",
+    "vite": "8.1.4"
+  },
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org"
   }
 }

@@ -38,6 +38,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Install bun
         uses: oven-sh/setup-bun@v2
@@ -54,6 +56,9 @@ jobs:
       - name: Build
         run: bun run build
 
+      - name: Verify lobedocs package
+        run: npm pack --dry-run ./packages/docs-kit
+
       - name: Force Release Commit
         if: github.event.inputs.force_release == 'true'
         run: |
@@ -61,7 +66,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit --allow-empty -m "🔧 chore(release): force ${{ github.event.inputs.release_type }} release"
 
-      - name: Release
+      - name: Release @lobehub/ui and @lobehub/docs-kit
         run: bun run release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
