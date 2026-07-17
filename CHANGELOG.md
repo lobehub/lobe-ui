@@ -2,6 +2,13 @@
 
 # Changelog
 
+## [5.22.1](https://github.com/lobehub/lobe-ui/compare/v5.22.0...v5.22.1) (2026-07-17)
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Route all manifest documents, closes [#568](https://github.com/lobehub/lobe-ui/issues/568) ([691d93e](https://github.com/lobehub/lobe-ui/commit/691d93e))
+- **docs**: Exclude demo headings from TOC, closes [#569](https://github.com/lobehub/lobe-ui/issues/569) ([7443188](https://github.com/lobehub/lobe-ui/commit/7443188))
+
 # [5.22.0](https://github.com/lobehub/lobe-ui/compare/v5.21.0...v5.22.0) (2026-07-17)
 
 ### ✅ Tests
