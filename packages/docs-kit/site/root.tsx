@@ -45,6 +45,7 @@ export function Layout({ children }: { children: ReactNode }) {
         <Links />
       </head>
       <body>
+        <div aria-hidden="true" data-ambient-glow="" />
         <SiteProviders>{children}</SiteProviders>
         <ScrollRestoration />
         <Scripts />
