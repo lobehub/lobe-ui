@@ -2,6 +2,30 @@
 
 # Changelog
 
+# [5.23.0](https://github.com/lobehub/lobe-ui/compare/v5.22.3...v5.23.0) (2026-07-20)
+
+### ⚡ Performance Improvements
+
+- **docs-kit**: Build dev search index lazily and hot-reload MDX in place ([8aa36f8](https://github.com/lobehub/lobe-ui/commit/8aa36f8))
+
+### ✅ Tests
+
+- **docs-kit**: Update navigation section count for Radio doc ([b4dbe66](https://github.com/lobehub/lobe-ui/commit/b4dbe66))
+
+### ✨ Features
+
+- **base-ui**: Add Radio and RadioGroup components ([577dc06](https://github.com/lobehub/lobe-ui/commit/577dc06))
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Exclude live-demo code blocks from overflow scroll ([0dacdfd](https://github.com/lobehub/lobe-ui/commit/0dacdfd))
+- **docs-kit**: Remove seams from ambient background glow ([a94fb1a](https://github.com/lobehub/lobe-ui/commit/a94fb1a))
+- Stop tracking generated react-router.config.mjs ([c4541c9](https://github.com/lobehub/lobe-ui/commit/c4541c9))
+
+### 📝 Documentation
+
+- Add CLAUDE.md ([d71dece](https://github.com/lobehub/lobe-ui/commit/d71dece))
+
 ## [5.22.3](https://github.com/lobehub/lobe-ui/compare/v5.22.2...v5.22.3) (2026-07-17)
 
 ### 🐛 Bug Fixes
