@@ -93,6 +93,7 @@
   "src/base-ui/FloatingSheet/index.mdx": "Base UI",
   "src/base-ui/Modal/index.mdx": "Base UI",
   "src/base-ui/Popover/index.mdx": "Base UI",
+  "src/base-ui/Radio/index.mdx": "Base UI",
   "src/base-ui/ScrollArea/index.mdx": "Base UI",
   "src/base-ui/Segmented/index.mdx": "Base UI",
   "src/base-ui/Select/index.mdx": "Base UI",

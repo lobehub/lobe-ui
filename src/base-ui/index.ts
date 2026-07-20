@@ -19,6 +19,7 @@ export * from './Input';
 export * from './Modal';
 export { default as Popover } from './Popover';
 export * from './Popover';
+export * from './Radio';
 export * from './ScrollArea';
 export { default as Segmented } from './Segmented';
 export * from './Segmented';

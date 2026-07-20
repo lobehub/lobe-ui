@@ -1,0 +1,25 @@
+---
+title: Radio
+description: Base UI-powered Radio and RadioGroup with lobe visual style.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+### Radio
+
+<Api name="Radio" from=".." />
+
+Radio must be rendered inside a RadioGroup, which owns the selected value.
+
+### RadioGroup
+
+<Api name="RadioGroup" from=".." />
+
+`options` also accepts an array of plain strings as shorthand: `['http', 'https']` is equivalent to `[{ value: 'http', label: 'http' }, ...]`.

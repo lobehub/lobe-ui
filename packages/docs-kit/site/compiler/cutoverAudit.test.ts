@@ -164,7 +164,7 @@ it('preserves the homepage demo source and every frozen standalone path', () => 
         pathname !== '/theme-vars.css' &&
         !pathname.startsWith('/~demos/'),
     ),
-  ).toHaveLength(160);
+  ).toHaveLength(161);
 });
 
 it('documents compatibility-backed canonical documentation path discovery', () => {
