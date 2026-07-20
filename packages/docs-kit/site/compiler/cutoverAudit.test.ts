@@ -152,10 +152,10 @@ it('preserves the homepage demo source and every frozen standalone path', () => 
   expect(readFileSync(path.resolve(repositoryRoot, 'docs/index.tsx'), 'utf8')).toContain(
     'Start building your AIGC app now',
   );
-  expect(getStandaloneDemoPaths(inventory)).toHaveLength(992);
+  expect(getStandaloneDemoPaths(inventory)).toHaveLength(1014);
   expect(getStandaloneDemoPaths(inventory)).toContain('/~demos/docs-demo-docs');
   const prerenderPaths = getPrerenderPaths();
-  expect(prerenderPaths.filter((pathname) => pathname.startsWith('/~demos/'))).toHaveLength(992);
+  expect(prerenderPaths.filter((pathname) => pathname.startsWith('/~demos/'))).toHaveLength(1014);
   expect(
     prerenderPaths.filter(
       (pathname) =>

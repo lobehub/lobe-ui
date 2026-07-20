@@ -55,7 +55,7 @@ describe('documentation inventory', () => {
     const inventory = buildRealInventory();
 
     expect(inventory.documents).toHaveLength(166);
-    expect(inventory.demoReferences).toHaveLength(524);
+    expect(inventory.demoReferences).toHaveLength(525);
     expect(inventory.documents.some(({ source }) => source.includes('/superpowers/'))).toBe(false);
   });
 
