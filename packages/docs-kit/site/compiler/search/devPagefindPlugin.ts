@@ -223,11 +223,12 @@ const devServerOrigin = (server: ViteDevServer): string | undefined => {
   return `http://127.0.0.1:${address.port}`;
 };
 
+// Only documents feed the index: component/demo source changes never alter the
+// searchable prose, so they must not trigger a full 160-page re-render.
 const isSearchSource = (root: string, file: string): boolean => {
   const relative = path.relative(root, file).replaceAll(path.sep, '/');
   if (relative.startsWith('..')) return false;
-  if (/^(docs\/(?:index|changelog)|src\/.+\/index)\.mdx$/i.test(relative)) return true;
-  return relative.startsWith('src/') && /\.[cm]?[jt]sx?$/i.test(relative);
+  return /^(docs\/(?:index|changelog)|src\/.+\/index)\.mdx?$/i.test(relative);
 };
 
 const renderDocumentHtml = async (origin: string, pathname: string): Promise<string> => {
@@ -287,8 +288,21 @@ export function devPagefindPlugin(options: DevPagefindPluginOptions = {}): Plugi
         },
       });
 
+      // Indexing renders every document route, which pins the dev server's CPU
+      // for minutes on large sites. Defer it until search is actually used: the
+      // first /pagefind/ request 404s (the client falls back to the manifest
+      // engine), the build starts in the background, and the swap event tells
+      // the client to retry Pagefind once files exist.
+      let activated = false;
+      const activate = () => {
+        if (activated) return;
+        activated = true;
+        void controller.rebuildNow();
+      };
+
       server.middlewares.use((request, response, next) => {
         if (!request.url?.split('?', 1)[0].startsWith('/pagefind/')) return next();
+        activate();
         const asset = readDevPagefindAsset(request.url, controller.files());
         response.statusCode = asset.status;
         for (const [name, value] of Object.entries(asset.headers)) response.setHeader(name, value);
@@ -296,15 +310,11 @@ export function devPagefindPlugin(options: DevPagefindPluginOptions = {}): Plugi
       });
 
       const handleSourceChange = (file: string) => {
-        if (isSearchSource(root, file)) controller.schedule();
+        if (activated && isSearchSource(root, file)) controller.schedule();
       };
       server.watcher.on('add', handleSourceChange);
       server.watcher.on('change', handleSourceChange);
       server.watcher.on('unlink', handleSourceChange);
-
-      const start = () => controller.schedule();
-      if (server.httpServer?.listening) start();
-      else server.httpServer?.once('listening', start);
 
       server.httpServer?.once('close', () => {
         server.watcher.off('add', handleSourceChange);

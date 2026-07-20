@@ -231,7 +231,16 @@ it('wires successful rebuilds through Vite middleware and closes the service on 
 
   configurePlugin(plugin, server as never);
   events.emit('listening');
-  await vi.advanceTimersByTimeAsync(5);
+  await vi.advanceTimersByTimeAsync(50);
+  expect(wsSend).not.toHaveBeenCalled();
+
+  const pendingResponse = {
+    end: vi.fn(),
+    setHeader: vi.fn(),
+    statusCode: 0,
+  };
+  middleware({ url: '/pagefind/pagefind.js' }, pendingResponse, vi.fn());
+  expect(pendingResponse.statusCode).toBe(404);
   await vi.waitFor(() =>
     expect(wsSend).toHaveBeenCalledWith({
       event: PAGEFIND_HMR_EVENT,
@@ -272,10 +281,11 @@ it('reports Pagefind service close failures through the Vite logger', async () =
       },
     })),
   } as unknown as DevPagefindNodeApi;
+  const middleware = vi.fn();
   const server = {
     config: { logger },
     httpServer: events,
-    middlewares: { use: vi.fn() },
+    middlewares: { use: (handler: unknown) => middleware.mockImplementation(handler as never) },
     resolvedUrls: { local: ['http://127.0.0.1:4173/'] },
     watcher: new EventEmitter(),
     ws: { send: vi.fn() },
@@ -289,6 +299,11 @@ it('reports Pagefind service close failures through the Vite logger', async () =
 
   configurePlugin(plugin, server as never);
   events.emit('listening');
+  middleware(
+    { url: '/pagefind/pagefind.js' },
+    { end: vi.fn(), setHeader: vi.fn(), statusCode: 0 },
+    vi.fn(),
+  );
   await vi.advanceTimersByTimeAsync(1);
   events.emit('close');
   await vi.waitFor(() => expect(logger.error).toHaveBeenCalledWith('close failed'));
