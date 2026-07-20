@@ -98,7 +98,7 @@ export const styles = createStaticStyles(({ css }) => {
         text-wrap: pretty;
       }
 
-      pre:not(:where([data-code-type='highlighter'] *)) {
+      pre:not(:where([data-code-type='highlighter'] *, [data-code-type='live-demo'] *)) {
         overflow-x: auto;
 
         max-width: 100%;

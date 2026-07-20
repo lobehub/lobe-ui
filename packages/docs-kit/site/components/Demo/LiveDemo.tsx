@@ -176,6 +176,7 @@ export function LiveDemo({
       <div
         aria-hidden={expanded ? undefined : true}
         className={styles.sourcePanel}
+        data-code-type="live-demo"
         data-pagefind-ignore="all"
         hidden={!expanded}
         id={sourcePanelId}
