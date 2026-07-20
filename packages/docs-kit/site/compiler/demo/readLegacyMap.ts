@@ -24,10 +24,19 @@ export const createCanonicalDemoId = (sourcePath: string): string =>
 const compareEntries = (left: StandaloneDemoMapEntry, right: StandaloneDemoMapEntry): number =>
   left.id.localeCompare(right.id, 'en');
 
-export function readLegacyMap(inventory: DocumentationInventory): StandaloneDemoMapEntry[] {
+export interface CanonicalDemoReference {
+  pathname?: string;
+  source: string;
+}
+
+export function readLegacyMap(
+  inventory: DocumentationInventory,
+  canonicalReferences: readonly CanonicalDemoReference[] = [],
+): StandaloneDemoMapEntry[] {
   const entries: StandaloneDemoMapEntry[] = [];
   const entriesById = new Map<string, StandaloneDemoMapEntry>();
   const canonicalSources = new Map<string, string>();
+  const canonicalPathnames = new Map<string, string>();
 
   const register = (entry: StandaloneDemoMapEntry) => {
     const previous = entriesById.get(entry.id);
@@ -40,8 +49,7 @@ export function readLegacyMap(inventory: DocumentationInventory): StandaloneDemo
     entries.push(entry);
   };
 
-  for (const reference of inventory.demoReferences) {
-    const sourcePath = normalizePath(reference.source);
+  const trackCanonicalSource = (sourcePath: string): string => {
     const canonicalId = createCanonicalDemoId(sourcePath);
     const previousCanonicalSource = canonicalSources.get(canonicalId);
     if (previousCanonicalSource && previousCanonicalSource !== sourcePath) {
@@ -50,6 +58,20 @@ export function readLegacyMap(inventory: DocumentationInventory): StandaloneDemo
       );
     }
     canonicalSources.set(canonicalId, sourcePath);
+    return canonicalId;
+  };
+
+  for (const reference of canonicalReferences) {
+    const sourcePath = normalizePath(reference.source);
+    const canonicalId = trackCanonicalSource(sourcePath);
+    if (reference.pathname && !canonicalPathnames.has(canonicalId)) {
+      canonicalPathnames.set(canonicalId, reference.pathname);
+    }
+  }
+
+  for (const reference of inventory.demoReferences) {
+    const sourcePath = normalizePath(reference.source);
+    const canonicalId = trackCanonicalSource(sourcePath);
 
     register({
       canonicalId,
@@ -62,7 +84,14 @@ export function readLegacyMap(inventory: DocumentationInventory): StandaloneDemo
   }
 
   for (const [canonicalId, sourcePath] of canonicalSources) {
-    register({ canonicalId, id: canonicalId, kind: 'canonical', sourcePath });
+    const pathname = canonicalPathnames.get(canonicalId);
+    register({
+      canonicalId,
+      id: canonicalId,
+      kind: 'canonical',
+      ...(pathname ? { pathname } : {}),
+      sourcePath,
+    });
   }
 
   return entries.toSorted(compareEntries);
@@ -72,5 +101,10 @@ export const createStandaloneDemoPath = (id: string): string => `/~demos/${encod
 
 export const createStandaloneDemoPrerenderPath = (id: string): string => `/~demos/${id}`;
 
-export const getStandaloneDemoPaths = (inventory: DocumentationInventory): string[] =>
-  readLegacyMap(inventory).map(({ id }) => createStandaloneDemoPrerenderPath(id));
+export const getStandaloneDemoPaths = (
+  inventory: DocumentationInventory,
+  canonicalReferences: readonly CanonicalDemoReference[] = [],
+): string[] =>
+  readLegacyMap(inventory, canonicalReferences).map(({ id }) =>
+    createStandaloneDemoPrerenderPath(id),
+  );

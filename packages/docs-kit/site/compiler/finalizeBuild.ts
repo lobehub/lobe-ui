@@ -20,6 +20,7 @@ import {
 } from './audit/artifactAudit';
 import { createContentManifest } from './content/createManifest';
 import { defaultAtomDirs } from './content/discoverDocuments';
+import { extractManifestDemoReferences } from './demo/extractDemoReferences';
 import { getStandaloneDemoPaths } from './demo/readLegacyMap';
 import { buildPagefind } from './search/buildPagefind';
 import { createRobots, createSitemap } from './seo/createSitemap';
@@ -132,7 +133,8 @@ export async function finalizeDocumentationBuild(
         docsConfig?.publicDocs ?? [],
       ).documents;
     const expectedStandalonePaths =
-      dependencies.expectedStandalonePaths ?? getStandaloneDemoPaths(compatibility);
+      dependencies.expectedStandalonePaths ??
+      getStandaloneDemoPaths(compatibility, extractManifestDemoReferences(root, documents));
     const buildSearchIndex = dependencies.buildSearchIndex ?? buildPagefind;
     const auditArtifact = dependencies.auditArtifact ?? auditDocumentationArtifact;
 

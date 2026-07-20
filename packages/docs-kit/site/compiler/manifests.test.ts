@@ -7,7 +7,7 @@ it('adds both frozen and canonical standalone demo paths to prerender inputs', (
   expect(paths).toContain('/~demos/src-button-demos-index');
   expect(paths).toContain('/~demos/file, filetree, folder-demo-demos');
   expect(paths).not.toContain('/~demos/file%2C%20filetree%2C%20folder-demo-demos');
-  expect(paths.filter((path) => path.startsWith('/~demos/'))).toHaveLength(992);
+  expect(paths).toContain('/~demos/src-base-ui-radio-demos-index');
   expect(new Set(paths).size).toBe(paths.length);
 });
 

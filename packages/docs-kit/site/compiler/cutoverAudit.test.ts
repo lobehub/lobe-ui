@@ -3,7 +3,11 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 
 import compatibility from '../../../../compatibility.json';
+import { getDocsConfig } from '../../src/config';
+import { createContentManifest } from './content/createManifest';
+import { defaultAtomDirs } from './content/discoverDocuments';
 import { findExecutableDumiReferences } from './cutoverAudit';
+import { extractManifestDemoReferences } from './demo/extractDemoReferences';
 import { getStandaloneDemoPaths } from './demo/readLegacyMap';
 import { getPrerenderPaths } from './manifests';
 import type { DocumentationInventory } from './types';
@@ -152,19 +156,41 @@ it('preserves the homepage demo source and every frozen standalone path', () => 
   expect(readFileSync(path.resolve(repositoryRoot, 'docs/index.tsx'), 'utf8')).toContain(
     'Start building your AIGC app now',
   );
-  expect(getStandaloneDemoPaths(inventory)).toHaveLength(1014);
-  expect(getStandaloneDemoPaths(inventory)).toContain('/~demos/docs-demo-docs');
+
+  const config = getDocsConfig(repositoryRoot);
+  const { documents } = createContentManifest(
+    repositoryRoot,
+    config.atomDirs ?? defaultAtomDirs,
+    config.navSections ?? {},
+    config.publicDocs ?? [],
+  );
+  const manifestReferences = extractManifestDemoReferences(repositoryRoot, documents);
+  const standalonePaths = getStandaloneDemoPaths(inventory, manifestReferences);
+  const standalonePathSet = new Set(standalonePaths);
+
+  expect(standalonePathSet).toContain('/~demos/docs-demo-docs');
+  for (const reference of manifestReferences) {
+    expect(standalonePathSet).toContain(`/~demos/${reference.canonicalId}`);
+  }
+  for (const reference of inventory.demoReferences) {
+    expect(standalonePathSet).toContain(`/~demos/${reference.legacyId}`);
+  }
+
   const prerenderPaths = getPrerenderPaths();
-  expect(prerenderPaths.filter((pathname) => pathname.startsWith('/~demos/'))).toHaveLength(1014);
+  expect(prerenderPaths.filter((pathname) => pathname.startsWith('/~demos/')).toSorted()).toEqual(
+    standalonePaths.toSorted(),
+  );
   expect(
-    prerenderPaths.filter(
-      (pathname) =>
-        pathname !== '/404' &&
-        pathname !== '/antd.css' &&
-        pathname !== '/theme-vars.css' &&
-        !pathname.startsWith('/~demos/'),
-    ),
-  ).toHaveLength(161);
+    prerenderPaths
+      .filter(
+        (pathname) =>
+          pathname !== '/404' &&
+          pathname !== '/antd.css' &&
+          pathname !== '/theme-vars.css' &&
+          !pathname.startsWith('/~demos/'),
+      )
+      .toSorted(),
+  ).toEqual(documents.map(({ pathname }) => pathname).toSorted());
 });
 
 it('documents compatibility-backed canonical documentation path discovery', () => {

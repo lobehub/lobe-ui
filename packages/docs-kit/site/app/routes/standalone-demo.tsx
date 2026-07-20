@@ -1,11 +1,10 @@
 import { use, useEffect, useMemo, useSyncExternalStore } from 'react';
 import type { MetaFunction } from 'react-router';
 import { isRouteErrorResponse, useParams, useRouteError } from 'react-router';
-import compatibility from 'virtual:lobedocs/compatibility';
 import siteConfig from 'virtual:lobedocs/site-config';
+import standaloneEntries from 'virtual:lobedocs/standalone-demos';
 
-import { readLegacyMap, type StandaloneDemoMapEntry } from '../../compiler/demo/readLegacyMap';
-import type { DocumentationInventory } from '../../compiler/types';
+import type { StandaloneDemoMapEntry } from '../../compiler/demo/readLegacyMap';
 import { StandaloneDemoPage } from '../../components/Demo/StandaloneDemoPage';
 import { styles as demoStyles } from '../../components/Demo/style';
 import type { DemoAppearance, DemoModule } from '../../types/demo';
@@ -16,7 +15,6 @@ export interface ResolvedStandaloneDemo extends StandaloneDemoMapEntry {
   requestedRouteId?: string;
 }
 
-const standaloneEntries = readLegacyMap(compatibility as DocumentationInventory);
 const standaloneEntriesById = new Map(standaloneEntries.map((entry) => [entry.id, entry]));
 const standaloneSources = new Set(standaloneEntries.map(({ sourcePath }) => sourcePath));
 const standaloneDescriptorCache = createDescriptorPromiseCache<DemoModule>();

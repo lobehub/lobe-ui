@@ -10,6 +10,8 @@ import { shouldUseChangelogFallback } from './content/changelogFallback';
 import { createContentManifest } from './content/createManifest';
 import { defaultAtomDirs } from './content/discoverDocuments';
 import { demoPlugin } from './demo/demoPlugin';
+import { extractManifestDemoReferences } from './demo/extractDemoReferences';
+import { readLegacyMap } from './demo/readLegacyMap';
 
 const metadataQuery = 'document-metadata';
 const metadataPrefix = '\0lobe-docs:document-metadata:';
@@ -17,6 +19,8 @@ const siteConfigVirtualId = 'virtual:lobedocs/site-config';
 const resolvedSiteConfigVirtualId = `\0${siteConfigVirtualId}`;
 const compatibilityVirtualId = 'virtual:lobedocs/compatibility';
 const resolvedCompatibilityVirtualId = `\0${compatibilityVirtualId}`;
+const standaloneDemosVirtualId = 'virtual:lobedocs/standalone-demos';
+const resolvedStandaloneDemosVirtualId = `\0${standaloneDemosVirtualId}`;
 const documentModulesVirtualId = 'virtual:lobedocs/document-modules';
 const resolvedDocumentModulesVirtualId = `\0${documentModulesVirtualId}`;
 const homePageVirtualId = 'virtual:lobedocs/home-page';
@@ -57,11 +61,26 @@ export function lobeDocsSiteConfigPlugin(root: string = process.cwd()): Plugin {
         const legacyRedirects = config.legacyRedirects ?? emptyLegacyRedirects;
         return `export default ${JSON.stringify(legacyRedirects)};`;
       }
+      if (id === resolvedStandaloneDemosVirtualId) {
+        const config = getDocsConfig(root);
+        const { documents } = createContentManifest(
+          root,
+          config.atomDirs ?? defaultAtomDirs,
+          config.navSections ?? {},
+          config.publicDocs ?? [],
+        );
+        const entries = readLegacyMap(
+          config.legacyRedirects ?? emptyLegacyRedirects,
+          extractManifestDemoReferences(root, documents),
+        );
+        return `export default ${JSON.stringify(entries)};`;
+      }
     },
     name: 'lobe-docs-site-config',
     resolveId(source) {
       if (source === siteConfigVirtualId) return resolvedSiteConfigVirtualId;
       if (source === compatibilityVirtualId) return resolvedCompatibilityVirtualId;
+      if (source === standaloneDemosVirtualId) return resolvedStandaloneDemosVirtualId;
       if (source === homePageVirtualId) {
         const config = getDocsConfig(root);
         if (!config.homePage) return defaultHomePagePath;

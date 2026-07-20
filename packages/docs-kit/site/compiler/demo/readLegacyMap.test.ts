@@ -11,8 +11,12 @@ const realInventory = compatibility as DocumentationInventory;
 it('preserves every frozen alias and adds one canonical id per unique source', () => {
   const entries = readLegacyMap(realInventory);
 
-  expect(entries.filter(({ kind }) => kind === 'legacy')).toHaveLength(514);
-  expect(entries.filter(({ kind }) => kind === 'canonical')).toHaveLength(478);
+  expect(entries.filter(({ kind }) => kind === 'legacy')).toHaveLength(
+    realInventory.demoReferences.length,
+  );
+  expect(entries.filter(({ kind }) => kind === 'canonical')).toHaveLength(
+    new Set(realInventory.demoReferences.map(({ source }) => source)).size,
+  );
   expect(new Set(entries.map(({ id }) => id)).size).toBe(entries.length);
   expect(entries).toContainEqual(
     expect.objectContaining({

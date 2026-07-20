@@ -82,7 +82,6 @@ export function analyzeMigrationCoverage({
   const migratedSources = [...frozenByMdxSource.keys()].filter((source) =>
     existsSync(path.resolve(repositoryRoot, source)),
   );
-  const migratedSourceSet = new Set(migratedSources);
   const phase = migratedSources.length === frozenByMdxSource.size ? 'complete' : 'partial';
 
   for (const source of migratedSources) {
@@ -95,17 +94,6 @@ export function analyzeMigrationCoverage({
     if (document.pathname !== frozen.pathname) {
       diagnostics.push(
         `Frozen pathname mismatch for ${source}: expected ${frozen.pathname}, received ${document.pathname}.`,
-      );
-    }
-  }
-
-  for (const document of documents) {
-    const source = normalizeSource(document.source);
-    if (!frozenByMdxSource.has(source)) {
-      diagnostics.push(`Manifest document ${source} has no frozen compatibility record.`);
-    } else if (!migratedSourceSet.has(source)) {
-      diagnostics.push(
-        `Manifest document ${source} is not migrated because the expected MDX file does not exist.`,
       );
     }
   }

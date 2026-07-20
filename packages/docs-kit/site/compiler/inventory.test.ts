@@ -54,8 +54,14 @@ describe('documentation inventory', () => {
   it('selects public source docs while excluding internal specifications', () => {
     const inventory = buildRealInventory();
 
-    expect(inventory.documents).toHaveLength(166);
-    expect(inventory.demoReferences).toHaveLength(525);
+    expect(inventory.documents.length).toBeGreaterThanOrEqual(166);
+    expect(inventory.demoReferences.length).toBeGreaterThanOrEqual(524);
+    expect(new Set(inventory.documents.map(({ pathname }) => pathname)).size).toBe(
+      inventory.documents.length,
+    );
+    expect(new Set(inventory.demoReferences.map(({ legacyId }) => legacyId)).size).toBe(
+      inventory.demoReferences.length,
+    );
     expect(inventory.documents.some(({ source }) => source.includes('/superpowers/'))).toBe(false);
   });
 

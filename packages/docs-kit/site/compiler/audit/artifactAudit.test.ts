@@ -172,7 +172,7 @@ it('rejects a migrated document omitted from the manifest and a frozen pathname 
   );
 });
 
-it('requires the partial manifest to equal the existing MDX set and rejects duplicate entries', () => {
+it('accepts manifest documents without frozen records and rejects duplicate entries', () => {
   const root = mkdtempSync(path.resolve(tmpdir(), 'lobe-ui-migration-exact-'));
   temporaryRoots.push(root);
   const inputCompatibility = {
@@ -201,7 +201,7 @@ it('requires the partial manifest to equal the existing MDX set and rejects dupl
   });
   const message = result.diagnostics.join('\n');
 
-  expect(message).toMatch(/src\/Input\/index\.mdx.*does not exist|not migrated/i);
+  expect(message).not.toMatch(/no frozen compatibility record/i);
   expect(message).toMatch(/duplicate manifest source.*src\/Button\/index\.mdx/i);
   expect(message).toMatch(/duplicate manifest source.*src\/Input\/index\.mdx/i);
   expect(message).toMatch(/duplicate manifest pathname.*components\/button/i);

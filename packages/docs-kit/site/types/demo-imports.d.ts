@@ -18,6 +18,12 @@ declare module 'virtual:lobedocs/compatibility' {
   export default compatibility;
 }
 
+declare module 'virtual:lobedocs/standalone-demos' {
+  const entries: import('../compiler/demo/readLegacyMap').StandaloneDemoMapEntry[];
+
+  export default entries;
+}
+
 declare module 'virtual:lobedocs/site-config' {
   const siteConfig: import('../../src/config').ClientSiteConfig;
 

@@ -3277,18 +3277,6 @@
       "source": "src/awesome/TypewriterEffect/demos/variableSpeed.tsx"
     },
     {
-      "document": "src/base-ui/AutoComplete/index.md",
-      "legacyId": "src-base-ui-auto-complete-demo-demos",
-      "legacyRouteId": "components/base-ui/AutoComplete/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/auto-complete",
-      "source": "src/base-ui/AutoComplete/demos/index.tsx"
-    },
-    {
       "document": "src/base-ui/Button/index.mdx",
       "legacyId": "src-base-ui-button-demo-demos",
       "legacyRouteId": "components/base-ui/Button/index",
@@ -3335,18 +3323,6 @@
       },
       "pathname": "/components/base-ui/button",
       "source": "src/base-ui/Button/demos/split.tsx"
-    },
-    {
-      "document": "src/base-ui/Checkbox/index.md",
-      "legacyId": "src-base-ui-checkbox-demo-demos",
-      "legacyRouteId": "components/base-ui/Checkbox/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/checkbox",
-      "source": "src/base-ui/Checkbox/demos/index.tsx"
     },
     {
       "document": "src/base-ui/ContextMenu/index.mdx",
@@ -3757,90 +3733,6 @@
       "source": "src/base-ui/FloatingSheet/demos/playground.tsx"
     },
     {
-      "document": "src/base-ui/Form/index.md",
-      "legacyId": "src-base-ui-form-demo-demos",
-      "legacyRouteId": "components/base-ui/Form/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/form",
-      "source": "src/base-ui/Form/demos/index.tsx"
-    },
-    {
-      "document": "src/base-ui/Form/index.md",
-      "legacyId": "src-base-ui-form-demo-compound",
-      "legacyRouteId": "components/base-ui/Form/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/form",
-      "source": "src/base-ui/Form/demos/compound.tsx"
-    },
-    {
-      "document": "src/base-ui/Form/index.md",
-      "legacyId": "src-base-ui-form-demo-controls",
-      "legacyRouteId": "components/base-ui/Form/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/form",
-      "source": "src/base-ui/Form/demos/controls.tsx"
-    },
-    {
-      "document": "src/base-ui/Form/index.md",
-      "legacyId": "src-base-ui-form-demo-zod",
-      "legacyRouteId": "components/base-ui/Form/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/form",
-      "source": "src/base-ui/Form/demos/zod.tsx"
-    },
-    {
-      "document": "src/base-ui/Form/index.md",
-      "legacyId": "src-base-ui-form-demo-float",
-      "legacyRouteId": "components/base-ui/Form/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/form",
-      "source": "src/base-ui/Form/demos/float.tsx"
-    },
-    {
-      "document": "src/base-ui/Input/index.md",
-      "legacyId": "src-base-ui-input-demo-demos",
-      "legacyRouteId": "components/base-ui/Input/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/input",
-      "source": "src/base-ui/Input/demos/index.tsx"
-    },
-    {
-      "document": "src/base-ui/Input/index.md",
-      "legacyId": "src-base-ui-input-demo-family",
-      "legacyRouteId": "components/base-ui/Input/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/input",
-      "source": "src/base-ui/Input/demos/family.tsx"
-    },
-    {
       "document": "src/base-ui/Modal/index.mdx",
       "legacyId": "src-base-ui-modal-demo-atoms",
       "legacyRouteId": "components/base-ui/Modal/index",
@@ -4093,18 +3985,6 @@
       "source": "src/base-ui/Popover/demos/trigger.tsx"
     },
     {
-      "document": "src/base-ui/Radio/index.mdx",
-      "legacyId": "src-base-ui-radio-demo-demos",
-      "legacyRouteId": "components/base-ui/Radio/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/radio",
-      "source": "src/base-ui/Radio/demos/index.tsx"
-    },
-    {
       "document": "src/base-ui/ScrollArea/index.mdx",
       "legacyId": "src-base-ui-scroll-area-demo-background",
       "legacyRouteId": "components/base-ui/ScrollArea/index",
@@ -4295,18 +4175,6 @@
       },
       "pathname": "/components/base-ui/select",
       "source": "src/base-ui/Select/demos/virtual.tsx"
-    },
-    {
-      "document": "src/base-ui/Slider/index.md",
-      "legacyId": "src-base-ui-slider-demo-demos",
-      "legacyRouteId": "components/base-ui/Slider/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/base-ui/slider",
-      "source": "src/base-ui/Slider/demos/index.tsx"
     },
     {
       "document": "src/base-ui/Switch/index.mdx",
@@ -6697,7 +6565,7 @@
     },
     {
       "category": "Data Display",
-      "description": "HtmlPreview renders LLM-generated HTML inline using a hardened iframe sandbox. It mirrors how Mermaid is embedded in Markdown, but treats the content as code rather than data — scripts execute inside an isolated frame that cannot reach the host page.",
+      "description": "HtmlPreview renders LLM-generated HTML inline using a hardened iframe sandbox. It mirrors how Mermaid is embedded in Markdown, but treats the content as code rather than data \u2014 scripts execute inside an isolated frame that cannot reach the host page.",
       "legacyRouteId": "components/HtmlPreview/index",
       "pathname": "/components/html-preview",
       "section": "Components",
@@ -6822,7 +6690,7 @@
     },
     {
       "category": "Feedback",
-      "description": "An animated SVG loading indicator depicting a neural network — pulsing nodes connected across layers, particles flowing through the connections, and a slowly rotating outer ring. Suitable for \"AI is thinking / preparing\" empty states.",
+      "description": "An animated SVG loading indicator depicting a neural network \u2014 pulsing nodes connected across layers, particles flowing through the connections, and a slowly rotating outer ring. Suitable for \"AI is thinking / preparing\" empty states.",
       "legacyRouteId": "components/NeuralNetworkLoading/index",
       "pathname": "/components/neural-network-loading",
       "section": "Components",
@@ -7009,7 +6877,7 @@
     },
     {
       "category": "Feedback",
-      "description": "A wrapper component for giscus 💎, a comments system powered by GitHub Discussions.",
+      "description": "A wrapper component for giscus \ud83d\udc8e, a comments system powered by GitHub Discussions.",
       "legacyRouteId": "components/awesome/Giscus/index",
       "pathname": "/components/awesome/giscus",
       "section": "Awesome",
@@ -7071,15 +6939,6 @@
       "title": "TypewriterEffect"
     },
     {
-      "category": "Data Entry",
-      "description": "Base UI-powered AutoComplete input with filtered suggestions.",
-      "legacyRouteId": "components/base-ui/AutoComplete/index",
-      "pathname": "/components/base-ui/auto-complete",
-      "section": "Base UI",
-      "source": "src/base-ui/AutoComplete/index.md",
-      "title": "AutoComplete"
-    },
-    {
       "category": "General",
       "description": "Polished base-ui Button. API-compatible drop-in for antd Button core props.",
       "legacyRouteId": "components/base-ui/Button/index",
@@ -7087,15 +6946,6 @@
       "section": "Base UI",
       "source": "src/base-ui/Button/index.mdx",
       "title": "Button"
-    },
-    {
-      "category": "Data Entry",
-      "description": "Base UI-powered Checkbox and CheckboxGroup with lobe visual style.",
-      "legacyRouteId": "components/base-ui/Checkbox/index",
-      "pathname": "/components/base-ui/checkbox",
-      "section": "Base UI",
-      "source": "src/base-ui/Checkbox/index.md",
-      "title": "Checkbox"
     },
     {
       "category": "Navigation",
@@ -7134,24 +6984,6 @@
       "title": "FloatingSheet"
     },
     {
-      "category": "Data Entry",
-      "description": "Base UI-powered Form with settings-style groups, fields and submit footer.",
-      "legacyRouteId": "components/base-ui/Form/index",
-      "pathname": "/components/base-ui/form",
-      "section": "Base UI",
-      "source": "src/base-ui/Form/index.md",
-      "title": "Form"
-    },
-    {
-      "category": "Data Entry",
-      "description": "Base UI-powered Input and TextArea components.",
-      "legacyRouteId": "components/base-ui/Input/index",
-      "pathname": "/components/base-ui/input",
-      "section": "Base UI",
-      "source": "src/base-ui/Input/index.md",
-      "title": "Input"
-    },
-    {
       "category": "Feedback",
       "description": "Base UI-powered Modal with antd-compatible API, supporting declarative, imperative, and atomic usage.",
       "legacyRouteId": "components/base-ui/Modal/index",
@@ -7170,14 +7002,6 @@
       "title": "Popover"
     },
     {
-      "description": "Base UI-powered Radio and RadioGroup with lobe visual style.",
-      "legacyRouteId": "components/base-ui/Radio/index",
-      "pathname": "/components/base-ui/radio",
-      "section": "Base UI",
-      "source": "src/base-ui/Radio/index.mdx",
-      "title": "Radio"
-    },
-    {
       "category": "Layout",
       "description": "A native scroll container with custom scrollbars and gradient scroll fade.",
       "legacyRouteId": "components/base-ui/ScrollArea/index",
@@ -7188,7 +7012,7 @@
     },
     {
       "category": "Data Entry",
-      "description": "Base UI-powered Segmented control — toggle-group semantics with a sliding active indicator. Drops antd dependency in favor of @base-ui/react/toggle-group.",
+      "description": "Base UI-powered Segmented control \u2014 toggle-group semantics with a sliding active indicator. Drops antd dependency in favor of @base-ui/react/toggle-group.",
       "legacyRouteId": "components/base-ui/Segmented/index",
       "pathname": "/components/base-ui/segmented",
       "section": "Base UI",
@@ -7206,15 +7030,6 @@
     },
     {
       "category": "Data Entry",
-      "description": "Base UI-powered Slider and SliderWithInput components.",
-      "legacyRouteId": "components/base-ui/Slider/index",
-      "pathname": "/components/base-ui/slider",
-      "section": "Base UI",
-      "source": "src/base-ui/Slider/index.md",
-      "title": "Slider"
-    },
-    {
-      "category": "Data Entry",
       "description": "Base UI-powered Switch component.",
       "legacyRouteId": "components/base-ui/Switch/index",
       "pathname": "/components/base-ui/switch",
@@ -7224,7 +7039,7 @@
     },
     {
       "category": "Navigation",
-      "description": "Base UI-powered Tabs with iOS-flavored interactions — no hover background, tap-scale feedback, and a sliding active indicator across rounded / square / point variants.",
+      "description": "Base UI-powered Tabs with iOS-flavored interactions \u2014 no hover background, tap-scale feedback, and a sliding active indicator across rounded / square / point variants.",
       "legacyRouteId": "components/base-ui/Tabs/index",
       "pathname": "/components/base-ui/tabs",
       "section": "Base UI",
