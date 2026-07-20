@@ -47,3 +47,6 @@ bun.lockb
 
 # Superpowers brainstorm artifacts
 .superpowers/
+
+# lobedocs generated (removed on exit)
+react-router.config.mjs
