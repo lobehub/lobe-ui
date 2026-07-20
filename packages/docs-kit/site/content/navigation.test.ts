@@ -167,8 +167,8 @@ describe('reviewed documentation navigation', () => {
       compactEntries.map(([source, section]) => [sourceIdentity(source), section]),
     );
 
-    expect(compactEntries).toHaveLength(160);
-    expect(compactBySource.size).toBe(160);
+    expect(compactEntries).toHaveLength(161);
+    expect(compactBySource.size).toBe(161);
     for (const frozenDocument of compatibility.documents) {
       expect(compactBySource.get(sourceIdentity(frozenDocument.source))).toBe(
         frozenDocument.section,
