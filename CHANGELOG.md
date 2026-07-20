@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [5.23.1](https://github.com/lobehub/lobe-ui/compare/v5.23.0...v5.23.1) (2026-07-20)
+
+### ♻ Code Refactoring
+
+- **docs-kit**: Derive standalone demo routes from mdx demo imports ([3be29f2](https://github.com/lobehub/lobe-ui/commit/3be29f2))
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Freeze compatibility records for Radio and unmigrated base-ui docs ([8e4ef2b](https://github.com/lobehub/lobe-ui/commit/8e4ef2b))
+
 # [5.23.0](https://github.com/lobehub/lobe-ui/compare/v5.22.3...v5.23.0) (2026-07-20)
 
 ### ⚡ Performance Improvements
