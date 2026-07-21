@@ -103,6 +103,7 @@ interface UpdateBlockAnimationArgs {
   blocks: BlockInfo[];
   charDelay: number;
   getBlockState: (index: number) => BlockState;
+  initialContent?: string;
   pluginsCache: Map<number, BlockPluginsCacheEntry>;
   renderNow: number;
   revealClock: { lastTs: number };
@@ -112,14 +113,33 @@ interface UpdateBlockAnimationArgs {
 const MIN_STREAM_CHAR_PACE_MS = 2;
 const MAX_REVEAL_GAP_MS = 160;
 
+function commonPrefixLength(a: string, b: string): number {
+  let index = 0;
+  const limit = Math.min(a.length, b.length);
+
+  while (index < limit && a[index] === b[index]) index += 1;
+
+  return index;
+}
+
+function revealedCharsInBlock(block: BlockInfo, prefixLength: number): number {
+  const revealedRawLength = Math.max(
+    0,
+    Math.min(block.content.length, prefixLength - block.startOffset),
+  );
+
+  return countChars(block.content.slice(0, revealedRawLength));
+}
+
 // Runs in the render phase: extends each visible block's birth timeline in
 // place and resolves its animation meta in one pass. Mutations are
 // idempotent for a given block content/length, so discarded or StrictMode
 // double renders re-derive the same state.
-const updateBlockAnimation = ({
+export const updateBlockAnimation = ({
   blocks,
   charDelay,
   getBlockState,
+  initialContent,
   pluginsCache,
   renderNow,
   revealClock,
@@ -128,6 +148,11 @@ const updateBlockAnimation = ({
   const blockAnimationMeta = new Map<number, BlockAnimationMeta>();
   const alive = new Set<number>();
   let revealedNewChars = false;
+  const content = blocks.map((block) => block.content).join('');
+  const prefixLength =
+    initialContent && content.startsWith(initialContent)
+      ? commonPrefixLength(initialContent, content)
+      : 0;
 
   for (const [index, block] of blocks.entries()) {
     alive.add(block.startOffset);
@@ -157,6 +182,13 @@ const updateBlockAnimation = ({
       // Block content shrunk (stream restart or upstream rewrite).
       births.length = blockCharCount;
       runtime.styles.length = blockCharCount;
+    }
+
+    const initialRevealedCount = revealedCharsInBlock(block, prefixLength);
+    if (births.length === 0 && initialRevealedCount > 0) {
+      const revealedAt = renderNow - STREAM_FADE_DURATION;
+      births.push(...Array.from({ length: initialRevealedCount }, () => revealedAt));
+      runtime.styles.push(...Array.from({ length: initialRevealedCount }, () => null));
     }
 
     if (births.length < blockCharCount) {
@@ -229,7 +261,8 @@ interface StreamdownBlocksProps {
 
 const StreamdownBlocks = memo<StreamdownBlocksProps>(
   ({ content: smoothedContent, markdownOptions: rest }) => {
-    const { streamAnimationGranularity = 'char' } = useMarkdownContext();
+    const { streamAnimationGranularity = 'char', streamAnimationInitialContent } =
+      useMarkdownContext();
     const profiler = useStreamdownProfiler();
     const components = useMarkdownComponents();
     const baseRehypePlugins = useStablePlugins(useMarkdownRehypePlugins());
@@ -277,6 +310,7 @@ const StreamdownBlocks = memo<StreamdownBlocksProps>(
       blocks,
       charDelay,
       getBlockState,
+      initialContent: streamAnimationInitialContent,
       pluginsCache: blockPluginsRef.current,
       renderNow,
       revealClock: revealClockRef.current,

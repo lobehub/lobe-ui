@@ -56,6 +56,11 @@ export interface SyntaxMarkdownProps {
   remarkPluginsAhead?: Pluggable[];
   showFootnotes?: boolean;
   streamAnimationGranularity?: StreamAnimationGranularity;
+  /**
+   * Content already displayed before this component mount. It must be a prefix of `children`.
+   * This portion will not play the stream animation.
+   */
+  streamAnimationInitialContent?: string;
   streamSmoothingPreset?: StreamSmoothingPreset;
   variant?: 'default' | 'chat';
 }
