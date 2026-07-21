@@ -1,11 +1,18 @@
 import { describe, expect, it } from 'vitest';
 
-import { updateBlockAnimation } from './StreamdownRender';
+import { preprocessMarkdownContent } from '@/hooks/useMarkdown/utils';
+
+import { getInitialRevealedChars, updateBlockAnimation } from './StreamdownRender';
 import { STREAM_FADE_DURATION } from './style';
 
 type BlockRuntimes = Parameters<typeof updateBlockAnimation>[0]['runtimes'];
 
-const createArgs = (content: string, initialContent?: string) => {
+const createArgs = (
+  content: string,
+  initialContent?: string,
+  initialRevealedChars?: Map<number, number>,
+  renderedCharCounts?: Map<number, number>,
+) => {
   const runtimes: BlockRuntimes = new Map();
   const renderNow = 1_000;
 
@@ -14,9 +21,11 @@ const createArgs = (content: string, initialContent?: string) => {
     charDelay: 20,
     getBlockState: () => 'streaming',
     initialContent,
+    initialRevealedChars,
     pluginsCache: new Map(),
     renderNow,
     revealClock: { lastTs: 900 },
+    renderedCharCounts,
     runtimes,
   });
 
@@ -29,7 +38,9 @@ describe('updateBlockAnimation', () => {
     const runtime = runtimes.get(0)!;
 
     expect(runtime.births).toHaveLength(11);
-    expect(runtime.births.slice(0, 5)).toEqual(Array.from({length: 5}).fill(renderNow - STREAM_FADE_DURATION));
+    expect(runtime.births.slice(0, 5)).toEqual(
+      Array.from({ length: 5 }).fill(renderNow - STREAM_FADE_DURATION),
+    );
     expect(runtime.births.slice(5).every((birth) => birth >= renderNow)).toBe(true);
   });
 
@@ -63,5 +74,58 @@ describe('updateBlockAnimation', () => {
     const { renderNow, runtimes } = createArgs('Hello world', 'Hola');
 
     expect(runtimes.get(0)!.births.every((birth) => birth >= renderNow)).toBe(true);
+  });
+
+  it('uses the rendered baseline length instead of Markdown source characters', () => {
+    const { renderNow, runtimes } = createArgs(
+      '**Hi** there',
+      '**Hi**',
+      new Map([[0, 2]]),
+      new Map([[0, 8]]),
+    );
+    const runtime = runtimes.get(0)!;
+
+    expect(runtime.births).toHaveLength(8);
+    expect(runtime.births.slice(0, 2)).toEqual(
+      Array.from({ length: 2 }).fill(renderNow - STREAM_FADE_DURATION),
+    );
+    expect(runtime.births.slice(2).every((birth) => birth >= renderNow)).toBe(true);
+
+    updateBlockAnimation({
+      blocks: [{ content: '**Hi** there!', startOffset: 0 }],
+      charDelay: 20,
+      getBlockState: () => 'streaming',
+      initialContent: '**Hi**',
+      initialRevealedChars: new Map([[0, 2]]),
+      pluginsCache: new Map(),
+      renderNow: renderNow + 40,
+      renderedCharCounts: new Map([[0, 9]]),
+      revealClock: { lastTs: renderNow },
+      runtimes,
+    });
+
+    expect(runtime.births).toHaveLength(9);
+    expect(runtime.births.at(-1)).toBeGreaterThanOrEqual(renderNow + 40);
+  });
+
+  it('matches an initial snapshot after Markdown preprocessing', () => {
+    const initialContent = preprocessMarkdownContent('See [1]', {
+      citationsLength: 1,
+      enableCustomFootnotes: true,
+    });
+    const content = preprocessMarkdownContent('See [1] now', {
+      citationsLength: 1,
+      enableCustomFootnotes: true,
+    });
+
+    const revealedChars = getInitialRevealedChars({
+      blocks: [{ content, startOffset: 0 }],
+      content,
+      initialContent,
+      rehypePlugins: [],
+      remarkPlugins: [],
+    });
+
+    expect(revealedChars?.get(0)).toBe('See #citation-1'.length);
   });
 });
