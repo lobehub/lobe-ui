@@ -25,7 +25,7 @@ import Icon from '@/Icon';
 
 import { handleVariants, panelVariants, styles, toggleVariants } from './style';
 import type { DraggablePanelProps } from './type';
-import { reversePlacement } from './utils';
+import { isBelowCollapseThreshold, reversePlacement } from './utils';
 
 const ARROW_MAP = {
   bottom: ChevronUp,
@@ -73,6 +73,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     showHandleHighlight = false,
     showHandleWideArea = true,
     backgroundColor,
+    collapseThreshold,
     size,
     stableLayout = false,
     defaultSize: customizeDefaultSize,
@@ -99,6 +100,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     const resetTransitionTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
     const resizableRef = useRef<Resizable>(null);
     const initialExpandedSizeRef = useRef<Size | undefined>(undefined);
+    const resizeStartSizeRef = useRef<Size | undefined>(undefined);
     const outerRef = useRef<HTMLDivElement>(null);
 
     const { direction: antdDirection } = use(ConfigProvider.ConfigContext);
@@ -123,6 +125,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
 
     const [shouldTransition, setShouldTransition] = useState(true);
     const [showExpand, setShowExpand] = useState(true);
+    const usesStableLayout = stableLayout || collapseThreshold !== undefined;
 
     useEffect(() => {
       if (pin) return;
@@ -184,7 +187,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     const normalizedMinWidth = typeof minWidth === 'number' ? Math.max(minWidth, 0) : undefined;
 
     const sizeProps = useMemo(() => {
-      if (!stableLayout && !isExpand) {
+      if (!usesStableLayout && !isExpand) {
         return isVertical
           ? { minHeight: 0, size: { height: 0 } }
           : { minWidth: 0, size: { width: 0 } };
@@ -199,7 +202,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
         size: size as Size,
       };
     }, [
-      stableLayout,
+      usesStableLayout,
       isExpand,
       isVertical,
       defaultSize,
@@ -231,7 +234,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
 
     const setExpandedMainSize = useCallback(
       (nextSize: Size) => {
-        if (!stableLayout) return;
+        if (!usesStableLayout) return;
 
         const currentSize = isVertical ? nextSize.height : nextSize.width;
         if (!currentSize) return;
@@ -243,22 +246,27 @@ const DraggablePanel = memo<DraggablePanelProps>(
             : { ...state, horizontal: normalizedSize },
         );
       },
-      [fallbackExpandedSize, isVertical, stableLayout],
+      [fallbackExpandedSize, isVertical, usesStableLayout],
     );
+
+    const readCurrentSize = useCallback((): Size | undefined => {
+      const rect = resizableRef.current?.resizable?.getBoundingClientRect();
+      if (!rect) return undefined;
+
+      return isVertical
+        ? { height: rect.height, width: '100%' }
+        : { height: '100%', width: rect.width };
+    }, [isVertical]);
 
     const captureInitialExpandedSize = useCallback(() => {
       if (initialExpandedSizeRef.current) return initialExpandedSizeRef.current;
 
-      const rect = resizableRef.current?.resizable?.getBoundingClientRect();
-      if (!rect) return undefined;
-
-      const nextInitialSize = isVertical
-        ? ({ height: rect.height, width: '100%' } as Size)
-        : ({ height: '100%', width: rect.width } as Size);
+      const nextInitialSize = readCurrentSize();
+      if (!nextInitialSize) return undefined;
 
       initialExpandedSizeRef.current = nextInitialSize;
       return nextInitialSize;
-    }, [isVertical]);
+    }, [readCurrentSize]);
 
     useEffect(() => {
       if (!isExpand) return;
@@ -307,20 +315,37 @@ const DraggablePanel = memo<DraggablePanelProps>(
     const handleResize = useCallback(
       (_event: unknown, _direction: unknown, el: HTMLElement, delta: NumberSize) => {
         const nextSize = clampResizeSize(el);
-        if (stableLayout && outerRef.current) {
+        const nextCollapsePreview = isBelowCollapseThreshold({
+          axis: isVertical ? 'height' : 'width',
+          collapseThreshold,
+          size: nextSize,
+        });
+
+        if (usesStableLayout && outerRef.current) {
           // Sync outer DOM width immediately so it doesn't lag behind the
           // re-resizable inline style (which would otherwise trigger a 0.2s
           // width transition on the outer/aside each frame during drag).
           const dimension = isVertical ? nextSize.height : nextSize.width;
           if (dimension) {
-            if (isVertical) outerRef.current.style.height = dimension;
-            else outerRef.current.style.width = dimension;
+            const previewDimension = nextCollapsePreview ? '0px' : dimension;
+            if (isVertical) outerRef.current.style.height = previewDimension;
+            else outerRef.current.style.width = previewDimension;
           }
         }
-        setExpandedMainSize(nextSize);
+        // With drag-to-collapse enabled, defer the persisted expanded size until
+        // pointer release. This keeps the pre-drag width as the single source of
+        // truth while the outer stable-layout layer previews collapse/restore.
+        if (collapseThreshold === undefined) setExpandedMainSize(nextSize);
         onSizeDragging?.(delta, nextSize);
       },
-      [clampResizeSize, isVertical, onSizeDragging, setExpandedMainSize, stableLayout],
+      [
+        clampResizeSize,
+        collapseThreshold,
+        isVertical,
+        onSizeDragging,
+        setExpandedMainSize,
+        usesStableLayout,
+      ],
     );
 
     const triggerResetWithoutTransition = useCallback(() => {
@@ -377,34 +402,61 @@ const DraggablePanel = memo<DraggablePanelProps>(
           resetTransitionTimeoutRef.current = undefined;
         }
 
+        resizeStartSizeRef.current = readCurrentSize();
+
         // Synchronously disable the outer transition so the first drag frame
         // does not animate. `setShouldTransition(false)` below is asynchronous
         // and would only take effect after the next React commit.
-        if (stableLayout && outerRef.current) {
+        if (usesStableLayout && outerRef.current) {
           outerRef.current.style.transition = 'none';
         }
         setShouldTransition(false);
         setShowExpand(false);
       },
-      [handleResetSize, stableLayout],
+      [handleResetSize, readCurrentSize, usesStableLayout],
     );
 
     const handleResizeStop = useCallback(
       (_event: unknown, _direction: unknown, el: HTMLElement, delta: NumberSize) => {
         const nextSize = clampResizeSize(el);
-        setExpandedMainSize(nextSize);
+        const shouldCollapse = isBelowCollapseThreshold({
+          axis: isVertical ? 'height' : 'width',
+          collapseThreshold,
+          size: nextSize,
+        });
+        const committedSize = shouldCollapse ? (resizeStartSizeRef.current ?? nextSize) : nextSize;
+
+        resizableRef.current?.updateSize(committedSize);
+        if (!shouldCollapse) setExpandedMainSize(committedSize);
         setShouldTransition(true);
         setShowExpand(true);
-        // Clear imperative inline overrides so React resumes owning the outer
-        // width/transition on the next render.
-        if (stableLayout && outerRef.current) {
-          outerRef.current.style.removeProperty('width');
-          outerRef.current.style.removeProperty('height');
+        // Keep the collapsed main-axis size at zero until the controlled
+        // `expand=false` value arrives. Clearing it here would reveal the panel
+        // for one render between preview teardown and controlled-state commit.
+        if (usesStableLayout && outerRef.current) {
           outerRef.current.style.removeProperty('transition');
+          if (shouldCollapse) {
+            if (isVertical) outerRef.current.style.height = '0px';
+            else outerRef.current.style.width = '0px';
+          } else {
+            outerRef.current.style.removeProperty('width');
+            outerRef.current.style.removeProperty('height');
+          }
         }
-        onSizeChange?.(delta, nextSize);
+        if (shouldCollapse) setIsExpand(false);
+
+        resizeStartSizeRef.current = undefined;
+        onSizeChange?.(delta, committedSize);
       },
-      [clampResizeSize, onSizeChange, setExpandedMainSize, stableLayout],
+      [
+        clampResizeSize,
+        collapseThreshold,
+        isVertical,
+        onSizeChange,
+        setExpandedMainSize,
+        setIsExpand,
+        usesStableLayout,
+      ],
     );
 
     const resizeHandleClassName = useMemo(
@@ -422,7 +474,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     }
 
     const Arrow = ARROW_MAP[internalPlacement] ?? ChevronLeft;
-    const stableOuterFlex = stableLayout
+    const stableOuterFlex = usesStableLayout
       ? ({
           display: 'flex',
           flexDirection: 'column',
@@ -442,7 +494,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
           overflow: 'hidden',
           transition: shouldTransition ? 'width 0.2s var(--ant-motion-ease-out, ease)' : 'none',
           width: isExpand ? expandedOuterSize : 0,
-          ...(stableLayout
+          ...(usesStableLayout
             ? {
                 ...stableOuterFlex,
                 flex: 1,
@@ -461,13 +513,13 @@ const DraggablePanel = memo<DraggablePanelProps>(
       minWidth: 0,
       width: '100%',
     };
-    const sidebarInnerStyle: CSSProperties = stableLayout
+    const sidebarInnerStyle: CSSProperties = usesStableLayout
       ? stableInnerStyle
       : isVertical
         ? { height: '100%', width: '100%' }
         : { width: '100%' };
 
-    const stableAsideStyle: CSSProperties = stableLayout
+    const stableAsideStyle: CSSProperties = usesStableLayout
       ? {
           display: 'flex',
           flexDirection: 'column',
@@ -502,14 +554,14 @@ const DraggablePanel = memo<DraggablePanelProps>(
         style={{
           ...cssVariables,
           transition: shouldTransition ? undefined : 'none',
-          ...(stableLayout ? stableResizableStyle : {}),
+          ...(usesStableLayout ? stableResizableStyle : {}),
           ...style,
         }}
         onResize={handleResize}
         onResizeStart={handleResizeStart}
         onResizeStop={handleResizeStop}
       >
-        {stableLayout ? <div style={sidebarInnerStyle}>{children}</div> : children}
+        {usesStableLayout ? <div style={sidebarInnerStyle}>{children}</div> : children}
       </Resizable>
     );
 
@@ -548,7 +600,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
             </Center>
           </Center>
         )}
-        {stableLayout ? (
+        {usesStableLayout ? (
           <div ref={outerRef} style={sidebarOuterStyle}>
             {panelNode}
           </div>

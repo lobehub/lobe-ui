@@ -10,6 +10,8 @@ export default () => {
     <Flexbox horizontal height={'100%'} style={{ minHeight: 500 }} width={'100%'}>
       <DraggablePanel
         showHandleWhenCollapsed
+        stableLayout
+        collapseThreshold={240}
         defaultSize={{ width: 300 }}
         expand={expand}
         minWidth={180}
@@ -19,7 +21,8 @@ export default () => {
         <Flexbox gap={8} padding={24}>
           <div>Drag to Collapse Demo</div>
           <div style={{ color: 'gray', fontSize: 12 }}>
-            <p>Drag the handle all the way to the left to collapse.</p>
+            <p>Drag below 240px to preview collapse; drag back before release to cancel.</p>
+            <p>Release while collapsed to commit. Use the arrow to reopen.</p>
             <p>Double-click the handle to restore default size (300px).</p>
           </div>
         </Flexbox>
