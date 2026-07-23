@@ -2,6 +2,17 @@
 
 # Changelog
 
+## [5.23.3](https://github.com/lobehub/lobe-ui/compare/v5.23.2...v5.23.3) (2026-07-23)
+
+### 🐛 Bug Fixes
+
+- **draggable-panel**: Support reversible drag collapse, closes [#578](https://github.com/lobehub/lobe-ui/issues/578) ([0bddd4b](https://github.com/lobehub/lobe-ui/commit/0bddd4b))
+
+### 💄 Styles
+
+- **docs-kit**: Merge preview and search control refinements ([3a2f26c](https://github.com/lobehub/lobe-ui/commit/3a2f26c))
+- **docs-kit**: Refine preview and search controls ([8c704d7](https://github.com/lobehub/lobe-ui/commit/8c704d7))
+
 ## [5.23.2](https://github.com/lobehub/lobe-ui/compare/v5.23.1...v5.23.2) (2026-07-23)
 
 ### 🐛 Bug Fixes
