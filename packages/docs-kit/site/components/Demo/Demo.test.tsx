@@ -254,7 +254,7 @@ it('keeps source and every non-edit action available for read-only demos', async
   expect(screen.getByRole('button', { name: 'Show source' })).toBeTruthy();
   expect(screen.getByRole('button', { name: 'Copy source' })).toBeTruthy();
   expect(screen.getByRole('link', { name: 'Open standalone preview' })).toBeTruthy();
-  expect(screen.getByRole('button', { name: 'Enter full screen' })).toBeTruthy();
+  expect(screen.queryByRole('button', { name: 'Enter full screen' })).toBeNull();
   expect(screen.getByRole('button', { name: 'Preview viewport' })).toBeTruthy();
   expect(screen.getByRole('button', { name: 'Preview theme' })).toBeTruthy();
   expect(screen.queryByRole('button', { name: 'Reset source' })).toBeNull();

@@ -1,6 +1,18 @@
 import { createStaticStyles, injectGlobal } from 'antd-style';
 
 export const styles = createStaticStyles(({ css }) => ({
+  actionGroup: css`
+    display: inline-flex;
+    gap: 0.125rem;
+    align-items: center;
+
+    & + & {
+      margin-inline-start: 0.25rem;
+      padding-inline-start: 0.375rem;
+      border-inline-start: 1px solid var(--docs-border-subtle);
+    }
+  `,
+
   actions: css`
     display: flex;
     flex: none;
@@ -139,17 +151,6 @@ export const styles = createStaticStyles(({ css }) => ({
       box-shadow:
         0 0 0 1px color-mix(in srgb, var(--docs-accent) 10%, transparent),
         var(--docs-shadow-control);
-    }
-
-    &:fullscreen {
-      overflow: auto;
-
-      margin: 0;
-      border: 0;
-      border-radius: 0;
-
-      background: var(--docs-background);
-      box-shadow: none;
     }
 
     @media (prefers-reduced-motion: reduce) {

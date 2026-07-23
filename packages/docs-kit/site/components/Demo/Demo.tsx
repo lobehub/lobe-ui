@@ -3,16 +3,16 @@ import {
   Code,
   Copy,
   ExternalLink,
-  Maximize,
-  Minimize,
   Monitor,
+  MonitorSmartphone,
   Moon,
   RotateCcw,
   Smartphone,
   Sun,
+  SunMoon,
   Tablet,
 } from 'lucide-react';
-import { lazy, type RefObject, Suspense, useEffect, useId, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useId, useState } from 'react';
 
 import { useSiteTheme } from '../../app/providers/SiteProviders';
 import type {
@@ -26,7 +26,7 @@ import type { DemoFrameStyle, DemoViewport } from './LiveDemo';
 import { styles } from './style';
 
 const viewportOptions = [
-  { icon: Monitor, label: 'Responsive', value: 'responsive' },
+  { icon: MonitorSmartphone, label: 'Responsive', value: 'responsive' },
   { icon: Tablet, label: 'Tablet', value: 'tablet' },
   { icon: Smartphone, label: 'Mobile', value: 'mobile' },
 ] as const;
@@ -126,19 +126,6 @@ const writeStoredExpansion = (demoId: string, expanded: boolean): void => {
   }
 };
 
-const toggleFullScreen = async (
-  frameRef: RefObject<HTMLElement | null>,
-  fullScreen: boolean,
-): Promise<void> => {
-  if (fullScreen) {
-    if (typeof document.exitFullscreen === 'function') await document.exitFullscreen();
-    return;
-  }
-  if (typeof frameRef.current?.requestFullscreen === 'function') {
-    await frameRef.current.requestFullscreen();
-  }
-};
-
 export function Demo({
   description,
   editable,
@@ -150,7 +137,6 @@ export function Demo({
 }: DemoProps) {
   const headingId = of.id;
   const sourcePanelId = useId();
-  const frameRef = useRef<HTMLElement>(null);
   const resolvedEditable = editable ?? of.editable;
   const [appearancePreference, setAppearancePreference] =
     useState<DemoAppearancePreference>('auto');
@@ -161,7 +147,6 @@ export function Demo({
   const [editorResetSignal, setEditorResetSignal] = useState(0);
   const [editorOpened, setEditorOpened] = useState(false);
   const [expanded, setExpanded] = useState(false);
-  const [fullScreen, setFullScreen] = useState(false);
   const [viewport, setViewport] = useState<DemoViewport>('responsive');
   const style: DemoFrameStyle | undefined =
     height === undefined
@@ -174,12 +159,6 @@ export function Demo({
     setExpanded(storedExpansion);
     setEditorOpened(storedExpansion);
   }, [of.id]);
-
-  useEffect(() => {
-    const onFullScreenChange = () => setFullScreen(document.fullscreenElement === frameRef.current);
-    document.addEventListener('fullscreenchange', onFullScreenChange);
-    return () => document.removeEventListener('fullscreenchange', onFullScreenChange);
-  }, []);
 
   const onToggleSource = () => {
     setExpanded((current) => {
@@ -216,7 +195,6 @@ export function Demo({
     viewport,
   };
 
-  const fullScreenActionLabel = fullScreen ? 'Exit full screen' : 'Enter full screen';
   const activeViewport =
     viewportOptions.find((option) => option.value === viewport) ?? viewportOptions[0];
   const viewportItems: DropdownItem[] = viewportOptions.map(({ icon, label, value }) => ({
@@ -229,9 +207,6 @@ export function Demo({
     },
     type: 'checkbox',
   }));
-  const activeAppearanceOption =
-    appearanceOptions.find((option) => option.value === appearancePreference) ??
-    appearanceOptions[0];
   const appearanceItems: DropdownItem[] = appearanceOptions.map(({ icon, label, value }) => ({
     checked: appearancePreference === value,
     icon,
@@ -252,7 +227,6 @@ export function Demo({
       data-demo-isolated={isolated}
       data-demo-layout={layout}
       data-toc-ignore=""
-      ref={frameRef}
     >
       <header className={styles.caption}>
         {title ? <h3 id={headingId}>{title}</h3> : null}
@@ -263,63 +237,62 @@ export function Demo({
           data-pagefind-ignore="all"
           role="toolbar"
         >
-          <ActionIcon
-            active={expanded}
-            aria-controls={sourcePanelId}
-            aria-expanded={expanded}
-            aria-label={sourceActionLabel}
-            icon={Code}
-            size="small"
-            title={sourceActionLabel}
-            onClick={onToggleSource}
-          />
-          {resolvedEditable && expanded ? (
+          <div aria-label="Preview settings" className={styles.actionGroup} role="group">
+            <DropdownMenu items={viewportItems} placement="bottomRight">
+              <ActionIcon
+                aria-label="Preview viewport"
+                icon={activeViewport.icon}
+                size="small"
+                title="Preview viewport"
+              />
+            </DropdownMenu>
+            <DropdownMenu items={appearanceItems} placement="bottomRight">
+              <ActionIcon
+                aria-label="Preview theme"
+                icon={SunMoon}
+                size="small"
+                title="Preview theme"
+              />
+            </DropdownMenu>
+          </div>
+          <div aria-label="Source actions" className={styles.actionGroup} role="group">
             <ActionIcon
-              aria-label="Reset source"
-              icon={RotateCcw}
+              active={expanded}
+              aria-controls={sourcePanelId}
+              aria-expanded={expanded}
+              aria-label={sourceActionLabel}
+              icon={Code}
               size="small"
-              title="Reset source"
-              onClick={() => setEditorResetSignal((value) => value + 1)}
+              title={sourceActionLabel}
+              onClick={onToggleSource}
             />
-          ) : null}
-          <ActionIcon
-            aria-label="Copy source"
-            icon={Copy}
-            size="small"
-            title="Copy source"
-            onClick={onCopy}
-          />
-          <DropdownMenu items={appearanceItems} placement="bottomRight">
             <ActionIcon
-              aria-label="Preview theme"
-              icon={activeAppearanceOption.icon}
+              aria-label="Copy source"
+              icon={Copy}
               size="small"
-              title="Preview theme"
+              title="Copy source"
+              onClick={onCopy}
             />
-          </DropdownMenu>
-          <DropdownMenu items={viewportItems} placement="bottomRight">
+            {resolvedEditable && expanded ? (
+              <ActionIcon
+                aria-label="Reset source"
+                icon={RotateCcw}
+                size="small"
+                title="Reset source"
+                onClick={() => setEditorResetSignal((value) => value + 1)}
+              />
+            ) : null}
+          </div>
+          <div aria-label="Preview actions" className={styles.actionGroup} role="group">
             <ActionIcon
-              aria-label="Preview viewport"
-              icon={activeViewport.icon}
+              aria-label="Open standalone preview"
+              as="a"
+              icon={ExternalLink}
               size="small"
-              title="Preview viewport"
+              title="Open standalone preview"
+              {...standaloneLinkProps(standaloneHref)}
             />
-          </DropdownMenu>
-          <ActionIcon
-            aria-label="Open standalone preview"
-            as="a"
-            icon={ExternalLink}
-            size="small"
-            title="Open standalone preview"
-            {...standaloneLinkProps(standaloneHref)}
-          />
-          <ActionIcon
-            aria-label={fullScreenActionLabel}
-            icon={fullScreen ? Minimize : Maximize}
-            size="small"
-            title={fullScreenActionLabel}
-            onClick={() => void toggleFullScreen(frameRef, fullScreen)}
-          />
+          </div>
           <span aria-live="polite" className={styles.status}>
             {copyStatus}
           </span>
