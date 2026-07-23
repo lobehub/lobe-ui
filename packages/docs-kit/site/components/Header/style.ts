@@ -187,7 +187,7 @@ export const styles = createStaticStyles(({ css }) => {
   return {
     actions: css`
       display: flex;
-      flex: 1;
+      flex: none;
       gap: 0.375rem;
       align-items: center;
       justify-content: flex-end;
@@ -275,10 +275,31 @@ export const styles = createStaticStyles(({ css }) => {
       padding-inline: 0.625rem;
     `,
 
+    measureRail: css`
+      pointer-events: none;
+
+      position: absolute;
+      inset-block: 0;
+      inset-inline-start: 0;
+
+      display: flex;
+      align-items: center;
+
+      /* max-content lets the rail outgrow the nav so ResizeObserver re-measures on font swaps */
+      width: max-content;
+
+      visibility: hidden;
+
+      > * {
+        font-weight: 560;
+      }
+    `,
+
     nav: css`
       position: relative;
 
       display: flex;
+      flex: 1;
       gap: 0.25rem;
       align-items: center;
       align-self: stretch;

@@ -14,8 +14,18 @@ if (!Element.prototype.getAnimations) {
 
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {
+    #callback: ResizeObserverCallback;
+
+    constructor(callback: ResizeObserverCallback) {
+      this.#callback = callback;
+    }
+
     disconnect() {}
-    observe() {}
+
+    observe(target: Element) {
+      this.#callback([{ target } as ResizeObserverEntry], this as never);
+    }
+
     unobserve() {}
   } as never;
 }
@@ -215,6 +225,85 @@ it('keeps one indicator positioned relative to the navigation across route and v
   });
 
   expect(container.querySelectorAll('[data-header-nav-indicator]')).toHaveLength(1);
+});
+
+it('expands sections and the changelog link inline when the measured navigation row fits', async () => {
+  vi.spyOn(Element.prototype, 'clientWidth', 'get').mockImplementation(function (this: Element) {
+    return this.getAttribute('aria-label') === 'Documentation sections' ? 2000 : 0;
+  });
+  vi.spyOn(HTMLElement.prototype, 'offsetWidth', 'get').mockImplementation(function (
+    this: HTMLElement,
+  ) {
+    if (!this.dataset.measure) return 0;
+    return this.dataset.measure === 'more' ? 40 : 100;
+  });
+
+  renderHeader(
+    <Header
+      navigation={[
+        createSection('Components', alphaDocument.pathname),
+        createSection('Base UI', '/components/base-ui/alpha'),
+        createSection('Chat', '/components/chat/alpha'),
+        createSection('Icons', '/components/icons/alpha'),
+        createSection('Brand', '/components/brand/alpha'),
+        createSection('Color', '/components/color-a'),
+      ]}
+      onSearchOpen={vi.fn()}
+    />,
+    [alphaDocument.pathname],
+  );
+
+  const nav = screen.getByRole('navigation', { name: 'Documentation sections' });
+  await waitFor(() =>
+    expect(
+      within(nav)
+        .getAllByRole('link')
+        .map((link) => link.textContent),
+    ).toEqual(['Home', 'Components', 'Base UI', 'Chat', 'Icons', 'Brand', 'Color', 'Changelog']),
+  );
+  expect(within(nav).queryByRole('button', { name: 'More navigation links' })).toBeNull();
+});
+
+it('collapses trailing sections into the more menu when the measured row overflows', async () => {
+  vi.spyOn(Element.prototype, 'clientWidth', 'get').mockImplementation(function (this: Element) {
+    return this.getAttribute('aria-label') === 'Documentation sections' ? 450 : 0;
+  });
+  vi.spyOn(HTMLElement.prototype, 'offsetWidth', 'get').mockImplementation(function (
+    this: HTMLElement,
+  ) {
+    if (!this.dataset.measure) return 0;
+    return this.dataset.measure === 'more' ? 40 : 100;
+  });
+
+  renderHeader(
+    <Header
+      navigation={[
+        createSection('Components', alphaDocument.pathname),
+        createSection('Base UI', '/components/base-ui/alpha'),
+        createSection('Chat', '/components/chat/alpha'),
+        createSection('Icons', '/components/icons/alpha'),
+        createSection('Brand', '/components/brand/alpha'),
+        createSection('Color', '/components/color-a'),
+      ]}
+      onSearchOpen={vi.fn()}
+    />,
+    [alphaDocument.pathname],
+  );
+
+  const nav = screen.getByRole('navigation', { name: 'Documentation sections' });
+  await waitFor(() =>
+    expect(
+      within(nav)
+        .getAllByRole('link')
+        .map((link) => link.textContent),
+    ).toEqual(['Home', 'Components', 'Base UI', 'Chat']),
+  );
+
+  openMenu(within(nav).getByRole('button', { name: 'More navigation links' }));
+  const menu = await screen.findByRole('menu');
+  for (const label of ['Icons', 'Brand', 'Color', 'Changelog']) {
+    expect(within(menu).getByRole('menuitem', { name: label })).toBeTruthy();
+  }
 });
 
 it('keeps consumer-specific documentation sections visible in the primary navigation', () => {

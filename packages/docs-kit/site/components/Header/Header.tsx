@@ -10,6 +10,7 @@ import siteConfig from 'virtual:lobedocs/site-config';
 import { findSectionByPathname, sectionLandingPathname } from '../../content/pageChrome';
 import type { NavigationSection } from '../../types/content';
 import { Sidebar } from '../Sidebar/Sidebar';
+import { buildNavModel, computeCollapsedCount } from './navOverflow';
 import { styles } from './style';
 import { ThemeMenu } from './ThemeMenu';
 
@@ -24,9 +25,6 @@ const LOGO_URL =
 // LobeHubText viewBox keeps ~49% vertical padding, so the wordmark box must
 // be larger than the 3d logo for letter ink to optically match the icon.
 const LOGO_SIZE = 20;
-
-const MAX_PRIMARY_SECTIONS = 5;
-const preferredSectionTitles = ['Components', 'Base UI', 'Chat', 'Icons', 'Brand'];
 
 interface IndicatorGeometry {
   width: number;
@@ -56,22 +54,55 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
   const indicatorRef = useRef<HTMLSpanElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
   const navRef = useRef<HTMLElement>(null);
+  const railRef = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const activeSection = findSectionByPathname(navigation, pathname);
-  const preferredSections = preferredSectionTitles
-    .map((title) => navigation.find((section) => section.title === title))
-    .filter((section) => section !== undefined);
-  const remainingSections = navigation.filter(
-    (section) => !preferredSectionTitles.includes(section.title),
-  );
-  const primarySections = [...preferredSections, ...remainingSections].slice(
-    0,
-    MAX_PRIMARY_SECTIONS,
-  );
-  const primarySectionSet = new Set(primarySections);
-  const overflowSections = navigation.filter((section) => !primarySectionSet.has(section));
+  const navItems = siteConfig.themeConfig?.navItems ?? [];
+  const navModel = buildNavModel(navigation, navItems);
+  const { collapsibleKeys, externalNavItems, hasChangelogNavItem, orderedSections } = navModel;
+
+  const [collapsedCount, setCollapsedCount] = useState(navModel.defaultCollapsedCount);
+  const collapsed = Math.min(collapsedCount, collapsibleKeys.length);
+  const collapsedKeys = new Set(collapsibleKeys.slice(collapsibleKeys.length - collapsed));
+
+  const measureOverflow = useCallback(() => {
+    const nav = navRef.current;
+    const rail = railRef.current;
+    if (!nav || !rail) return;
+
+    const available = nav.clientWidth;
+    if (available <= 0) return;
+
+    const widths = new Map<string, number>();
+    for (const item of rail.querySelectorAll<HTMLElement>('[data-measure]')) {
+      widths.set(item.dataset.measure ?? '', item.offsetWidth);
+    }
+    const measured = (key: string) => widths.get(key) ?? 0;
+
+    const model = buildNavModel(navigation, siteConfig.themeConfig?.navItems ?? []);
+    setCollapsedCount(
+      computeCollapsedCount({
+        available,
+        candidateWidths: model.collapsibleKeys.map(measured),
+        fixedWidths: model.fixedKeys.map(measured),
+        gap: Number.parseFloat(getComputedStyle(nav).columnGap) || 0,
+        moreWidth: measured('more'),
+      }),
+    );
+  }, [navigation]);
+
+  useLayoutEffect(() => {
+    const nav = navRef.current;
+    const rail = railRef.current;
+    if (!nav || typeof ResizeObserver === 'undefined') return;
+
+    const observer = new ResizeObserver(measureOverflow);
+    observer.observe(nav);
+    if (rail) observer.observe(rail);
+    return () => observer.disconnect();
+  }, [measureOverflow]);
 
   const openNavigation = useCallback(() => {
     window.clearTimeout(closeTimerRef.current);
@@ -151,9 +182,6 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
   };
 
   const isHome = pathname === '/';
-  const navItems = siteConfig.themeConfig?.navItems ?? [];
-  const directNavItems = navItems.filter((item) => !item.external);
-  const externalNavItems = navItems.filter((item) => item.external);
   const actions = siteConfig.themeConfig?.actions ?? [];
   const githubSocialLink = siteConfig.themeConfig?.socialLinks?.find(
     (link) => link.icon === 'github',
@@ -161,30 +189,42 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
   const productName = siteConfig.title.replace(/^Lobe(?:Hub)?\s+/i, '') || siteConfig.title;
   const showThemeMenu = (siteConfig.themeConfig?.prefersColor ?? 'auto') === 'auto';
 
+  const inlineSections = orderedSections.filter(
+    (section) => !collapsedKeys.has(`section:${section.title}`),
+  );
+  const collapsedSections = orderedSections.filter((section) =>
+    collapsedKeys.has(`section:${section.title}`),
+  );
+  const collapsedExternalItems = externalNavItems.filter((item) =>
+    collapsedKeys.has(`nav:${item.label}`),
+  );
+  const changelogCollapsed = !hasChangelogNavItem && collapsedKeys.has('changelog');
+  const showInlineChangelog = !hasChangelogNavItem && !changelogCollapsed;
+
   const secondaryItems: DropdownItem[] = [
-    ...externalNavItems.map((item) => ({
+    ...collapsedExternalItems.map((item) => ({
       key: `nav:${item.label}`,
       label: item.label,
       onClick: () => window.open(item.href, '_blank', 'noopener,noreferrer'),
     })),
-    ...(navItems.some((item) => item.href === '/changelog')
-      ? []
-      : [{ key: 'changelog', label: 'Changelog', onClick: () => navigate('/changelog') }]),
+    ...(changelogCollapsed
+      ? [{ key: 'changelog', label: 'Changelog', onClick: () => navigate('/changelog') }]
+      : []),
   ];
   const moreItems: DropdownItem[] = [
-    ...overflowSections.map((section) => ({
+    ...collapsedSections.map((section) => ({
       key: `section:${section.title}`,
       label: section.title,
       onClick: () => navigate(sectionLandingPathname(section)),
     })),
-    ...(overflowSections.length > 0 && secondaryItems.length > 0
+    ...(collapsedSections.length > 0 && secondaryItems.length > 0
       ? [{ type: 'divider' as const }]
       : []),
     ...secondaryItems,
   ];
   const isMoreActive =
-    (activeSection ? overflowSections.includes(activeSection) : false) ||
-    (!navItems.some((item) => item.href === '/changelog') && pathname === '/changelog');
+    (activeSection ? collapsedKeys.has(`section:${activeSection.title}`) : false) ||
+    (changelogCollapsed && pathname === '/changelog');
 
   const measureIndicator = useCallback(() => {
     const nav = navRef.current;
@@ -230,7 +270,7 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
     resizeObserver.observe(activeTab);
 
     return () => resizeObserver.disconnect();
-  }, [measureIndicator, navigation, pathname]);
+  }, [collapsed, measureIndicator, navigation, pathname]);
 
   return (
     <>
@@ -278,7 +318,7 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
             <Link aria-current={isHome ? 'page' : undefined} className={styles.navLink} to="/">
               Home
             </Link>
-            {primarySections.map((section) => (
+            {inlineSections.map((section) => (
               <Link
                 aria-current={section === activeSection ? 'true' : undefined}
                 className={styles.navLink}
@@ -300,16 +340,72 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
                 </button>
               </DropdownMenu>
             ) : null}
-            {directNavItems.map((item) => (
+            {navItems.map((item) => {
+              if (item.external) {
+                if (collapsedKeys.has(`nav:${item.label}`)) return null;
+                return (
+                  <a
+                    className={styles.navLink}
+                    href={item.href}
+                    key={item.label}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    {item.label}
+                  </a>
+                );
+              }
+              return (
+                <Link
+                  aria-current={pathname === item.href ? 'page' : undefined}
+                  className={styles.navLink}
+                  key={item.label}
+                  to={item.href}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+            {showInlineChangelog ? (
               <Link
-                aria-current={pathname === item.href ? 'page' : undefined}
+                aria-current={pathname === '/changelog' ? 'page' : undefined}
                 className={styles.navLink}
-                key={item.label}
-                to={item.href}
+                to="/changelog"
               >
-                {item.label}
+                Changelog
               </Link>
-            ))}
+            ) : null}
+            <div aria-hidden className={styles.measureRail} ref={railRef}>
+              <span className={styles.navLink} data-measure="home">
+                Home
+              </span>
+              {orderedSections.map((section) => (
+                <span
+                  className={styles.navLink}
+                  data-measure={`section:${section.title}`}
+                  key={section.title}
+                >
+                  {section.title}
+                </span>
+              ))}
+              {navItems.map((item) => (
+                <span
+                  className={styles.navLink}
+                  data-measure={`nav:${item.label}`}
+                  key={item.label}
+                >
+                  {item.label}
+                </span>
+              ))}
+              {hasChangelogNavItem ? null : (
+                <span className={styles.navLink} data-measure="changelog">
+                  Changelog
+                </span>
+              )}
+              <span className={`${styles.navLink} ${styles.moreButton}`} data-measure="more">
+                <Ellipsis aria-hidden size={16} strokeWidth={1.8} />
+              </span>
+            </div>
           </nav>
 
           <div className={styles.actions}>
