@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.23.2](https://github.com/lobehub/lobe-ui/compare/v5.23.1...v5.23.2) (2026-07-23)
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Size header navigation overflow from measured width ([9f5ea36](https://github.com/lobehub/lobe-ui/commit/9f5ea36))
+
 ## [5.23.1](https://github.com/lobehub/lobe-ui/compare/v5.23.0...v5.23.1) (2026-07-20)
 
 ### ♻ Code Refactoring
