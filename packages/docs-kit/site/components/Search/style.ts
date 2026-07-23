@@ -76,11 +76,6 @@ export const styles = createStaticStyles(({ css }) => {
       border: 0;
 
       background: var(--docs-overlay);
-      backdrop-filter: blur(3px);
-
-      @media (prefers-reduced-motion: reduce) {
-        backdrop-filter: none;
-      }
     `,
 
     body: css`
