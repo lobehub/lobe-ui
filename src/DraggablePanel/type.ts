@@ -12,6 +12,14 @@ export interface DraggablePanelProps extends DivProps {
     content?: string;
     handle?: string;
   };
+  /**
+   * Preview a collapsed panel while resizing at or below this size, then commit
+   * the collapsed state on pointer release. Dragging back above the threshold
+   * before release restores the panel.
+   * Applies to width for left/right placement and height for top/bottom placement.
+   * Omit to disable drag-to-collapse behavior.
+   */
+  collapseThreshold?: number;
   defaultExpand?: boolean;
   defaultSize?: Partial<Size>;
   destroyOnClose?: boolean;
