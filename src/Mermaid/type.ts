@@ -1,4 +1,4 @@
-import type { MermaidConfig } from 'mermaid';
+import type { ThemeName } from 'beautiful-mermaid';
 import type { CSSProperties, ReactNode, Ref } from 'react';
 
 import type { ActionIconProps } from '@/ActionIcon';
@@ -43,6 +43,6 @@ export interface MermaidProps extends DivProps {
     content?: CSSProperties;
     header?: CSSProperties;
   };
-  theme?: 'lobe-theme' | MermaidConfig['theme'];
+  theme?: 'lobe-theme' | ThemeName;
   variant?: 'filled' | 'outlined' | 'borderless';
 }

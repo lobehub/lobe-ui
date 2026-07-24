@@ -1,37 +1,25 @@
+import { THEMES } from 'beautiful-mermaid';
+
 interface MermaidThemeItem {
   background?: string;
   displayName: string;
   id: string;
 }
 
+const toDisplayName = (id: string) =>
+  id
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+
 export const mermaidThemes: MermaidThemeItem[] = [
   {
     displayName: 'Lobe Theme',
     id: 'lobe-theme',
   },
-  {
-    background: '#fbf9ff',
-    displayName: 'Mermaid Default',
-    id: 'default',
-  },
-  {
-    background: '#fffcf8',
-    displayName: 'Mermaid Base',
-    id: 'base',
-  },
-  {
-    background: '#000',
-    displayName: 'Mermaid Dark',
-    id: 'dark',
-  },
-  {
-    background: '#f9ffeb',
-    displayName: 'Mermaid Forest',
-    id: 'forest',
-  },
-  {
-    background: '#fff',
-    displayName: 'Mermaid Neutral',
-    id: 'neutral',
-  },
+  ...Object.entries(THEMES).map(([id, colors]) => ({
+    background: colors.bg,
+    displayName: toDisplayName(id),
+    id,
+  })),
 ];

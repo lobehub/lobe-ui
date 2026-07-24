@@ -27,6 +27,17 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           width: 100%;
           height: auto;
         }
+
+        svg {
+          display: block;
+          width: 100%;
+          height: auto;
+          max-height: 480px;
+        }
+
+        svg text {
+          font-family: ${cssVar.fontFamily};
+        }
       `,
     ),
 
