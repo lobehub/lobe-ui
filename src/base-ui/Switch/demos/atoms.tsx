@@ -29,15 +29,6 @@ export default () => {
           <SwitchThumb />
         </SwitchRoot>
       </Flexbox>
-      <Flexbox horizontal align="center" gap={8}>
-        <span>Custom Thumb:</span>
-        <SwitchRoot defaultChecked>
-          <SwitchThumb
-            pressedAnimation={{ scale: 1.1, width: 24 }}
-            transition={{ damping: 20, stiffness: 400, type: 'spring' }}
-          />
-        </SwitchRoot>
-      </Flexbox>
     </Flexbox>
   );
 };

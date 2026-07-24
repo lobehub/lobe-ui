@@ -2,12 +2,10 @@
 
 import { Switch } from '@base-ui/react/switch';
 import { cx } from 'antd-style';
-import { useReducedMotion } from 'motion/react';
-import type { KeyboardEvent, MouseEvent } from 'react';
-import { createContext, use, useMemo, useRef, useState } from 'react';
+import { animate, motionValue } from 'motion';
+import type { CSSProperties, KeyboardEvent, MouseEvent, PointerEvent } from 'react';
+import { createContext, use, useEffect, useMemo, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
-
-import { useMotionComponent } from '@/MotionProvider';
 
 import { rootVariants, styles, thumbVariants } from './style';
 import type {
@@ -16,8 +14,19 @@ import type {
   SwitchIconPosition,
   SwitchIconProps,
   SwitchRootProps,
+  SwitchSize,
   SwitchThumbProps,
 } from './type';
+
+const THUMB_METRICS: Record<
+  SwitchSize,
+  { checkedX: number; pressedCheckedX: number; pressedWidth: number; width: number }
+> = {
+  default: { checkedX: 14, pressedCheckedX: 10, pressedWidth: 22, width: 18 },
+  small: { checkedX: 12, pressedCheckedX: 8, pressedWidth: 16, width: 12 },
+};
+
+const THUMB_SPRING = { damping: 24, stiffness: 360, type: 'spring' as const };
 
 const SwitchContext = createContext<SwitchContextType | null>(null);
 
@@ -40,6 +49,12 @@ export const SwitchRoot = ({
   defaultChecked,
   onCheckedChange,
   onClick,
+  onKeyDown,
+  onKeyUp,
+  onPointerCancel,
+  onPointerDown,
+  onPointerLeave,
+  onPointerUp,
   size = 'default',
   children,
   disabled,
@@ -50,7 +65,6 @@ export const SwitchRoot = ({
   name,
   ...rest
 }: SwitchRootInternalProps) => {
-  const Motion = useMotionComponent();
   const [isPressed, setIsPressed] = useState(false);
   const lastEventRef = useRef<MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLButtonElement>>(
     null,
@@ -83,11 +97,45 @@ export const SwitchRoot = ({
     onClick?.(!isChecked, event);
   };
 
+  const isInteractive = !disabled && !readOnly;
+
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     if (event.key === 'Enter' || event.key === ' ') {
       lastEventRef.current = event;
     }
-    (rest as any).onKeyDown?.(event);
+    if (event.key === ' ' && isInteractive) {
+      setIsPressed(true);
+    }
+    onKeyDown?.(event);
+  };
+
+  const handleKeyUp = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === ' ') {
+      setIsPressed(false);
+    }
+    onKeyUp?.(event);
+  };
+
+  const handlePointerDown = (event: PointerEvent<HTMLButtonElement>) => {
+    if (isInteractive) {
+      setIsPressed(true);
+    }
+    onPointerDown?.(event);
+  };
+
+  const handlePointerUp = (event: PointerEvent<HTMLButtonElement>) => {
+    setIsPressed(false);
+    onPointerUp?.(event);
+  };
+
+  const handlePointerCancel = (event: PointerEvent<HTMLButtonElement>) => {
+    setIsPressed(false);
+    onPointerCancel?.(event);
+  };
+
+  const handlePointerLeave = (event: PointerEvent<HTMLButtonElement>) => {
+    setIsPressed(false);
+    onPointerLeave?.(event);
   };
 
   return (
@@ -103,16 +151,16 @@ export const SwitchRoot = ({
         readOnly={readOnly}
         required={required}
         render={
-          <Motion.button
+          <button
             {...rest}
             className={cx(baseClassName, className)}
-            initial={false}
-            whileTap="tap"
             onClick={handleClick}
             onKeyDown={handleKeyDown}
-            onTap={() => setIsPressed(false)}
-            onTapCancel={() => setIsPressed(false)}
-            onTapStart={() => setIsPressed(true)}
+            onKeyUp={handleKeyUp}
+            onPointerCancel={handlePointerCancel}
+            onPointerDown={handlePointerDown}
+            onPointerLeave={handlePointerLeave}
+            onPointerUp={handlePointerUp}
           />
         }
         onCheckedChange={setIsChecked}
@@ -127,37 +175,67 @@ SwitchRoot.displayName = 'SwitchRoot';
 
 export const SwitchThumb = ({
   className,
-  pressedAnimation,
   size = 'default',
-  transition = { damping: 24, stiffness: 360, type: 'spring' },
+  style,
   children,
   ...rest
 }: SwitchThumbProps) => {
-  const Motion = useMotionComponent();
-  const { isPressed } = useSwitchContext();
-  const shouldReduceMotion = useReducedMotion();
+  const { isChecked, isPressed } = useSwitchContext();
+  const ref = useRef<HTMLSpanElement>(null);
   const baseClassName = thumbVariants({ size });
 
-  const defaultPressedAnimation = {
-    width: size === 'small' ? 16 : 22,
-  };
+  const metrics = THUMB_METRICS[size];
+  const targetX = isChecked ? (isPressed ? metrics.pressedCheckedX : metrics.checkedX) : 0;
+  const targetWidth = isPressed ? metrics.pressedWidth : metrics.width;
 
-  const effectiveAnimate =
-    !shouldReduceMotion && isPressed ? pressedAnimation || defaultPressedAnimation : undefined;
-  const effectiveTransition = shouldReduceMotion ? { duration: 0 } : transition;
+  const [values] = useState(() => ({
+    width: motionValue(targetWidth),
+    x: motionValue(targetX),
+  }));
+
+  // animated keys stay referentially stable so React never rewrites mid-flight inline values
+  const [initialStyle] = useState<CSSProperties>(
+    () => ({ '--switch-x': `${targetX}px`, 'width': targetWidth }) as CSSProperties,
+  );
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const unsubscribeX = values.x.on('change', (x) => {
+      el.style.setProperty('--switch-x', `${x}px`);
+    });
+    const unsubscribeWidth = values.width.on('change', (width) => {
+      el.style.setProperty('width', `${width}px`);
+    });
+    return () => {
+      unsubscribeX();
+      unsubscribeWidth();
+    };
+  }, [values]);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    const transition = reduceMotion ? { duration: 0 } : THUMB_SPRING;
+    const animations = [
+      animate(values.x, targetX, transition),
+      animate(values.width, targetWidth, transition),
+    ];
+    return () => {
+      for (const animation of animations) animation.stop();
+    };
+  }, [values, targetX, targetWidth]);
 
   return (
     <Switch.Thumb
       render={
-        <Motion.span
-          layout
-          animate={effectiveAnimate}
-          className={cx(baseClassName, className)}
-          transition={effectiveTransition}
+        <span
           {...rest}
+          className={cx(baseClassName, className)}
+          ref={ref}
+          style={{ ...initialStyle, ...style }}
         >
           {children}
-        </Motion.span>
+        </span>
       }
     />
   );
@@ -176,32 +254,14 @@ export const SwitchIcon = ({
   className,
   position,
   size = 'default',
-  transition = { bounce: 0, type: 'spring' },
   ...rest
 }: SwitchIconProps) => {
-  const Motion = useMotionComponent();
-  const { isChecked } = useSwitchContext();
-  const shouldReduceMotion = useReducedMotion();
-
-  const isAnimated = useMemo(() => {
-    if (position === 'right') return !isChecked;
-    if (position === 'left') return isChecked;
-    if (position === 'thumb') return true;
-    return false;
-  }, [position, isChecked]);
-
   const positionClass = getIconPositionClass(position, size);
-  const effectiveTransition = shouldReduceMotion ? { duration: 0 } : transition;
 
   return (
-    <Motion.span
-      animate={isAnimated ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-      className={cx(styles.icon, positionClass, className)}
-      transition={effectiveTransition}
-      {...rest}
-    >
+    <span className={cx(styles.icon, positionClass, className)} {...rest}>
       {children}
-    </Motion.span>
+    </span>
   );
 };
 

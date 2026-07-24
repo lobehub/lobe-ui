@@ -1,5 +1,4 @@
 import { type Switch } from '@base-ui/react/switch';
-import { type HTMLMotionProps, type TargetAndTransition, type Transition } from 'motion/react';
 import {
   type ComponentProps,
   type CSSProperties,
@@ -38,23 +37,20 @@ export interface SwitchContextType {
 }
 
 export type SwitchRootProps = Omit<ComponentProps<typeof Switch.Root>, 'render'> &
-  HTMLMotionProps<'button'> & {
+  ComponentProps<'button'> & {
     size?: SwitchSize;
   };
 
 export type SwitchThumbProps = Omit<ComponentProps<typeof Switch.Thumb>, 'render'> &
-  HTMLMotionProps<'span'> & {
-    pressedAnimation?: TargetAndTransition | boolean;
+  ComponentProps<'span'> & {
     size?: SwitchSize;
-    transition?: Transition;
   };
 
 export type SwitchIconPosition = 'left' | 'right' | 'thumb';
 
-export type SwitchIconProps = HTMLMotionProps<'span'> & {
+export type SwitchIconProps = ComponentProps<'span'> & {
   position: SwitchIconPosition;
   size?: SwitchSize;
-  transition?: Transition;
 };
 
 export interface SwitchProps {

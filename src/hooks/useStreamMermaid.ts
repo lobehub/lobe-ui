@@ -1,131 +1,48 @@
 'use client';
 
-import { useTheme } from 'antd-style';
-import type { MermaidConfig } from 'mermaid';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useId, useMemo, useState } from 'react';
 
-import { createMermaidConfig, loadMermaid } from './useMermaid';
+import {
+  type MermaidRenderResult,
+  type MermaidThemeName,
+  renderMermaid,
+  useCdnMermaidFallback,
+} from './useMermaid';
 
-/**
- * 流式 Mermaid 渲染 - 支持内容逐步更新
- */
+const EMPTY: MermaidRenderResult = { svg: '' };
+
 export const useStreamMermaid = (
   content: string,
   {
     enabled = true,
-    id,
     theme: customTheme,
   }: {
     enabled?: boolean;
-    id: string;
-    theme?: MermaidConfig['theme'];
+    theme?: MermaidThemeName;
   },
-): string => {
-  const theme = useTheme();
-  const [data, setData] = useState<string>('');
-  const previousContentRef = useRef<string>('');
-  const latestContentRef = useRef(content);
-  const renderTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+): MermaidRenderResult => {
+  const reactId = useId();
+  const scopeId = useMemo(() => `mermaid-${reactId.replaceAll(':', '')}`, [reactId]);
+  const [primary, setPrimary] = useState<MermaidRenderResult>(EMPTY);
 
-  // 提取主题相关配置到 useMemo 中
-  const mermaidConfig = useMemo(
-    () => createMermaidConfig(theme, customTheme),
-    [
-      theme.fontFamilyCode,
-      theme.isDarkMode,
-      theme.colorTextDescription,
-      theme.fontFamily,
-      theme.colorTextSecondary,
-      theme.colorBgContainer,
-      theme.colorInfoBg,
-      theme.colorInfoText,
-      theme.geekblue,
-      theme.colorWarning,
-      theme.colorSuccess,
-      theme.colorError,
-      theme.colorBorder,
-      theme.colorInfoBorder,
-      theme.colorSuccessBorder,
-      theme.colorSuccessBg,
-      theme.colorSuccessText,
-      theme.colorText,
-      customTheme,
-    ],
-  );
-
-  // Update latest content ref
   useEffect(() => {
-    latestContentRef.current = content;
-  }, [content]);
-
-  // Debounced rendering for streaming content
-  useEffect(() => {
-    if (!enabled) {
-      setData('');
-      previousContentRef.current = '';
-      const timeoutId = renderTimeoutRef.current;
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
+    if (!enabled || !content) {
+      setPrimary(EMPTY);
       return;
     }
 
-    const currentContent = latestContentRef.current;
-
-    // Skip if content hasn't changed
-    if (currentContent === previousContentRef.current && data) {
-      return;
-    }
-
-    // Clear previous timeout
-    const timeoutId = renderTimeoutRef.current;
-    if (timeoutId) {
-      clearTimeout(timeoutId);
-    }
-
-    // Debounce rendering for streaming content (wait 300ms after last change)
-    renderTimeoutRef.current = setTimeout(async () => {
-      const contentToRender = latestContentRef.current;
-
-      // Skip if content changed during debounce
-      if (contentToRender !== currentContent) {
-        return;
-      }
-
-      try {
-        const mermaidInstance = await loadMermaid();
-        if (!mermaidInstance) return;
-
-        // 验证语法
-        const isValid = await mermaidInstance.parse(contentToRender);
-
-        if (isValid) {
-          // 初始化并渲染
-          mermaidInstance.initialize(mermaidConfig);
-          const { svg } = await mermaidInstance.render(id, contentToRender);
-
-          // Only update if content hasn't changed during rendering
-          if (latestContentRef.current === contentToRender) {
-            setData(svg);
-            previousContentRef.current = contentToRender;
-          }
-        }
-      } catch (error_) {
-        // Silently handle errors during streaming
-        // Only log if this is the final content
-        if (contentToRender === latestContentRef.current) {
-          console.error('Mermaid 解析错误:', error_);
-        }
-      }
+    // Debounce rendering so streaming content only re-renders after it settles
+    const timer = setTimeout(() => {
+      setPrimary(renderMermaid(content, scopeId, customTheme));
     }, 300);
 
-    return () => {
-      const timeoutId = renderTimeoutRef.current;
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [enabled, content, id, mermaidConfig, data]);
+    return () => clearTimeout(timer);
+  }, [enabled, content, scopeId, customTheme]);
 
-  return data;
+  const fallback = useCdnMermaidFallback(content, {
+    enabled: enabled && Boolean(primary.error),
+    theme: customTheme,
+  });
+
+  return primary.error ? fallback : primary;
 };
