@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.23.4](https://github.com/lobehub/lobe-ui/compare/v5.23.3...v5.23.4) (2026-07-24)
+
+### 🐛 Bug Fixes
+
+- **modal**: Isolate demo styles and align header, closes [#579](https://github.com/lobehub/lobe-ui/issues/579) ([51f7c61](https://github.com/lobehub/lobe-ui/commit/51f7c61))
+
 ## [5.23.3](https://github.com/lobehub/lobe-ui/compare/v5.23.2...v5.23.3) (2026-07-23)
 
 ### 🐛 Bug Fixes
