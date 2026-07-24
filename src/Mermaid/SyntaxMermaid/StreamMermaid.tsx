@@ -9,6 +9,7 @@ import Image from '@/Image';
 
 import { mermaidThemes } from '../const';
 import { type SyntaxMermaidProps } from '../type';
+import { prepareMermaidSvgString } from './prepareMermaidSvg';
 
 interface StreamMermaidProps {
   children: string;
@@ -54,31 +55,7 @@ const StreamMermaid = memo<StreamMermaidProps>(
         return;
       }
 
-      let finalSvgString = data;
-
-      // 修复Firefox点击预览mermaid图时宽高为0导致不显示的异常
-      if (
-        typeof window !== 'undefined' &&
-        typeof navigator !== 'undefined' &&
-        navigator.userAgent.includes('Firefox')
-      ) {
-        const parser = new DOMParser();
-        const svgDoc = parser.parseFromString(data, 'image/svg+xml');
-        const svgElement = svgDoc.documentElement;
-        if (svgElement && svgElement.hasAttribute('viewBox')) {
-          const viewBox = svgElement.getAttribute('viewBox')!;
-          const viewBoxParts = viewBox.split(' ');
-          if (Array.isArray(viewBoxParts) && viewBoxParts.length === 4) {
-            svgElement.setAttribute('width', viewBoxParts[2]);
-            svgElement.setAttribute('height', viewBoxParts[3]);
-          }
-          finalSvgString = new XMLSerializer().serializeToString(svgDoc);
-        }
-      }
-
-      // 创建Blob对象
-      const svgBlob = new Blob([finalSvgString], { type: 'image/svg+xml' });
-      // 创建并保存Blob URL
+      const svgBlob = new Blob([prepareMermaidSvgString(data)], { type: 'image/svg+xml' });
       const url = URL.createObjectURL(svgBlob);
       setBlobUrl(url);
     }, [isLoading, data]);
