@@ -2,6 +2,8 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, useLocation } from 'react-router';
 import siteConfig from 'virtual:lobedocs/site-config';
 
+import { styles as modalStyles } from '@/base-ui/Modal/style';
+
 import type { DocumentManifestEntry } from '../../types/content';
 import { DocsLayout } from './DocsLayout';
 import { styles } from './style';
@@ -145,4 +147,25 @@ it('syntax-highlights the component import statement', () => {
   expect(importCode?.querySelectorAll(`.${styles.syntaxKeyword}`)).toHaveLength(2);
   expect(importCode?.querySelector(`.${styles.syntaxEntity}`)?.textContent).toBe('Alpha');
   expect(importCode?.querySelector(`.${styles.syntaxString}`)?.textContent).toBe("'@lobehub/ui'");
+});
+
+it('does not override component typography inside an embedded demo', () => {
+  render(
+    <MemoryRouter>
+      <DocsLayout document={alphaDocument} navigation={[]}>
+        <h2>Documentation heading</h2>
+        <section data-demo-layout="default">
+          <h2 className={modalStyles.title}>Demo modal title</h2>
+        </section>
+      </DocsLayout>
+    </MemoryRouter>,
+  );
+
+  const documentationHeading = screen.getByRole('heading', { name: 'Documentation heading' });
+  const demoHeading = screen.getByRole('heading', { name: 'Demo modal title' });
+
+  expect(getComputedStyle(documentationHeading).fontSize).toBe('1.625rem');
+  expect(getComputedStyle(demoHeading).fontSize).toBe('17px');
+  expect(getComputedStyle(demoHeading).fontWeight).toBe('600');
+  expect(getComputedStyle(demoHeading).marginBlockStart).toBe('0');
 });

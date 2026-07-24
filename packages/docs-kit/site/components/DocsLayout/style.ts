@@ -64,15 +64,15 @@ export const styles = createStaticStyles(({ css }) => {
         margin-block-start: 0;
       }
 
-      h2,
-      h3 {
+      h2:not(:where([data-demo-layout] *)),
+      h3:not(:where([data-demo-layout] *)) {
         scroll-margin-top: calc(var(--docs-header-height) + 1.5rem);
         color: var(--docs-text-primary);
         text-wrap: balance;
         letter-spacing: -0.025em;
       }
 
-      h2 {
+      h2:not(:where([data-demo-layout] *)) {
         margin-block: 3.5rem 1rem;
         margin-inline: 0;
         padding-block-start: 1rem;
@@ -82,7 +82,7 @@ export const styles = createStaticStyles(({ css }) => {
         line-height: 1.25;
       }
 
-      h3 {
+      h3:not(:where([data-demo-layout] *)) {
         margin-block: 2.25rem 0.75rem;
         margin-inline: 0;
 
@@ -91,14 +91,20 @@ export const styles = createStaticStyles(({ css }) => {
         line-height: 1.35;
       }
 
-      p {
+      p:not(:where([data-demo-layout] *)) {
         max-width: 68ch;
         margin-block: 1rem;
         margin-inline: 0;
         text-wrap: pretty;
       }
 
-      pre:not(:where([data-code-type='highlighter'] *, [data-code-type='live-demo'] *)) {
+      pre:not(
+        :where(
+          [data-code-type='highlighter'] *,
+          [data-code-type='live-demo'] *,
+          [data-demo-layout] *
+        )
+      ) {
         overflow-x: auto;
 
         max-width: 100%;
@@ -115,7 +121,7 @@ export const styles = createStaticStyles(({ css }) => {
         box-shadow: var(--docs-shadow-inset);
       }
 
-      :where(:not(pre)) > code {
+      :where(:not(pre)) > code:not(:where([data-demo-layout] *)) {
         padding-block: 0.15em;
         padding-inline: 0.4em;
         border: 1px solid var(--docs-border-subtle);
@@ -127,7 +133,7 @@ export const styles = createStaticStyles(({ css }) => {
         background: var(--docs-surface-muted);
       }
 
-      table {
+      table:not(:where([data-demo-layout] *)) {
         overflow-x: auto;
         display: block;
         border-spacing: 0;
@@ -146,16 +152,16 @@ export const styles = createStaticStyles(({ css }) => {
         box-shadow: var(--docs-shadow-inset);
       }
 
-      thead {
+      thead:not(:where([data-demo-layout] *)) {
         background: var(--docs-surface-muted);
       }
 
-      tr + tr {
+      tr + tr:not(:where([data-demo-layout] *)) {
         border-block-start: 1px solid var(--docs-border-subtle);
       }
 
-      th,
-      td {
+      th:not(:where([data-demo-layout] *)),
+      td:not(:where([data-demo-layout] *)) {
         min-width: 7.5rem;
         padding-block: 0.75rem;
         padding-inline: 1rem;
@@ -167,17 +173,17 @@ export const styles = createStaticStyles(({ css }) => {
         vertical-align: top;
       }
 
-      th {
+      th:not(:where([data-demo-layout] *)) {
         font-weight: 620;
         color: var(--docs-text-primary);
         white-space: nowrap;
       }
 
-      td {
+      td:not(:where([data-demo-layout] *)) {
         color: var(--docs-text-secondary);
       }
 
-      td code {
+      td code:not(:where([data-demo-layout] *)) {
         font-size: 0.8125em;
         overflow-wrap: anywhere;
       }
