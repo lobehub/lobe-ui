@@ -2,6 +2,13 @@
 
 # Changelog
 
+## [5.23.5](https://github.com/lobehub/lobe-ui/compare/v5.23.4...v5.23.5) (2026-07-24)
+
+### 🐛 Bug Fixes
+
+- **deps**: Align KaTeX dependency version ([3df6d0f](https://github.com/lobehub/lobe-ui/commit/3df6d0f))
+- **docs-kit**: Highlight read-only demo source ([c3453a7](https://github.com/lobehub/lobe-ui/commit/c3453a7))
+
 ## [5.23.4](https://github.com/lobehub/lobe-ui/compare/v5.23.3...v5.23.4) (2026-07-24)
 
 ### 🐛 Bug Fixes
