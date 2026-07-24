@@ -13,18 +13,50 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     justify-content: center;
 
     color: ${cssVar.colorBgLayout};
+
+    transition:
+      opacity 200ms ${cssVar.motionEaseOut},
+      scale 200ms ${cssVar.motionEaseOut};
+
+    @media (prefers-reduced-motion: reduce) {
+      transition-duration: 0s;
+    }
   `,
   iconLeft: css`
     inset-inline-start: 4px;
+    scale: 0;
+    opacity: 0;
+
+    [data-checked] & {
+      scale: 1;
+      opacity: 1;
+    }
   `,
   iconLeftSmall: css`
     inset-inline-start: 4px;
+    scale: 0;
+    opacity: 0;
+
+    [data-checked] & {
+      scale: 1;
+      opacity: 1;
+    }
   `,
   iconRight: css`
     inset-inline-end: 4px;
+
+    [data-checked] & {
+      scale: 0;
+      opacity: 0;
+    }
   `,
   iconRightSmall: css`
     inset-inline-end: 4px;
+
+    [data-checked] & {
+      scale: 0;
+      opacity: 0;
+    }
   `,
   iconThumb: css`
     position: relative;
@@ -50,6 +82,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   root: css`
+    --switch-dir: 1;
+
     cursor: pointer;
     user-select: none;
 
@@ -73,6 +107,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       background 200ms ${cssVar.motionEaseOut},
       box-shadow 200ms ${cssVar.motionEaseOut};
 
+    &:dir(rtl) {
+      --switch-dir: -1;
+    }
+
+    [dir='rtl'] & {
+      --switch-dir: -1;
+    }
+
     &:focus-visible {
       outline: 2px solid ${cssVar.colorPrimaryBorder};
       outline-offset: 1px;
@@ -83,7 +125,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     &[data-checked] {
-      justify-content: flex-end;
       background: ${cssVar.colorPrimary};
       box-shadow: inset 0 1.5px 3px rgb(0 0 0 / 18%);
 
@@ -112,6 +153,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     height: 16px;
   `,
   thumb: css`
+    transform: translateX(calc(var(--switch-x, 0px) * var(--switch-dir, 1)));
+
     display: flex;
     flex-shrink: 0;
     align-items: center;
