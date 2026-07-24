@@ -15,6 +15,26 @@ const openMenu = (trigger: HTMLElement) => {
 
 const activityMocks = vi.hoisted(() => ({ cleanups: 0, starts: 0 }));
 
+vi.mock('@lobehub/ui', async (importOriginal) => {
+  const original = await importOriginal<typeof import('@lobehub/ui')>();
+
+  return {
+    ...original,
+    SyntaxHighlighter: ({
+      children,
+      language,
+      ...rest
+    }: {
+      children: string;
+      language: string;
+    }) => (
+      <pre data-language={language} data-testid="demo-source-highlighter" {...rest}>
+        <code>{children}</code>
+      </pre>
+    ),
+  };
+});
+
 vi.mock('react-live', async () => {
   const React = await import('react');
 
@@ -260,7 +280,9 @@ it('keeps source and every non-edit action available for read-only demos', async
   expect(screen.queryByRole('button', { name: 'Reset source' })).toBeNull();
 
   fireEvent.click(screen.getByRole('button', { name: 'Show source' }));
-  expect(await screen.findByText(/Read-only source/)).toBeTruthy();
+  const source = await screen.findByTestId('demo-source-highlighter');
+  expect(source.getAttribute('data-language')).toBe('tsx');
+  expect(source.textContent).toContain('Read-only source');
   expect(readOnlyDescriptor.loadScope).not.toHaveBeenCalled();
 });
 

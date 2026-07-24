@@ -1,4 +1,4 @@
-import { ActionIcon, type DropdownItem, DropdownMenu } from '@lobehub/ui';
+import { ActionIcon, type DropdownItem, DropdownMenu, SyntaxHighlighter } from '@lobehub/ui';
 import {
   Code,
   Copy,
@@ -102,11 +102,18 @@ function IsolatedPreview({ appearance, demo, standaloneHref, style, viewport }: 
   );
 }
 
-function ReadOnlySource({ source }: Pick<DemoModule, 'source'>) {
+function ReadOnlySource({ source, sourcePath }: Pick<DemoModule, 'source' | 'sourcePath'>) {
+  const language = sourcePath.split('.').pop() || 'tsx';
+
   return (
-    <pre className={styles.source} data-pagefind-ignore="all" tabIndex={0}>
-      <code>{source}</code>
-    </pre>
+    <SyntaxHighlighter
+      className={styles.source}
+      data-pagefind-ignore="all"
+      language={language}
+      tabIndex={0}
+    >
+      {source}
+    </SyntaxHighlighter>
   );
 }
 
@@ -328,7 +335,7 @@ export function Demo({
           {isolated ? <IsolatedPreview {...previewProps} /> : <EmbeddedPreview {...previewProps} />}
           {expanded ? (
             <div className={styles.sourcePanel} data-pagefind-ignore="all" id={sourcePanelId}>
-              <ReadOnlySource source={of.source} />
+              <ReadOnlySource source={of.source} sourcePath={of.sourcePath} />
             </div>
           ) : null}
         </>
