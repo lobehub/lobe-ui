@@ -86,6 +86,18 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     overflow: hidden auto;
     padding-block: 12px;
     padding-inline: 16px;
+
+    &[data-has-header] {
+      padding-block-start: 0;
+    }
+
+    &[data-has-footer] {
+      padding-block-end: 0;
+    }
+
+    &:has([data-lobe-modal-footer]) {
+      padding-block-end: 0;
+    }
   `,
 
   footer: css`
