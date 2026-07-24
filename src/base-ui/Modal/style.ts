@@ -103,6 +103,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     align-items: center;
     justify-content: space-between;
 
+    min-height: 56px;
     padding-block: 12px;
     padding-inline: 16px;
   `,
