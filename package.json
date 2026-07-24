@@ -241,7 +241,7 @@
     "antd": "^6.5.0",
     "cheerio": "^1.2.0",
     "clean-package": "^2.2.0",
-    "code-inspector-plugin": "^1.6.6",
+    "code-inspector-plugin": "^2.0.0",
     "commitlint": "^21.2.1",
     "concurrently": "^10.0.3",
     "cross-env": "^10.1.0",
