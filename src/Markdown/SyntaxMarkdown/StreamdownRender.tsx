@@ -12,8 +12,12 @@ import {
   useRef,
 } from 'react';
 import { type Options } from 'react-markdown';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
 import remend from 'remend';
 import type { Pluggable, PluggableList } from 'unified';
+import { unified } from 'unified';
+import { VFile } from 'vfile';
 
 import {
   useMarkdownComponents,
@@ -24,6 +28,7 @@ import {
 import { useStableValue } from '@/hooks/useStableValue';
 import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
 import {
+  countStreamAnimatedChars,
   rehypeStreamAnimated,
   type StreamAnimatedRuntime,
 } from '@/Markdown/plugins/rehypeStreamAnimated';
@@ -103,31 +108,62 @@ interface UpdateBlockAnimationArgs {
   blocks: BlockInfo[];
   charDelay: number;
   getBlockState: (index: number) => BlockState;
+  initialContent?: string;
+  initialRevealedChars?: ReadonlyMap<number, number>;
   pluginsCache: Map<number, BlockPluginsCacheEntry>;
+  renderedCharCounts?: ReadonlyMap<number, number>;
   renderNow: number;
   revealClock: { lastTs: number };
   runtimes: Map<number, BlockRuntime>;
 }
 
+const DEFAULT_REMARK_REHYPE_OPTIONS = { allowDangerousHtml: true };
+
 const MIN_STREAM_CHAR_PACE_MS = 2;
 const MAX_REVEAL_GAP_MS = 160;
+
+function commonPrefixLength(a: string, b: string): number {
+  let index = 0;
+  const limit = Math.min(a.length, b.length);
+
+  while (index < limit && a[index] === b[index]) index += 1;
+
+  return index;
+}
+
+function revealedCharsInBlock(block: BlockInfo, prefixLength: number): number {
+  const revealedRawLength = Math.max(
+    0,
+    Math.min(block.content.length, prefixLength - block.startOffset),
+  );
+
+  return countChars(block.content.slice(0, revealedRawLength));
+}
 
 // Runs in the render phase: extends each visible block's birth timeline in
 // place and resolves its animation meta in one pass. Mutations are
 // idempotent for a given block content/length, so discarded or StrictMode
 // double renders re-derive the same state.
-const updateBlockAnimation = ({
+export const updateBlockAnimation = ({
   blocks,
   charDelay,
   getBlockState,
+  initialContent,
+  initialRevealedChars,
   pluginsCache,
   renderNow,
   revealClock,
+  renderedCharCounts,
   runtimes,
 }: UpdateBlockAnimationArgs): Map<number, BlockAnimationMeta> => {
   const blockAnimationMeta = new Map<number, BlockAnimationMeta>();
   const alive = new Set<number>();
   let revealedNewChars = false;
+  const content = blocks.map((block) => block.content).join('');
+  const prefixLength =
+    initialContent && content.startsWith(initialContent)
+      ? commonPrefixLength(initialContent, content)
+      : 0;
 
   for (const [index, block] of blocks.entries()) {
     alive.add(block.startOffset);
@@ -146,7 +182,7 @@ const updateBlockAnimation = ({
     }
 
     if (runtime.rawLength !== block.content.length) {
-      runtime.charCount = countChars(block.content);
+      runtime.charCount = renderedCharCounts?.get(block.startOffset) ?? countChars(block.content);
       runtime.rawLength = block.content.length;
     }
 
@@ -157,6 +193,14 @@ const updateBlockAnimation = ({
       // Block content shrunk (stream restart or upstream rewrite).
       births.length = blockCharCount;
       runtime.styles.length = blockCharCount;
+    }
+
+    const initialRevealedCount =
+      initialRevealedChars?.get(block.startOffset) ?? revealedCharsInBlock(block, prefixLength);
+    if (births.length === 0 && initialRevealedCount > 0) {
+      const revealedAt = renderNow - STREAM_FADE_DURATION;
+      births.push(...Array.from({ length: initialRevealedCount }, () => revealedAt));
+      runtime.styles.push(...Array.from({ length: initialRevealedCount }, () => null));
     }
 
     if (births.length < blockCharCount) {
@@ -224,11 +268,106 @@ const updateBlockAnimation = ({
 
 interface StreamdownBlocksProps {
   content: string;
+  initialContent?: string;
   markdownOptions: Omit<Options, 'children'>;
 }
 
+export const getInitialRevealedChars = ({
+  blocks,
+  content,
+  initialContent,
+  rehypePlugins,
+  remarkPlugins,
+  remarkRehypeOptions,
+}: {
+  blocks: BlockInfo[];
+  content: string;
+  initialContent?: string;
+  rehypePlugins: PluggableList;
+  remarkPlugins: PluggableList;
+  remarkRehypeOptions?: Options['remarkRehypeOptions'];
+}): ReadonlyMap<number, number> | undefined => {
+  if (!initialContent || !content.startsWith(initialContent)) return;
+
+  const prefixLength = commonPrefixLength(initialContent, content);
+  const result = new Map<number, number>();
+
+  for (const block of blocks) {
+    const revealedRawLength = Math.max(
+      0,
+      Math.min(block.content.length, prefixLength - block.startOffset),
+    );
+    if (revealedRawLength === 0) continue;
+
+    result.set(
+      block.startOffset,
+      getRenderedBlockCharCount({
+        content: block.content.slice(0, revealedRawLength),
+        rehypePlugins,
+        remarkPlugins,
+        remarkRehypeOptions,
+      }),
+    );
+  }
+
+  return result;
+};
+
+const getRenderedBlockCharCount = ({
+  content,
+  rehypePlugins,
+  remarkPlugins,
+  remarkRehypeOptions,
+}: {
+  content: string;
+  rehypePlugins: PluggableList;
+  remarkPlugins: PluggableList;
+  remarkRehypeOptions?: Options['remarkRehypeOptions'];
+}): number => {
+  const file = new VFile();
+  file.value = content;
+  const processor = unified()
+    .use(remarkParse)
+    .use(remarkPlugins)
+    .use(
+      remarkRehype,
+      remarkRehypeOptions
+        ? { ...remarkRehypeOptions, ...DEFAULT_REMARK_REHYPE_OPTIONS }
+        : DEFAULT_REMARK_REHYPE_OPTIONS,
+    )
+    .use(rehypePlugins);
+  const tree = processor.runSync(processor.parse(file), file);
+  return countStreamAnimatedChars(tree);
+};
+
+const getRenderedBlockCharCounts = ({
+  blocks,
+  rehypePlugins,
+  remarkPlugins,
+  remarkRehypeOptions,
+}: Omit<Parameters<typeof getInitialRevealedChars>[0], 'content' | 'initialContent'>): ReadonlyMap<
+  number,
+  number
+> => {
+  const result = new Map<number, number>();
+
+  for (const block of blocks) {
+    result.set(
+      block.startOffset,
+      getRenderedBlockCharCount({
+        content: block.content,
+        rehypePlugins,
+        remarkPlugins,
+        remarkRehypeOptions,
+      }),
+    );
+  }
+
+  return result;
+};
+
 const StreamdownBlocks = memo<StreamdownBlocksProps>(
-  ({ content: smoothedContent, markdownOptions: rest }) => {
+  ({ content: smoothedContent, initialContent, markdownOptions: rest }) => {
     const { streamAnimationGranularity = 'char' } = useMarkdownContext();
     const profiler = useStreamdownProfiler();
     const components = useMarkdownComponents();
@@ -246,6 +385,10 @@ const StreamdownBlocks = memo<StreamdownBlocksProps>(
       };
     }, [profiler, smoothedContent]);
     const processedContent = processedContentResult.value;
+    const processedInitialContent = useMemo(
+      () => (initialContent ? remend(initialContent) : undefined),
+      [initialContent],
+    );
 
     const blocksResult = useMemo(() => {
       const start = profiler ? getNow() : 0;
@@ -265,6 +408,36 @@ const StreamdownBlocks = memo<StreamdownBlocksProps>(
     }, [processedContent, profiler]);
     const blocks: BlockInfo[] = blocksResult.value;
 
+    const initialRevealedChars = useMemo(
+      () =>
+        getInitialRevealedChars({
+          blocks,
+          content: processedContent,
+          initialContent: processedInitialContent,
+          rehypePlugins: baseRehypePlugins,
+          remarkPlugins,
+          remarkRehypeOptions: rest.remarkRehypeOptions,
+        }),
+      [
+        baseRehypePlugins,
+        blocks,
+        processedInitialContent,
+        processedContent,
+        remarkPlugins,
+        rest.remarkRehypeOptions,
+      ],
+    );
+    const renderedCharCounts = useMemo(
+      () =>
+        getRenderedBlockCharCounts({
+          blocks,
+          rehypePlugins: baseRehypePlugins,
+          remarkPlugins,
+          remarkRehypeOptions: rest.remarkRehypeOptions,
+        }),
+      [baseRehypePlugins, blocks, remarkPlugins, rest.remarkRehypeOptions],
+    );
+
     const { getBlockState, charDelay } = useStreamQueue(blocks);
     const blockRuntimesRef = useRef<Map<number, BlockRuntime>>(new Map());
     const blockPluginsRef = useRef<Map<number, BlockPluginsCacheEntry>>(new Map());
@@ -277,9 +450,12 @@ const StreamdownBlocks = memo<StreamdownBlocksProps>(
       blocks,
       charDelay,
       getBlockState,
+      initialContent,
+      initialRevealedChars,
       pluginsCache: blockPluginsRef.current,
       renderNow,
       revealClock: revealClockRef.current,
+      renderedCharCounts,
       runtimes: blockRuntimesRef.current,
     });
     const blockAnimationDurationMs = profiler ? getNow() - animationStart : 0;
@@ -447,15 +623,23 @@ StreamdownBlocks.displayName = 'StreamdownBlocks';
 // a memoized child keyed on the smoother's output — so the expensive block
 // pipeline runs per reveal commit, not per chunk AND per commit.
 export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
-  const { streamSmoothingPreset = 'balanced' } = useMarkdownContext();
+  const { streamAnimationInitialContent, streamSmoothingPreset = 'balanced' } =
+    useMarkdownContext();
   const escapedContent = useMarkdownContent(children || '');
+  const escapedInitialContent = useMarkdownContent(streamAnimationInitialContent || '');
   const smoothedContent = useSmoothStreamContent(
     typeof escapedContent === 'string' ? escapedContent : '',
     { preset: streamSmoothingPreset },
   );
   const markdownOptions = useStableValue(rest);
 
-  return <StreamdownBlocks content={smoothedContent} markdownOptions={markdownOptions} />;
+  return (
+    <StreamdownBlocks
+      content={smoothedContent}
+      initialContent={escapedInitialContent}
+      markdownOptions={markdownOptions}
+    />
+  );
 });
 
 StreamdownRender.displayName = 'StreamdownRender';

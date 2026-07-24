@@ -62,6 +62,34 @@ function hasClass(node: Element, cls: string): boolean {
   return false;
 }
 
+export const countStreamAnimatedChars = (tree: Root): number => {
+  let count = 0;
+
+  const shouldSkip = (node: Element): boolean => {
+    return SKIP_TAGS.has(node.tagName) || hasClass(node, 'katex');
+  };
+
+  const countText = (node: Element) => {
+    for (const child of node.children) {
+      if (child.type === 'text') {
+        for (const _char of child.value) count += 1;
+      } else if (child.type === 'element' && !shouldSkip(child)) {
+        countText(child);
+      }
+    }
+  };
+
+  visit(tree, 'element', ((node: Element) => {
+    if (shouldSkip(node)) return 'skip';
+    if (BLOCK_TAGS.has(node.tagName)) {
+      countText(node);
+      return 'skip';
+    }
+  }) as BuildVisitor<Root, 'element'>);
+
+  return count;
+};
+
 export const rehypeStreamAnimated = (options: StreamAnimatedOptions = {}) => {
   const {
     births,
