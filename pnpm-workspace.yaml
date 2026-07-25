@@ -3,6 +3,9 @@ lockfile: false
 packages:
   - packages/*
 
+overrides:
+  katex: ^0.18.1
+
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true

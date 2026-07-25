@@ -62,7 +62,7 @@ const ThemeProvider = memo<ThemeProviderProps>(
           genCdnUrl({
             path: 'dist/katex.min.css',
             pkg: 'katex',
-            version: '0.17.0',
+            version: '0.18.1',
           }),
         ],
       [customFonts, genCdnUrl],
