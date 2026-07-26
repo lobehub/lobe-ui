@@ -178,7 +178,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   popup: css`
+    overflow-y: auto;
+
     min-width: 220px;
+    max-height: var(--available-height);
     padding: 4px;
     border-radius: ${cssVar.borderRadius};
 
