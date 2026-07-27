@@ -37,11 +37,16 @@ export { default as CodeEditor, type CodeEditorProps } from './CodeEditor';
 export { default as Collapse, type CollapseItemType, type CollapseProps } from './Collapse';
 export { default as ColorSwatches, type ColorSwatchesProps } from './ColorSwatches';
 export { type Config, default as ConfigProvider, useCdnFn } from './ConfigProvider';
-export type { ContextMenuCheckboxItem, ContextMenuItem } from './ContextMenu';
+export type {
+  ContextMenuCheckboxItem,
+  ContextMenuInterceptor,
+  ContextMenuItem,
+} from './ContextMenu';
 export {
   closeContextMenu,
   ContextMenuHost,
   ContextMenuTrigger,
+  setContextMenuInterceptor,
   showContextMenu,
   updateContextMenuItems,
 } from './ContextMenu';

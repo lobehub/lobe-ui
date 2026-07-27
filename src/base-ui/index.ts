@@ -2,11 +2,16 @@ export * from './AutoComplete';
 export { default as Button } from './Button';
 export * from './Button';
 export * from './Checkbox';
-export type { ContextMenuCheckboxItem, ContextMenuItem } from './ContextMenu';
+export type {
+  ContextMenuCheckboxItem,
+  ContextMenuInterceptor,
+  ContextMenuItem,
+} from './ContextMenu';
 export {
   closeContextMenu,
   ContextMenuHost,
   ContextMenuTrigger,
+  setContextMenuInterceptor,
   showContextMenu,
   updateContextMenuItems,
 } from './ContextMenu';

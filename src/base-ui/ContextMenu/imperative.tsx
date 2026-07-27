@@ -1,3 +1,8 @@
 export { ContextMenuHost } from './ContextMenuHost';
 export { ContextMenuTrigger } from './ContextMenuTrigger';
-export { closeContextMenu, showContextMenu, updateContextMenuItems } from './store';
+export {
+  closeContextMenu,
+  setContextMenuInterceptor,
+  showContextMenu,
+  updateContextMenuItems,
+} from './store';
