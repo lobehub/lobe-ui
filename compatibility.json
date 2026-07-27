@@ -2414,6 +2414,18 @@
     },
     {
       "document": "src/Mermaid/index.mdx",
+      "legacyId": "src-mermaid-demo-mermaid-18",
+      "legacyRouteId": "components/Mermaid/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/mermaid",
+      "source": "src/Mermaid/demos/mermaid-18.tsx"
+    },
+    {
+      "document": "src/Mermaid/index.mdx",
       "legacyId": "src-mermaid-demo-mermaid-2",
       "legacyRouteId": "components/Mermaid/index",
       "options": {
@@ -4175,6 +4187,18 @@
       },
       "pathname": "/components/base-ui/select",
       "source": "src/base-ui/Select/demos/virtual.tsx"
+    },
+    {
+      "document": "src/base-ui/Switch/index.mdx",
+      "legacyId": "src-base-ui-switch-demo-asyncloading",
+      "legacyRouteId": "components/base-ui/Switch/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/switch",
+      "source": "src/base-ui/Switch/demos/asyncLoading.tsx"
     },
     {
       "document": "src/base-ui/Switch/index.mdx",
