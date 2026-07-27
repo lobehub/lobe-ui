@@ -438,7 +438,15 @@ const StreamdownBlocks = memo<StreamdownBlocksProps>(
       [baseRehypePlugins, blocks, remarkPlugins, rest.remarkRehypeOptions],
     );
 
-    const { getBlockState, charDelay } = useStreamQueue(blocks);
+    const initialRevealedBlockCount = useMemo(() => {
+      if (!processedInitialContent || !processedContent.startsWith(processedInitialContent))
+        return 0;
+
+      return blocks.filter(
+        (block) => block.startOffset + block.content.length <= processedInitialContent.length,
+      ).length;
+    }, [blocks, processedContent, processedInitialContent]);
+    const { getBlockState, charDelay } = useStreamQueue(blocks, initialRevealedBlockCount);
     const blockRuntimesRef = useRef<Map<number, BlockRuntime>>(new Map());
     const blockPluginsRef = useRef<Map<number, BlockPluginsCacheEntry>>(new Map());
     const revealClockRef = useRef<{ lastTs: number }>({ lastTs: 0 });
@@ -629,7 +637,7 @@ export const StreamdownRender = memo<Options>(({ children, ...rest }) => {
   const escapedInitialContent = useMarkdownContent(streamAnimationInitialContent || '');
   const smoothedContent = useSmoothStreamContent(
     typeof escapedContent === 'string' ? escapedContent : '',
-    { preset: streamSmoothingPreset },
+    { initialContent: escapedInitialContent, preset: streamSmoothingPreset },
   );
   const markdownOptions = useStableValue(rest);
 

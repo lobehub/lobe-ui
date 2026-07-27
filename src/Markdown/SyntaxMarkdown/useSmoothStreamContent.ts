@@ -117,12 +117,17 @@ export const countChars = (text: string): number => {
 
 interface UseSmoothStreamContentOptions {
   enabled?: boolean;
+  /**
+   * Text already present when a stream is resumed. This prefix must bypass
+   * smoothing so restoring a session does not replay its accumulated output.
+   */
+  initialContent?: string;
   preset?: StreamSmoothingPreset;
 }
 
 export const useSmoothStreamContent = (
   content: string,
-  { enabled = true, preset = 'balanced' }: UseSmoothStreamContentOptions = {},
+  { enabled = true, initialContent = '', preset = 'balanced' }: UseSmoothStreamContentOptions = {},
 ): string => {
   const config = PRESET_CONFIG[preset];
   const profiler = useStreamdownProfiler();
@@ -369,6 +374,14 @@ export const useSmoothStreamContent = (
       return;
     }
 
+    // A restored stream can mount before its authoritative snapshot reaches
+    // the renderer. Treat every prefix of that snapshot as already revealed:
+    // otherwise the smoother turns historical content into a second stream.
+    if (initialContent && initialContent.startsWith(content)) {
+      syncImmediate(content);
+      return;
+    }
+
     const prevTargetContent = targetContentRef.current;
     if (content === prevTargetContent) return;
 
@@ -444,6 +457,7 @@ export const useSmoothStreamContent = (
     config.minCps,
     content,
     enabled,
+    initialContent,
     startFrameLoop,
     syncImmediate,
     profiler,

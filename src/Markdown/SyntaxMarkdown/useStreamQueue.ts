@@ -27,7 +27,10 @@ export interface UseStreamQueueReturn {
   queueLength: number;
 }
 
-export function useStreamQueue(blocks: BlockInfo[]): UseStreamQueueReturn {
+export function useStreamQueue(
+  blocks: BlockInfo[],
+  initialRevealedCount = 0,
+): UseStreamQueueReturn {
   const [revealedCount, setRevealedCount] = useState(0);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prevBlocksLenRef = useRef(0);
@@ -46,6 +49,9 @@ export function useStreamQueue(blocks: BlockInfo[]): UseStreamQueueReturn {
     const prevTail = prevBlocksLenRef.current - 1;
     minRevealedRef.current = Math.max(minRevealedRef.current, prevTail + 1);
   }
+  // A resumed stream's historical blocks are already visible. Without this,
+  // the queue hides every block except the tail and replays them one by one.
+  minRevealedRef.current = Math.max(minRevealedRef.current, initialRevealedCount);
   prevBlocksLenRef.current = blocks.length;
 
   // State reset when stream restarts (blocks empty)
