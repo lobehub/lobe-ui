@@ -2,6 +2,24 @@
 
 # Changelog
 
+# [5.24.0](https://github.com/lobehub/lobe-ui/compare/v5.23.5...v5.24.0) (2026-07-27)
+
+### ♻ Code Refactoring
+
+- **base-ui**: Replace Switch layout animation with motionValue-driven transform, closes [#581](https://github.com/lobehub/lobe-ui/issues/581) ([b73ec63](https://github.com/lobehub/lobe-ui/commit/b73ec63))
+
+### ✨ Features
+
+- **base-ui**: Add context menu interceptor for global behavior override, closes [#586](https://github.com/lobehub/lobe-ui/issues/586) ([ff94afd](https://github.com/lobehub/lobe-ui/commit/ff94afd))
+
+### 🐛 Bug Fixes
+
+- **context-menu**: Constrain long menus to viewport ([04eaac7](https://github.com/lobehub/lobe-ui/commit/04eaac7))
+- **docs**: Register ContextMenu overflow demo in the frozen inventory, closes [#588](https://github.com/lobehub/lobe-ui/issues/588) ([68613a7](https://github.com/lobehub/lobe-ui/commit/68613a7))
+- **docs**: Register mermaid-18 and Switch asyncLoading demos in the frozen inventory, closes [#587](https://github.com/lobehub/lobe-ui/issues/587) ([e77dd0c](https://github.com/lobehub/lobe-ui/commit/e77dd0c))
+- Declare bun workspaces in package.json ([aef8a26](https://github.com/lobehub/lobe-ui/commit/aef8a26))
+- Upgrade katex to v0.18 and align class names ([9be1bf9](https://github.com/lobehub/lobe-ui/commit/9be1bf9))
+
 ## [5.23.5](https://github.com/lobehub/lobe-ui/compare/v5.23.4...v5.23.5) (2026-07-24)
 
 ### 🐛 Bug Fixes
