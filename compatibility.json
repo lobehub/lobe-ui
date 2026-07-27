@@ -626,6 +626,18 @@
     },
     {
       "document": "src/ContextMenu/index.mdx",
+      "legacyId": "src-context-menu-demo-overflow",
+      "legacyRouteId": "components/ContextMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/context-menu",
+      "source": "src/ContextMenu/demos/overflow.tsx"
+    },
+    {
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-context-menu-demo-switch",
       "legacyRouteId": "components/ContextMenu/index",
       "options": {
@@ -3419,6 +3431,18 @@
       },
       "pathname": "/components/base-ui/context-menu",
       "source": "src/ContextMenu/demos/imperative.tsx"
+    },
+    {
+      "document": "src/base-ui/ContextMenu/index.mdx",
+      "legacyId": "src-base-ui-context-menu-demo-overflow",
+      "legacyRouteId": "components/base-ui/ContextMenu/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/base-ui/context-menu",
+      "source": "src/ContextMenu/demos/overflow.tsx"
     },
     {
       "document": "src/base-ui/ContextMenu/index.mdx",
