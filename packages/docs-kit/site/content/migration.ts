@@ -585,7 +585,7 @@ const migration = {
   frozenInventory: {
     apiSourceOverrides: 79,
     componentApiDecisions: 158,
-    demoReferences: 514,
+    demoReferences: 516,
     documents: 160,
     initiallyMissingDescriptions: 43,
     isolatedDemos: 35,
