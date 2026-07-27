@@ -81,9 +81,29 @@ export interface ShowContextMenuOptions {
   iconSpaceMode?: IconSpaceMode;
 }
 
-export const showContextMenu = (items: ContextMenuItem[], options?: ShowContextMenuOptions) => {
-  if (typeof window === 'undefined') return;
+export interface ContextMenuInterceptor {
+  close?: (fallback: () => void) => void;
+  show?: (
+    items: ContextMenuItem[],
+    options: ShowContextMenuOptions | undefined,
+    fallback: () => void,
+  ) => void;
+}
 
+let interceptor: ContextMenuInterceptor | null = null;
+
+/**
+ * Register a global interceptor for every context menu — imperative
+ * `showContextMenu`/`closeContextMenu` calls and `ContextMenuTrigger` alike.
+ * The interceptor may render the menu through another system (e.g. a native
+ * OS menu) or invoke `fallback()` to show the default web menu. Pass `null`
+ * to restore the default behavior.
+ */
+export const setContextMenuInterceptor = (next: ContextMenuInterceptor | null) => {
+  interceptor = next;
+};
+
+const showWebContextMenu = (items: ContextMenuItem[], options?: ShowContextMenuOptions) => {
   const fallbackPoint = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
   const point = lastPointer.ready ? { x: lastPointer.x, y: lastPointer.y } : fallbackPoint;
 
@@ -99,6 +119,17 @@ export const showContextMenu = (items: ContextMenuItem[], options?: ShowContextM
   });
 };
 
+export const showContextMenu = (items: ContextMenuItem[], options?: ShowContextMenuOptions) => {
+  if (typeof window === 'undefined') return;
+
+  if (interceptor?.show) {
+    interceptor.show(items, options, () => showWebContextMenu(items, options));
+    return;
+  }
+
+  showWebContextMenu(items, options);
+};
+
 /**
  * Update menu items while keeping current anchor/position.
  * Useful for interactive menu items (e.g. checkbox) to avoid re-positioning.
@@ -108,7 +139,7 @@ export const updateContextMenuItems = (items: ContextMenuItem[]) => {
   setContextMenuState({ items });
 };
 
-export const closeContextMenu = () => {
+const closeWebContextMenu = () => {
   setContextMenuState({
     anchor: null,
     footer: undefined,
@@ -118,4 +149,13 @@ export const closeContextMenu = () => {
     open: false,
     triggerId: null,
   });
+};
+
+export const closeContextMenu = () => {
+  if (interceptor?.close) {
+    interceptor.close(closeWebContextMenu);
+    return;
+  }
+
+  closeWebContextMenu();
 };
