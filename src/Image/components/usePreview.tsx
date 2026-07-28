@@ -59,7 +59,7 @@ export const usePreview = (
         // 向后兼容旧的 onVisibleChange
         onVisibleChange?.(open, !open);
       },
-      rootClassName: cx(styles.preview, rootClassName),
+      classNames: { root: cx(styles.preview, rootClassName) },
       styles: { mask: { backdropFilter: 'blur(8px)' } },
       ...rest,
     };
