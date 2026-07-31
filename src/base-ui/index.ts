@@ -16,6 +16,7 @@ export {
   updateContextMenuItems,
 } from './ContextMenu';
 export { controlHeight, type ControlSize } from './controlSize';
+export * from './Drawer';
 export * from './DropdownMenu';
 export * from './FloatingPanel';
 export * from './FloatingSheet';

@@ -1,5 +1,5 @@
-import { Button, Flexbox, Text } from '@lobehub/ui';
-import { FloatingSheet, type FloatingSheetProps } from '@lobehub/ui/base-ui';
+import { Flexbox, Text } from '@lobehub/ui';
+import { Button, FloatingSheet, type FloatingSheetProps } from '@lobehub/ui/base-ui';
 import { Tag } from 'antd';
 import { cssVar } from 'antd-style';
 import { ChevronUp, Database, FileText, GripHorizontal, Search, Sparkles, X } from 'lucide-react';

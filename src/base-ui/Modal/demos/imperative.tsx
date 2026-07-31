@@ -1,5 +1,5 @@
-import { Button, Flexbox, Text } from '@lobehub/ui';
-import { createModalSystem, useModalContext } from '@lobehub/ui/base-ui';
+import { Flexbox, Text } from '@lobehub/ui';
+import { Button, createModalSystem, useModalContext } from '@lobehub/ui/base-ui';
 import { Tag } from 'antd';
 import { cssVar } from 'antd-style';
 import { CheckCircle, Loader2, XCircle } from 'lucide-react';

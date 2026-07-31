@@ -1,4 +1,5 @@
-import { Button, Flexbox, Popover, PopoverGroup, Tag } from '@lobehub/ui';
+import { Flexbox, Popover, PopoverGroup, Tag } from '@lobehub/ui';
+import { Button } from '@lobehub/ui/base-ui';
 import { BarChart3, LayoutDashboard, Sparkles } from 'lucide-react';
 
 const content = {

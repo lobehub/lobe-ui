@@ -1,5 +1,4 @@
 import {
-  Button,
   Flexbox,
   PopoverArrow,
   PopoverPopup,
@@ -10,6 +9,7 @@ import {
   PopoverViewport,
   Tag,
 } from '@lobehub/ui';
+import { Button } from '@lobehub/ui/base-ui';
 import { Blocks } from 'lucide-react';
 import { useState } from 'react';
 

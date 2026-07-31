@@ -1,4 +1,5 @@
-import { Button, Flexbox, Popover, Tooltip, TooltipGroup } from '@lobehub/ui';
+import { Flexbox, Popover, Tooltip, TooltipGroup } from '@lobehub/ui';
+import { Button } from '@lobehub/ui/base-ui';
 import { HelpCircle, Info } from 'lucide-react';
 
 /**

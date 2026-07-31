@@ -1,5 +1,5 @@
-import { Button, Flexbox, Text } from '@lobehub/ui';
-import { Modal } from '@lobehub/ui/base-ui';
+import { Flexbox, Text } from '@lobehub/ui';
+import { Button, Modal } from '@lobehub/ui/base-ui';
 import { Tag } from 'antd';
 import { cssVar } from 'antd-style';
 import { useState } from 'react';

@@ -1,4 +1,5 @@
-import { Button, Flexbox, Popover, Tag, usePopoverContext } from '@lobehub/ui';
+import { Flexbox, Popover, Tag, usePopoverContext } from '@lobehub/ui';
+import { Button } from '@lobehub/ui/base-ui';
 import { Check, Code2 } from 'lucide-react';
 
 const Content = () => {

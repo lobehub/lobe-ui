@@ -1,5 +1,6 @@
-import { Button, Flexbox, Text } from '@lobehub/ui';
+import { Flexbox, Text } from '@lobehub/ui';
 import {
+  Button,
   ModalBackdrop,
   ModalClose,
   ModalContent,

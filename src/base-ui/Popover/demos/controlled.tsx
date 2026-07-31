@@ -1,4 +1,5 @@
-import { ActionIcon, Button, Flexbox, Input, Popover, Tag } from '@lobehub/ui';
+import { ActionIcon, Flexbox, Popover, Tag } from '@lobehub/ui';
+import { Button, Input } from '@lobehub/ui/base-ui';
 import { AlertTriangle, Check, Edit3, Trash2, X } from 'lucide-react';
 import { useState } from 'react';
 
@@ -86,7 +87,9 @@ export default () => {
                   size="large"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  onPressEnter={() => setEditOpen(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') setEditOpen(false);
+                  }}
                 />
               </Flexbox>
               <Flexbox horizontal gap={8} justify="flex-end">

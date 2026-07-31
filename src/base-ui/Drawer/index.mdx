@@ -1,0 +1,36 @@
+---
+title: Drawer
+description: Edge-anchored panel built directly on Base UI dialog primitives, with four placements, an optional sidebar layout, and nested push behaviour.
+category: Feedback
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoSidebar from './demos/Sidebar.tsx?demo';
+import DemoNested from './demos/Nested.tsx?demo';
+
+## Placement
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Sidebar
+
+<Demo of={DemoSidebar} layout="bare" />
+
+## Nested Push
+
+<Demo of={DemoNested} layout="bare" />
+
+## Notes
+
+- `Drawer` owns its dialog primitives rather than reusing `Modal`, so its popup is edge-anchored instead of centred. It still shares the layered z-index stack, so drawers and modals interleave by open order.
+- The surface adapts to how the drawer is being used rather than applying one fixed elevation. The shadow casts along the placement axis toward the content it covers, only the edges facing that content are rounded, and the weight shifts per scenario: a drawer filling the viewport drops both shadow and radius, `mask={false}` deepens the cast because there is no backdrop doing the separating, and an ancestor pushed aside by a nested drawer lightens so stacked panels don't silt up.
+- Nested drawers push their ancestors aside by `180px` along the placement axis. Pass `push={false}` to opt out, or `push={{ distance }}` to change the offset. The push only reaches drawers that are React ancestors of the nested one.
+- `sidebar` switches the body to a two-column layout with independently scrolling columns; `sidebarWidth` sets the fixed column.
+- `containerMaxWidth` centres and constrains the header, body, and footer content, which keeps line length readable on full-width drawers.
+- Composing your own layout is possible with the exported primitives: `DrawerRoot`, `DrawerPortal`, `DrawerBackdrop`, `DrawerPopup`, `DrawerHeader`, `DrawerTitle`, `DrawerContent`, `DrawerFooter`, `DrawerClose`, and `DrawerTrigger`.
+
+## APIs
+
+### Drawer
+
+<Api name="Drawer" />

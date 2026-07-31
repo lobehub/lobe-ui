@@ -1,4 +1,5 @@
-import { Button, Flexbox, toast, type ToastOptions } from '@lobehub/ui';
+import { Flexbox, toast, type ToastOptions } from '@lobehub/ui';
+import { Button } from '@lobehub/ui/base-ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { MapPin } from 'lucide-react';
 

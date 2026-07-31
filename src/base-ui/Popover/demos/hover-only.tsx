@@ -1,4 +1,5 @@
-import { Button, Flexbox, Popover, Tag, Text } from '@lobehub/ui';
+import { Flexbox, Popover, Tag, Text } from '@lobehub/ui';
+import { Button } from '@lobehub/ui/base-ui';
 import { MousePointerClick, Move, Pointer } from 'lucide-react';
 import { type ElementType, useState } from 'react';
 
