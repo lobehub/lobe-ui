@@ -1,11 +1,9 @@
 import { type GroupPreviewConfig } from 'antd/es/image/PreviewGroup';
-import { cx } from 'antd-style';
 import { X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
 import Icon from '@/Icon';
 
-import { styles as componentStyles, styles } from '../style';
 import { type PreviewGroupPreviewOptions } from '../type';
 import Preview from './Preview';
 import Toolbar from './Toolbar';
@@ -24,7 +22,7 @@ export const usePreview = (
       minScale = 0.32,
       maxScale = 32,
       toolbarAddon,
-      rootClassName,
+      rootClassName: _rootClassName,
       imageRender,
       toolbarRender,
       ...rest
@@ -58,10 +56,9 @@ export const usePreview = (
         // 向后兼容旧的 onVisibleChange (注意参数差异)
         onVisibleChange?.(open, !open, info.current);
       },
-      rootClassName: cx(styles.preview, rootClassName),
       ...rest,
     } satisfies GroupPreviewConfig;
-  }, [props, visible, componentStyles]);
+  }, [props, visible]);
 };
 
 export default usePreview;
