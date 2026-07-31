@@ -1,5 +1,5 @@
-import { Button, Flexbox, Text } from '@lobehub/ui';
-import { Switch } from '@lobehub/ui/base-ui';
+import { Flexbox, Text } from '@lobehub/ui';
+import { Button, Switch } from '@lobehub/ui/base-ui';
 import { useState } from 'react';
 
 export default () => {

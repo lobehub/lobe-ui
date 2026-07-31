@@ -1,7 +1,6 @@
 import {
   ActionIcon,
   Avatar,
-  Button,
   Center,
   CopyButton,
   Flexbox,
@@ -12,6 +11,7 @@ import {
   Text,
 } from '@lobehub/ui';
 import { GradientButton } from '@lobehub/ui/awesome';
+import { Button } from '@lobehub/ui/base-ui';
 import { Heart, Settings, Star } from 'lucide-react';
 
 const PopoverContent = ({ title }: { title: string }) => (

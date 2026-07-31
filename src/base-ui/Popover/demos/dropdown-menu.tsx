@@ -1,4 +1,5 @@
-import { ActionIcon, Button, DropdownMenu, Flexbox, Popover, Tag } from '@lobehub/ui';
+import { ActionIcon, DropdownMenu, Flexbox, Popover, Tag } from '@lobehub/ui';
+import { Button } from '@lobehub/ui/base-ui';
 import { Folder, MoreHorizontal } from 'lucide-react';
 
 import { items } from '@/DropdownMenu/demos/data';

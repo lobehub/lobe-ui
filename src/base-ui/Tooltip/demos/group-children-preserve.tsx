@@ -1,4 +1,5 @@
-import { Button, Tooltip, TooltipGroup } from '@lobehub/ui';
+import { Tooltip, TooltipGroup } from '@lobehub/ui';
+import { Button } from '@lobehub/ui/base-ui';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Flexbox } from '@/Flex';

@@ -1,4 +1,5 @@
-import { Button, Flexbox, toast } from '@lobehub/ui';
+import { Flexbox, toast } from '@lobehub/ui';
+import { Button } from '@lobehub/ui/base-ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { CheckCircle, CloudDownload, Database, RefreshCw, XCircle } from 'lucide-react';
 

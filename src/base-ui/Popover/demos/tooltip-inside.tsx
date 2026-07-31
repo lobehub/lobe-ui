@@ -1,4 +1,5 @@
-import { Button, Flexbox, Popover, Tooltip } from '@lobehub/ui';
+import { Flexbox, Popover, Tooltip } from '@lobehub/ui';
+import { Button } from '@lobehub/ui/base-ui';
 import { Info, Sparkles } from 'lucide-react';
 
 export default () => {

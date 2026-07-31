@@ -1,4 +1,5 @@
-import { Button, Flexbox, toast, ToastHost, type ToastOptions } from '@lobehub/ui';
+import { Flexbox, toast, ToastHost, type ToastOptions } from '@lobehub/ui';
+import { Button } from '@lobehub/ui/base-ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { Bell, CheckCircle, Info, Loader2, type LucideIcon, XCircle } from 'lucide-react';
 

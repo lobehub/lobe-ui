@@ -1,5 +1,5 @@
-import { Button, Flexbox, Text } from '@lobehub/ui';
-import { confirmModal, createModal, ModalHost, useModalContext } from '@lobehub/ui/base-ui';
+import { Flexbox, Text } from '@lobehub/ui';
+import { Button, confirmModal, createModal, ModalHost, useModalContext } from '@lobehub/ui/base-ui';
 
 const NestedBody = () => {
   const { close } = useModalContext();

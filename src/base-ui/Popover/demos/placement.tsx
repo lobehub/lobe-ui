@@ -1,4 +1,5 @@
-import { Button, Flexbox, Popover, PopoverGroup, Tag } from '@lobehub/ui';
+import { Flexbox, Popover, PopoverGroup, Tag } from '@lobehub/ui';
+import { Button } from '@lobehub/ui/base-ui';
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from 'lucide-react';
 
 const content = (placement: string, icon: React.ReactNode) => (
