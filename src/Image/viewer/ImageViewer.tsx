@@ -1,10 +1,8 @@
 'use client';
 
 import { Dialog, type DialogRootProps } from '@base-ui/react/dialog';
-import { X } from 'lucide-react';
 import {
   memo,
-  type MouseEvent,
   type SyntheticEvent,
   use,
   useCallback,
@@ -15,50 +13,46 @@ import {
 } from 'react';
 import { useMergeRefs } from 'react-merge-refs';
 
-import ActionIcon from '@/ActionIcon';
 import { ToastHost } from '@/base-ui/Toast';
 import { useLayerZIndex } from '@/base-ui/zIndex';
-import imageMessages from '@/i18n/resources/en/image';
-import { useTranslation } from '@/i18n/useTranslation';
 import { MotionComponent } from '@/MotionProvider';
 import { useAppElement } from '@/ThemeProvider';
 
 import { styles } from '../style';
 import { computeFit, type Size } from './geometry';
 import { beginClosePreview, endClosePreview, type PreviewEntry } from './registry';
-import Toolbar from './Toolbar';
 import { useFlipTransition } from './useFlipTransition';
+import { readNatural, useGalleryNav } from './useGalleryNav';
 import { useViewerGestures } from './useViewerGestures';
 import { useZoomPan } from './useZoomPan';
+import ViewerChrome from './ViewerChrome';
 
 export interface ImageViewerProps {
-  entry: PreviewEntry;
+  entries: PreviewEntry[];
+  index: number;
   token: number;
 }
 
 const readViewport = (): Size => ({ height: window.innerHeight, width: window.innerWidth });
 
-const readNatural = (element: HTMLImageElement): Size => {
-  if (element.naturalWidth > 0 && element.naturalHeight > 0)
-    return { height: element.naturalHeight, width: element.naturalWidth };
-  const rect = element.getBoundingClientRect();
-  return { height: Math.max(rect.height, 1), width: Math.max(rect.width, 1) };
-};
-
 const prefersReducedMotion = () =>
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
-const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
-  const { element, options, previewSrc, src } = entry;
-  const { t } = useTranslation(imageMessages);
+const ImageViewer = memo<ImageViewerProps>(({ entries, index, token }) => {
+  const openerEntry = entries[index];
   const appElement = useAppElement();
   const motionComponent = use(MotionComponent);
   const [animated] = useState(() => !!motionComponent && !prefersReducedMotion());
 
   const { ref: layerRef, zIndex } = useLayerZIndex<HTMLDivElement>('modal');
 
-  const [source, setSource] = useState(src);
-  const [natural, setNatural] = useState<Size>(() => readNatural(element));
+  const [currentIndex, setCurrentIndex] = useState(index);
+  const currentEntry = entries[currentIndex];
+  const currentEntryRef = useRef(currentEntry);
+  currentEntryRef.current = currentEntry;
+
+  const [source, setSource] = useState(openerEntry.src);
+  const [natural, setNatural] = useState<Size>(() => readNatural(openerEntry.element));
   const [viewport, setViewport] = useState<Size>(readViewport);
 
   const closeRef = useRef<(() => void) | null>(null);
@@ -91,7 +85,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
     zoomIn,
     zoomOut,
   } = useZoomPan({
-    maxScale: options.maxScale,
+    maxScale: currentEntry.options.maxScale,
     natural,
     onCloseRequest: requestClose,
     viewport,
@@ -105,25 +99,27 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
   fitRectRef.current = fitRect;
   const getFitRect = useCallback(() => fitRectRef.current, []);
 
+  const getCloseSource = useCallback(() => currentEntryRef.current.element, []);
+
   const transform = useMemo(
     () => ({ flipX, flipY, rotate, scale, x, y }),
     [flipX, flipY, rotate, scale, x, y],
   );
 
-  const handleClosed = useCallback(() => {
-    endClosePreview(token);
-  }, [token]);
+  const handleClosed = useCallback(() => endClosePreview(token), [token]);
 
   const {
     backdropRef,
     chromeRef,
     close,
     imageRef: flipImageRef,
+    switchTo,
   } = useFlipTransition({
     animated,
+    getCloseSource,
     getFitRect,
     onClosed: handleClosed,
-    source: element,
+    source: openerEntry.element,
     transform,
   });
 
@@ -149,6 +145,22 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
     [escIntent, handleClose, reset],
   );
 
+  const { hasNext, hasPrev, next, prev } = useGalleryNav({
+    currentIndex,
+    entries,
+    flipX,
+    flipY,
+    rotate,
+    scale,
+    setCurrentIndex,
+    setNatural,
+    setSource,
+    switchTo,
+    syncZoomNatural,
+    x,
+    y,
+  });
+
   const gestures = useViewerGestures({
     dragBy,
     dragEnd,
@@ -157,6 +169,8 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
     isClean,
     isZoomed,
     onClose: handleClose,
+    onNext: next,
+    onPrev: prev,
     reset,
     zoomIn,
     zoomOut,
@@ -164,10 +178,6 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
 
   const popupRef = useMergeRefs<HTMLDivElement>([layerRef, gestures.popupRef]);
   const imageRef = useMergeRefs<HTMLImageElement>([flipImageRef, gestures.imageRef]);
-
-  const handleChromeClick = useCallback((event: MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-  }, []);
 
   const handleLoad = useCallback(
     (event: SyntheticEvent<HTMLImageElement>) => {
@@ -193,6 +203,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
   }, [syncZoomViewport]);
 
   useEffect(() => {
+    const { previewSrc, src } = currentEntry;
     if (!previewSrc || previewSrc === src) return;
     let cancelled = false;
     const loader = new window.Image();
@@ -205,14 +216,14 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
       cancelled = true;
       loader.removeEventListener('load', handleLoaded);
     };
-  }, [previewSrc, src]);
+  }, [currentEntry]);
 
   useEffect(
     () => () => {
-      const thumbnailWasRemoved = !element.isConnected;
+      const thumbnailWasRemoved = !openerEntry.element.isConnected;
       if (thumbnailWasRemoved) endClosePreview(token);
     },
-    [element, token],
+    [openerEntry, token],
   );
 
   return (
@@ -225,7 +236,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
           onClick={gestures.onSurfaceClick}
         />
         <Dialog.Popup
-          aria-label={element.alt || undefined}
+          aria-label={currentEntry.element.alt || undefined}
           className={styles.viewerPopup}
           ref={popupRef}
           style={zIndex === undefined ? undefined : { zIndex: zIndex + 1 }}
@@ -236,7 +247,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
           onPointerUp={gestures.onPointerFinish}
         >
           <img
-            alt={element.alt}
+            alt={currentEntry.element.alt}
             className={styles.viewerImage}
             ref={imageRef}
             src={source}
@@ -251,31 +262,31 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
             onDoubleClick={gestures.onImageDoubleClick}
             onLoad={handleLoad}
           />
-          <div className={styles.viewerChrome} ref={chromeRef} onClick={handleChromeClick}>
-            <ActionIcon
-              className={styles.viewerClose}
-              icon={X}
-              title={t('image.close')}
-              onClick={handleClose}
-            />
-            <Toolbar
-              canZoomIn={canZoomIn}
-              canZoomOut={canZoomOut}
-              fitRect={fitRect}
-              flipHorizontal={flipHorizontal}
-              flipVertical={flipVertical}
-              natural={natural}
-              reset={reset}
-              rotateLeft={rotateLeft}
-              rotateRight={rotateRight}
-              rotation={rotation}
-              scale={scale}
-              source={source}
-              toolbarAddon={options.toolbarAddon}
-              zoomIn={zoomIn}
-              zoomOut={zoomOut}
-            />
-          </div>
+          <ViewerChrome
+            canZoomIn={canZoomIn}
+            canZoomOut={canZoomOut}
+            chromeRef={chromeRef}
+            current={currentIndex}
+            fitRect={fitRect}
+            flipHorizontal={flipHorizontal}
+            flipVertical={flipVertical}
+            hasNext={hasNext}
+            hasPrev={hasPrev}
+            natural={natural}
+            next={next}
+            prev={prev}
+            reset={reset}
+            rotateLeft={rotateLeft}
+            rotateRight={rotateRight}
+            rotation={rotation}
+            scale={scale}
+            source={source}
+            toolbarAddon={currentEntry.options.toolbarAddon}
+            total={entries.length}
+            zoomIn={zoomIn}
+            zoomOut={zoomOut}
+            onClose={handleClose}
+          />
         </Dialog.Popup>
         <ToastHost root={appElement ?? undefined} />
       </Dialog.Portal>

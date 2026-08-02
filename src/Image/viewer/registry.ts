@@ -14,12 +14,14 @@ export interface PreviewEntry {
 }
 
 export interface PreviewSession {
-  entry: PreviewEntry;
+  entries: PreviewEntry[];
+  index: number;
   token: number;
 }
 
 interface HostState extends PreviewSession {
   closing: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
 let state: HostState | null = null;
@@ -34,13 +36,22 @@ const emit = () => {
 const flushClosed = () => {
   if (!state || state.closing) return;
   state.closing = true;
-  state.entry.options.onOpenChange?.(false);
+  state.onOpenChange?.(false);
 };
 
-export const openPreview = (entry: PreviewEntry): void => {
+export const openPreview = (entry: PreviewEntry, entries?: PreviewEntry[], index = 0): void => {
   flushClosed();
   nextToken += 1;
-  state = { closing: false, entry, token: nextToken };
+  const resolvedEntries = entries && entries.length > 0 ? entries : [entry];
+  const resolvedIndex =
+    entries && entries.length > 0 ? Math.min(Math.max(index, 0), entries.length - 1) : 0;
+  state = {
+    closing: false,
+    entries: resolvedEntries,
+    index: resolvedIndex,
+    onOpenChange: entry.options.onOpenChange,
+    token: nextToken,
+  };
   emit();
   entry.options.onOpenChange?.(true);
 };
@@ -70,7 +81,7 @@ export const usePreviewSession = (
   elementRef: RefObject<HTMLImageElement | null>,
 ): PreviewSession | null => {
   const getSnapshot = useCallback(
-    () => (state && state.entry.element === elementRef.current ? state : null),
+    () => (state && state.entries[state.index]?.element === elementRef.current ? state : null),
     [elementRef],
   );
 

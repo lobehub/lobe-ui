@@ -8,6 +8,8 @@ export default {
   'image.downloadSuccess': 'Download Success',
   'image.flipHorizontal': 'Flip Horizontal',
   'image.flipVertical': 'Flip Vertical',
+  'image.next': 'Next',
+  'image.prev': 'Previous',
   'image.rotateLeft': 'Rotate Left',
   'image.rotateRight': 'Rotate Right',
   'image.zoomIn': 'Zoom In',

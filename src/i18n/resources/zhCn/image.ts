@@ -8,6 +8,8 @@ export default {
   'image.downloadSuccess': '下载成功',
   'image.flipHorizontal': '水平翻转',
   'image.flipVertical': '垂直翻转',
+  'image.next': '下一张',
+  'image.prev': '上一张',
   'image.rotateLeft': '向左旋转',
   'image.rotateRight': '向右旋转',
   'image.zoomIn': '放大',

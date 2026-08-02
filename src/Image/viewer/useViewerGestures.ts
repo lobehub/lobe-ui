@@ -17,6 +17,8 @@ export interface UseViewerGesturesOptions {
   isClean: boolean;
   isZoomed: boolean;
   onClose: () => void;
+  onNext?: () => void;
+  onPrev?: () => void;
   reset: () => void;
   zoomIn: () => void;
   zoomOut: () => void;
@@ -57,6 +59,8 @@ export const useViewerGestures = ({
   isClean,
   isZoomed,
   onClose,
+  onNext,
+  onPrev,
   reset,
   zoomIn,
   zoomOut,
@@ -109,6 +113,16 @@ export const useViewerGestures = ({
           reset();
           break;
         }
+        case 'ArrowLeft': {
+          if (!onPrev) return;
+          onPrev();
+          break;
+        }
+        case 'ArrowRight': {
+          if (!onNext) return;
+          onNext();
+          break;
+        }
         default: {
           return;
         }
@@ -117,7 +131,7 @@ export const useViewerGestures = ({
     };
     document.addEventListener('keydown', listener);
     return () => document.removeEventListener('keydown', listener);
-  }, [reset, zoomIn, zoomOut]);
+  }, [onNext, onPrev, reset, zoomIn, zoomOut]);
 
   const onPointerDown = useCallback(
     (event: PointerEvent<HTMLElement>) => {

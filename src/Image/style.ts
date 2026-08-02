@@ -123,6 +123,23 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       background: ${cssVar.colorBgContainer};
       box-shadow: ${cssVar.boxShadowTertiary};
     `,
+    viewerCounter: css`
+      ${lobeStaticStylish.variantOutlinedWithoutHover};
+      pointer-events: none;
+
+      position: absolute;
+      inset-block-start: 16px;
+      inset-inline-start: 50%;
+      transform: translateX(-50%);
+
+      padding-block: 6px;
+      padding-inline: 14px;
+      border-radius: 999px;
+
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      color: ${cssVar.colorTextSecondary};
+    `,
     viewerImage: css`
       will-change: transform;
       cursor: zoom-out;
@@ -134,6 +151,24 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       object-fit: contain;
 
       -webkit-user-drag: none;
+    `,
+    viewerNavButton: css`
+      pointer-events: auto;
+
+      position: absolute;
+      inset-block-start: 50%;
+      transform: translateY(-50%);
+
+      border-radius: 50%;
+
+      background: ${cssVar.colorBgContainer};
+      box-shadow: ${cssVar.boxShadowTertiary};
+    `,
+    viewerNavNext: css`
+      inset-inline-end: 16px;
+    `,
+    viewerNavPrev: css`
+      inset-inline-start: 16px;
     `,
     viewerPopup: css`
       position: fixed;

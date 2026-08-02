@@ -12,7 +12,14 @@ export interface PreviewOutletProps {
 const PreviewOutlet = ({ elementRef }: PreviewOutletProps) => {
   const session = usePreviewSession(elementRef);
   if (!session) return null;
-  return <ImageViewer entry={session.entry} key={session.token} token={session.token} />;
+  return (
+    <ImageViewer
+      entries={session.entries}
+      index={session.index}
+      key={session.token}
+      token={session.token}
+    />
+  );
 };
 
 export default PreviewOutlet;

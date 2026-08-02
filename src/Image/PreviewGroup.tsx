@@ -3,10 +3,12 @@
 import { createContext, memo, use, useCallback, useMemo, useRef } from 'react';
 
 import type { ImagePreviewOptions, PreviewGroupProps } from './type';
+import type { ResolvedPreviewOptions } from './viewer/registry';
 
 export interface PreviewGroupEntry {
   getElement: () => HTMLImageElement | null;
   id: string;
+  options?: ResolvedPreviewOptions;
   previewSrc?: string;
   src: string;
 }

@@ -8,6 +8,7 @@ const OPEN_SPRING = { bounce: 0.15, type: 'spring' as const, visualDuration: 0.3
 const FADE = { duration: 0.15, ease: 'easeOut' as const };
 const CHROME_FADE = { delay: 0.15, duration: 0.2, ease: 'easeOut' as const };
 const FADE_SCALE = 0.92;
+const SWITCH_FADE_SCALE = 0.96;
 
 interface Animation {
   stop: () => void;
@@ -24,6 +25,7 @@ export interface FlipTransformValues {
 
 export interface UseFlipTransitionOptions {
   animated: boolean;
+  getCloseSource: () => HTMLImageElement;
   getFitRect: () => Rect;
   onClosed: () => void;
   source: HTMLImageElement;
@@ -39,6 +41,7 @@ export interface UseFlipTransitionResult {
   chromeRef: (node: HTMLElement | null) => void;
   close: (options?: CloseTransitionOptions) => void;
   imageRef: (node: HTMLImageElement | null) => void;
+  switchTo: (apply: () => void) => void;
 }
 
 const measureSource = (element: HTMLImageElement): DOMRect | null => {
@@ -88,6 +91,7 @@ const useBoundNode = <T extends HTMLElement>(apply: (node: T) => void) => {
 
 export const useFlipTransition = ({
   animated,
+  getCloseSource,
   getFitRect,
   onClosed,
   source,
@@ -135,6 +139,9 @@ export const useFlipTransition = ({
 
   const getFitRectRef = useRef(getFitRect);
   getFitRectRef.current = getFitRect;
+
+  const getCloseSourceRef = useRef(getCloseSource);
+  getCloseSourceRef.current = getCloseSource;
 
   const run = useCallback((animations: Animation[]) => {
     runningRef.current = [...runningRef.current, ...animations];
@@ -200,7 +207,7 @@ export const useFlipTransition = ({
       stopAll();
 
       const finish = () => onClosedRef.current();
-      const rect = animated && !options?.fade ? measureSource(source) : null;
+      const rect = animated && !options?.fade ? measureSource(getCloseSourceRef.current()) : null;
 
       run([animate(opacity.backdrop, 0, FADE), animate(opacity.chrome, 0, FADE)]);
 
@@ -217,7 +224,28 @@ export const useFlipTransition = ({
       if (animated) run([animate(transform.scale, transform.scale.get() * FADE_SCALE, FADE)]);
       run([animate(opacity.image, 0, { ...FADE, onComplete: finish })]);
     },
-    [animated, opacity, run, source, stopAll, transform],
+    [animated, opacity, run, stopAll, transform],
+  );
+
+  const switchTo = useCallback(
+    (apply: () => void) => {
+      if (closingRef.current) return;
+      stopAll();
+
+      const tasks: Animation[] = [];
+      if (animated) tasks.push(animate(transform.scale, SWITCH_FADE_SCALE, FADE));
+      tasks.push(
+        animate(opacity.image, 0, {
+          ...FADE,
+          onComplete: () => {
+            apply();
+            run([animate(opacity.image, 1, FADE)]);
+          },
+        }),
+      );
+      run(tasks);
+    },
+    [animated, opacity, run, stopAll, transform],
   );
 
   return {
@@ -225,5 +253,6 @@ export const useFlipTransition = ({
     chromeRef: chrome.setNode,
     close,
     imageRef: image.setNode,
+    switchTo,
   };
 };

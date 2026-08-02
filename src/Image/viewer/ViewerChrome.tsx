@@ -1,0 +1,76 @@
+'use client';
+
+import { X } from 'lucide-react';
+import type { MotionValue } from 'motion/react';
+import { memo, type MouseEvent, type ReactNode, useCallback } from 'react';
+
+import ActionIcon from '@/ActionIcon';
+import imageMessages from '@/i18n/resources/en/image';
+import { useTranslation } from '@/i18n/useTranslation';
+
+import { styles } from '../style';
+import GalleryNav from './GalleryNav';
+import type { Rect, Rotation, Size } from './geometry';
+import Toolbar from './Toolbar';
+
+export interface ViewerChromeProps {
+  canZoomIn: boolean;
+  canZoomOut: boolean;
+  chromeRef: (node: HTMLElement | null) => void;
+  current: number;
+  fitRect: Rect;
+  flipHorizontal: () => void;
+  flipVertical: () => void;
+  hasNext: boolean;
+  hasPrev: boolean;
+  natural: Size;
+  next: () => void;
+  onClose: () => void;
+  prev: () => void;
+  reset: () => void;
+  rotateLeft: () => void;
+  rotateRight: () => void;
+  rotation: Rotation;
+  scale: MotionValue<number>;
+  source: string;
+  toolbarAddon?: ReactNode;
+  total: number;
+  zoomIn: () => void;
+  zoomOut: () => void;
+}
+
+const ViewerChrome = memo<ViewerChromeProps>(
+  ({ chromeRef, current, hasNext, hasPrev, next, onClose, prev, total, ...toolbarProps }) => {
+    const { t } = useTranslation(imageMessages);
+
+    const handleChromeClick = useCallback((event: MouseEvent<HTMLDivElement>) => {
+      event.stopPropagation();
+    }, []);
+
+    return (
+      <div className={styles.viewerChrome} ref={chromeRef} onClick={handleChromeClick}>
+        <ActionIcon
+          className={styles.viewerClose}
+          icon={X}
+          title={t('image.close')}
+          onClick={onClose}
+        />
+        {total > 1 && (
+          <GalleryNav
+            current={current}
+            hasNext={hasNext}
+            hasPrev={hasPrev}
+            next={next}
+            prev={prev}
+            total={total}
+          />
+        )}
+        <Toolbar {...toolbarProps} />
+      </div>
+    );
+  },
+);
+
+ViewerChrome.displayName = 'ViewerChrome';
+
+export default ViewerChrome;

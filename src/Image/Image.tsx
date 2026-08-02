@@ -20,7 +20,7 @@ import { usePreviewGroupContext } from './PreviewGroup';
 import { FALLBACK_DARK, FALLBACK_LIGHT, styles, variants } from './style';
 import type { ImagePreviewOptions, ImageProps } from './type';
 import PreviewOutlet from './viewer/PreviewOutlet';
-import { openPreview } from './viewer/registry';
+import { openPreview, type PreviewEntry } from './viewer/registry';
 
 const DEFAULT_MAX_SCALE = 8;
 
@@ -92,10 +92,11 @@ const Image = memo<ImageProps>(
       return group.register({
         getElement: () => imgRef.current,
         id,
+        options: resolvedOptions,
         previewSrc,
         src: src ?? '',
       });
-    }, [group, id, src, previewSrc]);
+    }, [group, id, src, previewSrc, resolvedOptions]);
 
     const handleError = useCallback(
       (event: SyntheticEvent<HTMLImageElement>) => {
@@ -109,14 +110,34 @@ const Image = memo<ImageProps>(
       (event: MouseEvent<HTMLImageElement>) => {
         onClick?.(event);
         if (!previewEnabled || !imgRef.current || !resolvedOptions) return;
-        openPreview({
+        const clickedEntry: PreviewEntry = {
           element: imgRef.current,
           options: resolvedOptions,
           previewSrc,
           src: imgRef.current.currentSrc || imgRef.current.src,
-        });
+        };
+
+        if (!group) {
+          openPreview(clickedEntry);
+          return;
+        }
+
+        const galleryEntries: PreviewEntry[] = [];
+        let clickedIndex = -1;
+        for (const groupEntry of group.getEntries()) {
+          const element = groupEntry.getElement();
+          if (!element || !groupEntry.options) continue;
+          if (element === imgRef.current) clickedIndex = galleryEntries.length;
+          galleryEntries.push({
+            element,
+            options: groupEntry.options,
+            previewSrc: groupEntry.previewSrc,
+            src: element.currentSrc || element.src,
+          });
+        }
+        openPreview(clickedEntry, galleryEntries, clickedIndex >= 0 ? clickedIndex : 0);
       },
-      [onClick, previewEnabled, resolvedOptions, previewSrc],
+      [onClick, previewEnabled, resolvedOptions, previewSrc, group],
     );
 
     const actionsClassName = alwaysShowActions ? styles.actionsVisible : styles.actionsHidden;
