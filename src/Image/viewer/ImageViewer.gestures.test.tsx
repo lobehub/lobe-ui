@@ -426,6 +426,26 @@ describe('keyboard shortcuts', () => {
     expect(isOpen()).toBe(false);
     expect(image.style.transform).toBe(before);
   });
+
+  it('leaves ArrowLeft/ArrowRight unhandled for a standalone (non-gallery) session', () => {
+    mount();
+
+    const left = new KeyboardEvent('keydown', {
+      bubbles: true,
+      cancelable: true,
+      key: 'ArrowLeft',
+    });
+    document.body.dispatchEvent(left);
+    expect(left.defaultPrevented).toBe(false);
+
+    const right = new KeyboardEvent('keydown', {
+      bubbles: true,
+      cancelable: true,
+      key: 'ArrowRight',
+    });
+    document.body.dispatchEvent(right);
+    expect(right.defaultPrevented).toBe(false);
+  });
 });
 
 describe('close branch', () => {

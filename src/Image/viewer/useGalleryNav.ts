@@ -112,7 +112,10 @@ export const useGalleryNav = ({
   const prev = useCallback(() => goTo(indexRef.current - 1), [goTo]);
   const next = useCallback(() => goTo(indexRef.current + 1), [goTo]);
 
+  const isGallery = entries.length > 1;
+
   useEffect(() => {
+    if (!isGallery) return;
     const listener = (event: KeyboardEvent) => {
       if (event.altKey || event.ctrlKey || event.metaKey || event.defaultPrevented) return;
       if (isTypingTarget(event.target)) return;
@@ -123,7 +126,7 @@ export const useGalleryNav = ({
     };
     document.addEventListener('keydown', listener);
     return () => document.removeEventListener('keydown', listener);
-  }, [next, prev]);
+  }, [isGallery, next, prev]);
 
   return {
     hasNext: currentIndex < entries.length - 1,
