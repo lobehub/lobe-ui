@@ -1,6 +1,6 @@
 'use client';
 
-import { Dialog } from '@base-ui/react/dialog';
+import { Dialog, type DialogRootProps } from '@base-ui/react/dialog';
 import { X } from 'lucide-react';
 import {
   memo,
@@ -13,6 +13,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import { useMergeRefs } from 'react-merge-refs';
 
 import ActionIcon from '@/ActionIcon';
 import { useLayerZIndex } from '@/base-ui/zIndex';
@@ -25,6 +26,7 @@ import { styles } from '../style';
 import { computeFit, type Size } from './geometry';
 import { beginClosePreview, endClosePreview, type PreviewEntry } from './registry';
 import { useFlipTransition } from './useFlipTransition';
+import { useViewerGestures } from './useViewerGestures';
 import { useZoomPan } from './useZoomPan';
 
 export interface ImageViewerProps {
@@ -66,14 +68,24 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
   const requestClose = useCallback(() => closeRef.current?.(), []);
 
   const {
+    dragBy,
+    dragEnd,
+    escIntent,
     flipX,
     flipY,
+    handleDoubleClick,
+    handleWheel,
+    isClean,
+    isZoomed,
+    reset,
     rotate,
     scale,
     setNatural: syncZoomNatural,
     setViewport: syncZoomViewport,
     x,
     y,
+    zoomIn,
+    zoomOut,
   } = useZoomPan({
     maxScale: options.maxScale,
     natural,
@@ -90,7 +102,12 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
     endClosePreview(token);
   }, [token]);
 
-  const { backdropRef, chromeRef, close, imageRef } = useFlipTransition({
+  const {
+    backdropRef,
+    chromeRef,
+    close,
+    imageRef: flipImageRef,
+  } = useFlipTransition({
     animated,
     getFitRect,
     onClosed: handleClosed,
@@ -98,18 +115,42 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
     transform,
   });
 
+  const isCleanRef = useRef(isClean);
+  isCleanRef.current = isClean;
+
   const handleClose = useCallback(() => {
     beginClosePreview(token);
-    close();
+    close({ fade: !isCleanRef.current });
   }, [close, token]);
   closeRef.current = handleClose;
 
-  const handleDialogOpenChange = useCallback(
-    (open: boolean) => {
-      if (!open) handleClose();
+  const handleDialogOpenChange = useCallback<NonNullable<DialogRootProps['onOpenChange']>>(
+    (open, eventDetails) => {
+      if (open) return;
+      if (eventDetails.reason === 'escape-key' && escIntent() === 'reset') {
+        eventDetails.cancel();
+        reset();
+        return;
+      }
+      handleClose();
     },
-    [handleClose],
+    [escIntent, handleClose, reset],
   );
+
+  const gestures = useViewerGestures({
+    dragBy,
+    dragEnd,
+    handleDoubleClick,
+    handleWheel,
+    isZoomed,
+    onClose: handleClose,
+    reset,
+    zoomIn,
+    zoomOut,
+  });
+
+  const popupRef = useMergeRefs<HTMLDivElement>([layerRef, gestures.popupRef]);
+  const imageRef = useMergeRefs<HTMLImageElement>([flipImageRef, gestures.imageRef]);
 
   const handleChromeClick = useCallback((event: MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
@@ -168,14 +209,18 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
           className={styles.viewerBackdrop}
           ref={backdropRef}
           style={zIndex === undefined ? undefined : { zIndex }}
-          onClick={handleClose}
+          onClick={gestures.onSurfaceClick}
         />
         <Dialog.Popup
           aria-label={element.alt || undefined}
           className={styles.viewerPopup}
-          ref={layerRef}
+          ref={popupRef}
           style={zIndex === undefined ? undefined : { zIndex: zIndex + 1 }}
-          onClick={handleClose}
+          onClick={gestures.onSurfaceClick}
+          onPointerCancel={gestures.onPointerFinish}
+          onPointerDown={gestures.onPointerDown}
+          onPointerMove={gestures.onPointerMove}
+          onPointerUp={gestures.onPointerFinish}
         >
           <img
             alt={element.alt}
@@ -183,11 +228,14 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
             ref={imageRef}
             src={source}
             style={{
+              cursor: gestures.cursor,
               height: fitRect.height,
               left: fitRect.x,
               top: fitRect.y,
               width: fitRect.width,
             }}
+            onClick={gestures.onImageClick}
+            onDoubleClick={gestures.onImageDoubleClick}
             onLoad={handleLoad}
           />
           <div className={styles.viewerChrome} ref={chromeRef} onClick={handleChromeClick}>

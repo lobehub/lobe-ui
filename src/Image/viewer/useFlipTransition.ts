@@ -30,10 +30,14 @@ export interface UseFlipTransitionOptions {
   transform: FlipTransformValues;
 }
 
+export interface CloseTransitionOptions {
+  fade?: boolean;
+}
+
 export interface UseFlipTransitionResult {
   backdropRef: (node: HTMLElement | null) => void;
   chromeRef: (node: HTMLElement | null) => void;
-  close: () => void;
+  close: (options?: CloseTransitionOptions) => void;
   imageRef: (node: HTMLImageElement | null) => void;
 }
 
@@ -189,29 +193,32 @@ export const useFlipTransition = ({
     };
   }, [animated, opacity, run, source, stopAll, transform]);
 
-  const close = useCallback(() => {
-    if (closingRef.current) return;
-    closingRef.current = true;
-    stopAll();
+  const close = useCallback(
+    (options?: CloseTransitionOptions) => {
+      if (closingRef.current) return;
+      closingRef.current = true;
+      stopAll();
 
-    const finish = () => onClosedRef.current();
-    const rect = animated ? measureSource(source) : null;
+      const finish = () => onClosedRef.current();
+      const rect = animated && !options?.fade ? measureSource(source) : null;
 
-    run([animate(opacity.backdrop, 0, FADE), animate(opacity.chrome, 0, FADE)]);
+      run([animate(opacity.backdrop, 0, FADE), animate(opacity.chrome, 0, FADE)]);
 
-    if (rect) {
-      const target = sourceTransform(rect, getFitRectRef.current());
-      run([
-        animate(transform.x, target.x, OPEN_SPRING),
-        animate(transform.y, target.y, OPEN_SPRING),
-        animate(transform.scale, target.scale, { ...OPEN_SPRING, onComplete: finish }),
-      ]);
-      return;
-    }
+      if (rect) {
+        const target = sourceTransform(rect, getFitRectRef.current());
+        run([
+          animate(transform.x, target.x, OPEN_SPRING),
+          animate(transform.y, target.y, OPEN_SPRING),
+          animate(transform.scale, target.scale, { ...OPEN_SPRING, onComplete: finish }),
+        ]);
+        return;
+      }
 
-    if (animated) run([animate(transform.scale, transform.scale.get() * FADE_SCALE, FADE)]);
-    run([animate(opacity.image, 0, { ...FADE, onComplete: finish })]);
-  }, [animated, opacity, run, source, stopAll, transform]);
+      if (animated) run([animate(transform.scale, transform.scale.get() * FADE_SCALE, FADE)]);
+      run([animate(opacity.image, 0, { ...FADE, onComplete: finish })]);
+    },
+    [animated, opacity, run, source, stopAll, transform],
+  );
 
   return {
     backdropRef: backdrop.setNode,
