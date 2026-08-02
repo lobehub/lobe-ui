@@ -74,6 +74,50 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       border-radius: ${cssVar.borderRadiusLG};
     `,
 
+    viewerBackdrop: css`
+      position: fixed;
+      inset: 0;
+
+      opacity: 0;
+      background: color-mix(in srgb, ${cssVar.colorBgLayout} 90%, transparent);
+      backdrop-filter: blur(8px);
+    `,
+    viewerChrome: css`
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+    `,
+    viewerClose: css`
+      pointer-events: auto;
+
+      position: absolute;
+      inset-block-start: 16px;
+      inset-inline-end: 16px;
+
+      border-radius: 50%;
+
+      background: ${cssVar.colorBgContainer};
+      box-shadow: ${cssVar.boxShadowTertiary};
+    `,
+    viewerImage: css`
+      will-change: transform;
+      cursor: zoom-out;
+      user-select: none;
+
+      position: absolute;
+      transform-origin: center center;
+
+      object-fit: contain;
+
+      -webkit-user-drag: none;
+    `,
+    viewerPopup: css`
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      outline: none;
+    `,
     wrapper: css`
       position: relative;
       overflow: hidden;

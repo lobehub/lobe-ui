@@ -17,6 +17,7 @@ vi.mock('antd-style', async (importOriginal) => {
 
 vi.mock('./viewer/registry', () => ({
   openPreview: vi.fn(),
+  usePreviewSession: () => null,
 }));
 
 beforeEach(() => {

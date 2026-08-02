@@ -1,4 +1,5 @@
 export default {
+  'image.close': 'Close',
   'image.copy': 'Copy',
   'image.copyFailed': 'Copy Failed',
   'image.copySuccess': 'Copy Success',

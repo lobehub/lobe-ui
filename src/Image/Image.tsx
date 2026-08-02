@@ -19,6 +19,7 @@ import { SkeletonAvatar } from '@/Skeleton';
 import { usePreviewGroupContext } from './PreviewGroup';
 import { FALLBACK_DARK, FALLBACK_LIGHT, styles, variants } from './style';
 import type { ImagePreviewOptions, ImageProps } from './type';
+import PreviewOutlet from './viewer/PreviewOutlet';
 import { openPreview } from './viewer/registry';
 
 const DEFAULT_MAX_SCALE = 8;
@@ -161,6 +162,7 @@ const Image = memo<ImageProps>(
             {...rest}
           />
         </div>
+        {previewEnabled && <PreviewOutlet elementRef={imgRef} />}
       </Flexbox>
     );
   },

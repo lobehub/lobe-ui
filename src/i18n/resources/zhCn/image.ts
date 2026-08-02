@@ -1,4 +1,5 @@
 export default {
+  'image.close': '关闭',
   'image.copy': '复制',
   'image.copyFailed': '复制失败',
   'image.copySuccess': '复制成功',
