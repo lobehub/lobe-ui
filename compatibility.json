@@ -1718,6 +1718,18 @@
     },
     {
       "document": "src/Image/index.mdx",
+      "legacyId": "src-image-demo-deepzoom",
+      "legacyRouteId": "components/Image/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/image",
+      "source": "src/Image/demos/DeepZoom.tsx"
+    },
+    {
+      "document": "src/Image/index.mdx",
       "legacyId": "src-image-demo-demos",
       "legacyRouteId": "components/Image/index",
       "options": {
@@ -1727,6 +1739,18 @@
       },
       "pathname": "/components/image",
       "source": "src/Image/demos/index.tsx"
+    },
+    {
+      "document": "src/Image/index.mdx",
+      "legacyId": "src-image-demo-dualsource",
+      "legacyRouteId": "components/Image/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/image",
+      "source": "src/Image/demos/DualSource.tsx"
     },
     {
       "document": "src/Image/index.mdx",

@@ -1,6 +1,6 @@
 ---
 title: Image
-description: Image is an enhanced image component with preview capabilities, custom actions, and various display styles. It extends Ant Design's Image component with additional features like size control, loading state, and custom toolbar addons.
+description: Image is an enhanced image component with a self-contained zoom-and-pan preview viewer, custom actions, and various display styles. Preview is powered by a Base UI dialog with FLIP open/close transitions, deep zoom, and gallery navigation — it no longer wraps Ant Design's Image.
 category: Data Display
 ---
 
@@ -8,12 +8,16 @@ import DemoIndex from './demos/index.tsx?demo';
 import DemoGallery from './demos/Gallery.tsx?demo';
 import DemoFallback from './demos/Fallback.tsx?demo';
 import DemoCustomActions from './demos/CustomActions.tsx?demo';
+import DemoDualSource from './demos/DualSource.tsx?demo';
+import DemoDeepZoom from './demos/DeepZoom.tsx?demo';
 
 ## Default
 
 <Demo of={DemoIndex} layout="bare" />
 
 ## Gallery
+
+Wrap multiple `Image` components in `Image.PreviewGroup` to preview them together, with arrow buttons, a counter, and `←`/`→` keyboard navigation.
 
 <Demo of={DemoGallery} layout="center" />
 
@@ -25,26 +29,73 @@ import DemoCustomActions from './demos/CustomActions.tsx?demo';
 
 <Demo of={DemoCustomActions} layout="center" />
 
+## Dual Source Preview
+
+`preview.src` lets the thumbnail stay lightweight while the viewer opens instantly against it, then swaps in a higher-resolution image in place once it finishes loading — no layout jump.
+
+<Demo of={DemoDualSource} layout="center" />
+
+## Deep Zoom
+
+Ctrl/Cmd + wheel, double-click, or the toolbar's zoom buttons zoom in past the fitted size for pixel-level detail; drag to pan once zoomed. `preview.maxScale` raises the zoom ceiling for large source images.
+
+<Demo of={DemoDeepZoom} layout="center" />
+
+## Interaction Model
+
+The preview viewer opens with a FLIP transition from the clicked thumbnail's on-screen position and returns to it on close (or fades, if the thumbnail is no longer available or `prefers-reduced-motion` is set).
+
+**Zoom & pan**
+
+- Ctrl/Cmd + wheel, or the toolbar zoom buttons, zoom around the cursor (or the toolbar percentage's center).
+- Double-click toggles between fitted and a zoomed-in target scale.
+- Dragging pans a zoomed image, clamped so it can't be dragged past its edges.
+- A plain wheel zooms while already zoomed in.
+
+**Closing**
+
+- A plain wheel scroll while at the fitted (unzoomed) scale closes the viewer once the accumulated scroll passes a threshold; a large zoom-out overshoot re-arms after ~300ms of wheel idle rather than closing immediately.
+- Clicking the backdrop, the close button, or pressing Esc while at a clean (unzoomed, unrotated, unflipped) state closes immediately.
+- Clicking the image itself closes after a short delay unless a second click arrives in time (in which case it double-click-zooms instead of closing).
+- Esc is layered: at a zoomed/rotated/flipped state, the first Esc resets to the clean fit; only a second Esc (from a clean state) closes.
+
+**Gallery**
+
+- Inside `Image.PreviewGroup`, the arrow buttons, on-screen counter, and `←`/`→` keys navigate between images; zoom/rotate/flip state resets on every switch.
+- Outside a gallery (a single previewable `Image`), `←`/`→` are left alone for the browser/page to handle.
+
+## Breaking Changes
+
+The preview viewer was rewritten from scratch on top of a Base UI dialog and no longer wraps `rc-image` / Ant Design's `Image` preview. The following antd/rc-image passthrough is **no longer supported**:
+
+- `PreviewGroup`'s `items` prop — build the group from `Image` children instead.
+- `minScale`, `onVisibleChange`, and other rc-image `ImagePreviewType` render/lifecycle props.
+- Any other undocumented antd `Image`/`rc-image` preview props that used to pass through via `...rest`.
+
+`preview` now only accepts `boolean | { src?, maxScale?, onOpenChange?, toolbarAddon? }` (see below).
+
+> In apps without an app-level `ToastHost` (see `@lobehub/ui/base-ui`), a copy/download toast fired after the viewer has already closed is dropped rather than shown standalone. This is an accepted limitation — mount a `ToastHost` at the app root to avoid it.
+
 ## APIs
 
 ### Image
 
 <Api name="Image" migrationKey="heading:%5B%22Image%22%5D:0" />
 
-> Additional props are inherited from Ant Design's [Image](https://ant.design/components/image/) component.
+> Additional props are spread onto the underlying `<img>` element.
 
 ### PreviewGroup
 
-| Property | Description                                  | Type                         | Default |
-| -------- | -------------------------------------------- | ---------------------------- | ------- |
-| enable   | Whether to enable the preview group          | `boolean`                    | `true`  |
-| items    | List of image URLs to include in the preview | `string[]`                   | -       |
-| preview  | Preview options                              | `PreviewGroupPreviewOptions` | -       |
+| Property | Description                         | Type                  | Default |
+| -------- | ----------------------------------- | --------------------- | ------- |
+| enable   | Whether to enable the preview group | `boolean`             | `true`  |
+| preview  | Preview options for the whole group | `ImagePreviewOptions` | -       |
 
 ### ImagePreviewOptions
 
-| Property     | Description                                | Type        | Default |
-| ------------ | ------------------------------------------ | ----------- | ------- |
-| toolbarAddon | Additional content for the preview toolbar | `ReactNode` | -       |
-
-> Additional options are inherited from rc-image's ImagePreviewType.
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| src | Higher-resolution source swapped in after the viewer opens with `src` | `string` | - |
+| maxScale | Maximum zoom scale relative to the fitted size | `number` | `8` |
+| onOpenChange | Called when the preview viewer opens or closes | `(open: boolean) => void` | - |
+| toolbarAddon | Additional content appended to the preview toolbar | `ReactNode` | - |
