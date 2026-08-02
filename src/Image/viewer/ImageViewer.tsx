@@ -73,6 +73,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, token }) => {
     isClean,
     isZoomed,
     reset,
+    resetCloseTracking,
     rotate,
     rotateLeft,
     rotateRight,
@@ -105,7 +106,6 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, token }) => {
     () => ({ flipX, flipY, rotate, scale, x, y }),
     [flipX, flipY, rotate, scale, x, y],
   );
-
   const handleClosed = useCallback(() => endClosePreview(token), [token]);
 
   const {
@@ -145,11 +145,26 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, token }) => {
     [escIntent, handleClose, reset],
   );
 
+  const gestures = useViewerGestures({
+    dragBy,
+    dragEnd,
+    handleDoubleClick,
+    handleWheel,
+    isClean,
+    isZoomed,
+    onClose: handleClose,
+    reset,
+    zoomIn,
+    zoomOut,
+  });
+
   const { hasNext, hasPrev, next, prev } = useGalleryNav({
+    cancelPendingClose: gestures.cancelPendingClose,
     currentIndex,
     entries,
     flipX,
     flipY,
+    resetCloseTracking,
     rotate,
     scale,
     setCurrentIndex,
@@ -159,21 +174,6 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, token }) => {
     syncZoomNatural,
     x,
     y,
-  });
-
-  const gestures = useViewerGestures({
-    dragBy,
-    dragEnd,
-    handleDoubleClick,
-    handleWheel,
-    isClean,
-    isZoomed,
-    onClose: handleClose,
-    onNext: next,
-    onPrev: prev,
-    reset,
-    zoomIn,
-    zoomOut,
   });
 
   const popupRef = useMergeRefs<HTMLDivElement>([layerRef, gestures.popupRef]);

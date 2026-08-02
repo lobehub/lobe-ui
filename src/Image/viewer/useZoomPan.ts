@@ -52,6 +52,7 @@ export interface UseZoomPanResult {
   isClean: boolean;
   isZoomed: boolean;
   reset: () => void;
+  resetCloseTracking: () => void;
   rotate: MotionValue<number>;
   rotateLeft: () => void;
   rotateRight: () => void;
@@ -99,6 +100,15 @@ export const useZoomPan = ({
   const closeAccumRef = useRef(0);
   const disarmedRef = useRef(false);
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const resetCloseTracking = useCallback(() => {
+    if (idleTimerRef.current !== null) {
+      clearTimeout(idleTimerRef.current);
+      idleTimerRef.current = null;
+    }
+    closeAccumRef.current = 0;
+    disarmedRef.current = false;
+  }, []);
 
   const isCleanState = useCallback(
     () => scale.get() === 1 && rotate.get() === 0 && !flipX.get() && !flipY.get(),
@@ -350,6 +360,7 @@ export const useZoomPan = ({
     isClean: derived.isClean,
     isZoomed: derived.isZoomed,
     reset,
+    resetCloseTracking,
     rotate,
     rotateLeft,
     rotateRight,

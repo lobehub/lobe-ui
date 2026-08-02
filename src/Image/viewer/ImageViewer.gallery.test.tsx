@@ -424,4 +424,64 @@ describe('gallery navigation', () => {
     settle();
     expect(onOpenChange.mock.calls).toEqual([[true], [false]]);
   });
+
+  it('cancels a pending click-to-close timer when the user switches via keyboard before it fires', () => {
+    renderWithMotion(
+      <PreviewGroup>
+        <ImageComponent alt="a" src="https://example.com/a.png" />
+        <ImageComponent alt="b" src="https://example.com/b.png" />
+      </PreviewGroup>,
+    );
+    stubThumbnail('a');
+    stubThumbnail('b');
+
+    clickThumbnail('a');
+    settle();
+
+    fireEvent.click(getViewerImage() as HTMLElement);
+    act(() => {
+      vi.advanceTimersByTime(100);
+    });
+
+    fireEvent.keyDown(document, { key: 'ArrowRight' });
+    settle();
+
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    settle();
+
+    expect(screen.queryByRole('dialog')).not.toBeNull();
+    expect(getViewerImage()?.getAttribute('src')).toBe('https://example.com/b.png');
+  });
+
+  it('resets the wheel-close accumulator on switch instead of carrying it over', () => {
+    renderWithMotion(
+      <PreviewGroup>
+        <ImageComponent alt="a" src="https://example.com/a.png" />
+        <ImageComponent alt="b" src="https://example.com/b.png" />
+      </PreviewGroup>,
+    );
+    stubThumbnail('a');
+    stubThumbnail('b');
+
+    clickThumbnail('a');
+    settle();
+
+    wheel({ deltaY: 80 });
+    settle();
+    expect(screen.queryByRole('dialog')).not.toBeNull();
+
+    fireEvent.click(getNextButton() as HTMLElement);
+    settle();
+    expect(getViewerImage()?.getAttribute('src')).toBe('https://example.com/b.png');
+
+    wheel({ deltaY: 30 });
+    settle();
+    expect(screen.queryByRole('dialog')).not.toBeNull();
+
+    wheel({ deltaY: 100 });
+    settle();
+    expect(screen.queryByRole('dialog')).toBeNull();
+  });
 });

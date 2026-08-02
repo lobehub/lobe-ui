@@ -17,14 +17,13 @@ export interface UseViewerGesturesOptions {
   isClean: boolean;
   isZoomed: boolean;
   onClose: () => void;
-  onNext?: () => void;
-  onPrev?: () => void;
   reset: () => void;
   zoomIn: () => void;
   zoomOut: () => void;
 }
 
 export interface UseViewerGesturesResult {
+  cancelPendingClose: () => void;
   cursor: ViewerCursor;
   imageRef: (node: HTMLImageElement | null) => void;
   onImageClick: (event: MouseEvent<HTMLElement>) => void;
@@ -47,7 +46,7 @@ const capturePointer = (node: Element, pointerId: number) => {
   if (typeof node.setPointerCapture === 'function') node.setPointerCapture(pointerId);
 };
 
-const isTypingTarget = (target: EventTarget | null) =>
+export const isTypingTarget = (target: EventTarget | null) =>
   target instanceof HTMLElement &&
   (target.isContentEditable || ['INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName));
 
@@ -59,8 +58,6 @@ export const useViewerGestures = ({
   isClean,
   isZoomed,
   onClose,
-  onNext,
-  onPrev,
   reset,
   zoomIn,
   zoomOut,
@@ -113,16 +110,6 @@ export const useViewerGestures = ({
           reset();
           break;
         }
-        case 'ArrowLeft': {
-          if (!onPrev) return;
-          onPrev();
-          break;
-        }
-        case 'ArrowRight': {
-          if (!onNext) return;
-          onNext();
-          break;
-        }
         default: {
           return;
         }
@@ -131,7 +118,7 @@ export const useViewerGestures = ({
     };
     document.addEventListener('keydown', listener);
     return () => document.removeEventListener('keydown', listener);
-  }, [onNext, onPrev, reset, zoomIn, zoomOut]);
+  }, [reset, zoomIn, zoomOut]);
 
   const onPointerDown = useCallback(
     (event: PointerEvent<HTMLElement>) => {
@@ -205,6 +192,7 @@ export const useViewerGestures = ({
   );
 
   return {
+    cancelPendingClose,
     cursor: isZoomed ? (panning ? 'grabbing' : 'grab') : 'zoom-out',
     imageRef,
     onImageClick,

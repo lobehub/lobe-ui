@@ -1,8 +1,9 @@
 import type { MotionValue } from 'motion/react';
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 import type { Size } from './geometry';
 import type { PreviewEntry } from './registry';
+import { isTypingTarget } from './useViewerGestures';
 
 export const readNatural = (element: HTMLImageElement): Size => {
   if (element.naturalWidth > 0 && element.naturalHeight > 0)
@@ -12,10 +13,12 @@ export const readNatural = (element: HTMLImageElement): Size => {
 };
 
 export interface UseGalleryNavOptions {
+  cancelPendingClose: () => void;
   currentIndex: number;
   entries: PreviewEntry[];
   flipX: MotionValue<boolean>;
   flipY: MotionValue<boolean>;
+  resetCloseTracking: () => void;
   rotate: MotionValue<number>;
   scale: MotionValue<number>;
   setCurrentIndex: (index: number) => void;
@@ -35,10 +38,12 @@ export interface UseGalleryNavResult {
 }
 
 export const useGalleryNav = ({
+  cancelPendingClose,
   currentIndex,
   entries,
   flipX,
   flipY,
+  resetCloseTracking,
   rotate,
   scale,
   setCurrentIndex,
@@ -57,11 +62,22 @@ export const useGalleryNav = ({
   const switchToRef = useRef(switchTo);
   switchToRef.current = switchTo;
 
+  const cancelPendingCloseRef = useRef(cancelPendingClose);
+  cancelPendingCloseRef.current = cancelPendingClose;
+
+  const resetCloseTrackingRef = useRef(resetCloseTracking);
+  resetCloseTrackingRef.current = resetCloseTracking;
+
   const goTo = useCallback(
     (nextIndex: number) => {
       if (switchingRef.current) return;
       if (nextIndex < 0 || nextIndex >= entries.length || nextIndex === indexRef.current) return;
       switchingRef.current = true;
+      // A switch changes the displayed image out from under any pending
+      // click-to-close or wheel-close accumulation armed for the old image,
+      // so both must clear at this single choke point every switch goes through.
+      cancelPendingCloseRef.current();
+      resetCloseTrackingRef.current();
       switchToRef.current(() => {
         const nextEntry = entries[nextIndex];
         setCurrentIndex(nextIndex);
@@ -95,6 +111,19 @@ export const useGalleryNav = ({
 
   const prev = useCallback(() => goTo(indexRef.current - 1), [goTo]);
   const next = useCallback(() => goTo(indexRef.current + 1), [goTo]);
+
+  useEffect(() => {
+    const listener = (event: KeyboardEvent) => {
+      if (event.altKey || event.ctrlKey || event.metaKey || event.defaultPrevented) return;
+      if (isTypingTarget(event.target)) return;
+      if (event.key === 'ArrowLeft') prev();
+      else if (event.key === 'ArrowRight') next();
+      else return;
+      event.preventDefault();
+    };
+    document.addEventListener('keydown', listener);
+    return () => document.removeEventListener('keydown', listener);
+  }, [next, prev]);
 
   return {
     hasNext: currentIndex < entries.length - 1,
