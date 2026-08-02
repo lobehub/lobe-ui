@@ -40,74 +40,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       width: auto;
       height: auto;
     `,
-    mask: css`
-      ${lobeStaticStylish.blur};
-      backdrop-filter: blur(8px);
-    `,
     outlined: lobeStaticStylish.variantOutlinedWithoutHover,
-    preview: css`
-      .${prefixCls}-image-preview-mask {
-        background: color-mix(in srgb, ${cssVar.colorBgLayout} 90%, transparent);
-      }
-
-      .${prefixCls}-image-preview-close {
-        color: ${cssVar.colorTextDescription};
-        background: ${cssVar.colorBgContainer};
-        box-shadow: ${cssVar.boxShadowTertiary};
-
-        svg {
-          stroke: ${cssVar.colorTextDescription};
-        }
-
-        &:hover {
-          color: ${cssVar.colorText};
-          background: ${cssVar.colorBgContainer};
-
-          svg {
-            stroke: ${cssVar.colorText};
-          }
-        }
-      }
-
-      .${prefixCls}-image-preview-img {
-        width: 100%;
-      }
-
-      .${prefixCls}-image-preview-switch {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        width: 32px;
-        height: 32px;
-        padding: 0;
-
-        color: ${cssVar.colorTextDescription};
-
-        background: ${cssVar.colorBgContainer};
-        box-shadow: ${cssVar.boxShadowTertiary};
-
-        svg {
-          transform: scale(0.75);
-        }
-
-        &:hover {
-          color: ${cssVar.colorText};
-          background: ${cssVar.colorBgContainer};
-        }
-      }
-
-      .${prefixCls}-image-preview-switch-disabled {
-        display: none;
-      }
-
-      .ant-image-preview-progress {
-        color: ${cssVar.colorTextDescription};
-      }
-
-      img {
-        min-width: 100%;
-      }
+    previewable: css`
+      cursor: zoom-in;
     `,
     root: css`
       cursor: pointer;
