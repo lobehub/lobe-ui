@@ -2,13 +2,14 @@
 
 import { Toast as BaseToast } from '@base-ui/react/toast';
 import { cx } from 'antd-style';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useId, useState, useSyncExternalStore } from 'react';
 
 import { useIsClient } from '@/hooks/useIsClient';
 import { useAppElement } from '@/ThemeProvider';
 
 import { acquireLayerZIndex } from '../zIndex';
 import { ToastContext } from './context';
+import { isActiveToastHost, registerToastHost, subscribeToastHost } from './hostGuard';
 import { viewportVariants } from './style';
 import ToastItem from './Toast';
 import {
@@ -274,21 +275,32 @@ export const ToastHost = memo(
     const isClient = useIsClient();
     const appElement = useAppElement();
     const [viewportZIndex, setViewportZIndex] = useState<number | undefined>(undefined);
+    const hostId = useId();
+
+    useEffect(() => registerToastHost(hostId), [hostId]);
+
+    const isActive = useSyncExternalStore(
+      subscribeToastHost,
+      () => isActiveToastHost(hostId),
+      () => false,
+    );
 
     useEffect(() => {
+      if (!isActive) return;
       globalState = {
         duration,
         limit,
         position,
         swipeDirection,
       };
-    }, [duration, limit, position, swipeDirection]);
+    }, [duration, limit, position, swipeDirection, isActive]);
 
     useEffect(() => {
+      if (!isActive) return;
       setViewportZIndex(acquireLayerZIndex('toast'));
-    }, []);
+    }, [isActive]);
 
-    if (!isClient) return null;
+    if (!isClient || !isActive) return null;
 
     const container = root ?? appElement ?? document.body;
 
@@ -313,3 +325,16 @@ ToastHost.displayName = 'ToastHost';
 
 // Hook to use toast manager
 export const useToast = () => toast;
+
+export const __resetToastStateForTests = (): void => {
+  globalState = {
+    duration: 5000,
+    limit: 5,
+    position: 'bottom-right',
+    swipeDirection: ['down', 'right'],
+  };
+  for (const position of ALL_POSITIONS) {
+    toastManagers[position] = BaseToast.createToastManager();
+    activeToastIds[position].clear();
+  }
+};
