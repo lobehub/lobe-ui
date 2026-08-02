@@ -1,8 +1,9 @@
 import { act, render, screen } from '@testing-library/react';
-import { afterEach, beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { __resetToastHostRegistryForTests } from './hostGuard';
 import { __resetToastStateForTests, toast, ToastHost } from './imperative';
+import { markToastHostNotReady, markToastHostReady } from './pendingQueue';
 
 beforeEach(() => {
   __resetToastHostRegistryForTests();
@@ -79,5 +80,60 @@ describe('ToastHost single-instance guard', () => {
     });
 
     expect(await screen.findAllByText('copied after close')).toHaveLength(1);
+  });
+});
+
+describe('toasts fired during a handoff window are not lost', () => {
+  // RTL's unmount() flushes React's effect cascade (unregister -> promote ->
+  // remount -> subscribe -> ready) to completion inside its own act() before
+  // returning, so a real live handoff never leaves an externally-observable
+  // gap in this synchronous test harness. These tests instead exercise the
+  // same runWhenToastHostReady/markToastHostReady primitives ToastHost's own
+  // effect calls, constructing scenarios where "nothing is listening yet" is
+  // genuinely true at the moment toast.success() runs.
+
+  it('a toast fired before any host has ever mounted is queued and delivered once a host mounts', async () => {
+    act(() => {
+      toast.success('queued before any host');
+    });
+    expect(screen.queryAllByText('queued before any host')).toHaveLength(0);
+
+    render(<ToastHost />);
+
+    expect(await screen.findAllByText('queued before any host')).toHaveLength(1);
+  });
+
+  it('a toast fired while the active host is momentarily not ready is delivered exactly once when readiness is restored', async () => {
+    render(<ToastHost />);
+
+    act(() => {
+      markToastHostNotReady();
+      toast.success('mid-handoff');
+    });
+    expect(screen.queryAllByText('mid-handoff')).toHaveLength(0);
+
+    act(() => {
+      markToastHostReady();
+    });
+
+    expect(await screen.findAllByText('mid-handoff')).toHaveLength(1);
+  });
+
+  describe('TTL', () => {
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    it('drops a toast that sat queued past the TTL instead of delivering it once a host finally mounts', async () => {
+      vi.useFakeTimers();
+
+      toast.success('too stale');
+      vi.advanceTimersByTime(6000);
+
+      render(<ToastHost />);
+      await act(async () => {});
+
+      expect(screen.queryAllByText('too stale')).toHaveLength(0);
+    });
   });
 });

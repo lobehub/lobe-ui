@@ -10,6 +10,12 @@ import { useAppElement } from '@/ThemeProvider';
 import { acquireLayerZIndex } from '../zIndex';
 import { ToastContext } from './context';
 import { isActiveToastHost, registerToastHost, subscribeToastHost } from './hostGuard';
+import {
+  __resetPendingToastQueueForTests,
+  markToastHostNotReady,
+  markToastHostReady,
+  runWhenToastHostReady,
+} from './pendingQueue';
 import { viewportVariants } from './style';
 import ToastItem from './Toast';
 import {
@@ -67,6 +73,10 @@ const activeToastIds: Record<ToastPosition, Set<string>> = {
 
 const getManager = (position: ToastPosition) => toastManagers[position];
 
+let toastIdCounter = 0;
+const generateToastId = (): string =>
+  `toast-${Date.now().toString(36)}-${(toastIdCounter++).toString(36)}`;
+
 const normalizeOptions = (
   optionsOrMessage: Omit<ToastOptions, 'type'> | string,
   type: ToastType,
@@ -84,33 +94,46 @@ const normalizeOptions = (
 };
 
 const createToastInstance = (id: string, position: ToastPosition): ToastInstance => ({
-  close: () => getManager(position).close(id),
+  close: () => runWhenToastHostReady(() => getManager(position).close(id)),
   id,
   update: (options) => {
-    getManager(position).update(id, {
-      data: options,
-      description: options.description,
-      title: options.title,
-    });
+    runWhenToastHostReady(() =>
+      getManager(position).update(id, {
+        data: options,
+        description: options.description,
+        title: options.title,
+      }),
+    );
   },
 });
 
+// createToastManager() is a stateless emitter (see @base-ui/react/toast/createToastManager):
+// add/close/update just broadcast to whatever is currently subscribed, and the
+// ToastProvider that owns the real toast state only subscribes from a passive
+// useEffect. Calls made while no host is ready (e.g. mid-handoff between the
+// previously-active ToastHost unmounting and its successor's Provider
+// subscribing) would otherwise be silently dropped, so every manager call is
+// routed through runWhenToastHostReady to queue until a host is listening.
 const addToast = (options: ToastOptions): ToastInstance => {
   const position = options.placement ?? globalState.position;
   const manager = getManager(position);
   const onRemove = options.onRemove;
-  const id = manager.add({
-    data: options,
-    description: options.description,
-    onClose: options.onClose,
-    onRemove: () => {
-      activeToastIds[position].delete(id);
-      onRemove?.();
-    },
-    timeout: options.duration ?? globalState.duration,
-    title: options.title,
-  });
+  const id = generateToastId();
   activeToastIds[position].add(id);
+  runWhenToastHostReady(() => {
+    manager.add({
+      id,
+      data: options,
+      description: options.description,
+      onClose: options.onClose,
+      onRemove: () => {
+        activeToastIds[position].delete(id);
+        onRemove?.();
+      },
+      timeout: options.duration ?? globalState.duration,
+      title: options.title,
+    });
+  });
   return createToastInstance(id, position);
 };
 
@@ -119,16 +142,18 @@ const dismissToast = (id?: string) => {
     // Try to close from all managers since we don't know which position the toast is in
     for (const [position, manager] of Object.entries(toastManagers)) {
       activeToastIds[position as ToastPosition].delete(id);
-      manager.close(id);
+      runWhenToastHostReady(() => manager.close(id));
     }
   } else {
     // Clear all toasts
     for (const [position, manager] of Object.entries(toastManagers)) {
       const ids = Array.from(activeToastIds[position as ToastPosition]);
-      for (const toastId of ids) {
-        manager.close(toastId);
-      }
       activeToastIds[position as ToastPosition].clear();
+      runWhenToastHostReady(() => {
+        for (const toastId of ids) {
+          manager.close(toastId);
+        }
+      });
     }
   }
 };
@@ -300,6 +325,17 @@ export const ToastHost = memo(
       setViewportZIndex(acquireLayerZIndex('toast'));
     }, [isActive]);
 
+    useEffect(() => {
+      if (!isActive || !isClient) return undefined;
+      // Runs after the six BaseToast.Provider children below have committed
+      // and subscribed (child effects run before the parent's), so the
+      // managers are guaranteed to have a live listener once this fires.
+      markToastHostReady();
+      return () => {
+        markToastHostNotReady();
+      };
+    }, [isActive, isClient]);
+
     if (!isClient || !isActive) return null;
 
     const container = root ?? appElement ?? document.body;
@@ -337,4 +373,5 @@ export const __resetToastStateForTests = (): void => {
     toastManagers[position] = BaseToast.createToastManager();
     activeToastIds[position].clear();
   }
+  __resetPendingToastQueueForTests();
 };
