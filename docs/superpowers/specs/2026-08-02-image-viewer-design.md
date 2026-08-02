@@ -62,6 +62,7 @@ Principles:
 ### Close (fit state)
 
 - Click image / click backdrop / Esc / accumulated wheel `|deltaY| ≥ 100` → FLIP back to the thumbnail's **freshly re-measured** rect.
+- Image-click close defers by a ~250ms double-click window (a second click within it cancels the pending close and performs double-click zoom — `click` fires before `dblclick`, so an instant close would make double-click zoom unreachable). Backdrop / Esc / wheel / close button close immediately, no deferral.
 - Thumbnail no longer visible (scrolled away, virtualized out) → fall back to centered fade-out.
 - Body scroll is locked while open (Dialog); "scroll to close" listens to wheel gestures, the page does not actually scroll.
 
