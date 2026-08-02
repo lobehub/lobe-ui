@@ -133,6 +133,59 @@ describe('handleWheel', () => {
     expect(onCloseRequest).not.toHaveBeenCalled();
   });
 
+  it('plain wheel does nothing (no zoom, no close) while rotated at scale 1', () => {
+    const onCloseRequest = vi.fn();
+    const { result } = setup({ onCloseRequest });
+    act(() => {
+      result.current.rotate.set(90);
+    });
+    act(() => {
+      result.current.handleWheel(wheelEvent({ deltaY: 150 }));
+    });
+    expect(result.current.scale.get()).toBe(1);
+    expect(onCloseRequest).not.toHaveBeenCalled();
+  });
+
+  it('plain wheel does nothing (no zoom, no close) while flipped at scale 1', () => {
+    const onCloseRequest = vi.fn();
+    const { result } = setup({ onCloseRequest });
+    act(() => {
+      result.current.flipX.set(true);
+    });
+    act(() => {
+      result.current.handleWheel(wheelEvent({ deltaY: 150 }));
+    });
+    expect(result.current.scale.get()).toBe(1);
+    expect(onCloseRequest).not.toHaveBeenCalled();
+  });
+
+  it('ctrl+wheel still anchored-zooms while rotated at scale 1', () => {
+    const { result } = setup();
+    act(() => {
+      result.current.rotate.set(90);
+    });
+    act(() => {
+      result.current.handleWheel(wheelEvent({ ctrlKey: true, deltaY: -100 }));
+    });
+    expect(result.current.scale.get()).toBeCloseTo(1.2214027581601699, 10);
+  });
+
+  it('regression: rotateRight resets scale to 1 but does not arm the close accumulator', () => {
+    const onCloseRequest = vi.fn();
+    const { result } = setup({ onCloseRequest });
+    act(() => {
+      result.current.rotateRight();
+    });
+    expect(result.current.scale.get()).toBe(1);
+    act(() => {
+      result.current.handleWheel(wheelEvent({ deltaY: 60 }));
+    });
+    act(() => {
+      result.current.handleWheel(wheelEvent({ deltaY: 60 }));
+    });
+    expect(onCloseRequest).not.toHaveBeenCalled();
+  });
+
   it('clamps a zoom-out overshoot to exactly 1 and springs the pan back to zero', () => {
     const { result } = setup();
     act(() => {
@@ -350,7 +403,7 @@ describe('flipHorizontal / flipVertical', () => {
 });
 
 describe('reset', () => {
-  it('animates scale, x, y back to defaults and instantly clears rotate and flips', () => {
+  it('animates scale, x, y, rotate back to defaults and instantly clears flips', () => {
     const { result } = setup();
     act(() => {
       result.current.scale.set(3);
@@ -374,6 +427,7 @@ describe('reset', () => {
     expect(animateMock).toHaveBeenCalledWith(result.current.scale, 1, expect.any(Object));
     expect(animateMock).toHaveBeenCalledWith(result.current.x, 0, expect.any(Object));
     expect(animateMock).toHaveBeenCalledWith(result.current.y, 0, expect.any(Object));
+    expect(animateMock).toHaveBeenCalledWith(result.current.rotate, 0, expect.any(Object));
   });
 });
 

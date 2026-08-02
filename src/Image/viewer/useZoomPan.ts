@@ -98,15 +98,20 @@ export const useZoomPan = ({
   const disarmedRef = useRef(false);
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const isCleanState = useCallback(
+    () => scale.get() === 1 && rotate.get() === 0 && !flipX.get() && !flipY.get(),
+    [flipX, flipY, rotate, scale],
+  );
+
   const computeDerived = useCallback((): DerivedState => {
     const currentScale = scale.get();
     return {
       canZoomIn: currentScale < maxScaleRef.current,
       canZoomOut: currentScale > 1,
-      isClean: currentScale === 1 && rotate.get() === 0 && !flipX.get() && !flipY.get(),
+      isClean: isCleanState(),
       isZoomed: currentScale > 1,
     };
-  }, [flipX, flipY, rotate, scale]);
+  }, [isCleanState, scale]);
 
   const [derived, setDerived] = useState<DerivedState>(computeDerived);
 
@@ -233,7 +238,7 @@ export const useZoomPan = ({
         return;
       }
 
-      if (disarmedRef.current) return;
+      if (disarmedRef.current || !isCleanState()) return;
 
       closeAccumRef.current += Math.abs(event.deltaY);
       if (closeAccumRef.current >= WHEEL_CLOSE_THRESHOLD) {
@@ -241,7 +246,7 @@ export const useZoomPan = ({
         onCloseRequestRef.current?.();
       }
     },
-    [applyTransform, getFitRect, scale, x, y],
+    [applyTransform, getFitRect, isCleanState, scale, x, y],
   );
 
   const rotateBy = useCallback(
@@ -269,7 +274,7 @@ export const useZoomPan = ({
     animate(scale, 1, RESET_TRANSITION);
     animate(x, 0, RESET_TRANSITION);
     animate(y, 0, RESET_TRANSITION);
-    rotate.set(0);
+    animate(rotate, 0, RESET_TRANSITION);
     flipX.set(false);
     flipY.set(false);
   }, [flipX, flipY, rotate, scale, x, y]);
@@ -295,10 +300,10 @@ export const useZoomPan = ({
     animate(y, clamped.y, RESET_TRANSITION);
   }, [getFitRect, scale, x, y]);
 
-  const escIntent = useCallback((): 'reset' | 'close' => {
-    const isClean = scale.get() === 1 && rotate.get() === 0 && !flipX.get() && !flipY.get();
-    return isClean ? 'close' : 'reset';
-  }, [flipX, flipY, rotate, scale]);
+  const escIntent = useCallback(
+    (): 'reset' | 'close' => (isCleanState() ? 'close' : 'reset'),
+    [isCleanState],
+  );
 
   const setViewport = useCallback(
     (next: Size) => {
