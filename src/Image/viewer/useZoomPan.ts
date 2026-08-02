@@ -2,7 +2,7 @@ import type { MotionValue } from 'motion/react';
 import { animate, motionValue } from 'motion/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import type { Point, Rect, Size, TransformState } from './geometry';
+import type { Point, Rect, Rotation, Size, TransformState } from './geometry';
 import {
   anchoredZoom,
   clampPan,
@@ -55,6 +55,7 @@ export interface UseZoomPanResult {
   rotate: MotionValue<number>;
   rotateLeft: () => void;
   rotateRight: () => void;
+  rotation: Rotation;
   scale: MotionValue<number>;
   setNatural: (natural: Size) => void;
   setViewport: (viewport: Size) => void;
@@ -69,6 +70,7 @@ interface DerivedState {
   canZoomOut: boolean;
   isClean: boolean;
   isZoomed: boolean;
+  rotation: Rotation;
 }
 
 export const useZoomPan = ({
@@ -110,8 +112,9 @@ export const useZoomPan = ({
       canZoomOut: currentScale > 1,
       isClean: isCleanState(),
       isZoomed: currentScale > 1,
+      rotation: normalizeRotation(rotate.get()),
     };
-  }, [isCleanState, scale]);
+  }, [isCleanState, rotate, scale]);
 
   const [derived, setDerived] = useState<DerivedState>(computeDerived);
 
@@ -122,7 +125,8 @@ export const useZoomPan = ({
         prev.canZoomIn === next.canZoomIn &&
         prev.canZoomOut === next.canZoomOut &&
         prev.isClean === next.isClean &&
-        prev.isZoomed === next.isZoomed
+        prev.isZoomed === next.isZoomed &&
+        prev.rotation === next.rotation
       ) {
         return prev;
       }
@@ -349,6 +353,7 @@ export const useZoomPan = ({
     rotate,
     rotateLeft,
     rotateRight,
+    rotation: derived.rotation,
     scale,
     setNatural,
     setViewport,

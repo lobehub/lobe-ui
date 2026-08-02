@@ -16,6 +16,7 @@ import {
 import { useMergeRefs } from 'react-merge-refs';
 
 import ActionIcon from '@/ActionIcon';
+import { ToastHost } from '@/base-ui/Toast';
 import { useLayerZIndex } from '@/base-ui/zIndex';
 import imageMessages from '@/i18n/resources/en/image';
 import { useTranslation } from '@/i18n/useTranslation';
@@ -25,6 +26,7 @@ import { useAppElement } from '@/ThemeProvider';
 import { styles } from '../style';
 import { computeFit, type Size } from './geometry';
 import { beginClosePreview, endClosePreview, type PreviewEntry } from './registry';
+import Toolbar from './Toolbar';
 import { useFlipTransition } from './useFlipTransition';
 import { useViewerGestures } from './useViewerGestures';
 import { useZoomPan } from './useZoomPan';
@@ -59,18 +61,17 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
   const [natural, setNatural] = useState<Size>(() => readNatural(element));
   const [viewport, setViewport] = useState<Size>(readViewport);
 
-  const fitRect = useMemo(() => computeFit(natural, viewport, 0), [natural, viewport]);
-  const fitRectRef = useRef(fitRect);
-  fitRectRef.current = fitRect;
-  const getFitRect = useCallback(() => fitRectRef.current, []);
-
   const closeRef = useRef<(() => void) | null>(null);
   const requestClose = useCallback(() => closeRef.current?.(), []);
 
   const {
+    canZoomIn,
+    canZoomOut,
     dragBy,
     dragEnd,
     escIntent,
+    flipHorizontal,
+    flipVertical,
     flipX,
     flipY,
     handleDoubleClick,
@@ -79,6 +80,9 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
     isZoomed,
     reset,
     rotate,
+    rotateLeft,
+    rotateRight,
+    rotation,
     scale,
     setNatural: syncZoomNatural,
     setViewport: syncZoomViewport,
@@ -92,6 +96,14 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
     onCloseRequest: requestClose,
     viewport,
   });
+
+  const fitRect = useMemo(
+    () => computeFit(natural, viewport, rotation),
+    [natural, viewport, rotation],
+  );
+  const fitRectRef = useRef(fitRect);
+  fitRectRef.current = fitRect;
+  const getFitRect = useCallback(() => fitRectRef.current, []);
 
   const transform = useMemo(
     () => ({ flipX, flipY, rotate, scale, x, y }),
@@ -246,8 +258,26 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
               title={t('image.close')}
               onClick={handleClose}
             />
+            <Toolbar
+              canZoomIn={canZoomIn}
+              canZoomOut={canZoomOut}
+              fitRect={fitRect}
+              flipHorizontal={flipHorizontal}
+              flipVertical={flipVertical}
+              natural={natural}
+              reset={reset}
+              rotateLeft={rotateLeft}
+              rotateRight={rotateRight}
+              rotation={rotation}
+              scale={scale}
+              source={source}
+              toolbarAddon={options.toolbarAddon}
+              zoomIn={zoomIn}
+              zoomOut={zoomOut}
+            />
           </div>
         </Dialog.Popup>
+        <ToastHost root={appElement ?? undefined} />
       </Dialog.Portal>
     </Dialog.Root>
   );

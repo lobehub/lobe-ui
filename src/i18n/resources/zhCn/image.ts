@@ -12,4 +12,5 @@ export default {
   'image.rotateRight': '向右旋转',
   'image.zoomIn': '放大',
   'image.zoomOut': '缩小',
+  'image.zoomReset': '重置缩放',
 } as const;

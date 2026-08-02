@@ -3,8 +3,6 @@ import { cva } from 'class-variance-authority';
 
 import { lobeStaticStylish } from '@/styles';
 
-const prefixCls = 'ant';
-
 export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     actionsHidden: css`
@@ -57,10 +55,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 
       line-height: 1;
 
-      .${prefixCls}-image-cover {
-        display: none !important;
-      }
-
       &:hover {
         .actions-hidden {
           opacity: 1;
@@ -69,9 +63,38 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     `,
     toolbar: css`
       ${lobeStaticStylish.variantOutlinedWithoutHover};
+      pointer-events: auto;
+
+      position: absolute;
+      inset-block-end: 16px;
+      inset-inline-start: 50%;
+      transform: translateX(-50%);
+
       padding: 4px;
       border-color: ${cssVar.colorFillTertiary};
       border-radius: ${cssVar.borderRadiusLG};
+    `,
+    toolbarPercentage: css`
+      cursor: pointer;
+      user-select: none;
+
+      min-width: 44px;
+      height: 36px;
+      padding-inline: 8px;
+      border-radius: ${cssVar.borderRadius};
+
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      color: ${cssVar.colorTextTertiary};
+
+      transition:
+        color 400ms ${cssVar.motionEaseOut},
+        background 100ms ${cssVar.motionEaseOut};
+
+      &:hover {
+        color: ${cssVar.colorTextSecondary};
+        background: ${cssVar.colorFillTertiary};
+      }
     `,
 
     viewerBackdrop: css`

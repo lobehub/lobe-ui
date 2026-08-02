@@ -12,4 +12,5 @@ export default {
   'image.rotateRight': 'Rotate Right',
   'image.zoomIn': 'Zoom In',
   'image.zoomOut': 'Zoom Out',
+  'image.zoomReset': 'Reset Zoom',
 } as const;
