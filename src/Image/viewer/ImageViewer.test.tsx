@@ -284,7 +284,7 @@ describe('closing', () => {
 });
 
 describe('focus restoration', () => {
-  it('returns focus to the element focused before the thumbnail was clicked', () => {
+  it('returns focus to the element focused before the thumbnail was clicked', async () => {
     renderWithMotion(
       <div>
         <button type="button">External</button>
@@ -300,6 +300,12 @@ describe('focus restoration', () => {
     stubNatural(thumbnail, 400, 300);
     stubRect(thumbnail, THUMB_RECT);
     fireEvent.pointerDown(thumbnail);
+    // jsdom never replicates the browser's native mousedown-blurs-to-body
+    // default action, so force it here — otherwise this test would pass even
+    // without the captured-ref restoration wired up at all, since the button
+    // would still happen to hold focus by the time the dialog closes.
+    externalButton.blur();
+    expect(document.activeElement).toBe(document.body);
     fireEvent.click(thumbnail);
     flushAnimations();
 
@@ -307,22 +313,37 @@ describe('focus restoration', () => {
 
     fireEvent.click(getBackdrop() as HTMLElement);
     flushAnimations();
+    // Base UI's own focus restoration runs inside a queueMicrotask in the
+    // FloatingFocusManager's unmount cleanup, which the synchronous
+    // flushAnimations() above does not drain.
+    await act(async () => {
+      await Promise.resolve();
+    });
 
     expect(screen.queryByRole('dialog')).toBeNull();
     expect(document.activeElement).toBe(externalButton);
   });
 
-  it('does not force focus anywhere when nothing was focused beforehand', () => {
+  it('does not steal focus to the first tabbable element when nothing meaningful was focused beforehand', async () => {
     renderWithMotion(<ImageComponent alt="cat" src="https://example.com/cat.png" />);
     (document.activeElement as HTMLElement | null)?.blur();
+    expect(document.activeElement).toBe(document.body);
 
-    openViewer();
+    const thumbnail = screen.getByAltText('cat') as HTMLImageElement;
+    stubNatural(thumbnail, 400, 300);
+    stubRect(thumbnail, THUMB_RECT);
+    fireEvent.pointerDown(thumbnail);
+    fireEvent.click(thumbnail);
     flushAnimations();
 
     fireEvent.click(getBackdrop() as HTMLElement);
     flushAnimations();
+    await act(async () => {
+      await Promise.resolve();
+    });
 
     expect(screen.queryByRole('dialog')).toBeNull();
+    expect(document.activeElement).toBe(document.body);
   });
 });
 

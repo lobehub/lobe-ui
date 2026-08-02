@@ -25,6 +25,7 @@ const setup = (overrides: Partial<UseRefitTransitionOptions> = {}) => {
   const y = motionValue(0);
   const options: UseRefitTransitionOptions = {
     animated: true,
+    isTransitioning: () => false,
     natural: { height: 320, width: 480 },
     rotation: 0,
     scale,
@@ -93,5 +94,30 @@ describe('useRefitTransition', () => {
     const { options, rerender } = setup({ natural: { height: 1000, width: 2000 } });
     rerender({ ...options, natural: { height: 2000, width: 4000 } });
     expect(animateMock).not.toHaveBeenCalled();
+  });
+
+  it('never animates scale/x/y while a FLIP open, close, or gallery switch is in flight', () => {
+    const { options, rerender, scale, x, y } = setup({ isTransitioning: () => true });
+    rerender({ ...options, isTransitioning: () => true, natural: { height: 1280, width: 1920 } });
+
+    expect(animateMock).not.toHaveBeenCalled();
+    expect(scale.get()).toBe(1);
+    expect(x.get()).toBe(0);
+    expect(y.get()).toBe(0);
+  });
+
+  it('resumes gliding once the in-flight transition settles for a later natural-size change', () => {
+    const { options, rerender, scale } = setup({ isTransitioning: () => true });
+    rerender({ ...options, isTransitioning: () => true, natural: { height: 1280, width: 1920 } });
+    expect(animateMock).not.toHaveBeenCalled();
+
+    rerender({
+      ...options,
+      isTransitioning: () => false,
+      natural: { height: 600, width: 900 },
+    });
+
+    expect(animateMock).toHaveBeenCalledTimes(3);
+    expect(scale.get()).toBe(1);
   });
 });

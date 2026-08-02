@@ -7,6 +7,7 @@ import { OPEN_SPRING } from './useFlipTransition';
 
 export interface UseRefitTransitionOptions {
   animated: boolean;
+  isTransitioning: () => boolean;
   natural: Size;
   rotation: Rotation;
   scale: MotionValue<number>;
@@ -17,6 +18,7 @@ export interface UseRefitTransitionOptions {
 
 export const useRefitTransition = ({
   animated,
+  isTransitioning,
   natural,
   rotation,
   scale,
@@ -32,6 +34,15 @@ export const useRefitTransition = ({
     if (previousNatural.width === natural.width && previousNatural.height === natural.height)
       return;
     if (!animated) return;
+    // A FLIP open/close spring or a gallery switch is already animating these
+    // same scale/x/y values. Calling animate() on them here would silently
+    // cancel that in-flight animation (motion's animate() stops the prior one
+    // without firing its onComplete), which can park the viewer mid-transform
+    // on open or, worse, permanently wedge an invisible dialog open on close.
+    // Skip outright: the open spring always targets identity relative to the
+    // *current* fit rect, so it self-corrects once it settles; a switch resets
+    // the transform itself, and instant re-fit is correct there.
+    if (isTransitioning()) return;
 
     const previousFit = computeFit(previousNatural, viewport, rotation);
     const nextFit = computeFit(natural, viewport, rotation);
@@ -62,5 +73,5 @@ export const useRefitTransition = ({
     animate(scale, targetScale, OPEN_SPRING);
     animate(x, targetX, OPEN_SPRING);
     animate(y, targetY, OPEN_SPRING);
-  }, [animated, natural, rotation, scale, viewport, x, y]);
+  }, [animated, isTransitioning, natural, rotation, scale, viewport, x, y]);
 };

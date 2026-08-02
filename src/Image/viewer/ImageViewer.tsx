@@ -103,9 +103,6 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
   fitRectRef.current = fitRect;
   const getFitRect = useCallback(() => fitRectRef.current, []);
 
-  useRefitTransition({ animated, natural, rotation, scale, viewport, x, y });
-  const finalFocus = useFinalFocus(openerFocusElement);
-
   const getCloseSource = useCallback(() => currentEntryRef.current.element, []);
 
   const transform = useMemo(
@@ -119,6 +116,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
     chromeRef,
     close,
     imageRef: flipImageRef,
+    isTransitioning,
     switchTo,
   } = useFlipTransition({
     animated,
@@ -128,6 +126,9 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
     source: openerEntry.element,
     transform,
   });
+
+  useRefitTransition({ animated, isTransitioning, natural, rotation, scale, viewport, x, y });
+  const finalFocus = useFinalFocus(openerFocusElement);
 
   const isCleanRef = useRef(isClean);
   isCleanRef.current = isClean;

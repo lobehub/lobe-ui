@@ -9,6 +9,7 @@ const FADE = { duration: 0.15, ease: 'easeOut' as const };
 const CHROME_FADE = { delay: 0.15, duration: 0.2, ease: 'easeOut' as const };
 const FADE_SCALE = 0.92;
 const SWITCH_FADE_SCALE = 0.96;
+const SETTLE_FALLBACK_MS = 1000;
 
 interface Animation {
   stop: () => void;
@@ -41,6 +42,7 @@ export interface UseFlipTransitionResult {
   chromeRef: (node: HTMLElement | null) => void;
   close: (options?: CloseTransitionOptions) => void;
   imageRef: (node: HTMLImageElement | null) => void;
+  isTransitioning: () => boolean;
   switchTo: (apply: () => void) => void;
 }
 
@@ -133,6 +135,7 @@ export const useFlipTransition = ({
 
   const runningRef = useRef<Animation[]>([]);
   const closingRef = useRef(false);
+  const transitioningRef = useRef(true);
 
   const onClosedRef = useRef(onClosed);
   onClosedRef.current = onClosed;
@@ -151,6 +154,37 @@ export const useFlipTransition = ({
     for (const animation of runningRef.current) animation.stop();
     runningRef.current = [];
   }, []);
+
+  const isTransitioning = useCallback(() => transitioningRef.current, []);
+
+  // A future animate() call on one of these shared motion values (e.g. a refit
+  // triggered by a natural-size change) silently cancels whichever animation is
+  // already running on it — motion's animate() stops the prior one without ever
+  // firing its onComplete. Track completion by count for the common case, but
+  // always back it with a fallback timer so onSettled fires exactly once no
+  // matter what: a cancelled axis can never leave this permanently unfired.
+  const animateSettling = useCallback(
+    (axes: [MotionValue<number>, number][], onSettled: () => void) => {
+      let pending = axes.length;
+      let settled = false;
+      const finish = () => {
+        if (settled) return;
+        settled = true;
+        onSettled();
+      };
+      const onAxisComplete = () => {
+        pending -= 1;
+        if (pending === 0) finish();
+      };
+      run(
+        axes.map(([value, target]) =>
+          animate(value, target, { ...OPEN_SPRING, onComplete: onAxisComplete }),
+        ),
+      );
+      window.setTimeout(finish, SETTLE_FALLBACK_MS);
+    },
+    [run],
+  );
 
   useLayoutEffect(() => {
     const unsubscribes = [
@@ -174,6 +208,10 @@ export const useFlipTransition = ({
 
   useLayoutEffect(() => {
     const rect = animated ? measureSource(source) : null;
+    transitioningRef.current = true;
+    const markSettled = () => {
+      transitioningRef.current = false;
+    };
 
     if (rect) {
       const start = sourceTransform(rect, getFitRectRef.current());
@@ -181,16 +219,20 @@ export const useFlipTransition = ({
       transform.x.set(start.x);
       transform.y.set(start.y);
       opacity.image.set(1);
-      run([
-        animate(transform.scale, 1, OPEN_SPRING),
-        animate(transform.x, 0, OPEN_SPRING),
-        animate(transform.y, 0, OPEN_SPRING),
-      ]);
+      animateSettling(
+        [
+          [transform.scale, 1],
+          [transform.x, 0],
+          [transform.y, 0],
+        ],
+        markSettled,
+      );
     } else {
       opacity.image.set(0);
       if (animated) transform.scale.set(FADE_SCALE);
-      run([animate(opacity.image, 1, FADE)]);
+      run([animate(opacity.image, 1, { ...FADE, onComplete: markSettled })]);
       if (animated) run([animate(transform.scale, 1, FADE)]);
+      window.setTimeout(markSettled, SETTLE_FALLBACK_MS);
     }
 
     run([animate(opacity.backdrop, 1, FADE), animate(opacity.chrome, 1, CHROME_FADE)]);
@@ -198,44 +240,55 @@ export const useFlipTransition = ({
     return () => {
       stopAll();
     };
-  }, [animated, opacity, run, source, stopAll, transform]);
+  }, [animateSettling, animated, opacity, run, source, stopAll, transform]);
 
   const close = useCallback(
     (options?: CloseTransitionOptions) => {
       if (closingRef.current) return;
       closingRef.current = true;
+      transitioningRef.current = true;
       stopAll();
 
-      const finish = () => onClosedRef.current();
+      let finished = false;
+      const finish = () => {
+        if (finished) return;
+        finished = true;
+        transitioningRef.current = false;
+        onClosedRef.current();
+      };
       const rect = animated && !options?.fade ? measureSource(getCloseSourceRef.current()) : null;
 
       run([animate(opacity.backdrop, 0, FADE), animate(opacity.chrome, 0, FADE)]);
 
       if (rect) {
         const target = sourceTransform(rect, getFitRectRef.current());
-        let pending = 3;
-        const onAxisComplete = () => {
-          pending -= 1;
-          if (pending === 0) finish();
-        };
-        run([
-          animate(transform.x, target.x, { ...OPEN_SPRING, onComplete: onAxisComplete }),
-          animate(transform.y, target.y, { ...OPEN_SPRING, onComplete: onAxisComplete }),
-          animate(transform.scale, target.scale, { ...OPEN_SPRING, onComplete: onAxisComplete }),
-        ]);
+        animateSettling(
+          [
+            [transform.x, target.x],
+            [transform.y, target.y],
+            [transform.scale, target.scale],
+          ],
+          finish,
+        );
         return;
       }
 
       if (animated) run([animate(transform.scale, transform.scale.get() * FADE_SCALE, FADE)]);
       run([animate(opacity.image, 0, { ...FADE, onComplete: finish })]);
+      window.setTimeout(finish, SETTLE_FALLBACK_MS);
     },
-    [animated, opacity, run, stopAll, transform],
+    [animateSettling, animated, opacity, run, stopAll, transform],
   );
 
   const switchTo = useCallback(
     (apply: () => void) => {
       if (closingRef.current) return;
       stopAll();
+      transitioningRef.current = true;
+
+      const markSettled = () => {
+        transitioningRef.current = false;
+      };
 
       const tasks: Animation[] = [];
       if (animated) tasks.push(animate(transform.scale, SWITCH_FADE_SCALE, FADE));
@@ -244,11 +297,12 @@ export const useFlipTransition = ({
           ...FADE,
           onComplete: () => {
             apply();
-            run([animate(opacity.image, 1, FADE)]);
+            run([animate(opacity.image, 1, { ...FADE, onComplete: markSettled })]);
           },
         }),
       );
       run(tasks);
+      window.setTimeout(markSettled, SETTLE_FALLBACK_MS);
     },
     [animated, opacity, run, stopAll, transform],
   );
@@ -258,6 +312,7 @@ export const useFlipTransition = ({
     chromeRef: chrome.setNode,
     close,
     imageRef: image.setNode,
+    isTransitioning,
     switchTo,
   };
 };

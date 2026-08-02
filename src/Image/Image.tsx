@@ -108,8 +108,13 @@ const Image = memo<ImageProps>(
     );
 
     const handlePointerDown = useCallback(() => {
+      const active = document.activeElement;
       preOpenFocusRef.current =
-        document.activeElement instanceof HTMLElement ? document.activeElement : null;
+        active instanceof HTMLElement &&
+        active !== document.body &&
+        active !== document.documentElement
+          ? active
+          : null;
     }, []);
 
     const handleClick = useCallback(
