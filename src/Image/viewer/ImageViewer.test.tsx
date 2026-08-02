@@ -283,6 +283,49 @@ describe('closing', () => {
   });
 });
 
+describe('focus restoration', () => {
+  it('returns focus to the element focused before the thumbnail was clicked', () => {
+    renderWithMotion(
+      <div>
+        <button type="button">External</button>
+        <ImageComponent alt="cat" src="https://example.com/cat.png" />
+      </div>,
+    );
+
+    const externalButton = screen.getByText('External');
+    externalButton.focus();
+    expect(document.activeElement).toBe(externalButton);
+
+    const thumbnail = screen.getByAltText('cat') as HTMLImageElement;
+    stubNatural(thumbnail, 400, 300);
+    stubRect(thumbnail, THUMB_RECT);
+    fireEvent.pointerDown(thumbnail);
+    fireEvent.click(thumbnail);
+    flushAnimations();
+
+    expect(screen.getByRole('dialog')).toBeDefined();
+
+    fireEvent.click(getBackdrop() as HTMLElement);
+    flushAnimations();
+
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(document.activeElement).toBe(externalButton);
+  });
+
+  it('does not force focus anywhere when nothing was focused beforehand', () => {
+    renderWithMotion(<ImageComponent alt="cat" src="https://example.com/cat.png" />);
+    (document.activeElement as HTMLElement | null)?.blur();
+
+    openViewer();
+    flushAnimations();
+
+    fireEvent.click(getBackdrop() as HTMLElement);
+    flushAnimations();
+
+    expect(screen.queryByRole('dialog')).toBeNull();
+  });
+});
+
 describe('onOpenChange', () => {
   it('reports open at click time and close at dismissal', () => {
     const onOpenChange = vi.fn();

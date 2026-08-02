@@ -17,6 +17,7 @@ const PreviewOutlet = ({ elementRef }: PreviewOutletProps) => {
       entries={session.entries}
       index={session.index}
       key={session.token}
+      openerFocusElement={session.openerFocusElement}
       token={session.token}
     />
   );

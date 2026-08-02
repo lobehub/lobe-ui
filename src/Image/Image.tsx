@@ -68,6 +68,7 @@ const Image = memo<ImageProps>(
     const [hasError, setHasError] = useState(false);
     const lastSrcRef = useRef(src);
     const imgRef = useRef<HTMLImageElement>(null);
+    const preOpenFocusRef = useRef<HTMLElement | null>(null);
     const id = useId();
     const group = usePreviewGroupContext();
 
@@ -106,6 +107,11 @@ const Image = memo<ImageProps>(
       [onError],
     );
 
+    const handlePointerDown = useCallback(() => {
+      preOpenFocusRef.current =
+        document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    }, []);
+
     const handleClick = useCallback(
       (event: MouseEvent<HTMLImageElement>) => {
         onClick?.(event);
@@ -116,9 +122,10 @@ const Image = memo<ImageProps>(
           previewSrc,
           src: imgRef.current.currentSrc || imgRef.current.src,
         };
+        const openerFocusElement = preOpenFocusRef.current;
 
         if (!group) {
-          openPreview(clickedEntry);
+          openPreview(clickedEntry, undefined, 0, openerFocusElement);
           return;
         }
 
@@ -135,7 +142,12 @@ const Image = memo<ImageProps>(
             src: element.currentSrc || element.src,
           });
         }
-        openPreview(clickedEntry, galleryEntries, clickedIndex >= 0 ? clickedIndex : 0);
+        openPreview(
+          clickedEntry,
+          galleryEntries,
+          clickedIndex >= 0 ? clickedIndex : 0,
+          openerFocusElement,
+        );
       },
       [onClick, previewEnabled, resolvedOptions, previewSrc, group],
     );
@@ -180,6 +192,7 @@ const Image = memo<ImageProps>(
             }}
             onClick={handleClick}
             onError={handleError}
+            onPointerDown={handlePointerDown}
             {...rest}
           />
         </div>

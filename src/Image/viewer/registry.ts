@@ -16,6 +16,7 @@ export interface PreviewEntry {
 export interface PreviewSession {
   entries: PreviewEntry[];
   index: number;
+  openerFocusElement: HTMLElement | null;
   token: number;
 }
 
@@ -39,7 +40,15 @@ const flushClosed = () => {
   state.onOpenChange?.(false);
 };
 
-export const openPreview = (entry: PreviewEntry, entries?: PreviewEntry[], index = 0): void => {
+// openerFocusElement must be captured by the caller at pointerdown, not read here:
+// clicking a non-focusable thumbnail already blurs to document.body before its
+// click handler (and therefore this call) runs.
+export const openPreview = (
+  entry: PreviewEntry,
+  entries?: PreviewEntry[],
+  index = 0,
+  openerFocusElement: HTMLElement | null = null,
+): void => {
   flushClosed();
   nextToken += 1;
   const resolvedEntries = entries && entries.length > 0 ? entries : [entry];
@@ -50,6 +59,7 @@ export const openPreview = (entry: PreviewEntry, entries?: PreviewEntry[], index
     entries: resolvedEntries,
     index: resolvedIndex,
     onOpenChange: entry.options.onOpenChange,
+    openerFocusElement,
     token: nextToken,
   };
   emit();

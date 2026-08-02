@@ -21,8 +21,10 @@ import { useAppElement } from '@/ThemeProvider';
 import { styles } from '../style';
 import { computeFit, type Size } from './geometry';
 import { beginClosePreview, endClosePreview, type PreviewEntry } from './registry';
+import { useFinalFocus } from './useFinalFocus';
 import { useFlipTransition } from './useFlipTransition';
 import { readNatural, useGalleryNav } from './useGalleryNav';
+import { useRefitTransition } from './useRefitTransition';
 import { useViewerGestures } from './useViewerGestures';
 import { useZoomPan } from './useZoomPan';
 import ViewerChrome from './ViewerChrome';
@@ -30,6 +32,7 @@ import ViewerChrome from './ViewerChrome';
 export interface ImageViewerProps {
   entries: PreviewEntry[];
   index: number;
+  openerFocusElement: HTMLElement | null;
   token: number;
 }
 
@@ -38,7 +41,7 @@ const readViewport = (): Size => ({ height: window.innerHeight, width: window.in
 const prefersReducedMotion = () =>
   window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
 
-const ImageViewer = memo<ImageViewerProps>(({ entries, index, token }) => {
+const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement, token }) => {
   const openerEntry = entries[index];
   const appElement = useAppElement();
   const motionComponent = use(MotionComponent);
@@ -99,6 +102,9 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, token }) => {
   const fitRectRef = useRef(fitRect);
   fitRectRef.current = fitRect;
   const getFitRect = useCallback(() => fitRectRef.current, []);
+
+  useRefitTransition({ animated, natural, rotation, scale, viewport, x, y });
+  const finalFocus = useFinalFocus(openerFocusElement);
 
   const getCloseSource = useCallback(() => currentEntryRef.current.element, []);
 
@@ -238,6 +244,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, token }) => {
         <Dialog.Popup
           aria-label={currentEntry.element.alt || undefined}
           className={styles.viewerPopup}
+          finalFocus={finalFocus}
           ref={popupRef}
           style={zIndex === undefined ? undefined : { zIndex: zIndex + 1 }}
           onClick={gestures.onSurfaceClick}

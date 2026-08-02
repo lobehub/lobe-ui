@@ -4,7 +4,7 @@ import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import type { Rect } from './geometry';
 
-const OPEN_SPRING = { bounce: 0.15, type: 'spring' as const, visualDuration: 0.3 };
+export const OPEN_SPRING = { bounce: 0.15, type: 'spring' as const, visualDuration: 0.3 };
 const FADE = { duration: 0.15, ease: 'easeOut' as const };
 const CHROME_FADE = { delay: 0.15, duration: 0.2, ease: 'easeOut' as const };
 const FADE_SCALE = 0.92;
