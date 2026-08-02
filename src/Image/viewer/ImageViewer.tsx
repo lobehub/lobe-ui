@@ -153,6 +153,14 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
     };
   }, [previewSrc, src]);
 
+  useEffect(
+    () => () => {
+      const thumbnailWasRemoved = !element.isConnected;
+      if (thumbnailWasRemoved) endClosePreview(token);
+    },
+    [element, token],
+  );
+
   return (
     <Dialog.Root modal open onOpenChange={handleDialogOpenChange}>
       <Dialog.Portal container={appElement ?? undefined}>

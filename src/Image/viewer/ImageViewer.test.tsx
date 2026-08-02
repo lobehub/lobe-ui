@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { motion } from 'motion/react';
-import type { ReactNode } from 'react';
+import { type ReactNode, StrictMode } from 'react';
 
 import ConfigProvider from '@/ConfigProvider';
 
@@ -296,6 +296,67 @@ describe('singleton', () => {
     expect(document.querySelectorAll('[role="dialog"]')).toHaveLength(1);
     expect(getViewerImage()?.getAttribute('src')).toBe('https://example.com/dog.png');
     expect(onFirstOpenChange.mock.calls).toEqual([[true], [false]]);
+  });
+});
+
+describe('owner unmount', () => {
+  const Harness = ({
+    onOpenChange,
+    visible,
+  }: {
+    onOpenChange: (open: boolean) => void;
+    visible: boolean;
+  }) => (
+    <ConfigProvider motion={motion}>
+      {visible && (
+        <ImageComponent alt="cat" preview={{ onOpenChange }} src="https://example.com/cat.png" />
+      )}
+      <ImageComponent alt="dog" src="https://example.com/dog.png" />
+    </ConfigProvider>
+  );
+
+  it('releases the session when the owning image unmounts while open', () => {
+    const onOpenChange = vi.fn();
+    const { rerender } = render(<Harness visible onOpenChange={onOpenChange} />);
+
+    openViewer('cat');
+    flushAnimations();
+    rerender(<Harness visible={false} onOpenChange={onOpenChange} />);
+
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(onOpenChange.mock.calls).toEqual([[true], [false]]);
+
+    openViewer('dog');
+    expect(document.querySelectorAll('[role="dialog"]')).toHaveLength(1);
+    expect(getViewerImage()?.getAttribute('src')).toBe('https://example.com/dog.png');
+    expect(onOpenChange).toHaveBeenCalledTimes(2);
+  });
+
+  it('reports the close only once when the owner unmounts mid close animation', () => {
+    const onOpenChange = vi.fn();
+    const { rerender } = render(<Harness visible onOpenChange={onOpenChange} />);
+
+    openViewer('cat');
+    flushAnimations();
+    fireEvent.click(getViewerImage() as HTMLElement);
+    rerender(<Harness visible={false} onOpenChange={onOpenChange} />);
+
+    expect(onOpenChange.mock.calls).toEqual([[true], [false]]);
+  });
+
+  it('keeps the viewer open under StrictMode remounts', () => {
+    render(
+      <StrictMode>
+        <ConfigProvider motion={motion}>
+          <ImageComponent alt="cat" src="https://example.com/cat.png" />
+        </ConfigProvider>
+      </StrictMode>,
+    );
+
+    openViewer();
+
+    expect(screen.getByRole('dialog')).toBeDefined();
+    expect(getViewerImage()?.getAttribute('src')).toBe('https://example.com/cat.png');
   });
 });
 
