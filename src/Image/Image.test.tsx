@@ -92,6 +92,27 @@ describe('Image', () => {
     expect(entry.options.maxScale).toBe(8);
   });
 
+  it('calls a consumer onPointerDown while still capturing focus for openPreview', () => {
+    const onPointerDown = vi.fn();
+    render(
+      <div>
+        <button type="button">External</button>
+        <Image alt="cat" src="https://example.com/cat.png" onPointerDown={onPointerDown} />
+      </div>,
+    );
+
+    const externalButton = screen.getByText('External');
+    externalButton.focus();
+
+    const img = screen.getByAltText('cat');
+    fireEvent.pointerDown(img);
+    expect(onPointerDown).toHaveBeenCalledTimes(1);
+
+    fireEvent.click(img);
+    const [, , , openerFocusElement] = (openPreview as any).mock.calls[0];
+    expect(openerFocusElement).toBe(externalButton);
+  });
+
   it('does not call openPreview when preview is false', () => {
     render(<Image alt="cat" preview={false} src="https://example.com/cat.png" />);
 

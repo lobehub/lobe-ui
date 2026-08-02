@@ -32,6 +32,7 @@ export interface WheelLikeEvent {
 }
 
 export interface UseZoomPanOptions {
+  isClosing?: () => boolean;
   maxScale?: number;
   natural: Size;
   onCloseRequest?: () => void;
@@ -80,6 +81,7 @@ export const useZoomPan = ({
   viewport,
   maxScale,
   onCloseRequest,
+  isClosing,
 }: UseZoomPanOptions): UseZoomPanResult => {
   const [{ scale, x, y, rotate, flipX, flipY }] = useState(() => ({
     flipX: motionValue(false),
@@ -98,6 +100,9 @@ export const useZoomPan = ({
   const onCloseRequestRef = useRef(onCloseRequest);
   onCloseRequestRef.current = onCloseRequest;
 
+  const isClosingRef = useRef(isClosing);
+  isClosingRef.current = isClosing;
+
   const closeAccumRef = useRef(0);
   const disarmedRef = useRef(false);
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -110,6 +115,12 @@ export const useZoomPan = ({
     closeAccumRef.current = 0;
     disarmedRef.current = false;
   }, []);
+
+  // The close FLIP spring animates these same scale/x/y values. Any of
+  // these entry points still firing during the ~300ms close window would
+  // either fight that spring visually or, for wheel/reset specifically,
+  // race escIntent()/isCleanState() into cancelling the close outright.
+  const closing = useCallback(() => isClosingRef.current?.() ?? false, []);
 
   const isCleanState = useCallback(
     () =>
@@ -167,15 +178,21 @@ export const useZoomPan = ({
   const applyTransform = useCallback(
     (next: TransformState, fitRect: Rect) => {
       const clamped = clampPan(next, fitRect, viewportRef.current);
-      scale.set(next.scale);
-      x.set(clamped.x);
-      y.set(clamped.y);
+      // .jump(), not .set(): a surviving spring on these same values (e.g. a
+      // dragEnd clamp-back or wheel snap-back still in flight) would otherwise
+      // keep animating toward its own target and silently overwrite this
+      // instant write on its next tick — motion's set() never stops an
+      // active animation, only jump() does.
+      scale.jump(next.scale);
+      x.jump(clamped.x);
+      y.jump(clamped.y);
     },
     [scale, x, y],
   );
 
   const zoomBy = useCallback(
     (factor: number) => {
+      if (closing()) return;
       const currentScale = scale.get();
       const targetScale = clampScale(currentScale * factor, maxScaleRef.current);
       const fitRect = getFitRect();
@@ -188,7 +205,7 @@ export const useZoomPan = ({
       );
       applyTransform(next, fitRect);
     },
-    [applyTransform, getFitRect, scale, x, y],
+    [applyTransform, closing, getFitRect, scale, x, y],
   );
 
   const zoomIn = useCallback(() => zoomBy(ZOOM_STEP), [zoomBy]);
@@ -219,6 +236,7 @@ export const useZoomPan = ({
   const handleWheel = useCallback(
     (event: WheelLikeEvent) => {
       event.preventDefault?.();
+      if (closing()) return;
 
       if (idleTimerRef.current !== null) clearTimeout(idleTimerRef.current);
       idleTimerRef.current = setTimeout(() => {
@@ -265,38 +283,42 @@ export const useZoomPan = ({
         onCloseRequestRef.current?.();
       }
     },
-    [applyTransform, getFitRect, isCleanState, scale, x, y],
+    [applyTransform, closing, getFitRect, isCleanState, scale, x, y],
   );
 
   const rotateBy = useCallback(
     (delta: 90 | -90) => {
-      rotate.set(normalizeRotation(rotate.get() + delta));
-      scale.set(1);
-      x.set(0);
-      y.set(0);
+      if (closing()) return;
+      rotate.jump(normalizeRotation(rotate.get() + delta));
+      scale.jump(1);
+      x.jump(0);
+      y.jump(0);
     },
-    [rotate, scale, x, y],
+    [closing, rotate, scale, x, y],
   );
 
   const rotateLeft = useCallback(() => rotateBy(-90), [rotateBy]);
   const rotateRight = useCallback(() => rotateBy(90), [rotateBy]);
 
   const flipHorizontal = useCallback(() => {
+    if (closing()) return;
     flipX.set(!flipX.get());
-  }, [flipX]);
+  }, [closing, flipX]);
 
   const flipVertical = useCallback(() => {
+    if (closing()) return;
     flipY.set(!flipY.get());
-  }, [flipY]);
+  }, [closing, flipY]);
 
   const reset = useCallback(() => {
+    if (closing()) return;
     animate(scale, 1, RESET_TRANSITION);
     animate(x, 0, RESET_TRANSITION);
     animate(y, 0, RESET_TRANSITION);
     animate(rotate, 0, RESET_TRANSITION);
     flipX.set(false);
     flipY.set(false);
-  }, [flipX, flipY, rotate, scale, x, y]);
+  }, [closing, flipX, flipY, rotate, scale, x, y]);
 
   const dragBy = useCallback(
     (delta: Point) => {

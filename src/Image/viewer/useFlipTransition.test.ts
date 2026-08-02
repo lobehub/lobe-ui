@@ -190,4 +190,26 @@ describe('isTransitioning', () => {
     });
     expect(result.current.isTransitioning()).toBe(false);
   });
+
+  it('does not let a stale open fallback fire during a later switch that supersedes it', () => {
+    const { result } = setup();
+    expect(result.current.isTransitioning()).toBe(true);
+
+    // Interrupt the open before it settles (a fast gallery switch), partway
+    // through the open's own fallback window. switchTo's stopAll() should
+    // clear the now-orphaned open fallback along with the open's animations.
+    act(() => {
+      vi.advanceTimersByTime(100);
+      result.current.switchTo(() => {});
+    });
+    expect(result.current.isTransitioning()).toBe(true);
+
+    // Advance to exactly where the superseded open fallback would have
+    // fired (t=1000) — well before the switch's own fallback mark (t=1100).
+    act(() => {
+      vi.advanceTimersByTime(900);
+    });
+
+    expect(result.current.isTransitioning()).toBe(true);
+  });
 });

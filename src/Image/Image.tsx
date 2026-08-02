@@ -4,6 +4,7 @@ import { cx, useThemeMode } from 'antd-style';
 import {
   memo,
   type MouseEvent,
+  type PointerEvent,
   type SyntheticEvent,
   useCallback,
   useEffect,
@@ -56,6 +57,7 @@ const Image = memo<ImageProps>(
     styles: customStyles,
     onClick,
     onError,
+    onPointerDown,
     width,
     height,
     size,
@@ -107,15 +109,19 @@ const Image = memo<ImageProps>(
       [onError],
     );
 
-    const handlePointerDown = useCallback(() => {
-      const active = document.activeElement;
-      preOpenFocusRef.current =
-        active instanceof HTMLElement &&
-        active !== document.body &&
-        active !== document.documentElement
-          ? active
-          : null;
-    }, []);
+    const handlePointerDown = useCallback(
+      (event: PointerEvent<HTMLImageElement>) => {
+        onPointerDown?.(event);
+        const active = document.activeElement;
+        preOpenFocusRef.current =
+          active instanceof HTMLElement &&
+          active !== document.body &&
+          active !== document.documentElement
+            ? active
+            : null;
+      },
+      [onPointerDown],
+    );
 
     const handleClick = useCallback(
       (event: MouseEvent<HTMLImageElement>) => {

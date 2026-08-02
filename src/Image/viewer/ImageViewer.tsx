@@ -61,6 +61,14 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
   const closeRef = useRef<(() => void) | null>(null);
   const requestClose = useCallback(() => closeRef.current?.(), []);
 
+  // useZoomPan needs to gate its wheel/toolbar entry points on close-in-flight,
+  // but that state only exists once useFlipTransition (below) has run — and it
+  // needs useZoomPan's own transform values first. Break the cycle with a
+  // stable indirection: the ref is repointed at the real isClosing once it's
+  // available, written directly during render like the other *Ref fields here.
+  const isClosingIndirectRef = useRef<() => boolean>(() => false);
+  const isClosingIndirect = useCallback(() => isClosingIndirectRef.current(), []);
+
   const {
     canZoomIn,
     canZoomOut,
@@ -89,6 +97,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
     zoomIn,
     zoomOut,
   } = useZoomPan({
+    isClosing: isClosingIndirect,
     maxScale: currentEntry.options.maxScale,
     natural,
     onCloseRequest: requestClose,
@@ -116,6 +125,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
     chromeRef,
     close,
     imageRef: flipImageRef,
+    isClosing,
     isTransitioning,
     switchTo,
   } = useFlipTransition({
@@ -126,6 +136,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
     source: openerEntry.element,
     transform,
   });
+  isClosingIndirectRef.current = isClosing;
 
   useRefitTransition({ animated, isTransitioning, natural, rotation, scale, viewport, x, y });
   const finalFocus = useFinalFocus(openerFocusElement);
@@ -142,6 +153,12 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
   const handleDialogOpenChange = useCallback<NonNullable<DialogRootProps['onOpenChange']>>(
     (open, eventDetails) => {
       if (open) return;
+      // Base UI fires this on every Esc regardless of whether we're already
+      // mid-close (our Dialog.Root's open prop never actually flips to
+      // false), so without this guard a second Esc during the close window
+      // reads escIntent() off the close spring's mid-flight scale, decides
+      // 'reset', and cancels the close animation out from under itself.
+      if (isClosing()) return;
       if (eventDetails.reason === 'escape-key' && escIntent() === 'reset') {
         eventDetails.cancel();
         reset();
@@ -149,7 +166,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
       }
       handleClose();
     },
-    [escIntent, handleClose, reset],
+    [escIntent, handleClose, isClosing, reset],
   );
 
   const gestures = useViewerGestures({

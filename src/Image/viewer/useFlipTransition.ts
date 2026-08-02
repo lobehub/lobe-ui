@@ -42,6 +42,7 @@ export interface UseFlipTransitionResult {
   chromeRef: (node: HTMLElement | null) => void;
   close: (options?: CloseTransitionOptions) => void;
   imageRef: (node: HTMLImageElement | null) => void;
+  isClosing: () => boolean;
   isTransitioning: () => boolean;
   switchTo: (apply: () => void) => void;
 }
@@ -156,6 +157,21 @@ export const useFlipTransition = ({
   }, []);
 
   const isTransitioning = useCallback(() => transitioningRef.current, []);
+  const isClosing = useCallback(() => closingRef.current, []);
+
+  // stopAll() only stops tracked Animation objects; a bare window.setTimeout
+  // has no way to be cancelled by it. Track a fallback timer the same way, so
+  // a later stopAll() (a new open/close/switch superseding an interrupted one)
+  // clears the old timer along with the animations it was backing — otherwise
+  // it can fire mid-way through the new phase and flip transitioningRef false
+  // while something else is legitimately still in flight.
+  const trackTimeout = useCallback(
+    (callback: () => void, ms: number) => {
+      const id = window.setTimeout(callback, ms);
+      run([{ stop: () => window.clearTimeout(id) }]);
+    },
+    [run],
+  );
 
   // A future animate() call on one of these shared motion values (e.g. a refit
   // triggered by a natural-size change) silently cancels whichever animation is
@@ -181,9 +197,9 @@ export const useFlipTransition = ({
           animate(value, target, { ...OPEN_SPRING, onComplete: onAxisComplete }),
         ),
       );
-      window.setTimeout(finish, SETTLE_FALLBACK_MS);
+      trackTimeout(finish, SETTLE_FALLBACK_MS);
     },
-    [run],
+    [run, trackTimeout],
   );
 
   useLayoutEffect(() => {
@@ -232,7 +248,7 @@ export const useFlipTransition = ({
       if (animated) transform.scale.set(FADE_SCALE);
       run([animate(opacity.image, 1, { ...FADE, onComplete: markSettled })]);
       if (animated) run([animate(transform.scale, 1, FADE)]);
-      window.setTimeout(markSettled, SETTLE_FALLBACK_MS);
+      trackTimeout(markSettled, SETTLE_FALLBACK_MS);
     }
 
     run([animate(opacity.backdrop, 1, FADE), animate(opacity.chrome, 1, CHROME_FADE)]);
@@ -240,7 +256,7 @@ export const useFlipTransition = ({
     return () => {
       stopAll();
     };
-  }, [animateSettling, animated, opacity, run, source, stopAll, transform]);
+  }, [animateSettling, animated, opacity, run, source, stopAll, trackTimeout, transform]);
 
   const close = useCallback(
     (options?: CloseTransitionOptions) => {
@@ -275,9 +291,9 @@ export const useFlipTransition = ({
 
       if (animated) run([animate(transform.scale, transform.scale.get() * FADE_SCALE, FADE)]);
       run([animate(opacity.image, 0, { ...FADE, onComplete: finish })]);
-      window.setTimeout(finish, SETTLE_FALLBACK_MS);
+      trackTimeout(finish, SETTLE_FALLBACK_MS);
     },
-    [animateSettling, animated, opacity, run, stopAll, transform],
+    [animateSettling, animated, opacity, run, stopAll, trackTimeout, transform],
   );
 
   const switchTo = useCallback(
@@ -302,9 +318,9 @@ export const useFlipTransition = ({
         }),
       );
       run(tasks);
-      window.setTimeout(markSettled, SETTLE_FALLBACK_MS);
+      trackTimeout(markSettled, SETTLE_FALLBACK_MS);
     },
-    [animated, opacity, run, stopAll, transform],
+    [animated, opacity, run, stopAll, trackTimeout, transform],
   );
 
   return {
@@ -312,6 +328,7 @@ export const useFlipTransition = ({
     chromeRef: chrome.setNode,
     close,
     imageRef: image.setNode,
+    isClosing,
     isTransitioning,
     switchTo,
   };

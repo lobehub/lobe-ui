@@ -356,6 +356,52 @@ describe('zoomIn / zoomOut bounds', () => {
   });
 });
 
+describe('instant writes use jump(), not set()', () => {
+  // jump() stops whatever spring is currently animating a value; set() does
+  // not (verified against motion-dom's source: set() only calls
+  // updateAndNotify, jump() also calls stop()). A surviving spring from a
+  // dragEnd clamp-back or wheel snap-back — never tracked by useFlipTransition,
+  // since useZoomPan owns these — would otherwise silently overwrite these
+  // instant resets on its next tick. This only proves the call sites use the
+  // right API; the full cancel-a-real-spring behavior is motion's own,
+  // confirmed by source inspection and the live browser repro in the report.
+  it('applyTransform (zoomIn/zoomOut/dblclick/wheel-zoom) jumps scale/x/y', () => {
+    const { result } = setup();
+    const jumpScale = vi.spyOn(result.current.scale, 'jump');
+    const jumpX = vi.spyOn(result.current.x, 'jump');
+    const jumpY = vi.spyOn(result.current.y, 'jump');
+    const setScale = vi.spyOn(result.current.scale, 'set');
+
+    act(() => {
+      result.current.zoomIn();
+    });
+
+    expect(jumpScale).toHaveBeenCalledTimes(1);
+    expect(jumpX).toHaveBeenCalledTimes(1);
+    expect(jumpY).toHaveBeenCalledTimes(1);
+    expect(setScale).not.toHaveBeenCalled();
+  });
+
+  it('rotateBy jumps rotate/scale/x/y', () => {
+    const { result } = setup();
+    const jumpRotate = vi.spyOn(result.current.rotate, 'jump');
+    const jumpScale = vi.spyOn(result.current.scale, 'jump');
+    const jumpX = vi.spyOn(result.current.x, 'jump');
+    const jumpY = vi.spyOn(result.current.y, 'jump');
+    const setRotate = vi.spyOn(result.current.rotate, 'set');
+
+    act(() => {
+      result.current.rotateLeft();
+    });
+
+    expect(jumpRotate).toHaveBeenCalledTimes(1);
+    expect(jumpScale).toHaveBeenCalledTimes(1);
+    expect(jumpX).toHaveBeenCalledTimes(1);
+    expect(jumpY).toHaveBeenCalledTimes(1);
+    expect(setRotate).not.toHaveBeenCalled();
+  });
+});
+
 describe('rotateLeft / rotateRight', () => {
   it('rotates left by 90deg and resets scale and pan', () => {
     const { result } = setup();
@@ -530,5 +576,61 @@ describe('derived state reactivity', () => {
     });
     expect(result.current.isZoomed).toBe(false);
     expect(result.current.isClean).toBe(true);
+  });
+});
+
+describe('closing gate', () => {
+  it('no-ops zoomIn/zoomOut, rotateLeft/rotateRight, flips, and reset while closing', () => {
+    const { result } = setup({ isClosing: () => true });
+
+    act(() => {
+      result.current.zoomIn();
+      result.current.zoomOut();
+      result.current.rotateLeft();
+      result.current.rotateRight();
+      result.current.flipHorizontal();
+      result.current.flipVertical();
+      result.current.reset();
+    });
+
+    expect(result.current.scale.get()).toBe(1);
+    expect(result.current.x.get()).toBe(0);
+    expect(result.current.y.get()).toBe(0);
+    expect(result.current.rotation).toBe(0);
+    expect(animateMock).not.toHaveBeenCalled();
+  });
+
+  it('no-ops the wheel handler while closing, without arming wheel-close either', () => {
+    const onCloseRequest = vi.fn();
+    const { result } = setup({ isClosing: () => true, onCloseRequest });
+
+    act(() => {
+      result.current.handleWheel(wheelEvent({ deltaY: 60 }));
+      result.current.handleWheel(wheelEvent({ deltaY: 60 }));
+    });
+
+    expect(onCloseRequest).not.toHaveBeenCalled();
+    expect(result.current.scale.get()).toBe(1);
+  });
+
+  it('resumes normal behavior once isClosing flips back to false', () => {
+    let closing = true;
+    const { result, rerender } = renderHook(
+      (isClosingFlag: boolean) =>
+        useZoomPan({ isClosing: () => isClosingFlag, natural: NATURAL, viewport: VIEWPORT }),
+      { initialProps: closing },
+    );
+
+    act(() => {
+      result.current.zoomIn();
+    });
+    expect(result.current.scale.get()).toBe(1);
+
+    closing = false;
+    rerender(closing);
+    act(() => {
+      result.current.zoomIn();
+    });
+    expect(result.current.scale.get()).toBeCloseTo(1.5, 4);
   });
 });

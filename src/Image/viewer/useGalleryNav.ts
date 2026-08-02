@@ -85,12 +85,16 @@ export const useGalleryNav = ({
         const nextNatural = readNatural(nextEntry.element);
         setNatural(nextNatural);
         syncZoomNatural(nextNatural);
-        scale.set(1);
-        x.set(0);
-        y.set(0);
-        rotate.set(0);
-        flipX.set(false);
-        flipY.set(false);
+        // .jump(), not .set(): a surviving spring from the outgoing image (a
+        // dragEnd clamp-back, a wheel snap-back, or reset()) targets the OLD
+        // image's bounds and would otherwise silently overwrite this reset on
+        // its next tick, since motion's set() never stops an active animation.
+        scale.jump(1);
+        x.jump(0);
+        y.jump(0);
+        rotate.jump(0);
+        flipX.jump(false);
+        flipY.jump(false);
         switchingRef.current = false;
       });
     },

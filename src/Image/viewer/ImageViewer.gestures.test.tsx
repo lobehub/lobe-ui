@@ -370,6 +370,34 @@ describe('escape layering', () => {
 
     expect(isOpen()).toBe(false);
   });
+
+  it('does not let a second Esc during the close window cancel the close', () => {
+    const onOpenChange = vi.fn();
+    mountReporting(onOpenChange);
+
+    pressKey('Escape');
+    // Run only the scale axis's close animation, so scale now reads dirty
+    // (target 0.5 for this thumbnail) while x/y are still pending — the
+    // same live-mid-flight state a second Esc would see during a real close.
+    // Splice it out first so flushAnimations() below doesn't re-run it.
+    act(() => {
+      const [scaleTask] = motionMock.pending.splice(4, 1);
+      scaleTask.run();
+    });
+
+    const pendingBeforeSecondEsc = motionMock.pending.length;
+    pressKey('Escape');
+    // This mock never models motion's real cancel-on-restart semantics (see
+    // useFlipTransition.test.ts for that), so a fresh reset() call here would
+    // just queue alongside — not visibly break — the close. The real
+    // regression is reset() firing at all: assert no new animations queued.
+    expect(motionMock.pending.length).toBe(pendingBeforeSecondEsc);
+
+    flushAnimations();
+
+    expect(isOpen()).toBe(false);
+    expect(onOpenChange.mock.calls).toEqual([[true], [false]]);
+  });
 });
 
 describe('keyboard shortcuts', () => {
