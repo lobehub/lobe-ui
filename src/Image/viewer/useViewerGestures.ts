@@ -14,6 +14,7 @@ export interface UseViewerGesturesOptions {
   dragEnd: () => void;
   handleDoubleClick: (point: Point) => void;
   handleWheel: (event: WheelLikeEvent) => void;
+  isClean: boolean;
   isZoomed: boolean;
   onClose: () => void;
   reset: () => void;
@@ -53,6 +54,7 @@ export const useViewerGestures = ({
   dragEnd,
   handleDoubleClick,
   handleWheel,
+  isClean,
   isZoomed,
   onClose,
   reset,
@@ -66,6 +68,9 @@ export const useViewerGestures = ({
   const dragRef = useRef<DragState | null>(null);
   const movedRef = useRef(false);
   const pendingCloseRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const isCleanRef = useRef(isClean);
+  isCleanRef.current = isClean;
 
   const cancelPendingClose = useCallback(() => {
     if (pendingCloseRef.current === null) return;
@@ -116,7 +121,9 @@ export const useViewerGestures = ({
 
   const onPointerDown = useCallback(
     (event: PointerEvent<HTMLElement>) => {
+      if (dragRef.current?.panning) return;
       if (event.button !== 0) return;
+      cancelPendingClose();
       const start = { x: event.clientX, y: event.clientY };
       const panEligible = isZoomed && event.target === imageNodeRef.current;
       movedRef.current = false;
@@ -125,7 +132,7 @@ export const useViewerGestures = ({
       capturePointer(event.target as Element, event.pointerId);
       setPanning(true);
     },
-    [isZoomed],
+    [cancelPendingClose, isZoomed],
   );
 
   const onPointerMove = useCallback(
@@ -167,6 +174,7 @@ export const useViewerGestures = ({
       if (movedRef.current || isZoomed) return;
       pendingCloseRef.current = setTimeout(() => {
         pendingCloseRef.current = null;
+        if (!isCleanRef.current) return;
         onClose();
       }, DOUBLE_CLICK_WINDOW);
     },

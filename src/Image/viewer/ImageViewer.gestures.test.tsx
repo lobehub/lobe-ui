@@ -106,6 +106,13 @@ const mount = (natural?: { height: number; width: number }) => {
   return openViewer(natural);
 };
 
+const mountReporting = (onOpenChange: (open: boolean) => void) => {
+  renderWithMotion(
+    <ImageComponent alt="cat" preview={{ onOpenChange }} src="https://example.com/cat.png" />,
+  );
+  return openViewer();
+};
+
 const wheel = (init: { ctrlKey?: boolean; deltaY: number }) =>
   act(() => {
     getPopup()?.dispatchEvent(
@@ -285,6 +292,23 @@ describe('pointer drag', () => {
     expect(isOpen()).toBe(true);
   });
 
+  it('lets the first pointer finish the pan when a second pointer joins', () => {
+    mount({ height: 2000, width: 4000 });
+    doubleClickImage();
+    const image = getViewerImage() as HTMLImageElement;
+
+    fireEvent.pointerDown(image, { clientX: 500, clientY: 400, pointerId: 1 });
+    fireEvent.pointerMove(image, { clientX: 450, clientY: 400, pointerId: 1 });
+    fireEvent.pointerDown(image, { clientX: 700, clientY: 300, pointerId: 2 });
+    expect(image.style.cursor).toBe('grabbing');
+
+    fireEvent.pointerUp(image, { clientX: 450, clientY: 400, pointerId: 1 });
+
+    expect(image.style.cursor).toBe('grab');
+    expect(readTransform().x).toBe(-50);
+    expect(isOpen()).toBe(true);
+  });
+
   it('suppresses the click-to-close when the pointer moved more than 4px', () => {
     mount();
 
@@ -429,6 +453,59 @@ describe('close branch', () => {
     flushAnimations();
 
     expect(isOpen()).toBe(false);
+  });
+
+  it('abandons the pending close when a zoom lands inside the window', () => {
+    mount();
+
+    clickImage();
+    wheel({ ctrlKey: true, deltaY: -100 });
+    settleDoubleClickWindow();
+    flushAnimations();
+
+    expect(isOpen()).toBe(true);
+    expect(readTransform().scale).toBeCloseTo(1.2214, 4);
+  });
+
+  it('abandons the pending close when a drag starts inside the window', () => {
+    mount();
+    const image = getViewerImage() as HTMLImageElement;
+    clickImage();
+
+    fireEvent.pointerDown(image, { clientX: 500, clientY: 400, pointerId: 1 });
+    settleDoubleClickWindow();
+    expect(isOpen()).toBe(true);
+
+    fireEvent.pointerMove(image, { clientX: 440, clientY: 400, pointerId: 1 });
+    fireEvent.pointerUp(image, { clientX: 440, clientY: 400, pointerId: 1 });
+    settleDoubleClickWindow();
+    flushAnimations();
+
+    expect(isOpen()).toBe(true);
+  });
+
+  it.each([
+    ['Escape', () => pressKey('Escape')],
+    ['a backdrop click', () => fireEvent.click(getBackdrop() as HTMLElement)],
+    [
+      'a wheel close',
+      () => {
+        wheel({ deltaY: 60 });
+        wheel({ deltaY: 60 });
+      },
+    ],
+  ])('closes exactly once when %s lands inside the window', (_label, dismiss) => {
+    const onOpenChange = vi.fn();
+    mountReporting(onOpenChange);
+
+    clickImage();
+    dismiss();
+    settleDoubleClickWindow();
+    flushAnimations();
+
+    expect(isOpen()).toBe(false);
+    expect(onOpenChange.mock.calls).toEqual([[true], [false]]);
+    expect(motionMock.pending).toHaveLength(0);
   });
 
   it('springs back to the thumbnail from clean fit', () => {

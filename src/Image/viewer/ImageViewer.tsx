@@ -142,6 +142,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entry, token }) => {
     dragEnd,
     handleDoubleClick,
     handleWheel,
+    isClean,
     isZoomed,
     onClose: handleClose,
     reset,
