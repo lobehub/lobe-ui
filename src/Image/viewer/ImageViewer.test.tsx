@@ -247,6 +247,24 @@ describe('closing', () => {
     expect(screen.queryByRole('dialog')).toBeNull();
   });
 
+  it('waits for every close axis to settle before unmounting, even when scale has nothing to animate', () => {
+    renderWithMotion(<ImageComponent alt="cat" src="https://example.com/cat.png" />);
+    const thumbnail = openViewer();
+    flushAnimations();
+
+    stubRect(thumbnail, { height: 300, left: 100, top: 50, width: 400 });
+    fireEvent.click(getBackdrop() as HTMLElement);
+
+    const scaleTask = motionMock.pending[4];
+    act(() => {
+      scaleTask.run();
+    });
+    expect(screen.queryByRole('dialog')).not.toBeNull();
+
+    flushAnimations();
+    expect(screen.queryByRole('dialog')).toBeNull();
+  });
+
   it('fades out instead of springing back when the thumbnail is off screen', () => {
     renderWithMotion(<ImageComponent alt="cat" src="https://example.com/cat.png" />);
     const thumbnail = openViewer();

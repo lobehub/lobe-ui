@@ -213,10 +213,15 @@ export const useFlipTransition = ({
 
       if (rect) {
         const target = sourceTransform(rect, getFitRectRef.current());
+        let pending = 3;
+        const onAxisComplete = () => {
+          pending -= 1;
+          if (pending === 0) finish();
+        };
         run([
-          animate(transform.x, target.x, OPEN_SPRING),
-          animate(transform.y, target.y, OPEN_SPRING),
-          animate(transform.scale, target.scale, { ...OPEN_SPRING, onComplete: finish }),
+          animate(transform.x, target.x, { ...OPEN_SPRING, onComplete: onAxisComplete }),
+          animate(transform.y, target.y, { ...OPEN_SPRING, onComplete: onAxisComplete }),
+          animate(transform.scale, target.scale, { ...OPEN_SPRING, onComplete: onAxisComplete }),
         ]);
         return;
       }
