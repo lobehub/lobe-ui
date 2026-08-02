@@ -304,6 +304,23 @@ describe('escIntent', () => {
     });
     expect(result.current.escIntent()).toBe('reset');
   });
+
+  it('is close once a settling reset spring rests within tolerance of the target', () => {
+    const { result } = setup();
+    act(() => {
+      result.current.scale.set(0.9991);
+      result.current.rotate.set(0.004);
+    });
+    expect(result.current.escIntent()).toBe('close');
+  });
+
+  it('is still reset when meaningfully off target', () => {
+    const { result } = setup();
+    act(() => {
+      result.current.scale.set(1.05);
+    });
+    expect(result.current.escIntent()).toBe('reset');
+  });
 });
 
 describe('zoomIn / zoomOut bounds', () => {

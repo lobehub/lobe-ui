@@ -20,6 +20,7 @@ const WHEEL_CLOSE_THRESHOLD = 100;
 const WHEEL_IDLE_MS = 300;
 const ZOOM_STEP = 1.5;
 const RESET_TRANSITION = { damping: 30, stiffness: 300, type: 'spring' as const };
+const CLEAN_EPSILON = 0.01;
 
 export interface WheelLikeEvent {
   clientX: number;
@@ -111,7 +112,11 @@ export const useZoomPan = ({
   }, []);
 
   const isCleanState = useCallback(
-    () => scale.get() === 1 && rotate.get() === 0 && !flipX.get() && !flipY.get(),
+    () =>
+      Math.abs(scale.get() - 1) < CLEAN_EPSILON &&
+      Math.abs(rotate.get()) < CLEAN_EPSILON &&
+      !flipX.get() &&
+      !flipY.get(),
     [flipX, flipY, rotate, scale],
   );
 
