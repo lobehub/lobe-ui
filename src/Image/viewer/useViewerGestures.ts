@@ -5,6 +5,7 @@ import type { Point } from './geometry';
 import type { WheelLikeEvent } from './useZoomPan';
 
 const DRAG_THRESHOLD = 4;
+const DOUBLE_CLICK_WINDOW = 250;
 
 export type ViewerCursor = 'grab' | 'grabbing' | 'zoom-out';
 
@@ -64,6 +65,15 @@ export const useViewerGestures = ({
   const imageNodeRef = useRef<HTMLImageElement | null>(null);
   const dragRef = useRef<DragState | null>(null);
   const movedRef = useRef(false);
+  const pendingCloseRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelPendingClose = useCallback(() => {
+    if (pendingCloseRef.current === null) return;
+    clearTimeout(pendingCloseRef.current);
+    pendingCloseRef.current = null;
+  }, []);
+
+  useEffect(() => cancelPendingClose, [cancelPendingClose]);
 
   const imageRef = useCallback((node: HTMLImageElement | null) => {
     imageNodeRef.current = node;
@@ -146,24 +156,30 @@ export const useViewerGestures = ({
 
   const onSurfaceClick = useCallback(() => {
     if (movedRef.current) return;
+    cancelPendingClose();
     onClose();
-  }, [onClose]);
+  }, [cancelPendingClose, onClose]);
 
   const onImageClick = useCallback(
     (event: MouseEvent<HTMLElement>) => {
       event.stopPropagation();
+      cancelPendingClose();
       if (movedRef.current || isZoomed) return;
-      onClose();
+      pendingCloseRef.current = setTimeout(() => {
+        pendingCloseRef.current = null;
+        onClose();
+      }, DOUBLE_CLICK_WINDOW);
     },
-    [isZoomed, onClose],
+    [cancelPendingClose, isZoomed, onClose],
   );
 
   const onImageDoubleClick = useCallback(
     (event: MouseEvent<HTMLElement>) => {
       event.stopPropagation();
+      cancelPendingClose();
       handleDoubleClick({ x: event.clientX, y: event.clientY });
     },
-    [handleDoubleClick],
+    [cancelPendingClose, handleDoubleClick],
   );
 
   return {

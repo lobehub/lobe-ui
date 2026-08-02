@@ -117,7 +117,15 @@ const openViewer = (alt = 'cat', rect: Partial<DOMRect> = THUMB_RECT) => {
   return thumbnail;
 };
 
+const dismissViaImage = () => {
+  fireEvent.click(getViewerImage() as HTMLElement);
+  act(() => {
+    vi.advanceTimersByTime(300);
+  });
+};
+
 beforeEach(() => {
+  vi.useFakeTimers();
   motionMock.pending.length = 0;
   FakePreloader.instances.length = 0;
   setViewport(VIEWPORT);
@@ -125,6 +133,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  vi.useRealTimers();
   vi.unstubAllGlobals();
 });
 
@@ -206,7 +215,7 @@ describe('opening', () => {
 
 describe('closing', () => {
   it.each([
-    ['the viewer image', () => fireEvent.click(getViewerImage() as HTMLElement)],
+    ['the viewer image', dismissViaImage],
     ['the backdrop', () => fireEvent.click(getBackdrop() as HTMLElement)],
     ['the popup surface', () => fireEvent.click(getPopup() as HTMLElement)],
     ['the close button', () => fireEvent.click(getCloseButton() as HTMLElement)],
@@ -229,7 +238,7 @@ describe('closing', () => {
 
     stubRect(thumbnail, { height: 150, left: 300, top: 250, width: 200 });
     const image = getViewerImage() as HTMLImageElement;
-    fireEvent.click(image);
+    dismissViaImage();
     flushAnimations();
 
     expect(image.style.transform).toBe(
@@ -245,7 +254,7 @@ describe('closing', () => {
 
     stubRect(thumbnail, { height: 150, left: 100, top: 4000, width: 200 });
     const image = getViewerImage() as HTMLImageElement;
-    fireEvent.click(image);
+    dismissViaImage();
     flushAnimations();
 
     expect(image.style.transform).toBe(
@@ -267,7 +276,7 @@ describe('onOpenChange', () => {
     expect(onOpenChange.mock.calls).toEqual([[true]]);
 
     flushAnimations();
-    fireEvent.click(getViewerImage() as HTMLElement);
+    dismissViaImage();
     expect(onOpenChange.mock.calls).toEqual([[true], [false]]);
 
     flushAnimations();
@@ -338,7 +347,7 @@ describe('owner unmount', () => {
 
     openViewer('cat');
     flushAnimations();
-    fireEvent.click(getViewerImage() as HTMLElement);
+    dismissViaImage();
     rerender(<Harness visible={false} onOpenChange={onOpenChange} />);
 
     expect(onOpenChange.mock.calls).toEqual([[true], [false]]);

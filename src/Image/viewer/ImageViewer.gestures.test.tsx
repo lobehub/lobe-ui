@@ -75,6 +75,7 @@ const renderWithMotion = (node: ReactNode) =>
   render(<ConfigProvider motion={motion}>{node}</ConfigProvider>);
 
 const getViewerImage = () => document.querySelector<HTMLImageElement>('.viewerImage');
+const getBackdrop = () => document.querySelector<HTMLElement>('.viewerBackdrop');
 const getPopup = () => document.querySelector<HTMLElement>('.viewerPopup');
 const getCloseButton = () => document.querySelector<HTMLElement>('.viewerClose');
 const isOpen = () => screen.queryByRole('dialog') !== null;
@@ -120,7 +121,24 @@ const wheel = (init: { ctrlKey?: boolean; deltaY: number }) =>
 
 const pressKey = (key: string) => fireEvent.keyDown(document.body, { key });
 
+const settleDoubleClickWindow = () =>
+  act(() => {
+    vi.advanceTimersByTime(300);
+  });
+
+const AT_CENTER = { clientX: CENTER.x, clientY: CENTER.y };
+
+const clickImage = (init = AT_CENTER) => fireEvent.click(getViewerImage() as HTMLElement, init);
+
+const doubleClickImage = (init = AT_CENTER) => {
+  const image = getViewerImage() as HTMLImageElement;
+  fireEvent.click(image, init);
+  fireEvent.click(image, { ...init, detail: 2 });
+  fireEvent.doubleClick(image, init);
+};
+
 beforeEach(() => {
+  vi.useFakeTimers();
   motionMock.pending.length = 0;
   setViewport(VIEWPORT);
 });
@@ -176,7 +194,6 @@ describe('wheel', () => {
   });
 
   it('stays disarmed after a zoom-out overshoot until 300ms of wheel idle', () => {
-    vi.useFakeTimers();
     mount();
 
     wheel({ ctrlKey: true, deltaY: -100 });
@@ -212,14 +229,40 @@ describe('wheel', () => {
 describe('double click', () => {
   it('toggles between clean fit and the double click target', () => {
     mount();
-    const image = getViewerImage() as HTMLImageElement;
 
-    fireEvent.doubleClick(image, { clientX: CENTER.x, clientY: CENTER.y });
+    doubleClickImage();
     expect(readTransform()).toEqual({ scale: 2, x: 0, y: 0 });
 
-    fireEvent.doubleClick(image, { clientX: CENTER.x, clientY: CENTER.y });
+    doubleClickImage();
     expect(readTransform()).toEqual({ scale: 1, x: 0, y: 0 });
     expect(isOpen()).toBe(true);
+  });
+
+  it('cancels the pending close when the second click lands inside the window', () => {
+    mount();
+
+    clickImage();
+    act(() => {
+      vi.advanceTimersByTime(120);
+    });
+    expect(isOpen()).toBe(true);
+
+    fireEvent.click(getViewerImage() as HTMLElement, { ...AT_CENTER, detail: 2 });
+    fireEvent.doubleClick(getViewerImage() as HTMLElement, AT_CENTER);
+    settleDoubleClickWindow();
+    flushAnimations();
+
+    expect(isOpen()).toBe(true);
+    expect(readTransform()).toEqual({ scale: 2, x: 0, y: 0 });
+  });
+
+  it('anchors the zoom at the cursor rather than the viewport centre', () => {
+    mount({ height: 2000, width: 4000 });
+
+    doubleClickImage({ clientX: 412, clientY: 384 });
+
+    expect(readTransform().scale).toBeCloseTo(4.0984, 4);
+    expect(readTransform().x).toBeCloseTo(309.836, 3);
   });
 });
 
@@ -233,8 +276,7 @@ describe('pointer drag', () => {
 
   it('pans the zoomed image and keeps it open', () => {
     mount({ height: 2000, width: 4000 });
-    const image = getViewerImage() as HTMLImageElement;
-    fireEvent.doubleClick(image, { clientX: CENTER.x, clientY: CENTER.y });
+    doubleClickImage();
 
     drag({ x: 500, y: 400 }, { x: 450, y: 380 });
 
@@ -247,7 +289,8 @@ describe('pointer drag', () => {
     mount();
 
     drag({ x: 500, y: 400 }, { x: 520, y: 400 });
-    fireEvent.click(getViewerImage() as HTMLElement);
+    clickImage();
+    settleDoubleClickWindow();
     flushAnimations();
 
     expect(isOpen()).toBe(true);
@@ -257,7 +300,8 @@ describe('pointer drag', () => {
     mount();
 
     drag({ x: 500, y: 400 }, { x: 502, y: 400 });
-    fireEvent.click(getViewerImage() as HTMLElement);
+    clickImage();
+    settleDoubleClickWindow();
     flushAnimations();
 
     expect(isOpen()).toBe(false);
@@ -265,10 +309,10 @@ describe('pointer drag', () => {
 
   it('keeps a plain click on the zoomed image from closing but not one on the backdrop', () => {
     mount({ height: 2000, width: 4000 });
-    const image = getViewerImage() as HTMLImageElement;
-    fireEvent.doubleClick(image, { clientX: CENTER.x, clientY: CENTER.y });
+    doubleClickImage();
 
-    fireEvent.click(image);
+    clickImage();
+    settleDoubleClickWindow();
     flushAnimations();
     expect(isOpen()).toBe(true);
 
@@ -361,11 +405,38 @@ describe('keyboard shortcuts', () => {
 });
 
 describe('close branch', () => {
+  it('waits out the double click window before closing on a lone image click', () => {
+    mount();
+
+    clickImage();
+    expect(isOpen()).toBe(true);
+
+    settleDoubleClickWindow();
+    flushAnimations();
+
+    expect(isOpen()).toBe(false);
+  });
+
+  it.each([
+    ['the backdrop', () => fireEvent.click(getBackdrop() as HTMLElement)],
+    ['the popup surface', () => fireEvent.click(getPopup() as HTMLElement)],
+    ['the close button', () => fireEvent.click(getCloseButton() as HTMLElement)],
+    ['Escape', () => pressKey('Escape')],
+  ])('closes without waiting when dismissed via %s', (_label, dismiss) => {
+    mount();
+
+    dismiss();
+    flushAnimations();
+
+    expect(isOpen()).toBe(false);
+  });
+
   it('springs back to the thumbnail from clean fit', () => {
     mount();
     const image = getViewerImage() as HTMLImageElement;
 
-    fireEvent.click(image);
+    clickImage();
+    settleDoubleClickWindow();
     flushAnimations();
 
     expect(image.style.opacity).toBe('1');
@@ -377,6 +448,7 @@ describe('close branch', () => {
     mount();
     const image = getViewerImage() as HTMLImageElement;
     wheel({ ctrlKey: true, deltaY: -100 });
+    expect(isOpen()).toBe(true);
 
     fireEvent.click(getCloseButton() as HTMLElement);
     flushAnimations();
@@ -393,7 +465,7 @@ describe('cursor', () => {
     const image = getViewerImage() as HTMLImageElement;
     expect(image.style.cursor).toBe('zoom-out');
 
-    fireEvent.doubleClick(image, { clientX: CENTER.x, clientY: CENTER.y });
+    doubleClickImage();
     expect(image.style.cursor).toBe('grab');
 
     fireEvent.pointerDown(image, { clientX: 500, clientY: 400, pointerId: 1 });
