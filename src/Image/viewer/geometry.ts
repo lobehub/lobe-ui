@@ -68,6 +68,26 @@ export const computeFit = (
   };
 };
 
+// computeFit returns the box the image occupies *after* the CSS rotation, but
+// the element it is applied to is sized before that rotation runs. For quarter
+// turns the two disagree, so the element box has to be the transpose about the
+// same center — otherwise `object-fit: contain` letterboxes the image down to
+// the short side and everything downstream (pan bounds, natural scale) is
+// measuring a box the viewer never actually paints.
+export const unrotatedRect = (fit: Rect, rotate: Rotation): Rect => {
+  if (rotate !== 90 && rotate !== 270) return fit;
+
+  const centerX = fit.x + fit.width / 2;
+  const centerY = fit.y + fit.height / 2;
+
+  return {
+    height: fit.width,
+    width: fit.height,
+    x: centerX - fit.height / 2,
+    y: centerY - fit.width / 2,
+  };
+};
+
 export const anchoredZoom = (
   current: TransformState,
   targetScale: number,

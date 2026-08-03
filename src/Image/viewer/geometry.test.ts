@@ -10,6 +10,7 @@ import {
   naturalScale,
   normalizeRotation,
   rubberBand,
+  unrotatedRect,
   wheelZoomFactor,
 } from './geometry';
 
@@ -74,6 +75,34 @@ describe('computeFit', () => {
     const rect = computeFit({ height: 300, width: 700 }, { height: 900, width: 1000 }, 0);
     expect(rect.x + rect.width / 2).toBeCloseTo(500, 10);
     expect(rect.y + rect.height / 2).toBeCloseTo(450, 10);
+  });
+});
+
+describe('unrotatedRect', () => {
+  const fit: Rect = { height: 720, width: 360, x: 332, y: 24 };
+
+  it('leaves the rect untouched at 0deg and 180deg', () => {
+    expect(unrotatedRect(fit, 0)).toEqual(fit);
+    expect(unrotatedRect(fit, 180)).toEqual(fit);
+  });
+
+  it('transposes the rect for quarter turns', () => {
+    expect(unrotatedRect(fit, 90)).toEqual({ height: 360, width: 720, x: 152, y: 204 });
+    expect(unrotatedRect(fit, 270)).toEqual({ height: 360, width: 720, x: 152, y: 204 });
+  });
+
+  it('keeps the center fixed so the rotation lands back on the fitted box', () => {
+    const rotated = unrotatedRect(fit, 90);
+    expect(rotated.x + rotated.width / 2).toBe(fit.x + fit.width / 2);
+    expect(rotated.y + rotated.height / 2).toBe(fit.y + fit.height / 2);
+  });
+
+  it('matches the fitted box aspect once rotated, so object-fit fills it exactly', () => {
+    const natural = { height: 2000, width: 4000 };
+    const fitted = computeFit(natural, { height: 768, width: 1024 }, 90);
+    const element = unrotatedRect(fitted, 90);
+
+    expect(element.width / element.height).toBeCloseTo(natural.width / natural.height, 10);
   });
 });
 

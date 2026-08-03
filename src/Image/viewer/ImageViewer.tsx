@@ -19,7 +19,7 @@ import { MotionComponent } from '@/MotionProvider';
 import { useAppElement } from '@/ThemeProvider';
 
 import { styles } from '../style';
-import { computeFit, type Size } from './geometry';
+import { computeFit, type Size, unrotatedRect } from './geometry';
 import { beginClosePreview, endClosePreview, type PreviewEntry } from './registry';
 import { useFinalFocus } from './useFinalFocus';
 import { useFlipTransition } from './useFlipTransition';
@@ -116,6 +116,8 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
   const fitRectRef = useRef(fitRect);
   fitRectRef.current = fitRect;
   const getFitRect = useCallback(() => fitRectRef.current, []);
+
+  const imageRect = useMemo(() => unrotatedRect(fitRect, rotation), [fitRect, rotation]);
 
   const viewportRef = useRef(viewport);
   viewportRef.current = viewport;
@@ -304,10 +306,10 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
             src={source}
             style={{
               cursor: gestures.cursor,
-              height: fitRect.height,
-              left: fitRect.x,
-              top: fitRect.y,
-              width: fitRect.width,
+              height: imageRect.height,
+              left: imageRect.x,
+              top: imageRect.y,
+              width: imageRect.width,
             }}
             onClick={gestures.onImageClick}
             onDoubleClick={gestures.onImageDoubleClick}

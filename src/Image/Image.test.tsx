@@ -34,6 +34,39 @@ describe('Image', () => {
     expect(img.style.objectFit).toBe('contain');
   });
 
+  it('applies width, height and size as CSS so they survive the stylesheet', () => {
+    const { rerender } = render(<Image alt="cat" size={64} src="https://example.com/cat.png" />);
+
+    const img = screen.getByAltText('cat') as HTMLImageElement;
+    expect(img.style.width).toBe('64px');
+    expect(img.style.height).toBe('64px');
+
+    rerender(<Image alt="cat" height={48} src="https://example.com/cat.png" width={120} />);
+    expect(img.style.width).toBe('120px');
+    expect(img.style.height).toBe('48px');
+  });
+
+  it('leaves the sizing to the stylesheet when no dimensions are given', () => {
+    render(<Image alt="cat" src="https://example.com/cat.png" />);
+
+    const img = screen.getByAltText('cat') as HTMLImageElement;
+    expect(img.style.width).toBe('');
+    expect(img.style.height).toBe('');
+  });
+
+  it('lets styles.image override the resolved dimensions', () => {
+    render(
+      <Image
+        alt="cat"
+        size={64}
+        src="https://example.com/cat.png"
+        styles={{ image: { width: '100%' } }}
+      />,
+    );
+
+    expect((screen.getByAltText('cat') as HTMLImageElement).style.width).toBe('100%');
+  });
+
   it('swaps to the fallback image on error and resets when src changes', () => {
     const { rerender } = render(<Image alt="broken" src="https://example.com/broken.png" />);
     const img = screen.getByAltText('broken') as HTMLImageElement;
@@ -132,5 +165,24 @@ describe('Image', () => {
 
     fireEvent.click(screen.getByAltText('cat'));
     expect(openPreview).not.toHaveBeenCalled();
+  });
+
+  it('applies a group preview=false only to images that do not set their own', () => {
+    render(
+      <PreviewGroup preview={false}>
+        <Image alt="cat" src="https://example.com/cat.png" />
+        <Image alt="dog" preview={{ maxScale: 4 }} src="https://example.com/dog.png" />
+      </PreviewGroup>,
+    );
+
+    expect(screen.getByAltText('cat').className).not.toContain('previewable');
+    expect(screen.getByAltText('dog').className).toContain('previewable');
+
+    fireEvent.click(screen.getByAltText('cat'));
+    expect(openPreview).not.toHaveBeenCalled();
+
+    fireEvent.click(screen.getByAltText('dog'));
+    expect(openPreview).toHaveBeenCalledTimes(1);
+    expect((openPreview as any).mock.calls[0][0].options.maxScale).toBe(4);
   });
 });

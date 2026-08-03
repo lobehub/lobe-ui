@@ -231,8 +231,26 @@ describe('controls', () => {
     const items = openMoreMenu();
     fireEvent.click(items[3]);
 
-    expect(image.style.width).toBe('360px');
-    expect(image.style.height).toBe('720px');
+    // The fitted box is 360x720; the element is sized pre-rotation, so it
+    // carries the transpose and lands back on 360x720 once rotate(90deg) runs.
+    expect(image.style.width).toBe('720px');
+    expect(image.style.height).toBe('360px');
+    expect(image.style.left).toBe('152px');
+    expect(image.style.top).toBe('204px');
+  });
+
+  it('keeps the rotated layout box centered on the fitted box', () => {
+    mount({ height: 2000, width: 4000 });
+    const image = getViewerImage() as HTMLImageElement;
+
+    const items = openMoreMenu();
+    fireEvent.click(items[3]);
+
+    const centerX = Number.parseFloat(image.style.left) + Number.parseFloat(image.style.width) / 2;
+    const centerY = Number.parseFloat(image.style.top) + Number.parseFloat(image.style.height) / 2;
+
+    expect(centerX).toBe(512);
+    expect(centerY).toBe(384);
   });
 });
 

@@ -194,11 +194,13 @@ const Image = memo<ImageProps>(
             src={hasError ? (isDarkMode ? FALLBACK_DARK : FALLBACK_LIGHT) : src}
             width={resolvedWidth}
             style={{
+              height: resolvedHeight,
               maxHeight,
               maxWidth,
               minHeight,
               minWidth,
               objectFit,
+              width: resolvedWidth,
               ...customStyles?.image,
             }}
             onClick={handleClick}

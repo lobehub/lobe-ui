@@ -93,10 +93,12 @@ The preview viewer was rewritten from scratch on top of a Base UI dialog and no 
 
 ### PreviewGroup
 
-| Property | Description                         | Type                  | Default |
-| -------- | ----------------------------------- | --------------------- | ------- |
-| enable   | Whether to enable the preview group | `boolean`             | `true`  |
-| preview  | Preview options for the whole group | `ImagePreviewOptions` | -       |
+| Property | Description                         | Type                             | Default |
+| -------- | ----------------------------------- | -------------------------------- | ------- |
+| enable   | Whether to enable the preview group | `boolean`                        | `true`  |
+| preview  | Preview options for the whole group | `boolean \| ImagePreviewOptions` | -       |
+
+> Each `Image` resolves its own `preview` against the group's: an option object is merged over the group's (per-image keys win), and a per-image `preview` of any kind takes precedence over the group's. `preview={false}` on the group is therefore a default for children that don't set their own — a child passing `preview={false}` opts out of an enabled group, and a child passing an options object opts back into a disabled one.
 
 ### ImagePreviewOptions
 
