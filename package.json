@@ -92,9 +92,6 @@
   "files": [
     "es"
   ],
-  "workspaces": [
-    "packages/*"
-  ],
   "scripts": {
     "build": "tsdown && npm run build:packages",
     "build:packages": "tsx ./scripts/build.ts",

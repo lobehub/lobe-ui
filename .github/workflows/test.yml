@@ -14,6 +14,11 @@ jobs:
       - name: Install bun
         uses: oven-sh/setup-bun@v2
 
+      # Bun cannot read pnpm-workspace.yaml; see release.yml for why this is not
+      # committed to package.json.
+      - name: Declare bun workspaces
+        run: npm pkg set 'workspaces[0]=packages/*'
+
       - name: Install deps
         run: bun i
 

@@ -44,6 +44,13 @@ jobs:
       - name: Install bun
         uses: oven-sh/setup-bun@v2
 
+      # Bun cannot read pnpm-workspace.yaml, so it needs a `workspaces` field to
+      # resolve @lobehub/docs-kit. The field must never be committed: with it
+      # present, `npm version` walks the symlinked tree and dies on the
+      # `workspace:` specs published in third-party devDependencies.
+      - name: Declare bun workspaces
+        run: npm pkg set 'workspaces[0]=packages/*'
+
       - name: Install deps
         run: bun i
 
@@ -58,6 +65,11 @@ jobs:
 
       - name: Verify lobedocs package
         run: npm pack --dry-run ./packages/docs-kit
+
+      # Restores package.json to its committed state so semantic-release does
+      # not commit the transient declaration back to the branch.
+      - name: Undeclare bun workspaces
+        run: npm pkg delete workspaces
 
       - name: Force Release Commit
         if: github.event.inputs.force_release == 'true'
