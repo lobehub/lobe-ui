@@ -114,7 +114,7 @@
     "pull": "git pull",
     "release": "semantic-release",
     "setup": "lobedocs typegen",
-    "start": "bun run docs:dev",
+    "start": "pnpm run docs:dev",
     "test": "vitest --passWithNoTests",
     "test:coverage": "vitest run --coverage  --passWithNoTests",
     "test:update": "vitest -u",
@@ -289,6 +289,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
+  "packageManager": "pnpm@11.18.0",
   "engines": {
     "node": ">=22.22.0"
   },

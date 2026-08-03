@@ -11,27 +11,29 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Install bun
-        uses: oven-sh/setup-bun@v2
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
 
-      # Bun cannot read pnpm-workspace.yaml; see release.yml for why this is not
-      # committed to package.json.
-      - name: Declare bun workspaces
-        run: npm pkg set 'workspaces[0]=packages/*'
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
       - name: Install deps
-        run: bun i
+        run: pnpm install
 
       - name: CI
-        run: bun run ci
+        run: pnpm run ci
 
       - name: Test and coverage
-        run: bun run test:coverage
+        run: pnpm run test:coverage
 
       - name: Documentation verification
         run: |
-          bunx vitest run packages/docs-kit/site
-          bun run docs:build
+          pnpm exec vitest run packages/docs-kit/site
+          pnpm run docs:build
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5

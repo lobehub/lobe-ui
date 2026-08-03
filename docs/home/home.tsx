@@ -8,7 +8,7 @@ import { CopyControl } from './CopyControl';
 import { HeroIconMarquee } from './HeroIconMarquee';
 import { styles } from './homeStyle';
 
-const INSTALL_COMMAND = 'bun add @lobehub/ui';
+const INSTALL_COMMAND = 'pnpm add @lobehub/ui';
 const ICONS_PATHNAME = '/components/icons/auth0';
 
 const features = [

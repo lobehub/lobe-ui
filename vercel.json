@@ -1,10 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "bun run docs:build",
-  "devCommand": "bun run docs:dev",
+  "buildCommand": "pnpm run docs:build",
+  "devCommand": "pnpm run docs:dev",
   "framework": null,
   "ignoreCommand": "git diff HEAD^ HEAD --quiet -- ./package.json ./src ./docs ./packages ./public ./vercel.json ./docs.config.ts ./compatibility.json ./navigationSections.json ./tsconfig.site.json ./tsconfig.json",
-  "installCommand": "bun install",
+  "installCommand": "pnpm install",
   "outputDirectory": "dist",
   "trailingSlash": false
 }

@@ -13,7 +13,7 @@ Use `agent-browser` to verify the local documentation site visually and programm
 
 | Layer                            | Command or tool                   | Authority                      |
 | -------------------------------- | --------------------------------- | ------------------------------ |
-| Development server               | `bun run docs:dev`                | React Router and Vite          |
+| Development server               | `pnpm run docs:dev`               | React Router and Vite          |
 | Documentation routes             | `site/content/compatibility.json` | Frozen path authority          |
 | Navigation and document registry | Compiled content manifest         | Runtime result                 |
 | Standalone demo routes           | `site/content/compatibility.json` | Frozen compatibility inventory |
@@ -29,7 +29,7 @@ and retain its log for port discovery and error inspection:
 
 ```bash
 LOG=/tmp/lobe-ui-docs-dev.log
-nohup bun run docs:dev > "$LOG" 2>&1 &
+nohup pnpm run docs:dev > "$LOG" 2>&1 &
 disown
 ```
 

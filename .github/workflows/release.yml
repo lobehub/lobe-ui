@@ -41,35 +41,30 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install bun
-        uses: oven-sh/setup-bun@v2
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
 
-      # Bun cannot read pnpm-workspace.yaml, so it needs a `workspaces` field to
-      # resolve @lobehub/docs-kit. The field must never be committed: with it
-      # present, `npm version` walks the symlinked tree and dies on the
-      # `workspace:` specs published in third-party devDependencies.
-      - name: Declare bun workspaces
-        run: npm pkg set 'workspaces[0]=packages/*'
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
       - name: Install deps
-        run: bun i
+        run: pnpm install
 
       - name: CI
-        run: bun run ci
+        run: pnpm run ci
 
       - name: Test
-        run: bun run test
+        run: pnpm run test
 
       - name: Build
-        run: bun run build
+        run: pnpm run build
 
       - name: Verify lobedocs package
         run: npm pack --dry-run ./packages/docs-kit
-
-      # Restores package.json to its committed state so semantic-release does
-      # not commit the transient declaration back to the branch.
-      - name: Undeclare bun workspaces
-        run: npm pkg delete workspaces
 
       - name: Force Release Commit
         if: github.event.inputs.force_release == 'true'
@@ -79,7 +74,7 @@ jobs:
           git commit --allow-empty -m "🔧 chore(release): force ${{ github.event.inputs.release_type }} release"
 
       - name: Release @lobehub/ui and @lobehub/docs-kit
-        run: bun run release
+        run: pnpm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

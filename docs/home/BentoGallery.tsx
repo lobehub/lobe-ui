@@ -94,7 +94,7 @@ export function BentoGallery() {
           <Hotkey keys={'mod+k'} variant={'outlined'} />
         </Tile>
         <Tile hint="one-line copy" title="Snippet" to="/components/snippet">
-          <Snippet language={'bash'}>bun add @lobehub/ui</Snippet>
+          <Snippet language={'bash'}>pnpm add @lobehub/ui</Snippet>
         </Tile>
         <Tile hint="pick one" title="ColorSwatches" to="/components/color-swatches">
           <ColorSwatches colors={SWATCH_COLORS} defaultValue={'#8b5cf6'} size={22} />

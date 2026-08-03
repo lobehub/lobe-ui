@@ -65,7 +65,7 @@ it('renders accent, custom actions, features, and install cta from full config',
         ],
         title: 'Build Faster',
       },
-      install: 'bun add @lobehub/example',
+      install: 'pnpm add @lobehub/example',
     },
   };
 
@@ -93,7 +93,7 @@ it('renders accent, custom actions, features, and install cta from full config',
   expect(unknownFeature?.querySelector('svg')).toBeNull();
 
   expect(screen.getByRole('heading', { name: 'Ship it today' })).toBeTruthy();
-  expect(screen.getByText('bun add @lobehub/example')).toBeTruthy();
+  expect(screen.getByText('pnpm add @lobehub/example')).toBeTruthy();
   expect(screen.getByText(/Open source · MIT license/)).toBeTruthy();
 
   const links = screen.getAllByRole('link', { name: /Get Started/ });

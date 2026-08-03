@@ -60,10 +60,10 @@ Lobe UI is an open-source UI component library for building _AIGC_ web apps
 
 To install Lobe UI, run the following command:
 
-[![][bun-shield]][bun-link]
+[![][pnpm-shield]][pnpm-link]
 
 ```bash
-$ bun add @lobehub/ui
+$ pnpm add @lobehub/ui
 ```
 
 ### Compile with NextJS
@@ -166,8 +166,8 @@ Or clone it for local development:
 ```bash
 $ git clone https://github.com/lobehub/lobe-ui.git
 $ cd lobe-ui
-$ bun install
-$ bun start
+$ pnpm install
+$ pnpm start
 ```
 
 <div align="right">
@@ -249,8 +249,8 @@ This project is [MIT](./LICENSE) licensed.
 
 [back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
 [banner]: https://github-production-user-asset-6210df.s3.amazonaws.com/17870709/268452017-960ab8a1-e4b7-4648-beb1-77daf4b6034a.png
-[bun-link]: https://bun.sh
-[bun-shield]: https://img.shields.io/badge/-speedup%20with%20bun-black?logo=bun&style=for-the-badge
+[pnpm-link]: https://pnpm.io
+[pnpm-shield]: https://img.shields.io/badge/-pnpm-F69220?logo=pnpm&style=for-the-badge
 [codespaces-link]: https://codespaces.new/lobehub/lobe-ui
 [codespaces-shield]: https://github.com/codespaces/badge.svg
 [contributors-contrib]: https://contrib.rocks/image?repo=lobehub/lobe-ui

@@ -188,7 +188,7 @@ function parseArgs(): ReplaceConfig | null {
   if (args.length === 0 || args.includes('--help') || args.includes('-h')) {
     console.log(`
 使用方法:
-  bun run scripts/replaceComponentImports.ts [选项]
+  pnpm exec tsx scripts/replaceComponentImports.ts [选项]
 
 选项:
   --components <comp1,comp2,...>  要替换的组件列表（逗号分隔）
@@ -201,14 +201,14 @@ function parseArgs(): ReplaceConfig | null {
 
 示例:
   # 将 antd 的 Skeleton 和 Empty 替换为 @lobehub/ui
-  bun run scripts/replaceComponentImports.ts \\
+  pnpm exec tsx scripts/replaceComponentImports.ts \\
     --components Skeleton,Empty \\
     --from antd \\
     --to @lobehub/ui \\
     --dir src
 
   # 仅预览，不修改
-  bun run scripts/replaceComponentImports.ts \\
+  pnpm exec tsx scripts/replaceComponentImports.ts \\
     --components Skeleton,Empty \\
     --from antd \\
     --to @lobehub/ui \\
