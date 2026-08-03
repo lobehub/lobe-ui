@@ -6,12 +6,7 @@ import type { IconProps } from '@/Icon';
 export type ToastType = 'success' | 'info' | 'warning' | 'error' | 'loading' | 'default';
 
 export type ToastPosition =
-  | 'top'
-  | 'top-left'
-  | 'top-right'
-  | 'bottom'
-  | 'bottom-left'
-  | 'bottom-right';
+  'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left' | 'bottom-right';
 
 export type ToastActionVariant = 'primary' | 'secondary' | 'text' | 'danger' | 'ghost';
 
@@ -76,6 +71,13 @@ export interface ToastOptions {
    * Custom icon
    */
   icon?: IconProps['icon'];
+  /**
+   * Stable identifier used to deduplicate toasts. Showing a toast with an id
+   * that is already visible refreshes it in place and resets its timer instead
+   * of stacking a second copy; if it is no longer the newest toast it is also
+   * moved back to the front of the stack.
+   */
+  id?: string;
   /**
    * Callback when toast is closed
    */

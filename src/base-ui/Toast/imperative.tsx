@@ -62,13 +62,17 @@ const toastManagers: Record<ToastPosition, ReturnType<typeof BaseToast.createToa
   'top-right': BaseToast.createToastManager(),
 };
 
-const activeToastIds: Record<ToastPosition, Set<string>> = {
-  'bottom': new Set(),
-  'bottom-left': new Set(),
-  'bottom-right': new Set(),
-  'top': new Set(),
-  'top-left': new Set(),
-  'top-right': new Set(),
+interface ActiveToast {
+  superseded: boolean;
+}
+
+const activeToasts: Record<ToastPosition, Map<string, ActiveToast>> = {
+  'bottom': new Map(),
+  'bottom-left': new Map(),
+  'bottom-right': new Map(),
+  'top': new Map(),
+  'top-left': new Map(),
+  'top-right': new Map(),
 };
 
 const getManager = (position: ToastPosition) => toastManagers[position];
@@ -76,6 +80,13 @@ const getManager = (position: ToastPosition) => toastManagers[position];
 let toastIdCounter = 0;
 const generateToastId = (): string =>
   `toast-${Date.now().toString(36)}-${(toastIdCounter++).toString(36)}`;
+
+const findActivePosition = (id: string) => ALL_POSITIONS.find((pos) => activeToasts[pos].has(id));
+
+// Base UI prepends every new toast, so the last entry we registered is the one
+// currently rendered at the front of the stack.
+const isFrontMost = (position: ToastPosition, id: string) =>
+  Array.from(activeToasts[position].keys()).at(-1) === id;
 
 const normalizeOptions = (
   optionsOrMessage: Omit<ToastOptions, 'type'> | string,
@@ -117,17 +128,40 @@ const createToastInstance = (id: string, position: ToastPosition): ToastInstance
 const addToast = (options: ToastOptions): ToastInstance => {
   const position = options.placement ?? globalState.position;
   const manager = getManager(position);
-  const onRemove = options.onRemove;
-  const id = generateToastId();
-  activeToastIds[position].add(id);
+  const { id: dedupeId, onClose, onRemove } = options;
+
+  if (dedupeId) {
+    const prevPosition = findActivePosition(dedupeId);
+    // Already the front-most toast: let Base UI upsert it in place so it only
+    // refreshes its content and timer, without replaying the slide-in animation.
+    const shouldPromote =
+      prevPosition && !(prevPosition === position && isFrontMost(position, dedupeId));
+
+    if (shouldPromote) {
+      // Closing marks the toast as `ending`, which makes the following `add`
+      // drop it and prepend a fresh one — Base UI's own upsert keeps the
+      // original slot instead.
+      activeToasts[prevPosition].get(dedupeId)!.superseded = true;
+      activeToasts[prevPosition].delete(dedupeId);
+      runWhenToastHostReady(() => getManager(prevPosition).close(dedupeId));
+    }
+  }
+
+  const id = dedupeId ?? generateToastId();
+  const active: ActiveToast = { superseded: false };
+  activeToasts[position].set(id, active);
   runWhenToastHostReady(() => {
     manager.add({
       id,
       data: options,
       description: options.description,
-      onClose: options.onClose,
+      onClose: () => {
+        if (active.superseded) return;
+        onClose?.();
+      },
       onRemove: () => {
-        activeToastIds[position].delete(id);
+        if (active.superseded) return;
+        activeToasts[position].delete(id);
         onRemove?.();
       },
       timeout: options.duration ?? globalState.duration,
@@ -141,14 +175,14 @@ const dismissToast = (id?: string) => {
   if (id) {
     // Try to close from all managers since we don't know which position the toast is in
     for (const [position, manager] of Object.entries(toastManagers)) {
-      activeToastIds[position as ToastPosition].delete(id);
+      activeToasts[position as ToastPosition].delete(id);
       runWhenToastHostReady(() => manager.close(id));
     }
   } else {
     // Clear all toasts
     for (const [position, manager] of Object.entries(toastManagers)) {
-      const ids = Array.from(activeToastIds[position as ToastPosition]);
-      activeToastIds[position as ToastPosition].clear();
+      const ids = Array.from(activeToasts[position as ToastPosition].keys());
+      activeToasts[position as ToastPosition].clear();
       runWhenToastHostReady(() => {
         for (const toastId of ids) {
           manager.close(toastId);
@@ -371,7 +405,7 @@ export const __resetToastStateForTests = (): void => {
   };
   for (const position of ALL_POSITIONS) {
     toastManagers[position] = BaseToast.createToastManager();
-    activeToastIds[position].clear();
+    activeToasts[position].clear();
   }
   __resetPendingToastQueueForTests();
 };
