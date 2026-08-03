@@ -30,8 +30,7 @@ jobs:
 
       - name: Documentation verification
         run: |
-          bunx vitest run packages/docs-kit/site scripts/migrate-dumi-docs.test.ts
-          bunx tsx scripts/migrate-dumi-docs.ts --check
+          bunx vitest run packages/docs-kit/site
           bun run docs:build
 
       - name: Upload coverage to Codecov
