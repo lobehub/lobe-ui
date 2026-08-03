@@ -580,7 +580,7 @@ describe('derived state reactivity', () => {
 });
 
 describe('closing gate', () => {
-  it('no-ops zoomIn/zoomOut, rotateLeft/rotateRight, flips, and reset while closing', () => {
+  it('no-ops zoomIn/zoomOut, rotateLeft/rotateRight, flips, reset, and doubleClick while closing', () => {
     const { result } = setup({ isClosing: () => true });
 
     act(() => {
@@ -591,12 +591,30 @@ describe('closing gate', () => {
       result.current.flipHorizontal();
       result.current.flipVertical();
       result.current.reset();
+      result.current.handleDoubleClick(VIEWPORT_CENTER);
     });
 
     expect(result.current.scale.get()).toBe(1);
     expect(result.current.x.get()).toBe(0);
     expect(result.current.y.get()).toBe(0);
     expect(result.current.rotation).toBe(0);
+    expect(animateMock).not.toHaveBeenCalled();
+  });
+
+  it('no-ops dragBy and dragEnd while closing, leaving pan and any clamp-back spring untouched', () => {
+    const { result } = setup({ isClosing: () => true });
+    act(() => {
+      result.current.scale.set(2);
+    });
+
+    act(() => {
+      result.current.dragBy({ x: 700, y: 0 });
+    });
+    expect(result.current.x.get()).toBe(0);
+
+    act(() => {
+      result.current.dragEnd();
+    });
     expect(animateMock).not.toHaveBeenCalled();
   });
 

@@ -213,6 +213,7 @@ export const useZoomPan = ({
 
   const handleDoubleClick = useCallback(
     (point: Point) => {
+      if (closing()) return;
       const currentScale = scale.get();
       const fitRect = getFitRect();
       const target = doubleClickTarget(
@@ -230,7 +231,7 @@ export const useZoomPan = ({
       );
       applyTransform(next, fitRect);
     },
-    [applyTransform, getFitRect, rotate, scale, x, y],
+    [applyTransform, closing, getFitRect, rotate, scale, x, y],
   );
 
   const handleWheel = useCallback(
@@ -322,15 +323,22 @@ export const useZoomPan = ({
 
   const dragBy = useCallback(
     (delta: Point) => {
+      // A pointer can still be down when close starts (e.g. pinch to just
+      // over 1x — inside isClean's epsilon, so Esc/wheel reads 'close' —
+      // while the same gesture is still panning). Gated for consistency
+      // with the other entry points even though .set() here can't cancel
+      // the close spring outright, only cause a self-correcting flicker.
+      if (closing()) return;
       const fitRect = getFitRect();
       const bounds = panBounds({ scale: scale.get(), x: 0, y: 0 }, fitRect, viewportRef.current);
       x.set(rubberBand(x.get() + delta.x, bounds.x.min, bounds.x.max));
       y.set(rubberBand(y.get() + delta.y, bounds.y.min, bounds.y.max));
     },
-    [getFitRect, scale, x, y],
+    [closing, getFitRect, scale, x, y],
   );
 
   const dragEnd = useCallback(() => {
+    if (closing()) return;
     const fitRect = getFitRect();
     const clamped = clampPan(
       { scale: scale.get(), x: x.get(), y: y.get() },
@@ -339,7 +347,7 @@ export const useZoomPan = ({
     );
     animate(x, clamped.x, RESET_TRANSITION);
     animate(y, clamped.y, RESET_TRANSITION);
-  }, [getFitRect, scale, x, y]);
+  }, [closing, getFitRect, scale, x, y]);
 
   const escIntent = useCallback(
     (): 'reset' | 'close' => (isCleanState() ? 'close' : 'reset'),

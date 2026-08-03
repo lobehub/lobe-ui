@@ -398,6 +398,59 @@ describe('escape layering', () => {
     expect(isOpen()).toBe(false);
     expect(onOpenChange.mock.calls).toEqual([[true], [false]]);
   });
+
+  it('does not let a double-click during the close window override the close transform', () => {
+    const onOpenChange = vi.fn();
+    mountReporting(onOpenChange);
+
+    pressKey('Escape');
+    act(() => {
+      const [scaleTask] = motionMock.pending.splice(4, 1);
+      scaleTask.run();
+    });
+
+    // handleDoubleClick's applyTransform uses jump(), never the mocked
+    // animate(), so pending.length can't tell gated from ungated here —
+    // the distinguishing assertion is that the mid-close transform itself
+    // doesn't move.
+    const midClose = readTransform();
+    doubleClickImage();
+    expect(readTransform()).toEqual(midClose);
+
+    flushAnimations();
+
+    expect(isOpen()).toBe(false);
+    expect(onOpenChange.mock.calls).toEqual([[true], [false]]);
+  });
+
+  it('does not let dragEnd during the close window queue an animation on top of the close', () => {
+    const onOpenChange = vi.fn();
+    mountReporting(onOpenChange);
+
+    // Nudge just inside CLEAN_EPSILON of scale 1 — isZoomed (>1, so a drag
+    // is panEligible) and isClean (within epsilon, so escIntent() reads
+    // 'close' rather than 'reset') are simultaneously true, the sliver that
+    // makes a real close reachable while a pan is still in flight.
+    wheel({ ctrlKey: true, deltaY: -2 });
+    const scaleAfterNudge = readTransform().scale;
+    expect(scaleAfterNudge).toBeGreaterThan(1);
+    expect(scaleAfterNudge).toBeLessThan(1.01);
+
+    const image = getViewerImage() as HTMLImageElement;
+    fireEvent.pointerDown(image, { clientX: 500, clientY: 400, pointerId: 1 });
+    fireEvent.pointerMove(image, { clientX: 300, clientY: 400, pointerId: 1 });
+
+    pressKey('Escape');
+
+    const pendingBeforeRelease = motionMock.pending.length;
+    fireEvent.pointerUp(image, { clientX: 300, clientY: 400, pointerId: 1 });
+    expect(motionMock.pending.length).toBe(pendingBeforeRelease);
+
+    flushAnimations();
+
+    expect(isOpen()).toBe(false);
+    expect(onOpenChange.mock.calls).toEqual([[true], [false]]);
+  });
 });
 
 describe('keyboard shortcuts', () => {
