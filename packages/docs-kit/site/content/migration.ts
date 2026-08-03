@@ -350,7 +350,7 @@ const apiBodyShas: Readonly<Partial<Record<string, string>>> = {
   'src/HotkeyInput/index.mdx': 'fee816ae126740ac952fd0067c9020e326e51afee0474178e5c23a8b96e11538',
   'src/HtmlPreview/index.mdx': emptyPreservedApiBodySha,
   'src/Icon/index.mdx': '1765423b17ca76a736bc41c97a75932fba634d4187577e990b8cbf3c13873c1d',
-  'src/Image/index.mdx': '8818088bc09241e17d2db346854d752ac4c100bc1f0955000b04612f2b2cf314',
+  'src/Image/index.mdx': '6de4c270c449aae38c2879c1156ad9cd086bafcda195a61815e00a680c1249b9',
   'src/ImageSelect/index.mdx': 'bf4ce36289b07584db9e9e05152babc22d61f6ea4010954d4cdfb2e88e4013b4',
   'src/Input/index.mdx': 'c61908b891573db9f8d369444d9984008a16d653d6d3c164076f8bb9bd2717cd',
   'src/Layout/index.mdx': '50c8111069c920569774dfb7b1839cf310858b8b26dda43749ac40eac6a11ceb',
@@ -585,7 +585,7 @@ const migration = {
   frozenInventory: {
     apiSourceOverrides: 79,
     componentApiDecisions: 158,
-    demoReferences: 518,
+    demoReferences: 521,
     documents: 160,
     initiallyMissingDescriptions: 43,
     isolatedDemos: 35,

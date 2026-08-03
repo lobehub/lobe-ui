@@ -3,9 +3,11 @@ import { cva } from 'class-variance-authority';
 
 import { lobeStaticStylish } from '@/styles';
 
-const prefixCls = 'ant';
-
 export const styles = createStaticStyles(({ css, cssVar }) => {
+  // Bare viewer controls float directly over arbitrary image content; the
+  // theme-side halo (light halo around dark icons in light mode and vice
+  // versa) is what keeps them readable without a container panel.
+  const controlHalo = `drop-shadow(0 0 2px ${cssVar.colorBgLayout}) drop-shadow(0 1px 6px ${cssVar.colorBgLayout})`;
   return {
     actionsHidden: css`
       cursor: pointer;
@@ -40,74 +42,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       width: auto;
       height: auto;
     `,
-    mask: css`
-      ${lobeStaticStylish.blur};
-      backdrop-filter: blur(8px);
-    `,
     outlined: lobeStaticStylish.variantOutlinedWithoutHover,
-    preview: css`
-      .${prefixCls}-image-preview-mask {
-        background: color-mix(in srgb, ${cssVar.colorBgLayout} 90%, transparent);
-      }
-
-      .${prefixCls}-image-preview-close {
-        color: ${cssVar.colorTextDescription};
-        background: ${cssVar.colorBgContainer};
-        box-shadow: ${cssVar.boxShadowTertiary};
-
-        svg {
-          stroke: ${cssVar.colorTextDescription};
-        }
-
-        &:hover {
-          color: ${cssVar.colorText};
-          background: ${cssVar.colorBgContainer};
-
-          svg {
-            stroke: ${cssVar.colorText};
-          }
-        }
-      }
-
-      .${prefixCls}-image-preview-img {
-        width: 100%;
-      }
-
-      .${prefixCls}-image-preview-switch {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        width: 32px;
-        height: 32px;
-        padding: 0;
-
-        color: ${cssVar.colorTextDescription};
-
-        background: ${cssVar.colorBgContainer};
-        box-shadow: ${cssVar.boxShadowTertiary};
-
-        svg {
-          transform: scale(0.75);
-        }
-
-        &:hover {
-          color: ${cssVar.colorText};
-          background: ${cssVar.colorBgContainer};
-        }
-      }
-
-      .${prefixCls}-image-preview-switch-disabled {
-        display: none;
-      }
-
-      .ant-image-preview-progress {
-        color: ${cssVar.colorTextDescription};
-      }
-
-      img {
-        min-width: 100%;
-      }
+    previewable: css`
+      cursor: zoom-in;
     `,
     root: css`
       cursor: pointer;
@@ -122,10 +59,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 
       line-height: 1;
 
-      .${prefixCls}-image-cover {
-        display: none !important;
-      }
-
       &:hover {
         .actions-hidden {
           opacity: 1;
@@ -133,12 +66,139 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       }
     `,
     toolbar: css`
-      ${lobeStaticStylish.variantOutlinedWithoutHover};
-      padding: 4px;
-      border-color: ${cssVar.colorFillTertiary};
-      border-radius: ${cssVar.borderRadiusLG};
+      pointer-events: auto;
+
+      position: absolute;
+      inset-block-end: 16px;
+      inset-inline-start: 50%;
+      transform: translateX(-50%);
+    `,
+    // The glass lives on the icon row, not the toolbar itself: tooltips and
+    // the more-menu portal into the toolbar element, and an ancestor
+    // backdrop-filter/filter would distort those popups too.
+    toolbarRow: css`
+      padding-block: 4px;
+      padding-inline: 6px;
+      border-radius: 999px;
+
+      background: color-mix(in srgb, ${cssVar.colorBgLayout} 60%, transparent);
+      backdrop-filter: blur(12px);
+    `,
+    toolbarPercentage: css`
+      cursor: pointer;
+      user-select: none;
+
+      min-width: 44px;
+      height: 36px;
+      padding-inline: 8px;
+      border-radius: 999px;
+
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      color: ${cssVar.colorTextTertiary};
+
+      transition:
+        color 400ms ${cssVar.motionEaseOut},
+        background 100ms ${cssVar.motionEaseOut};
+
+      &:hover {
+        color: ${cssVar.colorTextSecondary};
+        background: ${cssVar.colorFillTertiary};
+      }
     `,
 
+    viewerBackdrop: css`
+      position: fixed;
+      inset: 0;
+
+      opacity: 0;
+      background: color-mix(in srgb, ${cssVar.colorBgLayout} 90%, transparent);
+      backdrop-filter: blur(8px);
+    `,
+    viewerChrome: css`
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+    `,
+    viewerChromeIdle: css`
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      transition:
+        opacity 200ms ${cssVar.motionEaseOut},
+        visibility 200ms;
+
+      &[data-idle-hidden] {
+        visibility: hidden;
+        opacity: 0;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
+    `,
+    viewerClose: css`
+      pointer-events: auto;
+
+      position: absolute;
+      inset-block-start: 16px;
+      inset-inline-end: 16px;
+
+      filter: ${controlHalo};
+    `,
+    viewerCounter: css`
+      pointer-events: none;
+
+      position: absolute;
+      inset-block-start: 16px;
+      inset-inline-start: 50%;
+      transform: translateX(-50%);
+
+      padding-block: 4px;
+      padding-inline: 12px;
+      border-radius: 999px;
+
+      font-size: 12px;
+      font-variant-numeric: tabular-nums;
+      color: ${cssVar.colorTextSecondary};
+
+      background: color-mix(in srgb, ${cssVar.colorBgLayout} 60%, transparent);
+      backdrop-filter: blur(12px);
+    `,
+    viewerImage: css`
+      will-change: transform;
+      cursor: zoom-out;
+      user-select: none;
+
+      position: absolute;
+      transform-origin: center center;
+
+      object-fit: contain;
+
+      -webkit-user-drag: none;
+    `,
+    viewerNavButton: css`
+      pointer-events: auto;
+
+      position: absolute;
+      inset-block-start: 50%;
+      transform: translateY(-50%);
+
+      filter: ${controlHalo};
+    `,
+    viewerNavNext: css`
+      inset-inline-end: 16px;
+    `,
+    viewerNavPrev: css`
+      inset-inline-start: 16px;
+    `,
+    viewerPopup: css`
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      outline: none;
+    `,
     wrapper: css`
       position: relative;
       overflow: hidden;

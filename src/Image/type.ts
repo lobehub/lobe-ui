@@ -1,30 +1,17 @@
-import type { ImageProps as AntdImageProps } from 'antd';
-import type { PreviewConfig } from 'antd/es/image';
-import type { GroupPreviewConfig } from 'antd/es/image/PreviewGroup';
-import type { CSSProperties, ReactNode, Ref } from 'react';
+import type { ComponentProps, CSSProperties, ReactNode, Ref } from 'react';
 
-export interface PreviewGroupPreviewOptions extends GroupPreviewConfig {
+export interface ImagePreviewOptions {
+  maxScale?: number;
+  onOpenChange?: (open: boolean) => void;
+  src?: string;
   toolbarAddon?: ReactNode;
 }
 
-export interface PreviewGroupProps {
-  children?: ReactNode;
-  enable?: boolean;
-  items?: string[];
-  preview?: boolean | PreviewGroupPreviewOptions;
-}
-
-export interface ImagePreviewOptions extends PreviewConfig {
-  toolbarAddon?: ReactNode;
-}
-
-export interface ImageProps extends Omit<AntdImageProps, 'preview'> {
+export type ImageProps = Omit<ComponentProps<'img'>, 'width' | 'height'> & {
   actions?: ReactNode;
   alwaysShowActions?: boolean;
-  classNames?: {
-    image?: string;
-    wrapper?: string;
-  };
+  classNames?: { image?: string; wrapper?: string };
+  height?: number | string;
   isLoading?: boolean;
   maxHeight?: number | string;
   maxWidth?: number | string;
@@ -34,10 +21,13 @@ export interface ImageProps extends Omit<AntdImageProps, 'preview'> {
   preview?: boolean | ImagePreviewOptions;
   ref?: Ref<HTMLDivElement>;
   size?: number | string;
-  styles?: {
-    image?: CSSProperties;
-    wrapper?: CSSProperties;
-  };
-  toolbarAddon?: ReactNode;
+  styles?: { image?: CSSProperties; wrapper?: CSSProperties };
   variant?: 'borderless' | 'filled' | 'outlined';
+  width?: number | string;
+};
+
+export interface PreviewGroupProps {
+  children?: ReactNode;
+  enable?: boolean;
+  preview?: boolean | ImagePreviewOptions;
 }

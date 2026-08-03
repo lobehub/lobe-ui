@@ -1,4 +1,5 @@
 export default {
+  'image.close': '关闭',
   'image.copy': '复制',
   'image.copyFailed': '复制失败',
   'image.copySuccess': '复制成功',
@@ -7,8 +8,12 @@ export default {
   'image.downloadSuccess': '下载成功',
   'image.flipHorizontal': '水平翻转',
   'image.flipVertical': '垂直翻转',
+  'image.more': '更多',
+  'image.next': '下一张',
+  'image.prev': '上一张',
   'image.rotateLeft': '向左旋转',
   'image.rotateRight': '向右旋转',
   'image.zoomIn': '放大',
   'image.zoomOut': '缩小',
+  'image.zoomReset': '重置缩放',
 } as const;
