@@ -10,6 +10,7 @@ import DemoFallback from './demos/Fallback.tsx?demo';
 import DemoCustomActions from './demos/CustomActions.tsx?demo';
 import DemoDualSource from './demos/DualSource.tsx?demo';
 import DemoDeepZoom from './demos/DeepZoom.tsx?demo';
+import DemoToolbarAddon from './demos/ToolbarAddon.tsx?demo';
 
 ## Default
 
@@ -40,6 +41,12 @@ Wrap multiple `Image` components in `Image.PreviewGroup` to preview them togethe
 Ctrl/Cmd + wheel, double-click, or the toolbar's zoom buttons zoom in past the fitted size for pixel-level detail; drag to pan once zoomed. `preview.maxScale` raises the zoom ceiling for large source images.
 
 <Demo of={DemoDeepZoom} layout="center" />
+
+## Toolbar Addon
+
+`preview.toolbarAddon` appends custom controls to the end of the preview toolbar — here, a button that opens the original file in a new tab.
+
+<Demo of={DemoToolbarAddon} layout="center" />
 
 ## Interaction Model
 

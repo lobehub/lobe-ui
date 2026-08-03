@@ -1777,6 +1777,18 @@
       "source": "src/Image/demos/Gallery.tsx"
     },
     {
+      "document": "src/Image/index.mdx",
+      "legacyId": "src-image-demo-toolbaraddon",
+      "legacyRouteId": "components/Image/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "center"
+      },
+      "pathname": "/components/image",
+      "source": "src/Image/demos/ToolbarAddon.tsx"
+    },
+    {
       "document": "src/ImageSelect/index.mdx",
       "legacyId": "imageselect-demo-demos",
       "legacyRouteId": "components/ImageSelect/index",
