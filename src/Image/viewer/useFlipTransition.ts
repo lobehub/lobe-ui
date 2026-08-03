@@ -5,6 +5,9 @@ import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import type { Rect } from './geometry';
 
 export const OPEN_SPRING = { bounce: 0.15, type: 'spring' as const, visualDuration: 0.3 };
+// bounce: 0 — a full-viewport push with overshoot would visibly slide past
+// the resting position and snap back.
+const PUSH_SPRING = { bounce: 0, type: 'spring' as const, visualDuration: 0.3 };
 const FADE = { duration: 0.15, ease: 'easeOut' as const };
 const CHROME_FADE = { delay: 0.15, duration: 0.2, ease: 'easeOut' as const };
 const FADE_SCALE = 0.92;
@@ -28,6 +31,7 @@ export interface UseFlipTransitionOptions {
   animated: boolean;
   getCloseSource: () => HTMLImageElement;
   getFitRect: () => Rect;
+  getViewportWidth: () => number;
   onClosed: () => void;
   source: HTMLImageElement;
   transform: FlipTransformValues;
@@ -44,7 +48,7 @@ export interface UseFlipTransitionResult {
   imageRef: (node: HTMLImageElement | null) => void;
   isClosing: () => boolean;
   isTransitioning: () => boolean;
-  switchTo: (apply: () => void) => void;
+  switchTo: (apply: () => void, direction?: 1 | -1) => void;
 }
 
 const measureSource = (element: HTMLImageElement): DOMRect | null => {
@@ -89,13 +93,16 @@ const useBoundNode = <T extends HTMLElement>(apply: (node: T) => void) => {
     if (node) applyRef.current(node);
   }, []);
 
-  return useMemo(() => ({ refresh, setNode }), [refresh, setNode]);
+  const getNode = useCallback(() => nodeRef.current, []);
+
+  return useMemo(() => ({ getNode, refresh, setNode }), [getNode, refresh, setNode]);
 };
 
 export const useFlipTransition = ({
   animated,
   getCloseSource,
   getFitRect,
+  getViewportWidth,
   onClosed,
   source,
   transform,
@@ -146,6 +153,15 @@ export const useFlipTransition = ({
 
   const getCloseSourceRef = useRef(getCloseSource);
   getCloseSourceRef.current = getCloseSource;
+
+  const getViewportWidthRef = useRef(getViewportWidth);
+  getViewportWidthRef.current = getViewportWidth;
+
+  const ghostRef = useRef<HTMLImageElement | null>(null);
+  const removeGhost = useCallback(() => {
+    ghostRef.current?.remove();
+    ghostRef.current = null;
+  }, []);
 
   const run = useCallback((animations: Animation[]) => {
     runningRef.current = [...runningRef.current, ...animations];
@@ -255,8 +271,19 @@ export const useFlipTransition = ({
 
     return () => {
       stopAll();
+      removeGhost();
     };
-  }, [animateSettling, animated, opacity, run, source, stopAll, trackTimeout, transform]);
+  }, [
+    animateSettling,
+    animated,
+    opacity,
+    removeGhost,
+    run,
+    source,
+    stopAll,
+    trackTimeout,
+    transform,
+  ]);
 
   const close = useCallback(
     (options?: CloseTransitionOptions) => {
@@ -264,6 +291,7 @@ export const useFlipTransition = ({
       closingRef.current = true;
       transitioningRef.current = true;
       stopAll();
+      removeGhost();
 
       let finished = false;
       const finish = () => {
@@ -297,14 +325,56 @@ export const useFlipTransition = ({
   );
 
   const switchTo = useCallback(
-    (apply: () => void) => {
+    (apply: () => void, direction?: 1 | -1) => {
       if (closingRef.current) return;
       stopAll();
+      removeGhost();
       transitioningRef.current = true;
 
       const markSettled = () => {
         transitioningRef.current = false;
       };
+
+      const node = image.getNode();
+      const width = getViewportWidthRef.current();
+
+      if (animated && direction && node && width > 0) {
+        // The clone snapshots the outgoing visual state wholesale — src,
+        // fitRect positioning and the current zoom/rotate/flip transform —
+        // so the live <img> stays the single element every other system
+        // (gestures, FLIP close, refit) keeps operating on.
+        const ghost = node.cloneNode() as HTMLImageElement;
+        ghost.dataset.ghost = 'true';
+        ghost.setAttribute('aria-hidden', 'true');
+        ghost.style.pointerEvents = 'none';
+        const base = ghost.style.transform;
+        node.parentElement?.insertBefore(ghost, node);
+        ghostRef.current = ghost;
+
+        const progress = motionValue(0);
+        const unsubscribe = progress.on('change', (p) => {
+          ghost.style.transform = `translateX(${-direction * width * p}px) ${base}`;
+        });
+        const finishGhost = () => {
+          unsubscribe();
+          if (ghostRef.current === ghost) removeGhost();
+          else ghost.remove();
+        };
+
+        apply();
+        transform.x.jump(direction * width);
+
+        run([
+          animate(progress, 1, { ...PUSH_SPRING, onComplete: finishGhost }),
+          animate(transform.x, 0, { ...PUSH_SPRING, onComplete: markSettled }),
+          { stop: finishGhost },
+        ]);
+        trackTimeout(() => {
+          finishGhost();
+          markSettled();
+        }, SETTLE_FALLBACK_MS);
+        return;
+      }
 
       const tasks: Animation[] = [];
       if (animated) tasks.push(animate(transform.scale, SWITCH_FADE_SCALE, FADE));
@@ -320,7 +390,7 @@ export const useFlipTransition = ({
       run(tasks);
       trackTimeout(markSettled, SETTLE_FALLBACK_MS);
     },
-    [animated, opacity, run, stopAll, trackTimeout, transform],
+    [animated, image, opacity, removeGhost, run, stopAll, trackTimeout, transform],
   );
 
   return {

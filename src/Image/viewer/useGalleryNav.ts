@@ -24,7 +24,7 @@ export interface UseGalleryNavOptions {
   setCurrentIndex: (index: number) => void;
   setNatural: (natural: Size) => void;
   setSource: (src: string) => void;
-  switchTo: (apply: () => void) => void;
+  switchTo: (apply: () => void, direction?: 1 | -1) => void;
   syncZoomNatural: (natural: Size) => void;
   x: MotionValue<number>;
   y: MotionValue<number>;
@@ -78,25 +78,28 @@ export const useGalleryNav = ({
       // so both must clear at this single choke point every switch goes through.
       cancelPendingCloseRef.current();
       resetCloseTrackingRef.current();
-      switchToRef.current(() => {
-        const nextEntry = entries[nextIndex];
-        setCurrentIndex(nextIndex);
-        setSource(nextEntry.src);
-        const nextNatural = readNatural(nextEntry.element);
-        setNatural(nextNatural);
-        syncZoomNatural(nextNatural);
-        // .jump(), not .set(): a surviving spring from the outgoing image (a
-        // dragEnd clamp-back, a wheel snap-back, or reset()) targets the OLD
-        // image's bounds and would otherwise silently overwrite this reset on
-        // its next tick, since motion's set() never stops an active animation.
-        scale.jump(1);
-        x.jump(0);
-        y.jump(0);
-        rotate.jump(0);
-        flipX.jump(false);
-        flipY.jump(false);
-        switchingRef.current = false;
-      });
+      switchToRef.current(
+        () => {
+          const nextEntry = entries[nextIndex];
+          setCurrentIndex(nextIndex);
+          setSource(nextEntry.src);
+          const nextNatural = readNatural(nextEntry.element);
+          setNatural(nextNatural);
+          syncZoomNatural(nextNatural);
+          // .jump(), not .set(): a surviving spring from the outgoing image (a
+          // dragEnd clamp-back, a wheel snap-back, or reset()) targets the OLD
+          // image's bounds and would otherwise silently overwrite this reset on
+          // its next tick, since motion's set() never stops an active animation.
+          scale.jump(1);
+          x.jump(0);
+          y.jump(0);
+          rotate.jump(0);
+          flipX.jump(false);
+          flipY.jump(false);
+          switchingRef.current = false;
+        },
+        nextIndex > indexRef.current ? 1 : -1,
+      );
     },
     [
       entries,

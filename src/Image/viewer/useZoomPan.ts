@@ -32,6 +32,7 @@ export interface WheelLikeEvent {
 }
 
 export interface UseZoomPanOptions {
+  fillViewport?: boolean;
   isClosing?: () => boolean;
   maxScale?: number;
   natural: Size;
@@ -82,6 +83,7 @@ export const useZoomPan = ({
   maxScale,
   onCloseRequest,
   isClosing,
+  fillViewport,
 }: UseZoomPanOptions): UseZoomPanResult => {
   const [{ scale, x, y, rotate, flipX, flipY }] = useState(() => ({
     flipX: motionValue(false),
@@ -96,6 +98,8 @@ export const useZoomPan = ({
   const viewportRef = useRef(viewport);
   const maxScaleRef = useRef(maxScale ?? DEFAULT_MAX_SCALE);
   maxScaleRef.current = maxScale ?? DEFAULT_MAX_SCALE;
+  const fillViewportRef = useRef(fillViewport ?? false);
+  fillViewportRef.current = fillViewport ?? false;
 
   const onCloseRequestRef = useRef(onCloseRequest);
   onCloseRequestRef.current = onCloseRequest;
@@ -171,7 +175,13 @@ export const useZoomPan = ({
   }, [flipX, flipY, rotate, scale, syncDerived]);
 
   const getFitRect = useCallback(
-    () => computeFit(naturalRef.current, viewportRef.current, normalizeRotation(rotate.get())),
+    () =>
+      computeFit(
+        naturalRef.current,
+        viewportRef.current,
+        normalizeRotation(rotate.get()),
+        fillViewportRef.current,
+      ),
     [rotate],
   );
 
@@ -190,6 +200,18 @@ export const useZoomPan = ({
     [scale, x, y],
   );
 
+  // Wheel/pinch stays on the instant applyTransform for 1:1 gesture tracking;
+  // stepped inputs (toolbar/keyboard zoom, double-click) animate instead.
+  const animateTransform = useCallback(
+    (next: TransformState, fitRect: Rect) => {
+      const clamped = clampPan(next, fitRect, viewportRef.current);
+      animate(scale, next.scale, RESET_TRANSITION);
+      animate(x, clamped.x, RESET_TRANSITION);
+      animate(y, clamped.y, RESET_TRANSITION);
+    },
+    [scale, x, y],
+  );
+
   const zoomBy = useCallback(
     (factor: number) => {
       if (closing()) return;
@@ -203,9 +225,9 @@ export const useZoomPan = ({
         anchor,
         fitRect,
       );
-      applyTransform(next, fitRect);
+      animateTransform(next, fitRect);
     },
-    [applyTransform, closing, getFitRect, scale, x, y],
+    [animateTransform, closing, getFitRect, scale, x, y],
   );
 
   const zoomIn = useCallback(() => zoomBy(ZOOM_STEP), [zoomBy]);
@@ -229,9 +251,9 @@ export const useZoomPan = ({
         point,
         fitRect,
       );
-      applyTransform(next, fitRect);
+      animateTransform(next, fitRect);
     },
-    [applyTransform, closing, getFitRect, rotate, scale, x, y],
+    [animateTransform, closing, getFitRect, rotate, scale, x, y],
   );
 
   const handleWheel = useCallback(
@@ -357,7 +379,12 @@ export const useZoomPan = ({
   const setViewport = useCallback(
     (next: Size) => {
       viewportRef.current = next;
-      const fitRect = computeFit(naturalRef.current, next, normalizeRotation(rotate.get()));
+      const fitRect = computeFit(
+        naturalRef.current,
+        next,
+        normalizeRotation(rotate.get()),
+        fillViewportRef.current,
+      );
       const clamped = clampPan({ scale: scale.get(), x: x.get(), y: y.get() }, fitRect, next);
       x.set(clamped.x);
       y.set(clamped.y);
@@ -368,7 +395,12 @@ export const useZoomPan = ({
   const setNatural = useCallback(
     (next: Size) => {
       naturalRef.current = next;
-      const fitRect = computeFit(next, viewportRef.current, normalizeRotation(rotate.get()));
+      const fitRect = computeFit(
+        next,
+        viewportRef.current,
+        normalizeRotation(rotate.get()),
+        fillViewportRef.current,
+      );
       const clamped = clampPan(
         { scale: scale.get(), x: x.get(), y: y.get() },
         fitRect,

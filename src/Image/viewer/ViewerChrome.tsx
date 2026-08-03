@@ -12,6 +12,7 @@ import { styles } from '../style';
 import GalleryNav from './GalleryNav';
 import type { Rect, Rotation, Size } from './geometry';
 import Toolbar from './Toolbar';
+import { useChromeIdle } from './useChromeIdle';
 
 export interface ViewerChromeProps {
   canZoomIn: boolean;
@@ -42,6 +43,7 @@ export interface ViewerChromeProps {
 const ViewerChrome = memo<ViewerChromeProps>(
   ({ chromeRef, current, hasNext, hasPrev, next, onClose, prev, total, ...toolbarProps }) => {
     const { t } = useTranslation(imageMessages);
+    const idle = useChromeIdle();
 
     const handleChromeClick = useCallback((event: MouseEvent<HTMLDivElement>) => {
       event.stopPropagation();
@@ -49,23 +51,29 @@ const ViewerChrome = memo<ViewerChromeProps>(
 
     return (
       <div className={styles.viewerChrome} ref={chromeRef} onClick={handleChromeClick}>
-        <ActionIcon
-          className={styles.viewerClose}
-          icon={X}
-          title={t('image.close')}
-          onClick={onClose}
-        />
-        {total > 1 && (
-          <GalleryNav
-            current={current}
-            hasNext={hasNext}
-            hasPrev={hasPrev}
-            next={next}
-            prev={prev}
-            total={total}
+        <div
+          className={styles.viewerChromeIdle}
+          data-idle-hidden={idle.hidden ? '' : undefined}
+          ref={idle.ref}
+        >
+          <ActionIcon
+            className={styles.viewerClose}
+            icon={X}
+            title={t('image.close')}
+            onClick={onClose}
           />
-        )}
-        <Toolbar {...toolbarProps} />
+          {total > 1 && (
+            <GalleryNav
+              current={current}
+              hasNext={hasNext}
+              hasPrev={hasPrev}
+              next={next}
+              prev={prev}
+              total={total}
+            />
+          )}
+          <Toolbar {...toolbarProps} onMoreOpenChange={idle.setHeld} />
+        </div>
       </div>
     );
   },

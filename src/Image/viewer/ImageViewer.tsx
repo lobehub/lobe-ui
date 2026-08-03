@@ -69,6 +69,10 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
   const isClosingIndirectRef = useRef<() => boolean>(() => false);
   const isClosingIndirect = useCallback(() => isClosingIndirectRef.current(), []);
 
+  const fillViewport = Boolean(
+    currentEntry.previewSrc && currentEntry.previewSrc !== currentEntry.src,
+  );
+
   const {
     canZoomIn,
     canZoomOut,
@@ -97,6 +101,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
     zoomIn,
     zoomOut,
   } = useZoomPan({
+    fillViewport,
     isClosing: isClosingIndirect,
     maxScale: currentEntry.options.maxScale,
     natural,
@@ -105,12 +110,16 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
   });
 
   const fitRect = useMemo(
-    () => computeFit(natural, viewport, rotation),
-    [natural, viewport, rotation],
+    () => computeFit(natural, viewport, rotation, fillViewport),
+    [natural, viewport, rotation, fillViewport],
   );
   const fitRectRef = useRef(fitRect);
   fitRectRef.current = fitRect;
   const getFitRect = useCallback(() => fitRectRef.current, []);
+
+  const viewportRef = useRef(viewport);
+  viewportRef.current = viewport;
+  const getViewportWidth = useCallback(() => viewportRef.current.width, []);
 
   const getCloseSource = useCallback(() => currentEntryRef.current.element, []);
 
@@ -132,13 +141,24 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
     animated,
     getCloseSource,
     getFitRect,
+    getViewportWidth,
     onClosed: handleClosed,
     source: openerEntry.element,
     transform,
   });
   isClosingIndirectRef.current = isClosing;
 
-  useRefitTransition({ animated, isTransitioning, natural, rotation, scale, viewport, x, y });
+  useRefitTransition({
+    animated,
+    fillViewport,
+    isTransitioning,
+    natural,
+    rotation,
+    scale,
+    viewport,
+    x,
+    y,
+  });
   const finalFocus = useFinalFocus(openerFocusElement);
 
   const isCleanRef = useRef(isClean);
@@ -200,7 +220,8 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
     y,
   });
 
-  const popupRef = useMergeRefs<HTMLDivElement>([layerRef, gestures.popupRef]);
+  const popupNodeRef = useRef<HTMLDivElement | null>(null);
+  const popupRef = useMergeRefs<HTMLDivElement>([layerRef, gestures.popupRef, popupNodeRef]);
   const imageRef = useMergeRefs<HTMLImageElement>([flipImageRef, gestures.imageRef]);
 
   const handleLoad = useCallback(
@@ -263,8 +284,13 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
           aria-label={currentEntry.element.alt || undefined}
           className={styles.viewerPopup}
           finalFocus={finalFocus}
+          // Focus the popup itself instead of Base UI's default (the first
+          // tabbable — the close button): a focus-visible close button pins
+          // the idle auto-hide open forever and pops its tooltip on open.
+          initialFocus={popupNodeRef}
           ref={popupRef}
           style={zIndex === undefined ? undefined : { zIndex: zIndex + 1 }}
+          tabIndex={-1}
           onClick={gestures.onSurfaceClick}
           onPointerCancel={gestures.onPointerFinish}
           onPointerDown={gestures.onPointerDown}

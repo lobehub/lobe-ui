@@ -128,6 +128,11 @@ const wheel = (init: { ctrlKey?: boolean; deltaY: number }) =>
 
 const pressKey = (key: string) => fireEvent.keyDown(document.body, { key });
 
+const pressZoomKey = (key: string) => {
+  pressKey(key);
+  flushAnimations();
+};
+
 const settleDoubleClickWindow = () =>
   act(() => {
     vi.advanceTimersByTime(300);
@@ -142,6 +147,7 @@ const doubleClickImage = (init = AT_CENTER) => {
   fireEvent.click(image, init);
   fireEvent.click(image, { ...init, detail: 2 });
   fireEvent.doubleClick(image, init);
+  flushAnimations();
 };
 
 beforeEach(() => {
@@ -409,13 +415,17 @@ describe('escape layering', () => {
       scaleTask.run();
     });
 
-    // handleDoubleClick's applyTransform uses jump(), never the mocked
-    // animate(), so pending.length can't tell gated from ungated here —
-    // the distinguishing assertion is that the mid-close transform itself
-    // doesn't move.
+    // Dispatch the double-click without the helper's flushAnimations(): the
+    // flush would run the remaining close axes and unmount the viewer, and
+    // this test must stay frozen mid-close to observe the gate.
     const midClose = readTransform();
-    doubleClickImage();
+    const pendingBeforeDoubleClick = motionMock.pending.length;
+    const image = getViewerImage() as HTMLImageElement;
+    fireEvent.click(image, AT_CENTER);
+    fireEvent.click(image, { ...AT_CENTER, detail: 2 });
+    fireEvent.doubleClick(image, AT_CENTER);
     expect(readTransform()).toEqual(midClose);
+    expect(motionMock.pending.length).toBe(pendingBeforeDoubleClick);
 
     flushAnimations();
 
@@ -457,22 +467,22 @@ describe('keyboard shortcuts', () => {
   it.each([['+'], ['=']])('zooms in on %s', (key) => {
     mount();
 
-    pressKey(key);
+    pressZoomKey(key);
 
     expect(readTransform().scale).toBe(1.5);
   });
 
   it('zooms out on - and stops at clean fit', () => {
     mount();
-    pressKey('+');
-    pressKey('+');
+    pressZoomKey('+');
+    pressZoomKey('+');
     expect(readTransform().scale).toBe(2.25);
 
-    pressKey('-');
+    pressZoomKey('-');
     expect(readTransform().scale).toBe(1.5);
 
-    pressKey('-');
-    pressKey('-');
+    pressZoomKey('-');
+    pressZoomKey('-');
     expect(readTransform().scale).toBe(1);
   });
 

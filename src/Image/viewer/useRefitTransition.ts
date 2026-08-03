@@ -7,6 +7,7 @@ import { OPEN_SPRING } from './useFlipTransition';
 
 export interface UseRefitTransitionOptions {
   animated: boolean;
+  fillViewport?: boolean;
   isTransitioning: () => boolean;
   natural: Size;
   rotation: Rotation;
@@ -18,6 +19,7 @@ export interface UseRefitTransitionOptions {
 
 export const useRefitTransition = ({
   animated,
+  fillViewport,
   isTransitioning,
   natural,
   rotation,
@@ -44,8 +46,8 @@ export const useRefitTransition = ({
     // the transform itself, and instant re-fit is correct there.
     if (isTransitioning()) return;
 
-    const previousFit = computeFit(previousNatural, viewport, rotation);
-    const nextFit = computeFit(natural, viewport, rotation);
+    const previousFit = computeFit(previousNatural, viewport, rotation, fillViewport);
+    const nextFit = computeFit(natural, viewport, rotation, fillViewport);
     if (
       previousFit.width === nextFit.width &&
       previousFit.height === nextFit.height &&
@@ -73,5 +75,5 @@ export const useRefitTransition = ({
     animate(scale, targetScale, OPEN_SPRING);
     animate(x, targetX, OPEN_SPRING);
     animate(y, targetY, OPEN_SPRING);
-  }, [animated, isTransitioning, natural, rotation, scale, viewport, x, y]);
+  }, [animated, fillViewport, isTransitioning, natural, rotation, scale, viewport, x, y]);
 };

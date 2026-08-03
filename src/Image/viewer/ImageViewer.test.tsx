@@ -470,6 +470,26 @@ describe('dual source', () => {
     expect(getViewerImage()?.getAttribute('src')).toBe('https://example.com/cat-hd.png');
   });
 
+  it('opens at the viewport fit instead of the low-res natural size and keeps it across the swap', () => {
+    renderWithMotion(
+      <ImageComponent
+        alt="cat"
+        preview={{ src: 'https://example.com/cat-hd.png' }}
+        src="https://example.com/cat.png"
+      />,
+    );
+    openViewer();
+
+    const image = getViewerImage() as HTMLImageElement;
+    expect(image.style.width).toBe('960px');
+    expect(image.style.height).toBe('720px');
+
+    const [preloader] = FakePreloader.instances;
+    preloader.emit('load');
+    expect(image.style.width).toBe('960px');
+    expect(image.style.height).toBe('720px');
+  });
+
   it('keeps the thumbnail source when the preview source fails', () => {
     renderWithMotion(
       <ImageComponent

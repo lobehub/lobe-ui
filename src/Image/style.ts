@@ -4,6 +4,10 @@ import { cva } from 'class-variance-authority';
 import { lobeStaticStylish } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) => {
+  // Bare viewer controls float directly over arbitrary image content; the
+  // theme-side halo (light halo around dark icons in light mode and vice
+  // versa) is what keeps them readable without a container panel.
+  const controlHalo = `drop-shadow(0 0 2px ${cssVar.colorBgLayout}) drop-shadow(0 1px 6px ${cssVar.colorBgLayout})`;
   return {
     actionsHidden: css`
       cursor: pointer;
@@ -62,17 +66,23 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       }
     `,
     toolbar: css`
-      ${lobeStaticStylish.variantOutlinedWithoutHover};
       pointer-events: auto;
 
       position: absolute;
       inset-block-end: 16px;
       inset-inline-start: 50%;
       transform: translateX(-50%);
+    `,
+    // The glass lives on the icon row, not the toolbar itself: tooltips and
+    // the more-menu portal into the toolbar element, and an ancestor
+    // backdrop-filter/filter would distort those popups too.
+    toolbarRow: css`
+      padding-block: 4px;
+      padding-inline: 6px;
+      border-radius: 999px;
 
-      padding: 4px;
-      border-color: ${cssVar.colorFillTertiary};
-      border-radius: ${cssVar.borderRadiusLG};
+      background: color-mix(in srgb, ${cssVar.colorBgLayout} 60%, transparent);
+      backdrop-filter: blur(12px);
     `,
     toolbarPercentage: css`
       cursor: pointer;
@@ -81,7 +91,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       min-width: 44px;
       height: 36px;
       padding-inline: 8px;
-      border-radius: ${cssVar.borderRadius};
+      border-radius: 999px;
 
       font-size: 12px;
       font-variant-numeric: tabular-nums;
@@ -111,6 +121,23 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       inset: 0;
       opacity: 0;
     `,
+    viewerChromeIdle: css`
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      transition:
+        opacity 200ms ${cssVar.motionEaseOut},
+        visibility 200ms;
+
+      &[data-idle-hidden] {
+        visibility: hidden;
+        opacity: 0;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
+    `,
     viewerClose: css`
       pointer-events: auto;
 
@@ -118,13 +145,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       inset-block-start: 16px;
       inset-inline-end: 16px;
 
-      border-radius: 50%;
-
-      background: ${cssVar.colorBgContainer};
-      box-shadow: ${cssVar.boxShadowTertiary};
+      filter: ${controlHalo};
     `,
     viewerCounter: css`
-      ${lobeStaticStylish.variantOutlinedWithoutHover};
       pointer-events: none;
 
       position: absolute;
@@ -132,13 +155,16 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       inset-inline-start: 50%;
       transform: translateX(-50%);
 
-      padding-block: 6px;
-      padding-inline: 14px;
+      padding-block: 4px;
+      padding-inline: 12px;
       border-radius: 999px;
 
       font-size: 12px;
       font-variant-numeric: tabular-nums;
       color: ${cssVar.colorTextSecondary};
+
+      background: color-mix(in srgb, ${cssVar.colorBgLayout} 60%, transparent);
+      backdrop-filter: blur(12px);
     `,
     viewerImage: css`
       will-change: transform;
@@ -159,10 +185,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       inset-block-start: 50%;
       transform: translateY(-50%);
 
-      border-radius: 50%;
-
-      background: ${cssVar.colorBgContainer};
-      box-shadow: ${cssVar.boxShadowTertiary};
+      filter: ${controlHalo};
     `,
     viewerNavNext: css`
       inset-inline-end: 16px;

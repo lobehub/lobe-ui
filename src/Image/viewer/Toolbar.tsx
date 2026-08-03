@@ -3,6 +3,7 @@
 import {
   Copy,
   Download,
+  Ellipsis,
   FlipHorizontal,
   FlipVertical,
   RotateCcw,
@@ -11,9 +12,10 @@ import {
   ZoomOut,
 } from 'lucide-react';
 import type { MotionValue } from 'motion/react';
-import { memo, type ReactNode, useCallback, useState, useSyncExternalStore } from 'react';
+import { memo, type ReactNode, useCallback, useMemo, useState, useSyncExternalStore } from 'react';
 
 import ActionIcon from '@/ActionIcon';
+import DropdownMenu, { type DropdownItem } from '@/base-ui/DropdownMenu';
 import { toast } from '@/base-ui/Toast';
 import { Center, Flexbox } from '@/Flex';
 import imageMessages from '@/i18n/resources/en/image';
@@ -64,6 +66,7 @@ export interface ToolbarProps {
   flipHorizontal: () => void;
   flipVertical: () => void;
   natural: Size;
+  onMoreOpenChange?: (open: boolean) => void;
   reset: () => void;
   rotateLeft: () => void;
   rotateRight: () => void;
@@ -83,6 +86,7 @@ const Toolbar = memo<ToolbarProps>(
     flipHorizontal,
     flipVertical,
     natural,
+    onMoreOpenChange,
     reset,
     rotateLeft,
     rotateRight,
@@ -139,54 +143,84 @@ const Toolbar = memo<ToolbarProps>(
       }
     }, [source, t]);
 
+    const moreItems = useMemo<DropdownItem[]>(
+      () => [
+        {
+          icon: FlipHorizontal,
+          key: 'flip-horizontal',
+          label: t('image.flipHorizontal'),
+          onClick: flipHorizontal,
+        },
+        {
+          icon: FlipVertical,
+          key: 'flip-vertical',
+          label: t('image.flipVertical'),
+          onClick: flipVertical,
+        },
+        { icon: RotateCcw, key: 'rotate-left', label: t('image.rotateLeft'), onClick: rotateLeft },
+        {
+          icon: RotateCw,
+          key: 'rotate-right',
+          label: t('image.rotateRight'),
+          onClick: rotateRight,
+        },
+        { icon: Copy, key: 'copy', label: t('image.copy'), onClick: handleCopy },
+      ],
+      [flipHorizontal, flipVertical, handleCopy, rotateLeft, rotateRight, t],
+    );
+
     return (
       <TooltipGroup popupContainer={containerEl ?? undefined}>
-        <Flexbox horizontal align="center" className={styles.toolbar} gap={4} ref={setContainerEl}>
-          <ActionIcon
-            icon={FlipHorizontal}
-            title={t('image.flipHorizontal')}
-            onClick={flipHorizontal}
-          />
-          <ActionIcon icon={FlipVertical} title={t('image.flipVertical')} onClick={flipVertical} />
-          <ActionIcon icon={RotateCcw} title={t('image.rotateLeft')} onClick={rotateLeft} />
-          <ActionIcon icon={RotateCw} title={t('image.rotateRight')} onClick={rotateRight} />
-          <ActionIcon
-            disabled={!canZoomOut}
-            icon={ZoomOut}
-            title={t('image.zoomOut')}
-            onClick={zoomOut}
-          />
-          <Tooltip title={t('image.zoomReset')}>
-            <Center
-              horizontal
-              className={styles.toolbarPercentage}
-              role="button"
-              tabIndex={0}
-              onClick={reset}
+        <div className={styles.toolbar} ref={setContainerEl}>
+          <Flexbox horizontal align="center" className={styles.toolbarRow} gap={8}>
+            <ActionIcon
+              disabled={!canZoomOut}
+              icon={ZoomOut}
+              style={{ borderRadius: 999 }}
+              title={t('image.zoomOut')}
+              onClick={zoomOut}
+            />
+            <Tooltip title={t('image.zoomReset')}>
+              <Center
+                horizontal
+                className={styles.toolbarPercentage}
+                role="button"
+                tabIndex={0}
+                onClick={reset}
+              >
+                {percentage}%
+              </Center>
+            </Tooltip>
+            <ActionIcon
+              disabled={!canZoomIn}
+              icon={ZoomIn}
+              style={{ borderRadius: 999 }}
+              title={t('image.zoomIn')}
+              onClick={zoomIn}
+            />
+            <ActionIcon
+              icon={Download}
+              loading={downloadLoading}
+              style={{ borderRadius: 999 }}
+              title={t('image.download')}
+              onClick={handleDownload}
+            />
+            <DropdownMenu
+              items={moreItems}
+              placement="top"
+              portalProps={{ container: containerEl ?? undefined }}
+              onOpenChange={(open) => onMoreOpenChange?.(open)}
             >
-              {percentage}%
-            </Center>
-          </Tooltip>
-          <ActionIcon
-            disabled={!canZoomIn}
-            icon={ZoomIn}
-            title={t('image.zoomIn')}
-            onClick={zoomIn}
-          />
-          <ActionIcon
-            icon={Copy}
-            loading={copyLoading}
-            title={t('image.copy')}
-            onClick={handleCopy}
-          />
-          <ActionIcon
-            icon={Download}
-            loading={downloadLoading}
-            title={t('image.download')}
-            onClick={handleDownload}
-          />
-          {toolbarAddon}
-        </Flexbox>
+              <ActionIcon
+                icon={Ellipsis}
+                loading={copyLoading}
+                style={{ borderRadius: 999 }}
+                title={t('image.more')}
+              />
+            </DropdownMenu>
+            {toolbarAddon}
+          </Flexbox>
+        </div>
       </TooltipGroup>
     );
   },

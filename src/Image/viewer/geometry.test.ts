@@ -47,6 +47,14 @@ describe('computeFit', () => {
     expect(rect).toEqual({ height: 300, width: 400, x: 400, y: 250 });
   });
 
+  it('upscales a small image to the viewport when fillViewport is set', () => {
+    const rect = computeFit({ height: 300, width: 400 }, { height: 800, width: 1200 }, 0, true);
+    expect(rect.height).toBeCloseTo(752, 5);
+    expect(rect.width).toBeCloseTo(1002.6667, 3);
+    expect(rect.x).toBeCloseTo(98.6667, 3);
+    expect(rect.y).toBeCloseTo(24, 5);
+  });
+
   it('swaps effective natural dimensions when rotated 90deg', () => {
     const rect = computeFit({ height: 2000, width: 4000 }, { height: 800, width: 1200 }, 90);
     expect(rect).toEqual({ height: 752, width: 376, x: 412, y: 24 });

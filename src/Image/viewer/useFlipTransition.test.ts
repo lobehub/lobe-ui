@@ -76,6 +76,7 @@ const setup = (overrides: Partial<UseFlipTransitionOptions> = {}) => {
     animated: true,
     getCloseSource: () => source,
     getFitRect: () => ({ height: 300, width: 400, x: 0, y: 0 }),
+    getViewportWidth: () => 1024,
     onClosed,
     source,
     transform: { flipX, flipY, rotate, scale, x, y },
@@ -84,6 +85,17 @@ const setup = (overrides: Partial<UseFlipTransitionOptions> = {}) => {
 
   const { result, unmount } = renderHook(() => useFlipTransition(options));
   return { onClosed, result, scale, source, unmount, x, y };
+};
+
+const bindImage = (result: { current: ReturnType<typeof useFlipTransition> }) => {
+  const parent = document.createElement('div');
+  const node = document.createElement('img');
+  parent.append(node);
+  document.body.append(parent);
+  act(() => {
+    result.current.imageRef(node);
+  });
+  return { node, parent };
 };
 
 beforeEach(() => {
@@ -211,5 +223,151 @@ describe('isTransitioning', () => {
     });
 
     expect(result.current.isTransitioning()).toBe(true);
+  });
+});
+
+describe('switchTo slide', () => {
+  it('applies immediately, jumps the incoming image a viewport width out, and removes the ghost on settle', () => {
+    const { result, x } = setup();
+    flushAnimations();
+    const { parent } = bindImage(result);
+
+    const apply = vi.fn();
+    act(() => {
+      result.current.switchTo(apply, 1);
+    });
+
+    expect(apply).toHaveBeenCalledTimes(1);
+    expect(x.get()).toBe(1024);
+    const ghost = parent.querySelector<HTMLElement>('[data-ghost]');
+    expect(ghost).not.toBeNull();
+    expect(ghost?.style.pointerEvents).toBe('none');
+    expect(ghost?.getAttribute('aria-hidden')).toBe('true');
+    expect(result.current.isTransitioning()).toBe(true);
+
+    flushAnimations();
+    expect(x.get()).toBe(0);
+    expect(parent.querySelector('[data-ghost]')).toBeNull();
+    expect(result.current.isTransitioning()).toBe(false);
+  });
+
+  it('mirrors the jump for a prev switch', () => {
+    const { result, x } = setup();
+    flushAnimations();
+    bindImage(result);
+
+    act(() => {
+      result.current.switchTo(() => {}, -1);
+    });
+    expect(x.get()).toBe(-1024);
+
+    flushAnimations();
+    expect(x.get()).toBe(0);
+  });
+
+  it('composes the slide offset on top of the captured outgoing transform', () => {
+    const { result, scale } = setup();
+    flushAnimations();
+    const { parent } = bindImage(result);
+
+    act(() => {
+      scale.set(2);
+    });
+    act(() => {
+      result.current.switchTo(() => {}, 1);
+    });
+
+    const ghost = parent.querySelector<HTMLElement>('[data-ghost]');
+    const base = ghost?.style.transform ?? '';
+    expect(base).toContain('scale(2)');
+
+    flushAnimations();
+    expect(ghost?.style.transform).toBe(`translateX(-1024px) ${base}`);
+  });
+
+  it('a second switch removes the in-flight ghost and leaves exactly one', () => {
+    const { result } = setup();
+    flushAnimations();
+    const { parent } = bindImage(result);
+
+    act(() => {
+      result.current.switchTo(() => {}, 1);
+    });
+    const first = parent.querySelector('[data-ghost]');
+
+    act(() => {
+      result.current.switchTo(() => {}, 1);
+    });
+    const ghosts = parent.querySelectorAll('[data-ghost]');
+    expect(ghosts).toHaveLength(1);
+    expect(ghosts[0]).not.toBe(first);
+
+    flushAnimations();
+    expect(parent.querySelectorAll('[data-ghost]')).toHaveLength(0);
+  });
+
+  it('close removes an in-flight ghost immediately', () => {
+    const { result } = setup();
+    flushAnimations();
+    const { parent } = bindImage(result);
+
+    act(() => {
+      result.current.switchTo(() => {}, 1);
+    });
+    expect(parent.querySelector('[data-ghost]')).not.toBeNull();
+
+    act(() => {
+      result.current.close();
+    });
+    expect(parent.querySelector('[data-ghost]')).toBeNull();
+  });
+
+  it('the fallback timer removes a ghost whose animations never complete', () => {
+    const { result } = setup();
+    flushAnimations();
+    const { parent } = bindImage(result);
+
+    act(() => {
+      result.current.switchTo(() => {}, 1);
+    });
+    expect(parent.querySelector('[data-ghost]')).not.toBeNull();
+
+    act(() => {
+      vi.advanceTimersByTime(1000);
+    });
+    expect(parent.querySelector('[data-ghost]')).toBeNull();
+    expect(result.current.isTransitioning()).toBe(false);
+  });
+
+  it('falls back to the deferred fade swap without a direction', () => {
+    const { result } = setup();
+    flushAnimations();
+    const { parent } = bindImage(result);
+
+    const apply = vi.fn();
+    act(() => {
+      result.current.switchTo(apply);
+    });
+    expect(parent.querySelector('[data-ghost]')).toBeNull();
+    expect(apply).not.toHaveBeenCalled();
+
+    flushAnimations();
+    expect(apply).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps the fade path when animated is false even with a direction', () => {
+    const { result } = setup({ animated: false });
+    flushAnimations();
+    const { parent } = bindImage(result);
+
+    const apply = vi.fn();
+    act(() => {
+      result.current.switchTo(apply, 1);
+    });
+    expect(parent.querySelector('[data-ghost]')).toBeNull();
+    expect(apply).not.toHaveBeenCalled();
+
+    flushAnimations();
+    expect(apply).toHaveBeenCalledTimes(1);
   });
 });

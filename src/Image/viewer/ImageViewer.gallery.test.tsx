@@ -271,6 +271,63 @@ describe('gallery navigation', () => {
     expect(getCounter()?.textContent).toBe('2 / 2');
   });
 
+  it('slides the switch: outgoing ghost exits while the incoming image pushes in from the side', () => {
+    renderWithMotion(
+      <PreviewGroup>
+        <ImageComponent alt="a" src="https://example.com/a.png" />
+        <ImageComponent alt="b" src="https://example.com/b.png" />
+      </PreviewGroup>,
+    );
+    stubThumbnail('a');
+    stubThumbnail('b');
+
+    clickThumbnail('a');
+    settle();
+
+    fireEvent.click(getNextButton() as HTMLElement);
+
+    const ghost = document.querySelector<HTMLImageElement>('[data-ghost]');
+    expect(ghost).not.toBeNull();
+    expect(ghost?.getAttribute('src')).toBe('https://example.com/a.png');
+    expect(ghost?.getAttribute('aria-hidden')).toBe('true');
+
+    const live = document.querySelector<HTMLImageElement>('.viewerImage:not([data-ghost])');
+    expect(live?.getAttribute('src')).toBe('https://example.com/b.png');
+    expect(live?.style.transform).toContain('translate3d(1024px, 0px, 0)');
+
+    settle();
+    expect(document.querySelector('[data-ghost]')).toBeNull();
+    const settled = getViewerImage();
+    expect(settled?.getAttribute('src')).toBe('https://example.com/b.png');
+    expect(settled?.style.transform).toContain('translate3d(0px, 0px, 0)');
+  });
+
+  it('rapid switches keep a single ghost and land on the final image', () => {
+    renderWithMotion(
+      <PreviewGroup>
+        <ImageComponent alt="a" src="https://example.com/a.png" />
+        <ImageComponent alt="b" src="https://example.com/b.png" />
+        <ImageComponent alt="c" src="https://example.com/c.png" />
+      </PreviewGroup>,
+    );
+    stubThumbnail('a');
+    stubThumbnail('b');
+    stubThumbnail('c');
+
+    clickThumbnail('a');
+    settle();
+
+    fireEvent.click(getNextButton() as HTMLElement);
+    fireEvent.click(getNextButton() as HTMLElement);
+
+    expect(document.querySelectorAll('[data-ghost]')).toHaveLength(1);
+
+    settle();
+    expect(document.querySelectorAll('[data-ghost]')).toHaveLength(0);
+    expect(getCounter()?.textContent).toBe('3 / 3');
+    expect(getViewerImage()?.getAttribute('src')).toBe('https://example.com/c.png');
+  });
+
   it('resets transform and recomputes fit from the new image on switch', () => {
     renderWithMotion(
       <PreviewGroup>

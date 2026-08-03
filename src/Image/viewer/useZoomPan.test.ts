@@ -365,7 +365,7 @@ describe('instant writes use jump(), not set()', () => {
   // instant resets on its next tick. This only proves the call sites use the
   // right API; the full cancel-a-real-spring behavior is motion's own,
   // confirmed by source inspection and the live browser repro in the report.
-  it('applyTransform (zoomIn/zoomOut/dblclick/wheel-zoom) jumps scale/x/y', () => {
+  it('applyTransform (wheel-zoom) jumps scale/x/y for 1:1 gesture tracking', () => {
     const { result } = setup();
     const jumpScale = vi.spyOn(result.current.scale, 'jump');
     const jumpX = vi.spyOn(result.current.x, 'jump');
@@ -373,13 +373,31 @@ describe('instant writes use jump(), not set()', () => {
     const setScale = vi.spyOn(result.current.scale, 'set');
 
     act(() => {
-      result.current.zoomIn();
+      result.current.handleWheel(wheelEvent({ ctrlKey: true, deltaY: -100 }));
     });
 
     expect(jumpScale).toHaveBeenCalledTimes(1);
     expect(jumpX).toHaveBeenCalledTimes(1);
     expect(jumpY).toHaveBeenCalledTimes(1);
     expect(setScale).not.toHaveBeenCalled();
+  });
+
+  it('stepped zoom (zoomIn/dblclick) animates scale/x/y instead of jumping', () => {
+    const { result } = setup();
+    const jumpScale = vi.spyOn(result.current.scale, 'jump');
+
+    act(() => {
+      result.current.zoomIn();
+    });
+    expect(animateMock).toHaveBeenCalledTimes(3);
+    expect(jumpScale).not.toHaveBeenCalled();
+
+    animateMock.mockClear();
+    act(() => {
+      result.current.handleDoubleClick(VIEWPORT_CENTER);
+    });
+    expect(animateMock).toHaveBeenCalledTimes(3);
+    expect(jumpScale).not.toHaveBeenCalled();
   });
 
   it('rotateBy jumps rotate/scale/x/y', () => {

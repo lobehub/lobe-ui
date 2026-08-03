@@ -29,6 +29,7 @@ const GalleryNav = memo<GalleryNavProps>(({ current, hasNext, hasPrev, next, pre
         <ActionIcon
           className={cx(styles.viewerNavButton, styles.viewerNavPrev)}
           icon={ChevronLeft}
+          size={'large'}
           title={t('image.prev')}
           onClick={prev}
         />
@@ -37,6 +38,7 @@ const GalleryNav = memo<GalleryNavProps>(({ current, hasNext, hasPrev, next, pre
         <ActionIcon
           className={cx(styles.viewerNavButton, styles.viewerNavNext)}
           icon={ChevronRight}
+          size={'large'}
           title={t('image.next')}
           onClick={next}
         />

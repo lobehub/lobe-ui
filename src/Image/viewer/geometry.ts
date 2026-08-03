@@ -40,14 +40,22 @@ export const normalizeRotation = (degrees: number): Rotation =>
 const effectiveSize = (natural: Size, rotate: Rotation): Size =>
   rotate === 90 || rotate === 270 ? { height: natural.width, width: natural.height } : natural;
 
-export const computeFit = (natural: Size, viewport: Size, rotate: Rotation): Rect => {
+export const computeFit = (
+  natural: Size,
+  viewport: Size,
+  rotate: Rotation,
+  fillViewport = false,
+): Rect => {
   const effective = effectiveSize(natural, rotate);
   const availableWidth = Math.max(viewport.width - VIEWPORT_MARGIN * 2, 0);
   const availableHeight = Math.max(viewport.height - VIEWPORT_MARGIN * 2, 0);
+  // fillViewport drops the no-upscale cap: a dual-source thumbnail is a
+  // stand-in for the hi-res image, so it must open at the viewport fit the
+  // hi-res will land in — otherwise the swap re-fits mid-open.
   const containScale = Math.min(
     availableWidth / effective.width,
     availableHeight / effective.height,
-    1,
+    ...(fillViewport ? [] : [1]),
   );
   const width = effective.width * containScale;
   const height = effective.height * containScale;

@@ -8,6 +8,14 @@ import imageMessages from '@/i18n/resources/en/image';
 import ImageComponent from '../Image';
 import type { ImagePreviewOptions } from '../type';
 
+if (!globalThis.ResizeObserver) {
+  globalThis.ResizeObserver = class {
+    disconnect() {}
+    observe() {}
+    unobserve() {}
+  } as any;
+}
+
 vi.mock('antd-style', async (importOriginal) => {
   const actual = await importOriginal<typeof import('antd-style')>();
   return {
@@ -125,23 +133,36 @@ beforeEach(() => {
   setViewport(VIEWPORT);
 });
 
+const openMoreMenu = () => {
+  fireEvent.click(getToolbarButtons()[4]);
+  return screen.getAllByRole('menuitem');
+};
+
 describe('controls', () => {
-  it('renders flip, rotate, zoom, percentage, copy and download in order', () => {
+  it('renders zoom, percentage, download and the more trigger in order', () => {
     mount();
     const buttons = getToolbarButtons();
 
-    expect(buttons).toHaveLength(9);
-    // lucide-react's FlipHorizontal/FlipVertical are aliases for the renamed
-    // SquareCenterlineDashedHorizontal/Vertical icons, which is what drives the generated class.
-    expect(iconClassOf(buttons[0])).toContain('lucide-square-centerline-dashed-horizontal');
-    expect(iconClassOf(buttons[1])).toContain('lucide-square-centerline-dashed-vertical');
-    expect(iconClassOf(buttons[2])).toContain('lucide-rotate-ccw');
-    expect(iconClassOf(buttons[3])).toContain('lucide-rotate-cw');
-    expect(iconClassOf(buttons[4])).toContain('lucide-zoom-out');
-    expect(buttons[5].textContent).toBe('100%');
-    expect(iconClassOf(buttons[6])).toContain('lucide-zoom-in');
-    expect(iconClassOf(buttons[7])).toContain('lucide-copy');
-    expect(iconClassOf(buttons[8])).toContain('lucide-download');
+    expect(buttons).toHaveLength(5);
+    expect(iconClassOf(buttons[0])).toContain('lucide-zoom-out');
+    expect(buttons[1].textContent).toBe('100%');
+    expect(iconClassOf(buttons[2])).toContain('lucide-zoom-in');
+    expect(iconClassOf(buttons[3])).toContain('lucide-download');
+    expect(iconClassOf(buttons[4])).toContain('lucide-ellipsis');
+  });
+
+  it('collects flip, rotate and copy into the more menu', () => {
+    mount();
+    const items = openMoreMenu();
+
+    expect(items).toHaveLength(5);
+    expect(items.map((item) => item.textContent)).toEqual([
+      imageMessages['image.flipHorizontal'],
+      imageMessages['image.flipVertical'],
+      imageMessages['image.rotateLeft'],
+      imageMessages['image.rotateRight'],
+      imageMessages['image.copy'],
+    ]);
   });
 
   it('renders the toolbarAddon after the built-in controls', () => {
@@ -155,7 +176,7 @@ describe('controls', () => {
 
   it('disables zoom out at scale 1', () => {
     mount();
-    const zoomOutButton = getToolbarButtons()[4];
+    const zoomOutButton = getToolbarButtons()[0];
 
     expect(zoomOutButton.getAttribute('tabindex')).toBe('-1');
     fireEvent.click(zoomOutButton);
@@ -164,27 +185,33 @@ describe('controls', () => {
 
   it('disables zoom in at maxScale', () => {
     mount();
-    const zoomInButton = () => getToolbarButtons()[6];
+    const zoomInButton = () => getToolbarButtons()[2];
 
-    for (let i = 0; i < 10; i += 1) fireEvent.click(zoomInButton());
+    for (let i = 0; i < 10; i += 1) {
+      fireEvent.click(zoomInButton());
+      flushAnimations();
+    }
 
     expect(readTransform().scale).toBe(8);
     expect(zoomInButton().getAttribute('tabindex')).toBe('-1');
 
     fireEvent.click(zoomInButton());
+    flushAnimations();
     expect(readTransform().scale).toBe(8);
   });
 
   it('zooms in, reflects the percentage, and resets to 100% on click', () => {
     mount();
     const buttons = getToolbarButtons();
-    const zoomInButton = buttons[6];
-    const percentageButton = buttons[5];
+    const zoomInButton = buttons[2];
+    const percentageButton = buttons[1];
 
     expect(percentageButton.textContent).toBe('100%');
 
     fireEvent.click(zoomInButton);
+    flushAnimations();
     fireEvent.click(zoomInButton);
+    flushAnimations();
     expect(percentageButton.textContent).toBe('225%');
 
     fireEvent.click(percentageButton);
@@ -194,15 +221,15 @@ describe('controls', () => {
     expect(readTransform().scale).toBe(1);
   });
 
-  it('re-fits the layout box to the swapped aspect when rotated', () => {
+  it('re-fits the layout box to the swapped aspect when rotated from the more menu', () => {
     mount({ height: 2000, width: 4000 });
     const image = getViewerImage() as HTMLImageElement;
-    const rotateRightButton = getToolbarButtons()[3];
 
     expect(image.style.width).toBe('976px');
     expect(image.style.height).toBe('488px');
 
-    fireEvent.click(rotateRightButton);
+    const items = openMoreMenu();
+    fireEvent.click(items[3]);
 
     expect(image.style.width).toBe('360px');
     expect(image.style.height).toBe('720px');
@@ -235,12 +262,12 @@ describe('copy and download', () => {
     vi.unstubAllGlobals();
   });
 
-  it('copies the displayed source and shows a success toast', async () => {
+  it('copies the displayed source from the more menu and shows a success toast', async () => {
     const blob = new Blob(['x'], { type: 'image/png' });
     vi.mocked(fetch).mockResolvedValue({ blob: () => Promise.resolve(blob) } as Response);
     mount();
 
-    fireEvent.click(getToolbarButtons()[7]);
+    fireEvent.click(openMoreMenu()[4]);
 
     await waitFor(() =>
       expect(toastMock.success).toHaveBeenCalledWith(imageMessages['image.copySuccess']),
@@ -252,7 +279,7 @@ describe('copy and download', () => {
     vi.mocked(fetch).mockRejectedValue(new Error('network error'));
     mount();
 
-    fireEvent.click(getToolbarButtons()[7]);
+    fireEvent.click(openMoreMenu()[4]);
 
     await waitFor(() =>
       expect(toastMock.error).toHaveBeenCalledWith(imageMessages['image.copyFailed']),
@@ -264,7 +291,7 @@ describe('copy and download', () => {
     vi.mocked(fetch).mockResolvedValue({ blob: () => Promise.resolve(blob) } as Response);
     mount();
 
-    fireEvent.click(getToolbarButtons()[8]);
+    fireEvent.click(getToolbarButtons()[3]);
 
     await waitFor(() =>
       expect(toastMock.success).toHaveBeenCalledWith(imageMessages['image.downloadSuccess']),
@@ -275,7 +302,7 @@ describe('copy and download', () => {
     vi.mocked(fetch).mockRejectedValue(new Error('network error'));
     mount();
 
-    fireEvent.click(getToolbarButtons()[8]);
+    fireEvent.click(getToolbarButtons()[3]);
 
     await waitFor(() =>
       expect(toastMock.error).toHaveBeenCalledWith(imageMessages['image.downloadFailed']),
