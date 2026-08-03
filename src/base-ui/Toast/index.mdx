@@ -8,6 +8,7 @@ import DemoIndex from './demos/index.tsx?demo';
 import DemoActions from './demos/actions.tsx?demo';
 import DemoPromise from './demos/promise.tsx?demo';
 import DemoPosition from './demos/position.tsx?demo';
+import DemoDedupe from './demos/dedupe.tsx?demo';
 
 ## Default
 
@@ -24,6 +25,10 @@ import DemoPosition from './demos/position.tsx?demo';
 ## Position
 
 <Demo of={DemoPosition} layout="bare" />
+
+## Deduplication
+
+<Demo of={DemoDedupe} layout="bare" />
 
 ## Usage
 
@@ -68,6 +73,21 @@ toast.promise(fetchData(), {
   loading: 'Loading data...',
   success: (data) => `Data: ${data}`,
   error: (err) => `Error: ${err.message}`,
+});
+```
+
+### Deduplicated Toast
+
+Give a toast a stable `id` when the same event can fire repeatedly (a failing request, a retried upload). Showing it again refreshes the visible toast and resets its timer instead of stacking another copy, and brings it back to the front of the stack if newer toasts have pushed it down.
+
+```tsx | pure
+import { toast } from '@lobehub/ui/base-ui';
+
+// Every retry refreshes one toast rather than stacking six of them
+toast.error({
+  description: 'Check your firewall, proxy or VPN settings and try again.',
+  id: 'network-error',
+  title: 'Connection refused',
 });
 ```
 
@@ -121,6 +141,7 @@ toast.dismiss();
 | closable        | Whether closable                           | `boolean`           | `true`      |
 | hideCloseButton | Hide the close button                      | `boolean`           | `false`     |
 | icon            | Custom icon                                | `IconProps['icon']` | -           |
+| id              | Stable id used to deduplicate toasts       | `string`            | -           |
 | placement       | Toast placement, overrides global position | `ToastPosition`     | -           |
 | onClose         | Callback when closed                       | `() => void`        | -           |
 | onRemove        | Callback when removed                      | `() => void`        | -           |
