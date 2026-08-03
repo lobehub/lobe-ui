@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.27.0](https://github.com/lobehub/lobe-ui/compare/v5.26.0...v5.27.0) (2026-08-03)
+
+### ✨ Features
+
+- **base-ui**: Let toasts deduplicate by id and return to the front, closes [#594](https://github.com/lobehub/lobe-ui/issues/594) ([512aa06](https://github.com/lobehub/lobe-ui/commit/512aa06))
+
 # [5.26.0](https://github.com/lobehub/lobe-ui/compare/v5.25.0...v5.26.0) (2026-08-03)
 
 ### ♻ Code Refactoring
