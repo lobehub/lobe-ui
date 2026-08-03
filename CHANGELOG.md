@@ -2,6 +2,16 @@
 
 # Changelog
 
+# [5.26.0](https://github.com/lobehub/lobe-ui/compare/v5.25.0...v5.26.0) (2026-08-03)
+
+### ♻ Code Refactoring
+
+- **docs-kit**: Drop the completed dumi migration machinery, closes [#595](https://github.com/lobehub/lobe-ui/issues/595) [#587](https://github.com/lobehub/lobe-ui/issues/587) [#588](https://github.com/lobehub/lobe-ui/issues/588) [#593](https://github.com/lobehub/lobe-ui/issues/593) ([55da151](https://github.com/lobehub/lobe-ui/commit/55da151))
+
+### ✨ Features
+
+- **image**: Rewrite viewer with Medium-Zoom interactions, closes [#593](https://github.com/lobehub/lobe-ui/issues/593) ([77f19bd](https://github.com/lobehub/lobe-ui/commit/77f19bd))
+
 # [5.25.0](https://github.com/lobehub/lobe-ui/compare/v5.24.0...v5.25.0) (2026-08-03)
 
 ### ✅ Tests
