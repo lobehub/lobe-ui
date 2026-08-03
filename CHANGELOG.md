@@ -2,6 +2,21 @@
 
 # Changelog
 
+# [5.25.0](https://github.com/lobehub/lobe-ui/compare/v5.24.0...v5.25.0) (2026-08-03)
+
+### ✅ Tests
+
+- **docs-kit**: Update navigation section count for base-ui Drawer doc, closes [#589](https://github.com/lobehub/lobe-ui/issues/589) ([4a9182e](https://github.com/lobehub/lobe-ui/commit/4a9182e))
+
+### ✨ Features
+
+- **base-ui**: Add Drawer built on Base UI dialog primitives, closes [#589](https://github.com/lobehub/lobe-ui/issues/589) ([900bd0b](https://github.com/lobehub/lobe-ui/commit/900bd0b))
+
+### 🐛 Bug Fixes
+
+- **release**: Declare bun workspaces in CI instead of package.json ([fdbd03b](https://github.com/lobehub/lobe-ui/commit/fdbd03b))
+- **release**: Stop the release from deleting the bun workspaces field ([93105f9](https://github.com/lobehub/lobe-ui/commit/93105f9))
+
 # [5.24.0](https://github.com/lobehub/lobe-ui/compare/v5.23.5...v5.24.0) (2026-07-27)
 
 ### ♻ Code Refactoring
