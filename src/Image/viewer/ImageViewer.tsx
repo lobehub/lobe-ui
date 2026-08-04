@@ -287,7 +287,12 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
   return (
     <Dialog.Root modal open onOpenChange={handleDialogOpenChange}>
       <Dialog.Portal container={appElement ?? undefined}>
+        {/* Base UI drops a nested dialog's backdrop so overlays don't stack. The viewer is
+            not an overlay on the surface it opened from — it replaces the screen — so it
+            keeps its own scrim, or a viewer opened from a maskless drawer would show the
+            page straight through the letterbox around the image. */}
         <Dialog.Backdrop
+          forceRender
           className={styles.viewerBackdrop}
           ref={backdropRef}
           style={zIndex === undefined ? undefined : { zIndex }}
