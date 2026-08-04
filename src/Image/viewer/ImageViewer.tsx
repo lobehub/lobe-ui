@@ -69,6 +69,9 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
   const isClosingIndirectRef = useRef<() => boolean>(() => false);
   const isClosingIndirect = useCallback(() => isClosingIndirectRef.current(), []);
 
+  const isTransitioningIndirectRef = useRef<() => boolean>(() => true);
+  const isTransitioningIndirect = useCallback(() => isTransitioningIndirectRef.current(), []);
+
   const fillViewport = Boolean(
     currentEntry.previewSrc && currentEntry.previewSrc !== currentEntry.src,
   );
@@ -83,6 +86,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
     flipVertical,
     flipX,
     flipY,
+    getInitialScale,
     handleDoubleClick,
     handleWheel,
     isClean,
@@ -96,13 +100,17 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
     scale,
     setNatural: syncZoomNatural,
     setViewport: syncZoomViewport,
+    toggleActualSize,
     x,
     y,
     zoomIn,
     zoomOut,
   } = useZoomPan({
+    autoZoomThreshold: currentEntry.options.autoZoomThreshold,
+    defaultZoom: currentEntry.options.defaultZoom,
     fillViewport,
     isClosing: isClosingIndirect,
+    isTransitioning: isTransitioningIndirect,
     maxScale: currentEntry.options.maxScale,
     natural,
     onCloseRequest: requestClose,
@@ -143,12 +151,14 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
     animated,
     getCloseSource,
     getFitRect,
+    getInitialScale,
     getViewportWidth,
     onClosed: handleClosed,
     source: openerEntry.element,
     transform,
   });
   isClosingIndirectRef.current = isClosing;
+  isTransitioningIndirectRef.current = isTransitioning;
 
   useRefitTransition({
     animated,
@@ -210,6 +220,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
     entries,
     flipX,
     flipY,
+    getInitialScale,
     resetCloseTracking,
     rotate,
     scale,
@@ -328,12 +339,12 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
             natural={natural}
             next={next}
             prev={prev}
-            reset={reset}
             rotateLeft={rotateLeft}
             rotateRight={rotateRight}
             rotation={rotation}
             scale={scale}
             source={source}
+            toggleActualSize={toggleActualSize}
             toolbarAddon={currentEntry.options.toolbarAddon}
             total={entries.length}
             zoomIn={zoomIn}

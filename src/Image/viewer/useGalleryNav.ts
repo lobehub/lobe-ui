@@ -18,6 +18,7 @@ export interface UseGalleryNavOptions {
   entries: PreviewEntry[];
   flipX: MotionValue<boolean>;
   flipY: MotionValue<boolean>;
+  getInitialScale: () => number;
   resetCloseTracking: () => void;
   rotate: MotionValue<number>;
   scale: MotionValue<number>;
@@ -43,6 +44,7 @@ export const useGalleryNav = ({
   entries,
   flipX,
   flipY,
+  getInitialScale,
   resetCloseTracking,
   rotate,
   scale,
@@ -83,6 +85,11 @@ export const useGalleryNav = ({
           const nextEntry = entries[nextIndex];
           setCurrentIndex(nextIndex);
           setSource(nextEntry.src);
+          // Orientation first: syncZoomNatural derives the incoming image's
+          // resting scale from the fit rect, which is rotation-dependent.
+          rotate.jump(0);
+          flipX.jump(false);
+          flipY.jump(false);
           const nextNatural = readNatural(nextEntry.element);
           setNatural(nextNatural);
           syncZoomNatural(nextNatural);
@@ -90,12 +97,9 @@ export const useGalleryNav = ({
           // dragEnd clamp-back, a wheel snap-back, or reset()) targets the OLD
           // image's bounds and would otherwise silently overwrite this reset on
           // its next tick, since motion's set() never stops an active animation.
-          scale.jump(1);
+          scale.jump(getInitialScale());
           x.jump(0);
           y.jump(0);
-          rotate.jump(0);
-          flipX.jump(false);
-          flipY.jump(false);
           switchingRef.current = false;
         },
         nextIndex > indexRef.current ? 1 : -1,
@@ -105,6 +109,7 @@ export const useGalleryNav = ({
       entries,
       flipX,
       flipY,
+      getInitialScale,
       rotate,
       scale,
       setCurrentIndex,

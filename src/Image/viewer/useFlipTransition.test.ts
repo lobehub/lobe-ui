@@ -76,6 +76,7 @@ const setup = (overrides: Partial<UseFlipTransitionOptions> = {}) => {
     animated: true,
     getCloseSource: () => source,
     getFitRect: () => ({ height: 300, width: 400, x: 0, y: 0 }),
+    getInitialScale: () => 1,
     getViewportWidth: () => 1024,
     onClosed,
     source,

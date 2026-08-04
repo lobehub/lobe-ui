@@ -20,10 +20,9 @@ import { SkeletonAvatar } from '@/Skeleton';
 import { usePreviewGroupContext } from './PreviewGroup';
 import { FALLBACK_DARK, FALLBACK_LIGHT, styles, variants } from './style';
 import type { ImagePreviewOptions, ImageProps } from './type';
+import { DEFAULT_AUTO_ZOOM_THRESHOLD, DEFAULT_MAX_SCALE } from './viewer/geometry';
 import PreviewOutlet from './viewer/PreviewOutlet';
 import { openPreview, type PreviewEntry } from './viewer/registry';
-
-const DEFAULT_MAX_SCALE = 8;
 
 const resolvePreview = (
   groupPreview: boolean | ImagePreviewOptions | undefined,
@@ -85,7 +84,15 @@ const Image = memo<ImageProps>(
     const resolvedPreview = resolvePreview(group?.preview, preview);
     const previewEnabled = resolvedPreview !== false;
     const resolvedOptions = useMemo(
-      () => (previewEnabled ? { maxScale: DEFAULT_MAX_SCALE, ...resolvedPreview } : undefined),
+      () =>
+        previewEnabled
+          ? {
+              autoZoomThreshold: DEFAULT_AUTO_ZOOM_THRESHOLD,
+              defaultZoom: 'auto' as const,
+              maxScale: DEFAULT_MAX_SCALE,
+              ...resolvedPreview,
+            }
+          : undefined,
       [previewEnabled, resolvedPreview],
     );
     const previewSrc = resolvedOptions?.src;

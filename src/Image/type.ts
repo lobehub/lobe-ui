@@ -1,6 +1,10 @@
 import type { ComponentProps, CSSProperties, ReactNode, Ref } from 'react';
 
+import type { ZoomPolicy } from './viewer/geometry';
+
 export interface ImagePreviewOptions {
+  autoZoomThreshold?: number;
+  defaultZoom?: ZoomPolicy;
   maxScale?: number;
   onOpenChange?: (open: boolean) => void;
   src?: string;

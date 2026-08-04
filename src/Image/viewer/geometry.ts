@@ -17,6 +17,8 @@ export interface Rect {
 
 export type Rotation = 0 | 90 | 180 | 270;
 
+export type ZoomPolicy = 'auto' | 'actual' | 'fit';
+
 export interface TransformState {
   scale: number;
   x: number;
@@ -33,6 +35,8 @@ export const MIN_SCALE = 1;
 export const DEFAULT_MAX_SCALE = 8;
 export const DEFAULT_RUBBER_BAND_FACTOR = 0.15;
 export const WHEEL_ZOOM_SENSITIVITY = 0.002;
+export const DEFAULT_AUTO_ZOOM_THRESHOLD = 2;
+export const WHEEL_LINE_HEIGHT = 16;
 
 export const normalizeRotation = (degrees: number): Rotation =>
   (((degrees % 360) + 360) % 360) as Rotation;
@@ -152,8 +156,40 @@ export const clampScale = (scale: number, maxScale: number = DEFAULT_MAX_SCALE):
 export const wheelZoomFactor = (deltaY: number): number =>
   Math.exp(-deltaY * WHEEL_ZOOM_SENSITIVITY);
 
+// Firefox on Windows/Linux reports wheel notches as DOM_DELTA_LINE with a
+// deltaY around 3, where Chrome/Safari report ~100 pixels for the same notch.
+// Feeding those raw into wheelZoomFactor is a ~30x under-zoom (0.6% per notch,
+// ~115 notches to double) and an equally dead scroll-to-close accumulator.
+export const normalizeWheelDelta = (deltaY: number, deltaMode = 0, viewportHeight = 0): number => {
+  if (deltaMode === 1) return deltaY * WHEEL_LINE_HEIGHT;
+  if (deltaMode === 2) return deltaY * (viewportHeight || WHEEL_LINE_HEIGHT * 40);
+  return deltaY;
+};
+
 export const naturalScale = (natural: Size, fitRect: Rect, rotate: Rotation): number =>
   effectiveSize(natural, rotate).width / fitRect.width;
+
+// The scale the viewer opens at, expressed like every other scale here:
+// relative to the fit rect, so MIN_SCALE is always still fit. Opening above
+// MIN_SCALE is what makes a screenshot legible on open and — because the image
+// then overflows the viewport — what gives panBounds something to work with.
+export const resolveInitialScale = (
+  policy: ZoomPolicy,
+  natural: Size,
+  fitRect: Rect,
+  rotate: Rotation,
+  threshold: number = DEFAULT_AUTO_ZOOM_THRESHOLD,
+): number => {
+  if (policy === 'fit') return MIN_SCALE;
+
+  const target = naturalScale(natural, fitRect, rotate);
+  if (!Number.isFinite(target) || target <= 0) return MIN_SCALE;
+  if (policy === 'auto' && target > threshold) return MIN_SCALE;
+
+  // fillViewport drops computeFit's no-upscale cap, so the fit rect can be
+  // larger than the image and target can land below the zoom floor.
+  return Math.max(MIN_SCALE, target);
+};
 
 export const doubleClickTarget = (
   currentScale: number,

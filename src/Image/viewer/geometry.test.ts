@@ -9,6 +9,8 @@ import {
   doubleClickTarget,
   naturalScale,
   normalizeRotation,
+  normalizeWheelDelta,
+  resolveInitialScale,
   rubberBand,
   unrotatedRect,
   wheelZoomFactor,
@@ -287,5 +289,74 @@ describe('normalizeRotation', () => {
     [-720, 0],
   ])('normalizes %i to %i', (input, expected) => {
     expect(normalizeRotation(input)).toBe(expected);
+  });
+});
+
+describe('normalizeWheelDelta', () => {
+  it('passes pixel deltas through untouched', () => {
+    expect(normalizeWheelDelta(120, 0)).toBe(120);
+    expect(normalizeWheelDelta(-120)).toBe(-120);
+  });
+
+  it('scales line deltas to pixels so Firefox notches zoom like Chrome notches', () => {
+    expect(normalizeWheelDelta(3, 1)).toBe(48);
+    expect(normalizeWheelDelta(-3, 1)).toBe(-48);
+  });
+
+  it('scales page deltas by the viewport height', () => {
+    expect(normalizeWheelDelta(1, 2, 900)).toBe(900);
+  });
+
+  it('falls back to a nominal page height when the viewport is unknown', () => {
+    expect(normalizeWheelDelta(1, 2, 0)).toBe(640);
+  });
+});
+
+describe('resolveInitialScale', () => {
+  const natural = { height: 800, width: 1600 };
+  const fitRect = { height: 576, width: 1152, x: 24, y: 112 };
+
+  it('always opens at the zoom floor under the fit policy', () => {
+    expect(resolveInitialScale('fit', natural, fitRect, 0)).toBe(1);
+  });
+
+  it('opens at natural size under the actual policy', () => {
+    expect(resolveInitialScale('actual', natural, fitRect, 0)).toBeCloseTo(1600 / 1152, 10);
+  });
+
+  it('opens at natural size under auto when the image is within the threshold', () => {
+    expect(resolveInitialScale('auto', natural, fitRect, 0, 2)).toBeCloseTo(1600 / 1152, 10);
+  });
+
+  it('falls back to fit under auto when the image is far larger than the viewport', () => {
+    const huge = { height: 2000, width: 4000 };
+    expect(resolveInitialScale('auto', huge, fitRect, 0, 2)).toBe(1);
+  });
+
+  it('treats the threshold as inclusive', () => {
+    const exact = { height: 1152, width: 2304 };
+    expect(resolveInitialScale('auto', exact, fitRect, 0, 2)).toBeCloseTo(2, 10);
+    expect(resolveInitialScale('auto', exact, fitRect, 0, 1.99)).toBe(1);
+  });
+
+  it('respects a caller-tuned threshold', () => {
+    const huge = { height: 2000, width: 4000 };
+    expect(resolveInitialScale('auto', huge, fitRect, 0, 4)).toBeCloseTo(4000 / 1152, 10);
+  });
+
+  it('never returns below the zoom floor when the fit rect upscales the image', () => {
+    const small = { height: 200, width: 400 };
+    expect(resolveInitialScale('actual', small, fitRect, 0)).toBe(1);
+    expect(resolveInitialScale('auto', small, fitRect, 0, 2)).toBe(1);
+  });
+
+  it('measures the rotated edge against the fit rect', () => {
+    const portrait = { height: 1600, width: 800 };
+    expect(resolveInitialScale('actual', portrait, fitRect, 90)).toBeCloseTo(1600 / 1152, 10);
+  });
+
+  it('falls back to the zoom floor when the fit rect has no width', () => {
+    const empty = { height: 0, width: 0, x: 0, y: 0 };
+    expect(resolveInitialScale('actual', natural, empty, 0)).toBe(1);
   });
 });

@@ -172,14 +172,17 @@ export const useViewerGestures = ({
     (event: MouseEvent<HTMLElement>) => {
       event.stopPropagation();
       cancelPendingClose();
-      if (movedRef.current || isZoomed) return;
+      // Gated on cleanliness rather than zoom: an image that *opened* zoomed
+      // (defaultZoom actual/auto) has been touched by nobody, so a plain click
+      // should still dismiss it, exactly as Esc does.
+      if (movedRef.current || !isCleanRef.current) return;
       pendingCloseRef.current = setTimeout(() => {
         pendingCloseRef.current = null;
         if (!isCleanRef.current) return;
         onClose();
       }, DOUBLE_CLICK_WINDOW);
     },
-    [cancelPendingClose, isZoomed, onClose],
+    [cancelPendingClose, onClose],
   );
 
   const onImageDoubleClick = useCallback(

@@ -10,6 +10,7 @@ import DemoFallback from './demos/Fallback.tsx?demo';
 import DemoCustomActions from './demos/CustomActions.tsx?demo';
 import DemoDualSource from './demos/DualSource.tsx?demo';
 import DemoDeepZoom from './demos/DeepZoom.tsx?demo';
+import DemoDefaultZoom from './demos/DefaultZoom.tsx?demo';
 import DemoToolbarAddon from './demos/ToolbarAddon.tsx?demo';
 
 ## Default
@@ -42,6 +43,14 @@ Ctrl/Cmd + wheel, double-click, or the toolbar's zoom buttons zoom in past the f
 
 <Demo of={DemoDeepZoom} layout="center" />
 
+## Default Zoom
+
+`preview.defaultZoom` picks the scale the viewer opens at. The default, `auto`, opens an image at its natural size when it is at most `preview.autoZoomThreshold` times the fitted size, and falls back to the fitted size beyond that. This keeps screenshots and text-bearing images legible on open — fitting a 2560px-wide screenshot into a 1400px viewport halves its text — while a photo many times the viewport still opens whole rather than showing a corner of itself.
+
+Opening above the fitted size also means the image overflows the viewport, so it is immediately pannable. Scrolling down zooms back out to the fitted size before the next scroll dismisses the viewer.
+
+<Demo of={DemoDefaultZoom} layout="center" />
+
 ## Toolbar Addon
 
 `preview.toolbarAddon` appends custom controls to the end of the preview toolbar — here, a button that opens the original file in a new tab.
@@ -54,21 +63,24 @@ The preview viewer opens with a FLIP transition from the clicked thumbnail's on-
 
 **Zoom & pan**
 
-- Ctrl/Cmd + wheel, or the toolbar zoom buttons, zoom around the cursor (or the toolbar percentage's center).
+- Scrolling up always zooms in, at any scale. Scrolling down zooms out until the fitted size, which is the zoom floor.
+- Ctrl/Cmd + wheel (trackpad pinch) zooms from any state, in either direction.
+- The toolbar zoom buttons zoom around the viewport center; the wheel zooms around the cursor.
+- The toolbar's expand/shrink button toggles between the fitted size and 100%, and is disabled for an image small enough that the two coincide. The toolbar percentage beside it is a readout only.
+- `0` resets to the opening state, which also clears rotation and flips.
 - Double-click toggles between fitted and a zoomed-in target scale.
-- Dragging pans a zoomed image, clamped so it can't be dragged past its edges.
-- A plain wheel zooms while already zoomed in.
+- Dragging pans whenever the image overflows the viewport, clamped so it can't be dragged past its edges. An image that fits entirely stays centered — there is nothing off-screen to reveal.
 
 **Closing**
 
-- A plain wheel scroll while at the fitted (unzoomed) scale closes the viewer once the accumulated scroll passes a threshold; a large zoom-out overshoot re-arms after ~300ms of wheel idle rather than closing immediately.
-- Clicking the backdrop, the close button, or pressing Esc while at a clean (unzoomed, unrotated, unflipped) state closes immediately.
+- Scrolling down while already at the fitted size closes the viewer once the accumulated scroll passes a threshold — the dismiss gesture is the continuation of zooming out. A large zoom-out overshoot re-arms after ~300ms of wheel idle rather than closing immediately, and a rotated or flipped image is never dismissed this way.
+- Clicking the backdrop, the close button, or pressing Esc while the viewer is untouched closes immediately. "Untouched" means still at the opening scale with no rotation or flip — so an image that opened at 100% under `defaultZoom` still closes on the first Esc or click.
 - Clicking the image itself closes after a short delay unless a second click arrives in time (in which case it double-click-zooms instead of closing).
-- Esc is layered: at a zoomed/rotated/flipped state, the first Esc resets to the clean fit; only a second Esc (from a clean state) closes.
+- Esc is layered: once zoomed away from the opening scale, or rotated or flipped, the first Esc resets; only a second Esc closes.
 
 **Gallery**
 
-- Inside `Image.PreviewGroup`, the arrow buttons, on-screen counter, and `←`/`→` keys navigate between images; zoom/rotate/flip state resets on every switch.
+- Inside `Image.PreviewGroup`, the arrow buttons, on-screen counter, and `←`/`→` keys navigate between images; rotation and flips clear on every switch, and each image lands at its own `defaultZoom` scale.
 - Outside a gallery (a single previewable `Image`), `←`/`→` are left alone for the browser/page to handle.
 
 ## Breaking Changes
@@ -79,7 +91,7 @@ The preview viewer was rewritten from scratch on top of a Base UI dialog and no 
 - `minScale`, `onVisibleChange`, and other rc-image `ImagePreviewType` render/lifecycle props.
 - Any other undocumented antd `Image`/`rc-image` preview props that used to pass through via `...rest`.
 
-`preview` now only accepts `boolean | { src?, maxScale?, onOpenChange?, toolbarAddon? }` (see below).
+`preview` now only accepts `boolean | { src?, defaultZoom?, autoZoomThreshold?, maxScale?, onOpenChange?, toolbarAddon? }` (see below).
 
 > In apps without an app-level `ToastHost` (see `@lobehub/ui/base-ui`), a copy/download toast fired after the viewer has already closed is dropped rather than shown standalone. This is an accepted limitation — mount a `ToastHost` at the app root to avoid it.
 
@@ -105,6 +117,8 @@ The preview viewer was rewritten from scratch on top of a Base UI dialog and no 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
 | src | Higher-resolution source swapped in after the viewer opens with `src` | `string` | - |
-| maxScale | Maximum zoom scale relative to the fitted size | `number` | `8` |
+| defaultZoom | Scale the viewer opens at. `fit` always shows the whole frame, `actual` always opens at 100%, and `auto` opens at 100% only when the image is within `autoZoomThreshold` of the fitted size | `'auto' \| 'actual' \| 'fit'` | `'auto'` |
+| autoZoomThreshold | How many times the fitted size an image may be and still open at 100% under `defaultZoom: 'auto'`. Ignored by the other policies | `number` | `2` |
+| maxScale | Maximum zoom scale relative to the fitted size. Raised automatically when `defaultZoom` resolves above it, so the opening scale is always reachable | `number` | `8` |
 | onOpenChange | Called when the preview viewer opens or closes | `(open: boolean) => void` | - |
 | toolbarAddon | Additional content appended to the preview toolbar | `ReactNode` | - |

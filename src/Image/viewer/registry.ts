@@ -1,8 +1,14 @@
 import { type RefObject, useCallback, useSyncExternalStore } from 'react';
 
 import type { ImagePreviewOptions } from '../type';
+import type { ZoomPolicy } from './geometry';
 
-export interface ResolvedPreviewOptions extends Omit<ImagePreviewOptions, 'maxScale'> {
+export interface ResolvedPreviewOptions extends Omit<
+  ImagePreviewOptions,
+  'autoZoomThreshold' | 'defaultZoom' | 'maxScale'
+> {
+  autoZoomThreshold: number;
+  defaultZoom: ZoomPolicy;
   maxScale: number;
 }
 

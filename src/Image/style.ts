@@ -84,27 +84,34 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       background: color-mix(in srgb, ${cssVar.colorBgLayout} 60%, transparent);
       backdrop-filter: blur(12px);
     `,
+    actualSizeCorner: css`
+      /* view-box, so the per-corner transform-origin below is read in the 24x24
+         user space the path coordinates are written in rather than the rendered
+         pixel box. */
+      transform-box: view-box;
+      transition: transform 300ms ${cssVar.motionEaseInOut};
+
+      [data-actual-size='fit'] & {
+        transform: rotate(180deg);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
+    `,
+
     toolbarPercentage: css`
-      cursor: pointer;
       user-select: none;
 
-      min-width: 44px;
+      /* Fixed, not min-width: this is a readout that changes digit count as it
+         zooms (9% → 100% → 800%), and letting it size to content shifts every
+         control beside it on each wheel tick. Wide enough for four digits. */
+      width: 56px;
       height: 36px;
-      padding-inline: 8px;
-      border-radius: 999px;
 
       font-size: 12px;
       font-variant-numeric: tabular-nums;
       color: ${cssVar.colorTextTertiary};
-
-      transition:
-        color 400ms ${cssVar.motionEaseOut},
-        background 100ms ${cssVar.motionEaseOut};
-
-      &:hover {
-        color: ${cssVar.colorTextSecondary};
-        background: ${cssVar.colorFillTertiary};
-      }
     `,
 
     viewerBackdrop: css`
