@@ -1,0 +1,42 @@
+name: Release Docs Kit CI
+on:
+  workflow_call:
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: write # Required for semantic-release to push tags and commits
+  issues: write # Required for semantic-release to create issues
+  pull-requests: write # Required for semantic-release to comment on PRs
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      # The caller has already pushed the @lobehub/ui release commit, so check
+      # out the branch tip rather than the SHA that triggered the run.
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install deps
+        run: pnpm install
+
+      - name: Verify lobedocs package
+        run: npm pack --dry-run ./packages/docs-kit
+
+      - name: Release @lobehub/docs-kit
+        run: npx semantic-release
+        working-directory: packages/docs-kit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

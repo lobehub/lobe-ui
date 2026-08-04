@@ -26,6 +26,12 @@ on:
           - 'minor'
           - 'major'
 
+# Every job here ends by pushing a release commit to the branch, so two runs
+# must never overlap.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
   id-token: write # Required for OIDC
   contents: write # Required for semantic-release to push tags and commits
@@ -40,6 +46,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
@@ -61,9 +68,6 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Verify lobedocs package
-        run: npm pack --dry-run ./packages/docs-kit
-
       - name: Force Release Commit
         if: github.event.inputs.force_release == 'true'
         run: |
@@ -71,8 +75,14 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit --allow-empty -m "🔧 chore(release): force ${{ github.event.inputs.release_type }} release"
 
-      - name: Release @lobehub/ui and @lobehub/docs-kit
+      - name: Release @lobehub/ui
         run: pnpm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  docs-kit:
+    name: Docs Kit
+    needs: release
+    uses: ./.github/workflows/release-docs-kit.yml
+    secrets: inherit
