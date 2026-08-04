@@ -20,11 +20,12 @@ import { toast } from '@/base-ui/Toast';
 import { Center, Flexbox } from '@/Flex';
 import imageMessages from '@/i18n/resources/en/image';
 import { useTranslation } from '@/i18n/useTranslation';
-import Tooltip, { TooltipGroup } from '@/Tooltip';
+import { TooltipGroup } from '@/Tooltip';
 import { getClipboardBlob } from '@/utils/blobToPng';
 import { downloadBlob } from '@/utils/downloadBlob';
 
 import { styles } from '../style';
+import ActualSizeIcon from './ActualSizeIcon';
 import { naturalScale, type Rect, type Rotation, type Size } from './geometry';
 
 const getFileNameFromUrl = (url: string): string => {
@@ -67,12 +68,12 @@ export interface ToolbarProps {
   flipVertical: () => void;
   natural: Size;
   onMoreOpenChange?: (open: boolean) => void;
-  reset: () => void;
   rotateLeft: () => void;
   rotateRight: () => void;
   rotation: Rotation;
   scale: MotionValue<number>;
   source: string;
+  toggleActualSize: () => void;
   toolbarAddon?: ReactNode;
   zoomIn: () => void;
   zoomOut: () => void;
@@ -87,12 +88,12 @@ const Toolbar = memo<ToolbarProps>(
     flipVertical,
     natural,
     onMoreOpenChange,
-    reset,
     rotateLeft,
     rotateRight,
     rotation,
     scale,
     source,
+    toggleActualSize,
     toolbarAddon,
     zoomIn,
     zoomOut,
@@ -104,6 +105,15 @@ const Toolbar = memo<ToolbarProps>(
 
     const matchScale = naturalScale(natural, fitRect, rotation);
     const percentage = usePercentage(scale, matchScale);
+    // An image small enough that computeFit never scaled it down is already at
+    // 100% when fitted, so the two states the toggle switches between are the
+    // same state and the control has nothing to do.
+    const canToggleActualSize = Math.abs(matchScale - 1) > 0.01;
+    // The control reads as "go to actual size" by default, and only flips to
+    // the fit affordance when it can actually take you back — an image that
+    // fits at 100% is at both states at once and would otherwise offer to
+    // "fit to screen" while already fitted.
+    const showFitAffordance = canToggleActualSize && percentage === 100;
 
     const handleDownload = useCallback(async () => {
       setDownloadLoading(true);
@@ -180,23 +190,23 @@ const Toolbar = memo<ToolbarProps>(
               title={t('image.zoomOut')}
               onClick={zoomOut}
             />
-            <Tooltip title={t('image.zoomReset')}>
-              <Center
-                horizontal
-                className={styles.toolbarPercentage}
-                role="button"
-                tabIndex={0}
-                onClick={reset}
-              >
-                {percentage}%
-              </Center>
-            </Tooltip>
+            <Center horizontal className={styles.toolbarPercentage}>
+              {percentage}%
+            </Center>
             <ActionIcon
               disabled={!canZoomIn}
               icon={ZoomIn}
               style={{ borderRadius: 999 }}
               title={t('image.zoomIn')}
               onClick={zoomIn}
+            />
+            <ActionIcon
+              data-actual-size={showFitAffordance ? 'fit' : 'actual'}
+              disabled={!canToggleActualSize}
+              icon={ActualSizeIcon}
+              style={{ borderRadius: 999 }}
+              title={showFitAffordance ? t('image.fitToScreen') : t('image.actualSize')}
+              onClick={toggleActualSize}
             />
             <ActionIcon
               icon={Download}

@@ -133,39 +133,42 @@ beforeEach(() => {
   setViewport(VIEWPORT);
 });
 
+const getPercentage = () => {
+  const node = Array.from(getToolbar().querySelectorAll<HTMLElement>('*')).find(
+    (element) => element.children.length === 0 && /^\d+%$/.test(element.textContent ?? ''),
+  );
+  if (!node) throw new Error('no percentage readout in the toolbar');
+  return node;
+};
+
+const getActualSizeToggle = () => {
+  const node = getToolbar().querySelector<HTMLElement>('[data-actual-size]');
+  if (!node) throw new Error('no actual-size toggle in the toolbar');
+  return node;
+};
+
+const toolbarButton = (icon: string) => {
+  const button = getToolbarButtons().find((node) => iconClassOf(node).includes(`lucide-${icon}`));
+  if (!button) throw new Error(`no toolbar button with icon ${icon}`);
+  return button;
+};
+
 const openMoreMenu = () => {
-  fireEvent.click(getToolbarButtons()[4]);
+  fireEvent.click(toolbarButton('ellipsis'));
   return screen.getAllByRole('menuitem');
 };
 
 describe('controls', () => {
-  it('renders zoom, percentage, download and the more trigger in order', () => {
+  it('renders the percentage as an inert readout, not a control', () => {
     mount();
-    const buttons = getToolbarButtons();
 
-    expect(buttons).toHaveLength(5);
-    expect(iconClassOf(buttons[0])).toContain('lucide-zoom-out');
-    expect(buttons[1].textContent).toBe('100%');
-    expect(iconClassOf(buttons[2])).toContain('lucide-zoom-in');
-    expect(iconClassOf(buttons[3])).toContain('lucide-download');
-    expect(iconClassOf(buttons[4])).toContain('lucide-ellipsis');
+    expect(getPercentage().textContent).toBe('100%');
+    expect(getPercentage().getAttribute('role')).toBeNull();
+    expect(getPercentage().getAttribute('tabindex')).toBeNull();
+    expect(getToolbarButtons().some((node) => (node.textContent ?? '').endsWith('%'))).toBe(false);
   });
 
-  it('collects flip, rotate and copy into the more menu', () => {
-    mount();
-    const items = openMoreMenu();
-
-    expect(items).toHaveLength(5);
-    expect(items.map((item) => item.textContent)).toEqual([
-      imageMessages['image.flipHorizontal'],
-      imageMessages['image.flipVertical'],
-      imageMessages['image.rotateLeft'],
-      imageMessages['image.rotateRight'],
-      imageMessages['image.copy'],
-    ]);
-  });
-
-  it('renders the toolbarAddon after the built-in controls', () => {
+  it('renders the toolbarAddon alongside the built-in controls', () => {
     mount(
       { height: 300, width: 400 },
       { toolbarAddon: <button data-testid="addon">Addon</button> },
@@ -176,7 +179,7 @@ describe('controls', () => {
 
   it('disables zoom out at scale 1', () => {
     mount();
-    const zoomOutButton = getToolbarButtons()[0];
+    const zoomOutButton = toolbarButton('zoom-out');
 
     expect(zoomOutButton.getAttribute('tabindex')).toBe('-1');
     fireEvent.click(zoomOutButton);
@@ -185,7 +188,7 @@ describe('controls', () => {
 
   it('disables zoom in at maxScale', () => {
     mount();
-    const zoomInButton = () => getToolbarButtons()[2];
+    const zoomInButton = () => toolbarButton('zoom-in');
 
     for (let i = 0; i < 10; i += 1) {
       fireEvent.click(zoomInButton());
@@ -200,25 +203,58 @@ describe('controls', () => {
     expect(readTransform().scale).toBe(8);
   });
 
-  it('zooms in, reflects the percentage, and resets to 100% on click', () => {
+  it('tracks the zoom level in the percentage readout', () => {
     mount();
-    const buttons = getToolbarButtons();
-    const zoomInButton = buttons[2];
-    const percentageButton = buttons[1];
+    const zoomInButton = () => toolbarButton('zoom-in');
 
-    expect(percentageButton.textContent).toBe('100%');
+    expect(getPercentage().textContent).toBe('100%');
 
-    fireEvent.click(zoomInButton);
+    fireEvent.click(zoomInButton());
     flushAnimations();
-    fireEvent.click(zoomInButton);
-    flushAnimations();
-    expect(percentageButton.textContent).toBe('225%');
-
-    fireEvent.click(percentageButton);
+    fireEvent.click(zoomInButton());
     flushAnimations();
 
-    expect(percentageButton.textContent).toBe('100%');
+    expect(getPercentage().textContent).toBe('225%');
+    expect(readTransform().scale).toBe(2.25);
+  });
+
+  it('does not change the transform when the percentage readout is clicked', () => {
+    mount();
+
+    fireEvent.click(toolbarButton('zoom-in'));
+    flushAnimations();
+    expect(readTransform().scale).toBe(1.5);
+
+    fireEvent.click(getPercentage());
+    flushAnimations();
+
+    expect(readTransform().scale).toBe(1.5);
+  });
+
+  it('toggles between the fitted size and 100%', () => {
+    // 4000 wide against a 1024 viewport minus margins fits to 976, so actual
+    // size is a little over 4x and the two states are distinguishable.
+    mount({ height: 2000, width: 4000 });
+
     expect(readTransform().scale).toBe(1);
+    expect(getActualSizeToggle().getAttribute('data-actual-size')).toBe('actual');
+
+    fireEvent.click(getActualSizeToggle());
+    flushAnimations();
+    expect(readTransform().scale).toBeCloseTo(4000 / 976, 5);
+    expect(getActualSizeToggle().getAttribute('data-actual-size')).toBe('fit');
+
+    fireEvent.click(getActualSizeToggle());
+    flushAnimations();
+    expect(readTransform().scale).toBe(1);
+    expect(getActualSizeToggle().getAttribute('data-actual-size')).toBe('actual');
+  });
+
+  it('disables the actual-size toggle when the image already fits at 100%', () => {
+    mount({ height: 300, width: 400 });
+
+    expect(getActualSizeToggle().getAttribute('tabindex')).toBe('-1');
+    expect(getActualSizeToggle().getAttribute('data-actual-size')).toBe('actual');
   });
 
   it('re-fits the layout box to the swapped aspect when rotated from the more menu', () => {
@@ -309,7 +345,7 @@ describe('copy and download', () => {
     vi.mocked(fetch).mockResolvedValue({ blob: () => Promise.resolve(blob) } as Response);
     mount();
 
-    fireEvent.click(getToolbarButtons()[3]);
+    fireEvent.click(toolbarButton('download'));
 
     await waitFor(() =>
       expect(toastMock.success).toHaveBeenCalledWith(imageMessages['image.downloadSuccess']),
@@ -320,7 +356,7 @@ describe('copy and download', () => {
     vi.mocked(fetch).mockRejectedValue(new Error('network error'));
     mount();
 
-    fireEvent.click(getToolbarButtons()[3]);
+    fireEvent.click(toolbarButton('download'));
 
     await waitFor(() =>
       expect(toastMock.error).toHaveBeenCalledWith(imageMessages['image.downloadFailed']),

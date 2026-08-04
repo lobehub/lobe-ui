@@ -31,6 +31,7 @@ export interface UseFlipTransitionOptions {
   animated: boolean;
   getCloseSource: () => HTMLImageElement;
   getFitRect: () => Rect;
+  getInitialScale: () => number;
   getViewportWidth: () => number;
   onClosed: () => void;
   source: HTMLImageElement;
@@ -102,6 +103,7 @@ export const useFlipTransition = ({
   animated,
   getCloseSource,
   getFitRect,
+  getInitialScale,
   getViewportWidth,
   onClosed,
   source,
@@ -153,6 +155,9 @@ export const useFlipTransition = ({
 
   const getCloseSourceRef = useRef(getCloseSource);
   getCloseSourceRef.current = getCloseSource;
+
+  const getInitialScaleRef = useRef(getInitialScale);
+  getInitialScaleRef.current = getInitialScale;
 
   const getViewportWidthRef = useRef(getViewportWidth);
   getViewportWidthRef.current = getViewportWidth;
@@ -245,6 +250,9 @@ export const useFlipTransition = ({
       transitioningRef.current = false;
     };
 
+    // Resting scale is whatever defaultZoom resolved to, not necessarily fit.
+    const resting = getInitialScaleRef.current();
+
     if (rect) {
       const start = sourceTransform(rect, getFitRectRef.current());
       transform.scale.set(start.scale);
@@ -253,7 +261,7 @@ export const useFlipTransition = ({
       opacity.image.set(1);
       animateSettling(
         [
-          [transform.scale, 1],
+          [transform.scale, resting],
           [transform.x, 0],
           [transform.y, 0],
         ],
@@ -261,9 +269,9 @@ export const useFlipTransition = ({
       );
     } else {
       opacity.image.set(0);
-      if (animated) transform.scale.set(FADE_SCALE);
+      if (animated) transform.scale.set(resting * FADE_SCALE);
       run([animate(opacity.image, 1, { ...FADE, onComplete: markSettled })]);
-      if (animated) run([animate(transform.scale, 1, FADE)]);
+      if (animated) run([animate(transform.scale, resting, FADE)]);
       trackTimeout(markSettled, SETTLE_FALLBACK_MS);
     }
 

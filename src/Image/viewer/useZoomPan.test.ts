@@ -670,3 +670,194 @@ describe('closing gate', () => {
     expect(result.current.scale.get()).toBeCloseTo(1.5, 4);
   });
 });
+
+describe('defaultZoom', () => {
+  // 1600 / (1200 - 48) = 1.389x the fit box: a screenshot-shaped image that is
+  // only modestly larger than the viewport.
+  const MODEST = { height: 800, width: 1600 };
+  const MODEST_ACTUAL = 1600 / 1152;
+  // NATURAL is 3.472x the fit box: a photo-shaped image.
+  const NATURAL_ACTUAL = 4000 / 1152;
+
+  it('opens at the zoom floor under the fit policy regardless of image size', () => {
+    const { result } = setup({ defaultZoom: 'fit', natural: MODEST });
+    expect(result.current.scale.get()).toBe(1);
+    expect(result.current.isZoomed).toBe(false);
+  });
+
+  it('opens at natural size under the actual policy', () => {
+    const { result } = setup({ defaultZoom: 'actual', natural: MODEST });
+    expect(result.current.scale.get()).toBeCloseTo(MODEST_ACTUAL, 10);
+  });
+
+  it('opens a modestly oversized image at natural size under auto', () => {
+    const { result } = setup({ defaultZoom: 'auto', natural: MODEST });
+    expect(result.current.scale.get()).toBeCloseTo(MODEST_ACTUAL, 10);
+  });
+
+  it('opens a far oversized image at fit under auto, keeping the whole frame visible', () => {
+    const { result } = setup({ defaultZoom: 'auto', natural: NATURAL });
+    expect(result.current.scale.get()).toBe(1);
+  });
+
+  it('honours a caller-tuned autoZoomThreshold', () => {
+    const { result } = setup({ autoZoomThreshold: 4, defaultZoom: 'auto', natural: NATURAL });
+    expect(result.current.scale.get()).toBeCloseTo(NATURAL_ACTUAL, 10);
+  });
+
+  it('defaults to auto when no policy is supplied', () => {
+    const { result } = setup({ natural: MODEST });
+    expect(result.current.scale.get()).toBeCloseTo(MODEST_ACTUAL, 10);
+  });
+
+  // The whole dismiss system keys off isClean. Opening above the zoom floor
+  // must not read as "the user changed something", or Esc stops closing on the
+  // first press, clicking the image stops closing, and the close animation
+  // degrades from a FLIP back to the thumbnail into a plain fade.
+  it('opens clean even above the zoom floor, so Esc still closes on the first press', () => {
+    const { result } = setup({ defaultZoom: 'actual', natural: MODEST });
+    expect(result.current.isClean).toBe(true);
+    expect(result.current.escIntent()).toBe('close');
+  });
+
+  it('opens pannable when it opens above the zoom floor', () => {
+    const { result } = setup({ defaultZoom: 'actual', natural: MODEST });
+    expect(result.current.isZoomed).toBe(true);
+    act(() => {
+      result.current.dragBy({ x: 60, y: 0 });
+    });
+    expect(result.current.x.get()).toBe(60);
+  });
+
+  it('resets back to the opening scale rather than to fit', () => {
+    const { result } = setup({ defaultZoom: 'actual', natural: MODEST });
+    act(() => {
+      result.current.zoomIn();
+    });
+    expect(result.current.scale.get()).toBeGreaterThan(MODEST_ACTUAL);
+    act(() => {
+      result.current.reset();
+    });
+    expect(result.current.scale.get()).toBeCloseTo(MODEST_ACTUAL, 10);
+    expect(result.current.isClean).toBe(true);
+  });
+
+  it('raises the zoom ceiling so actual size stays reachable past maxScale', () => {
+    const { result } = setup({ defaultZoom: 'actual', maxScale: 2, natural: NATURAL });
+    expect(result.current.scale.get()).toBeCloseTo(NATURAL_ACTUAL, 10);
+    expect(result.current.canZoomIn).toBe(false);
+  });
+
+  it('dismisses once an image opened at actual size has been scrolled back to fit', () => {
+    const onCloseRequest = vi.fn();
+    const { result } = setup({ defaultZoom: 'actual', natural: MODEST, onCloseRequest });
+
+    act(() => {
+      result.current.handleWheel(wheelEvent({ deltaY: 1000 }));
+    });
+    expect(result.current.scale.get()).toBe(1);
+    expect(onCloseRequest).not.toHaveBeenCalled();
+
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    act(() => {
+      result.current.handleWheel(wheelEvent({ deltaY: 150 }));
+    });
+    expect(onCloseRequest).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('wheel direction split', () => {
+  it('zooms in on a scroll up at the zoom floor instead of doing nothing', () => {
+    const onCloseRequest = vi.fn();
+    const { result } = setup({ onCloseRequest });
+    act(() => {
+      result.current.handleWheel(wheelEvent({ deltaY: -100 }));
+    });
+    expect(result.current.scale.get()).toBeCloseTo(1.2214027581601699, 10);
+    expect(onCloseRequest).not.toHaveBeenCalled();
+  });
+
+  it('still accumulates toward dismiss on a scroll down at the zoom floor', () => {
+    const onCloseRequest = vi.fn();
+    const { result } = setup({ onCloseRequest });
+    act(() => {
+      result.current.handleWheel(wheelEvent({ deltaY: 150 }));
+    });
+    expect(result.current.scale.get()).toBe(1);
+    expect(onCloseRequest).toHaveBeenCalledTimes(1);
+  });
+
+  it('zooms in during the post-zoom-out disarm window instead of going dead', () => {
+    const { result } = setup();
+    act(() => {
+      result.current.handleWheel(wheelEvent({ deltaY: -100 }));
+    });
+    act(() => {
+      result.current.handleWheel(wheelEvent({ deltaY: 1000 }));
+    });
+    expect(result.current.scale.get()).toBe(1);
+
+    act(() => {
+      result.current.handleWheel(wheelEvent({ deltaY: -100 }));
+    });
+    expect(result.current.scale.get()).toBeCloseTo(1.2214027581601699, 10);
+  });
+
+  it('treats a line-mode wheel notch like its pixel-mode equivalent', () => {
+    const lines = setup();
+    act(() => {
+      lines.result.current.handleWheel(wheelEvent({ deltaMode: 1, deltaY: -3 }));
+    });
+
+    const pixels = setup();
+    act(() => {
+      pixels.result.current.handleWheel(wheelEvent({ deltaMode: 0, deltaY: -48 }));
+    });
+
+    expect(lines.result.current.scale.get()).toBeCloseTo(pixels.result.current.scale.get(), 12);
+    expect(lines.result.current.scale.get()).toBeGreaterThan(1.09);
+  });
+
+  it('counts a line-mode scroll down toward dismiss at its pixel weight', () => {
+    const onCloseRequest = vi.fn();
+    const { result } = setup({ onCloseRequest });
+    act(() => {
+      result.current.handleWheel(wheelEvent({ deltaMode: 1, deltaY: 7 }));
+    });
+    expect(onCloseRequest).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('toggleActualSize', () => {
+  const MODEST = { height: 800, width: 1600 };
+  const MODEST_ACTUAL = 1600 / 1152;
+
+  it('jumps from fit to natural size', () => {
+    const { result } = setup({ defaultZoom: 'fit', natural: MODEST });
+    act(() => {
+      result.current.toggleActualSize();
+    });
+    expect(result.current.scale.get()).toBeCloseTo(MODEST_ACTUAL, 10);
+  });
+
+  it('returns to fit when already at natural size', () => {
+    const { result } = setup({ defaultZoom: 'actual', natural: MODEST });
+    act(() => {
+      result.current.toggleActualSize();
+    });
+    expect(result.current.scale.get()).toBe(1);
+  });
+
+  it('goes to natural size from an arbitrary zoom rather than toggling to fit', () => {
+    const { result } = setup({ defaultZoom: 'fit', natural: MODEST });
+    act(() => {
+      result.current.zoomIn();
+    });
+    act(() => {
+      result.current.toggleActualSize();
+    });
+    expect(result.current.scale.get()).toBeCloseTo(MODEST_ACTUAL, 10);
+  });
+});

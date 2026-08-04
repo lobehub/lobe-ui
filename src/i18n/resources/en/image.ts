@@ -1,4 +1,5 @@
 export default {
+  'image.actualSize': 'Actual Size',
   'image.close': 'Close',
   'image.copy': 'Copy',
   'image.copyFailed': 'Copy Failed',
@@ -6,6 +7,7 @@ export default {
   'image.download': 'Download',
   'image.downloadFailed': 'Download Failed',
   'image.downloadSuccess': 'Download Success',
+  'image.fitToScreen': 'Fit to Screen',
   'image.flipHorizontal': 'Flip Horizontal',
   'image.flipVertical': 'Flip Vertical',
   'image.more': 'More',
@@ -15,5 +17,4 @@ export default {
   'image.rotateRight': 'Rotate Right',
   'image.zoomIn': 'Zoom In',
   'image.zoomOut': 'Zoom Out',
-  'image.zoomReset': 'Reset Zoom',
 } as const;

@@ -28,12 +28,12 @@ export interface ViewerChromeProps {
   next: () => void;
   onClose: () => void;
   prev: () => void;
-  reset: () => void;
   rotateLeft: () => void;
   rotateRight: () => void;
   rotation: Rotation;
   scale: MotionValue<number>;
   source: string;
+  toggleActualSize: () => void;
   toolbarAddon?: ReactNode;
   total: number;
   zoomIn: () => void;

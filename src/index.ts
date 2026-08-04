@@ -179,7 +179,13 @@ export {
   isHtmlContentClosed,
 } from './HtmlPreview';
 export { default as Icon, type IconProps, IconProvider, type IconSize } from './Icon';
-export { default as Image, type ImageProps, PreviewGroup, type PreviewGroupProps } from './Image';
+export {
+  default as Image,
+  type ImagePreviewOptions,
+  type ImageProps,
+  PreviewGroup,
+  type PreviewGroupProps,
+} from './Image';
 export { default as ImageSelect, type ImageSelectItem, type ImageSelectProps } from './ImageSelect';
 export {
   default as Input,
