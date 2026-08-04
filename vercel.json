@@ -4,7 +4,7 @@
   "devCommand": "pnpm run docs:dev",
   "framework": null,
   "ignoreCommand": "git diff HEAD^ HEAD --quiet -- ./package.json ./src ./docs ./packages ./public ./vercel.json ./docs.config.ts ./compatibility.json ./navigationSections.json ./tsconfig.site.json ./tsconfig.json",
-  "installCommand": "corepack enable && corepack prepare pnpm@11.18.0 --activate && pnpm install",
+  "installCommand": "npm i -g pnpm@11.18.0 && pnpm install",
   "outputDirectory": "dist",
   "trailingSlash": false
 }
