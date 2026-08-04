@@ -119,15 +119,15 @@ it('closes discussion on SPA navigation and remounts when reopened', async () =>
   );
   openDiscussion();
   await screen.findByText('Discussion loaded');
+  await waitFor(() => expect(mountCount).toBeGreaterThanOrEqual(1));
   const afterFirst = mountCount;
-  expect(afterFirst).toBeGreaterThanOrEqual(1);
 
   rerender(<PageEndActions loadGiscus={loadGiscus} pathname="/components/segmented" />);
 
   expect(screen.queryByText('Discussion loaded')).toBeNull();
   openDiscussion();
   await screen.findByText('Discussion loaded');
-  expect(mountCount).toBeGreaterThan(afterFirst);
+  await waitFor(() => expect(mountCount).toBeGreaterThan(afterFirst));
   expect(loadGiscus).toHaveBeenCalledTimes(1);
 });
 
