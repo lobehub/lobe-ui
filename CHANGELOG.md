@@ -2,6 +2,27 @@
 
 # Changelog
 
+# [5.28.0](https://github.com/lobehub/lobe-ui/compare/v5.27.0...v5.28.0) (2026-08-04)
+
+### ✨ Features
+
+- **image**: Configurable open zoom and wheel fixes for the viewer, closes [#596](https://github.com/lobehub/lobe-ui/issues/596) ([2e1816a](https://github.com/lobehub/lobe-ui/commit/2e1816a))
+
+### 🎫 Chores
+
+- **ci**: Fix Vercel pnpm install via Corepack ([42bc54d](https://github.com/lobehub/lobe-ui/commit/42bc54d))
+- **ci**: Switch from bun to pnpm across Vercel and workflows ([50d5cee](https://github.com/lobehub/lobe-ui/commit/50d5cee))
+- **deps**: Keep @base-ui/react on 1.6.0 ([a78cdf6](https://github.com/lobehub/lobe-ui/commit/a78cdf6))
+- **release**: Move pnpm settings out of .npmrc for pnpm 11 ([69afebd](https://github.com/lobehub/lobe-ui/commit/69afebd))
+
+### 🐛 Bug Fixes
+
+- **image**: Keep the viewer backdrop when it opens from a dialog, closes [#598](https://github.com/lobehub/lobe-ui/issues/598) ([6b1b727](https://github.com/lobehub/lobe-ui/commit/6b1b727))
+
+### 🔧 Continuous Integration
+
+- **release**: Split @lobehub/ui and @lobehub/docs-kit release streams ([ed6bf99](https://github.com/lobehub/lobe-ui/commit/ed6bf99))
+
 # [5.27.0](https://github.com/lobehub/lobe-ui/compare/v5.26.0...v5.27.0) (2026-08-03)
 
 ### ✨ Features
