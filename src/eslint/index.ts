@@ -1,4 +1,4 @@
-const DEPRECATED_UI_COMPONENTS = ['Button', 'Modal', 'Segmented', 'Select', 'Tabs'];
+const DEPRECATED_UI_COMPONENTS = ['Button', 'Drawer', 'Modal', 'Segmented', 'Select', 'Tabs'];
 
 export const restrictedImports = {
   rules: {
