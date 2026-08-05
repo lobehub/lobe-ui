@@ -67,24 +67,44 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     min-width: 0;
     min-height: 0;
 
-    /* Elevated, not container: in dark themes container sits within 2 points of the page
-       background, so a panel with no border and a black-on-black cast loses its edge entirely. */
-    background: ${cssVar.colorBgElevated};
+    /* Container, not elevated: the antd-based Drawer paints its panel on container, and in dark
+       themes elevated is a visibly lighter step — the two drawers must read as the same surface. */
+    background: ${cssVar.colorBgContainer};
 
-    /* An edge-anchored panel casts along its placement axis, not downward like a centred
-       dialog would. Direction classes set the sign, weight classes set the opacity, so the
-       two compose without a class per combination. */
+    /* Geometry and alphas are antd's boxShadowDrawer{Left,Right,Up,Down} verbatim, so both drawers
+       cast identically. antd builds those by scaling colorShadow's *own* alpha by 8/12/5%, and
+       colorShadow flips from opaque black to rgba(255,255,255,0.2) in dark — hence the color-mix
+       against the raw var rather than a literal black (colorShadow has no AliasToken typing, so
+       cssVar cannot reach it). An edge-anchored panel casts along its placement axis rather than
+       downward like a centred dialog would: direction classes set the sign, weight classes scale
+       the alpha, so the two compose without a class per combination. */
     box-shadow:
-      calc(var(--drawer-cast-x, 0) * 6px) calc(var(--drawer-cast-y, 0) * 6px) 24px 0
-        rgb(0 0 0 / var(--drawer-cast-far, 8%)),
-      calc(var(--drawer-cast-x, 0) * 2px) calc(var(--drawer-cast-y, 0) * 2px) 6px 0
-        rgb(0 0 0 / var(--drawer-cast-near, 4%));
+      calc(var(--drawer-cast-x, 0) * 6px) calc(var(--drawer-cast-y, 0) * 6px) 16px 0
+        color-mix(
+          in srgb,
+          var(--ant-color-shadow, #000) calc(8% * var(--drawer-cast-alpha, 1)),
+          transparent
+        ),
+      calc(var(--drawer-cast-x, 0) * 3px) calc(var(--drawer-cast-y, 0) * 3px) 6px -4px
+        color-mix(
+          in srgb,
+          var(--ant-color-shadow, #000) calc(12% * var(--drawer-cast-alpha, 1)),
+          transparent
+        ),
+      calc(var(--drawer-cast-x, 0) * 9px) calc(var(--drawer-cast-y, 0) * 9px) 28px 8px
+        color-mix(
+          in srgb,
+          var(--ant-color-shadow, #000) calc(5% * var(--drawer-cast-alpha, 1)),
+          transparent
+        );
 
     transition: transform 300ms cubic-bezier(0.32, 0.72, 0, 1);
   `,
 
   panelLeft: css`
     --drawer-cast-x: 1;
+
+    border-inline-end: var(--drawer-edge-width, 1px) solid ${cssVar.colorBorder};
 
     &[data-starting-style],
     &[data-ending-style] {
@@ -95,6 +115,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   panelRight: css`
     --drawer-cast-x: -1;
 
+    border-inline-start: var(--drawer-edge-width, 1px) solid ${cssVar.colorBorder};
+
     &[data-starting-style],
     &[data-ending-style] {
       transform: translateX(100%);
@@ -104,6 +126,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   panelTop: css`
     --drawer-cast-y: 1;
 
+    border-block-end: var(--drawer-edge-width, 1px) solid ${cssVar.colorBorder};
+
     &[data-starting-style],
     &[data-ending-style] {
       transform: translateY(-100%);
@@ -112,6 +136,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   panelBottom: css`
     --drawer-cast-y: -1;
+
+    border-block-start: var(--drawer-edge-width, 1px) solid ${cssVar.colorBorder};
 
     &[data-starting-style],
     &[data-ending-style] {
@@ -142,22 +168,21 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     border-start-end-radius: 12px;
   `,
 
-  /* Filling the viewport leaves nothing to cast onto — the shadow would only dirty the edge. */
+  /* Filling the viewport leaves nothing to cast onto or to divide from — the shadow and the edge
+     rule would only dirty the seam against the viewport. */
   panelFlush: css`
-    --drawer-cast-far: 0%;
-    --drawer-cast-near: 0%;
+    --drawer-cast-alpha: 0;
+    --drawer-edge-width: 0;
   `,
 
   /* Without a backdrop the panel has to earn its separation from live content behind it. */
   panelBoosted: css`
-    --drawer-cast-far: 14%;
-    --drawer-cast-near: 7%;
+    --drawer-cast-alpha: 1.75;
   `,
 
   /* A pushed ancestor has receded behind its child; stacking full-weight casts would silt up. */
   panelRecessed: css`
-    --drawer-cast-far: 4%;
-    --drawer-cast-near: 2%;
+    --drawer-cast-alpha: 0.5;
   `,
 
   header: css`
@@ -298,11 +323,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     padding-block: 12px;
     padding-inline: 16px;
-    border-inline-end: 1px solid ${cssVar.colorSplit};
+    border-inline-end: 1px solid ${cssVar.colorBorderSecondary};
 
-    /* A translucent fill reads as a secondary surface against whatever the panel is, where the
-       page-level layout colour would punch a hole through an elevated panel in dark themes. */
-    background: ${cssVar.colorFillTertiary};
+    background: ${cssVar.colorBgLayout};
   `,
 
   sidebarContent: css`
