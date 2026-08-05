@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [5.28.1](https://github.com/lobehub/lobe-ui/compare/v5.28.0...v5.28.1) (2026-08-05)
+
+### 🎫 Chores
+
+- **eslint**: Ban antd Drawer imports ([1cd9f50](https://github.com/lobehub/lobe-ui/commit/1cd9f50))
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Align Drawer surface, edge and shadow with the antd Drawer ([21a3f9f](https://github.com/lobehub/lobe-ui/commit/21a3f9f))
+
 # [5.28.0](https://github.com/lobehub/lobe-ui/compare/v5.27.0...v5.28.0) (2026-08-04)
 
 ### ✨ Features
