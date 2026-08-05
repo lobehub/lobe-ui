@@ -74,12 +74,19 @@ const Segmented = <Value extends string = string>({
     if (!list) return;
     const active = list.querySelector<HTMLElement>('[data-segmented-item][data-pressed]');
     if (!active) {
+      list.style.setProperty('--active-item-left', '0px');
+      list.style.setProperty('--active-item-top', '0px');
+      list.style.setProperty('--active-item-right', '0px');
       list.style.setProperty('--active-item-width', '0px');
       list.style.setProperty('--active-item-height', '0px');
       return;
     }
     list.style.setProperty('--active-item-left', `${active.offsetLeft}px`);
     list.style.setProperty('--active-item-top', `${active.offsetTop}px`);
+    list.style.setProperty(
+      '--active-item-right',
+      `${list.clientWidth - active.offsetLeft - active.offsetWidth}px`,
+    );
     list.style.setProperty('--active-item-width', `${active.offsetWidth}px`);
     list.style.setProperty('--active-item-height', `${active.offsetHeight}px`);
   }, []);
