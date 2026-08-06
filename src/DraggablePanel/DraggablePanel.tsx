@@ -75,7 +75,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     backgroundColor,
     collapseThreshold,
     size,
-    stableLayout = false,
+    stableLayout = true,
     defaultSize: customizeDefaultSize,
     minWidth,
     minHeight,
