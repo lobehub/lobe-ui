@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.29.0](https://github.com/lobehub/lobe-ui/compare/v5.28.1...v5.29.0) (2026-08-06)
+
+### ✨ Features
+
+- **draggable-panel**: Default stableLayout to true ([0c7121a](https://github.com/lobehub/lobe-ui/commit/0c7121a))
+
 ## [5.28.1](https://github.com/lobehub/lobe-ui/compare/v5.28.0...v5.28.1) (2026-08-05)
 
 ### 🎫 Chores
