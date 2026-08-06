@@ -268,7 +268,7 @@ export type ModalFooterProps = React.HTMLAttributes<HTMLDivElement> & {
   ref?: React.Ref<HTMLDivElement>;
 };
 export const ModalFooter = ({ className, ...rest }: ModalFooterProps) => (
-  <div {...rest} className={cx(styles.footer, className)} />
+  <div {...rest} className={cx(styles.footer, className)} data-lobe-modal-footer="" />
 );
 
 // --- Close ---
