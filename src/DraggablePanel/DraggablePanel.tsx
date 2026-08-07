@@ -519,12 +519,13 @@ const DraggablePanel = memo<DraggablePanelProps>(
         ? { height: '100%', width: '100%' }
         : { width: '100%' };
 
+    const stableAsideFixedSize: CSSProperties = isVertical ? { width: '100%' } : { height: '100%' };
     const stableAsideStyle: CSSProperties = usesStableLayout
       ? {
           display: 'flex',
           flexDirection: 'column',
           minHeight: 0,
-          ...(mode === 'fixed' ? { height: '100%' } : {}),
+          ...(mode === 'fixed' ? stableAsideFixedSize : {}),
         }
       : {};
 

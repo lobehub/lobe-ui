@@ -58,6 +58,31 @@ describe('DraggablePanel stableLayout', () => {
     expect(getResizable(aside)).not.toBeNull();
   });
 
+  it.each(['top', 'bottom'] as const)(
+    'keeps a fixed %s panel from occupying the parent height outside its stable outer layer',
+    (placement) => {
+      const { rerender } = render(
+        <DraggablePanel expand defaultSize={{ height: 200 }} placement={placement}>
+          Panel body
+        </DraggablePanel>,
+      );
+
+      const aside = getAside();
+      expect(aside.style.height).toBe('');
+      expect(aside.style.width).toBe('100%');
+      expect(getStableOuter(aside)!.style.height).toBe('200px');
+
+      rerender(
+        <DraggablePanel defaultSize={{ height: 200 }} expand={false} placement={placement}>
+          Panel body
+        </DraggablePanel>,
+      );
+
+      expect(aside.style.height).toBe('');
+      expect(getStableOuter(aside)!.style.height).toBe('0px');
+    },
+  );
+
   it('can opt out of stableLayout and zeros resizable size when collapsed', () => {
     const { rerender } = render(
       <DraggablePanel expand defaultSize={{ width: 200 }} placement="left" stableLayout={false}>
