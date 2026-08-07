@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.29.1](https://github.com/lobehub/lobe-ui/compare/v5.29.0...v5.29.1) (2026-08-07)
+
+### 🐛 Bug Fixes
+
+- **draggable-panel**: Size stable layout by placement, closes [#600](https://github.com/lobehub/lobe-ui/issues/600) ([dff67c7](https://github.com/lobehub/lobe-ui/commit/dff67c7))
+
 # [5.29.0](https://github.com/lobehub/lobe-ui/compare/v5.28.1...v5.29.0) (2026-08-06)
 
 ### ✨ Features
