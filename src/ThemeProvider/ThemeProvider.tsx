@@ -8,7 +8,7 @@ import {
   ThemeProvider as AntdThemeProvider,
 } from 'antd-style';
 import { merge } from 'es-toolkit/compat';
-import { version as katexVersion } from 'katex';
+import katexPkg from 'katex/package.json';
 import { memo, useCallback, useMemo, useState } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
@@ -63,7 +63,7 @@ const ThemeProvider = memo<ThemeProviderProps>(
           genCdnUrl({
             path: 'dist/katex.min.css',
             pkg: 'katex',
-            version: katexVersion,
+            version: katexPkg.version,
           }),
         ],
       [customFonts, genCdnUrl],
