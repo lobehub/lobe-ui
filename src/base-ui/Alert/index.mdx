@@ -1,0 +1,59 @@
+---
+title: Alert
+description: Neutral-first inline feedback with restrained semantic color, actions, dismissal, and expandable diagnostic detail.
+category: Feedback
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoExtra from './demos/Extra.tsx?demo';
+import DemoPlayground from './demos/Playground.tsx?demo';
+
+## Playground
+
+<Demo of={DemoPlayground} layout="bare" />
+
+## Visual system
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Diagnostic detail
+
+<Demo of={DemoExtra} layout="bare" />
+
+## API
+
+<Api name="Alert" from=".." />
+
+`Alert` renders a native `role="alert"` region. Default icons are decorative because the semantic type is already expressed by the message and visual tone. Custom `role`, `aria-*`, `data-*`, event handlers, and `ref` are forwarded to the root `<div>`.
+
+The default `soft` surface keeps text and controls neutral while reserving semantic color for the icon and a low-opacity background tint. `outlined` adds a neutral hairline and `plain` removes the surrounding surface. Deprecated `filled` and `borderless` values remain as aliases for `soft` and `plain` during migration.
+
+### Migrating from antd Alert
+
+The core migration is an import replacement:
+
+```tsx | pure
+import { Alert } from '@lobehub/ui/base-ui';
+
+<Alert
+  action={<button>Retry</button>}
+  description="Confirm the endpoint and try again."
+  title="Connection failed"
+  type="error"
+/>;
+```
+
+`message` remains as a deprecated alias for `title`. Boolean `closable`, object-form `closable`, `closeIcon`, `closeText`, top-level `onClose`, and `afterClose` are retained so existing call sites can migrate without losing behavior. Prefer the object form for new code:
+
+```tsx | pure
+<Alert
+  closable={{
+    'aria-label': 'Dismiss connection warning',
+    'afterClose': () => console.log('removed'),
+    'onClose': () => console.log('dismissed'),
+  }}
+  title="Connection warning"
+/>
+```
+
+`extra` adds a compact disclosure for diagnostics. Set `extraIsolate` when the detail is an independent block that should remain visible instead of participating in the disclosure.

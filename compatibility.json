@@ -3337,6 +3337,42 @@
       "source": "src/awesome/TypewriterEffect/demos/variableSpeed.tsx"
     },
     {
+      "document": "src/base-ui/Alert/index.mdx",
+      "legacyId": "src-base-ui-alert-demo-demos",
+      "legacyRouteId": "components/base-ui/Alert/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/alert",
+      "source": "src/base-ui/Alert/demos/index.tsx"
+    },
+    {
+      "document": "src/base-ui/Alert/index.mdx",
+      "legacyId": "src-base-ui-alert-demo-extra",
+      "legacyRouteId": "components/base-ui/Alert/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/alert",
+      "source": "src/base-ui/Alert/demos/Extra.tsx"
+    },
+    {
+      "document": "src/base-ui/Alert/index.mdx",
+      "legacyId": "src-base-ui-alert-demo-playground",
+      "legacyRouteId": "components/base-ui/Alert/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/alert",
+      "source": "src/base-ui/Alert/demos/Playground.tsx"
+    },
+    {
       "document": "src/base-ui/Button/index.mdx",
       "legacyId": "src-base-ui-button-demo-demos",
       "legacyRouteId": "components/base-ui/Button/index",
@@ -7021,6 +7057,15 @@
       "section": "Awesome",
       "source": "src/awesome/TypewriterEffect/index.mdx",
       "title": "TypewriterEffect"
+    },
+    {
+      "category": "Feedback",
+      "description": "Semantic inline feedback with actions, dismissal, and expandable diagnostic detail.",
+      "legacyRouteId": "components/base-ui/Alert/index",
+      "pathname": "/components/base-ui/alert",
+      "section": "Base UI",
+      "source": "src/base-ui/Alert/index.mdx",
+      "title": "Alert"
     },
     {
       "category": "General",
