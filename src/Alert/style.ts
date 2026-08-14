@@ -85,6 +85,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         margin: 0;
       }
     `,
+    rootSingleLine: css`
+      align-items: center;
+    `,
     rootNoTitleNoIconNoClosable: css`
       gap: 8px;
       padding-block: 8px;
@@ -296,7 +299,7 @@ export const rootVariants = cva(styles.rootBase, {
       true: styles.glass,
     },
     hasTitle: {
-      false: null,
+      false: styles.rootSingleLine,
       true: null,
     },
     showIcon: {
