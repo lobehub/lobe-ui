@@ -2,6 +2,17 @@
 
 # Changelog
 
+## [5.29.3](https://github.com/lobehub/lobe-ui/compare/v5.29.2...v5.29.3) (2026-08-14)
+
+### ♻ Code Refactoring
+
+- **base-ui**: Enforce migrated form controls, closes [#610](https://github.com/lobehub/lobe-ui/issues/610) ([7bdc69f](https://github.com/lobehub/lobe-ui/commit/7bdc69f))
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Drop the fill and border from Button ghost ([f58c012](https://github.com/lobehub/lobe-ui/commit/f58c012))
+- **base-ui**: Let Select tags wrap inside the trigger ([79ba9fa](https://github.com/lobehub/lobe-ui/commit/79ba9fa))
+
 ## [5.29.2](https://github.com/lobehub/lobe-ui/compare/v5.29.1...v5.29.2) (2026-08-14)
 
 ### 💄 Styles
