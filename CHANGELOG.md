@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.30.0](https://github.com/lobehub/lobe-ui/compare/v5.29.3...v5.30.0) (2026-08-14)
+
+### ✨ Features
+
+- **base-ui**: Migrate Alert ([c47f4e1](https://github.com/lobehub/lobe-ui/commit/c47f4e1))
+
 ## [5.29.3](https://github.com/lobehub/lobe-ui/compare/v5.29.2...v5.29.3) (2026-08-14)
 
 ### ♻ Code Refactoring
