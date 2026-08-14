@@ -1,5 +1,6 @@
-import { Alert, type AlertProps, Highlighter } from '@lobehub/ui';
+import { Alert, type AlertProps, Button, Highlighter } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
+import { RefreshCw } from 'lucide-react';
 
 const demoError = {
   details: {
@@ -18,13 +19,13 @@ export default () => {
   const control = useControls(
     {
       banner: false,
-      closable: false,
+      closable: true,
       colorfulText: true,
-      description: 'Alert Title',
+      description: '',
       extraIsolate: false,
       glass: false,
       showIcon: true,
-      title: 'Informational Notes',
+      title: 'Provider connection failed during the final response',
       type: {
         options: ['info', 'success', 'warning', 'error', 'secondary'],
         value: 'secondary',
@@ -39,6 +40,11 @@ export default () => {
   return (
     <StoryBook levaStore={store}>
       <Alert
+        action={
+          <Button icon={RefreshCw} size={'small'}>
+            Regenerate
+          </Button>
+        }
         extra={
           <Highlighter
             actionIconSize={'small'}
