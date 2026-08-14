@@ -6,6 +6,7 @@ import { XIcon } from 'lucide-react';
 import { memo, useMemo, useRef } from 'react';
 
 import { inputStyles, inputVariants } from '@/base-ui/Input';
+import { useLayerZIndex } from '@/base-ui/zIndex';
 import Icon from '@/Icon';
 import { useAppElement } from '@/ThemeProvider';
 
@@ -35,6 +36,7 @@ const AutoComplete = memo<AutoCompleteProps>(
     const { isDarkMode } = useThemeMode();
     const appElement = useAppElement();
     const anchorRef = useRef<HTMLDivElement>(null);
+    const { ref: positionerRef, zIndex } = useLayerZIndex<HTMLDivElement>('floating');
     const mergedVariant = variant || (isDarkMode ? 'filled' : 'outlined');
 
     const items = useMemo<AutoCompleteOption[]>(
@@ -74,7 +76,13 @@ const AutoComplete = memo<AutoCompleteProps>(
           {suffix && <span className={inputStyles.slot}>{suffix}</span>}
         </div>
         <Autocomplete.Portal container={appElement ?? undefined}>
-          <Autocomplete.Positioner anchor={anchorRef} className={styles.positioner} sideOffset={4}>
+          <Autocomplete.Positioner
+            anchor={anchorRef}
+            className={styles.positioner}
+            ref={positionerRef}
+            sideOffset={4}
+            style={zIndex === undefined ? undefined : { zIndex }}
+          >
             <Autocomplete.Popup
               className={cx(styles.popup, classNames?.popup)}
               style={customStyles?.popup}
