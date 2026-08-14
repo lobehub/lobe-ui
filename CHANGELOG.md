@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.30.2](https://github.com/lobehub/lobe-ui/compare/v5.30.1...v5.30.2) (2026-08-14)
+
+### 🐛 Bug Fixes
+
+- **alert**: Align single-line actions, closes [#613](https://github.com/lobehub/lobe-ui/issues/613) ([4f89733](https://github.com/lobehub/lobe-ui/commit/4f89733))
+
 ## [5.30.1](https://github.com/lobehub/lobe-ui/compare/v5.30.0...v5.30.1) (2026-08-14)
 
 ### 🐛 Bug Fixes
