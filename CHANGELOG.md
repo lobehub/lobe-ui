@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.30.1](https://github.com/lobehub/lobe-ui/compare/v5.30.0...v5.30.1) (2026-08-14)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Refine SplitButton states ([368fcfa](https://github.com/lobehub/lobe-ui/commit/368fcfa))
+
 # [5.30.0](https://github.com/lobehub/lobe-ui/compare/v5.29.3...v5.30.0) (2026-08-14)
 
 ### ✨ Features
