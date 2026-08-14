@@ -1,4 +1,5 @@
 const DEPRECATED_UI_COMPONENTS = [
+  'Alert',
   'AutoComplete',
   'Button',
   'Checkbox',
@@ -15,6 +16,8 @@ const DEPRECATED_UI_COMPONENTS = [
 ];
 
 const DEPRECATED_ANTD_COMPONENT_PATHS = [
+  'antd/es/alert',
+  'antd/es/alert/*',
   'antd/es/auto-complete',
   'antd/es/auto-complete/*',
   'antd/es/checkbox',
@@ -23,6 +26,8 @@ const DEPRECATED_ANTD_COMPONENT_PATHS = [
   'antd/es/radio/*',
   'antd/es/slider',
   'antd/es/slider/*',
+  'antd/lib/alert',
+  'antd/lib/alert/*',
   'antd/lib/auto-complete',
   'antd/lib/auto-complete/*',
   'antd/lib/checkbox',
