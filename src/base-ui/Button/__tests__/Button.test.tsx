@@ -1,10 +1,11 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { motion } from 'motion/react';
 import { type ReactNode, useState } from 'react';
 
 import ConfigProvider from '@/ConfigProvider';
 
 import Button from '../Button';
+import type { ButtonProps } from '../type';
 
 const renderButton = (children: ReactNode) =>
   render(<ConfigProvider motion={motion}>{children}</ConfigProvider>);
@@ -112,5 +113,42 @@ describe('Button', () => {
 
     expect(button.disabled).toBe(true);
     expect(handleSubmit).not.toHaveBeenCalled();
+  });
+
+  test('drops both the fill and the border for every ghost variant', () => {
+    const transparent = new Set(['transparent', 'rgba(0, 0, 0, 0)']);
+    const variants: ButtonProps[] = [
+      {},
+      { type: 'primary' },
+      { danger: true },
+      { type: 'dashed' },
+      { danger: true, type: 'primary' },
+    ];
+
+    for (const variant of variants) {
+      cleanup();
+      renderButton(
+        <Button ghost {...variant}>
+          Delete
+        </Button>,
+      );
+
+      const style = getComputedStyle(screen.getByRole('button', { name: 'Delete' }));
+
+      expect(transparent.has(style.backgroundColor)).toBe(true);
+      expect(transparent.has(style.borderColor)).toBe(true);
+    }
+  });
+
+  test('leaves text and link buttons on their own variant when ghost is set', () => {
+    renderButton(
+      <Button ghost type={'link'}>
+        Docs
+      </Button>,
+    );
+
+    expect(getComputedStyle(screen.getByRole('button', { name: 'Docs' })).paddingInline).toBe(
+      '0px',
+    );
   });
 });

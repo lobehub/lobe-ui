@@ -38,10 +38,11 @@ const resolveVariantCls = ({
   ghost: boolean;
   type: NonNullable<ButtonProps['type']>;
 }): string => {
-  if (ghost) {
+  // `text` and `link` already drop the surface, so `ghost` there would only cost them
+  // their own traits (link's zero inline padding).
+  if (ghost && type !== 'text' && type !== 'link') {
     if (danger) return styles.ghostDanger;
     if (type === 'primary') return styles.ghostPrimary;
-    if (type === 'dashed') return cx(styles.ghostDefault, styles.ghostDashed);
     return styles.ghostDefault;
   }
 

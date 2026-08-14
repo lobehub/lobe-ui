@@ -294,31 +294,26 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   ghostDefault: css`
-    border-color: rgb(255 255 255 / 65%);
+    border-color: transparent;
     background: transparent;
 
     &,
     &:hover,
     &:active {
-      color: #fff;
+      color: ${cssVar.colorText};
     }
 
     &:hover:not(:disabled, [aria-disabled='true']) {
-      border-color: #fff;
-      background: color-mix(in srgb, currentcolor 8%, transparent);
+      background: ${cssVar.colorFillSecondary};
     }
 
     &:active:not(:disabled, [aria-disabled='true']) {
-      background: color-mix(in srgb, currentcolor 14%, transparent);
+      background: ${cssVar.colorFill};
     }
   `,
 
-  ghostDashed: css`
-    border-style: dashed;
-  `,
-
   ghostPrimary: css`
-    border-color: ${cssVar.colorPrimary};
+    border-color: transparent;
     background: transparent;
 
     &,
@@ -328,18 +323,18 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     &:hover:not(:disabled, [aria-disabled='true']) {
-      border-color: ${cssVar.colorPrimaryHover};
       color: ${cssVar.colorPrimaryHover};
-      background: color-mix(in srgb, currentcolor 8%, transparent);
+      background: ${cssVar.colorFillSecondary};
     }
 
     &:active:not(:disabled, [aria-disabled='true']) {
-      background: color-mix(in srgb, currentcolor 14%, transparent);
+      color: ${cssVar.colorPrimaryActive};
+      background: ${cssVar.colorFill};
     }
   `,
 
   ghostDanger: css`
-    border-color: ${cssVar.colorError};
+    border-color: transparent;
     background: transparent;
 
     &,
@@ -349,13 +344,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     &:hover:not(:disabled, [aria-disabled='true']) {
-      border-color: ${cssVar.colorErrorHover};
       color: ${cssVar.colorErrorHover};
-      background: color-mix(in srgb, currentcolor 8%, transparent);
+      background: ${cssVar.colorFillSecondary};
     }
 
     &:active:not(:disabled, [aria-disabled='true']) {
-      background: color-mix(in srgb, currentcolor 14%, transparent);
+      color: ${cssVar.colorErrorActive};
+      background: ${cssVar.colorFill};
     }
   `,
 
