@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.31.0](https://github.com/lobehub/lobe-ui/compare/v5.30.2...v5.31.0) (2026-08-16)
+
+### ✨ Features
+
+- **base-ui**: Support programmatic open for PopoverGroup members, closes [#615](https://github.com/lobehub/lobe-ui/issues/615) ([cb9cc29](https://github.com/lobehub/lobe-ui/commit/cb9cc29))
+
 ## [5.30.2](https://github.com/lobehub/lobe-ui/compare/v5.30.1...v5.30.2) (2026-08-14)
 
 ### 🐛 Bug Fixes
