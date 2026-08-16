@@ -17,6 +17,8 @@ export {
 } from './atoms';
 export type { PopoverContextValue } from './context';
 export { PopoverProvider, usePopoverContext } from './context';
+export type { PopoverGroupHandle, PopoverGroupItem } from './groupContext';
+export { usePopoverGroupHandle } from './groupContext';
 export { default, parseTrigger } from './Popover';
 export { default as PopoverGroup } from './PopoverGroup';
 export { usePopoverPortalContainer } from './PopoverPortal';

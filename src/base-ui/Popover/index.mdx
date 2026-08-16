@@ -124,3 +124,30 @@ type PopoverContextValue = {
 | disableDestroyOnInvalidTrigger | Disable auto-destroy when the active trigger becomes invalid (e.g. disconnected / `display: none`) | `boolean` | `false` |
 | disableZeroOriginGuard | Disable the visual guard that hides the popup when it falls back to viewport (0,0) | `boolean` | `false` |
 | ...props | Shared popover props applied to each group member | `Omit<PopoverProps, 'children' \| 'defaultOpen' \| 'open' \| 'ref' \| 'content'>` | - |
+
+### usePopoverGroupHandle
+
+Returns the enclosing `PopoverGroup`'s handle, or `null` outside one. Use it to drive the shared popup imperatively — for example opening a member from a keyboard shortcut or a context menu, which the group's own `hover` / `click` triggers cannot express.
+
+`open()` addresses a member by its trigger id, so give that member a `triggerProps.id`:
+
+```tsx
+const handle = usePopoverGroupHandle();
+
+<PopoverGroup>
+  <Popover content={<Menu />} trigger="click" triggerProps={{ id: 'row-1' }}>
+    <button type="button">Row 1</button>
+  </Popover>
+</PopoverGroup>;
+
+handle?.open('row-1');
+handle?.close();
+```
+
+```ts
+type PopoverGroupHandle = {
+  open: (triggerId: string) => void;
+  close: () => void;
+  readonly isOpen: boolean;
+};
+```
