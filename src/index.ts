@@ -287,6 +287,8 @@ export {
   PopoverBackdrop,
   type PopoverContextValue,
   PopoverGroup,
+  type PopoverGroupHandle,
+  type PopoverGroupItem,
   type PopoverPlacement,
   PopoverPopup,
   type PopoverPopupAtomProps,
@@ -303,6 +305,7 @@ export {
   PopoverViewport,
   type PopoverViewportAtomProps,
   usePopoverContext,
+  usePopoverGroupHandle,
   usePopoverPortalContainer,
 } from './Popover';
 export { I18nProvider, type I18nProviderProps, LobeUIProvider, useTranslation } from './Provider';

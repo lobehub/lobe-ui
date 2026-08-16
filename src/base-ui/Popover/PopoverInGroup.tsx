@@ -39,6 +39,7 @@ export const PopoverInGroup: FC<PopoverProps> = ({ children, ref: refProp, ...pr
     delay: resolvedOpenDelay,
     disabled,
     openOnHover: openOnHover && !disabled,
+    ...item.triggerProps,
     payload: item,
   };
 
