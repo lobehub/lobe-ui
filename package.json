@@ -268,7 +268,7 @@
     "remark-cli": "^12.0.1",
     "remark-frontmatter": "^5.0.0",
     "remark-mdx-frontmatter": "^5.2.0",
-    "rollup-plugin-visualizer": "7.0.1",
+    "rollup-plugin-visualizer": "7.1.1",
     "semantic-release": "^25.0.6",
     "stylelint": "^16.26.1",
     "svgo": "^4.0.1",
