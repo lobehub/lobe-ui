@@ -18,6 +18,10 @@ export default () => {
     const active = list.querySelector<HTMLElement>('[data-segmented-item][data-pressed]');
     if (!active) return;
     list.style.setProperty('--active-item-left', `${active.offsetLeft}px`);
+    list.style.setProperty(
+      '--active-item-right',
+      `${list.clientWidth - active.offsetLeft - active.offsetWidth}px`,
+    );
     list.style.setProperty('--active-item-top', `${active.offsetTop}px`);
     list.style.setProperty('--active-item-width', `${active.offsetWidth}px`);
     list.style.setProperty('--active-item-height', `${active.offsetHeight}px`);
