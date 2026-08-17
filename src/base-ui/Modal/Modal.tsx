@@ -302,6 +302,8 @@ const Modal = memo<ModalComponentProps>(
             )}
             <ModalContent
               className={classNames?.body}
+              data-has-footer={footerNode === null ? undefined : ''}
+              data-has-header={showHeader ? '' : undefined}
               style={{
                 ...(hasHeight || isFullscreen ? { flex: 1 } : {}),
                 ...semanticStyles?.body,

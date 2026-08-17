@@ -182,6 +182,7 @@ export function createModalSystem(): ModalSystem {
     );
 
     const showTitle = title !== undefined && title !== false && title !== null;
+    const hasFooter = footer !== undefined && footer !== null && footer !== false;
 
     return (
       <ModalContext value={{ close, setCanDismissByClickOutside }}>
@@ -205,7 +206,12 @@ export function createModalSystem(): ModalSystem {
                   <ModalClose className={classNames?.close} style={semanticStyles?.close} />
                 </ModalHeader>
               )}
-              <ModalContent className={classNames?.content} style={semanticStyles?.content}>
+              <ModalContent
+                className={classNames?.content}
+                data-has-footer={hasFooter ? '' : undefined}
+                data-has-header={showTitle ? '' : undefined}
+                style={semanticStyles?.content}
+              >
                 {content ?? children}
               </ModalContent>
               {footer}
