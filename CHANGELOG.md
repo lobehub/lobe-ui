@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.31.1](https://github.com/lobehub/lobe-ui/compare/v5.31.0...v5.31.1) (2026-08-17)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Open click triggers inside a PopoverGroup, closes [#616](https://github.com/lobehub/lobe-ui/issues/616) ([da87dec](https://github.com/lobehub/lobe-ui/commit/da87dec))
+
 # [5.31.0](https://github.com/lobehub/lobe-ui/compare/v5.30.2...v5.31.0) (2026-08-16)
 
 ### ✨ Features
