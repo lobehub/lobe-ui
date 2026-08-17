@@ -35,7 +35,7 @@ const ChatHeader = memo<ChatHeaderProps>(
         as={'header'}
         flex={'none'}
         ref={ref}
-        width={'100vw'}
+        width={'100%'}
         {...styleProps(styles.container, clsx(mobileChatHeaderClasses(), className), style)}
         {...rest}
       >
