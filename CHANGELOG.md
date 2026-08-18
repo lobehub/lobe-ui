@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.32.2](https://github.com/lobehub/lobe-ui/compare/v5.32.1...v5.32.2) (2026-08-18)
+
+### ♻ Code Refactoring
+
+- **color**: Use CSS contrast-color()/color-mix() instead of JS readable-color ([5223c4e](https://github.com/lobehub/lobe-ui/commit/5223c4e))
+
 ## [5.32.1](https://github.com/lobehub/lobe-ui/compare/v5.32.0...v5.32.1) (2026-08-18)
 
 ### 🐛 Bug Fixes
