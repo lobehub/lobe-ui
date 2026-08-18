@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.32.1](https://github.com/lobehub/lobe-ui/compare/v5.32.0...v5.32.1) (2026-08-18)
+
+### 🐛 Bug Fixes
+
+- **alert**: Anchor icon and controls to the title line box, closes [#619](https://github.com/lobehub/lobe-ui/issues/619) ([0c3f2fb](https://github.com/lobehub/lobe-ui/commit/0c3f2fb))
+
 # [5.32.0](https://github.com/lobehub/lobe-ui/compare/v5.31.1...v5.32.0) (2026-08-18)
 
 ### ✨ Features
