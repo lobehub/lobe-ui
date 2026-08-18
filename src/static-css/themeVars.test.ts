@@ -20,9 +20,11 @@ describe('buildThemeVarsCss', () => {
 
   it('includes compat rules by default and drops them on demand', () => {
     expect(payload.css).toContain('.ant-btn-primary:not(:disabled)');
+    expect(payload.css).toContain('contrast-color(var(--ant-color-primary))');
 
     const bare = buildThemeVarsCss({ compatRules: false });
     expect(bare.css).not.toContain('.ant-btn-primary');
+    expect(bare.css).not.toContain('contrast-color(var(--ant-color-primary))');
     expect(bare.hash).not.toBe(payload.hash);
   });
 

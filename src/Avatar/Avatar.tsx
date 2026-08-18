@@ -17,7 +17,6 @@ import { type AvatarProps } from './type';
 import {
   calculateEmojiSize,
   formatAvatarText,
-  getActualColorForReadable,
   hasValidBackground,
   isDefaultAntAvatar as checkIsDefaultAntAvatar,
 } from './utils';
@@ -103,12 +102,6 @@ const Avatar = memo<AvatarProps>(
       ],
     );
 
-    // Get actual color value for readableColor (CSS variables can't be parsed)
-    const actualColorForReadable = useMemo(
-      () => getActualColorForReadable(background, cssVar.colorBorder),
-      [background],
-    );
-
     const avatarStyle = useMemo(
       () => ({
         backgroundColor:
@@ -119,7 +112,7 @@ const Avatar = memo<AvatarProps>(
         boxShadow: bordered
           ? `${cssVar.colorBgLayout} 0 0 0 2px, ${borderedColor || cssVar.colorTextTertiary} 0 0 0 4px`
           : undefined,
-        color: safeReadableColor(actualColorForReadable),
+        color: safeReadableColor(background || cssVar.colorBorder),
         cursor: rest?.onClick ? 'pointer' : undefined,
         fontSize: size * (emoji ? 0.7 : 0.5),
         ...style,
@@ -133,7 +126,6 @@ const Avatar = memo<AvatarProps>(
         size,
         bordered,
         borderedColor,
-        actualColorForReadable,
         rest?.onClick,
         style,
       ],

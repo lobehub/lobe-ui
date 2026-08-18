@@ -14,7 +14,7 @@ type ThemeAppearance = 'dark' | 'light';
 export interface ThemeVarsCssOptions {
   /** selector activating an appearance; default matches next-themes' data-theme attribute */
   appearanceSelector?: (appearance: ThemeAppearance) => string;
-  /** dark fixups for lobe-ui antdOverride rules that keep literal polished-derived colors */
+  /** dark fixups for lobe-ui antdOverride primary-on-contrast rules */
   compatRules?: boolean;
   hrefTemplate?: (hash: string) => string;
   /** same theme factory the app hands to ConfigProvider/ThemeProvider */
@@ -91,21 +91,6 @@ const toDeclarations = (token: Record<string, number | string>) =>
     })
     .join('\n');
 
-const isBrightColor = (value: string) => {
-  const hex = /^#([\da-f]{6})/i.exec(value)?.[1];
-  const rgb = /^rgba?\((\d+)[\s,]+(\d+)[\s,]+(\d+)/.exec(value);
-  const [r, g, b] = hex
-    ? [
-        Number.parseInt(hex.slice(0, 2), 16),
-        Number.parseInt(hex.slice(2, 4), 16),
-        Number.parseInt(hex.slice(4, 6), 16),
-      ]
-    : rgb
-      ? [Number(rgb[1]), Number(rgb[2]), Number(rgb[3])]
-      : [0, 0, 0];
-  return (r * 299 + g * 587 + b * 114) / 1000 > 128;
-};
-
 const loadAntdTokenModules = () => {
   const antdLibDir = path.join(path.dirname(require.resolve('antd/package.json')), 'lib');
 
@@ -145,13 +130,9 @@ const buildDarkComponentVars = (tokens: {
   return { css: declarations.join(''), skipped };
 };
 
-const buildCompatRules = (
-  darkSelector: string,
-  darkToken: Record<string, number | string>,
-): string => {
-  // mirrors polished's readableColor for the antdOverride rules that keep colorPrimary literal
-  const readableOnPrimary = isBrightColor(String(darkToken.colorPrimary)) ? '#000' : '#fff';
+const readableOnPrimary = 'contrast-color(var(--ant-color-primary))';
 
+const buildCompatRules = (darkSelector: string): string => {
   return [
     [
       `${darkSelector} .ant-btn-primary:not(:disabled)`,
@@ -190,7 +171,7 @@ export const buildThemeVarsCss = (options: ThemeVarsCssOptions = {}): ThemeVarsC
     `${dark} [class*='css-var-']{${componentVars.css}}`,
   ];
 
-  if (compatRules) blocks.push(buildCompatRules(dark, tokens.dark));
+  if (compatRules) blocks.push(buildCompatRules(dark));
 
   const css = blocks.join('\n');
   const hash = hashCss(css);

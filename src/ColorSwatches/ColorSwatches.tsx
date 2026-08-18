@@ -4,7 +4,6 @@ import { ColorPicker } from 'antd';
 import { cssVar, cx } from 'antd-style';
 import chroma from 'chroma-js';
 import { CheckIcon } from 'lucide-react';
-import { rgba } from 'polished';
 import { type FC, useMemo } from 'react';
 import useMergeState from 'use-merge-value';
 
@@ -77,8 +76,6 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
                   return false;
                 }
               })());
-          // Get actual color value for readableColor (CSS variables can't be parsed)
-          const actualColorForReadable = c.color?.startsWith('var(') ? cssVar.colorPrimary : color;
           return (
             <Tooltip key={c?.key || i} title={c.title}>
               <Center
@@ -95,7 +92,7 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
               >
                 {isActive && (
                   <Icon
-                    color={rgba(safeReadableColor(actualColorForReadable), 0.33)}
+                    color={`color-mix(in srgb, ${safeReadableColor(color)} 33%, transparent)`}
                     icon={CheckIcon}
                     size={{ size: 14, strokeWidth: 4 }}
                     style={{
