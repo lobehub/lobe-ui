@@ -72,21 +72,34 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 
       max-width: 100%;
 
+      /* Every control anchors itself to the title's FIRST 24px line box via
+         align-self. Root-level align-items cannot be relied on: antd v6's own
+         base style centers the row, and whether it or these static styles win
+         depends on stylesheet injection order, which differs between
+         environments. Centering the row is also wrong for message-only alerts
+         whose content wraps - the icon drifts to the middle of the block. */
       .${prefixCls}-alert-icon {
         display: flex;
         align-items: center;
+        align-self: flex-start;
+
         height: 24px;
         margin: 0;
       }
       .${prefixCls}-alert-close-icon {
         display: flex;
         align-items: center;
+        align-self: flex-start;
+
         height: 24px;
         margin: 0;
       }
-    `,
-    rootSingleLine: css`
-      align-items: center;
+      .${prefixCls}-alert-actions {
+        display: flex;
+        align-items: center;
+        align-self: flex-start;
+        height: 24px;
+      }
     `,
     rootNoTitleNoIconNoClosable: css`
       gap: 8px;
@@ -299,7 +312,7 @@ export const rootVariants = cva(styles.rootBase, {
       true: styles.glass,
     },
     hasTitle: {
-      false: styles.rootSingleLine,
+      false: null,
       true: null,
     },
     showIcon: {
