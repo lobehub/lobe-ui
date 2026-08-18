@@ -81,6 +81,22 @@
       "types": "./es/eslint/index.d.mts",
       "import": "./es/eslint/index.mjs"
     },
+    "./static-css": {
+      "types": "./es/static-css/index.d.mts",
+      "import": "./es/static-css/index.mjs"
+    },
+    "./static-css/emit": {
+      "types": "./es/static-css/emit/index.d.mts",
+      "import": "./es/static-css/emit/index.mjs"
+    },
+    "./static-css/runtime": {
+      "types": "./es/static-css/runtime/index.d.mts",
+      "import": "./es/static-css/runtime/index.mjs"
+    },
+    "./static-css/vite": {
+      "types": "./es/static-css/vite/index.d.mts",
+      "import": "./es/static-css/vite/index.mjs"
+    },
     "./es/*": {
       "types": "./es/*.d.mts",
       "import": "./es/*.mjs"
