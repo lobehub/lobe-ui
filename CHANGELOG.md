@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.32.0](https://github.com/lobehub/lobe-ui/compare/v5.31.1...v5.32.0) (2026-08-18)
+
+### ✨ Features
+
+- **static-css**: Add static antd css extraction entries, closes [#618](https://github.com/lobehub/lobe-ui/issues/618) ([796ef87](https://github.com/lobehub/lobe-ui/commit/796ef87))
+
 ## [5.31.1](https://github.com/lobehub/lobe-ui/compare/v5.31.0...v5.31.1) (2026-08-17)
 
 ### 🐛 Bug Fixes
