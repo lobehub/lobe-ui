@@ -94,3 +94,18 @@ Render once near the root to host imperative context menus.
 ### ContextMenuTrigger
 
 Declarative trigger wrapper that attaches open state attributes (`data-popup-open`, `data-state`, `aria-expanded`) for styling alignment with DropdownMenu. Use `onContextMenu` to call `showContextMenu`. When the `items` prop is provided, the optional `header` and `footer` props are forwarded to the menu.
+
+### Item click behavior
+
+Standard items close the menu after a click by default. Set `closeOnClick: false` on an item to keep the menu open while its action runs. This is useful for interactive content such as upload or file-picker controls; call `closeContextMenu()` when the interaction is complete.
+
+```tsx
+showContextMenu([
+  {
+    closeOnClick: false,
+    key: 'upload',
+    label: 'Upload file',
+    onClick: openFilePicker,
+  },
+]);
+```
