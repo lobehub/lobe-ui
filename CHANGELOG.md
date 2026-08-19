@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [5.32.3](https://github.com/lobehub/lobe-ui/compare/v5.32.2...v5.32.3) (2026-08-19)
+
+### ♻ Code Refactoring
+
+- **eslint**: Ban legacy Alert imports, closes [#612](https://github.com/lobehub/lobe-ui/issues/612) ([88fcbf2](https://github.com/lobehub/lobe-ui/commit/88fcbf2))
+
+### 📝 Documentation
+
+- **menu**: Demonstrate persistent item clicks ([a8143c4](https://github.com/lobehub/lobe-ui/commit/a8143c4))
+
 ## [5.32.2](https://github.com/lobehub/lobe-ui/compare/v5.32.1...v5.32.2) (2026-08-18)
 
 ### ♻ Code Refactoring
