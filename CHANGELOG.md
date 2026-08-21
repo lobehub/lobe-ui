@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.32.4](https://github.com/lobehub/lobe-ui/compare/v5.32.3...v5.32.4) (2026-08-21)
+
+### 💄 Styles
+
+- **base-ui**: Restyle Slider thumb as a primary capsule ([bfe4fe1](https://github.com/lobehub/lobe-ui/commit/bfe4fe1))
+
 ## [5.32.3](https://github.com/lobehub/lobe-ui/compare/v5.32.2...v5.32.3) (2026-08-19)
 
 ### ♻ Code Refactoring
