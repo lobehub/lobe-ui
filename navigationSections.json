@@ -99,6 +99,7 @@
   "src/base-ui/ScrollArea/index.mdx": "Base UI",
   "src/base-ui/Segmented/index.mdx": "Base UI",
   "src/base-ui/Select/index.mdx": "Base UI",
+  "src/base-ui/Slider/index.mdx": "Base UI",
   "src/base-ui/Switch/index.mdx": "Base UI",
   "src/base-ui/Tabs/index.mdx": "Base UI",
   "src/base-ui/Toast/index.mdx": "Base UI",

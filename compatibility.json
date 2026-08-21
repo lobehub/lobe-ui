@@ -4285,6 +4285,18 @@
       "source": "src/base-ui/Select/demos/virtual.tsx"
     },
     {
+      "document": "src/base-ui/Slider/index.mdx",
+      "legacyId": "src-base-ui-slider-demo-demos",
+      "legacyRouteId": "components/base-ui/Slider/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/slider",
+      "source": "src/base-ui/Slider/demos/index.tsx"
+    },
+    {
       "document": "src/base-ui/Switch/index.mdx",
       "legacyId": "src-base-ui-switch-demo-asyncloading",
       "legacyRouteId": "components/base-ui/Switch/index",
@@ -7156,6 +7168,15 @@
       "section": "Base UI",
       "source": "src/base-ui/Select/index.mdx",
       "title": "Select"
+    },
+    {
+      "category": "Data Entry",
+      "description": "Base UI-powered Slider and SliderWithInput components.",
+      "legacyRouteId": "components/base-ui/Slider/index",
+      "pathname": "/components/base-ui/slider",
+      "section": "Base UI",
+      "source": "src/base-ui/Slider/index.mdx",
+      "title": "Slider"
     },
     {
       "category": "Data Entry",

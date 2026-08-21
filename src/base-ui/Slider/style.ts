@@ -25,23 +25,31 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   thumb: css`
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
+    flex-shrink: 0;
 
-    background: ${cssVar.colorBgContainer};
-    box-shadow:
-      0 0 0 1px ${cssVar.colorBorder},
-      0 1px 2px rgb(0 0 0 / 12%),
-      0 2px 6px rgb(0 30 80 / 12%);
+    width: 8px;
+    height: 16px;
+    border-radius: 100px;
+
+    background: ${cssVar.colorPrimary};
+    box-shadow: 0 0 0 1px ${cssVar.colorBgContainer};
 
     transition: box-shadow 150ms ${cssVar.motionEaseOut};
 
+    &::before {
+      content: '';
+
+      position: absolute;
+      inset-block-start: 50%;
+      inset-inline-start: 50%;
+      translate: -50% -50%;
+
+      width: 24px;
+      height: 40px;
+    }
+
     &:hover:not([data-disabled] *) {
-      box-shadow:
-        0 0 0 1px ${cssVar.colorPrimary},
-        0 1px 2px rgb(0 0 0 / 12%),
-        0 3px 8px rgb(0 30 80 / 18%);
+      box-shadow: 0 0 0 2px ${cssVar.colorPrimaryBorder};
     }
 
     &:focus-visible {
@@ -50,10 +58,16 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     [data-dragging] & {
-      box-shadow:
-        0 0 0 1px ${cssVar.colorPrimary},
-        0 1px 2px rgb(0 0 0 / 12%),
-        0 3px 8px rgb(0 30 80 / 18%);
+      box-shadow: 0 0 0 2px ${cssVar.colorPrimaryBorder};
+    }
+
+    [data-disabled] & {
+      background: ${cssVar.colorTextQuaternary};
+      box-shadow: 0 0 0 1px ${cssVar.colorBgContainer};
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition-duration: 0s;
     }
   `,
   track: css`

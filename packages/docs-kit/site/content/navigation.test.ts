@@ -167,8 +167,8 @@ describe('reviewed documentation navigation', () => {
       compactEntries.map(([source, section]) => [sourceIdentity(source), section]),
     );
 
-    expect(compactEntries).toHaveLength(163);
-    expect(compactBySource.size).toBe(163);
+    expect(compactEntries).toHaveLength(164);
+    expect(compactBySource.size).toBe(164);
     for (const frozenDocument of compatibility.documents) {
       expect(compactBySource.get(sourceIdentity(frozenDocument.source))).toBe(
         frozenDocument.section,
@@ -177,7 +177,7 @@ describe('reviewed documentation navigation', () => {
   });
 
   it('assigns every frozen source to exactly one section while keeping overview links separate', () => {
-    expect(compatibility.documents).toHaveLength(161);
+    expect(compatibility.documents).toHaveLength(162);
 
     const documents = compatibility.documents.map((record) =>
       document({
@@ -199,7 +199,7 @@ describe('reviewed documentation navigation', () => {
       .map(({ source }) => sourceIdentity(source))
       .toSorted();
 
-    expect(nestedDocuments).toHaveLength(159);
+    expect(nestedDocuments).toHaveLength(160);
     expect(nestedDocuments.map(({ source }) => sourceIdentity(source)).toSorted()).toEqual(
       frozenComponentSources,
     );
