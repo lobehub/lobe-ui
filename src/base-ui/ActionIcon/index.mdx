@@ -1,0 +1,28 @@
+---
+title: ActionIcon
+description: Compact icon button built on the Base UI Button with size presets, visual variants, loading state, and tooltip integration.
+category: General
+---
+
+import DemoDropdownMenu from './demos/DropdownMenu.tsx?demo';
+import DemoIndex from './demos/index.tsx?demo';
+
+## Playground
+
+<Demo of={DemoIndex} layout="bare" />
+
+## DropdownMenu trigger
+
+<Demo of={DemoDropdownMenu} layout="bare" />
+
+## API
+
+<Api name="ActionIcon" from=".." />
+
+`ActionIcon` composes the Base UI `Button` as a native `<button type="button">`, so it is safe to nest inside forms and menus without triggering submissions. Sizing follows the legacy contract: `size` accepts a number (block size is `n * 1.8`, radius `floor(blockSize / 6)`), the `small` / `middle` / `large` presets, or an explicit `{ blockSize, borderRadius }` config applied as inline overrides on the Button.
+
+Legacy variants map onto Button types: `borderless` to `text`, `filled` to `fill`, and `outlined` to `default`; `danger` delegates to Button's danger styling. Only ActionIcon-specific extras (`active` emphasis, `glass` blur, `shadow`) are layered on top.
+
+When `title` is provided the root is wrapped by the Base UI Tooltip and the tooltip container receives `pointerEvents: none` so hover interactions pass through to the icon. Elements carrying `aria-haspopup` or `aria-expanded` default their `aria-label` to the string `title`.
+
+Optional `classNames` and `styles` slots (`root`, `icon`) allow targeted style overrides on top of the existing props.

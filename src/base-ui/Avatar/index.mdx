@@ -1,0 +1,78 @@
+---
+title: Avatar
+description: Avatar and AvatarGroup with emoji, image, text fallback and loading overlay support, built on Base UI-era primitives.
+category: Data Display
+---
+
+import DemoBordered from './demos/Bordered.tsx?demo';
+import DemoEmoji from './demos/Emoji.tsx?demo';
+import DemoGroup from './demos/Group.tsx?demo';
+import DemoImageFallback from './demos/ImageFallback.tsx?demo';
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Emoji
+
+<Demo of={DemoEmoji} layout="bare" />
+
+## Image with Fallback
+
+<Demo of={DemoImageFallback} layout="bare" />
+
+## Bordered and Loading
+
+<Demo of={DemoBordered} layout="bare" />
+
+## Group
+
+<Demo of={DemoGroup} layout="bare" />
+
+## APIs
+
+### Avatar
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| avatar | Image URL, emoji, or custom React node | `string \| ReactNode` | - |
+| title | Fallback text; also the default image `alt` | `string` | - |
+| alt | Native `alt` attribute of the rendered image | `string` | `'avatar'` |
+| size | Width and height in pixels; drives font size | `number` | `48` |
+| shape | Avatar shape | `'circle' \| 'square'` | `'square'` |
+| background | Background color, ignored for images and custom nodes | `string` | - |
+| variant | Visual variant | `'borderless' \| 'filled' \| 'outlined'` | `'borderless'` |
+| shadow | Apply the lobe shadow style | `boolean` | - |
+| bordered | Show the outer ring | `boolean` | - |
+| borderedColor | Custom color for the outer ring | `string` | - |
+| loading | Show a full-size spinning overlay | `boolean` | - |
+| animation | Use the animated emoji variant | `boolean` | - |
+| sliceText | Slice fallback text to its first two characters | `boolean` | `true` |
+| emojiScaleWithBackground | Scale the emoji down when a background is present | `boolean` | `true` |
+| crossOrigin | Native `crossOrigin` attribute of the image | `'' \| 'anonymous' \| 'use-credentials'` | - |
+| draggable | Native `draggable` attribute of the image | `boolean` | `false` |
+| unoptimized | Compatibility with next/image-based avatars; no effect | `boolean` | - |
+| tooltipProps | Reserved for tooltip integration; not rendered yet | `Record<string, unknown>` | - |
+| classNames | Semantic class names: `root`, `img`, `content`, `loading` | `AvatarClassNames` | - |
+| styles | Semantic styles: `root`, `img`, `content`, `loading` | `AvatarStyles` | - |
+| ref | Reference to the root element | `Ref<HTMLDivElement>` | - |
+
+Font size is derived from `size`: `size * 0.5` for text and `size * 0.7` for emoji. The border radius is `50%` for `circle`; for `square` it is `33%` below `24px` and `size / 6` (at least 2px) otherwise. When no valid `background` is given and the content is not an image or custom node, the background falls back to `colorBorder` with a contrast-safe text color.
+
+### AvatarGroup
+
+Also accepts all shared visual props of `Avatar` (`variant`, `bordered`, `shadow`, `size`, `background`, `animation`, `draggable`, `shape`) plus `Flexbox` props.
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| items | Avatar list with a required `key` per item | `AvatarGroupItemType[]` | - |
+| max | Render at most `max` avatars and a `+N` count | `number` | - |
+| gap | Overlap between avatars in pixels | `number` | `-size / 4` |
+| zIndexReverse | Reverse the stacking order | `boolean` | - |
+| onClick | Called with the clicked item and its key | `({ item, key }) => void` | - |
+| classNames | `avatar` and `count` class names | `{ avatar?: string; count?: string }` | - |
+| styles | `avatar` and `count` styles | `{ avatar?: CSSProperties; count?: CSSProperties }` | - |
+| ref | Reference to the container element | `Ref<HTMLDivElement>` | - |
+
+`Avatar.Group` is also attached as a static property of the default export, so `<Avatar.Group />` and `<AvatarGroup />` are interchangeable.

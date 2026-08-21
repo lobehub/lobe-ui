@@ -10,6 +10,9 @@ import { safeReadableColor } from '@/utils/safeReadableColor';
 import { variants } from './styles';
 import type { TagProps } from './type';
 
+/**
+ * @deprecated Use `Tag` from `@lobehub/ui/base-ui` instead.
+ */
 const Tag: FC<TagProps> = ({
   className,
   ref,
