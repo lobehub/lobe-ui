@@ -12,10 +12,10 @@ interface NavItemLike {
 
 export interface NavModel {
   collapsibleKeys: string[];
-  defaultCollapsedCount: number;
   externalNavItems: NavItemLike[];
   fixedKeys: string[];
   hasChangelogNavItem: boolean;
+  minCollapsedCount: number;
   orderedSections: NavigationSection[];
 }
 
@@ -35,16 +35,20 @@ export function buildNavModel(
   const internalNavItems = navItems.filter((item) => !item.external);
   const hasChangelogNavItem = navItems.some((item) => item.href === '/changelog');
 
+  const collapsibleKeys = [
+    ...orderedSections.map((section) => `section:${section.title}`),
+    ...externalNavItems.map((item) => `nav:${item.label}`),
+    ...(hasChangelogNavItem ? [] : ['changelog']),
+  ];
+
   return {
-    collapsibleKeys: [
-      ...orderedSections.map((section) => `section:${section.title}`),
-      ...externalNavItems.map((item) => `nav:${item.label}`),
-      ...(hasChangelogNavItem ? [] : ['changelog']),
-    ],
-    defaultCollapsedCount:
+    collapsibleKeys,
+    minCollapsedCount: Math.min(
+      collapsibleKeys.length,
       Math.max(0, orderedSections.length - MAX_PRIMARY_SECTIONS) +
-      externalNavItems.length +
-      (hasChangelogNavItem ? 0 : 1),
+        externalNavItems.length +
+        (hasChangelogNavItem ? 0 : 1),
+    ),
     externalNavItems,
     fixedKeys: ['home', ...internalNavItems.map((item) => `nav:${item.label}`)],
     hasChangelogNavItem,

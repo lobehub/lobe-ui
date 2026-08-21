@@ -63,7 +63,7 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
   const navModel = buildNavModel(navigation, navItems);
   const { collapsibleKeys, externalNavItems, hasChangelogNavItem, orderedSections } = navModel;
 
-  const [collapsedCount, setCollapsedCount] = useState(navModel.defaultCollapsedCount);
+  const [collapsedCount, setCollapsedCount] = useState(navModel.minCollapsedCount);
   const collapsed = Math.min(collapsedCount, collapsibleKeys.length);
   const collapsedKeys = new Set(collapsibleKeys.slice(collapsibleKeys.length - collapsed));
 
@@ -83,13 +83,16 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
 
     const model = buildNavModel(navigation, siteConfig.themeConfig?.navItems ?? []);
     setCollapsedCount(
-      computeCollapsedCount({
-        available,
-        candidateWidths: model.collapsibleKeys.map(measured),
-        fixedWidths: model.fixedKeys.map(measured),
-        gap: Number.parseFloat(getComputedStyle(nav).columnGap) || 0,
-        moreWidth: measured('more'),
-      }),
+      Math.max(
+        model.minCollapsedCount,
+        computeCollapsedCount({
+          available,
+          candidateWidths: model.collapsibleKeys.map(measured),
+          fixedWidths: model.fixedKeys.map(measured),
+          gap: Number.parseFloat(getComputedStyle(nav).columnGap) || 0,
+          moreWidth: measured('more'),
+        }),
+      ),
     );
   }, [navigation]);
 
