@@ -1,0 +1,51 @@
+---
+title: Text
+description: Base UI-powered Text typography component with semantic types, formatting options, and single- or multi-line ellipsis with overflow-aware tooltip.
+category: Typography
+subType: base-ui
+apiHeader:
+  pkg: '@lobehub/ui/base-ui'
+  docUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/base-ui/Text/index.mdx'
+  sourceUrl: 'https://github.com/lobehub/lobe-ui/tree/master/src/base-ui/Text/Text.tsx'
+---
+
+import DemoBasic from './demos/index.tsx?demo';
+
+## Basic
+
+Types, colors, headings, formatting combinations, and ellipsis modes:
+
+<code src="./demos/index.tsx" nopadding></code>
+
+## APIs
+
+### Text
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| align | `'left' \| 'center' \| 'right'` | - | Text alignment. |
+| as | `ElementType` | `'div'` | Rendered element. Heading variants `h1`–`h5` and `p` apply matching typographic styles. |
+| classNames | `TextClassNames` | - | Semantic class slots, `{ root }`. |
+| styles | `TextStyles` | - | Semantic style slots, `{ root }`. |
+| code | `boolean` | - | Monospace code font. |
+| color | `string` | - | Custom text color. |
+| delete | `boolean` | - | Strikethrough text. |
+| disabled | `boolean` | - | Disabled text color and cursor. |
+| ellipsis | `boolean \| { rows?: number; tooltip?: boolean \| string \| TooltipProps; tooltipWhenOverflow?: boolean }` | - | Single-line ellipsis with `true`; multi-line clamp via `rows`. `tooltip` shows the full content on hover; `tooltipWhenOverflow` gates the tooltip on actual overflow detection. |
+| fontSize | `number \| string` | - | Font size. |
+| italic | `boolean` | - | Italic text. |
+| lineClamp | `number` | - | Clamp lines with CSS line-clamp. Ignored when `ellipsis` is provided. |
+| lineHeight | `CSSProperties['lineHeight']` | - | Line height. |
+| mark | `boolean` | - | Highlighted text. |
+| noWrap | `boolean` | - | `white-space: nowrap`. Ignored when multi-line ellipsis is enabled. |
+| ref | `Ref<HTMLDivElement>` | - | Forwarded to the root element. |
+| strong | `boolean` | - | Bold text. |
+| textDecoration | `CSSProperties['textDecoration']` | - | Text decoration. |
+| textTransform | `CSSProperties['textTransform']` | - | Text transform. |
+| type | `'secondary' \| 'success' \| 'warning' \| 'danger' \| 'info'` | - | Semantic text color. |
+| underline | `boolean` | - | Underlined text. |
+| weight | `'bold' \| 'bolder' \| number` | - | Font weight. |
+| whiteSpace | `CSSProperties['whiteSpace']` | - | White space handling. |
+| wordBreak | `CSSProperties['wordBreak']` | - | Word break behavior. |
+
+Additionally, `Text` accepts all native HTML attributes of the rendered element through rest props.

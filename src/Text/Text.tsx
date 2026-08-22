@@ -9,6 +9,9 @@ import Tooltip from '@/Tooltip';
 import { variants } from './styles';
 import { type TextProps } from './type';
 
+/**
+ * @deprecated Use `Text` from `@lobehub/ui/base-ui` instead.
+ */
 const Text: FC<TextProps> = ({
   as: Container = 'div',
   align,

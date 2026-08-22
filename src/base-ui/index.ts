@@ -1,5 +1,9 @@
+export { default as ActionIcon } from './ActionIcon';
+export * from './ActionIcon';
 export * from './Alert';
 export * from './AutoComplete';
+export { default as Avatar } from './Avatar';
+export * from './Avatar';
 export { default as Button } from './Button';
 export * from './Button';
 export * from './Checkbox';
@@ -37,6 +41,10 @@ export { default as Switch } from './Switch';
 export * from './Switch';
 export { default as Tabs } from './Tabs';
 export * from './Tabs';
+export { default as Tag } from './Tag';
+export * from './Tag';
+export { default as Text } from './Text';
+export * from './Text';
 export {
   toast,
   type ToastAPI,

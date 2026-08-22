@@ -12,6 +12,9 @@ import { calcSize } from './components/utils';
 import { variants } from './style';
 import { type ActionIconProps } from './type';
 
+/**
+ * @deprecated Use `ActionIcon` from `@lobehub/ui/base-ui` instead.
+ */
 const ActionIcon = memo<ActionIconProps>(
   ({
     color,

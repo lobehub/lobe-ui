@@ -3337,6 +3337,30 @@
       "source": "src/awesome/TypewriterEffect/demos/variableSpeed.tsx"
     },
     {
+      "document": "src/base-ui/ActionIcon/index.mdx",
+      "legacyId": "src-base-ui-action-icon-demo-demos",
+      "legacyRouteId": "components/base-ui/ActionIcon/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/action-icon",
+      "source": "src/base-ui/ActionIcon/demos/index.tsx"
+    },
+    {
+      "document": "src/base-ui/ActionIcon/index.mdx",
+      "legacyId": "src-base-ui-action-icon-demo-dropdown-menu",
+      "legacyRouteId": "components/base-ui/ActionIcon/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/action-icon",
+      "source": "src/base-ui/ActionIcon/demos/DropdownMenu.tsx"
+    },
+    {
       "document": "src/base-ui/Alert/index.mdx",
       "legacyId": "src-base-ui-alert-demo-demos",
       "legacyRouteId": "components/base-ui/Alert/index",
@@ -3371,6 +3395,66 @@
       },
       "pathname": "/components/base-ui/alert",
       "source": "src/base-ui/Alert/demos/Playground.tsx"
+    },
+    {
+      "document": "src/base-ui/Avatar/index.mdx",
+      "legacyId": "src-base-ui-avatar-demo-demos",
+      "legacyRouteId": "components/base-ui/Avatar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/avatar",
+      "source": "src/base-ui/Avatar/demos/index.tsx"
+    },
+    {
+      "document": "src/base-ui/Avatar/index.mdx",
+      "legacyId": "src-base-ui-avatar-demo-bordered",
+      "legacyRouteId": "components/base-ui/Avatar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/avatar",
+      "source": "src/base-ui/Avatar/demos/Bordered.tsx"
+    },
+    {
+      "document": "src/base-ui/Avatar/index.mdx",
+      "legacyId": "src-base-ui-avatar-demo-emoji",
+      "legacyRouteId": "components/base-ui/Avatar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/avatar",
+      "source": "src/base-ui/Avatar/demos/Emoji.tsx"
+    },
+    {
+      "document": "src/base-ui/Avatar/index.mdx",
+      "legacyId": "src-base-ui-avatar-demo-group",
+      "legacyRouteId": "components/base-ui/Avatar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/avatar",
+      "source": "src/base-ui/Avatar/demos/Group.tsx"
+    },
+    {
+      "document": "src/base-ui/Avatar/index.mdx",
+      "legacyId": "src-base-ui-avatar-demo-image-fallback",
+      "legacyRouteId": "components/base-ui/Avatar/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/avatar",
+      "source": "src/base-ui/Avatar/demos/ImageFallback.tsx"
     },
     {
       "document": "src/base-ui/Button/index.mdx",
@@ -4379,6 +4463,78 @@
       },
       "pathname": "/components/base-ui/tabs",
       "source": "src/base-ui/Tabs/demos/implicitDefault.tsx"
+    },
+    {
+      "document": "src/base-ui/Tag/index.mdx",
+      "legacyId": "src-base-ui-tag-demo-demos",
+      "legacyRouteId": "components/base-ui/Tag/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/tag",
+      "source": "src/base-ui/Tag/demos/index.tsx"
+    },
+    {
+      "document": "src/base-ui/Tag/index.mdx",
+      "legacyId": "src-base-ui-tag-demo-closable",
+      "legacyRouteId": "components/base-ui/Tag/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/tag",
+      "source": "src/base-ui/Tag/demos/closable.tsx"
+    },
+    {
+      "document": "src/base-ui/Tag/index.mdx",
+      "legacyId": "src-base-ui-tag-demo-hex",
+      "legacyRouteId": "components/base-ui/Tag/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/tag",
+      "source": "src/base-ui/Tag/demos/hex.tsx"
+    },
+    {
+      "document": "src/base-ui/Tag/index.mdx",
+      "legacyId": "src-base-ui-tag-demo-sizes",
+      "legacyRouteId": "components/base-ui/Tag/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/tag",
+      "source": "src/base-ui/Tag/demos/sizes.tsx"
+    },
+    {
+      "document": "src/base-ui/Tag/index.mdx",
+      "legacyId": "src-base-ui-tag-demo-variants",
+      "legacyRouteId": "components/base-ui/Tag/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/tag",
+      "source": "src/base-ui/Tag/demos/variants.tsx"
+    },
+    {
+      "document": "src/base-ui/Text/index.mdx",
+      "legacyId": "src-base-ui-text-demo-demos",
+      "legacyRouteId": "components/base-ui/Text/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/text",
+      "source": "src/base-ui/Text/demos/index.tsx"
     },
     {
       "document": "src/base-ui/Toast/index.mdx",
