@@ -2,6 +2,17 @@
 
 # Changelog
 
+## [5.32.5](https://github.com/lobehub/lobe-ui/compare/v5.32.4...v5.32.5) (2026-08-22)
+
+### 🎫 Chores
+
+- **ci**: Scrub legacy pnpm6 from Vercel build PATH ([990d9d7](https://github.com/lobehub/lobe-ui/commit/990d9d7))
+- **release**: Docs-kit@5.27.1 [skip ci] ([c8e2834](https://github.com/lobehub/lobe-ui/commit/c8e2834))
+
+### 💄 Styles
+
+- **tooltip**: Spring-based enter and group glide motion ([a3979c1](https://github.com/lobehub/lobe-ui/commit/a3979c1))
+
 ## [5.32.4](https://github.com/lobehub/lobe-ui/compare/v5.32.3...v5.32.4) (2026-08-21)
 
 ### 💄 Styles
