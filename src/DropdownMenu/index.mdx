@@ -5,6 +5,7 @@ category: Navigation
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import DemoCloseOnClick from './demos/closeOnClick.tsx?demo';
 import DemoAtoms from './demos/atoms.tsx?demo';
 import DemoSubmenu from './demos/submenu.tsx?demo';
 import DemoPlusActionSubmenu from './demos/plus-action-submenu.tsx?demo';
@@ -28,6 +29,12 @@ import DemoTooltipHoverStay from './demos/tooltip-hover-stay.tsx?demo';
 ## Default
 
 <Demo of={DemoIndex} layout="center" />
+
+## Keep Open on Item Click
+
+Standard items close the menu after a click. Set `closeOnClick: false` on an item when the menu should remain open while its action runs. This behavior applies at any nesting level, including submenu items.
+
+<Demo of={DemoCloseOnClick} layout="center" />
 
 ## Atom Components
 

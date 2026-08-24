@@ -3337,6 +3337,42 @@
       "source": "src/awesome/TypewriterEffect/demos/variableSpeed.tsx"
     },
     {
+      "document": "src/base-ui/Alert/index.mdx",
+      "legacyId": "src-base-ui-alert-demo-demos",
+      "legacyRouteId": "components/base-ui/Alert/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/alert",
+      "source": "src/base-ui/Alert/demos/index.tsx"
+    },
+    {
+      "document": "src/base-ui/Alert/index.mdx",
+      "legacyId": "src-base-ui-alert-demo-extra",
+      "legacyRouteId": "components/base-ui/Alert/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/alert",
+      "source": "src/base-ui/Alert/demos/Extra.tsx"
+    },
+    {
+      "document": "src/base-ui/Alert/index.mdx",
+      "legacyId": "src-base-ui-alert-demo-playground",
+      "legacyRouteId": "components/base-ui/Alert/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/alert",
+      "source": "src/base-ui/Alert/demos/Playground.tsx"
+    },
+    {
       "document": "src/base-ui/Button/index.mdx",
       "legacyId": "src-base-ui-button-demo-demos",
       "legacyRouteId": "components/base-ui/Button/index",
@@ -4247,6 +4283,18 @@
       },
       "pathname": "/components/base-ui/select",
       "source": "src/base-ui/Select/demos/virtual.tsx"
+    },
+    {
+      "document": "src/base-ui/Slider/index.mdx",
+      "legacyId": "src-base-ui-slider-demo-demos",
+      "legacyRouteId": "components/base-ui/Slider/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/slider",
+      "source": "src/base-ui/Slider/demos/index.tsx"
     },
     {
       "document": "src/base-ui/Switch/index.mdx",
@@ -7023,6 +7071,15 @@
       "title": "TypewriterEffect"
     },
     {
+      "category": "Feedback",
+      "description": "Semantic inline feedback with actions, dismissal, and expandable diagnostic detail.",
+      "legacyRouteId": "components/base-ui/Alert/index",
+      "pathname": "/components/base-ui/alert",
+      "section": "Base UI",
+      "source": "src/base-ui/Alert/index.mdx",
+      "title": "Alert"
+    },
+    {
       "category": "General",
       "description": "Polished base-ui Button. API-compatible drop-in for antd Button core props.",
       "legacyRouteId": "components/base-ui/Button/index",
@@ -7111,6 +7168,15 @@
       "section": "Base UI",
       "source": "src/base-ui/Select/index.mdx",
       "title": "Select"
+    },
+    {
+      "category": "Data Entry",
+      "description": "Base UI-powered Slider and SliderWithInput components.",
+      "legacyRouteId": "components/base-ui/Slider/index",
+      "pathname": "/components/base-ui/slider",
+      "section": "Base UI",
+      "source": "src/base-ui/Slider/index.mdx",
+      "title": "Slider"
     },
     {
       "category": "Data Entry",

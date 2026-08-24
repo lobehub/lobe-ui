@@ -1,6 +1,7 @@
 import { expect, it } from 'vitest';
 
-import { computeCollapsedCount } from './navOverflow';
+import type { NavigationSection } from '../../types/content';
+import { buildNavModel, computeCollapsedCount } from './navOverflow';
 
 it('keeps every candidate inline when the row fits without the more button', () => {
   expect(
@@ -72,4 +73,26 @@ it('returns zero for an empty candidate list', () => {
       moreWidth: 36,
     }),
   ).toBe(0);
+});
+
+it('caps the primary section count at five when computing the minimum collapse', () => {
+  const sections = Array.from({ length: 7 }, (_, index): NavigationSection => ({
+    categories: [{ documents: [], title: 'General' }],
+    title: `Section ${index}`,
+  }));
+
+  expect(buildNavModel(sections, []).minCollapsedCount).toBe(3);
+});
+
+it('counts standalone changelog and external items toward the minimum collapse', () => {
+  const sections = Array.from({ length: 4 }, (_, index): NavigationSection => ({
+    categories: [{ documents: [], title: 'General' }],
+    title: `Section ${index}`,
+  }));
+
+  const model = buildNavModel(sections, [
+    { href: 'https://example.com', label: 'Docs', external: true },
+  ]);
+
+  expect(model.minCollapsedCount).toBe(2);
 });

@@ -38,3 +38,5 @@ The component forwards all standard `<button>` (or `<a>` when `href` is set) HTM
 ## Migrating from `antd`'s `Button`
 
 The props listed above match antd `Button`'s behaviour, so most call sites swap import only. Styling matches the rest of `base-ui` — tighter heights (`24 / 32 / 40` for `small / middle / large`) and a subtle hover micro-lift, no hover shadow.
+
+`ghost` is the one deviation. antd treats it as an on-dark-background variant, which left `ghost danger` indistinguishable from plain `danger` on a light surface. Here it strips the fill and the border instead, leaving the type's semantic color — the borderless icon button an inline delete action wants.

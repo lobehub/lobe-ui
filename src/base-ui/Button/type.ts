@@ -19,6 +19,11 @@ interface BaseButtonOwnProps {
   classNames?: { icon?: string };
   danger?: boolean;
   disabled?: boolean;
+  /**
+   * Strips the fill and the border, leaving only the type's semantic color and a hover
+   * wash. Unlike antd's `ghost`, this is not an on-dark-background variant. It is a no-op
+   * on `text` and `link`, which already carry no surface.
+   */
   ghost?: boolean;
   href?: string;
   htmlType?: ButtonHTMLAttributes<HTMLButtonElement>['type'];

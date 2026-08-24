@@ -13,6 +13,8 @@ const pkg = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8')) as {
 const external = [
   ...Object.keys(pkg.dependencies ?? {}),
   ...Object.keys(pkg.peerDependencies ?? {}),
+  // type-only import in static-css/vite; not a dependency, so external it explicitly
+  'vite',
 ];
 
 // 动态查找所有 src/*/index.ts 文件
@@ -32,6 +34,9 @@ export default defineConfig({
     // packages
     ...packageEntries,
     'src/i18n/resources/index.ts',
+    'src/static-css/emit/index.ts',
+    'src/static-css/runtime/index.ts',
+    'src/static-css/vite/index.ts',
   ],
   external,
   format: ['esm'],

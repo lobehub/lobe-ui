@@ -227,7 +227,7 @@ it('keeps one indicator positioned relative to the navigation across route and v
   expect(container.querySelectorAll('[data-header-nav-indicator]')).toHaveLength(1);
 });
 
-it('expands sections and the changelog link inline when the measured navigation row fits', async () => {
+it('caps primary sections at five even when the measured navigation row fits', async () => {
   vi.spyOn(Element.prototype, 'clientWidth', 'get').mockImplementation(function (this: Element) {
     return this.getAttribute('aria-label') === 'Documentation sections' ? 2000 : 0;
   });
@@ -259,9 +259,14 @@ it('expands sections and the changelog link inline when the measured navigation 
       within(nav)
         .getAllByRole('link')
         .map((link) => link.textContent),
-    ).toEqual(['Home', 'Components', 'Base UI', 'Chat', 'Icons', 'Brand', 'Color', 'Changelog']),
+    ).toEqual(['Home', 'Components', 'Base UI', 'Chat', 'Icons', 'Brand']),
   );
-  expect(within(nav).queryByRole('button', { name: 'More navigation links' })).toBeNull();
+
+  openMenu(within(nav).getByRole('button', { name: 'More navigation links' }));
+  const menu = await screen.findByRole('menu');
+  for (const label of ['Color', 'Changelog']) {
+    expect(within(menu).getByRole('menuitem', { name: label })).toBeTruthy();
+  }
 });
 
 it('collapses trailing sections into the more menu when the measured row overflows', async () => {

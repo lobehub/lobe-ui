@@ -25,7 +25,52 @@ interface SplitButtonProps extends SharedVisualProps {
 
 const SplitButtonContext = createContext<SharedVisualProps>({});
 
-const styles = createStaticStyles(({ css }) => ({
+const styles = createStaticStyles(({ css, cssVar }) => ({
+  interactionDisabled: css`
+    opacity: 0.5;
+
+    & > :where(button, a):disabled,
+    & > :where(button, a)[aria-disabled='true'] {
+      opacity: 1;
+    }
+  `,
+  solid: css`
+    & > :where(button, a):last-of-type::before {
+      pointer-events: none;
+      content: '';
+
+      position: absolute;
+      inset-block: 0;
+      inset-inline-start: 0;
+
+      width: 1px;
+
+      opacity: 0.2;
+      background: currentcolor;
+    }
+  `,
+  solidDanger: css`
+    &:has(> :where(button, a):hover:not(:disabled, [aria-disabled='true'])) > :where(button, a) {
+      border-color: ${cssVar.colorErrorHover};
+      background: ${cssVar.colorErrorHover};
+    }
+
+    &:has(> :where(button, a):active:not(:disabled, [aria-disabled='true'])) > :where(button, a) {
+      border-color: ${cssVar.colorErrorActive};
+      background: ${cssVar.colorErrorActive};
+    }
+  `,
+  solidPrimary: css`
+    &:has(> :where(button, a):hover:not(:disabled, [aria-disabled='true'])) > :where(button, a) {
+      border-color: ${cssVar.colorPrimaryHover};
+      background: ${cssVar.colorPrimaryHover};
+    }
+
+    &:has(> :where(button, a):active:not(:disabled, [aria-disabled='true'])) > :where(button, a) {
+      border-color: ${cssVar.colorPrimaryActive};
+      background: ${cssVar.colorPrimaryActive};
+    }
+  `,
   splitButton: css`
     display: inline-flex;
     flex-direction: row;
@@ -59,7 +104,16 @@ const SplitButton = ({
   );
   return (
     <SplitButtonContext value={shared}>
-      <div className={cx(styles.splitButton, className)} style={style}>
+      <div
+        style={style}
+        className={cx(
+          styles.splitButton,
+          type === 'primary' && styles.solid,
+          type === 'primary' && (danger ? styles.solidDanger : styles.solidPrimary),
+          (disabled || loading) && styles.interactionDisabled,
+          className,
+        )}
+      >
         {children}
       </div>
     </SplitButtonContext>
@@ -77,12 +131,15 @@ interface SplitButtonMenuProps extends Omit<DropdownMenuProps, 'children'> {
 
 const SplitButtonMenu = ({
   icon = <ChevronDownIcon size={14} />,
+  disabled,
   ...menuProps
 }: SplitButtonMenuProps) => {
   const shared = use(SplitButtonContext);
+  const interactionDisabled = disabled || shared.disabled || shared.loading;
+
   return (
-    <DropdownMenu {...menuProps}>
-      <Button {...shared} icon={icon} />
+    <DropdownMenu {...menuProps} disabled={interactionDisabled}>
+      <Button {...shared} disabled={interactionDisabled} icon={icon} />
     </DropdownMenu>
   );
 };

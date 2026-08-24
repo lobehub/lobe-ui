@@ -70,7 +70,11 @@ export const useStyles = () => {
       --color-btn-primary-hover-border: ${theme.colorPrimaryBorderHover};
       --color-btn-primary-selected-bg: ${theme.colorPrimaryActive};
       --color-btn-primary-selected-shadow: 0 0 transparent;
-      --color-btn-primary-disabled-text: ${rgba(safeReadableColor(theme.colorPrimary), 0.5)};
+      --color-btn-primary-disabled-text: color-mix(
+        in srgb,
+        ${safeReadableColor(theme.colorPrimary)} 50%,
+        transparent
+      );
       --color-btn-primary-disabled-bg: ${rgba(theme.colorPrimary, 0.5)};
       --color-btn-primary-disabled-border: ${rgba(theme.colorPrimaryBorder, 0.5)};
       --color-action-list-item-default-hover-bg: ${theme.colorFillQuaternary};

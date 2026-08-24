@@ -237,21 +237,6 @@ export const styles = createStaticStyles(({ css }) => ({
 
     text-align: center;
 
-    &::before {
-      pointer-events: none;
-      content: '';
-
-      position: absolute;
-      z-index: -1;
-      inset-block: calc(-1 * var(--docs-header-height) - 2rem) 0;
-      inset-inline: 0;
-
-      background:
-        radial-gradient(38% 55% at 22% 8%, var(--docs-aurora-violet), transparent 70%),
-        radial-gradient(30% 50% at 58% 0%, var(--docs-aurora-blue), transparent 70%),
-        radial-gradient(26% 45% at 84% 12%, var(--docs-aurora-pink), transparent 70%);
-    }
-
     h1 {
       margin: 0;
 

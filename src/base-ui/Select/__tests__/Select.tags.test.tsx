@@ -98,7 +98,22 @@ describe('Select tags mode', () => {
 
     const value = screen.getByRole('combobox').querySelector('span[data-placeholder]');
 
-    expect(getComputedStyle(value!).flex).toBe('0 0 auto');
+    expect(getComputedStyle(value!).flexGrow).toBe('0');
+  });
+
+  test('lets the tag list shrink so tags wrap instead of overflowing the trigger', () => {
+    render(
+      <ConfigProvider motion={motion}>
+        <Select mode="tags" open={false} value={['en', 'zh', 'ja']} />
+      </ConfigProvider>,
+    );
+
+    const value = screen.getByRole('combobox').querySelector('[data-role="lobe-select-tag"]')!
+      .parentElement!.parentElement!;
+    const computed = getComputedStyle(value);
+
+    expect(computed.flexShrink).toBe('1');
+    expect(computed.minWidth).toBe('0px');
   });
 
   test('accepts a tag while the popup is controlled closed', () => {

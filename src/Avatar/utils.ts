@@ -27,24 +27,6 @@ export const hasValidBackground = (background?: string | null): boolean => {
 };
 
 /**
- * 获取用于可读性计算的实际颜色值
- * 如果是 CSS 变量，返回 fallback 值
- */
-export const getActualColorForReadable = (
-  background: string | undefined,
-  fallbackColor: string,
-): string => {
-  const bgColor = background || fallbackColor;
-
-  // 如果背景是 CSS 变量，使用 fallback 颜色
-  if (typeof bgColor === 'string' && bgColor.startsWith('var(')) {
-    return fallbackColor;
-  }
-
-  return bgColor;
-};
-
-/**
  * 格式化头像文本（转大写并可选切片）
  */
 export const formatAvatarText = (text: string | undefined, sliceText: boolean): string => {

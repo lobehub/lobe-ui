@@ -211,7 +211,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     align-items: center;
   `,
   tagsValue: css`
-    flex: none;
+    /* No growing, so an empty trigger leaves the inline input the full width — but it must
+       still shrink, or the tags stay at max-content and run off the trigger instead of wrapping. */
+    flex: 0 1 auto;
   `,
   tagsSearch: css`
     display: flex;

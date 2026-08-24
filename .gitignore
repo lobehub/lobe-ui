@@ -51,3 +51,4 @@ bun.lockb
 
 # lobedocs generated (removed on exit)
 react-router.config.mjs
+.vercel

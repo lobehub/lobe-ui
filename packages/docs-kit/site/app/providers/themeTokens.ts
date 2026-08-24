@@ -62,29 +62,12 @@ const toDeclarations = (token: Record<string, string | number>) =>
     })
     .join('\n');
 
-const isBrightColor = (value: string) => {
-  const hex = /^#([\da-f]{6})/i.exec(value)?.[1];
-  const rgb = /^rgba?\((\d+)[\s,]+(\d+)[\s,]+(\d+)/.exec(value);
-  const [r, g, b] = hex
-    ? [
-        Number.parseInt(hex.slice(0, 2), 16),
-        Number.parseInt(hex.slice(2, 4), 16),
-        Number.parseInt(hex.slice(4, 6), 16),
-      ]
-    : rgb
-      ? [Number(rgb[1]), Number(rgb[2]), Number(rgb[3])]
-      : [0, 0, 0];
-  return (r * 299 + g * 587 + b * 114) / 1000 > 128;
-};
-
 const lightToken = buildLobeToken('light');
 const darkToken = buildLobeToken('dark');
 
 export const lobeThemeTokens = { dark: darkToken, light: lightToken };
 
-export const darkReadableOnPrimary = isBrightColor(String(darkToken.colorPrimary))
-  ? '#000'
-  : '#fff';
+export const darkReadableOnPrimary = 'contrast-color(var(--ant-color-primary))';
 
 export const themeCssVarPalettes = {
   dark: toDeclarations(darkToken),

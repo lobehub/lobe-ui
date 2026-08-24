@@ -6,6 +6,7 @@ import { BentoGallery } from './BentoGallery';
 import { CodeShowcase } from './CodeShowcase';
 import { CopyControl } from './CopyControl';
 import { HeroIconMarquee } from './HeroIconMarquee';
+import { HeroTexture } from './HeroTexture';
 import { styles } from './homeStyle';
 
 const INSTALL_COMMAND = 'pnpm add @lobehub/ui';
@@ -60,6 +61,7 @@ export default function Home({
   return (
     <>
       <section className={styles.hero}>
+        <HeroTexture />
         <h1 data-pagefind-meta="title">
           LobeHub <span className={styles.heroGradient}>UI Kit</span>
         </h1>

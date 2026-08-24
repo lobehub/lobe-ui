@@ -1,5 +1,6 @@
 import { Flexbox } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
+import { Trash2 } from 'lucide-react';
 
 export default () => (
   <Flexbox gap={20} padding={16}>
@@ -37,19 +38,17 @@ export default () => (
       </Flexbox>
     </Flexbox>
 
-    <Flexbox gap={8} style={{ background: 'rgb(190, 200, 200)', borderRadius: 8, padding: 16 }}>
-      <span style={{ color: 'rgba(0,0,0,0.55)', fontSize: 12 }}>Ghost (on colored background)</span>
+    <Flexbox gap={8}>
+      <span style={{ fontSize: 12, opacity: 0.6 }}>Ghost (no fill, no border)</span>
       <Flexbox horizontal gap={8} style={{ flexWrap: 'wrap' }}>
         <Button ghost type="primary">
           Primary
         </Button>
         <Button ghost>Default</Button>
-        <Button ghost type="dashed">
-          Dashed
-        </Button>
         <Button danger ghost>
           Danger
         </Button>
+        <Button danger ghost icon={Trash2} shape="circle" />
       </Flexbox>
     </Flexbox>
 

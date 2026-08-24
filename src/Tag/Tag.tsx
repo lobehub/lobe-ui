@@ -23,21 +23,6 @@ const Tag: FC<TagProps> = ({
   ...rest
 }) => {
   const colors = useMemo(() => {
-    const resolveActualColor = (colorValue?: string) => {
-      if (!colorValue || !colorValue.startsWith('var(')) return colorValue;
-      if (typeof window === 'undefined') return colorValue;
-
-      const matched = colorValue.match(/var\((--[^,\s)]+)/);
-      if (!matched?.[1]) return colorValue;
-
-      const resolved = window
-        .getComputedStyle(document.documentElement)
-        .getPropertyValue(matched[1])
-        .trim();
-
-      return resolved || colorValue;
-    };
-
     let textColor = cssVar.colorTextSecondary;
     let backgroundColor;
     let borderColor;
@@ -50,9 +35,7 @@ const Tag: FC<TagProps> = ({
 
     if (isPresetColor) {
       const solidBgColor = colorsPreset(color);
-      textColor = isSolid
-        ? safeReadableColor(resolveActualColor(solidBgColor) || solidBgColor)
-        : colorsPreset(color, 'active');
+      textColor = isSolid ? safeReadableColor(solidBgColor) : colorsPreset(color, 'active');
       backgroundColor = isSolid
         ? solidBgColor
         : isBorderless
@@ -64,9 +47,7 @@ const Tag: FC<TagProps> = ({
     }
     if (isPresetSystemColors) {
       const solidBgColor = colorsPresetSystem(color);
-      textColor = isSolid
-        ? safeReadableColor(resolveActualColor(solidBgColor) || solidBgColor)
-        : colorsPresetSystem(color);
+      textColor = isSolid ? safeReadableColor(solidBgColor) : colorsPresetSystem(color);
       backgroundColor = isSolid
         ? solidBgColor
         : isBorderless

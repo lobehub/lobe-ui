@@ -2,6 +2,110 @@
 
 # Changelog
 
+## [5.32.5](https://github.com/lobehub/lobe-ui/compare/v5.32.4...v5.32.5) (2026-08-22)
+
+### 🎫 Chores
+
+- **ci**: Scrub legacy pnpm6 from Vercel build PATH ([990d9d7](https://github.com/lobehub/lobe-ui/commit/990d9d7))
+- **release**: Docs-kit@5.27.1 [skip ci] ([c8e2834](https://github.com/lobehub/lobe-ui/commit/c8e2834))
+
+### 💄 Styles
+
+- **tooltip**: Spring-based enter and group glide motion ([a3979c1](https://github.com/lobehub/lobe-ui/commit/a3979c1))
+
+## [5.32.4](https://github.com/lobehub/lobe-ui/compare/v5.32.3...v5.32.4) (2026-08-21)
+
+### 💄 Styles
+
+- **base-ui**: Restyle Slider thumb as a primary capsule ([bfe4fe1](https://github.com/lobehub/lobe-ui/commit/bfe4fe1))
+
+## [5.32.3](https://github.com/lobehub/lobe-ui/compare/v5.32.2...v5.32.3) (2026-08-19)
+
+### ♻ Code Refactoring
+
+- **eslint**: Ban legacy Alert imports, closes [#612](https://github.com/lobehub/lobe-ui/issues/612) ([88fcbf2](https://github.com/lobehub/lobe-ui/commit/88fcbf2))
+
+### 📝 Documentation
+
+- **menu**: Demonstrate persistent item clicks ([a8143c4](https://github.com/lobehub/lobe-ui/commit/a8143c4))
+
+## [5.32.2](https://github.com/lobehub/lobe-ui/compare/v5.32.1...v5.32.2) (2026-08-18)
+
+### ♻ Code Refactoring
+
+- **color**: Use CSS contrast-color()/color-mix() instead of JS readable-color ([5223c4e](https://github.com/lobehub/lobe-ui/commit/5223c4e))
+
+## [5.32.1](https://github.com/lobehub/lobe-ui/compare/v5.32.0...v5.32.1) (2026-08-18)
+
+### 🐛 Bug Fixes
+
+- **alert**: Anchor icon and controls to the title line box, closes [#619](https://github.com/lobehub/lobe-ui/issues/619) ([0c3f2fb](https://github.com/lobehub/lobe-ui/commit/0c3f2fb))
+
+# [5.32.0](https://github.com/lobehub/lobe-ui/compare/v5.31.1...v5.32.0) (2026-08-18)
+
+### ✨ Features
+
+- **static-css**: Add static antd css extraction entries, closes [#618](https://github.com/lobehub/lobe-ui/issues/618) ([796ef87](https://github.com/lobehub/lobe-ui/commit/796ef87))
+
+## [5.31.1](https://github.com/lobehub/lobe-ui/compare/v5.31.0...v5.31.1) (2026-08-17)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Open click triggers inside a PopoverGroup, closes [#616](https://github.com/lobehub/lobe-ui/issues/616) ([da87dec](https://github.com/lobehub/lobe-ui/commit/da87dec))
+
+# [5.31.0](https://github.com/lobehub/lobe-ui/compare/v5.30.2...v5.31.0) (2026-08-16)
+
+### ✨ Features
+
+- **base-ui**: Support programmatic open for PopoverGroup members, closes [#615](https://github.com/lobehub/lobe-ui/issues/615) ([cb9cc29](https://github.com/lobehub/lobe-ui/commit/cb9cc29))
+
+## [5.30.2](https://github.com/lobehub/lobe-ui/compare/v5.30.1...v5.30.2) (2026-08-14)
+
+### 🐛 Bug Fixes
+
+- **alert**: Align single-line actions, closes [#613](https://github.com/lobehub/lobe-ui/issues/613) ([4f89733](https://github.com/lobehub/lobe-ui/commit/4f89733))
+
+## [5.30.1](https://github.com/lobehub/lobe-ui/compare/v5.30.0...v5.30.1) (2026-08-14)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Refine SplitButton states ([368fcfa](https://github.com/lobehub/lobe-ui/commit/368fcfa))
+
+# [5.30.0](https://github.com/lobehub/lobe-ui/compare/v5.29.3...v5.30.0) (2026-08-14)
+
+### ✨ Features
+
+- **base-ui**: Migrate Alert ([c47f4e1](https://github.com/lobehub/lobe-ui/commit/c47f4e1))
+
+## [5.29.3](https://github.com/lobehub/lobe-ui/compare/v5.29.2...v5.29.3) (2026-08-14)
+
+### ♻ Code Refactoring
+
+- **base-ui**: Enforce migrated form controls, closes [#610](https://github.com/lobehub/lobe-ui/issues/610) ([7bdc69f](https://github.com/lobehub/lobe-ui/commit/7bdc69f))
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Drop the fill and border from Button ghost ([f58c012](https://github.com/lobehub/lobe-ui/commit/f58c012))
+- **base-ui**: Let Select tags wrap inside the trigger ([79ba9fa](https://github.com/lobehub/lobe-ui/commit/79ba9fa))
+
+## [5.29.2](https://github.com/lobehub/lobe-ui/compare/v5.29.1...v5.29.2) (2026-08-14)
+
+### 💄 Styles
+
+- Fix markdown code style, closes [#609](https://github.com/lobehub/lobe-ui/issues/609) ([4c46855](https://github.com/lobehub/lobe-ui/commit/4c46855))
+
+## [5.29.1](https://github.com/lobehub/lobe-ui/compare/v5.29.0...v5.29.1) (2026-08-07)
+
+### 🐛 Bug Fixes
+
+- **draggable-panel**: Size stable layout by placement, closes [#600](https://github.com/lobehub/lobe-ui/issues/600) ([dff67c7](https://github.com/lobehub/lobe-ui/commit/dff67c7))
+
+# [5.29.0](https://github.com/lobehub/lobe-ui/compare/v5.28.1...v5.29.0) (2026-08-06)
+
+### ✨ Features
+
+- **draggable-panel**: Default stableLayout to true ([0c7121a](https://github.com/lobehub/lobe-ui/commit/0c7121a))
+
 ## [5.28.1](https://github.com/lobehub/lobe-ui/compare/v5.28.0...v5.28.1) (2026-08-05)
 
 ### 🎫 Chores

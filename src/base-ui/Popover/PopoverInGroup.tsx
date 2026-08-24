@@ -11,6 +11,7 @@ import { useNativeButton } from '@/hooks/useNativeButton';
 import { parseTrigger } from '@/utils/parseTrigger';
 
 import { PopoverGroupHandleContext } from './groupContext';
+import { HOVER_ONLY_TRIGGER_ATTR } from './hoverOnlyPress';
 import { type PopoverProps } from './type';
 import { useMergedPopoverProps } from './useMergedPopoverProps';
 
@@ -18,7 +19,10 @@ export const PopoverInGroup: FC<PopoverProps> = ({ children, ref: refProp, ...pr
   const group = use(PopoverGroupHandleContext);
   const item = useMergedPopoverProps(props);
 
-  const { openOnHover } = useMemo(() => parseTrigger(item.trigger ?? 'hover'), [item.trigger]);
+  const { openOnClick, openOnHover } = useMemo(
+    () => parseTrigger(item.trigger ?? 'hover'),
+    [item.trigger],
+  );
 
   const resolvedOpenDelay = item.openDelay ?? (item.mouseEnterDelay ?? 0.1) * 1000;
   const resolvedCloseDelay = item.closeDelay ?? (item.mouseLeaveDelay ?? 0.1) * 1000;
@@ -35,10 +39,12 @@ export const PopoverInGroup: FC<PopoverProps> = ({ children, ref: refProp, ...pr
   }
 
   const triggerProps = {
+    [HOVER_ONLY_TRIGGER_ATTR]: openOnClick ? undefined : '',
     closeDelay: resolvedCloseDelay,
     delay: resolvedOpenDelay,
     disabled,
     openOnHover: openOnHover && !disabled,
+    ...item.triggerProps,
     payload: item,
   };
 

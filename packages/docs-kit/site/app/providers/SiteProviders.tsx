@@ -2,7 +2,7 @@ import { ConfigProvider, ThemeProvider as LobeThemeProvider } from '@lobehub/ui'
 import type { ThemeMode } from 'antd-style';
 import { motion } from 'motion/react';
 import { ThemeProvider as NextThemeProvider, useTheme } from 'next-themes';
-import type { PropsWithChildren } from 'react';
+import { type PropsWithChildren, useEffect, useState } from 'react';
 import siteConfig from 'virtual:lobedocs/site-config';
 
 import { StyleRegistry } from './StyleRegistry';
@@ -22,6 +22,8 @@ export interface SiteThemeValue {
 
 export function useSiteTheme(): SiteThemeValue {
   const { forcedTheme, resolvedTheme, setTheme, theme } = useTheme();
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => setHydrated(true), []);
   const configuredTheme = siteConfig.themeConfig?.prefersColor;
   const configuredAppearance =
     configuredTheme === 'dark' || configuredTheme === 'light' ? configuredTheme : undefined;
@@ -29,10 +31,11 @@ export function useSiteTheme(): SiteThemeValue {
     forcedTheme === 'dark' || forcedTheme === 'light'
       ? forcedTheme
       : (configuredAppearance ?? 'light');
+  const resolvedAppearance =
+    resolvedTheme === 'dark' || resolvedTheme === 'light' ? resolvedTheme : fallbackAppearance;
 
   return {
-    appearance:
-      resolvedTheme === 'dark' || resolvedTheme === 'light' ? resolvedTheme : fallbackAppearance,
+    appearance: hydrated ? resolvedAppearance : fallbackAppearance,
     preference: theme === 'light' || theme === 'dark' ? theme : (configuredAppearance ?? 'system'),
     setPreference: setTheme,
   };

@@ -25,7 +25,7 @@ import {
   PopoverGroupPropsContext,
   type PopoverGroupSharedProps,
 } from './groupContext';
-import { shouldCancelHoverOnlyPressOpen } from './hoverOnlyPress';
+import { isHoverOnlyTriggerElement, shouldCancelHoverOnlyPressOpen } from './hoverOnlyPress';
 import { usePopoverPortalContainer } from './PopoverPortal';
 
 type PopoverGroupProps = PopoverGroupSharedProps & {
@@ -57,9 +57,20 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
   const contextValue = useMemo(() => ({ close }), [close]);
 
   const handleOpenChange = useCallback(
-    (nextOpen: boolean, eventDetails?: { cancel?: () => void; reason?: string }) => {
+    (
+      nextOpen: boolean,
+      eventDetails?: { cancel?: () => void; reason?: string; trigger?: unknown },
+    ) => {
       const item = activeItemRef.current;
-      const { openOnClick } = parseTrigger(item?.trigger ?? 'hover');
+      // The press belongs to the trigger that fired it, which is not necessarily
+      // the member currently showing — judging by `activeItemRef` cancels every
+      // click member's first press, since the active one is a hover member (or
+      // none, which also reads as hover-only).
+      const hoverOnlyTrigger = isHoverOnlyTriggerElement(eventDetails?.trigger);
+      const openOnClick =
+        hoverOnlyTrigger === null
+          ? parseTrigger(item?.trigger ?? 'hover').openOnClick
+          : !hoverOnlyTrigger;
 
       if (shouldCancelHoverOnlyPressOpen(openOnClick, nextOpen, eventDetails?.reason)) {
         eventDetails?.cancel?.();

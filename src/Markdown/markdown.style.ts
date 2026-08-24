@@ -49,7 +49,7 @@ export const styles = createStaticStyles(({ cssVar, css }) => {
         display: inline;
 
         margin-inline: 0.25em;
-        padding-block: 0.2em;
+        padding-block: 0.1em;
         padding-inline: 0.4em;
         border: 1px solid var(--lobe-markdown-border-color);
         border-radius: 0.25em;
