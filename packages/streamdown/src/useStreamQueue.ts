@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { STREAM_FADE_DURATION } from './style';
+import { STREAM_FADE_DURATION } from './styles';
 import { countChars } from './useSmoothStreamContent';
 
 export interface BlockInfo {

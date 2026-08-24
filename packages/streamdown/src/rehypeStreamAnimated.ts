@@ -2,7 +2,7 @@ import { type Element, type ElementContent, type Root } from 'hast';
 import { type BuildVisitor } from 'unist-util-visit';
 import { visit } from 'unist-util-visit';
 
-import { getNow } from '@/utils/getNow';
+import { getNow } from './internal';
 
 export interface StreamAnimatedRuntime {
   births: number[];

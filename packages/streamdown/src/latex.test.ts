@@ -305,6 +305,18 @@ describe('escapeCurrencyDollars', () => {
     expect(escapeCurrencyDollars(content)).toBe(expected);
   });
 
+  // The math-detection lookahead used to scan the whole remaining string for a
+  // backslash, so any LaTeX later in the text made every preceding currency
+  // pair look like a formula and skip escaping entirely.
+  test('escapes currency even when LaTeX appears later in the text', () => {
+    expect(escapeCurrencyDollars('Costs $9.99 and $1,200 — see \\alpha later.')).toBe(
+      'Costs \\$9.99 and \\$1,200 — see \\alpha later.',
+    );
+    expect(escapeCurrencyDollars('Price $25,000 for $\\alpha$ compute.')).toBe(
+      'Price \\$25,000 for $\\alpha$ compute.',
+    );
+  });
+
   test('does not escape simple LaTeX number formulas', () => {
     // Single digit LaTeX formulas should not be escaped
     expect(escapeCurrencyDollars('$1$')).toBe('$1$');

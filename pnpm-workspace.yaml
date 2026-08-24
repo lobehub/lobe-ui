@@ -3,6 +3,7 @@ resolutionMode: highest
 
 packages:
   - packages/*
+  - packages/streamdown/site
 
 publicHoistPattern:
   - '*changelog*'

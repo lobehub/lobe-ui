@@ -15,6 +15,10 @@ export default defineConfig({
       { find: '@lobehub/ui/es/styles/theme/antdTheme', replacement: antdThemePath },
       { find: '@', replacement: srcPath },
       { find: name, replacement: srcPath },
+      {
+        find: /^@lobehub\/streamdown(\/profiler)?$/,
+        replacement: fileURLToPath(new URL('./packages/streamdown/src', import.meta.url)) + '$1',
+      },
     ],
   },
   test: {

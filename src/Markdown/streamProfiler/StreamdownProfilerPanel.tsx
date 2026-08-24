@@ -1,10 +1,12 @@
 'use client';
 
+import {
+  type StreamdownProfiler,
+  type StreamdownProfilerSnapshot,
+} from '@lobehub/streamdown/profiler';
 import { type CSSProperties, type ReactNode, useDeferredValue, useSyncExternalStore } from 'react';
 
 import Button from '@/Button';
-
-import { type StreamdownProfiler, type StreamdownProfilerSnapshot } from './profiler';
 
 const EMPTY_SNAPSHOT: StreamdownProfilerSnapshot = {
   animation: {

@@ -1,0 +1,47 @@
+name: Release Streamdown CI
+on:
+  workflow_call:
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: write # Required for semantic-release to push tags and commits
+  issues: write # Required for semantic-release to create issues
+  pull-requests: write # Required for semantic-release to comment on PRs
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref_name }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install deps
+        run: pnpm install
+
+      - name: Build
+        run: pnpm build
+        working-directory: packages/streamdown
+
+      - name: Test
+        run: pnpm vitest run packages/streamdown
+
+      - name: Verify package
+        run: npm pack --dry-run ./packages/streamdown
+
+      - name: Release @lobehub/streamdown
+        run: npx semantic-release
+        working-directory: packages/streamdown
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

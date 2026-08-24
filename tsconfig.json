@@ -16,6 +16,8 @@
     "types": ["node", "vitest/globals"],
     "paths": {
       "@/*": ["src/*"],
+      "@lobehub/streamdown": ["packages/streamdown/src"],
+      "@lobehub/streamdown/profiler": ["packages/streamdown/src/profiler"],
       "@lobehub/ui": ["src"],
       "@lobehub/ui/*": ["src/*"],
       "@lobehub/ui/mdx": ["src/mdx"],

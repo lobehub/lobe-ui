@@ -166,7 +166,7 @@ export function escapeCurrencyDollars(text: string): string {
     // 6. Number lists in math mode: $1,-1,0$ or $1,2,3$ (comma-separated numbers, possibly negative)
     // 7. LaTeX bracket notation: \[...\]
     // 8. LaTeX parenthesis notation: \(...\)
-    /(```[\s\S]*?```|`[^\n`]*`|\$\$[\s\S]*?\$\$|(?<!\\)\$(?!\$)(?=[\s\S]*?\\)[\s\S]*?(?<!\\)\$(?!\$)|\$\d+\$|\$-?\d+(?:,-?\d+)+\$|\\\[[\s\S]*?\\\]|\\\(.*?\\\))/g,
+    /(```[\s\S]*?```|`[^\n`]*`|\$\$[\s\S]*?\$\$|(?<!\\)\$(?!\$)[^$]*\\[^$]*(?<!\\)\$(?!\$)|\$\d+\$|\$-?\d+(?:,-?\d+)+\$|\\\[[\s\S]*?\\\]|\\\(.*?\\\))/g,
     (match) => manager.add(match),
   );
 
@@ -232,8 +232,7 @@ export const isLastFormulaRenderable = (text: string) => {
       throwOnError: true,
     });
     return true;
-  } catch (error) {
-    console.error(`LaTeX formula rendering error: ${error}`);
+  } catch {
     return false;
   }
 };

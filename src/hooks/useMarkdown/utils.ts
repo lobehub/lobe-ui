@@ -1,4 +1,4 @@
-import { preprocessLaTeX } from './latex';
+import { preprocessLaTeX } from '@lobehub/streamdown';
 
 // Cache configuration
 const CACHE_SIZE = 50;
