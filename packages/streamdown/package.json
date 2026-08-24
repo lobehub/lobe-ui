@@ -1,0 +1,62 @@
+{
+  "name": "@lobehub/streamdown",
+  "version": "1.0.0",
+  "description": "Headless streaming markdown engine for React: block splitting, smooth reveal, per-char fade animation and LLM output preprocessing",
+  "homepage": "https://github.com/lobehub/lobe-ui/tree/master/packages/streamdown",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lobehub/lobe-ui.git",
+    "directory": "packages/streamdown"
+  },
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./es/index.d.mts",
+      "import": "./es/index.mjs",
+      "default": "./es/index.mjs"
+    },
+    "./profiler": {
+      "types": "./es/profiler/index.d.mts",
+      "import": "./es/profiler/index.mjs"
+    }
+  },
+  "main": "./es/index.mjs",
+  "types": "./es/index.d.mts",
+  "files": [
+    "es"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "@types/hast": "^3.0.5",
+    "hast-util-to-jsx-runtime": "^2.3.6",
+    "html-url-attributes": "^3.0.1",
+    "katex": "^0.18.1",
+    "marked": "^18.0.6",
+    "react-markdown": "^10.1.0",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.2",
+    "remend": "^1.3.0",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.1.0",
+    "vfile": "^6.0.3"
+  },
+  "devDependencies": {
+    "tsdown": "^0.22.4"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org"
+  }
+}
