@@ -240,6 +240,83 @@ supply a remark/rehype plugin pair that resolves them out of band.
 Line one with two trailing spaces
 line two after a hard break.
 
+## 13. Mermaid diagrams
+
+Three back-to-back diagram fences. Each one arrives as a long fence with no
+renderable intermediate state — the fence guard has to hold them inert until the
+closing delimiter lands.
+
+\`\`\`mermaid
+flowchart LR
+  A[Token stream] --> B{Block boundary?}
+  B -- no --> C[Append to tail block]
+  B -- yes --> D[Seal block]
+  D --> E[Memoize]
+  C --> F[Reveal queue]
+  E --> F
+  F --> G[[CSS animation-delay stagger]]
+\`\`\`
+
+\`\`\`mermaid
+sequenceDiagram
+  participant M as Model
+  participant Q as useStreamQueue
+  participant R as Streamdown
+  M->>Q: chunk (6 chars)
+  Q->>Q: smooth to per-char cadence
+  Q->>R: committed slice
+  R->>R: parse tail block only
+  R-->>M: backpressure signal
+\`\`\`
+
+\`\`\`mermaid
+stateDiagram-v2
+  [*] --> Idle
+  Idle --> Streaming: first chunk
+  Streaming --> Guarded: unbalanced delimiter
+  Guarded --> Streaming: delimiter closed
+  Streaming --> Settled: stream end
+  Settled --> [*]
+\`\`\`
+
+## 14. Code block rendering
+
+A tight run of fences in different languages, including the shapes that break
+naive highlighters.
+
+\`\`\`ts
+export const useStreamQueue = (source: string, { chunkSize = 8, delayMs = 60 } = {}) => {
+  const [text, setText] = useState('');
+  useEffect(() => { /* … */ }, [source, chunkSize, delayMs]);
+  return { text } as const;
+};
+\`\`\`
+
+\`\`\`python
+def reveal(chars: list[str], *, stagger_ms: int = 18) -> list[dict]:
+    return [{"char": c, "delay": i * stagger_ms} for i, c in enumerate(chars)]
+\`\`\`
+
+\`\`\`json
+{ "smoothing": "balanced", "granularity": "char", "latexGuard": true, "preprocess": "preprocessLaTeX", "plugins": ["remark-gfm", "remark-math", "rehype-katex"] }
+\`\`\`
+
+\`\`\`diff
+- <Streamdown content={text} />
++ <Streamdown content={text} smoothing="silky" latexGuard />
+\`\`\`
+
+A fence with no language tag, containing a very long single line that has to scroll horizontally without widening the pane:
+
+\`\`\`
+2026-08-24T12:00:00.482Z  commit=418  block=24  tail="…continuous even though commits are throttled well below the display refresh rate"  reveal=0.08ms  backlog=3  granularity=char  smoothing=balanced
+\`\`\`
+
+Inline \`code\` right next to a fence, and an empty fence:
+
+\`\`\`
+\`\`\`
+
 ---
 
 Final paragraph, deliberately long so the smoother has a substantial tail to pace out across reveal commits — this is where per-character stagger has to stay continuous even though commits are throttled well below the display refresh rate, and where a naive implementation visibly stutters.
@@ -268,10 +345,142 @@ another block stays literal: GFM footnotes, reference-style links
 a remark/rehype plugin pair if you need to resolve these out of band.
 `;
 
+export const mathEdgeSample = `# Math Edge Cases
+
+Delimiter styles the guard has to recognise, mixed into one stream.
+
+## Bracket delimiters
+
+\\[
+f(x) = f(a) + f'(a)(x-a) + \\frac{f''(a)}{2!}(x-a)^2 + \\cdots + \\frac{f^{(n)}(a)}{n!}(x-a)^n + R_n(x)
+\\]
+
+Inline bracket form: \\(\\boldsymbol{\\alpha}^T \\boldsymbol{\\beta} = 0\\) means the two
+vectors are orthogonal.
+
+## Math inside list items
+
+- **Exponential**
+  \\[
+  e^x = 1 + x + \\frac{x^2}{2!} + \\frac{x^3}{3!} + \\cdots, \\quad x \\in \\mathbb{R}
+  \\]
+- **Natural log**
+  \\[
+  \\ln(1+x) = x - \\frac{x^2}{2} + \\frac{x^3}{3} - \\cdots, \\quad -1 < x \\le 1
+  \\]
+- **Thin-space and comma escapes**
+  \\[
+  \\frac{363}{15,\\!135} \\times 100\\% = 2.398\\%
+  \\]
+
+## Environments
+
+$$
+\\begin{bmatrix}
+2x_2 - 8x_3 = 8 \\\\
+5x_1 - 5x_3 = 10
+\\end{bmatrix}
+$$
+
+$$i\\hbar \\frac{\\partial}{\\partial t} \\Psi(\\mathbf{r},t) = \\left[ -\\frac{\\hbar^2}{2m} \\nabla^2 + V(\\mathbf{r},t) \\right] \\Psi(\\mathbf{r},t)$$
+
+Trailing inline math right before the end of the stream: $W^\\perp = \\{ \\mathbf{v} \\in \\mathbb{R}^3 \\mid \\mathbf{v} \\cdot \\mathbf{w} = 0 \\}$
+`;
+
+export const inlineSample = `# Inline Torture
+
+Links in every shape, arriving one character at a time.
+
+[Markdown link](https://simonhe.me/) · <a href="https://simonhe.me/">raw anchor tag</a>
+
+Bare autolink: https://github.com/lobehub/lobe-ui
+
+- **[Bold wrapping a link](https://example.com)**
+- [*Italic inside a link*](https://example.com)
+- [\`code inside a link\`](https://example.com)
+- Bracketed label: [【Author: Simon】](https://simonhe.me/)
+
+Trailing two-space line breaks:
+
+1. [GitHub](https://github.com)
+2. [Wikipedia](https://www.wikipedia.org)
+3. Plain text URL: https://markdown-guide.readthedocs.io
+
+## Inline HTML
+
+Text with <sub>subscript</sub>, <sup>superscript</sup> and <ins>inserted text</ins>.
+
+## Mixed scripts and punctuation
+
+这是 ~~已删除的文本~~，这是一个表情 :smile:。中英混排 hello world，标点密度高的一段：\`1-(5)\`、\`3-(3)\`、\`3-(4)\` 的 complex test \`1-(4)\`"heiheihei"中。
+
+مرحبا بكم في عالم اللغة العربية!
+
+## Nested emphasis
+
+Use \`npm install\` to install dependencies. The \`--save-dev\` flag marks it as a
+dev dependency. **Bold with _nested italic_ and \`code\`** all in one run.
+`;
+
+export const gfmEdgeSample = `# GFM Edge Cases
+
+## Task list
+
+- [ ] Star this repo
+- [x] Fork this repo
+- [ ] Create issues
+- [x] Submit PRs
+
+## Aligned table
+
+| Left | Centered | Right |
+|:-----|:--------:|------:|
+| 内容1 | 内容2 | 内容3 |
+| a long-ish cell | 25 | 1,024 |
+| \`code\` | **bold** | [link](https://example.com) |
+
+## Nested blockquote
+
+> This is a blockquote with **bold**, *italic*, and \`inline code\`.
+>
+> > Nested blockquotes work too, and keep streaming in order.
+
+## Heading levels
+
+### Heading 3
+#### Heading 4
+##### Heading 5
+###### Heading 6
+
+## Footnotes (known limitation)
+
+Each top-level block parses independently, so a footnote reference[^1] whose
+definition lands in a later block stays literal.
+
+[^1]: This definition arrives as its own block.
+
+## Tight nested list
+
+1. First level
+   - Second level
+     - Third level with a very long line that has to wrap inside the reveal without breaking the per-character stagger
+   - Back to second
+2. Second item
+
+\`\`\`plaintext
+packages/
+  markdown-parser/
+  streamdown/
+\`\`\`
+`;
+
 export const samples = {
   code: { content: codeSample, label: 'Long code' },
+  gfmEdge: { content: gfmEdgeSample, label: 'GFM edge cases' },
+  inline: { content: inlineSample, label: 'Inline torture' },
   latex: { content: latexSample, label: 'LaTeX' },
   markdown: { content: markdownSample, label: 'Markdown' },
+  mathEdge: { content: mathEdgeSample, label: 'Math edge cases' },
   stress: { content: stressSample, label: 'Stress test' },
 } as const;
 

@@ -4,13 +4,16 @@ import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
+import { markdownComponents } from '../components/CodeBlock';
 import { heroSample } from '../lib/samples';
 import { useLocalStream } from '../lib/useLocalStream';
+import { useStickToBottom } from '../lib/useStickToBottom';
 
 const INSTALL_COMMAND = 'pnpm add @lobehub/streamdown';
 
 export const Hero = () => {
-  const { text } = useLocalStream(heroSample, { chunkSize: 8, delayMs: 60, loop: true });
+  const { text } = useLocalStream(heroSample, { chunkSize: 6, delayMs: 24 });
+  const { onScroll, ref } = useStickToBottom();
   const remarkPlugins = useMemo(() => [remarkGfm, remarkMath], []);
   const rehypePlugins = useMemo(() => [rehypeKatex], []);
   const [copied, setCopied] = useState(false);
@@ -22,32 +25,48 @@ export const Hero = () => {
   };
 
   return (
-    <header className="hero">
-      <div className="hero-intro">
-        <h1>Streamdown</h1>
-        <p className="tagline">
-          Headless streaming markdown engine for React. Smooth per-character reveal, block-level
-          caching, LaTeX guarding — zero UI dependencies.
-        </p>
-        <div className="install">
+    <section className="hero">
+      <span className="hero-pill">
+        <b>New</b> Block-level caching, 2× less main-thread time
+      </span>
+      <h1>
+        Render markdown
+        <br />
+        as it arrives
+      </h1>
+      <p className="hero-lede">
+        A headless streaming markdown engine for React. Per-character reveal, block-level caching,
+        and a LaTeX guard that keeps half-typed math from breaking mid-stream. Ships zero styles.
+      </p>
+      <div className="hero-cta">
+        <a className="btn btn-primary" href="#playground">
+          Try the playground
+        </a>
+        <button className="btn btn-ghost" type="button" onClick={copyInstall}>
           <code>{INSTALL_COMMAND}</code>
-          <button type="button" onClick={copyInstall}>
-            {copied ? 'Copied!' : 'Copy'}
-          </button>
+          <span className="copy-state">{copied ? 'Copied!' : 'Copy'}</span>
+        </button>
+      </div>
+
+      <div className="surface hero-demo">
+        <div className="surface-bar">
+          <span>heroSample.md</span>
+          <span className="surface-bar-spacer" />
+          <span className="live-dot">
+            <i />
+            streaming
+          </span>
         </div>
-        <div className="hero-links">
-          <a href="https://github.com/lobehub/lobe-ui/tree/master/packages/streamdown">GitHub</a>
-          <a href="https://www.npmjs.com/package/@lobehub/streamdown">npm</a>
+        <div className="stream-pane sd-typography" ref={ref} onScroll={onScroll}>
+          <Streamdown
+            latexGuard
+            components={markdownComponents}
+            content={text}
+            rehypePlugins={rehypePlugins}
+            remarkPlugins={remarkPlugins}
+          />
         </div>
       </div>
-      <div className="hero-demo sd-typography">
-        <Streamdown
-          latexGuard
-          content={text}
-          rehypePlugins={rehypePlugins}
-          remarkPlugins={remarkPlugins}
-        />
-      </div>
-    </header>
+    </section>
   );
 };

@@ -10,134 +10,150 @@ import rehypeKatex from 'rehype-katex';
 import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 
+import { markdownComponents } from '../components/CodeBlock';
+import { Range, Segmented, Select, Switch } from '../components/Controls';
 import { type SampleKey, samples } from '../lib/samples';
 import { useLocalStream } from '../lib/useLocalStream';
-import { ProfilerPanel } from './ProfilerPanel';
+import { useStickToBottom } from '../lib/useStickToBottom';
+import { ProfilerPanel, ProfilerRate } from './ProfilerPanel';
 
-const SMOOTHING_PRESETS: StreamSmoothingPreset[] = ['realtime', 'balanced', 'silky'];
-const GRANULARITIES: StreamAnimationGranularity[] = ['char', 'word'];
+const SAMPLE_OPTIONS = Object.entries(samples).map(([value, { label }]) => ({
+  label,
+  value: value as SampleKey,
+}));
+
+const SMOOTHING_OPTIONS: { label: string; value: StreamSmoothingPreset }[] = [
+  { label: 'Realtime', value: 'realtime' },
+  { label: 'Balanced', value: 'balanced' },
+  { label: 'Silky', value: 'silky' },
+];
+
+const GRANULARITY_OPTIONS: { label: string; value: StreamAnimationGranularity }[] = [
+  { label: 'Char', value: 'char' },
+  { label: 'Word', value: 'word' },
+];
 
 export const Playground = () => {
   const [sampleKey, setSampleKey] = useState<SampleKey>('markdown');
-  const [chunkSize, setChunkSize] = useState(8);
-  const [delayMs, setDelayMs] = useState(60);
+  const [chunkSize, setChunkSize] = useState(6);
+  const [delayMs, setDelayMs] = useState(24);
+  const [jitter, setJitter] = useState(50);
   const [smoothing, setSmoothing] = useState<StreamSmoothingPreset>('balanced');
   const [granularity, setGranularity] = useState<StreamAnimationGranularity>('char');
   const [latexGuard, setLatexGuard] = useState(true);
   const [preprocess, setPreprocess] = useState(true);
 
+  const { onScroll: onOutputScroll, ref: outputRef } = useStickToBottom();
   const profiler = useMemo(() => createStreamdownProfiler({ label: 'playground' }), []);
-  const { restart, text } = useLocalStream(samples[sampleKey].content, { chunkSize, delayMs });
+  const { restart, text } = useLocalStream(samples[sampleKey].content, {
+    chunkSize,
+    delayMs,
+    jitter: jitter / 100,
+  });
   const remarkPlugins = useMemo(() => [remarkGfm, remarkMath], []);
   const rehypePlugins = useMemo(() => [rehypeKatex], []);
 
   useEffect(() => {
     profiler.reset('playground');
-  }, [profiler, sampleKey, chunkSize, delayMs, smoothing, granularity, preprocess]);
+  }, [profiler, sampleKey, chunkSize, delayMs, jitter, smoothing, granularity, preprocess]);
 
   return (
     <section className="playground" id="playground">
-      <h2>Playground</h2>
-      <div className="playground-grid">
-        <div className="controls">
-          <label>
-            Sample
-            <select value={sampleKey} onChange={(e) => setSampleKey(e.target.value as SampleKey)}>
-              {Object.entries(samples).map(([key, { label }]) => (
-                <option key={key} value={key}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Chunk size · {chunkSize} chars
-            <input
+      <div className="section-head">
+        <h2>Playground</h2>
+        <p>Tune the stream and watch the profiler respond in real time.</p>
+      </div>
+
+      <div className="surface">
+        <div className="surface-bar">
+          <span>{samples[sampleKey].label}</span>
+          <span className="surface-bar-spacer" />
+          <ProfilerRate profiler={profiler} />
+        </div>
+
+        <div className="board">
+          <div className="panel">
+            <Select
+              label="Sample"
+              options={SAMPLE_OPTIONS}
+              value={sampleKey}
+              onChange={setSampleKey}
+            />
+            <Range
+              label="Chunk size"
               max={40}
               min={1}
-              type="range"
+              unit="ch"
               value={chunkSize}
-              onChange={(e) => setChunkSize(Number(e.target.value))}
+              onChange={setChunkSize}
             />
-          </label>
-          <label>
-            Chunk delay · {delayMs} ms
-            <input
-              max={300}
-              min={10}
-              step={10}
-              type="range"
+            <Range
+              label="Chunk delay"
+              max={100}
+              min={4}
+              unit="ms"
               value={delayMs}
-              onChange={(e) => setDelayMs(Number(e.target.value))}
+              onChange={setDelayMs}
             />
-          </label>
-          <label>
-            Smoothing
-            <select
+            <Range
+              label="Jitter"
+              max={100}
+              min={0}
+              step={5}
+              unit="%"
+              value={jitter}
+              onChange={setJitter}
+            />
+            <Segmented
+              label="Smoothing"
+              options={SMOOTHING_OPTIONS}
               value={smoothing}
-              onChange={(e) => setSmoothing(e.target.value as StreamSmoothingPreset)}
-            >
-              {SMOOTHING_PRESETS.map((preset) => (
-                <option key={preset} value={preset}>
-                  {preset}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label>
-            Granularity
-            <select
+              onChange={setSmoothing}
+            />
+            <Segmented
+              label="Granularity"
+              options={GRANULARITY_OPTIONS}
               value={granularity}
-              onChange={(e) => setGranularity(e.target.value as StreamAnimationGranularity)}
+              onChange={setGranularity}
+            />
+            <Switch checked={latexGuard} label="LaTeX guard" onChange={setLatexGuard} />
+            <Switch checked={preprocess} label="Preprocess" onChange={setPreprocess} />
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={() => {
+                profiler.reset('playground');
+                restart();
+              }}
             >
-              {GRANULARITIES.map((g) => (
-                <option key={g} value={g}>
-                  {g}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="checkbox">
-            <input
-              checked={latexGuard}
-              type="checkbox"
-              onChange={(e) => setLatexGuard(e.target.checked)}
-            />
-            LaTeX guard
-          </label>
-          <label className="checkbox">
-            <input
-              checked={preprocess}
-              type="checkbox"
-              onChange={(e) => setPreprocess(e.target.checked)}
-            />
-            Preprocess
-          </label>
-          <button
-            type="button"
-            onClick={() => {
-              profiler.reset('playground');
-              restart();
-            }}
-          >
-            Replay
-          </button>
-          <ProfilerPanel profiler={profiler} />
-        </div>
-        <div className="playground-output sd-typography">
-          <StreamdownProfilerProvider profiler={profiler}>
-            <Streamdown
-              content={text}
-              granularity={granularity}
-              latexGuard={latexGuard}
-              preprocess={preprocess ? preprocessLaTeX : undefined}
-              rehypePlugins={rehypePlugins}
-              remarkPlugins={remarkPlugins}
-              smoothing={smoothing}
-            />
-          </StreamdownProfilerProvider>
+              Replay
+            </button>
+          </div>
+
+          <div className="canvas">
+            <div className="output-pane sd-typography" ref={outputRef} onScroll={onOutputScroll}>
+              <StreamdownProfilerProvider profiler={profiler}>
+                <Streamdown
+                  components={markdownComponents}
+                  content={text}
+                  granularity={granularity}
+                  latexGuard={latexGuard}
+                  preprocess={preprocess ? preprocessLaTeX : undefined}
+                  rehypePlugins={rehypePlugins}
+                  remarkPlugins={remarkPlugins}
+                  smoothing={smoothing}
+                />
+              </StreamdownProfilerProvider>
+            </div>
+            <ProfilerPanel profiler={profiler} />
+          </div>
         </div>
       </div>
+
+      <p className="footnote">
+        Reveal commits sit deliberately below the display refresh — per-character stagger rides CSS{' '}
+        <code>animation-delay</code>, not a re-render every frame.
+      </p>
     </section>
   );
 };
