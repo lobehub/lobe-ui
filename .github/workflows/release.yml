@@ -39,8 +39,17 @@ permissions:
   pull-requests: write # Required for semantic-release to comment on PRs
 
 jobs:
+  # @lobehub/ui depends on @lobehub/streamdown by semver range, so streamdown
+  # must reach npm first — otherwise a ui release can ship a dependency on a
+  # version that does not exist yet.
+  streamdown:
+    name: Streamdown
+    uses: ./.github/workflows/release-streamdown.yml
+    secrets: inherit
+
   release:
     name: Release
+    needs: streamdown
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -67,6 +76,20 @@ jobs:
 
       - name: Build
         run: pnpm run build
+
+      # clean-package rewrites the workspace: protocol into ^<version> read
+      # from packages/streamdown/package.json. If that version was never
+      # published (e.g. the change carried no `streamdown`-scoped commit), the
+      # tarball would depend on a package that does not exist — and an npm
+      # publish cannot be taken back. Fail loudly here instead.
+      - name: Verify streamdown dependency is published
+        run: |
+          VERSION=$(node -p "require('./packages/streamdown/package.json').version")
+          if ! npm view "@lobehub/streamdown@$VERSION" version > /dev/null 2>&1; then
+            echo "::error::@lobehub/streamdown@$VERSION is not on npm. The @lobehub/ui tarball would depend on a nonexistent version. Ensure the change includes a 'streamdown'-scoped commit so the streamdown job publishes it first."
+            exit 1
+          fi
+          echo "@lobehub/streamdown@$VERSION is published."
 
       - name: Force Release Commit
         if: github.event.inputs.force_release == 'true'
