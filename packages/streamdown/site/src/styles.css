@@ -1,0 +1,333 @@
+:root {
+  color-scheme: light dark;
+  --bg: #fafafa;
+  --fg: #1a1a1a;
+  --fg-secondary: #6b6b6b;
+  --surface: #ffffff;
+  --border: #e4e4e4;
+  --accent: #4f6ef7;
+  --code-bg: #f2f2f2;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111113;
+    --fg: #ededef;
+    --fg-secondary: #9b9b9e;
+    --surface: #1a1a1d;
+    --border: #2c2c30;
+    --accent: #7c94ff;
+    --code-bg: #232326;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+}
+
+a {
+  color: var(--accent);
+}
+
+button,
+select,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  cursor: pointer;
+}
+
+select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+
+.page {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 48px 24px 64px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 40px;
+  align-items: start;
+  margin-bottom: 64px;
+}
+
+.hero h1 {
+  font-size: 44px;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  color: var(--fg-secondary);
+  font-size: 17px;
+  margin: 0 0 24px;
+}
+
+.install {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  width: fit-content;
+}
+
+.install code {
+  font-size: 14px;
+}
+
+.hero-links {
+  display: flex;
+  gap: 16px;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.hero-demo {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  min-height: 420px;
+  max-height: 560px;
+  overflow-y: auto;
+}
+
+.playground h2 {
+  font-size: 28px;
+  margin: 0 0 20px;
+}
+
+.playground-grid {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  position: sticky;
+  top: 16px;
+}
+
+.controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--fg-secondary);
+}
+
+.controls label.checkbox {
+  flex-direction: row;
+  align-items: center;
+}
+
+.playground-output {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  min-height: 480px;
+}
+
+.profiler {
+  border-top: 1px solid var(--border);
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profiler-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.profiler-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--fg-secondary);
+}
+
+.profiler-fps {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.profiler-fps em {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--fg-secondary);
+}
+
+.sparkline {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.profiler-note {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--fg-secondary);
+  margin: 0;
+}
+
+.profiler-note code {
+  background: var(--code-bg);
+  border-radius: 3px;
+  padding: 0 3px;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.metric {
+  background: var(--code-bg);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+.metric-label {
+  font-size: 11px;
+  color: var(--fg-secondary);
+}
+
+.metric-value {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.metric-hint {
+  font-size: 11px;
+  color: var(--fg-secondary);
+}
+
+.footer {
+  margin-top: 64px;
+  border-top: 1px solid var(--border);
+  padding-top: 32px;
+}
+
+.footnote {
+  color: var(--fg-secondary);
+  font-size: 13px;
+}
+
+/* Minimal headless typography for Streamdown output — this is the demo of
+   "bring your own styles". */
+.sd-typography {
+  font-size: 15px;
+}
+
+.sd-typography h1,
+.sd-typography h2,
+.sd-typography h3 {
+  line-height: 1.3;
+  margin: 1.2em 0 0.5em;
+}
+
+.sd-typography h1:first-child,
+.sd-typography h2:first-child {
+  margin-top: 0;
+}
+
+.sd-typography p {
+  margin: 0.6em 0;
+}
+
+.sd-typography code {
+  background: var(--code-bg);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+  font-size: 0.9em;
+}
+
+.sd-typography pre {
+  background: var(--code-bg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow-x: auto;
+}
+
+.sd-typography pre code {
+  background: none;
+  padding: 0;
+}
+
+.sd-typography blockquote {
+  border-inline-start: 3px solid var(--accent);
+  margin-inline: 0;
+  padding-inline-start: 14px;
+  color: var(--fg-secondary);
+}
+
+.sd-typography table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 0.8em 0;
+}
+
+.sd-typography th,
+.sd-typography td {
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.sd-typography .katex-display {
+  overflow-x: auto;
+  padding: 4px 0;
+}
+
+@media (max-width: 860px) {
+  .hero,
+  .playground-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .controls {
+    position: static;
+  }
+}
