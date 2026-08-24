@@ -228,7 +228,6 @@ export {
 } from './Markdown/components/SearchResultCards';
 export { rehypeCustomFootnotes } from './Markdown/plugins/rehypeCustomFootnotes';
 export { rehypeKatexDir } from './Markdown/plugins/rehypeKatexDir';
-export { rehypeStreamAnimated } from './Markdown/plugins/rehypeStreamAnimated';
 export { remarkBr } from './Markdown/plugins/remarkBr';
 export { remarkColor } from './Markdown/plugins/remarkColor';
 export { remarkCustomFootnotes } from './Markdown/plugins/remarkCustomFootnotes';
@@ -375,4 +374,5 @@ export {
 } from './utils/placement';
 export { default as Video, type VideoProps } from './Video';
 export { default as ShikiLobeTheme } from '@/Highlighter/theme/lobe-theme';
+export { rehypeStreamAnimated } from '@lobehub/streamdown';
 export { ErrorBoundary, type ErrorBoundaryProps } from 'react-error-boundary';

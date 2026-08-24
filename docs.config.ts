@@ -9,6 +9,7 @@ export default defineDocsConfig({
     // to source while developing @lobehub/ui itself.
     '@lobehub/ui/es': 'src',
     '@lobehub/ui': 'src',
+    '@lobehub/streamdown': 'packages/streamdown/src',
   },
   atomDirs: [{ dir: 'src' }],
   description: 'A modern React component library for building LobeHub products.',
