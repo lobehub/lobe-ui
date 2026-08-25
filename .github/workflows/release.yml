@@ -77,11 +77,10 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      # clean-package rewrites the workspace: protocol into ^<version> read
-      # from packages/streamdown/package.json. If that version was never
-      # published (e.g. the change carried no `streamdown`-scoped commit), the
-      # tarball would depend on a package that does not exist — and an npm
-      # publish cannot be taken back. Fail loudly here instead.
+      # If the streamdown version this repo builds against was never published
+      # (e.g. the change carried no `streamdown`-scoped commit), @lobehub/ui
+      # would ship against a package that does not exist — and an npm publish
+      # cannot be taken back. Fail loudly here instead.
       - name: Verify streamdown dependency is published
         run: |
           VERSION=$(node -p "require('./packages/streamdown/package.json').version")

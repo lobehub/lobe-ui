@@ -166,7 +166,7 @@
     "@emotion/is-prop-valid": "^1.4.0",
     "@floating-ui/react": "^0.27.19",
     "@giscus/react": "^3.1.0",
-    "@lobehub/streamdown": "workspace:^",
+    "@lobehub/streamdown": "^1.0.0",
     "@mdx-js/mdx": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@pierre/diffs": "1.2.12",

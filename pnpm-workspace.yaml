@@ -1,4 +1,9 @@
 lockfile: false
+# @lobehub/ui depends on @lobehub/streamdown by plain semver, not `workspace:`:
+# npm sends the on-disk manifest to the registry before prepack runs, so a
+# `workspace:` range survives into the packument even when the tarball is
+# rewritten — and pnpm resolves consumers against the packument.
+linkWorkspacePackages: true
 resolutionMode: highest
 
 packages:
