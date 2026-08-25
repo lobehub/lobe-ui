@@ -2,6 +2,13 @@
 
 # Changelog
 
+## [5.27.2](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.1...docs-kit@5.27.2) (2026-08-25)
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Alias @lobehub/ui/es in changelog fallback route test ([a233558](https://github.com/lobehub/lobe-ui/commit/a233558))
+- **docs-kit**: Await giscus mount count in PageEndActions test ([6f99588](https://github.com/lobehub/lobe-ui/commit/6f99588))
+
 ## [5.27.1](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.0...docs-kit@5.27.1) (2026-08-21)
 
 ### 🐛 Bug Fixes
