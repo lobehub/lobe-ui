@@ -1,6 +1,6 @@
 {
   "name": "@lobehub/ui",
-  "version": "5.32.3",
+  "version": "5.32.5",
   "description": "Lobe UI is an open-source UI component library for building AIGC web apps",
   "keywords": [
     "lobehub",
@@ -166,6 +166,7 @@
     "@emotion/is-prop-valid": "^1.4.0",
     "@floating-ui/react": "^0.27.19",
     "@giscus/react": "^3.1.0",
+    "@lobehub/streamdown": "workspace:^",
     "@mdx-js/mdx": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@pierre/diffs": "1.2.12",

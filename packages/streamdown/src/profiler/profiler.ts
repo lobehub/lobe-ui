@@ -1,5 +1,5 @@
-import { type BlockState } from '@/Markdown/SyntaxMarkdown/useStreamQueue';
-import { getNow } from '@/utils/getNow';
+import { getNow } from '../internal';
+import { type BlockState } from '../useStreamQueue';
 
 export type StreamdownProfilerPhase = 'mount' | 'nested-update' | 'update';
 

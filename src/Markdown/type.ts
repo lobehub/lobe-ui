@@ -1,3 +1,4 @@
+import { type StreamAnimationGranularity, type StreamSmoothingPreset } from '@lobehub/streamdown';
 import { type AnchorProps } from 'antd';
 import { type CSSProperties, type ElementType, type FC, type ReactNode, type Ref } from 'react';
 import { type Components, type Options as ReactMarkdownOptions } from 'react-markdown';
@@ -19,9 +20,7 @@ export interface TypographyProps extends DivProps {
   ref?: Ref<HTMLDivElement>;
 }
 
-export type StreamSmoothingPreset = 'realtime' | 'balanced' | 'silky';
-
-export type StreamAnimationGranularity = 'char' | 'word';
+export type { StreamAnimationGranularity, StreamSmoothingPreset };
 
 export interface SyntaxMarkdownProps {
   allowHtml?: boolean;

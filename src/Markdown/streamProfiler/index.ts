@@ -1,4 +1,8 @@
 export {
+  StreamdownProfilerPanel,
+  type StreamdownProfilerPanelProps,
+} from './StreamdownProfilerPanel';
+export {
   createStreamdownProfiler,
   type CreateStreamdownProfilerOptions,
   type StreamdownAnimationFrameSample,
@@ -7,15 +11,9 @@ export {
   type StreamdownInputAppendSample,
   type StreamdownProfiler,
   type StreamdownProfilerPhase,
-  type StreamdownProfilerSnapshot,
-  type StreamdownRootCommitSample,
-} from './profiler';
-export {
-  StreamdownProfilerPanel,
-  type StreamdownProfilerPanelProps,
-} from './StreamdownProfilerPanel';
-export {
   StreamdownProfilerProvider,
   type StreamdownProfilerProviderProps,
+  type StreamdownProfilerSnapshot,
+  type StreamdownRootCommitSample,
   useStreamdownProfiler,
-} from './StreamdownProfilerProvider';
+} from '@lobehub/streamdown/profiler';

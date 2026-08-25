@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { useStreamdownProfiler } from '@/Markdown/streamProfiler';
-import { type StreamSmoothingPreset } from '@/Markdown/type';
-import { getNow } from '@/utils/getNow';
-
 import { findOpenFenceLanguage } from './fenceState';
+import { getNow } from './internal';
+import { useStreamdownProfiler } from './profiler';
+import { type StreamSmoothingPreset } from './types';
 
 interface StreamSmoothingPresetConfig {
   activeInputWindowMs: number;

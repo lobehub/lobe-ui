@@ -3,6 +3,7 @@ import { cx } from 'antd-style';
 import { Check } from 'lucide-react';
 import { type MenuInfo } from 'rc-menu/es/interface';
 import {
+  type ComponentProps,
   type KeyboardEvent as ReactKeyboardEvent,
   type MouseEvent as ReactMouseEvent,
   type ReactNode,
@@ -30,11 +31,36 @@ import {
 } from '@/Menu';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
+import { useLayerZIndex } from '../zIndex';
 import {
   type ContextMenuCheckboxItem,
   type ContextMenuItem,
   type ContextMenuSwitchItem,
 } from './type';
+
+type ContextMenuPositionerProps = ComponentProps<typeof ContextMenu.Positioner>;
+
+/**
+ * Submenu positioners are portaled outside the root menu, so they must allocate
+ * their own layer z-index (same pattern as DropdownMenu) rather than relying on
+ * the fixed CSS fallback that can fall behind after repeated root openings (#608).
+ */
+const ContextMenuSubmenuPositioner = memo(({ style, ...rest }: ContextMenuPositionerProps) => {
+  const explicitZIndex =
+    typeof style !== 'function' && style?.zIndex != null && typeof style.zIndex === 'number'
+      ? style.zIndex
+      : undefined;
+  const { zIndex, ref: zRef } = useLayerZIndex<HTMLDivElement>('floating', explicitZIndex);
+
+  const resolvedStyle =
+    typeof style === 'function'
+      ? (state: any) => ({ zIndex, ...style(state) })
+      : { zIndex, ...style };
+
+  return <ContextMenu.Positioner {...rest} ref={zRef as any} style={resolvedStyle} />;
+});
+
+ContextMenuSubmenuPositioner.displayName = 'ContextMenuSubmenuPositioner';
 
 export type { IconAlign, IconSpaceMode } from '@/Menu';
 
@@ -326,7 +352,7 @@ export const renderContextMenuItems = (
             })}
           </ContextMenu.SubmenuTrigger>
           <ContextMenu.Portal>
-            <ContextMenu.Positioner
+            <ContextMenuSubmenuPositioner
               alignOffset={-4}
               className={styles.positioner}
               data-submenu=""
@@ -348,7 +374,7 @@ export const renderContextMenuItems = (
                   <div className={styles.footer}>{submenu.footer}</div>
                 )}
               </ContextMenu.Popup>
-            </ContextMenu.Positioner>
+            </ContextMenuSubmenuPositioner>
           </ContextMenu.Portal>
         </ContextMenu.SubmenuRoot>
       );
