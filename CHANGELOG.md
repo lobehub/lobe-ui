@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.32.7](https://github.com/lobehub/lobe-ui/compare/v5.32.6...v5.32.7) (2026-08-25)
+
+### 🐛 Bug Fixes
+
+- **ui**: Publish streamdown dep as a real semver range ([da1f9dd](https://github.com/lobehub/lobe-ui/commit/da1f9dd))
+
 ## [5.32.6](https://github.com/lobehub/lobe-ui/compare/v5.32.5...v5.32.6) (2026-08-25)
 
 ### 🎫 Chores
