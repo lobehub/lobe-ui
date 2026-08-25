@@ -25,6 +25,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     border-radius: 50%;
 
     background: ${cssVar.colorPrimary};
+
+    [data-orientation='horizontal'] &:dir(rtl) {
+      inset-inline-start: calc(var(--active-tab-right) + var(--active-tab-width) / 2 - 2.5px);
+    }
   `,
   indicatorRounded: css`
     inset-block-start: var(--active-tab-top);
@@ -36,6 +40,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     background: ${cssVar.colorBgElevated};
     box-shadow: ${cssVar.boxShadowTertiary};
+
+    [data-orientation='horizontal'] &:dir(rtl) {
+      inset-inline-start: var(--active-tab-right);
+    }
   `,
   indicatorSquare: css`
     inset-block-end: 0;
@@ -45,6 +53,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     height: 2px;
 
     background: ${cssVar.colorPrimary};
+
+    [data-orientation='horizontal'] &:dir(rtl) {
+      inset-inline-start: var(--active-tab-right);
+    }
   `,
   list: css`
     position: relative;

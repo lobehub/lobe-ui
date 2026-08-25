@@ -23,6 +23,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     transition-duration: 240ms;
     transition-property: inset-inline-start, inset-block-start, width, height;
 
+    [data-orientation='horizontal'] &:dir(rtl) {
+      inset-inline-start: var(--active-item-right);
+    }
+
     @media (prefers-reduced-motion: reduce) {
       transition-duration: 0s;
     }
