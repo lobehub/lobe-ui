@@ -86,6 +86,7 @@ it('renders the realistic CHANGELOG.md fallback content for a fixture consumer w
           find: /^@lobehub\/streamdown(\/profiler)?$/,
           replacement: resolve(repositoryRoot, 'packages/streamdown/src') + '$1',
         },
+        { find: '@lobehub/ui/es', replacement: resolve(repositoryRoot, 'src') },
         { find: '@lobehub/ui', replacement: resolve(repositoryRoot, 'src') },
         { find: '@', replacement: resolve(repositoryRoot, 'src') },
       ],
