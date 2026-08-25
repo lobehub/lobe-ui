@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [5.32.6](https://github.com/lobehub/lobe-ui/compare/v5.32.5...v5.32.6) (2026-08-25)
+
+### 🎫 Chores
+
+- **release**: Streamdown@1.0.0 [skip ci] ([e026351](https://github.com/lobehub/lobe-ui/commit/e026351))
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Align Tabs and Segmented indicators in RTL, closes [#599](https://github.com/lobehub/lobe-ui/issues/599) ([aa6b726](https://github.com/lobehub/lobe-ui/commit/aa6b726))
+
 ## [5.32.5](https://github.com/lobehub/lobe-ui/compare/v5.32.4...v5.32.5) (2026-08-22)
 
 ### 🎫 Chores
