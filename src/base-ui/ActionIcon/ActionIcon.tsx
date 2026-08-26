@@ -126,6 +126,6 @@ const ActionIcon = memo<ActionIconProps>(
   },
 );
 
-ActionIcon.displayName = 'ActionIcon';
+ActionIcon.displayName = 'BaseActionIcon';
 
 export default ActionIcon;
