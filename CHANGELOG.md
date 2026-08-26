@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [5.33.1](https://github.com/lobehub/lobe-ui/compare/v5.33.0...v5.33.1) (2026-08-26)
+
+### 🎫 Chores
+
+- **release**: Docs-kit@5.27.3 [skip ci] ([04ba973](https://github.com/lobehub/lobe-ui/commit/04ba973))
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Resolve nativeButton for the base-ui ActionIcon trigger, closes [#625](https://github.com/lobehub/lobe-ui/issues/625) ([64d8144](https://github.com/lobehub/lobe-ui/commit/64d8144))
+
 # [5.33.0](https://github.com/lobehub/lobe-ui/compare/v5.32.7...v5.33.0) (2026-08-26)
 
 ### ✨ Features
