@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.27.3](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.2...docs-kit@5.27.3) (2026-08-26)
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Sync navigation section count with base-ui doc pages, closes [#624](https://github.com/lobehub/lobe-ui/issues/624) ([5d9477b](https://github.com/lobehub/lobe-ui/commit/5d9477b))
+
 ## [5.27.2](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.1...docs-kit@5.27.2) (2026-08-25)
 
 ### 🐛 Bug Fixes
