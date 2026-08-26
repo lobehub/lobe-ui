@@ -10,6 +10,9 @@ import { safeReadableColor } from '@/utils/safeReadableColor';
 import { variants } from './styles';
 import type { TagProps } from './type';
 
+/**
+ * @deprecated Use `Tag` from `@lobehub/ui/base-ui` instead.
+ */
 const Tag: FC<TagProps> = ({
   className,
   ref,
@@ -58,7 +61,7 @@ const Tag: FC<TagProps> = ({
         : colorsPresetSystem(color, isFilled ? 'fillQuaternary' : 'fillTertiary');
     }
     if (isHexColor) {
-      textColor = isSolid ? safeReadableColor(color) : cssVar.colorBgLayout;
+      textColor = isSolid ? safeReadableColor(color) : isBorderless ? color : cssVar.colorBgLayout;
       backgroundColor = isSolid ? color : isBorderless ? 'transparent' : color;
       borderColor = isSolid ? color : borderColor;
     }

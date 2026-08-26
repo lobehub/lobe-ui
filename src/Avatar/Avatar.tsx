@@ -21,6 +21,9 @@ import {
   isDefaultAntAvatar as checkIsDefaultAntAvatar,
 } from './utils';
 
+/**
+ * @deprecated Use `Avatar` from `@lobehub/ui/base-ui` instead.
+ */
 const Avatar = memo<AvatarProps>(
   ({
     bordered,
