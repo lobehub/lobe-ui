@@ -61,7 +61,7 @@ const Tag: FC<TagProps> = ({
         : colorsPresetSystem(color, isFilled ? 'fillQuaternary' : 'fillTertiary');
     }
     if (isHexColor) {
-      textColor = isSolid ? safeReadableColor(color) : cssVar.colorBgLayout;
+      textColor = isSolid ? safeReadableColor(color) : isBorderless ? color : cssVar.colorBgLayout;
       backgroundColor = isSolid ? color : isBorderless ? 'transparent' : color;
       borderColor = isSolid ? color : borderColor;
     }
