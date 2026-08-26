@@ -38,6 +38,7 @@ const NATIVE_BUTTON_MAP: Record<string, boolean> = {
   Alert: false,
   Avatar: false,
   AvatarGroup: false,
+  BaseActionIcon: true,
   BaseButton: true,
   Block: false,
   BottomGradientButton: true,
