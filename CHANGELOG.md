@@ -2,6 +2,16 @@
 
 # Changelog
 
+# [5.33.0](https://github.com/lobehub/lobe-ui/compare/v5.32.7...v5.33.0) (2026-08-26)
+
+### ✨ Features
+
+- **base-ui**: Migrate ActionIcon, Avatar, Tag, Text, closes [#621](https://github.com/lobehub/lobe-ui/issues/621) ([a26fa14](https://github.com/lobehub/lobe-ui/commit/a26fa14))
+
+### 🎫 Chores
+
+- **release**: Docs-kit@5.27.2 [skip ci] ([d3b243f](https://github.com/lobehub/lobe-ui/commit/d3b243f))
+
 ## [5.32.7](https://github.com/lobehub/lobe-ui/compare/v5.32.6...v5.32.7) (2026-08-25)
 
 ### 🐛 Bug Fixes
