@@ -108,6 +108,7 @@
   "src/base-ui/Tag/index.mdx": "Base UI",
   "src/base-ui/Text/index.mdx": "Base UI",
   "src/base-ui/Toast/index.mdx": "Base UI",
+  "src/base-ui/ToggleGroup/index.mdx": "Base UI",
   "src/base-ui/Tooltip/index.mdx": "Base UI",
   "src/brand/BrandLoading/index.mdx": "Brand",
   "src/brand/LobeChat/index.mdx": "Brand",

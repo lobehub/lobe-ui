@@ -1,0 +1,43 @@
+---
+title: ToggleGroup
+description: Base UI-powered ToggleGroup — a frameless radio-style group of action buttons for toolbar mode switches. Single selection is enforced; the pressed item cannot be deselected.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoContainerQuery from './demos/containerQuery.tsx?demo';
+
+## Default
+
+The default `outlined` variant renders a joined group — container border with `1px` dividers between items. The `borderless` variant renders detached action buttons for flush toolbars. Hover and pressed states follow ActionIcon: hover `colorFillSecondary`, pressed `colorFillSecondary` + `colorText`, pressed hover `colorFill`.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Responsive Labels
+
+Labels are wrapped in an addressable `.toggle-group-item-label` span, so a container query can hide them in narrow toolbars, leaving icon-only buttons.
+
+<Demo of={DemoContainerQuery} layout="bare" />
+
+## APIs
+
+### ToggleGroup
+
+<Api name="ToggleGroup" from=".." migrationKey="heading:%5B%22ToggleGroup%22%5D:0" />
+
+### ToggleGroupOption
+
+| Property | Description                              | Type        | Default |
+| -------- | ---------------------------------------- | ----------- | ------- |
+| value    | Unique value identifying the option      | `string`    | -       |
+| label    | Label text (hidable via container query) | `ReactNode` | -       |
+| icon     | Leading icon (14px recommended)          | `ReactNode` | -       |
+| disabled | Whether the option is disabled           | `boolean`   | `false` |
+| title    | Native tooltip / aria-label fallback     | `string`    | -       |
+
+A plain string option is shorthand for `{ value: option }`.
+
+### Variants
+
+- `outlined` (default) — joined group: container border, `1px` dividers, square inner corners.
+- `borderless` — detached action buttons with a `2px` gap, for flush toolbar scenarios.
