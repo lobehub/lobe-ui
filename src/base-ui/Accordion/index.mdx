@@ -1,0 +1,47 @@
+---
+title: Accordion
+description: Base UI-powered Accordion with a flush borderless look — the header hover highlight bleeds outside the text column so titles stay aligned with surrounding copy, plus an outlined FAQ-style variant.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoOutlined from './demos/outlined.tsx?demo';
+import DemoAtoms from './demos/atoms.tsx?demo';
+
+## Default
+
+The title text column is the alignment reference: the hover highlight and hit area extend `8px` (`--accordion-hover-inset`) beyond the component box without shifting layout.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Outlined
+
+Container border with dividers between items. The first example is single-open (`multiple={false}`), the second places the indicator at the end.
+
+<Demo of={DemoOutlined} layout="bare" />
+
+## Atom Components
+
+<Demo of={DemoAtoms} layout="bare" />
+
+## APIs
+
+### Accordion
+
+<Api name="Accordion" from=".." migrationKey="heading:%5B%22Accordion%22%5D:0" />
+
+### AccordionItemType
+
+| Property         | Description                              | Type        | Default |
+| ---------------- | ---------------------------------------- | ----------- | ------- |
+| key              | Unique value identifying the item        | `string`    | -       |
+| title            | Header title                             | `ReactNode` | -       |
+| children         | Panel content                            | `ReactNode` | -       |
+| action           | Actions shown at the header end on hover | `ReactNode` | -       |
+| alwaysShowAction | Show the action without hovering         | `boolean`   | `false` |
+| disabled         | Whether the item is disabled             | `boolean`   | `false` |
+
+### Variants
+
+- `borderless` (default) — flush look; hover highlight bleeds `8px` outside via `--accordion-hover-inset`.
+- `outlined` — rounded container border with `1px` dividers between items.

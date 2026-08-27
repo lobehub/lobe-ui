@@ -1,3 +1,5 @@
+export { default as Accordion } from './Accordion';
+export * from './Accordion';
 export { default as ActionIcon } from './ActionIcon';
 export * from './ActionIcon';
 export * from './Alert';
