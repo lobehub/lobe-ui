@@ -61,6 +61,12 @@ export const toStandaloneSvgString = (element: SVGElement): string => {
     if (value) clone.style.setProperty(name, value);
   }
 
+  // The diagram is rendered transparent so it inherits the page surface, but a
+  // standalone copy has nothing behind it: without an explicit fill the viewer
+  // scrim (and whatever it lets through) shows straight through the diagram.
+  const background = computed.getPropertyValue('--bg').trim();
+  if (background) clone.style.setProperty('background', background);
+
   const fontFamily = computed.fontFamily;
   if (fontFamily) clone.style.setProperty('font-family', fontFamily);
 

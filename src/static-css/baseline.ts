@@ -17,7 +17,6 @@ export const lobeUiAntdBaseline: AntdProbeName[] = [
   'dropdown',
   'empty',
   'form',
-  'image',
   'input',
   'input-number',
   'input-textarea',
