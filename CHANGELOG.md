@@ -2,6 +2,13 @@
 
 # Changelog
 
+# [5.34.0](https://github.com/lobehub/lobe-ui/compare/v5.33.3...v5.34.0) (2026-08-27)
+
+### ✨ Features
+
+- **base-ui**: Add Accordion ([b0582ef](https://github.com/lobehub/lobe-ui/commit/b0582ef))
+- **base-ui**: Add ToggleGroup ([027398c](https://github.com/lobehub/lobe-ui/commit/027398c))
+
 ## [5.33.3](https://github.com/lobehub/lobe-ui/compare/v5.33.2...v5.33.3) (2026-08-27)
 
 ### 🎫 Chores
