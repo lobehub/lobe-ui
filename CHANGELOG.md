@@ -2,6 +2,17 @@
 
 # Changelog
 
+## [5.33.3](https://github.com/lobehub/lobe-ui/compare/v5.33.2...v5.33.3) (2026-08-27)
+
+### 🎫 Chores
+
+- **eslint**: Ban the migrated ActionIcon, Avatar, Tag and Text wrappers, closes [#628](https://github.com/lobehub/lobe-ui/issues/628) ([0ba2af1](https://github.com/lobehub/lobe-ui/commit/0ba2af1))
+
+### 💄 Styles
+
+- **toast**: Rename viewport offset vars to avoid base-ui var collision ([b7696a0](https://github.com/lobehub/lobe-ui/commit/b7696a0))
+- **toast**: Themeable radius/offset vars and Linear-style shadow ([53e2bd5](https://github.com/lobehub/lobe-ui/commit/53e2bd5))
+
 ## [5.33.2](https://github.com/lobehub/lobe-ui/compare/v5.33.1...v5.33.2) (2026-08-27)
 
 ### 🐛 Bug Fixes
