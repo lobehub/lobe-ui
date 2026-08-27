@@ -73,4 +73,18 @@ describe('toStandaloneSvgString', () => {
     expect(standalone).toContain('--bg: #0d0d0d');
     expect(standalone).toContain('--fg: #ffffff');
   });
+
+  it('paints the background so the copy is not transparent', () => {
+    const host = document.createElement('div');
+    host.innerHTML = prepareInlineMermaidSvg(render(), 'scope-1');
+    document.body.append(host);
+
+    const svg = host.querySelector('svg')!;
+    svg.style.setProperty('--bg', 'rgb(13, 13, 13)');
+
+    const standalone = toStandaloneSvgString(svg);
+    host.remove();
+
+    expect(standalone).toContain('background: rgb(13, 13, 13)');
+  });
 });
