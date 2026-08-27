@@ -1,6 +1,8 @@
 const DEPRECATED_UI_COMPONENTS = [
+  'ActionIcon',
   'Alert',
   'AutoComplete',
+  'Avatar',
   'Button',
   'Checkbox',
   'CheckboxGroup',
@@ -13,6 +15,8 @@ const DEPRECATED_UI_COMPONENTS = [
   'Slider',
   'SliderWithInput',
   'Tabs',
+  'Tag',
+  'Text',
 ];
 
 const DEPRECATED_ANTD_COMPONENT_PATHS = [

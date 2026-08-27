@@ -38,6 +38,12 @@ describe('restrictedImports', () => {
     ]);
   });
 
+  it.each(['ActionIcon', 'Avatar', 'Tag', 'Text'])('rejects the migrated %s wrapper', (name) => {
+    expect(lint(`import { ${name} } from '@lobehub/ui';`)).toEqual([
+      expect.objectContaining({ ruleId: 'no-restricted-imports', severity: 2 }),
+    ]);
+  });
+
   it('allows Alert from the Base UI entrypoint', () => {
     expect(lint("import { Alert } from '@lobehub/ui/base-ui';")).toEqual([]);
   });
