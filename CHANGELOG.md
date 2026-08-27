@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.33.2](https://github.com/lobehub/lobe-ui/compare/v5.33.1...v5.33.2) (2026-08-27)
+
+### 🐛 Bug Fixes
+
+- **mermaid**: Give the diagram preview an opaque background, closes [#627](https://github.com/lobehub/lobe-ui/issues/627) ([8ce9025](https://github.com/lobehub/lobe-ui/commit/8ce9025))
+
 ## [5.33.1](https://github.com/lobehub/lobe-ui/compare/v5.33.0...v5.33.1) (2026-08-26)
 
 ### 🎫 Chores
