@@ -199,19 +199,16 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     height: var(--toast-collapsed-height);
     padding-block: 12px;
     padding-inline: 16px;
-    border-radius: ${cssVar.borderRadiusLG};
+    border-radius: var(--toast-border-radius, ${cssVar.borderRadiusLG});
 
     color: ${cssVar.colorText};
 
     background: ${cssVar.colorBgElevated};
     background-clip: padding-box;
     box-shadow:
-      0 0 0 1px color-mix(in srgb, ${cssVar.colorBgSolid} 3%, transparent),
-      0 1px 1px -0.5px color-mix(in srgb, ${cssVar.colorBgSolid} 3%, transparent),
-      0 3px 3px -1.5px color-mix(in srgb, ${cssVar.colorBgSolid} 3%, transparent),
-      0 6px 6px -3px color-mix(in srgb, ${cssVar.colorBgSolid} 3%, transparent),
-      0 12px 12px -6px color-mix(in srgb, ${cssVar.colorBgSolid} 3%, transparent),
-      0 24px 24px -12px color-mix(in srgb, ${cssVar.colorBgSolid} 3%, transparent);
+      0 0 0 1px ${cssVar.colorBorderSecondary},
+      0 4px 12px rgb(0 0 0 / 10%),
+      0 16px 32px -8px rgb(0 0 0 / 12%);
 
     transition:
       transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
@@ -339,45 +336,45 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     z-index: 100000;
 
     width: 360px;
-    max-width: calc(100vw - 32px);
+    max-width: calc(100vw - var(--toast-offset-x, 16px) * 2);
 
     outline: 0;
 
     @media (width <= 480px) {
-      width: calc(100vw - 32px);
+      width: calc(100vw - var(--toast-offset-x, 16px) * 2);
     }
   `,
 
   viewportBottom: css`
-    inset-block-end: 16px;
+    inset-block-end: var(--toast-offset-y, 16px);
     inset-inline-start: 50%;
     transform: translateX(-50%);
   `,
 
   viewportBottomLeft: css`
-    inset-block-end: 16px;
-    inset-inline-start: 16px;
+    inset-block-end: var(--toast-offset-y, 16px);
+    inset-inline-start: var(--toast-offset-x, 16px);
   `,
 
   viewportBottomRight: css`
-    inset-block-end: 16px;
-    inset-inline-end: 16px;
+    inset-block-end: var(--toast-offset-y, 16px);
+    inset-inline-end: var(--toast-offset-x, 16px);
   `,
 
   viewportTop: css`
-    inset-block-start: 16px;
+    inset-block-start: var(--toast-offset-y, 16px);
     inset-inline-start: 50%;
     transform: translateX(-50%);
   `,
 
   viewportTopLeft: css`
-    inset-block-start: 16px;
-    inset-inline-start: 16px;
+    inset-block-start: var(--toast-offset-y, 16px);
+    inset-inline-start: var(--toast-offset-x, 16px);
   `,
 
   viewportTopRight: css`
-    inset-block-start: 16px;
-    inset-inline-end: 16px;
+    inset-block-start: var(--toast-offset-y, 16px);
+    inset-inline-end: var(--toast-offset-x, 16px);
   `,
 }));
 
