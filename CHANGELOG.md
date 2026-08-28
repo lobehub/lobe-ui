@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.34.3](https://github.com/lobehub/lobe-ui/compare/v5.34.2...v5.34.3) (2026-08-28)
+
+### 🐛 Bug Fixes
+
+- **markdown**: Inline rehype-katex to keep a single katex version ([ca8c669](https://github.com/lobehub/lobe-ui/commit/ca8c669))
+
 ## [5.34.2](https://github.com/lobehub/lobe-ui/compare/v5.34.1...v5.34.2) (2026-08-28)
 
 ### 💄 Styles
