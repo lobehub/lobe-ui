@@ -3,7 +3,7 @@ import { cva } from 'class-variance-authority';
 
 import { lobeStaticStylish } from '@/styles';
 
-export const styles = createStaticStyles(({ css }) => ({
+export const styles = createStaticStyles(({ css, cssVar }) => ({
   borderless: lobeStaticStylish.variantBorderlessWithoutHover,
   close: css`
     cursor: pointer;
@@ -58,8 +58,9 @@ export const styles = createStaticStyles(({ css }) => ({
     width: fit-content;
     margin: 0;
 
-    font-size: inherit;
+    font-size: ${cssVar.fontSizeSM};
     line-height: 1.2;
+    white-space: nowrap;
 
     span {
       margin: 0;
