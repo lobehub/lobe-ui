@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.34.2](https://github.com/lobehub/lobe-ui/compare/v5.34.1...v5.34.2) (2026-08-28)
+
+### 💄 Styles
+
+- **tag**: Give middle size its own padding via cva ([e97c3b1](https://github.com/lobehub/lobe-ui/commit/e97c3b1))
+
 ## [5.34.1](https://github.com/lobehub/lobe-ui/compare/v5.34.0...v5.34.1) (2026-08-28)
 
 ### 💄 Styles
