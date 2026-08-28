@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.34.1](https://github.com/lobehub/lobe-ui/compare/v5.34.0...v5.34.1) (2026-08-28)
+
+### 💄 Styles
+
+- **base-ui**: Align ActionIcon and ToggleGroup colors with classic ActionIcon ([a404b5e](https://github.com/lobehub/lobe-ui/commit/a404b5e))
+
 # [5.34.0](https://github.com/lobehub/lobe-ui/compare/v5.33.3...v5.34.0) (2026-08-27)
 
 ### ✨ Features
