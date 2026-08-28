@@ -2,12 +2,12 @@
 
 import { useMemo } from 'react';
 import { rehypeGithubAlerts } from 'rehype-github-alerts';
-import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import type { Pluggable } from 'unified';
 
 import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
 import { rehypeCustomFootnotes } from '@/Markdown/plugins/rehypeCustomFootnotes';
+import { rehypeKatex } from '@/Markdown/plugins/rehypeKatex';
 import { rehypeKatexDir } from '@/Markdown/plugins/rehypeKatexDir';
 
 export const useMarkdownRehypePlugins = (): Pluggable[] => {
