@@ -114,7 +114,7 @@ const Tag = memo<TagProps>(
               setVisible(false);
             }}
           >
-            {closeIcon ?? <X size={12} />}
+            {closeIcon ?? <X size={10} />}
           </button>
         )}
       </span>

@@ -17,9 +17,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     padding: 0;
     border: none;
 
-    color: inherit;
+    color: ${cssVar.colorIcon};
 
     background: none;
+
+    &:hover {
+      color: ${cssVar.colorTextHeading};
+    }
   `,
   filled: lobeStaticStylish.variantFilledWithoutHover,
   large: css`
