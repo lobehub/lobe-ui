@@ -88,7 +88,7 @@ const ActionIcon = memo<ActionIconProps>(
       <Button
         {...(rest as unknown as ButtonProps)}
         aria-label={popupTriggerLabel}
-        className={cx(variants({ active, glass, shadow }), classNames?.root, className)}
+        className={cx(variants({ active, danger, glass, shadow }), classNames?.root, className)}
         danger={danger}
         disabled={disabled}
         htmlType="button"

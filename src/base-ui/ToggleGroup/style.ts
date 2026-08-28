@@ -17,7 +17,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     font: inherit;
     font-size: 12px;
-    color: ${cssVar.colorTextSecondary};
+    color: ${cssVar.colorTextTertiary};
     white-space: nowrap;
 
     background: transparent;
@@ -28,7 +28,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       color 120ms ${cssVar.motionEaseOut};
 
     &:hover:not([data-disabled]) {
-      color: ${cssVar.colorText};
+      color: ${cssVar.colorTextSecondary};
       background: ${cssVar.colorFillSecondary};
     }
 
