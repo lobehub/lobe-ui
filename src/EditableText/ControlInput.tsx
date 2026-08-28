@@ -4,7 +4,7 @@ import type { InputRef } from 'antd';
 import { RotateCcw, Save } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
 
-import ActionIcon, { type ActionIconProps } from '@/ActionIcon';
+import ActionIcon, { type ActionIconProps } from '@/base-ui/ActionIcon';
 import { Flexbox } from '@/Flex';
 import Input, { type InputProps } from '@/Input';
 

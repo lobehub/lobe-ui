@@ -7,7 +7,7 @@ import { AlertTriangle, CheckCircle, Info, X, XCircle } from 'lucide-react';
 import { memo } from 'react';
 
 import { Accordion, AccordionItem } from '@/Accordion';
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 

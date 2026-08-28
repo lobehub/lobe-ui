@@ -5,7 +5,7 @@ import { cx } from 'antd-style';
 import { MoreHorizontalIcon } from 'lucide-react';
 import { type FC } from 'react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 
 import { styles, variants } from './style';
 import type { TabsProps } from './type';

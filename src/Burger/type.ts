@@ -1,7 +1,7 @@
 import type { DrawerProps, MenuProps } from 'antd';
 import type { CSSProperties, Ref } from 'react';
 
-import type { ActionIconProps } from '@/ActionIcon';
+import type { ActionIconProps } from '@/base-ui/ActionIcon';
 
 export interface BurgerProps {
   className?: string;

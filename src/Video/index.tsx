@@ -5,7 +5,7 @@ import { cssVar, cx } from 'antd-style';
 import { PlayIcon } from 'lucide-react';
 import { type CSSProperties, memo, type Ref, useMemo, useState } from 'react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import { Flexbox, type FlexboxProps } from '@/Flex';
 import { type VideoProps as VProps } from '@/types';
 

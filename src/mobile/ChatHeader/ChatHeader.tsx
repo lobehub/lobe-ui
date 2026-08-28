@@ -4,7 +4,7 @@ import { cx } from 'antd-style';
 import { ChevronLeft } from 'lucide-react';
 import { memo } from 'react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import { Flexbox } from '@/Flex';
 import MobileSafeArea from '@/mobile/SafeArea';
 

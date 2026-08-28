@@ -5,7 +5,7 @@ import { PanelLeft, Pin, PinOff } from 'lucide-react';
 import { memo } from 'react';
 import useControlledState from 'use-merge-value';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import { Flexbox } from '@/Flex';
 import { type DivProps } from '@/types';
 

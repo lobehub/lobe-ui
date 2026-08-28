@@ -3,7 +3,7 @@
 import { GripVertical } from 'lucide-react';
 import { memo, use, useState } from 'react';
 
-import ActionIcon, { type ActionIconProps } from '@/ActionIcon';
+import ActionIcon, { type ActionIconProps } from '@/base-ui/ActionIcon';
 
 import { SortableItemContext } from './SortableItem';
 

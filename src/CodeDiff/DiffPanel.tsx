@@ -5,7 +5,7 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
 import { memo, useCallback, useState } from 'react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import type { FlexboxProps } from '@/Flex';
 import { Flexbox } from '@/Flex';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';

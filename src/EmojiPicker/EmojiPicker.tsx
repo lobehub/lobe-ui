@@ -10,8 +10,8 @@ import { memo, useMemo, useRef, useState } from 'react';
 import useSWR from 'swr';
 import useMergeState from 'use-merge-value';
 
-import ActionIcon from '@/ActionIcon';
 import Avatar from '@/Avatar';
+import ActionIcon from '@/base-ui/ActionIcon';
 import { Flexbox } from '@/Flex';
 import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
 import { useTranslation } from '@/i18n/useTranslation';

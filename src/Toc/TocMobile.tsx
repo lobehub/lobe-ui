@@ -5,7 +5,7 @@ import { PanelTopClose, PanelTopOpen } from 'lucide-react';
 import { memo, useMemo } from 'react';
 import useControlledState from 'use-merge-value';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 
 import { styles } from './style';
 import type { TocMobileProps } from './type';

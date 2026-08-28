@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode, Ref } from 'react';
 import type { BuiltinTheme } from 'shiki';
 
-import type { ActionIconProps } from '@/ActionIcon';
+import type { ActionIconProps } from '@/base-ui/ActionIcon';
 import type { FlexboxProps } from '@/Flex';
 import type { DivProps } from '@/types';
 

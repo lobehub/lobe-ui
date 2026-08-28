@@ -5,7 +5,7 @@ import { cx } from 'antd-style';
 import { MenuIcon, X } from 'lucide-react';
 import { memo, useMemo } from 'react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import { Center } from '@/Flex';
 
 import { styles } from './style';

@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode, Ref } from 'react';
 
-import type { ActionIconProps } from '@/ActionIcon';
+import type { ActionIconProps } from '@/base-ui/ActionIcon';
 import type { DivProps } from '@/types';
 
 export type HtmlPreviewMode = 'preview' | 'source';

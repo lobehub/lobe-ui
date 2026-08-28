@@ -4,7 +4,7 @@ import { cx, useThemeMode } from 'antd-style';
 import { X } from 'lucide-react';
 import { memo, useState } from 'react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import { Flexbox } from '@/Flex';
 import Img from '@/Img';
 

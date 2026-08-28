@@ -3,7 +3,7 @@
 import { Check, Copy } from 'lucide-react';
 import { memo } from 'react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import { useCopied } from '@/hooks/useCopied';
 import { copyToClipboard } from '@/utils/copyToClipboard';
 

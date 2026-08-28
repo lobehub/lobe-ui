@@ -6,7 +6,7 @@ import { memo, useMemo } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import useControlledState from 'use-merge-value';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import { Flexbox } from '@/Flex';
 
 import ControlInput from './ControlInput';

@@ -4,7 +4,7 @@ import { Select } from 'antd';
 import { Monitor, Moon, Sun } from 'lucide-react';
 import { type FC, useMemo } from 'react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import { type DropdownItem } from '@/DropdownMenu';
 import DropdownMenu from '@/DropdownMenu';
 import { Flexbox } from '@/Flex';

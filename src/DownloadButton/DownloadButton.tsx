@@ -3,7 +3,7 @@
 import { Download } from 'lucide-react';
 import React, { memo } from 'react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import { downloadBlob } from '@/utils/downloadBlob';
 
 import type { DownloadButtonProps } from './type';

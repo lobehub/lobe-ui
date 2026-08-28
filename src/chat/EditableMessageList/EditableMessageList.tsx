@@ -4,7 +4,7 @@ import isEqual from 'fast-deep-equal';
 import { Plus, Trash } from 'lucide-react';
 import { memo, useEffect, useReducer } from 'react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import Button from '@/Button';
 import ControlInput from '@/EditableText/ControlInput';
 import { Flexbox } from '@/Flex';

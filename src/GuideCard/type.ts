@@ -1,7 +1,7 @@
 import type { ImageProps } from 'antd';
 import type { CSSProperties, ReactNode, Ref } from 'react';
 
-import type { ActionIconProps } from '@/ActionIcon';
+import type { ActionIconProps } from '@/base-ui/ActionIcon';
 import type { FlexboxProps } from '@/Flex';
 import type { ImgProps } from '@/types';
 

@@ -1,7 +1,7 @@
 import type { DrawerProps as AntdDrawerProps } from 'antd';
 import type { CSSProperties, ReactNode, Ref } from 'react';
 
-import type { ActionIconProps } from '@/ActionIcon';
+import type { ActionIconProps } from '@/base-ui/ActionIcon';
 
 export interface DrawerProps extends Omit<AntdDrawerProps, 'styles' | 'classNames'> {
   classNames?: AntdDrawerProps['classNames'] & {

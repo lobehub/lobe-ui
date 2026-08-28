@@ -17,7 +17,7 @@ import {
 import { useHotkeys, useRecordHotkeys } from 'react-hotkeys-hook';
 import useControlledState from 'use-merge-value';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import { Flexbox } from '@/Flex';
 import Hotkey from '@/Hotkey';
 import { checkIsAppleDevice, NORMATIVE_MODIFIER, splitKeysByPlus } from '@/Hotkey/utils';

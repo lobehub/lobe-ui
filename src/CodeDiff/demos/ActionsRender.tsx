@@ -1,6 +1,6 @@
 import { RotateCcwIcon } from 'lucide-react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 
 import { CodeDiff } from '../CodeDiff';
 

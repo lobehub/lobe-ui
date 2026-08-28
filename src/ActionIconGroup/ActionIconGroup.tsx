@@ -4,7 +4,7 @@ import { cx } from 'antd-style';
 import { MoreHorizontal } from 'lucide-react';
 import { type FC, useMemo } from 'react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import DropdownMenu from '@/DropdownMenu';
 import { Center } from '@/Flex';
 import { TooltipGroup } from '@/Tooltip';

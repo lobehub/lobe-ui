@@ -5,7 +5,7 @@ import { cssVar } from 'antd-style';
 import numeral from 'numeral';
 import { type FC, useMemo } from 'react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import chatMessages from '@/i18n/resources/en/chat';
 import { useTranslation } from '@/i18n/useTranslation';
 

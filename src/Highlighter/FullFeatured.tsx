@@ -4,7 +4,7 @@ import { cx } from 'antd-style';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
 import { getCodeLanguageDisplayName, getCodeLanguageFilename } from '@/Highlighter/const';

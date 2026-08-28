@@ -1,6 +1,6 @@
 import type { Ref } from 'react';
 
-import type { ActionIconProps } from '@/ActionIcon';
+import type { ActionIconProps } from '@/base-ui/ActionIcon';
 import type { DropdownMenuProps } from '@/DropdownMenu';
 import type { CenterProps } from '@/Flex';
 import type { MenuInfo, MenuItemType } from '@/Menu';

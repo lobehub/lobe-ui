@@ -2,6 +2,7 @@
 
 import { resolve } from 'node:path';
 
+import { motion } from 'motion/react';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createServer, type ViteDevServer } from 'vite';
@@ -22,7 +23,13 @@ const renderDocument = async (source: string) => {
   });
 
   const module = await server.ssrLoadModule(source);
-  return renderToStaticMarkup(createElement(module.default));
+  // The mdx module lives in vite's SSR graph, so its React context instances only
+  // match a provider loaded through the same graph — a top-level import gives a
+  // different MotionComponent context and the controls still read it as unset.
+  const { MotionProvider } = await server.ssrLoadModule('/src/MotionProvider/index.tsx');
+  return renderToStaticMarkup(
+    createElement(MotionProvider, { motion }, createElement(module.default)),
+  );
 };
 
 it('compiles GFM markdown tables in component docs into real table markup', async () => {

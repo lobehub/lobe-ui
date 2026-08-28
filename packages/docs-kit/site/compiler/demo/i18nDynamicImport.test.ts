@@ -3,6 +3,7 @@
 import path from 'node:path';
 
 import { load } from 'cheerio';
+import { motion } from 'motion/react';
 import { type ComponentType, createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createServer, type ViteDevServer } from 'vite';
@@ -24,7 +25,13 @@ it('renders the production dynamic-import demo through the read-only source cont
   const module = (await server.ssrLoadModule('/src/i18n/index.mdx')) as {
     default: ComponentType;
   };
-  const $ = load(renderToStaticMarkup(createElement(module.default)));
+  // The mdx module lives in vite's SSR graph, so its React context instances only
+  // match a provider loaded through the same graph — a top-level import gives a
+  // different MotionComponent context and the controls still read it as unset.
+  const { MotionProvider } = await server.ssrLoadModule('/src/MotionProvider/index.tsx');
+  const $ = load(
+    renderToStaticMarkup(createElement(MotionProvider, { motion }, createElement(module.default))),
+  );
   const frame = $('section[aria-label="Demo: src/i18n/demos/DynamicImport.tsx"]');
   const toolbarLabels = frame
     .find('button, [role="button"]')

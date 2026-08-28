@@ -14,7 +14,7 @@ import {
   useState,
 } from 'react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import ChatInputAreaInner from '@/chat/ChatInputArea/components/ChatInputAreaInner';
 import { Flexbox } from '@/Flex';
 import SafeArea from '@/mobile/SafeArea';
