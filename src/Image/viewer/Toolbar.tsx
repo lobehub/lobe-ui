@@ -14,7 +14,7 @@ import {
 import type { MotionValue } from 'motion/react';
 import { memo, type ReactNode, useCallback, useMemo, useState, useSyncExternalStore } from 'react';
 
-import ActionIcon from '@/ActionIcon';
+import ActionIcon from '@/base-ui/ActionIcon';
 import DropdownMenu, { type DropdownItem } from '@/base-ui/DropdownMenu';
 import { toast } from '@/base-ui/Toast';
 import { Center, Flexbox } from '@/Flex';
@@ -67,6 +67,7 @@ export interface ToolbarProps {
   flipHorizontal: () => void;
   flipVertical: () => void;
   natural: Size;
+  onDownload?: (source: string) => void | Promise<void>;
   onMoreOpenChange?: (open: boolean) => void;
   rotateLeft: () => void;
   rotateRight: () => void;
@@ -87,6 +88,7 @@ const Toolbar = memo<ToolbarProps>(
     flipHorizontal,
     flipVertical,
     natural,
+    onDownload,
     onMoreOpenChange,
     rotateLeft,
     rotateRight,
@@ -115,28 +117,42 @@ const Toolbar = memo<ToolbarProps>(
     // "fit to screen" while already fitted.
     const showFitAffordance = canToggleActualSize && percentage === 100;
 
+    const defaultDownload = useCallback(
+      async (src: string) => {
+        try {
+          const response = await fetch(src, { mode: 'cors' });
+          const blob = await response.blob();
+          const blobUrl = URL.createObjectURL(blob);
+          let fileName = getFileNameFromUrl(src);
+          const ext = getExtensionFromMimeType(blob.type);
+          if (!fileName.includes('.')) {
+            fileName = `${fileName}.${ext}`;
+          } else if (fileName.endsWith('.svg+xml')) {
+            fileName = fileName.replace(/\.svg\+xml$/i, '.svg');
+          }
+          await downloadBlob(blobUrl, fileName);
+          URL.revokeObjectURL(blobUrl);
+          toast.success(t('image.downloadSuccess'));
+        } catch {
+          // A cross-origin source without CORS headers (e.g. a presigned URL reached
+          // through a redirect, which sends `Origin: null`) can never be read as a
+          // blob; opening it lets the browser handle the save instead of failing.
+          window.open(src, '_blank', 'noopener,noreferrer');
+        }
+      },
+      [t],
+    );
+
     const handleDownload = useCallback(async () => {
       setDownloadLoading(true);
       try {
-        const response = await fetch(source, { mode: 'cors' });
-        const blob = await response.blob();
-        const blobUrl = URL.createObjectURL(blob);
-        let fileName = getFileNameFromUrl(source);
-        const ext = getExtensionFromMimeType(blob.type);
-        if (!fileName.includes('.')) {
-          fileName = `${fileName}.${ext}`;
-        } else if (fileName.endsWith('.svg+xml')) {
-          fileName = fileName.replace(/\.svg\+xml$/i, '.svg');
-        }
-        await downloadBlob(blobUrl, fileName);
-        URL.revokeObjectURL(blobUrl);
-        toast.success(t('image.downloadSuccess'));
+        await (onDownload ?? defaultDownload)(source);
       } catch {
         toast.error(t('image.downloadFailed'));
       } finally {
         setDownloadLoading(false);
       }
-    }, [source, t]);
+    }, [defaultDownload, onDownload, source, t]);
 
     const handleCopy = useCallback(async () => {
       setCopyLoading(true);

@@ -6,6 +6,7 @@ export interface ImagePreviewOptions {
   autoZoomThreshold?: number;
   defaultZoom?: ZoomPolicy;
   maxScale?: number;
+  onDownload?: (source: string) => void | Promise<void>;
   onOpenChange?: (open: boolean) => void;
   src?: string;
   toolbarAddon?: ReactNode;

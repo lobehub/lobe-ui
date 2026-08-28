@@ -1,6 +1,7 @@
 'use client';
 
 import { Dialog, type DialogRootProps } from '@base-ui/react/dialog';
+import { motion } from 'motion/react';
 import {
   memo,
   type SyntheticEvent,
@@ -285,81 +286,88 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
   );
 
   return (
-    <Dialog.Root modal open onOpenChange={handleDialogOpenChange}>
-      <Dialog.Portal container={appElement ?? undefined}>
-        {/* Base UI drops a nested dialog's backdrop so overlays don't stack. The viewer is
+    // The chrome is built from Base UI controls, which need a motion component to
+    // render at all. The viewer itself still degrades to a plain fade without one —
+    // `animated` stays false — but the toolbar has no such fallback, so an app that
+    // skipped ConfigProvider gets motion here rather than a crash.
+    <MotionComponent value={motionComponent ?? motion}>
+      <Dialog.Root modal open onOpenChange={handleDialogOpenChange}>
+        <Dialog.Portal container={appElement ?? undefined}>
+          {/* Base UI drops a nested dialog's backdrop so overlays don't stack. The viewer is
             not an overlay on the surface it opened from — it replaces the screen — so it
             keeps its own scrim, or a viewer opened from a maskless drawer would show the
             page straight through the letterbox around the image. */}
-        <Dialog.Backdrop
-          forceRender
-          className={styles.viewerBackdrop}
-          ref={backdropRef}
-          style={zIndex === undefined ? undefined : { zIndex }}
-          onClick={gestures.onSurfaceClick}
-        />
-        <Dialog.Popup
-          aria-label={currentEntry.element.alt || undefined}
-          className={styles.viewerPopup}
-          finalFocus={finalFocus}
-          // Focus the popup itself instead of Base UI's default (the first
-          // tabbable — the close button): a focus-visible close button pins
-          // the idle auto-hide open forever and pops its tooltip on open.
-          initialFocus={popupNodeRef}
-          ref={popupRef}
-          style={zIndex === undefined ? undefined : { zIndex: zIndex + 1 }}
-          tabIndex={-1}
-          onClick={gestures.onSurfaceClick}
-          onPointerCancel={gestures.onPointerFinish}
-          onPointerDown={gestures.onPointerDown}
-          onPointerMove={gestures.onPointerMove}
-          onPointerUp={gestures.onPointerFinish}
-        >
-          <img
-            alt={currentEntry.element.alt}
-            className={styles.viewerImage}
-            ref={imageRef}
-            src={source}
-            style={{
-              cursor: gestures.cursor,
-              height: imageRect.height,
-              left: imageRect.x,
-              top: imageRect.y,
-              width: imageRect.width,
-            }}
-            onClick={gestures.onImageClick}
-            onDoubleClick={gestures.onImageDoubleClick}
-            onLoad={handleLoad}
+          <Dialog.Backdrop
+            forceRender
+            className={styles.viewerBackdrop}
+            ref={backdropRef}
+            style={zIndex === undefined ? undefined : { zIndex }}
+            onClick={gestures.onSurfaceClick}
           />
-          <ViewerChrome
-            canZoomIn={canZoomIn}
-            canZoomOut={canZoomOut}
-            chromeRef={chromeRef}
-            current={currentIndex}
-            fitRect={fitRect}
-            flipHorizontal={flipHorizontal}
-            flipVertical={flipVertical}
-            hasNext={hasNext}
-            hasPrev={hasPrev}
-            natural={natural}
-            next={next}
-            prev={prev}
-            rotateLeft={rotateLeft}
-            rotateRight={rotateRight}
-            rotation={rotation}
-            scale={scale}
-            source={source}
-            toggleActualSize={toggleActualSize}
-            toolbarAddon={currentEntry.options.toolbarAddon}
-            total={entries.length}
-            zoomIn={zoomIn}
-            zoomOut={zoomOut}
-            onClose={handleClose}
-          />
-        </Dialog.Popup>
-        <ToastHost root={appElement ?? undefined} />
-      </Dialog.Portal>
-    </Dialog.Root>
+          <Dialog.Popup
+            aria-label={currentEntry.element.alt || undefined}
+            className={styles.viewerPopup}
+            finalFocus={finalFocus}
+            // Focus the popup itself instead of Base UI's default (the first
+            // tabbable — the close button): a focus-visible close button pins
+            // the idle auto-hide open forever and pops its tooltip on open.
+            initialFocus={popupNodeRef}
+            ref={popupRef}
+            style={zIndex === undefined ? undefined : { zIndex: zIndex + 1 }}
+            tabIndex={-1}
+            onClick={gestures.onSurfaceClick}
+            onPointerCancel={gestures.onPointerFinish}
+            onPointerDown={gestures.onPointerDown}
+            onPointerMove={gestures.onPointerMove}
+            onPointerUp={gestures.onPointerFinish}
+          >
+            <img
+              alt={currentEntry.element.alt}
+              className={styles.viewerImage}
+              ref={imageRef}
+              src={source}
+              style={{
+                cursor: gestures.cursor,
+                height: imageRect.height,
+                left: imageRect.x,
+                top: imageRect.y,
+                width: imageRect.width,
+              }}
+              onClick={gestures.onImageClick}
+              onDoubleClick={gestures.onImageDoubleClick}
+              onLoad={handleLoad}
+            />
+            <ViewerChrome
+              canZoomIn={canZoomIn}
+              canZoomOut={canZoomOut}
+              chromeRef={chromeRef}
+              current={currentIndex}
+              fitRect={fitRect}
+              flipHorizontal={flipHorizontal}
+              flipVertical={flipVertical}
+              hasNext={hasNext}
+              hasPrev={hasPrev}
+              natural={natural}
+              next={next}
+              prev={prev}
+              rotateLeft={rotateLeft}
+              rotateRight={rotateRight}
+              rotation={rotation}
+              scale={scale}
+              source={source}
+              toggleActualSize={toggleActualSize}
+              toolbarAddon={currentEntry.options.toolbarAddon}
+              total={entries.length}
+              zoomIn={zoomIn}
+              zoomOut={zoomOut}
+              onClose={handleClose}
+              onDownload={currentEntry.options.onDownload}
+            />
+          </Dialog.Popup>
+          <ToastHost root={appElement ?? undefined} />
+        </Dialog.Portal>
+      </Dialog.Root>
+    </MotionComponent>
   );
 });
 

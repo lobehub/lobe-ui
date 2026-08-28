@@ -96,7 +96,7 @@ const renderWithMotion = (node: ReactNode) =>
 const getViewerImage = () => document.querySelector<HTMLImageElement>('.viewerImage');
 const getToolbar = () => document.querySelector('.toolbar') as HTMLElement;
 const getToolbarButtons = () =>
-  Array.from(getToolbar().querySelectorAll<HTMLElement>('[role="button"]'));
+  Array.from(getToolbar().querySelectorAll<HTMLElement>('button, [role="button"]'));
 const iconClassOf = (button: HTMLElement) =>
   button.querySelector('svg')?.getAttribute('class') ?? '';
 
@@ -352,14 +352,31 @@ describe('copy and download', () => {
     );
   });
 
-  it('shows an error toast when download fails', async () => {
+  it('uses a downstream onDownload handler instead of the default', async () => {
+    const onDownload = vi.fn().mockResolvedValue(undefined);
+    mount(undefined, { onDownload });
+
+    fireEvent.click(toolbarButton('download'));
+
+    await waitFor(() => expect(onDownload).toHaveBeenCalledWith('https://example.com/cat.png'));
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it('opens the source in a new tab when the blob download is blocked', async () => {
+    const openSpy = vi.spyOn(window, 'open').mockReturnValue(null);
     vi.mocked(fetch).mockRejectedValue(new Error('network error'));
     mount();
 
     fireEvent.click(toolbarButton('download'));
 
     await waitFor(() =>
-      expect(toastMock.error).toHaveBeenCalledWith(imageMessages['image.downloadFailed']),
+      expect(openSpy).toHaveBeenCalledWith(
+        'https://example.com/cat.png',
+        '_blank',
+        'noopener,noreferrer',
+      ),
     );
+    expect(toastMock.error).not.toHaveBeenCalledWith(imageMessages['image.downloadFailed']);
+    openSpy.mockRestore();
   });
 });
