@@ -27,9 +27,16 @@ export const styles = createStaticStyles(({ css }) => ({
     padding-inline: 12px;
     border-radius: 6px;
   `,
+  middle: css`
+    height: 22px;
+    padding-inline: 8px;
+    border-radius: 3px;
+  `,
   outlined: lobeStaticStylish.variantOutlinedWithoutHover,
   round: css`
-    border-radius: 999px;
+    && {
+      border-radius: 999px;
+    }
   `,
   roundLarge: css`
     padding-inline: 14px;
@@ -49,7 +56,6 @@ export const styles = createStaticStyles(({ css }) => ({
     justify-content: center;
 
     width: fit-content;
-    height: 22px;
     margin: 0;
 
     font-size: inherit;
@@ -97,7 +103,7 @@ export const variants = cva(styles.root, {
     },
     size: {
       large: styles.large,
-      middle: null,
+      middle: styles.middle,
       small: styles.small,
     },
     variant: {
