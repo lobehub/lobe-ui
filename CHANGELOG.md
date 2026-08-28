@@ -2,6 +2,21 @@
 
 # Changelog
 
+# [5.35.0](https://github.com/lobehub/lobe-ui/compare/v5.34.3...v5.35.0) (2026-08-28)
+
+### ♻ Code Refactoring
+
+- **action-icon**: Use the Base UI ActionIcon across components ([e0019db](https://github.com/lobehub/lobe-ui/commit/e0019db))
+
+### ✨ Features
+
+- **image**: Let consumers override the preview download action ([e4207e1](https://github.com/lobehub/lobe-ui/commit/e4207e1))
+
+### 💄 Styles
+
+- **tag**: Align the close icon with the antd tag ([bc08f9c](https://github.com/lobehub/lobe-ui/commit/bc08f9c))
+- **tag**: Restore the 12px tag font size ([973f9a5](https://github.com/lobehub/lobe-ui/commit/973f9a5))
+
 ## [5.34.3](https://github.com/lobehub/lobe-ui/compare/v5.34.2...v5.34.3) (2026-08-28)
 
 ### 🐛 Bug Fixes
