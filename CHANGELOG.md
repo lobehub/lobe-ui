@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.36.1](https://github.com/lobehub/lobe-ui/compare/v5.36.0...v5.36.1) (2026-08-29)
+
+### 💄 Styles
+
+- **text**: Widen the shiny sweep highlight band ([a1c2bc6](https://github.com/lobehub/lobe-ui/commit/a1c2bc6))
+
 # [5.36.0](https://github.com/lobehub/lobe-ui/compare/v5.35.0...v5.36.0) (2026-08-29)
 
 ### ✨ Features
