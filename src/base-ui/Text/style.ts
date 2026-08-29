@@ -103,9 +103,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     background: linear-gradient(
       120deg,
-      transparent 40%,
+      transparent 25%,
       ${cssVar.colorTextSecondary} 50%,
-      transparent 60%
+      transparent 75%
     );
     background-clip: text;
     background-size: 200% 100%;
@@ -122,6 +122,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
       animation: none;
 
+      /* stylelint-disable-next-line declaration-property-value-no-unknown */
       mask-clip: text;
       mask-image: linear-gradient(#fff, #fff);
 
@@ -135,9 +136,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
         background: linear-gradient(
           90deg,
-          transparent 40%,
+          transparent 25%,
           ${cssVar.colorTextSecondary} 50%,
-          transparent 60%
+          transparent 75%
         );
 
         animation: ${sweep} var(--shiny-duration) linear infinite;
