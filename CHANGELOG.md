@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.36.2](https://github.com/lobehub/lobe-ui/compare/v5.36.1...v5.36.2) (2026-08-29)
+
+### 💄 Styles
+
+- **text**: Disable selection on shiny text ([6618c79](https://github.com/lobehub/lobe-ui/commit/6618c79))
+
 ## [5.36.1](https://github.com/lobehub/lobe-ui/compare/v5.36.0...v5.36.1) (2026-08-29)
 
 ### 💄 Styles
