@@ -99,6 +99,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   shiny: css`
     --shiny-duration: 1.5s;
 
+    user-select: none;
+
     color: color-mix(in srgb, ${cssVar.colorText} 45%, transparent);
 
     background: linear-gradient(

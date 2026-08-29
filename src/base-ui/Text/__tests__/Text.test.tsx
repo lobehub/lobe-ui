@@ -145,6 +145,12 @@ describe('Text', () => {
     expect(screen.getByText('With id').id).toBe('text-root');
   });
 
+  test('shiny disables user selection', () => {
+    renderText('Loading', { shiny: true });
+
+    expect(getComputedStyle(screen.getByText('Loading')).userSelect).toBe('none');
+  });
+
   test('shinyDuration sets the sweep cycle css variable', () => {
     const { container } = renderText('Loading', { shiny: true, shinyDuration: '3s' });
     const el = container.querySelector('div > div') as HTMLElement;
