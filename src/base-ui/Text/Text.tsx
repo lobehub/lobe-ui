@@ -1,15 +1,20 @@
 'use client';
 
 import { cx } from 'antd-style';
-import { type CSSProperties, memo, type RefObject, useRef } from 'react';
+import { type CSSProperties, memo, type ReactNode, type RefObject, useRef } from 'react';
 
 import Tooltip from '@/base-ui/Tooltip';
 import { useTextOverflow } from '@/hooks/useTextOverflow';
 
 import { variants } from './style';
-import { type TextProps } from './type';
+import { type TextBaseProps, type TextProps } from './type';
 
-const Text = memo<TextProps>(
+type InternalTextProps = TextBaseProps & {
+  shiny?: boolean;
+  shinyDuration?: CSSProperties['animationDuration'];
+};
+
+const InternalText = memo<InternalTextProps>(
   ({
     align,
     as: Container = 'div',
@@ -28,6 +33,8 @@ const Text = memo<TextProps>(
     mark,
     noWrap,
     ref,
+    shiny,
+    shinyDuration,
     strong,
     style,
     styles: customStyles,
@@ -71,6 +78,7 @@ const Text = memo<TextProps>(
           overflow: 'hidden',
           textOverflow: 'ellipsis',
         }),
+      ...(shiny && shinyDuration && { '--shiny-duration': shinyDuration }),
       ...(fontSize && { fontSize }),
       ...(align && { textAlign: align }),
       ...(!isMultiEllipsis && noWrap && { whiteSpace: 'nowrap' as const }),
@@ -99,6 +107,7 @@ const Text = memo<TextProps>(
               : undefined,
             italic,
             mark,
+            shiny,
             strong,
             type,
             underline,
@@ -132,6 +141,12 @@ const Text = memo<TextProps>(
   },
 );
 
-Text.displayName = 'Text';
+InternalText.displayName = 'Text';
+
+export interface IText {
+  <Shiny extends boolean = boolean>(props: TextProps<Shiny>): ReactNode;
+}
+
+const Text = InternalText as unknown as IText;
 
 export default Text;

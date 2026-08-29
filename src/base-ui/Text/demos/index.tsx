@@ -32,6 +32,10 @@ export default () => (
       <Text delete>Deleted text</Text>
       <Text mark>Marked text</Text>
       <Text code>Code text</Text>
+      <Text shiny>Thinking in progress</Text>
+      <Text shiny shinyDuration="3s">
+        Thinking slowly
+      </Text>
       <Text delete mark underline>
         Combined formatting
       </Text>

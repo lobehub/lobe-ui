@@ -10,7 +10,7 @@ export interface TextStyles {
   root?: CSSProperties;
 }
 
-export interface TextProps extends HTMLAttributes<HTMLDivElement> {
+export interface TextBaseProps extends HTMLAttributes<HTMLDivElement> {
   align?: 'left' | 'center' | 'right';
   as?: ElementType;
   classNames?: TextClassNames;
@@ -42,3 +42,14 @@ export interface TextProps extends HTMLAttributes<HTMLDivElement> {
   whiteSpace?: CSSProperties['whiteSpace'];
   wordBreak?: CSSProperties['wordBreak'];
 }
+
+export type TextProps<Shiny extends boolean = boolean> = TextBaseProps &
+  (Shiny extends true
+    ? {
+        shiny: true;
+        shinyDuration?: CSSProperties['animationDuration'];
+      }
+    : {
+        shiny?: false;
+        shinyDuration?: never;
+      });

@@ -144,4 +144,11 @@ describe('Text', () => {
 
     expect(screen.getByText('With id').id).toBe('text-root');
   });
+
+  test('shinyDuration sets the sweep cycle css variable', () => {
+    const { container } = renderText('Loading', { shiny: true, shinyDuration: '3s' });
+    const el = container.querySelector('div > div') as HTMLElement;
+
+    expect(el.style.getPropertyValue('--shiny-duration')).toBe('3s');
+  });
 });

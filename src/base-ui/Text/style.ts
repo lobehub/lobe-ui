@@ -1,5 +1,25 @@
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles, keyframes } from 'antd-style';
 import { cva } from 'class-variance-authority';
+
+const shine = keyframes`
+  0% {
+    background-position: 100%;
+  }
+
+  100% {
+    background-position: -100%;
+  }
+`;
+
+const sweep = keyframes`
+  0% {
+    translate: -100% 0;
+  }
+
+  100% {
+    translate: 100% 0;
+  }
+`;
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   code: css`
@@ -76,6 +96,63 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     color: ${cssVar.colorTextDescription};
   `,
 
+  shiny: css`
+    --shiny-duration: 1.5s;
+
+    color: color-mix(in srgb, ${cssVar.colorText} 45%, transparent);
+
+    background: linear-gradient(
+      120deg,
+      transparent 40%,
+      ${cssVar.colorTextSecondary} 50%,
+      transparent 60%
+    );
+    background-clip: text;
+    background-size: 200% 100%;
+
+    animation: ${shine} var(--shiny-duration) linear infinite;
+
+    /* Animating background-position repaints every glyph each frame. Where
+     * mask-clip: text is supported, clip a transform-animated overlay to the
+     * glyphs instead so the sweep stays on the compositor. */
+    @supports (-webkit-mask-clip: text) {
+      position: relative;
+
+      background: none;
+
+      animation: none;
+
+      mask-clip: text;
+      mask-image: linear-gradient(#fff, #fff);
+
+      &::after {
+        pointer-events: none;
+        will-change: transform;
+        content: '';
+
+        position: absolute;
+        inset: 0;
+
+        background: linear-gradient(
+          90deg,
+          transparent 40%,
+          ${cssVar.colorTextSecondary} 50%,
+          transparent 60%
+        );
+
+        animation: ${sweep} var(--shiny-duration) linear infinite;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      animation: none;
+
+      &::after {
+        display: none;
+      }
+    }
+  `,
+
   strong: css`
     font-weight: bold;
   `,
@@ -122,6 +199,9 @@ export const variants = cva(styles.text, {
     },
     mark: {
       true: styles.mark,
+    },
+    shiny: {
+      true: styles.shiny,
     },
     strong: {
       true: styles.strong,

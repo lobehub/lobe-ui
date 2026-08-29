@@ -39,6 +39,8 @@ Types, colors, headings, formatting combinations, and ellipsis modes:
 | mark | `boolean` | - | Highlighted text. |
 | noWrap | `boolean` | - | `white-space: nowrap`. Ignored when multi-line ellipsis is enabled. |
 | ref | `Ref<HTMLDivElement>` | - | Forwarded to the root element. |
+| shiny | `boolean` | - | Looping shimmer sweep for loading or streaming text. Falls back to a static color when `prefers-reduced-motion` is set. |
+| shinyDuration | `CSSProperties['animationDuration']` | `'1.5s'` | Sweep cycle length. Only accepted when `shiny` is set. |
 | strong | `boolean` | - | Bold text. |
 | textDecoration | `CSSProperties['textDecoration']` | - | Text decoration. |
 | textTransform | `CSSProperties['textTransform']` | - | Text transform. |
