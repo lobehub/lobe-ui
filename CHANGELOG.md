@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.36.0](https://github.com/lobehub/lobe-ui/compare/v5.35.0...v5.36.0) (2026-08-29)
+
+### ✨ Features
+
+- **text**: Add shiny prop with GPU-accelerated shimmer ([0a5e92c](https://github.com/lobehub/lobe-ui/commit/0a5e92c))
+
 # [5.35.0](https://github.com/lobehub/lobe-ui/compare/v5.34.3...v5.35.0) (2026-08-28)
 
 ### ♻ Code Refactoring
