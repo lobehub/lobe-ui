@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.36.4](https://github.com/lobehub/lobe-ui/compare/v5.36.3...v5.36.4) (2026-08-31)
+
+### ♻ Code Refactoring
+
+- **skeleton**: Rebuild Skeleton on base-ui with a primitive block API, closes [#631](https://github.com/lobehub/lobe-ui/issues/631) ([de7d8c2](https://github.com/lobehub/lobe-ui/commit/de7d8c2))
+
 ## [5.36.3](https://github.com/lobehub/lobe-ui/compare/v5.36.2...v5.36.3) (2026-08-31)
 
 ### 💄 Styles
