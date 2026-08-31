@@ -23,13 +23,16 @@ const fade = keyframes`
 
 export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
+    avatar: css`
+      flex: none;
+    `,
+
     base: css`
       user-select: none;
 
       position: relative;
 
       overflow: hidden;
-      flex: none;
 
       border-radius: ${cssVar.borderRadius};
 
