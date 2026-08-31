@@ -177,7 +177,7 @@ describe('reviewed documentation navigation', () => {
   });
 
   it('assigns every frozen source to exactly one section while keeping overview links separate', () => {
-    expect(compatibility.documents).toHaveLength(162);
+    expect(compatibility.documents).toHaveLength(161);
 
     const documents = compatibility.documents.map((record) =>
       document({
@@ -199,7 +199,7 @@ describe('reviewed documentation navigation', () => {
       .map(({ source }) => sourceIdentity(source))
       .toSorted();
 
-    expect(nestedDocuments).toHaveLength(160);
+    expect(nestedDocuments).toHaveLength(159);
     expect(nestedDocuments.map(({ source }) => sourceIdentity(source)).toSorted()).toEqual(
       frozenComponentSources,
     );
