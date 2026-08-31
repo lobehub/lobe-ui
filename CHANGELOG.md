@@ -2,6 +2,13 @@
 
 # Changelog
 
+## [5.36.5](https://github.com/lobehub/lobe-ui/compare/v5.36.4...v5.36.5) (2026-08-31)
+
+### 🐛 Bug Fixes
+
+- **skeleton**: Let blocks shrink inside a flex row, closes [#632](https://github.com/lobehub/lobe-ui/issues/632) ([d658f04](https://github.com/lobehub/lobe-ui/commit/d658f04))
+- **skeleton**: Restore the legacy Skeleton surface on the root entry, closes [#633](https://github.com/lobehub/lobe-ui/issues/633) ([3a74656](https://github.com/lobehub/lobe-ui/commit/3a74656))
+
 ## [5.36.4](https://github.com/lobehub/lobe-ui/compare/v5.36.3...v5.36.4) (2026-08-31)
 
 ### ♻ Code Refactoring
