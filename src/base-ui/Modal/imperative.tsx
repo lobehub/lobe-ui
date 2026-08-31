@@ -1,5 +1,6 @@
 'use client';
 
+import { cx } from 'antd-style';
 import type { ReactNode } from 'react';
 import { memo, useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
@@ -21,6 +22,7 @@ import {
   ModalTitle,
 } from './atoms';
 import { ModalContext, useModalContext } from './context';
+import { styles } from './style';
 import type { ImperativeModalProps, ModalConfirmConfig, ModalInstance } from './type';
 
 // --- Shared types ---
@@ -205,7 +207,10 @@ export function createModalSystem(): ModalSystem {
                   <ModalClose className={classNames?.close} style={semanticStyles?.close} />
                 </ModalHeader>
               )}
-              <ModalContent className={classNames?.content} style={semanticStyles?.content}>
+              <ModalContent
+                className={cx(!showTitle && styles.contentNoHeader, classNames?.content)}
+                style={semanticStyles?.content}
+              >
                 {content ?? children}
               </ModalContent>
               {footer}

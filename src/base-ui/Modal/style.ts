@@ -20,7 +20,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     cursor: pointer;
 
     position: absolute;
-    inset-block-start: 12px;
+    inset-block-start: 8px;
     inset-inline-end: 12px;
 
     display: flex;
@@ -84,8 +84,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   content: css`
     overflow: hidden auto;
-    padding-block: 12px;
+    padding-block: 0 16px;
     padding-inline: 16px;
+  `,
+
+  contentNoHeader: css`
+    padding-block-start: 16px;
   `,
 
   footer: css`
@@ -103,8 +107,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     align-items: center;
     justify-content: space-between;
 
-    min-height: 56px;
-    padding-block: 12px;
+    min-height: 48px;
+    padding-block: 8px;
     padding-inline: 16px;
   `,
 
@@ -164,11 +168,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   title: css`
     margin: 0;
 
-    font-size: 17px;
+    font-size: 14px;
     font-weight: 600;
     line-height: 1.4;
     color: ${cssVar.colorText};
-    letter-spacing: -0.005em;
   `,
 
   loadingSpinner: css`
