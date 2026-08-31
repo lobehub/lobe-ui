@@ -2,6 +2,12 @@ import { createStaticStyles } from 'antd-style';
 
 import { controlHeight } from '@/base-ui/controlSize';
 
+export const buttonPaddingInline = {
+  large: 16,
+  middle: 14,
+  small: 8,
+} as const;
+
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   base: css`
     cursor: pointer;
@@ -41,24 +47,38 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   sizeSmall: css`
+    --button-padding-inline: ${buttonPaddingInline.small}px;
+
     height: ${controlHeight.small}px;
-    padding-inline: 8px;
+    padding-inline: var(--button-padding-inline);
     border-radius: ${cssVar.borderRadiusSM};
     font-size: 12px;
   `,
 
   sizeMiddle: css`
+    --button-padding-inline: ${buttonPaddingInline.middle}px;
+
     height: ${controlHeight.middle}px;
-    padding-inline: 14px;
+    padding-inline: var(--button-padding-inline);
     border-radius: ${cssVar.borderRadiusSM};
     font-size: 13px;
   `,
 
   sizeLarge: css`
+    --button-padding-inline: ${buttonPaddingInline.large}px;
+
     height: ${controlHeight.large}px;
-    padding-inline: 16px;
+    padding-inline: var(--button-padding-inline);
     border-radius: ${cssVar.borderRadius};
     font-size: 14px;
+  `,
+
+  outdentStart: css`
+    margin-inline-start: calc(var(--button-padding-inline) * -1);
+  `,
+
+  outdentEnd: css`
+    margin-inline-end: calc(var(--button-padding-inline) * -1);
   `,
 
   shapeCircle: css`
@@ -79,16 +99,22 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   iconOnlySmall: css`
+    --button-padding-inline: 0px;
+
     width: 24px;
     padding-inline: 0;
   `,
 
   iconOnlyMiddle: css`
+    --button-padding-inline: 0px;
+
     width: 32px;
     padding-inline: 0;
   `,
 
   iconOnlyLarge: css`
+    --button-padding-inline: 0px;
+
     width: 40px;
     padding-inline: 0;
   `,

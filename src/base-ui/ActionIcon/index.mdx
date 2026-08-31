@@ -6,6 +6,7 @@ category: General
 
 import DemoDropdownMenu from './demos/DropdownMenu.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
+import DemoOutdent from './demos/outdent.tsx?demo';
 
 ## Playground
 
@@ -14,6 +15,12 @@ import DemoIndex from './demos/index.tsx?demo';
 ## DropdownMenu trigger
 
 <Demo of={DemoDropdownMenu} layout="bare" />
+
+## Outdent borderless
+
+`outdent` is typed onto `variant="borderless"` only (the default). It applies a negative margin equal to this size's icon inset — half of `blockSize − glyph` (`small` 5, `middle` 8, `large` 10) — so a paperclip action lines up with the title and list beside it.
+
+<Demo of={DemoOutdent} layout="bare" />
 
 ## API
 

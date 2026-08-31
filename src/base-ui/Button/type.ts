@@ -12,6 +12,7 @@ export type ButtonType = 'default' | 'primary' | 'dashed' | 'fill' | 'link' | 't
 export type ButtonShape = 'default' | 'circle' | 'round';
 export type ButtonSize = 'small' | 'middle' | 'large';
 export type ButtonIconPosition = 'start' | 'end';
+export type ButtonOutdent = boolean | 'start' | 'end';
 
 interface BaseButtonOwnProps {
   block?: boolean;
@@ -35,17 +36,31 @@ interface BaseButtonOwnProps {
   size?: ButtonSize;
   styles?: { icon?: CSSProperties };
   target?: string;
-  type?: ButtonType;
 }
+
+type TextOutdentProps<T extends ButtonType> = [T] extends ['text']
+  ? {
+      /**
+       * Cancels this size's `padding-inline` with a negative margin so a `text`
+       * button lines up with adjacent copy. `true` / `'start'` outdent the start
+       * edge; `'end'` outdents the end edge.
+       */
+      outdent?: ButtonOutdent;
+      type?: T;
+    }
+  : { outdent?: never; type?: T };
 
 type NativeButtonProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
-  keyof BaseButtonOwnProps | 'type'
+  keyof BaseButtonOwnProps | 'type' | 'outdent'
 >;
 
 type NativeAnchorProps = Omit<
   AnchorHTMLAttributes<HTMLAnchorElement>,
-  keyof BaseButtonOwnProps | 'type'
+  keyof BaseButtonOwnProps | 'type' | 'outdent'
 >;
 
-export type ButtonProps = BaseButtonOwnProps & NativeButtonProps & Partial<NativeAnchorProps>;
+export type ButtonProps<T extends ButtonType = ButtonType> = BaseButtonOwnProps &
+  NativeButtonProps &
+  Partial<NativeAnchorProps> &
+  TextOutdentProps<T>;

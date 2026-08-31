@@ -5,6 +5,7 @@ import { type ReactNode, useState } from 'react';
 import ConfigProvider from '@/ConfigProvider';
 
 import Button from '../Button';
+import { buttonPaddingInline } from '../style';
 import type { ButtonProps } from '../type';
 
 const renderButton = (children: ReactNode) =>
@@ -151,4 +152,45 @@ describe('Button', () => {
       '0px',
     );
   });
+
+  test.each(['small', 'middle', 'large'] as const)(
+    'outdent on a text button cancels %s padding-inline',
+    (size) => {
+      renderButton(
+        <Button outdent size={size} type={'text'}>
+          Attach
+        </Button>,
+      );
+
+      const style = getComputedStyle(screen.getByRole('button', { name: 'Attach' }));
+
+      expect(style.getPropertyValue('--button-padding-inline').trim()).toBe(
+        `${buttonPaddingInline[size]}px`,
+      );
+      expect(style.marginInlineStart.replaceAll(' ', '')).toBe(
+        'calc(var(--button-padding-inline)*-1)',
+      );
+    },
+  );
+
+  test('outdent="end" cancels padding on the end edge', () => {
+    renderButton(
+      <Button outdent={'end'} type={'text'}>
+        Next
+      </Button>,
+    );
+
+    const style = getComputedStyle(screen.getByRole('button', { name: 'Next' }));
+
+    expect(style.marginInlineEnd.replaceAll(' ', '')).toBe('calc(var(--button-padding-inline)*-1)');
+    expect(style.marginInlineStart.replaceAll(' ', '')).not.toContain('--button-padding-inline');
+  });
 });
+
+{
+  const text: ButtonProps<'text'> = { outdent: true, type: 'text' };
+  void text;
+  // @ts-expect-error outdent is only on type="text"
+  const primary: ButtonProps<'primary'> = { outdent: true, type: 'primary' };
+  void primary;
+}

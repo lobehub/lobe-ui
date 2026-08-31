@@ -10,6 +10,8 @@ interface ActionIconSizeConfig extends IconSizeConfig {
 }
 
 export type ActionIconSize = number | IconSizeType | ActionIconSizeConfig;
+export type ActionIconVariant = 'borderless' | 'filled' | 'outlined';
+export type ActionIconOutdent = boolean | 'start' | 'end';
 
 export interface ActionIconClassNames {
   icon?: string;
@@ -21,7 +23,7 @@ export interface ActionIconStyles {
   root?: CSSProperties;
 }
 
-export interface ActionIconProps
+interface BaseActionIconOwnProps
   extends Partial<LucideIconProps>, Omit<CenterProps, 'title' | 'children'> {
   active?: boolean;
   classNames?: ActionIconClassNames;
@@ -37,5 +39,19 @@ export interface ActionIconProps
   styles?: ActionIconStyles;
   title?: TooltipProps['title'];
   tooltipProps?: Omit<TooltipProps, 'children' | 'title'>;
-  variant?: 'borderless' | 'filled' | 'outlined';
 }
+
+type BorderlessOutdentProps<V extends ActionIconVariant> = [V] extends ['borderless']
+  ? {
+      /**
+       * Cancels this size's icon inset (half of block − glyph) with a negative
+       * margin so a borderless ActionIcon lines up with adjacent copy. `true` /
+       * `'start'` outdent the start edge; `'end'` outdents the end edge.
+       */
+      outdent?: ActionIconOutdent;
+      variant?: V;
+    }
+  : { outdent?: never; variant?: V };
+
+export type ActionIconProps<V extends ActionIconVariant = ActionIconVariant> =
+  BaseActionIconOwnProps & BorderlessOutdentProps<V>;

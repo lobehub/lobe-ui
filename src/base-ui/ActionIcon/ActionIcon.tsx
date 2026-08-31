@@ -1,7 +1,7 @@
 'use client';
 
 import { cx } from 'antd-style';
-import type { MouseEvent, Ref } from 'react';
+import type { CSSProperties, MouseEvent, ReactElement, Ref } from 'react';
 import { memo, useMemo } from 'react';
 
 import type { ButtonProps } from '@/base-ui/Button';
@@ -9,9 +9,9 @@ import Button from '@/base-ui/Button';
 import Tooltip from '@/base-ui/Tooltip';
 import Icon from '@/Icon';
 
-import { variants } from './style';
-import { type ActionIconProps } from './type';
-import { calcSize } from './utils';
+import { styles, variants } from './style';
+import type { ActionIconOutdent, ActionIconProps, ActionIconVariant } from './type';
+import { calcOutdent, calcSize } from './utils';
 
 const resolveButtonType = (variant: ActionIconProps['variant']) => {
   if (variant === 'filled') return 'fill' as const;
@@ -25,7 +25,12 @@ const resolveButtonSize = (size: ActionIconProps['size']) => {
   return 'middle' as const;
 };
 
-const ActionIcon = memo<ActionIconProps>(
+type ActionIconImplProps = Omit<ActionIconProps, 'outdent' | 'variant'> & {
+  outdent?: ActionIconOutdent;
+  variant?: ActionIconVariant;
+};
+
+const ActionIconImpl = memo<ActionIconImplProps>(
   ({
     active,
     className,
@@ -41,12 +46,13 @@ const ActionIcon = memo<ActionIconProps>(
     icon,
     loading,
     onClick,
+    outdent,
     ref,
     shadow,
     size = 'middle',
     spin: iconSpinning,
     style,
-    styles,
+    styles: slotStyles,
     title,
     tooltipProps,
     variant = 'borderless',
@@ -80,15 +86,21 @@ const ActionIcon = memo<ActionIconProps>(
         icon={icon}
         size={size}
         spin={iconSpinning}
-        style={{ pointerEvents: 'none', ...styles?.icon }}
+        style={{ pointerEvents: 'none', ...slotStyles?.icon }}
       />
     ) : undefined;
+
+    const shouldOutdent = variant === 'borderless' && outdent;
+    const outdentCls = shouldOutdent
+      ? outdent === 'end'
+        ? styles.outdentEnd
+        : styles.outdentStart
+      : undefined;
 
     const node = (
       <Button
         {...(rest as unknown as ButtonProps)}
         aria-label={popupTriggerLabel}
-        className={cx(variants({ active, danger, glass, shadow }), classNames?.root, className)}
         danger={danger}
         disabled={disabled}
         htmlType="button"
@@ -98,11 +110,20 @@ const ActionIcon = memo<ActionIconProps>(
         size={resolveButtonSize(size)}
         tabIndex={disabled ? -1 : 0}
         type={resolveButtonType(variant)}
+        className={cx(
+          variants({ active, danger, glass, shadow }),
+          outdentCls,
+          classNames?.root,
+          className,
+        )}
         style={{
+          ...(shouldOutdent
+            ? ({ '--action-icon-outdent': calcOutdent(size) } as CSSProperties)
+            : undefined),
           borderRadius,
           height: blockSize,
           width: blockSize,
-          ...styles?.root,
+          ...slotStyles?.root,
           ...style,
         }}
         onClick={handleClick}
@@ -126,6 +147,10 @@ const ActionIcon = memo<ActionIconProps>(
   },
 );
 
-ActionIcon.displayName = 'BaseActionIcon';
+ActionIconImpl.displayName = 'BaseActionIcon';
+
+const ActionIcon = ActionIconImpl as unknown as <V extends ActionIconVariant = 'borderless'>(
+  props: ActionIconProps<V>,
+) => ReactElement;
 
 export default ActionIcon;
