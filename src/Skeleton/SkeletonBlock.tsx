@@ -1,0 +1,34 @@
+'use client';
+
+import { cx } from 'antd-style';
+import { type FC } from 'react';
+
+import Block from '@/Block';
+import type { SkeletonBlockProps } from '@/Skeleton/type';
+
+import { styles } from './style';
+
+/**
+ * @deprecated Use `Skeleton` from `@lobehub/ui/base-ui` instead.
+ */
+const SkeletonBlock: FC<SkeletonBlockProps> = ({
+  width = '100%',
+  height = '1em',
+  active,
+  style,
+  className,
+}) => {
+  return (
+    <Block
+      className={cx(styles.base, active && styles.active, className)}
+      height={height}
+      style={style}
+      variant={'filled'}
+      width={width}
+    />
+  );
+};
+
+SkeletonBlock.displayName = 'SkeletonBlock';
+
+export default SkeletonBlock;
