@@ -1,13 +1,19 @@
 'use client';
 
 import { cx } from 'antd-style';
-import { isValidElement, type MouseEvent, type ReactNode, type Ref } from 'react';
+import {
+  isValidElement,
+  type MouseEvent,
+  type ReactElement,
+  type ReactNode,
+  type Ref,
+} from 'react';
 
 import Icon, { type IconProps } from '@/Icon';
 import { useMotionComponent } from '@/MotionProvider';
 
 import { styles } from './style';
-import type { ButtonProps } from './type';
+import type { ButtonOutdent, ButtonProps, ButtonType } from './type';
 
 const resolveIconNode = (node: ReactNode | IconProps['icon'] | undefined | null) => {
   if (node === undefined || node === null) return null;
@@ -76,13 +82,19 @@ const motionTransition = {
   type: 'spring' as const,
 };
 
-const Button = ({
+type ButtonImplProps = Omit<ButtonProps, 'outdent' | 'type'> & {
+  outdent?: ButtonOutdent;
+  type?: ButtonType;
+};
+
+const ButtonImpl = ({
   block,
   children,
   className,
   classNames,
   danger = false,
   disabled,
+  outdent,
   ghost = false,
   href,
   htmlType = 'button',
@@ -97,7 +109,7 @@ const Button = ({
   target,
   type = 'default',
   ...rest
-}: ButtonProps) => {
+}: ButtonImplProps) => {
   const Motion = useMotionComponent();
   const isInteractionDisabled = disabled || loading;
   const sizeCls = resolveSizeCls(size);
@@ -111,6 +123,13 @@ const Button = ({
   const iconOnly = !hasChildren && !!renderIcon;
   const iconOnlySizeCls = iconOnly ? resolveIconOnlySizeCls(size) : undefined;
 
+  const outdentCls =
+    type === 'text' && outdent
+      ? outdent === 'end'
+        ? styles.outdentEnd
+        : styles.outdentStart
+      : undefined;
+
   const composedClassName = cx(
     styles.base,
     sizeCls,
@@ -119,6 +138,7 @@ const Button = ({
     block && styles.block,
     iconPosition === 'end' && styles.iconEnd,
     iconOnlySizeCls,
+    outdentCls,
     className,
   );
 
@@ -208,6 +228,10 @@ const Button = ({
   );
 };
 
-Button.displayName = 'BaseButton';
+ButtonImpl.displayName = 'BaseButton';
+
+const Button = ButtonImpl as <T extends ButtonType = 'default'>(
+  props: ButtonProps<T>,
+) => ReactElement;
 
 export default Button;

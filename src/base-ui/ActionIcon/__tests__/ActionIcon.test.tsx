@@ -6,7 +6,8 @@ import { type ReactNode } from 'react';
 import ConfigProvider from '@/ConfigProvider';
 
 import ActionIcon from '../ActionIcon';
-import { calcSize } from '../utils';
+import type { ActionIconProps } from '../type';
+import { actionIconOutdent, calcOutdent, calcSize } from '../utils';
 
 const renderActionIcon = (ui: ReactNode) =>
   render(<ConfigProvider motion={motion}>{ui}</ConfigProvider>);
@@ -48,6 +49,15 @@ describe('ActionIcon', () => {
     expect(calcSize(undefined)).toEqual({ blockSize: '1.8em', borderRadius: '0.3em' });
     expect(calcSize('large')).toEqual({ blockSize: 44, borderRadius: 8 });
     expect(calcSize({ blockSize: 40 })).toEqual({ blockSize: 40, borderRadius: 6 });
+  });
+
+  test('calcOutdent is half of block minus glyph', () => {
+    expect(calcOutdent('small')).toBe(`${actionIconOutdent.small}px`);
+    expect(calcOutdent('middle')).toBe(`${actionIconOutdent.middle}px`);
+    expect(calcOutdent('large')).toBe(`${actionIconOutdent.large}px`);
+    expect(calcOutdent(32)).toBe('12.8px');
+    expect(calcOutdent({ blockSize: 48 })).toBe('12px');
+    expect(calcOutdent(undefined)).toBe('0.4em');
   });
 
   test('blocks clicks while disabled and marks the root untabbable', () => {
@@ -121,4 +131,32 @@ describe('ActionIcon', () => {
     expect(container.querySelector('.icon-slot')).not.toBeNull();
     expect(getComputedStyle(root).background).toBe('rgb(255, 0, 0)');
   });
+
+  test.each(['small', 'middle', 'large'] as const)(
+    'outdent on a borderless ActionIcon cancels %s icon inset',
+    (size) => {
+      renderActionIcon(<ActionIcon outdent icon={Settings} size={size} />);
+
+      expect(getComputedStyle(screen.getByRole('button')).marginInlineStart).toBe(
+        `-${actionIconOutdent[size]}px`,
+      );
+    },
+  );
+
+  test('outdent="end" cancels inset on the end edge', () => {
+    renderActionIcon(<ActionIcon icon={Settings} outdent={'end'} />);
+
+    const style = getComputedStyle(screen.getByRole('button'));
+
+    expect(style.marginInlineEnd).toBe(`-${actionIconOutdent.middle}px`);
+    expect(style.marginInlineStart).not.toBe(`-${actionIconOutdent.middle}px`);
+  });
 });
+
+{
+  const borderless: ActionIconProps<'borderless'> = { outdent: true, variant: 'borderless' };
+  void borderless;
+  // @ts-expect-error outdent is only on variant="borderless"
+  const filled: ActionIconProps<'filled'> = { outdent: true, variant: 'filled' };
+  void filled;
+}

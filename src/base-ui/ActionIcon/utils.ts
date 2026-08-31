@@ -2,6 +2,14 @@ import { isNumber } from 'es-toolkit/compat';
 
 import type { ActionIconSize } from './type';
 
+export const actionIconOutdent = {
+  large: 10,
+  middle: 8,
+  small: 5,
+} as const;
+
+const toCss = (value: number | string) => (isNumber(value) ? `${value}px` : value);
+
 export const calcSize = (iconSize?: ActionIconSize) => {
   let blockSize: number | string;
   let borderRadius: number | string;
@@ -47,4 +55,33 @@ export const calcSize = (iconSize?: ActionIconSize) => {
     blockSize,
     borderRadius,
   };
+};
+
+export const calcOutdent = (iconSize?: ActionIconSize) => {
+  if (isNumber(iconSize)) {
+    return `${iconSize * 0.4}px`;
+  }
+
+  switch (iconSize) {
+    case 'large': {
+      return `${actionIconOutdent.large}px`;
+    }
+    case 'middle': {
+      return `${actionIconOutdent.middle}px`;
+    }
+    case 'small': {
+      return `${actionIconOutdent.small}px`;
+    }
+    default: {
+      if (iconSize) {
+        const { blockSize } = calcSize(iconSize);
+        const glyph = iconSize.size ?? 24;
+        if (isNumber(blockSize) && isNumber(glyph)) {
+          return `${Math.max(0, (blockSize - glyph) / 2)}px`;
+        }
+        return `calc((${toCss(blockSize)} - ${toCss(glyph)}) / 2)`;
+      }
+      return '0.4em';
+    }
+  }
 };

@@ -7,6 +7,7 @@ category: General
 import DemoIndex from './demos/index.tsx?demo';
 import DemoSizes from './demos/sizes.tsx?demo';
 import DemoIcons from './demos/icons.tsx?demo';
+import DemoOutdent from './demos/outdent.tsx?demo';
 import DemoSplit from './demos/split.tsx?demo';
 
 ## Type, danger & ghost
@@ -20,6 +21,12 @@ import DemoSplit from './demos/split.tsx?demo';
 ## Icons, loading & link
 
 <Demo of={DemoIcons} layout="bare" />
+
+## Outdent text
+
+`outdent` is typed onto `type="text"` only. It applies a negative margin equal to that size's `padding-inline` (`small` 8, `middle` 14, `large` 16), so a text action such as **Attach screenshot** lines up with the field above it.
+
+<Demo of={DemoOutdent} layout="bare" />
 
 ## Split button
 
