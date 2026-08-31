@@ -65,6 +65,7 @@
   "src/Segmented/index.mdx": "Components",
   "src/Select/index.mdx": "Components",
   "src/SideNav/index.mdx": "Components",
+  "src/Skeleton/index.mdx": "Components",
   "src/SliderWithInput/index.mdx": "Components",
   "src/Snippet/index.mdx": "Components",
   "src/SortableList/index.mdx": "Components",
