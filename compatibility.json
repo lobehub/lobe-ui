@@ -2785,114 +2785,6 @@
       "source": "src/SideNav/demos/index.tsx"
     },
     {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-avatar",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/Avatar.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-block",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/Block.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-button",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/Button.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-custom",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/Custom.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-demos",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/index.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-paragraph",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/Paragraph.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-tags",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/Tags.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-title",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/Title.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-withavatar",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/WithAvatar.tsx"
-    },
-    {
       "document": "src/SliderWithInput/index.mdx",
       "legacyId": "src-slider-with-input-demo-demos",
       "legacyRouteId": "components/SliderWithInput/index",
@@ -7037,15 +6929,6 @@
       "section": "Components",
       "source": "src/SideNav/index.mdx",
       "title": "SideNav"
-    },
-    {
-      "category": "Data Display",
-      "description": "Skeleton component provides a placeholder loading state for content that is being loaded. It displays animated placeholder blocks that mimic the structure of the actual content, improving user experience during data loading.",
-      "legacyRouteId": "components/Skeleton/index",
-      "pathname": "/components/skeleton",
-      "section": "Components",
-      "source": "src/Skeleton/index.mdx",
-      "title": "Skeleton"
     },
     {
       "category": "Data Entry",

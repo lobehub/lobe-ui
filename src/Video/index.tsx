@@ -1,11 +1,11 @@
 'use client';
 
-import { Skeleton } from 'antd';
 import { cssVar, cx } from 'antd-style';
 import { PlayIcon } from 'lucide-react';
 import { type CSSProperties, memo, type Ref, useMemo, useState } from 'react';
 
 import ActionIcon from '@/base-ui/ActionIcon';
+import Skeleton from '@/base-ui/Skeleton';
 import { Flexbox, type FlexboxProps } from '@/Flex';
 import { type VideoProps as VProps } from '@/types';
 
@@ -96,10 +96,9 @@ const Video = memo<VideoProps>(
 
     if (isLoading)
       return (
-        <Skeleton.Avatar
-          active
+        <Skeleton
+          radius={cssVar.borderRadiusLG}
           style={{
-            borderRadius: cssVar.borderRadiusLG,
             height,
             maxHeight,
             maxWidth,

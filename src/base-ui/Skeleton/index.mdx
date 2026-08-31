@@ -1,0 +1,71 @@
+---
+title: Skeleton
+description: Placeholder blocks that stand in for content while it loads. One primitive block, plus text-line and avatar helpers.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoText from './demos/Text.tsx?demo';
+import DemoAvatar from './demos/Avatar.tsx?demo';
+import DemoComposed from './demos/Composed.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Text
+
+<Demo of={DemoText} />
+
+## Avatar
+
+<Demo of={DemoAvatar} />
+
+## Composed
+
+<Demo of={DemoComposed} />
+
+## APIs
+
+### Skeleton
+
+<Api name="Skeleton" from=".." />
+
+`Skeleton` renders a plain `<div>`; every standard div attribute is forwarded to it. It is the only primitive — a card, a button, an image or a chart placeholder is this block with a `width`, `height` and `radius`.
+
+`animated` picks the motion: `'fade'` (the default, and what `true` resolves to) pulses the block's opacity, `'sweep'` runs a highlight across it at antd's 1.4s cadence, `false` holds it still. Both animate a compositor-only property — opacity and transform — so neither repaints while it runs, and both stop under `prefers-reduced-motion`.
+
+### Skeleton.Text
+
+Lines sized from the font metrics, so a placeholder occupies the same box the real text will.
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| rows | Number of lines | `number` | `1` |
+| fontSize | Font size the lines stand in for | `number` | `fontSize` |
+| lineHeight | Line height the lines stand in for | `number` | `1.6` |
+| width | Width of all lines, or one width per line | `number \| string \| (number \| string)[]` | `'100%'`, last line `'66%'` when `rows > 1` |
+| gap | Explicit gap between lines, replacing half-leading | `number` | - |
+| animated | Motion while loading | `boolean \| 'fade' \| 'sweep'` | `'fade'` |
+
+### Skeleton.Avatar
+
+| Property | Description          | Type                           | Default    |
+| -------- | -------------------- | ------------------------------ | ---------- |
+| size     | Width and height     | `number \| string`             | `40`       |
+| shape    | Avatar shape         | `'circle' \| 'square'`         | `'square'` |
+| animated | Motion while loading | `boolean \| 'fade' \| 'sweep'` | `'fade'`   |
+
+## Migration
+
+The antd-shaped API is gone. `active` is now `animated`, defaults to `'fade'`, and also accepts `'sweep'` for antd's highlight motion.
+
+| Before | After |
+| --- | --- |
+| `<Skeleton.Block height={16} width="60%" />` | `<Skeleton height={16} width="60%" />` |
+| `<Skeleton.Button active style={{ height: 16 }} />` | `<Skeleton height={16} />` |
+| `<Skeleton.Button block size="small" />` | `<Skeleton height={28} />` |
+| `<Skeleton active paragraph={{ rows: 3 }} title={false} />` | `<Skeleton.Text rows={3} />` |
+| `<Skeleton.Paragraph rows={3} fontSize={14} />` | `<Skeleton.Text rows={3} fontSize={14} />` |
+| `<Skeleton.Title fontSize={20} width="30%" />` | `<Skeleton.Text fontSize={20} width="30%" />` |
+| `<Skeleton.Tags count={2} />` | two `<Skeleton />` in a `<Flexbox horizontal />` |

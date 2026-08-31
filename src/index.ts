@@ -16,6 +16,14 @@ export { default as Alert, type AlertProps } from './Alert';
 export { default as AutoComplete, type AutoCompleteProps } from './AutoComplete';
 export { default as Avatar, AvatarGroup, type AvatarGroupProps, type AvatarProps } from './Avatar';
 export { styles as menuSharedStyles } from './base-ui/DropdownMenu/sharedStyle';
+export {
+  default as Skeleton,
+  SkeletonAvatar,
+  type SkeletonAvatarProps,
+  type SkeletonProps,
+  SkeletonText,
+  type SkeletonTextProps,
+} from './base-ui/Skeleton';
 export { default as Block, type BlockProps } from './Block';
 export { default as Burger, type BurgerProps } from './Burger';
 export { default as Button, type ButtonProps } from './Button';
@@ -314,22 +322,6 @@ export { default as SearchBar, type SearchBarProps } from './SearchBar';
 export { default as Segmented, type SegmentedProps } from './Segmented';
 export { default as Select, type SelectProps } from './Select';
 export { default as SideNav, type SideNavProps } from './SideNav';
-export {
-  default as Skeleton,
-  SkeletonAvatar,
-  type SkeletonAvatarProps,
-  SkeletonBlock,
-  type SkeletonBlockProps,
-  SkeletonButton,
-  type SkeletonButtonProps,
-  SkeletonParagraph,
-  type SkeletonParagraphProps,
-  type SkeletonProps,
-  SkeletonTags,
-  type SkeletonTagsProps,
-  SkeletonTitle,
-  type SkeletonTitleProps,
-} from './Skeleton';
 export { default as SliderWithInput, type SliderWithInputProps } from './SliderWithInput';
 export { default as Snippet, type SnippetProps } from './Snippet';
 export { default as SortableList, type SortableListProps } from './SortableList';

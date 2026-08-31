@@ -26,7 +26,6 @@ export const lobeUiAntdBaseline: AntdProbeName[] = [
   'progress',
   'segmented',
   'select',
-  'skeleton',
   'slider',
   'space',
   'tabs',
