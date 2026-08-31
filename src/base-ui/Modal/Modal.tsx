@@ -301,7 +301,7 @@ const Modal = memo<ModalComponentProps>(
               </ModalHeader>
             )}
             <ModalContent
-              className={classNames?.body}
+              className={cx(!showHeader && styles.contentNoHeader, classNames?.body)}
               style={{
                 ...(hasHeight || isFullscreen ? { flex: 1 } : {}),
                 ...semanticStyles?.body,
