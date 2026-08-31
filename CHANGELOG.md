@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.37.0](https://github.com/lobehub/lobe-ui/compare/v5.36.5...v5.37.0) (2026-08-31)
+
+### ✨ Features
+
+- **base-ui**: Add outdent to text Button and borderless ActionIcon, closes [#634](https://github.com/lobehub/lobe-ui/issues/634) ([3827d3c](https://github.com/lobehub/lobe-ui/commit/3827d3c))
+
 ## [5.36.5](https://github.com/lobehub/lobe-ui/compare/v5.36.4...v5.36.5) (2026-08-31)
 
 ### 🐛 Bug Fixes
