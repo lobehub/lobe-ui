@@ -1,33 +1,54 @@
 import { createStaticStyles, keyframes } from 'antd-style';
 
-const pulse = keyframes`
+const sweep = keyframes`
   0% {
-    opacity: 1;
+    translate: -100% 0;
   }
-  50% {
-    opacity: .5;
-  }
+
   100% {
-    opacity: 1;
+    translate: 100% 0;
   }
 `;
 
 export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     animated: css`
-      background: ${cssVar.colorFillSecondary};
-      animation: ${pulse} 2s linear infinite;
+      &::after {
+        pointer-events: none;
+        will-change: transform;
+        content: '';
+
+        position: absolute;
+        inset: 0;
+
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          ${cssVar.colorFill} 50%,
+          transparent 100%
+        );
+
+        animation: ${sweep} 1.4s ease infinite;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        &::after {
+          display: none;
+        }
+      }
     `,
 
     base: css`
       user-select: none;
+
+      position: relative;
 
       overflow: hidden;
       flex: none;
 
       border-radius: ${cssVar.borderRadius};
 
-      background: ${cssVar.colorFillTertiary};
+      background: ${cssVar.colorFillContent};
     `,
 
     text: css`
