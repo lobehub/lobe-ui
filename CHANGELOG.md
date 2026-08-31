@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.36.3](https://github.com/lobehub/lobe-ui/compare/v5.36.2...v5.36.3) (2026-08-31)
+
+### 💄 Styles
+
+- **base-ui**: Rebalance Modal header and body spacing, closes [#630](https://github.com/lobehub/lobe-ui/issues/630) ([79502c7](https://github.com/lobehub/lobe-ui/commit/79502c7))
+
 ## [5.36.2](https://github.com/lobehub/lobe-ui/compare/v5.36.1...v5.36.2) (2026-08-29)
 
 ### 💄 Styles
