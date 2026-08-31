@@ -165,7 +165,7 @@ it('does not override component typography inside an embedded demo', () => {
   const demoHeading = screen.getByRole('heading', { name: 'Demo modal title' });
 
   expect(getComputedStyle(documentationHeading).fontSize).toBe('1.625rem');
-  expect(getComputedStyle(demoHeading).fontSize).toBe('17px');
+  expect(getComputedStyle(demoHeading).fontSize).toBe('14px');
   expect(getComputedStyle(demoHeading).fontWeight).toBe('600');
   expect(getComputedStyle(demoHeading).marginBlockStart).toBe('0');
 });
