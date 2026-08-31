@@ -31,12 +31,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       }
     `,
     shadow: lobeStaticStylish.shadow,
-    outdentStart: css`
-      margin-inline-start: calc(var(--action-icon-outdent) * -1);
-    `,
-    outdentEnd: css`
-      margin-inline-end: calc(var(--action-icon-outdent) * -1);
-    `,
   };
 });
 

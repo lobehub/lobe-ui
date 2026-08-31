@@ -1,7 +1,7 @@
 'use client';
 
 import { cx } from 'antd-style';
-import type { CSSProperties, MouseEvent, ReactElement, Ref } from 'react';
+import type { MouseEvent, ReactElement, Ref } from 'react';
 import { memo, useMemo } from 'react';
 
 import type { ButtonProps } from '@/base-ui/Button';
@@ -9,7 +9,7 @@ import Button from '@/base-ui/Button';
 import Tooltip from '@/base-ui/Tooltip';
 import Icon from '@/Icon';
 
-import { styles, variants } from './style';
+import { variants } from './style';
 import type { ActionIconOutdent, ActionIconProps, ActionIconVariant } from './type';
 import { calcOutdent, calcSize } from './utils';
 
@@ -90,17 +90,18 @@ const ActionIconImpl = memo<ActionIconImplProps>(
       />
     ) : undefined;
 
-    const shouldOutdent = variant === 'borderless' && outdent;
-    const outdentCls = shouldOutdent
+    const outdentAmount = variant === 'borderless' && outdent ? calcOutdent(size) : undefined;
+    const outdentMargin = outdentAmount
       ? outdent === 'end'
-        ? styles.outdentEnd
-        : styles.outdentStart
+        ? { marginInlineEnd: `-${outdentAmount}` }
+        : { marginInlineStart: `-${outdentAmount}` }
       : undefined;
 
     const node = (
       <Button
         {...(rest as unknown as ButtonProps)}
         aria-label={popupTriggerLabel}
+        className={cx(variants({ active, danger, glass, shadow }), classNames?.root, className)}
         danger={danger}
         disabled={disabled}
         htmlType="button"
@@ -110,16 +111,8 @@ const ActionIconImpl = memo<ActionIconImplProps>(
         size={resolveButtonSize(size)}
         tabIndex={disabled ? -1 : 0}
         type={resolveButtonType(variant)}
-        className={cx(
-          variants({ active, danger, glass, shadow }),
-          outdentCls,
-          classNames?.root,
-          className,
-        )}
         style={{
-          ...(shouldOutdent
-            ? ({ '--action-icon-outdent': calcOutdent(size) } as CSSProperties)
-            : undefined),
+          ...outdentMargin,
           borderRadius,
           height: blockSize,
           width: blockSize,

@@ -137,13 +137,8 @@ describe('ActionIcon', () => {
     (size) => {
       renderActionIcon(<ActionIcon outdent icon={Settings} size={size} />);
 
-      const style = getComputedStyle(screen.getByRole('button'));
-
-      expect(style.getPropertyValue('--action-icon-outdent').trim()).toBe(
-        `${actionIconOutdent[size]}px`,
-      );
-      expect(style.marginInlineStart.replaceAll(' ', '')).toBe(
-        'calc(var(--action-icon-outdent)*-1)',
+      expect(getComputedStyle(screen.getByRole('button')).marginInlineStart).toBe(
+        `-${actionIconOutdent[size]}px`,
       );
     },
   );
@@ -153,8 +148,8 @@ describe('ActionIcon', () => {
 
     const style = getComputedStyle(screen.getByRole('button'));
 
-    expect(style.marginInlineEnd.replaceAll(' ', '')).toBe('calc(var(--action-icon-outdent)*-1)');
-    expect(style.marginInlineStart.replaceAll(' ', '')).not.toContain('--action-icon-outdent');
+    expect(style.marginInlineEnd).toBe(`-${actionIconOutdent.middle}px`);
+    expect(style.marginInlineStart).not.toBe(`-${actionIconOutdent.middle}px`);
   });
 });
 
