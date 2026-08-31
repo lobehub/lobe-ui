@@ -14,8 +14,8 @@ import {
   useState,
 } from 'react';
 
+import Skeleton from '@/base-ui/Skeleton';
 import { Flexbox } from '@/Flex';
-import { SkeletonAvatar } from '@/Skeleton';
 
 import { usePreviewGroupContext } from './PreviewGroup';
 import { FALLBACK_DARK, FALLBACK_LIGHT, styles, variants } from './style';
@@ -175,8 +175,7 @@ const Image = memo<ImageProps>(
     if (isLoading)
       return (
         <div onClick={onClick}>
-          <SkeletonAvatar
-            active
+          <Skeleton
             height={resolvedHeight}
             style={{ maxHeight, maxWidth, minHeight, minWidth }}
             width={resolvedWidth}

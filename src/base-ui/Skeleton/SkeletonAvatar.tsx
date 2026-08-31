@@ -1,0 +1,27 @@
+'use client';
+
+import { type FC } from 'react';
+
+import Skeleton from './Skeleton';
+import type { SkeletonAvatarProps } from './type';
+
+const DEFAULT_SIZE = 40;
+
+const SkeletonAvatar: FC<SkeletonAvatarProps> = ({
+  shape = 'square',
+  size = DEFAULT_SIZE,
+  width,
+  height,
+  ...rest
+}) => (
+  <Skeleton
+    height={height ?? size}
+    radius={shape === 'circle' ? '50%' : undefined}
+    width={width ?? size}
+    {...rest}
+  />
+);
+
+SkeletonAvatar.displayName = 'SkeletonAvatar';
+
+export default SkeletonAvatar;

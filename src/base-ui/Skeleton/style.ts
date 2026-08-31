@@ -1,6 +1,6 @@
 import { createStaticStyles, keyframes } from 'antd-style';
 
-const shimmer = keyframes`
+const pulse = keyframes`
   0% {
     opacity: 1;
   }
@@ -14,21 +14,16 @@ const shimmer = keyframes`
 
 export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
-    active: css`
+    animated: css`
       background: ${cssVar.colorFillSecondary};
-      animation: ${shimmer} 2s linear infinite;
-    `,
-
-    avatar: css`
-      flex-shrink: 0;
+      animation: ${pulse} 2s linear infinite;
     `,
 
     base: css`
       user-select: none;
 
-      position: relative;
-
       overflow: hidden;
+      flex: none;
 
       border-radius: ${cssVar.borderRadius};
 
@@ -37,10 +32,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 
     text: css`
       display: flex;
-      flex: 1;
       flex-direction: column;
-      gap: ${cssVar.paddingXS};
-
       width: 100%;
     `,
   };

@@ -38,6 +38,8 @@ export { default as Segmented } from './Segmented';
 export * from './Segmented';
 export { default as Select } from './Select';
 export * from './Select';
+export { default as Skeleton } from './Skeleton';
+export * from './Skeleton';
 export * from './Slider';
 export { default as Switch } from './Switch';
 export * from './Switch';
