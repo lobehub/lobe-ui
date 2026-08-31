@@ -16,13 +16,21 @@ describe('Skeleton', () => {
     expect(block.className).not.toBe('');
   });
 
-  test('animated={false} drops the pulse class', () => {
-    const { container } = render(<Skeleton animated={false} />);
-    const plain = (container.firstElementChild as HTMLElement).className;
+  test('animated picks fade by default, sweep on request and nothing when false', () => {
+    const cls = (node: HTMLElement) => node.className;
+    const { container, rerender } = render(<Skeleton animated={false} />);
+    const still = cls(container.firstElementChild as HTMLElement);
 
-    cleanup();
-    const { container: c2 } = render(<Skeleton />);
-    expect((c2.firstElementChild as HTMLElement).className).not.toBe(plain);
+    rerender(<Skeleton />);
+    const fade = cls(container.firstElementChild as HTMLElement);
+
+    rerender(<Skeleton animated="fade" />);
+    expect(cls(container.firstElementChild as HTMLElement)).toBe(fade);
+
+    rerender(<Skeleton animated="sweep" />);
+    const sweep = cls(container.firstElementChild as HTMLElement);
+
+    expect(new Set([still, fade, sweep]).size).toBe(3);
   });
 
   test('Text renders one row by default and shortens the last of many', () => {

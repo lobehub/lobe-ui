@@ -10,9 +10,46 @@ const sweep = keyframes`
   }
 `;
 
+const fade = keyframes`
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: .5;
+  }
+`;
+
 export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
-    animated: css`
+    base: css`
+      user-select: none;
+
+      position: relative;
+
+      overflow: hidden;
+      flex: none;
+
+      border-radius: ${cssVar.borderRadius};
+
+      background: ${cssVar.colorFillContent};
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+
+        &::after {
+          display: none;
+        }
+      }
+    `,
+
+    fade: css`
+      will-change: opacity;
+      animation: ${fade} 1.6s ease-in-out infinite;
+    `,
+
+    sweep: css`
       &::after {
         pointer-events: none;
         will-change: transform;
@@ -30,25 +67,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 
         animation: ${sweep} 1.4s ease infinite;
       }
-
-      @media (prefers-reduced-motion: reduce) {
-        &::after {
-          display: none;
-        }
-      }
-    `,
-
-    base: css`
-      user-select: none;
-
-      position: relative;
-
-      overflow: hidden;
-      flex: none;
-
-      border-radius: ${cssVar.borderRadius};
-
-      background: ${cssVar.colorFillContent};
     `,
 
     text: css`

@@ -16,8 +16,12 @@ const Skeleton: FC<SkeletonProps> = ({
   ...rest
 }) => (
   <div
-    className={cx(styles.base, animated && styles.animated, className)}
     style={{ borderRadius: radius, height, width, ...style }}
+    className={cx(
+      styles.base,
+      animated && styles[animated === true ? 'fade' : animated],
+      className,
+    )}
     {...rest}
   />
 );

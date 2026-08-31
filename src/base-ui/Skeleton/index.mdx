@@ -33,6 +33,8 @@ import DemoComposed from './demos/Composed.tsx?demo';
 
 `Skeleton` renders a plain `<div>`; every standard div attribute is forwarded to it. It is the only primitive — a card, a button, an image or a chart placeholder is this block with a `width`, `height` and `radius`.
 
+`animated` picks the motion: `'fade'` (the default, and what `true` resolves to) pulses the block's opacity, `'sweep'` runs a highlight across it at antd's 1.4s cadence, `false` holds it still. Both animate a compositor-only property — opacity and transform — so neither repaints while it runs, and both stop under `prefers-reduced-motion`.
+
 ### Skeleton.Text
 
 Lines sized from the font metrics, so a placeholder occupies the same box the real text will.
@@ -44,19 +46,19 @@ Lines sized from the font metrics, so a placeholder occupies the same box the re
 | lineHeight | Line height the lines stand in for | `number` | `1.6` |
 | width | Width of all lines, or one width per line | `number \| string \| (number \| string)[]` | `'100%'`, last line `'66%'` when `rows > 1` |
 | gap | Explicit gap between lines, replacing half-leading | `number` | - |
-| animated | Pulse while loading | `boolean` | `true` |
+| animated | Motion while loading | `boolean \| 'fade' \| 'sweep'` | `'fade'` |
 
 ### Skeleton.Avatar
 
-| Property | Description         | Type                   | Default    |
-| -------- | ------------------- | ---------------------- | ---------- |
-| size     | Width and height    | `number \| string`     | `40`       |
-| shape    | Avatar shape        | `'circle' \| 'square'` | `'square'` |
-| animated | Pulse while loading | `boolean`              | `true`     |
+| Property | Description          | Type                           | Default    |
+| -------- | -------------------- | ------------------------------ | ---------- |
+| size     | Width and height     | `number \| string`             | `40`       |
+| shape    | Avatar shape         | `'circle' \| 'square'`         | `'square'` |
+| animated | Motion while loading | `boolean \| 'fade' \| 'sweep'` | `'fade'`   |
 
 ## Migration
 
-The antd-shaped API is gone. `active` is now `animated` and defaults to `true`.
+The antd-shaped API is gone. `active` is now `animated`, defaults to `'fade'`, and also accepts `'sweep'` for antd's highlight motion.
 
 | Before | After |
 | --- | --- |

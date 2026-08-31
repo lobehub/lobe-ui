@@ -1,7 +1,9 @@
 import type { HTMLAttributes } from 'react';
 
+export type SkeletonAnimation = 'fade' | 'sweep';
+
 export interface SkeletonProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
-  animated?: boolean;
+  animated?: boolean | SkeletonAnimation;
   height?: number | string;
   radius?: number | string;
   width?: number | string;
