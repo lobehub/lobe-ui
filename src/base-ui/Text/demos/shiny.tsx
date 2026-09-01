@@ -1,6 +1,6 @@
 import { Flexbox } from '@lobehub/ui';
-import { Text } from '@lobehub/ui/base-ui';
-import { createStaticStyles, cssVar } from 'antd-style';
+import { Text, textGroupStyles, textStyles } from '@lobehub/ui/base-ui';
+import { createStaticStyles, cssVar, cx } from 'antd-style';
 import { Check, SquareChevronRight } from 'lucide-react';
 
 const styles = createStaticStyles(({ css, cssVar }) => ({
@@ -37,5 +37,15 @@ export default () => (
       </span>
       <Check color={cssVar.colorSuccess} size={14} />
     </Text>
+
+    <div className={cx(styles.row, textGroupStyles.shinyGroup)}>
+      <span className={textStyles.shiny}>Bash:</span>
+      <span className={styles.chip}>
+        <SquareChevronRight size={14} />
+        Read round-3 actionable review feedback
+      </span>
+      <span className={textStyles.shiny}>waiting for the shell</span>
+      <Check color={cssVar.colorSuccess} size={14} />
+    </div>
   </Flexbox>
 );
