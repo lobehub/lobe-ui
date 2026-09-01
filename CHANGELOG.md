@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.37.1](https://github.com/lobehub/lobe-ui/compare/v5.37.0...v5.37.1) (2026-09-01)
+
+### 🐛 Bug Fixes
+
+- **text**: Keep icons visible inside shiny text and boost light-mode contrast, closes [#635](https://github.com/lobehub/lobe-ui/issues/635) ([a824850](https://github.com/lobehub/lobe-ui/commit/a824850))
+
 # [5.37.0](https://github.com/lobehub/lobe-ui/compare/v5.36.5...v5.37.0) (2026-08-31)
 
 ### ✨ Features
