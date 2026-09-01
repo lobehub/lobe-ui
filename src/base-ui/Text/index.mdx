@@ -10,12 +10,19 @@ apiHeader:
 ---
 
 import DemoBasic from './demos/index.tsx?demo';
+import DemoShiny from './demos/shiny.tsx?demo';
 
 ## Basic
 
 Types, colors, headings, formatting combinations, and ellipsis modes:
 
 <Demo of={DemoBasic} layout="bare" />
+
+## Shiny
+
+The shimmer sweeps the text only — icons, chips, and other non-text children keep their own paint:
+
+<Demo of={DemoShiny} layout="bare" />
 
 ## APIs
 
