@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.38.0](https://github.com/lobehub/lobe-ui/compare/v5.37.1...v5.38.0) (2026-09-01)
+
+### ✨ Features
+
+- **text**: Add shinyGroup so one row sweeps as a single wave, closes [#636](https://github.com/lobehub/lobe-ui/issues/636) ([0759b39](https://github.com/lobehub/lobe-ui/commit/0759b39))
+
 ## [5.37.1](https://github.com/lobehub/lobe-ui/compare/v5.37.0...v5.37.1) (2026-09-01)
 
 ### 🐛 Bug Fixes
