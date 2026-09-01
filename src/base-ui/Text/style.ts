@@ -101,14 +101,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     user-select: none;
 
-    color: color-mix(in srgb, ${cssVar.colorText} 45%, transparent);
+    color: color-mix(in srgb, ${cssVar.colorText} 28%, transparent);
 
-    background: linear-gradient(
-      120deg,
-      transparent 25%,
-      ${cssVar.colorTextSecondary} 50%,
-      transparent 75%
-    );
+    background: linear-gradient(120deg, transparent 25%, ${cssVar.colorText} 50%, transparent 75%);
     background-clip: text;
     background-size: 200% 100%;
 
@@ -116,34 +111,38 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     /* Animating background-position repaints every glyph each frame. Where
      * mask-clip: text is supported, clip a transform-animated overlay to the
-     * glyphs instead so the sweep stays on the compositor. */
+     * glyphs instead so the sweep stays on the compositor. The mask clips every
+     * descendant too, so rows that also render icons or chips keep the
+     * background-clip path — masking would erase that non-text paint. */
     @supports (-webkit-mask-clip: text) {
-      position: relative;
+      &:not(:has(*)) {
+        position: relative;
 
-      background: none;
+        background: none;
 
-      animation: none;
+        animation: none;
 
-      /* stylelint-disable-next-line declaration-property-value-no-unknown */
-      mask-clip: text;
-      mask-image: linear-gradient(#fff, #fff);
+        /* stylelint-disable-next-line declaration-property-value-no-unknown */
+        mask-clip: text;
+        mask-image: linear-gradient(#fff, #fff);
 
-      &::after {
-        pointer-events: none;
-        will-change: transform;
-        content: '';
+        &::after {
+          pointer-events: none;
+          will-change: transform;
+          content: '';
 
-        position: absolute;
-        inset: 0;
+          position: absolute;
+          inset: 0;
 
-        background: linear-gradient(
-          90deg,
-          transparent 25%,
-          ${cssVar.colorTextSecondary} 50%,
-          transparent 75%
-        );
+          background: linear-gradient(
+            90deg,
+            transparent 25%,
+            ${cssVar.colorText} 50%,
+            transparent 75%
+          );
 
-        animation: ${sweep} var(--shiny-duration) linear infinite;
+          animation: ${sweep} var(--shiny-duration) linear infinite;
+        }
       }
     }
 
