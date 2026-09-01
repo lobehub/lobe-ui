@@ -116,7 +116,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
      * background-clip path — masking would erase that non-text paint. */
     @supports (-webkit-mask-clip: text) {
       &:not(:has(*)) {
-        position: relative;
+        position: var(--shiny-origin, relative);
 
         background: none;
 
@@ -169,6 +169,24 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   warning: css`
     color: ${cssVar.colorWarning};
+  `,
+}));
+
+/**
+ * Coordinate layer for a row that shimmers several separate text spans. Each
+ * span's sweep overlay resolves against the nearest positioned ancestor, so
+ * dropping `position` on the spans and holding it here gives every span the
+ * same row-wide overlay — one continuous wave instead of one sweep per span.
+ */
+export const groupStyles = createStaticStyles(({ css }) => ({
+  shinyGroup: css`
+    @supports (-webkit-mask-clip: text) {
+      & {
+        --shiny-origin: static;
+
+        position: relative;
+      }
+    }
   `,
 }));
 

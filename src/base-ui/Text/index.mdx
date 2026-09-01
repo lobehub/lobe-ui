@@ -20,7 +20,7 @@ Types, colors, headings, formatting combinations, and ellipsis modes:
 
 ## Shiny
 
-The shimmer sweeps the text only — icons, chips, and other non-text children keep their own paint:
+The shimmer sweeps the text only — icons, chips, and other non-text children keep their own paint. A row that shimmers several separate spans adds `textGroupStyles.shinyGroup`, which hands every span the same row-wide sweep so they read as one continuous wave rather than one sweep per span:
 
 <Demo of={DemoShiny} layout="bare" />
 
@@ -48,6 +48,12 @@ The shimmer sweeps the text only — icons, chips, and other non-text children k
 | ref | `Ref<HTMLDivElement>` | - | Forwarded to the root element. |
 | shiny | `boolean` | - | Looping shimmer sweep for loading or streaming text. Falls back to a static color when `prefers-reduced-motion` is set. |
 | shinyDuration | `CSSProperties['animationDuration']` | `'1.5s'` | Sweep cycle length. Only accepted when `shiny` is set. |
+
+### textGroupStyles
+
+| Class | Description |
+| --- | --- | --- | --- |
+| shinyGroup | Put it on a row that contains several `textStyles.shiny` spans: the row becomes the sweep's coordinate space, so every span shares one continuous wave. |
 | strong | `boolean` | - | Bold text. |
 | textDecoration | `CSSProperties['textDecoration']` | - | Text decoration. |
 | textTransform | `CSSProperties['textTransform']` | - | Text transform. |
