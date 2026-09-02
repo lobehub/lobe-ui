@@ -1,6 +1,7 @@
 import { createStaticStyles } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
+import { focusRing } from '@/base-ui/focusRing';
 import { lobeStaticStylish } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
@@ -60,10 +61,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       scale: 0.96;
     }
 
-    &:focus-visible {
-      outline: 2px solid ${cssVar.colorPrimaryBorder};
-      outline-offset: 1px;
-    }
+    ${focusRing};
 
     &:disabled {
       cursor: not-allowed;
@@ -157,10 +155,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       background: ${cssVar.colorFillQuaternary};
     }
 
-    &:focus-visible {
-      outline: 2px solid ${cssVar.colorPrimaryBorder};
-      outline-offset: -2px;
-    }
+    ${focusRing};
   `,
   extraHeaderPlain: css`
     margin-block-start: 6px;

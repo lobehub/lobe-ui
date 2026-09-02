@@ -1,5 +1,7 @@
 import { createStaticStyles } from 'antd-style';
 
+import { focusRing } from '@/base-ui/focusRing';
+
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   indicator: css`
     display: flex;
@@ -41,10 +43,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       border-color: ${cssVar.colorBorder};
     }
 
-    &:focus-visible {
-      outline: 2px solid ${cssVar.colorPrimaryBorder};
-      outline-offset: 1px;
-    }
+    ${focusRing};
 
     &[data-checked],
     &[data-indeterminate] {

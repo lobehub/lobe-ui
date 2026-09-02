@@ -1,6 +1,7 @@
 import { createStaticStyles } from 'antd-style';
 
 import { controlHeight } from '@/base-ui/controlSize';
+import { focusRing } from '@/base-ui/focusRing';
 
 export const buttonPaddingInline = {
   large: 16,
@@ -33,10 +34,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       border-color 160ms cubic-bezier(0.32, 0.72, 0, 1),
       box-shadow 160ms cubic-bezier(0.32, 0.72, 0, 1);
 
-    &:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 2px ${cssVar.colorPrimaryBorder};
-    }
+    ${focusRing};
 
     &:disabled,
     &[aria-disabled='true'] {

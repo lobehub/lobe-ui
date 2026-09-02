@@ -1,6 +1,8 @@
 import { createStaticStyles } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
+import { focusRing, focusRingColor } from '@/base-ui/focusRing';
+
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   action: css`
     cursor: pointer;
@@ -23,10 +25,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       background 0.2s,
       color 0.2s;
 
-    &:focus-visible {
-      outline: 2px solid ${cssVar.colorPrimaryBorder};
-      outline-offset: 1px;
-    }
+    ${focusRing};
   `,
 
   actionDanger: css`
@@ -41,9 +40,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       background: ${cssVar.colorErrorActive};
     }
 
-    &:focus-visible {
-      outline-color: ${cssVar.colorErrorBorder};
-    }
+    ${focusRingColor(cssVar.colorError)};
   `,
 
   actionGhost: css`

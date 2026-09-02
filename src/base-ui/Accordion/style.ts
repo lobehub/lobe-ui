@@ -1,6 +1,8 @@
 import { createStaticStyles } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
+import { focusRing } from '@/base-ui/focusRing';
+
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   action: css`
     display: flex;
@@ -144,10 +146,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     background: none;
     outline: none;
 
-    &:focus-visible {
-      outline: 2px solid ${cssVar.colorPrimaryBorder};
-      outline-offset: -2px;
-    }
+    ${focusRing};
 
     &[data-disabled] {
       cursor: not-allowed;

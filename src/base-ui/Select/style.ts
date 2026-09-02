@@ -2,6 +2,7 @@ import { createStaticStyles, cx } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
 import { controlHeight } from '@/base-ui/controlSize';
+import { focusRing } from '@/base-ui/focusRing';
 import { lobeStaticStylish } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
@@ -248,10 +249,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       background: var(--lobe-select-open-bg, ${cssVar.colorFillTertiary});
     }
 
-    &:focus-visible {
-      outline: 2px solid ${cssVar.colorPrimaryBorder};
-      outline-offset: 1px;
-    }
+    ${focusRing};
 
     &:hover [data-role='lobe-select-clear'] {
       opacity: 1;

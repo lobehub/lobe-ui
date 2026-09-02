@@ -1,5 +1,7 @@
 import { createStaticStyles } from 'antd-style';
 
+import { focusRing } from '@/base-ui/focusRing';
+
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   control: css`
     display: flex;
@@ -52,10 +54,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       box-shadow: 0 0 0 2px ${cssVar.colorPrimaryBorder};
     }
 
-    &:focus-visible {
-      outline: 2px solid ${cssVar.colorPrimaryBorder};
-      outline-offset: 1px;
-    }
+    ${focusRing};
 
     [data-dragging] & {
       box-shadow: 0 0 0 2px ${cssVar.colorPrimaryBorder};

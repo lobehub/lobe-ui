@@ -1,5 +1,7 @@
 import { createStaticStyles } from 'antd-style';
 
+import { focusRing } from '@/base-ui/focusRing';
+
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   backdrop: css`
     position: fixed;
@@ -282,10 +284,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       transform: scale(0.96);
     }
 
-    &:focus-visible {
-      outline: none;
-      box-shadow: 0 0 0 2px ${cssVar.colorPrimaryBorder};
-    }
+    ${focusRing};
   `,
 
   content: css`

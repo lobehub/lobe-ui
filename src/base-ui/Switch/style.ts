@@ -1,6 +1,8 @@
 import { createStaticStyles } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
+import { focusRing } from '@/base-ui/focusRing';
+
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   icon: css`
     pointer-events: none;
@@ -115,10 +117,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       --switch-dir: -1;
     }
 
-    &:focus-visible {
-      outline: 2px solid ${cssVar.colorPrimaryBorder};
-      outline-offset: 1px;
-    }
+    ${focusRing};
 
     &:hover:not([data-disabled]) {
       background: ${cssVar.colorFill};

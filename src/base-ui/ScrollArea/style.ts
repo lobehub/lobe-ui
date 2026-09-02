@@ -1,5 +1,7 @@
 import { createStaticStyles } from 'antd-style';
 
+import { focusRing } from '@/base-ui/focusRing';
+
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   content: css`
     display: flex;
@@ -81,10 +83,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     height: 100%;
     outline: none;
 
-    &:focus-visible {
-      outline: 2px solid ${cssVar.colorPrimary};
-      outline-offset: 2px;
-    }
+    ${focusRing};
   `,
 
   viewportFade: css`

@@ -1,6 +1,8 @@
 import { createStaticStyles } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
+import { focusRing } from '@/base-ui/focusRing';
+
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   indicator: css`
     pointer-events: none;
@@ -95,12 +97,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   panel: css`
     padding-block-start: 12px;
     outline: none;
-
-    &:focus-visible {
-      border-radius: ${cssVar.borderRadius};
-      outline: 2px solid ${cssVar.colorPrimaryBorder};
-      outline-offset: 2px;
-    }
+    border-radius: ${cssVar.borderRadius};
+    ${focusRing};
   `,
   root: css`
     display: flex;
@@ -146,10 +144,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       transform: scale(0.98);
     }
 
-    &:focus-visible {
-      outline: 2px solid ${cssVar.colorPrimaryBorder};
-      outline-offset: -2px;
-    }
+    ${focusRing};
 
     &[data-active] {
       color: ${cssVar.colorPrimary};
