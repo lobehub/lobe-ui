@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.39.0](https://github.com/lobehub/lobe-ui/compare/v5.38.0...v5.39.0) (2026-09-02)
+
+### ✨ Features
+
+- **base-ui**: Unify focus ring as a macOS-style soft accent glow ([1423d7f](https://github.com/lobehub/lobe-ui/commit/1423d7f))
+
 # [5.38.0](https://github.com/lobehub/lobe-ui/compare/v5.37.1...v5.38.0) (2026-09-01)
 
 ### ✨ Features
