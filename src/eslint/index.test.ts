@@ -38,16 +38,30 @@ describe('restrictedImports', () => {
     ]);
   });
 
-  it.each(['ActionIcon', 'Avatar', 'Dropdown', 'FormTitle', 'InputOPT', 'Switch', 'Tag', 'Text'])(
-    'rejects the migrated %s wrapper',
-    (name) => {
-      expect(lint(`import { ${name} } from '@lobehub/ui';`)).toEqual([
-        expect.objectContaining({ ruleId: 'no-restricted-imports', severity: 2 }),
-      ]);
-    },
-  );
+  it.each([
+    'ActionIcon',
+    'Avatar',
+    'Dropdown',
+    'FormTitle',
+    'InputOPT',
+    'Skeleton',
+    'SkeletonParagraph',
+    'Switch',
+    'Tag',
+    'Text',
+  ])('rejects the migrated %s wrapper', (name) => {
+    expect(lint(`import { ${name} } from '@lobehub/ui';`)).toEqual([
+      expect.objectContaining({ ruleId: 'no-restricted-imports', severity: 2 }),
+    ]);
+  });
 
-  it('allows Alert from the Base UI entrypoint', () => {
-    expect(lint("import { Alert } from '@lobehub/ui/base-ui';")).toEqual([]);
+  it('rejects the antd skeleton path', () => {
+    expect(lint("import Skeleton from 'antd/es/skeleton';")).toEqual([
+      expect.objectContaining({ ruleId: 'no-restricted-imports', severity: 2 }),
+    ]);
+  });
+
+  it.each(['Alert', 'Skeleton'])('allows %s from the Base UI entrypoint', (name) => {
+    expect(lint(`import { ${name} } from '@lobehub/ui/base-ui';`)).toEqual([]);
   });
 });
