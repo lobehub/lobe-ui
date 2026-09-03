@@ -309,7 +309,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
-  "packageManager": "pnpm@11.18.0",
+  "packageManager": "pnpm@11.25.0",
   "engines": {
     "node": ">=22.22.0"
   },
