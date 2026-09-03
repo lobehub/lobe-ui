@@ -247,7 +247,7 @@
     "@types/chroma-js": "^3.1.2",
     "@types/hast": "^3.0.5",
     "@types/mdx": "^2.0.14",
-    "@types/node": "26.1.1",
+    "@types/node": "26.4.1",
     "@types/numeral": "^2.0.5",
     "@types/pangu": "^4.0.2",
     "@types/react": "^19.2.17",
