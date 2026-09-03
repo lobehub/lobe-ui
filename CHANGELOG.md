@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.39.1](https://github.com/lobehub/lobe-ui/compare/v5.39.0...v5.39.1) (2026-09-03)
+
+### ♻ Code Refactoring
+
+- **eslint**: Ban the legacy Skeleton wrapper from the root entry, closes [#637](https://github.com/lobehub/lobe-ui/issues/637) ([f846816](https://github.com/lobehub/lobe-ui/commit/f846816))
+
 # [5.39.0](https://github.com/lobehub/lobe-ui/compare/v5.38.0...v5.39.0) (2026-09-02)
 
 ### ✨ Features
