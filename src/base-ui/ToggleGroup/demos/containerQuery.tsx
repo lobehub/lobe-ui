@@ -1,16 +1,16 @@
 import { ToggleGroup, type ToggleGroupProps } from '@lobehub/ui/base-ui';
-import { createStyles } from 'antd-style';
+import { createStaticStyles } from 'antd-style';
 import { CodeIcon, EyeIcon } from 'lucide-react';
 
-const useStyles = createStyles(({ css, token }) => ({
+const styles = createStaticStyles(({ css, cssVar }) => ({
   toolbar: css`
     container-type: inline-size;
     display: flex;
     justify-content: flex-end;
 
     padding: 8px;
-    border: 1px dashed ${token.colorBorder};
-    border-radius: ${token.borderRadiusLG}px;
+    border: 1px dashed ${cssVar.colorBorder};
+    border-radius: ${cssVar.borderRadiusLG};
 
     @container (max-width: 200px) {
       .toggle-group-item-label {
@@ -26,8 +26,6 @@ const options: ToggleGroupProps['options'] = [
 ];
 
 export default () => {
-  const { styles } = useStyles();
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16, padding: 16 }}>
       <div className={styles.toolbar} style={{ width: 320 }}>

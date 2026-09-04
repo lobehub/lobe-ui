@@ -1,6 +1,6 @@
 'use client';
 
-import { createStyles, cx, keyframes } from 'antd-style';
+import { createStaticStyles, cx, keyframes } from 'antd-style';
 import { Download, Expand } from 'lucide-react';
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -28,7 +28,7 @@ const shimmer = keyframes`
   100% { background-position: -200% 0; }
 `;
 
-const useStyles = createStyles(({ css, cssVar, isDarkMode }) => ({
+const styles = createStaticStyles(({ css, cssVar }) => ({
   loadingBackdrop: css`
     pointer-events: none;
 
@@ -40,7 +40,7 @@ const useStyles = createStyles(({ css, cssVar, isDarkMode }) => ({
     background: linear-gradient(
       90deg,
       transparent 0%,
-      ${isDarkMode ? 'rgba(255, 255, 255, 0.04)' : 'rgba(0, 0, 0, 0.04)'} 50%,
+      color-mix(in srgb, ${cssVar.colorText} 4%, transparent) 50%,
       transparent 100%
     );
     background-repeat: no-repeat;
@@ -100,7 +100,7 @@ const useStyles = createStyles(({ css, cssVar, isDarkMode }) => ({
   loadingRoot: css`
     position: relative;
     overflow: hidden;
-    background: ${isDarkMode ? '#1f1f1f' : '#fafafa'};
+    background: color-mix(in srgb, ${cssVar.colorText} 3%, ${cssVar.colorBgContainer});
   `,
   // Inline top-right toolbar. Tagged with `actionsHoverCls` so the Highlighter
   // container's `&:hover .${actionsHoverCls} { opacity: 1 }` rule flips it
@@ -361,8 +361,6 @@ const HtmlPreview = memo<HtmlPreviewProps>(
       [animated, classNames?.content, customStyles?.content, trimmedChildren, variant],
     );
 
-    const { styles } = useStyles();
-
     const iframeBody = useMemo(
       () => (
         <HtmlPreviewIframe
@@ -410,7 +408,7 @@ const HtmlPreview = memo<HtmlPreviewProps>(
           </div>
         </div>
       ),
-      [animated, defaultHeight, styles, trimmedChildren],
+      [animated, defaultHeight, trimmedChildren],
     );
 
     const previewBody = isStable ? iframeBody : loadingBody;

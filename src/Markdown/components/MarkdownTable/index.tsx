@@ -1,13 +1,13 @@
 'use client';
 
-import { createStyles } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
 import { memo, useCallback, useRef } from 'react';
 
 import CopyButton from '@/CopyButton';
 
 import { hastTableToMarkdown } from './hastTableToMarkdown';
 
-const useStyles = createStyles(({ css, token }) => ({
+const styles = createStaticStyles(({ css, cssVar }) => ({
   copyButton: css`
     position: absolute;
     z-index: 1;
@@ -20,10 +20,10 @@ const useStyles = createStyles(({ css, token }) => ({
     transform: translateY(-50%);
 
     opacity: 0;
-    background: ${token.colorBgContainer};
-    box-shadow: 0 0 0 1px ${token.colorBorderSecondary};
+    background: ${cssVar.colorBgContainer};
+    box-shadow: 0 0 0 1px ${cssVar.colorBorderSecondary};
 
-    transition: opacity ${token.motionDurationMid} ${token.motionEaseInOut};
+    transition: opacity ${cssVar.motionDurationMid} ${cssVar.motionEaseInOut};
   `,
   wrapper: css`
     position: relative;
@@ -60,7 +60,6 @@ interface MarkdownTableProps {
 }
 
 const MarkdownTable = memo<MarkdownTableProps>(({ node, children, ...rest }) => {
-  const { styles, cx } = useStyles();
   const nodeRef = useRef(node);
   nodeRef.current = node;
 

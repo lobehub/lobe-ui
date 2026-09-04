@@ -1,6 +1,6 @@
 'use client';
 
-import { createStyles, cx } from 'antd-style';
+import { createStaticStyles, cx } from 'antd-style';
 import { memo, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 
 import { buildShellSrcDoc, SHELL_UPDATE_MESSAGE_TYPE } from './buildShellSrcDoc';
@@ -9,7 +9,7 @@ import { DEFAULT_HEIGHT, DEFAULT_SANDBOX, SRCDOC_MAX_LENGTH } from './const';
 import { AUTO_HEIGHT_MESSAGE_TYPE } from './injectAutoHeightScript';
 import type { HtmlPreviewIframeProps } from './type';
 
-const useStyles = createStyles(({ css, cssVar }) => ({
+const styles = createStaticStyles(({ css, cssVar }) => ({
   fallback: css`
     padding: 16px;
     font-size: 13px;
@@ -91,7 +91,6 @@ export const HtmlPreviewIframe = memo<HtmlPreviewIframeProps>(
     style,
     title = 'HTML preview',
   }) => {
-    const { styles } = useStyles();
     const innerRef = useRef<HTMLIFrameElement | null>(null);
     const frameId = useId();
     const [height, setHeight] = useState<number>(defaultHeight);
