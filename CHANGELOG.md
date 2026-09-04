@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.39.2](https://github.com/lobehub/lobe-ui/compare/v5.39.1...v5.39.2) (2026-09-04)
+
+### ♻ Code Refactoring
+
+- Replace remaining createStyles with createStaticStyles ([0b87eff](https://github.com/lobehub/lobe-ui/commit/0b87eff))
+
 ## [5.39.1](https://github.com/lobehub/lobe-ui/compare/v5.39.0...v5.39.1) (2026-09-03)
 
 ### ♻ Code Refactoring
