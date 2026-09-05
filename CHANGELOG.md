@@ -2,6 +2,16 @@
 
 # Changelog
 
+# [5.40.0](https://github.com/lobehub/lobe-ui/compare/v5.39.2...v5.40.0) (2026-09-05)
+
+### ✨ Features
+
+- **markdown**: Token-level fade for streaming code blocks ([a0618f3](https://github.com/lobehub/lobe-ui/commit/a0618f3))
+
+### 🎫 Chores
+
+- **release**: Streamdown@1.1.0 [skip ci] ([b8f942c](https://github.com/lobehub/lobe-ui/commit/b8f942c))
+
 ## [5.39.2](https://github.com/lobehub/lobe-ui/compare/v5.39.1...v5.39.2) (2026-09-04)
 
 ### ♻ Code Refactoring
