@@ -2,7 +2,7 @@ import { Markdown } from '@lobehub/ui';
 import { useEffect, useRef, useState } from 'react';
 
 import { type StreamAnimationGranularity, type StreamSmoothingPreset } from '../type';
-import { fullContent } from './content';
+import { fullContent, listHeavyContent } from './content';
 
 const readParams = () => {
   const params = new URLSearchParams(typeof window === 'undefined' ? '' : window.location.search);
@@ -11,6 +11,7 @@ const readParams = () => {
     animation: params.get('anim') !== '0',
     chunkDelay: Number(params.get('delay')) || 50,
     chunkSize: Number(params.get('size')) || 5,
+    content: params.get('content') === 'list' ? listHeavyContent : fullContent,
     granularity: (params.get('granularity') === 'word'
       ? 'word'
       : 'char') as StreamAnimationGranularity,
@@ -23,7 +24,8 @@ const readParams = () => {
 const NO_ANIMATION_CSS = `.stream-char { animation: none !important; opacity: 1 !important; }`;
 
 export default () => {
-  const [{ animation, chunkDelay, chunkSize, granularity, preset }] = useState(readParams);
+  const [{ animation, chunkDelay, chunkSize, content: source, granularity, preset }] =
+    useState(readParams);
   const [content, setContent] = useState('');
   const [phase, setPhase] = useState<'idle' | 'streaming' | 'done'>('idle');
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -36,9 +38,9 @@ export default () => {
     let position = 0;
     timerRef.current = setInterval(() => {
       position += chunkSize;
-      setContent(fullContent.slice(0, position));
+      setContent(source.slice(0, position));
 
-      if (position >= fullContent.length) {
+      if (position >= source.length) {
         if (timerRef.current) clearInterval(timerRef.current);
         timerRef.current = null;
         setPhase('done');
@@ -65,7 +67,8 @@ export default () => {
         {phase === 'streaming' ? 'streaming' : phase === 'done' ? 'run again' : 'start'}
       </button>
       <span style={{ fontFamily: 'monospace', fontSize: 12, marginInlineStart: 8, opacity: 0.5 }}>
-        size={chunkSize} delay={chunkDelay}ms granularity={granularity} preset={preset} anim=
+        size={chunkSize} delay={chunkDelay}ms granularity={granularity} preset={preset} chars=
+        {source.length} anim=
         {animation ? 'on' : 'off'}
       </span>
       <Markdown

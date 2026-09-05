@@ -1,3 +1,4 @@
+import { STREAM_FADE_DURATION } from '@lobehub/streamdown';
 import { createStaticStyles, cx } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
@@ -8,10 +9,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     animated: css`
       .animate-fade-in,
       .katex-html > .katex-base,
-      span.line > span,
       code:not(:has(span.line)) {
         opacity: 1;
         animation: ${fadeIn} 1s ease-in-out;
+      }
+
+      span.line > span.stream-char {
+        opacity: 0;
+        animation: ${fadeIn} ${STREAM_FADE_DURATION}ms cubic-bezier(0.33, 0, 0.67, 1) forwards;
       }
 
       /* 只对 .katex-base 级别的 span 应用流式动画，不要穿透到内部 */

@@ -202,3 +202,19 @@ graph TD
 | 任务列表 | ✅ | 交互式复选框 |
 | 脚注 | ✅ | 引用系统 |
 `;
+
+const listItem = (index: number) =>
+  `- **Item ${index}: ${['Streaming', 'Rendering', 'Parsing', 'Layout', 'Animation'][index % 5]} note** — this bullet explains a moderately long point about how markdown streams into the viewer, keeps the sentence long enough to wrap onto a second line, and mentions \`inline code\` plus a [link](https://example.com/${index}) so the inline structure is realistic.`;
+
+export const listHeavyContent = `## Loose bullet list
+
+The following list has blank lines between items, so the whole list is a single block while it streams.
+
+${Array.from({ length: 24 }, (_, i) => listItem(i + 1)).join('\n\n')}
+
+## Numbered follow-up
+
+${Array.from({ length: 12 }, (_, i) => `${i + 1}. Step ${i + 1} describes another short action with **emphasis** and a trailing clause that adds a few more words.`).join('\n')}
+
+Closing paragraph after both lists to give the queue a short final block.
+`;
