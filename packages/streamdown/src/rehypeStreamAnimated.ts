@@ -3,18 +3,26 @@ import { type BuildVisitor } from 'unist-util-visit';
 import { visit } from 'unist-util-visit';
 
 import { getNow } from './internal';
+import { createStreamTailNode, type StreamTailData } from './StreamTail';
+
+export interface StreamBirthPacing {
+  capMs: number;
+  pace: number;
+}
 
 export interface StreamAnimatedRuntime {
-  births: number[];
   /**
-   * Write-once per-char render cache, indexed like `births`:
-   * `undefined` = char not rendered yet, `null` = born fully revealed,
-   * string = inline style frozen at first render.
-   * Freezing the style keeps span props referentially stable across the
-   * tail block's re-renders, so React never rewrites `animation-delay`
-   * on an in-flight fade (a rewrite restarts the CSS animation).
+   * Birth timestamp per rendered char, assigned on first render from
+   * `pacing` (or supplied up front by legacy callers).
    */
-  styles: (string | null | undefined)[];
+  births: number[];
+  pacing?: StreamBirthPacing;
+  /**
+   * Per char, indexed like `births`: `undefined` = not rendered yet,
+   * `true` = its fade window had already passed at first render, so it
+   * shows fully revealed from the start.
+   */
+  skipped: (boolean | undefined)[];
 }
 
 export interface StreamAnimatedOptions {
@@ -53,14 +61,16 @@ const segmentWords = (value: string): string[] => {
   return segments;
 };
 
-const BLOCK_TAGS = new Set(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li']);
-const SKIP_TAGS = new Set(['pre', 'code', 'table', 'svg']);
+const BLOCK_TAGS = new Set(['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'td', 'th']);
+const SKIP_TAGS = new Set(['pre', 'code', 'svg']);
 
 function hasClass(node: Element, cls: string): boolean {
   const cn: unknown = node.properties?.className;
   if (Array.isArray(cn)) return cn.some((c) => String(c).includes(cls));
   return false;
 }
+
+const noop = () => {};
 
 export const rehypeStreamAnimated = (options: StreamAnimatedOptions = {}) => {
   const {
@@ -71,13 +81,14 @@ export const rehypeStreamAnimated = (options: StreamAnimatedOptions = {}) => {
     revealed = false,
     runtime,
   } = options;
+  if (revealed) return noop;
+
   // Legacy births/nowMs callers share the runtime path through a throwaway
   // cache: the plugin factory runs once per render, so their styles are
   // recomputed against the caller's nowMs each run, exactly as before.
-  const resolvedRuntime = revealed
-    ? undefined
-    : (runtime ??
-      (Array.isArray(births) && typeof nowMs === 'number' ? { births, styles: [] } : undefined));
+  const resolvedRuntime =
+    runtime ??
+    (Array.isArray(births) && typeof nowMs === 'number' ? { births, skipped: [] } : undefined);
   const nowOverride = runtime ? undefined : nowMs;
 
   return (tree: Root) => {
@@ -88,74 +99,80 @@ export const rehypeStreamAnimated = (options: StreamAnimatedOptions = {}) => {
       return SKIP_TAGS.has(node.tagName) || hasClass(node, 'katex');
     };
 
-    const resolveStyle = (index: number): string | null => {
-      const styles = resolvedRuntime!.styles;
-      const cached = styles[index];
-      if (cached !== undefined) return cached;
-
-      const birthTs = resolvedRuntime!.births[index];
-      let resolved: string | null;
-      if (birthTs === undefined) {
-        resolved = null;
-      } else {
-        const elapsed = now - birthTs;
-        // Negative delay = already elapsed ms into the fade. Positive
-        // delay = not started yet (char born in the future, i.e.
-        // staggered within the same commit).
-        resolved = elapsed >= fadeDuration ? null : `animation-delay:${-elapsed}ms`;
+    const isSkipped = (index: number): boolean => {
+      if (!resolvedRuntime) return false;
+      const skipped = resolvedRuntime.skipped;
+      if (skipped[index] === undefined) {
+        const birthTs = resolvedRuntime.births[index];
+        skipped[index] = birthTs === undefined || now - birthTs >= fadeDuration;
       }
-      styles[index] = resolved;
-      return resolved;
+      return skipped[index];
     };
 
-    const buildSpan = (value: string, startIndex: number): ElementContent => {
-      let className = 'stream-char';
-      let style: string | undefined;
+    const ensureBirths = (from: number, count: number) => {
+      const pacing = resolvedRuntime?.pacing;
+      if (!resolvedRuntime || !pacing) return;
+      const births = resolvedRuntime.births;
+      for (let i = from; i < from + count; i++) {
+        if (births[i] !== undefined) continue;
+        const chained = i > 0 ? births[i - 1] + pacing.pace : now;
+        births[i] = Math.min(now + pacing.capMs, Math.max(chained, now));
+      }
+    };
 
-      if (revealed) {
-        className = 'stream-char stream-char-revealed';
-      } else if (resolvedRuntime) {
-        const resolved = resolveStyle(startIndex);
-        if (resolved === null) {
-          className = 'stream-char stream-char-revealed';
-        } else {
-          style = resolved;
+    const hasFaded = (index: number): boolean => {
+      const birthTs = resolvedRuntime?.births[index];
+      return birthTs !== undefined && now - birthTs >= fadeDuration;
+    };
+
+    const wrapTextValue = (value: string): Element => {
+      let text = '';
+      const items: StreamTailData['items'] = [];
+      let tailStarted = false;
+
+      const push = (segment: string, startIndex: number, charCount: number, animate: boolean) => {
+        if (animate) {
+          ensureBirths(startIndex, charCount);
+          if (isSkipped(startIndex)) {
+            tailStarted = true;
+            items.push({ birth: null, key: startIndex, value: segment });
+            return;
+          }
+          if (!hasFaded(startIndex)) {
+            tailStarted = true;
+            items.push({
+              birth: resolvedRuntime?.births[startIndex] ?? now,
+              key: startIndex,
+              value: segment,
+            });
+            return;
+          }
+        }
+        if (tailStarted) items.push(segment);
+        else text += segment;
+      };
+
+      if (granularity === 'word') {
+        for (const segment of segmentWords(value)) {
+          const startIndex = globalCharIndex;
+          for (const _char of segment) globalCharIndex++;
+          push(segment, startIndex, globalCharIndex - startIndex, segment.trim() !== '');
+        }
+      } else {
+        for (const char of value) {
+          push(char, globalCharIndex, 1, true);
+          globalCharIndex++;
         }
       }
 
-      const properties: Record<string, any> = { className };
-      if (style !== undefined) {
-        properties.style = style;
-      }
-      return {
-        children: [{ type: 'text', value }],
-        properties,
-        tagName: 'span',
-        type: 'element',
-      };
+      return createStreamTailNode({ items, text });
     };
 
     const wrapText = (node: Element) => {
       const newChildren: ElementContent[] = [];
       for (const child of node.children) {
         if (child.type === 'text') {
-          if (granularity === 'word') {
-            for (const segment of segmentWords(child.value)) {
-              const startIndex = globalCharIndex;
-              for (const _char of segment) globalCharIndex++;
-
-              if (segment.trim() === '') {
-                newChildren.push({ type: 'text', value: segment });
-              } else {
-                newChildren.push(buildSpan(segment, startIndex));
-              }
-            }
-          } else {
-            for (const char of child.value) {
-              newChildren.push(buildSpan(char, globalCharIndex));
-              globalCharIndex++;
-            }
-          }
+          newChildren.push(wrapTextValue(child.value));
         } else if (child.type === 'element') {
           if (!shouldSkip(child)) {
             wrapText(child);

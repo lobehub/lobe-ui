@@ -1,6 +1,5 @@
 'use client';
 
-import { marked } from 'marked';
 import {
   memo,
   Profiler,
@@ -10,17 +9,19 @@ import {
   useId,
   useMemo,
   useRef,
+  useState,
 } from 'react';
 import { type Options } from 'react-markdown';
-import remend from 'remend';
 import type { Pluggable, PluggableList } from 'unified';
 
+import { createBlockLexer } from './blockLexer';
 import { CachedMarkdown } from './CachedMarkdown';
 import { getNow, isDeepEqual, useStableValue } from './internal';
 import { isLastFormulaRenderable } from './latex';
 import { useStreamdownProfiler } from './profiler';
 import { rehypeStreamAnimated, type StreamAnimatedRuntime } from './rehypeStreamAnimated';
 import { type BlockAnimationMeta, resolveBlockAnimationMeta } from './streamAnimationMeta';
+import { STREAM_TAIL_TAG, StreamTail } from './StreamTail';
 import { STREAM_FADE_DURATION, STREAMDOWN_ANIMATED_CLASS, StreamdownStyles } from './styles';
 import { type StreamAnimationGranularity, type StreamSmoothingPreset } from './types';
 import { countChars, useSmoothStreamContent } from './useSmoothStreamContent';
@@ -102,10 +103,13 @@ interface UpdateBlockAnimationArgs {
 const MIN_STREAM_CHAR_PACE_MS = 2;
 const MAX_REVEAL_GAP_MS = 160;
 
-// Runs in the render phase: extends each visible block's birth timeline in
-// place and resolves its animation meta in one pass. Mutations are
-// idempotent for a given block content/length, so discarded or StrictMode
-// double renders re-derive the same state.
+// Runs in the render phase: refreshes each visible block's birth pacing in
+// place and resolves its animation meta in one pass. Births themselves are
+// assigned lazily by rehypeStreamAnimated per *rendered* char, because the
+// raw markdown length over-counts (link URLs, emphasis markers) and indexing
+// births by raw offset made chars after such syntax look already faded.
+// Mutations are idempotent for a given block content/length, so discarded
+// or StrictMode double renders re-derive the same state.
 const updateBlockAnimation = ({
   blocks,
   charDelay,
@@ -131,49 +135,45 @@ const updateBlockAnimation = ({
 
     let runtime = runtimes.get(block.startOffset);
     if (!runtime) {
-      runtime = { births: [], charCount: 0, rawLength: -1, settled: false, styles: [] };
+      runtime = { births: [], charCount: 0, rawLength: -1, settled: false, skipped: [] };
       runtimes.set(block.startOffset, runtime);
     }
 
-    if (runtime.rawLength !== block.content.length) {
-      runtime.charCount = countChars(block.content);
-      runtime.rawLength = block.content.length;
-    }
-
-    const blockCharCount = runtime.charCount;
     const births = runtime.births;
 
-    if (births.length > blockCharCount) {
-      // Block content shrunk (stream restart or upstream rewrite).
-      births.length = blockCharCount;
-      runtime.styles.length = blockCharCount;
-    }
+    if (runtime.rawLength !== block.content.length) {
+      const nextCharCount = countChars(block.content);
+      if (nextCharCount < runtime.charCount) {
+        // Block content shrunk. Usually just marked dropping a paragraph's
+        // trailing "\n" once the blank line completes, so only births past
+        // the new raw length are stale; wiping them all would replay the
+        // fade of every char in the block.
+        births.length = Math.min(births.length, nextCharCount);
+        runtime.skipped.length = births.length;
+      }
 
-    if (births.length < blockCharCount) {
       // Chain each new char monotonically after the previous one so fades
       // never race out of order. Cap how far the fade queue can run ahead
-      // of renderNow to prevent stream-faster-than-fade producing seconds
-      // of invisible backlog at the tail.
+      // of "now" to prevent stream-faster-than-fade producing seconds of
+      // invisible backlog at the tail.
       //
       // The streaming tail paces its stagger from the observed reveal-commit
       // gap instead of the queue's fixed charDelay: a commit's chars are
       // spread to land exactly until the next commit arrives, so the flow
       // stays per-char continuous no matter how far apart the throttled
       // commits are.
-      const newChars = blockCharCount - births.length;
+      const newChars = Math.max(1, nextCharCount - runtime.charCount);
       let pace = charDelay;
-      let cap = renderNow + STREAM_FADE_DURATION;
+      let capMs = STREAM_FADE_DURATION;
       if (state === 'streaming') {
         revealedNewChars = true;
         const gapMs = Math.min(Math.max(renderNow - revealClock.lastTs, 16), MAX_REVEAL_GAP_MS);
         pace = Math.min(charDelay, Math.max(gapMs / newChars, MIN_STREAM_CHAR_PACE_MS));
-        cap = renderNow + gapMs + STREAM_FADE_DURATION;
+        capMs = gapMs + STREAM_FADE_DURATION;
       }
-      for (let i = births.length; i < blockCharCount; i++) {
-        const prevBirth = i > 0 ? births[i - 1] : renderNow - pace;
-        const chained = prevBirth + pace;
-        births.push(Math.min(cap, Math.max(chained, renderNow)));
-      }
+      runtime.pacing = { capMs, pace };
+      runtime.charCount = nextCharCount;
+      runtime.rawLength = block.content.length;
     }
 
     let meta: BlockAnimationMeta;
@@ -216,44 +216,34 @@ interface StreamdownBlocksProps {
   content: string;
   granularity: StreamAnimationGranularity;
   markdownOptions: Omit<Options, 'children'>;
+  tailUnitsRef: { current: number };
 }
 
 const StreamdownBlocks = memo<StreamdownBlocksProps>(
-  ({ content: smoothedContent, granularity, markdownOptions }) => {
+  ({ content: smoothedContent, granularity, markdownOptions, tailUnitsRef }) => {
     const profiler = useStreamdownProfiler();
-    const { components, ...rest } = markdownOptions;
+    const { components: baseComponents, ...rest } = markdownOptions;
     const baseRehypePlugins = useStablePlugins(markdownOptions.rehypePlugins ?? EMPTY_PLUGINS);
     const remarkPlugins = useStablePlugins(markdownOptions.remarkPlugins ?? EMPTY_PLUGINS);
     const generatedId = useId();
+    const [lexBlocks] = useState(createBlockLexer);
 
-    const processedContentResult = useMemo(() => {
-      const start = profiler ? getNow() : 0;
-      const value = remend(smoothedContent);
-
-      return {
-        durationMs: profiler ? getNow() - start : 0,
-        value,
-      };
-    }, [profiler, smoothedContent]);
-    const processedContent = processedContentResult.value;
+    const components = useMemo<Options['components']>(
+      () => ({ ...baseComponents, [STREAM_TAIL_TAG]: StreamTail }) as Options['components'],
+      [baseComponents],
+    );
 
     const blocksResult = useMemo(() => {
       const start = profiler ? getNow() : 0;
-      const tokens = marked.lexer(processedContent);
-      let offset = 0;
-
-      const value = tokens.map((token) => {
-        const block = { content: token.raw, startOffset: offset };
-        offset += token.raw.length;
-        return block;
-      });
+      const value = lexBlocks(smoothedContent);
 
       return {
         durationMs: profiler ? getNow() - start : 0,
         value,
       };
-    }, [processedContent, profiler]);
-    const blocks: BlockInfo[] = blocksResult.value;
+    }, [lexBlocks, profiler, smoothedContent]);
+    const { blocks, processed: processedContent } = blocksResult.value;
+    tailUnitsRef.current = blocks.at(-1)?.content.length ?? 0;
 
     const { getBlockState, charDelay } = useStreamQueue(blocks);
     const blockRuntimesRef = useRef<Map<number, BlockRuntime>>(new Map());
@@ -273,16 +263,6 @@ const StreamdownBlocks = memo<StreamdownBlocksProps>(
       runtimes: blockRuntimesRef.current,
     });
     const blockAnimationDurationMs = profiler ? getNow() - animationStart : 0;
-
-    useEffect(() => {
-      if (!profiler) return;
-
-      profiler.recordCalculation({
-        durationMs: processedContentResult.durationMs,
-        name: 'content-normalize',
-        textLength: processedContent.length,
-      });
-    }, [processedContent.length, processedContentResult.durationMs, profiler]);
 
     useEffect(() => {
       if (!profiler) return;
@@ -376,7 +356,7 @@ const StreamdownBlocks = memo<StreamdownBlocksProps>(
     const content = (
       <div className={STREAMDOWN_ANIMATED_CLASS}>
         <StreamdownStyles />
-        {blocks.map((block, index) => {
+        {blocks.map((block: BlockInfo, index) => {
           const animationMeta = blockAnimationMeta.get(block.startOffset);
           if (!animationMeta) return null;
 
@@ -469,8 +449,10 @@ export const Streamdown = memo<StreamdownProps>(
       [content, preprocess],
     );
     const guardedContent = useLatexGuard(preprocessed, latexGuard);
+    const tailUnitsRef = useRef(0);
     const smoothedContent = useSmoothStreamContent(guardedContent, {
       preset: smoothing ?? 'balanced',
+      tailUnitsRef,
     });
     const markdownOptions = useStableValue(rest);
 
@@ -479,6 +461,7 @@ export const Streamdown = memo<StreamdownProps>(
         content={smoothedContent}
         granularity={granularity}
         markdownOptions={markdownOptions}
+        tailUnitsRef={tailUnitsRef}
       />
     );
   },

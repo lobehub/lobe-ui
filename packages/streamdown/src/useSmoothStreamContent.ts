@@ -94,12 +94,14 @@ const clamp = (value: number, min: number, max: number): number => {
   return Math.min(max, Math.max(min, value));
 };
 
-// Every reveal commit re-parses and re-wraps the entire trailing block, so
-// the per-commit cost grows linearly with how far the content is from the
-// last block boundary. Widen the commit interval as that distance grows —
-// long paragraphs/code fences keep total work bounded while short blocks
-// stay at the preset's snappy interval. Per-char animation-delay stagger
-// hides the lower commit rate.
+// Every reveal commit re-parses the entire trailing block, so the per-commit
+// cost grows linearly with the tail block's length. Widen the commit interval
+// as it grows — long paragraphs/lists/code fences keep total work bounded
+// while short blocks stay at the preset's snappy interval. Per-char
+// animation-delay stagger hides the lower commit rate. The renderer reports
+// the real tail block length through `tailUnitsRef`; the `\n\n` estimate is
+// only the fallback for standalone hook usage (a loose list is one block
+// despite its blank lines).
 const MAX_COMMIT_INTERVAL_MS = 96;
 const COMMIT_INTERVAL_TAIL_SCALE_UNITS = 256;
 
@@ -117,11 +119,12 @@ export const countChars = (text: string): number => {
 interface UseSmoothStreamContentOptions {
   enabled?: boolean;
   preset?: StreamSmoothingPreset;
+  tailUnitsRef?: { current: number };
 }
 
 export const useSmoothStreamContent = (
   content: string,
-  { enabled = true, preset = 'balanced' }: UseSmoothStreamContentOptions = {},
+  { enabled = true, preset = 'balanced', tailUnitsRef }: UseSmoothStreamContentOptions = {},
 ): string => {
   const config = PRESET_CONFIG[preset];
   const profiler = useStreamdownProfiler();
@@ -135,7 +138,7 @@ export const useSmoothStreamContent = (
   const targetCountRef = useRef(targetCharsRef.current.length);
 
   const emaCpsRef = useRef(config.defaultCps);
-  const tailUnitsRef = useRef(findTailUnits(content));
+  const estimatedTailUnitsRef = useRef(findTailUnits(content));
   const lastInputTsRef = useRef(0);
   const lastInputCountRef = useRef(targetCountRef.current);
   const chunkSizeEmaRef = useRef(1);
@@ -200,7 +203,7 @@ export const useSmoothStreamContent = (
       emaCpsRef.current = config.defaultCps;
       chunkSizeEmaRef.current = 1;
       arrivalCpsEmaRef.current = config.defaultCps;
-      tailUnitsRef.current = findTailUnits(nextContent);
+      estimatedTailUnitsRef.current = findTailUnits(nextContent);
       lastInputTsRef.current = now;
       lastInputCountRef.current = chars.length;
     },
@@ -231,9 +234,10 @@ export const useSmoothStreamContent = (
       // commit re-renders the tail block and re-runs remend + lexing, so
       // committing at 60-120fps burns CPU without visible benefit — the
       // per-char stagger inside a commit is carried by animation-delay.
+      const tailUnits = tailUnitsRef ? tailUnitsRef.current : estimatedTailUnitsRef.current;
       const commitIntervalMs = Math.min(
         MAX_COMMIT_INTERVAL_MS,
-        config.minCommitIntervalMs * (1 + tailUnitsRef.current / COMMIT_INTERVAL_TAIL_SCALE_UNITS),
+        config.minCommitIntervalMs * (1 + tailUnits / COMMIT_INTERVAL_TAIL_SCALE_UNITS),
       );
       const frameIntervalMs = Math.max(0, ts - lastFrameTsRef.current);
       if (frameIntervalMs < commitIntervalMs) {
@@ -359,6 +363,7 @@ export const useSmoothStreamContent = (
     config.targetBufferMs,
     scheduleFrameWake,
     stopFrameLoop,
+    tailUnitsRef,
   ]);
   startFrameLoopRef.current = startFrameLoop;
 
@@ -411,7 +416,7 @@ export const useSmoothStreamContent = (
     targetCharsRef.current.push(...appendedChars);
     targetCountRef.current += appendedCount;
 
-    tailUnitsRef.current = findTailUnits(content);
+    estimatedTailUnitsRef.current = findTailUnits(content);
 
     const deltaChars = targetCountRef.current - lastInputCountRef.current;
     const deltaMs = Math.max(1, now - lastInputTsRef.current);
