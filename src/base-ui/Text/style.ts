@@ -99,11 +99,16 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   shiny: css`
     --shiny-duration: 1.5s;
 
+    /* The sweep peaks at this color. Override it to match the static text the
+     * shimmering label sits next to. currentColor cannot serve here: the
+     * dimmed color declared below would feed back into the sweep overlay. */
+    --shiny-color: ${cssVar.colorText};
+
     user-select: none;
 
-    color: color-mix(in srgb, ${cssVar.colorText} 28%, transparent);
+    color: color-mix(in srgb, var(--shiny-color) 28%, transparent);
 
-    background: linear-gradient(120deg, transparent 25%, ${cssVar.colorText} 50%, transparent 75%);
+    background: linear-gradient(120deg, transparent 25%, var(--shiny-color) 50%, transparent 75%);
     background-clip: text;
     background-size: 200% 100%;
 
@@ -137,7 +142,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
           background: linear-gradient(
             90deg,
             transparent 25%,
-            ${cssVar.colorText} 50%,
+            var(--shiny-color) 50%,
             transparent 75%
           );
 
