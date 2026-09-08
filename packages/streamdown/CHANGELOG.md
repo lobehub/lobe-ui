@@ -2,6 +2,16 @@
 
 # Changelog
 
+# [1.2.0](https://github.com/lobehub/lobe-ui/compare/streamdown@1.1.1...streamdown@1.2.0) (2026-09-08)
+
+### ✨ Features
+
+- **streamdown**: Add fixed and range TPS playground controls ([971b512](https://github.com/lobehub/lobe-ui/commit/971b512))
+
+### 📝 Documentation
+
+- **streamdown**: Enrich high TPS demo with mixed markdown ([28cd5fe](https://github.com/lobehub/lobe-ui/commit/28cd5fe))
+
 ## [1.1.1](https://github.com/lobehub/lobe-ui/compare/streamdown@1.1.0...streamdown@1.1.1) (2026-09-08)
 
 ### ⚡ Performance Improvements
