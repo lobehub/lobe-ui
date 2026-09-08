@@ -9,6 +9,7 @@ import { useAppElement } from '@/ThemeProvider';
 import {
   useDestroyOnInvalidActiveTriggerElement,
   useHidePopupWhenPositionerAtOrigin,
+  usePopupHandleStore,
 } from '@/utils/destroyOnInvalidActiveTriggerElement';
 import { placementMap } from '@/utils/placement';
 
@@ -52,10 +53,11 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
   const floatingLayerContainer = useFloatingLayer();
   const portalContainer = floatingLayerContainer ?? appElement;
 
-  useDestroyOnInvalidActiveTriggerElement(handle.store, destroy, {
+  const store = usePopupHandleStore(handle);
+  useDestroyOnInvalidActiveTriggerElement(store, destroy, {
     enabled: !disableDestroyOnInvalidTrigger,
   });
-  useHidePopupWhenPositionerAtOrigin(handle.store, { enabled: !disableZeroOriginGuard });
+  useHidePopupWhenPositionerAtOrigin(store, { enabled: !disableZeroOriginGuard });
 
   return (
     <TooltipGroupHandleContext value={handle}>

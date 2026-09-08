@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react';
+import { useCallback, useLayoutEffect, useSyncExternalStore } from 'react';
 
 type PopupStoreLike = {
   // Base UI store's `useState` has a strongly-typed key union; we keep it loose here on purpose.
@@ -8,6 +8,24 @@ type PopupStoreLike = {
     positionerElement?: HTMLElement | null;
   };
   useState?: (...args: any[]) => unknown;
+};
+
+// Base UI 1.7+ strips `store`/`subscribeStore` from the handle's public typings, but detached
+// triggers still rely on them at runtime: the handle points at an inert fallback store until a
+// Root attaches in an effect, so the store must be read through a subscription, not captured once.
+type PopupHandleLike = {
+  store: PopupStoreLike;
+  subscribeStore: (listener: () => void) => () => void;
+};
+
+export const usePopupHandleStore = (handle: object): PopupStoreLike => {
+  const typedHandle = handle as PopupHandleLike;
+  const subscribe = useCallback(
+    (listener: () => void) => typedHandle.subscribeStore(listener),
+    [typedHandle],
+  );
+  const getSnapshot = useCallback(() => typedHandle.store, [typedHandle]);
+  return useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
 };
 
 const isInvalidTriggerElement = (el: Element | null): boolean => {
