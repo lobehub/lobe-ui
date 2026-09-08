@@ -38,7 +38,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         /* Token emphasis must not change glyph metrics relative to the textarea. */
         span {
           font-weight: inherit !important;
-          font-style: normal !important;
+          font-style: inherit !important;
         }
       }
     `,
