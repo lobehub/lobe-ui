@@ -19,6 +19,28 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     filled: lobeStaticStylish.variantFilledWithoutHover,
     highlight: css`
       pointer-events: none;
+
+      /* Mirror the textarea's text flow instead of the highlighter's flex rows. */
+      pre code {
+        display: block;
+
+        /* Keep the final empty line measurable after a trailing newline. */
+        &::after {
+          content: '\\200b';
+        }
+
+        .line {
+          display: inline;
+          margin: 0;
+          padding: 0;
+        }
+
+        /* Token emphasis must not change glyph metrics relative to the textarea. */
+        span {
+          font-weight: inherit !important;
+          font-style: inherit !important;
+        }
+      }
     `,
     outlined: lobeStaticStylish.variantOutlinedWithoutHover,
     root: css`
