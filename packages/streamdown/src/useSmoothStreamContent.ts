@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { createBlockLexer } from './blockLexer';
 import { findOpenFenceLanguage } from './fenceState';
 import { getNow } from './internal';
 import { useStreamdownProfiler } from './profiler';
@@ -129,6 +130,8 @@ export const useSmoothStreamContent = (
   const config = PRESET_CONFIG[preset];
   const profiler = useStreamdownProfiler();
   const [displayedContent, setDisplayedContent] = useState(content);
+  const [lexBufferedContent] = useState(createBlockLexer);
+  const completePrefixRef = useRef({ content: '', count: 0 });
 
   const displayedContentRef = useRef(content);
   const displayedCountRef = useRef(countChars(content));
@@ -321,7 +324,25 @@ export const useSmoothStreamContent = (
         revealChars = Math.min(revealChars, backlog);
       }
 
-      const nextCount = displayedCount + revealChars;
+      // Parse at most once per changed buffer, at the reveal cadence rather
+      // than per input chunk. Use real block boundaries: blank lines inside
+      // fences and loose lists do not mean the block has finished.
+      if (completePrefixRef.current.content !== targetContentRef.current) {
+        const target = targetContentRef.current;
+        const pending = target.slice(displayedContentRef.current.length);
+        const completeEnd =
+          backlog > revealChars && /\n[\t \r]*\n/.test(pending)
+            ? lexBufferedContent(target).completeEnd
+            : 0;
+        completePrefixRef.current = {
+          content: target,
+          count:
+            displayedCount +
+            countChars(target.slice(displayedContentRef.current.length, completeEnd)),
+        };
+      }
+      const nextCount = Math.max(displayedCount + revealChars, completePrefixRef.current.count);
+      revealChars = nextCount - displayedCount;
       const segment = targetCharsRef.current.slice(displayedCount, nextCount).join('');
 
       if (segment) {
@@ -361,6 +382,7 @@ export const useSmoothStreamContent = (
     config.settleDrainMaxMs,
     config.settleDrainMinMs,
     config.targetBufferMs,
+    lexBufferedContent,
     scheduleFrameWake,
     stopFrameLoop,
     tailUnitsRef,

@@ -5,6 +5,8 @@ import { type BlockInfo } from './useStreamQueue';
 
 export interface LexedBlocks {
   blocks: BlockInfo[];
+  /** End of the raw prefix that can no longer grow, in UTF-16 code units. */
+  completeEnd: number;
   processed: string;
 }
 
@@ -74,10 +76,16 @@ export const createBlockLexer = () => {
     const tailBlocks = toBlocks(tailTokens, frozenRaw.length);
     const result = {
       blocks: frozenBlocks.concat(tailBlocks),
+      completeEnd: 0,
       processed: frozenRaw + processedTail,
     };
 
     freezePrefix(rawTail, processedTail, tailTokens);
+    result.completeEnd = frozenRaw.length;
+    const separator = result.blocks.find((block) => block.startOffset === frozenRaw.length);
+    if (frozenRaw && separator && !separator.content.trim()) {
+      result.completeEnd += separator.content.length;
+    }
 
     return result;
   };

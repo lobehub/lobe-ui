@@ -27,7 +27,7 @@ export interface UseStreamQueueReturn {
   queueLength: number;
 }
 
-export function useStreamQueue(blocks: BlockInfo[]): UseStreamQueueReturn {
+export function useStreamQueue(blocks: BlockInfo[], batchComplete = false): UseStreamQueueReturn {
   const [revealedCount, setRevealedCount] = useState(0);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prevBlocksLenRef = useRef(0);
@@ -60,7 +60,9 @@ export function useStreamQueue(blocks: BlockInfo[]): UseStreamQueueReturn {
     }
   }, [blocks.length]);
 
-  const effectiveRevealedCount = Math.max(revealedCount, minRevealedRef.current);
+  const effectiveRevealedCount = batchComplete
+    ? Math.max(0, blocks.length - 1)
+    : Math.max(revealedCount, minRevealedRef.current);
   const tailIndex = blocks.length - 1;
 
   const getBlockState = useCallback(

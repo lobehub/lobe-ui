@@ -7,7 +7,8 @@ const css = `
   from { opacity: 0; }
   to { opacity: 1; }
 }
-.${STREAMDOWN_ANIMATED_CLASS} .stream-char {
+.${STREAMDOWN_ANIMATED_CLASS} .stream-char,
+.${STREAMDOWN_ANIMATED_CLASS} .stream-block {
   opacity: 0;
   animation-name: streamdown-fade-in;
   animation-duration: ${STREAM_FADE_DURATION}ms;
@@ -21,6 +22,12 @@ const css = `
 .${STREAMDOWN_ANIMATED_CLASS} .katex-display .katex-html span {
   mask: none !important;
   animation: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .${STREAMDOWN_ANIMATED_CLASS} .stream-block {
+    opacity: 1;
+    animation: none;
+  }
 }
 `;
 

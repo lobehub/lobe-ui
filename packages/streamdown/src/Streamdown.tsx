@@ -78,6 +78,7 @@ const StreamdownBlock = memo<Options>(
 StreamdownBlock.displayName = 'StreamdownBlock';
 
 interface BlockRuntime extends StreamAnimatedRuntime {
+  blockBirth?: number;
   charCount: number;
   charDelay?: number;
   rawLength: number;
@@ -135,7 +136,14 @@ const updateBlockAnimation = ({
 
     let runtime = runtimes.get(block.startOffset);
     if (!runtime) {
-      runtime = { births: [], charCount: 0, rawLength: -1, settled: false, skipped: [] };
+      runtime = {
+        births: [],
+        blockBirth: state === 'revealed' ? renderNow : undefined,
+        charCount: 0,
+        rawLength: -1,
+        settled: false,
+        skipped: [],
+      };
       runtimes.set(block.startOffset, runtime);
     }
 
@@ -183,7 +191,7 @@ const updateBlockAnimation = ({
       // pruned by a stream restart.
       meta = { charDelay: runtime.charDelay ?? charDelay, settled: true };
     } else {
-      const lastBirthTs = births.length > 0 ? (births.at(-1) ?? renderNow) : renderNow;
+      const lastBirthTs = runtime.blockBirth ?? births.at(-1) ?? renderNow;
       meta = resolveBlockAnimationMeta({
         currentCharDelay: charDelay,
         fadeDuration: STREAM_FADE_DURATION,
@@ -245,7 +253,7 @@ const StreamdownBlocks = memo<StreamdownBlocksProps>(
     const { blocks, processed: processedContent } = blocksResult.value;
     tailUnitsRef.current = blocks.at(-1)?.content.length ?? 0;
 
-    const { getBlockState, charDelay } = useStreamQueue(blocks);
+    const { getBlockState, charDelay } = useStreamQueue(blocks, true);
     const blockRuntimesRef = useRef<Map<number, BlockRuntime>>(new Map());
     const blockPluginsRef = useRef<Map<number, BlockPluginsCacheEntry>>(new Map());
     const revealClockRef = useRef<{ lastTs: number }>({ lastTs: 0 });
@@ -301,6 +309,7 @@ const StreamdownBlocks = memo<StreamdownBlocksProps>(
         [
           rehypeStreamAnimated,
           {
+            block: runtime?.blockBirth !== undefined,
             fadeDuration: STREAM_FADE_DURATION,
             granularity,
             runtime,

@@ -294,7 +294,9 @@ Use this demo to inspect stream-driven React commit frequency, block-level re-re
 
 ### Streaming Benchmark
 
-Noise-free page for CPU measurements: a single `Markdown` and a plain HTML button — no control panel, no chunk log, no spinner, no auto-scroll. Configure via query params: `?size=5&delay=50&granularity=char|word&preset=balanced`.
+Noise-free page for CPU measurements: a single `Markdown` and plain HTML controls — no control panel, no chunk log, no spinner, no auto-scroll. Configure via query params: `?size=5&delay=50&granularity=char|word&preset=balanced`.
+
+Use the Case selector or `?case=paragraph`, `?case=paragraphBurst`, or `?case=highTps` to compare complete paragraphs, two paragraphs arriving together, and 20-character chunks every 10ms. Completed paragraphs fade in together while unfinished text keeps streaming. Rates are measured in characters, not model tokens. `size` and `delay` override each case’s defaults; `anim=0` disables both character and block animations.
 
 <Demo of={DemoStreamingBench} isolated layout="bare" />
 

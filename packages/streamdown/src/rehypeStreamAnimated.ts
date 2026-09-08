@@ -27,6 +27,8 @@ export interface StreamAnimatedRuntime {
 
 export interface StreamAnimatedOptions {
   births?: number[];
+  /** Fade a newly mounted complete block without creating per-character spans. */
+  block?: boolean;
   fadeDuration?: number;
   /**
    * `'word'` wraps whitespace-delimited runs in one span instead of one
@@ -74,6 +76,7 @@ const noop = () => {};
 
 export const rehypeStreamAnimated = (options: StreamAnimatedOptions = {}) => {
   const {
+    block = false,
     births,
     fadeDuration = 150,
     granularity = 'char',
@@ -92,6 +95,17 @@ export const rehypeStreamAnimated = (options: StreamAnimatedOptions = {}) => {
   const nowOverride = runtime ? undefined : nowMs;
 
   return (tree: Root) => {
+    if (block) {
+      for (const node of tree.children) {
+        if (node.type !== 'element') continue;
+        const className = node.properties.className;
+        node.properties.className = [
+          ...(Array.isArray(className) ? className : className ? [String(className)] : []),
+          'stream-block',
+        ];
+      }
+      return;
+    }
     let globalCharIndex = 0;
     const now = nowOverride ?? (resolvedRuntime ? getNow() : 0);
 

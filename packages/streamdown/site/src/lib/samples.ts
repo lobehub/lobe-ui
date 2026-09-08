@@ -1,3 +1,5 @@
+import { paragraphBatchCases } from './paragraphBatches';
+
 export const heroSample = `## Streaming markdown, the smooth way
 
 **Streamdown** turns raw LLM token streams into calm, readable pages:
@@ -475,6 +477,7 @@ packages/
 `;
 
 export const samples = {
+  ...paragraphBatchCases,
   code: { content: codeSample, label: 'Long code' },
   gfmEdge: { content: gfmEdgeSample, label: 'GFM edge cases' },
   inline: { content: inlineSample, label: 'Inline torture' },

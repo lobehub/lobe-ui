@@ -12,6 +12,7 @@ import remarkMath from 'remark-math';
 
 import { markdownComponents } from '../components/CodeBlock';
 import { Range, Segmented, Select, Switch } from '../components/Controls';
+import { paragraphBatchCases } from '../lib/paragraphBatches';
 import { type SampleKey, samples } from '../lib/samples';
 import { useLocalStream } from '../lib/useLocalStream';
 import { useStickToBottom } from '../lib/useStickToBottom';
@@ -77,11 +78,20 @@ export const Playground = () => {
               label="Sample"
               options={SAMPLE_OPTIONS}
               value={sampleKey}
-              onChange={setSampleKey}
+              onChange={(key) => {
+                setSampleKey(key);
+                if (key in paragraphBatchCases) {
+                  const preset = paragraphBatchCases[key as keyof typeof paragraphBatchCases];
+                  setChunkSize(preset.chunkSize);
+                  setDelayMs(preset.delayMs);
+                  setJitter(0);
+                }
+                restart();
+              }}
             />
             <Range
               label="Chunk size"
-              max={40}
+              max={100}
               min={1}
               unit="ch"
               value={chunkSize}
@@ -89,7 +99,7 @@ export const Playground = () => {
             />
             <Range
               label="Chunk delay"
-              max={100}
+              max={500}
               min={4}
               unit="ms"
               value={delayMs}
