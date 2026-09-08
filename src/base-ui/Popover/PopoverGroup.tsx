@@ -6,6 +6,7 @@ import { type FC, type ReactNode, useCallback, useMemo, useRef, useState } from 
 import {
   useDestroyOnInvalidActiveTriggerElement,
   useHidePopupWhenPositionerAtOrigin,
+  usePopupHandleStore,
 } from '@/utils/destroyOnInvalidActiveTriggerElement';
 import { parseTrigger } from '@/utils/parseTrigger';
 import { placementMap } from '@/utils/placement';
@@ -82,10 +83,11 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
     [],
   );
 
-  useDestroyOnInvalidActiveTriggerElement(handle.store, destroy, {
+  const store = usePopupHandleStore(handle);
+  useDestroyOnInvalidActiveTriggerElement(store, destroy, {
     enabled: !disableDestroyOnInvalidTrigger,
   });
-  useHidePopupWhenPositionerAtOrigin(handle.store, { enabled: !disableZeroOriginGuard });
+  useHidePopupWhenPositionerAtOrigin(store, { enabled: !disableZeroOriginGuard });
 
   const portalContainer = usePopoverPortalContainer();
 
