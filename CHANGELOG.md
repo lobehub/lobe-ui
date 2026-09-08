@@ -2,6 +2,17 @@
 
 # Changelog
 
+## [5.40.2](https://github.com/lobehub/lobe-ui/compare/v5.40.1...v5.40.2) (2026-09-08)
+
+### 🎫 Chores
+
+- **deps**: Upgrade @base-ui/react to 1.8.0, closes [#644](https://github.com/lobehub/lobe-ui/issues/644) [mui/base-ui#5442](https://github.com/mui/base-ui/issues/5442) ([ca25fd6](https://github.com/lobehub/lobe-ui/commit/ca25fd6))
+- **release**: Streamdown@1.2.0 [skip ci] ([930f623](https://github.com/lobehub/lobe-ui/commit/930f623))
+
+### 🐛 Bug Fixes
+
+- **code-editor**: Align highlight layer with textarea layout, closes [#643](https://github.com/lobehub/lobe-ui/issues/643) ([384b444](https://github.com/lobehub/lobe-ui/commit/384b444))
+
 ## [5.40.1](https://github.com/lobehub/lobe-ui/compare/v5.40.0...v5.40.1) (2026-09-08)
 
 ### 🎫 Chores
