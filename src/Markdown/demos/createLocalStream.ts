@@ -9,12 +9,27 @@ interface LocalStreamControl {
   signal?: AbortSignal;
 }
 
+export const delayFromTps = (chunkSize: number, tps: number) =>
+  Math.max(1, Math.round((chunkSize / Math.max(tps, 0.001)) * 1000));
+
+const sampleInt = (min: number, max: number) => {
+  const lo = Math.min(min, max);
+  const hi = Math.max(min, max);
+  return Math.floor(Math.random() * (hi - lo + 1)) + lo;
+};
+
+const sampleRate = (min: number, max: number) => {
+  const lo = Math.min(min, max);
+  const hi = Math.max(min, max);
+  return lo === hi ? lo : lo + Math.random() * (hi - lo);
+};
+
 export const createLocalStream = (
   content: string,
   chunkSizeMin: number,
   chunkSizeMax: number,
-  chunkDelayMin: number,
-  chunkDelayMax: number,
+  tpsMin: number,
+  tpsMax: number,
   onChunk: (chunk: ChunkInfo) => void,
   control: LocalStreamControl = {},
 ) => {
@@ -38,26 +53,17 @@ export const createLocalStream = (
         await waitIfPaused();
         if (signal?.aborted) break;
 
-        // Calculate random chunk size and delay
-        const chunkSize =
-          Math.floor(Math.random() * (chunkSizeMax - chunkSizeMin + 1)) + chunkSizeMin;
-        const delay =
-          Math.floor(Math.random() * (chunkDelayMax - chunkDelayMin + 1)) + chunkDelayMin;
-
-        // Get chunk content
+        const chunkSize = sampleInt(chunkSizeMin, chunkSizeMax);
+        const delay = delayFromTps(chunkSize, sampleRate(tpsMin, tpsMax));
         const chunkContent = content.slice(currentPosition, currentPosition + chunkSize);
 
-        // Wait for delay
         await sleep(delay);
         if (signal?.aborted) break;
         await waitIfPaused();
         if (signal?.aborted) break;
 
-        // Enqueue chunk
-        const encodedChunk = encoder.encode(chunkContent);
-        controller.enqueue(encodedChunk);
+        controller.enqueue(encoder.encode(chunkContent));
 
-        // Notify chunk info
         onChunk({
           index: chunkIndex++,
           content: chunkContent,
@@ -68,8 +74,6 @@ export const createLocalStream = (
       }
       controller.close();
     },
-    cancel() {
-      // Optional: Handle cancellation if needed
-    },
+    cancel() {},
   });
 };

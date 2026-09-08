@@ -394,10 +394,41 @@ section[id] {
 }
 
 .field-value {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
   font-family: var(--mono);
   font-size: 12px;
   color: var(--fg);
   font-variant-numeric: tabular-nums;
+}
+
+.field-value-input {
+  width: 4.8em;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  -moz-appearance: textfield;
+}
+
+.field-value-input::-webkit-inner-spin-button,
+.field-value-input::-webkit-outer-spin-button {
+  appearance: none;
+}
+
+.field-value-input:focus {
+  outline: none;
+}
+
+.field-hint {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--fg-3);
 }
 
 .seg {

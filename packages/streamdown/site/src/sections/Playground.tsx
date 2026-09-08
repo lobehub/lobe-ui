@@ -34,29 +34,54 @@ const GRANULARITY_OPTIONS: { label: string; value: StreamAnimationGranularity }[
   { label: 'Word', value: 'word' },
 ];
 
+const TPS_MODE_OPTIONS = [
+  { label: 'Fixed', value: 'fixed' },
+  { label: 'Range', value: 'range' },
+] as const;
+
+type TpsMode = (typeof TPS_MODE_OPTIONS)[number]['value'];
+
 export const Playground = () => {
   const [sampleKey, setSampleKey] = useState<SampleKey>('markdown');
   const [chunkSize, setChunkSize] = useState(6);
-  const [delayMs, setDelayMs] = useState(24);
+  const [tpsMode, setTpsMode] = useState<TpsMode>('fixed');
+  const [tps, setTps] = useState(250);
+  const [tpsMin, setTpsMin] = useState(80);
+  const [tpsMax, setTpsMax] = useState(400);
   const [jitter, setJitter] = useState(50);
   const [smoothing, setSmoothing] = useState<StreamSmoothingPreset>('balanced');
   const [granularity, setGranularity] = useState<StreamAnimationGranularity>('char');
   const [latexGuard, setLatexGuard] = useState(true);
   const [preprocess, setPreprocess] = useState(true);
 
+  const rateMin = tpsMode === 'range' ? Math.min(tpsMin, tpsMax) : tps;
+  const rateMax = tpsMode === 'range' ? Math.max(tpsMin, tpsMax) : tps;
+  const batchDelayMs = Math.max(1, Math.round((chunkSize / Math.max(rateMin, 0.001)) * 1000));
+
   const { onScroll: onOutputScroll, ref: outputRef } = useStickToBottom();
   const profiler = useMemo(() => createStreamdownProfiler({ label: 'playground' }), []);
   const { restart, text } = useLocalStream(samples[sampleKey].content, {
     chunkSize,
-    delayMs,
     jitter: jitter / 100,
+    tps: rateMin,
+    tpsMax: rateMax,
   });
   const remarkPlugins = useMemo(() => [remarkGfm, remarkMath], []);
   const rehypePlugins = useMemo(() => [rehypeKatex], []);
 
   useEffect(() => {
     profiler.reset('playground');
-  }, [profiler, sampleKey, chunkSize, delayMs, jitter, smoothing, granularity, preprocess]);
+  }, [
+    profiler,
+    sampleKey,
+    chunkSize,
+    rateMin,
+    rateMax,
+    jitter,
+    smoothing,
+    granularity,
+    preprocess,
+  ]);
 
   return (
     <section className="playground" id="playground">
@@ -83,12 +108,53 @@ export const Playground = () => {
                 if (key in paragraphBatchCases) {
                   const preset = paragraphBatchCases[key as keyof typeof paragraphBatchCases];
                   setChunkSize(preset.chunkSize);
-                  setDelayMs(preset.delayMs);
+                  setTps(Math.round((preset.chunkSize / preset.delayMs) * 1000));
+                  setTpsMode('fixed');
                   setJitter(0);
                 }
                 restart();
               }}
             />
+            <Segmented
+              label="TPS"
+              options={TPS_MODE_OPTIONS}
+              value={tpsMode}
+              onChange={setTpsMode}
+            />
+            {tpsMode === 'fixed' ? (
+              <Range
+                hint={`${batchDelayMs}ms / batch at ${chunkSize} ch`}
+                label="Rate"
+                max={5000}
+                min={10}
+                step={10}
+                unit="chars/s"
+                value={tps}
+                onChange={setTps}
+              />
+            ) : (
+              <>
+                <Range
+                  label="TPS min"
+                  max={5000}
+                  min={10}
+                  step={10}
+                  unit="chars/s"
+                  value={tpsMin}
+                  onChange={setTpsMin}
+                />
+                <Range
+                  hint={`${Math.max(1, Math.round((chunkSize / Math.max(rateMax, 0.001)) * 1000))}–${batchDelayMs}ms / batch`}
+                  label="TPS max"
+                  max={5000}
+                  min={10}
+                  step={10}
+                  unit="chars/s"
+                  value={tpsMax}
+                  onChange={setTpsMax}
+                />
+              </>
+            )}
             <Range
               label="Chunk size"
               max={100}
@@ -96,14 +162,6 @@ export const Playground = () => {
               unit="ch"
               value={chunkSize}
               onChange={setChunkSize}
-            />
-            <Range
-              label="Chunk delay"
-              max={500}
-              min={4}
-              unit="ms"
-              value={delayMs}
-              onChange={setDelayMs}
             />
             <Range
               label="Jitter"

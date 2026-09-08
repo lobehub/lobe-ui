@@ -67,6 +67,7 @@ export const Segmented = <T extends string>({
 );
 
 interface RangeProps {
+  hint?: string;
   label: string;
   max: number;
   min: number;
@@ -76,12 +77,25 @@ interface RangeProps {
   value: number;
 }
 
-export const Range = ({ label, max, min, onChange, step = 1, unit, value }: RangeProps) => (
+export const Range = ({ hint, label, max, min, onChange, step = 1, unit, value }: RangeProps) => (
   <div className="field">
     <label className="field-label" htmlFor={`range-${label}`}>
       <span>{label}</span>
       <span className="field-value">
-        {value} {unit}
+        <input
+          className="field-value-input"
+          max={max}
+          min={min}
+          step={step}
+          type="number"
+          value={value}
+          onChange={(e) => {
+            const next = Number(e.target.value);
+            if (!Number.isFinite(next)) return;
+            onChange(Math.min(max, Math.max(min, next)));
+          }}
+        />
+        {unit}
       </span>
     </label>
     <input
@@ -95,6 +109,7 @@ export const Range = ({ label, max, min, onChange, step = 1, unit, value }: Rang
       value={value}
       onChange={(e) => onChange(Number(e.target.value))}
     />
+    {hint ? <div className="field-hint">{hint}</div> : null}
   </div>
 );
 

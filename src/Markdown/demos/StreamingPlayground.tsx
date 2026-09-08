@@ -20,7 +20,7 @@ import {
 } from '../streamProfiler';
 import { type StreamSmoothingPreset } from '../type';
 import { fullContent, fullContentCN } from './content';
-import { type ChunkInfo, createLocalStream } from './createLocalStream';
+import { type ChunkInfo, createLocalStream, delayFromTps } from './createLocalStream';
 import { markdownElements } from './custom/plugins/MarkdownElements';
 import { removeLineBreaksInAntArtifact } from './custom/plugins/utils';
 
@@ -96,13 +96,14 @@ export const StreamingPlayground = ({ defaultShowProfiler = false }: StreamingPl
 
   const {
     children,
-    streamingSpeed,
     randomStreaming,
     useReadableStream,
     chunkSizeMin,
     chunkSizeMax,
-    chunkDelayMin,
-    chunkDelayMax,
+    tpsMode,
+    tps,
+    tpsMin,
+    tpsMax,
     language,
     streamAnimationGranularity,
     streamSmoothingPreset,
@@ -135,11 +136,37 @@ export const StreamingPlayground = ({ defaultShowProfiler = false }: StreamingPl
       randomStreaming: {
         value: false,
       },
-      streamingSpeed: {
-        max: 100,
-        min: 5,
-        step: 5,
-        value: 25,
+      tpsMode: {
+        label: 'TPS',
+        options: {
+          Fixed: 'fixed',
+          Range: 'range',
+        },
+        value: 'fixed',
+      },
+      tps: {
+        label: 'chars/s',
+        max: 5000,
+        min: 10,
+        step: 10,
+        value: 80,
+        render: (get) => get('tpsMode') === 'fixed',
+      },
+      tpsMin: {
+        label: 'TPS min',
+        max: 5000,
+        min: 10,
+        step: 10,
+        value: 40,
+        render: (get) => get('tpsMode') === 'range',
+      },
+      tpsMax: {
+        label: 'TPS max',
+        max: 5000,
+        min: 10,
+        step: 10,
+        value: 200,
+        render: (get) => get('tpsMode') === 'range',
       },
       useReadableStream: {
         value: true,
@@ -154,18 +181,6 @@ export const StreamingPlayground = ({ defaultShowProfiler = false }: StreamingPl
       },
       ReadableStream: folder(
         {
-          chunkDelayMax: {
-            max: 5000,
-            min: 10,
-            step: 10,
-            value: 120,
-          },
-          chunkDelayMin: {
-            max: 1000,
-            min: 5,
-            step: 5,
-            value: 35,
-          },
           chunkSizeMax: {
             max: 200,
             min: 1,
@@ -204,6 +219,8 @@ export const StreamingPlayground = ({ defaultShowProfiler = false }: StreamingPl
     streamSmoothingPreset === 'silky'
       ? streamSmoothingPreset
       : 'balanced';
+  const rateMin = tpsMode === 'range' ? Math.min(Number(tpsMin), Number(tpsMax)) : Number(tps);
+  const rateMax = tpsMode === 'range' ? Math.max(Number(tpsMin), Number(tpsMax)) : Number(tps);
 
   const [streamedContent, setStreamedContent] = useState(safeChildren);
   const [isStreaming, setIsStreaming] = useState(false);
@@ -260,8 +277,8 @@ export const StreamingPlayground = ({ defaultShowProfiler = false }: StreamingPl
         safeChildren,
         chunkSizeMin,
         chunkSizeMax,
-        chunkDelayMin,
-        chunkDelayMax,
+        rateMin,
+        rateMax,
         (chunk) => {
           startTransition(() => {
             setChunks((prev) => [...prev, chunk]);
@@ -292,10 +309,10 @@ export const StreamingPlayground = ({ defaultShowProfiler = false }: StreamingPl
       setIsPaused(false);
     }
   }, [
-    chunkDelayMax,
-    chunkDelayMin,
     chunkSizeMax,
     chunkSizeMin,
+    rateMax,
+    rateMin,
     resetProfiler,
     resetProfilerOnRestart,
     safeChildren,
@@ -343,30 +360,25 @@ export const StreamingPlayground = ({ defaultShowProfiler = false }: StreamingPl
       const chunkSize = randomStreaming
         ? Math.min(Math.floor(Math.random() * 8) + 1, safeChildren.length - currentPosition)
         : Math.min(3, safeChildren.length - currentPosition);
+      const tps = rateMin === rateMax ? rateMin : rateMin + Math.random() * (rateMax - rateMin);
 
       currentPosition += chunkSize;
       setStreamedContent(safeChildren.slice(0, currentPosition));
 
-      const delay = randomStreaming
-        ? Math.floor(Math.random() * streamingSpeed * 2) + 5
-        : streamingSpeed;
-
-      timerId = setTimeout(tick, delay);
+      timerId = setTimeout(tick, delayFromTps(chunkSize, tps));
     };
 
-    timerId = setTimeout(
-      tick,
-      randomStreaming ? Math.floor(Math.random() * streamingSpeed) + 5 : streamingSpeed,
-    );
+    timerId = setTimeout(tick, delayFromTps(randomStreaming ? 4 : 3, rateMin));
 
     return () => clearTimeout(timerId);
   }, [
     isPaused,
     isStreaming,
     randomStreaming,
+    rateMax,
+    rateMin,
     safeChildren,
     streamedContent.length,
-    streamingSpeed,
     useReadableStream,
   ]);
 
