@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [5.40.1](https://github.com/lobehub/lobe-ui/compare/v5.40.0...v5.40.1) (2026-09-08)
+
+### 🎫 Chores
+
+- **release**: Streamdown@1.1.1 [skip ci] ([470cc46](https://github.com/lobehub/lobe-ui/commit/470cc46))
+
+### 💄 Styles
+
+- **text**: Make shiny text color overridable via --shiny-color, closes [#642](https://github.com/lobehub/lobe-ui/issues/642) ([a5cc15e](https://github.com/lobehub/lobe-ui/commit/a5cc15e))
+
 # [5.40.0](https://github.com/lobehub/lobe-ui/compare/v5.39.2...v5.40.0) (2026-09-05)
 
 ### ✨ Features
