@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [1.1.1](https://github.com/lobehub/lobe-ui/compare/streamdown@1.1.0...streamdown@1.1.1) (2026-09-08)
+
+### ⚡ Performance Improvements
+
+- **streamdown**: Fade buffered complete blocks together ([f73e7bf](https://github.com/lobehub/lobe-ui/commit/f73e7bf))
+
 # [1.1.0](https://github.com/lobehub/lobe-ui/compare/streamdown@1.0.0...streamdown@1.1.0) (2026-09-05)
 
 ### ✨ Features
