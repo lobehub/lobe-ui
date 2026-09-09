@@ -2,6 +2,20 @@
 
 # Changelog
 
+## [5.41.1](https://github.com/lobehub/lobe-ui/compare/v5.41.0...v5.41.1) (2026-09-09)
+
+### 🎫 Chores
+
+- **deps**: Upgrade pnpm to v12 ([3186d42](https://github.com/lobehub/lobe-ui/commit/3186d42))
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Stop the hovered and keyboard-highlighted menu items lighting up together ([8d2b695](https://github.com/lobehub/lobe-ui/commit/8d2b695))
+
+### 💄 Styles
+
+- **scroll-area**: Pin the viewport to overscroll-behavior auto, closes [#648](https://github.com/lobehub/lobe-ui/issues/648) ([9c2e172](https://github.com/lobehub/lobe-ui/commit/9c2e172))
+
 # [5.41.0](https://github.com/lobehub/lobe-ui/compare/v5.40.3...v5.41.0) (2026-09-09)
 
 ### ✨ Features
