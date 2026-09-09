@@ -6,6 +6,14 @@ import ConfigProvider from '@/ConfigProvider';
 
 import { FloatingPanel } from '../FloatingPanel';
 
+if (!globalThis.ResizeObserver) {
+  globalThis.ResizeObserver = class {
+    disconnect() {}
+    observe() {}
+    unobserve() {}
+  } as any;
+}
+
 vi.mock('antd-style', async (importOriginal) => {
   const actual = await importOriginal<typeof import('antd-style')>();
   return {

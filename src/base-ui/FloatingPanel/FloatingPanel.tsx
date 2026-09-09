@@ -19,6 +19,7 @@ import {
   ModalTitle,
 } from '../Modal';
 import { styles } from './style';
+import { ToastDodge } from './ToastDodge';
 import type {
   FloatingPanelOffset,
   FloatingPanelPlacement,
@@ -78,13 +79,17 @@ const getPlacementStyle = (
   const isTop = placement.startsWith('top');
   const isLeft = placement.endsWith('Left');
 
+  const px = (value: number | string) => (typeof value === 'number' ? `${value}px` : value);
+  const blockInset = `calc(${px(y)} + var(--floating-panel-reserve-block-end, 0px))`;
+  const inlineInset = `calc(${px(x)} + var(--floating-panel-reserve-inline-end, 0px))`;
+
   return {
     alignItems: isTop ? 'flex-start' : 'flex-end',
     justifyContent: isLeft ? 'flex-start' : 'flex-end',
-    paddingBlockEnd: isTop ? undefined : y,
-    paddingBlockStart: isTop ? y : undefined,
-    paddingInlineEnd: isLeft ? undefined : x,
-    paddingInlineStart: isLeft ? x : undefined,
+    paddingBlockEnd: isTop ? undefined : blockInset,
+    paddingBlockStart: isTop ? blockInset : undefined,
+    paddingInlineEnd: isLeft ? undefined : inlineInset,
+    paddingInlineStart: isLeft ? inlineInset : undefined,
   };
 };
 
@@ -334,6 +339,7 @@ const FloatingPanel = memo<FloatingPanelProps>(
               ...semanticStyles?.panel,
             }}
           >
+            {placement === 'bottomRight' && <ToastDodge />}
             {resizable &&
               resizeHandles.map((handle) => (
                 <div
