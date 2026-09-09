@@ -1,9 +1,9 @@
 import { Markdown } from '@lobehub/ui';
 import { useEffect, useRef, useState } from 'react';
 
-import { paragraphBatchCases } from '../../../packages/streamdown/site/src/lib/paragraphBatches';
 import { type StreamAnimationGranularity, type StreamSmoothingPreset } from '../type';
 import { fullContent, listHeavyContent } from './content';
+import { paragraphBatchCases } from './paragraphBatches';
 
 const BENCH_CASES = {
   default: { chunkSize: 5, content: fullContent, delayMs: 50, label: 'Mixed Markdown' },

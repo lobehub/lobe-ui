@@ -5,5 +5,5 @@ import { createReleaseConfig } from './scripts/release/config.mjs';
 // rather than releasing the wrong package.
 export default createReleaseConfig({
   exclude: true,
-  scopes: ['docs', 'docs-kit', 'streamdown'],
+  scopes: ['docs', 'docs-kit'],
 });
