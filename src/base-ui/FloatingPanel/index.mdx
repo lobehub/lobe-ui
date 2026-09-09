@@ -5,13 +5,19 @@ category: Feedback
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import DemoToastDodge from './demos/toastDodge.tsx?demo';
 
 ## Basic
 
 <Demo of={DemoIndex} layout="bare" />
+
+## Toast dodging
+
+<Demo of={DemoToastDodge} layout="bare" />
 
 ## Notes
 
 - `FloatingPanel` is resizable by default. The active resize handles follow the placement anchor so the panel remains attached to its viewport corner.
 - Use `minWidth`, `maxWidth`, `minHeight`, and `maxHeight` to constrain resize bounds.
 - Use `resizable={false}` for fixed auxiliary panels.
+- A `bottomRight` panel moves the bottom-right toast viewport out of its way while it is open, and restores it on close. The verdict is left shift, then up shift, then a narrowed toast, and finally the panel lifting its own bottom edge — so a toast never renders inside the panel.

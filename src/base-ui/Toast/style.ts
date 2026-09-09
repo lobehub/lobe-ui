@@ -3,6 +3,8 @@ import { cva } from 'class-variance-authority';
 
 import { focusRing, focusRingColor } from '@/base-ui/focusRing';
 
+import { TOAST_DODGE_DURATION, TOAST_DODGE_EASE } from './dodge';
+
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   action: css`
     cursor: pointer;
@@ -332,7 +334,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     position: fixed;
     z-index: 100000;
 
-    width: 360px;
+    width: var(--toast-width, 360px);
     max-width: calc(100vw - var(--toast-viewport-offset-x, 16px) * 2);
 
     outline: 0;
@@ -356,6 +358,18 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   viewportBottomRight: css`
     inset-block-end: var(--toast-viewport-offset-y, 16px);
     inset-inline-end: var(--toast-viewport-offset-x, 16px);
+
+    /* Percentages in translate() resolve against the element itself, not the
+       viewport, so the dodge offsets have to stay in px. */
+    transform: translate(
+      calc(-1 * var(--toast-shift-x, 0px)),
+      calc(-1 * var(--toast-shift-y, 0px))
+    );
+    transition: transform ${TOAST_DODGE_DURATION} ${TOAST_DODGE_EASE};
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
   `,
 
   viewportTop: css`

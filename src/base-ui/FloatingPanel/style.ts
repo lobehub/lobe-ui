@@ -1,5 +1,7 @@
 import { createStaticStyles } from 'antd-style';
 
+import { TOAST_DODGE_DURATION, TOAST_DODGE_EASE } from '../Toast/dodge';
+
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   body: css`
     overflow: hidden auto;
@@ -40,7 +42,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     transform-origin: 100% 100%;
 
     width: calc(100dvw - 32px);
-    max-height: calc(100dvh - 32px);
+    max-height: calc(100dvh - 32px - var(--floating-panel-reserve-block-end, 0px));
     border-radius: 12px;
 
     box-shadow:
@@ -169,5 +171,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   wrapper: css`
     overflow: hidden;
+    transition:
+      padding-block-end ${TOAST_DODGE_DURATION} ${TOAST_DODGE_EASE},
+      padding-block-start ${TOAST_DODGE_DURATION} ${TOAST_DODGE_EASE},
+      padding-inline-end ${TOAST_DODGE_DURATION} ${TOAST_DODGE_EASE},
+      padding-inline-start ${TOAST_DODGE_DURATION} ${TOAST_DODGE_EASE};
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
   `,
 }));
