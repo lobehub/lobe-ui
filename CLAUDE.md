@@ -58,7 +58,7 @@ Tests are colocated as `*.test.ts(x)` next to source.
 
 ### Docs site (`packages/docs-kit`)
 
-- `docs.config.ts` at the repo root (`defineDocsConfig`) drives everything: `atomDirs` (component docs from `src/**/index.mdx`), `navigationSections.json` (sidebar), `compatibility.json` (legacy dumi-era URL redirects), `docs/` (standalone guide pages, `docs/home/home.tsx` is the landing page).
+- `docs.config.ts` at the repo root (`defineDocsConfig`) drives everything: `atomDirs` (component docs from `src/**/index.mdx`), `compatibility.json` (legacy dumi-era URL redirects), `docs/` (standalone guide pages, `docs/home/home.tsx` is the landing page).
 - The `lobedocs` CLI keeps the repo root as the React Router/Vite root and injects its own react-router config; the consumer repo needs no vite/react-router config files.
 - Aliases in dev/test resolve `@lobehub/ui` and `@lobehub/ui/es/*` back to `src/` (see `docs.config.ts` and `vitest.config.ts`), so docs and tests run against source.
 

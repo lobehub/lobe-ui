@@ -91,7 +91,12 @@ export interface DocsConfig {
   favicons?: Record<string, string>;
   homePage?: string;
   legacyRedirects?: DocumentationInventory;
-  navSections: Record<string, string>;
+  /**
+   * Section overrides keyed by document source. The section is derived from the
+   * document's directory, so this is only for the rare page that sits outside
+   * its section's namespace.
+   */
+  navSections?: Record<string, string>;
   publicDocs?: string[];
   siteUrl: string;
   themeConfig?: DocsThemeConfig;

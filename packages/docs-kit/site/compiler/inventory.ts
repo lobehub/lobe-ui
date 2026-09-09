@@ -8,6 +8,7 @@ import type { Node, Parent } from 'unist';
 
 import { type AtomDirConfig } from '../../src/config';
 import { packageNamespaces } from '../../src/packageNamespaces';
+import { deriveDocumentSection } from '../content/documentSection';
 import { canonicalizePathname } from '../content/pathname';
 import { deriveComponentRoute, resolveAtomDir } from './content/atomRouting';
 import { defaultAtomDirs } from './content/discoverDocuments';
@@ -23,17 +24,6 @@ interface ParsedCodeTag {
 }
 
 const publicDocumentationStems = ['docs/index', 'docs/changelog'] as const;
-const packageSectionLabels: Record<(typeof packageNamespaces)[number], string> = {
-  'awesome': 'Awesome',
-  'base-ui': 'Base UI',
-  'brand': 'Brand',
-  'chat': 'Chat',
-  'color': 'Color',
-  'icons': 'Icons',
-  'mdx': 'Mdx',
-  'mobile': 'Mobile',
-  'storybook': 'StoryBook',
-};
 const supportedDemoAttributes = new Set([
   'center',
   'id',
@@ -214,19 +204,6 @@ const deriveDocumentLocation = (
       ? `components/${atomDir.subType}/${componentPath}/index`
       : `components/${componentPath}/index`;
   return { legacyRouteId, pathname };
-};
-
-const deriveDocumentSection = (source: string, navSections: Record<string, string>): string => {
-  const stem = documentStem(source);
-  if (stem === 'docs/index') return 'Home';
-  if (stem === 'docs/changelog') return 'Changelog';
-  if (stem.startsWith('docs/')) return 'Guides';
-
-  const override = navSections[`${stem}.mdx`] ?? navSections[`${stem}.md`];
-  if (override) return override;
-
-  const namespace = source.split('/')[1] as (typeof packageNamespaces)[number];
-  return packageSectionLabels[namespace] ?? 'Components';
 };
 
 export const deriveAtomIdFromPaths = (

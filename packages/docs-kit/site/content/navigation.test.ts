@@ -1,11 +1,6 @@
 import type { DocumentManifestEntry } from '../types/content';
 import { createNavigation } from './navigation';
 
-interface FrozenDocument {
-  section: string;
-  source: string;
-}
-
 const document = ({
   category,
   order,
@@ -39,12 +34,7 @@ describe('reviewed documentation navigation', () => {
       source: 'src/base-ui/Action/index.mdx',
       title: 'Base Action',
     });
-    const frozenDocuments: FrozenDocument[] = [
-      { section: 'Components', source: 'src/Action/index.md' },
-      { section: 'Base UI', source: 'src/base-ui/Action/index.md' },
-    ];
-
-    const navigation = createNavigation([baseAction, componentsAction], frozenDocuments);
+    const navigation = createNavigation([baseAction, componentsAction]);
 
     expect(navigation.map(({ title }) => title)).toEqual(['Components', 'Base UI']);
     expect(navigation[0]?.categories[0]?.documents).toEqual([componentsAction]);
@@ -88,16 +78,7 @@ describe('reviewed documentation navigation', () => {
         title: 'Alert',
       }),
     ];
-    const frozenDocuments: FrozenDocument[] = [
-      { section: 'Chat', source: 'src/chat/Notice/index.md' },
-      { section: 'Components', source: 'src/Avatar/index.md' },
-      { section: 'Components', source: 'src/Button/index.mdx' },
-      { section: 'Components', source: 'src/ActionIcon/index.md' },
-      { section: 'Components', source: 'src/Checkbox/index.md' },
-      { section: 'Components', source: 'src/Alert/index.md' },
-    ];
-
-    const navigation = createNavigation(documents, frozenDocuments);
+    const navigation = createNavigation(documents);
 
     expect(navigation.map(({ title }) => title)).toEqual(['Components', 'Chat']);
     expect(navigation[0]?.categories.map(({ title }) => title)).toEqual([
@@ -113,7 +94,24 @@ describe('reviewed documentation navigation', () => {
   });
 
   it('applies the complete reviewed section order regardless of input order', () => {
-    const expectedSections = [
+    const shuffled = [
+      ['StoryBook', 'src/storybook/index.mdx'],
+      ['Color', 'src/color/index.mdx'],
+      ['Components', 'src/Button/index.mdx'],
+      ['Icons', 'src/icons/Foo/index.mdx'],
+      ['Base UI', 'src/base-ui/Foo/index.mdx'],
+      ['Hooks & Providers', 'src/i18n/index.mdx'],
+      ['Mobile', 'src/mobile/Foo/index.mdx'],
+      ['Mdx', 'src/mdx/Foo/index.mdx'],
+      ['Chat', 'src/chat/Foo/index.mdx'],
+      ['Brand', 'src/brand/Foo/index.mdx'],
+      ['Awesome', 'src/awesome/Foo/index.mdx'],
+    ];
+    const documents = shuffled.map(([section, source]) =>
+      document({ category: 'General', source, title: `${section} document` }),
+    );
+
+    expect(createNavigation(documents).map(({ title }) => title)).toEqual([
       'Components',
       'Base UI',
       'Chat',
@@ -125,79 +123,27 @@ describe('reviewed documentation navigation', () => {
       'Color',
       'Hooks & Providers',
       'StoryBook',
+    ]);
+  });
+
+  it('keeps standalone guides out of the component sidebar', () => {
+    const documents = [
+      document({ category: 'General', source: 'docs/index.mdx', title: 'Home' }),
+      document({ category: 'General', source: 'docs/changelog.mdx', title: 'Changelog' }),
+      document({ category: 'General', source: 'docs/guides/theming.mdx', title: 'Theming' }),
+      document({ category: 'General', source: 'src/Button/index.mdx', title: 'Button' }),
     ];
-    const shuffledSections = [
-      'StoryBook',
-      'Color',
-      'Components',
-      'Icons',
-      'Base UI',
-      'Hooks & Providers',
-      'Mobile',
-      'Mdx',
-      'Chat',
-      'Brand',
-      'Awesome',
+
+    expect(createNavigation(documents).map(({ title }) => title)).toEqual(['Components']);
+  });
+
+  it('routes a source through a section override', () => {
+    const documents = [
+      document({ category: 'General', source: 'src/Odd/index.mdx', title: 'Odd' }),
     ];
-    const documents = shuffledSections.map((section, index) =>
-      document({
-        category: 'General',
-        source: `src/Section${index}/index.mdx`,
-        title: `${section} document`,
-      }),
-    );
-    const frozenDocuments = shuffledSections.map((section, index) => ({
-      section,
-      source: `src/Section${index}/index.md`,
-    }));
 
-    expect(createNavigation(documents, frozenDocuments).map(({ title }) => title)).toEqual(
-      expectedSections,
-    );
-  });
-
-  it('fails when a manifest document has no frozen section record', () => {
-    const unknown = document({
-      category: 'General',
-      source: 'src/Unknown/index.mdx',
-      title: 'Unknown',
-    });
-
-    expect(() => createNavigation([unknown], [])).toThrow(
-      /src\/Unknown\/index\.mdx.*no frozen section record/i,
-    );
-  });
-
-  it('fails when a manifest document resolves to duplicate frozen section records', () => {
-    const action = document({
-      category: 'General',
-      source: 'src/Action/index.mdx',
-      title: 'Action',
-    });
-
-    expect(() =>
-      createNavigation(
-        [action],
-        [
-          { section: 'Components', source: 'src/Action/index.md' },
-          { section: 'Base UI', source: 'src/Action/index.mdx' },
-        ],
-      ),
-    ).toThrow(/src\/Action\/index\.mdx.*multiple frozen section records.*Components.*Base UI/i);
-  });
-
-  it('fails with the source and unsupported frozen section in its diagnostic', () => {
-    const action = document({
-      category: 'General',
-      source: 'src/Action/index.mdx',
-      title: 'Action',
-    });
-
-    expect(() =>
-      createNavigation(
-        [action],
-        [{ section: 'Experimental Components', source: 'src/Action/index.md' }],
-      ),
-    ).toThrow(/src\/Action\/index\.mdx.*unknown frozen section.*Experimental Components/i);
+    expect(
+      createNavigation(documents, { 'src/Odd/index.mdx': 'Chat' }).map(({ title }) => title),
+    ).toEqual(['Chat']);
   });
 });
