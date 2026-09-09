@@ -122,6 +122,38 @@ describe('panel controller', () => {
     expect(panel.motion.content.get()).toBe(280);
   });
 
+  test('subscribers survive a detach and re-attach', () => {
+    const panel = createPanelController(baseOptions());
+    const listener = vi.fn();
+    panel.subscribe(listener);
+
+    const element = document.createElement('div');
+    panel.attach(element)();
+    panel.attach(element);
+
+    panel.sync(baseOptions({ expand: false }));
+    expect(listener).toHaveBeenCalled();
+  });
+
+  test('an unexpandable panel ignores Enter and the collapse threshold', () => {
+    const onSizeChange = vi.fn();
+    const panel = createPanelController(
+      baseOptions({
+        collapseThreshold: undefined,
+        min: 100,
+        onExpandChange: undefined,
+        onSizeChange,
+      }),
+    );
+
+    panel.resizeByKey({ key: 'Enter', preventDefault: vi.fn(), shiftKey: false });
+
+    panel.drag.start();
+    panel.drag.move({ x: -200, y: 0 });
+    expect(panel.motion.size.get()).toBe(100);
+    expect(panel.state.collapsing).toBe(false);
+  });
+
   test('reset reports the default size and expands', () => {
     const onExpandChange = vi.fn();
     const onSizeChange = vi.fn();

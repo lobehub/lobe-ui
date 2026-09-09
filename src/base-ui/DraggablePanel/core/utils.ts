@@ -5,7 +5,6 @@ export const emitter = () => {
   const listeners = new Set<() => void>();
 
   return {
-    clear: () => listeners.clear(),
     emit: () => {
       for (const listener of listeners) listener();
     },

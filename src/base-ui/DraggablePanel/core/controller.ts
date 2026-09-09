@@ -45,7 +45,6 @@ export interface PanelController {
   attach: (element: HTMLElement) => () => void;
   axis: Axis;
   bounds: () => { max: number; min: number };
-  destroy: () => void;
   drag: {
     cancel: () => void;
     end: () => void;
@@ -63,7 +62,7 @@ export interface PanelController {
 }
 
 export const createPanelController = (initial: PanelControllerOptions): PanelController => {
-  const { clear, emit: notify, subscribe } = emitter();
+  const { emit: notify, subscribe } = emitter();
 
   let element: HTMLElement | null = null;
   let options = initial;
@@ -109,10 +108,6 @@ export const createPanelController = (initial: PanelControllerOptions): PanelCon
     else if (to > 0) animate(content, to, timing());
     animate(size, to, timing());
   };
-
-  const stopSettle = size.on('animationComplete', () => {
-    if (size.get() === target) patch({ folding: false });
-  });
 
   const release = () => {
     unlock?.();
@@ -213,6 +208,10 @@ export const createPanelController = (initial: PanelControllerOptions): PanelCon
     }
     if (state.dragging) return;
     if (size.get() === target) {
+      // A reversal can land back on the target before the outgoing animation
+      // has moved; without this it keeps running past the new target.
+      size.stop();
+      content.stop();
       if (state.folding) {
         patch({ folding: false });
         content.jump(target || content.get());
@@ -227,7 +226,11 @@ export const createPanelController = (initial: PanelControllerOptions): PanelCon
   return {
     attach: (node) => {
       element = node;
+      const stopSettle = size.on('animationComplete', () => {
+        if (size.get() === target) patch({ folding: false });
+      });
       return () => {
+        stopSettle();
         release();
         element = null;
       };
@@ -236,11 +239,6 @@ export const createPanelController = (initial: PanelControllerOptions): PanelCon
       return AXES[options.placement];
     },
     bounds,
-    destroy: () => {
-      release();
-      stopSettle();
-      clear();
-    },
     drag,
     motion: { content, size },
     get options() {

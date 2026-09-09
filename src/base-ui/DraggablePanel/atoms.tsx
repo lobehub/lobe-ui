@@ -9,6 +9,7 @@ import {
   memo,
   type ReactNode,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -137,12 +138,12 @@ export const DraggablePanelRoot = memo<DraggablePanelRootProps>(
     );
 
     const options: PanelControllerOptions = {
-      collapseThreshold,
+      collapseThreshold: expandable ? collapseThreshold : undefined,
       defaultSize: resolvedDefaultSize,
       expand: isExpand,
       max,
       min,
-      onExpandChange: setIsExpand,
+      onExpandChange: expandable ? setIsExpand : undefined,
       onSizeChange: commitSize,
       onSizeDragging,
       placement,
@@ -159,11 +160,7 @@ export const DraggablePanelRoot = memo<DraggablePanelRootProps>(
 
     useIsomorphicLayoutEffect(() => {
       const node = elementRef.current;
-      const detach = node ? controller.attach(node) : undefined;
-      return () => {
-        detach?.();
-        controller.destroy();
-      };
+      return node ? controller.attach(node) : undefined;
     }, [controller]);
 
     const toggleExpand = useCallback(() => {
@@ -221,6 +218,7 @@ export const DraggablePanelContent = memo<DraggablePanelContentProps>(
 
     return (
       <motion.div
+        inert={!expand}
         style={
           {
             display: 'flex',
@@ -265,6 +263,8 @@ export const DraggablePanelHandle = memo<DraggablePanelHandleProps>(
     const { axis, controller, expand, showBorder, state } = useDraggablePanelContext();
     const size = useStore(coarsePointer.subscribe, () => getHandleSize(wideArea));
     const target = useStore(controller.subscribe, () => controller.target);
+    useEffect(() => () => controller.drag.cancel(), [controller]);
+
     const pressedRef = useRef<{ x: number; y: number } | null>(null);
     const draggingRef = useRef(false);
     const draggedRef = useRef(false);
@@ -294,6 +294,11 @@ export const DraggablePanelHandle = memo<DraggablePanelHandleProps>(
         onKeyDown={(event) => controller.resizeByKey(event)}
         onDoubleClick={() => {
           if (!draggedRef.current) controller.reset();
+        }}
+        onLostPointerCapture={() => {
+          if (draggingRef.current) controller.drag.cancel();
+          pressedRef.current = null;
+          draggingRef.current = false;
         }}
         onPointerCancel={() => {
           controller.drag.cancel();
@@ -357,7 +362,11 @@ export const DraggablePanelToggle = memo<DraggablePanelToggleProps>(
         style={{ opacity: expand ? undefined : showHandleWhenCollapsed ? 1 : 0, ...style }}
         {...rest}
       >
-        <button aria-label={expand ? 'Collapse panel' : 'Expand panel'} onClick={toggleExpand}>
+        <button
+          aria-label={expand ? 'Collapse panel' : 'Expand panel'}
+          type="button"
+          onClick={toggleExpand}
+        >
           <svg
             fill="none"
             height={axis.vertical ? BOW_W : BOW_H}

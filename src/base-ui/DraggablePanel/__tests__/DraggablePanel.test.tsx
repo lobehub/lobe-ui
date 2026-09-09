@@ -126,6 +126,51 @@ describe('DraggablePanel', () => {
     expect(screen.getByText('content')).toBeTruthy();
   });
 
+  test('an unexpandable panel cannot be collapsed by keyboard or by drag', () => {
+    const onExpandChange = vi.fn();
+    render(
+      <DraggablePanel
+        collapseThreshold={150}
+        defaultSize={{ width: 280 }}
+        expandable={false}
+        minWidth={100}
+        placement="left"
+        onExpandChange={onExpandChange}
+      >
+        content
+      </DraggablePanel>,
+    );
+
+    const handle = screen.getByRole('separator');
+    fireEvent.keyDown(handle, { key: 'Enter' });
+    pointerDrag(handle, { x: -260 });
+
+    expect(onExpandChange).not.toHaveBeenCalled();
+    expect(screen.queryByRole('button', { name: 'Collapse panel' })).toBeNull();
+  });
+
+  test('the toggle does not submit an enclosing form', () => {
+    const onSubmit = vi.fn((event: { preventDefault: () => void }) => event.preventDefault());
+    render(
+      <form onSubmit={onSubmit}>
+        <DraggablePanel placement="left">content</DraggablePanel>
+      </form>,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Collapse panel' }));
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+
+  test('collapsed content is inert', () => {
+    const { container } = render(
+      <DraggablePanel expand={false} placement="left">
+        <button type="button">inside</button>
+      </DraggablePanel>,
+    );
+
+    expect(container.querySelector('[inert]')).toBeTruthy();
+  });
+
   test('a bottom panel resizes on the block axis', () => {
     const onSizeChange = vi.fn();
     render(

@@ -137,6 +137,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     handle: cx(
       `${prefix}-handle`,
       css`
+        touch-action: none;
         position: absolute;
         z-index: 100;
 
@@ -256,11 +257,21 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         min-height: 0;
 
         &[data-expandable='true']:hover,
+        &[data-expandable='true']:focus-within,
         &[data-expandable='true'][data-expand='false'] {
           --draggable-panel-gap: ${BOW.gap}px;
         }
 
+        /* The wrapper carries an inline opacity when collapsed, so beat it. */
+        &[data-expandable='true']:hover
+          .${prefix}-toggle,
+          &[data-expandable='true']:focus-within
+          .${prefix}-toggle {
+          opacity: 1 !important;
+        }
+
         &[data-expandable='true']:hover .${prefix}-toggle svg,
+        &[data-expandable='true']:focus-within .${prefix}-toggle svg,
         &[data-expandable='true'][data-expand='false'] .${prefix}-toggle svg {
           transform: translate(-50%, -50%) scaleX(1);
           opacity: 1;
