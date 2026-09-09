@@ -80,6 +80,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   viewport: css`
     position: relative;
+    overscroll-behavior: auto;
     height: 100%;
     outline: none;
 
