@@ -199,6 +199,15 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     &[data-has-footer] {
       padding-block-end: 0;
     }
+
+    /* Base UI moves data-highlighted with the arrow keys, but :hover keeps painting
+       whatever the resting cursor sits on, so two items light up at once. */
+    &:has([data-highlighted]) {
+      [role^='menuitem']:hover:not([data-highlighted]),
+      [role='option']:hover:not([data-highlighted]) {
+        background: transparent !important;
+      }
+    }
   `,
 
   popupWithSlots: css`
