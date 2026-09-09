@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.42.0](https://github.com/lobehub/lobe-ui/compare/v5.41.1...v5.42.0) (2026-09-09)
+
+### ✨ Features
+
+- **base-ui**: Dodge the bottom-right toast around an open FloatingPanel, closes [#649](https://github.com/lobehub/lobe-ui/issues/649) ([f7cebe4](https://github.com/lobehub/lobe-ui/commit/f7cebe4))
+
 ## [5.41.1](https://github.com/lobehub/lobe-ui/compare/v5.41.0...v5.41.1) (2026-09-09)
 
 ### 🎫 Chores
