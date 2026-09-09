@@ -1,5 +1,4 @@
 import legacyRedirects from './compatibility.json';
-import navSections from './navigationSections.json';
 import { defineDocsConfig } from './packages/docs-kit/src/config';
 
 export default defineDocsConfig({
@@ -21,7 +20,6 @@ export default defineDocsConfig({
   },
   homePage: './docs/home/home.tsx',
   legacyRedirects,
-  navSections,
   siteUrl: 'https://ui.lobehub.com',
   themeConfig: {
     analytics: {

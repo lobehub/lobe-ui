@@ -4,7 +4,7 @@ import path from 'node:path';
 import { parse } from 'yaml';
 
 import type { AtomDirConfig } from '../../../src/config';
-import { createNavigation, toFrozenNavigationDocuments } from '../../content/navigation';
+import { createNavigation } from '../../content/navigation';
 import { canonicalizePathname, validateExplicitPathname } from '../../content/pathname';
 import type {
   ContentFrontmatter,
@@ -152,6 +152,6 @@ export function createContentManifest(
   const sortedDocuments = documents.toSorted(compareDocuments);
   return {
     documents: sortedDocuments,
-    navigation: createNavigation(sortedDocuments, toFrozenNavigationDocuments(navSections)),
+    navigation: createNavigation(sortedDocuments, navSections),
   };
 }

@@ -3,16 +3,7 @@ import type {
   NavigationCategory,
   NavigationSection,
 } from '../types/content';
-
-export interface FrozenNavigationDocument {
-  section: string;
-  source: string;
-}
-
-export const toFrozenNavigationDocuments = (
-  navSections: Record<string, string>,
-): FrozenNavigationDocument[] =>
-  Object.entries(navSections).map(([source, section]) => ({ section, source }));
+import { deriveDocumentSection } from './documentSection';
 
 export const reviewedCategoryOrder = {
   General: -1,
@@ -37,9 +28,6 @@ const specialSections = new Map([
   ['Home', '/'],
   ['Changelog', '/changelog'],
 ]);
-
-const sourceIdentity = (source: string): string =>
-  source.replaceAll('\\', '/').replace(/\.mdx?$/, '');
 
 const subTypeSectionTitle = (subType: string): string =>
   subType.charAt(0).toUpperCase() + subType.slice(1);
@@ -69,66 +57,18 @@ const compareSections = (left: NavigationSection, right: NavigationSection): num
 
 export function createNavigation(
   documents: readonly DocumentManifestEntry[],
-  frozenDocuments: readonly FrozenNavigationDocument[],
+  sectionOverrides: Record<string, string> = {},
 ): NavigationSection[] {
-  const frozenBySource = new Map<string, FrozenNavigationDocument[]>();
-  for (const frozenDocument of frozenDocuments) {
-    const key = sourceIdentity(frozenDocument.source);
-    const records = frozenBySource.get(key) ?? [];
-    records.push(frozenDocument);
-    frozenBySource.set(key, records);
-  }
-
   const diagnostics: string[] = [];
   const sections = new Map<string, Map<string, DocumentManifestEntry[]>>();
 
   for (const document of documents) {
-    const frozenRecords = frozenBySource.get(sourceIdentity(document.source)) ?? [];
+    const section = document.subType
+      ? subTypeSectionTitle(document.subType)
+      : deriveDocumentSection(document.source, sectionOverrides);
 
-    if (frozenRecords.length === 0 && document.subType) {
-      if (!document.category) {
-        diagnostics.push(`${document.source}: component navigation requires a category`);
-        continue;
-      }
-
-      const section = subTypeSectionTitle(document.subType);
-      const categories = sections.get(section) ?? new Map<string, DocumentManifestEntry[]>();
-      const categoryDocuments = categories.get(document.category) ?? [];
-      categoryDocuments.push(document);
-      categories.set(document.category, categoryDocuments);
-      sections.set(section, categories);
-      continue;
-    }
-
-    if (frozenRecords.length === 0) {
-      if ([...specialSections.values()].includes(document.pathname)) continue;
-      if (document.source.startsWith('docs/')) continue;
-      diagnostics.push(`${document.source}: no frozen section record`);
-      continue;
-    }
-    if (frozenRecords.length > 1) {
-      diagnostics.push(
-        `${document.source}: multiple frozen section records (${frozenRecords
-          .map(({ section }) => section || '<empty>')
-          .join(', ')})`,
-      );
-      continue;
-    }
-
-    const [{ section }] = frozenRecords;
-    const specialPathname = specialSections.get(section);
-    if (specialPathname) {
-      if (document.pathname !== specialPathname) {
-        diagnostics.push(
-          `${document.source}: frozen section "${section}" is reserved for ${specialPathname}`,
-        );
-      }
-      continue;
-    }
-    if (!sectionOrder.has(section as (typeof reviewedSectionOrder)[number])) {
-      diagnostics.push(`${document.source}: unknown frozen section "${section || '<empty>'}"`);
-      continue;
-    }
+    // Standalone guides live outside the component sidebar.
+    if (specialSections.has(section) || document.source.startsWith('docs/')) continue;
     if (!document.category) {
       diagnostics.push(`${document.source}: component navigation requires a category`);
       continue;
