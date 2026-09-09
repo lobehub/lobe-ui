@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "vite build",
+    "deploy": "pnpm build && npx wrangler pages deploy dist --project-name streamdown",
     "dev": "vite",
     "preview": "vite preview"
   },
