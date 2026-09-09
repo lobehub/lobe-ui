@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [5.40.3](https://github.com/lobehub/lobe-ui/compare/v5.40.2...v5.40.3) (2026-09-09)
+
+### 🎫 Chores
+
+- **release**: Streamdown@1.3.0 [skip ci] ([0b3122f](https://github.com/lobehub/lobe-ui/commit/0b3122f))
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Keep floating popups inside the viewport and let apps reserve edges, closes [#645](https://github.com/lobehub/lobe-ui/issues/645) ([d5c8df7](https://github.com/lobehub/lobe-ui/commit/d5c8df7))
+
 ## [5.40.2](https://github.com/lobehub/lobe-ui/compare/v5.40.1...v5.40.2) (2026-09-08)
 
 ### 🎫 Chores
