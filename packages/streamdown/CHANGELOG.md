@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [1.3.0](https://github.com/lobehub/lobe-ui/compare/streamdown@1.2.0...streamdown@1.3.0) (2026-09-09)
+
+### ✨ Features
+
+- **streamdown**: Add site SEO metadata and Pages deploy config ([12204a2](https://github.com/lobehub/lobe-ui/commit/12204a2))
+
 # [1.2.0](https://github.com/lobehub/lobe-ui/compare/streamdown@1.1.1...streamdown@1.2.0) (2026-09-08)
 
 ### ✨ Features

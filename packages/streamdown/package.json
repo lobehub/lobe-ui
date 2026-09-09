@@ -1,6 +1,6 @@
 {
   "name": "@lobehub/streamdown",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Headless streaming markdown engine for React: block splitting, smooth reveal, per-char fade animation and LLM output preprocessing",
   "homepage": "https://streamdown.lobehub.com",
   "repository": {
