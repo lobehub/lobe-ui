@@ -4,6 +4,7 @@ import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import { cx } from 'antd-style';
 import { type FC, useCallback, useRef, useState } from 'react';
 
+import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { useFloatingLayer } from '@/hooks/useFloatingLayer';
 import { useAppElement } from '@/ThemeProvider';
 import {
@@ -131,6 +132,9 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
                 sideOffset={baseSideOffset}
                 style={resolvedStyles.positioner}
                 {...item.positionerProps}
+                collisionPadding={
+                  item.positionerProps?.collisionPadding ?? getFloatingCollisionPadding()
+                }
               >
                 <BaseTooltip.Popup
                   className={resolvedClassNames.popup}

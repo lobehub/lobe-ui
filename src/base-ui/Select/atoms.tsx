@@ -12,6 +12,7 @@ import {
 import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
 import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
+import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { useAppElement } from '@/ThemeProvider';
 
@@ -142,6 +143,7 @@ export const SelectPositioner = ({
   align,
   alignItemWithTrigger,
   className,
+  collisionPadding,
   side,
   sideOffset,
   style,
@@ -165,6 +167,7 @@ export const SelectPositioner = ({
       align={align ?? 'start'}
       alignItemWithTrigger={alignItemWithTrigger ?? false}
       className={mergeStateClassName(styles.positioner, className) as any}
+      collisionPadding={collisionPadding ?? getFloatingCollisionPadding()}
       ref={composedRef as any}
       side={side ?? 'bottom'}
       sideOffset={sideOffset ?? 6}

@@ -12,6 +12,7 @@ import DemoVirtual from './demos/virtual.tsx?demo';
 import DemoClearValue from './demos/clearValue.tsx?demo';
 import DemoReactNodeSearch from './demos/reactNodeSearch.tsx?demo';
 import DemoClosedTags from './demos/closedTags.tsx?demo';
+import DemoViewportBounds from './demos/viewportBounds.tsx?demo';
 
 ## Default
 
@@ -44,6 +45,12 @@ import DemoClosedTags from './demos/closedTags.tsx?demo';
 ## Virtual List
 
 <Demo of={DemoVirtual} layout="bare" />
+
+## Viewport Bounds
+
+The popup is clamped to the space base-ui reports as available, so the search field never leaves the viewport. `setFloatingCollisionPadding` reserves extra space on any side for every base-ui floating layer; here it keeps the popup below a fixed title bar.
+
+<Demo of={DemoViewportBounds} isolated height={280} layout="bare" />
 
 ## APIs
 

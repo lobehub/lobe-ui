@@ -12,6 +12,7 @@ import {
 } from 'react';
 import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
+import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { placementMap } from '@/utils/placement';
@@ -128,6 +129,7 @@ export type PopoverPositionerAtomProps = ComponentProps<typeof BasePopover.Posit
 export const PopoverPositioner = ({
   children,
   className,
+  collisionPadding,
   hoverTrigger,
   placement,
   align,
@@ -153,6 +155,7 @@ export const PopoverPositioner = ({
   return (
     <BasePopover.Positioner
       align={align ?? placementConfig?.align ?? 'center'}
+      collisionPadding={collisionPadding ?? getFloatingCollisionPadding()}
       data-hover-trigger={hoverTrigger || undefined}
       data-placement={placement}
       ref={composedRef as any}

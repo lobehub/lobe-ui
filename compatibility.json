@@ -4358,6 +4358,18 @@
     },
     {
       "document": "src/base-ui/Select/index.mdx",
+      "legacyId": "src-base-ui-select-demo-viewportbounds",
+      "legacyRouteId": "components/base-ui/Select/index",
+      "options": {
+        "inline": false,
+        "isolated": true,
+        "layout": "bare"
+      },
+      "pathname": "/components/base-ui/select",
+      "source": "src/base-ui/Select/demos/viewportBounds.tsx"
+    },
+    {
+      "document": "src/base-ui/Select/index.mdx",
       "legacyId": "src-base-ui-select-demo-virtual",
       "legacyRouteId": "components/base-ui/Select/index",
       "options": {
@@ -6853,7 +6865,7 @@
     },
     {
       "category": "Data Display",
-      "description": "HtmlPreview renders LLM-generated HTML inline using a hardened iframe sandbox. It mirrors how Mermaid is embedded in Markdown, but treats the content as code rather than data \u2014 scripts execute inside an isolated frame that cannot reach the host page.",
+      "description": "HtmlPreview renders LLM-generated HTML inline using a hardened iframe sandbox. It mirrors how Mermaid is embedded in Markdown, but treats the content as code rather than data — scripts execute inside an isolated frame that cannot reach the host page.",
       "legacyRouteId": "components/HtmlPreview/index",
       "pathname": "/components/html-preview",
       "section": "Components",
@@ -6978,7 +6990,7 @@
     },
     {
       "category": "Feedback",
-      "description": "An animated SVG loading indicator depicting a neural network \u2014 pulsing nodes connected across layers, particles flowing through the connections, and a slowly rotating outer ring. Suitable for \"AI is thinking / preparing\" empty states.",
+      "description": "An animated SVG loading indicator depicting a neural network — pulsing nodes connected across layers, particles flowing through the connections, and a slowly rotating outer ring. Suitable for \"AI is thinking / preparing\" empty states.",
       "legacyRouteId": "components/NeuralNetworkLoading/index",
       "pathname": "/components/neural-network-loading",
       "section": "Components",
@@ -7165,7 +7177,7 @@
     },
     {
       "category": "Feedback",
-      "description": "A wrapper component for giscus \ud83d\udc8e, a comments system powered by GitHub Discussions.",
+      "description": "A wrapper component for giscus 💎, a comments system powered by GitHub Discussions.",
       "legacyRouteId": "components/awesome/Giscus/index",
       "pathname": "/components/awesome/giscus",
       "section": "Awesome",
@@ -7309,7 +7321,7 @@
     },
     {
       "category": "Data Entry",
-      "description": "Base UI-powered Segmented control \u2014 toggle-group semantics with a sliding active indicator. Drops antd dependency in favor of @base-ui/react/toggle-group.",
+      "description": "Base UI-powered Segmented control — toggle-group semantics with a sliding active indicator. Drops antd dependency in favor of @base-ui/react/toggle-group.",
       "legacyRouteId": "components/base-ui/Segmented/index",
       "pathname": "/components/base-ui/segmented",
       "section": "Base UI",
@@ -7345,7 +7357,7 @@
     },
     {
       "category": "Navigation",
-      "description": "Base UI-powered Tabs with iOS-flavored interactions \u2014 no hover background, tap-scale feedback, and a sliding active indicator across rounded / square / point variants.",
+      "description": "Base UI-powered Tabs with iOS-flavored interactions — no hover background, tap-scale feedback, and a sliding active indicator across rounded / square / point variants.",
       "legacyRouteId": "components/base-ui/Tabs/index",
       "pathname": "/components/base-ui/tabs",
       "section": "Base UI",
