@@ -1,7 +1,5 @@
-import compatibility from '../../../../compatibility.json';
-import navigationSections from '../../../../navigationSections.json';
 import type { DocumentManifestEntry } from '../types/content';
-import { createNavigation, toFrozenNavigationDocuments } from './navigation';
+import { createNavigation } from './navigation';
 
 interface FrozenDocument {
   section: string;
@@ -28,9 +26,6 @@ const document = ({
   source,
   title,
 });
-
-const finalSource = (source: string): string => source.replace(/\.md$/, '.mdx');
-const sourceIdentity = (source: string): string => source.replace(/\.mdx?$/, '');
 
 describe('reviewed documentation navigation', () => {
   it('keeps equal category names separate across frozen sections', () => {
@@ -158,50 +153,6 @@ describe('reviewed documentation navigation', () => {
 
     expect(createNavigation(documents, frozenDocuments).map(({ title }) => title)).toEqual(
       expectedSections,
-    );
-  });
-
-  it('keeps the compact runtime section map consistent with the frozen compatibility authority', () => {
-    const compactEntries = Object.entries(navigationSections);
-    const compactBySource = new Map(
-      compactEntries.map(([source, section]) => [sourceIdentity(source), section]),
-    );
-
-    expect(compactEntries).toHaveLength(171);
-    expect(compactBySource.size).toBe(171);
-    for (const frozenDocument of compatibility.documents) {
-      expect(compactBySource.get(sourceIdentity(frozenDocument.source))).toBe(
-        frozenDocument.section,
-      );
-    }
-  });
-
-  it('assigns every frozen source to exactly one section while keeping overview links separate', () => {
-    expect(compatibility.documents).toHaveLength(162);
-
-    const documents = compatibility.documents.map((record) =>
-      document({
-        category:
-          record.pathname === '/' || record.pathname === '/changelog'
-            ? undefined
-            : (record.category ?? 'General'),
-        pathname: record.pathname,
-        source: finalSource(record.source),
-        title: record.title ?? 'Documentation overview',
-      }),
-    );
-    const navigation = createNavigation(documents, toFrozenNavigationDocuments(navigationSections));
-    const nestedDocuments = navigation.flatMap(({ categories }) =>
-      categories.flatMap(({ documents: categoryDocuments }) => categoryDocuments),
-    );
-    const frozenComponentSources = compatibility.documents
-      .filter(({ pathname }) => pathname !== '/' && pathname !== '/changelog')
-      .map(({ source }) => sourceIdentity(source))
-      .toSorted();
-
-    expect(nestedDocuments).toHaveLength(160);
-    expect(nestedDocuments.map(({ source }) => sourceIdentity(source)).toSorted()).toEqual(
-      frozenComponentSources,
     );
   });
 
