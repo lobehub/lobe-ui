@@ -14,6 +14,7 @@ import {
 } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
+import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { useFloatingLayer } from '@/hooks/useFloatingLayer';
 import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
@@ -222,6 +223,7 @@ export const TooltipStandalone = memo<TooltipProps>(
           sideOffset={baseSideOffset}
           style={resolvedStyles.positioner}
           {...positionerProps}
+          collisionPadding={positionerProps?.collisionPadding ?? getFloatingCollisionPadding()}
         >
           <BaseTooltip.Popup
             className={resolvedClassNames.popup}

@@ -11,6 +11,7 @@ import {
 import { memo, useCallback, useState } from 'react';
 
 import { styles } from '@/base-ui/DropdownMenu/sharedStyle';
+import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { SubmenuArrowIcon } from '@/base-ui/SubmenuArrowIcon';
 import Switch from '@/base-ui/Switch';
 import common from '@/i18n/resources/en/common';
@@ -45,20 +46,29 @@ type ContextMenuPositionerProps = ComponentProps<typeof ContextMenu.Positioner>;
  * their own layer z-index (same pattern as DropdownMenu) rather than relying on
  * the fixed CSS fallback that can fall behind after repeated root openings (#608).
  */
-const ContextMenuSubmenuPositioner = memo(({ style, ...rest }: ContextMenuPositionerProps) => {
-  const explicitZIndex =
-    typeof style !== 'function' && style?.zIndex != null && typeof style.zIndex === 'number'
-      ? style.zIndex
-      : undefined;
-  const { zIndex, ref: zRef } = useLayerZIndex<HTMLDivElement>('floating', explicitZIndex);
+const ContextMenuSubmenuPositioner = memo(
+  ({ collisionPadding, style, ...rest }: ContextMenuPositionerProps) => {
+    const explicitZIndex =
+      typeof style !== 'function' && style?.zIndex != null && typeof style.zIndex === 'number'
+        ? style.zIndex
+        : undefined;
+    const { zIndex, ref: zRef } = useLayerZIndex<HTMLDivElement>('floating', explicitZIndex);
 
-  const resolvedStyle =
-    typeof style === 'function'
-      ? (state: any) => ({ zIndex, ...style(state) })
-      : { zIndex, ...style };
+    const resolvedStyle =
+      typeof style === 'function'
+        ? (state: any) => ({ zIndex, ...style(state) })
+        : { zIndex, ...style };
 
-  return <ContextMenu.Positioner {...rest} ref={zRef as any} style={resolvedStyle} />;
-});
+    return (
+      <ContextMenu.Positioner
+        {...rest}
+        collisionPadding={collisionPadding ?? getFloatingCollisionPadding()}
+        ref={zRef as any}
+        style={resolvedStyle}
+      />
+    );
+  },
+);
 
 ContextMenuSubmenuPositioner.displayName = 'ContextMenuSubmenuPositioner';
 

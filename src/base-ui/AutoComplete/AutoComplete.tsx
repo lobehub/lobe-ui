@@ -5,6 +5,7 @@ import { cx, useThemeMode } from 'antd-style';
 import { XIcon } from 'lucide-react';
 import { memo, useMemo, useRef } from 'react';
 
+import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { inputStyles, inputVariants } from '@/base-ui/Input';
 import { useLayerZIndex } from '@/base-ui/zIndex';
 import Icon from '@/Icon';
@@ -79,6 +80,7 @@ const AutoComplete = memo<AutoCompleteProps>(
           <Autocomplete.Positioner
             anchor={anchorRef}
             className={styles.positioner}
+            collisionPadding={getFloatingCollisionPadding()}
             ref={positionerRef}
             sideOffset={4}
             style={zIndex === undefined ? undefined : { zIndex }}

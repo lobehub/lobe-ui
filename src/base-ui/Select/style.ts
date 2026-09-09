@@ -80,7 +80,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     flex: 1;
 
     min-height: 0;
-    max-height: var(--lobe-select-available-height, var(--available-height));
     padding-block: 0;
   `,
   listWithSearch: css`
@@ -99,6 +98,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       var(--available-height),
       var(--lobe-select-popup-max-height, var(--available-height))
     );
+
+    max-height: var(--lobe-select-available-height);
 
     transform-origin: var(--transform-origin);
 

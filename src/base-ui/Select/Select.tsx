@@ -182,7 +182,6 @@ const Select = memo<SelectProps<any>>(
     const popupStyle = useMemo(() => {
       const maxHeight = isItemAligned ? '80vh' : `${listHeight}px`;
       const baseStyle: React.CSSProperties = {
-        maxHeight,
         maxWidth: 'var(--available-width)',
         minWidth: 'var(--anchor-width)',
         ['--lobe-select-popup-max-height' as any]: maxHeight,

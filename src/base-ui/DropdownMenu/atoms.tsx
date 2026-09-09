@@ -8,6 +8,7 @@ import type React from 'react';
 import { cloneElement, isValidElement, useCallback, useState } from 'react';
 import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
+import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import Switch from '@/base-ui/Switch';
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
@@ -107,6 +108,7 @@ export type DropdownMenuPositionerProps = React.ComponentProps<typeof Menu.Posit
 
 export const DropdownMenuPositioner = ({
   className,
+  collisionPadding,
   placement,
   hoverTrigger,
   align,
@@ -136,6 +138,7 @@ export const DropdownMenuPositioner = ({
       {...rest}
       align={align ?? placementConfig?.align}
       className={mergeStateClassName(styles.positioner, className as any) as any}
+      collisionPadding={collisionPadding ?? getFloatingCollisionPadding()}
       data-hover-trigger={hoverTrigger || undefined}
       data-placement={placement}
       ref={composedRef as any}

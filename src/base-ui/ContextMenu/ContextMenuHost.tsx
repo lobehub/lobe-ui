@@ -4,6 +4,7 @@ import { ContextMenu } from '@base-ui/react/context-menu';
 import { cx } from 'antd-style';
 import { memo, useEffect, useMemo, useSyncExternalStore } from 'react';
 
+import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { useIsClient } from '@/hooks/useIsClient';
 import { useAppElement } from '@/ThemeProvider';
 import { registerDevSingleton } from '@/utils/devSingleton';
@@ -72,6 +73,7 @@ export const ContextMenuHost = memo(() => {
         <ContextMenu.Positioner
           anchor={state.anchor ?? undefined}
           className={styles.positioner}
+          collisionPadding={getFloatingCollisionPadding()}
           ref={zRef as any}
           sideOffset={6}
           style={{ ...noAnimationStyles, zIndex }}
