@@ -1,0 +1,34 @@
+import { DraggablePanel } from '@lobehub/ui/base-ui';
+import { useState } from 'react';
+
+import { Flexbox } from '@/Flex';
+
+export default () => {
+  const [expand, setExpand] = useState(true);
+
+  return (
+    <Flexbox horizontal height={'100%'} style={{ minHeight: 500 }} width={'100%'}>
+      <DraggablePanel
+        showHandleWhenCollapsed
+        collapseThreshold={240}
+        defaultSize={{ width: 300 }}
+        expand={expand}
+        minWidth={180}
+        placement="left"
+        onExpandChange={setExpand}
+      >
+        <Flexbox gap={8} padding={24}>
+          <div>Drag to Collapse</div>
+          <div style={{ color: 'gray', fontSize: 12 }}>
+            <p>Drag below 240px to preview collapse; drag back before release to cancel.</p>
+            <p>Release while collapsed to commit. Use the arrow to reopen.</p>
+            <p>Double-click the handle to restore the default size (300px).</p>
+          </div>
+        </Flexbox>
+      </DraggablePanel>
+      <Flexbox padding={24} style={{ flex: 1 }}>
+        <div>Panel is {expand ? 'expanded' : 'collapsed'}</div>
+      </Flexbox>
+    </Flexbox>
+  );
+};

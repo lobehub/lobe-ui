@@ -92,6 +92,7 @@
   "src/base-ui/Avatar/index.mdx": "Base UI",
   "src/base-ui/Button/index.mdx": "Base UI",
   "src/base-ui/ContextMenu/index.mdx": "Base UI",
+  "src/base-ui/DraggablePanel/index.mdx": "Base UI",
   "src/base-ui/Drawer/index.mdx": "Base UI",
   "src/base-ui/DropdownMenu/index.mdx": "Base UI",
   "src/base-ui/FloatingPanel/index.mdx": "Base UI",
