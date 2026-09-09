@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.41.0](https://github.com/lobehub/lobe-ui/compare/v5.40.3...v5.41.0) (2026-09-09)
+
+### ✨ Features
+
+- **base-ui**: Add DraggablePanel, closes [#647](https://github.com/lobehub/lobe-ui/issues/647) ([20c6ec4](https://github.com/lobehub/lobe-ui/commit/20c6ec4))
+
 ## [5.40.3](https://github.com/lobehub/lobe-ui/compare/v5.40.2...v5.40.3) (2026-09-09)
 
 ### 🎫 Chores
