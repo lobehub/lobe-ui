@@ -41,6 +41,8 @@ describe('restrictedImports', () => {
   it.each([
     'ActionIcon',
     'Avatar',
+    'DraggablePanel',
+    'DraggablePanelHeader',
     'Dropdown',
     'FormTitle',
     'InputOPT',
@@ -61,7 +63,10 @@ describe('restrictedImports', () => {
     ]);
   });
 
-  it.each(['Alert', 'Skeleton'])('allows %s from the Base UI entrypoint', (name) => {
-    expect(lint(`import { ${name} } from '@lobehub/ui/base-ui';`)).toEqual([]);
-  });
+  it.each(['Alert', 'DraggablePanel', 'Skeleton'])(
+    'allows %s from the Base UI entrypoint',
+    (name) => {
+      expect(lint(`import { ${name} } from '@lobehub/ui/base-ui';`)).toEqual([]);
+    },
+  );
 });
