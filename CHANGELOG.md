@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [5.42.1](https://github.com/lobehub/lobe-ui/compare/v5.42.0...v5.42.1) (2026-09-10)
+
+### 🎫 Chores
+
+- Move @lobehub/streamdown to lobehub/streamdown, closes [#646](https://github.com/lobehub/lobe-ui/issues/646) ([01bf38f](https://github.com/lobehub/lobe-ui/commit/01bf38f))
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Keep DraggablePanel's collapseThreshold working when expandable is false, closes [#650](https://github.com/lobehub/lobe-ui/issues/650) ([09a624d](https://github.com/lobehub/lobe-ui/commit/09a624d))
+
 # [5.42.0](https://github.com/lobehub/lobe-ui/compare/v5.41.1...v5.42.0) (2026-09-09)
 
 ### ✨ Features
