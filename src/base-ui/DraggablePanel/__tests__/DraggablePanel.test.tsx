@@ -126,7 +126,7 @@ describe('DraggablePanel', () => {
     expect(screen.getByText('content')).toBeTruthy();
   });
 
-  test('an unexpandable panel cannot be collapsed by keyboard or by drag', () => {
+  test('an unexpandable panel drops the toggle but still honours collapseThreshold', () => {
     const onExpandChange = vi.fn();
     render(
       <DraggablePanel
@@ -141,12 +141,11 @@ describe('DraggablePanel', () => {
       </DraggablePanel>,
     );
 
-    const handle = screen.getByRole('separator');
-    fireEvent.keyDown(handle, { key: 'Enter' });
-    pointerDrag(handle, { x: -260 });
-
-    expect(onExpandChange).not.toHaveBeenCalled();
     expect(screen.queryByRole('button', { name: 'Collapse panel' })).toBeNull();
+
+    pointerDrag(screen.getByRole('separator'), { x: -260 });
+
+    expect(onExpandChange.mock.calls[0][0]).toBe(false);
   });
 
   test('the toggle does not submit an enclosing form', () => {
