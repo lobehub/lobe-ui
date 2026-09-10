@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.42.4](https://github.com/lobehub/lobe-ui/compare/v5.42.3...v5.42.4) (2026-09-10)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Apply DraggablePanel's style prop to the content layer ([733aa36](https://github.com/lobehub/lobe-ui/commit/733aa36))
+
 ## [5.42.3](https://github.com/lobehub/lobe-ui/compare/v5.42.2...v5.42.3) (2026-09-10)
 
 ### 🎫 Chores
