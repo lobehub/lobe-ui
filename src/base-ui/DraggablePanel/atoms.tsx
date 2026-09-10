@@ -138,12 +138,12 @@ export const DraggablePanelRoot = memo<DraggablePanelRootProps>(
     );
 
     const options: PanelControllerOptions = {
-      collapseThreshold: expandable ? collapseThreshold : undefined,
+      collapseThreshold,
       defaultSize: resolvedDefaultSize,
       expand: isExpand,
       max,
       min,
-      onExpandChange: expandable ? setIsExpand : undefined,
+      onExpandChange: setIsExpand,
       onSizeChange: commitSize,
       onSizeDragging,
       placement,

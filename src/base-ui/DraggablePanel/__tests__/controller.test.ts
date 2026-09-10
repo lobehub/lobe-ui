@@ -135,7 +135,7 @@ describe('panel controller', () => {
     expect(listener).toHaveBeenCalled();
   });
 
-  test('an unexpandable panel ignores Enter and the collapse threshold', () => {
+  test('without a collapse threshold or an expand callback, drag clamps at min', () => {
     const onSizeChange = vi.fn();
     const panel = createPanelController(
       baseOptions({
