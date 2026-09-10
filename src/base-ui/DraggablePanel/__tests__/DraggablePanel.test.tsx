@@ -212,3 +212,23 @@ describe('DraggablePanel', () => {
     );
   });
 });
+
+describe('DraggablePanel style target', () => {
+  // The antd build applied `style` to the same element as `classNames.content`, so
+  // callers cancel the panel's own painting through it. Keep that element.
+  test('applies style to the content layer, not the root', () => {
+    render(
+      <DraggablePanel
+        classNames={{ content: 'panel-content' }}
+        placement="left"
+        style={{ background: 'transparent' }}
+      >
+        content
+      </DraggablePanel>,
+    );
+
+    const content = document.querySelector('.panel-content') as HTMLElement;
+    expect(content.style.background).toBe('transparent');
+    expect((content.closest('aside') as HTMLElement).style.background).toBe('');
+  });
+});

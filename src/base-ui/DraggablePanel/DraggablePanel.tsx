@@ -39,6 +39,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
     showHandleWhenCollapsed,
     showHandleWideArea = true,
     size,
+    style,
     styles: customStyles,
     ...rest
   }) => {
@@ -85,7 +86,10 @@ const DraggablePanel = memo<DraggablePanelProps>(
         {...rest}
       >
         <DraggablePanelToggle showHandleWhenCollapsed={showHandleWhenCollapsed} />
-        <DraggablePanelContent className={cx(classNames?.content)} style={customStyles?.content}>
+        <DraggablePanelContent
+          className={cx(classNames?.content)}
+          style={{ ...customStyles?.content, ...style }}
+        >
           {children}
         </DraggablePanelContent>
         <DraggablePanelHandle wideArea={showHandleWideArea} />
