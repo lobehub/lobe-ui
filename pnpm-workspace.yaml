@@ -8,7 +8,6 @@ resolutionMode: highest
 
 packages:
   - packages/*
-  - packages/streamdown/site
 
 publicHoistPattern:
   - '*changelog*'
@@ -30,3 +29,9 @@ allowBuilds:
   '@parcel/watcher': true
   esbuild: true
   unrs-resolver: true
+
+# @lobehub/streamdown is published from lobehub/streamdown and consumed here as
+# a plain registry dependency, so its newest release can be younger than the
+# default minimumReleaseAge window.
+minimumReleaseAgeExclude:
+  - '@lobehub/streamdown@1.3.0'
