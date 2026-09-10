@@ -213,7 +213,10 @@ export const DraggablePanelContent = memo<DraggablePanelContentProps>(
   ({ children, className, style, ...rest }) => {
     const { axis, controller, expand, placement, state } = useDraggablePanelContext();
     const extent = useTransform(controller.motion.size, (value) => Math.max(0, value));
-    const clipping = state.dragging || state.folding || controller.target === 0;
+    // Subscribed, not read: a collapse that changes only the target would otherwise
+    // leave the content unclipped and painted outside the zero-width box.
+    const target = useStore(controller.subscribe, () => controller.target);
+    const clipping = state.dragging || state.folding || target === 0;
     const shrunk = state.collapsing || !expand;
 
     return (
