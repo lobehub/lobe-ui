@@ -255,7 +255,7 @@
     "@types/unist": "^3.0.3",
     "@typescript-eslint/eslint-plugin": "^8.63.0",
     "@typescript-eslint/parser": "^8.63.0",
-    "@vitest/coverage-v8": "^4.1.10",
+    "@vitest/coverage-v8": "^5.0.0",
     "antd": "^6.5.0",
     "cheerio": "^1.2.0",
     "clean-package": "^2.2.0",
