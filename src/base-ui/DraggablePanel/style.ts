@@ -118,7 +118,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         min-width: 0;
         min-height: 0;
 
-        background: var(--draggable-panel-bg, ${cssVar.colorBgLayout});
+        background: var(--draggable-panel-bg, transparent);
       `,
     ),
     fixed: css`
