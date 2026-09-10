@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [5.42.3](https://github.com/lobehub/lobe-ui/compare/v5.42.2...v5.42.3) (2026-09-10)
+
+### 🎫 Chores
+
+- **eslint**: Ban the antd-based DraggablePanel, closes [#652](https://github.com/lobehub/lobe-ui/issues/652) ([b71080c](https://github.com/lobehub/lobe-ui/commit/b71080c))
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Stop DraggablePanel from painting a default background ([66f111f](https://github.com/lobehub/lobe-ui/commit/66f111f))
+
 ## [5.42.2](https://github.com/lobehub/lobe-ui/compare/v5.42.1...v5.42.2) (2026-09-10)
 
 ### 🐛 Bug Fixes
