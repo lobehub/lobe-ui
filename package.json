@@ -282,7 +282,7 @@
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-live": "4.1.8",
-    "react-router": "8.2.0",
+    "react-router": "8.3.1",
     "remark": "^15.0.1",
     "remark-cli": "^12.0.1",
     "remark-frontmatter": "^5.0.0",
