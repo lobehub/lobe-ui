@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.42.2](https://github.com/lobehub/lobe-ui/compare/v5.42.1...v5.42.2) (2026-09-10)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Clip a DraggablePanel that was collapsed by dragging past its threshold, closes [#651](https://github.com/lobehub/lobe-ui/issues/651) ([1aaf4ba](https://github.com/lobehub/lobe-ui/commit/1aaf4ba))
+
 ## [5.42.1](https://github.com/lobehub/lobe-ui/compare/v5.42.0...v5.42.1) (2026-09-10)
 
 ### 🎫 Chores
