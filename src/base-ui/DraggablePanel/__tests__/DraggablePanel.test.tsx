@@ -148,6 +148,24 @@ describe('DraggablePanel', () => {
     expect(onExpandChange.mock.calls[0][0]).toBe(false);
   });
 
+  test('a drag-collapsed panel clips the content it is still holding at full size', () => {
+    render(
+      <DraggablePanel
+        collapseThreshold={150}
+        defaultSize={{ width: 280 }}
+        minWidth={100}
+        placement="left"
+      >
+        content
+      </DraggablePanel>,
+    );
+
+    pointerDrag(screen.getByRole('separator'), { x: -200 });
+
+    const box = document.querySelector('.base-draggable-panel-content')!.parentElement!;
+    expect(box.style.overflow).toBe('clip');
+  });
+
   test('the toggle does not submit an enclosing form', () => {
     const onSubmit = vi.fn((event: { preventDefault: () => void }) => event.preventDefault());
     render(
