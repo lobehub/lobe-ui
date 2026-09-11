@@ -25,13 +25,16 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   scrollbar: css`
     pointer-events: none;
 
-    margin: 8px;
+    margin: 3px;
     border-radius: ${cssVar.borderRadiusSM};
 
     opacity: 0;
     background: transparent;
 
-    transition: opacity 150ms;
+    transition:
+      opacity 150ms,
+      width 150ms,
+      height 150ms;
 
     &::before {
       content: '';
@@ -39,7 +42,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     &[data-scrolling] {
-      transition-duration: 0ms;
+      transition-duration: 0ms, 150ms, 150ms;
     }
 
     &[data-hovering],
@@ -49,24 +52,32 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     &[data-orientation='vertical'] {
-      width: 4px;
+      width: 3px;
 
       &::before {
         inset-inline-start: 50%;
         transform: translateX(-50%);
-        width: 20px;
+        width: 16px;
         height: 100%;
+      }
+
+      &:hover {
+        width: 6px;
       }
     }
 
     &[data-orientation='horizontal'] {
-      height: 4px;
+      height: 3px;
 
       &::before {
-        inset-block-end: -8px;
-        inset-inline: 0;
+        inset-block-start: 50%;
+        transform: translateY(-50%);
         width: 100%;
-        height: 20px;
+        height: 16px;
+      }
+
+      &:hover {
+        height: 6px;
       }
     }
   `,
