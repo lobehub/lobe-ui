@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.42.6](https://github.com/lobehub/lobe-ui/compare/v5.42.5...v5.42.6) (2026-09-11)
+
+### 💄 Styles
+
+- **base-ui**: Morph TooltipGroup and PopoverGroup between triggers ([1c3ec70](https://github.com/lobehub/lobe-ui/commit/1c3ec70))
+
 ## [5.42.5](https://github.com/lobehub/lobe-ui/compare/v5.42.4...v5.42.5) (2026-09-11)
 
 ### 💄 Styles
