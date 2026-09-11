@@ -5,6 +5,7 @@ import {
 } from 'antd-style';
 import { type CSSProperties } from 'react';
 
+import { type MotionComponentType } from '@/MotionProvider';
 import { type NeutralColors, type PrimaryColors } from '@/styles';
 
 export interface ThemeProviderProps extends AntdThemeProviderProps<any> {
@@ -19,6 +20,7 @@ export interface ThemeProviderProps extends AntdThemeProviderProps<any> {
   customToken?: (theme: CustomTokenParams) => { [key: string]: any };
   enableCustomFonts?: boolean;
   enableGlobalStyle?: boolean;
+  motion?: MotionComponentType;
   style?: CSSProperties;
 }
 

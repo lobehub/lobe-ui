@@ -12,6 +12,7 @@ import { memo, useCallback, useMemo, useState } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
 import FontLoader from '@/FontLoader';
+import { MotionComponent } from '@/MotionProvider';
 import { lobeCustomStylish, lobeCustomToken } from '@/styles';
 import { createLobeAntdTheme } from '@/styles/theme/antdTheme';
 import { type LobeCustomToken } from '@/types/customToken';
@@ -33,6 +34,7 @@ const ThemeProvider = memo<ThemeProviderProps>(
     customFonts,
     customTheme = {},
     className,
+    motion,
     style,
     theme: antdTheme,
     ...rest
@@ -90,7 +92,7 @@ const ThemeProvider = memo<ThemeProviderProps>(
       [customTheme.primaryColor, customTheme.neutralColor, antdTheme],
     );
 
-    return (
+    const app = (
       <>
         {enableCustomFonts &&
           webfontUrls?.length > 0 &&
@@ -128,6 +130,10 @@ const ThemeProvider = memo<ThemeProviderProps>(
         </AntdThemeProvider>
       </>
     );
+
+    // antd <App> hosts the notification / modal holders, so anything rendered through those
+    // static APIs sits above the app-level ConfigProvider and needs the motion context here.
+    return motion ? <MotionComponent value={motion}>{app}</MotionComponent> : app;
   },
 );
 
