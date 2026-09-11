@@ -181,9 +181,12 @@ describe('opening', () => {
     );
   });
 
-  it('fades in without a FLIP transform when motion is unavailable', () => {
-    render(<ImageComponent alt="cat" src="https://example.com/cat.png" />);
+  it('fades in without a FLIP transform when the user prefers reduced motion', () => {
+    const matchMedia = vi.fn(() => ({ matches: true }));
+    vi.stubGlobal('matchMedia', matchMedia);
+    renderWithMotion(<ImageComponent alt="cat" src="https://example.com/cat.png" />);
     openViewer();
+    expect(matchMedia).toHaveBeenCalledWith('(prefers-reduced-motion: reduce)');
 
     const image = getViewerImage() as HTMLImageElement;
     expect(image.style.transform).toBe(
