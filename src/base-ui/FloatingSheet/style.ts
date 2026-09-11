@@ -43,6 +43,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     visibility: hidden;
   `,
   header: css`
+    /* Stops the browser claiming the vertical gesture as a scroll,
+       which would fire pointercancel and kill the drag. */
+    touch-action: none;
     cursor: grab;
     user-select: none;
 
