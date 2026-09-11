@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [5.42.7](https://github.com/lobehub/lobe-ui/compare/v5.42.6...v5.42.7) (2026-09-11)
+
+### ♻ Code Refactoring
+
+- **base-ui**: Drop the empty ScrollArea content style wrapper ([df093eb](https://github.com/lobehub/lobe-ui/commit/df093eb))
+
+### 💄 Styles
+
+- **base-ui**: Stop forcing typography and flex layout on ScrollArea content ([0b82243](https://github.com/lobehub/lobe-ui/commit/0b82243))
+
 ## [5.42.6](https://github.com/lobehub/lobe-ui/compare/v5.42.5...v5.42.6) (2026-09-11)
 
 ### 💄 Styles
