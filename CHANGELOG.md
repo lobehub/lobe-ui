@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.42.5](https://github.com/lobehub/lobe-ui/compare/v5.42.4...v5.42.5) (2026-09-11)
+
+### 💄 Styles
+
+- **base-ui**: Tighten ScrollArea scrollbar inset and thicken it on hover ([3da2409](https://github.com/lobehub/lobe-ui/commit/3da2409))
+
 ## [5.42.4](https://github.com/lobehub/lobe-ui/compare/v5.42.3...v5.42.4) (2026-09-10)
 
 ### 🐛 Bug Fixes
