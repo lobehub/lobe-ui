@@ -75,16 +75,7 @@ export const ScrollAreaViewport = ({
 
 ScrollAreaViewport.displayName = 'ScrollAreaViewport';
 
-export const ScrollAreaContent = ({ className, ...rest }: ScrollAreaContentProps) => {
-  return (
-    <BaseScrollArea.Content
-      {...rest}
-      className={mergeStateClassName(styles.content, className) as any}
-    />
-  );
-};
-
-ScrollAreaContent.displayName = 'ScrollAreaContent';
+export const ScrollAreaContent = BaseScrollArea.Content;
 
 export const ScrollAreaScrollbar = ({ className, ...rest }: ScrollAreaScrollbarProps) => {
   return (

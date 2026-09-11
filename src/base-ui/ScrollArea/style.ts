@@ -3,8 +3,6 @@ import { createStaticStyles } from 'antd-style';
 import { focusRing } from '@/base-ui/focusRing';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
-  content: css``,
-
   corner: css`
     background: ${cssVar.colorFillSecondary};
   `,
