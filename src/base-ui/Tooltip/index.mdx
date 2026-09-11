@@ -52,6 +52,7 @@ Tooltip is built on top of `@floating-ui/react` (Base Tooltip). For compatibilit
 | children | Tooltip subtree that shares a single tooltip instance | `ReactNode` | - |
 | disableDestroyOnInvalidTrigger | Disable auto-destroy when the active trigger becomes invalid (e.g. disconnected / `display: none`) | `boolean` | `false` |
 | disableZeroOriginGuard | Disable the visual guard that hides the popup when it falls back to viewport (0,0) | `boolean` | `false` |
+| layoutAnimation | Morph the shared popup (position, size, content) when switching triggers; switches farther than 280px re-pop instead | `boolean` | `true` |
 | popupContainer | Direct HTMLElement to use as the portal container for the group | `HTMLElement` | - |
 | ...props | Shared tooltip props applied to each group member | `Omit<TooltipProps, 'children' \| 'defaultOpen' \| 'open' \| 'ref' \| 'title'>` | - |
 

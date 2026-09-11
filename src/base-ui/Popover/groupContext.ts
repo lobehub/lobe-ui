@@ -12,8 +12,8 @@ export type PopoverGroupSharedProps = Omit<
   'children' | 'content' | 'defaultOpen' | 'open' | 'ref'
 > & {
   /**
-   * @description Whether to enable content layout animation when switching triggers
-   * @default false
+   * @description Morph the shared popup (position, size, content) when switching triggers
+   * @default true
    */
   contentLayoutAnimation?: boolean;
   /**

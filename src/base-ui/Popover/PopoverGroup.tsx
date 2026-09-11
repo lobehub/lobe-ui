@@ -10,6 +10,7 @@ import {
 } from '@/utils/destroyOnInvalidActiveTriggerElement';
 import { parseTrigger } from '@/utils/parseTrigger';
 import { placementMap } from '@/utils/placement';
+import { useRepopOnFarTriggerSwitch } from '@/utils/useRepopOnFarTriggerSwitch';
 
 import { PopoverArrowIcon } from './ArrowIcon';
 import {
@@ -35,7 +36,7 @@ type PopoverGroupProps = PopoverGroupSharedProps & {
 
 const PopoverGroup: FC<PopoverGroupProps> = ({
   children,
-  contentLayoutAnimation = false,
+  contentLayoutAnimation = true,
   disableDestroyOnInvalidTrigger = false,
   disableZeroOriginGuard = false,
   ...sharedProps
@@ -88,6 +89,7 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
     enabled: !disableDestroyOnInvalidTrigger,
   });
   useHidePopupWhenPositionerAtOrigin(store, { enabled: !disableZeroOriginGuard });
+  const repop = useRepopOnFarTriggerSwitch(store, { enabled: contentLayoutAnimation });
 
   const portalContainer = usePopoverPortalContainer();
 
@@ -134,6 +136,7 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
                 align={placementConfig.align}
                 className={resolvedClassNames.positioner}
                 data-layout-animation={contentLayoutAnimation || undefined}
+                data-repop={repop || undefined}
                 hoverTrigger={openOnHover}
                 placement={placement}
                 side={placementConfig.side}
@@ -144,6 +147,7 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
                 <PopoverPopup
                   className={resolvedClassNames.popup}
                   data-layout-animation={contentLayoutAnimation || undefined}
+                  data-repop={repop || undefined}
                   {...item.popupProps}
                 >
                   {arrow && (
@@ -153,6 +157,7 @@ const PopoverGroup: FC<PopoverGroupProps> = ({
                   )}
                   <PopoverViewport
                     className={resolvedClassNames.viewport}
+                    data-repop={repop || undefined}
                     style={resolvedStyles.viewport}
                   >
                     {contentNode}

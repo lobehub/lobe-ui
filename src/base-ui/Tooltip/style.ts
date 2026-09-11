@@ -15,6 +15,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     width: 8px;
     height: 4px;
 
+    transition:
+      inset-inline-start var(--lobe-tooltip-layout-duration) var(--lobe-tooltip-layout-ease),
+      inset-block-start var(--lobe-tooltip-layout-duration) var(--lobe-tooltip-layout-ease);
+
     & > svg {
       display: block;
       width: 100%;
@@ -47,7 +51,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   popup: css`
-
     /* Keep the popup on its own compositor layer for its whole lifetime: when the opacity
        transition ends the browser otherwise drops the layer and re-rasterizes with pixel
        snapping — a visible one-frame shift when the measured width is fractional
@@ -58,7 +61,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     position: relative;
     transform-origin: var(--transform-origin);
 
-    max-width: min(320px, var(--available-width));
+    box-sizing: border-box;
+
+    /* The 320px cap lives on the viewport, not here: Base UI measures content with
+       --available-width set to max-content, and min(320px, max-content) is invalid, which
+       recorded unclamped sizes. A percentage cap is out too — it tracks the positioner, which
+       snaps to the new size and would freeze the shrink half of the morph. */
+    max-width: var(--available-width);
     border: 1px solid ${cssVar.colorFill};
     border-radius: ${cssVar.borderRadiusSM};
 
@@ -80,7 +89,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     transition-duration: var(--lobe-tooltip-fade-duration), var(--lobe-tooltip-animation-duration);
     transition-property: opacity, transform;
 
+    /* Base UI writes the old size into --popup-width/height on a trigger switch and the new size
+       one frame later; the box only morphs if width/height actually read them. */
     &[data-layout-animation] {
+      width: var(--popup-width, auto);
+      height: var(--popup-height, auto);
+
       transition-timing-function:
         var(--lobe-tooltip-fade-ease), var(--lobe-tooltip-animation-ease-out),
         var(--lobe-tooltip-layout-ease), var(--lobe-tooltip-layout-ease);
@@ -88,6 +102,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
         var(--lobe-tooltip-fade-duration), var(--lobe-tooltip-animation-duration),
         var(--lobe-tooltip-layout-duration), var(--lobe-tooltip-layout-duration);
       transition-property: opacity, transform, width, height;
+    }
+
+    &[data-repop] {
+      transition: none;
     }
 
     &[data-starting-style],
@@ -194,7 +212,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
         inset-block-start, inset-inline-start, inset-inline-end, inset-block-end, transform;
     }
 
-    &[data-instant] {
+    &[data-instant],
+    &[data-repop] {
       transition: none;
     }
 
@@ -243,21 +262,22 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   viewport: css`
     --lobe-tooltip-viewport-inline-padding: 8px;
-    --lobe-tooltip-content-shift: 40%;
+    --lobe-tooltip-content-shift: 8px;
+    --lobe-tooltip-content-blur: 4px;
 
     position: relative;
 
     overflow: clip;
-    display: flex;
-    gap: 6px;
-    align-items: center;
 
+    max-width: calc(320px - 2px);
     padding-block: 4px;
     padding-inline: var(--lobe-tooltip-viewport-inline-padding);
 
     overflow-wrap: break-word;
     white-space: normal;
 
+    /* Old and new text overlap in one clip box while the box morphs; blurring both layers during
+       the crossfade turns the misaligned overlap into a soft smear instead of garbled text. */
     [data-previous],
     [data-current] {
       transform: translateX(0);
@@ -267,16 +287,44 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       align-items: center;
 
       opacity: 1;
+      filter: blur(0);
 
       transition:
         transform var(--lobe-tooltip-layout-duration) var(--lobe-tooltip-layout-ease),
-        opacity calc(var(--lobe-tooltip-layout-duration) / 2) var(--lobe-tooltip-fade-ease);
+        opacity calc(var(--lobe-tooltip-layout-duration) / 2) var(--lobe-tooltip-fade-ease),
+        filter calc(var(--lobe-tooltip-layout-duration) / 2) var(--lobe-tooltip-fade-ease);
     }
 
+    [data-current] {
+      transition-delay:
+        0s, calc(var(--lobe-tooltip-layout-duration) / 6),
+        calc(var(--lobe-tooltip-layout-duration) / 6);
+    }
+
+    [data-previous][data-ending-style],
+    [data-current][data-starting-style] {
+      filter: blur(var(--lobe-tooltip-content-blur));
+    }
+
+    /* Freeze both layers at their own final width so neither re-wraps while the box morphs;
+       the viewport clip reveals the new text as the box grows over it. */
     [data-previous] {
       position: absolute;
       inset-block-start: 4px;
       inset-inline-start: var(--lobe-tooltip-viewport-inline-padding);
+      width: calc(var(--popup-width) - var(--lobe-tooltip-viewport-inline-padding) * 2 - 2px);
+    }
+
+    &[data-transitioning] [data-current] {
+      width: calc(var(--positioner-width) - var(--lobe-tooltip-viewport-inline-padding) * 2 - 2px);
+    }
+
+    &[data-repop] [data-previous] {
+      display: none;
+    }
+
+    &[data-repop] [data-current] {
+      transition: none;
     }
 
     &[data-activation-direction~='right'] [data-previous][data-ending-style] {

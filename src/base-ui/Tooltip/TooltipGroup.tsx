@@ -13,6 +13,7 @@ import {
   usePopupHandleStore,
 } from '@/utils/destroyOnInvalidActiveTriggerElement';
 import { placementMap } from '@/utils/placement';
+import { useRepopOnFarTriggerSwitch } from '@/utils/useRepopOnFarTriggerSwitch';
 
 import { TooltipArrowIcon } from './ArrowIcon';
 import {
@@ -28,7 +29,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
   children,
   disableDestroyOnInvalidTrigger = false,
   disableZeroOriginGuard = false,
-  layoutAnimation = false,
+  layoutAnimation = true,
   popupContainer,
   ...sharedProps
 }) => {
@@ -59,6 +60,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
     enabled: !disableDestroyOnInvalidTrigger,
   });
   useHidePopupWhenPositionerAtOrigin(store, { enabled: !disableZeroOriginGuard });
+  const repop = useRepopOnFarTriggerSwitch(store, { enabled: layoutAnimation });
 
   return (
     <TooltipGroupHandleContext value={handle}>
@@ -112,6 +114,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
             const body = (
               <BaseTooltip.Viewport
                 className={resolvedClassNames.viewport}
+                data-repop={repop || undefined}
                 style={resolvedStyles.viewport}
               >
                 <TooltipContent
@@ -128,6 +131,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
                 className={resolvedClassNames.positioner}
                 data-layout-animation={layoutAnimation || undefined}
                 data-placement={placement}
+                data-repop={repop || undefined}
                 side={placementConfig.side}
                 sideOffset={baseSideOffset}
                 style={resolvedStyles.positioner}
@@ -139,6 +143,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
                 <BaseTooltip.Popup
                   className={resolvedClassNames.popup}
                   data-layout-animation={layoutAnimation || undefined}
+                  data-repop={repop || undefined}
                   style={resolvedStyles.popup}
                   {...item.popupProps}
                 >

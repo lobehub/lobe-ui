@@ -42,7 +42,7 @@ const content = {
 };
 
 export default () => (
-  <PopoverGroup contentLayoutAnimation>
+  <PopoverGroup>
     <Flexbox
       horizontal
       align="center"

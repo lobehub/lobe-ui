@@ -120,7 +120,7 @@ type PopoverContextValue = {
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
 | children | Popover subtree that shares a single popover instance | `ReactNode` | - |
-| contentLayoutAnimation | Animate content layout when switching triggers | `boolean` | `false` |
+| contentLayoutAnimation | Morph the shared popup (position, size, content) when switching triggers; switches farther than 280px re-pop instead | `boolean` | `true` |
 | disableDestroyOnInvalidTrigger | Disable auto-destroy when the active trigger becomes invalid (e.g. disconnected / `display: none`) | `boolean` | `false` |
 | disableZeroOriginGuard | Disable the visual guard that hides the popup when it falls back to viewport (0,0) | `boolean` | `false` |
 | ...props | Shared popover props applied to each group member | `Omit<PopoverProps, 'children' \| 'defaultOpen' \| 'open' \| 'ref' \| 'content'>` | - |

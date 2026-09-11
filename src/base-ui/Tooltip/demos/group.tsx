@@ -9,7 +9,7 @@ export default () => {
   return (
     <StoryBook levaStore={store}>
       <Flexbox horizontal gap={12}>
-        <TooltipGroup layoutAnimation>
+        <TooltipGroup>
           <Tooltip
             closeDelay={10_000_000_000}
             title="The Tooltip component is used to provide additional information to the user when they hover over a specific element."

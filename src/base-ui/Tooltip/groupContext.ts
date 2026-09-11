@@ -12,8 +12,8 @@ export type TooltipGroupSharedProps = Omit<
   'children' | 'defaultOpen' | 'open' | 'ref' | 'title'
 > & {
   /**
-   * @description Whether to enable content layout animation when switching triggers
-   * @default false
+   * @description Morph the shared popup (position, size, content) when switching triggers
+   * @default true
    */
   layoutAnimation?: boolean;
 };

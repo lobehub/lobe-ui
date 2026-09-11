@@ -83,7 +83,7 @@ export default () => {
     <Header
       logo={<LobeHub type="combine" />}
       actions={
-        <PopoverGroup contentLayoutAnimation>
+        <PopoverGroup>
           <Flexbox horizontal align="center" gap={12}>
             <Popover
               arrow={false}
@@ -250,7 +250,7 @@ export default () => {
         </PopoverGroup>
       }
       nav={
-        <PopoverGroup contentLayoutAnimation>
+        <PopoverGroup>
           <Flexbox horizontal gap={4}>
             <NavItem
               icon={Bot}
