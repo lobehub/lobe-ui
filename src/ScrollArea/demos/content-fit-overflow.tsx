@@ -41,6 +41,7 @@ const Demo = ({ disableContentFit, label }: { disableContentFit?: boolean; label
         sibling
       </div>
       <ScrollArea
+        contentProps={{ style: { display: 'flex', flexDirection: 'column', gap: 16 } }}
         disableContentFit={disableContentFit}
         style={{
           flex: 1,

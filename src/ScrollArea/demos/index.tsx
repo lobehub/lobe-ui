@@ -11,6 +11,9 @@ export default () => {
       scrollFade
       contentProps={{
         style: {
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 16,
           padding: 16,
         },
       }}

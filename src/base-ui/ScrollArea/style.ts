@@ -3,15 +3,7 @@ import { createStaticStyles } from 'antd-style';
 import { focusRing } from '@/base-ui/focusRing';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
-  content: css`
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-
-    font-size: ${cssVar.fontSizeSM};
-    line-height: 1.375rem;
-    color: ${cssVar.colorText};
-  `,
+  content: css``,
 
   corner: css`
     background: ${cssVar.colorFillSecondary};
