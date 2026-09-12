@@ -1,0 +1,67 @@
+---
+title: Tree
+description: Data-driven tree with expand, single/multiple selection, linked checkboxes, keyboard navigation and rounded SVG guide lines. A drop-in for the common antd Tree props.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoShowLine from './demos/showLine.tsx?demo';
+import DemoCheckable from './demos/checkable.tsx?demo';
+import DemoMultiple from './demos/multiple.tsx?demo';
+
+## Default
+
+`blockNode` makes the whole row the hit target; `showIcon` renders folder / file icons (or `node.icon`).
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Guide lines
+
+`showLine` draws one SVG path per row, so collapsed subtrees cost nothing. Custom titles get `flex: 1` under `blockNode`, so `space-between` layouts work.
+
+<Demo of={DemoShowLine} layout="bare" />
+
+## Checkable
+
+Parent / child linkage is on by default; pass `checkStrictly` to make every checkbox independent. `onCheck` receives the fully-checked keys only (half-checked parents are excluded).
+
+<Demo of={DemoCheckable} layout="bare" />
+
+## Multiple selection
+
+`multiple` enables ⌘ / ctrl-click to toggle and shift-click to select a visible range.
+
+<Demo of={DemoMultiple} layout="bare" />
+
+## Keyboard
+
+The tree is a [FocusScope](/components/base-ui/focus-scope): after pointing into it once, keys keep working without focus. `scopeId` names the scope; `vimKeys` adds `j` / `k`.
+
+| Key           | Action                                          |
+| ------------- | ----------------------------------------------- |
+| `↓` / `↑`     | Move to the next / previous visible row         |
+| `Home` / `End`| First / last row                                |
+| `→`           | Expand, or move to the first child when open    |
+| `←`           | Collapse, or move to the parent when closed     |
+| `Enter`       | Select                                          |
+| `Space`       | Toggle the checkbox (`checkable`), else select  |
+| `*`           | Expand all siblings                             |
+
+## APIs
+
+### Tree
+
+<Api name="Tree" from=".." />
+
+### TreeDataNode
+
+| Property   | Description                                   | Type             | Default |
+| ---------- | --------------------------------------------- | ---------------- | ------- |
+| key        | Unique key                                    | `string`         | -       |
+| title      | Row content                                   | `ReactNode`      | -       |
+| children   | Child nodes                                   | `TreeDataNode[]` | -       |
+| icon       | Icon shown with `showIcon`                    | `ReactNode`      | -       |
+| disabled   | Not selectable / checkable; still expandable  | `boolean`        | `false` |
+| selectable | Whether the row can be selected               | `boolean`        | `true`  |
+| checkable  | Whether the row renders a checkbox            | `boolean`        | `true`  |
+| isLeaf     | Force leaf rendering even with `children`     | `boolean`        | `false` |
