@@ -179,8 +179,69 @@ const main = async () => {
     check('pointer focus follows focus-visible semantics');
     await page.locator('#input').click();
     await settle();
-    assert(await aligned());
-    check('text input focus remains visible after pointer interaction');
+    assert.equal(await aligned(), false);
+    assert.equal(await page.locator('#input').getAttribute('data-lobe-focus-ring'), null);
+    assert.notEqual(
+      await page.locator('#input').evaluate((e) => getComputedStyle(e).outlineStyle),
+      'none',
+    );
+    check('native text input retains its own focus outline');
+    await page.evaluate(() => {
+      document.querySelector('#clip')!.scrollTop = 0;
+      document.body.insertAdjacentHTML(
+        'beforeend',
+        `
+        <div id="composer" style="border:1px solid #aaa;border-radius:12px;padding:16px">
+          <textarea id="textarea" style="outline:none" aria-label="Message"></textarea>
+          <div contenteditable="true" id="editor" style="outline:none">Rich editor
+            <span id="inherited-editor" tabindex="0">Nested editable content</span>
+            <button id="noneditable" contenteditable="false">Editor action</button>
+          </div>
+        </div>
+        <section data-lobe-focus-ring="off"><button id="optout">Local focus</button></section>
+        <button id="self-optout" data-lobe-focus-ring="off">Own focus</button>
+        <input id="checkbox" type="checkbox" aria-label="Checkbox">
+      `,
+      );
+    });
+    for (const selector of [
+      '#textarea',
+      '#editor',
+      '#inherited-editor',
+      '#optout',
+      '#self-optout',
+    ]) {
+      await page.locator(selector).click();
+      await page.keyboard.press('Shift');
+      await page.locator(selector).focus();
+      await settle();
+      assert.equal(
+        await page.locator(selector).evaluate((e) => e === document.activeElement),
+        true,
+      );
+      assert.equal(
+        await page.locator(selector).getAttribute('data-lobe-focus-ring'),
+        selector === '#self-optout' ? 'off' : null,
+      );
+      assert.equal(
+        await page
+          .locator('[data-lobe-global-focus-ring]')
+          .evaluate((e) => e.matches(':popover-open')),
+        false,
+      );
+    }
+    await page.locator('#textarea').focus();
+    await page.keyboard.press('Tab');
+    assert.equal(await page.locator('#editor').evaluate((e) => e === document.activeElement), true);
+    assert.equal(await aligned(), false);
+    await page.screenshot({ path: `${output}/editor-no-ring.png` });
+    check('pointer and keyboard editing preserve local styles; element and ancestor opt-out');
+    for (const selector of ['#noneditable', '#checkbox']) {
+      await page.locator(selector).focus();
+      await settle();
+      assert(await aligned());
+    }
+    check('noneditable editor actions and checkbox retain global keyboard ring');
     await page.emulateMedia({ reducedMotion: 'reduce', colorScheme: 'dark' });
     await page.evaluate(() => {
       document.body.style.background = '#141414';

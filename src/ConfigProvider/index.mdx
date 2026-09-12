@@ -59,6 +59,8 @@ const cleanup = installGlobalFocusRing();
 
 The decorative top-layer ring uses CSS anchors to follow scrolling, resizing and translation without a continuous JavaScript measurement loop. It preserves `:focus-visible`, reduced-motion and forced-colors preferences. Only successfully covered controls lose their local outline; existing Base UI rings remain the fallback.
 
+Text inputs, textareas and contenteditable regions retain their existing focus styles. To opt out another control or an entire region, add `data-lobe-focus-ring="off"` to the element or an ancestor. This only skips the global ring; keep an appropriate local focus indication for keyboard users.
+
 Unsupported browsers, fragmented multiline links and shadow-root controls retain their original focus treatment. Install separately in each iframe document. Rotated shapes are not reproduced; the ring follows a rectangular bounding box. Partially clipped controls receive a full ring; fully clipped anchors are hidden by the browser.
 
 ## APIs
