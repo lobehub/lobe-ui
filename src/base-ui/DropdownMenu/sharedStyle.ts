@@ -214,6 +214,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     &:has(> [data-virtual]) {
+      --lobe-virtual-scroll-inset: 4px;
+
       overflow: hidden;
       display: flex;
       flex-direction: column;

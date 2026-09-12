@@ -21,17 +21,22 @@ import {
   type ScrollAreaViewportProps,
 } from './atoms';
 
+// `--lobe-virtual-scroll-inset` is the inline padding of the box the scroll area sits in: the
+// root bleeds out by it so the scrollbar hugs that box's edge, and the viewport pads the rows back.
 const styles = createStaticStyles(({ css }) => ({
   root: css`
     display: flex;
     flex: 1;
     flex-direction: column;
+
     min-height: 0;
+    margin-inline: calc(-1 * var(--lobe-virtual-scroll-inset, 0px));
   `,
   viewport: css`
     flex: 1;
     height: auto;
     min-height: 0;
+    padding-inline: var(--lobe-virtual-scroll-inset, 0);
   `,
 }));
 
