@@ -7,6 +7,7 @@ import type {
 } from '@base-ui/react/menu';
 import type { ReactNode } from 'react';
 
+import type { VirtualListProps } from '@/base-ui/virtual';
 import type { BaseMenuItemType, IconAlign, MenuCheckboxItemType, MenuSwitchItemType } from '@/Menu';
 import type { Trigger } from '@/types';
 import type { Placement } from '@/utils/placement';
@@ -21,10 +22,10 @@ export type DropdownMenuSwitchItem = MenuSwitchItemType;
 
 export type DropdownItem = BaseMenuItemType;
 
-export interface DropdownMenuProps<Payload = unknown> extends Omit<
-  MenuRootProps<Payload>,
-  'children'
-> {
+export interface DropdownMenuProps<Payload = unknown>
+  extends
+    Omit<MenuRootProps<Payload>, 'children'>,
+    Pick<VirtualListProps, 'virtual' | 'listItemHeight'> {
   children: ReactNode;
   /**
    * 底部固定插槽，渲染于可滚动的 items 区域下方，自带分隔边框
@@ -49,10 +50,6 @@ export interface DropdownMenuProps<Payload = unknown> extends Omit<
    */
   iconSpaceMode?: IconSpaceMode;
   items: DropdownItem[] | (() => DropdownItem[]);
-  /**
-   * 虚拟列表的行高提示，仅在 `virtual` 开启时生效
-   */
-  listItemHeight?: number;
   nativeButton?: boolean;
   placement?: DropdownMenuPlacement;
   popupProps?: MenuPopupProps;
@@ -64,9 +61,4 @@ export interface DropdownMenuProps<Payload = unknown> extends Omit<
    */
   trigger?: Trigger;
   triggerProps?: Omit<MenuTriggerProps<Payload>, 'children'>;
-  /**
-   * 开启虚拟滚动，只挂载滚动位置附近的 items；适用于数百个以上的扁平列表
-   * @default false
-   */
-  virtual?: boolean;
 }

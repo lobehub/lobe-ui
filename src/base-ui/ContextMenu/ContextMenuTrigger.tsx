@@ -14,12 +14,13 @@ import React, {
   useSyncExternalStore,
 } from 'react';
 
+import type { VirtualListProps } from '@/base-ui/virtual';
 import { CLASSNAMES } from '@/styles/classNames';
 
 import { getServerSnapshot, getSnapshot, showContextMenu, subscribe } from './store';
 import { type ContextMenuItem } from './type';
 
-export type ContextMenuTriggerProps = {
+export type ContextMenuTriggerProps = Pick<VirtualListProps, 'virtual' | 'listItemHeight'> & {
   children: ReactNode;
   /**
    * Footer slot pinned below the scrollable items area, with a divider border.
@@ -35,17 +36,9 @@ export type ContextMenuTriggerProps = {
    */
   items?: ContextMenuItem[] | (() => ContextMenuItem[]);
   /**
-   * Row height hint for the virtualized list.
-   */
-  listItemHeight?: number;
-  /**
    * Custom context menu handler. If `items` is provided, this is optional.
    */
   onContextMenu?: (event: MouseEvent<HTMLElement>) => void;
-  /**
-   * Only mount the items near the scroll position; use for long flat lists.
-   */
-  virtual?: boolean;
 } & Omit<HTMLAttributes<HTMLElement>, 'onContextMenu' | 'children'>;
 
 const styles = {

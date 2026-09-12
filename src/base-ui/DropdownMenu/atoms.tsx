@@ -10,7 +10,7 @@ import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
 import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import Switch from '@/base-ui/Switch';
-import { MenuVirtualList } from '@/base-ui/virtual';
+import { MenuVirtualList, type VirtualListProps } from '@/base-ui/virtual';
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { CLASSNAMES } from '@/styles/classNames';
@@ -180,25 +180,13 @@ export const DropdownMenuFooter = ({ className, ...rest }: DropdownMenuFooterPro
 
 DropdownMenuFooter.displayName = 'DropdownMenuFooter';
 
-export type DropdownMenuScrollViewportProps = React.HTMLAttributes<HTMLDivElement> & {
-  /**
-   * Extra child indices to keep mounted while virtualized, on top of the highlighted item.
-   */
-  keepMounted?: readonly number[];
-  /**
-   * Row height hint for the virtualizer; rows are still measured after mount.
-   */
-  listItemHeight?: number;
-  /**
-   * Only mount the children near the scroll position. Children must be a flat list of
-   * fixed-height rows; groups and submenus keep working but are kept mounted as one row.
-   */
-  virtual?: boolean;
-};
+export type DropdownMenuScrollViewportProps = React.HTMLAttributes<HTMLDivElement> &
+  VirtualListProps;
 
 export const DropdownMenuScrollViewport = ({
   children,
   className,
+  getItemLabel,
   keepMounted,
   listItemHeight,
   virtual,
@@ -216,6 +204,7 @@ export const DropdownMenuScrollViewport = ({
     <MenuVirtualList
       {...rest}
       className={className}
+      getItemLabel={getItemLabel}
       itemSize={listItemHeight}
       keepMounted={keepMounted}
     >

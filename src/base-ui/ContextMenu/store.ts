@@ -1,22 +1,21 @@
 import type { VirtualElement } from '@floating-ui/react';
 import type { ReactNode } from 'react';
 
+import type { VirtualListProps } from '@/base-ui/virtual';
 import type { IconAlign } from '@/Menu';
 
 import type { IconSpaceMode } from './renderItems';
 import type { ContextMenuItem } from './type';
 
-export type ContextMenuState = {
+export type ContextMenuState = Pick<VirtualListProps, 'virtual' | 'listItemHeight'> & {
   anchor: VirtualElement | null;
   footer?: ReactNode;
   header?: ReactNode;
   iconAlign?: IconAlign;
   iconSpaceMode: IconSpaceMode;
   items: ContextMenuItem[];
-  listItemHeight?: number;
   open: boolean;
   triggerId: string | null;
-  virtual?: boolean;
 };
 
 const emptyState: ContextMenuState = {
@@ -76,20 +75,14 @@ export const setContextMenuState = (next: Partial<ContextMenuState>) => {
   notify();
 };
 
-export interface ShowContextMenuOptions {
+export interface ShowContextMenuOptions extends Pick<
+  VirtualListProps,
+  'virtual' | 'listItemHeight'
+> {
   footer?: ReactNode;
   header?: ReactNode;
   iconAlign?: IconAlign;
   iconSpaceMode?: IconSpaceMode;
-  /**
-   * Row height hint for the virtualized list; rows are still measured after mount.
-   */
-  listItemHeight?: number;
-  /**
-   * Only mount the items near the scroll position; use for long flat lists.
-   * @default false
-   */
-  virtual?: boolean;
 }
 
 export interface ContextMenuInterceptor {

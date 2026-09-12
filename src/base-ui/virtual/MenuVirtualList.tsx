@@ -1,16 +1,16 @@
 'use client';
 
-import { type ReactElement, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 
+import type { VirtualListProps } from './type';
 import { useMenuVirtualList } from './useMenuVirtualList';
 import { VirtualScrollArea, type VirtualScrollAreaProps } from './VirtualScrollArea';
 
-export interface MenuVirtualListProps extends Omit<
-  VirtualScrollAreaProps,
-  'viewport' | 'viewportProps' | 'virtualizerRef'
-> {
+export interface MenuVirtualListProps
+  extends
+    Omit<VirtualScrollAreaProps, 'viewport' | 'viewportProps' | 'virtualizerRef'>,
+    Pick<VirtualListProps, 'getItemLabel' | 'keepMounted'> {
   children: ReactNode;
-  getItemLabel?: (child: ReactElement, index: number) => string | undefined;
 }
 
 export const MenuVirtualList = ({

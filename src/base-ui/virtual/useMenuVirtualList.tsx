@@ -5,7 +5,6 @@ import {
   Children,
   cloneElement,
   isValidElement,
-  type ReactElement,
   useCallback,
   useEffect,
   useMemo,
@@ -14,6 +13,7 @@ import {
 } from 'react';
 import type { VirtualizerHandle } from 'virtua';
 
+import type { VirtualListProps } from './type';
 import { usePointerScrollGuard } from './VirtualScrollArea';
 
 const LIST_ITEM_SELECTOR = '[role^="menuitem"], [role="option"]';
@@ -34,15 +34,12 @@ export interface ListEntry {
   label: string;
 }
 
-export interface UseMenuVirtualListParams {
+export interface UseMenuVirtualListParams extends Pick<
+  VirtualListProps,
+  'getItemLabel' | 'keepMounted'
+> {
   children: React.ReactNode;
   enabled: boolean | undefined;
-  /**
-   * Typeahead label for a child. Defaults to its `label` prop, then `aria-label`, then the
-   * flattened text of its children.
-   */
-  getItemLabel?: (child: ReactElement, index: number) => string | undefined;
-  keepMounted?: readonly number[];
   /**
    * Idle time after which the typeahead query resets; matches Base UI's per-component value.
    * @default 500
