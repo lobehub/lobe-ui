@@ -1,5 +1,5 @@
 export { MenuVirtualList, type MenuVirtualListProps } from './MenuVirtualList';
-export { useMenuVirtualList } from './useMenuVirtualList';
+export { useMenuVirtualList, type UseMenuVirtualListParams } from './useMenuVirtualList';
 export {
   usePointerScrollGuard,
   VirtualScrollArea,

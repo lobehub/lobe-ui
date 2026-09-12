@@ -5,12 +5,13 @@ import {
   cloneElement,
   type ReactElement,
   type ReactNode,
+  type Ref,
   useCallback,
   useEffect,
   useRef,
 } from 'react';
 import { useMergeRefs } from 'react-merge-refs';
-import { Virtualizer } from 'virtua';
+import { Virtualizer, type VirtualizerHandle } from 'virtua';
 
 import {
   ScrollAreaRoot,
@@ -54,6 +55,7 @@ export interface VirtualScrollAreaProps extends Omit<ScrollAreaRootProps, 'child
    */
   viewport?: ReactElement<{ children?: ReactNode; render?: ReactElement }>;
   viewportProps?: ScrollAreaViewportProps;
+  virtualizerRef?: Ref<VirtualizerHandle>;
 }
 
 export const VirtualScrollArea = ({
@@ -63,6 +65,7 @@ export const VirtualScrollArea = ({
   keepMounted,
   viewport,
   viewportProps,
+  virtualizerRef,
   ...rest
 }: VirtualScrollAreaProps) => {
   const viewportRef = useRef<HTMLDivElement | null>(null);
@@ -72,6 +75,7 @@ export const VirtualScrollArea = ({
     <Virtualizer
       itemSize={itemSize}
       keepMounted={keepMounted}
+      ref={virtualizerRef}
       scrollRef={viewportRef}
       ssrCount={INITIAL_ROW_COUNT}
     >

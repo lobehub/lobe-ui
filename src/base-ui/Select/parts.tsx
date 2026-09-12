@@ -151,9 +151,12 @@ export function SelectListSection({
 }: SelectListSectionProps) {
   const listClassName = cx(styles.list, hasSearch && styles.listWithSearch, classNames?.list);
   const enabled = Boolean(virtual) && !isEmpty;
-  const { keepMountedIndices, scrollGuardProps, viewportRef, virtualChildren } = useMenuVirtualList(
-    { children: listContent, enabled, keepMounted: virtualState.selectedIndices },
-  );
+  const { keepMountedIndices, viewportProps, viewportRef, virtualChildren, virtualizerRef } =
+    useMenuVirtualList({
+      children: listContent,
+      enabled,
+      keepMounted: virtualState.selectedIndices,
+    });
 
   if (!enabled) {
     return (
@@ -169,7 +172,8 @@ export function SelectListSection({
       keepMounted={keepMountedIndices}
       style={virtualState.virtualListStyle}
       viewport={<BaseSelect.List className={listClassName} />}
-      viewportProps={{ ref: viewportRef, ...scrollGuardProps }}
+      viewportProps={{ ref: viewportRef, ...viewportProps }}
+      virtualizerRef={virtualizerRef}
     >
       {virtualChildren}
     </VirtualScrollArea>

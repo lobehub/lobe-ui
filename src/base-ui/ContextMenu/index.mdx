@@ -57,7 +57,7 @@ When the items exceed the available height, the items area scrolls while the hea
 
 ## Virtual List
 
-Pass `virtual` (and a `listItemHeight` hint) to `showContextMenu` or `ContextMenuTrigger` for long flat lists: only the rows near the scroll position are mounted, the list scrolls through `ScrollArea`, and header and footer stay pinned. Keyboard navigation and typeahead work across the mounted window and the highlighted row stays mounted while you scroll.
+Pass `virtual` (and a `listItemHeight` hint) to `showContextMenu` or `ContextMenuTrigger` for long flat lists: only the rows near the scroll position are mounted, the list scrolls through `ScrollArea`, and header and footer stay pinned. Keyboard navigation works across the full list — arrow keys, Home/End, and typeahead jump to any row, not just the mounted window — and the highlighted row stays mounted while you scroll.
 
 <Demo of={DemoVirtual} layout="center" />
 
