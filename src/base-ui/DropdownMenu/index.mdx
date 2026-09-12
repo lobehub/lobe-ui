@@ -107,7 +107,7 @@ When items have descriptions, use `iconAlign` to control icon vertical alignment
 
 ## Virtual List
 
-Long flat lists (a branch picker, a model list) can be virtualized so only the rows near the scroll position are mounted. Compose it from atoms: a `DropdownMenuHeader` holding a search input that filters the rows, a `DropdownMenuScrollViewport` with `virtual` and a `listItemHeight` hint wrapping the `DropdownMenuItem` rows, and a `DropdownMenuFooter` with the pinned action. The viewport is the only scroller — it renders through `ScrollArea` — while header and footer stay fixed. Keyboard navigation and typeahead work across the mounted window, the highlighted row stays mounted while you scroll, and `keepMounted` pins extra child indices. The composed `DropdownMenu` accepts the same `virtual` / `listItemHeight` props for `items`-driven menus.
+Long flat lists (a branch picker, a model list) can be virtualized so only the rows near the scroll position are mounted. Compose it from atoms: a `DropdownMenuHeader` holding a search input that filters the rows, a `DropdownMenuScrollViewport` with `virtual` and a `listItemHeight` hint wrapping the `DropdownMenuItem` rows, and a `DropdownMenuFooter` with the pinned action. The viewport is the only scroller — it renders through `ScrollArea` — while header and footer stay fixed. A `DropdownMenuItem` placed directly in a header or footer drops the slot's inline padding so it lines up with the rows. Keyboard navigation and typeahead work across the mounted window, the highlighted row stays mounted while you scroll, and `keepMounted` pins extra child indices. The composed `DropdownMenu` accepts the same `virtual` / `listItemHeight` props for `items`-driven menus.
 
 <Demo of={DemoVirtual} layout="center" />
 

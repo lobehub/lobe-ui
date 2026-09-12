@@ -31,6 +31,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     padding-block: 8px;
     padding-inline: 12px;
     border-block-start: 1px solid ${cssVar.colorBorder};
+
+    /* A menu item pinned in a slot keeps the same inset as the rows above it. */
+    &:has(> [role^='menuitem']) {
+      padding-block: 4px;
+      padding-inline: 0;
+    }
   `,
 
   header: css`
@@ -38,6 +44,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     padding-block: 8px;
     padding-inline: 12px;
     border-block-end: 1px solid ${cssVar.colorBorder};
+
+    &:has(> [role^='menuitem']) {
+      padding-block: 4px;
+      padding-inline: 0;
+    }
   `,
 
   groupLabel: css`
@@ -192,11 +203,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       0 4px 12px 0 rgb(0 0 0 / 8%),
       0 1px 3px 0 rgb(0 0 0 / 6%);
 
-    &[data-has-header] {
+    &[data-has-header],
+    &:has(> [data-slot='header']) {
       padding-block-start: 0;
     }
 
-    &[data-has-footer] {
+    &[data-has-footer],
+    &:has(> [data-slot='footer']) {
       padding-block-end: 0;
     }
 

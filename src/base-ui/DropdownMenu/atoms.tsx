@@ -168,7 +168,7 @@ DropdownMenuPopup.displayName = 'DropdownMenuPopup';
 export type DropdownMenuHeaderProps = React.HTMLAttributes<HTMLDivElement>;
 
 export const DropdownMenuHeader = ({ className, ...rest }: DropdownMenuHeaderProps) => {
-  return <div {...rest} className={cx(styles.header, className)} />;
+  return <div {...rest} className={cx(styles.header, className)} data-slot="header" />;
 };
 
 DropdownMenuHeader.displayName = 'DropdownMenuHeader';
@@ -176,7 +176,7 @@ DropdownMenuHeader.displayName = 'DropdownMenuHeader';
 export type DropdownMenuFooterProps = React.HTMLAttributes<HTMLDivElement>;
 
 export const DropdownMenuFooter = ({ className, ...rest }: DropdownMenuFooterProps) => {
-  return <div {...rest} className={cx(styles.footer, className)} />;
+  return <div {...rest} className={cx(styles.footer, className)} data-slot="footer" />;
 };
 
 DropdownMenuFooter.displayName = 'DropdownMenuFooter';
