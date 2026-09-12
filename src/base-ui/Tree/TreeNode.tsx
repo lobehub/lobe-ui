@@ -66,12 +66,13 @@ const TreeNode = memo<TreeNodeProps>(({ node, depth, isLast, trail }) => {
   return (
     <>
       <div
+        data-scope-item
         aria-checked={checkable ? (checkState === 'mixed' ? 'mixed' : checkState === 'checked') : undefined}
         aria-disabled={disabled || undefined}
         aria-expanded={expandable ? expanded : undefined}
         aria-level={depth + 1}
         aria-selected={ctx.selected.has(node.key)}
-        ref={(el) => ctx.registerRow(node.key, el)}
+        data-id={node.key}
         role="treeitem"
         style={rowStyle}
         tabIndex={ctx.activeKey === node.key ? 0 : -1}

@@ -1,5 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 
+import { FocusScope, setActiveScope, useScopeSwitcher } from '../../FocusScope';
 import Tree from '../Tree';
 import type { TreeDataNode } from '../type';
 
@@ -17,6 +18,21 @@ const data: TreeDataNode[] = [
 ];
 
 const item = (name: string) => screen.getByRole('treeitem', { name });
+const key = (k: string) => fireEvent.keyDown(window, { key: k });
+
+vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockReturnValue({
+  bottom: 10,
+  height: 10,
+  left: 0,
+  right: 10,
+  toJSON: () => ({}),
+  top: 0,
+  width: 10,
+  x: 0,
+  y: 0,
+});
+
+afterEach(() => act(() => setActiveScope(null)));
 
 describe('Tree', () => {
   test('renders only expanded subtrees and toggles via switcher', () => {
@@ -73,21 +89,22 @@ describe('Tree', () => {
     expect(item('a').getAttribute('aria-checked')).toBe('mixed');
   });
 
-  test('keyboard: arrows move focus, right expands, left collapses', () => {
+  test('keyboard works after pointing into the tree, without focusing it', () => {
     render(<Tree treeData={data} />);
-    const a = item('a');
-    act(() => a.focus());
-    fireEvent.keyDown(a, { key: 'ArrowRight' });
-    expect(a.getAttribute('aria-expanded')).toBe('true');
-    fireEvent.keyDown(a, { key: 'ArrowRight' });
-    expect(document.activeElement).toBe(item('a-1'));
-    fireEvent.keyDown(item('a-1'), { key: 'ArrowDown' });
-    expect(document.activeElement).toBe(item('a-2'));
-    fireEvent.keyDown(item('a-2'), { key: 'ArrowLeft' });
+    fireEvent.pointerDown(item('a'));
+    key('ArrowDown');
     expect(document.activeElement).toBe(item('a'));
-    fireEvent.keyDown(item('a'), { key: 'ArrowLeft' });
+    key('ArrowRight');
+    expect(item('a').getAttribute('aria-expanded')).toBe('true');
+    key('ArrowRight');
+    expect(document.activeElement).toBe(item('a-1'));
+    key('ArrowDown');
+    expect(document.activeElement).toBe(item('a-2'));
+    key('ArrowLeft');
+    expect(document.activeElement).toBe(item('a'));
+    key('ArrowLeft');
     expect(item('a').getAttribute('aria-expanded')).toBe('false');
-    fireEvent.keyDown(item('a'), { key: 'End' });
+    key('End');
     expect(document.activeElement).toBe(item('c'));
   });
 
@@ -95,12 +112,34 @@ describe('Tree', () => {
     const onSelect = vi.fn();
     const onCheck = vi.fn();
     render(<Tree checkable treeData={data} onCheck={onCheck} onSelect={onSelect} />);
-    const c = item('c');
-    act(() => c.focus());
-    fireEvent.keyDown(c, { key: 'Enter' });
+    fireEvent.pointerDown(item('c'));
+    act(() => item('c').focus());
+    key('Enter');
     expect(onSelect).toHaveBeenCalledWith(['c'], expect.anything());
-    fireEvent.keyDown(c, { key: ' ' });
+    key(' ');
     expect(onCheck).toHaveBeenCalledWith(['c'], expect.objectContaining({ checked: true }));
+  });
+
+  test('arrow left/right inside the tree never switch to a sibling scope', () => {
+    const Shell = () => {
+      useScopeSwitcher();
+      return (
+        <>
+          <Tree scopeId="tree" treeData={data} />
+          <FocusScope id="other">
+            <div data-scope-item tabIndex={-1}>
+              other
+            </div>
+          </FocusScope>
+        </>
+      );
+    };
+    render(<Shell />);
+    fireEvent.pointerDown(item('c'));
+    act(() => item('c').focus());
+    key('ArrowRight');
+    key('ArrowLeft');
+    expect(document.activeElement).toBe(item('c'));
   });
 
   test('disabled node ignores select but still expands', () => {

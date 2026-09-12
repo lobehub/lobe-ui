@@ -29,6 +29,7 @@ export * from './DropdownMenu';
 export * from './floating';
 export * from './FloatingPanel';
 export * from './FloatingSheet';
+export * from './FocusScope';
 export * from './Form';
 export * from './Input';
 export * from './Modal';
