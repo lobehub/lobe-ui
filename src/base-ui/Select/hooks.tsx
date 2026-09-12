@@ -13,6 +13,7 @@ import {
   useState,
 } from 'react';
 
+import { usePointerScrollGuard } from '@/base-ui/ScrollArea/VirtualScrollArea';
 import { useAppElement } from '@/ThemeProvider';
 
 import {
@@ -359,44 +360,36 @@ export function useSelectVirtual({
   virtual,
 }: UseSelectVirtualParams) {
   const listRef = useRef<HTMLDivElement | null>(null);
-  const pointerScrollRef = useRef(false);
-  const pointerScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { pointerScrollRef, scrollGuardProps } = usePointerScrollGuard();
 
-  const renderVirtualItem = useCallback((props: HTMLAttributes<HTMLDivElement>) => {
-    const { ref, ...rest } = props as HTMLAttributes<HTMLDivElement> & {
-      ref?: Ref<HTMLDivElement>;
-    };
+  const renderVirtualItem = useCallback(
+    (props: HTMLAttributes<HTMLDivElement>) => {
+      const { ref, ...rest } = props as HTMLAttributes<HTMLDivElement> & {
+        ref?: Ref<HTMLDivElement>;
+      };
 
-    return (
-      <div
-        {...rest}
-        ref={(node) => {
-          if (node) {
-            node.scrollIntoView = (...args) => {
-              if (!pointerScrollRef.current) {
-                HTMLElement.prototype.scrollIntoView.call(node, ...args);
-              }
-            };
-          }
-          if (typeof ref === 'function') {
-            ref(node);
-          } else if (ref && 'current' in ref) {
-            (ref as MutableRefObject<HTMLDivElement | null>).current = node;
-          }
-        }}
-      />
-    );
-  }, []);
-
-  const markPointerScroll = useCallback(() => {
-    pointerScrollRef.current = true;
-    if (pointerScrollTimeoutRef.current) {
-      clearTimeout(pointerScrollTimeoutRef.current);
-    }
-    pointerScrollTimeoutRef.current = setTimeout(() => {
-      pointerScrollRef.current = false;
-    }, 120);
-  }, []);
+      return (
+        <div
+          {...rest}
+          ref={(node) => {
+            if (node) {
+              node.scrollIntoView = (...args) => {
+                if (!pointerScrollRef.current) {
+                  HTMLElement.prototype.scrollIntoView.call(node, ...args);
+                }
+              };
+            }
+            if (typeof ref === 'function') {
+              ref(node);
+            } else if (ref && 'current' in ref) {
+              (ref as MutableRefObject<HTMLDivElement | null>).current = node;
+            }
+          }}
+        />
+      );
+    },
+    [pointerScrollRef],
+  );
 
   const handleListScroll = useCallback(() => {
     if (!virtual || !pointerScrollRef.current) return;
@@ -405,15 +398,7 @@ export function useSelectVirtual({
     if (listElement && activeElement && listElement.contains(activeElement)) {
       listElement.focus({ preventScroll: true });
     }
-  }, [virtual]);
-
-  useEffect(() => {
-    return () => {
-      if (pointerScrollTimeoutRef.current) {
-        clearTimeout(pointerScrollTimeoutRef.current);
-      }
-    };
-  }, []);
+  }, [pointerScrollRef, virtual]);
 
   const virtualListStyle = useMemo(() => {
     if (!virtual) return undefined;
@@ -454,8 +439,8 @@ export function useSelectVirtual({
     handleListScroll,
     keepMountedIndices,
     listRef,
-    markPointerScroll,
     renderVirtualItem,
+    scrollGuardProps,
     virtualListStyle,
   };
 }

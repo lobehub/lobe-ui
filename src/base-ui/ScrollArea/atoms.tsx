@@ -39,7 +39,13 @@ export type ScrollAreaCornerProps = React.ComponentProps<typeof BaseScrollArea.C
 
 export const ScrollAreaRoot = ({ className, ...rest }: ScrollAreaRootProps) => {
   return (
-    <BaseScrollArea.Root {...rest} className={mergeStateClassName(styles.root, className) as any} />
+    <>
+      <ScrollAreaGlobalStyle />
+      <BaseScrollArea.Root
+        {...rest}
+        className={mergeStateClassName(styles.root, className) as any}
+      />
+    </>
   );
 };
 
@@ -61,15 +67,12 @@ export const ScrollAreaViewport = ({
   ...rest
 }: ScrollAreaViewportProps) => {
   return (
-    <>
-      <ScrollAreaGlobalStyle />
-      <BaseScrollArea.Viewport
-        {...rest}
-        className={
-          mergeStateClassName(cx(styles.viewport, resolveFadeClass(scrollFade)), className) as any
-        }
-      />
-    </>
+    <BaseScrollArea.Viewport
+      {...rest}
+      className={
+        mergeStateClassName(cx(styles.viewport, resolveFadeClass(scrollFade)), className) as any
+      }
+    />
   );
 };
 

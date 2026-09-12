@@ -10,9 +10,9 @@ import {
   type MouseEvent,
   type ReactNode,
 } from 'react';
-import { Virtualizer } from 'virtua';
 
 import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
+import { VirtualScrollArea } from '@/base-ui/ScrollArea/VirtualScrollArea';
 import Icon, { type IconProps } from '@/Icon';
 
 import { isValueEmpty } from './helpers';
@@ -159,25 +159,19 @@ export function SelectListSection({
     );
   }
 
-  const { handleListScroll, keepMountedIndices, listRef, markPointerScroll, virtualListStyle } =
+  const { handleListScroll, keepMountedIndices, listRef, scrollGuardProps, virtualListStyle } =
     virtualState;
 
   return (
-    <BaseSelect.List
-      data-virtual
-      className={listClassName}
-      ref={listRef}
+    <VirtualScrollArea
+      itemSize={listItemHeight}
+      keepMounted={keepMountedIndices}
       style={virtualListStyle}
-      tabIndex={-1}
-      onPointerDown={markPointerScroll}
-      onScroll={handleListScroll}
-      onTouchMove={markPointerScroll}
-      onWheel={markPointerScroll}
+      viewport={<BaseSelect.List className={listClassName} />}
+      viewportProps={{ onScroll: handleListScroll, ref: listRef, ...scrollGuardProps }}
     >
-      <Virtualizer itemSize={listItemHeight} keepMounted={keepMountedIndices}>
-        {listContent}
-      </Virtualizer>
-    </BaseSelect.List>
+      {listContent}
+    </VirtualScrollArea>
   );
 }
 

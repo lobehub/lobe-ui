@@ -7,9 +7,9 @@ import clsx from 'clsx';
 import type React from 'react';
 import { cloneElement, isValidElement, useCallback, useState } from 'react';
 import { mergeRefs, useMergeRefs } from 'react-merge-refs';
-import { Virtualizer } from 'virtua';
 
 import { getFloatingCollisionPadding } from '@/base-ui/floating';
+import { VirtualScrollArea } from '@/base-ui/ScrollArea/VirtualScrollArea';
 import Switch from '@/base-ui/Switch';
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
@@ -205,7 +205,7 @@ export const DropdownMenuScrollViewport = ({
   virtual,
   ...rest
 }: DropdownMenuScrollViewportProps) => {
-  const { keepMountedIndices, markPointerScroll, viewportRef, virtualChildren } =
+  const { keepMountedIndices, scrollGuardProps, viewportRef, virtualChildren } =
     useDropdownMenuVirtual({ children, keepMounted, virtual });
 
   if (!virtual) {
@@ -217,20 +217,15 @@ export const DropdownMenuScrollViewport = ({
   }
 
   return (
-    <div
+    <VirtualScrollArea
       {...rest}
-      className={cx(styles.slotViewport, className)}
-      data-virtual=""
-      ref={viewportRef}
-      tabIndex={-1}
-      onPointerDown={markPointerScroll}
-      onTouchMove={markPointerScroll}
-      onWheel={markPointerScroll}
+      className={className}
+      itemSize={listItemHeight}
+      keepMounted={keepMountedIndices}
+      viewportProps={{ ref: viewportRef, ...scrollGuardProps }}
     >
-      <Virtualizer itemSize={listItemHeight} keepMounted={keepMountedIndices}>
-        {virtualChildren}
-      </Virtualizer>
-    </div>
+      {virtualChildren}
+    </VirtualScrollArea>
   );
 };
 

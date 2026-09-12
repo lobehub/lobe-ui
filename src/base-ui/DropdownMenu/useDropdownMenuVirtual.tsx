@@ -5,13 +5,14 @@ import {
   Children,
   cloneElement,
   isValidElement,
-  useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
 import { mergeRefs } from 'react-merge-refs';
+
+import { usePointerScrollGuard } from '@/base-ui/ScrollArea/VirtualScrollArea';
 
 interface VirtualChildProps {
   onFocus?: (event: React.FocusEvent<HTMLElement>) => void;
@@ -30,24 +31,9 @@ export function useDropdownMenuVirtual({
   virtual,
 }: UseDropdownMenuVirtualParams) {
   const viewportRef = useRef<HTMLDivElement | null>(null);
-  const pointerScrollRef = useRef(false);
-  const pointerScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const focusedItemRef = useRef<HTMLElement | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
-  const markPointerScroll = useCallback(() => {
-    pointerScrollRef.current = true;
-    if (pointerScrollTimeoutRef.current) clearTimeout(pointerScrollTimeoutRef.current);
-    pointerScrollTimeoutRef.current = setTimeout(() => {
-      pointerScrollRef.current = false;
-    }, 120);
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      if (pointerScrollTimeoutRef.current) clearTimeout(pointerScrollTimeoutRef.current);
-    };
-  }, []);
+  const { pointerScrollRef, scrollGuardProps } = usePointerScrollGuard();
 
   // Base UI numbers items by DOM position among mounted nodes, so the highlighted index goes
   // stale every time the virtualizer shifts its window; re-firing focusin on the focused item
@@ -84,8 +70,6 @@ export function useDropdownMenuVirtual({
           focusedItemRef.current = event.currentTarget;
           setActiveIndex(index);
         },
-        // Base UI calls scrollIntoView on the highlighted item after focusing it; while the
-        // pointer is scrolling that would yank the list back to the highlighted row.
         ref: mergeRefs([
           ref,
           (node: HTMLElement | null) => {
@@ -98,14 +82,16 @@ export function useDropdownMenuVirtual({
         ]),
       });
     });
-  }, [children, virtual]);
+  }, [children, pointerScrollRef, virtual]);
 
   const keepMountedIndices = useMemo(() => {
     if (!virtual) return undefined;
+    const count = Children.count(children);
     const indices = new Set(keepMounted);
     if (activeIndex !== null) indices.add(activeIndex);
-    return indices.size ? [...indices] : undefined;
-  }, [activeIndex, keepMounted, virtual]);
+    const inRange = [...indices].filter((index) => index >= 0 && index < count);
+    return inRange.length ? inRange : undefined;
+  }, [activeIndex, children, keepMounted, virtual]);
 
-  return { keepMountedIndices, markPointerScroll, viewportRef, virtualChildren };
+  return { keepMountedIndices, scrollGuardProps, viewportRef, virtualChildren };
 }

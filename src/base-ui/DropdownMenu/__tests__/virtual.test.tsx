@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 
 import {
   DropdownMenuItem,
@@ -16,6 +16,7 @@ const VIEWPORT_HEIGHT = 200;
 const ROW_HEIGHT = 32;
 
 // jsdom has no layout: report a bounded viewport and fixed rows so virtua can pick a window.
+Element.prototype.getAnimations ??= () => [];
 Object.defineProperty(HTMLElement.prototype, 'offsetParent', {
   configurable: true,
   get() {
@@ -33,11 +34,15 @@ globalThis.ResizeObserver = class {
   disconnect() {}
 
   observe(target: Element) {
-    const height = target.hasAttribute('data-virtual') ? VIEWPORT_HEIGHT : ROW_HEIGHT;
-    this.callback(
-      [{ contentRect: { height, width: 220 }, target } as ResizeObserverEntry],
-      this as any,
-    );
+    const height = target.parentElement?.hasAttribute('data-virtual')
+      ? VIEWPORT_HEIGHT
+      : ROW_HEIGHT;
+    queueMicrotask(() => {
+      this.callback(
+        [{ contentRect: { height, width: 220 }, target } as ResizeObserverEntry],
+        this as any,
+      );
+    });
   }
 
   unobserve() {}
@@ -63,16 +68,15 @@ const items = Array.from({ length: COUNT }, (_, index) => ({
 })) satisfies DropdownItem[];
 
 describe('DropdownMenu virtual', () => {
-  test('composed DropdownMenu mounts only a window of items', () => {
+  test('composed DropdownMenu mounts only a window of items', async () => {
     render(
       <DropdownMenu open virtual items={items} listItemHeight={ROW_HEIGHT}>
         <button type="button">trigger</button>
       </DropdownMenu>,
     );
 
-    const rendered = countMenuItems();
-    expect(rendered).toBeGreaterThan(0);
-    expect(rendered).toBeLessThan(100);
+    await waitFor(() => expect(countMenuItems()).toBeGreaterThan(0));
+    expect(countMenuItems()).toBeLessThan(100);
     expect(screen.getByText('Item 0')).toBeDefined();
     expect(screen.queryByText(`Item ${COUNT - 1}`)).toBeNull();
   });
@@ -87,7 +91,7 @@ describe('DropdownMenu virtual', () => {
     expect(countMenuItems()).toBe(COUNT);
   });
 
-  test('DropdownMenuScrollViewport virtualizes arbitrary item children', () => {
+  test('DropdownMenuScrollViewport virtualizes arbitrary item children', async () => {
     render(
       <DropdownMenuRoot open>
         <DropdownMenuTrigger>
@@ -113,9 +117,8 @@ describe('DropdownMenu virtual', () => {
       </DropdownMenuRoot>,
     );
 
-    const rendered = countMenuItems();
-    expect(rendered).toBeGreaterThan(0);
-    expect(rendered).toBeLessThan(100);
+    await waitFor(() => expect(countMenuItems()).toBeGreaterThan(1));
+    expect(countMenuItems()).toBeLessThan(100);
     expect(screen.getByTestId('row-0')).toBeDefined();
     expect(screen.getByTestId(`row-${COUNT - 1}`)).toBeDefined();
     expect(screen.queryByTestId('row-500')).toBeNull();
