@@ -97,7 +97,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       var(--available-height),
       var(--lobe-select-popup-max-height, var(--available-height))
     );
-    --lobe-virtual-scroll-inset: 4px;
 
     transform-origin: var(--transform-origin);
 
@@ -146,7 +145,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     align-items: center;
 
     min-height: 36px;
-    margin-inline: -4px;
+    margin-inline: calc(-1 * var(--lobe-menu-popup-padding));
     padding-block: 8px;
     padding-inline: 12px;
     border-block-end: 1px solid ${cssVar.colorFillSecondary};

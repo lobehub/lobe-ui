@@ -189,11 +189,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   popup: css`
+    --lobe-menu-popup-padding: 4px;
+
     overflow-y: auto;
 
     min-width: 220px;
     max-height: var(--available-height);
-    padding: 4px;
+    padding: var(--lobe-menu-popup-padding);
     border-radius: ${cssVar.borderRadius};
 
     background: ${cssVar.colorBgElevated};
@@ -214,7 +216,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     &:has(> [data-virtual]) {
-      --lobe-virtual-scroll-inset: 4px;
+      --lobe-virtual-scroll-inset: var(--lobe-menu-popup-padding);
 
       overflow: hidden;
       display: flex;
