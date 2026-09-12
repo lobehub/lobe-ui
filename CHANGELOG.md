@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.43.0](https://github.com/lobehub/lobe-ui/compare/v5.42.8...v5.43.0) (2026-09-12)
+
+### ✨ Features
+
+- Add global keyboard focus ring with subtle contraction ([afd7e65](https://github.com/lobehub/lobe-ui/commit/afd7e65))
+
 ## [5.42.8](https://github.com/lobehub/lobe-ui/compare/v5.42.7...v5.42.8) (2026-09-12)
 
 ### ♻ Code Refactoring
