@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import type React from 'react';
 import { cloneElement, isValidElement, useCallback, useState } from 'react';
 import { mergeRefs, useMergeRefs } from 'react-merge-refs';
+import { Virtualizer } from 'virtua';
 
 import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import Switch from '@/base-ui/Switch';
@@ -19,6 +20,7 @@ import { placementMap } from '@/utils/placement';
 import { useLayerZIndex } from '../zIndex';
 import { styles } from './sharedStyle';
 import { type DropdownMenuPlacement } from './type';
+import { useDropdownMenuVirtual } from './useDropdownMenuVirtual';
 
 export const DropdownMenuRoot: typeof Menu.Root = (props) => <Menu.Root modal={false} {...props} />;
 export const DropdownMenuSubmenuRoot = Menu.SubmenuRoot;
@@ -179,13 +181,57 @@ export const DropdownMenuFooter = ({ className, ...rest }: DropdownMenuFooterPro
 
 DropdownMenuFooter.displayName = 'DropdownMenuFooter';
 
-export type DropdownMenuScrollViewportProps = React.HTMLAttributes<HTMLDivElement>;
+export type DropdownMenuScrollViewportProps = React.HTMLAttributes<HTMLDivElement> & {
+  /**
+   * Extra child indices to keep mounted while virtualized, on top of the highlighted item.
+   */
+  keepMounted?: readonly number[];
+  /**
+   * Row height hint for the virtualizer; rows are still measured after mount.
+   */
+  listItemHeight?: number;
+  /**
+   * Only mount the children near the scroll position. Children must be a flat list of
+   * fixed-height rows; groups and submenus keep working but are kept mounted as one row.
+   */
+  virtual?: boolean;
+};
 
 export const DropdownMenuScrollViewport = ({
+  children,
   className,
+  keepMounted,
+  listItemHeight,
+  virtual,
   ...rest
 }: DropdownMenuScrollViewportProps) => {
-  return <div {...rest} className={cx(styles.slotViewport, className)} />;
+  const { keepMountedIndices, markPointerScroll, viewportRef, virtualChildren } =
+    useDropdownMenuVirtual({ children, keepMounted, virtual });
+
+  if (!virtual) {
+    return (
+      <div {...rest} className={cx(styles.slotViewport, className)}>
+        {children}
+      </div>
+    );
+  }
+
+  return (
+    <div
+      {...rest}
+      className={cx(styles.slotViewport, className)}
+      data-virtual=""
+      ref={viewportRef}
+      tabIndex={-1}
+      onPointerDown={markPointerScroll}
+      onTouchMove={markPointerScroll}
+      onWheel={markPointerScroll}
+    >
+      <Virtualizer itemSize={listItemHeight} keepMounted={keepMountedIndices}>
+        {virtualChildren}
+      </Virtualizer>
+    </div>
+  );
 };
 
 DropdownMenuScrollViewport.displayName = 'DropdownMenuScrollViewport';

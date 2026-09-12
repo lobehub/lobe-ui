@@ -200,6 +200,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       padding-block-end: 0;
     }
 
+    &:has(> [data-virtual]) {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
     /* Base UI moves data-highlighted with the arrow keys, but :hover keeps painting
        whatever the resting cursor sits on, so two items light up at once. */
     &:has([data-highlighted]) {

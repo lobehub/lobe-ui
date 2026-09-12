@@ -49,6 +49,10 @@ export interface DropdownMenuProps<Payload = unknown> extends Omit<
    */
   iconSpaceMode?: IconSpaceMode;
   items: DropdownItem[] | (() => DropdownItem[]);
+  /**
+   * 虚拟列表的行高提示，仅在 `virtual` 开启时生效
+   */
+  listItemHeight?: number;
   nativeButton?: boolean;
   placement?: DropdownMenuPlacement;
   popupProps?: MenuPopupProps;
@@ -60,4 +64,9 @@ export interface DropdownMenuProps<Payload = unknown> extends Omit<
    */
   trigger?: Trigger;
   triggerProps?: Omit<MenuTriggerProps<Payload>, 'children'>;
+  /**
+   * 开启虚拟滚动，只挂载滚动位置附近的 items；适用于数百个以上的扁平列表
+   * @default false
+   */
+  virtual?: boolean;
 }

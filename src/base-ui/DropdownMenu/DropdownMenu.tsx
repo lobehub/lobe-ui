@@ -29,6 +29,7 @@ const DropdownMenu = memo<DropdownMenuProps>(
     iconAlign,
     iconSpaceMode,
     items,
+    listItemHeight,
     nativeButton,
     onOpenChange,
     onOpenChangeComplete,
@@ -39,6 +40,7 @@ const DropdownMenu = memo<DropdownMenuProps>(
     positionerProps,
     trigger = 'click',
     triggerProps,
+    virtual,
     ...rest
   }) => {
     const [uncontrolledOpen, setUncontrolledOpen] = useState(Boolean(defaultOpen));
@@ -131,8 +133,10 @@ const DropdownMenu = memo<DropdownMenuProps>(
               }
             >
               {header == null ? null : <DropdownMenuHeader>{header}</DropdownMenuHeader>}
-              {hasSlots ? (
-                <DropdownMenuScrollViewport>{menuItems}</DropdownMenuScrollViewport>
+              {hasSlots || virtual ? (
+                <DropdownMenuScrollViewport listItemHeight={listItemHeight} virtual={virtual}>
+                  {menuItems}
+                </DropdownMenuScrollViewport>
               ) : (
                 menuItems
               )}
