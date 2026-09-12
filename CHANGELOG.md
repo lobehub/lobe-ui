@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.42.8](https://github.com/lobehub/lobe-ui/compare/v5.42.7...v5.42.8) (2026-09-12)
+
+### ♻ Code Refactoring
+
+- **motion**: Consume the motion context only, never provide it from components, closes [#654](https://github.com/lobehub/lobe-ui/issues/654) ([2b66314](https://github.com/lobehub/lobe-ui/commit/2b66314))
+
 ## [5.42.7](https://github.com/lobehub/lobe-ui/compare/v5.42.6...v5.42.7) (2026-09-11)
 
 ### ♻ Code Refactoring
