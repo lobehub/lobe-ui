@@ -1,8 +1,10 @@
 'use client';
 
 import { cx } from 'antd-style';
-import { type KeyboardEvent, memo, useCallback, useMemo, useRef, useState } from 'react';
+import { memo, useId, useMemo, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
+
+import { FocusScope, focusScopeItem, useScopeArrowNav } from '@/base-ui/FocusScope';
 
 import { TreeContext, type TreeContextValue } from './context';
 import { styles } from './style';
@@ -32,6 +34,7 @@ const Tree = memo<TreeProps>(
     onExpand,
     onRightClick,
     onSelect,
+    scopeId: scopeIdProp,
     selectedKeys: selectedKeysProp,
     showIcon = false,
     showLine = false,
@@ -41,7 +44,10 @@ const Tree = memo<TreeProps>(
     switcherIcon,
     titleRender,
     treeData,
+    vimKeys = false,
   }) => {
+    const generatedId = useId();
+    const scopeId = scopeIdProp ?? generatedId;
     const [expandedKeys, setExpandedKeys] = useControlledState<string[]>(
       defaultExpandAll ? getAllKeys(treeData) : defaultExpandedKeys,
       { value: expandedKeysProp },
@@ -73,17 +79,14 @@ const Tree = memo<TreeProps>(
           flat[0]?.node.key ??
           null);
 
-    const rowsRef = useRef(new Map<string, HTMLDivElement>());
     const anchorRef = useRef<string | null>(null);
 
-    const registerRow = useCallback((key: string, el: HTMLDivElement | null) => {
-      if (el) rowsRef.current.set(key, el);
-      else rowsRef.current.delete(key);
-    }, []);
-
+    const rowOf = (key: string) =>
+      document.querySelector<HTMLElement>(`[data-focus-scope="${scopeId}"] [data-id="${key}"]`);
     const focusRow = (key: string) => {
       setActiveKey(key);
-      rowsRef.current.get(key)?.focus();
+      const row = rowOf(key);
+      if (row) focusScopeItem(scopeId, row);
     };
 
     const isDisabled = (node: TreeDataNode) => disabled || !!node.disabled;
@@ -134,17 +137,25 @@ const Tree = memo<TreeProps>(
       onCheck?.(next, { checked: willCheck, node });
     };
 
-    const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      const index = flat.findIndex((row) => row.node.key === activeKey);
-      if (index < 0) return;
-      const row = flat[index];
-      const isOpen = row.hasChildren && expanded.has(row.node.key);
-      const handlers: Record<string, () => void> = {
-        ' ': () => {
+    const currentRow = () => {
+      const focused = document.activeElement?.closest<HTMLElement>('[role="treeitem"]');
+      const key = focused?.dataset.id ?? activeKey;
+      return flat.find((row) => row.node.key === key);
+    };
+
+    const withRow = (fn: (row: (typeof flat)[number], event: KeyboardEvent) => void) =>
+      (event: KeyboardEvent) => {
+        const row = currentRow();
+        if (row) fn(row, event);
+      };
+
+    useScopeArrowNav({
+      extra: {
+        ' ': withRow((row, event) => {
           if (checkable && row.node.checkable !== false) toggleCheck(row.node);
           else toggleSelect(row.node, event);
-        },
-        '*': () => {
+        }),
+        '*': withRow((row) => {
           const siblings = flat.filter(
             (r) => r.parentKey === row.parentKey && r.hasChildren && !expanded.has(r.node.key),
           );
@@ -152,27 +163,23 @@ const Tree = memo<TreeProps>(
           const next = [...expandedKeys, ...siblings.map((r) => r.node.key)];
           setExpandedKeys(next);
           onExpand?.(next, { expanded: true, node: row.node });
-        },
-        ArrowDown: () => flat[index + 1] && focusRow(flat[index + 1].node.key),
-        ArrowLeft: () => {
-          if (isOpen) toggleExpand(row.node);
+        }),
+        ArrowLeft: withRow((row) => {
+          if (row.hasChildren && expanded.has(row.node.key)) toggleExpand(row.node);
           else if (row.parentKey) focusRow(row.parentKey);
-        },
-        ArrowRight: () => {
+        }),
+        ArrowRight: withRow((row) => {
           if (!row.hasChildren) return;
-          if (isOpen) focusRow(flat[index + 1].node.key);
+          if (expanded.has(row.node.key)) focusRow(flat[row.index + 1].node.key);
           else toggleExpand(row.node);
-        },
-        ArrowUp: () => flat[index - 1] && focusRow(flat[index - 1].node.key),
-        End: () => focusRow(flat.at(-1)!.node.key),
-        Enter: () => toggleSelect(row.node, event),
-        Home: () => focusRow(flat[0].node.key),
-      };
-      const handler = handlers[event.key];
-      if (!handler) return;
-      event.preventDefault();
-      handler();
-    };
+        }),
+        Enter: withRow((row, event) => toggleSelect(row.node, event)),
+      },
+      itemSelector: '[role="treeitem"]',
+      onItemFocus: (el) => el.dataset.id && setActiveKey(el.dataset.id),
+      scopeId,
+      vimKeys,
+    });
 
     const ctx: TreeContextValue = {
       activeKey,
@@ -185,7 +192,6 @@ const Tree = memo<TreeProps>(
       halfChecked,
       indent,
       onRightClick: (event, node) => onRightClick?.({ event, node }),
-      registerRow,
       selected,
       setActiveKey,
       showIcon,
@@ -201,11 +207,11 @@ const Tree = memo<TreeProps>(
 
     return (
       <TreeContext value={ctx}>
-        <div
+        <FocusScope
           className={cx(styles.root, classNames.root, className)}
+          id={scopeId}
           role="tree"
           style={{ ...customStyles.root, ...style }}
-          onKeyDown={onKeyDown}
         >
           {treeData.map((node, i) => (
             <TreeNode
@@ -216,7 +222,7 @@ const Tree = memo<TreeProps>(
               trail={[]}
             />
           ))}
-        </div>
+        </FocusScope>
       </TreeContext>
     );
   },

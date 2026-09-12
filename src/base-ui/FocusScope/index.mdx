@@ -1,0 +1,51 @@
+---
+title: FocusScope
+description: Sticky keyboard regions. Point into a scope once and ↑ ↓ keep working there without holding focus; ← → jump between scopes and restore the last focused item.
+category: Utils
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Model
+
+- `<FocusScope id>` marks a DOM subtree. The **active scope** is the last one the user pointed or focused into, and it stays active until `Esc` or `setActiveScope(null)` — clicking elsewhere does not clear it.
+- Items are `[data-scope-item]` elements; give them `data-id` to enable last-focused memory.
+- `useScopeArrowNav({ scopeId })` binds `↑ ↓ Home End` on `window` (capture phase) and moves DOM focus between the active scope's visible items. `extra` adds scope-local keys under the same gating; `vimKeys` adds `j k`.
+- `useScopeSwitcher()` — mount once per app — binds `← →` (`h l` with `vimKeys`) on `window` (bubble phase). A scope whose `extra` claims `←`/`→` wins by `preventDefault`, which is how `Tree` keeps expand / collapse.
+
+All bindings skip text inputs, modifier combos and already-prevented events.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+### FocusScope
+
+| Property     | Description                                             | Type      | Default    |
+| ------------ | ------------------------------------------------------- | --------- | ---------- |
+| id           | Stable scope id; the same id may be mounted twice       | `string`  | `useId()`  |
+| debugOutline | Dashed outline on the active scope                      | `boolean` | `false`    |
+
+Every other `div` prop passes through (`role`, `className`, `style`, `onKeyDown`, `ref`).
+
+### useScopeArrowNav
+
+| Option       | Description                                        | Type                                   | Default               |
+| ------------ | -------------------------------------------------- | -------------------------------------- | --------------------- |
+| scopeId      | Scope to navigate                                  | `string`                               | -                     |
+| itemSelector | Items inside the scope                             | `string`                               | `'[data-scope-item]'` |
+| vimKeys      | Also bind `j` / `k`                                | `boolean`                              | `false`               |
+| extra        | Extra keys (`event.key`) with the same gating      | `Record<string, (e: KeyboardEvent) => void>` | -               |
+| onItemFocus  | Called after keyboard focus lands on an item       | `(el: HTMLElement) => void`            | -                     |
+| enabled      |                                                    | `boolean`                              | `true`                |
+
+### useScopeSwitcher
+
+| Option  | Description          | Type      | Default |
+| ------- | -------------------- | --------- | ------- |
+| vimKeys | Also bind `h` / `l`  | `boolean` | `false` |
+| enabled |                      | `boolean` | `true`  |
+
+### Store
+
+`getActiveScopeId()`, `setActiveScope(id | null)`, `useActiveScopeId()`, `useFocusScopeActive(id)`, `getLastFocusedItem(scopeId)`, `setLastFocusedItem(scopeId, id | null)`, `registerScope(id)`.
