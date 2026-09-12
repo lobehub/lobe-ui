@@ -12,6 +12,7 @@ import {
   useState,
 } from 'react';
 
+import { installGlobalFocusRing } from '@/GlobalFocusRing';
 import {
   type I18nContextValue,
   type TranslationKey,
@@ -24,6 +25,7 @@ import { type CDN, type CdnApi, genCdnUrl } from '@/utils/genCdnUrl';
 export interface Config {
   aAs?: ElementType;
   customCdnFn?: CdnFn;
+  globalFocusRing?: boolean;
   imgAs?: ElementType;
   imgUnoptimized?: boolean;
   proxy?: CDN | 'custom';
@@ -51,6 +53,11 @@ const isThenable = (value: unknown): value is Promise<TranslationResourcesMap> =
 
 const ConfigProvider = memo<ConfigProviderProps>(
   ({ children, config, locale, resources, motion }) => {
+    useEffect(() => {
+      if (config?.globalFocusRing === false) return;
+      return installGlobalFocusRing();
+    }, [config?.globalFocusRing]);
+
     const fallbackLocale = locale ?? 'en';
     const [resolvedResources, setResolvedResources] = useState<TranslationResourcesMap | undefined>(
       () => (resources && !isThenable(resources) ? resources : undefined),
