@@ -14,7 +14,6 @@ export interface TreeContextValue {
   halfChecked: Set<string>;
   indent: number;
   onRightClick: (event: MouseEvent<HTMLDivElement>, node: TreeDataNode) => void;
-  registerRow: (key: string, el: HTMLDivElement | null) => void;
   selected: Set<string>;
   setActiveKey: (key: string) => void;
   showIcon: boolean;

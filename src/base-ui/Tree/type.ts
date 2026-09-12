@@ -58,6 +58,7 @@ export interface TreeProps {
   onExpand?: (keys: string[], info: { expanded: boolean; node: TreeDataNode }) => void;
   onRightClick?: (info: { event: MouseEvent<HTMLDivElement>; node: TreeDataNode }) => void;
   onSelect?: (keys: string[], info: { node: TreeDataNode; selected: boolean }) => void;
+  scopeId?: string;
   selectedKeys?: string[];
   showIcon?: boolean;
   showLine?: boolean;
@@ -67,4 +68,5 @@ export interface TreeProps {
   switcherIcon?: ReactNode | ((info: { expanded: boolean; node: TreeDataNode }) => ReactNode);
   titleRender?: (node: TreeDataNode) => ReactNode;
   treeData: TreeDataNode[];
+  vimKeys?: boolean;
 }
