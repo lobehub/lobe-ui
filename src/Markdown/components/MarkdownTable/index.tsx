@@ -14,10 +14,13 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
 
     /* Vertical center of the header row = top padding (0.75em) + half of
        the text line-box (line-height * 0.5em). Pulling the button up by
-       50% of its own height with transform parks it on that exact line. */
+       50% of its own height parks it on that exact line.
+       Use CSS `translate` instead of `transform`: Motion's whileTap
+       scale writes `transform` on the same element and would overwrite
+       translateY, causing the button to jump down on press. */
     inset-block-start: calc(0.75em + (var(--lobe-markdown-line-height) * 0.5em));
     inset-inline-end: 0.5em;
-    transform: translateY(-50%);
+    translate: 0 -50%;
 
     opacity: 0;
     background: ${cssVar.colorBgContainer};
