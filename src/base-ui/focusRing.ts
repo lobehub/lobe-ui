@@ -1,29 +1,28 @@
 import { css, cssVar, keyframes } from 'antd-style';
 
-const tint = (color: string, alpha: number) =>
-  `color-mix(in srgb, ${color} ${alpha}%, transparent)`;
+import { focusRingColor as ringColor } from '@/GlobalFocusRing/style';
 
-const glow = (color: string, scale = 1) =>
-  `0 0 0 ${3 * scale}px ${tint(color, 70)}, 0 0 ${5 * scale}px ${4 * scale}px ${tint(color, 35)}`;
-
-const ringIn = (color: string) => keyframes`
+const ringIn = keyframes`
   from {
-    box-shadow: ${glow(color, 2.5)};
+    outline-color: transparent;
+    outline-offset: 5px;
   }
 `;
 
 const ring = (color: string) => css`
-  &:focus-visible {
-    outline: none;
-    box-shadow: ${glow(color)};
-    animation: ${ringIn(color)} 560ms cubic-bezier(0.32, 0.72, 0, 1);
+  --lobe-focus-ring-color: ${color};
+
+  &:focus-visible:not([data-lobe-focus-ring='managed']) {
+    outline: 2px solid ${ringColor(color)};
+    outline-offset: 2px;
+    animation: ${ringIn} 200ms cubic-bezier(0.22, 1, 0.36, 1);
 
     @media (prefers-reduced-motion: reduce) {
       animation: none;
     }
 
     @media (forced-colors: active) {
-      outline: 2px solid CanvasText;
+      outline-color: CanvasText;
       animation: none;
     }
   }

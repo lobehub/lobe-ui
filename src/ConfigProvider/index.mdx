@@ -33,6 +33,24 @@ If your app uses [`LazyMotion`](https://motion.dev/docs/react-lazy-motion):
 
 <Demo of={DemoLazyMotion} />
 
+## Global keyboard focus
+
+ConfigProvider installs one global focus ring per document, including native controls and controls outside the provider's React subtree. No component focus class or registration is required. Set `config={{ globalFocusRing: false }}` on all providers to disable installation.
+
+Without ConfigProvider, install it directly and call the returned cleanup when your application unmounts:
+
+```ts
+import { installGlobalFocusRing } from '@lobehub/ui';
+
+const cleanup = installGlobalFocusRing();
+```
+
+The decorative top-layer ring uses CSS anchors to follow scrolling, resizing and translation without a continuous JavaScript measurement loop. It preserves `:focus-visible`, reduced-motion and forced-colors preferences. Only successfully covered controls lose their local outline; existing Base UI rings remain the fallback.
+
+Text inputs, textareas and contenteditable regions retain their existing focus styles. To opt out another control or an entire region, add `data-lobe-focus-ring="off"` to the element or an ancestor. This only skips the global ring; keep an appropriate local focus indication for keyboard users.
+
+Unsupported browsers, fragmented multiline links and shadow-root controls retain their original focus treatment. Install separately in each iframe document. Rotated shapes are not reproduced; the ring follows a rectangular bounding box. Partially clipped controls receive a full ring; fully clipped anchors are hidden by the browser.
+
 ## APIs
 
 ### ConfigProvider
@@ -47,6 +65,7 @@ If your app uses [`LazyMotion`](https://motion.dev/docs/react-lazy-motion):
 | customCdnFn | Custom function for generating CDN URLs when proxy is 'custom' | `CdnFn` | - |
 | aAs | Custom component to use for rendering anchor tags | `ElementType` | - |
 | imgAs | Custom component to use for rendering image tags | `ElementType` | - |
+| globalFocusRing | Install the document-wide keyboard focus ring | `boolean` | `true` |
 | imgUnoptimized | Whether to disable image optimization | `boolean` | - |
 
 ### CdnFn

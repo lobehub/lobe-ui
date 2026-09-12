@@ -150,6 +150,7 @@ export {
 } from './Form';
 export { default as FormModal, type FormModalProps } from './FormModal';
 export { default as Freeze, type FreezeProps } from './Freeze';
+export { installGlobalFocusRing } from './GlobalFocusRing';
 export { default as Grid, type GridProps } from './Grid';
 export { default as GroupAvatar, type GroupAvatarProps } from './GroupAvatar';
 export { default as GuideCard, type GuideCardProps } from './GuideCard';
