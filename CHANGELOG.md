@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.43.1](https://github.com/lobehub/lobe-ui/compare/v5.43.0...v5.43.1) (2026-09-12)
+
+### 🐛 Bug Fixes
+
+- Preserve local focus styles in text editors ([0e073db](https://github.com/lobehub/lobe-ui/commit/0e073db))
+
 # [5.43.0](https://github.com/lobehub/lobe-ui/compare/v5.42.8...v5.43.0) (2026-09-12)
 
 ### ✨ Features
