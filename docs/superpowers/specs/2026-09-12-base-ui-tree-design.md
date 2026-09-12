@@ -80,7 +80,7 @@ Keys are `string` only. antd's `Key` union is not carried over.
 
 Derived once per render with `useMemo`:
 
-- `flat = flattenVisible(treeData, expandedSet)` → `{ node, depth, parentKey, index, hasChildren }[]` in document order. This is the single source of truth for rendering order and keyboard navigation.
+- `flat = flattenVisible(treeData, expandedSet)` → `{ node, depth, parentKey, index, hasChildren, isLast, trail: boolean[] }[]` in document order (`trail[i]` = ancestor at depth `i` still has following siblings; drives `showLine`). This is the single source of truth for rendering order and keyboard navigation.
 - `keyIndex = Map<key, flatIndex>` for O(1) lookup.
 - `checkState = checkStrictly ? { checked: Set, halfChecked: ∅ } : conductCheck(treeData, checkedKeys)`.
 
@@ -90,11 +90,11 @@ Derived once per render with `useMemo`:
 
 Row layout, left to right, `paddingInlineStart = depth * indent`:
 
-1. `showLine` guides: absolutely positioned vertical borders per depth, drawn on the row (not on ancestors), so hidden subtrees cost nothing.
+1. `showLine` guides: one absolutely positioned `<svg>` per row (width `depth * indent`, height = row height), a single `<path>`: a full-height vertical at every `trail[i] === true` depth, and at `depth - 1` a vertical that turns into the row through a 6px quarter arc (`A 6 6 0 0 0`) then a horizontal to the switcher; `isLast` rows stop the vertical at the arc. `stroke: colorBorderSecondary`, `stroke-linecap: round`. Drawn on the row, never on ancestors, so hidden subtrees cost nothing. CSS borders can't do the arc, hence SVG.
 2. Switcher: 16px `ActionIcon`-less button; `ChevronRight` rotated 90deg when expanded, `transition: transform 200ms`. Leaf → empty spacer of same width.
 3. Checkbox (base-ui `Checkbox`, `indeterminate` from halfChecked) when `checkable && node.checkable !== false`.
 4. Icon when `showIcon`.
-5. Title: `titleRender?.(node) ?? node.title`. `blockNode` makes the whole row the hit target; otherwise only the title span is.
+5. Title: `titleRender?.(node) ?? node.title`. `blockNode` makes the whole row the hit target and the title span `flex: 1; min-width: 0` so a custom title can lay out edge-to-edge (TaskSubtasks needs `justify-content: space-between`); otherwise only the title span is the target and it shrink-wraps.
 
 Row `role="treeitem"`, `aria-expanded` (only when has children), `aria-selected`, `aria-checked` (only when checkable), `aria-level`, `aria-disabled`, `tabIndex` = `0` for the active row else `-1` (roving tabindex).
 
