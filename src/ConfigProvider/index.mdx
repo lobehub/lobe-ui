@@ -23,6 +23,18 @@ At the same time, it provides custom CDN configuration, set `proxy` to `custom` 
 
 <Demo of={DemoConfigProvider} />
 
+## Provider order
+
+`ConfigProvider` must wrap `ThemeProvider`, never the other way round. `ThemeProvider` renders the antd `App` that hosts the static `notification` / `modal` holders, and it reads the CDN config for its webfonts — both need the contexts from `ConfigProvider` above them. Components never provide these contexts themselves; anything rendered inside a `ConfigProvider` (including through antd's static APIs) receives them.
+
+```tsx
+<ConfigProvider motion={motion}>
+  <ThemeProvider>
+    <App />
+  </ThemeProvider>
+</ConfigProvider>
+```
+
 ## Motion
 
 Lobe UI uses Motion components via context. You must pass a motion component to `ConfigProvider`. If your app uses `LazyMotion`, pass `m`:

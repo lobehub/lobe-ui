@@ -3,7 +3,7 @@
 import { cx } from 'antd-style';
 import { ChevronLeft } from 'lucide-react';
 import type { HTMLMotionProps, MotionStyle } from 'motion/react';
-import { motion, useTransform } from 'motion/react';
+import { useTransform } from 'motion/react';
 import {
   type CSSProperties,
   memo,
@@ -17,6 +17,7 @@ import {
 import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/base-ui/ActionIcon';
+import { useMotionComponent } from '@/MotionProvider';
 import type { DivProps } from '@/types';
 
 import { DraggablePanelContext, useDraggablePanelContext } from './context';
@@ -211,6 +212,7 @@ export interface DraggablePanelContentProps extends Omit<DivProps, 'onDrag'> {}
 
 export const DraggablePanelContent = memo<DraggablePanelContentProps>(
   ({ children, className, style, ...rest }) => {
+    const Motion = useMotionComponent();
     const { axis, controller, expand, placement, state } = useDraggablePanelContext();
     const extent = useTransform(controller.motion.size, (value) => Math.max(0, value));
     // Subscribed, not read: a collapse that changes only the target would otherwise
@@ -220,7 +222,7 @@ export const DraggablePanelContent = memo<DraggablePanelContentProps>(
     const shrunk = state.collapsing || !expand;
 
     return (
-      <motion.div
+      <Motion.div
         inert={!expand}
         style={
           {
@@ -234,7 +236,7 @@ export const DraggablePanelContent = memo<DraggablePanelContentProps>(
           } as MotionStyle
         }
       >
-        <motion.div
+        <Motion.div
           animate={{ scale: shrunk ? COLLAPSED_SCALE : 1 }}
           className={cx(styles.content, className)}
           transition={timing()}
@@ -249,8 +251,8 @@ export const DraggablePanelContent = memo<DraggablePanelContentProps>(
           {...(rest as HTMLMotionProps<'div'>)}
         >
           {children}
-        </motion.div>
-      </motion.div>
+        </Motion.div>
+      </Motion.div>
     );
   },
 );

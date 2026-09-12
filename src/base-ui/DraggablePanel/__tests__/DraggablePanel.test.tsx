@@ -1,6 +1,13 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render as rtlRender, screen } from '@testing-library/react';
+import { motion } from 'motion/react';
+import type { ReactNode } from 'react';
+
+import ConfigProvider from '@/ConfigProvider';
 
 import DraggablePanel from '../DraggablePanel';
+
+const render = (node: ReactNode) =>
+  rtlRender(<ConfigProvider motion={motion}>{node}</ConfigProvider>);
 
 const pointerDrag = (handle: Element, offset: { x?: number; y?: number }) => {
   fireEvent.pointerDown(handle, { clientX: 0, clientY: 0, pointerId: 1 });

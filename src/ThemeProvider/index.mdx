@@ -24,6 +24,8 @@ import DemoCustomFonts from './demos/CustomFonts.tsx?demo';
 
 ThemeProvider inherits all properties from antd-style's ThemeProvider component, including the common appearance-related properties.
 
+ThemeProvider must sit inside `ConfigProvider`: it renders the antd `App` that hosts the static `notification` / `modal` holders and reads the CDN config for its webfonts, so it needs the motion and config contexts from above. See [ConfigProvider → Provider order](/components/config-provider#provider-order).
+
 ### ThemeProvider Features
 
 The ThemeProvider component provides several key features:

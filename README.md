@@ -119,31 +119,34 @@ import hotkeyMessages from '@lobehub/ui/i18n/resources/hotkey';
 
 ### ConfigProvider (Motion)
 
-You must pass a motion component via `ConfigProvider`.
-If your app uses `LazyMotion`, pass `m`:
+You must pass a motion component via `ConfigProvider`, and `ConfigProvider` must wrap `ThemeProvider` — never the other way round. `ThemeProvider` renders the antd `App` that hosts the static `notification` / `modal` holders and reads the CDN config for its webfonts, so both need the contexts from `ConfigProvider` above them.
 
 ```tsx
-import { ConfigProvider } from '@lobehub/ui';
+import { ConfigProvider, ThemeProvider } from '@lobehub/ui';
 import { motion } from 'motion/react';
 
 export default () => (
   <ConfigProvider motion={motion}>
-    <App />
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </ConfigProvider>
 );
 ```
 
-If your app uses `LazyMotion`:
+If your app uses `LazyMotion`, pass `m`:
 
 ```tsx
-import { ConfigProvider } from '@lobehub/ui';
+import { ConfigProvider, ThemeProvider } from '@lobehub/ui';
 import { LazyMotion, domAnimation } from 'motion/react';
 import * as m from 'motion/react-m';
 
 export default () => (
   <LazyMotion features={domAnimation}>
     <ConfigProvider motion={m}>
-      <App />
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
     </ConfigProvider>
   </LazyMotion>
 );
