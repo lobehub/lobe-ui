@@ -2,10 +2,7 @@
 
 import {
   type ChangeEvent,
-  type HTMLAttributes,
   type KeyboardEvent,
-  type MutableRefObject,
-  type Ref,
   useCallback,
   useEffect,
   useMemo,
@@ -13,7 +10,6 @@ import {
   useState,
 } from 'react';
 
-import { usePointerScrollGuard } from '@/base-ui/ScrollArea/VirtualScrollArea';
 import { useAppElement } from '@/ThemeProvider';
 
 import {
@@ -359,47 +355,6 @@ export function useSelectVirtual({
   valueArray,
   virtual,
 }: UseSelectVirtualParams) {
-  const listRef = useRef<HTMLDivElement | null>(null);
-  const { pointerScrollRef, scrollGuardProps } = usePointerScrollGuard();
-
-  const renderVirtualItem = useCallback(
-    (props: HTMLAttributes<HTMLDivElement>) => {
-      const { ref, ...rest } = props as HTMLAttributes<HTMLDivElement> & {
-        ref?: Ref<HTMLDivElement>;
-      };
-
-      return (
-        <div
-          {...rest}
-          ref={(node) => {
-            if (node) {
-              node.scrollIntoView = (...args) => {
-                if (!pointerScrollRef.current) {
-                  HTMLElement.prototype.scrollIntoView.call(node, ...args);
-                }
-              };
-            }
-            if (typeof ref === 'function') {
-              ref(node);
-            } else if (ref && 'current' in ref) {
-              (ref as MutableRefObject<HTMLDivElement | null>).current = node;
-            }
-          }}
-        />
-      );
-    },
-    [pointerScrollRef],
-  );
-
-  const handleListScroll = useCallback(() => {
-    if (!virtual || !pointerScrollRef.current) return;
-    const listElement = listRef.current;
-    const activeElement = document.activeElement;
-    if (listElement && activeElement && listElement.contains(activeElement)) {
-      listElement.focus({ preventScroll: true });
-    }
-  }, [pointerScrollRef, virtual]);
-
   const virtualListStyle = useMemo(() => {
     if (!virtual) return undefined;
     const rowCount = countVirtualItems(filteredOptions);
@@ -414,7 +369,7 @@ export function useSelectVirtual({
     };
   }, [filteredOptions, listItemHeight, size, virtual]);
 
-  const keepMountedIndices = useMemo(() => {
+  const selectedIndices = useMemo(() => {
     if (!virtual || valueArray.length === 0) return undefined;
     const selectedSet = new Set(valueArray);
     const indices: number[] = [];
@@ -435,14 +390,7 @@ export function useSelectVirtual({
     return indices.length ? indices : undefined;
   }, [filteredOptions, valueArray, virtual]);
 
-  return {
-    handleListScroll,
-    keepMountedIndices,
-    listRef,
-    renderVirtualItem,
-    scrollGuardProps,
-    virtualListStyle,
-  };
+  return { selectedIndices, virtualListStyle };
 }
 
 export function usePortalContainer() {

@@ -225,8 +225,6 @@ const Select = memo<SelectProps<any>>(
         itemTextClassName,
         listItemHeight,
         optionRender,
-        renderVirtualItem: virtualState.renderVirtualItem,
-        virtual,
       })
     );
 

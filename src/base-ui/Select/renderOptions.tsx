@@ -3,7 +3,6 @@
 import { Select as BaseSelect } from '@base-ui/react/select';
 import { cx } from 'antd-style';
 import { Check } from 'lucide-react';
-import { type ComponentProps } from 'react';
 
 import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
 import Icon from '@/Icon';
@@ -24,8 +23,6 @@ interface RenderOptionsParams {
   itemTextClassName: string;
   listItemHeight: number | undefined;
   optionRender: SelectProps['optionRender'];
-  renderVirtualItem: NonNullable<ComponentProps<typeof BaseSelect.Item>['render']>;
-  virtual: boolean | undefined;
 }
 
 function renderItem(
@@ -33,22 +30,13 @@ function renderItem(
   index: number,
   params: Omit<RenderOptionsParams, 'items'>,
 ) {
-  const {
-    classNames,
-    isBoldIndicator,
-    itemTextClassName,
-    listItemHeight,
-    optionRender,
-    renderVirtualItem,
-    virtual,
-  } = params;
+  const { classNames, isBoldIndicator, itemTextClassName, listItemHeight, optionRender } = params;
 
   return (
     <BaseSelect.Item
       disabled={option.disabled}
       key={`${String(option.value)}-${index}`}
       label={getOptionSearchText(option)}
-      render={virtual ? renderVirtualItem : undefined}
       value={option.value}
       className={cx(
         menuStyles.item,

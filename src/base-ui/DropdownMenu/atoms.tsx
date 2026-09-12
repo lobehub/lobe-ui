@@ -9,8 +9,8 @@ import { cloneElement, isValidElement, useCallback, useState } from 'react';
 import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
 import { getFloatingCollisionPadding } from '@/base-ui/floating';
-import { VirtualScrollArea } from '@/base-ui/ScrollArea/VirtualScrollArea';
 import Switch from '@/base-ui/Switch';
+import { MenuVirtualList } from '@/base-ui/virtual';
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { CLASSNAMES } from '@/styles/classNames';
@@ -20,7 +20,6 @@ import { placementMap } from '@/utils/placement';
 import { useLayerZIndex } from '../zIndex';
 import { styles } from './sharedStyle';
 import { type DropdownMenuPlacement } from './type';
-import { useDropdownMenuVirtual } from './useDropdownMenuVirtual';
 
 export const DropdownMenuRoot: typeof Menu.Root = (props) => <Menu.Root modal={false} {...props} />;
 export const DropdownMenuSubmenuRoot = Menu.SubmenuRoot;
@@ -205,9 +204,6 @@ export const DropdownMenuScrollViewport = ({
   virtual,
   ...rest
 }: DropdownMenuScrollViewportProps) => {
-  const { keepMountedIndices, scrollGuardProps, viewportRef, virtualChildren } =
-    useDropdownMenuVirtual({ children, keepMounted, virtual });
-
   if (!virtual) {
     return (
       <div {...rest} className={cx(styles.slotViewport, className)}>
@@ -217,15 +213,14 @@ export const DropdownMenuScrollViewport = ({
   }
 
   return (
-    <VirtualScrollArea
+    <MenuVirtualList
       {...rest}
       className={className}
       itemSize={listItemHeight}
-      keepMounted={keepMountedIndices}
-      viewportProps={{ ref: viewportRef, ...scrollGuardProps }}
+      keepMounted={keepMounted}
     >
-      {virtualChildren}
-    </VirtualScrollArea>
+      {children}
+    </MenuVirtualList>
   );
 };
 

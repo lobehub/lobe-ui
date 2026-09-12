@@ -19,7 +19,7 @@ import {
   ScrollAreaThumb,
   ScrollAreaViewport,
   type ScrollAreaViewportProps,
-} from './atoms';
+} from '@/base-ui/ScrollArea/atoms';
 
 // `--lobe-virtual-scroll-inset` is the inline padding of the box the scroll area sits in: the
 // root bleeds out by it so the scrollbar hugs that box's edge, and the viewport pads the rows back.

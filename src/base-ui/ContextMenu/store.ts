@@ -13,8 +13,10 @@ export type ContextMenuState = {
   iconAlign?: IconAlign;
   iconSpaceMode: IconSpaceMode;
   items: ContextMenuItem[];
+  listItemHeight?: number;
   open: boolean;
   triggerId: string | null;
+  virtual?: boolean;
 };
 
 const emptyState: ContextMenuState = {
@@ -79,6 +81,15 @@ export interface ShowContextMenuOptions {
   header?: ReactNode;
   iconAlign?: IconAlign;
   iconSpaceMode?: IconSpaceMode;
+  /**
+   * Row height hint for the virtualized list; rows are still measured after mount.
+   */
+  listItemHeight?: number;
+  /**
+   * Only mount the items near the scroll position; use for long flat lists.
+   * @default false
+   */
+  virtual?: boolean;
 }
 
 export interface ContextMenuInterceptor {
@@ -114,8 +125,10 @@ const showWebContextMenu = (items: ContextMenuItem[], options?: ShowContextMenuO
     iconAlign: options?.iconAlign,
     iconSpaceMode: options?.iconSpaceMode ?? 'global',
     items,
+    listItemHeight: options?.listItemHeight,
     open: true,
     triggerId: lastPointer.triggerId ?? null,
+    virtual: options?.virtual,
   });
 };
 
@@ -146,8 +159,10 @@ const closeWebContextMenu = () => {
     header: undefined,
     iconSpaceMode: 'global',
     items: [],
+    listItemHeight: undefined,
     open: false,
     triggerId: null,
+    virtual: undefined,
   });
 };
 

@@ -35,9 +35,17 @@ export type ContextMenuTriggerProps = {
    */
   items?: ContextMenuItem[] | (() => ContextMenuItem[]);
   /**
+   * Row height hint for the virtualized list.
+   */
+  listItemHeight?: number;
+  /**
    * Custom context menu handler. If `items` is provided, this is optional.
    */
   onContextMenu?: (event: MouseEvent<HTMLElement>) => void;
+  /**
+   * Only mount the items near the scroll position; use for long flat lists.
+   */
+  virtual?: boolean;
 } & Omit<HTMLAttributes<HTMLElement>, 'onContextMenu' | 'children'>;
 
 const styles = {
@@ -47,7 +55,7 @@ const styles = {
 };
 
 export const ContextMenuTrigger = memo<ContextMenuTriggerProps>(
-  ({ children, footer, header, items, onContextMenu, ...rest }) => {
+  ({ children, footer, header, items, listItemHeight, onContextMenu, virtual, ...rest }) => {
     const triggerId = useId();
     const state = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
     const open = state.open && state.triggerId === triggerId;
@@ -57,11 +65,11 @@ export const ContextMenuTrigger = memo<ContextMenuTriggerProps>(
         if (items) {
           event.preventDefault();
           const resolvedItems = typeof items === 'function' ? items() : items;
-          showContextMenu(resolvedItems, { footer, header });
+          showContextMenu(resolvedItems, { footer, header, listItemHeight, virtual });
         }
         onContextMenu?.(event);
       },
-      [items, onContextMenu, footer, header],
+      [items, onContextMenu, footer, header, listItemHeight, virtual],
     );
 
     const triggerProps = {

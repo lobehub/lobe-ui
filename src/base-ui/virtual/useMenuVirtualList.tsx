@@ -5,44 +5,41 @@ import {
   Children,
   cloneElement,
   isValidElement,
+  useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
-import { mergeRefs } from 'react-merge-refs';
 
-import { usePointerScrollGuard } from '@/base-ui/ScrollArea/VirtualScrollArea';
+import { usePointerScrollGuard } from './VirtualScrollArea';
+
+const LIST_ITEM_SELECTOR = '[role^="menuitem"], [role="option"]';
 
 interface VirtualChildProps {
   onFocus?: (event: React.FocusEvent<HTMLElement>) => void;
-  ref?: React.Ref<HTMLElement>;
 }
 
-interface UseDropdownMenuVirtualParams {
+export interface UseMenuVirtualListParams {
   children: React.ReactNode;
-  keepMounted: readonly number[] | undefined;
-  virtual: boolean | undefined;
+  enabled: boolean | undefined;
+  keepMounted?: readonly number[];
 }
 
-export function useDropdownMenuVirtual({
-  children,
-  keepMounted,
-  virtual,
-}: UseDropdownMenuVirtualParams) {
+export function useMenuVirtualList({ children, enabled, keepMounted }: UseMenuVirtualListParams) {
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const focusedItemRef = useRef<HTMLElement | null>(null);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const { pointerScrollRef, scrollGuardProps } = usePointerScrollGuard();
 
-  // Base UI numbers items by DOM position among mounted nodes, so the highlighted index goes
-  // stale every time the virtualizer shifts its window; re-firing focusin on the focused item
-  // makes Base UI re-read its index and keeps highlight, focus, and arrow keys in step. If the
-  // focused item got unmounted anyway, park focus on the viewport so the popup keydown
+  // Base UI numbers list items by DOM position among mounted nodes, so the highlighted index
+  // goes stale every time the virtualizer shifts its window; re-firing focusin on the focused
+  // item makes Base UI re-read its index and keeps highlight, focus, and arrow keys in step. If
+  // the focused item got unmounted anyway, park focus on the viewport so the popup keydown
   // handlers stay reachable.
   useEffect(() => {
     const viewport = viewportRef.current;
-    if (!virtual || !viewport) return;
+    if (!enabled || !viewport) return;
     const observer = new MutationObserver(() => {
       const focusedItem = focusedItemRef.current;
       const active = document.activeElement;
@@ -57,41 +54,47 @@ export function useDropdownMenuVirtual({
     });
     observer.observe(viewport, { childList: true, subtree: true });
     return () => observer.disconnect();
-  }, [virtual]);
+  }, [enabled]);
+
+  // Base UI scrolls the focused item into view right after focusing it; while the pointer is
+  // scrolling that would yank the list back, so the item's scrollIntoView checks the guard.
+  const guardScrollIntoView = useCallback(
+    (item: HTMLElement) => {
+      if (Object.hasOwn(item, 'scrollIntoView')) return;
+      item.scrollIntoView = (...args) => {
+        if (!pointerScrollRef.current) HTMLElement.prototype.scrollIntoView.call(item, ...args);
+      };
+    },
+    [pointerScrollRef],
+  );
 
   const virtualChildren = useMemo(() => {
-    if (!virtual) return children;
+    if (!enabled) return children;
     return Children.map(children, (child, index) => {
       if (!isValidElement<VirtualChildProps>(child)) return child;
-      const { onFocus, ref } = child.props;
+      const { onFocus } = child.props;
       return cloneElement<VirtualChildProps>(child, {
         onFocus: (event: React.FocusEvent<HTMLElement>) => {
           onFocus?.(event);
-          focusedItemRef.current = event.currentTarget;
+          const item = (event.target as HTMLElement).closest<HTMLElement>(LIST_ITEM_SELECTOR);
+          if (item && event.currentTarget.contains(item)) {
+            focusedItemRef.current = item;
+            guardScrollIntoView(item);
+          }
           setActiveIndex(index);
         },
-        ref: mergeRefs([
-          ref,
-          (node: HTMLElement | null) => {
-            if (!node) return;
-            node.scrollIntoView = (...args) => {
-              if (!pointerScrollRef.current)
-                HTMLElement.prototype.scrollIntoView.call(node, ...args);
-            };
-          },
-        ]),
       });
     });
-  }, [children, pointerScrollRef, virtual]);
+  }, [children, enabled, guardScrollIntoView]);
 
   const keepMountedIndices = useMemo(() => {
-    if (!virtual) return undefined;
+    if (!enabled) return undefined;
     const count = Children.count(children);
     const indices = new Set(keepMounted);
     if (activeIndex !== null) indices.add(activeIndex);
     const inRange = [...indices].filter((index) => index >= 0 && index < count);
     return inRange.length ? inRange : undefined;
-  }, [activeIndex, children, keepMounted, virtual]);
+  }, [activeIndex, children, enabled, keepMounted]);
 
   return { keepMountedIndices, scrollGuardProps, viewportRef, virtualChildren };
 }

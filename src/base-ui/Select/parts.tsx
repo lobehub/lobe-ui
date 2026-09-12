@@ -12,7 +12,7 @@ import {
 } from 'react';
 
 import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
-import { VirtualScrollArea } from '@/base-ui/ScrollArea/VirtualScrollArea';
+import { useMenuVirtualList, VirtualScrollArea } from '@/base-ui/virtual';
 import Icon, { type IconProps } from '@/Icon';
 
 import { isValueEmpty } from './helpers';
@@ -150,8 +150,12 @@ export function SelectListSection({
   virtualState,
 }: SelectListSectionProps) {
   const listClassName = cx(styles.list, hasSearch && styles.listWithSearch, classNames?.list);
+  const enabled = Boolean(virtual) && !isEmpty;
+  const { keepMountedIndices, scrollGuardProps, viewportRef, virtualChildren } = useMenuVirtualList(
+    { children: listContent, enabled, keepMounted: virtualState.selectedIndices },
+  );
 
-  if (!virtual || isEmpty) {
+  if (!enabled) {
     return (
       <BaseSelect.List className={listClassName} data-virtual={virtual || undefined}>
         {listContent}
@@ -159,18 +163,15 @@ export function SelectListSection({
     );
   }
 
-  const { handleListScroll, keepMountedIndices, listRef, scrollGuardProps, virtualListStyle } =
-    virtualState;
-
   return (
     <VirtualScrollArea
       itemSize={listItemHeight}
       keepMounted={keepMountedIndices}
-      style={virtualListStyle}
+      style={virtualState.virtualListStyle}
       viewport={<BaseSelect.List className={listClassName} />}
-      viewportProps={{ onScroll: handleListScroll, ref: listRef, ...scrollGuardProps }}
+      viewportProps={{ ref: viewportRef, ...scrollGuardProps }}
     >
-      {listContent}
+      {virtualChildren}
     </VirtualScrollArea>
   );
 }
