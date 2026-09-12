@@ -14,12 +14,13 @@ import React, {
   useSyncExternalStore,
 } from 'react';
 
+import type { VirtualListProps } from '@/base-ui/virtual';
 import { CLASSNAMES } from '@/styles/classNames';
 
 import { getServerSnapshot, getSnapshot, showContextMenu, subscribe } from './store';
 import { type ContextMenuItem } from './type';
 
-export type ContextMenuTriggerProps = {
+export type ContextMenuTriggerProps = Pick<VirtualListProps, 'virtual' | 'listItemHeight'> & {
   children: ReactNode;
   /**
    * Footer slot pinned below the scrollable items area, with a divider border.
@@ -47,7 +48,7 @@ const styles = {
 };
 
 export const ContextMenuTrigger = memo<ContextMenuTriggerProps>(
-  ({ children, footer, header, items, onContextMenu, ...rest }) => {
+  ({ children, footer, header, items, listItemHeight, onContextMenu, virtual, ...rest }) => {
     const triggerId = useId();
     const state = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
     const open = state.open && state.triggerId === triggerId;
@@ -57,11 +58,11 @@ export const ContextMenuTrigger = memo<ContextMenuTriggerProps>(
         if (items) {
           event.preventDefault();
           const resolvedItems = typeof items === 'function' ? items() : items;
-          showContextMenu(resolvedItems, { footer, header });
+          showContextMenu(resolvedItems, { footer, header, listItemHeight, virtual });
         }
         onContextMenu?.(event);
       },
-      [items, onContextMenu, footer, header],
+      [items, onContextMenu, footer, header, listItemHeight, virtual],
     );
 
     const triggerProps = {

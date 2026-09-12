@@ -10,6 +10,7 @@ import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
 import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import Switch from '@/base-ui/Switch';
+import { MenuVirtualList, type VirtualListProps } from '@/base-ui/virtual';
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { CLASSNAMES } from '@/styles/classNames';
@@ -166,7 +167,7 @@ DropdownMenuPopup.displayName = 'DropdownMenuPopup';
 export type DropdownMenuHeaderProps = React.HTMLAttributes<HTMLDivElement>;
 
 export const DropdownMenuHeader = ({ className, ...rest }: DropdownMenuHeaderProps) => {
-  return <div {...rest} className={cx(styles.header, className)} />;
+  return <div {...rest} className={cx(styles.header, className)} data-slot="header" />;
 };
 
 DropdownMenuHeader.displayName = 'DropdownMenuHeader';
@@ -174,18 +175,42 @@ DropdownMenuHeader.displayName = 'DropdownMenuHeader';
 export type DropdownMenuFooterProps = React.HTMLAttributes<HTMLDivElement>;
 
 export const DropdownMenuFooter = ({ className, ...rest }: DropdownMenuFooterProps) => {
-  return <div {...rest} className={cx(styles.footer, className)} />;
+  return <div {...rest} className={cx(styles.footer, className)} data-slot="footer" />;
 };
 
 DropdownMenuFooter.displayName = 'DropdownMenuFooter';
 
-export type DropdownMenuScrollViewportProps = React.HTMLAttributes<HTMLDivElement>;
+export type DropdownMenuScrollViewportProps = React.HTMLAttributes<HTMLDivElement> &
+  VirtualListProps;
 
 export const DropdownMenuScrollViewport = ({
+  children,
   className,
+  getItemLabel,
+  keepMounted,
+  listItemHeight,
+  virtual,
   ...rest
 }: DropdownMenuScrollViewportProps) => {
-  return <div {...rest} className={cx(styles.slotViewport, className)} />;
+  if (!virtual) {
+    return (
+      <div {...rest} className={cx(styles.slotViewport, className)}>
+        {children}
+      </div>
+    );
+  }
+
+  return (
+    <MenuVirtualList
+      {...rest}
+      className={className}
+      getItemLabel={getItemLabel}
+      itemSize={listItemHeight}
+      keepMounted={keepMounted}
+    >
+      {children}
+    </MenuVirtualList>
+  );
 };
 
 DropdownMenuScrollViewport.displayName = 'DropdownMenuScrollViewport';

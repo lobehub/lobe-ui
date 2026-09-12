@@ -5,6 +5,7 @@ import { cx } from 'antd-style';
 import { memo, useEffect, useMemo, useSyncExternalStore } from 'react';
 
 import { getFloatingCollisionPadding } from '@/base-ui/floating';
+import { MenuVirtualList } from '@/base-ui/virtual';
 import { useIsClient } from '@/hooks/useIsClient';
 import { useAppElement } from '@/ThemeProvider';
 import { registerDevSingleton } from '@/utils/devSingleton';
@@ -85,7 +86,13 @@ export const ContextMenuHost = memo(() => {
             onContextMenu={preventDefaultAndStopPropagation}
           >
             {state.header == null ? null : <div className={styles.header}>{state.header}</div>}
-            {hasSlots ? <div className={styles.slotViewport}>{menuItems}</div> : menuItems}
+            {state.virtual ? (
+              <MenuVirtualList itemSize={state.listItemHeight}>{menuItems}</MenuVirtualList>
+            ) : hasSlots ? (
+              <div className={styles.slotViewport}>{menuItems}</div>
+            ) : (
+              menuItems
+            )}
             {state.footer == null ? null : <div className={styles.footer}>{state.footer}</div>}
           </ContextMenu.Popup>
         </ContextMenu.Positioner>

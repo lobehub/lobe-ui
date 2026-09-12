@@ -10,9 +10,9 @@ import {
   type MouseEvent,
   type ReactNode,
 } from 'react';
-import { Virtualizer } from 'virtua';
 
 import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
+import { useMenuVirtualList, VirtualScrollArea } from '@/base-ui/virtual';
 import Icon, { type IconProps } from '@/Icon';
 
 import { isValueEmpty } from './helpers';
@@ -150,8 +150,15 @@ export function SelectListSection({
   virtualState,
 }: SelectListSectionProps) {
   const listClassName = cx(styles.list, hasSearch && styles.listWithSearch, classNames?.list);
+  const enabled = Boolean(virtual) && !isEmpty;
+  const { keepMountedIndices, viewportProps, viewportRef, virtualChildren, virtualizerRef } =
+    useMenuVirtualList({
+      children: listContent,
+      enabled,
+      keepMounted: virtualState.selectedIndices,
+    });
 
-  if (!virtual || isEmpty) {
+  if (!enabled) {
     return (
       <BaseSelect.List className={listClassName} data-virtual={virtual || undefined}>
         {listContent}
@@ -159,25 +166,17 @@ export function SelectListSection({
     );
   }
 
-  const { handleListScroll, keepMountedIndices, listRef, markPointerScroll, virtualListStyle } =
-    virtualState;
-
   return (
-    <BaseSelect.List
-      data-virtual
-      className={listClassName}
-      ref={listRef}
-      style={virtualListStyle}
-      tabIndex={-1}
-      onPointerDown={markPointerScroll}
-      onScroll={handleListScroll}
-      onTouchMove={markPointerScroll}
-      onWheel={markPointerScroll}
+    <VirtualScrollArea
+      itemSize={listItemHeight}
+      keepMounted={keepMountedIndices}
+      style={virtualState.virtualListStyle}
+      viewport={<BaseSelect.List className={listClassName} />}
+      viewportProps={{ ref: viewportRef, ...viewportProps }}
+      virtualizerRef={virtualizerRef}
     >
-      <Virtualizer itemSize={listItemHeight} keepMounted={keepMountedIndices}>
-        {listContent}
-      </Virtualizer>
-    </BaseSelect.List>
+      {virtualChildren}
+    </VirtualScrollArea>
   );
 }
 

@@ -2,10 +2,7 @@
 
 import {
   type ChangeEvent,
-  type HTMLAttributes,
   type KeyboardEvent,
-  type MutableRefObject,
-  type Ref,
   useCallback,
   useEffect,
   useMemo,
@@ -358,63 +355,6 @@ export function useSelectVirtual({
   valueArray,
   virtual,
 }: UseSelectVirtualParams) {
-  const listRef = useRef<HTMLDivElement | null>(null);
-  const pointerScrollRef = useRef(false);
-  const pointerScrollTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const renderVirtualItem = useCallback((props: HTMLAttributes<HTMLDivElement>) => {
-    const { ref, ...rest } = props as HTMLAttributes<HTMLDivElement> & {
-      ref?: Ref<HTMLDivElement>;
-    };
-
-    return (
-      <div
-        {...rest}
-        ref={(node) => {
-          if (node) {
-            node.scrollIntoView = (...args) => {
-              if (!pointerScrollRef.current) {
-                HTMLElement.prototype.scrollIntoView.call(node, ...args);
-              }
-            };
-          }
-          if (typeof ref === 'function') {
-            ref(node);
-          } else if (ref && 'current' in ref) {
-            (ref as MutableRefObject<HTMLDivElement | null>).current = node;
-          }
-        }}
-      />
-    );
-  }, []);
-
-  const markPointerScroll = useCallback(() => {
-    pointerScrollRef.current = true;
-    if (pointerScrollTimeoutRef.current) {
-      clearTimeout(pointerScrollTimeoutRef.current);
-    }
-    pointerScrollTimeoutRef.current = setTimeout(() => {
-      pointerScrollRef.current = false;
-    }, 120);
-  }, []);
-
-  const handleListScroll = useCallback(() => {
-    if (!virtual || !pointerScrollRef.current) return;
-    const listElement = listRef.current;
-    const activeElement = document.activeElement;
-    if (listElement && activeElement && listElement.contains(activeElement)) {
-      listElement.focus({ preventScroll: true });
-    }
-  }, [virtual]);
-
-  useEffect(() => {
-    return () => {
-      if (pointerScrollTimeoutRef.current) {
-        clearTimeout(pointerScrollTimeoutRef.current);
-      }
-    };
-  }, []);
-
   const virtualListStyle = useMemo(() => {
     if (!virtual) return undefined;
     const rowCount = countVirtualItems(filteredOptions);
@@ -429,7 +369,7 @@ export function useSelectVirtual({
     };
   }, [filteredOptions, listItemHeight, size, virtual]);
 
-  const keepMountedIndices = useMemo(() => {
+  const selectedIndices = useMemo(() => {
     if (!virtual || valueArray.length === 0) return undefined;
     const selectedSet = new Set(valueArray);
     const indices: number[] = [];
@@ -450,14 +390,7 @@ export function useSelectVirtual({
     return indices.length ? indices : undefined;
   }, [filteredOptions, valueArray, virtual]);
 
-  return {
-    handleListScroll,
-    keepMountedIndices,
-    listRef,
-    markPointerScroll,
-    renderVirtualItem,
-    virtualListStyle,
-  };
+  return { selectedIndices, virtualListStyle };
 }
 
 export function usePortalContainer() {

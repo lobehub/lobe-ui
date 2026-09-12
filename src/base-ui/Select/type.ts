@@ -1,6 +1,7 @@
 import type { SelectRootChangeEventDetails } from '@base-ui/react/select';
 import type { CSSProperties, ReactNode } from 'react';
 
+import type { VirtualListProps } from '@/base-ui/virtual';
 import type { IconProps } from '@/Icon';
 
 export type { SelectRootChangeEventDetails };
@@ -54,7 +55,10 @@ export interface SelectClassNames {
   value?: string;
 }
 
-export interface SelectProps<Value = string> {
+export interface SelectProps<Value = string> extends Pick<
+  VirtualListProps,
+  'virtual' | 'listItemHeight'
+> {
   allowClear?: boolean;
   autoFocus?: boolean;
   /**
@@ -77,7 +81,6 @@ export interface SelectProps<Value = string> {
    * @default 512
    */
   listHeight?: number;
-  listItemHeight?: number;
   loading?: boolean;
   mode?: 'multiple' | 'tags';
   name?: string;
@@ -112,5 +115,4 @@ export interface SelectProps<Value = string> {
   tokenSeparators?: string[];
   value?: Value | Value[] | null;
   variant?: SelectVariant;
-  virtual?: boolean;
 }

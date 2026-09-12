@@ -12,6 +12,7 @@ import DemoSwitch from '../../ContextMenu/demos/switch.tsx?demo';
 import DemoDesc from '../../ContextMenu/demos/desc.tsx?demo';
 import DemoHeaderFooter from '../../ContextMenu/demos/header-footer.tsx?demo';
 import DemoHeaderFooterScroll from '../../ContextMenu/demos/header-footer-scroll.tsx?demo';
+import DemoVirtual from '../../ContextMenu/demos/virtual.tsx?demo';
 import DemoEmptySubmenu from '../../ContextMenu/demos/emptySubmenu.tsx?demo';
 import DemoUploader from '../../ContextMenu/demos/uploader.tsx?demo';
 import DemoIconSpaceMode from '../../ContextMenu/demos/iconSpaceMode.tsx?demo';
@@ -54,6 +55,12 @@ When the items exceed the available height, the items area scrolls while the hea
 
 <Demo of={DemoHeaderFooterScroll} layout="center" />
 
+## Virtual List
+
+Pass `virtual` (and a `listItemHeight` hint) to `showContextMenu` or `ContextMenuTrigger` for long flat lists: only the rows near the scroll position are mounted, the list scrolls through `ScrollArea`, and header and footer stay pinned. Keyboard navigation works across the full list — arrow keys, Home/End, and typeahead jump to any row, not just the mounted window — and the highlighted row stays mounted while you scroll.
+
+<Demo of={DemoVirtual} layout="center" />
+
 ## Empty Submenu
 
 <Demo of={DemoEmptySubmenu} layout="center" />
@@ -86,6 +93,8 @@ Control how icon spacing is reserved across menu items. In `global` mode (defaul
 | header | Pinned header slot rendered above the scrollable items area | `ReactNode` | - |
 | iconAlign | Icon vertical alignment when items have `desc`. Only effective with descriptions. | `'center' \| 'start'` | `'center'` |
 | iconSpaceMode | Icon space reservation: `global` reserves for all items, `group` reserves per group with icons | `'global' \| 'group'` | `'global'` |
+| listItemHeight | Row height hint for the virtualized list | `number` | - |
+| virtual | Only mount the rows near the scroll position; for long flat lists | `boolean` | `false` |
 
 ### ContextMenuHost
 

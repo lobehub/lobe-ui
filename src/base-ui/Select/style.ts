@@ -78,7 +78,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   list: css`
     overflow-y: auto;
     flex: 1;
-
     min-height: 0;
     padding-block: 0;
   `,
@@ -99,14 +98,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       var(--lobe-select-popup-max-height, var(--available-height))
     );
 
-    max-height: var(--lobe-select-available-height);
-
     transform-origin: var(--transform-origin);
 
     display: flex;
     flex-direction: column;
 
     box-sizing: border-box;
+    max-height: var(--lobe-select-available-height);
 
     transition:
       opacity 150ms ${cssVar.motionEaseOut},
@@ -147,7 +145,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     align-items: center;
 
     min-height: 36px;
-    margin-inline: -4px;
+    margin-inline: calc(-1 * var(--lobe-menu-popup-padding));
     padding-block: 8px;
     padding-inline: 12px;
     border-block-end: 1px solid ${cssVar.colorFillSecondary};

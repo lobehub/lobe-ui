@@ -7,6 +7,7 @@ import type {
 } from '@base-ui/react/menu';
 import type { ReactNode } from 'react';
 
+import type { VirtualListProps } from '@/base-ui/virtual';
 import type { BaseMenuItemType, IconAlign, MenuCheckboxItemType, MenuSwitchItemType } from '@/Menu';
 import type { Trigger } from '@/types';
 import type { Placement } from '@/utils/placement';
@@ -21,10 +22,10 @@ export type DropdownMenuSwitchItem = MenuSwitchItemType;
 
 export type DropdownItem = BaseMenuItemType;
 
-export interface DropdownMenuProps<Payload = unknown> extends Omit<
-  MenuRootProps<Payload>,
-  'children'
-> {
+export interface DropdownMenuProps<Payload = unknown>
+  extends
+    Omit<MenuRootProps<Payload>, 'children'>,
+    Pick<VirtualListProps, 'virtual' | 'listItemHeight'> {
   children: ReactNode;
   /**
    * 底部固定插槽，渲染于可滚动的 items 区域下方，自带分隔边框

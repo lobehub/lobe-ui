@@ -1,12 +1,13 @@
 import type { VirtualElement } from '@floating-ui/react';
 import type { ReactNode } from 'react';
 
+import type { VirtualListProps } from '@/base-ui/virtual';
 import type { IconAlign } from '@/Menu';
 
 import type { IconSpaceMode } from './renderItems';
 import type { ContextMenuItem } from './type';
 
-export type ContextMenuState = {
+export type ContextMenuState = Pick<VirtualListProps, 'virtual' | 'listItemHeight'> & {
   anchor: VirtualElement | null;
   footer?: ReactNode;
   header?: ReactNode;
@@ -74,7 +75,10 @@ export const setContextMenuState = (next: Partial<ContextMenuState>) => {
   notify();
 };
 
-export interface ShowContextMenuOptions {
+export interface ShowContextMenuOptions extends Pick<
+  VirtualListProps,
+  'virtual' | 'listItemHeight'
+> {
   footer?: ReactNode;
   header?: ReactNode;
   iconAlign?: IconAlign;
@@ -114,8 +118,10 @@ const showWebContextMenu = (items: ContextMenuItem[], options?: ShowContextMenuO
     iconAlign: options?.iconAlign,
     iconSpaceMode: options?.iconSpaceMode ?? 'global',
     items,
+    listItemHeight: options?.listItemHeight,
     open: true,
     triggerId: lastPointer.triggerId ?? null,
+    virtual: options?.virtual,
   });
 };
 
@@ -146,8 +152,10 @@ const closeWebContextMenu = () => {
     header: undefined,
     iconSpaceMode: 'global',
     items: [],
+    listItemHeight: undefined,
     open: false,
     triggerId: null,
+    virtual: undefined,
   });
 };
 

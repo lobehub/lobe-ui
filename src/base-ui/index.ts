@@ -68,3 +68,4 @@ export { default as ToggleGroup } from './ToggleGroup';
 export * from './ToggleGroup';
 export { default as Tooltip } from './Tooltip';
 export * from './Tooltip';
+export type { VirtualListProps } from './virtual';
