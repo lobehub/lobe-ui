@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.44.0](https://github.com/lobehub/lobe-ui/compare/v5.43.1...v5.44.0) (2026-09-12)
+
+### ✨ Features
+
+- **base-ui**: Shared virtual list for DropdownMenu, ContextMenu and Select, closes [#657](https://github.com/lobehub/lobe-ui/issues/657) ([7280aae](https://github.com/lobehub/lobe-ui/commit/7280aae))
+
 ## [5.43.1](https://github.com/lobehub/lobe-ui/compare/v5.43.0...v5.43.1) (2026-09-12)
 
 ### 🐛 Bug Fixes
