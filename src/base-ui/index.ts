@@ -42,6 +42,8 @@ export * from './Popover';
 export { default as Progress } from './Progress';
 export * from './Progress';
 export * from './Radio';
+export { default as Result } from './Result';
+export * from './Result';
 export * from './ScrollArea';
 export { default as Segmented } from './Segmented';
 export * from './Segmented';

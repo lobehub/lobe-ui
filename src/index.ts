@@ -30,6 +30,7 @@ export {
   type ProgressType,
   type ProgressVariant,
 } from './base-ui/Progress';
+export { default as Result, type ResultProps, type ResultStatus } from './base-ui/Result';
 export { default as Spin, type SpinProps, type SpinSize, type SpinVariant } from './base-ui/Spin';
 export { default as Block, type BlockProps } from './Block';
 export { default as Burger, type BurgerProps } from './Burger';

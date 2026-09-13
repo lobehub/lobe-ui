@@ -1,0 +1,29 @@
+---
+title: Result
+description: Feedback panel for success, error, warning, and info outcomes, with a status icon, title, subtitle, and extra actions.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Status
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="Result" from=".." />
+
+`Result` renders a native `<section>`. All standard section HTML attributes including `className`, `style`, and `ref` are forwarded to the root element.
+
+### Migrating from antd Result
+
+The core migration is an import replacement:
+
+```tsx | pure
+import { Result } from '@lobehub/ui/base-ui';
+
+<Result status="success" subTitle="Your changes have been saved." title="Success" />;
+```
+
+`icon` overrides the default status icon. `extra` renders a row of actions below the subtitle, and `children` render below that.
