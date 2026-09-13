@@ -2,10 +2,8 @@
 
 import { Accordion as BaseUIAccordion } from '@base-ui/react/accordion';
 import { cx } from 'antd-style';
-import { ChevronDown, ChevronRight } from 'lucide-react';
+import { ChevronDown, ChevronRight, Play } from 'lucide-react';
 import { createContext, type FC, use, useMemo } from 'react';
-
-import { SubmenuArrowIcon } from '@/base-ui/SubmenuArrowIcon';
 
 import {
   contentVariants,
@@ -45,6 +43,7 @@ export const AccordionRoot: FC<AccordionRootProps> = ({
   className,
   hideIndicator = false,
   indicatorPlacement = 'start',
+  multiple = true,
   variant = 'borderless',
   ...rest
 }) => {
@@ -55,7 +54,11 @@ export const AccordionRoot: FC<AccordionRootProps> = ({
 
   return (
     <AccordionContext value={contextValue}>
-      <BaseUIAccordion.Root className={cx(rootVariants({ variant }), className)} {...rest}>
+      <BaseUIAccordion.Root
+        className={cx(rootVariants({ variant }), className)}
+        multiple={multiple}
+        {...rest}
+      >
         {children}
       </BaseUIAccordion.Root>
     </AccordionContext>
@@ -113,7 +116,7 @@ export const AccordionTrigger: FC<AccordionTriggerProps> = ({
   const indicator = !hideIndicator && (
     <span className={indicatorVariants({ placement })}>
       {placement === 'start' && <ChevronRight size={16} />}
-      {placement === 'inline' && <SubmenuArrowIcon />}
+      {placement === 'inline' && <Play fill="currentColor" size={9} strokeWidth={1} />}
       {placement === 'end' && <ChevronDown size={16} />}
     </span>
   );

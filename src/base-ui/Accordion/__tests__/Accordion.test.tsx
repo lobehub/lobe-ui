@@ -1,6 +1,13 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import Accordion from '../Accordion';
+import {
+  AccordionHeader,
+  AccordionItem,
+  AccordionPanel,
+  AccordionRoot,
+  AccordionTrigger,
+} from '../atoms';
 
 const items = [
   { children: 'Panel A', key: 'a', title: 'Item A' },
@@ -53,5 +60,24 @@ describe('Accordion', () => {
     expect(trigger.firstChild?.textContent).toBe('Item A');
     const content = screen.getByText('Panel A');
     expect(getComputedStyle(content).paddingInlineStart).not.toBe('24px');
+  });
+
+  test('AccordionRoot keeps several items open by default', () => {
+    render(
+      <AccordionRoot defaultValue={['a']}>
+        {items.map((item) => (
+          <AccordionItem key={item.key} value={item.key}>
+            <AccordionHeader>
+              <AccordionTrigger>{item.title}</AccordionTrigger>
+            </AccordionHeader>
+            <AccordionPanel>{item.children}</AccordionPanel>
+          </AccordionItem>
+        ))}
+      </AccordionRoot>,
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Item B' }));
+    expect(screen.getByText('Panel A')).toBeTruthy();
+    expect(screen.getByText('Panel B')).toBeTruthy();
   });
 });
