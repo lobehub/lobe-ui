@@ -2,6 +2,13 @@
 
 # Changelog
 
+## [5.45.2](https://github.com/lobehub/lobe-ui/compare/v5.45.1...v5.45.2) (2026-09-13)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: AccordionRoot defaults to multiple, inline arrow uses lucide Play, closes [#665](https://github.com/lobehub/lobe-ui/issues/665) ([597249c](https://github.com/lobehub/lobe-ui/commit/597249c))
+- **base-ui**: Keep 32px header height for inline Accordion actions, closes [#664](https://github.com/lobehub/lobe-ui/issues/664) ([4e5b966](https://github.com/lobehub/lobe-ui/commit/4e5b966))
+
 ## [5.45.1](https://github.com/lobehub/lobe-ui/compare/v5.45.0...v5.45.1) (2026-09-13)
 
 ### 🐛 Bug Fixes
