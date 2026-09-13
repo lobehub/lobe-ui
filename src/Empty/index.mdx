@@ -1,6 +1,6 @@
 ---
 title: Empty
-description: Empty component displays an empty state with customizable icon, emoji, image, title, description, and action buttons. It's commonly used to indicate that there's no data or content to display.
+description: Empty component displays an empty state with customizable icon, emoji, image, title, description, and action buttons, in default, dashed, and stack variants. It's commonly used to indicate that there's no data or content to display.
 category: Data Display
 ---
 
@@ -8,6 +8,9 @@ import DemoIndex from './demos/index.tsx?demo';
 import DemoWithIcon from './demos/WithIcon.tsx?demo';
 import DemoWithEmoji from './demos/WithEmoji.tsx?demo';
 import DemoWithAction from './demos/WithAction.tsx?demo';
+import DemoDashed from './demos/Dashed.tsx?demo';
+import DemoStack from './demos/Stack.tsx?demo';
+import DemoPage from './demos/Page.tsx?demo';
 
 ## Default
 
@@ -24,6 +27,18 @@ import DemoWithAction from './demos/WithAction.tsx?demo';
 ## With Action Button
 
 <Demo of={DemoWithAction} layout="bare" />
+
+## Dashed
+
+<Demo of={DemoDashed} layout="bare" />
+
+## Stack
+
+<Demo of={DemoStack} layout="bare" />
+
+## Page
+
+<Demo of={DemoPage} layout="bare" />
 
 ## APIs
 
