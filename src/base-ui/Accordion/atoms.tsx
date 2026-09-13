@@ -5,8 +5,6 @@ import { cx } from 'antd-style';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { createContext, type FC, use, useMemo } from 'react';
 
-import { SubmenuArrowIcon } from '@/base-ui/SubmenuArrowIcon';
-
 import {
   contentVariants,
   headerVariants,
@@ -40,11 +38,18 @@ const AccordionContext = createContext<AccordionContextValue>({
 
 export const useAccordionContext = () => use(AccordionContext);
 
+const InlineArrowIcon = () => (
+  <svg aria-hidden fill="currentColor" fillRule="evenodd" viewBox="0 0 16 16">
+    <path d="M7.002 10.624a.5.5 0 01-.752-.432V5.808a.5.5 0 01.752-.432l3.758 2.192a.5.5 0 010 .864l-3.758 2.192z" />
+  </svg>
+);
+
 export const AccordionRoot: FC<AccordionRootProps> = ({
   children,
   className,
   hideIndicator = false,
   indicatorPlacement = 'start',
+  multiple = true,
   variant = 'borderless',
   ...rest
 }) => {
@@ -55,7 +60,11 @@ export const AccordionRoot: FC<AccordionRootProps> = ({
 
   return (
     <AccordionContext value={contextValue}>
-      <BaseUIAccordion.Root className={cx(rootVariants({ variant }), className)} {...rest}>
+      <BaseUIAccordion.Root
+        className={cx(rootVariants({ variant }), className)}
+        multiple={multiple}
+        {...rest}
+      >
         {children}
       </BaseUIAccordion.Root>
     </AccordionContext>
@@ -113,7 +122,7 @@ export const AccordionTrigger: FC<AccordionTriggerProps> = ({
   const indicator = !hideIndicator && (
     <span className={indicatorVariants({ placement })}>
       {placement === 'start' && <ChevronRight size={16} />}
-      {placement === 'inline' && <SubmenuArrowIcon />}
+      {placement === 'inline' && <InlineArrowIcon />}
       {placement === 'end' && <ChevronDown size={16} />}
     </span>
   );
