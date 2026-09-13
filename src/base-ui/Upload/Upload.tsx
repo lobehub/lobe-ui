@@ -19,7 +19,12 @@ const resolveAcceptedFiles = async (
 
   const accepted: File[] = [];
   for (const file of files) {
-    const result = await beforeUpload(file, files);
+    let result: boolean | void;
+    try {
+      result = await beforeUpload(file, files);
+    } catch {
+      result = false;
+    }
     if (result !== false) accepted.push(file);
   }
   return accepted;
