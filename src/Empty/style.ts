@@ -44,7 +44,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   rootStack: css`
     padding-block: 12px;
-padding-inline: 8px;
+    padding-inline: 8px;
   `,
   stack: css`
     position: relative;
