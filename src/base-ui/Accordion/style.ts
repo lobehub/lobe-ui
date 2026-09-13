@@ -26,6 +26,23 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   content: css`
     font-size: 14px;
     line-height: 1.6;
+    transition:
+      opacity 200ms ${cssVar.motionEaseOut},
+      translate 200ms ${cssVar.motionEaseOut};
+
+    [data-starting-style] & {
+      translate: 0 6px;
+      opacity: 0;
+    }
+
+    [data-ending-style] & {
+      translate: 0 -6px;
+      opacity: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition-duration: 0s;
+    }
   `,
   contentBorderless: css`
     padding-block: 0 12px;
@@ -122,8 +139,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   panel: css`
     overflow: hidden;
-    height: var(--accordion-panel-height);
+    height: auto;
     transition: height 200ms ${cssVar.motionEaseOut};
+
+    interpolate-size: allow-keywords;
 
     &[data-starting-style],
     &[data-ending-style] {
