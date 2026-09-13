@@ -83,4 +83,6 @@ export { default as Tooltip } from './Tooltip';
 export * from './Tooltip';
 export { default as Tree } from './Tree';
 export * from './Tree';
+export { default as Upload } from './Upload';
+export * from './Upload';
 export type { VirtualListProps } from './virtual';
