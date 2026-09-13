@@ -66,6 +66,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     margin-inline: calc(var(--accordion-hover-inset, 8px) * -1);
     border-radius: ${cssVar.borderRadius};
   `,
+  headerInline: css`
+    margin-inline: 0;
+  `,
+  contentInline: css`
+    padding-block: 0;
+  `,
   indicator: css`
     display: flex;
     flex-shrink: 0;
@@ -80,9 +86,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   indicatorInline: css`
-    width: 14px;
-    height: 14px;
-    margin-inline-start: -4px;
+    width: 18px;
+    height: 18px;
+    margin-inline-start: -6px;
 
     [data-panel-open] & {
       transform: rotate(90deg);
@@ -193,8 +199,13 @@ export const itemVariants = cva(styles.item, {
 });
 
 export const headerVariants = cva(styles.header, {
-  defaultVariants: { variant: 'borderless' },
+  compoundVariants: [{ class: styles.headerInline, inline: true, variant: 'borderless' }],
+  defaultVariants: { inline: false, variant: 'borderless' },
   variants: {
+    inline: {
+      false: null,
+      true: null,
+    },
     variant: {
       borderless: styles.headerBorderless,
       outlined: null,
@@ -226,6 +237,11 @@ export const indicatorVariants = cva(styles.indicator, {
 export const contentVariants = cva(styles.content, {
   compoundVariants: [
     {
+      class: styles.contentInline,
+      inline: true,
+      variant: 'borderless',
+    },
+    {
       class: styles.contentIndent,
       indent: true,
       variant: 'borderless',
@@ -236,9 +252,13 @@ export const contentVariants = cva(styles.content, {
       variant: 'outlined',
     },
   ],
-  defaultVariants: { indent: true, variant: 'borderless' },
+  defaultVariants: { indent: true, inline: false, variant: 'borderless' },
   variants: {
     indent: {
+      false: null,
+      true: null,
+    },
+    inline: {
       false: null,
       true: null,
     },

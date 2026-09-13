@@ -56,6 +56,7 @@ export type AccordionHeaderProps = Omit<
   'className' | 'render'
 > & {
   className?: string;
+  indicatorPlacement?: AccordionIndicatorPlacement;
   variant?: AccordionVariant;
 };
 

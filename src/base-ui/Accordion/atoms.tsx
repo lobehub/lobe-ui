@@ -79,14 +79,19 @@ AccordionItem.displayName = 'AccordionItem';
 
 export const AccordionHeader: FC<AccordionHeaderProps> = ({
   className,
+  indicatorPlacement: placementProp,
   variant: variantProp,
   ...rest
 }) => {
   const ctx = useAccordionContext();
   const variant = variantProp ?? ctx.variant;
+  const inline = (placementProp ?? ctx.indicatorPlacement) === 'inline';
 
   return (
-    <BaseUIAccordion.Header className={cx(headerVariants({ variant }), className)} {...rest} />
+    <BaseUIAccordion.Header
+      className={cx(headerVariants({ inline, variant }), className)}
+      {...rest}
+    />
   );
 };
 
@@ -139,11 +144,12 @@ export const AccordionPanel: FC<AccordionPanelProps> = ({
   const hideIndicator = hideIndicatorProp ?? ctx.hideIndicator;
   const placement = placementProp ?? ctx.indicatorPlacement;
   const indent = !hideIndicator && placement === 'start';
+  const inline = placement === 'inline';
 
   return (
     <BaseUIAccordion.Panel className={cx(styles.panel, className)} {...rest}>
       <div
-        className={cx(contentVariants({ indent, variant }), contentClassName)}
+        className={cx(contentVariants({ indent, inline, variant }), contentClassName)}
         style={contentStyle}
       >
         {children}
