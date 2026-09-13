@@ -2,7 +2,7 @@
 
 import { cssVar, cx } from 'antd-style';
 import { Minus, Plus } from 'lucide-react';
-import { memo, useMemo } from 'react';
+import { type KeyboardEvent, memo, useMemo } from 'react';
 
 import FluentEmoji from '@/FluentEmoji';
 import Icon from '@/Icon';
@@ -71,13 +71,23 @@ const Empty = memo<EmptyProps>(
       );
     }, [image, emoji, imageSize, resolvedIcon, variant, isPage, iconColor, iconSize]);
 
+    const isClickable = !isPage && variant === 'dashed' && !!onClick;
+
     const rootClassName = cx(
       isPage ? styles.rootPage : styles.root,
       !isPage && variant === 'dashed' && styles.dashed,
-      !isPage && variant === 'dashed' && !!onClick && styles.dashedClickable,
+      isClickable && styles.dashedClickable,
       !isPage && variant === 'stack' && styles.rootStack,
       className,
     );
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      if (!isClickable) return;
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+
+      event.preventDefault();
+      (onClick as (event: unknown) => void)?.(event);
+    };
 
     const rootStyle: EmptyProps['style'] = {
       color:
@@ -135,8 +145,11 @@ const Empty = memo<EmptyProps>(
       <div
         className={rootClassName}
         ref={ref}
+        role={isClickable ? 'button' : undefined}
         style={{ alignItems: alignValue, textAlign: isCenter ? 'center' : undefined, ...rootStyle }}
+        tabIndex={isClickable ? 0 : undefined}
         onClick={onClick}
+        onKeyDown={handleKeyDown}
         {...rest}
       >
         {cover && <div {...imageProps}>{cover}</div>}

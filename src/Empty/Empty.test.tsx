@@ -75,6 +75,24 @@ describe('Empty', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
+  it('exposes button semantics and fires onClick on Enter/Space for the clickable dashed variant', () => {
+    const onClick = vi.fn();
+    const { container } = render(
+      <Empty title="No skills yet" variant="dashed" onClick={onClick} />,
+    );
+
+    const root = container.firstChild as HTMLElement;
+
+    expect(root.getAttribute('role')).toBe('button');
+    expect(root.getAttribute('tabindex')).toBe('0');
+
+    fireEvent.keyDown(root, { key: 'Enter' });
+    fireEvent.keyDown(root, { key: ' ' });
+    fireEvent.keyDown(root, { key: 'a' });
+
+    expect(onClick).toHaveBeenCalledTimes(2);
+  });
+
   it('renders a row layout with a left icon for type="page"', () => {
     render(
       <Empty
