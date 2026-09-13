@@ -17,11 +17,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     width: 56px;
     height: 56px;
+    margin-block-end: 8px;
     border-radius: 50%;
   `,
   root: css`
     display: flex;
     flex-direction: column;
+    gap: 6px;
     align-items: center;
 
     padding-block: 16px;
