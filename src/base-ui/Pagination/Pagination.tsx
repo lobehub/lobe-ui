@@ -2,7 +2,7 @@
 
 import { cx } from 'antd-style';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import useControlledState from 'use-merge-value';
 
 import Select from '@/base-ui/Select';
@@ -35,35 +35,43 @@ const Pagination = memo<PaginationProps>(
       value: pageSize,
     });
     const pageCount = getPageCount(total, mergedPageSize);
-    const [mergedCurrent, setMergedCurrent] = useControlledState(
-      clampPage(defaultCurrent, pageCount),
-      {
-        value: current != null ? clampPage(current, pageCount) : undefined,
-      },
-    );
+    const [mergedCurrent, setMergedCurrent] = useControlledState(defaultCurrent, {
+      value: current,
+    });
+    const displayCurrent = clampPage(mergedCurrent, pageCount);
+
+    useEffect(() => {
+      if (mergedCurrent > pageCount) {
+        setMergedCurrent(pageCount);
+        onChange?.(pageCount, mergedPageSize);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [total, mergedPageSize]);
 
     if (hideOnSinglePage && pageCount <= 1) return null;
 
-    const goTo = (page: number) => {
-      const nextPage = clampPage(page, pageCount);
-      setMergedCurrent(nextPage);
-      onChange?.(nextPage, mergedPageSize);
+    const commitCurrent = (nextCurrent: number, nextPageSize: number) => {
+      setMergedCurrent(nextCurrent);
+      onChange?.(nextCurrent, nextPageSize);
     };
 
-    const handlePageSizeChange = (value: unknown) => {
+    const goTo = (page: number) => {
+      commitCurrent(clampPage(page, pageCount), mergedPageSize);
+    };
+
+    const handlePageSizeChange = (value: string) => {
       const nextSize = Number(value);
       const nextPageCount = getPageCount(total, nextSize);
-      const nextCurrent = clampPage(mergedCurrent, nextPageCount);
+      const nextCurrent = clampPage(displayCurrent, nextPageCount);
 
       setMergedPageSize(nextSize);
-      setMergedCurrent(nextCurrent);
+      commitCurrent(nextCurrent, nextSize);
       onPageSizeChange?.(nextCurrent, nextSize);
-      onChange?.(nextCurrent, nextSize);
     };
 
-    const items = getPaginationItems(mergedCurrent, pageCount);
-    const rangeStart = total === 0 ? 0 : (mergedCurrent - 1) * mergedPageSize + 1;
-    const rangeEnd = Math.min(mergedCurrent * mergedPageSize, total);
+    const items = getPaginationItems(displayCurrent, pageCount);
+    const rangeStart = total === 0 ? 0 : (displayCurrent - 1) * mergedPageSize + 1;
+    const rangeEnd = Math.min(displayCurrent * mergedPageSize, total);
 
     return (
       <nav
@@ -80,16 +88,16 @@ const Pagination = memo<PaginationProps>(
         <button
           aria-label="Previous page"
           className={buttonVariants({ size })}
-          disabled={disabled || mergedCurrent <= 1}
+          disabled={disabled || displayCurrent <= 1}
           type="button"
-          onClick={() => goTo(mergedCurrent - 1)}
+          onClick={() => goTo(displayCurrent - 1)}
         >
           <ChevronLeft size={size === 'small' ? 14 : 16} />
         </button>
         {items.map((item) =>
           typeof item === 'number' ? (
             <button
-              aria-current={item === mergedCurrent ? 'page' : undefined}
+              aria-current={item === displayCurrent ? 'page' : undefined}
               className={buttonVariants({ size })}
               disabled={disabled}
               key={item}
@@ -107,9 +115,9 @@ const Pagination = memo<PaginationProps>(
         <button
           aria-label="Next page"
           className={buttonVariants({ size })}
-          disabled={disabled || mergedCurrent >= pageCount}
+          disabled={disabled || displayCurrent >= pageCount}
           type="button"
-          onClick={() => goTo(mergedCurrent + 1)}
+          onClick={() => goTo(displayCurrent + 1)}
         >
           <ChevronRight size={size === 'small' ? 14 : 16} />
         </button>

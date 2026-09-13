@@ -60,11 +60,12 @@ describe('Pagination', () => {
   });
 
   test('clamps and resets current when pageSize shrinks the page count', () => {
+    const onChange = vi.fn();
     const Harness = () => {
       const [pageSize, setPageSize] = useState(10);
       return (
         <>
-          <Pagination current={9} pageSize={pageSize} total={90} />
+          <Pagination current={9} pageSize={pageSize} total={90} onChange={onChange} />
           <button type="button" onClick={() => setPageSize(50)}>
             shrink
           </button>
@@ -77,6 +78,30 @@ describe('Pagination', () => {
 
     fireEvent.click(screen.getByText('shrink'));
 
+    expect(screen.getByText('2').getAttribute('aria-current')).toBe('page');
+    expect(onChange).toHaveBeenCalledWith(2, 50);
+  });
+
+  test('notifies onChange when a controlled current is clamped after total shrinks', () => {
+    const onChange = vi.fn();
+    const Harness = () => {
+      const [total, setTotal] = useState(90);
+      return (
+        <>
+          <Pagination current={9} pageSize={10} total={total} onChange={onChange} />
+          <button type="button" onClick={() => setTotal(15)}>
+            shrink total
+          </button>
+        </>
+      );
+    };
+    render(<Harness />);
+
+    expect(screen.getByText('9').getAttribute('aria-current')).toBe('page');
+
+    fireEvent.click(screen.getByText('shrink total'));
+
+    expect(onChange).toHaveBeenCalledWith(2, 10);
     expect(screen.getByText('2').getAttribute('aria-current')).toBe('page');
   });
 
