@@ -2,10 +2,11 @@
 
 import { cx } from 'antd-style';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
 import Select from '@/base-ui/Select';
+import { useEventCallback } from '@/hooks/useEventCallback';
 
 import { clampPage, getPageCount, getPaginationItems } from './helpers';
 import { buttonVariants, ellipsisVariants, styles } from './style';
@@ -38,14 +39,31 @@ const Pagination = memo<PaginationProps>(
     const [mergedCurrent, setMergedCurrent] = useControlledState(defaultCurrent, {
       value: current,
     });
-    const displayCurrent = clampPage(mergedCurrent, pageCount);
+    const onChangeStable = useEventCallback((nextCurrent: number, nextPageSize: number) => {
+      onChange?.(nextCurrent, nextPageSize);
+    });
+
+    const pendingNotifyRef = useRef<{ current: number; pageSize: number } | null>(null);
+    const [prevPageCount, setPrevPageCount] = useState(pageCount);
+
+    if (pageCount !== prevPageCount) {
+      setPrevPageCount(pageCount);
+
+      if (mergedCurrent > pageCount && pageCount >= 1) {
+        setMergedCurrent(pageCount);
+        pendingNotifyRef.current = { current: pageCount, pageSize: mergedPageSize };
+      }
+    }
 
     useEffect(() => {
-      if (mergedCurrent > pageCount) {
-        onChange?.(pageCount, mergedPageSize);
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [total, mergedPageSize]);
+      if (!pendingNotifyRef.current) return;
+
+      const { current: nextCurrent, pageSize: nextPageSize } = pendingNotifyRef.current;
+      pendingNotifyRef.current = null;
+      onChangeStable(nextCurrent, nextPageSize);
+    });
+
+    const displayCurrent = clampPage(mergedCurrent, pageCount);
 
     if (hideOnSinglePage && pageCount <= 1) return null;
 
@@ -124,7 +142,7 @@ const Pagination = memo<PaginationProps>(
           <Select
             disabled={disabled}
             size={size === 'small' ? 'small' : 'middle'}
-            style={{ marginInlineStart: 8 }}
+            style={{ flex: 'none', marginInlineStart: 8, width: 'auto' }}
             value={String(mergedPageSize)}
             options={pageSizeOptions.map((option) => ({
               label: `${option} / page`,

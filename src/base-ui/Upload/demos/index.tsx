@@ -1,10 +1,11 @@
 import { Flexbox, Upload, UploadDragger } from '@lobehub/ui';
+import { Button } from '@lobehub/ui/base-ui';
 
 export default () => {
   return (
     <Flexbox gap={16} padding={16}>
       <Upload multiple onFiles={(files) => console.info(files.map((file) => file.name))}>
-        <button type="button">Upload file</button>
+        <Button>Upload file</Button>
       </Upload>
       <UploadDragger
         accept="image/*"

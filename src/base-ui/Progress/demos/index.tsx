@@ -1,5 +1,4 @@
-import { Flexbox } from '@lobehub/ui';
-import { Progress } from '@lobehub/ui/base-ui';
+import { Flexbox, Progress } from '@lobehub/ui';
 
 export default () => {
   return (

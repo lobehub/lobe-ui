@@ -1,5 +1,4 @@
-import { Flexbox } from '@lobehub/ui';
-import { Spin } from '@lobehub/ui/base-ui';
+import { Flexbox, Spin } from '@lobehub/ui';
 import { cssVar } from 'antd-style';
 
 export default () => {

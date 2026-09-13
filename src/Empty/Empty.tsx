@@ -53,8 +53,8 @@ const Empty = memo<EmptyProps>(
       if (variant === 'stack' && !isPage) {
         return (
           <div className={styles.stack}>
-            <i className={styles.stackCard} />
-            <i className={styles.stackCard} />
+            <i className={cx(styles.stackCard, styles.stackCardBack)} />
+            <i className={cx(styles.stackCard, styles.stackCardBack)} />
             <i className={styles.stackCard}>
               <Icon color={iconColor} icon={resolvedIcon} size={16} />
             </i>
@@ -125,7 +125,13 @@ const Empty = memo<EmptyProps>(
 
     if (isPage) {
       return (
-        <div className={rootClassName} ref={ref} style={rootStyle} onClick={onClick} {...rest}>
+        <div
+          className={rootClassName}
+          ref={ref}
+          style={{ alignItems: alignValue, ...rootStyle }}
+          onClick={onClick}
+          {...rest}
+        >
           {cover && <div {...imageProps}>{cover}</div>}
           <div>
             {titleNode}

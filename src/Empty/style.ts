@@ -83,4 +83,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       inset-block-start: 12px;
     }
   `,
+  stackCardBack: css`
+    background: ${cssVar.colorFillQuaternary};
+  `,
 }));

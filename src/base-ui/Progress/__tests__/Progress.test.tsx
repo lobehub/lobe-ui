@@ -104,6 +104,25 @@ describe('Progress', () => {
     expect(root.getAttribute('aria-valuetext')).toBe('62 done');
   });
 
+  test('gives the segments container flex: 1 so it fills the row', () => {
+    const { container } = render(<Progress percent={50} variant="segments" />);
+
+    const segmentsEl = container.querySelector('div > div');
+    expect(segmentsEl && getComputedStyle(segmentsEl).flex).toBe('1 1 0%');
+  });
+
+  test('hides the centered info on small circles', () => {
+    render(<Progress percent={62} size="small" type="circle" />);
+
+    expect(screen.queryByText('62%')).toBeNull();
+  });
+
+  test('shows the centered info once the circle reaches 40px', () => {
+    render(<Progress percent={62} size={40} type="circle" />);
+
+    expect(screen.getByText('62%')).toBeTruthy();
+  });
+
   test('exposes progressbar aria attributes on the circle type', () => {
     render(<Progress percent={33} type="circle" />);
 

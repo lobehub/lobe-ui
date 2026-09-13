@@ -144,7 +144,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   segments: css`
     display: flex;
+    flex: 1;
     gap: 2px;
+    min-width: 0;
   `,
 }));
 
