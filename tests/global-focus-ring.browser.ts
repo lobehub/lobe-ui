@@ -33,12 +33,31 @@ const main = async () => {
       route.fulfill({
         contentType: 'text/html',
         body: `<!doctype html><html lang="en"><title>Global keyboard focus verification</title>
-      <style>body { font: 16px system-ui; padding: 40px; } button,input { padding: 12px; border-radius: 8px; } #clip { overflow: hidden; width: 360px; height: 140px; margin-top: 40px; border: 1px solid #999; } #edge { margin: 0; } #multiline { display: block; width: 70px; margin-top: 30px; } dialog { padding: 35px; }</style>
+      <style>body { font: 16px system-ui; padding: 40px; } button,input { padding: 12px; border-radius: 8px; } #clip { contain: strict; overflow: hidden; width: 360px; height: 140px; margin-top: 40px; border: 1px solid #999; } #edge { margin: 0; } #multiline { display: block; width: 70px; margin-top: 30px; } dialog { padding: 35px; }</style>
       <h1>Global keyboard focus</h1><p>Native controls, with no component focus class.</p>
       <button id="first">First control</button>
       <div id="clip"><button id="edge">Clipped native button</button><input aria-label="Native input" id="input"><div style="height:400px"></div></div>
       <span id="multiline"><a href="#" id="link">A link wrapping across multiple lines</a></span>
       <dialog id="dialog"><button id="inside">Modal button</button></dialog>
+      <script>
+        let handlingFocusIn = false;
+        const getBoundingClientRect = HTMLElement.prototype.getBoundingClientRect;
+        const showPopover = HTMLElement.prototype.showPopover;
+        document.addEventListener('focusin', () => {
+          handlingFocusIn = true;
+          queueMicrotask(() => handlingFocusIn = false);
+        }, true);
+        HTMLElement.prototype.getBoundingClientRect = function () {
+          if (this.matches?.('[data-lobe-global-focus-ring][data-anchor-assigned-during-focusin]')) return new DOMRect();
+          return getBoundingClientRect.call(this);
+        };
+        HTMLElement.prototype.showPopover = function () {
+          showPopover.call(this);
+          if (this.matches?.('[data-lobe-global-focus-ring]')) {
+            this.toggleAttribute('data-anchor-assigned-during-focusin', handlingFocusIn);
+          }
+        };
+      </script>
       <script type="module">import { installGlobalFocusRing } from '/src/GlobalFocusRing/index.ts'; window.install = installGlobalFocusRing; window.cleanup = installGlobalFocusRing();</script>
       </html>`,
       }),
@@ -69,6 +88,7 @@ const main = async () => {
         );
       });
     await page.keyboard.press('Tab');
+    await settle();
     assert.equal(await page.locator('#first').evaluate((e) => e === document.activeElement), true);
     assert(await aligned());
     check('keyboard focus on native button');
@@ -89,6 +109,7 @@ const main = async () => {
     assert(await aligned());
     check('window blur keeps clipped local outline suppressed and focus restores the ring');
     await page.keyboard.press('Tab');
+    await settle();
     assert(await aligned());
     await page.screenshot({ path: `${output}/clipped-light.png` });
     check('clipping boundary and native outline suppression');
@@ -167,6 +188,7 @@ const main = async () => {
     await page.evaluate(() => {
       (document.querySelector('#first') as HTMLElement).focus();
     });
+    await settle();
     assert.equal(
       await page
         .locator('#dynamic')

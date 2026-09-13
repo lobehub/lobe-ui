@@ -78,15 +78,35 @@ export const installGlobalFocusRing = (doc: Document = document): (() => void) =
           'color',
           'file',
         ].includes((next as HTMLInputElement).type)) ||
-      !next.matches(':focus-visible') ||
-      next.getClientRects().length !== 1
+      !next.matches(':focus-visible')
     )
       return;
 
     const element = next as HTMLElement;
+    let scope = element.parentElement;
+    while (scope && win.getComputedStyle(scope).contain === 'none') scope = scope.parentElement;
+    // Anchor names do not cross CSS containment, while a popover still escapes its clipping.
+    const ringParent = scope || doc.body;
+    const moved = ring.parentElement !== ringParent;
+    if (moved) ringParent.append(ring);
+
     const computed = win.getComputedStyle(element);
-    const rect = element.getBoundingClientRect();
-    if (!rect.width || !rect.height || computed.visibility !== 'visible') return;
+    const borderRadius = computed.borderRadius;
+    const color =
+      computed.getPropertyValue('--lobe-focus-ring-color').trim() ||
+      computed.getPropertyValue('--ant-color-info').trim() ||
+      '#1677ff';
+    const styleChanged =
+      ring.style.borderRadius !== borderRadius ||
+      ring.style.getPropertyValue('--lobe-focus-ring-color') !== color;
+    if (styleChanged) {
+      ring.style.borderRadius = borderRadius;
+      ring.style.setProperty('--lobe-focus-ring-color', color);
+    }
+    if (moved || styleChanged) {
+      schedule();
+      return;
+    }
 
     const saved = ['anchor-name', 'outline'].map((property) => ({
       priority: element.style.getPropertyPriority(property),
@@ -98,13 +118,6 @@ export const installGlobalFocusRing = (doc: Document = document): (() => void) =
     const assignedAnchor =
       anchor && anchor !== 'none' ? `${anchor}, --lobe-global-focus` : '--lobe-global-focus';
     element.style.setProperty('anchor-name', assignedAnchor, 'important');
-    ring.style.borderRadius = computed.borderRadius;
-    ring.style.setProperty(
-      '--lobe-focus-ring-color',
-      computed.getPropertyValue('--lobe-focus-ring-color').trim() ||
-        computed.getPropertyValue('--ant-color-info').trim() ||
-        '#1677ff',
-    );
 
     restoreTarget = () => {
       for (const { property, value, priority } of saved) {
@@ -118,6 +131,16 @@ export const installGlobalFocusRing = (doc: Document = document): (() => void) =
         else element.setAttribute('data-lobe-focus-ring', oldMarker);
       }
     };
+    const rect = element.getBoundingClientRect();
+    if (
+      element.getClientRects().length !== 1 ||
+      !rect.width ||
+      !rect.height ||
+      computed.visibility !== 'visible'
+    ) {
+      clear();
+      return;
+    }
     try {
       ring.showPopover();
       // Do not suppress a working native outline when an anchor cannot resolve.
@@ -147,6 +170,7 @@ export const installGlobalFocusRing = (doc: Document = document): (() => void) =
         sync();
       });
   };
+  const focus = () => win.queueMicrotask(sync);
   const blur = () => {
     win.cancelAnimationFrame(frame);
     frame = 0;
@@ -156,7 +180,7 @@ export const installGlobalFocusRing = (doc: Document = document): (() => void) =
     if (target && !target.isConnected) clear();
   });
   observer.observe(doc.body, { childList: true, subtree: true });
-  doc.addEventListener('focusin', sync, true);
+  doc.addEventListener('focusin', focus, true);
   doc.addEventListener('focusout', schedule, true);
   doc.addEventListener('keydown', schedule, true);
   doc.addEventListener('pointerdown', schedule, true);
@@ -168,7 +192,7 @@ export const installGlobalFocusRing = (doc: Document = document): (() => void) =
       disposed = true;
       win.cancelAnimationFrame(frame);
       observer.disconnect();
-      doc.removeEventListener('focusin', sync, true);
+      doc.removeEventListener('focusin', focus, true);
       doc.removeEventListener('focusout', schedule, true);
       doc.removeEventListener('keydown', schedule, true);
       doc.removeEventListener('pointerdown', schedule, true);

@@ -25,7 +25,7 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
 
-    @media (max-width: 640px) {
+    @media (width <= 640px) {
       grid-template-columns: 1fr;
     }
   `,
@@ -40,16 +40,19 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   edgeTarget: css`
     width: calc(100% - 24px);
-    margin: 0 12px;
+    margin-block: 0;
+    margin-inline: 12px;
   `,
   input: css`
     box-sizing: border-box;
     width: 100%;
-    padding: 9px 12px;
+    padding-block: 9px;
+    padding-inline: 12px;
     border: 1px solid ${cssVar.colorBorder};
     border-radius: 8px;
 
     color: ${cssVar.colorText};
+
     background: ${cssVar.colorBgContainer};
 
     &:focus-visible {
@@ -60,11 +63,13 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
   target: css`
     cursor: pointer;
 
-    padding: 9px 12px;
+    padding-block: 9px;
+    padding-inline: 12px;
     border: 1px solid ${cssVar.colorBorder};
     border-radius: 8px;
 
     color: ${cssVar.colorText};
+
     background: ${cssVar.colorBgElevated};
 
     &:hover {
@@ -123,7 +128,9 @@ const Demo = () => {
     let frame = 0;
     const schedule = () => {
       cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(readRingState);
+      frame = requestAnimationFrame(() => {
+        frame = requestAnimationFrame(readRingState);
+      });
     };
     document.addEventListener('focusin', schedule);
     window.addEventListener('blur', schedule);
