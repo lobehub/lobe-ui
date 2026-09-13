@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.45.3](https://github.com/lobehub/lobe-ui/compare/v5.45.2...v5.45.3) (2026-09-13)
+
+### 💄 Styles
+
+- **base-ui**: Shrink inline Accordion arrow to 7px, closes [#666](https://github.com/lobehub/lobe-ui/issues/666) ([6f4181d](https://github.com/lobehub/lobe-ui/commit/6f4181d))
+
 ## [5.45.2](https://github.com/lobehub/lobe-ui/compare/v5.45.1...v5.45.2) (2026-09-13)
 
 ### 🐛 Bug Fixes
