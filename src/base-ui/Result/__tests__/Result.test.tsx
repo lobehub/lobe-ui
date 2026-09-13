@@ -51,6 +51,13 @@ describe('Result', () => {
     expect(container.querySelector('p')).toBeNull();
   });
 
+  test('stacks content with a 6px gap on the root', () => {
+    const { container } = render(<Result title="Title" />);
+
+    const root = container.querySelector('section');
+    expect(getComputedStyle(root!).gap).toBe('6px');
+  });
+
   test('forwards className and style to the root section', () => {
     const { container } = render(<Result className="custom" style={{ marginTop: 4 }} />);
 
