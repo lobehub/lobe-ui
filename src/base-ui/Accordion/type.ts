@@ -2,7 +2,7 @@ import { type Accordion as BaseUIAccordion } from '@base-ui/react/accordion';
 import { type ComponentProps, type CSSProperties, type ReactNode, type Ref } from 'react';
 
 export type AccordionVariant = 'borderless' | 'outlined';
-export type AccordionIndicatorPlacement = 'end' | 'start';
+export type AccordionIndicatorPlacement = 'end' | 'inline' | 'start';
 
 export interface AccordionClassNames {
   action?: string;
