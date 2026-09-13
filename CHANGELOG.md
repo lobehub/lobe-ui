@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.46.1](https://github.com/lobehub/lobe-ui/compare/v5.46.0...v5.46.1) (2026-09-13)
+
+### 🐛 Bug Fixes
+
+- Preserve global focus ring across window blur ([a60d80f](https://github.com/lobehub/lobe-ui/commit/a60d80f))
+
 # [5.46.0](https://github.com/lobehub/lobe-ui/compare/v5.45.3...v5.46.0) (2026-09-13)
 
 ### ✨ Features
