@@ -105,6 +105,20 @@ describe('Pagination', () => {
     expect(screen.getByText('2').getAttribute('aria-current')).toBe('page');
   });
 
+  test('notifies onChange when an uncontrolled current is clamped after total shrinks', () => {
+    const onChange = vi.fn();
+    const { rerender } = render(
+      <Pagination defaultCurrent={9} pageSize={10} total={90} onChange={onChange} />,
+    );
+
+    expect(screen.getByText('9').getAttribute('aria-current')).toBe('page');
+
+    rerender(<Pagination defaultCurrent={9} pageSize={10} total={15} onChange={onChange} />);
+
+    expect(onChange).toHaveBeenCalledWith(2, 10);
+    expect(screen.getByText('2').getAttribute('aria-current')).toBe('page');
+  });
+
   test('calls onPageSizeChange and onChange when the size changer selects an option', () => {
     const onPageSizeChange = vi.fn();
     const onChange = vi.fn();
