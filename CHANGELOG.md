@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.45.1](https://github.com/lobehub/lobe-ui/compare/v5.45.0...v5.45.1) (2026-09-13)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Match legacy metrics for inline Accordion indicator, closes [#663](https://github.com/lobehub/lobe-ui/issues/663) ([f311bdf](https://github.com/lobehub/lobe-ui/commit/f311bdf))
+
 # [5.45.0](https://github.com/lobehub/lobe-ui/compare/v5.44.0...v5.45.0) (2026-09-13)
 
 ### ✨ Features
