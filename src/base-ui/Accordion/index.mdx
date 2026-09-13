@@ -5,6 +5,7 @@ category: Data Display
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import DemoInline from './demos/inline.tsx?demo';
 import DemoOutlined from './demos/outlined.tsx?demo';
 import DemoAtoms from './demos/atoms.tsx?demo';
 
@@ -19,6 +20,10 @@ The title text column is the alignment reference: the hover highlight and hit ar
 Container border with dividers between items. The first example is single-open (`multiple={false}`), the second places the indicator at the end.
 
 <Demo of={DemoOutlined} layout="bare" />
+
+## Inline indicator
+
+<Demo of={DemoInline} layout="bare" />
 
 ## Atom Components
 
@@ -40,6 +45,12 @@ Container border with dividers between items. The first example is single-open (
 | action           | Actions shown at the header end on hover | `ReactNode` | -       |
 | alwaysShowAction | Show the action without hovering         | `boolean`   | `false` |
 | disabled         | Whether the item is disabled             | `boolean`   | `false` |
+
+### Indicator placement
+
+- `start` (default) — chevron before the title; panel content is indented to align with the title.
+- `inline` — small filled arrow right after the title, no panel indent (the compact sidebar look).
+- `end` — chevron pushed to the trailing edge of the header.
 
 ### Variants
 

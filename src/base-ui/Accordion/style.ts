@@ -79,6 +79,15 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       transition-duration: 0s;
     }
   `,
+  indicatorInline: css`
+    width: 14px;
+    height: 14px;
+    margin-inline-start: -4px;
+
+    [data-panel-open] & {
+      transform: rotate(90deg);
+    }
+  `,
   indicatorEnd: css`
     margin-inline-start: auto;
 
@@ -208,6 +217,7 @@ export const indicatorVariants = cva(styles.indicator, {
   variants: {
     placement: {
       end: styles.indicatorEnd,
+      inline: styles.indicatorInline,
       start: styles.indicatorStart,
     },
   },

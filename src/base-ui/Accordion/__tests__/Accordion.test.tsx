@@ -44,4 +44,14 @@ describe('Accordion', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Item C' }));
     expect(screen.queryByText('Panel C')).toBeNull();
   });
+
+  test('inline placement renders the indicator after the title without panel indent', () => {
+    render(<Accordion defaultValue={['a']} indicatorPlacement="inline" items={items} />);
+
+    const trigger = screen.getByRole('button', { name: 'Item A' });
+    expect(trigger.lastElementChild?.querySelector('svg')).toBeTruthy();
+    expect(trigger.firstChild?.textContent).toBe('Item A');
+    const content = screen.getByText('Panel A');
+    expect(getComputedStyle(content).paddingInlineStart).not.toBe('24px');
+  });
 });

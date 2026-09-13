@@ -5,6 +5,8 @@ import { cx } from 'antd-style';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { createContext, type FC, use, useMemo } from 'react';
 
+import { SubmenuArrowIcon } from '@/base-ui/SubmenuArrowIcon';
+
 import {
   contentVariants,
   headerVariants,
@@ -105,7 +107,9 @@ export const AccordionTrigger: FC<AccordionTriggerProps> = ({
 
   const indicator = !hideIndicator && (
     <span className={indicatorVariants({ placement })}>
-      {placement === 'start' ? <ChevronRight size={16} /> : <ChevronDown size={16} />}
+      {placement === 'start' && <ChevronRight size={16} />}
+      {placement === 'inline' && <SubmenuArrowIcon />}
+      {placement === 'end' && <ChevronDown size={16} />}
     </span>
   );
 
@@ -113,7 +117,7 @@ export const AccordionTrigger: FC<AccordionTriggerProps> = ({
     <BaseUIAccordion.Trigger className={cx(triggerVariants({ variant }), className)} {...rest}>
       {placement === 'start' && indicator}
       {children}
-      {placement === 'end' && indicator}
+      {placement !== 'start' && indicator}
     </BaseUIAccordion.Trigger>
   );
 };
