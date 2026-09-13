@@ -68,6 +68,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   headerInline: css`
     margin-inline: 0;
+
+    > .accordion-action {
+      padding-block: 4px;
+    }
   `,
   contentInline: css`
     padding-block: 0;
