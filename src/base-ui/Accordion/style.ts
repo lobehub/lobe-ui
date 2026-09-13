@@ -86,6 +86,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   indicatorInline: css`
+    justify-content: center;
     width: 18px;
     height: 18px;
     margin-inline-start: -6px;

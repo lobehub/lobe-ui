@@ -2,7 +2,7 @@
 
 import { Accordion as BaseUIAccordion } from '@base-ui/react/accordion';
 import { cx } from 'antd-style';
-import { ChevronDown, ChevronRight } from 'lucide-react';
+import { ChevronDown, ChevronRight, Play } from 'lucide-react';
 import { createContext, type FC, use, useMemo } from 'react';
 
 import {
@@ -37,12 +37,6 @@ const AccordionContext = createContext<AccordionContextValue>({
 });
 
 export const useAccordionContext = () => use(AccordionContext);
-
-const InlineArrowIcon = () => (
-  <svg aria-hidden fill="currentColor" fillRule="evenodd" viewBox="0 0 16 16">
-    <path d="M7.002 10.624a.5.5 0 01-.752-.432V5.808a.5.5 0 01.752-.432l3.758 2.192a.5.5 0 010 .864l-3.758 2.192z" />
-  </svg>
-);
 
 export const AccordionRoot: FC<AccordionRootProps> = ({
   children,
@@ -122,7 +116,7 @@ export const AccordionTrigger: FC<AccordionTriggerProps> = ({
   const indicator = !hideIndicator && (
     <span className={indicatorVariants({ placement })}>
       {placement === 'start' && <ChevronRight size={16} />}
-      {placement === 'inline' && <InlineArrowIcon />}
+      {placement === 'inline' && <Play fill="currentColor" size={9} strokeWidth={1} />}
       {placement === 'end' && <ChevronDown size={16} />}
     </span>
   );
