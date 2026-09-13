@@ -53,6 +53,20 @@ const Progress = memo<ProgressProps>(
       return format ? format(clamped) : `${clamped}%`;
     }, [status, format, clamped, barColor]);
 
+    const ariaValueText = useMemo(() => {
+      if (!format) return undefined;
+      const value = format(clamped);
+      return typeof value === 'string' || typeof value === 'number' ? String(value) : undefined;
+    }, [format, clamped]);
+
+    const progressAria = {
+      'aria-valuemax': 100,
+      'aria-valuemin': 0,
+      'aria-valuenow': clamped,
+      'aria-valuetext': ariaValueText,
+      'role': 'progressbar' as const,
+    };
+
     if (type === 'circle') {
       const isPreset = typeof size === 'string';
       const diameter = isPreset
@@ -66,7 +80,13 @@ const Progress = memo<ProgressProps>(
       const offset = circumference * (1 - clamped / 100);
 
       return (
-        <div className={cx(styles.circleRoot, className)} ref={ref} style={style} {...rest}>
+        <div
+          className={cx(styles.circleRoot, className)}
+          ref={ref}
+          style={style}
+          {...progressAria}
+          {...rest}
+        >
           <svg
             className={styles.circleSvg}
             height={diameter}
@@ -113,7 +133,13 @@ const Progress = memo<ProgressProps>(
       const filled = Math.round((segments * clamped) / 100);
 
       return (
-        <div className={cx(styles.rowRoot, className)} ref={ref} style={style} {...rest}>
+        <div
+          className={cx(styles.rowRoot, className)}
+          ref={ref}
+          style={style}
+          {...progressAria}
+          {...rest}
+        >
           <div className={cx(styles.segments, heightClass('block'))} style={heightStyle}>
             {Array.from({ length: segments }, (_, index) => (
               <span
@@ -130,7 +156,13 @@ const Progress = memo<ProgressProps>(
 
     if (variant === 'inset') {
       return (
-        <div className={cx(styles.rowRoot, className)} ref={ref} style={style} {...rest}>
+        <div
+          className={cx(styles.rowRoot, className)}
+          ref={ref}
+          style={style}
+          {...progressAria}
+          {...rest}
+        >
           <div
             className={cx(styles.rowTrack, styles.insetTrack, heightClass('block'))}
             style={heightStyle}
@@ -147,7 +179,13 @@ const Progress = memo<ProgressProps>(
     }
 
     return (
-      <div className={cx(styles.lineRoot, className)} ref={ref} style={style} {...rest}>
+      <div
+        className={cx(styles.lineRoot, className)}
+        ref={ref}
+        style={style}
+        {...progressAria}
+        {...rest}
+      >
         {(label || showInfo) && (
           <div className={styles.lineMeta}>
             <span>{label}</span>
