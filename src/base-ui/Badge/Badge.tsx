@@ -57,7 +57,6 @@ const Badge = memo<BadgeProps>(
     const pillStyle = {
       background: color,
       transform: offset ? `translate(${offset[0]}px, ${offset[1]}px)` : undefined,
-      ...style,
     };
 
     if (children == null) {
@@ -67,7 +66,7 @@ const Badge = memo<BadgeProps>(
         <span
           className={cx(pillSize({ size }), dot && styles.pillDot, className)}
           ref={ref}
-          style={pillStyle}
+          style={{ ...pillStyle, ...style }}
           {...rest}
         >
           {!dot && content}
