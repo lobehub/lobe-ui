@@ -16,6 +16,14 @@ export { default as Alert, type AlertProps } from './Alert';
 export { default as AutoComplete, type AutoCompleteProps } from './AutoComplete';
 export { default as Avatar, AvatarGroup, type AvatarGroupProps, type AvatarProps } from './Avatar';
 export { styles as menuSharedStyles } from './base-ui/DropdownMenu/sharedStyle';
+export {
+  default as Progress,
+  type ProgressProps,
+  type ProgressSize,
+  type ProgressStatus,
+  type ProgressType,
+  type ProgressVariant,
+} from './base-ui/Progress';
 export { default as Spin, type SpinProps, type SpinSize, type SpinVariant } from './base-ui/Spin';
 export { default as Block, type BlockProps } from './Block';
 export { default as Burger, type BurgerProps } from './Burger';
