@@ -42,7 +42,6 @@ const Pagination = memo<PaginationProps>(
 
     useEffect(() => {
       if (mergedCurrent > pageCount) {
-        setMergedCurrent(pageCount);
         onChange?.(pageCount, mergedPageSize);
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
