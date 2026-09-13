@@ -77,6 +77,20 @@ describe('Upload', () => {
     expect(onFiles.mock.calls[0][0].map((f: File) => f.name)).toEqual(['a.txt']);
   });
 
+  test('beforeUpload rejecting drops that file without an unhandled rejection', async () => {
+    const onFiles = vi.fn();
+    const beforeUpload = (f: File) =>
+      f.name === 'b.txt' ? Promise.reject(new Error('nope')) : Promise.resolve(true);
+    const { container } = render(<Upload multiple beforeUpload={beforeUpload} onFiles={onFiles} />);
+    const input = container.querySelector('input[type="file"]') as HTMLInputElement;
+    const files = [file('a.txt'), file('b.txt')];
+
+    selectFiles(input, files);
+
+    await waitFor(() => expect(onFiles).toHaveBeenCalledTimes(1));
+    expect(onFiles.mock.calls[0][0].map((f: File) => f.name)).toEqual(['a.txt']);
+  });
+
   test('maxCount slices the accepted files', async () => {
     const onFiles = vi.fn();
     const { container } = render(<Upload multiple maxCount={1} onFiles={onFiles} />);
@@ -131,6 +145,27 @@ describe('Upload', () => {
     fireEvent.click(screen.getByRole('button'));
 
     expect(clickSpy).not.toHaveBeenCalled();
+  });
+
+  test('clicking a button child opens the dialog exactly once', () => {
+    const { container } = render(
+      <Upload>
+        <button type="button">Upload file</button>
+      </Upload>,
+    );
+    const input = container.querySelector('input[type="file"]') as HTMLInputElement;
+    const clickSpy = vi.spyOn(input, 'click');
+
+    fireEvent.click(screen.getByText('Upload file'));
+
+    expect(clickSpy).toHaveBeenCalledTimes(1);
+  });
+
+  test('sets webkitdirectory on the input when directory is set', () => {
+    const { container } = render(<Upload directory />);
+    const input = container.querySelector('input[type="file"]') as HTMLInputElement;
+
+    expect(input.getAttribute('webkitdirectory')).toBe('');
   });
 
   test('openFileDialogOnClick=false blocks click', () => {
