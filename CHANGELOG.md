@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [5.46.2](https://github.com/lobehub/lobe-ui/compare/v5.46.1...v5.46.2) (2026-09-13)
+
+### 🎫 Chores
+
+- **eslint**: Ban legacy Accordion and Collapse imports, closes [#661](https://github.com/lobehub/lobe-ui/issues/661) ([82848a2](https://github.com/lobehub/lobe-ui/commit/82848a2))
+
+### 🐛 Bug Fixes
+
+- Keep global focus ring across containment ([6094661](https://github.com/lobehub/lobe-ui/commit/6094661))
+
 ## [5.46.1](https://github.com/lobehub/lobe-ui/compare/v5.46.0...v5.46.1) (2026-09-13)
 
 ### 🐛 Bug Fixes
