@@ -19,7 +19,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     border-radius: 999px;
 
     font-family: ${cssVar.fontFamilyCode};
-    font-size: 12px;
+    font-size: 11px;
+    font-weight: 500;
     font-variant-numeric: tabular-nums;
     line-height: 18px;
     color: ${cssVar.colorWhite};

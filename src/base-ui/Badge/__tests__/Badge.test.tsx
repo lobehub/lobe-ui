@@ -91,6 +91,21 @@ describe('Badge', () => {
     expect(pill?.getAttribute('style')).toContain('translate(4px, -4px)');
   });
 
+  test('keeps the pill transform bound to offset when a caller style sets transform on the wrapper', () => {
+    const { container } = render(
+      <Badge count={5} offset={[4, -4]} style={{ transform: 'scale(1.2)' }}>
+        <span>content</span>
+      </Badge>,
+    );
+
+    const wrapper = container.firstElementChild;
+    expect(wrapper?.getAttribute('style')).toContain('scale(1.2)');
+
+    const pill = container.querySelector('span[style*="translate"]');
+    expect(pill?.getAttribute('style')).toContain('translate(4px, -4px)');
+    expect(pill?.getAttribute('style')).not.toContain('scale(1.2)');
+  });
+
   test('renders a smaller pill for size="small"', () => {
     render(
       <Badge count={4} size="small">
