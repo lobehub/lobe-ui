@@ -530,6 +530,18 @@
     },
     {
       "document": "src/ConfigProvider/index.mdx",
+      "legacyId": "configprovider-demo-global-focus-ring",
+      "legacyRouteId": "components/ConfigProvider/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "default"
+      },
+      "pathname": "/components/config-provider",
+      "source": "src/ConfigProvider/demos/global-focus-ring.tsx"
+    },
+    {
+      "document": "src/ConfigProvider/index.mdx",
       "legacyId": "configprovider-demo-lazy-motion",
       "legacyRouteId": "components/ConfigProvider/index",
       "options": {

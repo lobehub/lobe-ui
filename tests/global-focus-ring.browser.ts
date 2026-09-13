@@ -72,6 +72,22 @@ const main = async () => {
     assert.equal(await page.locator('#first').evaluate((e) => e === document.activeElement), true);
     assert(await aligned());
     check('keyboard focus on native button');
+    await page.evaluate(() => window.dispatchEvent(new Event('blur')));
+    assert.equal(await page.locator('#first').getAttribute('data-lobe-focus-ring'), 'managed');
+    assert.equal(
+      await page.locator('#first').evaluate((e) => getComputedStyle(e).outlineStyle),
+      'none',
+    );
+    assert.equal(
+      await page
+        .locator('[data-lobe-global-focus-ring]')
+        .evaluate((e) => e.matches(':popover-open')),
+      false,
+    );
+    await page.evaluate(() => window.dispatchEvent(new Event('focus')));
+    await settle();
+    assert(await aligned());
+    check('window blur keeps clipped local outline suppressed and focus restores the ring');
     await page.keyboard.press('Tab');
     assert(await aligned());
     await page.screenshot({ path: `${output}/clipped-light.png` });
@@ -291,11 +307,42 @@ const main = async () => {
     await page.waitForSelector('[data-lobe-global-focus-ring]', { state: 'attached' });
     assert.match(await page.title(), /ConfigProvider/);
     assert.match(await page.locator('[aria-current=page]').first().innerText(), /ConfigProvider/);
+    await page.waitForSelector('[data-focus-ring-demo]');
+    assert.equal(await page.locator('[data-focus-ring-case]').count(), 4);
+    await page.getByRole('button', { name: 'Clipped-edge focus target' }).focus();
+    await settle();
+    assert(await aligned());
+    check('ConfigProvider documentation exposes four labeled focus cases');
     await page.keyboard.press('Tab');
     await settle();
     assert(await aligned());
     await page.screenshot({ path: `${output}/docs-native.png` });
     check('ConfigProvider automatically covers native documentation link');
+    await page.goto(`${origin}/~demos/configprovider-demo-global-focus-ring`);
+    await page.waitForSelector('[data-standalone-demo] [data-focus-ring-demo]');
+    assert.equal(await page.locator('[data-focus-ring-case]').count(), 4);
+    await page.getByRole('button', { name: 'Window lifecycle focus target' }).focus();
+    await settle();
+    assert(await aligned());
+    await page.getByRole('button', { name: 'Simulate window blur' }).click();
+    await settle();
+    assert.equal(
+      await page
+        .getByRole('button', { name: 'Window lifecycle focus target' })
+        .getAttribute('data-lobe-focus-ring'),
+      'managed',
+    );
+    assert.equal(
+      await page
+        .locator('[data-lobe-global-focus-ring]')
+        .evaluate((e) => e.matches(':popover-open')),
+      false,
+    );
+    await page.getByRole('button', { name: 'Restore window focus' }).click();
+    await settle();
+    assert(await aligned());
+    await page.screenshot({ path: `${output}/docs-focus-cases.png` });
+    check('standalone focus demo exercises the window blur regression');
     await page.goto(`${origin}/~demos/src-base-ui-button-demo-demos`);
     await page.waitForSelector('[data-standalone-demo] button');
     await page.keyboard.press('Tab');

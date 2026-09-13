@@ -6,6 +6,7 @@ category: Theme
 
 import DemoConfigProvider from './demos/config-provider.tsx?demo';
 import DemoConfigProvider2 from './demos/config-provider-2.tsx?demo';
+import DemoGlobalFocusRing from './demos/global-focus-ring.tsx?demo';
 import DemoLazyMotion from './demos/lazy-motion.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 
@@ -48,6 +49,10 @@ If your app uses [`LazyMotion`](https://motion.dev/docs/react-lazy-motion):
 ## Global keyboard focus
 
 ConfigProvider installs one global focus ring per document, including native controls and controls outside the provider's React subtree. No component focus class or registration is required. Set `config={{ globalFocusRing: false }}` on all providers to disable installation.
+
+Use Tab to walk through the labeled baseline, clipping, window lifecycle and local-fallback cases:
+
+<Demo of={DemoGlobalFocusRing} />
 
 Without ConfigProvider, install it directly and call the returned cleanup when your application unmounts:
 

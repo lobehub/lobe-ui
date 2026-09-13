@@ -49,7 +49,13 @@ export const installGlobalFocusRing = (doc: Document = document): (() => void) =
   const sync = () => {
     if (disposed) return;
     const next = doc.activeElement;
-    if (next === target && next?.matches(':focus-visible') && next.isConnected) return;
+    if (
+      next === target &&
+      next?.matches(':focus-visible') &&
+      next.isConnected &&
+      ring.matches(':popover-open')
+    )
+      return;
     clear();
     // Shadow roots and fragmented inline text retain their own focus treatment.
     if (
@@ -144,7 +150,7 @@ export const installGlobalFocusRing = (doc: Document = document): (() => void) =
   const blur = () => {
     win.cancelAnimationFrame(frame);
     frame = 0;
-    clear();
+    if (ring.matches(':popover-open')) ring.hidePopover();
   };
   const observer = new MutationObserver(() => {
     if (target && !target.isConnected) clear();
