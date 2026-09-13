@@ -37,6 +37,8 @@ export * from './Input';
 export * from './Modal';
 export { default as Popover } from './Popover';
 export * from './Popover';
+export { default as Progress } from './Progress';
+export * from './Progress';
 export * from './Radio';
 export * from './ScrollArea';
 export { default as Segmented } from './Segmented';
