@@ -93,4 +93,23 @@ describe('Progress', () => {
   test('sets the displayName', () => {
     expect(Progress.displayName).toBe('Progress');
   });
+
+  test('exposes progressbar aria attributes on the line variant', () => {
+    render(<Progress format={(p) => `${p} done`} percent={62} />);
+
+    const root = screen.getByRole('progressbar');
+    expect(root.getAttribute('aria-valuemin')).toBe('0');
+    expect(root.getAttribute('aria-valuemax')).toBe('100');
+    expect(root.getAttribute('aria-valuenow')).toBe('62');
+    expect(root.getAttribute('aria-valuetext')).toBe('62 done');
+  });
+
+  test('exposes progressbar aria attributes on the circle type', () => {
+    render(<Progress percent={33} type="circle" />);
+
+    const root = screen.getByRole('progressbar');
+    expect(root.getAttribute('aria-valuenow')).toBe('33');
+    expect(root.getAttribute('aria-valuemin')).toBe('0');
+    expect(root.getAttribute('aria-valuemax')).toBe('100');
+  });
 });
