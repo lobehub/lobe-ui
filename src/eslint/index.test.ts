@@ -39,7 +39,10 @@ describe('restrictedImports', () => {
   });
 
   it.each([
+    'Accordion',
+    'AccordionItem',
     'ActionIcon',
+    'Collapse',
     'Avatar',
     'DraggablePanel',
     'DraggablePanelHeader',
@@ -57,13 +60,19 @@ describe('restrictedImports', () => {
     ]);
   });
 
+  it('rejects the antd collapse path', () => {
+    expect(lint("import Collapse from 'antd/es/collapse';")).toEqual([
+      expect.objectContaining({ ruleId: 'no-restricted-imports', severity: 2 }),
+    ]);
+  });
+
   it('rejects the antd skeleton path', () => {
     expect(lint("import Skeleton from 'antd/es/skeleton';")).toEqual([
       expect.objectContaining({ ruleId: 'no-restricted-imports', severity: 2 }),
     ]);
   });
 
-  it.each(['Alert', 'DraggablePanel', 'Skeleton'])(
+  it.each(['Accordion', 'Alert', 'DraggablePanel', 'Skeleton'])(
     'allows %s from the Base UI entrypoint',
     (name) => {
       expect(lint(`import { ${name} } from '@lobehub/ui/base-ui';`)).toEqual([]);
