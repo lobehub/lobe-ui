@@ -54,7 +54,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     padding-inline-start: 40px;
   `,
   contentOutlined: css`
-    padding-block: 0 14px;
+    padding-block: 4px 14px;
     padding-inline: 16px;
   `,
   header: css`
@@ -199,6 +199,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   triggerOutlined: css`
     padding-block: 12px;
     padding-inline: 16px;
+
+    &[data-panel-open] {
+      padding-block-end: 8px;
+    }
   `,
 }));
 
