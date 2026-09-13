@@ -1,0 +1,37 @@
+---
+title: Badge
+description: Status dots with text, and numeric or dot count badges anchored to their children's corner.
+category: Feedback
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="Badge" from=".." />
+
+`Badge` renders a native `<span>`. All standard span HTML attributes including `className`, `style`, `data-*`, and `ref` are forwarded to the root element.
+
+### Status mode
+
+Passing `status`, or `text` without `children`, renders an inline dot plus label. `status="processing"` adds a pulsing ring around the dot. `color` overrides the dot color for any status.
+
+### Count mode
+
+Wrapping `children` anchors a pill to the top-right corner. `count` accepts a number (hidden at `0` unless `showZero`, capped at `overflowCount` with a `+` suffix) or any `ReactNode`. `dot` renders a small circle instead of the count. `offset` nudges the pill by `[x, y]` pixels. With no `children`, the pill renders inline instead of being absolutely positioned.
+
+### Migrating from antd Badge
+
+```tsx | pure
+import { Badge } from '@lobehub/ui/base-ui';
+
+<Badge count={5}>
+  <Avatar />
+</Badge>;
+```
+
+`Badge.Ribbon`, `title`, and gradient `color` presets are not supported.

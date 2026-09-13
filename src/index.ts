@@ -15,6 +15,12 @@ export {
 export { default as Alert, type AlertProps } from './Alert';
 export { default as AutoComplete, type AutoCompleteProps } from './AutoComplete';
 export { default as Avatar, AvatarGroup, type AvatarGroupProps, type AvatarProps } from './Avatar';
+export {
+  default as Badge,
+  type BadgeProps,
+  type BadgeSize,
+  type BadgeStatus,
+} from './base-ui/Badge';
 export { styles as menuSharedStyles } from './base-ui/DropdownMenu/sharedStyle';
 export {
   default as Progress,
