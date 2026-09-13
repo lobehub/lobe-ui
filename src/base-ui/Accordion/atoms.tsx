@@ -116,7 +116,7 @@ export const AccordionTrigger: FC<AccordionTriggerProps> = ({
   const indicator = !hideIndicator && (
     <span className={indicatorVariants({ placement })}>
       {placement === 'start' && <ChevronRight size={16} />}
-      {placement === 'inline' && <Play fill="currentColor" size={9} strokeWidth={1} />}
+      {placement === 'inline' && <Play fill="currentColor" size={7} strokeWidth={1} />}
       {placement === 'end' && <ChevronDown size={16} />}
     </span>
   );
