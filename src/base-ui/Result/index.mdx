@@ -1,12 +1,12 @@
 ---
 title: Result
 description: Feedback panel for success, error, warning, and info outcomes, with a status icon, title, subtitle, and extra actions.
-category: Data Display
+category: Feedback
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
 
-## Status
+## Basic
 
 <Demo of={DemoIndex} layout="bare" />
 
@@ -27,3 +27,5 @@ import { Result } from '@lobehub/ui/base-ui';
 ```
 
 `icon` overrides the default status icon. `extra` renders a row of actions below the subtitle, and `children` render below that.
+
+antd's error-page presets (`status="404" | "403" | "500"`) are not supported; only `success` | `error` | `info` | `warning` are.

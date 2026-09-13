@@ -107,6 +107,14 @@ describe('Empty', () => {
     expect(screen.getByText('Upload documents to get started.')).toBeTruthy();
   });
 
+  it('applies align to the row container for type="page"', () => {
+    const { container } = render(
+      <Empty align="center" title="No files in this project" type="page" />,
+    );
+
+    expect(getComputedStyle(container.firstElementChild as Element).alignItems).toBe('center');
+  });
+
   it('renders the action inside the text block for type="page"', () => {
     render(
       <Empty

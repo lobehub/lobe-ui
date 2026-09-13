@@ -113,11 +113,8 @@ const Progress = memo<ProgressProps>(
               style={{ transition: 'stroke-dashoffset 0.3s' }}
             />
           </svg>
-          {showInfo && (
-            <span
-              className={styles.circleInfo}
-              style={{ fontSize: diameter <= 20 ? 10 : diameter <= 40 ? 12 : 16 }}
-            >
+          {showInfo && diameter >= 40 && (
+            <span className={styles.circleInfo} style={{ fontSize: diameter <= 40 ? 12 : 16 }}>
               {info}
             </span>
           )}

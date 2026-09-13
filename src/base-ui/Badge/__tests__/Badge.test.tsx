@@ -21,6 +21,16 @@ describe('Badge', () => {
     },
   );
 
+  test('renders children as a count pill when status is set alongside children', () => {
+    render(
+      <Badge status="success" text="Online">
+        <span>content</span>
+      </Badge>,
+    );
+
+    expect(screen.getByText('content')).toBeTruthy();
+  });
+
   test('applies a custom color to the status dot', () => {
     const { container } = render(<Badge color="#7c4dff" text="Custom" />);
 

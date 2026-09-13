@@ -69,6 +69,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     margin-inline-end: 8px;
     font-size: 12px;
     color: ${cssVar.colorTextTertiary};
+    white-space: nowrap;
   `,
 }));
 

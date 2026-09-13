@@ -4,8 +4,13 @@ import { useState } from 'react';
 import Pagination from '../Pagination';
 
 vi.mock('@/base-ui/Select', () => ({
-  default: ({ onChange, options, value }: any) => (
-    <select data-testid="size-changer" value={value} onChange={(e) => onChange(e.target.value)}>
+  default: ({ onChange, options, style, value }: any) => (
+    <select
+      data-testid="size-changer"
+      style={style}
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+    >
       {options.map((option: any) => (
         <option key={option.value} value={option.value}>
           {option.label}
@@ -151,6 +156,43 @@ describe('Pagination', () => {
     for (const button of screen.getAllByRole('button')) {
       expect((button as HTMLButtonElement).disabled).toBe(true);
     }
+  });
+
+  test('keeps the size changer from growing to fill the row', () => {
+    render(
+      <Pagination
+        showSizeChanger
+        pageSize={10}
+        showTotal={(total) => `${total} items`}
+        total={100}
+      />,
+    );
+
+    const select = screen.getByTestId('size-changer');
+    expect(select.style.flex).toBe('0 0 auto');
+    expect(select.style.width).toBe('auto');
+  });
+
+  test('does not wrap the total text', () => {
+    render(<Pagination pageSize={10} showTotal={(total) => `${total} items`} total={100} />);
+
+    expect(getComputedStyle(screen.getByText('100 items')).whiteSpace).toBe('nowrap');
+  });
+
+  test('keeps the clamped page after total shrinks and grows back', () => {
+    const onChange = vi.fn();
+    const { rerender } = render(
+      <Pagination defaultCurrent={9} pageSize={10} total={90} onChange={onChange} />,
+    );
+
+    rerender(<Pagination defaultCurrent={9} pageSize={10} total={15} onChange={onChange} />);
+    expect(screen.getByText('2').getAttribute('aria-current')).toBe('page');
+
+    onChange.mockClear();
+    rerender(<Pagination defaultCurrent={9} pageSize={10} total={90} onChange={onChange} />);
+
+    expect(screen.getByText('2').getAttribute('aria-current')).toBe('page');
+    expect(onChange).not.toHaveBeenCalled();
   });
 
   test('renders the showTotal range', () => {

@@ -1,5 +1,4 @@
-import { Flexbox } from '@lobehub/ui';
-import { Badge } from '@lobehub/ui/base-ui';
+import { Badge, Flexbox } from '@lobehub/ui';
 
 export default () => {
   return (

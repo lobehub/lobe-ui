@@ -23,7 +23,7 @@ const Badge = memo<BadgeProps>(
     text,
     ...rest
   }) => {
-    const isStatusMode = Boolean(status) || (Boolean(text) && children == null);
+    const isStatusMode = children == null && (status !== undefined || text !== undefined);
 
     if (isStatusMode) {
       const dotColor = color ?? statusColor[status ?? 'default'];
