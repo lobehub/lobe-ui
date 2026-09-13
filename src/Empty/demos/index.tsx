@@ -28,6 +28,10 @@ export default () => {
         options: ['default', 'page'],
         value: 'default',
       },
+      variant: {
+        options: ['default', 'dashed', 'stack'],
+        value: 'default',
+      },
     },
     { store },
   );
@@ -37,6 +41,7 @@ export default () => {
     imageSize: control.imageSize,
     title: control.title,
     type: control.type,
+    variant: control.variant,
   } as EmptyProps;
 
   if (control.iconType === 'icon') {
