@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.46.0](https://github.com/lobehub/lobe-ui/compare/v5.45.3...v5.46.0) (2026-09-13)
+
+### ✨ Features
+
+- **base-ui**: Animate Accordion panel height to auto and fade content, closes [#667](https://github.com/lobehub/lobe-ui/issues/667) ([bf8e239](https://github.com/lobehub/lobe-ui/commit/bf8e239))
+
 ## [5.45.3](https://github.com/lobehub/lobe-ui/compare/v5.45.2...v5.45.3) (2026-09-13)
 
 ### 💄 Styles
