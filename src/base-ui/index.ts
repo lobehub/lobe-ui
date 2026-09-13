@@ -34,6 +34,8 @@ export * from './FloatingSheet';
 export * from './Form';
 export * from './Input';
 export * from './Modal';
+export { default as Pagination } from './Pagination';
+export * from './Pagination';
 export { default as Popover } from './Popover';
 export * from './Popover';
 export { default as Progress } from './Progress';

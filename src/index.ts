@@ -23,6 +23,11 @@ export {
 } from './base-ui/Badge';
 export { styles as menuSharedStyles } from './base-ui/DropdownMenu/sharedStyle';
 export {
+  default as Pagination,
+  type PaginationProps,
+  type PaginationSize,
+} from './base-ui/Pagination';
+export {
   default as Progress,
   type ProgressProps,
   type ProgressSize,
