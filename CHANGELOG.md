@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.45.0](https://github.com/lobehub/lobe-ui/compare/v5.44.0...v5.45.0) (2026-09-13)
+
+### ✨ Features
+
+- **base-ui**: Add inline indicator placement to Accordion, closes [#662](https://github.com/lobehub/lobe-ui/issues/662) ([fef6253](https://github.com/lobehub/lobe-ui/commit/fef6253))
+
 # [5.44.0](https://github.com/lobehub/lobe-ui/compare/v5.43.1...v5.44.0) (2026-09-12)
 
 ### ✨ Features
