@@ -178,7 +178,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     font: inherit;
     font-size: 14px;
-    font-weight: 500;
     color: ${cssVar.colorText};
     text-align: start;
 
