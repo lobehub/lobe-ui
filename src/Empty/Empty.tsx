@@ -1,109 +1,176 @@
 'use client';
 
-import { Empty as AntEmpty } from 'antd';
-import { cssVar, useThemeMode } from 'antd-style';
-import { type FC } from 'react';
+import { cssVar, cx } from 'antd-style';
+import { Minus, Plus } from 'lucide-react';
+import { type KeyboardEvent, memo, useMemo } from 'react';
 
-import Block from '@/Block';
-import { Flexbox } from '@/Flex';
 import FluentEmoji from '@/FluentEmoji';
 import Icon from '@/Icon';
 import Text from '@/Text';
 
+import { styles } from './style';
 import type { EmptyProps } from './type';
 
-const Empty: FC<EmptyProps> = ({
-  title,
-  description,
-  icon,
-  image,
-  emoji,
-  imageSize = 48,
-  iconColor,
-  action,
-  children,
-  imageProps,
-  align,
-  actionProps,
-  type = 'default',
-  titleProps,
-  descriptionProps,
-  ...rest
-}) => {
-  const { isDarkMode } = useThemeMode();
-  const isPage = type === 'page';
-  const alignValue = align || (isPage ? 'flex-start' : 'center');
-  const isCenter = alignValue === 'center';
+const Empty = memo<EmptyProps>(
+  ({
+    title,
+    description,
+    icon,
+    iconColor,
+    emoji,
+    image,
+    imageSize = 48,
+    action,
+    actionProps,
+    titleProps,
+    descriptionProps,
+    align,
+    imageProps,
+    children,
+    type = 'default',
+    variant = 'default',
+    className,
+    onClick,
+    ref,
+    style,
+    ...rest
+  }) => {
+    const isPage = type === 'page';
+    const alignValue = align || (isPage ? 'flex-start' : 'center');
+    const isCenter = alignValue === 'center';
 
-  const fallbackImage = AntEmpty.PRESENTED_IMAGE_SIMPLE;
-  const hasImage = image || emoji || icon;
-  const cover = hasImage ? (
-    image ? (
-      image
-    ) : (
-      <Block
-        align={'center'}
-        flex={'none'}
-        height={imageSize}
-        justify="center"
-        variant={'outlined'}
-        width={imageSize}
-        {...imageProps}
+    const resolvedIcon =
+      icon ??
+      (isPage ? undefined : variant === 'dashed' ? Plus : variant === 'stack' ? Minus : undefined);
+
+    const iconSize = isPage ? 36 : variant === 'dashed' ? 20 : variant === 'stack' ? 16 : 32;
+
+    const cover = useMemo(() => {
+      if (image) return image;
+      if (emoji) return <FluentEmoji emoji={emoji} size={imageSize} type={'anim'} />;
+      if (!resolvedIcon) return null;
+
+      if (variant === 'stack' && !isPage) {
+        return (
+          <div className={styles.stack}>
+            <i className={cx(styles.stackCard, styles.stackCardBack)} />
+            <i className={cx(styles.stackCard, styles.stackCardBack)} />
+            <i className={styles.stackCard}>
+              <Icon color={iconColor} icon={resolvedIcon} size={16} />
+            </i>
+          </div>
+        );
+      }
+
+      return (
+        <Icon
+          color={iconColor}
+          icon={resolvedIcon}
+          size={{ size: iconSize, strokeWidth: isPage ? 1.25 : 2 }}
+        />
+      );
+    }, [image, emoji, imageSize, resolvedIcon, variant, isPage, iconColor, iconSize]);
+
+    const isClickable = !isPage && variant === 'dashed' && !!onClick;
+
+    const rootClassName = cx(
+      isPage ? styles.rootPage : styles.root,
+      !isPage && variant === 'dashed' && styles.dashed,
+      isClickable && styles.dashedClickable,
+      !isPage && variant === 'stack' && styles.rootStack,
+      className,
+    );
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      if (!isClickable) return;
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+
+      event.preventDefault();
+      (onClick as (event: unknown) => void)?.(event);
+    };
+
+    const rootStyle: EmptyProps['style'] = {
+      color:
+        !isPage && variant === 'dashed' ? cssVar.colorTextTertiary : cssVar.colorTextQuaternary,
+      ...style,
+    };
+
+    const titleNode = title && (
+      <Text
+        align={isCenter ? 'center' : undefined}
+        color={cssVar.colorText}
+        fontSize={isPage ? 18 : 14}
+        weight={isPage ? 600 : 500}
         style={{
-          marginBottom: 4,
-          ...imageProps?.style,
+          marginBottom: isPage ? 4 : 0,
+          marginTop: isPage ? 0 : variant === 'stack' ? 10 : variant === 'dashed' ? 6 : 8,
         }}
+        {...titleProps}
       >
-        {icon && (
-          <Icon
-            icon={icon}
-            size={imageSize * 0.66}
-            color={
-              iconColor || (isDarkMode ? cssVar.colorTextQuaternary : cssVar.colorTextSecondary)
-            }
-          />
-        )}
-        {emoji && <FluentEmoji emoji={emoji} size={imageSize * 0.75} type={'anim'} />}
-      </Block>
-    )
-  ) : (
-    fallbackImage
-  );
+        {title}
+      </Text>
+    );
 
-  return (
-    <Flexbox align={alignValue} gap={8} padding={16} {...rest}>
-      {cover}
-      <Flexbox align={alignValue} gap={isPage ? 4 : 1}>
-        {title && (
-          <Text
-            align={isCenter ? 'center' : undefined}
-            fontSize={isPage ? 24 : 16}
-            weight={'bold'}
-            {...titleProps}
-          >
-            {title}
-          </Text>
+    const descriptionNode = description && (
+      <Text
+        align={isCenter ? 'center' : undefined}
+        color={cssVar.colorTextTertiary}
+        fontSize={13}
+        style={{ maxWidth: isPage ? '52ch' : '34ch' }}
+        {...descriptionProps}
+      >
+        {description}
+      </Text>
+    );
+
+    if (isPage) {
+      return (
+        <div
+          className={rootClassName}
+          ref={ref}
+          style={{ alignItems: alignValue, ...rootStyle }}
+          onClick={onClick}
+          {...rest}
+        >
+          {cover && <div {...imageProps}>{cover}</div>}
+          <div>
+            {titleNode}
+            {descriptionNode}
+            {children}
+            {action && (
+              <div className={styles.extraPage} {...actionProps}>
+                {action}
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div
+        className={rootClassName}
+        ref={ref}
+        role={isClickable ? 'button' : undefined}
+        style={{ alignItems: alignValue, textAlign: isCenter ? 'center' : undefined, ...rootStyle }}
+        tabIndex={isClickable ? 0 : undefined}
+        onClick={onClick}
+        onKeyDown={handleKeyDown}
+        {...rest}
+      >
+        {cover && <div {...imageProps}>{cover}</div>}
+        {titleNode}
+        {descriptionNode}
+        {children}
+        {action && (
+          <div className={styles.action} {...actionProps}>
+            {action}
+          </div>
         )}
-        {description && (
-          <Text
-            align={isCenter ? 'center' : undefined}
-            color={isPage ? cssVar.colorTextSecondary : cssVar.colorTextDescription}
-            fontSize={isPage ? 16 : 14}
-            {...descriptionProps}
-          >
-            {description}
-          </Text>
-        )}
-      </Flexbox>
-      {children}
-      {action && (
-        <Flexbox gap={4} {...actionProps}>
-          {action}
-        </Flexbox>
-      )}
-    </Flexbox>
-  );
-};
+      </div>
+    );
+  },
+);
 
 Empty.displayName = 'Empty';
 
