@@ -160,4 +160,17 @@ describe('Tree', () => {
       expect.objectContaining({ node: expect.objectContaining({ key: 'c' }) }),
     );
   });
+
+  test('styles.node.height drives both the row and the guide line', () => {
+    render(<Tree defaultExpandAll showLine styles={{ node: { height: 36 } }} treeData={data} />);
+    expect(item('a-1').style.height).toBe('36px');
+    expect(item('a-1').querySelector('svg[aria-hidden]')?.getAttribute('height')).toBe('36');
+  });
+
+  test('guide line of a last child under a root node has no trailing segment', () => {
+    render(<Tree defaultExpandAll showLine treeData={data} />);
+    const d = item('a-2').querySelector('svg[aria-hidden] path')?.getAttribute('d') ?? '';
+    expect(d.startsWith('M11.5 0V')).toBe(true);
+    expect(d).not.toContain('V32');
+  });
 });

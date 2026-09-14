@@ -24,16 +24,24 @@ interface TreeNodeProps {
 const ARC = 6;
 const SWITCHER_CENTER = 11.5;
 
-const guidePath = (depth: number, isLast: boolean, trail: boolean[], indent: number, height: number) => {
+const guidePath = (
+  depth: number,
+  isLast: boolean,
+  trail: boolean[],
+  indent: number,
+  height: number,
+) => {
   const cx = (i: number) => i * indent + SWITCHER_CENTER;
   let d = '';
   trail.forEach((more, i) => {
-    if (more) d += `M${cx(i)} 0V${height}`;
+    if (more && i > 0) d += `M${cx(i)} 0V${height}`;
   });
   const x = cx(depth - 1);
   const y = height / 2;
   const elbow = `M${x} ${y - ARC}A${ARC} ${ARC} 0 0 0 ${x + ARC} ${y}H${x + indent - 2}`;
-  d += isLast ? `M${x} 0V${y - ARC}${elbow.slice(elbow.indexOf('A'))}` : `M${x} 0V${height}${elbow}`;
+  d += isLast
+    ? `M${x} 0V${y - ARC}${elbow.slice(elbow.indexOf('A'))}`
+    : `M${x} 0V${height}${elbow}`;
   return d;
 };
 
@@ -48,7 +56,8 @@ const TreeNode = memo<TreeNodeProps>(({ node, depth, isLast, trail }) => {
     : ctx.halfChecked.has(node.key)
       ? 'mixed'
       : 'unchecked';
-  const rowHeight = controlHeight[ctx.size];
+  const rowHeight =
+    typeof ctx.styles.node?.height === 'number' ? ctx.styles.node.height : controlHeight[ctx.size];
 
   const switcherIcon =
     typeof ctx.switcherIcon === 'function'
@@ -67,7 +76,6 @@ const TreeNode = memo<TreeNodeProps>(({ node, depth, isLast, trail }) => {
     <>
       <div
         data-scope-item
-        aria-checked={checkable ? (checkState === 'mixed' ? 'mixed' : checkState === 'checked') : undefined}
         aria-disabled={disabled || undefined}
         aria-expanded={expandable ? expanded : undefined}
         aria-level={depth + 1}
@@ -76,6 +84,9 @@ const TreeNode = memo<TreeNodeProps>(({ node, depth, isLast, trail }) => {
         role="treeitem"
         style={rowStyle}
         tabIndex={ctx.activeKey === node.key ? 0 : -1}
+        aria-checked={
+          checkable ? (checkState === 'mixed' ? 'mixed' : checkState === 'checked') : undefined
+        }
         className={cx(
           styles.node,
           ctx.blockNode && styles.nodeBlock,
@@ -99,10 +110,14 @@ const TreeNode = memo<TreeNodeProps>(({ node, depth, isLast, trail }) => {
         )}
         <button
           aria-hidden
-          className={cx(styles.switcher, !expandable && styles.switcherLeaf, ctx.classNames.switcher)}
           style={ctx.styles.switcher}
           tabIndex={-1}
           type="button"
+          className={cx(
+            styles.switcher,
+            !expandable && styles.switcherLeaf,
+            ctx.classNames.switcher,
+          )}
           onClick={(event) => {
             event.stopPropagation();
             ctx.toggleExpand(node);
