@@ -13,6 +13,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     min-height: 32px;
     margin-inline-start: auto;
   `,
+  centered: css`
+    align-items: center;
+  `,
   close: css`
     cursor: pointer;
 
@@ -331,7 +334,7 @@ export const rootVariants = cva(styles.root, {
     banner: { false: null, true: styles.banner },
     colorfulText: { false: styles.neutralText, true: styles.colorfulText },
     glass: { false: null, true: lobeStaticStylish.blur },
-    hasDescription: { false: null, true: styles.detailed },
+    hasDescription: { false: styles.centered, true: styles.detailed },
     hasExtra: { false: null, true: null },
     variant: {
       borderless: styles.plain,

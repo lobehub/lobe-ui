@@ -120,7 +120,7 @@ const Alert = memo<AlertProps>(
             className={cx(styles.icon, classNames?.icon)}
             style={customStyles?.icon}
           >
-            <Icon icon={icon ?? typeIcons[type]} size={hasDescription ? 20 : 18} {...iconProps} />
+            <Icon icon={icon ?? typeIcons[type]} size={hasDescription ? 18 : 16} {...iconProps} />
           </span>
         )}
         <div

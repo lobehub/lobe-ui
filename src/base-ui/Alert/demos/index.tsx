@@ -49,6 +49,19 @@ export default () => {
           Restore dismissed alert
         </Button>
       </Flexbox>
+
+      <Flexbox gap={8}>
+        <span style={{ fontSize: 12, opacity: 0.6 }}>
+          Single line, closable (vertical centering)
+        </span>
+        <Alert closable title="Bot connected successfully" type="success" />
+        <Alert
+          closable
+          description="credentials: Failed to authenticate with Feishu API"
+          title="Connection test failed"
+          type="error"
+        />
+      </Flexbox>
     </Flexbox>
   );
 };
