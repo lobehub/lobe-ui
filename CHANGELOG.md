@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.46.3](https://github.com/lobehub/lobe-ui/compare/v5.46.2...v5.46.3) (2026-09-14)
+
+### 🐛 Bug Fixes
+
+- **accordion**: Let the trigger inherit font weight ([88592ac](https://github.com/lobehub/lobe-ui/commit/88592ac))
+
 ## [5.46.2](https://github.com/lobehub/lobe-ui/compare/v5.46.1...v5.46.2) (2026-09-13)
 
 ### 🎫 Chores
