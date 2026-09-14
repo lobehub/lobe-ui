@@ -9,6 +9,8 @@ export * from './Avatar';
 export { default as Button } from './Button';
 export * from './Button';
 export * from './Checkbox';
+export { default as Collapsible } from './Collapsible';
+export * from './Collapsible';
 export type {
   ContextMenuCheckboxItem,
   ContextMenuInterceptor,
