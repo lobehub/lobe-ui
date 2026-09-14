@@ -1,7 +1,6 @@
 'use client';
 
-import { type SplineEvent, type SplineEventName } from '@splinetool/runtime';
-import { Application } from '@splinetool/runtime';
+import type { SplineEvent, SplineEventName } from '@splinetool/runtime';
 import { memo, useEffect, useRef, useState } from 'react';
 
 import ParentSize from './ParentSize';
@@ -28,84 +27,56 @@ const Spline = memo<SplineProps>(
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    const init = async (
-      speApp: Application,
-      events: {
-        cb?: (e: SplineEvent) => void;
-        name: SplineEventName;
-      }[],
-    ) => {
-      await speApp.load(scene);
-
-      for (const event of events) {
-        if (event.cb) {
-          speApp.addEventListener(event.name, event.cb);
-        }
-      }
-
-      setIsLoading(false);
-      onLoad?.(speApp);
-    };
-
-    // Initialize runtime when component is mounted
     useEffect(() => {
       setIsLoading(true);
+      if (!canvasRef.current) return;
 
-      let speApp: Application;
+      let disposed = false;
+      let speApp: any;
+
       const events: {
         cb?: (e: SplineEvent) => void;
         name: SplineEventName;
       }[] = [
-        {
-          cb: onMouseDown,
-          name: 'mouseDown',
-        },
-        {
-          cb: onMouseUp,
-          name: 'mouseUp',
-        },
-        {
-          cb: onMouseHover,
-          name: 'mouseHover',
-        },
-        {
-          cb: onKeyDown,
-          name: 'keyDown',
-        },
-        {
-          cb: onKeyUp,
-          name: 'keyUp',
-        },
-        {
-          cb: onStart,
-          name: 'start',
-        },
-        {
-          cb: onLookAt,
-          name: 'lookAt',
-        },
-        {
-          cb: onFollow,
-          name: 'follow',
-        },
-        {
-          cb: onWheel,
-          name: 'scroll',
-        },
+        { cb: onMouseDown, name: 'mouseDown' },
+        { cb: onMouseUp, name: 'mouseUp' },
+        { cb: onMouseHover, name: 'mouseHover' },
+        { cb: onKeyDown, name: 'keyDown' },
+        { cb: onKeyUp, name: 'keyUp' },
+        { cb: onStart, name: 'start' },
+        { cb: onLookAt, name: 'lookAt' },
+        { cb: onFollow, name: 'follow' },
+        { cb: onWheel, name: 'scroll' },
       ];
 
-      if (canvasRef.current) {
-        speApp = new Application(canvasRef.current, { renderOnDemand });
-        init(speApp, events);
-      }
+      (async () => {
+        const { Application } = await import('@splinetool/runtime');
+        if (disposed) return;
 
-      return () => {
+        speApp = new Application(canvasRef.current!, { renderOnDemand });
+        await speApp.load(scene);
+        if (disposed) return;
+
         for (const event of events) {
           if (event.cb) {
-            speApp.removeEventListener(event.name, event.cb);
+            speApp.addEventListener(event.name, event.cb);
           }
         }
-        speApp.dispose();
+
+        setIsLoading(false);
+        onLoad?.(speApp);
+      })();
+
+      return () => {
+        disposed = true;
+        if (speApp) {
+          for (const event of events) {
+            if (event.cb) {
+              speApp.removeEventListener(event.name, event.cb);
+            }
+          }
+          speApp.dispose();
+        }
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [scene]);

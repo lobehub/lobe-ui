@@ -1,14 +1,8 @@
 'use client';
 
-import {
-  transformerNotationDiff,
-  transformerNotationErrorLevel,
-  transformerNotationFocus,
-  transformerNotationHighlight,
-  transformerNotationWordHighlight,
-} from '@shikijs/transformers';
 import { type CSSProperties, useEffect, useMemo, useState } from 'react';
-import type { BuiltinTheme, CodeToHastOptions, ThemedToken } from 'shiki';
+import type { BuiltinTheme, ThemedToken } from 'shiki';
+import type { HighlighterCore } from 'shiki/core';
 import { Md5 } from 'ts-md5';
 
 import { getCodeLanguageByInput } from '@/Highlighter/const';
@@ -41,30 +35,6 @@ const cleanupCache = () => {
   }
 };
 
-export type ICodeToHtml = (code: string, options: CodeToHastOptions) => Promise<string>;
-export type ShikiModule = typeof import('shiki');
-
-// Use codeToHtml shorthand for better performance
-// It automatically manages highlighter instances and loads themes/languages on-demand
-let codeToHtmlPromise: Promise<ICodeToHtml | null> | null = null;
-
-const loadCodeToHtml = (): Promise<ICodeToHtml | null> => {
-  if (typeof window === 'undefined') return Promise.resolve(null);
-
-  if (!codeToHtmlPromise) {
-    codeToHtmlPromise = import('shiki').then((mod) => mod.codeToHtml ?? null);
-  }
-
-  return codeToHtmlPromise;
-};
-
-// Export shikiModulePromise for useStreamHighlight compatibility
-const loadShikiModule = (): Promise<ShikiModule | null> => {
-  if (typeof window === 'undefined') return Promise.resolve(null);
-  return import('shiki');
-};
-export const shikiModulePromise = loadShikiModule();
-
 // Helper function: Safe HTML escaping
 export const escapeHtml = (str: string): string => {
   return str
@@ -75,11 +45,58 @@ export const escapeHtml = (str: string): string => {
     .replaceAll("'", '&#039;');
 };
 
-// Main highlight component - optimized version without SWR
-const customThemes = {
-  'lobe-theme': lobeTheme,
+// Singleton highlighter using shiki/core for minimal bundle size
+let highlighterPromise: Promise<HighlighterCore> | null = null;
+
+export const getOrCreateHighlighter = (): Promise<HighlighterCore> | null => {
+  if (typeof window === 'undefined') return null;
+  if (!highlighterPromise) {
+    highlighterPromise = (async () => {
+      const [{ createHighlighterCore }, { createOnigurumaEngine }] = await Promise.all([
+        import('shiki/core'),
+        import('shiki/engine/oniguruma'),
+      ]);
+      return createHighlighterCore({
+        engine: createOnigurumaEngine(() => import('shiki/wasm')),
+      });
+    })();
+  }
+  return highlighterPromise;
 };
 
+// Dynamically load a language on demand via shiki/langs
+export const ensureLanguage = async (highlighter: HighlighterCore, lang: string) => {
+  if (highlighter.getLoadedLanguages().includes(lang)) return;
+  try {
+    const { bundledLanguages } = await import('shiki/langs');
+    const loader = bundledLanguages[lang as keyof typeof bundledLanguages];
+    if (loader) {
+      await highlighter.loadLanguage(await loader());
+    }
+  } catch {
+    // Language not found, highlighter will fallback
+  }
+};
+
+// Dynamically load a theme on demand via shiki/themes
+export const ensureTheme = async (highlighter: HighlighterCore, theme: string) => {
+  if (highlighter.getLoadedThemes().includes(theme)) return;
+  if (theme === 'lobe-theme') {
+    await highlighter.loadTheme(lobeTheme as any);
+    return;
+  }
+  try {
+    const { bundledThemes } = await import('shiki/themes');
+    const loader = bundledThemes[theme as keyof typeof bundledThemes];
+    if (loader) {
+      await highlighter.loadTheme(await loader());
+    }
+  } catch {
+    // Theme not found
+  }
+};
+
+// Main highlight hook
 export const useHighlight = (
   text: string,
   {
@@ -96,16 +113,22 @@ export const useHighlight = (
   // Match supported languages
   const matchedLanguage = useMemo(() => getCodeLanguageByInput(lang), [lang]);
 
-  // Optimize transformer creation
-  const transformers = useMemo(() => {
-    if (!enableTransformer) return;
-    return [
-      transformerNotationDiff(),
-      transformerNotationHighlight(),
-      transformerNotationWordHighlight(),
-      transformerNotationFocus(),
-      transformerNotationErrorLevel(),
-    ];
+  // Lazy-load transformers to avoid static @shikijs/transformers import
+  const [transformers, setTransformers] = useState<any[] | undefined>();
+  useEffect(() => {
+    if (!enableTransformer) {
+      setTransformers(undefined);
+      return;
+    }
+    import('@shikijs/transformers').then((mod) => {
+      setTransformers([
+        mod.transformerNotationDiff(),
+        mod.transformerNotationHighlight(),
+        mod.transformerNotationWordHighlight(),
+        mod.transformerNotationFocus(),
+        mod.transformerNotationErrorLevel(),
+      ]);
+    });
   }, [enableTransformer]);
 
   // Build cache key
@@ -138,40 +161,20 @@ export const useHighlight = (
     }
 
     // Create new promise for highlighting
-    // Using codeToHtml shorthand: automatically loads themes/languages on-demand
     const highlightPromise = (async (): Promise<string> => {
       try {
-        // Try full rendering with transformers
-        const shikiModule = await shikiModulePromise;
-        if (!shikiModule) return safeText;
+        const highlighter = await getOrCreateHighlighter();
+        if (!highlighter) return safeText;
 
         const effectiveTheme = builtinTheme || 'lobe-theme';
 
-        // Load custom theme if using slack-dark or slack-ochin
-        if (!builtinTheme && effectiveTheme === 'lobe-theme') {
-          const customTheme = customThemes[effectiveTheme];
-          if (customTheme) {
-            // Use getSingletonHighlighter to load custom theme
-            const highlighter = await shikiModule.getSingletonHighlighter({
-              langs: [matchedLanguage],
-              themes: [customTheme as any],
-            });
+        // Load language and theme on demand
+        await Promise.all([
+          ensureLanguage(highlighter, matchedLanguage),
+          ensureTheme(highlighter, effectiveTheme),
+        ]);
 
-            const html = await highlighter.codeToHtml(safeText, {
-              lang: matchedLanguage,
-              theme: effectiveTheme,
-              transformers,
-            });
-
-            return html;
-          }
-        }
-
-        // Fallback to codeToHtml for builtin themes
-        const codeToHtml = await loadCodeToHtml();
-        if (!codeToHtml) return safeText;
-
-        const html = await codeToHtml(safeText, {
+        const html = highlighter.codeToHtml(safeText, {
           lang: matchedLanguage,
           theme: effectiveTheme,
           transformers,
@@ -182,10 +185,13 @@ export const useHighlight = (
         console.error('Advanced rendering failed:', error_);
 
         try {
-          // Try simple rendering (without transformers)
-          const codeToHtml = await loadCodeToHtml();
-          if (!codeToHtml) return safeText;
-          const html = await codeToHtml(safeText, {
+          const highlighter = await getOrCreateHighlighter();
+          if (!highlighter) return safeText;
+          await Promise.all([
+            ensureLanguage(highlighter, matchedLanguage),
+            ensureTheme(highlighter, 'lobe-theme'),
+          ]);
+          const html = highlighter.codeToHtml(safeText, {
             lang: matchedLanguage,
             theme: 'lobe-theme',
           });
@@ -216,7 +222,7 @@ export const useHighlight = (
           highlightCache.delete(cacheKey);
         }
       });
-  }, [cacheKey, safeText, matchedLanguage, builtinTheme, transformers, customThemes]);
+  }, [cacheKey, safeText, matchedLanguage, builtinTheme, transformers]);
 
   return data || '';
 };
