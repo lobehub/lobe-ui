@@ -2,6 +2,24 @@
 
 # Changelog
 
+# [5.47.0](https://github.com/lobehub/lobe-ui/compare/v5.46.3...v5.47.0) (2026-09-14)
+
+### ✨ Features
+
+- **base-ui**: Add Collapsible ([096c76c](https://github.com/lobehub/lobe-ui/commit/096c76c))
+- **base-ui**: Add FocusScope and drive Tree keyboard through it ([0c27aa1](https://github.com/lobehub/lobe-ui/commit/0c27aa1))
+- **base-ui**: Add Tree ([aad9e03](https://github.com/lobehub/lobe-ui/commit/aad9e03))
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Tree row height follows styles.node, drop root guide tail ([f49153a](https://github.com/lobehub/lobe-ui/commit/f49153a))
+
+### 📝 Documentation
+
+- **tree**: Svg guide lines, flex title, flatten trail ([1b1f727](https://github.com/lobehub/lobe-ui/commit/1b1f727))
+- Add base-ui FocusScope design spec ([84da859](https://github.com/lobehub/lobe-ui/commit/84da859))
+- Add base-ui Tree design spec ([411bd8f](https://github.com/lobehub/lobe-ui/commit/411bd8f))
+
 ## [5.46.3](https://github.com/lobehub/lobe-ui/compare/v5.46.2...v5.46.3) (2026-09-14)
 
 ### 🐛 Bug Fixes
