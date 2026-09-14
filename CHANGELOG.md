@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.47.1](https://github.com/lobehub/lobe-ui/compare/v5.47.0...v5.47.1) (2026-09-14)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Center-align single-line Alert content, shrink icon size ([5ec345f](https://github.com/lobehub/lobe-ui/commit/5ec345f))
+
 # [5.47.0](https://github.com/lobehub/lobe-ui/compare/v5.46.3...v5.47.0) (2026-09-14)
 
 ### ✨ Features
