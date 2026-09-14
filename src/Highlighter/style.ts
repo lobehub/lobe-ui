@@ -43,7 +43,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     `,
 
     headerFilled: css`
-      background: transparent;
+      background: ${cssVar.containerBg};
     `,
 
     headerOutlined: css`
@@ -54,7 +54,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 
     headerRoot: css`
       cursor: pointer;
-      position: relative;
+      position: sticky;
+      top: 0;
+      z-index: 3;
       padding: 4px;
     `,
 
@@ -88,7 +90,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       css`
         position: relative;
 
-        overflow: hidden;
+        overflow: clip;
 
         width: 100%;
         border-radius: ${cssVar.borderRadius};
