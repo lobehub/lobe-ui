@@ -37,6 +37,7 @@ const DEPRECATED_UI_COMPONENTS = [
   'Tabs',
   'Tag',
   'Text',
+  'Tree',
 ];
 
 const DEPRECATED_ANTD_COMPONENT_PATHS = [
@@ -62,6 +63,8 @@ const DEPRECATED_ANTD_COMPONENT_PATHS = [
   'antd/es/slider/*',
   'antd/es/switch',
   'antd/es/switch/*',
+  'antd/es/tree',
+  'antd/es/tree/*',
   'antd/lib/alert',
   'antd/lib/alert/*',
   'antd/lib/auto-complete',
@@ -84,6 +87,8 @@ const DEPRECATED_ANTD_COMPONENT_PATHS = [
   'antd/lib/slider/*',
   'antd/lib/switch',
   'antd/lib/switch/*',
+  'antd/lib/tree',
+  'antd/lib/tree/*',
 ];
 
 export const restrictedImports = {
