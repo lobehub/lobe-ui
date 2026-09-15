@@ -15,7 +15,7 @@ jobs:
     steps:
       # The caller has already pushed the @lobehub/ui release commit, so check
       # out the branch tip rather than the SHA that triggered the run.
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ref: ${{ github.ref_name }}
