@@ -200,6 +200,9 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
   const showLogo = brand?.logo !== false;
   const showProductName = brand?.productName !== false;
   const showWordmark = brand?.wordmark !== false;
+  const brandLabel =
+    brand?.label ??
+    (brandHref === '/' ? `${siteConfig.title} documentation home` : productName || siteConfig.title);
   const brandContent = (
     <>
       {showLogo ? (
@@ -337,7 +340,7 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
 
           {/^(?:https?:)?\/\//.test(brandHref) ? (
             <a
-              aria-label={`${siteConfig.title} documentation home`}
+              aria-label={brandLabel}
               className={styles.brand}
               href={brandHref}
               rel="noreferrer"
@@ -347,7 +350,7 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
             </a>
           ) : (
             <Link
-              aria-label={`${siteConfig.title} documentation home`}
+              aria-label={brandLabel}
               className={styles.brand}
               to={brandHref}
             >

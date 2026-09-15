@@ -65,6 +65,7 @@ export interface DocsMetadataConfig {
 
 export interface DocsBrandConfig {
   href?: string;
+  label?: string;
   logo?: string | false;
   productName?: string | false;
   wordmark?: string | false;
