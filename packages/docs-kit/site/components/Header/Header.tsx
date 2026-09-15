@@ -200,6 +200,7 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
   const showLogo = brand?.logo !== false;
   const showProductName = brand?.productName !== false;
   const showWordmark = brand?.wordmark !== false;
+  const showBrand = showLogo || showProductName || showWordmark;
   const brandLabel =
     brand?.label ??
     (brandHref === '/' ? `${siteConfig.title} documentation home` : productName || siteConfig.title);
@@ -338,25 +339,23 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
             <Menu aria-hidden size={18} strokeWidth={1.8} />
           </button>
 
-          {/^(?:https?:)?\/\//.test(brandHref) ? (
-            <a
-              aria-label={brandLabel}
-              className={styles.brand}
-              href={brandHref}
-              rel="noreferrer"
-              target="_blank"
-            >
-              {brandContent}
-            </a>
-          ) : (
-            <Link
-              aria-label={brandLabel}
-              className={styles.brand}
-              to={brandHref}
-            >
-              {brandContent}
-            </Link>
-          )}
+          {showBrand ? (
+            /^(?:https?:)?\/\//.test(brandHref) ? (
+              <a
+                aria-label={brandLabel}
+                className={styles.brand}
+                href={brandHref}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {brandContent}
+              </a>
+            ) : (
+              <Link aria-label={brandLabel} className={styles.brand} to={brandHref}>
+                {brandContent}
+              </Link>
+            )
+          ) : null}
 
           <nav aria-label="Documentation sections" className={styles.nav} ref={navRef}>
             <span
