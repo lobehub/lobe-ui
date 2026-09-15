@@ -249,7 +249,7 @@
     "@types/mdx": "^2.0.14",
     "@types/node": "26.1.1",
     "@types/numeral": "^2.0.5",
-    "@types/pangu": "^4.0.2",
+    "@types/pangu": "^5.0.0",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@types/unist": "^3.0.3",
