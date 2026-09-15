@@ -363,6 +363,21 @@ export const styles = createStaticStyles(({ css }) => {
       letter-spacing: -0.02em;
     `,
 
+    wordmark: css`
+      display: block;
+      flex: none;
+      width: auto;
+      height: 28px;
+    `,
+
+    wordmarkText: css`
+      font-size: 15px;
+      font-weight: 650;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      white-space: nowrap;
+    `,
+
     root: css`
       position: fixed;
       z-index: 100;
@@ -455,11 +470,5 @@ export const styles = createStaticStyles(({ css }) => {
       }
     `,
 
-    wordmark: css`
-      display: block;
-      flex: none;
-      width: auto;
-      height: 28px;
-    `,
   };
 });

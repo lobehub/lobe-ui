@@ -186,11 +186,59 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
 
   const isHome = pathname === '/';
   const actions = siteConfig.themeConfig?.actions ?? [];
+  const brand = siteConfig.themeConfig?.brand;
   const githubSocialLink = siteConfig.themeConfig?.socialLinks?.find(
     (link) => link.icon === 'github',
   );
-  const productName = siteConfig.title.replace(/^Lobe(?:Hub)?\s+/i, '') || siteConfig.title;
+  const productName =
+    brand?.productName === false
+      ? ''
+      : (brand?.productName ??
+        (siteConfig.title.replace(/^Lobe(?:Hub)?\s+/i, '') || siteConfig.title));
   const showThemeMenu = (siteConfig.themeConfig?.prefersColor ?? 'auto') === 'auto';
+  const brandHref = brand?.href ?? '/';
+  const showLogo = brand?.logo !== false;
+  const showProductName = brand?.productName !== false;
+  const showWordmark = brand?.wordmark !== false;
+  const showBrand = showLogo || showProductName || showWordmark;
+  const brandLabel =
+    brand?.label ??
+    (brandHref === '/' ? `${siteConfig.title} documentation home` : productName || siteConfig.title);
+  const brandContent = (
+    <>
+      {showLogo ? (
+        <img
+          alt=""
+          aria-hidden
+          className={styles.logo}
+          height={LOGO_SIZE}
+          src={brand?.logo ?? LOGO_URL}
+          width={LOGO_SIZE}
+        />
+      ) : null}
+      {showWordmark ? (
+        <>
+          {brand?.wordmark ? (
+            <span aria-hidden className={styles.wordmarkText}>
+              {brand.wordmark}
+            </span>
+          ) : (
+            <LobeHubText aria-hidden className={styles.wordmark} />
+          )}
+        </>
+      ) : null}
+      {showProductName ? (
+        <>
+          {showLogo || showWordmark ? (
+            <span aria-hidden className={styles.brandDivider}>
+              /
+            </span>
+          ) : null}
+          <span className={styles.productName}>{productName}</span>
+        </>
+      ) : null}
+    </>
+  );
 
   const inlineSections = orderedSections.filter(
     (section) => !collapsedKeys.has(`section:${section.title}`),
@@ -291,25 +339,23 @@ export function Header({ navigation, onSearchOpen }: HeaderProps) {
             <Menu aria-hidden size={18} strokeWidth={1.8} />
           </button>
 
-          <Link
-            aria-label={`${siteConfig.title} documentation home`}
-            className={styles.brand}
-            to="/"
-          >
-            <img
-              aria-hidden
-              alt=""
-              className={styles.logo}
-              height={LOGO_SIZE}
-              src={LOGO_URL}
-              width={LOGO_SIZE}
-            />
-            <LobeHubText aria-hidden className={styles.wordmark} />
-            <span aria-hidden className={styles.brandDivider}>
-              /
-            </span>
-            <span className={styles.productName}>{productName}</span>
-          </Link>
+          {showBrand ? (
+            /^(?:https?:)?\/\//.test(brandHref) ? (
+              <a
+                aria-label={brandLabel}
+                className={styles.brand}
+                href={brandHref}
+                rel="noreferrer"
+                target="_blank"
+              >
+                {brandContent}
+              </a>
+            ) : (
+              <Link aria-label={brandLabel} className={styles.brand} to={brandHref}>
+                {brandContent}
+              </Link>
+            )
+          ) : null}
 
           <nav aria-label="Documentation sections" className={styles.nav} ref={navRef}>
             <span

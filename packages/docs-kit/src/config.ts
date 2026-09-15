@@ -63,6 +63,14 @@ export interface DocsMetadataConfig {
   };
 }
 
+export interface DocsBrandConfig {
+  href?: string;
+  label?: string;
+  logo?: string | false;
+  productName?: string | false;
+  wordmark?: string | false;
+}
+
 export interface DocsApiHeaderConfig {
   docUrl?: string;
   github?: string;
@@ -76,6 +84,7 @@ export interface DocsThemeConfig {
   actions?: DocsNavItem[];
   analytics?: DocsAnalyticsConfig;
   apiHeader?: DocsApiHeaderConfig;
+  brand?: DocsBrandConfig;
   giscus?: DocsGiscusConfig;
   home?: DocsHomeConfig;
   metadata?: DocsMetadataConfig;
