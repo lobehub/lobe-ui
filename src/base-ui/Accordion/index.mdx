@@ -1,10 +1,11 @@
 ---
 title: Accordion
-description: Base UI-powered Accordion with a flush borderless look — the header hover highlight bleeds outside the text column so titles stay aligned with surrounding copy, plus an outlined FAQ-style variant.
+description: Base UI-powered Accordion with borderless, filled-header and outlined variants.
 category: Data Display
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import DemoFilled from './demos/filled.tsx?demo';
 import DemoInline from './demos/inline.tsx?demo';
 import DemoOutlined from './demos/outlined.tsx?demo';
 import DemoAtoms from './demos/atoms.tsx?demo';
@@ -14,6 +15,12 @@ import DemoAtoms from './demos/atoms.tsx?demo';
 The title text column is the alignment reference: the hover highlight and hit area extend `8px` (`--accordion-hover-inset`) beyond the component box without shifting layout.
 
 <Demo of={DemoIndex} layout="bare" />
+
+## Filled
+
+Compact filled headers with panels outside the filled surface.
+
+<Demo of={DemoFilled} layout="bare" />
 
 ## Outlined
 
@@ -55,4 +62,5 @@ Container border with dividers between items. The first example is single-open (
 ### Variants
 
 - `borderless` (default) — flush look; hover highlight bleeds `8px` outside via `--accordion-hover-inset`.
+- `filled` — compact filled headers; expanded content remains outside the filled surface.
 - `outlined` — rounded container border with `1px` dividers between items.
