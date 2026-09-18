@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.47.3](https://github.com/lobehub/lobe-ui/compare/v5.47.2...v5.47.3) (2026-09-18)
+
+### 🎫 Chores
+
+- **release**: Force patch release ([d619682](https://github.com/lobehub/lobe-ui/commit/d619682))
+
 ## [5.47.2](https://github.com/lobehub/lobe-ui/compare/v5.47.1...v5.47.2) (2026-09-18)
 
 ### 🎫 Chores
