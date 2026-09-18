@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.47.5](https://github.com/lobehub/lobe-ui/compare/v5.47.4...v5.47.5) (2026-09-18)
+
+### 🐛 Bug Fixes
+
+- **button**: Keep solid button fill while its popup is open ([e38b8b0](https://github.com/lobehub/lobe-ui/commit/e38b8b0))
+
 ## [5.47.4](https://github.com/lobehub/lobe-ui/compare/v5.47.3...v5.47.4) (2026-09-18)
 
 ### 🎫 Chores
