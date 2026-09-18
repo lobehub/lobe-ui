@@ -39,6 +39,9 @@ export const createReleaseConfig = ({ exclude = false, scopes, tagFormat = 'v${v
     // as well would run the step twice and duplicate every release note.
     if (name === '@semantic-release/release-notes-generator') return [];
 
+    // Releases go to npm only; GitHub Releases are intentionally not created.
+    if (name === '@semantic-release/github') return [];
+
     return [plugin];
   });
 
