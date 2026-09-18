@@ -2,6 +2,17 @@
 
 # Changelog
 
+## [5.47.2](https://github.com/lobehub/lobe-ui/compare/v5.47.1...v5.47.2) (2026-09-18)
+
+### 🎫 Chores
+
+- **eslint**: Ban Tree, drop restrictedImports test ([01c0c8d](https://github.com/lobehub/lobe-ui/commit/01c0c8d))
+- **release**: Force patch release ([ffd2171](https://github.com/lobehub/lobe-ui/commit/ffd2171))
+
+### 🐛 Bug Fixes
+
+- **accordion**: Restore filled variant ([70065a1](https://github.com/lobehub/lobe-ui/commit/70065a1))
+
 ## [5.47.1](https://github.com/lobehub/lobe-ui/compare/v5.47.0...v5.47.1) (2026-09-14)
 
 ### 🐛 Bug Fixes
