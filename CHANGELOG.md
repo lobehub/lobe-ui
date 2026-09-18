@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [5.47.6](https://github.com/lobehub/lobe-ui/compare/v5.47.5...v5.47.6) (2026-09-18)
+
+### 🎫 Chores
+
+- **release**: Stop creating github releases ([572ac55](https://github.com/lobehub/lobe-ui/commit/572ac55))
+
+### 🐛 Bug Fixes
+
+- **virtual**: Clamp ssrCount to the child count so short lists do not crash virtua ([0d602d5](https://github.com/lobehub/lobe-ui/commit/0d602d5))
+
 ## [5.47.5](https://github.com/lobehub/lobe-ui/compare/v5.47.4...v5.47.5) (2026-09-18)
 
 ### 🐛 Bug Fixes
