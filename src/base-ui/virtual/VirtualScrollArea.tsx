@@ -2,6 +2,7 @@
 
 import { createStaticStyles, cx } from 'antd-style';
 import {
+  Children,
   cloneElement,
   type ReactElement,
   type ReactNode,
@@ -77,7 +78,7 @@ export const VirtualScrollArea = ({
       keepMounted={keepMounted}
       ref={virtualizerRef}
       scrollRef={viewportRef}
-      ssrCount={INITIAL_ROW_COUNT}
+      ssrCount={Math.min(INITIAL_ROW_COUNT, Children.count(children))}
     >
       {children}
     </Virtualizer>
