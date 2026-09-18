@@ -1,0 +1,37 @@
+---
+title: Progress
+description: Line, segmented, inset, and circular progress indicators with status colors and a determinate info label.
+category: Feedback
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="Progress" from=".." />
+
+`Progress` renders a native `<div>`. All standard div HTML attributes including `className`, `style`, `data-*`, and `ref` are forwarded to the root element.
+
+### Variants
+
+`type="line"` (default) supports three `variant`s: `line` (a label and value row above a thin track), `segments` (independent cells, count set by `segments`), and `inset` (a track with an inset bar). `type="circle"` renders an SVG ring instead.
+
+### Status
+
+`status` accepts `normal`, `active`, `success`, or `exception`. `success` and `exception` replace the info text with a check or cross icon; `active` adds a shimmer animation to the `line` variant's bar.
+
+### Migrating from antd Progress
+
+```tsx | pure
+import { Progress } from '@lobehub/ui/base-ui';
+
+<Progress percent={62} status="active" />;
+```
+
+`steps`, `strokeLinecap="square"`, `trailColor`, and gradient `strokeColor` are not supported; use `variant="segments"` for step-like semantics.
+
+antd's `size="default"` becomes `size="middle"`.
