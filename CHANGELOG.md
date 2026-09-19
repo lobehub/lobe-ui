@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.48.0](https://github.com/lobehub/lobe-ui/compare/v5.47.6...v5.48.0) (2026-09-19)
+
+### ✨ Features
+
+- **base-ui**: Layered shadows with hairline ring on elevated surfaces ([28ef4b2](https://github.com/lobehub/lobe-ui/commit/28ef4b2))
+
 ## [5.47.6](https://github.com/lobehub/lobe-ui/compare/v5.47.5...v5.47.6) (2026-09-18)
 
 ### 🎫 Chores
