@@ -62,16 +62,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     box-sizing: border-box;
     min-width: 120px;
     max-width: var(--available-width);
-    border: 1px solid ${cssVar.colorBorderSecondary};
     border-radius: ${cssVar.borderRadius};
 
     color: ${cssVar.colorText};
 
     background: ${cssVar.colorBgElevated};
     outline: none;
-    box-shadow:
-      0 0 15px 0 #00000008,
-      0 2px 30px 0 #00000014;
+    box-shadow: ${cssVar.boxShadowSecondary}, var(--lobe-ring);
 
     transition-timing-function: var(--lobe-popover-animation-ease-out);
     transition-duration: var(--lobe-popover-animation-duration);

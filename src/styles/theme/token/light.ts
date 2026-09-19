@@ -47,9 +47,6 @@ const lightBaseToken: Partial<AliasToken> = {
   ...errorToken,
   ...infoToken,
 
-  boxShadow: '0 20px 20px -8px rgba(0, 0, 0, 0.24)',
-  boxShadowSecondary: '0 8px 16px -4px rgba(0, 0, 0, 0.2)',
-  boxShadowTertiary: '0 3px 1px -1px rgba(26, 26, 26, 0.06)',
   colorLink: infoToken.colorInfoText,
   colorLinkActive: infoToken.colorInfoTextActive,
 

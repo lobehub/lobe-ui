@@ -204,10 +204,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     background: ${cssVar.colorBgElevated};
     background-clip: padding-box;
-    box-shadow:
-      0 0 0 1px ${cssVar.colorBorderSecondary},
-      0 4px 12px rgb(0 0 0 / 10%),
-      0 16px 32px -8px rgb(0 0 0 / 12%);
+    box-shadow: ${cssVar.boxShadowSecondary}, var(--lobe-ring);
 
     transition:
       transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),

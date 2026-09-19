@@ -8,6 +8,13 @@ import { CLASSNAMES } from '@/styles/classNames';
  * independent of `enableGlobalStyle`, which only gates document-level resets.
  */
 export default (token: Theme) => css`
+  :root {
+    /* Outer hairline painted on the page behind an elevated surface. Dark alpha is much
+       higher on purpose: a white hairline lightens toward a raised surface, and below ~16%
+       it lands on the surface's own colour and the edge vanishes. */
+    --lobe-ring: 0 0 0 1px ${token.isDarkMode ? 'rgb(255 255 255 / 18%)' : 'rgb(0 0 0 / 5%)'};
+  }
+
   @layer lobe-popup {
     .${CLASSNAMES.ContextTrigger}[data-popup-open],
       .${CLASSNAMES.DropdownMenuTrigger}[data-popup-open] {
