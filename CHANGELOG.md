@@ -2,6 +2,13 @@
 
 # Changelog
 
+## [5.48.1](https://github.com/lobehub/lobe-ui/compare/v5.48.0...v5.48.1) (2026-09-20)
+
+### 🐛 Bug Fixes
+
+- **accordion**: Skip enter animation when panels start expanded ([b54b565](https://github.com/lobehub/lobe-ui/commit/b54b565))
+- **base-ui**: Commit DraggablePanel size when pointer capture is lost mid-drag ([42b9235](https://github.com/lobehub/lobe-ui/commit/42b9235))
+
 # [5.48.0](https://github.com/lobehub/lobe-ui/compare/v5.47.6...v5.48.0) (2026-09-19)
 
 ### ✨ Features
