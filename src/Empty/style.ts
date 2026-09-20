@@ -9,7 +9,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     padding-inline: 16px;
     border: 1px dashed ${cssVar.colorBorder};
     border-radius: ${cssVar.borderRadiusLG};
-
+  `,
+  dashedClickable: css`
+    cursor: pointer;
     transition:
       border-color 0.15s,
       background 0.15s;
@@ -18,9 +20,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       border-color: ${cssVar.colorTextTertiary};
       background: ${cssVar.colorFillQuaternary};
     }
-  `,
-  dashedClickable: css`
-    cursor: pointer;
   `,
   extraPage: css`
     display: flex;
@@ -41,49 +40,5 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     gap: 20px;
     align-items: flex-start;
     padding: 8px;
-  `,
-  rootStack: css`
-    padding-block: 12px;
-    padding-inline: 8px;
-  `,
-  stack: css`
-    position: relative;
-    width: 48px;
-    height: 40px;
-  `,
-  stackCard: css`
-    position: absolute;
-    inset-inline: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    height: 28px;
-    border: 1px solid ${cssVar.colorBorder};
-    border-radius: 5px;
-
-    color: ${cssVar.colorTextQuaternary};
-
-    background: ${cssVar.colorBgContainer};
-
-    &:nth-child(1) {
-      inset-block-start: 0;
-      scale: 0.8;
-      opacity: 0.4;
-    }
-
-    &:nth-child(2) {
-      inset-block-start: 6px;
-      scale: 0.9;
-      opacity: 0.7;
-    }
-
-    &:nth-child(3) {
-      inset-block-start: 12px;
-    }
-  `,
-  stackCardBack: css`
-    background: ${cssVar.colorFillQuaternary};
   `,
 }));

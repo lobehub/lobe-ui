@@ -41,17 +41,14 @@ describe('Empty', () => {
     expect(container.querySelector('svg')).toBeNull();
   });
 
-  it('renders a default Plus icon for the dashed variant', () => {
-    const { container } = render(<Empty title="No skills yet" variant="dashed" />);
+  it('renders a default Plus icon only for the clickable dashed variant', () => {
+    const { container: withoutClick } = render(<Empty title="No skills yet" variant="dashed" />);
+    const { container: withClick } = render(
+      <Empty title="No skills yet" variant="dashed" onClick={() => {}} />,
+    );
 
-    expect(container.querySelector('svg')).toBeTruthy();
-  });
-
-  it('renders a default Minus icon inside a stack illustration for the stack variant', () => {
-    const { container } = render(<Empty title="Nothing here yet" variant="stack" />);
-
-    expect(container.querySelectorAll('i').length).toBe(3);
-    expect(container.querySelector('svg')).toBeTruthy();
+    expect(withoutClick.querySelector('svg')).toBeNull();
+    expect(withClick.querySelector('svg')).toBeTruthy();
   });
 
   it('only applies the pointer cursor on the dashed variant when onClick is passed', () => {

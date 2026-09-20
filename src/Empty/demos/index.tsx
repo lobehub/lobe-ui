@@ -9,7 +9,7 @@ export default () => {
       description: 'There is no data to display',
       emoji: '📭',
       icon: {
-        options: [Inbox, Package],
+        options: { Inbox, Package },
         value: Inbox,
       },
       iconType: {
@@ -29,7 +29,7 @@ export default () => {
         value: 'default',
       },
       variant: {
-        options: ['default', 'dashed', 'stack'],
+        options: ['default', 'dashed'],
         value: 'default',
       },
     },

@@ -1,7 +1,7 @@
 'use client';
 
 import { cssVar, cx } from 'antd-style';
-import { Minus, Plus } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { type KeyboardEvent, memo, useMemo } from 'react';
 
 import FluentEmoji from '@/FluentEmoji';
@@ -39,28 +39,15 @@ const Empty = memo<EmptyProps>(
     const alignValue = align || (isPage ? 'flex-start' : 'center');
     const isCenter = alignValue === 'center';
 
-    const resolvedIcon =
-      icon ??
-      (isPage ? undefined : variant === 'dashed' ? Plus : variant === 'stack' ? Minus : undefined);
+    const isClickable = !isPage && variant === 'dashed' && !!onClick;
+    const resolvedIcon = icon ?? (isClickable ? Plus : undefined);
 
-    const iconSize = isPage ? 36 : variant === 'dashed' ? 20 : variant === 'stack' ? 16 : 32;
+    const iconSize = isPage ? 36 : variant === 'dashed' ? 20 : 32;
 
     const cover = useMemo(() => {
       if (image) return image;
       if (emoji) return <FluentEmoji emoji={emoji} size={imageSize} type={'anim'} />;
       if (!resolvedIcon) return null;
-
-      if (variant === 'stack' && !isPage) {
-        return (
-          <div className={styles.stack}>
-            <i className={cx(styles.stackCard, styles.stackCardBack)} />
-            <i className={cx(styles.stackCard, styles.stackCardBack)} />
-            <i className={styles.stackCard}>
-              <Icon color={iconColor} icon={resolvedIcon} size={16} />
-            </i>
-          </div>
-        );
-      }
 
       return (
         <Icon
@@ -69,15 +56,12 @@ const Empty = memo<EmptyProps>(
           size={{ size: iconSize, strokeWidth: isPage ? 1.25 : 2 }}
         />
       );
-    }, [image, emoji, imageSize, resolvedIcon, variant, isPage, iconColor, iconSize]);
-
-    const isClickable = !isPage && variant === 'dashed' && !!onClick;
+    }, [image, emoji, imageSize, resolvedIcon, isPage, iconColor, iconSize]);
 
     const rootClassName = cx(
       isPage ? styles.rootPage : styles.root,
       !isPage && variant === 'dashed' && styles.dashed,
       isClickable && styles.dashedClickable,
-      !isPage && variant === 'stack' && styles.rootStack,
       className,
     );
 
@@ -103,7 +87,7 @@ const Empty = memo<EmptyProps>(
         weight={isPage ? 600 : 500}
         style={{
           marginBottom: isPage ? 4 : 0,
-          marginTop: isPage ? 0 : variant === 'stack' ? 10 : variant === 'dashed' ? 6 : 8,
+          marginTop: isPage ? 0 : variant === 'dashed' ? 6 : 8,
         }}
         {...titleProps}
       >

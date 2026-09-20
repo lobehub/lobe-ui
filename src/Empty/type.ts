@@ -19,5 +19,5 @@ export interface EmptyProps extends Omit<ComponentProps<'div'>, 'title'> {
   title?: ReactNode;
   titleProps?: Omit<TextProps, 'children'>;
   type?: 'default' | 'page';
-  variant?: 'default' | 'dashed' | 'stack';
+  variant?: 'default' | 'dashed';
 }
