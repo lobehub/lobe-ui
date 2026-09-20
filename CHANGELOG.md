@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.48.2](https://github.com/lobehub/lobe-ui/compare/v5.48.1...v5.48.2) (2026-09-20)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Render empty Avatar text instead of "UN" when avatar and title are missing ([36d6589](https://github.com/lobehub/lobe-ui/commit/36d6589))
+
 ## [5.48.1](https://github.com/lobehub/lobe-ui/compare/v5.48.0...v5.48.1) (2026-09-20)
 
 ### 🐛 Bug Fixes
