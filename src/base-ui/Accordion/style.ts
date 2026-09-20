@@ -40,6 +40,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       opacity: 0;
     }
 
+    /* Base UI sets animation-name: none on initially-open panels */
+    [style*='animation-name: none'] &,
+    [style*='animation-name:none'] & {
+      translate: none;
+      opacity: 1;
+      transition: none;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       transition-duration: 0s;
     }
@@ -155,6 +163,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     &[data-starting-style],
     &[data-ending-style] {
       height: 0;
+    }
+
+    &[data-starting-style][style*='animation-name: none'],
+    &[data-starting-style][style*='animation-name:none'] {
+      height: auto;
+      transition: none;
     }
 
     @media (prefers-reduced-motion: reduce) {

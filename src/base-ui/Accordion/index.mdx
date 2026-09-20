@@ -9,6 +9,7 @@ import DemoFilled from './demos/filled.tsx?demo';
 import DemoInline from './demos/inline.tsx?demo';
 import DemoOutlined from './demos/outlined.tsx?demo';
 import DemoAtoms from './demos/atoms.tsx?demo';
+import DemoDefaultOpen from './demos/defaultOpen.tsx?demo';
 
 ## Default
 
@@ -31,6 +32,12 @@ Container border with dividers between items. The first example is single-open (
 ## Inline indicator
 
 <Demo of={DemoInline} layout="bare" />
+
+## Default-open mount
+
+Sections that start expanded should paint fully open — no height or fade enter. Remount to replay first paint. Click **Pricing** to compare the expand motion.
+
+<Demo of={DemoDefaultOpen} layout="bare" />
 
 ## Atom Components
 

@@ -62,6 +62,22 @@ describe('Accordion', () => {
     expect(getComputedStyle(content).paddingInlineStart).not.toBe('24px');
   });
 
+  test('default-open panel skips the enter animation', () => {
+    render(<Accordion defaultValue={['a']} items={items} />);
+
+    const openPanel = screen.getByText('Panel A').parentElement;
+    expect(openPanel?.style.animationName).toBe('none');
+    expect(getComputedStyle(screen.getByText('Panel A')).opacity).not.toBe('0');
+  });
+
+  test('opening a closed panel does not keep enter animation suppressed', () => {
+    render(<Accordion defaultValue={['a']} items={items} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Item B' }));
+    const openedPanel = screen.getByText('Panel B').parentElement;
+    expect(openedPanel?.style.animationName).not.toBe('none');
+  });
+
   test('AccordionRoot keeps several items open by default', () => {
     render(
       <AccordionRoot defaultValue={['a']}>
