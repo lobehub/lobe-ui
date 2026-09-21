@@ -23,6 +23,7 @@ jobs:
       # out the branch tip rather than the SHA that triggered the run.
       - uses: actions/checkout@v5
         with:
+          token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
           ref: ${{ github.ref_name }}
 
