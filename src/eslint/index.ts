@@ -167,6 +167,15 @@ export const restrictedImports = {
             message: 'antd feedback APIs are deprecated. Use `toast` from "@lobehub/ui/base-ui".',
             name: 'antd',
           },
+          {
+            importNames: ['LoadingOutlined'],
+            message: 'Use `Spin` from "@lobehub/ui/base-ui" instead of a hand-rolled spinner.',
+            name: '@ant-design/icons',
+          },
+          {
+            message: 'Use `Spin variant="network"` from "@lobehub/ui/base-ui" instead.',
+            name: 'thinking-orbs',
+          },
         ],
         patterns: [
           {
