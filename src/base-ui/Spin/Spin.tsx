@@ -6,6 +6,7 @@ import { memo, useMemo } from 'react';
 
 import Icon from '@/Icon';
 
+import NetworkGlyph from './NetworkGlyph';
 import { styles } from './style';
 import type { SpinProps, SpinSize } from './type';
 
@@ -16,13 +17,6 @@ const sizeMap: Record<'small' | 'middle' | 'large', number> = {
 };
 
 const resolveSize = (size: SpinSize) => (typeof size === 'number' ? size : sizeMap[size]);
-
-const neuralPoints = [
-  [20, 50],
-  [50, 25],
-  [80, 50],
-  [50, 75],
-] as const;
 
 const Spin = memo<SpinProps>(
   ({
@@ -43,17 +37,7 @@ const Spin = memo<SpinProps>(
     const glyph = useMemo(() => {
       if (indicator) return indicator;
 
-      if (variant === 'neural') {
-        return (
-          <svg className={styles.glyph} height={px} viewBox="0 0 100 100" width={px}>
-            <path className={styles.neuralPath} d="M20 50 L50 25 L80 50 L50 75 Z" />
-            {neuralPoints.map(([x, y]) => (
-              <circle className={styles.neuralDim} cx={x} cy={y} key={`${x}-${y}`} r={5} />
-            ))}
-            <circle className={styles.neuralParticle} r={4} />
-          </svg>
-        );
-      }
+      if (variant === 'network') return <NetworkGlyph px={px} />;
 
       if (typeof percent === 'number') {
         const clamped = Math.min(100, Math.max(0, percent));

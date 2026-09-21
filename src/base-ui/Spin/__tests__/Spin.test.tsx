@@ -43,12 +43,15 @@ describe('Spin', () => {
     expect(circles[1].getAttribute('stroke-dashoffset')).not.toBe('0');
   });
 
-  test('renders the neural variant glyph', () => {
-    renderSpin({ variant: 'neural' });
+  test('renders the network variant glyph', () => {
+    renderSpin({ size: 'small', variant: 'network' });
 
-    const svg = screen.getByRole('status').querySelector('svg');
-    expect(svg?.getAttribute('viewBox')).toBe('0 0 100 100');
-    expect(svg?.querySelectorAll('circle')).toHaveLength(5);
+    const status = screen.getByRole('status');
+    expect(status.querySelectorAll('line')).toHaveLength(18);
+    expect(status.querySelectorAll('i')).toHaveLength(12);
+    expect((status.querySelector('[style*="scale"]') as HTMLElement).style.transform).toBe(
+      'scale(0.14)',
+    );
   });
 
   test('renders a custom indicator instead of the built-in glyph', () => {

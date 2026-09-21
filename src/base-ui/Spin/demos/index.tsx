@@ -14,7 +14,9 @@ export default () => {
         <Spin percent={72} size="large" />
       </Flexbox>
       <Flexbox horizontal align="center" gap={16}>
-        <Spin variant="neural" />
+        <Spin size="small" variant="network" />
+        <Spin size="middle" variant="network" />
+        <Spin size="large" variant="network" />
       </Flexbox>
       <div
         style={{
