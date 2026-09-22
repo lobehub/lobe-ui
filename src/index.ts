@@ -303,10 +303,6 @@ export {
 export type { MotionComponentType } from './MotionProvider';
 export { MotionComponent, MotionProvider, useMotionComponent } from './MotionProvider';
 export {
-  default as NeuralNetworkLoading,
-  type NeuralNetworkLoadingProps,
-} from './NeuralNetworkLoading';
-export {
   default as Popover,
   PopoverArrow,
   type PopoverArrowAtomProps,

@@ -5,11 +5,11 @@ import { Download, Expand } from 'lucide-react';
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import ActionIcon from '@/base-ui/ActionIcon';
+import Spin from '@/base-ui/Spin';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
 import { actionsHoverCls, variants } from '@/Highlighter/style';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
-import NeuralNetworkLoading from '@/NeuralNetworkLoading';
 import Segmented from '@/Segmented';
 import { stopPropagation } from '@/utils/dom';
 import { downloadBlob } from '@/utils/downloadBlob';
@@ -403,7 +403,7 @@ const HtmlPreview = memo<HtmlPreviewProps>(
           </div>
           <div className={styles.loadingBackdrop} />
           <div className={styles.loadingBadge}>
-            <NeuralNetworkLoading size={16} />
+            <Spin size={16} variant="network" />
             <span>Preparing preview…</span>
           </div>
         </div>
