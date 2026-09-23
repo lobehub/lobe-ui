@@ -2,6 +2,16 @@
 
 # Changelog
 
+# [5.49.0](https://github.com/lobehub/lobe-ui/compare/v5.48.2...v5.49.0) (2026-09-23)
+
+### ✨ Features
+
+- **ui**: Add landing and dashboard kits and rebuild docs chrome ([4d09fea](https://github.com/lobehub/lobe-ui/commit/4d09fea))
+
+### 🔧 Continuous Integration
+
+- Publish GitHub releases as lobe-tsukumo App, closes [#670](https://github.com/lobehub/lobe-ui/issues/670) ([84a8f20](https://github.com/lobehub/lobe-ui/commit/84a8f20))
+
 ## [5.48.2](https://github.com/lobehub/lobe-ui/compare/v5.48.1...v5.48.2) (2026-09-20)
 
 ### 🐛 Bug Fixes
