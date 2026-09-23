@@ -72,7 +72,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     border: 1px solid ${cssVar.colorBorderSecondary};
     border-radius: 16px;
 
-    background: color-mix(in srgb, ${cssVar.colorBgContainer} 82%, transparent);
+    background: color-mix(in srgb, ${cssVar.colorBgElevated} 25%, transparent);
     backdrop-filter: blur(12px);
     box-shadow:
       0 1px 2px rgb(0 0 0 / 4%),

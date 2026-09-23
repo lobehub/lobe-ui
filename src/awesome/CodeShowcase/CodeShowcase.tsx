@@ -15,7 +15,7 @@ const CodeShowcase = memo<CodeShowcaseProps>(
     className,
     defaultActiveKey,
     items,
-    minHeight = 300,
+    minHeight,
     onChange,
     style,
     ...rest

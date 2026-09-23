@@ -3,7 +3,6 @@
 import { cx } from 'antd-style';
 import { memo } from 'react';
 
-import FluidGradient from '@/awesome/FluidGradient';
 import { LandingActions } from '@/awesome/landingActions';
 
 import { styles } from './style';
@@ -14,7 +13,6 @@ const LandingHero = memo<LandingHeroProps>(
     accent,
     actions,
     aside,
-    background,
     badge,
     children,
     className,
@@ -29,7 +27,6 @@ const LandingHero = memo<LandingHeroProps>(
       data-layout={aside ? 'split' : 'center'}
       {...rest}
     >
-      {background === undefined ? <FluidGradient /> : background || null}
       <div className={styles.content}>
         <div className={styles.main}>
           <div className={styles.intro}>

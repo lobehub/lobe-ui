@@ -6,7 +6,6 @@ it('renders actions as anchors and opens absolute URLs in a new tab', () => {
   render(
     <LandingHero
       accent="Kit"
-      background={false}
       title="Example"
       actions={[
         { href: '/docs', label: 'Get Started', primary: true },
@@ -24,7 +23,6 @@ it('routes the primary action through renderLink', () => {
   render(
     <LandingHero
       actions={[{ href: '/docs', label: 'Docs', primary: true }]}
-      background={false}
       title="Example"
       renderLink={({ children, className, external, href }) => (
         <button className={className} data-external={external} data-href={href} type="button">
@@ -44,7 +42,6 @@ it('hands internal secondary actions to onNavigate', () => {
   render(
     <LandingHero
       actions={[{ href: '/guide', label: 'Guide' }]}
-      background={false}
       title="Example"
       onNavigate={onNavigate}
     />,
@@ -57,9 +54,7 @@ it('hands internal secondary actions to onNavigate', () => {
 });
 
 it('switches to the split layout when an aside is given', () => {
-  const { container } = render(
-    <LandingHero aside={<div>Aside</div>} background={false} title="Example" />,
-  );
+  const { container } = render(<LandingHero aside={<div>Aside</div>} title="Example" />);
 
   expect(container.querySelector('section')?.getAttribute('data-layout')).toBe('split');
   expect(screen.getByText('Aside')).toBeTruthy();

@@ -29,7 +29,7 @@ have not seen here: `https://ui.lobehub.com/skills/components/awesome/<kebab-nam
 | Code next to its result | `CodeShowcase`            | Two to four short snippets, each with a live `preview`.                                                            |
 | Reasons to choose       | `FeatureGrid`             | Three or six cards of icon, title and one-sentence description.                                                    |
 | Closing call to action  | `InstallBanner`           | Title, copyable install command, footnote with license and a docs link.                                            |
-| Background texture      | `FluidGradient`           | Already inside `LandingHero`; use it alone only for a custom band. Needs a positioned parent.                      |
+| Background texture      | `FluidGradient`           | Place it behind a positioned band when you want a texture. Needs a positioned parent.                              |
 
 ## Page structure
 

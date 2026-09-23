@@ -26,7 +26,7 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
     border: 1px solid ${cssVar.colorBorderSecondary};
     border-radius: ${cssVar.borderRadiusLG};
 
-    background: color-mix(in srgb, ${cssVar.colorBgContainer} 62%, transparent);
+    background: color-mix(in srgb, ${cssVar.colorBgElevated} 25%, transparent);
     box-shadow: ${cssVar.boxShadowTertiary};
 
     > * {

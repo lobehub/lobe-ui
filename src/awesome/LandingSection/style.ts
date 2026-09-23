@@ -75,7 +75,7 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
     margin: 0;
 
     font-size: clamp(24px, 3vw, 32px);
-    font-weight: 600;
+    font-weight: bold;
     line-height: 1.2;
     color: ${cssVar.colorText};
     text-wrap: balance;

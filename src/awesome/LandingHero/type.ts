@@ -15,11 +15,6 @@ export interface LandingHeroProps extends Omit<DivProps, 'title'> {
    * hero to a two-column layout with left-aligned text; it stacks below the text on narrow screens.
    */
   aside?: ReactNode;
-  /**
-   * Background layer. Pass `false` to render none.
-   * @default <FluidGradient />
-   */
-  background?: ReactNode | false;
   /** Small pill above the title, e.g. a release note link. */
   badge?: ReactNode;
   /** Full-width content below the hero, e.g. a LogoMarquee. */

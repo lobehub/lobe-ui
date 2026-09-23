@@ -59,7 +59,6 @@ export default function Home({
     <>
       <LandingHero
         accent="UI Kit"
-        background={false}
         description={<span data-pagefind-meta="description">{description}</span>}
         renderLink={renderLink}
         title={<span data-pagefind-meta="title">LobeHub</span>}
