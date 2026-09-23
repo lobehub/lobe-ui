@@ -5,6 +5,7 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
 import Tooltip from '@/base-ui/Tooltip';
 import Icon from '@/Icon';
+import ScrollShadow from '@/ScrollShadow';
 
 import { useConsoleShellState } from '../ConsoleShell/context';
 import { useLocalStorage, usePrefersReducedMotion } from '../hooks';
@@ -130,7 +131,7 @@ function ConsoleNav({
   storageKey,
 }: ConsoleNavProps) {
   const id = useId();
-  const navRef = useRef<HTMLElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
   const shell = useConsoleShellState();
   const collapsed = collapsedProp ?? shell?.collapsed ?? false;
   const reducedMotion = usePrefersReducedMotion();
@@ -207,7 +208,15 @@ function ConsoleNav({
     const iconGroups = groups.filter((group) => group.icon);
 
     return (
-      <nav data-collapsed aria-label={label} className={styles.nav} ref={navRef}>
+      <ScrollShadow
+        aria-label={label}
+        as={'nav'}
+        className={styles.nav}
+        data-collapsed=""
+        orientation={'vertical'}
+        ref={navRef}
+        size={8}
+      >
         {topRail.length > 0 ? <div className={styles.railTop}>{topRail}</div> : null}
         {iconGroups.length > 0 ? (
           <div className={styles.railGroup} data-first={topRail.length === 0} role="group">
@@ -245,7 +254,7 @@ function ConsoleNav({
               </div>
             );
           })}
-      </nav>
+      </ScrollShadow>
     );
   }
 
@@ -309,14 +318,21 @@ function ConsoleNav({
   };
 
   return (
-    <nav aria-label={label} className={styles.nav} ref={navRef}>
+    <ScrollShadow
+      aria-label={label}
+      as={'nav'}
+      className={styles.nav}
+      orientation={'vertical'}
+      ref={navRef}
+      size={4}
+    >
       {items.length > 0 ? (
         <div className={styles.topItems} data-divided={groups.length > 0}>
           {renderItems(items, 0)}
         </div>
       ) : null}
       {groups.map((group) => renderGroup(group, 0, 0))}
-    </nav>
+    </ScrollShadow>
   );
 }
 

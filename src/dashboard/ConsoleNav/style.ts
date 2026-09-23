@@ -225,7 +225,6 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
   nav: css`
     scrollbar-width: thin;
 
-    overflow-y: auto;
     display: flex;
     flex: 1;
     flex-direction: column;

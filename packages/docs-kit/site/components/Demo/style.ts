@@ -1,7 +1,5 @@
 import { createStaticStyles, injectGlobal } from 'antd-style';
 
-import { lobeCodeSurface } from '../../styles/syntaxTheme';
-
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   actionGroup: css`
     display: inline-flex;
@@ -142,22 +140,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     background: var(--docs-surface-raised);
     box-shadow: var(--docs-shadow-control);
-
-    transition:
-      border-color 180ms ease,
-      box-shadow 180ms ease;
-
-    &:hover,
-    &:focus-within {
-      border-color: color-mix(in srgb, var(--docs-accent) 32%, var(--docs-border-default));
-      box-shadow:
-        0 0 0 1px color-mix(in srgb, var(--docs-accent) 10%, transparent),
-        var(--docs-shadow-control);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0.01ms;
-    }
   `,
 
   iframe: css`
@@ -241,7 +223,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     color: ${cssVar.colorTextSecondary};
     tab-size: 2;
 
-    background: ${lobeCodeSurface};
+    background: var(--docs-background);
     box-shadow: none;
 
     &::before {
@@ -272,7 +254,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     line-height: 1.65;
     color: ${cssVar.colorText};
 
-    background: ${lobeCodeSurface};
+    background: var(--docs-background);
 
     pre {
       min-height: 8rem;
@@ -297,7 +279,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   liveSource: css`
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    background: ${lobeCodeSurface};
+    background: var(--docs-background);
   `,
 
   liveStage: css`
@@ -393,7 +375,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     color: ${cssVar.colorText};
     tab-size: 2;
 
-    background: ${lobeCodeSurface};
+    background: var(--docs-background);
 
     @media (width <= 47.5rem) {
       padding-inline: 1rem;
@@ -402,16 +384,18 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
   sourcePanel: css`
     border-block-start: 1px solid var(--docs-border-subtle);
-    background: ${lobeCodeSurface};
+    background: var(--docs-background);
   `,
 
   standalonePage: css`
+    overflow: auto;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     place-items: center;
 
     min-width: 20rem;
-    min-height: 100dvh;
+    height: 100%;
+    min-height: 100%;
     padding: 1.5rem;
 
     background: var(--docs-background);

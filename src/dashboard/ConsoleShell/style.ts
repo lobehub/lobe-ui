@@ -68,6 +68,7 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
     gap: 20px;
 
     min-inline-size: 0;
+    min-block-size: 0;
     padding: 24px;
 
     /*
@@ -186,6 +187,7 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
     flex-direction: column;
 
     min-inline-size: 0;
+    min-block-size: 0;
     margin-block: ${WORKSPACE_INSET}px;
     margin-inline: 0 ${WORKSPACE_INSET}px;
     border: 1px solid ${cssVar.colorBorderSecondary};

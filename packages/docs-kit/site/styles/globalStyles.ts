@@ -74,7 +74,8 @@ injectGlobal`
   }
 
   html {
-    min-height: 100%;
+    overflow: hidden;
+    height: 100%;
     background: var(--docs-background);
     font-synthesis: none;
     text-size-adjust: 100%;
@@ -82,10 +83,15 @@ injectGlobal`
 
   body {
     position: relative;
+
+    overflow: hidden;
+
+    width: 100%;
     min-width: 20rem;
-    min-height: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
+
     color: var(--docs-text-primary);
     background-color: var(--docs-background);
     font-family: var(--docs-font-sans);
@@ -153,12 +159,12 @@ export const styles = createStaticStyles(({ css }) => ({
   `,
 
   page: css`
-    overflow-x: clip;
     display: flex;
-    flex: 1 0 auto;
+    flex: 1;
     flex-direction: column;
 
     min-width: 0;
+    min-block-size: 0;
   `,
 
   searchLoading: css`
