@@ -2,8 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import { Outlet } from 'react-router';
 
 import { Plausible } from '../../components/Analytics/Plausible';
-import { Footer } from '../../components/Footer/Footer';
-import { Header } from '../../components/Header/Header';
+import { DocsShell } from '../../components/DocsShell/DocsShell';
 import { styles } from '../../styles/globalStyles';
 import { contentManifest } from '../content/registry';
 
@@ -49,14 +48,15 @@ export default function DocsRouteLayout() {
 
   return (
     <>
-      <a className={styles.skipLink} href="#docs-content">
-        Skip to documentation
-      </a>
-      <Header navigation={contentManifest.navigation} onSearchOpen={openSearch} />
-      <div className={styles.page}>
-        <Outlet context={{ openSearch } satisfies DocsOutletContext} />
-        <Footer />
-      </div>
+      <DocsShell
+        documents={contentManifest.documents}
+        navigation={contentManifest.navigation}
+        onSearchOpen={openSearch}
+      >
+        <div className={styles.page}>
+          <Outlet context={{ openSearch } satisfies DocsOutletContext} />
+        </div>
+      </DocsShell>
       {searchOpen ? (
         <Suspense
           fallback={

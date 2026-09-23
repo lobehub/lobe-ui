@@ -1,0 +1,22 @@
+---
+title: FluidGradient
+description: A slow, GPU-rendered gradient texture for landing page backgrounds. It pauses off-screen and renders a still frame when reduced motion is preferred.
+category: Landing
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoColors from './demos/colors.tsx?demo';
+
+## Default
+
+FluidGradient fills its nearest positioned ancestor. Place it behind a positioned band when you want a landing texture.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Custom colors
+
+<Demo of={DemoColors} layout="bare" />
+
+## APIs
+
+<Api name="FluidGradient" from=".." />

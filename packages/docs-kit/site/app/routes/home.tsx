@@ -17,6 +17,7 @@ export const meta: MetaFunction = () => {
     { title },
     { content: description, name: 'description' },
     { href: canonicalUrl, rel: 'canonical', tagName: 'link' },
+    { href: new URL('/llms.txt', siteConfig.siteUrl).href, rel: 'describedby', tagName: 'link' },
     { content: 'website', property: 'og:type' },
     { content: siteConfig.title, property: 'og:site_name' },
     { content: title, property: 'og:title' },
@@ -34,10 +35,10 @@ export default function Home() {
   const getStartedPathname = firstSection ? sectionLandingPathname(firstSection) : '/changelog';
 
   return (
-    <main className={styles.root} id="docs-content">
+    <div className={styles.root} id="docs-content">
       <article data-pagefind-body className={styles.document}>
         <HomePage description={description} getStartedPathname={getStartedPathname} />
       </article>
-    </main>
+    </div>
   );
 }

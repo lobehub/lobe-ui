@@ -19,7 +19,7 @@ export default function NotFound() {
   const suggestions = findSimilarDocuments(location.pathname, contentManifest.documents);
 
   return (
-    <main className={styles.root} id="docs-content">
+    <div className={styles.root} id="docs-content">
       <p className={styles.code}>404</p>
       <h1>Documentation not found</h1>
       <p>
@@ -52,6 +52,6 @@ export default function NotFound() {
           Return to the documentation home page
         </Link>
       </div>
-    </main>
+    </div>
   );
 }

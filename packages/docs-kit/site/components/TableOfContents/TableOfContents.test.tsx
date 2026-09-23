@@ -110,7 +110,7 @@ it('spring-scrolls to the heading when a toc link is clicked', async () => {
   const heading = document.getElementById('usage');
   fireEvent.click(link);
 
-  expect(springScrollToElement).toHaveBeenCalledWith(heading, -100);
+  expect(springScrollToElement).toHaveBeenCalledWith(heading, scroller.HEADING_SCROLL_OFFSET);
 });
 
 it('scrolls the active link into view inside the viewport', async () => {

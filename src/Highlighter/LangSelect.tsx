@@ -59,7 +59,7 @@ export const LangSelect = memo<Omit<SelectProps, 'options'>>(({ ...rest }) => {
   return (
     <Select
       showSearch
-      className={'languageTitle'}
+      className={'language-title'}
       options={options}
       size={'small'}
       suffixIcon={false}

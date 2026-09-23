@@ -30,6 +30,7 @@ export const SegmentedRoot = <Value extends string = string>({
   return (
     <BaseUIToggleGroup<Value>
       className={cx(listVariants({ block, glass, shadow, variant }), className)}
+      data-variant={variant}
       {...rest}
     />
   );

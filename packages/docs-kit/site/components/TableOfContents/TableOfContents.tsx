@@ -4,7 +4,11 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import type { MouseEvent as ReactMouseEvent } from 'react';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
-import { springScrollToElement } from '../../lib/scroller';
+import {
+  getScrollContainer,
+  HEADING_SCROLL_OFFSET,
+  springScrollToElement,
+} from '../../lib/scroller';
 import { styles } from './style';
 
 interface TableOfContentsProps {
@@ -30,7 +34,7 @@ function TocList({ activeId, items, onNavigate }: TocListProps) {
       event.preventDefault();
       const heading = document.getElementById(id);
       if (heading) {
-        springScrollToElement(heading, -100);
+        springScrollToElement(heading, HEADING_SCROLL_OFFSET);
       }
       onNavigate(id);
     },
@@ -108,7 +112,10 @@ export function TableOfContents({ contentId, scopeKey }: TableOfContentsProps) {
         const first = headings.find((heading) => visible.has(heading.id));
         if (first) setActiveId(first.id);
       },
-      { rootMargin: '-96px 0px -66% 0px' },
+      {
+        root: getScrollContainer(),
+        rootMargin: '-96px 0px -66% 0px',
+      },
     );
     for (const heading of headings) observer.observe(heading);
 

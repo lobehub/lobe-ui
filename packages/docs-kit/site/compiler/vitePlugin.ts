@@ -136,8 +136,33 @@ export const componentModuleLoaders = import.meta.glob(${JSON.stringify(componen
   };
 }
 
+const routeConfigFiles = [
+  resolve(import.meta.dirname, '../routes.ts'),
+  resolve(import.meta.dirname, '../react-router.config.ts'),
+];
+
+// React Router's config watcher ignores an appDirectory that is not a direct
+// child of the Vite root, so kit route edits never reach a running dev server.
+export function lobeDocsRouteConfigRestartPlugin(): Plugin {
+  return {
+    apply: 'serve',
+    configureServer(server) {
+      server.watcher.add(routeConfigFiles);
+      server.watcher.on('change', (file) => {
+        if (!routeConfigFiles.includes(resolve(file))) return;
+        server.config.logger.info('Route config changed, restarting server...', {
+          timestamp: true,
+        });
+        void server.restart();
+      });
+    },
+    name: 'lobe-docs-route-config-restart',
+  };
+}
+
 export function lobeDocs(root: string = process.cwd()): Plugin[] {
   return [
+    lobeDocsRouteConfigRestartPlugin(),
     demoPlugin(),
     apiPlugin(),
     lobeDocsSiteConfigPlugin(root),

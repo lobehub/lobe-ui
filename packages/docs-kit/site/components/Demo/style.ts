@@ -1,6 +1,6 @@
 import { createStaticStyles, injectGlobal } from 'antd-style';
 
-export const styles = createStaticStyles(({ css }) => ({
+export const styles = createStaticStyles(({ css, cssVar }) => ({
   actionGroup: css`
     display: inline-flex;
     gap: 0.125rem;
@@ -140,22 +140,6 @@ export const styles = createStaticStyles(({ css }) => ({
 
     background: var(--docs-surface-raised);
     box-shadow: var(--docs-shadow-control);
-
-    transition:
-      border-color 180ms ease,
-      box-shadow 180ms ease;
-
-    &:hover,
-    &:focus-within {
-      border-color: color-mix(in srgb, var(--docs-accent) 32%, var(--docs-border-default));
-      box-shadow:
-        0 0 0 1px color-mix(in srgb, var(--docs-accent) 10%, transparent),
-        var(--docs-shadow-control);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0.01ms;
-    }
   `,
 
   iframe: css`
@@ -236,10 +220,10 @@ export const styles = createStaticStyles(({ css }) => ({
 
     font-size: 0.75rem;
     line-height: 1.65;
-    color: var(--docs-text-subtle);
+    color: ${cssVar.colorTextSecondary};
     tab-size: 2;
 
-    background: var(--docs-code-background);
+    background: var(--docs-background);
     box-shadow: none;
 
     &::before {
@@ -252,7 +236,7 @@ export const styles = createStaticStyles(({ css }) => ({
       width: 2px;
       border-radius: 2px;
 
-      background: var(--docs-border-strong);
+      background: ${cssVar.colorBorder};
     }
 
     @media (width <= 47.5rem) {
@@ -268,9 +252,9 @@ export const styles = createStaticStyles(({ css }) => ({
     font-family: var(--docs-font-mono);
     font-size: 0.75rem;
     line-height: 1.65;
-    color: var(--docs-text-primary);
+    color: ${cssVar.colorText};
 
-    background: var(--docs-code-background);
+    background: var(--docs-background);
 
     pre {
       min-height: 8rem;
@@ -295,7 +279,7 @@ export const styles = createStaticStyles(({ css }) => ({
   liveSource: css`
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    background: var(--docs-code-background);
+    background: var(--docs-background);
   `,
 
   liveStage: css`
@@ -347,7 +331,7 @@ export const styles = createStaticStyles(({ css }) => ({
     [data-demo-appearance='dark'] > & {
       color: #f4f4f5;
       color-scheme: dark;
-      background: #0d0d0f;
+      background: #000;
     }
 
     [data-demo-layout='center'] & {
@@ -357,6 +341,21 @@ export const styles = createStaticStyles(({ css }) => ({
 
     [data-demo-layout='bare'] & {
       padding: 0;
+    }
+
+    /* A short StoryBook must still fill the frame, and a taller one must
+       keep growing. Percentage heights do not resolve against min-height,
+       so the row itself carries the free space down to the sidebar. */
+    &:has([data-lobe-storybook]) {
+      display: grid;
+      grid-template-rows: minmax(min-content, 1fr);
+      padding: 0;
+
+      > *,
+      .ant-app:has([data-lobe-storybook]) {
+        height: 100%;
+        min-height: 100%;
+      }
     }
 
     @media (width <= 47.5rem) {
@@ -373,10 +372,10 @@ export const styles = createStaticStyles(({ css }) => ({
 
     font-size: 0.75rem;
     line-height: 1.65;
-    color: var(--docs-text-primary);
+    color: ${cssVar.colorText};
     tab-size: 2;
 
-    background: var(--docs-code-background);
+    background: var(--docs-background);
 
     @media (width <= 47.5rem) {
       padding-inline: 1rem;
@@ -385,16 +384,18 @@ export const styles = createStaticStyles(({ css }) => ({
 
   sourcePanel: css`
     border-block-start: 1px solid var(--docs-border-subtle);
-    background: var(--docs-code-background);
+    background: var(--docs-background);
   `,
 
   standalonePage: css`
+    overflow: auto;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     place-items: center;
 
     min-width: 20rem;
-    min-height: 100dvh;
+    height: 100%;
+    min-height: 100%;
     padding: 1.5rem;
 
     background: var(--docs-background);
@@ -408,7 +409,7 @@ export const styles = createStaticStyles(({ css }) => ({
     &[data-demo-appearance='dark'] {
       color: #f4f4f5;
       color-scheme: dark;
-      background: #0d0d0f;
+      background: #000;
     }
 
     > [data-demo-placeholder],
@@ -448,9 +449,8 @@ export const styles = createStaticStyles(({ css }) => ({
 
     white-space: nowrap;
 
-    clip-path: inset(50%);
-
     clip: rect(0 0 0 0);
+    clip-path: inset(50%);
   `,
 
   viewport: css`
@@ -484,6 +484,6 @@ injectGlobal`
   :root[data-standalone-appearance='dark'] [data-standalone-demo] {
     color: #f4f4f5;
     color-scheme: dark;
-    background: #0d0d0f;
+    background: #000;
   }
 `;

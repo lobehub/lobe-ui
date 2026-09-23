@@ -60,7 +60,7 @@ const themeConfig = (() => {
 // One probe per antd component the docs (incl. @lobehub/ui internals) can render.
 // A missed component is not fatal: entry.server keeps its rules inline as fallback.
 const PROBES: [string, () => ReactElement][] = [
-  ['alert', () => <Alert message={'-'} />],
+  ['alert', () => <Alert title={'-'} />],
   ['anchor', () => <Anchor items={[]} />],
   ['app', () => <App>{'-'}</App>],
   ['avatar', () => <Avatar />],
@@ -81,7 +81,7 @@ const PROBES: [string, () => ReactElement][] = [
   ],
   ['empty', () => <Empty />],
   ['float-button', () => <FloatButton />],
-  ['image', () => <Image src={''} />],
+  ['image', () => <Image />],
   ['input', () => <Input />],
   ['input-number', () => <InputNumber />],
   ['menu', () => <Menu items={[]} />],

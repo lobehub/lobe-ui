@@ -1,4 +1,5 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import type { ReactNode } from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router';
 
 import type { NavigationSection } from '../../types/content';
@@ -17,18 +18,23 @@ vi.mock('../content/registry', () => ({
   },
 }));
 
-vi.mock('../../components/Header/Header', () => ({
-  Header: ({
+vi.mock('../../components/DocsShell/DocsShell', () => ({
+  DocsShell: ({
+    children,
     navigation,
     onSearchOpen,
   }: {
+    children: ReactNode;
     navigation: NavigationSection[];
     onSearchOpen: (trigger: HTMLButtonElement) => void;
   }) => (
-    <header>
-      {navigation[0]?.title}
-      <button onClick={(event) => onSearchOpen(event.currentTarget)}>Search</button>
-    </header>
+    <div data-testid="docs-shell">
+      <header>
+        {navigation[0]?.title}
+        <button onClick={(event) => onSearchOpen(event.currentTarget)}>Search</button>
+      </header>
+      <main>{children}</main>
+    </div>
   ),
 }));
 
@@ -58,17 +64,16 @@ it('owns documentation chrome while rendering the nested document route', () => 
     <MemoryRouter>
       <Routes>
         <Route element={<DocsRouteLayout />}>
-          <Route index element={<main id="docs-content">Document content</main>} />
+          <Route index element={<div id="docs-content">Document content</div>} />
         </Route>
       </Routes>
     </MemoryRouter>,
   );
 
-  expect(screen.getByRole('link', { name: 'Skip to documentation' }).getAttribute('href')).toBe(
-    '#docs-content',
-  );
+  const shell = screen.getByTestId('docs-shell');
   expect(screen.getByText('Components')).toBeTruthy();
-  expect(screen.getByText('Document content')).toBeTruthy();
+  expect(shell.contains(screen.getByText('Document content'))).toBe(true);
+  expect(screen.queryByRole('contentinfo')).toBeNull();
   expect(layoutMocks.searchModuleLoads).toBe(0);
   expect(screen.getByTestId('plausible')).toBeTruthy();
 });
@@ -78,7 +83,7 @@ it('opens documentation search from a header intent', async () => {
     <MemoryRouter>
       <Routes>
         <Route element={<DocsRouteLayout />}>
-          <Route index element={<main id="docs-content">Document content</main>} />
+          <Route index element={<div id="docs-content">Document content</div>} />
         </Route>
       </Routes>
     </MemoryRouter>,
@@ -94,7 +99,7 @@ it('cancels a pending lazy search with Escape and restores the invoking control'
     <MemoryRouter>
       <Routes>
         <Route element={<DocsRouteLayout />}>
-          <Route index element={<main id="docs-content">Document content</main>} />
+          <Route index element={<div id="docs-content">Document content</div>} />
         </Route>
       </Routes>
     </MemoryRouter>,
@@ -117,7 +122,7 @@ it.each([
     <MemoryRouter>
       <Routes>
         <Route element={<DocsRouteLayout />}>
-          <Route index element={<main id="docs-content">Document content</main>} />
+          <Route index element={<div id="docs-content">Document content</div>} />
         </Route>
       </Routes>
     </MemoryRouter>,
@@ -132,7 +137,7 @@ it('preserves the original trigger when the search shortcut repeats inside the d
     <MemoryRouter>
       <Routes>
         <Route element={<DocsRouteLayout />}>
-          <Route index element={<main id="docs-content">Document content</main>} />
+          <Route index element={<div id="docs-content">Document content</div>} />
         </Route>
       </Routes>
     </MemoryRouter>,

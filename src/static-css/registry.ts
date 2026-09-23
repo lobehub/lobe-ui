@@ -118,7 +118,7 @@ export type AntdProbeName = (typeof PROBE_NAMES)[number];
 export const antdProbeNames: AntdProbeName[] = [...PROBE_NAMES];
 
 export const antdProbeRegistry: Record<AntdProbeName, AntdProbeDef> = {
-  'alert': { detect: 'Alert', render: () => createElement(Alert, { message: '-' }) },
+  'alert': { detect: 'Alert', render: () => createElement(Alert, { title: '-' }) },
   'anchor': { detect: 'Anchor', render: () => createElement(Anchor, { items: [] }) },
   'app': { detect: 'App', render: () => createElement(App, null, '-') },
   'auto-complete': { detect: 'AutoComplete', render: () => createElement(AutoComplete) },
@@ -147,7 +147,7 @@ export const antdProbeRegistry: Record<AntdProbeName, AntdProbeDef> = {
   },
   'grid-col': { detect: 'Col', render: () => createElement(Col, { span: 1 }) },
   'grid-row': { detect: 'Row', render: () => createElement(Row) },
-  'image': { detect: 'Image', render: () => createElement(Image, { src: '' }) },
+  'image': { detect: 'Image', render: () => createElement(Image) },
   'input': { detect: 'Input', render: () => createElement(Input) },
   'input-number': { detect: 'InputNumber', render: () => createElement(InputNumber) },
   'input-textarea': { detect: 'Input', render: () => createElement(Input.TextArea) },

@@ -1,0 +1,24 @@
+---
+title: AgentSkillCard
+description: A card that hands coding agents a prompt pointing at your skills, and gives humans the matching install command, with a row of supported agent logos.
+category: Landing
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoAgents from './demos/agents.tsx?demo';
+
+## Default
+
+With both `agent` and `human` panels the card shows an "I'm an Agent / I'm a Human" toggle. The logo row defaults to `DEFAULT_SKILL_AGENTS`, built from `@lobehub/icons`.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Custom agents and footer
+
+Pass `agents` to change the logo row, or an empty array to hide it. Omit `human` to show only the prompt.
+
+<Demo of={DemoAgents} layout="bare" />
+
+## APIs
+
+<Api name="AgentSkillCard" from=".." />

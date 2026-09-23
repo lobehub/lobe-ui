@@ -45,12 +45,12 @@ const ThemeProvider = memo<ThemeProviderProps>(
         customFonts || [
           genCdnUrl({
             path: 'css/index.css',
-            pkg: '@lobehub/webfont-geist-mono',
+            pkg: '@lobehub/webfont-mono',
             version: '1.0.0',
           }),
           genCdnUrl({
             path: 'css/index-full.css',
-            pkg: '@lobehub/webfont-geist',
+            pkg: '@lobehub/webfont-harmony-sans',
             version: '1.0.0',
           }),
           genCdnUrl({

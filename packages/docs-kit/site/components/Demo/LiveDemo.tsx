@@ -1,8 +1,9 @@
-import type { ComponentProps, CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 import { Activity, useEffect, useLayoutEffect, useRef } from 'react';
 import { Editor } from 'react-live';
 
 import type { LiveDiagnostic } from '../../compiler/demo/liveTransform';
+import { lobePrismTheme } from '../../styles/syntaxTheme';
 import type { DemoAppearance, DemoModule } from '../../types/demo';
 import { CanonicalPreview } from './CanonicalPreview';
 import { DemoEnvironment } from './DemoEnvironment';
@@ -35,32 +36,6 @@ interface SourceEditorProps {
   code: string;
   onChange: (value: string) => void;
 }
-
-const editorTheme: NonNullable<ComponentProps<typeof Editor>['theme']> = {
-  plain: { backgroundColor: 'transparent', color: 'var(--docs-syntax-plain)' },
-  styles: [
-    {
-      style: { color: 'var(--docs-syntax-comment)', fontStyle: 'italic' },
-      types: ['comment', 'prolog', 'doctype', 'cdata'],
-    },
-    {
-      style: { color: 'var(--docs-syntax-punctuation)' },
-      types: ['punctuation', 'operator', 'plain-text'],
-    },
-    {
-      style: { color: 'var(--docs-syntax-keyword)' },
-      types: ['keyword', 'boolean', 'important', 'atrule', 'rule'],
-    },
-    {
-      style: { color: 'var(--docs-syntax-entity)' },
-      types: ['tag', 'function', 'class-name', 'selector', 'attr-name', 'builtin'],
-    },
-    {
-      style: { color: 'var(--docs-syntax-string)' },
-      types: ['string', 'char', 'url', 'number', 'inserted', 'attr-value', 'constant'],
-    },
-  ],
-};
 
 const formatDiagnostic = ({ column, line, message }: LiveDiagnostic): string => {
   const location = line ? `Line ${line}${column ? `, column ${column}` : ''}: ` : '';
@@ -97,7 +72,7 @@ function SourceEditor({ code, onChange }: SourceEditorProps) {
 
   return (
     <div ref={containerRef}>
-      <Editor code={code} language="tsx" theme={editorTheme} onChange={onChange} />
+      <Editor code={code} language="tsx" theme={lobePrismTheme} onChange={onChange} />
     </div>
   );
 }
