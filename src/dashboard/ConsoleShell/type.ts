@@ -28,7 +28,11 @@ export interface ConsoleBrandProps {
    * The default render is an anchor.
    */
   renderLink?: (props: ConsoleBrandLinkProps) => ReactNode;
-  title: ReactNode;
+  /**
+   * Name beside the mark. Omit when `logo` already includes the wordmark,
+   * such as a combine lockup.
+   */
+  title?: ReactNode;
 }
 
 export interface ConsoleShellProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {

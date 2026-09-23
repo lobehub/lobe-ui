@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Play } from 'lucide-react';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
 import Tooltip from '@/base-ui/Tooltip';
@@ -275,13 +275,21 @@ function ConsoleNav({
           onClick={() => toggleGroup(group.key, expanded)}
         >
           {group.icon ? <Icon icon={group.icon} size={16} /> : null}
-          <span className={styles.itemLabel}>{group.label}</span>
-          <Icon
-            className={styles.chevron}
-            data-expanded={expanded}
-            icon={ChevronDown}
-            size={level > 0 ? 12 : 14}
-          />
+          <span className={styles.itemLabel} data-label="">
+            {group.label}
+          </span>
+          {level === 0 ? (
+            <Icon
+              className={styles.chevron}
+              data-expanded={expanded}
+              icon={ChevronDown}
+              size={14}
+            />
+          ) : (
+            <span className={styles.indicator} data-expanded={expanded}>
+              <Play fill={'currentColor'} size={7} strokeWidth={1} />
+            </span>
+          )}
         </button>
         <div
           aria-hidden={!expanded}

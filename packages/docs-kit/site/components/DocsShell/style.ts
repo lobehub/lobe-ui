@@ -61,38 +61,7 @@ export const styles = createStaticStyles(({ css }) => {
       }
     `,
 
-    brandDivider: css`
-      font-size: 1rem;
-      font-weight: 300;
-      line-height: 1;
-      color: var(--docs-border-strong);
-    `,
-
-    brandTitle: css`
-      display: inline-flex;
-      gap: 0.375rem;
-      align-items: center;
-      min-width: 0;
-    `,
-
     iconButton,
-
-    logo: css`
-      display: block;
-      flex: none;
-    `,
-
-    productName: css`
-      overflow: hidden;
-
-      font-size: 1rem;
-      font-weight: 700;
-      line-height: 1;
-      color: var(--docs-text-primary);
-      text-overflow: ellipsis;
-      letter-spacing: -0.02em;
-      white-space: nowrap;
-    `,
 
     search: css`
       cursor: pointer;
@@ -176,13 +145,6 @@ export const styles = createStaticStyles(({ css }) => {
           scroll-padding-top: 4rem;
         }
       }
-    `,
-
-    wordmark: css`
-      display: block;
-      flex: none;
-      width: auto;
-      height: 24px;
     `,
   };
 });

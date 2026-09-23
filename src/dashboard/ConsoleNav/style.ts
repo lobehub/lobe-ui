@@ -23,6 +23,24 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
       transform: rotate(-90deg);
     }
   `,
+  indicator: css`
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+
+    width: 18px;
+    height: 18px;
+    margin-inline-start: -6px;
+
+    color: ${cssVar.colorTextDescription};
+
+    transition: transform 160ms ease;
+
+    &[data-expanded='true'] {
+      transform: rotate(90deg);
+    }
+  `,
   dot: css`
     position: absolute;
     inset-block-start: 7px;
@@ -83,9 +101,9 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
       background: ${cssVar.colorFillTertiary};
     }
 
-    /* Nested groups read as quiet subheadings with the chevron right after the label. */
+    /* Nested groups read as quiet subheadings with the indicator right after the label. */
     &:not([data-level='0']) {
-      gap: 2px;
+      gap: 8px;
       justify-content: flex-start;
 
       min-block-size: 26px;
@@ -94,12 +112,8 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
       font-weight: 400;
       color: ${cssVar.colorTextDescription};
 
-      > span:not([role='img']) {
+      > [data-label] {
         flex: 0 1 auto;
-      }
-
-      > [role='img'] {
-        opacity: 0.7;
       }
 
       &:hover,
