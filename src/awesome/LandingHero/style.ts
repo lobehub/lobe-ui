@@ -140,7 +140,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     margin: 0;
 
     font-size: clamp(44px, 8vw, 84px);
-    font-weight: bolder;
+    font-weight: 900;
     line-height: 1.02;
     color: ${cssVar.colorText};
     text-wrap: balance;
