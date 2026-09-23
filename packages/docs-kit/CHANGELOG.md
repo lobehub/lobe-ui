@@ -2,6 +2,20 @@
 
 # Changelog
 
+## [5.27.4](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.3...docs-kit@5.27.4) (2026-09-23)
+
+### ✅ Tests
+
+- **docs-kit**: Bump frozen navigation entry count for new base-ui atoms ([e4d3c26](https://github.com/lobehub/lobe-ui/commit/e4d3c26))
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Drop leftover Geist font resources ([abe2263](https://github.com/lobehub/lobe-ui/commit/abe2263))
+
+### 💄 Styles
+
+- **docs-kit**: Drop the collapsible TOC bar ([88249a2](https://github.com/lobehub/lobe-ui/commit/88249a2))
+
 ## [5.27.3](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.2...docs-kit@5.27.3) (2026-08-26)
 
 ### 🐛 Bug Fixes
