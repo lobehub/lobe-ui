@@ -70,10 +70,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         color: var(--docs-text-primary);
         text-wrap: balance;
         letter-spacing: -0.025em;
-
-        @media (width <= 80rem) {
-          scroll-margin-top: 4rem;
-        }
       }
 
       h2:not(:where([data-demo-layout] *)) {
@@ -198,10 +194,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       width: 100%;
       min-width: 0;
       padding-block-start: clamp(2.75rem, 6vw, 5rem);
-
-      @container docs (width < 87rem) {
-        padding-block-start: 0;
-      }
     `,
 
     header: css`

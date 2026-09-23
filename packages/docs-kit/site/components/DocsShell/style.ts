@@ -136,10 +136,6 @@ export const styles = createStaticStyles(({ css }) => {
         scroll-padding-top: 1.5rem;
         gap: 0;
         padding: 0;
-
-        @media (width <= 80rem) {
-          scroll-padding-top: 4rem;
-        }
       }
     `,
   };

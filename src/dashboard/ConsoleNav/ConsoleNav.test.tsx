@@ -3,6 +3,14 @@ import { BookOpen } from 'lucide-react';
 
 import ConsoleNav from './ConsoleNav';
 
+if (!globalThis.ResizeObserver) {
+  globalThis.ResizeObserver = class {
+    disconnect() {}
+    observe() {}
+    unobserve() {}
+  } as never;
+}
+
 const groups = [
   {
     groups: [
