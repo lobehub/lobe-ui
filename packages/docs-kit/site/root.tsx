@@ -7,8 +7,6 @@ import { SiteProviders } from './app/providers/SiteProviders';
 import { ThemeBootstrap } from './app/providers/ThemeBootstrap';
 import { styles } from './styles/globalStyles';
 
-const FONT_REGISTRY_ORIGIN = 'https://registry.npmmirror.com';
-
 const DEFAULT_FAVICONS: Record<string, string> = {
   appleTouchIcon: '/apple-touch-icon.png',
   icon: '/favicon.ico',
@@ -20,7 +18,6 @@ export const links: LinksFunction = () => {
   const favicons = { ...DEFAULT_FAVICONS, ...siteConfig.favicons };
 
   return [
-    { crossOrigin: 'anonymous', href: FONT_REGISTRY_ORIGIN, rel: 'preconnect' },
     { href: favicons.icon, rel: 'icon', sizes: 'any' },
     { href: favicons.icon16, rel: 'icon', sizes: '16x16', type: 'image/png' },
     { href: favicons.icon32, rel: 'icon', sizes: '32x32', type: 'image/png' },

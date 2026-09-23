@@ -10,9 +10,8 @@ injectGlobal`
     --docs-radius-lg: 0.75rem;
     --docs-radius-md: 0.5rem;
     --docs-radius-sm: 0.375rem;
-    --docs-font-sans:
-      'Geist', 'SF Pro Text', 'SF Pro Display', Inter, ui-sans-serif, system-ui, sans-serif;
-    --docs-font-mono: 'Geist Mono', 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+    --docs-font-sans: 'SF Pro Text', 'SF Pro Display', Inter, ui-sans-serif, system-ui, sans-serif;
+    --docs-font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
     --docs-background: #ffffff;
     --docs-surface-raised: #ffffff;
     --docs-surface-muted: #f7f7f8;
@@ -95,7 +94,7 @@ injectGlobal`
     color: var(--docs-text-primary);
     background-color: var(--docs-background);
     font-family: var(--docs-font-sans);
-    font-feature-settings: 'kern', 'cv01';
+    font-feature-settings: 'kern';
     font-kerning: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
