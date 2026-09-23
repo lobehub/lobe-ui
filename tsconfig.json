@@ -26,6 +26,8 @@
       "@lobehub/ui/mobile/*": ["src/mobile/*"],
       "@lobehub/ui/chat": ["src/chat"],
       "@lobehub/ui/chat/*": ["src/chat/*"],
+      "@lobehub/ui/dashboard": ["src/dashboard"],
+      "@lobehub/ui/dashboard/*": ["src/dashboard/*"],
       "@lobehub/ui/storybook": ["src/storybook"],
       "@lobehub/ui/storybook/*": ["src/storybook/*"],
       "@lobehub/ui/awesome": ["src/awesome"],

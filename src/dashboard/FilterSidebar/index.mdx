@@ -1,0 +1,28 @@
+---
+title: FilterSidebar
+description: FilterSidebar splits a dashboard page into a resizable filter rail and a content pane. On narrow screens the same choices move into a drawer behind a summary button.
+category: Layout
+order: 4
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+`FilterRow` is the label-and-count pair for a tree node. `FilterOption` is a choice in a flat list. `useInFilterSplit` reports when the split itself is the card, so a nested table can drop its own frame.
+
+## APIs
+
+### FilterSidebar
+
+<Api name="FilterSidebar" />
+
+### FilterOption
+
+<Api name="FilterOption" from="." />
+
+### FilterRow
+
+<Api name="FilterRow" from="." />

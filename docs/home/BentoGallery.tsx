@@ -1,3 +1,5 @@
+import { Flexbox } from '@lobehub/ui';
+import { BentoCard, BentoGrid } from '@lobehub/ui/awesome';
 import ColorSwatches from '@lobehub/ui/ColorSwatches';
 import FluentEmoji from '@lobehub/ui/FluentEmoji';
 import GroupAvatar from '@lobehub/ui/GroupAvatar';
@@ -7,10 +9,8 @@ import Markdown from '@lobehub/ui/Markdown';
 import Snippet from '@lobehub/ui/Snippet';
 import ThemeSwitch from '@lobehub/ui/ThemeSwitch';
 import { useTheme } from 'next-themes';
-import type { ReactNode } from 'react';
-import { Link } from 'react-router';
 
-import { styles } from './bentoGalleryStyle';
+import { renderLink } from './renderLink';
 
 const MARKDOWN_SAMPLE = `#### Streaming Markdown
 
@@ -38,26 +38,6 @@ const SWATCH_COLORS = [
 
 const GROUP_AVATARS = ['😀', '🤖', '🦄', '🐬'];
 
-interface TileProps {
-  children: ReactNode;
-  className?: string;
-  hint: string;
-  title: string;
-  to: string;
-}
-
-function Tile({ children, className, hint, title, to }: TileProps) {
-  return (
-    <div className={`${styles.tile} ${className ?? ''}`}>
-      <div className={styles.tileHeader}>
-        <Link to={to}>{title}</Link>
-        <span>{hint}</span>
-      </div>
-      <div className={styles.tileBody}>{children}</div>
-    </div>
-  );
-}
-
 function ThemeSwitchTile() {
   const { setTheme, theme } = useTheme();
   const preference = theme === 'light' || theme === 'dark' ? theme : 'system';
@@ -73,53 +53,82 @@ function ThemeSwitchTile() {
 
 export function BentoGallery() {
   return (
-    <section aria-labelledby="home-gallery" className={styles.root}>
-      <h2 id="home-gallery">Built for AI interfaces</h2>
-      <p>90+ components — every tile below is a live render, not a screenshot</p>
-      <div className={styles.grid}>
-        <Tile
-          className={styles.tileLarge}
-          hint="streaming · math · mermaid"
-          title="Markdown"
-          to="/components/markdown"
-        >
-          <Markdown fontSize={13} variant={'chat'}>
-            {MARKDOWN_SAMPLE}
-          </Markdown>
-        </Tile>
-        <Tile hint="try it" title="ThemeSwitch" to="/components/theme-switch">
-          <ThemeSwitchTile />
-        </Tile>
-        <Tile hint="key bindings" title="Hotkey" to="/components/hotkey">
-          <Hotkey keys={'mod+k'} variant={'outlined'} />
-        </Tile>
-        <Tile hint="one-line copy" title="Snippet" to="/components/snippet">
-          <Snippet language={'bash'}>pnpm add @lobehub/ui</Snippet>
-        </Tile>
-        <Tile hint="pick one" title="ColorSwatches" to="/components/color-swatches">
-          <ColorSwatches colors={SWATCH_COLORS} defaultValue={'#8b5cf6'} size={22} />
-        </Tile>
-        <Tile
-          className={styles.tileWide}
-          hint="shiki syntax highlighting"
-          title="Highlighter"
-          to="/components/highlighter"
-        >
-          <Highlighter language={'ts'} showLanguage={false} variant={'borderless'}>
-            {HIGHLIGHTER_SAMPLE}
-          </Highlighter>
-        </Tile>
-        <Tile hint="fluent 3D emoji" title="FluentEmoji" to="/components/fluent-emoji">
-          <div className={styles.emojiRow}>
-            <FluentEmoji emoji={'🎉'} size={36} />
-            <FluentEmoji emoji={'🚀'} size={36} />
-            <FluentEmoji emoji={'🧠'} size={36} />
-          </div>
-        </Tile>
-        <Tile hint="avatar grid" title="GroupAvatar" to="/components/group-avatar">
-          <GroupAvatar avatars={GROUP_AVATARS} size={56} />
-        </Tile>
-      </div>
-    </section>
+    <BentoGrid>
+      <BentoCard
+        colSpan={2}
+        hint="streaming · math · mermaid"
+        href="/components/markdown"
+        renderLink={renderLink}
+        rowSpan={2}
+        title="Markdown"
+      >
+        <Markdown fontSize={13} variant={'chat'}>
+          {MARKDOWN_SAMPLE}
+        </Markdown>
+      </BentoCard>
+      <BentoCard
+        hint="try it"
+        href="/components/theme-switch"
+        renderLink={renderLink}
+        title="ThemeSwitch"
+      >
+        <ThemeSwitchTile />
+      </BentoCard>
+      <BentoCard
+        hint="key bindings"
+        href="/components/hotkey"
+        renderLink={renderLink}
+        title="Hotkey"
+      >
+        <Hotkey keys={'mod+k'} variant={'outlined'} />
+      </BentoCard>
+      <BentoCard
+        hint="one-line copy"
+        href="/components/snippet"
+        renderLink={renderLink}
+        title="Snippet"
+      >
+        <Snippet language={'bash'}>pnpm add @lobehub/ui</Snippet>
+      </BentoCard>
+      <BentoCard
+        hint="pick one"
+        href="/components/color-swatches"
+        renderLink={renderLink}
+        title="ColorSwatches"
+      >
+        <ColorSwatches colors={SWATCH_COLORS} defaultValue={'#8b5cf6'} size={22} />
+      </BentoCard>
+      <BentoCard
+        colSpan={2}
+        hint="shiki syntax highlighting"
+        href="/components/highlighter"
+        renderLink={renderLink}
+        title="Highlighter"
+      >
+        <Highlighter language={'ts'} variant={'filled'}>
+          {HIGHLIGHTER_SAMPLE}
+        </Highlighter>
+      </BentoCard>
+      <BentoCard
+        hint="fluent 3D emoji"
+        href="/components/fluent-emoji"
+        renderLink={renderLink}
+        title="FluentEmoji"
+      >
+        <Flexbox horizontal align={'center'} gap={10}>
+          <FluentEmoji emoji={'🎉'} size={36} />
+          <FluentEmoji emoji={'🚀'} size={36} />
+          <FluentEmoji emoji={'🧠'} size={36} />
+        </Flexbox>
+      </BentoCard>
+      <BentoCard
+        hint="avatar grid"
+        href="/components/group-avatar"
+        renderLink={renderLink}
+        title="GroupAvatar"
+      >
+        <GroupAvatar avatars={GROUP_AVATARS} size={56} />
+      </BentoCard>
+    </BentoGrid>
   );
 }

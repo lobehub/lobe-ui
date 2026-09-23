@@ -23,9 +23,13 @@ export const StoryBook = memo<StoryBookProps>(
       <Flexbox
         align={'stretch'}
         className={cx(styles.editor, className)}
+        data-lobe-storybook=""
+        flex={1}
+        height={'100%'}
         horizontal={!mobile}
         justify={'stretch'}
         ref={ref}
+        width={'100%'}
       >
         <Center className={cx(noPadding ? styles.left : styles.leftWithPadding)} flex={1} {...rest}>
           {children}

@@ -41,7 +41,7 @@ export function CodeBlock({ children }: { children?: ReactNode }) {
   if (!content) return null;
 
   return (
-    <Highlighter className={styles.root} language={language} showLanguage={false} variant="filled">
+    <Highlighter className={styles.root} language={language} theme="lobe-theme" variant="filled">
       {content}
     </Highlighter>
   );

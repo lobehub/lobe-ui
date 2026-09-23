@@ -2,7 +2,9 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'nod
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
+import { siteMetadata } from '../../content/siteMetadata';
 import type { DocumentManifestEntry } from '../../types/content';
+import { assembleAgentDocs } from '../agent/assembleAgentDocs';
 import { createRobots, createSitemap } from '../seo/createSitemap';
 import type { DocumentationInventory } from '../types';
 import {
@@ -82,6 +84,22 @@ const createValidFixture = (withData = false) => {
   );
   write(outputDirectory, 'sitemap.xml', createSitemap(['/components/button']));
   write(outputDirectory, 'robots.txt', createRobots());
+  const assembled = assembleAgentDocs({
+    documents: [buttonDocument],
+    proseBySource: new Map([
+      ['src/Button/index.mdx', { headings: ['Introduction'], prose: 'Button starts an action.' }],
+    ]),
+    site: {
+      atomDirs: [{ dir: 'src' }],
+      description: siteMetadata.description,
+      navSections: {},
+      origin: siteMetadata.origin,
+      title: siteMetadata.name,
+    },
+  });
+  write(outputDirectory, 'llms.txt', assembled.llmsTxt);
+  write(outputDirectory, 'skills.md', assembled.skillsMd);
+  for (const page of assembled.pages) write(outputDirectory, page.pathname.slice(1), page.markdown);
   if (withData) {
     write(clientDirectory, 'components/button.data', 'payload');
     write(outputDirectory, 'components/button.data', 'payload');
@@ -250,6 +268,24 @@ it('preserves the exact React Router data payload set when payloads are emitted'
   expect(
     readFileSync(path.resolve(fixture.outputDirectory, 'components/button.data'), 'utf8'),
   ).toBe('payload');
+});
+
+it('reports generated agent documents that are missing from the artifact', () => {
+  const fixture = createValidFixture();
+  rmSync(path.resolve(fixture.outputDirectory, 'llms.txt'));
+  rmSync(path.resolve(fixture.outputDirectory, 'skills.md'));
+  rmSync(path.resolve(fixture.outputDirectory, 'skills/components/button.md'));
+
+  const diagnostics = collectArtifactDiagnostics({
+    ...fixture,
+    compatibility: compatibility(),
+    documents: [buttonDocument],
+    expectedStandalonePaths: ['/~demos/legacy'],
+  }).diagnostics.join('\n');
+
+  expect(diagnostics).toMatch(/llms\.txt is missing/);
+  expect(diagnostics).toMatch(/skills\.md is missing/);
+  expect(diagnostics).toMatch(/skills\/components\/button\.md is missing/);
 });
 
 it('aggregates metadata, routing, link, standalone, sitemap, Pagefind, fallback, and data failures', () => {
@@ -421,4 +457,29 @@ it('requires the Pagefind receipt to cover exactly the current documents and no 
   expect(diagnostics).toMatch(/Pagefind.*page count.*2.*document.*1/i);
   expect(diagnostics).toMatch(/Pagefind.*~demos\/legacy.*excluded/i);
   expect(diagnostics).toMatch(/Pagefind.*unexpected route.*~demos\/legacy/i);
+});
+
+it('requires the sitemap to list overview pages that were prerendered', () => {
+  const fixture = createValidFixture();
+  const options = {
+    ...fixture,
+    compatibility: compatibility(),
+    documents: [buttonDocument],
+    expectedStandalonePaths: ['/~demos/legacy'],
+    sitemapPathnames: ['/components/button', '/sections/components'],
+  };
+
+  const missing = collectArtifactDiagnostics(options).diagnostics.join('\n');
+  expect(missing).toMatch(
+    /sitemap\.xml is missing https:\/\/ui\.lobehub\.com\/sections\/components/,
+  );
+  expect(missing).toMatch(/sitemap\.xml lists \/sections\/components, which has no HTML artifact/);
+
+  write(
+    fixture.outputDirectory,
+    'sitemap.xml',
+    createSitemap(['/components/button', '/sections/components']),
+  );
+  write(fixture.outputDirectory, 'sections/components/index.html', '<html></html>');
+  expect(collectArtifactDiagnostics(options).diagnostics.join('\n')).not.toMatch(/sitemap/);
 });

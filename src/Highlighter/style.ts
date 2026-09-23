@@ -62,18 +62,21 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       langHoverCls,
       lobeStaticStylish.blur,
       css`
-        position: absolute;
-        z-index: 2;
-        inset-block-end: 8px;
-        inset-inline-end: 8px;
+        &.ant-tag {
+          position: absolute;
+          z-index: 2;
+          inset-block: auto 8px;
+          inset-inline: auto 8px;
 
-        font-family: ${cssVar.fontFamilyCode};
-        color: ${cssVar.colorTextSecondary};
+          font-family: ${cssVar.fontFamilyCode};
+          color: ${cssVar.colorTextSecondary};
 
-        opacity: 0;
-        background: ${cssVar.colorFillQuaternary};
+          opacity: 0;
+          background: ${cssVar.colorFillQuaternary};
+          box-shadow: none;
 
-        transition: opacity 0.1s;
+          transition: opacity 0.1s;
+        }
       `,
     ),
     nowrap: css`
@@ -95,7 +98,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 
         transition: background-color 100ms ${cssVar.motionEaseOut};
 
-        .languageTitle {
+        .language-title {
           opacity: 0.5;
           filter: grayscale(100%);
           transition:
@@ -109,7 +112,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         }
 
         &:hover {
-          .languageTitle {
+          .language-title {
             opacity: 1;
             filter: grayscale(0%);
           }

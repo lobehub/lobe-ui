@@ -14,7 +14,12 @@ const document: DocumentManifestEntry = {
 };
 
 vi.mock('../content/registry', () => ({
-  contentManifest: { documents: [], navigation: [] },
+  contentManifest: {
+    documents: [],
+    get navigation() {
+      return [{ categories: [{ documents: [document], title: 'General' }], title: 'Components' }];
+    },
+  },
   findDocument: (pathname: string) => (pathname === '/components/button' ? document : undefined),
   loadDocument: vi.fn(),
 }));
@@ -34,6 +39,11 @@ it('emits absolute canonical, Open Graph, and Twitter metadata for a document', 
       {
         href: `${siteMetadata.origin}/components/button`,
         rel: 'canonical',
+        tagName: 'link',
+      },
+      {
+        href: `${siteMetadata.origin}/llms.txt`,
+        rel: 'describedby',
         tagName: 'link',
       },
       { content: 'website', property: 'og:type' },
@@ -69,4 +79,18 @@ it('marks an unknown document matched by the components wildcard as noindex', ()
   expect(descriptors).toEqual(
     expect.arrayContaining([{ content: 'noindex, nofollow', name: 'robots' }]),
   );
+});
+
+it('describes section and category overview pages', () => {
+  expect(
+    readDescriptors(meta({ location: { pathname: '/sections/components' } } as never)),
+  ).toEqual(
+    expect.arrayContaining([
+      { title: 'Components - Lobe UI' },
+      { href: `${siteMetadata.origin}/sections/components`, rel: 'canonical', tagName: 'link' },
+    ]),
+  );
+  expect(
+    readDescriptors(meta({ location: { pathname: '/sections/components/general' } } as never)),
+  ).toEqual(expect.arrayContaining([{ title: 'General - Components - Lobe UI' }]));
 });

@@ -3,8 +3,8 @@ import { createStaticStyles } from 'antd-style';
 export const styles = createStaticStyles(({ css, cssVar, responsive }) => {
   return {
     editor: css`
-      width: inherit;
-      min-height: inherit;
+      width: 100%;
+      min-height: 100%;
     `,
     left: css`
       position: relative;
@@ -56,6 +56,11 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => {
       }
     `,
     right: css`
+      /* The panel sets an inline height of 100%. That percentage does not
+         resolve while the preview height comes from min-height, so the
+         sidebar stays content-sized. Stretch it to the editor instead. */
+      align-self: stretch;
+      height: auto !important;
       background: ${cssVar.colorBgLayout};
 
       ${responsive.sm} {

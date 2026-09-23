@@ -53,6 +53,10 @@
       "types": "./es/chat/index.d.mts",
       "import": "./es/chat/index.mjs"
     },
+    "./dashboard": {
+      "types": "./es/dashboard/index.d.mts",
+      "import": "./es/dashboard/index.mjs"
+    },
     "./color": {
       "types": "./es/color/index.d.mts",
       "import": "./es/color/index.mjs"

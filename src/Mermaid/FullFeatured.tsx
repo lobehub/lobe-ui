@@ -30,7 +30,7 @@ const MermaidHeaderLanguage = memo(
       <Flexbox
         horizontal
         align={'center'}
-        className={'languageTitle'}
+        className={'language-title'}
         flex={1}
         gap={4}
         justify={'flex-start'}

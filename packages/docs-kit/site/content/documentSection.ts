@@ -4,6 +4,7 @@ const namespaceSectionLabels: Record<string, string> = {
   'brand': 'Brand',
   'chat': 'Chat',
   'color': 'Color',
+  'dashboard': 'Dashboard',
   // Not a component namespace, so it is absent from `packageNamespaces`; adding
   // it there would make the directory scan treat it as one and change its route.
   'i18n': 'Hooks & Providers',

@@ -1,12 +1,4 @@
-import { createStaticStyles, injectGlobal } from 'antd-style';
-
-injectGlobal`
-  @media (max-width: 74rem) {
-    :root {
-      scroll-padding-top: calc(var(--docs-header-height) + 4rem);
-    }
-  }
-`;
+import { createStaticStyles } from 'antd-style';
 
 export const styles = createStaticStyles(({ css }) => {
   const chevron = css`
@@ -23,7 +15,7 @@ export const styles = createStaticStyles(({ css }) => {
   const panel = css`
     max-height: min(50dvh, 20rem);
     padding-block: 0.5rem 0.75rem;
-    padding-inline: max(1rem, calc((100% - 47rem) / 2));
+    padding-inline: 0;
     border-block-start: 1px solid var(--docs-border-subtle);
 
     background: var(--docs-background);
@@ -68,19 +60,20 @@ export const styles = createStaticStyles(({ css }) => {
 
   return {
     bar: css`
-      position: fixed;
+      position: sticky;
       z-index: 40;
-      inset-block-start: var(--docs-header-height);
-      inset-inline: 0;
+      inset-block-start: 0;
 
       display: none;
+      grid-column: 2;
+      order: -1;
 
       border-block-end: 1px solid var(--docs-border-subtle);
 
       background: color-mix(in srgb, var(--docs-background) 92%, transparent);
       backdrop-filter: blur(8px);
 
-      @media (width <= 74rem) {
+      @container docs (width < 87rem) {
         display: block;
       }
     `,
@@ -121,7 +114,7 @@ export const styles = createStaticStyles(({ css }) => {
       overflow: hidden;
 
       width: 100%;
-      max-height: calc(100dvh - var(--docs-header-height) - 4rem - 1.875rem);
+      max-height: calc(var(--docs-viewport-height) - 4rem - 1.875rem);
       border-radius: 0;
 
       background: none;
@@ -139,17 +132,21 @@ export const styles = createStaticStyles(({ css }) => {
     `,
 
     viewport: css`
-      max-height: calc(100dvh - var(--docs-header-height) - 4rem - 1.875rem);
+      max-height: calc(var(--docs-viewport-height) - 4rem - 1.875rem);
     `,
 
     root: css`
       position: sticky;
-      inset-block-start: calc(var(--docs-header-height) + 2rem);
+      inset-block-start: 2rem;
 
       overflow: hidden;
-      align-self: start;
+      grid-column: 3;
+      place-self: start end;
 
-      max-height: calc(100dvh - var(--docs-header-height) - 4rem);
+      max-width: calc(100% - 1.5rem);
+      max-height: calc(var(--docs-viewport-height) - 4rem);
+      margin-block-start: clamp(2.75rem, 6vw, 5rem);
+      margin-inline-end: 1.5rem;
 
       h2 {
         margin-block: 0 0.625rem;
@@ -226,7 +223,7 @@ export const styles = createStaticStyles(({ css }) => {
         padding-inline-start: 1.625rem;
       }
 
-      @media (width <= 74rem) {
+      @container docs (width < 87rem) {
         display: none;
       }
     `,
@@ -241,7 +238,7 @@ export const styles = createStaticStyles(({ css }) => {
       width: 100%;
       min-height: 2.5rem;
       padding-block: 0;
-      padding-inline: max(1rem, calc((100% - 47rem) / 2));
+      padding-inline: 0;
       border: 0;
 
       font: inherit;

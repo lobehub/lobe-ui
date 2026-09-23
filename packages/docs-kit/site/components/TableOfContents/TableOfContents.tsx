@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import type { MouseEvent as ReactMouseEvent } from 'react';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
-import { springScrollToElement } from '../../lib/scroller';
+import { HEADING_SCROLL_OFFSET, springScrollToElement } from '../../lib/scroller';
 import { styles } from './style';
 
 interface TableOfContentsProps {
@@ -30,7 +30,7 @@ function TocList({ activeId, items, onNavigate }: TocListProps) {
       event.preventDefault();
       const heading = document.getElementById(id);
       if (heading) {
-        springScrollToElement(heading, -100);
+        springScrollToElement(heading, HEADING_SCROLL_OFFSET);
       }
       onNavigate(id);
     },

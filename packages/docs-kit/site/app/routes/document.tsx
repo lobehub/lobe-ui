@@ -4,6 +4,9 @@ import { useLocation } from 'react-router';
 import siteConfig from 'virtual:lobedocs/site-config';
 
 import { DocsLayout } from '../../components/DocsLayout/DocsLayout';
+import { overviewMeta } from '../../components/SectionOverview/meta';
+import { SectionOverview } from '../../components/SectionOverview/SectionOverview';
+import { findOverview } from '../../content/sectionOverview';
 import type { DocumentManifestEntry } from '../../types/content';
 import { contentManifest, findDocument, loadDocument } from '../content/registry';
 import NotFound from './not-found';
@@ -15,6 +18,9 @@ const DocumentContent = ({ document }: { document: DocumentManifestEntry }) => {
 };
 
 export const meta: MetaFunction = ({ location }) => {
+  const overview = findOverview(contentManifest.navigation, location.pathname);
+  if (overview) return overviewMeta(overview, location.pathname);
+
   const document = findDocument(location.pathname);
   if (!document) {
     return [
@@ -31,6 +37,7 @@ export const meta: MetaFunction = ({ location }) => {
     { title },
     { content: document.description, name: 'description' },
     { href: canonicalUrl, rel: 'canonical', tagName: 'link' },
+    { href: new URL('/llms.txt', siteConfig.siteUrl).href, rel: 'describedby', tagName: 'link' },
     { content: 'website', property: 'og:type' },
     { content: siteConfig.title, property: 'og:site_name' },
     { content: title, property: 'og:title' },
@@ -43,6 +50,9 @@ export const meta: MetaFunction = ({ location }) => {
 
 export default function DocumentRoute() {
   const location = useLocation();
+  const overview = findOverview(contentManifest.navigation, location.pathname);
+  if (overview) return <SectionOverview {...overview} />;
+
   const document = findDocument(location.pathname);
   if (!document) return <NotFound />;
 

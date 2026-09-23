@@ -162,7 +162,7 @@ export const styles = createStaticStyles(({ css }) => ({
 
       position: absolute;
       z-index: -1;
-      inset-block: calc(-1 * var(--docs-header-height) - 2rem) 0;
+      inset-block: 0;
       inset-inline: 0;
 
       background:
@@ -320,10 +320,10 @@ export const styles = createStaticStyles(({ css }) => ({
 
   root: css`
     display: flex;
+    flex: 1;
     flex-direction: column;
 
     width: min(100% - 3rem, 64rem);
-    min-height: calc(100dvh - var(--docs-header-height));
     margin-inline: auto;
 
     @media (width <= 47.5rem) {

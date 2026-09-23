@@ -6,6 +6,7 @@ import ts from 'typescript';
 
 import { siteMetadata } from '../../content/siteMetadata';
 import type { DocumentManifestEntry } from '../../types/content';
+import { agentPagePathname, listAgentPagePathnames } from '../agent/assembleAgentDocs';
 import type { DocumentationInventory } from '../types';
 
 const BUNDLE_ORIGIN = 'https://lobe-ui.local';
@@ -119,6 +120,8 @@ export interface ArtifactAuditOptions extends MigrationCoverageOptions {
   clientDirectory: string;
   expectedStandalonePaths: string[];
   outputDirectory: string;
+  /** Pages the sitemap must list exactly. Defaults to every document. */
+  sitemapPathnames?: string[];
 }
 
 export interface ArtifactDiagnosticsResult {
@@ -510,7 +513,7 @@ const auditInternalLinks = (
 };
 
 const auditSitemap = (
-  documents: DocumentManifestEntry[],
+  pathnames: readonly string[],
   outputDirectory: string,
   diagnostics: string[],
 ): void => {
@@ -547,8 +550,15 @@ const auditSitemap = (
     }
   }
 
+  for (const pathname of pathnames) {
+    const file = artifactHtmlPath(outputDirectory, pathname);
+    if (!file || !existsSync(file)) {
+      diagnostics.push(`sitemap.xml lists ${pathname}, which has no HTML artifact.`);
+    }
+  }
+
   const expected = new Set(
-    documents.map(({ pathname }) => new URL(pathname, siteMetadata.origin).href),
+    pathnames.map((pathname) => new URL(pathname, siteMetadata.origin).href),
   );
   const actual = new Set(locations);
   for (const location of expected) {
@@ -626,6 +636,49 @@ const auditPagefind = (
   }
   for (const route of actual) {
     if (!expected.has(route)) diagnostics.push(`Pagefind contains unexpected route ${route}.`);
+  }
+};
+
+const auditAgentDocs = (
+  documents: DocumentManifestEntry[],
+  outputDirectory: string,
+  diagnostics: string[],
+): void => {
+  const llmsPath = path.resolve(outputDirectory, 'llms.txt');
+  const skillsPath = path.resolve(outputDirectory, 'skills.md');
+  const llms = existsSync(llmsPath) ? readFileSync(llmsPath, 'utf8') : undefined;
+  const skills = existsSync(skillsPath) ? readFileSync(skillsPath, 'utf8') : undefined;
+
+  if (llms === undefined) diagnostics.push('llms.txt is missing.');
+  else if (!llms.startsWith(`# ${siteMetadata.name}\n`)) {
+    diagnostics.push('llms.txt must start with the configured site title.');
+  }
+  if (skills === undefined) diagnostics.push('skills.md is missing.');
+  else if (!skills.includes(`# ${siteMetadata.name}`)) {
+    diagnostics.push('skills.md must include the configured site title.');
+  }
+  const referencePathnames = new Set(listAgentPagePathnames(documents));
+  for (const document of documents) {
+    const docsUrl = new URL(document.pathname, siteMetadata.origin).href;
+    if (llms !== undefined && !llms.includes(docsUrl)) {
+      diagnostics.push(`llms.txt is missing ${docsUrl}.`);
+    }
+    const pagePathname = agentPagePathname(document.pathname);
+    if (!referencePathnames.has(pagePathname)) continue;
+
+    const pageUrl = new URL(pagePathname, siteMetadata.origin).href;
+    if (llms !== undefined && !llms.includes(pageUrl)) {
+      diagnostics.push(`llms.txt is missing ${pageUrl}.`);
+    }
+    if (skills !== undefined && !skills.includes(pageUrl)) {
+      diagnostics.push(`skills.md is missing ${pageUrl}.`);
+    }
+    const pageFile = path.resolve(outputDirectory, pagePathname.slice(1));
+    if (!existsSync(pageFile)) {
+      diagnostics.push(`${pagePathname.slice(1)} is missing.`);
+    } else if (!readFileSync(pageFile, 'utf8').includes(document.source)) {
+      diagnostics.push(`${pagePathname.slice(1)} is missing source ${document.source}.`);
+    }
   }
 };
 
@@ -728,7 +781,12 @@ export function collectArtifactDiagnostics(
   }
 
   auditInternalLinks(documents, outputDirectory, htmlByPathname, diagnostics);
-  auditSitemap(documents, outputDirectory, diagnostics);
+  auditAgentDocs(documents, outputDirectory, diagnostics);
+  auditSitemap(
+    options.sitemapPathnames ?? documents.map(({ pathname }) => pathname),
+    outputDirectory,
+    diagnostics,
+  );
   auditRobots(outputDirectory, diagnostics);
   auditPagefind(documents, outputDirectory, diagnostics);
   auditDataFiles(clientDirectory, outputDirectory, diagnostics);

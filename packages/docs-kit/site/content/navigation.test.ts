@@ -104,6 +104,7 @@ describe('reviewed documentation navigation', () => {
       ['Mobile', 'src/mobile/Foo/index.mdx'],
       ['Mdx', 'src/mdx/Foo/index.mdx'],
       ['Chat', 'src/chat/Foo/index.mdx'],
+      ['Dashboard', 'src/dashboard/Foo/index.mdx'],
       ['Brand', 'src/brand/Foo/index.mdx'],
       ['Awesome', 'src/awesome/Foo/index.mdx'],
     ];
@@ -115,6 +116,7 @@ describe('reviewed documentation navigation', () => {
       'Components',
       'Base UI',
       'Chat',
+      'Dashboard',
       'Mobile',
       'Awesome',
       'Brand',

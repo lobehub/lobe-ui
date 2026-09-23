@@ -1,55 +1,51 @@
+import {
+  Claude,
+  DeepSeek,
+  Gemini,
+  Grok,
+  HuggingFace,
+  Meta,
+  Midjourney,
+  Mistral,
+  Ollama,
+  OpenAI,
+  OpenRouter,
+  Qwen,
+} from '@lobehub/icons';
+import {
+  AgentSkillCard,
+  InstallBanner,
+  LandingHero,
+  LandingSection,
+  LogoMarquee,
+} from '@lobehub/ui/awesome';
 import { GithubIcon } from '@lobehub/ui/icons/lucideExtra';
-import { ArrowRight, BookOpenText, Languages, Palette, Sparkles, SunMoon, Zap } from 'lucide-react';
-import { Link } from 'react-router';
+import { ArrowRight } from 'lucide-react';
+import { Link, useNavigate } from 'react-router';
 
 import { BentoGallery } from './BentoGallery';
-import { CodeShowcase } from './CodeShowcase';
-import { CopyControl } from './CopyControl';
-import { HeroIconMarquee } from './HeroIconMarquee';
-import { HeroTexture } from './HeroTexture';
-import { styles } from './homeStyle';
+import { CodeShowcaseSection } from './CodeShowcase';
+import { FeatureSection } from './FeatureSection';
+import { renderLink } from './renderLink';
 
+const SITE_URL = 'https://ui.lobehub.com';
 const INSTALL_COMMAND = 'pnpm add @lobehub/ui';
 const ICONS_PATHNAME = '/components/icons/auth0';
 
-const features = [
-  {
-    description:
-      'Customize colors, typography, breakpoints, and other design foundations through the theme system.',
-    icon: Palette,
-    title: 'Themeable',
-  },
-  {
-    description:
-      'Avoid unnecessary style-prop processing at runtime while retaining a flexible component API.',
-    icon: Zap,
-    title: 'Fast',
-  },
-  {
-    description:
-      'Build interfaces that adapt consistently to light and dark appearance preferences.',
-    icon: SunMoon,
-    title: 'Light and dark UI',
-  },
-  {
-    description:
-      'Ship in 18 locales out of the box with I18nProvider, including RTL-aware layouts.',
-    icon: Languages,
-    title: 'i18n ready',
-  },
-  {
-    description:
-      'Render content-heavy pages with the bundled MDX components and typography styles.',
-    icon: BookOpenText,
-    title: 'MDX and docs',
-  },
-  {
-    description:
-      'Includes an AIGC-flavored icon set covering models, providers, and chat affordances.',
-    icon: Sparkles,
-    title: 'AIGC icons',
-  },
-] as const;
+const MODEL_ICONS = [
+  { icon: OpenAI, label: 'OpenAI' },
+  { icon: Claude, label: 'Claude' },
+  { icon: Gemini, label: 'Gemini' },
+  { icon: DeepSeek, label: 'DeepSeek' },
+  { icon: Mistral, label: 'Mistral' },
+  { icon: Qwen, label: 'Qwen' },
+  { icon: Meta, label: 'Meta' },
+  { icon: Grok, label: 'Grok' },
+  { icon: Ollama, label: 'Ollama' },
+  { icon: HuggingFace, label: 'Hugging Face' },
+  { icon: OpenRouter, label: 'OpenRouter' },
+  { icon: Midjourney, label: 'Midjourney' },
+];
 
 export default function Home({
   description,
@@ -58,65 +54,115 @@ export default function Home({
   description: string;
   getStartedPathname: string;
 }) {
+  const navigate = useNavigate();
   return (
     <>
-      <section className={styles.hero}>
-        <HeroTexture />
-        <h1 data-pagefind-meta="title">
-          LobeHub <span className={styles.heroGradient}>UI Kit</span>
-        </h1>
-        <p data-pagefind-meta="description">{description}</p>
-        <div className={styles.heroActions}>
-          <a
-            className={`${styles.button} ${styles.buttonPrimary}`}
-            href="https://github.com/lobehub/lobe-ui"
-            rel="noreferrer"
-            target="_blank"
-          >
-            <GithubIcon aria-hidden size={16} strokeWidth={1.8} />
-            GitHub
+      <LandingHero
+        accent="UI Kit"
+        background={false}
+        description={<span data-pagefind-meta="description">{description}</span>}
+        renderLink={renderLink}
+        title={<span data-pagefind-meta="title">LobeHub</span>}
+        actions={[
+          {
+            href: getStartedPathname,
+            icon: ArrowRight,
+            iconPlacement: 'end',
+            label: 'Get Started',
+            primary: true,
+          },
+          { href: 'https://github.com/lobehub/lobe-ui', icon: GithubIcon, label: 'GitHub' },
+        ]}
+        aside={
+          <AgentSkillCard
+            agent={{
+              code: `Read ${SITE_URL}/skills.md and follow it to build UI with @lobehub/ui.`,
+              description: 'Send this prompt to your agent to pick the right components',
+            }}
+            footer={
+              <>
+                <a href="/skills.md" rel="noreferrer" target="_blank">
+                  skills.md
+                </a>
+                <a href="/llms.txt" rel="noreferrer" target="_blank">
+                  llms.txt
+                </a>
+              </>
+            }
+            human={{
+              code: 'npx skills add lobehub/lobe-ui',
+              description: 'Install the Lobe UI skills into your project',
+            }}
+          />
+        }
+        badge={
+          <a href="/skills.md" rel="noreferrer" target="_blank">
+            New · Agent skills for every component →
           </a>
-          <Link className={styles.button} to={getStartedPathname}>
-            Get Started
-            <ArrowRight aria-hidden size={16} strokeWidth={1.8} />
-          </Link>
-        </div>
-        <HeroIconMarquee iconsPathname={ICONS_PATHNAME} />
-      </section>
+        }
+        onNavigate={navigate}
+      >
+        <LogoMarquee
+          caption={<Link to={ICONS_PATHNAME}>300+ AI model &amp; provider icons built in</Link>}
+          items={MODEL_ICONS}
+        />
+      </LandingHero>
 
-      <BentoGallery />
+      <LandingSection
+        description="90+ components — every tile below is a live render, not a screenshot."
+        eyebrow="Components"
+        eyebrowColor="blue"
+        id="home-gallery"
+        renderLink={renderLink}
+        title="Built for AI interfaces"
+        actions={[
+          {
+            href: '/sections/components',
+            icon: ArrowRight,
+            iconPlacement: 'end',
+            label: 'Browse components',
+          },
+        ]}
+        onNavigate={navigate}
+      >
+        <BentoGallery />
+      </LandingSection>
 
-      <CodeShowcase />
+      <LandingSection
+        actions={[{ href: '/components/chat/chat-item', label: 'Chat components' }]}
+        description="Switch tabs — each snippet on the left renders live on the right."
+        eyebrow="Developer experience"
+        eyebrowColor="green"
+        id="home-showcase"
+        renderLink={renderLink}
+        title="Code you write, UI you get"
+        onNavigate={navigate}
+      >
+        <CodeShowcaseSection />
+      </LandingSection>
 
-      <section aria-labelledby="home-features" className={styles.features}>
-        <h2 id="home-features">Everything an AIGC app needs</h2>
-        <p>Design foundations that hold up beyond the demo.</p>
-        <div className={styles.featuresGrid}>
-          {features.map(({ description: featureDescription, icon: FeatureIcon, title }) => (
-            <div className={styles.feature} key={title}>
-              <span className={styles.featureIcon}>
-                <FeatureIcon aria-hidden size={16} strokeWidth={1.7} />
-              </span>
-              <h3>{title}</h3>
-              <p>{featureDescription}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      <LandingSection
+        actions={[{ href: '/components/theme-provider', label: 'Theming guide' }]}
+        description="Design foundations that hold up beyond the demo."
+        eyebrow="Foundations"
+        eyebrowColor="orange"
+        id="home-features"
+        renderLink={renderLink}
+        title="Everything an AIGC app needs"
+        onNavigate={navigate}
+      >
+        <FeatureSection />
+      </LandingSection>
 
-      <section aria-labelledby="home-install" className={styles.cta}>
-        <h2 id="home-install">Start building your AIGC app now</h2>
-        <div className={styles.installCommand}>
-          <code>{INSTALL_COMMAND}</code>
-          <CopyControl label="Copy install command" value={INSTALL_COMMAND} />
-        </div>
-        <p className={styles.ctaFootnote}>
-          Open source · MIT license ·{' '}
-          <Link to={getStartedPathname}>
-            Get Started <ArrowRight aria-hidden size={12} strokeWidth={1.8} />
-          </Link>
-        </p>
-      </section>
+      <InstallBanner
+        command={INSTALL_COMMAND}
+        title="Start building your AIGC app now"
+        footnote={
+          <>
+            Open source · MIT license · <Link to={getStartedPathname}>Get Started →</Link>
+          </>
+        }
+      />
     </>
   );
 }

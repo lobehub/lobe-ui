@@ -13,6 +13,7 @@ export const reviewedSectionOrder = [
   'Components',
   'Base UI',
   'Chat',
+  'Dashboard',
   'Mobile',
   'Awesome',
   'Brand',
