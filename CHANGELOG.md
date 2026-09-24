@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [5.49.1](https://github.com/lobehub/lobe-ui/compare/v5.49.0...v5.49.1) (2026-09-24)
+
+### 🎫 Chores
+
+- **release**: Docs-kit@5.27.4 [skip ci] ([03078a6](https://github.com/lobehub/lobe-ui/commit/03078a6))
+
+### 🐛 Bug Fixes
+
+- **markdown**: Sanitize allowed raw HTML, closes [#672](https://github.com/lobehub/lobe-ui/issues/672) ([4f736cb](https://github.com/lobehub/lobe-ui/commit/4f736cb))
+
 # [5.49.0](https://github.com/lobehub/lobe-ui/compare/v5.48.2...v5.49.0) (2026-09-23)
 
 ### ✨ Features
