@@ -3,6 +3,7 @@
 import { useMemo } from 'react';
 import { rehypeGithubAlerts } from 'rehype-github-alerts';
 import rehypeRaw from 'rehype-raw';
+import rehypeSanitize from 'rehype-sanitize';
 import type { Pluggable } from 'unified';
 
 import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
@@ -24,6 +25,8 @@ export const useMarkdownRehypePlugins = (): Pluggable[] => {
     () =>
       [
         allowHtml && rehypeRaw,
+        // Parse untrusted HTML into nodes, then remove unsafe elements and attributes.
+        allowHtml && rehypeSanitize,
         enableGithubAlert && rehypeGithubAlerts,
         enableLatex && rehypeKatex,
         enableLatex && rehypeKatexDir,
