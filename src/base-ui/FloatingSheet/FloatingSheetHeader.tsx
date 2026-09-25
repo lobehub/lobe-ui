@@ -5,7 +5,7 @@ import { styles } from './style';
 
 interface FloatingSheetHeaderProps {
   handleProps: {
-    onMouseDown: (e: React.MouseEvent<HTMLDivElement>) => void;
+    onPointerDown: (e: React.PointerEvent<HTMLDivElement>) => void;
   };
   headerActions?: ReactNode;
   isDragging: boolean;
