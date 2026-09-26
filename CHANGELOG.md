@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.50.0](https://github.com/lobehub/lobe-ui/compare/v5.49.1...v5.50.0) (2026-09-26)
+
+### ✨ Features
+
+- **base-ui**: Spin, Progress, Badge, Result, Pagination, Upload and antd-free Empty, closes [#660](https://github.com/lobehub/lobe-ui/issues/660) ([f2861d0](https://github.com/lobehub/lobe-ui/commit/f2861d0))
+
 ## [5.49.1](https://github.com/lobehub/lobe-ui/compare/v5.49.0...v5.49.1) (2026-09-24)
 
 ### 🎫 Chores
