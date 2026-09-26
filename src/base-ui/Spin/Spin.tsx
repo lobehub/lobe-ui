@@ -85,7 +85,9 @@ const Spin = memo<SpinProps>(
           style={style}
           {...rest}
         >
-          <span aria-hidden>{glyph}</span>
+          <span aria-hidden className={styles.glyphBox}>
+            {glyph}
+          </span>
         </div>
       );
     }
@@ -94,7 +96,9 @@ const Spin = memo<SpinProps>(
       <div className={cx(styles.wrapper, className)} ref={ref} style={style} {...rest}>
         {children}
         <div aria-busy aria-live="polite" className={styles.overlay} role="status">
-          <span aria-hidden>{glyph}</span>
+          <span aria-hidden className={styles.glyphBox}>
+            {glyph}
+          </span>
           {tip && <span className={styles.tip}>{tip}</span>}
         </div>
       </div>
