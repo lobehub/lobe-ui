@@ -1,7 +1,7 @@
-import { Divider } from 'antd';
 import { Timer } from 'lucide-react';
 import { type FC } from 'react';
 
+import Divider from '@/base-ui/Divider';
 import Icon from '@/Icon';
 import Tag from '@/Tag';
 
@@ -15,7 +15,7 @@ const HistoryDivider: FC<HistoryDividerProps> = ({ enable, text }) => {
 
   return (
     <div style={{ padding: '0 20px' }}>
-      <Divider>
+      <Divider style={{ marginBlock: 16 }}>
         <Tag icon={<Icon icon={Timer} />}>{text || 'History Message'}</Tag>
       </Divider>
     </div>

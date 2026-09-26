@@ -1,0 +1,23 @@
+---
+title: Breadcrumb
+description: A trail of links to the current page, with a chevron separator and router-aware links.
+category: Navigation
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="Breadcrumb" from=".." />
+
+Renders `nav[aria-label="breadcrumb"] > ol > li`. The last item gets `aria-current="page"`; separators are `aria-hidden`. Items with `href` render through lobe-ui `A`, so a router `Link` set as `ConfigProvider` `aAs` navigates client-side. Items with only `onClick` render as buttons.
+
+### Migrating from antd Breadcrumb
+
+- The default `separator` is a chevron icon; drop explicit `separator={<Icon icon={ChevronRight} />}`.
+- Items are vertically centered by default; delete `.ant-breadcrumb-*` overrides.
+- Dropdown `menu` items, `itemRender`, `params` and route-path concatenation are not supported.
