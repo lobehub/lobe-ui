@@ -42,6 +42,8 @@ export * from './FloatingSheet';
 export * from './FocusScope';
 export * from './Form';
 export * from './Input';
+export { default as List } from './List';
+export * from './List';
 export * from './Modal';
 export { default as Pagination } from './Pagination';
 export * from './Pagination';
