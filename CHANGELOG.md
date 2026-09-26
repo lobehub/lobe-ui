@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.50.2](https://github.com/lobehub/lobe-ui/compare/v5.50.1...v5.50.2) (2026-09-26)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Let Spin inherit color and center its glyph, closes [#674](https://github.com/lobehub/lobe-ui/issues/674) ([0a684c8](https://github.com/lobehub/lobe-ui/commit/0a684c8))
+
 ## [5.50.1](https://github.com/lobehub/lobe-ui/compare/v5.50.0...v5.50.1) (2026-09-26)
 
 ### 🐛 Bug Fixes
