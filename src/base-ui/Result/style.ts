@@ -3,11 +3,17 @@ import { createStaticStyles, cssVar } from 'antd-style';
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   extra: css`
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
     align-items: center;
+    align-self: stretch;
     justify-content: center;
 
     margin-block-start: 10px;
+
+    > :is(div, section, form) {
+      flex: 1 1 100%;
+    }
   `,
   icon: css`
     display: flex;
@@ -15,10 +21,15 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     align-items: center;
     justify-content: center;
 
-    width: 56px;
-    height: 56px;
-    margin-block-end: 8px;
+    width: 72px;
+    height: 72px;
+    margin-block-end: 12px;
     border-radius: 50%;
+
+    svg {
+      width: 36px;
+      height: 36px;
+    }
   `,
   root: css`
     display: flex;
@@ -39,7 +50,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   title: css`
     margin: 0;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 600;
     text-wrap: balance;
   `,

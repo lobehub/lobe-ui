@@ -123,6 +123,18 @@ describe('Progress', () => {
     expect(screen.getByText('62%')).toBeTruthy();
   });
 
+  test.each([
+    [40, '12px'],
+    [56, '14px'],
+    [120, '24px'],
+  ])('scales the centered info with a %ipx circle so it stays inside the ring', (size, font) => {
+    render(
+      <Progress format={(v) => `${v.toFixed(1)}%`} percent={62.5} size={size} type="circle" />,
+    );
+
+    expect(screen.getByText('62.5%').style.fontSize).toBe(font);
+  });
+
   test('exposes progressbar aria attributes on the circle type', () => {
     render(<Progress percent={33} type="circle" />);
 
