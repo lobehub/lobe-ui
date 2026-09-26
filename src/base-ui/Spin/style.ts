@@ -49,12 +49,13 @@ const reducedMotion = `
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   glyph: css`
     display: inline-flex;
-    color: ${cssVar.colorTextSecondary};
+  `,
+  glyphBox: css`
+    display: inline-flex;
   `,
   network: css`
     position: relative;
     display: inline-block;
-    color: ${cssVar.colorTextSecondary};
   `,
   networkBox: css`
     position: absolute;
@@ -156,6 +157,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   root: css`
     display: inline-flex;
     align-items: center;
+    color: ${cssVar.colorTextSecondary};
   `,
   tip: css`
     font-size: ${cssVar.fontSizeSM};
