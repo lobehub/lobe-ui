@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.50.1](https://github.com/lobehub/lobe-ui/compare/v5.50.0...v5.50.1) (2026-09-26)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Fit circle Progress label inside the ring and restore Result visual weight, closes [#673](https://github.com/lobehub/lobe-ui/issues/673) ([2dacc81](https://github.com/lobehub/lobe-ui/commit/2dacc81))
+
 # [5.50.0](https://github.com/lobehub/lobe-ui/compare/v5.49.1...v5.50.0) (2026-09-26)
 
 ### ✨ Features
