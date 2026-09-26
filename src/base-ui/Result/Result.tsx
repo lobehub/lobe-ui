@@ -8,10 +8,10 @@ import { statusColor, styles } from './style';
 import type { ResultProps } from './type';
 
 const statusIcon = {
-  error: <X size={28} strokeWidth={2.5} />,
-  info: <Info size={28} strokeWidth={2} />,
-  success: <Check size={28} strokeWidth={2.5} />,
-  warning: <TriangleAlert size={28} strokeWidth={2} />,
+  error: <X size={36} strokeWidth={2.5} />,
+  info: <Info size={36} strokeWidth={2} />,
+  success: <Check size={36} strokeWidth={2.5} />,
+  warning: <TriangleAlert size={36} strokeWidth={2} />,
 };
 
 const Result = memo<ResultProps>(

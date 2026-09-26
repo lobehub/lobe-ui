@@ -41,9 +41,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   circleInfo: css`
     position: absolute;
-    font-family: ${cssVar.fontFamilyCode};
+
     font-variant-numeric: tabular-nums;
+    line-height: 1;
     color: ${cssVar.colorText};
+    white-space: nowrap;
   `,
   circleRoot: css`
     position: relative;

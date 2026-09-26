@@ -114,7 +114,10 @@ const Progress = memo<ProgressProps>(
             />
           </svg>
           {showInfo && diameter >= 40 && (
-            <span className={styles.circleInfo} style={{ fontSize: diameter <= 40 ? 12 : 16 }}>
+            <span
+              className={styles.circleInfo}
+              style={{ fontSize: Math.round(diameter * 0.15 + 6) }}
+            >
               {info}
             </span>
           )}
