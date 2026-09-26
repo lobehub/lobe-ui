@@ -66,6 +66,13 @@ describe('Steps', () => {
     expect(screen.queryByText('1')).toBeNull();
   });
 
+  test('dot variant moves the vertical connector under the 7px dot', () => {
+    const { container } = render(<Steps items={items} orientation="vertical" variant="dot" />);
+
+    const connector = container.querySelector('li > span[aria-hidden="true"]')!;
+    expect(connector.getAttribute('style')).toContain('inset-inline-start: 3px');
+  });
+
   test('renders descriptions', () => {
     render(<Steps items={[{ description: 'Pick one', title: 'Select type' }]} />);
 

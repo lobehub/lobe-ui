@@ -96,7 +96,13 @@ const Steps = memo<StepsProps>(
                   )}
                 </div>
               )}
-              {!isLast && <span aria-hidden="true" className={styles.connector} />}
+              {!isLast && (
+                <span
+                  aria-hidden="true"
+                  className={styles.connector}
+                  style={isDot ? { insetBlockStart: 20, insetInlineStart: 3 } : undefined}
+                />
+              )}
             </li>
           );
         })}
