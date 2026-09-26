@@ -89,6 +89,32 @@ describe('DraggablePanel', () => {
     );
   });
 
+  test('losing pointer capture mid-drag commits the current size instead of reverting', () => {
+    const onSizeChange = vi.fn();
+    render(
+      <DraggablePanel
+        defaultSize={{ width: 280 }}
+        maxWidth={500}
+        minWidth={200}
+        placement="left"
+        onSizeChange={onSizeChange}
+      >
+        content
+      </DraggablePanel>,
+    );
+
+    const handle = screen.getByRole('separator');
+    fireEvent.pointerDown(handle, { clientX: 0, clientY: 0, pointerId: 1 });
+    fireEvent.pointerMove(handle, { clientX: 60, clientY: 0, pointerId: 1 });
+    fireEvent.lostPointerCapture(handle, { pointerId: 1 });
+
+    expect(onSizeChange).toHaveBeenCalledWith(
+      { height: 0, width: 60 },
+      { height: '100%', width: 340 },
+    );
+    expect(handle.getAttribute('aria-valuenow')).toBe('340');
+  });
+
   test('arrow keys resize the panel', () => {
     const onSizeChange = vi.fn();
     render(

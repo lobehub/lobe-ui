@@ -1,6 +1,6 @@
 import { createStaticStyles } from 'antd-style';
 
-export const styles = createStaticStyles(({ css }) => {
+export const styles = createStaticStyles(({ css, cssVar }) => {
   const paginationArrow = css`
     flex: none;
     color: var(--docs-text-subtle);
@@ -66,7 +66,7 @@ export const styles = createStaticStyles(({ css }) => {
 
       h2:not(:where([data-demo-layout] *)),
       h3:not(:where([data-demo-layout] *)) {
-        scroll-margin-top: calc(var(--docs-header-height) + 1.5rem);
+        scroll-margin-top: 1.5rem;
         color: var(--docs-text-primary);
         text-wrap: balance;
         letter-spacing: -0.025em;
@@ -111,14 +111,14 @@ export const styles = createStaticStyles(({ css }) => {
         margin-block: 1.5rem;
         margin-inline: 0;
         padding: 1.25rem;
-        border: 1px solid var(--docs-border-subtle);
-        border-radius: var(--docs-radius-lg);
+        border: 1px solid ${cssVar.colorBorderSecondary};
+        border-radius: ${cssVar.borderRadiusLG};
 
         font-size: 0.8125rem;
         line-height: 1.7;
+        color: ${cssVar.colorText};
 
-        background: var(--docs-code-background);
-        box-shadow: var(--docs-shadow-inset);
+        background: ${cssVar.colorFillQuaternary};
       }
 
       :where(:not(pre)) > code:not(:where([data-demo-layout] *)) {
@@ -190,7 +190,10 @@ export const styles = createStaticStyles(({ css }) => {
     `,
 
     document: css`
+      grid-column: 2;
+      width: 100%;
       min-width: 0;
+      padding-block-start: clamp(2.75rem, 6vw, 5rem);
     `,
 
     header: css`
@@ -256,27 +259,9 @@ export const styles = createStaticStyles(({ css }) => {
     `,
 
     importBlock: css`
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-
-      max-width: fit-content;
+      width: fit-content;
+      max-width: 100%;
       margin-block-start: 1.25rem;
-      padding-block: 0.375rem;
-      padding-inline: 0.75rem 0.375rem;
-      border: 1px solid var(--docs-border-subtle);
-      border-radius: var(--docs-radius-md);
-
-      background: var(--docs-code-background);
-
-      code {
-        overflow-x: auto;
-
-        font-size: 0.8125rem;
-        line-height: 1.5rem;
-        color: var(--docs-syntax-plain);
-        white-space: nowrap;
-      }
     `,
 
     linkIcon: css`
@@ -324,36 +309,19 @@ export const styles = createStaticStyles(({ css }) => {
     paginationText,
 
     root: css`
+      container: docs / inline-size;
       display: grid;
-      grid-template-columns: minmax(12rem, 15rem) minmax(0, 47rem) minmax(10rem, 13rem);
-      gap: clamp(2rem, 4vw, 3.5rem);
+      grid-template-columns: 1fr min(64rem, 100% - 3rem) 1fr;
       align-items: start;
-      justify-content: center;
 
-      width: min(100% - 3rem, var(--docs-shell-max-width));
-      min-height: calc(100dvh - var(--docs-header-height));
+      width: 100%;
       margin-block: 0;
-      margin-inline: auto;
-      padding-block: clamp(2.75rem, 6vw, 5rem) 7rem;
+      padding-block: 0 7rem;
       padding-inline: 0;
 
-      &[data-sidebar='false'] {
-        grid-template-columns: minmax(0, 47rem) minmax(10rem, 13rem);
-      }
-
-      @media (width <= 74rem) {
-        grid-template-columns: minmax(12rem, 15rem) minmax(0, 47rem);
-        width: min(100% - 2.5rem, 68rem);
-
-        &[data-sidebar='false'] {
-          grid-template-columns: minmax(0, 47rem);
-        }
-      }
-
       @media (width <= 47.5rem) {
-        display: block;
-        width: min(100% - 2rem, 47rem);
-        padding-block: 2.5rem 5rem;
+        grid-template-columns: 1fr min(64rem, 100% - 2rem) 1fr;
+        padding-block-end: 5rem;
       }
     `,
 
@@ -368,62 +336,6 @@ export const styles = createStaticStyles(({ css }) => {
       white-space: nowrap;
 
       clip-path: inset(50%);
-    `,
-
-    sidebar: css`
-      position: sticky;
-      inset-block-start: calc(var(--docs-header-height) + 2rem);
-
-      overflow: hidden;
-      align-self: start;
-
-      max-height: calc(100dvh - var(--docs-header-height) - 4rem);
-      padding-inline-end: 0.25rem;
-
-      @media (width <= 47.5rem) {
-        display: none;
-      }
-    `,
-
-    sidebarContent: css`
-      gap: 0;
-      min-width: 0;
-      padding-inline-end: 0.75rem;
-    `,
-
-    sidebarScroll: css`
-      overflow: hidden;
-
-      width: 100%;
-      max-height: calc(100dvh - var(--docs-header-height) - 4rem);
-      border-radius: 0;
-
-      background: none;
-    `,
-
-    sidebarScrollbar: css`
-      margin-block: 0.5rem;
-      margin-inline: 0 0.125rem;
-    `,
-
-    sidebarViewport: css`
-      max-height: calc(100dvh - var(--docs-header-height) - 4rem);
-    `,
-
-    syntaxEntity: css`
-      color: var(--docs-syntax-entity);
-    `,
-
-    syntaxKeyword: css`
-      color: var(--docs-syntax-keyword);
-    `,
-
-    syntaxPunctuation: css`
-      color: var(--docs-syntax-punctuation);
-    `,
-
-    syntaxString: css`
-      color: var(--docs-syntax-string);
     `,
   };
 });

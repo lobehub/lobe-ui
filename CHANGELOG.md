@@ -2,6 +2,84 @@
 
 # Changelog
 
+## [5.49.1](https://github.com/lobehub/lobe-ui/compare/v5.49.0...v5.49.1) (2026-09-24)
+
+### 🎫 Chores
+
+- **release**: Docs-kit@5.27.4 [skip ci] ([03078a6](https://github.com/lobehub/lobe-ui/commit/03078a6))
+
+### 🐛 Bug Fixes
+
+- **markdown**: Sanitize allowed raw HTML, closes [#672](https://github.com/lobehub/lobe-ui/issues/672) ([4f736cb](https://github.com/lobehub/lobe-ui/commit/4f736cb))
+
+# [5.49.0](https://github.com/lobehub/lobe-ui/compare/v5.48.2...v5.49.0) (2026-09-23)
+
+### ✨ Features
+
+- **ui**: Add landing and dashboard kits and rebuild docs chrome ([4d09fea](https://github.com/lobehub/lobe-ui/commit/4d09fea))
+
+### 🔧 Continuous Integration
+
+- Publish GitHub releases as lobe-tsukumo App, closes [#670](https://github.com/lobehub/lobe-ui/issues/670) ([84a8f20](https://github.com/lobehub/lobe-ui/commit/84a8f20))
+
+## [5.48.2](https://github.com/lobehub/lobe-ui/compare/v5.48.1...v5.48.2) (2026-09-20)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Render empty Avatar text instead of "UN" when avatar and title are missing ([36d6589](https://github.com/lobehub/lobe-ui/commit/36d6589))
+
+## [5.48.1](https://github.com/lobehub/lobe-ui/compare/v5.48.0...v5.48.1) (2026-09-20)
+
+### 🐛 Bug Fixes
+
+- **accordion**: Skip enter animation when panels start expanded ([b54b565](https://github.com/lobehub/lobe-ui/commit/b54b565))
+- **base-ui**: Commit DraggablePanel size when pointer capture is lost mid-drag ([42b9235](https://github.com/lobehub/lobe-ui/commit/42b9235))
+
+# [5.48.0](https://github.com/lobehub/lobe-ui/compare/v5.47.6...v5.48.0) (2026-09-19)
+
+### ✨ Features
+
+- **base-ui**: Layered shadows with hairline ring on elevated surfaces ([28ef4b2](https://github.com/lobehub/lobe-ui/commit/28ef4b2))
+
+## [5.47.6](https://github.com/lobehub/lobe-ui/compare/v5.47.5...v5.47.6) (2026-09-18)
+
+### 🎫 Chores
+
+- **release**: Stop creating github releases ([572ac55](https://github.com/lobehub/lobe-ui/commit/572ac55))
+
+### 🐛 Bug Fixes
+
+- **virtual**: Clamp ssrCount to the child count so short lists do not crash virtua ([0d602d5](https://github.com/lobehub/lobe-ui/commit/0d602d5))
+
+## [5.47.5](https://github.com/lobehub/lobe-ui/compare/v5.47.4...v5.47.5) (2026-09-18)
+
+### 🐛 Bug Fixes
+
+- **button**: Keep solid button fill while its popup is open ([e38b8b0](https://github.com/lobehub/lobe-ui/commit/e38b8b0))
+
+## [5.47.4](https://github.com/lobehub/lobe-ui/compare/v5.47.3...v5.47.4) (2026-09-18)
+
+### 🎫 Chores
+
+- **release**: Force patch release ([118e147](https://github.com/lobehub/lobe-ui/commit/118e147))
+
+## [5.47.3](https://github.com/lobehub/lobe-ui/compare/v5.47.2...v5.47.3) (2026-09-18)
+
+### 🎫 Chores
+
+- **release**: Force patch release ([d619682](https://github.com/lobehub/lobe-ui/commit/d619682))
+
+## [5.47.2](https://github.com/lobehub/lobe-ui/compare/v5.47.1...v5.47.2) (2026-09-18)
+
+### 🎫 Chores
+
+- **eslint**: Ban Tree, drop restrictedImports test ([01c0c8d](https://github.com/lobehub/lobe-ui/commit/01c0c8d))
+- **release**: Force patch release ([ffd2171](https://github.com/lobehub/lobe-ui/commit/ffd2171))
+
+### 🐛 Bug Fixes
+
+- **accordion**: Restore filled variant ([70065a1](https://github.com/lobehub/lobe-ui/commit/70065a1))
+
 ## [5.47.1](https://github.com/lobehub/lobe-ui/compare/v5.47.0...v5.47.1) (2026-09-14)
 
 ### 🐛 Bug Fixes

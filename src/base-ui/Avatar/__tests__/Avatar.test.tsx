@@ -21,6 +21,12 @@ describe('Avatar', () => {
     expect((container.firstChild as HTMLElement).style.fontSize).toBe('24px');
   });
 
+  test('renders empty text when avatar and title are missing', () => {
+    const { container } = renderWithProvider(<Avatar />);
+
+    expect(container.textContent).toBe('');
+  });
+
   test('keeps the full text when sliceText is false', () => {
     renderWithProvider(<Avatar avatar="chat" sliceText={false} />);
 

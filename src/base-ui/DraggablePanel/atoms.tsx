@@ -300,8 +300,11 @@ export const DraggablePanelHandle = memo<DraggablePanelHandleProps>(
         onDoubleClick={() => {
           if (!draggedRef.current) controller.reset();
         }}
+        // Capture can be stolen mid-drag (another setPointerCapture, an OOPIF under the
+        // cursor) and the pointerup then never reaches us; the pointer is wherever the
+        // user last dragged it, so commit rather than snap back.
         onLostPointerCapture={() => {
-          if (draggingRef.current) controller.drag.cancel();
+          if (draggingRef.current) controller.drag.end();
           pressedRef.current = null;
           draggingRef.current = false;
         }}

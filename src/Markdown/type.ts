@@ -23,6 +23,7 @@ export interface TypographyProps extends DivProps {
 export type { StreamAnimationGranularity, StreamSmoothingPreset };
 
 export interface SyntaxMarkdownProps {
+  /** Parse and render sanitized inline HTML in Markdown content. */
   allowHtml?: boolean;
   allowHtmlList?: ElementType[];
   animated?: boolean;

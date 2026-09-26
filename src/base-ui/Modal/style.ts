@@ -138,11 +138,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     width: calc(100% - 32px);
     max-width: 520px;
     max-height: calc(100dvh - 64px);
-    border: 1px solid ${cssVar.colorBorderSecondary};
     border-radius: 12px;
 
     background: ${cssVar.colorBgElevated};
-    box-shadow: ${cssVar.boxShadow};
+    box-shadow: ${cssVar.boxShadow}, var(--lobe-ring);
 
     transition:
       transform 220ms cubic-bezier(0.32, 0.72, 0, 1),

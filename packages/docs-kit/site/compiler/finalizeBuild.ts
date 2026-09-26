@@ -12,7 +12,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { emptyLegacyRedirects, getDocsConfig } from '../../src/config';
-import type { DocumentManifestEntry } from '../types/content';
+import { siteMetadata } from '../content/siteMetadata';
+import type { DocumentManifestEntry, NavigationSection } from '../types/content';
+import { type AgentSiteInfo, assembleAgentDocs } from './agent/assembleAgentDocs';
+import { agentSiteFromConfig } from './agent/loadAgentDocs.server';
+import { readDocumentProse } from './agent/readDocumentProse';
 import {
   type ArtifactAuditOptions,
   auditDocumentationArtifact,
@@ -23,7 +27,7 @@ import { defaultAtomDirs } from './content/discoverDocuments';
 import { extractManifestDemoReferences } from './demo/extractDemoReferences';
 import { getStandaloneDemoPaths } from './demo/readLegacyMap';
 import { buildPagefind } from './search/buildPagefind';
-import { createRobots, createSitemap } from './seo/createSitemap';
+import { createRobots, createSitemap, listSitemapPathnames } from './seo/createSitemap';
 import type { DocumentationInventory } from './types';
 
 export { auditStandaloneBundleIsolation } from './audit/artifactAudit';
@@ -41,6 +45,7 @@ export interface FinalizeBuildDependencies {
   documents?: DocumentManifestEntry[];
   expectedStandalonePaths?: string[];
   fileSystem?: FinalizeFileSystem;
+  navigation?: NavigationSection[];
   onCleanupError?: (error: unknown) => void;
 }
 
@@ -48,6 +53,17 @@ export interface FinalizeFileSystem {
   remove: (target: string, options: { force: boolean; recursive: boolean }) => void;
   rename: (source: string, destination: string) => void;
 }
+
+const agentSite = (docsConfig: ReturnType<typeof getDocsConfig> | undefined): AgentSiteInfo =>
+  docsConfig
+    ? agentSiteFromConfig(docsConfig)
+    : {
+        atomDirs: [],
+        description: siteMetadata.description,
+        navSections: {},
+        origin: siteMetadata.origin,
+        title: siteMetadata.name,
+      };
 
 const defaultFileSystem: FinalizeFileSystem = {
   remove: (target, options) => rmSync(target, options),
@@ -124,14 +140,17 @@ export async function finalizeDocumentationBuild(
     const docsConfig = needsDocsConfig ? getDocsConfig(root) : undefined;
     const compatibility =
       dependencies.compatibility ?? docsConfig?.legacyRedirects ?? emptyLegacyRedirects;
-    const documents =
-      dependencies.documents ??
-      createContentManifest(
-        root,
-        docsConfig?.atomDirs ?? defaultAtomDirs,
-        docsConfig?.navSections ?? {},
-        docsConfig?.publicDocs ?? [],
-      ).documents;
+    const manifest = dependencies.documents
+      ? undefined
+      : createContentManifest(
+          root,
+          docsConfig?.atomDirs ?? defaultAtomDirs,
+          docsConfig?.navSections ?? {},
+          docsConfig?.publicDocs ?? [],
+        );
+    const documents = dependencies.documents ?? manifest?.documents ?? [];
+    const navigation = dependencies.navigation ?? manifest?.navigation ?? [];
+    const sitemapPathnames = listSitemapPathnames(documents, navigation);
     const expectedStandalonePaths =
       dependencies.expectedStandalonePaths ??
       getStandaloneDemoPaths(compatibility, extractManifestDemoReferences(root, documents));
@@ -148,11 +167,20 @@ export async function finalizeDocumentationBuild(
       inputDirectory: stagedDirectory,
       outputDirectory: path.resolve(stagedDirectory, 'pagefind'),
     });
-    writeFileSync(
-      path.resolve(stagedDirectory, 'sitemap.xml'),
-      createSitemap(documents.map(({ pathname }) => pathname)),
-    );
+    writeFileSync(path.resolve(stagedDirectory, 'sitemap.xml'), createSitemap(sitemapPathnames));
     writeFileSync(path.resolve(stagedDirectory, 'robots.txt'), createRobots());
+    const assembled = assembleAgentDocs({
+      documents,
+      proseBySource: readDocumentProse(root, documents),
+      site: agentSite(docsConfig),
+    });
+    writeFileSync(path.resolve(stagedDirectory, 'llms.txt'), assembled.llmsTxt);
+    writeFileSync(path.resolve(stagedDirectory, 'skills.md'), assembled.skillsMd);
+    for (const page of assembled.pages) {
+      const pagePath = path.resolve(stagedDirectory, page.pathname.slice(1));
+      mkdirSync(path.dirname(pagePath), { recursive: true });
+      writeFileSync(pagePath, page.markdown);
+    }
 
     const coverage = auditArtifact({
       clientDirectory: client,
@@ -161,6 +189,7 @@ export async function finalizeDocumentationBuild(
       expectedStandalonePaths,
       outputDirectory: stagedDirectory,
       repositoryRoot: root,
+      sitemapPathnames,
     });
     promoteArtifact(
       stagedDirectory,

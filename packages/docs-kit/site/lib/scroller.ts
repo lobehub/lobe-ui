@@ -12,11 +12,28 @@ type AnimationHandle = {
 
 let currentAnimation: AnimationHandle | null = null;
 
-const readScrollTop = () =>
-  window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+/** Leaves room for the sticky "On this page" bar on narrow layouts. */
+export const HEADING_SCROLL_OFFSET = -48;
+
+/** The docs chrome scrolls inside the shell workspace, not the window. */
+export const getScrollContainer = (): HTMLElement | null =>
+  typeof document === 'undefined'
+    ? null
+    : document.querySelector<HTMLElement>('[data-console-shell] main');
+
+const readScrollTop = (container: HTMLElement | null) =>
+  container
+    ? container.scrollTop
+    : window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+
+const writeScrollTop = (container: HTMLElement | null, top: number) => {
+  if (container) container.scrollTop = top;
+  else window.scrollTo(0, top);
+};
 
 export const springScrollTo = (y: number): AnimationHandle => {
-  const from = readScrollTop();
+  const container = getScrollContainer();
+  const from = readScrollTop(container);
 
   currentAnimation?.stop();
 
@@ -54,7 +71,7 @@ export const springScrollTo = (y: number): AnimationHandle => {
 
     const state = generator.next(now - start);
     const latest = Math.max(0, state.value);
-    window.scrollTo(0, latest);
+    writeScrollTop(container, latest);
 
     if (state.done || (y <= 0 && latest <= 0)) {
       finish();
@@ -79,17 +96,26 @@ export const springScrollTo = (y: number): AnimationHandle => {
 export const springScrollToTop = () => springScrollTo(0);
 
 export const springScrollToElement = (element: HTMLElement, delta = 40) => {
-  const y = calculateElementTop(element);
+  const y = calculateElementTop(element, getScrollContainer());
 
   const to = y + delta;
   return springScrollTo(to);
 };
 
-const calculateElementTop = (el: HTMLElement) => {
+const calculateElementTop = (element: HTMLElement, container: HTMLElement | null) => {
+  if (container) {
+    return (
+      element.getBoundingClientRect().top -
+      container.getBoundingClientRect().top +
+      container.scrollTop
+    );
+  }
+
   let top = 0;
-  while (el) {
-    top += el.offsetTop;
-    el = el.offsetParent as HTMLElement;
+  let current: HTMLElement | null = element;
+  while (current) {
+    top += current.offsetTop;
+    current = current.offsetParent as HTMLElement | null;
   }
   return top;
 };

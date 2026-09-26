@@ -5,6 +5,7 @@ import type { NeutralColors, PrimaryColors } from '../customTheme';
 import { darkAlgorithm } from './algorithms/darkAlgorithm';
 import { lightAlgorithm } from './algorithms/lightAlgorithm';
 import { baseToken } from './token/base';
+import { shadowToken } from './token/shadow';
 
 export interface LobeAntdThemeParams {
   appearance: ThemeAppearance;
@@ -54,6 +55,7 @@ export const createLobeAntdTheme = ({
     },
     token: {
       ...baseToken,
+      ...shadowToken[isDark ? 'dark' : 'light'],
       // @ts-ignore
       neutralColor,
       primaryColor,

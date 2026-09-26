@@ -1,4 +1,11 @@
+import { listOverviewPathnames } from '../../content/sectionOverview';
 import { siteMetadata } from '../../content/siteMetadata';
+import type { DocumentManifestEntry, NavigationSection } from '../../types/content';
+
+export const listSitemapPathnames = (
+  documents: readonly Pick<DocumentManifestEntry, 'pathname'>[],
+  navigation: readonly NavigationSection[],
+): string[] => [...documents.map(({ pathname }) => pathname), ...listOverviewPathnames(navigation)];
 
 const xmlEscape = (value: string): string =>
   value

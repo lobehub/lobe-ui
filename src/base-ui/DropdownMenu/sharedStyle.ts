@@ -200,10 +200,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     background: ${cssVar.colorBgElevated};
     outline: none;
-    box-shadow:
-      0 0 0 1px ${cssVar.colorBorder},
-      0 4px 12px 0 rgb(0 0 0 / 8%),
-      0 1px 3px 0 rgb(0 0 0 / 6%);
+    box-shadow: ${cssVar.boxShadowSecondary}, var(--lobe-ring);
 
     &[data-has-header],
     &:has(> [data-slot='header']) {

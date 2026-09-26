@@ -68,7 +68,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
        recorded unclamped sizes. A percentage cap is out too — it tracks the positioner, which
        snaps to the new size and would freeze the shrink half of the morph. */
     max-width: var(--available-width);
-    border: 1px solid ${cssVar.colorFill};
     border-radius: ${cssVar.borderRadiusSM};
 
     font-size: ${cssVar.fontSizeSM};
@@ -76,10 +75,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     color: ${cssVar.colorTextLabel};
 
     background: ${cssVar.colorBgElevated};
-    box-shadow:
-      0 1px 2px 0 rgb(0 0 0 / 3%),
-      0 1px 6px -1px rgb(0 0 0 / 2%),
-      0 2px 4px 0 rgb(0 0 0 / 2%);
+    box-shadow: ${cssVar.boxShadowTertiary}, var(--lobe-ring);
 
     /* Opacity gets its own monotonic curve: running it on the overshooting spring makes the
        fade look finished at ~0.96, pause, then visibly step to 1 at the clamp point — reads

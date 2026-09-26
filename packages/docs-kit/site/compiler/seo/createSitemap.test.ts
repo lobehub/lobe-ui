@@ -1,4 +1,4 @@
-import { createRobots, createSitemap } from './createSitemap';
+import { createRobots, createSitemap, listSitemapPathnames } from './createSitemap';
 
 it('creates a sorted deduplicated absolute sitemap and excludes non-document routes', () => {
   const sitemap = createSitemap([
@@ -49,4 +49,30 @@ it('uses the supplied origin consistently while normalizing absolute inputs', ()
 
   expect(sitemap).toContain('https://docs.example.com/components/button');
   expect(sitemap).not.toContain('https://ui.lobehub.com');
+});
+
+it('lists documents followed by section and category overview pages', () => {
+  expect(
+    listSitemapPathnames(
+      [{ pathname: '/components/button' }],
+      [
+        {
+          categories: [
+            {
+              documents: [
+                {
+                  description: '',
+                  pathname: '/components/button',
+                  source: 'src/Button/index.mdx',
+                  title: 'Button',
+                },
+              ],
+              title: 'General',
+            },
+          ],
+          title: 'Components',
+        },
+      ],
+    ),
+  ).toEqual(['/components/button', '/sections/components', '/sections/components/general']);
 });

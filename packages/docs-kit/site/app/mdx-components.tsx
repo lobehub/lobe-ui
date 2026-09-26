@@ -6,7 +6,7 @@ import { Api } from '../components/Api/Api';
 import { Demo } from '../components/Demo/Demo';
 import { styles as docsLayoutStyles } from '../components/DocsLayout/style';
 import { CodeBlock } from '../components/Mdx/CodeBlock';
-import { springScrollToElement } from '../lib/scroller';
+import { HEADING_SCROLL_OFFSET, springScrollToElement } from '../lib/scroller';
 
 const createAnchoredHeading = (Tag: 'h2' | 'h3' | 'h4' | 'h5' | 'h6') =>
   function AnchoredHeading({ children, id, ...rest }: ComponentProps<'h2'>) {
@@ -16,7 +16,7 @@ const createAnchoredHeading = (Tag: 'h2' | 'h3' | 'h4' | 'h5' | 'h6') =>
       event.preventDefault();
       const heading = document.getElementById(id);
       if (heading) {
-        springScrollToElement(heading, -100);
+        springScrollToElement(heading, HEADING_SCROLL_OFFSET);
       }
     };
 

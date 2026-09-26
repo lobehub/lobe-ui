@@ -81,6 +81,27 @@ describe('DropdownMenu virtual', () => {
     expect(screen.queryByText(`Item ${COUNT - 1}`)).toBeNull();
   });
 
+  test('composed DropdownMenu survives fewer items than the initial row count', async () => {
+    const few = items.slice(0, 1);
+    const { rerender } = render(
+      <DropdownMenu open virtual items={few} listItemHeight={ROW_HEIGHT}>
+        <button type="button">trigger</button>
+      </DropdownMenu>,
+    );
+
+    await waitFor(() => expect(countMenuItems()).toBe(1));
+
+    expect(() =>
+      rerender(
+        <DropdownMenu open virtual items={items.slice(0, 50)} listItemHeight={ROW_HEIGHT}>
+          <button type="button">trigger</button>
+        </DropdownMenu>,
+      ),
+    ).not.toThrow();
+
+    expect(countMenuItems()).toBeGreaterThan(0);
+  });
+
   test('composed DropdownMenu renders every item when virtual is off', () => {
     render(
       <DropdownMenu open items={items}>

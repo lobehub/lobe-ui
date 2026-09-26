@@ -182,6 +182,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       border-color: ${cssVar.colorPrimaryActive};
       background: ${cssVar.colorPrimaryActive};
     }
+
+    /* triple-class specificity so the global popup-open trigger highlight cannot wash out a solid button */
+    &&&[data-popup-open] {
+      border-color: ${cssVar.colorPrimaryActive};
+      background: ${cssVar.colorPrimaryActive};
+    }
   `,
 
   variantDashed: css`
@@ -284,6 +290,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     &:active:not(:disabled, [aria-disabled='true']) {
+      border-color: ${cssVar.colorErrorActive};
+      background: ${cssVar.colorErrorActive};
+    }
+
+    &&&[data-popup-open] {
       border-color: ${cssVar.colorErrorActive};
       background: ${cssVar.colorErrorActive};
     }

@@ -12,7 +12,7 @@ const FONT_EMOJI = [
 ];
 
 const FONT_EN = [
-  'Geist',
+  'HarmonyOS Sans',
   '-apple-system',
   'BlinkMacSystemFont',
   'Segoe UI Variable Display',
@@ -34,7 +34,7 @@ const FONT_CN = [
 ];
 
 const FONT_CODE = [
-  'Geist Mono',
+  'Hack',
   'ui-monospace',
   'SFMono-Regular',
   'SF Mono',

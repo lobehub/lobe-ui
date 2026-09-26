@@ -57,7 +57,7 @@ const Avatar = memo<AvatarProps>(
       [avatar, isStringAvatar, isUrlOrElement],
     );
 
-    const text = String(isUrlOrElement ? title : avatar);
+    const text = isUrlOrElement ? title : typeof avatar === 'string' ? avatar : undefined;
 
     const imgAlt = alt || title || 'avatar';
 

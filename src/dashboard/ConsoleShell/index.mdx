@@ -1,0 +1,24 @@
+---
+title: ConsoleShell
+description: ConsoleShell is a dashboard frame with a collapsible sidebar, a compact navigation drawer, and an inset workspace card. Brand, navigation, and account slots stay empty so the shell can be reused without a product identity.
+category: Layout
+order: 0
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+The sidebar collapses to an icon rail, and folds into a drawer below the laptop breakpoint. Mod+B toggles it while focus is inside the shell. Pass `storageKey` to remember the rail.
+
+## APIs
+
+### ConsoleShell
+
+<Api name="ConsoleShell" />
+
+### ConsoleBrand
+
+<Api name="ConsoleBrand" from="." />

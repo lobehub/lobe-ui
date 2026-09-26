@@ -24,7 +24,7 @@ const serializeColor = (value: string): string => {
 
 it.each([
   ['light', '#fff', '#111113'],
-  ['dark', '#0d0d0f', '#f4f4f5'],
+  ['dark', '#000', '#f4f4f5'],
 ] as const)(
   'applies an explicit %s canvas to embedded, live, and standalone previews',
   (appearance, background, color) => {
@@ -54,7 +54,7 @@ it('applies the pre-hydration standalone appearance marker before page attribute
   container.innerHTML = `<main class="${styles.standalonePage}" data-standalone-demo=""></main>`;
 
   expect(getComputedStyle(container.querySelector('main')!).backgroundColor).toBe(
-    serializeColor('#0d0d0f'),
+    serializeColor('#000'),
   );
 });
 

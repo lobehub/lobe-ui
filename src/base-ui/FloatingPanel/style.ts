@@ -45,9 +45,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     max-height: calc(100dvh - 32px - var(--floating-panel-reserve-block-end, 0px));
     border-radius: 12px;
 
-    box-shadow:
-      0 6px 24px 0 rgb(0 0 0 / 8%),
-      0 2px 6px 0 rgb(0 0 0 / 4%);
+    box-shadow: ${cssVar.boxShadowSecondary}, var(--lobe-ring);
   `,
   panelTop: css`
     transform-origin: 100% 0;

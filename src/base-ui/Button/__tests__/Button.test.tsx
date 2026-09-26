@@ -185,6 +185,34 @@ describe('Button', () => {
     expect(style.marginInlineEnd.replaceAll(' ', '')).toBe('calc(var(--button-padding-inline)*-1)');
     expect(style.marginInlineStart.replaceAll(' ', '')).not.toContain('--button-padding-inline');
   });
+  test.each([
+    [false, 'var(--ant-color-primary-active)'],
+    [true, 'var(--ant-color-error-active)'],
+  ])(
+    'solid button (danger=%s) keeps its fill when a global popup-open highlight targets the trigger',
+    (danger, expected) => {
+      const override = document.createElement('style');
+      override.textContent =
+        '.lobe-dropdown-menu-trigger[data-popup-open]:not([data-no-highlight]) { background: rgb(1, 2, 3); }';
+      document.head.append(override);
+
+      renderButton(
+        <Button
+          data-popup-open
+          className={'lobe-dropdown-menu-trigger'}
+          danger={danger}
+          type={'primary'}
+        >
+          Open
+        </Button>,
+      );
+
+      const style = getComputedStyle(screen.getByRole('button', { name: 'Open' }));
+
+      expect(style.background).toBe(expected);
+      override.remove();
+    },
+  );
 });
 
 {

@@ -44,6 +44,12 @@ it('runs 404, Pagefind, metadata, audit, and atomic promotion in order', async (
           expect(
             readFileSync(path.resolve(options.outputDirectory, 'robots.txt'), 'utf8'),
           ).toContain('Disallow: /~demos/');
+          expect(readFileSync(path.resolve(options.outputDirectory, 'llms.txt'), 'utf8')).toContain(
+            '# Lobe UI',
+          );
+          expect(
+            readFileSync(path.resolve(options.outputDirectory, 'skills.md'), 'utf8'),
+          ).toContain('## Workflow');
           expect(
             readFileSync(path.resolve(options.outputDirectory, 'pagefind/pagefind.js'), 'utf8'),
           ).toContain('search');

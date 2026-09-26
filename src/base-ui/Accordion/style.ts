@@ -40,6 +40,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       opacity: 0;
     }
 
+    /* Base UI sets animation-name: none on initially-open panels */
+    [style*='animation-name: none'] &,
+    [style*='animation-name:none'] & {
+      translate: none;
+      opacity: 1;
+      transition: none;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       transition-duration: 0s;
     }
@@ -82,6 +90,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   headerBorderless: css`
     margin-inline: calc(var(--accordion-hover-inset, 8px) * -1);
     border-radius: ${cssVar.borderRadius};
+  `,
+  headerFilled: css`
+    border-radius: ${cssVar.borderRadius};
+    background: ${cssVar.colorFillTertiary};
+
+    &:hover:not(:has([data-disabled])) {
+      background: ${cssVar.colorFillSecondary};
+    }
   `,
   headerInline: css`
     margin-inline: 0;
@@ -149,6 +165,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       height: 0;
     }
 
+    &[data-starting-style][style*='animation-name: none'],
+    &[data-starting-style][style*='animation-name:none'] {
+      height: auto;
+      transition: none;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       transition-duration: 0s;
     }
@@ -195,6 +217,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     padding-block: 8px;
     padding-inline: var(--accordion-hover-inset, 8px);
   `,
+  triggerFilled: css`
+    padding-block: 8px;
+    padding-inline: 16px;
+  `,
   triggerOutlined: css`
     padding-block: 12px;
     padding-inline: 16px;
@@ -210,6 +236,7 @@ export const rootVariants = cva(styles.root, {
   variants: {
     variant: {
       borderless: null,
+      filled: null,
       outlined: styles.rootOutlined,
     },
   },
@@ -220,13 +247,17 @@ export const itemVariants = cva(styles.item, {
   variants: {
     variant: {
       borderless: null,
+      filled: null,
       outlined: styles.itemOutlined,
     },
   },
 });
 
 export const headerVariants = cva(styles.header, {
-  compoundVariants: [{ class: styles.headerInline, inline: true, variant: 'borderless' }],
+  compoundVariants: [
+    { class: styles.headerInline, inline: true, variant: 'borderless' },
+    { class: styles.headerInline, inline: true, variant: 'filled' },
+  ],
   defaultVariants: { inline: false, variant: 'borderless' },
   variants: {
     inline: {
@@ -235,6 +266,7 @@ export const headerVariants = cva(styles.header, {
     },
     variant: {
       borderless: styles.headerBorderless,
+      filled: styles.headerFilled,
       outlined: null,
     },
   },
@@ -245,6 +277,7 @@ export const triggerVariants = cva(styles.trigger, {
   variants: {
     variant: {
       borderless: styles.triggerBorderless,
+      filled: styles.triggerFilled,
       outlined: styles.triggerOutlined,
     },
   },
@@ -274,6 +307,11 @@ export const contentVariants = cva(styles.content, {
       variant: 'borderless',
     },
     {
+      class: styles.contentIndent,
+      indent: true,
+      variant: 'filled',
+    },
+    {
       class: styles.contentIndentOutlined,
       indent: true,
       variant: 'outlined',
@@ -291,6 +329,7 @@ export const contentVariants = cva(styles.content, {
     },
     variant: {
       borderless: styles.contentBorderless,
+      filled: styles.contentBorderless,
       outlined: styles.contentOutlined,
     },
   },
@@ -305,6 +344,7 @@ export const actionVariants = cva(styles.action, {
     },
     variant: {
       borderless: styles.actionBorderless,
+      filled: styles.actionOutlined,
       outlined: styles.actionOutlined,
     },
   },

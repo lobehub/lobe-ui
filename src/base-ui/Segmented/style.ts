@@ -4,8 +4,8 @@ import { cva } from 'class-variance-authority';
 import { focusRing } from '@/base-ui/focusRing';
 import { lobeStaticStylish } from '@/styles';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  indicator: css`
+export const styles = createStaticStyles(({ css, cssVar }) => {
+  const indicator = css`
     pointer-events: none;
 
     position: absolute;
@@ -18,7 +18,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     border-radius: ${cssVar.borderRadius};
 
     background: ${cssVar.colorBgElevated};
-    box-shadow: ${cssVar.boxShadowTertiary};
+    box-shadow: none;
 
     transition-timing-function: ${cssVar.motionEaseOut};
     transition-duration: 240ms;
@@ -31,131 +31,135 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     @media (prefers-reduced-motion: reduce) {
       transition-duration: 0s;
     }
-  `,
-  item: css`
-    cursor: pointer;
-    user-select: none;
+  `;
 
-    position: relative;
-    z-index: 1;
+  return {
+    indicator,
+    item: css`
+      cursor: pointer;
+      user-select: none;
 
-    display: inline-flex;
-    flex-shrink: 0;
-    gap: 6px;
-    align-items: center;
-    justify-content: center;
+      position: relative;
+      z-index: 1;
 
-    box-sizing: border-box;
-    border: 0;
+      display: inline-flex;
+      flex-shrink: 0;
+      gap: 6px;
+      align-items: center;
+      justify-content: center;
 
-    font-weight: 500;
-    color: ${cssVar.colorTextSecondary};
-    white-space: nowrap;
+      box-sizing: border-box;
+      border: 0;
+      border-radius: ${cssVar.borderRadius};
 
-    background: transparent;
-    outline: none;
+      font-weight: 500;
+      color: ${cssVar.colorTextSecondary};
+      white-space: nowrap;
 
-    transition:
-      color 120ms ${cssVar.motionEaseOut},
-      transform 120ms ${cssVar.motionEaseOut};
+      background: transparent;
+      outline: none;
 
-    &:hover:not([data-disabled], [data-pressed]) {
-      color: ${cssVar.colorText};
-    }
+      transition:
+        color 120ms ${cssVar.motionEaseOut},
+        transform 120ms ${cssVar.motionEaseOut};
 
-    &:active:not([data-disabled]) {
-      transform: scale(0.98);
-    }
+      &:hover:not([data-disabled], [data-pressed]) {
+        color: ${cssVar.colorText};
+      }
 
-    border-radius: ${cssVar.borderRadius};
-    ${focusRing};
+      &:active:not([data-disabled]) {
+        transform: scale(0.98);
+      }
 
-    &[data-pressed] {
-      color: ${cssVar.colorText};
-    }
+      ${focusRing};
 
-    &[data-disabled] {
-      cursor: not-allowed;
-      color: ${cssVar.colorTextDisabled};
-    }
+      &[data-pressed] {
+        color: ${cssVar.colorText};
+      }
 
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0s;
-    }
-  `,
-  itemBlock: css`
-    flex: 1 1 0;
-  `,
-  itemIcon: css`
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  `,
-  itemLabel: css`
-    display: inline-flex;
-    align-items: center;
-  `,
-  itemLarge: css`
-    height: 36px;
-    padding-inline: 16px;
-    border-radius: ${cssVar.borderRadius};
-    font-size: 14px;
-  `,
-  itemMiddle: css`
-    height: 32px;
-    padding-inline: 12px;
-    border-radius: ${cssVar.borderRadius};
-    font-size: 13px;
-  `,
-  itemSmall: css`
-    height: 26px;
-    padding-inline: 10px;
-    border-radius: ${cssVar.borderRadius};
-    font-size: 12px;
-  `,
-  list: css`
-    position: relative;
+      &[data-disabled] {
+        cursor: not-allowed;
+        color: ${cssVar.colorTextDisabled};
+      }
 
-    display: inline-flex;
-    flex-wrap: nowrap;
-    gap: 4px;
-    align-items: center;
-    align-self: flex-start;
+      @media (prefers-reduced-motion: reduce) {
+        transition-duration: 0s;
+      }
+    `,
+    itemBlock: css`
+      flex: 1 1 0;
+    `,
+    itemIcon: css`
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    `,
+    itemLabel: css`
+      display: inline-flex;
+      align-items: center;
+    `,
+    itemLarge: css`
+      height: 36px;
+      padding-inline: 16px;
+      border-radius: ${cssVar.borderRadius};
+      font-size: 14px;
+    `,
+    itemMiddle: css`
+      height: 32px;
+      padding-inline: 12px;
+      border-radius: ${cssVar.borderRadius};
+      font-size: 13px;
+    `,
+    itemSmall: css`
+      height: 26px;
+      padding-inline: 10px;
+      border-radius: ${cssVar.borderRadius};
+      font-size: 12px;
+    `,
+    list: css`
+      position: relative;
 
-    box-sizing: border-box;
-    padding: 3px;
-    border-radius: ${cssVar.borderRadiusLG};
+      display: inline-flex;
+      flex-wrap: nowrap;
+      gap: 4px;
+      align-items: center;
+      align-self: flex-start;
 
-    &[data-orientation='vertical'] {
-      flex-direction: column;
-      align-items: stretch;
-      align-self: stretch;
-    }
-  `,
-  listBlock: css`
-    display: flex;
-    align-self: stretch;
-    width: 100%;
-  `,
-  listFilled: css`
-    border: 1px solid ${cssVar.colorFillQuaternary};
-    background: ${cssVar.colorBgLayout};
-  `,
-  listGlass: lobeStaticStylish.blur,
-  listOutlined: css`
-    border: 1px solid ${cssVar.colorBorderSecondary};
-    background: transparent;
-  `,
-  listShadow: lobeStaticStylish.shadow,
-  root: css`
-    display: inline-flex;
+      box-sizing: border-box;
+      padding: 3px;
+      border-radius: ${cssVar.borderRadiusLG};
 
-    &[data-block='true'] {
+      &[data-orientation='vertical'] {
+        flex-direction: column;
+        align-items: stretch;
+        align-self: stretch;
+      }
+    `,
+    listBlock: css`
       display: flex;
+      align-self: stretch;
       width: 100%;
-    }
-  `,
-}));
+    `,
+    listFilled: css`
+      border: 1px solid ${cssVar.colorFillQuaternary};
+      background: ${cssVar.colorBgLayout};
+    `,
+    listGlass: lobeStaticStylish.blur,
+    listOutlined: css`
+      border: 1px solid ${cssVar.colorBorderSecondary};
+      background: transparent;
+    `,
+    listShadow: lobeStaticStylish.shadow,
+    root: css`
+      display: inline-flex;
+
+      &[data-block='true'] {
+        display: flex;
+        width: 100%;
+      }
+    `,
+  };
+});
 
 export const listVariants = cva(styles.list, {
   defaultVariants: {

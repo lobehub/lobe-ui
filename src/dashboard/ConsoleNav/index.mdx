@@ -1,0 +1,25 @@
+---
+title: ConsoleNav
+description: ConsoleNav is grouped sidebar navigation for a dashboard. It collapses to an icon rail, keeps a badge as a dot, and leaves link rendering to the app so it is not tied to a router.
+category: Navigation
+order: 0
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoTree from './demos/tree.tsx?demo';
+
+## Default
+
+The list highlights the longest matching path. Fold a group to hide its items, or switch to the icon rail. A badge becomes a dot on the rail. Inside [ConsoleShell](/components/dashboard/console-shell) the rail follows the shell unless `collapsed` is set.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Tree
+
+Use `items` for top-level links and nested `groups` for a second level. Icons are optional: a group with an `icon` becomes a single rail button that links to its `href` (or its first item), and items without an icon are left off the rail. With `defaultExpanded="active"` every group starts folded and the branch holding the current page opens on navigation, then scrolls into view.
+
+<Demo of={DemoTree} layout="bare" />
+
+## APIs
+
+<Api name="ConsoleNav" />

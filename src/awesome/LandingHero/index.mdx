@@ -1,0 +1,43 @@
+---
+title: LandingHero
+description: The opening band of a landing page, with a badge, a title with a gradient accent, a description and actions.
+category: Landing
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoSplit from './demos/split.tsx?demo';
+
+## Default
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Split layout
+
+Pass `aside` to put content beside the text, such as an `AgentSkillCard`. The text aligns left and the columns stack on narrow screens.
+
+<Demo of={DemoSplit} layout="bare" />
+
+## Routing
+
+Actions render plain anchors. Pass `renderLink` to use your router's link component:
+
+```tsx
+import { Link } from 'react-router';
+
+<LandingHero
+  renderLink={({ external, href, ...props }) =>
+    external ? (
+      <a href={href} rel="noreferrer" target="_blank" {...props} />
+    ) : (
+      <Link to={href} {...props} />
+    )
+  }
+  title="LobeHub"
+/>;
+```
+
+Put a `LogoMarquee` in `children` to show it across the full width under the hero.
+
+## APIs
+
+<Api name="LandingHero" from=".." />

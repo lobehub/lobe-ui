@@ -17,7 +17,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     border-radius: 12px;
   `,
   elevated: css`
-    box-shadow: ${cssVar.boxShadowSecondary};
+    box-shadow: ${cssVar.boxShadowSecondary}, var(--lobe-ring);
   `,
   embedded: css`
     border: 1px solid ${cssVar.colorBorderSecondary};

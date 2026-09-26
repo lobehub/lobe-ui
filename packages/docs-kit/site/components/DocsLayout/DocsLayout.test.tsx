@@ -1,4 +1,7 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { ConfigProvider } from '@lobehub/ui';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
+import { motion } from 'motion/react';
+import type { ReactElement } from 'react';
 import { MemoryRouter, useLocation } from 'react-router';
 import siteConfig from 'virtual:lobedocs/site-config';
 
@@ -6,11 +9,13 @@ import { styles as modalStyles } from '@/base-ui/Modal/style';
 
 import type { DocumentManifestEntry } from '../../types/content';
 import { DocsLayout } from './DocsLayout';
-import { styles } from './style';
 
 if (!Element.prototype.getAnimations) {
   Element.prototype.getAnimations = () => [];
 }
+
+const renderLayout = (ui: ReactElement) =>
+  render(<ConfigProvider motion={motion}>{ui}</ConfigProvider>);
 
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {
@@ -62,27 +67,23 @@ const TestPage = () => {
 };
 
 it('navigates with the memory router while preserving link semantics', async () => {
-  render(
+  renderLayout(
     <MemoryRouter initialEntries={['/components/alpha']}>
       <TestPage />
     </MemoryRouter>,
   );
 
-  const alphaLink = screen.getByRole('link', { name: 'Alpha' });
-  const betaLink = screen.getByRole('link', { name: 'Beta' });
+  const pagination = screen.getByRole('navigation', { name: 'Adjacent documents' });
+  const nextLink = within(pagination).getByRole('link', { name: /Beta/ });
 
-  expect(alphaLink.getAttribute('href')).toBe('/components/alpha');
-  expect(alphaLink.getAttribute('aria-current')).toBe('page');
-  expect(betaLink.getAttribute('href')).toBe('/components/beta');
-  expect(betaLink.getAttribute('aria-current')).toBeNull();
+  expect(nextLink.getAttribute('href')).toBe('/components/beta');
+  expect(nextLink.getAttribute('rel')).toBe('next');
+  expect(within(pagination).queryByRole('link', { name: /Previous/ })).toBeNull();
 
-  expect(fireEvent.click(betaLink)).toBe(false);
+  expect(fireEvent.click(nextLink)).toBe(false);
   await waitFor(() => expect(screen.getByTestId('location').textContent).toBe('/components/beta'));
 
-  expect(alphaLink.getAttribute('aria-current')).toBeNull();
-  expect(betaLink.getAttribute('aria-current')).toBe('page');
-
-  expect(screen.getByRole('navigation', { name: 'Component documentation' })).toBeTruthy();
+  expect(screen.queryByRole('main')).toBeNull();
   const tableOfContents = await screen.findByRole('navigation', { name: 'On this page' });
   expect(tableOfContents.textContent).toContain('Usage');
   expect(screen.getByRole('link', { name: 'Usage' }).getAttribute('href')).toBe('#usage');
@@ -92,7 +93,7 @@ it('derives the Source and Edit links from the real docs.config.ts apiHeader', (
   const repositoryUrl = siteConfig.themeConfig?.apiHeader?.github;
   expect(repositoryUrl).toBeDefined();
 
-  render(
+  renderLayout(
     <MemoryRouter initialEntries={['/components/alpha']}>
       <TestPage />
     </MemoryRouter>,
@@ -108,7 +109,7 @@ it('derives the Source and Edit links from the real docs.config.ts apiHeader', (
 
 it('marks one searchable article with title, description, category, and status metadata', () => {
   const stableDocument = { ...alphaDocument, status: 'stable' as const };
-  const { container } = render(
+  const { container } = renderLayout(
     <MemoryRouter>
       <DocsLayout document={stableDocument} navigation={[]}>
         <p>Human prose</p>
@@ -133,8 +134,8 @@ it('marks one searchable article with title, description, category, and status m
   expect(screen.queryByText('Community')).toBeNull();
 });
 
-it('syntax-highlights the component import statement', () => {
-  const { container } = render(
+it('renders the component import with the lobe highlighter snippet', () => {
+  const { container } = renderLayout(
     <MemoryRouter>
       <DocsLayout document={alphaDocument} navigation={[]}>
         <p>Content</p>
@@ -142,15 +143,13 @@ it('syntax-highlights the component import statement', () => {
     </MemoryRouter>,
   );
 
-  const importCode = container.querySelector(`.${styles.importBlock} code`);
-  expect(importCode?.textContent).toBe("import { Alpha } from '@lobehub/ui';");
-  expect(importCode?.querySelectorAll(`.${styles.syntaxKeyword}`)).toHaveLength(2);
-  expect(importCode?.querySelector(`.${styles.syntaxEntity}`)?.textContent).toBe('Alpha');
-  expect(importCode?.querySelector(`.${styles.syntaxString}`)?.textContent).toBe("'@lobehub/ui'");
+  const importCode = container.querySelector('[data-code-type="highlighter"]');
+  expect(importCode?.textContent).toContain("import { Alpha } from '@lobehub/ui';");
+  expect(importCode?.querySelector('button, [role="button"]')).toBeTruthy();
 });
 
 it('does not override component typography inside an embedded demo', () => {
-  render(
+  renderLayout(
     <MemoryRouter>
       <DocsLayout document={alphaDocument} navigation={[]}>
         <h2>Documentation heading</h2>
