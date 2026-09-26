@@ -179,6 +179,7 @@
     "@shikijs/stream": "^4.3.1",
     "@shikijs/transformers": "^4.3.1",
     "@splinetool/runtime": "1.12.98",
+    "@tanstack/react-table": "^9.2.4",
     "ahooks": "^3.9.7",
     "antd-style": "^4.1.0",
     "beautiful-mermaid": "^1.1.3",
