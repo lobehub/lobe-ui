@@ -36,6 +36,30 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     color: ${cssVar.colorTextDescription};
     text-align: center;
   `,
+  filterActive: css`
+    color: ${cssVar.colorPrimary};
+  `,
+  filterButton: css`
+    ${focusRing};
+    cursor: pointer;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 2px;
+    border: 0;
+    border-radius: 4px;
+
+    color: ${cssVar.colorTextQuaternary};
+
+    background: none;
+
+    &:hover {
+      color: ${cssVar.colorText};
+      background: ${cssVar.colorFillTertiary};
+    }
+  `,
   fixed: css`
     z-index: 1;
     background: ${cssVar.colorBgContainer};

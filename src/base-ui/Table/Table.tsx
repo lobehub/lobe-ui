@@ -8,12 +8,13 @@ import Pagination from '@/base-ui/Pagination';
 import Spin from '@/base-ui/Spin';
 
 import { tableFeatureSet } from './features';
+import FilterMenu from './FilterMenu';
 import { getFixedOffsets } from './fixedOffsets';
 import { styles } from './style';
 import TableBody from './TableBody';
 import TableHead from './TableHead';
 import { toColumnDefs } from './toColumnDefs';
-import type { TableColumn, TableProps } from './type';
+import type { FilterValue, TableColumn, TableProps } from './type';
 import { useTableState } from './useTableState';
 
 const EMPTY_DATA: any[] = [];
@@ -105,9 +106,21 @@ const TableInner = <T extends RowData>(props: TableInternalProps<T>) => {
             fixedOffsets={fixedOffsets}
             getColumn={(id) => table.getColumn(id) as any}
             styles={customStyles}
-            renderFilter={
-              renderFilter ? (column, id) => renderFilter(column, id, table) : undefined
-            }
+            renderFilter={(column, id) => {
+              if (renderFilter) return renderFilter(column, id, table);
+              const tableColumn = table.getColumn(id) as any;
+              const value = (tableColumn?.getFilterValue() as FilterValue[] | undefined) ?? [];
+              return (
+                <FilterMenu
+                  filters={column.filters ?? []}
+                  label={typeof column.title === 'string' ? column.title : id}
+                  value={value}
+                  onChange={(next) =>
+                    tableColumn?.setFilterValue(next.length > 0 ? next : undefined)
+                  }
+                />
+              );
+            }}
           />
           <TableBody
             classNames={classNames}
