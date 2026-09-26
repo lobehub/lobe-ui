@@ -1,0 +1,32 @@
+---
+title: Divider
+description: A thin separator line between content, horizontal or vertical, with an optional centered label.
+category: Layout
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="Divider" from=".." />
+
+`Divider` renders the `@base-ui/react` `Separator` (`role="separator"`, `aria-orientation`). Standard div attributes are forwarded.
+
+The default margin is `0` in both orientations. Add `style={{ marginBlock: 12 }}` where spacing is wanted.
+
+### Migrating from antd Divider
+
+```tsx | pure
+import { Divider } from '@lobehub/ui/base-ui';
+
+<Divider dashed />;
+<Divider orientation="vertical" />;
+```
+
+- Remove `style={{ margin: 0 }}` / `marginBlock: 0` overrides; they are the default now.
+- `type="vertical"` → `orientation="vertical"`.
+- `titlePlacement`, `orientationMargin`, `plain`, `variant` and `size` are not supported.

@@ -1,11 +1,12 @@
 'use client';
 
-import { Divider } from 'antd';
 import { cx } from 'antd-style';
 import { LayoutGroup } from 'motion/react';
 import { type Key } from 'react';
 import { Children, Fragment, isValidElement, memo, useCallback, useMemo, useRef } from 'react';
 import useMergeState from 'use-merge-value';
+
+import Divider from '@/base-ui/Divider';
 
 import { AccordionConfigContext, AccordionItemStateProvider } from './context';
 import { styles } from './style';
