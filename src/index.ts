@@ -15,7 +15,34 @@ export {
 export { default as Alert, type AlertProps } from './Alert';
 export { default as AutoComplete, type AutoCompleteProps } from './AutoComplete';
 export { default as Avatar, AvatarGroup, type AvatarGroupProps, type AvatarProps } from './Avatar';
+export {
+  default as Badge,
+  type BadgeProps,
+  type BadgeSize,
+  type BadgeStatus,
+} from './base-ui/Badge';
 export { styles as menuSharedStyles } from './base-ui/DropdownMenu/sharedStyle';
+export {
+  default as Pagination,
+  type PaginationProps,
+  type PaginationSize,
+} from './base-ui/Pagination';
+export {
+  default as Progress,
+  type ProgressProps,
+  type ProgressSize,
+  type ProgressStatus,
+  type ProgressType,
+  type ProgressVariant,
+} from './base-ui/Progress';
+export { default as Result, type ResultProps, type ResultStatus } from './base-ui/Result';
+export { default as Spin, type SpinProps, type SpinSize, type SpinVariant } from './base-ui/Spin';
+export {
+  default as Upload,
+  type UploadChangeInfo,
+  UploadDragger,
+  type UploadProps,
+} from './base-ui/Upload';
 export { default as Block, type BlockProps } from './Block';
 export { default as Burger, type BurgerProps } from './Burger';
 export { default as Button, type ButtonProps } from './Button';
@@ -275,10 +302,6 @@ export {
 } from './Modal';
 export type { MotionComponentType } from './MotionProvider';
 export { MotionComponent, MotionProvider, useMotionComponent } from './MotionProvider';
-export {
-  default as NeuralNetworkLoading,
-  type NeuralNetworkLoadingProps,
-} from './NeuralNetworkLoading';
 export {
   default as Popover,
   PopoverArrow,

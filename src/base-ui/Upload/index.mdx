@@ -1,0 +1,43 @@
+---
+title: Upload
+description: Headless file picker trigger with a hidden input, drag-and-drop dragger, and accept/maxCount filtering.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="Upload" from=".." />
+
+`Upload` renders a native `<span>` (or a `<div>` when `dragger` is set). All standard HTML attributes including `className`, `style`, `data-*`, and `ref` are forwarded to the root element.
+
+### Migrating from antd Upload
+
+`Upload` has no file list, no XHR uploader, and no progress UI — it only manages the hidden `<input type="file">`, drag-and-drop, and `accept`/`maxCount` filtering, then hands you the accepted `File[]`.
+
+```tsx | pure
+import { Upload } from '@lobehub/ui/base-ui';
+
+<Upload
+  accept="image/*"
+  beforeUpload={(file) => file.size < 1024 * 1024}
+  onFiles={(files) => console.log(files)}
+>
+  <button type="button">Upload file</button>
+</Upload>;
+```
+
+`beforeUpload` keeps antd's `(file, fileList) => boolean | Promise<boolean | void> | void` signature — returning (or resolving) `false` drops that file; returning `Upload.LIST_IGNORE` or a replacement `File` is not supported. `onFiles` fires once with the accepted files after `beforeUpload` filtering and the `maxCount` slice; `onChange` fires once per accepted file with `{ file, fileList }`. `maxCount` is applied after `beforeUpload` filtering.
+
+Replace `<Upload.Dragger>` with `<Upload dragger>`, or use the `UploadDragger` convenience component exported alongside `Upload` (a drop-in rename for `Upload.Dragger`):
+
+```tsx | pure
+import { UploadDragger } from '@lobehub/ui/base-ui';
+
+<UploadDragger accept="image/*" description="Support for a single upload" onFiles={console.log} />;
+```

@@ -1,0 +1,37 @@
+---
+title: Pagination
+description: Page navigation with a windowed page list, prev/next controls, and an optional page-size changer.
+category: Navigation
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="Pagination" from=".." />
+
+`Pagination` renders a native `<nav>` with `role="navigation"` and `aria-label="Pagination"`. All standard nav HTML attributes including `className`, `style`, and `ref` are forwarded to the root element.
+
+### Migrating from antd Pagination
+
+The core migration is an import replacement, keeping the shared props:
+
+```tsx | pure
+import { Pagination } from '@lobehub/ui/base-ui';
+
+<Pagination
+  current={current}
+  pageSize={pageSize}
+  showSizeChanger
+  total={total}
+  onChange={setCurrent}
+/>;
+```
+
+`current`/`onChange` and `pageSize`/`onPageSizeChange` each support both controlled and uncontrolled usage via `defaultCurrent`/`defaultPageSize`.
+
+antd's `size="default"` becomes `size="middle"`.

@@ -1,0 +1,64 @@
+---
+title: Spin
+description: Lightweight loading indicator with size presets, a determinate progress ring, a network variant for AI work, and a children overlay mode.
+category: Feedback
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="Spin" from=".." />
+
+`Spin` renders a native `<div>`. All standard div HTML attributes including `className`, `style`, `data-*`, and `ref` are forwarded to the root element.
+
+### Sizes
+
+`size` accepts `small` (14px), `middle` (20px, default), `large` (32px), or any raw pixel number.
+
+### Determinate progress
+
+Pass `percent` (0–100) with the default variant to render a progress ring driven by `stroke-dashoffset` instead of the spinning glyph.
+
+### Network variant
+
+`variant="network"` renders a layered-network glyph: nodes pulse, particles flow between layers, and a dashed ring rotates. Every animated property is `transform` or `opacity`, so it runs on the compositor and stays static under `prefers-reduced-motion`.
+
+Use it only when the user is waiting on a model or agent. Plain network requests use the default variant.
+
+### Which indicator to use
+
+| Waiting on | Component | Size |
+| --- | --- | --- |
+| A button or icon action | `Button loading` / `ActionIcon loading` | follows the button |
+| Background sync next to a title or list item | `Spin` | `small` |
+| A model or agent (reasoning, tool call, task step) | `Spin variant="network"` | `small` inline, `middle` inside a card |
+| The first token of a chat message | `LoadingDots` from `@lobehub/ui/chat` | 12 |
+| A panel whose layout is unknown | `Spin variant="network"` centered | `large` |
+| A panel whose layout is known | `Skeleton` | — |
+| Existing content being replaced | `Spin` wrapping children | `middle` |
+| The app itself | `BrandLoading` from `@lobehub/ui/brand` | 40 |
+
+Do not hand-roll spinners, use `Icon spin`, antd `Spin`, or third-party loading packages.
+
+### Overlaying content
+
+When `children` is provided, `Spin` wraps it in a relative container and overlays a centered spinner (plus optional `tip`) on top while `spinning` is `true`. Set `spinning={false}` to render only the children.
+
+### Migrating from antd Spin
+
+```tsx | pure
+import { Spin } from '@lobehub/ui/base-ui';
+
+<Spin spinning={loading} tip="Loading…">
+  <Content />
+</Spin>;
+```
+
+`delay` and `fullscreen` are not supported; gate `spinning` yourself and use `Spin` inside your own fullscreen container if needed.
+
+antd's `size="default"` becomes `size="middle"`.
