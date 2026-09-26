@@ -6,6 +6,7 @@ import { type Key, memo, type ReactNode, useEffect, useMemo } from 'react';
 
 import Pagination from '@/base-ui/Pagination';
 import Spin from '@/base-ui/Spin';
+import { useEventCallback } from '@/hooks/useEventCallback';
 
 import { tableFeatureSet } from './features';
 import FilterMenu from './FilterMenu';
@@ -51,37 +52,38 @@ const TableInner = <T extends RowData>(props: TableInternalProps<T>) => {
   const fixedOffsets = useMemo(() => getFixedOffsets(columns), [columns]);
 
   const table = useTable({
-    autoResetPageIndex: false,
     columns: columnDefs,
     data: dataSource,
+    enableMultiSort: false,
     enableSortingRemoval: true,
     features: tableFeatureSet,
     getRowId: (record: T) =>
       String(typeof rowKey === 'function' ? rowKey(record) : (record[rowKey] as Key)),
-    manualPagination: state.manualPagination,
     manualSorting: state.manualSorting,
     onColumnFiltersChange: state.onColumnFiltersChange,
-    onPaginationChange: state.onPaginationChange,
     onSortingChange: state.onSortingChange,
-    rowCount: state.config?.total,
     state: {
       columnFilters: state.columnFilters,
-      pagination: state.page,
       sorting: state.sorting,
     },
   } as any);
 
-  const total = state.config?.total ?? table.getPrePaginatedRowModel().rows.length;
-  const pageCount = Math.max(1, Math.ceil(total / state.page.pageSize));
-  const { page, setInnerPage } = state;
+  const allRows = table.getRowModel().rows as unknown as { id: Key; original: T }[];
+  const { page } = state;
   const clientPaginated = pagination !== false && state.config?.total === undefined;
+  const total = state.config?.total ?? allRows.length;
+  const pageCount = Math.max(1, Math.ceil(total / page.pageSize));
+  const pageIndex = Math.min(page.pageIndex, pageCount - 1);
+  const rows = clientPaginated
+    ? allRows.slice(pageIndex * page.pageSize, (pageIndex + 1) * page.pageSize)
+    : allRows;
+
+  const syncClampedPage = useEventCallback(() => state.clampPage(pageIndex));
 
   useEffect(() => {
-    if (!clientPaginated) return;
-    if (page.pageIndex >= pageCount) setInnerPage({ ...page, pageIndex: pageCount - 1 });
-  }, [clientPaginated, pageCount, page, setInnerPage]);
+    if (clientPaginated && pageIndex !== page.pageIndex) syncClampedPage();
+  }, [clientPaginated, pageIndex, page.pageIndex, syncClampedPage]);
 
-  const rows = table.getRowModel().rows as unknown as { id: Key; original: T }[];
   const minWidth = scroll?.x === 'max-content' ? undefined : scroll?.x;
 
   return (
@@ -144,16 +146,13 @@ const TableInner = <T extends RowData>(props: TableInternalProps<T>) => {
       {pagination !== false && total > 0 && (
         <div className={styles.pagination}>
           <Pagination
-            current={Math.min(page.pageIndex, pageCount - 1) + 1}
+            current={pageIndex + 1}
             pageSize={page.pageSize}
             pageSizeOptions={state.config?.pageSizeOptions}
             showSizeChanger={state.config?.showSizeChanger}
             total={total}
             onChange={(next, pageSize) =>
               state.onPaginationChange({ pageIndex: next - 1, pageSize })
-            }
-            onPageSizeChange={(current, pageSize) =>
-              state.onPaginationChange({ pageIndex: current - 1, pageSize })
             }
           />
         </div>

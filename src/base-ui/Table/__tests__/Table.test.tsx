@@ -275,6 +275,73 @@ describe('Table', () => {
     );
   });
 
+  test('controlled current past the last page renders the last page and asks the parent to move', () => {
+    const onPageChange = vi.fn();
+    render(
+      <Table
+        columns={columns}
+        dataSource={manyRows(5)}
+        pagination={{ current: 3, onChange: onPageChange, pageSize: 5 }}
+        rowKey="id"
+      />,
+    );
+
+    expect(bodyModels()).toEqual(['m-00', 'm-01', 'm-02', 'm-03', 'm-04']);
+    expect(onPageChange).toHaveBeenCalledTimes(1);
+    expect(onPageChange).toHaveBeenCalledWith(1, 5);
+  });
+
+  test('shift-click does not add a second sorted column', () => {
+    const onChange = vi.fn();
+    render(
+      <Table
+        columns={columns}
+        dataSource={rows}
+        pagination={false}
+        rowKey="id"
+        onChange={onChange}
+      />,
+    );
+    const spend = screen.getByRole('columnheader', { name: /Spend/ });
+    const model = screen.getByRole('columnheader', { name: /Model/ });
+
+    fireEvent.click(within(spend).getByRole('button'));
+    fireEvent.click(within(model).getByRole('button'), { shiftKey: true });
+
+    expect(spend.getAttribute('aria-sort')).toBe('none');
+    expect(model.getAttribute('aria-sort')).toBe('ascending');
+    expect(onChange.mock.calls.at(-1)![2]).toMatchObject({ columnKey: 'model', order: 'ascend' });
+  });
+
+  test('a key-only column with a comparator sorts', () => {
+    render(
+      <Table
+        dataSource={rows}
+        pagination={false}
+        rowKey="id"
+        columns={[
+          {
+            key: 'double',
+            render: (_, record) => String(record.spend * 2),
+            sorter: (a, b) => a.spend - b.spend,
+            title: 'Double',
+          },
+        ]}
+      />,
+    );
+
+    fireEvent.click(
+      within(screen.getByRole('columnheader', { name: /Double/ })).getByRole('button'),
+    );
+
+    expect(
+      screen
+        .getAllByRole('row')
+        .slice(1)
+        .map((row) => row.textContent),
+    ).toEqual(['20', '40', '60']);
+  });
+
   test('fixed right columns are sticky at the right edge', () => {
     render(
       <Table

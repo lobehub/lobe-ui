@@ -80,11 +80,19 @@ export const useTableState = <T>({
 
   const changePage = (next: PaginationState) => {
     setInnerPage(next);
-    if (next.pageIndex !== page.pageIndex) config?.onChange?.(next.pageIndex + 1, next.pageSize);
-    if (next.pageSize !== page.pageSize) {
-      config?.onShowSizeChange?.(next.pageIndex + 1, next.pageSize);
+    const sizeChanged = next.pageSize !== page.pageSize;
+    if (sizeChanged) config?.onShowSizeChange?.(next.pageIndex + 1, next.pageSize);
+    if (sizeChanged || next.pageIndex !== page.pageIndex) {
       config?.onChange?.(next.pageIndex + 1, next.pageSize);
     }
+  };
+
+  const clampPage = (pageIndex: number) => {
+    if (config?.current === undefined) {
+      setInnerPage((previous) => ({ ...previous, pageIndex }));
+      return;
+    }
+    config.onChange?.(pageIndex + 1, page.pageSize);
   };
 
   const onSortingChange = (updater: Updater<SortingState>) => {
@@ -110,16 +118,15 @@ export const useTableState = <T>({
   };
 
   return {
+    clampPage,
     columnFilters,
     columnIds,
     config,
-    manualPagination: pagination === false || config?.total !== undefined,
     manualSorting: columns.some((column) => column.sorter === true),
     onColumnFiltersChange,
     onPaginationChange,
     onSortingChange,
     page,
-    setInnerPage,
     sorting,
   };
 };

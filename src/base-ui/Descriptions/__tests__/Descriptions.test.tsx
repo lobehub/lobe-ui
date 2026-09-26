@@ -46,6 +46,23 @@ describe('Descriptions', () => {
     expect(container.querySelector('dd')!.getAttribute('style')).toContain('span 3');
   });
 
+  test('a span item that does not fit the current row starts a new row with its label', () => {
+    const { container } = render(
+      <Descriptions
+        column={2}
+        items={[
+          { children: 'a', label: 'A' },
+          { children: 'b', label: 'B', span: 2 },
+        ]}
+      />,
+    );
+    const [, labelB] = container.querySelectorAll('dt');
+    const [, contentB] = container.querySelectorAll('dd');
+
+    expect(labelB.getAttribute('style')).toContain('grid-column: 1');
+    expect(contentB.getAttribute('style')).toContain('grid-column: 2 / span 3');
+  });
+
   test('renders title and extra in a header', () => {
     render(
       <Descriptions extra={<button type="button">Download</button>} items={items} title="Basic" />,

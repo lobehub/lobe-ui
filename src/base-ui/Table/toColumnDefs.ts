@@ -38,8 +38,10 @@ export const toColumnDefs = <T extends RowData>(
       filterFn,
       id: getColumnId(column, index),
       sortDescFirst: column.sortDirections?.[0] === 'descend',
-      sortFn: comparator
-        ? (rowA: { original: T }, rowB: { original: T }) => comparator(rowA.original, rowB.original)
-        : undefined,
+      ...(comparator && {
+        sortFn: (rowA: { original: T }, rowB: { original: T }) =>
+          comparator(rowA.original, rowB.original),
+        sortUndefined: false,
+      }),
     } as unknown as ColumnDef<TableFeatureSet, T, unknown>;
   });

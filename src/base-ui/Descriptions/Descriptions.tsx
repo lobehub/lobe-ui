@@ -22,6 +22,15 @@ const Descriptions = memo<DescriptionsProps>(
   }) => {
     const columnCount = Math.max(1, Math.floor(column));
 
+    let cursor = 0;
+    const placements = items.map((item) => {
+      const span = Math.min(Math.max(Math.floor(item.span ?? 1), 1), columnCount);
+      if (cursor + span > columnCount) cursor = 0;
+      const start = cursor;
+      cursor = (cursor + span) % columnCount;
+      return { span, start };
+    });
+
     return (
       <div className={cx(styles.root, className)} ref={ref} {...rest}>
         {(title != null || extra != null) && (
@@ -35,18 +44,22 @@ const Descriptions = memo<DescriptionsProps>(
           style={{ gridTemplateColumns: `repeat(${columnCount}, auto minmax(0, 1fr))` }}
         >
           {items.map((item, index) => {
-            const span = Math.min(Math.max(Math.floor(item.span ?? 1), 1), columnCount);
+            const { span, start } = placements[index];
+            const contentStart = String(start * 2 + 2);
 
             return (
               <Fragment key={item.key ?? index}>
-                <dt className={cx(styles.label, classNames?.label)} style={customStyles?.label}>
+                <dt
+                  className={cx(styles.label, classNames?.label)}
+                  style={{ gridColumn: String(start * 2 + 1), ...customStyles?.label }}
+                >
                   {item.label}
                   {colon && item.label != null ? ':' : null}
                 </dt>
                 <dd
                   className={cx(styles.content, classNames?.content)}
                   style={{
-                    gridColumn: span > 1 ? `span ${span * 2 - 1}` : undefined,
+                    gridColumn: span > 1 ? `${contentStart} / span ${span * 2 - 1}` : contentStart,
                     ...customStyles?.content,
                   }}
                 >

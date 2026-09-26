@@ -1,9 +1,7 @@
 import {
   columnFilteringFeature,
   createFilteredRowModel,
-  createPaginatedRowModel,
   createSortedRowModel,
-  rowPaginationFeature,
   rowSortingFeature,
   tableFeatures,
 } from '@tanstack/react-table';
@@ -11,8 +9,6 @@ import {
 export const tableFeatureSet = tableFeatures({
   columnFilteringFeature,
   filteredRowModel: createFilteredRowModel(),
-  paginatedRowModel: createPaginatedRowModel(),
-  rowPaginationFeature,
   rowSortingFeature,
   sortedRowModel: createSortedRowModel(),
 });
