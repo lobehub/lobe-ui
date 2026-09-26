@@ -58,6 +58,8 @@ export * from './Skeleton';
 export * from './Slider';
 export { default as Spin } from './Spin';
 export * from './Spin';
+export { default as Statistic } from './Statistic';
+export * from './Statistic';
 export { default as Switch } from './Switch';
 export * from './Switch';
 export { default as Tabs } from './Tabs';
