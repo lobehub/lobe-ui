@@ -8,6 +8,8 @@ export { default as Avatar } from './Avatar';
 export * from './Avatar';
 export { default as Badge } from './Badge';
 export * from './Badge';
+export { default as Breadcrumb } from './Breadcrumb';
+export * from './Breadcrumb';
 export { default as Button } from './Button';
 export * from './Button';
 export * from './Checkbox';
