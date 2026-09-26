@@ -29,6 +29,8 @@ export {
   updateContextMenuItems,
 } from './ContextMenu';
 export { controlHeight, type ControlSize } from './controlSize';
+export { default as Descriptions } from './Descriptions';
+export * from './Descriptions';
 export { default as Divider } from './Divider';
 export * from './Divider';
 export * from './DraggablePanel';
