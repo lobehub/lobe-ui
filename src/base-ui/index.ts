@@ -70,6 +70,8 @@ export { default as Steps } from './Steps';
 export * from './Steps';
 export { default as Switch } from './Switch';
 export * from './Switch';
+export { default as Table } from './Table';
+export * from './Table';
 export { default as Tabs } from './Tabs';
 export * from './Tabs';
 export { default as Tag } from './Tag';
