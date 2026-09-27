@@ -2,6 +2,13 @@
 
 # Changelog
 
+## [5.50.3](https://github.com/lobehub/lobe-ui/compare/v5.50.2...v5.50.3) (2026-09-27)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Give the outlined Segmented indicator a visible fill ([8d88a97](https://github.com/lobehub/lobe-ui/commit/8d88a97))
+- **dashboard**: Keep sidebar icons in place while the rail collapses ([5111bfc](https://github.com/lobehub/lobe-ui/commit/5111bfc))
+
 ## [5.50.2](https://github.com/lobehub/lobe-ui/compare/v5.50.1...v5.50.2) (2026-09-26)
 
 ### 🐛 Bug Fixes
