@@ -24,6 +24,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     transition-duration: 240ms;
     transition-property: inset-inline-start, inset-block-start, width, height;
 
+    [data-variant='outlined'] > & {
+      background: ${cssVar.colorFillSecondary};
+    }
+
     [data-orientation='horizontal'] &:dir(rtl) {
       inset-inline-start: var(--active-item-right);
     }
