@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.51.1](https://github.com/lobehub/lobe-ui/compare/v5.51.0...v5.51.1) (2026-09-27)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Render a custom Result icon without the status circle, closes [#681](https://github.com/lobehub/lobe-ui/issues/681) ([99e6a55](https://github.com/lobehub/lobe-ui/commit/99e6a55))
+
 # [5.51.0](https://github.com/lobehub/lobe-ui/compare/v5.50.3...v5.51.0) (2026-09-27)
 
 ### ✨ Features
