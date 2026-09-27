@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.51.0](https://github.com/lobehub/lobe-ui/compare/v5.50.3...v5.51.0) (2026-09-27)
+
+### ✨ Features
+
+- **eslint**: Ban antd Badge, Empty, Pagination, Popover, Progress, Result, Spin, Tooltip and Upload imports, closes [#669](https://github.com/lobehub/lobe-ui/issues/669) ([ba4bbea](https://github.com/lobehub/lobe-ui/commit/ba4bbea))
+
 ## [5.50.3](https://github.com/lobehub/lobe-ui/compare/v5.50.2...v5.50.3) (2026-09-27)
 
 ### 🐛 Bug Fixes
