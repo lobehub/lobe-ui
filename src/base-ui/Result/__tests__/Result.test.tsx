@@ -27,6 +27,15 @@ describe('Result', () => {
     expect(screen.getByTestId('custom-icon')).toBeTruthy();
   });
 
+  test('renders a custom icon without the status circle', () => {
+    render(<Result icon={<span data-testid="custom-icon" />} status="success" />);
+
+    const slot = screen.getByTestId('custom-icon').parentElement!;
+    expect(slot.getAttribute('style')).toBeNull();
+    expect(getComputedStyle(slot).width).not.toBe('72px');
+    expect(getComputedStyle(slot).borderRadius).not.toBe('50%');
+  });
+
   test('renders title, subTitle, extra, and children', () => {
     render(
       <Result
