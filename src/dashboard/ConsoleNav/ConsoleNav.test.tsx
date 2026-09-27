@@ -108,6 +108,17 @@ describe('ConsoleNav', () => {
     expect(links[0].getAttribute('data-active')).toBe('true');
   });
 
+  it('keeps the same link elements when toggling the rail', () => {
+    const railItems = [{ end: true, href: '/', icon: BookOpen, label: 'Home' }];
+    const { rerender } = render(<ConsoleNav groups={groups} items={railItems} pathname="/" />);
+    const home = screen.getByRole('link', { name: 'Home' });
+
+    rerender(<ConsoleNav collapsed groups={groups} items={railItems} pathname="/" />);
+
+    expect(screen.getByRole('link', { name: 'Home' })).toBe(home);
+    expect(home.textContent).toBe('Home');
+  });
+
   it('routes clicks through onNavigate and leaves external links alone', () => {
     const onNavigate = vi.fn();
     render(

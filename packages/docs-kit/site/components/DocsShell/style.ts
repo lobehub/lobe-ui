@@ -61,6 +61,21 @@ export const styles = createStaticStyles(({ css }) => {
       }
     `,
 
+    brandLogo: css`
+      > :not(:first-child) {
+        transition: opacity 120ms ease 80ms;
+
+        [data-collapsed='true'] & {
+          opacity: 0;
+          transition-delay: 0s;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          transition: none;
+        }
+      }
+    `,
+
     iconButton,
 
     search: css`

@@ -1,7 +1,9 @@
 import { createStaticStyles } from 'antd-style';
 
 const SIDEBAR_INLINE_SIZE = 248;
-const SIDEBAR_RAIL_INLINE_SIZE = 64;
+// Twice the nav icon inset (8px nav padding + 10px item padding) plus the 18px icon, so the icons
+// land centered on the rail without moving sideways.
+const SIDEBAR_RAIL_INLINE_SIZE = 54;
 const WORKSPACE_INSET = 8;
 
 /**
@@ -16,19 +18,10 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
 
     block-size: 56px;
     margin-block-start: ${WORKSPACE_INSET}px;
-    padding-inline: 16px;
+    padding-inline: 15px;
 
     color: ${cssVar.colorText};
-
-    &[data-collapsed='true'] {
-      justify-content: center;
-      padding-inline: 0;
-
-      > * {
-        justify-content: center;
-        inline-size: auto;
-      }
-    }
+    white-space: nowrap;
 
     ${responsive.laptop} {
       margin-block-start: 0;
@@ -59,6 +52,18 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
     color: ${cssVar.colorText};
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    transition: opacity 120ms ease 80ms;
+
+    [data-collapsed='true'] & {
+      text-overflow: clip;
+      opacity: 0;
+      transition-delay: 0s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
   `,
   main: css`
     overflow: auto;
@@ -103,6 +108,7 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
     background: ${cssVar.colorBgLayout};
   `,
   sidebar: css`
+    overflow: hidden;
     display: flex;
     flex: none;
     flex-direction: column;

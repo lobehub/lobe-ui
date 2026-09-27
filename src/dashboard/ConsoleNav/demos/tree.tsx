@@ -57,8 +57,10 @@ export default () => {
         style={{
           blockSize: 360,
           display: 'flex',
-          inlineSize: collapsed ? 72 : 260,
+          inlineSize: collapsed ? 56 : 260,
+          overflow: 'hidden',
           paddingBlock: 8,
+          transition: 'inline-size 200ms ease',
         }}
       >
         <ConsoleNav

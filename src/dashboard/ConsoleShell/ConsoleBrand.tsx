@@ -6,8 +6,7 @@ import type { ConsoleBrandProps } from './type';
 
 function ConsoleBrand({ href = '/', label, logo, renderLink, title }: ConsoleBrandProps) {
   const shell = useConsoleShellState();
-  const collapsed = shell?.collapsed ?? false;
-  const lockup =
+  const content =
     title == null || title === false || title === '' ? (
       logo
     ) : (
@@ -16,7 +15,6 @@ function ConsoleBrand({ href = '/', label, logo, renderLink, title }: ConsoleBra
         <span className={styles.brandName}>{title}</span>
       </span>
     );
-  const content = collapsed ? logo : lockup;
   const linkProps = {
     'aria-label': label ?? (typeof title === 'string' ? title : 'Home'),
     'children': content,

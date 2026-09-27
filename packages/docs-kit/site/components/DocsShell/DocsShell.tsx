@@ -1,12 +1,6 @@
 import { Hotkey } from '@lobehub/ui';
 import { LobeHub } from '@lobehub/ui/brand';
-import {
-  Breadcrumb,
-  ConsoleBrand,
-  ConsoleNav,
-  ConsoleShell,
-  useConsoleShell,
-} from '@lobehub/ui/dashboard';
+import { Breadcrumb, ConsoleBrand, ConsoleNav, ConsoleShell } from '@lobehub/ui/dashboard';
 import { GithubIcon } from '@lobehub/ui/icons';
 import { Search } from 'lucide-react';
 import type { ReactNode } from 'react';
@@ -28,16 +22,6 @@ interface DocsShellProps {
 }
 
 const LOGO_SIZE = 24;
-
-function DocsBrandLogo({ productName }: { productName: string }) {
-  const { collapsed } = useConsoleShell();
-
-  return collapsed ? (
-    <LobeHub size={LOGO_SIZE} />
-  ) : (
-    <LobeHub extra={productName} size={LOGO_SIZE} type="combine" />
-  );
-}
 
 const useIsomorphicLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
 
@@ -92,7 +76,9 @@ export function DocsShell({ children, documents, navigation, onSearchOpen }: Doc
   const brand = (
     <ConsoleBrand
       label={`${siteConfig.title} documentation home`}
-      logo={<DocsBrandLogo productName={productName} />}
+      logo={
+        <LobeHub className={styles.brandLogo} extra={productName} size={LOGO_SIZE} type="combine" />
+      }
       renderLink={({ children: content, href, ...linkProps }) => (
         <Link {...linkProps} to={href}>
           {content}

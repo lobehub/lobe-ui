@@ -28,7 +28,14 @@ export default () => {
 
   return (
     <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
-      <Surface style={{ inlineSize: collapsed ? 72 : 240, paddingBlock: 8 }}>
+      <Surface
+        style={{
+          inlineSize: collapsed ? 56 : 240,
+          overflow: 'hidden',
+          paddingBlock: 8,
+          transition: 'inline-size 200ms ease',
+        }}
+      >
         <ConsoleNav
           collapsed={collapsed}
           groups={groups}

@@ -1,7 +1,7 @@
 'use client';
 
 import { ChevronDown, Play } from 'lucide-react';
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from 'react';
 
 import Tooltip from '@/base-ui/Tooltip';
 import Icon from '@/Icon';
@@ -14,6 +14,7 @@ import { styles } from './style';
 import type { ConsoleNavGroup, ConsoleNavItem, ConsoleNavLinkProps, ConsoleNavProps } from './type';
 
 const PANEL_TRANSITION_MS = 160;
+const RAIL_TRANSITION_MS = 200;
 
 type ExpandedOverrides = Record<string, boolean>;
 
@@ -25,7 +26,7 @@ function readOverrides(value: unknown): ExpandedOverrides {
   return value && typeof value === 'object' ? (value as ExpandedOverrides) : {};
 }
 
-function scrollActiveIntoView(container: HTMLElement) {
+function scrollActiveIntoView(container: HTMLElement, behavior: ScrollBehavior = 'auto') {
   const link =
     container.querySelector<HTMLElement>('[aria-current="page"]') ??
     [...container.querySelectorAll<HTMLElement>('button[data-active="true"]')].at(-1);
@@ -33,13 +34,39 @@ function scrollActiveIntoView(container: HTMLElement) {
   const containerRect = container.getBoundingClientRect();
   const linkRect = link.getBoundingClientRect();
   if (linkRect.top >= containerRect.top && linkRect.bottom <= containerRect.bottom) return;
-  container.scrollTop +=
-    linkRect.top - containerRect.top - (containerRect.height - linkRect.height) / 2;
+  container.scrollBy({
+    behavior,
+    top: linkRect.top - containerRect.top - (containerRect.height - linkRect.height) / 2,
+  });
 }
 
 interface LinkContext {
   onNavigate?: (href: string) => void;
   renderLink?: ConsoleNavProps['renderLink'];
+}
+
+function renderAnchor(context: LinkContext, linkProps: ConsoleNavLinkProps, onFollow: () => void) {
+  if (context.renderLink) return context.renderLink(linkProps);
+  return (
+    <a
+      aria-current={linkProps['aria-current']}
+      aria-label={linkProps['aria-label']}
+      className={linkProps.className}
+      data-active={linkProps['data-active']}
+      data-collapsed={linkProps['data-collapsed']}
+      data-indent={linkProps['data-indent']}
+      href={linkProps.href}
+      rel={linkProps.external ? 'noreferrer' : undefined}
+      target={linkProps.external ? '_blank' : undefined}
+      title={linkProps.title}
+      onClick={(event) => {
+        if (context.onNavigate && !linkProps.external) event.preventDefault();
+        onFollow();
+      }}
+    >
+      {linkProps.children}
+    </a>
+  );
 }
 
 function NavLink({
@@ -51,6 +78,7 @@ function NavLink({
   indent = 0,
   item,
   name,
+  overlay = false,
 }: {
   active: boolean;
   collapsed: boolean;
@@ -60,6 +88,7 @@ function NavLink({
   indent?: number;
   item?: ConsoleNavItem;
   name: string;
+  overlay?: boolean;
 }) {
   const shell = useConsoleShellState();
   const label = item?.label ?? name;
@@ -70,15 +99,15 @@ function NavLink({
   const linkProps: ConsoleNavLinkProps = {
     'aria-current': active ? 'page' : undefined,
     'aria-label': collapsed ? name : undefined,
-    'children': (
+    'children': overlay ? null : (
       <>
         {icon ? <Icon icon={icon} size={18} /> : null}
-        {collapsed ? null : <span className={styles.itemLabel}>{label}</span>}
-        {!collapsed && item?.badge ? <span className={styles.badge}>{item.badge}</span> : null}
-        {collapsed && item?.badge ? <span aria-hidden className={styles.dot} /> : null}
+        <span className={styles.itemLabel}>{label}</span>
+        {item?.badge ? <span className={styles.badge}>{item.badge}</span> : null}
+        {item?.badge ? <span aria-hidden className={styles.dot} /> : null}
       </>
     ),
-    'className': styles.item,
+    'className': overlay ? styles.railLink : styles.item,
     'data-active': active,
     'data-collapsed': collapsed,
     'data-indent': indent,
@@ -88,34 +117,27 @@ function NavLink({
     'title': collapsed ? undefined : label,
   };
 
-  const link = context.renderLink ? (
-    context.renderLink(linkProps)
-  ) : (
-    <a
-      aria-current={linkProps['aria-current']}
-      aria-label={linkProps['aria-label']}
-      className={linkProps.className}
-      data-active={active}
-      data-collapsed={collapsed}
-      data-indent={indent}
-      href={href}
-      rel={item?.external ? 'noreferrer' : undefined}
-      target={item?.external ? '_blank' : undefined}
-      title={linkProps.title}
-      onClick={(event) => {
-        if (context.onNavigate && !item?.external) event.preventDefault();
-        follow();
-      }}
-    >
-      {linkProps.children}
-    </a>
-  );
+  const link = renderAnchor(context, linkProps, follow);
 
-  if (!collapsed) return link;
+  if (!icon && !overlay) return link;
+  // Always mounted so toggling the rail keeps the same link element and its label can fade.
   return (
-    <Tooltip placement="right" title={name}>
+    <Tooltip disabled={!collapsed} placement="right" title={name}>
       {link}
     </Tooltip>
+  );
+}
+
+function Fold({ children, folded }: { children: ReactNode; folded: boolean }) {
+  return (
+    <div
+      aria-hidden={folded || undefined}
+      className={styles.fold}
+      data-folded={folded}
+      inert={folded || undefined}
+    >
+      <div>{children}</div>
+    </div>
   );
 }
 
@@ -171,146 +193,136 @@ function ConsoleNav({
     if (reducedMotion) return;
     const timer = window.setTimeout(() => scrollActiveIntoView(container), PANEL_TRANSITION_MS);
     return () => window.clearTimeout(timer);
-  }, [activeHref, collapsed, pathname, reducedMotion]);
+  }, [activeHref, pathname, reducedMotion]);
 
-  const renderItems = (list: ConsoleNavItem[], indent: number, groupLabel?: string) =>
-    list.map((item) => (
-      <NavLink
-        active={item.href === activeHref}
-        collapsed={false}
-        context={context}
-        href={item.href}
-        icon={item.icon}
-        indent={item.icon ? Math.max(0, indent - 1) : indent}
-        item={item}
-        key={item.href}
-        name={groupLabel ? `${groupLabel} / ${item.label}` : item.label}
-      />
-    ));
-
-  if (collapsed) {
-    const railItems = (list: ConsoleNavItem[], groupLabel?: string) =>
-      list
-        .filter((item) => item.icon)
-        .map((item) => (
-          <NavLink
-            collapsed
-            active={item.href === activeHref}
-            context={context}
-            href={item.href}
-            icon={item.icon}
-            item={item}
-            key={item.href}
-            name={groupLabel ? `${groupLabel} / ${item.label}` : item.label}
-          />
-        ));
-    const topRail = railItems(items);
-    const iconGroups = groups.filter((group) => group.icon);
-
-    return (
-      <ScrollShadow
-        aria-label={label}
-        as={'nav'}
-        className={styles.nav}
-        data-collapsed=""
-        orientation={'vertical'}
-        ref={navRef}
-        size={8}
-      >
-        {topRail.length > 0 ? <div className={styles.railTop}>{topRail}</div> : null}
-        {iconGroups.length > 0 ? (
-          <div className={styles.railGroup} data-first={topRail.length === 0} role="group">
-            {iconGroups.map((group) => {
-              const href = group.href ?? collectNavItems([group])[0]?.href;
-              if (!href) return null;
-              return (
-                <NavLink
-                  collapsed
-                  active={activeBranch[0] === group.key}
-                  context={context}
-                  href={href}
-                  icon={group.icon}
-                  key={group.key}
-                  name={group.label}
-                />
-              );
-            })}
-          </div>
-        ) : null}
-        {groups
-          .filter((group) => !group.icon)
-          .map((group, index) => {
-            const rail = railItems(collectNavItems([group]), group.label);
-            if (rail.length === 0) return null;
-            return (
-              <div
-                className={styles.railGroup}
-                data-first={topRail.length === 0 && iconGroups.length === 0 && index === 0}
-                key={group.key}
-                role="group"
-              >
-                <h2 className={styles.srOnly}>{group.label}</h2>
-                {rail}
-              </div>
-            );
-          })}
-      </ScrollShadow>
+  useEffect(() => {
+    const container = navRef.current;
+    if (!container) return;
+    const timer = window.setTimeout(
+      () => scrollActiveIntoView(container, reducedMotion ? 'auto' : 'smooth'),
+      reducedMotion ? 0 : RAIL_TRANSITION_MS,
     );
-  }
+    return () => window.clearTimeout(timer);
+  }, [collapsed, reducedMotion]);
 
-  const renderGroup = (group: ConsoleNavGroup, level: number, indent: number) => {
+  // The rail folds rows out of this same tree instead of rendering its own, so icons stay put
+  // while the sidebar width animates.
+  const renderItems = (
+    list: ConsoleNavItem[],
+    indent: number,
+    groupLabel: string | undefined,
+    foldable: boolean,
+  ) =>
+    list.map((item) => {
+      const link = (
+        <NavLink
+          active={item.href === activeHref}
+          collapsed={collapsed}
+          context={context}
+          href={item.href}
+          icon={item.icon}
+          indent={item.icon ? Math.max(0, indent - 1) : indent}
+          item={item}
+          key={item.href}
+          name={groupLabel ? `${groupLabel} / ${item.label}` : item.label}
+        />
+      );
+      if (item.icon || !foldable) return link;
+      return (
+        <Fold folded={collapsed} key={item.href}>
+          {link}
+        </Fold>
+      );
+    });
+
+  const renderGroup = (
+    group: ConsoleNavGroup,
+    level: number,
+    indent: number,
+    underRailIcon: boolean,
+  ) => {
     const expanded = isExpanded(group);
     const panelId = `${id}-${group.key}`;
     // Nested groups are headings over their items, so the items keep the same indent.
     const childIndent = indent + (group.icon ? 1 : 0);
     const active = activeBranch.includes(group.key);
+    const railIcon = level === 0 && Boolean(group.icon);
+    const onRail = collapsed && !underRailIcon;
+    const open = onRail ? !railIcon : expanded;
+    const railHref = railIcon ? (group.href ?? collectNavItems([group])[0]?.href) : undefined;
+    const railEmpty = !railIcon && !collectNavItems([group]).some((item) => item.icon);
+
+    const header = (
+      <button
+        aria-controls={panelId}
+        aria-expanded={open}
+        aria-hidden={(onRail && railIcon) || undefined}
+        className={styles.groupHeader}
+        data-active={active}
+        data-icon={Boolean(group.icon)}
+        data-indent={indent}
+        data-level={level}
+        tabIndex={onRail && railIcon ? -1 : undefined}
+        type="button"
+        onClick={() => toggleGroup(group.key, expanded)}
+      >
+        {group.icon ? <Icon icon={group.icon} size={16} /> : null}
+        <span className={styles.itemLabel} data-label="">
+          {group.label}
+        </span>
+        {level === 0 ? (
+          <Icon className={styles.chevron} data-expanded={expanded} icon={ChevronDown} size={14} />
+        ) : (
+          <span className={styles.indicator} data-expanded={expanded}>
+            <Play fill={'currentColor'} size={7} strokeWidth={1} />
+          </span>
+        )}
+      </button>
+    );
+
+    let head: ReactNode = header;
+    if (railIcon) {
+      head = (
+        <div className={styles.groupHead}>
+          {header}
+          {onRail && railHref ? (
+            <NavLink
+              collapsed
+              overlay
+              active={activeBranch[0] === group.key}
+              context={context}
+              href={railHref}
+              name={group.label}
+            />
+          ) : null}
+        </div>
+      );
+    } else if (!underRailIcon) {
+      head = <Fold folded={onRail}>{header}</Fold>;
+    }
 
     return (
       <div
         className={styles.group}
         data-icon={Boolean(group.icon)}
         data-level={level}
+        data-rail-empty={railEmpty}
         key={group.key}
       >
-        <button
-          aria-controls={panelId}
-          aria-expanded={expanded}
-          className={styles.groupHeader}
-          data-active={active}
-          data-icon={Boolean(group.icon)}
-          data-indent={indent}
-          data-level={level}
-          type="button"
-          onClick={() => toggleGroup(group.key, expanded)}
-        >
-          {group.icon ? <Icon icon={group.icon} size={16} /> : null}
-          <span className={styles.itemLabel} data-label="">
-            {group.label}
-          </span>
-          {level === 0 ? (
-            <Icon
-              className={styles.chevron}
-              data-expanded={expanded}
-              icon={ChevronDown}
-              size={14}
-            />
-          ) : (
-            <span className={styles.indicator} data-expanded={expanded}>
-              <Play fill={'currentColor'} size={7} strokeWidth={1} />
-            </span>
-          )}
-        </button>
+        {head}
         <div
-          aria-hidden={!expanded}
+          aria-hidden={!open}
           className={styles.groupPanel}
-          data-expanded={expanded}
+          data-expanded={open}
           data-instant={reducedMotion}
           id={panelId}
-          inert={expanded ? undefined : true}
+          inert={open ? undefined : true}
         >
           <div className={styles.groupItems}>
-            {renderItems(group.items ?? [], childIndent, group.label)}
-            {(group.groups ?? []).map((child) => renderGroup(child, level + 1, childIndent))}
+            {renderItems(group.items ?? [], childIndent, group.label, !(underRailIcon || railIcon))}
+            {(group.groups ?? []).map((child) =>
+              renderGroup(child, level + 1, childIndent, underRailIcon || railIcon),
+            )}
           </div>
         </div>
       </div>
@@ -322,16 +334,21 @@ function ConsoleNav({
       aria-label={label}
       as={'nav'}
       className={styles.nav}
+      data-collapsed={collapsed}
       orientation={'vertical'}
       ref={navRef}
       size={4}
     >
       {items.length > 0 ? (
-        <div className={styles.topItems} data-divided={groups.length > 0}>
-          {renderItems(items, 0)}
+        <div
+          className={styles.topItems}
+          data-divided={groups.length > 0}
+          data-rail-empty={!items.some((item) => item.icon)}
+        >
+          {renderItems(items, 0, undefined, true)}
         </div>
       ) : null}
-      {groups.map((group) => renderGroup(group, 0, 0))}
+      {groups.map((group) => renderGroup(group, 0, 0, false))}
     </ScrollShadow>
   );
 }
