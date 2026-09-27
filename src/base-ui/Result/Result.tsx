@@ -26,9 +26,13 @@ const Result = memo<ResultProps>(
 
     return (
       <section className={cx(styles.root, className)} ref={ref} style={style} {...rest}>
-        <div className={styles.icon} style={iconStyle}>
-          {icon ?? statusIcon[status]}
-        </div>
+        {icon ? (
+          <div className={styles.customIcon}>{icon}</div>
+        ) : (
+          <div className={styles.icon} style={iconStyle}>
+            {statusIcon[status]}
+          </div>
+        )}
         {title && <h3 className={styles.title}>{title}</h3>}
         {subTitle && <p className={styles.subTitle}>{subTitle}</p>}
         {extra && <div className={styles.extra}>{extra}</div>}

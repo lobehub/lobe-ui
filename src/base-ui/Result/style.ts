@@ -1,6 +1,12 @@
 import { createStaticStyles, cssVar } from 'antd-style';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
+  customIcon: css`
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    margin-block-end: 12px;
+  `,
   extra: css`
     display: flex;
     flex-wrap: wrap;
