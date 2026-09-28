@@ -10,6 +10,7 @@ import {
   type ReactNode,
   useCallback,
   useEffect,
+  useId,
   useMemo,
   useRef,
   useState,
@@ -28,40 +29,30 @@ import { createPanelController } from './core/controller';
 import { coarsePointer, handleSize as getHandleSize } from './core/env';
 import { useIsomorphicLayoutEffect, useStore } from './core/internal';
 import { timing } from './core/transition';
-import { BOW, handleVariants, rootVariants, styles, toggleVariants } from './style';
+import { handleVariants, rootVariants, SEAM_ARROW, styles, toggleVariants } from './style';
 
 const PAN_THRESHOLD = 3;
 
-const BOW_CX = 15;
-const BOW_CY = BOW.half + 8;
-const BOW_W = BOW_CX * 2;
-const BOW_H = BOW_CY * 2;
+const ARROW_BOX = (SEAM_ARROW.half + SEAM_ARROW.lead) * 2;
+const ARROW_C = ARROW_BOX / 2;
 
-const bowPath = (direction: 1 | -1, verticalSeam: boolean) => {
-  const k = BOW.half * BOW.curve;
-  const b = BOW_CX + BOW.bulge * direction;
-  const a0 = BOW_CY - BOW.half;
-  const a1 = BOW_CY + BOW.half;
-  // `a` runs along the seam, `b` across it; a horizontal seam swaps the two.
-  const pt = (along: number, across: number) =>
-    verticalSeam ? `${along} ${across}` : `${across} ${along}`;
+const ARROW_PATH = (() => {
+  const { depth: d, half: h, lead } = SEAM_ARROW;
+  const c = ARROW_C;
+  const r = 0.12;
   return [
-    `M${pt(BOW_CX, a0)}`,
-    `C${pt(BOW_CX, a0 + k)} ${pt(b, BOW_CY - k)} ${pt(b, BOW_CY)}`,
-    `C${pt(b, BOW_CY + k)} ${pt(BOW_CX, a1 - k)} ${pt(BOW_CX, a1)}`,
+    `M${c} ${c - h - lead}`,
+    `Q${c} ${c - h} ${c - d * r} ${c - h + h * r}`,
+    `L${c - d * (1 - r)} ${c - h * r}`,
+    `Q${c - d} ${c} ${c - d * (1 - r)} ${c + h * r}`,
+    `L${c - d * r} ${c + h - h * r}`,
+    `Q${c} ${c + h} ${c} ${c + h + lead}`,
   ].join(' ');
-};
+})();
 
-const BOW_PATHS = {
-  horizontalSeam: [bowPath(-1, false), bowPath(1, false)],
-  verticalSeam: [bowPath(-1, true), bowPath(1, true)],
-};
-
-/** The chevron points the way a click moves the panel. */
-const CHEVRON_TURN = { bottom: 270, left: 0, right: 180, top: 90 } as const;
-
-const chevronPath = (cx: number, cy: number) =>
-  `M${cx + 2.4} ${cy - 4.8} L${cx - 2.4} ${cy} L${cx + 2.4} ${cy + 4.8}`;
+// The path bends toward -x; the sign flips it so the seam points the way a click moves the panel.
+const bendSign = (placement: Placement, expand: boolean) =>
+  (placement === 'left' || placement === 'top' ? 1 : -1) * (expand ? 1 : -1);
 
 const ORIGIN_MAP = {
   bottom: 'center bottom',
@@ -356,13 +347,14 @@ export interface DraggablePanelToggleProps extends Omit<DivProps, 'onDrag'> {
 
 export const DraggablePanelToggle = memo<DraggablePanelToggleProps>(
   ({ className, showHandleWhenCollapsed, style, ...rest }) => {
-    const { axis, expand, expandable, placement, toggleExpand } = useDraggablePanelContext();
+    const { axis, expand, expandable, placement, showBorder, toggleExpand } =
+      useDraggablePanelContext();
+    const gradientId = `seam-arrow-${useId().replaceAll(/[^\w-]/g, '')}`;
 
     if (!expandable) return null;
 
-    const turn = CHEVRON_TURN[placement] + (expand ? 0 : 180);
-    const chevX = axis.vertical ? BOW_CY : BOW_CX;
-    const chevY = axis.vertical ? BOW_CX : BOW_CY;
+    const bend = bendSign(placement, expand);
+    const edgeOpacity = expand && showBorder ? 1 : 0;
 
     return (
       <div
@@ -377,26 +369,33 @@ export const DraggablePanelToggle = memo<DraggablePanelToggleProps>(
         >
           <svg
             fill="none"
-            height={axis.vertical ? BOW_W : BOW_H}
-            viewBox={`0 0 ${axis.vertical ? BOW_H : BOW_W} ${axis.vertical ? BOW_W : BOW_H}`}
-            width={axis.vertical ? BOW_H : BOW_W}
+            height={ARROW_BOX}
+            style={{ '--seam-bend': bend } as CSSProperties}
+            viewBox={`0 0 ${ARROW_BOX} ${ARROW_BOX}`}
+            width={ARROW_BOX}
           >
-            {BOW_PATHS[axis.vertical ? 'horizontalSeam' : 'verticalSeam'].map((d) => (
-              <path d={d} data-bow="" key={d} strokeLinecap="round" strokeWidth={BOW.stroke} />
-            ))}
-            <g
-              style={{
-                rotate: `${turn}deg`,
-                transformOrigin: `${chevX}px ${chevY}px`,
-                transition: 'rotate 0.25s var(--ant-motion-ease-out, ease)',
-              }}
-            >
+            <defs>
+              <linearGradient
+                gradientUnits="userSpaceOnUse"
+                id={gradientId}
+                x1={ARROW_C}
+                x2={ARROW_C}
+                y1={0}
+                y2={ARROW_BOX}
+              >
+                <stop data-end="" offset={0} stopOpacity={edgeOpacity} />
+                <stop data-tip="" offset={0.3} />
+                <stop data-tip="" offset={0.7} />
+                <stop data-end="" offset={1} stopOpacity={edgeOpacity} />
+              </linearGradient>
+            </defs>
+            <g transform={axis.vertical ? `rotate(90 ${ARROW_C} ${ARROW_C})` : undefined}>
               <path
-                d={chevronPath(chevX, chevY)}
-                stroke="currentColor"
+                d={ARROW_PATH}
+                stroke={`url(#${gradientId})`}
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth={1.6}
+                strokeWidth={SEAM_ARROW.stroke}
               />
             </g>
           </svg>

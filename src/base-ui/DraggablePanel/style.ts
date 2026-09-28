@@ -2,13 +2,12 @@ import { createStaticStyles, cx } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
 const TOGGLE_HIT_SHORT = 26;
-const TOGGLE_HIT_LONG = 34;
+const TOGGLE_HIT_LONG = 40;
 
-export const BOW = {
-  bulge: 10,
-  curve: 0.44,
-  gap: 45,
-  half: 46,
+export const SEAM_ARROW = {
+  depth: 6.5,
+  half: 11,
+  lead: 6,
   stroke: 1.25,
 };
 
@@ -43,13 +42,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         padding: 0;
         border: none;
 
-        color: ${cssVar.colorTextTertiary};
-
         background: none;
-
-        &:hover {
-          color: ${cssVar.colorText};
-        }
 
         &:focus-visible {
           outline: 2px solid ${cssVar.colorPrimary};
@@ -63,28 +56,35 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         position: absolute;
         inset-block-start: 50%;
         inset-inline-start: 50%;
-        transform: translate(-50%, -50%) scaleX(0.45);
+        transform: translate(-50%, -50%);
 
         overflow: visible;
 
         opacity: 0;
 
-        transition:
-          opacity 0.18s ${cssVar.motionEaseOut},
-          transform 0.24s ${cssVar.motionEaseOut};
+        transition: opacity 0.18s ${cssVar.motionEaseOut};
       }
 
       path {
-        transition: stroke 0.16s ${cssVar.motionEaseOut};
+        transform-origin: center;
+        transform: scaleX(0);
+        vector-effect: non-scaling-stroke;
+        transition: transform 0.24s ${cssVar.motionEaseOut};
       }
 
-      /* The bow is the seam bending, so it carries the seam's color, not the chevron's. */
-      path[data-bow] {
-        stroke: ${cssVar.colorBorderSecondary};
+      /* The ends fade into the seam so the bend reads as the seam itself, not a drawn icon. */
+      stop[data-end] {
+        stop-color: ${cssVar.colorBorderSecondary};
+        transition: stop-opacity 0.18s ${cssVar.motionEaseOut};
       }
 
-      button:hover path[data-bow] {
-        stroke: ${cssVar.colorBorder};
+      stop[data-tip] {
+        stop-color: ${cssVar.colorTextTertiary};
+        transition: stop-color 0.16s ${cssVar.motionEaseOut};
+      }
+
+      button:hover stop[data-tip] {
+        stop-color: ${cssVar.colorTextSecondary};
       }
     `,
   );
@@ -259,7 +259,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         &[data-expandable='true']:hover,
         &[data-expandable='true']:focus-within,
         &[data-expandable='true'][data-expand='false'] {
-          --draggable-panel-gap: ${BOW.gap}px;
+          --draggable-panel-gap: ${SEAM_ARROW.half + SEAM_ARROW.lead}px;
         }
 
         /* The wrapper carries an inline opacity when collapsed, so beat it. */
@@ -273,8 +273,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         &[data-expandable='true']:hover .${prefix}-toggle svg,
         &[data-expandable='true']:focus-within .${prefix}-toggle svg,
         &[data-expandable='true'][data-expand='false'] .${prefix}-toggle svg {
-          transform: translate(-50%, -50%) scaleX(1);
           opacity: 1;
+        }
+
+        &[data-expandable='true']:hover .${prefix}-toggle path,
+        &[data-expandable='true']:focus-within .${prefix}-toggle path,
+        &[data-expandable='true'][data-expand='false'] .${prefix}-toggle path {
+          transform: scaleX(var(--seam-bend));
         }
 
         &[data-expandable='true'][data-resizing='true'] {
