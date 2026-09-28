@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.51.2](https://github.com/lobehub/lobe-ui/compare/v5.51.1...v5.51.2) (2026-09-28)
+
+### 💄 Styles
+
+- **base-ui**: Bend DraggablePanel's seam into the toggle arrow ([0d40843](https://github.com/lobehub/lobe-ui/commit/0d40843))
+
 ## [5.51.1](https://github.com/lobehub/lobe-ui/compare/v5.51.0...v5.51.1) (2026-09-27)
 
 ### 🐛 Bug Fixes
