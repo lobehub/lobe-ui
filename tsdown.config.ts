@@ -38,7 +38,10 @@ export default defineConfig({
     'src/static-css/runtime/index.ts',
     'src/static-css/vite/index.ts',
   ],
-  external,
+  deps: {
+    neverBundle: external,
+    resolveDepSubpath: true,
+  },
   format: ['esm'],
 
   outDir: 'es',

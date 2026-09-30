@@ -1,5 +1,4 @@
 import { defineConfig } from '@lobehub/eslint-config';
-import sortKeysFix from 'eslint-plugin-sort-keys-fix';
 
 export default defineConfig(
   {
@@ -33,11 +32,6 @@ export default defineConfig(
       'unicorn/better-regex': 'off',
       'unicorn/no-anonymous-default-export': 'off',
       'unicorn/prefer-logical-operator-over-ternary': 'off',
-    },
-  },
-  {
-    plugins: {
-      'sort-keys-fix': sortKeysFix,
     },
   },
   {
