@@ -1,5 +1,4 @@
 import { Check } from 'lucide-react';
-import { type MenuInfo } from 'rc-menu/es/interface';
 import {
   type KeyboardEvent as ReactKeyboardEvent,
   type MouseEvent as ReactMouseEvent,
@@ -15,6 +14,7 @@ import {
   hasAnyIcon,
   hasCheckboxAndIcon,
   type MenuDividerType,
+  type MenuInfo,
   type MenuItemType,
   renderIcon,
   type RenderItemContentOptions,

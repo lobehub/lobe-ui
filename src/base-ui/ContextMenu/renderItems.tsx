@@ -1,7 +1,6 @@
 import { ContextMenu } from '@base-ui/react/context-menu';
 import { cx } from 'antd-style';
 import { Check } from 'lucide-react';
-import { type MenuInfo } from 'rc-menu/es/interface';
 import {
   type ComponentProps,
   type KeyboardEvent as ReactKeyboardEvent,
@@ -25,6 +24,7 @@ import {
   hasAnyIcon,
   hasCheckboxAndIcon,
   type MenuDividerType,
+  type MenuInfo,
   type MenuItemType,
   renderIcon,
   type RenderItemContentOptions,
