@@ -1,0 +1,24 @@
+---
+title: ColorPicker
+description: Hex colour picking with a saturation area, hue and alpha sliders, presets and the EyeDropper API.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="ColorPicker" from=".." />
+
+Values are lowercase hex strings; with `alpha` they are always 8 digits. `onChange` fires while dragging, `onChangeComplete` when the pointer is released or an input commits, so write to a store in `onChangeComplete`. Pass a single element as `children` to use your own trigger.
+
+### Migrating from antd ColorPicker
+
+- `Color` objects → hex strings; `onChangeComplete={(c) => c.toHexString()}` → `onChangeComplete={(hex) => …}`.
+- `disabledAlpha` is the default; set `alpha` to enable it.
+- `presets={[{ label, colors }]}` → `presets={colors}`.
+- RGB / HSL inputs, gradients and `format` are not supported.

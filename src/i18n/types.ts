@@ -1,6 +1,7 @@
 export type Locale = string;
 
 type BuiltinTranslationResources = typeof import('./resources/en/chat').default &
+  typeof import('./resources/en/colorPicker').default &
   typeof import('./resources/en/common').default &
   typeof import('./resources/en/datePicker').default &
   typeof import('./resources/en/editableMessage').default &

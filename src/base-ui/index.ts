@@ -15,6 +15,7 @@ export * from './Button';
 export * from './Checkbox';
 export { default as Collapsible } from './Collapsible';
 export * from './Collapsible';
+export * from './ColorPicker';
 export type {
   ContextMenuCheckboxItem,
   ContextMenuInterceptor,

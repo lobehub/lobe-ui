@@ -1,4 +1,5 @@
 export { default as chat } from './chat';
+export { default as colorPicker } from './colorPicker';
 export { default as common } from './common';
 export { default as datePicker } from './datePicker';
 export { default as editableMessage } from './editableMessage';

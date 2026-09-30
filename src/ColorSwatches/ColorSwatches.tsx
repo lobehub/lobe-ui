@@ -1,12 +1,12 @@
 'use client';
 
-import { ColorPicker } from 'antd';
 import { cssVar, cx } from 'antd-style';
 import chroma from 'chroma-js';
 import { CheckIcon } from 'lucide-react';
 import { type FC, useMemo } from 'react';
 import useMergeState from 'use-merge-value';
 
+import { ColorPicker } from '@/base-ui/ColorPicker';
 import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Tooltip from '@/Tooltip';
@@ -106,38 +106,27 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
         })}
       {enableColorPicker && (
         <Tooltip title={texts?.custom || 'Custom'}>
-          <ColorPicker
-            disabledAlpha
-            arrow={false}
-            defaultValue={cssVar.colorPrimary}
-            format={'hex'}
-            value={enableColorSwatches ? undefined : active}
-            className={cx(
-              styles.picker,
-              enableColorSwatches && styles.conic,
-              isCustomActive && styles.active,
-            )}
-            presets={
-              enableColorSwatches
-                ? undefined
-                : [
-                    {
-                      colors: colors.map((c) => c.color),
-                      label: texts?.presets || 'Presets',
-                    },
-                  ]
-            }
-            style={{
-              borderRadius: shape === 'circle' ? '50%' : cssVar.borderRadius,
-            }}
-            onChangeComplete={(c) => {
-              if (c.toHexString() === cssVar.colorPrimary) {
-                setActive('');
-              } else {
-                setActive(c.toHexString());
-              }
-            }}
-          />
+          <span style={{ display: 'inline-flex' }}>
+            <ColorPicker
+              presets={enableColorSwatches ? undefined : colors.map((c) => c.color)}
+              value={isCustomActive ? active : undefined}
+              onChangeComplete={setActive}
+            >
+              <button
+                aria-label={texts?.custom || 'Custom'}
+                type="button"
+                className={cx(
+                  styles.picker,
+                  enableColorSwatches && styles.conic,
+                  isCustomActive && styles.active,
+                )}
+                style={{
+                  background: enableColorSwatches ? undefined : active,
+                  borderRadius: shape === 'circle' ? '50%' : cssVar.borderRadius,
+                }}
+              />
+            </ColorPicker>
+          </span>
         </Tooltip>
       )}
     </Flexbox>
