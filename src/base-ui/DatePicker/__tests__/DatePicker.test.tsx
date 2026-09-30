@@ -88,4 +88,14 @@ describe('DatePicker', () => {
     expect(onChange.mock.calls[0][0]).toBeNull();
     expect(screen.getByText('Select date')).toBeTruthy();
   });
+
+  test('opening moves focus to the selected day', async () => {
+    render(<DatePicker defaultValue={new Date(2026, 9, 15)} />);
+
+    open();
+
+    await waitFor(() =>
+      expect(document.activeElement?.getAttribute('aria-label')).toBe('October 15, 2026'),
+    );
+  });
 });

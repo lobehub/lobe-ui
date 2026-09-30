@@ -68,7 +68,7 @@ const QRCode = memo<QRCodeProps>(
         )}
         {status === 'loading' && (
           <span aria-label={t('qrCode.loading')} className={styles.overlay} role="status">
-            <Spin />
+            <Spin style={{ color: '#666' }} />
           </span>
         )}
         {status === 'expired' && (

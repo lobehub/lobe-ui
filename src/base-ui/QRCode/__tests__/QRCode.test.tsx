@@ -55,4 +55,12 @@ describe('QRCode', () => {
     expect(screen.getByText('L')).toBeTruthy();
     expect(holed).toBeLessThan(full * 1.5);
   });
+
+  test('loading spinner stays dark on the white overlay', () => {
+    render(<QRCode status="loading" value="x" />);
+
+    const spinner = screen.getByRole('status', { name: 'Loading' })
+      .firstElementChild as HTMLElement;
+    expect(spinner.style.color).toBe('rgb(102, 102, 102)');
+  });
 });

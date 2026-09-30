@@ -2,7 +2,7 @@
 
 import { cx, useThemeMode } from 'antd-style';
 import { Pipette } from 'lucide-react';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
 import { Input, InputNumber } from '@/base-ui/Input';
@@ -53,6 +53,7 @@ const ColorPicker = memo<ColorPickerProps>(
     });
     const [hsva, setHsva] = useState<Hsva>(() => parseColor(hex));
     const [draft, setDraft] = useState(hex.slice(1).toUpperCase());
+    const popupRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
       setHsva((current) =>
@@ -93,6 +94,7 @@ const ColorPicker = memo<ColorPickerProps>(
           type="button"
           className={cx(
             rootVariants({ size, variant: isDarkMode ? 'filled' : 'outlined' }),
+            styles.textTrigger,
             className,
           )}
         >
@@ -118,7 +120,13 @@ const ColorPicker = memo<ColorPickerProps>(
         <PopoverTriggerElement>{trigger}</PopoverTriggerElement>
         <PopoverPortal>
           <PopoverPositioner placement="bottomLeft">
-            <PopoverPopup className={panelStyles.popup}>
+            <PopoverPopup
+              className={panelStyles.popup}
+              ref={popupRef}
+              initialFocus={() =>
+                popupRef.current?.querySelector<HTMLElement>('[role="slider"]') ?? true
+              }
+            >
               <div className={styles.panel}>
                 <div className={styles.summary}>
                   {swatch(40)}

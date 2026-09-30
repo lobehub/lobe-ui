@@ -7,11 +7,7 @@ export default () => {
 
   return (
     <Flexbox padding={16} style={{ maxWidth: 360 }}>
-      <DateRangePicker
-        disabledDate={(date) => date > new Date()}
-        value={range}
-        onChange={setRange}
-      />
+      <DateRangePicker value={range} onChange={setRange} />
     </Flexbox>
   );
 };

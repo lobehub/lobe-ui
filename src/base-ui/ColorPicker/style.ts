@@ -103,6 +103,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       opacity: 0.5;
     }
   `,
+  textTrigger: css`
+    cursor: pointer;
+    width: auto;
+  `,
   thumb: css`
     position: absolute;
 

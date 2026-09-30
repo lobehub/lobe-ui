@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 import ColorPicker from '../ColorPicker';
 
@@ -84,5 +84,23 @@ describe('ColorPicker', () => {
     fireEvent.change(input, { target: { value: '379D4A' } });
     fireEvent.keyDown(input, { key: 'Enter' });
     expect(onChangeComplete).toHaveBeenLastCalledWith('#379d4a');
+  });
+
+  test('opening moves focus to the saturation area', async () => {
+    render(<ColorPicker defaultValue="#0072f5" />);
+
+    openPicker();
+
+    await waitFor(() =>
+      expect(document.activeElement?.getAttribute('aria-label')).toBe('Saturation and brightness'),
+    );
+  });
+
+  test('the showText trigger sizes to its content', () => {
+    render(<ColorPicker showText defaultValue="#0072f5" />);
+
+    expect(getComputedStyle(screen.getByRole('button', { name: 'Pick colour' })).width).not.toBe(
+      '100%',
+    );
   });
 });

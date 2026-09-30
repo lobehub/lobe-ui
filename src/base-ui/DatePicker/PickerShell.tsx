@@ -49,6 +49,7 @@ const PickerShell = memo<PickerShellProps>(
   }) => {
     const { isDarkMode } = useThemeMode();
     const anchorRef = useRef<HTMLDivElement>(null);
+    const popupRef = useRef<HTMLDivElement>(null);
 
     return (
       <div
@@ -64,7 +65,15 @@ const PickerShell = memo<PickerShellProps>(
           <PopoverTriggerElement>{trigger}</PopoverTriggerElement>
           <PopoverPortal>
             <PopoverPositioner anchor={anchorRef} placement="bottomLeft">
-              <PopoverPopup className={panelStyles.popup}>{children}</PopoverPopup>
+              <PopoverPopup
+                className={panelStyles.popup}
+                ref={popupRef}
+                initialFocus={() =>
+                  popupRef.current?.querySelector<HTMLElement>('[data-focus-target]') ?? true
+                }
+              >
+                {children}
+              </PopoverPopup>
             </PopoverPositioner>
           </PopoverPortal>
         </PopoverRoot>
