@@ -29,6 +29,7 @@ export {
   updateContextMenuItems,
 } from './ContextMenu';
 export { controlHeight, type ControlSize } from './controlSize';
+export * from './DatePicker';
 export { default as Descriptions } from './Descriptions';
 export * from './Descriptions';
 export { default as Divider } from './Divider';
