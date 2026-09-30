@@ -14,6 +14,11 @@ const circleDiameterMap: Record<'small' | 'middle' | 'large', number> = {
   middle: 40,
   small: 20,
 };
+const blockHeightMap: Record<'small' | 'middle' | 'large', number> = {
+  large: 12,
+  middle: 8,
+  small: 4,
+};
 const circleStrokeMap: Record<'small' | 'middle' | 'large', number> = {
   large: 4,
   middle: 3,
@@ -163,15 +168,18 @@ const Progress = memo<ProgressProps>(
           {...progressAria}
           {...rest}
         >
-          <div
-            className={cx(styles.rowTrack, styles.insetTrack, heightClass('block'))}
-            style={heightStyle}
-          >
-            <div className={styles.insetBarWrapper}>
-              <div className={styles.bar} style={{ background: barColor, width: `${clamped}%` }}>
-                <span className={styles.insetCap} />
-              </div>
-            </div>
+          <div className={cx(styles.split, heightClass('block'))} style={heightStyle}>
+            {clamped > 0 && (
+              <span
+                className={cx(styles.splitFill, status === 'active' && styles.barActive)}
+                style={{
+                  backgroundColor: barColor,
+                  minWidth: typeof size === 'number' ? size : blockHeightMap[size],
+                  width: clamped === 100 ? '100%' : `calc((100% - 3px) * ${clamped / 100})`,
+                }}
+              />
+            )}
+            {clamped < 100 && <span className={styles.splitRest} />}
           </div>
           {showInfo && <span className={styles.rowInfo}>{info}</span>}
         </div>
@@ -194,7 +202,7 @@ const Progress = memo<ProgressProps>(
         )}
         <div className={cx(styles.lineTrack, heightClass('line'))} style={heightStyle}>
           <div
-            style={{ background: barColor, width: `${clamped}%` }}
+            style={{ backgroundColor: barColor, width: `${clamped}%` }}
             className={cx(
               styles.bar,
               variant === 'line' && status === 'active' && styles.barActive,
