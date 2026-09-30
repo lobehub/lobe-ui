@@ -1,7 +1,7 @@
 import type { Input as BaseInput } from '@base-ui/react/input';
 import type { NumberField } from '@base-ui/react/number-field';
 import type { OTPField } from '@base-ui/react/otp-field';
-import type { ComponentProps, CSSProperties, ReactNode, Ref } from 'react';
+import type { ComponentProps, CSSProperties, KeyboardEvent, ReactNode, Ref } from 'react';
 
 export type InputVariant = 'filled' | 'outlined' | 'borderless';
 export type InputSize = 'small' | 'middle' | 'large';
@@ -24,11 +24,14 @@ type BaseInputProps = Omit<
 >;
 
 export interface InputProps extends BaseInputProps {
+  allowClear?: boolean;
   className?: string;
   /**
    * Custom class names for each part
    */
   classNames?: InputClassNames;
+  onClear?: () => void;
+  onPressEnter?: (event: KeyboardEvent<HTMLInputElement>) => void;
   /**
    * Prefix node rendered before the input
    */
@@ -71,7 +74,7 @@ export interface InputPasswordProps extends Omit<InputProps, 'type'> {
 
 type BaseNumberFieldProps = Omit<
   ComponentProps<typeof NumberField.Root>,
-  'className' | 'style' | 'render' | 'onValueChange' | 'children'
+  'className' | 'style' | 'render' | 'onValueChange' | 'children' | 'prefix'
 >;
 
 export interface InputNumberProps extends BaseNumberFieldProps {
@@ -87,12 +90,16 @@ export interface InputNumberProps extends BaseNumberFieldProps {
    */
   controls?: boolean;
   onChange?: (value: number | null) => void;
+  onPressEnter?: (event: KeyboardEvent<HTMLInputElement>) => void;
   placeholder?: string;
+  precision?: number;
+  prefix?: ReactNode;
   ref?: Ref<HTMLInputElement>;
   shadow?: boolean;
   size?: InputSize;
   style?: CSSProperties;
   styles?: Pick<InputStyles, 'input'>;
+  suffix?: ReactNode;
   variant?: InputVariant;
 }
 
@@ -121,16 +128,20 @@ export type TextAreaAutoSize = boolean | { maxRows?: number; minRows?: number };
 
 export interface TextAreaProps
   extends Omit<ComponentProps<'textarea'>, 'prefix'>, Pick<InputProps, 'shadow' | 'variant'> {
+  allowClear?: boolean;
   /**
    * Auto grow with content, optionally bounded by minRows/maxRows
    */
   autoSize?: TextAreaAutoSize;
   classNames?: Pick<InputClassNames, 'input'>;
+  onClear?: () => void;
+  onPressEnter?: (event: KeyboardEvent<HTMLTextAreaElement>) => void;
   ref?: Ref<HTMLTextAreaElement>;
   /**
    * Allow manual resize
    * @default false
    */
   resize?: boolean;
+  showCount?: boolean;
   styles?: Pick<InputStyles, 'input'>;
 }

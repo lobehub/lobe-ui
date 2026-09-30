@@ -54,3 +54,10 @@ Wraps Base UI `OTPField`: `length` (default `6`), `value` / `defaultValue` / `on
 | resize   | Allow manual vertical resize                       | `boolean`                                           | `false`                           |
 | variant  | Visual variant                                     | `'filled' \| 'outlined' \| 'borderless'`            | dark: `filled`, light: `outlined` |
 | shadow   | Apply lobe shadow style                            | `boolean`                                           | `false`                           |
+
+## Clear, Enter and counting
+
+- `allowClear` shows a round clear button while the field has a value and is hovered or focused; `onClear` fires after the value is emptied. Focus stays in the field.
+- `onPressEnter` fires on Enter, but not while an IME is composing, so confirming a Chinese or Japanese candidate never submits.
+- `InputNumber` formats through `format` (`Intl.NumberFormatOptions`); `precision` fixes the fraction digits; `prefix` / `suffix` hold units.
+- `TextArea` `showCount` renders the character count (emoji count as one), `used / maxLength` when `maxLength` is set.
