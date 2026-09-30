@@ -52,7 +52,7 @@ Style B on a solid surface:
   max={...}
   disabledDate={(d) => ...} // (date: Date) => boolean
   allowClear
-  format="ll"               // dayjs format string, default per mode: 'll' / 'MMMM YYYY' / 'YYYY'
+  format="MMM D, YYYY"      // dayjs format string or (date) => string; default per mode: 'MMM D, YYYY' / 'MMMM YYYY' / 'YYYY'
   placeholder="Select date"
   footer={<Button>Never expires</Button>}
   variant size disabled
