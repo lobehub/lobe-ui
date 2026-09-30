@@ -1,0 +1,23 @@
+---
+title: Burger
+description: Mobile navigation toggle that opens a drawer of List items under the header, or fullscreen with large type.
+category: Navigation
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="Burger" from=".." />
+
+`items` use the base-ui `List` item shape, so the same builders serve desktop lists and the mobile menu. Selecting an item calls `onSelect` and closes the drawer. `fullscreen` covers the header, renders labels in large type without icons and pins `footer` to the bottom.
+
+### Migrating from the root Burger
+
+- `setOpened` → `onOpenChange`; `selectedKeys` → `activeKey`; `onClick` → `onSelect(key)`.
+- antd `Menu` items → base-ui `List` items; nested submenus are not supported.
+- `drawerProps`, `openKeys`, `rootClassName` and `iconProps` are gone.

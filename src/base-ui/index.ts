@@ -10,6 +10,8 @@ export { default as Badge } from './Badge';
 export * from './Badge';
 export { default as Breadcrumb } from './Breadcrumb';
 export * from './Breadcrumb';
+export { default as Burger } from './Burger';
+export * from './Burger';
 export { default as Button } from './Button';
 export * from './Button';
 export * from './Checkbox';
