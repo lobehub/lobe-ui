@@ -28,6 +28,7 @@ patchedDependencies:
 allowBuilds:
   '@parcel/watcher': true
   esbuild: true
+  node-pty: false
   unrs-resolver: true
 
 # @lobehub/streamdown is published from lobehub/streamdown and consumed here as
