@@ -38,7 +38,7 @@
     "rehype-raw": "^7.0.0",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.1",
-    "remark-mdx-frontmatter": "^5.2.0",
+    "remark-mdx-frontmatter": "^6.0.0",
     "remark-parse": "^11.0.0",
     "rollup-plugin-visualizer": "7.0.1",
     "typescript": "^6.0.3",
