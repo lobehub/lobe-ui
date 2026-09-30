@@ -1,4 +1,5 @@
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import dayjs from 'dayjs';
 
 import DatePicker from '../DatePicker';
 
@@ -96,6 +97,55 @@ describe('DatePicker', () => {
 
     await waitFor(() =>
       expect(document.activeElement?.getAttribute('aria-label')).toBe('October 15, 2026'),
+    );
+  });
+
+  test('PageDown and crossing a month edge keep keyboard focus in the grid', async () => {
+    render(<DatePicker defaultValue={new Date(2026, 9, 31)} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /Oct 31, 2026/ }));
+    await waitFor(() =>
+      expect(document.activeElement?.getAttribute('aria-label')).toBe('October 31, 2026'),
+    );
+
+    fireEvent.keyDown(document.activeElement!, { key: 'ArrowRight' });
+    await waitFor(() =>
+      expect(document.activeElement?.getAttribute('aria-label')).toBe('November 1, 2026'),
+    );
+
+    fireEvent.keyDown(document.activeElement!, { key: 'PageDown' });
+    await waitFor(() =>
+      expect(document.activeElement?.getAttribute('aria-label')).toBe('December 1, 2026'),
+    );
+  });
+
+  test('opens on an enabled day when today is outside min', async () => {
+    const min = dayjs().add(40, 'day').toDate();
+    render(<DatePicker min={min} />);
+
+    fireEvent.click(screen.getByRole('button', { name: /Select date/ }));
+
+    await waitFor(() =>
+      expect(document.activeElement?.getAttribute('aria-label')).toBe(
+        dayjs(min).format('MMMM D, YYYY'),
+      ),
+    );
+    expect((document.activeElement as HTMLButtonElement).disabled).toBe(false);
+  });
+
+  test('arrow keys skip disabled days', async () => {
+    render(
+      <DatePicker defaultValue={new Date(2026, 9, 15)} disabledDate={(d) => d.getDate() === 16} />,
+    );
+
+    open();
+    await waitFor(() =>
+      expect(document.activeElement?.getAttribute('aria-label')).toBe('October 15, 2026'),
+    );
+    fireEvent.keyDown(document.activeElement!, { key: 'ArrowRight' });
+
+    await waitFor(() =>
+      expect(document.activeElement?.getAttribute('aria-label')).toBe('October 17, 2026'),
     );
   });
 });

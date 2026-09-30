@@ -10,7 +10,6 @@ export const lobeUiAntdBaseline: AntdProbeName[] = [
   'avatar',
   'button',
   'collapse',
-  'color-picker',
   'date-picker',
   'divider',
   'drawer',

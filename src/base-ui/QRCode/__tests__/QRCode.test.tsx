@@ -63,4 +63,14 @@ describe('QRCode', () => {
       .firstElementChild as HTMLElement;
     expect(spinner.style.color).toBe('rgb(102, 102, 102)');
   });
+
+  test('the image role sits on the svg so overlay controls stay reachable', () => {
+    render(<QRCode status="expired" value="x" onRefresh={vi.fn()} />);
+
+    expect(screen.getByRole('img', { name: 'x' }).tagName.toLowerCase()).toBe('svg');
+  });
+
+  test('a value too long to encode does not throw', () => {
+    expect(() => render(<QRCode value={'x'.repeat(5000)} />)).not.toThrow();
+  });
 });

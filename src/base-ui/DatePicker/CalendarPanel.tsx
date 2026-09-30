@@ -61,14 +61,19 @@ const CalendarPanel = memo<CalendarPanelProps>(
     const today = new Date();
     const current = dayjs(month);
     const decadeStart = Math.floor(current.year() / 12) * 12;
-    const focusDay = dayjs(focused).isSame(month, 'month')
-      ? focused
-      : current.startOf('month').toDate();
+    const days = buildMonthGrid(month, weekStart);
+    const focusDay =
+      dayjs(focused).isSame(month, 'month') && !isDayDisabled(focused, bounds)
+        ? focused
+        : (days.find((day) => dayjs(day).isSame(month, 'month') && !isDayDisabled(day, bounds)) ??
+          current.startOf('month').toDate());
+    const keyboardMoveRef = useRef(false);
 
     useEffect(() => {
-      const target = gridRef.current?.querySelector<HTMLButtonElement>('[data-focus-target]');
-      if (target && gridRef.current?.contains(document.activeElement)) target.focus();
-    }, [focused]);
+      if (!keyboardMoveRef.current) return;
+      keyboardMoveRef.current = false;
+      gridRef.current?.querySelector<HTMLButtonElement>('[data-focus-target]')?.focus();
+    }, [focused, month]);
 
     const step = (direction: 1 | -1) => {
       const unit = view === 'date' ? 'month' : 'year';
@@ -79,9 +84,14 @@ const CalendarPanel = memo<CalendarPanelProps>(
     const drillUp = () => setView(view === 'date' ? 'month' : 'year');
 
     const handleDayKey = (event: KeyboardEvent<HTMLButtonElement>) => {
-      const next = moveDayFocus(focusDay, event.key, weekStart);
+      let next = moveDayFocus(focusDay, event.key, weekStart);
       if (!next) return;
       event.preventDefault();
+      for (let step = 0; next && isDayDisabled(next, bounds) && step < 366; step++) {
+        next = moveDayFocus(next, event.key, weekStart);
+      }
+      if (!next || isDayDisabled(next, bounds)) return;
+      keyboardMoveRef.current = true;
       setFocused(next);
       if (!dayjs(next).isSame(month, 'month')) onMonthChange(next);
     };
@@ -93,7 +103,6 @@ const CalendarPanel = memo<CalendarPanelProps>(
     })();
 
     const renderDays = () => {
-      const days = buildMonthGrid(month, weekStart);
       return (
         <div
           aria-label={current.format('MMMM YYYY')}

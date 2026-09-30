@@ -35,22 +35,26 @@ const QRCode = memo<QRCodeProps>(
   }) => {
     const { t } = useTranslation(qrCodeMessages);
     const { count, path } = useMemo(() => {
-      const { data } = encode(value, { border: 0, ecc: icon ? 'H' : errorLevel });
-      const hole = icon ? Math.ceil(data.length * ICON_RATIO) | 1 : 0;
-      return { count: data.length, path: buildQrPath(data, hole) };
+      try {
+        const { data } = encode(value, { border: 0, ecc: icon ? 'H' : errorLevel });
+        const hole = icon ? Math.ceil(data.length * ICON_RATIO) | 1 : 0;
+        return { count: data.length, path: buildQrPath(data, hole) };
+      } catch {
+        return { count: 0, path: '' };
+      }
     }, [value, icon, errorLevel]);
 
     return (
       <div
-        aria-label={value}
         className={cx(styles.root, bordered && styles.bordered, className)}
         ref={ref}
-        role="img"
         style={{ background: bgColor, ...style }}
         {...rest}
       >
         <svg
+          aria-label={value}
           height={size}
+          role="img"
           shapeRendering="crispEdges"
           viewBox={`0 0 ${count} ${count}`}
           width={size}

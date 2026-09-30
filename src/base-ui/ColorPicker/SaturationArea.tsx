@@ -8,7 +8,7 @@ export interface SaturationAreaProps {
   hue: number;
   label: string;
   onChange: (saturation: number, value: number) => void;
-  onChangeComplete: () => void;
+  onChangeComplete: (saturation: number, value: number) => void;
   saturation: number;
   value: number;
 }
@@ -19,12 +19,14 @@ const SaturationArea = memo<SaturationAreaProps>(
   ({ hue, label, onChange, onChangeComplete, saturation, value }) => {
     const areaRef = useRef<HTMLDivElement>(null);
 
-    const fromPointer = (event: PointerEvent<HTMLDivElement>) => {
+    const fromPointer = (event: PointerEvent<HTMLDivElement>): [number, number] => {
       const rect = areaRef.current!.getBoundingClientRect();
-      onChange(
+      const next: [number, number] = [
         clamp((event.clientX - rect.left) / rect.width),
         clamp(1 - (event.clientY - rect.top) / rect.height),
-      );
+      ];
+      onChange(...next);
+      return next;
     };
 
     return (
@@ -52,8 +54,9 @@ const SaturationArea = memo<SaturationAreaProps>(
           const move = moves[event.key];
           if (!move) return;
           event.preventDefault();
-          onChange(clamp(saturation + move[0]), clamp(value + move[1]));
-          onChangeComplete();
+          const next: [number, number] = [clamp(saturation + move[0]), clamp(value + move[1])];
+          onChange(...next);
+          onChangeComplete(...next);
         }}
         onPointerDown={(event) => {
           event.currentTarget.setPointerCapture(event.pointerId);
@@ -64,7 +67,7 @@ const SaturationArea = memo<SaturationAreaProps>(
         }}
         onPointerUp={(event) => {
           event.currentTarget.releasePointerCapture(event.pointerId);
-          onChangeComplete();
+          onChangeComplete(...fromPointer(event));
         }}
       >
         <span

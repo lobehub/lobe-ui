@@ -57,7 +57,7 @@ const ColorPicker = memo<ColorPickerProps>(
 
     useEffect(() => {
       setHsva((current) =>
-        formatColor(current, alpha) === hex ? current : parseColor(hex, current.h),
+        formatColor(current, alpha) === hex.toLowerCase() ? current : parseColor(hex, current.h),
       );
       setDraft(hex.slice(1).toUpperCase());
     }, [hex, alpha]);
@@ -162,7 +162,7 @@ const ColorPicker = memo<ColorPickerProps>(
                   saturation={hsva.s}
                   value={hsva.v}
                   onChange={(s, v) => update({ ...hsva, s, v })}
-                  onChangeComplete={() => commit(hsva)}
+                  onChangeComplete={(s, v) => commit({ ...hsva, s, v })}
                 />
                 <Slider
                   aria-label={t('colorPicker.hue')}

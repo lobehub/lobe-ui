@@ -1,4 +1,5 @@
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { useState } from 'react';
 
 import ColorPicker from '../ColorPicker';
 
@@ -102,5 +103,43 @@ describe('ColorPicker', () => {
     expect(getComputedStyle(screen.getByRole('button', { name: 'Pick colour' })).width).not.toBe(
       '100%',
     );
+  });
+
+  test('keyboard commits the same colour it emitted', () => {
+    const onChange = vi.fn();
+    const onChangeComplete = vi.fn();
+    render(
+      <ColorPicker
+        defaultValue="#0072f5"
+        onChange={onChange}
+        onChangeComplete={onChangeComplete}
+      />,
+    );
+
+    openPicker();
+    fireEvent.keyDown(screen.getByRole('slider', { name: 'Saturation and brightness' }), {
+      key: 'ArrowLeft',
+      shiftKey: true,
+    });
+
+    expect(onChangeComplete).toHaveBeenLastCalledWith(onChange.mock.calls.at(-1)![0]);
+  });
+
+  test('an uppercase-echoing parent does not snap the hue of a grey', () => {
+    const Upper = () => {
+      const [color, setColor] = useState('#808080');
+      return <ColorPicker value={color} onChange={(hex) => setColor(hex.toUpperCase())} />;
+    };
+    render(<Upper />);
+
+    openPicker();
+    const [area, hue] = screen.getAllByRole('slider');
+    fireEvent.keyDown(hue, { key: 'End' });
+    fireEvent.keyDown(hue, { key: 'ArrowLeft' });
+    const before = hue.getAttribute('aria-valuenow');
+    fireEvent.keyDown(area, { key: 'ArrowRight' });
+
+    expect(before).toBe('359');
+    expect(hue.getAttribute('aria-valuenow')).toBe('359');
   });
 });

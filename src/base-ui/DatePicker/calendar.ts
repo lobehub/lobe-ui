@@ -85,3 +85,9 @@ export const moveDayFocus = (date: Date, key: string, weekStart = getWeekStart()
 
 export const orderRange = (a: Date, b: Date): [Date, Date] =>
   dayjs(a).isAfter(b, 'day') ? [b, a] : [a, b];
+
+export const clampToBounds = (date: Date, { max, min }: DateBounds): Date => {
+  if (min && dayjs(date).isBefore(min, 'day')) return min;
+  if (max && dayjs(date).isAfter(max, 'day')) return max;
+  return date;
+};

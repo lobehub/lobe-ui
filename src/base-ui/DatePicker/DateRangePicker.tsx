@@ -9,7 +9,7 @@ import datePickerMessages from '@/i18n/resources/en/datePicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 
-import { DEFAULT_FORMAT, orderRange } from './calendar';
+import { clampToBounds, DEFAULT_FORMAT, orderRange } from './calendar';
 import CalendarPanel from './CalendarPanel';
 import { formatDate } from './DatePicker';
 import PickerShell from './PickerShell';
@@ -109,7 +109,7 @@ const DateRangePicker = memo<DateRangePickerProps>(
         onClear={() => setCurrent(EMPTY)}
         onOpenChange={(next) => {
           if (next) {
-            setMonth(current[0] ?? new Date());
+            setMonth(current[0] ?? clampToBounds(new Date(), { max, min }));
             setDraft(EMPTY);
           }
           setOpen(next);
