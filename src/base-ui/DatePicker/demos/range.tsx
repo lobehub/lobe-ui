@@ -1,0 +1,17 @@
+import { Flexbox } from '@lobehub/ui';
+import { DateRangePicker, type DateRangeValue } from '@lobehub/ui/base-ui';
+import { useState } from 'react';
+
+export default () => {
+  const [range, setRange] = useState<DateRangeValue>([null, null]);
+
+  return (
+    <Flexbox padding={16} style={{ maxWidth: 360 }}>
+      <DateRangePicker
+        disabledDate={(date) => date > new Date()}
+        value={range}
+        onChange={setRange}
+      />
+    </Flexbox>
+  );
+};
