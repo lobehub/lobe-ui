@@ -10,6 +10,7 @@ type BuiltinTranslationResources = typeof import('./resources/en/chat').default 
   typeof import('./resources/en/hotkey').default &
   typeof import('./resources/en/image').default &
   typeof import('./resources/en/messageModal').default &
+  typeof import('./resources/en/qrCode').default &
   typeof import('./resources/en/sideNav').default;
 
 export type TranslationKey = keyof BuiltinTranslationResources;

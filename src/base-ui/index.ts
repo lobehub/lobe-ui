@@ -53,6 +53,8 @@ export { default as Popover } from './Popover';
 export * from './Popover';
 export { default as Progress } from './Progress';
 export * from './Progress';
+export { default as QRCode } from './QRCode';
+export * from './QRCode';
 export * from './Radio';
 export { default as Result } from './Result';
 export * from './Result';

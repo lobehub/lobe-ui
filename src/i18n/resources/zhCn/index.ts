@@ -8,4 +8,5 @@ export { default as form } from './form';
 export { default as hotkey } from './hotkey';
 export { default as image } from './image';
 export { default as messageModal } from './messageModal';
+export { default as qrCode } from './qrCode';
 export { default as sideNav } from './sideNav';

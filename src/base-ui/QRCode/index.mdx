@@ -1,0 +1,22 @@
+---
+title: QRCode
+description: SVG QR code, dark on white in both themes, with an optional centre icon and loading / expired states.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="QRCode" from=".." />
+
+The code stays dark on white in dark mode so phones can scan it; `color` and `bgColor` override that. Setting `icon` raises the error correction level to `H` and clears the modules under the icon. `status="expired"` shows a Refresh button when `onRefresh` is set.
+
+### Migrating from antd QRCode
+
+- Drop `color="#000"`, `bgColor="#fff"` and `bordered={false}` where they only restated the old workaround; keep `bordered={false}` if you want no outline.
+- `type="canvas"` is not supported; output is always SVG.
