@@ -11,14 +11,46 @@ const checker = (color: string) => `
 `;
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
+  alphaField: css`
+    flex: none;
+    width: 76px;
+  `,
   alphaTrack: css`
-    ${checker(cssVar.colorFillSecondary)};
     height: 10px;
     border-radius: 999px;
+
+    background-image:
+      linear-gradient(to right, transparent, var(--lobe-color-picker-alpha)),
+      linear-gradient(
+        45deg,
+        ${cssVar.colorFillSecondary} 25%,
+        transparent 25%,
+        transparent 75%,
+        ${cssVar.colorFillSecondary} 75%
+      ),
+      linear-gradient(
+        45deg,
+        ${cssVar.colorFillSecondary} 25%,
+        transparent 25%,
+        transparent 75%,
+        ${cssVar.colorFillSecondary} 75%
+      );
+    background-position:
+      0 0,
+      0 0,
+      4px 4px;
+    background-size:
+      100% 100%,
+      8px 8px,
+      8px 8px;
   `,
   hexRow: css`
     display: flex;
     gap: 6px;
+
+    & > * {
+      min-width: 0;
+    }
   `,
   hidden: css`
     background: transparent !important;

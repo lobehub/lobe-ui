@@ -2,7 +2,7 @@
 
 import { cx, useThemeMode } from 'antd-style';
 import { Pipette } from 'lucide-react';
-import { memo, useEffect, useRef, useState } from 'react';
+import { type CSSProperties, memo, useEffect, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
 import { Input, InputNumber } from '@/base-ui/Input';
@@ -190,8 +190,8 @@ const ColorPicker = memo<ColorPickerProps>(
                     }}
                     styles={{
                       track: {
-                        backgroundImage: `linear-gradient(to right, transparent, ${formatColor(hsva, false)})`,
-                      },
+                        '--lobe-color-picker-alpha': formatColor(hsva, false),
+                      } as CSSProperties,
                     }}
                     onChange={(a) => update({ ...hsva, a: a / 100 })}
                     onChangeComplete={(a) => commit({ ...hsva, a: a / 100 })}
@@ -210,10 +210,10 @@ const ColorPicker = memo<ColorPickerProps>(
                   {alpha && (
                     <InputNumber
                       aria-label={t('colorPicker.alpha')}
+                      className={styles.alphaField}
                       controls={false}
                       max={100}
                       min={0}
-                      style={{ width: 76 }}
                       suffix="%"
                       value={Math.round(hsva.a * 100)}
                       variant="filled"

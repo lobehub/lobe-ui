@@ -2,6 +2,7 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { useState } from 'react';
 
 import ColorPicker from '../ColorPicker';
+import { styles } from '../style';
 
 const openPicker = () => fireEvent.click(screen.getByRole('button', { name: 'Pick colour' }));
 
@@ -141,5 +142,27 @@ describe('ColorPicker', () => {
 
     expect(before).toBe('359');
     expect(hue.getAttribute('aria-valuenow')).toBe('359');
+  });
+
+  test('alpha track draws the colour as one full-width layer over the checkerboard', () => {
+    render(<ColorPicker alpha defaultValue="#0072f5cc" />);
+
+    openPicker();
+    const alphaThumb = screen.getAllByRole('slider')[2];
+    const track = alphaThumb.parentElement!.parentElement!;
+
+    expect(track.style.backgroundImage).toBe('');
+    expect(getComputedStyle(track).backgroundSize.startsWith('100% 100%')).toBe(true);
+  });
+
+  test('hex and alpha fields can shrink to fit the panel', () => {
+    render(<ColorPicker alpha defaultValue="#0072f5cc" />);
+
+    openPicker();
+    const row = document.querySelector<HTMLElement>(`.${styles.hexRow}`)!;
+
+    for (const field of Array.from(row.children)) {
+      expect(getComputedStyle(field).minWidth).toBe('0px');
+    }
   });
 });
