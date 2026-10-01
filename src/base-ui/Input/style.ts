@@ -149,15 +149,15 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   shadow: lobeStaticStylish.shadow,
   sizeLarge: css`
-    height: ${controlHeight.large}px;
+    min-height: ${controlHeight.large}px;
     border-radius: ${cssVar.borderRadiusLG};
     font-size: 16px;
   `,
   sizeMiddle: css`
-    height: ${controlHeight.middle}px;
+    min-height: ${controlHeight.middle}px;
   `,
   sizeSmall: css`
-    height: ${controlHeight.small}px;
+    min-height: ${controlHeight.small}px;
     padding-inline: 8px;
     border-radius: ${cssVar.borderRadiusSM};
     font-size: 12px;
