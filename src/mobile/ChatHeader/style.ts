@@ -8,7 +8,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     container: css`
       overflow: hidden;
       flex: none;
-      width: 100vw;
+      width: 100%;
       background: ${cssVar.colorBgLayout};
     `,
 
