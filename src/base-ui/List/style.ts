@@ -86,6 +86,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    a {
+      color: inherit;
+    }
   `,
   outlined: css`
     padding: 4px;

@@ -13,6 +13,9 @@ describe('formatStatisticValue', () => {
     [1e-7, undefined, '1e-7'],
     [Number.NaN, undefined, 'NaN'],
     ['12 / 3', undefined, '12 / 3'],
+    ['0', 2, '0.00'],
+    ['1234.5', 2, '1,234.50'],
+    ['1,234.5', 2, '1,234.5'],
     [undefined, undefined, ''],
   ])('formats %s with precision %s as %s', (value, precision, expected) => {
     expect(formatStatisticValue(value as number | string | undefined, precision)).toBe(expected);

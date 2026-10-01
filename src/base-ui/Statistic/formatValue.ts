@@ -5,7 +5,10 @@ export const formatStatisticValue = (
   precision?: number,
 ): string => {
   if (value === undefined || value === null) return '';
-  if (typeof value === 'string') return value;
+  if (typeof value === 'string') {
+    if (!/^-?\d+(\.\d+)?$/.test(value)) return value;
+    return formatStatisticValue(Number(value), precision);
+  }
   if (!Number.isFinite(value)) return String(value);
 
   if (precision !== undefined) {

@@ -93,7 +93,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   invalid: css`
-    &:has([data-invalid]) {
+    &:has([data-invalid], [aria-invalid='true']) {
       border-color: ${cssVar.colorError};
 
       &:focus-within {

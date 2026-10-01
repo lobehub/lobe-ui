@@ -73,7 +73,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     font-weight: 500;
     color: ${cssVar.colorTextSecondary};
     text-align: start;
-    white-space: nowrap;
 
     background: ${cssVar.colorBgContainer};
     box-shadow:

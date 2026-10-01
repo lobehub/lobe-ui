@@ -275,6 +275,22 @@ describe('Table', () => {
     );
   });
 
+  test('scroll.x max-content sizes to content but never narrower than the wrapper', () => {
+    const { container } = render(
+      <Table
+        columns={columns}
+        dataSource={rows}
+        pagination={false}
+        rowKey="id"
+        scroll={{ x: 'max-content' }}
+      />,
+    );
+
+    const style = container.querySelector('table')!.getAttribute('style');
+    expect(style).toContain('width: max-content');
+    expect(style).toContain('min-width: 100%');
+  });
+
   test('controlled current past the last page renders the last page and asks the parent to move', () => {
     const onPageChange = vi.fn();
     render(

@@ -18,6 +18,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     align-items: center;
     color: ${cssVar.colorTextDescription};
 
+    & a {
+      color: inherit;
+      text-decoration: none;
+    }
+
     &[aria-current='page'] {
       font-weight: 500;
       color: ${cssVar.colorText};

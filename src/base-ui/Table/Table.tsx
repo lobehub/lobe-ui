@@ -84,7 +84,7 @@ const TableInner = <T extends RowData>(props: TableInternalProps<T>) => {
     if (clientPaginated && pageIndex !== page.pageIndex) syncClampedPage();
   }, [clientPaginated, pageIndex, page.pageIndex, syncClampedPage]);
 
-  const minWidth = scroll?.x === 'max-content' ? undefined : scroll?.x;
+  const minWidth = scroll?.x === 'max-content' ? '100%' : scroll?.x;
 
   return (
     <div className={cx(styles.root, className)} ref={ref} style={style}>
