@@ -7,7 +7,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     margin-block-start: 24px;
 
     button {
+      height: 45px;
       padding-inline: 32px !important;
+      border-radius: ${cssVar.borderRadiusLG};
+
+      font-size: 18px;
       font-weight: 500;
     }
 

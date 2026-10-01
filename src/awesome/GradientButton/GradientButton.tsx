@@ -3,7 +3,7 @@
 import { cssVar, cx, useThemeMode } from 'antd-style';
 import { memo, useMemo } from 'react';
 
-import Button from '@/Button';
+import Button from '@/base-ui/Button';
 
 import { styles } from './style';
 import type { GradientButtonProps } from './type';
@@ -39,7 +39,7 @@ const GradientButton = memo<GradientButtonProps>(
       <Button
         disabled={disabled}
         size={size}
-        variant={disabled ? undefined : 'text'}
+        type={disabled ? undefined : 'text'}
         className={cx(
           !disabled && (isDarkMode ? styles.buttonDark : styles.buttonLight),
           className,

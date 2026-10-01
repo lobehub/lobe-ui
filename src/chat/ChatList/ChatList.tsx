@@ -3,6 +3,8 @@
 import { cx } from 'antd-style';
 import { Fragment, memo } from 'react';
 
+import { ToastHost } from '@/base-ui/Toast';
+
 import ChatListItem from './components/ChatListItem';
 import HistoryDivider from './components/HistoryDivider';
 import { styles } from './style';
@@ -61,6 +63,7 @@ const ChatList = memo<ChatListProps>(
             </Fragment>
           );
         })}
+        <ToastHost />
       </div>
     );
   },

@@ -1,15 +1,15 @@
 'use client';
 
 import { GithubIcon } from '@lobehub/ui/icons';
-import { ConfigProvider } from 'antd';
 import { useResponsive } from 'antd-style';
 import { memo, useCallback } from 'react';
 
 import A from '@/A';
 import AuroraBackground from '@/awesome/AuroraBackground';
 import GradientButton from '@/awesome/GradientButton';
-import Button from '@/Button';
+import Button from '@/base-ui/Button';
 import { Center, Flexbox } from '@/Flex';
+import Icon from '@/Icon';
 
 import { styles } from './style';
 import { type HeroProps } from './type';
@@ -28,7 +28,7 @@ const Hero = memo<HeroProps>(({ title, description, actions, Link }) => {
               type === 'primary' ? (
                 <GradientButton
                   block={mobile}
-                  icon={github ? GithubIcon : undefined}
+                  icon={github ? <Icon icon={GithubIcon} size={18} /> : undefined}
                   key={index}
                   size="large"
                 >
@@ -37,7 +37,7 @@ const Hero = memo<HeroProps>(({ title, description, actions, Link }) => {
               ) : (
                 <Button
                   block={mobile}
-                  icon={github ? GithubIcon : undefined}
+                  icon={github ? <Icon icon={GithubIcon} size={18} /> : undefined}
                   key={index}
                   size="large"
                   type="primary"
@@ -64,28 +64,26 @@ const Hero = memo<HeroProps>(({ title, description, actions, Link }) => {
   return (
     <>
       <AuroraBackground />
-      <ConfigProvider theme={{ token: { fontSize: 16 } }}>
-        <Flexbox align={'center'} style={{ zIndex: 1 }}>
-          <Flexbox horizontal className={styles.container} distribution={'center'}>
-            <Center>
-              {title && (
-                <Center
-                  horizontal
-                  as={'h1'}
-                  className={styles.title}
-                  dangerouslySetInnerHTML={{ __html: title }}
-                  gap={'0.25em'}
-                  wrap={'wrap'}
-                />
-              )}
-              {description && (
-                <p className={styles.desc} dangerouslySetInnerHTML={{ __html: description }} />
-              )}
-              <ButtonGroups />
-            </Center>
-          </Flexbox>
+      <Flexbox align={'center'} style={{ fontSize: 16, zIndex: 1 }}>
+        <Flexbox horizontal className={styles.container} distribution={'center'}>
+          <Center>
+            {title && (
+              <Center
+                horizontal
+                as={'h1'}
+                className={styles.title}
+                dangerouslySetInnerHTML={{ __html: title }}
+                gap={'0.25em'}
+                wrap={'wrap'}
+              />
+            )}
+            {description && (
+              <p className={styles.desc} dangerouslySetInnerHTML={{ __html: description }} />
+            )}
+            <ButtonGroups />
+          </Center>
         </Flexbox>
-      </ConfigProvider>
+      </Flexbox>
     </>
   );
 });

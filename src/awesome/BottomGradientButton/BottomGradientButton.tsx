@@ -3,7 +3,7 @@
 import { cx } from 'antd-style';
 import { memo } from 'react';
 
-import Button from '@/Button';
+import Button from '@/base-ui/Button';
 
 import { styles } from './style';
 import type { BottomGradientButtonProps } from './type';
@@ -15,7 +15,7 @@ const BottomGradientButton = memo<BottomGradientButtonProps>(
         className={cx(styles, className)}
         ref={ref}
         shape={'round'}
-        variant={'filled'}
+        type={'fill'}
         style={{
           paddingInline: 16,
           width: 'unset',

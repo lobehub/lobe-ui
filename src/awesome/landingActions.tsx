@@ -121,7 +121,7 @@ export const LandingActions = ({
           <BottomGradientButton
             href={href}
             icon={iconNode}
-            iconPlacement={iconPlacement}
+            iconPosition={iconPlacement}
             key={href}
             rel={isExternal ? 'noreferrer' : undefined}
             size={size === 'small' ? 'middle' : 'large'}

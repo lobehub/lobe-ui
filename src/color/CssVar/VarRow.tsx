@@ -1,7 +1,7 @@
-import { message, Space } from 'antd';
 import { cssVar } from 'antd-style';
 import { memo } from 'react';
 
+import { toast } from '@/base-ui/Toast';
 import { Flexbox } from '@/Flex';
 import { copyToClipboard } from '@/utils/copyToClipboard';
 
@@ -13,7 +13,7 @@ export interface IScaleRow {
 
 const ScaleRow = memo<IScaleRow>(({ name }) => {
   return (
-    <Space size={2}>
+    <Flexbox horizontal align={'center'} gap={2}>
       <div className={styles.scaleRowTitle} key={name}>
         <div className={styles.text}>cssVar</div>
       </div>
@@ -27,7 +27,7 @@ const ScaleRow = memo<IScaleRow>(({ name }) => {
               const content = (cssVar as any)[`${name}${color}`] as any;
 
               await copyToClipboard(content);
-              message.success(content);
+              toast.success(content);
             }}
           >
             <Flexbox
@@ -40,7 +40,7 @@ const ScaleRow = memo<IScaleRow>(({ name }) => {
           </div>
         );
       })}
-    </Space>
+    </Flexbox>
   );
 });
 

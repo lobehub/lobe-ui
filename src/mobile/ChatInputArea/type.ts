@@ -1,13 +1,12 @@
-import type { TextAreaRef } from 'antd/es/input/TextArea';
-import type { CSSProperties, ReactNode, Ref } from 'react';
+import type { CSSProperties, MouseEventHandler, ReactNode, Ref } from 'react';
 
-import type { ButtonProps } from '@/Button';
+import type { ButtonProps } from '@/base-ui/Button';
 import type { ChatInputAreaInnerProps } from '@/chat/ChatInputArea';
 
 export interface ChatInputAreaProps extends ChatInputAreaInnerProps {
   bottomAddons?: ReactNode;
   expand?: boolean;
-  ref?: Ref<TextAreaRef>;
+  ref?: Ref<HTMLTextAreaElement>;
   safeArea?: boolean;
   setExpand?: (expand: boolean) => void;
   style?: CSSProperties;
@@ -17,6 +16,6 @@ export interface ChatInputAreaProps extends ChatInputAreaInnerProps {
 }
 
 export interface ChatSendButtonProps extends Omit<ButtonProps, 'onClick'> {
-  onSend?: ButtonProps['onClick'];
-  onStop?: ButtonProps['onClick'];
+  onSend?: MouseEventHandler<HTMLElement>;
+  onStop?: MouseEventHandler<HTMLElement>;
 }

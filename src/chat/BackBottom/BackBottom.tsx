@@ -5,7 +5,8 @@ import { cx } from 'antd-style';
 import { ListEnd } from 'lucide-react';
 import { memo, type MouseEventHandler, useEffect, useRef, useState } from 'react';
 
-import Button from '@/Button';
+import Button from '@/base-ui/Button';
+import { lobeStaticStylish } from '@/styles';
 
 import { styles } from './style';
 import { type BackBottomProps } from './type';
@@ -25,21 +26,20 @@ const BackBottom = memo<BackBottomProps>(
       }
     }, [scrollHeight, scroll, visibilityHeight]);
 
-    const scrollToBottom: MouseEventHandler<HTMLDivElement> = (e) => {
+    const scrollToBottom: MouseEventHandler<HTMLElement> = (e) => {
       (target as any)?.current?.scrollTo({ behavior: 'smooth', left: 0, top: scrollHeight });
       onClick?.(e);
     };
 
     return (
       <Button
-        glass
-        className={cx(visible ? styles.visible : styles.hidden, className)}
+        className={cx(lobeStaticStylish.blur, visible ? styles.visible : styles.hidden, className)}
         icon={ListEnd}
         ref={ref}
         shape={'round'}
         size={'small'}
         style={style}
-        variant={'filled'}
+        type={'fill'}
         onClick={scrollToBottom}
       >
         {text || 'Back to bottom'}

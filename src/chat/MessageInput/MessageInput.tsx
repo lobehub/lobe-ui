@@ -4,12 +4,12 @@ import { cx, useResponsive } from 'antd-style';
 import { memo, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
-import Button from '@/Button';
+import Button from '@/base-ui/Button';
+import { TextArea } from '@/base-ui/Input';
 import CodeEditor from '@/CodeEditor';
 import { Flexbox } from '@/Flex';
 import { KeyMapEnum } from '@/Hotkey/const';
 import { combineKeys } from '@/Hotkey/utils';
-import TextArea from '@/Input/TextArea';
 import Tooltip from '@/Tooltip';
 
 import { styles } from './style';
@@ -55,7 +55,7 @@ const MessageInput = memo<MessageInputProps>(
     );
 
     const cancllButton = (
-      <Button size={editButtonSize} variant={'filled'} onClick={handleCancel}>
+      <Button size={editButtonSize} type={'fill'} onClick={handleCancel}>
         {text?.cancel || 'Cancel'}
       </Button>
     );

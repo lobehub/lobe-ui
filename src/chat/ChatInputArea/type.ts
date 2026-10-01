@@ -1,9 +1,8 @@
-import type { TextAreaRef } from 'antd/es/input/TextArea';
 import type { CSSProperties, ReactNode, Ref } from 'react';
 
-import type { DraggablePanelProps } from '@/DraggablePanel';
+import type { DraggablePanelProps } from '@/base-ui/DraggablePanel';
+import type { TextAreaProps } from '@/base-ui/Input';
 import type { FlexboxProps } from '@/Flex';
-import type { TextAreaProps } from '@/Input';
 
 export interface ChatInputAreaProps extends Omit<ChatInputAreaInnerProps, 'classNames'> {
   bottomAddons?: ReactNode;
@@ -16,7 +15,7 @@ export interface ChatInputAreaProps extends Omit<ChatInputAreaInnerProps, 'class
     minHeight?: number;
   };
   onSizeChange?: DraggablePanelProps['onSizeChange'];
-  ref?: Ref<TextAreaRef>;
+  ref?: Ref<HTMLTextAreaElement>;
   setExpand?: (expand: boolean) => void;
   topAddons?: ReactNode;
 }
@@ -34,7 +33,7 @@ export interface ChatInputAreaInnerProps extends Omit<TextAreaProps, 'onInput'> 
   loading?: boolean;
   onInput?: (value: string) => void;
   onSend?: () => void;
-  ref?: Ref<TextAreaRef>;
+  ref?: Ref<HTMLTextAreaElement>;
   style?: CSSProperties;
 }
 

@@ -114,7 +114,7 @@ const ChatInputArea = memo<ChatInputAreaProps>(
               className={styles.expandTextArea}
               loading={loading}
               ref={ref}
-              style={{ height: 36, paddingBlock: 6 }}
+              style={{ minHeight: 36, paddingBlock: 6 }}
               value={value}
               variant={expand ? 'borderless' : 'filled'}
               onBlur={() => setIsFocused(false)}

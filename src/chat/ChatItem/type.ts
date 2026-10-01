@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
 
-import { type AlertProps } from '@/Alert';
-import { type AvatarProps } from '@/Avatar';
+import { type AlertProps } from '@/base-ui/Alert';
+import { type AvatarProps } from '@/base-ui/Avatar';
 import { type EditableMessageProps } from '@/chat/EditableMessage';
 import { type MetaData } from '@/chat/types';
 import { type FlexboxProps } from '@/Flex';

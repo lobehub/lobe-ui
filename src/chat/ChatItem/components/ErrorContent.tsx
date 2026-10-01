@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 
-import Alert from '@/Alert';
+import Alert from '@/base-ui/Alert';
 import { type ChatItemProps } from '@/chat/ChatItem';
 import { Flexbox } from '@/Flex';
 

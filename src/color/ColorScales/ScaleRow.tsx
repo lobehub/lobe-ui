@@ -1,6 +1,6 @@
-import { message, Space } from 'antd';
 import { memo } from 'react';
 
+import { toast } from '@/base-ui/Toast';
 import { Flexbox } from '@/Flex';
 import { copyToClipboard } from '@/utils/copyToClipboard';
 
@@ -33,7 +33,7 @@ const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
   }
 
   return (
-    <Space size={2}>
+    <Flexbox horizontal align={'center'} gap={2}>
       <div className={styles.scaleRowTitle} key={title}>
         <div className={styles.text}>{title}</div>
       </div>
@@ -50,7 +50,7 @@ const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
               const content = `token.${name}${index}${isAlpha ? 'A' : ''} /* ${color} */`;
 
               await copyToClipboard(content);
-              message.success(content);
+              toast.success(content);
             }}
           >
             <Flexbox
@@ -63,7 +63,7 @@ const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
           </div>
         );
       })}
-    </Space>
+    </Flexbox>
   );
 });
 

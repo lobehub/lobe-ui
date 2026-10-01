@@ -1,6 +1,13 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render as rtlRender, screen } from '@testing-library/react';
+import { motion } from 'motion/react';
+import { type ReactElement } from 'react';
+
+import { MotionProvider } from '@/MotionProvider';
 
 import LandingHero from './LandingHero';
+
+const render = (node: ReactElement) =>
+  rtlRender(<MotionProvider motion={motion}>{node}</MotionProvider>);
 
 it('renders actions as anchors and opens absolute URLs in a new tab', () => {
   render(

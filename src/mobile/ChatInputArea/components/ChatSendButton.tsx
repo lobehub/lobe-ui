@@ -3,7 +3,7 @@
 import { SendHorizontal } from 'lucide-react';
 import { memo } from 'react';
 
-import Button from '@/Button';
+import Button from '@/base-ui/Button';
 
 import type { ChatSendButtonProps } from '../type';
 

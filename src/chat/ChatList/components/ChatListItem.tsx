@@ -1,7 +1,7 @@
-import { App } from 'antd';
 import { memo, type ReactNode, useCallback, useMemo, useState } from 'react';
 
-import { type AlertProps } from '@/Alert';
+import { type AlertProps } from '@/base-ui/Alert';
+import { toast } from '@/base-ui/Toast';
 import ChatItem from '@/chat/ChatItem';
 import { type ChatMessage } from '@/chat/types';
 import { copyToClipboard } from '@/utils/copyToClipboard';
@@ -29,8 +29,6 @@ const ChatListItem = memo<ChatListItemProps>((props) => {
   } = props;
 
   const [editing, setEditing] = useState(false);
-
-  const { message } = App.useApp();
 
   const RenderItem = useMemo(() => {
     if (!renderItems || !item?.role) return;
@@ -92,7 +90,7 @@ const ChatListItem = memo<ChatListItemProps>((props) => {
         switch (action.key) {
           case 'copy': {
             await copyToClipboard(data.content);
-            message.success(text?.copySuccess || 'Copy Success');
+            toast.success(text?.copySuccess || 'Copy Success');
             break;
           }
           case 'edit': {
@@ -116,13 +114,12 @@ const ChatListItem = memo<ChatListItemProps>((props) => {
 
   const error = useMemo(() => {
     if (!item.error) return;
-    const message = item.error?.message;
     let alertConfig = {};
     if (item.error.type && renderErrorMessages?.[item.error.type]) {
       alertConfig = renderErrorMessages[item.error.type]?.config as AlertProps;
     }
     return {
-      message,
+      title: item.error?.message,
       ...alertConfig,
     };
   }, [renderErrorMessages, item.error]);
