@@ -56,11 +56,25 @@ describe('Progress', () => {
     expect(filled.length).toBe(5);
   });
 
-  test('renders the inset variant with a bar width matching percent', () => {
+  test('renders the inset variant as a filled pill and a remaining pill', () => {
     const { container } = render(<Progress percent={70} variant="inset" />);
 
-    const bar = container.querySelector('div[style*="width: 70%"]');
-    expect(bar).toBeTruthy();
+    const split = container.querySelector('[role="progressbar"] > div')!;
+    expect(split.children).toHaveLength(2);
+    expect((split.children[0] as HTMLElement).style.width).toMatch(/0\.7.*100% - 3px/);
+    expect((split.children[0] as HTMLElement).style.minWidth).toBe('8px');
+  });
+
+  test('drops the remaining pill at 100% and the filled pill at 0% in the inset variant', () => {
+    const { container, rerender } = render(<Progress percent={100} variant="inset" />);
+    const split = () => container.querySelector('[role="progressbar"] > div')!;
+
+    expect(split().children).toHaveLength(1);
+    expect((split().children[0] as HTMLElement).style.width).toBe('100%');
+
+    rerender(<Progress percent={0} variant="inset" />);
+    expect(split().children).toHaveLength(1);
+    expect((split().children[0] as HTMLElement).style.width).toBe('');
   });
 
   test('renders the circle type with an svg ring and centered info', () => {

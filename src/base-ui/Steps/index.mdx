@@ -1,0 +1,23 @@
+---
+title: Steps
+description: A numbered sequence for multi-step flows, or a neutral vertical guide list when no step is current.
+category: Navigation
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="Steps" from=".." />
+
+With `current`, steps before it are `finish`, it is `process`, later ones are `wait`; an item's own `status` wins. Without `current`, every step renders as a neutral guide step. The current step gets `aria-current="step"`.
+
+### Migrating from antd Steps
+
+- `direction` → `orientation`; `progressDot` → `variant="dot"`; `size` is removed.
+- Replace `current={null as any}` / `current={-1}` with no `current`.
+- Clickable steps (`onChange`), `percent`, `labelPlacement` and `type="navigation" | "inline"` are not supported.

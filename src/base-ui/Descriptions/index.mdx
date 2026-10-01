@@ -1,0 +1,25 @@
+---
+title: Descriptions
+description: Label and value pairs laid out in one or more columns, with an optional header and bordered style.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="Descriptions" from=".." />
+
+Renders a `<dl>` laid out with CSS grid: `column` repetitions of a label track and a content track. `span` stretches an item across that many label / content pairs, clamped to `column`.
+
+### Migrating from antd Descriptions
+
+- `labelStyle` → `styles.label`; `classNames.label` / `classNames.content` keep working.
+- `size` is removed; there is one compact density (antd `small`).
+- `column` defaults to `1` (antd defaults to `3`).
+- The `Descriptions.Item` children form is not supported; pass `items`.
+- `layout="vertical"`, responsive `column` objects and `span: 'filled'` are not supported.

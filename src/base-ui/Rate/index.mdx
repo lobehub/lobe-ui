@@ -1,0 +1,23 @@
+---
+title: Rate
+description: Star rating that displays any fractional score read-only, or lets users pick a value with pointer or keyboard.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="Rate" from=".." />
+
+`readOnly` renders `role="img"` labelled like "4.3 out of 5" and fills any fraction proportionally. Interactive ratings are a `role="slider"`: arrow keys step by 1 (or 0.5 with `allowHalf`), `Home`/`End` jump to 0 and `count`. `gap` defaults to half of `size`; empty stars use `colorFill`.
+
+### Migrating from antd Rate
+
+- Display-only `disabled` → `readOnly`; `disabled` now dims the control.
+- `character` takes a node only; `allowClear`, `tooltips`, `keyboard` and `autoFocus` are not supported.
+- Size and colours are props (`size`, `color`) instead of `ConfigProvider` theme tokens.

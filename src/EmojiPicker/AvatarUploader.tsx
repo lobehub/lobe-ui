@@ -1,30 +1,29 @@
 'use client';
 
-import { type GetProp, message, Upload, type UploadProps } from 'antd';
 import { cssVar } from 'antd-style';
 import { ChevronLeftIcon, ImageUpIcon } from 'lucide-react';
 import { memo, useCallback, useRef, useState } from 'react';
 import AvatarEditor from 'react-avatar-editor';
 
-import Button from '@/Button';
+import Button from '@/base-ui/Button';
+import Tag from '@/base-ui/Tag';
+import { toast, ToastHost } from '@/base-ui/Toast';
+import { UploadDragger } from '@/base-ui/Upload';
 import { Center, Flexbox } from '@/Flex';
 import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
-import Tag from '@/Tag';
 import Text from '@/Text';
 
 import { type AvatarUploaderProps } from './type';
 
-type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
+const ACCEPTED_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
 
-const { Dragger } = Upload;
-
-const createUploadImageHandler = (onUploadImage: (base64: string) => void) => (file: any) => {
+const readAsDataURL = (file: File, onLoad: (dataUrl: string) => void) => {
   const reader = new FileReader();
   reader.readAsDataURL(file);
   reader.addEventListener('load', () => {
-    onUploadImage(String(reader.result));
+    onLoad(String(reader.result));
   });
 };
 
@@ -38,20 +37,13 @@ const AvatarUploader = memo<AvatarUploaderProps>(
     const draggerDescText = texts?.draggerDesc ?? t('emojiPicker.draggerDesc');
     const uploadBtnText = texts?.uploadBtn ?? t('emojiPicker.uploadBtn');
 
-    const beforeUpload = useCallback(
-      (file: FileType) => {
-        const isJpgOrPng =
-          file.type === 'image/jpeg' ||
-          file.type === 'image/png' ||
-          file.type === 'image/gif' ||
-          file.type === 'image/webp';
-        if (!isJpgOrPng) {
-          message.error(fileTypeErrorText);
+    const handleFiles = useCallback(
+      ([file]: File[]) => {
+        if (!ACCEPTED_IMAGE_TYPES.has(file.type)) {
+          toast.error(fileTypeErrorText);
           return;
         }
-        return createUploadImageHandler((avatar) => {
-          setPreviewImage(avatar);
-        })(file);
+        readAsDataURL(file, setPreviewImage);
       },
       [fileTypeErrorText],
     );
@@ -80,13 +72,7 @@ const AvatarUploader = memo<AvatarUploaderProps>(
     return (
       <Flexbox padding={10} style={{ position: 'relative' }} width={'100%'}>
         {!previewImage && (
-          <Dragger
-            accept={'image'}
-            beforeUpload={beforeUpload}
-            itemRender={() => void 0}
-            maxCount={1}
-            multiple={false}
-          >
+          <UploadDragger maxCount={1} onFiles={handleFiles}>
             <Center gap={16} height={compressSize} width={compressSize}>
               <Icon color={cssVar.colorTextDescription} icon={ImageUpIcon} size={48} />
               <Text color={cssVar.colorTextSecondary}>{draggerDescText}</Text>
@@ -97,7 +83,7 @@ const AvatarUploader = memo<AvatarUploaderProps>(
                 <Tag>WEBP</Tag>
               </Center>
             </Center>
-          </Dragger>
+          </UploadDragger>
         )}
         {previewImage && (
           <Center gap={8} style={{ position: 'relative' }} width={'100%'}>
@@ -122,6 +108,7 @@ const AvatarUploader = memo<AvatarUploaderProps>(
             </Flexbox>
           </Center>
         )}
+        <ToastHost />
       </Flexbox>
     );
   },

@@ -1,19 +1,18 @@
 'use client';
 
-import { Select, type SelectProps } from 'antd';
 import { memo, useMemo } from 'react';
 import { bundledLanguagesInfo } from 'shiki';
 
+import Select, { type SelectProps } from '@/base-ui/Select';
 import { Flexbox } from '@/Flex';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
 import Text from '@/Text';
 import { stopPropagation } from '@/utils/dom';
 
-export const LangSelect = memo<Omit<SelectProps, 'options'>>(({ ...rest }) => {
+export const LangSelect = memo<Omit<SelectProps<string>, 'options'>>(({ style, ...rest }) => {
   const options = useMemo(
     () => [
       {
-        aliases: ['text', 'txt'],
         label: (
           <Flexbox horizontal align={'center'} gap={4}>
             <MaterialFileTypeIcon
@@ -28,10 +27,10 @@ export const LangSelect = memo<Omit<SelectProps, 'options'>>(({ ...rest }) => {
             </Text>
           </Flexbox>
         ),
+        title: 'Plaintext,plaintext,*.text,*.txt',
         value: 'plaintext',
       },
       ...bundledLanguagesInfo.map((item) => ({
-        aliases: item.aliases,
         label: (
           <Flexbox horizontal align={'center'} gap={4}>
             <MaterialFileTypeIcon
@@ -46,10 +45,7 @@ export const LangSelect = memo<Omit<SelectProps, 'options'>>(({ ...rest }) => {
             </Text>
           </Flexbox>
         ),
-        title: (item.aliases || [item.id])
-          .filter(Boolean)
-          .map((item) => `*.${item}`)
-          .join(','),
+        title: [item.name, item.id, ...(item.aliases || []).map((alias) => `*.${alias}`)].join(','),
         value: item.id,
       })),
     ],
@@ -57,20 +53,19 @@ export const LangSelect = memo<Omit<SelectProps, 'options'>>(({ ...rest }) => {
   );
 
   return (
-    <Select
-      showSearch
-      className={'language-title'}
-      options={options}
-      size={'small'}
-      suffixIcon={false}
-      variant={'borderless'}
-      style={{
-        maxWidth: 240,
-        width: '100%',
-      }}
-      onClick={stopPropagation}
-      {...rest}
-    />
+    <div style={{ maxWidth: 240, width: '100%' }} onClick={stopPropagation}>
+      <Select
+        showSearch
+        virtual
+        className={'language-title'}
+        options={options}
+        size={'small'}
+        style={{ width: '100%', ...style }}
+        suffixIcon={null}
+        variant={'borderless'}
+        {...rest}
+      />
+    </div>
   );
 });
 

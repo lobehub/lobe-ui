@@ -3,8 +3,8 @@
 import { cx } from 'antd-style';
 import { type FC } from 'react';
 
+import Tag from '@/base-ui/Tag';
 import { Flexbox } from '@/Flex';
-import Tag from '@/Tag';
 
 import { titleStyles as styles } from '../style';
 import type { FormTitleProps } from '../type';

@@ -73,6 +73,7 @@ const EditableText = memo<EditableTextProps>(
         variant={variant}
         style={{
           height,
+          ...(size === 'small' && { fontSize: 14 }),
           ...style,
           ...styles?.input,
         }}

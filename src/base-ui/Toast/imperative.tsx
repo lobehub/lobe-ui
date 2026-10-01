@@ -5,7 +5,7 @@ import { cx } from 'antd-style';
 import { memo, useEffect, useId, useState, useSyncExternalStore } from 'react';
 
 import { useIsClient } from '@/hooks/useIsClient';
-import { useAppElement } from '@/ThemeProvider';
+import { useAppElement } from '@/ThemeProvider/AppElementContext';
 
 import { acquireLayerZIndex } from '../zIndex';
 import { ToastContext } from './context';

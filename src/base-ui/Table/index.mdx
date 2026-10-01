@@ -1,0 +1,31 @@
+---
+title: Table
+description: Data table with antd-shaped columns, local or server sorting, header filters, pagination, sticky header and fixed columns. Built on TanStack Table v9.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoServer from './demos/server.tsx?demo';
+
+## Basic
+
+Sort by clicking a header, filter from the funnel icon, page through with the pager. `scroll.y` keeps the header in view; `fixed: 'right'` pins the action column.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Server-driven
+
+`sorter: true` leaves row order alone and reports the sort through `onChange`; `pagination.total` switches the pager to server mode. Fetch the page yourself and pass it as `dataSource`.
+
+<Demo of={DemoServer} layout="bare" />
+
+## APIs
+
+<Api name="Table" from=".." />
+
+### Migrating from antd Table
+
+- `columns`, `dataSource`, `rowKey`, `pagination`, `onChange`, `onRow`, `rowClassName`, `scroll`, `size` (`small` / `middle`), `bordered`, `loading` and `tableLayout` keep their antd shape.
+- `locale={{ emptyText }}` → `emptyText`.
+- Delete `.ant-table-*` style overrides; use `classNames` / `styles` (`wrapper`, `header`, `body`, `row`, `cell`).
+- Row selection, expandable rows, virtual scrolling, summary rows, tree data, column resizing, multi-column sort, controlled `sortOrder`, custom `filterDropdown` and array `dataIndex` paths are not supported.

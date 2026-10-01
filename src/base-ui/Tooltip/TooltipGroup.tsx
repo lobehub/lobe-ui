@@ -6,7 +6,7 @@ import { type FC, useCallback, useRef, useState } from 'react';
 
 import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { useFloatingLayer } from '@/hooks/useFloatingLayer';
-import { useAppElement } from '@/ThemeProvider';
+import { useAppElement } from '@/ThemeProvider/AppElementContext';
 import {
   useDestroyOnInvalidActiveTriggerElement,
   useHidePopupWhenPositionerAtOrigin,

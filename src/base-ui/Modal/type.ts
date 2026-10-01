@@ -108,4 +108,5 @@ export interface ModalConfirmConfig {
   onCancel?: () => void;
   onOk?: (() => void) | (() => Promise<void>);
   title?: ReactNode;
+  width?: number | string;
 }

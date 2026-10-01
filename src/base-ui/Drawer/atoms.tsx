@@ -21,7 +21,7 @@ import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { useMotionComponent } from '@/MotionProvider';
-import { useAppElement } from '@/ThemeProvider';
+import { useAppElement } from '@/ThemeProvider/AppElementContext';
 
 import { useLayerZIndex } from '../zIndex';
 import { drawerBackdropTransition, getDrawerMotionConfig, pushAxis } from './constants';

@@ -18,7 +18,7 @@ import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { useFloatingLayer } from '@/hooks/useFloatingLayer';
 import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
-import { useAppElement } from '@/ThemeProvider';
+import { useAppElement } from '@/ThemeProvider/AppElementContext';
 import { placementMap } from '@/utils/placement';
 
 import { TooltipArrowIcon } from './ArrowIcon';

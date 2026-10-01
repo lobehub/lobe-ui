@@ -1,6 +1,6 @@
 import type { Ref } from 'react';
 
-import type { AvatarProps } from '@/Avatar/type';
+import type { AvatarProps } from '@/base-ui/Avatar';
 import type { BlockProps } from '@/Block/type';
 import type { SMOOTH_CORNER_MASKS } from '@/utils/smoothCorners';
 

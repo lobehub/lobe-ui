@@ -18,11 +18,11 @@ import DemoIndex from './demos/index.tsx?demo';
 
 ### Variants
 
-`type="line"` (default) supports three `variant`s: `line` (a label and value row above a thin track), `segments` (independent cells, count set by `segments`), and `inset` (a track with an inset bar). `type="circle"` renders an SVG ring instead.
+`type="line"` (default) supports three `variant`s: `line` (a label and value row above a thin track), `segments` (independent cells, count set by `segments`), and `inset` (a meter: a filled pill and a remaining pill split by a small gap). `type="circle"` renders an SVG ring instead.
 
 ### Status
 
-`status` accepts `normal`, `active`, `success`, or `exception`. `success` and `exception` replace the info text with a check or cross icon; `active` adds a shimmer animation to the `line` variant's bar.
+`status` accepts `normal`, `active`, `success`, or `exception`. `success` and `exception` replace the info text with a check or cross icon; `active` adds a shimmer animation to the `line` and `inset` bars.
 
 ### Migrating from antd Progress
 

@@ -3,9 +3,9 @@ import type { Form as BaseForm } from '@base-ui/react/form';
 import type { ComponentProps, CSSProperties, ReactNode, Ref } from 'react';
 
 import type { ButtonProps } from '@/base-ui/Button';
+import type { TagProps } from '@/base-ui/Tag';
 import type { FlexboxProps } from '@/Flex';
 import type { IconProps } from '@/Icon';
-import type { TagProps } from '@/Tag';
 import type { DivProps } from '@/types';
 
 export type FormVariant = 'filled' | 'outlined' | 'borderless';

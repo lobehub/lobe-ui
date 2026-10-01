@@ -14,7 +14,7 @@ import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
 import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { useNativeButton } from '@/hooks/useNativeButton';
-import { useAppElement } from '@/ThemeProvider';
+import { useAppElement } from '@/ThemeProvider/AppElementContext';
 
 import { useLayerZIndex } from '../zIndex';
 import { styles, triggerVariants } from './style';

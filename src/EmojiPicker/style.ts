@@ -26,17 +26,40 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       background: ${cssVar.colorFillSecondary};
     }
   `,
-  tabs: css`
-    border-block-end: 1px solid ${cssVar.colorBorderSecondary};
-
-    .ant-tabs-tab {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
+  tab: css`
+    && {
       width: 32px;
       height: 32px;
-      padding: 0 !important;
+      padding: 0;
+      border-radius: ${cssVar.borderRadius};
+
+      transition: background-color 100ms ease-out;
+    }
+
+    &&:hover:not([data-disabled]) {
+      background: ${cssVar.colorFillTertiary};
+    }
+  `,
+  tabs: css`
+    border-block-end: 1px solid ${cssVar.colorBorderSecondary};
+  `,
+  tabsIndicator: css`
+    && {
+      height: 3px;
+      border-start-start-radius: 3px;
+      border-start-end-radius: 3px;
+    }
+  `,
+  tabsList: css`
+    && {
+      gap: 8px;
+      padding: 4px;
+      box-shadow: none;
+    }
+  `,
+  tabsRoot: css`
+    && {
+      width: auto;
     }
   `,
 }));

@@ -1,13 +1,14 @@
 import type { MenuProps as AntdMenuProps, MenuRef } from 'antd';
-import type {
-  MenuDividerType as RcMenuDividerType,
-  MenuItemGroupType as RcMenuItemGroupType,
-  MenuItemType as RcMenuItemType,
-  SubMenuType as RcSubMenuType,
-} from 'rc-menu/es/interface';
 import type { Key, ReactNode, Ref } from 'react';
 
 import type { IconContentConfig, IconProps } from '@/Icon';
+
+import type {
+  RcMenuDividerType,
+  RcMenuItemGroupType,
+  RcMenuItemType,
+  RcSubMenuType,
+} from './itemInterface';
 
 export interface MenuItemType extends RcMenuItemType {
   /**
@@ -42,11 +43,7 @@ export interface MenuDividerType extends RcMenuDividerType {
   key?: Key;
 }
 export type ItemType<T extends MenuItemType = MenuItemType> =
-  | T
-  | SubMenuType<T>
-  | MenuItemGroupType<T>
-  | MenuDividerType
-  | null;
+  T | SubMenuType<T> | MenuItemGroupType<T> | MenuDividerType | null;
 
 export type GenericItemType<T = unknown> = T extends infer U extends MenuItemType
   ? unknown extends U
@@ -63,4 +60,4 @@ export interface MenuProps<T = unknown> extends Omit<AntdMenuProps, 'items'> {
   variant?: 'filled' | 'outlined' | 'borderless';
 }
 
-export type { MenuInfo } from 'rc-menu/es/interface';
+export type { MenuInfo } from './itemInterface';

@@ -16,7 +16,6 @@ export interface EditableTextProps
       | 'variant'
       | 'onBlur'
       | 'onFocus'
-      | 'size'
     > {
   className?: string;
   classNames?: {
@@ -45,6 +44,10 @@ export interface EditableTextProps
   onEditingChange?: (editing: boolean) => void;
 
   showEditIcon?: boolean;
+  /**
+   * @default 'small'
+   */
+  size?: ControlInputProps['size'];
   style?: CSSProperties;
   styles?: {
     container?: CSSProperties;

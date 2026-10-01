@@ -1,0 +1,22 @@
+---
+title: Statistic
+description: A labeled number with thousands separators, fixed precision, prefix and suffix.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="Statistic" from=".." />
+
+Numbers format through `Intl.NumberFormat('en-US')`: thousands separators always, `precision` fixes the decimal places. Strings render unchanged. `formatter` replaces the built-in formatting. `loading` swaps the value for a skeleton.
+
+### Migrating from antd Statistic
+
+- `valueStyle` → `styles.value`.
+- `groupSeparator`, `decimalSeparator`, `Statistic.Countdown` and `Statistic.Timer` are not supported.

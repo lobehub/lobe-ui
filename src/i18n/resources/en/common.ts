@@ -1,4 +1,5 @@
 export default {
+  'common.clear': 'Clear',
   'common.cancel': 'Cancel',
   'common.confirm': 'Confirm',
   'common.delete': 'Delete',

@@ -10,7 +10,6 @@ export const lobeUiAntdBaseline: AntdProbeName[] = [
   'avatar',
   'button',
   'collapse',
-  'color-picker',
   'date-picker',
   'divider',
   'drawer',
@@ -21,7 +20,6 @@ export const lobeUiAntdBaseline: AntdProbeName[] = [
   'input-textarea',
   'menu',
   'modal',
-  'popover',
   'progress',
   'segmented',
   'select',
@@ -31,5 +29,4 @@ export const lobeUiAntdBaseline: AntdProbeName[] = [
   'tag',
   'tag-preset',
   'tag-status',
-  'upload',
 ];

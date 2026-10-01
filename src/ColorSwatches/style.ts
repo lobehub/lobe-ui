@@ -1,7 +1,5 @@
 import { createStaticStyles } from 'antd-style';
 
-const prefixCls = 'ant';
-
 export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     active: css`
@@ -23,9 +21,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         ${cssVar.magenta},
         ${cssVar.red}
       );
-      .${prefixCls}-color-picker-color-block {
-        opacity: 0;
-      }
     `,
 
     container: css`
@@ -43,12 +38,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 
       &:hover {
         box-shadow:
-          inset 0 0 0 1px rgba(0, 0, 0, 5%),
+          inset 0 0 0 1px rgb(0 0 0 / 5%),
           0 0 0 2px ${cssVar.colorText};
       }
     `,
 
     picker: css`
+      cursor: pointer;
+
       overflow: hidden;
       flex: none;
 
@@ -65,13 +62,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         box-shadow:
           inset 0 0 0 1px ${cssVar.colorFillSecondary},
           0 0 0 2px ${cssVar.colorText};
-      }
-
-      .${prefixCls}-color-picker-color-block {
-        width: 100%;
-        height: 100%;
-        border: none;
-        border-radius: inherit;
       }
     `,
 

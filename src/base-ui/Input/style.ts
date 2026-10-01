@@ -5,6 +5,63 @@ import { controlHeight } from '@/base-ui/controlSize';
 import { lobeStaticStylish } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
+  clear: css`
+    cursor: pointer;
+
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+
+    width: 16px;
+    height: 16px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+
+    color: ${cssVar.colorBgContainer};
+
+    visibility: hidden;
+    background: ${cssVar.colorTextQuaternary};
+
+    &:hover {
+      background: ${cssVar.colorTextTertiary};
+    }
+  `,
+  count: css`
+    pointer-events: none;
+
+    position: absolute;
+    inset-block-end: 6px;
+    inset-inline-end: 8px;
+
+    display: inline-flex;
+    align-items: center;
+
+    height: 20px;
+    padding-inline: 8px;
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: ${cssVar.colorTextSecondary};
+
+    background: ${cssVar.colorFillTertiary};
+
+    &[data-over] {
+      color: ${cssVar.colorWhite};
+      background: ${cssVar.colorError};
+    }
+  `,
+  textareaClear: css`
+    position: absolute;
+    inset-block-start: 10px;
+    inset-inline-end: 10px;
+  `,
+  textareaWithCount: css`
+    padding-block-end: 30px;
+  `,
   borderless: css`
     border: 1px solid transparent;
     background: none;
@@ -36,7 +93,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   invalid: css`
-    &:has([data-invalid]) {
+    &:has([data-invalid], [aria-invalid='true']) {
       border-color: ${cssVar.colorError};
 
       &:focus-within {
@@ -84,18 +141,23 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       color: ${cssVar.colorTextQuaternary};
       opacity: 0.66;
     }
+
+    &:hover [data-lobe-input-clear],
+    &:focus-within [data-lobe-input-clear] {
+      visibility: visible;
+    }
   `,
   shadow: lobeStaticStylish.shadow,
   sizeLarge: css`
-    height: ${controlHeight.large}px;
+    min-height: ${controlHeight.large}px;
     border-radius: ${cssVar.borderRadiusLG};
     font-size: 16px;
   `,
   sizeMiddle: css`
-    height: ${controlHeight.middle}px;
+    min-height: ${controlHeight.middle}px;
   `,
   sizeSmall: css`
-    height: ${controlHeight.small}px;
+    min-height: ${controlHeight.small}px;
     padding-inline: 8px;
     border-radius: ${cssVar.borderRadiusSM};
     font-size: 12px;
@@ -181,6 +243,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     color: ${cssVar.colorTextTertiary};
   `,
   textarea: css`
+    position: relative;
     height: auto;
     padding-block: 8px;
 

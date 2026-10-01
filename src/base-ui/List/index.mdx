@@ -1,0 +1,24 @@
+---
+title: List
+description: A vertical list of selectable rows with icons or avatars, descriptions, trailing extras, hover actions and dividers.
+category: Navigation
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="List" from=".." />
+
+Rows render as `button`, or as lobe-ui `A` when `href` is set (router-aware through `ConfigProvider` `aAs`). With `selectable`, clicking a row makes it active; pass `activeKey` to control it (`null` for none). The active row gets `aria-current`. `actions` appear on hover or focus and never select the row. `{ type: 'divider' }` renders a separator.
+
+### Migrating from antd Menu / List
+
+- antd `Menu` inline navigation: `selectedKeys={[key]}` → `activeKey={key}`; drop `mode`. Item `icon` / `label` / `extra` / `danger` / `type: 'divider'` keep their shape.
+- root `@lobehub/ui` `List`: `title` → `label`.
+- antd `List`: map `dataSource` to `items`; `bordered` → `variant="outlined"`.
+- Submenus, groups, horizontal mode and virtual scrolling are not supported.

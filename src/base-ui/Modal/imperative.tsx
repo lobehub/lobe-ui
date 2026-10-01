@@ -6,7 +6,7 @@ import { memo, useCallback, useEffect, useState, useSyncExternalStore } from 're
 import { createPortal } from 'react-dom';
 
 import { useIsClient } from '@/hooks/useIsClient';
-import { useAppElement } from '@/ThemeProvider';
+import { useAppElement } from '@/ThemeProvider/AppElementContext';
 import { registerDevSingleton } from '@/utils/devSingleton';
 
 import { Button } from '../Button';
@@ -273,7 +273,7 @@ export function createModalSystem(): ModalSystem {
       content: <ConfirmBody config={config} />,
       styles: { content: { padding: 0 } },
       title: config.title,
-      width: 420,
+      width: config.width ?? 420,
     });
 
     return {

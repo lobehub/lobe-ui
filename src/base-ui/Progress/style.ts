@@ -60,28 +60,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     fill: none;
     stroke: ${cssVar.colorFillTertiary};
   `,
-  insetBarWrapper: css`
-    position: relative;
-    overflow: hidden;
-    height: 100%;
-    border-radius: 999px;
-  `,
-  insetCap: css`
-    position: absolute;
-    inset-block: 0;
-    inset-inline-end: 0;
-
-    width: 4px;
-    border-radius: 999px;
-
-    opacity: 0.6;
-    background: ${cssVar.colorBgContainer};
-  `,
-  insetTrack: css`
-    padding: 2px;
-    border-radius: 999px;
-    background: ${cssVar.colorFillTertiary};
-  `,
   lineLg: css`
     height: 6px;
   `,
@@ -133,9 +111,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     width: 100%;
   `,
-  rowTrack: css`
-    flex: 1;
-  `,
   segment: css`
     flex: 1;
     border-radius: 1px;
@@ -149,6 +124,22 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     flex: 1;
     gap: 2px;
     min-width: 0;
+  `,
+  split: css`
+    display: flex;
+    flex: 1;
+    gap: 3px;
+    min-width: 0;
+  `,
+  splitFill: css`
+    flex: none;
+    border-radius: 999px;
+    transition: width 0.3s;
+  `,
+  splitRest: css`
+    flex: 1;
+    border-radius: 999px;
+    background: ${cssVar.colorFillSecondary};
   `,
 }));
 

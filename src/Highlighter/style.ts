@@ -62,7 +62,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       langHoverCls,
       lobeStaticStylish.blur,
       css`
-        &.ant-tag {
+        && {
           position: absolute;
           z-index: 2;
           inset-block: auto 8px;
