@@ -125,4 +125,27 @@ describe('Anchor', () => {
 
     expect(current()?.textContent).toBe('Usage');
   });
+
+  test('rail marker follows the active link and hides when nothing is active', () => {
+    const offsetTop = vi
+      .spyOn(HTMLElement.prototype, 'offsetTop', 'get')
+      .mockImplementation(function (this: HTMLElement) {
+        return this.dataset.key === 'usage' ? 64 : 0;
+      });
+    const offsetHeight = vi.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockReturnValue(20);
+
+    const { container, rerender } = render(
+      <Anchor activeKey={null} getContainer={() => scroller} items={items} />,
+    );
+    const marker = container.querySelector('nav > span[aria-hidden]') as HTMLElement;
+    expect(marker.hidden).toBe(true);
+
+    rerender(<Anchor activeKey="usage" getContainer={() => scroller} items={items} />);
+    expect(marker.hidden).toBe(false);
+    expect(marker.getAttribute('style')).toContain('inset-block-start: 64px');
+    expect(marker.style.height).toBe('20px');
+
+    offsetTop.mockRestore();
+    offsetHeight.mockRestore();
+  });
 });

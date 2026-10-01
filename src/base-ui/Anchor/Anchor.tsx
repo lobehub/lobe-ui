@@ -1,6 +1,16 @@
 'use client';
 
-import { memo, type MouseEvent, useEffect, useRef } from 'react';
+import { cx } from 'antd-style';
+import {
+  type CSSProperties,
+  memo,
+  type MouseEvent,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
+import { useMergeRefs } from 'react-merge-refs';
 import useControlledState from 'use-merge-value';
 
 import { useEventCallback } from '@/hooks/useEventCallback';
@@ -54,12 +64,15 @@ const getActiveKey = (
 };
 
 const Anchor = memo<AnchorProps>(
-  ({ activeKey, className, getContainer, items, offset = 0, onChange, onClick, ...rest }) => {
+  ({ activeKey, className, getContainer, items, offset = 0, onChange, onClick, ref, ...rest }) => {
     const [mergedActiveKey, setMergedActiveKey] = useControlledState<string | null>(null, {
       onChange,
       value: activeKey,
     });
     const scrollLockRef = useRef(false);
+    const navRef = useRef<HTMLElement>(null);
+    const mergedRef = useMergeRefs([ref, navRef]);
+    const [marker, setMarker] = useState<CSSProperties>();
     const lockTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
     const resolveContainer = useEventCallback((): ScrollContainer => getContainer?.() ?? window);
@@ -85,6 +98,24 @@ const Anchor = memo<AnchorProps>(
     }, [items, offset, resolveContainer, spy]);
 
     useEffect(() => () => clearTimeout(lockTimerRef.current), []);
+
+    useLayoutEffect(() => {
+      const nav = navRef.current;
+      if (!nav) return;
+      const place = () => {
+        const link = [...nav.querySelectorAll<HTMLElement>('a[data-key]')].find(
+          (element) => element.dataset.key === mergedActiveKey,
+        );
+        setMarker(
+          link ? { height: link.offsetHeight, insetBlockStart: link.offsetTop } : undefined,
+        );
+      };
+      place();
+      if (typeof ResizeObserver === 'undefined') return;
+      const observer = new ResizeObserver(place);
+      observer.observe(nav);
+      return () => observer.disconnect();
+    }, [items, mergedActiveKey]);
 
     const handleClick = (event: MouseEvent<HTMLAnchorElement>, item: AnchorItem) => {
       onClick?.(event, item);
@@ -119,6 +150,7 @@ const Anchor = memo<AnchorProps>(
             <a
               aria-current={item.key === mergedActiveKey ? 'location' : undefined}
               className={styles.link}
+              data-key={item.key}
               href={item.href}
               title={typeof item.title === 'string' ? item.title : undefined}
               onClick={(event) => handleClick(event, item)}
@@ -132,7 +164,8 @@ const Anchor = memo<AnchorProps>(
     );
 
     return (
-      <nav className={className} {...rest}>
+      <nav className={cx(styles.root, className)} ref={mergedRef} {...rest}>
+        <span aria-hidden className={styles.marker} hidden={!marker} style={marker} />
         {renderList(items)}
       </nav>
     );

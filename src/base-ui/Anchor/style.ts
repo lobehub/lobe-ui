@@ -35,13 +35,42 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     gap: 8px;
 
     margin: 0;
-    padding: 0;
+    padding-block: 0;
+    padding-inline: 14px 0;
+    border-inline-start: 1px solid ${cssVar.colorBorderSecondary};
 
     list-style: none;
 
     & & {
       margin-block-start: 8px;
       padding-inline-start: 12px;
+      border-inline-start: none;
+
+      a {
+        font-size: 13px;
+      }
     }
+  `,
+  marker: css`
+    pointer-events: none;
+
+    position: absolute;
+    inset-inline-start: -1px;
+
+    width: 2px;
+    border-radius: 2px;
+
+    background: ${cssVar.colorText};
+
+    transition:
+      inset-block-start 0.2s ${cssVar.motionEaseOut},
+      height 0.2s ${cssVar.motionEaseOut};
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  `,
+  root: css`
+    position: relative;
   `,
 }));
