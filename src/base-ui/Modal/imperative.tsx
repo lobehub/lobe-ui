@@ -6,7 +6,7 @@ import { memo, useCallback, useEffect, useState, useSyncExternalStore } from 're
 import { createPortal } from 'react-dom';
 
 import { useIsClient } from '@/hooks/useIsClient';
-import { useAppElement } from '@/ThemeProvider';
+import { useAppElement } from '@/ThemeProvider/AppElementContext';
 import { registerDevSingleton } from '@/utils/devSingleton';
 
 import { Button } from '../Button';

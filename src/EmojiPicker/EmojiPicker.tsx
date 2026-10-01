@@ -2,7 +2,8 @@
 
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
-import { getLobeIconCDN, toc } from '@lobehub/icons';
+import { getLobeIconCDN } from '@lobehub/icons/es/features/getLobeIconCDN';
+import { toc } from '@lobehub/icons/es/toc';
 import { cx, useTheme } from 'antd-style';
 import chroma from 'chroma-js';
 import { SmileIcon, TrashIcon, UploadIcon } from 'lucide-react';
@@ -10,14 +11,14 @@ import { memo, useMemo, useRef, useState } from 'react';
 import useSWR from 'swr';
 import useMergeState from 'use-merge-value';
 
-import Avatar from '@/Avatar';
 import ActionIcon from '@/base-ui/ActionIcon';
+import Avatar from '@/base-ui/Avatar';
+import Tabs, { type TabsProps } from '@/base-ui/Tabs';
 import { Flexbox } from '@/Flex';
 import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 import Popover from '@/Popover';
-import Tabs, { type TabsProps } from '@/Tabs';
 import Tooltip from '@/Tooltip';
 
 import AvatarUploader from './AvatarUploader';
@@ -159,10 +160,15 @@ const EmojiPicker = memo<EmojiPickerProps>(
             paddingInline={10}
           >
             <Tabs
-              compact
               activeKey={tab}
               items={items}
-              size={'small'}
+              variant={'square'}
+              classNames={{
+                indicator: styles.tabsIndicator,
+                list: styles.tabsList,
+                root: styles.tabsRoot,
+                tab: styles.tab,
+              }}
               onChange={(key) => setTab(key as any)}
             />
             {allowDelete && (

@@ -10,7 +10,7 @@ import {
   useState,
 } from 'react';
 
-import { useAppElement } from '@/ThemeProvider';
+import { useAppElement } from '@/ThemeProvider/AppElementContext';
 
 import {
   countVirtualItems,

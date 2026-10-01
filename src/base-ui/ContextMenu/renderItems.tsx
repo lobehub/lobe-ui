@@ -16,20 +16,17 @@ import Switch from '@/base-ui/Switch';
 import common from '@/i18n/resources/en/common';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
+import type { BaseMenuItemGroupType, BaseSubMenuType } from '@/Menu/baseItem';
 import {
-  type BaseMenuItemGroupType,
-  type BaseSubMenuType,
   getItemKey,
   getItemLabel,
   hasAnyIcon,
   hasCheckboxAndIcon,
-  type MenuDividerType,
-  type MenuInfo,
-  type MenuItemType,
   renderIcon,
   type RenderItemContentOptions,
   type RenderOptions,
-} from '@/Menu';
+} from '@/Menu/renderUtils';
+import type { MenuDividerType, MenuInfo, MenuItemType } from '@/Menu/type';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
 import { useLayerZIndex } from '../zIndex';
@@ -72,7 +69,7 @@ const ContextMenuSubmenuPositioner = memo(
 
 ContextMenuSubmenuPositioner.displayName = 'ContextMenuSubmenuPositioner';
 
-export type { IconAlign, IconSpaceMode } from '@/Menu';
+export type { IconAlign, IconSpaceMode } from '@/Menu/renderUtils';
 
 const EmptyMenuItem = memo(() => {
   const { t } = useTranslation(common);

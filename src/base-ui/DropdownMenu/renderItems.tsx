@@ -6,20 +6,17 @@ import {
 } from 'react';
 
 import { SubmenuArrowIcon } from '@/base-ui/SubmenuArrowIcon';
+import type { BaseMenuItemGroupType, BaseSubMenuType } from '@/Menu/baseItem';
 import {
-  type BaseMenuItemGroupType,
-  type BaseSubMenuType,
   getItemKey,
   getItemLabel,
   hasAnyIcon,
   hasCheckboxAndIcon,
-  type MenuDividerType,
-  type MenuInfo,
-  type MenuItemType,
   renderIcon,
   type RenderItemContentOptions,
   type RenderOptions,
-} from '@/Menu';
+} from '@/Menu/renderUtils';
+import type { MenuDividerType, MenuInfo, MenuItemType } from '@/Menu/type';
 
 import {
   DropdownMenuCheckboxItemIndicator,
@@ -52,7 +49,7 @@ import {
   type DropdownMenuSwitchItem as DropdownMenuSwitchItemType,
 } from './type';
 
-export type { IconAlign, IconSpaceMode } from '@/Menu';
+export type { IconAlign, IconSpaceMode } from '@/Menu/renderUtils';
 
 const renderItemContent = (
   item: MenuItemType | BaseSubMenuType | DropdownMenuCheckboxItemType | DropdownMenuSwitchItemType,

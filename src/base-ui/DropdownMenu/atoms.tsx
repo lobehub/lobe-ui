@@ -14,7 +14,7 @@ import { MenuVirtualList, type VirtualListProps } from '@/base-ui/virtual';
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { CLASSNAMES } from '@/styles/classNames';
-import { useAppElement } from '@/ThemeProvider';
+import { useAppElement } from '@/ThemeProvider/AppElementContext';
 import { placementMap } from '@/utils/placement';
 
 import { useLayerZIndex } from '../zIndex';

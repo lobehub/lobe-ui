@@ -3,7 +3,7 @@
 import { cx } from 'antd-style';
 import { type FC, useMemo } from 'react';
 
-import Avatar from '@/Avatar';
+import Avatar from '@/base-ui/Avatar';
 import Block from '@/Block';
 import Grid from '@/Grid';
 

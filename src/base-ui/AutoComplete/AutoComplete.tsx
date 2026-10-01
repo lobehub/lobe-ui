@@ -9,7 +9,7 @@ import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { inputStyles, inputVariants } from '@/base-ui/Input';
 import { useLayerZIndex } from '@/base-ui/zIndex';
 import Icon from '@/Icon';
-import { useAppElement } from '@/ThemeProvider';
+import { useAppElement } from '@/ThemeProvider/AppElementContext';
 
 import { styles } from './style';
 import type { AutoCompleteOption, AutoCompleteProps } from './type';
