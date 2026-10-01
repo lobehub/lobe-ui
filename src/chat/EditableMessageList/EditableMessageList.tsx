@@ -5,12 +5,12 @@ import { Plus, Trash } from 'lucide-react';
 import { memo, useEffect, useReducer } from 'react';
 
 import ActionIcon from '@/base-ui/ActionIcon';
-import Button from '@/Button';
+import Button from '@/base-ui/Button';
+import Select from '@/base-ui/Select';
 import ControlInput from '@/EditableText/ControlInput';
 import { Flexbox } from '@/Flex';
 import editableMessageMessages from '@/i18n/resources/en/editableMessage';
 import { useTranslation } from '@/i18n/useTranslation';
-import Select from '@/Select';
 
 import { messagesReducer } from './messageReducer';
 import { type EditableMessageListProps } from './type';
@@ -48,7 +48,6 @@ const EditableMessageList = memo<EditableMessageListProps>(
             <Select
               disabled={disabled}
               style={{ width: 120 }}
-              styles={{ popup: { root: { zIndex: 100 } } }}
               value={item.role}
               options={[
                 { label: systemText, value: 'system' },

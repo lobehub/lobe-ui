@@ -91,6 +91,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     &::placeholder {
       color: ${cssVar.colorTextPlaceholder};
     }
+
+    /* the root shows focus via its border; outrank global :focus-visible rings */
+    &:focus-visible {
+      outline: none;
+    }
   `,
   invalid: css`
     &:has([data-invalid], [aria-invalid='true']) {

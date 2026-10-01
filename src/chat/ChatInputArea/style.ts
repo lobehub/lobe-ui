@@ -2,7 +2,7 @@ import { createStaticStyles, cx } from 'antd-style';
 
 import { lobeStaticStylish } from '@/styles';
 
-export const styles = createStaticStyles(({ css }) => {
+export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     container: css`
       position: relative;
@@ -15,10 +15,21 @@ export const styles = createStaticStyles(({ css }) => {
       padding-block: 8px 12px;
       padding-inline: 0;
     `,
+    fullscreen: css`
+      position: absolute;
+      z-index: 10;
+      inset-block-end: 0;
+      inset-inline: 0;
+
+      background: ${cssVar.colorBgContainer};
+    `,
     textarea: css`
+      align-items: stretch;
+
       height: 100% !important;
       padding-block: 0;
       padding-inline: 8px;
+
       line-height: 1.5;
     `,
     textareaContainer: css`

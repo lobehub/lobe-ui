@@ -1,12 +1,11 @@
 import type { Target } from 'ahooks/lib/useScroll';
-import type { BackTopProps } from 'antd';
-import type { CSSProperties } from 'react';
+import type { CSSProperties, MouseEventHandler } from 'react';
 
 export interface BackBottomProps {
   className?: string;
-  onClick?: BackTopProps['onClick'];
+  onClick?: MouseEventHandler<HTMLElement>;
   style?: CSSProperties;
   target: Target;
   text?: string;
-  visibilityHeight?: BackTopProps['visibilityHeight'];
+  visibilityHeight?: number;
 }

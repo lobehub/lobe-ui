@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 
-import { TextArea, type TextAreaProps } from '@/Input';
+import { TextArea, type TextAreaProps } from '@/base-ui/Input';
 
 interface MessageTextAreaProps extends Omit<TextAreaProps, 'onChange' | 'onBlur' | 'value'> {
   defaultValue: string;

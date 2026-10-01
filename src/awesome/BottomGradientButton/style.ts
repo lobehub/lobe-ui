@@ -8,7 +8,6 @@ export const styles = createStaticStyles(({ css, cssVar }) =>
     css`
       overflow: hidden;
       font-weight: bold;
-      color: ${cssVar.colorTextSecondary};
       transition: all 0.2s ease-in-out;
 
       &::before {
@@ -26,6 +25,10 @@ export const styles = createStaticStyles(({ css, cssVar }) =>
         background-image: linear-gradient(to right, transparent, ${cssVar.gold}, transparent);
 
         transition: all 0.2s ease-in-out;
+      }
+
+      &&:not(:hover) {
+        color: ${cssVar.colorTextSecondary};
       }
 
       &:hover {

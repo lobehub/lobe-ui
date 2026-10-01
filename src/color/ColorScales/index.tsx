@@ -1,8 +1,8 @@
 'use client';
 
-import { Space } from 'antd';
 import { memo } from 'react';
 
+import { ToastHost } from '@/base-ui/Toast';
 import { Flexbox } from '@/Flex';
 
 import type { ColorScaleItem } from '../types';
@@ -28,8 +28,8 @@ const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
   return (
     <Flexbox horizontal align={'center'} flex={1} justify={'center'}>
       <div style={{ padding: '8px 16px 32px 0' }}>
-        <Space direction={'vertical'} size={2}>
-          <Space key="scale-title" size={2}>
+        <Flexbox gap={2}>
+          <Flexbox horizontal align={'center'} gap={2} key="scale-title">
             <Flexbox horizontal align={'center'} className={styles.scaleRowTitle} key="scale-num" />
             {Array.from({ length: scale.light.length })
               .fill('')
@@ -57,13 +57,14 @@ const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
                   </div>
                 );
               })}
-          </Space>
+          </Flexbox>
           <ScaleRow key="light" name={name} scale={scale.light} title="light" />
           <ScaleRow key="lightA" name={name} scale={scale.lightA} title="lightA" />
           <ScaleRow key="dark" name={name} scale={scale.dark} title="dark" />
           <ScaleRow key="darkA" name={name} scale={scale.darkA} title="darkA" />
-        </Space>
+        </Flexbox>
       </div>
+      <ToastHost />
     </Flexbox>
   );
 });
