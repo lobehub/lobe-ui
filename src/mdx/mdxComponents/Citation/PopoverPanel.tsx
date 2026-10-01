@@ -1,9 +1,9 @@
 'use client';
 
-import { Popover } from 'antd';
 import { ArrowRightIcon } from 'lucide-react';
 import { type FC, type ReactNode, useMemo } from 'react';
 
+import Popover from '@/base-ui/Popover';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 

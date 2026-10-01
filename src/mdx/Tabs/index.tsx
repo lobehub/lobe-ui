@@ -3,8 +3,8 @@
 import { cx } from 'antd-style';
 import { type FC, type ReactNode, useState } from 'react';
 
+import LobeTabs, { type TabsProps as LobeTabsProps } from '@/base-ui/Tabs';
 import { Flexbox, type FlexboxProps } from '@/Flex';
-import { default as LobeTabs, type TabsProps as LobeTabsProps } from '@/Tabs';
 
 import { styles } from './style';
 
@@ -31,9 +31,14 @@ const Tabs: FC<TabsProps> = ({
   return (
     <Flexbox className={cx(styles.container, className)} {...rest}>
       <LobeTabs
-        compact
         activeKey={activeIndex}
         className={cx(styles.header, tabNavClassName)}
+        variant={'square'}
+        classNames={{
+          indicator: styles.indicator,
+          list: styles.list,
+          tab: styles.tab,
+        }}
         items={items.map((item, i) => ({
           key: String(i),
           label: item,

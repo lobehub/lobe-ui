@@ -5,12 +5,12 @@ import { Download, Expand } from 'lucide-react';
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import ActionIcon from '@/base-ui/ActionIcon';
+import Segmented from '@/base-ui/Segmented';
 import Spin from '@/base-ui/Spin';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
 import { actionsHoverCls, variants } from '@/Highlighter/style';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
-import Segmented from '@/Segmented';
 import { stopPropagation } from '@/utils/dom';
 import { downloadBlob } from '@/utils/downloadBlob';
 
@@ -101,6 +101,28 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
     position: relative;
     overflow: hidden;
     background: color-mix(in srgb, ${cssVar.colorText} 3%, ${cssVar.colorBgContainer});
+  `,
+  segmented: css`
+    && {
+      gap: 0;
+      padding: 2px;
+      border-radius: ${cssVar.borderRadiusSM};
+    }
+  `,
+  segmentedIndicator: css`
+    && {
+      border-radius: ${cssVar.borderRadiusXS};
+    }
+  `,
+  segmentedItem: css`
+    && {
+      height: 23px;
+      padding-inline: 7px;
+      border-radius: ${cssVar.borderRadiusXS};
+
+      font-size: 14px;
+      font-weight: 400;
+    }
   `,
   // Inline top-right toolbar. Tagged with `actionsHoverCls` so the Highlighter
   // container's `&:hover .${actionsHoverCls} { opacity: 1 }` rule flips it
@@ -441,6 +463,11 @@ const HtmlPreview = memo<HtmlPreviewProps>(
             options={segmentOptions}
             size={'small'}
             value={effectiveMode}
+            classNames={{
+              indicator: styles.segmentedIndicator,
+              item: styles.segmentedItem,
+              root: styles.segmented,
+            }}
             onChange={(v) => setMode(v as HtmlPreviewMode)}
           />
         )}

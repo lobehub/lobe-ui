@@ -1,12 +1,11 @@
 'use client';
 
-import type { InputRef } from 'antd';
 import { RotateCcw, Save } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
 
 import ActionIcon, { type ActionIconProps } from '@/base-ui/ActionIcon';
+import { Input, type InputProps } from '@/base-ui/Input';
 import { Flexbox } from '@/Flex';
-import Input, { type InputProps } from '@/Input';
 
 export interface ControlInputProps extends Omit<InputProps, 'onChange' | 'value' | 'onAbort'> {
   onChange?: (value: string) => void;
@@ -35,7 +34,7 @@ const ControlInput = memo<ControlInputProps>(
     texts,
     ...rest
   }) => {
-    const ref = useRef<InputRef>(null);
+    const ref = useRef<HTMLInputElement>(null);
     const [input, setInput] = useState<string>(value || '');
 
     const isChineseInput = useRef(false);

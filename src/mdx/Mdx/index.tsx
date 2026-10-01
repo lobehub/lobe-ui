@@ -10,7 +10,7 @@ import remarkGfm from 'remark-gfm';
 import remarkMath from 'remark-math';
 import { type Pluggable } from 'unified';
 
-import Alert from '@/Alert';
+import Alert from '@/base-ui/Alert';
 import { useMarkdownContent } from '@/hooks/useMarkdown';
 import { PreviewGroup } from '@/Image';
 import { Typography, type TypographyProps } from '@/Markdown';

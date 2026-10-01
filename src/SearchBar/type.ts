@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 
-import type { InputProps } from '@/Input';
+import type { InputProps } from '@/base-ui/Input';
 
 export interface SearchBarProps extends Omit<InputProps, 'styles' | 'classNames'> {
   classNames?: {
