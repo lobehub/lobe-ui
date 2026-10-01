@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.52.0](https://github.com/lobehub/lobe-ui/compare/v5.51.2...v5.52.0) (2026-10-01)
+
+### ✨ Features
+
+- **base-ui**: Table, DatePicker, ColorPicker, QRCode, Burger and more, closes [#675](https://github.com/lobehub/lobe-ui/issues/675) ([8ee1c47](https://github.com/lobehub/lobe-ui/commit/8ee1c47))
+
 ## [5.51.2](https://github.com/lobehub/lobe-ui/compare/v5.51.1...v5.51.2) (2026-09-28)
 
 ### 💄 Styles
