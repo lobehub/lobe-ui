@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.53.0](https://github.com/lobehub/lobe-ui/compare/v5.52.0...v5.53.0) (2026-10-01)
+
+### ✨ Features
+
+- **eslint**: Ban antd and root wrappers replaced by base-ui batches 8–10, closes [#685](https://github.com/lobehub/lobe-ui/issues/685) ([b0599bd](https://github.com/lobehub/lobe-ui/commit/b0599bd))
+
 # [5.52.0](https://github.com/lobehub/lobe-ui/compare/v5.51.2...v5.52.0) (2026-10-01)
 
 ### ✨ Features
