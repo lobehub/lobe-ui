@@ -273,7 +273,7 @@ export function createModalSystem(): ModalSystem {
       content: <ConfirmBody config={config} />,
       styles: { content: { padding: 0 } },
       title: config.title,
-      width: 420,
+      width: config.width ?? 420,
     });
 
     return {
