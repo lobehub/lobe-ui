@@ -1,0 +1,23 @@
+---
+title: Carousel
+description: Slide carousel with autoplay, loop, adaptive height, pill dots and an imperative ref.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="Carousel" from=".." />
+
+Each child is a slide. `autoplay` takes `true` (5s) or an interval in ms and pauses while hovered unless `pauseOnHover={false}`. `adaptiveHeight` animates the viewport to the active slide's height. The ref exposes `goTo(index)`, `next()` and `prev()`. Touch swipes change slides; inactive slides are `inert`.
+
+### Migrating from antd Carousel
+
+- `beforeChange` / `afterChange` → `onIndexChange(index)`; controlled `index` is supported.
+- `autoplaySpeed` → `autoplay={ms}`; `dots={false}` and `ref.goTo` keep working.
+- `effect="fade"`, `vertical`, `dotPosition`, `draggable` and other slick settings are not supported.

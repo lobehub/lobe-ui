@@ -1,0 +1,22 @@
+---
+title: Anchor
+description: Scroll-spy table of contents that highlights the heading at the top of a scroll container.
+category: Navigation
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="Anchor" from=".." />
+
+The active item is the last target whose top has passed `offset` pixels below the top of the container. `getContainer` returns the scroll element (default `window`) and is only called in effects, so it is SSR-safe. Clicking a link smooth-scrolls (instant under reduced motion) and keeps that link active until the scroll ends; call `event.preventDefault()` in `onClick` to handle navigation yourself.
+
+### Migrating from antd Anchor
+
+- `affix`, `bounds`, `showInkInFixed`, `targetOffset`, `replace` and `direction` are not supported; the list is always vertical with no ink bar.
+- `onChange` receives the item `key` (not the `href`); `activeKey` controls the highlight.
