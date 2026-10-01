@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.54.0](https://github.com/lobehub/lobe-ui/compare/v5.53.0...v5.54.0) (2026-10-01)
+
+### ✨ Features
+
+- **chat**: Move chat, mobile, awesome, color and storybook subpaths off antd, closes [#686](https://github.com/lobehub/lobe-ui/issues/686) ([ebb89e4](https://github.com/lobehub/lobe-ui/commit/ebb89e4))
+
 # [5.53.0](https://github.com/lobehub/lobe-ui/compare/v5.52.0...v5.53.0) (2026-10-01)
 
 ### ✨ Features
