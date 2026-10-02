@@ -49,7 +49,7 @@ jobs:
           app-id: ${{ vars.LOBEHUB_BOT_APP_ID }}
           private-key: ${{ secrets.LOBEHUB_BOT_APP_PRIVATE_KEY }}
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
