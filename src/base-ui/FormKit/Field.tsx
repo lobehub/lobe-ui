@@ -6,6 +6,7 @@ import {
   isValidElement,
   memo,
   type ReactElement,
+  type ReactNode,
   useCallback,
   useEffect,
   useId,
@@ -24,7 +25,7 @@ import type { FieldValidator } from './engine/types';
 import { getInternals } from './instance';
 import { toFieldValidator } from './schema';
 import { fieldKitStyles } from './style';
-import type { FieldRenderProps, FormFieldProps } from './type';
+import type { FieldRenderProps, FormFieldProps, FormValues } from './type';
 import { useStoreSelector } from './useStoreSelector';
 
 const isEmpty = (value: unknown) =>
@@ -279,4 +280,6 @@ const FormField = memo<FormFieldProps>(
 
 FormField.displayName = 'FormField';
 
-export default FormField;
+export default FormField as unknown as (<T extends FormValues = FormValues>(
+  props: FormFieldProps<T>,
+) => ReactNode) & { displayName?: string };

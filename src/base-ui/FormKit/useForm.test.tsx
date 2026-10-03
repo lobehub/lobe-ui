@@ -1,6 +1,7 @@
 import { act, render, renderHook, screen } from '@testing-library/react';
 import { z } from 'zod';
 
+import type { FormInstance } from './type';
 import { useForm } from './useForm';
 import { useWatch } from './useWatch';
 
@@ -121,7 +122,7 @@ describe('useForm', () => {
 describe('useWatch', () => {
   it('re-renders only when the watched path changes', () => {
     let renders = 0;
-    let form!: ReturnType<typeof useForm<{ a: string; b: string }>>;
+    let form!: FormInstance<{ a: string; b: string }>;
     const Watcher = () => {
       renders += 1;
       const a = useWatch(form, 'a');
@@ -141,7 +142,7 @@ describe('useWatch', () => {
   });
 
   it('accepts a selector', () => {
-    let form!: ReturnType<typeof useForm<{ a: number; b: number }>>;
+    let form!: FormInstance<{ a: number; b: number }>;
     const Sum = () => {
       const sum = useWatch(form, (v) => v.a + v.b);
       return <span data-testid="sum">{sum}</span>;

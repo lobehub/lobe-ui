@@ -3,11 +3,18 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { createFormInstance, getIn, getInternals, leafPaths, setIn } from './instance';
+import type { InferSchemaInput, StandardSchema } from './schema';
 import type { DeepPartial, FormInstance, FormValues, UseFormOptions } from './type';
 
-export const useForm = <T extends FormValues = FormValues>(
+export function useForm<S extends StandardSchema<FormValues>>(
+  options: UseFormOptions<InferSchemaInput<S>> & { schema: S },
+): FormInstance<InferSchemaInput<S>>;
+export function useForm<T extends FormValues = FormValues>(
+  options?: UseFormOptions<T>,
+): FormInstance<T>;
+export function useForm<T extends FormValues = FormValues>(
   options: UseFormOptions<T> = {},
-): FormInstance<T> => {
+): FormInstance<T> {
   const [form] = useState(() =>
     createFormInstance<T>({
       initialValues: options.initialValues ?? options.values ?? {},
@@ -61,4 +68,4 @@ export const useForm = <T extends FormValues = FormValues>(
   }, [form, values]);
 
   return form;
-};
+}
