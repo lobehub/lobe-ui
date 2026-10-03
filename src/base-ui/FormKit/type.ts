@@ -148,7 +148,7 @@ export interface FormFieldProps<T extends FormValues = FormValues> extends Field
   label?: ReactNode;
   layout?: FormLayout;
   minWidth?: string | number;
-  name: FieldPath<T>;
+  name?: FieldPath<T>;
   render?: (field: FieldRenderProps) => ReactNode;
   required?: boolean | string;
   style?: CSSProperties;

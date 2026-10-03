@@ -55,6 +55,29 @@ describe('<Form>', () => {
     expect((screen.getByLabelText('Name') as HTMLInputElement).value).toBe('Ada');
   });
 
+  it('renders an item without name as an unbound layout row', () => {
+    const onChange = vi.fn();
+    render(
+      <Host
+        render={(f) => (
+          <Form
+            form={f}
+            itemsType="flat"
+            items={[
+              { children: <input defaultValue="free" onChange={onChange} />, label: 'Free' },
+              { children: <input />, label: 'Name', name: 'name' },
+            ]}
+          />
+        )}
+      />,
+    );
+    expect(screen.getByText('Free')).toBeTruthy();
+    const free = screen.getByDisplayValue('free') as HTMLInputElement;
+    fireEvent.change(free, { target: { value: 'next' } });
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(form.getValues()).toEqual({ email: '', name: 'Ada' });
+  });
+
   it('renders flat items, skips hidden ones, then children after items', () => {
     render(
       <Host

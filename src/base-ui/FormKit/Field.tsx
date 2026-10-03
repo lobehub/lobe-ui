@@ -48,7 +48,7 @@ type ControlProps = Pick<
   | 'validateDebounce'
   | 'validateOn'
   | 'valueProp'
-> & { id: string };
+> & { id: string; name: string };
 
 const FieldControl = memo<ControlProps>(
   ({
@@ -207,7 +207,9 @@ const FormField = memo<FormFieldProps>(
 
     if (hidden) return null;
 
-    const control = (
+    const control = !name ? (
+      children
+    ) : (
       <FieldControl
         bare={bare}
         deps={deps}
@@ -226,7 +228,7 @@ const FormField = memo<FormFieldProps>(
       </FieldControl>
     );
 
-    if (bare) return control;
+    if (bare) return <>{control}</>;
 
     const mergedLayout = layout || (mobile ? 'vertical' : config.layout);
     const mergedVariant = variant || config.variant;
@@ -236,7 +238,7 @@ const FormField = memo<FormFieldProps>(
       <>
         {divider && <FormDivider visible={mergedVariant !== 'borderless'} />}
         <div className={cx(fieldVariants({ layout: mergedLayout }), className)} style={style}>
-          <label className={fieldStyles.label} htmlFor={render ? undefined : id}>
+          <label className={fieldStyles.label} htmlFor={render || !name ? undefined : id}>
             <FormTitle
               avatar={avatar}
               desc={desc}

@@ -72,7 +72,7 @@ const Form = <T extends FormValues>({
     <FormField
       className={classNames?.item}
       divider={index !== 0}
-      key={item.name}
+      key={item.name ?? index}
       style={customStyles?.item}
       {...(item as FormFieldProps)}
     />

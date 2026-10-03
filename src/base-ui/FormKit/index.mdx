@@ -72,7 +72,7 @@ import { Form, useForm, useWatch } from '@lobehub/ui/base-ui/form';
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| name | Dot path, e.g. `agent.model`, `env.0.key` | `FieldPath<T>` | - |
+| name | Dot path, e.g. `agent.model`, `env.0.key`. Omit it for a layout-only row whose child manages its own state | `FieldPath<T>` | - |
 | label / desc / extra / tag / avatar | Layout content | `ReactNode` | - |
 | required | Built-in empty check plus asterisk; a string replaces the message | `boolean \| string` | - |
 | validate | Field-level schema or function returning an error string | `StandardSchema \| (value, values) => string \| undefined \| Promise` | - |
