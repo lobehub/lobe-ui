@@ -94,4 +94,4 @@ const Input = memo<InputProps>(
 
 Input.displayName = 'Input';
 
-export default Input;
+export default Object.assign(Input, { formBinding: { emptyValue: '' } as const });

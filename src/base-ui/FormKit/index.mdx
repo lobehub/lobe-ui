@@ -82,6 +82,7 @@ import { Form, useForm, useWatch } from '@lobehub/ui/base-ui/form';
 | valueProp | Prop that receives the value | `string` | `'value'` |
 | trigger | Prop that reports changes | `string` | `'onChange'` |
 | getValue | Map the trigger arguments to the stored value | `(...args) => unknown` | event value |
+| emptyValue | Value passed to the control while the field is `undefined`, so it stays controlled. lobe-ui inputs declare `''` (`InputNumber`: `null`) | `unknown` | control's `formBinding.emptyValue` |
 | render | Render the control yourself | `(field: FieldRenderProps) => ReactNode` | - |
 | bare | Render only the control, without label or layout | `boolean` | - |
 | hidden / divider / layout / minWidth / variant | Layout | - | - |

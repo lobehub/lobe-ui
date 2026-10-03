@@ -85,6 +85,7 @@ export interface UseFormOptions<T extends FormValues> {
 }
 
 export interface FieldBinding {
+  emptyValue?: unknown;
   getValue?: (...args: any[]) => unknown;
   trigger?: string;
   valueProp?: string;
