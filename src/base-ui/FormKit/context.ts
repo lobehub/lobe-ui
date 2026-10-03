@@ -7,7 +7,6 @@ import type { FormInstance, FormValues } from './type';
 
 export interface FormKitContextValue {
   form: FormInstance<any>;
-  itemMinWidth?: string | number;
   layout: FormLayout;
   variant: FormVariant;
 }
