@@ -14,6 +14,10 @@ export const styles = createStaticStyles(({ css }) => ({
 
     width: 100%;
 
+    [data-form-group-body] {
+      padding-block: 0;
+    }
+
     ${responsive.sm} {
       gap: 0 !important;
     }
@@ -108,6 +112,7 @@ export const groupStyles = createStaticStyles(({ css, cssVar }) => ({
     flex-direction: column;
   `,
   bodyBoxed: css`
+    padding-block: 16px;
     padding-inline: 16px;
   `,
   chevron: css`

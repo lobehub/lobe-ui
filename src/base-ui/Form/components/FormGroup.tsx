@@ -79,7 +79,10 @@ const FormGroup = memo<FormGroupProps>(
               {extra}
             </div>
           )}
-          <div className={cx(groupStyles.body, !isBorderless && groupStyles.bodyBoxed)}>
+          <div
+            data-form-group-body
+            className={cx(groupStyles.body, !isBorderless && groupStyles.bodyBoxed)}
+          >
             {children}
           </div>
         </div>
@@ -106,7 +109,10 @@ const FormGroup = memo<FormGroupProps>(
           {extra}
         </div>
         <Collapsible.Panel className={groupStyles.panel}>
-          <div className={cx(groupStyles.body, !isBorderless && groupStyles.bodyBoxed)}>
+          <div
+            data-form-group-body
+            className={cx(groupStyles.body, !isBorderless && groupStyles.bodyBoxed)}
+          >
             {children}
           </div>
         </Collapsible.Panel>
