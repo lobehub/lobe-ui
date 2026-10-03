@@ -99,6 +99,21 @@ describe('<Form>', () => {
     expect(screen.getByLabelText('Email').parentElement!.style.width).toBe('');
   });
 
+  it('applies itemMinWidth to items only, not to JSX fields', () => {
+    render(
+      <Host
+        render={(f) => (
+          <Form form={f} itemMinWidth={300} layout="horizontal">
+            <FormField label="Name" name="name">
+              <input />
+            </FormField>
+          </Form>
+        )}
+      />,
+    );
+    expect(screen.getByLabelText('Name').parentElement!.style.width).toBe('');
+  });
+
   it('links an unnamed field label to the child id', () => {
     render(
       <Host

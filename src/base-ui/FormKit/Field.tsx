@@ -239,13 +239,12 @@ const FormField = memo<FormFieldProps>(
           : undefined;
     const mergedLayout = layout || (mobile ? 'vertical' : config.layout);
     const mergedVariant = variant || config.variant;
-    const mergedMinWidth = minWidth ?? config.itemMinWidth;
     const controlWidth =
-      mergedLayout === 'vertical' || mergedMinWidth === undefined || mergedMinWidth === ''
+      mergedLayout === 'vertical' || minWidth === undefined || minWidth === ''
         ? undefined
-        : typeof mergedMinWidth === 'number'
-          ? `${mergedMinWidth}px`
-          : mergedMinWidth;
+        : typeof minWidth === 'number'
+          ? `${minWidth}px`
+          : minWidth;
 
     return (
       <>

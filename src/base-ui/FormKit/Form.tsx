@@ -44,11 +44,10 @@ const Form = <T extends FormValues>({
   const context = useMemo<FormKitContextValue>(
     () => ({
       form,
-      itemMinWidth,
       layout: layout || (mobile ? 'vertical' : 'horizontal'),
       variant,
     }),
-    [form, itemMinWidth, layout, mobile, variant],
+    [form, layout, mobile, variant],
   );
 
   const mergedRef = useCallback(
@@ -76,7 +75,7 @@ const Form = <T extends FormValues>({
       key={item.name ?? index}
       style={customStyles?.item}
       {...(item as FormFieldProps)}
-      minWidth={'minWidth' in item && item.minWidth === undefined ? '' : item.minWidth}
+      minWidth={'minWidth' in item ? item.minWidth : itemMinWidth}
     />
   );
 
