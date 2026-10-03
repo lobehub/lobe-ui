@@ -78,6 +78,21 @@ describe('<Form>', () => {
     expect(form.getValues()).toEqual({ email: '', name: 'Ada' });
   });
 
+  it('links an unnamed field label to the child id', () => {
+    render(
+      <Host
+        render={(f) => (
+          <Form
+            form={f}
+            items={[{ children: <input id="free" />, label: 'Free' }]}
+            itemsType="flat"
+          />
+        )}
+      />,
+    );
+    expect(screen.getByLabelText('Free').id).toBe('free');
+  });
+
   it('submits from a button outside the form through the native id', async () => {
     const onSubmit = vi.fn();
     render(

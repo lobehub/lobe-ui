@@ -230,6 +230,13 @@ const FormField = memo<FormFieldProps>(
 
     if (bare) return <>{control}</>;
 
+    const labelFor = render
+      ? undefined
+      : name
+        ? id
+        : isValidElement<{ id?: string }>(children)
+          ? children.props.id
+          : undefined;
     const mergedLayout = layout || (mobile ? 'vertical' : config.layout);
     const mergedVariant = variant || config.variant;
     const mergedMinWidth = minWidth ?? config.itemMinWidth;
@@ -238,7 +245,7 @@ const FormField = memo<FormFieldProps>(
       <>
         {divider && <FormDivider visible={mergedVariant !== 'borderless'} />}
         <div className={cx(fieldVariants({ layout: mergedLayout }), className)} style={style}>
-          <label className={fieldStyles.label} htmlFor={render || !name ? undefined : id}>
+          <label className={fieldStyles.label} htmlFor={labelFor}>
             <FormTitle
               avatar={avatar}
               desc={desc}
