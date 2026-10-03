@@ -5,7 +5,6 @@ import type { FormInstance, FormValues } from './type';
 
 interface InstanceInternals {
   engine: FormEngine;
-  initialValues: FormValues;
   onSubmit?: (values: FormValues) => unknown;
   validateOn: ValidateOn;
 }
@@ -18,11 +17,15 @@ export const getInternals = (form: object): InstanceInternals => {
   return found;
 };
 
-const isPlainObject = (value: unknown): value is Record<string, unknown> =>
-  typeof value === 'object' && value !== null && !Array.isArray(value);
+const isPlainObject = (value: unknown): value is Record<string, unknown> => {
+  if (typeof value !== 'object' || value === null) return false;
+  const proto = Object.getPrototypeOf(value);
+  return proto === Object.prototype || proto === null;
+};
 
 export const leafPaths = (value: unknown, prefix = ''): string[] => {
-  if (!isPlainObject(value)) return prefix ? [prefix] : [];
+  if (!isPlainObject(value) || (prefix && Object.keys(value).length === 0))
+    return prefix ? [prefix] : [];
   return Object.entries(value).flatMap(([key, child]) =>
     leafPaths(child, prefix ? `${prefix}.${key}` : key),
   );
@@ -64,10 +67,7 @@ export const createFormInstance = <T extends FormValues>({
     isDirty: () => engine.getStatus().dirty,
     isTouched: (name) => engine.isTouched(name),
     reset: (values) => engine.reset(values),
-    resetField: (name) => {
-      engine.setValue(name, getIn(internals.get(form)!.initialValues, name), 'api');
-      engine.setErrors({ [name]: undefined });
-    },
+    resetField: (name) => engine.resetField(name),
     setErrors: (errors) => engine.setErrors(errors as Record<string, string | undefined>),
     setSchema: (next) => engine.setFormValidator(next ? schemaToFormValidator(next) : undefined),
     setValue: ((name: string, value: unknown, options?: { asUser?: boolean }) =>
@@ -92,6 +92,6 @@ export const createFormInstance = <T extends FormValues>({
     validate: (names) => engine.validate(names) as ReturnType<FormInstance<T>['validate']>,
   };
 
-  internals.set(form, { engine, initialValues, validateOn });
+  internals.set(form, { engine, validateOn });
   return form;
 };

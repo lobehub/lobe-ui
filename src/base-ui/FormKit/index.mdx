@@ -45,7 +45,7 @@ import { Form, useForm, useWatch } from '@lobehub/ui/base-ui/form';
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
 | schema | Standard Schema (zod, valibot…) for the whole form; infers `T` | `StandardSchema` | - |
-| initialValues | Values the form starts from and resets to | `T` | `{}` |
+| initialValues | Values the form starts from. `reset` returns to the latest values set by code, by `values` sync or by a successful submit | `T` | `{}` |
 | values | External values synced into untouched fields when they change | `T` | - |
 | onSubmit | Called with values after a valid submit | `(values: T) => unknown` | - |
 | onValuesChange | Called after user edits with the changed slice and all values | `(changed: DeepPartial<T>, values: T) => void` | - |
@@ -62,9 +62,9 @@ import { Form, useForm, useWatch } from '@lobehub/ui/base-ui/form';
 | `setValue(name, value, { asUser? })` | Write a value; code changes do not mark the field touched |
 | `setValues(partial, { asUser? })` | Write several values |
 | `validate(names?)` | Resolve to `{ valid, errors }` |
-| `setErrors(map)` | Show server errors; each clears on that field's next edit |
+| `setErrors(map)` | Show server errors; each clears on that field's next edit or on the next submit |
 | `submit()` / `reset(values?)` / `resetField(name)` | Submit and reset |
-| `isTouched(name)` / `isDirty()` | State |
+| `isTouched(name)` / `isDirty()` | State. A path counts as touched when it or a parent/child path was edited; dirty compares user edits with the reset baseline |
 | `subscribe(selector, callback)` | Subscribe outside React; returns an unsubscribe function |
 | `setSchema(schema)` | Replace the form schema |
 

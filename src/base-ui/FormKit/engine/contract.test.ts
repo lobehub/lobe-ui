@@ -258,5 +258,88 @@ describe.each(engines)('FormEngine contract: %s', (_name, create) => {
       expect(e.getStatus().submitting).toBe(false);
       expect(e.getStatus().dirty).toBe(false);
     });
+
+    it('drops server errors so the user can resubmit', async () => {
+      const e = make({ a: 'x' });
+      e.registerField('a', {});
+      e.setErrors({ a: 'taken' });
+      const onSubmit = vi.fn();
+      expect((await e.submit(onSubmit)).valid).toBe(true);
+      expect(onSubmit).toHaveBeenCalledTimes(1);
+    });
+
+    it('runs onSubmit once for concurrent submits', async () => {
+      const e = make({ a: 'x' });
+      e.registerField('a', { validate: async () => undefined });
+      const onSubmit = vi.fn(() => wait(5));
+      await Promise.all([e.submit(onSubmit), e.submit(onSubmit)]);
+      expect(onSubmit).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('lifecycle', () => {
+    it('registers no global listeners, so an undestroyed engine can be collected', () => {
+      const spy = vi.spyOn(window, 'addEventListener');
+      create({ a: '' });
+      expect(spy).not.toHaveBeenCalled();
+      spy.mockRestore();
+    });
+  });
+
+  describe('touched and dirty', () => {
+    it('counts a path touched when an ancestor or descendant was edited', () => {
+      const e = make({ items: [{ k: 'a' }], provider: { x: 1 } });
+      e.setValue('items.0.k', 'typed', 'user');
+      e.setValue('provider', { x: 2 }, 'user');
+      expect(e.isTouched('items')).toBe(true);
+      expect(e.isTouched('provider.x')).toBe(true);
+      expect(e.isTouched('item')).toBe(false);
+    });
+
+    it('is no longer dirty once the user reverts to the baseline', () => {
+      const e = make({ a: 'x' });
+      e.setValue('a', 'y', 'user');
+      expect(e.getStatus().dirty).toBe(true);
+      e.setValue('a', 'x', 'user');
+      expect(e.getStatus().dirty).toBe(false);
+    });
+
+    it('code changes move the baseline that reset and resetField return to', () => {
+      const e = make({});
+      e.setValue('a', 'server', 'api');
+      expect(e.getStatus().dirty).toBe(false);
+      e.setValue('a', 'typed', 'user');
+      e.resetField('a');
+      expect(e.getValue('a')).toBe('server');
+      e.setValue('a', 'typed', 'user');
+      e.reset();
+      expect(e.getValue('a')).toBe('server');
+    });
+
+    it('a successful submit becomes the baseline for reset and resetField', async () => {
+      const e = make({ a: 'x', b: 'x' });
+      e.setValue('a', 'saved', 'user');
+      e.setValue('b', 'saved', 'user');
+      await e.submit();
+      e.setValue('a', 'later', 'user');
+      e.setValue('b', 'later', 'user');
+      e.resetField('a');
+      expect(e.getValue('a')).toBe('saved');
+      e.reset();
+      expect(e.getValue('b')).toBe('saved');
+    });
+
+    it('resetField clears the field error, touched and dirty', async () => {
+      const e = make({ a: 'x' });
+      e.registerField('a', { validate: required });
+      e.setValue('a', '', 'user');
+      e.blurField('a');
+      await wait();
+      expect(e.getField('a').error).toBe('required');
+      e.resetField('a');
+      await wait();
+      expect(e.getField('a')).toMatchObject({ error: undefined, touched: false, value: 'x' });
+      expect(e.getStatus().dirty).toBe(false);
+    });
   });
 });

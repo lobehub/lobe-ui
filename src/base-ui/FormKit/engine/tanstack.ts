@@ -1,4 +1,5 @@
-import { FormApi } from '@tanstack/form-core';
+import { FormApi, getBy, setBy } from '@tanstack/form-core';
+import isEqual from 'fast-deep-equal';
 
 import type {
   ChangeSource,
@@ -15,6 +16,11 @@ import type {
 
 const toEnginePath = (path: string) => path.replaceAll(/\.(\d+)(?=\.|$)/g, '[$1]');
 
+const isSameOrNested = (a: string, b: string) =>
+  a === b || a.startsWith(`${b}.`) || b.startsWith(`${a}.`);
+
+const isUnder = (path: string, root: string) => path === root || path.startsWith(`${root}.`);
+
 interface FieldRuntime {
   registration: FieldRegistration;
   timer?: ReturnType<typeof setTimeout>;
@@ -23,19 +29,21 @@ interface FieldRuntime {
 
 export const createTanstackEngine: CreateEngine = (initialValues) => {
   const form = new FormApi({ defaultValues: initialValues });
-  const unmount = form.mount();
 
   const fields = new Map<string, FieldRuntime>();
   const fieldErrors = new Map<string, string>();
   const formErrors = new Map<string, string>();
   const serverErrors = new Map<string, string>();
   const validating = new Set<string>();
-  const blurred = new Set<string>();
+  const touched = new Set<string>();
   const listeners = new Set<() => void>();
   const valueListeners = new Set<(change: ValueChange) => void>();
   const snapshots = new Map<string, FieldSnapshot>();
 
   let formValidator: FormValidator | undefined;
+  let baseline = initialValues;
+  let dirtyCache: { baseline: unknown; dirty: boolean; values: unknown } | undefined;
+  let inflightSubmit: Promise<ValidateResult> | undefined;
   let submitting = false;
   let submitCount = 0;
   let status: FormStatus = { dirty: false, submitCount: 0, submitting: false };
@@ -47,8 +55,10 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
 
   const getValue = (path: string) => form.getFieldValue(toEnginePath(path) as never) as unknown;
   const getValues = () => form.state.values as Record<string, unknown>;
-  const isTouched = (path: string) =>
-    blurred.has(path) || Boolean(form.getFieldMeta(toEnginePath(path) as never)?.isTouched);
+  const isTouched = (path: string) => {
+    for (const entry of touched) if (isSameOrNested(entry, path)) return true;
+    return false;
+  };
   const errorOf = (path: string) =>
     serverErrors.get(path) ?? fieldErrors.get(path) ?? formErrors.get(path);
 
@@ -73,7 +83,10 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
   };
 
   const getStatus = (): FormStatus => {
-    const dirty = Boolean(form.state.isDirty);
+    const values = getValues();
+    if (dirtyCache?.values !== values || dirtyCache.baseline !== baseline)
+      dirtyCache = { baseline, dirty: !isEqual(values, baseline), values };
+    const { dirty } = dirtyCache;
     if (
       status.dirty !== dirty ||
       status.submitting !== submitting ||
@@ -134,10 +147,17 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
     void runField(path, true);
   };
 
-  const clearErrorsUnder = (path: string) => {
-    const prefix = `${path}.`;
+  const clearErrorsUnder = (path: string, inclusive = false) => {
     for (const map of [fieldErrors, formErrors, serverErrors])
-      for (const key of map.keys()) if (key.startsWith(prefix)) map.delete(key);
+      for (const key of map.keys())
+        if (inclusive ? isUnder(key, path) : key.startsWith(`${path}.`)) map.delete(key);
+  };
+
+  const resetTo = (values: Record<string, unknown>) => {
+    clearRuntimeState();
+    baseline = values;
+    form.reset(values);
+    notify();
   };
 
   const emitValueChange = (path: string, source: ChangeSource) => {
@@ -145,6 +165,7 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
   };
 
   const afterUserChange = (path: string) => {
+    touched.add(path);
     serverErrors.delete(path);
     schedule(path, 'change');
     for (const [other, runtime] of fields) {
@@ -178,19 +199,39 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
     formErrors.clear();
     serverErrors.clear();
     validating.clear();
-    blurred.clear();
+    touched.clear();
+  };
+
+  const runSubmit = async (onSubmit?: (values: Record<string, unknown>) => unknown) => {
+    submitCount += 1;
+    serverErrors.clear();
+    for (const path of fields.keys()) touched.add(path);
+    const result = await validate();
+    if (!result.valid) {
+      notify();
+      return result;
+    }
+    submitting = true;
+    notify();
+    try {
+      await onSubmit?.(getValues());
+      resetTo(getValues());
+    } finally {
+      submitting = false;
+      notify();
+    }
+    return result;
   };
 
   const engine: FormEngine = {
     blurField: (path) => {
-      blurred.add(path);
+      touched.add(path);
       schedule(path, 'blur');
       notify();
     },
     destroy: () => {
       for (const runtime of fields.values()) clearTimeout(runtime.timer);
       storeSubscription.unsubscribe();
-      unmount();
       listeners.clear();
       valueListeners.clear();
     },
@@ -201,6 +242,7 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
     isTouched,
     moveItem: (path, from, to) => {
       form.moveFieldValues(toEnginePath(path) as never, from, to);
+      touched.add(path);
       clearErrorsUnder(path);
       emitValueChange(path, 'user');
       notify();
@@ -211,6 +253,7 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
     },
     pushItem: (path, item) => {
       form.pushFieldValue(toEnginePath(path) as never, item as never);
+      touched.add(path);
       emitValueChange(path, 'user');
       notify();
     },
@@ -229,14 +272,25 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
     },
     removeItem: (path, index) => {
       void form.removeFieldValue(toEnginePath(path) as never, index);
+      touched.add(path);
       clearErrorsUnder(path);
       emitValueChange(path, 'user');
       notify();
     },
-    reset: (values) => {
-      clearRuntimeState();
-      if (values) form.reset(values);
-      else form.reset();
+    reset: (values) => resetTo(values ?? baseline),
+    resetField: (path) => {
+      for (const [key, runtime] of fields) {
+        if (!isUnder(key, path)) continue;
+        clearTimeout(runtime.timer);
+        runtime.token += 1;
+        validating.delete(key);
+      }
+      for (const entry of touched) if (isUnder(entry, path)) touched.delete(entry);
+      clearErrorsUnder(path, true);
+      form.setFieldValue(toEnginePath(path) as never, getBy(baseline, toEnginePath(path)), {
+        dontUpdateMeta: true,
+      });
+      emitValueChange(path, 'api');
       notify();
     },
     setErrors: (errors) => {
@@ -247,34 +301,16 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
       formValidator = validator;
     },
     setValue: (path, value, source) => {
-      form.setFieldValue(
-        toEnginePath(path) as never,
-        value as never,
-        source === 'api' ? { dontUpdateMeta: true } : undefined,
-      );
+      form.setFieldValue(toEnginePath(path) as never, value as never, { dontUpdateMeta: true });
+      if (source === 'api') baseline = setBy(baseline, toEnginePath(path), () => value);
       emitValueChange(path, source);
       if (source === 'user') afterUserChange(path);
     },
-    submit: async (onSubmit) => {
-      submitCount += 1;
-      for (const path of fields.keys()) blurred.add(path);
-      const result = await validate();
-      if (!result.valid) {
-        notify();
-        return result;
-      }
-      submitting = true;
-      notify();
-      try {
-        await onSubmit?.(getValues());
-        const values = getValues();
-        clearRuntimeState();
-        form.reset(values);
-      } finally {
-        submitting = false;
-        notify();
-      }
-      return result;
+    submit: (onSubmit) => {
+      inflightSubmit ??= runSubmit(onSubmit).finally(() => {
+        inflightSubmit = undefined;
+      });
+      return inflightSubmit;
     },
     subscribe: (listener) => {
       listeners.add(listener);

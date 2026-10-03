@@ -57,6 +57,7 @@ export interface FormEngine {
   registerField: (path: string, registration: FieldRegistration) => () => void;
   removeItem: (path: string, index: number) => void;
   reset: (values?: Record<string, unknown>) => void;
+  resetField: (path: string) => void;
   setErrors: (errors: Record<string, string | undefined>) => void;
   setFormValidator: (validator: FormValidator | undefined) => void;
   setValue: (path: string, value: unknown, source: ChangeSource) => void;

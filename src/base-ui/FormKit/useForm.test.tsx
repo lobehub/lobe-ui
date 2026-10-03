@@ -97,6 +97,37 @@ describe('useForm', () => {
     expect(result.current.getValues()).toEqual({ a: 'typed', b: 'server-2' });
   });
 
+  it('values sync keeps edits made inside list rows', () => {
+    const { result, rerender } = renderHook(({ values }) => useForm({ values }), {
+      initialProps: { values: { items: [{ k: 'a' }] } },
+    });
+    act(() => result.current.setValue('items.0.k', 'typed', { asUser: true }));
+    rerender({ values: { items: [{ k: 'a' }] } });
+    expect(result.current.getValue('items.0.k')).toBe('typed');
+  });
+
+  it('reset returns to values that arrived after mount', () => {
+    const { result, rerender } = renderHook(
+      ({ values }: { values?: { a: string } }) => useForm<{ a: string }>({ values }),
+      { initialProps: {} },
+    );
+    rerender({ values: { a: 'loaded' } });
+    act(() => result.current.setValue('a', 'typed', { asUser: true }));
+    act(() => result.current.reset());
+    expect(result.current.getValue('a')).toBe('loaded');
+    expect(result.current.isDirty()).toBe(false);
+  });
+
+  it('setValues writes dates and empty objects as whole values', () => {
+    const { result } = renderHook(() =>
+      useForm<{ d?: Date; o?: Record<string, never> }>({ initialValues: {} }),
+    );
+    const d = new Date(0);
+    act(() => result.current.setValues({ d, o: {} }));
+    expect(result.current.getValues()).toEqual({ d, o: {} });
+    expect(result.current.getValue('d')).toBe(d);
+  });
+
   it('subscribe calls back only when the selected slice changes', () => {
     const { result } = renderHook(() => useForm({ initialValues: { a: 0, b: 0 } }));
     const cb = vi.fn();
